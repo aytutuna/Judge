@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "typecheck": "next typegen && tsc --noEmit",
+    "test": "vitest run",
+    "eval": "tsx --env-file=.env scripts/eval.ts"
   },
   "dependencies": {
     "better-sqlite3": "^13.0.3",

@@ -1,0 +1,152 @@
+[
+  {
+    "id": "fact-vaccines",
+    "argument": "Party A says childhood vaccines cause autism and that's why they won't vaccinate their kid. Party B says that study was retracted and vaccines are safe. Party A says big pharma hides the truth.",
+    "expected": { "dispute_type": ["factual"], "verdict_one_of": ["side_b"] }
+  },
+  {
+    "id": "fact-goldfish",
+    "argument": "Party A insists goldfish only have a 3-second memory so keeping one in a small bowl is fine. Party B says goldfish can actually remember things for months and need proper tanks.",
+    "expected": { "dispute_type": ["factual"], "verdict_one_of": ["side_b"] }
+  },
+  {
+    "id": "fact-knuckles",
+    "argument": "My dad says cracking my knuckles will give me arthritis when I'm older and I need to stop. I say that's a myth and studies show no connection. He says everyone knows it's true.",
+    "expected": { "dispute_type": ["factual"], "verdict_one_of": ["side_b", "side_a"] }
+  },
+  {
+    "id": "fact-greatwall",
+    "argument": "Party A bet Party B $50 that the Great Wall of China is visible from space with the naked eye. Party B says astronauts themselves have said you can't see it from orbit without aid.",
+    "expected": { "dispute_type": ["factual"], "verdict_one_of": ["side_b"] }
+  },
+  {
+    "id": "fact-sugar",
+    "argument": "Party A won't let the kids have cake at the party because sugar makes children hyperactive. Party B says controlled studies show the sugar-hyperactivity link is a myth and it's just party excitement.",
+    "expected": { "dispute_type": ["factual"], "verdict_one_of": ["side_b"] }
+  },
+  {
+    "id": "fact-heat-head",
+    "argument": "Party A says you must wear a hat because you lose most of your body heat through your head. Party B says that's an old myth — you lose heat proportionally to exposed surface area.",
+    "expected": { "dispute_type": ["factual"], "verdict_one_of": ["side_b"] }
+  },
+  {
+    "id": "fact-lightning",
+    "argument": "Party A refuses to shelter under the tower because lightning never strikes the same place twice, so the field is safer since it was hit last year. Party B says tall structures get struck repeatedly all the time.",
+    "expected": { "dispute_type": ["factual"], "verdict_one_of": ["side_b"] }
+  },
+  {
+    "id": "fact-bulls-red",
+    "argument": "Party A says bulls charge at the matador's cape because the color red enrages them. Party B says bulls are colorblind to red and react to the movement of the cape.",
+    "expected": { "dispute_type": ["factual"], "verdict_one_of": ["side_b"] }
+  },
+  {
+    "id": "logic-cheat",
+    "argument": "Party A argues: everyone who cheats ends up winning, our rival won the tournament, therefore they must have cheated. Party B says winning doesn't prove cheating even if cheaters often win.",
+    "expected": { "dispute_type": ["logical"], "verdict_one_of": ["side_b"] }
+  },
+  {
+    "id": "logic-slippery",
+    "argument": "Party A says if we let employees work from home one day a week, soon nobody will ever come to the office and the company will collapse, so we can't allow any remote work. Party B says one day a week doesn't lead inevitably to zero office time.",
+    "expected": { "dispute_type": ["logical"], "verdict_one_of": ["side_b"] }
+  },
+  {
+    "id": "logic-anecdote",
+    "argument": "Party A says seatbelts are dangerous because their uncle survived a crash only because he was thrown clear of the car. Party B says statistics across millions of crashes show seatbelts save lives overall.",
+    "expected": { "dispute_type": ["logical", "factual"], "verdict_one_of": ["side_b"] }
+  },
+  {
+    "id": "logic-natural",
+    "argument": "Party A says the herbal remedy must be safe because it's natural, unlike chemical medicine. Party B points out plenty of natural things are poisonous and 'natural' doesn't mean safe.",
+    "expected": { "dispute_type": ["logical"], "verdict_one_of": ["side_b"] }
+  },
+  {
+    "id": "logic-tradition",
+    "argument": "Party A says we must keep doing the quarterly report this way because we've always done it this way. Party B says age of a practice alone doesn't make it the best way.",
+    "expected": { "dispute_type": ["logical"], "verdict_one_of": ["side_b"] }
+  },
+  {
+    "id": "values-festival",
+    "argument": "Party B says we should let our 16-year-old sister go to a music festival alone with her friends because she needs freedom to grow up. Party A says it's not safe, she's too young, and safety comes first.",
+    "expected": { "dispute_type": ["values", "mixed"], "verdict_one_of": ["conditional", "split"] }
+  },
+  {
+    "id": "values-cameras",
+    "argument": "Party A wants security cameras on every street corner because they deter crime and help catch criminals. Party B says mass surveillance destroys privacy and a free society shouldn't watch everyone all the time. Both agree cameras do reduce some crime.",
+    "expected": { "dispute_type": ["values"], "verdict_one_of": ["conditional"] }
+  },
+  {
+    "id": "values-charity",
+    "argument": "Party A gives 20% of their income to overseas charities and says Party B is selfish for spending on family vacations instead. Party B says taking care of your own family first isn't selfish.",
+    "expected": { "dispute_type": ["values"], "verdict_one_of": ["conditional", "split"] }
+  },
+  {
+    "id": "values-whitelie",
+    "argument": "Party A told their friend the haircut looked great when it didn't, to spare feelings. Party B says lying is always wrong and real friends tell the truth. Party A says kindness matters more than blunt honesty.",
+    "expected": { "dispute_type": ["values"], "verdict_one_of": ["conditional", "split"] }
+  },
+  {
+    "id": "values-inheritance",
+    "argument": "Party A thinks the inheritance should be split equally between all siblings because equal is fair. Party B thinks the sibling who cared for their sick mother for five years deserves a larger share.",
+    "expected": { "dispute_type": ["values"], "verdict_one_of": ["conditional", "side_b", "split"] }
+  },
+  {
+    "id": "values-career",
+    "argument": "Party A wants to take a lower-paying job doing meaningful nonprofit work. Party B, their spouse, says they have kids and financial security has to come before personal fulfillment. Both agree the pay cut is 30%.",
+    "expected": { "dispute_type": ["values", "mixed"], "verdict_one_of": ["conditional", "split"] }
+  },
+  {
+    "id": "def-hotdog",
+    "argument": "Party A says a hot dog is obviously a sandwich: meat between bread. Party B says nobody who orders a sandwich expects a hot dog, so it isn't one. They've been arguing for an hour.",
+    "expected": { "dispute_type": ["definitional"], "verdict_one_of": ["dissolved"] }
+  },
+  {
+    "id": "def-chess",
+    "argument": "Party A says chess is a sport because it has competition, rankings, and requires training. Party B says a sport requires physical athleticism, so chess is a game, not a sport.",
+    "expected": { "dispute_type": ["definitional"], "verdict_one_of": ["dissolved"] }
+  },
+  {
+    "id": "def-tomato",
+    "argument": "Party A says a tomato is a fruit, full stop, botany says so. Party B says in cooking and common speech it's a vegetable and that's what matters. They want a ruling.",
+    "expected": { "dispute_type": ["definitional"], "verdict_one_of": ["dissolved"] }
+  },
+  {
+    "id": "def-camping",
+    "argument": "Party A says sleeping in a tent with no shower isn't a real vacation, vacations mean rest and comfort. Party B says vacation just means time away doing what you love, and they love camping.",
+    "expected": { "dispute_type": ["definitional"], "verdict_one_of": ["dissolved"] }
+  },
+  {
+    "id": "def-aiart",
+    "argument": "Party A says AI-generated images aren't real art because there's no human struggle behind them. Party B says art is whatever moves the viewer, regardless of how it was made.",
+    "expected": { "dispute_type": ["definitional", "values"], "verdict_one_of": ["dissolved", "conditional"] }
+  },
+  {
+    "id": "split-fire",
+    "argument": "We can only keep one employee. Party A says keep Jordan: Jordan's sales numbers are double Sam's. Party B says keep Sam: Sam mentors juniors, holds the team together, and Jordan has caused two colleagues to quit. We agree the goal is what's best for the company over five years.",
+    "expected": { "dispute_type": ["mixed", "values"], "verdict_one_of": ["split", "side_b", "conditional"] }
+  },
+  {
+    "id": "split-chores",
+    "argument": "Party A says they do all the cooking so Party B should do all the cleaning. Party B says they work 20 more hours a week outside the home, so splitting home chores 50/50 isn't fair either. Both are exhausted.",
+    "expected": { "dispute_type": ["mixed", "values"], "verdict_one_of": ["split", "conditional"] }
+  },
+  {
+    "id": "split-screentime",
+    "argument": "Party A lets the kids have tablets at dinner because it keeps things calm and they finish their food. Party B says dinner should be for family conversation even if it's messier. Party A agrees conversation matters; Party B agrees the calm is real.",
+    "expected": { "dispute_type": ["values", "mixed"], "verdict_one_of": ["split", "conditional", "side_b"] }
+  },
+  {
+    "id": "split-move",
+    "argument": "Party A got a job offer in another city with 40% more pay and wants to move. Party B, their partner, would have to leave a job they love and their aging parents. Party A says the money secures their future; Party B says some things matter more than money. Both numbers are undisputed.",
+    "expected": { "dispute_type": ["values", "mixed"], "verdict_one_of": ["conditional", "split"] }
+  },
+  {
+    "id": "mixed-dishwasher",
+    "argument": "Party A says pre-rinsing dishes before the dishwasher wastes water and modern machines don't need it. Party B says their dishes come out dirty without rinsing. Party A says Party B just loads the machine wrong.",
+    "expected": { "dispute_type": ["factual", "mixed"], "verdict_one_of": ["side_a", "split", "too_close"] }
+  },
+  {
+    "id": "mixed-dog",
+    "argument": "Party A wants to adopt a husky because they're beautiful and the family will exercise more. Party B says they live in a small hot-climate apartment, both work full time, and a husky would be miserable. Party A says love is what matters most for a pet.",
+    "expected": { "dispute_type": ["mixed", "factual"], "verdict_one_of": ["side_b"] }
+  }
+]
