@@ -68,11 +68,12 @@ export async function POST(req: Request): Promise<NextResponse> {
         result = refusedResult();
       } else {
         const firstError = runs.find((r) => !r.ok);
-        console.error("[verdict] all judge runs failed:", firstError && !firstError.ok ? firstError.error : "?");
-        return NextResponse.json(
-          { error: "The judge is unavailable right now — try again in a minute." },
-          { status: 502 },
-        );
+        const detail = firstError && !firstError.ok ? firstError.error : "?";
+        console.error("[verdict] all judge runs failed:", detail);
+        const message = detail.includes("429")
+          ? "The judge hit its AI quota for now — try again in a few minutes."
+          : "The judge is unavailable right now — try again in a minute.";
+        return NextResponse.json({ error: message }, { status: 502 });
       }
     } else {
       result = aggregate(ok);

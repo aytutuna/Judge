@@ -1,36 +1,98 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ⚖️ Verdict
 
-## Getting Started
+Tell it the argument. It digs to bedrock and rules.
 
-First, run the development server:
+Verdict is a mobile-first web app that settles arguments: one person describes a
+disagreement, and an AI judge steelmans both sides, maps each side's claims down
+to its **bedrock** premise, finds the **crux** — the one point the fight is
+actually about — and renders a verdict.
+
+## Honest verdicts, always labeled
+
+Verdict never launders an opinion through a confident interface. Every ruling
+carries an explicit type:
+
+| Verdict | When |
+|---|---|
+| **Party A / B is right** | The crux is a checkable fact or a logical error — and the facts the ruling leans on are listed so you can check them |
+| **Split decision** | Each side is right about a different part |
+| **It depends on your values** | The crux is a clash of terminal values — you get "if you weight X → then Y" branches instead of fake certainty |
+| **Same word, different meanings** | The argument dissolves once definitions are separated |
+| **Too close to call** | The independent judges couldn't agree |
+
+**Confidence is computed, not claimed**: the judge runs up to three times
+independently (one run analyzes the sides in reverse order as a position-bias
+check), and the 1–5 confidence meter comes from how often the runs agreed.
+
+**Privacy = fairness**: before judging or storing anything, names are replaced
+with *Party A* / *Party B*. The judge never knows who is who — which is also the
+bias mitigation — and only the anonymized text is stored. The name map returns
+to your browser only.
+
+## Run it
 
 ```bash
+npm install
+cp .env.example .env    # add your Gemini key, or leave empty for demo mode
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Without a `GEMINI_API_KEY` the app runs in **demo mode** — deterministic sample
+verdicts, full UI, no external calls. Get a key at
+[Google AI Studio](https://aistudio.google.com/apikey).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+> ⚠️ **Never commit `.env`.** If a key has ever been pasted into a chat, issue,
+> or commit, rotate it in AI Studio before going public.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Configuration
 
-## Learn More
+| Env var | Default | Meaning |
+|---|---|---|
+| `GEMINI_API_KEY` | *(empty → demo mode)* | Google AI Studio key |
+| `GEMINI_MODEL` | `gemini-flash-latest` | Judge model |
+| `GEMINI_MODEL_LITE` | `gemini-flash-lite-latest` | Anonymizer model (separate free-tier quota bucket) |
+| `JUDGE_RUNS` | `3` | Self-consistency runs per verdict (1–3). Lower it on tight quotas; confidence is capped accordingly |
+| `DATABASE_URL` | `file:./dev.db` | SQLite file path |
 
-To learn more about Next.js, take a look at the following resources:
+**Free-tier reality check:** one verdict costs 1 lite call + `JUDGE_RUNS` flash
+calls. The Gemini free tier allows only a handful of flash requests per minute
+and a small daily cap, so for anything public use a paid-tier key (still cheap —
+flash pricing is fractions of a cent per verdict) or set `JUDGE_RUNS=1`.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## How it works
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+input ──▶ anonymize (names → Party A/B) ──▶ judge ×N (structured JSON)
+                                                 │
+   stored: anonymized text + result only         ▼
+   share link /v/[id]  ◀── SQLite ◀── aggregate (majority vote → confidence)
+```
 
-## Deploy on Vercel
+- One well-crafted structured-output prompt does parse → steelman → classify
+  claims (fact / value / definition / logic) → bedrock → crux → verdict
+  (`lib/judge.ts`), forced through a `responseSchema` so it always parses.
+- The value framework (preset chips + fine-tuning sliders) is injected into the
+  prompt and only matters when the crux is a values clash (`lib/frameworks.ts`).
+- Aggregation and the confidence rules live in `lib/aggregate.ts`.
+- If the model's own safety filter refuses, the app says so honestly instead of
+  inventing a ruling.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Testing
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+npm test        # unit tests: aggregation rules, mock verdicts, test-set shape
+npm run eval    # LIVE eval of the judge against test/arguments.json (costs API calls)
+npm run eval -- 5   # just the first 5 cases
+```
+
+`test/arguments.json` holds 30 hand-labeled arguments across all dispute types —
+tune the judge prompt against it before trusting changes.
+
+## Roadmap (v2)
+
+- Two-party mode: each side states their case separately; a link invites the
+  other party mid-argument
+- Web-search fact-checking when a factual crux is load-bearing and confidence is low
+- Staged pipeline (separate steelman / bedrock / verdict calls) where the single
+  call visibly fails
+- Postgres/Turso storage for serverless deploys (SQLite needs a persistent disk)
