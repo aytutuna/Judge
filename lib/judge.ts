@@ -139,11 +139,14 @@ export async function judgeSelfConsistent(
   anonymizedArgument: string,
   framework: FrameworkChoice,
 ): Promise<JudgeRun[]> {
+  // JUDGE_RUNS lets tight-quota deployments trade confidence for requests
+  // (1-3; aggregate caps confidence when fewer runs survive).
+  const n = Math.min(3, Math.max(1, Number(process.env.JUDGE_RUNS) || 3));
   const configs = [
     { temperature: 0.7 },
     { temperature: 0.7, analyzeBFirst: true },
     { temperature: 0.9 },
-  ];
+  ].slice(0, n);
   const runs: JudgeRun[] = [];
   for (const config of configs) {
     runs.push(await judgeOnce(anonymizedArgument, framework, config));

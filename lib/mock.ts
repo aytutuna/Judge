@@ -14,8 +14,11 @@ function hash(s: string): number {
 
 export function mockVerdict(
   argument: string,
-  _framework: FrameworkChoice,
+  // Framework is accepted for signature parity with the live judge; demo
+  // verdicts are canned and don't vary by framework.
+  framework?: FrameworkChoice,
 ): VerdictResult {
+  void framework;
   const lower = argument.toLowerCase();
   const seed = hash(argument);
 

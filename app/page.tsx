@@ -1,69 +1,163 @@
-import Image from "next/image";
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+import { FrameworkPicker } from "@/components/FrameworkPicker";
+import { VerdictView } from "@/components/VerdictView";
+import { DEFAULT_FRAMEWORK } from "@/lib/frameworks";
+import type { FrameworkChoice, VerdictResponse } from "@/lib/types";
+
+const STAGES = [
+  "Reading both sides…",
+  "Steelmanning the weaker telling…",
+  "Labeling claims: fact · value · definition · logic…",
+  "Digging down to bedrock…",
+  "Locating the crux…",
+  "Three independent judges deliberating…",
+  "Counting the votes…",
+];
+
+const PLACEHOLDER =
+  "Describe the argument. Who says what, and why?\n\nInclude the other person's side as they would state it — the judge steelmans both sides either way.";
 
 export default function Home() {
+  const [argument, setArgument] = useState("");
+  const [framework, setFramework] = useState<FrameworkChoice>(DEFAULT_FRAMEWORK);
+  const [phase, setPhase] = useState<"intake" | "judging" | "verdict">("intake");
+  const [stage, setStage] = useState(0);
+  const [error, setError] = useState<string | null>(null);
+  const [response, setResponse] = useState<VerdictResponse | null>(null);
+  const stageTimer = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  useEffect(() => {
+    if (phase === "judging") {
+      stageTimer.current = setInterval(
+        () => setStage((s) => Math.min(s + 1, STAGES.length - 1)),
+        7000,
+      );
+    }
+    return () => {
+      if (stageTimer.current) clearInterval(stageTimer.current);
+    };
+  }, [phase]);
+
+  async function submit() {
+    setError(null);
+    setStage(0);
+    setPhase("judging");
+    try {
+      const res = await fetch("/api/verdict", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ argument, framework }),
+      });
+      const json = await res.json();
+      if (!res.ok) {
+        throw new Error(json.error ?? "Something went wrong");
+      }
+      setResponse(json as VerdictResponse);
+      setPhase("verdict");
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Something went wrong");
+      setPhase("intake");
+    }
+  }
+
+  function reset() {
+    setResponse(null);
+    setArgument("");
+    setPhase("intake");
+  }
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <main className="flex-1 w-full max-w-md mx-auto px-4 py-8 flex flex-col gap-6">
+      <header className="text-center">
+        <h1 className="text-3xl font-black tracking-tight" style={{ color: "var(--ink)" }}>
+          ⚖️ Verdict
+        </h1>
+        <p className="text-sm mt-1" style={{ color: "var(--ink-2)" }}>
+          Tell it the argument. It digs to bedrock and rules.
+        </p>
+      </header>
+
+      {phase === "intake" ? (
+        <form
+          className="flex flex-col gap-4"
+          onSubmit={(e) => {
+            e.preventDefault();
+            void submit();
+          }}
+        >
+          <textarea
+            value={argument}
+            onChange={(e) => setArgument(e.target.value)}
+            placeholder={PLACEHOLDER}
+            rows={7}
+            maxLength={6000}
+            required
+            minLength={20}
+            className="w-full rounded-2xl px-4 py-3 text-sm leading-relaxed resize-y outline-none focus:ring-2"
+            style={{
+              background: "var(--surface)",
+              border: "1px solid var(--ring)",
+              color: "var(--ink)",
+            }}
+          />
+
+          <FrameworkPicker value={framework} onChange={setFramework} />
+
+          {error ? (
+            <p className="text-sm text-center" role="alert" style={{ color: "#d03b3b" }}>
+              {error}
+            </p>
+          ) : null}
+
+          <button
+            type="submit"
+            disabled={argument.trim().length < 20}
+            className="rounded-full px-5 py-3.5 text-base font-bold disabled:opacity-40"
+            style={{ background: "var(--ink)", color: "var(--plane)" }}
+          >
+            Get the verdict
+          </button>
+
+          <p className="text-[11px] text-center leading-relaxed" style={{ color: "var(--muted)" }}>
+            Names are replaced with Party A / Party B before judging — the judge
+            never knows who is who, and only the anonymous version is stored.
+          </p>
+        </form>
+      ) : null}
+
+      {phase === "judging" ? (
+        <div className="flex flex-col items-center gap-4 py-14" aria-live="polite">
+          <span className="weigh text-6xl" aria-hidden>
+            ⚖️
+          </span>
+          <p className="text-sm font-medium" style={{ color: "var(--ink-2)" }}>
+            {STAGES[stage]}
+          </p>
+          <p className="text-[11px]" style={{ color: "var(--muted)" }}>
+            Three separate AI judges rule independently — this takes a minute.
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+      ) : null}
+
+      {phase === "verdict" && response ? (
+        <>
+          <VerdictView
+            result={response.result}
+            nameMap={response.name_map}
+            shareId={response.id}
+          />
+          <button
+            type="button"
+            onClick={reset}
+            className="text-sm underline underline-offset-2 self-center pb-6"
+            style={{ color: "var(--ink-2)" }}
           >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+            Judge another argument
+          </button>
+        </>
+      ) : null}
+    </main>
   );
 }
