@@ -1,6 +1,7 @@
 import { frameworkInstruction } from "./frameworks";
 import { geminiJson } from "./gemini";
-import { JudgeOutput, type FrameworkChoice } from "./types";
+import type { Lang } from "./i18n";
+import { JudgeRunOutput, type FrameworkChoice } from "./types";
 
 /** Gemini responseSchema mirroring lib/types.ts JudgeOutput. */
 const CLAIM = {
@@ -61,6 +62,14 @@ const JUDGE_SCHEMA = {
     },
     facts_relied_on: { type: "array", items: { type: "string" } },
     losing_side_best_point: { type: "string" },
+    // Ordering is the anchoring guard: the verdict is fully emitted before
+    // the forced choice exists. Gemini emits JSON in schema declaration
+    // order and generation is autoregressive, so `leaning`/`leaning_reason`
+    // MUST stay the LAST two properties (and last in `required`) — never
+    // alphabetize or reorder them, or the forced pick could anchor the
+    // verdict toward side_a/side_b.
+    leaning: { type: "string", enum: ["side_a", "side_b"] },
+    leaning_reason: { type: "string" },
   },
   required: [
     "verdict",
@@ -72,10 +81,20 @@ const JUDGE_SCHEMA = {
     "argument_map",
     "facts_relied_on",
     "losing_side_best_point",
+    "leaning",
+    "leaning_reason",
   ],
 } as const;
 
-function systemPrompt(framework: FrameworkChoice, analyzeBFirst: boolean): string {
+/** Appended when the request asks for Turkish output. The register and
+ * if_value-shape sentences are load-bearing: without them Gemini defaults to
+ * formal "siz" (clashing with the all-"sen" UI on the same card) and emits
+ * indicative or self-prefixed conditionals that break the "Eğer … → …" card. */
+const TR_LANGUAGE_BLOCK = `
+
+LANGUAGE: Write every free-text output field (headline, crux, claims, bedrock premises, split points, conditional branches, facts_relied_on, losing_side_best_point, leaning_reason) in natural, fluent, everyday Turkish — plain language, not officialese. Address the reader with informal "sen", never "siz". Refer to the parties as "Taraf A" and "Taraf B" in prose. Write each conditional if_value as a bare conditional clause ending in -sa/-se (e.g. "dürüstlüğe en çok değer veriyorsan"), with no leading "Eğer". Keep all JSON enum values exactly as specified in the schema (English identifiers). headline stays at most 10 words.`;
+
+function systemPrompt(framework: FrameworkChoice, analyzeBFirst: boolean, lang: Lang): string {
   return `You are Verdict, an impartial adjudicator of arguments between two parties.
 
 METHOD — follow these steps in order:
@@ -88,6 +107,13 @@ METHOD — follow these steps in order:
    - Each side is right about a DIFFERENT part (one about the facts, the other about a consequence, or right about different sub-questions): return "split" and fill split_points with what each party is right about.
    - Crux is a clash of TERMINAL VALUES: apply the value framework below. If the framework clearly favors one side, pick that side and say in the crux that the call follows from the framework. If it does not clearly decide, return "conditional" and fill conditional with 2-3 "if you weight X highest -> then Y" branches.
    - The sides mean DIFFERENT THINGS by a key word and would agree once defined: return "dissolved".
+5b. FORCED RULING: separately from the verdict, you MUST pick which side is MORE right — the side a real court would rule for under a preponderance standard, no ties allowed. This forced choice must NOT change your verdict in step 5. If your step-5 verdict already names a winner ("side_a" or "side_b"), your leaning MUST be that same side. Standards, by what the crux is:
+   - FACTUAL crux left genuinely uncertain in step 5: which side's factual claim is more probable on current, well-established evidence; only if truly 50/50, fall through to the burden-of-proof rule below.
+   - DEFINITIONAL crux: whose usage better matches how the language community actually uses the word (ordinary meaning, like a court reading a contract).
+   - VALUES crux: which side the value framework below favors even slightly; if it is truly silent, broadly shared common-sense morality.
+   - SPLIT: who is right about the more central part of what the parties were actually fighting over.
+   - Otherwise / still tied: the party whose claim departs further from ordinary expectation bears the burden of proof and loses the tie.
+   leaning_reason: ONE concrete sentence, at most ~25 words, naming the standard you used ("Ordinary usage of 'making tea' includes…", "Under an outcomes weighting…").
 6. HONESTY RULES: never manufacture certainty. Never rule against a side just because it was described less sympathetically. The narrator (usually Party A) gets no home advantage.
 
 VALUE FRAMEWORK (set by the user): ${frameworkInstruction(framework)}
@@ -99,20 +125,20 @@ OUTPUT RULES:
 - split_points only for "split" verdicts, otherwise null. conditional only for "conditional" verdicts, otherwise null.
 - losing_side_best_point: the single strongest point of whichever side fares worse (for "conditional"/"dissolved", the best point that survives on the less-favored framing).
 - facts_relied_on: empty array if the verdict rests on no contested facts.
-${analyzeBFirst ? "\nPROCESS NOTE: analyze Party B's case fully before Party A's, to guard against order bias." : ""}`;
+${analyzeBFirst ? "\nPROCESS NOTE: analyze Party B's case fully before Party A's, to guard against order bias." : ""}${lang === "tr" ? TR_LANGUAGE_BLOCK : ""}`;
 }
 
 export type JudgeRun =
-  | { ok: true; data: JudgeOutput }
+  | { ok: true; data: JudgeRunOutput }
   | { ok: false; blocked: boolean; error: string };
 
 export async function judgeOnce(
   anonymizedArgument: string,
   framework: FrameworkChoice,
-  opts: { analyzeBFirst?: boolean; temperature?: number } = {},
+  opts: { analyzeBFirst?: boolean; temperature?: number; lang?: Lang } = {},
 ): Promise<JudgeRun> {
   const res = await geminiJson<unknown>({
-    system: systemPrompt(framework, opts.analyzeBFirst ?? false),
+    system: systemPrompt(framework, opts.analyzeBFirst ?? false, opts.lang ?? "en"),
     user: `THE ARGUMENT:\n\n${anonymizedArgument}`,
     schema: JUDGE_SCHEMA as unknown as Record<string, unknown>,
     temperature: opts.temperature ?? 0.7,
@@ -122,7 +148,7 @@ export async function judgeOnce(
       ? { ok: false, blocked: true, error: `model refused (${res.reason})` }
       : { ok: false, blocked: false, error: res.error };
   }
-  const parsed = JudgeOutput.safeParse(res.data);
+  const parsed = JudgeRunOutput.safeParse(res.data);
   if (!parsed.success) {
     return { ok: false, blocked: false, error: `schema mismatch: ${parsed.error.message.slice(0, 200)}` };
   }
@@ -138,6 +164,7 @@ export async function judgeOnce(
 export async function judgeSelfConsistent(
   anonymizedArgument: string,
   framework: FrameworkChoice,
+  lang: Lang = "en",
 ): Promise<JudgeRun[]> {
   // JUDGE_RUNS lets tight-quota deployments trade confidence for requests
   // (1-3; aggregate caps confidence when fewer runs survive).
@@ -149,7 +176,7 @@ export async function judgeSelfConsistent(
   ].slice(0, n);
   const runs: JudgeRun[] = [];
   for (const config of configs) {
-    runs.push(await judgeOnce(anonymizedArgument, framework, config));
+    runs.push(await judgeOnce(anonymizedArgument, framework, { ...config, lang }));
   }
   return runs;
 }

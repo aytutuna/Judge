@@ -34,7 +34,9 @@ Rewrite the text with these rules:
 - Replace specific company, school, or place names that could identify someone with generic terms ("the company", "their school", "the city").
 - Change NOTHING else: keep every claim, detail, number, and the tone exactly as written.
 - List every replacement you made.
-- If there is nothing to anonymize, return the text unchanged with an empty replacements list.`;
+- If there is nothing to anonymize, return the text unchanged with an empty replacements list.
+
+Always keep the rewritten text in the SAME language as the input. The replacement labels are always exactly "Party A", "Party B", "Person C"… regardless of language.`;
 
 /**
  * Names -> Party A/B before judging and storage. Doubles as bias mitigation:
@@ -43,8 +45,8 @@ Rewrite the text with these rules:
  */
 export async function anonymize(argument: string): Promise<AnonymizeResult> {
   if (!hasApiKey()) {
-    // Demo mode: no rewriting; nothing is stored differently either since
-    // mock verdicts are generated locally.
+    // Unreachable via the API route (it refuses without a key); kept as a
+    // guard so a stray call degrades to raw text instead of a wasted request.
     return { text: argument, nameMap: [] };
   }
   const res = await geminiJson<{

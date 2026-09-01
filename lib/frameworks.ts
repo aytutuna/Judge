@@ -1,7 +1,13 @@
 import type { FrameworkChoice } from "./types";
 
+/** Narrowed to literal unions so dictionary lookups like
+ * `t(lang, `preset.${p.id}.label`)` are statically typed (no `as Key` casts).
+ * `label`/`blurb` stay as the English display fallbacks and the eval
+ * script's vocabulary; `instruction` is model prompt text and stays English. */
+export type PresetId = "balanced" | "outcomes" | "principles" | "fairness" | "loyalty";
+
 export type Preset = {
-  id: string;
+  id: PresetId;
   label: string;
   emoji: string;
   blurb: string;
@@ -51,8 +57,10 @@ export const PRESETS: Preset[] = [
   },
 ];
 
+export type SliderId = "freedom_safety" | "individual_group" | "head_heart";
+
 export type SliderDef = {
-  id: string;
+  id: SliderId;
   left: string;
   right: string;
 };

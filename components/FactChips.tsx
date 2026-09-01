@@ -1,4 +1,6 @@
-export function FactChips({ facts }: { facts: string[] }) {
+import { t, type Lang } from "@/lib/i18n";
+
+export function FactChips({ facts, lang = "en" }: { facts: string[]; lang?: Lang }) {
   if (!facts.length) return null;
   return (
     <section className="rise-in-late">
@@ -6,7 +8,7 @@ export function FactChips({ facts }: { facts: string[] }) {
         className="text-xs font-semibold uppercase tracking-wide mb-2"
         style={{ color: "var(--muted)" }}
       >
-        Facts this verdict leans on — check them
+        {t(lang, "factsTitle")}
       </h3>
       <ul className="flex flex-col gap-1.5">
         {facts.map((f, i) => (

@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { PRESETS, SLIDERS } from "@/lib/frameworks";
+import { t } from "@/lib/i18n";
+import { useLang } from "@/lib/lang";
 import type { FrameworkChoice } from "@/lib/types";
 
 export function FrameworkPicker({
@@ -11,6 +13,7 @@ export function FrameworkPicker({
   value: FrameworkChoice;
   onChange: (next: FrameworkChoice) => void;
 }) {
+  const lang = useLang();
   const [showSliders, setShowSliders] = useState(false);
 
   return (
@@ -20,7 +23,7 @@ export function FrameworkPicker({
           className="text-xs font-semibold uppercase tracking-wide"
           style={{ color: "var(--muted)" }}
         >
-          Judge by
+          {t(lang, "judgeBy")}
         </span>
         <button
           type="button"
@@ -28,7 +31,7 @@ export function FrameworkPicker({
           className="text-xs underline underline-offset-2"
           style={{ color: "var(--ink-2)" }}
         >
-          {showSliders ? "Hide fine-tuning" : "Fine-tune ▸"}
+          {showSliders ? t(lang, "hideFineTune") : t(lang, "fineTune")}
         </button>
       </div>
 
@@ -47,9 +50,9 @@ export function FrameworkPicker({
                 color: active ? "var(--plane)" : "var(--ink-2)",
                 border: "1px solid var(--ring)",
               }}
-              title={p.blurb}
+              title={t(lang, `preset.${p.id}.blurb`)}
             >
-              <span aria-hidden>{p.emoji}</span> {p.label}
+              <span aria-hidden>{p.emoji}</span> {t(lang, `preset.${p.id}.label`)}
             </button>
           );
         })}
@@ -62,14 +65,16 @@ export function FrameworkPicker({
         >
           {SLIDERS.map((s) => {
             const v = value.sliders?.[s.id] ?? 50;
+            const left = t(lang, `slider.${s.id}.left`);
+            const right = t(lang, `slider.${s.id}.right`);
             return (
               <label key={s.id} className="flex flex-col gap-1">
                 <span
                   className="flex justify-between text-xs font-medium"
                   style={{ color: "var(--ink-2)" }}
                 >
-                  <span>{s.left}</span>
-                  <span>{s.right}</span>
+                  <span>{left}</span>
+                  <span>{right}</span>
                 </span>
                 <input
                   type="range"
@@ -77,7 +82,7 @@ export function FrameworkPicker({
                   max={100}
                   step={5}
                   value={v}
-                  aria-label={`${s.left} versus ${s.right}`}
+                  aria-label={t(lang, "slider.aria", { left, right })}
                   onChange={(e) =>
                     onChange({
                       ...value,
@@ -90,7 +95,7 @@ export function FrameworkPicker({
             );
           })}
           <p className="text-[11px]" style={{ color: "var(--muted)" }}>
-            Middle = neutral. These only matter when the argument comes down to values.
+            {t(lang, "sliderNote")}
           </p>
         </div>
       ) : null}

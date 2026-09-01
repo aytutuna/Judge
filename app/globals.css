@@ -23,6 +23,12 @@
   --kind-logic: #4a3aa7;
 
   --good: #006300;
+
+  /* thinking dig: soil strata and unlit rock (muted; party/kind colours stay the accents) */
+  --soil-1: #e9dfcf;
+  --soil-2: #d8c8ae;
+  --rock: #bfb7a8;
+
   --background: var(--plane);
   --foreground: var(--ink);
 }
@@ -55,6 +61,10 @@
     --kind-logic: #9085e9;
 
     --good: #0ca30c;
+
+    --soil-1: #2a2520;
+    --soil-2: #3a3128;
+    --rock: #5a5347;
   }
 }
 
@@ -103,8 +113,75 @@ body {
 }
 .dot-fill { animation: dot-fill 0.25s ease-out both; }
 
+/* ---------- thinking dig ---------- */
+/* Base styles are the resting visible state; entrance keyframes animate from
+   hidden to base with `both`. All transform motion lives in keyframes so the
+   reduced-motion rule below neutralises it; only colour/opacity transition. */
+
+@keyframes cloud-in {
+  from { opacity: 0; transform: translateY(6px) scale(0.9); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes cloud-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-2px); }
+}
+@keyframes cloud-pop {
+  0% { transform: scale(1); opacity: 1; }
+  25% { transform: translateY(3px) scale(0.96); opacity: 1; }
+  60% { transform: translateY(-2px) scale(1.2); opacity: 1; }
+  100% { transform: scale(0); opacity: 0; }
+}
+@keyframes tag-in {
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes bore-draw {
+  from { transform: scaleY(0); }
+  to { transform: scaleY(1); }
+}
+@keyframes rock-light {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.06); }
+}
+@keyframes line-draw {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+@keyframes crux-spark {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.6); }
+}
+@keyframes judge-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes dig-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+.dig-cloud {
+  animation: cloud-in 0.4s ease-out both, cloud-bob 2.6s 0.4s ease-in-out infinite;
+}
+.dig-cloud-pop { animation: cloud-pop 0.5s ease-in both; }
+.tag-in { animation: tag-in 0.3s ease-out both; }
+.bore-draw { animation: bore-draw 0.4s ease-out both; transform-origin: top; }
+.dig-rock {
+  transition: background-color 0.25s, border-color 0.25s, color 0.25s;
+}
+.rock-light { animation: rock-light 0.4s ease-out; }
+.line-draw { animation: line-draw 0.4s ease-out both; }
+.dig-crux { opacity: 0.45; transition: opacity 0.25s; }
+.dig-crux.dig-lit { opacity: 1; }
+.crux-spark { display: inline-block; animation: crux-spark 0.5s ease-out 1 both; }
+.judge-in { animation: judge-in 0.4s ease-out both; }
+.dig-out { animation: dig-out 0.25s ease-out both; }
+
 @media (prefers-reduced-motion: reduce) {
-  .weigh, .tug-a, .pop-in, .rise-in, .rise-in-late, .dot-fill {
+  .weigh, .tug-a, .pop-in, .rise-in, .rise-in-late, .dot-fill,
+  .dig-cloud, .dig-cloud-pop, .tag-in, .bore-draw, .rock-light, .line-draw,
+  .crux-spark, .judge-in, .dig-out {
     animation-duration: 0.01ms !important;
     animation-delay: 0s !important;
     animation-iteration-count: 1 !important;

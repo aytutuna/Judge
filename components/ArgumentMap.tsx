@@ -1,14 +1,14 @@
 import type { ArgumentMap as ArgumentMapData, ClaimKind } from "@/lib/types";
+import { KIND_KEY, t, type Lang } from "@/lib/i18n";
 
-const KIND_META: Record<ClaimKind, { label: string; varName: string }> = {
-  fact: { label: "fact", varName: "--kind-fact" },
-  value: { label: "value", varName: "--kind-value" },
-  definition: { label: "definition", varName: "--kind-definition" },
-  logic: { label: "logic", varName: "--kind-logic" },
+const KIND_VAR: Record<ClaimKind, string> = {
+  fact: "--kind-fact",
+  value: "--kind-value",
+  definition: "--kind-definition",
+  logic: "--kind-logic",
 };
 
-function KindTag({ kind }: { kind: ClaimKind }) {
-  const meta = KIND_META[kind];
+function KindTag({ kind, lang }: { kind: ClaimKind; lang: Lang }) {
   return (
     <span
       className="inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wide"
@@ -20,11 +20,11 @@ function KindTag({ kind }: { kind: ClaimKind }) {
           width: 8,
           height: 8,
           borderRadius: 2,
-          background: `var(${meta.varName})`,
+          background: `var(${KIND_VAR[kind]})`,
           display: "inline-block",
         }}
       />
-      {meta.label}
+      {t(lang, KIND_KEY[kind])}
     </span>
   );
 }
@@ -36,6 +36,7 @@ function ClaimColumn({
   bedrock,
   color,
   soft,
+  lang,
 }: {
   party: "a" | "b";
   name: string;
@@ -43,6 +44,7 @@ function ClaimColumn({
   bedrock: string;
   color: string;
   soft: string;
+  lang: Lang;
 }) {
   return (
     <div className="flex flex-col gap-2 min-w-0">
@@ -74,7 +76,7 @@ function ClaimColumn({
           <span className="text-sm leading-snug" style={{ color: "var(--ink)" }}>
             {c.claim}
           </span>
-          <KindTag kind={c.kind} />
+          <KindTag kind={c.kind} lang={lang} />
         </div>
       ))}
 
@@ -94,7 +96,7 @@ function ClaimColumn({
           className="text-[10px] font-semibold uppercase tracking-wide mb-0.5"
           style={{ color: "var(--muted)" }}
         >
-          🪨 Bedrock
+          {t(lang, "bedrock")}
         </div>
         <div className="text-sm font-medium leading-snug" style={{ color: "var(--ink)" }}>
           {bedrock}
@@ -113,11 +115,13 @@ export function ArgumentMap({
   crux,
   nameA,
   nameB,
+  lang = "en",
 }: {
   map: ArgumentMapData;
   crux: string;
   nameA: string;
   nameB: string;
+  lang?: Lang;
 }) {
   return (
     <section className="rise-in">
@@ -125,7 +129,7 @@ export function ArgumentMap({
         className="text-xs font-semibold uppercase tracking-wide mb-2"
         style={{ color: "var(--muted)" }}
       >
-        The argument, mapped to bedrock
+        {t(lang, "mapTitle")}
       </h3>
       <div className="grid grid-cols-2 gap-3">
         <ClaimColumn
@@ -135,6 +139,7 @@ export function ArgumentMap({
           bedrock={map.bedrock_a}
           color="var(--party-a)"
           soft="var(--party-a-soft)"
+          lang={lang}
         />
         <ClaimColumn
           party="b"
@@ -143,6 +148,7 @@ export function ArgumentMap({
           bedrock={map.bedrock_b}
           color="var(--party-b)"
           soft="var(--party-b-soft)"
+          lang={lang}
         />
       </div>
 
@@ -163,7 +169,7 @@ export function ArgumentMap({
           className="text-[10px] font-semibold uppercase tracking-wide mb-1"
           style={{ color: "var(--muted)" }}
         >
-          ⚡ The crux — what this is really about
+          {t(lang, "cruxTitle")}
         </div>
         <p className="text-sm font-medium leading-snug" style={{ color: "var(--ink)" }}>
           {crux}

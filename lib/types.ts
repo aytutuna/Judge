@@ -65,6 +65,41 @@ export const JudgeOutput = z.object({
 });
 export type JudgeOutput = z.infer<typeof JudgeOutput>;
 
+export const JudgeVerdictSide = z.enum(["side_a", "side_b"]);
+export type JudgeVerdictSide = z.infer<typeof JudgeVerdictSide>;
+
+/** What one judge run actually emits: the honest verdict plus the forced
+ * ruling. The two lean fields sit LAST on purpose, mirroring their position
+ * in JUDGE_SCHEMA (lib/judge.ts) — the ordering is an anchoring guard: the
+ * verdict is fully emitted before the forced choice exists. */
+export const JudgeRunOutput = JudgeOutput.extend({
+  leaning: JudgeVerdictSide,
+  leaning_reason: z.string(),
+});
+export type JudgeRunOutput = z.infer<typeof JudgeRunOutput>;
+
+/** Forced ruling attached to non-winner verdicts: which side the judges,
+ * forced to pick, found MORE right. Computed from run agreement, never
+ * model-claimed as an aggregate. */
+export const Lean = z.object({
+  party: z.enum(["a", "b"]),
+  unanimous: z.boolean(),
+  reason: z.string(),
+});
+export type Lean = z.infer<typeof Lean>;
+
+export const CruxTrialOutcome = z.enum(["survived", "overturned", "uncertain"]);
+export type CruxTrialOutcome = z.infer<typeof CruxTrialOutcome>;
+
+/** Result of the adversarial cross-examination of a fact/logic winner ruling. */
+export const CruxTrial = z.object({
+  attack: z.string(),
+  outcome: CruxTrialOutcome,
+  /** Adjudicator's short reason (empty string when the attacker conceded). */
+  reasoning: z.string(),
+});
+export type CruxTrial = z.infer<typeof CruxTrial>;
+
 /** Aggregated result shown to the user and stored. Confidence is computed
  * from self-consistency (how often the judges agreed), never model-claimed. */
 export const VerdictResult = JudgeOutput.extend({
@@ -72,10 +107,17 @@ export const VerdictResult = JudgeOutput.extend({
   confidence: z.number().int().min(1).max(5),
   /** Which verdict each self-consistency run reached, for transparency. */
   runs: z.array(JudgeVerdict),
-  /** True when produced by demo mode (no API key configured). */
+  /** Legacy: true on verdicts stored by the removed demo mode. Never set anymore. */
   demo: z.boolean(),
   /** True when the model itself declined to judge (its safety filter). */
   model_refused: z.boolean().optional(),
+  /** Adversarial cross-examination of a fact/logic winner ruling (absent when
+   * the trial was skipped, failed open, or predates the feature). */
+  crux_trial: CruxTrial.optional(),
+  /** Forced ruling for non-winner verdicts. Optional so every previously
+   * stored row keeps parsing: absent (undefined) for side_a/side_b winners,
+   * refusals, and pre-feature rows; null only for a computed lean tie. */
+  lean: Lean.nullable().optional(),
 });
 export type VerdictResult = z.infer<typeof VerdictResult>;
 
@@ -92,6 +134,8 @@ export const VerdictRequest = z.object({
     "Keep it under 6000 characters.",
   ),
   framework: FrameworkChoice.default({ preset: "balanced" }),
+  /** UI + judge output language. Never stored with the verdict. */
+  lang: z.enum(["en", "tr"]).default("en"),
 });
 export type VerdictRequest = z.infer<typeof VerdictRequest>;
 

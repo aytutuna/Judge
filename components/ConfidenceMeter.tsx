@@ -1,7 +1,17 @@
-const LABELS = ["", "Very low", "Low", "Moderate", "High", "Very high"];
+import { t, type Key, type Lang } from "@/lib/i18n";
 
-export function ConfidenceMeter({ value }: { value: number }) {
+/** Indexed by clamped value - 1 — a typed lookup, no `as Key` cast. */
+const CONF_KEY = [
+  "confidence.1",
+  "confidence.2",
+  "confidence.3",
+  "confidence.4",
+  "confidence.5",
+] as const satisfies readonly Key[];
+
+export function ConfidenceMeter({ value, lang = "en" }: { value: number; lang?: Lang }) {
   const v = Math.max(1, Math.min(5, Math.round(value)));
+  const word = t(lang, CONF_KEY[v - 1]);
   return (
     <div
       className="flex items-center gap-2"
@@ -9,7 +19,7 @@ export function ConfidenceMeter({ value }: { value: number }) {
       aria-valuemin={1}
       aria-valuemax={5}
       aria-valuenow={v}
-      aria-label={`Confidence ${v} of 5`}
+      aria-label={t(lang, "confidenceAria", { n: v })}
     >
       <div className="flex gap-1.5">
         {[1, 2, 3, 4, 5].map((i) => (
@@ -29,7 +39,7 @@ export function ConfidenceMeter({ value }: { value: number }) {
         ))}
       </div>
       <span className="text-xs" style={{ color: "var(--ink-2)" }}>
-        {LABELS[v]} confidence · {v}/5
+        {t(lang, "confidenceWord", { word, n: v })}
       </span>
     </div>
   );

@@ -3,7 +3,7 @@
 import { anonymize } from "../lib/anonymize";
 import { judgeSelfConsistent } from "../lib/judge";
 import { aggregate } from "../lib/aggregate";
-import type { JudgeOutput } from "../lib/types";
+import type { JudgeRunOutput } from "../lib/types";
 
 const argument = `My brother Mark and I are fighting. Mark says we should let our 16-year-old
 sister Ana go to a music festival alone with her friends because she needs freedom to grow up.
@@ -24,7 +24,7 @@ async function main() {
     );
   }
   const ok = runs
-    .filter((r): r is { ok: true; data: JudgeOutput } => r.ok)
+    .filter((r): r is { ok: true; data: JudgeRunOutput } => r.ok)
     .map((r) => r.data);
   if (!ok.length) throw new Error("all runs failed");
   const final = aggregate(ok);
