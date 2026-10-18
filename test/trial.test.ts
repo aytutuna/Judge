@@ -1,8 +1,8 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-vi.mock("../lib/gemini", () => ({ geminiJson: vi.fn() }));
+vi.mock("../lib/claude", () => ({ claudeJson: vi.fn() }));
 
-import { geminiJson } from "../lib/gemini";
+import { claudeJson } from "../lib/claude";
 import { applyCruxTrial, runCruxTrial, shouldTryCrux } from "../lib/trial";
 import {
   CruxTrial,
@@ -12,7 +12,7 @@ import {
   type FinalVerdict,
 } from "../lib/types";
 
-const mockGemini = vi.mocked(geminiJson);
+const mockClaude = vi.mocked(claudeJson);
 
 function fixture(overrides: Partial<VerdictResult> = {}): VerdictResult {
   return {
@@ -42,7 +42,7 @@ function trial(outcome: CruxTrialOutcome, reasoning = "r"): CruxTrial {
 }
 
 beforeEach(() => {
-  mockGemini.mockReset();
+  mockClaude.mockReset();
   vi.spyOn(console, "warn").mockImplementation(() => {});
 });
 
@@ -157,9 +157,9 @@ describe("schema back-compat", () => {
   });
 });
 
-describe("runCruxTrial (mocked gemini)", () => {
+describe("runCruxTrial (mocked claude)", () => {
   it("concession short-circuits to survived without an adjudicator call", async () => {
-    mockGemini.mockResolvedValueOnce({
+    mockClaude.mockResolvedValueOnce({
       ok: true,
       data: { attack: "The basis rests on settled fact; nothing sticks.", has_substantive_attack: false },
     });
@@ -169,21 +169,21 @@ describe("runCruxTrial (mocked gemini)", () => {
       outcome: "survived",
       reasoning: "",
     });
-    expect(mockGemini).toHaveBeenCalledTimes(1);
+    expect(mockClaude).toHaveBeenCalledTimes(1);
   });
 
   it("an empty attack is treated as a concession (never sent to the adjudicator)", async () => {
-    mockGemini.mockResolvedValueOnce({
+    mockClaude.mockResolvedValueOnce({
       ok: true,
       data: { attack: "  ", has_substantive_attack: true },
     });
     const t = await runCruxTrial("arg", fixture());
     expect(t).toEqual({ attack: "  ", outcome: "survived", reasoning: "" });
-    expect(mockGemini).toHaveBeenCalledTimes(1);
+    expect(mockClaude).toHaveBeenCalledTimes(1);
   });
 
   it("a substantive attack goes to the adjudicator and yields its outcome", async () => {
-    mockGemini
+    mockClaude
       .mockResolvedValueOnce({
         ok: true,
         data: { attack: "The inference is a false dichotomy.", has_substantive_attack: true },
@@ -198,32 +198,32 @@ describe("runCruxTrial (mocked gemini)", () => {
       outcome: "overturned",
       reasoning: "The flaw defeats the basis.",
     });
-    expect(mockGemini).toHaveBeenCalledTimes(2);
+    expect(mockClaude).toHaveBeenCalledTimes(2);
   });
 
   it("returns null when the attacker is safety-blocked", async () => {
-    mockGemini.mockResolvedValueOnce({ ok: false, blocked: true, reason: "SAFETY" });
+    mockClaude.mockResolvedValueOnce({ ok: false, blocked: true, reason: "general_harms" });
     expect(await runCruxTrial("arg", fixture())).toBeNull();
-    expect(mockGemini).toHaveBeenCalledTimes(1);
+    expect(mockClaude).toHaveBeenCalledTimes(1);
   });
 
   it("returns null when the attacker call errors", async () => {
-    mockGemini.mockResolvedValueOnce({ ok: false, blocked: false, error: "Gemini HTTP 429" });
+    mockClaude.mockResolvedValueOnce({ ok: false, blocked: false, error: "Claude HTTP 429: rate limited" });
     expect(await runCruxTrial("arg", fixture())).toBeNull();
-    expect(mockGemini).toHaveBeenCalledTimes(1);
+    expect(mockClaude).toHaveBeenCalledTimes(1);
   });
 
   it("returns null when the attacker payload does not match the schema", async () => {
-    mockGemini.mockResolvedValueOnce({
+    mockClaude.mockResolvedValueOnce({
       ok: true,
       data: { attack: 42, has_substantive_attack: "yes" },
     });
     expect(await runCruxTrial("arg", fixture())).toBeNull();
-    expect(mockGemini).toHaveBeenCalledTimes(1);
+    expect(mockClaude).toHaveBeenCalledTimes(1);
   });
 
   it("returns null on an out-of-enum adjudicator outcome (validation catch)", async () => {
-    mockGemini
+    mockClaude
       .mockResolvedValueOnce({
         ok: true,
         data: { attack: "A real attack.", has_substantive_attack: true },
@@ -233,11 +233,11 @@ describe("runCruxTrial (mocked gemini)", () => {
         data: { outcome: "mistrial", reasoning: "r" },
       });
     expect(await runCruxTrial("arg", fixture())).toBeNull();
-    expect(mockGemini).toHaveBeenCalledTimes(2);
+    expect(mockClaude).toHaveBeenCalledTimes(2);
   });
 
-  it("returns null when geminiJson rejects (failure-open catch)", async () => {
-    mockGemini.mockRejectedValueOnce(new Error("malformed 200 body"));
+  it("returns null when claudeJson rejects (failure-open catch)", async () => {
+    mockClaude.mockRejectedValueOnce(new Error("unexpected failure"));
     expect(await runCruxTrial("arg", fixture())).toBeNull();
   });
 });

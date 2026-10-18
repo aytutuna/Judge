@@ -13,16 +13,14 @@
  */
 
 import { z } from "zod";
-import { geminiJson } from "./gemini";
+import { claudeJson } from "./claude";
 import type { Lang } from "./i18n";
 import { CruxTrial, type VerdictResult } from "./types";
 
-/** Upper bound on total trial time. The trial's calls share JUDGE_MODEL's
- * per-model RPM bucket with the 3 judge calls that just ran, so trial-time
- * 429s are the expected case, and geminiJson honors "retry in Ns" waits up
- * to 45s per attempt — unbounded, that adds minutes behind platform/proxy
- * timeouts. On deadline the abandoned call may still complete and spend its
- * quota; acceptable — it was already issued. */
+/** Upper bound on total trial time. Each claudeJson call may take up to its
+ * 120s budget (SDK retries included), so two sequential calls could otherwise
+ * add minutes to the request. On deadline the abandoned call may still
+ * complete and spend its tokens; acceptable — it was already issued. */
 const TRIAL_DEADLINE_MS = 60_000;
 
 export const ATTACKER_SYSTEM = `You are a cross-examiner in an argument-settling app. A panel of judges ruled on a dispute between Party A and Party B, deciding it on factual or logical grounds. Your job is to stress-test that ruling: produce the SINGLE strongest attack on the FACTUAL or LOGICAL basis of the ruling.
@@ -64,7 +62,8 @@ const TR_TRIAL_BLOCK = `
 
 LANGUAGE: Write the attack and reasoning text in natural, fluent, everyday Turkish, addressing the reader with informal "sen", never "siz". Refer to the parties as "Taraf A" and "Taraf B". Keep all JSON enum values exactly as specified in the schema (English identifiers).`;
 
-/** Gemini responseSchema (OpenAPI subset), mirroring lib/judge.ts style. */
+/** Output schemas (compact form, converted by toClaudeSchema), mirroring
+ * lib/judge.ts style. */
 const ATTACKER_SCHEMA = {
   type: "object",
   properties: {
@@ -83,8 +82,8 @@ const ADJUDICATOR_SCHEMA = {
   required: ["outcome", "reasoning"],
 } as const;
 
-/** responseSchema is a hint, not a guarantee — geminiJson returns an
- * unvalidated cast, so every payload is safeParsed before use. */
+/** claudeJson returns an unvalidated cast (and a refusal need not match the
+ * schema), so every payload is safeParsed before use. */
 const AttackerOutput = z.object({
   attack: z.string(),
   has_substantive_attack: z.boolean(),
@@ -160,11 +159,10 @@ async function trialCalls(
   const context = `THE ARGUMENT:\n\n${anonymizedArgument}\n\nTHE RULING:\n\n${summary}`;
   const trBlock = lang === "tr" ? TR_TRIAL_BLOCK : "";
 
-  const attackRes = await geminiJson<unknown>({
+  const attackRes = await claudeJson<unknown>({
     system: `${ATTACKER_SYSTEM}${trBlock}`,
     user: context,
     schema: ATTACKER_SCHEMA as unknown as Record<string, unknown>,
-    temperature: 0.8,
   });
   if (!attackRes.ok) {
     console.warn(
@@ -192,15 +190,14 @@ async function trialCalls(
   // If the deadline already fired, the route has shipped the verdict untried
   // and this result would be discarded. The accepted cost is narrower than
   // "keep going": only calls already in flight at deadline time may still
-  // spend quota — never a brand-new adjudicator call (with its own retry
-  // loop) burning the JUDGE_MODEL RPM bucket the next user's judges need.
+  // spend tokens — never a brand-new adjudicator call (with its own SDK
+  // retries) for a result nobody will see.
   if (isExpired()) return null;
 
-  const adjRes = await geminiJson<unknown>({
+  const adjRes = await claudeJson<unknown>({
     system: `${ADJUDICATOR_SYSTEM}${trBlock}`,
     user: `${context}\n\nTHE ATTACK:\n\n${attacker.data.attack}`,
     schema: ADJUDICATOR_SCHEMA as unknown as Record<string, unknown>,
-    temperature: 0.2,
   });
   if (!adjRes.ok) {
     console.warn(
@@ -230,7 +227,8 @@ async function trialCalls(
 }
 
 /**
- * Run the trial: attacker, then adjudicator (sequential — free-tier RPM).
+ * Run the trial: attacker, then adjudicator (sequential — the adjudicator
+ * needs the attack).
  * Never throws, never exceeds its deadline; every failure path resolves
  * null so the verdict ships untried.
  */
@@ -249,8 +247,8 @@ export async function runCruxTrial(
         resolve(null);
       }, TRIAL_DEADLINE_MS);
     });
-    // geminiJson can reject (e.g. its un-caught res.json() on a malformed 200
-    // body); a request that already holds a good verdict must not 500. The
+    // claudeJson maps SDK errors to results, but any unexpected rejection
+    // must still not 500 a request that already holds a good verdict. The
     // catch is attached to the work promise itself so a rejection after the
     // deadline fires cannot become an unhandled rejection.
     const work = trialCalls(anonymizedArgument, result, () => expired, lang).catch((e: unknown) => {

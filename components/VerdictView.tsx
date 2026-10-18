@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import type { NameMapping, VerdictResult } from "@/lib/types";
 import { t, type Key, type Lang } from "@/lib/i18n";
 import { useLang } from "@/lib/lang";
@@ -8,6 +7,7 @@ import { partyNames } from "@/lib/names";
 import { VerdictReveal } from "./VerdictReveal";
 import { ArgumentMap } from "./ArgumentMap";
 import { FactChips } from "./FactChips";
+import { ShareButtons } from "./ShareButtons";
 
 /** Non-side votes rendered whole from the dictionary — never
  * `r.replace("_", " ")`, which would splice raw English enum words into a
@@ -36,19 +36,6 @@ export function VerdictView({
   const storeLang = useLang();
   const lang = langProp ?? storeLang;
   const { nameA, nameB, aIsSelf, bIsSelf } = partyNames(nameMap, lang);
-  const [copied, setCopied] = useState(false);
-
-  async function copyLink() {
-    if (!shareId) return;
-    const url = `${window.location.origin}/v/${shareId}`;
-    try {
-      await navigator.clipboard.writeText(url);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch {
-      window.prompt(t(lang, "copyPrompt"), url);
-    }
-  }
 
   return (
     <div className="flex flex-col gap-6">
@@ -110,17 +97,12 @@ export function VerdictView({
       ) : null}
 
       {shareId ? (
-        <button
-          type="button"
-          onClick={copyLink}
-          className="rise-in-late rounded-full px-5 py-3 text-sm font-semibold self-center"
-          style={{
-            background: "var(--ink)",
-            color: "var(--plane)",
-          }}
-        >
-          {copied ? t(lang, "copied") : t(lang, "share")}
-        </button>
+        <ShareButtons
+          shareId={shareId}
+          title={result.headline}
+          lang={lang}
+          className="rise-in-late"
+        />
       ) : null}
     </div>
   );

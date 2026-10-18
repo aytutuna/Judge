@@ -1,5 +1,5 @@
 /* One-off live pipeline check: anonymize -> judge x3 -> aggregate.
-   Run: npx tsx scripts/live-check.ts (requires GEMINI_API_KEY in env) */
+   Run: npx tsx scripts/live-check.ts (requires ANTHROPIC_API_KEY in env) */
 import { anonymize } from "../lib/anonymize";
 import { judgeSelfConsistent } from "../lib/judge";
 import { aggregate } from "../lib/aggregate";

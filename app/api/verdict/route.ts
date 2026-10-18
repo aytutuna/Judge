@@ -2,11 +2,14 @@ import { NextResponse } from "next/server";
 import { nanoid } from "nanoid";
 import { aggregate } from "@/lib/aggregate";
 import { anonymize } from "@/lib/anonymize";
+import { clientIp } from "@/lib/client-ip";
 import { saveVerdict } from "@/lib/db";
-import { hasApiKey } from "@/lib/gemini";
+import { hasApiKey } from "@/lib/claude";
 import { t, type Lang } from "@/lib/i18n";
 import { judgeSelfConsistent } from "@/lib/judge";
+import { checkVerdictLimits } from "@/lib/ratelimit";
 import { applyCruxTrial, runCruxTrial, shouldTryCrux } from "@/lib/trial";
+import { verifyTurnstile } from "@/lib/turnstile";
 import {
   VerdictRequest,
   type JudgeRunOutput,
@@ -15,6 +18,23 @@ import {
 } from "@/lib/types";
 
 export const runtime = "nodejs";
+// Vercel function limit (seconds): anonymize (60s) + parallel judges (120s)
+// + crux trial (60s) fits with headroom.
+export const maxDuration = 300;
+
+const UNAVAILABLE_MESSAGE = "The judge is unavailable right now — try again in a minute.";
+
+function unavailable(): NextResponse {
+  return NextResponse.json({ error: UNAVAILABLE_MESSAGE, code: "unavailable" }, { status: 503 });
+}
+
+/** The Turnstile token rides next to the verdict fields; read it apart so the
+ * shared request schema stays as it is. */
+function turnstileToken(body: unknown): string | undefined {
+  if (typeof body !== "object" || body === null) return undefined;
+  const token = (body as { turnstileToken?: unknown }).turnstileToken;
+  return typeof token === "string" ? token : undefined;
+}
 
 /** Honest output when the model's own safety filter declines to judge.
  * Stored localized — consistent with stored CONTENT keeping its judged
@@ -69,19 +89,57 @@ export async function POST(req: Request): Promise<NextResponse> {
     return NextResponse.json({ error: message, code }, { status: 400 });
   }
   const { argument, framework, lang } = parsed.data;
+  const ip = clientIp(req.headers);
+
+  // Bot check first: cheapest gate, and it keeps bots from burning the
+  // limits of real visitors. A no-op when TURNSTILE_SECRET_KEY is unset.
+  const captcha = await verifyTurnstile(turnstileToken(body), ip);
+  if (captcha === "invalid") {
+    return NextResponse.json(
+      { error: "Bot check failed — reload the page and try again.", code: "captcha_failed" },
+      { status: 403 },
+    );
+  }
+  if (captcha === "error") return unavailable();
+
+  // Limits before any model call, so refused requests cost nothing.
+  const limit = await checkVerdictLimits(ip);
+  if (!limit.ok) {
+    if (limit.code === "unavailable") return unavailable();
+    const daily = limit.code === "daily_cap";
+    return NextResponse.json(
+      {
+        error: daily
+          ? "Verdict has used today's capacity — try again tomorrow."
+          : "Too many verdicts from you — take a breather and try again later.",
+        code: limit.code,
+        retryAfterSec: limit.retryAfterSec,
+      },
+      { status: daily ? 503 : 429, headers: { "Retry-After": String(limit.retryAfterSec) } },
+    );
+  }
 
   // No key -> no verdict. This app never fakes a ruling.
   if (!hasApiKey()) {
     return NextResponse.json(
       {
-        error: "The judge is not configured: set GEMINI_API_KEY in .env and restart the server.",
+        error: "The judge is not configured: set ANTHROPIC_API_KEY in .env and restart the server.",
         code: "not_configured",
       },
       { status: 503 },
     );
   }
 
-  const { text: anonymized, nameMap } = await anonymize(argument);
+  // Fail closed: if names can't be removed, nothing is judged or stored —
+  // the raw text would carry them to the model and into the database.
+  let anonymized: string;
+  let nameMap: VerdictResponse["name_map"];
+  try {
+    ({ text: anonymized, nameMap } = await anonymize(argument));
+  } catch (e) {
+    console.error("[verdict] anonymize failed:", e instanceof Error ? e.message : String(e));
+    return unavailable();
+  }
 
   let result: VerdictResult;
   const runs = await judgeSelfConsistent(anonymized, framework, lang);
@@ -94,10 +152,11 @@ export async function POST(req: Request): Promise<NextResponse> {
       const firstError = runs.find((r) => !r.ok);
       const detail = firstError && !firstError.ok ? firstError.error : "?";
       console.error("[verdict] all judge runs failed:", detail);
-      const quota = detail.includes("429");
+      // claudeJson keeps the HTTP status in its error text ("Claude HTTP 429: …").
+      const quota = /HTTP 429/.test(detail);
       const message = quota
         ? "The judge hit its AI quota for now — try again in a few minutes."
-        : "The judge is unavailable right now — try again in a minute.";
+        : UNAVAILABLE_MESSAGE;
       return NextResponse.json(
         { error: message, code: quota ? "quota" : "unavailable" },
         { status: 502 },
@@ -116,7 +175,12 @@ export async function POST(req: Request): Promise<NextResponse> {
   }
 
   const id = nanoid(10);
-  saveVerdict({ id, input: anonymized, framework, result });
+  try {
+    await saveVerdict({ id, input: anonymized, framework, result });
+  } catch (e) {
+    console.error("[verdict] saving failed:", e instanceof Error ? e.message : String(e));
+    return unavailable();
+  }
 
   const response: VerdictResponse = { id, result, name_map: nameMap };
   return NextResponse.json(response);

@@ -59,7 +59,7 @@ describe("aggregate", () => {
   });
 
   it("three-way disagreement -> too_close, confidence 1", () => {
-    const r = aggregate([run("side_a"), run("side_b"), run("dissolved")]);
+    const r = aggregate([run("side_a"), run("side_b", "factual", "side_b"), run("dissolved")]);
     expect(r.verdict).toBe("too_close");
     expect(r.confidence).toBe(1);
     expect(r.headline).toBe("Too close to call");
@@ -157,6 +157,56 @@ describe("forced-ruling lean", () => {
       expect(r).not.toHaveProperty("leaning");
       expect(r).not.toHaveProperty("leaning_reason");
     }
+  });
+});
+
+describe("no-majority rescue", () => {
+  it("unanimous lean with a winner run among split/conditional -> that side at confidence 2", () => {
+    const winner = { ...run("side_a", "factual", "side_a"), headline: "winner-h", crux: "winner-c" };
+    const r = aggregate([
+      run("split", "mixed", "side_a"),
+      winner,
+      run("conditional", "values", "side_a"),
+    ]);
+    expect(r.verdict).toBe("side_a");
+    expect(r.confidence).toBe(2);
+    expect(r.lean).toBeUndefined();
+    expect(r.runs).toEqual(["split", "side_a", "conditional"]);
+    expect(r.headline).toBe("winner-h");
+    expect(r.crux).toBe("winner-c");
+    expect(r).not.toHaveProperty("leaning");
+    expect(r).not.toHaveProperty("leaning_reason");
+  });
+
+  it("unanimous lean but no run ruled for that side -> too_close with lean", () => {
+    const r = aggregate([
+      run("split", "mixed", "side_a", "one"),
+      run("conditional", "values", "side_a"),
+      run("dissolved", "definitional", "side_a"),
+    ]);
+    expect(r.verdict).toBe("too_close");
+    expect(r.lean).toEqual({ party: "a", unanimous: true, reason: "one" });
+  });
+
+  it("non-unanimous lean -> too_close", () => {
+    const r = aggregate([
+      run("side_a", "factual", "side_a"),
+      run("side_b", "factual", "side_b"),
+      run("split", "mixed", "side_a"),
+    ]);
+    expect(r.verdict).toBe("too_close");
+    expect(r.confidence).toBe(1);
+    expect(r.lean?.unanimous).toBe(false);
+  });
+
+  it("two runs, side_b + split both leaning side_b -> side_b at confidence 2", () => {
+    const r = aggregate([
+      run("side_b", "factual", "side_b"),
+      run("split", "mixed", "side_b"),
+    ]);
+    expect(r.verdict).toBe("side_b");
+    expect(r.confidence).toBe(2);
+    expect(r.lean).toBeUndefined();
   });
 });
 

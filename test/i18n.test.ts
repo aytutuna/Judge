@@ -1,6 +1,14 @@
 import { describe, expect, it } from "vitest";
 import { KEY_BY_CAPTION } from "../components/ThinkingDig";
-import { ERROR_KEY_BY_CODE, STRINGS, t, type Key } from "../lib/i18n";
+import {
+  ERROR_KEY_BY_CODE,
+  STRINGS,
+  apiErrorMessage,
+  contentLang,
+  formatWait,
+  t,
+  type Key,
+} from "../lib/i18n";
 import { partyNames } from "../lib/names";
 import { FINISH_CAPTION, READY, STILL_JUDGING, THINKING_STEPS } from "../lib/thinking";
 import { VerdictRequest } from "../lib/types";
@@ -153,12 +161,120 @@ describe("ThinkingDig caption map", () => {
 
 describe("ERROR_KEY_BY_CODE", () => {
   it("maps every code the route can emit to a real key", () => {
-    const codes = ["invalid", "too_short", "too_long", "not_configured", "quota", "unavailable"];
+    const codes = [
+      "invalid",
+      "too_short",
+      "too_long",
+      "not_configured",
+      "quota",
+      "unavailable",
+      "rate_limited",
+      "daily_cap",
+      "captcha_failed",
+    ];
     for (const code of codes) {
       const key = ERROR_KEY_BY_CODE[code];
       expect(key, code).toBeDefined();
       expect(STRINGS.en[key as Key]).toBeDefined();
       expect(STRINGS.tr[key as Key]).toBeDefined();
+    }
+  });
+});
+
+describe("formatWait", () => {
+  it("rounds seconds up to whole minutes below 90 minutes", () => {
+    expect(formatWait("en", 1)).toBe("1 minute");
+    expect(formatWait("en", 60)).toBe("1 minute");
+    expect(formatWait("en", 61)).toBe("2 minutes");
+    expect(formatWait("tr", 300)).toBe("5 dakika");
+    expect(formatWait("en", 89 * 60)).toBe("89 minutes");
+  });
+
+  it("switches to whole hours from 90 minutes up", () => {
+    expect(formatWait("en", 90 * 60)).toBe("2 hours");
+    expect(formatWait("en", 3600 * 7 + 1)).toBe("8 hours");
+    expect(formatWait("tr", 3600 * 5)).toBe("5 saat");
+  });
+
+  it("falls back to a vague phrase for missing or nonsense input", () => {
+    for (const v of [undefined, null, "60", Number.NaN, Infinity, 0, -5]) {
+      expect(formatWait("en", v)).toBe("a few minutes");
+    }
+    expect(formatWait("tr", undefined)).toBe("birkaç dakika");
+  });
+});
+
+describe("apiErrorMessage", () => {
+  it("localizes a known code", () => {
+    expect(apiErrorMessage("tr", { error: "Too short", code: "too_short" })).toBe(
+      STRINGS.tr["error.too_short"],
+    );
+  });
+
+  it("fills the wait slot for rate_limited and daily_cap", () => {
+    expect(apiErrorMessage("en", { code: "rate_limited", retryAfterSec: 240 }, 429)).toBe(
+      "Order in the court! You've hit the limit for now. Try again in 4 minutes.",
+    );
+    const tr = apiErrorMessage("tr", { code: "daily_cap", retryAfterSec: 3600 * 6 }, 503);
+    expect(tr).toContain("6 saat sonra");
+    expect(tr).not.toContain("{wait}");
+  });
+
+  it("never leaves a raw {wait} slot, even without retryAfterSec", () => {
+    const msg = apiErrorMessage("en", { code: "daily_cap" }, 503);
+    expect(msg).toContain("a few minutes");
+    expect(msg).not.toContain("{");
+  });
+
+  it("treats a bare 429 (non-JSON body) as a rate limit", () => {
+    expect(apiErrorMessage("en", null, 429)).toContain("Try again in a few minutes");
+  });
+
+  it("falls back to server text, then to the generic message", () => {
+    expect(apiErrorMessage("en", { error: "Boom", code: "mystery" })).toBe("Boom");
+    expect(apiErrorMessage("tr", { code: "mystery" }, 500)).toBe(STRINGS.tr.errorFallback);
+    expect(apiErrorMessage("en", null, 500)).toBe(STRINGS.en.errorFallback);
+  });
+
+  it("localizes captcha_failed", () => {
+    expect(apiErrorMessage("tr", { code: "captcha_failed" }, 403)).toBe(
+      STRINGS.tr["error.captcha_failed"],
+    );
+  });
+});
+
+describe("contentLang", () => {
+  it("detects Turkish verdict text", () => {
+    expect(contentLang("Taraf A haklı çünkü domates botanik olarak meyve.")).toBe("tr");
+    expect(contentLang("Sosisli kendi başına bir kategori.")).toBe("tr");
+  });
+
+  it("defaults to English", () => {
+    expect(contentLang("Party A is right: a tomato is botanically a fruit.")).toBe("en");
+    expect(contentLang("")).toBe("en");
+  });
+});
+
+describe("example disputes", () => {
+  const exampleKeys = (Object.keys(STRINGS.en) as Key[]).filter(
+    (k) => k.startsWith("example.") && k.endsWith(".text"),
+  );
+
+  it("there are four to six of them, each with a label", () => {
+    expect(exampleKeys.length).toBeGreaterThanOrEqual(4);
+    expect(exampleKeys.length).toBeLessThanOrEqual(6);
+    for (const k of exampleKeys) {
+      expect(STRINGS.en[k.replace(/\.text$/, ".label") as Key], k).toBeDefined();
+    }
+  });
+
+  it("every example passes the API's 20..6000 character limits in both languages", () => {
+    for (const k of exampleKeys) {
+      for (const lang of ["en", "tr"] as const) {
+        const len = STRINGS[lang][k].trim().length;
+        expect(len, `${lang}.${k}`).toBeGreaterThanOrEqual(20);
+        expect(len, `${lang}.${k}`).toBeLessThanOrEqual(6000);
+      }
     }
   });
 });

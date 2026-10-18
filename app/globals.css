@@ -6,9 +6,12 @@
   --surface: #fcfcfb;
   --ink: #0b0b0b;
   --ink-2: #52514e;
-  --muted: #898781;
+  /* AA (>= 4.5:1) on --plane and --surface for small helper text */
+  --muted: #6b6963;
   --line: #e1e0d9;
   --ring: rgba(11, 11, 11, 0.1);
+  --focus: #2a78d6;
+  --danger: #c22f2f;
 
   /* party identity (categorical slots 1 & 2, validated) */
   --party-a: #2a78d6;
@@ -46,9 +49,11 @@
     --surface: #1a1a19;
     --ink: #ffffff;
     --ink-2: #c3c2b7;
-    --muted: #898781;
+    --muted: #9a988f;
     --line: #2c2c2a;
     --ring: rgba(255, 255, 255, 0.1);
+    --focus: #6aa8f0;
+    --danger: #ff7a7a;
 
     --party-a: #3987e5;
     --party-b: #d95926;
@@ -68,11 +73,57 @@
   }
 }
 
+html {
+  color-scheme: light dark;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans), system-ui, -apple-system, "Segoe UI", sans-serif;
+  overflow-x: hidden;
 }
+
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+
+/* ---------- site chrome ---------- */
+
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+textarea:focus-visible {
+  outline-offset: 0;
+}
+
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -100px;
+  z-index: 50;
+  padding: 0.5rem 0.875rem;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--plane);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+.skip-link:focus {
+  top: 0.75rem;
+}
+
+.hero-title { text-wrap: balance; }
+
+.chip { transition: background-color 0.15s, border-color 0.15s, color 0.15s; }
+.chip:hover { border-color: var(--muted) !important; color: var(--ink) !important; }
+
+details > summary { list-style: none; }
+details > summary::-webkit-details-marker { display: none; }
+.faq-icon, .advanced-caret { transition: transform 0.2s ease-out; }
+.faq[open] .faq-icon { transform: rotate(45deg); }
+.advanced[open] .advanced-caret { transform: rotate(90deg); }
 
 /* ---------- verdict reveal animations ---------- */
 
@@ -186,4 +237,5 @@ body {
     animation-delay: 0s !important;
     animation-iteration-count: 1 !important;
   }
+  .chip, .faq-icon, .advanced-caret { transition: none; }
 }

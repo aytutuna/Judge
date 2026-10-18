@@ -24,7 +24,7 @@ const BADGE_KEY = {
 /** The self flags are the structural second-person trigger — never a
  * string test on the display name (which cannot see "Sen", and
  * default-locale toLowerCase corrupts Turkish names). */
-function verdictLabel(
+export function verdictLabel(
   r: VerdictResult,
   nameA: string,
   nameB: string,
@@ -54,7 +54,7 @@ function verdictLabel(
  * completely" reads at a glance. Deliberately NOT agreement-graded: with one
  * surviving run "unanimous" is vacuous and a stronger bar would overclaim;
  * the agreement note carries that distinction in text. */
-function tugFinal(result: VerdictResult): number {
+export function tugFinal(result: VerdictResult): number {
   switch (result.verdict) {
     case "side_a":
       return 80;
@@ -119,7 +119,7 @@ function CruxTrialNote({ trial, lang }: { trial: CruxTrial; lang: Lang }) {
     <>
       <p
         className="text-xs"
-        style={{ color: overturned ? "#d03b3b" : "var(--ink-2)" }}
+        style={{ color: overturned ? "var(--danger)" : "var(--ink-2)" }}
       >
         {t(lang, overturned ? "trial.overturned" : "trial.uncertain")}
       </p>

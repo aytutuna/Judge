@@ -1,9 +1,10 @@
 import { frameworkInstruction } from "./frameworks";
-import { geminiJson } from "./gemini";
+import { claudeJson } from "./claude";
 import type { Lang } from "./i18n";
 import { JudgeRunOutput, type FrameworkChoice } from "./types";
 
-/** Gemini responseSchema mirroring lib/types.ts JudgeOutput. */
+/** Output schema mirroring lib/types.ts JudgeOutput (compact form,
+ * converted by toClaudeSchema in lib/claude.ts). */
 const CLAIM = {
   type: "object",
   properties: {
@@ -13,7 +14,7 @@ const CLAIM = {
   required: ["claim", "kind"],
 } as const;
 
-const JUDGE_SCHEMA = {
+export const JUDGE_SCHEMA = {
   type: "object",
   properties: {
     verdict: {
@@ -63,11 +64,13 @@ const JUDGE_SCHEMA = {
     facts_relied_on: { type: "array", items: { type: "string" } },
     losing_side_best_point: { type: "string" },
     // Ordering is the anchoring guard: the verdict is fully emitted before
-    // the forced choice exists. Gemini emits JSON in schema declaration
-    // order and generation is autoregressive, so `leaning`/`leaning_reason`
-    // MUST stay the LAST two properties (and last in `required`) — never
-    // alphabetize or reorder them, or the forced pick could anchor the
-    // verdict toward side_a/side_b.
+    // the forced choice exists. Structured outputs emit JSON in schema
+    // declaration order (toClaudeSchema preserves it) and generation is
+    // autoregressive, so `leaning`/`leaning_reason` MUST stay the LAST two
+    // properties (and last in `required`) — never alphabetize or reorder
+    // them, or the forced pick could anchor the verdict toward side_a/side_b.
+    // Adaptive thinking runs before the JSON, so this orders the emitted
+    // answer only; step 5b's "must NOT change your verdict" covers reasoning.
     leaning: { type: "string", enum: ["side_a", "side_b"] },
     leaning_reason: { type: "string" },
   },
@@ -87,7 +90,7 @@ const JUDGE_SCHEMA = {
 } as const;
 
 /** Appended when the request asks for Turkish output. The register and
- * if_value-shape sentences are load-bearing: without them Gemini defaults to
+ * if_value-shape sentences are load-bearing: without them the model defaults to
  * formal "siz" (clashing with the all-"sen" UI on the same card) and emits
  * indicative or self-prefixed conditionals that break the "Eğer … → …" card. */
 const TR_LANGUAGE_BLOCK = `
@@ -102,11 +105,11 @@ METHOD — follow these steps in order:
 2. CLASSIFY: break each side's case into its distinct claims (2-4 per side) and label each claim's kind: "fact" (checkable about the world), "value" (what matters or should be), "definition" (what a word means), "logic" (an inference from other claims).
 3. BEDROCK: for each side, dig below its claims to the single deepest premise it ultimately rests on — a terminal value or a foundational factual belief. One short phrase each.
 4. CRUX: state, in one sentence, the highest point where the two sides actually diverge. Everything above the crux is noise.
-5. VERDICT — choose by what the crux is:
-   - Crux is a checkable FACT or a LOGICAL error: pick the winner ("side_a" or "side_b"). List in facts_relied_on every factual claim your verdict depends on, so users can check them. Use only well-established knowledge; if the decisive fact is genuinely uncertain, do not pretend certainty — treat it as below.
-   - Each side is right about a DIFFERENT part (one about the facts, the other about a consequence, or right about different sub-questions): return "split" and fill split_points with what each party is right about.
-   - Crux is a clash of TERMINAL VALUES: apply the value framework below. If the framework clearly favors one side, pick that side and say in the crux that the call follows from the framework. If it does not clearly decide, return "conditional" and fill conditional with 2-3 "if you weight X highest -> then Y" branches.
-   - The sides mean DIFFERENT THINGS by a key word and would agree once defined: return "dissolved".
+5. VERDICT — people come here to find out who is right. Naming a winner ("side_a" or "side_b") is the DEFAULT; "split", "conditional" and "dissolved" are exceptions you must earn. Before returning one of them, ask: "If I had to rule, would I know which side to rule for?" If yes, rule for that side — a winner verdict can still acknowledge the other side's best point (losing_side_best_point exists for that). Choose by what the crux is:
+   - Crux is a checkable FACT or a LOGICAL error: pick the winner. List in facts_relied_on every factual claim your verdict depends on, so users can check them. Use only well-established knowledge. If the decisive fact is not settled but the evidence clearly favors one side, pick that side; only a genuine evidential toss-up falls through to the exceptions below.
+   - Crux is a clash of TERMINAL VALUES: apply the value framework below. If it favors one side — even moderately — pick that side and say in the crux that the call follows from the framework. Return "conditional" (with 2-3 "if you weight X highest -> then Y" branches) ONLY when the framework is genuinely balanced between the two sides.
+   - Crux is what a key WORD means: if one side's usage matches how the word is ordinarily used in this context, that side wins — rule like a court reading a contract. Return "dissolved" ONLY when both usages are fully standard and the parties would have nothing left to disagree about once the word is defined.
+   - Each side is right about a DIFFERENT part: if one side is right about the part the argument is centrally about, that side wins. Return "split" (filling split_points with what each party is right about) ONLY when both parts matter about equally to what the parties were actually fighting over.
 5b. FORCED RULING: separately from the verdict, you MUST pick which side is MORE right — the side a real court would rule for under a preponderance standard, no ties allowed. This forced choice must NOT change your verdict in step 5. If your step-5 verdict already names a winner ("side_a" or "side_b"), your leaning MUST be that same side. Standards, by what the crux is:
    - FACTUAL crux left genuinely uncertain in step 5: which side's factual claim is more probable on current, well-established evidence; only if truly 50/50, fall through to the burden-of-proof rule below.
    - DEFINITIONAL crux: whose usage better matches how the language community actually uses the word (ordinary meaning, like a court reading a contract).
@@ -114,7 +117,7 @@ METHOD — follow these steps in order:
    - SPLIT: who is right about the more central part of what the parties were actually fighting over.
    - Otherwise / still tied: the party whose claim departs further from ordinary expectation bears the burden of proof and loses the tie.
    leaning_reason: ONE concrete sentence, at most ~25 words, naming the standard you used ("Ordinary usage of 'making tea' includes…", "Under an outcomes weighting…").
-6. HONESTY RULES: never manufacture certainty. Never rule against a side just because it was described less sympathetically. The narrator (usually Party A) gets no home advantage.
+6. HONESTY RULES: never manufacture certainty — but a close call is still a call; uncertainty belongs in the reasoning, not in refusing to rule. Never rule against a side just because it was described less sympathetically. The narrator (usually Party A) gets no home advantage.
 
 VALUE FRAMEWORK (set by the user): ${frameworkInstruction(framework)}
 
@@ -135,13 +138,13 @@ export type JudgeRun =
 export async function judgeOnce(
   anonymizedArgument: string,
   framework: FrameworkChoice,
-  opts: { analyzeBFirst?: boolean; temperature?: number; lang?: Lang } = {},
+  opts: { analyzeBFirst?: boolean; lang?: Lang } = {},
 ): Promise<JudgeRun> {
-  const res = await geminiJson<unknown>({
+  // Effort defaults to JUDGE_EFFORT (else "medium") inside claudeJson.
+  const res = await claudeJson<unknown>({
     system: systemPrompt(framework, opts.analyzeBFirst ?? false, opts.lang ?? "en"),
     user: `THE ARGUMENT:\n\n${anonymizedArgument}`,
     schema: JUDGE_SCHEMA as unknown as Record<string, unknown>,
-    temperature: opts.temperature ?? 0.7,
   });
   if (!res.ok) {
     return res.blocked
@@ -158,25 +161,22 @@ export async function judgeOnce(
 /**
  * Self-consistency: three independent runs (one analyzing B first as a
  * position-bias check). Confidence later derives from their agreement.
- * Runs are SEQUENTIAL on purpose: the Gemini free tier allows 5 requests/min
- * per model, and a concurrent burst trips it immediately.
+ * Diversity between runs comes from default sampling plus the B-first
+ * variant — the model rejects non-default temperatures.
+ * Runs are PARALLEL: paid-tier rate limits absorb a 3-request burst, and
+ * latency becomes one run instead of three. judgeOnce never throws (errors
+ * come back as results), so one failed run cannot sink the others.
  */
 export async function judgeSelfConsistent(
   anonymizedArgument: string,
   framework: FrameworkChoice,
   lang: Lang = "en",
 ): Promise<JudgeRun[]> {
-  // JUDGE_RUNS lets tight-quota deployments trade confidence for requests
+  // JUDGE_RUNS lets cost-conscious deployments trade confidence for requests
   // (1-3; aggregate caps confidence when fewer runs survive).
   const n = Math.min(3, Math.max(1, Number(process.env.JUDGE_RUNS) || 3));
-  const configs = [
-    { temperature: 0.7 },
-    { temperature: 0.7, analyzeBFirst: true },
-    { temperature: 0.9 },
-  ].slice(0, n);
-  const runs: JudgeRun[] = [];
-  for (const config of configs) {
-    runs.push(await judgeOnce(anonymizedArgument, framework, { ...config, lang }));
-  }
-  return runs;
+  const configs = [{}, { analyzeBFirst: true }, {}].slice(0, n);
+  return Promise.all(
+    configs.map((config) => judgeOnce(anonymizedArgument, framework, { ...config, lang })),
+  );
 }

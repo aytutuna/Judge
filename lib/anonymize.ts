@@ -1,4 +1,4 @@
-import { geminiJson, hasApiKey, LITE_MODEL } from "./gemini";
+import { claudeJson, hasApiKey, LITE_MODEL } from "./claude";
 import type { NameMapping } from "./types";
 
 export type AnonymizeResult = {
@@ -38,37 +38,52 @@ Rewrite the text with these rules:
 
 Always keep the rewritten text in the SAME language as the input. The replacement labels are always exactly "Party A", "Party B", "Person C"… regardless of language.`;
 
+/** Thrown when the text could not be anonymized. Callers must not judge or
+ * store the raw text instead: it still carries the real names. */
+export class AnonymizeError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "AnonymizeError";
+  }
+}
+
 /**
  * Names -> Party A/B before judging and storage. Doubles as bias mitigation:
  * the judge never sees who is who. The name map is returned to the client for
- * display but never stored.
+ * display but never stored. Fails closed: throws AnonymizeError rather than
+ * ever returning the raw text.
  */
 export async function anonymize(argument: string): Promise<AnonymizeResult> {
   if (!hasApiKey()) {
-    // Unreachable via the API route (it refuses without a key); kept as a
-    // guard so a stray call degrades to raw text instead of a wasted request.
-    return { text: argument, nameMap: [] };
+    // Unreachable via the API route (it refuses without a key).
+    throw new AnonymizeError("ANTHROPIC_API_KEY not set");
   }
-  const res = await geminiJson<{
+  const res = await claudeJson<{
     text: string;
     replacements: { original: string; replacement: string }[];
   }>({
     system: SYSTEM,
     user: argument,
     schema: SCHEMA,
-    temperature: 0.1,
-    // No thinkingBudget: the lite model rejects thinkingConfig entirely.
+    // Mechanical rewrite: low effort keeps thinking (and latency) minimal.
+    effort: "low",
     model: LITE_MODEL,
+    // Runs before the judges on every request; a stall here fails the
+    // request early instead of holding it for the full judge budget.
+    timeoutMs: 60_000,
   });
 
   if (!res.ok) {
-    console.warn(
-      "[anonymize] falling back to raw text:",
-      res.blocked ? `blocked (${res.reason})` : res.error,
-    );
-    // If anonymization itself is blocked or fails, fall back to the raw text:
-    // judging may still work, and we never fail the whole request here.
-    return { text: argument, nameMap: [] };
+    throw new AnonymizeError(res.blocked ? `blocked (${res.reason})` : res.error);
+  }
+  // Structured outputs should guarantee the shape; a missing text would
+  // otherwise slip an empty or undefined argument past the judges.
+  if (
+    typeof res.data?.text !== "string" ||
+    !res.data.text.trim() ||
+    !Array.isArray(res.data.replacements)
+  ) {
+    throw new AnonymizeError("anonymizer returned malformed output");
   }
   const nameMap = res.data.replacements.filter(
     (r) => r.original.trim() && r.original.trim() !== r.replacement.trim(),

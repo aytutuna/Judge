@@ -29,7 +29,8 @@ function computeLean(runs: JudgeRunOutput[]): Lean | null {
  * Confidence comes from agreement between runs, never from the model:
  *   3/3 same verdict -> 5 (4 if they disagree on dispute_type)
  *   2/3 majority     -> 3 (2 if the dissenter picked the opposite side)
- *   no majority      -> "too_close", confidence 1
+ *   no majority      -> the unanimously-leaned side if a run ruled for it,
+ *                       confidence 2; otherwise "too_close", confidence 1
  */
 export function aggregate(runs: JudgeRunOutput[]): VerdictResult {
   if (runs.length === 0) {
@@ -53,6 +54,21 @@ export function aggregate(runs: JudgeRunOutput[]): VerdictResult {
   void _leaningReason;
 
   if (!majority) {
+    // No verdict majority, but every run's forced lean names the same side
+    // and at least one run ruled for it outright: that side wins at low
+    // confidence. The winner run is the representative, so the headline and
+    // analysis already argue for the side that won.
+    const lean = computeLean(runs);
+    const winnerVerdict = lean?.party === "a" ? "side_a" : "side_b";
+    const winnerRun = lean?.unanimous
+      ? runs.find((r) => r.verdict === winnerVerdict)
+      : undefined;
+    if (winnerRun) {
+      const { leaning: _l, leaning_reason: _lr, ...winnerCore } = winnerRun;
+      void _l;
+      void _lr;
+      return { ...winnerCore, confidence: 2, runs: votes, demo: false };
+    }
     // Three-way disagreement: honest "too close to call", but still show the
     // richest analysis we have so the user sees the map and crux.
     return {
@@ -62,7 +78,7 @@ export function aggregate(runs: JudgeRunOutput[]): VerdictResult {
       headline: "Too close to call",
       runs: votes,
       demo: false,
-      lean: computeLean(runs),
+      lean,
     };
   }
 

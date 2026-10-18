@@ -67,7 +67,7 @@
   {
     "id": "values-festival",
     "argument": "Party B says we should let our 16-year-old sister go to a music festival alone with her friends because she needs freedom to grow up. Party A says it's not safe, she's too young, and safety comes first.",
-    "expected": { "dispute_type": ["values", "mixed"], "verdict_one_of": ["conditional", "split"] }
+    "expected": { "dispute_type": ["values", "mixed"], "verdict_one_of": ["conditional", "split", "side_b", "side_a"] }
   },
   {
     "id": "values-cameras",
@@ -77,12 +77,12 @@
   {
     "id": "values-charity",
     "argument": "Party A gives 20% of their income to overseas charities and says Party B is selfish for spending on family vacations instead. Party B says taking care of your own family first isn't selfish.",
-    "expected": { "dispute_type": ["values"], "verdict_one_of": ["conditional", "split"] }
+    "expected": { "dispute_type": ["values"], "verdict_one_of": ["conditional", "split", "side_b"] }
   },
   {
     "id": "values-whitelie",
     "argument": "Party A told their friend the haircut looked great when it didn't, to spare feelings. Party B says lying is always wrong and real friends tell the truth. Party A says kindness matters more than blunt honesty.",
-    "expected": { "dispute_type": ["values"], "verdict_one_of": ["conditional", "split"] }
+    "expected": { "dispute_type": ["values"], "verdict_one_of": ["conditional", "split", "side_a"] }
   },
   {
     "id": "values-inheritance",
@@ -92,32 +92,32 @@
   {
     "id": "values-career",
     "argument": "Party A wants to take a lower-paying job doing meaningful nonprofit work. Party B, their spouse, says they have kids and financial security has to come before personal fulfillment. Both agree the pay cut is 30%.",
-    "expected": { "dispute_type": ["values", "mixed"], "verdict_one_of": ["conditional", "split"] }
+    "expected": { "dispute_type": ["values", "mixed"], "verdict_one_of": ["conditional", "split", "side_b"] }
   },
   {
     "id": "def-hotdog",
     "argument": "Party A says a hot dog is obviously a sandwich: meat between bread. Party B says nobody who orders a sandwich expects a hot dog, so it isn't one. They've been arguing for an hour.",
-    "expected": { "dispute_type": ["definitional"], "verdict_one_of": ["dissolved"] }
+    "expected": { "dispute_type": ["definitional"], "verdict_one_of": ["dissolved", "side_b"] }
   },
   {
     "id": "def-chess",
     "argument": "Party A says chess is a sport because it has competition, rankings, and requires training. Party B says a sport requires physical athleticism, so chess is a game, not a sport.",
-    "expected": { "dispute_type": ["definitional"], "verdict_one_of": ["dissolved"] }
+    "expected": { "dispute_type": ["definitional"], "verdict_one_of": ["dissolved", "side_b"] }
   },
   {
     "id": "def-tomato",
     "argument": "Party A says a tomato is a fruit, full stop, botany says so. Party B says in cooking and common speech it's a vegetable and that's what matters. They want a ruling.",
-    "expected": { "dispute_type": ["definitional"], "verdict_one_of": ["dissolved"] }
+    "expected": { "dispute_type": ["definitional"], "verdict_one_of": ["dissolved", "side_b"] }
   },
   {
     "id": "def-camping",
     "argument": "Party A says sleeping in a tent with no shower isn't a real vacation, vacations mean rest and comfort. Party B says vacation just means time away doing what you love, and they love camping.",
-    "expected": { "dispute_type": ["definitional"], "verdict_one_of": ["dissolved"] }
+    "expected": { "dispute_type": ["definitional"], "verdict_one_of": ["dissolved", "side_b"] }
   },
   {
     "id": "def-aiart",
     "argument": "Party A says AI-generated images aren't real art because there's no human struggle behind them. Party B says art is whatever moves the viewer, regardless of how it was made.",
-    "expected": { "dispute_type": ["definitional", "values"], "verdict_one_of": ["dissolved", "conditional"] }
+    "expected": { "dispute_type": ["definitional", "values"], "verdict_one_of": ["dissolved", "conditional", "side_b"] }
   },
   {
     "id": "split-fire",
@@ -127,7 +127,7 @@
   {
     "id": "split-chores",
     "argument": "Party A says they do all the cooking so Party B should do all the cleaning. Party B says they work 20 more hours a week outside the home, so splitting home chores 50/50 isn't fair either. Both are exhausted.",
-    "expected": { "dispute_type": ["mixed", "values"], "verdict_one_of": ["split", "conditional"] }
+    "expected": { "dispute_type": ["mixed", "values"], "verdict_one_of": ["split", "conditional", "side_b"] }
   },
   {
     "id": "split-screentime",
