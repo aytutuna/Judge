@@ -1,5 +1,7 @@
 # ⚖️ Verdict
 
+[![CI](https://github.com/aytutuna/Verdict/actions/workflows/ci.yml/badge.svg)](https://github.com/aytutuna/Verdict/actions/workflows/ci.yml)
+
 Tell it the argument. It digs to bedrock and rules.
 
 Verdict is a mobile-first web app that settles arguments: one person describes a
@@ -110,6 +112,11 @@ npm run eval -- 5   # just the first 5 cases
 
 `test/arguments.json` holds 30 hand-labeled arguments across all dispute types —
 tune the judge prompt against it before trusting changes.
+
+Unit tests never call Gemini: `test/setup.ts` clears `GEMINI_API_KEY` and
+rejects any request to the Gemini host. CI (`.github/workflows/ci.yml`) runs
+`npm ci`, lint, typecheck and tests on every push and pull request to `main`,
+with no secrets.
 
 ## Roadmap (v2)
 
