@@ -9,10 +9,11 @@
     "lint": "eslint",
     "typecheck": "next typegen && tsc --noEmit",
     "test": "vitest run",
-    "eval": "tsx --env-file=.env scripts/eval.ts"
+    "eval": "tsx --env-file=.env scripts/eval.ts",
+    "db:migrate": "tsx scripts/migrate.ts"
   },
   "dependencies": {
-    "better-sqlite3": "^13.0.3",
+    "@libsql/client": "^0.18.0",
     "nanoid": "^6.0.1",
     "next": "16.3.1",
     "react": "19.2.8",
@@ -21,7 +22,6 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
-    "@types/better-sqlite3": "^9.6.0",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
