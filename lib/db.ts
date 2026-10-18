@@ -1,29 +1,54 @@
-import Database from "better-sqlite3";
-import path from "node:path";
+import { createClient, type Client, type Config } from "@libsql/client";
+import { ensureSchema } from "./migrations";
 import { VerdictResult, type FrameworkChoice } from "./types";
 
-function dbPath(): string {
-  const url = process.env.DATABASE_URL ?? "file:./dev.db";
-  const file = url.startsWith("file:") ? url.slice(5) : url;
-  return path.isAbsolute(file) ? file : path.join(process.cwd(), file);
+/** Turso when TURSO_DATABASE_URL is set, otherwise a local libSQL file
+ * (DATABASE_URL, default `file:./dev.db`). */
+export function dbConfig(env: Record<string, string | undefined> = process.env): Config {
+  const tursoUrl = env.TURSO_DATABASE_URL?.trim();
+  if (tursoUrl) {
+    return { url: tursoUrl, authToken: env.TURSO_AUTH_TOKEN?.trim() || undefined };
+  }
+  // A file DB on Vercel would land on a read-only, per-instance disk and
+  // silently lose every verdict, so refuse instead of falling back.
+  if (env.VERCEL) {
+    throw new Error("TURSO_DATABASE_URL is not set; a file database cannot persist on Vercel.");
+  }
+  return { url: env.DATABASE_URL?.trim() || "file:./dev.db" };
 }
 
-function createDb(): Database.Database {
-  const db = new Database(dbPath());
-  db.pragma("journal_mode = WAL");
-  db.exec(`CREATE TABLE IF NOT EXISTS verdicts (
-    id TEXT PRIMARY KEY,
-    input TEXT NOT NULL,
-    framework TEXT NOT NULL,
-    result TEXT NOT NULL,
-    created_at TEXT NOT NULL DEFAULT (datetime('now'))
-  )`);
-  return db;
+type DbState = { client: Client; ready: Promise<void> };
+
+// Reuse one client across Next.js dev hot reloads. Created lazily so that
+// importing this module (e.g. during `next build`) never touches the database.
+const globalForDb = globalThis as unknown as { __verdictDb?: DbState };
+
+async function getDb(): Promise<Client> {
+  let state = globalForDb.__verdictDb;
+  if (!state) {
+    const client = createClient(dbConfig());
+    state = { client, ready: ensureSchema(client) };
+    globalForDb.__verdictDb = state;
+  }
+  try {
+    await state.ready;
+  } catch (err) {
+    // Don't cache a failed setup (e.g. Turso briefly unreachable); the next
+    // call starts over.
+    if (globalForDb.__verdictDb === state) {
+      globalForDb.__verdictDb = undefined;
+      state.client.close();
+    }
+    throw err;
+  }
+  return state.client;
 }
 
-// Reuse one connection across Next.js dev hot reloads.
-const globalForDb = globalThis as unknown as { __verdictDb?: Database.Database };
-const db = (globalForDb.__verdictDb ??= createDb());
+/** Closes the shared client; the next call opens a fresh one. */
+export function closeDb(): void {
+  globalForDb.__verdictDb?.client.close();
+  globalForDb.__verdictDb = undefined;
+}
 
 export type StoredVerdict = {
   id: string;
@@ -33,38 +58,34 @@ export type StoredVerdict = {
   createdAt: string;
 };
 
-export function saveVerdict(entry: {
+export async function saveVerdict(entry: {
   id: string;
   input: string;
   framework: FrameworkChoice;
   result: VerdictResult;
-}): void {
-  db.prepare(
-    "INSERT INTO verdicts (id, input, framework, result) VALUES (?, ?, ?, ?)",
-  ).run(
-    entry.id,
-    entry.input,
-    JSON.stringify(entry.framework),
-    JSON.stringify(entry.result),
-  );
+}): Promise<void> {
+  const db = await getDb();
+  await db.execute({
+    sql: "INSERT INTO verdicts (id, input, framework, result) VALUES (?, ?, ?, ?)",
+    args: [entry.id, entry.input, JSON.stringify(entry.framework), JSON.stringify(entry.result)],
+  });
 }
 
-export function getVerdict(id: string): StoredVerdict | null {
-  const row = db
-    .prepare(
-      "SELECT id, input, framework, result, created_at FROM verdicts WHERE id = ?",
-    )
-    .get(id) as
-    | { id: string; input: string; framework: string; result: string; created_at: string }
-    | undefined;
+export async function getVerdict(id: string): Promise<StoredVerdict | null> {
+  const db = await getDb();
+  const rs = await db.execute({
+    sql: "SELECT id, input, framework, result, created_at FROM verdicts WHERE id = ?",
+    args: [id],
+  });
+  const row = rs.rows[0];
   if (!row) return null;
-  const parsed = VerdictResult.safeParse(JSON.parse(row.result));
+  const parsed = VerdictResult.safeParse(JSON.parse(String(row.result)));
   if (!parsed.success) return null;
   return {
-    id: row.id,
-    input: row.input,
-    framework: JSON.parse(row.framework) as FrameworkChoice,
+    id: String(row.id),
+    input: String(row.input),
+    framework: JSON.parse(String(row.framework)) as FrameworkChoice,
     result: parsed.data,
-    createdAt: row.created_at,
+    createdAt: String(row.created_at),
   };
 }

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { headers } from "next/headers";
 import { notFound } from "next/navigation";
+import { cache } from "react";
 import type { Metadata } from "next";
 import { getVerdict } from "@/lib/db";
 import { t, type Lang } from "@/lib/i18n";
@@ -8,11 +9,14 @@ import { VerdictView } from "@/components/VerdictView";
 
 export const dynamic = "force-dynamic";
 
+// generateMetadata and the page both need the row; one query per request.
+const loadVerdict = cache(getVerdict);
+
 export async function generateMetadata({
   params,
 }: PageProps<"/v/[id]">): Promise<Metadata> {
   const { id } = await params;
-  const stored = getVerdict(id);
+  const stored = await loadVerdict(id);
   if (!stored) return { title: "Verdict" };
   return {
     title: `Verdict: ${stored.result.headline}`,
@@ -22,7 +26,7 @@ export async function generateMetadata({
 
 export default async function SharedVerdictPage({ params }: PageProps<"/v/[id]">) {
   const { id } = await params;
-  const stored = getVerdict(id);
+  const stored = await loadVerdict(id);
   if (!stored) notFound();
 
   // Chrome language follows the viewer's browser (only a LEADING "tr"

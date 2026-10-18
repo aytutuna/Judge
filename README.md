@@ -72,7 +72,9 @@ A `GEMINI_API_KEY` is **required** — without one the API refuses to judge
 | `GEMINI_MODEL_LITE` | `gemini-flash-lite-latest` | Anonymizer model (separate free-tier quota bucket) |
 | `JUDGE_RUNS` | `3` | Self-consistency runs per verdict (1–3). Lower it on tight quotas; confidence is capped accordingly |
 | `CRUX_TRIAL` | `1` | Cross-examination of fact/logic winner rulings (up to 2 extra flash calls). Set `0` on tight quotas |
-| `DATABASE_URL` | `file:./dev.db` | SQLite file path |
+| `DATABASE_URL` | `file:./dev.db` | Local libSQL file, used when Turso is not configured |
+| `TURSO_DATABASE_URL` | *(unset)* | Turso database URL (`libsql://…`); required on Vercel, where a file DB cannot persist |
+| `TURSO_AUTH_TOKEN` | *(unset)* | Turso auth token for that database |
 
 **Free-tier reality check:** one verdict costs 1 lite call + `JUDGE_RUNS` flash
 calls, plus up to 2 trial calls when a fact/logic winner is declared — on the
@@ -82,13 +84,24 @@ tier allows only a handful of flash requests per minute
 and a small daily cap, so for anything public use a paid-tier key (still cheap —
 flash pricing is fractions of a cent per verdict) or set `JUDGE_RUNS=1`.
 
+### Storage
+
+Verdicts live in libSQL: a local file in development and tests, Turso in
+production. The schema is versioned in `lib/migrations.ts` (append new
+migrations, never edit shipped ones). The app applies pending migrations on its
+first query; you can also apply them explicitly, e.g. before a deploy:
+
+```bash
+npm run db:migrate   # uses TURSO_* if set, else DATABASE_URL; reads .env.local / .env
+```
+
 ## How it works
 
 ```
 input ──▶ anonymize (names → Party A/B) ──▶ judge ×N (structured JSON)
                                                  │
    stored: anonymized text + result only         ▼
-   share link /v/[id]  ◀── SQLite ◀── aggregate (majority vote → confidence)
+   share link /v/[id]  ◀── libSQL ◀── aggregate (majority vote → confidence)
 ```
 
 - One well-crafted structured-output prompt does parse → steelman → classify
@@ -103,7 +116,7 @@ input ──▶ anonymize (names → Party A/B) ──▶ judge ×N (structured 
 ## Testing
 
 ```bash
-npm test        # unit tests: aggregation rules, thinking timeline, test-set shape
+npm test        # unit tests: aggregation rules, thinking timeline, storage, test-set shape
 npm run eval    # LIVE eval of the judge against test/arguments.json (costs API calls)
 npm run eval -- 5   # just the first 5 cases
 ```
@@ -118,4 +131,3 @@ tune the judge prompt against it before trusting changes.
 - Web-search fact-checking when a factual crux is load-bearing and confidence is low
 - Staged pipeline (separate steelman / bedrock / verdict calls) where the single
   call visibly fails
-- Postgres/Turso storage for serverless deploys (SQLite needs a persistent disk)

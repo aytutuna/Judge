@@ -116,7 +116,15 @@ export async function POST(req: Request): Promise<NextResponse> {
   }
 
   const id = nanoid(10);
-  saveVerdict({ id, input: anonymized, framework, result });
+  try {
+    await saveVerdict({ id, input: anonymized, framework, result });
+  } catch (err) {
+    console.error("[verdict] saving failed:", err);
+    return NextResponse.json(
+      { error: "Could not save the verdict — try again in a minute.", code: "unavailable" },
+      { status: 503 },
+    );
+  }
 
   const response: VerdictResponse = { id, result, name_map: nameMap };
   return NextResponse.json(response);
