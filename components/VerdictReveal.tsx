@@ -212,6 +212,14 @@ export function VerdictReveal({
         <p className="text-sm" style={{ color: "var(--ink-2)" }}>
           {result.headline}
         </p>
+        {/* Non-winner verdicts state the exception test they met, so the
+            reader can check why no single side won. */}
+        {result.exception_basis ? (
+          <p className="text-xs" style={{ color: "var(--muted)" }}>
+            <span className="font-semibold">{t(lang, "exceptionBasis")}</span>{" "}
+            {result.exception_basis}
+          </p>
+        ) : null}
 
         <ConfidenceMeter value={result.confidence} lang={lang} />
 
@@ -236,7 +244,10 @@ export function VerdictReveal({
             </p>
             {result.runs.length >= 2 ? (
               <p className="text-xs" style={{ color: "var(--muted)" }}>
-                {t(lang, lean.unanimous ? "lean.unanimous" : "lean.majority")}
+                {t(
+                  lang,
+                  lean.unanimous ? "lean.unanimous" : lean.tiebreak ? "lean.tiebreak" : "lean.majority",
+                )}
               </p>
             ) : null}
           </>

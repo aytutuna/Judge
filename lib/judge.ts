@@ -1,3 +1,4 @@
+import { enforceCriteria } from "./criteria";
 import { frameworkInstruction } from "./frameworks";
 import { geminiJson } from "./gemini";
 import type { Lang } from "./i18n";
@@ -13,13 +14,14 @@ const CLAIM = {
   required: ["claim", "kind"],
 } as const;
 
-const JUDGE_SCHEMA = {
+export const JUDGE_SCHEMA = {
   type: "object",
   properties: {
     verdict: {
       type: "string",
       enum: ["side_a", "side_b", "split", "conditional", "dissolved"],
     },
+    exception_basis: { type: "string", nullable: true },
     dispute_type: {
       type: "string",
       enum: ["factual", "logical", "definitional", "values", "mixed"],
@@ -73,6 +75,7 @@ const JUDGE_SCHEMA = {
   },
   required: [
     "verdict",
+    "exception_basis",
     "dispute_type",
     "headline",
     "crux",
@@ -92,9 +95,9 @@ const JUDGE_SCHEMA = {
  * indicative or self-prefixed conditionals that break the "Eğer … → …" card. */
 const TR_LANGUAGE_BLOCK = `
 
-LANGUAGE: Write every free-text output field (headline, crux, claims, bedrock premises, split points, conditional branches, facts_relied_on, losing_side_best_point, leaning_reason) in natural, fluent, everyday Turkish — plain language, not officialese. Address the reader with informal "sen", never "siz". Refer to the parties as "Taraf A" and "Taraf B" in prose. Write each conditional if_value as a bare conditional clause ending in -sa/-se (e.g. "dürüstlüğe en çok değer veriyorsan"), with no leading "Eğer". Keep all JSON enum values exactly as specified in the schema (English identifiers). headline stays at most 10 words.`;
+LANGUAGE: Write every free-text output field (headline, crux, exception_basis, claims, bedrock premises, split points, conditional branches, facts_relied_on, losing_side_best_point, leaning_reason) in natural, fluent, everyday Turkish — plain language, not officialese. Address the reader with informal "sen", never "siz". Refer to the parties as "Taraf A" and "Taraf B" in prose. Write each conditional if_value as a bare conditional clause ending in -sa/-se (e.g. "dürüstlüğe en çok değer veriyorsan"), with no leading "Eğer". Keep all JSON enum values exactly as specified in the schema (English identifiers). headline stays at most 10 words.`;
 
-function systemPrompt(framework: FrameworkChoice, analyzeBFirst: boolean, lang: Lang): string {
+export function systemPrompt(framework: FrameworkChoice, analyzeBFirst: boolean, lang: Lang): string {
   return `You are Verdict, an impartial adjudicator of arguments between two parties.
 
 METHOD — follow these steps in order:
@@ -102,11 +105,17 @@ METHOD — follow these steps in order:
 2. CLASSIFY: break each side's case into its distinct claims (2-4 per side) and label each claim's kind: "fact" (checkable about the world), "value" (what matters or should be), "definition" (what a word means), "logic" (an inference from other claims).
 3. BEDROCK: for each side, dig below its claims to the single deepest premise it ultimately rests on — a terminal value or a foundational factual belief. One short phrase each.
 4. CRUX: state, in one sentence, the highest point where the two sides actually diverge. Everything above the crux is noise.
-5. VERDICT — choose by what the crux is:
-   - Crux is a checkable FACT or a LOGICAL error: pick the winner ("side_a" or "side_b"). List in facts_relied_on every factual claim your verdict depends on, so users can check them. Use only well-established knowledge; if the decisive fact is genuinely uncertain, do not pretend certainty — treat it as below.
-   - Each side is right about a DIFFERENT part (one about the facts, the other about a consequence, or right about different sub-questions): return "split" and fill split_points with what each party is right about.
-   - Crux is a clash of TERMINAL VALUES: apply the value framework below. If the framework clearly favors one side, pick that side and say in the crux that the call follows from the framework. If it does not clearly decide, return "conditional" and fill conditional with 2-3 "if you weight X highest -> then Y" branches.
-   - The sides mean DIFFERENT THINGS by a key word and would agree once defined: return "dissolved".
+5. VERDICT — a clear winner is the default. Almost every real dispute has a side that is more right at the crux; your job is to find it and say so. Return "side_a" or "side_b" unless one of the three exceptions below is fully met. Picking a winner does not mean the loser has no point: put that in losing_side_best_point, and put any real doubt in facts_relied_on and the crux, not in the verdict.
+   Deciding the winner, by what the crux is:
+   - FACT or LOGIC: the side whose claim matches well-established knowledge, or whose reasoning is valid, wins. List in facts_relied_on every factual claim your verdict depends on, so users can check them. If the decisive fact is uncertain, the side better supported by current evidence wins; never invent certainty in the facts, but do not withhold the ruling either.
+   - VALUES: apply the value framework below. The side it favors, even slightly, wins; say in the crux that the call follows from the framework.
+   - DEFINITION: the side whose usage matches how people ordinarily use the word in this context wins.
+   - Both sides have a point: the side that is right about the part the parties were actually fighting over wins.
+   EXCEPTIONS — use one ONLY if every condition listed for it holds, and state the test in exception_basis (one sentence) so a reader can check it. If any condition fails, or you are unsure, pick the winner instead.
+   - "split": (a) the dispute contains two separate sub-questions the parties actually contested, (b) Party A is right on one and Party B on the other, and (c) neither sub-question is more central to the fight than the other. exception_basis names both sub-questions and who is right on each. split_points must contain at least one point for EACH party.
+   - "conditional": (a) the crux is purely a clash of terminal values, with no disputed fact or reasoning error deciding it, and (b) the value framework below gives no preference between those values, not even a slight one. exception_basis names the two values and why the framework does not rank them. conditional must hold 2-3 "if you weight X highest -> then Y" branches that lead to different sides.
+   - "dissolved": (a) the parties use one key word in two different senses, (b) each side's claim is true under its own sense, (c) neither sense is clearly the ordinary one in this context, and (d) once the word is pinned down nothing is left to disagree about. exception_basis names the word and both senses. If one sense is the ordinary one, that is a DEFINITION crux: pick the side using it.
+   For "side_a" or "side_b", exception_basis is null.
 5b. FORCED RULING: separately from the verdict, you MUST pick which side is MORE right — the side a real court would rule for under a preponderance standard, no ties allowed. This forced choice must NOT change your verdict in step 5. If your step-5 verdict already names a winner ("side_a" or "side_b"), your leaning MUST be that same side. Standards, by what the crux is:
    - FACTUAL crux left genuinely uncertain in step 5: which side's factual claim is more probable on current, well-established evidence; only if truly 50/50, fall through to the burden-of-proof rule below.
    - DEFINITIONAL crux: whose usage better matches how the language community actually uses the word (ordinary meaning, like a court reading a contract).
@@ -114,7 +123,7 @@ METHOD — follow these steps in order:
    - SPLIT: who is right about the more central part of what the parties were actually fighting over.
    - Otherwise / still tied: the party whose claim departs further from ordinary expectation bears the burden of proof and loses the tie.
    leaning_reason: ONE concrete sentence, at most ~25 words, naming the standard you used ("Ordinary usage of 'making tea' includes…", "Under an outcomes weighting…").
-6. HONESTY RULES: never manufacture certainty. Never rule against a side just because it was described less sympathetically. The narrator (usually Party A) gets no home advantage.
+6. HONESTY RULES: never manufacture facts or certainty you do not have, but a ruling under some doubt is still a ruling — reporting the doubt is honest, withholding the ruling is not. Never rule against a side just because it was described less sympathetically. The narrator (usually Party A) gets no home advantage.
 
 VALUE FRAMEWORK (set by the user): ${frameworkInstruction(framework)}
 
@@ -122,14 +131,17 @@ OUTPUT RULES:
 - headline: at most 10 words, punchy, plain language, names the outcome.
 - crux: one sentence, what this argument is REALLY about.
 - All text concise and concrete — this is displayed on small cards.
-- split_points only for "split" verdicts, otherwise null. conditional only for "conditional" verdicts, otherwise null.
+- split_points only for "split" verdicts, otherwise null. conditional only for "conditional" verdicts, otherwise null. exception_basis only for "split", "conditional" and "dissolved", otherwise null.
+- A "split", "conditional" or "dissolved" verdict that is missing its exception_basis, or a split without a point for each party, or a conditional with fewer than two branches, is treated as your forced ruling instead.
 - losing_side_best_point: the single strongest point of whichever side fares worse (for "conditional"/"dissolved", the best point that survives on the less-favored framing).
 - facts_relied_on: empty array if the verdict rests on no contested facts.
 ${analyzeBFirst ? "\nPROCESS NOTE: analyze Party B's case fully before Party A's, to guard against order bias." : ""}${lang === "tr" ? TR_LANGUAGE_BLOCK : ""}`;
 }
 
 export type JudgeRun =
-  | { ok: true; data: JudgeRunOutput }
+  /** `downgraded`: the run returned an exception verdict without meeting its
+   * criteria and was turned into its forced ruling (lib/criteria.ts). */
+  | { ok: true; data: JudgeRunOutput; downgraded: boolean }
   | { ok: false; blocked: boolean; error: string };
 
 export async function judgeOnce(
@@ -152,7 +164,16 @@ export async function judgeOnce(
   if (!parsed.success) {
     return { ok: false, blocked: false, error: `schema mismatch: ${parsed.error.message.slice(0, 200)}` };
   }
-  return { ok: true, data: parsed.data };
+  const { run, downgraded } = enforceCriteria(parsed.data);
+  return { ok: true, data: run, downgraded };
+}
+
+/** Self-consistency run count from JUDGE_RUNS: 1 or 3, default 3. Always odd
+ * so the verdict and forced-leaning votes cannot tie; an even request rounds
+ * down so a verdict never costs more calls than configured. */
+export function judgeRunCount(raw: string | undefined = process.env.JUDGE_RUNS): number {
+  const n = Math.min(3, Math.max(1, Math.floor(Number(raw)) || 3));
+  return n % 2 === 1 ? n : n - 1;
 }
 
 /**
@@ -167,8 +188,8 @@ export async function judgeSelfConsistent(
   lang: Lang = "en",
 ): Promise<JudgeRun[]> {
   // JUDGE_RUNS lets tight-quota deployments trade confidence for requests
-  // (1-3; aggregate caps confidence when fewer runs survive).
-  const n = Math.min(3, Math.max(1, Number(process.env.JUDGE_RUNS) || 3));
+  // (1 or 3; aggregate caps confidence when fewer runs survive).
+  const n = judgeRunCount();
   const configs = [
     { temperature: 0.7 },
     { temperature: 0.7, analyzeBFirst: true },

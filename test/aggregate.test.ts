@@ -12,6 +12,7 @@ function run(
   dispute_type: JudgeRunOutput["dispute_type"] = "factual",
   leaning: JudgeVerdictSide = "side_a",
   leaning_reason = "lr",
+  exception_basis: string | null = null,
 ): JudgeRunOutput {
   return {
     verdict,
@@ -28,6 +29,7 @@ function run(
     },
     facts_relied_on: [],
     losing_side_best_point: "p",
+    exception_basis,
     leaning,
     leaning_reason,
   };
@@ -58,11 +60,51 @@ describe("aggregate", () => {
     expect(r.confidence).toBe(2);
   });
 
-  it("three-way disagreement -> too_close, confidence 1", () => {
-    const r = aggregate([run("side_a"), run("side_b"), run("dissolved")]);
-    expect(r.verdict).toBe("too_close");
+  it("three-way disagreement -> the forced leanings pick the winner, confidence 1", () => {
+    const winner = { ...run("side_b", "factual", "side_b"), headline: "B wins" };
+    const r = aggregate([
+      run("side_a", "factual", "side_a"),
+      winner,
+      run("dissolved", "factual", "side_b"),
+    ]);
+    expect(r.verdict).toBe("side_b");
     expect(r.confidence).toBe(1);
-    expect(r.headline).toBe("Too close to call");
+    expect(r.headline).toBe("B wins");
+    expect(r.runs).toEqual(["side_a", "side_b", "dissolved"]);
+    expect("lean" in r).toBe(false);
+  });
+
+  it("three-way disagreement with no run ruling for the leaned side keeps a non-winner verdict with the lean", () => {
+    const r = aggregate([
+      run("side_a", "mixed", "side_a", "a-why"),
+      run("split", "mixed", "side_b", "b-why", "two sub-questions"),
+      run("conditional", "mixed", "side_b", "b-why-2", "two values"),
+    ]);
+    expect(r.verdict).toBe("split");
+    expect(r.confidence).toBe(1);
+    expect(r.lean).toEqual({ party: "b", unanimous: false, reason: "b-why" });
+    expect(r.exception_basis).toBe("two sub-questions");
+  });
+
+  it("two disagreeing runs -> a side named outright beats a side only leaned to", () => {
+    const r = aggregate([
+      run("split", "mixed", "side_b", "lean-b", "basis"),
+      run("side_a", "mixed", "side_a"),
+    ]);
+    expect(r.verdict).toBe("side_a");
+    expect(r.confidence).toBe(1);
+  });
+
+  it("two runs ruling for opposite sides -> the first run decides", () => {
+    const first = aggregate([run("side_b", "factual", "side_b"), run("side_a", "factual", "side_a")]);
+    expect(first.verdict).toBe("side_b");
+    const swapped = aggregate([run("side_a", "factual", "side_a"), run("side_b", "factual", "side_b")]);
+    expect(swapped.verdict).toBe("side_a");
+  });
+
+  it("two disagreeing runs agreeing on the leaning -> that side wins if a run ruled for it", () => {
+    const r = aggregate([run("dissolved", "definitional", "side_a"), run("side_a", "definitional", "side_a")]);
+    expect(r.verdict).toBe("side_a");
   });
 
   it("only 2 surviving runs caps confidence at 4", () => {
@@ -102,13 +144,13 @@ describe("forced-ruling lean", () => {
     expect(r.lean).toEqual({ party: "b", unanimous: false, reason: "maj-1" });
   });
 
-  it("two-run 1-1 leaning tie on a non-winner verdict -> lean is null", () => {
+  it("two-run 1-1 leaning tie on a non-winner verdict -> first run breaks the tie", () => {
     const r = aggregate([
-      run("conditional", "values", "side_a"),
-      run("conditional", "values", "side_b"),
+      run("conditional", "values", "side_b", "first"),
+      run("conditional", "values", "side_a", "second"),
     ]);
     expect(r.verdict).toBe("conditional");
-    expect(r.lean).toBeNull();
+    expect(r.lean).toEqual({ party: "b", unanimous: false, reason: "first", tiebreak: true });
   });
 
   it("two-run same leaning on a non-winner verdict -> unanimous lean", () => {
@@ -139,21 +181,55 @@ describe("forced-ruling lean", () => {
     expect(r.lean).toBeUndefined();
   });
 
-  it("too_close (3-way verdict split) still computes the lean", () => {
-    const r = aggregate([
-      run("side_a", "factual", "side_a", "one"),
-      run("side_b", "factual", "side_a", "two"),
-      run("dissolved", "factual", "side_b", "three"),
+  it("never returns too_close and never a null lean, for every vote combination of 1-3 runs", () => {
+    const verdicts: JudgeVerdict[] = ["side_a", "side_b", "split", "conditional", "dissolved"];
+    const sides: JudgeVerdictSide[] = ["side_a", "side_b"];
+    const combos = (n: number): JudgeRunOutput[][] =>
+      n === 0
+        ? [[]]
+        : combos(n - 1).flatMap((rest) =>
+            verdicts.flatMap((v) =>
+              // A winner run's leaning equals its verdict (lib/criteria.ts).
+              (v === "side_a" || v === "side_b" ? [v] : sides).map((l) => [
+                ...rest,
+                run(v, "mixed", l, `${v}/${l}`, v === "side_a" || v === "side_b" ? null : "basis"),
+              ]),
+            ),
+          );
+    for (const n of [1, 2, 3]) {
+      for (const runs of combos(n)) {
+        const r = aggregate(runs);
+        const label = runs.map((x) => `${x.verdict}/${x.leaning}`).join(" ");
+        expect(r.verdict, label).not.toBe("too_close");
+        expect(r.runs).toHaveLength(n);
+        expect(VerdictResult.safeParse(r).success, label).toBe(true);
+        if (r.verdict === "side_a" || r.verdict === "side_b") {
+          expect("lean" in r, label).toBe(false);
+          expect("exception_basis" in r, label).toBe(false);
+          expect(runs.some((x) => x.verdict === r.verdict), label).toBe(true);
+        } else {
+          expect(r.lean, label).toBeTruthy();
+          expect(r.exception_basis, label).toBe("basis");
+        }
+      }
+    }
+  });
+
+  it("exception_basis rides along on non-winner verdicts only", () => {
+    const nonWinner = aggregate([
+      run("dissolved", "definitional", "side_a", "r", "'tea' means two things"),
+      run("dissolved", "definitional", "side_a", "r", "other wording"),
     ]);
-    expect(r.verdict).toBe("too_close");
-    expect(r.lean).toEqual({ party: "a", unanimous: false, reason: "one" });
+    expect(nonWinner.exception_basis).toBe("'tea' means two things");
+    const winner = aggregate([run("side_a"), run("side_a")]);
+    expect("exception_basis" in winner).toBe(false);
   });
 
   it("spread hygiene: run-level leaning fields never leak into the result", () => {
     const nonWinner = aggregate([run("split", "mixed"), run("split", "mixed")]);
     const winner = aggregate([run("side_a"), run("side_a")]);
-    const tooClose = aggregate([run("side_a"), run("side_b"), run("dissolved")]);
-    for (const r of [nonWinner, winner, tooClose]) {
+    const noMajority = aggregate([run("side_a"), run("side_b"), run("dissolved")]);
+    for (const r of [nonWinner, winner, noMajority]) {
       expect(r).not.toHaveProperty("leaning");
       expect(r).not.toHaveProperty("leaning_reason");
     }

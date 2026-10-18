@@ -9,24 +9,28 @@ actually about — and renders a verdict.
 
 ## Honest verdicts, always labeled
 
-Verdict never launders an opinion through a confident interface. Every ruling
-carries an explicit type:
+Verdict never launders an opinion through a confident interface. A clear
+winner is the default ruling; the other types are exceptions the judge may only
+use when it states the test it met (shown on the card), and a split or
+conditional ruling missing its points or branches falls back to the judge's
+forced ruling. Every ruling carries an explicit type:
 
 | Verdict | When |
 |---|---|
-| **Party A / B is right** | The crux is a checkable fact or a logical error — and the facts the ruling leans on are listed so you can check them |
-| **Split decision** | Each side is right about a different part |
-| **It depends on your values** | The crux is a clash of terminal values — you get "if you weight X → then Y" branches instead of fake certainty |
-| **Same word, different meanings** | The argument dissolves once definitions are separated |
-| **Too close to call** | The independent judges couldn't agree |
+| **Party A / B is right** | One side is more right at the crux: the facts or valid reasoning back it, the value framework favors it, or its usage of a word is the ordinary one. The facts the ruling leans on are listed so you can check them |
+| **Split decision** | Two separate sub-questions were contested, each side is right on one, and neither is more central |
+| **It depends on your values** | A pure clash of terminal values the chosen framework cannot rank — you get "if you weight X → then Y" branches instead of fake certainty |
+| **Same word, different meanings** | Each side is right under its own sense of a key word, neither sense is the ordinary one, and nothing is left once it is pinned down |
 
 **Forced ruling — someone is always more right**: every new non-winner verdict
 also records a forced ruling: each judge must separately say who is more right
 under a preponderance standard (balance of probabilities for uncertain facts,
 ordinary usage for definitions, the value framework for values, burden of proof
-for ties). The lean shown is the majority of those forced votes, and when the
-judges split evenly it says so — closure never comes at the price of the
-honest label.
+for ties). The lean shown is the majority of those forced votes. When the
+independent judges reach three different verdicts (or two surviving judges
+disagree), the forced votes decide the ruling at confidence 1 instead of
+returning "too close to call"; an even 1–1 split goes to a side some judge ruled
+for outright, then to the first judge's call, and the card says so.
 
 **Confidence is computed, not claimed**: the judge runs up to three times
 independently (one run analyzes the sides in reverse order as a position-bias
@@ -70,7 +74,7 @@ A `GEMINI_API_KEY` is **required** — without one the API refuses to judge
 | `GEMINI_API_KEY` | *(required)* | Google AI Studio key |
 | `GEMINI_MODEL` | `gemini-flash-latest` | Judge model |
 | `GEMINI_MODEL_LITE` | `gemini-flash-lite-latest` | Anonymizer model (separate free-tier quota bucket) |
-| `JUDGE_RUNS` | `3` | Self-consistency runs per verdict (1–3). Lower it on tight quotas; confidence is capped accordingly |
+| `JUDGE_RUNS` | `3` | Self-consistency runs per verdict: 1 or 3 (always odd, so votes cannot tie; 2 rounds down to 1). Lower it on tight quotas; confidence is capped accordingly |
 | `CRUX_TRIAL` | `1` | Cross-examination of fact/logic winner rulings (up to 2 extra flash calls). Set `0` on tight quotas |
 | `DATABASE_URL` | `file:./dev.db` | SQLite file path |
 
@@ -103,13 +107,19 @@ input ──▶ anonymize (names → Party A/B) ──▶ judge ×N (structured 
 ## Testing
 
 ```bash
-npm test        # unit tests: aggregation rules, thinking timeline, test-set shape
-npm run eval    # LIVE eval of the judge against test/arguments.json (costs API calls)
-npm run eval -- 5   # just the first 5 cases
+npm test        # unit tests: aggregation rules, ruling criteria, thinking timeline, test-set shape
+npm run eval    # LIVE eval of the full judging pipeline against test/arguments.json (costs API calls)
+npm run eval -- --out eval-results/after.json --limit 5   # first 5 cases into a named result file
+npm run eval -- --compare eval-results/before.json eval-results/after.json   # markdown table, no API calls
 ```
 
-`test/arguments.json` holds 30 hand-labeled arguments across all dispute types —
-tune the judge prompt against it before trusting changes.
+`test/arguments.json` holds 44 hand-labeled arguments (38 English, 6 Turkish),
+mostly with one clearly correct winner plus a few genuine splits, value clashes
+and misunderstandings. The eval runs `JUDGE_RUNS` judge calls per case, paced
+for the free tier (`EVAL_PACE_MS`, default 13000 per call), saves after each case
+and resumes a cut-short run from its result file. Results go to the git-ignored
+`eval-results/`; the latest before/after numbers are in
+[docs/eval-report.md](docs/eval-report.md).
 
 ## Roadmap (v2)
 

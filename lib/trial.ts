@@ -97,7 +97,8 @@ const AttackerOutput = z.object({
  */
 export function shouldTryCrux(result: VerdictResult): boolean {
   return (
-    // A winner was declared — split/conditional/dissolved/too_close have no
+    // A winner was declared — split/conditional/dissolved (and too_close on
+    // refusals and older rows) have no
     // single ruling to attack.
     (result.verdict === "side_a" || result.verdict === "side_b") &&
     // Only fact/logic ground is testable. A framework-decided values win has
@@ -121,8 +122,8 @@ export function shouldTryCrux(result: VerdictResult): boolean {
  * decrements — one adversarial exchange is evidence about confidence, not a
  * superior court. `uncertain → 3` lands at the existing "2/3 majority" tier
  * (real doubt exists), `overturned → 2` at the "opposite-side dissenter"
- * tier; confidence 1 stays reserved for verdicts where no ruling stands at
- * all. Confidence NEVER increases and the verdict/headline never change.
+ * tier; confidence 1 stays reserved for verdicts where the judges had no
+ * majority at all. Confidence NEVER increases and the verdict/headline never change.
  * Pure: returns a new object, never mutates the input.
  */
 export function applyCruxTrial(result: VerdictResult, trial: CruxTrial): VerdictResult {

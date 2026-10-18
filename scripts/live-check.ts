@@ -1,9 +1,8 @@
 /* One-off live pipeline check: anonymize -> judge x3 -> aggregate.
    Run: npx tsx scripts/live-check.ts (requires GEMINI_API_KEY in env) */
 import { anonymize } from "../lib/anonymize";
-import { judgeSelfConsistent } from "../lib/judge";
+import { judgeSelfConsistent, type JudgeRun } from "../lib/judge";
 import { aggregate } from "../lib/aggregate";
-import type { JudgeRunOutput } from "../lib/types";
 
 const argument = `My brother Mark and I are fighting. Mark says we should let our 16-year-old
 sister Ana go to a music festival alone with her friends because she needs freedom to grow up.
@@ -24,7 +23,7 @@ async function main() {
     );
   }
   const ok = runs
-    .filter((r): r is { ok: true; data: JudgeRunOutput } => r.ok)
+    .filter((r): r is Extract<JudgeRun, { ok: true }> => r.ok)
     .map((r) => r.data);
   if (!ok.length) throw new Error("all runs failed");
   const final = aggregate(ok);

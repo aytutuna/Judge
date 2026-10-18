@@ -13,7 +13,8 @@ export const DisputeType = z.enum([
 export type DisputeType = z.infer<typeof DisputeType>;
 
 /** What a single judge run may conclude. "too_close" is never produced by a
- * run — it only emerges from aggregation when runs disagree. */
+ * run; new verdicts only use it for model refusals, and older stored rows
+ * carry it from when aggregation emitted it on judge disagreement. */
 export const JudgeVerdict = z.enum([
   "side_a",
   "side_b",
@@ -68,11 +69,15 @@ export type JudgeOutput = z.infer<typeof JudgeOutput>;
 export const JudgeVerdictSide = z.enum(["side_a", "side_b"]);
 export type JudgeVerdictSide = z.infer<typeof JudgeVerdictSide>;
 
-/** What one judge run actually emits: the honest verdict plus the forced
- * ruling. The two lean fields sit LAST on purpose, mirroring their position
- * in JUDGE_SCHEMA (lib/judge.ts) — the ordering is an anchoring guard: the
- * verdict is fully emitted before the forced choice exists. */
+/** What one judge run actually emits: the honest verdict, the exception
+ * test for a non-winner verdict, plus the forced ruling. The two lean fields
+ * sit LAST on purpose, mirroring their position in JUDGE_SCHEMA
+ * (lib/judge.ts) — the ordering is an anchoring guard: the verdict is fully
+ * emitted before the forced choice exists. */
 export const JudgeRunOutput = JudgeOutput.extend({
+  /** For split/conditional/dissolved: one sentence stating the exception's
+   * criterion as met (see lib/criteria.ts). Null for winner verdicts. */
+  exception_basis: z.string().nullable(),
   leaning: JudgeVerdictSide,
   leaning_reason: z.string(),
 });
@@ -85,6 +90,9 @@ export const Lean = z.object({
   party: z.enum(["a", "b"]),
   unanimous: z.boolean(),
   reason: z.string(),
+  /** True when the forced votes split evenly (two surviving runs, 1–1) and
+   * the deterministic tie-break in lib/aggregate.ts decided. Absent otherwise. */
+  tiebreak: z.boolean().optional(),
 });
 export type Lean = z.infer<typeof Lean>;
 
@@ -116,8 +124,12 @@ export const VerdictResult = JudgeOutput.extend({
   crux_trial: CruxTrial.optional(),
   /** Forced ruling for non-winner verdicts. Optional so every previously
    * stored row keeps parsing: absent (undefined) for side_a/side_b winners,
-   * refusals, and pre-feature rows; null only for a computed lean tie. */
+   * refusals, and pre-feature rows; null only on older rows from before the
+   * tie-break existed. */
   lean: Lean.nullable().optional(),
+  /** Why a non-winner verdict met its exception criterion, as stated by the
+   * judge. Absent for winners, refusals, and older rows. */
+  exception_basis: z.string().optional(),
 });
 export type VerdictResult = z.infer<typeof VerdictResult>;
 

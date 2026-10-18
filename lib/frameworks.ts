@@ -21,7 +21,7 @@ export const PRESETS: Preset[] = [
     emoji: "⚖️",
     blurb: "Common-sense mix",
     instruction:
-      "Weigh values the way broadly shared common-sense morality does: outcomes, fairness, rights, and relationships all count, none automatically dominates.",
+      "Weigh values the way broadly shared common-sense morality does: outcomes, fairness, rights, and relationships all count, none automatically dominates, and the side most thoughtful, fair-minded people would back in this specific situation is favored.",
   },
   {
     id: "outcomes",
@@ -89,6 +89,9 @@ export function frameworkInstruction(choice: FrameworkChoice): string {
       `When ${def.left.toLowerCase()} and ${def.right.toLowerCase()} conflict, lean ${strength} toward ${toward.toLowerCase()}.`,
     );
   }
+  parts.push(
+    "Use this framework to decide which side is more right: it should settle most values disputes, and only a clash it truly cannot rank is left conditional.",
+  );
   return parts.join(" ");
 }
 
