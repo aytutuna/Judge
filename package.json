@@ -9,7 +9,7 @@
     "lint": "eslint",
     "typecheck": "next typegen && tsc --noEmit",
     "test": "vitest run",
-    "eval": "tsx --env-file=.env scripts/eval.ts"
+    "eval": "tsx --env-file-if-exists=.env --env-file-if-exists=.env.local scripts/eval.ts"
   },
   "dependencies": {
     "better-sqlite3": "^13.0.3",

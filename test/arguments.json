@@ -1,152 +1,266 @@
 [
   {
     "id": "fact-vaccines",
+    "lang": "en",
     "argument": "Party A says childhood vaccines cause autism and that's why they won't vaccinate their kid. Party B says that study was retracted and vaccines are safe. Party A says big pharma hides the truth.",
     "expected": { "dispute_type": ["factual"], "verdict_one_of": ["side_b"] }
   },
   {
     "id": "fact-goldfish",
+    "lang": "en",
     "argument": "Party A insists goldfish only have a 3-second memory so keeping one in a small bowl is fine. Party B says goldfish can actually remember things for months and need proper tanks.",
     "expected": { "dispute_type": ["factual"], "verdict_one_of": ["side_b"] }
   },
   {
     "id": "fact-knuckles",
-    "argument": "My dad says cracking my knuckles will give me arthritis when I'm older and I need to stop. I say that's a myth and studies show no connection. He says everyone knows it's true.",
-    "expected": { "dispute_type": ["factual"], "verdict_one_of": ["side_b", "side_a"] }
+    "lang": "en",
+    "argument": "Party B, Party A's dad, says cracking knuckles will give Party A arthritis later in life and Party A needs to stop. Party A says that's a myth and studies show no connection. Party B says everyone knows it's true.",
+    "expected": { "dispute_type": ["factual"], "verdict_one_of": ["side_a"] }
   },
   {
     "id": "fact-greatwall",
+    "lang": "en",
     "argument": "Party A bet Party B $50 that the Great Wall of China is visible from space with the naked eye. Party B says astronauts themselves have said you can't see it from orbit without aid.",
     "expected": { "dispute_type": ["factual"], "verdict_one_of": ["side_b"] }
   },
   {
     "id": "fact-sugar",
+    "lang": "en",
     "argument": "Party A won't let the kids have cake at the party because sugar makes children hyperactive. Party B says controlled studies show the sugar-hyperactivity link is a myth and it's just party excitement.",
     "expected": { "dispute_type": ["factual"], "verdict_one_of": ["side_b"] }
   },
   {
     "id": "fact-heat-head",
+    "lang": "en",
     "argument": "Party A says you must wear a hat because you lose most of your body heat through your head. Party B says that's an old myth — you lose heat proportionally to exposed surface area.",
     "expected": { "dispute_type": ["factual"], "verdict_one_of": ["side_b"] }
   },
   {
     "id": "fact-lightning",
+    "lang": "en",
     "argument": "Party A refuses to shelter under the tower because lightning never strikes the same place twice, so the field is safer since it was hit last year. Party B says tall structures get struck repeatedly all the time.",
     "expected": { "dispute_type": ["factual"], "verdict_one_of": ["side_b"] }
   },
   {
     "id": "fact-bulls-red",
+    "lang": "en",
     "argument": "Party A says bulls charge at the matador's cape because the color red enrages them. Party B says bulls are colorblind to red and react to the movement of the cape.",
     "expected": { "dispute_type": ["factual"], "verdict_one_of": ["side_b"] }
   },
   {
     "id": "logic-cheat",
+    "lang": "en",
     "argument": "Party A argues: everyone who cheats ends up winning, our rival won the tournament, therefore they must have cheated. Party B says winning doesn't prove cheating even if cheaters often win.",
     "expected": { "dispute_type": ["logical"], "verdict_one_of": ["side_b"] }
   },
   {
     "id": "logic-slippery",
+    "lang": "en",
     "argument": "Party A says if we let employees work from home one day a week, soon nobody will ever come to the office and the company will collapse, so we can't allow any remote work. Party B says one day a week doesn't lead inevitably to zero office time.",
     "expected": { "dispute_type": ["logical"], "verdict_one_of": ["side_b"] }
   },
   {
     "id": "logic-anecdote",
+    "lang": "en",
     "argument": "Party A says seatbelts are dangerous because their uncle survived a crash only because he was thrown clear of the car. Party B says statistics across millions of crashes show seatbelts save lives overall.",
     "expected": { "dispute_type": ["logical", "factual"], "verdict_one_of": ["side_b"] }
   },
   {
     "id": "logic-natural",
+    "lang": "en",
     "argument": "Party A says the herbal remedy must be safe because it's natural, unlike chemical medicine. Party B points out plenty of natural things are poisonous and 'natural' doesn't mean safe.",
     "expected": { "dispute_type": ["logical"], "verdict_one_of": ["side_b"] }
   },
   {
     "id": "logic-tradition",
+    "lang": "en",
     "argument": "Party A says we must keep doing the quarterly report this way because we've always done it this way. Party B says age of a practice alone doesn't make it the best way.",
     "expected": { "dispute_type": ["logical"], "verdict_one_of": ["side_b"] }
   },
   {
     "id": "values-festival",
+    "lang": "en",
     "argument": "Party B says we should let our 16-year-old sister go to a music festival alone with her friends because she needs freedom to grow up. Party A says it's not safe, she's too young, and safety comes first.",
     "expected": { "dispute_type": ["values", "mixed"], "verdict_one_of": ["conditional", "split"] }
   },
   {
     "id": "values-cameras",
+    "lang": "en",
     "argument": "Party A wants security cameras on every street corner because they deter crime and help catch criminals. Party B says mass surveillance destroys privacy and a free society shouldn't watch everyone all the time. Both agree cameras do reduce some crime.",
     "expected": { "dispute_type": ["values"], "verdict_one_of": ["conditional"] }
   },
   {
     "id": "values-charity",
+    "lang": "en",
     "argument": "Party A gives 20% of their income to overseas charities and says Party B is selfish for spending on family vacations instead. Party B says taking care of your own family first isn't selfish.",
-    "expected": { "dispute_type": ["values"], "verdict_one_of": ["conditional", "split"] }
+    "expected": { "dispute_type": ["values"], "verdict_one_of": ["side_b"] }
   },
   {
     "id": "values-whitelie",
+    "lang": "en",
     "argument": "Party A told their friend the haircut looked great when it didn't, to spare feelings. Party B says lying is always wrong and real friends tell the truth. Party A says kindness matters more than blunt honesty.",
-    "expected": { "dispute_type": ["values"], "verdict_one_of": ["conditional", "split"] }
+    "expected": { "dispute_type": ["values"], "verdict_one_of": ["side_a"] }
   },
   {
     "id": "values-inheritance",
+    "lang": "en",
     "argument": "Party A thinks the inheritance should be split equally between all siblings because equal is fair. Party B thinks the sibling who cared for their sick mother for five years deserves a larger share.",
-    "expected": { "dispute_type": ["values"], "verdict_one_of": ["conditional", "side_b", "split"] }
+    "expected": { "dispute_type": ["values"], "verdict_one_of": ["side_b"] }
   },
   {
     "id": "values-career",
+    "lang": "en",
     "argument": "Party A wants to take a lower-paying job doing meaningful nonprofit work. Party B, their spouse, says they have kids and financial security has to come before personal fulfillment. Both agree the pay cut is 30%.",
     "expected": { "dispute_type": ["values", "mixed"], "verdict_one_of": ["conditional", "split"] }
   },
   {
     "id": "def-hotdog",
+    "lang": "en",
     "argument": "Party A says a hot dog is obviously a sandwich: meat between bread. Party B says nobody who orders a sandwich expects a hot dog, so it isn't one. They've been arguing for an hour.",
     "expected": { "dispute_type": ["definitional"], "verdict_one_of": ["dissolved"] }
   },
   {
     "id": "def-chess",
+    "lang": "en",
     "argument": "Party A says chess is a sport because it has competition, rankings, and requires training. Party B says a sport requires physical athleticism, so chess is a game, not a sport.",
     "expected": { "dispute_type": ["definitional"], "verdict_one_of": ["dissolved"] }
   },
   {
     "id": "def-tomato",
+    "lang": "en",
     "argument": "Party A says a tomato is a fruit, full stop, botany says so. Party B says in cooking and common speech it's a vegetable and that's what matters. They want a ruling.",
     "expected": { "dispute_type": ["definitional"], "verdict_one_of": ["dissolved"] }
   },
   {
     "id": "def-camping",
+    "lang": "en",
     "argument": "Party A says sleeping in a tent with no shower isn't a real vacation, vacations mean rest and comfort. Party B says vacation just means time away doing what you love, and they love camping.",
-    "expected": { "dispute_type": ["definitional"], "verdict_one_of": ["dissolved"] }
+    "expected": { "dispute_type": ["definitional"], "verdict_one_of": ["side_b"] }
   },
   {
     "id": "def-aiart",
+    "lang": "en",
     "argument": "Party A says AI-generated images aren't real art because there's no human struggle behind them. Party B says art is whatever moves the viewer, regardless of how it was made.",
     "expected": { "dispute_type": ["definitional", "values"], "verdict_one_of": ["dissolved", "conditional"] }
   },
   {
     "id": "split-fire",
+    "lang": "en",
     "argument": "We can only keep one employee. Party A says keep Jordan: Jordan's sales numbers are double Sam's. Party B says keep Sam: Sam mentors juniors, holds the team together, and Jordan has caused two colleagues to quit. We agree the goal is what's best for the company over five years.",
-    "expected": { "dispute_type": ["mixed", "values"], "verdict_one_of": ["split", "side_b", "conditional"] }
+    "expected": { "dispute_type": ["mixed", "values"], "verdict_one_of": ["side_b"] }
   },
   {
     "id": "split-chores",
+    "lang": "en",
     "argument": "Party A says they do all the cooking so Party B should do all the cleaning. Party B says they work 20 more hours a week outside the home, so splitting home chores 50/50 isn't fair either. Both are exhausted.",
-    "expected": { "dispute_type": ["mixed", "values"], "verdict_one_of": ["split", "conditional"] }
+    "expected": { "dispute_type": ["mixed", "values"], "verdict_one_of": ["split"] }
   },
   {
     "id": "split-screentime",
+    "lang": "en",
     "argument": "Party A lets the kids have tablets at dinner because it keeps things calm and they finish their food. Party B says dinner should be for family conversation even if it's messier. Party A agrees conversation matters; Party B agrees the calm is real.",
-    "expected": { "dispute_type": ["values", "mixed"], "verdict_one_of": ["split", "conditional", "side_b"] }
+    "expected": { "dispute_type": ["values", "mixed"], "verdict_one_of": ["side_b"] }
   },
   {
     "id": "split-move",
+    "lang": "en",
     "argument": "Party A got a job offer in another city with 40% more pay and wants to move. Party B, their partner, would have to leave a job they love and their aging parents. Party A says the money secures their future; Party B says some things matter more than money. Both numbers are undisputed.",
     "expected": { "dispute_type": ["values", "mixed"], "verdict_one_of": ["conditional", "split"] }
   },
   {
     "id": "mixed-dishwasher",
+    "lang": "en",
     "argument": "Party A says pre-rinsing dishes before the dishwasher wastes water and modern machines don't need it. Party B says their dishes come out dirty without rinsing. Party A says Party B just loads the machine wrong.",
-    "expected": { "dispute_type": ["factual", "mixed"], "verdict_one_of": ["side_a", "split", "too_close"] }
+    "expected": { "dispute_type": ["factual", "mixed"], "verdict_one_of": ["side_a"] }
   },
   {
     "id": "mixed-dog",
+    "lang": "en",
     "argument": "Party A wants to adopt a husky because they're beautiful and the family will exercise more. Party B says they live in a small hot-climate apartment, both work full time, and a husky would be miserable. Party A says love is what matters most for a pet.",
     "expected": { "dispute_type": ["mixed", "factual"], "verdict_one_of": ["side_b"] }
+  },
+  {
+    "id": "fact-microwave",
+    "lang": "en",
+    "argument": "Party A won't use the microwave because it makes food radioactive and destroys all the nutrients. Party B says microwaves just heat the water in food, nothing becomes radioactive, and nutrient loss is no worse than other cooking.",
+    "expected": { "dispute_type": ["factual"], "verdict_one_of": ["side_b"] }
+  },
+  {
+    "id": "fact-grease-fire",
+    "lang": "en",
+    "argument": "A pan of oil caught fire while Party A and Party B were cooking. Party A grabbed the lid to smother it. Party B yelled at Party A for not just throwing water on it, because water puts out any fire. Party A says water on burning oil makes it explode.",
+    "expected": { "dispute_type": ["factual"], "verdict_one_of": ["side_a"] }
+  },
+  {
+    "id": "fact-moon-dark-side",
+    "lang": "en",
+    "argument": "Party B says the far side of the Moon is permanently dark, which is why it's called the dark side. Party A says the far side gets just as much sunlight as the near side; it only always faces away from Earth.",
+    "expected": { "dispute_type": ["factual"], "verdict_one_of": ["side_a"] }
+  },
+  {
+    "id": "fact-sleepwalker",
+    "lang": "en",
+    "argument": "Party A says you must never wake a sleepwalker because the shock can give them a heart attack. Party B says waking them is just disorienting and gently guiding them back to bed or waking them is fine and safer than letting them wander.",
+    "expected": { "dispute_type": ["factual"], "verdict_one_of": ["side_b"] }
+  },
+  {
+    "id": "logic-gambler",
+    "lang": "en",
+    "argument": "Party B wants to buy fifty lottery tickets this week because their numbers haven't come up in two years, so they're due. Party A says every draw is independent and past draws don't change the odds.",
+    "expected": { "dispute_type": ["logical"], "verdict_one_of": ["side_a"] }
+  },
+  {
+    "id": "logic-coffee-machine",
+    "lang": "en",
+    "argument": "Party A says the new espresso machine boosted team productivity, because output rose 15% the month it was installed. Party B points out that the same month two new engineers started and a big deadline hit, so the machine proves nothing.",
+    "expected": { "dispute_type": ["logical"], "verdict_one_of": ["side_b"] }
+  },
+  {
+    "id": "values-car-tank",
+    "lang": "en",
+    "argument": "Party A borrowed Party B's car for the weekend and promised to bring it back with a full tank. They returned it nearly empty and said it's just gas money, Party B is being petty. Party B says a promise is a promise.",
+    "expected": { "dispute_type": ["values"], "verdict_one_of": ["side_b"] }
+  },
+  {
+    "id": "values-wallet",
+    "lang": "en",
+    "argument": "Party A and Party B found a wallet on the street with $300 cash and the owner's ID with an address. Party A wants to return it with all the money. Party B says finders keepers, the owner was careless, and they should split the cash.",
+    "expected": { "dispute_type": ["values"], "verdict_one_of": ["side_a"] }
+  },
+  {
+    "id": "tr-fact-wet-hair",
+    "lang": "tr",
+    "argument": "Party A kışın ıslak saçla dışarı çıkarsan kesin soğuk algınlığına yakalanacağını söylüyor. Party B soğuk algınlığının virüslerle bulaştığını, ıslak saçın tek başına hastalık yapmadığını savunuyor.",
+    "expected": { "dispute_type": ["factual"], "verdict_one_of": ["side_b"] }
+  },
+  {
+    "id": "tr-fact-swim-after-meal",
+    "lang": "tr",
+    "argument": "Party A çocukların yemekten sonra en az bir saat denize girmemesi gerektiğini, yoksa kramp girip boğulabileceklerini söylüyor. Party B bunun bilimsel bir dayanağı olmayan eski bir inanış olduğunu söylüyor.",
+    "expected": { "dispute_type": ["factual"], "verdict_one_of": ["side_b"] }
+  },
+  {
+    "id": "tr-fact-antibiotic",
+    "lang": "tr",
+    "argument": "Party B gribe yakalanınca hemen antibiyotik içmek gerektiğini, yoksa iyileşmenin uzayacağını söylüyor. Party A gribin bir virüs olduğunu ve antibiyotiklerin virüslere etki etmediğini söylüyor.",
+    "expected": { "dispute_type": ["factual"], "verdict_one_of": ["side_a"] }
+  },
+  {
+    "id": "tr-logic-neighbor",
+    "lang": "tr",
+    "argument": "Party B komşunun yeni bir araba aldığını ve terfi ettiğini görünce kesin rüşvet aldığını söylüyor. Party A yeni araba ve terfinin rüşvete kanıt olmadığını, başka pek çok açıklaması olabileceğini söylüyor.",
+    "expected": { "dispute_type": ["logical"], "verdict_one_of": ["side_a"] }
+  },
+  {
+    "id": "tr-values-rent",
+    "lang": "tr",
+    "argument": "Party A ile ev arkadaşı Party B kirayı her ayın birinde yarı yarıya ödemek için anlaştı. Party B üç aydır payını iki hafta geç ödüyor ve \"nasılsa ödüyorum, ne fark eder\" diyor. Party A anlaşmaya uyulmasını istiyor, çünkü kirayı zamanında kendisi tamamlamak zorunda kalıyor.",
+    "expected": { "dispute_type": ["values"], "verdict_one_of": ["side_a"] }
+  },
+  {
+    "id": "tr-def-weekend",
+    "lang": "tr",
+    "argument": "Party A, Party B'ye \"hafta sonu bizde kalabilirsin\" dedi ve cumartesi gecesini kastetti. Party B bunu cuma akşamından pazar akşamına kadar diye anladı ve cuma kapıya geldi. Party A, Party B'nin davetsiz geldiğini, Party B ise Party A'nın sözünden döndüğünü düşünüyor.",
+    "expected": { "dispute_type": ["definitional"], "verdict_one_of": ["dissolved"] }
   }
 ]

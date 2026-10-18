@@ -43,6 +43,9 @@ next-env.d.ts
 # allow the example env template
 !.env.example
 
+# local eval output
+/eval-results/
+
 # sqlite db
 *.db
 *.db-journal
