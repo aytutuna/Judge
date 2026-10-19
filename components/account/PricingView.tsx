@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import type { PricingInfo } from "@/lib/account-types";
-import { t, type Key, type Lang } from "@/lib/i18n";
+import type { Entitlement, PricingInfo } from "@/lib/account-types";
+import { t, tWithDate, type Key, type Lang } from "@/lib/i18n";
 import { useLang } from "@/lib/lang";
 import { PRICING, formatPrice } from "@/lib/pricing";
 import { signInOffered } from "@/lib/tier";
@@ -48,19 +48,39 @@ export type PricingTableProps = {
   /** At least one sign-in method is set up; without one the sign-in call
    * to action would lead to a page where nothing works. */
   signInOffered: boolean;
+  /** The signed-in viewer's balance and plan, shown above the plans. */
+  entitlement?: Entitlement | null;
 };
 
 /** Free and Premium side by side. Buy buttons stay disabled ("Coming soon")
  * until a payment provider exists. Stateless for tests. */
-export function PricingTable({ lang, pricing, premiumEnabled, signedIn, signInOffered }: PricingTableProps) {
+export function PricingTable({ lang, pricing, premiumEnabled, signedIn, signInOffered, entitlement }: PricingTableProps) {
   const buy = (label: string) => (
     <button type="button" className={`${styles.btn} ${styles.secondary}`} disabled>
       {pricing.purchasesEnabled ? label : t(lang, "pricing.comingSoon")}
     </button>
   );
 
+  const sub = entitlement?.subscription ?? null;
+  const premiumPlan = Boolean(sub) || (entitlement?.credits ?? 0) > 0;
+
   return (
     <>
+      {signedIn && entitlement ? (
+        <p className={styles.status} data-testid="pricing-status">
+          <strong>
+            {t(lang, "account.plan")}: {t(lang, premiumPlan ? "account.plan.premium" : "account.plan.free")}
+          </strong>
+          <span>
+            {t(lang, "account.credits")}: {entitlement.credits}
+          </span>
+          {sub ? (
+            <span>
+              {tWithDate(lang, sub.willRenew ? "account.subscriptionRenews" : "account.subscriptionUntil", sub.periodEnd)}
+            </span>
+          ) : null}
+        </p>
+      ) : null}
       {premiumEnabled === false ? <p className={styles.notice}>{t(lang, "pricing.preview")}</p> : null}
       <div className={styles.plans}>
         <section className={styles.plan} aria-labelledby="plan-free">
@@ -140,6 +160,7 @@ export function PricingView() {
         premiumEnabled={known ? config?.premiumEnabled === true : null}
         signedIn={Boolean(me?.user)}
         signInOffered={signInOffered(config)}
+        entitlement={me?.entitlement ?? null}
       />
     </PageShell>
   );

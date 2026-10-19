@@ -68,7 +68,7 @@ export async function judgePremiumPanel(
 ): Promise<{ runs: JudgeRun[]; models: string[] }> {
   const common = { lang, premium: true, ...(context ? { context } : {}) };
   const served = await Promise.all(
-    seats.map(async (seat): Promise<{ run: JudgeRun; model: string }> => {
+    seats.map(async (seat, i): Promise<{ run: JudgeRun; model: string }> => {
       const run = await judgeOnce(text, framework, {
         ...common,
         analyzeBFirst: seat.analyzeBFirst,
@@ -79,6 +79,10 @@ export async function judgePremiumPanel(
         blocked: false,
         error: e instanceof Error ? e.message : String(e),
       }));
+      if (!run.ok) {
+        const why = run.blocked ? "refused" : "failed";
+        console.warn(`[premium] seat ${i} (${seat.model}) ${why}: ${run.error.slice(0, 200)}`);
+      }
       if (run.ok || !run.blocked || isHaiku(seat.model)) return { run, model: seat.model };
       console.warn(`[premium] ${seat.model} seat refused; rerunning it on ${HAIKU_MODEL}`);
       const retry = await judgeOnce(text, framework, {

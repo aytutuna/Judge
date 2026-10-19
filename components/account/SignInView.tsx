@@ -228,6 +228,7 @@ export function SignInPanel({
         <Link href="/privacy" className={styles.link}>
           {t(lang, "footer.privacy")}
         </Link>
+        .
       </p>
     </div>
   );

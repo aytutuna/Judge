@@ -26,11 +26,12 @@ const BADGE_KEY = {
  * worse, tr-lowercase a surviving English "If" into the misspelling "ıf".
  * The tr path lowercases with toLocaleLowerCase("tr") — never
  * default-locale, which turns "İ" into "i̇" — and keeps the capital when the
- * clause starts with the party label "Taraf". */
-function conditionalClause(raw: string, lang: Lang): string {
+ * clause starts with the party label "Taraf" or a restored real name
+ * (`keep`). */
+function conditionalClause(raw: string, lang: Lang, keep: readonly string[] = []): string {
   const s = raw.replace(/^(eğer|if)\s+/i, "");
   if (lang === "tr") {
-    if (s.startsWith("Taraf")) return s;
+    if (s.startsWith("Taraf") || keep.some((name) => name && s.startsWith(name))) return s;
     return s.charAt(0).toLocaleLowerCase("tr") + s.slice(1);
   }
   return /^(You|Your)\b/.test(s) ? s.charAt(0).toLowerCase() + s.slice(1) : s;
@@ -134,6 +135,7 @@ export function VerdictReveal({
   bIsSelf,
   lang,
   labelId,
+  restoredNames = [],
 }: {
   result: VerdictResult;
   nameA: string;
@@ -142,12 +144,17 @@ export function VerdictReveal({
   bIsSelf: boolean;
   lang: Lang;
   labelId?: string;
+  /** Every real name restored into the text (other people included), so a
+   * conditional opening with one keeps its capital. Never the narrator. */
+  restoredNames?: readonly string[];
 }) {
   const final = tugFinal(result);
   const label = verdictLabel(result, nameA, nameB, aIsSelf, bIsSelf, lang);
   const lean = result.lean;
   const leanIsSelf = lean ? (lean.party === "a" ? aIsSelf : bIsSelf) : false;
   const leanName = lean ? (lean.party === "a" ? nameA : nameB) : "";
+  // Real names that may open a conditional clause; never the "Sen"/"You" label.
+  const keepCase = [aIsSelf ? "" : nameA, bIsSelf ? "" : nameB, ...restoredNames];
 
   return (
     <>
@@ -236,7 +243,7 @@ export function VerdictReveal({
           {result.conditional.map((c, i) => (
             <div key={i} className={`${styles.branch} ${styles.branchIf}`}>
               <span className={styles.branchLead}>
-                {t(lang, "ifPrefix")} {conditionalClause(c.if_value, lang)}
+                {t(lang, "ifPrefix")} {conditionalClause(c.if_value, lang, keepCase)}
               </span>
               <span aria-hidden> → </span>
               {c.then}

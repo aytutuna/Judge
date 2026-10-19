@@ -1,10 +1,10 @@
 "use client";
 
-import { useId } from "react";
+import { useId, useMemo } from "react";
 import type { NameMapping, VerdictResult } from "@/lib/types";
 import { t, type Key, type Lang } from "@/lib/i18n";
 import { useLang } from "@/lib/lang";
-import { partyNames } from "@/lib/names";
+import { partyNames, personalizeResult, resolveParties } from "@/lib/names";
 import { verdictLang } from "@/lib/content-lang";
 import { stripLeadingEmoji } from "@/lib/text";
 import { panelSummary } from "@/lib/verdict-display";
@@ -65,7 +65,11 @@ function TranslationNote({ view, lang }: { view: TranslationView; lang: Lang }) 
  * in sage for a moment when it has just replaced the form.
  * Premium results (`tier: "premium"`) add a badge in the top row, a panel
  * line in the footnote and the web fact-check below the card; free results
- * render exactly as before. */
+ * render exactly as before.
+ * With a `nameMap` (the author's own view, right after judging) the real
+ * names go back into the verdict text as well as the labels; share pages
+ * pass none and stay anonymized. Display-only: the share title and anything
+ * that leaves the page use the anonymized text. */
 export function VerdictView({
   result: original,
   nameMap,
@@ -85,9 +89,17 @@ export function VerdictView({
   const lang = langProp ?? storeLang;
   // Narrator detection follows the language the argument was judged in;
   // only the labels follow the display language.
-  const { nameA, nameB, aIsSelf, bIsSelf } = partyNames(nameMap, lang, verdictLang(original));
+  const selfLang = verdictLang(original);
+  const { nameA, nameB, aIsSelf, bIsSelf } = partyNames(nameMap, lang, selfLang);
   const view = useVerdictTranslation(shareId, original, lang);
-  const result = view.result;
+  const result = useMemo(
+    () => personalizeResult(view.result, nameMap, selfLang),
+    [view.result, nameMap, selfLang],
+  );
+  const restoredNames = useMemo(
+    () => [...resolveParties(nameMap, selfLang).values()].filter((p) => !p.self).map((p) => p.name),
+    [nameMap, selfLang],
+  );
   const loading = view.status === "loading";
   const labelId = useId();
   const refused = Boolean(result.model_refused);
@@ -130,6 +142,7 @@ export function VerdictView({
           bIsSelf={bIsSelf}
           lang={lang}
           labelId={labelId}
+          restoredNames={restoredNames}
         />
 
         {!refused ? (
@@ -173,7 +186,7 @@ export function VerdictView({
 
         <CardActions
           share={
-            shareId ? <ShareButtons shareId={shareId} title={result.headline} lang={lang} /> : null
+            shareId ? <ShareButtons shareId={shareId} title={view.result.headline} lang={lang} /> : null
           }
           again={
             onJudgeAnother ? { label: t(lang, "judgeAnother"), onClick: onJudgeAnother } : undefined

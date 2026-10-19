@@ -25,11 +25,12 @@
 
 .h1 {
   margin: 0;
+  padding-top: 0.08em; /* room for capital diacritics (İ Ü Ö Ç Ş) */
   overflow-wrap: break-word;
   font-family: var(--font-display);
   font-size: var(--text-display-2);
   font-weight: 700;
-  line-height: 1.02;
+  line-height: 1.1;
   letter-spacing: -0.035em;
 }
 
@@ -372,6 +373,7 @@
   align-items: center;
   gap: 8px;
   margin: 0;
+  line-height: 1.2;
   font-family: var(--font-display);
   font-size: 26px;
   font-weight: 700;
@@ -517,4 +519,20 @@
   .dialog {
     border-color: CanvasText;
   }
+}
+
+.status {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 18px;
+  margin: 0;
+  padding: 12px 14px;
+  border: 1px solid var(--line-2);
+  border-radius: 14px;
+  color: var(--ink-2);
+  font-size: 14px;
+  line-height: 1.5;
+}
+.status strong {
+  color: var(--ink);
 }

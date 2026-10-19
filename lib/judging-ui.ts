@@ -28,30 +28,54 @@ export const CHECKLIST_KEYS = [
 /** Loop step (lib/thinking.ts THINKING_STEPS index) → checklist row. */
 export const STEP_TO_ROW: readonly number[] = [0, 1, 2, 2, 2, 2, 3, 4, 5];
 
-const JUDGES_ROW = 4;
+/** Premium runs the web fact-check right after the labels are swapped in
+ * and before the judges, so its row sits third and the rest shift down. */
+export const PREMIUM_CHECKLIST_KEYS = [
+  "thinking.read",
+  "thinking.label",
+  "thinking.factcheck",
+  "thinking.dig",
+  "thinking.crux",
+  "thinking.judges",
+  "thinking.votes",
+] as const satisfies readonly Key[];
+
+export const PREMIUM_STEP_TO_ROW: readonly number[] = [0, 1, 2, 2, 3, 3, 4, 5, 6];
 
 export type RowStatus = "pending" | "active" | "done";
 
 export function checklistState(
   state: DigState,
   done: boolean,
+  premium = false,
 ): { rows: RowStatus[]; stillJudging: boolean; ready: boolean } {
-  const n = CHECKLIST_KEYS.length;
+  const n = (premium ? PREMIUM_CHECKLIST_KEYS : CHECKLIST_KEYS).length;
+  const judgesRow = premium ? 5 : 4;
   if (done || state.mode === "finish") {
     return { rows: Array<RowStatus>(n).fill("done"), stillJudging: false, ready: true };
   }
   if (state.cycle >= 1) {
     // The story is told once; later cycles just say the judges are still out.
     const rows = Array.from({ length: n }, (_, i): RowStatus =>
-      i < JUDGES_ROW ? "done" : i === JUDGES_ROW ? "active" : "pending",
+      i < judgesRow ? "done" : i === judgesRow ? "active" : "pending",
     );
     return { rows, stillJudging: true, ready: false };
   }
-  const active = STEP_TO_ROW[state.step] ?? 0;
+  const active = (premium ? PREMIUM_STEP_TO_ROW : STEP_TO_ROW)[state.step] ?? 0;
   const rows = Array.from({ length: n }, (_, i): RowStatus =>
     i < active ? "done" : i === active ? "active" : "pending",
   );
   return { rows, stillJudging: false, ready: false };
+}
+
+/** The text of a checklist row. The web check only reads as finished once
+ * the verdict is in: the checklist is a timed story, and its row ticks
+ * over seconds before the real fact-check (which runs after anonymizing)
+ * could have ended. */
+export function checklistRowKey(key: Key, status: RowStatus, stillJudging: boolean, done: boolean): Key {
+  if (stillJudging && status === "active") return "thinking.stillJudging";
+  if (key === "thinking.factcheck" && done) return "thinking.factcheckDone";
+  return key;
 }
 
 /** Progress bar fill. Eases toward 92% (about .62 at 10 s, .82 at 20 s, .89
@@ -85,10 +109,4 @@ export function judgeDots(result: VerdictResult | null, done: boolean): JudgeDot
   if (!done || !result) return pending;
   const votes = sceneVerdictFrom(result).votes;
   return votes.length > 0 ? [...votes] : pending;
-}
-
-/** Premium's extra line above the checklist: the web fact-check runs before
- * the judges, so it reads as in progress until the verdict is in. */
-export function premiumCaptionKey(done: boolean): Key {
-  return done ? "thinking.factcheckDone" : "thinking.factcheck";
 }

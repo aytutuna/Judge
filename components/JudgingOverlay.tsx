@@ -5,18 +5,18 @@ import { sceneVerdictFrom } from "@/lib/balance";
 import { t, type Lang } from "@/lib/i18n";
 import {
   CHECKLIST_KEYS,
+  PREMIUM_CHECKLIST_KEYS,
   REVEAL_HOLD_MS,
+  checklistRowKey,
   checklistState,
   judgeDots,
   judgingBeatFor,
-  premiumCaptionKey,
   progressAt,
 } from "@/lib/judging-ui";
 import { resetScene, setSceneMode } from "@/lib/scene-bridge";
 import { INITIAL_STATE, announcement, plan, type DigState } from "@/lib/thinking";
 import { KEY_BY_CAPTION } from "@/lib/thinking-keys";
 import type { VerdictResult } from "@/lib/types";
-import { PremiumSpark } from "./PremiumBadge";
 import { useReducedMotion } from "./scene/useReducedMotion";
 import styles from "./JudgingOverlay.module.css";
 
@@ -27,11 +27,15 @@ import styles from "./JudgingOverlay.module.css";
  * each run's colour, the 3D balance tips (via the scene bridge), and after
  * a short hold onFinished hands over to the verdict.
  *
- * Accessibility: one polite live region (announcement() semantics); the
+ * Accessibility: one polite live region (announcement() semantics, plus
+ * the premium web-check line below); the
  * visible checklist and captions are aria-hidden so nothing is read twice.
  *
- * `premium` adds one plain-text line above the checklist for the web
- * fact-check and swaps the helper text; without it the markup is unchanged.
+ * `premium` adds the web fact-check row to the checklist, in pipeline order
+ * (after the labels, before the judges), and swaps the helper text; without
+ * it the markup is unchanged. Its row says "finished" only once `done`;
+ * screen readers get the web check from a second polite line, since the
+ * checklist itself is aria-hidden.
  */
 export function JudgingOverlay({
   lang,
@@ -101,7 +105,8 @@ export function JudgingOverlay({
     return () => clearInterval(id);
   }, [done]);
 
-  const list = checklistState(state, done);
+  const list = checklistState(state, done, premium);
+  const keys = premium ? PREMIUM_CHECKLIST_KEYS : CHECKLIST_KEYS;
   const dots = judgeDots(result, done);
 
   return (
@@ -111,24 +116,22 @@ export function JudgingOverlay({
         {t(lang, KEY_BY_CAPTION[announcement(state, done)])}
       </p>
 
-      {premium ? (
-        <p className={`${styles.row} ${styles.premiumRow}`} data-status={done ? "done" : "active"}>
-          <span className={styles.icon} />
-          <span>{t(lang, premiumCaptionKey(done))}</span>
-          <PremiumSpark className={styles.premiumSpark} />
-        </p>
-      ) : null}
-
       <ol className={styles.steps} aria-hidden="true">
-        {CHECKLIST_KEYS.map((key, i) => (
+        {keys.map((key, i) => (
           <li key={key} className={styles.row} data-status={list.rows[i]}>
             <span className={styles.icon} />
-            <span>
-              {list.stillJudging && list.rows[i] === "active" ? t(lang, "thinking.stillJudging") : t(lang, key)}
-            </span>
+            <span>{t(lang, checklistRowKey(key, list.rows[i], list.stillJudging, done))}</span>
           </li>
         ))}
       </ol>
+      {/* The checklist is aria-hidden, so the web check gets its own
+          screen-reader line, mounted from the start: it reads as in
+          progress and is announced as finished only once the verdict is in. */}
+      {premium ? (
+        <p className="sr-only" aria-live="polite" aria-atomic="true">
+          {t(lang, done ? "thinking.factcheckDone" : "thinking.factcheck")}
+        </p>
+      ) : null}
 
       <div className={styles.bar} aria-hidden="true">
         <span ref={barRef} />

@@ -147,4 +147,14 @@ describe("JudgingOverlay premium line", () => {
     expect(premium).toContain(t("en", "thinking.factcheck"));
     expect(premium).toContain(esc(t("en", "thinking.premiumHelper")));
   });
+
+  it("announces the web check as finished only once the verdict is in, outside the aria-hidden list", () => {
+    const srLine = (s: string) => `<p class="sr-only" aria-live="polite" aria-atomic="true">${esc(s)}</p>`;
+    const waiting = html(<JudgingOverlay {...props} premium />);
+    expect(waiting).toContain(srLine(t("en", "thinking.factcheck")));
+    expect(waiting).not.toContain(t("en", "thinking.factcheckDone"));
+    const done = html(<JudgingOverlay {...props} done premium />);
+    expect(done).toContain(srLine(t("en", "thinking.factcheckDone")));
+    expect(html(<JudgingOverlay {...props} />)).not.toContain(t("en", "thinking.factcheckDone"));
+  });
 });

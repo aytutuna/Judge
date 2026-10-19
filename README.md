@@ -42,7 +42,10 @@ its verdict but its confidence is capped, and the attack is shown.
 with *Party A* / *Party B*. The judge never knows who is who — which is also the
 bias mitigation — and only the anonymized text is stored. The anonymizer is
 itself a Claude call, so the raw text, names included, does go to Anthropic
-once; the privacy page says so. The name map returns to your browser only. If anonymization fails for any reason (refusal, quota,
+once; the privacy page says so. The name map returns to your browser only,
+where it puts the real names back into the verdict you see (a first-person
+narrator reads as "You" / "Sen"); share pages and the stored row stay
+anonymized. If anonymization fails for any reason (refusal, quota,
 timeout, malformed output), the request fails closed: nothing is judged and
 nothing is stored.
 
