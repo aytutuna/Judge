@@ -1,0 +1,14 @@
+# Runs verdict-backup.service every night (server time, UTC by default).
+# Installed to /etc/systemd/system/ by update.sh; edits there are overwritten.
+
+[Unit]
+Description=Nightly Verdict database backup
+
+[Timer]
+OnCalendar=*-*-* 03:30:00
+RandomizedDelaySec=15min
+# Catch up after the server was off at the scheduled time.
+Persistent=true
+
+[Install]
+WantedBy=timers.target

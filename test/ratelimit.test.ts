@@ -1,13 +1,49 @@
 import { createHash } from "node:crypto";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { mkdtempSync, rmSync } from "node:fs";
+import { tmpdir } from "node:os";
+import path from "node:path";
+import { createClient } from "@libsql/client";
+import { afterAll, afterEach, describe, expect, it, vi } from "vitest";
 import {
   checkVerdictLimits,
   dailyCap,
   IP_DAILY_LIMIT,
   IP_SHORT_LIMIT,
+  limitDbUrl,
   MemoryLimiter,
+  PersistentLimiter,
   visitorKey,
 } from "../lib/ratelimit";
+
+const tmp = mkdtempSync(path.join(tmpdir(), "verdict-limits-"));
+let dbCount = 0;
+/** A fresh libSQL file URL under the test's temp directory. */
+function tempDbUrl(): string {
+  dbCount += 1;
+  return fileUrl(path.join(tmp, `limits-${dbCount}.db`));
+}
+function fileUrl(p: string): string {
+  return `file:${p.replace(/\\/g, "/")}`;
+}
+const opened: PersistentLimiter[] = [];
+/** A limiter on `url`, as a freshly started app process would create it. */
+function openLimiter(url: string): PersistentLimiter {
+  const l = new PersistentLimiter(createClient({ url }));
+  opened.push(l);
+  return l;
+}
+
+afterAll(() => {
+  for (const l of opened) l.close();
+  const g = globalThis as unknown as { __verdictPersistentLimiter?: { limiter: PersistentLimiter } };
+  g.__verdictPersistentLimiter?.limiter.close();
+  // Best effort: Windows can hold the files briefly after close.
+  try {
+    rmSync(tmp, { recursive: true, force: true, maxRetries: 5, retryDelay: 100 });
+  } catch {
+    // Left for the OS temp cleaner.
+  }
+});
 
 const MIN = 60_000;
 const DAY = 24 * 60 * MIN;
@@ -69,6 +105,80 @@ describe("MemoryLimiter", () => {
   });
 });
 
+describe("MemoryLimiter.restore", () => {
+  it("rebuilds both IP windows and today's site count from counted verdicts", () => {
+    const l = new MemoryLimiter();
+    const yesterday = NOON - 13 * 60 * MIN; // 23:00 UTC the day before
+    l.restore(
+      [
+        { visitor: "a", at: yesterday },
+        ...Array.from({ length: IP_SHORT_LIMIT }, (_, i) => ({ visitor: "a", at: NOON - (9 - i) * MIN })),
+        { visitor: "b", at: NOON - 2 * MIN },
+      ],
+      NOON,
+    );
+    // Five in the last 10 minutes: "a" is refused until the oldest ages out.
+    expect(l.check("a", 1000, NOON)).toEqual({ ok: false, code: "rate_limited", retryAfterSec: 60 });
+    // Today already has 6 verdicts (the one yesterday does not count).
+    expect(l.check("c", 7, NOON).ok).toBe(true);
+    expect(l.check("d", 7, NOON)).toMatchObject({ ok: false, code: "daily_cap" });
+  });
+});
+
+describe("PersistentLimiter", () => {
+  it("keeps per-visitor windows across a restart", async () => {
+    const url = tempDbUrl();
+    const first = openLimiter(url);
+    for (let i = 0; i < IP_SHORT_LIMIT; i++) {
+      expect(await first.check("ip-a", 1000, NOON + i * MIN)).toEqual({ ok: true });
+    }
+    first.close();
+    const restarted = openLimiter(url);
+    expect(await restarted.check("ip-a", 1000, NOON + 5 * MIN)).toEqual({
+      ok: false,
+      code: "rate_limited",
+      retryAfterSec: 5 * 60,
+    });
+    expect(await restarted.check("ip-b", 1000, NOON + 5 * MIN)).toEqual({ ok: true });
+  });
+
+  it("keeps the site-wide daily count across a restart, and resets it at UTC midnight", async () => {
+    const url = tempDbUrl();
+    const first = openLimiter(url);
+    expect((await first.check("a", 2, NOON)).ok).toBe(true);
+    expect((await first.check("b", 2, NOON)).ok).toBe(true);
+    first.close();
+    expect(await openLimiter(url).check("c", 2, NOON + MIN)).toMatchObject({ ok: false, code: "daily_cap" });
+    const nextDay = Date.UTC(2026, 9, 19, 0, 0, 1);
+    expect((await openLimiter(url).check("c", 2, nextDay)).ok).toBe(true);
+  });
+
+  it("does not store refused requests, and deletes rows older than 24 hours", async () => {
+    const url = tempDbUrl();
+    const l = openLimiter(url);
+    expect((await l.check("a", 1, NOON)).ok).toBe(true);
+    expect((await l.check("b", 1, NOON)).ok).toBe(false);
+    const reader = createClient({ url });
+    try {
+      const count = async () => Number((await reader.execute("SELECT COUNT(*) AS n FROM rate_hits")).rows[0].n);
+      expect(await count()).toBe(1);
+      // A day later the old row goes when the next verdict is written.
+      expect((await l.check("c", 1, NOON + DAY + MIN)).ok).toBe(true);
+      expect(await count()).toBe(1);
+    } finally {
+      reader.close();
+    }
+  });
+});
+
+describe("limitDbUrl", () => {
+  it("is null when unset or blank", () => {
+    expect(limitDbUrl({})).toBeNull();
+    expect(limitDbUrl({ RATE_LIMIT_DB: "  " })).toBeNull();
+    expect(limitDbUrl({ RATE_LIMIT_DB: "file:/run/verdict/ratelimit.db" })).toBe("file:/run/verdict/ratelimit.db");
+  });
+});
+
 describe("visitorKey", () => {
   it("is a keyed hash: same input and secret match, another secret does not", () => {
     const env = { RATE_LIMIT_SALT: "salt-1" };
@@ -120,11 +230,42 @@ describe("checkVerdictLimits", () => {
   it("uses the in-memory store when Upstash is not configured", async () => {
     vi.stubEnv("UPSTASH_REDIS_REST_URL", "");
     vi.stubEnv("UPSTASH_REDIS_REST_TOKEN", "");
+    vi.stubEnv("RATE_LIMIT_DB", "");
     const ip = "203.0.113.77";
     for (let i = 0; i < IP_SHORT_LIMIT; i++) {
       expect(await checkVerdictLimits(ip)).toEqual({ ok: true });
     }
     expect(await checkVerdictLimits(ip)).toMatchObject({ ok: false, code: "rate_limited" });
+  });
+
+  it("uses the limit database when RATE_LIMIT_DB is set", async () => {
+    vi.stubEnv("UPSTASH_REDIS_REST_URL", "");
+    vi.stubEnv("UPSTASH_REDIS_REST_TOKEN", "");
+    const url = tempDbUrl();
+    vi.stubEnv("RATE_LIMIT_DB", url);
+    const ip = "203.0.113.78";
+    for (let i = 0; i < IP_SHORT_LIMIT; i++) {
+      expect(await checkVerdictLimits(ip)).toEqual({ ok: true });
+    }
+    expect(await checkVerdictLimits(ip)).toMatchObject({ ok: false, code: "rate_limited" });
+    const reader = createClient({ url });
+    try {
+      expect(Number((await reader.execute("SELECT COUNT(*) AS n FROM rate_hits")).rows[0].n)).toBe(IP_SHORT_LIMIT);
+    } finally {
+      reader.close();
+    }
+  });
+
+  it("fails closed when the limit database cannot be opened", async () => {
+    vi.stubEnv("UPSTASH_REDIS_REST_URL", "");
+    vi.stubEnv("UPSTASH_REDIS_REST_TOKEN", "");
+    vi.stubEnv("RATE_LIMIT_DB", fileUrl(path.join(tmp, "missing-dir", "x.db")));
+    vi.spyOn(console, "error").mockImplementation(() => {});
+    try {
+      expect(await checkVerdictLimits("198.51.100.2")).toMatchObject({ ok: false, code: "unavailable" });
+    } finally {
+      vi.restoreAllMocks();
+    }
   });
 
   it("fails closed when Redis is unreachable", async () => {

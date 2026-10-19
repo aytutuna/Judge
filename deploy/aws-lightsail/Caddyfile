@@ -1,0 +1,28 @@
+# Caddy config for Verdict. update.sh renders this template to
+# /etc/caddy/Caddyfile, replacing __SITE_ADDRESS__ with the host name from
+# NEXT_PUBLIC_SITE_URL in /etc/verdict/verdict.env. Edits made directly to
+# /etc/caddy/Caddyfile are overwritten on the next update.
+#
+# Caddy obtains and renews the HTTPS certificate on its own (Let's Encrypt,
+# with ZeroSSL as fallback) and redirects http:// to https://.
+
+__SITE_ADDRESS__ {
+	encode zstd gzip
+
+	header {
+		Strict-Transport-Security "max-age=31536000"
+		X-Content-Type-Options "nosniff"
+		X-Frame-Options "DENY"
+		Referrer-Policy "strict-origin-when-cross-origin"
+		Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=()"
+		-Server
+	}
+
+	reverse_proxy 127.0.0.1:3000 {
+		# The app rate-limits by the first X-Forwarded-For entry. Replace
+		# whatever the visitor sent with the address Caddy actually sees, so
+		# nobody can pick their own rate-limit identity.
+		header_up X-Forwarded-For {remote_host}
+		header_up -X-Real-IP
+	}
+}

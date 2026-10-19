@@ -5,13 +5,16 @@
  *
  * Backed by Upstash Redis when UPSTASH_REDIS_REST_URL/TOKEN are set, so the
  * limits hold across every serverless instance. Without them an in-memory
- * store is used: fine for local dev, but per instance only.
+ * store is used, per process only. On a single server, RATE_LIMIT_DB (a
+ * libSQL file URL) makes that store survive app restarts: every counted
+ * verdict is also written there, and a fresh process reloads the last 24 hours.
  *
- * Fails closed: if Redis errors or is slow, the request is refused as
- * "unavailable" rather than let through unmetered.
+ * Fails closed: if Redis or the limit database errors or is slow, the request
+ * is refused as "unavailable" rather than let through unmetered.
  */
 
 import { createHmac } from "node:crypto";
+import { createClient, type Client } from "@libsql/client";
 import { Ratelimit } from "@upstash/ratelimit";
 import { Redis } from "@upstash/redis";
 import { rateLimitSubject } from "./client-ip";
@@ -108,6 +111,21 @@ export class MemoryLimiter {
     return { ok: true };
   }
 
+  /** Replaces the state with previously counted verdicts (oldest first), as
+   * if check() had allowed each of them. */
+  restore(hits: readonly LimitHit[], now = Date.now()): void {
+    this.visits.clear();
+    this.day = Math.floor(now / DAY_MS);
+    this.dayCount = 0;
+    for (const { visitor, at } of hits) {
+      if (Math.floor(at / DAY_MS) === this.day) this.dayCount += 1;
+      if (at <= now - IP_DAILY_WINDOW_MS) continue;
+      const times = this.visits.get(visitor);
+      if (times) times.push(at);
+      else this.visits.set(visitor, [at]);
+    }
+  }
+
   /** Drops visitors with nothing left in the 24-hour window. */
   private sweep(now: number): void {
     for (const [key, times] of this.visits) {
@@ -116,12 +134,117 @@ export class MemoryLimiter {
   }
 }
 
+/** One counted verdict: who (the visitor key) and when (epoch ms). */
+export type LimitHit = { visitor: string; at: number };
+
+const PRUNE_EVERY_MS = 60 * MINUTE_MS;
+
+/**
+ * MemoryLimiter plus an append-only log of the verdicts it allowed, kept in a
+ * small SQLite table. The decisions stay in memory (one process, so they are
+ * atomic); the log only lets a restarted process rebuild the same state.
+ * Rows older than 24 hours are deleted on load, on every write and hourly.
+ */
+export class PersistentLimiter {
+  private memory: Promise<MemoryLimiter> | undefined;
+  private ready: Promise<void> | undefined;
+  private pruneTimer: ReturnType<typeof setInterval> | undefined;
+
+  constructor(private readonly client: Client) {}
+
+  async check(visitor: string, cap: number, now = Date.now()): Promise<LimitDecision> {
+    this.memory ??= this.load(now).catch((e: unknown) => {
+      // Let the next request retry instead of caching the failure.
+      this.memory = undefined;
+      throw e;
+    });
+    const memory = await this.memory;
+    const decision = memory.check(visitor, cap, now);
+    // If this write fails the verdict stays counted in memory (the safe
+    // side) and the caller refuses the request.
+    if (decision.ok) {
+      await this.client.batch(
+        [
+          { sql: "INSERT INTO rate_hits (visitor, at) VALUES (?, ?)", args: [visitor, now] },
+          { sql: "DELETE FROM rate_hits WHERE at <= ?", args: [now - IP_DAILY_WINDOW_MS] },
+        ],
+        "write",
+      );
+    }
+    return decision;
+  }
+
+  /** Stops the hourly cleanup and closes the database. */
+  close(): void {
+    if (this.pruneTimer) clearInterval(this.pruneTimer);
+    this.client.close();
+  }
+
+  private init(): Promise<void> {
+    this.ready ??= this.client
+      .batch(
+        [
+          "CREATE TABLE IF NOT EXISTS rate_hits (visitor TEXT NOT NULL, at INTEGER NOT NULL)",
+          "CREATE INDEX IF NOT EXISTS rate_hits_at ON rate_hits (at)",
+        ],
+        "write",
+      )
+      .then(() => undefined)
+      .catch((e: unknown) => {
+        this.ready = undefined;
+        throw e;
+      });
+    return this.ready;
+  }
+
+  private async load(now: number): Promise<MemoryLimiter> {
+    await this.init();
+    await this.prune(now);
+    const rs = await this.client.execute("SELECT visitor, at FROM rate_hits ORDER BY at");
+    const memory = new MemoryLimiter();
+    memory.restore(
+      rs.rows.map((row) => ({ visitor: String(row.visitor), at: Number(row.at) })),
+      now,
+    );
+    // Also clean up when no verdicts arrive, so no key outlives 24 hours.
+    this.pruneTimer ??= setInterval(() => {
+      this.prune(Date.now()).catch((e: unknown) => {
+        console.error("[ratelimit] cleaning the limit database failed:", e);
+      });
+    }, PRUNE_EVERY_MS);
+    this.pruneTimer.unref?.();
+    return memory;
+  }
+
+  private async prune(now: number): Promise<void> {
+    await this.client.execute({
+      sql: "DELETE FROM rate_hits WHERE at <= ?",
+      args: [now - IP_DAILY_WINDOW_MS],
+    });
+  }
+}
+
+/** RATE_LIMIT_DB as given, or null when unset (limits then live in memory only). */
+export function limitDbUrl(env: Record<string, string | undefined> = process.env): string | null {
+  return env.RATE_LIMIT_DB?.trim() || null;
+}
+
 type RedisLimiters = { cap: number; short: Ratelimit; daily: Ratelimit; site: Ratelimit };
 
 const globalForLimits = globalThis as unknown as {
   __verdictMemoryLimiter?: MemoryLimiter;
+  __verdictPersistentLimiter?: { url: string; limiter: PersistentLimiter };
   __verdictRedisLimiters?: RedisLimiters;
 };
+
+function persistentLimiter(url: string): PersistentLimiter {
+  const cached = globalForLimits.__verdictPersistentLimiter;
+  if (cached?.url === url) return cached.limiter;
+  cached?.limiter.close();
+  const limiter = new PersistentLimiter(createClient({ url }));
+  globalForLimits.__verdictPersistentLimiter = { url, limiter };
+  return limiter;
+}
 
 function redisLimiters(cap: number): RedisLimiters {
   const cached = globalForLimits.__verdictRedisLimiters;
@@ -190,8 +313,18 @@ export async function checkVerdictLimits(ip: string): Promise<LimitDecision> {
   const visitor = visitorKey(ip);
   const cap = dailyCap();
   if (!redisConfigured()) {
-    globalForLimits.__verdictMemoryLimiter ??= new MemoryLimiter();
-    return globalForLimits.__verdictMemoryLimiter.check(visitor, cap);
+    const url = limitDbUrl();
+    if (!url) {
+      globalForLimits.__verdictMemoryLimiter ??= new MemoryLimiter();
+      return globalForLimits.__verdictMemoryLimiter.check(visitor, cap);
+    }
+    try {
+      return await persistentLimiter(url).check(visitor, cap);
+    } catch (e) {
+      const error = e instanceof Error ? e.message : String(e);
+      console.error("[ratelimit] limit database failed, refusing request:", error);
+      return { ok: false, code: "unavailable", error };
+    }
   }
   try {
     return await withTimeout(checkRedis(visitor, cap), REDIS_TOTAL_TIMEOUT_MS);

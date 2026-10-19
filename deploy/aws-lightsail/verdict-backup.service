@@ -1,0 +1,29 @@
+# Nightly copy of the Verdict database; started by verdict-backup.timer.
+# Installed to /etc/systemd/system/ by update.sh; edits there are overwritten.
+
+[Unit]
+Description=Back up the Verdict database
+After=verdict.service
+
+[Service]
+Type=oneshot
+User=verdict
+Group=verdict
+EnvironmentFile=/etc/verdict/verdict.env
+ExecStart=/usr/bin/bash /opt/verdict/current/deploy/aws-lightsail/backup.sh
+Nice=10
+IOSchedulingClass=idle
+
+NoNewPrivileges=true
+ProtectSystem=strict
+ReadWritePaths=/var/lib/verdict
+ProtectHome=true
+PrivateTmp=true
+PrivateDevices=true
+PrivateNetwork=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+CapabilityBoundingSet=
+UMask=0077
