@@ -224,3 +224,17 @@
     background: CanvasText;
   }
 }
+
+/* Premium: the web fact-check line above the checklist. */
+.premiumRow {
+  margin: 0;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed var(--line-2);
+}
+
+.premiumSpark {
+  width: 11px;
+  height: 11px;
+  flex: none;
+  color: var(--terra);
+}

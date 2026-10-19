@@ -418,3 +418,148 @@ export async function checkTranslateLimits(ip: string): Promise<LimitDecision> {
     return { ok: false, code: "unavailable", error };
   }
 }
+
+// --- Per-user limits (premium) --------------------------------------------------
+
+/** Per-account buckets for signed-in features. Premium verdicts: 10 per 10
+ * minutes and 60 per 24 hours; clarifying questions: 20 per 10 minutes and
+ * 100 per 24 hours (they spend no credit, so the daily window is what bounds
+ * their cost per account). */
+export type UserBucket = "premium_verdict" | "clarify";
+
+type UserWindow = { limit: number; windowMs: number; redisWindow: `${number} ${"m" | "h" | "d"}`; prefix: string };
+
+export const USER_LIMITS: Record<UserBucket, readonly UserWindow[]> = {
+  premium_verdict: [
+    { limit: 10, windowMs: 10 * MINUTE_MS, redisWindow: "10 m", prefix: "verdict:u:pv10m" },
+    { limit: 60, windowMs: DAY_MS, redisWindow: "1 d", prefix: "verdict:u:pvday" },
+  ],
+  clarify: [
+    { limit: 20, windowMs: 10 * MINUTE_MS, redisWindow: "10 m", prefix: "verdict:u:cl10m" },
+    { limit: 100, windowMs: DAY_MS, redisWindow: "1 d", prefix: "verdict:u:clday" },
+  ],
+};
+
+/** Several sliding windows per key, in memory. Checks every window before
+ * recording, so a refused request costs no quota. */
+export class MultiWindowLimiter {
+  private hits = new Map<string, number[]>();
+  private readonly longest: number;
+
+  constructor(private readonly windows: readonly { limit: number; windowMs: number }[]) {
+    this.longest = Math.max(...windows.map((w) => w.windowMs));
+  }
+
+  check(key: string, now = Date.now()): LimitDecision {
+    const recent = (this.hits.get(key) ?? []).filter((t) => t > now - this.longest);
+    for (const { limit, windowMs } of this.windows) {
+      const inWindow = recent.filter((t) => t > now - windowMs);
+      if (inWindow.length >= limit) {
+        return {
+          ok: false,
+          code: "rate_limited",
+          retryAfterSec: retryAfterSec(inWindow[inWindow.length - limit] + windowMs, now),
+        };
+      }
+    }
+    recent.push(now);
+    this.hits.set(key, recent);
+    if (this.hits.size > 10_000) {
+      for (const [k, times] of this.hits) {
+        if (!times.some((t) => t > now - this.longest)) this.hits.delete(k);
+      }
+    }
+    return { ok: true };
+  }
+}
+
+const globalForUserLimits = globalThis as unknown as {
+  __verdictUserLimiters?: Partial<Record<UserBucket, MultiWindowLimiter>>;
+  __verdictUserRedis?: Partial<Record<UserBucket, Ratelimit[]>>;
+};
+
+function userRedisLimiters(bucket: UserBucket): Ratelimit[] {
+  const cache = (globalForUserLimits.__verdictUserRedis ??= {});
+  const cached = cache[bucket];
+  if (cached) return cached;
+  const redis = new Redis({
+    url: process.env.UPSTASH_REDIS_REST_URL,
+    token: process.env.UPSTASH_REDIS_REST_TOKEN,
+    retry: { retries: 1, backoff: () => 100 },
+    signal: () => AbortSignal.timeout(REDIS_ATTEMPT_TIMEOUT_MS),
+  });
+  const limiters = USER_LIMITS[bucket].map(
+    (w) =>
+      new Ratelimit({
+        redis,
+        timeout: 0,
+        analytics: false,
+        prefix: w.prefix,
+        limiter: Ratelimit.slidingWindow(w.limit, w.redisWindow),
+      }),
+  );
+  cache[bucket] = limiters;
+  return limiters;
+}
+
+/** Counts one use of `bucket` for this account, or says why it is refused.
+ * Redis when configured (shared across instances), else memory. Fails closed
+ * like the IP limits. */
+export async function checkUserLimits(userId: string, bucket: UserBucket): Promise<LimitDecision> {
+  if (!redisConfigured()) {
+    const limiters = (globalForUserLimits.__verdictUserLimiters ??= {});
+    const limiter = (limiters[bucket] ??= new MultiWindowLimiter(USER_LIMITS[bucket]));
+    return limiter.check(userId);
+  }
+  try {
+    const work = async (): Promise<LimitDecision> => {
+      for (const limiter of userRedisLimiters(bucket)) {
+        const res = await limiter.limit(userId);
+        if (res.reason === "timeout") throw new Error("rate limit check timed out");
+        if (!res.success) {
+          return { ok: false, code: "rate_limited", retryAfterSec: retryAfterSec(res.reset, Date.now()) };
+        }
+      }
+      return { ok: true };
+    };
+    return await withTimeout(work(), REDIS_TOTAL_TIMEOUT_MS);
+  } catch (e) {
+    const error = e instanceof Error ? e.message : String(e);
+    console.error("[ratelimit] Redis user check failed, refusing request:", error);
+    return { ok: false, code: "unavailable", error };
+  }
+}
+
+const DEFAULT_PREMIUM_DAILY_CAP = 500;
+
+/** PREMIUM_DAILY_CAP as a non-negative integer (0 pauses premium). */
+export function premiumDailyCap(env: Record<string, string | undefined> = process.env): number {
+  const raw = env.PREMIUM_DAILY_CAP?.trim();
+  const n = Number(raw);
+  return raw && Number.isInteger(n) && n >= 0 ? n : DEFAULT_PREMIUM_DAILY_CAP;
+}
+
+/**
+ * Site-wide premium cost breaker: refuses once PREMIUM_DAILY_CAP premium
+ * pipeline runs have started this UTC day. Counted from the reservations in
+ * the main database, refunded ones included (a refused or failed run still
+ * cost its model calls), so it holds across restarts and instances without
+ * extra state. Clarifying questions are not counted here; the per-account
+ * daily clarify window bounds them. Fails closed.
+ */
+export async function checkPremiumSiteCap(now: Date = new Date()): Promise<LimitDecision> {
+  const cap = premiumDailyCap();
+  const nextDayMs = (Math.floor(now.getTime() / DAY_MS) + 1) * DAY_MS;
+  try {
+    const { countPremiumToday } = await import("./entitlements");
+    const count = cap === 0 ? 0 : await countPremiumToday(now);
+    if (count >= cap) {
+      return { ok: false, code: "daily_cap", retryAfterSec: retryAfterSec(nextDayMs, now.getTime()) };
+    }
+    return { ok: true };
+  } catch (e) {
+    const error = e instanceof Error ? e.message : String(e);
+    console.error("[ratelimit] premium daily count failed, refusing request:", error);
+    return { ok: false, code: "unavailable", error };
+  }
+}

@@ -11,7 +11,8 @@ import { noOrphan, separatorPhrases } from "@/lib/text";
 import type { FrameworkChoice } from "@/lib/types";
 import styles from "./Hero.module.css";
 
-export type HeroPhase = "intake" | "judging" | "verdict";
+/** "clarify": premium only, the card holds the clarifying questions. */
+export type HeroPhase = "intake" | "clarify" | "judging" | "verdict";
 
 /** Longest argument the form accepts (the API enforces the same cap). */
 export const MAX_ARGUMENT = 6000;
@@ -43,6 +44,18 @@ export type HeroProps = {
   judging: ReactNode;
   /** Replaces the form card once the verdict is in. */
   verdict: ReactNode;
+  /** Free / Premium switch, placed after the CTA. Absent when premium is
+   * off: the form is then exactly what it was before premium existed. */
+  tierSwitch?: ReactNode;
+  /** Short progress text (premium's "checking if anything's missing"),
+   * read out politely. Only rendered alongside `tierSwitch`. */
+  status?: string | null;
+  /** Shown in the card instead of the form during the "clarify" phase. */
+  clarify?: ReactNode;
+  /** Premium's check step is running: the text, examples and framework are
+   * held so what is judged is what is shown. The form stays in the
+   * accessibility tree (unlike `inert`), so `status` is still read out. */
+  busy?: boolean;
 };
 
 function prefersReducedMotion(): boolean {
@@ -71,6 +84,10 @@ export function Hero({
   turnstile,
   judging,
   verdict,
+  tierSwitch,
+  status = null,
+  clarify,
+  busy = false,
 }: HeroProps) {
   const cardRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
@@ -97,7 +114,7 @@ export function Hero({
     } else if (phase === "verdict") {
       // A screen reader reads the verdict heading next, not stale captions.
       verdictRef.current?.focus({ preventScroll: true });
-    } else if (prev === "verdict") {
+    } else if (phase === "intake" && (prev === "verdict" || prev === "clarify")) {
       inputRef.current?.focus({ preventScroll: true });
     }
   }, [phase]);
@@ -148,6 +165,7 @@ export function Hero({
               <form
                 className={styles.form}
                 inert={isJudging}
+                hidden={phase === "clarify"}
                 onSubmit={(e) => {
                   e.preventDefault();
                   if (canSubmit) onSubmit();
@@ -172,6 +190,7 @@ export function Hero({
                     }
                   }}
                   placeholder={t(lang, "placeholder")}
+                  readOnly={busy}
                   rows={4}
                   maxLength={MAX_ARGUMENT}
                   required
@@ -189,6 +208,7 @@ export function Hero({
                       type="button"
                       className={styles.chip}
                       data-on={argument === t(lang, ex.text) ? "" : undefined}
+                      disabled={busy}
                       onClick={() => {
                         onExample(ex.text, i);
                         inputRef.current?.focus({ preventScroll: true });
@@ -228,7 +248,15 @@ export function Hero({
                       →
                     </span>
                   </button>
+                  {tierSwitch}
                 </div>
+
+                {tierSwitch ? (
+                  <p className={status ? styles.status : "sr-only"} role="status" aria-live="polite">
+                    {status ? <span className={styles.spinner} aria-hidden /> : null}
+                    {status}
+                  </p>
+                ) : null}
 
                 <details className={styles.advanced}>
                   <summary className={styles.summary}>
@@ -250,7 +278,9 @@ export function Hero({
                     </span>
                   </summary>
                   <div className={styles.advancedBody}>
-                    <FrameworkPicker value={framework} onChange={onFrameworkChange} />
+                    <fieldset className={styles.hold} disabled={busy}>
+                      <FrameworkPicker value={framework} onChange={onFrameworkChange} />
+                    </fieldset>
                   </div>
                 </details>
 
@@ -268,6 +298,7 @@ export function Hero({
                 </p>
               </form>
 
+              {phase === "clarify" ? <div className={styles.clarify}>{clarify}</div> : null}
               {isJudging ? <div className={styles.judging}>{judging}</div> : null}
             </div>
           )}

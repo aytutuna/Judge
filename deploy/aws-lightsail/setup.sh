@@ -381,6 +381,21 @@ CONTACT_EMAIL=
 # after the = signs. Empty = no bot check.
 NEXT_PUBLIC_TURNSTILE_SITE_KEY=
 TURNSTILE_SECRET_KEY=
+
+# --- Accounts and Premium, optional (off while BETTER_AUTH_SECRET is unset) ----
+# Needs a real domain in NEXT_PUBLIC_SITE_URL for Google, Apple and email
+# sign-in. See "Accounts and Premium" in the README for every setting.
+# BETTER_AUTH_SECRET=   (openssl rand -base64 32)
+# BETTER_AUTH_URL=https://your.domain
+# GOOGLE_CLIENT_ID=
+# GOOGLE_CLIENT_SECRET=
+# APPLE_CLIENT_ID=
+# APPLE_TEAM_ID=
+# APPLE_KEY_ID=
+# APPLE_PRIVATE_KEY_BASE64=
+# RESEND_API_KEY=
+# EMAIL_FROM=Verdict <signin@your.domain>
+# PREMIUM_DAILY_CAP=500
 EOF
     chmod 600 "$tmp"
     mv -f "$tmp" "$ENV_FILE"

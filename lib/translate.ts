@@ -43,6 +43,9 @@ export type TranslatableText = {
   losing_side_best_point: string;
   lean_reason: string | null;
   crux_trial: { attack: string; reasoning: string } | null;
+  /** Premium web fact-check claims. Present only when the verdict has a
+   * "checked" fact-check; source titles and URLs are never translated. */
+  fact_check?: { claim: string; summary: string }[];
 };
 
 /** Output schema (compact form, converted by toClaudeSchema). */
@@ -79,6 +82,9 @@ export function extractText(r: VerdictResult): TranslatableText {
     losing_side_best_point: r.losing_side_best_point,
     lean_reason: r.lean ? r.lean.reason : null,
     crux_trial: r.crux_trial ? { attack: r.crux_trial.attack, reasoning: r.crux_trial.reasoning } : null,
+    ...(r.fact_check?.status === "checked"
+      ? { fact_check: r.fact_check.claims.map((c) => ({ claim: c.claim, summary: c.summary })) }
+      : {}),
   };
 }
 
@@ -103,6 +109,7 @@ export function flattenText(x: TranslatableText): Slot[] {
     other(x.losing_side_best_point),
     ...(x.lean_reason === null ? [] : [other(x.lean_reason)]),
     ...(x.crux_trial ? [other(x.crux_trial.attack), other(x.crux_trial.reasoning)] : []),
+    ...(x.fact_check ?? []).flatMap((c) => [other(c.claim), other(c.summary)]),
   ];
 }
 
@@ -132,6 +139,10 @@ export function unflattenText(template: TranslatableText, flat: readonly string[
         return { attack, reasoning: next() };
       })()
     : null;
+  const fact_check = template.fact_check?.map(() => {
+    const claim = next();
+    return { claim, summary: next() };
+  });
   return {
     headline,
     crux,
@@ -145,6 +156,7 @@ export function unflattenText(template: TranslatableText, flat: readonly string[
     losing_side_best_point,
     lean_reason,
     crux_trial,
+    ...(fact_check ? { fact_check } : {}),
   };
 }
 
@@ -349,6 +361,18 @@ export function applyText(r: VerdictResult, text: TranslatableText, target: Lang
             ...r.crux_trial,
             attack: m(text.crux_trial?.attack ?? r.crux_trial.attack),
             reasoning: m(text.crux_trial?.reasoning ?? r.crux_trial.reasoning),
+          },
+        }
+      : {}),
+    ...(r.fact_check?.status === "checked"
+      ? {
+          fact_check: {
+            ...r.fact_check,
+            claims: r.fact_check.claims.map((c, i) => ({
+              ...c,
+              claim: m(text.fact_check?.[i]?.claim ?? c.claim),
+              summary: m(text.fact_check?.[i]?.summary ?? c.summary),
+            })),
           },
         }
       : {}),

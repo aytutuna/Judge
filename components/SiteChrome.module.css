@@ -100,6 +100,20 @@
   }
 }
 
+/* The account entry (client-rendered; empty until the viewer store has
+   answered) takes no box of its own. */
+.account {
+  display: contents;
+}
+
+/* Phones: once the account entry shows, brand + story link + toggle +
+   account no longer fit one row, so the story link gives way. */
+@media (max-width: 519px) {
+  .navRight:has(.account > *) .primary {
+    display: none;
+  }
+}
+
 /* ---------- Footer ---------- */
 .footer {
   position: relative;

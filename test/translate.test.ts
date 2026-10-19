@@ -484,3 +484,89 @@ describe("WindowLimiter (translation bucket)", () => {
     expect(limiter.check("v", 60_001).ok).toBe(true);
   });
 });
+
+describe("premium fact-check text", () => {
+  const PREMIUM_TR: VerdictResult = {
+    ...TR_RESULT,
+    tier: "premium",
+    panel: { models: ["claude-sonnet-5-5", "claude-sonnet-5-5", "claude-haiku-5-5"] },
+    fact_check: {
+      status: "checked",
+      claims: [
+        {
+          claim: "Domates botanik olarak bir meyvedir.",
+          status: "supported",
+          summary: "Botanik kaynaklar domatesi meyve sayar.",
+          sources: [{ title: "Tomato | Britannica", url: "https://www.britannica.com/plant/tomato" }],
+        },
+        {
+          claim: "Taraf B'nin dediği gibi yasal olarak sebzedir.",
+          status: "mixed",
+          summary: "Bir mahkeme kararı vergi için sebze saydı.",
+          sources: [],
+        },
+      ],
+    },
+  };
+  const EN_FACTS = [
+    { claim: "Botanically, a tomato is a fruit.", summary: "Botanical sources count the tomato as a fruit." },
+    { claim: "As Party B says, it is legally a vegetable.", summary: "A court ruling counted it as a vegetable for tax." },
+  ];
+
+  it("extracts claim and summary slots only for a checked fact-check, after every other slot", () => {
+    const text = extractText(PREMIUM_TR);
+    expect(text.fact_check).toEqual([
+      { claim: "Domates botanik olarak bir meyvedir.", summary: "Botanik kaynaklar domatesi meyve sayar." },
+      { claim: "Taraf B'nin dediği gibi yasal olarak sebzedir.", summary: "Bir mahkeme kararı vergi için sebze saydı." },
+    ]);
+    const base = flattenText(extractText(TR_RESULT)).map((s) => s.text);
+    const withFacts = flattenText(text).map((s) => s.text);
+    expect(withFacts.slice(0, base.length)).toEqual(base);
+    expect(withFacts.slice(base.length)).toEqual([
+      "Domates botanik olarak bir meyvedir.",
+      "Botanik kaynaklar domatesi meyve sayar.",
+      "Taraf B'nin dediği gibi yasal olarak sebzedir.",
+      "Bir mahkeme kararı vergi için sebze saydı.",
+    ]);
+    expect(unflattenText(text, withFacts)).toEqual(text);
+  });
+
+  it("adds no slots for none / unavailable fact-checks or free results", () => {
+    for (const fact_check of [
+      { status: "none" as const, claims: [] },
+      { status: "unavailable" as const, claims: [] },
+      undefined,
+    ]) {
+      const text = extractText({ ...TR_RESULT, fact_check });
+      expect(text).not.toHaveProperty("fact_check");
+      expect(planSegments(text, "en").segments).toEqual(planSegments(extractText(TR_RESULT), "en").segments);
+    }
+  });
+
+  it("translates claims and summaries but keeps status, sources, tier and panel", () => {
+    const out = applyText(PREMIUM_TR, { ...EN_TEXT, fact_check: EN_FACTS }, "en");
+    expect(out.tier).toBe("premium");
+    expect(out.panel).toEqual(PREMIUM_TR.panel);
+    expect(out.fact_check?.status).toBe("checked");
+    expect(out.fact_check?.claims).toEqual([
+      { ...PREMIUM_TR.fact_check!.claims[0], ...EN_FACTS[0] },
+      { ...PREMIUM_TR.fact_check!.claims[1], ...EN_FACTS[1] },
+    ]);
+    expect(out.fact_check?.claims[0].sources).toEqual([
+      { title: "Tomato | Britannica", url: "https://www.britannica.com/plant/tomato" },
+    ]);
+  });
+
+  it("round-trips through translateResult with the fact-check segments", async () => {
+    const plan = planSegments(extractText(PREMIUM_TR), "en");
+    const english = planSegments({ ...EN_TEXT, fact_check: EN_FACTS }, "en").segments;
+    expect(english).toHaveLength(plan.segments.length);
+    const call = vi.fn().mockResolvedValue({ ok: true, data: { segments: english.map(({ i, text }) => ({ i, text })) } });
+    const res = await translateResult(PREMIUM_TR, "en", { call });
+    expect(res.ok).toBe(true);
+    if (!res.ok) return;
+    expect(res.result.lang).toBe("en");
+    expect(res.result.fact_check?.claims.map((c) => c.claim)).toEqual(EN_FACTS.map((f) => f.claim));
+    expect(res.result.fact_check?.claims.map((c) => c.status)).toEqual(["supported", "mixed"]);
+  });
+});

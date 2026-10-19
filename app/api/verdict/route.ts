@@ -99,6 +99,12 @@ export async function POST(req: Request): Promise<NextResponse> {
           : "invalid";
     return NextResponse.json({ error: message, code }, { status: 400 });
   }
+  // Premium has its own gates (account, credits) and pipeline. Loaded only
+  // for premium requests, so the free path below runs exactly as before.
+  if (parsed.data.tier === "premium") {
+    const { premiumVerdict } = await import("@/lib/premium/handler");
+    return premiumVerdict(req, parsed.data);
+  }
   const { argument, framework, lang } = parsed.data;
   const ip = clientIp(req.headers);
 

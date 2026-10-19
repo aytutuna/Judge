@@ -56,6 +56,12 @@ async function db(): Promise<Client> {
   return client;
 }
 
+/** The shared, migrated client, for modules that keep their own tables in the
+ * same database (accounts, entitlements). */
+export async function getDb(): Promise<Client> {
+  return db();
+}
+
 export type StoredVerdict = {
   id: string;
   input: string;

@@ -1,5 +1,5 @@
 import { frameworkInstruction } from "./frameworks";
-import { claudeJson } from "./claude";
+import { claudeJson, type Effort } from "./claude";
 import { humanStyle } from "./style";
 import type { Lang } from "./i18n";
 import { JudgeRunOutput, type FrameworkChoice } from "./types";
@@ -141,17 +141,44 @@ export type JudgeRun =
   | { ok: true; data: JudgeRunOutput }
   | { ok: false; blocked: boolean; error: string };
 
+/** Added to the system prompt of premium judges only (`premium: true`). The
+ * free judge prompt never carries it. */
+export const PREMIUM_JUDGE_NOTE =
+  "When a FACT-CHECK block is present, rely on it over memory for the facts it covers; if it marks a decisive fact unverified or mixed, treat that fact as unsettled. List any fact-checked fact your verdict depends on in facts_relied_on.";
+
+export type JudgeOptions = {
+  analyzeBFirst?: boolean;
+  lang?: Lang;
+  timeoutMs?: number;
+  /** Model for this run. Absent: JUDGE_MODEL. */
+  model?: string;
+  /** Thinking depth. Absent: JUDGE_EFFORT, else "medium". */
+  effort?: Effort;
+  /** Extra material appended to the user message after the argument (the
+   * premium FACT-CHECK block). */
+  context?: string;
+  /** Adds PREMIUM_JUDGE_NOTE to the system prompt. */
+  premium?: boolean;
+};
+
 export async function judgeOnce(
   anonymizedArgument: string,
   framework: FrameworkChoice,
-  opts: { analyzeBFirst?: boolean; lang?: Lang; timeoutMs?: number } = {},
+  opts: JudgeOptions = {},
 ): Promise<JudgeRun> {
-  // Effort defaults to JUDGE_EFFORT (else "medium") inside claudeJson.
+  // Effort defaults to JUDGE_EFFORT (else "medium") inside claudeJson. The
+  // premium options only add keys when set, so a call without them sends
+  // exactly the request it always has.
+  const system = systemPrompt(framework, opts.analyzeBFirst ?? false, opts.lang ?? "en");
   const res = await claudeJson<unknown>({
-    system: systemPrompt(framework, opts.analyzeBFirst ?? false, opts.lang ?? "en"),
-    user: `THE ARGUMENT:\n\n${anonymizedArgument}`,
+    system: opts.premium ? `${system}\n\n${PREMIUM_JUDGE_NOTE}` : system,
+    user: opts.context
+      ? `THE ARGUMENT:\n\n${anonymizedArgument}\n\n${opts.context}`
+      : `THE ARGUMENT:\n\n${anonymizedArgument}`,
     schema: JUDGE_SCHEMA as unknown as Record<string, unknown>,
     timeoutMs: opts.timeoutMs,
+    ...(opts.model ? { model: opts.model } : {}),
+    ...(opts.effort ? { effort: opts.effort } : {}),
   });
   if (!res.ok) {
     return res.blocked
@@ -206,6 +233,8 @@ export async function judgeExtra(
   anonymizedArgument: string,
   framework: FrameworkChoice,
   lang: Lang = "en",
+  /** Premium escalation: the same FACT-CHECK context and note as the panel. */
+  extra: Pick<JudgeOptions, "context" | "premium"> = {},
 ): Promise<JudgeRun[]> {
   const configs = Array.from({ length: Math.max(0, n) }, (_, i) => ({
     analyzeBFirst: i % 2 === 0,
@@ -216,6 +245,7 @@ export async function judgeExtra(
         ...config,
         lang,
         timeoutMs: EXTRA_RUN_TIMEOUT_MS,
+        ...extra,
       }),
     ),
   );

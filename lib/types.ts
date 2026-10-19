@@ -1,4 +1,5 @@
 import { z } from "zod";
+import type { Entitlement } from "./account-types";
 
 export const ClaimKind = z.enum(["fact", "value", "definition", "logic"]);
 export type ClaimKind = z.infer<typeof ClaimKind>;
@@ -104,6 +105,37 @@ export const CruxTrial = z.object({
 });
 export type CruxTrial = z.infer<typeof CruxTrial>;
 
+// --- Premium ------------------------------------------------------------------
+export const Tier = z.enum(["free", "premium"]);
+export type Tier = z.infer<typeof Tier>;
+
+export const FactStatus = z.enum(["supported", "refuted", "mixed", "unverified"]);
+export type FactStatus = z.infer<typeof FactStatus>;
+
+export const FactSource = z.object({ title: z.string(), url: z.string() });
+export type FactSource = z.infer<typeof FactSource>;
+
+export const FactClaim = z.object({
+  claim: z.string(),
+  status: FactStatus,
+  summary: z.string(),
+  sources: z.array(FactSource),
+});
+export type FactClaim = z.infer<typeof FactClaim>;
+
+/** "checked": web-checked claims below; "none": nothing checkable (values,
+ * meanings, taste), no search was run; "unavailable": the fact-check failed or
+ * timed out and the judges ruled without it. */
+export const FactCheck = z.object({
+  status: z.enum(["checked", "none", "unavailable"]),
+  claims: z.array(FactClaim),
+});
+export type FactCheck = z.infer<typeof FactCheck>;
+
+/** models[i] is the model that produced runs[i]. */
+export const Panel = z.object({ models: z.array(z.string()) });
+export type Panel = z.infer<typeof Panel>;
+
 /** Aggregated result shown to the user and stored. Confidence is computed
  * from self-consistency (how often the judges agreed), never model-claimed. */
 export const VerdictResult = JudgeOutput.extend({
@@ -129,6 +161,12 @@ export const VerdictResult = JudgeOutput.extend({
    * target language of a stored translation. Optional so rows written before
    * it existed keep parsing; those fall back to verdictLang's heuristic. */
   lang: z.enum(["en", "tr"]).optional(),
+  /** "premium" on premium verdicts; absent on free (and all older) rows. */
+  tier: Tier.optional(),
+  /** Web fact-check run before judging (premium only). */
+  fact_check: FactCheck.optional(),
+  /** Which model produced each run (premium only). */
+  panel: Panel.optional(),
 });
 export type VerdictResult = z.infer<typeof VerdictResult>;
 
@@ -150,16 +188,39 @@ export const FrameworkChoice = z.object({
 });
 export type FrameworkChoice = z.infer<typeof FrameworkChoice>;
 
+export const ArgumentText = z.string().trim().min(20, "Tell us a bit more about the argument.").max(
+  6000,
+  "Keep it under 6000 characters.",
+);
+
+export const Clarification = z.object({
+  question: z.string().trim().min(1).max(300),
+  /** Empty string = skipped; skipped answers are dropped server-side. */
+  answer: z.string().trim().max(500),
+});
+export type Clarification = z.infer<typeof Clarification>;
+
 export const VerdictRequest = z.object({
-  argument: z.string().trim().min(20, "Tell us a bit more about the argument.").max(
-    6000,
-    "Keep it under 6000 characters.",
-  ),
+  argument: ArgumentText,
   framework: FrameworkChoice.default({ preset: "balanced" }),
   /** UI + judge output language. Stored as the result's `lang`. */
   lang: z.enum(["en", "tr"]).default("en"),
+  tier: Tier.default("free"),
+  /** Premium only: answers to the clarifying questions. Ignored on free. */
+  clarifications: z.array(Clarification).max(2).optional(),
 });
 export type VerdictRequest = z.infer<typeof VerdictRequest>;
+
+export const ClarifyRequest = z.object({
+  argument: ArgumentText,
+  lang: z.enum(["en", "tr"]).default("en"),
+});
+export type ClarifyRequest = z.infer<typeof ClarifyRequest>;
+
+export const ClarifyResponse = z.object({
+  questions: z.array(z.object({ id: z.string(), text: z.string() })).max(2),
+});
+export type ClarifyResponse = z.infer<typeof ClarifyResponse>;
 
 /** One replaced name, returned to the client only — never stored. */
 export const NameMapping = z.object({
@@ -174,3 +235,11 @@ export const VerdictResponse = z.object({
   name_map: z.array(NameMapping),
 });
 export type VerdictResponse = z.infer<typeof VerdictResponse>;
+
+/** POST /api/v1/verdict body. Free responses are exactly VerdictResponse;
+ * premium adds the updated entitlement, and `replayed` marks an
+ * Idempotency-Key replay of an already-finished verdict (name_map is [] then). */
+export type VerdictApiResponse = VerdictResponse & { entitlement?: Entitlement; replayed?: boolean };
+
+/** GET /api/v1/verdicts/{id}. The stored input text is never exposed. */
+export type StoredVerdictResponse = { id: string; result: VerdictResult; createdAt: string };

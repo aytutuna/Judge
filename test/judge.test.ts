@@ -1,9 +1,16 @@
+import { createHash } from "node:crypto";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("../lib/claude", () => ({ claudeJson: vi.fn() }));
 
 import { claudeJson, type ClaudeJsonCall } from "../lib/claude";
-import { EXTRA_RUN_TIMEOUT_MS, judgeExtra } from "../lib/judge";
+import {
+  EXTRA_RUN_TIMEOUT_MS,
+  judgeExtra,
+  judgeOnce,
+  judgeSelfConsistent,
+  PREMIUM_JUDGE_NOTE,
+} from "../lib/judge";
 import type { JudgeRunOutput } from "../lib/types";
 
 const mockClaude = vi.mocked(claudeJson);
@@ -75,5 +82,61 @@ describe("judgeExtra", () => {
   it("keeps the budget inside the route's worst case", () => {
     // anonymize 60s + judges 120s + extra judges + trial 60s <= maxDuration 300s.
     expect(60_000 + 120_000 + EXTRA_RUN_TIMEOUT_MS + 60_000).toBeLessThanOrEqual(300_000);
+  });
+});
+
+describe("free judge requests stay byte-identical", () => {
+  // SHA-256 of the six claudeJson call objects below, taken from the code
+  // before the premium options existed. A change here means the FREE judge
+  // request changed: only update it for an intentional free-prompt change.
+  const FREE_REQUESTS_SHA256 = "c0115cb802f0666e6b6a1ff56f52a97d03688adf12e975990c2cb3fa3745d284";
+
+  it("sends exactly the pre-premium requests (no model, effort, context or note)", async () => {
+    vi.stubEnv("JUDGE_RUNS", "");
+    mockClaude.mockResolvedValue({ ok: false, blocked: false, error: "x" });
+    await judgeSelfConsistent("Party A says x; Party B says y.", { preset: "balanced" }, "en");
+    await judgeExtra(2, "Party A says x; Party B says y.", { preset: "balanced", sliders: { a: 10 } }, "tr");
+    await judgeOnce("text", { preset: "balanced" });
+    const calls = mockClaude.mock.calls.map(([c]) => c as ClaudeJsonCall);
+    expect(calls).toHaveLength(6);
+    for (const c of calls) {
+      expect(Object.keys(c)).toEqual(["system", "user", "schema", "timeoutMs"]);
+      expect(c.system).not.toContain(PREMIUM_JUDGE_NOTE);
+      expect(c.user).not.toContain("FACT-CHECK");
+    }
+    expect(createHash("sha256").update(JSON.stringify(calls)).digest("hex")).toBe(FREE_REQUESTS_SHA256);
+    vi.unstubAllEnvs();
+  });
+});
+
+describe("judgeOnce premium options", () => {
+  it("adds model, effort, the context after the argument and the premium note", async () => {
+    mockClaude.mockResolvedValue({ ok: true, data: RUN });
+    const run = await judgeOnce("Party A says x.", { preset: "balanced" }, {
+      model: "claude-sonnet-5-5",
+      effort: "medium",
+      context: "FACT-CHECK (...):\n1. [supported] x - y (sources: a.org)",
+      premium: true,
+      analyzeBFirst: true,
+    });
+    expect(run.ok).toBe(true);
+    const call = mockClaude.mock.calls[0][0] as ClaudeJsonCall;
+    expect(call.model).toBe("claude-sonnet-5-5");
+    expect(call.effort).toBe("medium");
+    expect(call.user).toBe("THE ARGUMENT:\n\nParty A says x.\n\nFACT-CHECK (...):\n1. [supported] x - y (sources: a.org)");
+    expect(call.system.endsWith(`\n\n${PREMIUM_JUDGE_NOTE}`)).toBe(true);
+    expect(call.system).toContain(B_FIRST);
+  });
+
+  it("judgeExtra passes premium context and note to every extra run", async () => {
+    mockClaude.mockResolvedValue({ ok: true, data: RUN });
+    await judgeExtra(2, "text", { preset: "balanced" }, "en", { context: "FACT-CHECK x", premium: true });
+    for (const [c] of mockClaude.mock.calls) {
+      const call = c as ClaudeJsonCall;
+      expect(call.user).toBe("THE ARGUMENT:\n\ntext\n\nFACT-CHECK x");
+      expect(call.system.endsWith(PREMIUM_JUDGE_NOTE)).toBe(true);
+      expect(call.timeoutMs).toBe(EXTRA_RUN_TIMEOUT_MS);
+      expect(call).not.toHaveProperty("model");
+    }
   });
 });

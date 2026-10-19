@@ -9,12 +9,14 @@ import {
   checklistState,
   judgeDots,
   judgingBeatFor,
+  premiumCaptionKey,
   progressAt,
 } from "@/lib/judging-ui";
 import { resetScene, setSceneMode } from "@/lib/scene-bridge";
 import { INITIAL_STATE, announcement, plan, type DigState } from "@/lib/thinking";
 import { KEY_BY_CAPTION } from "@/lib/thinking-keys";
 import type { VerdictResult } from "@/lib/types";
+import { PremiumSpark } from "./PremiumBadge";
 import { useReducedMotion } from "./scene/useReducedMotion";
 import styles from "./JudgingOverlay.module.css";
 
@@ -27,17 +29,22 @@ import styles from "./JudgingOverlay.module.css";
  *
  * Accessibility: one polite live region (announcement() semantics); the
  * visible checklist and captions are aria-hidden so nothing is read twice.
+ *
+ * `premium` adds one plain-text line above the checklist for the web
+ * fact-check and swaps the helper text; without it the markup is unchanged.
  */
 export function JudgingOverlay({
   lang,
   done,
   result,
   onFinished,
+  premium = false,
 }: {
   lang: Lang;
   done: boolean;
   result: VerdictResult | null;
   onFinished: () => void;
+  premium?: boolean;
 }) {
   const reduced = useReducedMotion();
   const [state, setState] = useState<DigState>(INITIAL_STATE);
@@ -104,6 +111,14 @@ export function JudgingOverlay({
         {t(lang, KEY_BY_CAPTION[announcement(state, done)])}
       </p>
 
+      {premium ? (
+        <p className={`${styles.row} ${styles.premiumRow}`} data-status={done ? "done" : "active"}>
+          <span className={styles.icon} />
+          <span>{t(lang, premiumCaptionKey(done))}</span>
+          <PremiumSpark className={styles.premiumSpark} />
+        </p>
+      ) : null}
+
       <ol className={styles.steps} aria-hidden="true">
         {CHECKLIST_KEYS.map((key, i) => (
           <li key={key} className={styles.row} data-status={list.rows[i]}>
@@ -134,7 +149,7 @@ export function JudgingOverlay({
       <p className={styles.ready} aria-hidden="true">
         {t(lang, "thinking.ready")}
       </p>
-      <p className={styles.helper}>{t(lang, "thinking.helper")}</p>
+      <p className={styles.helper}>{t(lang, premium ? "thinking.premiumHelper" : "thinking.helper")}</p>
     </div>
   );
 }

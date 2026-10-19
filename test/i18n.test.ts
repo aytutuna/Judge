@@ -1,13 +1,16 @@
 import { describe, expect, it } from "vitest";
 import { KEY_BY_CAPTION } from "../lib/thinking-keys";
 import { leanTally } from "../components/VerdictReveal";
+import { API_ERROR_STATUS, type ApiErrorCode } from "../lib/api-errors";
 import {
   ERROR_KEY_BY_CODE,
   STRINGS,
   apiErrorMessage,
   contentLang,
+  formatDate,
   formatWait,
   t,
+  tWithDate,
   type Key,
 } from "../lib/i18n";
 import { partyNames } from "../lib/names";
@@ -19,8 +22,16 @@ const LEAN: Lean = { party: "a", unanimous: false, reason: "r" };
 const TR_KEYS = Object.keys(STRINGS.tr).sort();
 
 /** Intentionally language-invariant: each toggle aria label is written in
- * the language of the audience it serves. */
-const IDENTICAL_ALLOWLIST = new Set<Key>(["langToggle.toTr", "langToggle.toEn"]);
+ * the language of the audience it serves. "Premium" is the product name in
+ * both languages. */
+const IDENTICAL_ALLOWLIST = new Set<Key>([
+  "langToggle.toTr",
+  "langToggle.toEn",
+  "tier.premium",
+  "premium.badge",
+  "account.plan.premium",
+  "pricing.premium.title",
+]);
 
 describe("STRINGS table", () => {
   it("en and tr have identical key sets, both directions", () => {
@@ -202,6 +213,39 @@ describe("ERROR_KEY_BY_CODE", () => {
       expect(STRINGS.tr[key as Key]).toBeDefined();
     }
   });
+
+  it("covers every stable API error code (lib/api-errors.ts)", () => {
+    for (const code of Object.keys(API_ERROR_STATUS) as ApiErrorCode[]) {
+      const key = ERROR_KEY_BY_CODE[code];
+      expect(key, code).toBeDefined();
+      expect(STRINGS.en[key as Key], code).toBeTruthy();
+      expect(STRINGS.tr[key as Key], code).toBeTruthy();
+    }
+  });
+});
+
+describe("formatDate / tWithDate", () => {
+  const iso = "2026-11-18T12:00:00.000Z";
+
+  it("formats a calendar date per language", () => {
+    expect(formatDate("en", iso)).toBe("November 18");
+    expect(formatDate("tr", iso)).toBe("18 Kasım");
+  });
+
+  it("returns null for missing or broken input", () => {
+    for (const v of [undefined, null, "", "not a date", 42]) expect(formatDate("en", v)).toBeNull();
+  });
+
+  it("fills {date}, or falls back to the dateless sentence", () => {
+    expect(tWithDate("en", "tier.fairUse", iso)).toBe(
+      "You've used this month's premium verdicts. More on November 18.",
+    );
+    expect(tWithDate("tr", "tier.fairUse", iso)).toContain("18 Kasım tarihinde");
+    expect(tWithDate("en", "tier.fairUse", null)).toBe(STRINGS.en["tier.fairUseSoon"]);
+    for (const lang of ["en", "tr"] as const) {
+      expect(tWithDate(lang, "account.subscriptionRenews", iso)).not.toContain("{date}");
+    }
+  });
 });
 
 describe("formatWait", () => {
@@ -259,10 +303,40 @@ describe("apiErrorMessage", () => {
     expect(apiErrorMessage("en", null, 500)).toBe(STRINGS.en.errorFallback);
   });
 
+  it("localizes the premium codes, with the fair-use reset date", () => {
+    expect(apiErrorMessage("tr", { code: "no_credits" }, 402)).toBe(STRINGS.tr["error.no_credits"]);
+    expect(apiErrorMessage("en", { code: "signin_required" }, 401)).toBe("Sign in to use Premium.");
+    expect(
+      apiErrorMessage("en", { code: "fair_use", resetsAt: "2026-11-18T12:00:00.000Z" }, 402),
+    ).toBe("You've used this month's premium verdicts. More on November 18.");
+    const noDate = apiErrorMessage("tr", { code: "fair_use" }, 402);
+    expect(noDate).toBe(STRINGS.tr["error.fair_useSoon"]);
+    expect(noDate).not.toContain("{");
+  });
+
   it("localizes captcha_failed", () => {
     expect(apiErrorMessage("tr", { code: "captcha_failed" }, 403)).toBe(
       STRINGS.tr["error.captcha_failed"],
     );
+  });
+});
+
+describe("account and privacy copy", () => {
+  it("no longer claims there are no accounts", () => {
+    for (const key of ["privacy.lead", "privacy.notStored", "faq.private.a"] as Key[]) {
+      expect(STRINGS.en[key], key).not.toMatch(/no accounts/i);
+      expect(STRINGS.tr[key], key).not.toMatch(/hesap yok/i);
+    }
+  });
+
+  it("names the new processors and the raw-text clarify call", () => {
+    expect(STRINGS.en["privacy.processors"]).toMatch(/Resend/);
+    expect(STRINGS.en["privacy.processors"]).toMatch(/Apple/);
+    expect(STRINGS.en["privacy.processors"]).toMatch(/Google/);
+    expect(STRINGS.tr["privacy.processors"]).toMatch(/Resend/);
+    expect(STRINGS.en["privacy.accounts"]).toMatch(/no IP address/);
+    expect(STRINGS.en["privacy.webSearch"]).toMatch(/names included/);
+    expect(STRINGS.tr["privacy.webSearch"]).toMatch(/isimler dahil/);
   });
 });
 

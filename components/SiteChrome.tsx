@@ -1,11 +1,14 @@
 import Link from "next/link";
 import { t, type Lang } from "@/lib/i18n";
+import { AccountMenu } from "./AccountMenu";
 import { BrandMark } from "./BrandMark";
 import { LangToggle } from "./LangToggle";
 import styles from "./SiteChrome.module.css";
 
 /** Shared page chrome. No hooks: usable from server pages (share page, which
- * passes its Accept-Language lang and no toggle) and client pages alike. */
+ * passes its Accept-Language lang and no toggle) and client pages alike. The
+ * account entry is its own client component and renders nothing until the
+ * viewer store has answered, so server HTML is unchanged. */
 
 export function SkipLink({ lang }: { lang: Lang }) {
   return (
@@ -48,6 +51,9 @@ export function SiteHeader({
               </nav>
             ) : null}
             {toggle ? <LangToggle lang={lang} /> : null}
+            <span className={styles.account}>
+              <AccountMenu lang={lang} />
+            </span>
           </div>
         </div>
       </header>
@@ -75,6 +81,9 @@ export function SiteFooter({ lang, toggle = false }: { lang: Lang; toggle?: bool
               </li>
               <li>
                 <Link href="/about">{t(lang, "footer.about")}</Link>
+              </li>
+              <li>
+                <Link href="/pricing">{t(lang, "footer.pricing")}</Link>
               </li>
               <li>
                 <Link href="/privacy">{t(lang, "footer.privacy")}</Link>

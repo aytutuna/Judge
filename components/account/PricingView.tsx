@@ -1,0 +1,146 @@
+"use client";
+
+import Link from "next/link";
+import type { PricingInfo } from "@/lib/account-types";
+import { t, type Key, type Lang } from "@/lib/i18n";
+import { useLang } from "@/lib/lang";
+import { PRICING, formatPrice } from "@/lib/pricing";
+import { signInOffered } from "@/lib/tier";
+import { useViewer } from "@/lib/use-viewer";
+import { PremiumSpark } from "../PremiumBadge";
+import styles from "./AccountPages.module.css";
+import { PageShell } from "./PageShell";
+
+const FREE_FEATURES: Key[] = ["pricing.free.f1", "pricing.free.f2", "pricing.free.f3"];
+const PREMIUM_FEATURES: Key[] = ["pricing.premium.f1", "pricing.premium.f2", "pricing.premium.f3"];
+
+function Features({ lang, keys }: { lang: Lang; keys: Key[] }) {
+  return (
+    <ul className={styles.features}>
+      {keys.map((k) => (
+        <li key={k}>
+          <span className={styles.tick} aria-hidden>
+            <svg viewBox="0 0 10 10">
+              <path
+                d="M2 5.3 4.1 7.3 8 2.9"
+                fill="none"
+                stroke="#fff"
+                strokeWidth={1.6}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </span>
+          <span>{t(lang, k)}</span>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+export type PricingTableProps = {
+  lang: Lang;
+  pricing: PricingInfo;
+  /** null while /config is loading: neither the preview notice nor the
+   * sign-in call to action shows until it is known. */
+  premiumEnabled: boolean | null;
+  signedIn: boolean;
+  /** At least one sign-in method is set up; without one the sign-in call
+   * to action would lead to a page where nothing works. */
+  signInOffered: boolean;
+};
+
+/** Free and Premium side by side. Buy buttons stay disabled ("Coming soon")
+ * until a payment provider exists. Stateless for tests. */
+export function PricingTable({ lang, pricing, premiumEnabled, signedIn, signInOffered }: PricingTableProps) {
+  const buy = (label: string) => (
+    <button type="button" className={`${styles.btn} ${styles.secondary}`} disabled>
+      {pricing.purchasesEnabled ? label : t(lang, "pricing.comingSoon")}
+    </button>
+  );
+
+  return (
+    <>
+      {premiumEnabled === false ? <p className={styles.notice}>{t(lang, "pricing.preview")}</p> : null}
+      <div className={styles.plans}>
+        <section className={styles.plan} aria-labelledby="plan-free">
+          <h2 id="plan-free" className={styles.planTitle}>
+            {t(lang, "pricing.free.title")}
+          </h2>
+          <p className={styles.planPrice}>{t(lang, "pricing.free.price")}</p>
+          <Features lang={lang} keys={FREE_FEATURES} />
+          <Link href="/" className={`${styles.btn} ${styles.secondary}`}>
+            {t(lang, "footer.home")}
+          </Link>
+        </section>
+
+        <section className={`${styles.plan} ${styles.planHighlight}`} aria-labelledby="plan-premium">
+          <h2 id="plan-premium" className={styles.planTitle}>
+            <PremiumSpark />
+            {t(lang, "pricing.premium.title")}
+          </h2>
+          <Features lang={lang} keys={PREMIUM_FEATURES} />
+
+          <h3 className={styles.groupTitle}>{t(lang, "pricing.packsTitle")}</h3>
+          <p className={styles.small}>{t(lang, "pricing.packsLead")}</p>
+          <ul className={styles.offers}>
+            {pricing.packs.map((p) => (
+              <li key={p.id} className={styles.offer}>
+                <p className={styles.offerName}>{t(lang, "pricing.pack", { n: p.credits })}</p>
+                <p className={styles.offerMeta}>
+                  {t(lang, "pricing.perVerdict", { price: formatPrice(p.priceUsd / p.credits, lang) })}
+                </p>
+                <span className={styles.offerPrice}>{formatPrice(p.priceUsd, lang)}</span>
+                {buy(formatPrice(p.priceUsd, lang))}
+              </li>
+            ))}
+          </ul>
+
+          <h3 className={styles.groupTitle}>{t(lang, "pricing.monthly.title")}</h3>
+          <ul className={styles.offers}>
+            <li className={styles.offer}>
+              <p className={styles.offerName}>
+                {t(lang, "pricing.monthly.cap", { n: pricing.monthly.fairUseCap })}
+              </p>
+              <p className={styles.offerMeta}>{t(lang, "pricing.monthly.renews")}</p>
+              <span className={styles.offerPrice}>{formatPrice(pricing.monthly.priceUsd, lang)}</span>
+              {buy(formatPrice(pricing.monthly.priceUsd, lang))}
+            </li>
+          </ul>
+
+          {premiumEnabled && !signedIn && signInOffered ? (
+            <Link href="/signin?next=%2Fpricing" className={`${styles.btn} ${styles.primary}`}>
+              {t(lang, "pricing.signIn")}
+            </Link>
+          ) : null}
+        </section>
+      </div>
+      <p className={styles.small}>{t(lang, "pricing.note")}</p>
+    </>
+  );
+}
+
+/** /pricing: prices from /api/v1/config, falling back to lib/pricing.ts
+ * (the same source the server uses) until it answers. */
+export function PricingView() {
+  const lang = useLang();
+  const { config, me, status } = useViewer();
+  const known = status === "ready" || status === "error";
+  return (
+    <PageShell
+      lang={lang}
+      kicker={t(lang, "nav.pricing")}
+      title={t(lang, "pricing.title")}
+      lead={t(lang, "pricing.lead")}
+      wide
+    >
+      <PricingTable
+        lang={lang}
+        pricing={config?.pricing ?? PRICING}
+        premiumEnabled={known ? config?.premiumEnabled === true : null}
+        signedIn={Boolean(me?.user)}
+        signInOffered={signInOffered(config)}
+      />
+    </PageShell>
+  );
+}

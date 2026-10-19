@@ -132,6 +132,192 @@ The visitor IP comes from the first `X-Forwarded-For` entry, so it is only
 trustworthy behind a proxy that overwrites that header: Vercel does, and so
 does the Caddy setup in the Lightsail guide below.
 
+## Accounts and Premium
+
+Accounts are optional. Signed-out and free visitors get exactly the free
+experience above. Signing in (Apple, Google or an emailed link) unlocks
+**Premium**: clarifying questions, web fact-checking with sources and a
+stronger judge panel. It is paid for with credits (one premium verdict = one
+credit) or a monthly plan with a fair-use cap. There is no payment provider
+yet: prices live in `lib/pricing.ts`, the buy buttons read "Coming soon", and
+testers get premium from the admin script below.
+
+Accounts use [Better Auth](https://www.better-auth.com) on the same database
+(`DATABASE_URL`). The tables (`user`, `session`, `account`, `verification`
+and the entitlement tables) are created automatically on first use. Sessions
+store no IP address or device string, and provider access tokens are dropped
+after sign-in.
+
+| Env var | Default | Meaning |
+|---|---|---|
+| `BETTER_AUTH_SECRET` | *(required in production)* | At least 32 random characters (`openssl rand -base64 32`). Signs session cookies. Unset in production = accounts and Premium are off, and `/api/v1/config` reports every sign-in method as unavailable; the free site is unaffected. Locally a fixed development secret is used (with a warning) |
+| `BETTER_AUTH_URL` | `NEXT_PUBLIC_SITE_URL`, else the local host | Public origin, e.g. `https://verdict.example.org`. OAuth callbacks are `<origin>/api/auth/callback/google` and `/apple` |
+| `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` | *(empty)* | Google OAuth client of type "Web application". Both set = the Google button works |
+| `GOOGLE_IOS_CLIENT_ID`, `GOOGLE_ANDROID_CLIENT_ID` | *(empty)* | Extra accepted ID-token audiences for the future mobile app |
+| `APPLE_CLIENT_ID` | *(empty)* | Apple Services ID used for web sign-in (e.g. `org.verdict.web`) |
+| `APPLE_TEAM_ID`, `APPLE_KEY_ID` | *(empty)* | Your 10-character Apple team id, and the key id of the Sign in with Apple key |
+| `APPLE_PRIVATE_KEY_BASE64` | *(empty)* | The whole `AuthKey_<KEYID>.p8` file, base64-encoded on one line (`base64 -w0 AuthKey_XXXX.p8`). The app signs Apple's client secret from it and renews it on its own. All four Apple values set = the Apple button works |
+| `APPLE_APP_BUNDLE_ID` | *(empty)* | The iOS app's bundle id, accepted as an extra audience for native Sign in with Apple |
+| `RESEND_API_KEY`, `EMAIL_FROM` | *(empty)* | [Resend](https://resend.com) API key and sender, e.g. `Verdict <signin@verdict.example.org>` on a domain verified in Resend. Both set = email sign-in links work. With `TURNSTILE_SECRET_KEY` set, the email form needs a Turnstile token too |
+| `DEV_LOGIN` | *(empty)* | `1` shows a "test sign-in" for local testing. It works only when **all** hold: not a production build (`next build` output is production whatever `NODE_ENV` it is started with), `DEV_LOGIN=1`, the server listens on `127.0.0.1` or `::1` only (`npm run dev:login`, i.e. `next dev -H 127.0.0.1`; plain `npm run dev` listens on every interface and is refused), and the request's `Host` is `localhost`, `127.0.0.1` or `[::1]`. Anywhere else the endpoint answers 404 |
+| `PREMIUM_ENABLED` | `1` | `0` turns Premium off (the switch disappears; premium requests get `503 not_configured`) |
+| `PREMIUM_DAILY_CAP` | `500` | Site-wide premium runs per UTC day, counted from the database, refunded ones included (a refused or failed run still costs its model calls). A cost circuit breaker; `0` pauses Premium. Clarifying questions are not counted; the per-account limit below bounds them |
+| `PREMIUM_JUDGE_MODELS` | `claude-sonnet-5-5,claude-sonnet-5-5,claude-haiku-5-5` | Premium panel seats, in order (1 to 5) |
+| `PREMIUM_SONNET_EFFORT` | `medium` | Thinking depth for non-Haiku premium judges: `low`, `medium` or `high` |
+| `PREMIUM_FACTCHECK_MODEL` | `claude-haiku-5-5` | Model for the web fact-check |
+| `PREMIUM_FACTCHECK_MAX_SEARCHES` | `3` | Web searches per fact-check (1 to 5), $0.01 each |
+
+Sign-in providers without credentials are reported as unavailable by
+`GET /api/v1/config`, and the sign-in page shows them disabled.
+
+**Limits for Premium:** per account 10 premium verdicts per 10 minutes and
+60 per 24 hours, 20 clarifying-question requests per 10 minutes and 100 per
+24 hours (`429 rate_limited`), plus `PREMIUM_DAILY_CAP` (`503 daily_cap`). Premium
+skips Turnstile: the signed-in account and these limits are the gate. A
+premium credit is reserved before any model call and returned automatically
+if the verdict fails, if the judges decline, or if every Sonnet seat failed
+and the verdict rests on Haiku alone (that verdict is still shown).
+
+**A real domain is needed before going live** with email, Google or Apple
+sign-in on the web: Resend cannot send from `sslip.io`, and Google and Apple
+want a domain you own for the consent screen and return URLs. Native app
+sign-in does not depend on it.
+
+### How a premium verdict is made
+
+1. **Clarifying questions** (`POST /api/v1/clarify`, Haiku, never costs a
+   credit): up to 2 short questions when a fact that would change the winner
+   is missing. Answers (skipped ones dropped) are appended to the argument
+   before names are swapped out.
+2. **Web fact-check** (Haiku with Anthropic's `web_search_20250305` tool, up
+   to `PREMIUM_FACTCHECK_MAX_SEARCHES` searches, on the anonymized text).
+   Only source URLs that really came back from the search are kept; a claim
+   with no surviving source is shown as "unverified". Pure values disputes
+   are not searched. A failure or a 40 s timeout lets the judges rule without
+   it ("unavailable").
+3. **Judge panel**: 2 × Sonnet + 1 × Haiku in parallel, each seeing the
+   fact-check. Escalation and the crux trial work as on the free tier.
+4. The verdict is stored like a free one (anonymized), with `tier`,
+   `fact_check` and `panel` added, and the reserved credit is consumed
+   (or returned, see above).
+
+**Cost per premium verdict** (Haiku $0.10/$0.50 and Sonnet $2/$10 per
+million tokens, $0.01 per search). Measured on 6 logged local runs:
+**$0.031 to $0.052**, about $0.05 for a factual dispute with 2 searches and
+about $0.03 for a values dispute with no search; the two Sonnet seats are
+most of it. That is the typical range, not a limit: every model call may
+write up to 16k output tokens, so the code allows up to about **$0.43** for
+one verdict (anonymize $0.008, fact-check with 3 searches $0.044, two Sonnet
+seats $0.34, Haiku seat $0.008, escalation $0.017, crux trial $0.017). Each
+clarifying-question call can add up to about $0.008. A free verdict costs
+about $0.005.
+
+**Margins** have to be worked out on what is left after the app store's cut
+(Apple and Google keep 15 to 30%), since the mobile app is the main target.
+At a 30% cut one credit nets about $0.139 (10 for $1.99) or $0.116 (30 for
+$4.99): enough at the typical cost, though a verdict at the code ceiling
+costs about 3 credits. The monthly plan nets about $3.49 to $4.24 of its
+$4.99: at the current cap of 200 a heavy user costs $6.20 to $10.40, and
+even a cap of 60 costs about $3.12 at $0.052 a verdict, leaving almost
+nothing. Before selling it, lower the cap (`PRICING.monthly.fairUseCap` in
+`lib/pricing.ts`), raise the price, or lower the per-verdict ceiling (for
+example a smaller `max_tokens` for the Sonnet judge calls, whose measured
+output is 500 to 800 tokens; not done yet).
+
+### Try it locally (test sign-in)
+
+```bash
+# in .env: DEV_LOGIN=1
+npm run dev:login -- -p 3600
+# open http://127.0.0.1:3600/signin and use the test sign-in button
+npx tsx --env-file=.env scripts/grant.ts test@verdict.local --credits 5
+```
+
+### Give testers Premium (admin script)
+
+```bash
+npx tsx --env-file=.env scripts/grant.ts <email> --credits 20
+npx tsx --env-file=.env scripts/grant.ts <email> --subscription 30d
+npx tsx --env-file=.env scripts/grant.ts <email> --revoke
+npx tsx --env-file=.env scripts/grant.ts <email> --show
+```
+
+The person must have signed in once; add `--create` to make the account
+first. Every change is recorded in the grant ledger with source `admin`, and
+the resulting balance is printed. On the Lightsail server, from the app
+directory: `sudo -u verdict npx tsx --env-file=/etc/verdict/verdict.env scripts/grant.ts <email> --credits 20`.
+
+### API for mobile
+
+The website and the future iOS/Android app share one JSON API. Base URL
+`https://<domain>/api/v1`; changes within v1 are additive only.
+
+- **Auth:** `Authorization: Bearer <session token>`. No cookies or CORS
+  needed for native apps; the website uses the HttpOnly cookie
+  `verdict.session_token` for the same session. Cookie-authenticated
+  writes must come from the site's own origin (`403 bad_origin`), bearer
+  requests are exempt.
+- **Errors:** `{ "error": "<English>", "code": "<stable code>", "retryAfterSec"?, "resetsAt"? }`.
+  Codes are listed in `lib/api-errors.ts`; the app localizes them with the
+  `error.<code>` keys in `lib/i18n.ts`.
+- **Shared plain-TypeScript modules** (no Next or DOM imports) the app can
+  reuse: `lib/types.ts`, `lib/i18n.ts`, `lib/verdict-display.ts`,
+  `lib/names.ts`, `lib/palette.ts`, `lib/frameworks.ts`, `lib/api-errors.ts`,
+  `lib/account-types.ts`, `lib/pricing.ts`.
+
+| Call | Purpose |
+|---|---|
+| `GET /api/v1/config` | Startup: which sign-in methods work, whether Premium is on, prices (`AppConfig`) |
+| `GET /api/v1/me` | The account and its entitlement (`MeResponse`); signed out = `{ "user": null, "entitlement": null }` |
+| `DELETE /api/v1/me` `{ "confirm": "delete" }` | Deletes the account, sessions, sign-ins and entitlements (both stores require in-app deletion) |
+| `POST /api/v1/clarify` | Premium: up to 2 clarifying questions |
+| `POST /api/v1/verdict` | A verdict; `"tier": "premium"` for Premium. Send an `Idempotency-Key` header to retry safely |
+| `GET /api/v1/verdicts/{id}` | A stored verdict |
+| `POST /api/v1/verdicts/{id}/translate?lang=en\|tr` | A stored verdict in the other language |
+| `POST /api/v1/auth/dev-login` | Local testing only (see above); 404 everywhere else |
+
+**Sign-in from the app** (Better Auth endpoints under `/api/auth`):
+
+- **Apple (iOS):** `expo-apple-authentication` with a random nonce (Apple gets
+  its SHA-256), then `POST /api/auth/sign-in/social`
+  `{ "provider": "apple", "idToken": { "token": "<identityToken>", "nonce": "<raw nonce>", "user": { "name": { "firstName": "…", "lastName": "…" } } } }`.
+  Apple sends the name only on the first sign-in, so pass it then. Needs
+  `APPLE_APP_BUNDLE_ID`.
+- **Google (iOS/Android):** native Google Sign-In, then
+  `POST /api/auth/sign-in/social { "provider": "google", "idToken": { "token": "<idToken>" } }`.
+  Needs the iOS/Android client ids above.
+- Both answer `200 { "redirect": false, "token": "<session token>", "user": { … } }`
+  (also in the `set-auth-token` header); keep the token in the device's secure
+  storage. An invalid ID token answers `401 { "code": "INVALID_TOKEN" }`.
+- **Session:** `GET /api/v1/me`. **Sign out:** `POST /api/auth/sign-out` with
+  the bearer token. Sessions last 30 days and slide forward with use.
+- **Email links in the app** need Better Auth's Expo plugin and a deep link
+  (`verdict://`), plus a bot check other than Turnstile; not wired up yet.
+- **Free verdicts from the app** need a bot check other than Turnstile
+  (e.g. App Attest / Play Integrity, or free verdicts for signed-in users
+  under a per-user limit) before the app ships.
+
+**Purchases (future):** all purchase sources feed one account. Each grant
+records its source (`app_store`, `play_store`, `web`, `admin`, `promo`) and
+applies at most once per external transaction/event id. A webhook (for
+example RevenueCat, `POST /api/v1/webhooks/revenuecat` checked against a
+shared secret) maps each store event to one normalized `StoreEvent` and calls
+`applyStoreEvent()` in `lib/entitlements.ts`:
+
+| StoreEvent | When |
+|---|---|
+| `{ type: "credits_purchased", eventId, source, userId, productId, credits, transactionId }` | A credit pack was bought (credits from `STORE_PRODUCTS` in `lib/pricing.ts`); granted once per `transactionId` |
+| `{ type: "subscription_active", eventId, source, userId, productId, originalTransactionId, periodStart, periodEnd, willRenew }` | Purchase, renewal, un-cancel or plan change; a new period resets the fair-use count |
+| `{ type: "subscription_will_not_renew", eventId, source, originalTransactionId }` | Auto-renew turned off; access stays until the period ends |
+| `{ type: "subscription_expired", eventId, source, originalTransactionId, at }` | The subscription ended (ignored if a later renewal already arrived) |
+| `{ type: "refund", eventId, source, transactionId }` | A refund: credits are taken back (never below 0), a refunded subscription ends at once |
+
+The app identifies the buyer to the store SDK with our `user.id` (e.g.
+RevenueCat `Purchases.logIn(user.id)`), then refreshes `GET /api/v1/me`.
+Apple's rule for multiplatform services: credits or plans bought on the web
+may be used in the iOS app only if the same items are also sold as in-app
+purchases there.
+
 ## Deploy to AWS Lightsail
 
 One small Linux server runs everything: the app, its SQLite database file,
@@ -412,7 +598,7 @@ input ──▶ anonymize (names → Party A/B) ──▶ judge ×N (structured 
 ## Testing
 
 ```bash
-npm test        # unit tests: aggregation, rate limits, bot check, route gates, storage
+npm test        # unit tests: aggregation, rate limits, bot check, route gates, storage, accounts, entitlements
 npm run eval    # LIVE eval of the judge against test/arguments.json (costs API calls)
 npm run eval -- 5   # just the first 5 cases
 ```

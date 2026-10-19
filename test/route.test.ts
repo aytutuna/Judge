@@ -34,6 +34,9 @@ vi.mock("@/lib/trial", async (importOriginal) => ({
   runCruxTrial: track("trial", m.runCruxTrial),
 }));
 vi.mock("@/lib/db", () => ({ saveVerdict: track("save", m.saveVerdict) }));
+// Premium requests are handed to their own handler; the free path never loads it.
+const premiumVerdict = vi.hoisted(() => vi.fn());
+vi.mock("@/lib/premium/handler", () => ({ premiumVerdict: track("premium", premiumVerdict) }));
 
 import { maxDuration, POST } from "../app/api/verdict/route";
 import type { JudgeRunOutput, JudgeVerdict, VerdictResult } from "../lib/types";
@@ -314,5 +317,24 @@ describe("POST /api/verdict escalation", () => {
     expect(console.info).toHaveBeenCalledTimes(1);
     const line = String(vi.mocked(console.info).mock.calls[0][0]);
     expect(line).toBe("[verdict] escalated at confidence 2: 1/2 extra runs ok, 4 runs counted");
+  });
+});
+
+describe("POST /api/verdict premium hand-off", () => {
+  it("hands a premium request to the premium handler with the parsed body, skipping every free gate", async () => {
+    premiumVerdict.mockResolvedValue(Response.json({ ok: true }));
+    const req = request({ argument: ARGUMENT, tier: "premium", lang: "tr" });
+    const res = await POST(req);
+    expect(await res.json()).toEqual({ ok: true });
+    expect(m.calls).toEqual(["premium"]);
+    const [passedReq, data] = premiumVerdict.mock.calls[0];
+    expect(passedReq).toBe(req);
+    expect(data).toEqual({ argument: ARGUMENT, framework: { preset: "balanced" }, lang: "tr", tier: "premium" });
+  });
+
+  it("never calls the premium handler for free requests", async () => {
+    await POST(request({ argument: ARGUMENT }));
+    await POST(request({ argument: ARGUMENT, tier: "free" }));
+    expect(premiumVerdict).not.toHaveBeenCalled();
   });
 });

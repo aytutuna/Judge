@@ -15,7 +15,7 @@ vi.mock("@anthropic-ai/sdk", async (importOriginal) => {
 });
 
 import Anthropic from "@anthropic-ai/sdk";
-import { claudeJson, toClaudeSchema } from "../lib/claude";
+import { claudeJson, claudeSearchJson, toClaudeSchema, withUsageMeter } from "../lib/claude";
 import { JUDGE_SCHEMA } from "../lib/judge";
 
 type Schema = Record<string, unknown>;
@@ -237,5 +237,147 @@ describe("claudeJson (mocked SDK)", () => {
     await claudeJson(CALL);
     const efforts = create.mock.calls.map((c) => c[0].output_config.effort);
     expect(efforts).toEqual(["low", "high", "medium"]);
+  });
+});
+
+describe("claudeSearchJson (mocked SDK)", () => {
+  const SEARCH_CALL = { ...CALL, model: "claude-haiku-5-5", effort: "low" as const, maxSearches: 3 };
+
+  function searched(overrides: Record<string, unknown> = {}): Anthropic.Message {
+    return message({
+      content: [
+        { type: "thinking", thinking: "", signature: "sig" },
+        { type: "server_tool_use", id: "s1", name: "web_search", input: { query: "q" }, caller: { type: "direct" } },
+        {
+          type: "web_search_tool_result",
+          tool_use_id: "s1",
+          caller: { type: "direct" },
+          content: [
+            { type: "web_search_result", url: "https://a.org/x", title: "A", encrypted_content: "e", page_age: null },
+            { type: "web_search_result", url: "https://b.org/y", title: "B", encrypted_content: "e", page_age: null },
+          ],
+        },
+        {
+          type: "web_search_tool_result",
+          tool_use_id: "s2",
+          caller: { type: "direct" },
+          content: { type: "web_search_tool_result_error", error_code: "unavailable" },
+        },
+        { type: "text", text: "Let me check.", citations: null },
+        { type: "text", text: '{"answer":"yes"}', citations: null },
+      ],
+      usage: { input_tokens: 2000, output_tokens: 300, server_tool_use: { web_search_requests: 2, web_fetch_requests: 0 } },
+      ...overrides,
+    });
+  }
+
+  it("sends the web search tool with max_uses next to the JSON-schema output", async () => {
+    create.mockResolvedValueOnce(searched());
+    const res = await claudeSearchJson<{ answer: string }>(SEARCH_CALL);
+    expect(res.ok).toBe(true);
+    const params = create.mock.calls[0][0];
+    expect(params).toMatchObject({
+      model: "claude-haiku-5-5",
+      max_tokens: 16000,
+      system: "sys",
+      messages: [{ role: "user", content: "usr" }],
+      tools: [{ type: "web_search_20250305", name: "web_search", max_uses: 3 }],
+      output_config: { format: { type: "json_schema", schema: toClaudeSchema(CALL.schema) }, effort: "low" },
+    });
+    expect(params).not.toHaveProperty("temperature");
+    expect(params).not.toHaveProperty("thinking");
+    expect(params).not.toHaveProperty("tool_choice");
+    expect(create.mock.calls[0][1]?.signal).toBeInstanceOf(AbortSignal);
+  });
+
+  it("parses the last text block and returns the search count and result URLs", async () => {
+    create.mockResolvedValueOnce(searched());
+    const res = await claudeSearchJson<{ answer: string }>(SEARCH_CALL);
+    expect(res).toEqual({
+      ok: true,
+      data: { answer: "yes" },
+      searches: 2,
+      results: new Map([
+        ["https://a.org/x", "A"],
+        ["https://b.org/y", "B"],
+      ]),
+    });
+  });
+
+  it("counts the search calls in the content when usage under-reports them", async () => {
+    create.mockResolvedValueOnce(
+      searched({ usage: { input_tokens: 2000, output_tokens: 300, server_tool_use: { web_search_requests: 0, web_fetch_requests: 0 } } }),
+    );
+    expect(await claudeSearchJson(SEARCH_CALL)).toMatchObject({ ok: true, searches: 1 });
+  });
+
+  it("counts zero searches when the model did not search", async () => {
+    create.mockResolvedValueOnce(message({ usage: { input_tokens: 10, output_tokens: 5, server_tool_use: null } }));
+    const res = await claudeSearchJson(SEARCH_CALL);
+    expect(res).toMatchObject({ ok: true, searches: 0 });
+  });
+
+  it("treats pause_turn and max_tokens as errors and a refusal as blocked", async () => {
+    create.mockResolvedValueOnce(searched({ stop_reason: "pause_turn" }));
+    expect(await claudeSearchJson(SEARCH_CALL)).toEqual({
+      ok: false,
+      blocked: false,
+      error: "search loop paused (pause_turn)",
+    });
+    create.mockResolvedValueOnce(searched({ stop_reason: "max_tokens" }));
+    expect(await claudeSearchJson(SEARCH_CALL)).toMatchObject({ ok: false, blocked: false });
+    create.mockResolvedValueOnce(
+      searched({ stop_reason: "refusal", stop_details: { type: "refusal", category: "cyber", explanation: null } }),
+    );
+    expect(await claudeSearchJson(SEARCH_CALL)).toEqual({ ok: false, blocked: true, reason: "cyber" });
+  });
+
+  it("maps HTTP errors and timeouts like claudeJson", async () => {
+    create.mockRejectedValueOnce(new Anthropic.RateLimitError(429, undefined, "rate limited", new Headers()));
+    const res = await claudeSearchJson(SEARCH_CALL);
+    expect(!res.ok && !res.blocked ? res.error : "").toMatch(/^Claude HTTP 429: /);
+    create.mockRejectedValueOnce(new Anthropic.APIUserAbortError());
+    expect(await claudeSearchJson({ ...SEARCH_CALL, timeoutMs: 40_000 })).toEqual({
+      ok: false,
+      blocked: false,
+      error: "Claude request timed out after 40s",
+    });
+  });
+
+  it("does not call the API without a key", async () => {
+    vi.stubEnv("ANTHROPIC_API_KEY", "");
+    expect(await claudeSearchJson(SEARCH_CALL)).toMatchObject({ ok: false, blocked: false });
+    expect(create).not.toHaveBeenCalled();
+  });
+});
+
+describe("withUsageMeter", () => {
+  it("totals tokens and searches per model across parallel calls inside the meter only", async () => {
+    create.mockImplementation(async (params: { model: string; tools?: unknown[] }) =>
+      params.tools
+        ? message({ usage: { input_tokens: 1000, output_tokens: 100, server_tool_use: { web_search_requests: 2, web_fetch_requests: 0 } } })
+        : message({ usage: { input_tokens: 10, output_tokens: 20 } }),
+    );
+    const { value, usage } = await withUsageMeter(async () => {
+      await Promise.all([
+        claudeJson({ ...CALL, model: "claude-sonnet-5-5" }),
+        claudeJson({ ...CALL, model: "claude-haiku-5-5" }),
+        claudeSearchJson({ ...CALL, model: "claude-haiku-5-5", maxSearches: 3 }),
+      ]);
+      return "done";
+    });
+    // Outside any meter: not counted anywhere.
+    await claudeJson(CALL);
+    expect(value).toBe("done");
+    expect(usage).toEqual({
+      calls: 3,
+      input: 1020,
+      output: 140,
+      searches: 2,
+      byModel: {
+        "claude-sonnet-5-5": { calls: 1, input: 10, output: 20, searches: 0 },
+        "claude-haiku-5-5": { calls: 2, input: 1010, output: 120, searches: 2 },
+      },
+    });
   });
 });

@@ -86,3 +86,9 @@ export function judgeDots(result: VerdictResult | null, done: boolean): JudgeDot
   const votes = sceneVerdictFrom(result).votes;
   return votes.length > 0 ? [...votes] : pending;
 }
+
+/** Premium's extra line above the checklist: the web fact-check runs before
+ * the judges, so it reads as in progress until the verdict is in. */
+export function premiumCaptionKey(done: boolean): Key {
+  return done ? "thinking.factcheckDone" : "thinking.factcheck";
+}

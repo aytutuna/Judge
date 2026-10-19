@@ -71,6 +71,8 @@ function Privacy({ lang, contactEmail }: { lang: Lang; contactEmail: string | nu
   const sections: [Key, Key][] = [
     ["privacy.storedTitle", "privacy.stored"],
     ["privacy.notStoredTitle", "privacy.notStored"],
+    ["privacy.accountsTitle", "privacy.accounts"],
+    ["privacy.webSearchTitle", "privacy.webSearch"],
     ["privacy.ipTitle", "privacy.ip"],
     ["privacy.processorsTitle", "privacy.processors"],
     ["privacy.shareTitle", "privacy.share"],

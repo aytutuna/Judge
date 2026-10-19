@@ -56,6 +56,14 @@
   color: var(--ivory);
   line-height: 1.2;
 }
+/* Premium: the translation note or brand mark plus the Premium badge. */
+.pillGroup {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
 /* Quiet brand mark in the top-left corner when no pill is showing. */
 .brandTag {
   display: inline-flex;

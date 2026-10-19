@@ -7,10 +7,13 @@ import { useLang } from "@/lib/lang";
 import { partyNames } from "@/lib/names";
 import { verdictLang } from "@/lib/content-lang";
 import { stripLeadingEmoji } from "@/lib/text";
+import { panelSummary } from "@/lib/verdict-display";
 import { useVerdictTranslation, type TranslationView } from "@/lib/use-translation";
 import { VerdictReveal } from "./VerdictReveal";
 import { ArgumentMap } from "./ArgumentMap";
 import { FactChips } from "./FactChips";
+import { FactCheckList } from "./FactCheckList";
+import { PremiumBadge } from "./PremiumBadge";
 import { ShareButtons } from "./ShareButtons";
 import { VerdictCardShell } from "./verdict/VerdictCardShell";
 import { CardBrand, CardTopRow } from "./verdict/CardTopRow";
@@ -59,7 +62,10 @@ function TranslationNote({ view, lang }: { view: TranslationView; lang: Lang }) 
  * `lang` too: a verdict written in the other language is fetched translated
  * and swapped in, with the original kept for switching back.
  * `onJudgeAnother` adds a "Settle another one" action; `fresh` rings the card
- * in sage for a moment when it has just replaced the form. */
+ * in sage for a moment when it has just replaced the form.
+ * Premium results (`tier: "premium"`) add a badge in the top row, a panel
+ * line in the footnote and the web fact-check below the card; free results
+ * render exactly as before. */
 export function VerdictView({
   result: original,
   nameMap,
@@ -85,6 +91,13 @@ export function VerdictView({
   const loading = view.status === "loading";
   const labelId = useId();
   const refused = Boolean(result.model_refused);
+  const premium = result.tier === "premium";
+  const pill = (
+    <>
+      {shareId ? <TranslationNote view={view} lang={lang} /> : null}
+      {view.status === "original" ? <CardBrand /> : null}
+    </>
+  );
 
   return (
     <div className="flex flex-col gap-7 min-w-0">
@@ -96,10 +109,14 @@ export function VerdictView({
         top={
           <CardTopRow
             pill={
-              <>
-                {shareId ? <TranslationNote view={view} lang={lang} /> : null}
-                {view.status === "original" ? <CardBrand /> : null}
-              </>
+              premium ? (
+                <span className={styles.pillGroup}>
+                  {pill}
+                  <PremiumBadge lang={lang} />
+                </span>
+              ) : (
+                pill
+              )
             }
             votes={result.runs.map(voteOf)}
           />
@@ -144,6 +161,13 @@ export function VerdictView({
                 r === "side_a" ? nameA : r === "side_b" ? nameB : t(lang, VOTE_KEY[r]),
               )
               .join(" · ")}
+            {premium ? (
+              <>
+                <br />
+                {t(lang, "panel.premium")}
+                {result.panel?.models.length ? ` ${panelSummary(result.panel.models, lang)}` : null}
+              </>
+            ) : null}
           </p>
         ) : null}
 
@@ -172,6 +196,7 @@ export function VerdictView({
             lang={lang}
             showCrux={false}
           />
+          {result.fact_check ? <FactCheckList factCheck={result.fact_check} lang={lang} /> : null}
           <FactChips facts={result.facts_relied_on} lang={lang} />
         </div>
       ) : null}
