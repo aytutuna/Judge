@@ -79,7 +79,7 @@ export function Turnstile({
         setFailed(false);
         widgetId = api.render(ref.current, {
           sitekey: siteKey,
-          theme: "auto",
+          theme: "light",
           size: "flexible",
           language: lang,
           callback: (token) => emit(token),
@@ -100,10 +100,15 @@ export function Turnstile({
   }, [siteKey, lang]);
 
   return (
-    <div className="flex flex-col gap-1">
-      <div ref={ref} aria-label={t(lang, "turnstile.label")} role="group" className="min-h-[65px]" />
+    <div className="flex flex-col gap-1.5">
+      <div
+        ref={ref}
+        aria-label={t(lang, "turnstile.label")}
+        role="group"
+        className="min-h-[65px]"
+      />
       {failed ? (
-        <p className="text-xs text-center" role="alert" style={{ color: "var(--danger)" }}>
+        <p className="text-[13px] leading-snug text-center text-danger" role="alert">
           {t(lang, "turnstile.error")}
         </p>
       ) : null}

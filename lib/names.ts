@@ -24,12 +24,19 @@ const EN_SELF = /^(i|me|my|myself)$/i;
  * The pronoun→You/Sen mapping applies ONLY to the Party A slot: the
  * anonymizer's own contract says a first-person narrator is always Party A,
  * which protects a friend actually named "Ben" (a top-100 English name) who
- * lands in slot B. The Turkish set additionally applies only when
- * lang === "tr", so an English session about Ben never becomes "You".
+ * lands in slot B. The Turkish set additionally applies only when the
+ * argument was written in Turkish, so an English session about Ben never
+ * becomes "You".
+ *
+ * `lang` is the display language of the labels; `selfLang` is the language
+ * the argument was judged in (defaults to `lang`). They differ when a
+ * verdict is shown translated: a Turkish "Ben" stays the narrator, labelled
+ * "You", after the page switches to English.
  */
 export function partyNames(
   nameMap: NameMapping[] | undefined,
   lang: Lang = "en",
+  selfLang: Lang = lang,
 ): { nameA: string; nameB: string; aIsSelf: boolean; bIsSelf: boolean } {
   let nameA = t(lang, "party.a");
   let nameB = t(lang, "party.b");
@@ -43,7 +50,7 @@ export function partyNames(
     if (/^party a$/i.test(m.replacement.trim())) {
       const self =
         EN_SELF.test(original) ||
-        (lang === "tr" && TR_SELF.has(original.toLocaleLowerCase("tr")));
+        (selfLang === "tr" && TR_SELF.has(original.toLocaleLowerCase("tr")));
       if (self) {
         nameA = t(lang, "you");
         aIsSelf = true;

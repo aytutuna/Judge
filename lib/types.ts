@@ -85,6 +85,10 @@ export const Lean = z.object({
   party: z.enum(["a", "b"]),
   unanimous: z.boolean(),
   reason: z.string(),
+  /** Forced votes for / against the leaned side. Only stored when the run
+   * count does not imply it (non-unanimous with 4+ runs); absent means
+   * (runs - 1)–1 or unanimous. */
+  tally: z.object({ for: z.number().int(), against: z.number().int() }).optional(),
 });
 export type Lean = z.infer<typeof Lean>;
 
@@ -118,8 +122,26 @@ export const VerdictResult = JudgeOutput.extend({
    * stored row keeps parsing: absent (undefined) for side_a/side_b winners,
    * refusals, and pre-feature rows; null only for a computed lean tie. */
   lean: Lean.nullable().optional(),
+  /** True when the first verdict was low-confidence and extra judges were
+   * called in (their votes are in `runs`). Absent on everything else. */
+  escalated: z.boolean().optional(),
+  /** Language the free text is written in: the judging language, or the
+   * target language of a stored translation. Optional so rows written before
+   * it existed keep parsing; those fall back to verdictLang's heuristic. */
+  lang: z.enum(["en", "tr"]).optional(),
 });
 export type VerdictResult = z.infer<typeof VerdictResult>;
+
+/** POST /api/verdict/[id]/translate success body. `result` is the original
+ * when `translated` is false (the verdict was already in `lang`). */
+export const TranslateResponse = z.object({
+  id: z.string(),
+  lang: z.enum(["en", "tr"]),
+  source: z.enum(["en", "tr"]),
+  translated: z.boolean(),
+  result: VerdictResult,
+});
+export type TranslateResponse = z.infer<typeof TranslateResponse>;
 
 export const FrameworkChoice = z.object({
   preset: z.string(),
@@ -134,7 +156,7 @@ export const VerdictRequest = z.object({
     "Keep it under 6000 characters.",
   ),
   framework: FrameworkChoice.default({ preset: "balanced" }),
-  /** UI + judge output language. Never stored with the verdict. */
+  /** UI + judge output language. Stored as the result's `lang`. */
   lang: z.enum(["en", "tr"]).default("en"),
 });
 export type VerdictRequest = z.infer<typeof VerdictRequest>;

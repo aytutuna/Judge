@@ -1,4 +1,5 @@
 import { createClient, type Client } from "@libsql/client";
+import type { Lang } from "./i18n";
 import { VerdictResult, type FrameworkChoice } from "./types";
 
 /** DATABASE_URL: `file:./dev.db` locally (relative to the working directory),
@@ -32,6 +33,15 @@ async function migrate(client: Client): Promise<void> {
     framework TEXT NOT NULL,
     result TEXT NOT NULL,
     created_at TEXT NOT NULL DEFAULT (datetime('now'))
+  )`);
+  // One stored translation per (verdict, language). The primary key is the
+  // cross-process backstop against computing the same pair twice.
+  await client.execute(`CREATE TABLE IF NOT EXISTS verdict_translations (
+    id TEXT NOT NULL,
+    lang TEXT NOT NULL,
+    result_json TEXT NOT NULL,
+    created_at TEXT NOT NULL DEFAULT (datetime('now')),
+    PRIMARY KEY (id, lang)
   )`);
 }
 
@@ -89,4 +99,27 @@ export async function getVerdict(id: string): Promise<StoredVerdict | null> {
     result: parsed.data,
     createdAt: String(row.created_at),
   };
+}
+
+/** A stored translation, or null when there is none (or it no longer parses). */
+export async function getTranslation(id: string, lang: Lang): Promise<VerdictResult | null> {
+  const client = await db();
+  const rs = await client.execute({
+    sql: "SELECT result_json FROM verdict_translations WHERE id = ? AND lang = ?",
+    args: [id, lang],
+  });
+  const row = rs.rows[0];
+  if (!row) return null;
+  const parsed = VerdictResult.safeParse(JSON.parse(String(row.result_json)));
+  return parsed.success ? parsed.data : null;
+}
+
+/** Stores a translation unless one already exists for the pair: the first
+ * writer wins and later writers keep the stored copy. */
+export async function saveTranslation(id: string, lang: Lang, result: VerdictResult): Promise<void> {
+  const client = await db();
+  await client.execute({
+    sql: "INSERT OR IGNORE INTO verdict_translations (id, lang, result_json) VALUES (?, ?, ?)",
+    args: [id, lang, JSON.stringify(result)],
+  });
 }

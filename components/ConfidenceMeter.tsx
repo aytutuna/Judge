@@ -1,4 +1,6 @@
+import type { CSSProperties } from "react";
 import { t, type Key, type Lang } from "@/lib/i18n";
+import styles from "./verdict/verdict.module.css";
 
 /** Indexed by clamped value - 1 — a typed lookup, no `as Key` cast. */
 const CONF_KEY = [
@@ -9,38 +11,31 @@ const CONF_KEY = [
   "confidence.5",
 ] as const satisfies readonly Key[];
 
+/** Five ink bars plus "High confidence · 4/5". The bars fill in sequence
+ * when an enclosing verdict card animates. */
 export function ConfidenceMeter({ value, lang = "en" }: { value: number; lang?: Lang }) {
   const v = Math.max(1, Math.min(5, Math.round(value)));
   const word = t(lang, CONF_KEY[v - 1]);
   return (
-    <div
-      className="flex items-center gap-2"
-      role="meter"
-      aria-valuemin={1}
-      aria-valuemax={5}
-      aria-valuenow={v}
-      aria-label={t(lang, "confidenceAria", { n: v })}
-    >
-      <div className="flex gap-1.5">
+    <div className={styles.meter}>
+      <div
+        className={styles.bars}
+        role="meter"
+        aria-valuemin={1}
+        aria-valuemax={5}
+        aria-valuenow={v}
+        aria-label={t(lang, "confidenceAria", { n: v })}
+      >
         {[1, 2, 3, 4, 5].map((i) => (
-          <span
+          <i
             key={i}
-            className={i <= v ? "dot-fill" : undefined}
-            style={{
-              width: 10,
-              height: 10,
-              borderRadius: 999,
-              background: i <= v ? "var(--ink)" : "transparent",
-              border: `1.5px solid ${i <= v ? "var(--ink)" : "var(--muted)"}`,
-              animationDelay: `${2 + i * 0.12}s`,
-              display: "inline-block",
-            }}
+            aria-hidden
+            className={i <= v ? `${styles.bar} ${styles.barOn}` : styles.bar}
+            style={{ "--i": i - 1 } as CSSProperties}
           />
         ))}
       </div>
-      <span className="text-xs" style={{ color: "var(--ink-2)" }}>
-        {t(lang, "confidenceWord", { word, n: v })}
-      </span>
+      <p className={styles.meterText}>{t(lang, "confidenceWord", { word, n: v })}</p>
     </div>
   );
 }

@@ -1,0 +1,511 @@
+/* ---------- Layout ---------- */
+.hero {
+  --unit: 100vh;
+  position: relative;
+  z-index: 1;
+  /* mobile: a compact scene band sits between the nav and the text, so the
+     form starts on the first screen (the camera frames the balance into
+     the same band: lib/scene-layout.ts) */
+  padding-top: calc(var(--nav-h) + var(--scene-band));
+  padding-bottom: 72px;
+}
+@supports (height: 100svh) {
+  .hero {
+    --unit: 100svh;
+  }
+}
+
+.text {
+  transition:
+    opacity 0.5s var(--ease),
+    transform 0.6s var(--ease);
+}
+
+/* ---------- Load-in (CSS only: never waits for hydration) ---------- */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+}
+.eyebrow,
+.title,
+.lead,
+.card {
+  animation: rise 0.9s var(--ease) both;
+}
+.title {
+  animation-delay: 0.05s;
+}
+.lead {
+  animation-delay: 0.12s;
+}
+.card {
+  animation-delay: 0.2s;
+}
+
+/* ---------- Text ---------- */
+/* Each phrase stays whole, so a narrow line breaks after the dot; the pips
+   stay level with the first line. */
+.eyebrow {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin: 0 0 14px;
+  color: var(--ink-2);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: 0.02em;
+}
+.phrase {
+  white-space: nowrap;
+}
+
+.pips {
+  display: inline-flex;
+  flex: none;
+  gap: 3px;
+  /* (13px * 1.4 - 7px) / 2: centred on the first line */
+  margin-top: 5.6px;
+}
+.pips i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--ink);
+}
+.pips i:nth-child(1) {
+  background: var(--terra);
+}
+.pips i:nth-child(3) {
+  background: var(--sage-strong);
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--text-display-1);
+  font-weight: 700;
+  line-height: 0.98;
+  letter-spacing: -0.04em;
+  color: var(--ink);
+}
+.line1 {
+  display: block;
+}
+.title em {
+  display: block;
+  padding-bottom: 0.04em;
+  font-family: var(--font-serif);
+  font-size: 1.1em;
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.015em;
+  color: var(--terra);
+}
+
+.lead {
+  max-width: 34ch;
+  margin: 18px 0 0;
+  color: var(--ink-2);
+  font-size: var(--text-lead);
+  line-height: 1.5;
+}
+
+/* ---------- Card ---------- */
+/* The form and the judging layer share one grid cell, so the card is as
+   tall as the taller of the two and nothing is absolutely positioned. */
+.card {
+  position: relative;
+  display: grid;
+  margin-top: 28px;
+  padding: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: var(--radius-card);
+  background: var(--glass);
+  -webkit-backdrop-filter: saturate(160%) blur(24px);
+  backdrop-filter: saturate(160%) blur(24px);
+  box-shadow:
+    var(--shadow-2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+.card > * {
+  grid-area: 1 / 1;
+  min-width: 0;
+}
+
+.form {
+  transition:
+    opacity 0.4s var(--ease),
+    filter 0.4s var(--ease);
+}
+.hero[data-phase="judging"] .form {
+  opacity: 0;
+  filter: blur(6px);
+}
+
+@keyframes judging-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.985);
+  }
+}
+/* Top-aligned: the form layer is usually taller, and centring left an
+   empty band above the checklist. Spare height goes below. */
+.judging {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  min-width: 0;
+  animation: judging-in 0.55s var(--ease) both;
+}
+
+.verdict {
+  margin-top: 28px;
+  outline: none;
+}
+
+/* ---------- Field ---------- */
+.fieldLabel {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  margin: 2px 4px 8px;
+  color: var(--ink-2);
+  font-size: 13px;
+  font-weight: 600;
+}
+.count {
+  color: var(--muted);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+.textarea {
+  display: block;
+  width: 100%;
+  min-height: 132px;
+  padding: 14px 16px;
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-field);
+  background: rgba(255, 253, 249, 0.92);
+  color: var(--ink);
+  font-size: 16px;
+  line-height: 1.5;
+  resize: vertical;
+  transition:
+    border-color var(--dur-1),
+    box-shadow 0.25s;
+}
+/* Soft halo plus a real indicator: the global 3px --terra-ink ring, drawn
+   flush with the field. */
+.textarea:focus {
+  outline: none;
+  border-color: var(--terra-ink);
+  box-shadow: 0 0 0 4px rgba(200, 85, 61, 0.14);
+}
+.textarea:focus-visible {
+  outline: 3px solid var(--terra-ink);
+  outline-offset: 0;
+}
+
+/* ---------- Example chips (wrap at every width) ---------- */
+.spark {
+  margin: 14px 4px 8px;
+  color: var(--muted);
+  font-size: 12.5px;
+  font-weight: 600;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 2px 0 4px;
+}
+
+.chip {
+  min-height: 40px;
+  padding: 7px 12px;
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-chip);
+  background: rgba(255, 253, 249, 0.8);
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.3;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    transform 0.25s var(--ease),
+    background-color var(--dur-1),
+    border-color var(--dur-1),
+    box-shadow 0.25s;
+}
+.chip:hover {
+  background: var(--paper);
+  border-color: rgba(28, 25, 22, 0.22);
+  box-shadow: var(--shadow-1);
+  transform: translateY(-1px);
+}
+.chip:active {
+  transform: scale(0.97);
+}
+.chip[data-on] {
+  background: var(--paper);
+  border-color: var(--ink);
+}
+
+/* ---------- Advanced (value settings) ---------- */
+/* Below the CTA: optional, so it never pushes the button down. */
+.advanced {
+  margin-top: 14px;
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-field);
+  background: rgba(255, 253, 249, 0.55);
+}
+
+.summary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2px 10px;
+  min-height: 44px;
+  padding: 10px 14px;
+  border-radius: var(--radius-field);
+  color: var(--ink-2);
+  font-size: 13.5px;
+  font-weight: 600;
+  list-style: none;
+  cursor: pointer;
+}
+.summary::-webkit-details-marker {
+  display: none;
+}
+
+.summaryText {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex: none;
+}
+
+.caret {
+  width: 12px;
+  height: 12px;
+  transition: transform var(--dur-1) var(--ease);
+}
+.advanced[open] .caret {
+  transform: rotate(90deg);
+}
+
+/* Never truncated: when it does not fit beside the summary text it wraps
+   to its own line, still right-aligned. */
+.current {
+  margin-left: auto;
+  color: var(--muted);
+  font-size: 12.5px;
+  font-weight: 500;
+  text-align: right;
+}
+
+.advancedBody {
+  padding: 4px 14px 14px;
+}
+
+/* ---------- Turnstile, error ---------- */
+.turnstile {
+  margin-top: 12px;
+}
+
+.error {
+  display: flex;
+  gap: 8px;
+  margin: 12px 4px 0;
+  color: var(--danger);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.45;
+}
+.error svg {
+  flex: none;
+  width: 16px;
+  height: 16px;
+  margin-top: 2px;
+}
+
+/* ---------- CTA ---------- */
+.ctaRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
+  margin-top: 14px;
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 54px;
+  padding: 14px 26px;
+  border: 0;
+  border-radius: var(--radius-chip);
+  background: var(--ink);
+  color: var(--ivory);
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  box-shadow: var(--shadow-cta);
+  cursor: pointer;
+  transition:
+    transform 0.3s var(--ease),
+    box-shadow 0.3s var(--ease),
+    opacity var(--dur-1);
+}
+.cta:not(:disabled):hover {
+  transform: translateY(-1px);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.15) inset,
+    0 16px 30px -10px rgba(28, 25, 22, 0.5);
+}
+.cta:not(:disabled):active {
+  transform: scale(0.98);
+}
+.cta:disabled {
+  opacity: 0.4;
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+.ctaIcon {
+  width: 18px;
+  height: 18px;
+  flex: none;
+}
+
+.arrow {
+  display: inline-block;
+  transition: transform 0.3s var(--ease);
+}
+.cta:not(:disabled):hover .arrow {
+  transform: translateX(3px);
+}
+
+/* ---------- Privacy note ---------- */
+.privacy {
+  display: flex;
+  gap: 8px;
+  margin: 14px 4px 2px;
+  color: var(--muted);
+  font-size: 12.5px;
+  line-height: 1.45;
+}
+.privacy svg {
+  flex: none;
+  width: 14px;
+  height: 14px;
+  margin-top: 2px;
+}
+
+.privacyLink {
+  border-radius: 4px;
+  color: var(--ink-2);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.privacyLink:hover {
+  color: var(--ink);
+}
+
+/* ---------- Mobile: the judging scene takes over above the card ---------- */
+@media (max-width: 959px) {
+  .hero[data-phase="judging"] .text {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+
+/* ---------- Desktop: text column left, scene right ---------- */
+@media (min-width: 960px) {
+  /* Sized so the CTA sits above the fold at 1280x800 and 1366x768 in
+     both languages, with the chips wrapped. */
+  .hero {
+    display: flex;
+    align-items: center;
+    min-height: var(--unit);
+    padding-top: calc(var(--nav-h) + clamp(28px, 4.5vh, 56px));
+    padding-bottom: 56px;
+  }
+  /* Wide enough for the Turkish chips to wrap onto two rows; still clear of
+     the balance, which starts at about 54% of the width. */
+  .col {
+    width: min(620px, 48vw);
+  }
+  .eyebrow {
+    margin-bottom: 12px;
+  }
+  .lead {
+    max-width: 36ch;
+    margin-top: 16px;
+  }
+  .card {
+    margin-top: 24px;
+    padding: 16px 18px 18px;
+  }
+  .textarea {
+    min-height: 116px;
+  }
+  .spark {
+    margin-top: 12px;
+  }
+  .chips {
+    gap: 6px;
+  }
+  .chip {
+    min-height: 36px;
+    padding: 6px 11px;
+  }
+  .cta {
+    width: auto;
+  }
+}
+
+/* Short laptop screens (1366x768, 1280x720): a little less air above and
+   between the blocks keeps the CTA clear of the fold. */
+@media (min-width: 960px) and (max-height: 820px) {
+  .hero {
+    padding-top: calc(var(--nav-h) + 20px);
+  }
+  .lead {
+    font-size: 18px;
+  }
+  .card {
+    margin-top: 20px;
+  }
+  .spark {
+    margin-top: 10px;
+  }
+}
+
+@media (forced-colors: active) {
+  .card {
+    border-color: CanvasText;
+  }
+  .textarea:focus,
+  .textarea:focus-visible {
+    outline: 3px solid Highlight;
+    outline-offset: 0;
+  }
+  .chip[data-on] {
+    outline: 2px solid CanvasText;
+  }
+}

@@ -1,29 +1,54 @@
 import type { ArgumentMap as ArgumentMapData, ClaimKind } from "@/lib/types";
 import { KIND_KEY, t, type Lang } from "@/lib/i18n";
+import { PALETTE } from "@/lib/palette";
+import { stripLeadingEmoji } from "@/lib/text";
+import { CruxBlock } from "./verdict/CruxBlock";
+import styles from "./verdict/verdict.module.css";
 
-const KIND_VAR: Record<ClaimKind, string> = {
-  fact: "--kind-fact",
-  value: "--kind-value",
-  definition: "--kind-definition",
-  logic: "--kind-logic",
-};
+/** Ink shape per claim kind, the same shapes as the 3D claim pieces:
+ * cube = fact, circle = value, triangle = definition, diamond = logic.
+ * Shape plus the written kind, so nothing is coded by colour alone. */
+function KindGlyph({ kind }: { kind: ClaimKind }) {
+  const ink = PALETTE.ink;
+  switch (kind) {
+    case "fact":
+      return (
+        <svg viewBox="0 0 12 12" className={styles.glyph} aria-hidden>
+          <path d="M6 .8 11 3.6v4.8L6 11.2 1 8.4V3.6z" fill={ink} />
+          <path
+            d="M6 6v5.2M6 6 1 3.6M6 6l5-2.4"
+            fill="none"
+            stroke={PALETTE.paper}
+            strokeWidth={0.9}
+            strokeLinejoin="round"
+          />
+        </svg>
+      );
+    case "value":
+      return (
+        <svg viewBox="0 0 12 12" className={styles.glyph} aria-hidden>
+          <circle cx={6} cy={6} r={5} fill={ink} />
+        </svg>
+      );
+    case "definition":
+      return (
+        <svg viewBox="0 0 12 12" className={styles.glyph} aria-hidden>
+          <path d="M6 1.2 11.2 10.6H.8z" fill={ink} />
+        </svg>
+      );
+    case "logic":
+      return (
+        <svg viewBox="0 0 12 12" className={styles.glyph} aria-hidden>
+          <path d="M6 .8 11.2 6 6 11.2.8 6z" fill={ink} />
+        </svg>
+      );
+  }
+}
 
 function KindTag({ kind, lang }: { kind: ClaimKind; lang: Lang }) {
   return (
-    <span
-      className="inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wide"
-      style={{ color: "var(--ink-2)" }}
-    >
-      <span
-        aria-hidden
-        style={{
-          width: 8,
-          height: 8,
-          borderRadius: 2,
-          background: `var(${KIND_VAR[kind]})`,
-          display: "inline-block",
-        }}
-      />
+    <span className={styles.kind}>
+      <KindGlyph kind={kind} />
       {t(lang, KIND_KEY[kind])}
     </span>
   );
@@ -34,73 +59,39 @@ function ClaimColumn({
   name,
   claims,
   bedrock,
-  color,
-  soft,
   lang,
 }: {
   party: "a" | "b";
   name: string;
   claims: { claim: string; kind: ClaimKind }[];
   bedrock: string;
-  color: string;
-  soft: string;
   lang: Lang;
 }) {
+  const a = party === "a";
   return (
-    <div className="flex flex-col gap-2 min-w-0">
-      <div
-        className="flex items-center gap-2 rounded-lg px-3 py-1.5"
-        style={{ background: soft }}
-      >
+    <div className={styles.col}>
+      <div className={`${styles.colHead} ${a ? styles.colHeadA : styles.colHeadB}`}>
         <span
-          className="flex items-center justify-center text-[11px] font-bold text-white rounded-full shrink-0"
-          style={{ background: color, width: 20, height: 20 }}
+          aria-hidden
+          className={`${styles.partyChip} ${a ? styles.partyChipA : styles.partyChipB}`}
         >
           {party.toUpperCase()}
         </span>
-        <span className="text-sm font-semibold truncate" style={{ color: "var(--ink)" }}>
-          {name}
-        </span>
+        <span className={styles.colName}>{name}</span>
       </div>
 
       {claims.map((c, i) => (
-        <div
-          key={i}
-          className="rounded-lg px-3 py-2 flex flex-col gap-1"
-          style={{
-            background: "var(--surface)",
-            border: "1px solid var(--ring)",
-            borderLeft: `3px solid ${color}`,
-          }}
-        >
-          <span className="text-sm leading-snug" style={{ color: "var(--ink)" }}>
-            {c.claim}
-          </span>
+        <div key={i} className={`${styles.claim} ${a ? styles.claimA : styles.claimB}`}>
+          <span className={styles.claimText}>{c.claim}</span>
           <KindTag kind={c.kind} lang={lang} />
         </div>
       ))}
 
-      {/* connector down to bedrock */}
-      <div className="flex justify-center" aria-hidden>
-        <span style={{ color: "var(--muted)" }}>↓</span>
-      </div>
+      <span className={styles.connector} aria-hidden />
 
-      <div
-        className="rounded-xl px-3 py-2 text-center"
-        style={{
-          background: "var(--surface)",
-          border: `2px solid ${color}`,
-        }}
-      >
-        <div
-          className="text-[10px] font-semibold uppercase tracking-wide mb-0.5"
-          style={{ color: "var(--muted)" }}
-        >
-          {t(lang, "bedrock")}
-        </div>
-        <div className="text-sm font-medium leading-snug" style={{ color: "var(--ink)" }}>
-          {bedrock}
-        </div>
+      <div className={styles.bedrock}>
+        <span className={styles.k}>{stripLeadingEmoji(t(lang, "bedrock"))}</span>
+        <div className={styles.bedrockText}>{bedrock}</div>
       </div>
     </div>
   );
@@ -108,7 +99,8 @@ function ClaimColumn({
 
 /**
  * The whole argument at a glance: each side's claims descending to its
- * bedrock premise, with the crux — what the fight is REALLY about — beneath.
+ * bedrock premise, with the crux (what the fight is REALLY about) beneath.
+ * `showCrux={false}` when the crux is already on the verdict card above.
  */
 export function ArgumentMap({
   map,
@@ -116,29 +108,24 @@ export function ArgumentMap({
   nameA,
   nameB,
   lang = "en",
+  showCrux = true,
 }: {
   map: ArgumentMapData;
   crux: string;
   nameA: string;
   nameB: string;
   lang?: Lang;
+  showCrux?: boolean;
 }) {
   return (
-    <section className="rise-in">
-      <h3
-        className="text-xs font-semibold uppercase tracking-wide mb-2"
-        style={{ color: "var(--muted)" }}
-      >
-        {t(lang, "mapTitle")}
-      </h3>
-      <div className="grid grid-cols-2 gap-3">
+    <section>
+      <h3 className={styles.sectionTitle}>{t(lang, "mapTitle")}</h3>
+      <div className={styles.mapCols}>
         <ClaimColumn
           party="a"
           name={nameA}
           claims={map.side_a}
           bedrock={map.bedrock_a}
-          color="var(--party-a)"
-          soft="var(--party-a-soft)"
           lang={lang}
         />
         <ClaimColumn
@@ -146,35 +133,19 @@ export function ArgumentMap({
           name={nameB}
           claims={map.side_b}
           bedrock={map.bedrock_b}
-          color="var(--party-b)"
-          soft="var(--party-b-soft)"
           lang={lang}
         />
       </div>
 
-      {/* converging connectors into the crux */}
-      <div className="flex justify-center gap-16 my-1" aria-hidden>
-        <span style={{ color: "var(--muted)" }}>↘</span>
-        <span style={{ color: "var(--muted)" }}>↙</span>
-      </div>
-
-      <div
-        className="rounded-xl px-4 py-3 text-center"
-        style={{
-          background: "var(--surface)",
-          border: "2px dashed var(--muted)",
-        }}
-      >
-        <div
-          className="text-[10px] font-semibold uppercase tracking-wide mb-1"
-          style={{ color: "var(--muted)" }}
-        >
-          {t(lang, "cruxTitle")}
-        </div>
-        <p className="text-sm font-medium leading-snug" style={{ color: "var(--ink)" }}>
-          {crux}
-        </p>
-      </div>
+      {showCrux ? (
+        <>
+          <div className={styles.mapJoin} aria-hidden>
+            <span />
+            <span />
+          </div>
+          <CruxBlock title={stripLeadingEmoji(t(lang, "cruxTitle"))} text={crux} />
+        </>
+      ) : null}
     </section>
   );
 }

@@ -1,19 +1,63 @@
 /**
  * Link-preview card markup for next/og (Satori). Satori supports only flex
- * layout and inline styles, so this mirrors the site's look with literal
- * light-theme colours. No emoji: Satori would fetch emoji images from a CDN
- * at render time, which is slow and can fail.
+ * layout and inline styles, so this mirrors the site with literal palette
+ * colours and the site's own faces, loaded from committed OFL TTFs (static
+ * instances with latin-ext, so Turkish renders). No emoji: Satori would
+ * fetch emoji images from a CDN at render time, which is slow and can fail.
+ * Server-only (reads the font files from disk).
  */
+
+import { readFile } from "node:fs/promises";
+import { join } from "node:path";
+import { PALETTE, PALETTE_ALPHA } from "@/lib/palette";
+import { BrandMark } from "./BrandMark";
 
 export const OG_SIZE = { width: 1200, height: 630 };
 
-const INK = "#0b0b0b";
-const INK_2 = "#52514e";
-const PLANE = "#f9f9f7";
-const SURFACE = "#fcfcfb";
-const LINE = "#e1e0d9";
-export const PARTY_A = "#2a78d6";
-export const PARTY_B = "#eb6834";
+/** Tug-bar fills: terracotta for A, strong sage for B (thin marks, 3:1). */
+export const PARTY_A = PALETTE.terra;
+export const PARTY_B = PALETTE.sageStrong;
+/** Title colour when a side wins outright: the text-contrast inks. */
+export const ACCENT_A = PALETTE.terraInk;
+export const ACCENT_B = PALETTE.sageInk;
+
+const DISPLAY = "Inter Tight";
+const TEXT = "Inter";
+const SERIF = "Instrument Serif";
+
+type OgFont = {
+  name: string;
+  data: Buffer;
+  weight: 400 | 500 | 700;
+  style: "normal" | "italic";
+};
+
+async function loadFonts(): Promise<OgFont[]> {
+  const dir = join(process.cwd(), "assets/fonts");
+  const [display, text, serif] = await Promise.all([
+    readFile(join(dir, "InterTight-Bold.ttf")),
+    readFile(join(dir, "Inter-Medium.ttf")),
+    readFile(join(dir, "InstrumentSerif-Italic.ttf")),
+  ]);
+  return [
+    { name: DISPLAY, data: display, weight: 700, style: "normal" },
+    { name: TEXT, data: text, weight: 500, style: "normal" },
+    { name: SERIF, data: serif, weight: 400, style: "italic" },
+  ];
+}
+
+let fontsPromise: Promise<OgFont[]> | null = null;
+
+/** The three faces the card uses, read once per server process. */
+export function ogFonts(): Promise<OgFont[]> {
+  if (!fontsPromise) {
+    fontsPromise = loadFonts().catch((err: unknown) => {
+      fontsPromise = null; // let the next request try again
+      throw err;
+    });
+  }
+  return fontsPromise;
+}
 
 function truncate(s: string, max: number): string {
   const clean = s.replace(/\s+/g, " ").trim();
@@ -23,19 +67,23 @@ function truncate(s: string, max: number): string {
 export function OgCard({
   eyebrow,
   title,
+  titleSerif,
   subtitle,
   footer,
   tugA,
-  accent = INK,
+  accent = PALETTE.ink,
 }: {
   eyebrow: string;
   title: string;
+  /** Optional second title line in terracotta serif italic ("Settle it."). */
+  titleSerif?: string;
   subtitle?: string;
   footer: string;
   /** Party A's share of the tug-of-war bar, 0..100. */
   tugA: number;
   accent?: string;
 }) {
+  const a = Math.max(0, Math.min(100, tugA));
   return (
     <div
       style={{
@@ -44,20 +92,36 @@ export function OgCard({
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
-        background: PLANE,
-        padding: "64px 72px",
-        color: INK,
+        background: PALETTE.ivory,
+        padding: "60px 72px 56px",
+        color: PALETTE.ink,
+        fontFamily: TEXT,
+        fontWeight: 500,
       }}
     >
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-        <div style={{ display: "flex", fontSize: 40, letterSpacing: -1, color: INK }}>Verdict</div>
+        <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+          <BrandMark size={62} />
+          <div
+            style={{
+              display: "flex",
+              fontFamily: DISPLAY,
+              fontWeight: 700,
+              fontSize: 42,
+              letterSpacing: -1,
+              color: PALETTE.ink,
+            }}
+          >
+            Verdict
+          </div>
+        </div>
         <div
           style={{
             display: "flex",
             fontSize: 24,
-            color: INK_2,
-            border: `2px solid ${LINE}`,
-            background: SURFACE,
+            color: PALETTE.ink2,
+            border: `2px solid ${PALETTE_ALPHA.line2}`,
+            background: PALETTE.paper,
             borderRadius: 999,
             padding: "8px 22px",
           }}
@@ -66,38 +130,74 @@ export function OgCard({
         </div>
       </div>
 
-      <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
-        <div style={{ display: "flex", fontSize: 76, lineHeight: 1.05, letterSpacing: -2, color: accent }}>
+      <div style={{ display: "flex", flexDirection: "column", gap: 22 }}>
+        <div
+          style={{
+            display: "flex",
+            fontFamily: DISPLAY,
+            fontWeight: 700,
+            fontSize: 80,
+            lineHeight: 1.02,
+            letterSpacing: -3,
+            color: accent,
+          }}
+        >
           {truncate(title, 60)}
         </div>
+        {titleSerif ? (
+          <div
+            style={{
+              display: "flex",
+              fontFamily: SERIF,
+              fontStyle: "italic",
+              fontWeight: 400,
+              fontSize: 96,
+              lineHeight: 0.95,
+              letterSpacing: -1,
+              color: PALETTE.terra,
+              marginTop: -10,
+            }}
+          >
+            {truncate(titleSerif, 40)}
+          </div>
+        ) : null}
         {subtitle ? (
-          <div style={{ display: "flex", fontSize: 34, lineHeight: 1.3, color: INK_2 }}>
+          <div style={{ display: "flex", fontSize: 32, lineHeight: 1.32, color: PALETTE.ink2 }}>
             {truncate(subtitle, 150)}
           </div>
         ) : null}
       </div>
 
       <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
-        <div
-          style={{
-            display: "flex",
-            height: 22,
-            borderRadius: 999,
-            overflow: "hidden",
-            background: PARTY_B,
-          }}
-        >
+        <div style={{ display: "flex", position: "relative", height: 34, alignItems: "center" }}>
           <div
             style={{
               display: "flex",
-              width: `${Math.max(0, Math.min(100, tugA))}%`,
-              height: "100%",
-              background: PARTY_A,
-              borderRight: `4px solid ${SURFACE}`,
+              width: "100%",
+              height: 18,
+              borderRadius: 999,
+              overflow: "hidden",
+              background: PARTY_B,
+            }}
+          >
+            <div style={{ display: "flex", width: `${a}%`, height: "100%", background: PARTY_A }} />
+          </div>
+          <div
+            style={{
+              display: "flex",
+              position: "absolute",
+              left: `${a}%`,
+              top: 0,
+              width: 34,
+              height: 34,
+              marginLeft: -17,
+              borderRadius: 999,
+              background: PALETTE.paper,
+              border: `4px solid ${PALETTE.ink}`,
             }}
           />
         </div>
-        <div style={{ display: "flex", fontSize: 26, color: INK_2 }}>{footer}</div>
+        <div style={{ display: "flex", fontSize: 26, color: PALETTE.ink2 }}>{footer}</div>
       </div>
     </div>
   );

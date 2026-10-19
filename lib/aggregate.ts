@@ -1,14 +1,16 @@
 import type { JudgeRunOutput, JudgeVerdict, Lean, VerdictResult } from "./types";
 
 /**
- * Forced-ruling lean: the majority of every run's forced `leaning` vote.
- * With 3 or 1 runs a majority always exists; with 2 runs a 1–1 tie returns
- * null — genuinely even, shown as such, never coin-flipped. `reason` is the
- * leaning_reason of the first run that voted with the majority.
+ * Forced-ruling lean: the strict majority of every run's forced `leaning`
+ * vote. With an odd run count a majority always exists; with an even count
+ * a tie returns null — genuinely even, shown as such, never coin-flipped.
+ * `reason` is the leaning_reason of the first run that voted with the
+ * majority.
  *
- * Provable, and the UI relies on it: a non-unanimous non-null lean only
- * occurs with exactly 3 runs (2 disagreeing runs are a tie), so a false
- * `unanimous` is always a 2–1 vote.
+ * `tally` is stored only when the split cannot be inferred from the run
+ * count: up to 3 runs a non-unanimous non-null lean is always 2–1 (2
+ * disagreeing runs are a tie), so the UI reads a missing tally as
+ * (runs - 1)–1, which also covers every pre-escalation row.
  */
 function computeLean(runs: JudgeRunOutput[]): Lean | null {
   const aVotes = runs.filter((r) => r.leaning === "side_a").length;
@@ -17,19 +19,35 @@ function computeLean(runs: JudgeRunOutput[]): Lean | null {
   const winner: JudgeRunOutput["leaning"] = aVotes > bVotes ? "side_a" : "side_b";
   const majorityRun = runs.find((r) => r.leaning === winner);
   if (!majorityRun) return null; // unreachable: the winner has >= 1 vote
-  return {
+  const forVotes = Math.max(aVotes, bVotes);
+  const lean: Lean = {
     party: winner === "side_a" ? "a" : "b",
-    unanimous: runs.every((r) => r.leaning === winner),
+    unanimous: forVotes === runs.length,
     reason: majorityRun.leaning_reason,
   };
+  if (!lean.unanimous && runs.length > 3) {
+    lean.tally = { for: forVotes, against: runs.length - forVotes };
+  }
+  return lean;
+}
+
+/** Share of runs whose forced lean agrees with `lean` (0 for a tie). */
+function leanShare(runs: JudgeRunOutput[], lean: Lean | null): number {
+  if (!lean) return 0;
+  const side = lean.party === "a" ? "side_a" : "side_b";
+  return runs.filter((r) => r.leaning === side).length / runs.length;
 }
 
 /**
- * Turn 1-3 successful judge runs into the final verdict.
- * Confidence comes from agreement between runs, never from the model:
- *   3/3 same verdict -> 5 (4 if they disagree on dispute_type)
- *   2/3 majority     -> 3 (2 if the dissenter picked the opposite side)
- *   no majority      -> the unanimously-leaned side if a run ruled for it,
+ * Turn 1-7 successful judge runs (3 by default, more after escalation) into
+ * the final verdict. Confidence comes from agreement between runs, never
+ * from the model:
+ *   all agree        -> 5 (4 if they disagree on dispute_type)
+ *   strict majority  -> by agreement share: >= 80% -> 4, >= 60% -> 3, else 2;
+ *                       one less (floor 2) if a dissenter picked the
+ *                       opposite side. 2/3 -> 3 (2), 3/5 -> 3, 4/5 -> 4.
+ *   no majority      -> the leaned side if >= 80% of forced leans name it
+ *                       (unanimous up to 3 runs) and a run ruled for it,
  *                       confidence 2; otherwise "too_close", confidence 1
  */
 export function aggregate(runs: JudgeRunOutput[]): VerdictResult {
@@ -44,7 +62,7 @@ export function aggregate(runs: JudgeRunOutput[]): VerdictResult {
     (x, y) => y[1] - x[1],
   )[0];
 
-  const majority = topCount >= 2 || runs.length === 1;
+  const majority = topCount > runs.length / 2 || runs.length === 1;
   const representative =
     runs.find((r) => r.verdict === topVerdict) ?? runs[0];
   // Spread hygiene: the run-level forced-ruling fields must never leak into
@@ -54,22 +72,24 @@ export function aggregate(runs: JudgeRunOutput[]): VerdictResult {
   void _leaningReason;
 
   if (!majority) {
-    // No verdict majority, but every run's forced lean names the same side
-    // and at least one run ruled for it outright: that side wins at low
-    // confidence. The winner run is the representative, so the headline and
-    // analysis already argue for the side that won.
+    // No verdict majority, but the forced leans name one side with
+    // near-unanimity (>= 80%; for up to 3 runs that means every run) and at
+    // least one run ruled for it outright: that side wins at low confidence.
+    // The winner run is the representative, so the headline and analysis
+    // already argue for the side that won.
     const lean = computeLean(runs);
     const winnerVerdict = lean?.party === "a" ? "side_a" : "side_b";
-    const winnerRun = lean?.unanimous
-      ? runs.find((r) => r.verdict === winnerVerdict)
-      : undefined;
+    const winnerRun =
+      leanShare(runs, lean) >= 0.8
+        ? runs.find((r) => r.verdict === winnerVerdict)
+        : undefined;
     if (winnerRun) {
       const { leaning: _l, leaning_reason: _lr, ...winnerCore } = winnerRun;
       void _l;
       void _lr;
       return { ...winnerCore, confidence: 2, runs: votes, demo: false };
     }
-    // Three-way disagreement: honest "too close to call", but still show the
+    // Scattered disagreement: honest "too close to call", but still show the
     // richest analysis we have so the user sees the map and crux.
     return {
       ...core,
@@ -87,11 +107,14 @@ export function aggregate(runs: JudgeRunOutput[]): VerdictResult {
     const sameType = runs.every((r) => r.dispute_type === representative.dispute_type);
     confidence = sameType ? 5 : 4;
   } else {
-    const dissenter = runs.find((r) => r.verdict !== topVerdict);
-    const opposite =
-      (topVerdict === "side_a" && dissenter?.verdict === "side_b") ||
-      (topVerdict === "side_b" && dissenter?.verdict === "side_a");
-    confidence = opposite ? 2 : 3;
+    const share = topCount / runs.length;
+    confidence = share >= 0.8 ? 4 : share >= 0.6 ? 3 : 2;
+    const opposite = runs.some(
+      (r) =>
+        (topVerdict === "side_a" && r.verdict === "side_b") ||
+        (topVerdict === "side_b" && r.verdict === "side_a"),
+    );
+    if (opposite) confidence = Math.max(2, confidence - 1);
   }
 
   // Fewer surviving runs = weaker agreement evidence, cap confidence.

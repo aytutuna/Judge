@@ -18,7 +18,7 @@ carries an explicit type:
 | **Split decision** | Each side is right about a different part, and both parts matter about equally |
 | **It depends on your values** | Only when the value frameworks are genuinely balanced — you get "if you weight X → then Y" branches instead of fake certainty |
 | **Same word, different meanings** | Only when both uses of the word are fully standard and the argument dissolves once definitions are separated |
-| **Too close to call** | The independent judges couldn't agree, and their forced rulings don't unanimously favor a side that one of them ruled for |
+| **Too close to call** | The independent judges couldn't agree, even with extra judges called in, and their forced rulings don't (near-)unanimously favor a side that one of them ruled for |
 
 **Forced ruling — someone is always more right**: every new non-winner verdict
 also records a forced ruling: each judge must separately say who is more right
@@ -31,6 +31,9 @@ honest label.
 **Confidence is computed, not claimed**: the judge runs up to three times
 independently (one run analyzes the sides in reverse order as a position-bias
 check), and the 1–5 confidence meter comes from how often the runs agreed.
+When that first round lands at low confidence (2 or below), two more judges
+are called in and every vote is counted again, so a close call gets a bigger
+panel instead of a coin flip; the verdict notes when this happened.
 Fact/logic winner rulings are then cross-examined — an adversarial attack on
 the crux, judged by a separate referee; a ruling that does not survive keeps
 its verdict but its confidence is capped, and the attack is shown.
@@ -85,18 +88,23 @@ An `ANTHROPIC_API_KEY` is **required** — without one the API refuses to judge
 | `CLAUDE_MODEL_LITE` | `claude-haiku-5-5` | Anonymizer model (always runs at `low` effort) |
 | `JUDGE_EFFORT` | `medium` | Thinking depth for judge and trial calls: `low`, `medium` or `high` |
 | `JUDGE_RUNS` | `3` | Self-consistency runs per verdict (1–3), run in parallel. Lower it to cut cost; confidence is capped accordingly |
+| `JUDGE_EXTRA_RUNS` | `2` | Extra judges (0–4, in parallel) called in when the first round's confidence is at or below `JUDGE_ESCALATE_AT`; all votes are then aggregated together. `0` turns escalation off |
+| `JUDGE_ESCALATE_AT` | `2` | Confidence (1–5) at or below which a verdict escalates. Only low-confidence verdicts escalate; with `JUDGE_RUNS=1` that is every verdict (one run caps confidence at 2), so set `JUDGE_EXTRA_RUNS=0` there if you want exactly one judge call |
 | `CRUX_TRIAL` | `1` | Cross-examination of fact/logic winner rulings (up to 2 extra calls). Set `0` to skip it |
 
 **Cost and latency:** one verdict costs 1 anonymizer call + `JUDGE_RUNS` judge
 calls (in parallel), plus up to 2 sequential trial calls when a fact/logic
-winner is declared, so winner verdicts take a little longer. Measured on
+winner is declared, so winner verdicts take a little longer. Only a
+low-confidence verdict adds `JUDGE_EXTRA_RUNS` more judge calls (one more
+parallel round, about **$0.002** extra at the default 2). Measured on
 Haiku 5.5 ($0.10 / $0.50 per 1M input / output tokens), a judge call uses
 about 3,050 input and 1,300 output tokens, so a full verdict (3 judges +
 anonymizer + up to 2 trial calls) costs roughly **$0.004–0.006** — about
 **$4–6 per 1,000 verdicts**. With the default `DAILY_VERDICT_CAP=1000`, the
-worst case is about $6 a day. Each call has a fixed time budget (60s for
-the anonymizer, 120s for judges, 60s total for the trial), so a verdict never
-hangs indefinitely. The SDK retries rate-limit and overload errors
+worst case is about $6 a day, plus about $2 if every verdict escalated.
+Each call has a fixed time budget (60s for the anonymizer, 120s for judges,
+45s for escalation judges, 60s total for the trial), so a verdict never hangs
+indefinitely and the worst case (285s) fits the route's 300s limit. The SDK retries rate-limit and overload errors
 automatically, and a verdict that still fails on a 429 is reported as a quota
 error.
 
@@ -117,7 +125,8 @@ Every `POST /api/verdict` passes these gates, in order, before any model call:
    it. If Redis or that log is down or slow, requests are refused
    (`503 unavailable`) rather than let through unmetered.
 
-Then: API key check → anonymize → judges → crux trial → save.
+Then: API key check → anonymize → judges (→ extra judges if confidence is
+low) → crux trial → save.
 
 The visitor IP comes from the first `X-Forwarded-For` entry, so it is only
 trustworthy behind a proxy that overwrites that header: Vercel does, and so

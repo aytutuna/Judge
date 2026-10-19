@@ -258,3 +258,150 @@ describe("VerdictResult back-compat", () => {
     expect(VerdictResult.safeParse(r).success).toBe(true);
   });
 });
+
+describe("aggregate with escalated panels (4-7 runs)", () => {
+  const many = (v: JudgeVerdict, n: number, leaning: JudgeVerdictSide = "side_a") =>
+    Array.from({ length: n }, () => run(v, "factual", leaning));
+
+  it("5/5 same verdict and type -> 5; mixed types -> 4", () => {
+    expect(aggregate(many("side_a", 5)).confidence).toBe(5);
+    const mixed = [...many("side_a", 4), run("side_a", "mixed")];
+    expect(aggregate(mixed).confidence).toBe(4);
+  });
+
+  it("4/5 with an adjacent dissenter -> 4", () => {
+    const r = aggregate([...many("side_a", 4), run("split", "mixed")]);
+    expect(r.verdict).toBe("side_a");
+    expect(r.confidence).toBe(4);
+    expect(r.runs).toHaveLength(5);
+  });
+
+  it("4/5 with an opposite-side dissenter -> 3", () => {
+    const r = aggregate([...many("side_a", 4), run("side_b", "factual", "side_b")]);
+    expect(r.confidence).toBe(3);
+  });
+
+  it("3/5 -> 3, or 2 when a dissenter picked the opposite side", () => {
+    expect(aggregate([...many("side_b", 3), run("split"), run("conditional")]).confidence).toBe(3);
+    expect(aggregate([...many("side_b", 3), run("split"), run("side_a")]).confidence).toBe(2);
+  });
+
+  it("3/4 -> 3, or 2 with an opposite dissenter", () => {
+    expect(aggregate([...many("side_a", 3), run("dissolved")]).confidence).toBe(3);
+    expect(aggregate([...many("side_a", 3), run("side_b")]).confidence).toBe(2);
+  });
+
+  it("7 runs: 7/7 -> 5, 6/7 -> 4, 5/7 -> 3, 4/7 -> 2 (opposite dissenters floor at 2)", () => {
+    expect(aggregate(many("side_a", 7)).confidence).toBe(5);
+    expect(aggregate([...many("side_a", 6), run("split")]).confidence).toBe(4);
+    expect(aggregate([...many("side_a", 6), run("side_b")]).confidence).toBe(3);
+    expect(aggregate([...many("side_a", 5), ...many("split", 2)]).confidence).toBe(3);
+    expect(aggregate([...many("side_a", 4), ...many("split", 3)]).confidence).toBe(2);
+    expect(aggregate([...many("side_a", 4), ...many("side_b", 3)]).confidence).toBe(2);
+  });
+
+  it("a 2-2 verdict tie is no majority", () => {
+    const r = aggregate([
+      run("split", "mixed", "side_a"),
+      run("split", "mixed", "side_b"),
+      run("conditional", "values", "side_a"),
+      run("conditional", "values", "side_b"),
+    ]);
+    expect(r.verdict).toBe("too_close");
+    expect(r.confidence).toBe(1);
+    expect(r.lean).toBeNull();
+  });
+
+  it("no majority, >= 80% lean with a winner run -> rescued to that side at 2", () => {
+    const winner = { ...run("side_a", "factual", "side_a"), headline: "winner-h" };
+    const r = aggregate([
+      run("split", "mixed", "side_a"),
+      run("split", "mixed", "side_a"),
+      winner,
+      run("conditional", "values", "side_a"),
+      run("dissolved", "definitional", "side_b"),
+    ]);
+    expect(r.verdict).toBe("side_a");
+    expect(r.confidence).toBe(2);
+    expect(r.headline).toBe("winner-h");
+    expect(r.lean).toBeUndefined();
+    expect(r).not.toHaveProperty("leaning");
+  });
+
+  it("no majority, 4/4 lean with a winner run -> rescued", () => {
+    const r = aggregate([
+      run("side_b", "factual", "side_b"),
+      run("side_b", "factual", "side_b"),
+      run("split", "mixed", "side_b"),
+      run("split", "mixed", "side_b"),
+    ]);
+    expect(r.verdict).toBe("side_b");
+    expect(r.confidence).toBe(2);
+  });
+
+  it("no majority, lean below 80% -> too_close with a stored tally", () => {
+    const r = aggregate([
+      run("side_a", "factual", "side_a", "first-a"),
+      run("split", "mixed", "side_a"),
+      run("split", "mixed", "side_b"),
+      run("conditional", "values", "side_a"),
+      run("dissolved", "definitional", "side_b"),
+    ]);
+    expect(r.verdict).toBe("too_close");
+    expect(r.confidence).toBe(1);
+    expect(r.lean).toEqual({
+      party: "a",
+      unanimous: false,
+      reason: "first-a",
+      tally: { for: 3, against: 2 },
+    });
+  });
+
+  it("no majority, 3/4 lean (75%) -> too_close, tally 3-1", () => {
+    const r = aggregate([
+      run("side_a", "factual", "side_a"),
+      run("side_a", "factual", "side_a"),
+      run("split", "mixed", "side_a"),
+      run("split", "mixed", "side_b"),
+    ]);
+    expect(r.verdict).toBe("too_close");
+    expect(r.lean?.tally).toEqual({ for: 3, against: 1 });
+  });
+
+  it("no majority, unanimous lean but no run ruled for that side -> too_close", () => {
+    const r = aggregate([
+      run("split", "mixed", "side_b"),
+      run("split", "mixed", "side_b"),
+      run("conditional", "values", "side_b"),
+      run("conditional", "values", "side_b"),
+      run("dissolved", "definitional", "side_b"),
+    ]);
+    expect(r.verdict).toBe("too_close");
+    expect(r.lean).toEqual({ party: "b", unanimous: true, reason: "lr" });
+  });
+
+  it("non-winner majority over 5 runs carries a lean; a unanimous lean has no tally", () => {
+    const r = aggregate([...many("split", 3, "side_b"), run("side_a"), run("side_b", "factual", "side_b")]);
+    expect(r.verdict).toBe("split");
+    expect(r.confidence).toBe(3);
+    expect(r.lean).toEqual({ party: "b", unanimous: false, reason: "lr", tally: { for: 4, against: 1 } });
+    const unanimous = aggregate(many("dissolved", 5, "side_a"));
+    expect(unanimous.lean).toEqual({ party: "a", unanimous: true, reason: "lr" });
+  });
+
+  it("escalated output round-trips through VerdictResult", () => {
+    const r = aggregate([
+      run("side_a", "factual", "side_a"),
+      run("split", "mixed", "side_a"),
+      run("split", "mixed", "side_b"),
+      run("conditional", "values", "side_a"),
+      run("dissolved", "definitional", "side_b"),
+    ]);
+    const parsed = VerdictResult.safeParse({ ...r, escalated: true });
+    expect(parsed.success).toBe(true);
+    if (parsed.success) {
+      expect(parsed.data.escalated).toBe(true);
+      expect(parsed.data.lean?.tally).toEqual({ for: 3, against: 2 });
+    }
+  });
+});

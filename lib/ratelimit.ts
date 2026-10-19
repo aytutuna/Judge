@@ -334,3 +334,87 @@ export async function checkVerdictLimits(ip: string): Promise<LimitDecision> {
     return { ok: false, code: "unavailable", error };
   }
 }
+
+/** New translations per visitor IP per 10 minutes. Separate from the verdict
+ * limits and the site-wide cap: one translation is a single cheap call and
+ * each (verdict, language) pair is translated at most once, ever. */
+export const TRANSLATE_LIMIT = 30;
+export const TRANSLATE_WINDOW_MS = 10 * MINUTE_MS;
+
+/** Single sliding window per visitor, in memory. Checks before recording,
+ * so a refused request costs nothing. */
+export class WindowLimiter {
+  private visits = new Map<string, number[]>();
+
+  constructor(
+    private readonly limit: number,
+    private readonly windowMs: number,
+  ) {}
+
+  check(visitor: string, now = Date.now()): LimitDecision {
+    const recent = (this.visits.get(visitor) ?? []).filter((t) => t > now - this.windowMs);
+    if (recent.length >= this.limit) {
+      return {
+        ok: false,
+        code: "rate_limited",
+        retryAfterSec: retryAfterSec(recent[0] + this.windowMs, now),
+      };
+    }
+    recent.push(now);
+    this.visits.set(visitor, recent);
+    if (this.visits.size > 10_000) {
+      for (const [key, times] of this.visits) {
+        if (!times.some((t) => t > now - this.windowMs)) this.visits.delete(key);
+      }
+    }
+    return { ok: true };
+  }
+}
+
+const globalForTranslateLimits = globalThis as unknown as {
+  __verdictTranslateLimiter?: WindowLimiter;
+  __verdictTranslateRedis?: Ratelimit;
+};
+
+/**
+ * Counts one NEW translation for this IP, or says why it is refused. Redis
+ * when configured (shared across instances), else memory. The memory window
+ * is not persisted across restarts even with RATE_LIMIT_DB: a restart can at
+ * most grant one fresh window of cheap, once-per-pair calls. Fails closed
+ * like the verdict limits.
+ */
+export async function checkTranslateLimits(ip: string): Promise<LimitDecision> {
+  const visitor = visitorKey(ip);
+  if (!redisConfigured()) {
+    globalForTranslateLimits.__verdictTranslateLimiter ??= new WindowLimiter(
+      TRANSLATE_LIMIT,
+      TRANSLATE_WINDOW_MS,
+    );
+    return globalForTranslateLimits.__verdictTranslateLimiter.check(visitor);
+  }
+  try {
+    globalForTranslateLimits.__verdictTranslateRedis ??= new Ratelimit({
+      redis: new Redis({
+        url: process.env.UPSTASH_REDIS_REST_URL,
+        token: process.env.UPSTASH_REDIS_REST_TOKEN,
+        retry: { retries: 1, backoff: () => 100 },
+        signal: () => AbortSignal.timeout(REDIS_ATTEMPT_TIMEOUT_MS),
+      }),
+      timeout: 0,
+      analytics: false,
+      prefix: "verdict:tr10m",
+      limiter: Ratelimit.slidingWindow(TRANSLATE_LIMIT, "10 m"),
+    });
+    const limiter = globalForTranslateLimits.__verdictTranslateRedis;
+    const res = await withTimeout(limiter.limit(visitor), REDIS_TOTAL_TIMEOUT_MS);
+    if (res.reason === "timeout") throw new Error("rate limit check timed out");
+    if (!res.success) {
+      return { ok: false, code: "rate_limited", retryAfterSec: retryAfterSec(res.reset, Date.now()) };
+    }
+    return { ok: true };
+  } catch (e) {
+    const error = e instanceof Error ? e.message : String(e);
+    console.error("[ratelimit] Redis translate check failed, refusing request:", error);
+    return { ok: false, code: "unavailable", error };
+  }
+}

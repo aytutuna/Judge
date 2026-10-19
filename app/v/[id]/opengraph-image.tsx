@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
-import { OG_SIZE, OgCard, PARTY_A, PARTY_B } from "@/components/OgCard";
-import { tugFinal, verdictLabel } from "@/components/VerdictReveal";
+import { ACCENT_A, ACCENT_B, OG_SIZE, OgCard, ogFonts } from "@/components/OgCard";
+import { tugFinal, verdictLabel } from "@/lib/verdict-display";
 import { getVerdict } from "@/lib/db";
 import { contentLang, t, type Key } from "@/lib/i18n";
 
@@ -24,19 +24,20 @@ const CONF_KEY = [
  */
 export default async function Image({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const stored = await getVerdict(id);
+  const [stored, fonts] = await Promise.all([getVerdict(id), ogFonts()]);
 
   if (!stored) {
     return new ImageResponse(
       (
         <OgCard
           eyebrow="Verdict"
-          title="Who's right? Settle it."
+          title={t("en", "hero.titleLine1")}
+          titleSerif={t("en", "hero.titleLine2")}
           footer="Settle your own argument"
           tugA={50}
         />
       ),
-      { ...size },
+      { ...size, fonts },
     );
   }
 
@@ -50,7 +51,7 @@ export default async function Image({ params }: { params: Promise<{ id: string }
     ? t(lang, "lean.title", { name: lean.party === "a" ? nameA : nameB })
     : undefined;
   const accent =
-    r.verdict === "side_a" ? PARTY_A : r.verdict === "side_b" ? PARTY_B : undefined;
+    r.verdict === "side_a" ? ACCENT_A : r.verdict === "side_b" ? ACCENT_B : undefined;
   const cta = t(lang, "shared.cta").replace(/\s*→$/, "");
   const n = Math.max(1, Math.min(5, Math.round(r.confidence)));
 
@@ -65,6 +66,6 @@ export default async function Image({ params }: { params: Promise<{ id: string }
         accent={accent}
       />
     ),
-    { ...size },
+    { ...size, fonts },
   );
 }

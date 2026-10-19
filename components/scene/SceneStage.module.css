@@ -1,0 +1,110 @@
+/* The sticky 3D stage behind the hero and the story (ported from the
+   prototype's .stage-wrap / .stage). */
+
+.wrap {
+  position: relative;
+  --unit: 100vh;
+}
+
+@supports (height: 100svh) {
+  .wrap {
+    --unit: 100svh;
+  }
+}
+
+/* Mobile: the light pool and the SVG sit in the scene band under the nav
+   (--scene-band), like the 3D framing. The halo is positioned by its top
+   edge, so half its size is taken off to centre it. */
+.stage {
+  --halo-x: 50%;
+  --halo-y: calc(var(--nav-h) + var(--scene-band) * 0.55 - min(60vw, 380px));
+  position: sticky;
+  top: 0;
+  height: var(--unit);
+  margin-bottom: calc(-1 * var(--unit));
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* Soft light pool behind the balance. */
+.stage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(closest-side, rgba(255, 252, 246, 0.95), rgba(255, 252, 246, 0))
+    var(--halo-x) var(--halo-y) / min(120vw, 760px) min(120vw, 760px) no-repeat;
+}
+
+.canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 0.4s linear;
+}
+
+.wrap[data-scene-status="ready"] .canvas {
+  opacity: 1;
+}
+
+.fallback {
+  position: absolute;
+  left: 50%;
+  top: calc(var(--nav-h) + var(--scene-band) - 18px);
+  /* 420:220 drawing, kept inside the band */
+  width: min(78vw, 400px, calc((var(--scene-band) - 20px) * 1.9));
+  height: auto;
+  transform: translate(-50%, -100%);
+  /* --avoid: the overlap fade under 960px (SceneStage). */
+  opacity: var(--avoid, 1);
+  transition: opacity 0.4s linear;
+}
+
+.wrap[data-scene-status="ready"] .fallback {
+  opacity: 0;
+}
+
+@media (min-width: 960px) {
+  .stage {
+    --halo-x: 74%;
+    --halo-y: 50%;
+  }
+
+  .stage::before {
+    background-size: min(70vw, 980px) min(70vw, 980px);
+  }
+
+  .fallback {
+    left: 74%;
+    top: calc(50% - 110px);
+    width: min(38vw, 500px);
+    transform: translateX(-50%);
+  }
+}
+
+/* Short landscape screens: no sticky trap; the stage scrolls away with the
+   hero and the story steps read as a plain list. */
+@media (max-height: 520px) and (orientation: landscape) {
+  .stage {
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 100vh;
+    margin-bottom: 0;
+  }
+}
+
+@media (forced-colors: active) {
+  .stage::before {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .canvas,
+  .fallback {
+    transition: none;
+  }
+}

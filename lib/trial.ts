@@ -15,6 +15,7 @@
 import { z } from "zod";
 import { claudeJson } from "./claude";
 import type { Lang } from "./i18n";
+import { humanStyle } from "./style";
 import { CruxTrial, type VerdictResult } from "./types";
 
 /** Upper bound on total trial time. Each claudeJson call may take up to its
@@ -56,11 +57,12 @@ RULES:
 - Scope is narrow: the ruling's stated basis versus the attack. Do not re-litigate the whole argument, and do not import new grounds to rescue or to sink the ruling.
 - reasoning: at most 2 sentences, concrete — say what the attack got right or where it failed.`;
 
-/** Appended to BOTH trial system prompts when the request asked for Turkish.
- * The outcome enum stays English (stored data invariant). */
+/** Appended to BOTH trial system prompts when the request asked for Turkish,
+ * ahead of the Turkish voice block (lib/style.ts). The outcome enum stays
+ * English (stored data invariant). */
 const TR_TRIAL_BLOCK = `
 
-LANGUAGE: Write the attack and reasoning text in natural, fluent, everyday Turkish, addressing the reader with informal "sen", never "siz". Refer to the parties as "Taraf A" and "Taraf B". Keep all JSON enum values exactly as specified in the schema (English identifiers).`;
+LANGUAGE: Write the attack and reasoning text in Turkish, following the VOICE rules below, addressing the reader with informal "sen", never "siz". Refer to the parties as "Taraf A" and "Taraf B". Keep all JSON enum values exactly as specified in the schema (English identifiers).`;
 
 /** Output schemas (compact form, converted by toClaudeSchema), mirroring
  * lib/judge.ts style. */
@@ -157,10 +159,11 @@ async function trialCalls(
 ): Promise<CruxTrial | null> {
   const summary = rulingSummary(result);
   const context = `THE ARGUMENT:\n\n${anonymizedArgument}\n\nTHE RULING:\n\n${summary}`;
-  const trBlock = lang === "tr" ? TR_TRIAL_BLOCK : "";
+  // Both texts are shown on the verdict card, so both calls get the voice.
+  const langBlock = `${lang === "tr" ? TR_TRIAL_BLOCK : ""}\n\n${humanStyle(lang)}`;
 
   const attackRes = await claudeJson<unknown>({
-    system: `${ATTACKER_SYSTEM}${trBlock}`,
+    system: `${ATTACKER_SYSTEM}${langBlock}`,
     user: context,
     schema: ATTACKER_SCHEMA as unknown as Record<string, unknown>,
   });
@@ -195,7 +198,7 @@ async function trialCalls(
   if (isExpired()) return null;
 
   const adjRes = await claudeJson<unknown>({
-    system: `${ADJUDICATOR_SYSTEM}${trBlock}`,
+    system: `${ADJUDICATOR_SYSTEM}${langBlock}`,
     user: `${context}\n\nTHE ATTACK:\n\n${attacker.data.attack}`,
     schema: ADJUDICATOR_SCHEMA as unknown as Record<string, unknown>,
   });

@@ -1,28 +1,28 @@
 import { t, type Lang } from "@/lib/i18n";
+import { stripLeadingEmoji } from "@/lib/text";
+import styles from "./verdict/verdict.module.css";
 
+/** Facts the verdict relies on, each with a sage check, for the reader to
+ * go and verify. */
 export function FactChips({ facts, lang = "en" }: { facts: string[]; lang?: Lang }) {
   if (!facts.length) return null;
   return (
-    <section className="rise-in-late">
-      <h3
-        className="text-xs font-semibold uppercase tracking-wide mb-2"
-        style={{ color: "var(--muted)" }}
-      >
-        {t(lang, "factsTitle")}
-      </h3>
-      <ul className="flex flex-col gap-1.5">
+    <section>
+      <h3 className={styles.sectionTitle}>{stripLeadingEmoji(t(lang, "factsTitle"))}</h3>
+      <ul className={styles.factList}>
         {facts.map((f, i) => (
-          <li
-            key={i}
-            className="flex items-start gap-2 rounded-lg px-3 py-2 text-sm"
-            style={{
-              background: "var(--surface)",
-              border: "1px solid var(--ring)",
-              color: "var(--ink-2)",
-            }}
-          >
-            <span aria-hidden style={{ color: "var(--good)" }}>
-              ✓
+          <li key={i} className={styles.fact}>
+            <span className={styles.factCheck} aria-hidden>
+              <svg viewBox="0 0 10 10">
+                <path
+                  d="M2 5.3 4.1 7.3 8 2.9"
+                  fill="none"
+                  stroke="#fff"
+                  strokeWidth={1.6}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
             </span>
             <span>{f}</span>
           </li>

@@ -1,0 +1,801 @@
+/* Verdict card system: shared by the homepage sample, the live verdict and
+   the share page. Base rules are always the FINAL, settled state; entrance
+   motion only animates *from* a start value, so no-JS, reduced motion and
+   re-renders (translation swaps) all show the finished card. */
+
+/* ---------- Card shell ---------- */
+.shell {
+  position: relative;
+  width: 100%;
+  padding: 26px 20px 20px;
+  border-radius: var(--radius-verdict);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+}
+.shell:focus {
+  outline: none;
+}
+.shell:focus-visible {
+  outline: 3px solid var(--terra-ink);
+  outline-offset: 4px;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+  transition: opacity var(--dur-2) var(--ease);
+}
+.busy {
+  opacity: 0.55;
+}
+
+/* ---------- Top row: pill + votes ---------- */
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+  min-height: 22px;
+}
+.pill {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 5px 10px;
+  border-radius: var(--radius-chip);
+  background: var(--ink);
+  color: var(--ivory);
+  line-height: 1.2;
+}
+/* Quiet brand mark in the top-left corner when no pill is showing. */
+.brandTag {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--muted);
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1;
+}
+/* Translation status, restyled as a soft pill (the element stays mounted
+   as a polite live region; see VerdictView). */
+.note {
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  max-width: 100%;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.35;
+  padding: 5px 11px;
+  border-radius: var(--radius-chip);
+  background: var(--ivory);
+  border: 1px solid var(--line-2);
+  color: var(--ink-2);
+}
+.spinner {
+  width: 11px;
+  height: 11px;
+  flex: none;
+  border-radius: 50%;
+  border: 1.5px solid rgba(28, 25, 22, 0.18);
+  border-top-color: var(--ink);
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.votes {
+  margin: 0 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  color: var(--muted);
+}
+.votesText {
+  margin-right: 3px;
+}
+.dot {
+  width: 10px;
+  height: 10px;
+  flex: none;
+  border-radius: 50%;
+}
+.dotA {
+  background: var(--terra);
+  box-shadow: inset 0 0 0 1px rgba(169, 68, 47, 0.55);
+}
+.dotB {
+  background: var(--sage-strong);
+  box-shadow: inset 0 0 0 1px rgba(79, 111, 96, 0.6);
+}
+.dotOther {
+  background: transparent;
+  box-shadow: inset 0 0 0 1.5px var(--ink);
+}
+
+/* ---------- Tug bar ---------- */
+.tugNames {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-2);
+  margin-bottom: 8px;
+}
+.tugName {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  max-width: 48%;
+}
+.nameText {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.nameDot {
+  width: 9px;
+  height: 9px;
+  flex: none;
+  border-radius: 50%;
+}
+.tugBar {
+  position: relative;
+  height: 10px;
+  border-radius: var(--radius-chip);
+  background: var(--sage-strong);
+}
+.tugA {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: var(--a, 50%);
+  background: var(--terra);
+  border-radius: 999px 0 0 999px;
+}
+.tugKnot {
+  position: absolute;
+  top: 50%;
+  left: var(--a, 50%);
+  width: 18px;
+  height: 18px;
+  margin: -9px 0 0 -9px;
+  border-radius: 50%;
+  background: var(--paper);
+  box-shadow: 0 0 0 2px var(--ink), 0 2px 6px rgba(0, 0, 0, 0.18);
+}
+
+/* ---------- Main block ---------- */
+.main {
+  text-align: center;
+  padding: 22px 16px 20px;
+  border-radius: var(--radius-block);
+  background: linear-gradient(180deg, #fbf7f0, #f7f1e7);
+  border: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  container-type: inline-size;
+}
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 5px 11px;
+  border-radius: var(--radius-chip);
+  background: var(--paper);
+  border: 1px solid var(--line-2);
+  color: var(--ink-2);
+}
+.label {
+  margin: 2px 0 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  max-width: 100%;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: var(--text-verdict);
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: var(--ink);
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+}
+/* A label that may wrap stacks its seal above it, so the seal never sits
+   stranded beside a two-line block; wide cards put it back inline. */
+.labelStack {
+  flex-direction: column;
+  gap: 10px;
+}
+@container (min-width: 420px) {
+  .labelStack:not(.labelLong) {
+    flex-direction: row;
+    gap: 12px;
+  }
+}
+.labelLong {
+  font-size: clamp(28px, 7.4vw, 38px);
+  line-height: 1.04;
+  letter-spacing: -0.035em;
+}
+.seal {
+  width: 34px;
+  height: 34px;
+  flex: none;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  box-shadow: inset 0 -3px 6px rgba(0, 0, 0, 0.12), inset 0 2px 3px rgba(255, 255, 255, 0.35);
+}
+.seal svg {
+  width: 17px;
+  height: 17px;
+}
+.sealA { background: var(--terra-ink); }
+.sealB { background: var(--sage-ink); }
+.sealNone { background: var(--ink); }
+.headline {
+  margin: 0;
+  color: var(--ink-2);
+  font-size: 15.5px;
+  line-height: 1.45;
+  max-width: 36ch;
+}
+/* A short hyphenated word is held together (lib/text.ts hyphenRuns). */
+.nobreak {
+  white-space: nowrap;
+}
+.slot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  max-width: 40ch;
+}
+.slotTitle {
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+}
+.slotText {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--muted);
+}
+.slotIcon {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  margin-right: 2px;
+  vertical-align: -2px;
+}
+.danger {
+  color: var(--danger);
+}
+.details {
+  align-self: stretch;
+  text-align: left;
+  font-size: 13px;
+  color: var(--muted);
+}
+.details summary {
+  cursor: pointer;
+  text-align: center;
+  font-weight: 600;
+  color: var(--ink-2);
+  border-radius: 8px;
+}
+.details summary:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.details p {
+  margin: 6px 0 0;
+}
+
+/* ---------- Confidence meter ---------- */
+.meter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-top: 6px;
+}
+.bars {
+  display: flex;
+  gap: 5px;
+}
+.bar {
+  position: relative;
+  width: 30px;
+  height: 7px;
+  border-radius: 7px;
+  background: rgba(28, 25, 22, 0.1);
+  overflow: hidden;
+}
+.barOn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--ink);
+  transform-origin: left;
+}
+.meterText {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-2);
+}
+
+/* ---------- Split / conditional branches ---------- */
+.branches {
+  display: grid;
+  gap: 8px;
+}
+.branch {
+  padding: 12px 14px;
+  border-radius: 16px;
+  font-size: 14.5px;
+  line-height: 1.5;
+  color: var(--ink);
+}
+.branchA {
+  background: var(--terra-tint);
+  border-left: 3px solid var(--terra);
+}
+.branchB {
+  background: var(--sage-tint);
+  border-left: 3px solid var(--sage-strong);
+}
+.branchIf {
+  background: var(--paper);
+  border: 1px solid var(--line-2);
+}
+.branchLead {
+  font-weight: 600;
+}
+.branchIf .branchLead {
+  color: var(--ink-2);
+}
+
+/* ---------- Micro label, crux, best point ---------- */
+.k {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 0 6px;
+}
+.crux {
+  padding: 16px 18px;
+  border-radius: 20px;
+  border: 1.5px dashed rgba(28, 25, 22, 0.28);
+  text-align: center;
+  background: var(--paper);
+}
+.cruxKicker {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+}
+.cruxKicker svg {
+  width: 12px;
+  height: 12px;
+  flex: none;
+}
+.cruxText {
+  margin: 0 auto;
+  color: var(--ink);
+  max-width: 34ch;
+  text-wrap: pretty;
+}
+.cruxSerif {
+  font-family: var(--font-serif);
+  font-size: var(--text-crux);
+  line-height: 1.28;
+  letter-spacing: 0.005em;
+}
+.cruxSans {
+  font-family: var(--font-sans);
+  font-size: 18px;
+  line-height: 1.5;
+  font-weight: 500;
+  max-width: 46ch;
+  text-align: left;
+}
+.best {
+  padding: 14px 16px;
+  border-radius: 18px;
+  background: #fbf6ef;
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--terra);
+}
+.best p {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--ink-2);
+}
+
+.footnote {
+  margin: 0;
+  text-align: center;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+/* ---------- Actions ---------- */
+.actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 2px;
+}
+.shareGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.btnGhost {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  border: 1px solid var(--line-2);
+  background: var(--paper);
+  padding: 9px 16px;
+  border-radius: var(--radius-chip);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+  cursor: pointer;
+  transition: background var(--dur-1), transform 0.25s var(--ease), border-color var(--dur-1);
+}
+.btnGhost:hover {
+  background: #fff;
+  border-color: rgba(28, 25, 22, 0.22);
+  transform: translateY(-1px);
+}
+.btnGhost:active {
+  transform: scale(0.98);
+}
+.btnGhost svg {
+  width: 15px;
+  height: 15px;
+  flex: none;
+}
+.btnLink {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 8px 4px;
+  border: 0;
+  background: none;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--terra-ink);
+  text-decoration: none;
+  cursor: pointer;
+  border-radius: 8px;
+}
+.btnLink:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ---------- Below the card: argument map and facts ---------- */
+.below {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  min-width: 0;
+  transition: opacity var(--dur-2) var(--ease);
+}
+
+/* Share page: the verdict-language switch above the card. */
+.langRow {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.langLabel {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.sectionTitle {
+  margin: 0 0 12px;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.mapCols {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+.col {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+.colHead {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px 6px 6px;
+  border-radius: var(--radius-chip);
+  min-width: 0;
+}
+.colHeadA { background: var(--terra-tint); }
+.colHeadB { background: var(--sage-tint); }
+.partyChip {
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  flex: none;
+  border-radius: 50%;
+  font-size: 11px;
+  font-weight: 700;
+  color: #fff;
+}
+.partyChipA { background: var(--terra-ink); }
+.partyChipB { background: var(--sage-ink); }
+.colName {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.claim {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  min-width: 0;
+}
+.claimA { border-left: 3px solid var(--terra); }
+.claimB { border-left: 3px solid var(--sage-strong); }
+.claimText {
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--ink);
+  overflow-wrap: break-word;
+}
+.kind {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+}
+.glyph {
+  width: 11px;
+  height: 11px;
+  flex: none;
+}
+.connector {
+  align-self: center;
+  width: 0;
+  height: 14px;
+  border-left: 1.5px dashed rgba(28, 25, 22, 0.28);
+}
+.bedrock {
+  padding: 10px 12px;
+  border-radius: 14px;
+  text-align: center;
+  background: var(--strata);
+  border: 1px solid var(--stone);
+  box-shadow: inset 0 -3px 0 var(--stone);
+  min-width: 0;
+}
+/* --muted is under 4.5:1 on --strata. */
+.bedrock .k {
+  color: var(--ink-2);
+}
+.bedrockText {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.45;
+  color: var(--ink);
+  overflow-wrap: break-word;
+}
+.mapJoin {
+  display: flex;
+  justify-content: center;
+  gap: 64px;
+  margin: 4px 0;
+}
+.mapJoin span {
+  width: 0;
+  height: 18px;
+  border-left: 1.5px dashed rgba(28, 25, 22, 0.28);
+}
+.mapJoin span:first-child { transform: rotate(-28deg); }
+.mapJoin span:last-child { transform: rotate(28deg); }
+
+.factList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.fact {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 11px 14px;
+  border-radius: 14px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--ink-2);
+}
+.factCheck {
+  display: grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  flex: none;
+  margin-top: 2px;
+  border-radius: 50%;
+  background: var(--sage-ink);
+}
+.factCheck svg {
+  width: 10px;
+  height: 10px;
+}
+
+/* ---------- Live entrance (VerdictView: `animate`) ---------- */
+@keyframes card-in {
+  from { opacity: 0; transform: translateY(16px); }
+}
+@keyframes tug-a-in {
+  from { width: 50%; }
+}
+@keyframes tug-knot-in {
+  from { left: 50%; }
+}
+@keyframes dot-pop {
+  from { opacity: 0; transform: scale(0); }
+}
+@keyframes label-in {
+  from { opacity: 0; transform: translateY(14px) scale(0.96); }
+}
+@keyframes bar-fill {
+  from { transform: scaleX(0); }
+}
+@keyframes fresh-ring {
+  0%, 70% { box-shadow: 0 0 0 6px rgba(138, 168, 153, 0.35), var(--shadow-card); }
+  100% { box-shadow: var(--shadow-card); }
+}
+
+.animate { animation: card-in 0.5s var(--ease) both; }
+.fresh { animation: fresh-ring 2.6s var(--ease) both; }
+.animate.fresh {
+  animation: card-in 0.5s var(--ease) both, fresh-ring 2.6s var(--ease) both;
+}
+.animate .tugA { animation: tug-a-in 1.4s var(--ease-spring) 0.25s both; }
+.animate .tugKnot { animation: tug-knot-in 1.4s var(--ease-spring) 0.25s both; }
+.animate .dot {
+  animation: dot-pop 0.5s var(--ease-spring) both;
+  animation-delay: calc(0.5s + var(--i, 0) * 0.1s);
+}
+.animate .label { animation: label-in 0.8s var(--ease-spring) 0.35s both; }
+.animate .barOn::after {
+  animation: bar-fill 0.45s var(--ease) both;
+  animation-delay: calc(0.7s + var(--i, 0) * 0.14s);
+}
+.animateBelow { animation: card-in 0.5s var(--ease) 0.45s both; }
+
+/* ---------- Sample play (SampleVerdict sets data-state) ---------- */
+/* "armed" is only ever set by script when motion is allowed; without it
+   (no JS, reduced motion) the card simply shows its final state. */
+.shell[data-state="armed"] .tugA { width: 50%; }
+.shell[data-state="armed"] .tugKnot { left: 50%; }
+.shell[data-state="armed"] .dot { opacity: 0; transform: scale(0); }
+.shell[data-state="armed"] .label { opacity: 0; transform: translateY(14px) scale(0.96); }
+.shell[data-state="armed"] .barOn::after { transform: scaleX(0); }
+
+.shell[data-state="play"] .tugA { transition: width 1.4s var(--ease-spring); }
+.shell[data-state="play"] .tugKnot { transition: left 1.4s var(--ease-spring); }
+.shell[data-state="play"] .dot {
+  transition: transform 0.5s var(--ease-spring), opacity 0.4s;
+  transition-delay: calc(0.1s + var(--i, 0) * 0.1s);
+}
+.shell[data-state="play"] .label {
+  transition: opacity 0.6s var(--ease) 0.35s, transform 0.8s var(--ease-spring) 0.35s;
+}
+.shell[data-state="play"] .barOn::after {
+  transition: transform 0.45s var(--ease);
+  transition-delay: calc(0.7s + var(--i, 0) * 0.14s);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate,
+  .animate *,
+  .animate *::after,
+  .fresh,
+  .animateBelow {
+    animation: none !important;
+  }
+  .spinner {
+    animation: none;
+    border-color: var(--ink);
+    border-top-color: transparent;
+  }
+}
+
+@media (max-width: 439px) {
+  .votesText { display: none; }
+}
+
+/* Two ~130px columns break Turkish claims mid-word: stack them. */
+@media (max-width: 400px) {
+  .mapCols { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+}
+
+@media (min-width: 960px) {
+  .shell { padding: 30px 28px 24px; }
+}
+
+@media (forced-colors: active) {
+  .dotA, .dotB, .tugA, .barOn::after, .seal, .partyChip, .factCheck { forced-color-adjust: none; }
+  .dotOther { box-shadow: inset 0 0 0 1.5px CanvasText; }
+}

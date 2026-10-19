@@ -6,7 +6,7 @@ import { clientIp } from "@/lib/client-ip";
 import { saveVerdict } from "@/lib/db";
 import { hasApiKey } from "@/lib/claude";
 import { t, type Lang } from "@/lib/i18n";
-import { judgeSelfConsistent } from "@/lib/judge";
+import { judgeExtra, judgeSelfConsistent, type JudgeRun } from "@/lib/judge";
 import { checkVerdictLimits } from "@/lib/ratelimit";
 import { applyCruxTrial, runCruxTrial, shouldTryCrux } from "@/lib/trial";
 import { verifyTurnstile } from "@/lib/turnstile";
@@ -19,10 +19,21 @@ import {
 
 export const runtime = "nodejs";
 // Vercel function limit (seconds): anonymize (60s) + parallel judges (120s)
-// + crux trial (60s) fits with headroom.
+// + escalation judges (45s, EXTRA_RUN_TIMEOUT_MS) + crux trial (60s) = 285s
+// worst case, inside 300s (Vercel Hobby's ceiling with Fluid compute). The
+// VPS deploy has no such limit; this keeps the Vercel path honest.
 export const maxDuration = 300;
 
 const UNAVAILABLE_MESSAGE = "The judge is unavailable right now — try again in a minute.";
+
+/** Integer env setting clamped to [min, max]; unset, empty or non-numeric
+ * reads as the default. */
+function intEnv(name: string, fallback: number, min: number, max: number): number {
+  const raw = process.env[name]?.trim();
+  if (!raw) return fallback;
+  const n = Number(raw);
+  return Number.isFinite(n) ? Math.min(max, Math.max(min, Math.floor(n))) : fallback;
+}
 
 function unavailable(): NextResponse {
   return NextResponse.json({ error: UNAVAILABLE_MESSAGE, code: "unavailable" }, { status: 503 });
@@ -164,6 +175,20 @@ export async function POST(req: Request): Promise<NextResponse> {
     }
   } else {
     result = aggregate(ok);
+    // Escalation: a low-confidence first round calls in a few more judges
+    // (in parallel) and every vote is counted again. Fail-open: if no extra
+    // run succeeds, the first result stands as it was.
+    const extra = intEnv("JUDGE_EXTRA_RUNS", 2, 0, 4);
+    if (extra > 0 && result.confidence <= intEnv("JUDGE_ESCALATE_AT", 2, 0, 5)) {
+      const more = await judgeExtra(extra, anonymized, framework, lang).catch(
+        (): JudgeRun[] => [],
+      );
+      const moreOk = more.filter((r) => r.ok).map((r) => r.data as JudgeRunOutput);
+      console.info(
+        `[verdict] escalated at confidence ${result.confidence}: ${moreOk.length}/${extra} extra runs ok, ${ok.length + moreOk.length} runs counted`,
+      );
+      if (moreOk.length > 0) result = { ...aggregate([...ok, ...moreOk]), escalated: true };
+    }
     // Crux trial: cross-examine fact/logic winner rulings before saving, so
     // shared /v/[id] pages get the trial for free. runCruxTrial never throws
     // and never exceeds its ~60s deadline; null means the verdict ships
@@ -174,6 +199,8 @@ export async function POST(req: Request): Promise<NextResponse> {
     }
   }
 
+  // Record the content language so a later translation knows its source.
+  result = { ...result, lang };
   const id = nanoid(10);
   try {
     await saveVerdict({ id, input: anonymized, framework, result });

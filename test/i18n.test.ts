@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { KEY_BY_CAPTION } from "../components/ThinkingDig";
+import { KEY_BY_CAPTION } from "../lib/thinking-keys";
+import { leanTally } from "../components/VerdictReveal";
 import {
   ERROR_KEY_BY_CODE,
   STRINGS,
@@ -11,9 +12,10 @@ import {
 } from "../lib/i18n";
 import { partyNames } from "../lib/names";
 import { FINISH_CAPTION, READY, STILL_JUDGING, THINKING_STEPS } from "../lib/thinking";
-import { VerdictRequest } from "../lib/types";
+import { VerdictRequest, type Lean } from "../lib/types";
 
 const EN_KEYS = Object.keys(STRINGS.en).sort();
+const LEAN: Lean = { party: "a", unanimous: false, reason: "r" };
 const TR_KEYS = Object.keys(STRINGS.tr).sort();
 
 /** Intentionally language-invariant: each toggle aria label is written in
@@ -30,6 +32,15 @@ describe("STRINGS table", () => {
       expect(STRINGS.en[key].length, `en.${key}`).toBeGreaterThan(0);
       expect(STRINGS.tr[key].length, `tr.${key}`).toBeGreaterThan(0);
       expect(STRINGS.tr[key], `tr.${key}`).not.toContain("TODO");
+    }
+  });
+
+  it('tr speaks to the reader as informal singular "sen", never plural/formal "siz"', () => {
+    // Second person plural possessives and verb endings: -(n)ız/-(n)iz/-(n)uz/-(n)üz
+    // ("tartıştığınızı", "deneyiniz", "haklısınız") and "siz" itself.
+    const formal = /(?:[ıiuü]n[ıiuü]z|s[ıiuü]n[ıiuü]z|\bsiz(?:in|e|i|den)?\b)/iu;
+    for (const key of TR_KEYS as Key[]) {
+      expect(STRINGS.tr[key], `tr.${key}`).not.toMatch(formal);
     }
   });
 
@@ -113,6 +124,18 @@ describe("partyNames", () => {
     expect(en.aIsSelf).toBe(false);
   });
 
+  it("narrator detection follows the judged language, labels follow the display language", () => {
+    const map = [{ original: "Ben", replacement: "Party A" }];
+    const shownInEn = partyNames(map, "en", "tr");
+    expect(shownInEn.nameA).toBe("You");
+    expect(shownInEn.aIsSelf).toBe(true);
+    expect(shownInEn.nameB).toBe("Party B");
+    const enArgumentShownInTr = partyNames(map, "tr", "en");
+    expect(enArgumentShownInTr.nameA).toBe("Ben");
+    expect(enArgumentShownInTr.aIsSelf).toBe(false);
+    expect(enArgumentShownInTr.nameB).toBe("Taraf B");
+  });
+
   it('all-caps "BENİM" matches under tr case folding', () => {
     const p = partyNames([{ original: "BENİM", replacement: "Party A" }], "tr");
     expect(p.nameA).toBe("Sen");
@@ -143,7 +166,7 @@ describe("VerdictRequest.lang", () => {
   });
 });
 
-describe("ThinkingDig caption map", () => {
+describe("judging caption map", () => {
   it("covers every caption thinking.ts can emit", () => {
     const captions = [
       ...THINKING_STEPS.map((s) => s.caption),
@@ -275,6 +298,39 @@ describe("example disputes", () => {
         expect(len, `${lang}.${k}`).toBeGreaterThanOrEqual(20);
         expect(len, `${lang}.${k}`).toBeLessThanOrEqual(6000);
       }
+    }
+  });
+});
+
+describe("vote-count copy", () => {
+  it("fills the forced-lean tally in both languages", () => {
+    expect(t("en", "lean.majority", leanTally(LEAN, 3))).toBe("The judges leaned this way 2–1.");
+    expect(t("tr", "lean.majority", leanTally(LEAN, 3))).toBe("Yargıçlar bu tarafı 2–1 seçti.");
+    const escalated = { ...LEAN, tally: { for: 3, against: 2 } };
+    expect(t("en", "lean.majority", leanTally(escalated, 5))).toBe("The judges leaned this way 3–2.");
+    expect(t("tr", "lean.majority", leanTally(escalated, 5))).toBe("Yargıçlar bu tarafı 3–2 seçti.");
+  });
+
+  it("never hardcodes a vote split or a fixed judge count in vote copy", () => {
+    for (const lang of ["en", "tr"] as const) {
+      for (const key of EN_KEYS as Key[]) {
+        expect(STRINGS[lang][key], `${lang}.${key}`).not.toMatch(/\d–\d/);
+      }
+      for (const key of ["thinking.stillJudging", "judgesVoted.other", "escalated"] as Key[]) {
+        expect(STRINGS[lang][key], `${lang}.${key}`).not.toMatch(/three|üç/i);
+      }
+    }
+  });
+
+  it("has an escalation note in both languages", () => {
+    expect(t("en", "escalated")).toContain("extra judges");
+    expect(t("tr", "escalated")).toContain("ek yargıç");
+  });
+
+  it("how-it-works, FAQ and About mention that close calls bring in more judges", () => {
+    for (const key of ["how.step4.body", "faq.fair.a", "faq.powers.a", "about.built"] as Key[]) {
+      expect(STRINGS.en[key], `en.${key}`).toMatch(/more/);
+      expect(STRINGS.tr[key], `tr.${key}`).toMatch(/ek yargıç/);
     }
   });
 });

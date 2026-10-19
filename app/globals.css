@@ -1,241 +1,320 @@
 @import "tailwindcss";
 
+/* ==========================================================================
+   Design tokens (Ivory & Terracotta, light only).
+   Colour values must match lib/palette.ts: test/palette.test.ts compares
+   this first :root block against it.
+   ========================================================================== */
 :root {
-  /* surfaces & ink (light) */
-  --plane: #f9f9f7;
-  --surface: #fcfcfb;
-  --ink: #0b0b0b;
-  --ink-2: #52514e;
-  /* AA (>= 4.5:1) on --plane and --surface for small helper text */
-  --muted: #6b6963;
-  --line: #e1e0d9;
-  --ring: rgba(11, 11, 11, 0.1);
-  --focus: #2a78d6;
-  --danger: #c22f2f;
+  /* surfaces */
+  --ivory: #F6F1E9;
+  --ivory-2: #EEE6D9;
+  --paper: #FFFCF7;
 
-  /* party identity (categorical slots 1 & 2, validated) */
-  --party-a: #2a78d6;
-  --party-b: #eb6834;
-  --party-a-soft: rgba(42, 120, 214, 0.1);
-  --party-b-soft: rgba(235, 104, 52, 0.12);
+  /* ink */
+  --ink: #1C1916;
+  --ink-2: #4A433C;
+  --muted: #6B6258;
+  --placeholder: #776D61;
 
-  /* claim-kind tags (always paired with a text label, never color-alone) */
-  --kind-fact: #1baf7a;
-  --kind-value: #e87ba4;
-  --kind-definition: #eda100;
-  --kind-logic: #4a3aa7;
+  /* Party A: terracotta. --terra is for fills and display text >= 24px;
+     --terra-ink for small text, links and the focus ring. */
+  --terra: #C8553D;
+  --terra-ink: #A9442F;
+  --terra-tint: #F3DDD5;
 
-  --good: #006300;
+  /* Party B: sage. --sage is for large fills only, never text;
+     --sage-strong for thin marks that need 3:1; --sage-ink for text. */
+  --sage: #8AA899;
+  --sage-strong: #6E8F80;
+  --sage-ink: #4F6F60;
+  --sage-tint: #DDE7E0;
 
-  /* thinking dig: soil strata and unlit rock (muted; party/kind colours stay the accents) */
-  --soil-1: #e9dfcf;
-  --soil-2: #d8c8ae;
-  --rock: #bfb7a8;
+  /* bedrock (3D scene, argument map) */
+  --stone: #D6C7B0;
+  --strata: #E6DCCB;
 
-  --background: var(--plane);
+  --danger: #B3261E;
+
+  --line: rgba(28, 25, 22, 0.09);
+  --line-2: rgba(28, 25, 22, 0.14);
+  --glass: rgba(255, 252, 247, 0.68);
+}
+
+:root {
+  color-scheme: light;
+
+  /* type families (next/font sets the --font-inter* variables on <html>) */
+  --font-sans: var(--font-inter), ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-display: var(--font-inter-tight), ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-serif: var(--font-instrument-serif), "Iowan Old Style", Georgia, serif;
+
+  /* type scale (mobile first; desktop overrides below) */
+  --text-display-1: clamp(44px, 12.6vw, 64px);
+  --text-display-2: clamp(36px, 9.6vw, 48px);
+  --text-display-3: 24px;
+  --text-verdict: clamp(36px, 10vw, 48px);
+  --text-crux: clamp(22px, 1.1vw + 17px, 28px);
+  --text-lead: 17px;
+  --text-micro: 12px;
+
+  /* layout */
+  --gutter: 20px;
+  --content-max: 1200px;
+  --section-pad: 96px;
+  --nav-h: 56px;
+  /* mobile: the 3D scene band between the nav and the hero text
+     (lib/scene-layout.ts heroBandPx mirrors it for the camera) */
+  --scene-band: clamp(176px, 52vw, 240px);
+
+  /* radius */
+  --radius-chip: 999px;
+  --radius-field: 18px;
+  --radius-block: 22px;
+  --radius-card: 28px;
+  --radius-verdict: 30px;
+  --radius-section: 36px;
+
+  /* elevation */
+  --shadow-1: 0 1px 2px rgba(60, 40, 20, 0.05), 0 8px 24px rgba(60, 40, 20, 0.06);
+  --shadow-2: 0 1px 2px rgba(60, 40, 20, 0.06), 0 24px 60px -12px rgba(60, 40, 20, 0.16);
+  --shadow-card: 0 2px 4px rgba(60, 40, 20, 0.04), 0 40px 80px -30px rgba(60, 40, 20, 0.28);
+  --shadow-cta: 0 1px 0 rgba(255, 255, 255, 0.15) inset, 0 10px 24px -8px rgba(28, 25, 22, 0.45);
+
+  /* motion */
+  --ease: cubic-bezier(0.2, 0.7, 0.1, 1);
+  --ease-spring: cubic-bezier(0.34, 1.4, 0.64, 1);
+  --dur-1: 0.2s;
+  --dur-2: 0.4s;
+  --dur-3: 0.6s;
+
+  --background: var(--ivory);
   --foreground: var(--ink);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@media (min-width: 960px) {
   :root {
-    --plane: #0d0d0d;
-    --surface: #1a1a19;
-    --ink: #ffffff;
-    --ink-2: #c3c2b7;
-    --muted: #9a988f;
-    --line: #2c2c2a;
-    --ring: rgba(255, 255, 255, 0.1);
-    --focus: #6aa8f0;
-    --danger: #ff7a7a;
-
-    --party-a: #3987e5;
-    --party-b: #d95926;
-    --party-a-soft: rgba(57, 135, 229, 0.16);
-    --party-b-soft: rgba(217, 89, 38, 0.16);
-
-    --kind-fact: #199e70;
-    --kind-value: #d55181;
-    --kind-definition: #c98500;
-    --kind-logic: #9085e9;
-
-    --good: #0ca30c;
-
-    --soil-1: #2a2520;
-    --soil-2: #3a3128;
-    --rock: #5a5347;
+    --text-display-1: clamp(58px, 5.1vw, 78px);
+    --text-display-3: clamp(36px, 3.4vw, 52px);
+    --text-lead: 19px;
+    --gutter: 40px;
+    --section-pad: 140px;
+    --radius-section: 48px;
   }
 }
 
-html {
-  color-scheme: light dark;
+@media (min-width: 1280px) {
+  :root {
+    --text-display-2: 56px;
+  }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-sans), system-ui, -apple-system, "Segoe UI", sans-serif;
-  overflow-x: hidden;
+/* Glass needs a backdrop blur to stay legible; without one, use paper. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  :root {
+    --glass: var(--paper);
+  }
+}
+
+/* Tailwind utilities read the tokens above (bg-ivory, text-terra-ink,
+   font-display, rounded-card, shadow-card, ease-spring, text-display-1...). */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-ivory: var(--ivory);
+  --color-ivory-2: var(--ivory-2);
+  --color-paper: var(--paper);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-muted: var(--muted);
+  --color-placeholder: var(--placeholder);
+  --color-terra: var(--terra);
+  --color-terra-ink: var(--terra-ink);
+  --color-terra-tint: var(--terra-tint);
+  --color-sage: var(--sage);
+  --color-sage-strong: var(--sage-strong);
+  --color-sage-ink: var(--sage-ink);
+  --color-sage-tint: var(--sage-tint);
+  --color-stone: var(--stone);
+  --color-strata: var(--strata);
+  --color-danger: var(--danger);
+  --color-line: var(--line);
+  --color-line-2: var(--line-2);
+  --color-glass: var(--glass);
+
+  --font-sans: var(--font-sans);
+  --font-display: var(--font-display);
+  --font-serif: var(--font-serif);
+
+  --text-display-1: var(--text-display-1);
+  --text-display-1--line-height: 0.98;
+  --text-display-1--letter-spacing: -0.04em;
+  --text-display-1--font-weight: 700;
+  --text-display-2: var(--text-display-2);
+  --text-display-2--line-height: 1.02;
+  --text-display-2--letter-spacing: -0.035em;
+  --text-display-2--font-weight: 700;
+  --text-display-3: var(--text-display-3);
+  --text-display-3--line-height: 1.08;
+  --text-display-3--letter-spacing: -0.03em;
+  --text-display-3--font-weight: 700;
+  --text-verdict: var(--text-verdict);
+  --text-verdict--line-height: 1;
+  --text-verdict--letter-spacing: -0.04em;
+  --text-verdict--font-weight: 800;
+  --text-lead: var(--text-lead);
+  --text-lead--line-height: 1.5;
+  --text-micro: var(--text-micro);
+  --text-micro--line-height: 1.3;
+  --text-micro--letter-spacing: 0.12em;
+
+  --radius-chip: var(--radius-chip);
+  --radius-field: var(--radius-field);
+  --radius-block: var(--radius-block);
+  --radius-card: var(--radius-card);
+  --radius-verdict: var(--radius-verdict);
+  --radius-section: var(--radius-section);
+
+  --shadow-1: var(--shadow-1);
+  --shadow-2: var(--shadow-2);
+  --shadow-card: var(--shadow-card);
+  --shadow-cta: var(--shadow-cta);
+
+  --ease-standard: var(--ease);
+  --ease-spring: var(--ease-spring);
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+@layer base {
+  html {
+    color-scheme: light;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    /* anchors (#how, #faq, #main) land below the fixed nav */
+    scroll-padding-top: calc(var(--nav-h) + 8px);
+    /* lets <details> animate to height: auto where supported */
+    interpolate-size: allow-keywords;
+  }
+
+  body {
+    background: var(--ivory);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-size: 16px;
+    line-height: 1.5;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+  @supports (overflow: clip) {
+    body { overflow-x: clip; }
+  }
+
+  h1, h2, h3 {
+    font-family: var(--font-display);
+    text-wrap: balance;
+  }
+
+  p, li, dd, blockquote {
+    text-wrap: pretty;
+  }
+
+  ::placeholder {
+    color: var(--placeholder);
+    opacity: 1;
+  }
+
+  ::selection {
+    background: var(--terra-tint);
+    color: var(--ink);
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--terra-ink);
+    outline-offset: 3px;
+  }
+  textarea:focus-visible {
+    outline-offset: 0;
+  }
+
+  details > summary { list-style: none; }
+  details > summary::-webkit-details-marker { display: none; }
 }
 
 @media (prefers-reduced-motion: no-preference) {
   html { scroll-behavior: smooth; }
 }
 
-/* ---------- site chrome ---------- */
-
-:focus-visible {
-  outline: 2px solid var(--focus);
-  outline-offset: 2px;
+/* Micro labels: uppercase via CSS so a lang="tr" scope yields a dotted İ. */
+.micro {
+  font-size: var(--text-micro);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
-textarea:focus-visible {
-  outline-offset: 0;
+
+/* Shared layout classes. In the components layer so Tailwind utilities
+   and CSS modules can still override them. */
+@layer components {
+  /* Page container: 1200px max, 20px gutter (40px from 960px). */
+  .wrap {
+    width: 100%;
+    max-width: var(--content-max);
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+  }
+
+  /* Section kicker above an h2: terracotta-ink micro label. */
+  .kicker {
+    margin: 0 0 12px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--terra-ink);
+  }
 }
 
 .skip-link {
-  position: absolute;
-  left: 1rem;
-  top: -100px;
-  z-index: 50;
-  padding: 0.5rem 0.875rem;
-  border-radius: 999px;
+  position: fixed;
+  left: 12px;
+  top: -60px;
+  z-index: 100;
+  padding: 10px 16px;
+  border-radius: var(--radius-chip);
   background: var(--ink);
-  color: var(--plane);
+  color: var(--ivory);
   font-size: 0.875rem;
   font-weight: 600;
+  text-decoration: none;
+  transition: top var(--dur-1);
 }
 .skip-link:focus {
-  top: 0.75rem;
+  top: 12px;
 }
-
-.hero-title { text-wrap: balance; }
-
-.chip { transition: background-color 0.15s, border-color 0.15s, color 0.15s; }
-.chip:hover { border-color: var(--muted) !important; color: var(--ink) !important; }
-
-details > summary { list-style: none; }
-details > summary::-webkit-details-marker { display: none; }
-.faq-icon, .advanced-caret { transition: transform 0.2s ease-out; }
-.faq[open] .faq-icon { transform: rotate(45deg); }
-.advanced[open] .advanced-caret { transform: rotate(90deg); }
-
-/* ---------- verdict reveal animations ---------- */
-
-@keyframes weigh-tilt {
-  0%, 100% { transform: rotate(-8deg); }
-  50% { transform: rotate(8deg); }
-}
-.weigh { animation: weigh-tilt 1.6s ease-in-out infinite; display: inline-block; }
-
-@keyframes tug {
-  0% { width: 50%; }
-  25% { width: 62%; }
-  45% { width: 40%; }
-  65% { width: 58%; }
-  100% { width: var(--tug-final, 50%); }
-}
-.tug-a {
-  animation: tug 1.8s cubic-bezier(0.65, 0, 0.35, 1) forwards;
-}
-
-@keyframes pop-in {
-  0% { opacity: 0; transform: scale(0.6); }
-  70% { transform: scale(1.08); }
-  100% { opacity: 1; transform: scale(1); }
-}
-.pop-in { animation: pop-in 0.5s 1.7s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
-
-@keyframes rise-in {
-  from { opacity: 0; transform: translateY(14px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-.rise-in { animation: rise-in 0.45s 2s ease-out both; }
-.rise-in-late { animation: rise-in 0.45s 2.3s ease-out both; }
-
-@keyframes dot-fill {
-  from { transform: scale(0); }
-  to { transform: scale(1); }
-}
-.dot-fill { animation: dot-fill 0.25s ease-out both; }
-
-/* ---------- thinking dig ---------- */
-/* Base styles are the resting visible state; entrance keyframes animate from
-   hidden to base with `both`. All transform motion lives in keyframes so the
-   reduced-motion rule below neutralises it; only colour/opacity transition. */
-
-@keyframes cloud-in {
-  from { opacity: 0; transform: translateY(6px) scale(0.9); }
-  to { opacity: 1; transform: none; }
-}
-@keyframes cloud-bob {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-2px); }
-}
-@keyframes cloud-pop {
-  0% { transform: scale(1); opacity: 1; }
-  25% { transform: translateY(3px) scale(0.96); opacity: 1; }
-  60% { transform: translateY(-2px) scale(1.2); opacity: 1; }
-  100% { transform: scale(0); opacity: 0; }
-}
-@keyframes tag-in {
-  from { opacity: 0; transform: scale(0.8); }
-  to { opacity: 1; transform: none; }
-}
-@keyframes bore-draw {
-  from { transform: scaleY(0); }
-  to { transform: scaleY(1); }
-}
-@keyframes rock-light {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.06); }
-}
-@keyframes line-draw {
-  from { transform: scaleX(0); }
-  to { transform: scaleX(1); }
-}
-@keyframes crux-spark {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.6); }
-}
-@keyframes judge-in {
-  from { opacity: 0; transform: translateY(6px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-@keyframes dig-out {
-  from { opacity: 1; }
-  to { opacity: 0; }
-}
-
-.dig-cloud {
-  animation: cloud-in 0.4s ease-out both, cloud-bob 2.6s 0.4s ease-in-out infinite;
-}
-.dig-cloud-pop { animation: cloud-pop 0.5s ease-in both; }
-.tag-in { animation: tag-in 0.3s ease-out both; }
-.bore-draw { animation: bore-draw 0.4s ease-out both; transform-origin: top; }
-.dig-rock {
-  transition: background-color 0.25s, border-color 0.25s, color 0.25s;
-}
-.rock-light { animation: rock-light 0.4s ease-out; }
-.line-draw { animation: line-draw 0.4s ease-out both; }
-.dig-crux { opacity: 0.45; transition: opacity 0.25s; }
-.dig-crux.dig-lit { opacity: 1; }
-.crux-spark { display: inline-block; animation: crux-spark 0.5s ease-out 1 both; }
-.judge-in { animation: judge-in 0.4s ease-out both; }
-.dig-out { animation: dig-out 0.25s ease-out both; }
 
 @media (prefers-reduced-motion: reduce) {
-  .weigh, .tug-a, .pop-in, .rise-in, .rise-in-late, .dot-fill,
-  .dig-cloud, .dig-cloud-pop, .tag-in, .bore-draw, .rock-light, .line-draw,
-  .crux-spark, .judge-in, .dig-out {
+  *, *::before, *::after {
+    transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
-    animation-delay: 0s !important;
     animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
   }
-  .chip, .faq-icon, .advanced-caret { transition: none; }
+}
+
+@media (forced-colors: active) {
+  :root {
+    --glass: Canvas;
+    --line: CanvasText;
+    --line-2: CanvasText;
+  }
+  *, *::before, *::after {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    box-shadow: none !important;
+  }
+  :focus-visible {
+    outline-color: Highlight;
+  }
 }

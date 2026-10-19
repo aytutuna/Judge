@@ -2,9 +2,11 @@
 
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { HOW_STEPS, stepNumeral } from "@/lib/how-steps";
 import { t, type Key, type Lang } from "@/lib/i18n";
 import { useLang } from "@/lib/lang";
-import { HOW_STEPS } from "./HomeSections";
+import { hyphenRuns, noOrphan } from "@/lib/text";
+import styles from "./InfoPage.module.css";
 import { SiteFooter, SiteHeader, SkipLink } from "./SiteChrome";
 
 /** Prose pages (/about, /privacy). Client-rendered chrome so the TR|EN
@@ -12,20 +14,10 @@ import { SiteFooter, SiteHeader, SkipLink } from "./SiteChrome";
 
 function Section({ title, children }: { title: string; children: ReactNode }) {
   return (
-    <section className="flex flex-col gap-2">
-      <h2 className="text-lg font-bold tracking-tight" style={{ color: "var(--ink)" }}>
-        {title}
-      </h2>
+    <section className={styles.section}>
+      <h2 className={styles.h2}>{noOrphan(title)}</h2>
       {children}
     </section>
-  );
-}
-
-function P({ children }: { children: ReactNode }) {
-  return (
-    <p className="text-[15px] leading-relaxed" style={{ color: "var(--ink-2)" }}>
-      {children}
-    </p>
   );
 }
 
@@ -34,38 +26,42 @@ function About({ lang }: { lang: Lang }) {
   return (
     <>
       <Section title={t(lang, "about.methodTitle")}>
-        <ol className="flex flex-col gap-2">
+        <ol className={styles.method}>
           {HOW_STEPS.map((s, i) => (
-            <li key={s.title} className="flex gap-3">
-              <span
-                aria-hidden
-                className="mt-0.5 flex shrink-0 items-center justify-center rounded-full text-xs font-bold"
-                style={{ width: 22, height: 22, background: "var(--ink)", color: "var(--plane)" }}
-              >
-                {i + 1}
+            <li key={s.title}>
+              <span className={styles.numeral} aria-hidden>
+                {stepNumeral(i)}
               </span>
-              <span className="text-[15px] leading-relaxed" style={{ color: "var(--ink-2)" }}>
-                <strong style={{ color: "var(--ink)" }}>{t(lang, s.title)}.</strong>{" "}
-                {t(lang, s.body)}
+              <span>
+                <strong>
+                  {hyphenRuns(t(lang, s.title)).map((r, j) =>
+                    r.keep ? (
+                      <span key={j} className={styles.nobreak}>
+                        {r.text}
+                      </span>
+                    ) : (
+                      r.text
+                    ),
+                  )}
+                  .
+                </strong> {t(lang, s.body)}
               </span>
             </li>
           ))}
         </ol>
       </Section>
       <Section title={t(lang, "about.honestTitle")}>
-        <P>{t(lang, "about.honest")}</P>
+        <p>{t(lang, "about.honest")}</p>
       </Section>
       <Section title={t(lang, "about.limitsTitle")}>
-        <ul className="flex flex-col gap-1.5 list-disc pl-5">
+        <ul className={styles.bullets}>
           {limits.map((k) => (
-            <li key={k} className="text-[15px] leading-relaxed" style={{ color: "var(--ink-2)" }}>
-              {t(lang, k)}
-            </li>
+            <li key={k}>{t(lang, k)}</li>
           ))}
         </ul>
       </Section>
       <Section title={t(lang, "about.builtTitle")}>
-        <P>{t(lang, "about.built")}</P>
+        <p>{t(lang, "about.built")}</p>
       </Section>
     </>
   );
@@ -86,22 +82,18 @@ function Privacy({ lang, contactEmail }: { lang: Lang; contactEmail: string | nu
     <>
       {sections.map(([title, body]) => (
         <Section key={title} title={t(lang, title)}>
-          <P>{t(lang, body)}</P>
+          <p>{t(lang, body)}</p>
         </Section>
       ))}
       {contactEmail ? (
         <Section title={t(lang, "privacy.contactTitle")}>
-          <P>
+          <p>
             {before}
-            <a
-              href={`mailto:${contactEmail}`}
-              className="underline underline-offset-2 rounded-sm"
-              style={{ color: "var(--ink)" }}
-            >
+            <a href={`mailto:${contactEmail}`} className={styles.link}>
               {contactEmail}
             </a>
             {after}
-          </P>
+          </p>
         </Section>
       ) : null}
     </>
@@ -124,27 +116,22 @@ export function InfoPage({
     <div lang={lang} className="contents">
       <SkipLink lang={lang} />
       <SiteHeader lang={lang} toggle />
-      <main
-        id="main"
-        tabIndex={-1}
-        className="flex-1 w-full max-w-2xl mx-auto px-4 pt-10 sm:pt-16 flex flex-col gap-8 outline-none"
-      >
-        <div className="flex flex-col gap-3">
-          <h1 className="text-4xl font-black tracking-tight" style={{ color: "var(--ink)" }}>
-            {t(lang, page === "about" ? "about.title" : "privacy.title")}
-          </h1>
-          <p className="text-lg leading-relaxed" style={{ color: "var(--ink-2)" }}>
-            {t(lang, page === "about" ? "about.lead" : "privacy.lead")}
-          </p>
+      <main id="main" tabIndex={-1} className={styles.main}>
+        <div className={`wrap ${styles.column}`}>
+          <header className={styles.intro}>
+            <p className="kicker">{t(lang, page === "about" ? "about.kicker" : "privacy.kicker")}</p>
+            <h1 className={styles.h1}>
+              {noOrphan(t(lang, page === "about" ? "about.title" : "privacy.title"))}
+            </h1>
+            <p className={styles.lead}>{t(lang, page === "about" ? "about.lead" : "privacy.lead")}</p>
+          </header>
+          <div className={styles.prose}>
+            {page === "about" ? <About lang={lang} /> : <Privacy lang={lang} contactEmail={contactEmail} />}
+          </div>
+          <Link href="/" className={styles.cta}>
+            {t(lang, "shared.cta")}
+          </Link>
         </div>
-        {page === "about" ? <About lang={lang} /> : <Privacy lang={lang} contactEmail={contactEmail} />}
-        <Link
-          href="/"
-          className="self-start rounded-full px-6 py-3.5 text-base font-bold"
-          style={{ background: "var(--ink)", color: "var(--plane)" }}
-        >
-          {t(lang, "shared.cta")}
-        </Link>
       </main>
       <SiteFooter lang={lang} toggle />
     </div>
