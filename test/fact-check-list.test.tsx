@@ -112,7 +112,7 @@ describe("VerdictView premium", () => {
   it("adds the badge, the panel line and the fact-check, before the facts", () => {
     const out = html(<VerdictView result={premium} lang="en" />);
     expect(out).toContain(">Premium<");
-    expect(out).toContain("Premium panel with a web fact-check. Judges: 2 Sonnet + 1 Haiku");
+    expect(out).toContain("Premium panel with a web fact-check. Judges: 2 strong + 1 quick");
     expect(out.indexOf(t("en", "factcheck.title"))).toBeLessThan(out.indexOf("The Wall is a few metres wide."));
   });
 
@@ -125,14 +125,15 @@ describe("VerdictView premium", () => {
 });
 
 describe("panelSummary", () => {
-  it("counts families in a fixed order, escalation included", () => {
+  it("counts seat tiers in a fixed order, escalation included, without model names", () => {
     expect(panelSummary(["claude-haiku-5-5", "claude-sonnet-5-5", "claude-sonnet-5-5"], "en")).toBe(
-      "Judges: 2 Sonnet + 1 Haiku",
+      "Judges: 2 strong + 1 quick",
     );
     expect(
       panelSummary(["claude-sonnet-5-5", "claude-sonnet-5-5", "claude-haiku-5-5", "claude-haiku-5-5", "claude-haiku-5-5"], "tr"),
-    ).toBe("Yargıçlar: 2 Sonnet + 3 Haiku");
-    expect(panelSummary(["mystery-model"], "en")).toBe("Judges: 1 Claude");
+    ).toBe("Yargıçlar: 2 güçlü + 3 hızlı");
+    expect(panelSummary(["mystery-model"], "en")).toBe("Judges: 1 strong");
+    expect(panelSummary(["claude-haiku-5-5"], "en")).toBe("Judges: 1 quick");
   });
 });
 

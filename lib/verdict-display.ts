@@ -58,26 +58,15 @@ export function leanTally(lean: Lean, runCount: number): { for: number; against:
   return lean.tally ?? { for: runCount - 1, against: 1 };
 }
 
-/** Model families in display order; anything unrecognised counts as "Claude". */
-const PANEL_FAMILIES = [
-  { name: "Sonnet", test: /sonnet/i },
-  { name: "Haiku", test: /haiku/i },
-  { name: "Opus", test: /opus/i },
-] as const;
-
-/** Who sat on a premium panel, e.g. "Judges: 2 Sonnet + 1 Haiku". `models`
+/** Who sat on a premium panel, e.g. "Judges: 2 strong + 1 quick". `models`
  * is VerdictResult.panel.models (one entry per counted run, escalation
- * included). Model names are proper nouns, so only the frame is translated. */
+ * included). Users see seat tiers, never model names: the lite model is
+ * "quick", every other model is "strong". */
 export function panelSummary(models: readonly string[], lang: Lang): string {
-  const counts = new Map<string, number>();
-  for (const m of models) {
-    const name = PANEL_FAMILIES.find((f) => f.test.test(m))?.name ?? "Claude";
-    counts.set(name, (counts.get(name) ?? 0) + 1);
-  }
-  const order = [...PANEL_FAMILIES.map((f) => f.name), "Claude"];
-  const list = order
-    .filter((name) => counts.has(name))
-    .map((name) => `${counts.get(name)} ${name}`)
-    .join(" + ");
-  return t(lang, "panel.models", { list });
+  const quick = models.filter((m) => /haiku/i.test(m)).length;
+  const strong = models.length - quick;
+  const parts: string[] = [];
+  if (strong) parts.push(t(lang, "panel.strong", { n: strong }));
+  if (quick) parts.push(t(lang, "panel.quick", { n: quick }));
+  return t(lang, "panel.models", { list: parts.join(" + ") });
 }

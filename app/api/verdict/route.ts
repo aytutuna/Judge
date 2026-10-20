@@ -107,7 +107,7 @@ export async function POST(req: Request): Promise<NextResponse> {
   if (!hasApiKey()) {
     return NextResponse.json(
       {
-        error: "The judge is not configured: set ANTHROPIC_API_KEY in .env and restart the server.",
+        error: "The judge isn't set up yet. Try again later.",
         code: "not_configured",
       },
       { status: 503 },

@@ -130,7 +130,7 @@ const en = {
   "shared.cta": "Settle your own argument →",
   errorFallback: "Something went wrong. Mind trying again?",
   "error.not_configured":
-    "The judge isn't set up yet: add ANTHROPIC_API_KEY to .env and restart the server.",
+    "The judge isn't set up yet. Try again later.",
   "error.quota": "The judges have used up their AI quota for now. Try again in a few minutes.",
   "error.unavailable": "We can't reach the judges right now. Give it a minute and try again.",
   "error.too_short": "That's a bit thin. Tell us more about the argument.",
@@ -212,10 +212,10 @@ const en = {
     "It tries hard to be. Names become Party A and Party B, so the judges never know who's who. Both sides get argued at their strongest, and three judges rule separately. If they disagree, the confidence score drops and tells you. On a close call, more judges get called in first. It can still be wrong, so check the facts it lists.",
   "faq.private.q": "Is my text private?",
   "faq.private.a":
-    "Free verdicts need no account. Your text goes to Anthropic's API so the names can be swapped for Party A and Party B, and only that version is judged. We keep what you wrote, names included, encrypted, so you can see it again; you can have it removed any time. Share links show the names you choose, or none.",
+    "Free verdicts need no account. Your text goes to an outside AI service so the names can be swapped for Party A and Party B, and only that version is judged. We keep what you wrote, names included, encrypted, so you can see it again; you can have it removed any time. Share links show the names you choose, or none.",
   "faq.powers.q": "What powers it?",
   "faq.powers.a":
-    "Anthropic's Claude. Three judges run side by side on a structured judging prompt, with more joining on a close call. Winning factual rulings get their own cross-examination. The confidence math is plain code that counts how often the judges agree.",
+    "An AI model from an outside provider. Three judges run side by side on a structured judging prompt, with more joining on a close call. Winning factual rulings get their own cross-examination. The confidence math is plain code that counts how often the judges agree.",
   "faq.taste.q": "What if it's just a matter of taste?",
   "faq.taste.a":
     "Then it'll tell you: “It depends on your values” or “Same word, different meanings”. You still see which way the judges lean, clearly marked as a forced ruling.",
@@ -249,7 +249,7 @@ const en = {
   "about.limit4": "It's for fun and clarity, not legal, medical or financial advice.",
   "about.builtTitle": "Under the hood",
   "about.built":
-    "Judge runs on Anthropic's Claude. Three judges work in parallel and more join on a close call. How much they agree sets the confidence score, and a winning factual ruling faces its own cross-examination before it stands.",
+    "Judge runs on an AI model from an outside provider. Three judges work in parallel and more join on a close call. How much they agree sets the confidence score, and a winning factual ruling faces its own cross-examination before it stands.",
   "privacy.title": "Privacy",
   "privacy.kicker": "Your data",
   "privacy.lead":
@@ -265,7 +265,7 @@ const en = {
     "To keep the court open for everyone, we cap how many verdicts and translations one visitor can ask for. For that we keep a keyed hash of your IP address, not the address itself, in our rate-limit store for up to 24 hours. If the human check is on, your IP address also goes to Cloudflare for that check. It's never saved with your verdict. Premium verdicts are also counted per account, for the same reason.",
   "privacy.processorsTitle": "Who else handles your text",
   "privacy.processors":
-    "The text you type, real names included, first goes to Anthropic's API (Claude) so the names can be taken out. Only the anonymized version is judged; your original is stored encrypted, as described above. If the human check is on, Cloudflare Turnstile runs in your browser and checks the result with Cloudflare. If you sign in, Apple or Google (whichever you pick) handle that sign-in, and sign-in emails go out through Resend. Our hosting provider keeps standard server logs.",
+    "The text you type, real names included, first goes to our AI provider in the United States so the names can be taken out. Only the anonymized version is judged; your original is stored encrypted, as described above. If the human check is on, Cloudflare Turnstile runs in your browser and checks the result with Cloudflare. If you sign in, Apple or Google (whichever you pick) handle that sign-in, and sign-in emails go out through Resend. Our hosting provider keeps standard server logs.",
   "privacy.shareTitle": "Share links",
   "privacy.share":
     "Anyone with the link to a verdict can see it, with the display names you chose (or Party A and Party B if you switched names off). Links use long random IDs, and share pages ask search engines not to index them. A removed verdict's link and preview image stop loading; previews already posted in chat apps may keep showing until those apps refresh them. Leave out addresses, phone numbers or anything else you wouldn't want on a page others can open.",
@@ -277,7 +277,7 @@ const en = {
     "You only need an account for Premium. If you sign in with Apple or Google, we keep the email address, name and profile picture link they share with us, plus which sign-in method you used, and Apple or Google can see that you signed in to Judge. If you sign in with an email link, that email goes out through Resend, and we briefly keep a record with your email address to check the link: it stops working after 10 minutes and is deleted once used or soon after it expires. We also keep your session records (a random token and when it expires, with no IP address or device details), your credits, your plan and its history, and which premium verdicts used a credit (only the verdict's ID). We also keep which verdicts and cases are yours, so you can find them on any device. Deleting your account on the account page removes all of that, and removes your verdicts and your sides of cases as described under Removal.",
   "privacy.webSearchTitle": "Premium: web search and questions",
   "privacy.webSearch":
-    "A Premium verdict sends the anonymized argument to Anthropic with web search turned on. The model writes the search queries from that anonymized text, and the results come from Anthropic's search provider. The sources it used are shown on the verdict. Premium may first ask you up to two questions: to come up with them, your text as you typed it, names included, goes to Anthropic once more. Your answers are anonymized together with the argument before judging; the questions and your answers as you wrote them are kept with your encrypted original.",
+    "A Premium verdict sends the anonymized argument to our AI provider with web search turned on. The model writes the search queries from that anonymized text, and the results come from the provider's search partner. The sources it used are shown on the verdict. Premium may first ask you up to two questions: to come up with them, your text as you typed it, names included, goes to the AI provider once more. Your answers are anonymized together with the argument before judging; the questions and your answers as you wrote them are kept with your encrypted original.",
   "nav.signIn": "Sign in",
   "nav.account": "Account",
   "nav.pricing": "Pricing",
@@ -315,6 +315,8 @@ const en = {
   "premium.badge": "Premium",
   "panel.premium": "Premium panel with a web fact-check.",
   "panel.models": "Judges: {list}",
+  "panel.strong": "{n} strong",
+  "panel.quick": "{n} quick",
   "factcheck.title": "Checked on the web",
   "factcheck.lead": "The judges saw these search results before ruling. They're evidence, not the ruling itself.",
   "factcheck.status.supported": "Holds up",
@@ -342,9 +344,7 @@ const en = {
   "signin.unavailable": "Sign-in isn't set up on this site yet.",
   "signin.providerUnavailable": "Not available yet",
   "signin.failed": "We couldn't sign you in. Mind trying again?",
-  "signin.ai": "An outside AI service reads your arguments to decide who's right.",
-  "signin.legal":
-    "Signing in keeps your email, the name and picture Apple or Google share, and your plan on file. By continuing you agree to the",
+  "signin.legal": "An outside AI reads your arguments. By continuing you agree to the",
   "signin.legalLink": "Privacy Policy",
   "signin.legalAfter": ".",
   "signin.loading": "Loading sign-in options…",
@@ -381,7 +381,7 @@ const en = {
   "pricing.free.f3": "No account needed",
   "pricing.premium.title": "Premium",
   "pricing.premium.f1": "Facts checked on the web, with the sources on your verdict",
-  "pricing.premium.f2": "A stronger judge panel with Claude Sonnet",
+  "pricing.premium.f2": "A stronger panel of AI judges",
   "pricing.premium.f3": "Up to two quick questions when a key fact is missing",
   "pricing.packsTitle": "Credit packs",
   "pricing.packsLead": "Pay once and use them whenever. One premium verdict uses one credit.",
@@ -561,7 +561,7 @@ const en = {
     "With Premium, yes. Pick “Both sides” and you get a private link to send them. They write their side without an account, and neither of you sees the other's text until the verdict. If they don't answer within 7 days, your premium verdict comes back, and you can get a verdict on your side alone at any time. After the verdict, each of you can add context once with Premium (1 premium verdict) and have it re-judged.",
   "faq.evidence.q": "Can I add screenshots?",
   "faq.evidence.a":
-    "With Premium, up to three per side, like a chat or a receipt. Each image goes to Anthropic's API once so its text can be read. The judges see a version with the names hidden. We keep the text read from the image, encrypted, with your original; the image itself is never stored. Screenshots can be cropped or out of context, so the judges treat them as strong evidence, not proof.",
+    "With Premium, up to three per side, like a chat or a receipt. Each image goes to an outside AI service once so its text can be read. The judges see a version with the names hidden. We keep the text read from the image, encrypted, with your original; the image itself is never stored. Screenshots can be cropped or out of context, so the judges treat them as strong evidence, not proof.",
   "about.premiumTitle": "Hearing both sides (Premium)",
   "about.premium1":
     "Two-sided cases: you write your side and send a private link. The other person writes theirs without seeing yours, and the judges weigh both accounts: what they agree on, what they dispute, and what evidence would change the verdict.",
@@ -575,7 +575,7 @@ const en = {
     "In a two-sided case, each side is anonymized when it's sent, the same way as a verdict. The anonymized text is what the judges read; each person's side as they wrote it, with its list of names, is stored encrypted, and only that person can see it. Each person types the name they want shown on the share page when they send their side; left empty, it's Party A or Party B. The other person needs no account; their answers are rate-limited with a keyed hash of their IP address. The invite link is stored only as a hash. If the other person answers while signed in, their account is linked to their side, so only they can add context later or see their original; if they answer signed out, a private code kept in their browser does the same. To give the same person the same label in both accounts, the server keeps coded fingerprints of names inside each case (keyed hashes, not the names themselves). Until the verdict, neither side can read the other's text; after a two-sided verdict, both people can read both anonymized accounts. Context added after a verdict (an appeal) is handled the same way. When the other person answers, we may email you a short note without any case text, if email is set up. Either person can remove their own side: their original and display name are erased, and the case's share links stop working for everyone. Deleting your account does this for every case you started or answered.",
   "privacy.evidenceTitle": "Premium: screenshots",
   "privacy.evidence":
-    "Your browser shrinks large images before uploading them. Each image then goes to Anthropic's API once so the visible text can be read; we never store the image. The raw transcript, which can still contain names, comes back to you inside a signed token your browser holds for up to 6 hours. When you send your side, the transcript is anonymized together with your text: the anonymized transcript is shown to the judges and stored with the case, and the raw transcript is kept encrypted with your original, where only you can see it. Phone numbers, e-mail addresses, social media handles and account numbers in it are replaced with placeholders for the judges too.",
+    "Your browser shrinks large images before uploading them. Each image then goes to an outside AI service once so the visible text can be read; we never store the image. The raw transcript, which can still contain names, comes back to you inside a signed token your browser holds for up to 6 hours. When you send your side, the transcript is anonymized together with your text: the anonymized transcript is shown to the judges and stored with the case, and the raw transcript is kept encrypted with your original, where only you can see it. Phone numbers, e-mail addresses, social media handles and account numbers in it are replaced with placeholders for the judges too.",
   "pricing.premium.f4":
     "Two-sided cases: the other person tells their side through a private link. One premium verdict per case, held until it's judged and back if nobody answers",
   "pricing.premium.f5": "Screenshot evidence, read and then thrown away, at no extra cost",
@@ -638,7 +638,7 @@ const en = {
   "account.verdicts.removed": "Removed",
   "privacy.accessTitle": "Who can see what",
   "privacy.access":
-    "You: your original text and names, on any device when you're signed in, or on the device you used through a private code saved in your browser or the app (we only keep a scrambled form of that code). In a two-sided case each person sees only their own original; after the verdict both see both anonymized accounts, as the judges read them. The judges (AI models run by Anthropic): only the anonymized version. Anyone with the share link: the verdict with display names. By default that's the name you choose for yourself and the first names of the others as you wrote them; you can change them or switch names off at any time, and then the page shows Party A and Party B. Us: we can decrypt originals with the key, and only do so to answer your requests, fix problems, or when the law requires it.",
+    "You: your original text and names, on any device when you're signed in, or on the device you used through a private code saved in your browser or the app (we only keep a scrambled form of that code). In a two-sided case each person sees only their own original; after the verdict both see both anonymized accounts, as the judges read them. The judges (AI models run by our AI provider): only the anonymized version. Anyone with the share link: the verdict with display names. By default that's the name you choose for yourself and the first names of the others as you wrote them; you can change them or switch names off at any time, and then the page shows Party A and Party B. Us: we can decrypt originals with the key, and only do so to answer your requests, fix problems, or when the law requires it.",
   "privacy.removalTitle": "Removal",
   "privacy.removal":
     "Ask for removal on the verdict page (signed in, you can open it from your account page), on the case page for a two-sided case, by deleting your account, or by email. Removal erases your original text, the name list and the display names (in a two-sided case, your side's original and your display name), and the share link and its preview image stop loading for everyone. Previews already posted in chat apps are kept by those apps and may keep showing until they refresh them. We keep the anonymized text and the verdict, without names, in our records; they can no longer be opened through the link. Deleting your account does this for all your verdicts and your sides of cases, and deletes your sign-in details, credits and plan. Removed data stays in our backups until they expire (at most 14 days, see below); if we ever restore a backup, we apply every removal again (for that we keep a list of what was removed and when, with no text or names).",
@@ -647,7 +647,7 @@ const en = {
     "We keep verdicts and originals until you ask for removal or delete your account. To recover from a failure, we keep backup copies of the server and its database for up to 14 days, then they're deleted. They hold the same data as the server, including the encrypted originals, and the key is on the same server, so the backups are protected like the server itself, not by that encryption. Rate-limit hashes last up to 24 hours. Server logs follow our hosting provider's standard retention.",
   "privacy.locationTitle": "Where your data is",
   "privacy.location":
-    "Our servers are in Germany (OVH, Frankfurt). Some processing happens in the United States: Anthropic runs the AI that removes names, judges, reads screenshots and, for Premium, searches the web; Cloudflare sits in front of okjudge.com as proxy and DNS (all traffic passes through it) and runs the human check. Sign-in goes through Apple or Google if you pick them, and sign-in emails through Resend. Data handled in another country can be subject to that country's laws.",
+    "Our servers are in Germany (OVH, Frankfurt). Some processing happens in the United States: our AI provider runs the models that remove names, judge, read screenshots and, for Premium, search the web; Cloudflare sits in front of okjudge.com as proxy and DNS (all traffic passes through it) and runs the human check. Sign-in goes through Apple or Google if you pick them, and sign-in emails through Resend. Data handled in another country can be subject to that country's laws.",
   "privacy.rightsTitle": "Your rights (Canada)",
   "privacy.rights":
     "Judge is run from Canada and handles personal information under Canada's federal privacy law (PIPEDA): we collect only what the service needs, use it only for that, protect it, and you can ask to see, correct or remove what we hold about you. We answer within 30 days.",
@@ -774,7 +774,7 @@ const tr = {
   "shared.cta": "Sen de kendi tartışmanı çözdür →",
   errorFallback: "Bir şey ters gitti. Bir daha dener misin?",
   "error.not_configured":
-    "Yargıç henüz kurulmamış: .env dosyasına ANTHROPIC_API_KEY ekle ve sunucuyu yeniden başlat.",
+    "Yargıç henüz kurulmamış. Biraz sonra yeniden dene.",
   "error.quota": "Yargıçların yapay zekâ kotası şimdilik doldu. Birkaç dakika sonra tekrar dene.",
   "error.unavailable": "Yargıçlara şu an ulaşamıyoruz. Bir dakika sonra tekrar dene.",
   "error.too_short": "Biraz kısa kaldı. Tartışmayı biraz daha anlat.",
@@ -856,10 +856,10 @@ const tr = {
     "Olmaya çok çalışıyor. İsimler Taraf A ve Taraf B olur, yargıçlar kimin kim olduğunu bilmez. İki tarafın da en güçlü hâli ele alınır ve üç yargıç ayrı ayrı karar verir. Anlaşamazlarsa güven puanı düşer ve bunu sana açıkça söyler. Oylar başa başsa önce ek yargıç çağrılır. Yine de yanılabilir, listelediği olgulara bir göz at.",
   "faq.private.q": "Metnim gizli kalıyor mu?",
   "faq.private.a":
-    "Ücretsiz kararlar için hesap gerekmez. Metnin, isimler Taraf A ve Taraf B'ye çevrilsin diye Anthropic'in API'sine gider ve yalnızca bu hâli yargılanır. Yazdığını, isimler dahil, şifreli olarak saklarız; böylece tekrar görebilirsin. İstediğin an kaldırılmasını isteyebilirsin. Paylaşım bağlantıları senin seçtiğin isimleri gösterir ya da hiç isim göstermez.",
+    "Ücretsiz kararlar için hesap gerekmez. Metnin, isimler Taraf A ve Taraf B'ye çevrilsin diye harici bir yapay zekâ hizmetine gider ve yalnızca bu hâli yargılanır. Yazdığını, isimler dahil, şifreli olarak saklarız; böylece tekrar görebilirsin. İstediğin an kaldırılmasını isteyebilirsin. Paylaşım bağlantıları senin seçtiğin isimleri gösterir ya da hiç isim göstermez.",
   "faq.powers.q": "Arkasında ne var?",
   "faq.powers.a":
-    "Anthropic'in Claude modeli. Üç yargıç aynı ayrıntılı talimatla yan yana çalışır, oylar başa başsa ek yargıçlar da katılır. Olgulara dayanan kazanan kararlar ayrıca çapraz sorgudan geçer. Güven puanını basit bir kod hesaplar, yargıçların ne sıklıkla anlaştığına bakar.",
+    "Harici bir sağlayıcının yapay zekâ modeli. Üç yargıç aynı ayrıntılı talimatla yan yana çalışır, oylar başa başsa ek yargıçlar da katılır. Olgulara dayanan kazanan kararlar ayrıca çapraz sorgudan geçer. Güven puanını basit bir kod hesaplar, yargıçların ne sıklıkla anlaştığına bakar.",
   "faq.taste.q": "Ya iş sadece zevk meselesiyse?",
   "faq.taste.a":
     "O zaman bunu söyler: “Değerlerine bağlı” ya da “Aynı kelime, farklı anlamlar”. Yargıçların hangi tarafa yattığını da gösterir, üstünde açıkça zorunlu hüküm olduğu yazar.",
@@ -893,7 +893,7 @@ const tr = {
   "about.limit4": "Eğlence ve netlik için. Hukuki, tıbbi ya da mali tavsiye değil.",
   "about.builtTitle": "Perde arkası",
   "about.built":
-    "Judge, Anthropic'in Claude modeliyle çalışır. Üç yargıç aynı anda karar verir, oylar başa başsa ek yargıçlar da katılır. Ne kadar anlaştıkları güven puanını belirler. Kazanan olgusal bir hüküm de kesinleşmeden önce ayrı bir çapraz sorgudan geçer.",
+    "Judge, harici bir sağlayıcının yapay zekâ modeliyle çalışır. Üç yargıç aynı anda karar verir, oylar başa başsa ek yargıçlar da katılır. Ne kadar anlaştıkları güven puanını belirler. Kazanan olgusal bir hüküm de kesinleşmeden önce ayrı bir çapraz sorgudan geçer.",
   "privacy.title": "Gizlilik",
   "privacy.kicker": "Verilerin",
   "privacy.lead":
@@ -909,7 +909,7 @@ const tr = {
     "Mahkeme herkese açık kalsın diye bir ziyaretçinin kaç karar ve çeviri isteyebileceğine sınır koyuyoruz. Bunun için IP adresinin kendisini değil, anahtarlı bir özetini (hash) kullanım sınırı deposunda en fazla 24 saat tutuyoruz. İnsan doğrulaması açıksa IP adresin doğrulama için Cloudflare'a da gider. Kararınla birlikte asla kaydedilmez. Premium kararlar da aynı nedenle hesap başına sayılır.",
   "privacy.processorsTitle": "Metnin başka kimin elinden geçiyor",
   "privacy.processors":
-    "Yazdığın metin, gerçek isimler dahil, isimler çıkarılsın diye önce Anthropic'in API'sine (Claude) gider. Yalnızca anonim hâli yargılanır; asıl metnin yukarıda anlatıldığı gibi şifreli saklanır. İnsan doğrulaması açıksa Cloudflare Turnstile tarayıcında çalışır ve sonucu Cloudflare ile kontrol eder. Giriş yaparsan bu girişi seçtiğin Apple ya da Google yürütür, giriş e-postaları da Resend üzerinden gider. Barındırma sağlayıcımız standart sunucu kayıtlarını tutar.",
+    "Yazdığın metin, gerçek isimler dahil, isimler çıkarılsın diye önce ABD'deki yapay zekâ sağlayıcımıza gider. Yalnızca anonim hâli yargılanır; asıl metnin yukarıda anlatıldığı gibi şifreli saklanır. İnsan doğrulaması açıksa Cloudflare Turnstile tarayıcında çalışır ve sonucu Cloudflare ile kontrol eder. Giriş yaparsan bu girişi seçtiğin Apple ya da Google yürütür, giriş e-postaları da Resend üzerinden gider. Barındırma sağlayıcımız standart sunucu kayıtlarını tutar.",
   "privacy.shareTitle": "Paylaşım bağlantıları",
   "privacy.share":
     "Bağlantısı olan herkes kararı, senin seçtiğin görünen isimlerle (isimleri kapattıysan Taraf A ve Taraf B olarak) görebilir. Bağlantılar uzun, rastgele kimlikler kullanır ve paylaşım sayfaları arama motorlarından dizine eklememelerini ister. Kaldırılan bir kararın bağlantısı ve önizleme görseli açılmaz olur; sohbet uygulamalarında önceden paylaşılmış önizlemeler, o uygulamalar yenileyene kadar görünmeye devam edebilir. Adres, telefon numarası ya da başkalarının açabileceği bir sayfada görmek istemeyeceğin hiçbir şey yazma.",
@@ -921,7 +921,7 @@ const tr = {
     "Hesap sadece Premium için gerekir. Apple ya da Google ile giriş yaparsan bizimle paylaştıkları e-posta adresini, adını ve profil fotoğrafı bağlantını, bir de hangi yolla giriş yaptığını saklarız. Apple ya da Google da Judge'a giriş yaptığını görebilir. E-posta bağlantısıyla giriş yaparsan o e-posta Resend üzerinden gönderilir, bağlantıyı doğrulamak için de e-posta adresinle kısa süreli bir kayıt tutarız: bağlantı 10 dakika sonra geçersiz olur, kayıt da kullanılınca ya da süresi dolduktan kısa süre sonra silinir. Ayrıca oturum kayıtlarını (rastgele bir anahtar ve bitiş tarihi; IP adresi ya da cihaz bilgisi yok), kredilerini, planını ve geçmişini, bir de hangi premium kararların kredi kullandığını (sadece kararın kimliği) saklarız. Hangi kararların ve davaların senin olduğunu da tutarız, böylece onları her cihazda bulabilirsin. Hesap sayfasından hesabını silersen bunların hepsi silinir; kararların ve davalardaki tarafların da Kaldırma bölümünde anlatıldığı gibi kaldırılır.",
   "privacy.webSearchTitle": "Premium: internet araması ve sorular",
   "privacy.webSearch":
-    "Premium bir karar, anonim tartışmayı internet araması açık olarak Anthropic'e gönderir. Arama sorgularını model bu anonim metinden yazar, sonuçlar da Anthropic'in arama sağlayıcısından gelir. Kullanılan kaynaklar kararda gösterilir. Premium önce sana en fazla iki soru sorabilir: bu soruları bulmak için yazdığın metin, isimler dahil, bir kez daha Anthropic'e gider. Cevapların yargılamadan önce tartışmayla birlikte anonimleştirilir; sorular ve cevapların, yazdığın hâliyle, şifreli asıl metninle birlikte saklanır.",
+    "Premium bir karar, anonim tartışmayı internet araması açık olarak yapay zekâ sağlayıcımıza gönderir. Arama sorgularını model bu anonim metinden yazar, sonuçlar da sağlayıcının arama ortağından gelir. Kullanılan kaynaklar kararda gösterilir. Premium önce sana en fazla iki soru sorabilir: bu soruları bulmak için yazdığın metin, isimler dahil, bir kez daha yapay zekâ sağlayıcımıza gider. Cevapların yargılamadan önce tartışmayla birlikte anonimleştirilir; sorular ve cevapların, yazdığın hâliyle, şifreli asıl metninle birlikte saklanır.",
   "nav.signIn": "Giriş yap",
   "nav.account": "Hesap",
   "nav.pricing": "Fiyatlar",
@@ -960,6 +960,8 @@ const tr = {
   "premium.badge": "Premium",
   "panel.premium": "İnternette olgu kontrolüyle premium kurul.",
   "panel.models": "Yargıçlar: {list}",
+  "panel.strong": "{n} güçlü",
+  "panel.quick": "{n} hızlı",
   "factcheck.title": "İnternette kontrol edildi",
   "factcheck.lead": "Yargıçlar karar vermeden önce bu arama sonuçlarını gördü. Bunlar kanıt, kararın kendisi değil.",
   "factcheck.status.supported": "Doğru çıktı",
@@ -987,9 +989,7 @@ const tr = {
   "signin.unavailable": "Bu sitede giriş henüz kurulmadı.",
   "signin.providerUnavailable": "Henüz kullanılamıyor",
   "signin.failed": "Giriş yapamadık. Bir daha dener misin?",
-  "signin.ai": "Kimin haklı olduğuna karar vermek için tartışmalarını harici bir yapay zekâ hizmeti okur.",
-  "signin.legal":
-    "Giriş yapınca e-postanı, Apple ya da Google'ın paylaştığı adı ve fotoğrafı, bir de planını saklarız. Devam ederek",
+  "signin.legal": "Tartışmalarını harici bir yapay zekâ okur. Devam ederek",
   "signin.legalLink": "Gizlilik Politikası",
   "signin.legalAfter": "'nı kabul etmiş olursun.",
   "signin.loading": "Giriş seçenekleri yükleniyor…",
@@ -1026,7 +1026,7 @@ const tr = {
   "pricing.free.f3": "Hesap gerekmez",
   "pricing.premium.title": "Premium",
   "pricing.premium.f1": "Olgular internette kontrol edilir, kaynaklar kararında görünür",
-  "pricing.premium.f2": "Claude Sonnet'li daha güçlü bir yargıç kurulu",
+  "pricing.premium.f2": "Daha güçlü bir yapay zekâ yargıç kurulu",
   "pricing.premium.f3": "Önemli bir olgu eksikse en fazla iki kısa soru",
   "pricing.packsTitle": "Kredi paketleri",
   "pricing.packsLead": "Bir kez öde, istediğin zaman kullan. Her premium karar bir kredi kullanır.",
@@ -1207,7 +1207,7 @@ const tr = {
     "Premium ile evet. “İki taraf da” seçeneğini seç, ona göndereceğin özel bir bağlantı al. O, hesap açmadan kendi tarafını yazar; karar çıkana kadar kimse diğerinin yazdığını görmez. 7 gün içinde cevap vermezse premium karar hakkın geri gelir, istediğin an sadece kendi tarafınla karar da alabilirsin. Karardan sonra Premium'u olan taraf bir kez bilgi ekleyip davayı yeniden yargılatabilir (1 premium karar).",
   "faq.evidence.q": "Ekran görüntüsü ekleyebilir miyim?",
   "faq.evidence.a":
-    "Premium ile, taraf başına en fazla üç tane: bir sohbet ya da bir fiş gibi. Her görsel, yazısı okunsun diye bir kez Anthropic'in API'sine gider. Yargıçlar isimleri gizlenmiş bir hâlini görür. Görselden okunan yazıyı, yazdığınla birlikte şifreli olarak saklarız; görselin kendisi hiç saklanmaz. Ekran görüntüleri kırpılmış ya da bağlamından kopmuş olabilir, o yüzden yargıçlar onları kesin kanıt değil, güçlü bir ipucu sayar.",
+    "Premium ile, taraf başına en fazla üç tane: bir sohbet ya da bir fiş gibi. Her görsel, yazısı okunsun diye bir kez harici bir yapay zekâ hizmetine gider. Yargıçlar isimleri gizlenmiş bir hâlini görür. Görselden okunan yazıyı, yazdığınla birlikte şifreli olarak saklarız; görselin kendisi hiç saklanmaz. Ekran görüntüleri kırpılmış ya da bağlamından kopmuş olabilir, o yüzden yargıçlar onları kesin kanıt değil, güçlü bir ipucu sayar.",
   "about.premiumTitle": "İki tarafı da dinlemek (Premium)",
   "about.premium1":
     "İki taraflı davalar: sen kendi tarafını yazıp özel bir bağlantı gönderirsin. Diğer kişi seninkini görmeden kendi tarafını yazar. Yargıçlar iki anlatımı birlikte tartar: iki tarafın neyde anlaştığını, neyi tartıştığını ve hangi kanıtın kararı değiştireceğini söyler.",
@@ -1221,7 +1221,7 @@ const tr = {
     "İki taraflı bir davada her taraf, gönderildiği anda bir karardaki gibi anonimleştirilir. Yargıçlar anonim metni okur; her kişinin kendi yazdığı hâli, isim listesiyle birlikte şifreli saklanır ve yalnızca o kişi görebilir. Her kişi, tarafını gönderirken paylaşım sayfasında görünmesini istediği adı yazar; boş bırakırsa Taraf A ya da Taraf B görünür. Diğer kişinin hesap açması gerekmez; cevapları IP adresinin anahtarlı bir özetiyle sınırlanır. Davet bağlantısı sadece özet (hash) olarak saklanır. Diğer kişi giriş yapmışken cevap verirse, sonradan sadece o bilgi ekleyebilsin ve asıl metnini görebilsin diye hesabı kendi tarafına bağlanır; giriş yapmadan cevap verirse aynı işi gören gizli bir kod onun tarayıcısında saklanır. Aynı kişi iki anlatımda da aynı etiketi alsın diye sunucu, her davanın içinde isimlerin kodlanmış parmak izlerini tutar (isimlerin kendisini değil, anahtarlı özetlerini). Karar çıkana kadar iki taraf da diğerinin yazdığını okuyamaz; iki taraflı bir karardan sonra iki kişi de iki anonim anlatımı okuyabilir. Karardan sonra eklenen bilgiler (itirazlar) de aynı şekilde işlenir. Diğer kişi cevap verince, e-posta kuruluysa sana dava metni içermeyen kısa bir not gönderebiliriz. İki kişiden her biri kendi tarafını kaldırabilir: asıl metni ve görünen adı silinir, davanın paylaşım bağlantıları da herkes için çalışmaz olur. Hesabını silmek bunu başlattığın ya da cevap verdiğin her dava için yapar.",
   "privacy.evidenceTitle": "Premium: ekran görüntüleri",
   "privacy.evidence":
-    "Tarayıcın büyük görselleri yüklemeden önce küçültür. Sonra her görsel, görünen yazısı okunsun diye bir kez Anthropic'in API'sine gider; görseli hiç saklamayız. İsimler hâlâ içinde olabilen ham döküm sana, tarayıcının en fazla 6 saat tuttuğu imzalı bir anahtarın içinde döner. Tarafını gönderdiğinde döküm metninle birlikte anonimleştirilir: anonim döküm yargıçlara gösterilir ve davayla birlikte saklanır, ham döküm de asıl metninle birlikte şifreli tutulur ve yalnızca sen görebilirsin. İçindeki telefon numaraları, e-posta adresleri, sosyal medya kullanıcı adları ve hesap numaraları da yargıçlar için yer tutucularla değiştirilir.",
+    "Tarayıcın büyük görselleri yüklemeden önce küçültür. Sonra her görsel, görünen yazısı okunsun diye bir kez harici bir yapay zekâ hizmetine gider; görseli hiç saklamayız. İsimler hâlâ içinde olabilen ham döküm sana, tarayıcının en fazla 6 saat tuttuğu imzalı bir anahtarın içinde döner. Tarafını gönderdiğinde döküm metninle birlikte anonimleştirilir: anonim döküm yargıçlara gösterilir ve davayla birlikte saklanır, ham döküm de asıl metninle birlikte şifreli tutulur ve yalnızca sen görebilirsin. İçindeki telefon numaraları, e-posta adresleri, sosyal medya kullanıcı adları ve hesap numaraları da yargıçlar için yer tutucularla değiştirilir.",
   "pricing.premium.f4":
     "İki taraflı davalar: diğer kişi kendi tarafını özel bir bağlantıdan anlatır. Dava başına 1 premium karar; karar çıkana kadar ayrılır, kimse cevap vermezse geri gelir",
   "pricing.premium.f5": "Ekran görüntüsü kanıtı: okunur, sonra atılır, ek ücret yok",
@@ -1281,7 +1281,7 @@ const tr = {
   "account.verdicts.removed": "Kaldırıldı",
   "privacy.accessTitle": "Kim neyi görebilir",
   "privacy.access":
-    "Sen: asıl metnini ve isimleri, giriş yaptıysan her cihazda; giriş yapmadıysan kullandığın cihazda, tarayıcına ya da uygulamaya kaydedilen gizli bir kodla (biz bu kodun yalnızca karıştırılmış bir hâlini tutarız). İki taraflı bir davada her kişi yalnızca kendi asıl metnini görür; karardan sonra ikisi de iki anonim anlatımı yargıçların okuduğu hâliyle görür. Yargıçlar (Anthropic'in çalıştırdığı yapay zekâ modelleri): yalnızca anonim hâli. Paylaşım bağlantısı olan herkes: kararı, görünen isimlerle. Varsayılan olarak bunlar kendin için seçtiğin ad ve diğerlerinin senin yazdığın ilk adlarıdır; istediğin an değiştirebilir ya da isimleri kapatabilirsin, o zaman sayfa Taraf A ve Taraf B gösterir. Biz: asıl metinleri anahtarla çözebiliriz ve bunu yalnızca isteklerini yanıtlamak, sorunları gidermek ya da yasa gerektirdiğinde yaparız.",
+    "Sen: asıl metnini ve isimleri, giriş yaptıysan her cihazda; giriş yapmadıysan kullandığın cihazda, tarayıcına ya da uygulamaya kaydedilen gizli bir kodla (biz bu kodun yalnızca karıştırılmış bir hâlini tutarız). İki taraflı bir davada her kişi yalnızca kendi asıl metnini görür; karardan sonra ikisi de iki anonim anlatımı yargıçların okuduğu hâliyle görür. Yargıçlar (yapay zekâ sağlayıcımızın çalıştırdığı modeller): yalnızca anonim hâli. Paylaşım bağlantısı olan herkes: kararı, görünen isimlerle. Varsayılan olarak bunlar kendin için seçtiğin ad ve diğerlerinin senin yazdığın ilk adlarıdır; istediğin an değiştirebilir ya da isimleri kapatabilirsin, o zaman sayfa Taraf A ve Taraf B gösterir. Biz: asıl metinleri anahtarla çözebiliriz ve bunu yalnızca isteklerini yanıtlamak, sorunları gidermek ya da yasa gerektirdiğinde yaparız.",
   "privacy.removalTitle": "Kaldırma",
   "privacy.removal":
     "Kaldırılmasını karar sayfasından (giriş yaptıysan hesap sayfandan açabilirsin), iki taraflı bir davada dava sayfasından, hesabını silerek ya da e-postayla isteyebilirsin. Kaldırma, asıl metnini, isim listesini ve görünen isimleri siler (iki taraflı bir davada senin tarafının asıl metnini ve görünen adını); paylaşım bağlantısı ve önizleme görseli de herkes için açılmaz olur. Sohbet uygulamalarında önceden paylaşılmış önizlemeleri o uygulamalar saklar; yenileyene kadar görünmeye devam edebilirler. Anonim metni ve kararı, isimler olmadan kayıtlarımızda tutarız; bunlar artık bağlantıdan açılamaz. Hesabını silmek bunu tüm kararların ve davalardaki tarafların için yapar, giriş bilgilerini, kredilerini ve planını da siler. Kaldırılan veriler, yedeklerimizin süresi dolana kadar (en fazla 14 gün, aşağıya bak) yedeklerde kalır; bir yedeği geri yüklersek tüm kaldırmaları yeniden uygularız (bunun için neyin ne zaman kaldırıldığının bir listesini, hiçbir metin ya da isim olmadan tutarız).",
@@ -1290,7 +1290,7 @@ const tr = {
     "Kararları ve asıl metinleri, kaldırılmasını isteyene ya da hesabını silene kadar saklarız. Bir arızadan kurtulabilmek için sunucunun ve veritabanının yedek kopyalarını en fazla 14 gün tutarız, sonra silinirler. Yedekler, şifreli asıl metinler de dahil sunucudaki verilerin aynısını içerir ve anahtar aynı sunucudadır; yani yedekler o şifrelemeyle değil, sunucunun kendisi gibi korunur. Kullanım sınırı özetleri en fazla 24 saat durur. Sunucu kayıtları barındırma sağlayıcımızın standart saklama süresine göre tutulur.",
   "privacy.locationTitle": "Verilerin nerede",
   "privacy.location":
-    "Sunucularımız Almanya'da (OVH, Frankfurt). Bazı işlemler Amerika Birleşik Devletleri'nde yapılır: isimleri çıkaran, yargılayan, ekran görüntülerini okuyan ve Premium'da internette arama yapan yapay zekâyı Anthropic çalıştırır; Cloudflare, okjudge.com'un önünde vekil sunucu ve DNS olarak durur (tüm trafik ondan geçer) ve insan doğrulamasını yürütür. Onları seçersen giriş Apple ya da Google üzerinden, giriş e-postaları da Resend üzerinden gider. Başka bir ülkede işlenen veriler o ülkenin yasalarına tabi olabilir.",
+    "Sunucularımız Almanya'da (OVH, Frankfurt). Bazı işlemler Amerika Birleşik Devletleri'nde yapılır: isimleri çıkaran, yargılayan, ekran görüntülerini okuyan ve Premium'da internette arama yapan modelleri yapay zekâ sağlayıcımız çalıştırır; Cloudflare, okjudge.com'un önünde vekil sunucu ve DNS olarak durur (tüm trafik ondan geçer) ve insan doğrulamasını yürütür. Onları seçersen giriş Apple ya da Google üzerinden, giriş e-postaları da Resend üzerinden gider. Başka bir ülkede işlenen veriler o ülkenin yasalarına tabi olabilir.",
   "privacy.rightsTitle": "Hakların (Kanada)",
   "privacy.rights":
     "Judge, Kanada'dan işletilir ve kişisel bilgileri Kanada'nın federal gizlilik yasasına (PIPEDA) göre işler: yalnızca hizmet için gerekeni toplarız, yalnızca bunun için kullanırız ve koruruz; hakkında tuttuklarımızı görmeyi, düzeltmeyi ya da kaldırmayı isteyebilirsin. 30 gün içinde yanıt veririz.",

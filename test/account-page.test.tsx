@@ -189,6 +189,18 @@ describe("SignInPanel", () => {
     expect(sent).toContain("a@b.co adresine bir giriş bağlantısı gönderdik");
     expect(sent).not.toContain('type="email"');
   });
+
+  it("consent is one short line with the privacy link, in both languages", () => {
+    const en = signin({});
+    expect(en).toMatch(
+      /<p[^>]*>An outside AI reads your arguments\. By continuing you agree to the <a [^>]*href="\/privacy"[^>]*>Privacy Policy<\/a>\.<\/p>/,
+    );
+    const tr = signin({ lang: "tr" });
+    expect(tr).toMatch(
+      /<p[^>]*>Tartışmalarını harici bir yapay zekâ okur\. Devam ederek <a [^>]*href="\/privacy"[^>]*>Gizlilik Politikası<\/a>&#x27;nı kabul etmiş olursun\.<\/p>/,
+    );
+    expect(en).not.toContain("Signing in keeps");
+  });
 });
 
 describe("safeNext / withLang", () => {
