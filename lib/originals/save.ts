@@ -8,7 +8,7 @@
  * never costs the user their verdict: it falls back to the plain save.
  */
 
-import type { InStatement } from "@libsql/client";
+import type { InStatement, InValue } from "@libsql/client";
 import { saveVerdict } from "@/lib/db";
 import { entitlementWriteBatch, type StatementGuard } from "@/lib/entitlements";
 import type { Lang } from "@/lib/i18n";
@@ -87,6 +87,97 @@ export type SaveVerdictOutcome = {
 
 const LABELS_ONLY: DisplayState = { ...EMPTY_DISPLAY, others: {}, namesVisible: true };
 
+/** INSERT ... VALUES, or INSERT ... SELECT ... WHERE <guard> when guarded. */
+function insert(head: string, values: InValue[], guard?: StatementGuard): InStatement {
+  const marks = values.map(() => "?").join(", ");
+  return guard
+    ? { sql: `${head} SELECT ${marks} WHERE ${guard.sql}`, args: [...values, ...guard.args] }
+    : { sql: `${head} VALUES (${marks})`, args: values };
+}
+
+/** The verdict row alone (the fallback when the full batch fails). */
+export function plainVerdictStatement(
+  v: Pick<SaveVerdictInput, "id" | "input" | "framework" | "result">,
+  guard?: StatementGuard,
+): InStatement {
+  return insert(
+    "INSERT INTO verdicts (id, input, framework, result)",
+    [v.id, v.input, JSON.stringify(v.framework), JSON.stringify(v.result)],
+    guard,
+  );
+}
+
+/**
+ * The statements of one save: the verdict row, its ownership row and (with
+ * a key) its sealed original and default display names, plus the outcome
+ * the caller reports once they ran. `ownerToken` is a token the caller
+ * already handed out (async verdicts); otherwise one is made for a
+ * signed-out writer. With `guard`, every insert is skipped unless it holds
+ * (an async verdict's job is still judging). Needs ensureOriginalsTables.
+ */
+export function verdictWriteStatements(
+  v: SaveVerdictInput,
+  opts: { ownerToken?: string | null; guard?: StatementGuard } = {},
+): { stmts: InStatement[]; outcome: SaveVerdictOutcome } {
+  const { guard } = opts;
+  const nowIso = new Date().toISOString();
+  const subject = subjects.verdict(v.id);
+  const lang: Lang = v.result.lang ?? "en";
+  const original = sealOriginal(subject, v.original);
+  const display: DisplayNames = original ? defaultDisplay(v.original.nameMap, lang) : { ...EMPTY_DISPLAY, others: {} };
+  const sealedDisplay = original ? sealJson(display, aad.verdictDisplay(v.id)) : null;
+  const token = v.ownerUserId ? null : (opts.ownerToken ?? newOwnerToken());
+  const stmts: InStatement[] = [
+    plainVerdictStatement(v, guard),
+    insert(
+      `INSERT INTO verdict_meta
+         (verdict_id, kind, owner_user_id, owner_token_hash, case_id, names_visible, display_sealed,
+          display_key_id, removed_at, removal_reason, created_at, updated_at)`,
+      [
+        v.id,
+        v.kind,
+        v.ownerUserId,
+        token ? ownerTokenHash(token) : null,
+        null,
+        1,
+        sealedDisplay?.sealed ?? null,
+        sealedDisplay?.kid ?? null,
+        null,
+        null,
+        nowIso,
+        nowIso,
+      ],
+      guard,
+    ),
+  ];
+  if (original) {
+    stmts.push(
+      insert(
+        "INSERT INTO originals (subject, kind, verdict_id, case_id, party, sealed, key_id, removed_at, created_at, updated_at)",
+        [subject, "verdict", v.id, null, null, original.sealed, original.kid, null, nowIso, nowIso],
+        guard,
+      ),
+    );
+  }
+  return {
+    stmts,
+    outcome: {
+      ownerToken: token,
+      originalsStored: Boolean(original),
+      display: sealedDisplay ? { ...display, namesVisible: true } : LABELS_ONLY,
+      metaWritten: true,
+    },
+  };
+}
+
+/** What a save reports when only the verdict row was written. */
+export const PLAIN_SAVE_OUTCOME: SaveVerdictOutcome = {
+  ownerToken: null,
+  originalsStored: false,
+  display: LABELS_ONLY,
+  metaWritten: false,
+};
+
 /**
  * One batch: the verdict row, its ownership row and (with a key) its sealed
  * original and default display names. If that batch fails, the verdict is
@@ -96,52 +187,12 @@ const LABELS_ONLY: DisplayState = { ...EMPTY_DISPLAY, others: {}, namesVisible: 
 export async function saveVerdictWithOriginals(v: SaveVerdictInput): Promise<SaveVerdictOutcome> {
   try {
     await ensureOriginalsTables();
-    const nowIso = new Date().toISOString();
-    const subject = subjects.verdict(v.id);
-    const lang: Lang = v.result.lang ?? "en";
-    const original = sealOriginal(subject, v.original);
-    const display: DisplayNames = original ? defaultDisplay(v.original.nameMap, lang) : { ...EMPTY_DISPLAY, others: {} };
-    const sealedDisplay = original ? sealJson(display, aad.verdictDisplay(v.id)) : null;
-    const token = v.ownerUserId ? null : newOwnerToken();
-    const stmts: InStatement[] = [
-      {
-        sql: "INSERT INTO verdicts (id, input, framework, result) VALUES (?, ?, ?, ?)",
-        args: [v.id, v.input, JSON.stringify(v.framework), JSON.stringify(v.result)],
-      },
-      {
-        sql: `INSERT INTO verdict_meta
-                (verdict_id, kind, owner_user_id, owner_token_hash, case_id, names_visible, display_sealed,
-                 display_key_id, removed_at, removal_reason, created_at, updated_at)
-              VALUES (?, ?, ?, ?, NULL, 1, ?, ?, NULL, NULL, ?, ?)`,
-        args: [
-          v.id,
-          v.kind,
-          v.ownerUserId,
-          token ? ownerTokenHash(token) : null,
-          sealedDisplay?.sealed ?? null,
-          sealedDisplay?.kid ?? null,
-          nowIso,
-          nowIso,
-        ],
-      },
-    ];
-    if (original) {
-      stmts.push({
-        sql: `INSERT INTO originals (subject, kind, verdict_id, case_id, party, sealed, key_id, removed_at, created_at, updated_at)
-              VALUES (?, 'verdict', ?, NULL, NULL, ?, ?, NULL, ?, ?)`,
-        args: [subject, v.id, original.sealed, original.kid, nowIso, nowIso],
-      });
-    }
+    const { stmts, outcome } = verdictWriteStatements(v);
     await entitlementWriteBatch(stmts);
-    return {
-      ownerToken: token,
-      originalsStored: Boolean(original),
-      display: sealedDisplay ? { ...display, namesVisible: true } : LABELS_ONLY,
-      metaWritten: true,
-    };
+    return outcome;
   } catch (e) {
     console.error("[originals] meta write failed:", e instanceof Error ? e.message : String(e));
   }
   await saveVerdict({ id: v.id, input: v.input, framework: v.framework, result: v.result });
-  return { ownerToken: null, originalsStored: false, display: LABELS_ONLY, metaWritten: false };
+  return { ...PLAIN_SAVE_OUTCOME };
 }

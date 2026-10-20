@@ -456,8 +456,11 @@ export const USER_LIMITS: Record<UserBucket, readonly UserWindow[]> = {
 };
 
 /** Per-IP buckets for the no-account endpoints (keyed by visitorKey):
- * respondents, and signed-out writers using their owner token or claim. */
-export type IpBucket = "respond_submit" | "respond_evidence" | "verdict_owner";
+ * respondents, signed-out writers using their owner token or claim, and
+ * polls of verdicts still judging (a poll every 2 to 5 s for a few minutes
+ * is about 100; the windows leave room for several verdicts and a shared
+ * address). */
+export type IpBucket = "respond_submit" | "respond_evidence" | "verdict_owner" | "verdict_poll";
 
 export const IP_LIMITS: Record<IpBucket, readonly UserWindow[]> = {
   respond_submit: [
@@ -471,6 +474,10 @@ export const IP_LIMITS: Record<IpBucket, readonly UserWindow[]> = {
   verdict_owner: [
     { limit: 60, windowMs: 10 * MINUTE_MS, redisWindow: "10 m", prefix: "verdict:ip:vo10m" },
     { limit: 300, windowMs: DAY_MS, redisWindow: "1 d", prefix: "verdict:ip:voday" },
+  ],
+  verdict_poll: [
+    { limit: 600, windowMs: 10 * MINUTE_MS, redisWindow: "10 m", prefix: "verdict:ip:vp10m" },
+    { limit: 5000, windowMs: DAY_MS, redisWindow: "1 d", prefix: "verdict:ip:vpday" },
   ],
 };
 

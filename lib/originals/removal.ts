@@ -15,6 +15,7 @@ import { entitlementWriteBatch, refundStatements } from "@/lib/entitlements";
 import type { RemovalReason } from "@/lib/originals-types";
 import { getVerdict } from "@/lib/db";
 import { ensureOriginalsTables, getVerdictMeta, userBackfillStatements, type VerdictMeta } from "./db";
+import { ensureVerdictJobTables } from "@/lib/verdict-jobs";
 import { appendRemovalLog, type RemovalLogEntry } from "./removal-log";
 
 /** `log: false`: do not append to the removal log (a replay of it). */
@@ -182,13 +183,22 @@ async function removeCaseSideOnce(
  * Account deletion, in one batch: every verdict the user owns (including
  * premium verdicts saved before ownership rows existed), their side of
  * every case they started or answered, then the respondent bindings and
- * appeal authorship are cut loose. Held units are not refunded (the
+ * appeal authorship are cut loose. An async verdict still judging for the
+ * account is failed first, so its background run stores nothing (its save
+ * requires the job to be judging). Held units are not refunded (the
  * entitlement rows are deleted right after).
  */
 export async function removeUserData(userId: string, now: Date = new Date(), opts: RemovalOptions = {}): Promise<void> {
   await ensureOriginalsTables();
+  await ensureVerdictJobTables();
   const nowIso = now.toISOString();
   await entitlementWriteBatch([
+    {
+      sql: `UPDATE verdict_jobs SET status = 'failed', error_code = 'unavailable', updated_at = ?
+            WHERE owner_user_id = ? AND status = 'judging'`,
+      args: [nowIso, userId],
+    },
+    { sql: "UPDATE verdict_jobs SET owner_user_id = NULL WHERE owner_user_id = ?", args: [userId] },
     ...userBackfillStatements(userId, nowIso),
     {
       sql: `UPDATE originals SET sealed = NULL, key_id = NULL, removed_at = COALESCE(removed_at, ?), updated_at = ?

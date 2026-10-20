@@ -9,6 +9,10 @@
  * failure after the reservation refunds it; a stored verdict consumes it
  * exactly once. Turnstile is not used here: the signed-in account and the
  * per-user limit are the gate, and native apps cannot render it.
+ *
+ * Async verdicts (`Prefer: respond-async`): every gate, the reservation and
+ * the anonymization stay in the request; then the verdict is judged in the
+ * background (./async) and the request answers 202 with the job id.
  */
 
 import { NextResponse } from "next/server";
@@ -31,6 +35,7 @@ import { firstNameOf } from "@/lib/originals-types";
 import { saveVerdictWithOriginals } from "@/lib/originals/save";
 import { checkPremiumSiteCap, checkUserLimits, type UserBucket } from "@/lib/ratelimit";
 import { ClarifyRequest, type VerdictApiResponse, type VerdictRequest } from "@/lib/types";
+import { POLL_AFTER_MS, wantsAsync, type VerdictAcceptedResponse } from "@/lib/verdict-poll";
 import { clarifyQuestions } from "./clarify";
 import { idempotencyKey } from "./context";
 import { premiumLogLine, runPremiumPipeline, type PremiumRun } from "./run";
@@ -238,8 +243,13 @@ export async function premiumVerdict(req: Request, data: VerdictRequest, rawBody
     console.error("[premium] reserve failed:", e instanceof Error ? e.message : String(e));
     return unavailable();
   }
+  const asyncMode = wantsAsync(req.headers, rawBody);
   if (!reserved.ok) {
     if (reserved.code === "replay") return replay(userId, reserved.verdictId);
+    if (reserved.code === "in_progress" && asyncMode && key) {
+      const joined = await joinJudging(userId, key);
+      if (joined) return joined;
+    }
     return reserveRefusal(reserved) ?? unavailable();
   }
 
@@ -254,6 +264,10 @@ export async function premiumVerdict(req: Request, data: VerdictRequest, rawBody
       console.error("[premium] refund failed:", e instanceof Error ? e.message : String(e));
     }
   };
+
+  if (asyncMode) {
+    return startPremiumJob({ data, rawBody, userId, name: gate.name, reservationId, evidence, startedAt, refund });
+  }
 
   let run: PremiumRun | undefined;
   try {
@@ -341,6 +355,121 @@ export async function premiumVerdict(req: Request, data: VerdictRequest, rawBody
     if (run) console.info(premiumLogLine(null, "error", run));
     return unavailable();
   }
+}
+
+/** In async mode, a retry whose Idempotency-Key is still being judged
+ * joins that verdict (202, empty name_map) instead of answering in_progress.
+ * Null when no async job holds the key (e.g. a waiting synchronous request). */
+async function joinJudging(userId: string, key: string): Promise<NextResponse | null> {
+  try {
+    const { judgingJobForKey } = await import("@/lib/verdict-jobs");
+    const job = await judgingJobForKey(userId, key);
+    if (!job) return null;
+    const { acceptedHeaders, pollPath } = await import("@/lib/free-async");
+    const entitlement = await entitlementOrNull(userId);
+    const body: VerdictAcceptedResponse = {
+      id: job.id,
+      status: "judging",
+      pollAfterMs: POLL_AFTER_MS,
+      poll: pollPath(job.id),
+      name_map: [],
+      replayed: true,
+      ...(entitlement ? { entitlement } : {}),
+    };
+    return NextResponse.json(body, { status: 202, headers: acceptedHeaders(job.id) });
+  } catch (e) {
+    console.error("[premium] job lookup failed:", e instanceof Error ? e.message : String(e));
+    return null;
+  }
+}
+
+/**
+ * The async premium verdict, after the reservation: anonymize inside the
+ * request (fail closed, refunded, 503 as on the synchronous path), start the
+ * job, answer 202 and judge in the background (./async). The deadline gates
+ * still count from the request's start.
+ */
+async function startPremiumJob(p: {
+  data: VerdictRequest;
+  rawBody: unknown;
+  userId: string;
+  name: string;
+  reservationId: string;
+  evidence: VerifiedEvidence[] | undefined;
+  startedAt: number;
+  refund: () => Promise<void>;
+}): Promise<NextResponse> {
+  const { data, userId, evidence } = p;
+  const { withUsageMeter } = await import("@/lib/claude");
+  const { preparePremium } = await import("./run");
+  let anonymized;
+  try {
+    anonymized = await withUsageMeter(() =>
+      preparePremium({
+        argument: data.argument,
+        clarifications: data.clarifications,
+        lang: data.lang,
+        ...(evidence ? { evidence } : {}),
+      }),
+    );
+  } catch (e) {
+    await p.refund();
+    console.error("[premium] anonymize failed:", e instanceof Error ? e.message : String(e));
+    return unavailable();
+  }
+  const prepared = anonymized.value;
+  if (!prepared.ok) {
+    await p.refund();
+    console.error("[premium] anonymize failed:", prepared.error);
+    return unavailable();
+  }
+
+  const id = nanoid(10);
+  try {
+    const { createVerdictJob } = await import("@/lib/verdict-jobs");
+    await createVerdictJob({ id, kind: "premium", reservationId: p.reservationId, ownerUserId: userId });
+  } catch (e) {
+    await p.refund();
+    console.error("[premium] job create failed:", e instanceof Error ? e.message : String(e));
+    return unavailable();
+  }
+
+  const [{ runInBackground }, { runPremiumJob }, { acceptedHeaders, pollPath }] = await Promise.all([
+    import("@/lib/background"),
+    import("./async"),
+    import("@/lib/free-async"),
+  ]);
+  runInBackground("premium", () =>
+    runPremiumJob({
+      id,
+      userId,
+      reservationId: p.reservationId,
+      prepared: prepared.prepared,
+      framework: data.framework,
+      lang: data.lang,
+      original: {
+        v: 1,
+        text: rawArgumentOf(p.rawBody, data.argument),
+        clarifications: rawClarificationsOf(p.rawBody, data.clarifications),
+        ...(evidence?.length ? { evidence: evidence.map((e) => ({ kind: e.kind, transcript: e.transcript })) } : {}),
+        nameMap: prepared.prepared.nameMap,
+      },
+      startedAt: p.startedAt,
+      anonymizeUsage: anonymized.usage,
+    }),
+  );
+
+  const entitlement = await entitlementOrNull(userId);
+  const body: VerdictAcceptedResponse = {
+    id,
+    status: "judging",
+    pollAfterMs: POLL_AFTER_MS,
+    poll: pollPath(id),
+    name_map: prepared.prepared.nameMap,
+    suggested_display_a: firstNameOf(p.name),
+    ...(entitlement ? { entitlement } : {}),
+  };
+  return NextResponse.json(body, { status: 202, headers: acceptedHeaders(id) });
 }
 
 /** POST /api/v1/clarify: up to two questions before a premium verdict.

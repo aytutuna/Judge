@@ -156,19 +156,31 @@ export async function runPremiumPipeline(
   return { outcome, usage, stats };
 }
 
-async function pipeline(
-  { argument, clarifications, framework, lang, evidence }: PremiumInput,
-  startedAt: number,
-  now: () => number,
-  stats: PremiumStats,
-): Promise<PremiumOutcome> {
-  // Fail closed, as on free: names in the argument or the answers must never
-  // reach the search engine, the judges or the database.
+async function pipeline(input: PremiumInput, startedAt: number, now: () => number, stats: PremiumStats): Promise<PremiumOutcome> {
+  const prepared = await preparePremium(input);
+  if (!prepared.ok) return { status: "anonymize_failed", error: prepared.error };
+  return judgePrepared(prepared.prepared, input, startedAt, now, stats);
+}
+
+/** A premium submission after anonymization: what the judges may see. */
+export type PreparedPremium = {
+  anonymized: string;
+  nameMap: NameMapping[];
+  /** The anonymized EVIDENCE block, or null without evidence. */
+  evidenceText: string | null;
+  evidenceCount: number;
+};
+
+/**
+ * The anonymize step on its own (async verdicts run it inside the request,
+ * then judge in the background). Fails closed, as on free: names in the
+ * argument or the answers must never reach the search engine, the judges
+ * or the database. Never throws.
+ */
+export async function preparePremium(
+  { argument, clarifications, lang, evidence }: Pick<PremiumInput, "argument" | "clarifications" | "lang" | "evidence">,
+): Promise<{ ok: true; prepared: PreparedPremium } | { ok: false; error: string }> {
   const argumentText = withClarifications(argument, clarifications, lang);
-  let anonymized: string;
-  let nameMap: NameMapping[];
-  let evidenceText: string | null = null;
-  let evidenceCount = 0;
   try {
     if (evidence && evidence.length > 0) {
       // Loaded only with evidence, so a plain premium request runs exactly
@@ -176,17 +188,32 @@ async function pipeline(
       // one name map.
       const ev = await import("../evidence");
       const sub = await ev.anonymizeSubmission({ narrator: "Party A", text: argumentText, evidence, lang });
-      anonymized = sub.text;
-      nameMap = sub.nameMap;
-      evidenceCount = sub.evidence.length;
-      evidenceText = ev.evidenceBlock([{ party: null, idPrefix: "E", items: sub.evidence }]);
-    } else {
-      ({ text: anonymized, nameMap } = await anonymize(argumentText));
+      return {
+        ok: true,
+        prepared: {
+          anonymized: sub.text,
+          nameMap: sub.nameMap,
+          evidenceCount: sub.evidence.length,
+          evidenceText: ev.evidenceBlock([{ party: null, idPrefix: "E", items: sub.evidence }]),
+        },
+      };
     }
+    const { text, nameMap } = await anonymize(argumentText);
+    return { ok: true, prepared: { anonymized: text, nameMap, evidenceText: null, evidenceCount: 0 } };
   } catch (e) {
-    return { status: "anonymize_failed", error: e instanceof Error ? e.message : String(e) };
+    return { ok: false, error: e instanceof Error ? e.message : String(e) };
   }
+}
 
+/** The judge step after preparePremium (fact-check, panel, escalation, crux
+ * trial). Sees only the prepared, anonymized text. */
+async function judgePrepared(
+  { anonymized, nameMap, evidenceText, evidenceCount }: PreparedPremium,
+  { framework, lang }: Pick<PremiumInput, "framework" | "lang">,
+  startedAt: number,
+  now: () => number,
+  stats: PremiumStats,
+): Promise<PremiumOutcome> {
   const judged = await judgeAnonymized(
     { text: anonymized, context: evidenceText, framework, lang, ...(evidenceText ? { evidence: true } : {}) },
     { startedAt, now, stats },
@@ -196,8 +223,49 @@ async function pipeline(
   return {
     ...judged,
     result: { ...judged.result, evidence_used: { a: evidenceCount, b: 0 } },
-    input: `${anonymized}\n\n${evidenceText}`,
+    input: `${anonymized}
+
+${evidenceText}`,
     nameMap,
+  };
+}
+
+/**
+ * runPremiumPipeline for an already prepared submission (the async
+ * background run). `startedAt` is the request's start, so the deadline
+ * gates count the time spent anonymizing; `anonymizeUsage` (metered in the
+ * request) is added to the run's usage for its log line.
+ */
+export async function runPreparedPipeline(
+  prepared: PreparedPremium,
+  input: Pick<PremiumInput, "framework" | "lang">,
+  opts: { startedAt: number; now?: () => number; anonymizeUsage?: UsageTotals },
+): Promise<PremiumRun> {
+  const now = opts.now ?? Date.now;
+  const stats: PremiumStats = { factCheck: "unavailable", claims: 0, escalated: false, trial: false, ms: 0 };
+  const { value: outcome, usage } = await withUsageMeter(() => judgePrepared(prepared, input, opts.startedAt, now, stats));
+  stats.ms = now() - opts.startedAt;
+  return { outcome, usage: opts.anonymizeUsage ? mergeUsage(opts.anonymizeUsage, usage) : usage, stats };
+}
+
+/** Two usage totals added up (per model too). */
+export function mergeUsage(a: UsageTotals, b: UsageTotals): UsageTotals {
+  const byModel: UsageTotals["byModel"] = {};
+  for (const src of [a.byModel, b.byModel]) {
+    for (const [model, m] of Object.entries(src)) {
+      const into = (byModel[model] ??= { calls: 0, input: 0, output: 0, searches: 0 });
+      into.calls += m.calls;
+      into.input += m.input;
+      into.output += m.output;
+      into.searches += m.searches;
+    }
+  }
+  return {
+    calls: a.calls + b.calls,
+    input: a.input + b.input,
+    output: a.output + b.output,
+    searches: a.searches + b.searches,
+    byModel,
   };
 }
 

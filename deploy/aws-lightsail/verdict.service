@@ -28,7 +28,11 @@ Environment=NEXT_TELEMETRY_DISABLED=1
 ExecStart=/usr/bin/node /opt/verdict/current/node_modules/next/dist/bin/next start --hostname 127.0.0.1 --port 3000
 Restart=always
 RestartSec=5
-TimeoutStopSec=20
+# On stop, `next start` refuses new connections, then finishes the verdicts
+# still judging in the background (after()) before it exits. A verdict ends
+# within about 5 minutes, so wait that long instead of killing it; a stop or
+# restart takes longer only while something is judging.
+TimeoutStopSec=320
 # /run/verdict holds the rate-limit log (RATE_LIMIT_DB in the env file). It
 # is kept when the app stops or restarts and cleared only by a reboot, and it
 # never reaches the disk, backups or snapshots.

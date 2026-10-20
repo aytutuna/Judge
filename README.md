@@ -383,7 +383,7 @@ The website and the future iOS/Android app share one JSON API. Base URL
   reuse: `lib/types.ts`, `lib/i18n.ts`, `lib/verdict-display.ts`,
   `lib/names.ts`, `lib/palette.ts`, `lib/frameworks.ts`, `lib/api-errors.ts`,
   `lib/account-types.ts`, `lib/pricing.ts`, `lib/case-types.ts`,
-  `lib/originals-types.ts`.
+  `lib/originals-types.ts`, `lib/verdict-poll.ts`.
 
 | Call | Purpose |
 |---|---|
@@ -392,8 +392,8 @@ The website and the future iOS/Android app share one JSON API. Base URL
 | `DELETE /api/v1/me` `{ "confirm": "delete" }` | Removes every verdict the account owns and its side of every case (originals and names blanked, links closed; no verdict row is deleted), then deletes the account, sessions, sign-ins and entitlements (both stores require in-app deletion) |
 | `GET /api/v1/me/verdicts` | Your one-sided verdicts, newest first (`?limit=1-50&before=<createdAt>`), each with its anonymized `headline` and your `nameMap` to restore names |
 | `POST /api/v1/clarify` | Premium: up to 2 clarifying questions |
-| `POST /api/v1/verdict` | A verdict; `"tier": "premium"` for Premium. Send an `Idempotency-Key` header to retry safely. Adds `owner_token` (signed out only, returned once), `originals_stored`, `display` and `suggested_display_a` |
-| `GET /api/v1/verdicts/{id}` | A stored verdict, with `display` (the share page's names, null = labels); `410 removed` once removed |
+| `POST /api/v1/verdict` | A verdict; `"tier": "premium"` for Premium. Send an `Idempotency-Key` header to retry safely. Adds `owner_token` (signed out only, returned once), `originals_stored`, `display` and `suggested_display_a`. With `Prefer: respond-async`: `202`, then poll (see *Async verdicts* below) |
+| `GET /api/v1/verdicts/{id}` | A stored verdict (`"status": "ready"`), with `display` (the share page's names, null = labels); `410 removed` once removed. An async verdict still judging or failed answers `"status": "judging"` / `"failed"` |
 | `GET /api/v1/verdicts/{id}/mine` | The writer's view (session or `X-Owner-Token`): `original` as written, `nameMap`, `display`, `originalStatus` (`stored`, `not_stored`, `removed` or `unreadable`); 404 for anyone else |
 | `PATCH /api/v1/verdicts/{id}/display` | Writer: `{ "namesVisible"?, "a"?, "b"?, "others"?: { "Person C": "Leo" } }` (null = the label; labels such as "Party A" refused); `503 names_unavailable` for names when the server has no key |
 | `POST /api/v1/verdicts/{id}/removal` | Writer: `{ "confirm": "remove" }` blanks the original and names and closes the link (idempotent) |
@@ -414,6 +414,65 @@ The website and the future iOS/Android app share one JSON API. Base URL
 | `POST /api/v1/respond/{token}/evidence` | The other person's evidence images |
 | `POST /api/v1/respond/{token}/appeals` | The other person adds context (signed in, Premium) |
 | `GET /api/v1/respond/{token}/originals` / `PATCH .../display` / `POST .../removal` | Party B (bound account or `Respondent-Claim` / `claim`): their original, their display name, removing their side |
+
+**Async verdicts (use these in the apps).** The site sits behind
+Cloudflare, which ends any request after 100 seconds (HTTP 524), and a
+verdict can take longer (escalation, the crux trial, a premium panel with
+fact-check). The server still finishes and stores such a verdict, but a
+waiting client never learns its id. So ask for the async flow; requests
+without it keep the old behavior (the response arrives when the verdict is
+done), so older pages and app builds keep working.
+
+1. **Request:** `POST /api/v1/verdict` as before, plus the header
+   `Prefer: respond-async` (or `"async": true` in the JSON body). Free and
+   one-sided premium alike; premium keeps its `Idempotency-Key`.
+   Everything that can refuse the request still answers at once with the
+   usual status and `code`: validation, Turnstile, rate limits and caps,
+   sign-in, credits (the unit is reserved now) and anonymization (`503
+   unavailable` when a name cannot be taken out; nothing is judged or
+   stored, and a reserved unit is refunded).
+2. **Accepted:** `202` with headers `Location: /api/v1/verdicts/{id}`,
+   `Retry-After: 2`, `Preference-Applied: respond-async` and the body
+   `VerdictAcceptedResponse` (`lib/verdict-poll.ts`):
+   `{ "id", "status": "judging", "pollAfterMs": 2000, "poll": "/api/v1/verdicts/{id}", "name_map": [...], "owner_token"?, "suggested_display_a"?, "entitlement"? }`.
+   Keep `name_map` and `owner_token` now (secure storage for the token):
+   the poll does not repeat them. `entitlement` (premium) is the balance
+   with this verdict's unit reserved. A premium retry with the same
+   `Idempotency-Key` (and `Prefer: respond-async`) while it is judging
+   answers `202` with the same `id`, `"replayed": true` and an empty
+   `name_map` (read the names from `GET /api/v1/verdicts/{id}/mine` once
+   it is ready); after it finished, `200` with the stored verdict (as
+   before). While the first request is still being anonymized (up to about
+   a minute) the retry gets `409 in_progress`: wait a few seconds and retry
+   with the same key. Handle a plain `200` verdict too: the server may
+   answer synchronously (e.g. an older server).
+3. **Poll:** `GET /api/v1/verdicts/{id}` (send `X-Owner-Token` or the
+   bearer token if you have one). Always `200` for these states:
+   - `{ "id", "status": "judging", "pollAfterMs": 2000 }` (+ `Retry-After: 2`): poll again;
+   - `{ "id", "status": "ready", "result", "createdAt", "display", "owner"? }`: done.
+     `owner` (`{ "originals_stored", "display": { namesVisible, a, b, others } }`)
+     is only there for the writer (owner token or owning session); it fills
+     the same fields the synchronous response had;
+   - `{ "id", "status": "failed", "code", "error" }`: stop and show the
+     localized `error.<code>` message. `code` is `quota` (the AI quota is
+     used up for now) or `unavailable` (the judges failed, saving failed,
+     or the verdict was still judging after 10 minutes, e.g. a server
+     restart); `refused` is reserved. A failed premium verdict's unit is
+     refunded. A refusal by the model is not a failure: it arrives as a
+     ready verdict with `model_refused: true` (premium: refunded), as before.
+
+   Other answers: `404 not_found` (unknown id: stop), `410 removed` (stop),
+   `429 rate_limited` (per address, about 600 polls per 10 minutes; wait
+   `Retry-After`), `503 unavailable` or a network error (keep polling).
+4. **Backoff** (what `pollVerdict` in `lib/verdict-poll.ts` does): first
+   poll after `pollAfterMs` (2 s), then x1.5 per poll up to 5 s; after an
+   error double the wait up to 15 s; a larger `pollAfterMs` or
+   `Retry-After` always wins. Drop a poll that takes longer than 20 s
+   (request and body) and count it as a network error, so a dead
+   connection cannot stall polling. Poll right away when the app returns
+   to the foreground or the network comes back. Give up after 11 minutes; the
+   server fails a verdict still judging after 10, so you normally hear
+   `failed` first.
 
 **Two-sided cases from the app.** Shapes are in `lib/case-types.ts` (a pure
 module the app can import); every case and respond response is
@@ -692,7 +751,9 @@ All commands run in the browser SSH window (**Connect using SSH**).
   code next to the running site, switches over only if the build succeeds,
   and checks `/api/health`; if the new version does not answer, it switches
   back to the previous one, with its service and web server settings,
-  automatically.
+  automatically. A restart first lets verdicts still being judged finish
+  (up to about 5 minutes); new requests are refused until the new version
+  is up.
 - **Logs:** `sudo journalctl -u verdict -f` (Ctrl+C to stop). Caddy and
   certificates: `sudo journalctl -u caddy -n 50`.
 - **Status / restart:** `systemctl status verdict`,

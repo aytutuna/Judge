@@ -18,7 +18,7 @@ import { VerdictView } from "@/components/VerdictView";
 import { MAX_EVIDENCE_PER_SIDE, type CreateCaseResponse } from "@/lib/case-types";
 import { saveCaseNames } from "@/lib/case-names-store";
 import { verdictLang } from "@/lib/content-lang";
-import { firstNameOf, type DisplayState } from "@/lib/originals-types";
+import { firstNameOf, type DisplayState, type MineResponse } from "@/lib/originals-types";
 import { saveOwnerToken } from "@/lib/owner-store";
 import { buildOwnerShare } from "@/components/ShareDialog";
 import heroStyles from "@/components/home/Hero.module.css";
@@ -37,6 +37,7 @@ import type {
   VerdictResponse,
 } from "@/lib/types";
 import { applyEntitlement, refreshViewer, useViewer } from "@/lib/use-viewer";
+import { pollVerdict, RESPOND_ASYNC, type VerdictAcceptedResponse } from "@/lib/verdict-poll";
 
 /** A new Idempotency-Key. randomUUID needs a secure context; plain-http
  * hosts fall back to getRandomValues. */
@@ -54,6 +55,31 @@ const ACCOUNT_STATUSES = new Set([401, 402]);
  * until it replays the finished verdict, for at most the route's 300s. */
 const IN_PROGRESS_POLL_MS = 4000;
 const IN_PROGRESS_WAIT_MS = 300_000;
+
+/** Verdict requests ask for the async flow: the server answers 202 once the
+ * text is anonymized and the page polls for the verdict, so a long verdict
+ * never hits the proxy's request time limit. */
+const ASYNC_HEADERS = { Prefer: RESPOND_ASYNC } as const;
+
+/** Waits `ms`, or less when the tab is shown again or the network comes
+ * back: background tabs throttle timers, and a returning visitor should
+ * not wait out a stretched delay. */
+function wakefulSleep(ms: number): Promise<void> {
+  return new Promise((resolve) => {
+    const done = () => {
+      clearTimeout(timer);
+      document.removeEventListener("visibilitychange", onVisible);
+      window.removeEventListener("online", done);
+      resolve();
+    };
+    const onVisible = () => {
+      if (document.visibilityState === "visible") done();
+    };
+    const timer = setTimeout(done, ms);
+    document.addEventListener("visibilitychange", onVisible);
+    window.addEventListener("online", done);
+  });
+}
 
 /** What a premium request judges, fixed when it is submitted. `evidence`
  * holds signed screenshot tokens; empty keeps the request exactly as before. */
@@ -93,6 +119,8 @@ export default function Home() {
   const [caseMode, setCaseMode] = useState<CaseMode>("now");
   const [creating, setCreating] = useState(false);
   const evidence = useEvidence(EVIDENCE_ENDPOINT, MAX_EVIDENCE_PER_SIDE);
+  // The running poll for an async verdict; abort it to drop it.
+  const pollRun = useRef<AbortController | null>(null);
 
   const availability = tierAvailability(viewer.config, viewer.me);
   const tier = effectiveTier(availability, tierChoice);
@@ -110,6 +138,14 @@ export default function Home() {
     const t = setTimeout(() => setPhase("verdict"), MAX_FINISH_MS + 2000);
     return () => clearTimeout(t);
   }, [phase, response]);
+
+  // Leaving the page drops a running poll.
+  useEffect(
+    () => () => {
+      pollRun.current?.abort();
+    },
+    [],
+  );
 
   // A draft saved on the way to /signin comes back once. sessionStorage
   // does not exist during server rendering, so it is read after mount.
@@ -166,7 +202,7 @@ export default function Home() {
     try {
       const res = await fetch("/api/verdict", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", ...ASYNC_HEADERS },
         // lang MUST be sent: the zod default("en") makes forgetting it
         // silent — the toggle would flip the UI while verdicts stay English.
         body: JSON.stringify({
@@ -182,6 +218,15 @@ export default function Home() {
         setPhase("intake");
         return;
       }
+      if (res.status === 202) {
+        const accepted = json as VerdictAcceptedResponse;
+        saveOwnerToken(accepted.id, accepted.owner_token);
+        const verdict = await awaitVerdict(accepted);
+        if (!verdict) return;
+        setOwnerDisplay(null);
+        setResponse(verdict);
+        return;
+      }
       const verdict = json as VerdictResponse;
       saveOwnerToken(verdict.id, verdict.owner_token);
       setOwnerDisplay(null);
@@ -189,6 +234,64 @@ export default function Home() {
     } catch {
       setError(t(lang, "errorFallback"));
       setPhase("intake");
+    }
+  }
+
+  /**
+   * An accepted (202) verdict: poll until it is ready, keeping the judging
+   * animation running. Offline spells and server hiccups just keep polling
+   * (lib/verdict-poll.ts backs off); a failed verdict shows the usual
+   * localized error and returns to the form. Null when it failed or the
+   * poll was dropped (reset, a new request, leaving the page).
+   */
+  async function awaitVerdict(accepted: VerdictAcceptedResponse): Promise<VerdictResponse | null> {
+    pollRun.current?.abort();
+    const run = new AbortController();
+    pollRun.current = run;
+    const outcome = await pollVerdict(accepted.id, {
+      fetch: (url, init) => fetch(url, init),
+      sleep: wakefulSleep,
+      ownerToken: accepted.owner_token ?? null,
+      firstDelayMs: accepted.pollAfterMs,
+      signal: run.signal,
+    });
+    if (pollRun.current === run) pollRun.current = null;
+    if (outcome.kind === "aborted") return null;
+    if (outcome.kind === "ready") {
+      const { result, owner } = outcome.body;
+      // A retry that joined a running verdict got no name map: the
+      // writer's view has it.
+      const mine = accepted.replayed ? await readMine(accepted.id, run.signal) : null;
+      if (run.signal.aborted) return null;
+      return {
+        id: accepted.id,
+        result,
+        name_map: mine?.nameMap ?? accepted.name_map,
+        ...(accepted.owner_token ? { owner_token: accepted.owner_token } : {}),
+        ...(owner ? { originals_stored: owner.originals_stored, display: owner.display } : {}),
+        suggested_display_a: mine?.suggested.a ?? accepted.suggested_display_a ?? null,
+      };
+    }
+    setError(
+      outcome.kind === "failed"
+        ? apiErrorMessage(lang, { code: outcome.code }, outcome.status === 200 ? 502 : outcome.status)
+        : t(lang, "errorFallback"),
+    );
+    setPhase("intake");
+    return null;
+  }
+
+  /** The writer's view of a verdict (its name map), or null on any failure. */
+  async function readMine(id: string, signal: AbortSignal): Promise<MineResponse | null> {
+    try {
+      const res = await fetch(`/api/v1/verdicts/${encodeURIComponent(id)}/mine`, {
+        cache: "no-store",
+        signal:
+          typeof AbortSignal.any === "function" ? AbortSignal.any([signal, AbortSignal.timeout(10_000)]) : signal,
+      });
+      return res.ok ? ((await res.json()) as MineResponse) : null;
+    } catch {
+      return null;
     }
   }
 
@@ -259,7 +362,7 @@ export default function Home() {
       for (;;) {
         const res = await fetch("/api/v1/verdict", {
           method: "POST",
-          headers: { "Content-Type": "application/json", "Idempotency-Key": key },
+          headers: { "Content-Type": "application/json", "Idempotency-Key": key, ...ASYNC_HEADERS },
           body,
         });
         const json: unknown = await res.json().catch(() => null);
@@ -272,6 +375,18 @@ export default function Home() {
           setError(apiErrorMessage(lang, json, res.status));
           setPhase("intake");
           if (ACCOUNT_STATUSES.has(res.status)) void refreshViewer();
+          return;
+        }
+        if (res.status === 202) {
+          const accepted = json as VerdictAcceptedResponse;
+          if (accepted.entitlement) applyEntitlement(accepted.entitlement);
+          const verdict = await awaitVerdict(accepted);
+          // A refused or degraded verdict, or a failed one, gave the unit back.
+          void refreshViewer();
+          if (!verdict) return;
+          if (premiumKey.current?.key === key) premiumKey.current = null;
+          setOwnerDisplay(null);
+          setResponse(verdict);
           return;
         }
         if (premiumKey.current?.key === key) premiumKey.current = null;
@@ -339,6 +454,7 @@ export default function Home() {
 
   // The hero focuses the textarea once the form is back.
   function reset() {
+    pollRun.current?.abort();
     resetScene();
     setResponse(null);
     setArgument("");
