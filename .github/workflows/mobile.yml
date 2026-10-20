@@ -1,0 +1,158 @@
+# Builds and tests both mobile apps and captures screenshots of every screen
+# from the fixture states (no network, no API key). Screenshots and the debug
+# APK are kept as run artifacts for a few days.
+name: Mobile
+
+on:
+  push:
+    paths:
+      - "mobile/**"
+      - ".github/workflows/mobile.yml"
+  pull_request:
+    paths:
+      - "mobile/**"
+      - ".github/workflows/mobile.yml"
+
+concurrency:
+  group: mobile-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  ios:
+    runs-on: macos-26
+    timeout-minutes: 45
+    defaults:
+      run:
+        working-directory: mobile/ios
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Xcode and simulators
+        run: |
+          xcodebuild -version
+          xcrun simctl list runtimes available
+
+      - name: Pick a simulator
+        id: sim
+        run: |
+          # Newest iOS runtime; prefer a plain "iPhone NN" over Pro/Plus models.
+          udid=$(xcrun simctl list devices available -j | python3 -c '
+          import json, re, sys
+          data = json.load(sys.stdin)["devices"]
+          def ver(key):
+              m = re.search(r"iOS-(\d+)-(\d+)", key)
+              return (int(m.group(1)), int(m.group(2))) if m else (0, 0)
+          for key in sorted((k for k in data if "iOS" in k), key=ver, reverse=True):
+              phones = [d for d in data[key] if d["name"].startswith("iPhone")]
+              if not phones:
+                  continue
+              plain = [d for d in phones if re.fullmatch(r"iPhone \d+", d["name"])]
+              pick = (plain or phones)[0]
+              print(pick["udid"])
+              print("%s (%s)" % (pick["name"], key), file=sys.stderr)
+              break
+          ')
+          test -n "$udid"
+          echo "udid=$udid" >> "$GITHUB_OUTPUT"
+
+      - name: Build and test
+        run: |
+          set -o pipefail
+          mkdir -p build
+          xcodebuild -quiet \
+            -project Judge.xcodeproj \
+            -scheme Judge \
+            -destination "id=${{ steps.sim.outputs.udid }}" \
+            -derivedDataPath build/DerivedData \
+            -resultBundlePath build/Judge.xcresult \
+            CODE_SIGNING_ALLOWED=NO \
+            build test 2>&1 | tee build/xcodebuild.log
+
+      - name: Screenshots
+        run: |
+          UDID="${{ steps.sim.outputs.udid }}"
+          APP=build/DerivedData/Build/Products/Debug-iphonesimulator/Judge.app
+          OUT="$GITHUB_WORKSPACE/shots/ios"
+          mkdir -p "$OUT"
+          xcrun simctl boot "$UDID" 2>/dev/null || true
+          xcrun simctl bootstatus "$UDID" -b
+          xcrun simctl status_bar "$UDID" override --time 9:41 --batteryState charged --batteryLevel 100 --cellularBars 4 --wifiBars 3 || true
+          xcrun simctl install "$UDID" "$APP"
+          samples=$(python3 -c 'import json; print(" ".join(json.load(open("../shared/fixtures/verdicts.json"))["verdictResponses"]))')
+          for lang in en tr; do
+            for state in home home-error judging history settings $(for s in $samples; do echo "verdict/$s"; done); do
+              xcrun simctl terminate "$UDID" com.okjudge.judge 2>/dev/null || true
+              xcrun simctl launch "$UDID" com.okjudge.judge -JudgeScreenshotState "$state:$lang" > /dev/null
+              sleep 4
+              xcrun simctl io "$UDID" screenshot "$OUT/${state//\//_}_$lang.png" > /dev/null
+            done
+          done
+          ls "$OUT"
+
+      - uses: actions/upload-artifact@v5
+        if: always()
+        with:
+          name: ios-screenshots
+          path: shots/ios
+          retention-days: 5
+          if-no-files-found: ignore
+
+      - uses: actions/upload-artifact@v5
+        if: failure()
+        with:
+          name: ios-logs
+          path: |
+            mobile/ios/build/xcodebuild.log
+            mobile/ios/build/Judge.xcresult
+          retention-days: 5
+          if-no-files-found: ignore
+
+  android:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: mobile/android
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: "25"
+
+      - uses: gradle/actions/setup-gradle@v5
+
+      - name: Unit tests
+        run: ./gradlew --no-daemon testDebugUnitTest
+
+      - name: Screenshots
+        run: ./gradlew --no-daemon recordRoborazziDebug --tests "*ScreenshotsTest*" "-Pjudge.shotsDir=$GITHUB_WORKSPACE/shots/android"
+
+      - name: Debug APK
+        run: ./gradlew --no-daemon assembleDebug
+
+      - uses: actions/upload-artifact@v5
+        if: always()
+        with:
+          name: android-screenshots
+          path: shots/android
+          retention-days: 5
+          if-no-files-found: ignore
+
+      - uses: actions/upload-artifact@v5
+        with:
+          name: android-debug-apk
+          path: mobile/android/app/build/outputs/apk/debug/app-debug.apk
+          retention-days: 5
+
+      - uses: actions/upload-artifact@v5
+        if: failure()
+        with:
+          name: android-test-reports
+          path: mobile/android/app/build/reports/tests
+          retention-days: 5
+          if-no-files-found: ignore
