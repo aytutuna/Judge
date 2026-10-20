@@ -857,6 +857,11 @@
 }
 
 /* ---------- Appeal outcome ---------- */
+/* Focused by code when an appeal finishes: no ring, as for the page title. */
+.outcome:focus {
+  outline: none;
+}
+
 .outcome {
   display: flex;
   flex-direction: column;

@@ -3,9 +3,10 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useId, useMemo, useRef, useState, type ReactNode } from "react";
-import type { CaseView, RespondResponse } from "@/lib/case-types";
+import type { CaseRemovalResponse, CaseView, RespondResponse } from "@/lib/case-types";
 import { MAX_EVIDENCE_PER_SIDE } from "@/lib/case-types";
-import { saveCaseNames, useCaseNames } from "@/lib/case-names-store";
+import { forgetCaseNames, saveCaseNames, useCaseNames } from "@/lib/case-names-store";
+import { firstNameOf } from "@/lib/originals-types";
 import { getPreset } from "@/lib/frameworks";
 import { apiErrorMessage, t, type Lang } from "@/lib/i18n";
 import { useLang } from "@/lib/lang";
@@ -24,8 +25,10 @@ import { Turnstile, TURNSTILE_SITE_KEY } from "../Turnstile";
 import { VerdictView } from "../VerdictView";
 import account from "../account/AccountPages.module.css";
 import { AccountsRead } from "./AccountsRead";
-import { AppealSection, useAppealDraft, type AppealDraft } from "./AppealForm";
+import { AppealSection, useAppealDraft, useAppealFinished, type AppealDraft } from "./AppealForm";
 import { CaseShell, VerdictHistory, useJudgingOverlay } from "./CaseScreen";
+import { CaseNames, CaseOriginals, useCaseOriginals } from "./CaseOwnTools";
+import { openConfirm } from "../account/AccountView";
 import { EvidencePicker, type EvidenceController, useEvidence } from "./EvidencePicker";
 import styles from "./case.module.css";
 
@@ -71,6 +74,9 @@ export function respondStage(view: CaseView): RespondStage {
 export type RespondForm = {
   text: string;
   setText: (v: string) => void;
+  /** The name shown for them on the case's share pages (empty = Party B). */
+  name: string;
+  setName: (v: string) => void;
   evidence: EvidenceController;
   setTurnstile: (token: string | null) => void;
   /** Bumped to remount the human check with a fresh token. */
@@ -85,8 +91,11 @@ function useRespondForm(
   token: string,
   lang: Lang,
   onDone: (view: CaseView, names: NameMapping[], claim: string | null) => void,
+  suggestedName: string | null,
 ): RespondForm {
   const [text, setText] = useState("");
+  const [typedName, setName] = useState<string | null>(null);
+  const name = typedName ?? suggestedName ?? "";
   const [turnstile, setTurnstile] = useState<string | null>(null);
   const [turnstileKey, setTurnstileKey] = useState(0);
   const [sending, setSending] = useState(false);
@@ -105,7 +114,12 @@ function useRespondForm(
     setTurnstile(null);
     setSending(true);
     setError(null);
-    const payload = { text: trimmed, ...(evidence.tokens.length ? { evidence: evidence.tokens } : {}) };
+    const shownName = name.trim();
+    const payload = {
+      text: trimmed,
+      ...(evidence.tokens.length ? { evidence: evidence.tokens } : {}),
+      ...(shownName ? { displayName: shownName } : {}),
+    };
     try {
       const res = await fetch(`/api/v1/respond/${encodeURIComponent(token)}`, {
         method: "POST",
@@ -129,7 +143,7 @@ function useRespondForm(
     }
   }
 
-  return { text, setText, evidence, setTurnstile, turnstileKey, sending, error, canSubmit, submit };
+  return { text, setText, name, setName, evidence, setTurnstile, turnstileKey, sending, error, canSubmit, submit };
 }
 
 function LockGlyph() {
@@ -155,6 +169,14 @@ export type RespondPanelProps = {
   turnstile?: ReactNode;
   /** Show the screenshot pickers (the deployment offers evidence). */
   evidence?: boolean;
+  /** An appeal just finished: focus its outcome banner. */
+  focusAppeal?: boolean;
+  /** Their names and originals (rendered by the screen). */
+  ownTools?: ReactNode;
+  /** Removes their side (soft); absent when this browser cannot prove it is Party B. */
+  onRemove?: () => void;
+  /** They just removed their side. */
+  removedNow?: boolean;
 };
 
 /** Everything on the respondent's page below the title. Stateless, so tests
@@ -171,8 +193,15 @@ export function RespondPanel({
   appeal,
   turnstile,
   evidence = true,
+  focusAppeal = false,
+  ownTools = null,
+  onRemove,
+  removedNow = false,
 }: RespondPanelProps) {
   const fieldId = useId();
+  const nameId = useId();
+  const removeRef = useRef<HTMLDialogElement>(null);
+  const removeCancelRef = useRef<HTMLButtonElement>(null);
   const stage = respondStage(view);
   const current = view.verdicts.at(-1) ?? null;
   const ownSide = view.sides.filter((s) => s.party === view.yourParty);
@@ -255,9 +284,25 @@ export function RespondPanel({
               {form.error}
             </p>
           ) : null}
-          <button type="submit" className={`${account.btn} ${account.primary}`} disabled={!form.canSubmit}>
-            {form.sending ? t(lang, "case.creating") : t(lang, "respond.submit")}
-          </button>
+          <div className={styles.row}>
+            <div className={styles.field}>
+              <label htmlFor={nameId} className={styles.fieldLabel}>
+                {t(lang, "case.displayName")}
+              </label>
+              <input
+                id={nameId}
+                className={account.input}
+                value={form.name}
+                maxLength={40}
+                autoComplete="given-name"
+                readOnly={form.sending}
+                onChange={(e) => form.setName(e.target.value)}
+              />
+            </div>
+            <button type="submit" className={`${account.btn} ${account.primary}`} disabled={!form.canSubmit}>
+              {form.sending ? t(lang, "case.creating") : t(lang, "respond.submit")}
+            </button>
+          </div>
           <p className={styles.privacy}>
             <LockGlyph />
             <span>{t(lang, "respond.privacy")}</span>
@@ -287,11 +332,58 @@ export function RespondPanel({
     );
   }
 
+  const removal =
+    onRemove && !view.removed ? (
+      <>
+        <button
+          type="button"
+          className={`${styles.textBtn} ${styles.dangerText}`}
+          onClick={() => openConfirm(removeRef.current, removeCancelRef.current)}
+        >
+          {t(lang, "respond.remove")}
+        </button>
+        <dialog ref={removeRef} className={account.dialog} aria-labelledby="remove-side-title">
+          <h2 id="remove-side-title" className={account.dialogTitle}>
+            {t(lang, "respond.remove")}
+          </h2>
+          <p className={account.dialogText}>{t(lang, "respond.remove.confirm")}</p>
+          <div className={account.row}>
+            <button
+              type="button"
+              className={`${account.btn} ${account.danger}`}
+              onClick={() => {
+                removeRef.current?.close();
+                onRemove();
+              }}
+            >
+              {t(lang, "case.remove.yes")}
+            </button>
+            <button
+              ref={removeCancelRef}
+              type="button"
+              className={`${account.btn} ${account.secondary}`}
+              onClick={() => removeRef.current?.close()}
+            >
+              {t(lang, "case.cancel")}
+            </button>
+          </div>
+        </dialog>
+      </>
+    ) : null;
+  const removedBanner = view.removed ? (
+    <p className={styles.banner} role="status">
+      {t(lang, removedNow ? "case.removed" : "case.removedBanner")}
+    </p>
+  ) : null;
+
   if (stage === "failed") {
     return (
       <>
+        {removedBanner}
         <p className={styles.banner}>{t(lang, "respond.failed")}</p>
+        {ownTools}
         <AccountsRead lang={lang} title={t(lang, "case.yourSide")} sides={ownSide} yourParty={view.yourParty} />
+        {removal}
       </>
     );
   }
@@ -299,15 +391,17 @@ export function RespondPanel({
   // stage === "verdict"
   return (
     <>
+      {removedBanner}
       {current ? (
         <VerdictView
           result={current.result}
           nameMap={names}
-          shareId={current.id}
+          shareId={view.removed ? undefined : current.id}
           lang={lang}
           fresh={fresh}
           selfParty="B"
           viewerIsSelfParty
+          focusAppeal={focusAppeal}
         />
       ) : null}
       <AppealSection
@@ -319,6 +413,7 @@ export function RespondPanel({
         evidence={evidence}
       />
       <VerdictHistory lang={lang} view={view} names={names} selfParty="B" />
+      {ownTools}
       <AccountsRead
         lang={lang}
         title={t(lang, "case.accounts")}
@@ -326,6 +421,7 @@ export function RespondPanel({
         appeals={view.appeals}
         yourParty={view.yourParty}
       />
+      {removal}
     </>
   );
 }
@@ -347,14 +443,50 @@ export function RespondScreen({ token }: { token: string }) {
   const view = load.view;
   const caseId = view?.id ?? null;
   if (caseId !== null && caseId !== knownId) setKnownId(caseId);
-  const names = useCaseNames(caseId, "b");
+  const localNames = useCaseNames(caseId, "b");
+  // The server's encrypted copy when this browser proves it is Party B
+  // (claim or bound account); this browser's names for older cases.
+  const names = view?.names ?? localNames;
+  const base = `/api/v1/respond/${encodeURIComponent(token)}`;
+  const claimHeaders = claim ? { "Respondent-Claim": claim } : null;
+  const originals = useCaseOriginals(base, claimHeaders, view?.yourOriginal === "stored");
+  const [removedNow, setRemovedNow] = useState(false);
+  const [removeError, setRemoveError] = useState<string | null>(null);
+  const canProve = Boolean(claim) || Boolean(viewer.me?.user);
   const { overlay, fresh, finish } = useJudgingOverlay(view?.status ?? null);
   const headingRef = useRef<HTMLHeadingElement>(null);
-  const form = useRespondForm(token, lang, (next, map, claimSecret) => {
-    saveCaseNames(next.id, "b", map);
-    saveClaim(next.id, claimSecret);
-    setView(next);
-  });
+  const form = useRespondForm(
+    token,
+    lang,
+    (next, map, claimSecret) => {
+      saveCaseNames(next.id, "b", map);
+      saveClaim(next.id, claimSecret);
+      setView(next);
+    },
+    firstNameOf(viewer.me?.user?.name),
+  );
+
+  async function removeSide() {
+    setRemoveError(null);
+    try {
+      const res = await fetch(`${base}/removal`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", ...(claimHeaders ?? {}) },
+        body: JSON.stringify({ confirm: "remove", ...(claim ? { claim } : {}) }),
+      });
+      const json: unknown = await res.json().catch(() => null);
+      const ok = json as CaseRemovalResponse | null;
+      if (!res.ok || !ok?.case) {
+        setRemoveError(apiErrorMessage(lang, json, res.status));
+        return;
+      }
+      if (caseId) forgetCaseNames(caseId);
+      setView(ok.case);
+      setRemovedNow(true);
+    } catch {
+      setRemoveError(t(lang, "errorFallback"));
+    }
+  }
   const appeal = useAppealDraft({
     endpoint: `/api/v1/respond/${encodeURIComponent(token)}/appeals`,
     caseId: caseId ?? "",
@@ -363,6 +495,7 @@ export function RespondScreen({ token }: { token: string }) {
     onView: setView,
     claim,
   });
+  const appealFinished = useAppealFinished(view);
 
   useEffect(() => {
     if (fresh) headingRef.current?.focus({ preventScroll: true });
@@ -414,7 +547,30 @@ export function RespondScreen({ token }: { token: string }) {
         onOverlayFinished={finish}
         fresh={fresh}
         appeal={appeal}
+        focusAppeal={appealFinished}
         evidence={evidenceOn}
+        removedNow={removedNow}
+        onRemove={canProve && view.respondentAnswered ? () => void removeSide() : undefined}
+        ownTools={
+          <>
+            {removeError ? (
+              <p className={styles.error} role="alert">
+                {removeError}
+              </p>
+            ) : null}
+            <CaseOriginals lang={lang} data={view.removed ? null : originals} />
+            {canProve && view.respondentAnswered && view.verdicts.length > 0 ? (
+              <CaseNames
+                lang={lang}
+                view={view}
+                base={base}
+                headers={claimHeaders}
+                body={claim ? { claim } : {}}
+                onView={setView}
+              />
+            ) : null}
+          </>
+        }
         turnstile={
           TURNSTILE_SITE_KEY !== "" && answering && !form.sending ? (
             <Turnstile key={form.turnstileKey} siteKey={TURNSTILE_SITE_KEY} lang={lang} onToken={form.setTurnstile} />

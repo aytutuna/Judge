@@ -13,6 +13,24 @@ import account from "../account/AccountPages.module.css";
 import { EvidencePicker, useEvidence, type EvidenceController } from "./EvidencePicker";
 import styles from "./case.module.css";
 
+/**
+ * True once an appeal that was being judged has finished (polling swapped in
+ * a view with no appeal judging). The form that had keyboard focus is gone
+ * by then, so the outcome banner takes focus instead of the document start.
+ * Uses React's adjust-state-while-rendering pattern; false again while the
+ * next appeal is judging.
+ */
+export function useAppealFinished(view: CaseView | null): boolean {
+  const judging = view ? view.appeals.some((a) => a.status === "judging") : false;
+  const [prev, setPrev] = useState(judging);
+  const [finished, setFinished] = useState(false);
+  if (judging !== prev) {
+    setPrev(judging);
+    setFinished(prev && !judging);
+  }
+  return finished;
+}
+
 /** Signed-in evidence uploads: an appeal is made by a signed-in account. */
 export const APPEAL_EVIDENCE_ENDPOINT = "/api/v1/evidence";
 

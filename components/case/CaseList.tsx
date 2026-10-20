@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import type { CaseListResponse, CaseSummary } from "@/lib/case-types";
 import { formatDate, t, tWithDate, type Lang } from "@/lib/i18n";
+import { localizeLabelsAuto } from "@/lib/names";
 import account from "../account/AccountPages.module.css";
 import { StatusChip } from "./CaseScreen";
 import styles from "./case.module.css";
@@ -15,8 +16,8 @@ export type CaseListState =
 
 /** "Your cases" on the account page: newest first, each a link to its case
  * page. Titles are the anonymized verdict headline, else the first words of
- * your anonymized side, so open cases can be told apart; names live only on
- * the device that submitted them. Stateless for tests. */
+ * your anonymized side, so open cases can be told apart. Removed cases are
+ * marked as such. Stateless for tests. */
 export function CaseList({ lang, state }: { lang: Lang; state: CaseListState }) {
   return (
     <section className={account.card} aria-labelledby="cases-title">
@@ -41,10 +42,14 @@ export function CaseList({ lang, state }: { lang: Lang; state: CaseListState }) 
               <li key={c.id}>
                 <Link href={`/c/${encodeURIComponent(c.id)}`} className={styles.caseLink}>
                   <span className={styles.caseHeadline}>
-                    {c.headline ?? c.excerpt ?? tWithDate(lang, "case.list.untitled", c.createdAt)}
+                    {c.headline ?? (c.excerpt ? localizeLabelsAuto(c.excerpt) : null) ?? tWithDate(lang, "case.list.untitled", c.createdAt)}
                   </span>
                   <span className={styles.caseMeta}>{date ? t(lang, "case.list.started", { date }) : null}</span>
-                  <StatusChip lang={lang} status={c.status} />
+                  {c.removed ? (
+                    <span className={styles.status}>{t(lang, "account.verdicts.removed")}</span>
+                  ) : (
+                    <StatusChip lang={lang} status={c.status} />
+                  )}
                 </Link>
               </li>
             );

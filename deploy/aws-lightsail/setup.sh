@@ -133,6 +133,13 @@ get_env() { sed -n "s/^$1=//p" "$ENV_FILE" | tail -n 1; }
 # Settings added after the first release of this script. Appended to an older
 # env file only if the key is not there at all (not even commented out).
 add_missing_settings() {
+  # The key that encrypts stored originals. Generated once; an existing value
+  # (even an empty line someone left on purpose) is never overwritten.
+  if ! grep -qE '^ORIGINALS_KEY=' "$ENV_FILE"; then
+    set_env ORIGINALS_KEY "$(openssl rand -base64 32)"
+    info "Added ORIGINALS_KEY (encrypts stored originals). Back it up apart from the database:"
+    info "  sudo grep ^ORIGINALS_KEY= $ENV_FILE"
+  fi
   if ! grep -qE '^[#[:space:]]*RATE_LIMIT_DB=' "$ENV_FILE"; then
     set_env RATE_LIMIT_DB "file:/run/verdict/ratelimit.db"
     info "Added RATE_LIMIT_DB (rate limits now survive app restarts)."
@@ -431,6 +438,14 @@ RATE_LIMIT_DB=file:/run/verdict/ratelimit.db
 RATE_LIMIT_SALT=$(openssl rand -hex 32)
 # Site-wide verdicts per UTC day. 0 pauses the site.
 DAILY_VERDICT_CAP=1000
+
+# --- Stored originals ---------------------------------------------------------
+# Encrypts what people wrote (and the names) at rest. Back it up apart from
+# the database, e.g. in a password manager: without it the stored originals
+# cannot be read. Never change it without moving the old value to
+# ORIGINALS_KEY_PREVIOUS (comma-separated).
+ORIGINALS_KEY=$(openssl rand -base64 32)
+ORIGINALS_KEY_PREVIOUS=
 
 # --- Public site (build time) -------------------------------------------------
 NEXT_PUBLIC_SITE_URL=

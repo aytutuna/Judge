@@ -351,12 +351,52 @@
 }
 
 /* ---------- CTA ---------- */
+.tierRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-top: 14px;
+}
+
 .ctaRow {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 14px;
   margin-top: 14px;
+}
+
+/* Two-sided: the name shown on the case's share pages, in the submit row. */
+.nameField {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1 1 200px;
+  min-width: 0;
+}
+.nameLabel {
+  color: var(--ink-2);
+  font-size: 13px;
+  font-weight: 600;
+}
+.nameInput {
+  width: 100%;
+  min-height: 46px;
+  padding: 10px 14px;
+  border: 1px solid var(--line-2);
+  border-radius: 14px;
+  background: rgba(255, 253, 249, 0.92);
+  color: var(--ink);
+  font-size: 16px;
+}
+.nameInput:focus {
+  outline: none;
+  border-color: var(--terra-ink);
+  box-shadow: 0 0 0 4px rgba(200, 85, 61, 0.14);
+}
+.nameInput:focus-visible {
+  outline: 3px solid var(--terra-ink);
+  outline-offset: 0;
 }
 
 .cta {

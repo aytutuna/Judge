@@ -40,6 +40,8 @@ const draft: AppealDraft = {
 const form: RespondForm = {
   text: "",
   setText: noop,
+  name: "",
+  setName: noop,
   evidence,
   setTurnstile: noop,
   turnstileKey: 0,
@@ -64,7 +66,7 @@ function owner(view: CaseView, over: Partial<CasePanelProps> = {}): string {
       onJudgeNow={noop}
       onRetry={noop}
       onReset={noop}
-      onDelete={noop}
+      onRemove={noop}
       appeal={draft}
       {...over}
     />,
@@ -101,7 +103,7 @@ describe("owner case page", () => {
     expect(html).toContain(esc(t("en", "case.yourSide")));
     expect(html).toContain("Your account (Party A)");
     expect(html).not.toContain(esc(t("en", "case.accountB")));
-    expect(html).toContain(t("en", "case.delete"));
+    expect(html).toContain(t("en", "case.remove"));
     // "Make a new link" asks first: the link already sent stops working.
     expect(html).toContain(esc(t("en", "case.invite.resetConfirm")));
     expect(html).toContain(t("en", "case.invite.resetYes"));
@@ -115,7 +117,7 @@ describe("owner case page", () => {
     const html = owner(OWNER.judging, { overlay: { done: false } });
     expect(html).toContain(t("en", "case.answered"));
     expect(html).toContain(t("en", "thinking.eyebrow"));
-    expect(html).not.toContain(t("en", "case.delete"));
+    expect(html).not.toContain(t("en", "case.remove"));
     expect(html).not.toContain(OWNER.awaiting.inviteUrl as string);
   });
 
@@ -351,6 +353,42 @@ describe("small case components", () => {
     expect(html).toContain("Image 1, as the judges read it");
   });
 
+  it("AccountsRead: Turkish text shows Taraf/Kişi labels, English text keeps Party, whatever the interface", () => {
+    const sides = [
+      { party: "a" as const, text: "Party A'ya göre Party B cimrilik ediyor, çünkü ödemedi.", submittedAt: "2026-10-20T10:00:00.000Z", evidence: [] },
+      { party: "b" as const, text: "Party B paid Person C back in April.", submittedAt: "2026-10-20T10:05:00.000Z", evidence: [] },
+    ];
+    for (const lang of ["en", "tr"] as const) {
+      const html = renderToStaticMarkup(<AccountsRead lang={lang} title="x" sides={sides} yourParty="a" />);
+      expect(html).toContain("Taraf A&#x27;ya göre Taraf B cimrilik ediyor");
+      expect(html).toContain("Party B paid Person C back in April.");
+      expect(html).not.toContain("Party A&#x27;ya");
+    }
+  });
+
+  it("AppealOutcomeBanner: can take focus programmatically, not by Tab", async () => {
+    const { AppealOutcomeBanner } = await import("../components/case/AppealOutcome");
+    const html = renderToStaticMarkup(
+      <AppealOutcomeBanner
+        appeal={{
+          by: "a",
+          outcome: "upheld",
+          previous_id: "v1",
+          previous_verdict: "side_b",
+          previous_confidence: 3,
+          confidence_change: 0,
+          summary: "",
+        }}
+        confidence={3}
+        lang="en"
+        byName="Party A"
+        bySelf
+        focus
+      />,
+    );
+    expect(html).toMatch(/<section[^>]*tabindex="-1"/i);
+  });
+
   it("CaseList: loading, empty, error and a list of links", () => {
     expect(renderToStaticMarkup(<CaseList lang="en" state={{ status: "loading" }} />)).toContain(t("en", "case.loading"));
     expect(renderToStaticMarkup(<CaseList lang="en" state={{ status: "ready", cases: [] }} />)).toContain(
@@ -375,6 +413,7 @@ describe("small case components", () => {
               verdict: "side_b",
               headline: "Party B paid",
               excerpt: "Party A paid the April bill",
+              removed: false,
             },
             {
               id: "c2",
@@ -386,6 +425,7 @@ describe("small case components", () => {
               verdict: null,
               headline: null,
               excerpt: "Party A says the bike was theirs for March",
+              removed: false,
             },
             {
               id: "c3",
@@ -397,6 +437,7 @@ describe("small case components", () => {
               verdict: null,
               headline: null,
               excerpt: null,
+              removed: false,
             },
           ],
         }}

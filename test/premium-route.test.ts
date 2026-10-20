@@ -25,6 +25,7 @@ const m = vi.hoisted(() => ({
   verifyEvidenceTokens: vi.fn(),
   anonymizeSubmission: vi.fn(),
   evidenceBlock: vi.fn(),
+  saved: [] as { ownerUserId: string | null; original: unknown }[],
 }));
 
 /** Wraps a mock so the call order across modules is recorded. */
@@ -72,6 +73,25 @@ vi.mock("@/lib/trial", async (importOriginal) => ({
 vi.mock("@/lib/db", () => ({
   saveVerdict: track("save", m.saveVerdict),
   getVerdict: track("getVerdict", m.getVerdict),
+}));
+vi.mock("@/lib/originals/save", () => ({
+  saveVerdictWithOriginals: async (v: {
+    id: string;
+    input: string;
+    framework: unknown;
+    result: unknown;
+    ownerUserId: string | null;
+    original: unknown;
+  }) => {
+    await track("save", m.saveVerdict)({ id: v.id, input: v.input, framework: v.framework, result: v.result });
+    m.saved.push(v);
+    return {
+      ownerToken: v.ownerUserId ? null : "o".repeat(43),
+      originalsStored: true,
+      display: { namesVisible: true, a: null, b: null, others: {} },
+      metaWritten: true,
+    };
+  },
 }));
 vi.mock("@/lib/premium/factcheck", async (importOriginal) => ({
   ...(await importOriginal<typeof import("@/lib/premium/factcheck")>()),
@@ -168,6 +188,7 @@ let clock = 1_000_000;
 
 beforeEach(() => {
   m.calls.length = 0;
+  m.saved.length = 0;
   clock = 1_000_000;
   vi.spyOn(Date, "now").mockImplementation(() => clock);
   vi.stubEnv("ANTHROPIC_API_KEY", "test-key");
@@ -208,15 +229,14 @@ afterEach(() => {
 });
 
 describe("free requests stay on the free path", () => {
-  it("never touches auth, entitlements, user limits or the premium pipeline", async () => {
+  it("never touches entitlements, user limits or the premium pipeline; the session only names the writer", async () => {
     for (const body of [{ argument: ARGUMENT }, { argument: ARGUMENT, tier: "free" }]) {
       m.calls.length = 0;
       const res = await POST(request({ ...body, clarifications: [{ question: "Q?", answer: "Bob" }] }));
       expect(res.status).toBe(200);
-      expect(m.calls).toEqual(["turnstile", "limits", "key", "anonymize", "judge", "save"]);
+      expect(m.calls).toEqual(["turnstile", "limits", "key", "anonymize", "judge", "viewer", "save"]);
     }
     for (const fn of [
-      m.getViewer,
       m.reservePremiumVerdict,
       m.checkUserLimits,
       m.checkPremiumSiteCap,
@@ -232,7 +252,9 @@ describe("free requests stay on the free path", () => {
   it("free results carry no tier, fact_check or panel and the response has no entitlement", async () => {
     const res = await POST(request({ argument: ARGUMENT }));
     const body = await res.json();
-    expect(Object.keys(body).sort()).toEqual(["id", "name_map", "result"]);
+    // Signed in (bearer): owned by the account, so no owner token.
+    expect(Object.keys(body).sort()).toEqual(["display", "id", "name_map", "originals_stored", "result", "suggested_display_a"]);
+    expect(m.saved[0].ownerUserId).toBe("u1");
     for (const key of ["tier", "fact_check", "panel"]) expect(body.result).not.toHaveProperty(key);
     expect(m.saveVerdict.mock.calls[0][0].result).not.toHaveProperty("tier");
   });

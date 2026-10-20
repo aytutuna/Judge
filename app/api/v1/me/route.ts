@@ -3,7 +3,7 @@ import type { MeResponse } from "@/lib/account-types";
 import { apiErrorBody } from "@/lib/api-errors";
 import { clearSessionCookieHeaders, deleteAuthUser, getViewer, isSameOrigin } from "@/lib/auth";
 import { deleteUserEntitlements, getEntitlement } from "@/lib/entitlements";
-import { deleteUserCases } from "@/lib/cases";
+import { removeUserData } from "@/lib/originals/removal";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -30,10 +30,10 @@ export async function GET(req: Request): Promise<NextResponse> {
   }
 }
 
-/** DELETE /api/v1/me { confirm: "delete" }: deletes the account, its
- * sign-ins, sessions and entitlements, and the cases it started (both sides,
- * evidence transcripts, appeals and their verdicts). Other shared verdicts
- * stay (anonymous). */
+/** DELETE /api/v1/me { confirm: "delete" }: removes every verdict the
+ * account owns and its side of every case (originals, name maps and display
+ * names blanked, share links closed; no verdict row is deleted), then
+ * deletes its entitlements, sign-ins and sessions. */
 export async function DELETE(req: Request): Promise<NextResponse> {
   const viewer = await getViewer(req);
   if (!viewer) {
@@ -58,7 +58,7 @@ export async function DELETE(req: Request): Promise<NextResponse> {
     });
   }
   try {
-    await deleteUserCases(viewer.user.id);
+    await removeUserData(viewer.user.id);
     await deleteUserEntitlements(viewer.user.id);
     await deleteAuthUser(viewer.user.id);
   } catch (e) {

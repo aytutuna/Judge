@@ -158,3 +158,24 @@ describe("JudgingOverlay premium line", () => {
     expect(html(<JudgingOverlay {...props} />)).not.toContain(t("en", "thinking.factcheckDone"));
   });
 });
+
+describe("FactCheckList: the 'nothing looked up' line agrees with the dispute type", () => {
+  it("factual and mixed disputes never say 'values or meanings, not facts'", () => {
+    for (const lang of ["en", "tr"] as const) {
+      for (const disputeType of ["factual", "mixed"] as const) {
+        const out = html(<FactCheckList factCheck={{ status: "none", claims: [] }} lang={lang} disputeType={disputeType} />);
+        expect(out).toContain(esc(t(lang, "factcheck.noneFactual")));
+        expect(out).not.toContain(esc(t(lang, "factcheck.none")));
+      }
+      for (const disputeType of ["values", "definitional", "logical", undefined] as const) {
+        const out = html(<FactCheckList factCheck={{ status: "none", claims: [] }} lang={lang} disputeType={disputeType} />);
+        expect(out).toContain(esc(t(lang, "factcheck.none")));
+      }
+    }
+  });
+
+  it("the verdict card passes its dispute type", () => {
+    const out = html(<VerdictView result={{ ...base, tier: "premium", fact_check: { status: "none", claims: [] } }} lang="en" />);
+    expect(out).toContain(esc(t("en", "factcheck.noneFactual")));
+  });
+});

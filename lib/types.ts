@@ -272,17 +272,36 @@ export const ClarifyResponse = z.object({
 });
 export type ClarifyResponse = z.infer<typeof ClarifyResponse>;
 
-/** One replaced name, returned to the client only — never stored. */
+/** One replaced name. Returned to the writer; stored only inside the
+ * writer's encrypted original (lib/originals), never in the clear. */
 export const NameMapping = z.object({
   original: z.string(),
   replacement: z.string(),
 });
 export type NameMapping = z.infer<typeof NameMapping>;
 
+/** What the share page shows instead of the labels (null = the label). */
+export const DisplayStateSchema = z.object({
+  namesVisible: z.boolean(),
+  a: z.string().nullable(),
+  b: z.string().nullable(),
+  others: z.record(z.string(), z.string()),
+});
+
 export const VerdictResponse = z.object({
   id: z.string(),
   result: VerdictResult,
   name_map: z.array(NameMapping),
+  /** Signed-out writers only, returned once: keep it (web: localStorage
+   * "judge.owner.<id>"; mobile: secure storage) and send it as the
+   * X-Owner-Token header to see the original, change names or remove it. */
+  owner_token: z.string().optional(),
+  /** Whether the original and the names were stored (false: no key on the server). */
+  originals_stored: z.boolean().optional(),
+  /** The share page's names right now. */
+  display: DisplayStateSchema.optional(),
+  /** A first-name suggestion for the writer's own display name (signed in). */
+  suggested_display_a: z.string().nullable().optional(),
 });
 export type VerdictResponse = z.infer<typeof VerdictResponse>;
 
@@ -291,5 +310,11 @@ export type VerdictResponse = z.infer<typeof VerdictResponse>;
  * Idempotency-Key replay of an already-finished verdict (name_map is [] then). */
 export type VerdictApiResponse = VerdictResponse & { entitlement?: Entitlement; replayed?: boolean };
 
-/** GET /api/v1/verdicts/{id}. The stored input text is never exposed. */
-export type StoredVerdictResponse = { id: string; result: VerdictResult; createdAt: string };
+/** GET /api/v1/verdicts/{id}. The stored input text is never exposed.
+ * `display`: the names the share page shows (null = the labels). */
+export type StoredVerdictResponse = {
+  id: string;
+  result: VerdictResult;
+  createdAt: string;
+  display?: { a: string | null; b: string | null; others: Record<string, string> } | null;
+};

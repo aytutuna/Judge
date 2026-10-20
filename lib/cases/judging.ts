@@ -2,8 +2,11 @@
  * Background judging for cases and appeals (scheduled after the response).
  * Each run is identified by a fresh token stored with the case
  * (judging_token) or the appeal (attempt_token); every write of the run is
- * guarded by it, so a run the sweep already failed (or a deleted case)
- * changes nothing. A stored verdict consumes the unit exactly once; a
+ * guarded by it, so a run the sweep already failed changes nothing: the
+ * verdict row itself is inserted in the same guarded batch, so a superseded
+ * run writes no row at all (verdict rows are never deleted). Each case
+ * verdict gets its ownership row (verdict_meta, kind 'case') in that batch,
+ * already removed if the case was. A stored verdict consumes the unit exactly once; a
  * failure refunds it; a refused or degraded panel shows the verdict but
  * refunds (rules of lib/premium/handler.ts). Never throws.
  */
@@ -11,13 +14,14 @@
 import { nanoid } from "nanoid";
 import type { CaseMode } from "@/lib/case-types";
 import { claudeJson, LITE_MODEL, withUsageMeter, type UsageTotals } from "@/lib/claude";
-import { saveVerdict, getDb } from "@/lib/db";
+import type { InStatement } from "@libsql/client";
 import { consumeStatement, entitlementWriteBatch, refundStatements, type StatementGuard } from "@/lib/entitlements";
+import { CASE_REMOVAL_REASON_SQL, ensureOriginalsTables } from "@/lib/originals/db";
 import { evidenceBlock } from "@/lib/evidence";
 import type { Lang } from "@/lib/i18n";
 import { APPEAL_JUDGE_NOTE, APPEAL_ONE_SIDED_JUDGE_NOTE } from "@/lib/judge";
 import { judgeAnonymized, premiumLogLine, type JudgedOutcome, type PremiumStats } from "@/lib/premium/run";
-import type { AppealInfo, AppealOutcome, DisputedFact, EvidenceUsed, VerdictResult } from "@/lib/types";
+import type { AppealInfo, AppealOutcome, DisputedFact, EvidenceUsed, FrameworkChoice, VerdictResult } from "@/lib/types";
 import { composeForJudging, evidenceCounts, evidenceGroups } from "./compose";
 import { getCase, loadCaseBundle, type AppealRow, type CaseBundle } from "./db";
 import { notifyOwnerCaseReady } from "./notify";
@@ -208,18 +212,33 @@ const verdictGuard = (verdictId: string): StatementGuard => ({
   args: [verdictId],
 });
 
-/** Removes a saved verdict row whose run lost its guard (never linked). */
-async function dropOrphan(verdictId: string): Promise<void> {
-  try {
-    const db = await getDb();
-    await db.execute({
-      sql: "DELETE FROM verdicts WHERE id = ? AND NOT EXISTS (SELECT 1 FROM case_verdicts WHERE verdict_id = ?)",
-      args: [verdictId, verdictId],
-    });
-  } catch (e) {
-    console.error("[cases] orphan cleanup failed:", e instanceof Error ? e.message : String(e));
-  }
+/** The verdict row and its ownership row, both written only when `runGuard`
+ * (the run's token still current) holds. Every later statement of the batch
+ * is guarded on the verdict row existing. */
+function verdictRowStatements(
+  verdictId: string,
+  caseId: string,
+  input: string,
+  framework: FrameworkChoice,
+  result: VerdictResult,
+  runGuard: StatementGuard,
+  nowIso: string,
+): InStatement[] {
+  return [
+    {
+      sql: `INSERT INTO verdicts (id, input, framework, result) SELECT ?, ?, ?, ? WHERE ${runGuard.sql}`,
+      args: [verdictId, input, JSON.stringify(framework), JSON.stringify(result), ...runGuard.args],
+    },
+    {
+      sql: `INSERT INTO verdict_meta (verdict_id, kind, case_id, names_visible, removed_at, removal_reason, created_at, updated_at)
+            SELECT ?, 'case', ?, 1, c.removed_at, ${CASE_REMOVAL_REASON_SQL}, ?, ?
+            FROM cases c WHERE c.id = ? AND EXISTS (SELECT 1 FROM verdicts WHERE id = ?)`,
+      args: [verdictId, caseId, nowIso, nowIso, caseId, verdictId],
+    },
+  ];
 }
+
+const VERDICT_EXISTS = "EXISTS (SELECT 1 FROM verdicts WHERE id = ?)";
 
 function evidenceText(bundle: CaseBundle, mode: CaseMode, appeals: { earlier: AppealRow[]; current: AppealRow | null }) {
   const groups = evidenceGroups(bundle.evidence, mode, appeals);
@@ -236,6 +255,11 @@ export async function runCaseJudging(
   const row = await getCase(caseId).catch(() => null);
   if (!row || row.status !== "judging" || row.judgingToken !== judgingToken) return;
   const nowIso = () => new Date().toISOString();
+  try {
+    await ensureOriginalsTables();
+  } catch (e) {
+    console.error("[cases] originals tables failed:", e instanceof Error ? e.message : String(e));
+  }
   const fail = async (code: "quota" | "unavailable") => {
     await entitlementWriteBatch(failJudgingStatements(caseId, judgingToken, row.reservationId, code, nowIso())).catch(
       (e: unknown) => console.error("[cases] failing a run failed:", e instanceof Error ? e.message : String(e)),
@@ -276,21 +300,12 @@ export async function runCaseJudging(
     evidenceUsed: evidenceCounts(bundle.evidence, new Set()),
   });
   const verdictId = nanoid(10);
-  try {
-    await saveVerdict({
-      id: verdictId,
-      input: evText ? `${document}\n\n${evText}` : document,
-      framework: row.framework,
-      result,
-    });
-  } catch (e) {
-    console.error("[cases] saving failed:", e instanceof Error ? e.message : String(e));
-    run.log(null, "save_failed");
-    return fail("unavailable");
-  }
-
   const at = nowIso();
   const free = outcome.refused || outcome.degraded;
+  const runGuard: StatementGuard = {
+    sql: "EXISTS (SELECT 1 FROM cases WHERE id = ? AND status = 'judging' AND judging_token = ?)",
+    args: [caseId, judgingToken],
+  };
   const charge = row.reservationId
     ? free
       ? refundStatements(row.reservationId, at, verdictGuard(verdictId))
@@ -299,29 +314,37 @@ export async function runCaseJudging(
   let linked = false;
   try {
     const rs = await entitlementWriteBatch([
+      ...verdictRowStatements(
+        verdictId,
+        caseId,
+        evText ? `${document}\n\n${evText}` : document,
+        row.framework,
+        result,
+        runGuard,
+        at,
+      ),
       {
         sql: `INSERT INTO case_verdicts (case_id, seq, verdict_id, appeal_id, mode, created_at)
               SELECT ?, COALESCE((SELECT MAX(seq) FROM case_verdicts WHERE case_id = ?), 0) + 1, ?, NULL, ?, ?
-              WHERE EXISTS (SELECT 1 FROM cases WHERE id = ? AND status = 'judging' AND judging_token = ?)`,
-        args: [caseId, caseId, verdictId, mode, at, caseId, judgingToken],
+              WHERE EXISTS (SELECT 1 FROM cases WHERE id = ? AND status = 'judging' AND judging_token = ?)
+                AND ${VERDICT_EXISTS}`,
+        args: [caseId, caseId, verdictId, mode, at, caseId, judgingToken, verdictId],
       },
       {
         sql: `UPDATE cases SET status = 'judged', judged_at = ?, last_error = NULL, updated_at = ?
-              WHERE id = ? AND status = 'judging' AND judging_token = ?`,
-        args: [at, at, caseId, judgingToken],
+              WHERE id = ? AND status = 'judging' AND judging_token = ? AND ${VERDICT_EXISTS}`,
+        args: [at, at, caseId, judgingToken, verdictId],
       },
       ...charge,
     ]);
     linked = rs[0].rowsAffected === 1;
   } catch (e) {
     console.error("[cases] storing the verdict failed:", e instanceof Error ? e.message : String(e));
-    await dropOrphan(verdictId);
     run.log(null, "save_failed");
     return fail("unavailable");
   }
   if (!linked) {
-    // The sweep failed this run (and refunded) or the case was deleted.
-    await dropOrphan(verdictId);
+    // The sweep failed this run (and refunded): nothing was written.
     run.log(null, "superseded");
     return;
   }
@@ -338,6 +361,11 @@ export async function runAppealJudging(
 ): Promise<void> {
   const row = await getCase(caseId).catch(() => null);
   if (!row || row.status !== "judged") return;
+  try {
+    await ensureOriginalsTables();
+  } catch (e) {
+    console.error("[cases] originals tables failed:", e instanceof Error ? e.message : String(e));
+  }
   let bundle: CaseBundle;
   try {
     bundle = await loadCaseBundle(row);
@@ -407,32 +435,34 @@ export async function runAppealJudging(
   };
   const result: VerdictResult = { ...next, appeal: info };
   const verdictId = nanoid(10);
-  try {
-    await saveVerdict({
-      id: verdictId,
-      input: evText ? `${document}\n\n${evText}` : document,
-      framework: row.framework,
-      result,
-    });
-  } catch (e) {
-    console.error("[cases] saving the appeal verdict failed:", e instanceof Error ? e.message : String(e));
-    run.log(null, "appeal_save_failed");
-    return fail("unavailable");
-  }
-
   const at = nowIso();
+  const runGuard: StatementGuard = {
+    sql: `EXISTS (SELECT 1 FROM case_appeals WHERE id = ? AND status = 'judging' AND attempt_token = ?)
+          AND EXISTS (SELECT 1 FROM cases WHERE id = ? AND status = 'judged')`,
+    args: [appealId, attemptToken, caseId],
+  };
   const charge = outcome.degraded
     ? refundStatements(appeal.reservationId, at, verdictGuard(verdictId))
     : [consumeStatement(appeal.reservationId, verdictId, at, verdictGuard(verdictId))];
   let linked = false;
   try {
     const rs = await entitlementWriteBatch([
+      ...verdictRowStatements(
+        verdictId,
+        caseId,
+        evText ? `${document}\n\n${evText}` : document,
+        row.framework,
+        result,
+        runGuard,
+        at,
+      ),
       {
         sql: `INSERT INTO case_verdicts (case_id, seq, verdict_id, appeal_id, mode, created_at)
               SELECT ?, COALESCE((SELECT MAX(seq) FROM case_verdicts WHERE case_id = ?), 0) + 1, ?, ?, ?, ?
               WHERE EXISTS (SELECT 1 FROM case_appeals WHERE id = ? AND status = 'judging' AND attempt_token = ?)
-                AND EXISTS (SELECT 1 FROM cases WHERE id = ? AND status = 'judged')`,
-        args: [caseId, caseId, verdictId, appealId, mode, at, appealId, attemptToken, caseId],
+                AND EXISTS (SELECT 1 FROM cases WHERE id = ? AND status = 'judged')
+                AND ${VERDICT_EXISTS}`,
+        args: [caseId, caseId, verdictId, appealId, mode, at, appealId, attemptToken, caseId, verdictId],
       },
       {
         sql: `UPDATE case_appeals SET status = 'judged', error = NULL, outcome = ?, updated_at = ?,
@@ -446,12 +476,10 @@ export async function runAppealJudging(
     linked = rs[0].rowsAffected === 1;
   } catch (e) {
     console.error("[cases] storing the appeal verdict failed:", e instanceof Error ? e.message : String(e));
-    await dropOrphan(verdictId);
     run.log(null, "appeal_save_failed");
     return fail("unavailable");
   }
   if (!linked) {
-    await dropOrphan(verdictId);
     run.log(null, "appeal_superseded");
     return;
   }

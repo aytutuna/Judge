@@ -2,6 +2,9 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 const getVerdict = vi.hoisted(() => vi.fn());
 vi.mock("@/lib/db", () => ({ getVerdict }));
+const getVerdictMeta = vi.hoisted(() => vi.fn());
+vi.mock("@/lib/originals/db", () => ({ getVerdictMeta }));
+vi.mock("@/lib/originals/removed", () => ({ verdictRemoved: async () => false }));
 vi.mock("@/lib/premium/handler", () => ({ clarifyHandler: vi.fn(), premiumVerdict: vi.fn() }));
 
 import * as v1Verdicts from "../app/api/v1/verdicts/[id]/route";
@@ -62,7 +65,7 @@ describe("GET /api/v1/verdicts/{id}", () => {
     const res = await get("abc123");
     expect(res.status).toBe(200);
     const body = await res.json();
-    expect(body).toEqual({ id: "abc123", result: RESULT, createdAt: "2026-10-19 12:00:00" });
+    expect(body).toEqual({ id: "abc123", result: RESULT, createdAt: "2026-10-19 12:00:00", display: null });
     expect(JSON.stringify(body)).not.toContain("secret");
     expect(getVerdict).toHaveBeenCalledWith("abc123");
   });

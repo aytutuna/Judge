@@ -17,6 +17,11 @@ import { Turnstile, TURNSTILE_SITE_KEY } from "@/components/Turnstile";
 import { VerdictView } from "@/components/VerdictView";
 import { MAX_EVIDENCE_PER_SIDE, type CreateCaseResponse } from "@/lib/case-types";
 import { saveCaseNames } from "@/lib/case-names-store";
+import { verdictLang } from "@/lib/content-lang";
+import { firstNameOf, type DisplayState } from "@/lib/originals-types";
+import { saveOwnerToken } from "@/lib/owner-store";
+import { buildOwnerShare } from "@/components/ShareDialog";
+import heroStyles from "@/components/home/Hero.module.css";
 import { clearDraft, registerDraftSource, takeDraft } from "@/lib/draft";
 import { DEFAULT_FRAMEWORK } from "@/lib/frameworks";
 import { apiErrorMessage, t, type Key } from "@/lib/i18n";
@@ -64,6 +69,11 @@ export default function Home() {
   const [phase, setPhase] = useState<HeroPhase>("intake");
   const [error, setError] = useState<string | null>(null);
   const [response, setResponse] = useState<VerdictResponse | null>(null);
+  // The writer's share-page names after they edit them (else the response's).
+  const [ownerDisplay, setOwnerDisplay] = useState<DisplayState | null>(null);
+  // Two-sided: the owner's name on the case's share pages (prefilled from
+  // the account's first name until they type).
+  const [caseName, setCaseName] = useState<string | null>(null);
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
   // Premium only.
   const viewer = useViewer();
@@ -120,6 +130,21 @@ export default function Home() {
     [argument, framework, phase],
   );
 
+  const shownCaseName = caseName ?? firstNameOf(viewer.me?.user?.name) ?? "";
+  const owner =
+    response?.display && response.originals_stored
+      ? buildOwnerShare({
+          verdictId: response.id,
+          token: response.owner_token ?? null,
+          display: ownerDisplay ?? response.display,
+          suggestedA: response.suggested_display_a ?? null,
+          nameMap: response.name_map,
+          lang: verdictLang(response.result),
+          namesConfirmed: ownerDisplay !== null,
+          onSaved: setOwnerDisplay,
+        })
+      : undefined;
+
   // Premium skips the human check: the signed-in account is the gate.
   const needsToken = TURNSTILE_SITE_KEY !== "" && !premium;
   const canSubmit =
@@ -157,7 +182,10 @@ export default function Home() {
         setPhase("intake");
         return;
       }
-      setResponse(json as VerdictResponse);
+      const verdict = json as VerdictResponse;
+      saveOwnerToken(verdict.id, verdict.owner_token);
+      setOwnerDisplay(null);
+      setResponse(verdict);
     } catch {
       setError(t(lang, "errorFallback"));
       setPhase("intake");
@@ -249,6 +277,7 @@ export default function Home() {
         if (premiumKey.current?.key === key) premiumKey.current = null;
         const verdict = json as VerdictApiResponse;
         if (verdict.entitlement) applyEntitlement(verdict.entitlement);
+        setOwnerDisplay(null);
         setResponse(verdict);
         return;
       }
@@ -267,11 +296,13 @@ export default function Home() {
     clearDraft();
     setError(null);
     setCreating(true);
+    const name = shownCaseName.trim();
     const body = JSON.stringify({
       text: argument,
       framework,
       lang,
       ...(tokens.length ? { evidence: tokens } : {}),
+      ...(name ? { displayName: name } : {}),
     });
     const key = keyFor(body);
     try {
@@ -370,6 +401,21 @@ export default function Home() {
             busy={holding}
             ctaLabel={twoSided ? t(lang, "case.create") : undefined}
             twoSided={twoSided}
+            ctaExtra={
+              twoSided ? (
+                <label className={heroStyles.nameField}>
+                  <span className={heroStyles.nameLabel}>{t(lang, "case.displayName")}</span>
+                  <input
+                    className={heroStyles.nameInput}
+                    value={shownCaseName}
+                    maxLength={40}
+                    autoComplete="given-name"
+                    disabled={holding}
+                    onChange={(e) => setCaseName(e.target.value)}
+                  />
+                </label>
+              ) : undefined
+            }
             extras={
               casesOn || evidenceOn ? (
                 <>
@@ -420,6 +466,7 @@ export default function Home() {
                   shareId={response.id}
                   onJudgeAnother={reset}
                   fresh
+                  owner={owner}
                 />
               ) : null
             }

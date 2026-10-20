@@ -16,7 +16,7 @@ import { nanoid } from "nanoid";
 import type { Entitlement } from "@/lib/account-types";
 import { API_ERROR_STATUS, apiErrorBody, type ApiErrorBody, type ApiErrorCode } from "@/lib/api-errors";
 import { getViewer, isSameOrigin, premiumEnabled } from "@/lib/auth";
-import { getVerdict, saveVerdict } from "@/lib/db";
+import { getVerdict } from "@/lib/db";
 import {
   consumePremiumVerdict,
   getEntitlement,
@@ -27,6 +27,8 @@ import {
 import { MAX_EVIDENCE_PER_SIDE } from "@/lib/case-types";
 import type { VerifiedEvidence } from "@/lib/evidence";
 import { evidenceEnabled } from "@/lib/features";
+import { firstNameOf } from "@/lib/originals-types";
+import { saveVerdictWithOriginals } from "@/lib/originals/save";
 import { checkPremiumSiteCap, checkUserLimits, type UserBucket } from "@/lib/ratelimit";
 import { ClarifyRequest, type VerdictApiResponse, type VerdictRequest } from "@/lib/types";
 import { clarifyQuestions } from "./clarify";
@@ -59,7 +61,7 @@ function unavailable(status = 503): NextResponse {
   return fail("unavailable", UNAVAILABLE_MESSAGE, { status });
 }
 
-type Gate = { userId: string } | { response: NextResponse };
+type Gate = { userId: string; name: string } | { response: NextResponse };
 
 /** Session, origin and configuration checks shared by both handlers. */
 async function signedInGate(req: Request): Promise<Gate> {
@@ -71,7 +73,7 @@ async function signedInGate(req: Request): Promise<Gate> {
   if (!premiumEnabled()) {
     return { response: fail("not_configured", "Premium is not available on this server right now.") };
   }
-  return { userId: viewer.user.id };
+  return { userId: viewer.user.id, name: viewer.user.name };
 }
 
 /** The per-user limit for `bucket`, plus the site-wide daily cap for
@@ -123,6 +125,25 @@ function invalidBody(issue: { message?: string; path: PropertyKey[]; code: strin
   return fail(code, issue?.message ?? "Invalid request");
 }
 
+/** Ownership, originals status and display names of a stored verdict, for
+ * a replayed response. Empty when unreadable. */
+async function storedOwnership(verdictId: string): Promise<Pick<VerdictApiResponse, "originals_stored" | "display">> {
+  try {
+    const { getOriginal, getVerdictMeta, subjects } = await import("@/lib/originals/db");
+    const { openVerdictDisplay } = await import("@/lib/originals/display");
+    const meta = await getVerdictMeta(verdictId);
+    if (!meta) return {};
+    const original = await getOriginal(subjects.verdict(verdictId));
+    return {
+      originals_stored: Boolean(original?.sealed),
+      display: { ...openVerdictDisplay(meta), namesVisible: meta.namesVisible },
+    };
+  } catch (e) {
+    console.error("[premium] ownership read failed:", e instanceof Error ? e.message : String(e));
+    return {};
+  }
+}
+
 async function replay(userId: string, verdictId: string): Promise<NextResponse> {
   const stored = await getVerdict(verdictId).catch(() => null);
   if (!stored) return unavailable();
@@ -132,9 +153,31 @@ async function replay(userId: string, verdictId: string): Promise<NextResponse> 
     result: stored.result,
     name_map: [],
     replayed: true,
+    ...(await storedOwnership(verdictId)),
     ...(entitlement ? { entitlement } : {}),
   };
   return NextResponse.json(body);
+}
+
+/** The argument exactly as sent (before trimming), for the encrypted original. */
+function rawArgumentOf(body: unknown, fallback: string): string {
+  if (typeof body !== "object" || body === null) return fallback;
+  const raw = (body as { argument?: unknown }).argument;
+  return typeof raw === "string" ? raw : fallback;
+}
+
+/** Clarifications exactly as sent, skipped answers kept as "". */
+function rawClarificationsOf(body: unknown, fallback: VerdictRequest["clarifications"]): { question: string; answer: string }[] {
+  const raw = typeof body === "object" && body !== null ? (body as { clarifications?: unknown }).clarifications : undefined;
+  if (Array.isArray(raw)) {
+    return raw
+      .filter((c): c is { question: unknown; answer: unknown } => typeof c === "object" && c !== null)
+      .map((c) => ({
+        question: typeof c.question === "string" ? c.question : "",
+        answer: typeof c.answer === "string" ? c.answer : "",
+      }));
+  }
+  return (fallback ?? []).map((c) => ({ question: c.question, answer: c.answer }));
 }
 
 function reserveRefusal(res: Exclude<ReserveResult, { ok: true }>): NextResponse | null {
@@ -150,8 +193,9 @@ function reserveRefusal(res: Exclude<ReserveResult, { ok: true }>): NextResponse
   }
 }
 
-/** POST /api/v1/verdict with tier "premium". `data` is the parsed body. */
-export async function premiumVerdict(req: Request, data: VerdictRequest): Promise<NextResponse> {
+/** POST /api/v1/verdict with tier "premium". `data` is the parsed body;
+ * `rawBody` the body as sent (the original is stored exactly as written). */
+export async function premiumVerdict(req: Request, data: VerdictRequest, rawBody?: unknown): Promise<NextResponse> {
   const startedAt = Date.now();
   const key = idempotencyKey(req.headers);
   if (key === null) {
@@ -240,8 +284,23 @@ export async function premiumVerdict(req: Request, data: VerdictRequest): Promis
     }
 
     const id = nanoid(10);
+    let saved;
     try {
-      await saveVerdict({ id, input: outcome.input, framework: data.framework, result: outcome.result });
+      saved = await saveVerdictWithOriginals({
+        id,
+        input: outcome.input,
+        framework: data.framework,
+        result: outcome.result,
+        kind: "premium",
+        ownerUserId: userId,
+        original: {
+          v: 1,
+          text: rawArgumentOf(rawBody, data.argument),
+          clarifications: rawClarificationsOf(rawBody, data.clarifications),
+          ...(evidence?.length ? { evidence: evidence.map((e) => ({ kind: e.kind, transcript: e.transcript })) } : {}),
+          nameMap: outcome.nameMap,
+        },
+      });
     } catch (e) {
       await refund();
       console.error("[premium] saving failed:", e instanceof Error ? e.message : String(e));
@@ -270,6 +329,9 @@ export async function premiumVerdict(req: Request, data: VerdictRequest): Promis
       id,
       result: outcome.result,
       name_map: outcome.nameMap,
+      originals_stored: saved.originalsStored,
+      ...(saved.metaWritten ? { display: saved.display } : {}),
+      suggested_display_a: firstNameOf(gate.name),
       ...(entitlement ? { entitlement } : {}),
     };
     return NextResponse.json(body);

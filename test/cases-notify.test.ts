@@ -66,11 +66,14 @@ describe("notifyOwnerCaseReady", () => {
 describe("caseReadyEmailContent", () => {
   it("names nobody, links the case and speaks Turkish with sen", () => {
     const en = caseReadyEmailContent("https://settle.example/c/abc", "en");
-    expect(en.subject).toContain("Settle");
+    expect(en.subject).toContain("Judge");
+    expect(en.html).toContain(">Judge</p>");
+    expect(JSON.stringify([en, caseReadyEmailContent("https://x.example/c/abc", "tr")])).not.toContain("Settle");
     expect(en.text).toContain("https://settle.example/c/abc");
     expect(en.html).toContain('href="https://settle.example/c/abc"');
     const tr = caseReadyEmailContent("https://settle.example/c/abc", "tr");
     expect(tr.text).toContain("sen başlattığın");
+    expect(tr.text).toContain("Judge'da");
     expect(tr.html).not.toMatch(/\bsiz\b|iniz\b/);
   });
 });

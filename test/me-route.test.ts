@@ -140,7 +140,7 @@ describe("DELETE /api/v1/me", () => {
     });
   });
 
-  it("also deletes the cases the account started, and unbinds it as a respondent", async () => {
+  it("removes (never deletes) the cases the account started or answered, and unbinds it as a respondent", async () => {
     const { token, user } = await createDevSession("me6@verdict.local");
     const { ensureCaseTables } = await import("../lib/cases");
     await ensureCaseTables();
@@ -169,11 +169,16 @@ describe("DELETE /api/v1/me", () => {
 
     const res = await del({ authorization: `Bearer ${token}` });
     expect(res.status).toBe(200);
-    expect(await rows("SELECT count(*) AS n FROM cases WHERE owner_id = ?", [user.id])).toBe(0);
-    expect(await rows("SELECT count(*) AS n FROM case_sides WHERE case_id = ?", ["me6-case-own"])).toBe(0);
-    expect(await rows("SELECT count(*) AS n FROM case_verdicts WHERE case_id = ?", ["me6-case-own"])).toBe(0);
-    expect(await rows("SELECT count(*) AS n FROM verdicts WHERE id = ?", ["me6-verdict"])).toBe(0);
-    expect(await rows("SELECT count(*) AS n FROM cases WHERE id = ? AND respondent_user_id IS NULL", ["me6-case-oth"])).toBe(1);
+    expect(await rows("SELECT count(*) AS n FROM cases WHERE owner_id = ? AND removed_a_at IS NOT NULL", [user.id])).toBe(1);
+    expect(await rows("SELECT count(*) AS n FROM case_sides WHERE case_id = ?", ["me6-case-own"])).toBe(1);
+    expect(await rows("SELECT count(*) AS n FROM case_verdicts WHERE case_id = ?", ["me6-case-own"])).toBe(1);
+    expect(await rows("SELECT count(*) AS n FROM verdicts WHERE id = ?", ["me6-verdict"])).toBe(1);
+    expect(await rows("SELECT count(*) AS n FROM verdict_meta WHERE verdict_id = ? AND removed_at IS NOT NULL", ["me6-verdict"])).toBe(1);
+    expect(
+      await rows("SELECT count(*) AS n FROM cases WHERE id = ? AND respondent_user_id IS NULL AND removed_b_at IS NOT NULL", [
+        "me6-case-oth",
+      ]),
+    ).toBe(1);
   });
 
   it("a bearer client (the app) can delete its account", async () => {

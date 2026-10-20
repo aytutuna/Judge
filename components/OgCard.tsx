@@ -73,17 +73,18 @@ export function OgCard({
   tugA,
   accent = PALETTE.ink,
 }: {
-  eyebrow: string;
+  /** The pill at the top right; none when omitted. */
+  eyebrow?: string;
   title: string;
   /** Optional second title line in terracotta serif italic ("Settle it."). */
   titleSerif?: string;
   subtitle?: string;
   footer: string;
-  /** Party A's share of the tug-of-war bar, 0..100. */
-  tugA: number;
+  /** Party A's share of the tug-of-war bar, 0..100; no bar when omitted. */
+  tugA?: number;
   accent?: string;
 }) {
-  const a = Math.max(0, Math.min(100, tugA));
+  const a = tugA === undefined ? null : Math.max(0, Math.min(100, tugA));
   return (
     <div
       style={{
@@ -115,19 +116,21 @@ export function OgCard({
             Judge
           </div>
         </div>
-        <div
-          style={{
-            display: "flex",
-            fontSize: 24,
-            color: PALETTE.ink2,
-            border: `2px solid ${PALETTE_ALPHA.line2}`,
-            background: PALETTE.paper,
-            borderRadius: 999,
-            padding: "8px 22px",
-          }}
-        >
-          {truncate(eyebrow, 40)}
-        </div>
+        {eyebrow ? (
+          <div
+            style={{
+              display: "flex",
+              fontSize: 24,
+              color: PALETTE.ink2,
+              border: `2px solid ${PALETTE_ALPHA.line2}`,
+              background: PALETTE.paper,
+              borderRadius: 999,
+              padding: "8px 22px",
+            }}
+          >
+            {truncate(eyebrow, 40)}
+          </div>
+        ) : null}
       </div>
 
       <div style={{ display: "flex", flexDirection: "column", gap: 22 }}>
@@ -169,6 +172,7 @@ export function OgCard({
       </div>
 
       <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+        {a === null ? null : (
         <div style={{ display: "flex", position: "relative", height: 34, alignItems: "center" }}>
           <div
             style={{
@@ -197,6 +201,7 @@ export function OgCard({
             }}
           />
         </div>
+        )}
         <div style={{ display: "flex", fontSize: 26, color: PALETTE.ink2 }}>{footer}</div>
       </div>
     </div>

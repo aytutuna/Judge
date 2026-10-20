@@ -44,7 +44,8 @@ export type HeroProps = {
   judging: ReactNode;
   /** Replaces the form card once the verdict is in. */
   verdict: ReactNode;
-  /** Free / Premium switch, placed after the CTA. Absent when premium is
+  /** Free / Premium switch, placed above the Premium extras and the CTA, so
+   * the choices it reveals come after it. Absent when premium is
    * off: the form is then exactly what it was before premium existed. */
   tierSwitch?: ReactNode;
   /** Short progress text (premium's "checking if anything's missing"),
@@ -64,6 +65,8 @@ export type HeroProps = {
   /** "Both sides" is chosen: the owner writes only their own side, so the
    * label and placeholder say so. */
   twoSided?: boolean;
+  /** Placed in the submit row before the button (the two-sided display name). */
+  ctaExtra?: ReactNode;
 };
 
 function prefersReducedMotion(): boolean {
@@ -99,6 +102,7 @@ export function Hero({
   extras,
   ctaLabel,
   twoSided = false,
+  ctaExtra,
 }: HeroProps) {
   const cardRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
@@ -209,26 +213,36 @@ export function Hero({
                   aria-describedby={error ? "hero-error" : undefined}
                 />
 
-                <p className={styles.spark} id="hero-spark">
-                  {t(lang, "examples.label")}
-                </p>
-                <div className={styles.chips} role="group" aria-labelledby="hero-spark">
-                  {EXAMPLES.map((ex, i) => (
-                    <button
-                      key={ex.text}
-                      type="button"
-                      className={styles.chip}
-                      data-on={argument === t(lang, ex.text) ? "" : undefined}
-                      disabled={busy}
-                      onClick={() => {
-                        onExample(ex.text, i);
-                        inputRef.current?.focus({ preventScroll: true });
-                      }}
-                    >
-                      {t(lang, ex.label)}
-                    </button>
-                  ))}
-                </div>
+                {/* The fun examples are one person's argument: not offered when
+                    the other side will write their own account. */}
+                {twoSided ? null : (
+                  <>
+                    <p className={styles.spark} id="hero-spark">
+                      {t(lang, "examples.label")}
+                    </p>
+                    <div className={styles.chips} role="group" aria-labelledby="hero-spark">
+                      {EXAMPLES.map((ex, i) => (
+                        <button
+                          key={ex.text}
+                          type="button"
+                          className={styles.chip}
+                          data-on={argument === t(lang, ex.text) ? "" : undefined}
+                          disabled={busy}
+                          onClick={() => {
+                            onExample(ex.text, i);
+                            inputRef.current?.focus({ preventScroll: true });
+                          }}
+                        >
+                          {t(lang, ex.label)}
+                        </button>
+                      ))}
+                    </div>
+                  </>
+                )}
+
+                {/* Free/Premium comes before the Premium extras it reveals
+                    (the mode choice, the screenshots). */}
+                {tierSwitch ? <div className={styles.tierRow}>{tierSwitch}</div> : null}
 
                 {extras}
 
@@ -248,6 +262,7 @@ export function Hero({
                 ) : null}
 
                 <div className={styles.ctaRow}>
+                  {ctaExtra}
                   <button type="submit" className={styles.cta} disabled={!canSubmit}>
                     <svg className={styles.ctaIcon} viewBox="0 0 20 20" aria-hidden>
                       <path d="M3 8.5 17 6.5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
@@ -260,7 +275,6 @@ export function Hero({
                       →
                     </span>
                   </button>
-                  {tierSwitch}
                 </div>
 
                 {tierSwitch ? (

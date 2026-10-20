@@ -4,7 +4,7 @@ import { contactEmail, SITE_NAME, SITE_OG_IMAGE } from "../site";
 
 const title = "Judge privacy";
 const description =
-  "What Judge stores (the anonymized argument and verdict, for share links; for optional accounts, sign-in and plan details), what it doesn't, and who else handles your text, including Premium's web search, two-sided cases and screenshots.";
+  "What Judge stores (your text as you wrote it, encrypted, and the anonymized version the judges read), who can see what, how removal works, where your data is processed, how long it is kept, and your rights.";
 
 export const metadata: Metadata = {
   title: "Privacy",

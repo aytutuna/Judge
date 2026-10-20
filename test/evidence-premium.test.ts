@@ -162,9 +162,13 @@ describe("premium verdict with evidence", () => {
     m.claudeJson.mockResolvedValue({
       ok: true,
       data: {
-        text: "Party A paid and Deniz says no.",
+        // A surname shared by two people cannot be substituted in code.
+        text: "Party A paid and Yılmaz says no.",
         evidence: [{ index: 0, transcript: ANON_CHAT }],
-        replacements: [{ original: "Deniz", replacement: "Party B" }],
+        replacements: [
+          { original: "Deniz Yılmaz", replacement: "Party B" },
+          { original: "Ali Yılmaz", replacement: "Person C" },
+        ],
       },
     });
     const res = await POST(request({ argument: ARGUMENT, tier: "premium", evidence: [token()] }));

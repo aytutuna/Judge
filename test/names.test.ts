@@ -594,3 +594,77 @@ describe("partyNames: a known viewer without names in this browser", () => {
     expect(partyNames(map, "en", "en", "A", true)).toEqual({ nameA: "You", nameB: "Deniz", aIsSelf: true, bIsSelf: false });
   });
 });
+
+describe("localizeLabels / textLang", () => {
+  it("writes the labels in the text's language, suffixes kept", async () => {
+    const { localizeLabels, localizeLabelsAuto, textLang } = await import("../lib/names");
+    expect(localizeLabels("Party A'ya göre Party B'nin annesi ve Person C'ye", "tr")).toBe(
+      "Taraf A'ya göre Taraf B'nin annesi ve Kişi C'ye",
+    );
+    expect(localizeLabels("Taraf A told Kişi D and Taraf B's friend", "en")).toBe(
+      "Party A told Person D and Party B's friend",
+    );
+    // Not a label: a party letter on "Person", a word that only starts like one.
+    expect(localizeLabels("Person A, Party Z, Partyc B, Party Animal", "tr")).toBe("Person A, Party Z, Partyc B, Party Animal");
+    expect(textLang("Party A bence cimrilik ediyor, çünkü ödemedi.")).toBe("tr");
+    expect(textLang("Party A ile Party B bir hediye için anlaştı ve sonra kavga etti")).toBe("tr");
+    expect(textLang("Party A says the bill was split and that Party B agreed.")).toBe("en");
+    expect(localizeLabelsAuto("Party A dedi ki Party B'ye para verdi.")).toBe("Taraf A dedi ki Taraf B'ye para verdi.");
+    expect(localizeLabelsAuto("Party A paid Party B.")).toBe("Party A paid Party B.");
+  });
+});
+
+describe("consistentSelfMap: the viewer is named one way per verdict", () => {
+  const map: NameMapping[] = [
+    { original: "I", replacement: "Party A" },
+    { original: "Can", replacement: "Party B" },
+  ];
+  const result = (over: Partial<VerdictResult>): VerdictResult =>
+    ({
+      verdict: "side_b",
+      dispute_type: "factual",
+      headline: "Party B is right",
+      crux: "Whether Party A paid.",
+      split_points: null,
+      conditional: null,
+      argument_map: { side_a: [], side_b: [], bedrock_a: "", bedrock_b: "" },
+      facts_relied_on: [],
+      losing_side_best_point: "",
+      confidence: 3,
+      runs: ["side_b"],
+      demo: false,
+      lang: "en",
+      ...over,
+    }) as VerdictResult;
+
+  it("keeps the map when every mention of the viewer restores", async () => {
+    const { consistentSelfMap } = await import("../lib/names");
+    const r = result({ crux: "Whether Party A paid." });
+    expect(consistentSelfMap(r, map, "en")).toEqual({ nameMap: map, selfDropped: false });
+  });
+
+  it("drops the viewer's entries when one mention would stay a label", async () => {
+    const { consistentSelfMap } = await import("../lib/names");
+    const r = result({ agreed_facts: ["Party A now wants 120 from Party B."] });
+    expect(consistentSelfMap(r, map, "en")).toEqual({
+      nameMap: [{ original: "Can", replacement: "Party B" }],
+      selfDropped: true,
+    });
+    // The respondent's own view: Party B is the viewer.
+    const respondent: NameMapping[] = [
+      { original: "I", replacement: "Party B" },
+      { original: "Leo", replacement: "Party A" },
+    ];
+    const rb = result({ lang: "tr", headline: "Taraf B şimdi 120 istiyor" });
+    expect(consistentSelfMap(rb, respondent, "tr", "B").selfDropped).toBe(true);
+    expect(consistentSelfMap(result({ headline: "Leo is right" }), respondent, "en", "B").selfDropped).toBe(false);
+  });
+
+  it("never touches a map without a narrator", async () => {
+    const { consistentSelfMap } = await import("../lib/names");
+    const names: NameMapping[] = [{ original: "Can", replacement: "Party B" }];
+    const r = result({ agreed_facts: ["Party A now wants 120."] });
+    expect(consistentSelfMap(r, names, "en")).toEqual({ nameMap: names, selfDropped: false });
+    expect(consistentSelfMap(r, undefined, "en")).toEqual({ nameMap: undefined, selfDropped: false });
+  });
+});

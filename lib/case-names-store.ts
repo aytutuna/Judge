@@ -1,45 +1,26 @@
 import { useSyncExternalStore } from "react";
 import type { PartyLetter } from "./case-types";
+import { mergeNameMaps } from "./originals-types";
 import type { NameMapping } from "./types";
 
+export { mergeNameMaps };
+
 /**
- * The real names behind a case's labels, kept only in this browser. The
- * server never stores them: each submission's `name_map` comes back once in
- * its response and is saved here under `settle.names.<caseId>.<a|b>`,
- * merged across the same person's submissions (their side, then their
- * appeal). Each party's own view reads its own map, so names show only on
- * the device that submitted them. Website-only (localStorage); the mobile
- * app keeps the same data in secure storage.
+ * The real names behind a case's labels, as this browser received them.
+ * The server keeps each party's map encrypted and sends it back in
+ * `case.names` on any device; this store is the fallback for cases created
+ * before that (or on a server without an originals key). Each submission's
+ * `name_map` is saved here under `settle.names.<caseId>.<a|b>`, merged across
+ * the same person's submissions (their side, then their appeal).
+ * Website-only (localStorage); the mobile app keeps the same data in secure
+ * storage.
  */
 
 const PREFIX = "settle.names.";
 const EMPTY: NameMapping[] = [];
-/** A generous guard against a corrupted or hostile storage entry. */
-const MAX_ENTRIES = 60;
 
 export function namesKey(caseId: string, party: PartyLetter): string {
   return `${PREFIX}${caseId}.${party}`;
-}
-
-function isMapping(v: unknown): v is NameMapping {
-  if (typeof v !== "object" || v === null) return false;
-  const m = v as Record<string, unknown>;
-  return typeof m.original === "string" && typeof m.replacement === "string" && m.original.length > 0;
-}
-
-/** Earlier entries first, then new ones; exact duplicates dropped. */
-export function mergeNameMaps(prev: readonly NameMapping[], next: readonly NameMapping[]): NameMapping[] {
-  const seen = new Set<string>();
-  const out: NameMapping[] = [];
-  for (const m of [...prev, ...next]) {
-    if (!isMapping(m)) continue;
-    const key = `${m.original}\u0000${m.replacement}`;
-    if (seen.has(key)) continue;
-    seen.add(key);
-    out.push({ original: m.original, replacement: m.replacement });
-    if (out.length >= MAX_ENTRIES) break;
-  }
-  return out;
 }
 
 /** Parses a stored value; anything unexpected reads as empty. */

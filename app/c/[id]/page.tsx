@@ -5,7 +5,7 @@ import { CaseScreen } from "@/components/case/CaseScreen";
  * shows never leaks through a Referer header. */
 export const metadata: Metadata = {
   title: "Your case",
-  description: "A two-sided Settle case: the invite, its status and the verdict.",
+  description: "A two-sided Judge case: the invite, its status and the verdict.",
   robots: { index: false, follow: false },
   referrer: "no-referrer",
 };

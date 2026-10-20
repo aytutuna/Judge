@@ -32,6 +32,13 @@ export const API_ERROR_STATUS = {
   unsupported_media: 415,
   too_many_files: 400,
   evidence_invalid: 400,
+  /** Cases, answers and appeals: a name could not be taken out of the text.
+   * Retryable; the free route keeps "unavailable". */
+  anonymize_failed: 503,
+  /** The verdict or case was removed: its public link no longer works. */
+  removed: 410,
+  /** A display-name write while this server has no originals key. */
+  names_unavailable: 503,
 } as const;
 
 export type ApiErrorCode = keyof typeof API_ERROR_STATUS;

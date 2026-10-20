@@ -94,6 +94,10 @@ function About({ lang, features }: { lang: Lang; features: InfoFeatures | null }
 function Privacy({ lang, contactEmail }: { lang: Lang; contactEmail: string | null }) {
   const sections: [Key, Key][] = [
     ["privacy.storedTitle", "privacy.stored"],
+    ["privacy.accessTitle", "privacy.access"],
+    ["privacy.removalTitle", "privacy.removal"],
+    ["privacy.retentionTitle", "privacy.retention"],
+    ["privacy.locationTitle", "privacy.location"],
     ["privacy.notStoredTitle", "privacy.notStored"],
     ["privacy.accountsTitle", "privacy.accounts"],
     ["privacy.webSearchTitle", "privacy.webSearch"],
@@ -104,6 +108,7 @@ function Privacy({ lang, contactEmail }: { lang: Lang; contactEmail: string | nu
     ["privacy.ipTitle", "privacy.ip"],
     ["privacy.processorsTitle", "privacy.processors"],
     ["privacy.shareTitle", "privacy.share"],
+    ["privacy.rightsTitle", "privacy.rights"],
   ];
   // Split around the {email} slot so the address can be a real link while
   // the sentence stays one whole dictionary string.

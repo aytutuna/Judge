@@ -1,5 +1,6 @@
 import type { CaseAppealView, CaseEvidenceView, CaseSideView, PartyLetter } from "@/lib/case-types";
 import { t, type Lang } from "@/lib/i18n";
+import { localizeLabelsAuto } from "@/lib/names";
 import styles from "./case.module.css";
 
 function Evidence({ items, lang }: { items: readonly CaseEvidenceView[]; lang: Lang }) {
@@ -8,7 +9,7 @@ function Evidence({ items, lang }: { items: readonly CaseEvidenceView[]; lang: L
       {items.map((ev, i) => (
         <details key={ev.id} className={styles.transcript}>
           <summary>{t(lang, "case.evidenceItem", { n: i + 1 })}</summary>
-          <pre>{ev.transcript}</pre>
+          <pre>{localizeLabelsAuto(ev.transcript)}</pre>
         </details>
       ))}
     </>
@@ -20,8 +21,11 @@ function Evidence({ items, lang }: { items: readonly CaseEvidenceView[]; lang: L
  * anonymized transcripts of any images. Before a verdict the server only
  * sends the viewer's own side; after a two-sided verdict it sends both, and
  * any context added by appeal. Names are deliberately not restored here:
- * this is the record as judged. The viewer's own account and context say
+ * this is the record as judged. The labels are written in the text's own
+ * language ("Taraf A" in Turkish text); the stored text keeps the
+ * canonical "Party A". The viewer's own account and context say
  * "yours" next to their label, so the labels in the text can be placed.
+ * A side its writer removed says so instead of its text.
  */
 export function AccountsRead({
   lang,
@@ -57,8 +61,14 @@ export function AccountsRead({
                 ? t(lang, "case.accountYou", { label: label(side.party) })
                 : t(lang, side.party === "a" ? "case.accountA" : "case.accountB")}
             </h3>
-            <p className={styles.accountText}>{side.text}</p>
-            <Evidence items={side.evidence} lang={lang} />
+            {side.removed ? (
+              <p className={styles.note}>{t(lang, "case.sideRemoved")}</p>
+            ) : (
+              <>
+                <p className={styles.accountText}>{localizeLabelsAuto(side.text)}</p>
+                <Evidence items={side.evidence} lang={lang} />
+              </>
+            )}
           </article>
         ))}
       </div>
@@ -69,7 +79,7 @@ export function AccountsRead({
               ? t(lang, "case.contextYou", { label: label(a.party) })
               : t(lang, a.party === "a" ? "case.contextA" : "case.contextB")}
           </h3>
-          <p className={styles.accountText}>{a.text}</p>
+          <p className={styles.accountText}>{localizeLabelsAuto(a.text)}</p>
           <Evidence items={a.evidence} lang={lang} />
         </article>
       ))}

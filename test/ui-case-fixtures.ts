@@ -126,6 +126,10 @@ export function caseView(over: Partial<CaseView> = {}): CaseView {
     appeal: { allowed: false, blockedBy: "not_judged" },
     lastError: null,
     pollAfterMs: null,
+    names: null,
+    display: { namesVisible: true, a: null, b: null },
+    removed: null,
+    yourOriginal: "not_stored",
     ...over,
   };
 }

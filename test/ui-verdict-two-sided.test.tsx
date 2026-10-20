@@ -199,14 +199,17 @@ describe("copy only claims what the deployment offers", () => {
     expect(premiumAboutKeys({ cases: true, evidence: true })).toHaveLength(4);
   });
 
-  it("privacy tells the truth about images, names and deletion in both languages", () => {
+  it("privacy tells the truth about images, names, originals and removal in both languages", () => {
     expect(STRINGS.en["privacy.evidence"]).toMatch(/never store the image/);
     expect(STRINGS.en["privacy.evidence"]).toMatch(/6 hours/);
+    expect(STRINGS.en["privacy.evidence"]).toMatch(/raw transcript is kept encrypted/);
     expect(STRINGS.en["privacy.cases"]).toMatch(/fingerprints/);
     expect(STRINGS.en["privacy.cases"]).toMatch(/stored only as a hash/);
-    expect(STRINGS.en["privacy.cases"]).toMatch(/Deleting your account deletes the cases you started/);
+    expect(STRINGS.en["privacy.cases"]).toMatch(/stored encrypted/);
+    expect(STRINGS.en["privacy.cases"]).toMatch(/remove their own side/);
     expect(STRINGS.tr["privacy.evidence"]).toMatch(/görseli hiç saklamayız/);
     expect(STRINGS.tr["privacy.cases"]).toMatch(/parmak izlerini/);
-    expect(STRINGS.en["account.deleteConfirm"]).toMatch(/cases you started/);
+    expect(STRINGS.tr["privacy.cases"]).toMatch(/şifreli/);
+    expect(STRINGS.en["account.deleteConfirm"]).toMatch(/share links stop working/);
   });
 });

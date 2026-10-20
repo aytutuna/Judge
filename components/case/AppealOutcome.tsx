@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect, useRef } from "react";
 import { t, type Key, type Lang } from "@/lib/i18n";
 import type { AppealInfo, AppealOutcome } from "@/lib/types";
 import styles from "./case.module.css";
@@ -37,7 +40,9 @@ function OutcomeGlyph({ outcome }: { outcome: AppealOutcome }) {
  * when the summary is empty). The "stands" chip is neutral: a green tick
  * would read as "you won".
  * `byName` is the display name of the appealing party; `bySelf` switches to
- * the second-person line on that party's own view.
+ * the second-person line on that party's own view. `focus` moves keyboard
+ * focus to the banner (programmatic only: tabIndex -1), for when an appeal
+ * has just finished and the form that had focus is gone.
  */
 export function AppealOutcomeBanner({
   appeal,
@@ -45,17 +50,28 @@ export function AppealOutcomeBanner({
   lang,
   byName,
   bySelf,
+  focus = false,
 }: {
   appeal: AppealInfo;
   confidence: number;
   lang: Lang;
   byName: string;
   bySelf: boolean;
+  focus?: boolean;
 }) {
+  const ref = useRef<HTMLElement>(null);
+  useEffect(() => {
+    if (focus) ref.current?.focus({ preventScroll: false });
+  }, [focus]);
   const from = appeal.previous_confidence;
   const to = confidence;
   return (
-    <section className={styles.outcome} aria-label={outcomeLabel(lang, appeal.outcome)}>
+    <section
+      ref={ref}
+      tabIndex={-1}
+      className={styles.outcome}
+      aria-label={outcomeLabel(lang, appeal.outcome)}
+    >
       <div className={styles.outcomeTop}>
         <span className={styles.outcomeChip} data-outcome={appeal.outcome}>
           <OutcomeGlyph outcome={appeal.outcome} />

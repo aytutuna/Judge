@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import type { CaseResponse, CaseStatus, CaseView, InviteResponse } from "@/lib/case-types";
+import type { CaseRemovalResponse, CaseResponse, CaseStatus, CaseView, InviteResponse } from "@/lib/case-types";
 import { forgetCaseNames, useCaseNames } from "@/lib/case-names-store";
 import { apiErrorMessage, formatDate, t, tWithDate, type Key, type Lang } from "@/lib/i18n";
 import { useLang } from "@/lib/lang";
@@ -15,7 +15,8 @@ import { VerdictView } from "../VerdictView";
 import { openConfirm } from "../account/AccountView";
 import account from "../account/AccountPages.module.css";
 import { AccountsRead } from "./AccountsRead";
-import { AppealSection, useAppealDraft, type AppealDraft } from "./AppealForm";
+import { AppealSection, useAppealDraft, useAppealFinished, type AppealDraft } from "./AppealForm";
+import { CaseNames, CaseOriginals, useCaseOriginals } from "./CaseOwnTools";
 import { InviteLink } from "./InviteLink";
 import styles from "./case.module.css";
 
@@ -141,6 +142,8 @@ export function VerdictHistory({
   selfParty: "A" | "B";
 }) {
   const earlier = view.verdicts.slice(0, -1).reverse();
+  // A removed case's verdicts stay readable here; their links are closed.
+  const linked = !view.removed;
   if (earlier.length === 0) return null;
   return (
     <section className={styles.history} aria-labelledby="history-title">
@@ -157,7 +160,7 @@ export function VerdictHistory({
             <VerdictView
               result={v.result}
               nameMap={names}
-              shareId={v.id}
+              shareId={linked ? v.id : undefined}
               lang={lang}
               selfParty={selfParty}
               viewerIsSelfParty
@@ -172,7 +175,7 @@ export function VerdictHistory({
 export type CasePanelProps = {
   lang: Lang;
   view: CaseView;
-  /** This browser's names for Party A's submissions (empty elsewhere). */
+  /** Party A's names: the server's copy (case.names), else this browser's. */
   names: NameMapping[];
   /** The judging animation is showing (status judging, or just finished). */
   overlay: { done: boolean } | null;
@@ -185,10 +188,17 @@ export type CasePanelProps = {
   onJudgeNow: () => void;
   onRetry: () => void;
   onReset: () => void;
-  onDelete: () => void;
+  /** Removes the owner's side (soft: blanked and links closed). */
+  onRemove: () => void;
   appeal: AppealDraft | null;
   /** Show the screenshot picker on the appeal form (the deployment offers evidence). */
   evidenceOn?: boolean;
+  /** An appeal just finished: focus its outcome banner. */
+  focusAppeal?: boolean;
+  /** The owner's names and originals (rendered by the screen). */
+  ownTools?: ReactNode;
+  /** The owner just removed the case. */
+  removedNow?: boolean;
 };
 
 /** Everything on the owner's case page below the title, from one case view.
@@ -206,9 +216,12 @@ export function CasePanel({
   onJudgeNow,
   onRetry,
   onReset,
-  onDelete,
+  onRemove,
   appeal,
   evidenceOn = true,
+  focusAppeal = false,
+  ownTools = null,
+  removedNow = false,
 }: CasePanelProps) {
   const judgeRef = useRef<HTMLDialogElement>(null);
   const judgeCancelRef = useRef<HTMLButtonElement>(null);
@@ -219,7 +232,7 @@ export function CasePanel({
 
   const current = view.verdicts.at(-1) ?? null;
   const appealJudging = view.appeals.some((a) => a.status === "judging");
-  const canDelete = view.status !== "judging" && !appealJudging;
+  const canRemove = view.status !== "judging" && !appealJudging && !view.removed;
   const ownSide = view.sides.filter((s) => s.party === view.yourParty);
   const bothRead = view.sides.length > 1;
 
@@ -284,11 +297,12 @@ export function CasePanel({
         <VerdictView
           result={current.result}
           nameMap={names}
-          shareId={current.id}
+          shareId={view.removed ? undefined : current.id}
           lang={lang}
           fresh={fresh}
           selfParty="A"
           viewerIsSelfParty
+          focusAppeal={focusAppeal}
         />
         <AppealSection
           lang={lang}
@@ -338,7 +352,13 @@ export function CasePanel({
 
   return (
     <>
+      {view.removed ? (
+        <p className={styles.banner} role="status">
+          {t(lang, removedNow ? "case.removed" : "case.removedBanner")}
+        </p>
+      ) : null}
       {body}
+      {ownTools}
       <AccountsRead
         lang={lang}
         title={t(lang, bothRead ? "case.accounts" : "case.yourSide")}
@@ -346,14 +366,14 @@ export function CasePanel({
         appeals={bothRead || view.mode === "one_sided" ? view.appeals : []}
         yourParty={view.yourParty}
       />
-      {canDelete ? (
+      {canRemove ? (
         <button
           type="button"
           className={`${styles.textBtn} ${styles.dangerText}`}
           disabled={busy}
           onClick={() => openConfirm(deleteRef.current, deleteCancelRef.current)}
         >
-          {t(lang, "case.delete")}
+          {t(lang, "case.remove")}
         </button>
       ) : null}
       {(view.status === "awaiting_respondent" || view.status === "expired") && view.canJudgeNow ? (
@@ -382,17 +402,17 @@ export function CasePanel({
           onYes={onReset}
         />
       ) : null}
-      {canDelete ? (
+      {canRemove ? (
         <Confirm
-          id="delete-case-title"
+          id="remove-case-title"
           dialogRef={deleteRef}
           cancelRef={deleteCancelRef}
-          title={t(lang, "case.delete")}
-          text={t(lang, "case.delete.confirm")}
-          yes={t(lang, "case.delete.yes")}
+          title={t(lang, "case.remove")}
+          text={t(lang, "case.remove.confirm")}
+          yes={t(lang, "case.remove.yes")}
           danger
           lang={lang}
-          onYes={onDelete}
+          onYes={onRemove}
         />
       ) : null}
     </>
@@ -434,15 +454,20 @@ export function CaseScreen({ id }: { id: string }) {
   const viewer = useViewer();
   const base = `/api/v1/cases/${encodeURIComponent(id)}`;
   const { load, setView } = useCase(base);
-  const names = useCaseNames(id, "a");
+  const localNames = useCaseNames(id, "a");
   const view = load.view;
+  // The server's encrypted copy, on any device; this browser's names for
+  // cases created before it existed.
+  const names = view?.names ?? localNames;
+  const originals = useCaseOriginals(base, null, view?.yourOriginal === "stored");
   const { overlay, fresh, finish } = useJudgingOverlay(view?.status ?? null);
   const [busy, setBusy] = useState(false);
   const [actionError, setActionError] = useState<string | null>(null);
   const [resetDone, setResetDone] = useState(false);
-  const [deleted, setDeleted] = useState(false);
+  const [removedNow, setRemovedNow] = useState(false);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const appeal = useAppealDraft({ endpoint: `${base}/appeals`, caseId: id, party: "a", lang, onView: setView });
+  const appealFinished = useAppealFinished(view);
 
   // A screen reader lands on the title once the verdict replaces the card.
   useEffect(() => {
@@ -488,29 +513,21 @@ export function CaseScreen({ id }: { id: string }) {
   }
 
   async function remove() {
-    const json = await post("", { method: "DELETE" });
-    if (json) {
+    const json = (await post("/removal", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ confirm: "remove" }),
+    })) as CaseRemovalResponse | null;
+    if (json?.case) {
       forgetCaseNames(id);
-      setDeleted(true);
+      setView(json.case);
+      setRemovedNow(true);
     }
   }
 
   const title = t(lang, "case.title");
   // A case judged on the owner's side alone is not "both sides" anymore.
   const kicker = t(lang, view?.mode === "one_sided" ? "case.kickerOneSided" : "case.kicker");
-
-  if (deleted) {
-    return (
-      <CaseShell lang={lang} kicker={kicker} title={title}>
-        <p className={styles.calm} role="status">
-          {t(lang, "case.deleted")}
-        </p>
-        <Link href="/" className={`${account.btn} ${account.primary}`}>
-          {t(lang, "case.startOver")}
-        </Link>
-      </CaseShell>
-    );
-  }
 
   if (!view) {
     const message =
@@ -550,9 +567,17 @@ export function CaseScreen({ id }: { id: string }) {
         onJudgeNow={() => void judge(true)}
         onRetry={() => void judge(false)}
         onReset={() => void reset()}
-        onDelete={() => void remove()}
+        onRemove={() => void remove()}
         appeal={appeal}
         evidenceOn={viewer.config?.features?.evidence === true}
+        focusAppeal={appealFinished}
+        removedNow={removedNow}
+        ownTools={
+          <>
+            <CaseOriginals lang={lang} data={view.removed ? null : originals} />
+            {view.verdicts.length > 0 ? <CaseNames lang={lang} view={view} base={base} onView={setView} /> : null}
+          </>
+        }
       />
     </CaseShell>
   );

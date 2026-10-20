@@ -5,7 +5,7 @@ import { RespondScreen } from "@/components/case/RespondScreen";
  * case, so the page is never indexed and sends no Referer anywhere. */
 export const metadata: Metadata = {
   title: "Tell your side",
-  description: "Someone asked Settle to settle an argument with you. Tell your side.",
+  description: "Someone asked Judge to settle an argument with you. Tell your side.",
   robots: { index: false, follow: false },
   referrer: "no-referrer",
 };

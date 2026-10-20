@@ -59,8 +59,9 @@ export function bareName(original: string): string {
   return m ? m[1] : s;
 }
 
-/** Whether a narrator-slot original is the narrator under the judged language. */
-function isSelfOriginal(original: string, selfLang: Lang): boolean {
+/** Whether an original is the narrator's pronoun under the judged language
+ * ("I", "me"; "Ben", "bana" only for a Turkish argument). */
+export function isSelfOriginal(original: string, selfLang: Lang): boolean {
   return EN_SELF.test(original) || (selfLang === "tr" && TR_SELF.has(original.toLocaleLowerCase("tr")));
 }
 
@@ -75,6 +76,11 @@ export type Parties = ReadonlyMap<string, Party>;
  * account was anonymized with them as Party B. */
 export type SelfParty = "A" | "B";
 
+/** `noSelf`: no entry is the narrator. Share pages restore the writer's
+ * chosen display names this way, so nobody is called "You" there and a
+ * display name such as "Ben" stays a name. */
+export type NameOptions = { noSelf?: boolean };
+
 /**
  * Who each label stands for. The pronoun -> narrator mapping applies ONLY to
  * the narrator's slot (`selfParty`, Party A unless a respondent is viewing
@@ -82,8 +88,12 @@ export type SelfParty = "A" | "B";
  * narrator is always that party, which protects a friend actually named
  * "Ben" (a top-100 English name) who lands in the other slot. The Turkish
  * set additionally applies only when the argument was judged in Turkish, so
- * an English session about Ben never becomes "You". A narrator entry wins
- * its slot; for names the first capitalized entry wins (the anonymizer
+ * an English session about Ben never becomes "You". A narrator pronoun on a
+ * "Person C".."Person Z" label (a bystander narrator the anonymizer made a
+ * third person) is not a name and is skipped, so nobody is called "Ben" or
+ * "I"; the label stays. The two party slots keep the slot guard above.
+ * A narrator entry wins its slot; for names the first capitalized entry
+ * wins (the anonymizer
  * lists them in order of appearance, so the fullest form usually comes
  * first, and it may also list a description such as "my roommate" for the
  * same slot).
@@ -92,6 +102,7 @@ export function resolveParties(
   nameMap: NameMapping[] | undefined,
   selfLang: Lang,
   selfParty: SelfParty = "A",
+  opts: NameOptions = {},
 ): Map<string, Party> {
   const parties = new Map<string, Party>();
   for (const m of nameMap ?? []) {
@@ -100,8 +111,11 @@ export function resolveParties(
     const name = bareName(m.original);
     if (!name) continue;
     const current = parties.get(letter);
-    if (letter === selfParty && isSelfOriginal(name, selfLang)) {
+    const selfWord = !opts.noSelf && isSelfOriginal(name, selfLang);
+    if (selfWord && letter === selfParty) {
       parties.set(letter, { name, self: true });
+    } else if (selfWord && letter !== "A" && letter !== "B") {
+      continue;
     } else if (!current || (!current.self && !startsUpper(current.name) && startsUpper(name))) {
       // A capitalized name beats a lowercase description ("my roommate").
       parties.set(letter, { name, self: false });
@@ -140,8 +154,9 @@ export function partyNames(
   selfLang: Lang = lang,
   selfParty: SelfParty = "A",
   viewerKnown = false,
+  opts: NameOptions = {},
 ): { nameA: string; nameB: string; aIsSelf: boolean; bIsSelf: boolean } {
-  const parties = resolveParties(nameMap, selfLang, selfParty);
+  const parties = resolveParties(nameMap, selfLang, selfParty, opts);
   const a = parties.get("A");
   const b = parties.get("B");
   const viewerLabel = (letter: SelfParty) =>
@@ -582,8 +597,9 @@ export function personalizeResult(
   nameMap: NameMapping[] | undefined,
   selfLang: Lang,
   selfParty: SelfParty = "A",
+  opts: NameOptions = {},
 ): VerdictResult {
-  const parties = resolveParties(nameMap, selfLang, selfParty);
+  const parties = resolveParties(nameMap, selfLang, selfParty, opts);
   if (parties.size === 0) return result;
   const lang = verdictLang(result);
   const r = (s: string) => restoreNames(s, parties, lang);
@@ -634,5 +650,111 @@ export function personalizeResult(
       : {}),
     ...(result.would_change ? { would_change: result.would_change.map(r) } : {}),
     ...(result.appeal ? { appeal: { ...result.appeal, summary: r(result.appeal.summary) } } : {}),
+  };
+}
+
+// --- Labels in anonymized text, by the text's language ----------------------------
+
+/** A label in running text, either language, suffix kept. */
+const ANY_LABEL = /(?<![\p{L}\p{N}])(Party|Taraf|Person|Kişi) ([A-Z])(?![\p{L}\p{N}])/gu;
+
+/** Common Turkish function words for telling a text's language when it has
+ * no Turkish-only letter. */
+const TR_WORDS = /(?<![\p{L}])(?:ve|bir|bu|ama|için|çok|değil|gibi|ile|diye|sonra|çünkü|hiç|daha|kadar|ediyor|dedi|oldu)(?![\p{L}])/giu;
+const EN_WORDS = /(?<![\p{L}])(?:the|and|is|was|that|with|for|said|says|this|they|because|would|have)(?![\p{L}])/giu;
+
+/** The language an anonymized text is written in: the Turkish labels, else
+ * whichever language's function words are more frequent; a Turkish-only
+ * letter (ğ, ı, İ, ş) decides only a tie, so an English sentence that keeps
+ * a Turkish place name ("moved to Beşiktaş") stays English. */
+export function textLang(text: string): Lang {
+  if (/(?<![\p{L}])(?:Taraf [AB]|Kişi [C-Z])(?![\p{L}])/u.test(text)) return "tr";
+  const tr = text.match(TR_WORDS)?.length ?? 0;
+  const en = text.match(EN_WORDS)?.length ?? 0;
+  if (tr !== en) return tr > en ? "tr" : "en";
+  return /[ğıİşĞŞ]/u.test(text) ? "tr" : "en";
+}
+
+/**
+ * The anonymized labels in the words of `lang`: "Party A" <-> "Taraf A",
+ * "Person C" <-> "Kişi C". A suffix after the apostrophe is kept as written
+ * (it already agrees with the letter, which reads the same in both). Stored
+ * and judged text keeps the English labels; this is for display only, with
+ * `lang` the language of the text itself (textLang), not of the interface.
+ * Pure.
+ */
+export function localizeLabels(text: string, lang: Lang): string {
+  if (!text) return text;
+  return text.replace(ANY_LABEL, (whole: string, word: string, letter: string) => {
+    const party = word === "Party" || word === "Taraf";
+    if (party !== (letter === "A" || letter === "B")) return whole;
+    if (lang === "tr") return `${party ? "Taraf" : "Kişi"} ${letter}`;
+    return `${party ? "Party" : "Person"} ${letter}`;
+  });
+}
+
+/** localizeLabels by the text's own language. */
+export function localizeLabelsAuto(text: string): string {
+  return localizeLabels(text, textLang(text));
+}
+
+// --- One way of naming the viewer per verdict -----------------------------------------
+
+/** Every free-text field personalizeResult restores. */
+function resultTexts(result: VerdictResult): string[] {
+  const map = result.argument_map;
+  return [
+    result.headline,
+    result.crux,
+    result.losing_side_best_point,
+    ...(result.split_points ?? []).map((p) => p.point),
+    ...(result.conditional ?? []).flatMap((c) => [c.if_value, c.then]),
+    ...map.side_a.map((c) => c.claim),
+    ...map.side_b.map((c) => c.claim),
+    map.bedrock_a,
+    map.bedrock_b,
+    ...result.facts_relied_on,
+    ...(result.lean ? [result.lean.reason] : []),
+    ...(result.crux_trial ? [result.crux_trial.attack, result.crux_trial.reasoning] : []),
+    ...(result.fact_check?.claims ?? []).flatMap((c) => [c.claim, c.summary]),
+    ...(result.agreed_facts ?? []),
+    ...(result.disputed_facts ?? []).flatMap((d) => [d.fact, d.party_a, d.party_b]),
+    ...(result.would_change ?? []),
+    ...(result.appeal ? [result.appeal.summary] : []),
+  ].filter((s): s is string => typeof s === "string" && s.length > 0);
+}
+
+/**
+ * The name map to display a verdict with, so the viewer is named ONE way
+ * across the whole card. Restoration is conservative: "Party A" becomes
+ * "you"/"sen" only where the grammar is surely right, and stays a label
+ * elsewhere ("Party A now wants 120"). When any of the viewer's labels in
+ * the verdict would stay, the viewer's entries are dropped, so every
+ * mention keeps the label and the header says "Party A (you)" instead of
+ * mixing "You" and "Party A" for the same person. Other people's names are
+ * unaffected. Returns the same map when nothing changes. Pure.
+ */
+export function consistentSelfMap(
+  result: VerdictResult,
+  nameMap: NameMapping[] | undefined,
+  selfLang: Lang,
+  selfParty: SelfParty = "A",
+  opts: NameOptions = {},
+): { nameMap: NameMapping[] | undefined; selfDropped: boolean } {
+  if (!nameMap?.length || opts.noSelf) return { nameMap, selfDropped: false };
+  const parties = resolveParties(nameMap, selfLang, selfParty);
+  const self = parties.get(selfParty);
+  if (!self?.self) return { nameMap, selfDropped: false };
+  const only = new Map([[selfParty, self]]);
+  const lang = verdictLang(result);
+  const label = new RegExp(
+    String.raw`(?<![\p{L}\p{N}])(?:Party|Taraf) ${selfParty}(?:['’]\p{Ll}+)?(?![\p{L}\p{N}])`,
+    "u",
+  );
+  const keepsLabel = resultTexts(result).some((s) => label.test(restoreNames(s, only, lang)));
+  if (!keepsLabel) return { nameMap, selfDropped: false };
+  return {
+    nameMap: nameMap.filter((m) => labelLetter(m.replacement) !== selfParty),
+    selfDropped: true,
   };
 }

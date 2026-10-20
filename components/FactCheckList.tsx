@@ -1,5 +1,5 @@
 import { t, type Key, type Lang } from "@/lib/i18n";
-import type { FactCheck, FactSource, FactStatus } from "@/lib/types";
+import type { DisputeType, FactCheck, FactSource, FactStatus } from "@/lib/types";
 import styles from "./FactCheckList.module.css";
 import vstyles from "./verdict/verdict.module.css";
 
@@ -63,20 +63,36 @@ function StatusGlyph({ status }: { status: FactStatus }) {
   );
 }
 
+/** The muted line when nothing was looked up. A factual or mixed dispute
+ * turns on facts only the people involved know (who paid, what was said),
+ * so "values or meanings, not facts" would contradict its badge. */
+export function noneKey(disputeType: DisputeType | undefined): Key {
+  return disputeType === "factual" || disputeType === "mixed" ? "factcheck.noneFactual" : "factcheck.none";
+}
+
 /**
  * The premium web fact-check, below the verdict card and before the facts
  * the verdict leans on. "checked" lists each claim with a status chip and up
  * to three source links (domain shown, full title for screen readers);
- * "none" and "unavailable" are one muted line. Hook-free (share page SSR).
+ * "none" and "unavailable" are one muted line, the "none" line worded for
+ * the dispute type. Hook-free (share page SSR).
  */
-export function FactCheckList({ factCheck, lang }: { factCheck: FactCheck; lang: Lang }) {
+export function FactCheckList({
+  factCheck,
+  lang,
+  disputeType,
+}: {
+  factCheck: FactCheck;
+  lang: Lang;
+  disputeType?: DisputeType;
+}) {
   const claims = factCheck.status === "checked" ? factCheck.claims : [];
   return (
     <section className={styles.root}>
       <h3 className={vstyles.sectionTitle}>{t(lang, "factcheck.title")}</h3>
       {claims.length === 0 ? (
         <p className={styles.muted}>
-          {t(lang, factCheck.status === "unavailable" ? "factcheck.unavailable" : "factcheck.none")}
+          {t(lang, factCheck.status === "unavailable" ? "factcheck.unavailable" : noneKey(disputeType))}
         </p>
       ) : (
         <>

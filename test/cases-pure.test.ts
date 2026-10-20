@@ -56,6 +56,12 @@ function row(over: Partial<CaseRow> = {}): CaseRow {
     judgedAt: null,
     createdAt: "2026-10-20T11:00:00.000Z",
     updatedAt: "2026-10-20T11:00:00.000Z",
+    namesVisible: true,
+    displayASealed: null,
+    displayBSealed: null,
+    removedAt: null,
+    removedAAt: null,
+    removedBAt: null,
     ...over,
   };
 }
@@ -337,5 +343,20 @@ describe("invite tokens", () => {
     expect(publicOrigin(req, { BETTER_AUTH_URL: "https://settle.example/x" })).toBe("https://settle.example");
     expect(publicOrigin(req, { NEXT_PUBLIC_SITE_URL: "https://site.example" })).toBe("https://site.example");
     expect(publicOrigin(req, {})).toBe("http://127.0.0.1:3901");
+  });
+
+  it("prefers the configured site URL over the auth URL", () => {
+    const req = new Request("http://127.0.0.1:3901/api/v1/cases");
+    expect(
+      publicOrigin(req, { NEXT_PUBLIC_SITE_URL: "https://okjudge.com/", BETTER_AUTH_URL: "http://localhost:3951" }),
+    ).toBe("https://okjudge.com");
+  });
+
+  it("without configuration, follows a loopback Host header, never another host", () => {
+    // next dev -H 127.0.0.1 reports localhost in the URL; the browser is on 127.0.0.1.
+    const dev = new Request("http://localhost:3951/api/v1/cases", { headers: { host: "127.0.0.1:3951" } });
+    expect(publicOrigin(dev, {})).toBe("http://127.0.0.1:3951");
+    const spoofed = new Request("https://okjudge.com/api/v1/cases", { headers: { host: "evil.example" } });
+    expect(publicOrigin(spoofed, {})).toBe("https://okjudge.com");
   });
 });

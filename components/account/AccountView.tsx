@@ -11,6 +11,7 @@ import { CaseList, useCaseList, type CaseListState } from "../case/CaseList";
 import { PremiumSpark } from "../PremiumBadge";
 import styles from "./AccountPages.module.css";
 import { PageShell } from "./PageShell";
+import { VerdictList, useVerdictList, type VerdictListState } from "./VerdictList";
 
 /** How long the "account deleted" note stays before going home. */
 const DELETED_HOLD_MS = 1800;
@@ -43,6 +44,8 @@ export type AccountPanelProps = {
   onDelete: () => void;
   /** "Your cases", when this deployment offers two-sided cases. */
   cases?: CaseListState | null;
+  /** "Your verdicts" (signed in). */
+  verdicts?: VerdictListState | null;
 };
 
 /** Everything on /account below the title, stateless apart from the
@@ -56,6 +59,7 @@ export function AccountPanel({
   onSignOut,
   onDelete,
   cases = null,
+  verdicts = null,
 }: AccountPanelProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const cancelRef = useRef<HTMLButtonElement>(null);
@@ -166,6 +170,8 @@ export function AccountPanel({
         </div>
       </section>
 
+      {verdicts ? <VerdictList lang={lang} state={verdicts} /> : null}
+
       {cases ? <CaseList lang={lang} state={cases} /> : null}
 
       <section className={styles.card}>
@@ -225,6 +231,8 @@ export function AccountView() {
   const [deleteError, setDeleteError] = useState<string | null>(null);
   const casesOn = Boolean(viewer.config?.features?.cases && viewer.me?.user);
   const cases = useCaseList(casesOn);
+  const signedIn = Boolean(viewer.me?.user);
+  const verdicts = useVerdictList(signedIn);
 
   useEffect(() => {
     if (!deleted) return;
@@ -268,6 +276,7 @@ export function AccountView() {
         onSignOut={() => void signOut()}
         onDelete={() => void remove()}
         cases={casesOn ? cases : null}
+        verdicts={signedIn ? verdicts : null}
       />
     </PageShell>
   );

@@ -20,6 +20,9 @@ export type SubmissionInput = {
   lang: Lang;
   /** Two-sided: the person the narrator argues with is the other party label. */
   twoSided?: boolean;
+  /** A side of a two-sided case: the rewritten account must name the other
+   * party's label (a missing one triggers a retry, never a failure). */
+  opponentRequired?: boolean;
   /** Earlier anonymized material of the case, for recognizing people by role. */
   roster?: { context: string; labelsInUse: string[] };
   /** Case name fingerprints (section 6.3). */

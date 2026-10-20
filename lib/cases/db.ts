@@ -4,9 +4,12 @@
  * busy-retried batch writer (entitlementWriteBatch), so case writes and
  * credit writes never race each other. No interactive transactions.
  *
- * Only anonymized text is ever stored here. Real names exist only in the
- * name maps returned to the submitting client; case_people keeps keyed,
- * case-salted fingerprints of names (lib/evidence caseNameKeys), never names.
+ * The tables here hold anonymized text only. Each party's original (text as
+ * written, raw transcripts, name map) and display name are kept encrypted:
+ * originals in the `originals` table (lib/originals), display names in the
+ * sealed `display_*` columns. case_people keeps keyed, case-salted
+ * fingerprints of names (lib/evidence caseNameKeys), never names.
+ * Rows are never deleted: removal blanks personal data and closes the links.
  *
  * Timestamps are ISO-8601 UTC strings, so string order is time order.
  */
@@ -119,6 +122,7 @@ export async function ensureCaseTables(): Promise<void> {
   const ready = client
     .batch(SCHEMA, "write")
     .then(() => addClaimColumn(client))
+    .then(() => addCaseColumns(client))
     .then(
       () => undefined,
       (e: unknown) => {
@@ -140,6 +144,32 @@ async function addClaimColumn(db: Client): Promise<void> {
   } catch (e) {
     const message = e instanceof Error ? e.message : String(e);
     if (!/duplicate column name/i.test(message)) throw e;
+  }
+}
+
+/** Columns added after the first release of the case tables (stored
+ * originals, display names, removal). No CHECK on added columns. */
+const ADDED_COLUMNS: [string, string][] = [
+  ["names_visible", "INTEGER NOT NULL DEFAULT 1"],
+  ["display_a_sealed", "TEXT"],
+  ["display_b_sealed", "TEXT"],
+  ["display_key_id", "TEXT"],
+  ["removed_at", "TEXT"],
+  ["removed_a_at", "TEXT"],
+  ["removed_b_at", "TEXT"],
+];
+
+async function addCaseColumns(db: Client): Promise<void> {
+  const info = await db.execute("PRAGMA table_info(cases)");
+  const have = new Set(info.rows.map((r) => String(r.name)));
+  for (const [name, type] of ADDED_COLUMNS) {
+    if (have.has(name)) continue;
+    try {
+      await db.execute(`ALTER TABLE cases ADD COLUMN ${name} ${type}`);
+    } catch (e) {
+      const message = e instanceof Error ? e.message : String(e);
+      if (!/duplicate column name/i.test(message)) throw e;
+    }
   }
 }
 
@@ -177,6 +207,15 @@ export type CaseRow = {
   judgedAt: string | null;
   createdAt: string;
   updatedAt: string;
+  /** The owner's switch: display names on the case's share pages. */
+  namesVisible: boolean;
+  /** Sealed display names ({"v":1,"name":...}); null = the label. */
+  displayASealed: string | null;
+  displayBSealed: string | null;
+  /** First removal of any side: every link of the case is closed from then on. */
+  removedAt: string | null;
+  removedAAt: string | null;
+  removedBAt: string | null;
 };
 
 export type SideRow = { party: PartyLetter; text: string; submittedAt: string };
@@ -260,6 +299,12 @@ export function mapCase(r: Row): CaseRow {
     judgedAt: strOrNull(r.judged_at),
     createdAt: str(r.created_at),
     updatedAt: str(r.updated_at),
+    namesVisible: r.names_visible == null ? true : Number(r.names_visible) === 1,
+    displayASealed: strOrNull(r.display_a_sealed),
+    displayBSealed: strOrNull(r.display_b_sealed),
+    removedAt: strOrNull(r.removed_at),
+    removedAAt: strOrNull(r.removed_a_at),
+    removedBAt: strOrNull(r.removed_b_at),
   };
 }
 

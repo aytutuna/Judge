@@ -10,6 +10,9 @@
  *   their transcripts, the appeals and every verdict.
  * - A case the owner judged on their side alone shows the respondent no
  *   verdict and no text ("settled without your side").
+ * - After a party removed their side, that side's text, transcripts and
+ *   appeal text are left out for everyone; the verdicts stay listed for
+ *   both parties (their share links are closed).
  */
 
 import {
@@ -23,6 +26,8 @@ import {
   type CaseView,
   type PartyLetter,
 } from "@/lib/case-types";
+import type { OriginalStatus } from "@/lib/originals-types";
+import type { NameMapping } from "@/lib/types";
 import type { CaseBundle, CaseListRow, EvidenceRow } from "./db";
 import { effectiveStatus } from "./sweep";
 
@@ -35,6 +40,14 @@ export type ViewContext = {
   ownInvite: boolean;
   /** Why the viewer cannot appeal right now (null = allowed). */
   appealBlock: AppealBlock | null;
+  /** Decrypted by the caller: the viewer's own name map (null when not
+   * stored or the viewer is not proven to be that party), both display
+   * names, and the status of the viewer's side original. */
+  originals?: {
+    names: NameMapping[] | null;
+    display: { a: string | null; b: string | null };
+    yourOriginal: OriginalStatus;
+  };
 };
 
 const evidenceView = (rows: readonly EvidenceRow[]): CaseEvidenceView[] =>
@@ -53,15 +66,25 @@ export function buildCaseView(bundle: CaseBundle, ctx: ViewContext): CaseView {
   // The respondent sees nothing of a case settled without their side.
   const respondentShut = ctx.role === "respondent" && row.mode === "one_sided";
 
+  const removedParties: PartyLetter[] = [
+    ...(row.removedAAt ? (["a"] as const) : []),
+    ...(row.removedBAt ? (["b"] as const) : []),
+  ];
+  const isRemoved = (p: PartyLetter) => removedParties.includes(p);
+
   const visibleParties: PartyLetter[] = shared ? ["a", "b"] : ctx.role === "owner" ? ["a"] : [];
   const sides: CaseSideView[] = bundle.sides
     .filter((s) => visibleParties.includes(s.party))
-    .map((s) => ({
-      party: s.party,
-      text: s.text,
-      evidence: evidenceView(bundle.evidence.filter((e) => e.party === s.party && e.appealId === null)),
-      submittedAt: s.submittedAt,
-    }));
+    .map((s) =>
+      isRemoved(s.party)
+        ? { party: s.party, text: "", evidence: [], submittedAt: s.submittedAt, removed: true as const }
+        : {
+            party: s.party,
+            text: s.text,
+            evidence: evidenceView(bundle.evidence.filter((e) => e.party === s.party && e.appealId === null)),
+            submittedAt: s.submittedAt,
+          },
+    );
 
   const appeals: CaseAppealView[] = respondentShut
     ? []
@@ -70,11 +93,12 @@ export function buildCaseView(bundle: CaseBundle, ctx: ViewContext): CaseView {
         party: a.party,
         status: a.status,
         error: a.error,
-        text: a.text,
-        evidence: evidenceView(bundle.evidence.filter((e) => e.appealId === a.id)),
+        text: isRemoved(a.party) ? "" : a.text,
+        evidence: isRemoved(a.party) ? [] : evidenceView(bundle.evidence.filter((e) => e.appealId === a.id)),
         outcome: a.outcome,
         verdictId: a.resultSeq === null ? null : (bundle.verdicts.find((v) => v.seq === a.resultSeq)?.verdictId ?? null),
         createdAt: a.createdAt,
+        ...(isRemoved(a.party) ? { removed: true as const } : {}),
       }));
 
   const verdicts = respondentShut
@@ -86,7 +110,9 @@ export function buildCaseView(bundle: CaseBundle, ctx: ViewContext): CaseView {
   const appealJudging = bundle.appeals.some((a) => a.status === "judging");
   const judging = status === "judging" || appealJudging;
   const canJudgeNow =
-    ctx.role === "owner" && (status === "awaiting_respondent" || status === "expired" || status === "failed");
+    ctx.role === "owner" &&
+    !row.removedAt &&
+    (status === "awaiting_respondent" || status === "expired" || status === "failed");
 
   return {
     id: row.id,
@@ -106,9 +132,19 @@ export function buildCaseView(bundle: CaseBundle, ctx: ViewContext): CaseView {
     verdicts,
     appeals,
     canJudgeNow,
-    appeal: { allowed: ctx.appealBlock === null, blockedBy: ctx.appealBlock },
+    appeal: row.removedAt
+      ? { allowed: false, blockedBy: "not_judged" }
+      : { allowed: ctx.appealBlock === null, blockedBy: ctx.appealBlock },
     lastError: status === "failed" ? row.lastError : null,
     pollAfterMs: judging ? CASE_POLL_MS : null,
+    names: ctx.originals?.names ?? null,
+    display: {
+      namesVisible: row.namesVisible,
+      a: ctx.originals?.display.a ?? null,
+      b: ctx.originals?.display.b ?? null,
+    },
+    removed: row.removedAt ? { at: row.removedAt, parties: removedParties } : null,
+    yourOriginal: ctx.originals?.yourOriginal ?? "not_stored",
   };
 }
 
@@ -162,7 +198,8 @@ export function caseSummary(r: CaseListRow, now: Date): CaseSummary {
     expiresAt: r.expiresAt,
     respondentAnswered: r.respondentAnswered,
     verdict: r.latestResult?.verdict ?? null,
-    headline: r.latestResult?.headline ?? null,
-    excerpt: excerptOf(r.sideAStart),
+    headline: r.removedAAt ? null : (r.latestResult?.headline ?? null),
+    excerpt: r.removedAAt ? null : excerptOf(r.sideAStart),
+    removed: r.removedAt !== null,
   };
 }

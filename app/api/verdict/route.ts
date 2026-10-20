@@ -2,11 +2,13 @@ import { NextResponse } from "next/server";
 import { nanoid } from "nanoid";
 import { aggregate } from "@/lib/aggregate";
 import { anonymize } from "@/lib/anonymize";
+import { getViewer, isSameOrigin } from "@/lib/auth";
 import { clientIp } from "@/lib/client-ip";
-import { saveVerdict } from "@/lib/db";
 import { hasApiKey } from "@/lib/claude";
 import { t, type Lang } from "@/lib/i18n";
 import { judgeExtra, judgeSelfConsistent, type JudgeRun } from "@/lib/judge";
+import { firstNameOf } from "@/lib/originals-types";
+import { saveVerdictWithOriginals } from "@/lib/originals/save";
 import { checkVerdictLimits } from "@/lib/ratelimit";
 import { applyCruxTrial, runCruxTrial, shouldTryCrux } from "@/lib/trial";
 import { verifyTurnstile } from "@/lib/turnstile";
@@ -45,6 +47,13 @@ function turnstileToken(body: unknown): string | undefined {
   if (typeof body !== "object" || body === null) return undefined;
   const token = (body as { turnstileToken?: unknown }).turnstileToken;
   return typeof token === "string" ? token : undefined;
+}
+
+/** The argument exactly as sent (before trimming), for the encrypted original. */
+function rawArgument(body: unknown, fallback: string): string {
+  if (typeof body !== "object" || body === null) return fallback;
+  const raw = (body as { argument?: unknown }).argument;
+  return typeof raw === "string" ? raw : fallback;
 }
 
 /** Honest output when the model's own safety filter declines to judge.
@@ -103,7 +112,7 @@ export async function POST(req: Request): Promise<NextResponse> {
   // for premium requests, so the free path below runs exactly as before.
   if (parsed.data.tier === "premium") {
     const { premiumVerdict } = await import("@/lib/premium/handler");
-    return premiumVerdict(req, parsed.data);
+    return premiumVerdict(req, parsed.data, body);
   }
   const { argument, framework, lang } = parsed.data;
   const ip = clientIp(req.headers);
@@ -208,13 +217,36 @@ export async function POST(req: Request): Promise<NextResponse> {
   // Record the content language so a later translation knows its source.
   result = { ...result, lang };
   const id = nanoid(10);
+  // The writer: a signed-in account (bearer, or a same-origin cookie; a
+  // cross-site cookie request counts as signed out), else a one-time owner
+  // token. The original, names included, is stored encrypted; the judges
+  // only ever saw the anonymized text.
+  const viewer = await getViewer(req).catch(() => null);
+  const ownerUserId = viewer && (viewer.via === "bearer" || isSameOrigin(req)) ? viewer.user.id : null;
+  let saved;
   try {
-    await saveVerdict({ id, input: anonymized, framework, result });
+    saved = await saveVerdictWithOriginals({
+      id,
+      input: anonymized,
+      framework,
+      result,
+      kind: "free",
+      ownerUserId,
+      original: { v: 1, text: rawArgument(body, argument), nameMap },
+    });
   } catch (e) {
     console.error("[verdict] saving failed:", e instanceof Error ? e.message : String(e));
     return unavailable();
   }
 
-  const response: VerdictResponse = { id, result, name_map: nameMap };
-  return NextResponse.json(response);
+  const response: VerdictResponse = {
+    id,
+    result,
+    name_map: nameMap,
+    ...(saved.ownerToken ? { owner_token: saved.ownerToken } : {}),
+    originals_stored: saved.originalsStored,
+    ...(saved.metaWritten ? { display: saved.display } : {}),
+    suggested_display_a: ownerUserId ? firstNameOf(viewer?.user.name) : null,
+  };
+  return NextResponse.json(response, { headers: { "Cache-Control": "no-store" } });
 }

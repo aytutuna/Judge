@@ -9,7 +9,9 @@ export async function GET(req: Request, ctx: RouteContext<"/api/v1/cases/[id]">)
   return getCaseHandler(req, id);
 }
 
-/** DELETE /api/v1/cases/{id}: deletes the case, both sides and its verdicts. */
+/** DELETE /api/v1/cases/{id}: kept for older clients; removes the owner's
+ * side (original, names, display name) and closes the case's links. No row
+ * is deleted. */
 export async function DELETE(req: Request, ctx: RouteContext<"/api/v1/cases/[id]">) {
   const { id } = await ctx.params;
   return deleteCaseHandler(req, id);

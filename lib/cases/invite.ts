@@ -64,10 +64,24 @@ function originOf(raw: string | undefined): string | null {
   }
 }
 
-/** The public origin for links: BETTER_AUTH_URL, else NEXT_PUBLIC_SITE_URL,
- * else the request's own origin. */
+/** A loopback Host header ("127.0.0.1:4010", "localhost:3000", "[::1]:3000"). */
+const LOOPBACK_HOST = /^(?:localhost|127\.0\.0\.1|\[::1\])(?::\d{1,5})?$/i;
+
+/**
+ * The public origin for links in invites and e-mails: the configured site
+ * URL (NEXT_PUBLIC_SITE_URL, the same origin as canonical links and the
+ * sitemap), else BETTER_AUTH_URL, else the request's own origin. Without
+ * configuration, a loopback Host header wins over the URL Next reports (a
+ * dev server started with -H 127.0.0.1 reports "localhost", so a link copied
+ * there would open a different origin, without the session cookie). Any
+ * other host only ever comes from configuration or the request URL.
+ */
 export function publicOrigin(req: Request, env: Record<string, string | undefined> = process.env): string {
-  return originOf(env.BETTER_AUTH_URL) ?? originOf(env.NEXT_PUBLIC_SITE_URL) ?? new URL(req.url).origin;
+  const configured = originOf(env.NEXT_PUBLIC_SITE_URL) ?? originOf(env.BETTER_AUTH_URL);
+  if (configured) return configured;
+  const url = new URL(req.url);
+  const host = req.headers.get("host")?.trim() ?? "";
+  return LOOPBACK_HOST.test(host) ? `${url.protocol}//${host.toLowerCase()}` : url.origin;
 }
 
 export function inviteUrl(origin: string, token: string): string {

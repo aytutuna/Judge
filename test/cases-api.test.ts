@@ -62,9 +62,12 @@ process.env.DATABASE_URL = `file:${path.join(dir, "test.db").replace(/\\/g, "/")
 const http = await import("../lib/cases/http");
 const ent = await import("../lib/entitlements");
 const { getDb, saveTranslation } = await import("../lib/db");
-const { sweepCases, deleteUserCases } = await import("../lib/cases");
+const { sweepCases } = await import("../lib/cases");
+const { removeUserData } = await import("../lib/originals/removal");
+const publicVerdict = await import("../app/api/v1/verdicts/[id]/route");
 const { inviteHash } = await import("../lib/cases/invite");
 import type { CaseView } from "../lib/case-types";
+import type { CaseOriginalsResponse } from "../lib/originals-types";
 import type { VerdictResult } from "../lib/types";
 
 afterAll(() => {
@@ -350,6 +353,29 @@ describe("POST /api/v1/cases", () => {
     expect(await credits(o)).toBe(2);
     expect(await usage(o)).toEqual(["refunded"]);
   });
+
+  it("a name that cannot be taken out answers 503 anonymize_failed and refunds", async () => {
+    const { AnonymizeError } = await import("../lib/anonymize");
+    const o = await owner(2);
+    m.anonymizeSubmission.mockRejectedValueOnce(new AnonymizeError("a listed name survived anonymization"));
+    const { res, data } = await create(o);
+    expect(res.status).toBe(503);
+    expect(data.code).toBe("anonymize_failed");
+    expect((data as unknown as { error: string }).error).toMatch(/initials/);
+    expect(await credits(o)).toBe(2);
+    expect(await usage(o)).toEqual(["refunded"]);
+    // A refusal or timeout is still "unavailable".
+    m.anonymizeSubmission.mockRejectedValueOnce(new AnonymizeError("blocked (cyber)"));
+    expect((await create(o)).data.code).toBe("unavailable");
+  });
+
+  it("asks for the other party's label on each side, not on appeals", async () => {
+    const o = await owner(2);
+    const { data } = await create(o);
+    expect(m.anonymizeSubmission.mock.calls.at(-1)?.[0]).toMatchObject({ narrator: "Party A", opponentRequired: true });
+    await respond(tokenOf(data.case));
+    expect(m.anonymizeSubmission.mock.calls.at(-1)?.[0]).toMatchObject({ narrator: "Party B", opponentRequired: true });
+  });
 });
 
 describe("respondent: GET and POST /api/v1/respond/{token}", () => {
@@ -430,6 +456,19 @@ describe("respondent: GET and POST /api/v1/respond/{token}", () => {
     const stored = (await db.execute({ sql: "SELECT * FROM cases WHERE id = ?", args: [data.case.id] })).rows[0];
     expect(Object.values(stored)).not.toContain(answered.respondent_claim);
     expect(stored.respondent_user_id).toBeNull();
+  });
+
+  it("a respondent whose names cannot be taken out gets 503 anonymize_failed and can answer again", async () => {
+    const { AnonymizeError } = await import("../lib/anonymize");
+    const o = await owner();
+    const { data } = await create(o);
+    const token = tokenOf(data.case);
+    m.anonymizeSubmission.mockRejectedValueOnce(new AnonymizeError("a listed name survived anonymization"));
+    const failed = await respond(token);
+    expect(failed.status).toBe(503);
+    expect((await body(failed)).code).toBe("anonymize_failed");
+    const again = await respond(token);
+    expect(again.status).toBe(202);
   });
 
   it("own_case for the owner, captcha_failed on a bad Turnstile token (bearer sessions skip it)", async () => {
@@ -642,7 +681,7 @@ describe("judge now, retries and races", () => {
   });
 });
 
-describe("invite and delete", () => {
+describe("invite and removal", () => {
   it("a new link turns the old one off; a closed case cannot rotate", async () => {
     const o = await owner();
     const { data } = await create(o);
@@ -660,16 +699,37 @@ describe("invite and delete", () => {
     expect((await body(closed)).code).toBe("case_closed");
   });
 
-  it("deleting an awaiting case refunds the hold and removes every row; judging is 409", async () => {
+  it("DELETE on an awaiting case removes it softly: hold refunded, rows kept, original blanked, invite closed; judging is 409", async () => {
     const o = await owner(2);
-    const { data } = await create(o, { evidence: [`good:u:${o}`] });
-    const del = (id: string) => http.deleteCaseHandler(req("DELETE", `/api/v1/cases/${id}`, { user: o }), id);
-    const res = await del(data.case.id);
-    expect(await body(res)).toEqual({ deleted: true });
+    const { data } = await create(o, { evidence: [`good:u:${o}`], displayName: "Aytu" });
+    const id = data.case.id;
+    const db = await getDb();
+    const sealedBefore = (await db.execute({ sql: "SELECT sealed FROM originals WHERE case_id = ?", args: [id] })).rows[0];
+    expect(String(sealedBefore.sealed)).toMatch(/^v1\./);
+    const del = (cid: string) => http.deleteCaseHandler(req("DELETE", `/api/v1/cases/${cid}`, { user: o }), cid);
+    const res = await del(id);
+    const out = await body<{ deleted: boolean; removed: boolean; removedAt: string }>(res);
+    expect(out.deleted).toBe(true);
+    expect(out.removed).toBe(true);
+    expect(typeof out.removedAt).toBe("string");
     expect(await credits(o)).toBe(2);
     for (const t of ["cases WHERE id", "case_sides WHERE case_id", "case_evidence WHERE case_id", "case_people WHERE case_id"]) {
-      expect(await count(`SELECT count(*) AS n FROM ${t} = ?`, [data.case.id])).toBe(0);
+      expect(await count(`SELECT count(*) AS n FROM ${t} = ?`, [id])).toBeGreaterThan(0);
     }
+    const caseRow = (await db.execute({ sql: "SELECT * FROM cases WHERE id = ?", args: [id] })).rows[0];
+    expect(caseRow.removed_at).not.toBeNull();
+    expect(caseRow.removed_a_at).not.toBeNull();
+    expect(caseRow.display_a_sealed).toBeNull();
+    expect(caseRow.status).toBe("expired");
+    const orig = (await db.execute({ sql: "SELECT sealed, removed_at FROM originals WHERE case_id = ?", args: [id] })).rows[0];
+    expect(orig.sealed).toBeNull();
+    expect(orig.removed_at).not.toBeNull();
+    // The invite is closed for good, and removal is idempotent.
+    const late = await respond(tokenOf(data.case));
+    expect(late.status).toBe(410);
+    expect((await body(late)).code).toBe("removed");
+    expect((await body(await del(id))).removedAt).toBe(out.removedAt);
+    expect((await judgeNow(o, id)).status).toBe(410);
     const busy = (await create(o)).data.case;
     await respond(tokenOf(busy));
     const refused = await del(busy.id);
@@ -904,7 +964,7 @@ describe("list and account deletion", () => {
     expect((await http.listCasesHandler(req("GET", "/api/v1/cases"))).status).toBe(401);
   });
 
-  it("deleteUserCases removes the owner's cases, verdicts and translations, and unbinds them elsewhere", async () => {
+  it("account removal blanks the owner's and the respondent's sides, keeps every row, and closes their links", async () => {
     const o = await owner(3);
     const { data } = await create(o, { evidence: [`good:u:${o}`] });
     await respond(tokenOf(data.case));
@@ -918,20 +978,202 @@ describe("list and account deletion", () => {
     await drain();
     await setCase(theirs.id, "respondent_user_id = ?", [o]);
 
-    await deleteUserCases(o);
-    for (const t of [
-      "cases WHERE id",
-      "case_sides WHERE case_id",
-      "case_evidence WHERE case_id",
-      "case_people WHERE case_id",
-      "case_verdicts WHERE case_id",
-      "case_appeals WHERE case_id",
-    ]) {
-      expect(await count(`SELECT count(*) AS n FROM ${t} = ?`, [data.case.id])).toBe(0);
+    await removeUserData(o);
+    for (const t of ["cases WHERE id", "case_sides WHERE case_id", "case_evidence WHERE case_id", "case_verdicts WHERE case_id"]) {
+      expect(await count(`SELECT count(*) AS n FROM ${t} = ?`, [data.case.id])).toBeGreaterThan(0);
     }
-    expect(await count("SELECT count(*) AS n FROM verdicts WHERE id = ?", [verdictId])).toBe(0);
-    expect(await count("SELECT count(*) AS n FROM verdict_translations WHERE id = ?", [verdictId])).toBe(0);
+    expect(await count("SELECT count(*) AS n FROM verdicts WHERE id = ?", [verdictId])).toBe(1);
+    expect(await count("SELECT count(*) AS n FROM verdict_translations WHERE id = ?", [verdictId])).toBe(1);
     const db = await getDb();
-    expect((await db.execute({ sql: "SELECT respondent_user_id FROM cases WHERE id = ?", args: [theirs.id] })).rows[0].respondent_user_id).toBeNull();
+    const mine = (await db.execute({ sql: "SELECT removed_a_at, display_a_sealed FROM cases WHERE id = ?", args: [data.case.id] })).rows[0];
+    expect(mine.removed_a_at).not.toBeNull();
+    expect(await count("SELECT count(*) AS n FROM originals WHERE case_id = ? AND party = 'a' AND sealed IS NOT NULL", [data.case.id])).toBe(0);
+    const theirsRow = (await db.execute({ sql: "SELECT respondent_user_id, removed_b_at FROM cases WHERE id = ?", args: [theirs.id] })).rows[0];
+    expect(theirsRow.respondent_user_id).toBeNull();
+    expect(theirsRow.removed_b_at).not.toBeNull();
+    expect(await count("SELECT count(*) AS n FROM originals WHERE case_id = ? AND party = 'b' AND sealed IS NOT NULL", [theirs.id])).toBe(0);
+    expect(await count("SELECT count(*) AS n FROM originals WHERE case_id = ? AND party = 'a' AND sealed IS NOT NULL", [theirs.id])).toBe(1);
+    // Every verdict of both cases now answers 410 on its public read.
+    const removed = await publicVerdict.GET(new Request(`${ORIGIN}/api/v1/verdicts/${verdictId}`), {
+      params: Promise.resolve({ id: verdictId }),
+    } as never);
+    expect(removed.status).toBe(410);
+  });
+});
+
+
+describe("originals, display names and removal of a side", () => {
+  async function judged() {
+    const o = await owner(3);
+    const raw = `${SIDE_A}  `;
+    const created = await http.createCaseHandler(
+      req("POST", "/api/v1/cases", {
+        user: o,
+        body: { text: raw, lang: "en", displayName: "Aytu", evidence: [`good:u:${o}`] },
+      }),
+    );
+    const c = (await body<{ case: CaseView }>(created)).case;
+    const token = tokenOf(c);
+    const answered = await http.respondPostHandler(
+      req("POST", `/api/v1/respond/${token}`, {
+        ip: ip(),
+        body: { text: SIDE_B, displayName: "Deniz", turnstileToken: "t" },
+      }),
+      token,
+    );
+    const claim = (await body<{ respondent_claim?: string }>(answered)).respondent_claim!;
+    await drain();
+    return { o, id: c.id, token, claim, raw };
+  }
+
+  const ownerOriginals = async (o: string, id: string) =>
+    body<CaseOriginalsResponse>(await http.caseOriginalsHandler(req("GET", `/api/v1/cases/${id}/originals`, { user: o }), id));
+
+  it("seals each side exactly as sent; each party reads only their own original and names", async () => {
+    const { o, id, token, claim, raw } = await judged();
+    const own = await ownerOriginals(o, id);
+    expect(own.party).toBe("a");
+    expect(own.side.status).toBe("stored");
+    expect(own.side.original?.text).toBe(raw);
+    expect(own.side.original?.evidence).toEqual([{ kind: "chat", transcript: "21:02 ME: did you pay?" }]);
+    expect(own.side.original?.nameMap).toContainEqual({ original: "Deniz", replacement: "Party B" });
+    expect(own.appeal).toBeNull();
+    const theirsRes = await http.respondOriginalsHandler(
+      req("GET", `/api/v1/respond/${token}/originals`, { headers: { "respondent-claim": claim } }),
+      token,
+    );
+    const theirs = await body<CaseOriginalsResponse>(theirsRes);
+    expect(theirs.party).toBe("b");
+    expect(theirs.side.original?.text).toBe(SIDE_B);
+    // The owner holds the invite link too, but is not Party B; nor is a stranger.
+    expect((await http.respondOriginalsHandler(req("GET", `/api/v1/respond/${token}/originals`, { user: o }), token)).status).toBe(403);
+    expect((await http.respondOriginalsHandler(req("GET", `/api/v1/respond/${token}/originals`), token)).status).toBe(403);
+    expect((await http.caseOriginalsHandler(req("GET", `/api/v1/cases/${id}/originals`, { user: await owner(0) }), id)).status).toBe(404);
+
+    const ov = await getOwner(o, id);
+    expect(ov.names).toContainEqual({ original: "Deniz", replacement: "Party B" });
+    expect(ov.display).toEqual({ namesVisible: true, a: "Aytu", b: "Deniz" });
+    expect(ov.yourOriginal).toBe("stored");
+    expect((await getRespondent(token, undefined, claim)).view!.names).toEqual([{ original: "I", replacement: "Party B" }]);
+    expect((await getRespondent(token)).view!.names).toBeNull();
+    expect((await getRespondent(token, o)).view!.names).toBeNull();
+    // Holding the invite link proves nothing: no display names either.
+    expect((await getRespondent(token)).view!.display).toEqual({ namesVisible: true, a: null, b: null });
+    expect((await getRespondent(token, o)).view!.display).toEqual({ namesVisible: true, a: null, b: null });
+    expect((await getRespondent(token, undefined, claim)).view!.display).toEqual({ namesVisible: true, a: "Aytu", b: "Deniz" });
+
+    const db = await getDb();
+    const rows = (await db.execute({ sql: "SELECT subject, sealed FROM originals WHERE case_id = ?", args: [id] })).rows;
+    expect(rows.map((r) => String(r.subject)).sort()).toEqual([`case:${id}:side:a`, `case:${id}:side:b`]);
+    for (const r of rows) {
+      expect(String(r.sealed)).toMatch(/^v1\./);
+      expect(String(r.sealed)).not.toContain("Deniz");
+    }
+    const caseRow = (await db.execute({ sql: "SELECT display_a_sealed, display_b_sealed FROM cases WHERE id = ?", args: [id] })).rows[0];
+    expect(String(caseRow.display_a_sealed)).toMatch(/^v1\./);
+    expect(String(caseRow.display_b_sealed)).not.toContain("Deniz");
+    // Every case verdict has an ownership row; the share page shows the typed names.
+    const vid = ov.verdicts[0].id;
+    expect(await count("SELECT count(*) AS n FROM verdict_meta WHERE verdict_id = ? AND kind = 'case' AND case_id = ?", [vid, id])).toBe(1);
+    const pub = await body<{ display: unknown }>(
+      await publicVerdict.GET(new Request(`${ORIGIN}/api/v1/verdicts/${vid}`), { params: Promise.resolve({ id: vid }) } as never),
+    );
+    expect(pub.display).toEqual({ a: "Aytu", b: "Deniz", others: {} });
+  });
+
+  it("an appeal's original is sealed too; a retry after a failed attempt replaces it", async () => {
+    const { o, id } = await judged();
+    m.judgeAnonymized.mockResolvedValueOnce({ status: "failed", code: "unavailable", error: "x" });
+    expect((await ownerAppeal(o, id, "First try: the receipt shows the payment on April 3rd.")).status).toBe(202);
+    await drain();
+    expect((await ownerAppeal(o, id, "Second try: the bank record shows April 3rd clearly.")).status).toBe(202);
+    await drain();
+    const own = await ownerOriginals(o, id);
+    expect(own.appeal?.status).toBe("stored");
+    expect(own.appeal?.original?.text).toBe("Second try: the bank record shows April 3rd clearly.");
+    expect(await count("SELECT count(*) AS n FROM originals WHERE case_id = ? AND kind = 'appeal'", [id])).toBe(1);
+  });
+
+  it("display names: each party edits only their own; only the owner flips the switch", async () => {
+    const { o, id, token, claim } = await judged();
+    const patchOwner = (b: unknown, extra: Opts = {}) =>
+      http.caseDisplayHandler(req("PATCH", `/api/v1/cases/${id}/display`, { user: o, body: b, ...extra }), id);
+    let v = (await body<{ case: CaseView }>(await patchOwner({ displayName: "Ayt" }))).case;
+    expect(v.display).toEqual({ namesVisible: true, a: "Ayt", b: "Deniz" });
+    expect((await patchOwner({ displayName: "Party B" })).status).toBe(400);
+    expect((await patchOwner({ namesVisible: false }, { via: "cookie", headers: { "x-test-cross": "1" } })).status).toBe(403);
+    v = (await body<{ case: CaseView }>(await patchOwner({ namesVisible: false }))).case;
+    expect(v.display.namesVisible).toBe(false);
+    const vid = v.verdicts[0].id;
+    const pub = await body<{ display: unknown }>(
+      await publicVerdict.GET(new Request(`${ORIGIN}/api/v1/verdicts/${vid}`), { params: Promise.resolve({ id: vid }) } as never),
+    );
+    expect(pub.display).toBeNull();
+    // Names off: each party sees only their own name; the invite link alone shows none.
+    expect((await getOwner(o, id)).display).toEqual({ namesVisible: false, a: "Ayt", b: null });
+    expect((await getRespondent(token, undefined, claim)).view!.display).toEqual({ namesVisible: false, a: null, b: "Deniz" });
+    expect((await getRespondent(token)).view!.display).toEqual({ namesVisible: false, a: null, b: null });
+    const patchB = (b: unknown) => http.respondDisplayHandler(req("PATCH", `/api/v1/respond/${token}/display`, { body: b }), token);
+    const okB = await patchB({ displayName: "D", claim });
+    expect(okB.status).toBe(200);
+    expect((await body<{ case: CaseView }>(okB)).case.display.b).toBe("D");
+    expect((await patchB({ namesVisible: true, claim })).status).toBe(403);
+    expect((await patchB({ displayName: "X" })).status).toBe(403);
+  });
+
+  it("the respondent removes their side: every link closes, the owner keeps their original, no row is deleted", async () => {
+    const { o, id, token, claim } = await judged();
+    const vid = (await getOwner(o, id)).verdicts[0].id;
+    const before = await count("SELECT count(*) AS n FROM verdicts", []);
+    const rm = (b: unknown) => http.respondRemovalHandler(req("POST", `/api/v1/respond/${token}/removal`, { body: b }), token);
+    expect((await rm({ confirm: "remove" })).status).toBe(403);
+    expect((await rm({ confirm: "nope", claim })).status).toBe(400);
+    const res = await rm({ confirm: "remove", claim });
+    expect(res.status).toBe(200);
+    const out = await body<{ removed: boolean; removedAt: string; case: CaseView }>(res);
+    expect(out.case.removed?.parties).toEqual(["b"]);
+    expect(await count("SELECT count(*) AS n FROM verdicts", [])).toBe(before);
+    const pub = await publicVerdict.GET(new Request(`${ORIGIN}/api/v1/verdicts/${vid}`), { params: Promise.resolve({ id: vid }) } as never);
+    expect(pub.status).toBe(410);
+    expect(await count("SELECT count(*) AS n FROM originals WHERE case_id = ? AND party = 'b' AND sealed IS NOT NULL", [id])).toBe(0);
+    expect((await ownerOriginals(o, id)).side.status).toBe("stored");
+    const view = await getOwner(o, id);
+    expect(view.removed).not.toBeNull();
+    expect(view.sides.find((s) => s.party === "b")).toMatchObject({ text: "", evidence: [], removed: true });
+    expect(view.verdicts).toHaveLength(1);
+    expect(view.display.b).toBeNull();
+    expect(view.appeal.allowed).toBe(false);
+    expect((await ownerAppeal(o, id)).status).toBe(410);
+    // Again: idempotent.
+    expect((await body(await rm({ confirm: "remove", claim }))).removedAt).toBe(out.removedAt);
+  });
+
+  it("removal waits for the judges; a run that finishes after an account deletion is stored already removed", async () => {
+    const o = await owner(3);
+    const c = (await create(o)).data.case;
+    await respond(tokenOf(c));
+    const refused = await http.caseRemovalHandler(req("POST", `/api/v1/cases/${c.id}/removal`, { user: o, body: { confirm: "remove" } }), c.id);
+    expect(refused.status).toBe(409);
+    await removeUserData(o);
+    await drain();
+    const db = await getDb();
+    const linked = (await db.execute({ sql: "SELECT verdict_id FROM case_verdicts WHERE case_id = ?", args: [c.id] })).rows[0];
+    expect(linked).toBeDefined();
+    expect(await count("SELECT count(*) AS n FROM verdict_meta WHERE verdict_id = ? AND removed_at IS NOT NULL", [String(linked.verdict_id)])).toBe(1);
+  });
+
+  it("a superseded judging run writes no verdict row at all", async () => {
+    const o = await owner(3);
+    const c = (await create(o)).data.case;
+    await respond(tokenOf(c));
+    const before = await count("SELECT count(*) AS n FROM verdicts", []);
+    m.judgeAnonymized.mockImplementationOnce(async () => {
+      // The sweep failed this run meanwhile: its token is no longer current.
+      await setCase(c.id, "judging_token = ?", ["another-run"]);
+      return okOutcome();
+    });
+    await drain();
+    expect(await count("SELECT count(*) AS n FROM verdicts", [])).toBe(before);
+    expect(await count("SELECT count(*) AS n FROM case_verdicts WHERE case_id = ?", [c.id])).toBe(0);
   });
 });

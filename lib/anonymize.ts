@@ -40,6 +40,7 @@ const SYSTEM = `You anonymize descriptions of arguments between two parties.
 
 Rewrite the text with these rules:
 - The two people having the argument become "Party A" and "Party B". If the narrator is one of the two sides, the narrator is ALWAYS Party A and the other person is Party B.
+- If the narrator only describes an argument between two OTHER people (for example "my two friends had a fight"), those two people are Party A and Party B, in the order they first appear, and the narrator is not a side: keep the narrator's first person as written ("I think Party B is right") and do not list an entry for the narrator.
 - First person marks the narrator in any language. English: "I", "me", "my", "myself". Turkish: "ben", "bence", "benim", "bana", "beni", "bende", "benden", "benimle", and also first-person endings with no pronoun at all ("düşünüyorum", "söyledim", "haklıyım", "arkadaşım").
 - Rewrite the narrator's first-person sentences about Party A in the third person, adjusting only the pronoun and verb ending ("I think" -> "Party A thinks", "Ben ise düşünüyorum" -> "Party A ise düşünüyor").
 - Replace the parties' real names, usernames, and nicknames everywhere with those labels, keeping grammar natural (adjust pronouns only where a name was used). In Turkish text keep the case suffix on the label after an apostrophe ("Deniz'in" -> "Party B'nin", "Deniz'e" -> "Party B'ye").
@@ -62,13 +63,53 @@ export class AnonymizeError extends Error {
   }
 }
 
-/** The firmer instruction for the second attempt. The names come from the
- * first attempt's own list; the candidates are capitalized words of the
- * argument that survived unlisted. */
-export function retrySystem(hint: RetryHint): string {
+/** How a label's letter is read in Turkish, for suffix harmony ("B" -> "be"
+ * -> "B'nin", "A" -> "A'nın"). */
+const TR_LETTER: Record<string, string> = {
+  A: "a", B: "be", C: "ce", D: "de", E: "e", F: "fe", G: "ge", H: "he", I: "ı", J: "je", K: "ke", L: "le",
+  M: "me", N: "ne", O: "o", P: "pe", Q: "kü", R: "re", S: "se", T: "te", U: "u", V: "ve", W: "ve", X: "iks",
+  Y: "ye", Z: "ze",
+};
+
+type PartyLabel = "Party A" | "Party B";
+
+/** A label with a Turkish case suffix, harmonized for its letter
+ * ("Party A" + dat -> "Party A'ya", "Party B" + gen -> "Party B'nin"). */
+function labelWith(label: string, c: TrCase): string {
+  const tail = trSuffix(TR_LETTER[label.slice(-1)], c);
+  return tail ? `${label}'${tail}` : label;
+}
+
+/**
+ * Turkish rewriting rules for the account, for a narrator `n` and the person
+ * they argue with `o`. Turkish drops subjects and marks the narrator with
+ * endings, so a literal rewrite easily changes who a sentence is about
+ * ("Bence cimrilik ediyor" -> "Party A bence cimrilik ediyor" reads as if
+ * Party A is stingy). Every suffix in the examples is rendered for the
+ * label's letter. Pure; exported for tests.
+ */
+export function trAccountRules(n: PartyLabel, o: PartyLabel): string {
+  return `Turkish:
+- Turkish drops subjects. A verb with a third-person ending and no written subject ("cimrilik ediyor", "ödemedi") is about someone else, usually ${o}. Never make ${n} its subject.
+- The narrator's opinion words become an attribution, and the dropped subject stays who it was: "bence X" -> "${labelWith(n, "dat")} göre X", "bana göre" -> "${labelWith(n, "dat")} göre". Example: "Bence cimrilik ediyor." -> "${labelWith(n, "dat")} göre ${o} cimrilik ediyor."
+- First-person possessive endings on nouns are the narrator: "annem" -> "${labelWith(n, "gen")} annesi", "arkadaşım" -> "${labelWith(n, "gen")} arkadaşı". First-person plural "-mız/-miz" ("annemiz", "evimiz") is the narrator and ${o} together when they share it: "annemizin" -> "${n} ile ${labelWith(o, "gen")} annesinin".
+- First-person verbs become third person: "dedim" -> "${n} dedi", "haklıyım" -> "${n} haklı".
+- Outside quotation marks, no first-person word ("ben", "bence", "benim", "bana", "beni", "annem", "dedim", ...) may remain in the rewritten account.`;
+}
+
+/** The Turkish rules for a one-account argument (narrator Party A). */
+export const TR_ACCOUNT_RULES = trAccountRules("Party A", "Party B");
+
+/** The first-attempt system prompt; Turkish arguments get the Turkish rules. */
+export function firstSystem(turkish: boolean): string {
+  return turkish ? `${SYSTEM}\n\n${TR_ACCOUNT_RULES}` : SYSTEM;
+}
+
+/** The firmer paragraph for a retry after a name leaked, shared by both
+ * anonymizers. The names come from the earlier attempts' own lists; the
+ * candidates are capitalized words of the input that survived unlisted. */
+export function retryLines(hint: RetryHint): string[] {
   const lines = [
-    SYSTEM,
-    "",
     "IMPORTANT: a previous attempt on this text left real names in the output. Rewrite the WHOLE text and replace EVERY occurrence of EVERY person's name, nickname and username, in every form (possessive \"Ryan's\", Turkish suffixes \"Burak'ın\", \"Burak'a\", \"Burakla\"), with that person's label. The rewritten text must not contain any of the original names, and every person you replace must be listed.",
   ];
   if (hint.names.length) lines.push(`Names already found in this text: ${hint.names.join(", ")}.`);
@@ -77,6 +118,39 @@ export function retrySystem(hint: RetryHint): string {
       `Check these capitalized words from the text: ${hint.candidates.join(", ")}. If one is a person's name, nickname or username, replace it with a label and list it; leave every other word as it is.`,
     );
   }
+  return lines;
+}
+
+/** One line per quality issue of an earlier attempt, for the retry prompt.
+ * Names nothing from the text. */
+export function qualityLines(issues: readonly QualityIssue[], n: PartyLabel, o: PartyLabel): string[] {
+  const lines: string[] = [];
+  if (issues.includes("first_person_left")) {
+    lines.push(
+      `IMPORTANT: a previous attempt left first-person words outside quotation marks ("I", "me", "my"; "ben", "bence", "benim", "annem", "dedim"). Rewrite every one of them in the third person about ${n}.`,
+    );
+  }
+  if (issues.includes("self_label_misuse")) {
+    lines.push(
+      `IMPORTANT: a previous attempt put an opinion word right after a label ("${n} bence ..."), which changes who the sentence is about. Write the opinion as an attribution ("${labelWith(n, "dat")} göre ${o} ...") and keep the original subject of the sentence.`,
+    );
+  }
+  if (issues.includes("opponent_missing")) {
+    lines.push(
+      `IMPORTANT: a previous attempt did not label the person the narrator argues with. That person is ALWAYS "${o}", even when the narrator calls them a friend, roommate or sibling; never "Person C".`,
+    );
+  }
+  return lines;
+}
+
+/** The firmer instruction for the second attempt: the first prompt plus the
+ * retry paragraph about names, and the quality lines when the first attempt
+ * had quality issues. A first attempt whose only problem was quality (no
+ * leak, no flagged word: `issues` set, no candidates) gets no name paragraph. */
+export function retrySystem(hint: RetryHint, turkish = false, issues: readonly QualityIssue[] = []): string {
+  const lines = [firstSystem(turkish), ""];
+  if (hint.candidates.length || issues.length === 0) lines.push(...retryLines(hint));
+  lines.push(...qualityLines(issues, "Party A", "Party B"));
   return lines.join("\n");
 }
 
@@ -93,7 +167,7 @@ type Attempt = {
   /** The person rules this attempt's own list produced. */
   rules: NameRule[];
 } & (
-  | { ok: true; value: AnonymizeResult; suspicious: string | null }
+  | { ok: true; value: AnonymizeResult; suspicious: string | null; issues: QualityIssue[] }
   | { ok: false; retry: boolean; error: string }
 );
 
@@ -123,9 +197,11 @@ async function attempt(
   hint: RetryHint | null,
   prior: readonly NameRule[],
   timeoutMs: number,
+  issuesBefore: readonly QualityIssue[] = [],
 ): Promise<Attempt> {
+  const turkish = isTurkishText(argument);
   const res = await claudeJson<ModelOutput>({
-    system: hint ? retrySystem(hint) : SYSTEM,
+    system: hint ? retrySystem(hint, turkish, issuesBefore) : firstSystem(turkish),
     user: argument,
     schema: SCHEMA,
     effort,
@@ -149,7 +225,6 @@ async function attempt(
   const replacements = data.replacements.filter(
     (r) => typeof r?.original === "string" && typeof r?.replacement === "string",
   );
-  const turkish = isTurkishText(argument);
   const rules = nameRules(replacements, turkish, argument);
   const text = substituteNames(data.text, rules, turkish);
   const repaired = text !== data.text;
@@ -177,7 +252,14 @@ async function attempt(
     : people.length === 0 && sameText(data.text, argument) && fp.enAny + fp.trAny + fp.trVerbs > 0
       ? "output identical to the input"
       : null;
-  return { ok: true, value: { text, nameMap }, suspicious, ...base };
+  // A narrator may describe two other people, so no label is required here,
+  // and first person left in the text is only an issue when the narrator is
+  // a side (the map makes them Party A); a bystander keeps "I think ...".
+  const narratorIsSide = nameMap.some((m) => m.original === "I" && m.replacement === "Party A");
+  const issues = accountQualityIssues(argument, text, { narrator: "Party A", opponentRequired: false }).filter(
+    (issue) => issue !== "first_person_left" || narratorIsSide,
+  );
+  return { ok: true, value: { text, nameMap }, suspicious, issues, ...base };
 }
 
 /**
@@ -197,6 +279,11 @@ async function attempt(
  * becomes Party A). A first attempt that was only suspicious is kept when
  * the retry leaks but none of the retry's names is in the first text and
  * none of its own flagged words reads as a person.
+ *
+ * Quality issues (accountQualityIssues: first person left, an opinion word
+ * glued to a label) never fail a request: a first attempt with issues but no
+ * name problem gets one retry naming the issues, and the retry wins only
+ * with fewer issues; otherwise the first attempt is kept.
  */
 export async function anonymize(argument: string, trace?: AnonymizeTrace): Promise<AnonymizeResult> {
   if (!hasApiKey()) {
@@ -209,13 +296,25 @@ export async function anonymize(argument: string, trace?: AnonymizeTrace): Promi
   let prior: NameRule[] = [];
   let fallback: AnonymizeResult | null = null;
   let fallbackCandidates: string[] = [];
+  // The first attempt passed every name check and only had quality issues:
+  // it is safe to keep whatever the retry does.
+  let fallbackSafe = false;
+  let fallbackIssues: QualityIssue[] = [];
+  let issues: QualityIssue[] = [];
   let last = "";
   const fp = firstPerson(argument);
   const firstPersonText = fp.enAny + fp.trAny + fp.trVerbs > 0;
   for (let i = 0; i < 2; i++) {
     const left = TOTAL_BUDGET_MS - (Date.now() - started);
     if (i > 0 && left < RETRY_MIN_MS) break;
-    const res = await attempt(argument, i === 0 ? "low" : "medium", hint, prior, Math.min(ATTEMPT_TIMEOUT_MS, left));
+    const res = await attempt(
+      argument,
+      i === 0 ? "low" : "medium",
+      hint,
+      prior,
+      Math.min(ATTEMPT_TIMEOUT_MS, left),
+      issues,
+    );
     if (trace) {
       trace.attempts++;
       if (res.repaired) trace.repaired++;
@@ -226,16 +325,29 @@ export async function anonymize(argument: string, trace?: AnonymizeTrace): Promi
       const why = res.hint.candidates.length > 0 ? "with possible names" : firstPersonText ? "in the first person" : null;
       if (why) {
         trace?.reasons.push(`output identical to the input ${why}`);
+        if (fallback && fallbackSafe) return fallback;
         throw new AnonymizeError(`output identical to the input ${why}`);
       }
     }
     if (res.ok) {
-      if (!res.suspicious || i > 0) return res.value;
+      if (i > 0) {
+        // A safe first attempt beats a retry that is no better in quality.
+        if (fallback && fallbackSafe && fallbackIssues.length <= res.issues.length) return fallback;
+        return res.value;
+      }
+      if (!res.suspicious && res.issues.length === 0) return res.value;
       fallback = res.value;
       fallbackCandidates = res.hint.candidates;
-      last = res.suspicious;
+      fallbackSafe = !res.suspicious;
+      fallbackIssues = res.issues;
+      issues = res.issues;
+      last = res.suspicious ?? qualityReason(res.issues);
     } else {
       last = res.error;
+      if (fallback && fallbackSafe) {
+        trace?.reasons.push(last);
+        return fallback;
+      }
       if (
         fallback &&
         res.retry &&
@@ -247,6 +359,7 @@ export async function anonymize(argument: string, trace?: AnonymizeTrace): Promi
         return fallback;
       }
       if (!res.retry) break;
+      issues = [];
     }
     trace?.reasons.push(last);
     hint = res.hint;
@@ -254,6 +367,7 @@ export async function anonymize(argument: string, trace?: AnonymizeTrace): Promi
     // Reasons only, never names: nothing personal reaches the logs.
     if (i === 0) console.warn(`[anonymize] retry: ${last}`);
   }
+  if (fallback && fallbackSafe) return fallback;
   throw new AnonymizeError(last);
 }
 
@@ -268,7 +382,7 @@ export async function anonymize(argument: string, trace?: AnonymizeTrace): Promi
  * - exact: a generalized place or company, matched only as spelled;
  * - lowerOk: lowercase spellings are the name too (the model listed it in
  *   lowercase, or the argument never writes it capitalized). */
-type NameRule = {
+export type NameRule = {
   name: string;
   label: string | null;
   person: boolean;
@@ -276,6 +390,10 @@ type NameRule = {
   part: boolean;
   exact: boolean;
   lowerOk: boolean;
+  /** The argument itself uses this name as a person (capitalized mid-sentence
+   * or with an apostrophe suffix): at a sentence start it is the person too,
+   * unless the next word makes this very name an everyday word (NAME_TIED_NEXT). */
+  confirmed?: boolean;
 };
 
 /** Names that are also everyday words in English or Turkish. They are never
@@ -319,14 +437,38 @@ const TITLES = new Set(["mr", "mrs", "ms", "miss", "dr", "prof", "sir", "bey", "
 const DESCRIPTOR_START = new Set(["my", "your", "his", "her", "our", "their", "the", "a", "an", "benim", "bizim", "onun", "senin"]);
 const LABEL_WORDS = new Set(["party", "person", "taraf", "kişi"]);
 
-/** Words after a sentence-initial ambiguous name that make it the ordinary
- * word ("Can you believe", "Will it rain", "Umut ediyorum"). */
-const ORDINARY_NEXT = new Set([
+/** English words after a sentence-initial "Can", "Will", "May"... that make
+ * it the ordinary word ("Can you believe", "Will it rain"). */
+const EN_ORDINARY_NEXT = new Set([
   "you", "i", "we", "they", "he", "she", "it", "this", "that", "these", "those", "the", "a", "an", "someone",
   "somebody", "anyone", "anybody", "everyone", "there", "my", "your", "our", "his", "her", "their", "not",
-  "be", "all", "ediyorum", "ediyor", "ederim", "eder", "ettim", "etmek", "kenarı", "kenarında", "kenarına",
-  "kenarından", "artık",
+  "be", "all",
 ]);
+/** "Umut ediyorum", "Ümit ederim": hope, the verb. */
+const TR_ETMEK_NEXT = new Set(["ediyorum", "ediyor", "ederim", "eder", "ettim", "etmek"]);
+/** "Deniz kenarı": the seaside. */
+const TR_KENAR_NEXT = new Set(["kenarı", "kenarında", "kenarına", "kenarından"]);
+
+/** Words after a sentence-initial ambiguous name that make it the ordinary
+ * word, for a name the argument never clearly uses as a person. A Turkish
+ * time word is not one ("Deniz artık ...", "Umut artık ..." read as the
+ * person); "Yeter artık" is tied to that one name (NAME_TIED_NEXT). */
+const ORDINARY_NEXT = new Set([...EN_ORDINARY_NEXT, ...TR_ETMEK_NEXT, ...TR_KENAR_NEXT]);
+
+/** Words that make one particular name the everyday word at a sentence
+ * start ("Can you", "Umut ediyorum", "Deniz kenarı", "Yeter artık"). For a
+ * name the argument uses as a person (NameRule.confirmed) only these count. */
+const NAME_TIED_NEXT: Record<string, ReadonlySet<string>> = {
+  yeter: new Set(["artık"]),
+  can: EN_ORDINARY_NEXT,
+  will: EN_ORDINARY_NEXT,
+  may: EN_ORDINARY_NEXT,
+  hope: EN_ORDINARY_NEXT,
+  mark: EN_ORDINARY_NEXT,
+  umut: TR_ETMEK_NEXT,
+  ümit: TR_ETMEK_NEXT,
+  deniz: TR_KENAR_NEXT,
+};
 
 /** Cases a suffix glued on without an apostrophe is substituted for in code
  * ("Burakla" -> "Party B'yle"), when it agrees with the name by vowel harmony. */
@@ -339,13 +481,6 @@ const TR_LEAK_TAIL =
  * possessive): "t" is never a name's suffix. */
 const NOT_A_SUFFIX = new Set(["t"]);
 
-/** How a label's letter is read in Turkish, for suffix harmony ("B" -> "be"
- * -> "B'nin", "A" -> "A'nın"). */
-const TR_LETTER: Record<string, string> = {
-  A: "a", B: "be", C: "ce", D: "de", E: "e", F: "fe", G: "ge", H: "he", I: "ı", J: "je", K: "ke", L: "le",
-  M: "me", N: "ne", O: "o", P: "pe", Q: "kü", R: "re", S: "se", T: "te", U: "u", V: "ve", W: "ve", X: "iks",
-  Y: "ye", Z: "ze",
-};
 
 const letterCount = (s: string) => (s.match(/\p{L}/gu) ?? []).length;
 const hasUpper = (s: string) => /\p{Lu}/u.test(s);
@@ -353,8 +488,9 @@ const hasLower = (s: string) => /\p{Ll}/u.test(s);
 const sameText = (a: string, b: string) => a.replace(/\s+/g, " ").trim() === b.replace(/\s+/g, " ").trim();
 
 /** Whether the argument is Turkish, for suffix handling: the function-word
- * test, or a letter only Turkish uses (ğ, ı, ş, İ). */
-function isTurkishText(argument: string): boolean {
+ * test, or a letter only Turkish uses (ğ, ı, ş, İ). Pure; exported for the
+ * evidence anonymizer. */
+export function isTurkishText(argument: string): boolean {
   return looksTurkish(argument, firstPerson(argument)) || /[ğışĞİŞ]/u.test(argument);
 }
 
@@ -388,6 +524,23 @@ function writtenCapitalized(argument: string, name: string): boolean {
 
 type RuleKind = "name" | "part" | "place";
 
+/** Whether the argument uses the name as a person: capitalized in the middle
+ * of a sentence, or with an apostrophe suffix ("Deniz'e", "Will's"; not a
+ * contraction such as "Can't"). */
+function usedAsPerson(argument: string, name: string): boolean {
+  const re = new RegExp(`(?<![\\p{L}\\p{N}'’])(?:${namePattern(name)})(?:['’](\\p{Ll}+))?(?![\\p{L}\\p{N}])`, "gu");
+  for (const m of argument.matchAll(re)) {
+    const word = m[0].slice(0, m[0].length - (m[1] === undefined ? 0 : m[1].length + 1));
+    if (!/^\p{Lu}/u.test(word) || !hasLower(word)) continue;
+    if (m[1] !== undefined) {
+      if (!NOT_A_SUFFIX.has(m[1])) return true;
+      continue;
+    }
+    if (midSentence(argument, m.index)) return true;
+  }
+  return false;
+}
+
 function makeRule(name: string, label: string | null, person: boolean, kind: RuleKind, argument?: string): NameRule {
   const part = kind === "part";
   const ambiguous = part || inSet(COMMON_WORD_NAMES, name);
@@ -400,6 +553,7 @@ function makeRule(name: string, label: string | null, person: boolean, kind: Rul
     part,
     exact: kind === "place",
     lowerOk: kind === "name" && !ambiguous && !inSet(RELATION_WORDS, name) && typedLower,
+    confirmed: person && ambiguous && argument !== undefined && usedAsPerson(argument, name),
   };
 }
 
@@ -519,7 +673,9 @@ function occurrences(text: string, rules: readonly NameRule[]): Occurrence[] {
  * lowerOk rule, or with a Turkish case after an apostrophe ("deniz'e" is
  * never the sea); for an ambiguous rule not an all-caps word, not a
  * contraction ("Can't") and not the ordinary word opening a sentence ("Can
- * you", or "Long story" when the text also writes "long"). */
+ * you", or "Long story" when the text also writes "long"). A name the
+ * argument uses as a person elsewhere (rule.confirmed) is the person at a
+ * sentence start too, unless the next word makes this very name ordinary. */
 function isNameUse(o: Occurrence, text: string): boolean {
   if (o.suffix !== undefined && NOT_A_SUFFIX.has(o.suffix)) return false;
   if (o.rule.exact) return o.name.replace(/\s+/g, " ") === o.rule.name.replace(/\s+/g, " ");
@@ -531,7 +687,18 @@ function isNameUse(o: Occurrence, text: string): boolean {
   if (o.suffix !== undefined || midSentence(text, o.index)) return true;
   if (o.rule.part && lowerForms(o.name).some((w) => wordIn(text, w))) return false;
   const next = /^\s+(\p{L}+)/u.exec(text.slice(o.index + o.length));
-  return !(next && inSet(ORDINARY_NEXT, next[1]));
+  return !(next && ordinaryAfter(o.rule.name, next[1], o.rule.confirmed === true));
+}
+
+/** Whether `next` after a sentence-initial `name` makes it the ordinary
+ * word: a word tied to this name, or (unless the argument uses the name as
+ * a person) any word of ORDINARY_NEXT. */
+function ordinaryAfter(name: string, next: string, confirmed: boolean): boolean {
+  const tied = lowerForms(name)
+    .map((w) => NAME_TIED_NEXT[w])
+    .find((s) => s !== undefined);
+  if (tied && inSet(tied, next)) return true;
+  return !confirmed && inSet(ORDINARY_NEXT, next);
 }
 
 /** Whether `word` appears in `text` as a whole word, exactly as spelled. */
@@ -627,6 +794,40 @@ const NOT_NAMES = new Set(
   ].map((w) => w.toLocaleLowerCase("tr")),
 );
 
+/** Whether a capitalized word is never anyone's name here (calendar,
+ * languages, holidays, platforms, family words used as names). Pure. */
+export function isNotName(word: string): boolean {
+  return inSet(NOT_NAMES, word);
+}
+
+/** Words right before a place ("moved to Berlin", "in İstanbul"). */
+const PLACE_BEFORE =
+  /(?:^|[^\p{L}])(?:in|at|near|into|around|across|outside|inside|visit|visited|visiting|(?:move|moved|moving|fly|flew|flying|drive|drove|driving|trip|flight|went|go|going|back|came|come|coming|travel|traveled|travelled)\s+to|(?:live|lives|lived|living)\s+in)\s+$/iu;
+/** Turkish place suffixes after an apostrophe: locative and ablative ("'da",
+ * "'daki", "'dan"). */
+const TR_PLACE_SUFFIX = /^(?:[dt][ae](?:ki|n)?)$/u;
+
+/**
+ * Whether every use of a capitalized word in the argument reads as a place:
+ * right after a place word ("moved to Berlin", "in Ankara") or with a Turkish
+ * locative or ablative suffix ("İstanbul'da", "Berlin'den"). A possessive or
+ * any other use makes it possibly a person. False when the word is absent.
+ * Pure; exported for the evidence anonymizer.
+ */
+export function onlyPlaceUses(argument: string, word: string): boolean {
+  const re = new RegExp(`(?<![\\p{L}\\p{N}'’])${escapeRe(word)}(?:['’](\\p{Ll}+))?(?![\\p{L}\\p{N}])`, "gu");
+  let any = false;
+  for (const m of argument.matchAll(re)) {
+    any = true;
+    if (m[1] !== undefined) {
+      if (TR_PLACE_SUFFIX.test(m[1])) continue;
+      return false;
+    }
+    if (!PLACE_BEFORE.test(argument.slice(Math.max(0, m.index - 24), m.index))) return false;
+  }
+  return any;
+}
+
 /** Words that commonly open a sentence and are never a name on their own. */
 const SENTENCE_OPENERS = new Set([
   // English
@@ -677,7 +878,7 @@ function usesOf(argument: string, word: string): (string | undefined)[] {
 function sentenceStartName(argument: string, text: string, word: string, index: number): boolean {
   if (inSet(SENTENCE_OPENERS, word)) return false;
   const next = /^\s+(\p{L}+)/u.exec(argument.slice(index + word.length));
-  if (next && inSet(ORDINARY_NEXT, next[1])) return false;
+  if (next && ordinaryAfter(word, next[1], false)) return false;
   if (lowerForms(word).some((w) => wordIn(argument, w))) return false;
   return usesOf(argument, word).length >= 2 || !hasBothLabels(text);
 }
@@ -848,7 +1049,77 @@ function firstPerson(text: string) {
 const TR_POSSESSIVE = new Set(["benim", "benimki"]);
 
 /** Everyday nouns that end like a first-person verb. */
-const TR_VERB_LOOKALIKES = new Set(["yardım", "tutum", "giyim", "kıyım", "boyum", "koyum"]);
+const TR_VERB_LOOKALIKES = new Set([
+  "yardım", "tutum", "giyim", "kıyım", "boyum", "koyum", "eğitim", "yönetim", "üretim", "iletim", "tüketim",
+  "denetim", "gözetim", "işletim", "kadim", "hatim", "itim",
+]);
+
+// --- Quality of the rewritten account ----------------------------------------------
+
+export type QualityIssue = "first_person_left" | "self_label_misuse" | "opponent_missing";
+
+/** Quoted words are someone's own words and keep their first person. A
+ * single-quoted span must start and end outside a word, so the apostrophe of
+ * a suffix ("Party A'nın") never opens one. */
+const QUOTED = /"[^"\n]*"|“[^”\n]*”|«[^»\n]*»|‘[^’\n]*’|(?<![\p{L}\p{N}])'[^'\n]*\s[^'\n]*'(?![\p{L}\p{N}])/gu;
+
+/** Turkish nouns with a first-person possessive ending: the narrator's own
+ * people and places ("annem", "arkadaşım", "evimiz"). */
+const TR_FIRST_PERSON_NOUN =
+  /(?<!\p{L})(?:annem|babam|kardeşim|ablam|abim|ağabeyim|eşim|kocam(?!an)|karım|sevgilim|arkadaşım|oğlum|kızım|teyzem|halam|amcam|dayım|kuzenim|evim|annemiz|babamız|kardeşimiz|evimiz)\p{Ll}*(?!\p{L})/u;
+
+/** "Party A bence ...": a first-person opinion word glued to a label, which
+ * makes the label the subject of what the narrator thinks about someone else. */
+const SELF_LABEL_MISUSE = /(?:Party|Taraf) [AB](?:['’]\p{Ll}+)?\s+(?:ben|bence|benim|bana|beni)(?!\p{L})/iu;
+
+/**
+ * What is wrong with a rewritten account beyond names, outside quotations:
+ * - first_person_left: a Turkish input whose rewrite still has a first-person
+ *   word, a first-person possessive noun ("annem") or a first-person verb;
+ *   an English input whose rewrite still has "I"/"me"/"myself";
+ * - self_label_misuse: an opinion word right after a label ("Party A bence");
+ * - opponent_missing: the other party's label is required but absent.
+ * Issues only ever cause a retry, never a failure. Codes only, nothing from
+ * the text. Pure; exported for tests.
+ */
+export function accountQualityIssues(
+  input: string,
+  output: string,
+  opts: { narrator: "Party A" | "Party B"; opponentRequired: boolean },
+): QualityIssue[] {
+  const plain = output.replace(QUOTED, " ");
+  const issues: QualityIssue[] = [];
+  const fp = firstPerson(plain);
+  if (isTurkishText(input)) {
+    const words = plain.toLocaleLowerCase("tr").match(/\p{L}+/gu) ?? [];
+    const lower = plain.toLocaleLowerCase("tr");
+    if (words.some((w) => TR_SELF.has(w)) || TR_FIRST_PERSON_NOUN.test(lower) || fp.trVerbs > 0) {
+      issues.push("first_person_left");
+    }
+  } else if (fp.enStrong > 0) {
+    issues.push("first_person_left");
+  }
+  if (SELF_LABEL_MISUSE.test(plain)) issues.push("self_label_misuse");
+  if (opts.opponentRequired) {
+    const letter = opts.narrator === "Party A" ? "B" : "A";
+    if (!new RegExp(`(?<![\\p{L}\\p{N}])(?:Party|Taraf) ${letter}(?![\\p{L}\\p{N}])`, "u").test(output)) {
+      issues.push("opponent_missing");
+    }
+  }
+  return issues;
+}
+
+/** Whether a text has first-person markers in either language (a narrator
+ * who must become a label). Pure. */
+export function firstPersonPresent(text: string): boolean {
+  const fp = firstPerson(text);
+  return fp.enAny + fp.trAny + fp.trVerbs > 0;
+}
+
+/** The log and trace reason for quality issues (codes only). */
+export function qualityReason(issues: readonly QualityIssue[]): string {
+  return `quality: ${issues.join(",")}`;
+}
 
 /**
  * The anonymizer's replacement list, made reliable for display:

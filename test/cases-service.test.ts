@@ -29,6 +29,7 @@ const dir = mkdtempSync(path.join(tmpdir(), "verdict-cases-svc-"));
 process.env.DATABASE_URL = `file:${path.join(dir, "test.db").replace(/\\/g, "/")}`;
 
 const svc = await import("../lib/cases/service");
+const { removeCaseSide } = await import("../lib/originals/removal");
 const ent = await import("../lib/entitlements");
 
 afterAll(() => {
@@ -42,7 +43,7 @@ afterAll(() => {
 });
 
 describe("case service on a fresh database", () => {
-  it("createCase creates its own tables, then the answer and deletion work", async () => {
+  it("createCase creates its own tables, then the answer and removal work", async () => {
     await ent.grantCredits({ userId: "o1", credits: 1, source: "admin", externalId: "g:o1" });
     const created = await svc.createCase({
       ownerId: "o1",
@@ -63,6 +64,6 @@ describe("case service on a fresh database", () => {
       origin: "http://localhost",
     });
     expect(answered.ok && answered.row.status).toBe("judging");
-    expect(await svc.deleteCase(created.row)).toEqual({ ok: false, code: "in_progress" });
+    expect(await removeCaseSide(created.row, "a", "party_a")).toEqual({ ok: false, code: "in_progress" });
   });
 });

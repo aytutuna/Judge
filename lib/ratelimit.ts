@@ -425,7 +425,7 @@ export async function checkTranslateLimits(ip: string): Promise<LimitDecision> {
  * minutes and 60 per 24 hours; clarifying questions: 20 per 10 minutes and
  * 100 per 24 hours (they spend no credit, so the daily window is what bounds
  * their cost per account). */
-export type UserBucket = "premium_verdict" | "clarify" | "case_create" | "evidence" | "case_evidence";
+export type UserBucket = "premium_verdict" | "clarify" | "case_create" | "evidence" | "case_evidence" | "verdict_owner";
 
 type UserWindow = { limit: number; windowMs: number; redisWindow: `${number} ${"m" | "h" | "d"}`; prefix: string };
 
@@ -448,10 +448,16 @@ export const USER_LIMITS: Record<UserBucket, readonly UserWindow[]> = {
   ],
   /** Keyed "case:<id>:b": respondent uploads per case. */
   case_evidence: [{ limit: 12, windowMs: DAY_MS, redisWindow: "1 d", prefix: "verdict:c:evday" }],
+  /** A writer reading or changing their own verdicts and case sides (session). */
+  verdict_owner: [
+    { limit: 60, windowMs: 10 * MINUTE_MS, redisWindow: "10 m", prefix: "verdict:u:vo10m" },
+    { limit: 300, windowMs: DAY_MS, redisWindow: "1 d", prefix: "verdict:u:voday" },
+  ],
 };
 
-/** Per-IP buckets for the no-account respondent endpoints (keyed by visitorKey). */
-export type IpBucket = "respond_submit" | "respond_evidence";
+/** Per-IP buckets for the no-account endpoints (keyed by visitorKey):
+ * respondents, and signed-out writers using their owner token or claim. */
+export type IpBucket = "respond_submit" | "respond_evidence" | "verdict_owner";
 
 export const IP_LIMITS: Record<IpBucket, readonly UserWindow[]> = {
   respond_submit: [
@@ -461,6 +467,10 @@ export const IP_LIMITS: Record<IpBucket, readonly UserWindow[]> = {
   respond_evidence: [
     { limit: 15, windowMs: 10 * MINUTE_MS, redisWindow: "10 m", prefix: "verdict:ip:re10m" },
     { limit: 60, windowMs: DAY_MS, redisWindow: "1 d", prefix: "verdict:ip:reday" },
+  ],
+  verdict_owner: [
+    { limit: 60, windowMs: 10 * MINUTE_MS, redisWindow: "10 m", prefix: "verdict:ip:vo10m" },
+    { limit: 300, windowMs: DAY_MS, redisWindow: "1 d", prefix: "verdict:ip:voday" },
   ],
 };
 

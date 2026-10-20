@@ -4,6 +4,7 @@
 import { z } from "zod";
 import type { Entitlement } from "./account-types";
 import type { Lang } from "./i18n";
+import { DisplayNameInput, type OriginalStatus } from "./originals-types";
 import {
   ArgumentText,
   FrameworkChoice,
@@ -34,6 +35,8 @@ export const CreateCaseRequest = z.object({
   framework: FrameworkChoice.default({ preset: "balanced" }),
   lang: z.enum(["en", "tr"]).default("en"),
   evidence: EvidenceTokens.max(MAX_EVIDENCE_PER_SIDE).optional(),
+  /** How the owner appears on the case's share pages; empty or null = "Party A". */
+  displayName: z.union([z.literal(""), DisplayNameInput]).nullable().optional(),
 });
 export type CreateCaseRequest = z.infer<typeof CreateCaseRequest>;
 
@@ -41,6 +44,8 @@ export const RespondRequest = z.object({
   text: ArgumentText,
   evidence: EvidenceTokens.max(MAX_EVIDENCE_PER_SIDE).optional(),
   turnstileToken: z.string().max(2048).optional(),
+  /** How the respondent appears on the case's share pages; empty or null = "Party B". */
+  displayName: z.union([z.literal(""), DisplayNameInput]).nullable().optional(),
 });
 export type RespondRequest = z.infer<typeof RespondRequest>;
 
@@ -101,10 +106,12 @@ export type CaseEvidenceView = { id: string; kind: EvidenceKind; transcript: str
 
 export type CaseSideView = {
   party: PartyLetter;
-  /** Anonymized, as the judges read it. */
+  /** Anonymized, as the judges read it. Empty once that party removed their side. */
   text: string;
   evidence: CaseEvidenceView[];
   submittedAt: string;
+  /** That party removed their side: text and evidence are left out. */
+  removed?: true;
 };
 
 export type CaseAppealView = {
@@ -118,6 +125,8 @@ export type CaseAppealView = {
   /** The verdict this appeal produced (share id), once judged. */
   verdictId: string | null;
   createdAt: string;
+  /** That party removed their side: text and evidence are left out. */
+  removed?: true;
 };
 
 export type CaseVerdictView = {
@@ -155,6 +164,16 @@ export type CaseView = {
   lastError: "quota" | "unavailable" | null;
   /** Poll GET again after this many ms while something is judging; null otherwise. */
   pollAfterMs: number | null;
+  /** The viewer's own name map (their side and appeal, merged), from the
+   * server's encrypted copy; null when none is stored (older cases, no key)
+   * or the viewer is not proven to be that party. */
+  names: NameMapping[] | null;
+  /** The names each party chose for the share pages, and the owner's switch. */
+  display: { namesVisible: boolean; a: string | null; b: string | null };
+  /** Set once a party removed their side: every link of the case is closed. */
+  removed: { at: string; parties: PartyLetter[] } | null;
+  /** Status of the viewer's own side original. */
+  yourOriginal: OriginalStatus;
 };
 
 export type CaseSummary = {
@@ -169,6 +188,8 @@ export type CaseSummary = {
   headline: string | null;
   /** The first words of your side, anonymized: a title before any verdict. */
   excerpt: string | null;
+  /** A side was removed: the case's links are closed. */
+  removed: boolean;
 };
 
 export type CreateCaseResponse = {
@@ -197,4 +218,8 @@ export type AppealResponse = {
   replayed?: boolean;
 };
 export type InviteResponse = { inviteUrl: string };
-export type DeleteCaseResponse = { deleted: true };
+/** DELETE /api/v1/cases/{id}: kept for older clients; it runs the owner's
+ * removal (nothing is deleted). */
+export type DeleteCaseResponse = { deleted: true; removed: true; removedAt: string };
+/** POST /api/v1/cases/{id}/removal and /respond/{token}/removal */
+export type CaseRemovalResponse = { removed: true; removedAt: string; case: CaseView };

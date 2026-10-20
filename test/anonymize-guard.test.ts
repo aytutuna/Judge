@@ -9,6 +9,7 @@ vi.mock("../lib/claude", () => ({
 }));
 
 import {
+  accountQualityIssues,
   anonymize,
   AnonymizeError,
   findNameLeak,
@@ -49,8 +50,11 @@ const sub = (text: string, reps: Rep[], turkish = false) => substituteNames(text
 const leaks = (text: string, reps: Rep[], turkish = false) => findNameLeak(text, nameRules(reps, turkish), turkish);
 
 describe("anonymize: code-side repair", () => {
-  it("repairs an un-rewritten echo by substituting the listed names, in one call", async () => {
-    claudeJson.mockResolvedValueOnce(reply(LOAN, LOAN_REPS));
+  it("repairs an un-rewritten echo by substituting the listed names, keeping it when a quality retry is no better", async () => {
+    // The names are repaired in code; the narrator's "I" left in place is a
+    // quality issue: one retry, and the first attempt stays when the retry
+    // is no better.
+    claudeJson.mockResolvedValue(reply(LOAN, LOAN_REPS));
     const trace = newTrace();
     const res = await anonymize(LOAN, trace);
     expect(res.text).not.toMatch(/Burak/);
@@ -59,8 +63,24 @@ describe("anonymize: code-side repair", () => {
       { original: "I", replacement: "Party A" },
       { original: "Burak", replacement: "Party B" },
     ]);
-    expect(claudeJson).toHaveBeenCalledTimes(1);
-    expect(trace).toEqual({ attempts: 1, repaired: 1, reasons: [] });
+    expect(claudeJson).toHaveBeenCalledTimes(2);
+    expect(trace).toEqual({ attempts: 2, repaired: 2, reasons: ["quality: first_person_left"] });
+    // The retry names the issue, not a leak.
+    const second = claudeJson.mock.calls[1][0].system as string;
+    expect(second).toContain("left first-person words outside quotation marks");
+    expect(second).not.toContain("left real names");
+  });
+
+  it("takes a quality retry that is cleaner", async () => {
+    const clean = "In March Party A lent Party A's friend Party B 500 euros to cover Party B's car repair.";
+    claudeJson.mockResolvedValueOnce(reply(LOAN, LOAN_REPS)).mockResolvedValueOnce(reply(clean, LOAN_REPS));
+    expect((await anonymize(LOAN)).text).toBe(clean);
+    expect(claudeJson).toHaveBeenCalledTimes(2);
+  });
+
+  it("keeps the repaired first attempt when the quality retry fails", async () => {
+    claudeJson.mockResolvedValueOnce(reply(LOAN, LOAN_REPS)).mockResolvedValueOnce({ ok: false, error: "timeout" });
+    expect((await anonymize(LOAN)).text).toBe(LOAN.replaceAll("Burak", "Party B"));
   });
 
   it("repairs a listed name the model left in place, keeping the possessive", async () => {
@@ -516,7 +536,8 @@ describe("narrator mapping is unchanged", () => {
 
   it("the name map after a Turkish repair still maps Ben to the narrator I", async () => {
     const arg = "Ben Burak'a 500 lira verdim, Burak ödemedi.";
-    claudeJson.mockResolvedValueOnce(
+    // First person left: a quality retry, which returns the same; the first stays.
+    claudeJson.mockResolvedValue(
       reply(arg, [
         { original: "Ben", replacement: "Party A" },
         { original: "Burak'a", replacement: "Party B'ye" },
@@ -544,5 +565,145 @@ describe("narrator mapping is unchanged", () => {
       { original: "Ben", replacement: "Party A" },
       { original: "Jürgen", replacement: "Party B" },
     ]);
+  });
+});
+
+describe("accountQualityIssues", () => {
+  const A = { narrator: "Party A" as const, opponentRequired: false };
+  const TR_IN = "Bence cimrilik ediyor, annemizin doğum günüydü ve annem de öyle dedi.";
+
+  it("flags an opinion word glued to a label (the 'Party A bence' failure)", () => {
+    expect(accountQualityIssues(TR_IN, "Party A bence cimrilik ediyor.", A)).toContain("self_label_misuse");
+    expect(accountQualityIssues(TR_IN, "Taraf A'nın bana göre haklı olduğu.", A)).toContain("self_label_misuse");
+    expect(accountQualityIssues(TR_IN, "Party A'ya göre Party B cimrilik ediyor.", A)).toEqual([]);
+  });
+
+  it("flags Turkish first-person words, possessive nouns and verbs left outside quotes", () => {
+    expect(accountQualityIssues(TR_IN, "Party A ile Party B'nin annemizin doğum günüydü.", A)).toEqual(["first_person_left"]);
+    expect(accountQualityIssues(TR_IN, "Party A'nın annem dediği kişi geldi.", A)).toEqual(["first_person_left"]);
+    expect(accountQualityIssues(TR_IN, "Party B'ye öyle dedim.", A)).toEqual(["first_person_left"]);
+    expect(accountQualityIssues(TR_IN, "Party B'ye benim param dedi.", A)).toContain("first_person_left");
+    // Ordinary words that end like a first-person form are not flagged.
+    expect(accountQualityIssues(TR_IN, "Party A kocaman bir eğitim aldı, yönetim de onayladı.", A)).toEqual([]);
+  });
+
+  it("ignores first person inside quotation marks", () => {
+    expect(accountQualityIssues(TR_IN, `Party B "ben ödemem" dedi, Party A da 'annem bilir' diye yazdı.`, A)).toEqual([]);
+    expect(accountQualityIssues("I said no.", "Party B wrote “I never agreed” to Party A.", A)).toEqual([]);
+  });
+
+  it("flags an English narrator left as I or me, not a possessive alone", () => {
+    expect(accountQualityIssues("I lent him money.", "I lent Party B money.", A)).toEqual(["first_person_left"]);
+    expect(accountQualityIssues("He owes me.", "Party B owes me.", A)).toEqual(["first_person_left"]);
+    expect(accountQualityIssues("My coworker Daniel.", "My coworker Party B.", A)).toEqual([]);
+    expect(accountQualityIssues("I lent him money.", "Party A lent Party B money.", A)).toEqual([]);
+  });
+
+  it("flags a missing opponent label only when one is required", () => {
+    const b = { narrator: "Party B" as const, opponentRequired: true };
+    expect(accountQualityIssues("I ate the soup.", "Party B ate Person C's soup.", b)).toEqual(["opponent_missing"]);
+    expect(accountQualityIssues("I ate the soup.", "Party B ate Party A's soup.", b)).toEqual([]);
+    expect(accountQualityIssues("Yedim.", "Party B, Taraf A'nın çorbasını yedi.", b)).toEqual([]);
+    expect(accountQualityIssues("I ate the soup.", "Party B ate Person C's soup.", { ...b, opponentRequired: false })).toEqual([]);
+  });
+});
+
+describe("Turkish account rules in the prompt", () => {
+  it("renders every suffix for the label's letter", async () => {
+    const { TR_ACCOUNT_RULES, trAccountRules, firstSystem } = await import("../lib/anonymize");
+    expect(TR_ACCOUNT_RULES).toContain(`"Bence cimrilik ediyor." -> "Party A'ya göre Party B cimrilik ediyor."`);
+    expect(TR_ACCOUNT_RULES).toContain(`"annem" -> "Party A'nın annesi"`);
+    expect(TR_ACCOUNT_RULES).toContain(`"annemizin" -> "Party A ile Party B'nin annesinin"`);
+    const b = trAccountRules("Party B", "Party A");
+    expect(b).toContain(`"bence X" -> "Party B'ye göre X"`);
+    expect(b).toContain(`"annem" -> "Party B'nin annesi"`);
+    expect(b).toContain(`"annemizin" -> "Party B ile Party A'nın annesinin"`);
+    expect(firstSystem(true)).toContain(TR_ACCOUNT_RULES);
+    expect(firstSystem(false)).not.toContain("Turkish drops subjects");
+  });
+
+  it("sends the Turkish rules for a Turkish argument only", async () => {
+    claudeJson.mockResolvedValue(reply("Party A, Party B'ye borç verdi.", [{ original: "Burak", replacement: "Party B" }]));
+    await anonymize("Burak'a 500 lira borç verdim ve hâlâ ödemedi, çok kızgınım.");
+    expect(claudeJson.mock.calls[0][0].system).toContain("Turkish drops subjects");
+    claudeJson.mockReset();
+    claudeJson.mockResolvedValue(reply(CREDIT_CLEAN, [{ original: "Daniel", replacement: "Party B" }]));
+    await anonymize(CREDIT);
+    expect(claudeJson.mock.calls[0][0].system).not.toContain("Turkish drops subjects");
+  });
+});
+
+describe("sentence-start names the argument uses as a person", () => {
+  /** Rules built with the argument, as both anonymizers build them. */
+  const subArg = (text: string, reps: Rep[], argument: string, turkish = false) =>
+    substituteNames(text, nameRules(reps, turkish, argument), turkish);
+  const leaksArg = (text: string, reps: Rep[], argument: string, turkish = false) =>
+    findNameLeak(text, nameRules(reps, turkish, argument), turkish);
+
+  it("'Deniz artık' is the person: repaired in an echo, and a leak when left", () => {
+    const echo = "Deniz ile üç yıldır birlikteyiz. Deniz'e göre ben çok kıskancım. Deniz artık eve geç geliyor.";
+    const deniz = [{ original: "Deniz", replacement: "Party B" }];
+    const fixed = subArg(echo, deniz, echo, true);
+    expect(fixed).not.toMatch(/Deniz/);
+    expect(fixed).toContain("Party B artık eve geç geliyor.");
+    expect(leaksArg("Party B'ye göre öyle. Deniz artık eve geç geliyor.", deniz, echo, true)).toBe(true);
+    // Without the argument too: "artık" no longer makes any name ordinary.
+    expect(leaks("Party B'ye göre öyle. Deniz artık eve geç geliyor.", deniz, true)).toBe(true);
+  });
+
+  it("'Umut artık' is the person even when only used at a sentence start", () => {
+    const text = "Umut artık benimle konuşmuyor.";
+    const umut = [{ original: "Umut", replacement: "Party B" }];
+    expect(subArg(text, umut, text, true)).toBe("Party B artık benimle konuşmuyor.");
+    expect(leaksArg(text, umut, text, true)).toBe(true);
+  });
+
+  it("keeps the words tied to one name ordinary: 'Can you', 'Umut ediyorum', 'deniz kenarı', 'Yeter artık'", () => {
+    const can = [{ original: "Can", replacement: "Party B" }];
+    const en = "Can you believe Can still hasn't paid? Can's excuse was weak.";
+    expect(subArg(en, can, en)).toBe("Can you believe Party B still hasn't paid? Party B's excuse was weak.");
+    const umut = [{ original: "Umut", replacement: "Party B" }];
+    const tr = "Umut'a para verdim. Umut ediyorum öder.";
+    expect(subArg(tr, umut, tr, true)).toBe("Party B'ye para verdim. Umut ediyorum öder.");
+    const yeter = [{ original: "Yeter", replacement: "Person C" }];
+    const y = "Yeter'e söyledim. Yeter artık!";
+    expect(subArg(y, yeter, y, true)).toBe("Person C'ye söyledim. Yeter artık!");
+  });
+
+  it("an English name used as a person elsewhere is the person after 'Will' too, unless the next word is ordinary", () => {
+    const will = [{ original: "Will", replacement: "Party B" }];
+    const text = "I asked Will about it. Will never pays. Will you help?";
+    expect(subArg(text, will, text)).toBe("I asked Party B about it. Party B never pays. Will you help?");
+  });
+});
+
+describe("free path: a bystander narrator is not a quality issue", () => {
+  it("keeps a correct rewrite that leaves the bystander's 'I think' without a retry", async () => {
+    const arg = "My mom and dad argue about the thermostat. Mom wants 24 degrees, Dad wants 19. I think Dad is right.";
+    const out = "Party A and Party B argue about the thermostat. Party A wants 24 degrees, Party B wants 19. I think Party B is right.";
+    claudeJson.mockResolvedValue(
+      reply(out, [
+        { original: "Mom", replacement: "Party A" },
+        { original: "Dad", replacement: "Party B" },
+      ]),
+    );
+    const trace = newTrace();
+    const res = await anonymize(arg, trace);
+    expect(res.text).toBe(out);
+    expect(trace.attempts).toBe(1);
+    expect(claudeJson).toHaveBeenCalledTimes(1);
+  });
+
+  it("still retries first person left when the narrator is a side", async () => {
+    claudeJson.mockResolvedValue(reply(LOAN.replace(/Burak/g, "Party B"), LOAN_REPS));
+    const trace = newTrace();
+    await anonymize(LOAN, trace);
+    expect(trace.attempts).toBe(2);
+  });
+
+  it("the prompt says a bystander narrator is not a side", async () => {
+    claudeJson.mockResolvedValue(reply(CREDIT_CLEAN, [{ original: "Daniel", replacement: "Party B" }]));
+    await anonymize(CREDIT);
+    expect(claudeJson.mock.calls[0][0].system).toContain("only describes an argument between two OTHER people");
   });
 });

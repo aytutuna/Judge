@@ -90,6 +90,9 @@ An `ANTHROPIC_API_KEY` is **required** — without one the API refuses to judge
 | `RATE_LIMIT_DB` | *(empty)* | Without Upstash: a libSQL file URL (e.g. `file:/run/verdict/ratelimit.db` in the Lightsail guide) where the in-memory limits log each counted verdict, so a restarted app process keeps its limits and daily count. Unset = they start over on every restart. If the file cannot be written, verdicts are refused (`503 unavailable`) |
 | `RATE_LIMIT_SALT` | *(Upstash token)* | Secret key for hashing visitor IPs before they reach the rate-limit store. Any long random string. Unset = the Upstash token is used. Changing it resets every visitor's limits |
 | `DAILY_VERDICT_CAP` | `1000` | Site-wide verdicts per UTC day. `0` pauses the site |
+| `ORIGINALS_KEY` | *(required in production)* | 32 random bytes, base64 (`openssl rand -base64 32`): encrypts every stored original text, name map and share-page display name (AES-256-GCM). Back it up apart from the database (e.g. in a password manager): losing it makes the stored originals unreadable, and leaking it together with a database copy exposes them. Unset in development = a fixed development key (with a warning). Unset or invalid in production = originals and display names are not stored (one error line per process, one warning per skipped item); verdicts still work and share pages show Party A / Party B. See *Stored originals, names and removal* |
+| `ORIGINALS_KEY_PREVIOUS` | *(empty)* | Older keys, comma-separated, used only to decrypt after a rotation. New data is always sealed with `ORIGINALS_KEY` |
+| `REMOVAL_LOG` | *(`removals.log` beside a local database file)* | Append-only log of removals (ids, party, reason, time; no text or names), kept outside the database so `scripts/originals.ts replay-removals` can re-apply them after a backup is restored. `off` disables it; a remote (`libsql://`) database has none unless this is set |
 | `NEXT_PUBLIC_TURNSTILE_SITE_KEY` | *(empty)* | Cloudflare Turnstile site key. Unset = no bot-check widget |
 | `TURNSTILE_SECRET_KEY` | *(empty)* | Turnstile secret for server-side verification. Unset = verification skipped (local dev) |
 | `NEXT_PUBLIC_SITE_URL` | *(Vercel production domain, else `http://localhost:3000`)* | Public origin, e.g. `https://verdict.example.org`, used for canonical links, link previews, `robots.txt` and the sitemap. Set it for a custom domain or a host other than Vercel. Read at build time, so redeploy after changing it |
@@ -245,15 +248,20 @@ sign-in does not depend on it.
   code their browser got when answering signed out). It costs one premium
   verdict; the whole case is judged again and the new verdict is labelled
   (verdict stands / flipped / changed) next to the earlier one, which stays.
-- **Names.** Each side is anonymized when it is submitted, and the name map
-  goes back only in that response (the website keeps it in the browser to
-  show names on your own view). The server keeps only keyed, per-case name
-  fingerprints so the same person gets the same label in both accounts.
+- **Names.** Each side is anonymized when it is submitted. The judges read
+  only the anonymized text; each side as written (with its raw transcripts
+  and name map) is stored encrypted, readable only by that party (see
+  *Stored originals, names and removal*). Each person types the name they
+  want on the share pages when they submit (`displayName`; empty = the
+  label). The server also keeps keyed, per-case name fingerprints so the
+  same person gets the same label in both accounts.
 - **Secrets.** Invite links, evidence tokens and name fingerprints are keyed
   from `BETTER_AUTH_SECRET`: rotating it turns off open invite links and
   pending evidence uploads.
-- **Deletion.** Deleting an account deletes the cases it started, with the
-  other person's answers, transcripts, appeals and their verdicts.
+- **Removal.** Either party can remove their own side: their original and
+  display name are blanked and every link of the case (share pages, previews,
+  the invite) is closed. Nothing is deleted. Deleting an account does this
+  for every case the account started or answered.
 
 **Cost per premium verdict** (Haiku $0.10/$0.50 and Sonnet $2/$10 per
 million tokens, $0.01 per search). Measured on 6 logged local runs:
@@ -278,6 +286,62 @@ lower the cap (`PRICING.monthly.fairUseCap` in `lib/pricing.ts`), raise the
 price, or lower the per-verdict ceiling (for
 example a smaller `max_tokens` for the Sonnet judge calls, whose measured
 output is 500 to 800 tokens; not done yet).
+
+### Stored originals, names and removal
+
+- **What is stored.** Every submission's text exactly as sent (free and
+  premium arguments with Premium's questions and answers, each case side,
+  each appeal), the raw screenshot transcripts and the name map (original ->
+  label), as one AES-256-GCM sealed JSON blob per submission in the
+  `originals` table, bound to its row (the additional authenticated data
+  names the row). The judges, fact-check, crux trial and translation still
+  only ever get the anonymized text.
+- **Who can read it.** Only the writer: a signed-in writer through their
+  account on any device; a signed-out writer through an owner token returned
+  once in the verdict response (`owner_token`, 43 characters; the website
+  keeps it in `localStorage` under `judge.owner.<verdictId>`, the app should
+  use secure storage) and sent only as the `X-Owner-Token` header. The server
+  keeps a SHA-256 of the token, never the token. Case parties use their
+  session, or Party B's claim code. The operator can decrypt with the key
+  (`scripts/originals.ts`).
+- **Share pages show names.** Each one-sided verdict has display names: the
+  other people default to the first names the writer used, the writer's own
+  name is whatever they save in the share dialog (prefilled with the
+  account's first name). The writer can edit them or switch names off at any
+  time (then the page shows Party A / Party B). Share pages and their OG
+  images use only these display names, never the raw map, and stay
+  `noindex`.
+- **Removal.** The writer (or a case party for their side, or account
+  deletion for everything of an account) can remove a verdict: the original,
+  name map and display names become NULL, and the share page (via
+  `proxy.ts`), its preview image and `GET /api/v1/verdicts/{id}` answer
+  **410**. No row is ever deleted; the anonymized text and the verdict stay
+  in the database, unreachable through public routes.
+- **Older rows.** Verdicts stored before this feature have no owner and keep
+  showing labels. Premium verdicts (linked through their consumed credit)
+  and case verdicts are backfilled with an ownership row at startup.
+
+**Operator script** (from the app directory; `show*` needs the key):
+
+```bash
+sudo -u verdict npx tsx --env-file=/etc/verdict/verdict.env scripts/originals.ts show <verdictId>
+sudo -u verdict npx tsx --env-file=/etc/verdict/verdict.env scripts/originals.ts show-case <caseId> [a|b]
+sudo -u verdict npx tsx --env-file=/etc/verdict/verdict.env scripts/originals.ts remove <verdictId>
+sudo -u verdict npx tsx --env-file=/etc/verdict/verdict.env scripts/originals.ts remove-case <caseId> <a|b>
+```
+
+`remove` also works for verdicts stored before this feature (it adds a
+removed ownership row). Every removal (by a writer, a party, an account
+deletion or this script) is also appended to the removal log (`REMOVAL_LOG`,
+by default `removals.log` beside the database, i.e.
+`/var/lib/verdict/removals.log` on the server). Restoring an older database
+would otherwise bring removed originals and share links back, so
+`verdict-restore` runs
+`scripts/originals.ts replay-removals [logFile]` before starting the app
+(and leaves it stopped if that fails); run it by hand after any other kind
+of restore. A server installed before this feature needs
+`ORIGINALS_KEY` added to its env file by hand (`openssl rand -base64 32`)
+and a restart; until then nothing personal is stored (logged once).
 
 ### Try it locally (test sign-in)
 
@@ -318,28 +382,38 @@ The website and the future iOS/Android app share one JSON API. Base URL
 - **Shared plain-TypeScript modules** (no Next or DOM imports) the app can
   reuse: `lib/types.ts`, `lib/i18n.ts`, `lib/verdict-display.ts`,
   `lib/names.ts`, `lib/palette.ts`, `lib/frameworks.ts`, `lib/api-errors.ts`,
-  `lib/account-types.ts`, `lib/pricing.ts`, `lib/case-types.ts`.
+  `lib/account-types.ts`, `lib/pricing.ts`, `lib/case-types.ts`,
+  `lib/originals-types.ts`.
 
 | Call | Purpose |
 |---|---|
 | `GET /api/v1/config` | Startup: which sign-in methods work, whether Premium is on, prices (`AppConfig`) |
 | `GET /api/v1/me` | The account and its entitlement (`MeResponse`); signed out = `{ "user": null, "entitlement": null }` |
-| `DELETE /api/v1/me` `{ "confirm": "delete" }` | Deletes the account, sessions, sign-ins and entitlements (both stores require in-app deletion) |
+| `DELETE /api/v1/me` `{ "confirm": "delete" }` | Removes every verdict the account owns and its side of every case (originals and names blanked, links closed; no verdict row is deleted), then deletes the account, sessions, sign-ins and entitlements (both stores require in-app deletion) |
+| `GET /api/v1/me/verdicts` | Your one-sided verdicts, newest first (`?limit=1-50&before=<createdAt>`), each with its anonymized `headline` and your `nameMap` to restore names |
 | `POST /api/v1/clarify` | Premium: up to 2 clarifying questions |
-| `POST /api/v1/verdict` | A verdict; `"tier": "premium"` for Premium. Send an `Idempotency-Key` header to retry safely |
-| `GET /api/v1/verdicts/{id}` | A stored verdict |
+| `POST /api/v1/verdict` | A verdict; `"tier": "premium"` for Premium. Send an `Idempotency-Key` header to retry safely. Adds `owner_token` (signed out only, returned once), `originals_stored`, `display` and `suggested_display_a` |
+| `GET /api/v1/verdicts/{id}` | A stored verdict, with `display` (the share page's names, null = labels); `410 removed` once removed |
+| `GET /api/v1/verdicts/{id}/mine` | The writer's view (session or `X-Owner-Token`): `original` as written, `nameMap`, `display`, `originalStatus` (`stored`, `not_stored`, `removed` or `unreadable`); 404 for anyone else |
+| `PATCH /api/v1/verdicts/{id}/display` | Writer: `{ "namesVisible"?, "a"?, "b"?, "others"?: { "Person C": "Leo" } }` (null = the label; labels such as "Party A" refused); `503 names_unavailable` for names when the server has no key |
+| `POST /api/v1/verdicts/{id}/removal` | Writer: `{ "confirm": "remove" }` blanks the original and names and closes the link (idempotent) |
+| `POST /api/v1/verdicts/{id}/claim` | Signed in + `X-Owner-Token`: keep a token-owned verdict in the account |
 | `POST /api/v1/verdicts/{id}/translate?lang=en\|tr` | A stored verdict in the other language |
 | `POST /api/v1/auth/dev-login` | Local testing only (see above); 404 everywhere else |
 | `POST /api/v1/evidence` | Premium: transcribe 1 to 3 evidence images, get signed evidence tokens |
 | `POST /api/v1/cases` | Premium: start a two-sided case (holds 1 premium verdict) |
 | `GET /api/v1/cases` | Your cases, newest first (`?limit=1-50&before=<createdAt>`); each has the anonymized `headline` of its latest verdict and an `excerpt` of your side |
-| `GET /api/v1/cases/{id}` / `DELETE` | Your case (`CaseView`) / delete it |
+| `GET /api/v1/cases/{id}` / `DELETE` | Your case (`CaseView`) / remove your side (kept for older clients; same as `/removal`) |
+| `GET /api/v1/cases/{id}/originals` | Your side (and appeal) as you wrote them |
+| `PATCH /api/v1/cases/{id}/display` | `{ "displayName"?, "namesVisible"? }`: your name on the share pages and the names switch |
+| `POST /api/v1/cases/{id}/removal` | `{ "confirm": "remove" }`: removes your side and closes every link of the case (`409 in_progress` while judging) |
 | `POST /api/v1/cases/{id}/judge` | Judge with only your side (`{ "mode": "only_mine" }`), or retry a failed case |
 | `POST /api/v1/cases/{id}/invite` | A new invite link (the old one stops working) |
 | `POST /api/v1/cases/{id}/appeals` | Add context once and get a re-judged verdict (1 premium verdict) |
 | `GET /api/v1/respond/{token}` / `POST` | The invite as the other person sees it / their side (no account) |
 | `POST /api/v1/respond/{token}/evidence` | The other person's evidence images |
 | `POST /api/v1/respond/{token}/appeals` | The other person adds context (signed in, Premium) |
+| `GET /api/v1/respond/{token}/originals` / `PATCH .../display` / `POST .../removal` | Party B (bound account or `Respondent-Claim` / `claim`): their original, their display name, removing their side |
 
 **Two-sided cases from the app.** Shapes are in `lib/case-types.ts` (a pure
 module the app can import); every case and respond response is
@@ -362,10 +436,13 @@ module the app can import); every case and respond response is
    account numbers are masked when the transcript is anonymized.
 2. **Create:** `POST /api/v1/cases` with an optional `Idempotency-Key` and
    `{ "text": "...", "framework": { "preset": "balanced" }, "lang": "en", "evidence": ["v1...."] }`.
+   Add `"displayName": "Aytu"` for the name shown on the share pages (empty
+   or absent = Party A).
    `201 { "case": CaseView, "name_map": [...], "entitlement": {...} }`
    (`200` with `"replayed": true` and an empty `name_map` on a retried key).
-   Store `name_map` in secure storage under the case id: it is returned only
-   once and is the only place real names exist. Share `case.inviteUrl`.
+   The server keeps an encrypted copy of the name map (`case.names` on every
+   later `GET`, on any device); keeping `name_map` locally is only a fallback
+   for a server without `ORIGINALS_KEY`. Share `case.inviteUrl`.
 3. **Status:** `GET /api/v1/cases/{id}`. While `case.pollAfterMs` is set
    (something is judging), poll again after that many milliseconds.
    `status`: `awaiting_respondent | judging | judged | failed | expired`.
@@ -375,7 +452,7 @@ module the app can import); every case and respond response is
    started, `200` when it already was.
 4. **The other person** opens `https://<domain>/r/<token>` (or the app calls
    `GET /api/v1/respond/{token}`), then `POST /api/v1/respond/{token}` with
-   `{ "text": "...", "evidence": ["v1...."], "turnstileToken": "..." }`
+   `{ "text": "...", "evidence": ["v1...."], "turnstileToken": "...", "displayName": "Deniz" }`
    (Turnstile is skipped for bearer sessions). `202 { "case": CaseView, "name_map": [...] }`;
    store that `name_map` too. A signed-in answer binds side B to that
    account. A signed-out answer also returns `"respondent_claim": "<22 chars>"`
@@ -407,10 +484,18 @@ module the app can import); every case and respond response is
    the token is kept in the browser so it is not put in a sign-in e-mail or
    an OAuth state.
 
+Removal and names: `removed` (410: the verdict or case was removed; its
+links no longer work) and `names_unavailable` (503: a display name was sent
+while the server has no originals key). `CaseView` also carries `names`
+(your own map, or null), `display` (`namesVisible`, `a`, `b`), `removed`
+(`{ at, parties }` or null) and `yourOriginal`; a removed side's entries
+have `text: ""`, `evidence: []` and `removed: true`.
+
 Case error codes: `case_closed` (409), `case_expired` (410), `appeal_used`
 (409), `in_progress` (409), `not_party` (403), `own_case` (403),
 `too_many_files` (400), `evidence_invalid` (400), `too_large` (413),
-`unsupported_media` (415), plus the premium ones (`signin_required`,
+`unsupported_media` (415), `anonymize_failed` (503: a name could not be
+taken out of the text; the same request can be retried, e.g. with initials), plus the premium ones (`signin_required`,
 `premium_required`, `no_credits`, `fair_use`, `rate_limited`, `daily_cap`,
 `not_configured`). `GET /api/v1/config` has
 `features: { cases, evidence }` (absent on older servers: treat as false).
@@ -638,10 +723,20 @@ All commands run in the browser SSH window (**Connect using SSH**).
   `/var/lib/verdict/backups` (14 days are kept). Run one now with
   `sudo systemctl start verdict-backup`. `sudo verdict-restore` lists the
   backups, and `sudo verdict-restore <file name>` restores one (verdicts saved
-  after that backup are lost; the replaced database is kept beside it). These
-  copies live on the same disk, so also turn on off-server backups: on your
-  instance's **Snapshots** tab, switch on **Automatic snapshots** (Lightsail
-  keeps the last seven daily snapshots; they are billed per GB stored).
+  after that backup are lost; the replaced database is kept beside it and,
+  like the backups, deleted after 14 days). The restore re-applies every
+  removal made since the backup from `/var/lib/verdict/removals.log` (see
+  *Stored originals, names and removal*). These copies live on the same
+  disk, so also turn on off-server backups: on your instance's **Snapshots**
+  tab, switch on **Automatic snapshots** (Lightsail keeps the last seven
+  daily snapshots; they are billed per GB stored). The privacy page promises
+  removed data is gone from backups within 14 days: keep backup and
+  snapshot retention at 14 days or less. A snapshot holds the database *and*
+  `/etc/verdict/verdict.env` with `ORIGINALS_KEY`, so the encryption does not
+  protect a snapshot: guard snapshots like the server itself. Restoring a
+  snapshot also rolls the removal log back, so before restoring one onto a
+  new instance, copy `/var/lib/verdict/removals.log` off the old instance
+  and run `replay-removals <that file>` on the new one before opening it.
 - **Reboots:** if the terminal says *System restart required* after security
   updates, run `sudo reboot`; the app and Caddy start again on their own.
   A reboot also starts every rate limit and the daily cap over.
