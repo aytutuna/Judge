@@ -23,8 +23,8 @@ object RestoreNames {
     private const val WS = "[\\t\\n\\x0B\\f\\r\\uFEFF\\u2028\\u2029\\p{Zs}]"
 
     private fun isJsSpace(c: Char): Boolean =
-        c == '\t' || c == '\n' || c == '\u000B' || c == '\u000C' || c == '\r' || c == '﻿' ||
-            c == ' ' || c == ' ' || Character.getType(c) == Character.SPACE_SEPARATOR.toInt()
+        c == '\t' || c == '\n' || c == '\u000B' || c == '\u000C' || c == '\r' || c == '\uFEFF' ||
+            c == '\u2028' || c == '\u2029' || Character.getType(c) == Character.SPACE_SEPARATOR.toInt()
 
     // --- Turkish suffixes on a name -------------------------------------------------
 

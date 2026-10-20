@@ -541,7 +541,8 @@ private func isLetter(_ s: Unicode.Scalar) -> Bool {
 /// A compiled pattern used like a JavaScript RegExp. Patterns are written
 /// with `\z` where the JavaScript source has `$` (without the m flag, `$`
 /// is the very end of the input; ICU's `$` also matches before a final line
-/// break). ICU's `\s` omits VT and BOM, which verdict text never contains.
+/// break). Unlike JavaScript, ICU's `\s` also matches NEL (U+0085) and
+/// misses BOM (U+FEFF); verdict text contains neither.
 /// Immutable after init, so safe to share across threads.
 private struct JSPattern: @unchecked Sendable {
     let regex: NSRegularExpression

@@ -32,6 +32,7 @@ final class RestoreNamesTests: XCTestCase {
             let payload = try Fixtures.sample(name)
             let result = payload.result.result
             let selfLang = ContentLang.verdictLang(result)
+            XCTAssertEqual(selfLang, try Fixtures.lang(vector["selfLang"]), name)
             let expected = try XCTUnwrap(vector["personalized"] as? [String: Any], name)
             let personalized = Names.personalizeResult(result, nameMap: payload.nameMap, selfLang: selfLang)
             assertFields(personalized, expected, context: "\(name)/\(lang.rawValue)")
@@ -84,7 +85,8 @@ final class RestoreNamesTests: XCTestCase {
     /// One personalized result against its flattened fields (see
     /// personalizedFields() in mobile/shared/fixtures/export-fixtures.ts).
     private func assertFields(_ r: VerdictResult, _ expected: [String: Any], context: String) {
-        XCTAssertTrue(Self.personalizedKeys.isSubset(of: Set(expected.keys)), "missing fields in \(context)")
+        let fields = Set(expected.keys).subtracting(["sample", "lang", "selfLang"])
+        XCTAssertEqual(fields, Self.personalizedKeys, "personalized fields differ in \(context)")
         XCTAssertEqual(r.headline, expected["headline"] as? String, context)
         XCTAssertEqual(r.crux, expected["crux"] as? String, context)
         XCTAssertEqual(r.losingSideBestPoint, expected["losing_side_best_point"] as? String, context)
