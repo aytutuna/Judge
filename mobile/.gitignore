@@ -12,9 +12,7 @@ android/captures/
 *.keystore
 *.jks
 
-# iOS (the Xcode project is generated from ios/project.yml by XcodeGen)
-ios/*.xcodeproj/
-ios/*.xcworkspace/
+# iOS (Judge.xcodeproj and its shared scheme are committed; per-user state is not)
 ios/DerivedData/
 ios/build/
 xcuserdata/

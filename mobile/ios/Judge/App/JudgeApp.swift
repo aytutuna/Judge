@@ -5,17 +5,28 @@ import WebKit
 @main
 struct JudgeApp: App {
     private let container: ModelContainer
+    private let initialTab: RootTab
     @State private var app: AppModel
 
     init() {
+        #if DEBUG
+        if let screenshot = ScreenshotState.fromLaunchArguments() {
+            let container = HistoryContainer.inMemory()
+            self.container = container
+            initialTab = screenshot.tab
+            _app = State(initialValue: screenshot.makeModel(container: container))
+            return
+        }
+        #endif
         let container = HistoryContainer.make()
         self.container = container
+        initialTab = .new
         _app = State(initialValue: AppModel(config: .load(), container: container))
     }
 
     var body: some Scene {
         WindowGroup {
-            RootView()
+            RootView(initialTab: initialTab)
                 .environment(app)
                 .modelContainer(container)
                 .preferredColorScheme(.light)
@@ -30,9 +41,13 @@ enum RootTab: Hashable {
 
 struct RootView: View {
     @Environment(AppModel.self) private var app
-    @State private var tab: RootTab = .new
+    @State private var tab: RootTab
     @State private var showLaunchMark = true
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
+    init(initialTab: RootTab = .new) {
+        _tab = State(initialValue: initialTab)
+    }
 
     var body: some View {
         let lang = app.lang

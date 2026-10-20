@@ -3,7 +3,7 @@ import XCTest
 @testable import Judge
 
 /// Loads mobile/shared/fixtures/*.json, bundled into the test target as
-/// resources (see project.yml).
+/// resources (the SharedFixtures folder in Judge.xcodeproj).
 enum Fixtures {
     private final class BundleToken {}
 

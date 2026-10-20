@@ -82,16 +82,22 @@ struct JudgingView: View {
                     }
                 }
 
-                ZStack {
-                    Text(L10n.text(captionKey, lang) ?? "")
-                        .brandText(.lead)
-                        .foregroundStyle(Brand.ink)
-                        .multilineTextAlignment(.center)
-                        .id(captionKey)
-                        .transition(.opacity)
+                VStack(spacing: 14) {
+                    ZStack {
+                        Text(L10n.text(captionKey, lang) ?? "")
+                            .brandText(.lead)
+                            .foregroundStyle(Brand.ink)
+                            .multilineTextAlignment(.center)
+                            .id(captionKey)
+                            .transition(.opacity)
+                    }
+                    .frame(minHeight: 56, alignment: .top)
+                    .animation(reduceMotion ? nil : .easeInOut(duration: 0.3), value: captionKey)
+
+                    TimelineView(.animation(minimumInterval: 0.25, paused: done)) { context in
+                        progressBar(Thinking.progressAt(elapsedMs: context.date.timeIntervalSince(started) * 1000, done: done))
+                    }
                 }
-                .frame(minHeight: 56, alignment: .top)
-                .animation(reduceMotion ? nil : .easeInOut(duration: 0.3), value: captionKey)
                 .accessibilityHidden(true)
 
                 Text(L10n.thinkingHelper(lang))
@@ -167,6 +173,25 @@ struct JudgingView: View {
         guard let settle else { return rockingAngle(at: date) }
         if reduceMotion { return settle.target }
         return BalanceMotion.springAngle(from: settle.from, to: settle.target, elapsed: date.timeIntervalSince(settle.start))
+    }
+
+    /// Thin bar under the caption, like the website's: the terra-to-sage
+    /// gradient spans the full track and is revealed from the leading edge.
+    private func progressBar(_ value: Double) -> some View {
+        let fill = min(max(value, 0), 1)
+        return GeometryReader { geo in
+            ZStack(alignment: .leading) {
+                Capsule().fill(Brand.ink.opacity(0.08))
+                Capsule()
+                    .fill(LinearGradient(colors: [Brand.terra, Brand.sageStrong], startPoint: .leading, endPoint: .trailing))
+                    .mask(alignment: .leading) {
+                        Capsule().frame(width: geo.size.width * fill)
+                    }
+            }
+        }
+        .frame(maxWidth: 280)
+        .frame(height: 3)
+        .animation(reduceMotion ? nil : .linear(duration: 0.3), value: fill)
     }
 
     @ViewBuilder

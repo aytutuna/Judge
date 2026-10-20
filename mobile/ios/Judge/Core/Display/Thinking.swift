@@ -100,6 +100,14 @@ enum Thinking {
         guard let result, !result.modelRefused, !result.runs.isEmpty else { return pending }
         return result.runs.map { .vote(VerdictDisplay.vote($0)) }
     }
+
+    /// Progress bar fill (lib/judging-ui.ts progressAt). Eases toward 92%
+    /// (about .62 at 10 s, .82 at 20 s) so it never reaches the end before
+    /// the answer and never visibly stalls; 1 once the answer is in.
+    static func progressAt(elapsedMs: Double, done: Bool) -> Double {
+        if done { return 1 }
+        return 0.92 * (1 - exp(-max(0, elapsedMs) / 9000))
+    }
 }
 
 /// The 2D balance's motion, as pure functions of time so it can be tested

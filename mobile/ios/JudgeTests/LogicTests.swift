@@ -192,6 +192,16 @@ final class ThinkingTests: XCTestCase {
         XCTAssertEqual(Thinking.announcementKey(.loop(step: 3, cycle: 1), done: true), "thinking.ready")
         XCTAssertEqual(Thinking.announcementKey(.finish(step: 0, from: 0, cycle: 0), done: false), "thinking.ready")
     }
+
+    func testProgressEasesTowardNinetyTwoPercent() {
+        XCTAssertEqual(Thinking.progressAt(elapsedMs: 0, done: false), 0)
+        XCTAssertEqual(Thinking.progressAt(elapsedMs: -500, done: false), 0)
+        XCTAssertEqual(Thinking.progressAt(elapsedMs: 10_000, done: false), 0.62, accuracy: 0.01)
+        XCTAssertEqual(Thinking.progressAt(elapsedMs: 20_000, done: false), 0.82, accuracy: 0.01)
+        XCTAssertEqual(Thinking.progressAt(elapsedMs: 30_000, done: false), 0.89, accuracy: 0.01)
+        XCTAssertLessThan(Thinking.progressAt(elapsedMs: 600_000, done: false), 0.92 + 1e-9)
+        XCTAssertEqual(Thinking.progressAt(elapsedMs: 1_000, done: true), 1)
+    }
 }
 
 final class BalanceMotionTests: XCTestCase {

@@ -33,13 +33,17 @@ final class AppModel {
     let turnstile: TurnstileBotCheck?
     let history: HistoryStore
     let home: HomeModel
+    /// Whether Home saves the unsent draft and brings it back next session
+    /// (off for screenshot states, so they neither read nor overwrite it).
+    let persistsDraft: Bool
 
     private let defaults: UserDefaults
     private static let langKey = "settings.lang"
     static let presetKey = "settings.lastPreset"
 
-    init(config: AppConfig, container: ModelContainer, defaults: UserDefaults = .standard, tokenStore: any TokenStore = NoTokenStore()) {
+    init(config: AppConfig, container: ModelContainer, defaults: UserDefaults = .standard, tokenStore: any TokenStore = NoTokenStore(), persistsDraft: Bool = true) {
         self.config = config
+        self.persistsDraft = persistsDraft
         self.defaults = defaults
         langPreference = defaults.string(forKey: Self.langKey).flatMap(LangPreference.init(rawValue:)) ?? .system
         api = JudgeAPI(baseURL: config.apiBaseURL, userAgent: config.userAgent, tokenStore: tokenStore)

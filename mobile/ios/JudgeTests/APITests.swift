@@ -181,6 +181,9 @@ final class JudgeAPITests: XCTestCase {
         StubURLProtocol.handler = { _ in StubURLProtocol.Reply(status: 524, headers: ["Content-Type": "text/html"], body: Data("<html>".utf8)) }
         await assertFails(with: .timeout)
 
+        StubURLProtocol.handler = { _ in StubURLProtocol.Reply(status: 504, headers: ["Content-Type": "text/html"], body: Data("<html>".utf8)) }
+        await assertFails(with: .timeout)
+
         StubURLProtocol.handler = { _ in StubURLProtocol.Reply(status: 502, headers: ["Content-Type": "text/html"], body: Data("<html>".utf8)) }
         await assertFails(with: .server(status: 502, body: ApiErrorBody(code: "unavailable")))
     }
@@ -220,6 +223,8 @@ final class JudgeAPITests: XCTestCase {
 final class ErrorMappingTests: XCTestCase {
     func testStatusMapping() {
         XCTAssertEqual(APIError.from(status: 524, body: Data(), retryAfterHeader: nil), .timeout)
+        XCTAssertEqual(APIError.from(status: 504, body: Data(), retryAfterHeader: nil), .timeout)
+        XCTAssertEqual(APIError.from(status: 504, body: Data(#"{"code":"unavailable"}"#.utf8), retryAfterHeader: nil), .timeout)
         XCTAssertEqual(APIError.from(status: 503, body: Data("<html>".utf8), retryAfterHeader: nil), .server(status: 503, body: ApiErrorBody(code: "unavailable")))
         XCTAssertEqual(APIError.from(status: 429, body: Data(), retryAfterHeader: nil).code, "rate_limited")
         XCTAssertNil(APIError.from(status: 404, body: Data("nope".utf8), retryAfterHeader: nil).code)

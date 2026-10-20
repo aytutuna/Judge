@@ -1,23 +1,29 @@
 # Judge for iOS
 
 SwiftUI app for okjudge.com. Swift 6 language mode, iOS 17+, Observation,
-URLSession, Codable and SwiftData; no third-party packages. The Xcode
-project is generated from `project.yml` by XcodeGen and is not committed.
+URLSession, Codable and SwiftData; no third-party packages. `Judge.xcodeproj`
+is committed and needs no generator.
 
 ## Build on a Mac
 
-Requirements: Xcode 16 or newer (Swift 6 compiler; Xcode 26 recommended)
-and Homebrew.
+Requirements: Xcode 16 or newer (Swift 6 compiler and the synchronized-folder
+project format; Xcode 26 recommended). Nothing else to install.
 
 ```sh
-brew install xcodegen          # 2.46 or newer
-cd mobile/ios
-xcodegen generate              # writes Judge.xcodeproj from project.yml
-open Judge.xcodeproj
+open mobile/ios/Judge.xcodeproj
 ```
 
-In Xcode, pick the **Judge** scheme and an iPhone simulator (iOS 17 or
-newer), then Run (Cmd-R). Tests: Cmd-U.
+Pick the **Judge** scheme and an iPhone simulator (iOS 17 or newer), then Run
+(Cmd-R). Tests: Cmd-U.
+
+The project uses synchronized folders: everything under `Judge/` belongs to
+the app, and everything under `JudgeTests/` and `../shared/fixtures` to the
+tests (see Tests). Adding, renaming or deleting a file needs no project edit.
+Exceptions: `Judge/Info.plist` is not copied as a resource and
+`export-fixtures.ts` is in neither target. The app takes only
+`verdicts.json` from the fixtures folder, as an explicit file reference
+(Debug builds only, see Screenshot states), so a new fixture file never
+ends up in the app.
 
 ### Running on a device
 
@@ -28,33 +34,46 @@ Signing is automatic. Put your team id in `Config/Signing.xcconfig`
 DEVELOPMENT_TEAM = ABCDE12345
 ```
 
-then run `xcodegen generate` again and select your phone as the destination.
+then select your phone as the destination.
 
 ### Command line (CI / SSH)
 
 ```sh
 cd mobile/ios
-xcodegen generate
+xcodebuild -list -project Judge.xcodeproj
 xcrun simctl list devices available | grep -i iphone    # pick a simulator name
-xcodebuild \
-  -project Judge.xcodeproj \
-  -scheme Judge \
-  -destination 'platform=iOS Simulator,name=iPhone 16,OS=latest' \
-  -derivedDataPath build/DerivedData \
-  CODE_SIGNING_ALLOWED=NO \
-  build test
+xcodebuild   -project Judge.xcodeproj   -scheme Judge   -destination 'platform=iOS Simulator,name=iPhone 17,OS=latest'   -derivedDataPath build/DerivedData   CODE_SIGNING_ALLOWED=NO   build test
 ```
 
-Swap `iPhone 16` for a simulator listed by `simctl` on that Mac. Test results
+Swap `iPhone 17` for a simulator listed by `simctl` on that Mac. Test results
 are in `build/DerivedData/Logs/Test`; add `-resultBundlePath build/Judge.xcresult`
 to keep a result bundle.
 
 A release archive (needs signing and a team id):
 
 ```sh
-xcodebuild -project Judge.xcodeproj -scheme Judge -configuration Release \
-  -destination 'generic/platform=iOS' -archivePath build/Judge.xcarchive archive
+xcodebuild -project Judge.xcodeproj -scheme Judge -configuration Release   -destination 'generic/platform=iOS' -archivePath build/Judge.xcarchive archive
 ```
+
+### Screenshot states (Debug builds)
+
+Debug builds accept `-JudgeScreenshotState <screen>:<lang>` and render a fixed
+state from `mobile/shared/fixtures/verdicts.json`, with an in-memory history,
+a separate defaults suite and no network (the API points at a closed local
+port). Screens: `home`, `home-error`, `judging`, `history`, `settings`, and
+`verdict/<sample>` for any key of `verdictResponses`. Languages: `en`, `tr`.
+
+```sh
+APP=build/DerivedData/Build/Products/Debug-iphonesimulator/Judge.app
+xcrun simctl boot "iPhone 17"
+xcrun simctl install "iPhone 17" "$APP"
+xcrun simctl launch "iPhone 17" com.okjudge.judge -JudgeScreenshotState verdict/win_a_self:tr
+xcrun simctl io "iPhone 17" screenshot win_a_self_tr.png
+```
+
+Release builds contain neither the hook (`#if DEBUG`) nor the fixture file
+(`EXCLUDED_SOURCE_FILE_NAMES = verdicts.json` in the Judge Release
+configuration).
 
 ## Configuration
 
@@ -79,21 +98,23 @@ TURNSTILE_SITE_KEY =
 network addresses (`NSAllowsLocalNetworking`).
 
 **Bot check.** With `TURNSTILE_SITE_KEY` empty the app sends no Turnstile
-token, which only works against a server without `TURNSTILE_SECRET_KEY`. The
-live site answers such requests with `403 captcha_failed`. With the key set,
-the app runs an invisible Turnstile widget in a web view whose base URL is the
-API origin (`TurnstileBotCheck`); when Cloudflare asks for a tap, the widget
-appears in a sheet. The check runs before the judging cover is presented (the
-sheet hangs off the root view, which cannot present over the cover). Whether Cloudflare accepts tokens from a web view has to
-be tried against production before release.
+token, which only works against a server without `TURNSTILE_SECRET_KEY`; a
+server with the secret set answers such requests with `403 captcha_failed`.
+With the key set, the app runs an invisible Turnstile widget in a web view
+whose base URL is the API origin (`TurnstileBotCheck`); when Cloudflare asks
+for a tap, the widget appears in a sheet. The check runs before the judging
+cover is presented (the sheet hangs off the root view, which cannot present
+over the cover). Whether Cloudflare accepts tokens from a web view has to be
+tried against production before release.
 
 ## Layout
 
 ```
-project.yml                  XcodeGen spec (targets Judge, JudgeTests)
+Judge.xcodeproj              targets Judge, JudgeTests; shared scheme Judge
 Config/                      xcconfigs
 Judge/
-  App/                       JudgeApp (root view, tabs), AppModel, AppConfig
+  App/                       JudgeApp (root view, tabs), AppModel, AppConfig,
+                             ScreenshotState (Debug-only fixture states)
   Core/API/                  JudgeAPI (URLSession), APIError, BotCheck, TokenStore
   Core/Model/                Codable wire models, raw-JSON-preserving decoding
   Core/Display/              ports of the website's display logic (pure)
@@ -124,10 +145,23 @@ available. It covers:
   URL, waits, error messages, confidence text, preset emoji, palette, judging
   timeline), computed by the website's own code;
 - decoding of every sample body, absent vs `null` lean, unknown enum values;
-- the judging state machine and the balance motion;
+- the judging state machine, the progress bar and the balance motion;
 - error mapping, and `JudgeAPI` against a stub `URLProtocol` (headers,
-  timeouts, every error body, 524, HTML 5xx, offline, no automatic retry);
-- `HistoryStore` with an in-memory SwiftData container.
+  timeouts, every error body, 524 and 504, HTML 5xx, offline, no automatic
+  retry);
+- `HistoryStore` with an in-memory SwiftData container;
+- the Debug screenshot states (parsing, fixtures, no network).
+
+`LiveAPITests` sends one real free verdict and is skipped unless
+`JUDGE_LIVE_BASE_URL` is set. It costs a few cents and a rate-limit slot, so
+run it on purpose only:
+
+```sh
+TEST_RUNNER_JUDGE_LIVE_BASE_URL=https://okjudge.com xcodebuild   -project Judge.xcodeproj -scheme Judge   -destination 'platform=iOS Simulator,name=iPhone 17'   CODE_SIGNING_ALLOWED=NO -only-testing:JudgeTests/LiveAPITests test
+```
+
+`TEST_RUNNER_JUDGE_LIVE_TURNSTILE_TOKEN` passes a bot-check token for servers
+that require one.
 
 ## Assets
 

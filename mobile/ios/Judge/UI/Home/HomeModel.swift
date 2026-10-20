@@ -177,6 +177,15 @@ final class HomeModel {
     }
 }
 
+#if DEBUG
+extension HomeModel {
+    /// Screenshot fixtures: show an error without a request.
+    func showForScreenshot(error: APIError) {
+        self.error = error
+    }
+}
+#endif
+
 /// A UIKit background task around one request: about 30 s of extra run time
 /// after the user leaves the app. `expired` records that the time ran out
 /// (iOS then suspends the app and open connections usually drop).

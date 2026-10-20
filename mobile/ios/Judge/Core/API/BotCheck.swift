@@ -134,10 +134,10 @@ final class TurnstileBotCheck: BotCheck {
     }
 }
 
-/// Receives the widget's messages. `@preconcurrency` keeps the conformance
-/// valid whether or not the SDK marks WKScriptMessageHandler as main-actor.
+/// Receives the widget's messages. WebKit declares WKScriptMessageHandler
+/// main-actor isolated, so the conformance needs no annotation.
 @MainActor
-final class TurnstileBridge: NSObject, @preconcurrency WKScriptMessageHandler {
+final class TurnstileBridge: NSObject, WKScriptMessageHandler {
     static let name = "judgeTurnstile"
 
     enum Message: Sendable, Equatable {

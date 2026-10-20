@@ -7,7 +7,8 @@ enum APIError: Error, Sendable, Equatable {
     /// response was not JSON); a non-JSON 5xx arrives as code `unavailable`.
     case server(status: Int, body: ApiErrorBody?)
     case offline
-    /// Client timeout or Cloudflare's 524 (origin took longer than 100 s).
+    /// Client timeout, Cloudflare's 524 (origin took longer than 100 s) or a
+    /// gateway's 504.
     case timeout
     /// A 2xx whose body did not decode.
     case malformed
@@ -43,7 +44,7 @@ enum APIError: Error, Sendable, Equatable {
 
     /// Maps an HTTP error response.
     static func from(status: Int, body data: Data, retryAfterHeader: String?) -> APIError {
-        if status == 524 { return .timeout }
+        if status == 524 || status == 504 { return .timeout }
         guard var body = WireDecoding.errorBody(from: data) else {
             return status >= 500 ? .server(status: status, body: ApiErrorBody(code: "unavailable")) : .server(status: status, body: nil)
         }
