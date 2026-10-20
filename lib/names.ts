@@ -510,7 +510,14 @@ function trSelf(trCase: TrCase | "nom", after: string): { text: string; consumed
     return { text: `senin${next[1]}${turned}`, consumed: next[0].length };
   }
   const form = TR_SELF_CASE[trCase];
-  return form ? { text: form, consumed: 0 } : null;
+  if (!form) return null;
+  // A following "da/de" or question particle agrees with the label ("Taraf A'da da");
+  // make it agree with the pronoun instead ("sende de", "sana da").
+  const clitic = /^(\s+)(da|de|mı|mi|mu|mü)(?![\p{L}\p{N}])/u.exec(after);
+  if (!clitic) return { text: form, consumed: 0 };
+  const back = /[aıou][^aeıioöuü]*$/u.test(form);
+  const particle = clitic[2].startsWith("m") ? (back ? "mı" : "mi") : back ? "da" : "de";
+  return { text: `${form}${clitic[1]}${particle}`, consumed: clitic[0].length };
 }
 
 type Rendered = { text: string; consumed: number } | null;
