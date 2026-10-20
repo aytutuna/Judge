@@ -8,10 +8,16 @@ on:
     paths:
       - "mobile/**"
       - ".github/workflows/mobile.yml"
+      - "lib/**"
+      - "package.json"
+      - "package-lock.json"
   pull_request:
     paths:
       - "mobile/**"
       - ".github/workflows/mobile.yml"
+      - "lib/**"
+      - "package.json"
+      - "package-lock.json"
 
 concurrency:
   group: mobile-${{ github.ref }}
@@ -156,3 +162,22 @@ jobs:
           path: mobile/android/app/build/reports/tests
           retention-days: 5
           if-no-files-found: ignore
+
+  generated:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "24"
+          cache: npm
+
+      - run: npm ci
+
+      - name: Generated strings are current
+        run: npx tsx mobile/shared/strings/export-strings.ts --check
+
+      - name: Fixtures are current
+        run: npx tsx mobile/shared/fixtures/export-fixtures.ts --check
