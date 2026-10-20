@@ -47,9 +47,14 @@ itself a Claude call, so the raw text, names included, does go to Anthropic
 once; the privacy page says so. The name map returns to your browser only,
 where it puts the real names back into the verdict you see (a first-person
 narrator reads as "You" / "Sen"); share pages and the stored row stay
-anonymized. If anonymization fails for any reason (refusal, quota,
-timeout, malformed output), the request fails closed: nothing is judged and
-nothing is stored.
+anonymized. The anonymizer's output is checked in code: the names it lists
+are substituted in its text (including possessives and Turkish suffixes such
+as "Ryan's", "Burak'ın", "Burakla"), and a listed name that still survives, an
+untouched echo of the input, or capitalized words that survive unlisted
+trigger one retry at `medium` effort with a firmer instruction. If
+anonymization fails for any reason (refusal, quota, timeout, malformed
+output, a name that survives the retry), the request fails closed: nothing
+is judged and nothing is stored.
 
 **Türkçe / Turkish**: a TR | EN toggle in the header switches the whole UI, and
 the chosen language rides along with each request so the judges, the
@@ -90,7 +95,7 @@ An `ANTHROPIC_API_KEY` is **required** — without one the API refuses to judge
 | `NEXT_PUBLIC_SITE_URL` | *(Vercel production domain, else `http://localhost:3000`)* | Public origin, e.g. `https://verdict.example.org`, used for canonical links, link previews, `robots.txt` and the sitemap. Set it for a custom domain or a host other than Vercel. Read at build time, so redeploy after changing it |
 | `CONTACT_EMAIL` | *(empty)* | Address shown on `/privacy` for questions and removal requests. Unset or a placeholder (`example.com`) = the contact section is hidden. Read at build time, so redeploy after changing it |
 | `CLAUDE_MODEL` | `claude-haiku-5-5` | Judge and crux-trial model |
-| `CLAUDE_MODEL_LITE` | `claude-haiku-5-5` | Anonymizer model (always runs at `low` effort) |
+| `CLAUDE_MODEL_LITE` | `claude-haiku-5-5` | Anonymizer model (runs at `low` effort; its one retry runs at `medium`) |
 | `JUDGE_EFFORT` | `medium` | Thinking depth for judge and trial calls: `low`, `medium` or `high` |
 | `JUDGE_RUNS` | `3` | Self-consistency runs per verdict (1–3), run in parallel. Lower it to cut cost; confidence is capped accordingly |
 | `JUDGE_EXTRA_RUNS` | `2` | Extra judges (0–4, in parallel) called in when the first round's confidence is at or below `JUDGE_ESCALATE_AT`; all votes are then aggregated together. `0` turns escalation off |
@@ -107,7 +112,7 @@ about 3,050 input and 1,300 output tokens, so a full verdict (3 judges +
 anonymizer + up to 2 trial calls) costs roughly **$0.004–0.006** — about
 **$4–6 per 1,000 verdicts**. With the default `DAILY_VERDICT_CAP=1000`, the
 worst case is about $6 a day, plus about $2 if every verdict escalated.
-Each call has a fixed time budget (60s for the anonymizer, 120s for judges,
+Each call has a fixed time budget (60s for the anonymizer, retry included, 120s for judges,
 45s for escalation judges, 60s total for the trial), so a verdict never hangs
 indefinitely and the worst case (285s) fits the route's 300s limit. The SDK retries rate-limit and overload errors
 automatically, and a verdict that still fails on a 429 is reported as a quota

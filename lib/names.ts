@@ -136,8 +136,8 @@ export function partyNames(
 
 export type TrCase = "gen" | "genki" | "acc" | "dat" | "loc" | "locki" | "abl" | "ins" | "cop" | "past" | "ken" | "evid";
 
-/** A suffix after a label's apostrophe, as the judge wrote it for the letter
- * name ("A'nın", "B'ye"), read back as a grammatical case. */
+/** A suffix after a label's or a name's apostrophe ("A'nın", "B'ye",
+ * "Burak'ın"), read back as a grammatical case. */
 const TR_CASES: readonly [RegExp, TrCase][] = [
   [/^n?[ıiuü]nki$/, "genki"],
   [/^n?[ıiuü]n$/, "gen"],
@@ -153,7 +153,7 @@ const TR_CASES: readonly [RegExp, TrCase][] = [
   [/^y?m[ıiuü]ş$/, "evid"],
 ];
 
-function classifyTr(suffix: string): TrCase | null {
+export function classifyTr(suffix: string): TrCase | null {
   const s = suffix.toLocaleLowerCase("tr");
   for (const [re, c] of TR_CASES) if (re.test(s)) return c;
   return null;
