@@ -80,7 +80,7 @@ final class DecodingTests: XCTestCase {
         XCTAssertEqual(payload.source, .en)
         XCTAssertTrue(payload.translated)
         XCTAssertTrue(payload.looksValid)
-        XCTAssertEqual(payload.result.result.headline, "Kimse sandviç isteyip sosisli beklemez")
+        XCTAssertEqual(payload.result.result.headline, "Taraf B kelimenin anlamını zorluyor, Taraf A'nın menü testi kazanıyor")
     }
 
     func testStoredResponse() throws {

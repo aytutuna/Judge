@@ -62,7 +62,7 @@ final class HistoryStoreTests: XCTestCase {
             try store.cacheTranslation(id: "abc123DEF0", lang: .tr, json: translated.result.json)
 
             let restored = try XCTUnwrap(try store.find(id: "abc123DEF0")?.session())
-            XCTAssertEqual(restored.translations[.tr]?.result.headline, "Kimse sandviç isteyip sosisli beklemez")
+            XCTAssertEqual(restored.translations[.tr]?.result.headline, "Taraf B kelimenin anlamını zorluyor, Taraf A'nın menü testi kazanıyor")
             XCTAssertEqual(restored.original.result.lang, .en, "the original is kept next to the translation")
 
             // Caching for an unknown id is a no-op.

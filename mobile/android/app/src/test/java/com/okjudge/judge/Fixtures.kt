@@ -1,8 +1,11 @@
 package com.okjudge.judge
 
 import com.okjudge.judge.core.model.NameMapping
+import com.okjudge.judge.core.model.TranslateOutcome
 import com.okjudge.judge.core.model.VerdictOutcome
+import com.okjudge.judge.core.model.VerdictResult
 import com.okjudge.judge.core.model.WireJson
+import com.okjudge.judge.i18n.AppLang
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
@@ -34,6 +37,13 @@ object Fixtures {
     fun sampleJson(name: String): String = verdicts["verdictResponses"]!!.jsonObject[name]!!.toString()
 
     fun sample(name: String): VerdictOutcome = WireJson.decodeVerdictResponse(sampleJson(name))
+
+    /** The fixture translation body, through the app's wire decoder. */
+    val translation: TranslateOutcome by lazy { WireJson.decodeTranslateResponse(verdicts["translateResponse"].toString()) }
+
+    /** The fixture translation of verdict [id] into [lang], or null when there is none. */
+    fun translationOf(id: String, lang: AppLang): VerdictResult? =
+        translation.takeIf { it.id == id && it.lang == lang.tag }?.result?.result
 
     fun nameMap(element: JsonElement): List<NameMapping> = element.jsonArray.map {
         NameMapping(it.jsonObject.str("original")!!, it.jsonObject.str("replacement")!!)

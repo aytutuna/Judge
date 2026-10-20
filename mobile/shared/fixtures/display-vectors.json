@@ -17,7 +17,26 @@
       "personalized": {
         "headline": "Sam is stretching the word, and your menu test wins",
         "crux": "Sam goes by shape; you go by how people use the word.",
-        "losing_side_best_point": "Sam is right that you would struggle to define a sandwich without including it."
+        "losing_side_best_point": "Sam is right that you would struggle to define a sandwich without including it.",
+        "side_a": [
+          "Menus never list hot dogs as sandwiches"
+        ],
+        "side_b": [
+          "A filling in a split roll is a sandwich"
+        ],
+        "bedrock_a": "Words mean what people use them to mean",
+        "bedrock_b": "Definitions follow form",
+        "facts_relied_on": [
+          "Major menus list hot dogs separately from sandwiches"
+        ],
+        "split_points": null,
+        "conditional_if_value": null,
+        "conditional_then": null,
+        "lean_reason": null,
+        "crux_trial_attack": "Dictionaries disagree.",
+        "crux_trial_reasoning": "Usage wins here.",
+        "fact_check_claims": null,
+        "fact_check_summaries": null
       }
     },
     {
@@ -37,7 +56,26 @@
       "personalized": {
         "headline": "Sam is stretching the word, and your menu test wins",
         "crux": "Sam goes by shape; you go by how people use the word.",
-        "losing_side_best_point": "Sam is right that you would struggle to define a sandwich without including it."
+        "losing_side_best_point": "Sam is right that you would struggle to define a sandwich without including it.",
+        "side_a": [
+          "Menus never list hot dogs as sandwiches"
+        ],
+        "side_b": [
+          "A filling in a split roll is a sandwich"
+        ],
+        "bedrock_a": "Words mean what people use them to mean",
+        "bedrock_b": "Definitions follow form",
+        "facts_relied_on": [
+          "Major menus list hot dogs separately from sandwiches"
+        ],
+        "split_points": null,
+        "conditional_if_value": null,
+        "conditional_then": null,
+        "lean_reason": null,
+        "crux_trial_attack": "Dictionaries disagree.",
+        "crux_trial_reasoning": "Usage wins here.",
+        "fact_check_claims": null,
+        "fact_check_summaries": null
       }
     },
     {
@@ -57,7 +95,26 @@
       "personalized": {
         "headline": "Nobody orders a sandwich hoping for a hot dog",
         "crux": "Whether 'sandwich' follows shape or everyday use.",
-        "losing_side_best_point": "A split roll with a filling does fit most dictionary definitions."
+        "losing_side_best_point": "A split roll with a filling does fit most dictionary definitions.",
+        "side_a": [
+          "Menus never list hot dogs as sandwiches"
+        ],
+        "side_b": [
+          "A filling in a split roll is a sandwich"
+        ],
+        "bedrock_a": "Words mean what people use them to mean",
+        "bedrock_b": "Definitions follow form",
+        "facts_relied_on": [
+          "Major menus list hot dogs separately from sandwiches"
+        ],
+        "split_points": null,
+        "conditional_if_value": null,
+        "conditional_then": null,
+        "lean_reason": null,
+        "crux_trial_attack": null,
+        "crux_trial_reasoning": null,
+        "fact_check_claims": null,
+        "fact_check_summaries": null
       }
     },
     {
@@ -77,7 +134,26 @@
       "personalized": {
         "headline": "Nobody orders a sandwich hoping for a hot dog",
         "crux": "Whether 'sandwich' follows shape or everyday use.",
-        "losing_side_best_point": "A split roll with a filling does fit most dictionary definitions."
+        "losing_side_best_point": "A split roll with a filling does fit most dictionary definitions.",
+        "side_a": [
+          "Menus never list hot dogs as sandwiches"
+        ],
+        "side_b": [
+          "A filling in a split roll is a sandwich"
+        ],
+        "bedrock_a": "Words mean what people use them to mean",
+        "bedrock_b": "Definitions follow form",
+        "facts_relied_on": [
+          "Major menus list hot dogs separately from sandwiches"
+        ],
+        "split_points": null,
+        "conditional_if_value": null,
+        "conditional_then": null,
+        "lean_reason": null,
+        "crux_trial_attack": null,
+        "crux_trial_reasoning": null,
+        "fact_check_claims": null,
+        "fact_check_summaries": null
       }
     },
     {
@@ -100,7 +176,26 @@
       "personalized": {
         "headline": "Nobody orders a sandwich hoping for a hot dog",
         "crux": "Whether 'sandwich' follows shape or everyday use.",
-        "losing_side_best_point": "A split roll with a filling does fit most dictionary definitions."
+        "losing_side_best_point": "A split roll with a filling does fit most dictionary definitions.",
+        "side_a": [
+          "Menus never list hot dogs as sandwiches"
+        ],
+        "side_b": [
+          "A filling in a split roll is a sandwich"
+        ],
+        "bedrock_a": "Words mean what people use them to mean",
+        "bedrock_b": "Definitions follow form",
+        "facts_relied_on": [
+          "Major menus list hot dogs separately from sandwiches"
+        ],
+        "split_points": null,
+        "conditional_if_value": null,
+        "conditional_then": null,
+        "lean_reason": "Party B's reading is closer to common use.",
+        "crux_trial_attack": null,
+        "crux_trial_reasoning": null,
+        "fact_check_claims": null,
+        "fact_check_summaries": null
       }
     },
     {
@@ -123,7 +218,26 @@
       "personalized": {
         "headline": "Nobody orders a sandwich hoping for a hot dog",
         "crux": "Whether 'sandwich' follows shape or everyday use.",
-        "losing_side_best_point": "A split roll with a filling does fit most dictionary definitions."
+        "losing_side_best_point": "A split roll with a filling does fit most dictionary definitions.",
+        "side_a": [
+          "Menus never list hot dogs as sandwiches"
+        ],
+        "side_b": [
+          "A filling in a split roll is a sandwich"
+        ],
+        "bedrock_a": "Words mean what people use them to mean",
+        "bedrock_b": "Definitions follow form",
+        "facts_relied_on": [
+          "Major menus list hot dogs separately from sandwiches"
+        ],
+        "split_points": null,
+        "conditional_if_value": null,
+        "conditional_then": null,
+        "lean_reason": "Party B's reading is closer to common use.",
+        "crux_trial_attack": null,
+        "crux_trial_reasoning": null,
+        "fact_check_claims": null,
+        "fact_check_summaries": null
       }
     },
     {
@@ -143,7 +257,26 @@
       "personalized": {
         "headline": "Nobody orders a sandwich hoping for a hot dog",
         "crux": "Whether 'sandwich' follows shape or everyday use.",
-        "losing_side_best_point": "A split roll with a filling does fit most dictionary definitions."
+        "losing_side_best_point": "A split roll with a filling does fit most dictionary definitions.",
+        "side_a": [
+          "Menus never list hot dogs as sandwiches"
+        ],
+        "side_b": [
+          "A filling in a split roll is a sandwich"
+        ],
+        "bedrock_a": "Words mean what people use them to mean",
+        "bedrock_b": "Definitions follow form",
+        "facts_relied_on": [
+          "Major menus list hot dogs separately from sandwiches"
+        ],
+        "split_points": null,
+        "conditional_if_value": null,
+        "conditional_then": null,
+        "lean_reason": null,
+        "crux_trial_attack": null,
+        "crux_trial_reasoning": null,
+        "fact_check_claims": null,
+        "fact_check_summaries": null
       }
     },
     {
@@ -163,7 +296,26 @@
       "personalized": {
         "headline": "Nobody orders a sandwich hoping for a hot dog",
         "crux": "Whether 'sandwich' follows shape or everyday use.",
-        "losing_side_best_point": "A split roll with a filling does fit most dictionary definitions."
+        "losing_side_best_point": "A split roll with a filling does fit most dictionary definitions.",
+        "side_a": [
+          "Menus never list hot dogs as sandwiches"
+        ],
+        "side_b": [
+          "A filling in a split roll is a sandwich"
+        ],
+        "bedrock_a": "Words mean what people use them to mean",
+        "bedrock_b": "Definitions follow form",
+        "facts_relied_on": [
+          "Major menus list hot dogs separately from sandwiches"
+        ],
+        "split_points": null,
+        "conditional_if_value": null,
+        "conditional_then": null,
+        "lean_reason": null,
+        "crux_trial_attack": null,
+        "crux_trial_reasoning": null,
+        "fact_check_claims": null,
+        "fact_check_summaries": null
       }
     },
     {
@@ -186,7 +338,32 @@
       "personalized": {
         "headline": "Nobody orders a sandwich hoping for a hot dog",
         "crux": "Whether 'sandwich' follows shape or everyday use.",
-        "losing_side_best_point": "A split roll with a filling does fit most dictionary definitions."
+        "losing_side_best_point": "A split roll with a filling does fit most dictionary definitions.",
+        "side_a": [
+          "Menus never list hot dogs as sandwiches"
+        ],
+        "side_b": [
+          "A filling in a split roll is a sandwich"
+        ],
+        "bedrock_a": "Words mean what people use them to mean",
+        "bedrock_b": "Definitions follow form",
+        "facts_relied_on": [
+          "Major menus list hot dogs separately from sandwiches"
+        ],
+        "split_points": null,
+        "conditional_if_value": [
+          "If honesty comes first",
+          "If kindness comes first"
+        ],
+        "conditional_then": [
+          "Party B is right",
+          "Party A is right"
+        ],
+        "lean_reason": "Small kindnesses keep friendships going.",
+        "crux_trial_attack": null,
+        "crux_trial_reasoning": null,
+        "fact_check_claims": null,
+        "fact_check_summaries": null
       }
     },
     {
@@ -209,7 +386,32 @@
       "personalized": {
         "headline": "Nobody orders a sandwich hoping for a hot dog",
         "crux": "Whether 'sandwich' follows shape or everyday use.",
-        "losing_side_best_point": "A split roll with a filling does fit most dictionary definitions."
+        "losing_side_best_point": "A split roll with a filling does fit most dictionary definitions.",
+        "side_a": [
+          "Menus never list hot dogs as sandwiches"
+        ],
+        "side_b": [
+          "A filling in a split roll is a sandwich"
+        ],
+        "bedrock_a": "Words mean what people use them to mean",
+        "bedrock_b": "Definitions follow form",
+        "facts_relied_on": [
+          "Major menus list hot dogs separately from sandwiches"
+        ],
+        "split_points": null,
+        "conditional_if_value": [
+          "If honesty comes first",
+          "If kindness comes first"
+        ],
+        "conditional_then": [
+          "Party B is right",
+          "Party A is right"
+        ],
+        "lean_reason": "Small kindnesses keep friendships going.",
+        "crux_trial_attack": null,
+        "crux_trial_reasoning": null,
+        "fact_check_claims": null,
+        "fact_check_summaries": null
       }
     },
     {
@@ -232,7 +434,29 @@
       "personalized": {
         "headline": "Nobody orders a sandwich hoping for a hot dog",
         "crux": "Whether 'sandwich' follows shape or everyday use.",
-        "losing_side_best_point": "A split roll with a filling does fit most dictionary definitions."
+        "losing_side_best_point": "A split roll with a filling does fit most dictionary definitions.",
+        "side_a": [
+          "Menus never list hot dogs as sandwiches"
+        ],
+        "side_b": [
+          "A filling in a split roll is a sandwich"
+        ],
+        "bedrock_a": "Words mean what people use them to mean",
+        "bedrock_b": "Definitions follow form",
+        "facts_relied_on": [
+          "Major menus list hot dogs separately from sandwiches"
+        ],
+        "split_points": [
+          "Botanically it is a fruit.",
+          "In the kitchen it is a vegetable."
+        ],
+        "conditional_if_value": null,
+        "conditional_then": null,
+        "lean_reason": "The question asked was botanical.",
+        "crux_trial_attack": null,
+        "crux_trial_reasoning": null,
+        "fact_check_claims": null,
+        "fact_check_summaries": null
       }
     },
     {
@@ -255,7 +479,29 @@
       "personalized": {
         "headline": "Nobody orders a sandwich hoping for a hot dog",
         "crux": "Whether 'sandwich' follows shape or everyday use.",
-        "losing_side_best_point": "A split roll with a filling does fit most dictionary definitions."
+        "losing_side_best_point": "A split roll with a filling does fit most dictionary definitions.",
+        "side_a": [
+          "Menus never list hot dogs as sandwiches"
+        ],
+        "side_b": [
+          "A filling in a split roll is a sandwich"
+        ],
+        "bedrock_a": "Words mean what people use them to mean",
+        "bedrock_b": "Definitions follow form",
+        "facts_relied_on": [
+          "Major menus list hot dogs separately from sandwiches"
+        ],
+        "split_points": [
+          "Botanically it is a fruit.",
+          "In the kitchen it is a vegetable."
+        ],
+        "conditional_if_value": null,
+        "conditional_then": null,
+        "lean_reason": "The question asked was botanical.",
+        "crux_trial_attack": null,
+        "crux_trial_reasoning": null,
+        "fact_check_claims": null,
+        "fact_check_summaries": null
       }
     },
     {
@@ -275,7 +521,26 @@
       "personalized": {
         "headline": "Parmak çıtlatmak artrite yol açmıyor",
         "crux": "annem'in korkusu kanıta dayanıyor mu, yoksa Taraf A haklı mı?",
-        "losing_side_best_point": "Bazı küçük çalışmalar şişlik bildiriyor."
+        "losing_side_best_point": "Bazı küçük çalışmalar şişlik bildiriyor.",
+        "side_a": [
+          "Menus never list hot dogs as sandwiches"
+        ],
+        "side_b": [
+          "A filling in a split roll is a sandwich"
+        ],
+        "bedrock_a": "Words mean what people use them to mean",
+        "bedrock_b": "Definitions follow form",
+        "facts_relied_on": [
+          "Major menus list hot dogs separately from sandwiches"
+        ],
+        "split_points": null,
+        "conditional_if_value": null,
+        "conditional_then": null,
+        "lean_reason": null,
+        "crux_trial_attack": "Uzun vadeli çalışma az.",
+        "crux_trial_reasoning": "İtiraz yerinde.",
+        "fact_check_claims": null,
+        "fact_check_summaries": null
       }
     },
     {
@@ -295,7 +560,26 @@
       "personalized": {
         "headline": "Parmak çıtlatmak artrite yol açmıyor",
         "crux": "annem'in korkusu kanıta dayanıyor mu, yoksa Taraf A haklı mı?",
-        "losing_side_best_point": "Bazı küçük çalışmalar şişlik bildiriyor."
+        "losing_side_best_point": "Bazı küçük çalışmalar şişlik bildiriyor.",
+        "side_a": [
+          "Menus never list hot dogs as sandwiches"
+        ],
+        "side_b": [
+          "A filling in a split roll is a sandwich"
+        ],
+        "bedrock_a": "Words mean what people use them to mean",
+        "bedrock_b": "Definitions follow form",
+        "facts_relied_on": [
+          "Major menus list hot dogs separately from sandwiches"
+        ],
+        "split_points": null,
+        "conditional_if_value": null,
+        "conditional_then": null,
+        "lean_reason": null,
+        "crux_trial_attack": "Uzun vadeli çalışma az.",
+        "crux_trial_reasoning": "İtiraz yerinde.",
+        "fact_check_claims": null,
+        "fact_check_summaries": null
       }
     },
     {
@@ -315,7 +599,24 @@
       "personalized": {
         "headline": "The AI wouldn't weigh in on this one",
         "crux": "Whether 'sandwich' follows shape or everyday use.",
-        "losing_side_best_point": "A split roll with a filling does fit most dictionary definitions."
+        "losing_side_best_point": "A split roll with a filling does fit most dictionary definitions.",
+        "side_a": [
+          "Skipped"
+        ],
+        "side_b": [
+          "Skipped"
+        ],
+        "bedrock_a": "—",
+        "bedrock_b": "—",
+        "facts_relied_on": [],
+        "split_points": null,
+        "conditional_if_value": null,
+        "conditional_then": null,
+        "lean_reason": null,
+        "crux_trial_attack": null,
+        "crux_trial_reasoning": null,
+        "fact_check_claims": null,
+        "fact_check_summaries": null
       }
     },
     {
@@ -335,7 +636,24 @@
       "personalized": {
         "headline": "The AI wouldn't weigh in on this one",
         "crux": "Whether 'sandwich' follows shape or everyday use.",
-        "losing_side_best_point": "A split roll with a filling does fit most dictionary definitions."
+        "losing_side_best_point": "A split roll with a filling does fit most dictionary definitions.",
+        "side_a": [
+          "Skipped"
+        ],
+        "side_b": [
+          "Skipped"
+        ],
+        "bedrock_a": "—",
+        "bedrock_b": "—",
+        "facts_relied_on": [],
+        "split_points": null,
+        "conditional_if_value": null,
+        "conditional_then": null,
+        "lean_reason": null,
+        "crux_trial_attack": null,
+        "crux_trial_reasoning": null,
+        "fact_check_claims": null,
+        "fact_check_summaries": null
       }
     },
     {
@@ -355,7 +673,30 @@
       "personalized": {
         "headline": "Nobody orders a sandwich hoping for a hot dog",
         "crux": "Whether 'sandwich' follows shape or everyday use.",
-        "losing_side_best_point": "A split roll with a filling does fit most dictionary definitions."
+        "losing_side_best_point": "A split roll with a filling does fit most dictionary definitions.",
+        "side_a": [
+          "Menus never list hot dogs as sandwiches"
+        ],
+        "side_b": [
+          "A filling in a split roll is a sandwich"
+        ],
+        "bedrock_a": "Words mean what people use them to mean",
+        "bedrock_b": "Definitions follow form",
+        "facts_relied_on": [
+          "Major menus list hot dogs separately from sandwiches"
+        ],
+        "split_points": null,
+        "conditional_if_value": null,
+        "conditional_then": null,
+        "lean_reason": null,
+        "crux_trial_attack": null,
+        "crux_trial_reasoning": null,
+        "fact_check_claims": [
+          "Menus list hot dogs separately"
+        ],
+        "fact_check_summaries": [
+          "Most do."
+        ]
       }
     },
     {
@@ -375,7 +716,30 @@
       "personalized": {
         "headline": "Nobody orders a sandwich hoping for a hot dog",
         "crux": "Whether 'sandwich' follows shape or everyday use.",
-        "losing_side_best_point": "A split roll with a filling does fit most dictionary definitions."
+        "losing_side_best_point": "A split roll with a filling does fit most dictionary definitions.",
+        "side_a": [
+          "Menus never list hot dogs as sandwiches"
+        ],
+        "side_b": [
+          "A filling in a split roll is a sandwich"
+        ],
+        "bedrock_a": "Words mean what people use them to mean",
+        "bedrock_b": "Definitions follow form",
+        "facts_relied_on": [
+          "Major menus list hot dogs separately from sandwiches"
+        ],
+        "split_points": null,
+        "conditional_if_value": null,
+        "conditional_then": null,
+        "lean_reason": null,
+        "crux_trial_attack": null,
+        "crux_trial_reasoning": null,
+        "fact_check_claims": [
+          "Menus list hot dogs separately"
+        ],
+        "fact_check_summaries": [
+          "Most do."
+        ]
       }
     }
   ],
@@ -665,6 +1029,772 @@
       "nameB": "Taraf B",
       "aIsSelf": false,
       "bIsSelf": false
+    }
+  ],
+  "restore": [
+    {
+      "text": "Party A is right about the menus.",
+      "nameMap": [
+        {
+          "original": "I",
+          "replacement": "Party A"
+        },
+        {
+          "original": "Sam",
+          "replacement": "Party B"
+        }
+      ],
+      "selfLang": "en",
+      "textLang": "en",
+      "expected": "You are right about the menus."
+    },
+    {
+      "text": "Party B says Party A was late.",
+      "nameMap": [
+        {
+          "original": "I",
+          "replacement": "Party A"
+        },
+        {
+          "original": "Sam",
+          "replacement": "Party B"
+        }
+      ],
+      "selfLang": "en",
+      "textLang": "en",
+      "expected": "Sam says you were late."
+    },
+    {
+      "text": "Party A has a point, but Party A doesn't see it.",
+      "nameMap": [
+        {
+          "original": "I",
+          "replacement": "Party A"
+        },
+        {
+          "original": "Sam",
+          "replacement": "Party B"
+        }
+      ],
+      "selfLang": "en",
+      "textLang": "en",
+      "expected": "You have a point, but you don't see it."
+    },
+    {
+      "text": "Party A isn't wrong, but Party A didn't ask.",
+      "nameMap": [
+        {
+          "original": "I",
+          "replacement": "Party A"
+        },
+        {
+          "original": "Sam",
+          "replacement": "Party B"
+        }
+      ],
+      "selfLang": "en",
+      "textLang": "en",
+      "expected": "You aren't wrong, but you didn't ask."
+    },
+    {
+      "text": "Party A can't prove it, and Party A should apologize.",
+      "nameMap": [
+        {
+          "original": "I",
+          "replacement": "Party A"
+        },
+        {
+          "original": "Sam",
+          "replacement": "Party B"
+        }
+      ],
+      "selfLang": "en",
+      "textLang": "en",
+      "expected": "You can't prove it, and you should apologize."
+    },
+    {
+      "text": "Party A ignored the menus.",
+      "nameMap": [
+        {
+          "original": "I",
+          "replacement": "Party A"
+        },
+        {
+          "original": "Sam",
+          "replacement": "Party B"
+        }
+      ],
+      "selfLang": "en",
+      "textLang": "en",
+      "expected": "You ignored the menus."
+    },
+    {
+      "text": "Party A wants a sandwich; Party B wants a hot dog.",
+      "nameMap": [
+        {
+          "original": "I",
+          "replacement": "Party A"
+        },
+        {
+          "original": "Sam",
+          "replacement": "Party B"
+        }
+      ],
+      "selfLang": "en",
+      "textLang": "en",
+      "expected": "You want a sandwich; Sam wants a hot dog."
+    },
+    {
+      "text": "This is the thing Party A wants.",
+      "nameMap": [
+        {
+          "original": "I",
+          "replacement": "Party A"
+        },
+        {
+          "original": "Sam",
+          "replacement": "Party B"
+        }
+      ],
+      "selfLang": "en",
+      "textLang": "en",
+      "expected": "This is the thing you want."
+    },
+    {
+      "text": "Party B knows that Party A tries hard.",
+      "nameMap": [
+        {
+          "original": "I",
+          "replacement": "Party A"
+        },
+        {
+          "original": "Sam",
+          "replacement": "Party B"
+        }
+      ],
+      "selfLang": "en",
+      "textLang": "en",
+      "expected": "Sam knows that you try hard."
+    },
+    {
+      "text": "Party B and Party A are both wrong.",
+      "nameMap": [
+        {
+          "original": "I",
+          "replacement": "Party A"
+        },
+        {
+          "original": "Sam",
+          "replacement": "Party B"
+        }
+      ],
+      "selfLang": "en",
+      "textLang": "en",
+      "expected": "Sam and you are both wrong."
+    },
+    {
+      "text": "Party A's menu test wins.",
+      "nameMap": [
+        {
+          "original": "I",
+          "replacement": "Party A"
+        },
+        {
+          "original": "Sam",
+          "replacement": "Party B"
+        }
+      ],
+      "selfLang": "en",
+      "textLang": "en",
+      "expected": "Your menu test wins."
+    },
+    {
+      "text": "Party B owes an apology to Party A.",
+      "nameMap": [
+        {
+          "original": "I",
+          "replacement": "Party A"
+        },
+        {
+          "original": "Sam",
+          "replacement": "Party B"
+        }
+      ],
+      "selfLang": "en",
+      "textLang": "en",
+      "expected": "Sam owes an apology to you."
+    },
+    {
+      "text": "Person C told Party A the truth, and Party B tries harder than Party A.",
+      "nameMap": [
+        {
+          "original": "I",
+          "replacement": "Party A"
+        },
+        {
+          "original": "Sam",
+          "replacement": "Party B"
+        },
+        {
+          "original": "Ayşe",
+          "replacement": "Kişi C"
+        }
+      ],
+      "selfLang": "en",
+      "textLang": "en",
+      "expected": "Ayşe told you the truth, and Sam tries harder than you."
+    },
+    {
+      "text": "\"Party A is late,\" said Party B.",
+      "nameMap": [
+        {
+          "original": "I",
+          "replacement": "Party A"
+        },
+        {
+          "original": "Sam",
+          "replacement": "Party B"
+        }
+      ],
+      "selfLang": "en",
+      "textLang": "en",
+      "expected": "\"You are late,\" said Sam."
+    },
+    {
+      "text": "Party B gives Party A points.",
+      "nameMap": [
+        {
+          "original": "I",
+          "replacement": "Party A"
+        },
+        {
+          "original": "Sam",
+          "replacement": "Party B"
+        }
+      ],
+      "selfLang": "en",
+      "textLang": "en",
+      "expected": "Sam gives Party A points."
+    },
+    {
+      "text": "Party A, frankly, is wrong.",
+      "nameMap": [
+        {
+          "original": "I",
+          "replacement": "Party A"
+        },
+        {
+          "original": "Sam",
+          "replacement": "Party B"
+        }
+      ],
+      "selfLang": "en",
+      "textLang": "en",
+      "expected": "Party A, frankly, is wrong."
+    },
+    {
+      "text": "Party A was and is stubborn.",
+      "nameMap": [
+        {
+          "original": "I",
+          "replacement": "Party A"
+        },
+        {
+          "original": "Sam",
+          "replacement": "Party B"
+        }
+      ],
+      "selfLang": "en",
+      "textLang": "en",
+      "expected": "Party A was and is stubborn."
+    },
+    {
+      "text": "Party A alone decides.",
+      "nameMap": [
+        {
+          "original": "I",
+          "replacement": "Party A"
+        },
+        {
+          "original": "Sam",
+          "replacement": "Party B"
+        }
+      ],
+      "selfLang": "en",
+      "textLang": "en",
+      "expected": "Party A alone decides."
+    },
+    {
+      "text": "Party A's plan beats Party B's, and Party A knows it.",
+      "nameMap": [
+        {
+          "original": "Alex",
+          "replacement": "Party A"
+        },
+        {
+          "original": "Jordan",
+          "replacement": "Party B"
+        }
+      ],
+      "selfLang": "en",
+      "textLang": "en",
+      "expected": "Alex's plan beats Jordan's, and Alex knows it."
+    },
+    {
+      "text": "Party B’s point stands.",
+      "nameMap": [
+        {
+          "original": "I",
+          "replacement": "Party A"
+        },
+        {
+          "original": "Sam",
+          "replacement": "Party B"
+        }
+      ],
+      "selfLang": "en",
+      "textLang": "en",
+      "expected": "Sam’s point stands."
+    },
+    {
+      "text": "Party B'nin point was sent to Party A'ya.",
+      "nameMap": [
+        {
+          "original": "I",
+          "replacement": "Party A"
+        },
+        {
+          "original": "Sam",
+          "replacement": "Party B"
+        }
+      ],
+      "selfLang": "en",
+      "textLang": "en",
+      "expected": "Sam's point was sent to you."
+    },
+    {
+      "text": "Party AB and xParty A are not labels, Party C and Person A neither, but Party B is.",
+      "nameMap": [
+        {
+          "original": "I",
+          "replacement": "Party A"
+        },
+        {
+          "original": "Sam",
+          "replacement": "Party B"
+        }
+      ],
+      "selfLang": "en",
+      "textLang": "en",
+      "expected": "Party AB and xParty A are not labels, Party C and Person A neither, but Sam is."
+    },
+    {
+      "text": "Party A is right and Person C agrees.",
+      "nameMap": [],
+      "selfLang": "en",
+      "textLang": "en",
+      "expected": "Party A is right and Person C agrees."
+    },
+    {
+      "text": "Party A is right and Party B's idea fails.",
+      "nameMap": [
+        {
+          "original": "Ben",
+          "replacement": "Taraf A"
+        },
+        {
+          "original": "Deniz'in",
+          "replacement": "Taraf B'nin"
+        }
+      ],
+      "selfLang": "tr",
+      "textLang": "en",
+      "expected": "You are right and Deniz's idea fails."
+    },
+    {
+      "text": "Taraf A haklı.",
+      "nameMap": [
+        {
+          "original": "Ben",
+          "replacement": "Taraf A"
+        },
+        {
+          "original": "Deniz'in",
+          "replacement": "Taraf B'nin"
+        }
+      ],
+      "selfLang": "tr",
+      "textLang": "tr",
+      "expected": "Sen haklısın."
+    },
+    {
+      "text": "Bu konuda Taraf A kesinlikle haklı, Taraf B ise haksız.",
+      "nameMap": [
+        {
+          "original": "Ben",
+          "replacement": "Taraf A"
+        },
+        {
+          "original": "Deniz'in",
+          "replacement": "Taraf B'nin"
+        }
+      ],
+      "selfLang": "tr",
+      "textLang": "tr",
+      "expected": "Bu konuda sen kesinlikle haklısın, Deniz ise haksız."
+    },
+    {
+      "text": "Taraf A haklıydı. Taraf A haklı bir noktaya değinmedi.",
+      "nameMap": [
+        {
+          "original": "Ben",
+          "replacement": "Taraf A"
+        },
+        {
+          "original": "Deniz'in",
+          "replacement": "Taraf B'nin"
+        }
+      ],
+      "selfLang": "tr",
+      "textLang": "tr",
+      "expected": "Sen haklıydın. Taraf A haklı bir noktaya değinmedi."
+    },
+    {
+      "text": "Taraf B, Taraf A'ya borçlu ve Taraf A'yı suçluyor.",
+      "nameMap": [
+        {
+          "original": "Ben",
+          "replacement": "Taraf A"
+        },
+        {
+          "original": "Deniz'in",
+          "replacement": "Taraf B'nin"
+        }
+      ],
+      "selfLang": "tr",
+      "textLang": "tr",
+      "expected": "Deniz, sana borçlu ve seni suçluyor."
+    },
+    {
+      "text": "Taraf B, Taraf A'dan özür dilemeli; Taraf A'da da haklılık payı var.",
+      "nameMap": [
+        {
+          "original": "Ben",
+          "replacement": "Taraf A"
+        },
+        {
+          "original": "Deniz'in",
+          "replacement": "Taraf B'nin"
+        }
+      ],
+      "selfLang": "tr",
+      "textLang": "tr",
+      "expected": "Deniz, senden özür dilemeli; sende de haklılık payı var."
+    },
+    {
+      "text": "Taraf A'yla konuşmak gerek, Taraf A'daki inat belli.",
+      "nameMap": [
+        {
+          "original": "Ben",
+          "replacement": "Taraf A"
+        },
+        {
+          "original": "Deniz'in",
+          "replacement": "Taraf B'nin"
+        }
+      ],
+      "selfLang": "tr",
+      "textLang": "tr",
+      "expected": "Seninle konuşmak gerek, sendeki inat belli."
+    },
+    {
+      "text": "Bu karar Taraf A için iyi. Taraf A'ya göre menü belirleyici.",
+      "nameMap": [
+        {
+          "original": "Ben",
+          "replacement": "Taraf A"
+        },
+        {
+          "original": "Deniz'in",
+          "replacement": "Taraf B'nin"
+        }
+      ],
+      "selfLang": "tr",
+      "textLang": "tr",
+      "expected": "Bu karar senin için iyi. Sana göre menü belirleyici."
+    },
+    {
+      "text": "Taraf A açısından ölçüt kullanım, Taraf A ile Taraf B ise anlaşamıyor.",
+      "nameMap": [
+        {
+          "original": "Ben",
+          "replacement": "Taraf A"
+        },
+        {
+          "original": "Deniz'in",
+          "replacement": "Taraf B'nin"
+        }
+      ],
+      "selfLang": "tr",
+      "textLang": "tr",
+      "expected": "Senin açından ölçüt kullanım, seninle Deniz ise anlaşamıyor."
+    },
+    {
+      "text": "Taraf A'nın istediği şey açık: Taraf A'nın gelmesi ve Taraf A'nın yapmasına izin verilmesi.",
+      "nameMap": [
+        {
+          "original": "Ben",
+          "replacement": "Taraf A"
+        },
+        {
+          "original": "Deniz'in",
+          "replacement": "Taraf B'nin"
+        }
+      ],
+      "selfLang": "tr",
+      "textLang": "tr",
+      "expected": "Senin istediğin şey açık: senin gelmen ve senin yapmana izin verilmesi."
+    },
+    {
+      "text": "Taraf A'nınki daha mantıklı.",
+      "nameMap": [
+        {
+          "original": "Ben",
+          "replacement": "Taraf A"
+        },
+        {
+          "original": "Deniz'in",
+          "replacement": "Taraf B'nin"
+        }
+      ],
+      "selfLang": "tr",
+      "textLang": "tr",
+      "expected": "Seninki daha mantıklı."
+    },
+    {
+      "text": "Taraf A'nın menü testi kazanıyor, Taraf A'nın çoğu iddiası doğru.",
+      "nameMap": [
+        {
+          "original": "Ben",
+          "replacement": "Taraf A"
+        },
+        {
+          "original": "Deniz'in",
+          "replacement": "Taraf B'nin"
+        }
+      ],
+      "selfLang": "tr",
+      "textLang": "tr",
+      "expected": "Taraf A'nın menü testi kazanıyor, Taraf A'nın çoğu iddiası doğru."
+    },
+    {
+      "text": "Taraf A şunu söylüyor: haklı olan Taraf A'ydı. Yanılan Taraf B'ydi.",
+      "nameMap": [
+        {
+          "original": "Ben",
+          "replacement": "Taraf A"
+        },
+        {
+          "original": "Deniz'in",
+          "replacement": "Taraf B'nin"
+        }
+      ],
+      "selfLang": "tr",
+      "textLang": "tr",
+      "expected": "Taraf A şunu söylüyor: haklı olan Taraf A'ydı. Yanılan Deniz'di."
+    },
+    {
+      "text": "Taraf A büyük ölçüde haklı, Taraf B'nin itirazı zayıf.",
+      "nameMap": [
+        {
+          "original": "I",
+          "replacement": "Party A"
+        },
+        {
+          "original": "Sam",
+          "replacement": "Party B"
+        }
+      ],
+      "selfLang": "en",
+      "textLang": "tr",
+      "expected": "Sen büyük ölçüde haklısın, Sam'ın itirazı zayıf."
+    },
+    {
+      "text": "Person C'ye göre Taraf A haklı; Kişi C'nin annesi de öyle düşünüyor.",
+      "nameMap": [
+        {
+          "original": "Ben",
+          "replacement": "Taraf A"
+        },
+        {
+          "original": "Deniz'in",
+          "replacement": "Taraf B'nin"
+        },
+        {
+          "original": "Ayşe",
+          "replacement": "Kişi C"
+        }
+      ],
+      "selfLang": "tr",
+      "textLang": "tr",
+      "expected": "Ayşe'ye göre sen haklısın; Ayşe'nin annesi de öyle düşünüyor."
+    },
+    {
+      "text": "Taraf A'nın görüşü güçlü, Taraf B'nin değil; söz Taraf A'ya ve Taraf B'ye verildi.",
+      "nameMap": [
+        {
+          "original": "Burak",
+          "replacement": "Taraf A"
+        },
+        {
+          "original": "Ayşe",
+          "replacement": "Taraf B"
+        }
+      ],
+      "selfLang": "tr",
+      "textLang": "tr",
+      "expected": "Burak'ın görüşü güçlü, Ayşe'nin değil; söz Burak'a ve Ayşe'ye verildi."
+    },
+    {
+      "text": "Taraf A'da ve Taraf B'de, Taraf A'dan ve Taraf B'den, Taraf A'yı ve Taraf B'yi.",
+      "nameMap": [
+        {
+          "original": "Burak",
+          "replacement": "Taraf A"
+        },
+        {
+          "original": "Ayşe",
+          "replacement": "Taraf B"
+        }
+      ],
+      "selfLang": "tr",
+      "textLang": "tr",
+      "expected": "Burak'ta ve Ayşe'de, Burak'tan ve Ayşe'den, Burak'ı ve Ayşe'yi."
+    },
+    {
+      "text": "Taraf A'yla Taraf B'yle; Taraf A'dır, Taraf B'dir; Taraf A'yken, Taraf B'ymiş; Taraf A'daki, Taraf B'ninki.",
+      "nameMap": [
+        {
+          "original": "Burak",
+          "replacement": "Taraf A"
+        },
+        {
+          "original": "Ayşe",
+          "replacement": "Taraf B"
+        }
+      ],
+      "selfLang": "tr",
+      "textLang": "tr",
+      "expected": "Burak'la Ayşe'yle; Burak'tır, Ayşe'dir; Burak'ken, Ayşe'ymiş; Burak'taki, Ayşe'ninki."
+    },
+    {
+      "text": "Party B's görüşü zayıf, Taraf B’ye sorulmalı, Taraf A ise haklı.",
+      "nameMap": [
+        {
+          "original": "Burak",
+          "replacement": "Taraf A"
+        },
+        {
+          "original": "Ayşe",
+          "replacement": "Taraf B"
+        }
+      ],
+      "selfLang": "tr",
+      "textLang": "tr",
+      "expected": "Ayşe'nin görüşü zayıf, Ayşe’ye sorulmalı, Burak ise haklı."
+    },
+    {
+      "text": "Taraf A'nın ve Taraf B'nin; Taraf A'da, Taraf B'ye; Taraf A'dan, Taraf B'yi.",
+      "nameMap": [
+        {
+          "original": "Umut",
+          "replacement": "Taraf A"
+        },
+        {
+          "original": "Gül",
+          "replacement": "Taraf B"
+        }
+      ],
+      "selfLang": "tr",
+      "textLang": "tr",
+      "expected": "Umut'un ve Gül'ün; Umut'ta, Gül'e; Umut'tan, Gül'ü."
+    },
+    {
+      "text": "Taraf A'nın ve Taraf B'nin; Taraf A'ya, Taraf B'de; Taraf A'dır, Taraf B'yle.",
+      "nameMap": [
+        {
+          "original": "Kemal",
+          "replacement": "Taraf A"
+        },
+        {
+          "original": "Övünç",
+          "replacement": "Taraf B"
+        }
+      ],
+      "selfLang": "tr",
+      "textLang": "tr",
+      "expected": "Kemal'in ve Övünç'ün; Kemal'e, Övünç'te; Kemal'dir, Övünç'le."
+    },
+    {
+      "text": "Taraf A'nın ve Taraf B'nin; Taraf A'yı, Taraf B'ye; Taraf A'daydı, Taraf B'ydi.",
+      "nameMap": [
+        {
+          "original": "Ömer",
+          "replacement": "Taraf A"
+        },
+        {
+          "original": "Derya",
+          "replacement": "Taraf B"
+        }
+      ],
+      "selfLang": "tr",
+      "textLang": "tr",
+      "expected": "Ömer'in ve Derya'nın; Ömer'i, Derya'ya; Taraf A'daydı, Derya'ydı."
+    },
+    {
+      "text": "Taraf B'nin sözü geçmiyor, Taraf B haklı değil.",
+      "nameMap": [
+        {
+          "original": "Burak",
+          "replacement": "Taraf A"
+        },
+        {
+          "original": "JJ",
+          "replacement": "Taraf B"
+        }
+      ],
+      "selfLang": "tr",
+      "textLang": "tr",
+      "expected": "Taraf B'nin sözü geçmiyor, JJ haklı değil."
+    }
+  ],
+  "personalizedTranslations": [
+    {
+      "sample": "win_a_self",
+      "lang": "tr",
+      "selfLang": "en",
+      "headline": "Sam kelimenin anlamını zorluyor, Taraf A'nın menü testi kazanıyor",
+      "crux": "Sam için ölçüt biçim; senin için ise insanların kelimeyi nasıl kullandığı.",
+      "losing_side_best_point": "Sam şu konuda haklı: sosisliyi dışarıda bırakan bir sandviç tanımı yapmak senin için zor olurdu.",
+      "side_a": [
+        "Menüler sosisliyi asla sandviç olarak listelemez"
+      ],
+      "side_b": [
+        "Ortadan kesilmiş ekmeğin arasına konan her şey sandviçtir"
+      ],
+      "bedrock_a": "Kelimeler, insanların onlara yüklediği anlama gelir",
+      "bedrock_b": "Tanımlar biçime göre yapılır",
+      "facts_relied_on": [
+        "Büyük zincirlerin menüleri sosisliyi sandviçlerden ayrı listeliyor"
+      ],
+      "split_points": null,
+      "conditional_if_value": null,
+      "conditional_then": null,
+      "lean_reason": null,
+      "crux_trial_attack": "Sözlükler aynı fikirde değil.",
+      "crux_trial_reasoning": "Burada kullanım ağır basıyor.",
+      "fact_check_claims": null,
+      "fact_check_summaries": null
     }
   ],
   "waits": [

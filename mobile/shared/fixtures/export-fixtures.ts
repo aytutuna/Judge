@@ -4,7 +4,8 @@
  * against the real thing rather than a re-reading of it:
  *
  *   mobile/shared/fixtures/verdicts.json         sample API bodies (validated with lib/types.ts)
- *   mobile/shared/fixtures/display-vectors.json  expected labels, tug, tilt, waits, errors
+ *   mobile/shared/fixtures/display-vectors.json  expected labels, tug, tilt, waits, errors,
+ *                                                restored names
  *
  * Run from the repo root (needs `npm ci`): npx tsx mobile/shared/fixtures/export-fixtures.ts
  * Add --check to fail when the committed files are stale.
@@ -14,13 +15,14 @@ import { join, relative, resolve } from "node:path";
 import { cruxStyle } from "../../../lib/crux-style";
 import { verdictLang } from "../../../lib/content-lang";
 import { apiErrorMessage, formatWait, t, type Lang } from "../../../lib/i18n";
-import { partyNames, personalizeResult } from "../../../lib/names";
+import { partyNames, personalizeResult, resolveParties, restoreNames } from "../../../lib/names";
 import { svgRotateDeg } from "../../../lib/balance";
 import { PRESETS } from "../../../lib/frameworks";
 import { PALETTE, PALETTE_ALPHA } from "../../../lib/palette";
 import { FINISH_CAPTION, FINISH_STEPS, MAX_FINISH_MS, READY, STILL_JUDGING, THINKING_STEPS } from "../../../lib/thinking";
 import { KEY_BY_CAPTION } from "../../../lib/thinking-keys";
 import { leanTally, tugFinal, verdictLabel } from "../../../lib/verdict-display";
+import { applyText, checkSegments, extractText, planSegments, reassemble, unflattenText } from "../../../lib/translate";
 import { z } from "zod";
 import {
   TranslateResponse,
@@ -193,6 +195,141 @@ const NAME_CASES: Record<string, { nameMap: NameMapping[]; selfLang: Lang }> = {
   person_c_ignored: { nameMap: [{ original: "Ayşe", replacement: "Kişi C" }], selfLang: "tr" },
 };
 
+/**
+ * Turkish text for win_a_self, one string per segment the server sends
+ * (lib/translate.ts planSegments order: headline, crux, side_a, side_b,
+ * bedrock_a, bedrock_b, facts_relied_on, losing_side_best_point,
+ * crux_trial attack and reasoning), written the way the translator is told
+ * to: faithful, natural, labels as "Taraf A/B" with their suffixes.
+ */
+const WIN_A_SELF_TR = [
+  "Taraf B kelimenin anlamını zorluyor, Taraf A'nın menü testi kazanıyor",
+  "Taraf B için ölçüt biçim; Taraf A için ise insanların kelimeyi nasıl kullandığı.",
+  "Menüler sosisliyi asla sandviç olarak listelemez",
+  "Ortadan kesilmiş ekmeğin arasına konan her şey sandviçtir",
+  "Kelimeler, insanların onlara yüklediği anlama gelir",
+  "Tanımlar biçime göre yapılır",
+  "Büyük zincirlerin menüleri sosisliyi sandviçlerden ayrı listeliyor",
+  "Taraf B şu konuda haklı: sosisliyi dışarıda bırakan bir sandviç tanımı yapmak Taraf A için zor olurdu.",
+  "Sözlükler aynı fikirde değil.",
+  "Burada kullanım ağır basıyor.",
+];
+
+/** A translation built the way lib/translate.ts translateResult builds one:
+ * the reply passes the server's own checkSegments, then applyText puts it
+ * back, so only free text changes and labels are mapped. */
+function serverTranslation(result: VerdictResult, target: Lang, texts: string[]): VerdictResult {
+  const text = extractText(result);
+  const plan = planSegments(text, target);
+  const checked = checkSegments(plan.segments, { segments: texts.map((s, i) => ({ i, text: s })) }, target);
+  if (!checked.ok) throw new Error(`fixture translation rejected: ${checked.error}`);
+  return applyText(result, unflattenText(text, reassemble(plan, checked.texts)), target);
+}
+
+const TRANSLATED_WIN_A_SELF = serverTranslation(SAMPLES.win_a_self.response.result, "tr", WIN_A_SELF_TR);
+
+/**
+ * Every free-text field personalizeResult rewrites, flattened:
+ *   headline, crux, losing_side_best_point, bedrock_a, bedrock_b: string
+ *   side_a, side_b, facts_relied_on: string[] (claim texts, in order)
+ *   split_points: string[] | null (the points)
+ *   conditional_if_value, conditional_then: string[] | null (same length)
+ *   lean_reason, crux_trial_attack, crux_trial_reasoning: string | null
+ *   fact_check_claims, fact_check_summaries: string[] | null (same length)
+ */
+function personalizedFields(r: VerdictResult, nameMap: NameMapping[], selfLang: Lang) {
+  const p = personalizeResult(r, nameMap, selfLang);
+  return {
+    headline: p.headline,
+    crux: p.crux,
+    losing_side_best_point: p.losing_side_best_point,
+    side_a: p.argument_map.side_a.map((c) => c.claim),
+    side_b: p.argument_map.side_b.map((c) => c.claim),
+    bedrock_a: p.argument_map.bedrock_a,
+    bedrock_b: p.argument_map.bedrock_b,
+    facts_relied_on: p.facts_relied_on,
+    split_points: p.split_points?.map((s) => s.point) ?? null,
+    conditional_if_value: p.conditional?.map((c) => c.if_value) ?? null,
+    conditional_then: p.conditional?.map((c) => c.then) ?? null,
+    lean_reason: p.lean?.reason ?? null,
+    crux_trial_attack: p.crux_trial?.attack ?? null,
+    crux_trial_reasoning: p.crux_trial?.reasoning ?? null,
+    fact_check_claims: p.fact_check?.claims.map((c) => c.claim) ?? null,
+    fact_check_summaries: p.fact_check?.claims.map((c) => c.summary) ?? null,
+  };
+}
+
+const nm = (a: string, ra: string, b?: string, rb?: string, ...rest: NameMapping[]): NameMapping[] => [
+  { original: a, replacement: ra },
+  ...(b && rb ? [{ original: b, replacement: rb }] : []),
+  ...rest,
+];
+const PERSON_C_AYSE: NameMapping = { original: "Ayşe", replacement: "Kişi C" };
+const NAMED_EN = nm("Alex", "Party A", "Jordan", "Party B");
+const NARRATOR_TR = nm("Ben", "Taraf A", "Deniz'in", "Taraf B'nin");
+const BURAK_AYSE = nm("Burak", "Taraf A", "Ayşe", "Taraf B");
+
+/** restoreNames inputs, one or more per branch of lib/names.ts renderEn,
+ * enSelf, renderTr, trSelf and trSuffix. */
+const RESTORE_CASES: { text: string; nameMap: NameMapping[]; selfLang: Lang; textLang: Lang }[] = [
+  // English narrator: agreement after "you".
+  { text: "Party A is right about the menus.", nameMap: NARRATOR_EN, selfLang: "en", textLang: "en" },
+  { text: "Party B says Party A was late.", nameMap: NARRATOR_EN, selfLang: "en", textLang: "en" },
+  { text: "Party A has a point, but Party A doesn't see it.", nameMap: NARRATOR_EN, selfLang: "en", textLang: "en" },
+  { text: "Party A isn't wrong, but Party A didn't ask.", nameMap: NARRATOR_EN, selfLang: "en", textLang: "en" },
+  { text: "Party A can't prove it, and Party A should apologize.", nameMap: NARRATOR_EN, selfLang: "en", textLang: "en" },
+  { text: "Party A ignored the menus.", nameMap: NARRATOR_EN, selfLang: "en", textLang: "en" },
+  { text: "Party A wants a sandwich; Party B wants a hot dog.", nameMap: NARRATOR_EN, selfLang: "en", textLang: "en" },
+  { text: "This is the thing Party A wants.", nameMap: NARRATOR_EN, selfLang: "en", textLang: "en" },
+  { text: "Party B knows that Party A tries hard.", nameMap: NARRATOR_EN, selfLang: "en", textLang: "en" },
+  { text: "Party B and Party A are both wrong.", nameMap: NARRATOR_EN, selfLang: "en", textLang: "en" },
+  // Possessive, preposition object, end of sentence, quotes.
+  { text: "Party A's menu test wins.", nameMap: NARRATOR_EN, selfLang: "en", textLang: "en" },
+  { text: "Party B owes an apology to Party A.", nameMap: NARRATOR_EN, selfLang: "en", textLang: "en" },
+  { text: "Person C told Party A the truth, and Party B tries harder than Party A.", nameMap: nm("I", "Party A", "Sam", "Party B", PERSON_C_AYSE), selfLang: "en", textLang: "en" },
+  { text: "\"Party A is late,\" said Party B.", nameMap: NARRATOR_EN, selfLang: "en", textLang: "en" },
+  // Kept labels: nothing settles the sentence shape.
+  { text: "Party B gives Party A points.", nameMap: NARRATOR_EN, selfLang: "en", textLang: "en" },
+  { text: "Party A, frankly, is wrong.", nameMap: NARRATOR_EN, selfLang: "en", textLang: "en" },
+  { text: "Party A was and is stubborn.", nameMap: NARRATOR_EN, selfLang: "en", textLang: "en" },
+  { text: "Party A alone decides.", nameMap: NARRATOR_EN, selfLang: "en", textLang: "en" },
+  // Named parties, curly apostrophe, a Turkish suffix left in English text.
+  { text: "Party A's plan beats Party B's, and Party A knows it.", nameMap: NAMED_EN, selfLang: "en", textLang: "en" },
+  { text: "Party B’s point stands.", nameMap: NARRATOR_EN, selfLang: "en", textLang: "en" },
+  { text: "Party B'nin point was sent to Party A'ya.", nameMap: NARRATOR_EN, selfLang: "en", textLang: "en" },
+  // Not labels: glued, wrong letter for the word, no name for the slot.
+  { text: "Party AB and xParty A are not labels, Party C and Person A neither, but Party B is.", nameMap: NARRATOR_EN, selfLang: "en", textLang: "en" },
+  { text: "Party A is right and Person C agrees.", nameMap: [], selfLang: "en", textLang: "en" },
+  // A Turkish narrator in English text.
+  { text: "Party A is right and Party B's idea fails.", nameMap: NARRATOR_TR, selfLang: "tr", textLang: "en" },
+  // Turkish narrator: "sen" forms.
+  { text: "Taraf A haklı.", nameMap: NARRATOR_TR, selfLang: "tr", textLang: "tr" },
+  { text: "Bu konuda Taraf A kesinlikle haklı, Taraf B ise haksız.", nameMap: NARRATOR_TR, selfLang: "tr", textLang: "tr" },
+  { text: "Taraf A haklıydı. Taraf A haklı bir noktaya değinmedi.", nameMap: NARRATOR_TR, selfLang: "tr", textLang: "tr" },
+  { text: "Taraf B, Taraf A'ya borçlu ve Taraf A'yı suçluyor.", nameMap: NARRATOR_TR, selfLang: "tr", textLang: "tr" },
+  { text: "Taraf B, Taraf A'dan özür dilemeli; Taraf A'da da haklılık payı var.", nameMap: NARRATOR_TR, selfLang: "tr", textLang: "tr" },
+  { text: "Taraf A'yla konuşmak gerek, Taraf A'daki inat belli.", nameMap: NARRATOR_TR, selfLang: "tr", textLang: "tr" },
+  { text: "Bu karar Taraf A için iyi. Taraf A'ya göre menü belirleyici.", nameMap: NARRATOR_TR, selfLang: "tr", textLang: "tr" },
+  { text: "Taraf A açısından ölçüt kullanım, Taraf A ile Taraf B ise anlaşamıyor.", nameMap: NARRATOR_TR, selfLang: "tr", textLang: "tr" },
+  { text: "Taraf A'nın istediği şey açık: Taraf A'nın gelmesi ve Taraf A'nın yapmasına izin verilmesi.", nameMap: NARRATOR_TR, selfLang: "tr", textLang: "tr" },
+  { text: "Taraf A'nınki daha mantıklı.", nameMap: NARRATOR_TR, selfLang: "tr", textLang: "tr" },
+  // Turkish narrator: kept labels.
+  { text: "Taraf A'nın menü testi kazanıyor, Taraf A'nın çoğu iddiası doğru.", nameMap: NARRATOR_TR, selfLang: "tr", textLang: "tr" },
+  { text: "Taraf A şunu söylüyor: haklı olan Taraf A'ydı. Yanılan Taraf B'ydi.", nameMap: NARRATOR_TR, selfLang: "tr", textLang: "tr" },
+  // An English narrator in Turkish text; a placeholder with a suffix.
+  { text: "Taraf A büyük ölçüde haklı, Taraf B'nin itirazı zayıf.", nameMap: NARRATOR_EN, selfLang: "en", textLang: "tr" },
+  { text: "Person C'ye göre Taraf A haklı; Kişi C'nin annesi de öyle düşünüyor.", nameMap: [...NARRATOR_TR, PERSON_C_AYSE], selfLang: "tr", textLang: "tr" },
+  // Named Turkish parties: harmony, buffer letters, d -> t after a voiceless consonant.
+  { text: "Taraf A'nın görüşü güçlü, Taraf B'nin değil; söz Taraf A'ya ve Taraf B'ye verildi.", nameMap: BURAK_AYSE, selfLang: "tr", textLang: "tr" },
+  { text: "Taraf A'da ve Taraf B'de, Taraf A'dan ve Taraf B'den, Taraf A'yı ve Taraf B'yi.", nameMap: BURAK_AYSE, selfLang: "tr", textLang: "tr" },
+  { text: "Taraf A'yla Taraf B'yle; Taraf A'dır, Taraf B'dir; Taraf A'yken, Taraf B'ymiş; Taraf A'daki, Taraf B'ninki.", nameMap: BURAK_AYSE, selfLang: "tr", textLang: "tr" },
+  { text: "Party B's görüşü zayıf, Taraf B’ye sorulmalı, Taraf A ise haklı.", nameMap: BURAK_AYSE, selfLang: "tr", textLang: "tr" },
+  { text: "Taraf A'nın ve Taraf B'nin; Taraf A'da, Taraf B'ye; Taraf A'dan, Taraf B'yi.", nameMap: nm("Umut", "Taraf A", "Gül", "Taraf B"), selfLang: "tr", textLang: "tr" },
+  { text: "Taraf A'nın ve Taraf B'nin; Taraf A'ya, Taraf B'de; Taraf A'dır, Taraf B'yle.", nameMap: nm("Kemal", "Taraf A", "Övünç", "Taraf B"), selfLang: "tr", textLang: "tr" },
+  { text: "Taraf A'nın ve Taraf B'nin; Taraf A'yı, Taraf B'ye; Taraf A'daydı, Taraf B'ydi.", nameMap: nm("Ömer", "Taraf A", "Derya", "Taraf B"), selfLang: "tr", textLang: "tr" },
+  { text: "Taraf B'nin sözü geçmiyor, Taraf B haklı değil.", nameMap: nm("Burak", "Taraf A", "JJ", "Taraf B"), selfLang: "tr", textLang: "tr" },
+];
+
 const WAIT_SECONDS = [null, 0, -5, 1, 59, 60, 61, 600, 5340, 5400, 5401, 7200, 86400];
 
 const ERROR_BODIES: { body: unknown; status?: number }[] = [
@@ -230,10 +367,7 @@ function displayVectors() {
         cruxStyle: cruxStyle(r.crux),
         leanTally: lean ? leanTally(lean, r.runs.length) : null,
         shareUrl: `https://okjudge.com/v/${response.id}`,
-        personalized: (() => {
-          const p2 = personalizeResult(r, response.name_map, selfLang);
-          return { headline: p2.headline, crux: p2.crux, losing_side_best_point: p2.losing_side_best_point };
-        })(),
+        personalized: personalizedFields(r, response.name_map, selfLang),
       };
     }),
   );
@@ -261,7 +395,34 @@ function displayVectors() {
     stillJudgingKey: KEY_BY_CAPTION[STILL_JUDGING],
     readyKey: KEY_BY_CAPTION[READY],
   };
-  return { verdicts, names, waits, errors, confidence, presets, palette: PALETTE, paletteAlpha: PALETTE_ALPHA, thinking };
+  const restore = RESTORE_CASES.map((c) => ({
+    ...c,
+    expected: restoreNames(c.text, resolveParties(c.nameMap, c.selfLang), c.textLang),
+  }));
+  // The fixture translation as its author sees it: grammar follows the
+  // Turkish text, the narrator follows the language it was judged in.
+  const original = SAMPLES.win_a_self.response;
+  const personalizedTranslations = [
+    {
+      sample: "win_a_self",
+      lang: verdictLang(TRANSLATED_WIN_A_SELF),
+      selfLang: verdictLang(original.result),
+      ...personalizedFields(TRANSLATED_WIN_A_SELF, original.name_map, verdictLang(original.result)),
+    },
+  ];
+  return {
+    verdicts,
+    names,
+    restore,
+    personalizedTranslations,
+    waits,
+    errors,
+    confidence,
+    presets,
+    palette: PALETTE,
+    paletteAlpha: PALETTE_ALPHA,
+    thinking,
+  };
 }
 
 function main(): void {
@@ -275,7 +436,7 @@ function main(): void {
     lang: "tr",
     source: "en",
     translated: true,
-    result: { ...SAMPLES.win_a_self.response.result, lang: "tr", headline: "Kimse sandviç isteyip sosisli beklemez" },
+    result: TRANSLATED_WIN_A_SELF,
   });
   const stored = StoredVerdictResponseSchema.parse({
     id: SAMPLES.win_b_named.response.id,

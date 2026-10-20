@@ -465,30 +465,30 @@
     "result": {
       "verdict": "side_a",
       "dispute_type": "definitional",
-      "headline": "Kimse sandviç isteyip sosisli beklemez",
-      "crux": "Party B goes by shape; Party A goes by how people use the word.",
+      "headline": "Taraf B kelimenin anlamını zorluyor, Taraf A'nın menü testi kazanıyor",
+      "crux": "Taraf B için ölçüt biçim; Taraf A için ise insanların kelimeyi nasıl kullandığı.",
       "split_points": null,
       "conditional": null,
       "argument_map": {
         "side_a": [
           {
-            "claim": "Menus never list hot dogs as sandwiches",
+            "claim": "Menüler sosisliyi asla sandviç olarak listelemez",
             "kind": "fact"
           }
         ],
         "side_b": [
           {
-            "claim": "A filling in a split roll is a sandwich",
+            "claim": "Ortadan kesilmiş ekmeğin arasına konan her şey sandviçtir",
             "kind": "definition"
           }
         ],
-        "bedrock_a": "Words mean what people use them to mean",
-        "bedrock_b": "Definitions follow form"
+        "bedrock_a": "Kelimeler, insanların onlara yüklediği anlama gelir",
+        "bedrock_b": "Tanımlar biçime göre yapılır"
       },
       "facts_relied_on": [
-        "Major menus list hot dogs separately from sandwiches"
+        "Büyük zincirlerin menüleri sosisliyi sandviçlerden ayrı listeliyor"
       ],
-      "losing_side_best_point": "Party B is right that Party A would struggle to define a sandwich without including it.",
+      "losing_side_best_point": "Taraf B şu konuda haklı: sosisliyi dışarıda bırakan bir sandviç tanımı yapmak Taraf A için zor olurdu.",
       "confidence": 4,
       "runs": [
         "side_a",
@@ -497,9 +497,9 @@
       ],
       "demo": false,
       "crux_trial": {
-        "attack": "Dictionaries disagree.",
+        "attack": "Sözlükler aynı fikirde değil.",
         "outcome": "survived",
-        "reasoning": "Usage wins here."
+        "reasoning": "Burada kullanım ağır basıyor."
       },
       "lang": "tr"
     }

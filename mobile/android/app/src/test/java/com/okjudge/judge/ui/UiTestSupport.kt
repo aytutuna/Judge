@@ -46,14 +46,18 @@ fun Themed(lang: AppLang, content: @Composable () -> Unit) {
     }
 }
 
-/** A fixture sample rendered like a fresh verdict (labels from its name map). */
+/**
+ * A fixture sample rendered like a fresh verdict (labels from its name map).
+ * Shown in another language, it carries the fixture translation when there
+ * is one for it (as the iOS screenshot states do), unless [status] asks for
+ * a specific pill.
+ */
 @Composable
 fun SampleVerdict(outcome: VerdictOutcome, lang: AppLang, modifier: Modifier = Modifier, status: TranslationStatus = TranslationStatus.ORIGINAL) {
-    val result = outcome.result.result
-    val selfLang = ContentLang.verdictLang(result)
+    val selfLang = ContentLang.verdictLang(outcome.result.result)
     val s = UiTestSupport.s(lang)
     VerdictContent(
-        view = TranslationView(result, status, selfLang),
+        view = sampleView(outcome, lang, status),
         parties = PartyNames.partyNames(outcome.nameMap, selfLang, s),
         restoredNames = PartyNames.restoredNames(outcome.nameMap, selfLang),
         actions = CardActions(onShare = {}, onCopy = {}, copied = false, onJudgeAnother = {}),
@@ -62,3 +66,15 @@ fun SampleVerdict(outcome: VerdictOutcome, lang: AppLang, modifier: Modifier = M
 }
 
 fun sample(name: String): VerdictOutcome = Fixtures.sample(name)
+
+/** What [SampleVerdict] shows for [outcome] in [lang]. */
+fun sampleView(outcome: VerdictOutcome, lang: AppLang, status: TranslationStatus = TranslationStatus.ORIGINAL): TranslationView {
+    val original = outcome.result.result
+    val selfLang = ContentLang.verdictLang(original)
+    val translated = if (status == TranslationStatus.ORIGINAL && lang != selfLang) Fixtures.translationOf(outcome.id, lang) else null
+    return if (translated != null) {
+        TranslationView(translated, TranslationStatus.TRANSLATED, selfLang)
+    } else {
+        TranslationView(original, status, selfLang)
+    }
+}
