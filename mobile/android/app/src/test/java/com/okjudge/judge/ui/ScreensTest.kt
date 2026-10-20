@@ -1,0 +1,187 @@
+package com.okjudge.judge.ui
+
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.test.assertIsEnabled
+import androidx.compose.ui.test.assertIsNotEnabled
+import androidx.compose.ui.test.assertTextEquals
+import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.onNodeWithContentDescription
+import androidx.compose.ui.test.onNodeWithTag
+import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performTextInput
+import androidx.compose.ui.unit.dp
+import com.okjudge.judge.Fixtures
+import com.okjudge.judge.core.data.SavedVerdict
+import com.okjudge.judge.core.display.ContentLang
+import com.okjudge.judge.core.display.PartyNames
+import com.okjudge.judge.core.display.Preset
+import com.okjudge.judge.core.display.UiError
+import com.okjudge.judge.core.display.VerdictDisplay
+import com.okjudge.judge.core.model.FactCheck
+import com.okjudge.judge.core.model.FactClaim
+import com.okjudge.judge.core.model.FactSource
+import com.okjudge.judge.i18n.AppLang
+import com.okjudge.judge.ui.history.HistoryScreen
+import com.okjudge.judge.ui.history.HistoryTags
+import com.okjudge.judge.ui.home.HomeScreen
+import com.okjudge.judge.ui.home.HomeTags
+import com.okjudge.judge.ui.home.HomeUiState
+import org.junit.Rule
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
+import org.robolectric.annotation.Config
+
+@RunWith(RobolectricTestRunner::class)
+@Config(sdk = [36], qualifiers = "w400dp-h2400dp-xhdpi")
+class ScreensTest {
+    @get:Rule
+    val compose = createComposeRule()
+
+    private fun home(lang: AppLang, initial: HomeUiState = HomeUiState()) {
+        compose.setContent {
+            Themed(lang) {
+                var state by remember { mutableStateOf(initial) }
+                HomeScreen(
+                    state = state,
+                    onArgumentChange = { state = state.copy(argument = it) },
+                    onExample = { state = state.copy(argument = it) },
+                    onPreset = { state = state.copy(preset = it) },
+                    onSubmit = {},
+                    onDismissError = { state = state.copy(error = null) },
+                    onToggleLang = {},
+                    onOpenPrivacy = {},
+                )
+            }
+        }
+    }
+
+    @Test
+    fun home_counter_disabledUntil20Chars_andChipFillsTheText() {
+        home(AppLang.EN)
+        val en = UiTestSupport.s(AppLang.EN)
+        compose.onNodeWithTag(HomeTags.COUNTER).assertTextEquals("0 / 6,000")
+        compose.onNodeWithTag(HomeTags.SUBMIT).assertIsNotEnabled()
+        compose.onNodeWithTag(HomeTags.INPUT).performTextInput("nineteen characters")
+        compose.onNodeWithTag(HomeTags.SUBMIT).assertIsNotEnabled()
+        compose.onNodeWithTag(HomeTags.INPUT).performTextInput("!")
+        compose.onNodeWithTag(HomeTags.SUBMIT).assertIsEnabled()
+        compose.onNodeWithText(en.exampleHotdogLabel).performClick()
+        compose.onNodeWithTag(HomeTags.COUNTER).assertTextEquals("${"%,d".format(en.exampleHotdogText.length)} / 6,000")
+    }
+
+    @Test
+    fun home_tr_eyebrowUppercasesWithTurkishRules() {
+        home(AppLang.TR)
+        // "İsimler gizli kalır" must become "İSİMLER GİZLİ KALIR", not "İSIMLER GIZLI KALIR".
+        compose.onNodeWithText("ÜÇ BAĞIMSIZ YARGIÇ · İSİMLER GİZLİ KALIR").assertExists()
+    }
+
+    @Test
+    fun home_showsLocalizedErrors() {
+        home(AppLang.TR, HomeUiState(error = UiError.Api("rate_limited", 429, retryAfterSec = 420.0)))
+        compose.onNodeWithText("Ağır ol, burası mahkeme! Şimdilik sınıra geldin. 7 dakika sonra tekrar dene.").assertExists()
+    }
+
+    @Test
+    fun verdictCard_rendersEverySample_withRestoredLabels() {
+        for (lang in AppLang.entries) {
+            for (name in Fixtures.sampleNames) {
+                val outcome = sample(name)
+                compose.setContentOnce { Themed(lang) { SampleVerdict(outcome, lang, modifier = Modifier.verticalScroll(rememberScrollState()).padding(16.dp)) } }
+                val s = UiTestSupport.s(lang)
+                val r = outcome.result.result
+                val parties = PartyNames.partyNames(outcome.nameMap, ContentLang.verdictLang(r), s)
+                compose.onNodeWithText(VerdictDisplay.verdictLabel(r, parties, s)).assertExists()
+                if (!r.refused) compose.onNodeWithText(r.crux).assertExists()
+                compose.onNodeWithText(VerdictDisplay.confidenceText(r.confidence, s)).assertExists()
+                if (outcome.nameMap.isNotEmpty()) {
+                    // The labels never fall back to "Party A/B" when a name map exists.
+                    compose.onNodeWithText(s.partyA).assertDoesNotExist()
+                    compose.onNodeWithText(s.partyB).assertDoesNotExist()
+                }
+                resetContent()
+            }
+        }
+    }
+
+    @Test
+    fun factCheck_emptyCheckedReadsAsNone_andOnlySafeSourcesShowByDomain() {
+        val base = sample("win_b_named")
+        fun with(check: FactCheck) = base.copy(result = base.result.copy(result = base.result.result.copy(factCheck = check)))
+        val s = UiTestSupport.s(AppLang.EN)
+        var outcome by mutableStateOf(with(FactCheck(status = "checked", claims = emptyList())))
+        compose.setContent { Themed(AppLang.EN) { SampleVerdict(outcome, AppLang.EN, modifier = Modifier.verticalScroll(rememberScrollState())) } }
+        compose.onNodeWithText(s.factcheckNone).assertExists()
+        compose.onNodeWithText(s.factcheckLead).assertDoesNotExist()
+
+        outcome = with(
+            FactCheck(
+                status = "checked",
+                claims = listOf(
+                    FactClaim(
+                        claim = "Hot dogs are sandwiches.",
+                        status = "mixed",
+                        sources = listOf(
+                            FactSource("Evil", "javascript:alert(1)"),
+                            FactSource("Local file", "file:///sdcard/x"),
+                            FactSource("Merriam-Webster", "https://www.merriam-webster.com/x"),
+                            FactSource("Duplicate", "https://www.merriam-webster.com/x"),
+                        ),
+                    ),
+                ),
+            ),
+        )
+        compose.waitForIdle()
+        compose.onNodeWithText(s.factcheckLead).assertExists()
+        compose.onNodeWithContentDescription(s.appFactcheckSourceAria("Merriam-Webster")).assertExists()
+        compose.onNodeWithContentDescription(s.appFactcheckSourceAria("Duplicate")).assertDoesNotExist()
+        compose.onNodeWithContentDescription(s.appFactcheckSourceAria("Evil")).assertDoesNotExist()
+        compose.onNodeWithContentDescription(s.appFactcheckSourceAria("Local file")).assertDoesNotExist()
+    }
+
+    @Test
+    fun history_listsAndEmptyState() {
+        var items by mutableStateOf<List<SavedVerdict>?>(emptyList())
+        compose.setContent {
+            Themed(AppLang.EN) {
+                HistoryScreen(items = items, onOpen = {}, onDelete = {}, onDeleteAll = {}, onToggleLang = {})
+            }
+        }
+        compose.onNodeWithTag(HistoryTags.EMPTY).assertExists()
+        items = listOf("win_a_self", "lean_tie").mapIndexed { i, n ->
+            val o = sample(n)
+            SavedVerdict(o.id, 1_760_000_000_000L + i, o.result, o.nameMap, Preset.BALANCED.id, emptyMap())
+        }
+        compose.waitForIdle()
+        compose.onNodeWithTag(HistoryTags.row("abc123DEF0")).assertExists()
+        compose.onNodeWithText("You're right").assertExists()
+        compose.onNodeWithText(UiTestSupport.s(AppLang.EN).appHistoryDeviceOnly).assertExists()
+    }
+
+    // createComposeRule allows one setContent per test; swap the content through state instead.
+    private var content by mutableStateOf<(@androidx.compose.runtime.Composable () -> Unit)?>(null)
+    private var started = false
+
+    private fun androidx.compose.ui.test.junit4.ComposeContentTestRule.setContentOnce(block: @androidx.compose.runtime.Composable () -> Unit) {
+        content = block
+        if (!started) {
+            started = true
+            setContent { content?.invoke() }
+        }
+        waitForIdle()
+    }
+
+    private fun resetContent() {
+        content = null
+        compose.waitForIdle()
+    }
+}

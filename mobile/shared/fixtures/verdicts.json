@@ -1,0 +1,644 @@
+{
+  "verdictResponses": {
+    "win_a_self": {
+      "id": "abc123DEF0",
+      "result": {
+        "verdict": "side_a",
+        "dispute_type": "definitional",
+        "headline": "Party B is stretching the word, and Party A's menu test wins",
+        "crux": "Party B goes by shape; Party A goes by how people use the word.",
+        "split_points": null,
+        "conditional": null,
+        "argument_map": {
+          "side_a": [
+            {
+              "claim": "Menus never list hot dogs as sandwiches",
+              "kind": "fact"
+            }
+          ],
+          "side_b": [
+            {
+              "claim": "A filling in a split roll is a sandwich",
+              "kind": "definition"
+            }
+          ],
+          "bedrock_a": "Words mean what people use them to mean",
+          "bedrock_b": "Definitions follow form"
+        },
+        "facts_relied_on": [
+          "Major menus list hot dogs separately from sandwiches"
+        ],
+        "losing_side_best_point": "Party B is right that Party A would struggle to define a sandwich without including it.",
+        "confidence": 4,
+        "runs": [
+          "side_a",
+          "side_a",
+          "side_b"
+        ],
+        "demo": false,
+        "lang": "en",
+        "crux_trial": {
+          "attack": "Dictionaries disagree.",
+          "outcome": "survived",
+          "reasoning": "Usage wins here."
+        }
+      },
+      "name_map": [
+        {
+          "original": "I",
+          "replacement": "Party A"
+        },
+        {
+          "original": "Sam",
+          "replacement": "Party B"
+        }
+      ]
+    },
+    "win_b_named": {
+      "id": "winB000001",
+      "result": {
+        "verdict": "side_b",
+        "dispute_type": "definitional",
+        "headline": "Nobody orders a sandwich hoping for a hot dog",
+        "crux": "Whether 'sandwich' follows shape or everyday use.",
+        "split_points": null,
+        "conditional": null,
+        "argument_map": {
+          "side_a": [
+            {
+              "claim": "Menus never list hot dogs as sandwiches",
+              "kind": "fact"
+            }
+          ],
+          "side_b": [
+            {
+              "claim": "A filling in a split roll is a sandwich",
+              "kind": "definition"
+            }
+          ],
+          "bedrock_a": "Words mean what people use them to mean",
+          "bedrock_b": "Definitions follow form"
+        },
+        "facts_relied_on": [
+          "Major menus list hot dogs separately from sandwiches"
+        ],
+        "losing_side_best_point": "A split roll with a filling does fit most dictionary definitions.",
+        "confidence": 5,
+        "runs": [
+          "side_b",
+          "side_b",
+          "side_b"
+        ],
+        "demo": false,
+        "lang": "en"
+      },
+      "name_map": [
+        {
+          "original": "Alex",
+          "replacement": "Party A"
+        },
+        {
+          "original": "Jordan",
+          "replacement": "Party B"
+        }
+      ]
+    },
+    "lean_b_majority_escalated": {
+      "id": "lean000001",
+      "result": {
+        "verdict": "too_close",
+        "dispute_type": "definitional",
+        "headline": "Nobody orders a sandwich hoping for a hot dog",
+        "crux": "Whether 'sandwich' follows shape or everyday use.",
+        "split_points": null,
+        "conditional": null,
+        "argument_map": {
+          "side_a": [
+            {
+              "claim": "Menus never list hot dogs as sandwiches",
+              "kind": "fact"
+            }
+          ],
+          "side_b": [
+            {
+              "claim": "A filling in a split roll is a sandwich",
+              "kind": "definition"
+            }
+          ],
+          "bedrock_a": "Words mean what people use them to mean",
+          "bedrock_b": "Definitions follow form"
+        },
+        "facts_relied_on": [
+          "Major menus list hot dogs separately from sandwiches"
+        ],
+        "losing_side_best_point": "A split roll with a filling does fit most dictionary definitions.",
+        "confidence": 2,
+        "runs": [
+          "side_a",
+          "side_b",
+          "split",
+          "side_b",
+          "side_b"
+        ],
+        "demo": false,
+        "lang": "en",
+        "lean": {
+          "party": "b",
+          "unanimous": false,
+          "reason": "Party B's reading is closer to common use.",
+          "tally": {
+            "for": 4,
+            "against": 1
+          }
+        },
+        "escalated": true
+      },
+      "name_map": []
+    },
+    "lean_tie": {
+      "id": "tie0000001",
+      "result": {
+        "verdict": "too_close",
+        "dispute_type": "definitional",
+        "headline": "Nobody orders a sandwich hoping for a hot dog",
+        "crux": "Whether 'sandwich' follows shape or everyday use.",
+        "split_points": null,
+        "conditional": null,
+        "argument_map": {
+          "side_a": [
+            {
+              "claim": "Menus never list hot dogs as sandwiches",
+              "kind": "fact"
+            }
+          ],
+          "side_b": [
+            {
+              "claim": "A filling in a split roll is a sandwich",
+              "kind": "definition"
+            }
+          ],
+          "bedrock_a": "Words mean what people use them to mean",
+          "bedrock_b": "Definitions follow form"
+        },
+        "facts_relied_on": [
+          "Major menus list hot dogs separately from sandwiches"
+        ],
+        "losing_side_best_point": "A split roll with a filling does fit most dictionary definitions.",
+        "confidence": 1,
+        "runs": [
+          "side_a",
+          "side_b"
+        ],
+        "demo": false,
+        "lang": "en",
+        "lean": null
+      },
+      "name_map": []
+    },
+    "conditional": {
+      "id": "cond000001",
+      "result": {
+        "verdict": "conditional",
+        "dispute_type": "values",
+        "headline": "Nobody orders a sandwich hoping for a hot dog",
+        "crux": "Whether 'sandwich' follows shape or everyday use.",
+        "split_points": null,
+        "conditional": [
+          {
+            "if_value": "If honesty comes first",
+            "then": "Party B is right"
+          },
+          {
+            "if_value": "If kindness comes first",
+            "then": "Party A is right"
+          }
+        ],
+        "argument_map": {
+          "side_a": [
+            {
+              "claim": "Menus never list hot dogs as sandwiches",
+              "kind": "fact"
+            }
+          ],
+          "side_b": [
+            {
+              "claim": "A filling in a split roll is a sandwich",
+              "kind": "definition"
+            }
+          ],
+          "bedrock_a": "Words mean what people use them to mean",
+          "bedrock_b": "Definitions follow form"
+        },
+        "facts_relied_on": [
+          "Major menus list hot dogs separately from sandwiches"
+        ],
+        "losing_side_best_point": "A split roll with a filling does fit most dictionary definitions.",
+        "confidence": 4,
+        "runs": [
+          "conditional",
+          "conditional",
+          "conditional"
+        ],
+        "demo": false,
+        "lang": "en",
+        "lean": {
+          "party": "a",
+          "unanimous": true,
+          "reason": "Small kindnesses keep friendships going."
+        }
+      },
+      "name_map": []
+    },
+    "split": {
+      "id": "split00001",
+      "result": {
+        "verdict": "split",
+        "dispute_type": "mixed",
+        "headline": "Nobody orders a sandwich hoping for a hot dog",
+        "crux": "Whether 'sandwich' follows shape or everyday use.",
+        "split_points": [
+          {
+            "party": "a",
+            "point": "Botanically it is a fruit."
+          },
+          {
+            "party": "b",
+            "point": "In the kitchen it is a vegetable."
+          }
+        ],
+        "conditional": null,
+        "argument_map": {
+          "side_a": [
+            {
+              "claim": "Menus never list hot dogs as sandwiches",
+              "kind": "fact"
+            }
+          ],
+          "side_b": [
+            {
+              "claim": "A filling in a split roll is a sandwich",
+              "kind": "definition"
+            }
+          ],
+          "bedrock_a": "Words mean what people use them to mean",
+          "bedrock_b": "Definitions follow form"
+        },
+        "facts_relied_on": [
+          "Major menus list hot dogs separately from sandwiches"
+        ],
+        "losing_side_best_point": "A split roll with a filling does fit most dictionary definitions.",
+        "confidence": 4,
+        "runs": [
+          "split",
+          "split",
+          "side_a"
+        ],
+        "demo": false,
+        "lang": "en",
+        "lean": {
+          "party": "a",
+          "unanimous": false,
+          "reason": "The question asked was botanical."
+        }
+      },
+      "name_map": []
+    },
+    "overturned_tr": {
+      "id": "trial0001x",
+      "result": {
+        "verdict": "side_a",
+        "dispute_type": "factual",
+        "headline": "Parmak çıtlatmak artrite yol açmıyor",
+        "crux": "Taraf B'nin korkusu kanıta dayanıyor mu, yoksa Taraf A haklı mı?",
+        "split_points": null,
+        "conditional": null,
+        "argument_map": {
+          "side_a": [
+            {
+              "claim": "Menus never list hot dogs as sandwiches",
+              "kind": "fact"
+            }
+          ],
+          "side_b": [
+            {
+              "claim": "A filling in a split roll is a sandwich",
+              "kind": "definition"
+            }
+          ],
+          "bedrock_a": "Words mean what people use them to mean",
+          "bedrock_b": "Definitions follow form"
+        },
+        "facts_relied_on": [
+          "Major menus list hot dogs separately from sandwiches"
+        ],
+        "losing_side_best_point": "Bazı küçük çalışmalar şişlik bildiriyor.",
+        "confidence": 2,
+        "runs": [
+          "side_a",
+          "side_a",
+          "side_b"
+        ],
+        "demo": false,
+        "lang": "tr",
+        "crux_trial": {
+          "attack": "Uzun vadeli çalışma az.",
+          "outcome": "overturned",
+          "reasoning": "İtiraz yerinde."
+        }
+      },
+      "name_map": [
+        {
+          "original": "Ben",
+          "replacement": "Taraf A"
+        },
+        {
+          "original": "annem",
+          "replacement": "Taraf B"
+        }
+      ]
+    },
+    "refused": {
+      "id": "refused001",
+      "result": {
+        "verdict": "too_close",
+        "dispute_type": "mixed",
+        "headline": "The AI wouldn't weigh in on this one",
+        "crux": "Whether 'sandwich' follows shape or everyday use.",
+        "split_points": null,
+        "conditional": null,
+        "argument_map": {
+          "side_a": [
+            {
+              "claim": "Skipped",
+              "kind": "logic"
+            }
+          ],
+          "side_b": [
+            {
+              "claim": "Skipped",
+              "kind": "logic"
+            }
+          ],
+          "bedrock_a": "—",
+          "bedrock_b": "—"
+        },
+        "facts_relied_on": [],
+        "losing_side_best_point": "A split roll with a filling does fit most dictionary definitions.",
+        "confidence": 1,
+        "runs": [],
+        "demo": false,
+        "lang": "en",
+        "model_refused": true
+      },
+      "name_map": []
+    },
+    "premium_factcheck": {
+      "id": "premium001",
+      "result": {
+        "verdict": "side_a",
+        "dispute_type": "definitional",
+        "headline": "Nobody orders a sandwich hoping for a hot dog",
+        "crux": "Whether 'sandwich' follows shape or everyday use.",
+        "split_points": null,
+        "conditional": null,
+        "argument_map": {
+          "side_a": [
+            {
+              "claim": "Menus never list hot dogs as sandwiches",
+              "kind": "fact"
+            }
+          ],
+          "side_b": [
+            {
+              "claim": "A filling in a split roll is a sandwich",
+              "kind": "definition"
+            }
+          ],
+          "bedrock_a": "Words mean what people use them to mean",
+          "bedrock_b": "Definitions follow form"
+        },
+        "facts_relied_on": [
+          "Major menus list hot dogs separately from sandwiches"
+        ],
+        "losing_side_best_point": "A split roll with a filling does fit most dictionary definitions.",
+        "confidence": 4,
+        "runs": [
+          "side_a",
+          "side_a",
+          "side_b"
+        ],
+        "demo": false,
+        "lang": "en",
+        "tier": "premium",
+        "panel": {
+          "models": [
+            "claude-sonnet-x",
+            "claude-sonnet-x",
+            "claude-haiku-x"
+          ]
+        },
+        "fact_check": {
+          "status": "checked",
+          "claims": [
+            {
+              "claim": "Menus list hot dogs separately",
+              "status": "supported",
+              "summary": "Most do.",
+              "sources": [
+                {
+                  "title": "Example",
+                  "url": "https://example.com"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "name_map": []
+    }
+  },
+  "translateResponse": {
+    "id": "abc123DEF0",
+    "lang": "tr",
+    "source": "en",
+    "translated": true,
+    "result": {
+      "verdict": "side_a",
+      "dispute_type": "definitional",
+      "headline": "Kimse sandviç isteyip sosisli beklemez",
+      "crux": "Party B goes by shape; Party A goes by how people use the word.",
+      "split_points": null,
+      "conditional": null,
+      "argument_map": {
+        "side_a": [
+          {
+            "claim": "Menus never list hot dogs as sandwiches",
+            "kind": "fact"
+          }
+        ],
+        "side_b": [
+          {
+            "claim": "A filling in a split roll is a sandwich",
+            "kind": "definition"
+          }
+        ],
+        "bedrock_a": "Words mean what people use them to mean",
+        "bedrock_b": "Definitions follow form"
+      },
+      "facts_relied_on": [
+        "Major menus list hot dogs separately from sandwiches"
+      ],
+      "losing_side_best_point": "Party B is right that Party A would struggle to define a sandwich without including it.",
+      "confidence": 4,
+      "runs": [
+        "side_a",
+        "side_a",
+        "side_b"
+      ],
+      "demo": false,
+      "crux_trial": {
+        "attack": "Dictionaries disagree.",
+        "outcome": "survived",
+        "reasoning": "Usage wins here."
+      },
+      "lang": "tr"
+    }
+  },
+  "storedVerdictResponse": {
+    "id": "winB000001",
+    "result": {
+      "verdict": "side_b",
+      "dispute_type": "definitional",
+      "headline": "Nobody orders a sandwich hoping for a hot dog",
+      "crux": "Whether 'sandwich' follows shape or everyday use.",
+      "split_points": null,
+      "conditional": null,
+      "argument_map": {
+        "side_a": [
+          {
+            "claim": "Menus never list hot dogs as sandwiches",
+            "kind": "fact"
+          }
+        ],
+        "side_b": [
+          {
+            "claim": "A filling in a split roll is a sandwich",
+            "kind": "definition"
+          }
+        ],
+        "bedrock_a": "Words mean what people use them to mean",
+        "bedrock_b": "Definitions follow form"
+      },
+      "facts_relied_on": [
+        "Major menus list hot dogs separately from sandwiches"
+      ],
+      "losing_side_best_point": "A split roll with a filling does fit most dictionary definitions.",
+      "confidence": 5,
+      "runs": [
+        "side_b",
+        "side_b",
+        "side_b"
+      ],
+      "demo": false,
+      "lang": "en"
+    },
+    "createdAt": "2026-10-20T12:00:00.000Z"
+  },
+  "errorBodies": [
+    {
+      "body": {
+        "error": "x",
+        "code": "too_short"
+      },
+      "status": 400
+    },
+    {
+      "body": {
+        "error": "x",
+        "code": "too_long"
+      },
+      "status": 400
+    },
+    {
+      "body": {
+        "error": "x",
+        "code": "invalid"
+      },
+      "status": 400
+    },
+    {
+      "body": {
+        "error": "x",
+        "code": "rate_limited",
+        "retryAfterSec": 420
+      },
+      "status": 429
+    },
+    {
+      "body": {
+        "error": "x",
+        "code": "daily_cap",
+        "retryAfterSec": 30000
+      },
+      "status": 503
+    },
+    {
+      "body": {
+        "error": "x",
+        "code": "quota"
+      },
+      "status": 502
+    },
+    {
+      "body": {
+        "error": "x",
+        "code": "unavailable"
+      },
+      "status": 503
+    },
+    {
+      "body": {
+        "error": "x",
+        "code": "captcha_failed"
+      },
+      "status": 403
+    },
+    {
+      "body": {
+        "error": "x",
+        "code": "not_found"
+      },
+      "status": 404
+    },
+    {
+      "body": {
+        "error": "x",
+        "code": "fair_use",
+        "resetsAt": "2026-11-18T10:00:00.000Z"
+      },
+      "status": 402
+    },
+    {
+      "body": {
+        "error": "x",
+        "code": "fair_use"
+      },
+      "status": 402
+    },
+    {
+      "body": null,
+      "status": 429
+    },
+    {
+      "body": {
+        "error": "Some new server message",
+        "code": "brand_new_code"
+      },
+      "status": 500
+    },
+    {
+      "body": null,
+      "status": 500
+    }
+  ]
+}

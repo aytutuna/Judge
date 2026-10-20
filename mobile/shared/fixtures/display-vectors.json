@@ -1,0 +1,1210 @@
+{
+  "verdicts": [
+    {
+      "sample": "win_a_self",
+      "lang": "en",
+      "selfLang": "en",
+      "nameA": "You",
+      "nameB": "Sam",
+      "aIsSelf": true,
+      "bIsSelf": false,
+      "label": "You're right",
+      "tugA": 80,
+      "svgRotateDeg": -10.313,
+      "cruxStyle": "serif",
+      "leanTally": null,
+      "shareUrl": "https://okjudge.com/v/abc123DEF0",
+      "personalized": {
+        "headline": "Sam is stretching the word, and your menu test wins",
+        "crux": "Sam goes by shape; you go by how people use the word.",
+        "losing_side_best_point": "Sam is right that you would struggle to define a sandwich without including it."
+      }
+    },
+    {
+      "sample": "win_a_self",
+      "lang": "tr",
+      "selfLang": "en",
+      "nameA": "Sen",
+      "nameB": "Sam",
+      "aIsSelf": true,
+      "bIsSelf": false,
+      "label": "Sen haklısın",
+      "tugA": 80,
+      "svgRotateDeg": -10.313,
+      "cruxStyle": "serif",
+      "leanTally": null,
+      "shareUrl": "https://okjudge.com/v/abc123DEF0",
+      "personalized": {
+        "headline": "Sam is stretching the word, and your menu test wins",
+        "crux": "Sam goes by shape; you go by how people use the word.",
+        "losing_side_best_point": "Sam is right that you would struggle to define a sandwich without including it."
+      }
+    },
+    {
+      "sample": "win_b_named",
+      "lang": "en",
+      "selfLang": "en",
+      "nameA": "Alex",
+      "nameB": "Jordan",
+      "aIsSelf": false,
+      "bIsSelf": false,
+      "label": "Jordan is right",
+      "tugA": 20,
+      "svgRotateDeg": 10.313,
+      "cruxStyle": "serif",
+      "leanTally": null,
+      "shareUrl": "https://okjudge.com/v/winB000001",
+      "personalized": {
+        "headline": "Nobody orders a sandwich hoping for a hot dog",
+        "crux": "Whether 'sandwich' follows shape or everyday use.",
+        "losing_side_best_point": "A split roll with a filling does fit most dictionary definitions."
+      }
+    },
+    {
+      "sample": "win_b_named",
+      "lang": "tr",
+      "selfLang": "en",
+      "nameA": "Alex",
+      "nameB": "Jordan",
+      "aIsSelf": false,
+      "bIsSelf": false,
+      "label": "Jordan haklı",
+      "tugA": 20,
+      "svgRotateDeg": 10.313,
+      "cruxStyle": "serif",
+      "leanTally": null,
+      "shareUrl": "https://okjudge.com/v/winB000001",
+      "personalized": {
+        "headline": "Nobody orders a sandwich hoping for a hot dog",
+        "crux": "Whether 'sandwich' follows shape or everyday use.",
+        "losing_side_best_point": "A split roll with a filling does fit most dictionary definitions."
+      }
+    },
+    {
+      "sample": "lean_b_majority_escalated",
+      "lang": "en",
+      "selfLang": "en",
+      "nameA": "Party A",
+      "nameB": "Party B",
+      "aIsSelf": false,
+      "bIsSelf": false,
+      "label": "Too close to call",
+      "tugA": 38,
+      "svgRotateDeg": 4.125,
+      "cruxStyle": "serif",
+      "leanTally": {
+        "for": 4,
+        "against": 1
+      },
+      "shareUrl": "https://okjudge.com/v/lean000001",
+      "personalized": {
+        "headline": "Nobody orders a sandwich hoping for a hot dog",
+        "crux": "Whether 'sandwich' follows shape or everyday use.",
+        "losing_side_best_point": "A split roll with a filling does fit most dictionary definitions."
+      }
+    },
+    {
+      "sample": "lean_b_majority_escalated",
+      "lang": "tr",
+      "selfLang": "en",
+      "nameA": "Taraf A",
+      "nameB": "Taraf B",
+      "aIsSelf": false,
+      "bIsSelf": false,
+      "label": "Başa baş, karar çıkmadı",
+      "tugA": 38,
+      "svgRotateDeg": 4.125,
+      "cruxStyle": "serif",
+      "leanTally": {
+        "for": 4,
+        "against": 1
+      },
+      "shareUrl": "https://okjudge.com/v/lean000001",
+      "personalized": {
+        "headline": "Nobody orders a sandwich hoping for a hot dog",
+        "crux": "Whether 'sandwich' follows shape or everyday use.",
+        "losing_side_best_point": "A split roll with a filling does fit most dictionary definitions."
+      }
+    },
+    {
+      "sample": "lean_tie",
+      "lang": "en",
+      "selfLang": "en",
+      "nameA": "Party A",
+      "nameB": "Party B",
+      "aIsSelf": false,
+      "bIsSelf": false,
+      "label": "Too close to call",
+      "tugA": 50,
+      "svgRotateDeg": 0,
+      "cruxStyle": "serif",
+      "leanTally": null,
+      "shareUrl": "https://okjudge.com/v/tie0000001",
+      "personalized": {
+        "headline": "Nobody orders a sandwich hoping for a hot dog",
+        "crux": "Whether 'sandwich' follows shape or everyday use.",
+        "losing_side_best_point": "A split roll with a filling does fit most dictionary definitions."
+      }
+    },
+    {
+      "sample": "lean_tie",
+      "lang": "tr",
+      "selfLang": "en",
+      "nameA": "Taraf A",
+      "nameB": "Taraf B",
+      "aIsSelf": false,
+      "bIsSelf": false,
+      "label": "Başa baş, karar çıkmadı",
+      "tugA": 50,
+      "svgRotateDeg": 0,
+      "cruxStyle": "serif",
+      "leanTally": null,
+      "shareUrl": "https://okjudge.com/v/tie0000001",
+      "personalized": {
+        "headline": "Nobody orders a sandwich hoping for a hot dog",
+        "crux": "Whether 'sandwich' follows shape or everyday use.",
+        "losing_side_best_point": "A split roll with a filling does fit most dictionary definitions."
+      }
+    },
+    {
+      "sample": "conditional",
+      "lang": "en",
+      "selfLang": "en",
+      "nameA": "Party A",
+      "nameB": "Party B",
+      "aIsSelf": false,
+      "bIsSelf": false,
+      "label": "It depends on your values",
+      "tugA": 62,
+      "svgRotateDeg": -4.125,
+      "cruxStyle": "serif",
+      "leanTally": {
+        "for": 2,
+        "against": 1
+      },
+      "shareUrl": "https://okjudge.com/v/cond000001",
+      "personalized": {
+        "headline": "Nobody orders a sandwich hoping for a hot dog",
+        "crux": "Whether 'sandwich' follows shape or everyday use.",
+        "losing_side_best_point": "A split roll with a filling does fit most dictionary definitions."
+      }
+    },
+    {
+      "sample": "conditional",
+      "lang": "tr",
+      "selfLang": "en",
+      "nameA": "Taraf A",
+      "nameB": "Taraf B",
+      "aIsSelf": false,
+      "bIsSelf": false,
+      "label": "Değerlerine bağlı",
+      "tugA": 62,
+      "svgRotateDeg": -4.125,
+      "cruxStyle": "serif",
+      "leanTally": {
+        "for": 2,
+        "against": 1
+      },
+      "shareUrl": "https://okjudge.com/v/cond000001",
+      "personalized": {
+        "headline": "Nobody orders a sandwich hoping for a hot dog",
+        "crux": "Whether 'sandwich' follows shape or everyday use.",
+        "losing_side_best_point": "A split roll with a filling does fit most dictionary definitions."
+      }
+    },
+    {
+      "sample": "split",
+      "lang": "en",
+      "selfLang": "en",
+      "nameA": "Party A",
+      "nameB": "Party B",
+      "aIsSelf": false,
+      "bIsSelf": false,
+      "label": "Split decision",
+      "tugA": 62,
+      "svgRotateDeg": -4.125,
+      "cruxStyle": "serif",
+      "leanTally": {
+        "for": 2,
+        "against": 1
+      },
+      "shareUrl": "https://okjudge.com/v/split00001",
+      "personalized": {
+        "headline": "Nobody orders a sandwich hoping for a hot dog",
+        "crux": "Whether 'sandwich' follows shape or everyday use.",
+        "losing_side_best_point": "A split roll with a filling does fit most dictionary definitions."
+      }
+    },
+    {
+      "sample": "split",
+      "lang": "tr",
+      "selfLang": "en",
+      "nameA": "Taraf A",
+      "nameB": "Taraf B",
+      "aIsSelf": false,
+      "bIsSelf": false,
+      "label": "Bölünmüş karar",
+      "tugA": 62,
+      "svgRotateDeg": -4.125,
+      "cruxStyle": "serif",
+      "leanTally": {
+        "for": 2,
+        "against": 1
+      },
+      "shareUrl": "https://okjudge.com/v/split00001",
+      "personalized": {
+        "headline": "Nobody orders a sandwich hoping for a hot dog",
+        "crux": "Whether 'sandwich' follows shape or everyday use.",
+        "losing_side_best_point": "A split roll with a filling does fit most dictionary definitions."
+      }
+    },
+    {
+      "sample": "overturned_tr",
+      "lang": "en",
+      "selfLang": "tr",
+      "nameA": "You",
+      "nameB": "annem",
+      "aIsSelf": true,
+      "bIsSelf": false,
+      "label": "You're right",
+      "tugA": 80,
+      "svgRotateDeg": -10.313,
+      "cruxStyle": "serif",
+      "leanTally": null,
+      "shareUrl": "https://okjudge.com/v/trial0001x",
+      "personalized": {
+        "headline": "Parmak çıtlatmak artrite yol açmıyor",
+        "crux": "annem'in korkusu kanıta dayanıyor mu, yoksa Taraf A haklı mı?",
+        "losing_side_best_point": "Bazı küçük çalışmalar şişlik bildiriyor."
+      }
+    },
+    {
+      "sample": "overturned_tr",
+      "lang": "tr",
+      "selfLang": "tr",
+      "nameA": "Sen",
+      "nameB": "annem",
+      "aIsSelf": true,
+      "bIsSelf": false,
+      "label": "Sen haklısın",
+      "tugA": 80,
+      "svgRotateDeg": -10.313,
+      "cruxStyle": "serif",
+      "leanTally": null,
+      "shareUrl": "https://okjudge.com/v/trial0001x",
+      "personalized": {
+        "headline": "Parmak çıtlatmak artrite yol açmıyor",
+        "crux": "annem'in korkusu kanıta dayanıyor mu, yoksa Taraf A haklı mı?",
+        "losing_side_best_point": "Bazı küçük çalışmalar şişlik bildiriyor."
+      }
+    },
+    {
+      "sample": "refused",
+      "lang": "en",
+      "selfLang": "en",
+      "nameA": "Party A",
+      "nameB": "Party B",
+      "aIsSelf": false,
+      "bIsSelf": false,
+      "label": "Too close to call",
+      "tugA": 50,
+      "svgRotateDeg": 0,
+      "cruxStyle": "serif",
+      "leanTally": null,
+      "shareUrl": "https://okjudge.com/v/refused001",
+      "personalized": {
+        "headline": "The AI wouldn't weigh in on this one",
+        "crux": "Whether 'sandwich' follows shape or everyday use.",
+        "losing_side_best_point": "A split roll with a filling does fit most dictionary definitions."
+      }
+    },
+    {
+      "sample": "refused",
+      "lang": "tr",
+      "selfLang": "en",
+      "nameA": "Taraf A",
+      "nameB": "Taraf B",
+      "aIsSelf": false,
+      "bIsSelf": false,
+      "label": "Başa baş, karar çıkmadı",
+      "tugA": 50,
+      "svgRotateDeg": 0,
+      "cruxStyle": "serif",
+      "leanTally": null,
+      "shareUrl": "https://okjudge.com/v/refused001",
+      "personalized": {
+        "headline": "The AI wouldn't weigh in on this one",
+        "crux": "Whether 'sandwich' follows shape or everyday use.",
+        "losing_side_best_point": "A split roll with a filling does fit most dictionary definitions."
+      }
+    },
+    {
+      "sample": "premium_factcheck",
+      "lang": "en",
+      "selfLang": "en",
+      "nameA": "Party A",
+      "nameB": "Party B",
+      "aIsSelf": false,
+      "bIsSelf": false,
+      "label": "Party A is right",
+      "tugA": 80,
+      "svgRotateDeg": -10.313,
+      "cruxStyle": "serif",
+      "leanTally": null,
+      "shareUrl": "https://okjudge.com/v/premium001",
+      "personalized": {
+        "headline": "Nobody orders a sandwich hoping for a hot dog",
+        "crux": "Whether 'sandwich' follows shape or everyday use.",
+        "losing_side_best_point": "A split roll with a filling does fit most dictionary definitions."
+      }
+    },
+    {
+      "sample": "premium_factcheck",
+      "lang": "tr",
+      "selfLang": "en",
+      "nameA": "Taraf A",
+      "nameB": "Taraf B",
+      "aIsSelf": false,
+      "bIsSelf": false,
+      "label": "Taraf A haklı",
+      "tugA": 80,
+      "svgRotateDeg": -10.313,
+      "cruxStyle": "serif",
+      "leanTally": null,
+      "shareUrl": "https://okjudge.com/v/premium001",
+      "personalized": {
+        "headline": "Nobody orders a sandwich hoping for a hot dog",
+        "crux": "Whether 'sandwich' follows shape or everyday use.",
+        "losing_side_best_point": "A split roll with a filling does fit most dictionary definitions."
+      }
+    }
+  ],
+  "names": [
+    {
+      "case": "empty",
+      "lang": "en",
+      "selfLang": "en",
+      "nameMap": [],
+      "nameA": "Party A",
+      "nameB": "Party B",
+      "aIsSelf": false,
+      "bIsSelf": false
+    },
+    {
+      "case": "empty",
+      "lang": "tr",
+      "selfLang": "en",
+      "nameMap": [],
+      "nameA": "Taraf A",
+      "nameB": "Taraf B",
+      "aIsSelf": false,
+      "bIsSelf": false
+    },
+    {
+      "case": "narrator_en",
+      "lang": "en",
+      "selfLang": "en",
+      "nameMap": [
+        {
+          "original": "I",
+          "replacement": "Party A"
+        },
+        {
+          "original": "Sam",
+          "replacement": "Party B"
+        }
+      ],
+      "nameA": "You",
+      "nameB": "Sam",
+      "aIsSelf": true,
+      "bIsSelf": false
+    },
+    {
+      "case": "narrator_en",
+      "lang": "tr",
+      "selfLang": "en",
+      "nameMap": [
+        {
+          "original": "I",
+          "replacement": "Party A"
+        },
+        {
+          "original": "Sam",
+          "replacement": "Party B"
+        }
+      ],
+      "nameA": "Sen",
+      "nameB": "Sam",
+      "aIsSelf": true,
+      "bIsSelf": false
+    },
+    {
+      "case": "narrator_my",
+      "lang": "en",
+      "selfLang": "en",
+      "nameMap": [
+        {
+          "original": "my",
+          "replacement": "Party A"
+        },
+        {
+          "original": "Sam",
+          "replacement": "Party B"
+        }
+      ],
+      "nameA": "You",
+      "nameB": "Sam",
+      "aIsSelf": true,
+      "bIsSelf": false
+    },
+    {
+      "case": "narrator_my",
+      "lang": "tr",
+      "selfLang": "en",
+      "nameMap": [
+        {
+          "original": "my",
+          "replacement": "Party A"
+        },
+        {
+          "original": "Sam",
+          "replacement": "Party B"
+        }
+      ],
+      "nameA": "Sen",
+      "nameB": "Sam",
+      "aIsSelf": true,
+      "bIsSelf": false
+    },
+    {
+      "case": "narrator_tr_ben",
+      "lang": "en",
+      "selfLang": "tr",
+      "nameMap": [
+        {
+          "original": "Ben",
+          "replacement": "Taraf A"
+        },
+        {
+          "original": "Deniz'in",
+          "replacement": "Taraf B'nin"
+        }
+      ],
+      "nameA": "You",
+      "nameB": "Deniz",
+      "aIsSelf": true,
+      "bIsSelf": false
+    },
+    {
+      "case": "narrator_tr_ben",
+      "lang": "tr",
+      "selfLang": "tr",
+      "nameMap": [
+        {
+          "original": "Ben",
+          "replacement": "Taraf A"
+        },
+        {
+          "original": "Deniz'in",
+          "replacement": "Taraf B'nin"
+        }
+      ],
+      "nameA": "Sen",
+      "nameB": "Deniz",
+      "aIsSelf": true,
+      "bIsSelf": false
+    },
+    {
+      "case": "ben_is_a_name_in_en",
+      "lang": "en",
+      "selfLang": "en",
+      "nameMap": [
+        {
+          "original": "Ben",
+          "replacement": "Party A"
+        },
+        {
+          "original": "Sam",
+          "replacement": "Party B"
+        }
+      ],
+      "nameA": "Ben",
+      "nameB": "Sam",
+      "aIsSelf": false,
+      "bIsSelf": false
+    },
+    {
+      "case": "ben_is_a_name_in_en",
+      "lang": "tr",
+      "selfLang": "en",
+      "nameMap": [
+        {
+          "original": "Ben",
+          "replacement": "Party A"
+        },
+        {
+          "original": "Sam",
+          "replacement": "Party B"
+        }
+      ],
+      "nameA": "Ben",
+      "nameB": "Sam",
+      "aIsSelf": false,
+      "bIsSelf": false
+    },
+    {
+      "case": "ben_in_slot_b",
+      "lang": "en",
+      "selfLang": "tr",
+      "nameMap": [
+        {
+          "original": "I",
+          "replacement": "Party A"
+        },
+        {
+          "original": "Ben",
+          "replacement": "Party B"
+        }
+      ],
+      "nameA": "You",
+      "nameB": "Ben",
+      "aIsSelf": true,
+      "bIsSelf": false
+    },
+    {
+      "case": "ben_in_slot_b",
+      "lang": "tr",
+      "selfLang": "tr",
+      "nameMap": [
+        {
+          "original": "I",
+          "replacement": "Party A"
+        },
+        {
+          "original": "Ben",
+          "replacement": "Party B"
+        }
+      ],
+      "nameA": "Sen",
+      "nameB": "Ben",
+      "aIsSelf": true,
+      "bIsSelf": false
+    },
+    {
+      "case": "description_then_name",
+      "lang": "en",
+      "selfLang": "en",
+      "nameMap": [
+        {
+          "original": "my roommate",
+          "replacement": "Party B"
+        },
+        {
+          "original": "Chris",
+          "replacement": "Party B"
+        },
+        {
+          "original": "Mark's",
+          "replacement": "Party A"
+        }
+      ],
+      "nameA": "Mark",
+      "nameB": "Chris",
+      "aIsSelf": false,
+      "bIsSelf": false
+    },
+    {
+      "case": "description_then_name",
+      "lang": "tr",
+      "selfLang": "en",
+      "nameMap": [
+        {
+          "original": "my roommate",
+          "replacement": "Party B"
+        },
+        {
+          "original": "Chris",
+          "replacement": "Party B"
+        },
+        {
+          "original": "Mark's",
+          "replacement": "Party A"
+        }
+      ],
+      "nameA": "Mark",
+      "nameB": "Chris",
+      "aIsSelf": false,
+      "bIsSelf": false
+    },
+    {
+      "case": "person_c_ignored",
+      "lang": "en",
+      "selfLang": "tr",
+      "nameMap": [
+        {
+          "original": "Ayşe",
+          "replacement": "Kişi C"
+        }
+      ],
+      "nameA": "Party A",
+      "nameB": "Party B",
+      "aIsSelf": false,
+      "bIsSelf": false
+    },
+    {
+      "case": "person_c_ignored",
+      "lang": "tr",
+      "selfLang": "tr",
+      "nameMap": [
+        {
+          "original": "Ayşe",
+          "replacement": "Kişi C"
+        }
+      ],
+      "nameA": "Taraf A",
+      "nameB": "Taraf B",
+      "aIsSelf": false,
+      "bIsSelf": false
+    }
+  ],
+  "waits": [
+    {
+      "seconds": null,
+      "lang": "en",
+      "text": "a few minutes"
+    },
+    {
+      "seconds": null,
+      "lang": "tr",
+      "text": "birkaç dakika"
+    },
+    {
+      "seconds": 0,
+      "lang": "en",
+      "text": "a few minutes"
+    },
+    {
+      "seconds": 0,
+      "lang": "tr",
+      "text": "birkaç dakika"
+    },
+    {
+      "seconds": -5,
+      "lang": "en",
+      "text": "a few minutes"
+    },
+    {
+      "seconds": -5,
+      "lang": "tr",
+      "text": "birkaç dakika"
+    },
+    {
+      "seconds": 1,
+      "lang": "en",
+      "text": "1 minute"
+    },
+    {
+      "seconds": 1,
+      "lang": "tr",
+      "text": "1 dakika"
+    },
+    {
+      "seconds": 59,
+      "lang": "en",
+      "text": "1 minute"
+    },
+    {
+      "seconds": 59,
+      "lang": "tr",
+      "text": "1 dakika"
+    },
+    {
+      "seconds": 60,
+      "lang": "en",
+      "text": "1 minute"
+    },
+    {
+      "seconds": 60,
+      "lang": "tr",
+      "text": "1 dakika"
+    },
+    {
+      "seconds": 61,
+      "lang": "en",
+      "text": "2 minutes"
+    },
+    {
+      "seconds": 61,
+      "lang": "tr",
+      "text": "2 dakika"
+    },
+    {
+      "seconds": 600,
+      "lang": "en",
+      "text": "10 minutes"
+    },
+    {
+      "seconds": 600,
+      "lang": "tr",
+      "text": "10 dakika"
+    },
+    {
+      "seconds": 5340,
+      "lang": "en",
+      "text": "89 minutes"
+    },
+    {
+      "seconds": 5340,
+      "lang": "tr",
+      "text": "89 dakika"
+    },
+    {
+      "seconds": 5400,
+      "lang": "en",
+      "text": "2 hours"
+    },
+    {
+      "seconds": 5400,
+      "lang": "tr",
+      "text": "2 saat"
+    },
+    {
+      "seconds": 5401,
+      "lang": "en",
+      "text": "2 hours"
+    },
+    {
+      "seconds": 5401,
+      "lang": "tr",
+      "text": "2 saat"
+    },
+    {
+      "seconds": 7200,
+      "lang": "en",
+      "text": "2 hours"
+    },
+    {
+      "seconds": 7200,
+      "lang": "tr",
+      "text": "2 saat"
+    },
+    {
+      "seconds": 86400,
+      "lang": "en",
+      "text": "24 hours"
+    },
+    {
+      "seconds": 86400,
+      "lang": "tr",
+      "text": "24 saat"
+    }
+  ],
+  "errors": [
+    {
+      "body": {
+        "error": "x",
+        "code": "too_short"
+      },
+      "status": 400,
+      "lang": "en",
+      "message": "That's a bit thin. Tell us more about the argument."
+    },
+    {
+      "body": {
+        "error": "x",
+        "code": "too_short"
+      },
+      "status": 400,
+      "lang": "tr",
+      "message": "Biraz kısa kaldı. Tartışmayı biraz daha anlat."
+    },
+    {
+      "body": {
+        "error": "x",
+        "code": "too_long"
+      },
+      "status": 400,
+      "lang": "en",
+      "message": "That's a lot! Keep it under 6000 characters."
+    },
+    {
+      "body": {
+        "error": "x",
+        "code": "too_long"
+      },
+      "status": 400,
+      "lang": "tr",
+      "message": "Epey uzun oldu. 6000 karakterin altında tut."
+    },
+    {
+      "body": {
+        "error": "x",
+        "code": "invalid"
+      },
+      "status": 400,
+      "lang": "en",
+      "message": "That request didn't look right."
+    },
+    {
+      "body": {
+        "error": "x",
+        "code": "invalid"
+      },
+      "status": 400,
+      "lang": "tr",
+      "message": "Bu istekte bir sorun var."
+    },
+    {
+      "body": {
+        "error": "x",
+        "code": "rate_limited",
+        "retryAfterSec": 420
+      },
+      "status": 429,
+      "lang": "en",
+      "message": "Order in the court! You've hit the limit for now. Try again in 7 minutes."
+    },
+    {
+      "body": {
+        "error": "x",
+        "code": "rate_limited",
+        "retryAfterSec": 420
+      },
+      "status": 429,
+      "lang": "tr",
+      "message": "Ağır ol, burası mahkeme! Şimdilik sınıra geldin. 7 dakika sonra tekrar dene."
+    },
+    {
+      "body": {
+        "error": "x",
+        "code": "daily_cap",
+        "retryAfterSec": 30000
+      },
+      "status": 503,
+      "lang": "en",
+      "message": "The court's closed for today. It's heard all the arguments it can take. Back in 9 hours."
+    },
+    {
+      "body": {
+        "error": "x",
+        "code": "daily_cap",
+        "retryAfterSec": 30000
+      },
+      "status": 503,
+      "lang": "tr",
+      "message": "Mahkeme bugünlük kapandı, kaldırabileceği kadar kavga dinledi. 9 saat sonra yine burada."
+    },
+    {
+      "body": {
+        "error": "x",
+        "code": "quota"
+      },
+      "status": 502,
+      "lang": "en",
+      "message": "The judges have used up their AI quota for now. Try again in a few minutes."
+    },
+    {
+      "body": {
+        "error": "x",
+        "code": "quota"
+      },
+      "status": 502,
+      "lang": "tr",
+      "message": "Yargıçların yapay zekâ kotası şimdilik doldu. Birkaç dakika sonra tekrar dene."
+    },
+    {
+      "body": {
+        "error": "x",
+        "code": "unavailable"
+      },
+      "status": 503,
+      "lang": "en",
+      "message": "We can't reach the judges right now. Give it a minute and try again."
+    },
+    {
+      "body": {
+        "error": "x",
+        "code": "unavailable"
+      },
+      "status": 503,
+      "lang": "tr",
+      "message": "Yargıçlara şu an ulaşamıyoruz. Bir dakika sonra tekrar dene."
+    },
+    {
+      "body": {
+        "error": "x",
+        "code": "captcha_failed"
+      },
+      "status": 403,
+      "lang": "en",
+      "message": "We couldn't tell if you're human. Try the check again, then send it."
+    },
+    {
+      "body": {
+        "error": "x",
+        "code": "captcha_failed"
+      },
+      "status": 403,
+      "lang": "tr",
+      "message": "İnsan olduğunu doğrulayamadık. Kontrolü bir daha dene, sonra yeniden gönder."
+    },
+    {
+      "body": {
+        "error": "x",
+        "code": "not_found"
+      },
+      "status": 404,
+      "lang": "en",
+      "message": "We couldn't find that."
+    },
+    {
+      "body": {
+        "error": "x",
+        "code": "not_found"
+      },
+      "status": 404,
+      "lang": "tr",
+      "message": "Bunu bulamadık."
+    },
+    {
+      "body": {
+        "error": "x",
+        "code": "fair_use",
+        "resetsAt": "2026-11-18T10:00:00.000Z"
+      },
+      "status": 402,
+      "lang": "en",
+      "message": "You've used this month's premium verdicts. More on November 18."
+    },
+    {
+      "body": {
+        "error": "x",
+        "code": "fair_use",
+        "resetsAt": "2026-11-18T10:00:00.000Z"
+      },
+      "status": 402,
+      "lang": "tr",
+      "message": "Bu ayın premium kararlarını kullandın. Hakların 18 Kasım tarihinde yenilenir."
+    },
+    {
+      "body": {
+        "error": "x",
+        "code": "fair_use"
+      },
+      "status": 402,
+      "lang": "en",
+      "message": "You've used this month's premium verdicts. More soon."
+    },
+    {
+      "body": {
+        "error": "x",
+        "code": "fair_use"
+      },
+      "status": 402,
+      "lang": "tr",
+      "message": "Bu ayın premium kararlarını kullandın. Hakların yakında yenilenir."
+    },
+    {
+      "body": null,
+      "status": 429,
+      "lang": "en",
+      "message": "Order in the court! You've hit the limit for now. Try again in a few minutes."
+    },
+    {
+      "body": null,
+      "status": 429,
+      "lang": "tr",
+      "message": "Ağır ol, burası mahkeme! Şimdilik sınıra geldin. birkaç dakika sonra tekrar dene."
+    },
+    {
+      "body": {
+        "error": "Some new server message",
+        "code": "brand_new_code"
+      },
+      "status": 500,
+      "lang": "en",
+      "message": "Some new server message"
+    },
+    {
+      "body": {
+        "error": "Some new server message",
+        "code": "brand_new_code"
+      },
+      "status": 500,
+      "lang": "tr",
+      "message": "Some new server message"
+    },
+    {
+      "body": null,
+      "status": 500,
+      "lang": "en",
+      "message": "Something went wrong. Mind trying again?"
+    },
+    {
+      "body": null,
+      "status": 500,
+      "lang": "tr",
+      "message": "Bir şey ters gitti. Bir daha dener misin?"
+    }
+  ],
+  "confidence": [
+    {
+      "n": 1,
+      "lang": "en",
+      "text": "Very low confidence · 1/5"
+    },
+    {
+      "n": 1,
+      "lang": "tr",
+      "text": "Çok düşük güven · 1/5"
+    },
+    {
+      "n": 2,
+      "lang": "en",
+      "text": "Low confidence · 2/5"
+    },
+    {
+      "n": 2,
+      "lang": "tr",
+      "text": "Düşük güven · 2/5"
+    },
+    {
+      "n": 3,
+      "lang": "en",
+      "text": "Moderate confidence · 3/5"
+    },
+    {
+      "n": 3,
+      "lang": "tr",
+      "text": "Orta güven · 3/5"
+    },
+    {
+      "n": 4,
+      "lang": "en",
+      "text": "High confidence · 4/5"
+    },
+    {
+      "n": 4,
+      "lang": "tr",
+      "text": "Yüksek güven · 4/5"
+    },
+    {
+      "n": 5,
+      "lang": "en",
+      "text": "Very high confidence · 5/5"
+    },
+    {
+      "n": 5,
+      "lang": "tr",
+      "text": "Çok yüksek güven · 5/5"
+    }
+  ],
+  "presets": [
+    {
+      "id": "balanced",
+      "emoji": "⚖️"
+    },
+    {
+      "id": "outcomes",
+      "emoji": "🎯"
+    },
+    {
+      "id": "principles",
+      "emoji": "📜"
+    },
+    {
+      "id": "fairness",
+      "emoji": "🤝"
+    },
+    {
+      "id": "loyalty",
+      "emoji": "❤️"
+    }
+  ],
+  "palette": {
+    "ivory": "#F6F1E9",
+    "ivory2": "#EEE6D9",
+    "paper": "#FFFCF7",
+    "ink": "#1C1916",
+    "ink2": "#4A433C",
+    "muted": "#6B6258",
+    "placeholder": "#776D61",
+    "terra": "#C8553D",
+    "terraInk": "#A9442F",
+    "terraTint": "#F3DDD5",
+    "sage": "#8AA899",
+    "sageStrong": "#6E8F80",
+    "sageInk": "#4F6F60",
+    "sageTint": "#DDE7E0",
+    "stone": "#D6C7B0",
+    "strata": "#E6DCCB",
+    "danger": "#B3261E"
+  },
+  "paletteAlpha": {
+    "line": "rgba(28, 25, 22, 0.09)",
+    "line2": "rgba(28, 25, 22, 0.14)",
+    "glass": "rgba(255, 252, 247, 0.68)"
+  },
+  "thinking": {
+    "steps": [
+      {
+        "ms": 2400,
+        "key": "thinking.read"
+      },
+      {
+        "ms": 2400,
+        "key": "thinking.label"
+      },
+      {
+        "ms": 1100,
+        "key": "thinking.dig"
+      },
+      {
+        "ms": 1100,
+        "key": "thinking.dig"
+      },
+      {
+        "ms": 1100,
+        "key": "thinking.dig"
+      },
+      {
+        "ms": 1300,
+        "key": "thinking.reach"
+      },
+      {
+        "ms": 2400,
+        "key": "thinking.crux"
+      },
+      {
+        "ms": 2400,
+        "key": "thinking.judges"
+      },
+      {
+        "ms": 1200,
+        "key": "thinking.votes"
+      }
+    ],
+    "finishSteps": [
+      {
+        "name": "settle",
+        "ms": 600
+      },
+      {
+        "name": "sweep",
+        "ms": 900
+      },
+      {
+        "name": "crux",
+        "ms": 700
+      },
+      {
+        "name": "out",
+        "ms": 250
+      }
+    ],
+    "maxFinishMs": 3000,
+    "finishKey": "thinking.finish",
+    "stillJudgingKey": "thinking.stillJudging",
+    "readyKey": "thinking.ready"
+  }
+}

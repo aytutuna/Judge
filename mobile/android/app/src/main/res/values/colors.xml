@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- lib/palette.ts (the Compose theme reads ui/theme/Palette.kt; these
+         are only for XML: launcher icon, splash and window). -->
+    <color name="ivory">#FFF6F1E9</color>
+    <color name="ink">#FF1C1916</color>
+    <color name="terra">#FFC8553D</color>
+    <color name="sage">#FF8AA899</color>
+</resources>

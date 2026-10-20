@@ -1,0 +1,21 @@
+// Settings shared by Debug and Release. Values reach the app through
+// Judge/Info.plist (JudgeAPIBaseURL, JudgeShareBaseURL, JudgeTurnstileSiteKey)
+// and are read once into AppConfig. "$()" keeps "//" from starting a comment.
+
+MARKETING_VERSION = 1.0.0
+CURRENT_PROJECT_VERSION = 1
+
+API_BASE_URL = https:/$()/okjudge.com
+SHARE_BASE_URL = $(API_BASE_URL)
+
+// Public Turnstile site key (the website's NEXT_PUBLIC_TURNSTILE_SITE_KEY).
+// Empty = no bot check, which only works against servers without
+// TURNSTILE_SECRET_KEY (local/dev). The live site refuses free verdicts
+// without a token (403 captcha_failed).
+TURNSTILE_SITE_KEY =
+
+APP_DISPLAY_NAME = Judge
+
+// Signing: put `DEVELOPMENT_TEAM = <your team id>` in Config/Signing.xcconfig
+// (gitignored). Simulator builds and tests need no signing.
+#include? "Signing.xcconfig"
