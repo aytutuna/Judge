@@ -59,7 +59,7 @@ export function bareName(original: string): string {
   return m ? m[1] : s;
 }
 
-/** Whether a Party A original is the narrator under the judged language. */
+/** Whether a narrator-slot original is the narrator under the judged language. */
 function isSelfOriginal(original: string, selfLang: Lang): boolean {
   return EN_SELF.test(original) || (selfLang === "tr" && TR_SELF.has(original.toLocaleLowerCase("tr")));
 }
@@ -70,18 +70,29 @@ export type Party = { name: string; self: boolean };
 /** Label letter ("A", "B", "C"…) -> who it stands for. */
 export type Parties = ReadonlyMap<string, Party>;
 
+/** Which party label is the viewer's own narrator. "A" everywhere except a
+ * two-sided case seen by the person who answered the invite: their own
+ * account was anonymized with them as Party B. */
+export type SelfParty = "A" | "B";
+
 /**
  * Who each label stands for. The pronoun -> narrator mapping applies ONLY to
- * the Party A slot: the anonymizer's own contract says a first-person
- * narrator is always Party A, which protects a friend actually named "Ben"
- * (a top-100 English name) who lands in slot B. The Turkish set additionally
- * applies only when the argument was judged in Turkish, so an English
- * session about Ben never becomes "You". A narrator entry wins slot A; for
- * names the first capitalized entry wins (the anonymizer lists them in
- * order of appearance, so the fullest form usually comes first, and it may
- * also list a description such as "my roommate" for the same slot).
+ * the narrator's slot (`selfParty`, Party A unless a respondent is viewing
+ * their own case): the anonymizer's own contract says a first-person
+ * narrator is always that party, which protects a friend actually named
+ * "Ben" (a top-100 English name) who lands in the other slot. The Turkish
+ * set additionally applies only when the argument was judged in Turkish, so
+ * an English session about Ben never becomes "You". A narrator entry wins
+ * its slot; for names the first capitalized entry wins (the anonymizer
+ * lists them in order of appearance, so the fullest form usually comes
+ * first, and it may also list a description such as "my roommate" for the
+ * same slot).
  */
-export function resolveParties(nameMap: NameMapping[] | undefined, selfLang: Lang): Map<string, Party> {
+export function resolveParties(
+  nameMap: NameMapping[] | undefined,
+  selfLang: Lang,
+  selfParty: SelfParty = "A",
+): Map<string, Party> {
   const parties = new Map<string, Party>();
   for (const m of nameMap ?? []) {
     const letter = labelLetter(m.replacement);
@@ -89,8 +100,8 @@ export function resolveParties(nameMap: NameMapping[] | undefined, selfLang: Lan
     const name = bareName(m.original);
     if (!name) continue;
     const current = parties.get(letter);
-    if (letter === "A" && isSelfOriginal(name, selfLang)) {
-      parties.set("A", { name, self: true });
+    if (letter === selfParty && isSelfOriginal(name, selfLang)) {
+      parties.set(letter, { name, self: true });
     } else if (!current || (!current.self && !startsUpper(current.name) && startsUpper(name))) {
       // A capitalized name beats a lowercase description ("my roommate").
       parties.set(letter, { name, self: false });
@@ -112,23 +123,36 @@ export function resolveParties(nameMap: NameMapping[] | undefined, selfLang: Lan
  * the argument was judged in (defaults to `lang`). They differ when a
  * verdict is shown translated: a Turkish "Ben" stays the narrator, labelled
  * "You", after the page switches to English.
+ *
+ * `selfParty` "B" is the respondent's own view of a two-sided case: their
+ * narrator entry ({ original: "I", replacement: "Party B" }) makes Party B
+ * "You" and `bIsSelf` true. With the default "A", `bIsSelf` is always false.
+ *
+ * `viewerKnown` says the viewer is known to be `selfParty` (a case page,
+ * where the server says which party is looking). When the map says nothing
+ * about that party (the names live on another device), it is labelled
+ * "Party A (you)" and flagged as self, so the card still tells the viewer
+ * which side they are. Never set on share pages.
  */
 export function partyNames(
   nameMap: NameMapping[] | undefined,
   lang: Lang = "en",
   selfLang: Lang = lang,
+  selfParty: SelfParty = "A",
+  viewerKnown = false,
 ): { nameA: string; nameB: string; aIsSelf: boolean; bIsSelf: boolean } {
-  const parties = resolveParties(nameMap, selfLang);
+  const parties = resolveParties(nameMap, selfLang, selfParty);
   const a = parties.get("A");
   const b = parties.get("B");
+  const viewerLabel = (letter: SelfParty) =>
+    t(lang, "party.youLabel", { label: t(lang, letter === "A" ? "party.a" : "party.b") });
+  const markA = viewerKnown && selfParty === "A" && !a;
+  const markB = viewerKnown && selfParty === "B" && !b;
   return {
-    nameA: a ? (a.self ? t(lang, "you") : a.name) : t(lang, "party.a"),
-    nameB: b ? b.name : t(lang, "party.b"),
-    aIsSelf: Boolean(a?.self),
-    // Always false under the current anonymizer contract (a first-person
-    // narrator is always Party A); kept so call sites stay uniform
-    // (`p.party === "a" ? aIsSelf : bIsSelf`).
-    bIsSelf: false,
+    nameA: a ? (a.self ? t(lang, "you") : a.name) : markA ? viewerLabel("A") : t(lang, "party.a"),
+    nameB: b ? (b.self ? t(lang, "you") : b.name) : markB ? viewerLabel("B") : t(lang, "party.b"),
+    aIsSelf: Boolean(a?.self) || markA,
+    bIsSelf: Boolean(b?.self) || markB,
   };
 }
 
@@ -363,6 +387,24 @@ function enSelf(before: string, after: string): Rendered {
   return { text: `you${space}${base}`, consumed: whole.length };
 }
 
+/**
+ * A narrator's possessive ("Party A's"): "your" before the noun it owns,
+ * "yours" when it ends the phrase ("were Party A's." -> "were yours."),
+ * or null (keep the label) when the next word does not settle which.
+ */
+const EN_POSSESSIVE_ALONE_NEXT =
+  /^(?:and|or|but|nor|too|either|instead|alone|is|are|was|were|has|have|had|will|would|can|could|should|might|must|may|seems?|seemed|stays?|stayed|remains?|remained)$/i;
+
+function enSelfPossessive(after: string): Rendered {
+  if (/^\s*(?:[.,;:!?…"”’)\]—–]|$)/u.test(after)) return { text: "yours", consumed: 0 };
+  const next = /^ ([A-Za-z]+)(?![\p{L}\p{N}'’-])/u.exec(after);
+  if (!next) return null;
+  // A joined phrase or a verb right after it: the possessive stands alone
+  // ("yours and Deniz's", "yours was better").
+  if (EN_POSSESSIVE_ALONE_NEXT.test(next[1])) return { text: "yours", consumed: 0 };
+  return { text: "your", consumed: 0 };
+}
+
 // Turkish narrator: "sen" forms, only where the result is surely grammatical.
 
 const TR_SELF_CASE: Partial<Record<TrCase, string>> = {
@@ -473,7 +515,7 @@ function renderEn(party: Party, suffix: string | undefined, apos: string, before
   if (!party.self) {
     return { text: possessive ? `${party.name}${apos || "'"}s` : party.name, consumed: 0 };
   }
-  const r = possessive ? { text: "your", consumed: 0 } : enSelf(before, after);
+  const r = possessive ? enSelfPossessive(after) : enSelf(before, after);
   if (!r) return null;
   return atSentenceStart(before) ? { ...r, text: capitalize(r.text, "en") } : r;
 }
@@ -532,14 +574,16 @@ export function restoreNames(text: string, parties: Parties, textLang: Lang): st
  * `selfLang` is the language the argument was judged in (narrator
  * detection); the grammar follows the language the text is written in,
  * which differs once the verdict has been translated. Returns the same
- * object when there is nothing to restore.
+ * object when there is nothing to restore. Two-sided fields and an appeal
+ * summary are restored the same way when present.
  */
 export function personalizeResult(
   result: VerdictResult,
   nameMap: NameMapping[] | undefined,
   selfLang: Lang,
+  selfParty: SelfParty = "A",
 ): VerdictResult {
-  const parties = resolveParties(nameMap, selfLang);
+  const parties = resolveParties(nameMap, selfLang, selfParty);
   if (parties.size === 0) return result;
   const lang = verdictLang(result);
   const r = (s: string) => restoreNames(s, parties, lang);
@@ -577,5 +621,18 @@ export function personalizeResult(
           },
         }
       : {}),
+    ...(result.agreed_facts ? { agreed_facts: result.agreed_facts.map(r) } : {}),
+    ...(result.disputed_facts
+      ? {
+          disputed_facts: result.disputed_facts.map((d) => ({
+            ...d,
+            fact: r(d.fact),
+            party_a: r(d.party_a),
+            party_b: r(d.party_b),
+          })),
+        }
+      : {}),
+    ...(result.would_change ? { would_change: result.would_change.map(r) } : {}),
+    ...(result.appeal ? { appeal: { ...result.appeal, summary: r(result.appeal.summary) } } : {}),
   };
 }

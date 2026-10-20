@@ -227,7 +227,13 @@ export function normalizeNameMap(
   replacements: readonly { original: string; replacement: string }[],
   argument: string,
   text: string,
+  /** The narrator's label: "Party A" (default, every one-account argument)
+   * or "Party B" (the respondent's account of a two-sided case). The other
+   * party label is the one the narrator argues with. */
+  opts: { narrator?: "Party A" | "Party B" } = {},
 ): NameMapping[] {
+  const narrator = opts.narrator ?? "Party A";
+  const other = narrator === "Party A" ? "Party B" : "Party A";
   const out: NameMapping[] = [];
   const seen = new Set<string>();
   const push = (m: NameMapping) => {
@@ -256,7 +262,7 @@ export function normalizeNameMap(
     );
     let name = stripGluedSuffix(bareName(original), argument, tr, taken);
     if (!name || canonicalLabel(name)) continue;
-    if (label === "Party A") {
+    if (label === narrator) {
       // Every narrator becomes "I", which reads as the narrator under
       // either judged language, so a Turkish argument judged with the
       // English interface shows "You", never a person named "Ben". A bare
@@ -268,12 +274,12 @@ export function normalizeNameMap(
     push({ original: name, replacement: label });
   }
 
-  if (!out.some((m) => m.replacement === "Party A")) {
+  if (!out.some((m) => m.replacement === narrator)) {
     const anon = firstPerson(text);
     const present = tr ? raw.trAny + raw.trVerbs > 0 : raw.enAny > 0;
-    const hasLabelA = /(?:Party|Taraf) A(?![\p{L}\p{N}])/u.test(text);
-    const hasLabelB =
-      /(?:Party|Taraf) B(?![\p{L}\p{N}])/u.test(text) || out.some((m) => m.replacement === "Party B");
+    const labelRe = (label: string) => new RegExp(String.raw`(?:Party|Taraf) ${label.slice(-1)}(?![\p{L}\p{N}])`, "u");
+    const hasLabelSelf = labelRe(narrator).test(text);
+    const hasLabelOther = labelRe(other).test(text) || out.some((m) => m.replacement === other);
     const rewritten = tr
       ? raw.trStrong > 0
         ? anon.trStrong < raw.trStrong
@@ -281,8 +287,8 @@ export function normalizeNameMap(
       : raw.enStrong > 0
         ? anon.enStrong < raw.enStrong
         : anon.enAny < raw.enAny;
-    if (present && ((hasLabelA && rewritten) || (!hasLabelA && hasLabelB))) {
-      out.unshift({ original: "I", replacement: "Party A" });
+    if (present && ((hasLabelSelf && rewritten) || (!hasLabelSelf && hasLabelOther))) {
+      out.unshift({ original: "I", replacement: narrator });
     }
   }
   return out;

@@ -68,4 +68,6 @@ export type AppConfig = {
   signIn: AuthProviders;
   premiumEnabled: boolean;
   pricing: PricingInfo;
+  /** Premium features this deployment offers. Absent on older servers: treat as all false. */
+  features?: { cases: boolean; evidence: boolean };
 };

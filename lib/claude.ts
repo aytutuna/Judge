@@ -82,9 +82,19 @@ export async function withUsageMeter<T>(fn: () => Promise<T>): Promise<{ value: 
   return { value, usage };
 }
 
+/** One image for a vision call (base64, no data: prefix). The media type
+ * must come from the sniffed bytes, never from the client. */
+export type ClaudeImage = {
+  mediaType: "image/jpeg" | "image/png" | "image/gif" | "image/webp";
+  data: string;
+};
+
 export type ClaudeJsonCall = {
   system: string;
   user: string;
+  /** Images placed before the user text. Absent or empty: the request is
+   * exactly the text-only one. */
+  images?: ClaudeImage[];
   /** Compact schema (see toClaudeSchema): JSON Schema plus `nullable: true`. */
   schema: Record<string, unknown>;
   /** Thinking depth and token spend. Defaults to JUDGE_EFFORT, else "medium".
@@ -160,6 +170,20 @@ function describeError(e: unknown, timeoutMs: number): string {
   return `Claude request failed: ${e instanceof Error ? e.message : String(e)}`;
 }
 
+/** The user turn: the plain text, or the images followed by the text. */
+function userContent(call: ClaudeJsonCall): string | Anthropic.ContentBlockParam[] {
+  if (!call.images?.length) return call.user;
+  return [
+    ...call.images.map(
+      (image): Anthropic.ImageBlockParam => ({
+        type: "image",
+        source: { type: "base64", media_type: image.mediaType, data: image.data },
+      }),
+    ),
+    { type: "text", text: call.user },
+  ];
+}
+
 export async function claudeJson<T>(
   call: ClaudeJsonCall,
 ): Promise<ClaudeJsonResult<T>> {
@@ -173,7 +197,7 @@ export async function claudeJson<T>(
         model: call.model ?? JUDGE_MODEL,
         max_tokens: MAX_TOKENS,
         system: call.system,
-        messages: [{ role: "user", content: call.user }],
+        messages: [{ role: "user", content: userContent(call) }],
         output_config: {
           format: { type: "json_schema", schema: toClaudeSchema(call.schema) },
           effort: call.effort ?? defaultEffort(),

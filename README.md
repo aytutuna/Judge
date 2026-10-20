@@ -171,6 +171,9 @@ after sign-in.
 | `PREMIUM_SONNET_EFFORT` | `medium` | Thinking depth for non-Haiku premium judges: `low`, `medium` or `high` |
 | `PREMIUM_FACTCHECK_MODEL` | `claude-haiku-5-5` | Model for the web fact-check |
 | `PREMIUM_FACTCHECK_MAX_SEARCHES` | `3` | Web searches per fact-check (1 to 5), $0.01 each |
+| `CASES_ENABLED` | `1` | `0` turns off two-sided cases and appeals (`/api/v1/cases*` and `/api/v1/respond/*` answer `503 not_configured`, `GET /api/v1/config` reports `features.cases: false`). Always off when Premium is off |
+| `EVIDENCE_ENABLED` | `1` | `0` turns off screenshot evidence (upload endpoints answer `503 not_configured`, evidence tokens are refused with `400 evidence_invalid`, `features.evidence: false`). Always off when Premium is off |
+| `EVIDENCE_MODEL` | `claude-haiku-5-5` | Vision model that transcribes evidence images |
 
 Sign-in providers without credentials are reported as unavailable by
 `GET /api/v1/config`, and the sign-in page shows them disabled.
@@ -205,6 +208,46 @@ sign-in does not depend on it.
 4. The verdict is stored like a free one (anonymized), with `tier`,
    `fact_check` and `panel` added, and the reserved credit is consumed
    (or returned, see above).
+
+### Two-sided cases, evidence and appeals (Premium)
+
+- **Hear both sides.** A Premium user writes their side (`POST /api/v1/cases`)
+  and gets a private invite link `/r/<token>` for the other person. That
+  person needs no account: they write their side privately (Turnstile when
+  configured, per-IP limits). Neither sees the other's text before the
+  verdict; afterwards both see the verdict and both anonymized accounts.
+  The judges get both accounts labelled "Party A's account" / "Party B's
+  account" and add what both agree on, what is disputed (with which side the
+  evidence favors and the fact the verdict hinges on) and what would change
+  the verdict. The owner can judge with only their side at any time; after
+  7 days without an answer the invite expires.
+- **Credits.** One premium verdict per case, held when the case is created
+  (it counts towards the fair-use cap and `PREMIUM_DAILY_CAP` then), spent
+  when it is judged, and returned if judging fails, the judges decline, or
+  nobody answers in 7 days. Judging runs after the response (Next's
+  `after()`, so it needs `next start` or a platform that supports it);
+  anything still judging after 10 minutes is failed and refunded.
+- **Evidence.** Up to 3 images per side (1 per appeal), PNG/JPEG/WebP/GIF,
+  checked by their bytes. The browser shrinks them to 1600 px first. Each
+  image is transcribed in memory by `EVIDENCE_MODEL` and then thrown away:
+  images are never stored, and the transcript is anonymized with the same
+  name map as the text before it is stored or judged. Works for one-sided
+  premium verdicts too (`"evidence"` on `POST /api/v1/verdict`).
+- **Appeals.** After a verdict, each party may add context once (the owner;
+  the other person only when signed in with Premium, and only the person who
+  wrote side B: the account they answered with, or whoever holds the claim
+  code their browser got when answering signed out). It costs one premium
+  verdict; the whole case is judged again and the new verdict is labelled
+  (verdict stands / flipped / changed) next to the earlier one, which stays.
+- **Names.** Each side is anonymized when it is submitted, and the name map
+  goes back only in that response (the website keeps it in the browser to
+  show names on your own view). The server keeps only keyed, per-case name
+  fingerprints so the same person gets the same label in both accounts.
+- **Secrets.** Invite links, evidence tokens and name fingerprints are keyed
+  from `BETTER_AUTH_SECRET`: rotating it turns off open invite links and
+  pending evidence uploads.
+- **Deletion.** Deleting an account deletes the cases it started, with the
+  other person's answers, transcripts, appeals and their verdicts.
 
 **Cost per premium verdict** (Haiku $0.10/$0.50 and Sonnet $2/$10 per
 million tokens, $0.01 per search). Measured on 6 logged local runs:
@@ -269,7 +312,7 @@ The website and the future iOS/Android app share one JSON API. Base URL
 - **Shared plain-TypeScript modules** (no Next or DOM imports) the app can
   reuse: `lib/types.ts`, `lib/i18n.ts`, `lib/verdict-display.ts`,
   `lib/names.ts`, `lib/palette.ts`, `lib/frameworks.ts`, `lib/api-errors.ts`,
-  `lib/account-types.ts`, `lib/pricing.ts`.
+  `lib/account-types.ts`, `lib/pricing.ts`, `lib/case-types.ts`.
 
 | Call | Purpose |
 |---|---|
@@ -281,6 +324,90 @@ The website and the future iOS/Android app share one JSON API. Base URL
 | `GET /api/v1/verdicts/{id}` | A stored verdict |
 | `POST /api/v1/verdicts/{id}/translate?lang=en\|tr` | A stored verdict in the other language |
 | `POST /api/v1/auth/dev-login` | Local testing only (see above); 404 everywhere else |
+| `POST /api/v1/evidence` | Premium: transcribe 1 to 3 evidence images, get signed evidence tokens |
+| `POST /api/v1/cases` | Premium: start a two-sided case (holds 1 premium verdict) |
+| `GET /api/v1/cases` | Your cases, newest first (`?limit=1-50&before=<createdAt>`); each has the anonymized `headline` of its latest verdict and an `excerpt` of your side |
+| `GET /api/v1/cases/{id}` / `DELETE` | Your case (`CaseView`) / delete it |
+| `POST /api/v1/cases/{id}/judge` | Judge with only your side (`{ "mode": "only_mine" }`), or retry a failed case |
+| `POST /api/v1/cases/{id}/invite` | A new invite link (the old one stops working) |
+| `POST /api/v1/cases/{id}/appeals` | Add context once and get a re-judged verdict (1 premium verdict) |
+| `GET /api/v1/respond/{token}` / `POST` | The invite as the other person sees it / their side (no account) |
+| `POST /api/v1/respond/{token}/evidence` | The other person's evidence images |
+| `POST /api/v1/respond/{token}/appeals` | The other person adds context (signed in, Premium) |
+
+**Two-sided cases from the app.** Shapes are in `lib/case-types.ts` (a pure
+module the app can import); every case and respond response is
+`Cache-Control: no-store`.
+
+1. *(Optional)* **Evidence:** `POST /api/v1/evidence` with `multipart/form-data`
+   (1 to 3 parts named `image`) or JSON
+   `{ "images": [{ "data": "<base64>", "mediaType": "image/jpeg" }] }`. Shrink
+   images to 1600 px on the longest edge first (max 5 MB each, 16 MB per
+   request). The answer lists each image:
+   `{ "items": [{ "index": 0, "status": "ok", "kind": "chat", "token": "v1....", "preview": "...", "expiresAt": "..." }] }`;
+   `status` is `ok | unreadable | refused | unsupported | too_large | failed`.
+   `preview` is the raw transcript for the uploader only (it may contain real
+   names; show it, never send it anywhere). Tokens expire after 6 hours and
+   are bound to who uploaded (your account, or for the other person, the
+   case). One bad image does not fail the request; whole-request errors are
+   `413 too_large` (body over 16 MB), `415 unsupported_media` (not multipart
+   or JSON), `400 too_many_files` (more than 3) and the usual premium,
+   sign-in and rate-limit codes. Phone numbers, e-mail addresses, handles and
+   account numbers are masked when the transcript is anonymized.
+2. **Create:** `POST /api/v1/cases` with an optional `Idempotency-Key` and
+   `{ "text": "...", "framework": { "preset": "balanced" }, "lang": "en", "evidence": ["v1...."] }`.
+   `201 { "case": CaseView, "name_map": [...], "entitlement": {...} }`
+   (`200` with `"replayed": true` and an empty `name_map` on a retried key).
+   Store `name_map` in secure storage under the case id: it is returned only
+   once and is the only place real names exist. Share `case.inviteUrl`.
+3. **Status:** `GET /api/v1/cases/{id}`. While `case.pollAfterMs` is set
+   (something is judging), poll again after that many milliseconds.
+   `status`: `awaiting_respondent | judging | judged | failed | expired`.
+   `case.canJudgeNow` says whether `POST /cases/{id}/judge` makes sense
+   (`{ "mode": "only_mine" }` while waiting for the answer; no body needed to
+   retry a failed case; an expired case takes a new unit). `202` when judging
+   started, `200` when it already was.
+4. **The other person** opens `https://<domain>/r/<token>` (or the app calls
+   `GET /api/v1/respond/{token}`), then `POST /api/v1/respond/{token}` with
+   `{ "text": "...", "evidence": ["v1...."], "turnstileToken": "..." }`
+   (Turnstile is skipped for bearer sessions). `202 { "case": CaseView, "name_map": [...] }`;
+   store that `name_map` too. A signed-in answer binds side B to that
+   account. A signed-out answer also returns `"respondent_claim": "<22 chars>"`
+   (again on a replayed `Idempotency-Key`): keep it in secure storage with
+   the name map. It is the only proof of having written side B; send it as
+   the `Respondent-Claim` header on `GET /api/v1/respond/{token}` (so
+   `case.appeal` is right for this person) and as `"claim"` on the appeal.
+   Anyone else holding the link gets `not_party`. Their evidence goes to
+   `POST /api/v1/respond/{token}/evidence`.
+5. **Verdicts:** `case.verdicts` (oldest first; the last is current) carry
+   the usual `VerdictResult` plus `two_sided`, `agreed_facts`,
+   `disputed_facts` (`fact`, `party_a`, `party_b`, `finding` `a|b|unsettled`,
+   `decisive`), `would_change`, `evidence_used` and, after an appeal,
+   `appeal` (`by`, `outcome` `upheld|overturned|changed`, `previous_id`,
+   `previous_verdict`, `previous_confidence`, `confidence_change`, `summary`).
+   `case.sides` holds both anonymized accounts once a two-sided verdict
+   exists (before that: only the owner's own side, and nothing on the
+   respondent view). Each verdict also has a public share link `/v/<id>`.
+6. **Appeal:** `case.appeal.allowed` / `blockedBy`
+   (`signin_required | premium_required | no_credits | fair_use | appeal_used | not_judged | busy | not_party`).
+   `POST /api/v1/cases/{id}/appeals` (owner) or
+   `POST /api/v1/respond/{token}/appeals` (signed-in respondent) with
+   `{ "text": "20 to 2000 characters", "evidence": ["v1...."], "claim": "..." }`
+   (at most 1 image; `claim` only for the respondent, until their account is
+   bound by the first accepted appeal) and an optional `Idempotency-Key`.
+   `202`, then poll. The appeal outcome stays `upheld | overturned | changed`
+   in the API; the website shows it as "Verdict stands / flipped / changed".
+   On the web, "Sign in to add context" returns to `/r` (never `/r/<token>`):
+   the token is kept in the browser so it is not put in a sign-in e-mail or
+   an OAuth state.
+
+Case error codes: `case_closed` (409), `case_expired` (410), `appeal_used`
+(409), `in_progress` (409), `not_party` (403), `own_case` (403),
+`too_many_files` (400), `evidence_invalid` (400), `too_large` (413),
+`unsupported_media` (415), plus the premium ones (`signin_required`,
+`premium_required`, `no_credits`, `fair_use`, `rate_limited`, `daily_cap`,
+`not_configured`). `GET /api/v1/config` has
+`features: { cases, evidence }` (absent on older servers: treat as false).
 
 **Sign-in from the app** (Better Auth endpoints under `/api/auth`):
 

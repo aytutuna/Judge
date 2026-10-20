@@ -4,7 +4,7 @@ import { contactEmail, SITE_NAME, SITE_OG_IMAGE } from "../site";
 
 const title = "Settle privacy";
 const description =
-  "What Settle stores (the anonymized argument and verdict, for share links; for optional accounts, sign-in and plan details), what it doesn't, and who else handles your text, including Premium's web search.";
+  "What Settle stores (the anonymized argument and verdict, for share links; for optional accounts, sign-in and plan details), what it doesn't, and who else handles your text, including Premium's web search, two-sided cases and screenshots.";
 
 export const metadata: Metadata = {
   title: "Privacy",

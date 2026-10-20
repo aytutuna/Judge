@@ -1,7 +1,8 @@
 /**
- * Sign-in emails (magic links) through Resend's HTTP API, with plain fetch.
- * Configured by RESEND_API_KEY and EMAIL_FROM; without both, email sign-in is
- * reported unavailable. Never logs addresses or links.
+ * Sign-in emails (magic links) and "your case is ready" notices through
+ * Resend's HTTP API, with plain fetch. Configured by RESEND_API_KEY and
+ * EMAIL_FROM; without both, email sign-in is reported unavailable and no
+ * notice is sent. Never logs addresses, links or case text.
  */
 
 import type { Lang } from "./i18n";
@@ -90,4 +91,55 @@ export async function sendSignInEmail({ to, url, lang }: { to: string; url: stri
     throw new Error(`sign-in email request failed: ${e instanceof Error ? e.name : "error"}`);
   }
   if (!res.ok) throw new Error(`sign-in email rejected: HTTP ${res.status}`);
+}
+
+/** "The other side answered" notice copy. It names no one and quotes nothing
+ * from the case. Turkish speaks to the reader as "sen". */
+export const CASE_READY_EMAIL: Record<Lang, { subject: string; intro: string; button: string; note: string }> = {
+  en: {
+    subject: "They answered: your Settle verdict is ready",
+    intro: "The other person told their side, and the judges have ruled on both accounts.",
+    button: "See the verdict",
+    note: "You're getting this because you started this case on Settle.",
+  },
+  tr: {
+    subject: "Cevap geldi: Settle kararın hazır",
+    intro: "Diğer kişi kendi tarafını anlattı ve yargıçlar iki anlatıma göre karar verdi.",
+    button: "Kararı gör",
+    note: "Bu e-postayı Settle'da bu davayı sen başlattığın için alıyorsun.",
+  },
+};
+
+export function caseReadyEmailContent(url: string, lang: Lang): { subject: string; text: string; html: string } {
+  const c = CASE_READY_EMAIL[lang];
+  const text = `${c.intro}\n\n${url}\n\n${c.note}\n`;
+  const html = `<!doctype html><html lang="${lang}"><body style="margin:0;padding:32px 16px;background:${P.ivory};font-family:Georgia,'Times New Roman',serif;color:${P.ink}">
+<div style="max-width:480px;margin:0 auto;background:${P.paper};border:1px solid ${P.strata};border-radius:12px;padding:32px">
+<p style="font-size:22px;margin:0 0 16px">Settle</p>
+<p style="font-size:16px;line-height:1.5;margin:0 0 24px">${escapeHtml(c.intro)}</p>
+<p style="margin:0 0 24px"><a href="${escapeHtml(url)}" style="display:inline-block;background:${P.terraInk};color:${P.paper};text-decoration:none;padding:12px 20px;border-radius:8px;font-family:Arial,sans-serif;font-size:15px">${escapeHtml(c.button)}</a></p>
+<p style="font-size:13px;line-height:1.5;color:${P.muted};margin:0">${escapeHtml(c.note)}</p>
+</div></body></html>`;
+  return { subject: c.subject, text, html };
+}
+
+/** Sends the "your case is ready" notice. Throws on failure; the message
+ * never contains the address or link. */
+export async function sendCaseReadyEmail({ to, url, lang }: { to: string; url: string; lang: Lang }): Promise<void> {
+  const key = process.env.RESEND_API_KEY?.trim();
+  const from = process.env.EMAIL_FROM?.trim();
+  if (!key || !from) throw new Error("email is not configured");
+  const { subject, text, html } = caseReadyEmailContent(url, lang);
+  let res: Response;
+  try {
+    res = await fetch(RESEND_URL, {
+      method: "POST",
+      headers: { authorization: `Bearer ${key}`, "content-type": "application/json" },
+      body: JSON.stringify({ from, to: [to], subject, text, html }),
+      signal: AbortSignal.timeout(SEND_TIMEOUT_MS),
+    });
+  } catch (e) {
+    throw new Error(`case email request failed: ${e instanceof Error ? e.name : "error"}`);
+  }
+  if (!res.ok) throw new Error(`case email rejected: HTTP ${res.status}`);
 }

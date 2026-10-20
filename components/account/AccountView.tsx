@@ -7,6 +7,7 @@ import type { Entitlement } from "@/lib/account-types";
 import { t, tWithDate, type Lang } from "@/lib/i18n";
 import { useLang } from "@/lib/lang";
 import { markSignedOut, useViewer, type ViewerState } from "@/lib/use-viewer";
+import { CaseList, useCaseList, type CaseListState } from "../case/CaseList";
 import { PremiumSpark } from "../PremiumBadge";
 import styles from "./AccountPages.module.css";
 import { PageShell } from "./PageShell";
@@ -40,6 +41,8 @@ export type AccountPanelProps = {
   deleteError: string | null;
   onSignOut: () => void;
   onDelete: () => void;
+  /** "Your cases", when this deployment offers two-sided cases. */
+  cases?: CaseListState | null;
 };
 
 /** Everything on /account below the title, stateless apart from the
@@ -52,6 +55,7 @@ export function AccountPanel({
   deleteError,
   onSignOut,
   onDelete,
+  cases = null,
 }: AccountPanelProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const cancelRef = useRef<HTMLButtonElement>(null);
@@ -162,6 +166,8 @@ export function AccountPanel({
         </div>
       </section>
 
+      {cases ? <CaseList lang={lang} state={cases} /> : null}
+
       <section className={styles.card}>
         {deleteError ? (
           <p className={styles.error} role="alert">
@@ -217,6 +223,8 @@ export function AccountView() {
   const [deleting, setDeleting] = useState(false);
   const [deleted, setDeleted] = useState(false);
   const [deleteError, setDeleteError] = useState<string | null>(null);
+  const casesOn = Boolean(viewer.config?.features?.cases && viewer.me?.user);
+  const cases = useCaseList(casesOn);
 
   useEffect(() => {
     if (!deleted) return;
@@ -259,6 +267,7 @@ export function AccountView() {
         deleteError={deleteError}
         onSignOut={() => void signOut()}
         onDelete={() => void remove()}
+        cases={casesOn ? cases : null}
       />
     </PageShell>
   );

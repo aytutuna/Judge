@@ -56,6 +56,28 @@ for Premium: the account and the per-user limits are the gate.
 Funding order: an active subscription under its fair-use cap first, then
 credits. Reservations still open after 10 minutes are refunded lazily.
 
+## Two-sided cases, evidence and appeals
+
+Code: `lib/cases/**` (tables, state machine, credits, judging, HTTP),
+`lib/evidence/**` (images, transcripts, tokens, submission anonymizer),
+shapes in `lib/case-types.ts`. The free flow and a premium request without
+evidence send exactly the requests they did before.
+
+| Topic | Decision |
+|---|---|
+| Real names | Never on the server. Each submission (side A, side B, each appeal) is anonymized once, when it is submitted, together with its evidence transcripts, and its name map goes back only in that response. The server keeps keyed, case-salted name fingerprints (`case_people`: HMAC of case id + normalized name -> label) so the second account and appeals reuse the same labels. |
+| Visibility | Before a two-sided verdict nobody sees the other side. The respondent view carries no sides at all until then (the link is the credential and the owner holds it too). After a two-sided verdict both parties see both anonymized accounts, transcripts, appeals and every verdict. A case judged on the owner's side alone shows the respondent no verdict. Share pages show only the verdict. |
+| Invite links | 128-bit token = HMAC(derived key, case id + nonce), base64url. The table stores the nonce and sha256(token); the owner's link is re-derived, and a new nonce turns the old one off. The token never goes into a sign-in redirect: the respondent's sign-in returns to `/r`, which reads the token back from the browser. |
+| Who is Party B | Fixed when side B is submitted: a signed-in answer sets `respondent_user_id` in the same guarded UPDATE; a signed-out answer stores `respondent_claim_nonce` and returns a claim secret = HMAC(derived key, case id + nonce) (re-derived for a replayed key; never stored). A Party B appeal needs the bound account, or the claim (the first accepted appeal then binds the account). Holding the link alone is not enough. |
+| States | `awaiting_respondent -> judging -> judged`, plus `failed` (retryable, refunded) and `expired` (7 days, refunded; reads report it before the sweep writes it). Transitions are one conditional UPDATE, so a respondent and a judge-now race has exactly one winner. |
+| Credits | The owner's unit is reserved in `premium_usage` at creation with `hold_until = expires_at`; the stale sweep refunds 10 minutes after `COALESCE(hold_until, created_at)`. Judging consumes it in the same batch that links the verdict; failure, refusal, a degraded panel, expiry and deletion refund it. Appeals reserve the appealer's unit. |
+| Judging | After the response (`after()`), clients poll `GET` every `pollAfterMs`. Every write of a run is guarded by a fresh token (`judging_token` / `attempt_token`), so a run the 10-minute sweep already failed, or a deleted case, changes nothing. |
+| Judges | Same premium pipeline (fact-check on the document, 2 x Sonnet + Haiku, escalation, crux trial). Two-sided runs add `TWO_SIDED_JUDGE_NOTE` and `TWO_SIDED_JUDGE_SCHEMA` (`agreed_facts`, `disputed_facts`, `would_change` before the forced ruling, which stays last); evidence adds `EVIDENCE_JUDGE_NOTE`; appeals add `APPEAL_JUDGE_NOTE` (`APPEAL_ONE_SIDED_JUDGE_NOTE` on a case judged on one side, where nobody answered either text) and re-judge the whole record without showing the earlier verdict. When the crux trial overturns a two-sided ruling, the decisive dispute is stored as `unsettled`. Deadline gates count from the request that scheduled the run, so anonymizing in that request counts; a refused seat's Haiku rerun is skipped past 220 s. Each case's model calls are logged with its id (`[premium] ... case=<id>` for judging, `[cases] usage case=<id> step=...` for each anonymize call and the appeal summary). |
+| Appeals | One per party per case (at most two), owner or the signed-in Premium respondent who wrote side B (see above). The verdict it answers is read inside the INSERT (latest seq), not from the pre-anonymize snapshot. Labelled `upheld / overturned / changed` (shown as "Verdict stands / flipped / changed") against that verdict, with the confidence change and a one-sentence summary (Haiku, fails open to empty). A refused re-judge fails the appeal and refunds instead of storing a refused card. |
+| Evidence | Images are checked by magic bytes, transcribed in memory, and thrown away; the client gets a signed token (6 h) holding the raw transcript, and the submission anonymizes it with the text. Only anonymized transcripts are stored. |
+| Deletion | `DELETE /cases/{id}` and account deletion remove sides, evidence, fingerprints, appeals, case verdicts and their translations; bindings to the deleted account elsewhere are cleared. |
+| Kill switches | `CASES_ENABLED=0`, `EVIDENCE_ENABLED=0` (also off whenever Premium is off); `GET /api/v1/config` reports `features`. |
+
 ## API for mobile
 
 ### Principles

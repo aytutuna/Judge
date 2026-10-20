@@ -305,6 +305,11 @@ describe("restoreNames: English", () => {
     ["Party A can't prove it.", "You can't prove it."],
     ["Party A's promise counted.", "Your promise counted."],
     ["It hinges on Party A's promise.", "It hinges on your promise."],
+    ["March and April were Party A's.", "March and April were yours."],
+    ["The bike was Party A's, not Party B's.", "The bike was yours, not Deniz's."],
+    ["Party B's turn and Party A's are both in March.", "Deniz's turn and yours are both in March."],
+    ["The call is Party A's and nobody else's.", "The call is yours and nobody else's."],
+    ["The blame is Party A's", "The blame is yours"],
     ["Party B owes Party A an apology.", "Deniz owes you an apology."],
     ["Party B gives Party A lots of credit.", "Deniz gives you lots of credit."],
     ["What matters to Party A is fairness.", "What matters to you is fairness."],
@@ -471,5 +476,121 @@ describe("personalizeResult", () => {
     const out = personalizeResult(r, [{ original: "Mert", replacement: "Party A" }, ...map.slice(1)], "tr");
     expect(out.split_points?.[0].point).toBe("Mert'in zamanı kısıtlıydı.");
     expect(out.conditional?.[0]).toEqual({ if_value: "Deniz'in zevkine öncelik veriyorsan", then: "Deniz haklı" });
+  });
+});
+
+describe("selfParty B: the respondent's own view of a two-sided case", () => {
+  // The respondent's submission map: they narrate as Party B, and the person
+  // who invited them is Party A.
+  const map: NameMapping[] = [
+    { original: "I", replacement: "Party B" },
+    { original: "Aytu", replacement: "Party A" },
+    { original: "Sarah", replacement: "Person C" },
+  ];
+
+  it("makes Party B the narrator and Party A a name", () => {
+    expect(partyNames(map, "en", "en", "B")).toEqual({
+      nameA: "Aytu",
+      nameB: "You",
+      aIsSelf: false,
+      bIsSelf: true,
+    });
+    expect(partyNames(map, "tr", "tr", "B")).toEqual({
+      nameA: "Aytu",
+      nameB: "Sen",
+      aIsSelf: false,
+      bIsSelf: true,
+    });
+  });
+
+  it("keeps the default (Party A) behavior unchanged for the same map", () => {
+    const p = partyNames(map, "en");
+    expect(p.bIsSelf).toBe(false);
+    expect(p.aIsSelf).toBe(false);
+    // "I" only ever means the narrator in the narrator's own slot.
+    expect(p.nameB).toBe("I");
+  });
+
+  it("applies the pronoun slot guard to Party B only", () => {
+    const parties = resolveParties(
+      [
+        { original: "Ben", replacement: "Party A" },
+        { original: "ben", replacement: "Party B" },
+      ],
+      "tr",
+      "B",
+    );
+    expect(parties.get("A")).toEqual({ name: "Ben", self: false });
+    expect(parties.get("B")).toEqual({ name: "ben", self: true });
+  });
+
+  it("restores names in the two-sided fields and the appeal summary", () => {
+    const result: VerdictResult = {
+      verdict: "side_b",
+      dispute_type: "factual",
+      headline: "Party B paid the bill",
+      crux: "Who paid in April.",
+      split_points: null,
+      conditional: null,
+      argument_map: {
+        side_a: [{ claim: "Party A says it was Party B's turn.", kind: "fact" }],
+        side_b: [{ claim: "Party B says they paid.", kind: "fact" }],
+        bedrock_a: "Turns.",
+        bedrock_b: "Receipts.",
+      },
+      facts_relied_on: [],
+      losing_side_best_point: "Party A kept the calendar.",
+      confidence: 4,
+      runs: ["side_b", "side_b", "side_b"],
+      demo: false,
+      lang: "en",
+      two_sided: true,
+      agreed_facts: ["Person C saw the bill."],
+      disputed_facts: [
+        { fact: "Who paid", party_a: "Party B did not pay", party_b: "Party B paid", finding: "b", decisive: true },
+      ],
+      would_change: ["A bank record from Party A"],
+      appeal: {
+        by: "a",
+        outcome: "upheld",
+        previous_id: "v1",
+        previous_verdict: "side_b",
+        previous_confidence: 4,
+        confidence_change: 0,
+        summary: "Party A's new context did not change it.",
+      },
+    };
+    const out = personalizeResult(result, map, "en", "B");
+    expect(out.agreed_facts).toEqual(["Sarah saw the bill."]);
+    expect(out.disputed_facts?.[0].party_a).toBe("You did not pay");
+    expect(out.disputed_facts?.[0].finding).toBe("b");
+    expect(out.would_change).toEqual(["A bank record from Aytu"]);
+    expect(out.appeal?.summary).toBe("Aytu's new context did not change it.");
+    expect(out.headline).toBe("You paid the bill");
+  });
+});
+
+describe("partyNames: a known viewer without names in this browser", () => {
+  it("labels the viewer's party and flags it as self, only when asked and only when the map is silent", () => {
+    expect(partyNames([], "en", "en", "A", true)).toEqual({
+      nameA: "Party A (you)",
+      nameB: "Party B",
+      aIsSelf: true,
+      bIsSelf: false,
+    });
+    expect(partyNames(undefined, "tr", "tr", "B", true)).toEqual({
+      nameA: "Taraf A",
+      nameB: "Taraf B (sen)",
+      aIsSelf: false,
+      bIsSelf: true,
+    });
+    // Share pages (no viewer) never get it.
+    expect(partyNames([], "en")).toEqual({ nameA: "Party A", nameB: "Party B", aIsSelf: false, bIsSelf: false });
+    // A map that names the party wins.
+    const map: NameMapping[] = [
+      { original: "I", replacement: "Party A" },
+      { original: "Deniz", replacement: "Party B" },
+    ];
+    expect(partyNames(map, "en", "en", "A", true)).toEqual({ nameA: "You", nameB: "Deniz", aIsSelf: true, bIsSelf: false });
   });
 });

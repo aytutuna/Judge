@@ -136,6 +136,45 @@ export type FactCheck = z.infer<typeof FactCheck>;
 export const Panel = z.object({ models: z.array(z.string()) });
 export type Panel = z.infer<typeof Panel>;
 
+// --- Two-sided cases, evidence, appeals ------------------------------------------
+export const EvidenceKind = z.enum(["chat", "document", "photo", "other"]);
+export type EvidenceKind = z.infer<typeof EvidenceKind>;
+
+export const DisputedFact = z.object({
+  fact: z.string(),
+  party_a: z.string(),
+  party_b: z.string(),
+  finding: z.enum(["a", "b", "unsettled"]),
+  decisive: z.boolean(),
+});
+export type DisputedFact = z.infer<typeof DisputedFact>;
+
+export const EvidenceUsed = z.object({ a: z.number().int().min(0), b: z.number().int().min(0) });
+export type EvidenceUsed = z.infer<typeof EvidenceUsed>;
+
+export const AppealOutcome = z.enum(["upheld", "overturned", "changed"]);
+export type AppealOutcome = z.infer<typeof AppealOutcome>;
+
+/** On a verdict produced by an appeal: how it compares to the one before. */
+export const AppealInfo = z.object({
+  by: z.enum(["a", "b"]),
+  outcome: AppealOutcome,
+  previous_id: z.string(),
+  previous_verdict: FinalVerdict,
+  previous_confidence: z.number().int().min(1).max(5),
+  confidence_change: z.number().int(),
+  summary: z.string(),
+});
+export type AppealInfo = z.infer<typeof AppealInfo>;
+
+/** One judge run on a two-sided case (lib/judge.ts TWO_SIDED_JUDGE_SCHEMA). */
+export const TwoSidedJudgeRunOutput = JudgeRunOutput.extend({
+  agreed_facts: z.array(z.string()),
+  disputed_facts: z.array(DisputedFact),
+  would_change: z.array(z.string()),
+});
+export type TwoSidedJudgeRunOutput = z.infer<typeof TwoSidedJudgeRunOutput>;
+
 /** Aggregated result shown to the user and stored. Confidence is computed
  * from self-consistency (how often the judges agreed), never model-claimed. */
 export const VerdictResult = JudgeOutput.extend({
@@ -167,6 +206,15 @@ export const VerdictResult = JudgeOutput.extend({
   fact_check: FactCheck.optional(),
   /** Which model produced each run (premium only). */
   panel: Panel.optional(),
+  /** Two-sided case verdicts only. */
+  two_sided: z.literal(true).optional(),
+  agreed_facts: z.array(z.string()).optional(),
+  disputed_facts: z.array(DisputedFact).optional(),
+  would_change: z.array(z.string()).optional(),
+  /** Images each party attached (premium with evidence, and cases). */
+  evidence_used: EvidenceUsed.optional(),
+  /** Set on verdicts produced by an appeal. */
+  appeal: AppealInfo.optional(),
 });
 export type VerdictResult = z.infer<typeof VerdictResult>;
 
@@ -208,6 +256,8 @@ export const VerdictRequest = z.object({
   tier: Tier.default("free"),
   /** Premium only: answers to the clarifying questions. Ignored on free. */
   clarifications: z.array(Clarification).max(2).optional(),
+  /** Premium only: signed evidence tokens from POST /api/v1/evidence. Ignored on free. */
+  evidence: z.array(z.string().min(1).max(16_000)).max(3).optional(),
 });
 export type VerdictRequest = z.infer<typeof VerdictRequest>;
 

@@ -570,3 +570,55 @@ describe("premium fact-check text", () => {
     expect(res.result.fact_check?.claims.map((c) => c.status)).toEqual(["supported", "mixed"]);
   });
 });
+
+describe("two-sided and appeal fields", () => {
+  const TWO: VerdictResult = {
+    ...TR_RESULT,
+    two_sided: true,
+    agreed_facts: ["İkisi de faturayı biliyordu."],
+    disputed_facts: [
+      { fact: "Fatura ödendi mi?", party_a: "Ödendi.", party_b: "Ödenmedi.", finding: "b", decisive: true },
+    ],
+    would_change: ["Nisan ayına ait bir banka kaydı."],
+    evidence_used: { a: 1, b: 2 },
+    appeal: {
+      by: "b",
+      outcome: "changed",
+      previous_id: "v1",
+      previous_verdict: "side_a",
+      previous_confidence: 4,
+      confidence_change: -1,
+      summary: "Yeni ekran görüntüsü ödemenin geç yapıldığını gösterdi.",
+    },
+  };
+
+  it("are extracted only when present and round-trip through flatten/unflatten", () => {
+    expect(extractText(TR_RESULT)).not.toHaveProperty("agreed_facts");
+    expect(extractText(TR_RESULT)).not.toHaveProperty("appeal_summary");
+    const text = extractText(TWO);
+    expect(text.agreed_facts).toEqual(["İkisi de faturayı biliyordu."]);
+    expect(text.disputed_facts).toEqual([{ fact: "Fatura ödendi mi?", party_a: "Ödendi.", party_b: "Ödenmedi." }]);
+    expect(text.would_change).toEqual(["Nisan ayına ait bir banka kaydı."]);
+    expect(text.appeal_summary).toBe("Yeni ekran görüntüsü ödemenin geç yapıldığını gösterdi.");
+    expect(unflattenText(text, flattenText(text).map((s) => s.text))).toEqual(text);
+  });
+
+  it("applyText swaps their text and keeps findings, flags, counts and the appeal facts", () => {
+    const en = {
+      ...EN_TEXT,
+      agreed_facts: ["Both knew about the bill."],
+      disputed_facts: [{ fact: "Was the bill paid?", party_a: "Paid.", party_b: "Not paid." }],
+      would_change: ["A bank record for April."],
+      appeal_summary: "The new screenshot showed the payment was late.",
+    };
+    const out = applyText(TWO, en, "en");
+    expect(out.agreed_facts).toEqual(["Both knew about the bill."]);
+    expect(out.disputed_facts).toEqual([
+      { fact: "Was the bill paid?", party_a: "Paid.", party_b: "Not paid.", finding: "b", decisive: true },
+    ]);
+    expect(out.would_change).toEqual(["A bank record for April."]);
+    expect(out.appeal).toEqual({ ...TWO.appeal, summary: "The new screenshot showed the payment was late." });
+    expect(out.two_sided).toBe(true);
+    expect(out.evidence_used).toEqual({ a: 1, b: 2 });
+  });
+});

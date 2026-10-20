@@ -23,6 +23,15 @@ export const API_ERROR_STATUS = {
   unavailable: 503,
   daily_cap: 503,
   not_configured: 503,
+  case_closed: 409,
+  case_expired: 410,
+  appeal_used: 409,
+  not_party: 403,
+  own_case: 403,
+  too_large: 413,
+  unsupported_media: 415,
+  too_many_files: 400,
+  evidence_invalid: 400,
 } as const;
 
 export type ApiErrorCode = keyof typeof API_ERROR_STATUS;

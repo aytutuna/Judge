@@ -4,7 +4,8 @@
  *
  * Premium gate order: Idempotency-Key format, session, same-origin (cookie
  * sessions only; bearer requests cannot be forged cross-site), configured,
- * per-user limit, site-wide daily cap, then the credit reservation. Every
+ * per-user limit, site-wide daily cap, evidence tokens (when sent), then the
+ * credit reservation. Every
  * failure after the reservation refunds it; a stored verdict consumes it
  * exactly once. Turnstile is not used here: the signed-in account and the
  * per-user limit are the gate, and native apps cannot render it.
@@ -23,6 +24,9 @@ import {
   reservePremiumVerdict,
   type ReserveResult,
 } from "@/lib/entitlements";
+import { MAX_EVIDENCE_PER_SIDE } from "@/lib/case-types";
+import type { VerifiedEvidence } from "@/lib/evidence";
+import { evidenceEnabled } from "@/lib/features";
 import { checkPremiumSiteCap, checkUserLimits, type UserBucket } from "@/lib/ratelimit";
 import { ClarifyRequest, type VerdictApiResponse, type VerdictRequest } from "@/lib/types";
 import { clarifyQuestions } from "./clarify";
@@ -161,6 +165,28 @@ export async function premiumVerdict(req: Request, data: VerdictRequest): Promis
   const limited = await limitGate(userId, "premium_verdict");
   if (limited) return limited;
 
+  // Evidence tokens are checked before any unit is reserved. Loaded only
+  // when sent, so a request without evidence runs exactly as before.
+  let evidence: VerifiedEvidence[] | undefined;
+  if (data.evidence && data.evidence.length > 0) {
+    if (!evidenceEnabled()) {
+      return fail("evidence_invalid", "Screenshot evidence is not available on this server right now.");
+    }
+    try {
+      const { verifyEvidenceTokens } = await import("@/lib/evidence");
+      const verified = verifyEvidenceTokens(data.evidence, { type: "user", userId }, MAX_EVIDENCE_PER_SIDE);
+      if (!verified.ok) {
+        return verified.code === "too_many_files"
+          ? fail("too_many_files", `Attach at most ${MAX_EVIDENCE_PER_SIDE} images.`)
+          : fail("evidence_invalid", "An evidence image expired or could not be verified. Add it again.");
+      }
+      evidence = verified.items;
+    } catch (e) {
+      console.error("[premium] evidence check failed:", e instanceof Error ? e.message : String(e));
+      return unavailable();
+    }
+  }
+
   let reserved: ReserveResult;
   try {
     reserved = await reservePremiumVerdict(userId, key ? { idempotencyKey: key } : {});
@@ -193,6 +219,7 @@ export async function premiumVerdict(req: Request, data: VerdictRequest): Promis
         clarifications: data.clarifications,
         framework: data.framework,
         lang: data.lang,
+        ...(evidence ? { evidence } : {}),
       },
       { startedAt },
     );

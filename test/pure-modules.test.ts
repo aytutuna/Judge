@@ -19,6 +19,7 @@ const PURE = [
   "api-errors",
   "account-types",
   "pricing",
+  "case-types",
 ] as const;
 
 const ALLOWED_PACKAGES = new Set(["zod"]);

@@ -1,16 +1,19 @@
 /**
  * The premium verdict pipeline, without HTTP, auth or credits: anonymize
- * (argument plus clarification answers), fact-check, premium panel, then the
- * free tier's escalation and crux trial behind deadline gates. The handler
- * wraps it with the entitlement reserve/consume/refund; scripts can call it
- * directly.
+ * (argument plus clarification answers, plus evidence transcripts when
+ * attached), fact-check, premium panel, then the free tier's escalation and
+ * crux trial behind deadline gates. The handler wraps it with the
+ * entitlement reserve/consume/refund; scripts can call it directly.
+ *
+ * judgeAnonymized is the part after anonymization, shared with two-sided
+ * cases and appeals (lib/cases), which anonymize each account on its own.
  */
 
 import { aggregate } from "../aggregate";
 import { anonymize } from "../anonymize";
 import { withUsageMeter, type UsageTotals } from "../claude";
 import { t, type Lang } from "../i18n";
-import { judgeExtra, type JudgeRun } from "../judge";
+import { judgeExtra, type JudgeOptions, type JudgeRun } from "../judge";
 import { applyCruxTrial, runCruxTrial, shouldTryCrux } from "../trial";
 import type {
   Clarification,
@@ -22,20 +25,53 @@ import type {
 } from "../types";
 import { withClarifications } from "./context";
 import { factCheckBlock, runFactCheck } from "./factcheck";
-import { HAIKU_MODEL, isHaiku, judgePremiumPanel, premiumPanel } from "./panel";
+import {
+  HAIKU_MODEL,
+  isHaiku,
+  judgePremiumPanel,
+  premiumPanel,
+  SEAT_RETRY_TIMEOUT_MS,
+  type PanelOptions,
+} from "./panel";
+import type { VerifiedEvidence } from "../evidence";
 
 /** Escalation starts only before this much of the request has passed, the
- * crux trial only before the second mark. With anonymize 60s + fact-check
- * 40s + judges 120s = 220s worst case, escalation is skipped and the trial
- * (60s) still ends by 280s, inside maxDuration = 300. */
+ * crux trial only before the second mark, and (on case, evidence and appeal
+ * runs) a refused seat's Haiku rerun only before the third. Worst cases,
+ * all inside maxDuration = 300:
+ * - plain premium: anonymize 60s + fact-check 40s + judges 120s = 220s, plus
+ *   a seat rerun (60s) = 280s; escalation and the trial are then skipped;
+ * - with evidence, or a case answer/appeal judged in the same invocation:
+ *   anonymize up to 120s + fact-check 40s + judges 120s = 280s; the rerun
+ *   gate skips the rerun rather than run past 280s.
+ * Callers pass the request's start as `startedAt`, so time spent
+ * anonymizing counts. */
 export const ESCALATION_CUTOFF_MS = 150_000;
 export const TRIAL_CUTOFF_MS = 225_000;
+export const SEAT_RETRY_CUTOFF_MS = 280_000 - SEAT_RETRY_TIMEOUT_MS;
 
 export type PremiumInput = {
   argument: string;
   clarifications?: Clarification[];
   framework: FrameworkChoice;
   lang: Lang;
+  /** Verified evidence transcripts (raw). Absent or empty: today's path. */
+  evidence?: VerifiedEvidence[];
+};
+
+/** An already anonymized document to judge (premium argument, two-sided
+ * case document, or a case plus appeal context). */
+export type JudgeInput = {
+  text: string;
+  /** Extra judge context placed before the FACT-CHECK block (the EVIDENCE
+   * block). The fact-check itself sees `text` only. */
+  context: string | null;
+  framework: FrameworkChoice;
+  lang: Lang;
+  twoSided?: boolean;
+  evidence?: boolean;
+  /** Appeal note for the judges' system prompt (APPEAL_JUDGE_NOTE). */
+  appeal?: string;
 };
 
 export type PremiumStats = {
@@ -63,6 +99,11 @@ export type PremiumOutcome =
     }
   | { status: "anonymize_failed"; error: string }
   | { status: "failed"; code: "quota" | "unavailable"; error: string };
+
+/** judgeAnonymized's outcome: PremiumOutcome without the anonymize step. */
+export type JudgedOutcome =
+  | Omit<Extract<PremiumOutcome, { status: "ok" }>, "nameMap">
+  | Extract<PremiumOutcome, { status: "failed" }>;
 
 export type PremiumRun = { outcome: PremiumOutcome; usage: UsageTotals; stats: PremiumStats };
 
@@ -116,27 +157,87 @@ export async function runPremiumPipeline(
 }
 
 async function pipeline(
-  { argument, clarifications, framework, lang }: PremiumInput,
+  { argument, clarifications, framework, lang, evidence }: PremiumInput,
   startedAt: number,
   now: () => number,
   stats: PremiumStats,
 ): Promise<PremiumOutcome> {
   // Fail closed, as on free: names in the argument or the answers must never
   // reach the search engine, the judges or the database.
+  const argumentText = withClarifications(argument, clarifications, lang);
   let anonymized: string;
   let nameMap: NameMapping[];
+  let evidenceText: string | null = null;
+  let evidenceCount = 0;
   try {
-    ({ text: anonymized, nameMap } = await anonymize(withClarifications(argument, clarifications, lang)));
+    if (evidence && evidence.length > 0) {
+      // Loaded only with evidence, so a plain premium request runs exactly
+      // as before. One call anonymizes the account and its transcripts with
+      // one name map.
+      const ev = await import("../evidence");
+      const sub = await ev.anonymizeSubmission({ narrator: "Party A", text: argumentText, evidence, lang });
+      anonymized = sub.text;
+      nameMap = sub.nameMap;
+      evidenceCount = sub.evidence.length;
+      evidenceText = ev.evidenceBlock([{ party: null, idPrefix: "E", items: sub.evidence }]);
+    } else {
+      ({ text: anonymized, nameMap } = await anonymize(argumentText));
+    }
   } catch (e) {
     return { status: "anonymize_failed", error: e instanceof Error ? e.message : String(e) };
   }
 
-  const factCheck = await runFactCheck(anonymized, lang);
+  const judged = await judgeAnonymized(
+    { text: anonymized, context: evidenceText, framework, lang, ...(evidenceText ? { evidence: true } : {}) },
+    { startedAt, now, stats },
+  );
+  if (judged.status !== "ok") return judged;
+  if (!evidenceText) return { ...judged, nameMap };
+  return {
+    ...judged,
+    result: { ...judged.result, evidence_used: { a: evidenceCount, b: 0 } },
+    input: `${anonymized}\n\n${evidenceText}`,
+    nameMap,
+  };
+}
+
+/**
+ * Judges an anonymized document: fact-check (on `text` only), the premium
+ * panel with [context, FACT-CHECK] as context, then escalation and the crux
+ * trial behind the deadline gates measured from `startedAt`. Never throws
+ * for model failures. `input` in the outcome is `text`.
+ */
+export async function judgeAnonymized(
+  input: JudgeInput,
+  opts: { startedAt?: number; now?: () => number; stats?: PremiumStats } = {},
+): Promise<JudgedOutcome> {
+  const { text, framework, lang } = input;
+  const now = opts.now ?? Date.now;
+  const startedAt = opts.startedAt ?? now();
+  const stats = opts.stats ?? { factCheck: "unavailable", claims: 0, escalated: false, trial: false, ms: 0 };
+
+  const factCheck = await runFactCheck(text, lang);
   stats.factCheck = factCheck.status;
   stats.claims = factCheck.claims.length;
-  const context = factCheckBlock(factCheck);
+  const factContext = factCheckBlock(factCheck);
+  const context = [input.context, factContext].filter((c): c is string => Boolean(c)).join("\n\n") || null;
 
-  const panel = await judgePremiumPanel(anonymized, framework, lang, context);
+  // Case options are only passed when set, so a plain premium run calls the
+  // panel and the extra judges exactly as before.
+  const caseOpts: PanelOptions = {
+    ...(input.twoSided ? { twoSided: true } : {}),
+    ...(input.evidence ? { evidence: true } : {}),
+    ...(input.appeal ? { appeal: input.appeal } : {}),
+  };
+  const hasCaseOpts = Object.keys(caseOpts).length > 0;
+
+  // The rerun gate only rides along with case options: a plain premium run
+  // (anonymize 60s) always fits and keeps exactly its old call.
+  const panel = hasCaseOpts
+    ? await judgePremiumPanel(text, framework, lang, context, premiumPanel(), caseOpts, {
+        allowRetry: () => now() - startedAt < SEAT_RETRY_CUTOFF_MS,
+      })
+    : await judgePremiumPanel(text, framework, lang, context);
   const ok = panel.runs.filter((r) => r.ok).map((r) => r.data as JudgeRunOutput);
   const premiumFields = { tier: "premium" as const, fact_check: factCheck, lang };
 
@@ -145,8 +246,7 @@ async function pipeline(
       return {
         status: "ok",
         result: { ...refusedPremiumResult(lang), ...premiumFields, panel: { models: [] } },
-        input: anonymized,
-        nameMap,
+        input: text,
         refused: true,
         degraded: false,
       };
@@ -167,10 +267,12 @@ async function pipeline(
     result.confidence <= intEnv("JUDGE_ESCALATE_AT", 2, 0, 5) &&
     now() - startedAt < ESCALATION_CUTOFF_MS
   ) {
-    const more = await judgeExtra(extra, anonymized, framework, lang, {
+    const extraOpts: Pick<JudgeOptions, "context" | "premium" | "twoSided" | "evidence" | "appeal"> = {
       premium: true,
       ...(context ? { context } : {}),
-    }).catch((): JudgeRun[] => []);
+      ...caseOpts,
+    };
+    const more = await judgeExtra(extra, text, framework, lang, extraOpts).catch((): JudgeRun[] => []);
     const moreOk = more.filter((r) => r.ok).map((r) => r.data as JudgeRunOutput);
     if (moreOk.length > 0) {
       result = { ...aggregate([...ok, ...moreOk]), escalated: true };
@@ -181,7 +283,7 @@ async function pipeline(
 
   if (process.env.CRUX_TRIAL !== "0" && shouldTryCrux(result) && now() - startedAt < TRIAL_CUTOFF_MS) {
     // The attacker and adjudicator see the same evidence the judges saw.
-    const trial = await runCruxTrial(context ? `${anonymized}\n\n${context}` : anonymized, result, lang);
+    const trial = await runCruxTrial(context ? `${text}\n\n${context}` : text, result, lang);
     if (trial) {
       result = applyCruxTrial(result, trial);
       stats.trial = true;
@@ -191,8 +293,7 @@ async function pipeline(
   return {
     status: "ok",
     result: { ...result, ...premiumFields, panel: { models } },
-    input: anonymized,
-    nameMap,
+    input: text,
     refused: false,
     degraded,
   };

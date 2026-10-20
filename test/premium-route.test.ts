@@ -22,6 +22,9 @@ const m = vi.hoisted(() => ({
   getVerdict: vi.fn(),
   runFactCheck: vi.fn(),
   judgePremiumPanel: vi.fn(),
+  verifyEvidenceTokens: vi.fn(),
+  anonymizeSubmission: vi.fn(),
+  evidenceBlock: vi.fn(),
 }));
 
 /** Wraps a mock so the call order across modules is recorded. */
@@ -77,6 +80,12 @@ vi.mock("@/lib/premium/factcheck", async (importOriginal) => ({
 vi.mock("@/lib/premium/panel", async (importOriginal) => ({
   ...(await importOriginal<typeof import("@/lib/premium/panel")>()),
   judgePremiumPanel: track("panel", m.judgePremiumPanel),
+}));
+
+vi.mock("@/lib/evidence", () => ({
+  verifyEvidenceTokens: track("verifyEvidence", m.verifyEvidenceTokens),
+  anonymizeSubmission: track("anonymizeSubmission", m.anonymizeSubmission),
+  evidenceBlock: m.evidenceBlock,
 }));
 
 import { POST } from "../app/api/verdict/route";
@@ -640,5 +649,75 @@ describe("premium verdict: escalation, trial and deadlines", () => {
     const result: VerdictResult = (await (await POST(request(premium()))).json()).result;
     expect(result.runs).toHaveLength(2);
     expect(result.panel!.models).toEqual(["claude-sonnet-5-5", "claude-haiku-5-5"]);
+  });
+});
+
+describe("premium verdict with evidence", () => {
+  const EV_BLOCK =
+    "EVIDENCE (machine transcripts of images the person asking attached; they show only what was on screen):\n[E1 · Chat screenshot]\n21:02 Party A: hi";
+
+  beforeEach(() => {
+    vi.stubEnv("EVIDENCE_ENABLED", "");
+    m.verifyEvidenceTokens.mockReturnValue({ ok: true, items: [{ kind: "chat", transcript: "21:02 ME: hi" }] });
+    m.anonymizeSubmission.mockResolvedValue({
+      text: ANON,
+      evidence: [{ kind: "chat", transcript: "21:02 Party A: hi" }],
+      nameMap: [{ original: "I", replacement: "Party A" }],
+      people: [],
+    });
+    m.evidenceBlock.mockReturnValue(EV_BLOCK);
+  });
+
+  it("verifies tokens before reserving, anonymizes account and transcripts in one call, judges with the block", async () => {
+    const res = await POST(request(premium({ evidence: ["v1.tok"] })));
+    expect(res.status).toBe(200);
+    expect(steps()).toEqual([
+      "viewer",
+      "userLimits",
+      "siteCap",
+      "verifyEvidence",
+      "reserve",
+      "anonymizeSubmission",
+      "factcheck",
+      "panel",
+      "save",
+      "consume",
+    ]);
+    expect(m.verifyEvidenceTokens).toHaveBeenCalledWith(["v1.tok"], { type: "user", userId: "u1" }, 3);
+    expect(m.anonymize).not.toHaveBeenCalled();
+    expect(m.anonymizeSubmission.mock.calls[0][0]).toMatchObject({ narrator: "Party A", text: ARGUMENT, lang: "en" });
+    // The fact-check sees the account only; the judges get evidence then fact-check.
+    expect(m.runFactCheck).toHaveBeenCalledWith(ANON, "en");
+    const [text, , , context, , opts] = m.judgePremiumPanel.mock.calls[0];
+    expect(text).toBe(ANON);
+    expect(context).toMatch(/^EVIDENCE \(machine transcripts[\s\S]*\n\nFACT-CHECK/);
+    expect(opts).toEqual({ evidence: true });
+    const saved = m.saveVerdict.mock.calls[0][0];
+    expect(saved.input).toBe(`${ANON}\n\n${EV_BLOCK}`);
+    expect(saved.result.evidence_used).toEqual({ a: 1, b: 0 });
+    expect((await res.json()).name_map).toEqual([{ original: "I", replacement: "Party A" }]);
+  });
+
+  it("a bad token is a 400 evidence_invalid before any unit is reserved", async () => {
+    m.verifyEvidenceTokens.mockReturnValue({ ok: false, code: "evidence_invalid" });
+    const res = await POST(request(premium({ evidence: ["v1.bad"] })));
+    expect(res.status).toBe(400);
+    expect((await res.json()).code).toBe("evidence_invalid");
+    expect(m.reservePremiumVerdict).not.toHaveBeenCalled();
+  });
+
+  it("EVIDENCE_ENABLED=0 refuses evidence tokens without reserving", async () => {
+    vi.stubEnv("EVIDENCE_ENABLED", "0");
+    const res = await POST(request(premium({ evidence: ["v1.tok"] })));
+    expect((await res.json()).code).toBe("evidence_invalid");
+    expect(m.reservePremiumVerdict).not.toHaveBeenCalled();
+  });
+
+  it("without evidence the panel gets exactly the four arguments it always did", async () => {
+    await POST(request(premium()));
+    expect(m.judgePremiumPanel.mock.calls[0]).toHaveLength(4);
+    expect(m.verifyEvidenceTokens).not.toHaveBeenCalled();
+    expect(m.anonymizeSubmission).not.toHaveBeenCalled();
+    expect(m.saveVerdict.mock.calls[0][0].result).not.toHaveProperty("evidence_used");
   });
 });

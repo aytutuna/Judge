@@ -1,6 +1,9 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { CaseModeSwitch, type CaseMode } from "@/components/case/CaseModeSwitch";
+import { EvidencePicker, useEvidence } from "@/components/case/EvidencePicker";
 import { ClarifyStep, buildClarifications, type ClarifyQuestion } from "@/components/ClarifyStep";
 import { Faq } from "@/components/home/Faq";
 import { Hero, type HeroPhase } from "@/components/home/Hero";
@@ -12,6 +15,8 @@ import { SiteFooter, SiteHeader, SkipLink } from "@/components/SiteChrome";
 import { TierSwitch } from "@/components/TierSwitch";
 import { Turnstile, TURNSTILE_SITE_KEY } from "@/components/Turnstile";
 import { VerdictView } from "@/components/VerdictView";
+import { MAX_EVIDENCE_PER_SIDE, type CreateCaseResponse } from "@/lib/case-types";
+import { saveCaseNames } from "@/lib/case-names-store";
 import { clearDraft, registerDraftSource, takeDraft } from "@/lib/draft";
 import { DEFAULT_FRAMEWORK } from "@/lib/frameworks";
 import { apiErrorMessage, t, type Key } from "@/lib/i18n";
@@ -45,8 +50,12 @@ const ACCOUNT_STATUSES = new Set([401, 402]);
 const IN_PROGRESS_POLL_MS = 4000;
 const IN_PROGRESS_WAIT_MS = 300_000;
 
-/** What a premium request judges, fixed when it is submitted. */
-type PremiumInput = { argument: string; framework: FrameworkChoice };
+/** What a premium request judges, fixed when it is submitted. `evidence`
+ * holds signed screenshot tokens; empty keeps the request exactly as before. */
+type PremiumInput = { argument: string; framework: FrameworkChoice; evidence: string[] };
+
+/** Signed-in screenshot uploads (the respondent's page uses its own). */
+const EVIDENCE_ENDPOINT = "/api/v1/evidence";
 
 export default function Home() {
   const lang = useLang();
@@ -68,10 +77,21 @@ export default function Home() {
   // of the same request reuses it, so the server replays or waits instead
   // of charging again. A success or a different request gets a new key.
   const premiumKey = useRef<{ request: string; key: string } | null>(null);
+  // Premium extras: screenshot evidence and two-sided cases, each only when
+  // this deployment offers it (GET /api/v1/config `features`).
+  const router = useRouter();
+  const [caseMode, setCaseMode] = useState<CaseMode>("now");
+  const [creating, setCreating] = useState(false);
+  const evidence = useEvidence(EVIDENCE_ENDPOINT, MAX_EVIDENCE_PER_SIDE);
 
   const availability = tierAvailability(viewer.config, viewer.me);
   const tier = effectiveTier(availability, tierChoice);
   const premium = tier === "premium";
+  const features = viewer.config?.features;
+  const evidenceOn = premium && features?.evidence === true;
+  const casesOn = premium && features?.cases === true;
+  const twoSided = casesOn && caseMode === "both";
+  const holding = checking || creating;
 
   // Belt and braces: if the judging animation has not handed off shortly
   // after the response arrived, show the verdict anyway.
@@ -103,7 +123,10 @@ export default function Home() {
   // Premium skips the human check: the signed-in account is the gate.
   const needsToken = TURNSTILE_SITE_KEY !== "" && !premium;
   const canSubmit =
-    argument.trim().length >= 20 && !checking && (!needsToken || turnstileToken !== null);
+    argument.trim().length >= 20 &&
+    !holding &&
+    !(evidenceOn && evidence.busy) &&
+    (!needsToken || turnstileToken !== null);
 
   async function submit() {
     // Turnstile tokens are single-use: take it now, and the widget remounts
@@ -146,7 +169,7 @@ export default function Home() {
    * questions. Account problems (401/402) and bad input stop on the form. */
   async function submitPremium() {
     // Judged as submitted: later edits never mix into this request.
-    const input: PremiumInput = { argument, framework };
+    const input: PremiumInput = { argument, framework, evidence: evidenceOn ? evidence.tokens : [] };
     premiumInput.current = input;
     clearDraft();
     setError(null);
@@ -200,6 +223,7 @@ export default function Home() {
       lang,
       tier: "premium",
       ...(clarifications ? { clarifications } : {}),
+      ...(input.evidence.length ? { evidence: input.evidence } : {}),
     });
     const key = keyFor(body);
     const waitUntil = Date.now() + IN_PROGRESS_WAIT_MS;
@@ -234,6 +258,48 @@ export default function Home() {
     }
   }
 
+  /** Premium, both sides: create the case with the owner's side (one
+   * premium verdict is held), keep the returned names in this browser and
+   * open the case page with the invite link. No clarifying step: the other
+   * side's account fills the gaps. */
+  async function createCase() {
+    const tokens = evidenceOn ? evidence.tokens : [];
+    clearDraft();
+    setError(null);
+    setCreating(true);
+    const body = JSON.stringify({
+      text: argument,
+      framework,
+      lang,
+      ...(tokens.length ? { evidence: tokens } : {}),
+    });
+    const key = keyFor(body);
+    try {
+      const res = await fetch("/api/v1/cases", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Idempotency-Key": key },
+        body,
+      });
+      const json: unknown = await res.json().catch(() => null);
+      const created = json as CreateCaseResponse | null;
+      if (!res.ok || !created?.case) {
+        setError(apiErrorMessage(lang, json, res.status));
+        setCreating(false);
+        if (ACCOUNT_STATUSES.has(res.status)) void refreshViewer();
+        return;
+      }
+      if (premiumKey.current?.key === key) premiumKey.current = null;
+      saveCaseNames(created.case.id, "a", created.name_map ?? []);
+      if (created.entitlement) applyEntitlement(created.entitlement);
+      evidence.clear();
+      // `creating` stays on: the form holds until the case page takes over.
+      router.push(`/c/${encodeURIComponent(created.case.id)}`);
+    } catch {
+      setError(t(lang, "errorFallback"));
+      setCreating(false);
+    }
+  }
+
   function finishClarify(skip: boolean) {
     const input = premiumInput.current;
     if (!input) return;
@@ -248,6 +314,7 @@ export default function Home() {
     setQuestions([]);
     setAnswers({});
     setJudgingPremium(false);
+    evidence.clear();
     setPhase("intake");
     window.scrollTo({ top: 0 });
   }
@@ -276,7 +343,7 @@ export default function Home() {
             argument={argument}
             onArgumentChange={changeArgument}
             onExample={fillExample}
-            onSubmit={() => void (premium ? submitPremium() : submit())}
+            onSubmit={() => void (premium ? (twoSided ? createCase() : submitPremium()) : submit())}
             canSubmit={canSubmit}
             error={error}
             framework={framework}
@@ -294,13 +361,37 @@ export default function Home() {
                   value={tier}
                   onChange={setTierChoice}
                   entitlement={viewer.me?.entitlement ?? null}
-                  disabled={checking}
+                  disabled={holding}
                   onPremiumIntent={() => setTierChoice("premium")}
                 />
               )
             }
-            status={checking ? t(lang, "tier.checking") : null}
-            busy={checking}
+            status={checking ? t(lang, "tier.checking") : creating ? t(lang, "case.creating") : null}
+            busy={holding}
+            ctaLabel={twoSided ? t(lang, "case.create") : undefined}
+            twoSided={twoSided}
+            extras={
+              casesOn || evidenceOn ? (
+                <>
+                  {casesOn ? (
+                    <CaseModeSwitch lang={lang} value={caseMode} onChange={setCaseMode} disabled={holding} />
+                  ) : null}
+                  {evidenceOn ? (
+                    <EvidencePicker
+                      lang={lang}
+                      max={MAX_EVIDENCE_PER_SIDE}
+                      items={evidence.items}
+                      full={evidence.full}
+                      failure={evidence.failure}
+                      overLimit={evidence.overLimit}
+                      disabled={holding}
+                      onAdd={evidence.add}
+                      onRemove={evidence.remove}
+                    />
+                  ) : null}
+                </>
+              ) : undefined
+            }
             clarify={
               <ClarifyStep
                 lang={lang}
@@ -336,7 +427,7 @@ export default function Home() {
           <ScrollStory lang={lang} />
         </SceneStage>
         <SampleVerdict lang={lang} />
-        <Faq lang={lang} />
+        <Faq lang={lang} features={viewer.config?.premiumEnabled ? (features ?? null) : null} />
       </main>
 
       <SiteFooter lang={lang} toggle />

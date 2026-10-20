@@ -14,6 +14,15 @@ import { PageShell } from "./PageShell";
 const FREE_FEATURES: Key[] = ["pricing.free.f1", "pricing.free.f2", "pricing.free.f3"];
 const PREMIUM_FEATURES: Key[] = ["pricing.premium.f1", "pricing.premium.f2", "pricing.premium.f3"];
 
+/** Premium's feature list, plus the extras this deployment offers. */
+export function premiumFeatureKeys(features?: { cases: boolean; evidence: boolean } | null): Key[] {
+  const keys = [...PREMIUM_FEATURES];
+  if (features?.cases) keys.push("pricing.premium.f4");
+  if (features?.evidence) keys.push("pricing.premium.f5");
+  if (features?.cases) keys.push("pricing.premium.f6");
+  return keys;
+}
+
 function Features({ lang, keys }: { lang: Lang; keys: Key[] }) {
   return (
     <ul className={styles.features}>
@@ -50,11 +59,21 @@ export type PricingTableProps = {
   signInOffered: boolean;
   /** The signed-in viewer's balance and plan, shown above the plans. */
   entitlement?: Entitlement | null;
+  /** Premium extras on offer (two-sided cases, screenshot evidence). */
+  features?: { cases: boolean; evidence: boolean } | null;
 };
 
 /** Free and Premium side by side. Buy buttons stay disabled ("Coming soon")
  * until a payment provider exists. Stateless for tests. */
-export function PricingTable({ lang, pricing, premiumEnabled, signedIn, signInOffered, entitlement }: PricingTableProps) {
+export function PricingTable({
+  lang,
+  pricing,
+  premiumEnabled,
+  signedIn,
+  signInOffered,
+  entitlement,
+  features = null,
+}: PricingTableProps) {
   const buy = (label: string) => (
     <button type="button" className={`${styles.btn} ${styles.secondary}`} disabled>
       {pricing.purchasesEnabled ? label : t(lang, "pricing.comingSoon")}
@@ -99,7 +118,7 @@ export function PricingTable({ lang, pricing, premiumEnabled, signedIn, signInOf
             <PremiumSpark />
             {t(lang, "pricing.premium.title")}
           </h2>
-          <Features lang={lang} keys={PREMIUM_FEATURES} />
+          <Features lang={lang} keys={premiumFeatureKeys(premiumEnabled ? features : null)} />
 
           <h3 className={styles.groupTitle}>{t(lang, "pricing.packsTitle")}</h3>
           <p className={styles.small}>{t(lang, "pricing.packsLead")}</p>
@@ -161,6 +180,7 @@ export function PricingView() {
         signedIn={Boolean(me?.user)}
         signInOffered={signInOffered(config)}
         entitlement={me?.entitlement ?? null}
+        features={config?.features ?? null}
       />
     </PageShell>
   );

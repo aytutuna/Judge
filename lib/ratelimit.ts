@@ -425,7 +425,7 @@ export async function checkTranslateLimits(ip: string): Promise<LimitDecision> {
  * minutes and 60 per 24 hours; clarifying questions: 20 per 10 minutes and
  * 100 per 24 hours (they spend no credit, so the daily window is what bounds
  * their cost per account). */
-export type UserBucket = "premium_verdict" | "clarify";
+export type UserBucket = "premium_verdict" | "clarify" | "case_create" | "evidence" | "case_evidence";
 
 type UserWindow = { limit: number; windowMs: number; redisWindow: `${number} ${"m" | "h" | "d"}`; prefix: string };
 
@@ -437,6 +437,30 @@ export const USER_LIMITS: Record<UserBucket, readonly UserWindow[]> = {
   clarify: [
     { limit: 20, windowMs: 10 * MINUTE_MS, redisWindow: "10 m", prefix: "verdict:u:cl10m" },
     { limit: 100, windowMs: DAY_MS, redisWindow: "1 d", prefix: "verdict:u:clday" },
+  ],
+  case_create: [
+    { limit: 10, windowMs: 10 * MINUTE_MS, redisWindow: "10 m", prefix: "verdict:u:cc10m" },
+    { limit: 30, windowMs: DAY_MS, redisWindow: "1 d", prefix: "verdict:u:ccday" },
+  ],
+  evidence: [
+    { limit: 30, windowMs: 10 * MINUTE_MS, redisWindow: "10 m", prefix: "verdict:u:ev10m" },
+    { limit: 150, windowMs: DAY_MS, redisWindow: "1 d", prefix: "verdict:u:evday" },
+  ],
+  /** Keyed "case:<id>:b": respondent uploads per case. */
+  case_evidence: [{ limit: 12, windowMs: DAY_MS, redisWindow: "1 d", prefix: "verdict:c:evday" }],
+};
+
+/** Per-IP buckets for the no-account respondent endpoints (keyed by visitorKey). */
+export type IpBucket = "respond_submit" | "respond_evidence";
+
+export const IP_LIMITS: Record<IpBucket, readonly UserWindow[]> = {
+  respond_submit: [
+    { limit: 5, windowMs: 10 * MINUTE_MS, redisWindow: "10 m", prefix: "verdict:ip:rs10m" },
+    { limit: 20, windowMs: DAY_MS, redisWindow: "1 d", prefix: "verdict:ip:rsday" },
+  ],
+  respond_evidence: [
+    { limit: 15, windowMs: 10 * MINUTE_MS, redisWindow: "10 m", prefix: "verdict:ip:re10m" },
+    { limit: 60, windowMs: DAY_MS, redisWindow: "1 d", prefix: "verdict:ip:reday" },
   ],
 };
 
@@ -474,13 +498,13 @@ export class MultiWindowLimiter {
 }
 
 const globalForUserLimits = globalThis as unknown as {
-  __verdictUserLimiters?: Partial<Record<UserBucket, MultiWindowLimiter>>;
-  __verdictUserRedis?: Partial<Record<UserBucket, Ratelimit[]>>;
+  __verdictUserLimiters?: Partial<Record<string, MultiWindowLimiter>>;
+  __verdictUserRedis?: Partial<Record<string, Ratelimit[]>>;
 };
 
-function userRedisLimiters(bucket: UserBucket): Ratelimit[] {
+function windowRedisLimiters(cacheKey: string, windows: readonly UserWindow[]): Ratelimit[] {
   const cache = (globalForUserLimits.__verdictUserRedis ??= {});
-  const cached = cache[bucket];
+  const cached = cache[cacheKey];
   if (cached) return cached;
   const redis = new Redis({
     url: process.env.UPSTASH_REDIS_REST_URL,
@@ -488,7 +512,7 @@ function userRedisLimiters(bucket: UserBucket): Ratelimit[] {
     retry: { retries: 1, backoff: () => 100 },
     signal: () => AbortSignal.timeout(REDIS_ATTEMPT_TIMEOUT_MS),
   });
-  const limiters = USER_LIMITS[bucket].map(
+  const limiters = windows.map(
     (w) =>
       new Ratelimit({
         redis,
@@ -498,23 +522,27 @@ function userRedisLimiters(bucket: UserBucket): Ratelimit[] {
         limiter: Ratelimit.slidingWindow(w.limit, w.redisWindow),
       }),
   );
-  cache[bucket] = limiters;
+  cache[cacheKey] = limiters;
   return limiters;
 }
 
-/** Counts one use of `bucket` for this account, or says why it is refused.
- * Redis when configured (shared across instances), else memory. Fails closed
- * like the IP limits. */
-export async function checkUserLimits(userId: string, bucket: UserBucket): Promise<LimitDecision> {
+/** Counts one use for `subject` against `windows`. Redis when configured
+ * (shared across instances), else one in-memory limiter per cacheKey. Fails
+ * closed like the IP limits. */
+async function checkWindows(
+  cacheKey: string,
+  subject: string,
+  windows: readonly UserWindow[],
+): Promise<LimitDecision> {
   if (!redisConfigured()) {
     const limiters = (globalForUserLimits.__verdictUserLimiters ??= {});
-    const limiter = (limiters[bucket] ??= new MultiWindowLimiter(USER_LIMITS[bucket]));
-    return limiter.check(userId);
+    const limiter = (limiters[cacheKey] ??= new MultiWindowLimiter(windows));
+    return limiter.check(subject);
   }
   try {
     const work = async (): Promise<LimitDecision> => {
-      for (const limiter of userRedisLimiters(bucket)) {
-        const res = await limiter.limit(userId);
+      for (const limiter of windowRedisLimiters(cacheKey, windows)) {
+        const res = await limiter.limit(subject);
         if (res.reason === "timeout") throw new Error("rate limit check timed out");
         if (!res.success) {
           return { ok: false, code: "rate_limited", retryAfterSec: retryAfterSec(res.reset, Date.now()) };
@@ -528,6 +556,17 @@ export async function checkUserLimits(userId: string, bucket: UserBucket): Promi
     console.error("[ratelimit] Redis user check failed, refusing request:", error);
     return { ok: false, code: "unavailable", error };
   }
+}
+
+/** Counts one use of `bucket` for this account, or says why it is refused. */
+export async function checkUserLimits(userId: string, bucket: UserBucket): Promise<LimitDecision> {
+  return checkWindows(`u:${bucket}`, userId, USER_LIMITS[bucket]);
+}
+
+/** Counts one use of `bucket` for this visitor IP (keyed hash), or says why
+ * it is refused. Same stores and fail-closed behavior as checkUserLimits. */
+export async function checkIpLimits(ip: string, bucket: IpBucket): Promise<LimitDecision> {
+  return checkWindows(`ip:${bucket}`, visitorKey(ip), IP_LIMITS[bucket]);
 }
 
 const DEFAULT_PREMIUM_DAILY_CAP = 500;

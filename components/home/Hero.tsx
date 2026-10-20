@@ -56,6 +56,14 @@ export type HeroProps = {
    * held so what is judged is what is shown. The form stays in the
    * accessibility tree (unlike `inert`), so `status` is still read out. */
   busy?: boolean;
+  /** Premium extras between the examples and the CTA: the evidence picker
+   * and the "just me / both sides" choice. Absent on free. */
+  extras?: ReactNode;
+  /** Replaces "Get the verdict" (a two-sided case creates an invite). */
+  ctaLabel?: string;
+  /** "Both sides" is chosen: the owner writes only their own side, so the
+   * label and placeholder say so. */
+  twoSided?: boolean;
 };
 
 function prefersReducedMotion(): boolean {
@@ -88,6 +96,9 @@ export function Hero({
   status = null,
   clarify,
   busy = false,
+  extras,
+  ctaLabel,
+  twoSided = false,
 }: HeroProps) {
   const cardRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
@@ -172,7 +183,7 @@ export function Hero({
                 }}
               >
                 <label className={styles.fieldLabel} htmlFor="argument">
-                  <span>{t(lang, "input.label")}</span>
+                  <span>{t(lang, twoSided ? "input.labelTwoSided" : "input.label")}</span>
                   <span className={styles.count} aria-hidden>
                     {argument.length} / {MAX_ARGUMENT}
                   </span>
@@ -189,7 +200,7 @@ export function Hero({
                       e.currentTarget.form?.requestSubmit();
                     }
                   }}
-                  placeholder={t(lang, "placeholder")}
+                  placeholder={t(lang, twoSided ? "placeholderTwoSided" : "placeholder")}
                   readOnly={busy}
                   rows={4}
                   maxLength={MAX_ARGUMENT}
@@ -219,6 +230,7 @@ export function Hero({
                   ))}
                 </div>
 
+                {extras}
 
                 {phase === "intake" && turnstile ? (
                   <div className={styles.turnstile}>{turnstile}</div>
@@ -243,7 +255,7 @@ export function Hero({
                       <circle cx="15" cy="3.8" r="2.4" fill="#B5CCC0" />
                       <path d="M10 8 7.6 16h4.8z" fill="currentColor" />
                     </svg>
-                    <span>{t(lang, "getVerdict")}</span>
+                    <span>{ctaLabel ?? t(lang, "getVerdict")}</span>
                     <span className={styles.arrow} aria-hidden>
                       →
                     </span>

@@ -11,7 +11,7 @@
  * before.
  */
 
-import { createHash } from "node:crypto";
+import { createHash, createHmac } from "node:crypto";
 import { LibsqlDialect } from "@libsql/kysely-libsql";
 import { betterAuth, type Auth, type BetterAuthOptions, type BetterAuthPlugin } from "better-auth";
 import { makeSignature } from "better-auth/crypto";
@@ -51,6 +51,15 @@ function authSecret(env: Env): string | null {
   if (secret && secret.length >= MIN_SECRET_LENGTH) return secret;
   if (isProduction(env)) return null;
   return DEV_SECRET;
+}
+
+export type SecretPurpose = "evidence-token" | "case-invite" | "case-names" | "respondent-claim";
+
+/** A 32-byte key for one purpose, derived from the auth secret, or null when
+ * accounts are not configured. Rotating BETTER_AUTH_SECRET rotates every key. */
+export function derivedSecret(purpose: SecretPurpose, env: Env = process.env): Buffer | null {
+  const secret = authSecret(env);
+  return secret ? createHmac("sha256", secret).update(`settle:${purpose}:v1`).digest() : null;
 }
 
 /** True when accounts can work: a real secret, or any non-production run. */

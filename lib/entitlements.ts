@@ -17,7 +17,7 @@
  */
 
 import { nanoid } from "nanoid";
-import type { Client, InStatement, ResultSet } from "@libsql/client";
+import type { Client, InStatement, InValue, ResultSet } from "@libsql/client";
 import type { Entitlement, GrantSource, PremiumBlock, SubscriptionView } from "./account-types";
 import { getDb } from "./db";
 import { PRICING } from "./pricing";
@@ -95,7 +95,7 @@ export async function ensureEntitlementTables(): Promise<void> {
   const cached = globalForEntitlements.__verdictEntitlementsReady;
   if (cached?.client === client) return cached.ready;
   const ready = withBusyRetry(() => client.batch(SCHEMA, "write")).then(
-    () => undefined,
+    () => addHoldColumn(client),
     (e: unknown) => {
       globalForEntitlements.__verdictEntitlementsReady = undefined;
       throw e;
@@ -103,6 +103,20 @@ export async function ensureEntitlementTables(): Promise<void> {
   );
   globalForEntitlements.__verdictEntitlementsReady = { client, ready };
   return ready;
+}
+
+/** Adds premium_usage.hold_until (a reservation held past the usual
+ * 10-minute crash window, e.g. a two-sided case waiting for its answer).
+ * A concurrent process adding it first is fine. */
+async function addHoldColumn(db: Client): Promise<void> {
+  const info = await db.execute("PRAGMA table_info(premium_usage)");
+  if (info.rows.some((r) => String(r.name) === "hold_until")) return;
+  try {
+    await withBusyRetry(() => db.execute("ALTER TABLE premium_usage ADD COLUMN hold_until TEXT"));
+  } catch (e) {
+    const message = e instanceof Error ? e.message : String(e);
+    if (!/duplicate column name/i.test(message)) throw e;
+  }
 }
 
 async function client(): Promise<Client> {
@@ -147,6 +161,67 @@ function serialized<T>(fn: () => Promise<T>): Promise<T> {
 async function writeBatch(stmts: InStatement[]): Promise<ResultSet[]> {
   const db = await client();
   return serialized(() => withBusyRetry(() => db.batch(stmts, "write")));
+}
+
+/** The same serialized writer for other modules whose writes must not race
+ * credit writes (two-sided cases): one atomic batch of statements. */
+export async function entitlementWriteBatch(stmts: InStatement[]): Promise<ResultSet[]> {
+  return writeBatch(stmts);
+}
+
+/** An extra condition ANDed into a reservation statement, e.g.
+ * `EXISTS (SELECT 1 FROM cases WHERE id = ? AND judging_token = ?)`. */
+export type StatementGuard = { sql: string; args: InValue[] };
+
+const guardSql = (guard?: StatementGuard) => (guard ? ` AND ${guard.sql}` : "");
+const guardArgs = (guard?: StatementGuard) => (guard ? guard.args : []);
+
+/** Keeps a reservation open until `untilIso` (the stale sweep refunds it 10
+ * minutes after that). No-op unless still reserved. */
+export function holdStatement(reservationId: string, untilIso: string, guard?: StatementGuard): InStatement {
+  return {
+    sql: `UPDATE premium_usage SET hold_until = ? WHERE id = ? AND status = 'reserved'${guardSql(guard)}`,
+    args: [untilIso, reservationId, ...guardArgs(guard)],
+  };
+}
+
+/** Marks a reservation spent on `verdictId`, for use inside a larger batch. */
+export function consumeStatement(
+  reservationId: string,
+  verdictId: string,
+  nowIso: string,
+  guard?: StatementGuard,
+): InStatement {
+  return {
+    sql: `UPDATE premium_usage SET status = 'consumed', verdict_id = ?, updated_at = ?
+          WHERE id = ? AND status = 'reserved'${guardSql(guard)}`,
+    args: [verdictId, nowIso, reservationId, ...guardArgs(guard)],
+  };
+}
+
+/** The refund of one reservation as statements for a larger batch (the
+ * same three statements refundPremiumVerdict runs). No-op unless reserved. */
+export function refundStatements(reservationId: string, nowIso: string, guard?: StatementGuard): InStatement[] {
+  const g = guardSql(guard);
+  const ga = guardArgs(guard);
+  return [
+    {
+      sql: `UPDATE entitlement_accounts SET credits = credits + 1, updated_at = ?
+            WHERE user_id = (SELECT user_id FROM premium_usage
+                             WHERE id = ? AND status = 'reserved' AND funded_by = 'credits')${g}`,
+      args: [nowIso, reservationId, ...ga],
+    },
+    {
+      sql: `UPDATE subscriptions SET used_in_period = MAX(used_in_period - 1, 0), updated_at = ?
+            WHERE (id, period_end) = (SELECT subscription_id, sub_period_end FROM premium_usage
+                                      WHERE id = ? AND status = 'reserved' AND funded_by = 'subscription')${g}`,
+      args: [nowIso, reservationId, ...ga],
+    },
+    {
+      sql: `UPDATE premium_usage SET status = 'refunded', updated_at = ? WHERE id = ? AND status = 'reserved'${g}`,
+      args: [nowIso, reservationId, ...ga],
+    },
+  ];
 }
 
 const iso = (d: Date) => d.toISOString();
@@ -273,7 +348,16 @@ async function existingByKey(
   return { status: String(row.status), verdictId: row.verdict_id == null ? null : String(row.verdict_id) };
 }
 
-function keyOutcome(existing: { status: string; verdictId: string | null }): ReserveResult | null {
+/** The reservation a user made with this Idempotency-Key, if any (status:
+ * reserved, consumed or refunded). */
+export async function reservationByKey(
+  userId: string,
+  key: string,
+): Promise<{ status: string; verdictId: string | null } | null> {
+  return existingByKey(await client(), userId, key);
+}
+
+function keyOutcome(existing:{ status: string; verdictId: string | null }): ReserveResult | null {
   if (existing.status === "reserved") return { ok: false, code: "in_progress" };
   if (existing.status === "consumed" && existing.verdictId) {
     return { ok: false, code: "replay", verdictId: existing.verdictId };
@@ -382,25 +466,7 @@ export async function consumePremiumVerdict(reservationId: string, verdictId: st
 /** Returns the unit to where it came from. No-op unless still reserved. A
  * subscription unit is only returned while the same period is running. */
 async function refund(reservationId: string, now: Date): Promise<boolean> {
-  const nowIso = iso(now);
-  const results = await writeBatch([
-    {
-      sql: `UPDATE entitlement_accounts SET credits = credits + 1, updated_at = ?
-            WHERE user_id = (SELECT user_id FROM premium_usage
-                             WHERE id = ? AND status = 'reserved' AND funded_by = 'credits')`,
-      args: [nowIso, reservationId],
-    },
-    {
-      sql: `UPDATE subscriptions SET used_in_period = MAX(used_in_period - 1, 0), updated_at = ?
-            WHERE (id, period_end) = (SELECT subscription_id, sub_period_end FROM premium_usage
-                                      WHERE id = ? AND status = 'reserved' AND funded_by = 'subscription')`,
-      args: [nowIso, reservationId],
-    },
-    {
-      sql: "UPDATE premium_usage SET status = 'refunded', updated_at = ? WHERE id = ? AND status = 'reserved'",
-      args: [nowIso, reservationId],
-    },
-  ]);
+  const results = await writeBatch(refundStatements(reservationId, iso(now)));
   return results[2].rowsAffected === 1;
 }
 
@@ -409,12 +475,13 @@ export async function refundPremiumVerdict(reservationId: string): Promise<void>
 }
 
 /** Refunds reservations left `reserved` for over 10 minutes (a crashed or
- * killed request). Returns how many were refunded. */
+ * killed request) after their creation, or after `hold_until` when one is
+ * set (a case waiting for its answer). Returns how many were refunded. */
 export async function sweepStaleReservations(now: Date = new Date()): Promise<number> {
   globalForEntitlements.__verdictEntitlementsLastSweep = now.getTime();
   const db = await client();
   const rs = await db.execute({
-    sql: "SELECT id FROM premium_usage WHERE status = 'reserved' AND created_at < ? LIMIT 200",
+    sql: "SELECT id FROM premium_usage WHERE status = 'reserved' AND COALESCE(hold_until, created_at) < ? LIMIT 200",
     args: [iso(new Date(now.getTime() - STALE_RESERVATION_MS))],
   });
   let refunded = 0;
