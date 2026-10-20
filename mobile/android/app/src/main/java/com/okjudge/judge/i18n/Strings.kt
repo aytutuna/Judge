@@ -157,6 +157,8 @@ class Strings(private val res: Resources) {
     val premiumBadge: String get() = res.getString(R.string.premium_badge)
     val panelPremium: String get() = res.getString(R.string.panel_premium)
     fun panelModels(list: String): String = res.getString(R.string.panel_models, list)
+    fun panelStrong(n: String): String = res.getString(R.string.panel_strong, n)
+    fun panelQuick(n: String): String = res.getString(R.string.panel_quick, n)
     val factcheckTitle: String get() = res.getString(R.string.factcheck_title)
     val factcheckLead: String get() = res.getString(R.string.factcheck_lead)
     val factcheckStatusSupported: String get() = res.getString(R.string.factcheck_status_supported)

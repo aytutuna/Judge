@@ -68,6 +68,8 @@ export const WEB_KEYS: readonly string[] = [
   "premium.badge",
   "panel.premium",
   "panel.models",
+  "panel.strong",
+  "panel.quick",
   "factcheck.*",
   // Errors and waits
   "errorFallback",

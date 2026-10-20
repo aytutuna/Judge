@@ -128,9 +128,12 @@ class TextVectorsTest {
     }
 
     @Test
-    fun panelSummary_groupsFamilies() {
+    fun panelSummary_countsSeatTiersWithoutModelNames() {
         val en = s("en")
         val text = VerdictDisplay.panelSummary(listOf("claude-sonnet-4", "claude-haiku-4", "claude-sonnet-4", "mystery"), en)
-        assertEquals(en.panelModels("2 Sonnet + 1 Haiku + 1 Claude"), text)
+        assertEquals("Judges: 3 strong + 1 quick", text)
+        assertEquals("Judges: 1 quick", VerdictDisplay.panelSummary(listOf("claude-haiku-4"), en))
+        val tr = s("tr")
+        assertEquals("Yargıçlar: 2 güçlü + 3 hızlı", VerdictDisplay.panelSummary(listOf("a-sonnet", "b-sonnet", "x-haiku", "y-haiku", "z-haiku"), tr))
     }
 }

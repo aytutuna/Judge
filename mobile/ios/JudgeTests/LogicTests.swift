@@ -62,7 +62,10 @@ final class TugAndTiltTests: XCTestCase {
 
     func testPanelSummary() {
         let text = VerdictDisplay.panelSummary(models: ["claude-haiku-4", "claude-sonnet-4", "claude-sonnet-4", "mystery"], lang: .en)
-        XCTAssertTrue(text.contains("2 Sonnet + 1 Haiku + 1 Claude"), text)
+        XCTAssertEqual(text, "Judges: 3 strong + 1 quick")
+        XCTAssertEqual(VerdictDisplay.panelSummary(models: ["claude-haiku-4"], lang: .en), "Judges: 1 quick")
+        let tr = VerdictDisplay.panelSummary(models: ["a-sonnet", "b-sonnet", "x-haiku", "y-haiku", "z-haiku"], lang: .tr)
+        XCTAssertEqual(tr, "Yargıçlar: 2 güçlü + 3 hızlı")
     }
 
     func testLabelLengthThresholds() {

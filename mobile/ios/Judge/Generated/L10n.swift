@@ -163,6 +163,8 @@ enum L10n {
     static func premiumBadge(_ lang: AppLang) -> String { string("premium.badge", lang) }
     static func panelPremium(_ lang: AppLang) -> String { string("panel.premium", lang) }
     static func panelModels(_ lang: AppLang, list: String) -> String { format("panel.models", lang, list) }
+    static func panelStrong(_ lang: AppLang, n: String) -> String { format("panel.strong", lang, n) }
+    static func panelQuick(_ lang: AppLang, n: String) -> String { format("panel.quick", lang, n) }
     static func factcheckTitle(_ lang: AppLang) -> String { string("factcheck.title", lang) }
     static func factcheckLead(_ lang: AppLang) -> String { string("factcheck.lead", lang) }
     static func factcheckStatusSupported(_ lang: AppLang) -> String { string("factcheck.status.supported", lang) }

@@ -110,7 +110,7 @@
     <string name="party_b">Taraf B</string>
     <string name="you">Sen</string>
     <string name="error_fallback">Bir şey ters gitti. Bir daha dener misin?</string>
-    <string name="error_not_configured">Yargıç henüz kurulmamış: .env dosyasına ANTHROPIC_API_KEY ekle ve sunucuyu yeniden başlat.</string>
+    <string name="error_not_configured">Yargıç henüz kurulmamış. Biraz sonra yeniden dene.</string>
     <string name="error_quota">Yargıçların yapay zekâ kotası şimdilik doldu. Birkaç dakika sonra tekrar dene.</string>
     <string name="error_unavailable">Yargıçlara şu an ulaşamıyoruz. Bir dakika sonra tekrar dene.</string>
     <string name="error_too_short">Biraz kısa kaldı. Tartışmayı biraz daha anlat.</string>
@@ -152,6 +152,8 @@
     <string name="premium_badge">Premium</string>
     <string name="panel_premium">İnternette olgu kontrolüyle premium kurul.</string>
     <string name="panel_models">Yargıçlar: %1$s</string>
+    <string name="panel_strong">%1$s güçlü</string>
+    <string name="panel_quick">%1$s hızlı</string>
     <string name="factcheck_title">İnternette kontrol edildi</string>
     <string name="factcheck_lead">Yargıçlar karar vermeden önce bu arama sonuçlarını gördü. Bunlar kanıt, kararın kendisi değil.</string>
     <string name="factcheck_status_supported">Doğru çıktı</string>

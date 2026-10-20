@@ -70,22 +70,18 @@ object VerdictDisplay {
             FinalVerdict.TOO_CLOSE, FinalVerdict.UNKNOWN -> s.verdictTooClose
         }
 
-    private val PANEL_FAMILIES = listOf(
-        "Sonnet" to Regex("sonnet", RegexOption.IGNORE_CASE),
-        "Haiku" to Regex("haiku", RegexOption.IGNORE_CASE),
-        "Opus" to Regex("opus", RegexOption.IGNORE_CASE),
-    )
+    private val QUICK_MODEL = Regex("haiku", RegexOption.IGNORE_CASE)
 
-    /** "Judges: 2 Sonnet + 1 Haiku" (panelSummary). */
+    /** "Judges: 2 strong + 1 quick" (panelSummary). Users see seat tiers,
+     * never model names: the lite model is "quick", every other is "strong". */
     fun panelSummary(models: List<String>, s: Strings): String {
-        val counts = LinkedHashMap<String, Int>()
-        for (m in models) {
-            val name = PANEL_FAMILIES.firstOrNull { it.second.containsMatchIn(m) }?.first ?: "Claude"
-            counts[name] = (counts[name] ?: 0) + 1
+        val quick = models.count { QUICK_MODEL.containsMatchIn(it) }
+        val strong = models.size - quick
+        val parts = buildList {
+            if (strong > 0) add(s.panelStrong(strong.toString()))
+            if (quick > 0) add(s.panelQuick(quick.toString()))
         }
-        val order = PANEL_FAMILIES.map { it.first } + "Claude"
-        val list = order.filter { it in counts }.joinToString(" + ") { "${counts[it]} $it" }
-        return s.panelModels(list)
+        return s.panelModels(parts.joinToString(" + "))
     }
 
     /** Clamped confidence 1..5 (ConfidenceMeter). */

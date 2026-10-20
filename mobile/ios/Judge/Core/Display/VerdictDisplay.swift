@@ -63,19 +63,16 @@ enum VerdictDisplay {
         lean.tally ?? LeanTally(forValue: runCount - 1, against: 1)
     }
 
-    /// "Judges: 2 Sonnet + 1 Haiku" for a premium panel.
+    /// "Judges: 2 strong + 1 quick" for a premium panel. Users see seat
+    /// tiers, never model names: the lite model is "quick", every other is
+    /// "strong".
     static func panelSummary(models: [String], lang: AppLang) -> String {
-        let families = ["Sonnet", "Haiku", "Opus"]
-        var counts: [String: Int] = [:]
-        for model in models {
-            let lower = model.lowercased()
-            let name = families.first { lower.contains($0.lowercased()) } ?? "Claude"
-            counts[name, default: 0] += 1
-        }
-        let list = (families + ["Claude"])
-            .compactMap { name in counts[name].map { "\($0) \(name)" } }
-            .joined(separator: " + ")
-        return L10n.panelModels(lang, list: list)
+        let quick = models.filter { $0.lowercased().contains("haiku") }.count
+        let strong = models.count - quick
+        var parts: [String] = []
+        if strong > 0 { parts.append(L10n.panelStrong(lang, n: String(strong))) }
+        if quick > 0 { parts.append(L10n.panelQuick(lang, n: String(quick))) }
+        return L10n.panelModels(lang, list: parts.joined(separator: " + "))
     }
 
     enum Vote: Sendable, Equatable {

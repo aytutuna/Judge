@@ -110,7 +110,7 @@
     <string name="party_b">Party B</string>
     <string name="you">You</string>
     <string name="error_fallback">Something went wrong. Mind trying again?</string>
-    <string name="error_not_configured">The judge isn\'t set up yet: add ANTHROPIC_API_KEY to .env and restart the server.</string>
+    <string name="error_not_configured">The judge isn\'t set up yet. Try again later.</string>
     <string name="error_quota">The judges have used up their AI quota for now. Try again in a few minutes.</string>
     <string name="error_unavailable">We can\'t reach the judges right now. Give it a minute and try again.</string>
     <string name="error_too_short">That\'s a bit thin. Tell us more about the argument.</string>
@@ -152,6 +152,8 @@
     <string name="premium_badge">Premium</string>
     <string name="panel_premium">Premium panel with a web fact-check.</string>
     <string name="panel_models">Judges: %1$s</string>
+    <string name="panel_strong">%1$s strong</string>
+    <string name="panel_quick">%1$s quick</string>
     <string name="factcheck_title">Checked on the web</string>
     <string name="factcheck_lead">The judges saw these search results before ruling. They\'re evidence, not the ruling itself.</string>
     <string name="factcheck_status_supported">Holds up</string>
