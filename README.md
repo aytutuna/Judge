@@ -1,17 +1,17 @@
-# ⚖️ Settle
+# ⚖️ Judge
 
-> The product is called Settle. Internal names (repo, `/opt/verdict`, `verdict.service`, `verdict-update`, the `/api/verdict` route, database paths) keep "verdict".
+> The product is called Judge. Internal names (repo, `/opt/verdict`, `verdict.service`, `verdict-update`, the `/api/verdict` route, database paths) keep "verdict".
 
 Tell it the argument. It digs to bedrock and rules.
 
-Settle is a mobile-first web app that settles arguments: one person describes a
+Judge is a mobile-first web app that settles arguments: one person describes a
 disagreement, and an AI judge steelmans both sides, maps each side's claims down
 to its **bedrock** premise, finds the **crux** — the one point the fight is
 actually about — and renders a verdict.
 
 ## Honest verdicts, always labeled
 
-Settle never launders an opinion through a confident interface. Every ruling
+Judge never launders an opinion through a confident interface. Every ruling
 carries an explicit type:
 
 | Verdict | When |
@@ -47,9 +47,14 @@ itself a Claude call, so the raw text, names included, does go to Anthropic
 once; the privacy page says so. The name map returns to your browser only,
 where it puts the real names back into the verdict you see (a first-person
 narrator reads as "You" / "Sen"); share pages and the stored row stay
-anonymized. If anonymization fails for any reason (refusal, quota,
-timeout, malformed output), the request fails closed: nothing is judged and
-nothing is stored.
+anonymized. The anonymizer's output is checked in code: the names it lists
+are substituted in its text (including possessives and Turkish suffixes such
+as "Ryan's", "Burak'ın", "Burakla"), and a listed name that still survives, an
+untouched echo of the input, or capitalized words that survive unlisted
+trigger one retry at `medium` effort with a firmer instruction. If
+anonymization fails for any reason (refusal, quota, timeout, malformed
+output, a name that survives the retry), the request fails closed: nothing
+is judged and nothing is stored.
 
 **Türkçe / Turkish**: a TR | EN toggle in the header switches the whole UI, and
 the chosen language rides along with each request so the judges, the
@@ -90,7 +95,7 @@ An `ANTHROPIC_API_KEY` is **required** — without one the API refuses to judge
 | `NEXT_PUBLIC_SITE_URL` | *(Vercel production domain, else `http://localhost:3000`)* | Public origin, e.g. `https://verdict.example.org`, used for canonical links, link previews, `robots.txt` and the sitemap. Set it for a custom domain or a host other than Vercel. Read at build time, so redeploy after changing it |
 | `CONTACT_EMAIL` | *(empty)* | Address shown on `/privacy` for questions and removal requests. Unset or a placeholder (`example.com`) = the contact section is hidden. Read at build time, so redeploy after changing it |
 | `CLAUDE_MODEL` | `claude-haiku-5-5` | Judge and crux-trial model |
-| `CLAUDE_MODEL_LITE` | `claude-haiku-5-5` | Anonymizer model (always runs at `low` effort) |
+| `CLAUDE_MODEL_LITE` | `claude-haiku-5-5` | Anonymizer model (runs at `low` effort; its one retry runs at `medium`) |
 | `JUDGE_EFFORT` | `medium` | Thinking depth for judge and trial calls: `low`, `medium` or `high` |
 | `JUDGE_RUNS` | `3` | Self-consistency runs per verdict (1–3), run in parallel. Lower it to cut cost; confidence is capped accordingly |
 | `JUDGE_EXTRA_RUNS` | `2` | Extra judges (0–4, in parallel) called in when the first round's confidence is at or below `JUDGE_ESCALATE_AT`; all votes are then aggregated together. `0` turns escalation off |
@@ -107,7 +112,7 @@ about 3,050 input and 1,300 output tokens, so a full verdict (3 judges +
 anonymizer + up to 2 trial calls) costs roughly **$0.004–0.006** — about
 **$4–6 per 1,000 verdicts**. With the default `DAILY_VERDICT_CAP=1000`, the
 worst case is about $6 a day, plus about $2 if every verdict escalated.
-Each call has a fixed time budget (60s for the anonymizer, 120s for judges,
+Each call has a fixed time budget (60s for the anonymizer, retry included, 120s for judges,
 45s for escalation judges, 60s total for the trial), so a verdict never hangs
 indefinitely and the worst case (285s) fits the route's 300s limit. The SDK retries rate-limit and overload errors
 automatically, and a verdict that still fails on a 429 is reported as a quota
@@ -135,7 +140,8 @@ low) → crux trial → save.
 
 The visitor IP comes from the first `X-Forwarded-For` entry, so it is only
 trustworthy behind a proxy that overwrites that header: Vercel does, and so
-does the Caddy setup in the Lightsail guide below.
+does the Caddy setup in the Lightsail guide below, also behind Cloudflare's
+proxy (see *Custom domain behind Cloudflare*).
 
 ## Accounts and Premium
 
@@ -163,7 +169,7 @@ after sign-in.
 | `APPLE_TEAM_ID`, `APPLE_KEY_ID` | *(empty)* | Your 10-character Apple team id, and the key id of the Sign in with Apple key |
 | `APPLE_PRIVATE_KEY_BASE64` | *(empty)* | The whole `AuthKey_<KEYID>.p8` file, base64-encoded on one line (`base64 -w0 AuthKey_XXXX.p8`). The app signs Apple's client secret from it and renews it on its own. All four Apple values set = the Apple button works |
 | `APPLE_APP_BUNDLE_ID` | *(empty)* | The iOS app's bundle id, accepted as an extra audience for native Sign in with Apple |
-| `RESEND_API_KEY`, `EMAIL_FROM` | *(empty)* | [Resend](https://resend.com) API key and sender, e.g. `Settle <signin@verdict.example.org>` on a domain verified in Resend. Both set = email sign-in links work. With `TURNSTILE_SECRET_KEY` set, the email form needs a Turnstile token too |
+| `RESEND_API_KEY`, `EMAIL_FROM` | *(empty)* | [Resend](https://resend.com) API key and sender, e.g. `Judge <signin@okjudge.com>` on a domain verified in Resend. Both set = email sign-in links work. With `TURNSTILE_SECRET_KEY` set, the email form needs a Turnstile token too |
 | `DEV_LOGIN` | *(empty)* | `1` shows a "test sign-in" for local testing. It works only when **all** hold: not a production build (`next build` output is production whatever `NODE_ENV` it is started with), `DEV_LOGIN=1`, the server listens on `127.0.0.1` or `::1` only (`npm run dev:login`, i.e. `next dev -H 127.0.0.1`; plain `npm run dev` listens on every interface and is refused), and the request's `Host` is `localhost`, `127.0.0.1` or `[::1]`. Anywhere else the endpoint answers 404 |
 | `PREMIUM_ENABLED` | `1` | `0` turns Premium off (the switch disappears; premium requests get `503 not_configured`) |
 | `PREMIUM_DAILY_CAP` | `500` | Site-wide premium runs per UTC day, counted from the database, refunded ones included (a refused or failed run still costs its model calls). A cost circuit breaker; `0` pauses Premium. Clarifying questions are not counted; the per-account limit below bounds them |
@@ -547,6 +553,9 @@ check on github.com that `main` now has `deploy/aws-lightsail/setup.sh` and
   is a free public DNS service that points such names at the IP inside them,
   so HTTPS works without buying a domain. You can move to a real domain later
   (see *Change the site address* below).
+- **A domain on Cloudflare with its proxy on (orange cloud):** follow
+  *Custom domain behind Cloudflare* below; without those settings every
+  visitor would share Cloudflare's few addresses and the rate limits with them.
 
 ### 5. Run the setup
 
@@ -620,7 +629,11 @@ All commands run in the browser SSH window (**Connect using SSH**).
     `sudo verdict-update --force`.
 - **Change the site address:** point the new domain's A record at the static
   IP, then run
-  `sudo bash /opt/verdict/repo/deploy/aws-lightsail/setup.sh --reconfigure`.
+  `sudo bash /opt/verdict/repo/deploy/aws-lightsail/setup.sh --reconfigure`
+  (it also asks whether the domain is behind Cloudflare's proxy). Or change
+  `NEXT_PUBLIC_SITE_URL` in the settings file yourself and run
+  `sudo verdict-update --force`. For a domain on Cloudflare, see
+  *Custom domain behind Cloudflare* below.
 - **Backups:** every night a copy of the database goes to
   `/var/lib/verdict/backups` (14 days are kept). Run one now with
   `sudo systemctl start verdict-backup`. `sudo verdict-restore` lists the
@@ -640,6 +653,158 @@ settings in `/etc/verdict/verdict.env`, the database in
 `/var/lib/verdict/verdict.db`, and the scripts in `deploy/aws-lightsail/`.
 The app listens only on `127.0.0.1:3000`; Caddy is the only way in, and it
 replaces any `X-Forwarded-For` header a visitor sends with their real address.
+
+### Custom domain behind Cloudflare
+
+With a domain on Cloudflare (bought there, or moved there) you can turn on
+Cloudflare's proxy, the orange cloud next to a DNS record. Visitors then
+connect to Cloudflare, and Cloudflare connects to your server. That blocks
+large attacks before they reach the server, hides its IP address, and serves
+static files from near the visitor. The server has to know about it, though:
+otherwise every visitor looks like one of a few Cloudflare addresses, and they
+all share one rate limit. The steps below use `okjudge.com`; put your own
+domain in its place.
+
+**1. DNS records.** In the Cloudflare dashboard, open the domain, then
+**DNS** > **Records**. Delete any old `A`, `AAAA` or `CNAME` records for `@`
+and `www` (e.g. a registrar's parking page), then add:
+
+| Type | Name | Content | Proxy status |
+|---|---|---|---|
+| `A` | `@` | the server's IPv4 address (the static IP) | Proxied (orange) |
+| `AAAA` | `@` | the server's IPv6 address, if it has one | Proxied (orange) |
+| `CNAME` | `www` | `okjudge.com` | Proxied (orange) |
+
+The `AAAA` record is optional: Cloudflare answers visitors over IPv6 either
+way, and the record only lets Cloudflare reach the server over IPv6 too. On
+Lightsail the address is on the instance's **Networking** tab; skip the record
+if there is none.
+
+**2. Cloudflare settings.**
+
+- **SSL/TLS** > **Overview**: set the mode to **Full (strict)**. Cloudflare
+  then checks the server's own certificate, which Caddy gets from Let's
+  Encrypt. Never use *Flexible*: it sends visitors' data unencrypted to the
+  server and makes the site redirect in a loop.
+- **SSL/TLS** > **Edge Certificates**: turn **Always Use HTTPS** off. Let's
+  Encrypt checks the domain over plain `http://` on port 80, and Caddy has to
+  answer that itself. Visitors still end up on `https://`, because Caddy
+  redirects them.
+- **Security** > **Bots**: turn **Bot Fight Mode** off. It shows challenges
+  that the API and mobile apps cannot solve, and on the free plan it cannot
+  be switched off for single paths. The Turnstile bot check keeps working.
+
+**3. Server settings.** In the browser SSH window run
+`sudo nano /etc/verdict/verdict.env` and set these lines (add any that are
+missing):
+
+```bash
+NEXT_PUBLIC_SITE_URL=https://okjudge.com
+SITE_ALIASES=www.okjudge.com
+LEGACY_HOSTS=51-195-110-113.sslip.io
+CLOUDFLARE_PROXY=1
+```
+
+- `SITE_ALIASES` lists other names of the site, separated by spaces or
+  commas; each one redirects to the address in `NEXT_PUBLIC_SITE_URL`.
+- `LEGACY_HOSTS` lists old addresses that should redirect the same way, here
+  the `sslip.io` name the site used before. They are reached directly, not
+  through Cloudflare, so drop them once you turn on the firewall in step 5.
+- `CLOUDFLARE_PROXY=1` tells Caddy to trust Cloudflare's addresses, and only
+  those, to name the visitor. It also installs a weekly job that refreshes
+  Cloudflare's address list.
+
+If you use accounts, also set `BETTER_AUTH_URL=https://okjudge.com`, use the
+new domain in the Google and Apple redirect URLs, and add it to the Turnstile
+widget. Save, then run `sudo verdict-update --force`. Caddy requests the new
+certificates through Cloudflare within a minute or two; until then
+Cloudflare may show error 525 or 526. (`setup.sh --reconfigure` can set the address
+and `CLOUDFLARE_PROXY` for you; it asks.)
+
+**4. Check it.** From your computer (or the SSH window):
+
+```bash
+curl -sI https://okjudge.com | grep -iE '^(server|cf-ray)'   # server: cloudflare, and a cf-ray line
+curl -sI https://www.okjudge.com | grep -i '^location'        # location: https://okjudge.com/
+```
+
+On the server:
+
+```bash
+sudo journalctl -u caddy -n 100 --no-pager | grep -iE 'certificate obtained|error'
+curl -s localhost:2019/config/apps/http/servers/srv0/client_ip_headers   # ["CF-Connecting-IP"]
+systemctl list-timers verdict-cloudflare-ips.timer                       # next weekly refresh
+```
+
+**5. Firewall, optional.** Attackers who know the server's IP address can
+still skip Cloudflare and connect to it directly. They cannot fake their IP
+that way (see below), but they do skip Cloudflare's protection. To block
+them, let only Cloudflare reach ports 80 and 443. SSH stays open to
+everyone on every port it uses (22, any port set in the SSH config or in
+`ssh.socket`, and the port of your current session), so you can always log
+in. Turn it on once everything above works:
+
+1. In `/etc/verdict/verdict.env` set `FIREWALL_CLOUDFLARE_ONLY=1` and empty
+   `LEGACY_HOSTS=`, then run `sudo verdict-update --force`. Check that
+   `grep ^IPV6 /etc/default/ufw` prints `IPV6=yes` (the Ubuntu default);
+   otherwise ufw cannot filter IPv6 and the script warns about it.
+2. Turn the firewall on for a trial:
+
+   ```bash
+   sudo bash /opt/verdict/repo/deploy/aws-lightsail/cloudflare-ips.sh --enable-firewall
+   ```
+
+   This adds the rules and turns `ufw` on. It also schedules `ufw disable`
+   in 10 minutes (add a number after the option for other minutes), and
+   until you confirm, a restart brings the server back with `ufw` off. So a
+   mistake cannot lock you out for good. The script refuses to turn `ufw` on
+   if a `deny` rule for an SSH port could win over the allow rule, and warns
+   about any remaining rule that may still open port 80 or 443 to everyone.
+3. Keep that window open. Open a **new** SSH window and check that you can
+   log in, and check in a browser that the site loads. If both work, keep
+   the firewall (also across restarts):
+
+   ```bash
+   sudo bash /opt/verdict/repo/deploy/aws-lightsail/cloudflare-ips.sh --confirm-firewall
+   ```
+
+   If something is wrong, do nothing: the firewall turns itself off after
+   10 minutes. You can also run `sudo ufw disable` at any time.
+4. Check: `sudo ufw status` lists your SSH rule (`22/tcp`, or an existing
+   `OpenSSH` or `LIMIT` rule) and one `80,443/tcp` rule per Cloudflare range.
+   This command, run on your computer, connects to the server directly
+   instead of through Cloudflare; it should now print `000` after 10 seconds
+   instead of `200`:
+
+   ```bash
+   curl -sk -m 10 -o /dev/null -w '%{http_code}\n' --resolve okjudge.com:443:<server IP> https://okjudge.com/
+   ```
+
+The weekly job keeps the rules in step with Cloudflare's list (it leaves
+them alone while a trial waits for confirmation). If you are ever locked out
+after confirming, use your provider's console to run `sudo ufw disable`. To
+turn the firewall off for good, run `sudo ufw disable` and set
+`FIREWALL_CLOUDFLARE_ONLY=` (empty). The provider's own firewall
+(Lightsail's **Networking** tab) can stay as it is.
+
+**How visitor IPs reach the app.** Cloudflare puts the visitor's address in a
+`CF-Connecting-IP` header. Caddy believes that header only when the
+connection comes from one of Cloudflare's published addresses (kept in
+`/etc/caddy/cloudflare-ips.caddy`). Any other connection counts as its own
+address, whatever headers it sends. Caddy then replaces `X-Forwarded-For`
+with that address, and the app rate-limits by it, so each visitor still has
+their own limit and nobody can pick one.
+
+**Renewals and upkeep.** Caddy renews certificates about 30 days before they
+expire, through Cloudflare on port 80, so keep *Always Use HTTPS* off.
+Cloudflare's address list is refreshed weekly and on every deploy. If a
+download fails, the previous list stays in place; see
+`systemctl status verdict-cloudflare-ips.service`, or refresh it by hand with
+`sudo bash /opt/verdict/repo/deploy/aws-lightsail/cloudflare-ips.sh`. To stop
+using the proxy, run `sudo ufw disable` first (if you turned the firewall on;
+`verdict-update` refuses to switch the proxy setting off while it is on),
+switch the records to *DNS only* (grey cloud), empty `CLOUDFLARE_PROXY=` and
+`FIREWALL_CLOUDFLARE_ONLY=`, then run `sudo verdict-update --force`.
 
 ### Monthly cost
 

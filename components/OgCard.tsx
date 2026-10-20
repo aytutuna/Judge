@@ -112,7 +112,7 @@ export function OgCard({
               color: PALETTE.ink,
             }}
           >
-            Settle
+            Judge
           </div>
         </div>
         <div

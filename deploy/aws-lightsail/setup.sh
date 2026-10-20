@@ -7,7 +7,8 @@
 # Options:
 #   --branch NAME    deploy another branch (default: main)
 #   --repo URL       clone another repository (default: the Verdict repo)
-#   --reconfigure    ask for the API key and site address again
+#   --reconfigure    ask for the API key and site address again (e.g. to move
+#                    the site to your own domain, with or without Cloudflare)
 #
 # Safe to run again: finished steps are skipped and existing settings kept.
 # If it stops with an error, fix the cause (if any) and run the same command.
@@ -136,6 +137,31 @@ add_missing_settings() {
     set_env RATE_LIMIT_DB "file:/run/verdict/ratelimit.db"
     info "Added RATE_LIMIT_DB (rate limits now survive app restarts)."
   fi
+  if ! grep -qE '^[#[:space:]]*CLOUDFLARE_PROXY=' "$ENV_FILE"; then
+    printf '\n%s\n' "$(cloudflare_settings_block)" >>"$ENV_FILE"
+    info "Added the (empty) custom domain and Cloudflare settings."
+  fi
+}
+
+# The env file section for the web server settings update.sh reads. Empty
+# values keep the plain setup: one address, no Cloudflare.
+cloudflare_settings_block() {
+  cat <<'EOF'
+# --- Custom domain and Cloudflare, optional ---------------------------------
+# See "Custom domain behind Cloudflare" in the README. After changing any of
+# these, run: sudo verdict-update --force
+# Other names of the site, each redirected to NEXT_PUBLIC_SITE_URL (spaces or
+# commas between them), e.g. SITE_ALIASES=www.example.org
+SITE_ALIASES=
+# Old addresses that redirect the same way, e.g. the sslip.io name. They only
+# work while visitors can reach this server directly (not with the firewall).
+LEGACY_HOSTS=
+# 1 = the domain's DNS records are proxied by Cloudflare (orange cloud).
+CLOUDFLARE_PROXY=
+# 1 = keep ufw rules that let only Cloudflare reach ports 80 and 443. Turning
+# ufw on is a separate, one-time step (see the README).
+FIREWALL_CLOUDFLARE_ONLY=
+EOF
 }
 
 setup_swap() {
@@ -290,15 +316,51 @@ ask_site_host() {
     if valid_host "$host"; then break; fi
     echo "That is not a valid host name. Type just the name, e.g. verdict.example.org" >&2
   done
-  if [[ -n $ip && $host != *.sslip.io ]]; then
-    if getent ahostsv4 "$host" | awk '{ print $1 }' | grep -qx "$ip"; then
-      info "DNS for $host points at $ip." >&2
-    else
-      warn "DNS for $host does not point at $ip yet. The site will get its HTTPS" >&2
-      warn "certificate a few minutes after it does; Caddy keeps retrying on its own." >&2
-    fi
-  fi
   printf '%s' "$host"
+}
+
+# Asks whether host $1 is behind Cloudflare's proxy and saves the answer as
+# CLOUDFLARE_PROXY. True if it is.
+ask_cloudflare_proxy() {
+  local host=$1 current default=n answer
+  if [[ $host == *.sslip.io ]]; then
+    if [[ -n $(get_env CLOUDFLARE_PROXY) ]]; then set_env CLOUDFLARE_PROXY ""; fi
+    return 1
+  fi
+  current=$(get_env CLOUDFLARE_PROXY)
+  if [[ ${current,,} =~ ^(1|true|yes|on)$ ]]; then default=y; fi
+  echo
+  echo "Is $host proxied by Cloudflare (an orange cloud next to its DNS records)?"
+  echo "If you are not sure, answer n."
+  read -r -p "Behind Cloudflare's proxy? [y/n, Enter = $default]: " answer
+  answer=${answer:-$default}
+  if [[ $answer == [yY]* ]]; then
+    set_env CLOUDFLARE_PROXY 1
+    return 0
+  fi
+  set_env CLOUDFLARE_PROXY ""
+  return 1
+}
+
+# True if ufw is on with cloudflare-ips.sh's rules, i.e. only Cloudflare can
+# reach ports 80 and 443.
+cloudflare_firewall_on() {
+  local status
+  command -v ufw >/dev/null || return 1
+  status=$(ufw status 2>/dev/null) || return 1
+  [[ $status == "Status: active"* && $status == *verdict-cloudflare* ]]
+}
+
+# Warns if host $1 does not resolve to this server's IPv4 address $2.
+check_site_dns() {
+  local host=$1 ip=$2
+  [[ -n $ip && $host != *.sslip.io ]] || return 0
+  if getent ahostsv4 "$host" | awk '{ print $1 }' | grep -qx "$ip"; then
+    info "DNS for $host points at $ip."
+  else
+    warn "DNS for $host does not point at $ip yet. The site will get its HTTPS"
+    warn "certificate a few minutes after it does; Caddy keeps retrying on its own."
+  fi
 }
 
 ask_api_key() {
@@ -394,8 +456,10 @@ TURNSTILE_SECRET_KEY=
 # APPLE_KEY_ID=
 # APPLE_PRIVATE_KEY_BASE64=
 # RESEND_API_KEY=
-# EMAIL_FROM=Settle <signin@your.domain>
+# EMAIL_FROM=Judge <signin@okjudge.com>
 # PREMIUM_DAILY_CAP=500
+
+$(cloudflare_settings_block)
 EOF
     chmod 600 "$tmp"
     mv -f "$tmp" "$ENV_FILE"
@@ -403,6 +467,21 @@ EOF
   chown root:root "$ENV_FILE"
   chmod 600 "$ENV_FILE"
   set_env NEXT_PUBLIC_SITE_URL "https://$host"
+  add_missing_settings
+  if ask_cloudflare_proxy "$host"; then
+    info "Saved CLOUDFLARE_PROXY=1: Caddy trusts only Cloudflare to name each visitor."
+    if [[ -z $(get_env SITE_ALIASES) ]]; then
+      info "To serve www.$host too, see \"Custom domain behind Cloudflare\" in the README."
+    fi
+  else
+    if cloudflare_firewall_on; then
+      warn "ufw is on and lets only Cloudflare reach ports 80 and 443, so without"
+      warn "Cloudflare's proxy nobody can reach the site, and the deploy below stops."
+      warn "Turn it off first: sudo ufw disable, and set FIREWALL_CLOUDFLARE_ONLY="
+      warn "(empty) in $ENV_FILE. Then run this again."
+    fi
+    check_site_dns "$host" "$ip"
+  fi
 
   local replace_key=1 answer
   if [[ -n $(get_env ANTHROPIC_API_KEY) ]]; then
@@ -417,7 +496,6 @@ EOF
     set_env ANTHROPIC_API_KEY "$key"
     key=""
   fi
-  add_missing_settings
   info "Saved settings (readable by root only)."
 }
 

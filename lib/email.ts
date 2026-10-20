@@ -21,16 +21,16 @@ export const SIGNIN_EMAIL: Record<
   { subject: string; intro: string; button: string; expiry: string; ignore: string }
 > = {
   en: {
-    subject: "Your Settle sign-in link",
-    intro: "Tap the button below to sign in to Settle.",
-    button: "Sign in to Settle",
+    subject: "Your Judge sign-in link",
+    intro: "Tap the button below to sign in to Judge.",
+    button: "Sign in to Judge",
     expiry: "The link works once and expires in 10 minutes.",
     ignore: "If you didn't ask for this, you can ignore this email.",
   },
   tr: {
-    subject: "Settle giriş bağlantın",
-    intro: "Settle'a giriş yapmak için aşağıdaki düğmeye dokun.",
-    button: "Settle'a giriş yap",
+    subject: "Judge giriş bağlantın",
+    intro: "Judge'a giriş yapmak için aşağıdaki düğmeye dokun.",
+    button: "Judge'a giriş yap",
     expiry: "Bağlantı tek kullanımlık ve 10 dakika geçerli.",
     ignore: "Bu isteği sen yapmadıysan bu e-postayı yok sayabilirsin.",
   },
@@ -64,7 +64,7 @@ export function signInEmailContent(url: string, lang: Lang): { subject: string; 
   // Ivory & Terracotta, inline styles only (email clients drop <style>).
   const html = `<!doctype html><html lang="${lang}"><body style="margin:0;padding:32px 16px;background:${P.ivory};font-family:Georgia,'Times New Roman',serif;color:${P.ink}">
 <div style="max-width:480px;margin:0 auto;background:${P.paper};border:1px solid ${P.strata};border-radius:12px;padding:32px">
-<p style="font-size:22px;margin:0 0 16px">Settle</p>
+<p style="font-size:22px;margin:0 0 16px">Judge</p>
 <p style="font-size:16px;line-height:1.5;margin:0 0 24px">${escapeHtml(c.intro)}</p>
 <p style="margin:0 0 24px"><a href="${escapeHtml(url)}" style="display:inline-block;background:${P.terraInk};color:${P.paper};text-decoration:none;padding:12px 20px;border-radius:8px;font-family:Arial,sans-serif;font-size:15px">${escapeHtml(c.button)}</a></p>
 <p style="font-size:13px;line-height:1.5;color:${P.muted};margin:0">${escapeHtml(c.expiry)}<br>${escapeHtml(c.ignore)}</p>

@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { PricingView } from "@/components/account/PricingView";
 import { SITE_NAME, SITE_OG_IMAGE } from "../site";
 
-const title = "Settle pricing";
+const title = "Judge pricing";
 const description =
-  "Settle is free. Premium adds facts checked on the web with sources, a stronger judge panel and clarifying questions, as credit packs or a monthly plan.";
+  "Judge is free. Premium adds facts checked on the web with sources, a stronger judge panel and clarifying questions, as credit packs or a monthly plan.";
 
 export const metadata: Metadata = {
   title: "Pricing",

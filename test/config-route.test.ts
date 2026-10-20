@@ -68,7 +68,7 @@ describe("GET /api/v1/config", () => {
     vi.stubEnv("GOOGLE_CLIENT_ID", "web.apps.googleusercontent.com");
     vi.stubEnv("GOOGLE_CLIENT_SECRET", "secret");
     vi.stubEnv("RESEND_API_KEY", "re_x");
-    vi.stubEnv("EMAIL_FROM", "Settle <signin@verdict.example.org>");
+    vi.stubEnv("EMAIL_FROM", "Judge <signin@verdict.example.org>");
     const { body } = await call("verdict.example.org");
     expect(body.signIn).toEqual({ apple: false, google: true, email: true, dev: false });
     expect(body.premiumEnabled).toBe(true);

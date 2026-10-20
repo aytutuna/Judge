@@ -30,14 +30,14 @@ export function ExamplePill({ children }: { children: ReactNode }) {
   return <span className={styles.pill}>{children}</span>;
 }
 
-/** The quiet "Settle" mark for the top-left corner of a live verdict when
+/** The quiet "Judge" mark for the top-left corner of a live verdict when
  * no translation note is showing. Decorative: the page already names the
  * product, and a screen reader goes straight to the verdict. */
 export function CardBrand() {
   return (
     <span className={styles.brandTag} aria-hidden>
       <BrandMark size={20} />
-      Settle
+      Judge
     </span>
   );
 }
