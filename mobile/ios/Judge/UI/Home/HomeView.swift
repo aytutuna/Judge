@@ -39,6 +39,14 @@ struct HomeView: View {
             }
         }
         .scrollDismissesKeyboard(.interactively)
+        // Keeps scrolled content out from under the status bar, since the nav bar is hidden.
+        .safeAreaInset(edge: .top, spacing: 0) {
+            Color.clear
+                .frame(height: 0)
+                .background(Brand.ivory)
+                .allowsHitTesting(false)
+                .accessibilityHidden(true)
+        }
         .background(Brand.ivory.ignoresSafeArea())
         .toolbar(.hidden, for: .navigationBar)
         .onAppear {

@@ -1718,13 +1718,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Three independent judges · Names stay anonymous"
+            "value" : "Three independent judges · Judges never see names"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Üç bağımsız yargıç · İsimler gizli kalır"
+            "value" : "Üç bağımsız yargıç · Yargıçlar isimleri görmez"
           }
         }
       }
@@ -2498,13 +2498,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "We swap names for Party A and Party B before judging. The judges never know who's who, and only the anonymous version gets saved."
+            "value" : "We swap names for Party A and Party B before judging, so the judges never know who's who."
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Yargılamadan önce isimleri Taraf A ve Taraf B yapıyoruz. Yargıçlar kimin kim olduğunu bilmez, sadece anonim metin saklanır."
+            "value" : "Yargılamadan önce isimleri Taraf A ve Taraf B yapıyoruz, yani yargıçlar kimin kim olduğunu hiç bilmez."
           }
         }
       }

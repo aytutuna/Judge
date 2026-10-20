@@ -3,12 +3,12 @@
 <resources>
     <string name="hero_title_line1">Kim haklı?</string>
     <string name="hero_title_line2">Hemen çözelim.</string>
-    <string name="hero_eyebrow">Üç bağımsız yargıç · İsimler gizli kalır</string>
+    <string name="hero_eyebrow">Üç bağımsız yargıç · Yargıçlar isimleri görmez</string>
     <string name="hero_lead">Neyi tartıştığını anlat. Üç yapay zekâ yargıcı ayrı ayrı karar verir, ne kadar anlaştıklarını da güven puanından görürsün.</string>
     <string name="input_label">Tartışma</string>
     <string name="placeholder">Ne oldu? Kim ne diyor, neden?\n\nKarşı tarafın görüşünü onun anlatacağı gibi yaz. Yargıçlar zaten iki tarafı da en güçlü hâliyle ele alır.</string>
     <string name="get_verdict">Kararı öğren</string>
-    <string name="privacy_note">Yargılamadan önce isimleri Taraf A ve Taraf B yapıyoruz. Yargıçlar kimin kim olduğunu bilmez, sadece anonim metin saklanır.</string>
+    <string name="privacy_note">Yargılamadan önce isimleri Taraf A ve Taraf B yapıyoruz, yani yargıçlar kimin kim olduğunu hiç bilmez.</string>
     <string name="judge_by">Neye göre?</string>
     <string name="fine_tune">İnce ayar ▸</string>
     <string name="hide_fine_tune">İnce ayarı gizle</string>

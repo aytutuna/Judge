@@ -16,7 +16,7 @@ const en = {
   "hero.title": "Who's right? Settle it.",
   "hero.titleLine1": "Who's right?",
   "hero.titleLine2": "Settle it.",
-  "hero.eyebrow": "Three independent judges · Names stay anonymous",
+  "hero.eyebrow": "Three independent judges · Judges never see names",
   "hero.lead":
     "Tell us what the fight is about. Three AI judges each make the call on their own, and the confidence score shows how much they agree.",
   "input.label": "The argument",
@@ -24,7 +24,7 @@ const en = {
     "What happened? Who says what, and why?\n\nPut the other person's side the way they'd say it. The judges build the strongest case for both sides either way.",
   getVerdict: "Get the verdict",
   privacyNote:
-    "We swap names for Party A and Party B before judging. The judges never know who's who, and only the anonymous version gets saved.",
+    "We swap names for Party A and Party B before judging, so the judges never know who's who.",
   judgeBy: "Judge by",
   fineTune: "Fine-tune ▸",
   hideFineTune: "Hide fine-tuning",
@@ -405,7 +405,7 @@ const tr = {
   "hero.title": "Kim haklı? Hemen çözelim.",
   "hero.titleLine1": "Kim haklı?",
   "hero.titleLine2": "Hemen çözelim.",
-  "hero.eyebrow": "Üç bağımsız yargıç · İsimler gizli kalır",
+  "hero.eyebrow": "Üç bağımsız yargıç · Yargıçlar isimleri görmez",
   "hero.lead":
     "Neyi tartıştığını anlat. Üç yapay zekâ yargıcı ayrı ayrı karar verir, ne kadar anlaştıklarını da güven puanından görürsün.",
   "input.label": "Tartışma",
@@ -413,7 +413,7 @@ const tr = {
     "Ne oldu? Kim ne diyor, neden?\n\nKarşı tarafın görüşünü onun anlatacağı gibi yaz. Yargıçlar zaten iki tarafı da en güçlü hâliyle ele alır.",
   getVerdict: "Kararı öğren",
   privacyNote:
-    "Yargılamadan önce isimleri Taraf A ve Taraf B yapıyoruz. Yargıçlar kimin kim olduğunu bilmez, sadece anonim metin saklanır.",
+    "Yargılamadan önce isimleri Taraf A ve Taraf B yapıyoruz, yani yargıçlar kimin kim olduğunu hiç bilmez.",
   judgeBy: "Neye göre?",
   fineTune: "İnce ayar ▸",
   hideFineTune: "İnce ayarı gizle",

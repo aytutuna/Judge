@@ -81,8 +81,8 @@ class ScreensTest {
     @Test
     fun home_tr_eyebrowUppercasesWithTurkishRules() {
         home(AppLang.TR)
-        // "İsimler gizli kalır" must become "İSİMLER GİZLİ KALIR", not "İSIMLER GIZLI KALIR".
-        compose.onNodeWithText("ÜÇ BAĞIMSIZ YARGIÇ · İSİMLER GİZLİ KALIR").assertExists()
+        // "Yargıçlar isimleri görmez" must become "YARGIÇLAR İSİMLERİ GÖRMEZ", not "YARGIÇLAR ISIMLERI GÖRMEZ".
+        compose.onNodeWithText("ÜÇ BAĞIMSIZ YARGIÇ · YARGIÇLAR İSİMLERİ GÖRMEZ").assertExists()
     }
 
     @Test
@@ -101,7 +101,8 @@ class ScreensTest {
                 val r = outcome.result.result
                 val parties = PartyNames.partyNames(outcome.nameMap, ContentLang.verdictLang(r), s)
                 compose.onNodeWithText(VerdictDisplay.verdictLabel(r, parties, s)).assertExists()
-                if (!r.refused) compose.onNodeWithText(r.crux).assertExists()
+                // The fixture translation stands in for the original in the other language.
+                if (!r.refused) compose.onNodeWithText(sampleView(outcome, lang).result.crux).assertExists()
                 compose.onNodeWithText(VerdictDisplay.confidenceText(r.confidence, s)).assertExists()
                 if (outcome.nameMap.isNotEmpty()) {
                     // The labels never fall back to "Party A/B" when a name map exists.

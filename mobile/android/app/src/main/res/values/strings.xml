@@ -3,12 +3,12 @@
 <resources>
     <string name="hero_title_line1">Who\'s right?</string>
     <string name="hero_title_line2">Settle it.</string>
-    <string name="hero_eyebrow">Three independent judges · Names stay anonymous</string>
+    <string name="hero_eyebrow">Three independent judges · Judges never see names</string>
     <string name="hero_lead">Tell us what the fight is about. Three AI judges each make the call on their own, and the confidence score shows how much they agree.</string>
     <string name="input_label">The argument</string>
     <string name="placeholder">What happened? Who says what, and why?\n\nPut the other person\'s side the way they\'d say it. The judges build the strongest case for both sides either way.</string>
     <string name="get_verdict">Get the verdict</string>
-    <string name="privacy_note">We swap names for Party A and Party B before judging. The judges never know who\'s who, and only the anonymous version gets saved.</string>
+    <string name="privacy_note">We swap names for Party A and Party B before judging, so the judges never know who\'s who.</string>
     <string name="judge_by">Judge by</string>
     <string name="fine_tune">Fine-tune ▸</string>
     <string name="hide_fine_tune">Hide fine-tuning</string>
