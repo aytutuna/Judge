@@ -10,7 +10,7 @@ const NBSP = " ";
  * headings of three to `maxWords` words (default 6). Longer text is left to
  * `text-wrap: balance`, where a forced pair could overflow narrow screens;
  * so are two-word headings, where binding the only space would make the
- * whole heading one unbreakable token ("Settle hakkında" at 320px).
+ * whole heading one unbreakable token ("Judge hakkında" at 320px).
  */
 export function noOrphan(text: string, maxWords = 6): string {
   const words = text.trim().split(/\s+/).filter(Boolean);

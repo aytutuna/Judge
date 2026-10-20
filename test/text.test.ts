@@ -28,7 +28,7 @@ describe("noOrphan", () => {
   });
 
   it("leaves two-word headings breakable (one NBSP would make them a single token)", () => {
-    expect(noOrphan("Settle hakkında")).toBe("Settle hakkında");
+    expect(noOrphan("Judge hakkında")).toBe("Judge hakkında");
     expect(noOrphan("Who's right?")).toBe("Who's right?");
     expect(noOrphan("Settle  it")).toBe("Settle  it");
   });

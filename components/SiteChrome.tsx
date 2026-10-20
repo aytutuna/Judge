@@ -40,7 +40,7 @@ export function SiteHeader({
         <div className={`wrap ${styles.navInner}`}>
           <Link href="/" aria-label={t(lang, "nav.home")} className={styles.brand}>
             <BrandMark size={28} />
-            Settle
+            Judge
           </Link>
           <div className={styles.navRight}>
             {howLink ? (
@@ -69,7 +69,7 @@ export function SiteFooter({ lang, toggle = false }: { lang: Lang; toggle?: bool
         <div className={styles.footBrand}>
           <Link href="/" className={styles.brand}>
             <BrandMark size={28} />
-            Settle
+            Judge
           </Link>
           <p className={styles.note}>{t(lang, "footer.note")}</p>
         </div>

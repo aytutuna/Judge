@@ -158,7 +158,7 @@ function buildOptions(env: Env, secret: string, client: Awaited<ReturnType<typeo
   }
 
   const options: BetterAuthOptions = {
-    appName: "Settle",
+    appName: "Judge",
     basePath: "/api/auth",
     secret,
     // Outside production without a configured origin, follow the local host

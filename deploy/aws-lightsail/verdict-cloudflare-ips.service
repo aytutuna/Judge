@@ -1,0 +1,20 @@
+# Refreshes Caddy's list of Cloudflare addresses (and, with
+# FIREWALL_CLOUDFLARE_ONLY=1, the matching ufw rules); started by
+# verdict-cloudflare-ips.timer. Installed to /etc/systemd/system/ by
+# update.sh only while CLOUDFLARE_PROXY=1; edits there are overwritten.
+#
+# Runs as root from the root-owned checkout (never from /opt/verdict/current,
+# which the app user can write): it writes /etc/caddy, reloads Caddy and
+# changes firewall rules.
+
+[Unit]
+Description=Refresh the Cloudflare address ranges for Verdict
+Wants=network-online.target
+After=network-online.target caddy.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/bash /opt/verdict/repo/deploy/aws-lightsail/cloudflare-ips.sh
+NoNewPrivileges=true
+PrivateTmp=true
+UMask=0022

@@ -149,7 +149,7 @@ const en = {
   "refused.bestPoint": "Try putting it another way. Or accept that some fights are too big for an app.",
   "refused.claim": "Skipped",
   "nav.skip": "Skip to content",
-  "nav.home": "Settle home page",
+  "nav.home": "Judge home page",
   "nav.how": "How it works",
   "nav.primary": "Main",
   "examples.label": "Stuck? Try one of these:",
@@ -219,7 +219,7 @@ const en = {
     "Then it'll tell you: “It depends on your values” or “Same word, different meanings”. You still see which way the judges lean, clearly marked as a forced ruling.",
   "faq.legal.q": "Is this legal advice?",
   "faq.legal.a":
-    "No. Settle is for fun and for thinking a bit more clearly about everyday spats. For anything legal, medical or financial, talk to a qualified human.",
+    "No. Judge is for fun and for thinking a bit more clearly about everyday spats. For anything legal, medical or financial, talk to a qualified human.",
   "footer.about": "About",
   "footer.privacy": "Privacy",
   "footer.home": "Settle an argument",
@@ -229,10 +229,10 @@ const en = {
   "shared.ctaLead": "Got an argument of your own?",
   "notFound.title": "This verdict has left the courtroom",
   "notFound.body": "Maybe the link has a typo, or the verdict is gone.",
-  "about.title": "About Settle",
+  "about.title": "About Judge",
   "about.kicker": "How we judge",
   "about.lead":
-    "Settle is a small, opinionated referee for everyday arguments. Tell it what you're fighting about and it'll say who's right. Or, just as handy, why nobody is.",
+    "Judge is a small, opinionated referee for everyday arguments. Tell it what you're fighting about and it'll say who's right. Or, just as handy, why nobody is.",
   "about.methodTitle": "The method",
   "about.honestTitle": "Honest labels",
   "about.honest":
@@ -247,7 +247,7 @@ const en = {
   "about.limit4": "It's for fun and clarity, not legal, medical or financial advice.",
   "about.builtTitle": "Under the hood",
   "about.built":
-    "Settle runs on Anthropic's Claude. Three judges work in parallel and more join on a close call. How much they agree sets the confidence score, and a winning factual ruling faces its own cross-examination before it stands.",
+    "Judge runs on Anthropic's Claude. Three judges work in parallel and more join on a close call. How much they agree sets the confidence score, and a winning factual ruling faces its own cross-examination before it stands.",
   "privacy.title": "Privacy",
   "privacy.kicker": "Your data",
   "privacy.lead": "Short version: accounts are optional, real names in your arguments are never kept, and we sell nothing.",
@@ -270,7 +270,7 @@ const en = {
   "privacy.contact": "Got a question, or want a verdict taken down? Email {email} with the link.",
   "privacy.accountsTitle": "Accounts (optional)",
   "privacy.accounts":
-    "You only need an account for Premium. If you sign in with Apple or Google, we keep the email address, name and profile picture link they share with us, plus which sign-in method you used, and Apple or Google can see that you signed in to Settle. If you sign in with an email link, that email goes out through Resend, and we briefly keep a record with your email address to check the link: it stops working after 10 minutes and is deleted once used or soon after it expires. We also keep your session records (a random token and when it expires, with no IP address or device details), your credits, your plan and its history, and which premium verdicts used a credit (only the verdict's ID). Deleting your account on the account page removes all of that. Verdicts you shared stay up as anonymous links, since they never carried your name.",
+    "You only need an account for Premium. If you sign in with Apple or Google, we keep the email address, name and profile picture link they share with us, plus which sign-in method you used, and Apple or Google can see that you signed in to Judge. If you sign in with an email link, that email goes out through Resend, and we briefly keep a record with your email address to check the link: it stops working after 10 minutes and is deleted once used or soon after it expires. We also keep your session records (a random token and when it expires, with no IP address or device details), your credits, your plan and its history, and which premium verdicts used a credit (only the verdict's ID). Deleting your account on the account page removes all of that. Verdicts you shared stay up as anonymous links, since they never carried your name.",
   "privacy.webSearchTitle": "Premium: web search and questions",
   "privacy.webSearch":
     "A Premium verdict sends the anonymized argument to Anthropic with web search turned on. The model writes the search queries from that anonymized text, and the results come from Anthropic's search provider. The sources it used are shown on the verdict. Premium may first ask you up to two questions: to come up with them, your text as you typed it, names included, goes to Anthropic once more and isn't stored. Your answers are anonymized together with the argument before judging, and only that anonymized version is saved.",
@@ -538,7 +538,7 @@ const tr = {
   "refused.bestPoint": "Başka türlü anlatmayı dene. Ya da bazı kavgaların bir uygulamaya fazla geldiğini kabul et.",
   "refused.claim": "Atlandı",
   "nav.skip": "İçeriğe geç",
-  "nav.home": "Settle ana sayfası",
+  "nav.home": "Judge ana sayfası",
   "nav.how": "Nasıl çalışır",
   "nav.primary": "Ana menü",
   "examples.label": "Fikir mi lazım? Şunlardan birini dene:",
@@ -608,7 +608,7 @@ const tr = {
     "O zaman bunu söyler: “Değerlerine bağlı” ya da “Aynı kelime, farklı anlamlar”. Yargıçların hangi tarafa yattığını da gösterir, üstünde açıkça zorunlu hüküm olduğu yazar.",
   "faq.legal.q": "Bu hukuki tavsiye mi?",
   "faq.legal.a":
-    "Hayır. Settle eğlenmek ve gündelik atışmalara biraz daha net bakmak için. Hukuki, tıbbi ya da mali konularda işinin ehli birine danış.",
+    "Hayır. Judge eğlenmek ve gündelik atışmalara biraz daha net bakmak için. Hukuki, tıbbi ya da mali konularda işinin ehli birine danış.",
   "footer.about": "Hakkında",
   "footer.privacy": "Gizlilik",
   "footer.home": "Bir tartışma çözdür",
@@ -618,10 +618,10 @@ const tr = {
   "shared.ctaLead": "Senin de bir tartışman mı var?",
   "notFound.title": "Bu karar salonu çoktan terk etmiş",
   "notFound.body": "Bağlantıda bir yazım hatası olabilir ya da karar artık yok.",
-  "about.title": "Settle hakkında",
+  "about.title": "Judge hakkında",
   "about.kicker": "Nasıl karar veriyoruz",
   "about.lead":
-    "Settle, gündelik kavgalar için küçük ve lafını esirgemeyen bir hakem. Neyi tartıştığını anlat, kimin haklı olduğunu söylesin. Bazen de kimsenin neden haklı olmadığını söyler, bu da en az o kadar işe yarar.",
+    "Judge, gündelik kavgalar için küçük ve lafını esirgemeyen bir hakem. Neyi tartıştığını anlat, kimin haklı olduğunu söylesin. Bazen de kimsenin neden haklı olmadığını söyler, bu da en az o kadar işe yarar.",
   "about.methodTitle": "Yöntem",
   "about.honestTitle": "Dürüst etiketler",
   "about.honest":
@@ -636,7 +636,7 @@ const tr = {
   "about.limit4": "Eğlence ve netlik için. Hukuki, tıbbi ya da mali tavsiye değil.",
   "about.builtTitle": "Perde arkası",
   "about.built":
-    "Settle, Anthropic'in Claude modeliyle çalışır. Üç yargıç aynı anda karar verir, oylar başa başsa ek yargıçlar da katılır. Ne kadar anlaştıkları güven puanını belirler. Kazanan olgusal bir hüküm de kesinleşmeden önce ayrı bir çapraz sorgudan geçer.",
+    "Judge, Anthropic'in Claude modeliyle çalışır. Üç yargıç aynı anda karar verir, oylar başa başsa ek yargıçlar da katılır. Ne kadar anlaştıkları güven puanını belirler. Kazanan olgusal bir hüküm de kesinleşmeden önce ayrı bir çapraz sorgudan geçer.",
   "privacy.title": "Gizlilik",
   "privacy.kicker": "Verilerin",
   "privacy.lead": "Kısacası: hesap isteğe bağlı, tartışmalarındaki gerçek isimleri hiç saklamıyoruz, hiçbir şey de satmıyoruz.",
@@ -660,7 +660,7 @@ const tr = {
     "Soracağın bir şey mi var ya da bir kararı kaldırmamızı mı istiyorsun? Bağlantıyı ekleyip {email} adresine yaz.",
   "privacy.accountsTitle": "Hesaplar (isteğe bağlı)",
   "privacy.accounts":
-    "Hesap sadece Premium için gerekir. Apple ya da Google ile giriş yaparsan bizimle paylaştıkları e-posta adresini, adını ve profil fotoğrafı bağlantını, bir de hangi yolla giriş yaptığını saklarız. Apple ya da Google da Settle'a giriş yaptığını görebilir. E-posta bağlantısıyla giriş yaparsan o e-posta Resend üzerinden gönderilir, bağlantıyı doğrulamak için de e-posta adresinle kısa süreli bir kayıt tutarız: bağlantı 10 dakika sonra geçersiz olur, kayıt da kullanılınca ya da süresi dolduktan kısa süre sonra silinir. Ayrıca oturum kayıtlarını (rastgele bir anahtar ve bitiş tarihi; IP adresi ya da cihaz bilgisi yok), kredilerini, planını ve geçmişini, bir de hangi premium kararların kredi kullandığını (sadece kararın kimliği) saklarız. Hesap sayfasından hesabını silersen bunların hepsi silinir. Paylaştığın kararlar anonim bağlantılar olarak kalır, çünkü hiçbirinde adın yoktu.",
+    "Hesap sadece Premium için gerekir. Apple ya da Google ile giriş yaparsan bizimle paylaştıkları e-posta adresini, adını ve profil fotoğrafı bağlantını, bir de hangi yolla giriş yaptığını saklarız. Apple ya da Google da Judge'a giriş yaptığını görebilir. E-posta bağlantısıyla giriş yaparsan o e-posta Resend üzerinden gönderilir, bağlantıyı doğrulamak için de e-posta adresinle kısa süreli bir kayıt tutarız: bağlantı 10 dakika sonra geçersiz olur, kayıt da kullanılınca ya da süresi dolduktan kısa süre sonra silinir. Ayrıca oturum kayıtlarını (rastgele bir anahtar ve bitiş tarihi; IP adresi ya da cihaz bilgisi yok), kredilerini, planını ve geçmişini, bir de hangi premium kararların kredi kullandığını (sadece kararın kimliği) saklarız. Hesap sayfasından hesabını silersen bunların hepsi silinir. Paylaştığın kararlar anonim bağlantılar olarak kalır, çünkü hiçbirinde adın yoktu.",
   "privacy.webSearchTitle": "Premium: internet araması ve sorular",
   "privacy.webSearch":
     "Premium bir karar, anonim tartışmayı internet araması açık olarak Anthropic'e gönderir. Arama sorgularını model bu anonim metinden yazar, sonuçlar da Anthropic'in arama sağlayıcısından gelir. Kullanılan kaynaklar kararda gösterilir. Premium önce sana en fazla iki soru sorabilir: bu soruları bulmak için yazdığın metin, isimler dahil, bir kez daha Anthropic'e gider ve saklanmaz. Cevapların yargılamadan önce tartışmayla birlikte anonimleştirilir ve yalnızca bu anonim hâli kaydedilir.",

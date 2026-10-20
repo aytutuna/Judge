@@ -20,6 +20,17 @@
 # write. The git checkout in /opt/verdict/repo (and this script in it) is
 # owned by root; the systemd units and the Caddyfile are copied from there,
 # never from the release directory the build ran in.
+#
+# Web server settings in /etc/verdict/verdict.env (all optional; after a
+# change run sudo verdict-update --force):
+#   SITE_ALIASES       other names of the site, e.g. www.example.org; each
+#                      redirects to the address in NEXT_PUBLIC_SITE_URL
+#   LEGACY_HOSTS       old addresses that redirect the same way, e.g. the
+#                      sslip.io name (only while visitors can reach this
+#                      server directly, not with FIREWALL_CLOUDFLARE_ONLY=1)
+#   CLOUDFLARE_PROXY=1 the site is behind Cloudflare's proxy: trust
+#                      Cloudflare (and only Cloudflare) to name the visitor,
+#                      and refresh its address list weekly (cloudflare-ips.sh)
 set -euo pipefail
 
 APP_USER=verdict
@@ -33,6 +44,9 @@ DEPLOY_SRC=$REPO_DIR/deploy/aws-lightsail
 BUILD_HOME=/var/cache/verdict-build
 CADDYFILE=/etc/caddy/Caddyfile
 UNITS=(verdict.service verdict-backup.service verdict-backup.timer)
+# Installed only while CLOUDFLARE_PROXY=1.
+CF_UNITS=(verdict-cloudflare-ips.service verdict-cloudflare-ips.timer)
+CF_SNIPPET=/etc/caddy/cloudflare-ips.caddy
 HEALTH_URL=http://127.0.0.1:3000/api/health
 HEALTH_TIMEOUT_SEC=120
 KEEP_RELEASES=3
@@ -85,6 +99,52 @@ site_host() {
   printf '%s' "$host"
 }
 
+# True if CLOUDFLARE_PROXY is on in the env file.
+cloudflare_proxy() {
+  local value
+  value=$(env_value CLOUDFLARE_PROXY)
+  case ${value,,} in
+    1 | true | yes | on) return 0 ;;
+    "" | 0 | false | no | off) return 1 ;;
+    *) die "CLOUDFLARE_PROXY in $ENV_FILE must be 1 (on) or 0 (off), got '$value'." ;;
+  esac
+}
+
+# True if ufw is on with cloudflare-ips.sh's rules, i.e. only Cloudflare can
+# reach ports 80 and 443.
+cloudflare_firewall_on() {
+  local status
+  command -v ufw >/dev/null || return 1
+  status=$(ufw status 2>/dev/null) || return 1
+  [[ $status == "Status: active"* && $status == *verdict-cloudflare* ]]
+}
+
+# Prints the host names in setting $1 (separated by spaces or commas), one
+# per line, skipping the main host $2 and the names in $3 (one per line).
+redirect_hosts() {
+  local name=$1 main=$2 seen=$3 raw host
+  local -a hosts
+  raw=$(env_value "$name")
+  IFS=', ' read -r -a hosts <<<"$raw"
+  for host in "${hosts[@]}"; do
+    [[ -n $host ]] || continue
+    host=${host,,}
+    host=${host#https://}
+    host=${host#http://}
+    host=${host%%/*}
+    [[ $host =~ ^([a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,63}$ ]] ||
+      die "$name in $ENV_FILE must list host names such as www.example.org, got '$host'."
+    if [[ $host == "$main" ]] || grep -qxF -- "$host" <<<"$seen"; then continue; fi
+    seen+=$'\n'$host
+    printf '%s\n' "$host"
+  done
+}
+
+# Prints a site block that sends host $1 to https://$2, keeping the path.
+redirect_block() {
+  printf '%s {\n\tredir https://%s{uri} permanent\n}\n' "$1" "$2"
+}
+
 # The env file values the build may see: the ones baked into the pages.
 # Secrets (ANTHROPIC_API_KEY, RATE_LIMIT_SALT, TURNSTILE_SECRET_KEY, ...) are
 # only read at run time, by systemd, and never reach npm or its packages.
@@ -135,29 +195,69 @@ switch_to() {
 }
 
 # Copies changed systemd units from the root-owned checkout into
-# /etc/systemd/system.
+# /etc/systemd/system. The Cloudflare refresh timer is installed only while
+# CLOUDFLARE_PROXY=1, and removed again when it is switched off.
 install_units() {
-  local src=$DEPLOY_SRC changed=0 unit
-  for unit in "${UNITS[@]}"; do
+  local src=$DEPLOY_SRC changed=0 proxy=0 unit
+  local -a units=("${UNITS[@]}")
+  if cloudflare_proxy; then
+    proxy=1
+    units+=("${CF_UNITS[@]}")
+  fi
+  for unit in "${units[@]}"; do
     if ! cmp -s "$src/$unit" "/etc/systemd/system/$unit"; then
       install -m 644 -o root -g root "$src/$unit" "/etc/systemd/system/$unit"
       info "Installed $unit"
       changed=1
     fi
   done
+  if ((!proxy)); then
+    for unit in "${CF_UNITS[@]}"; do
+      if [[ -f /etc/systemd/system/$unit ]]; then
+        systemctl disable --now --quiet "$unit" 2>/dev/null || true
+        rm -f -- "/etc/systemd/system/$unit"
+        info "Removed $unit (CLOUDFLARE_PROXY is off)"
+        changed=1
+      fi
+    done
+  fi
   if ((changed)); then systemctl daemon-reload; fi
   systemctl enable --quiet verdict.service
   systemctl enable --now --quiet verdict-backup.timer
+  if ((proxy)); then systemctl enable --now --quiet verdict-cloudflare-ips.timer; fi
+}
+
+# Prints the Caddyfile for this site: the template with its #?proxy or
+# #?direct lines picked, then a redirect block for each extra host name.
+caddyfile_text() {
+  local host proxy=0 aliases legacy name
+  host=$(site_host)
+  if cloudflare_proxy; then proxy=1; fi
+  aliases=$(redirect_hosts SITE_ALIASES "$host" "")
+  legacy=$(redirect_hosts LEGACY_HOSTS "$host" "$aliases")
+  # Comment lines keep the placeholder name, so the header still explains it.
+  if ((proxy)); then
+    sed -e '/^#%/d' -e '/^#?direct/d' -e 's/^#?proxy \{0,1\}//' "$DEPLOY_SRC/Caddyfile"
+  else
+    sed -e '/^#%/d' -e '/^#?proxy/d' -e 's/^#?direct \{0,1\}//' "$DEPLOY_SRC/Caddyfile"
+  fi | sed "/^[[:space:]]*#/!s/__SITE_ADDRESS__/$host/g"
+  if [[ -n $aliases ]]; then
+    printf '\n# Other names of this site (SITE_ALIASES in %s).\n' "$ENV_FILE"
+    while IFS= read -r name; do redirect_block "$name" "$host"; done <<<"$aliases"
+  fi
+  if [[ -n $legacy ]]; then
+    printf '\n# Old addresses of this site (LEGACY_HOSTS in %s). They only work\n' "$ENV_FILE"
+    printf '# while visitors can reach this server directly, without Cloudflare.\n'
+    while IFS= read -r name; do redirect_block "$name" "$host"; done <<<"$legacy"
+  fi
 }
 
 # Renders the Caddyfile template for this site into $1 and validates it.
 # Runs before the build, so a bad config stops the deploy before anything
 # is installed.
 render_caddyfile() {
-  local out=$1 host
-  host=$(site_host)
-  # Comment lines keep the placeholder name, so the header still explains it.
-  sed "/^[[:space:]]*#/!s/__SITE_ADDRESS__/$host/g" "$DEPLOY_SRC/Caddyfile" >"$out"
+  local out=$1
+  caddyfile_text >"$out"
   if ! caddy validate --adapter caddyfile --config "$out" >/dev/null 2>&1; then
     caddy validate --adapter caddyfile --config "$out" || true
     die "The rendered Caddyfile is invalid (see above). Nothing was changed."
@@ -187,7 +287,7 @@ install_caddyfile() {
 # can put them back. A file that does not exist yet is simply not saved.
 save_config() {
   local dir=$1 unit
-  for unit in "${UNITS[@]}"; do
+  for unit in "${UNITS[@]}" "${CF_UNITS[@]}"; do
     if [[ -f /etc/systemd/system/$unit ]]; then cp -p "/etc/systemd/system/$unit" "$dir/$unit"; fi
   done
   if [[ -f $CADDYFILE ]]; then cp -p "$CADDYFILE" "$dir/Caddyfile"; fi
@@ -196,14 +296,26 @@ save_config() {
 # Puts back what save_config saved in $1.
 restore_config() {
   local dir=$1 unit changed=0
-  for unit in "${UNITS[@]}"; do
+  for unit in "${UNITS[@]}" "${CF_UNITS[@]}"; do
     if [[ -f $dir/$unit ]] && ! cmp -s "$dir/$unit" "/etc/systemd/system/$unit"; then
       install -m 644 -o root -g root "$dir/$unit" "/etc/systemd/system/$unit"
       info "Restored the previous $unit"
       changed=1
     fi
   done
+  # Cloudflare units the failed deploy installed for the first time.
+  for unit in "${CF_UNITS[@]}"; do
+    if [[ ! -f $dir/$unit && -f /etc/systemd/system/$unit ]]; then
+      systemctl disable --now --quiet "$unit" 2>/dev/null || true
+      rm -f -- "/etc/systemd/system/$unit"
+      info "Removed $unit (installed by the failed deploy)"
+      changed=1
+    fi
+  done
   if ((changed)); then systemctl daemon-reload; fi
+  if [[ -f $dir/verdict-cloudflare-ips.timer ]]; then
+    systemctl enable --now --quiet verdict-cloudflare-ips.timer || true
+  fi
   if [[ -f $dir/Caddyfile ]] && ! cmp -s "$dir/Caddyfile" "$CADDYFILE"; then
     install -m 644 -o root -g root "$dir/Caddyfile" "$CADDYFILE"
     info "Restored the previous Caddyfile"
@@ -290,10 +402,22 @@ main() {
   fi
 
   log "Checking the web server config"
+  if ! cloudflare_proxy && cloudflare_firewall_on; then
+    die "CLOUDFLARE_PROXY is off in $ENV_FILE, but ufw is on and lets only Cloudflare reach ports 80 and 443, so without Cloudflare's proxy nobody could reach the site. Turn the firewall off first (sudo ufw disable, and set FIREWALL_CLOUDFLARE_ONLY= empty), or set CLOUDFLARE_PROXY=1 again. Nothing was changed."
+  fi
   local workdir
   workdir=$(mktemp -d)
   # shellcheck disable=SC2064 # expand $workdir now
   trap "rm -rf -- '$workdir'" EXIT
+  if cloudflare_proxy; then
+    # The Caddyfile imports this list, so it must exist before validation.
+    # A changed list is loaded into the running Caddy right away (if its
+    # current Caddyfile imports it), so it is in use even if the build fails.
+    if ! bash "$DEPLOY_SRC/cloudflare-ips.sh" --no-firewall; then
+      [[ -f $CF_SNIPPET ]] || die "CLOUDFLARE_PROXY=1 needs Cloudflare's address list, and it could not be fetched (see above)."
+      info "Using the previous Cloudflare address list."
+    fi
+  fi
   render_caddyfile "$workdir/Caddyfile.new"
   info "OK"
 

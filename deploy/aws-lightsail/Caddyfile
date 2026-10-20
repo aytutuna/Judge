@@ -5,7 +5,28 @@
 #
 # Caddy obtains and renews the HTTPS certificate on its own (Let's Encrypt,
 # with ZeroSSL as fallback) and redirects http:// to https://.
-
+#% Template notes; update.sh never copies lines that start with #%.
+#% - A line that starts with #?proxy is copied, without that marker, only
+#%   when verdict.env sets CLOUDFLARE_PROXY=1; a line that starts with
+#%   #?direct only when it does not. All other lines are always copied.
+#% - update.sh appends a redirect block for each host in SITE_ALIASES and
+#%   LEGACY_HOSTS after the main site block.
+#% - The blank line below is #?direct because caddy fmt wants no blank line
+#%   between these comments and the global options block.
+#?direct
+#?proxy {
+#?proxy 	# Cloudflare's proxy is in front of this server (CLOUDFLARE_PROXY=1).
+#?proxy 	# A request whose connection comes from one of Cloudflare's addresses
+#?proxy 	# (the imported file, refreshed weekly by cloudflare-ips.sh) is
+#?proxy 	# trusted to name the visitor in its CF-Connecting-IP header. From any
+#?proxy 	# other address that header is ignored and the connecting address is
+#?proxy 	# the visitor.
+#?proxy 	servers {
+#?proxy 		import /etc/caddy/cloudflare-ips.caddy
+#?proxy 		client_ip_headers CF-Connecting-IP
+#?proxy 	}
+#?proxy }
+#?proxy
 __SITE_ADDRESS__ {
 	encode zstd gzip
 
@@ -22,7 +43,16 @@ __SITE_ADDRESS__ {
 		# The app rate-limits by the first X-Forwarded-For entry. Replace
 		# whatever the visitor sent with the address Caddy actually sees, so
 		# nobody can pick their own rate-limit identity.
-		header_up X-Forwarded-For {remote_host}
+#?direct		header_up X-Forwarded-For {remote_host}
+#?proxy		# Behind Cloudflare that is {client_ip}: CF-Connecting-IP when the
+#?proxy		# connection comes from Cloudflare, else the connecting address.
+#?proxy		header_up X-Forwarded-For {client_ip}
+#?proxy		# Caddy keeps X-Forwarded-Host from a trusted proxy, and Cloudflare
+#?proxy		# passes on whatever the visitor sent; set it from the real Host,
+#?proxy		# as Caddy does without the proxy. CF-Connecting-IP has done its
+#?proxy		# job above, so the app never sees an unchecked copy of it.
+#?proxy		header_up X-Forwarded-Host {hostport}
+#?proxy		header_up -CF-Connecting-IP
 		header_up -X-Real-IP
 	}
 }

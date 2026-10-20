@@ -3,9 +3,9 @@
  * only treats convention file names (page, layout, route, ...) as routable.
  */
 
-export const SITE_NAME = "Settle";
+export const SITE_NAME = "Judge";
 
-export const SITE_TITLE = "Settle: who's right?";
+export const SITE_TITLE = "Judge: who's right?";
 
 export const SITE_DESCRIPTION =
   "Describe an argument. Three independent AI judges find the crux and rule, with an honest confidence score, the strongest point for the other side, and a link to share.";
