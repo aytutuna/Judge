@@ -142,7 +142,7 @@
     <string name="privacy_link">Yazdıklarına ne oluyor?</string>
     <string name="footer_about">Hakkında</string>
     <string name="footer_privacy">Gizlilik</string>
-    <string name="footer_note">Eğlence ve netlik için, hukuki tavsiye değil. Anthropic\'in Claude modeliyle çalışır.</string>
+    <string name="footer_note">Eğlence ve netlik için, hukuki tavsiye değil.</string>
     <string name="footer_language">Dil</string>
     <string name="not_found_title">Bu karar salonu çoktan terk etmiş</string>
     <string name="not_found_body">Bağlantıda bir yazım hatası olabilir ya da karar artık yok.</string>

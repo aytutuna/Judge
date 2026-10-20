@@ -1664,13 +1664,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "For fun and clarity, not legal advice. Runs on Anthropic's Claude."
+            "value" : "For fun and clarity, not legal advice."
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Eğlence ve netlik için, hukuki tavsiye değil. Anthropic'in Claude modeliyle çalışır."
+            "value" : "Eğlence ve netlik için, hukuki tavsiye değil."
           }
         }
       }
