@@ -318,7 +318,7 @@ describe("entitlements: grants and store events", () => {
       ...base,
     });
     let e = await ent.getEntitlement(u);
-    expect(e.subscription).toMatchObject({ willRenew: true, cap: 200, used: 0, periodEnd: end.toISOString() });
+    expect(e.subscription).toMatchObject({ willRenew: true, cap: 60, used: 0, periodEnd: end.toISOString() });
 
     await ent.applyStoreEvent({ type: "subscription_will_not_renew", eventId: "e2", ...base });
     e = await ent.getEntitlement(u);

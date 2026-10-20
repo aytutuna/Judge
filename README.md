@@ -220,10 +220,11 @@ about $0.005.
 At a 30% cut one credit nets about $0.139 (10 for $1.99) or $0.116 (30 for
 $4.99): enough at the typical cost, though a verdict at the code ceiling
 costs about 3 credits. The monthly plan nets about $3.49 to $4.24 of its
-$4.99: at the current cap of 200 a heavy user costs $6.20 to $10.40, and
-even a cap of 60 costs about $3.12 at $0.052 a verdict, leaving almost
-nothing. Before selling it, lower the cap (`PRICING.monthly.fairUseCap` in
-`lib/pricing.ts`), raise the price, or lower the per-verdict ceiling (for
+$4.99: at the current cap of 60 a heavy user costs about $2.40 at the
+measured average ($0.039) and about $3.12 at $0.052 a verdict, which still
+leaves a margin after a 15% store cut but little after 30%. To widen it,
+lower the cap (`PRICING.monthly.fairUseCap` in `lib/pricing.ts`), raise the
+price, or lower the per-verdict ceiling (for
 example a smaller `max_tokens` for the Sonnet judge calls, whose measured
 output is 500 to 800 tokens; not done yet).
 

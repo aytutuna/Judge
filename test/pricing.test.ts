@@ -11,7 +11,7 @@ describe("pricing config", () => {
       { id: "pack_10", credits: 10, priceUsd: 1.99 },
       { id: "pack_30", credits: 30, priceUsd: 4.99 },
     ]);
-    expect(PRICING.monthly).toEqual({ id: "monthly", priceUsd: 4.99, fairUseCap: 200, periodDays: 30 });
+    expect(PRICING.monthly).toEqual({ id: "monthly", priceUsd: 4.99, fairUseCap: 60, periodDays: 30 });
   });
 
   it("packById finds packs and nothing else", () => {

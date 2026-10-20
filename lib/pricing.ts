@@ -17,7 +17,7 @@ export const PRICING: PricingInfo & { packs: readonly PricingPack[] } = {
     { id: "pack_30", credits: 30, priceUsd: 4.99 },
   ],
   // One premium verdict = one credit; the monthly plan is fair-use capped.
-  monthly: { id: "monthly", priceUsd: 4.99, fairUseCap: 200, periodDays: 30 },
+  monthly: { id: "monthly", priceUsd: 4.99, fairUseCap: 60, periodDays: 30 },
 };
 
 /**
