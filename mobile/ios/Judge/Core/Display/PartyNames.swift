@@ -14,7 +14,7 @@ struct PartyNames: Sendable, Equatable {
 
 /// Port of the label half of lib/names.ts: canonicalLabel, bareName,
 /// resolveParties and partyNames. Putting real names back into the verdict
-/// text (personalizeResult) is phase 1.5.
+/// text (restoreNames, personalizeResult) lives in RestoreNames.swift.
 enum Names {
     /// Turkish first-person forms, compared after Turkish lowercasing.
     static let trSelf: Set<String> = [

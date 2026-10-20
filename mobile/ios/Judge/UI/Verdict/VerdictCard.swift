@@ -9,6 +9,9 @@ import UIKit
 struct VerdictCard: View {
     let result: VerdictResult
     let parties: PartyNames
+    /// Real names restored into the text: a conditional clause opening with
+    /// one keeps its capital.
+    var restoredNames: [String] = []
     let lang: AppLang
     let status: TranslationStatus
     let shareURL: URL
@@ -210,7 +213,7 @@ struct VerdictCard: View {
                 }
             }
         } else if result.verdict == .conditional, let items = result.conditional, !items.isEmpty {
-            let keep = [parties.aIsSelf ? "" : parties.nameA, parties.bIsSelf ? "" : parties.nameB]
+            let keep = [parties.aIsSelf ? "" : parties.nameA, parties.bIsSelf ? "" : parties.nameB] + restoredNames
             VStack(spacing: 8) {
                 ForEach(Array(items.enumerated()), id: \.offset) { _, branch in
                     let clause = ConditionalClause.format(branch.ifValue, lang: lang, keep: keep)

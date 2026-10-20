@@ -36,13 +36,17 @@ private struct VerdictScreenContent: View {
         let lang = app.lang
         let session = model.session
         let view = model.view(for: lang)
-        let parties = Names.partyNames(session.nameMap, lang: lang, selfLang: session.sourceLang)
-        let result = view.result
+        let selfLang = session.sourceLang
+        let parties = Names.partyNames(session.nameMap, lang: lang, selfLang: selfLang)
+        // Real names go back into the shown text only; the session, history
+        // and share subject keep the anonymized text.
+        let result = Names.personalizeResult(view.result, nameMap: session.nameMap, selfLang: selfLang)
         ScrollView {
             VStack(spacing: 28) {
                 VerdictCard(
                     result: result,
                     parties: parties,
+                    restoredNames: Names.restoredNames(session.nameMap, selfLang: selfLang),
                     lang: lang,
                     status: view.status,
                     shareURL: app.config.shareURL(id: session.id),

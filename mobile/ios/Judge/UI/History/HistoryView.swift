@@ -81,7 +81,12 @@ private struct HistoryRow: View {
     let lang: AppLang
 
     var body: some View {
-        let parties = Names.partyNames(row.nameMap, lang: lang, selfLang: row.contentLang)
+        let nameMap = row.nameMap
+        let selfLang = row.contentLang
+        let parties = Names.partyNames(nameMap, lang: lang, selfLang: selfLang)
+        // Display-only: the stored headline stays anonymized. It is the
+        // original's, so it is written in the language it was judged in.
+        let headline = Names.restoreNames(row.headline, parties: Names.resolveParties(nameMap, selfLang: selfLang), textLang: selfLang)
         let verdict = row.finalVerdict
         HStack(alignment: .top, spacing: 12) {
             Circle()
@@ -93,7 +98,7 @@ private struct HistoryRow: View {
                 Text(VerdictDisplay.label(verdict, parties: parties, lang: lang))
                     .brandText(.slotTitle)
                     .foregroundStyle(Brand.ink)
-                Text(row.headline)
+                Text(headline)
                     .brandText(.slotText)
                     .foregroundStyle(Brand.ink2)
                     .lineLimit(2)
