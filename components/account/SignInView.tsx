@@ -223,12 +223,13 @@ export function SignInPanel({
         </div>
       ) : null}
 
+      <p className={styles.small}>{t(lang, "signin.ai")}</p>
       <p className={styles.small}>
         {t(lang, "signin.legal")}{" "}
         <Link href="/privacy" className={styles.link}>
-          {t(lang, "footer.privacy")}
+          {t(lang, "signin.legalLink")}
         </Link>
-        .
+        {t(lang, "signin.legalAfter")}
       </p>
     </div>
   );
