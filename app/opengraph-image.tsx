@@ -2,7 +2,7 @@ import { ImageResponse } from "next/og";
 import { OG_SIZE, OgCard, ogFonts } from "@/components/OgCard";
 import { t } from "@/lib/i18n";
 
-export const alt = "Verdict: who's right? Settle it.";
+export const alt = "Settle: who's right?";
 export const size = OG_SIZE;
 export const contentType = "image/png";
 

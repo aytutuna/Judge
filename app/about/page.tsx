@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { InfoPage } from "@/components/InfoPage";
 import { SITE_NAME, SITE_OG_IMAGE } from "../site";
 
-const title = "About Verdict";
+const title = "About Settle";
 const description =
-  "What Verdict is, how it judges an argument (steelman, crux, three independent judges, cross-examination) and where its limits are.";
+  "What Settle is, how it judges an argument (steelman, crux, three independent judges, cross-examination) and where its limits are.";
 
 export const metadata: Metadata = {
   title: "About",

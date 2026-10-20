@@ -127,7 +127,7 @@ export async function POST(req: Request): Promise<NextResponse> {
     return NextResponse.json(
       {
         error: daily
-          ? "Verdict has used today's capacity — try again tomorrow."
+          ? "Settle has used today's capacity — try again tomorrow."
           : "Too many verdicts from you — take a breather and try again later.",
         code: limit.code,
         retryAfterSec: limit.retryAfterSec,

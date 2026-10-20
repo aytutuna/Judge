@@ -30,7 +30,7 @@ export default async function Image({ params }: { params: Promise<{ id: string }
     return new ImageResponse(
       (
         <OgCard
-          eyebrow="Verdict"
+          eyebrow="Three independent AI judges"
           title={t("en", "hero.titleLine1")}
           titleSerif={t("en", "hero.titleLine2")}
           footer="Settle your own argument"

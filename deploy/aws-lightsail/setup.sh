@@ -394,7 +394,7 @@ TURNSTILE_SECRET_KEY=
 # APPLE_KEY_ID=
 # APPLE_PRIVATE_KEY_BASE64=
 # RESEND_API_KEY=
-# EMAIL_FROM=Verdict <signin@your.domain>
+# EMAIL_FROM=Settle <signin@your.domain>
 # PREMIUM_DAILY_CAP=500
 EOF
     chmod 600 "$tmp"

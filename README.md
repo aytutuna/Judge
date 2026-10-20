@@ -1,15 +1,17 @@
-# ⚖️ Verdict
+# ⚖️ Settle
+
+> The product is called Settle. Internal names (repo, `/opt/verdict`, `verdict.service`, `verdict-update`, the `/api/verdict` route, database paths) keep "verdict".
 
 Tell it the argument. It digs to bedrock and rules.
 
-Verdict is a mobile-first web app that settles arguments: one person describes a
+Settle is a mobile-first web app that settles arguments: one person describes a
 disagreement, and an AI judge steelmans both sides, maps each side's claims down
 to its **bedrock** premise, finds the **crux** — the one point the fight is
 actually about — and renders a verdict.
 
 ## Honest verdicts, always labeled
 
-Verdict never launders an opinion through a confident interface. Every ruling
+Settle never launders an opinion through a confident interface. Every ruling
 carries an explicit type:
 
 | Verdict | When |
@@ -161,7 +163,7 @@ after sign-in.
 | `APPLE_TEAM_ID`, `APPLE_KEY_ID` | *(empty)* | Your 10-character Apple team id, and the key id of the Sign in with Apple key |
 | `APPLE_PRIVATE_KEY_BASE64` | *(empty)* | The whole `AuthKey_<KEYID>.p8` file, base64-encoded on one line (`base64 -w0 AuthKey_XXXX.p8`). The app signs Apple's client secret from it and renews it on its own. All four Apple values set = the Apple button works |
 | `APPLE_APP_BUNDLE_ID` | *(empty)* | The iOS app's bundle id, accepted as an extra audience for native Sign in with Apple |
-| `RESEND_API_KEY`, `EMAIL_FROM` | *(empty)* | [Resend](https://resend.com) API key and sender, e.g. `Verdict <signin@verdict.example.org>` on a domain verified in Resend. Both set = email sign-in links work. With `TURNSTILE_SECRET_KEY` set, the email form needs a Turnstile token too |
+| `RESEND_API_KEY`, `EMAIL_FROM` | *(empty)* | [Resend](https://resend.com) API key and sender, e.g. `Settle <signin@verdict.example.org>` on a domain verified in Resend. Both set = email sign-in links work. With `TURNSTILE_SECRET_KEY` set, the email form needs a Turnstile token too |
 | `DEV_LOGIN` | *(empty)* | `1` shows a "test sign-in" for local testing. It works only when **all** hold: not a production build (`next build` output is production whatever `NODE_ENV` it is started with), `DEV_LOGIN=1`, the server listens on `127.0.0.1` or `::1` only (`npm run dev:login`, i.e. `next dev -H 127.0.0.1`; plain `npm run dev` listens on every interface and is refused), and the request's `Host` is `localhost`, `127.0.0.1` or `[::1]`. Anywhere else the endpoint answers 404 |
 | `PREMIUM_ENABLED` | `1` | `0` turns Premium off (the switch disappears; premium requests get `503 not_configured`) |
 | `PREMIUM_DAILY_CAP` | `500` | Site-wide premium runs per UTC day, counted from the database, refunded ones included (a refused or failed run still costs its model calls). A cost circuit breaker; `0` pauses Premium. Clarifying questions are not counted; the per-account limit below bounds them |

@@ -1,7 +1,7 @@
 import { PALETTE } from "@/lib/palette";
 
 /**
- * The Verdict mark: an ink beam tipped toward a terracotta sphere, a sage
+ * The Settle mark: an ink beam tipped toward a terracotta sphere, a sage
  * sphere, and an ink pivot. Hook-free with inline colours (no classes or
  * CSS variables), so it renders the same in server pages, client pages and
  * Satori OG images. `size` is the width in px; the mark is 28:20.

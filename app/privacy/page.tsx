@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { InfoPage } from "@/components/InfoPage";
 import { contactEmail, SITE_NAME, SITE_OG_IMAGE } from "../site";
 
-const title = "Verdict privacy";
+const title = "Settle privacy";
 const description =
-  "What Verdict stores (the anonymized argument and verdict, for share links; for optional accounts, sign-in and plan details), what it doesn't, and who else handles your text, including Premium's web search.";
+  "What Settle stores (the anonymized argument and verdict, for share links; for optional accounts, sign-in and plan details), what it doesn't, and who else handles your text, including Premium's web search.";
 
 export const metadata: Metadata = {
   title: "Privacy",

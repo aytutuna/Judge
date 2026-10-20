@@ -85,7 +85,7 @@ describe("authProviders", () => {
     expect(auth.authProviders(r, { ...base, GOOGLE_CLIENT_ID: "g" }).google).toBe(false);
     expect(auth.authProviders(r, { ...base, GOOGLE_CLIENT_ID: "g", GOOGLE_CLIENT_SECRET: "s" }).google).toBe(true);
     expect(auth.authProviders(r, { ...base, RESEND_API_KEY: "r" }).email).toBe(false);
-    expect(auth.authProviders(r, { ...base, RESEND_API_KEY: "r", EMAIL_FROM: "Verdict <a@b.c>" }).email).toBe(true);
+    expect(auth.authProviders(r, { ...base, RESEND_API_KEY: "r", EMAIL_FROM: "Settle <a@b.c>" }).email).toBe(true);
   });
 
   it("Apple needs a usable key", () => {
@@ -207,7 +207,7 @@ describe("Better Auth on the shared libSQL database", () => {
 
   it("emails a magic link (language from callbackURL) whose link signs the user in", async () => {
     vi.stubEnv("RESEND_API_KEY", "re_test");
-    vi.stubEnv("EMAIL_FROM", "Verdict <signin@verdict.example.org>");
+    vi.stubEnv("EMAIL_FROM", "Settle <signin@verdict.example.org>");
     const sent: { to: string[]; subject: string; text: string }[] = [];
     const realFetch = globalThis.fetch;
     vi.stubGlobal(
@@ -285,7 +285,7 @@ describe("sign-in email", () => {
 
   it("send errors carry no address or link", async () => {
     vi.stubEnv("RESEND_API_KEY", "re_test");
-    vi.stubEnv("EMAIL_FROM", "Verdict <a@b.c>");
+    vi.stubEnv("EMAIL_FROM", "Settle <a@b.c>");
     vi.stubGlobal("fetch", vi.fn(async () => new Response("bad", { status: 422 })));
     const err = await sendSignInEmail({ to: "secret@person.com", url: "https://x/verify?token=SECRET", lang: "en" }).catch(
       (e: unknown) => e,
