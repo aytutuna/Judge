@@ -58,6 +58,7 @@ import com.okjudge.judge.core.display.CruxFace
 import com.okjudge.judge.core.display.CruxStyle
 import com.okjudge.judge.core.display.FactSources
 import com.okjudge.judge.core.display.PartyLabels
+import com.okjudge.judge.core.display.RestoreNames
 import com.okjudge.judge.core.display.SealSide
 import com.okjudge.judge.core.display.VerdictDisplay
 import com.okjudge.judge.core.display.Vote
@@ -68,6 +69,7 @@ import com.okjudge.judge.core.model.CruxTrial
 import com.okjudge.judge.core.model.FactCheck
 import com.okjudge.judge.core.model.FinalVerdict
 import com.okjudge.judge.core.model.LeanState
+import com.okjudge.judge.core.model.NameMapping
 import com.okjudge.judge.core.model.TrialOutcome
 import com.okjudge.judge.core.model.VerdictResult
 import com.okjudge.judge.i18n.AppLang
@@ -91,7 +93,11 @@ import com.okjudge.judge.ui.theme.cappedScale
 /** What the translation pill says (lib/use-translation.ts statuses plus offline). */
 enum class TranslationStatus { ORIGINAL, LOADING, TRANSLATED, ERROR, OFFLINE }
 
-data class TranslationView(val result: VerdictResult, val status: TranslationStatus, val source: AppLang)
+data class TranslationView(val result: VerdictResult, val status: TranslationStatus, val source: AppLang) {
+    /** The shown result with real names restored (display only; `selfLang` is the original's language). */
+    fun personalized(nameMap: List<NameMapping>?, selfLang: AppLang): TranslationView =
+        copy(result = RestoreNames.personalizeResult(result, nameMap, selfLang))
+}
 
 /** Card actions; null hides them (e.g. previews). */
 data class CardActions(

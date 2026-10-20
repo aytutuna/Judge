@@ -15,7 +15,7 @@ data class Party(val name: String, val self: Boolean)
 /**
  * Port of the label half of lib/names.ts: `canonicalLabel`, `bareName`,
  * `resolveParties` and `partyNames`. Putting real names back into the
- * verdict text (`restoreNames`) is phase 1.5.
+ * verdict text (`restoreNames`, `personalizeResult`) is in RestoreNames.kt.
  */
 object PartyNames {
     private val TR = Locale.forLanguageTag("tr")

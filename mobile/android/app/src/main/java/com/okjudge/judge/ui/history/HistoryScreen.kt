@@ -45,6 +45,7 @@ import androidx.lifecycle.viewModelScope
 import com.okjudge.judge.core.data.HistoryRepository
 import com.okjudge.judge.core.data.SavedVerdict
 import com.okjudge.judge.core.display.PartyNames
+import com.okjudge.judge.core.display.RestoreNames
 import com.okjudge.judge.core.display.SealSide
 import com.okjudge.judge.core.display.VerdictDisplay
 import com.okjudge.judge.i18n.LocalLang
@@ -150,7 +151,7 @@ fun HistoryScreen(
     confirmOne?.let { id ->
         AlertDialog(
             onDismissRequest = { confirmOne = null },
-            text = { Text(items?.firstOrNull { it.id == id }?.original?.result?.headline ?: "", style = JudgeType.body) },
+            text = { Text(items?.firstOrNull { it.id == id }?.let(::restoredOriginalHeadline) ?: "", style = JudgeType.body) },
             confirmButton = {
                 TextButton(onClick = { confirmOne = null; onDelete(id) }) { Text(s.appHistoryDelete, color = Palette.danger) }
             },
@@ -159,6 +160,10 @@ fun HistoryScreen(
         )
     }
 }
+
+/** The original headline with real names restored (display only), for the delete prompt. */
+private fun restoredOriginalHeadline(item: SavedVerdict): String =
+    RestoreNames.headline(item.original.result, item.nameMap, item.lang)
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -195,7 +200,8 @@ private fun HistoryRow(item: SavedVerdict, onOpen: () -> Unit, onLongPress: () -
     val result = item.original.result
     val parties = PartyNames.partyNames(item.nameMap, item.lang, s)
     val label = VerdictDisplay.verdictLabel(result, parties, s)
-    val headline = (item.translations[lang]?.result ?: result).headline
+    val shown = item.translations[lang]?.result ?: result
+    val headline = remember(shown, item.nameMap) { RestoreNames.headline(shown, item.nameMap, item.lang) }
     val date = remember(item.createdAt, lang) {
         DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM).withLocale(lang.locale)
             .format(Instant.ofEpochMilli(item.createdAt).atZone(ZoneId.systemDefault()))

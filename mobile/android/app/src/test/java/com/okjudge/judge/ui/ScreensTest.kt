@@ -19,6 +19,7 @@ import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
 import androidx.compose.ui.unit.dp
 import com.okjudge.judge.Fixtures
+import com.okjudge.judge.str
 import com.okjudge.judge.core.data.SavedVerdict
 import com.okjudge.judge.core.display.ContentLang
 import com.okjudge.judge.core.display.PartyNames
@@ -28,12 +29,16 @@ import com.okjudge.judge.core.display.VerdictDisplay
 import com.okjudge.judge.core.model.FactCheck
 import com.okjudge.judge.core.model.FactClaim
 import com.okjudge.judge.core.model.FactSource
+import com.okjudge.judge.core.model.VerdictOutcome
 import com.okjudge.judge.i18n.AppLang
 import com.okjudge.judge.ui.history.HistoryScreen
 import com.okjudge.judge.ui.history.HistoryTags
 import com.okjudge.judge.ui.home.HomeScreen
 import com.okjudge.judge.ui.home.HomeTags
 import com.okjudge.judge.ui.home.HomeUiState
+import com.okjudge.judge.ui.verdict.TranslationStatus
+import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.jsonObject
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -101,8 +106,9 @@ class ScreensTest {
                 val r = outcome.result.result
                 val parties = PartyNames.partyNames(outcome.nameMap, ContentLang.verdictLang(r), s)
                 compose.onNodeWithText(VerdictDisplay.verdictLabel(r, parties, s)).assertExists()
-                // The fixture translation stands in for the original in the other language.
-                if (!r.refused) compose.onNodeWithText(sampleView(outcome, lang).result.crux).assertExists()
+                // The fixture translation stands in for the original in the other language,
+                // with real names restored as the web shows them.
+                if (!r.refused) compose.onNodeWithText(personalizedCrux(name, outcome, lang)).assertExists()
                 compose.onNodeWithText(VerdictDisplay.confidenceText(r.confidence, s)).assertExists()
                 if (outcome.nameMap.isNotEmpty()) {
                     // The labels never fall back to "Party A/B" when a name map exists.
@@ -165,7 +171,25 @@ class ScreensTest {
         compose.waitForIdle()
         compose.onNodeWithTag(HistoryTags.row("abc123DEF0")).assertExists()
         compose.onNodeWithText("You're right").assertExists()
+        // Row headlines carry the real names (display only).
+        compose.onNodeWithText(personalized("win_a_self").str("headline")!!).assertExists()
+        compose.onNodeWithText(personalized("lean_tie").str("headline")!!).assertExists()
         compose.onNodeWithText(UiTestSupport.s(AppLang.EN).appHistoryDeviceOnly).assertExists()
+    }
+
+    /** The web's personalized fields for a sample in its own language. */
+    private fun personalized(name: String): JsonObject =
+        Fixtures.list("verdicts").first { it.str("sample") == name }["personalized"]!!.jsonObject
+
+    /** The crux the web shows for [name] in [lang]: personalized, from the translation when one is shown. */
+    private fun personalizedCrux(name: String, outcome: VerdictOutcome, lang: AppLang): String {
+        val view = sampleView(outcome, lang)
+        val expected = if (view.status == TranslationStatus.TRANSLATED) {
+            Fixtures.list("personalizedTranslations").first { it.str("sample") == name && it.str("lang") == lang.tag }
+        } else {
+            personalized(name)
+        }
+        return expected.str("crux")!!
     }
 
     // createComposeRule allows one setContent per test; swap the content through state instead.

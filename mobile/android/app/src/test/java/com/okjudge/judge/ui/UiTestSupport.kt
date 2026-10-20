@@ -47,17 +47,17 @@ fun Themed(lang: AppLang, content: @Composable () -> Unit) {
 }
 
 /**
- * A fixture sample rendered like a fresh verdict (labels from its name map).
- * Shown in another language, it carries the fixture translation when there
- * is one for it (as the iOS screenshot states do), unless [status] asks for
- * a specific pill.
+ * A fixture sample rendered like a fresh verdict (labels from its name map,
+ * real names restored in the text as VerdictRoute does). Shown in another
+ * language, it carries the fixture translation when there is one for it (as
+ * the iOS screenshot states do), unless [status] asks for a specific pill.
  */
 @Composable
 fun SampleVerdict(outcome: VerdictOutcome, lang: AppLang, modifier: Modifier = Modifier, status: TranslationStatus = TranslationStatus.ORIGINAL) {
     val selfLang = ContentLang.verdictLang(outcome.result.result)
     val s = UiTestSupport.s(lang)
     VerdictContent(
-        view = sampleView(outcome, lang, status),
+        view = sampleView(outcome, lang, status).personalized(outcome.nameMap, selfLang),
         parties = PartyNames.partyNames(outcome.nameMap, selfLang, s),
         restoredNames = PartyNames.restoredNames(outcome.nameMap, selfLang),
         actions = CardActions(onShare = {}, onCopy = {}, copied = false, onJudgeAnother = {}),

@@ -80,6 +80,7 @@ fun VerdictRoute(
         val selfLang = saved.lang
         val parties = PartyNames.partyNames(saved.nameMap, selfLang, s)
         val restored = remember(saved.nameMap, selfLang) { PartyNames.restoredNames(saved.nameMap, selfLang) }
+        val shown = remember(view, saved.nameMap, selfLang) { view.personalized(saved.nameMap, selfLang) }
         Column(
             Modifier
                 .fillMaxSize()
@@ -88,7 +89,7 @@ fun VerdictRoute(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             VerdictContent(
-                view = view,
+                view = shown,
                 parties = parties,
                 restoredNames = restored,
                 actions = CardActions(
