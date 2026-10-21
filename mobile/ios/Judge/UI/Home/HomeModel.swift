@@ -170,8 +170,10 @@ final class HomeModel {
             }
             acceptedID = accepted.id
             let payload = try await api.awaitVerdict(accepted)
-            if pending?.accepted.id == accepted.id { pending = nil }
+            // Closed at the last moment: keep the id so the same request
+            // picks the finished verdict up.
             guard !Task.isCancelled else { return }
+            if pending?.accepted.id == accepted.id { pending = nil }
             deliver(payload, history: history, preset: preset)
         } catch let failure as VerdictPollError {
             if !failure.resumable, let acceptedID, pending?.accepted.id == acceptedID { pending = nil }

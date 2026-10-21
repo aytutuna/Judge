@@ -1,3 +1,4 @@
+import SwiftData
 import XCTest
 @testable import Judge
 
@@ -188,7 +189,7 @@ final class VerdictPollingTests: XCTestCase {
 
     func testFailedUnavailableAndRefused() async throws {
         let sample = try fixture("win_a_self")
-        for (code, retry) in [("unavailable", true), ("refused", false)] {
+        for (code, retry, message) in [("unavailable", true, L10n.errorUnavailable(.tr)), ("refused", false, L10n.refusedNote(.tr))] {
             StubURLProtocol.requests = []
             let server = ScriptedServer(post: try acceptedReply(sample), polls: [try failed(sample, code: code, error: "x")])
             StubURLProtocol.handler = { server.reply(to: $0) }
@@ -198,7 +199,7 @@ final class VerdictPollingTests: XCTestCase {
             } catch let error as APIError {
                 XCTAssertEqual(error.code, code)
                 XCTAssertEqual(error.offersRetry, retry, code)
-                XCTAssertFalse(ErrorText.message(error, lang: .tr).isEmpty)
+                XCTAssertEqual(ErrorText.message(error, lang: .tr), message, code)
             }
         }
     }
@@ -388,5 +389,154 @@ final class VerdictPollingTests: XCTestCase {
         let bare = try WireDecoding.acceptedPayload(from: Data(#"{"id":"j0b","status":"judging","name_map":[]}"#.utf8))
         XCTAssertNil(bare.ownerToken)
         XCTAssertNil(bare.pollAfterMs)
+    }
+}
+
+/// HomeModel's request flow against the stub: a verdict the server already
+/// accepted is picked up again by "Try again", never asked for twice.
+final class HomeResumeTests: XCTestCase {
+    private static let text = "Alex says Jordan should pay for the broken lamp because Jordan knocked it over."
+
+    override func setUp() {
+        super.setUp()
+        StubURLProtocol.handler = nil
+        StubURLProtocol.requests = []
+    }
+
+    override func tearDown() {
+        StubURLProtocol.handler = nil
+        super.tearDown()
+    }
+
+    private var posts: Int { StubURLProtocol.requests.filter { $0.httpMethod == "POST" }.count }
+
+    @MainActor
+    private func makeApp(container: ModelContainer) throws -> AppModel {
+        let config = AppConfig(apiBaseURL: AppConfig.production, shareBaseURL: AppConfig.production, turnstileSiteKey: "", version: "1", build: "1")
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: "judge.tests.\(UUID().uuidString)"))
+        let api = JudgeAPI(
+            baseURL: AppConfig.production,
+            userAgent: "Judge-iOS/test",
+            session: JudgeAPI.makeSession(protocolClasses: [StubURLProtocol.self]),
+            pollPolicy: PollPolicy(
+                firstMs: 10, factor: 1.5, maxMs: 20, errorMaxMs: 40, capMs: 100,
+                deadlineMs: 10_000, requestTimeout: 5, maxConsecutiveErrors: 3
+            )
+        )
+        let app = AppModel(config: config, container: container, defaults: defaults, persistsDraft: false, api: api)
+        app.home.argument = Self.text
+        return app
+    }
+
+    @MainActor
+    private func waitUntil(_ what: String, _ condition: () -> Bool) async throws {
+        var waited = 0
+        while !condition(), waited < 500 {
+            try await Task.sleep(for: .milliseconds(10))
+            waited += 1
+        }
+        XCTAssertTrue(condition(), "timed out waiting for \(what)")
+    }
+
+    private func namedSample() throws -> [String: Any] {
+        let responses = try XCTUnwrap(Fixtures.verdicts()["verdictResponses"] as? [String: Any])
+        return try XCTUnwrap(responses["win_b_named"] as? [String: Any])
+    }
+
+    private func reply(_ status: Int, _ object: [String: Any]) throws -> StubURLProtocol.Reply {
+        StubURLProtocol.Reply(status: status, headers: ["Content-Type": "application/json"], body: try JSONSerialization.data(withJSONObject: object))
+    }
+
+    private func accepted(_ sample: [String: Any]) throws -> StubURLProtocol.Reply {
+        try reply(202, [
+            "id": try XCTUnwrap(sample["id"] as? String),
+            "status": "judging",
+            "pollAfterMs": 10,
+            "name_map": sample["name_map"] ?? [Any](),
+            "owner_token": "own3r",
+        ])
+    }
+
+    private func ready(_ sample: [String: Any]) throws -> StubURLProtocol.Reply {
+        try reply(200, [
+            "id": try XCTUnwrap(sample["id"] as? String),
+            "result": try XCTUnwrap(sample["result"]),
+            "createdAt": "2026-10-20T10:00:00.000Z",
+            "status": "ready",
+        ])
+    }
+
+    @MainActor
+    func testTryAgainAfterFailedPollsResumesWithoutASecondPost() async throws {
+        let container = HistoryContainer.inMemory()
+        let app = try makeApp(container: container)
+        let home = app.home
+        let sample = try namedSample()
+        let id = try XCTUnwrap(sample["id"] as? String)
+
+        let flaky = ScriptedServer(post: try accepted(sample), polls: [try reply(503, ["error": "x", "code": "unavailable"])])
+        StubURLProtocol.handler = { flaky.reply(to: $0) }
+        home.submit(app: app)
+        try await waitUntil("the poll failure") { home.error != nil }
+        XCTAssertEqual(home.error?.code, "unavailable")
+        XCTAssertFalse(home.isJudging)
+        XCTAssertEqual(posts, 1)
+
+        let healthy = ScriptedServer(post: try accepted(sample), polls: [try reply(200, ["id": id, "status": "judging", "pollAfterMs": 10]), try ready(sample)])
+        StubURLProtocol.handler = { healthy.reply(to: $0) }
+        home.submit(app: app)
+        try await waitUntil("the verdict") { home.arrived != nil }
+        XCTAssertNil(home.error)
+        XCTAssertEqual(posts, 1, "Try again must poll the accepted verdict, not ask for a new one")
+        XCTAssertEqual(home.session(id)?.nameMap, Fixtures.nameMap(sample["name_map"]))
+        XCTAssertEqual(try app.history.all().map(\.id), [id])
+        withExtendedLifetime(container) {}
+    }
+
+    @MainActor
+    func testClosingTheCoverKeepsTheAcceptedVerdict() async throws {
+        let container = HistoryContainer.inMemory()
+        let app = try makeApp(container: container)
+        let home = app.home
+        let sample = try namedSample()
+        let id = try XCTUnwrap(sample["id"] as? String)
+
+        let slow = ScriptedServer(post: try accepted(sample), polls: [try reply(200, ["id": id, "status": "judging", "pollAfterMs": 10])])
+        StubURLProtocol.handler = { slow.reply(to: $0) }
+        home.submit(app: app)
+        try await waitUntil("polling") { slow.pollCount >= 1 }
+        home.cancel()
+        XCTAssertFalse(home.isJudging)
+
+        let healthy = ScriptedServer(post: try accepted(sample), polls: [try ready(sample)])
+        StubURLProtocol.handler = { healthy.reply(to: $0) }
+        home.submit(app: app)
+        try await waitUntil("the verdict") { home.arrived != nil }
+        XCTAssertEqual(posts, 1)
+        XCTAssertNotNil(home.session(id))
+        withExtendedLifetime(container) {}
+    }
+
+    @MainActor
+    func testASettledFailureAsksForANewVerdict() async throws {
+        let container = HistoryContainer.inMemory()
+        let app = try makeApp(container: container)
+        let home = app.home
+        let sample = try namedSample()
+        let id = try XCTUnwrap(sample["id"] as? String)
+
+        let quota = ScriptedServer(post: try accepted(sample), polls: [try reply(200, ["id": id, "status": "failed", "code": "quota", "error": "x"])])
+        StubURLProtocol.handler = { quota.reply(to: $0) }
+        home.submit(app: app)
+        try await waitUntil("the failed verdict") { home.error != nil }
+        XCTAssertEqual(home.error?.code, "quota")
+        XCTAssertEqual(posts, 1)
+
+        let healthy = ScriptedServer(post: try accepted(sample), polls: [try ready(sample)])
+        StubURLProtocol.handler = { healthy.reply(to: $0) }
+        home.submit(app: app)
+        try await waitUntil("the verdict") { home.arrived != nil }
+        XCTAssertEqual(posts, 2)
+        withExtendedLifetime(container) {}
     }
 }

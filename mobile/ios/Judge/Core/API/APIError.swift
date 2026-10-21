@@ -125,6 +125,8 @@ enum ErrorText {
     /// generic fallback.
     static func apiErrorMessage(_ body: ApiErrorBody?, status: Int?, lang: AppLang) -> String {
         let code = body?.code ?? (status == 429 ? "rate_limited" : nil)
+        // An async verdict that failed with `refused` reads like a refused verdict.
+        if code == "refused" { return L10n.refusedNote(lang) }
         if let code, knownCodes.contains(code) {
             switch code {
             case "fair_use":

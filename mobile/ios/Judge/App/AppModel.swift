@@ -41,12 +41,19 @@ final class AppModel {
     private static let langKey = "settings.lang"
     static let presetKey = "settings.lastPreset"
 
-    init(config: AppConfig, container: ModelContainer, defaults: UserDefaults = .standard, tokenStore: any TokenStore = NoTokenStore(), persistsDraft: Bool = true) {
+    init(
+        config: AppConfig,
+        container: ModelContainer,
+        defaults: UserDefaults = .standard,
+        tokenStore: any TokenStore = NoTokenStore(),
+        persistsDraft: Bool = true,
+        api: JudgeAPI? = nil
+    ) {
         self.config = config
         self.persistsDraft = persistsDraft
         self.defaults = defaults
         langPreference = defaults.string(forKey: Self.langKey).flatMap(LangPreference.init(rawValue:)) ?? .system
-        api = JudgeAPI(baseURL: config.apiBaseURL, userAgent: config.userAgent, tokenStore: tokenStore)
+        self.api = api ?? JudgeAPI(baseURL: config.apiBaseURL, userAgent: config.userAgent, tokenStore: tokenStore)
         if config.turnstileSiteKey.isEmpty {
             turnstile = nil
             botCheck = NoBotCheck()
