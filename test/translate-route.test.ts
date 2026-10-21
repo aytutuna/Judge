@@ -7,6 +7,7 @@ const m = vi.hoisted(() => ({
   saveTranslation: vi.fn(),
   checkTranslateLimits: vi.fn(),
   claudeJson: vi.fn(),
+  verdictRemoved: vi.fn(),
 }));
 
 vi.mock("@/lib/db", () => ({
@@ -15,6 +16,7 @@ vi.mock("@/lib/db", () => ({
   saveTranslation: m.saveTranslation,
 }));
 vi.mock("@/lib/ratelimit", () => ({ checkTranslateLimits: m.checkTranslateLimits }));
+vi.mock("@/lib/originals/removed", () => ({ verdictRemoved: m.verdictRemoved }));
 // Only the model call is mocked: the translation logic stays real.
 vi.mock("@/lib/claude", () => ({ claudeJson: m.claudeJson, LITE_MODEL: "lite-model" }));
 
@@ -37,6 +39,7 @@ const STORED = {
 
 beforeEach(() => {
   vi.clearAllMocks();
+  m.verdictRemoved.mockResolvedValue(false);
   clearTranslationFailures();
   vi.spyOn(console, "error").mockImplementation(() => {});
   m.getVerdict.mockResolvedValue(STORED);

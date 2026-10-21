@@ -104,9 +104,21 @@ describe("Hero premium slots", () => {
     expect(html).not.toContain('data-testid="clarify"');
   });
 
-  it("puts the switch right after the CTA and a polite status line under it", () => {
-    const html = hero({ tierSwitch: <div data-testid="switch" />, status: "Checking if anything's missing…" });
-    expect(html.indexOf('type="submit"')).toBeLessThan(html.indexOf('data-testid="switch"'));
+  it("hides the example chips in two-sided mode only", () => {
+    expect(hero({})).toContain('id="hero-spark"');
+    const both = hero({ twoSided: true });
+    expect(both).not.toContain('id="hero-spark"');
+    expect(both).not.toContain('aria-labelledby="hero-spark"');
+  });
+
+  it("puts the switch before the Premium extras and the CTA, and a polite status line under the CTA", () => {
+    const html = hero({
+      tierSwitch: <div data-testid="switch" />,
+      extras: <div data-testid="mode" />,
+      status: "Checking if anything's missing…",
+    });
+    expect(html.indexOf('data-testid="switch"')).toBeLessThan(html.indexOf('data-testid="mode"'));
+    expect(html.indexOf('data-testid="mode"')).toBeLessThan(html.indexOf('type="submit"'));
     expect(html).toMatch(/role="status" aria-live="polite">.*Checking if anything&#x27;s missing…<\/p>/);
   });
 

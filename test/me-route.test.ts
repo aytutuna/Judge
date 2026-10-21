@@ -133,11 +133,52 @@ describe("DELETE /api/v1/me", () => {
     for (const t of ["entitlement_accounts", "entitlement_grants", "subscriptions", "premium_usage"]) {
       expect(await rows(`SELECT count(*) AS n FROM ${t} WHERE user_id = ?`, [user.id]), t).toBe(0);
     }
-    // Every session of the user is gone, including other devices.
-    expect(await (await get({ authorization: `Bearer ${second.token}` })).json()).toEqual({
-      user: null,
-      entitlement: null,
+    // Every session of the user is gone, including other devices: their
+    // bearer tokens are now dead and answer 401.
+    const other = await get({ authorization: `Bearer ${second.token}` });
+    expect(other.status).toBe(401);
+    expect(await other.json()).toEqual({ error: "Sign in first.", code: "signin_required" });
+  });
+
+  it("removes (never deletes) the cases the account started or answered, and unbinds it as a respondent", async () => {
+    const { token, user } = await createDevSession("me6@verdict.local");
+    const { ensureCaseTables } = await import("../lib/cases");
+    await ensureCaseTables();
+    const db = await getDb();
+    const now = new Date().toISOString();
+    const insertCase = (id: string, ownerId: string, respondent: string | null) =>
+      db.execute({
+        sql: `INSERT INTO cases (id, owner_id, status, mode, framework, lang, invite_nonce, invite_hash,
+                respondent_user_id, expires_at, created_at, updated_at)
+              VALUES (?, ?, 'judged', 'two_sided', '{"preset":"balanced"}', 'en', 'n', ?, ?, ?, ?, ?)`,
+        args: [id, ownerId, `hash-${id}`, respondent, now, now, now],
+      });
+    await insertCase("me6-case-own", user.id, null);
+    await insertCase("me6-case-oth", "someone-else", user.id);
+    await db.execute({
+      sql: "INSERT INTO case_sides (case_id, party, text, submitted_at) VALUES ('me6-case-own', 'a', 'Party A says', ?)",
+      args: [now],
     });
+    await db.execute({
+      sql: "INSERT INTO verdicts (id, input, framework, result) VALUES ('me6-verdict', 'doc', '{}', '{}')",
+    });
+    await db.execute({
+      sql: "INSERT INTO case_verdicts (case_id, seq, verdict_id, appeal_id, mode, created_at) VALUES ('me6-case-own', 1, 'me6-verdict', NULL, 'two_sided', ?)",
+      args: [now],
+    });
+
+    const res = await del({ authorization: `Bearer ${token}` });
+    expect(res.status).toBe(200);
+    expect(await rows("SELECT count(*) AS n FROM cases WHERE owner_id = ? AND removed_a_at IS NOT NULL", [user.id])).toBe(1);
+    expect(await rows("SELECT count(*) AS n FROM case_sides WHERE case_id = ?", ["me6-case-own"])).toBe(1);
+    expect(await rows("SELECT count(*) AS n FROM case_verdicts WHERE case_id = ?", ["me6-case-own"])).toBe(1);
+    expect(await rows("SELECT count(*) AS n FROM verdicts WHERE id = ?", ["me6-verdict"])).toBe(1);
+    expect(await rows("SELECT count(*) AS n FROM verdict_meta WHERE verdict_id = ? AND removed_at IS NOT NULL", ["me6-verdict"])).toBe(1);
+    expect(
+      await rows("SELECT count(*) AS n FROM cases WHERE id = ? AND respondent_user_id IS NULL AND removed_b_at IS NOT NULL", [
+        "me6-case-oth",
+      ]),
+    ).toBe(1);
   });
 
   it("a bearer client (the app) can delete its account", async () => {

@@ -44,7 +44,7 @@ describe("GET /api/v1/config", () => {
     const { res, body } = await call();
     expect(res.headers.get("cache-control")).toBe("no-store");
     expect(body).toEqual({
-      signIn: { apple: false, google: false, email: false, dev: false },
+      signIn: { apple: false, google: false, email: false, emailCode: false, dev: false },
       premiumEnabled: false,
       pricing: {
         currency: "USD",
@@ -55,6 +55,7 @@ describe("GET /api/v1/config", () => {
         ],
         monthly: { id: "monthly", priceUsd: 4.99, fairUseCap: 60, periodDays: 30 },
       },
+      features: { cases: false, evidence: false },
     });
     expect(body.pricing).toEqual(PRICING);
   });
@@ -69,7 +70,7 @@ describe("GET /api/v1/config", () => {
     vi.stubEnv("RESEND_API_KEY", "re_x");
     vi.stubEnv("EMAIL_FROM", "Judge <signin@verdict.example.org>");
     const { body } = await call("verdict.example.org");
-    expect(body.signIn).toEqual({ apple: false, google: true, email: true, dev: false });
+    expect(body.signIn).toEqual({ apple: false, google: true, email: true, emailCode: true, dev: false });
     expect(body.premiumEnabled).toBe(true);
   });
 
@@ -83,6 +84,24 @@ describe("GET /api/v1/config", () => {
     vi.stubEnv("PREMIUM_ENABLED", "1");
     vi.stubEnv("ANTHROPIC_API_KEY", "");
     expect((await call()).body.premiumEnabled).toBe(false);
+  });
+
+  it("features follow Premium and the CASES_ENABLED / EVIDENCE_ENABLED switches", async () => {
+    clearAuthEnv();
+    vi.stubEnv("NODE_ENV", "production");
+    vi.stubEnv("BETTER_AUTH_SECRET", "s".repeat(40));
+    vi.stubEnv("ANTHROPIC_API_KEY", "k");
+    vi.stubEnv("CASES_ENABLED", "");
+    vi.stubEnv("EVIDENCE_ENABLED", "");
+    expect((await call()).body.features).toEqual({ cases: true, evidence: true });
+    vi.stubEnv("CASES_ENABLED", "0");
+    expect((await call()).body.features).toEqual({ cases: false, evidence: true });
+    vi.stubEnv("EVIDENCE_ENABLED", "0");
+    expect((await call()).body.features).toEqual({ cases: false, evidence: false });
+    vi.stubEnv("CASES_ENABLED", "1");
+    vi.stubEnv("EVIDENCE_ENABLED", "1");
+    vi.stubEnv("PREMIUM_ENABLED", "0");
+    expect((await call()).body.features).toEqual({ cases: false, evidence: false });
   });
 
   it("development: the test login shows only with DEV_LOGIN=1 on localhost", async () => {

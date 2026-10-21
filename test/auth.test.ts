@@ -74,6 +74,7 @@ describe("authProviders", () => {
       apple: false,
       google: false,
       email: false,
+      emailCode: false,
       dev: false,
     });
   });
@@ -81,11 +82,19 @@ describe("authProviders", () => {
   it("a provider is on only with all of its credentials", () => {
     const base = { NODE_ENV: "production", BETTER_AUTH_SECRET: "s".repeat(32) };
     const r = req({ host: "verdict.example.org" });
-    expect(auth.authProviders(r, base)).toEqual({ apple: false, google: false, email: false, dev: false });
+    expect(auth.authProviders(r, base)).toEqual({
+      apple: false,
+      google: false,
+      email: false,
+      emailCode: false,
+      dev: false,
+    });
     expect(auth.authProviders(r, { ...base, GOOGLE_CLIENT_ID: "g" }).google).toBe(false);
     expect(auth.authProviders(r, { ...base, GOOGLE_CLIENT_ID: "g", GOOGLE_CLIENT_SECRET: "s" }).google).toBe(true);
     expect(auth.authProviders(r, { ...base, RESEND_API_KEY: "r" }).email).toBe(false);
     expect(auth.authProviders(r, { ...base, RESEND_API_KEY: "r", EMAIL_FROM: "Judge <a@b.c>" }).email).toBe(true);
+    expect(auth.authProviders(r, { ...base, RESEND_API_KEY: "r" }).emailCode).toBe(false);
+    expect(auth.authProviders(r, { ...base, RESEND_API_KEY: "r", EMAIL_FROM: "Judge <a@b.c>" }).emailCode).toBe(true);
   });
 
   it("Apple needs a usable key", () => {

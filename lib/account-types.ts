@@ -37,7 +37,8 @@ export type Viewer = {
   image: string | null;
 };
 
-/** GET /api/v1/me. Signed out: { user: null, entitlement: null }. */
+/** GET /api/v1/me. Signed out: { user: null, entitlement: null }. A bearer
+ * token with no live session: 401 signin_required instead. */
 export type MeResponse = {
   user: Viewer | null;
   entitlement: Entitlement | null;
@@ -47,7 +48,11 @@ export type MeResponse = {
 export type AuthProviders = {
   apple: boolean;
   google: boolean;
+  /** Email magic link (website). */
   email: boolean;
+  /** Email one-time code (apps): POST /api/auth/email-otp/send-verification-otp
+   * then POST /api/auth/sign-in/email-otp. On whenever `email` is. */
+  emailCode: boolean;
   /** Dev-only test login (never true in production). */
   dev: boolean;
 };
@@ -68,4 +73,6 @@ export type AppConfig = {
   signIn: AuthProviders;
   premiumEnabled: boolean;
   pricing: PricingInfo;
+  /** Premium features this deployment offers. Absent on older servers: treat as all false. */
+  features?: { cases: boolean; evidence: boolean };
 };

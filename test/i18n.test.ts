@@ -338,6 +338,17 @@ describe("account and privacy copy", () => {
     expect(STRINGS.en["privacy.webSearch"]).toMatch(/names included/);
     expect(STRINGS.tr["privacy.webSearch"]).toMatch(/isimler dahil/);
   });
+
+  it("never names the AI vendor or model, but still says the AI provider is in the US", () => {
+    for (const lang of ["en", "tr"] as const) {
+      for (const [key, value] of Object.entries(STRINGS[lang])) {
+        expect(value, `${lang} ${key}`).not.toMatch(/anthrop|claude|haiku|sonnet|opus/i);
+      }
+    }
+    expect(STRINGS.en["privacy.processors"]).toMatch(/AI provider in the United States/);
+    expect(STRINGS.tr["privacy.processors"]).toMatch(/ABD'deki yapay zekâ sağlayıcımıza/);
+    expect(STRINGS.en["privacy.location"]).toMatch(/United States: our AI provider/);
+  });
 });
 
 describe("contentLang", () => {

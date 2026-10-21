@@ -5,22 +5,29 @@
  * - the native app: the same session token as `Authorization: Bearer <token>`.
  *
  * Sign-in methods: Apple and Google (web redirect and native ID token), email
- * magic link (Resend), and a dev-only test login. A method without
- * credentials is simply not offered (authProviders). Without
- * BETTER_AUTH_SECRET in production, auth is off and the free site runs as
- * before.
+ * magic link (website) or one-time email code (apps), both through Resend,
+ * and a dev-only test login. A method without credentials is simply not
+ * offered (authProviders). Without BETTER_AUTH_SECRET in production, auth is
+ * off and the free site runs as before.
  */
 
-import { createHash } from "node:crypto";
+import { createHash, createHmac } from "node:crypto";
 import { LibsqlDialect } from "@libsql/kysely-libsql";
 import { betterAuth, type Auth, type BetterAuthOptions, type BetterAuthPlugin } from "better-auth";
+import { APIError, createAuthMiddleware } from "better-auth/api";
 import { makeSignature } from "better-auth/crypto";
 import { getMigrations } from "better-auth/db/migration";
-import { bearer, captcha, magicLink } from "better-auth/plugins";
+import { bearer, captcha, emailOTP, magicLink } from "better-auth/plugins";
 import type { AuthProviders, Viewer } from "./account-types";
 import { APPLE_SECRET_REFRESH_MS, appleClientSecret, appleEnv } from "./apple-secret";
 import { getDb } from "./db";
-import { emailConfigured, langFromMagicLink, sendSignInEmail } from "./email";
+import {
+  emailConfigured,
+  langFromMagicLink,
+  langFromRequestUrl,
+  sendSignInCodeEmail,
+  sendSignInEmail,
+} from "./email";
 import { ensureEntitlementTables } from "./entitlements";
 
 type Env = Record<string, string | undefined>;
@@ -29,6 +36,13 @@ type AuthInstance = Auth<BetterAuthOptions>;
 export type ViewerSession = { user: Viewer; sessionId: string; via: "cookie" | "bearer" };
 
 const SESSION_DAYS = 30;
+/** Email sign-in links and codes live this long. */
+const EMAIL_SIGNIN_SECONDS = 600;
+/** Wrong guesses allowed per emailed code before it is burned. */
+const EMAIL_CODE_ATTEMPTS = 3;
+/** Sign-in requests per IP and endpoint per minute (production only). */
+const EMAIL_SIGNIN_RATE = { window: 60, max: 3 };
+const SEND_CODE_PATH = "/email-otp/send-verification-otp";
 const MIN_SECRET_LENGTH = 32;
 /** Used only outside production (never in a production build) when
  * BETTER_AUTH_SECRET is unset or too short. */
@@ -51,6 +65,15 @@ function authSecret(env: Env): string | null {
   if (secret && secret.length >= MIN_SECRET_LENGTH) return secret;
   if (isProduction(env)) return null;
   return DEV_SECRET;
+}
+
+export type SecretPurpose = "evidence-token" | "case-invite" | "case-names" | "respondent-claim";
+
+/** A 32-byte key for one purpose, derived from the auth secret, or null when
+ * accounts are not configured. Rotating BETTER_AUTH_SECRET rotates every key. */
+export function derivedSecret(purpose: SecretPurpose, env: Env = process.env): Buffer | null {
+  const secret = authSecret(env);
+  return secret ? createHmac("sha256", secret).update(`settle:${purpose}:v1`).digest() : null;
 }
 
 /** True when accounts can work: a real secret, or any non-production run. */
@@ -139,10 +162,23 @@ function buildOptions(env: Env, secret: string, client: Awaited<ReturnType<typeo
   if (emailConfigured(env)) {
     plugins.push(
       magicLink({
-        expiresIn: 600,
+        expiresIn: EMAIL_SIGNIN_SECONDS,
         storeToken: "hashed",
         sendMagicLink: async ({ email, url }) => {
           await sendSignInEmail({ to: email, url, lang: langFromMagicLink(url) });
+        },
+      }),
+      // The apps: POST /email-otp/send-verification-otp?lang=tr
+      // {email, type:"sign-in"}, then POST /sign-in/email-otp {email, otp}.
+      emailOTP({
+        expiresIn: EMAIL_SIGNIN_SECONDS,
+        otpLength: 6,
+        allowedAttempts: EMAIL_CODE_ATTEMPTS,
+        storeOTP: "hashed",
+        rateLimit: EMAIL_SIGNIN_RATE,
+        sendVerificationOTP: async ({ email, otp, type }, ctx) => {
+          if (type !== "sign-in") return; // refused earlier by hooks.before
+          await sendSignInCodeEmail({ to: email, code: otp, lang: langFromRequestUrl(ctx?.request?.url) });
         },
       }),
     );
@@ -151,6 +187,8 @@ function buildOptions(env: Env, secret: string, client: Awaited<ReturnType<typeo
         captcha({
           provider: "cloudflare-turnstile",
           secretKey: env.TURNSTILE_SECRET_KEY.trim(),
+          // Magic link only: the apps cannot show the widget, so the code
+          // endpoints rely on the rate limits and the per-code attempt cap.
           endpoints: ["/sign-in/magic-link"],
         }),
       );
@@ -214,14 +252,34 @@ function buildOptions(env: Env, secret: string, client: Awaited<ReturnType<typeo
       "/get-access-token",
       "/refresh-token",
       "/account-info",
+      // Email code plugin: only send-verification-otp and sign-in/email-otp
+      // are used.
+      "/email-otp/check-verification-otp",
+      "/email-otp/verify-email",
+      "/email-otp/request-password-reset",
+      "/forget-password/email-otp",
+      "/email-otp/reset-password",
+      "/email-otp/request-email-change",
+      "/email-otp/change-email",
     ],
     rateLimit: {
       enabled: production,
       storage: "memory",
       customRules: {
-        "/sign-in/magic-link": { window: 60, max: 3 },
+        "/sign-in/magic-link": EMAIL_SIGNIN_RATE,
+        [SEND_CODE_PATH]: EMAIL_SIGNIN_RATE,
+        "/sign-in/email-otp": EMAIL_SIGNIN_RATE,
         "/sign-in/social": { window: 60, max: 10 },
       },
+    },
+    hooks: {
+      // Codes are for signing in only (no email verification, password or
+      // email-change codes).
+      before: createAuthMiddleware(async (ctx) => {
+        if (ctx.path === SEND_CODE_PATH && (ctx.body as { type?: unknown } | undefined)?.type !== "sign-in") {
+          throw new APIError("BAD_REQUEST", { message: "Only sign-in codes are supported" });
+        }
+      }),
     },
     advanced: {
       cookiePrefix: "verdict",
@@ -349,24 +407,50 @@ export function toViewer(user: { id: string; email: string; name?: string | null
   return { id: user.id, email: user.email, name: user.name ?? "", image: user.image ?? null };
 }
 
-/** The signed-in account behind this request (cookie or bearer), or null.
- * Never throws: a lookup failure is logged and treated as signed out. */
-export async function getViewer(req: Request): Promise<ViewerSession | null> {
-  if (!authConfigured()) return null;
+export type ViewerLookup = {
+  viewer: ViewerSession | null;
+  /** The request carried `Authorization: Bearer <token>` and the token
+   * matches no live session (unknown, expired or signed out). */
+  deadBearer: boolean;
+};
+
+/**
+ * The signed-in account behind this request, and whether a bearer token was
+ * sent that no longer works. A request with a bearer token is judged by that
+ * token alone (a cookie next to it is ignored); without one, by the session
+ * cookie. Never throws: a lookup failure is logged and treated as signed out
+ * with deadBearer false (the token itself may be fine). With auth off there
+ * are no sessions, so nothing counts as a dead token either.
+ */
+export async function resolveViewer(req: Request): Promise<ViewerLookup> {
+  if (!authConfigured()) return { viewer: null, deadBearer: false };
+  const bearer = bearerToken(req.headers);
   try {
     const auth = await getAuth();
     const res = await auth.api.getSession({ headers: req.headers });
-    if (!res) return null;
-    const bearer = bearerToken(req.headers);
+    if (bearer !== null && res?.session.token !== bearer) return { viewer: null, deadBearer: true };
+    if (!res) return { viewer: null, deadBearer: false };
     return {
-      user: toViewer(res.user),
-      sessionId: res.session.id,
-      via: bearer !== null && bearer === res.session.token ? "bearer" : "cookie",
+      viewer: { user: toViewer(res.user), sessionId: res.session.id, via: bearer !== null ? "bearer" : "cookie" },
+      deadBearer: false,
     };
   } catch (e) {
     console.error("[auth] session lookup failed:", e instanceof Error ? e.message : String(e));
-    return null;
+    return { viewer: null, deadBearer: false };
   }
+}
+
+/** The signed-in account behind this request (cookie or bearer), or null.
+ * A dead bearer token gives null too; see resolveViewer to tell them apart. */
+export async function getViewer(req: Request): Promise<ViewerSession | null> {
+  return (await resolveViewer(req)).viewer;
+}
+
+/** True when the request has an `Authorization: Bearer` token that matches
+ * no live session. No session lookup without such a header. */
+export async function hasDeadBearer(req: Request): Promise<boolean> {
+  if (bearerToken(req.headers) === null) return false;
+  return (await resolveViewer(req)).deadBearer;
 }
 
 /** CSRF check for cookie-authenticated writes: the Origin (else Referer)
@@ -423,11 +507,12 @@ export function devLoginAllowed(req: Request, env: Env = process.env): boolean {
 
 /** Which sign-in methods this deployment offers right now. */
 export function authProviders(req: Request, env: Env = process.env): AuthProviders {
-  if (!authConfigured(env)) return { apple: false, google: false, email: false, dev: false };
+  if (!authConfigured(env)) return { apple: false, google: false, email: false, emailCode: false, dev: false };
   return {
     apple: appleConfigured(env),
     google: googleClientIds(env) !== null,
     email: emailConfigured(env),
+    emailCode: emailConfigured(env),
     dev: devLoginAllowed(req, env),
   };
 }

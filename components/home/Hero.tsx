@@ -44,7 +44,8 @@ export type HeroProps = {
   judging: ReactNode;
   /** Replaces the form card once the verdict is in. */
   verdict: ReactNode;
-  /** Free / Premium switch, placed after the CTA. Absent when premium is
+  /** Free / Premium switch, placed above the Premium extras and the CTA, so
+   * the choices it reveals come after it. Absent when premium is
    * off: the form is then exactly what it was before premium existed. */
   tierSwitch?: ReactNode;
   /** Short progress text (premium's "checking if anything's missing"),
@@ -56,6 +57,16 @@ export type HeroProps = {
    * held so what is judged is what is shown. The form stays in the
    * accessibility tree (unlike `inert`), so `status` is still read out. */
   busy?: boolean;
+  /** Premium extras between the examples and the CTA: the evidence picker
+   * and the "just me / both sides" choice. Absent on free. */
+  extras?: ReactNode;
+  /** Replaces "Get the verdict" (a two-sided case creates an invite). */
+  ctaLabel?: string;
+  /** "Both sides" is chosen: the owner writes only their own side, so the
+   * label and placeholder say so. */
+  twoSided?: boolean;
+  /** Placed in the submit row before the button (the two-sided display name). */
+  ctaExtra?: ReactNode;
 };
 
 function prefersReducedMotion(): boolean {
@@ -88,6 +99,10 @@ export function Hero({
   status = null,
   clarify,
   busy = false,
+  extras,
+  ctaLabel,
+  twoSided = false,
+  ctaExtra,
 }: HeroProps) {
   const cardRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
@@ -172,7 +187,7 @@ export function Hero({
                 }}
               >
                 <label className={styles.fieldLabel} htmlFor="argument">
-                  <span>{t(lang, "input.label")}</span>
+                  <span>{t(lang, twoSided ? "input.labelTwoSided" : "input.label")}</span>
                   <span className={styles.count} aria-hidden>
                     {argument.length} / {MAX_ARGUMENT}
                   </span>
@@ -189,7 +204,7 @@ export function Hero({
                       e.currentTarget.form?.requestSubmit();
                     }
                   }}
-                  placeholder={t(lang, "placeholder")}
+                  placeholder={t(lang, twoSided ? "placeholderTwoSided" : "placeholder")}
                   readOnly={busy}
                   rows={4}
                   maxLength={MAX_ARGUMENT}
@@ -198,27 +213,38 @@ export function Hero({
                   aria-describedby={error ? "hero-error" : undefined}
                 />
 
-                <p className={styles.spark} id="hero-spark">
-                  {t(lang, "examples.label")}
-                </p>
-                <div className={styles.chips} role="group" aria-labelledby="hero-spark">
-                  {EXAMPLES.map((ex, i) => (
-                    <button
-                      key={ex.text}
-                      type="button"
-                      className={styles.chip}
-                      data-on={argument === t(lang, ex.text) ? "" : undefined}
-                      disabled={busy}
-                      onClick={() => {
-                        onExample(ex.text, i);
-                        inputRef.current?.focus({ preventScroll: true });
-                      }}
-                    >
-                      {t(lang, ex.label)}
-                    </button>
-                  ))}
-                </div>
+                {/* The fun examples are one person's argument: not offered when
+                    the other side will write their own account. */}
+                {twoSided ? null : (
+                  <>
+                    <p className={styles.spark} id="hero-spark">
+                      {t(lang, "examples.label")}
+                    </p>
+                    <div className={styles.chips} role="group" aria-labelledby="hero-spark">
+                      {EXAMPLES.map((ex, i) => (
+                        <button
+                          key={ex.text}
+                          type="button"
+                          className={styles.chip}
+                          data-on={argument === t(lang, ex.text) ? "" : undefined}
+                          disabled={busy}
+                          onClick={() => {
+                            onExample(ex.text, i);
+                            inputRef.current?.focus({ preventScroll: true });
+                          }}
+                        >
+                          {t(lang, ex.label)}
+                        </button>
+                      ))}
+                    </div>
+                  </>
+                )}
 
+                {/* Free/Premium comes before the Premium extras it reveals
+                    (the mode choice, the screenshots). */}
+                {tierSwitch ? <div className={styles.tierRow}>{tierSwitch}</div> : null}
+
+                {extras}
 
                 {phase === "intake" && turnstile ? (
                   <div className={styles.turnstile}>{turnstile}</div>
@@ -236,6 +262,7 @@ export function Hero({
                 ) : null}
 
                 <div className={styles.ctaRow}>
+                  {ctaExtra}
                   <button type="submit" className={styles.cta} disabled={!canSubmit}>
                     <svg className={styles.ctaIcon} viewBox="0 0 20 20" aria-hidden>
                       <path d="M3 8.5 17 6.5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
@@ -243,12 +270,11 @@ export function Hero({
                       <circle cx="15" cy="3.8" r="2.4" fill="#B5CCC0" />
                       <path d="M10 8 7.6 16h4.8z" fill="currentColor" />
                     </svg>
-                    <span>{t(lang, "getVerdict")}</span>
+                    <span>{ctaLabel ?? t(lang, "getVerdict")}</span>
                     <span className={styles.arrow} aria-hidden>
                       →
                     </span>
                   </button>
-                  {tierSwitch}
                 </div>
 
                 {tierSwitch ? (

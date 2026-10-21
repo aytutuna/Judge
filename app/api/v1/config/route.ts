@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import type { AppConfig } from "@/lib/account-types";
 import { authProviders, premiumEnabled } from "@/lib/auth";
+import { casesEnabled, evidenceEnabled } from "@/lib/features";
 import { PRICING } from "@/lib/pricing";
 
 export const runtime = "nodejs";
@@ -13,6 +14,7 @@ export function GET(req: Request): NextResponse<AppConfig> {
     signIn: authProviders(req),
     premiumEnabled: premiumEnabled(),
     pricing: { ...PRICING, packs: PRICING.packs.map((p) => ({ ...p })), monthly: { ...PRICING.monthly } },
+    features: { cases: casesEnabled(), evidence: evidenceEnabled() },
   };
   return NextResponse.json(body, { headers: { "Cache-Control": "no-store" } });
 }

@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useSyncExternalStore } from "react";
+import { useRef, useState, useSyncExternalStore } from "react";
 import { t, type Lang } from "@/lib/i18n";
 import { stripLeadingEmoji } from "@/lib/text";
+import { ShareDialog, type OwnerShare } from "./ShareDialog";
 import styles from "./verdict/verdict.module.css";
 
 function subscribeNever(): () => void {
@@ -15,21 +16,45 @@ function serverCanShare(): boolean {
   return false;
 }
 
+/** Whether a share or copy opens the names dialog first. Asked once per
+ * verdict: not when the names were saved in this page view
+ * (`confirmedHere`), saved before on any device (the server remembers it,
+ * even when the writer kept the label or switched names off), or the
+ * writer's own name is already chosen. Never for public viewers. Pure. */
+export function needsNamesPrompt(owner: OwnerShare | undefined, confirmedHere: boolean): boolean {
+  return Boolean(owner) && !confirmedHere && !owner?.namesConfirmed && owner?.display.a == null;
+}
+
 /** Copy-link plus native share sheet (where the browser has one). The native
- * button only appears after hydration so server and client markup agree. */
+ * button only appears after hydration so server and client markup agree.
+ * For the verdict's writer (`owner`), the first share or copy opens the
+ * names dialog first (how they appear, the others' names, names on or off),
+ * then goes on with the share; public viewers get the buttons alone. */
 export function ShareButtons({
   shareId,
   title,
   lang,
   className,
+  owner,
 }: {
   shareId: string;
   title: string;
   lang: Lang;
   className?: string;
+  owner?: OwnerShare;
 }) {
   const nativeShare = useSyncExternalStore(subscribeNever, canNativeShare, serverCanShare);
   const [copied, setCopied] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [confirmed, setConfirmed] = useState(false);
+  const pending = useRef<(() => void) | null>(null);
+  const needsNames = needsNamesPrompt(owner, confirmed);
+
+  function withNames(action: () => void) {
+    if (!needsNames) return action();
+    pending.current = action;
+    setDialogOpen(true);
+  }
 
   const url = () => `${window.location.origin}/v/${shareId}`;
 
@@ -55,7 +80,7 @@ export function ShareButtons({
   return (
     <div className={[styles.shareGroup, className].filter(Boolean).join(" ")}>
       {nativeShare ? (
-        <button type="button" onClick={share} className={styles.btnGhost}>
+        <button type="button" onClick={() => withNames(() => void share())} className={styles.btnGhost}>
           <svg viewBox="0 0 16 16" aria-hidden>
             <path
               d="M8 10V2.5M5 5.2 8 2.2l3 3M4 8H3.5A1.5 1.5 0 0 0 2 9.5v3A1.5 1.5 0 0 0 3.5 14h9a1.5 1.5 0 0 0 1.5-1.5v-3A1.5 1.5 0 0 0 12.5 8H12"
@@ -69,7 +94,7 @@ export function ShareButtons({
           {stripLeadingEmoji(t(lang, "share"))}
         </button>
       ) : null}
-      <button type="button" onClick={copyLink} className={styles.btnGhost}>
+      <button type="button" onClick={() => withNames(() => void copyLink())} className={styles.btnGhost}>
         {copied ? (
           <svg viewBox="0 0 16 16" aria-hidden>
             <path
@@ -96,6 +121,21 @@ export function ShareButtons({
           {stripLeadingEmoji(copied ? t(lang, "copied") : t(lang, "copyLink"))}
         </span>
       </button>
+      {owner ? (
+        <ShareDialog
+          open={dialogOpen}
+          lang={lang}
+          owner={owner}
+          saveLabel={t(lang, "names.saveShare")}
+          onClose={() => setDialogOpen(false)}
+          onDone={() => {
+            setConfirmed(true);
+            const action = pending.current;
+            pending.current = null;
+            action?.();
+          }}
+        />
+      ) : null}
     </div>
   );
 }

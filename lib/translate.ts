@@ -46,6 +46,12 @@ export type TranslatableText = {
   /** Premium web fact-check claims. Present only when the verdict has a
    * "checked" fact-check; source titles and URLs are never translated. */
   fact_check?: { claim: string; summary: string }[];
+  /** Two-sided case verdicts: present only when the verdict has them. */
+  agreed_facts?: string[];
+  disputed_facts?: { fact: string; party_a: string; party_b: string }[];
+  would_change?: string[];
+  /** Verdicts produced by an appeal: the one-sentence "what changed". */
+  appeal_summary?: string;
 };
 
 /** Output schema (compact form, converted by toClaudeSchema). */
@@ -85,6 +91,12 @@ export function extractText(r: VerdictResult): TranslatableText {
     ...(r.fact_check?.status === "checked"
       ? { fact_check: r.fact_check.claims.map((c) => ({ claim: c.claim, summary: c.summary })) }
       : {}),
+    ...(r.agreed_facts ? { agreed_facts: [...r.agreed_facts] } : {}),
+    ...(r.disputed_facts
+      ? { disputed_facts: r.disputed_facts.map((d) => ({ fact: d.fact, party_a: d.party_a, party_b: d.party_b })) }
+      : {}),
+    ...(r.would_change ? { would_change: [...r.would_change] } : {}),
+    ...(r.appeal ? { appeal_summary: r.appeal.summary } : {}),
   };
 }
 
@@ -110,6 +122,10 @@ export function flattenText(x: TranslatableText): Slot[] {
     ...(x.lean_reason === null ? [] : [other(x.lean_reason)]),
     ...(x.crux_trial ? [other(x.crux_trial.attack), other(x.crux_trial.reasoning)] : []),
     ...(x.fact_check ?? []).flatMap((c) => [other(c.claim), other(c.summary)]),
+    ...(x.agreed_facts ?? []).map(other),
+    ...(x.disputed_facts ?? []).flatMap((d) => [other(d.fact), other(d.party_a), other(d.party_b)]),
+    ...(x.would_change ?? []).map(other),
+    ...(x.appeal_summary === undefined ? [] : [other(x.appeal_summary)]),
   ];
 }
 
@@ -143,6 +159,14 @@ export function unflattenText(template: TranslatableText, flat: readonly string[
     const claim = next();
     return { claim, summary: next() };
   });
+  const agreed_facts = template.agreed_facts?.map(() => next());
+  const disputed_facts = template.disputed_facts?.map(() => {
+    const fact = next();
+    const party_a = next();
+    return { fact, party_a, party_b: next() };
+  });
+  const would_change = template.would_change?.map(() => next());
+  const appeal_summary = template.appeal_summary === undefined ? undefined : next();
   return {
     headline,
     crux,
@@ -157,6 +181,10 @@ export function unflattenText(template: TranslatableText, flat: readonly string[
     lean_reason,
     crux_trial,
     ...(fact_check ? { fact_check } : {}),
+    ...(agreed_facts ? { agreed_facts } : {}),
+    ...(disputed_facts ? { disputed_facts } : {}),
+    ...(would_change ? { would_change } : {}),
+    ...(appeal_summary !== undefined ? { appeal_summary } : {}),
   };
 }
 
@@ -376,6 +404,19 @@ export function applyText(r: VerdictResult, text: TranslatableText, target: Lang
           },
         }
       : {}),
+    ...(r.agreed_facts ? { agreed_facts: r.agreed_facts.map((f, i) => m(text.agreed_facts?.[i] ?? f)) } : {}),
+    ...(r.disputed_facts
+      ? {
+          disputed_facts: r.disputed_facts.map((d, i) => ({
+            ...d,
+            fact: m(text.disputed_facts?.[i]?.fact ?? d.fact),
+            party_a: m(text.disputed_facts?.[i]?.party_a ?? d.party_a),
+            party_b: m(text.disputed_facts?.[i]?.party_b ?? d.party_b),
+          })),
+        }
+      : {}),
+    ...(r.would_change ? { would_change: r.would_change.map((w, i) => m(text.would_change?.[i] ?? w)) } : {}),
+    ...(r.appeal ? { appeal: { ...r.appeal, summary: m(text.appeal_summary ?? r.appeal.summary) } } : {}),
     lang: target,
   };
 }

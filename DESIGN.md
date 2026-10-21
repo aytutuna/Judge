@@ -11,7 +11,7 @@ the admin script are in the README ("Accounts and Premium").
 | Product | The website and a later native app (iOS + Android, likely Expo / React Native) share one backend. The app will be the main product, so every capability is a versioned JSON HTTP API. No server actions, no cookie-only flows. |
 | Tiers | **Free**: the original pipeline, limits and UI flow, unchanged, for signed-out and free users. **Premium**: clarifying questions, web fact-check with sources, stronger judge panel. |
 | Auth | [Better Auth](https://www.better-auth.com) 1.7 on the existing libSQL database (`@libsql/kysely-libsql`; an npm `overrides` entry keeps one `@libsql/client`). Browser: HttpOnly cookie `verdict.session_token` (`__Secure-` on https). App: the same session token as `Authorization: Bearer`. 30-day sliding sessions. |
-| Sign-in | Apple and Google (web redirect and native ID token), email magic link (Resend), and a dev-only test login. Methods without credentials are reported unavailable by `GET /api/v1/config` and shown disabled. |
+| Sign-in | Apple and Google (web redirect and native ID token), email magic link (website) or 6-digit email code (apps), both through Resend, and a dev-only test login. Methods without credentials are reported unavailable by `GET /api/v1/config` and shown disabled. |
 | Dev login | Only when the code is not a production build (the `process.env.NODE_ENV` literal is inlined by `next build`, so starting a build with another `NODE_ENV` does not help) **and** `DEV_LOGIN=1` **and** the server listens on loopback only (`next dev -H 127.0.0.1`, read from Next's recorded listen origin) **and** the `Host` header is `localhost`/`127.0.0.1`/`[::1]` (`X-Forwarded-Host` ignored). Otherwise 404. |
 | Errors | `{ error, code, retryAfterSec?, resetsAt? }` with stable codes in `lib/api-errors.ts`. |
 | Entitlements | Credit balance + subscriptions + an append-only grant ledger with `UNIQUE(source, external_id)` + a `premium_usage` reservation table. A credit is reserved before any model call, then consumed or refunded. Writes are single conditional `batch()` statements under an in-process mutex with SQLITE_BUSY retry; interactive transactions are never used (they failed 7 of 8 under parallel load on one libSQL client). |
@@ -56,6 +56,28 @@ for Premium: the account and the per-user limits are the gate.
 Funding order: an active subscription under its fair-use cap first, then
 credits. Reservations still open after 10 minutes are refunded lazily.
 
+## Two-sided cases, evidence and appeals
+
+Code: `lib/cases/**` (tables, state machine, credits, judging, HTTP),
+`lib/evidence/**` (images, transcripts, tokens, submission anonymizer),
+shapes in `lib/case-types.ts`. The free flow and a premium request without
+evidence send exactly the requests they did before.
+
+| Topic | Decision |
+|---|---|
+| Real names | Never on the server. Each submission (side A, side B, each appeal) is anonymized once, when it is submitted, together with its evidence transcripts, and its name map goes back only in that response. The server keeps keyed, case-salted name fingerprints (`case_people`: HMAC of case id + normalized name -> label) so the second account and appeals reuse the same labels. |
+| Visibility | Before a two-sided verdict nobody sees the other side. The respondent view carries no sides at all until then (the link is the credential and the owner holds it too). After a two-sided verdict both parties see both anonymized accounts, transcripts, appeals and every verdict. A case judged on the owner's side alone shows the respondent no verdict. Share pages show only the verdict. |
+| Invite links | 128-bit token = HMAC(derived key, case id + nonce), base64url. The table stores the nonce and sha256(token); the owner's link is re-derived, and a new nonce turns the old one off. The token never goes into a sign-in redirect: the respondent's sign-in returns to `/r`, which reads the token back from the browser. |
+| Who is Party B | Fixed when side B is submitted: a signed-in answer sets `respondent_user_id` in the same guarded UPDATE; a signed-out answer stores `respondent_claim_nonce` and returns a claim secret = HMAC(derived key, case id + nonce) (re-derived for a replayed key; never stored). A Party B appeal needs the bound account, or the claim (the first accepted appeal then binds the account). Holding the link alone is not enough. |
+| States | `awaiting_respondent -> judging -> judged`, plus `failed` (retryable, refunded) and `expired` (7 days, refunded; reads report it before the sweep writes it). Transitions are one conditional UPDATE, so a respondent and a judge-now race has exactly one winner. |
+| Credits | The owner's unit is reserved in `premium_usage` at creation with `hold_until = expires_at`; the stale sweep refunds 10 minutes after `COALESCE(hold_until, created_at)`. Judging consumes it in the same batch that links the verdict; failure, refusal, a degraded panel, expiry and deletion refund it. Appeals reserve the appealer's unit. |
+| Judging | After the response (`after()`), clients poll `GET` every `pollAfterMs`. Every write of a run is guarded by a fresh token (`judging_token` / `attempt_token`), so a run the 10-minute sweep already failed, or a deleted case, changes nothing. |
+| Judges | Same premium pipeline (fact-check on the document, 2 x Sonnet + Haiku, escalation, crux trial). Two-sided runs add `TWO_SIDED_JUDGE_NOTE` and `TWO_SIDED_JUDGE_SCHEMA` (`agreed_facts`, `disputed_facts`, `would_change` before the forced ruling, which stays last); evidence adds `EVIDENCE_JUDGE_NOTE`; appeals add `APPEAL_JUDGE_NOTE` (`APPEAL_ONE_SIDED_JUDGE_NOTE` on a case judged on one side, where nobody answered either text) and re-judge the whole record without showing the earlier verdict. When the crux trial overturns a two-sided ruling, the decisive dispute is stored as `unsettled`. Deadline gates count from the request that scheduled the run, so anonymizing in that request counts; a refused seat's Haiku rerun is skipped past 220 s. Each case's model calls are logged with its id (`[premium] ... case=<id>` for judging, `[cases] usage case=<id> step=...` for each anonymize call and the appeal summary). |
+| Appeals | One per party per case (at most two), owner or the signed-in Premium respondent who wrote side B (see above). The verdict it answers is read inside the INSERT (latest seq), not from the pre-anonymize snapshot. Labelled `upheld / overturned / changed` (shown as "Verdict stands / flipped / changed") against that verdict, with the confidence change and a one-sentence summary (Haiku, fails open to empty). A refused re-judge fails the appeal and refunds instead of storing a refused card. |
+| Evidence | Images are checked by magic bytes, transcribed in memory, and thrown away; the client gets a signed token (6 h) holding the raw transcript, and the submission anonymizes it with the text. Only anonymized transcripts are stored. |
+| Deletion | `DELETE /cases/{id}` and account deletion remove sides, evidence, fingerprints, appeals, case verdicts and their translations; bindings to the deleted account elsewhere are cleared. |
+| Kill switches | `CASES_ENABLED=0`, `EVIDENCE_ENABLED=0` (also off whenever Premium is off); `GET /api/v1/config` reports `features`. |
+
 ## API for mobile
 
 ### Principles
@@ -68,8 +90,8 @@ credits. Reservations still open after 10 minutes are refunded lazily.
 - **Apple (iOS):** `expo-apple-authentication` with a random nonce (Apple gets `SHA256(nonce)`), then `POST /api/auth/sign-in/social { provider: "apple", idToken: { token: identityToken, nonce, user: { name: { firstName, lastName } } } }`. Response `{ redirect: false, token, user }` (and the `set-auth-token` header); keep `token` in SecureStore. Apple sends the name only on the first sign-in. Audience: `APPLE_APP_BUNDLE_ID`.
 - **Google (iOS/Android):** native Google Sign-In, then `POST /api/auth/sign-in/social { provider: "google", idToken: { token } }`. Accepted audiences: the web, iOS and Android client ids.
 - Invalid ID tokens answer `401 { code: "INVALID_TOKEN" }`.
-- **Email (later):** magic link with `callbackURL: "verdict://auth"`, which needs the `@better-auth/expo` server plugin, app links, and a bot check other than Turnstile.
-- **Session:** `GET /api/v1/me`. **Sign out:** `POST /api/auth/sign-out`. **Delete account** (required by both stores): `DELETE /api/v1/me { "confirm": "delete" }`.
+- **Email (apps):** when `signIn.emailCode` is true, `POST /api/auth/email-otp/send-verification-otp?lang=tr { email, type: "sign-in" }` → `{ success: true }` and a 6-digit code by email; then `POST /api/auth/sign-in/email-otp { email, otp }` → `{ token, user }` (and `set-auth-token`). Codes last 10 minutes, 3 wrong tries burn a code (`INVALID_OTP`, `TOO_MANY_ATTEMPTS`, `OTP_EXPIRED`), 3 requests per minute per IP; no Turnstile.
+- **Session:** `GET /api/v1/me`. A bearer token with no live session gets `401 signin_required` on every session-aware route (free verdicts and public reads included); requests without `Authorization` are unaffected. **Sign out:** `POST /api/auth/sign-out`. **Delete account** (required by both stores): `DELETE /api/v1/me { "confirm": "delete" }`.
 
 ### Core calls
 | Call | Response |

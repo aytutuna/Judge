@@ -48,3 +48,6 @@ next-env.d.ts
 *.db-journal
 *.db-wal
 *.db-shm
+
+# removal log written beside the local database (lib/originals/removal-log.ts)
+removals.log

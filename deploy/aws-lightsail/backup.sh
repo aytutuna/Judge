@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 # Copies the Verdict SQLite database to /var/lib/verdict/backups and deletes
-# copies older than 14 days. Runs nightly via verdict-backup.timer, as the
+# copies older than 14 days (and databases set aside by verdict-restore, so
+# removed data is gone from every copy within that time; the privacy page
+# promises it). Runs nightly via verdict-backup.timer, as the
 # verdict user, with /etc/verdict/verdict.env loaded by systemd. Run it now:
 #
 #   sudo systemctl start verdict-backup && journalctl -u verdict-backup -n 20
@@ -49,6 +51,8 @@ main() {
   # -mtime +N matches files at least N+1 whole days old.
   find "$BACKUP_DIR" -maxdepth 1 -type f -name 'verdict-*.db.gz' -mtime +"$((KEEP_DAYS - 1))" -print -delete |
     sed 's/^/Deleted old backup /'
+  find "$(dirname -- "$db")" -maxdepth 1 -type f -name "$(basename -- "$db").before-restore-*" \
+    -mtime +"$((KEEP_DAYS - 1))" -print -delete | sed 's/^/Deleted old pre-restore copy /'
 }
 
 main "$@"

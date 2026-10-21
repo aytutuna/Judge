@@ -47,9 +47,14 @@ itself a Claude call, so the raw text, names included, does go to Anthropic
 once; the privacy page says so. The name map returns to your browser only,
 where it puts the real names back into the verdict you see (a first-person
 narrator reads as "You" / "Sen"); share pages and the stored row stay
-anonymized. If anonymization fails for any reason (refusal, quota,
-timeout, malformed output), the request fails closed: nothing is judged and
-nothing is stored.
+anonymized. The anonymizer's output is checked in code: the names it lists
+are substituted in its text (including possessives and Turkish suffixes such
+as "Ryan's", "Burak'ın", "Burakla"), and a listed name that still survives, an
+untouched echo of the input, or capitalized words that survive unlisted
+trigger one retry at `medium` effort with a firmer instruction. If
+anonymization fails for any reason (refusal, quota, timeout, malformed
+output, a name that survives the retry), the request fails closed: nothing
+is judged and nothing is stored.
 
 **Türkçe / Turkish**: a TR | EN toggle in the header switches the whole UI, and
 the chosen language rides along with each request so the judges, the
@@ -85,12 +90,15 @@ An `ANTHROPIC_API_KEY` is **required** — without one the API refuses to judge
 | `RATE_LIMIT_DB` | *(empty)* | Without Upstash: a libSQL file URL (e.g. `file:/run/verdict/ratelimit.db` in the Lightsail guide) where the in-memory limits log each counted verdict, so a restarted app process keeps its limits and daily count. Unset = they start over on every restart. If the file cannot be written, verdicts are refused (`503 unavailable`) |
 | `RATE_LIMIT_SALT` | *(Upstash token)* | Secret key for hashing visitor IPs before they reach the rate-limit store. Any long random string. Unset = the Upstash token is used. Changing it resets every visitor's limits |
 | `DAILY_VERDICT_CAP` | `1000` | Site-wide verdicts per UTC day. `0` pauses the site |
+| `ORIGINALS_KEY` | *(required in production)* | 32 random bytes, base64 (`openssl rand -base64 32`): encrypts every stored original text, name map and share-page display name (AES-256-GCM). Back it up apart from the database (e.g. in a password manager): losing it makes the stored originals unreadable, and leaking it together with a database copy exposes them. Unset in development = a fixed development key (with a warning). Unset or invalid in production = originals and display names are not stored (one error line per process, one warning per skipped item); verdicts still work and share pages show Party A / Party B. See *Stored originals, names and removal* |
+| `ORIGINALS_KEY_PREVIOUS` | *(empty)* | Older keys, comma-separated, used only to decrypt after a rotation. New data is always sealed with `ORIGINALS_KEY` |
+| `REMOVAL_LOG` | *(`removals.log` beside a local database file)* | Append-only log of removals (ids, party, reason, time; no text or names), kept outside the database so `scripts/originals.ts replay-removals` can re-apply them after a backup is restored. `off` disables it; a remote (`libsql://`) database has none unless this is set |
 | `NEXT_PUBLIC_TURNSTILE_SITE_KEY` | *(empty)* | Cloudflare Turnstile site key. Unset = no bot-check widget |
 | `TURNSTILE_SECRET_KEY` | *(empty)* | Turnstile secret for server-side verification. Unset = verification skipped (local dev) |
 | `NEXT_PUBLIC_SITE_URL` | *(Vercel production domain, else `http://localhost:3000`)* | Public origin, e.g. `https://verdict.example.org`, used for canonical links, link previews, `robots.txt` and the sitemap. Set it for a custom domain or a host other than Vercel. Read at build time, so redeploy after changing it |
 | `CONTACT_EMAIL` | *(empty)* | Address shown on `/privacy` for questions and removal requests. Unset or a placeholder (`example.com`) = the contact section is hidden. Read at build time, so redeploy after changing it |
 | `CLAUDE_MODEL` | `claude-haiku-5-5` | Judge and crux-trial model |
-| `CLAUDE_MODEL_LITE` | `claude-haiku-5-5` | Anonymizer model (always runs at `low` effort) |
+| `CLAUDE_MODEL_LITE` | `claude-haiku-5-5` | Anonymizer model (runs at `low` effort; its one retry runs at `medium`) |
 | `JUDGE_EFFORT` | `medium` | Thinking depth for judge and trial calls: `low`, `medium` or `high` |
 | `JUDGE_RUNS` | `3` | Self-consistency runs per verdict (1–3), run in parallel. Lower it to cut cost; confidence is capped accordingly |
 | `JUDGE_EXTRA_RUNS` | `2` | Extra judges (0–4, in parallel) called in when the first round's confidence is at or below `JUDGE_ESCALATE_AT`; all votes are then aggregated together. `0` turns escalation off |
@@ -107,7 +115,7 @@ about 3,050 input and 1,300 output tokens, so a full verdict (3 judges +
 anonymizer + up to 2 trial calls) costs roughly **$0.004–0.006** — about
 **$4–6 per 1,000 verdicts**. With the default `DAILY_VERDICT_CAP=1000`, the
 worst case is about $6 a day, plus about $2 if every verdict escalated.
-Each call has a fixed time budget (60s for the anonymizer, 120s for judges,
+Each call has a fixed time budget (60s for the anonymizer, retry included, 120s for judges,
 45s for escalation judges, 60s total for the trial), so a verdict never hangs
 indefinitely and the worst case (285s) fits the route's 300s limit. The SDK retries rate-limit and overload errors
 automatically, and a verdict that still fails on a 429 is reported as a quota
@@ -164,7 +172,7 @@ after sign-in.
 | `APPLE_TEAM_ID`, `APPLE_KEY_ID` | *(empty)* | Your 10-character Apple team id, and the key id of the Sign in with Apple key |
 | `APPLE_PRIVATE_KEY_BASE64` | *(empty)* | The whole `AuthKey_<KEYID>.p8` file, base64-encoded on one line (`base64 -w0 AuthKey_XXXX.p8`). The app signs Apple's client secret from it and renews it on its own. All four Apple values set = the Apple button works |
 | `APPLE_APP_BUNDLE_ID` | *(empty)* | The iOS app's bundle id, accepted as an extra audience for native Sign in with Apple |
-| `RESEND_API_KEY`, `EMAIL_FROM` | *(empty)* | [Resend](https://resend.com) API key and sender, e.g. `Judge <signin@okjudge.com>` on a domain verified in Resend. Both set = email sign-in links work. With `TURNSTILE_SECRET_KEY` set, the email form needs a Turnstile token too |
+| `RESEND_API_KEY`, `EMAIL_FROM` | *(empty)* | [Resend](https://resend.com) API key and sender, e.g. `Judge <signin@okjudge.com>` on a domain verified in Resend. Both set = email sign-in links (website) and email sign-in codes (apps) work. With `TURNSTILE_SECRET_KEY` set, the website's email form needs a Turnstile token too; the app code endpoints rely on rate limits instead |
 | `DEV_LOGIN` | *(empty)* | `1` shows a "test sign-in" for local testing. It works only when **all** hold: not a production build (`next build` output is production whatever `NODE_ENV` it is started with), `DEV_LOGIN=1`, the server listens on `127.0.0.1` or `::1` only (`npm run dev:login`, i.e. `next dev -H 127.0.0.1`; plain `npm run dev` listens on every interface and is refused), and the request's `Host` is `localhost`, `127.0.0.1` or `[::1]`. Anywhere else the endpoint answers 404 |
 | `PREMIUM_ENABLED` | `1` | `0` turns Premium off (the switch disappears; premium requests get `503 not_configured`) |
 | `PREMIUM_DAILY_CAP` | `500` | Site-wide premium runs per UTC day, counted from the database, refunded ones included (a refused or failed run still costs its model calls). A cost circuit breaker; `0` pauses Premium. Clarifying questions are not counted; the per-account limit below bounds them |
@@ -172,6 +180,9 @@ after sign-in.
 | `PREMIUM_SONNET_EFFORT` | `medium` | Thinking depth for non-Haiku premium judges: `low`, `medium` or `high` |
 | `PREMIUM_FACTCHECK_MODEL` | `claude-haiku-5-5` | Model for the web fact-check |
 | `PREMIUM_FACTCHECK_MAX_SEARCHES` | `3` | Web searches per fact-check (1 to 5), $0.01 each |
+| `CASES_ENABLED` | `1` | `0` turns off two-sided cases and appeals (`/api/v1/cases*` and `/api/v1/respond/*` answer `503 not_configured`, `GET /api/v1/config` reports `features.cases: false`). Always off when Premium is off |
+| `EVIDENCE_ENABLED` | `1` | `0` turns off screenshot evidence (upload endpoints answer `503 not_configured`, evidence tokens are refused with `400 evidence_invalid`, `features.evidence: false`). Always off when Premium is off |
+| `EVIDENCE_MODEL` | `claude-haiku-5-5` | Vision model that transcribes evidence images |
 
 Sign-in providers without credentials are reported as unavailable by
 `GET /api/v1/config`, and the sign-in page shows them disabled.
@@ -207,6 +218,51 @@ sign-in does not depend on it.
    `fact_check` and `panel` added, and the reserved credit is consumed
    (or returned, see above).
 
+### Two-sided cases, evidence and appeals (Premium)
+
+- **Hear both sides.** A Premium user writes their side (`POST /api/v1/cases`)
+  and gets a private invite link `/r/<token>` for the other person. That
+  person needs no account: they write their side privately (Turnstile when
+  configured, per-IP limits). Neither sees the other's text before the
+  verdict; afterwards both see the verdict and both anonymized accounts.
+  The judges get both accounts labelled "Party A's account" / "Party B's
+  account" and add what both agree on, what is disputed (with which side the
+  evidence favors and the fact the verdict hinges on) and what would change
+  the verdict. The owner can judge with only their side at any time; after
+  7 days without an answer the invite expires.
+- **Credits.** One premium verdict per case, held when the case is created
+  (it counts towards the fair-use cap and `PREMIUM_DAILY_CAP` then), spent
+  when it is judged, and returned if judging fails, the judges decline, or
+  nobody answers in 7 days. Judging runs after the response (Next's
+  `after()`, so it needs `next start` or a platform that supports it);
+  anything still judging after 10 minutes is failed and refunded.
+- **Evidence.** Up to 3 images per side (1 per appeal), PNG/JPEG/WebP/GIF,
+  checked by their bytes. The browser shrinks them to 1600 px first. Each
+  image is transcribed in memory by `EVIDENCE_MODEL` and then thrown away:
+  images are never stored, and the transcript is anonymized with the same
+  name map as the text before it is stored or judged. Works for one-sided
+  premium verdicts too (`"evidence"` on `POST /api/v1/verdict`).
+- **Appeals.** After a verdict, each party may add context once (the owner;
+  the other person only when signed in with Premium, and only the person who
+  wrote side B: the account they answered with, or whoever holds the claim
+  code their browser got when answering signed out). It costs one premium
+  verdict; the whole case is judged again and the new verdict is labelled
+  (verdict stands / flipped / changed) next to the earlier one, which stays.
+- **Names.** Each side is anonymized when it is submitted. The judges read
+  only the anonymized text; each side as written (with its raw transcripts
+  and name map) is stored encrypted, readable only by that party (see
+  *Stored originals, names and removal*). Each person types the name they
+  want on the share pages when they submit (`displayName`; empty = the
+  label). The server also keeps keyed, per-case name fingerprints so the
+  same person gets the same label in both accounts.
+- **Secrets.** Invite links, evidence tokens and name fingerprints are keyed
+  from `BETTER_AUTH_SECRET`: rotating it turns off open invite links and
+  pending evidence uploads.
+- **Removal.** Either party can remove their own side: their original and
+  display name are blanked and every link of the case (share pages, previews,
+  the invite) is closed. Nothing is deleted. Deleting an account does this
+  for every case the account started or answered.
+
 **Cost per premium verdict** (Haiku $0.10/$0.50 and Sonnet $2/$10 per
 million tokens, $0.01 per search). Measured on 6 logged local runs:
 **$0.031 to $0.052**, about $0.05 for a factual dispute with 2 searches and
@@ -230,6 +286,62 @@ lower the cap (`PRICING.monthly.fairUseCap` in `lib/pricing.ts`), raise the
 price, or lower the per-verdict ceiling (for
 example a smaller `max_tokens` for the Sonnet judge calls, whose measured
 output is 500 to 800 tokens; not done yet).
+
+### Stored originals, names and removal
+
+- **What is stored.** Every submission's text exactly as sent (free and
+  premium arguments with Premium's questions and answers, each case side,
+  each appeal), the raw screenshot transcripts and the name map (original ->
+  label), as one AES-256-GCM sealed JSON blob per submission in the
+  `originals` table, bound to its row (the additional authenticated data
+  names the row). The judges, fact-check, crux trial and translation still
+  only ever get the anonymized text.
+- **Who can read it.** Only the writer: a signed-in writer through their
+  account on any device; a signed-out writer through an owner token returned
+  once in the verdict response (`owner_token`, 43 characters; the website
+  keeps it in `localStorage` under `judge.owner.<verdictId>`, the app should
+  use secure storage) and sent only as the `X-Owner-Token` header. The server
+  keeps a SHA-256 of the token, never the token. Case parties use their
+  session, or Party B's claim code. The operator can decrypt with the key
+  (`scripts/originals.ts`).
+- **Share pages show names.** Each one-sided verdict has display names: the
+  other people default to the first names the writer used, the writer's own
+  name is whatever they save in the share dialog (prefilled with the
+  account's first name). The writer can edit them or switch names off at any
+  time (then the page shows Party A / Party B). Share pages and their OG
+  images use only these display names, never the raw map, and stay
+  `noindex`.
+- **Removal.** The writer (or a case party for their side, or account
+  deletion for everything of an account) can remove a verdict: the original,
+  name map and display names become NULL, and the share page (via
+  `proxy.ts`), its preview image and `GET /api/v1/verdicts/{id}` answer
+  **410**. No row is ever deleted; the anonymized text and the verdict stay
+  in the database, unreachable through public routes.
+- **Older rows.** Verdicts stored before this feature have no owner and keep
+  showing labels. Premium verdicts (linked through their consumed credit)
+  and case verdicts are backfilled with an ownership row at startup.
+
+**Operator script** (from the app directory; `show*` needs the key):
+
+```bash
+sudo -u verdict npx tsx --env-file=/etc/verdict/verdict.env scripts/originals.ts show <verdictId>
+sudo -u verdict npx tsx --env-file=/etc/verdict/verdict.env scripts/originals.ts show-case <caseId> [a|b]
+sudo -u verdict npx tsx --env-file=/etc/verdict/verdict.env scripts/originals.ts remove <verdictId>
+sudo -u verdict npx tsx --env-file=/etc/verdict/verdict.env scripts/originals.ts remove-case <caseId> <a|b>
+```
+
+`remove` also works for verdicts stored before this feature (it adds a
+removed ownership row). Every removal (by a writer, a party, an account
+deletion or this script) is also appended to the removal log (`REMOVAL_LOG`,
+by default `removals.log` beside the database, i.e.
+`/var/lib/verdict/removals.log` on the server). Restoring an older database
+would otherwise bring removed originals and share links back, so
+`verdict-restore` runs
+`scripts/originals.ts replay-removals [logFile]` before starting the app
+(and leaves it stopped if that fails); run it by hand after any other kind
+of restore. A server installed before this feature needs
+`ORIGINALS_KEY` added to its env file by hand (`openssl rand -base64 32`)
+and a restart; until then nothing personal is stored (logged once).
 
 ### Try it locally (test sign-in)
 
@@ -270,18 +382,182 @@ The website and the future iOS/Android app share one JSON API. Base URL
 - **Shared plain-TypeScript modules** (no Next or DOM imports) the app can
   reuse: `lib/types.ts`, `lib/i18n.ts`, `lib/verdict-display.ts`,
   `lib/names.ts`, `lib/palette.ts`, `lib/frameworks.ts`, `lib/api-errors.ts`,
-  `lib/account-types.ts`, `lib/pricing.ts`.
+  `lib/account-types.ts`, `lib/pricing.ts`, `lib/case-types.ts`,
+  `lib/originals-types.ts`, `lib/verdict-poll.ts`.
 
 | Call | Purpose |
 |---|---|
 | `GET /api/v1/config` | Startup: which sign-in methods work, whether Premium is on, prices (`AppConfig`) |
-| `GET /api/v1/me` | The account and its entitlement (`MeResponse`); signed out = `{ "user": null, "entitlement": null }` |
-| `DELETE /api/v1/me` `{ "confirm": "delete" }` | Deletes the account, sessions, sign-ins and entitlements (both stores require in-app deletion) |
+| `GET /api/v1/me` | The account and its entitlement (`MeResponse`); signed out = `{ "user": null, "entitlement": null }`; a dead bearer token = `401 signin_required` |
+| `DELETE /api/v1/me` `{ "confirm": "delete" }` | Removes every verdict the account owns and its side of every case (originals and names blanked, links closed; no verdict row is deleted), then deletes the account, sessions, sign-ins and entitlements (both stores require in-app deletion) |
+| `GET /api/v1/me/verdicts` | Your one-sided verdicts, newest first (`?limit=1-50&before=<createdAt>`), each with its anonymized `headline` and your `nameMap` to restore names |
 | `POST /api/v1/clarify` | Premium: up to 2 clarifying questions |
-| `POST /api/v1/verdict` | A verdict; `"tier": "premium"` for Premium. Send an `Idempotency-Key` header to retry safely |
-| `GET /api/v1/verdicts/{id}` | A stored verdict |
+| `POST /api/v1/verdict` | A verdict; `"tier": "premium"` for Premium. Send an `Idempotency-Key` header to retry safely. Adds `owner_token` (signed out only, returned once), `originals_stored`, `display` and `suggested_display_a`. With `Prefer: respond-async`: `202`, then poll (see *Async verdicts* below) |
+| `GET /api/v1/verdicts/{id}` | A stored verdict (`"status": "ready"`), with `display` (the share page's names, null = labels); `410 removed` once removed. An async verdict still judging or failed answers `"status": "judging"` / `"failed"` |
+| `GET /api/v1/verdicts/{id}/mine` | The writer's view (session or `X-Owner-Token`): `original` as written, `nameMap`, `display`, `originalStatus` (`stored`, `not_stored`, `removed` or `unreadable`); 404 for anyone else |
+| `PATCH /api/v1/verdicts/{id}/display` | Writer: `{ "namesVisible"?, "a"?, "b"?, "others"?: { "Person C": "Leo" } }` (null = the label; labels such as "Party A" refused); `503 names_unavailable` for names when the server has no key |
+| `POST /api/v1/verdicts/{id}/removal` | Writer: `{ "confirm": "remove" }` blanks the original and names and closes the link (idempotent) |
+| `POST /api/v1/verdicts/{id}/claim` | Signed in + `X-Owner-Token`: keep a token-owned verdict in the account |
 | `POST /api/v1/verdicts/{id}/translate?lang=en\|tr` | A stored verdict in the other language |
 | `POST /api/v1/auth/dev-login` | Local testing only (see above); 404 everywhere else |
+| `POST /api/v1/evidence` | Premium: transcribe 1 to 3 evidence images, get signed evidence tokens |
+| `POST /api/v1/cases` | Premium: start a two-sided case (holds 1 premium verdict) |
+| `GET /api/v1/cases` | Your cases, newest first (`?limit=1-50&before=<createdAt>`); each has the anonymized `headline` of its latest verdict and an `excerpt` of your side |
+| `GET /api/v1/cases/{id}` / `DELETE` | Your case (`CaseView`) / remove your side (kept for older clients; same as `/removal`) |
+| `GET /api/v1/cases/{id}/originals` | Your side (and appeal) as you wrote them |
+| `PATCH /api/v1/cases/{id}/display` | `{ "displayName"?, "namesVisible"? }`: your name on the share pages and the names switch |
+| `POST /api/v1/cases/{id}/removal` | `{ "confirm": "remove" }`: removes your side and closes every link of the case (`409 in_progress` while judging) |
+| `POST /api/v1/cases/{id}/judge` | Judge with only your side (`{ "mode": "only_mine" }`), or retry a failed case |
+| `POST /api/v1/cases/{id}/invite` | A new invite link (the old one stops working) |
+| `POST /api/v1/cases/{id}/appeals` | Add context once and get a re-judged verdict (1 premium verdict) |
+| `GET /api/v1/respond/{token}` / `POST` | The invite as the other person sees it / their side (no account) |
+| `POST /api/v1/respond/{token}/evidence` | The other person's evidence images |
+| `POST /api/v1/respond/{token}/appeals` | The other person adds context (signed in, Premium) |
+| `GET /api/v1/respond/{token}/originals` / `PATCH .../display` / `POST .../removal` | Party B (bound account or `Respondent-Claim` / `claim`): their original, their display name, removing their side |
+
+**Async verdicts (use these in the apps).** The site sits behind
+Cloudflare, which ends any request after 100 seconds (HTTP 524), and a
+verdict can take longer (escalation, the crux trial, a premium panel with
+fact-check). The server still finishes and stores such a verdict, but a
+waiting client never learns its id. So ask for the async flow; requests
+without it keep the old behavior (the response arrives when the verdict is
+done), so older pages and app builds keep working.
+
+1. **Request:** `POST /api/v1/verdict` as before, plus the header
+   `Prefer: respond-async` (or `"async": true` in the JSON body). Free and
+   one-sided premium alike; premium keeps its `Idempotency-Key`.
+   Everything that can refuse the request still answers at once with the
+   usual status and `code`: validation, Turnstile, rate limits and caps,
+   sign-in, credits (the unit is reserved now) and anonymization (`503
+   unavailable` when a name cannot be taken out; nothing is judged or
+   stored, and a reserved unit is refunded).
+2. **Accepted:** `202` with headers `Location: /api/v1/verdicts/{id}`,
+   `Retry-After: 2`, `Preference-Applied: respond-async` and the body
+   `VerdictAcceptedResponse` (`lib/verdict-poll.ts`):
+   `{ "id", "status": "judging", "pollAfterMs": 2000, "poll": "/api/v1/verdicts/{id}", "name_map": [...], "owner_token"?, "suggested_display_a"?, "entitlement"? }`.
+   Keep `name_map` and `owner_token` now (secure storage for the token):
+   the poll does not repeat them. `entitlement` (premium) is the balance
+   with this verdict's unit reserved. A premium retry with the same
+   `Idempotency-Key` (and `Prefer: respond-async`) while it is judging
+   answers `202` with the same `id`, `"replayed": true` and an empty
+   `name_map` (read the names from `GET /api/v1/verdicts/{id}/mine` once
+   it is ready); after it finished, `200` with the stored verdict (as
+   before). While the first request is still being anonymized (up to about
+   a minute) the retry gets `409 in_progress`: wait a few seconds and retry
+   with the same key. Handle a plain `200` verdict too: the server may
+   answer synchronously (e.g. an older server).
+3. **Poll:** `GET /api/v1/verdicts/{id}` (send `X-Owner-Token` or the
+   bearer token if you have one). Always `200` for these states:
+   - `{ "id", "status": "judging", "pollAfterMs": 2000 }` (+ `Retry-After: 2`): poll again;
+   - `{ "id", "status": "ready", "result", "createdAt", "display", "owner"? }`: done.
+     `owner` (`{ "originals_stored", "display": { namesVisible, a, b, others } }`)
+     is only there for the writer (owner token or owning session); it fills
+     the same fields the synchronous response had;
+   - `{ "id", "status": "failed", "code", "error" }`: stop and show the
+     localized `error.<code>` message. `code` is `quota` (the AI quota is
+     used up for now) or `unavailable` (the judges failed, saving failed,
+     or the verdict was still judging after 10 minutes, e.g. a server
+     restart); `refused` is reserved. A failed premium verdict's unit is
+     refunded. A refusal by the model is not a failure: it arrives as a
+     ready verdict with `model_refused: true` (premium: refunded), as before.
+
+   Other answers: `404 not_found` (unknown id: stop), `410 removed` (stop),
+   `429 rate_limited` (per address, about 600 polls per 10 minutes; wait
+   `Retry-After`), `503 unavailable` or a network error (keep polling).
+4. **Backoff** (what `pollVerdict` in `lib/verdict-poll.ts` does): first
+   poll after `pollAfterMs` (2 s), then x1.5 per poll up to 5 s; after an
+   error double the wait up to 15 s; a larger `pollAfterMs` or
+   `Retry-After` always wins. Drop a poll that takes longer than 20 s
+   (request and body) and count it as a network error, so a dead
+   connection cannot stall polling. Poll right away when the app returns
+   to the foreground or the network comes back. Give up after 11 minutes; the
+   server fails a verdict still judging after 10, so you normally hear
+   `failed` first.
+
+**Two-sided cases from the app.** Shapes are in `lib/case-types.ts` (a pure
+module the app can import); every case and respond response is
+`Cache-Control: no-store`.
+
+1. *(Optional)* **Evidence:** `POST /api/v1/evidence` with `multipart/form-data`
+   (1 to 3 parts named `image`) or JSON
+   `{ "images": [{ "data": "<base64>", "mediaType": "image/jpeg" }] }`. Shrink
+   images to 1600 px on the longest edge first (max 5 MB each, 16 MB per
+   request). The answer lists each image:
+   `{ "items": [{ "index": 0, "status": "ok", "kind": "chat", "token": "v1....", "preview": "...", "expiresAt": "..." }] }`;
+   `status` is `ok | unreadable | refused | unsupported | too_large | failed`.
+   `preview` is the raw transcript for the uploader only (it may contain real
+   names; show it, never send it anywhere). Tokens expire after 6 hours and
+   are bound to who uploaded (your account, or for the other person, the
+   case). One bad image does not fail the request; whole-request errors are
+   `413 too_large` (body over 16 MB), `415 unsupported_media` (not multipart
+   or JSON), `400 too_many_files` (more than 3) and the usual premium,
+   sign-in and rate-limit codes. Phone numbers, e-mail addresses, handles and
+   account numbers are masked when the transcript is anonymized.
+2. **Create:** `POST /api/v1/cases` with an optional `Idempotency-Key` and
+   `{ "text": "...", "framework": { "preset": "balanced" }, "lang": "en", "evidence": ["v1...."] }`.
+   Add `"displayName": "Aytu"` for the name shown on the share pages (empty
+   or absent = Party A).
+   `201 { "case": CaseView, "name_map": [...], "entitlement": {...} }`
+   (`200` with `"replayed": true` and an empty `name_map` on a retried key).
+   The server keeps an encrypted copy of the name map (`case.names` on every
+   later `GET`, on any device); keeping `name_map` locally is only a fallback
+   for a server without `ORIGINALS_KEY`. Share `case.inviteUrl`.
+3. **Status:** `GET /api/v1/cases/{id}`. While `case.pollAfterMs` is set
+   (something is judging), poll again after that many milliseconds.
+   `status`: `awaiting_respondent | judging | judged | failed | expired`.
+   `case.canJudgeNow` says whether `POST /cases/{id}/judge` makes sense
+   (`{ "mode": "only_mine" }` while waiting for the answer; no body needed to
+   retry a failed case; an expired case takes a new unit). `202` when judging
+   started, `200` when it already was.
+4. **The other person** opens `https://<domain>/r/<token>` (or the app calls
+   `GET /api/v1/respond/{token}`), then `POST /api/v1/respond/{token}` with
+   `{ "text": "...", "evidence": ["v1...."], "turnstileToken": "...", "displayName": "Deniz" }`
+   (Turnstile is skipped for bearer sessions). `202 { "case": CaseView, "name_map": [...] }`;
+   store that `name_map` too. A signed-in answer binds side B to that
+   account. A signed-out answer also returns `"respondent_claim": "<22 chars>"`
+   (again on a replayed `Idempotency-Key`): keep it in secure storage with
+   the name map. It is the only proof of having written side B; send it as
+   the `Respondent-Claim` header on `GET /api/v1/respond/{token}` (so
+   `case.appeal` is right for this person) and as `"claim"` on the appeal.
+   Anyone else holding the link gets `not_party`. Their evidence goes to
+   `POST /api/v1/respond/{token}/evidence`.
+5. **Verdicts:** `case.verdicts` (oldest first; the last is current) carry
+   the usual `VerdictResult` plus `two_sided`, `agreed_facts`,
+   `disputed_facts` (`fact`, `party_a`, `party_b`, `finding` `a|b|unsettled`,
+   `decisive`), `would_change`, `evidence_used` and, after an appeal,
+   `appeal` (`by`, `outcome` `upheld|overturned|changed`, `previous_id`,
+   `previous_verdict`, `previous_confidence`, `confidence_change`, `summary`).
+   `case.sides` holds both anonymized accounts once a two-sided verdict
+   exists (before that: only the owner's own side, and nothing on the
+   respondent view). Each verdict also has a public share link `/v/<id>`.
+6. **Appeal:** `case.appeal.allowed` / `blockedBy`
+   (`signin_required | premium_required | no_credits | fair_use | appeal_used | not_judged | busy | not_party`).
+   `POST /api/v1/cases/{id}/appeals` (owner) or
+   `POST /api/v1/respond/{token}/appeals` (signed-in respondent) with
+   `{ "text": "20 to 2000 characters", "evidence": ["v1...."], "claim": "..." }`
+   (at most 1 image; `claim` only for the respondent, until their account is
+   bound by the first accepted appeal) and an optional `Idempotency-Key`.
+   `202`, then poll. The appeal outcome stays `upheld | overturned | changed`
+   in the API; the website shows it as "Verdict stands / flipped / changed".
+   On the web, "Sign in to add context" returns to `/r` (never `/r/<token>`):
+   the token is kept in the browser so it is not put in a sign-in e-mail or
+   an OAuth state.
+
+Removal and names: `removed` (410: the verdict or case was removed; its
+links no longer work) and `names_unavailable` (503: a display name was sent
+while the server has no originals key). `CaseView` also carries `names`
+(your own map, or null), `display` (`namesVisible`, `a`, `b`), `removed`
+(`{ at, parties }` or null) and `yourOriginal`; a removed side's entries
+have `text: ""`, `evidence: []` and `removed: true`.
+
+Case error codes: `case_closed` (409), `case_expired` (410), `appeal_used`
+(409), `in_progress` (409), `not_party` (403), `own_case` (403),
+`too_many_files` (400), `evidence_invalid` (400), `too_large` (413),
+`unsupported_media` (415), `anonymize_failed` (503: a name could not be
+taken out of the text; the same request can be retried, e.g. with initials), plus the premium ones (`signin_required`,
+`premium_required`, `no_credits`, `fair_use`, `rate_limited`, `daily_cap`,
+`not_configured`). `GET /api/v1/config` has
+`features: { cases, evidence }` (absent on older servers: treat as false).
 
 **Sign-in from the app** (Better Auth endpoints under `/api/auth`):
 
@@ -298,8 +574,30 @@ The website and the future iOS/Android app share one JSON API. Base URL
   storage. An invalid ID token answers `401 { "code": "INVALID_TOKEN" }`.
 - **Session:** `GET /api/v1/me`. **Sign out:** `POST /api/auth/sign-out` with
   the bearer token. Sessions last 30 days and slide forward with use.
-- **Email links in the app** need Better Auth's Expo plugin and a deep link
-  (`verdict://`), plus a bot check other than Turnstile; not wired up yet.
+- **Dead tokens:** a bearer token that matches no live session (unknown,
+  expired, signed out, account deleted) answers `401` with code
+  `signin_required` on every route that reads the session, before any other
+  work (`{ "error": "Sign in first.", "code": "signin_required" }` where the
+  route would otherwise serve a signed-out caller): `POST /api/v1/verdict`
+  (free too), `GET /api/v1/verdicts/{id}` (polls and share reads),
+  `GET /api/v1/me`, the writer and respondent routes, and every route that
+  needs an account. Drop the token and sign in again. Requests without an
+  `Authorization` header (the website, share viewers) are unaffected; an
+  expired cookie still counts as signed out.
+- **Email (apps): a 6-digit code**, offered when `signIn.emailCode` is true
+  in `GET /api/v1/config` (false, and both endpoints `404`, without
+  `RESEND_API_KEY`/`EMAIL_FROM`):
+  1. `POST /api/auth/email-otp/send-verification-otp?lang=tr`
+     `{ "email": "a@example.com", "type": "sign-in" }` → `200 { "success": true }`
+     and an email with the code (`lang=tr` Turkish, otherwise English). Only
+     `"type": "sign-in"` is accepted (`400` otherwise).
+  2. `POST /api/auth/sign-in/email-otp { "email": "a@example.com", "otp": "123456" }`
+     → `200 { "token": "<session token>", "user": { … } }` (also in the
+     `set-auth-token` header). A new address gets a new account.
+  Codes work once for 10 minutes. Wrong code: `400 { "code": "INVALID_OTP" }`;
+  after 3 wrong codes the code is burned: `403 { "code": "TOO_MANY_ATTEMPTS" }`;
+  late: `400 { "code": "OTP_EXPIRED" }`. Both endpoints allow 3 requests per
+  minute per IP (`429`). No Turnstile token is needed.
 - **Free verdicts from the app** need a bot check other than Turnstile
   (e.g. App Attest / Play Integrity, or free verdicts for signed-in users
   under a per-user limit) before the app ships.
@@ -475,7 +773,9 @@ All commands run in the browser SSH window (**Connect using SSH**).
   code next to the running site, switches over only if the build succeeds,
   and checks `/api/health`; if the new version does not answer, it switches
   back to the previous one, with its service and web server settings,
-  automatically.
+  automatically. A restart first lets verdicts still being judged finish
+  (up to about 5 minutes); new requests are refused until the new version
+  is up.
 - **Logs:** `sudo journalctl -u verdict -f` (Ctrl+C to stop). Caddy and
   certificates: `sudo journalctl -u caddy -n 50`.
 - **Status / restart:** `systemctl status verdict`,
@@ -506,10 +806,20 @@ All commands run in the browser SSH window (**Connect using SSH**).
   `/var/lib/verdict/backups` (14 days are kept). Run one now with
   `sudo systemctl start verdict-backup`. `sudo verdict-restore` lists the
   backups, and `sudo verdict-restore <file name>` restores one (verdicts saved
-  after that backup are lost; the replaced database is kept beside it). These
-  copies live on the same disk, so also turn on off-server backups: on your
-  instance's **Snapshots** tab, switch on **Automatic snapshots** (Lightsail
-  keeps the last seven daily snapshots; they are billed per GB stored).
+  after that backup are lost; the replaced database is kept beside it and,
+  like the backups, deleted after 14 days). The restore re-applies every
+  removal made since the backup from `/var/lib/verdict/removals.log` (see
+  *Stored originals, names and removal*). These copies live on the same
+  disk, so also turn on off-server backups: on your instance's **Snapshots**
+  tab, switch on **Automatic snapshots** (Lightsail keeps the last seven
+  daily snapshots; they are billed per GB stored). The privacy page promises
+  removed data is gone from backups within 14 days: keep backup and
+  snapshot retention at 14 days or less. A snapshot holds the database *and*
+  `/etc/verdict/verdict.env` with `ORIGINALS_KEY`, so the encryption does not
+  protect a snapshot: guard snapshots like the server itself. Restoring a
+  snapshot also rolls the removal log back, so before restoring one onto a
+  new instance, copy `/var/lib/verdict/removals.log` off the old instance
+  and run `replay-removals <that file>` on the new one before opening it.
 - **Reboots:** if the terminal says *System restart required* after security
   updates, run `sudo reboot`; the app and Caddy start again on their own.
   A reboot also starts every rate limit and the daily cap over.

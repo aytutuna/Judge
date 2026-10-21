@@ -6,6 +6,7 @@ import { HOW_STEPS, stepNumeral } from "@/lib/how-steps";
 import { t, type Key, type Lang } from "@/lib/i18n";
 import { useLang } from "@/lib/lang";
 import { hyphenRuns, noOrphan } from "@/lib/text";
+import { useViewer } from "@/lib/use-viewer";
 import styles from "./InfoPage.module.css";
 import { SiteFooter, SiteHeader, SkipLink } from "./SiteChrome";
 
@@ -21,8 +22,22 @@ function Section({ title, children }: { title: string; children: ReactNode }) {
   );
 }
 
-function About({ lang }: { lang: Lang }) {
+/** Premium extras this deployment offers (GET /api/v1/config `features`). */
+export type InfoFeatures = { cases: boolean; evidence: boolean };
+
+/** About's Premium bullets for the features that are switched on. */
+export function premiumAboutKeys(features: InfoFeatures | null | undefined): Key[] {
+  if (!features) return [];
+  const keys: Key[] = [];
+  if (features.cases) keys.push("about.premium1");
+  if (features.evidence) keys.push("about.premium2");
+  if (features.cases) keys.push("about.premium3", "about.premium4");
+  return keys;
+}
+
+function About({ lang, features }: { lang: Lang; features: InfoFeatures | null }) {
   const limits: Key[] = ["about.limit1", "about.limit2", "about.limit3", "about.limit4"];
+  const premium = premiumAboutKeys(features);
   return (
     <>
       <Section title={t(lang, "about.methodTitle")}>
@@ -53,6 +68,15 @@ function About({ lang }: { lang: Lang }) {
       <Section title={t(lang, "about.honestTitle")}>
         <p>{t(lang, "about.honest")}</p>
       </Section>
+      {premium.length > 0 ? (
+        <Section title={t(lang, "about.premiumTitle")}>
+          <ul className={styles.bullets}>
+            {premium.map((k) => (
+              <li key={k}>{t(lang, k)}</li>
+            ))}
+          </ul>
+        </Section>
+      ) : null}
       <Section title={t(lang, "about.limitsTitle")}>
         <ul className={styles.bullets}>
           {limits.map((k) => (
@@ -70,12 +94,21 @@ function About({ lang }: { lang: Lang }) {
 function Privacy({ lang, contactEmail }: { lang: Lang; contactEmail: string | null }) {
   const sections: [Key, Key][] = [
     ["privacy.storedTitle", "privacy.stored"],
+    ["privacy.accessTitle", "privacy.access"],
+    ["privacy.removalTitle", "privacy.removal"],
+    ["privacy.retentionTitle", "privacy.retention"],
+    ["privacy.locationTitle", "privacy.location"],
     ["privacy.notStoredTitle", "privacy.notStored"],
     ["privacy.accountsTitle", "privacy.accounts"],
     ["privacy.webSearchTitle", "privacy.webSearch"],
+    // Disclosed whether or not this deployment has switched them on: what
+    // happens to the data when they are used never depends on a flag.
+    ["privacy.casesTitle", "privacy.cases"],
+    ["privacy.evidenceTitle", "privacy.evidence"],
     ["privacy.ipTitle", "privacy.ip"],
     ["privacy.processorsTitle", "privacy.processors"],
     ["privacy.shareTitle", "privacy.share"],
+    ["privacy.rightsTitle", "privacy.rights"],
   ];
   // Split around the {email} slot so the address can be a real link while
   // the sentence stays one whole dictionary string.
@@ -112,6 +145,7 @@ export function InfoPage({
   contactEmail?: string | null;
 }) {
   const lang = useLang();
+  const { config } = useViewer();
   return (
     // One lang scope for skip link, header, main and footer, so screen
     // readers voice all of the chrome in the page language.
@@ -128,7 +162,11 @@ export function InfoPage({
             <p className={styles.lead}>{t(lang, page === "about" ? "about.lead" : "privacy.lead")}</p>
           </header>
           <div className={styles.prose}>
-            {page === "about" ? <About lang={lang} /> : <Privacy lang={lang} contactEmail={contactEmail} />}
+            {page === "about" ? (
+              <About lang={lang} features={config?.premiumEnabled ? (config.features ?? null) : null} />
+            ) : (
+              <Privacy lang={lang} contactEmail={contactEmail} />
+            )}
           </div>
           <Link href="/" className={styles.cta}>
             {t(lang, "shared.cta")}

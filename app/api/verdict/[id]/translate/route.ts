@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { clientIp } from "@/lib/client-ip";
 import type { Lang } from "@/lib/i18n";
+import { verdictRemoved } from "@/lib/originals/removed";
 import { checkTranslateLimits, type LimitDecision } from "@/lib/ratelimit";
 import { translatedVerdict } from "@/lib/translate";
 import type { TranslateResponse } from "@/lib/types";
@@ -41,6 +42,18 @@ export async function POST(req: Request, ctx: RouteContext<"/api/verdict/[id]/tr
   }
   const lang: Lang = raw;
   if (!ID_PATTERN.test(id)) return notFound();
+  // A removed verdict is not translated (or served translated) any more.
+  try {
+    if (await verdictRemoved(id)) {
+      return NextResponse.json(
+        { error: "This verdict was removed. Its link no longer works.", code: "removed" },
+        { status: 410, headers: { "Cache-Control": "no-store" } },
+      );
+    }
+  } catch (e) {
+    console.error("[translate] removed check failed:", e instanceof Error ? e.message : String(e));
+    return unavailable();
+  }
 
   const ip = clientIp(req.headers);
   let outcome;

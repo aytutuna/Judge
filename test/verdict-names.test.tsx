@@ -80,3 +80,25 @@ describe("VerdictView: conditional clauses keep the capital of restored names", 
     expect(out).toContain("Eğer çay soğuksa");
   });
 });
+
+describe("VerdictView: never 'You' and 'Party A' for the same person", () => {
+  const map: NameMapping[] = [
+    { original: "I", replacement: "Party A" },
+    { original: "Can", replacement: "Party B" },
+  ];
+
+  it("restores You everywhere when every mention can be restored", () => {
+    const out = html(<VerdictView result={base} nameMap={map} lang="en" />);
+    expect(out).toContain(esc("You are right and your plan works"));
+    expect(out).not.toMatch(/Party A/);
+  });
+
+  it("keeps the label everywhere, and says which side is the viewer, when one mention cannot be", () => {
+    const mixed: VerdictResult = { ...base, facts_relied_on: ["Party A now wants 120 from Party B."] };
+    const out = html(<VerdictView result={mixed} nameMap={map} lang="en" />);
+    expect(out).toContain("Party A now wants 120 from Can.");
+    expect(out).toContain("Party A is right and Party A&#x27;s plan works");
+    expect(out).toContain("Party A (you)");
+    expect(out).not.toMatch(/\byour plan\b|You are right and/);
+  });
+});

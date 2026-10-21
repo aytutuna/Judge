@@ -1,8 +1,10 @@
 import { NextResponse } from "next/server";
 import type { MeResponse } from "@/lib/account-types";
 import { apiErrorBody } from "@/lib/api-errors";
-import { clearSessionCookieHeaders, deleteAuthUser, getViewer, isSameOrigin } from "@/lib/auth";
+import { clearSessionCookieHeaders, deleteAuthUser, getViewer, isSameOrigin, resolveViewer } from "@/lib/auth";
+import { deadBearerResponse } from "@/lib/bearer-guard";
 import { deleteUserEntitlements, getEntitlement } from "@/lib/entitlements";
+import { removeUserData } from "@/lib/originals/removal";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -10,9 +12,11 @@ export const dynamic = "force-dynamic";
 const NO_STORE = { "Cache-Control": "no-store" } as const;
 
 /** GET /api/v1/me: the viewer and their entitlement; nulls when signed out
- * (200, so one call drives every UI state). */
+ * (200, so one call drives every UI state). A bearer token that no longer
+ * works answers 401 signin_required. */
 export async function GET(req: Request): Promise<NextResponse> {
-  const viewer = await getViewer(req);
+  const { viewer, deadBearer } = await resolveViewer(req);
+  if (deadBearer) return deadBearerResponse();
   if (!viewer) {
     const body: MeResponse = { user: null, entitlement: null };
     return NextResponse.json(body, { headers: NO_STORE });
@@ -29,8 +33,10 @@ export async function GET(req: Request): Promise<NextResponse> {
   }
 }
 
-/** DELETE /api/v1/me { confirm: "delete" }: deletes the account, its
- * sign-ins, sessions and entitlements. Shared verdicts stay (anonymous). */
+/** DELETE /api/v1/me { confirm: "delete" }: removes every verdict the
+ * account owns and its side of every case (originals, name maps and display
+ * names blanked, share links closed; no verdict row is deleted), then
+ * deletes its entitlements, sign-ins and sessions. */
 export async function DELETE(req: Request): Promise<NextResponse> {
   const viewer = await getViewer(req);
   if (!viewer) {
@@ -55,6 +61,7 @@ export async function DELETE(req: Request): Promise<NextResponse> {
     });
   }
   try {
+    await removeUserData(viewer.user.id);
     await deleteUserEntitlements(viewer.user.id);
     await deleteAuthUser(viewer.user.id);
   } catch (e) {

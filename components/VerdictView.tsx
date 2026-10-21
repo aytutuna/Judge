@@ -4,7 +4,7 @@ import { useId, useMemo } from "react";
 import type { NameMapping, VerdictResult } from "@/lib/types";
 import { t, type Key, type Lang } from "@/lib/i18n";
 import { useLang } from "@/lib/lang";
-import { partyNames, personalizeResult, resolveParties } from "@/lib/names";
+import { consistentSelfMap, partyNames, personalizeResult, resolveParties, type SelfParty } from "@/lib/names";
 import { verdictLang } from "@/lib/content-lang";
 import { stripLeadingEmoji } from "@/lib/text";
 import { panelSummary } from "@/lib/verdict-display";
@@ -15,12 +15,16 @@ import { FactChips } from "./FactChips";
 import { FactCheckList } from "./FactCheckList";
 import { PremiumBadge } from "./PremiumBadge";
 import { ShareButtons } from "./ShareButtons";
+import type { OwnerShare } from "./ShareDialog";
 import { VerdictCardShell } from "./verdict/VerdictCardShell";
 import { CardBrand, CardTopRow } from "./verdict/CardTopRow";
 import { voteOf } from "./verdict/VoteDots";
 import { CruxBlock } from "./verdict/CruxBlock";
 import { BestPointBlock } from "./verdict/BestPointBlock";
 import { CardActions } from "./verdict/CardActions";
+import { AppealOutcomeBanner } from "./case/AppealOutcome";
+import { TwoSidedFacts, WouldChangeBlock, evidenceNote } from "./case/TwoSidedBlocks";
+import caseStyles from "./case/case.module.css";
 import styles from "./verdict/verdict.module.css";
 
 /** Non-side votes rendered whole from the dictionary — never
@@ -66,10 +70,24 @@ function TranslationNote({ view, lang }: { view: TranslationView; lang: Lang }) 
  * Premium results (`tier: "premium"`) add a badge in the top row, a panel
  * line in the footnote and the web fact-check below the card; free results
  * render exactly as before.
- * With a `nameMap` (the author's own view, right after judging) the real
- * names go back into the verdict text as well as the labels; share pages
- * pass none and stay anonymized. Display-only: the share title and anything
- * that leaves the page use the anonymized text. */
+ * With a `nameMap` (the writer's own view) the real names go back into the
+ * verdict text as well as the labels. Share pages pass the writer's chosen
+ * display names as the map with `publicNames`: nobody is "You" there and a
+ * display name such as "Ben" stays a name. Display-only: the share title and
+ * anything that leaves the page use the anonymized text. `owner` (the
+ * writer's views) adds the names dialog to the share buttons.
+ * `selfParty` says whose narrator the map describes: "B" on the respondent's
+ * own view of a two-sided case. `viewerIsSelfParty` (case pages only, where
+ * the server says which party is looking) labels that party "Party A (you)"
+ * when this browser has no names for it. The viewer is named one way per
+ * verdict (consistentSelfMap): when any of their labels cannot be turned
+ * into "you" grammatically, every mention keeps the label and the header
+ * says "Party A (you)" (or "Ayşe (you)" when the writer saved `selfDisplayName`
+ * for themselves, so their view reads like the share page with the name in
+ * the text). `focusAppeal` moves keyboard focus to the appeal
+ * outcome banner (an appeal just finished and its form is gone). Two-sided results (agreed and disputed
+ * facts, what would change the verdict), an evidence count and an appeal
+ * outcome render only when the result carries them. */
 export function VerdictView({
   result: original,
   nameMap,
@@ -77,6 +95,12 @@ export function VerdictView({
   lang: langProp,
   onJudgeAnother,
   fresh = false,
+  selfParty = "A",
+  viewerIsSelfParty = false,
+  focusAppeal = false,
+  publicNames = false,
+  selfDisplayName = null,
+  owner,
 }: {
   result: VerdictResult;
   nameMap?: NameMapping[];
@@ -84,26 +108,51 @@ export function VerdictView({
   lang?: Lang;
   onJudgeAnother?: () => void;
   fresh?: boolean;
+  selfParty?: SelfParty;
+  viewerIsSelfParty?: boolean;
+  focusAppeal?: boolean;
+  publicNames?: boolean;
+  /** The display name the viewer chose for their own party (shown on the share page). */
+  selfDisplayName?: string | null;
+  owner?: OwnerShare;
 }) {
   const storeLang = useLang();
+  const opts = useMemo(() => ({ noSelf: publicNames }), [publicNames]);
   const lang = langProp ?? storeLang;
   // Narrator detection follows the language the argument was judged in;
   // only the labels follow the display language.
   const selfLang = verdictLang(original);
-  const { nameA, nameB, aIsSelf, bIsSelf } = partyNames(nameMap, lang, selfLang);
   const view = useVerdictTranslation(shareId, original, lang);
+  const shown = useMemo(() => {
+    const s = consistentSelfMap(view.result, nameMap, selfLang, selfParty, opts);
+    // "You" can't be restored everywhere: use the viewer's own display name
+    // (a plain name, restored like any other) instead of the bare label.
+    if (!s.selfDropped || !selfDisplayName) return { ...s, selfName: null };
+    const selfEntry = { original: selfDisplayName, replacement: `Party ${selfParty}` };
+    return { nameMap: [...(s.nameMap ?? []), selfEntry], selfDropped: true, selfName: selfDisplayName };
+  }, [view.result, nameMap, selfLang, selfParty, opts, selfDisplayName]);
+  const named = partyNames(shown.nameMap, lang, selfLang, selfParty, viewerIsSelfParty || shown.selfDropped, opts);
+  const selfLabel = shown.selfName ? t(lang, "party.youLabel", { label: shown.selfName }) : null;
+  const nameA = selfLabel && selfParty === "A" ? selfLabel : named.nameA;
+  const nameB = selfLabel && selfParty === "B" ? selfLabel : named.nameB;
+  const aIsSelf = named.aIsSelf || Boolean(selfLabel && selfParty === "A");
+  const bIsSelf = named.bIsSelf || Boolean(selfLabel && selfParty === "B");
   const result = useMemo(
-    () => personalizeResult(view.result, nameMap, selfLang),
-    [view.result, nameMap, selfLang],
+    () => personalizeResult(view.result, shown.nameMap, selfLang, selfParty, opts),
+    [view.result, shown.nameMap, selfLang, selfParty, opts],
   );
   const restoredNames = useMemo(
-    () => [...resolveParties(nameMap, selfLang).values()].filter((p) => !p.self).map((p) => p.name),
-    [nameMap, selfLang],
+    () =>
+      [...resolveParties(shown.nameMap, selfLang, selfParty, opts).values()].filter((p) => !p.self).map((p) => p.name),
+    [shown.nameMap, selfLang, selfParty, opts],
   );
   const loading = view.status === "loading";
   const labelId = useId();
   const refused = Boolean(result.model_refused);
   const premium = result.tier === "premium";
+  const twoSided = result.two_sided === true;
+  const evidenceLine = evidenceNote(result, lang);
+  const parties = { nameA, nameB, aIsSelf, bIsSelf };
   const pill = (
     <>
       {shareId ? <TranslationNote view={view} lang={lang} /> : null}
@@ -113,6 +162,16 @@ export function VerdictView({
 
   return (
     <div className="flex flex-col gap-7 min-w-0">
+      {result.appeal ? (
+        <AppealOutcomeBanner
+          appeal={result.appeal}
+          confidence={result.confidence}
+          lang={lang}
+          byName={result.appeal.by === "a" ? nameA : nameB}
+          bySelf={result.appeal.by === "a" ? aIsSelf : bIsSelf}
+          focus={focusAppeal}
+        />
+      ) : null}
       <VerdictCardShell
         labelledBy={labelId}
         busy={loading}
@@ -125,6 +184,7 @@ export function VerdictView({
                 <span className={styles.pillGroup}>
                   {pill}
                   <PremiumBadge lang={lang} />
+                  {twoSided ? <span className={caseStyles.tsBadge}>{t(lang, "twoSided.badge")}</span> : null}
                 </span>
               ) : (
                 pill
@@ -156,6 +216,10 @@ export function VerdictView({
           />
         ) : null}
 
+        {!refused && result.would_change?.length ? (
+          <WouldChangeBlock items={result.would_change} lang={lang} />
+        ) : null}
+
         {/* The votes in words (the dots in the top row are decorative), plus
             the escalation note when extra judges were called in. */}
         {result.runs.length > 0 ? (
@@ -181,12 +245,18 @@ export function VerdictView({
                 {result.panel?.models.length ? ` ${panelSummary(result.panel.models, lang)}` : null}
               </>
             ) : null}
+            {evidenceLine ? (
+              <>
+                <br />
+                {evidenceLine}
+              </>
+            ) : null}
           </p>
         ) : null}
 
         <CardActions
           share={
-            shareId ? <ShareButtons shareId={shareId} title={view.result.headline} lang={lang} /> : null
+            shareId ? <ShareButtons shareId={shareId} title={view.result.headline} lang={lang} owner={owner} /> : null
           }
           again={
             onJudgeAnother ? { label: t(lang, "judgeAnother"), onClick: onJudgeAnother } : undefined
@@ -201,6 +271,7 @@ export function VerdictView({
             .join(" ")}
           aria-busy={loading}
         >
+          {twoSided ? <TwoSidedFacts result={result} lang={lang} parties={parties} /> : null}
           <ArgumentMap
             map={result.argument_map}
             crux={result.crux}
@@ -209,7 +280,7 @@ export function VerdictView({
             lang={lang}
             showCrux={false}
           />
-          {result.fact_check ? <FactCheckList factCheck={result.fact_check} lang={lang} /> : null}
+          {result.fact_check ? <FactCheckList factCheck={result.fact_check} lang={lang} disputeType={result.dispute_type} /> : null}
           <FactChips facts={result.facts_relied_on} lang={lang} />
         </div>
       ) : null}

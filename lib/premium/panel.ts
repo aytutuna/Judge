@@ -7,7 +7,7 @@
 
 import { defaultJudgeEffort, type Effort } from "../claude";
 import type { Lang } from "../i18n";
-import { judgeOnce, type JudgeRun } from "../judge";
+import { judgeOnce, type JudgeOptions, type JudgeRun } from "../judge";
 import type { FrameworkChoice } from "../types";
 
 export const HAIKU_MODEL = "claude-haiku-5-5";
@@ -16,12 +16,17 @@ const MAX_SEATS = 5;
 const MODEL_NAME = /^claude-[a-z0-9.-]+$/;
 const EFFORTS: readonly Effort[] = ["low", "medium", "high"];
 
-/** Budget for a refused seat's one rerun on Haiku. Keeps the worst case
- * (anonymize 60s + fact-check 40s + judges 120s + rerun 60s = 280s) inside
- * maxDuration; the route's deadline gates then skip escalation and trial. */
+/** Budget for a refused seat's one rerun on Haiku. Keeps the worst plain
+ * premium case (anonymize 60s + fact-check 40s + judges 120s + rerun 60s =
+ * 280s) inside maxDuration; the deadline gates then skip escalation and
+ * trial. Runs whose anonymize step can take longer pass `allowRetry` (see
+ * SEAT_RETRY_CUTOFF_MS in run.ts). */
 export const SEAT_RETRY_TIMEOUT_MS = 60_000;
 
 export type PanelSeat = { model: string; analyzeBFirst: boolean; effort: Effort };
+
+/** Case options every seat gets (two-sided schema, evidence and appeal notes). */
+export type PanelOptions = Pick<JudgeOptions, "twoSided" | "evidence" | "appeal">;
 
 export function isHaiku(model: string): boolean {
   return model.includes("haiku");
@@ -65,8 +70,19 @@ export async function judgePremiumPanel(
   lang: Lang,
   context: string | null,
   seats: PanelSeat[] = premiumPanel(),
+  opts: PanelOptions = {},
+  gate: { allowRetry: () => boolean } = { allowRetry: () => true },
 ): Promise<{ runs: JudgeRun[]; models: string[] }> {
-  const common = { lang, premium: true, ...(context ? { context } : {}) };
+  // Option keys are only added when set, so a plain premium run sends
+  // exactly the request it always has.
+  const common = {
+    lang,
+    premium: true,
+    ...(context ? { context } : {}),
+    ...(opts.twoSided ? { twoSided: true } : {}),
+    ...(opts.evidence ? { evidence: true } : {}),
+    ...(opts.appeal ? { appeal: opts.appeal } : {}),
+  };
   const served = await Promise.all(
     seats.map(async (seat, i): Promise<{ run: JudgeRun; model: string }> => {
       const run = await judgeOnce(text, framework, {
@@ -84,6 +100,10 @@ export async function judgePremiumPanel(
         console.warn(`[premium] seat ${i} (${seat.model}) ${why}: ${run.error.slice(0, 200)}`);
       }
       if (run.ok || !run.blocked || isHaiku(seat.model)) return { run, model: seat.model };
+      if (!gate.allowRetry()) {
+        console.warn(`[premium] ${seat.model} seat refused; no time left to rerun it`);
+        return { run, model: seat.model };
+      }
       console.warn(`[premium] ${seat.model} seat refused; rerunning it on ${HAIKU_MODEL}`);
       const retry = await judgeOnce(text, framework, {
         ...common,

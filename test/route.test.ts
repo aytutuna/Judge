@@ -10,6 +10,9 @@ const m = vi.hoisted(() => ({
   judgeExtra: vi.fn(),
   runCruxTrial: vi.fn(),
   saveVerdict: vi.fn(),
+  getViewer: vi.fn(),
+  isSameOrigin: vi.fn(),
+  saved: [] as { ownerUserId: string | null; original: unknown; kind?: string }[],
 }));
 
 /** Wraps a mock so the call order across modules is recorded. */
@@ -34,6 +37,31 @@ vi.mock("@/lib/trial", async (importOriginal) => ({
   runCruxTrial: track("trial", m.runCruxTrial),
 }));
 vi.mock("@/lib/db", () => ({ saveVerdict: track("save", m.saveVerdict) }));
+vi.mock("@/lib/auth", () => ({
+  getViewer: m.getViewer,
+  isSameOrigin: m.isSameOrigin,
+  resolveViewer: async (req: Request) => ({ viewer: (await m.getViewer(req)) ?? null, deadBearer: false }),
+  hasDeadBearer: async () => false,
+}));
+vi.mock("@/lib/originals/save", () => ({
+  saveVerdictWithOriginals: async (v: {
+    id: string;
+    input: string;
+    framework: unknown;
+    result: unknown;
+    ownerUserId: string | null;
+    original: unknown;
+  }) => {
+    await track("save", m.saveVerdict)({ id: v.id, input: v.input, framework: v.framework, result: v.result });
+    m.saved.push(v);
+    return {
+      ownerToken: v.ownerUserId ? null : "o".repeat(43),
+      originalsStored: true,
+      display: { namesVisible: true, a: null, b: null, others: {} },
+      metaWritten: true,
+    };
+  },
+}));
 // Premium requests are handed to their own handler; the free path never loads it.
 const premiumVerdict = vi.hoisted(() => vi.fn());
 vi.mock("@/lib/premium/handler", () => ({ premiumVerdict: track("premium", premiumVerdict) }));
@@ -72,6 +100,9 @@ const RUN: JudgeRunOutput = {
 
 beforeEach(() => {
   m.calls.length = 0;
+  m.saved.length = 0;
+  m.getViewer.mockResolvedValue(null);
+  m.isSameOrigin.mockReturnValue(true);
   m.verifyTurnstile.mockResolvedValue("ok");
   m.checkVerdictLimits.mockResolvedValue({ ok: true });
   m.hasApiKey.mockReturnValue(true);
@@ -128,6 +159,41 @@ describe("POST /api/verdict", () => {
     const body = await res.json();
     expect(body.id).toBe(saved.id);
     expect(body.name_map).toEqual([{ original: "Mark", replacement: "Party A" }]);
+  });
+
+  it("stores the original exactly as sent with its name map; signed out, the writer gets an owner token", async () => {
+    const raw = `  ${ARGUMENT}\n\n`;
+    const res = await POST(request({ argument: raw }));
+    expect(res.status).toBe(200);
+    expect(res.headers.get("cache-control")).toBe("no-store");
+    const body = await res.json();
+    expect(body.owner_token).toMatch(/^[A-Za-z0-9_-]{43}$/);
+    expect(body.originals_stored).toBe(true);
+    expect(body.display).toEqual({ namesVisible: true, a: null, b: null, others: {} });
+    expect(body.suggested_display_a).toBeNull();
+    expect(m.saved[0].ownerUserId).toBeNull();
+    expect(m.saved[0].original).toEqual({
+      v: 1,
+      text: raw,
+      nameMap: [{ original: "Mark", replacement: "Party A" }],
+    });
+    // The judges and the stored verdict only ever see the anonymized text.
+    expect(m.anonymize).toHaveBeenCalledWith(ARGUMENT);
+    expect(m.saveVerdict.mock.calls[0][0].input).not.toContain("Mark");
+  });
+
+  it("signed in (bearer or same-origin cookie) owns the verdict; a cross-site cookie counts as signed out", async () => {
+    const user = { id: "u9", email: "e", name: "Aytu Tuna", image: null };
+    m.getViewer.mockResolvedValue({ user, sessionId: "s", via: "bearer" });
+    let body = await (await POST(request({ argument: ARGUMENT }))).json();
+    expect(body.owner_token).toBeUndefined();
+    expect(body.suggested_display_a).toBe("Aytu");
+    expect(m.saved.at(-1)!.ownerUserId).toBe("u9");
+    m.getViewer.mockResolvedValue({ user, sessionId: "s", via: "cookie" });
+    m.isSameOrigin.mockReturnValue(false);
+    body = await (await POST(request({ argument: ARGUMENT }))).json();
+    expect(body.owner_token).toMatch(/^[A-Za-z0-9_-]{43}$/);
+    expect(m.saved.at(-1)!.ownerUserId).toBeNull();
   });
 
   it("validates the body before anything else", async () => {

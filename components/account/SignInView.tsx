@@ -54,7 +54,7 @@ export function withLang(path: string, lang: Lang): string {
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-const NO_PROVIDERS: AuthProviders = { apple: false, google: false, email: false, dev: false };
+const NO_PROVIDERS: AuthProviders = { apple: false, google: false, email: false, emailCode: false, dev: false };
 
 function AppleLogo() {
   return (
@@ -226,9 +226,9 @@ export function SignInPanel({
       <p className={styles.small}>
         {t(lang, "signin.legal")}{" "}
         <Link href="/privacy" className={styles.link}>
-          {t(lang, "footer.privacy")}
+          {t(lang, "signin.legalLink")}
         </Link>
-        .
+        {t(lang, "signin.legalAfter")}
       </p>
     </div>
   );

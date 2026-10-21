@@ -1,5 +1,5 @@
-/* The switch lives in the hero's flex-wrap CTA row: the fieldset sits next
-   to the button, the note takes a full line of its own below both. */
+/* The switch lives in the hero's flex-wrap tier row, above the Premium
+   extras: the fieldset takes the width, the note a full line below it. */
 .root {
   display: contents;
 }
