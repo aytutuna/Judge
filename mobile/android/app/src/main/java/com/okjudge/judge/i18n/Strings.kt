@@ -151,6 +151,33 @@ class Strings(private val res: Resources) {
     val footerLanguage: String get() = res.getString(R.string.footer_language)
     val notFoundTitle: String get() = res.getString(R.string.not_found_title)
     val notFoundBody: String get() = res.getString(R.string.not_found_body)
+    val navSignIn: String get() = res.getString(R.string.nav_sign_in)
+    val navAccount: String get() = res.getString(R.string.nav_account)
+    val navPricing: String get() = res.getString(R.string.nav_pricing)
+    val navSignOut: String get() = res.getString(R.string.nav_sign_out)
+    val tierLabel: String get() = res.getString(R.string.tier_label)
+    val tierFree: String get() = res.getString(R.string.tier_free)
+    val tierPremium: String get() = res.getString(R.string.tier_premium)
+    val tierFreeHint: String get() = res.getString(R.string.tier_free_hint)
+    val tierPremiumHint: String get() = res.getString(R.string.tier_premium_hint)
+    val tierSignInToUse: String get() = res.getString(R.string.tier_sign_in_to_use)
+    val tierLockedSignIn: String get() = res.getString(R.string.tier_locked_sign_in)
+    val tierLockedNoAllowance: String get() = res.getString(R.string.tier_locked_no_allowance)
+    val tierGetPremium: String get() = res.getString(R.string.tier_get_premium)
+    fun tierCreditsLeft(n: Int): String = res.getQuantityString(R.plurals.tier_credits_left, n, n)
+    fun tierMonthlyLeft(n: String): String = res.getString(R.string.tier_monthly_left, n)
+    val tierInvite: String get() = res.getString(R.string.tier_invite)
+    val tierOutOfCredits: String get() = res.getString(R.string.tier_out_of_credits)
+    fun tierFairUse(date: String): String = res.getString(R.string.tier_fair_use, date)
+    val tierFairUseSoon: String get() = res.getString(R.string.tier_fair_use_soon)
+    val tierChecking: String get() = res.getString(R.string.tier_checking)
+    val clarifyTitle: String get() = res.getString(R.string.clarify_title)
+    val clarifyLead: String get() = res.getString(R.string.clarify_lead)
+    fun clarifyAnswerAria(n: String): String = res.getString(R.string.clarify_answer_aria, n)
+    val clarifyPlaceholder: String get() = res.getString(R.string.clarify_placeholder)
+    val clarifySkip: String get() = res.getString(R.string.clarify_skip)
+    val clarifySubmit: String get() = res.getString(R.string.clarify_submit)
+    val clarifyBack: String get() = res.getString(R.string.clarify_back)
     val thinkingFactcheck: String get() = res.getString(R.string.thinking_factcheck)
     val thinkingFactcheckDone: String get() = res.getString(R.string.thinking_factcheck_done)
     val thinkingPremiumHelper: String get() = res.getString(R.string.thinking_premium_helper)
@@ -167,6 +194,7 @@ class Strings(private val res: Resources) {
     val factcheckStatusUnverified: String get() = res.getString(R.string.factcheck_status_unverified)
     val factcheckSources: String get() = res.getString(R.string.factcheck_sources)
     val factcheckNone: String get() = res.getString(R.string.factcheck_none)
+    val factcheckNoneFactual: String get() = res.getString(R.string.factcheck_none_factual)
     val factcheckUnavailable: String get() = res.getString(R.string.factcheck_unavailable)
     val signinTitle: String get() = res.getString(R.string.signin_title)
     val signinLead: String get() = res.getString(R.string.signin_lead)
@@ -205,10 +233,26 @@ class Strings(private val res: Resources) {
     val accountSignInPrompt: String get() = res.getString(R.string.account_sign_in_prompt)
     val accountLoadFailed: String get() = res.getString(R.string.account_load_failed)
     val accountLoading: String get() = res.getString(R.string.account_loading)
-    val accountVerdictsTitle: String get() = res.getString(R.string.account_verdicts_title)
-    val accountVerdictsEmpty: String get() = res.getString(R.string.account_verdicts_empty)
-    val accountVerdictsLoadFailed: String get() = res.getString(R.string.account_verdicts_load_failed)
-    val accountVerdictsRemoved: String get() = res.getString(R.string.account_verdicts_removed)
+    val pricingTitle: String get() = res.getString(R.string.pricing_title)
+    val pricingLead: String get() = res.getString(R.string.pricing_lead)
+    val pricingFreeTitle: String get() = res.getString(R.string.pricing_free_title)
+    val pricingFreePrice: String get() = res.getString(R.string.pricing_free_price)
+    val pricingFreeF1: String get() = res.getString(R.string.pricing_free_f1)
+    val pricingFreeF2: String get() = res.getString(R.string.pricing_free_f2)
+    val pricingFreeF3: String get() = res.getString(R.string.pricing_free_f3)
+    val pricingPremiumTitle: String get() = res.getString(R.string.pricing_premium_title)
+    val pricingPremiumF1: String get() = res.getString(R.string.pricing_premium_f1)
+    val pricingPremiumF2: String get() = res.getString(R.string.pricing_premium_f2)
+    val pricingPremiumF3: String get() = res.getString(R.string.pricing_premium_f3)
+    val pricingPacksTitle: String get() = res.getString(R.string.pricing_packs_title)
+    val pricingPacksLead: String get() = res.getString(R.string.pricing_packs_lead)
+    fun pricingPack(n: String): String = res.getString(R.string.pricing_pack, n)
+    fun pricingPerVerdict(price: String): String = res.getString(R.string.pricing_per_verdict, price)
+    val pricingMonthlyTitle: String get() = res.getString(R.string.pricing_monthly_title)
+    val pricingMonthlyRenews: String get() = res.getString(R.string.pricing_monthly_renews)
+    fun pricingMonthlyCap(n: String): String = res.getString(R.string.pricing_monthly_cap, n)
+    val pricingComingSoon: String get() = res.getString(R.string.pricing_coming_soon)
+    val pricingNote: String get() = res.getString(R.string.pricing_note)
     val errorSigninRequired: String get() = res.getString(R.string.error_signin_required)
     val errorPremiumRequired: String get() = res.getString(R.string.error_premium_required)
     val errorNoCredits: String get() = res.getString(R.string.error_no_credits)
@@ -216,8 +260,193 @@ class Strings(private val res: Resources) {
     val errorFairUseSoon: String get() = res.getString(R.string.error_fair_use_soon)
     val errorInProgress: String get() = res.getString(R.string.error_in_progress)
     val errorNotFound: String get() = res.getString(R.string.error_not_found)
+    val errorCaseClosed: String get() = res.getString(R.string.error_case_closed)
+    val errorCaseExpired: String get() = res.getString(R.string.error_case_expired)
+    val errorAppealUsed: String get() = res.getString(R.string.error_appeal_used)
+    val errorNotParty: String get() = res.getString(R.string.error_not_party)
+    val errorOwnCase: String get() = res.getString(R.string.error_own_case)
+    val errorTooLarge: String get() = res.getString(R.string.error_too_large)
+    val errorUnsupportedMedia: String get() = res.getString(R.string.error_unsupported_media)
+    val errorTooManyFiles: String get() = res.getString(R.string.error_too_many_files)
+    val errorEvidenceInvalid: String get() = res.getString(R.string.error_evidence_invalid)
+    val errorAnonymizeFailed: String get() = res.getString(R.string.error_anonymize_failed)
+    val modeLabel: String get() = res.getString(R.string.mode_label)
+    val modeNow: String get() = res.getString(R.string.mode_now)
+    val modeBoth: String get() = res.getString(R.string.mode_both)
+    val modeNowHint: String get() = res.getString(R.string.mode_now_hint)
+    val modeBothHint: String get() = res.getString(R.string.mode_both_hint)
+    val caseCreate: String get() = res.getString(R.string.case_create)
+    val caseCreating: String get() = res.getString(R.string.case_creating)
+    val caseKicker: String get() = res.getString(R.string.case_kicker)
+    val caseKickerOneSided: String get() = res.getString(R.string.case_kicker_one_sided)
+    val caseTitle: String get() = res.getString(R.string.case_title)
+    val caseLoading: String get() = res.getString(R.string.case_loading)
+    val caseLoadFailed: String get() = res.getString(R.string.case_load_failed)
+    val caseNotFound: String get() = res.getString(R.string.case_not_found)
+    val caseSignIn: String get() = res.getString(R.string.case_sign_in)
+    val caseStatusAwaiting: String get() = res.getString(R.string.case_status_awaiting)
+    val caseStatusJudging: String get() = res.getString(R.string.case_status_judging)
+    val caseStatusJudged: String get() = res.getString(R.string.case_status_judged)
+    val caseStatusFailed: String get() = res.getString(R.string.case_status_failed)
+    val caseStatusExpired: String get() = res.getString(R.string.case_status_expired)
+    val caseInviteLabel: String get() = res.getString(R.string.case_invite_label)
+    val caseInviteCopy: String get() = res.getString(R.string.case_invite_copy)
+    val caseInviteCopied: String get() = res.getString(R.string.case_invite_copied)
+    val caseInviteShare: String get() = res.getString(R.string.case_invite_share)
+    val caseInviteShareText: String get() = res.getString(R.string.case_invite_share_text)
+    val caseInviteReset: String get() = res.getString(R.string.case_invite_reset)
+    val caseInviteResetConfirm: String get() = res.getString(R.string.case_invite_reset_confirm)
+    val caseInviteResetYes: String get() = res.getString(R.string.case_invite_reset_yes)
+    val caseInviteResetDone: String get() = res.getString(R.string.case_invite_reset_done)
+    fun caseInviteExpires(date: String): String = res.getString(R.string.case_invite_expires, date)
+    val caseInviteExpiresSoon: String get() = res.getString(R.string.case_invite_expires_soon)
+    fun caseHeld(date: String): String = res.getString(R.string.case_held, date)
+    val caseHeldSoon: String get() = res.getString(R.string.case_held_soon)
+    val caseJudgeNow: String get() = res.getString(R.string.case_judge_now)
+    val caseJudgeNowConfirm: String get() = res.getString(R.string.case_judge_now_confirm)
+    val caseJudgeNowYes: String get() = res.getString(R.string.case_judge_now_yes)
+    val caseJudgeExpiredConfirm: String get() = res.getString(R.string.case_judge_expired_confirm)
+    val caseJudgeExpiredYes: String get() = res.getString(R.string.case_judge_expired_yes)
+    val caseCancel: String get() = res.getString(R.string.case_cancel)
+    val caseRetry: String get() = res.getString(R.string.case_retry)
+    val caseFailedBody: String get() = res.getString(R.string.case_failed_body)
+    val caseYourSide: String get() = res.getString(R.string.case_your_side)
+    val caseAccounts: String get() = res.getString(R.string.case_accounts)
+    val caseAccountA: String get() = res.getString(R.string.case_account_a)
+    val caseAccountB: String get() = res.getString(R.string.case_account_b)
+    fun caseAccountYou(label: String): String = res.getString(R.string.case_account_you, label)
+    val caseContextA: String get() = res.getString(R.string.case_context_a)
+    val caseContextB: String get() = res.getString(R.string.case_context_b)
+    fun caseContextYou(label: String): String = res.getString(R.string.case_context_you, label)
+    fun caseEvidenceItem(n: String): String = res.getString(R.string.case_evidence_item, n)
+    val caseNotYet: String get() = res.getString(R.string.case_not_yet)
+    val caseAnswered: String get() = res.getString(R.string.case_answered)
+    val caseJudgingAlone: String get() = res.getString(R.string.case_judging_alone)
+    val caseExpiredBody: String get() = res.getString(R.string.case_expired_body)
+    val caseOneSided: String get() = res.getString(R.string.case_one_sided)
+    val caseStartOver: String get() = res.getString(R.string.case_start_over)
+    val caseListTitle: String get() = res.getString(R.string.case_list_title)
+    val caseListEmpty: String get() = res.getString(R.string.case_list_empty)
+    val caseListLoadFailed: String get() = res.getString(R.string.case_list_load_failed)
+    fun caseListStarted(date: String): String = res.getString(R.string.case_list_started, date)
+    fun caseListUntitled(date: String): String = res.getString(R.string.case_list_untitled, date)
+    val caseListUntitledSoon: String get() = res.getString(R.string.case_list_untitled_soon)
+    val respondKicker: String get() = res.getString(R.string.respond_kicker)
+    val respondTitle: String get() = res.getString(R.string.respond_title)
+    val respondIntro: String get() = res.getString(R.string.respond_intro)
+    val respondPrivacy: String get() = res.getString(R.string.respond_privacy)
+    fun respondFramework(preset: String): String = res.getString(R.string.respond_framework, preset)
+    fun respondLang(lang: String): String = res.getString(R.string.respond_lang, lang)
+    val respondLangEn: String get() = res.getString(R.string.respond_lang_en)
+    val respondLangTr: String get() = res.getString(R.string.respond_lang_tr)
+    val respondLabel: String get() = res.getString(R.string.respond_label)
+    val respondPlaceholder: String get() = res.getString(R.string.respond_placeholder)
+    val respondSubmit: String get() = res.getString(R.string.respond_submit)
+    val respondSent: String get() = res.getString(R.string.respond_sent)
+    val respondOwnInvite: String get() = res.getString(R.string.respond_own_invite)
+    val respondExpired: String get() = res.getString(R.string.respond_expired)
+    val respondClosed: String get() = res.getString(R.string.respond_closed)
+    val respondWithoutYou: String get() = res.getString(R.string.respond_without_you)
+    val respondFailed: String get() = res.getString(R.string.respond_failed)
+    val respondNotFound: String get() = res.getString(R.string.respond_not_found)
+    val respondLoading: String get() = res.getString(R.string.respond_loading)
+    val respondInviteTitle: String get() = res.getString(R.string.respond_invite_title)
+    val respondStartOwn: String get() = res.getString(R.string.respond_start_own)
+    val respondStartOwnCta: String get() = res.getString(R.string.respond_start_own_cta)
+    val respondPendingMissing: String get() = res.getString(R.string.respond_pending_missing)
+    val evidenceLabel: String get() = res.getString(R.string.evidence_label)
+    val evidenceAdd: String get() = res.getString(R.string.evidence_add)
+    val evidenceAddOne: String get() = res.getString(R.string.evidence_add_one)
+    fun evidenceHint(n: String): String = res.getString(R.string.evidence_hint, n)
+    val evidenceHintOne: String get() = res.getString(R.string.evidence_hint_one)
+    val evidenceReading: String get() = res.getString(R.string.evidence_reading)
+    val evidenceOk: String get() = res.getString(R.string.evidence_ok)
+    fun evidenceRemove(n: String): String = res.getString(R.string.evidence_remove, n)
+    fun evidenceThumb(n: String): String = res.getString(R.string.evidence_thumb, n)
+    val evidencePreview: String get() = res.getString(R.string.evidence_preview)
+    val evidencePreviewNote: String get() = res.getString(R.string.evidence_preview_note)
+    val evidenceStatusUnreadable: String get() = res.getString(R.string.evidence_status_unreadable)
+    val evidenceStatusRefused: String get() = res.getString(R.string.evidence_status_refused)
+    val evidenceStatusUnsupported: String get() = res.getString(R.string.evidence_status_unsupported)
+    val evidenceStatusTooLarge: String get() = res.getString(R.string.evidence_status_too_large)
+    val evidenceStatusFailed: String get() = res.getString(R.string.evidence_status_failed)
+    val evidenceLimit: String get() = res.getString(R.string.evidence_limit)
+    fun evidenceUsed(a: String, b: String): String = res.getString(R.string.evidence_used, a, b)
+    fun evidenceUsedOne(n: String): String = res.getString(R.string.evidence_used_one, n)
+    val twoSidedBadge: String get() = res.getString(R.string.two_sided_badge)
+    val twoSidedAgreed: String get() = res.getString(R.string.two_sided_agreed)
+    val twoSidedDisputed: String get() = res.getString(R.string.two_sided_disputed)
+    fun twoSidedFindingA(name: String): String = res.getString(R.string.two_sided_finding_a, name)
+    fun twoSidedFindingB(name: String): String = res.getString(R.string.two_sided_finding_b, name)
+    val twoSidedFindingSelf: String get() = res.getString(R.string.two_sided_finding_self)
+    val twoSidedFindingUnsettled: String get() = res.getString(R.string.two_sided_finding_unsettled)
+    val twoSidedDecisive: String get() = res.getString(R.string.two_sided_decisive)
+    val twoSidedWouldChange: String get() = res.getString(R.string.two_sided_would_change)
+    val appealTitle: String get() = res.getString(R.string.appeal_title)
+    val appealLead: String get() = res.getString(R.string.appeal_lead)
+    val appealLabel: String get() = res.getString(R.string.appeal_label)
+    val appealPlaceholder: String get() = res.getString(R.string.appeal_placeholder)
+    val appealSubmit: String get() = res.getString(R.string.appeal_submit)
+    val appealSending: String get() = res.getString(R.string.appeal_sending)
+    val appealJudging: String get() = res.getString(R.string.appeal_judging)
+    val appealUpsell: String get() = res.getString(R.string.appeal_upsell)
+    val appealSignIn: String get() = res.getString(R.string.appeal_sign_in)
+    val appealUsed: String get() = res.getString(R.string.appeal_used)
+    val appealBusy: String get() = res.getString(R.string.appeal_busy)
+    val appealOutcomeUpheld: String get() = res.getString(R.string.appeal_outcome_upheld)
+    val appealOutcomeOverturned: String get() = res.getString(R.string.appeal_outcome_overturned)
+    val appealOutcomeChanged: String get() = res.getString(R.string.appeal_outcome_changed)
+    fun appealBy(name: String): String = res.getString(R.string.appeal_by, name)
+    val appealBySelf: String get() = res.getString(R.string.appeal_by_self)
+    fun appealConfidence(from: String): String = res.getString(R.string.appeal_confidence, from)
+    val appealConfidenceTo: String get() = res.getString(R.string.appeal_confidence_to)
+    fun appealConfidenceSame(n: String): String = res.getString(R.string.appeal_confidence_same, n)
+    val appealGenericUpheld: String get() = res.getString(R.string.appeal_generic_upheld)
+    val appealGenericOverturned: String get() = res.getString(R.string.appeal_generic_overturned)
+    val appealGenericChanged: String get() = res.getString(R.string.appeal_generic_changed)
+    val appealPrevious: String get() = res.getString(R.string.appeal_previous)
+    val appealFailed: String get() = res.getString(R.string.appeal_failed)
+    val appealRefused: String get() = res.getString(R.string.appeal_refused)
+    val appealHistory: String get() = res.getString(R.string.appeal_history)
+    val pricingPremiumF4: String get() = res.getString(R.string.pricing_premium_f4)
+    val pricingPremiumF5: String get() = res.getString(R.string.pricing_premium_f5)
+    val pricingPremiumF6: String get() = res.getString(R.string.pricing_premium_f6)
     val langToggleToTr: String get() = res.getString(R.string.lang_toggle_to_tr)
     val langToggleToEn: String get() = res.getString(R.string.lang_toggle_to_en)
+    val removedTitle: String get() = res.getString(R.string.removed_title)
+    val removedBody: String get() = res.getString(R.string.removed_body)
+    val errorRemoved: String get() = res.getString(R.string.error_removed)
+    val errorNamesUnavailable: String get() = res.getString(R.string.error_names_unavailable)
+    val verdictRemove: String get() = res.getString(R.string.verdict_remove)
+    val verdictRemoveConfirm: String get() = res.getString(R.string.verdict_remove_confirm)
+    val verdictRemoveYes: String get() = res.getString(R.string.verdict_remove_yes)
+    val verdictRemoved: String get() = res.getString(R.string.verdict_removed)
+    val verdictRemoveFailed: String get() = res.getString(R.string.verdict_remove_failed)
+    val caseRemove: String get() = res.getString(R.string.case_remove)
+    val caseRemoveConfirm: String get() = res.getString(R.string.case_remove_confirm)
+    val caseRemoveYes: String get() = res.getString(R.string.case_remove_yes)
+    val caseRemoved: String get() = res.getString(R.string.case_removed)
+    val caseRemovedBanner: String get() = res.getString(R.string.case_removed_banner)
+    val caseSideRemoved: String get() = res.getString(R.string.case_side_removed)
+    val caseOriginalTitle: String get() = res.getString(R.string.case_original_title)
+    val caseAppealOriginal: String get() = res.getString(R.string.case_appeal_original)
+    val caseDisplayName: String get() = res.getString(R.string.case_display_name)
+    val caseDisplaySave: String get() = res.getString(R.string.case_display_save)
+    val respondRemove: String get() = res.getString(R.string.respond_remove)
+    val respondRemoveConfirm: String get() = res.getString(R.string.respond_remove_confirm)
+    val namesTitle: String get() = res.getString(R.string.names_title)
+    val namesYou: String get() = res.getString(R.string.names_you)
+    val namesShow: String get() = res.getString(R.string.names_show)
+    val namesSave: String get() = res.getString(R.string.names_save)
+    val namesSaveShare: String get() = res.getString(R.string.names_save_share)
+    val namesEdit: String get() = res.getString(R.string.names_edit)
+    val namesSaved: String get() = res.getString(R.string.names_saved)
+    val namesFailed: String get() = res.getString(R.string.names_failed)
+    val namesInvalid: String get() = res.getString(R.string.names_invalid)
+    val accountVerdictsTitle: String get() = res.getString(R.string.account_verdicts_title)
+    val accountVerdictsEmpty: String get() = res.getString(R.string.account_verdicts_empty)
+    val accountVerdictsLoadFailed: String get() = res.getString(R.string.account_verdicts_load_failed)
+    val accountVerdictsRemoved: String get() = res.getString(R.string.account_verdicts_removed)
     val appName: String get() = res.getString(R.string.app_name)
     val appTabNew: String get() = res.getString(R.string.app_tab_new)
     val appTabHistory: String get() = res.getString(R.string.app_tab_history)
@@ -401,6 +630,29 @@ class Strings(private val res: Resources) {
             "footer.language" -> R.string.footer_language
             "notFound.title" -> R.string.not_found_title
             "notFound.body" -> R.string.not_found_body
+            "nav.signIn" -> R.string.nav_sign_in
+            "nav.account" -> R.string.nav_account
+            "nav.pricing" -> R.string.nav_pricing
+            "nav.signOut" -> R.string.nav_sign_out
+            "tier.label" -> R.string.tier_label
+            "tier.free" -> R.string.tier_free
+            "tier.premium" -> R.string.tier_premium
+            "tier.freeHint" -> R.string.tier_free_hint
+            "tier.premiumHint" -> R.string.tier_premium_hint
+            "tier.signInToUse" -> R.string.tier_sign_in_to_use
+            "tier.lockedSignIn" -> R.string.tier_locked_sign_in
+            "tier.lockedNoAllowance" -> R.string.tier_locked_no_allowance
+            "tier.getPremium" -> R.string.tier_get_premium
+            "tier.invite" -> R.string.tier_invite
+            "tier.outOfCredits" -> R.string.tier_out_of_credits
+            "tier.fairUseSoon" -> R.string.tier_fair_use_soon
+            "tier.checking" -> R.string.tier_checking
+            "clarify.title" -> R.string.clarify_title
+            "clarify.lead" -> R.string.clarify_lead
+            "clarify.placeholder" -> R.string.clarify_placeholder
+            "clarify.skip" -> R.string.clarify_skip
+            "clarify.submit" -> R.string.clarify_submit
+            "clarify.back" -> R.string.clarify_back
             "thinking.factcheck" -> R.string.thinking_factcheck
             "thinking.factcheckDone" -> R.string.thinking_factcheck_done
             "thinking.premiumHelper" -> R.string.thinking_premium_helper
@@ -414,6 +666,7 @@ class Strings(private val res: Resources) {
             "factcheck.status.unverified" -> R.string.factcheck_status_unverified
             "factcheck.sources" -> R.string.factcheck_sources
             "factcheck.none" -> R.string.factcheck_none
+            "factcheck.noneFactual" -> R.string.factcheck_none_factual
             "factcheck.unavailable" -> R.string.factcheck_unavailable
             "signin.title" -> R.string.signin_title
             "signin.lead" -> R.string.signin_lead
@@ -447,18 +700,197 @@ class Strings(private val res: Resources) {
             "account.signInPrompt" -> R.string.account_sign_in_prompt
             "account.loadFailed" -> R.string.account_load_failed
             "account.loading" -> R.string.account_loading
-            "account.verdicts.title" -> R.string.account_verdicts_title
-            "account.verdicts.empty" -> R.string.account_verdicts_empty
-            "account.verdicts.loadFailed" -> R.string.account_verdicts_load_failed
-            "account.verdicts.removed" -> R.string.account_verdicts_removed
+            "pricing.title" -> R.string.pricing_title
+            "pricing.lead" -> R.string.pricing_lead
+            "pricing.free.title" -> R.string.pricing_free_title
+            "pricing.free.price" -> R.string.pricing_free_price
+            "pricing.free.f1" -> R.string.pricing_free_f1
+            "pricing.free.f2" -> R.string.pricing_free_f2
+            "pricing.free.f3" -> R.string.pricing_free_f3
+            "pricing.premium.title" -> R.string.pricing_premium_title
+            "pricing.premium.f1" -> R.string.pricing_premium_f1
+            "pricing.premium.f2" -> R.string.pricing_premium_f2
+            "pricing.premium.f3" -> R.string.pricing_premium_f3
+            "pricing.packsTitle" -> R.string.pricing_packs_title
+            "pricing.packsLead" -> R.string.pricing_packs_lead
+            "pricing.monthly.title" -> R.string.pricing_monthly_title
+            "pricing.monthly.renews" -> R.string.pricing_monthly_renews
+            "pricing.comingSoon" -> R.string.pricing_coming_soon
+            "pricing.note" -> R.string.pricing_note
             "error.signin_required" -> R.string.error_signin_required
             "error.premium_required" -> R.string.error_premium_required
             "error.no_credits" -> R.string.error_no_credits
             "error.fair_useSoon" -> R.string.error_fair_use_soon
             "error.in_progress" -> R.string.error_in_progress
             "error.not_found" -> R.string.error_not_found
+            "error.case_closed" -> R.string.error_case_closed
+            "error.case_expired" -> R.string.error_case_expired
+            "error.appeal_used" -> R.string.error_appeal_used
+            "error.not_party" -> R.string.error_not_party
+            "error.own_case" -> R.string.error_own_case
+            "error.too_large" -> R.string.error_too_large
+            "error.unsupported_media" -> R.string.error_unsupported_media
+            "error.too_many_files" -> R.string.error_too_many_files
+            "error.evidence_invalid" -> R.string.error_evidence_invalid
+            "error.anonymize_failed" -> R.string.error_anonymize_failed
+            "mode.label" -> R.string.mode_label
+            "mode.now" -> R.string.mode_now
+            "mode.both" -> R.string.mode_both
+            "mode.nowHint" -> R.string.mode_now_hint
+            "mode.bothHint" -> R.string.mode_both_hint
+            "case.create" -> R.string.case_create
+            "case.creating" -> R.string.case_creating
+            "case.kicker" -> R.string.case_kicker
+            "case.kickerOneSided" -> R.string.case_kicker_one_sided
+            "case.title" -> R.string.case_title
+            "case.loading" -> R.string.case_loading
+            "case.loadFailed" -> R.string.case_load_failed
+            "case.notFound" -> R.string.case_not_found
+            "case.signIn" -> R.string.case_sign_in
+            "case.status.awaiting" -> R.string.case_status_awaiting
+            "case.status.judging" -> R.string.case_status_judging
+            "case.status.judged" -> R.string.case_status_judged
+            "case.status.failed" -> R.string.case_status_failed
+            "case.status.expired" -> R.string.case_status_expired
+            "case.invite.label" -> R.string.case_invite_label
+            "case.invite.copy" -> R.string.case_invite_copy
+            "case.invite.copied" -> R.string.case_invite_copied
+            "case.invite.share" -> R.string.case_invite_share
+            "case.invite.shareText" -> R.string.case_invite_share_text
+            "case.invite.reset" -> R.string.case_invite_reset
+            "case.invite.resetConfirm" -> R.string.case_invite_reset_confirm
+            "case.invite.resetYes" -> R.string.case_invite_reset_yes
+            "case.invite.resetDone" -> R.string.case_invite_reset_done
+            "case.invite.expiresSoon" -> R.string.case_invite_expires_soon
+            "case.heldSoon" -> R.string.case_held_soon
+            "case.judgeNow" -> R.string.case_judge_now
+            "case.judgeNow.confirm" -> R.string.case_judge_now_confirm
+            "case.judgeNow.yes" -> R.string.case_judge_now_yes
+            "case.judgeExpired.confirm" -> R.string.case_judge_expired_confirm
+            "case.judgeExpired.yes" -> R.string.case_judge_expired_yes
+            "case.cancel" -> R.string.case_cancel
+            "case.retry" -> R.string.case_retry
+            "case.failedBody" -> R.string.case_failed_body
+            "case.yourSide" -> R.string.case_your_side
+            "case.accounts" -> R.string.case_accounts
+            "case.accountA" -> R.string.case_account_a
+            "case.accountB" -> R.string.case_account_b
+            "case.contextA" -> R.string.case_context_a
+            "case.contextB" -> R.string.case_context_b
+            "case.notYet" -> R.string.case_not_yet
+            "case.answered" -> R.string.case_answered
+            "case.judgingAlone" -> R.string.case_judging_alone
+            "case.expiredBody" -> R.string.case_expired_body
+            "case.oneSided" -> R.string.case_one_sided
+            "case.startOver" -> R.string.case_start_over
+            "case.list.title" -> R.string.case_list_title
+            "case.list.empty" -> R.string.case_list_empty
+            "case.list.loadFailed" -> R.string.case_list_load_failed
+            "case.list.untitledSoon" -> R.string.case_list_untitled_soon
+            "respond.kicker" -> R.string.respond_kicker
+            "respond.title" -> R.string.respond_title
+            "respond.intro" -> R.string.respond_intro
+            "respond.privacy" -> R.string.respond_privacy
+            "respond.lang.en" -> R.string.respond_lang_en
+            "respond.lang.tr" -> R.string.respond_lang_tr
+            "respond.label" -> R.string.respond_label
+            "respond.placeholder" -> R.string.respond_placeholder
+            "respond.submit" -> R.string.respond_submit
+            "respond.sent" -> R.string.respond_sent
+            "respond.ownInvite" -> R.string.respond_own_invite
+            "respond.expired" -> R.string.respond_expired
+            "respond.closed" -> R.string.respond_closed
+            "respond.withoutYou" -> R.string.respond_without_you
+            "respond.failed" -> R.string.respond_failed
+            "respond.notFound" -> R.string.respond_not_found
+            "respond.loading" -> R.string.respond_loading
+            "respond.inviteTitle" -> R.string.respond_invite_title
+            "respond.startOwn" -> R.string.respond_start_own
+            "respond.startOwnCta" -> R.string.respond_start_own_cta
+            "respond.pendingMissing" -> R.string.respond_pending_missing
+            "evidence.label" -> R.string.evidence_label
+            "evidence.add" -> R.string.evidence_add
+            "evidence.addOne" -> R.string.evidence_add_one
+            "evidence.hintOne" -> R.string.evidence_hint_one
+            "evidence.reading" -> R.string.evidence_reading
+            "evidence.ok" -> R.string.evidence_ok
+            "evidence.preview" -> R.string.evidence_preview
+            "evidence.previewNote" -> R.string.evidence_preview_note
+            "evidence.status.unreadable" -> R.string.evidence_status_unreadable
+            "evidence.status.refused" -> R.string.evidence_status_refused
+            "evidence.status.unsupported" -> R.string.evidence_status_unsupported
+            "evidence.status.too_large" -> R.string.evidence_status_too_large
+            "evidence.status.failed" -> R.string.evidence_status_failed
+            "evidence.limit" -> R.string.evidence_limit
+            "twoSided.badge" -> R.string.two_sided_badge
+            "twoSided.agreed" -> R.string.two_sided_agreed
+            "twoSided.disputed" -> R.string.two_sided_disputed
+            "twoSided.finding.self" -> R.string.two_sided_finding_self
+            "twoSided.finding.unsettled" -> R.string.two_sided_finding_unsettled
+            "twoSided.decisive" -> R.string.two_sided_decisive
+            "twoSided.wouldChange" -> R.string.two_sided_would_change
+            "appeal.title" -> R.string.appeal_title
+            "appeal.lead" -> R.string.appeal_lead
+            "appeal.label" -> R.string.appeal_label
+            "appeal.placeholder" -> R.string.appeal_placeholder
+            "appeal.submit" -> R.string.appeal_submit
+            "appeal.sending" -> R.string.appeal_sending
+            "appeal.judging" -> R.string.appeal_judging
+            "appeal.upsell" -> R.string.appeal_upsell
+            "appeal.signIn" -> R.string.appeal_sign_in
+            "appeal.used" -> R.string.appeal_used
+            "appeal.busy" -> R.string.appeal_busy
+            "appeal.outcome.upheld" -> R.string.appeal_outcome_upheld
+            "appeal.outcome.overturned" -> R.string.appeal_outcome_overturned
+            "appeal.outcome.changed" -> R.string.appeal_outcome_changed
+            "appeal.bySelf" -> R.string.appeal_by_self
+            "appeal.confidenceTo" -> R.string.appeal_confidence_to
+            "appeal.generic.upheld" -> R.string.appeal_generic_upheld
+            "appeal.generic.overturned" -> R.string.appeal_generic_overturned
+            "appeal.generic.changed" -> R.string.appeal_generic_changed
+            "appeal.previous" -> R.string.appeal_previous
+            "appeal.failed" -> R.string.appeal_failed
+            "appeal.refused" -> R.string.appeal_refused
+            "appeal.history" -> R.string.appeal_history
+            "pricing.premium.f4" -> R.string.pricing_premium_f4
+            "pricing.premium.f5" -> R.string.pricing_premium_f5
+            "pricing.premium.f6" -> R.string.pricing_premium_f6
             "langToggle.toTr" -> R.string.lang_toggle_to_tr
             "langToggle.toEn" -> R.string.lang_toggle_to_en
+            "removed.title" -> R.string.removed_title
+            "removed.body" -> R.string.removed_body
+            "error.removed" -> R.string.error_removed
+            "error.names_unavailable" -> R.string.error_names_unavailable
+            "verdict.remove" -> R.string.verdict_remove
+            "verdict.remove.confirm" -> R.string.verdict_remove_confirm
+            "verdict.remove.yes" -> R.string.verdict_remove_yes
+            "verdict.removed" -> R.string.verdict_removed
+            "verdict.removeFailed" -> R.string.verdict_remove_failed
+            "case.remove" -> R.string.case_remove
+            "case.remove.confirm" -> R.string.case_remove_confirm
+            "case.remove.yes" -> R.string.case_remove_yes
+            "case.removed" -> R.string.case_removed
+            "case.removedBanner" -> R.string.case_removed_banner
+            "case.sideRemoved" -> R.string.case_side_removed
+            "case.originalTitle" -> R.string.case_original_title
+            "case.appealOriginal" -> R.string.case_appeal_original
+            "case.displayName" -> R.string.case_display_name
+            "case.displaySave" -> R.string.case_display_save
+            "respond.remove" -> R.string.respond_remove
+            "respond.remove.confirm" -> R.string.respond_remove_confirm
+            "names.title" -> R.string.names_title
+            "names.you" -> R.string.names_you
+            "names.show" -> R.string.names_show
+            "names.save" -> R.string.names_save
+            "names.saveShare" -> R.string.names_save_share
+            "names.edit" -> R.string.names_edit
+            "names.saved" -> R.string.names_saved
+            "names.failed" -> R.string.names_failed
+            "names.invalid" -> R.string.names_invalid
+            "account.verdicts.title" -> R.string.account_verdicts_title
+            "account.verdicts.empty" -> R.string.account_verdicts_empty
+            "account.verdicts.loadFailed" -> R.string.account_verdicts_load_failed
+            "account.verdicts.removed" -> R.string.account_verdicts_removed
             "app.name" -> R.string.app_name
             "app.tab.new" -> R.string.app_tab_new
             "app.tab.history" -> R.string.app_tab_history

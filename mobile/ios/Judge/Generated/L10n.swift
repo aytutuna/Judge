@@ -157,6 +157,33 @@ enum L10n {
     static func footerLanguage(_ lang: AppLang) -> String { string("footer.language", lang) }
     static func notFoundTitle(_ lang: AppLang) -> String { string("notFound.title", lang) }
     static func notFoundBody(_ lang: AppLang) -> String { string("notFound.body", lang) }
+    static func navSignIn(_ lang: AppLang) -> String { string("nav.signIn", lang) }
+    static func navAccount(_ lang: AppLang) -> String { string("nav.account", lang) }
+    static func navPricing(_ lang: AppLang) -> String { string("nav.pricing", lang) }
+    static func navSignOut(_ lang: AppLang) -> String { string("nav.signOut", lang) }
+    static func tierLabel(_ lang: AppLang) -> String { string("tier.label", lang) }
+    static func tierFree(_ lang: AppLang) -> String { string("tier.free", lang) }
+    static func tierPremium(_ lang: AppLang) -> String { string("tier.premium", lang) }
+    static func tierFreeHint(_ lang: AppLang) -> String { string("tier.freeHint", lang) }
+    static func tierPremiumHint(_ lang: AppLang) -> String { string("tier.premiumHint", lang) }
+    static func tierSignInToUse(_ lang: AppLang) -> String { string("tier.signInToUse", lang) }
+    static func tierLockedSignIn(_ lang: AppLang) -> String { string("tier.lockedSignIn", lang) }
+    static func tierLockedNoAllowance(_ lang: AppLang) -> String { string("tier.lockedNoAllowance", lang) }
+    static func tierGetPremium(_ lang: AppLang) -> String { string("tier.getPremium", lang) }
+    static func tierCreditsLeft(_ lang: AppLang, n: Int) -> String { format("tier.creditsLeft", lang, n) }
+    static func tierMonthlyLeft(_ lang: AppLang, n: String) -> String { format("tier.monthlyLeft", lang, n) }
+    static func tierInvite(_ lang: AppLang) -> String { string("tier.invite", lang) }
+    static func tierOutOfCredits(_ lang: AppLang) -> String { string("tier.outOfCredits", lang) }
+    static func tierFairUse(_ lang: AppLang, date: String) -> String { format("tier.fairUse", lang, date) }
+    static func tierFairUseSoon(_ lang: AppLang) -> String { string("tier.fairUseSoon", lang) }
+    static func tierChecking(_ lang: AppLang) -> String { string("tier.checking", lang) }
+    static func clarifyTitle(_ lang: AppLang) -> String { string("clarify.title", lang) }
+    static func clarifyLead(_ lang: AppLang) -> String { string("clarify.lead", lang) }
+    static func clarifyAnswerAria(_ lang: AppLang, n: String) -> String { format("clarify.answerAria", lang, n) }
+    static func clarifyPlaceholder(_ lang: AppLang) -> String { string("clarify.placeholder", lang) }
+    static func clarifySkip(_ lang: AppLang) -> String { string("clarify.skip", lang) }
+    static func clarifySubmit(_ lang: AppLang) -> String { string("clarify.submit", lang) }
+    static func clarifyBack(_ lang: AppLang) -> String { string("clarify.back", lang) }
     static func thinkingFactcheck(_ lang: AppLang) -> String { string("thinking.factcheck", lang) }
     static func thinkingFactcheckDone(_ lang: AppLang) -> String { string("thinking.factcheckDone", lang) }
     static func thinkingPremiumHelper(_ lang: AppLang) -> String { string("thinking.premiumHelper", lang) }
@@ -173,6 +200,7 @@ enum L10n {
     static func factcheckStatusUnverified(_ lang: AppLang) -> String { string("factcheck.status.unverified", lang) }
     static func factcheckSources(_ lang: AppLang) -> String { string("factcheck.sources", lang) }
     static func factcheckNone(_ lang: AppLang) -> String { string("factcheck.none", lang) }
+    static func factcheckNoneFactual(_ lang: AppLang) -> String { string("factcheck.noneFactual", lang) }
     static func factcheckUnavailable(_ lang: AppLang) -> String { string("factcheck.unavailable", lang) }
     static func signinTitle(_ lang: AppLang) -> String { string("signin.title", lang) }
     static func signinLead(_ lang: AppLang) -> String { string("signin.lead", lang) }
@@ -211,10 +239,26 @@ enum L10n {
     static func accountSignInPrompt(_ lang: AppLang) -> String { string("account.signInPrompt", lang) }
     static func accountLoadFailed(_ lang: AppLang) -> String { string("account.loadFailed", lang) }
     static func accountLoading(_ lang: AppLang) -> String { string("account.loading", lang) }
-    static func accountVerdictsTitle(_ lang: AppLang) -> String { string("account.verdicts.title", lang) }
-    static func accountVerdictsEmpty(_ lang: AppLang) -> String { string("account.verdicts.empty", lang) }
-    static func accountVerdictsLoadFailed(_ lang: AppLang) -> String { string("account.verdicts.loadFailed", lang) }
-    static func accountVerdictsRemoved(_ lang: AppLang) -> String { string("account.verdicts.removed", lang) }
+    static func pricingTitle(_ lang: AppLang) -> String { string("pricing.title", lang) }
+    static func pricingLead(_ lang: AppLang) -> String { string("pricing.lead", lang) }
+    static func pricingFreeTitle(_ lang: AppLang) -> String { string("pricing.free.title", lang) }
+    static func pricingFreePrice(_ lang: AppLang) -> String { string("pricing.free.price", lang) }
+    static func pricingFreeF1(_ lang: AppLang) -> String { string("pricing.free.f1", lang) }
+    static func pricingFreeF2(_ lang: AppLang) -> String { string("pricing.free.f2", lang) }
+    static func pricingFreeF3(_ lang: AppLang) -> String { string("pricing.free.f3", lang) }
+    static func pricingPremiumTitle(_ lang: AppLang) -> String { string("pricing.premium.title", lang) }
+    static func pricingPremiumF1(_ lang: AppLang) -> String { string("pricing.premium.f1", lang) }
+    static func pricingPremiumF2(_ lang: AppLang) -> String { string("pricing.premium.f2", lang) }
+    static func pricingPremiumF3(_ lang: AppLang) -> String { string("pricing.premium.f3", lang) }
+    static func pricingPacksTitle(_ lang: AppLang) -> String { string("pricing.packsTitle", lang) }
+    static func pricingPacksLead(_ lang: AppLang) -> String { string("pricing.packsLead", lang) }
+    static func pricingPack(_ lang: AppLang, n: String) -> String { format("pricing.pack", lang, n) }
+    static func pricingPerVerdict(_ lang: AppLang, price: String) -> String { format("pricing.perVerdict", lang, price) }
+    static func pricingMonthlyTitle(_ lang: AppLang) -> String { string("pricing.monthly.title", lang) }
+    static func pricingMonthlyRenews(_ lang: AppLang) -> String { string("pricing.monthly.renews", lang) }
+    static func pricingMonthlyCap(_ lang: AppLang, n: String) -> String { format("pricing.monthly.cap", lang, n) }
+    static func pricingComingSoon(_ lang: AppLang) -> String { string("pricing.comingSoon", lang) }
+    static func pricingNote(_ lang: AppLang) -> String { string("pricing.note", lang) }
     static func errorSigninRequired(_ lang: AppLang) -> String { string("error.signin_required", lang) }
     static func errorPremiumRequired(_ lang: AppLang) -> String { string("error.premium_required", lang) }
     static func errorNoCredits(_ lang: AppLang) -> String { string("error.no_credits", lang) }
@@ -222,8 +266,193 @@ enum L10n {
     static func errorFairUseSoon(_ lang: AppLang) -> String { string("error.fair_useSoon", lang) }
     static func errorInProgress(_ lang: AppLang) -> String { string("error.in_progress", lang) }
     static func errorNotFound(_ lang: AppLang) -> String { string("error.not_found", lang) }
+    static func errorCaseClosed(_ lang: AppLang) -> String { string("error.case_closed", lang) }
+    static func errorCaseExpired(_ lang: AppLang) -> String { string("error.case_expired", lang) }
+    static func errorAppealUsed(_ lang: AppLang) -> String { string("error.appeal_used", lang) }
+    static func errorNotParty(_ lang: AppLang) -> String { string("error.not_party", lang) }
+    static func errorOwnCase(_ lang: AppLang) -> String { string("error.own_case", lang) }
+    static func errorTooLarge(_ lang: AppLang) -> String { string("error.too_large", lang) }
+    static func errorUnsupportedMedia(_ lang: AppLang) -> String { string("error.unsupported_media", lang) }
+    static func errorTooManyFiles(_ lang: AppLang) -> String { string("error.too_many_files", lang) }
+    static func errorEvidenceInvalid(_ lang: AppLang) -> String { string("error.evidence_invalid", lang) }
+    static func errorAnonymizeFailed(_ lang: AppLang) -> String { string("error.anonymize_failed", lang) }
+    static func modeLabel(_ lang: AppLang) -> String { string("mode.label", lang) }
+    static func modeNow(_ lang: AppLang) -> String { string("mode.now", lang) }
+    static func modeBoth(_ lang: AppLang) -> String { string("mode.both", lang) }
+    static func modeNowHint(_ lang: AppLang) -> String { string("mode.nowHint", lang) }
+    static func modeBothHint(_ lang: AppLang) -> String { string("mode.bothHint", lang) }
+    static func caseCreate(_ lang: AppLang) -> String { string("case.create", lang) }
+    static func caseCreating(_ lang: AppLang) -> String { string("case.creating", lang) }
+    static func caseKicker(_ lang: AppLang) -> String { string("case.kicker", lang) }
+    static func caseKickerOneSided(_ lang: AppLang) -> String { string("case.kickerOneSided", lang) }
+    static func caseTitle(_ lang: AppLang) -> String { string("case.title", lang) }
+    static func caseLoading(_ lang: AppLang) -> String { string("case.loading", lang) }
+    static func caseLoadFailed(_ lang: AppLang) -> String { string("case.loadFailed", lang) }
+    static func caseNotFound(_ lang: AppLang) -> String { string("case.notFound", lang) }
+    static func caseSignIn(_ lang: AppLang) -> String { string("case.signIn", lang) }
+    static func caseStatusAwaiting(_ lang: AppLang) -> String { string("case.status.awaiting", lang) }
+    static func caseStatusJudging(_ lang: AppLang) -> String { string("case.status.judging", lang) }
+    static func caseStatusJudged(_ lang: AppLang) -> String { string("case.status.judged", lang) }
+    static func caseStatusFailed(_ lang: AppLang) -> String { string("case.status.failed", lang) }
+    static func caseStatusExpired(_ lang: AppLang) -> String { string("case.status.expired", lang) }
+    static func caseInviteLabel(_ lang: AppLang) -> String { string("case.invite.label", lang) }
+    static func caseInviteCopy(_ lang: AppLang) -> String { string("case.invite.copy", lang) }
+    static func caseInviteCopied(_ lang: AppLang) -> String { string("case.invite.copied", lang) }
+    static func caseInviteShare(_ lang: AppLang) -> String { string("case.invite.share", lang) }
+    static func caseInviteShareText(_ lang: AppLang) -> String { string("case.invite.shareText", lang) }
+    static func caseInviteReset(_ lang: AppLang) -> String { string("case.invite.reset", lang) }
+    static func caseInviteResetConfirm(_ lang: AppLang) -> String { string("case.invite.resetConfirm", lang) }
+    static func caseInviteResetYes(_ lang: AppLang) -> String { string("case.invite.resetYes", lang) }
+    static func caseInviteResetDone(_ lang: AppLang) -> String { string("case.invite.resetDone", lang) }
+    static func caseInviteExpires(_ lang: AppLang, date: String) -> String { format("case.invite.expires", lang, date) }
+    static func caseInviteExpiresSoon(_ lang: AppLang) -> String { string("case.invite.expiresSoon", lang) }
+    static func caseHeld(_ lang: AppLang, date: String) -> String { format("case.held", lang, date) }
+    static func caseHeldSoon(_ lang: AppLang) -> String { string("case.heldSoon", lang) }
+    static func caseJudgeNow(_ lang: AppLang) -> String { string("case.judgeNow", lang) }
+    static func caseJudgeNowConfirm(_ lang: AppLang) -> String { string("case.judgeNow.confirm", lang) }
+    static func caseJudgeNowYes(_ lang: AppLang) -> String { string("case.judgeNow.yes", lang) }
+    static func caseJudgeExpiredConfirm(_ lang: AppLang) -> String { string("case.judgeExpired.confirm", lang) }
+    static func caseJudgeExpiredYes(_ lang: AppLang) -> String { string("case.judgeExpired.yes", lang) }
+    static func caseCancel(_ lang: AppLang) -> String { string("case.cancel", lang) }
+    static func caseRetry(_ lang: AppLang) -> String { string("case.retry", lang) }
+    static func caseFailedBody(_ lang: AppLang) -> String { string("case.failedBody", lang) }
+    static func caseYourSide(_ lang: AppLang) -> String { string("case.yourSide", lang) }
+    static func caseAccounts(_ lang: AppLang) -> String { string("case.accounts", lang) }
+    static func caseAccountA(_ lang: AppLang) -> String { string("case.accountA", lang) }
+    static func caseAccountB(_ lang: AppLang) -> String { string("case.accountB", lang) }
+    static func caseAccountYou(_ lang: AppLang, label: String) -> String { format("case.accountYou", lang, label) }
+    static func caseContextA(_ lang: AppLang) -> String { string("case.contextA", lang) }
+    static func caseContextB(_ lang: AppLang) -> String { string("case.contextB", lang) }
+    static func caseContextYou(_ lang: AppLang, label: String) -> String { format("case.contextYou", lang, label) }
+    static func caseEvidenceItem(_ lang: AppLang, n: String) -> String { format("case.evidenceItem", lang, n) }
+    static func caseNotYet(_ lang: AppLang) -> String { string("case.notYet", lang) }
+    static func caseAnswered(_ lang: AppLang) -> String { string("case.answered", lang) }
+    static func caseJudgingAlone(_ lang: AppLang) -> String { string("case.judgingAlone", lang) }
+    static func caseExpiredBody(_ lang: AppLang) -> String { string("case.expiredBody", lang) }
+    static func caseOneSided(_ lang: AppLang) -> String { string("case.oneSided", lang) }
+    static func caseStartOver(_ lang: AppLang) -> String { string("case.startOver", lang) }
+    static func caseListTitle(_ lang: AppLang) -> String { string("case.list.title", lang) }
+    static func caseListEmpty(_ lang: AppLang) -> String { string("case.list.empty", lang) }
+    static func caseListLoadFailed(_ lang: AppLang) -> String { string("case.list.loadFailed", lang) }
+    static func caseListStarted(_ lang: AppLang, date: String) -> String { format("case.list.started", lang, date) }
+    static func caseListUntitled(_ lang: AppLang, date: String) -> String { format("case.list.untitled", lang, date) }
+    static func caseListUntitledSoon(_ lang: AppLang) -> String { string("case.list.untitledSoon", lang) }
+    static func respondKicker(_ lang: AppLang) -> String { string("respond.kicker", lang) }
+    static func respondTitle(_ lang: AppLang) -> String { string("respond.title", lang) }
+    static func respondIntro(_ lang: AppLang) -> String { string("respond.intro", lang) }
+    static func respondPrivacy(_ lang: AppLang) -> String { string("respond.privacy", lang) }
+    static func respondFramework(_ lang: AppLang, preset: String) -> String { format("respond.framework", lang, preset) }
+    static func respondLang(_ lang: AppLang, lang: String) -> String { format("respond.lang", lang, lang) }
+    static func respondLangEn(_ lang: AppLang) -> String { string("respond.lang.en", lang) }
+    static func respondLangTr(_ lang: AppLang) -> String { string("respond.lang.tr", lang) }
+    static func respondLabel(_ lang: AppLang) -> String { string("respond.label", lang) }
+    static func respondPlaceholder(_ lang: AppLang) -> String { string("respond.placeholder", lang) }
+    static func respondSubmit(_ lang: AppLang) -> String { string("respond.submit", lang) }
+    static func respondSent(_ lang: AppLang) -> String { string("respond.sent", lang) }
+    static func respondOwnInvite(_ lang: AppLang) -> String { string("respond.ownInvite", lang) }
+    static func respondExpired(_ lang: AppLang) -> String { string("respond.expired", lang) }
+    static func respondClosed(_ lang: AppLang) -> String { string("respond.closed", lang) }
+    static func respondWithoutYou(_ lang: AppLang) -> String { string("respond.withoutYou", lang) }
+    static func respondFailed(_ lang: AppLang) -> String { string("respond.failed", lang) }
+    static func respondNotFound(_ lang: AppLang) -> String { string("respond.notFound", lang) }
+    static func respondLoading(_ lang: AppLang) -> String { string("respond.loading", lang) }
+    static func respondInviteTitle(_ lang: AppLang) -> String { string("respond.inviteTitle", lang) }
+    static func respondStartOwn(_ lang: AppLang) -> String { string("respond.startOwn", lang) }
+    static func respondStartOwnCta(_ lang: AppLang) -> String { string("respond.startOwnCta", lang) }
+    static func respondPendingMissing(_ lang: AppLang) -> String { string("respond.pendingMissing", lang) }
+    static func evidenceLabel(_ lang: AppLang) -> String { string("evidence.label", lang) }
+    static func evidenceAdd(_ lang: AppLang) -> String { string("evidence.add", lang) }
+    static func evidenceAddOne(_ lang: AppLang) -> String { string("evidence.addOne", lang) }
+    static func evidenceHint(_ lang: AppLang, n: String) -> String { format("evidence.hint", lang, n) }
+    static func evidenceHintOne(_ lang: AppLang) -> String { string("evidence.hintOne", lang) }
+    static func evidenceReading(_ lang: AppLang) -> String { string("evidence.reading", lang) }
+    static func evidenceOk(_ lang: AppLang) -> String { string("evidence.ok", lang) }
+    static func evidenceRemove(_ lang: AppLang, n: String) -> String { format("evidence.remove", lang, n) }
+    static func evidenceThumb(_ lang: AppLang, n: String) -> String { format("evidence.thumb", lang, n) }
+    static func evidencePreview(_ lang: AppLang) -> String { string("evidence.preview", lang) }
+    static func evidencePreviewNote(_ lang: AppLang) -> String { string("evidence.previewNote", lang) }
+    static func evidenceStatusUnreadable(_ lang: AppLang) -> String { string("evidence.status.unreadable", lang) }
+    static func evidenceStatusRefused(_ lang: AppLang) -> String { string("evidence.status.refused", lang) }
+    static func evidenceStatusUnsupported(_ lang: AppLang) -> String { string("evidence.status.unsupported", lang) }
+    static func evidenceStatusTooLarge(_ lang: AppLang) -> String { string("evidence.status.too_large", lang) }
+    static func evidenceStatusFailed(_ lang: AppLang) -> String { string("evidence.status.failed", lang) }
+    static func evidenceLimit(_ lang: AppLang) -> String { string("evidence.limit", lang) }
+    static func evidenceUsed(_ lang: AppLang, a: String, b: String) -> String { format("evidence.used", lang, a, b) }
+    static func evidenceUsedOne(_ lang: AppLang, n: String) -> String { format("evidence.usedOne", lang, n) }
+    static func twoSidedBadge(_ lang: AppLang) -> String { string("twoSided.badge", lang) }
+    static func twoSidedAgreed(_ lang: AppLang) -> String { string("twoSided.agreed", lang) }
+    static func twoSidedDisputed(_ lang: AppLang) -> String { string("twoSided.disputed", lang) }
+    static func twoSidedFindingA(_ lang: AppLang, name: String) -> String { format("twoSided.finding.a", lang, name) }
+    static func twoSidedFindingB(_ lang: AppLang, name: String) -> String { format("twoSided.finding.b", lang, name) }
+    static func twoSidedFindingSelf(_ lang: AppLang) -> String { string("twoSided.finding.self", lang) }
+    static func twoSidedFindingUnsettled(_ lang: AppLang) -> String { string("twoSided.finding.unsettled", lang) }
+    static func twoSidedDecisive(_ lang: AppLang) -> String { string("twoSided.decisive", lang) }
+    static func twoSidedWouldChange(_ lang: AppLang) -> String { string("twoSided.wouldChange", lang) }
+    static func appealTitle(_ lang: AppLang) -> String { string("appeal.title", lang) }
+    static func appealLead(_ lang: AppLang) -> String { string("appeal.lead", lang) }
+    static func appealLabel(_ lang: AppLang) -> String { string("appeal.label", lang) }
+    static func appealPlaceholder(_ lang: AppLang) -> String { string("appeal.placeholder", lang) }
+    static func appealSubmit(_ lang: AppLang) -> String { string("appeal.submit", lang) }
+    static func appealSending(_ lang: AppLang) -> String { string("appeal.sending", lang) }
+    static func appealJudging(_ lang: AppLang) -> String { string("appeal.judging", lang) }
+    static func appealUpsell(_ lang: AppLang) -> String { string("appeal.upsell", lang) }
+    static func appealSignIn(_ lang: AppLang) -> String { string("appeal.signIn", lang) }
+    static func appealUsed(_ lang: AppLang) -> String { string("appeal.used", lang) }
+    static func appealBusy(_ lang: AppLang) -> String { string("appeal.busy", lang) }
+    static func appealOutcomeUpheld(_ lang: AppLang) -> String { string("appeal.outcome.upheld", lang) }
+    static func appealOutcomeOverturned(_ lang: AppLang) -> String { string("appeal.outcome.overturned", lang) }
+    static func appealOutcomeChanged(_ lang: AppLang) -> String { string("appeal.outcome.changed", lang) }
+    static func appealBy(_ lang: AppLang, name: String) -> String { format("appeal.by", lang, name) }
+    static func appealBySelf(_ lang: AppLang) -> String { string("appeal.bySelf", lang) }
+    static func appealConfidence(_ lang: AppLang, from: String) -> String { format("appeal.confidence", lang, from) }
+    static func appealConfidenceTo(_ lang: AppLang) -> String { string("appeal.confidenceTo", lang) }
+    static func appealConfidenceSame(_ lang: AppLang, n: String) -> String { format("appeal.confidenceSame", lang, n) }
+    static func appealGenericUpheld(_ lang: AppLang) -> String { string("appeal.generic.upheld", lang) }
+    static func appealGenericOverturned(_ lang: AppLang) -> String { string("appeal.generic.overturned", lang) }
+    static func appealGenericChanged(_ lang: AppLang) -> String { string("appeal.generic.changed", lang) }
+    static func appealPrevious(_ lang: AppLang) -> String { string("appeal.previous", lang) }
+    static func appealFailed(_ lang: AppLang) -> String { string("appeal.failed", lang) }
+    static func appealRefused(_ lang: AppLang) -> String { string("appeal.refused", lang) }
+    static func appealHistory(_ lang: AppLang) -> String { string("appeal.history", lang) }
+    static func pricingPremiumF4(_ lang: AppLang) -> String { string("pricing.premium.f4", lang) }
+    static func pricingPremiumF5(_ lang: AppLang) -> String { string("pricing.premium.f5", lang) }
+    static func pricingPremiumF6(_ lang: AppLang) -> String { string("pricing.premium.f6", lang) }
     static func langToggleToTr(_ lang: AppLang) -> String { string("langToggle.toTr", lang) }
     static func langToggleToEn(_ lang: AppLang) -> String { string("langToggle.toEn", lang) }
+    static func removedTitle(_ lang: AppLang) -> String { string("removed.title", lang) }
+    static func removedBody(_ lang: AppLang) -> String { string("removed.body", lang) }
+    static func errorRemoved(_ lang: AppLang) -> String { string("error.removed", lang) }
+    static func errorNamesUnavailable(_ lang: AppLang) -> String { string("error.names_unavailable", lang) }
+    static func verdictRemove(_ lang: AppLang) -> String { string("verdict.remove", lang) }
+    static func verdictRemoveConfirm(_ lang: AppLang) -> String { string("verdict.remove.confirm", lang) }
+    static func verdictRemoveYes(_ lang: AppLang) -> String { string("verdict.remove.yes", lang) }
+    static func verdictRemoved(_ lang: AppLang) -> String { string("verdict.removed", lang) }
+    static func verdictRemoveFailed(_ lang: AppLang) -> String { string("verdict.removeFailed", lang) }
+    static func caseRemove(_ lang: AppLang) -> String { string("case.remove", lang) }
+    static func caseRemoveConfirm(_ lang: AppLang) -> String { string("case.remove.confirm", lang) }
+    static func caseRemoveYes(_ lang: AppLang) -> String { string("case.remove.yes", lang) }
+    static func caseRemoved(_ lang: AppLang) -> String { string("case.removed", lang) }
+    static func caseRemovedBanner(_ lang: AppLang) -> String { string("case.removedBanner", lang) }
+    static func caseSideRemoved(_ lang: AppLang) -> String { string("case.sideRemoved", lang) }
+    static func caseOriginalTitle(_ lang: AppLang) -> String { string("case.originalTitle", lang) }
+    static func caseAppealOriginal(_ lang: AppLang) -> String { string("case.appealOriginal", lang) }
+    static func caseDisplayName(_ lang: AppLang) -> String { string("case.displayName", lang) }
+    static func caseDisplaySave(_ lang: AppLang) -> String { string("case.displaySave", lang) }
+    static func respondRemove(_ lang: AppLang) -> String { string("respond.remove", lang) }
+    static func respondRemoveConfirm(_ lang: AppLang) -> String { string("respond.remove.confirm", lang) }
+    static func namesTitle(_ lang: AppLang) -> String { string("names.title", lang) }
+    static func namesYou(_ lang: AppLang) -> String { string("names.you", lang) }
+    static func namesShow(_ lang: AppLang) -> String { string("names.show", lang) }
+    static func namesSave(_ lang: AppLang) -> String { string("names.save", lang) }
+    static func namesSaveShare(_ lang: AppLang) -> String { string("names.saveShare", lang) }
+    static func namesEdit(_ lang: AppLang) -> String { string("names.edit", lang) }
+    static func namesSaved(_ lang: AppLang) -> String { string("names.saved", lang) }
+    static func namesFailed(_ lang: AppLang) -> String { string("names.failed", lang) }
+    static func namesInvalid(_ lang: AppLang) -> String { string("names.invalid", lang) }
+    static func accountVerdictsTitle(_ lang: AppLang) -> String { string("account.verdicts.title", lang) }
+    static func accountVerdictsEmpty(_ lang: AppLang) -> String { string("account.verdicts.empty", lang) }
+    static func accountVerdictsLoadFailed(_ lang: AppLang) -> String { string("account.verdicts.loadFailed", lang) }
+    static func accountVerdictsRemoved(_ lang: AppLang) -> String { string("account.verdicts.removed", lang) }
     static func appName(_ lang: AppLang) -> String { string("app.name", lang) }
     static func appTabNew(_ lang: AppLang) -> String { string("app.tab.new", lang) }
     static func appTabHistory(_ lang: AppLang) -> String { string("app.tab.history", lang) }
@@ -408,6 +637,29 @@ enum L10n {
         "footer.language",
         "notFound.title",
         "notFound.body",
+        "nav.signIn",
+        "nav.account",
+        "nav.pricing",
+        "nav.signOut",
+        "tier.label",
+        "tier.free",
+        "tier.premium",
+        "tier.freeHint",
+        "tier.premiumHint",
+        "tier.signInToUse",
+        "tier.lockedSignIn",
+        "tier.lockedNoAllowance",
+        "tier.getPremium",
+        "tier.invite",
+        "tier.outOfCredits",
+        "tier.fairUseSoon",
+        "tier.checking",
+        "clarify.title",
+        "clarify.lead",
+        "clarify.placeholder",
+        "clarify.skip",
+        "clarify.submit",
+        "clarify.back",
         "thinking.factcheck",
         "thinking.factcheckDone",
         "thinking.premiumHelper",
@@ -421,6 +673,7 @@ enum L10n {
         "factcheck.status.unverified",
         "factcheck.sources",
         "factcheck.none",
+        "factcheck.noneFactual",
         "factcheck.unavailable",
         "signin.title",
         "signin.lead",
@@ -454,18 +707,197 @@ enum L10n {
         "account.signInPrompt",
         "account.loadFailed",
         "account.loading",
-        "account.verdicts.title",
-        "account.verdicts.empty",
-        "account.verdicts.loadFailed",
-        "account.verdicts.removed",
+        "pricing.title",
+        "pricing.lead",
+        "pricing.free.title",
+        "pricing.free.price",
+        "pricing.free.f1",
+        "pricing.free.f2",
+        "pricing.free.f3",
+        "pricing.premium.title",
+        "pricing.premium.f1",
+        "pricing.premium.f2",
+        "pricing.premium.f3",
+        "pricing.packsTitle",
+        "pricing.packsLead",
+        "pricing.monthly.title",
+        "pricing.monthly.renews",
+        "pricing.comingSoon",
+        "pricing.note",
         "error.signin_required",
         "error.premium_required",
         "error.no_credits",
         "error.fair_useSoon",
         "error.in_progress",
         "error.not_found",
+        "error.case_closed",
+        "error.case_expired",
+        "error.appeal_used",
+        "error.not_party",
+        "error.own_case",
+        "error.too_large",
+        "error.unsupported_media",
+        "error.too_many_files",
+        "error.evidence_invalid",
+        "error.anonymize_failed",
+        "mode.label",
+        "mode.now",
+        "mode.both",
+        "mode.nowHint",
+        "mode.bothHint",
+        "case.create",
+        "case.creating",
+        "case.kicker",
+        "case.kickerOneSided",
+        "case.title",
+        "case.loading",
+        "case.loadFailed",
+        "case.notFound",
+        "case.signIn",
+        "case.status.awaiting",
+        "case.status.judging",
+        "case.status.judged",
+        "case.status.failed",
+        "case.status.expired",
+        "case.invite.label",
+        "case.invite.copy",
+        "case.invite.copied",
+        "case.invite.share",
+        "case.invite.shareText",
+        "case.invite.reset",
+        "case.invite.resetConfirm",
+        "case.invite.resetYes",
+        "case.invite.resetDone",
+        "case.invite.expiresSoon",
+        "case.heldSoon",
+        "case.judgeNow",
+        "case.judgeNow.confirm",
+        "case.judgeNow.yes",
+        "case.judgeExpired.confirm",
+        "case.judgeExpired.yes",
+        "case.cancel",
+        "case.retry",
+        "case.failedBody",
+        "case.yourSide",
+        "case.accounts",
+        "case.accountA",
+        "case.accountB",
+        "case.contextA",
+        "case.contextB",
+        "case.notYet",
+        "case.answered",
+        "case.judgingAlone",
+        "case.expiredBody",
+        "case.oneSided",
+        "case.startOver",
+        "case.list.title",
+        "case.list.empty",
+        "case.list.loadFailed",
+        "case.list.untitledSoon",
+        "respond.kicker",
+        "respond.title",
+        "respond.intro",
+        "respond.privacy",
+        "respond.lang.en",
+        "respond.lang.tr",
+        "respond.label",
+        "respond.placeholder",
+        "respond.submit",
+        "respond.sent",
+        "respond.ownInvite",
+        "respond.expired",
+        "respond.closed",
+        "respond.withoutYou",
+        "respond.failed",
+        "respond.notFound",
+        "respond.loading",
+        "respond.inviteTitle",
+        "respond.startOwn",
+        "respond.startOwnCta",
+        "respond.pendingMissing",
+        "evidence.label",
+        "evidence.add",
+        "evidence.addOne",
+        "evidence.hintOne",
+        "evidence.reading",
+        "evidence.ok",
+        "evidence.preview",
+        "evidence.previewNote",
+        "evidence.status.unreadable",
+        "evidence.status.refused",
+        "evidence.status.unsupported",
+        "evidence.status.too_large",
+        "evidence.status.failed",
+        "evidence.limit",
+        "twoSided.badge",
+        "twoSided.agreed",
+        "twoSided.disputed",
+        "twoSided.finding.self",
+        "twoSided.finding.unsettled",
+        "twoSided.decisive",
+        "twoSided.wouldChange",
+        "appeal.title",
+        "appeal.lead",
+        "appeal.label",
+        "appeal.placeholder",
+        "appeal.submit",
+        "appeal.sending",
+        "appeal.judging",
+        "appeal.upsell",
+        "appeal.signIn",
+        "appeal.used",
+        "appeal.busy",
+        "appeal.outcome.upheld",
+        "appeal.outcome.overturned",
+        "appeal.outcome.changed",
+        "appeal.bySelf",
+        "appeal.confidenceTo",
+        "appeal.generic.upheld",
+        "appeal.generic.overturned",
+        "appeal.generic.changed",
+        "appeal.previous",
+        "appeal.failed",
+        "appeal.refused",
+        "appeal.history",
+        "pricing.premium.f4",
+        "pricing.premium.f5",
+        "pricing.premium.f6",
         "langToggle.toTr",
         "langToggle.toEn",
+        "removed.title",
+        "removed.body",
+        "error.removed",
+        "error.names_unavailable",
+        "verdict.remove",
+        "verdict.remove.confirm",
+        "verdict.remove.yes",
+        "verdict.removed",
+        "verdict.removeFailed",
+        "case.remove",
+        "case.remove.confirm",
+        "case.remove.yes",
+        "case.removed",
+        "case.removedBanner",
+        "case.sideRemoved",
+        "case.originalTitle",
+        "case.appealOriginal",
+        "case.displayName",
+        "case.displaySave",
+        "respond.remove",
+        "respond.remove.confirm",
+        "names.title",
+        "names.you",
+        "names.show",
+        "names.save",
+        "names.saveShare",
+        "names.edit",
+        "names.saved",
+        "names.failed",
+        "names.invalid",
+        "account.verdicts.title",
+        "account.verdicts.empty",
+        "account.verdicts.loadFailed",
+        "account.verdicts.removed",
         "app.name",
         "app.tab.new",
         "app.tab.history",

@@ -102,6 +102,22 @@ export const WEB_KEYS: readonly string[] = [
   "footer.language",
   "footer.note",
   "nav.how",
+  "nav.signIn",
+  "nav.account",
+  "nav.pricing",
+  "nav.signOut",
+  // Premium, cases and appeals
+  "tier.*",
+  "clarify.*",
+  "mode.*",
+  "case.*",
+  "respond.*",
+  "evidence.*",
+  "twoSided.*",
+  "appeal.*",
+  "names.*",
+  "removed.*",
+  "pricing.*",
   "langToggle.toTr",
   "langToggle.toEn",
 ];
@@ -115,6 +131,8 @@ export const EXCLUDE_KEYS: readonly string[] = [
   "error.bad_origin",
   "signin.unavailable",
   "account.deleted",
+  "pricing.preview",
+  "pricing.signIn",
 ];
 
 /**
@@ -161,4 +179,9 @@ export const REQUIRED_KEYS: readonly string[] = [
   "account.signedInAs",
   "account.signOut",
   "account.delete",
+  "tier.premium",
+  "clarify.title",
+  "evidence.label",
+  "case.status.judged",
+  "appeal.outcome.upheld",
 ];
