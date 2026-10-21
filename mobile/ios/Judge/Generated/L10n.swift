@@ -342,7 +342,7 @@ enum L10n {
     static func respondIntro(_ lang: AppLang) -> String { string("respond.intro", lang) }
     static func respondPrivacy(_ lang: AppLang) -> String { string("respond.privacy", lang) }
     static func respondFramework(_ lang: AppLang, preset: String) -> String { format("respond.framework", lang, preset) }
-    static func respondLang(_ lang: AppLang, lang: String) -> String { format("respond.lang", lang, lang) }
+    static func respondLang(_ lang: AppLang, language: String) -> String { format("respond.lang", lang, language) }
     static func respondLangEn(_ lang: AppLang) -> String { string("respond.lang.en", lang) }
     static func respondLangTr(_ lang: AppLang) -> String { string("respond.lang.tr", lang) }
     static func respondLabel(_ lang: AppLang) -> String { string("respond.label", lang) }
