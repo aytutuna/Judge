@@ -16,6 +16,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.selection.selectable
+import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.SwipeToDismissBox
@@ -35,6 +37,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.CustomAccessibilityAction
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.customActions
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
@@ -49,6 +52,8 @@ import com.okjudge.judge.core.display.RestoreNames
 import com.okjudge.judge.core.display.SealSide
 import com.okjudge.judge.core.display.VerdictDisplay
 import com.okjudge.judge.i18n.AppLang
+import com.okjudge.judge.ui.cases.CaseList
+import com.okjudge.judge.ui.cases.CaseListState
 import com.okjudge.judge.i18n.LocalLang
 import com.okjudge.judge.i18n.LocalStrings
 import com.okjudge.judge.ui.components.JudgeIcons
@@ -87,6 +92,7 @@ object HistoryTags {
     const val LIST = "history.list"
     const val EMPTY = "history.empty"
     fun row(id: String) = "history.row.$id"
+    fun segment(i: Int) = "history.segment.$i"
 }
 
 /** "My verdicts": saved on this phone, newest first; swipe or long-press to delete. */
@@ -99,8 +105,15 @@ fun HistoryScreen(
     onDeleteAll: () -> Unit,
     onToggleLang: () -> Unit,
     modifier: Modifier = Modifier,
+    /** The account's two-sided cases; null hides the section (cases off, signed out). */
+    cases: CaseListState? = null,
+    onOpenCase: (String) -> Unit = {},
+    onRetryCases: () -> Unit = {},
+    initiallyCases: Boolean = false,
 ) {
     val s = LocalStrings.current
+    var showCases by rememberSaveable { mutableStateOf(initiallyCases) }
+    val casesShown = cases != null && showCases
     var confirmAll by rememberSaveable { mutableStateOf(false) }
     var confirmOne by rememberSaveable { mutableStateOf<String?>(null) }
 
@@ -111,9 +124,18 @@ fun HistoryScreen(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(s.appHistoryTitle, style = JudgeType.sectionTitle.copy(fontSize = JudgeType.sectionTitle.fontSize * 1.3f), modifier = Modifier.weight(1f))
-            if (!items.isNullOrEmpty()) TextAction(s.appHistoryClearAll, { confirmAll = true })
+            if (!casesShown && !items.isNullOrEmpty()) TextAction(s.appHistoryClearAll, { confirmAll = true })
+        }
+        if (cases != null) {
+            Segmented(
+                options = listOf(s.appHistoryTitle, s.caseListTitle),
+                selected = if (showCases) 1 else 0,
+                onSelect = { showCases = it == 1 },
+                modifier = Modifier.padding(horizontal = 16.dp, vertical = 6.dp),
+            )
         }
         when {
+            casesShown -> CaseList(cases!!, onOpenCase, onRetryCases)
             items == null -> Unit
             items.isEmpty() -> Box(Modifier.fillMaxSize().padding(32.dp), contentAlignment = Alignment.Center) {
                 Text(s.appHistoryEmpty, style = JudgeType.lead, textAlign = TextAlign.Center, modifier = Modifier.testTag(HistoryTags.EMPTY))
@@ -232,3 +254,34 @@ private fun HistoryRow(item: SavedVerdict, onOpen: () -> Unit, onLongPress: () -
         }
     }
 }
+
+/** A two-option segmented control (phone history / account cases). */
+@Composable
+private fun Segmented(options: List<String>, selected: Int, onSelect: (Int) -> Unit, modifier: Modifier = Modifier) {
+    Row(
+        modifier
+            .fillMaxWidth()
+            .clip(JudgeShapes.chip)
+            .background(Palette.paper)
+            .border(1.dp, Palette.line2, JudgeShapes.chip)
+            .padding(3.dp)
+            .selectableGroup(),
+    ) {
+        options.forEachIndexed { i, label ->
+            val on = i == selected
+            Box(
+                Modifier
+                    .weight(1f)
+                    .clip(JudgeShapes.chip)
+                    .background(if (on) Palette.ink else Palette.paper)
+                    .selectable(selected = on, role = Role.Tab) { onSelect(i) }
+                    .testTag(HistoryTags.segment(i))
+                    .padding(vertical = 9.dp),
+                contentAlignment = Alignment.Center,
+            ) {
+                Text(label, style = JudgeType.small.copy(color = if (on) Palette.ivory else Palette.ink2), maxLines = 1, overflow = TextOverflow.Ellipsis)
+            }
+        }
+    }
+}
+

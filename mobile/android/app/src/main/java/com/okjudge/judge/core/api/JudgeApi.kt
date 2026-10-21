@@ -2,7 +2,13 @@ package com.okjudge.judge.core.api
 
 import com.okjudge.judge.core.display.UiError
 import com.okjudge.judge.core.evidence.PreparedImage
+import com.okjudge.judge.core.model.CaseListResponse
+import com.okjudge.judge.core.model.CaseRemovalResponse
+import com.okjudge.judge.core.model.CaseResponse
+import com.okjudge.judge.core.model.CaseView
+import com.okjudge.judge.core.model.CaseWithNames
 import com.okjudge.judge.core.model.ClarifyRequest
+import com.okjudge.judge.core.model.InviteResponse
 import com.okjudge.judge.core.model.ClarifyResponse
 import com.okjudge.judge.core.model.EvidenceUploadResponse
 import com.okjudge.judge.core.model.MeResponse
@@ -186,6 +192,75 @@ class JudgeApi(
         val req = request(url("api", "v1", "evidence")).post(form.build()).build()
         return execute(evidenceClient, req) { _, text -> WireJson.json.decodeFromString(EvidenceUploadResponse.serializer(), text) }
     }
+
+    // --- Two-sided cases (lib/cases/http.ts) ------------------------------------------
+
+    /** POST /api/v1/cases with the owner's side; [body] is the exact JSON the [idempotencyKey] belongs to. */
+    suspend fun createCase(body: String, idempotencyKey: String): ApiResult<CaseWithNames> {
+        val req = request(url("api", "v1", "cases"))
+            .header("Idempotency-Key", idempotencyKey)
+            .post(body.toRequestBody(JSON))
+            .build()
+        return execute(translateClient, req) { _, text -> WireJson.json.decodeFromString(CaseWithNames.serializer(), text) }
+    }
+
+    /** GET /api/v1/cases/{id}: the owner's view of a case. */
+    suspend fun getCase(id: String): ApiResult<CaseView> {
+        val req = request(caseUrl(id)).cacheControl(CacheControl.FORCE_NETWORK).get().build()
+        return execute(getClient, req) { _, text -> WireJson.json.decodeFromString(CaseResponse.serializer(), text).case }
+    }
+
+    /** GET /api/v1/cases?limit=: the signed-in account's cases, newest first. */
+    suspend fun listCases(limit: Int = 20): ApiResult<CaseListResponse> {
+        val url = url("api", "v1", "cases").newBuilder().addQueryParameter("limit", limit.toString()).build()
+        val req = request(url).cacheControl(CacheControl.FORCE_NETWORK).get().build()
+        return execute(getClient, req) { _, text -> WireJson.json.decodeFromString(CaseListResponse.serializer(), text) }
+    }
+
+    /** POST /api/v1/cases/{id}/judge: `{"mode":"only_mine"}` judges without the other side, `{}` retries. */
+    suspend fun judgeCase(id: String, onlyMine: Boolean): ApiResult<CaseView> {
+        val body = if (onlyMine) buildJsonObject { put("mode", "only_mine") } else JsonObject(emptyMap())
+        val req = request(caseUrl(id, "judge")).post(body.toString().toRequestBody(JSON)).build()
+        return execute(translateClient, req) { _, text -> WireJson.json.decodeFromString(CaseResponse.serializer(), text).case }
+    }
+
+    /** POST /api/v1/cases/{id}/invite: a new invite link; the old one stops working. */
+    suspend fun resetInvite(id: String): ApiResult<InviteResponse> {
+        val req = request(caseUrl(id, "invite")).post(EMPTY).build()
+        return execute(accountClient, req) { _, text -> WireJson.json.decodeFromString(InviteResponse.serializer(), text) }
+    }
+
+    /** POST /api/v1/cases/{id}/removal: the owner's side is blanked and every link closes. */
+    suspend fun removeCase(id: String): ApiResult<CaseRemovalResponse> {
+        val body = buildJsonObject { put("confirm", "remove") }.toString()
+        val req = request(caseUrl(id, "removal")).post(body.toRequestBody(JSON)).build()
+        return execute(accountClient, req) { _, text -> WireJson.json.decodeFromString(CaseRemovalResponse.serializer(), text) }
+    }
+
+    /**
+     * PATCH /api/v1/cases/{id}/display: the owner's name on the share pages
+     * ([setName]: [displayName], null resets it to the label) and/or the names switch.
+     */
+    suspend fun patchCaseDisplay(id: String, setName: Boolean, displayName: String?, namesVisible: Boolean?): ApiResult<CaseView> {
+        val body = buildJsonObject {
+            if (setName) put("displayName", displayName)
+            if (namesVisible != null) put("namesVisible", namesVisible)
+        }.toString()
+        val req = request(caseUrl(id, "display")).patch(body.toRequestBody(JSON)).build()
+        return execute(accountClient, req) { _, text -> WireJson.json.decodeFromString(CaseResponse.serializer(), text).case }
+    }
+
+    /** POST /api/v1/cases/{id}/appeals: added context, re-judged (202 with the case). */
+    suspend fun appeal(id: String, body: String, idempotencyKey: String): ApiResult<CaseWithNames> {
+        val req = request(caseUrl(id, "appeals"))
+            .header("Idempotency-Key", idempotencyKey)
+            .post(body.toRequestBody(JSON))
+            .build()
+        return execute(translateClient, req) { _, text -> WireJson.json.decodeFromString(CaseWithNames.serializer(), text) }
+    }
+
+    private fun caseUrl(id: String, action: String? = null): HttpUrl =
+        base.newBuilder().addPathSegments("api/v1/cases").addPathSegment(id).apply { action?.let { addPathSegment(it) } }.build()
 
     /** One poll of an async verdict; [ownerToken] lets a ready answer carry the writer's state. */
     suspend fun pollVerdict(id: String, ownerToken: String?): ApiResult<VerdictPoll> {

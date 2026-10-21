@@ -17,6 +17,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.selection.selectable
+import androidx.compose.foundation.selection.selectableGroup
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
@@ -34,6 +37,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.LiveRegionMode
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.semantics
@@ -47,6 +51,7 @@ import com.okjudge.judge.core.display.Errors
 import com.okjudge.judge.core.display.Example
 import com.okjudge.judge.core.display.Preset
 import com.okjudge.judge.core.display.UiError
+import com.okjudge.judge.core.cases.CaseLogic
 import com.okjudge.judge.core.evidence.ImageSource
 import com.okjudge.judge.core.premium.Tier
 import com.okjudge.judge.core.premium.TierAvailability
@@ -75,6 +80,9 @@ object HomeTags {
     const val COUNTER = "home.counter"
     const val ERROR = "home.error"
     const val STATUS = "home.status"
+    const val MODE_NOW = "home.modeNow"
+    const val MODE_BOTH = "home.modeBoth"
+    const val NAME = "home.name"
 }
 
 /** Home: headline, the argument box with its counter, examples, presets and the CTA. */
@@ -96,6 +104,8 @@ fun HomeScreen(
     onPricing: () -> Unit = {},
     onAddEvidence: (List<ImageSource>) -> Unit = {},
     onRemoveEvidence: (String) -> Unit = {},
+    onCaseMode: (CaseMode) -> Unit = {},
+    onDisplayName: (String) -> Unit = {},
 ) {
     val s = LocalStrings.current
     val lang = LocalLang.current
@@ -155,6 +165,10 @@ fun HomeScreen(
                     Text(it, style = JudgeType.slotText, modifier = Modifier.padding(top = 8.dp))
                 }
 
+                if (state.casesOn) {
+                    CaseModeSwitch(state.caseMode, disabled = state.holding, onChange = onCaseMode, modifier = Modifier.padding(top = 22.dp))
+                }
+
                 if (state.evidenceOn) {
                     val pick = rememberEvidencePicker(state.evidence.room, onAddEvidence)
                     EvidencePicker(
@@ -180,20 +194,25 @@ fun HomeScreen(
                     modifier = Modifier.padding(top = 22.dp),
                 )
 
+                if (state.twoSided) {
+                    Text(s.caseDisplayName, style = JudgeType.slotTitle, modifier = Modifier.padding(top = 18.dp, bottom = 8.dp))
+                    NameField(state.shownName, onDisplayName, enabled = !state.holding)
+                }
+
                 PrimaryButton(
-                    text = s.getVerdict,
+                    text = if (state.twoSided) s.caseCreate else s.getVerdict,
                     enabled = state.canSubmit && !blocked,
                     onClick = onSubmit,
                     modifier = Modifier.fillMaxWidth().padding(top = if (state.availability == TierAvailability.HIDDEN) 24.dp else 14.dp).testTag(HomeTags.SUBMIT),
                 )
-                if (state.checking) {
+                if (state.checking || state.creating) {
                     Row(
                         Modifier.fillMaxWidth().padding(top = 12.dp).semantics(mergeDescendants = true) { liveRegion = LiveRegionMode.Polite }.testTag(HomeTags.STATUS),
                         horizontalArrangement = Arrangement.Center,
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         CircularProgressIndicator(Modifier.padding(end = 8.dp).size(14.dp), color = Palette.ink2, strokeWidth = 1.5.dp)
-                        Text(s.tierChecking, style = JudgeType.slotText.copy(color = Palette.ink2))
+                        Text(if (state.creating) s.caseCreating else s.tierChecking, style = JudgeType.slotText.copy(color = Palette.ink2))
                     }
                 }
                 Text(s.privacyNote, style = JudgeType.footnote, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth().padding(top = 12.dp))
@@ -278,3 +297,64 @@ private fun ErrorBanner(error: UiError, onDismiss: () -> Unit) {
         ) { TintedIcon(remember { JudgeIcons.close(Palette.ink2) }, 16) }
     }
 }
+
+/** "Just me" / "Both sides" (components/case/CaseModeSwitch.tsx), with the hint for the chosen mode. */
+@Composable
+private fun CaseModeSwitch(value: CaseMode, disabled: Boolean, onChange: (CaseMode) -> Unit, modifier: Modifier = Modifier) {
+    val s = LocalStrings.current
+    Column(modifier.fillMaxWidth()) {
+        Text(s.modeLabel, style = JudgeType.slotTitle, modifier = Modifier.padding(bottom = 8.dp))
+        Row(Modifier.selectableGroup(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            listOf(CaseMode.NOW to s.modeNow, CaseMode.BOTH to s.modeBoth).forEach { (mode, label) ->
+                val selected = value == mode
+                Row(
+                    Modifier
+                        .weight(1f)
+                        .clip(JudgeShapes.field)
+                        .background(if (selected) Palette.terraTint else Palette.paper)
+                        .border(if (selected) 1.5.dp else 1.dp, if (selected) Palette.terra else Palette.line2, JudgeShapes.field)
+                        .selectable(selected = selected, enabled = !disabled, role = Role.RadioButton) { onChange(mode) }
+                        .testTag(if (mode == CaseMode.BOTH) HomeTags.MODE_BOTH else HomeTags.MODE_NOW)
+                        .padding(horizontal = 14.dp, vertical = 12.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                ) {
+                    Box(
+                        Modifier.size(18.dp).clip(CircleShape).border(1.5.dp, if (selected) Palette.ink else Palette.line2, CircleShape),
+                        contentAlignment = Alignment.Center,
+                    ) { if (selected) Box(Modifier.size(9.dp).clip(CircleShape).background(Palette.ink)) }
+                    Text(label, style = JudgeType.small.copy(color = Palette.ink))
+                }
+            }
+        }
+        Text(
+            if (value == CaseMode.BOTH) s.modeBothHint else s.modeNowHint,
+            style = JudgeType.slotText,
+            modifier = Modifier.padding(top = 8.dp),
+        )
+    }
+}
+
+@Composable
+private fun NameField(value: String, onChange: (String) -> Unit, enabled: Boolean) {
+    Box(
+        Modifier
+            .fillMaxWidth()
+            .clip(JudgeShapes.field)
+            .background(Palette.paper)
+            .border(1.dp, Palette.line2, JudgeShapes.field)
+            .padding(horizontal = 16.dp, vertical = 14.dp),
+    ) {
+        BasicTextField(
+            value = value,
+            onValueChange = { onChange(it.take(CaseLogic.MAX_DISPLAY_NAME)) },
+            enabled = enabled,
+            singleLine = true,
+            textStyle = JudgeType.body,
+            cursorBrush = SolidColor(Palette.terraInk),
+            keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Words),
+            modifier = Modifier.fillMaxWidth().testTag(HomeTags.NAME),
+        )
+    }
+}
+

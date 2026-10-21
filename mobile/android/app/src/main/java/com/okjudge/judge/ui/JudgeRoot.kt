@@ -40,6 +40,7 @@ import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
 import com.okjudge.judge.AppContainer
+import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import com.okjudge.judge.core.auth.Account
 import com.okjudge.judge.core.session.VerdictFlow
 import com.okjudge.judge.i18n.AppLang
@@ -54,6 +55,18 @@ import com.okjudge.judge.ui.history.HistoryViewModel
 import com.okjudge.judge.ui.home.HomeScreen
 import com.okjudge.judge.ui.home.HomeViewModel
 import com.okjudge.judge.ui.home.Submitted
+import com.okjudge.judge.ui.cases.CaseActions
+import com.okjudge.judge.ui.cases.CaseListViewModel
+import com.okjudge.judge.ui.cases.CaseLoadStatus
+import com.okjudge.judge.ui.cases.CaseScreen
+import com.okjudge.judge.ui.cases.CaseViewModel
+import com.okjudge.judge.ui.verdict.copyLink
+import com.okjudge.judge.ui.verdict.shareUrl
+import com.okjudge.judge.ui.verdict.shareVerdict
+import android.content.Intent
+import android.net.Uri
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import com.okjudge.judge.ui.premium.ClarifyScreen
 import com.okjudge.judge.ui.premium.PricingScreen
 import com.okjudge.judge.core.model.PricingInfo
@@ -79,6 +92,7 @@ import kotlinx.serialization.Serializable
 @Serializable data object SettingsKey : NavKey
 @Serializable data object ClarifyKey : NavKey
 @Serializable data object PricingKey : NavKey
+@Serializable data class CaseKey(val id: String) : NavKey
 
 /** Sign-in; [thenVerdict] when it was opened by "Get the verdict", which goes on after signing in. */
 @Serializable data class SignInKey(val thenVerdict: Boolean) : NavKey
@@ -87,7 +101,7 @@ private enum class Tab { NEW, HISTORY, SETTINGS }
 
 /** App shell: language, theme, the back stack, the bottom bar and the sign-in gate. */
 @Composable
-fun JudgeRoot(container: AppContainer) {
+fun JudgeRoot(container: AppContainer, links: StateFlow<Uri?> = MutableStateFlow(null), onLinkHandled: () -> Unit = {}) {
     val langPref by container.settings.langPref.collectAsStateWithLifecycle(initialValue = LangPref.SYSTEM)
     val configuration = LocalConfiguration.current
     val deviceTag = remember(configuration) { deviceLanguageTag() }
@@ -111,13 +125,29 @@ fun JudgeRoot(container: AppContainer) {
                 // Premium moves on by itself: questions first, then the judging screen.
                 container.verdictFlow.navigation.collect { nav ->
                     when (nav) {
-                        VerdictFlow.Nav.CLARIFY -> if (backStack.none { it is ClarifyKey }) backStack.add(ClarifyKey)
-                        VerdictFlow.Nav.JUDGING -> {
+                        VerdictFlow.Nav.Clarify -> if (backStack.none { it is ClarifyKey }) backStack.add(ClarifyKey)
+                        VerdictFlow.Nav.Judging -> {
                             backStack.removeAll { it is ClarifyKey }
                             if (backStack.none { it is JudgingKey }) backStack.add(JudgingKey)
                         }
+                        is VerdictFlow.Nav.Case -> {
+                            // The form's work is now the case: it starts empty next time.
+                            clearDraft = true
+                            backStack.removeAll { it is ClarifyKey }
+                            backStack.add(CaseKey(nav.id))
+                        }
                     }
                 }
+            }
+            val link by links.collectAsStateWithLifecycle()
+            LaunchedEffect(link) {
+                when (val target = link?.let { DeepLinks.parse(it.toString()) }) {
+                    is DeepLinks.Target.Case -> if (backStack.lastOrNull() != CaseKey(target.id)) backStack.add(CaseKey(target.id))
+                    // Invites are answered on the website: the app only passes them on.
+                    is DeepLinks.Target.Invite -> openLink(context, target.url)
+                    null -> Unit
+                }
+                if (link != null) onLinkHandled()
             }
             LaunchedEffect(account) {
                 // The tier switch and the pricing screen read /config.
@@ -217,6 +247,8 @@ fun JudgeRoot(container: AppContainer) {
                                 onPricing = { if (backStack.lastOrNull() !is PricingKey) backStack.add(PricingKey) },
                                 onAddEvidence = vm::onAddEvidence,
                                 onRemoveEvidence = vm::onRemoveEvidence,
+                                onCaseMode = vm::onCaseMode,
+                                onDisplayName = vm::onDisplayName,
                             )
                         }
                         entry<JudgingKey> {
@@ -293,12 +325,78 @@ fun JudgeRoot(container: AppContainer) {
                         entry<HistoryKey> {
                             val vm = viewModel { HistoryViewModel(container.history) }
                             val items by vm.items.collectAsStateWithLifecycle()
+                            val accountState by account.state.collectAsStateWithLifecycle()
+                            val providers by account.providers.collectAsStateWithLifecycle()
+                            val config = (providers as? Account.Providers.Ready)?.config
+                            val casesOn = accountState is Account.State.SignedIn && config?.premiumEnabled == true && config.features.cases
+                            val cases = if (casesOn) {
+                                val listVm = viewModel { CaseListViewModel(container.api) }
+                                LaunchedEffect(Unit) { listVm.reload() }
+                                listVm.state.collectAsStateWithLifecycle().value to listVm
+                            } else {
+                                null
+                            }
                             HistoryScreen(
                                 items = items,
                                 onOpen = { id -> backStack.add(VerdictKey(id, fresh = false)) },
                                 onDelete = vm::delete,
                                 onDeleteAll = vm::deleteAll,
                                 onToggleLang = toggleLang,
+                                cases = cases?.first,
+                                onOpenCase = { id -> backStack.add(CaseKey(id)) },
+                                onRetryCases = { cases?.second?.reload() },
+                            )
+                        }
+                        entry<CaseKey> { key ->
+                            val vm = viewModel(key = "case-${key.id}") {
+                                CaseViewModel(
+                                    key.id, container.api, container.caseNames,
+                                    onEntitlement = { account.applyEntitlement(it) },
+                                    refreshAccount = { account.refresh() },
+                                )
+                            }
+                            val state by vm.state.collectAsStateWithLifecycle()
+                            val accountState by account.state.collectAsStateWithLifecycle()
+                            val providers by account.providers.collectAsStateWithLifecycle()
+                            val signedIn = accountState is Account.State.SignedIn
+                            LaunchedEffect(signedIn) {
+                                // Signed in from the case screen: read it again.
+                                if (signedIn && state.status == CaseLoadStatus.SIGNIN) vm.reload()
+                            }
+                            val shareBase = container.config.shareBaseUrl
+                            CaseScreen(
+                                state = state,
+                                evidenceOn = (providers as? Account.Providers.Ready)?.config?.features?.evidence == true,
+                                reducedMotion = rememberReducedMotion(),
+                                actions = CaseActions(
+                                    onBack = if (backStack.size > 1) ({ backStack.removeAt(backStack.lastIndex) }) else null,
+                                    onToggleLang = toggleLang,
+                                    onReload = vm::reload,
+                                    onSignIn = { if (backStack.lastOrNull() !is SignInKey) backStack.add(SignInKey(thenVerdict = false)) },
+                                    onPricing = { if (backStack.lastOrNull() !is PricingKey) backStack.add(PricingKey) },
+                                    onStartOver = {
+                                        clearDraft = true
+                                        backStack.resetTo(listOf(HomeKey))
+                                    },
+                                    onJudgeNow = { vm.judge(onlyMine = true) },
+                                    onRetry = { vm.judge(onlyMine = false) },
+                                    onResetInvite = vm::resetInvite,
+                                    onRemove = vm::remove,
+                                    onCopyInvite = { copyLink(context, it) },
+                                    onShareInvite = { shareInvite(context, currentStrings.appShareTitle, currentStrings.caseInviteShareText, it) },
+                                    onOverlayFinished = vm::finishOverlay,
+                                    onAppealText = vm::onAppealText,
+                                    onAddAppealEvidence = vm::onAddAppealEvidence,
+                                    onRemoveAppealEvidence = vm::onRemoveAppealEvidence,
+                                    onSubmitAppeal = vm::submitAppeal,
+                                    onTypedName = vm::onTypedName,
+                                    onSaveName = vm::saveDisplayName,
+                                    onNamesVisible = vm::setNamesVisible,
+                                    onShareVerdict = { id, headline ->
+                                        shareVerdict(context, currentStrings.appShareTitle, headline, currentStrings.shareText, shareUrl(shareBase, id))
+                                    },
+                                    onCopyVerdict = { id -> copyLink(context, shareUrl(shareBase, id)) },
+                                ),
                             )
                         }
                         entry<SettingsKey> {
@@ -439,3 +537,35 @@ fun openLink(context: Context, url: String) {
         CustomTabsIntent.Builder().setDefaultColorSchemeParams(params).build().launchUrl(context, url.toUri())
     }
 }
+
+/** The invite link through the share sheet, with the web's share text. */
+fun shareInvite(context: Context, chooserTitle: String, shareText: String, url: String) {
+    val send = Intent(Intent.ACTION_SEND).apply {
+        type = "text/plain"
+        putExtra(Intent.EXTRA_TEXT, "$shareText\n$url")
+    }
+    runCatching { context.startActivity(Intent.createChooser(send, chooserTitle).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)) }
+}
+
+/** okjudge.com links the app is opened with: /c/{id} opens the case, /r/{token} goes to the website. */
+object DeepLinks {
+    sealed interface Target {
+        data class Case(val id: String) : Target
+        data class Invite(val url: String) : Target
+    }
+
+    private val ID = Regex("^[A-Za-z0-9_-]{1,64}$")
+
+    fun parse(url: String): Target? {
+        val u = url.toHttpUrlOrNull() ?: return null
+        if (u.scheme != "https") return null
+        val segments = u.pathSegments.filter { it.isNotEmpty() }
+        if (segments.size != 2) return null
+        return when (segments[0]) {
+            "c" -> segments[1].takeIf { ID.matches(it) }?.let { Target.Case(it) }
+            "r" -> if (ID.matches(segments[1])) Target.Invite(u.toString()) else null
+            else -> null
+        }
+    }
+}
+

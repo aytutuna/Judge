@@ -7,6 +7,8 @@ import com.okjudge.judge.core.api.NoBotCheck
 import com.okjudge.judge.core.api.TokenStore
 import com.okjudge.judge.core.api.TurnstileBotCheck
 import com.okjudge.judge.core.auth.Account
+import com.okjudge.judge.core.cases.CaseNamesStore
+import com.okjudge.judge.core.cases.PrefsCaseNames
 import com.okjudge.judge.core.auth.CredentialManagerGoogle
 import com.okjudge.judge.core.auth.KeystoreTokenStore
 import com.okjudge.judge.core.data.DataStoreSettings
@@ -84,11 +86,15 @@ class AppContainer(context: Context, val config: AppConfig = AppConfig.fromBuild
 
     val settings: SettingsStore by lazy { DataStoreSettings(appContext) }
 
+    /** The owner's real names per two-sided case, on this phone only. */
+    val caseNames: CaseNamesStore by lazy { PrefsCaseNames(appContext) }
+
     val verdictFlow: VerdictFlow by lazy {
         VerdictFlow(
             api, botCheck, history, appScope,
             onEntitlement = { account.applyEntitlement(it) },
             refreshAccount = { account.refresh() },
+            caseNames = caseNames,
         )
     }
 }

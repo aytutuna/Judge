@@ -9,7 +9,10 @@ import com.okjudge.judge.core.data.HistoryRepository
 import com.okjudge.judge.core.display.Errors
 import com.okjudge.judge.core.display.Preset
 import com.okjudge.judge.core.display.UiError
+import com.okjudge.judge.core.cases.CaseNamesStore
+import com.okjudge.judge.core.cases.MemoryCaseNames
 import com.okjudge.judge.core.model.Clarification
+import com.okjudge.judge.core.model.CreateCaseRequest
 import com.okjudge.judge.core.model.ClarifyQuestion
 import com.okjudge.judge.core.model.Entitlement
 import com.okjudge.judge.core.model.FrameworkChoice
@@ -50,6 +53,7 @@ class VerdictFlow(
     private val refreshAccount: suspend () -> Unit = {},
     private val sleep: suspend (Long) -> Unit = { delay(it) },
     private val newKey: () -> String = { UUID.randomUUID().toString() },
+    private val caseNames: CaseNamesStore = MemoryCaseNames(),
 ) {
     sealed interface State {
         data object Idle : State
@@ -79,7 +83,16 @@ class VerdictFlow(
     }
 
     /** Where the app shell should go next on the premium path. */
-    enum class Nav { CLARIFY, JUDGING }
+    sealed interface Nav {
+        data object Clarify : Nav
+        data object Judging : Nav
+        /** A two-sided case was created: open its screen. */
+        data class Case(val id: String) : Nav
+    }
+
+    private val _creating = MutableStateFlow(false)
+    /** A two-sided case is being created (POST /api/v1/cases). */
+    val creating: StateFlow<Boolean> = _creating.asStateFlow()
 
     private val _premiumStep = MutableStateFlow<PremiumStep>(PremiumStep.None)
     val premiumStep: StateFlow<PremiumStep> = _premiumStep.asStateFlow()
@@ -197,7 +210,7 @@ class VerdictFlow(
 
     /** Whether a new request may start now (nothing running, no rate-limit block). */
     fun canStart(): Boolean {
-        if (_state.value is State.Running || _premiumStep.value == PremiumStep.Checking) return false
+        if (_state.value is State.Running || _premiumStep.value == PremiumStep.Checking || _creating.value) return false
         val until = _blockedUntil.value
         return until == null || until <= clock()
     }
@@ -227,7 +240,7 @@ class VerdictFlow(
             }
             if (found.isNotEmpty()) {
                 _premiumStep.value = PremiumStep.Clarify(found)
-                _navigation.trySend(Nav.CLARIFY)
+                _navigation.trySend(Nav.Clarify)
             } else {
                 _premiumStep.value = PremiumStep.None
                 judgePremium(input, null)
@@ -244,6 +257,43 @@ class VerdictFlow(
         judgePremium(input, buildClarifications(step.questions, answers, skip))
     }
 
+    /**
+     * Premium, both sides (createCase): the case with the owner's side and
+     * one premium verdict held. The returned names stay on this phone. No
+     * clarifying step: the other side fills the gaps.
+     */
+    fun createCase(argument: String, preset: Preset, lang: AppLang, evidence: List<String>, displayName: String?): Boolean {
+        if (!canStart()) return false
+        _lastError.value = null
+        _creating.value = true
+        val request = CreateCaseRequest(
+            text = argument.trim(),
+            framework = FrameworkChoice(preset = preset.id),
+            lang = lang.tag,
+            evidence = evidence.takeIf { it.isNotEmpty() },
+            displayName = displayName?.trim()?.takeIf { it.isNotEmpty() },
+        )
+        val body = WireJson.json.encodeToString(CreateCaseRequest.serializer(), request)
+        val key = keyFor(body)
+        job = scope.launch {
+            when (val res = api.createCase(body, key)) {
+                is ApiResult.Err -> {
+                    _creating.value = false
+                    report(res.error)
+                }
+                is ApiResult.Ok -> {
+                    clearKey(key)
+                    val created = res.value
+                    caseNames.save(created.case.id, created.nameMap)
+                    created.entitlement?.let(onEntitlement)
+                    _creating.value = false
+                    _navigation.trySend(Nav.Case(created.case.id))
+                }
+            }
+        }
+        return true
+    }
+
     /** "Back" from the questions: the form again, nothing sent. */
     fun leaveClarify() {
         if (_premiumStep.value is PremiumStep.Clarify) _premiumStep.value = PremiumStep.None
@@ -253,7 +303,7 @@ class VerdictFlow(
     private fun judgePremium(input: PremiumInput, clarifications: List<Clarification>?) {
         _lastError.value = null
         _state.value = State.Running(clock(), premium = true)
-        _navigation.trySend(Nav.JUDGING)
+        _navigation.trySend(Nav.Judging)
         val request = VerdictRequest(
             argument = input.text,
             framework = FrameworkChoice(preset = input.preset.id),

@@ -1,6 +1,8 @@
 package com.okjudge.judge
 
+import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
@@ -9,10 +11,19 @@ import androidx.activity.enableEdgeToEdge
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.lifecycleScope
 import com.okjudge.judge.ui.JudgeRoot
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
+    /** An okjudge.com link the app was opened with, until the app shell has handled it. */
+    private val links = MutableStateFlow<Uri?>(null)
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        links.value = intent.data
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         val splash = installSplashScreen()
         super.onCreate(savedInstanceState)
@@ -32,6 +43,7 @@ class MainActivity : ComponentActivity() {
             statusBarStyle = SystemBarStyle.light(ivory, ivory),
             navigationBarStyle = SystemBarStyle.light(ivory, ivory),
         )
-        setContent { JudgeRoot(container) }
+        if (savedInstanceState == null) links.value = intent?.data
+        setContent { JudgeRoot(container, links, onLinkHandled = { links.value = null }) }
     }
 }

@@ -312,6 +312,65 @@ class ScreenshotsTest {
     @Test
     fun verdict_appealOutcome_en() = shotVerdict("verdict_appeal_overturned_en", caseOutcome("appeal_overturned"), AppLang.EN)
 
+    // --- Two-sided cases ---------------------------------------------------------------
+
+    private fun caseState(name: String): com.okjudge.judge.ui.cases.CaseUiState {
+        val v = WireJson.json.decodeFromString(
+            com.okjudge.judge.core.model.CaseView.serializer(),
+            Fixtures.verdicts["cases"]!!.jsonObject["views"]!!.jsonObject[name].toString(),
+        )
+        val base = com.okjudge.judge.ui.cases.CaseViewModel.preview(v)
+        return if (v.statusRaw == "judging") base.copy(overlay = com.okjudge.judge.ui.cases.CaseOverlay(false)) else base
+    }
+
+    private fun shotCase(file: String, name: String, lang: AppLang = AppLang.EN, tall: Boolean = true) = capture(file, tall = tall) {
+        Themed(lang) {
+            com.okjudge.judge.ui.cases.CaseScreen(caseState(name), evidenceOn = true, actions = com.okjudge.judge.ui.cases.CaseActions(onBack = {}), reducedMotion = true)
+        }
+    }
+
+    @Test
+    fun case_awaiting_en() = shotCase("case_awaiting_en", "waiting_for_respondent")
+
+    @Test
+    fun case_judging_en() = shotCase("case_judging_en", "judging", tall = false)
+
+    @Test
+    fun case_judged_en() = shotCase("case_judged_en", "judged")
+
+    @Test
+    fun case_failed_en() = shotCase("case_failed_en", "failed")
+
+    @Test
+    fun case_expired_en() = shotCase("case_expired_en", "expired")
+
+    @Test
+    fun case_removed_en() = shotCase("case_removed_en", "removed")
+
+    @Test
+    fun case_judged_tr() = shotCase("case_judged_tr", "judged_tr", AppLang.TR)
+
+    @Test
+    fun history_cases_en() = capture("history_cases_en") {
+        val list = WireJson.json.decodeFromString(
+            com.okjudge.judge.core.model.CaseListResponse.serializer(),
+            Fixtures.verdicts["cases"]!!.jsonObject["list"].toString(),
+        )
+        Themed(AppLang.EN) {
+            HistoryScreen(emptyList(), {}, {}, {}, {}, cases = com.okjudge.judge.ui.cases.CaseListState.Ready(list.cases), initiallyCases = true)
+        }
+    }
+
+    @Test
+    fun home_bothSides_en() = capture("home_both_sides_en", tall = true) {
+        Themed(AppLang.EN) {
+            HomeScreen(
+                premiumHome(AppLang.EN, "credits7", TierAvailability.AVAILABLE).copy(caseMode = com.okjudge.judge.ui.home.CaseMode.BOTH, suggestedName = "Alex"),
+                {}, {}, {}, {}, {}, {}, {},
+            )
+        }
+    }
+
     @Test
     fun brandMark_icon() = capture("brand_mark") {
         Themed(AppLang.EN) {

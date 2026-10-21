@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.okjudge.judge.core.api.ApiResult
 import com.okjudge.judge.core.auth.Account
+import com.okjudge.judge.core.cases.CaseLogic
 import com.okjudge.judge.core.data.SettingsStore
 import com.okjudge.judge.core.display.ArgumentRules
 import com.okjudge.judge.core.display.Preset
@@ -45,21 +46,35 @@ data class HomeUiState(
     /** Premium is asking whether facts are missing (POST /clarify). */
     val checking: Boolean = false,
     val evidence: EvidenceState = EvidenceState(max = MAX_EVIDENCE_PER_SIDE),
+    /** "Just me" (a verdict now) or "Both sides" (a two-sided case with an invite link). */
+    val caseMode: CaseMode = CaseMode.NOW,
+    /** The owner's name for the case's share pages as typed; null until they type. */
+    val typedName: String? = null,
+    /** The account's first name, prefilled until the owner types. */
+    val suggestedName: String? = null,
+    /** A two-sided case is being created. */
+    val creating: Boolean = false,
 ) {
+    val casesOn: Boolean get() = premium && features.cases
+    val twoSided: Boolean get() = casesOn && caseMode == CaseMode.BOTH
+    val shownName: String get() = typedName ?: suggestedName ?: ""
+
     /** The effective tier: premium only while it can be used and was chosen. */
     val tier: Tier get() = Tiers.effective(availability, tierChoice)
     val premium: Boolean get() = tier == Tier.PREMIUM
     val evidenceOn: Boolean get() = premium && features.evidence
 
     /** A premium request is being prepared: the form and the switch hold still. */
-    val holding: Boolean get() = checking
+    val holding: Boolean get() = checking || creating
 
     val canSubmit: Boolean
         get() = ArgumentRules.canSubmit(argument) && !holding && !(evidenceOn && evidence.busy)
 }
 
 /** What a submit started. */
-enum class Submitted { NOTHING, JUDGING, CHECKING }
+enum class Submitted { NOTHING, JUDGING, CHECKING, CREATING }
+
+enum class CaseMode { NOW, BOTH }
 
 /**
  * The argument form. The draft survives rotation and process death through
@@ -109,8 +124,29 @@ class HomeViewModel(
         val evidence: EvidenceState,
     )
 
-    val state: StateFlow<HomeUiState> = combine(form, premium) { f, p ->
+    private val casePart = combine(
+        saved.getStateFlow(KEY_MODE, CaseMode.NOW.name),
+        saved.getStateFlow<String?>(KEY_NAME, null),
+        flow.creating,
+        accountState,
+    ) { mode, name, creating, account ->
+        val user = (account as? Account.State.SignedIn)?.me?.user
+        CasePart(
+            mode = runCatching { CaseMode.valueOf(mode) }.getOrDefault(CaseMode.NOW),
+            typedName = name,
+            suggestedName = CaseLogic.firstNameOf(user?.name),
+            creating = creating,
+        )
+    }
+
+    private data class CasePart(val mode: CaseMode, val typedName: String?, val suggestedName: String?, val creating: Boolean)
+
+    val state: StateFlow<HomeUiState> = combine(form, premium, casePart) { f, p, c ->
         f.copy(
+            caseMode = c.mode,
+            typedName = c.typedName,
+            suggestedName = c.suggestedName,
+            creating = c.creating,
             tierChoice = p.choice,
             availability = p.availability,
             entitlement = p.entitlement,
@@ -135,6 +171,14 @@ class HomeViewModel(
         viewModelScope.launch { settings.setTierChoice(tier) }
     }
 
+    fun onCaseMode(mode: CaseMode) {
+        saved[KEY_MODE] = mode.name
+    }
+
+    fun onDisplayName(name: String) {
+        saved[KEY_NAME] = name.take(CaseLogic.MAX_DISPLAY_NAME)
+    }
+
     fun onAddEvidence(sources: List<ImageSource>) = evidence.add(sources)
 
     fun onRemoveEvidence(id: String) = evidence.remove(id)
@@ -144,8 +188,10 @@ class HomeViewModel(
         val s = state.value
         if (!s.canSubmit) return Submitted.NOTHING
         if ((s.blockedUntil ?: 0) > now) return Submitted.NOTHING
-        return if (s.premium) {
-            val tokens = if (s.evidenceOn) s.evidence.tokens else emptyList()
+        val tokens = if (s.evidenceOn) s.evidence.tokens else emptyList()
+        return if (s.twoSided) {
+            if (flow.createCase(s.argument, s.preset, lang, tokens, s.shownName)) Submitted.CREATING else Submitted.NOTHING
+        } else if (s.premium) {
             if (flow.startPremium(s.argument, s.preset, lang, tokens)) Submitted.CHECKING else Submitted.NOTHING
         } else {
             if (flow.start(s.argument, s.preset, lang)) Submitted.JUDGING else Submitted.NOTHING
@@ -163,5 +209,7 @@ class HomeViewModel(
 
     private companion object {
         const val KEY_ARGUMENT = "argument"
+        const val KEY_MODE = "case_mode"
+        const val KEY_NAME = "case_name"
     }
 }

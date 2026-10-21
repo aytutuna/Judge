@@ -157,11 +157,11 @@ class PremiumFlowTest {
         f.startPremium(argument, Preset.FAIRNESS, AppLang.TR, emptyList())
         val step = f.stepIs { it is VerdictFlow.PremiumStep.Clarify } as VerdictFlow.PremiumStep.Clarify
         assertEquals(listOf("q1", "q2"), step.questions.map { it.id })
-        assertEquals(VerdictFlow.Nav.CLARIFY, f.navigation.first())
+        assertEquals(VerdictFlow.Nav.Clarify, f.navigation.first())
         assertEquals(VerdictFlow.State.Idle, f.state.value)
 
         f.finishClarify(mapOf("q1" to "  Never, we just argue.  "), skip = false)
-        assertEquals(VerdictFlow.Nav.JUDGING, f.navigation.first())
+        assertEquals(VerdictFlow.Nav.Judging, f.navigation.first())
         assertTrue(f.settled() is VerdictFlow.State.Succeeded)
         val clarifyBody = body(CLARIFY)
         assertEquals("tr", clarifyBody["lang"]!!.jsonPrimitive.content)
