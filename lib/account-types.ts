@@ -47,7 +47,11 @@ export type MeResponse = {
 export type AuthProviders = {
   apple: boolean;
   google: boolean;
+  /** Email magic link (website). */
   email: boolean;
+  /** Email one-time code (apps): POST /api/auth/email-otp/send-verification-otp
+   * then POST /api/auth/sign-in/email-otp. On whenever `email` is. */
+  emailCode: boolean;
   /** Dev-only test login (never true in production). */
   dev: boolean;
 };

@@ -129,13 +129,13 @@ describe("AccountPanel", () => {
   });
 });
 
-const none: AuthProviders = { apple: false, google: false, email: false, dev: false };
+const none: AuthProviders = { apple: false, google: false, email: false, emailCode: false, dev: false };
 
 function signin(over: Partial<SignInPanelProps>): string {
   return renderToStaticMarkup(
     <SignInPanel
       lang="en"
-      providers={{ apple: true, google: true, email: true, dev: false }}
+      providers={{ apple: true, google: true, email: true, emailCode: true, dev: false }}
       pending={false}
       error={null}
       emailOpen={false}

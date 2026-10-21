@@ -172,7 +172,7 @@ after sign-in.
 | `APPLE_TEAM_ID`, `APPLE_KEY_ID` | *(empty)* | Your 10-character Apple team id, and the key id of the Sign in with Apple key |
 | `APPLE_PRIVATE_KEY_BASE64` | *(empty)* | The whole `AuthKey_<KEYID>.p8` file, base64-encoded on one line (`base64 -w0 AuthKey_XXXX.p8`). The app signs Apple's client secret from it and renews it on its own. All four Apple values set = the Apple button works |
 | `APPLE_APP_BUNDLE_ID` | *(empty)* | The iOS app's bundle id, accepted as an extra audience for native Sign in with Apple |
-| `RESEND_API_KEY`, `EMAIL_FROM` | *(empty)* | [Resend](https://resend.com) API key and sender, e.g. `Judge <signin@okjudge.com>` on a domain verified in Resend. Both set = email sign-in links work. With `TURNSTILE_SECRET_KEY` set, the email form needs a Turnstile token too |
+| `RESEND_API_KEY`, `EMAIL_FROM` | *(empty)* | [Resend](https://resend.com) API key and sender, e.g. `Judge <signin@okjudge.com>` on a domain verified in Resend. Both set = email sign-in links (website) and email sign-in codes (apps) work. With `TURNSTILE_SECRET_KEY` set, the website's email form needs a Turnstile token too; the app code endpoints rely on rate limits instead |
 | `DEV_LOGIN` | *(empty)* | `1` shows a "test sign-in" for local testing. It works only when **all** hold: not a production build (`next build` output is production whatever `NODE_ENV` it is started with), `DEV_LOGIN=1`, the server listens on `127.0.0.1` or `::1` only (`npm run dev:login`, i.e. `next dev -H 127.0.0.1`; plain `npm run dev` listens on every interface and is refused), and the request's `Host` is `localhost`, `127.0.0.1` or `[::1]`. Anywhere else the endpoint answers 404 |
 | `PREMIUM_ENABLED` | `1` | `0` turns Premium off (the switch disappears; premium requests get `503 not_configured`) |
 | `PREMIUM_DAILY_CAP` | `500` | Site-wide premium runs per UTC day, counted from the database, refunded ones included (a refused or failed run still costs its model calls). A cost circuit breaker; `0` pauses Premium. Clarifying questions are not counted; the per-account limit below bounds them |
@@ -574,8 +574,20 @@ taken out of the text; the same request can be retried, e.g. with initials), plu
   storage. An invalid ID token answers `401 { "code": "INVALID_TOKEN" }`.
 - **Session:** `GET /api/v1/me`. **Sign out:** `POST /api/auth/sign-out` with
   the bearer token. Sessions last 30 days and slide forward with use.
-- **Email links in the app** need Better Auth's Expo plugin and a deep link
-  (`verdict://`), plus a bot check other than Turnstile; not wired up yet.
+- **Email (apps): a 6-digit code**, offered when `signIn.emailCode` is true
+  in `GET /api/v1/config` (false, and both endpoints `404`, without
+  `RESEND_API_KEY`/`EMAIL_FROM`):
+  1. `POST /api/auth/email-otp/send-verification-otp?lang=tr`
+     `{ "email": "a@example.com", "type": "sign-in" }` → `200 { "success": true }`
+     and an email with the code (`lang=tr` Turkish, otherwise English). Only
+     `"type": "sign-in"` is accepted (`400` otherwise).
+  2. `POST /api/auth/sign-in/email-otp { "email": "a@example.com", "otp": "123456" }`
+     → `200 { "token": "<session token>", "user": { … } }` (also in the
+     `set-auth-token` header). A new address gets a new account.
+  Codes work once for 10 minutes. Wrong code: `400 { "code": "INVALID_OTP" }`;
+  after 3 wrong codes the code is burned: `403 { "code": "TOO_MANY_ATTEMPTS" }`;
+  late: `400 { "code": "OTP_EXPIRED" }`. Both endpoints allow 3 requests per
+  minute per IP (`429`). No Turnstile token is needed.
 - **Free verdicts from the app** need a bot check other than Turnstile
   (e.g. App Attest / Play Integrity, or free verdicts for signed-in users
   under a per-user limit) before the app ships.

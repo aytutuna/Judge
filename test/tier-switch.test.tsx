@@ -7,7 +7,7 @@ import { PRICING } from "../lib/pricing";
 import { effectiveTier, premiumRemaining, signInOffered, tierAvailability } from "../lib/tier";
 
 const config = (premiumEnabled: boolean): AppConfig => ({
-  signIn: { apple: false, google: false, email: false, dev: true },
+  signIn: { apple: false, google: false, email: false, emailCode: false, dev: true },
   premiumEnabled,
   pricing: PRICING,
 });
@@ -72,7 +72,7 @@ describe("tierAvailability", () => {
   it("hides the switch for signed-out viewers when no sign-in method is set up", () => {
     const noSignIn: AppConfig = {
       ...config(true),
-      signIn: { apple: false, google: false, email: false, dev: false },
+      signIn: { apple: false, google: false, email: false, emailCode: false, dev: false },
     };
     expect(tierAvailability(noSignIn, signedOut)).toBe("hidden");
     expect(tierAvailability(noSignIn, null)).toBe("hidden");

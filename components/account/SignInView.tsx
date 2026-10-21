@@ -54,7 +54,7 @@ export function withLang(path: string, lang: Lang): string {
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-const NO_PROVIDERS: AuthProviders = { apple: false, google: false, email: false, dev: false };
+const NO_PROVIDERS: AuthProviders = { apple: false, google: false, email: false, emailCode: false, dev: false };
 
 function AppleLogo() {
   return (
