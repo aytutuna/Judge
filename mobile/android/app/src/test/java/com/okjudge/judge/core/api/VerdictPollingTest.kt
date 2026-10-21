@@ -29,7 +29,7 @@ class VerdictPollingTest {
         val sleeps = mutableListOf<Long>()
         var polls = 0
 
-        suspend fun go(accepted: VerdictAccepted, policy: PollPolicy): ApiResult<VerdictOutcome> = awaitVerdict(
+        suspend fun go(accepted: VerdictAccepted, policy: PollPolicy): PollOutcome = awaitVerdict(
             accepted = accepted,
             policy = policy,
             poll = {
@@ -54,55 +54,60 @@ class VerdictPollingTest {
     @Test
     fun ready_mergesTheAcceptedNameMapAndOwnerToken() = runBlocking {
         val run = Run(listOf(judging, judging, ApiResult.Ok(ready)))
-        val outcome = (run.go(accepted, policy) as ApiResult.Ok).value
+        val outcome = (run.go(accepted, policy) as PollOutcome.Ready).outcome
         assertEquals(VerdictOutcome("winB000001", ready.result, accepted.nameMap, ownerToken = "tok"), outcome)
         assertEquals("first wait is the 202's pollAfterMs", listOf(2000L, 3000L, 4500L), run.sleeps)
     }
 
     @Test
-    fun networkErrors_retryWithBackoff_thenGiveUp() = runBlocking {
+    fun networkErrors_retryWithBackoff_thenGiveUp_keepingTheVerdictResumable() = runBlocking {
         val recovers = Run(listOf(ApiResult.Err(UiError.Offline), ApiResult.Err(UiError.Timeout), ApiResult.Ok(ready)))
-        assertTrue(recovers.go(accepted, policy) is ApiResult.Ok)
+        assertTrue(recovers.go(accepted, policy) is PollOutcome.Ready)
         assertEquals(listOf(2000L, 4000L, 8000L), recovers.sleeps)
 
-        val offline = Run(List(policy.maxErrors + 1) { ApiResult.Err(UiError.Offline) })
-        assertEquals(ApiResult.Err(UiError.Offline), offline.go(accepted, policy))
-        assertEquals(policy.maxErrors + 1, offline.polls)
+        val offline = Run(List(policy.maxErrors) { ApiResult.Err(UiError.Offline) } + ApiResult.Ok(ready))
+        assertEquals(PollOutcome.Ended(UiError.Offline, resumable = true), offline.go(accepted, policy))
+        assertEquals("gives up on failure number maxErrors", policy.maxErrors, offline.polls)
     }
 
     @Test
     fun aJudgingAnswer_resetsTheErrorCount() = runBlocking {
         val answers = mutableListOf<ApiResult<VerdictPoll>>()
-        repeat(3) { answers += List(policy.maxErrors) { ApiResult.Err(UiError.Offline) }; answers += judging }
+        repeat(3) { answers += List(policy.maxErrors - 1) { ApiResult.Err(UiError.Offline) }; answers += judging }
         answers += ApiResult.Ok(ready)
-        assertTrue(Run(answers).go(accepted, policy) is ApiResult.Ok)
+        assertTrue(Run(answers).go(accepted, policy) is PollOutcome.Ready)
     }
 
     @Test
-    fun rateLimitAndServerErrors_areTransient_butNotFoundIsFinal() = runBlocking {
+    fun rateLimitAndServerErrors_areTransient_butNotFoundAndRemovedAreFinal() = runBlocking {
         val limited = UiError.Api(code = "rate_limited", status = 429, retryAfterSec = 9.0)
         val run = Run(listOf(ApiResult.Err(limited), ApiResult.Err(UiError.Api("unavailable", 503)), ApiResult.Ok(ready)))
-        assertTrue(run.go(accepted, policy) is ApiResult.Ok)
+        assertTrue(run.go(accepted, policy) is PollOutcome.Ready)
         assertEquals("Retry-After wins", 9000L, run.sleeps[1])
 
-        val gone = UiError.Api(code = "not_found", status = 404)
-        val missing = Run(listOf(ApiResult.Err(gone), ApiResult.Ok(ready)))
-        assertEquals(ApiResult.Err(gone), missing.go(accepted, policy))
-        assertEquals(1, missing.polls)
+        for (settled in listOf(UiError.Api(code = "not_found", status = 404), UiError.Api(code = "removed", status = 410))) {
+            val ended = Run(listOf(ApiResult.Err(settled), ApiResult.Ok(ready)))
+            assertEquals(PollOutcome.Ended(settled, resumable = false), ended.go(accepted, policy))
+            assertEquals("not retried", 1, ended.polls)
+        }
     }
 
     @Test
     fun failedCodes_becomeApiErrors() = runBlocking {
         for (code in listOf("quota", "unavailable", "refused")) {
             val run = Run(listOf(judging, ApiResult.Ok(VerdictPoll.Failed(code, "server text"))))
-            assertEquals(ApiResult.Err(UiError.Api(code = code, status = 502, serverText = "server text")), run.go(accepted, policy))
+            assertEquals(
+                PollOutcome.Ended(UiError.Api(code = code, status = 502, serverText = "server text"), resumable = false),
+                run.go(accepted, policy),
+            )
         }
     }
 
     @Test
-    fun stillJudgingAtTheDeadline_timesOut() = runBlocking {
+    fun stillJudgingAtTheDeadline_timesOut_resumably() = runBlocking {
+        assertEquals("past the server's 10-minute stale mark", 11 * 60_000L, policy.deadlineMs)
         val run = Run(listOf(judging), repeatLast = true)
-        assertEquals(ApiResult.Err(UiError.Timeout), run.go(accepted, policy))
+        assertEquals(PollOutcome.Ended(UiError.Timeout, resumable = true), run.go(accepted, policy))
         assertEquals(policy.deadlineMs, run.clock)
     }
 

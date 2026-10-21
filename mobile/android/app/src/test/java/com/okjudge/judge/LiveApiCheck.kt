@@ -61,7 +61,7 @@ class LiveApiCheck {
                         },
                         sleep = { delay(it) },
                         elapsedMs = { System.nanoTime() / 1_000_000 },
-                    ).also { println("LIVE polls=$polls") }
+                    ).asApiResult().also { println("LIVE polls=$polls") }
                 }
             }
         }

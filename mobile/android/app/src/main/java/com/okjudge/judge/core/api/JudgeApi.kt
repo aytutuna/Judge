@@ -3,6 +3,7 @@ package com.okjudge.judge.core.api
 import com.okjudge.judge.core.display.UiError
 import com.okjudge.judge.core.model.StoredVerdict
 import com.okjudge.judge.core.model.TranslateOutcome
+import com.okjudge.judge.core.model.VerdictAccepted
 import com.okjudge.judge.core.model.VerdictOutcome
 import com.okjudge.judge.core.model.VerdictPoll
 import com.okjudge.judge.core.model.VerdictRequest
@@ -88,15 +89,18 @@ class JudgeApi(
             is ApiResult.Err -> started
             is ApiResult.Ok -> when (val submission = started.value) {
                 is VerdictSubmission.Done -> ApiResult.Ok(submission.outcome)
-                is VerdictSubmission.Accepted -> awaitVerdict(
-                    accepted = submission.accepted,
-                    policy = pollPolicy,
-                    poll = { pollVerdict(submission.accepted.id, submission.accepted.ownerToken) },
-                    sleep = { delay(it) },
-                    elapsedMs = { System.nanoTime() / 1_000_000 },
-                )
+                is VerdictSubmission.Accepted -> awaitAccepted(submission.accepted).asApiResult()
             }
         }
+
+    /** Polls an accepted verdict (a fresh 202 or one kept to resume) per [pollPolicy]. */
+    suspend fun awaitAccepted(accepted: VerdictAccepted): PollOutcome = awaitVerdict(
+        accepted = accepted,
+        policy = pollPolicy,
+        poll = { pollVerdict(accepted.id, accepted.ownerToken) },
+        sleep = { delay(it) },
+        elapsedMs = { System.nanoTime() / 1_000_000 },
+    )
 
     /** POST /api/v1/verdict asking for a 202 (RESPOND_ASYNC in lib/verdict-poll.ts). */
     suspend fun startVerdict(request: VerdictRequest): ApiResult<VerdictSubmission> {

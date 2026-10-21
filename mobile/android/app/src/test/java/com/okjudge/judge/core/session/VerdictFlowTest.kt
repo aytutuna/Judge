@@ -86,7 +86,14 @@ class VerdictFlowTest {
             Fixtures.verdicts["storedVerdictResponse"]!!.jsonObject + ("status" to JsonPrimitive("ready")),
         ).toString()
 
-    private fun requests(): List<RecordedRequest> = List(server.requestCount) { server.takeRequest() }
+    private var taken = 0
+
+    /** The requests recorded since the last call. */
+    private fun requests(): List<RecordedRequest> {
+        val fresh = server.requestCount - taken
+        taken += fresh
+        return List(fresh) { server.takeRequest() }
+    }
 
     private suspend fun VerdictFlow.settled(): VerdictFlow.State =
         withTimeout(10_000) { state.first { it is VerdictFlow.State.Succeeded || it is VerdictFlow.State.Failed } }
@@ -253,6 +260,111 @@ class VerdictFlowTest {
         assertTrue("at most the poll already on the wire", server.requestCount <= atCancel + 1)
         assertTrue(history.rows.value.isEmpty())
         assertEquals(null, f.lastError.value)
+    }
+
+    private class CountingBotCheck : BotCheck {
+        var calls = 0
+        override suspend fun token(): String {
+            calls += 1
+            return "tok"
+        }
+    }
+
+    private val unavailable = """{"error":"Verdicts are unavailable right now.","code":"unavailable"}"""
+
+    private fun posts(sent: List<RecordedRequest>) = sent.count { it.method == "POST" }
+
+    @Test
+    fun async_tryAgainAfterPollingGaveUp_resumesTheSameVerdict_withoutASecondPost() = runBlocking {
+        val bot = CountingBotCheck()
+        server.enqueue(json(202, accepted()))
+        repeat(fastPolls.maxErrors) { server.enqueue(json(503, unavailable)) }
+        val f = flow(bot)
+        f.start("Alex says one thing, Jordan another.", Preset.BALANCED, AppLang.EN)
+        val failed = f.settled() as VerdictFlow.State.Failed
+        assertEquals("unavailable", (failed.error as UiError.Api).code)
+        assertEquals(1 + fastPolls.maxErrors, server.requestCount)
+        f.acknowledge()
+
+        server.enqueue(json(200, ready))
+        assertTrue(f.start("  Alex says one thing, Jordan another.\n", Preset.BALANCED, AppLang.EN))
+        val outcome = (f.settled() as VerdictFlow.State.Succeeded).outcome
+        assertEquals(ID, outcome.id)
+        assertEquals(Fixtures.sample("win_b_named").nameMap, outcome.nameMap)
+        assertEquals(OWNER_TOKEN, outcome.ownerToken)
+        val sent = requests()
+        assertEquals("one verdict asked for", 1, posts(sent))
+        assertEquals("no second bot check", 1, bot.calls)
+        assertEquals("/api/v1/verdicts/$ID", sent.last().url.encodedPath)
+        assertEquals(1, history.rows.value.size)
+    }
+
+    @Test
+    fun async_tryAgainAfterCancel_resumesTheSameVerdict() = runBlocking {
+        server.enqueue(json(202, accepted()))
+        server.enqueue(
+            MockResponse.Builder().code(200).body(judging).headersDelay(5, java.util.concurrent.TimeUnit.SECONDS).build(),
+        )
+        val f = flow()
+        f.start("an argument that is long enough", Preset.BALANCED, AppLang.EN)
+        withTimeout(10_000) { while (server.requestCount < 2) delay(5) }
+        f.cancel()
+
+        server.enqueue(json(200, ready))
+        f.start("an argument that is long enough", Preset.BALANCED, AppLang.EN)
+        assertEquals(ID, (f.settled() as VerdictFlow.State.Succeeded).outcome.id)
+        assertEquals(1, posts(requests()))
+    }
+
+    @Test
+    fun async_removed410_endsPolling_andTheNextSubmitAsksAgain() = runBlocking {
+        server.enqueue(json(202, accepted()))
+        server.enqueue(json(410, """{"error":"This verdict was removed.","code":"removed"}"""))
+        val f = flow()
+        f.start("an argument that is long enough", Preset.BALANCED, AppLang.EN)
+        val failed = (f.settled() as VerdictFlow.State.Failed).error as UiError.Api
+        assertEquals("removed" to 410, failed.code to failed.status)
+        assertEquals("not retried", 2, server.requestCount)
+        f.acknowledge()
+
+        server.enqueue(json(200, Fixtures.sampleJson("split")))
+        f.start("an argument that is long enough", Preset.BALANCED, AppLang.EN)
+        assertTrue(f.settled() is VerdictFlow.State.Succeeded)
+        assertEquals(2, posts(requests()))
+    }
+
+    @Test
+    fun async_failedVerdict_otherInput_orAnOldPending_askAgain() = runBlocking {
+        val f = flow()
+        suspend fun acceptedThen(vararg polls: MockResponse, text: String = "an argument that is long enough") {
+            server.enqueue(json(202, accepted()))
+            polls.forEach { server.enqueue(it) }
+            f.start(text, Preset.BALANCED, AppLang.EN)
+            assertTrue(f.settled() is VerdictFlow.State.Failed)
+            f.acknowledge()
+        }
+        suspend fun directAnswer(text: String = "an argument that is long enough", lang: AppLang = AppLang.EN) {
+            server.enqueue(json(200, Fixtures.sampleJson("split")))
+            f.start(text, Preset.BALANCED, lang)
+            assertTrue(f.settled() is VerdictFlow.State.Succeeded)
+            f.acknowledge()
+        }
+
+        // The server settled it as failed: nothing to resume.
+        acceptedThen(json(200, """{"id":"$ID","status":"failed","code":"quota","error":"x"}"""))
+        directAnswer()
+        assertEquals(2, posts(requests()))
+
+        // Same text, another language: a different request.
+        acceptedThen(*Array(fastPolls.maxErrors) { json(503, unavailable) })
+        directAnswer(lang = AppLang.TR)
+        assertEquals(2, posts(requests()))
+
+        // Past the resume window: asked again.
+        acceptedThen(*Array(fastPolls.maxErrors) { json(503, unavailable) })
+        now += VerdictFlow.RESUME_WINDOW_MS + 1
+        directAnswer()
+        assertEquals(2, posts(requests()))
     }
 
     private companion object {
