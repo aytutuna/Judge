@@ -133,11 +133,11 @@ describe("DELETE /api/v1/me", () => {
     for (const t of ["entitlement_accounts", "entitlement_grants", "subscriptions", "premium_usage"]) {
       expect(await rows(`SELECT count(*) AS n FROM ${t} WHERE user_id = ?`, [user.id]), t).toBe(0);
     }
-    // Every session of the user is gone, including other devices.
-    expect(await (await get({ authorization: `Bearer ${second.token}` })).json()).toEqual({
-      user: null,
-      entitlement: null,
-    });
+    // Every session of the user is gone, including other devices: their
+    // bearer tokens are now dead and answer 401.
+    const other = await get({ authorization: `Bearer ${second.token}` });
+    expect(other.status).toBe(401);
+    expect(await other.json()).toEqual({ error: "Sign in first.", code: "signin_required" });
   });
 
   it("removes (never deletes) the cases the account started or answered, and unbinds it as a respondent", async () => {

@@ -17,7 +17,8 @@
 
 import { NextResponse } from "next/server";
 import { API_ERROR_STATUS, apiErrorBody, type ApiErrorCode } from "@/lib/api-errors";
-import { getViewer, isSameOrigin, type ViewerSession } from "@/lib/auth";
+import { getViewer, isSameOrigin, resolveViewer, type ViewerSession } from "@/lib/auth";
+import { deadBearerResponse } from "@/lib/bearer-guard";
 import { getCase, type CaseRow } from "@/lib/cases/db";
 import { claimMatches } from "@/lib/cases/invite";
 import { clientIp } from "@/lib/client-ip";
@@ -106,7 +107,8 @@ type Owner =
 async function ownerOf(req: Request, id: string, write: boolean): Promise<Owner> {
   if (!ID_PATTERN.test(id)) return { response: fail("not_found") };
   const token = ownerTokenHeader(req);
-  const viewer = await getViewer(req);
+  const { viewer, deadBearer } = await resolveViewer(req);
+  if (deadBearer) return { response: deadBearerResponse() };
   if (!token && !viewer && !claimHeader(req)) return { response: fail("not_found") };
   try {
     const limit = viewer && !token

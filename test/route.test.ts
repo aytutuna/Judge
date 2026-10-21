@@ -37,7 +37,12 @@ vi.mock("@/lib/trial", async (importOriginal) => ({
   runCruxTrial: track("trial", m.runCruxTrial),
 }));
 vi.mock("@/lib/db", () => ({ saveVerdict: track("save", m.saveVerdict) }));
-vi.mock("@/lib/auth", () => ({ getViewer: m.getViewer, isSameOrigin: m.isSameOrigin }));
+vi.mock("@/lib/auth", () => ({
+  getViewer: m.getViewer,
+  isSameOrigin: m.isSameOrigin,
+  resolveViewer: async (req: Request) => ({ viewer: (await m.getViewer(req)) ?? null, deadBearer: false }),
+  hasDeadBearer: async () => false,
+}));
 vi.mock("@/lib/originals/save", () => ({
   saveVerdictWithOriginals: async (v: {
     id: string;

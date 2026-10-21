@@ -407,24 +407,50 @@ export function toViewer(user: { id: string; email: string; name?: string | null
   return { id: user.id, email: user.email, name: user.name ?? "", image: user.image ?? null };
 }
 
-/** The signed-in account behind this request (cookie or bearer), or null.
- * Never throws: a lookup failure is logged and treated as signed out. */
-export async function getViewer(req: Request): Promise<ViewerSession | null> {
-  if (!authConfigured()) return null;
+export type ViewerLookup = {
+  viewer: ViewerSession | null;
+  /** The request carried `Authorization: Bearer <token>` and the token
+   * matches no live session (unknown, expired or signed out). */
+  deadBearer: boolean;
+};
+
+/**
+ * The signed-in account behind this request, and whether a bearer token was
+ * sent that no longer works. A request with a bearer token is judged by that
+ * token alone (a cookie next to it is ignored); without one, by the session
+ * cookie. Never throws: a lookup failure is logged and treated as signed out
+ * with deadBearer false (the token itself may be fine). With auth off there
+ * are no sessions, so nothing counts as a dead token either.
+ */
+export async function resolveViewer(req: Request): Promise<ViewerLookup> {
+  if (!authConfigured()) return { viewer: null, deadBearer: false };
+  const bearer = bearerToken(req.headers);
   try {
     const auth = await getAuth();
     const res = await auth.api.getSession({ headers: req.headers });
-    if (!res) return null;
-    const bearer = bearerToken(req.headers);
+    if (bearer !== null && res?.session.token !== bearer) return { viewer: null, deadBearer: true };
+    if (!res) return { viewer: null, deadBearer: false };
     return {
-      user: toViewer(res.user),
-      sessionId: res.session.id,
-      via: bearer !== null && bearer === res.session.token ? "bearer" : "cookie",
+      viewer: { user: toViewer(res.user), sessionId: res.session.id, via: bearer !== null ? "bearer" : "cookie" },
+      deadBearer: false,
     };
   } catch (e) {
     console.error("[auth] session lookup failed:", e instanceof Error ? e.message : String(e));
-    return null;
+    return { viewer: null, deadBearer: false };
   }
+}
+
+/** The signed-in account behind this request (cookie or bearer), or null.
+ * A dead bearer token gives null too; see resolveViewer to tell them apart. */
+export async function getViewer(req: Request): Promise<ViewerSession | null> {
+  return (await resolveViewer(req)).viewer;
+}
+
+/** True when the request has an `Authorization: Bearer` token that matches
+ * no live session. No session lookup without such a header. */
+export async function hasDeadBearer(req: Request): Promise<boolean> {
+  if (bearerToken(req.headers) === null) return false;
+  return (await resolveViewer(req)).deadBearer;
 }
 
 /** CSRF check for cookie-authenticated writes: the Origin (else Referer)

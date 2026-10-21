@@ -38,6 +38,8 @@ function track<T extends (...args: never[]) => unknown>(name: string, fn: T) {
 
 vi.mock("@/lib/auth", () => ({
   getViewer: track("viewer", m.getViewer),
+  resolveViewer: async (req: Request) => ({ viewer: (await m.getViewer(req)) ?? null, deadBearer: false }),
+  hasDeadBearer: async () => false,
   isSameOrigin: track("origin", m.isSameOrigin),
   authConfigured: m.authConfigured,
   // Same rule as lib/auth premiumEnabled, over the mocked authConfigured.

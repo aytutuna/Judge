@@ -37,7 +37,8 @@ export type Viewer = {
   image: string | null;
 };
 
-/** GET /api/v1/me. Signed out: { user: null, entitlement: null }. */
+/** GET /api/v1/me. Signed out: { user: null, entitlement: null }. A bearer
+ * token with no live session: 401 signin_required instead. */
 export type MeResponse = {
   user: Viewer | null;
   entitlement: Entitlement | null;

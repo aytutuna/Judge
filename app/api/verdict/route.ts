@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { nanoid } from "nanoid";
 import { anonymize } from "@/lib/anonymize";
 import { getViewer, isSameOrigin } from "@/lib/auth";
+import { rejectDeadBearer } from "@/lib/bearer-guard";
 import { clientIp } from "@/lib/client-ip";
 import { hasApiKey } from "@/lib/claude";
 import { judgeFreeAnonymized } from "@/lib/free-run";
@@ -41,6 +42,12 @@ function rawArgument(body: unknown, fallback: string): string {
 }
 
 export async function POST(req: Request): Promise<NextResponse> {
+  // A bearer token that no longer works is refused before anything else
+  // (free and premium): the app signs in again rather than being judged as
+  // signed out. No header (the website): no lookup, as before.
+  const deadBearer = await rejectDeadBearer(req);
+  if (deadBearer) return deadBearer;
+
   let body: unknown;
   try {
     body = await req.json();

@@ -23,7 +23,8 @@
 import { NextResponse } from "next/server";
 import type { Entitlement, PremiumBlock } from "@/lib/account-types";
 import { API_ERROR_STATUS, apiErrorBody, type ApiErrorBody, type ApiErrorCode } from "@/lib/api-errors";
-import { getViewer, isSameOrigin, type ViewerSession } from "@/lib/auth";
+import { getViewer, isSameOrigin, resolveViewer, type ViewerSession } from "@/lib/auth";
+import { deadBearerResponse } from "@/lib/bearer-guard";
 import {
   AppealRequest,
   CreateCaseRequest,
@@ -545,7 +546,8 @@ export function respondGetHandler(req: Request, token: string): Promise<NextResp
     await maybeSweepCases();
     const row = await caseByToken(token);
     if (!row) return fail("not_found", "No invite with that link.");
-    const viewer = await getViewer(req);
+    const { viewer, deadBearer } = await resolveViewer(req);
+    if (deadBearer) return deadBearerResponse();
     const body: CaseResponse = { case: await respondentView(row, viewer?.user.id ?? null, claimHeader(req)) };
     return json(body);
   });
@@ -566,7 +568,8 @@ export function respondPostHandler(req: Request, token: string): Promise<NextRes
     if (!row) return fail("not_found", "No invite with that link.");
     if (row.removedAt) return fail("removed");
 
-    const viewer = await getViewer(req);
+    const { viewer, deadBearer } = await resolveViewer(req);
+    if (deadBearer) return deadBearerResponse();
     const ip = clientIp(req.headers);
     if (viewer?.via !== "bearer") {
       const captcha = await verifyTurnstile(parsed.data.turnstileToken, ip);
@@ -710,7 +713,8 @@ async function ownerParty(req: Request, id: string, write: boolean): Promise<Par
 async function respondentParty(req: Request, token: string, write: boolean, bodyClaim?: string): Promise<Party> {
   if (!casesEnabled()) return { response: fail("not_configured") };
   if (!isInviteToken(token)) return { response: fail("not_found", "No invite with that link.") };
-  const viewer = await getViewer(req);
+  const { viewer, deadBearer } = await resolveViewer(req);
+  if (deadBearer) return { response: deadBearerResponse() };
   if (write && viewer?.via === "cookie" && !isSameOrigin(req)) return { response: fail("bad_origin") };
   const limited = await ownerLimit(viewer?.user.id ?? null, req);
   if (limited) return { response: limited };

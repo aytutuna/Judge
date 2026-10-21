@@ -388,7 +388,7 @@ The website and the future iOS/Android app share one JSON API. Base URL
 | Call | Purpose |
 |---|---|
 | `GET /api/v1/config` | Startup: which sign-in methods work, whether Premium is on, prices (`AppConfig`) |
-| `GET /api/v1/me` | The account and its entitlement (`MeResponse`); signed out = `{ "user": null, "entitlement": null }` |
+| `GET /api/v1/me` | The account and its entitlement (`MeResponse`); signed out = `{ "user": null, "entitlement": null }`; a dead bearer token = `401 signin_required` |
 | `DELETE /api/v1/me` `{ "confirm": "delete" }` | Removes every verdict the account owns and its side of every case (originals and names blanked, links closed; no verdict row is deleted), then deletes the account, sessions, sign-ins and entitlements (both stores require in-app deletion) |
 | `GET /api/v1/me/verdicts` | Your one-sided verdicts, newest first (`?limit=1-50&before=<createdAt>`), each with its anonymized `headline` and your `nameMap` to restore names |
 | `POST /api/v1/clarify` | Premium: up to 2 clarifying questions |
@@ -574,6 +574,16 @@ taken out of the text; the same request can be retried, e.g. with initials), plu
   storage. An invalid ID token answers `401 { "code": "INVALID_TOKEN" }`.
 - **Session:** `GET /api/v1/me`. **Sign out:** `POST /api/auth/sign-out` with
   the bearer token. Sessions last 30 days and slide forward with use.
+- **Dead tokens:** a bearer token that matches no live session (unknown,
+  expired, signed out, account deleted) answers `401` with code
+  `signin_required` on every route that reads the session, before any other
+  work (`{ "error": "Sign in first.", "code": "signin_required" }` where the
+  route would otherwise serve a signed-out caller): `POST /api/v1/verdict`
+  (free too), `GET /api/v1/verdicts/{id}` (polls and share reads),
+  `GET /api/v1/me`, the writer and respondent routes, and every route that
+  needs an account. Drop the token and sign in again. Requests without an
+  `Authorization` header (the website, share viewers) are unaffected; an
+  expired cookie still counts as signed out.
 - **Email (apps): a 6-digit code**, offered when `signIn.emailCode` is true
   in `GET /api/v1/config` (false, and both endpoints `404`, without
   `RESEND_API_KEY`/`EMAIL_FROM`):

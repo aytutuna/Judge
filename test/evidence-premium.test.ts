@@ -24,6 +24,8 @@ vi.mock("@/lib/auth", async (importOriginal) => ({
   ...(await importOriginal<typeof import("@/lib/auth")>()),
   getViewer: m.getViewer,
   isSameOrigin: () => true,
+  resolveViewer: async (req: Request) => ({ viewer: (await m.getViewer(req)) ?? null, deadBearer: false }),
+  hasDeadBearer: async () => false,
 }));
 vi.mock("@/lib/entitlements", () => ({
   reservePremiumVerdict: m.reservePremiumVerdict,

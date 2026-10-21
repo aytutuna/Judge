@@ -91,7 +91,7 @@ evidence send exactly the requests they did before.
 - **Google (iOS/Android):** native Google Sign-In, then `POST /api/auth/sign-in/social { provider: "google", idToken: { token } }`. Accepted audiences: the web, iOS and Android client ids.
 - Invalid ID tokens answer `401 { code: "INVALID_TOKEN" }`.
 - **Email (apps):** when `signIn.emailCode` is true, `POST /api/auth/email-otp/send-verification-otp?lang=tr { email, type: "sign-in" }` → `{ success: true }` and a 6-digit code by email; then `POST /api/auth/sign-in/email-otp { email, otp }` → `{ token, user }` (and `set-auth-token`). Codes last 10 minutes, 3 wrong tries burn a code (`INVALID_OTP`, `TOO_MANY_ATTEMPTS`, `OTP_EXPIRED`), 3 requests per minute per IP; no Turnstile.
-- **Session:** `GET /api/v1/me`. **Sign out:** `POST /api/auth/sign-out`. **Delete account** (required by both stores): `DELETE /api/v1/me { "confirm": "delete" }`.
+- **Session:** `GET /api/v1/me`. A bearer token with no live session gets `401 signin_required` on every session-aware route (free verdicts and public reads included); requests without `Authorization` are unaffected. **Sign out:** `POST /api/auth/sign-out`. **Delete account** (required by both stores): `DELETE /api/v1/me { "confirm": "delete" }`.
 
 ### Core calls
 | Call | Response |

@@ -27,6 +27,12 @@ vi.mock("@/lib/auth", () => ({
   getViewer: m.getViewer,
   isSameOrigin: m.isSameOrigin,
   authConfigured: () => true,
+  // "x-test-dead" stands for a bearer token that matches no live session.
+  resolveViewer: async (req: Request) =>
+    req.headers.has("x-test-dead")
+      ? { viewer: null, deadBearer: true }
+      : { viewer: (await m.getViewer(req)) ?? null, deadBearer: false },
+  hasDeadBearer: async (req: Request) => req.headers.has("x-test-dead"),
   premiumEnabled: (env: Record<string, string | undefined> = process.env) => env.PREMIUM_ENABLED?.trim() !== "0",
   derivedSecret: (purpose: string) => createHmac("sha256", "test-secret").update(purpose).digest(),
   getAuth: vi.fn(),
@@ -394,6 +400,25 @@ describe("respondent: GET and POST /api/v1/respond/{token}", () => {
     expect((await getRespondent(token, o)).view!.ownInvite).toBe(true);
     expect((await getRespondent("short")).res.status).toBe(404);
     expect((await getRespondent("A".repeat(22))).res.status).toBe(404);
+  });
+
+  it("a dead bearer token gets 401 signin_required on the respondent routes; no header still works", async () => {
+    const o = await owner();
+    const { data } = await create(o);
+    const token = tokenOf(data.case);
+    const dead = { "x-test-dead": "1" };
+    const anonymizedBefore = m.anonymizeSubmission.mock.calls.length;
+    const expectDead = async (res: Response) => {
+      expect(res.status).toBe(401);
+      expect(await res.json()).toEqual({ error: "Sign in first.", code: "signin_required" });
+    };
+    await expectDead(await http.respondGetHandler(req("GET", `/api/v1/respond/${token}`, { headers: dead }), token));
+    await expectDead(await respond(token, { headers: { ...dead, "idempotency-key": "dead-1" } }));
+    await expectDead(
+      await http.respondOriginalsHandler(req("GET", `/api/v1/respond/${token}/originals`, { headers: dead }), token),
+    );
+    expect(m.anonymizeSubmission.mock.calls.length).toBe(anonymizedBefore);
+    expect((await getRespondent(token)).res.status).toBe(200);
   });
 
   it("the answer starts judging; nobody sees the other side until the verdict; both see it after", async () => {

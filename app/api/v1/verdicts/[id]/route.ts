@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { apiErrorBody } from "@/lib/api-errors";
+import { rejectDeadBearer } from "@/lib/bearer-guard";
 import { clientIp } from "@/lib/client-ip";
 import { getPublicVerdict } from "@/lib/originals/display";
 import type { VerdictMeta } from "@/lib/originals/db";
@@ -111,6 +112,9 @@ async function ownerState(req: Request, meta: VerdictMeta | null): Promise<Verdi
 export async function GET(req: Request, ctx: RouteContext<"/api/v1/verdicts/[id]">) {
   const { id } = await ctx.params;
   if (!ID_PATTERN.test(id)) return notFound();
+  // Share viewers send no Authorization header and are never affected.
+  const deadBearer = await rejectDeadBearer(req);
+  if (deadBearer) return deadBearer;
   let found;
   try {
     // One primary-key read; a job that is ready falls through to the verdict.

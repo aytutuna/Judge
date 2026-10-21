@@ -23,6 +23,8 @@ const m = vi.hoisted(() => ({
 vi.mock("@/lib/auth", () => ({
   getViewer: m.getViewer,
   isSameOrigin: () => true,
+  resolveViewer: async (req: Request) => ({ viewer: (await m.getViewer(req)) ?? null, deadBearer: false }),
+  hasDeadBearer: async () => false,
   authConfigured: () => true,
   premiumEnabled: () => true,
 }));
