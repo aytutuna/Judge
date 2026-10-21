@@ -174,6 +174,47 @@ enum L10n {
     static func factcheckSources(_ lang: AppLang) -> String { string("factcheck.sources", lang) }
     static func factcheckNone(_ lang: AppLang) -> String { string("factcheck.none", lang) }
     static func factcheckUnavailable(_ lang: AppLang) -> String { string("factcheck.unavailable", lang) }
+    static func signinTitle(_ lang: AppLang) -> String { string("signin.title", lang) }
+    static func signinLead(_ lang: AppLang) -> String { string("signin.lead", lang) }
+    static func signinApple(_ lang: AppLang) -> String { string("signin.apple", lang) }
+    static func signinGoogle(_ lang: AppLang) -> String { string("signin.google", lang) }
+    static func signinEmailToggle(_ lang: AppLang) -> String { string("signin.emailToggle", lang) }
+    static func signinEmailLabel(_ lang: AppLang) -> String { string("signin.emailLabel", lang) }
+    static func signinEmailPlaceholder(_ lang: AppLang) -> String { string("signin.emailPlaceholder", lang) }
+    static func signinEmailSubmit(_ lang: AppLang) -> String { string("signin.emailSubmit", lang) }
+    static func signinEmailSent(_ lang: AppLang, email: String) -> String { format("signin.emailSent", lang, email) }
+    static func signinEmailInvalid(_ lang: AppLang) -> String { string("signin.emailInvalid", lang) }
+    static func signinProviderUnavailable(_ lang: AppLang) -> String { string("signin.providerUnavailable", lang) }
+    static func signinFailed(_ lang: AppLang) -> String { string("signin.failed", lang) }
+    static func signinLegal(_ lang: AppLang) -> String { string("signin.legal", lang) }
+    static func signinLegalLink(_ lang: AppLang) -> String { string("signin.legalLink", lang) }
+    static func signinLegalAfter(_ lang: AppLang) -> String { string("signin.legalAfter", lang) }
+    static func signinLoading(_ lang: AppLang) -> String { string("signin.loading", lang) }
+    static func accountTitle(_ lang: AppLang) -> String { string("account.title", lang) }
+    static func accountSignedInAs(_ lang: AppLang, email: String) -> String { format("account.signedInAs", lang, email) }
+    static func accountPlan(_ lang: AppLang) -> String { string("account.plan", lang) }
+    static func accountPlanFree(_ lang: AppLang) -> String { string("account.plan.free", lang) }
+    static func accountPlanPremium(_ lang: AppLang) -> String { string("account.plan.premium", lang) }
+    static func accountCredits(_ lang: AppLang) -> String { string("account.credits", lang) }
+    static func accountSubscription(_ lang: AppLang) -> String { string("account.subscription", lang) }
+    static func accountSubscriptionNone(_ lang: AppLang) -> String { string("account.subscriptionNone", lang) }
+    static func accountSubscriptionUntil(_ lang: AppLang, date: String) -> String { format("account.subscriptionUntil", lang, date) }
+    static func accountSubscriptionRenews(_ lang: AppLang, date: String) -> String { format("account.subscriptionRenews", lang, date) }
+    static func accountFairUse(_ lang: AppLang, used: String, cap: String) -> String { format("account.fairUse", lang, used, cap) }
+    static func accountGetPremium(_ lang: AppLang) -> String { string("account.getPremium", lang) }
+    static func accountSignOut(_ lang: AppLang) -> String { string("account.signOut", lang) }
+    static func accountDelete(_ lang: AppLang) -> String { string("account.delete", lang) }
+    static func accountDeleteConfirm(_ lang: AppLang) -> String { string("account.deleteConfirm", lang) }
+    static func accountDeleteYes(_ lang: AppLang) -> String { string("account.deleteYes", lang) }
+    static func accountDeleteCancel(_ lang: AppLang) -> String { string("account.deleteCancel", lang) }
+    static func accountDeleteFailed(_ lang: AppLang) -> String { string("account.deleteFailed", lang) }
+    static func accountSignInPrompt(_ lang: AppLang) -> String { string("account.signInPrompt", lang) }
+    static func accountLoadFailed(_ lang: AppLang) -> String { string("account.loadFailed", lang) }
+    static func accountLoading(_ lang: AppLang) -> String { string("account.loading", lang) }
+    static func accountVerdictsTitle(_ lang: AppLang) -> String { string("account.verdicts.title", lang) }
+    static func accountVerdictsEmpty(_ lang: AppLang) -> String { string("account.verdicts.empty", lang) }
+    static func accountVerdictsLoadFailed(_ lang: AppLang) -> String { string("account.verdicts.loadFailed", lang) }
+    static func accountVerdictsRemoved(_ lang: AppLang) -> String { string("account.verdicts.removed", lang) }
     static func errorSigninRequired(_ lang: AppLang) -> String { string("error.signin_required", lang) }
     static func errorPremiumRequired(_ lang: AppLang) -> String { string("error.premium_required", lang) }
     static func errorNoCredits(_ lang: AppLang) -> String { string("error.no_credits", lang) }
@@ -211,6 +252,26 @@ enum L10n {
     static func appSettingsVersion(_ lang: AppLang, version: String) -> String { format("app.settings.version", lang, version) }
     static func appLangEn(_ lang: AppLang) -> String { string("app.lang.en", lang) }
     static func appLangTr(_ lang: AppLang) -> String { string("app.lang.tr", lang) }
+    static func appSigninRequired(_ lang: AppLang) -> String { string("app.signin.required", lang) }
+    static func appSigninOr(_ lang: AppLang) -> String { string("app.signin.or", lang) }
+    static func appSigninCodeRequest(_ lang: AppLang) -> String { string("app.signin.codeRequest", lang) }
+    static func appSigninCodeSent(_ lang: AppLang, email: String) -> String { format("app.signin.codeSent", lang, email) }
+    static func appSigninCodeLabel(_ lang: AppLang) -> String { string("app.signin.codeLabel", lang) }
+    static func appSigninCodeSubmit(_ lang: AppLang) -> String { string("app.signin.codeSubmit", lang) }
+    static func appSigninCodeInvalid(_ lang: AppLang) -> String { string("app.signin.codeInvalid", lang) }
+    static func appSigninCodeExpired(_ lang: AppLang) -> String { string("app.signin.codeExpired", lang) }
+    static func appSigninCodeTooMany(_ lang: AppLang) -> String { string("app.signin.codeTooMany", lang) }
+    static func appSigninCodeResend(_ lang: AppLang) -> String { string("app.signin.codeResend", lang) }
+    static func appSigninChangeEmail(_ lang: AppLang) -> String { string("app.signin.changeEmail", lang) }
+    static func appSigninRateLimited(_ lang: AppLang) -> String { string("app.signin.rateLimited", lang) }
+    static func appSigninUnavailable(_ lang: AppLang) -> String { string("app.signin.unavailable", lang) }
+    static func appAccountDeleteTitle(_ lang: AppLang) -> String { string("app.account.deleteTitle", lang) }
+    static func appAccountDeleteBody(_ lang: AppLang) -> String { string("app.account.deleteBody", lang) }
+    static func appAccountDeleteConfirm(_ lang: AppLang) -> String { string("app.account.deleteConfirm", lang) }
+    static func appAccountDeleted(_ lang: AppLang) -> String { string("app.account.deleted", lang) }
+    static func appAccountSignOutConfirm(_ lang: AppLang) -> String { string("app.account.signOutConfirm", lang) }
+    static func appAccountSignedOut(_ lang: AppLang) -> String { string("app.account.signedOut", lang) }
+    static func appAccountSessionExpired(_ lang: AppLang) -> String { string("app.account.sessionExpired", lang) }
 
     /// A placeholder-free string by its lib/i18n.ts key, for keys built at
     /// runtime ("badge.\(type)"). Nil when unknown.
@@ -361,6 +422,42 @@ enum L10n {
         "factcheck.sources",
         "factcheck.none",
         "factcheck.unavailable",
+        "signin.title",
+        "signin.lead",
+        "signin.apple",
+        "signin.google",
+        "signin.emailToggle",
+        "signin.emailLabel",
+        "signin.emailPlaceholder",
+        "signin.emailSubmit",
+        "signin.emailInvalid",
+        "signin.providerUnavailable",
+        "signin.failed",
+        "signin.legal",
+        "signin.legalLink",
+        "signin.legalAfter",
+        "signin.loading",
+        "account.title",
+        "account.plan",
+        "account.plan.free",
+        "account.plan.premium",
+        "account.credits",
+        "account.subscription",
+        "account.subscriptionNone",
+        "account.getPremium",
+        "account.signOut",
+        "account.delete",
+        "account.deleteConfirm",
+        "account.deleteYes",
+        "account.deleteCancel",
+        "account.deleteFailed",
+        "account.signInPrompt",
+        "account.loadFailed",
+        "account.loading",
+        "account.verdicts.title",
+        "account.verdicts.empty",
+        "account.verdicts.loadFailed",
+        "account.verdicts.removed",
         "error.signin_required",
         "error.premium_required",
         "error.no_credits",
@@ -394,6 +491,25 @@ enum L10n {
         "app.settings.about",
         "app.lang.en",
         "app.lang.tr",
+        "app.signin.required",
+        "app.signin.or",
+        "app.signin.codeRequest",
+        "app.signin.codeLabel",
+        "app.signin.codeSubmit",
+        "app.signin.codeInvalid",
+        "app.signin.codeExpired",
+        "app.signin.codeTooMany",
+        "app.signin.codeResend",
+        "app.signin.changeEmail",
+        "app.signin.rateLimited",
+        "app.signin.unavailable",
+        "app.account.deleteTitle",
+        "app.account.deleteBody",
+        "app.account.deleteConfirm",
+        "app.account.deleted",
+        "app.account.signOutConfirm",
+        "app.account.signedOut",
+        "app.account.sessionExpired",
     ]
 
     private static func string(_ key: String, _ lang: AppLang) -> String {

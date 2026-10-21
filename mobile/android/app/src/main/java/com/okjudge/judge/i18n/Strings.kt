@@ -168,6 +168,47 @@ class Strings(private val res: Resources) {
     val factcheckSources: String get() = res.getString(R.string.factcheck_sources)
     val factcheckNone: String get() = res.getString(R.string.factcheck_none)
     val factcheckUnavailable: String get() = res.getString(R.string.factcheck_unavailable)
+    val signinTitle: String get() = res.getString(R.string.signin_title)
+    val signinLead: String get() = res.getString(R.string.signin_lead)
+    val signinApple: String get() = res.getString(R.string.signin_apple)
+    val signinGoogle: String get() = res.getString(R.string.signin_google)
+    val signinEmailToggle: String get() = res.getString(R.string.signin_email_toggle)
+    val signinEmailLabel: String get() = res.getString(R.string.signin_email_label)
+    val signinEmailPlaceholder: String get() = res.getString(R.string.signin_email_placeholder)
+    val signinEmailSubmit: String get() = res.getString(R.string.signin_email_submit)
+    fun signinEmailSent(email: String): String = res.getString(R.string.signin_email_sent, email)
+    val signinEmailInvalid: String get() = res.getString(R.string.signin_email_invalid)
+    val signinProviderUnavailable: String get() = res.getString(R.string.signin_provider_unavailable)
+    val signinFailed: String get() = res.getString(R.string.signin_failed)
+    val signinLegal: String get() = res.getString(R.string.signin_legal)
+    val signinLegalLink: String get() = res.getString(R.string.signin_legal_link)
+    val signinLegalAfter: String get() = res.getString(R.string.signin_legal_after)
+    val signinLoading: String get() = res.getString(R.string.signin_loading)
+    val accountTitle: String get() = res.getString(R.string.account_title)
+    fun accountSignedInAs(email: String): String = res.getString(R.string.account_signed_in_as, email)
+    val accountPlan: String get() = res.getString(R.string.account_plan)
+    val accountPlanFree: String get() = res.getString(R.string.account_plan_free)
+    val accountPlanPremium: String get() = res.getString(R.string.account_plan_premium)
+    val accountCredits: String get() = res.getString(R.string.account_credits)
+    val accountSubscription: String get() = res.getString(R.string.account_subscription)
+    val accountSubscriptionNone: String get() = res.getString(R.string.account_subscription_none)
+    fun accountSubscriptionUntil(date: String): String = res.getString(R.string.account_subscription_until, date)
+    fun accountSubscriptionRenews(date: String): String = res.getString(R.string.account_subscription_renews, date)
+    fun accountFairUse(used: String, cap: String): String = res.getString(R.string.account_fair_use, used, cap)
+    val accountGetPremium: String get() = res.getString(R.string.account_get_premium)
+    val accountSignOut: String get() = res.getString(R.string.account_sign_out)
+    val accountDelete: String get() = res.getString(R.string.account_delete)
+    val accountDeleteConfirm: String get() = res.getString(R.string.account_delete_confirm)
+    val accountDeleteYes: String get() = res.getString(R.string.account_delete_yes)
+    val accountDeleteCancel: String get() = res.getString(R.string.account_delete_cancel)
+    val accountDeleteFailed: String get() = res.getString(R.string.account_delete_failed)
+    val accountSignInPrompt: String get() = res.getString(R.string.account_sign_in_prompt)
+    val accountLoadFailed: String get() = res.getString(R.string.account_load_failed)
+    val accountLoading: String get() = res.getString(R.string.account_loading)
+    val accountVerdictsTitle: String get() = res.getString(R.string.account_verdicts_title)
+    val accountVerdictsEmpty: String get() = res.getString(R.string.account_verdicts_empty)
+    val accountVerdictsLoadFailed: String get() = res.getString(R.string.account_verdicts_load_failed)
+    val accountVerdictsRemoved: String get() = res.getString(R.string.account_verdicts_removed)
     val errorSigninRequired: String get() = res.getString(R.string.error_signin_required)
     val errorPremiumRequired: String get() = res.getString(R.string.error_premium_required)
     val errorNoCredits: String get() = res.getString(R.string.error_no_credits)
@@ -205,6 +246,26 @@ class Strings(private val res: Resources) {
     fun appSettingsVersion(version: String): String = res.getString(R.string.app_settings_version, version)
     val appLangEn: String get() = res.getString(R.string.app_lang_en)
     val appLangTr: String get() = res.getString(R.string.app_lang_tr)
+    val appSigninRequired: String get() = res.getString(R.string.app_signin_required)
+    val appSigninOr: String get() = res.getString(R.string.app_signin_or)
+    val appSigninCodeRequest: String get() = res.getString(R.string.app_signin_code_request)
+    fun appSigninCodeSent(email: String): String = res.getString(R.string.app_signin_code_sent, email)
+    val appSigninCodeLabel: String get() = res.getString(R.string.app_signin_code_label)
+    val appSigninCodeSubmit: String get() = res.getString(R.string.app_signin_code_submit)
+    val appSigninCodeInvalid: String get() = res.getString(R.string.app_signin_code_invalid)
+    val appSigninCodeExpired: String get() = res.getString(R.string.app_signin_code_expired)
+    val appSigninCodeTooMany: String get() = res.getString(R.string.app_signin_code_too_many)
+    val appSigninCodeResend: String get() = res.getString(R.string.app_signin_code_resend)
+    val appSigninChangeEmail: String get() = res.getString(R.string.app_signin_change_email)
+    val appSigninRateLimited: String get() = res.getString(R.string.app_signin_rate_limited)
+    val appSigninUnavailable: String get() = res.getString(R.string.app_signin_unavailable)
+    val appAccountDeleteTitle: String get() = res.getString(R.string.app_account_delete_title)
+    val appAccountDeleteBody: String get() = res.getString(R.string.app_account_delete_body)
+    val appAccountDeleteConfirm: String get() = res.getString(R.string.app_account_delete_confirm)
+    val appAccountDeleted: String get() = res.getString(R.string.app_account_deleted)
+    val appAccountSignOutConfirm: String get() = res.getString(R.string.app_account_sign_out_confirm)
+    val appAccountSignedOut: String get() = res.getString(R.string.app_account_signed_out)
+    val appAccountSessionExpired: String get() = res.getString(R.string.app_account_session_expired)
 
     /** A placeholder-free string by its lib/i18n.ts key, for keys built at
      * runtime ("badge.$type", "preset.$id.label"). Null when unknown. */
@@ -354,6 +415,42 @@ class Strings(private val res: Resources) {
             "factcheck.sources" -> R.string.factcheck_sources
             "factcheck.none" -> R.string.factcheck_none
             "factcheck.unavailable" -> R.string.factcheck_unavailable
+            "signin.title" -> R.string.signin_title
+            "signin.lead" -> R.string.signin_lead
+            "signin.apple" -> R.string.signin_apple
+            "signin.google" -> R.string.signin_google
+            "signin.emailToggle" -> R.string.signin_email_toggle
+            "signin.emailLabel" -> R.string.signin_email_label
+            "signin.emailPlaceholder" -> R.string.signin_email_placeholder
+            "signin.emailSubmit" -> R.string.signin_email_submit
+            "signin.emailInvalid" -> R.string.signin_email_invalid
+            "signin.providerUnavailable" -> R.string.signin_provider_unavailable
+            "signin.failed" -> R.string.signin_failed
+            "signin.legal" -> R.string.signin_legal
+            "signin.legalLink" -> R.string.signin_legal_link
+            "signin.legalAfter" -> R.string.signin_legal_after
+            "signin.loading" -> R.string.signin_loading
+            "account.title" -> R.string.account_title
+            "account.plan" -> R.string.account_plan
+            "account.plan.free" -> R.string.account_plan_free
+            "account.plan.premium" -> R.string.account_plan_premium
+            "account.credits" -> R.string.account_credits
+            "account.subscription" -> R.string.account_subscription
+            "account.subscriptionNone" -> R.string.account_subscription_none
+            "account.getPremium" -> R.string.account_get_premium
+            "account.signOut" -> R.string.account_sign_out
+            "account.delete" -> R.string.account_delete
+            "account.deleteConfirm" -> R.string.account_delete_confirm
+            "account.deleteYes" -> R.string.account_delete_yes
+            "account.deleteCancel" -> R.string.account_delete_cancel
+            "account.deleteFailed" -> R.string.account_delete_failed
+            "account.signInPrompt" -> R.string.account_sign_in_prompt
+            "account.loadFailed" -> R.string.account_load_failed
+            "account.loading" -> R.string.account_loading
+            "account.verdicts.title" -> R.string.account_verdicts_title
+            "account.verdicts.empty" -> R.string.account_verdicts_empty
+            "account.verdicts.loadFailed" -> R.string.account_verdicts_load_failed
+            "account.verdicts.removed" -> R.string.account_verdicts_removed
             "error.signin_required" -> R.string.error_signin_required
             "error.premium_required" -> R.string.error_premium_required
             "error.no_credits" -> R.string.error_no_credits
@@ -387,6 +484,25 @@ class Strings(private val res: Resources) {
             "app.settings.about" -> R.string.app_settings_about
             "app.lang.en" -> R.string.app_lang_en
             "app.lang.tr" -> R.string.app_lang_tr
+            "app.signin.required" -> R.string.app_signin_required
+            "app.signin.or" -> R.string.app_signin_or
+            "app.signin.codeRequest" -> R.string.app_signin_code_request
+            "app.signin.codeLabel" -> R.string.app_signin_code_label
+            "app.signin.codeSubmit" -> R.string.app_signin_code_submit
+            "app.signin.codeInvalid" -> R.string.app_signin_code_invalid
+            "app.signin.codeExpired" -> R.string.app_signin_code_expired
+            "app.signin.codeTooMany" -> R.string.app_signin_code_too_many
+            "app.signin.codeResend" -> R.string.app_signin_code_resend
+            "app.signin.changeEmail" -> R.string.app_signin_change_email
+            "app.signin.rateLimited" -> R.string.app_signin_rate_limited
+            "app.signin.unavailable" -> R.string.app_signin_unavailable
+            "app.account.deleteTitle" -> R.string.app_account_delete_title
+            "app.account.deleteBody" -> R.string.app_account_delete_body
+            "app.account.deleteConfirm" -> R.string.app_account_delete_confirm
+            "app.account.deleted" -> R.string.app_account_deleted
+            "app.account.signOutConfirm" -> R.string.app_account_sign_out_confirm
+            "app.account.signedOut" -> R.string.app_account_signed_out
+            "app.account.sessionExpired" -> R.string.app_account_session_expired
             else -> null
         }
     }

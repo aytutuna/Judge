@@ -76,6 +76,26 @@ export const WEB_KEYS: readonly string[] = [
   "error.*",
   "wait.*",
   "turnstile.label",
+  // Sign-in (Apple, Google, email code) and the account screen. The dev
+  // login keys stay web-only.
+  "signin.title",
+  "signin.lead",
+  "signin.apple",
+  "signin.google",
+  "signin.emailToggle",
+  "signin.emailLabel",
+  "signin.emailPlaceholder",
+  "signin.emailSubmit",
+  "signin.emailSent",
+  "signin.emailInvalid",
+  "signin.unavailable",
+  "signin.providerUnavailable",
+  "signin.failed",
+  "signin.legal",
+  "signin.legalLink",
+  "signin.legalAfter",
+  "signin.loading",
+  "account.*",
   // Settings / links out to the website
   "footer.about",
   "footer.privacy",
@@ -90,7 +110,12 @@ export const WEB_KEYS: readonly string[] = [
  * Exact web keys left out even though a WEB_KEYS prefix matches them: browser
  * copy ("new tab", "reload the page") with an app version in app-strings.ts.
  */
-export const EXCLUDE_KEYS: readonly string[] = ["factcheck.sourceAria", "error.bad_origin"];
+export const EXCLUDE_KEYS: readonly string[] = [
+  "factcheck.sourceAria",
+  "error.bad_origin",
+  "signin.unavailable",
+  "account.deleted",
+];
 
 /**
  * Keys whose leading emoji the web design drops at render time
@@ -127,4 +152,13 @@ export const REQUIRED_KEYS: readonly string[] = [
   "error.captcha_failed",
   "thinking.read",
   "translate.loading",
+  "signin.title",
+  "signin.apple",
+  "signin.google",
+  "signin.legal",
+  "signin.legalLink",
+  "signin.legalAfter",
+  "account.signedInAs",
+  "account.signOut",
+  "account.delete",
 ];

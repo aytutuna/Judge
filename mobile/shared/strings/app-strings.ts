@@ -63,4 +63,56 @@ export const APP_STRINGS: Record<string, { en: string; tr: string }> = {
   "app.settings.version": { en: "Version {version}", tr: "Sürüm {version}" },
   "app.lang.en": { en: "English", tr: "English" },
   "app.lang.tr": { en: "Türkçe", tr: "Türkçe" },
+  // Sign-in. Email in the apps is a 6-digit code, not a link.
+  "app.signin.required": { en: "Sign in to get a verdict.", tr: "Karar almak için giriş yap." },
+  "app.signin.or": { en: "or", tr: "ya da" },
+  "app.signin.codeRequest": { en: "Email me a code", tr: "Bana kod gönder" },
+  "app.signin.codeSent": {
+    en: "We emailed a code to {email}. It works for 10 minutes.",
+    tr: "{email} adresine bir kod gönderdik. 10 dakika geçerli.",
+  },
+  "app.signin.codeLabel": { en: "Enter the 6-digit code", tr: "6 haneli kodu gir" },
+  "app.signin.codeSubmit": { en: "Sign in", tr: "Giriş yap" },
+  "app.signin.codeInvalid": {
+    en: "That code isn't right. Check the email and try again.",
+    tr: "Bu kod doğru değil. E-postana bakıp tekrar dene.",
+  },
+  "app.signin.codeExpired": {
+    en: "That code has expired. Ask for a new one.",
+    tr: "Bu kodun süresi doldu. Yeni bir kod iste.",
+  },
+  "app.signin.codeTooMany": {
+    en: "Too many wrong tries for this code. Ask for a new one.",
+    tr: "Bu kod için çok fazla yanlış deneme oldu. Yeni bir kod iste.",
+  },
+  "app.signin.codeResend": { en: "Send a new code", tr: "Yeni kod gönder" },
+  "app.signin.changeEmail": { en: "Use a different email", tr: "Başka bir e-posta kullan" },
+  "app.signin.rateLimited": {
+    en: "Too many tries. Wait a minute and try again.",
+    tr: "Çok fazla deneme oldu. Bir dakika bekleyip tekrar dene.",
+  },
+  // App version of signin.unavailable, which talks about "this site".
+  "app.signin.unavailable": {
+    en: "Sign-in isn't available right now. Try again later.",
+    tr: "Giriş şu an kullanılamıyor. Daha sonra tekrar dene.",
+  },
+  // Account. account.deleteConfirm is one web paragraph; native dialogs need
+  // a title, a body and a button.
+  "app.account.deleteTitle": { en: "Delete your account?", tr: "Hesabın silinsin mi?" },
+  "app.account.deleteBody": {
+    en: "Your sign-in details, credits, plan and personal data are deleted, and your share links stop working. Verdict text stays stored without your name, as explained in the Privacy Policy.",
+    tr: "Giriş bilgilerin, kredilerin, planın ve kişisel verilerin silinir; paylaşım bağlantıların da çalışmaz olur. Karar metinleri, Gizlilik Politikası'nda anlatıldığı gibi adın olmadan saklanır.",
+  },
+  "app.account.deleteConfirm": { en: "Delete account", tr: "Hesabı sil" },
+  // App version of account.deleted, which promises a trip to the home page.
+  "app.account.deleted": { en: "Your account was deleted.", tr: "Hesabın silindi." },
+  "app.account.signOutConfirm": {
+    en: "Sign out of Judge on this phone?",
+    tr: "Bu telefonda Judge'dan çıkış yapılsın mı?",
+  },
+  "app.account.signedOut": { en: "You're signed out.", tr: "Çıkış yaptın." },
+  "app.account.sessionExpired": {
+    en: "You've been signed out. Sign in again to continue.",
+    tr: "Oturumun kapandı. Devam etmek için tekrar giriş yap.",
+  },
 };
