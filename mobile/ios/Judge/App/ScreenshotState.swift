@@ -168,10 +168,12 @@ struct ScreenshotState {
             premium(app, me: "fair_use")
             app.setTierChoice(.premium)
             app.home.argument = ExampleArgument.all[0].text(lang)
+            app.home.initialScroll = HomeModel.tierAnchor
         case .tierPremium:
             premium(app, me: "credits7")
             app.setTierChoice(.premium)
             app.home.argument = ExampleArgument.all[0].text(lang)
+            app.home.initialScroll = HomeModel.tierAnchor
         case .pricing:
             premium(app, me: "subscriber")
             app.home.path = [.pricing]
@@ -184,6 +186,7 @@ struct ScreenshotState {
             premium(app, me: "credits7")
             app.setTierChoice(.premium)
             app.home.argument = ExampleArgument.all[0].text(lang)
+            app.home.initialScroll = HomeModel.evidenceAnchor
             let preview = ScreenshotFixtures.evidencePreview()
             app.home.evidence.showForScreenshot([
                 (status: .ok, preview: preview),
@@ -200,6 +203,7 @@ struct ScreenshotState {
             app.setTierChoice(.premium)
             app.home.mode = .both
             app.home.argument = ExampleArgument.all[0].text(lang)
+            app.home.initialScroll = HomeModel.tierAnchor
         case .historyCases:
             premium(app, me: "credits7")
             app.historySegment = .cases

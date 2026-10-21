@@ -68,6 +68,10 @@ final class HomeModel {
     /// often, for at most the route's 300 s.
     @ObservationIgnored var inProgressInterval: Duration = .seconds(4)
     @ObservationIgnored var inProgressWait: Duration = .seconds(300)
+    /// Scroll anchor Home opens on (screenshot states); nil = the top.
+    @ObservationIgnored var initialScroll: String?
+    static let tierAnchor = "home.tier"
+    static let evidenceAnchor = "home.evidence"
 
     struct ClarifyState: Equatable {
         var questions: [ClarifyQuestion]

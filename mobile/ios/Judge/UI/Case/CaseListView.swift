@@ -82,6 +82,7 @@ struct CaseListView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .task(id: app.account.isSignedIn) { await list.load(api: app.api, account: app.account) }
+        .onAppear { Task { await list.load(api: app.api, account: app.account) } }
     }
 
     private func message<Extra: View>(_ text: String, @ViewBuilder extra: () -> Extra) -> some View {

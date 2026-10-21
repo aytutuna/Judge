@@ -38,6 +38,12 @@ struct HomeView: View {
             .onAppear {
                 if home.error != nil { proxy.scrollTo(Self.errorID, anchor: .center) }
             }
+            .task {
+                // Screenshot states open on the part they show.
+                guard let target = home.initialScroll else { return }
+                try? await Task.sleep(for: .milliseconds(300))
+                proxy.scrollTo(target, anchor: .top)
+            }
             .onChange(of: home.error) { _, error in
                 guard error != nil else { return }
                 withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.3)) {
@@ -122,12 +128,14 @@ struct HomeView: View {
                 TierSwitchView(lang: lang, disabled: home.isBusy) {
                     home.path.append(.pricing)
                 }
+                .id(HomeModel.tierAnchor)
             }
             if app.casesOn {
                 CaseModeSwitch(home: home, lang: lang, disabled: home.isBusy)
             }
             if app.evidenceOn {
                 EvidencePickerView(evidence: home.evidence, lang: lang, disabled: home.isBusy)
+                    .id(HomeModel.evidenceAnchor)
             }
             if let error = home.error {
                 errorBanner(error, lang: lang)
@@ -254,7 +262,7 @@ struct HomeView: View {
                     .accessibilityAddTraits(.updatesFrequently)
             }
             if twoSided {
-                CaseNameField(home: home, initial: home.shownCaseName(app), lang: lang, disabled: home.isBusy)
+                CaseNameField(home: home, fallback: Names.firstName(app.account.user?.name) ?? "", lang: lang, disabled: home.isBusy)
             }
             VStack(spacing: 2) {
                 Text(L10n.privacyNote(lang))
