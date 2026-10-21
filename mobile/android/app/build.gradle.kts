@@ -1,3 +1,5 @@
+import java.util.Base64
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
@@ -19,6 +21,29 @@ val productionApi = "https://okjudge.com"
 // and the server accepts it. Not a secret.
 val googleWebClientId = "173777773521-gumchqdjf6oud3gp4cb27jeqsmf157fd.apps.googleusercontent.com"
 
+// Upload key: CI passes the keystore base64-encoded in env vars; a developer
+// machine can set judge.upload* in ~/.gradle/gradle.properties instead. With
+// neither, release builds stay unsigned.
+fun uploadSetting(env: String, prop: String): String? =
+    (System.getenv(env) ?: findProperty(prop) as String?)?.trim()?.ifEmpty { null }
+
+val uploadKeystoreFile: File? = run {
+    val b64 = uploadSetting("JUDGE_UPLOAD_KEYSTORE_BASE64", "judge.uploadKeystoreBase64")
+    val path = uploadSetting("JUDGE_UPLOAD_KEYSTORE_FILE", "judge.uploadKeystoreFile")
+    when {
+        b64 != null -> layout.buildDirectory.file("upload-keystore.jks").get().asFile.also {
+            it.parentFile.mkdirs()
+            it.writeBytes(Base64.getMimeDecoder().decode(b64))
+        }
+        path != null -> file(path)
+        else -> null
+    }
+}
+val uploadStorePassword = uploadSetting("JUDGE_UPLOAD_KEYSTORE_PASSWORD", "judge.uploadStorePassword")
+val uploadKeyAlias = uploadSetting("JUDGE_UPLOAD_KEY_ALIAS", "judge.uploadKeyAlias")
+val uploadKeyPassword = uploadSetting("JUDGE_UPLOAD_KEY_PASSWORD", "judge.uploadKeyPassword") ?: uploadStorePassword
+val canSignRelease = uploadKeystoreFile != null && uploadStorePassword != null && uploadKeyAlias != null && uploadKeyPassword != null
+
 android {
     namespace = "com.okjudge.judge"
     compileSdk = 37
@@ -33,6 +58,17 @@ android {
         buildConfigField("String", "GOOGLE_SERVER_CLIENT_ID", judgeProp("googleServerClientId", googleWebClientId))
     }
 
+    signingConfigs {
+        if (canSignRelease) {
+            create("release") {
+                storeFile = uploadKeystoreFile
+                storePassword = uploadStorePassword
+                keyAlias = uploadKeyAlias
+                keyPassword = uploadKeyPassword
+            }
+        }
+    }
+
     buildTypes {
         debug {
             applicationIdSuffix = ".debug"
@@ -43,6 +79,7 @@ android {
             buildConfigField("String", "TURNSTILE_SITE_KEY", judgeProp("turnstileSiteKey"))
         }
         release {
+            if (canSignRelease) signingConfig = signingConfigs.getByName("release")
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")

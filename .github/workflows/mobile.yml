@@ -143,6 +143,24 @@ jobs:
       - name: Debug APK
         run: ./gradlew --no-daemon assembleDebug
 
+      - name: Release bundle
+        if: github.event_name == 'push' && (github.ref == 'refs/heads/feature/mobile' || github.ref == 'refs/heads/main')
+        env:
+          JUDGE_UPLOAD_KEYSTORE_BASE64: ${{ secrets.JUDGE_UPLOAD_KEYSTORE_BASE64 }}
+          JUDGE_UPLOAD_KEYSTORE_PASSWORD: ${{ secrets.JUDGE_UPLOAD_KEYSTORE_PASSWORD }}
+          JUDGE_UPLOAD_KEY_ALIAS: ${{ secrets.JUDGE_UPLOAD_KEY_ALIAS }}
+          JUDGE_UPLOAD_KEY_PASSWORD: ${{ secrets.JUDGE_UPLOAD_KEY_PASSWORD }}
+          JUDGE_TURNSTILE_SITE_KEY: ${{ vars.JUDGE_TURNSTILE_SITE_KEY }}
+        run: ./gradlew --no-daemon bundleRelease "-Pjudge.turnstileSiteKey=$JUDGE_TURNSTILE_SITE_KEY"
+
+      - uses: actions/upload-artifact@v7
+        if: github.event_name == 'push' && (github.ref == 'refs/heads/feature/mobile' || github.ref == 'refs/heads/main')
+        with:
+          name: android-release-aab
+          path: mobile/android/app/build/outputs/bundle/release/app-release.aab
+          retention-days: 14
+          if-no-files-found: error
+
       - uses: actions/upload-artifact@v7
         if: always()
         with:
