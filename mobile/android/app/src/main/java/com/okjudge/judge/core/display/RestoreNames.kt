@@ -451,6 +451,10 @@ object RestoreNames {
             factCheck = result.factCheck?.let { fc ->
                 fc.copy(claims = fc.claims.map { it.copy(claim = r(it.claim), summary = r(it.summary)) })
             },
+            agreedFacts = result.agreedFacts?.map(r),
+            disputedFacts = result.disputedFacts?.map { it.copy(fact = r(it.fact), partyA = r(it.partyA), partyB = r(it.partyB)) },
+            wouldChange = result.wouldChange?.map(r),
+            appeal = result.appeal?.let { it.copy(summary = r(it.summary)) },
         )
     }
 

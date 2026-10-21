@@ -65,6 +65,42 @@ data class FactCheck(val status: String = "", val claims: List<FactClaim> = empt
 @Serializable
 data class Panel(val models: List<String> = emptyList())
 
+/** A fact the parties disagree on (two-sided verdicts). `finding`: "a", "b" or "unsettled". */
+@Serializable
+data class DisputedFact(
+    val fact: String = "",
+    @SerialName("party_a") val partyA: String = "",
+    @SerialName("party_b") val partyB: String = "",
+    val finding: String = "unsettled",
+    val decisive: Boolean = false,
+)
+
+/** Images each party attached that the judges read. */
+@Serializable
+data class EvidenceUsed(val a: Int = 0, val b: Int = 0)
+
+/** On a verdict produced by an appeal: how it compares to the one before (AppealInfo). */
+@Serializable
+data class AppealInfo(
+    val by: String = "a",
+    val outcome: String = "",
+    @SerialName("previous_id") val previousId: String = "",
+    @SerialName("previous_verdict") val previousVerdict: String = "",
+    @SerialName("previous_confidence") val previousConfidence: Int = 1,
+    @SerialName("confidence_change") val confidenceChange: Int = 0,
+    val summary: String = "",
+) {
+    val appealOutcome: AppealOutcome get() = AppealOutcome.of(outcome)
+}
+
+enum class AppealOutcome(val raw: String) {
+    UPHELD("upheld"), OVERTURNED("overturned"), CHANGED("changed"), UNKNOWN("");
+
+    companion object {
+        fun of(raw: String?): AppealOutcome = entries.firstOrNull { it.raw == raw && it != UNKNOWN } ?: UNKNOWN
+    }
+}
+
 /**
  * The verdict as shown and stored (VerdictResult in lib/types.ts).
  *
@@ -95,8 +131,16 @@ data class VerdictResult(
     val tier: String? = null,
     @SerialName("fact_check") val factCheck: FactCheck? = null,
     val panel: Panel? = null,
+    @SerialName("two_sided") val twoSided: Boolean? = null,
+    @SerialName("agreed_facts") val agreedFacts: List<String>? = null,
+    @SerialName("disputed_facts") val disputedFacts: List<DisputedFact>? = null,
+    @SerialName("would_change") val wouldChange: List<String>? = null,
+    @SerialName("evidence_used") val evidenceUsed: EvidenceUsed? = null,
+    val appeal: AppealInfo? = null,
     @Transient val leanPresent: Boolean = false,
 ) {
+    val isTwoSided: Boolean get() = twoSided == true
+
     val finalVerdict: FinalVerdict get() = FinalVerdict.of(verdict)
     val dispute: DisputeType get() = DisputeType.of(disputeType)
     val refused: Boolean get() = modelRefused == true
@@ -158,7 +202,11 @@ data class FrameworkChoice(val preset: String = "balanced", val sliders: Map<Str
 @Serializable
 data class Clarification(val question: String, val answer: String)
 
-/** POST /api/v1/verdict. `tier` and `clarifications` are the premium slots (phase 2). */
+/**
+ * POST /api/v1/verdict. `tier`, `clarifications` and `evidence` (signed
+ * tokens from POST /api/v1/evidence) are the premium slots; null fields are
+ * left out of the body.
+ */
 @Serializable
 data class VerdictRequest(
     val argument: String,
@@ -166,8 +214,33 @@ data class VerdictRequest(
     val lang: String = "en",
     val tier: String = "free",
     val clarifications: List<Clarification>? = null,
+    val evidence: List<String>? = null,
     val turnstileToken: String? = null,
 )
+
+/** POST /api/v1/clarify. */
+@Serializable
+data class ClarifyRequest(val argument: String, val lang: String = "en")
+
+@Serializable
+data class ClarifyQuestion(val id: String = "", val text: String = "")
+
+@Serializable
+data class ClarifyResponse(val questions: List<ClarifyQuestion> = emptyList())
+
+/** One image's answer from POST /api/v1/evidence (EvidenceItemResult). */
+@Serializable
+data class EvidenceItemResult(
+    val index: Int = 0,
+    val status: String = "failed",
+    val kind: String? = null,
+    val token: String? = null,
+    val preview: String? = null,
+    val expiresAt: String? = null,
+)
+
+@Serializable
+data class EvidenceUploadResponse(val items: List<EvidenceItemResult> = emptyList())
 
 /** Error body of every /api/v1 failure. */
 @Serializable
@@ -191,6 +264,8 @@ data class VerdictOutcome(
     val replayed: Boolean = false,
     /** Signed-out writers only, returned once with the verdict (or its 202). */
     val ownerToken: String? = null,
+    /** Premium: the account's entitlement after this verdict. */
+    val entitlement: Entitlement? = null,
 )
 
 /**
@@ -204,6 +279,8 @@ data class VerdictAccepted(
     val nameMap: List<NameMapping>,
     val ownerToken: String? = null,
     val replayed: Boolean = false,
+    /** Premium: the entitlement right after the unit was reserved. */
+    val entitlement: Entitlement? = null,
 )
 
 /** What POST /api/v1/verdict answered: the verdict itself (200) or a job to poll (202). */

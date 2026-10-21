@@ -37,6 +37,21 @@ import com.okjudge.judge.ui.signin.SignInScreen
 import com.okjudge.judge.ui.signin.SignInStep
 import com.okjudge.judge.ui.signin.SignInUiState
 import com.okjudge.judge.ui.verdict.TranslationStatus
+import com.okjudge.judge.core.evidence.EvidenceItem
+import com.okjudge.judge.core.evidence.EvidenceState
+import com.okjudge.judge.core.evidence.EvidenceStatus
+import com.okjudge.judge.core.model.ClarifyResponse
+import com.okjudge.judge.core.model.Features
+import com.okjudge.judge.core.model.PricingInfo
+import com.okjudge.judge.core.model.VerdictOutcome
+import com.okjudge.judge.core.model.WireJson
+import com.okjudge.judge.core.premium.Tier
+import com.okjudge.judge.core.premium.TierAvailability
+import com.okjudge.judge.ui.premium.ClarifyScreen
+import com.okjudge.judge.ui.premium.PricingScreen
+import kotlinx.serialization.json.jsonArray
+import kotlinx.serialization.json.jsonObject
+import kotlinx.serialization.json.jsonPrimitive
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -193,6 +208,109 @@ class ScreenshotsTest {
         )
         Themed(AppLang.EN) { SignInScreen(state, onBack = {}, onToggleLang = {}, actions = SignInActions()) }
     }
+
+    // --- Premium ---------------------------------------------------------------------
+
+    private fun me(name: String): MeResponse =
+        WireJson.json.decodeFromString(MeResponse.serializer(), Fixtures.verdicts["me"]!!.jsonObject[name].toString())
+
+    private fun premiumHome(lang: AppLang, meName: String, availability: TierAvailability, evidence: EvidenceState = EvidenceState(max = 3)) =
+        homeState(lang).copy(
+            tierChoice = Tier.PREMIUM,
+            availability = availability,
+            entitlement = me(meName).entitlement,
+            features = Features(cases = true, evidence = true),
+            evidence = evidence,
+        )
+
+    @Test
+    fun tier_lockedFairUse_en() = capture("tier_locked_fair_use_en", tall = true) {
+        Themed(AppLang.EN) { HomeScreen(premiumHome(AppLang.EN, "fair_use", TierAvailability.LOCKED), {}, {}, {}, {}, {}, {}, {}) }
+    }
+
+    @Test
+    fun tier_availablePremium_en() = capture("tier_available_premium_en", tall = true) {
+        Themed(AppLang.EN) {
+            HomeScreen(premiumHome(AppLang.EN, "subscriber", TierAvailability.AVAILABLE).copy(features = Features()), {}, {}, {}, {}, {}, {}, {})
+        }
+    }
+
+    @Test
+    fun evidence_mixedStatuses_en() = capture("evidence_mixed_en", tall = true) {
+        val thumb = android.graphics.Bitmap.createBitmap(96, 160, android.graphics.Bitmap.Config.ARGB_8888).apply {
+            eraseColor(android.graphics.Color.rgb(0xDD, 0xE7, 0xE0))
+        }
+        val items = listOf(
+            EvidenceItem("ev1", 1, EvidenceStatus.OK, token = "t1", preview = "Sam: it's a hot dog, not a sandwich", thumb = thumb),
+            EvidenceItem("ev2", 2, EvidenceStatus.READING),
+            EvidenceItem("ev3", 3, EvidenceStatus.UNREADABLE),
+        )
+        Themed(AppLang.EN) {
+            HomeScreen(premiumHome(AppLang.EN, "credits7", TierAvailability.AVAILABLE, EvidenceState(items, max = 3)), {}, {}, {}, {}, {}, {}, {})
+        }
+    }
+
+    @Test
+    fun clarify_en() = capture("clarify_en") {
+        val questions = WireJson.json.decodeFromString(
+            ClarifyResponse.serializer(),
+            Fixtures.verdicts["clarifyResponse"]!!.jsonObject["two_questions"].toString(),
+        ).questions
+        Themed(AppLang.EN) {
+            ClarifyScreen(questions, mapOf("q1" to "No, we never settled it."), { _, _ -> }, {}, {}, {}, {})
+        }
+    }
+
+    @Test
+    fun pricing_en() = capture("pricing_en", tall = true) {
+        Themed(AppLang.EN) {
+            PricingScreen(PricingInfo(), true, Features(true, true), true, true, me("credits7").entitlement, {}, {}, {})
+        }
+    }
+
+    @Test
+    fun pricing_tr() = capture("pricing_tr", tall = true) {
+        Themed(AppLang.TR) {
+            PricingScreen(PricingInfo(), true, Features(true, true), false, true, null, null, {}, {})
+        }
+    }
+
+    @Test
+    fun judging_premium_en() = capture("judging_premium_en") {
+        Themed(AppLang.EN) {
+            JudgingScreen(done = false, result = null, startedAt = System.currentTimeMillis() - 8_000, reducedMotion = true, onFinished = {}, onCancel = {}, premium = true)
+        }
+    }
+
+    private fun premiumOutcome(): VerdictOutcome =
+        WireJson.decodeVerdictResponse(Fixtures.verdicts["premiumVerdictResponse"]!!.jsonObject["response"].toString())
+
+    private fun caseOutcome(view: String): VerdictOutcome {
+        val v = Fixtures.verdicts["cases"]!!.jsonObject["views"]!!.jsonObject[view]!!.jsonObject
+        val last = v["verdicts"]!!.jsonArray.last().jsonObject
+        return VerdictOutcome(last["id"]!!.jsonPrimitive.content, WireJson.decodeResult(last["result"]!!), Fixtures.nameMap(v["names"]!!))
+    }
+
+    private fun shotVerdict(name: String, outcome: VerdictOutcome, lang: AppLang) = capture(name, tall = true) {
+        Themed(lang) {
+            Column(Modifier.fillMaxSize()) {
+                TopBar(onBack = null, onToggleLang = {})
+                SampleVerdict(outcome, lang, Modifier.padding(horizontal = 16.dp, vertical = 12.dp))
+            }
+        }
+    }
+
+    @Test
+    fun verdict_premiumFactCheck_en() = shotVerdict("verdict_premium_factcheck_en", premiumOutcome(), AppLang.EN)
+
+    @Test
+    fun verdict_premiumFactCheck_tr() = shotVerdict("verdict_premium_factcheck_tr", premiumOutcome(), AppLang.TR)
+
+    @Test
+    fun verdict_twoSided_en() = shotVerdict("verdict_two_sided_en", caseOutcome("judged"), AppLang.EN)
+
+    @Test
+    fun verdict_appealOutcome_en() = shotVerdict("verdict_appeal_overturned_en", caseOutcome("appeal_overturned"), AppLang.EN)
 
     @Test
     fun brandMark_icon() = capture("brand_mark") {

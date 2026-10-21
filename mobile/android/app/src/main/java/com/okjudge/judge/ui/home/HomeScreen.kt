@@ -14,11 +14,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -45,6 +47,12 @@ import com.okjudge.judge.core.display.Errors
 import com.okjudge.judge.core.display.Example
 import com.okjudge.judge.core.display.Preset
 import com.okjudge.judge.core.display.UiError
+import com.okjudge.judge.core.evidence.ImageSource
+import com.okjudge.judge.core.premium.Tier
+import com.okjudge.judge.core.premium.TierAvailability
+import com.okjudge.judge.ui.premium.EvidencePicker
+import com.okjudge.judge.ui.premium.TierSwitch
+import com.okjudge.judge.ui.premium.rememberEvidencePicker
 import com.okjudge.judge.i18n.AppLang
 import com.okjudge.judge.i18n.LocalLang
 import com.okjudge.judge.i18n.LocalStrings
@@ -66,6 +74,7 @@ object HomeTags {
     const val SUBMIT = "home.submit"
     const val COUNTER = "home.counter"
     const val ERROR = "home.error"
+    const val STATUS = "home.status"
 }
 
 /** Home: headline, the argument box with its counter, examples, presets and the CTA. */
@@ -81,6 +90,12 @@ fun HomeScreen(
     onToggleLang: () -> Unit,
     onOpenPrivacy: () -> Unit,
     modifier: Modifier = Modifier,
+    onTier: (Tier) -> Unit = {},
+    onPremiumIntent: () -> Unit = {},
+    onSignIn: () -> Unit = {},
+    onPricing: () -> Unit = {},
+    onAddEvidence: (List<ImageSource>) -> Unit = {},
+    onRemoveEvidence: (String) -> Unit = {},
 ) {
     val s = LocalStrings.current
     val lang = LocalLang.current
@@ -140,14 +155,47 @@ fun HomeScreen(
                     Text(it, style = JudgeType.slotText, modifier = Modifier.padding(top = 8.dp))
                 }
 
+                if (state.evidenceOn) {
+                    val pick = rememberEvidencePicker(state.evidence.room, onAddEvidence)
+                    EvidencePicker(
+                        state = state.evidence,
+                        disabled = state.holding,
+                        onAdd = pick,
+                        onRemove = onRemoveEvidence,
+                        modifier = Modifier.padding(top = 22.dp),
+                    )
+                }
+
                 state.error?.let { ErrorBanner(it, onDismissError) }
+
+                TierSwitch(
+                    availability = state.availability,
+                    value = state.tier,
+                    entitlement = state.entitlement,
+                    disabled = state.holding,
+                    onChange = onTier,
+                    onPremiumIntent = onPremiumIntent,
+                    onSignIn = onSignIn,
+                    onPricing = onPricing,
+                    modifier = Modifier.padding(top = 22.dp),
+                )
 
                 PrimaryButton(
                     text = s.getVerdict,
                     enabled = state.canSubmit && !blocked,
                     onClick = onSubmit,
-                    modifier = Modifier.fillMaxWidth().padding(top = 24.dp).testTag(HomeTags.SUBMIT),
+                    modifier = Modifier.fillMaxWidth().padding(top = if (state.availability == TierAvailability.HIDDEN) 24.dp else 14.dp).testTag(HomeTags.SUBMIT),
                 )
+                if (state.checking) {
+                    Row(
+                        Modifier.fillMaxWidth().padding(top = 12.dp).semantics(mergeDescendants = true) { liveRegion = LiveRegionMode.Polite }.testTag(HomeTags.STATUS),
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        CircularProgressIndicator(Modifier.padding(end = 8.dp).size(14.dp), color = Palette.ink2, strokeWidth = 1.5.dp)
+                        Text(s.tierChecking, style = JudgeType.slotText.copy(color = Palette.ink2))
+                    }
+                }
                 Text(s.privacyNote, style = JudgeType.footnote, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth().padding(top = 12.dp))
                 Text(
                     s.privacyLink,

@@ -48,6 +48,7 @@ object SettingsTags {
     const val SIGN_IN = "settings.signIn"
     const val SIGN_OUT = "settings.signOut"
     const val DELETE = "settings.delete"
+    const val PRICING = "settings.pricing"
 }
 
 /** The account, language choice, links out to the website, and the footer note. */
@@ -65,6 +66,7 @@ fun SettingsScreen(
     onSignIn: () -> Unit = {},
     onSignOut: () -> Unit = {},
     onDeleteAccount: () -> Unit = {},
+    onOpenPricing: (() -> Unit)? = null,
 ) {
     val s = LocalStrings.current
     val base = siteBaseUrl.trimEnd('/')
@@ -95,6 +97,12 @@ fun SettingsScreen(
                         Text(label, style = JudgeType.body, modifier = Modifier.weight(1f))
                         Radio(pref == langPref)
                     }
+                }
+            }
+
+            if (onOpenPricing != null) {
+                Group(null) {
+                    ActionRow(s.navPricing, Modifier.testTag(SettingsTags.PRICING), trailing = "›", onClick = onOpenPricing)
                 }
             }
 

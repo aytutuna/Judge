@@ -96,6 +96,7 @@ internal suspend fun awaitVerdict(
                         nameMap = accepted.nameMap,
                         replayed = accepted.replayed,
                         ownerToken = accepted.ownerToken,
+                        entitlement = accepted.entitlement,
                     ),
                 )
             }

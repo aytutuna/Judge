@@ -1,6 +1,10 @@
 package com.okjudge.judge.core.api
 
 import com.okjudge.judge.core.display.UiError
+import com.okjudge.judge.core.evidence.PreparedImage
+import com.okjudge.judge.core.model.ClarifyRequest
+import com.okjudge.judge.core.model.ClarifyResponse
+import com.okjudge.judge.core.model.EvidenceUploadResponse
 import com.okjudge.judge.core.model.MeResponse
 import com.okjudge.judge.core.model.ServerConfig
 import com.okjudge.judge.core.model.SessionGrant
@@ -28,6 +32,7 @@ import okhttp3.CacheControl
 import okhttp3.HttpUrl
 import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody
@@ -77,6 +82,7 @@ class JudgeApi(
         val accountSec: Long = 30,
         /** Account deletion anonymizes every verdict the account owns, which can take a while. */
         val deleteSec: Long = 90,
+        val evidenceSec: Long = 120,
     )
 
     private val base: HttpUrl = baseUrl.trimEnd('/').toHttpUrl()
@@ -93,6 +99,15 @@ class JudgeApi(
         .connectTimeout(20, TimeUnit.SECONDS)
         .readTimeout(timeouts.translateSec, TimeUnit.SECONDS)
         .callTimeout(timeouts.translateSec, TimeUnit.SECONDS)
+        .build()
+
+    /** Images are read by a vision model before the answer: allow it time, never retry an upload. */
+    private val evidenceClient = client.newBuilder()
+        .connectTimeout(20, TimeUnit.SECONDS)
+        .writeTimeout(60, TimeUnit.SECONDS)
+        .readTimeout(timeouts.evidenceSec, TimeUnit.SECONDS)
+        .callTimeout(timeouts.evidenceSec, TimeUnit.SECONDS)
+        .retryOnConnectionFailure(false)
         .build()
 
     private val getClient = client.newBuilder()
@@ -132,17 +147,44 @@ class JudgeApi(
         elapsedMs = { System.nanoTime() / 1_000_000 },
     )
 
-    /** POST /api/v1/verdict asking for a 202 (RESPOND_ASYNC in lib/verdict-poll.ts). */
-    suspend fun startVerdict(request: VerdictRequest): ApiResult<VerdictSubmission> {
-        val body = WireJson.json.encodeToString(VerdictRequest.serializer(), request)
-        val req = request(url("api", "v1", "verdict"))
-            .header("Prefer", RESPOND_ASYNC)
-            .post(body.toRequestBody(JSON))
-            .build()
+    /**
+     * POST /api/v1/verdict asking for a 202 (RESPOND_ASYNC in lib/verdict-poll.ts).
+     * Premium requests carry an [idempotencyKey]: the same key with the same
+     * body replays (or joins) the verdict instead of charging again.
+     */
+    suspend fun startVerdict(request: VerdictRequest, idempotencyKey: String? = null): ApiResult<VerdictSubmission> =
+        startVerdictBody(WireJson.json.encodeToString(VerdictRequest.serializer(), request), idempotencyKey)
+
+    /** [startVerdict] with the body already encoded (the key belongs to these exact bytes). */
+    suspend fun startVerdictBody(body: String, idempotencyKey: String? = null): ApiResult<VerdictSubmission> {
+        val builder = request(url("api", "v1", "verdict")).header("Prefer", RESPOND_ASYNC)
+        idempotencyKey?.let { builder.header("Idempotency-Key", it) }
+        val req = builder.post(body.toRequestBody(JSON)).build()
         return execute(verdictClient, req) { status, text ->
             if (status == 202) VerdictSubmission.Accepted(WireJson.decodeAccepted(text))
             else VerdictSubmission.Done(WireJson.decodeVerdictResponse(text))
         }
+    }
+
+    /** POST /api/v1/clarify: up to two questions about facts the argument leaves out (premium). */
+    suspend fun clarify(argument: String, lang: AppLang): ApiResult<ClarifyResponse> {
+        val body = WireJson.json.encodeToString(ClarifyRequest.serializer(), ClarifyRequest(argument, lang.tag))
+        val req = request(url("api", "v1", "clarify")).post(body.toRequestBody(JSON)).build()
+        return execute(translateClient, req) { _, text -> WireJson.json.decodeFromString(ClarifyResponse.serializer(), text) }
+    }
+
+    /**
+     * POST /api/v1/evidence: 1-3 prepared images as multipart parts named
+     * "image". The server answers per image (by index) with a status and, for
+     * readable ones, a signed token and a preview of what it read.
+     */
+    suspend fun uploadEvidence(images: List<PreparedImage>): ApiResult<EvidenceUploadResponse> {
+        val form = MultipartBody.Builder().setType(MultipartBody.FORM)
+        images.forEachIndexed { i, img ->
+            form.addFormDataPart("image", "image-${i + 1}.${img.extension}", img.bytes.toRequestBody(img.mimeType.toMediaType()))
+        }
+        val req = request(url("api", "v1", "evidence")).post(form.build()).build()
+        return execute(evidenceClient, req) { _, text -> WireJson.json.decodeFromString(EvidenceUploadResponse.serializer(), text) }
     }
 
     /** One poll of an async verdict; [ownerToken] lets a ready answer carry the writer's state. */

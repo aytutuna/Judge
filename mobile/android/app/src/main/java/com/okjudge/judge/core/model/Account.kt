@@ -14,12 +14,37 @@ data class SignInProviders(
     val dev: Boolean = false,
 )
 
+@Serializable
+data class PricingPack(val id: String = "", val credits: Int = 0, val priceUsd: Double = 0.0)
+
+@Serializable
+data class PricingPlan(val id: String = "", val priceUsd: Double = 0.0, val fairUseCap: Int = 0, val periodDays: Int = 30)
+
+/** Prices (PricingInfo); the defaults are lib/pricing.ts, used until /config answers. */
+@Serializable
+data class PricingInfo(
+    val currency: String = "USD",
+    /** False until a payment provider is wired up: buy buttons say "Coming soon". */
+    val purchasesEnabled: Boolean = false,
+    val packs: List<PricingPack> = listOf(PricingPack("pack_10", 10, 1.99), PricingPack("pack_30", 30, 4.99)),
+    val monthly: PricingPlan = PricingPlan("monthly", 4.99, 60, 30),
+)
+
+/** Premium extras this deployment offers; absent on older servers (all off). */
+@Serializable
+data class Features(val cases: Boolean = false, val evidence: Boolean = false)
+
 /** GET /api/v1/config, the parts the app reads. */
 @Serializable
 data class ServerConfig(
     val signIn: SignInProviders = SignInProviders(),
     val premiumEnabled: Boolean = false,
-)
+    val pricing: PricingInfo = PricingInfo(),
+    val features: Features = Features(),
+) {
+    /** At least one sign-in method this app can use (signInOffered: Apple is iOS only, the dev login web only). */
+    val signInOffered: Boolean get() = signIn.google || signIn.emailCode
+}
 
 @Serializable
 data class Viewer(

@@ -62,7 +62,10 @@ import com.okjudge.judge.core.display.RestoreNames
 import com.okjudge.judge.core.display.SealSide
 import com.okjudge.judge.core.display.VerdictDisplay
 import com.okjudge.judge.core.display.Vote
+import com.okjudge.judge.core.model.AppealInfo
+import com.okjudge.judge.core.model.AppealOutcome
 import com.okjudge.judge.core.model.ArgumentMap
+import com.okjudge.judge.core.model.DisputeType
 import com.okjudge.judge.core.model.Claim
 import com.okjudge.judge.core.model.ClaimKind
 import com.okjudge.judge.core.model.CruxTrial
@@ -123,6 +126,15 @@ fun VerdictContent(
     val result = view.result
     val busy = view.status == TranslationStatus.LOADING
     Column(modifier, verticalArrangement = Arrangement.spacedBy(28.dp)) {
+        result.appeal?.let { appeal ->
+            val byA = appeal.by == "a"
+            AppealOutcomeBanner(
+                appeal = appeal,
+                confidence = result.confidence,
+                byName = if (byA) parties.nameA else parties.nameB,
+                bySelf = if (byA) parties.aIsSelf else parties.bIsSelf,
+            )
+        }
         PaperCard {
             Column(
                 Modifier.padding(start = 20.dp, end = 20.dp, top = 26.dp, bottom = 20.dp),
@@ -136,6 +148,7 @@ fun VerdictContent(
                     VerdictReveal(result, parties, restoredNames)
                     if (!result.refused) CruxBlock(result.crux)
                     if (!result.refused && result.losingSideBestPoint.isNotEmpty()) BestPoint(result.losingSideBestPoint)
+                    if (!result.refused) WouldChangeBlock(result.wouldChange.orEmpty())
                     Footnote(result, parties)
                     ActionsRow(actions)
                 }
@@ -146,8 +159,9 @@ fun VerdictContent(
                 Modifier.alpha(if (busy) 0.55f else 1f),
                 verticalArrangement = Arrangement.spacedBy(28.dp),
             ) {
+                if (result.isTwoSided) TwoSidedFacts(result, parties)
                 ArgumentMapSection(result.argumentMap, parties)
-                result.factCheck?.let { FactCheckSection(it) }
+                result.factCheck?.let { FactCheckSection(it, result.dispute) }
                 if (result.factsReliedOn.isNotEmpty()) FactsSection(result.factsReliedOn)
             }
         }
@@ -190,6 +204,18 @@ private fun CardTopRow(view: TranslationView, result: VerdictResult) {
                     style = JudgeType.micro.copy(color = Palette.ivory),
                     modifier = Modifier.clip(JudgeShapes.chip).background(Palette.ink).padding(horizontal = 10.dp, vertical = 5.dp),
                 )
+                if (result.isTwoSided) {
+                    Text(
+                        s.twoSidedBadge.uppercaseForUi(),
+                        style = JudgeType.micro.copy(color = Palette.ink2),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        modifier = Modifier
+                            .clip(JudgeShapes.chip)
+                            .border(1.dp, Palette.line2, JudgeShapes.chip)
+                            .padding(horizontal = 10.dp, vertical = 5.dp),
+                    )
+                }
             }
         }
         VoteDots(VerdictDisplay.votes(result))
@@ -609,6 +635,7 @@ private fun Footnote(result: VerdictResult, parties: PartyLabels) {
             val models = result.panel?.models.orEmpty()
             add(if (models.isNotEmpty()) "${s.panelPremium} ${VerdictDisplay.panelSummary(models, s)}" else s.panelPremium)
         }
+        VerdictDisplay.evidenceNote(result, s)?.let { add(it) }
     }
     Text(lines.joinToString("\n"), style = JudgeType.footnote, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth())
 }
@@ -779,7 +806,7 @@ private fun FactsSection(facts: List<String>) {
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-private fun FactCheckSection(check: FactCheck) {
+private fun FactCheckSection(check: FactCheck, dispute: DisputeType) {
     val s = LocalStrings.current
     val context = LocalContext.current
     // As on the web: only a "checked" result with claims gets the list; an
@@ -788,7 +815,8 @@ private fun FactCheckSection(check: FactCheck) {
     Column {
         SectionTitle(s.factcheckTitle)
         if (claims.isEmpty()) {
-            Text(if (check.status == "unavailable") s.factcheckUnavailable else s.factcheckNone, style = JudgeType.slotText)
+            val none = if (dispute == DisputeType.FACTUAL || dispute == DisputeType.MIXED) s.factcheckNoneFactual else s.factcheckNone
+            Text(if (check.status == "unavailable") s.factcheckUnavailable else none, style = JudgeType.slotText)
         } else {
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Text(s.factcheckLead, style = JudgeType.slotText, modifier = Modifier.padding(bottom = 4.dp))
@@ -802,12 +830,7 @@ private fun FactCheckSection(check: FactCheck) {
                             .padding(horizontal = 14.dp, vertical = 12.dp),
                         verticalArrangement = Arrangement.spacedBy(6.dp),
                     ) {
-                        val statusColor = when (c.status) {
-                            "supported" -> Palette.sageInk
-                            "refuted" -> Palette.danger
-                            else -> Palette.ink2
-                        }
-                        s.text("factcheck.status.${c.status}")?.let { Kicker(it, color = statusColor) }
+                        s.text("factcheck.status.${c.status}")?.let { FactStatusChip(c.status, it) }
                         Text(c.claim, style = JudgeType.slotTitle)
                         if (c.summary.isNotEmpty()) Text(c.summary, style = JudgeType.slotText.copy(color = Palette.ink2))
                         val sources = FactSources.shown(c.sources)
@@ -838,5 +861,225 @@ private fun FactCheckSection(check: FactCheck) {
                 }
             }
         }
+    }
+}
+
+/** Status chip with its glyph, so the status never relies on colour alone. */
+@Composable
+private fun FactStatusChip(status: String, label: String) {
+    val (fg, bg) = when (status) {
+        "supported" -> Palette.sageInk to Palette.sageTint
+        "refuted" -> Palette.danger to Palette.terraTint
+        "mixed" -> Palette.ink2 to Palette.strata
+        else -> Palette.ink2 to Palette.ivory2
+    }
+    Row(
+        Modifier.clip(JudgeShapes.chip).background(bg).padding(horizontal = 9.dp, vertical = 4.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(5.dp),
+    ) {
+        JudgeIcons.factStatus(status, fg)?.let { glyph -> TintedIcon(remember(status) { glyph }, 11) }
+        Text(label.uppercaseForUi(), style = JudgeType.micro.copy(color = fg))
+    }
+}
+
+// --- Two-sided verdicts and appeals ------------------------------------------------
+
+/** Display caps (the server normalizes the same; a second guard for stored rows). */
+private const val MAX_AGREED = 5
+private const val MAX_DISPUTED = 4
+private const val MAX_WOULD_CHANGE = 3
+
+/** "What would change this verdict", inside the card (WouldChangeBlock). */
+@Composable
+private fun WouldChangeBlock(items: List<String>) {
+    val list = items.filter { it.isNotBlank() }.take(MAX_WOULD_CHANGE)
+    if (list.isEmpty()) return
+    val s = LocalStrings.current
+    Column(
+        Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(18.dp))
+            .background(Palette.ivory)
+            .border(1.dp, Palette.line, RoundedCornerShape(18.dp))
+            .padding(horizontal = 16.dp, vertical = 14.dp),
+        verticalArrangement = Arrangement.spacedBy(6.dp),
+    ) {
+        Kicker(s.twoSidedWouldChange, Modifier.semantics { heading() })
+        list.forEach { item ->
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                Text("•", style = JudgeType.body.copy(color = Palette.ink2))
+                Text(item, style = JudgeType.body.copy(fontSize = 15.sp, lineHeight = 22.sp, color = Palette.ink2))
+            }
+        }
+    }
+}
+
+/** Agreed and disputed facts of a two-sided verdict, below the card (TwoSidedFacts). */
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+private fun TwoSidedFacts(result: VerdictResult, parties: PartyLabels) {
+    val s = LocalStrings.current
+    val agreed = result.agreedFacts.orEmpty().filter { it.isNotBlank() }.take(MAX_AGREED)
+    val disputed = result.disputedFacts.orEmpty().take(MAX_DISPUTED)
+    // At most one decisive marker, as the server promises.
+    val decisiveAt = disputed.indexOfFirst { it.decisive }
+    if (agreed.isEmpty() && disputed.isEmpty()) return
+    Column(verticalArrangement = Arrangement.spacedBy(28.dp)) {
+        if (agreed.isNotEmpty()) {
+            Column {
+                SectionTitle(s.twoSidedAgreed)
+                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    agreed.forEach { fact ->
+                        Row(
+                            Modifier
+                                .fillMaxWidth()
+                                .clip(RoundedCornerShape(14.dp))
+                                .background(Palette.paper)
+                                .border(1.dp, Palette.line, RoundedCornerShape(14.dp))
+                                .padding(horizontal = 14.dp, vertical = 11.dp),
+                            horizontalArrangement = Arrangement.spacedBy(10.dp),
+                        ) {
+                            Row(Modifier.padding(top = 6.dp).clearAndSetSemantics { }, horizontalArrangement = Arrangement.spacedBy((-3).dp)) {
+                                Dot(Palette.terra, 10)
+                                Dot(Palette.sageStrong, 10)
+                            }
+                            Text(fact, style = JudgeType.body.copy(fontSize = 15.sp, lineHeight = 22.5.sp, color = Palette.ink2))
+                        }
+                    }
+                }
+            }
+        }
+        if (disputed.isNotEmpty()) {
+            Column {
+                SectionTitle(s.twoSidedDisputed)
+                Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
+                    disputed.forEachIndexed { i, d ->
+                        val decisive = i == decisiveAt
+                        Column(
+                            Modifier
+                                .fillMaxWidth()
+                                .clip(RoundedCornerShape(16.dp))
+                                .background(Palette.paper)
+                                .then(
+                                    if (decisive) Modifier.dashedBorder(Palette.ink.copy(alpha = 0.4f))
+                                    else Modifier.border(1.dp, Palette.line, RoundedCornerShape(16.dp)),
+                                )
+                                .padding(horizontal = 14.dp, vertical = 12.dp),
+                            verticalArrangement = Arrangement.spacedBy(8.dp),
+                        ) {
+                            FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                                if (decisive) {
+                                    Row(
+                                        Modifier.clip(JudgeShapes.chip).background(Palette.ink).padding(horizontal = 9.dp, vertical = 4.dp),
+                                        verticalAlignment = Alignment.CenterVertically,
+                                        horizontalArrangement = Arrangement.spacedBy(4.dp),
+                                    ) {
+                                        TintedIcon(remember { JudgeIcons.bolt(Palette.ivory) }, 11)
+                                        Text(s.twoSidedDecisive.uppercaseForUi(), style = JudgeType.micro.copy(color = Palette.ivory))
+                                    }
+                                }
+                                FindingChip(findingText(d.finding, parties, s), d.finding)
+                            }
+                            Text(d.fact, style = JudgeType.slotTitle)
+                            ClaimLine(parties.nameA, d.partyA, Palette.terra)
+                            ClaimLine(parties.nameB, d.partyB, Palette.sageStrong)
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+private fun findingText(finding: String, p: PartyLabels, s: Strings): String = when (finding) {
+    "a" -> if (p.aIsSelf) s.twoSidedFindingSelf else s.twoSidedFindingA(p.nameA)
+    "b" -> if (p.bIsSelf) s.twoSidedFindingSelf else s.twoSidedFindingB(p.nameB)
+    else -> s.twoSidedFindingUnsettled
+}
+
+@Composable
+private fun FindingChip(text: String, finding: String) {
+    val (fg, bg) = when (finding) {
+        "a" -> Palette.terraInk to Palette.terraTint
+        "b" -> Palette.sageInk to Palette.sageTint
+        else -> Palette.ink2 to Palette.ivory2
+    }
+    Text(
+        text,
+        style = JudgeType.small.copy(color = fg, fontSize = 12.sp),
+        modifier = Modifier.clip(JudgeShapes.chip).background(bg).padding(horizontal = 10.dp, vertical = 4.dp),
+    )
+}
+
+@Composable
+private fun ClaimLine(name: String, claim: String, rule: Color) {
+    Row(Modifier.fillMaxWidth().height(IntrinsicSize.Min)) {
+        Box(Modifier.width(3.dp).fillMaxHeight().background(rule))
+        Column(Modifier.padding(start = 10.dp)) {
+            Text(name, style = JudgeType.micro.copy(color = Palette.ink2), maxLines = 1, overflow = TextOverflow.Ellipsis)
+            Text(claim, style = JudgeType.body.copy(fontSize = 14.sp, lineHeight = 20.sp, color = Palette.ink2))
+        }
+    }
+}
+
+/**
+ * Banner on a verdict produced by an appeal (AppealOutcomeBanner): what
+ * happened to the verdict, who added context, the confidence change and the
+ * summary (or a generic line). "Stands" stays neutral: a green tick would
+ * read as "you won".
+ */
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+fun AppealOutcomeBanner(appeal: AppealInfo, confidence: Int, byName: String, bySelf: Boolean, modifier: Modifier = Modifier) {
+    val s = LocalStrings.current
+    val outcome = appeal.appealOutcome
+    val label = when (outcome) {
+        AppealOutcome.UPHELD, AppealOutcome.UNKNOWN -> s.appealOutcomeUpheld
+        AppealOutcome.OVERTURNED -> s.appealOutcomeOverturned
+        AppealOutcome.CHANGED -> s.appealOutcomeChanged
+    }
+    val generic = when (outcome) {
+        AppealOutcome.UPHELD, AppealOutcome.UNKNOWN -> s.appealGenericUpheld
+        AppealOutcome.OVERTURNED -> s.appealGenericOverturned
+        AppealOutcome.CHANGED -> s.appealGenericChanged
+    }
+    val (fg, bg) = when (outcome) {
+        AppealOutcome.OVERTURNED -> Palette.terraInk to Palette.terraTint
+        AppealOutcome.CHANGED -> Palette.sageInk to Palette.sageTint
+        else -> Palette.ink2 to Palette.ivory2
+    }
+    val from = appeal.previousConfidence
+    Column(
+        modifier
+            .fillMaxWidth()
+            .clip(JudgeShapes.block)
+            .background(Palette.paper)
+            .border(1.dp, Palette.line2, JudgeShapes.block)
+            .semantics(mergeDescendants = true) { contentDescription = label }
+            .padding(horizontal = 16.dp, vertical = 14.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
+        FlowRow(
+            horizontalArrangement = Arrangement.spacedBy(10.dp),
+            verticalArrangement = Arrangement.spacedBy(6.dp),
+            itemVerticalAlignment = Alignment.CenterVertically,
+        ) {
+            Row(
+                Modifier.clip(JudgeShapes.chip).background(bg).padding(horizontal = 10.dp, vertical = 5.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(5.dp),
+            ) {
+                JudgeIcons.appealOutcome(outcome.raw, fg)?.let { glyph -> TintedIcon(remember(outcome) { glyph }, 12) }
+                Text(label, style = JudgeType.small.copy(color = fg))
+            }
+            Text(if (bySelf) s.appealBySelf else s.appealBy(byName), style = JudgeType.slotText.copy(color = Palette.ink2))
+            Text(
+                if (from == confidence) s.appealConfidenceSame(confidence.toString())
+                else "${s.appealConfidence(from.toString())} → $confidence/5",
+                style = JudgeType.slotText,
+            )
+        }
+        Text(appeal.summary.trim().ifEmpty { generic }, style = JudgeType.body.copy(fontSize = 15.sp, lineHeight = 22.sp, color = Palette.ink))
     }
 }

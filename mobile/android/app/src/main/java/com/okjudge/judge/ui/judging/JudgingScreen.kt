@@ -23,6 +23,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -50,7 +51,9 @@ import com.okjudge.judge.core.display.VerdictDisplay
 import com.okjudge.judge.core.model.VerdictResult
 import com.okjudge.judge.i18n.LocalStrings
 import com.okjudge.judge.ui.components.Balance
+import com.okjudge.judge.ui.components.JudgeIcons
 import com.okjudge.judge.ui.components.Kicker
+import com.okjudge.judge.ui.components.TintedIcon
 import com.okjudge.judge.ui.components.TextAction
 import com.okjudge.judge.ui.theme.JudgeType
 import com.okjudge.judge.ui.theme.Palette
@@ -69,6 +72,7 @@ fun rememberReducedMotion(): Boolean {
 object JudgingTags {
     const val CAPTION = "judging.caption"
     const val BALANCE = "judging.balance"
+    const val FACTCHECK = "judging.factcheck"
 }
 
 /**
@@ -86,6 +90,8 @@ fun JudgingScreen(
     onFinished: () -> Unit,
     onCancel: () -> Unit,
     modifier: Modifier = Modifier,
+    premium: Boolean = false,
+    showCancel: Boolean = true,
 ) {
     val s = LocalStrings.current
     val finishedCallback by rememberUpdatedState(onFinished)
@@ -165,15 +171,40 @@ fun JudgingScreen(
             liveRegion = LiveRegionMode.Polite
             contentDescription = announcement
         })
+        if (premium) FactCheckRow(done)
         ProgressBar(progress, Modifier.padding(top = 20.dp).widthIn(max = 280.dp).fillMaxWidth())
         Text(
-            s.thinkingHelper,
+            if (premium) s.thinkingPremiumHelper else s.thinkingHelper,
             style = JudgeType.slotText,
             textAlign = TextAlign.Center,
             modifier = Modifier.padding(top = 18.dp).widthIn(max = 360.dp),
         )
         Spacer(Modifier.weight(1f))
-        TextAction(s.appCancel, onCancel, Modifier.padding(bottom = 24.dp), color = Palette.ink2)
+        if (showCancel) TextAction(s.appCancel, onCancel, Modifier.padding(bottom = 24.dp), color = Palette.ink2)
+    }
+}
+
+/** Premium's web fact-check line (JudgingOverlay): in progress, then finished once the verdict is in. */
+@Composable
+private fun FactCheckRow(done: Boolean) {
+    val s = LocalStrings.current
+    val text = if (done) s.thinkingFactcheckDone else s.thinkingFactcheck
+    Row(
+        Modifier
+            .padding(top = 14.dp)
+            .testTag(JudgingTags.FACTCHECK)
+            .semantics(mergeDescendants = true) { liveRegion = LiveRegionMode.Polite },
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
+        if (done) {
+            Box(Modifier.size(16.dp).clip(RoundedCornerShape(8.dp)).background(Palette.sageInk), contentAlignment = Alignment.Center) {
+                TintedIcon(JudgeIcons.factCheck, 10)
+            }
+        } else {
+            CircularProgressIndicator(Modifier.size(14.dp), color = Palette.ink2, strokeWidth = 1.5.dp)
+        }
+        Text(text, style = JudgeType.slotText.copy(color = Palette.ink2))
     }
 }
 

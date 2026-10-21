@@ -39,7 +39,19 @@ object WireJson {
         val result = decodeResult(root["result"] ?: throw SerializationException("missing result"))
         val nameMap = decodeNameMapElement(root["name_map"])
         val replayed = (root["replayed"] as? JsonPrimitive)?.booleanOrNull ?: false
-        return VerdictOutcome(id, result, nameMap, replayed, root.string("owner_token"))
+        return VerdictOutcome(id, result, nameMap, replayed, root.string("owner_token"), decodeEntitlement(root["entitlement"]))
+    }
+
+    /** An `entitlement` field, or null when absent or unreadable (it is a hint, never required). */
+    fun decodeEntitlement(element: JsonElement?): Entitlement? {
+        val obj = element as? JsonObject ?: return null
+        return try {
+            json.decodeFromJsonElement(Entitlement.serializer(), obj)
+        } catch (_: SerializationException) {
+            null
+        } catch (_: IllegalArgumentException) {
+            null
+        }
     }
 
     /** The 202 body of an async verdict request. */
@@ -51,6 +63,7 @@ object WireJson {
             nameMap = decodeNameMapElement(root["name_map"]),
             ownerToken = root.string("owner_token"),
             replayed = (root["replayed"] as? JsonPrimitive)?.booleanOrNull ?: false,
+            entitlement = decodeEntitlement(root["entitlement"]),
         )
     }
 

@@ -44,6 +44,9 @@ object Errors {
         "invalid", "too_short", "too_long", "not_configured", "quota", "unavailable",
         "rate_limited", "daily_cap", "captcha_failed", "signin_required", "premium_required",
         "no_credits", "fair_use", "in_progress", "bad_origin", "not_found",
+        "case_closed", "case_expired", "appeal_used", "not_party", "own_case", "too_large",
+        "unsupported_media", "too_many_files", "evidence_invalid", "anonymize_failed", "removed",
+        "names_unavailable",
     )
 
     /** A server wait as a whole phrase, rounding up: minutes below 90, hours beyond. */
@@ -103,6 +106,9 @@ object Errors {
         UiError.BotCheck -> s.appTurnstileError
         UiError.Unknown -> s.errorFallback
     }
+
+    /** Account-side failures (401, 402): the entitlement on screen is stale, read /me again. */
+    fun isAccountError(error: UiError?): Boolean = error is UiError.Api && (error.status == 401 || error.status == 402)
 
     /** Whether a "Try again" button makes sense for this failure. */
     fun isRetryable(error: UiError): Boolean = when (error) {

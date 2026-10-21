@@ -84,5 +84,11 @@ class AppContainer(context: Context, val config: AppConfig = AppConfig.fromBuild
 
     val settings: SettingsStore by lazy { DataStoreSettings(appContext) }
 
-    val verdictFlow: VerdictFlow by lazy { VerdictFlow(api, botCheck, history, appScope) }
+    val verdictFlow: VerdictFlow by lazy {
+        VerdictFlow(
+            api, botCheck, history, appScope,
+            onEntitlement = { account.applyEntitlement(it) },
+            refreshAccount = { account.refresh() },
+        )
+    }
 }

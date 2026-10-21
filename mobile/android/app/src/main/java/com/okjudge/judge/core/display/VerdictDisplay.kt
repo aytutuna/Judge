@@ -84,6 +84,14 @@ object VerdictDisplay {
         return s.panelModels(parts.joinToString(" + "))
     }
 
+    /** The evidence footnote line (evidenceNote): per party on two-sided verdicts, a count otherwise. */
+    fun evidenceNote(result: VerdictResult, s: Strings): String? {
+        val used = result.evidenceUsed ?: return null
+        if (used.a + used.b == 0) return null
+        return if (result.isTwoSided) s.evidenceUsed(used.a.toString(), used.b.toString())
+        else s.evidenceUsedOne((used.a + used.b).toString())
+    }
+
     /** Clamped confidence 1..5 (ConfidenceMeter). */
     fun confidenceLevel(value: Int): Int = value.coerceIn(1, 5)
 

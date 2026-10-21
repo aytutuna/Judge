@@ -53,6 +53,11 @@ import com.okjudge.judge.ui.history.HistoryScreen
 import com.okjudge.judge.ui.history.HistoryViewModel
 import com.okjudge.judge.ui.home.HomeScreen
 import com.okjudge.judge.ui.home.HomeViewModel
+import com.okjudge.judge.ui.home.Submitted
+import com.okjudge.judge.ui.premium.ClarifyScreen
+import com.okjudge.judge.ui.premium.PricingScreen
+import com.okjudge.judge.core.model.PricingInfo
+import com.okjudge.judge.core.premium.Tier
 import com.okjudge.judge.ui.judging.JudgingScreen
 import com.okjudge.judge.ui.judging.rememberReducedMotion
 import com.okjudge.judge.ui.settings.SettingsScreen
@@ -72,6 +77,8 @@ import kotlinx.serialization.Serializable
 @Serializable data class VerdictKey(val id: String, val fresh: Boolean) : NavKey
 @Serializable data object HistoryKey : NavKey
 @Serializable data object SettingsKey : NavKey
+@Serializable data object ClarifyKey : NavKey
+@Serializable data object PricingKey : NavKey
 
 /** Sign-in; [thenVerdict] when it was opened by "Get the verdict", which goes on after signing in. */
 @Serializable data class SignInKey(val thenVerdict: Boolean) : NavKey
@@ -100,7 +107,21 @@ fun JudgeRoot(container: AppContainer) {
             val account = container.account
             val snackbar = remember { SnackbarHostState() }
             val currentStrings by rememberUpdatedState(strings)
+            LaunchedEffect(container.verdictFlow) {
+                // Premium moves on by itself: questions first, then the judging screen.
+                container.verdictFlow.navigation.collect { nav ->
+                    when (nav) {
+                        VerdictFlow.Nav.CLARIFY -> if (backStack.none { it is ClarifyKey }) backStack.add(ClarifyKey)
+                        VerdictFlow.Nav.JUDGING -> {
+                            backStack.removeAll { it is ClarifyKey }
+                            if (backStack.none { it is JudgingKey }) backStack.add(JudgingKey)
+                        }
+                    }
+                }
+            }
             LaunchedEffect(account) {
+                // The tier switch and the pricing screen read /config.
+                account.loadProviders()
                 // A session that ended on the server while the app was closed shows up here.
                 launch { account.refresh() }
                 account.notices.collect { notice ->
@@ -126,7 +147,7 @@ fun JudgeRoot(container: AppContainer) {
                     }
                 },
                 bottomBar = {
-                    if (top !is JudgingKey && top !is SignInKey) {
+                    if (top !is JudgingKey && top !is SignInKey && top !is ClarifyKey) {
                         BottomBar(tab) { selected ->
                             backStack.resetTo(
                                 when (selected) {
@@ -149,7 +170,16 @@ fun JudgeRoot(container: AppContainer) {
                     ),
                     entryProvider = entryProvider {
                         entry<HomeKey> {
-                            val vm = viewModel { HomeViewModel(createSavedStateHandle(), container.settings, container.verdictFlow) }
+                            val vm = viewModel {
+                                HomeViewModel(
+                                    createSavedStateHandle(),
+                                    container.settings,
+                                    container.verdictFlow,
+                                    accountState = account.state,
+                                    providers = account.providers,
+                                    uploadEvidence = container.api::uploadEvidence,
+                                )
+                            }
                             val state by vm.state.collectAsStateWithLifecycle()
                             LaunchedEffect(clearDraft) {
                                 if (clearDraft) {
@@ -160,7 +190,7 @@ fun JudgeRoot(container: AppContainer) {
                             LaunchedEffect(submitAfterSignIn) {
                                 if (submitAfterSignIn) {
                                     submitAfterSignIn = false
-                                    if (account.isSignedIn && vm.submit(lang)) backStack.add(JudgingKey)
+                                    if (account.isSignedIn && vm.submit(lang) == Submitted.JUDGING) backStack.add(JudgingKey)
                                 }
                             }
                             HomeScreen(
@@ -174,13 +204,19 @@ fun JudgeRoot(container: AppContainer) {
                                         if (state.canSubmit && backStack.lastOrNull() !is SignInKey) {
                                             backStack.add(SignInKey(thenVerdict = true))
                                         }
-                                    } else if (vm.submit(lang)) {
+                                    } else if (vm.submit(lang) == Submitted.JUDGING) {
                                         backStack.add(JudgingKey)
                                     }
                                 },
                                 onDismissError = vm::dismissError,
                                 onToggleLang = toggleLang,
                                 onOpenPrivacy = { openLink(context, "${container.config.shareBaseUrl.trimEnd('/')}/privacy") },
+                                onTier = vm::onTier,
+                                onPremiumIntent = { vm.onTier(Tier.PREMIUM) },
+                                onSignIn = { if (backStack.lastOrNull() !is SignInKey) backStack.add(SignInKey(thenVerdict = false)) },
+                                onPricing = { if (backStack.lastOrNull() !is PricingKey) backStack.add(PricingKey) },
+                                onAddEvidence = vm::onAddEvidence,
+                                onRemoveEvidence = vm::onRemoveEvidence,
                             )
                         }
                         entry<JudgingKey> {
@@ -191,6 +227,51 @@ fun JudgeRoot(container: AppContainer) {
                                     backStack.add(VerdictKey(id, fresh = true))
                                 },
                                 onLeave = { backStack.removeAll { it is JudgingKey } },
+                            )
+                        }
+                        entry<ClarifyKey> {
+                            val step by container.verdictFlow.premiumStep.collectAsStateWithLifecycle()
+                            val clarify = step as? VerdictFlow.PremiumStep.Clarify
+                            var answers by rememberSaveable { mutableStateOf(mapOf<String, String>()) }
+                            LaunchedEffect(clarify == null) {
+                                // Nothing to ask (e.g. after the process was restarted): back to the form.
+                                if (clarify == null) backStack.removeAll { it is ClarifyKey }
+                            }
+                            if (clarify != null) {
+                                ClarifyScreen(
+                                    questions = clarify.questions,
+                                    answers = answers,
+                                    onAnswer = { id, value -> answers = answers + (id to value) },
+                                    onSubmit = { container.verdictFlow.finishClarify(answers, skip = false) },
+                                    onSkip = { container.verdictFlow.finishClarify(answers, skip = true) },
+                                    onBack = {
+                                        container.verdictFlow.leaveClarify()
+                                        backStack.removeAll { it is ClarifyKey }
+                                    },
+                                    onToggleLang = toggleLang,
+                                )
+                            }
+                        }
+                        entry<PricingKey> {
+                            val accountState by account.state.collectAsStateWithLifecycle()
+                            val providers by account.providers.collectAsStateWithLifecycle()
+                            val config = (providers as? Account.Providers.Ready)?.config
+                            val signedIn = accountState as? Account.State.SignedIn
+                            LaunchedEffect(Unit) { account.refresh() }
+                            PricingScreen(
+                                pricing = config?.pricing ?: PricingInfo(),
+                                premiumEnabled = when (providers) {
+                                    is Account.Providers.Ready -> config?.premiumEnabled == true
+                                    Account.Providers.Failed -> false
+                                    Account.Providers.Loading -> null
+                                },
+                                features = config?.features,
+                                signedIn = signedIn != null,
+                                signInOffered = config?.signInOffered == true,
+                                entitlement = signedIn?.me?.entitlement,
+                                onBack = { backStack.removeAll { it is PricingKey } },
+                                onSignIn = { if (backStack.lastOrNull() !is SignInKey) backStack.add(SignInKey(thenVerdict = false)) },
+                                onToggleLang = toggleLang,
                             )
                         }
                         entry<VerdictKey> { key ->
@@ -234,6 +315,7 @@ fun JudgeRoot(container: AppContainer) {
                                 account = accountState,
                                 accountBusy = accountBusy,
                                 onSignIn = { if (backStack.lastOrNull() !is SignInKey) backStack.add(SignInKey(thenVerdict = false)) },
+                                onOpenPricing = { if (backStack.lastOrNull() !is PricingKey) backStack.add(PricingKey) },
                                 // App scope: leaving the screen must not stop a sign-out or deletion halfway.
                                 onSignOut = { container.appScope.launch { account.signOut() } },
                                 onDeleteAccount = { container.appScope.launch { account.deleteAccount() } },
@@ -277,6 +359,9 @@ private fun JudgingEntry(flow: VerdictFlow, onDone: (String) -> Unit, onLeave: (
     val state by flow.state.collectAsStateWithLifecycle()
     val reduced = rememberReducedMotion()
     val startedAt = remember { (state as? VerdictFlow.State.Running)?.startedAt ?: System.currentTimeMillis() }
+    val premium = remember {
+        (state as? VerdictFlow.State.Running)?.premium ?: ((state as? VerdictFlow.State.Succeeded)?.outcome?.result?.result?.premium == true)
+    }
     val current = state
     LaunchedEffect(current) {
         when (current) {
@@ -294,6 +379,7 @@ private fun JudgingEntry(flow: VerdictFlow, onDone: (String) -> Unit, onLeave: (
         result = outcome?.result?.result,
         startedAt = startedAt,
         reducedMotion = reduced,
+        premium = premium,
         onFinished = {
             if (outcome != null) {
                 flow.acknowledge()

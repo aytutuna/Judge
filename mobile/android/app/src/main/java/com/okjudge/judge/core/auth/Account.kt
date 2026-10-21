@@ -5,6 +5,7 @@ import com.okjudge.judge.core.api.ApiResult
 import com.okjudge.judge.core.api.JudgeApi
 import com.okjudge.judge.core.api.TokenStore
 import com.okjudge.judge.core.display.UiError
+import com.okjudge.judge.core.model.Entitlement
 import com.okjudge.judge.core.model.MeResponse
 import com.okjudge.judge.core.model.ServerConfig
 import com.okjudge.judge.core.model.SessionGrant
@@ -124,6 +125,14 @@ class Account(
 
     fun refreshInBackground() {
         scope.launch { refresh() }
+    }
+
+    /** A balance a premium response carried (applyEntitlement): shown at once, before /me is read again. */
+    fun applyEntitlement(entitlement: Entitlement) {
+        val current = _state.value as? State.SignedIn ?: return
+        val me = current.me ?: return
+        if (me.user == null) return
+        _state.value = current.copy(me = me.copy(entitlement = entitlement))
     }
 
     suspend fun signInWithGoogle(host: Context): SignInResult =

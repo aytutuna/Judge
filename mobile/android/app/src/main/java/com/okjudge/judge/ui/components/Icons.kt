@@ -96,4 +96,46 @@ object JudgeIcons {
     )
 
     fun back(color: Color) = icon("back", 16f, P("M10 3 5 8l5 5", stroke = color, width = 1.8f))
+
+    /** Premium's four-point spark (PremiumSpark). */
+    fun spark(color: Color) = icon("spark", 12f, P("M6 0.8 7.3 4.7 11.2 6 7.3 7.3 6 11.2 4.7 7.3 0.8 6 4.7 4.7z", fill = color))
+
+    fun lock(color: Color) = icon(
+        "lock", 12f,
+        P("M3.8 5.3h4.4a1.3 1.3 0 0 1 1.3 1.3v2.6a1.3 1.3 0 0 1-1.3 1.3H3.8a1.3 1.3 0 0 1-1.3-1.3V6.6a1.3 1.3 0 0 1 1.3-1.3z", fill = color),
+        P("M4.2 5.3V4a1.8 1.8 0 0 1 3.6 0v1.3", stroke = color, width = 1.3f),
+    )
+
+    fun image(color: Color) = icon(
+        "image", 20f,
+        P("M5 3.5h10a2.5 2.5 0 0 1 2.5 2.5v8a2.5 2.5 0 0 1-2.5 2.5H5A2.5 2.5 0 0 1 2.5 14V6A2.5 2.5 0 0 1 5 3.5z", stroke = color, width = 1.5f),
+        P("M5.6 8a1.6 1.6 0 1 0 3.2 0a1.6 1.6 0 1 0 -3.2 0", fill = color),
+        P("m3.5 14.5 4.2-4 3 2.6 2.4-2 3.4 3.4", stroke = color, width = 1.5f),
+    )
+
+    /** Fact-check status glyphs (StatusGlyph in components/FactCheckList.tsx). */
+    fun factStatus(status: String, color: Color): ImageVector? = when (status) {
+        "supported" -> icon("supported", 12f, P("M2.5 6.3 5 8.6 9.6 3.6", stroke = color, width = 1.7f))
+        "refuted" -> icon("refuted", 12f, P("M3.3 3.3l5.4 5.4M8.7 3.3 3.3 8.7", stroke = color, width = 1.7f))
+        "mixed" -> icon("mixed", 12f, P("M2.8 6h6.4", stroke = color, width = 1.7f))
+        "unverified" -> icon(
+            "unverified", 12f,
+            P("M4.4 4.4a1.7 1.7 0 1 1 2.4 1.5c-.5.3-.8.6-.8 1.2", stroke = color, width = 1.7f),
+            P("M5.2 9.2a0.8 0.8 0 1 0 1.6 0a0.8 0.8 0 1 0 -1.6 0", fill = color),
+        )
+        else -> null
+    }
+
+    /** Appeal outcome glyphs (OutcomeGlyph in components/case/AppealOutcome.tsx). */
+    fun appealOutcome(outcome: String, color: Color): ImageVector? = when (outcome) {
+        "upheld" -> icon("upheld", 12f, P("M2.5 4.6h7M2.5 7.4h7", stroke = color, width = 1.7f))
+        "overturned" -> icon("overturned", 12f, P("M2.5 4.5h6.5l-2-2M9.5 7.5H3l2 2", stroke = color, width = 1.7f))
+        "changed" -> icon("changed", 12f, P("M2.5 6h7M6.5 3l3 3-3 3", stroke = color, width = 1.7f))
+        else -> null
+    }
+
+    /** The decisive dispute's bolt (DecisiveGlyph). */
+    fun bolt(color: Color) = icon("bolt", 12f, P("M6.6 1 2.5 7h3L5 11l4.5-6.2h-3z", fill = color))
+
+    fun external(color: Color) = icon("external", 10f, P("M4 2h4v4M8 2 3 7", stroke = color, width = 1.4f))
 }
