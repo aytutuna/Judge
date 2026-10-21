@@ -1,6 +1,9 @@
 package com.okjudge.judge.core.api
 
 import com.okjudge.judge.core.display.UiError
+import com.okjudge.judge.core.model.MeResponse
+import com.okjudge.judge.core.model.ServerConfig
+import com.okjudge.judge.core.model.SessionGrant
 import com.okjudge.judge.core.model.StoredVerdict
 import com.okjudge.judge.core.model.TranslateOutcome
 import com.okjudge.judge.core.model.VerdictAccepted
@@ -18,6 +21,9 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.SerializationException
+import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.buildJsonObject
+import kotlinx.serialization.json.put
 import okhttp3.CacheControl
 import okhttp3.HttpUrl
 import okhttp3.HttpUrl.Companion.toHttpUrl
@@ -37,7 +43,8 @@ sealed interface ApiResult<out T> {
 }
 
 /**
- * Client for the phase-1 endpoints of /api/v1. No cookies, no automatic
+ * Client for /api/v1 and the Better Auth endpoints the app signs in with
+ * (/api/auth). No cookies, no automatic
  * retries of the verdict POST (a retry would cost the user's rate limit and
  * a second verdict), and per-call timeouts sized to the server's real work.
  *
@@ -45,6 +52,10 @@ sealed interface ApiResult<out T> {
  * answers 202 once the text is anonymized and the app polls the verdict id
  * per [pollPolicy]. A server that answers 200 with the verdict (older ones)
  * still works; that call can legitimately take about 285 s.
+ *
+ * Every call carries `Authorization: Bearer` while [tokenStore] holds a
+ * session; a 401 `signin_required` to such a call clears it and calls
+ * [onSignedOut].
  *
  * Main-safe: the call, the body read and the JSON decode all run on [io], so
  * callers on Dispatchers.Main never touch the socket.
@@ -59,7 +70,14 @@ class JudgeApi(
     private val io: CoroutineDispatcher = Dispatchers.IO,
     private val pollPolicy: PollPolicy = PollPolicy(),
 ) {
-    data class Timeouts(val verdictSec: Long = 310, val translateSec: Long = 90, val getSec: Long = 20)
+    data class Timeouts(
+        val verdictSec: Long = 310,
+        val translateSec: Long = 90,
+        val getSec: Long = 20,
+        val accountSec: Long = 30,
+        /** Account deletion anonymizes every verdict the account owns, which can take a while. */
+        val deleteSec: Long = 90,
+    )
 
     private val base: HttpUrl = baseUrl.trimEnd('/').toHttpUrl()
 
@@ -81,6 +99,18 @@ class JudgeApi(
         .connectTimeout(15, TimeUnit.SECONDS)
         .readTimeout(timeouts.getSec, TimeUnit.SECONDS)
         .callTimeout(timeouts.getSec, TimeUnit.SECONDS)
+        .build()
+
+    private val accountClient = client.newBuilder()
+        .connectTimeout(15, TimeUnit.SECONDS)
+        .readTimeout(timeouts.accountSec, TimeUnit.SECONDS)
+        .callTimeout(timeouts.accountSec, TimeUnit.SECONDS)
+        .retryOnConnectionFailure(false)
+        .build()
+
+    private val deleteClient = accountClient.newBuilder()
+        .readTimeout(timeouts.deleteSec, TimeUnit.SECONDS)
+        .callTimeout(timeouts.deleteSec, TimeUnit.SECONDS)
         .build()
 
     /** The whole verdict: the POST, then polling when the server accepted it as a job. */
@@ -139,6 +169,68 @@ class JudgeApi(
         return execute(getClient, request(url).get().build()) { _, text -> WireJson.decodeStoredVerdict(text) }
     }
 
+    /** GET /api/v1/config: which sign-in methods the server offers. */
+    suspend fun config(): ApiResult<ServerConfig> {
+        val req = request(url("api", "v1", "config")).cacheControl(CacheControl.FORCE_NETWORK).get().build()
+        return execute(getClient, req) { _, text -> WireJson.json.decodeFromString(ServerConfig.serializer(), text) }
+    }
+
+    /** GET /api/v1/me: the signed-in account and its entitlement (nulls without a session). */
+    suspend fun me(): ApiResult<MeResponse> {
+        val req = request(url("api", "v1", "me")).cacheControl(CacheControl.FORCE_NETWORK).get().build()
+        return execute(getClient, req) { _, text -> WireJson.json.decodeFromString(MeResponse.serializer(), text) }
+    }
+
+    /** POST /api/auth/sign-in/social with a Google ID token obtained on the device. */
+    suspend fun signInWithGoogle(idToken: String): ApiResult<SessionGrant> = postAuth(
+        url("api", "auth", "sign-in", "social"),
+        buildJsonObject {
+            put("provider", "google")
+            put("idToken", buildJsonObject { put("token", idToken) })
+        },
+    ) { _, text -> decodeGrant(text) }
+
+    /** POST /api/auth/email-otp/send-verification-otp: emails a sign-in code in [lang]. */
+    suspend fun sendSignInCode(email: String, lang: AppLang): ApiResult<Unit> {
+        val url = url("api", "auth", "email-otp", "send-verification-otp").newBuilder()
+            .addQueryParameter("lang", lang.tag)
+            .build()
+        return postAuth(url, buildJsonObject {
+            put("email", email)
+            put("type", "sign-in")
+        }) { _, _ -> }
+    }
+
+    /** POST /api/auth/sign-in/email-otp: trades the emailed code for a session. */
+    suspend fun signInWithCode(email: String, otp: String): ApiResult<SessionGrant> = postAuth(
+        url("api", "auth", "sign-in", "email-otp"),
+        buildJsonObject {
+            put("email", email)
+            put("otp", otp)
+        },
+    ) { _, text -> decodeGrant(text) }
+
+    /** POST /api/auth/sign-out: ends the session on the server. */
+    suspend fun signOut(): ApiResult<Unit> = postAuth(url("api", "auth", "sign-out"), JsonObject(emptyMap())) { _, _ -> }
+
+    /** DELETE /api/v1/me: deletes the account (the server keeps verdict rows, anonymized). */
+    suspend fun deleteAccount(): ApiResult<Unit> {
+        val body = buildJsonObject { put("confirm", "delete") }.toString()
+        val req = request(url("api", "v1", "me")).delete(body.toRequestBody(JSON)).build()
+        return execute(deleteClient, req) { _, _ -> }
+    }
+
+    private suspend fun <T> postAuth(url: HttpUrl, body: JsonObject, decode: (status: Int, body: String) -> T): ApiResult<T> {
+        val req = request(url).post(body.toString().toRequestBody(JSON)).build()
+        return execute(accountClient, req, decode)
+    }
+
+    private fun decodeGrant(text: String): SessionGrant {
+        val grant = WireJson.json.decodeFromString(SessionGrant.serializer(), text)
+        if (grant.token.isBlank()) throw SerializationException("empty token")
+        return grant
+    }
+
     private fun url(vararg segments: String): HttpUrl =
         base.newBuilder().apply { segments.forEach { addPathSegment(it) } }.build()
 
@@ -152,7 +244,7 @@ class JudgeApi(
     }
 
     private suspend fun <T> execute(client: OkHttpClient, request: Request, decode: (status: Int, body: String) -> T): ApiResult<T> {
-        val hadToken = request.header("Authorization") != null
+        val sentAuth = request.header("Authorization")
         val result = try {
             withContext(io) { exchange(client, request, decode) }
         } catch (e: CancellationException) {
@@ -163,7 +255,9 @@ class JudgeApi(
         }
         // Sign-out runs back on the caller's dispatcher: it may touch UI state.
         val error = (result as? ApiResult.Err)?.error as? UiError.Api
-        if (hadToken && error?.status == 401 && error.code == "signin_required") {
+        // Only the session this request used ends (not one from a sign-in since).
+        val stillCurrent = sentAuth != null && tokenStore.get()?.let { "Bearer $it" } == sentAuth
+        if (stillCurrent && error?.status == 401 && error.code == "signin_required") {
             tokenStore.clear()
             onSignedOut()
         }

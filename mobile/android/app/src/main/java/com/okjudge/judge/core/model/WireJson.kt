@@ -107,7 +107,8 @@ object WireJson {
         return try {
             val obj = json.parseToJsonElement(body) as? JsonObject ?: return null
             ApiErrorBody(
-                error = obj.string("error"),
+                // Better Auth (/api/auth/*) says `message` where /api/v1 says `error`.
+                error = obj.string("error") ?: obj.string("message"),
                 code = obj.string("code"),
                 retryAfterSec = (obj["retryAfterSec"] as? JsonPrimitive)?.takeIf { !it.isString }?.contentOrNull?.toDoubleOrNull(),
                 resetsAt = obj.string("resetsAt"),

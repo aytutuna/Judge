@@ -10,6 +10,9 @@ import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Snackbar
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -18,6 +21,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -36,11 +40,13 @@ import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
 import com.okjudge.judge.AppContainer
+import com.okjudge.judge.core.auth.Account
 import com.okjudge.judge.core.session.VerdictFlow
 import com.okjudge.judge.i18n.AppLang
 import com.okjudge.judge.i18n.LangPref
 import com.okjudge.judge.i18n.LocalLang
 import com.okjudge.judge.i18n.LocalStrings
+import com.okjudge.judge.i18n.Strings
 import com.okjudge.judge.i18n.deviceLanguageTag
 import com.okjudge.judge.ui.components.JudgeIcons
 import com.okjudge.judge.ui.history.HistoryScreen
@@ -50,6 +56,9 @@ import com.okjudge.judge.ui.home.HomeViewModel
 import com.okjudge.judge.ui.judging.JudgingScreen
 import com.okjudge.judge.ui.judging.rememberReducedMotion
 import com.okjudge.judge.ui.settings.SettingsScreen
+import com.okjudge.judge.ui.signin.SignInActions
+import com.okjudge.judge.ui.signin.SignInScreen
+import com.okjudge.judge.ui.signin.SignInViewModel
 import com.okjudge.judge.ui.theme.JudgeTheme
 import com.okjudge.judge.ui.theme.JudgeType
 import com.okjudge.judge.ui.theme.Palette
@@ -64,9 +73,12 @@ import kotlinx.serialization.Serializable
 @Serializable data object HistoryKey : NavKey
 @Serializable data object SettingsKey : NavKey
 
+/** Sign-in; [thenVerdict] when it was opened by "Get the verdict", which goes on after signing in. */
+@Serializable data class SignInKey(val thenVerdict: Boolean) : NavKey
+
 private enum class Tab { NEW, HISTORY, SETTINGS }
 
-/** App shell: language, theme, the back stack and the bottom bar. */
+/** App shell: language, theme, the back stack, the bottom bar and the sign-in gate. */
 @Composable
 fun JudgeRoot(container: AppContainer) {
     val langPref by container.settings.langPref.collectAsStateWithLifecycle(initialValue = LangPref.SYSTEM)
@@ -83,7 +95,22 @@ fun JudgeRoot(container: AppContainer) {
         JudgeTheme {
             val backStack = rememberNavBackStack(HomeKey)
             var clearDraft by rememberSaveable { mutableStateOf(false) }
+            var submitAfterSignIn by rememberSaveable { mutableStateOf(false) }
             val context = LocalContext.current
+            val account = container.account
+            val snackbar = remember { SnackbarHostState() }
+            val currentStrings by rememberUpdatedState(strings)
+            LaunchedEffect(account) {
+                // A session that ended on the server while the app was closed shows up here.
+                launch { account.refresh() }
+                account.notices.collect { notice ->
+                    if (notice == Account.Notice.SESSION_EXPIRED) {
+                        val onTop = backStack.lastOrNull()
+                        if (onTop !is SignInKey && onTop !is JudgingKey) backStack.add(SignInKey(thenVerdict = false))
+                    }
+                    launch { snackbar.showSnackbar(noticeText(currentStrings, notice)) }
+                }
+            }
             val top = backStack.lastOrNull()
             val tab = when {
                 backStack.any { it is HistoryKey } -> Tab.HISTORY
@@ -93,8 +120,13 @@ fun JudgeRoot(container: AppContainer) {
 
             Scaffold(
                 containerColor = Palette.ivory,
+                snackbarHost = {
+                    SnackbarHost(snackbar) { data ->
+                        Snackbar(data, containerColor = Palette.ink, contentColor = Palette.ivory)
+                    }
+                },
                 bottomBar = {
-                    if (top !is JudgingKey) {
+                    if (top !is JudgingKey && top !is SignInKey) {
                         BottomBar(tab) { selected ->
                             backStack.resetTo(
                                 when (selected) {
@@ -125,12 +157,27 @@ fun JudgeRoot(container: AppContainer) {
                                     clearDraft = false
                                 }
                             }
+                            LaunchedEffect(submitAfterSignIn) {
+                                if (submitAfterSignIn) {
+                                    submitAfterSignIn = false
+                                    if (account.isSignedIn && vm.submit(lang)) backStack.add(JudgingKey)
+                                }
+                            }
                             HomeScreen(
                                 state = state,
                                 onArgumentChange = vm::onArgumentChange,
                                 onExample = vm::onExample,
                                 onPreset = vm::onPreset,
-                                onSubmit = { if (vm.submit(lang)) backStack.add(JudgingKey) },
+                                onSubmit = {
+                                    // Every verdict needs an account: sign in first, then go on.
+                                    if (!account.isSignedIn) {
+                                        if (state.canSubmit && backStack.lastOrNull() !is SignInKey) {
+                                            backStack.add(SignInKey(thenVerdict = true))
+                                        }
+                                    } else if (vm.submit(lang)) {
+                                        backStack.add(JudgingKey)
+                                    }
+                                },
                                 onDismissError = vm::dismissError,
                                 onToggleLang = toggleLang,
                                 onOpenPrivacy = { openLink(context, "${container.config.shareBaseUrl.trimEnd('/')}/privacy") },
@@ -174,6 +221,9 @@ fun JudgeRoot(container: AppContainer) {
                             )
                         }
                         entry<SettingsKey> {
+                            val accountState by account.state.collectAsStateWithLifecycle()
+                            val accountBusy by account.working.collectAsStateWithLifecycle()
+                            LaunchedEffect(Unit) { account.refresh() }
                             SettingsScreen(
                                 langPref = langPref,
                                 versionName = container.config.versionName,
@@ -181,6 +231,38 @@ fun JudgeRoot(container: AppContainer) {
                                 onToggleLang = toggleLang,
                                 onOpenLink = { openLink(context, it) },
                                 siteBaseUrl = container.config.shareBaseUrl,
+                                account = accountState,
+                                accountBusy = accountBusy,
+                                onSignIn = { if (backStack.lastOrNull() !is SignInKey) backStack.add(SignInKey(thenVerdict = false)) },
+                                // App scope: leaving the screen must not stop a sign-out or deletion halfway.
+                                onSignOut = { container.appScope.launch { account.signOut() } },
+                                onDeleteAccount = { container.appScope.launch { account.deleteAccount() } },
+                            )
+                        }
+                        entry<SignInKey> { key ->
+                            val vm = viewModel { SignInViewModel(account) }
+                            val state by vm.state.collectAsStateWithLifecycle()
+                            LaunchedEffect(state.done) {
+                                if (state.done) {
+                                    backStack.removeAll { it is SignInKey }
+                                    if (key.thenVerdict) submitAfterSignIn = true
+                                }
+                            }
+                            SignInScreen(
+                                state = state,
+                                onBack = { backStack.removeAll { it is SignInKey } },
+                                onToggleLang = toggleLang,
+                                actions = SignInActions(
+                                    onGoogle = { vm.google(context) },
+                                    onEmailChange = vm::onEmailChange,
+                                    onRequestCode = { vm.requestCode(lang) },
+                                    onCodeChange = vm::onCodeChange,
+                                    onSubmitCode = vm::submitCode,
+                                    onResend = { vm.resend(lang) },
+                                    onChangeEmail = vm::changeEmail,
+                                    onRetryProviders = vm::retryProviders,
+                                    onOpenPrivacy = { openLink(context, "${container.config.shareBaseUrl.trimEnd('/')}/privacy") },
+                                ),
                             )
                         }
                     },
@@ -250,6 +332,13 @@ private fun BottomBar(selected: Tab, onSelect: (Tab) -> Unit) {
             )
         }
     }
+}
+
+private fun noticeText(s: Strings, notice: Account.Notice): String = when (notice) {
+    Account.Notice.SIGNED_OUT -> s.appAccountSignedOut
+    Account.Notice.SESSION_EXPIRED -> s.appAccountSessionExpired
+    Account.Notice.DELETED -> s.appAccountDeleted
+    Account.Notice.DELETE_FAILED -> s.accountDeleteFailed
 }
 
 private fun NavBackStack<NavKey>.resetTo(keys: List<NavKey>) {

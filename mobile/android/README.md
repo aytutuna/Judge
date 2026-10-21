@@ -1,7 +1,23 @@
 # Judge for Android
 
-Kotlin + Jetpack Compose, phase 1 (no sign-in). Package `com.okjudge.judge`
-(debug builds add `.debug`).
+Kotlin + Jetpack Compose. Package `com.okjudge.judge` (debug builds add
+`.debug`).
+
+## Sign-in
+
+Every verdict needs an account: "Get the verdict" opens sign-in when signed
+out and goes on to the verdict afterwards. Methods follow `GET /api/v1/config`
+(`signIn.google`, `signIn.emailCode`); Apple is iOS only and never shown here.
+
+- Google: Credential Manager ("Sign in with Google") returns an ID token for
+  the web client id (`GOOGLE_SERVER_CLIENT_ID`), traded at
+  `POST /api/auth/sign-in/social`.
+- Email: a six-digit code (`/api/auth/email-otp/send-verification-otp`, then
+  `/api/auth/sign-in/email-otp`).
+- The session token is sent as `Authorization: Bearer` and stored AES-GCM
+  encrypted with an Android Keystore key (`core/auth/KeystoreTokenStore.kt`).
+  A 401 `signin_required`, or `/api/v1/me` answering without a user, ends the
+  session. Sign-out and account deletion never touch the history on the phone.
 
 ## Build
 
@@ -25,6 +41,7 @@ Toolchain: Gradle 9.8.2, AGP 9.4.1 (built-in Kotlin), Kotlin 2.4.21, KSP
 | `judge.apiBaseUrl` | `https://okjudge.com` | Debug API base (release is always production) |
 | `judge.shareBaseUrl` | API base | `/v/<id>` share links |
 | `judge.turnstileSiteKey` | empty | Public Turnstile key; empty disables the bot check (debug only: release packaging fails without it) |
+| `judge.googleServerClientId` | Judge's web client id | OAuth client id Google issues ID tokens for (public) |
 
 Local dev server: `-Pjudge.apiBaseUrl=http://10.0.2.2:3000` (emulator) or
 `http://localhost:3000` with `adb reverse tcp:3000 tcp:3000`. Debug builds allow

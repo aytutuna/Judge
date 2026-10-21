@@ -13,9 +13,17 @@ import androidx.compose.ui.test.onRoot
 import androidx.compose.ui.unit.dp
 import com.github.takahirom.roborazzi.captureRoboImage
 import com.okjudge.judge.Fixtures
+import com.okjudge.judge.core.auth.Account
+import com.okjudge.judge.core.auth.SignInError
 import com.okjudge.judge.core.data.SavedVerdict
 import com.okjudge.judge.core.display.Preset
 import com.okjudge.judge.core.display.UiError
+import com.okjudge.judge.core.model.Entitlement
+import com.okjudge.judge.core.model.MeResponse
+import com.okjudge.judge.core.model.ServerConfig
+import com.okjudge.judge.core.model.SignInProviders
+import com.okjudge.judge.core.model.SubscriptionView
+import com.okjudge.judge.core.model.Viewer
 import com.okjudge.judge.i18n.AppLang
 import com.okjudge.judge.i18n.LangPref
 import com.okjudge.judge.ui.components.TopBar
@@ -24,6 +32,10 @@ import com.okjudge.judge.ui.home.HomeScreen
 import com.okjudge.judge.ui.home.HomeUiState
 import com.okjudge.judge.ui.judging.JudgingScreen
 import com.okjudge.judge.ui.settings.SettingsScreen
+import com.okjudge.judge.ui.signin.SignInActions
+import com.okjudge.judge.ui.signin.SignInScreen
+import com.okjudge.judge.ui.signin.SignInStep
+import com.okjudge.judge.ui.signin.SignInUiState
 import com.okjudge.judge.ui.verdict.TranslationStatus
 import org.junit.Rule
 import org.junit.Test
@@ -141,6 +153,45 @@ class ScreenshotsTest {
     @Test
     fun settings_tr() = capture("settings_tr") {
         Themed(AppLang.TR) { SettingsScreen(LangPref.SYSTEM, "0.1.0", {}, {}, {}, "https://okjudge.com") }
+    }
+
+    @Test
+    fun settings_signedIn_en() = capture("settings_signed_in_en", tall = true) {
+        val me = MeResponse(
+            user = Viewer(id = "u1", email = "ada@example.com", name = "Ada"),
+            entitlement = Entitlement(
+                canUsePremium = true,
+                credits = 3,
+                subscription = SubscriptionView(periodEnd = "2026-11-18T12:00:00.000Z", willRenew = true, used = 12, cap = 100),
+            ),
+        )
+        Themed(AppLang.EN) {
+            SettingsScreen(LangPref.SYSTEM, "0.1.0", {}, {}, {}, "https://okjudge.com", account = Account.State.SignedIn(me))
+        }
+    }
+
+    private val bothProviders = Account.Providers.Ready(ServerConfig(SignInProviders(apple = true, google = true, email = true, emailCode = true)))
+
+    @Test
+    fun signin_en() = capture("signin_en") {
+        Themed(AppLang.EN) { SignInScreen(SignInUiState(providers = bothProviders), onBack = {}, onToggleLang = {}, actions = SignInActions()) }
+    }
+
+    @Test
+    fun signin_tr() = capture("signin_tr") {
+        Themed(AppLang.TR) { SignInScreen(SignInUiState(providers = bothProviders), onBack = {}, onToggleLang = {}, actions = SignInActions()) }
+    }
+
+    @Test
+    fun signin_code_en() = capture("signin_code_en") {
+        val state = SignInUiState(
+            providers = bothProviders,
+            step = SignInStep.CODE,
+            email = "ada@example.com",
+            code = "482913",
+            error = SignInError.CODE_INVALID,
+        )
+        Themed(AppLang.EN) { SignInScreen(state, onBack = {}, onToggleLang = {}, actions = SignInActions()) }
     }
 
     @Test

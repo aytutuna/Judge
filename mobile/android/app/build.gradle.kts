@@ -15,6 +15,10 @@ fun judgeProp(name: String, fallback: String = ""): String {
 
 val productionApi = "https://okjudge.com"
 
+// Public OAuth web client id: Google issues the ID token for this audience,
+// and the server accepts it. Not a secret.
+val googleWebClientId = "173777773521-gumchqdjf6oud3gp4cb27jeqsmf157fd.apps.googleusercontent.com"
+
 android {
     namespace = "com.okjudge.judge"
     compileSdk = 37
@@ -26,6 +30,7 @@ android {
         versionCode = 1
         versionName = "0.1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField("String", "GOOGLE_SERVER_CLIENT_ID", judgeProp("googleServerClientId", googleWebClientId))
     }
 
     buildTypes {
@@ -153,6 +158,9 @@ dependencies {
     implementation(libs.core.splashscreen)
     implementation(libs.browser)
     implementation(libs.webkit)
+    implementation(libs.credentials)
+    implementation(libs.credentials.play.services)
+    implementation(libs.googleid)
 
     implementation(libs.room.runtime)
     implementation(libs.room.ktx)

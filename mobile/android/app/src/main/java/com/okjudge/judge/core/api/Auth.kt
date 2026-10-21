@@ -1,9 +1,9 @@
 package com.okjudge.judge.core.api
 
 /**
- * Where a signed-in session token lives. Phase 1 has no sign-in, so the app
- * uses [NoTokenStore]; phase 2 adds a Keystore-backed implementation and the
- * API client starts sending `Authorization: Bearer` without other changes.
+ * Where the signed-in session token lives. The app uses
+ * [com.okjudge.judge.core.auth.KeystoreTokenStore]; [JudgeApi] sends the
+ * token as `Authorization: Bearer` whenever there is one.
  */
 interface TokenStore {
     fun get(): String?
@@ -11,6 +11,7 @@ interface TokenStore {
     fun clear()
 }
 
+/** Never signed in: the default for API clients that do not need a session. */
 object NoTokenStore : TokenStore {
     override fun get(): String? = null
     override fun set(token: String) = Unit

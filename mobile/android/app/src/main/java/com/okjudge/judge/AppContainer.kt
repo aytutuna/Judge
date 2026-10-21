@@ -4,9 +4,11 @@ import android.content.Context
 import com.okjudge.judge.core.api.BotCheck
 import com.okjudge.judge.core.api.JudgeApi
 import com.okjudge.judge.core.api.NoBotCheck
-import com.okjudge.judge.core.api.NoTokenStore
 import com.okjudge.judge.core.api.TokenStore
 import com.okjudge.judge.core.api.TurnstileBotCheck
+import com.okjudge.judge.core.auth.Account
+import com.okjudge.judge.core.auth.CredentialManagerGoogle
+import com.okjudge.judge.core.auth.KeystoreTokenStore
 import com.okjudge.judge.core.data.DataStoreSettings
 import com.okjudge.judge.core.data.HistoryDb
 import com.okjudge.judge.core.data.HistoryRepository
@@ -24,6 +26,7 @@ data class AppConfig(
     val apiBaseUrl: String,
     val shareBaseUrl: String,
     val turnstileSiteKey: String,
+    val googleServerClientId: String,
     val versionName: String,
     val versionCode: Int,
 ) {
@@ -34,6 +37,7 @@ data class AppConfig(
             apiBaseUrl = BuildConfig.API_BASE_URL,
             shareBaseUrl = BuildConfig.SHARE_BASE_URL.ifBlank { BuildConfig.API_BASE_URL },
             turnstileSiteKey = BuildConfig.TURNSTILE_SITE_KEY,
+            googleServerClientId = BuildConfig.GOOGLE_SERVER_CLIENT_ID,
             versionName = BuildConfig.VERSION_NAME,
             versionCode = BuildConfig.VERSION_CODE,
         )
@@ -42,7 +46,7 @@ data class AppConfig(
 
 /**
  * Manual dependency wiring: lazy singletons created once per process in
- * [JudgeApp]. Sign-in (phase 2) swaps [tokenStore]; the rest stays as is.
+ * [JudgeApp].
  */
 class AppContainer(context: Context, val config: AppConfig = AppConfig.fromBuildConfig()) {
     private val appContext = context.applicationContext
@@ -51,12 +55,22 @@ class AppContainer(context: Context, val config: AppConfig = AppConfig.fromBuild
 
     val strings: LocalizedStrings by lazy { LocalizedStrings(appContext) }
 
-    val tokenStore: TokenStore = NoTokenStore
+    val tokenStore: TokenStore by lazy { KeystoreTokenStore(appContext) }
 
     val okHttp: OkHttpClient by lazy { OkHttpClient.Builder().build() }
 
     val api: JudgeApi by lazy {
-        JudgeApi(baseUrl = config.apiBaseUrl, client = okHttp, userAgent = config.userAgent, tokenStore = tokenStore)
+        JudgeApi(
+            baseUrl = config.apiBaseUrl,
+            client = okHttp,
+            userAgent = config.userAgent,
+            tokenStore = tokenStore,
+            onSignedOut = { account.onSessionExpired() },
+        )
+    }
+
+    val account: Account by lazy {
+        Account(api, tokenStore, CredentialManagerGoogle(config.googleServerClientId), appScope)
     }
 
     val botCheck: BotCheck by lazy {

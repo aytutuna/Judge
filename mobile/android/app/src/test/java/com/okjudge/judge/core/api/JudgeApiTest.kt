@@ -6,6 +6,7 @@ import com.okjudge.judge.core.model.FrameworkChoice
 import com.okjudge.judge.core.model.VerdictRequest
 import com.okjudge.judge.i18n.AppLang
 import kotlinx.coroutines.asCoroutineDispatcher
+import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
@@ -164,6 +165,25 @@ class JudgeApiTest {
         assertEquals("Bearer tok-1", server.takeRequest().headers["Authorization"])
         assertNull(tokens.get())
         assertTrue(signedOut)
+    }
+
+    @Test
+    fun a401ForAnOlderSession_leavesANewerOneAlone() = runBlocking {
+        val tokens = MemoryTokenStore("old")
+        var signedOut = false
+        server.enqueue(
+            MockResponse.Builder().code(401).addHeader("Content-Type", "application/json")
+                .body("""{"error":"Sign in","code":"signin_required"}""")
+                .headersDelay(500, TimeUnit.MILLISECONDS)
+                .build(),
+        )
+        val api = api(tokens, onSignedOut = { signedOut = true })
+        val call = async(kotlinx.coroutines.Dispatchers.IO) { api.submitVerdict(request) }
+        assertEquals("Bearer old", server.takeRequest().headers["Authorization"])
+        tokens.set("new")
+        call.await()
+        assertEquals("new", tokens.get())
+        assertTrue(!signedOut)
     }
 
     @Test
