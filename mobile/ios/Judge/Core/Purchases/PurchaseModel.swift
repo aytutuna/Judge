@@ -45,7 +45,9 @@ final class PurchaseModel {
     /// The Judge user id the store was last logged in with.
     @ObservationIgnored private(set) var loggedInUserId: String?
     @ObservationIgnored private var login: (id: String, task: Task<Void, any Error>)?
-    @ObservationIgnored private var logoutTask: Task<Void, Never>?
+    /// The last store log-in or log-out; the next one waits for it, so they
+    /// reach the store in order.
+    @ObservationIgnored private var storeQueue: Task<Void, Never>?
     /// Bumped by every purchase and sign-out, so an older /me poll stops.
     @ObservationIgnored private var generation = 0
 
@@ -61,6 +63,12 @@ final class PurchaseModel {
     /// offering has loaded.
     func canPurchase(_ pricing: PricingInfo) -> Bool {
         pricing.purchasesEnabled && isConfigured && !offers.isEmpty
+    }
+
+    /// Every plan on the pricing screen has a store offer (the note about
+    /// payments not being open yet can go).
+    func sellsEveryPlan(_ pricing: PricingInfo) -> Bool {
+        canPurchase(pricing) && (pricing.packs.map(.id) + [pricing.monthly.id]).allSatisfy { offers[$0] != nil }
     }
 
     /// The store offer behind a plan's buy button, or nil for "Coming soon".
@@ -130,10 +138,14 @@ final class PurchaseModel {
         buying = planId
         message = nil
         restoreResult = nil
-        let before = account.entitlement
         let outcome: PurchaseOutcome
+        let before: Entitlement?
         do {
-            try await logInCurrentUser()
+            try await logInCurrentUser(generation: mine)
+            // A real balance to compare the grant against.
+            if account.entitlement == nil { await account.refresh() }
+            before = account.entitlement
+            try checkStoreUser(generation: mine)
             outcome = try await gateway.purchase(planId: planId)
         } catch {
             buying = nil
@@ -154,7 +166,10 @@ final class PurchaseModel {
     }
 
     /// Asks /me a few times; when nothing changed, says it may take a minute.
+    /// Without a balance from before the purchase, the first answer becomes
+    /// the baseline.
     private func waitForGrant(since before: Entitlement?, generation mine: Int) async {
+        var baseline = before
         for delay in pollDelays {
             do {
                 try await self.sleep(delay)
@@ -164,28 +179,46 @@ final class PurchaseModel {
             guard mine == generation else { return }
             await account.refresh()
             guard mine == generation else { return }
-            if Self.granted(before: before, after: account.entitlement) { return }
+            guard let now = account.entitlement else { continue }
+            if let baseline {
+                if Self.granted(before: baseline, after: now) { return }
+            } else {
+                baseline = now
+            }
         }
         if message == .success { message = .pending }
     }
 
     /// Whether /me shows something new: another credit balance or another
     /// subscription.
-    nonisolated static func granted(before: Entitlement?, after: Entitlement?) -> Bool {
-        guard let after else { return false }
-        let base = before ?? Entitlement()
-        return after.credits != base.credits || after.subscription != base.subscription
+    nonisolated static func granted(before: Entitlement, after: Entitlement) -> Bool {
+        after.credits != before.credits || after.subscription != before.subscription
+    }
+
+    /// The pricing screen closed: an old confirmation should not greet the
+    /// next visit.
+    func clearMessage() {
+        guard buying == nil else { return }
+        message = nil
+    }
+
+    /// Settings closed.
+    func clearRestoreResult() {
+        guard !isRestoring else { return }
+        restoreResult = nil
     }
 
     // MARK: - Restore
 
     func restore() async {
         guard let gateway, !isRestoring, account.isSignedIn else { return }
+        let mine = generation
         isRestoring = true
         restoreResult = nil
         defer { isRestoring = false }
         do {
-            try await logInCurrentUser()
+            try await logInCurrentUser(generation: mine)
+            try checkStoreUser(generation: mine)
             let found = try await gateway.restore()
             await account.refresh()
             restoreResult = found ? .done : .nothing
@@ -210,7 +243,7 @@ final class PurchaseModel {
         message = nil
         restoreResult = nil
         guard let gateway else { return }
-        logoutTask = Task { await gateway.logOut() }
+        _ = enqueue { await gateway.logOut() }
     }
 
     /// Logs the store in as `id` once; concurrent callers share the call.
@@ -220,12 +253,7 @@ final class PurchaseModel {
             try await login.task.value
             return
         }
-        // A log-out still under way finishes first, so it cannot undo this.
-        let logout = logoutTask
-        let task = Task {
-            await logout?.value
-            try await gateway.logIn(userId: id)
-        }
+        let task = enqueue { try await gateway.logIn(userId: id) }
         login = (id: id, task: task)
         do {
             try await task.value
@@ -239,12 +267,32 @@ final class PurchaseModel {
         }
     }
 
+    /// Runs store identity work after whatever log-in or log-out came before.
+    private func enqueue(_ work: @escaping @MainActor () async throws -> Void) -> Task<Void, any Error> {
+        let previous = storeQueue
+        let task = Task {
+            await previous?.value
+            try await work()
+        }
+        storeQueue = Task { _ = try? await task.value }
+        return task
+    }
+
     /// Purchases always go to the signed-in account: the store logs in as
     /// it first (a no-op when it already is).
-    private func logInCurrentUser() async throws {
+    private func logInCurrentUser(generation mine: Int) async throws {
         if account.user == nil { await account.refresh() }
-        guard let id = account.user?.id else { throw PurchaseGatewayError.signedOut }
+        guard mine == generation, let id = account.user?.id else { throw PurchaseGatewayError.signedOut }
         try await logIn(id)
+    }
+
+    /// Right before the store sheet: the session is still the one the
+    /// purchase started in and the store holds its user id. Anything else
+    /// would send the money to another (or an anonymous) store user.
+    private func checkStoreUser(generation mine: Int) throws {
+        guard mine == generation, account.isSignedIn, let id = account.user?.id,
+              loggedInUserId == id, gateway?.isLoggedIn(as: id) == true
+        else { throw PurchaseGatewayError.signedOut }
     }
 }
 

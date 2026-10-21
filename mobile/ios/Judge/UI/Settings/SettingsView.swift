@@ -78,6 +78,7 @@ struct SettingsView: View {
                 Text(L10n.appAccountDeleteBody(lang))
             }
             .task { await app.account.refresh() }
+            .onDisappear { app.purchases.clearRestoreResult() }
         }
     }
 

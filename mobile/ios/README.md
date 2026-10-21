@@ -193,7 +193,8 @@ grants them. With `REVENUECAT_API_KEY` set (the public Apple SDK key,
 `Purchases.logIn(<Judge user id>)` whenever a sign-in or `/api/v1/me` brings
 the user id (and again right before every purchase and restore), and
 `logOut()` when the session ends, so RevenueCat's `app_user_id` is the Judge
-user id. The RevenueCat webhook turns purchases into credits and
+user id. Log-ins and log-outs reach the SDK in order, and the purchase sheet
+opens only while the SDK's `appUserID` is the signed-in user's id. The RevenueCat webhook turns purchases into credits and
 subscriptions on the server; the app only shows what `/me` says.
 
 - **Pricing screen**: when `GET /api/v1/config` has

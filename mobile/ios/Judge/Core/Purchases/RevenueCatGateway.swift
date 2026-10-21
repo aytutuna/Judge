@@ -27,6 +27,10 @@ final class RevenueCatGateway: PurchaseGateway {
         _ = try? await Purchases.shared.logOut()
     }
 
+    func isLoggedIn(as userId: String) -> Bool {
+        !Purchases.shared.isAnonymous && Purchases.shared.appUserID == userId
+    }
+
     func offers() async throws -> [StoreOffer] {
         let offerings = try await Purchases.shared.offerings()
         let available = offerings.current?.availablePackages ?? []

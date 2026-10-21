@@ -11,6 +11,9 @@ protocol PurchaseGateway: AnyObject {
     func logIn(userId: String) async throws
     /// Back to an anonymous store user. Never fails.
     func logOut() async
+    /// Whether the store's current user is this Judge user id (checked right
+    /// before the purchase sheet).
+    func isLoggedIn(as userId: String) -> Bool
     /// The current offering's products that the server knows how to grant.
     func offers() async throws -> [StoreOffer]
     /// Runs the store's purchase sheet for one of the loaded offers.

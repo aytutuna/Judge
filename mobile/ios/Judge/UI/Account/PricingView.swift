@@ -34,7 +34,7 @@ struct PricingView: View {
                 freePlan(lang)
                 premiumPlan(pricing, lang: lang)
                 // The note says payments are not open yet and prices are in USD.
-                if !app.purchases.canPurchase(pricing) {
+                if !app.purchases.sellsEveryPlan(pricing) {
                     Text(L10n.pricingNote(lang))
                         .brandText(.footnote)
                         .foregroundStyle(Brand.muted)
@@ -50,6 +50,7 @@ struct PricingView: View {
         .toolbarBackground(Brand.ivory, for: .navigationBar)
         .task { await account.refresh() }
         .task(id: pricing.purchasesEnabled) { await app.purchases.loadOffers(pricing: app.account.pricing) }
+        .onDisappear { app.purchases.clearMessage() }
     }
 
     private func planStatus(_ entitlement: Entitlement, lang: AppLang) -> some View {

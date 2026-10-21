@@ -10,6 +10,8 @@ final class FakePurchaseGateway: PurchaseGateway {
     var outcome: Result<PurchaseOutcome, any Error> = .success(.purchased)
     var restoreAnswer: Result<Bool, any Error> = .success(true)
     var logInError: (any Error)?
+    /// Makes the store report another user than the one logged in.
+    var storeUserOverride: String?
     private(set) var logIns: [String] = []
     private(set) var logOuts = 0
     private(set) var offerCalls = 0
@@ -28,6 +30,10 @@ final class FakePurchaseGateway: PurchaseGateway {
     func logOut() async {
         logOuts += 1
         currentUser = nil
+    }
+
+    func isLoggedIn(as userId: String) -> Bool {
+        (storeUserOverride ?? currentUser) == userId
     }
 
     func offers() async throws -> [StoreOffer] {
@@ -120,11 +126,13 @@ final class PurchaseTests: XCTestCase {
     /// A signed-in account (0 credits) on a server that allows purchases,
     /// with a purchase model whose /me polling does not wait.
     @MainActor
-    private func model(_ gateway: FakePurchaseGateway?, me credits: [Int] = [0]) -> (PurchaseModel, AccountModel) {
+    private func model(_ gateway: FakePurchaseGateway?, me credits: [Int] = [0], balanceKnown: Bool = true) -> (PurchaseModel, AccountModel) {
         let sequence = MeSequence(credits)
         StubURLProtocol.handler = { sequence.reply(to: $0) }
         let account = AccountModel(api: Self.api())
-        account.preload(config: ServerConfig(signIn: SignInProviders(apple: true), premiumEnabled: true, pricing: Self.pricing(enabled: true)), info: Self.info(credits: 0))
+        var info = Self.info(credits: 0)
+        if !balanceKnown { info.entitlement = nil }
+        account.preload(config: ServerConfig(signIn: SignInProviders(apple: true), premiumEnabled: true, pricing: Self.pricing(enabled: true)), info: info)
         let purchases = PurchaseModel(gateway: gateway, account: account)
         purchases.pollDelays = [.zero, .zero, .zero, .zero]
         purchases.sleep = { _ in }
@@ -245,6 +253,70 @@ final class PurchaseTests: XCTestCase {
     }
 
     @MainActor
+    func testPurchaseWithoutAKnownBalanceTakesOneFirst() async {
+        let gateway = FakePurchaseGateway()
+        gateway.offerList = Self.offers
+        let (purchases, account) = model(gateway, me: [7, 7, 17], balanceKnown: false)
+        await purchases.loadOffers(pricing: Self.pricing(enabled: true))
+
+        await purchases.buy("pack_10")
+        XCTAssertEqual(purchases.message, .success)
+        XCTAssertEqual(account.entitlement?.credits, 17)
+        XCTAssertEqual(meRequests, 3, "one for the balance before, two polls; the old balance is not taken for the grant")
+    }
+
+    @MainActor
+    func testNoPurchaseWhenTheStoreHoldsAnotherUser() async {
+        let gateway = FakePurchaseGateway()
+        gateway.offerList = Self.offers
+        gateway.storeUserOverride = "someone-else"
+        let (purchases, _) = model(gateway)
+        await purchases.loadOffers(pricing: Self.pricing(enabled: true))
+
+        await purchases.buy("pack_10")
+        XCTAssertEqual(gateway.bought, [])
+        XCTAssertEqual(purchases.message, .failed)
+
+        await purchases.restore()
+        XCTAssertEqual(gateway.restores, 0)
+        XCTAssertEqual(purchases.restoreResult, .failed)
+    }
+
+    @MainActor
+    func testOldMessagesAreClearedWhenTheScreenCloses() async {
+        let gateway = FakePurchaseGateway()
+        gateway.offerList = Self.offers
+        gateway.outcome = .failure(URLError(.timedOut))
+        let (purchases, _) = model(gateway)
+        await purchases.loadOffers(pricing: Self.pricing(enabled: true))
+        await purchases.buy("pack_10")
+        XCTAssertEqual(purchases.message, .failed)
+        purchases.clearMessage()
+        XCTAssertNil(purchases.message)
+
+        gateway.restoreAnswer = .success(false)
+        await purchases.restore()
+        XCTAssertEqual(purchases.restoreResult, .nothing)
+        purchases.clearRestoreResult()
+        XCTAssertNil(purchases.restoreResult)
+    }
+
+    @MainActor
+    func testThePaymentNoteGoesOnlyWhenEveryPlanIsSold() async {
+        let gateway = FakePurchaseGateway()
+        gateway.offerList = Array(Self.offers.prefix(2))
+        let (purchases, _) = model(gateway)
+        let pricing = Self.pricing(enabled: true)
+        await purchases.loadOffers(pricing: pricing)
+        XCTAssertTrue(purchases.canPurchase(pricing))
+        XCTAssertFalse(purchases.sellsEveryPlan(pricing))
+        gateway.offerList = Self.offers
+        let (all, _) = model(gateway)
+        await all.loadOffers(pricing: pricing)
+        XCTAssertTrue(all.sellsEveryPlan(pricing))
+    }
+
+    @MainActor
     func testPurchaseWithoutAGrantSaysItMayTakeAMinute() async {
         let gateway = FakePurchaseGateway()
         gateway.offerList = Self.offers
@@ -312,13 +384,11 @@ final class PurchaseTests: XCTestCase {
         XCTAssertEqual(meRequests, 0)
     }
 
-    @MainActor
     func testGrantDetection() {
         let zero = Entitlement(credits: 0)
-        XCTAssertFalse(PurchaseModel.granted(before: zero, after: nil))
         XCTAssertFalse(PurchaseModel.granted(before: zero, after: zero))
         XCTAssertTrue(PurchaseModel.granted(before: zero, after: Entitlement(credits: 10)))
-        XCTAssertFalse(PurchaseModel.granted(before: nil, after: zero))
+        XCTAssertTrue(PurchaseModel.granted(before: Entitlement(credits: 7), after: Entitlement(credits: 6)))
         let subscription = SubscriptionInfo(
             source: "app_store", productId: "verdict_premium_monthly", periodStart: "2026-10-01T00:00:00.000Z",
             periodEnd: "2026-10-31T00:00:00.000Z", willRenew: true, used: 0, cap: 60

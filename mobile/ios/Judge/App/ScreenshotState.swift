@@ -288,6 +288,7 @@ final class FixedPurchaseGateway: PurchaseGateway {
 
     func logIn(userId: String) async throws {}
     func logOut() async {}
+    func isLoggedIn(as userId: String) -> Bool { true }
     func offers() async throws -> [StoreOffer] { list }
     func purchase(planId: String) async throws -> PurchaseOutcome { .cancelled }
     func restore() async throws -> Bool { false }
