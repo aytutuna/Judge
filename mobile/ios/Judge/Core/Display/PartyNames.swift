@@ -113,4 +113,15 @@ enum Names {
             bIsSelf: false
         )
     }
+
+    /// firstNameOf (lib/originals-types.ts): the bare name's first word when
+    /// it reads as a first name (a capital, then 1 to 39 letters, apostrophes
+    /// or hyphens); descriptions, usernames and pronouns give nil.
+    static func firstName(_ name: String?) -> String? {
+        guard let name, !name.isEmpty else { return nil }
+        let first = bareName(name).trimmingCharacters(in: .whitespacesAndNewlines)
+            .split(whereSeparator: { $0.isWhitespace }).first.map(String.init) ?? ""
+        if enSelf.contains(first.lowercased(with: enLocale)) { return nil }
+        return first.wholeMatch(of: #/\p{Lu}[\p{L}'’-]{1,39}/#) == nil ? nil : first
+    }
 }

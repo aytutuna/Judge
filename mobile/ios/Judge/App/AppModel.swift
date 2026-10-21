@@ -36,6 +36,18 @@ final class AppModel {
     /// Whether Home saves the unsent draft and brings it back next session
     /// (off for screenshot states, so they neither read nor overwrite it).
     let persistsDraft: Bool
+    /// The real names behind each case's labels, kept on this phone.
+    let caseNames: any CaseNamesStore
+    /// The selected tab (links and "Start a new case" switch it).
+    var tab: RootTab = .new
+    /// Which list the History tab shows.
+    var historySegment: HistorySegment = .verdicts
+    /// "Your cases" in the History tab.
+    let caseList: CaseListModel
+    /// Off for screenshot states: case pages neither load nor poll.
+    @ObservationIgnored var usesNetwork = true
+    /// Case views created on this phone, so their page opens at once.
+    @ObservationIgnored private var caseSeeds: [String: CaseView] = [:]
 
     private let defaults: UserDefaults
     private static let langKey = "settings.lang"
@@ -47,11 +59,14 @@ final class AppModel {
         defaults: UserDefaults = .standard,
         tokenStore: any TokenStore = KeychainTokenStore(),
         persistsDraft: Bool = true,
-        api: JudgeAPI? = nil
+        api: JudgeAPI? = nil,
+        caseNames: (any CaseNamesStore)? = nil
     ) {
         self.config = config
         self.persistsDraft = persistsDraft
         self.defaults = defaults
+        self.caseNames = caseNames ?? KeychainCaseNamesStore()
+        caseList = CaseListModel()
         langPreference = defaults.string(forKey: Self.langKey).flatMap(LangPreference.init(rawValue:)) ?? .system
         self.api = api ?? JudgeAPI(baseURL: config.apiBaseURL, userAgent: config.userAgent, tokenStore: tokenStore)
         if config.turnstileSiteKey.isEmpty {
@@ -108,4 +123,61 @@ final class AppModel {
 
     /// Screenshot evidence on Home: premium chosen and offered here.
     var evidenceOn: Bool { effectiveTier == .premium && account.features.evidence }
+
+    // MARK: - Two-sided cases
+
+    /// The Just me / Both sides choice on Home: premium chosen and cases offered.
+    var casesOn: Bool { effectiveTier == .premium && account.features.cases }
+
+    /// "Your cases" in the History tab: this server offers cases.
+    var caseListOffered: Bool { account.premiumEnabled && account.features.cases }
+
+    func seedCase(_ view: CaseView) {
+        caseSeeds[view.id] = view
+    }
+
+    /// The model behind one case page, starting from a view created here.
+    func makeCaseModel(id: String) -> CaseModel {
+        let model = CaseModel(id: id, api: api, namesStore: caseNames, account: account, initial: caseSeeds[id])
+        model.usesNetwork = usesNetwork
+        return model
+    }
+
+    func selectHome() {
+        tab = .new
+    }
+
+    /// A link the app was opened with: an invite opens the website's answer
+    /// page in Safari (answering is done there); a case opens its page.
+    func open(_ link: AppLink) -> URL? {
+        switch link {
+        case .invite(let url):
+            return url
+        case .caseDetail(let id):
+            tab = .new
+            home.path = [.caseDetail(id: id)]
+            return nil
+        }
+    }
+}
+
+/// Links into the app (okjudge.com URLs).
+enum AppLink: Equatable {
+    /// /r/{token}: the other side's invite. Never handled natively.
+    case invite(URL)
+    /// /c/{id}: the owner's case page.
+    case caseDetail(id: String)
+
+    static func parse(_ url: URL, site: URL) -> AppLink? {
+        guard let host = url.host?.lowercased(), let siteHost = site.host?.lowercased(),
+              host == siteHost || host == "www." + siteHost
+        else { return nil }
+        let parts = url.pathComponents.filter { $0 != "/" }
+        guard parts.count == 2, !parts[1].isEmpty else { return nil }
+        switch parts[0] {
+        case "r": return .invite(url)
+        case "c": return .caseDetail(id: parts[1])
+        default: return nil
+        }
+    }
 }

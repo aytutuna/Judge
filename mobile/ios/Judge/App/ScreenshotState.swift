@@ -12,8 +12,13 @@ import SwiftData
 /// key of `verdictResponses`), or a Premium state: `tier/locked` (signed
 /// in, monthly allowance used up), `tier/premium` (Premium chosen with
 /// credits), `pricing`, `clarify` (the questions), `evidence` (picked
-/// screenshots in mixed states) or `judging-premium`; lang is `en` or `tr`.
-/// Examples: `home:tr`, `verdict/win_a_self:tr`, `tier/locked:en`.
+/// screenshots in mixed states), `judging-premium`, `mode-both` (Both sides
+/// chosen), `history-cases` ("Your cases") or `case/<state>`: the owner's
+/// case page for a key of `cases.views` or one of the short names `awaiting`,
+/// `judging`, `judged`, `one-sided`, `appeal`, `appeal-judging`, `failed`,
+/// `expired`, `removed` (Turkish takes the `_tr` view when there is one);
+/// lang is `en` or `tr`.
+/// Examples: `home:tr`, `verdict/win_a_self:tr`, `tier/locked:en`, `case/judged:en`.
 ///
 /// The state runs on an in-memory history store and a separate defaults
 /// suite, so it never touches the real data, and the API points at a closed
@@ -35,6 +40,9 @@ struct ScreenshotState {
         case clarify
         case evidence
         case judgingPremium
+        case modeBoth
+        case historyCases
+        case caseDetail(view: String)
     }
 
     static let argument = "-JudgeScreenshotState"
@@ -45,9 +53,9 @@ struct ScreenshotState {
     var tab: RootTab {
         switch screen {
         case .home, .homeError, .judging, .verdict, .signIn, .signInCode,
-             .tierLocked, .tierPremium, .pricing, .clarify, .evidence, .judgingPremium:
+             .tierLocked, .tierPremium, .pricing, .clarify, .evidence, .judgingPremium, .modeBoth, .caseDetail:
             return .new
-        case .history: return .history
+        case .history, .historyCases: return .history
         case .settings, .account: return .settings
         }
     }
@@ -77,11 +85,19 @@ struct ScreenshotState {
         case "clarify": screen = .clarify
         case "evidence": screen = .evidence
         case "judging-premium": screen = .judgingPremium
+        case "mode-both": screen = .modeBoth
+        case "history-cases": screen = .historyCases
         default:
-            guard name.hasPrefix("verdict/") else { return nil }
-            let sample = String(name.dropFirst("verdict/".count))
-            guard !sample.isEmpty else { return nil }
-            screen = .verdict(sample: sample)
+            if name.hasPrefix("case/") {
+                let view = String(name.dropFirst("case/".count))
+                guard !view.isEmpty else { return nil }
+                screen = .caseDetail(view: Self.caseAliases[view] ?? view)
+            } else {
+                guard name.hasPrefix("verdict/") else { return nil }
+                let sample = String(name.dropFirst("verdict/".count))
+                guard !sample.isEmpty else { return nil }
+                screen = .verdict(sample: sample)
+            }
         }
         return ScreenshotState(screen: screen, lang: lang)
     }
@@ -101,8 +117,17 @@ struct ScreenshotState {
             version: base.version,
             build: base.build
         )
-        let app = AppModel(config: config, container: container, defaults: defaults, tokenStore: MemoryTokenStore(), persistsDraft: false)
+        let app = AppModel(
+            config: config,
+            container: container,
+            defaults: defaults,
+            tokenStore: MemoryTokenStore(),
+            persistsDraft: false,
+            caseNames: MemoryCaseNamesStore()
+        )
         app.account.usesNetwork = false
+        app.usesNetwork = false
+        app.caseList.usesNetwork = false
         app.setLangPreference(lang == .tr ? .tr : .en)
         apply(to: app)
         return app
@@ -170,6 +195,21 @@ struct ScreenshotState {
             app.setTierChoice(.premium)
             app.home.argument = ExampleArgument.all[0].text(lang)
             app.home.showForScreenshot(judgingPremium: true)
+        case .modeBoth:
+            premium(app, me: "credits7")
+            app.setTierChoice(.premium)
+            app.home.mode = .both
+            app.home.argument = ExampleArgument.all[0].text(lang)
+        case .historyCases:
+            premium(app, me: "credits7")
+            app.historySegment = .cases
+            app.caseList.showForScreenshot(ScreenshotFixtures.caseList())
+        case .caseDetail(let name):
+            premium(app, me: "credits7")
+            let localized = lang == .tr ? ScreenshotFixtures.caseView(name + "_tr") : nil
+            guard let view = localized ?? ScreenshotFixtures.caseView(name) else { return }
+            app.seedCase(view)
+            app.home.path = [.caseDetail(id: view.id)]
         case .history:
             // Fixed times, newest first, an hour apart.
             let newest = Date(timeIntervalSince1970: 1_792_000_000)
@@ -191,6 +231,14 @@ struct ScreenshotState {
             config: ScreenshotFixtures.config("full")
         )
     }
+
+    /// Short names for the case views in the screenshot list.
+    static let caseAliases: [String: String] = [
+        "awaiting": "waiting_for_respondent",
+        "one-sided": "judged_one_sided",
+        "appeal": "appeal_overturned",
+        "appeal-judging": "appeal_judging",
+    ]
 
     private static let email = "sam@example.com"
     private static let allProviders = SignInProviders(apple: true, google: true, email: true, emailCode: true)
@@ -254,6 +302,22 @@ enum ScreenshotFixtures {
     static func evidencePreview() -> String? {
         let items = (root()["evidenceResponse"] as? [String: Any])?["items"] as? [[String: Any]]
         return items?.first?["preview"] as? String
+    }
+
+    /// `cases.views.<name>` as GET /api/v1/cases/{id} would answer.
+    static func caseView(_ name: String) -> CaseView? {
+        let views = (root()["cases"] as? [String: Any])?["views"] as? [String: Any]
+        guard let object = views?[name] as? [String: Any] else { return nil }
+        return try? CaseDecoding.view(object)
+    }
+
+    /// `cases.list` as GET /api/v1/cases would answer.
+    static func caseList() -> [CaseSummary] {
+        let list = (root()["cases"] as? [String: Any])?["list"]
+        guard let list, JSONSerialization.isValidJSONObject(list),
+              let data = try? JSONSerialization.data(withJSONObject: list)
+        else { return [] }
+        return (try? CaseDecoding.list(data)) ?? []
     }
 
     static func decode<T: Decodable>(_ type: T.Type, _ value: Any?) -> T? {

@@ -114,7 +114,7 @@ enum PremiumFixtures {
             session: JudgeAPI.makeSession(protocolClasses: [StubURLProtocol.self]),
             pollPolicy: fastPolicy
         )
-        let app = AppModel(config: config, container: container, defaults: defaults, persistsDraft: false, api: api)
+        let app = AppModel(config: config, container: container, defaults: defaults, persistsDraft: false, api: api, caseNames: MemoryCaseNamesStore())
         app.account.preload(config: try self.config("full"), info: token == nil ? nil : try self.me(me))
         app.home.argument = "My friend Sam says a hot dog is a sandwich. I say it is not."
         app.home.inProgressInterval = .milliseconds(10)

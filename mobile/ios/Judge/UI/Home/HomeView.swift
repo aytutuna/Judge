@@ -123,6 +123,9 @@ struct HomeView: View {
                     home.path.append(.pricing)
                 }
             }
+            if app.casesOn {
+                CaseModeSwitch(home: home, lang: lang, disabled: home.isBusy)
+            }
             if app.evidenceOn {
                 EvidencePickerView(evidence: home.evidence, lang: lang, disabled: home.isBusy)
             }
@@ -228,25 +231,30 @@ struct HomeView: View {
     private func submitSection(_ lang: AppLang, home: HomeModel) -> some View {
         VStack(spacing: 12) {
             // `blockedUntil` is cleared by the model when a rate limit ends.
-            let waiting = home.isCheckingBot || home.isCheckingQuestions
+            let waiting = home.isCheckingBot || home.isCheckingQuestions || home.isCreatingCase
+            let twoSided = home.isTwoSided(app)
+            let title = twoSided ? L10n.caseCreate(lang) : L10n.getVerdict(lang)
             Button { submit() } label: {
                 if waiting {
-                    // The bot check (free) or the questions (premium) run
-                    // before the judging cover goes up.
+                    // The bot check (free), the questions (premium) or the
+                    // new case run before anything else goes up.
                     ProgressView()
                         .tint(Brand.ivory)
-                        .accessibilityLabel(L10n.getVerdict(lang))
+                        .accessibilityLabel(title)
                 } else {
-                    Text(L10n.getVerdict(lang))
+                    Text(title)
                 }
             }
             .buttonStyle(PrimaryButtonStyle())
             .disabled(!home.canSubmit(evidenceOn: app.evidenceOn) && !waiting)
-            if home.isCheckingQuestions {
-                Text(L10n.tierChecking(lang))
+            if home.isCheckingQuestions || home.isCreatingCase {
+                Text(home.isCreatingCase ? L10n.caseCreating(lang) : L10n.tierChecking(lang))
                     .brandText(.slotText)
                     .foregroundStyle(Brand.muted)
                     .accessibilityAddTraits(.updatesFrequently)
+            }
+            if twoSided {
+                CaseNameField(home: home, initial: home.shownCaseName(app), lang: lang, disabled: home.isBusy)
             }
             VStack(spacing: 2) {
                 Text(L10n.privacyNote(lang))

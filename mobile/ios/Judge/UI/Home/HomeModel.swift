@@ -5,6 +5,13 @@ import UIKit
 enum HomeRoute: Hashable {
     case verdict(id: String)
     case pricing
+    case caseDetail(id: String)
+}
+
+/// Premium's mode on Home (components/case/CaseModeSwitch.tsx): a verdict
+/// right away, or a two-sided case with an invite link.
+enum HomeMode: String, Sendable {
+    case now, both
 }
 
 /// The Home flow: argument, preset, the pending request and its outcome.
@@ -48,6 +55,13 @@ final class HomeModel {
     private(set) var blockedUntil: Date?
     /// Screenshots picked for the next premium request.
     let evidence: EvidenceModel
+    /// Just me (a verdict now) or both sides (a case), when cases are offered.
+    var mode: HomeMode = .now
+    /// The owner's name on a new case's share pages; nil = the account's
+    /// first name until the user types.
+    var caseName: String?
+    /// POST /api/v1/cases is running (the owner's side is being anonymized).
+    private(set) var isCreatingCase = false
 
     /// While the server answers 409 in_progress (the same premium request is
     /// still being judged, e.g. after a dropped connection), ask again this
@@ -117,7 +131,17 @@ final class HomeModel {
     var trimmedLength: Int { argument.trimmingCharacters(in: .whitespacesAndNewlines).utf16.count }
 
     /// Something the form started is still running: the switches hold still.
-    var isBusy: Bool { isCheckingBot || isCheckingQuestions || isJudging }
+    var isBusy: Bool { isCheckingBot || isCheckingQuestions || isJudging || isCreatingCase }
+
+    /// Both sides chosen while cases can be used: "Create the invite".
+    func isTwoSided(_ app: AppModel) -> Bool {
+        app.casesOn && mode == .both
+    }
+
+    /// The display name field's text: what was typed, else the account's first name.
+    func shownCaseName(_ app: AppModel) -> String {
+        caseName ?? Names.firstName(app.account.user?.name) ?? ""
+    }
 
     func canSubmit(now: Date = .now, evidenceOn: Bool = false) -> Bool {
         guard trimmedLength >= Self.minLength, length <= Self.maxLength, !isBusy else { return false }
@@ -161,10 +185,60 @@ final class HomeModel {
             }
             return
         }
-        if app.effectiveTier == .premium {
+        if isTwoSided(app) {
+            createCase(app: app)
+        } else if app.effectiveTier == .premium {
             submitPremium(app: app)
         } else {
             submitFree(app: app)
+        }
+    }
+
+    // MARK: - Two-sided cases
+
+    /// Premium, both sides: create the case with the owner's side (one
+    /// premium verdict is held), keep the returned names on the phone and
+    /// open the case page with the invite link. No clarifying step: the
+    /// other side's account fills the gaps.
+    private func createCase(app: AppModel) {
+        error = nil
+        isCreatingCase = true
+        let text = argument
+        let preset = preset
+        let lang = app.lang
+        let tokens = app.evidenceOn ? evidence.tokens : []
+        let name = shownCaseName(app).trimmingCharacters(in: .whitespacesAndNewlines)
+        let displayName: String? = name.isEmpty ? nil : name
+        let body = JudgeAPI.createCaseBody(text: text, preset: preset, lang: lang, evidence: tokens, displayName: displayName)
+        let token = keys.key(for: JudgeAPI.canonical(body))
+        let api = app.api
+        let names = app.caseNames
+        request = Task { [weak self, weak app] in
+            do {
+                let created = try await api.createCase(
+                    text: text, preset: preset, lang: lang, evidence: tokens, displayName: displayName, idempotencyKey: token
+                )
+                guard let self, !Task.isCancelled else { return }
+                self.keys.clear(token)
+                names.save(caseID: created.view.id, created.nameMap)
+                if let entitlement = created.entitlement { self.account?.applyEntitlement(entitlement) }
+                app?.seedCase(created.view)
+                self.evidence.clear()
+                self.argument = ""
+                self.caseName = nil
+                self.isCreatingCase = false
+                self.path.append(.caseDetail(id: created.view.id))
+            } catch is CancellationError {
+                self?.isCreatingCase = false
+            } catch let failure as APIError {
+                guard let self else { return }
+                self.isCreatingCase = false
+                self.fail(failure)
+            } catch {
+                guard let self else { return }
+                self.isCreatingCase = false
+                self.fail(.malformed)
+            }
         }
     }
 

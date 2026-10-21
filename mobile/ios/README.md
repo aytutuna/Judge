@@ -65,7 +65,10 @@ port). Screens: `home`, `home-error`, `judging`, `history`, `settings`,
 account), `verdict/<sample>` for any key of `verdictResponses`, and the
 Premium states `tier/locked` (monthly allowance used up), `tier/premium`
 (Premium chosen, credits left), `pricing`, `clarify`, `evidence` (picked
-screenshots in mixed states) and `judging-premium`.
+screenshots in mixed states) and `judging-premium`, and the case states
+`mode-both`, `history-cases` and `case/<state>` (a key of `cases.views` or
+`awaiting`, `judging`, `judged`, `one-sided`, `appeal`, `appeal-judging`,
+`failed`, `expired`, `removed`; Turkish takes the `_tr` view if there is one).
 Languages: `en`, `tr`.
 
 ```sh
@@ -166,6 +169,17 @@ The website's Premium flow, natively (lib/tier.ts, app/page.tsx):
   `POST /api/v1/evidence` (multipart, `image` parts). Only the tokens of
   images read successfully are sent, in order; images still being read
   hold the submit.
+- **Both sides** (when `features.cases`): "Both sides" on Home creates a case
+  (`POST /api/v1/cases` with an `Idempotency-Key`); the returned name map is
+  kept in the Keychain per case (`KeychainCaseNamesStore`) as the fallback
+  for `case.names`. The case page polls `GET /api/v1/cases/{id}` every
+  `pollAfterMs` while something is judging (backing off to 30 s on errors)
+  and offers the invite link (copy, share sheet, new link), judging on the
+  owner's side alone, retry, removal, the names on the share pages and
+  adding context (appeals). "Your cases" is the second list in the History
+  tab. Invite links (`/r/…`) are never answered in the app: they are shared
+  as URLs, and one the app is opened with goes to Safari; `/c/{id}` links
+  open the case page.
 
 ## Layout
 

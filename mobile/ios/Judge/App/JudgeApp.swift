@@ -5,7 +5,6 @@ import WebKit
 @main
 struct JudgeApp: App {
     private let container: ModelContainer
-    private let initialTab: RootTab
     @State private var app: AppModel
 
     init() {
@@ -13,20 +12,20 @@ struct JudgeApp: App {
         if let screenshot = ScreenshotState.fromLaunchArguments() {
             let container = HistoryContainer.inMemory()
             self.container = container
-            initialTab = screenshot.tab
-            _app = State(initialValue: screenshot.makeModel(container: container))
+            let model = screenshot.makeModel(container: container)
+            model.tab = screenshot.tab
+            _app = State(initialValue: model)
             return
         }
         #endif
         let container = HistoryContainer.make()
         self.container = container
-        initialTab = .new
         _app = State(initialValue: AppModel(config: .load(), container: container))
     }
 
     var body: some Scene {
         WindowGroup {
-            RootView(initialTab: initialTab)
+            RootView()
                 .environment(app)
                 .modelContainer(container)
                 .preferredColorScheme(.light)
@@ -41,18 +40,15 @@ enum RootTab: Hashable {
 
 struct RootView: View {
     @Environment(AppModel.self) private var app
-    @State private var tab: RootTab
     @State private var showLaunchMark = true
+    @State private var webLink: WebLink?
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-
-    init(initialTab: RootTab = .new) {
-        _tab = State(initialValue: initialTab)
-    }
 
     var body: some View {
         let lang = app.lang
+        @Bindable var model = app
         @Bindable var account = app.account
-        TabView(selection: $tab) {
+        TabView(selection: $model.tab) {
             HomeTab()
                 .tabItem { Label(L10n.appTabNew(lang), systemImage: "square.and.pencil") }
                 .tag(RootTab.new)
@@ -73,6 +69,13 @@ struct RootView: View {
                 .presentationDragIndicator(.visible)
         }
         .task { await app.account.start() }
+        .onOpenURL { url in open(url) }
+        .onContinueUserActivity(NSUserActivityTypeBrowsingWeb) { activity in
+            if let url = activity.webpageURL { open(url) }
+        }
+        .sheet(item: $webLink) { link in
+            SafariView(url: link.url).ignoresSafeArea()
+        }
         .overlay {
             // The first frame repeats the launch screen, then fades into Home.
             if showLaunchMark {
@@ -87,6 +90,13 @@ struct RootView: View {
                 }
             }
         }
+    }
+
+    /// An okjudge.com link: an invite opens in Safari (answering happens on
+    /// the website), a case opens on its page.
+    private func open(_ url: URL) {
+        guard let link = AppLink.parse(url, site: app.config.shareBaseURL) else { return }
+        if let web = app.open(link) { webLink = WebLink(url: web) }
     }
 }
 
@@ -169,6 +179,8 @@ private struct HomeTab: View {
                         }
                     case .pricing:
                         PricingView()
+                    case .caseDetail(let id):
+                        CaseScreen(id: id)
                     }
                 }
         }
@@ -182,6 +194,7 @@ private struct HistoryTab: View {
                 .navigationDestination(for: HistoryRoute.self) { route in
                     switch route {
                     case .detail(let id): HistoryDetailView(id: id)
+                    case .caseDetail(let id): CaseScreen(id: id)
                     }
                 }
         }

@@ -145,5 +145,43 @@ final class ScreenshotStateTests: XCTestCase {
             XCTAssertTrue(judging.home.judgingPremium)
         }
     }
+
+    func testParsesTheCaseScreens() {
+        XCTAssertEqual(ScreenshotState.parse("case/awaiting:en")?.screen, .caseDetail(view: "waiting_for_respondent"))
+        XCTAssertEqual(ScreenshotState.parse("case/appeal:tr")?.screen, .caseDetail(view: "appeal_overturned"))
+        XCTAssertEqual(ScreenshotState.parse("case/judged:en")?.screen, .caseDetail(view: "judged"))
+        XCTAssertEqual(ScreenshotState.parse("case/judged:en")?.tab, .new)
+        XCTAssertEqual(ScreenshotState.parse("history-cases:en")?.tab, .history)
+        XCTAssertEqual(ScreenshotState.parse("mode-both:en")?.screen, .modeBoth)
+        XCTAssertNil(ScreenshotState.parse("case/:en"))
+    }
+
+    @MainActor
+    func testCaseStatesNeedNoNetwork() throws {
+        let container = HistoryContainer.inMemory()
+        try withExtendedLifetime(container) {
+            for name in ["awaiting", "judging", "judged", "failed", "expired", "removed", "appeal", "one-sided"] {
+                let app = try XCTUnwrap(ScreenshotState.parse("case/\(name):en")).makeModel(container: container)
+                XCTAssertEqual(app.home.path, [.caseDetail(id: "case0000001")], name)
+                let page = app.makeCaseModel(id: "case0000001")
+                XCTAssertNotNil(page.view, name)
+                XCTAssertFalse(page.usesNetwork, name)
+            }
+            let tr = try XCTUnwrap(ScreenshotState.parse("case/judged:tr")).makeModel(container: container)
+            XCTAssertEqual(tr.makeCaseModel(id: "case0000001").view?.lang, .tr, "Turkish takes the Turkish view")
+
+            let list = try XCTUnwrap(ScreenshotState.parse("history-cases:en")).makeModel(container: container)
+            XCTAssertEqual(list.historySegment, .cases)
+            XCTAssertTrue(list.caseListOffered)
+            if case .ready(let cases) = list.caseList.state {
+                XCTAssertEqual(cases.count, 3)
+            } else {
+                XCTFail("the fixture list is shown")
+            }
+
+            let both = try XCTUnwrap(ScreenshotState.parse("mode-both:en")).makeModel(container: container)
+            XCTAssertTrue(both.home.isTwoSided(both))
+        }
+    }
 }
 #endif
