@@ -472,6 +472,8 @@ TURNSTILE_SECRET_KEY=
 # APPLE_PRIVATE_KEY_BASE64=
 # RESEND_API_KEY=
 # EMAIL_FROM=Judge <signin@okjudge.com>
+# REVIEW_ACCOUNT_EMAIL=   (store reviewers' test account; with REVIEW_ACCOUNT_CODE, a 6-digit code)
+# REVIEW_ACCOUNT_CODE=
 # PREMIUM_DAILY_CAP=500
 
 $(cloudflare_settings_block)

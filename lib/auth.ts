@@ -87,6 +87,38 @@ export function premiumEnabled(env: Env = process.env): boolean {
   return env.PREMIUM_ENABLED?.trim() !== "0" && authConfigured(env) && Boolean(env.ANTHROPIC_API_KEY);
 }
 
+/**
+ * The store-review account: one address whose emailed sign-in code is always
+ * REVIEW_ACCOUNT_CODE, and to which no email is sent (App Review has no inbox
+ * of ours). Needs REVIEW_ACCOUNT_EMAIL, a 6-digit code that is not a trivial
+ * run of digits, and email sign-in configured (the code plugin is only loaded
+ * then). It is an ordinary account otherwise: same limits, nothing granted.
+ */
+export function reviewAccount(env: Env = process.env): { email: string; code: string } | null {
+  const email = env.REVIEW_ACCOUNT_EMAIL?.trim().toLowerCase() ?? "";
+  const code = env.REVIEW_ACCOUNT_CODE?.trim() ?? "";
+  if (!email || !code) return null;
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return null;
+  if (!/^\d{6}$/.test(code)) return null;
+  if (/^(\d)\1{5}$/.test(code) || code === "123456" || code === "654321") return null;
+  return { email, code };
+}
+
+/** Code requests for the review address per hour, process-wide. Each request
+ * resets the per-code guess count, so without this a guess-and-resend search
+ * of the fixed code would be bounded only by the per-IP rate limit; with it,
+ * REVIEW_SENDS_PER_HOUR * EMAIL_CODE_ATTEMPTS guesses an hour. Past the cap
+ * the address gets a random code that is never sent: locked until the window
+ * moves on. */
+const REVIEW_SENDS_PER_HOUR = 10;
+const reviewSends: number[] = [];
+function reviewSendAllowed(now = Date.now()): boolean {
+  while (reviewSends.length && now - reviewSends[0] > 3_600_000) reviewSends.shift();
+  if (reviewSends.length >= REVIEW_SENDS_PER_HOUR) return false;
+  reviewSends.push(now);
+  return true;
+}
+
 function originOf(raw: string | undefined): string | null {
   if (!raw?.trim()) return null;
   try {
@@ -180,8 +212,16 @@ function buildOptions(env: Env, secret: string, client: Awaited<ReturnType<typeo
         allowedAttempts: EMAIL_CODE_ATTEMPTS,
         storeOTP: "hashed",
         rateLimit: EMAIL_SIGNIN_RATE,
+        // The review account gets its fixed code (see reviewAccount); anyone
+        // else a random one.
+        generateOTP: ({ email, type }) => {
+          const review = reviewAccount(env);
+          if (type !== "sign-in" || !review || email.toLowerCase() !== review.email) return undefined;
+          return reviewSendAllowed() ? review.code : undefined;
+        },
         sendVerificationOTP: async ({ email, otp, type }, ctx) => {
           if (type !== "sign-in") return; // refused earlier by hooks.before
+          if (reviewAccount(env)?.email === email.trim().toLowerCase()) return; // the reviewer knows the code
           await sendSignInCodeEmail({ to: email, code: otp, lang: langFromRequestUrl(ctx?.request?.url) });
         },
       }),
@@ -359,6 +399,8 @@ const CONFIG_KEYS = [
   "APPLE_PRIVATE_KEY_BASE64",
   "APPLE_APP_BUNDLE_ID",
   "RESEND_API_KEY",
+  "REVIEW_ACCOUNT_EMAIL",
+  "REVIEW_ACCOUNT_CODE",
   "EMAIL_FROM",
   "TURNSTILE_SECRET_KEY",
 ];
