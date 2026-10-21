@@ -7,6 +7,32 @@
  *   mobile/shared/fixtures/display-vectors.json  expected labels, tug, tilt, waits, errors,
  *                                                restored names
  *
+ * verdicts.json also carries the Premium and account bodies the apps build and
+ * test against offline (each validated with the web's zod schemas where one
+ * exists, otherwise built with its TypeScript type):
+ *   config                  GET /api/v1/config: full (every provider, premium and
+ *                           features on, purchases off) and minimal (google only,
+ *                           premium off)
+ *   me                      GET /api/v1/me: signed_out, free (premium_required),
+ *                           credits7, subscriber (used/cap), fair_use (resetsAt),
+ *                           no_credits
+ *   clarifyResponse         POST /api/v1/clarify: two_questions, none
+ *   evidenceResponse        POST /api/v1/evidence: {items} with ok, unreadable,
+ *                           refused, unsupported, too_large, failed
+ *   premiumVerdictResponse  response (premium verdict plus entitlement), accepted
+ *                           (202 body) and polls {judging, failed_quota, ready}
+ *                           (GET /api/v1/verdicts/{id}, lib/verdict-poll.ts)
+ *   cases                   views (CaseView per state: waiting_for_respondent,
+ *                           respondent_answered, judging, judged, judged_one_sided,
+ *                           judged_tr, appeal_judging, appeal_upheld,
+ *                           appeal_overturned, appeal_changed, failed, expired,
+ *                           removed), list (GET /api/v1/cases with next),
+ *                           createResponse (POST /api/v1/cases) and appealResponse
+ *   asyncErrors             {status, body} per code in the lib/api-errors.ts
+ *                           envelope: signin_required, premium_required,
+ *                           no_credits, fair_use, in_progress, appeal_used,
+ *                           case_closed, removed, rate_limited
+ *
  * Run from the repo root (needs `npm ci`): npx tsx mobile/shared/fixtures/export-fixtures.ts
  * Add --check to fail when the committed files are stale.
  */
@@ -24,10 +50,29 @@ import { KEY_BY_CAPTION } from "../../../lib/thinking-keys";
 import { leanTally, tugFinal, verdictLabel } from "../../../lib/verdict-display";
 import { applyText, checkSegments, extractText, planSegments, reassemble, unflattenText } from "../../../lib/translate";
 import { z } from "zod";
+import type { AppConfig as WebAppConfig, AuthProviders, Entitlement, MeResponse, SubscriptionView, Viewer } from "../../../lib/account-types";
 import {
+  CASE_POLL_MS,
+  type AppealResponse,
+  type CaseAppealView,
+  type CaseListResponse,
+  type CaseSideView,
+  type CaseVerdictView,
+  type CaseView,
+  type CreateCaseResponse,
+  type EvidenceItemResult,
+  type EvidenceUploadResponse,
+} from "../../../lib/case-types";
+import type { DisplayState } from "../../../lib/originals-types";
+import { PRICING } from "../../../lib/pricing";
+import { POLL_AFTER_MS, type VerdictAcceptedResponse, type VerdictPollResponse } from "../../../lib/verdict-poll";
+import {
+  ClarifyResponse,
+  FinalVerdict,
   TranslateResponse,
   VerdictResponse,
   VerdictResult as VerdictResultSchema,
+  type AppealOutcome,
   type NameMapping,
   type VerdictResult,
 } from "../../../lib/types";
@@ -349,6 +394,451 @@ const ERROR_BODIES: { body: unknown; status?: number }[] = [
   { body: null, status: 500 },
 ];
 
+// --- Premium, account and case fixtures ------------------------------------------
+
+// This worktree's lib/account-types.ts and lib/api-errors.ts predate the live
+// site's, so the two differences the fixtures need are spelled out here.
+/** Live AppConfig: the emailed-code sign-in flag and the feature switches. */
+type AppConfig = Omit<WebAppConfig, "signIn"> & {
+  signIn: AuthProviders & { emailCode: boolean };
+  features?: { cases: boolean; evidence: boolean };
+};
+/** Live lib/api-errors.ts envelope and default statuses for the codes below. */
+type AsyncErrorCode =
+  | "signin_required" | "premium_required" | "no_credits" | "fair_use" | "in_progress"
+  | "appeal_used" | "case_closed" | "removed" | "rate_limited";
+type AsyncErrorBody = { error: string; code: AsyncErrorCode; retryAfterSec?: number; resetsAt?: string };
+const ASYNC_ERROR_STATUS: Record<AsyncErrorCode, number> = {
+  signin_required: 401,
+  premium_required: 402,
+  no_credits: 402,
+  fair_use: 402,
+  in_progress: 409,
+  appeal_used: 409,
+  case_closed: 409,
+  removed: 410,
+  rate_limited: 429,
+};
+
+const T0 = "2026-10-20T09:00:00.000Z";
+const PERIOD_START = "2026-10-01T00:00:00.000Z";
+const PERIOD_END = "2026-10-31T00:00:00.000Z";
+const NO_SUB: Entitlement = { canUsePremium: false, blockedReason: null, credits: 0, subscription: null, resetsAt: null };
+const subscription = (used: number): SubscriptionView => ({
+  source: "app_store",
+  productId: "verdict_premium_monthly",
+  periodStart: PERIOD_START,
+  periodEnd: PERIOD_END,
+  willRenew: true,
+  used,
+  cap: 60,
+});
+
+const ENTITLEMENTS: Record<string, Entitlement> = {
+  free: { ...NO_SUB, blockedReason: "premium_required" },
+  credits7: { ...NO_SUB, canUsePremium: true, credits: 7 },
+  no_credits: { ...NO_SUB, blockedReason: "no_credits" },
+  subscriber: { canUsePremium: true, blockedReason: null, credits: 0, subscription: subscription(12), resetsAt: null },
+  fair_use: { canUsePremium: false, blockedReason: "fair_use", credits: 0, subscription: subscription(60), resetsAt: PERIOD_END },
+};
+
+const viewer = (id: string, name: string, email: string): Viewer => ({ id, email, name, image: null });
+
+const ME_BODIES: Record<string, MeResponse> = {
+  signed_out: { user: null, entitlement: null },
+  free: { user: viewer("usr_sam0001", "Sam", "sam@example.com"), entitlement: ENTITLEMENTS.free },
+  credits7: { user: viewer("usr_alex001", "Alex", "alex@example.com"), entitlement: ENTITLEMENTS.credits7 },
+  subscriber: { user: viewer("usr_jordan1", "Jordan", "jordan@example.com"), entitlement: ENTITLEMENTS.subscriber },
+  fair_use: { user: viewer("usr_deniz01", "Deniz", "deniz@example.com"), entitlement: ENTITLEMENTS.fair_use },
+  no_credits: { user: viewer("usr_ayse001", "Ayşe", "ayse@example.com"), entitlement: ENTITLEMENTS.no_credits },
+};
+
+const pricing = (): AppConfig["pricing"] => ({
+  currency: "USD",
+  purchasesEnabled: false,
+  packs: PRICING.packs.map((p) => ({ ...p })),
+  monthly: { ...PRICING.monthly },
+});
+
+const CONFIG_BODIES: Record<string, AppConfig> = {
+  full: {
+    signIn: { apple: true, google: true, email: true, emailCode: true, dev: false },
+    premiumEnabled: true,
+    pricing: pricing(),
+    features: { cases: true, evidence: true },
+  },
+  minimal: {
+    signIn: { apple: false, google: true, email: false, emailCode: false, dev: false },
+    premiumEnabled: false,
+    pricing: pricing(),
+    features: { cases: false, evidence: false },
+  },
+};
+
+const CLARIFY_BODIES = {
+  two_questions: ClarifyResponse.parse({
+    questions: [
+      { id: "q1", text: "Did you and Sam ever agree on what counts as a sandwich?" },
+      { id: "q2", text: "Is this about the menu wording or about what you were served?" },
+    ],
+  }),
+  none: ClarifyResponse.parse({ questions: [] }),
+};
+
+const EVIDENCE_TOKEN = "ev1.eyJhIjoidXNyXzEiLCJrIjoiY2hhdCIsImUiOjE3OTI1NzYwMDB9.q3Zk0pYb7wH2mT9sVxN1cLd8RfUe4JgA6oBiXyKnM5E";
+const EVIDENCE_ITEMS: EvidenceItemResult[] = [
+  {
+    index: 0,
+    status: "ok",
+    kind: "chat",
+    token: EVIDENCE_TOKEN,
+    preview: "Sam: it's a hot dog, not a sandwich\nMe: it's a filling in bread, that's a sandwich\nSam: then a taco is a sandwich too?",
+    expiresAt: "2026-10-20T10:00:00.000Z",
+  },
+  { index: 1, status: "unreadable", kind: null, token: null, preview: null, expiresAt: null },
+  { index: 2, status: "refused", kind: null, token: null, preview: null, expiresAt: null },
+  { index: 3, status: "unsupported", kind: null, token: null, preview: null, expiresAt: null },
+  { index: 4, status: "too_large", kind: null, token: null, preview: null, expiresAt: null },
+  { index: 5, status: "failed", kind: null, token: null, preview: null, expiresAt: null },
+];
+
+const PREMIUM_ID = SAMPLES.premium_factcheck.response.id;
+const PREMIUM_ENTITLEMENT: Entitlement = { ...ENTITLEMENTS.subscriber, subscription: subscription(13) };
+const PREMIUM_RESPONSE = { ...SAMPLES.premium_factcheck.response, entitlement: PREMIUM_ENTITLEMENT };
+const PREMIUM_ACCEPTED: VerdictAcceptedResponse = {
+  id: PREMIUM_ID,
+  status: "judging",
+  pollAfterMs: POLL_AFTER_MS,
+  poll: `/api/v1/verdicts/${PREMIUM_ID}`,
+  name_map: [],
+  suggested_display_a: null,
+  entitlement: PREMIUM_ENTITLEMENT,
+};
+const PREMIUM_POLLS: Record<string, VerdictPollResponse> = {
+  judging: { id: PREMIUM_ID, status: "judging", pollAfterMs: POLL_AFTER_MS },
+  failed_quota: { id: PREMIUM_ID, status: "failed", code: "quota", error: "The judges are busy right now. Your credit was not used." },
+  ready: {
+    id: PREMIUM_ID,
+    status: "ready",
+    result: SAMPLES.premium_factcheck.response.result,
+    createdAt: T0,
+    owner: { originals_stored: true, display: { namesVisible: true, a: null, b: null, others: {} } },
+  },
+};
+
+// Cases ----------------------------------------------------------------------------
+
+const CASE_ID = "case0000001";
+const INVITE = "https://okjudge.com/respond/Xk3pQ9vLm2Rt7YbN4cWd0A";
+const CASE_NAMES: NameMapping[] = [
+  { original: "I", replacement: "Party A" },
+  { original: "Sam", replacement: "Party B" },
+];
+const RESPONDENT_NAMES: NameMapping[] = [
+  { original: "I", replacement: "Party B" },
+  { original: "Alex", replacement: "Party A" },
+];
+const SIDE_A_TEXT = "Party B says a hot dog is a sandwich. I say nobody orders a sandwich hoping for a hot dog, and every menu lists them apart.";
+const SIDE_B_TEXT = "Party A is stubborn. A filling inside a split roll is a sandwich by any dictionary, and Party A knows it.";
+const JUDGED_AT = "2026-10-20T11:05:00.000Z";
+
+const sideA = (over: Partial<CaseSideView> = {}): CaseSideView => ({ party: "a", text: SIDE_A_TEXT, evidence: [], submittedAt: T0, ...over });
+const sideB = (over: Partial<CaseSideView> = {}): CaseSideView => ({
+  party: "b",
+  text: SIDE_B_TEXT,
+  evidence: [{ id: "ev_b1", kind: "chat", transcript: "Party A: it's a sandwich\nParty B: it's a hot dog" }],
+  submittedAt: "2026-10-20T11:00:00.000Z",
+  ...over,
+});
+
+const twoSided = (over: Partial<VerdictResult> = {}): VerdictResult =>
+  base({
+    two_sided: true,
+    tier: "premium",
+    headline: "Party A's menu test settles it",
+    agreed_facts: ["Both agree a hot dog is meat in a split roll.", "Both agree menus list hot dogs separately."],
+    disputed_facts: [
+      { fact: "Whether a dictionary definition covers a hot dog", party_a: "No, definitions assume sliced bread.", party_b: "Yes, any filling in bread counts.", finding: "a", decisive: true },
+      { fact: "Who started the argument", party_a: "Party B did.", party_b: "Party A did.", finding: "unsettled", decisive: false },
+    ],
+    would_change: ["A dictionary entry naming hot dogs as sandwiches."],
+    evidence_used: { a: 0, b: 1 },
+    ...over,
+  });
+
+const appealInfo = (outcome: AppealOutcome, confChange: number, summary: string): NonNullable<VerdictResult["appeal"]> => ({
+  by: "b",
+  outcome,
+  previous_id: "caseverd01",
+  previous_verdict: "side_a",
+  previous_confidence: 4,
+  confidence_change: confChange,
+  summary,
+});
+
+const caseVerdict = (seq: number, id: string, result: VerdictResult, appealId: string | null = null): CaseVerdictView => ({
+  seq,
+  id,
+  result,
+  appealId,
+  createdAt: seq === 1 ? JUDGED_AT : "2026-10-20T14:00:00.000Z",
+});
+const FIRST_VERDICT = caseVerdict(1, "caseverd01", twoSided());
+
+const appealRow = (over: Partial<CaseAppealView> = {}): CaseAppealView => ({
+  id: "appeal00001",
+  party: "b",
+  status: "judging",
+  error: null,
+  text: "The judges ignored the dictionary I attached: it lists any filling in bread as a sandwich.",
+  evidence: [],
+  outcome: null,
+  verdictId: null,
+  createdAt: "2026-10-20T13:50:00.000Z",
+  ...over,
+});
+
+const caseView = (over: Partial<CaseView> = {}): CaseView => ({
+  id: CASE_ID,
+  role: "owner",
+  yourParty: "a",
+  status: "awaiting_respondent",
+  mode: null,
+  lang: "en",
+  framework: { preset: "balanced" },
+  createdAt: T0,
+  expiresAt: "2026-10-27T09:00:00.000Z",
+  judgedAt: null,
+  respondentAnswered: false,
+  inviteUrl: null,
+  ownInvite: false,
+  sides: [sideA()],
+  verdicts: [],
+  appeals: [],
+  canJudgeNow: false,
+  appeal: { allowed: false, blockedBy: "not_judged" },
+  lastError: null,
+  pollAfterMs: null,
+  names: CASE_NAMES,
+  display: { namesVisible: true, a: null, b: null },
+  removed: null,
+  yourOriginal: "stored",
+  ...over,
+});
+
+const judgedCase = (over: Partial<CaseView> = {}): CaseView =>
+  caseView({
+    status: "judged",
+    mode: "two_sided",
+    judgedAt: JUDGED_AT,
+    respondentAnswered: true,
+    sides: [sideA(), sideB()],
+    verdicts: [FIRST_VERDICT],
+    appeal: { allowed: true, blockedBy: null },
+    display: { namesVisible: true, a: "Alex", b: "Sam" },
+    ...over,
+  });
+
+const appealedCase = (outcome: AppealOutcome, result: VerdictResult): CaseView =>
+  judgedCase({
+    verdicts: [FIRST_VERDICT, caseVerdict(2, "caseverd02", result, "appeal00001")],
+    appeals: [appealRow({ status: "judged", outcome, verdictId: "caseverd02" })],
+    appeal: { allowed: false, blockedBy: "appeal_used" },
+  });
+
+const CASE_VIEWS: Record<string, CaseView> = {
+  waiting_for_respondent: caseView({ inviteUrl: INVITE, canJudgeNow: true }),
+  respondent_answered: caseView({
+    role: "respondent",
+    yourParty: "b",
+    status: "judging",
+    mode: "two_sided",
+    respondentAnswered: true,
+    sides: [sideB({ evidence: [] })],
+    pollAfterMs: CASE_POLL_MS,
+    names: RESPONDENT_NAMES,
+  }),
+  judging: caseView({ status: "judging", mode: "two_sided", respondentAnswered: true, pollAfterMs: CASE_POLL_MS }),
+  judged: judgedCase(),
+  judged_one_sided: caseView({
+    status: "judged",
+    mode: "one_sided",
+    judgedAt: JUDGED_AT,
+    verdicts: [caseVerdict(1, "caseverd09", base({ tier: "premium", evidence_used: { a: 0, b: 0 } }))],
+    appeal: { allowed: false, blockedBy: "premium_required" },
+  }),
+  judged_tr: judgedCase({
+    lang: "tr",
+    sides: [
+      sideA({ text: "Taraf B sosisli sandviçin sandviç olduğunu söylüyor. Ben ise kimsenin sosisli bekleyerek sandviç sipariş etmediğini düşünüyorum." }),
+      sideB({ text: "Taraf A inatçı. Ortadan kesilmiş ekmeğin içindeki her dolgu sözlüğe göre sandviçtir.", evidence: [] }),
+    ],
+    verdicts: [
+      caseVerdict(
+        1,
+        "caseverd03",
+        twoSided({
+          lang: "tr",
+          headline: "Taraf A'nın menü testi meseleyi çözüyor",
+          crux: "'Sandviç' kelimesi biçimi mi yoksa günlük kullanımı mı izler?",
+          agreed_facts: ["İkisi de sosislinin bölünmüş ekmekte et olduğunu kabul ediyor."],
+          disputed_facts: [{ fact: "Sözlük tanımının sosisliyi kapsayıp kapsamadığı", party_a: "Hayır.", party_b: "Evet.", finding: "a", decisive: true }],
+          would_change: ["Sosisliyi sandviç sayan bir sözlük maddesi."],
+          evidence_used: { a: 0, b: 0 },
+        }),
+      ),
+    ],
+    display: { namesVisible: true, a: null, b: null },
+  }),
+  appeal_judging: judgedCase({ appeals: [appealRow()], appeal: { allowed: false, blockedBy: "busy" }, pollAfterMs: CASE_POLL_MS }),
+  appeal_upheld: appealedCase(
+    "upheld",
+    twoSided({ appeal: appealInfo("upheld", 0, "The appeal added no new fact, so the ruling stands with the same confidence.") }),
+  ),
+  appeal_overturned: appealedCase(
+    "overturned",
+    twoSided({
+      verdict: "side_b",
+      runs: ["side_b", "side_b", "side_a"],
+      confidence: 3,
+      headline: "On appeal, Party B's dictionary wins",
+      appeal: appealInfo("overturned", -1, "The dictionary evidence shows hot dogs fit the definition, so the ruling flips to Party B."),
+    }),
+  ),
+  appeal_changed: appealedCase(
+    "changed",
+    twoSided({
+      verdict: "split",
+      dispute_type: "mixed",
+      runs: ["split", "split", "side_a"],
+      confidence: 3,
+      headline: "On appeal, both have part of the answer",
+      split_points: [
+        { party: "a", point: "In everyday use a hot dog is not a sandwich." },
+        { party: "b", point: "By the dictionary it is." },
+      ],
+      appeal: appealInfo("changed", -1, "The new evidence narrows the point at issue, so the verdict becomes split."),
+    }),
+  ),
+  failed: caseView({ status: "failed", mode: "two_sided", respondentAnswered: true, lastError: "quota", canJudgeNow: true }),
+  expired: caseView({ status: "expired" }),
+  removed: judgedCase({
+    sides: [sideA({ text: "", removed: true }), sideB()],
+    appeal: { allowed: false, blockedBy: "not_party" },
+    removed: { at: "2026-10-21T08:00:00.000Z", parties: ["a"] },
+    names: null,
+    yourOriginal: "removed",
+  }),
+};
+
+const CASE_LIST: CaseListResponse = {
+  cases: [
+    {
+      id: "case0000001",
+      status: "awaiting_respondent",
+      mode: null,
+      createdAt: T0,
+      expiresAt: "2026-10-27T09:00:00.000Z",
+      respondentAnswered: false,
+      verdict: null,
+      headline: null,
+      excerpt: "Party B says a hot dog is a sandwich. I say nobody orders a sandwich hoping",
+      removed: false,
+    },
+    {
+      id: "case0000002",
+      status: "judged",
+      mode: "two_sided",
+      createdAt: "2026-10-18T17:30:00.000Z",
+      expiresAt: "2026-10-25T17:30:00.000Z",
+      respondentAnswered: true,
+      verdict: "side_a",
+      headline: "Party A's menu test settles it",
+      excerpt: "We split rent unevenly because my room is bigger, and Party B never agreed to",
+      removed: false,
+    },
+    {
+      id: "case0000003",
+      status: "judged",
+      mode: "one_sided",
+      createdAt: "2026-10-15T08:10:00.000Z",
+      expiresAt: "2026-10-22T08:10:00.000Z",
+      respondentAnswered: false,
+      verdict: "too_close",
+      headline: "Too close to call on the borrowed car",
+      excerpt: null,
+      removed: true,
+    },
+  ],
+  next: "eyJjIjoiMjAyNi0xMC0xNVQwODoxMDowMC4wMDBaIiwiaSI6ImNhc2UwMDAwMDAzIn0",
+};
+
+const CREATE_CASE_RESPONSE: CreateCaseResponse = {
+  case: CASE_VIEWS.waiting_for_respondent,
+  name_map: CASE_NAMES,
+  entitlement: PREMIUM_ENTITLEMENT,
+};
+const APPEAL_RESPONSE: AppealResponse = {
+  case: CASE_VIEWS.appeal_judging,
+  name_map: RESPONDENT_NAMES,
+  entitlement: { ...ENTITLEMENTS.credits7, credits: 6 },
+};
+
+/** Fails the export on a case body that the zod schemas or the view's own rules reject. */
+function validateCases(): void {
+  const views: [string, CaseView][] = [
+    ...Object.entries(CASE_VIEWS),
+    ["createResponse", CREATE_CASE_RESPONSE.case],
+    ["appealResponse", APPEAL_RESPONSE.case],
+  ];
+  for (const [name, v] of views) {
+    for (const verdict of v.verdicts) {
+      const p = VerdictResultSchema.safeParse(verdict.result);
+      if (!p.success) throw new Error(`case ${name} verdict ${verdict.id} is not a valid VerdictResult: ${p.error.message}`);
+    }
+    for (const a of v.appeals) {
+      if (a.verdictId && !v.verdicts.some((x) => x.id === a.verdictId)) throw new Error(`case ${name}: appeal ${a.id} points at a missing verdict`);
+    }
+    const busy = v.status === "judging" || v.appeals.some((a) => a.status === "judging");
+    if (busy !== (v.pollAfterMs !== null)) throw new Error(`case ${name}: pollAfterMs must be set exactly while something is judging`);
+  }
+  for (const c of CASE_LIST.cases) {
+    if (c.verdict !== null && !FinalVerdict.safeParse(c.verdict).success) throw new Error(`case list ${c.id}: bad verdict`);
+  }
+}
+
+const ASYNC_ERRORS = Object.fromEntries(
+  (
+    [
+      ["signin_required", "Sign in to use Premium."],
+      ["premium_required", "This needs Premium."],
+      ["no_credits", "You are out of credits."],
+      ["fair_use", "You have used this period's fair-use allowance.", { resetsAt: PERIOD_END }],
+      ["in_progress", "A verdict with this key is already being judged."],
+      ["appeal_used", "This side has already appealed."],
+      ["case_closed", "This case is closed."],
+      ["removed", "This was removed."],
+      ["rate_limited", "Too many requests. Try again shortly.", { retryAfterSec: 420 }],
+    ] as [AsyncErrorCode, string, Omit<AsyncErrorBody, "code" | "error">?][]
+  ).map(([code, msg, extra]) => [code, { status: ASYNC_ERROR_STATUS[code], body: { error: msg, code, ...extra } satisfies AsyncErrorBody }]),
+);
+
+/** The new top-level keys of verdicts.json, validated. */
+function premiumFixtures() {
+  const checked = VerdictResponse.safeParse(PREMIUM_RESPONSE);
+  if (!checked.success) throw new Error(`premium verdict is not a valid VerdictResponse: ${checked.error.message}`);
+  validateCases();
+  return {
+    config: CONFIG_BODIES,
+    me: ME_BODIES,
+    clarifyResponse: CLARIFY_BODIES,
+    evidenceResponse: { items: EVIDENCE_ITEMS } satisfies EvidenceUploadResponse,
+    premiumVerdictResponse: { response: PREMIUM_RESPONSE, accepted: PREMIUM_ACCEPTED, polls: PREMIUM_POLLS },
+    cases: { views: CASE_VIEWS, list: CASE_LIST, createResponse: CREATE_CASE_RESPONSE, appealResponse: APPEAL_RESPONSE },
+    asyncErrors: ASYNC_ERRORS,
+  };
+}
+
 function displayVectors() {
   const verdicts = Object.entries(SAMPLES).flatMap(([name, { response }]) =>
     LANGS.map((lang) => {
@@ -448,6 +938,7 @@ function main(): void {
     translateResponse: translate,
     storedVerdictResponse: stored,
     errorBodies: ERROR_BODIES,
+    ...premiumFixtures(),
   };
   const files: [string, string][] = [
     [join(OUT_DIR, "verdicts.json"), `${JSON.stringify(verdicts, null, 2)}\n`],
