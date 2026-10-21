@@ -2,8 +2,9 @@
  * Premium prices and store products: the one place to change them.
  * Pure module (no Next, DOM or Node imports) so the mobile app can reuse it.
  *
- * Prices are placeholders until a payment provider is wired up; while
- * `purchasesEnabled` is false the buy buttons read "Coming soon".
+ * `purchasesEnabled` here is the default (false: the buy buttons read
+ * "Coming soon"); the server reports PURCHASES_ENABLED=1 as true in
+ * GET /api/v1/config.
  */
 
 import type { PricingInfo, PricingPack } from "./account-types";

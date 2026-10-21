@@ -804,8 +804,8 @@ export async function deleteUserEntitlements(userId: string): Promise<void> {
 
 // --- Normalized purchase events ---------------------------------------------
 
-/** Normalized purchase event: the single entry point for future webhooks
- * (RevenueCat, web provider). */
+/** Normalized purchase event: the single entry point for purchase webhooks
+ * (RevenueCat in app/api/v1/webhooks/revenuecat, a future web provider). */
 export type StoreEvent =
   | {
       type: "credits_purchased";

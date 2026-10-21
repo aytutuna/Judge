@@ -20,6 +20,7 @@ const AUTH_VARS = [
   "EMAIL_FROM",
   "DEV_LOGIN",
   "PREMIUM_ENABLED",
+  "PURCHASES_ENABLED",
 ];
 
 function clearAuthEnv() {
@@ -115,6 +116,19 @@ describe("GET /api/v1/config", () => {
     vi.stubEnv("__NEXT_PRIVATE_ORIGIN", "http://127.0.0.1:3600");
     expect((await call("localhost:3600")).body.signIn.dev).toBe(true);
     expect((await call("192.168.1.20:3600")).body.signIn.dev).toBe(false);
+  });
+
+  it("pricing.purchasesEnabled is true only with PURCHASES_ENABLED=1", async () => {
+    clearAuthEnv();
+    expect((await call()).body.pricing.purchasesEnabled).toBe(false);
+    for (const v of ["0", "true", "yes"]) {
+      vi.stubEnv("PURCHASES_ENABLED", v);
+      expect((await call()).body.pricing.purchasesEnabled, v).toBe(false);
+    }
+    vi.stubEnv("PURCHASES_ENABLED", "1");
+    const { body } = await call();
+    expect(body.pricing).toEqual({ ...PRICING, purchasesEnabled: true });
+    expect(PRICING.purchasesEnabled).toBe(false);
   });
 
   it("returns a copy: callers cannot mutate the pricing config", async () => {

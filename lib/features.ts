@@ -11,3 +11,9 @@ export function casesEnabled(env: Env = process.env): boolean {
 export function evidenceEnabled(env: Env = process.env): boolean {
   return env.EVIDENCE_ENABLED?.trim() !== "0" && premiumEnabled(env);
 }
+
+/** Store purchases are live: PURCHASES_ENABLED=1 (off by default). Reported as
+ * `pricing.purchasesEnabled` by GET /api/v1/config. */
+export function purchasesEnabled(env: Env = process.env): boolean {
+  return env.PURCHASES_ENABLED?.trim() === "1";
+}

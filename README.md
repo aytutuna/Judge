@@ -152,9 +152,10 @@ Accounts are optional. Signed-out and free visitors get exactly the free
 experience above. Signing in (Apple, Google or an emailed link) unlocks
 **Premium**: clarifying questions, web fact-checking with sources and a
 stronger judge panel. It is paid for with credits (one premium verdict = one
-credit) or a monthly plan with a fair-use cap. There is no payment provider
-yet: prices live in `lib/pricing.ts`, the buy buttons read "Coming soon", and
-testers get premium from the admin script below.
+credit) or a monthly plan with a fair-use cap, bought in the apps through
+RevenueCat (see *Purchases* below). Prices live in `lib/pricing.ts`; until
+`PURCHASES_ENABLED=1` the buy buttons read "Coming soon". Testers get premium
+from the admin script below.
 
 Accounts use [Better Auth](https://www.better-auth.com) on the same database
 (`DATABASE_URL`). The tables (`user`, `session`, `account`, `verification`
@@ -183,6 +184,9 @@ after sign-in.
 | `CASES_ENABLED` | `1` | `0` turns off two-sided cases and appeals (`/api/v1/cases*` and `/api/v1/respond/*` answer `503 not_configured`, `GET /api/v1/config` reports `features.cases: false`). Always off when Premium is off |
 | `EVIDENCE_ENABLED` | `1` | `0` turns off screenshot evidence (upload endpoints answer `503 not_configured`, evidence tokens are refused with `400 evidence_invalid`, `features.evidence: false`). Always off when Premium is off |
 | `EVIDENCE_MODEL` | `claude-haiku-5-5` | Vision model that transcribes evidence images |
+| `PURCHASES_ENABLED` | *(empty)* | `1` = `GET /api/v1/config` reports `pricing.purchasesEnabled: true`, so the apps offer their in-app purchases. Anything else = false ("Coming soon") |
+| `REVENUECAT_WEBHOOK_SECRET` | *(empty)* | Shared secret for `POST /api/v1/webhooks/revenuecat`; set RevenueCat's webhook Authorization header to `Bearer <secret>`. Unset = the webhook answers `503 not_configured` |
+| `ALLOW_SANDBOX_PURCHASES` | *(empty)* | `1` = also apply RevenueCat events with `environment: SANDBOX` (TestFlight, Play test tracks). Leave unset on the live server: sandbox purchases are free |
 
 Sign-in providers without credentials are reported as unavailable by
 `GET /api/v1/config`, and the sign-in page shows them disabled.
@@ -422,6 +426,7 @@ The website and the future iOS/Android app share one JSON API. Base URL
 | `GET /api/v1/respond/{token}` / `POST` | The invite as the other person sees it / their side (no account) |
 | `POST /api/v1/respond/{token}/evidence` | The other person's evidence images |
 | `POST /api/v1/respond/{token}/appeals` | The other person adds context (signed in, Premium) |
+| `POST /api/v1/webhooks/revenuecat` | RevenueCat only (`Authorization: Bearer ${REVENUECAT_WEBHOOK_SECRET}`): applies a purchase event once; see *Purchases* |
 | `GET /api/v1/respond/{token}/originals` / `PATCH .../display` / `POST .../removal` | Party B (bound account or `Respondent-Claim` / `claim`): their original, their display name, removing their side |
 
 **Async verdicts (use these in the apps).** The site sits behind
@@ -620,23 +625,53 @@ taken out of the text; the same request can be retried, e.g. with initials), plu
   (e.g. App Attest / Play Integrity, or free verdicts for signed-in users
   under a per-user limit) before the app ships.
 
-**Purchases (future):** all purchase sources feed one account. Each grant
-records its source (`app_store`, `play_store`, `web`, `admin`, `promo`) and
-applies at most once per external transaction/event id. A webhook (for
-example RevenueCat, `POST /api/v1/webhooks/revenuecat` checked against a
-shared secret) maps each store event to one normalized `StoreEvent` and calls
-`applyStoreEvent()` in `lib/entitlements.ts`:
+### Purchases
 
-| StoreEvent | When |
+The apps sell through the App Store and Google Play with RevenueCat; the
+server is the source of truth for what a purchase grants, so no RevenueCat
+entitlement has to be set up (products only).
+
+1. **Products** (App Store Connect and Play Console, then imported into
+   RevenueCat): `pack_10` (consumable, 10 credits), `pack_30` (consumable, 30
+   credits), `monthly` (auto-renewing monthly subscription; on Google Play any
+   base plan id works, `monthly:<base plan>` is read as `monthly`). The
+   `verdict_credits_10`, `verdict_credits_30` and `verdict_premium_monthly`
+   ids in `STORE_PRODUCTS` (`lib/pricing.ts`) are accepted too.
+2. **Webhook** (RevenueCat → Integrations → Webhooks): URL
+   `https://okjudge.com/api/v1/webhooks/revenuecat`, Authorization header
+   `Bearer <REVENUECAT_WEBHOOK_SECRET>`, production events (sandbox events
+   are ignored unless `ALLOW_SANDBOX_PURCHASES=1`).
+3. **App:** `Purchases.logIn(user.id)` with our account id before buying,
+   then refresh `GET /api/v1/me` after a purchase.
+4. Set `PURCHASES_ENABLED=1` when the products are live.
+
+Every event the server has decided about answers `200`: applied
+(`{ "ok": true, "applied": true|false, "action": "<StoreEvent type>" }`,
+`applied: false` = already applied or nothing to apply it to), or ignored
+(`{ "ok": true, "ignored": true, "reason" }`, e.g. `unknown_product`,
+`unknown_user`, `sandbox`); the `TEST` event answers
+`{ "ok": true, "test": true }`. `401` wrong secret, `400`/`413` malformed or
+over 256 KB, `429` over 600 requests per 10 minutes per IP, `503` not
+configured or the database failing (RevenueCat retries for about 80
+minutes). Each purchase is granted at most once, whatever RevenueCat
+retries or replays:
+
+| RevenueCat event | Result |
 |---|---|
-| `{ type: "credits_purchased", eventId, source, userId, productId, credits, transactionId }` | A credit pack was bought (credits from `STORE_PRODUCTS` in `lib/pricing.ts`); granted once per `transactionId` |
-| `{ type: "subscription_active", eventId, source, userId, productId, originalTransactionId, periodStart, periodEnd, willRenew }` | Purchase, renewal, un-cancel or plan change; a new period resets the fair-use count |
-| `{ type: "subscription_will_not_renew", eventId, source, originalTransactionId }` | Auto-renew turned off; access stays until the period ends |
-| `{ type: "subscription_expired", eventId, source, originalTransactionId, at }` | The subscription ended (ignored if a later renewal already arrived) |
-| `{ type: "refund", eventId, source, transactionId }` | A refund: credits are taken back (never below 0), a refunded subscription ends at once |
+| `NON_RENEWING_PURCHASE` (or `INITIAL_PURCHASE`) of a pack | `credits_purchased`: the pack's credits, once per `transaction_id` |
+| `INITIAL_PURCHASE`, `RENEWAL`, `UNCANCELLATION`, `PRODUCT_CHANGE` of the plan | `subscription_active`: period `purchased_at_ms` to `expiration_at_ms`, renewing; a new period resets the fair-use count |
+| `CANCELLATION` of the plan, any reason but `CUSTOMER_SUPPORT` | `subscription_will_not_renew`: access stays until the period ends |
+| `CANCELLATION` with `cancel_reason: CUSTOMER_SUPPORT` (a refund) | `refund`: a pack's credits are taken back (never below 0); the plan ends at once |
+| `EXPIRATION` of the plan | `subscription_expired` at `expiration_at_ms` (ignored after a later renewal) |
+| `TEST` | `{ ok, test }`, nothing changes |
+| `BILLING_ISSUE`, `SUBSCRIPTION_PAUSED`, `TRANSFER`, a pack `CANCELLATION` that is not a refund, any other type | ignored |
 
-The app identifies the buyer to the store SDK with our `user.id` (e.g.
-RevenueCat `Purchases.logIn(user.id)`), then refreshes `GET /api/v1/me`.
+Stores: `APP_STORE`/`MAC_APP_STORE` → `app_store`, `PLAY_STORE` →
+`play_store`, `STRIPE`/`RC_BILLING`/`PADDLE` → `web`; others are ignored.
+The buyer is the first existing account among `app_user_id`,
+`original_app_user_id` and `aliases` (anonymous RevenueCat ids never match).
+`applyStoreEvent()` in `lib/entitlements.ts` is the single entry point, so a
+direct web provider can map its own webhook to the same `StoreEvent` union.
 Apple's rule for multiplatform services: credits or plans bought on the web
 may be used in the iOS app only if the same items are also sold as in-app
 purchases there.

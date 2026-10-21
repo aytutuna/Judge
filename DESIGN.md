@@ -34,7 +34,8 @@ Browser (cookie)            Native app (Bearer)
       ├── /api/v1/clarify          POST  premium: up to 2 questions
       ├── /api/v1/verdict          POST  free | premium   (same handler as /api/verdict)
       ├── /api/v1/verdicts/{id}    GET   stored verdict (no input text)
-      └── /api/v1/verdicts/{id}/translate POST  (same handler as /api/verdict/{id}/translate)
+      ├── /api/v1/verdicts/{id}/translate POST  (same handler as /api/verdict/{id}/translate)
+      └── /api/v1/webhooks/revenuecat     POST  RevenueCat only (shared secret)
 ```
 
 The free request path in `app/api/verdict/route.ts` is untouched: one early
@@ -109,7 +110,7 @@ Free verdicts from the app need a bot check before launch, because Turnstile
 is web-only: App Attest / Play Integrity, or free verdicts for signed-in
 bearer users under a per-user limit. Decide before the app ships.
 
-### Purchases and entitlement webhooks (future)
+### Purchases and entitlement webhooks
 Every grant stores its source (`admin | app_store | play_store | web | promo`)
 and is applied at most once per `(source, external id)`. The single entry
 point is `applyStoreEvent(e: StoreEvent)` in `lib/entitlements.ts`:
@@ -124,27 +125,52 @@ type StoreEvent =
   | { type: "refund"; eventId; source; transactionId };  // credits taken back (never below 0); subscription ends
 ```
 
-Recommended: RevenueCat for App Store, Play Store and web billing, so there
-is one webhook. The app calls `Purchases.logIn(<our user.id>)` before buying.
+RevenueCat handles App Store, Play Store and web billing, so there is one
+webhook. The app calls `Purchases.logIn(<our user.id>)` before buying.
 RevenueCat calls `POST /api/v1/webhooks/revenuecat` with
-`Authorization: Bearer ${REVENUECAT_WEBHOOK_SECRET}`; the handler maps the
-event and calls `applyStoreEvent()`; the app then refreshes `GET /me`.
-Mapping (verify field names against RevenueCat's docs when implementing):
+`Authorization: Bearer ${REVENUECAT_WEBHOOK_SECRET}` (constant-time compare;
+503 when unset; then 600 requests per 10 min per IP, counted only after the
+secret matches so forged requests cannot exhaust RevenueCat's allowance;
+256 KB body cap). The route
+(`app/api/v1/webhooks/revenuecat/route.ts`) maps the event with
+`mapRevenueCatEvent()` (`lib/revenuecat.ts`, no database access), resolves the
+buyer for grants and calls `applyStoreEvent()`; the app then refreshes
+`GET /me`. Field names follow RevenueCat's "Event Types and Fields" reference.
 
 | RevenueCat `type` | StoreEvent |
 |---|---|
-| `INITIAL_PURCHASE`, `RENEWAL`, `UNCANCELLATION`, `PRODUCT_CHANGE` (subscription) | `subscription_active` |
-| `NON_RENEWING_PURCHASE` (pack) | `credits_purchased` (credits from `STORE_PRODUCTS` in `lib/pricing.ts`) |
-| `CANCELLATION` (not a refund) | `subscription_will_not_renew` |
-| `CANCELLATION` with `cancel_reason: "CUSTOMER_SUPPORT"` | `refund` |
-| `EXPIRATION` | `subscription_expired` |
-| `TEST` | ignored |
+| `INITIAL_PURCHASE`, `RENEWAL`, `UNCANCELLATION`, `PRODUCT_CHANGE` (subscription; `new_product_id` when given) | `subscription_active` (`purchased_at_ms` → `expiration_at_ms`, `willRenew: true`, keyed by `original_transaction_id`) |
+| `NON_RENEWING_PURCHASE` or `INITIAL_PURCHASE` (pack) | `credits_purchased` (credits from `STORE_PRODUCTS` × `quantity`, keyed by `transaction_id`) |
+| `CANCELLATION` (subscription, not a refund) | `subscription_will_not_renew` |
+| `CANCELLATION` with `cancel_reason: "CUSTOMER_SUPPORT"` | `refund` (`transaction_id` for a pack, `original_transaction_id` for the plan) |
+| `EXPIRATION` (subscription) | `subscription_expired` at `expiration_at_ms` |
+| `TEST` | `200 { ok, test }` |
+| `BILLING_ISSUE`, `SUBSCRIPTION_PAUSED` (access continues; `EXPIRATION` ends it), `TRANSFER` (the ledger has no move between accounts), a pack `CANCELLATION` with another reason, other types | `200 { ignored, reason }` |
 
-`store`: `APP_STORE` → `app_store`, `PLAY_STORE` → `play_store`,
-`STRIPE`/`RC_BILLING` → `web`; `eventId = event.id`; sandbox events only
-with an explicit opt-in. A direct web provider maps its own webhook to the
-same union. Apple's multiplatform rule: items bought on the web may be used
-in the iOS app only if they are also sold as in-app purchases there.
+`store`: `APP_STORE`/`MAC_APP_STORE` → `app_store`, `PLAY_STORE` →
+`play_store`, `STRIPE`/`RC_BILLING`/`PADDLE` → `web`, others ignored. Google
+Play product ids `<subscription>:<base plan>` are read by the part before the
+colon. `eventId = event.id` (RevenueCat retries reuse it). Sandbox events are
+ignored unless `ALLOW_SANDBOX_PURCHASES=1`. Grants go to the first existing
+account among `app_user_id`, `original_app_user_id` and `aliases` (anonymous
+`$RCAnonymousID:` ids skipped); none = `200 { ignored: "unknown_user" }`, so
+RevenueCat does not retry forever. Events keyed by a transaction alone
+(will-not-renew, expiry, refund) need no account: one nobody has is
+`200 { applied: false }`. A database failure answers 503 so RevenueCat
+retries. A direct web provider maps its own webhook to the same union.
+Apple's multiplatform rule: items bought on the web may be used in the iOS
+app only if they are also sold as in-app purchases there.
+
+Known limits of the ledger rules (unchanged by the webhook): a purchase whose
+delivery failed and is retried after its refund was already applied is
+granted again (a subscription row that is not active is reactivated; a refund
+of credits not yet granted finds nothing). It needs a refund inside the
+roughly 80-minute retry window. `PRODUCT_CHANGE` applies the new product at
+once with the current period, which is harmless while there is one plan and
+must be revisited before a second (e.g. yearly) plan. `TRANSFER` is ignored:
+after a restore moves a purchase to another account, the next `RENEWAL`
+reassigns the subscription; RevenueCat's restore behavior can be set to keep
+purchases with the original App User ID.
 
 ## Domain and go-live
 

@@ -590,6 +590,17 @@ export async function deleteAuthUser(userId: string): Promise<void> {
   await ctx.internalAdapter.deleteUser(userId);
 }
 
+/** The first of these ids that is an existing account, else null (store
+ * webhooks name the buyer by our user id). */
+export async function findExistingUserId(ids: readonly string[]): Promise<string | null> {
+  const ctx = await (await getAuth()).$context;
+  for (const id of ids) {
+    const user = await ctx.internalAdapter.findUserById(id);
+    if (user) return user.id;
+  }
+  return null;
+}
+
 export const DEV_LOGIN_DEFAULT_EMAIL = "test@verdict.local";
 const DEV_EMAIL = /^[a-z0-9][a-z0-9._+-]{0,63}@verdict\.local$/;
 

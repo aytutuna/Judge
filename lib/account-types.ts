@@ -62,7 +62,7 @@ export type PricingPlan = { id: string; priceUsd: number; fairUseCap: number; pe
 
 export type PricingInfo = {
   currency: "USD";
-  /** False until a payment provider is wired up: buy buttons say "Coming soon". */
+  /** PURCHASES_ENABLED=1 on the server; false = buy buttons say "Coming soon". */
   purchasesEnabled: boolean;
   packs: PricingPack[];
   monthly: PricingPlan;
