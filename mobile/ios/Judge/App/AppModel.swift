@@ -18,9 +18,8 @@ enum LangPreference: String, CaseIterable, Sendable {
 }
 
 /// App-wide state and dependencies, created once in `JudgeApp` and shared
-/// through the environment. Sign-in and Premium (phase 2) slot in here: a
-/// Keychain `TokenStore` replaces `NoTokenStore` and the API already sends
-/// the bearer token when one exists.
+/// through the environment. The API sends the bearer token from the token
+/// store (the Keychain in the app); `account` owns sign-in.
 @MainActor
 @Observable
 final class AppModel {
@@ -33,6 +32,7 @@ final class AppModel {
     let turnstile: TurnstileBotCheck?
     let history: HistoryStore
     let home: HomeModel
+    let account: AccountModel
     /// Whether Home saves the unsent draft and brings it back next session
     /// (off for screenshot states, so they neither read nor overwrite it).
     let persistsDraft: Bool
@@ -45,7 +45,7 @@ final class AppModel {
         config: AppConfig,
         container: ModelContainer,
         defaults: UserDefaults = .standard,
-        tokenStore: any TokenStore = NoTokenStore(),
+        tokenStore: any TokenStore = KeychainTokenStore(),
         persistsDraft: Bool = true,
         api: JudgeAPI? = nil
     ) {
@@ -64,6 +64,7 @@ final class AppModel {
         }
         history = HistoryStore(context: container.mainContext)
         home = HomeModel(preset: defaults.string(forKey: Self.presetKey) ?? Preset.defaultID)
+        account = AccountModel(api: self.api)
     }
 
     /// The UI language right now. Every string lookup takes it explicitly,

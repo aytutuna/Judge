@@ -1,7 +1,7 @@
 import Foundation
 
-/// Where a signed-in session token lives. Phase 1 never has one
-/// (`NoTokenStore`); phase 2 adds a Keychain-backed store.
+/// Where a signed-in session token lives: the Keychain in the app
+/// (`KeychainTokenStore`), memory in tests and screenshot states.
 protocol TokenStore: Sendable {
     func token() -> String?
     func setToken(_ token: String)
@@ -162,7 +162,7 @@ struct JudgeAPI: Sendable {
                 retryAfterHeader: http.value(forHTTPHeaderField: "Retry-After")
             )
             if http.statusCode == 401, failure.code == "signin_required" {
-                // Phase 2: the session expired; the account layer observes this.
+                // The session expired; AccountModel signs out on this code.
                 tokenStore.clear()
             }
             throw failure

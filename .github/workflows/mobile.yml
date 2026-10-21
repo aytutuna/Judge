@@ -89,7 +89,7 @@ jobs:
           xcrun simctl install "$UDID" "$APP"
           samples=$(python3 -c 'import json; print(" ".join(json.load(open("../shared/fixtures/verdicts.json"))["verdictResponses"]))')
           for lang in en tr; do
-            for state in home home-error judging history settings $(for s in $samples; do echo "verdict/$s"; done); do
+            for state in home home-error judging history settings signin signin-code account $(for s in $samples; do echo "verdict/$s"; done); do
               xcrun simctl terminate "$UDID" com.okjudge.judge 2>/dev/null || true
               xcrun simctl launch "$UDID" com.okjudge.judge -JudgeScreenshotState "$state:$lang" > /dev/null
               sleep 4

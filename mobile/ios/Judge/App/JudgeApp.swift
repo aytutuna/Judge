@@ -51,6 +51,7 @@ struct RootView: View {
 
     var body: some View {
         let lang = app.lang
+        @Bindable var account = app.account
         TabView(selection: $tab) {
             HomeTab()
                 .tabItem { Label(L10n.appTabNew(lang), systemImage: "square.and.pencil") }
@@ -66,6 +67,12 @@ struct RootView: View {
         .toolbarBackground(.visible, for: .tabBar)
         .environment(\.locale, lang.locale)
         .turnstileHost(app.turnstile, lang: lang)
+        .sheet(isPresented: $account.isSignInPresented, onDismiss: { app.account.signInDismissed() }) {
+            SignInView()
+                .environment(app)
+                .presentationDragIndicator(.visible)
+        }
+        .task { await app.account.start() }
         .overlay {
             // The first frame repeats the launch screen, then fades into Home.
             if showLaunchMark {

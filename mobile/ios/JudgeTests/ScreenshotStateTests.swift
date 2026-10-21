@@ -13,6 +13,11 @@ final class ScreenshotStateTests: XCTestCase {
         XCTAssertEqual(ScreenshotState.parse("history:en")?.tab, .history)
         XCTAssertEqual(ScreenshotState.parse("settings:tr")?.tab, .settings)
         XCTAssertEqual(ScreenshotState.parse("verdict/split:en")?.tab, .new)
+        XCTAssertEqual(ScreenshotState.parse("signin:en")?.screen, .signIn)
+        XCTAssertEqual(ScreenshotState.parse("signin-code:tr")?.screen, .signInCode)
+        XCTAssertEqual(ScreenshotState.parse("signin:tr")?.tab, .new)
+        XCTAssertEqual(ScreenshotState.parse("account:en")?.screen, .account)
+        XCTAssertEqual(ScreenshotState.parse("account:en")?.tab, .settings)
     }
 
     func testRejectsMalformedValues() {
@@ -48,6 +53,37 @@ final class ScreenshotStateTests: XCTestCase {
             XCTAssertEqual(app.config.apiBaseURL.host, "127.0.0.1")
             XCTAssertFalse(app.persistsDraft)
             XCTAssertEqual(app.lang, .en)
+        }
+    }
+
+    @MainActor
+    func testSignInStatesOpenTheSheetWithoutNetwork() throws {
+        let container = HistoryContainer.inMemory()
+        try withExtendedLifetime(container) {
+            let signIn = try XCTUnwrap(ScreenshotState.parse("signin:en")).makeModel(container: container)
+            XCTAssertTrue(signIn.account.isSignInPresented)
+            XCTAssertFalse(signIn.account.isSignedIn)
+            XCTAssertFalse(signIn.account.usesNetwork)
+            XCTAssertEqual(signIn.account.signInProviders?.apple, true)
+            XCTAssertEqual(signIn.account.step, .choose)
+
+            let code = try XCTUnwrap(ScreenshotState.parse("signin-code:tr")).makeModel(container: container)
+            XCTAssertTrue(code.account.isSignInPresented)
+            XCTAssertEqual(code.account.step, .code(email: "sam@example.com"))
+            XCTAssertEqual(code.lang, .tr)
+        }
+    }
+
+    @MainActor
+    func testAccountStateIsSignedInWithoutAToken() throws {
+        let container = HistoryContainer.inMemory()
+        try withExtendedLifetime(container) {
+            let app = try XCTUnwrap(ScreenshotState.parse("account:en")).makeModel(container: container)
+            XCTAssertTrue(app.account.isSignedIn)
+            XCTAssertEqual(app.account.user?.email, "sam@example.com")
+            XCTAssertEqual(app.account.entitlement?.isPremium, false)
+            XCTAssertFalse(app.account.isSignInPresented)
+            XCTAssertNil(app.api.tokenStore.token(), "screenshots never hold a real token")
         }
     }
 

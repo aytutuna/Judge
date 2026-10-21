@@ -410,13 +410,15 @@ final class HomeResumeTests: XCTestCase {
 
     private var posts: Int { StubURLProtocol.requests.filter { $0.httpMethod == "POST" }.count }
 
+    /// Verdicts need an account, so the app starts signed in unless told otherwise.
     @MainActor
-    private func makeApp(container: ModelContainer) throws -> AppModel {
+    private func makeApp(container: ModelContainer, token: String? = "s3ss10n") throws -> AppModel {
         let config = AppConfig(apiBaseURL: AppConfig.production, shareBaseURL: AppConfig.production, turnstileSiteKey: "", version: "1", build: "1")
         let defaults = try XCTUnwrap(UserDefaults(suiteName: "judge.tests.\(UUID().uuidString)"))
         let api = JudgeAPI(
             baseURL: AppConfig.production,
             userAgent: "Judge-iOS/test",
+            tokenStore: MemoryTokenStore(token: token),
             session: JudgeAPI.makeSession(protocolClasses: [StubURLProtocol.self]),
             pollPolicy: PollPolicy(
                 firstMs: 10, factor: 1.5, maxMs: 20, errorMaxMs: 40, capMs: 100,
@@ -424,6 +426,7 @@ final class HomeResumeTests: XCTestCase {
             )
         )
         let app = AppModel(config: config, container: container, defaults: defaults, persistsDraft: false, api: api)
+        app.account.usesNetwork = false
         app.home.argument = Self.text
         return app
     }
@@ -537,6 +540,70 @@ final class HomeResumeTests: XCTestCase {
         home.submit(app: app)
         try await waitUntil("the verdict") { home.arrived != nil }
         XCTAssertEqual(posts, 2)
+        withExtendedLifetime(container) {}
+    }
+
+    @MainActor
+    func testSignedOutSubmitOpensSignInAndSubmitsAfterSigningIn() async throws {
+        let container = HistoryContainer.inMemory()
+        let app = try makeApp(container: container, token: nil)
+        let home = app.home
+        let sample = try namedSample()
+        let server = ScriptedServer(post: try accepted(sample), polls: [try ready(sample)])
+        let sent = try reply(200, ["success": true])
+        let signedIn = try reply(200, ["token": "fr3sh", "user": ["id": "u1", "email": "sam@example.com", "name": "Sam", "image": NSNull()] as [String: Any]])
+        StubURLProtocol.handler = { request in
+            let path = request.url?.path ?? ""
+            if path.hasSuffix("/email-otp/send-verification-otp") { return sent }
+            if path.hasSuffix("/sign-in/email-otp") { return signedIn }
+            return server.reply(to: request)
+        }
+        var verdictPosts: Int {
+            StubURLProtocol.requests.filter { $0.httpMethod == "POST" && $0.url?.path == "/api/v1/verdict" }.count
+        }
+
+        home.submit(app: app)
+        XCTAssertTrue(app.account.isSignInPresented, "signed out, Get the verdict opens sign-in")
+        XCTAssertFalse(home.isJudging)
+        XCTAssertTrue(StubURLProtocol.requests.isEmpty, "no verdict request while signed out")
+
+        // Swiping the sheet away does not submit.
+        app.account.isSignInPresented = false
+        app.account.signInDismissed()
+        XCTAssertTrue(StubURLProtocol.requests.isEmpty)
+
+        home.submit(app: app)
+        XCTAssertTrue(app.account.isSignInPresented)
+        app.account.email = "sam@example.com"
+        await app.account.sendCode(lang: .en)
+        app.account.code = "123456"
+        await app.account.verifyCode()
+        XCTAssertTrue(app.account.isSignedIn)
+        XCTAssertFalse(app.account.isSignInPresented, "signing in closes the sheet")
+        XCTAssertEqual(verdictPosts, 0, "the verdict waits for the sheet to close")
+        app.account.signInDismissed()
+        try await waitUntil("the verdict") { home.arrived != nil }
+        XCTAssertEqual(verdictPosts, 1)
+        let verdictRequest = StubURLProtocol.requests.first { $0.url?.path == "/api/v1/verdict" }
+        XCTAssertEqual(verdictRequest?.value(forHTTPHeaderField: "Authorization"), "Bearer fr3sh")
+        withExtendedLifetime(container) {}
+    }
+
+    @MainActor
+    func testVerdict401SignsOutWithoutAnErrorBox() async throws {
+        let container = HistoryContainer.inMemory()
+        let app = try makeApp(container: container)
+        let home = app.home
+        let refused = ScriptedServer(post: try reply(401, ["error": "Sign in first.", "code": "signin_required"]))
+        StubURLProtocol.handler = { refused.reply(to: $0) }
+
+        home.submit(app: app)
+        try await waitUntil("the sign-out") { !app.account.isSignedIn }
+        XCTAssertNil(app.api.tokenStore.token())
+        XCTAssertEqual(app.account.notice, .sessionExpired)
+        XCTAssertNil(home.error)
+        XCTAssertFalse(home.isJudging)
+        try await waitUntil("the sign-in sheet") { app.account.isSignInPresented }
         withExtendedLifetime(container) {}
     }
 }

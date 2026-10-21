@@ -36,6 +36,8 @@ final class HomeModel {
     @ObservationIgnored private var request: Task<Void, Never>?
     @ObservationIgnored private var unblock: Task<Void, Never>?
     @ObservationIgnored private var pending: PendingVerdict?
+    /// Told when the server refuses the session (401 signin_required).
+    @ObservationIgnored private weak var account: AccountModel?
 
     /// What was asked: "Try again" with the same request resumes its verdict.
     private struct RequestKey: Equatable {
@@ -98,8 +100,19 @@ final class HomeModel {
     /// The bot check runs first, with Home still on screen: its interactive
     /// sheet is presented from the root view, which cannot present while the
     /// judging cover is up. The cover goes up once there is a token.
+    ///
+    /// Verdicts need an account: signed out, this opens sign-in and submits
+    /// once the user has signed in.
     func submit(app: AppModel) {
         guard canSubmit() else { return }
+        account = app.account
+        guard app.account.isSignedIn else {
+            app.account.requireSignIn { [weak self, weak app] in
+                guard let self, let app else { return }
+                self.submit(app: app)
+            }
+            return
+        }
         error = nil
         arrived = nil
         arrivedID = nil
@@ -236,6 +249,11 @@ final class HomeModel {
 
     private func fail(_ failure: APIError) {
         isJudging = false
+        if failure.code == "signin_required", let account {
+            // The token is already cleared; sign-in comes up once the cover is gone.
+            account.sessionExpired(presentAfter: .milliseconds(600))
+            return
+        }
         error = failure
         if failure.code == "rate_limited", let wait = failure.retryAfterSec, wait > 0 {
             block(for: wait)

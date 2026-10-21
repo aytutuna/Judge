@@ -3,11 +3,15 @@ import SwiftUI
 struct SettingsView: View {
     @Environment(AppModel.self) private var app
     @State private var webLink: WebLink?
+    @State private var confirmSignOut = false
+    @State private var confirmDelete = false
 
     var body: some View {
         let lang = app.lang
         NavigationStack {
             List {
+                AccountSection(confirmSignOut: $confirmSignOut, confirmDelete: $confirmDelete)
+
                 Section {
                     languageRow(.system, title: L10n.appSettingsLanguageDevice(lang))
                     languageRow(.en, title: L10n.appLangEn(lang))
@@ -43,6 +47,21 @@ struct SettingsView: View {
             .sheet(item: $webLink) { link in
                 SafariView(url: link.url).ignoresSafeArea()
             }
+            .alert(L10n.appAccountSignOutConfirm(lang), isPresented: $confirmSignOut) {
+                Button(L10n.accountSignOut(lang), role: .destructive) {
+                    Task { await app.account.signOut() }
+                }
+                Button(L10n.appCancel(lang), role: .cancel) {}
+            }
+            .alert(L10n.appAccountDeleteTitle(lang), isPresented: $confirmDelete) {
+                Button(L10n.appAccountDeleteConfirm(lang), role: .destructive) {
+                    Task { await app.account.deleteAccount() }
+                }
+                Button(L10n.accountDeleteCancel(lang), role: .cancel) {}
+            } message: {
+                Text(L10n.appAccountDeleteBody(lang))
+            }
+            .task { await app.account.refresh() }
         }
     }
 

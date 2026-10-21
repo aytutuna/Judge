@@ -7,8 +7,9 @@ import SwiftData
 /// only) with no network.
 ///
 /// Launch argument: `-JudgeScreenshotState <screen>:<lang>`, where screen is
-/// `home`, `home-error`, `judging`, `history`, `settings` or
-/// `verdict/<sample>` (a key of `verdictResponses`), and lang is `en` or `tr`.
+/// `home`, `home-error`, `judging`, `history`, `settings`, `signin`,
+/// `signin-code`, `account` (Settings, signed in) or `verdict/<sample>` (a
+/// key of `verdictResponses`), and lang is `en` or `tr`.
 /// Examples: `home:tr`, `verdict/win_a_self:tr`, `history:en`.
 ///
 /// The state runs on an in-memory history store and a separate defaults
@@ -22,6 +23,9 @@ struct ScreenshotState {
         case verdict(sample: String)
         case history
         case settings
+        case signIn
+        case signInCode
+        case account
     }
 
     static let argument = "-JudgeScreenshotState"
@@ -31,9 +35,9 @@ struct ScreenshotState {
 
     var tab: RootTab {
         switch screen {
-        case .home, .homeError, .judging, .verdict: return .new
+        case .home, .homeError, .judging, .verdict, .signIn, .signInCode: return .new
         case .history: return .history
-        case .settings: return .settings
+        case .settings, .account: return .settings
         }
     }
 
@@ -53,6 +57,9 @@ struct ScreenshotState {
         case "judging": screen = .judging
         case "history": screen = .history
         case "settings": screen = .settings
+        case "signin": screen = .signIn
+        case "signin-code": screen = .signInCode
+        case "account": screen = .account
         default:
             guard name.hasPrefix("verdict/") else { return nil }
             let sample = String(name.dropFirst("verdict/".count))
@@ -77,7 +84,8 @@ struct ScreenshotState {
             version: base.version,
             build: base.build
         )
-        let app = AppModel(config: config, container: container, defaults: defaults, persistsDraft: false)
+        let app = AppModel(config: config, container: container, defaults: defaults, tokenStore: MemoryTokenStore(), persistsDraft: false)
+        app.account.usesNetwork = false
         app.setLangPreference(lang == .tr ? .tr : .en)
         apply(to: app)
         return app
@@ -98,6 +106,22 @@ struct ScreenshotState {
             guard let session = ScreenshotFixtures.session(sample) else { return }
             app.home.updateSession(session)
             app.home.path = [.verdict(id: session.id)]
+        case .signIn:
+            app.home.argument = ExampleArgument.all[0].text(lang)
+            app.account.showForScreenshot(providers: Self.allProviders)
+            app.account.isSignInPresented = true
+        case .signInCode:
+            app.home.argument = ExampleArgument.all[0].text(lang)
+            app.account.showForScreenshot(providers: Self.allProviders, step: .code(email: Self.email), email: Self.email)
+            app.account.isSignInPresented = true
+        case .account:
+            app.account.showForScreenshot(
+                providers: Self.allProviders,
+                info: AccountInfo(
+                    user: Viewer(id: "user000001", email: Self.email, name: "Sam"),
+                    entitlement: Entitlement(canUsePremium: false, blockedReason: "premium_required", credits: 0)
+                )
+            )
         case .history:
             // Fixed times, newest first, an hour apart.
             let newest = Date(timeIntervalSince1970: 1_792_000_000)
@@ -108,6 +132,9 @@ struct ScreenshotState {
             }
         }
     }
+
+    private static let email = "sam@example.com"
+    private static let allProviders = SignInProviders(apple: true, google: true, email: true, emailCode: true)
 }
 
 /// Reads verdicts.json from the app bundle (Debug builds copy it in; Release
