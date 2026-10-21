@@ -88,10 +88,17 @@ final class AccountModel {
     var pricing: PricingInfo { serverConfig?.pricing ?? .fallback }
 
     /// A premium answer carried the account's new balance: show it at once.
+    /// Before /me has answered there is no account to put it on; /me brings it.
     func applyEntitlement(_ entitlement: Entitlement) {
-        guard isSignedIn else { return }
-        info = AccountInfo(user: info?.user, entitlement: entitlement)
+        guard isSignedIn, var current = info else { return }
+        current.entitlement = entitlement
+        info = current
     }
+
+    /// Told whenever the session ends: `true` when the user signed out or
+    /// deleted the account (data kept for this account goes too), `false`
+    /// when the server ended it.
+    @ObservationIgnored var onSessionEnded: (@MainActor (_ byUser: Bool) -> Void)?
 
     /// Refetches /me in the background (after a premium outcome or a 402).
     func refreshSoon() {
@@ -307,7 +314,7 @@ final class AccountModel {
         busy = .signOut
         defer { busy = nil }
         try? await api.signOut()
-        clearSession()
+        clearSession(byUser: true)
         notice = .signedOut
     }
 
@@ -325,7 +332,7 @@ final class AccountModel {
         do {
             try await api.deleteAccount()
             guard isSameSession(asked) else { return }
-            clearSession()
+            clearSession(byUser: true)
             notice = .deleted
         } catch let error as APIError where error.code == "signin_required" {
             guard isSameSession(asked) else { return }
@@ -334,7 +341,7 @@ final class AccountModel {
             let check = try? await api.me()
             guard isSameSession(asked) else { return }
             if let check, check.user == nil {
-                clearSession()
+                clearSession(byUser: true)
                 notice = .deleted
             } else {
                 failure = .deleteFailed
@@ -371,13 +378,14 @@ final class AccountModel {
         }
     }
 
-    private func clearSession() {
+    private func clearSession(byUser: Bool = false) {
         api.tokenStore.clear()
         isSignedIn = false
         info = nil
         failure = nil
         step = .choose
         code = ""
+        onSessionEnded?(byUser)
     }
 
     // MARK: - Error mapping

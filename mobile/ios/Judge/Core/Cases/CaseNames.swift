@@ -11,6 +11,8 @@ protocol CaseNamesStore: Sendable {
     func names(caseID: String) -> [NameMapping]
     func save(caseID: String, _ map: [NameMapping])
     func forget(caseID: String)
+    /// Every case's names (signing out or deleting the account).
+    func forgetAll()
 }
 
 enum CaseNames {
@@ -75,6 +77,16 @@ final class KeychainCaseNamesStore: CaseNamesStore {
         }
     }
 
+    func forgetAll() {
+        lock.withLock {
+            let all: [String: Any] = [
+                kSecClass as String: kSecClassGenericPassword,
+                kSecAttrService as String: service,
+            ]
+            _ = SecItemDelete(all as CFDictionary)
+        }
+    }
+
     private func query(_ caseID: String) -> [String: Any] {
         [
             kSecClass as String: kSecClassGenericPassword,
@@ -110,5 +122,9 @@ final class MemoryCaseNamesStore: CaseNamesStore {
 
     func forget(caseID: String) {
         state.withLock { $0[caseID] = nil }
+    }
+
+    func forgetAll() {
+        state.withLock { $0 = [:] }
     }
 }

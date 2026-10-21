@@ -56,7 +56,8 @@ final class CaseModel {
     /// Off for screenshot states: no fetches, no polling.
     @ObservationIgnored var usesNetwork = true
     @ObservationIgnored private var failures = 0
-    @ObservationIgnored private var loadedOnce = false
+    /// Tests shorten the waits between polls.
+    @ObservationIgnored var pollScale: Double = 1
     @ObservationIgnored private let keys = IdempotencyKeys()
     @ObservationIgnored private let api: JudgeAPI
     @ObservationIgnored private let namesStore: any CaseNamesStore
@@ -81,24 +82,27 @@ final class CaseModel {
 
     // MARK: - Loading and polling
 
-    /// Loads the case when there is none yet, then polls while the server
-    /// asks for it. Runs until cancelled (the screen goes away) or nothing
-    /// is being judged anymore.
+    /// Polls while the server asks for it. Runs until cancelled (the screen
+    /// goes away, or `generation` changes and the screen restarts it) or
+    /// nothing is being judged anymore.
     func run() async {
         guard usesNetwork else { return }
-        // A view created on this phone shows at once; it is refreshed once anyway.
-        if !loadedOnce {
-            loadedOnce = true
-            await reload()
-        }
         while !Task.isCancelled, let delay = CaseLogic.nextPollDelay(view, failures: failures) {
             do {
-                try await Task.sleep(for: .milliseconds(Int(delay)))
+                try await Task.sleep(for: .milliseconds(Int(delay * pollScale)))
             } catch {
                 return
             }
             await reload()
         }
+    }
+
+    /// Loads the case again and restarts polling with what came back: the
+    /// screen appearing, pull to refresh, "Try again", signing in.
+    func refresh() async {
+        guard usesNetwork else { return }
+        await reload()
+        generation += 1
     }
 
     /// GET the case once. A failed refresh keeps the last view.
@@ -229,6 +233,7 @@ final class CaseModel {
             } else if case .server(let status, _) = failure, status == 402 {
                 account?.refreshSoon()
             }
+            if failure.code == "evidence_invalid" { appealEvidence.invalidateTokens() }
             appealError = failure
         }
     }

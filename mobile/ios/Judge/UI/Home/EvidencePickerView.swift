@@ -1,5 +1,6 @@
 import PhotosUI
 import SwiftUI
+import UniformTypeIdentifiers
 
 /// The screenshot picker (components/case/EvidencePicker.tsx): picked
 /// images upload at once and each shows how it went; a read image can show
@@ -74,13 +75,40 @@ struct EvidencePickerView: View {
         let evidence = evidence
         let api = app.api
         let account = app.account
-        Task {
-            var files: [Data?] = []
-            for item in fitting {
-                files.append(try? await item.loadTransferable(type: Data.self))
-            }
-            await evidence.process(ids, files: files, api: api, account: account)
+        // Each item is loaded only when its turn comes, as a file copy.
+        let loaders: [EvidenceLoader] = fitting.map { item in
+            { await PickedImage.load(item) }
         }
+        Task {
+            await evidence.process(ids, loaders: loaders, api: api, account: account)
+        }
+    }
+}
+
+/// A picked photo copied to a temporary file, so the whole image never has
+/// to sit in memory (ImagePreparation reads it from disk and removes it).
+struct PickedImage: Transferable {
+    let url: URL
+
+    static var transferRepresentation: some TransferRepresentation {
+        FileRepresentation(importedContentType: .image) { received in
+            let copy = FileManager.default.temporaryDirectory
+                .appending(path: "evidence-\(UUID().uuidString)")
+                .appendingPathExtension(received.file.pathExtension)
+            try FileManager.default.copyItem(at: received.file, to: copy)
+            return PickedImage(url: copy)
+        }
+    }
+
+    /// The file copy, or the data as a fallback.
+    static func load(_ item: PhotosPickerItem) async -> EvidenceSource {
+        if let picked = try? await item.loadTransferable(type: PickedImage.self) {
+            return .file(picked.url)
+        }
+        if let data = try? await item.loadTransferable(type: Data.self) {
+            return .data(data)
+        }
+        return .missing
     }
 }
 

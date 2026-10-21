@@ -258,13 +258,45 @@ final class CaseTests: XCTestCase {
         XCTAssertEqual(page.view?.status, .judged)
         XCTAssertNil(CaseLogic.nextPollDelay(page.view, failures: 0))
 
-        // A page refreshes once, then stops when nothing is judging.
+        // Nothing judging: polling has nothing to do and returns.
         let settled = try model("judged")
         await settled.run()
-        XCTAssertEqual(router.count("GET", Self.casePath), 3)
-        XCTAssertEqual(settled.view?.status, .judged)
-        await settled.run()
-        XCTAssertEqual(router.count("GET", Self.casePath), 3, "a restarted poll does not reload again")
+        XCTAssertEqual(router.count("GET", Self.casePath), 2)
+    }
+
+    @MainActor
+    func testPullToRefreshRestartsPolling() async throws {
+        let router = StubRouter()
+        router.on("GET", Self.casePath, try caseReply("judging"), try caseReply("judged"))
+        router.install()
+        let page = try model("waiting_for_respondent")
+        page.pollScale = 0.001
+        await page.run()
+        XCTAssertEqual(router.count("GET", Self.casePath), 0, "nothing judging: no polling")
+
+        let before = page.generation
+        await page.refresh()
+        XCTAssertEqual(page.view?.status, .judging)
+        XCTAssertGreaterThan(page.generation, before, "the screen restarts polling")
+        XCTAssertNotNil(CaseLogic.nextPollDelay(page.view, failures: 0))
+
+        // The restarted poll carries on until the verdict is in.
+        await page.run()
+        XCTAssertEqual(page.view?.status, .judged)
+        XCTAssertEqual(router.count("GET", Self.casePath), 2)
+    }
+
+    @MainActor
+    func testRefreshAfterSigningInLeavesTheSignInState() async throws {
+        let router = StubRouter()
+        router.on("GET", Self.casePath, try PremiumFixtures.json(401, ["error": "x", "code": "signin_required"]), try caseReply("judged"))
+        router.install()
+        let page = try model(nil)
+        await page.refresh()
+        XCTAssertEqual(page.load, .signIn)
+        await page.refresh()
+        XCTAssertEqual(page.load, .ready)
+        XCTAssertEqual(page.view?.status, .judged)
     }
 
     @MainActor

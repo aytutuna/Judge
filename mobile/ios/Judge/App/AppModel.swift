@@ -48,6 +48,8 @@ final class AppModel {
     @ObservationIgnored var usesNetwork = true
     /// Case views created on this phone, so their page opens at once.
     @ObservationIgnored private var caseSeeds: [String: CaseView] = [:]
+    /// One model per case page, so a re-rendered screen keeps its state.
+    @ObservationIgnored private var caseModels: [String: CaseModel] = [:]
 
     private let defaults: UserDefaults
     private static let langKey = "settings.lang"
@@ -81,6 +83,14 @@ final class AppModel {
         home = HomeModel(preset: defaults.string(forKey: Self.presetKey) ?? Preset.defaultID)
         account = AccountModel(api: self.api)
         loadTierChoice()
+        let names = self.caseNames
+        let list = caseList
+        account.onSessionEnded = { [weak self] byUser in
+            list.reset()
+            self?.caseModels = [:]
+            // Real names kept for this account's cases go with it.
+            if byUser { names.forgetAll() }
+        }
     }
 
     /// The UI language right now. Every string lookup takes it explicitly,
@@ -134,12 +144,16 @@ final class AppModel {
 
     func seedCase(_ view: CaseView) {
         caseSeeds[view.id] = view
+        caseModels[view.id] = nil
     }
 
-    /// The model behind one case page, starting from a view created here.
+    /// The model behind one case page (kept per case), starting from a view
+    /// created here.
     func makeCaseModel(id: String) -> CaseModel {
+        if let model = caseModels[id] { return model }
         let model = CaseModel(id: id, api: api, namesStore: caseNames, account: account, initial: caseSeeds[id])
         model.usesNetwork = usesNetwork
+        caseModels[id] = model
         return model
     }
 

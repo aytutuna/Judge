@@ -118,6 +118,8 @@ final class HomeModel {
         let accepted: VerdictAccepted
         let key: RequestKey
         let since: Date
+        /// Premium: the request's Idempotency-Key, retired once the verdict arrives.
+        var idempotencyKey: String? = nil
     }
 
     /// After this long a pending verdict is dropped and a new one is asked
@@ -183,8 +185,15 @@ final class HomeModel {
         guard canSubmit(evidenceOn: app.evidenceOn) else { return }
         account = app.account
         guard app.account.isSignedIn else {
+            // What the user tapped for. Signing in can unlock Premium (and a
+            // remembered Premium choice); then the switch shows the new
+            // state and nothing is sent until the user taps again.
+            let tierAtTap = app.effectiveTier
+            let twoSidedAtTap = isTwoSided(app)
             app.account.requireSignIn { [weak self, weak app] in
-                guard let self, let app else { return }
+                guard let self, let app,
+                      app.effectiveTier == tierAtTap, self.isTwoSided(app) == twoSidedAtTap
+                else { return }
                 self.submit(app: app)
             }
             return
@@ -270,7 +279,7 @@ final class HomeModel {
             isCheckingBot = false
             isJudging = true
             request = Task { [weak self] in
-                await self?.judge(.resume(held.accepted), requestKey: key, api: api, history: history, preset: preset)
+                await self?.judge(.resume(held.accepted, idempotencyKey: held.idempotencyKey), requestKey: key, api: api, history: history, preset: preset)
             }
             return
         }
@@ -324,7 +333,7 @@ final class HomeModel {
             judgingPremium = true
             isJudging = true
             request = Task { [weak self] in
-                await self?.judge(.resume(held.accepted), requestKey: key, api: api, history: history, preset: input.preset, premium: true)
+                await self?.judge(.resume(held.accepted, idempotencyKey: held.idempotencyKey), requestKey: key, api: api, history: history, preset: input.preset, premium: true)
             }
             return
         }
@@ -442,7 +451,7 @@ final class HomeModel {
     private enum Start {
         case post(VerdictRequest)
         case premium(VerdictRequest, idempotencyKey: String)
-        case resume(VerdictAccepted)
+        case resume(VerdictAccepted, idempotencyKey: String?)
     }
 
     /// The request behind the judging cover: the POST (unless resuming),
@@ -468,8 +477,9 @@ final class HomeModel {
         do {
             let accepted: VerdictAccepted
             switch start {
-            case .resume(let held):
+            case .resume(let held, let token):
                 accepted = held
+                idempotencyKey = token
             case .post(let body):
                 switch try await api.startVerdict(body) {
                 case .ready(let payload):
@@ -494,7 +504,7 @@ final class HomeModel {
                 case .accepted(let fresh):
                     if let entitlement = fresh.entitlement { account?.applyEntitlement(entitlement) }
                     accepted = fresh
-                    pending = PendingVerdict(accepted: fresh, key: requestKey, since: .now)
+                    pending = PendingVerdict(accepted: fresh, key: requestKey, since: .now, idempotencyKey: token)
                 }
             }
             acceptedID = accepted.id
@@ -572,6 +582,10 @@ final class HomeModel {
 
     private func fail(_ failure: APIError) {
         isJudging = false
+        if failure.code == "evidence_invalid" {
+            // A token expired or failed its check: those images must be added again.
+            evidence.invalidateTokens()
+        }
         if failure.code == "signin_required", let account {
             // The token is already cleared; sign-in comes up once the cover is gone.
             account.sessionExpired(presentAfter: .milliseconds(600))

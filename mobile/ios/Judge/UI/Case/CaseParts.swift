@@ -273,7 +273,7 @@ struct CaseNamesCard: View {
                         .disabled(model.displayBusy)
                         .accessibilityLabel(L10n.caseDisplayName(lang))
                         .onChange(of: name) { _, value in
-                            let capped = String(value.prefix(40))
+                            let capped = HomeModel.capUTF16(value, max: 40)
                             if capped != value { name = capped }
                             model.displayNameDraft = capped
                         }

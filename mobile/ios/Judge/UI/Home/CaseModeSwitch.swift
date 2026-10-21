@@ -87,7 +87,7 @@ struct CaseNameField: View {
                 .disabled(disabled)
                 .accessibilityLabel(L10n.caseDisplayName(lang))
                 .onChange(of: text) { _, value in
-                    let capped = String(value.prefix(40))
+                    let capped = HomeModel.capUTF16(value, max: 40)
                     if capped != value { text = capped }
                     if capped != (home.caseName ?? fallback) { home.caseName = capped }
                 }

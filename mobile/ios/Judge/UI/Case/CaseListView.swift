@@ -13,9 +13,17 @@ final class CaseListModel {
     private(set) var state: Phase = .idle
     /// Off for screenshot states.
     @ObservationIgnored var usesNetwork = true
+    @ObservationIgnored private var inFlight = false
+
+    /// Signed out: nothing of the last account's list stays.
+    func reset() {
+        state = .idle
+    }
 
     func load(api: JudgeAPI, account: AccountModel) async {
-        guard usesNetwork, account.isSignedIn else { return }
+        guard usesNetwork, account.isSignedIn, !inFlight else { return }
+        inFlight = true
+        defer { inFlight = false }
         if case .ready = state {} else { state = .loading }
         do {
             state = .ready(try await api.listCases(limit: 20))
@@ -81,8 +89,12 @@ struct CaseListView: View {
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .task(id: app.account.isSignedIn) { await list.load(api: app.api, account: app.account) }
+        // Each appearance refreshes (the list may have changed meanwhile);
+        // signing in loads it. A load already running is not repeated.
         .onAppear { Task { await list.load(api: app.api, account: app.account) } }
+        .onChange(of: app.account.isSignedIn) { _, signedIn in
+            if signedIn { Task { await list.load(api: app.api, account: app.account) } } else { list.reset() }
+        }
     }
 
     private func message<Extra: View>(_ text: String, @ViewBuilder extra: () -> Extra) -> some View {

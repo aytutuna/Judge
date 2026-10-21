@@ -21,6 +21,24 @@ struct PreparedImage: Sendable, Equatable {
     }
 }
 
+/// One picked image as it arrives from the photo library.
+enum EvidenceSource: Sendable {
+    /// A copy of the file on disk (preferred: never held in memory whole).
+    case file(URL)
+    case data(Data)
+    /// Could not be loaded.
+    case missing
+}
+
+/// Loads one picked image when its turn comes.
+typealias EvidenceLoader = @Sendable () async -> EvidenceSource
+
+enum PreparedOutcome: Sendable, Equatable {
+    case ready(PreparedImage)
+    case tooLarge
+    case unsupported
+}
+
 /// Port of lib/image-downscale.ts. A screenshot is downscaled to 1600 px on
 /// its longest side and re-encoded as JPEG on white, which also drops EXIF
 /// data such as the GPS position. Small PNG and GIF images go as they are:
@@ -52,13 +70,46 @@ enum ImagePreparation {
             && bytes <= maxBytes
     }
 
+    /// Largest picked file read at all; anything bigger is "too big" without
+    /// being decoded (a photo this large would only be downscaled anyway).
+    static let maxSourceBytes = 40 * 1024 * 1024
+
+    /// One picked image, whatever form it came in. A file is removed once read.
+    static func prepare(_ source: EvidenceSource) -> PreparedOutcome {
+        switch source {
+        case .missing:
+            return .unsupported
+        case .data(let data):
+            guard data.count <= maxSourceBytes else { return .tooLarge }
+            return prepare(data).map(PreparedOutcome.ready) ?? .unsupported
+        case .file(let url):
+            defer { try? FileManager.default.removeItem(at: url) }
+            return prepare(fileAt: url)
+        }
+    }
+
+    /// A picked file read straight from disk: the whole file is only loaded
+    /// when it is uploaded as it is (small PNG or GIF).
+    static func prepare(fileAt url: URL) -> PreparedOutcome {
+        let size = (try? url.resourceValues(forKeys: [.fileSizeKey]))?.fileSize ?? 0
+        guard size <= maxSourceBytes else { return .tooLarge }
+        let sourceOptions: [CFString: Any] = [kCGImageSourceShouldCache: false]
+        guard let source = CGImageSourceCreateWithURL(url as CFURL, sourceOptions as CFDictionary) else { return .unsupported }
+        let prepared = prepare(source: source, bytes: size) { try? Data(contentsOf: url) }
+        return prepared.map(PreparedOutcome.ready) ?? .unsupported
+    }
+
     /// The upload for one picked file, or nil when it cannot be decoded at
     /// all (it is then reported as unsupported without an upload). Formats
     /// the server does not take (HEIC from the photo library) come out as JPEG.
     static func prepare(_ data: Data) -> PreparedImage? {
         let sourceOptions: [CFString: Any] = [kCGImageSourceShouldCache: false]
-        guard let source = CGImageSourceCreateWithData(data as CFData, sourceOptions as CFDictionary),
-              CGImageSourceGetCount(source) > 0,
+        guard let source = CGImageSourceCreateWithData(data as CFData, sourceOptions as CFDictionary) else { return nil }
+        return prepare(source: source, bytes: data.count) { data }
+    }
+
+    private static func prepare(source: CGImageSource, bytes: Int, original: () -> Data?) -> PreparedImage? {
+        guard CGImageSourceGetCount(source) > 0,
               let properties = CGImageSourceCopyPropertiesAtIndex(source, 0, nil) as? [CFString: Any],
               let pixelWidth = (properties[kCGImagePropertyPixelWidth] as? NSNumber)?.intValue,
               let pixelHeight = (properties[kCGImagePropertyPixelHeight] as? NSNumber)?.intValue,
@@ -70,7 +121,7 @@ enum ImagePreparation {
         let width = rotated ? pixelHeight : pixelWidth
         let height = rotated ? pixelWidth : pixelHeight
         let type = mimeType(of: source)
-        if keepOriginal(type: type, width: width, height: height, bytes: data.count) {
+        if keepOriginal(type: type, width: width, height: height, bytes: bytes), let data = original() {
             return PreparedImage(data: data, mimeType: type, width: width, height: height)
         }
         let size = fitWithin(width: width, height: height)

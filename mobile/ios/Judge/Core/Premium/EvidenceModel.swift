@@ -84,22 +84,34 @@ final class EvidenceModel {
         return fresh.map(\.id)
     }
 
-    /// Prepares the reserved images (`files[i]` belongs to `ids[i]`; nil =
-    /// it could not be loaded), uploads the ones that decode, and applies the
-    /// answer by index. Items removed meanwhile are left alone. A 401 ends
-    /// the session and a 402 refreshes the account, as everywhere else.
+    /// `process` with files already in memory (nil = could not be loaded).
     func process(_ ids: [UUID], files: [Data?], api: JudgeAPI, account: AccountModel? = nil) async {
-        let prepared: [PreparedImage?] = await Task.detached(priority: .userInitiated) {
-            files.map { file in file.flatMap(ImagePreparation.prepare) }
-        }.value
+        let loaders: [EvidenceLoader] = files.map { file in
+            { file.map(EvidenceSource.data) ?? .missing }
+        }
+        await process(ids, loaders: loaders, api: api, account: account)
+    }
 
+    /// Loads and prepares the reserved images one at a time (`loaders[i]`
+    /// belongs to `ids[i]`), so only one picked file is held at once, then
+    /// uploads the ones that decode and applies the answer by index. Items
+    /// removed meanwhile are left alone. A 401 ends the session and a 402
+    /// refreshes the account, as everywhere else.
+    func process(_ ids: [UUID], loaders: [EvidenceLoader], api: JudgeAPI, account: AccountModel? = nil) async {
         var send: [(id: UUID, image: PreparedImage)] = []
         for (index, id) in ids.enumerated() {
-            let image = index < prepared.count ? prepared[index] : nil
-            if let image {
+            let loader: EvidenceLoader? = index < loaders.count ? loaders[index] : nil
+            let outcome: PreparedOutcome = await Task.detached(priority: .userInitiated) {
+                guard let loader else { return .unsupported }
+                return ImagePreparation.prepare(await loader())
+            }.value
+            switch outcome {
+            case .ready(let image):
                 send.append((id, image))
                 update(id) { $0.thumb = UIImage(data: image.data) }
-            } else {
+            case .tooLarge:
+                update(id) { $0.status = .tooLarge }
+            case .unsupported:
                 update(id) { $0.status = .unsupported }
             }
         }
@@ -142,6 +154,16 @@ final class EvidenceModel {
                     item.preview = nil
                 }
             }
+        }
+    }
+
+    /// The server refused the tokens at submit (400 evidence_invalid): the
+    /// read images have to be added again.
+    func invalidateTokens() {
+        for index in items.indices where items[index].status == .ok {
+            items[index].status = .failed
+            items[index].token = nil
+            items[index].preview = nil
         }
     }
 

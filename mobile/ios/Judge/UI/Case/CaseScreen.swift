@@ -36,6 +36,7 @@ private struct CaseScreenContent: View {
 
     private static let title = TypeStyle(face: .interTight, weight: 700, size: 30, lineHeight: 1.05, tracking: -0.03, textStyle: .title1, maxScale: 1.4)
 
+    /// AppModel keeps one model per case, so a re-render reuses it.
     @MainActor
     init(app: AppModel, id: String) {
         self.app = app
@@ -66,8 +67,13 @@ private struct CaseScreenContent: View {
                 LangToggle(lang: lang) { app.setLangPreference($0 == .en ? .en : .tr) }
             }
         }
+        // Polling restarts whenever a new view arrives (generation).
         .task(id: model.generation) { await model.run() }
-        .refreshable { await model.reload() }
+        .onAppear { Task { await model.refresh() } }
+        .refreshable { await model.refresh() }
+        .onChange(of: app.account.isSignedIn) { _, signedIn in
+            if signedIn, model.load == .signIn { Task { await model.refresh() } }
+        }
         .sheet(item: $webLink) { link in
             SafariView(url: link.url).ignoresSafeArea()
         }
@@ -107,7 +113,7 @@ private struct CaseScreenContent: View {
                 .buttonStyle(PrimaryButtonStyle())
         case .error:
             ErrorBanner(message: L10n.caseLoadFailed(lang), retryTitle: L10n.caseRetry(lang)) {
-                Task { await model.reload() }
+                Task { await model.refresh() }
             }
         }
     }
