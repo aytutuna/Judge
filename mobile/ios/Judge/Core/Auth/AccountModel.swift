@@ -200,6 +200,11 @@ final class AccountModel {
             let identity = try await apple.authorize()
             let session = try await api.signInWithIDToken(provider: .apple, idToken: identity.identityToken, nonce: identity.rawNonce, apple: identity)
             finishSignIn(session)
+            // Codes expire in minutes and work once: send it now. Any
+            // answer or failure is ignored; the sign-in stands.
+            if let code = identity.authorizationCode, !code.isEmpty {
+                try? await api.storeAppleAuthorizationCode(code, token: session.token)
+            }
         } catch {
             failure = Self.signInFailure(error)
         }

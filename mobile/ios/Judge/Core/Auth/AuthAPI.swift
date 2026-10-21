@@ -51,6 +51,17 @@ extension JudgeAPI {
         return try await authPost("sign-in/social", body: ["provider": provider.rawValue, "idToken": token])
     }
 
+    /// POST /api/v1/auth/apple/code: hands the server Apple's one-time
+    /// authorization code under the new session's token. Sent on the raw
+    /// session so an answer never clears the token; callers ignore failures.
+    func storeAppleAuthorizationCode(_ code: String, token: String) async throws {
+        var request = makeRequest(url: endpoint("auth/apple/code"), method: "POST", timeout: AuthTimeout.call)
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        request.httpBody = try JSONSerialization.data(withJSONObject: ["code": code])
+        _ = try await session.data(for: request)
+    }
+
     /// POST /api/auth/email-otp/send-verification-otp?lang=… : emails a
     /// six-digit sign-in code in the app's language.
     func sendSignInCode(email: String, lang: AppLang) async throws {

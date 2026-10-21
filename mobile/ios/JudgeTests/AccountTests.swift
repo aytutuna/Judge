@@ -177,6 +177,57 @@ final class AccountTests: XCTestCase {
     }
 
     @MainActor
+    func testAppleAuthorizationCodeIsSentWithTheNewBearer() async throws {
+        route([
+            "/api/auth/sign-in/social": try json(200, ["token": "sess-new", "user": Self.userJSON]),
+            "/api/v1/auth/apple/code": try json(200, ["stored": true]),
+            "/api/v1/me": try json(200, Self.meJSON),
+        ])
+        let store = MemoryTokenStore()
+        store.setToken("old-token")
+        let account = model(store, apple: .success(AppleIdentity(identityToken: "jwt", rawNonce: "n", authorizationCode: "c0de.one-time")))
+        await account.signInWithApple()
+
+        let sent = try XCTUnwrap(request("/api/v1/auth/apple/code"))
+        XCTAssertEqual(sent.httpMethod, "POST")
+        XCTAssertEqual(sent.value(forHTTPHeaderField: "Authorization"), "Bearer sess-new")
+        XCTAssertEqual(try body(sent) as NSDictionary, ["code": "c0de.one-time"] as NSDictionary)
+        XCTAssertTrue(account.isSignedIn)
+        XCTAssertNil(account.failure)
+    }
+
+    @MainActor
+    func testAppleCodeRefusalsLeaveTheSignInStanding() async throws {
+        for status in [400, 401, 403, 503] {
+            StubURLProtocol.requests = []
+            route([
+                "/api/auth/sign-in/social": try json(200, ["token": "sess-new", "user": Self.userJSON]),
+                "/api/v1/auth/apple/code": try json(status, ["error": "nope"]),
+                "/api/v1/me": try json(200, Self.meJSON),
+            ])
+            let store = MemoryTokenStore()
+            let account = model(store, apple: .success(AppleIdentity(identityToken: "jwt", rawNonce: "n", authorizationCode: "c")))
+            await account.signInWithApple()
+            XCTAssertNotNil(request("/api/v1/auth/apple/code"), "status \(status)")
+            XCTAssertTrue(account.isSignedIn, "status \(status)")
+            XCTAssertEqual(store.token(), "sess-new", "status \(status)")
+            XCTAssertNil(account.failure, "status \(status)")
+        }
+    }
+
+    @MainActor
+    func testNoCodePostWithoutAnAuthorizationCode() async throws {
+        route([
+            "/api/auth/sign-in/social": try json(200, ["token": "t", "user": Self.userJSON]),
+            "/api/v1/me": try json(200, Self.meJSON),
+        ])
+        let account = model(apple: .success(AppleIdentity(identityToken: "jwt", rawNonce: "n")))
+        await account.signInWithApple()
+        XCTAssertNil(request("/api/v1/auth/apple/code"))
+        XCTAssertTrue(account.isSignedIn)
+    }
+
+    @MainActor
     func testAppleWithoutNameSendsNoUser() async throws {
         route(["/api/auth/sign-in/social": try json(200, ["token": "t", "user": Self.userJSON])])
         let account = model(apple: .success(AppleIdentity(identityToken: "jwt", rawNonce: "n")))

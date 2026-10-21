@@ -226,6 +226,9 @@ struct AppleIdentity: Sendable, Equatable {
     var firstName: String?
     var lastName: String?
     var email: String?
+    /// Apple's one-time authorization code (UTF-8), sent to the server so
+    /// the Apple grant can be revoked when the account is deleted.
+    var authorizationCode: String?
 }
 
 /// What the Google sign-in handed over. Google copies `rawNonce` into the

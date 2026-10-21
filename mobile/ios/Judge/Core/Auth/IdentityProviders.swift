@@ -101,12 +101,12 @@ final class AppleAuthorizer: NSObject, AppleAuthorizing {
         continuation.resume(with: outcome)
     }
 
-    fileprivate func complete(token: String?, firstName: String?, lastName: String?, email: String?) {
+    fileprivate func complete(token: String?, firstName: String?, lastName: String?, email: String?, authorizationCode: String? = nil) {
         guard let token, !token.isEmpty else {
             finish(.failure(IdentityProviderError.failed))
             return
         }
-        finish(.success(AppleIdentity(identityToken: token, rawNonce: rawNonce, firstName: firstName, lastName: lastName, email: email)))
+        finish(.success(AppleIdentity(identityToken: token, rawNonce: rawNonce, firstName: firstName, lastName: lastName, email: email, authorizationCode: authorizationCode)))
     }
 }
 
@@ -117,8 +117,9 @@ extension AppleAuthorizer: ASAuthorizationControllerDelegate, ASAuthorizationCon
         let first = credential?.fullName?.givenName
         let last = credential?.fullName?.familyName
         let email = credential?.email
+        let code = credential?.authorizationCode.flatMap { String(data: $0, encoding: .utf8) }
         MainActor.assumeIsolated {
-            self.complete(token: token, firstName: first, lastName: last, email: email)
+            self.complete(token: token, firstName: first, lastName: last, email: email, authorizationCode: code)
         }
     }
 
