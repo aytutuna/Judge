@@ -16,6 +16,9 @@ import com.okjudge.judge.core.data.HistoryDb
 import com.okjudge.judge.core.data.HistoryRepository
 import com.okjudge.judge.core.data.RoomHistoryRepository
 import com.okjudge.judge.core.data.SettingsStore
+import com.okjudge.judge.core.purchases.PurchaseController
+import com.okjudge.judge.core.purchases.PurchaseGateway
+import com.okjudge.judge.core.purchases.RevenueCatGateway
 import com.okjudge.judge.core.session.VerdictFlow
 import com.okjudge.judge.i18n.LocalizedStrings
 import kotlinx.coroutines.CoroutineScope
@@ -29,6 +32,8 @@ data class AppConfig(
     val shareBaseUrl: String,
     val turnstileSiteKey: String,
     val googleServerClientId: String,
+    /** Public RevenueCat SDK key; empty turns store purchases off. */
+    val revenueCatApiKey: String = "",
     val versionName: String,
     val versionCode: Int,
 ) {
@@ -40,6 +45,7 @@ data class AppConfig(
             shareBaseUrl = BuildConfig.SHARE_BASE_URL.ifBlank { BuildConfig.API_BASE_URL },
             turnstileSiteKey = BuildConfig.TURNSTILE_SITE_KEY,
             googleServerClientId = BuildConfig.GOOGLE_SERVER_CLIENT_ID,
+            revenueCatApiKey = BuildConfig.REVENUECAT_API_KEY,
             versionName = BuildConfig.VERSION_NAME,
             versionCode = BuildConfig.VERSION_CODE,
         )
@@ -88,6 +94,13 @@ class AppContainer(context: Context, val config: AppConfig = AppConfig.fromBuild
 
     /** The owner's real names per two-sided case, on this phone only. */
     val caseNames: CaseNamesStore by lazy { PrefsCaseNames(appContext) }
+
+    /** Null without an SDK key: no store in this build. */
+    val purchaseGateway: PurchaseGateway? by lazy { RevenueCatGateway.createOrNull(appContext, config.revenueCatApiKey) }
+
+    val purchases: PurchaseController by lazy {
+        PurchaseController(purchaseGateway, account.state, refreshAccount = { account.refresh() }, scope = appScope)
+    }
 
     val verdictFlow: VerdictFlow by lazy {
         VerdictFlow(

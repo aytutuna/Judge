@@ -16,6 +16,7 @@ import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -35,9 +36,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.okjudge.judge.core.auth.Account
 import com.okjudge.judge.core.display.Errors
+import com.okjudge.judge.core.purchases.PurchaseController
 import com.okjudge.judge.i18n.LangPref
 import com.okjudge.judge.i18n.LocalLang
 import com.okjudge.judge.i18n.LocalStrings
+import com.okjudge.judge.i18n.rememberPurchaseStrings
 import com.okjudge.judge.ui.components.Kicker
 import com.okjudge.judge.ui.components.TopBar
 import com.okjudge.judge.ui.theme.JudgeShapes
@@ -49,7 +52,12 @@ object SettingsTags {
     const val SIGN_OUT = "settings.signOut"
     const val DELETE = "settings.delete"
     const val PRICING = "settings.pricing"
+    const val RESTORE = "settings.restore"
+    const val RESTORE_NOTE = "settings.restoreNote"
 }
+
+/** "Restore purchases" in the account group; shown while the store is ready for this account. */
+data class RestoreUi(val working: Boolean = false, val notice: PurchaseController.RestoreNotice? = null)
 
 /** The account, language choice, links out to the website, and the footer note. */
 @Composable
@@ -67,6 +75,8 @@ fun SettingsScreen(
     onSignOut: () -> Unit = {},
     onDeleteAccount: () -> Unit = {},
     onOpenPricing: (() -> Unit)? = null,
+    restore: RestoreUi? = null,
+    onRestore: () -> Unit = {},
 ) {
     val s = LocalStrings.current
     val base = siteBaseUrl.trimEnd('/')
@@ -78,7 +88,7 @@ fun SettingsScreen(
         ) {
             Text(s.appTabSettings, style = JudgeType.sectionTitle.copy(fontSize = JudgeType.sectionTitle.fontSize * 1.3f))
 
-            AccountGroup(account, accountBusy, onSignIn, onSignOut, onDeleteAccount)
+            AccountGroup(account, accountBusy, onSignIn, onSignOut, onDeleteAccount, restore, onRestore)
 
             Group(s.appSettingsLanguage) {
                 listOf(
@@ -129,6 +139,8 @@ private fun AccountGroup(
     onSignIn: () -> Unit,
     onSignOut: () -> Unit,
     onDelete: () -> Unit,
+    restore: RestoreUi?,
+    onRestore: () -> Unit,
 ) {
     val s = LocalStrings.current
     val lang = LocalLang.current
@@ -181,6 +193,10 @@ private fun AccountGroup(
                             note = s.accountFairUse(sub.used.toString(), sub.cap.toString()),
                         )
                     }
+                    if (restore != null) {
+                        HorizontalDivider(color = Palette.line)
+                        RestoreRow(restore, enabled = !busy, onRestore)
+                    }
                 }
                 HorizontalDivider(color = Palette.line)
                 ActionRow(s.accountSignOut, Modifier.testTag(SettingsTags.SIGN_OUT), enabled = !busy) { confirmSignOut = true }
@@ -214,6 +230,35 @@ private fun AccountGroup(
             dismissButton = { TextButton(onClick = { confirmDelete = false }) { Text(s.appCancel, color = Palette.ink) } },
             containerColor = Palette.paper,
         )
+    }
+}
+
+@Composable
+private fun RestoreRow(restore: RestoreUi, enabled: Boolean, onRestore: () -> Unit) {
+    val ps = rememberPurchaseStrings()
+    Column {
+        ActionRow(ps.restore, Modifier.testTag(SettingsTags.RESTORE), enabled = enabled && !restore.working, onClick = onRestore)
+        val note = when (restore.notice) {
+            PurchaseController.RestoreNotice.DONE -> ps.restoreDone
+            PurchaseController.RestoreNotice.NONE -> ps.restoreNone
+            PurchaseController.RestoreNotice.FAILED -> ps.failed
+            null -> null
+        }
+        if (restore.working) {
+            CircularProgressIndicator(
+                Modifier.padding(start = 16.dp, bottom = 12.dp).size(12.dp),
+                color = Palette.ink2,
+                strokeWidth = 1.5.dp,
+            )
+        } else if (note != null) {
+            Text(
+                note,
+                style = JudgeType.footnote.copy(
+                    color = if (restore.notice == PurchaseController.RestoreNotice.FAILED) Palette.danger else Palette.ink2,
+                ),
+                modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 12.dp).testTag(SettingsTags.RESTORE_NOTE),
+            )
+        }
     }
 }
 

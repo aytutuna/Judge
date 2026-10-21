@@ -44,6 +44,18 @@ import com.okjudge.judge.ui.premium.ClarifyTags
 import com.okjudge.judge.ui.premium.EvidenceTags
 import com.okjudge.judge.ui.premium.PricingScreen
 import com.okjudge.judge.ui.premium.PricingTags
+import com.okjudge.judge.ui.premium.StoreUi
+import com.okjudge.judge.core.purchases.PurchaseController
+import com.okjudge.judge.core.purchases.StoreOffer
+import com.okjudge.judge.core.auth.Account
+import com.okjudge.judge.i18n.PurchaseStrings
+import com.okjudge.judge.i18n.LangPref
+import com.okjudge.judge.ui.settings.RestoreUi
+import com.okjudge.judge.ui.settings.SettingsScreen
+import com.okjudge.judge.ui.settings.SettingsTags
+import androidx.compose.ui.test.assertIsEnabled
+import androidx.compose.ui.test.performScrollTo
+import androidx.test.core.app.ApplicationProvider
 import com.okjudge.judge.ui.premium.TierSwitch
 import com.okjudge.judge.ui.premium.TierTags
 import kotlinx.serialization.json.jsonObject
@@ -221,7 +233,7 @@ class PremiumScreensTest {
         compose.setContent {
             Themed(AppLang.EN) {
                 androidx.compose.foundation.layout.Column {
-                    PricingScreen(PricingInfo(purchasesEnabled = true), false, Features(true, true), false, true, null, null, {}, {})
+                    PricingScreen(PricingInfo(purchasesEnabled = true), false, Features(true, true), false, true, null, null, {}, {}, store = StoreUi(available = true))
                 }
             }
         }
@@ -229,6 +241,142 @@ class PremiumScreensTest {
         compose.onAllNodesWithText(en.pricingPremiumF4).assertCountEquals(0)
         compose.onAllNodesWithTag(PricingTags.BUY).assertCountEquals(3)
         compose.onAllNodesWithText(en.pricingComingSoon).assertCountEquals(0)
+    }
+
+    private val ps: PurchaseStrings by lazy { PurchaseStrings.of(ApplicationProvider.getApplicationContext(), AppLang.EN) }
+
+    private val storeOffers = mapOf(
+        "pack_10" to StoreOffer("pack_10", "TRY 79.99", 79_990_000, "TRY"),
+        "pack_30" to StoreOffer("pack_30", "TRY 199.99", 199_990_000, "TRY"),
+        "monthly" to StoreOffer("monthly", "TRY 149.99", 149_990_000, "TRY"),
+    )
+
+    @Test
+    fun pricing_noSdkKey_staysComingSoon_evenWithPurchasesOn() {
+        compose.setContent {
+            Themed(AppLang.EN) {
+                PricingScreen(
+                    PricingInfo(purchasesEnabled = true), true, Features(true, true), true, true, me("credits7").entitlement, null, {}, {},
+                    store = StoreUi(available = false, offers = storeOffers),
+                )
+            }
+        }
+        compose.onAllNodesWithText(en.pricingComingSoon).assertCountEquals(3)
+        compose.onAllNodesWithText("TRY 79.99").assertCountEquals(0)
+        compose.onNodeWithText(en.pricingNote).assertExists()
+    }
+
+    @Test
+    fun pricing_storeReady_showsStorePricesOnTheButtons_andBuysThatProduct() {
+        val bought = mutableListOf<String>()
+        compose.setContent {
+            Themed(AppLang.EN) {
+                PricingScreen(
+                    PricingInfo(purchasesEnabled = true), true, Features(true, true), true, true, me("credits7").entitlement, null, {}, {},
+                    store = StoreUi(available = true, offers = storeOffers),
+                    onBuy = { bought += it },
+                )
+            }
+        }
+        compose.onAllNodesWithText(en.pricingComingSoon).assertCountEquals(0)
+        // The price column and the button both carry the store's price.
+        compose.onAllNodesWithText("TRY 79.99").assertCountEquals(2)
+        compose.onAllNodesWithText("TRY 149.99").assertCountEquals(2)
+        compose.onAllNodesWithText("$1.99").assertCountEquals(0)
+        // The "prices in USD, payments not open" footnote goes once the store sells.
+        compose.onAllNodesWithText(en.pricingNote).assertCountEquals(0)
+        compose.onAllNodesWithTag(PricingTags.BUY)[0].assertIsEnabled().performClick()
+        compose.onAllNodesWithTag(PricingTags.BUY)[2].performScrollTo().performClick()
+        assertEquals(listOf("pack_10", "monthly"), bought)
+        compose.onAllNodesWithTag(PricingTags.NOTICE).assertCountEquals(0)
+    }
+
+    @Test
+    fun pricing_storeReady_butSignedOut_doesNotSell() {
+        compose.setContent {
+            Themed(AppLang.EN) {
+                PricingScreen(
+                    PricingInfo(purchasesEnabled = true), true, Features(true, true), false, true, null, null, {}, {},
+                    store = StoreUi(available = true, offers = storeOffers),
+                )
+            }
+        }
+        compose.onAllNodesWithText("TRY 79.99").assertCountEquals(0)
+        compose.onAllNodesWithTag(PricingTags.BUY)[0].assertIsNotEnabled()
+    }
+
+    @Test
+    fun pricing_buying_showsTheSpinnerLabel_andHoldsTheOtherButtons() {
+        compose.setContent {
+            Themed(AppLang.EN) {
+                PricingScreen(
+                    PricingInfo(purchasesEnabled = true), true, Features(true, true), true, true, me("credits7").entitlement, null, {}, {},
+                    store = StoreUi(available = true, offers = storeOffers, buying = "pack_30"),
+                )
+            }
+        }
+        compose.onNodeWithText(ps.buying).assertExists()
+        compose.onAllNodesWithTag(PricingTags.BUY)[0].assertIsNotEnabled()
+        compose.onAllNodesWithTag(PricingTags.BUY)[2].assertIsNotEnabled()
+    }
+
+    @Test
+    fun pricing_notices_sayWhatHappened() {
+        var store by mutableStateOf(StoreUi(available = true, offers = storeOffers, notice = PurchaseController.Notice.ARRIVING))
+        compose.setContent {
+            Themed(AppLang.EN) {
+                PricingScreen(
+                    PricingInfo(purchasesEnabled = true), true, Features(true, true), true, true, me("credits7").entitlement, null, {}, {},
+                    store = store,
+                )
+            }
+        }
+        compose.onNodeWithText(ps.pending, substring = true).assertExists()
+        store = store.copy(notice = PurchaseController.Notice.ARRIVED)
+        compose.onNodeWithText(ps.success).assertExists()
+        store = store.copy(notice = PurchaseController.Notice.SLOW)
+        compose.onNodeWithText(ps.slow, substring = true).assertExists()
+        store = store.copy(notice = PurchaseController.Notice.FAILED)
+        compose.onNodeWithText(ps.failed).assertExists()
+        store = store.copy(notice = null, subscriptionPending = true)
+        compose.onNodeWithText(ps.pending).assertExists()
+        store = store.copy(subscriptionPending = false)
+        compose.onAllNodesWithTag(PricingTags.NOTICE).assertCountEquals(0)
+    }
+
+    @Test
+    fun settings_restoreRow_showsWhenTheStoreIsReady_andReportsTheResult() {
+        var restore by mutableStateOf<RestoreUi?>(null)
+        var taps = 0
+        compose.setContent {
+            Themed(AppLang.EN) {
+                SettingsScreen(
+                    LangPref.SYSTEM, "0.1.0", {}, {}, {}, "https://okjudge.com",
+                    account = Account.State.SignedIn(me("credits7")),
+                    restore = restore,
+                    onRestore = { taps++ },
+                )
+            }
+        }
+        compose.onAllNodesWithTag(SettingsTags.RESTORE).assertCountEquals(0)
+        restore = RestoreUi()
+        compose.onNodeWithTag(SettingsTags.RESTORE).assertTextContains(ps.restore).performClick()
+        assertEquals(1, taps)
+        restore = RestoreUi(working = true)
+        compose.onNodeWithTag(SettingsTags.RESTORE).assertIsNotEnabled()
+        restore = RestoreUi(notice = PurchaseController.RestoreNotice.DONE)
+        compose.onNodeWithTag(SettingsTags.RESTORE_NOTE).assertTextContains(ps.restoreDone)
+        restore = RestoreUi(notice = PurchaseController.RestoreNotice.NONE)
+        compose.onNodeWithTag(SettingsTags.RESTORE_NOTE).assertTextContains(ps.restoreNone)
+        restore = RestoreUi(notice = PurchaseController.RestoreNotice.FAILED)
+        compose.onNodeWithTag(SettingsTags.RESTORE_NOTE).assertTextContains(ps.failed)
+    }
+
+    @Test
+    fun purchaseStrings_followTheAppLanguage() {
+        val tr = PurchaseStrings.of(ApplicationProvider.getApplicationContext(), AppLang.TR)
+        assertEquals("Satın alımları geri yükle", tr.restore)
+        assertEquals("Restore purchases", ps.restore)
     }
 
     private fun premiumOutcome(): VerdictOutcome =

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Store purchase copy, Android only for now. These move to the shared
+    exporter (mobile/shared/strings, from lib/i18n.ts) later; keep the keys
+    when they do. Turkish: values-tr/strings_purchases.xml.
+-->
+<resources>
+    <string name="purchase_buying">Purchasing…</string>
+    <string name="purchase_success">Purchase complete.</string>
+    <string name="purchase_pending">Your credits are on their way…</string>
+    <string name="purchase_slow">It may take a minute to show up here.</string>
+    <string name="purchase_failed">Something went wrong with the store. Please try again.</string>
+    <string name="purchase_restore">Restore purchases</string>
+    <string name="purchase_restore_done">Purchases restored.</string>
+    <string name="purchase_restore_none">No purchases to restore.</string>
+</resources>

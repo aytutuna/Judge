@@ -49,6 +49,9 @@ import com.okjudge.judge.core.premium.Tier
 import com.okjudge.judge.core.premium.TierAvailability
 import com.okjudge.judge.ui.premium.ClarifyScreen
 import com.okjudge.judge.ui.premium.PricingScreen
+import com.okjudge.judge.ui.premium.StoreUi
+import com.okjudge.judge.core.purchases.PurchaseController
+import com.okjudge.judge.core.purchases.StoreOffer
 import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
@@ -272,6 +275,38 @@ class ScreenshotsTest {
     fun pricing_tr() = capture("pricing_tr", tall = true) {
         Themed(AppLang.TR) {
             PricingScreen(PricingInfo(), true, Features(true, true), false, true, null, null, {}, {})
+        }
+    }
+
+    /** Purchases on: the store's own prices on the buttons, a pack being bought, and the arriving line. */
+    private fun storeUi(notice: PurchaseController.Notice?, buying: String?) = StoreUi(
+        available = true,
+        offers = mapOf(
+            "pack_10" to StoreOffer("pack_10", "₺79,99", 79_990_000, "TRY"),
+            "pack_30" to StoreOffer("pack_30", "₺199,99", 199_990_000, "TRY"),
+            "monthly" to StoreOffer("monthly", "₺149,99", 149_990_000, "TRY"),
+        ),
+        buying = buying,
+        notice = notice,
+    )
+
+    @Test
+    fun pricing_store_tr() = capture("pricing_store_tr", tall = true) {
+        Themed(AppLang.TR) {
+            PricingScreen(
+                PricingInfo(purchasesEnabled = true), true, Features(true, true), true, true, me("credits7").entitlement, {}, {}, {},
+                store = storeUi(notice = PurchaseController.Notice.ARRIVING, buying = null),
+            )
+        }
+    }
+
+    @Test
+    fun pricing_store_buying_en() = capture("pricing_store_buying_en", tall = true) {
+        Themed(AppLang.EN) {
+            PricingScreen(
+                PricingInfo(purchasesEnabled = true), true, Features(true, true), true, true, me("credits7").entitlement, {}, {}, {},
+                store = storeUi(notice = null, buying = "pack_30"),
+            )
         }
     }
 

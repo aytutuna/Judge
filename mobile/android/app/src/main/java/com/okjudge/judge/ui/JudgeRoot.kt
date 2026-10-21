@@ -69,10 +69,13 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import com.okjudge.judge.ui.premium.ClarifyScreen
 import com.okjudge.judge.ui.premium.PricingScreen
+import com.okjudge.judge.ui.premium.StoreUi
+import com.okjudge.judge.core.purchases.PurchaseController
 import com.okjudge.judge.core.model.PricingInfo
 import com.okjudge.judge.core.premium.Tier
 import com.okjudge.judge.ui.judging.JudgingScreen
 import com.okjudge.judge.ui.judging.rememberReducedMotion
+import com.okjudge.judge.ui.settings.RestoreUi
 import com.okjudge.judge.ui.settings.SettingsScreen
 import com.okjudge.judge.ui.signin.SignInActions
 import com.okjudge.judge.ui.signin.SignInScreen
@@ -302,7 +305,12 @@ fun JudgeRoot(container: AppContainer, links: StateFlow<Uri?> = MutableStateFlow
                             val providers by account.providers.collectAsStateWithLifecycle()
                             val config = (providers as? Account.Providers.Ready)?.config
                             val signedIn = accountState as? Account.State.SignedIn
-                            LaunchedEffect(Unit) { account.refresh() }
+                            val purchases = container.purchases
+                            val store by purchases.state.collectAsStateWithLifecycle()
+                            LaunchedEffect(Unit) {
+                                purchases.refresh()
+                                account.refresh()
+                            }
                             PricingScreen(
                                 pricing = config?.pricing ?: PricingInfo(),
                                 premiumEnabled = when (providers) {
@@ -317,6 +325,14 @@ fun JudgeRoot(container: AppContainer, links: StateFlow<Uri?> = MutableStateFlow
                                 onBack = { backStack.removeAll { it is PricingKey } },
                                 onSignIn = { if (backStack.lastOrNull() !is SignInKey) backStack.add(SignInKey(thenVerdict = false)) },
                                 onToggleLang = toggleLang,
+                                store = StoreUi(
+                                    available = store.available,
+                                    offers = if (purchases.isReady(store)) store.offers else emptyMap(),
+                                    buying = store.buying,
+                                    notice = store.notice,
+                                    subscriptionPending = PurchaseController.subscriptionPending(store, signedIn?.me?.entitlement),
+                                ),
+                                onBuy = { productId -> purchases.buy(context, productId) },
                             )
                         }
                         entry<VerdictKey> { key ->
@@ -415,7 +431,14 @@ fun JudgeRoot(container: AppContainer, links: StateFlow<Uri?> = MutableStateFlow
                         entry<SettingsKey> {
                             val accountState by account.state.collectAsStateWithLifecycle()
                             val accountBusy by account.working.collectAsStateWithLifecycle()
-                            LaunchedEffect(Unit) { account.refresh() }
+                            val providers by account.providers.collectAsStateWithLifecycle()
+                            val purchases = container.purchases
+                            val store by purchases.state.collectAsStateWithLifecycle()
+                            val purchasesOn = (providers as? Account.Providers.Ready)?.config?.pricing?.purchasesEnabled == true
+                            LaunchedEffect(Unit) {
+                                purchases.refresh()
+                                account.refresh()
+                            }
                             SettingsScreen(
                                 langPref = langPref,
                                 versionName = container.config.versionName,
@@ -430,6 +453,8 @@ fun JudgeRoot(container: AppContainer, links: StateFlow<Uri?> = MutableStateFlow
                                 // App scope: leaving the screen must not stop a sign-out or deletion halfway.
                                 onSignOut = { container.appScope.launch { account.signOut() } },
                                 onDeleteAccount = { container.appScope.launch { account.deleteAccount() } },
+                                restore = if (purchasesOn && purchases.isReady(store)) RestoreUi(store.restoring, store.restoreNotice) else null,
+                                onRestore = { purchases.restore() },
                             )
                         }
                         entry<SignInKey> { key ->

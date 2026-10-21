@@ -56,6 +56,8 @@ android {
         versionName = "0.1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "GOOGLE_SERVER_CLIENT_ID", judgeProp("googleServerClientId", googleWebClientId))
+        // Public RevenueCat SDK key for Google Play (goog_...). Empty: no store purchases.
+        buildConfigField("String", "REVENUECAT_API_KEY", judgeProp("revenuecatApiKey"))
     }
 
     signingConfigs {
@@ -179,6 +181,7 @@ dependencies {
     implementation(libs.credentials)
     implementation(libs.credentials.play.services)
     implementation(libs.googleid)
+    implementation(libs.revenuecat.purchases)
 
     implementation(libs.room.runtime)
     implementation(libs.room.ktx)
