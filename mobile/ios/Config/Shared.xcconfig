@@ -1,6 +1,6 @@
 // Settings shared by Debug and Release. Values reach the app through
-// Judge/Info.plist (JudgeAPIBaseURL, JudgeShareBaseURL, JudgeTurnstileSiteKey)
-// and are read once into AppConfig. "$()" keeps "//" from starting a comment.
+// Judge/Info.plist (JudgeAPIBaseURL, JudgeShareBaseURL, JudgeTurnstileSiteKey,
+// JudgeRevenueCatAPIKey) and are read once into AppConfig. "$()" keeps "//" from starting a comment.
 
 MARKETING_VERSION = 0.1.0
 CURRENT_PROJECT_VERSION = 1
@@ -14,6 +14,11 @@ SHARE_BASE_URL = $(API_BASE_URL)
 // without a token (403 captcha_failed); set the key before that is enabled
 // in production.
 TURNSTILE_SITE_KEY =
+
+// Public RevenueCat SDK key for the App Store app (appl_...). It is meant to
+// ship inside the app. Empty = no in-app purchases: the pricing screen keeps
+// "Coming soon" and Settings shows no "Restore purchases".
+REVENUECAT_API_KEY =
 
 APP_DISPLAY_NAME = Judge
 

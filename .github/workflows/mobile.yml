@@ -88,7 +88,7 @@ jobs:
           xcrun simctl status_bar "$UDID" override --time 9:41 --batteryState charged --batteryLevel 100 --cellularBars 4 --wifiBars 3 || true
           xcrun simctl install "$UDID" "$APP"
           samples=$(python3 -c 'import json; print(" ".join(json.load(open("../shared/fixtures/verdicts.json"))["verdictResponses"]))')
-          premium="tier/locked tier/premium pricing clarify evidence judging-premium"
+          premium="tier/locked tier/premium pricing pricing-store clarify evidence judging-premium"
           cases="mode-both history-cases case/awaiting case/judging case/judged case/one-sided case/appeal case/failed case/expired case/removed"
           for lang in en tr; do
             for state in home home-error judging history settings signin signin-code account $premium $cases $(for s in $samples; do echo "verdict/$s"; done); do

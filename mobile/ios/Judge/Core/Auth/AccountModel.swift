@@ -100,6 +100,10 @@ final class AccountModel {
     /// when the server ended it.
     @ObservationIgnored var onSessionEnded: (@MainActor (_ byUser: Bool) -> Void)?
 
+    /// Told the signed-in user's id whenever a sign-in or /me brings it
+    /// (the store logs in with it).
+    @ObservationIgnored var onUserKnown: (@MainActor (_ userId: String) -> Void)?
+
     /// Refetches /me in the background (after a premium outcome or a 402).
     func refreshSoon() {
         guard isSignedIn, usesNetwork else { return }
@@ -142,6 +146,7 @@ final class AccountModel {
             } else {
                 info = fresh
                 if failure == .loadFailed { failure = nil }
+                if let id = fresh.user?.id { onUserKnown?(id) }
             }
         } catch let error as APIError {
             if error.code == "signin_required" {
@@ -307,6 +312,7 @@ final class AccountModel {
         step = .choose
         code = ""
         isSignInPresented = false
+        if let id = session.user?.id { onUserKnown?(id) }
         if usesNetwork {
             Task { await refresh() }
         }

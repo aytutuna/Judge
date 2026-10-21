@@ -33,6 +33,8 @@ final class AppModel {
     let history: HistoryStore
     let home: HomeModel
     let account: AccountModel
+    /// In-app purchases (off without a RevenueCat key).
+    let purchases: PurchaseModel
     /// Whether Home saves the unsent draft and brings it back next session
     /// (off for screenshot states, so they neither read nor overwrite it).
     let persistsDraft: Bool
@@ -62,7 +64,8 @@ final class AppModel {
         tokenStore: any TokenStore = KeychainTokenStore(),
         persistsDraft: Bool = true,
         api: JudgeAPI? = nil,
-        caseNames: (any CaseNamesStore)? = nil
+        caseNames: (any CaseNamesStore)? = nil,
+        purchaseGateway: (any PurchaseGateway)? = nil
     ) {
         self.config = config
         self.persistsDraft = persistsDraft
@@ -82,15 +85,27 @@ final class AppModel {
         history = HistoryStore(context: container.mainContext)
         home = HomeModel(preset: defaults.string(forKey: Self.presetKey) ?? Preset.defaultID)
         account = AccountModel(api: self.api)
+        let gateway: (any PurchaseGateway)?
+        if let purchaseGateway {
+            gateway = purchaseGateway
+        } else if config.revenueCatAPIKey.isEmpty {
+            gateway = nil
+        } else {
+            gateway = RevenueCatGateway(apiKey: config.revenueCatAPIKey)
+        }
+        purchases = PurchaseModel(gateway: gateway, account: account)
         loadTierChoice()
         let names = self.caseNames
         let list = caseList
-        account.onSessionEnded = { [weak self] byUser in
+        let purchases = self.purchases
+        account.onSessionEnded = { [weak self, weak purchases] byUser in
             list.reset()
             self?.caseModels = [:]
+            purchases?.userSignedOut()
             // Real names kept for this account's cases go with it.
             if byUser { names.forgetAll() }
         }
+        account.onUserKnown = { [weak purchases] id in purchases?.userSignedIn(id) }
     }
 
     /// The UI language right now. Every string lookup takes it explicitly,

@@ -48,6 +48,8 @@
 	<string>$(SHARE_BASE_URL)</string>
 	<key>JudgeTurnstileSiteKey</key>
 	<string>$(TURNSTILE_SITE_KEY)</string>
+	<key>JudgeRevenueCatAPIKey</key>
+	<string>$(REVENUECAT_API_KEY)</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsLocalNetworking</key>

@@ -1,8 +1,9 @@
 import SwiftUI
 
 /// Free and Premium side by side (components/account/PricingView.tsx), with
-/// prices from GET /api/v1/config (lib/pricing.ts until it answers). Buy
-/// buttons stay disabled: purchases arrive with the store build.
+/// prices from GET /api/v1/config (lib/pricing.ts until it answers). When the
+/// server allows purchases and the store's offering has loaded, the buttons
+/// show store prices and buy; otherwise they read "Coming soon".
 struct PricingView: View {
     @Environment(AppModel.self) private var app
 
@@ -32,10 +33,13 @@ struct PricingView: View {
                 }
                 freePlan(lang)
                 premiumPlan(pricing, lang: lang)
-                Text(L10n.pricingNote(lang))
-                    .brandText(.footnote)
-                    .foregroundStyle(Brand.muted)
-                    .fixedSize(horizontal: false, vertical: true)
+                // The note says payments are not open yet and prices are in USD.
+                if !app.purchases.canPurchase(pricing) {
+                    Text(L10n.pricingNote(lang))
+                        .brandText(.footnote)
+                        .foregroundStyle(Brand.muted)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
             }
             .padding(.horizontal, 20)
             .padding(.top, 8)
@@ -45,6 +49,7 @@ struct PricingView: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbarBackground(Brand.ivory, for: .navigationBar)
         .task { await account.refresh() }
+        .task(id: pricing.purchasesEnabled) { await app.purchases.loadOffers(pricing: app.account.pricing) }
     }
 
     private func planStatus(_ entitlement: Entitlement, lang: AppLang) -> some View {
@@ -107,12 +112,12 @@ struct PricingView: View {
                 .foregroundStyle(Brand.muted)
                 .fixedSize(horizontal: false, vertical: true)
             ForEach(pricing.packs) { pack in
+                let labels = app.purchases.labels(planId: pack.id, usd: pack.priceUsd, credits: pack.credits, pricing: pricing, lang: lang)
                 offer(
+                    planId: pack.id,
                     name: L10n.pricingPack(lang, n: String(pack.credits)),
-                    meta: L10n.pricingPerVerdict(lang, price: PricingInfo.format(pack.priceUsd / Double(Swift.max(1, pack.credits)), lang: lang)),
-                    price: PricingInfo.format(pack.priceUsd, lang: lang),
-                    purchasable: pricing.purchasesEnabled,
-                    lang: lang
+                    meta: labels.perVerdict.map { L10n.pricingPerVerdict(lang, price: $0) },
+                    labels: labels
                 )
             }
 
@@ -121,12 +126,18 @@ struct PricingView: View {
                 .foregroundStyle(Brand.ink)
                 .padding(.top, 4)
             offer(
+                planId: pricing.monthly.id,
                 name: L10n.pricingMonthlyCap(lang, n: String(pricing.monthly.fairUseCap)),
                 meta: L10n.pricingMonthlyRenews(lang),
-                price: PricingInfo.format(pricing.monthly.priceUsd, lang: lang),
-                purchasable: pricing.purchasesEnabled,
-                lang: lang
+                labels: app.purchases.labels(planId: pricing.monthly.id, usd: pricing.monthly.priceUsd, credits: nil, pricing: pricing, lang: lang)
             )
+
+            if let message = app.purchases.message {
+                Text(message.text(lang))
+                    .brandText(.slotText)
+                    .foregroundStyle(message == .failed ? Brand.danger : Brand.ink2)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
 
             if account.premiumEnabled, !account.isSignedIn, account.signInProviders?.any == true {
                 Button(L10n.tierSignInToUse(lang)) { account.presentSignIn() }
@@ -169,31 +180,56 @@ struct PricingView: View {
         }
     }
 
-    private func offer(name: String, meta: String, price: String, purchasable: Bool, lang: AppLang) -> some View {
-        VStack(alignment: .leading, spacing: 10) {
+    private func offer(planId: String, name: String, meta: String?, labels: PurchaseModel.OfferLabels) -> some View {
+        let purchases = app.purchases
+        return VStack(alignment: .leading, spacing: 10) {
             HStack(alignment: .firstTextBaseline) {
                 VStack(alignment: .leading, spacing: 2) {
                     Text(name)
                         .brandText(.bodyMedium)
                         .foregroundStyle(Brand.ink)
-                    Text(meta)
-                        .brandText(.slotText)
-                        .foregroundStyle(Brand.muted)
+                    if let meta {
+                        Text(meta)
+                            .brandText(.slotText)
+                            .foregroundStyle(Brand.muted)
+                    }
                 }
                 Spacer(minLength: 12)
-                Text(price)
+                Text(labels.price)
                     .brandText(Self.price)
                     .foregroundStyle(Brand.ink)
                     .monospacedDigit()
             }
-            // Purchases arrive with the store build: disabled either way.
-            Button(purchasable ? price : L10n.pricingComingSoon(lang)) {}
+            if labels.purchasable {
+                Button {
+                    buy(planId)
+                } label: {
+                    HStack(spacing: 8) {
+                        if purchases.buying == planId {
+                            ProgressView().tint(Brand.ink)
+                        }
+                        Text(labels.button)
+                    }
+                }
                 .buttonStyle(GhostButtonStyle())
-                .disabled(true)
-                .opacity(0.6)
+                .disabled(purchases.buying != nil)
+            } else {
+                Button(labels.button) {}
+                    .buttonStyle(GhostButtonStyle())
+                    .disabled(true)
+                    .opacity(0.6)
+            }
         }
         .padding(14)
         .frame(maxWidth: .infinity, alignment: .leading)
         .paperSurface(radius: 18, fill: Brand.ivory)
+    }
+
+    /// Buying needs an account: signed out, sign-in comes first.
+    private func buy(_ planId: String) {
+        let purchases = app.purchases
+        app.account.requireSignIn {
+            Task { await purchases.buy(planId) }
+        }
     }
 }

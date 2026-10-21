@@ -1,7 +1,8 @@
 import SwiftUI
 
-/// Settings → Account: who is signed in, plan and credits, sign out and
-/// delete; signed out, a way into sign-in. On-device history is never
+/// Settings → Account: who is signed in, plan and credits, restore
+/// purchases (when the store is set up), sign out and delete; signed out, a
+/// way into sign-in. On-device history is never
 /// touched by either action. The confirmations are alerts owned by the
 /// list (alerts on list sections are unreliable).
 struct AccountSection: View {
@@ -50,6 +51,13 @@ struct AccountSection: View {
                 fact(L10n.accountSubscription(lang), value: subscriptionText(subscription, lang: lang))
             }
         }
+        if app.purchases.canRestore(account.pricing) {
+            let purchases = app.purchases
+            actionRow(PurchaseStrings.restore(lang), busy: purchases.isRestoring, color: Brand.ink) {
+                Task { await purchases.restore() }
+            }
+            .disabled(purchases.isRestoring || account.busy != nil)
+        }
         actionRow(L10n.accountSignOut(lang), busy: account.busy == .signOut, color: Brand.ink) {
             confirmSignOut = true
         }
@@ -77,6 +85,10 @@ struct AccountSection: View {
             Text(failure.message(lang))
                 .brandText(.footnote)
                 .foregroundStyle(Brand.danger)
+        } else if account.isSignedIn, let restored = app.purchases.restoreResult {
+            Text(restored.text(lang))
+                .brandText(.footnote)
+                .foregroundStyle(restored == .failed ? Brand.danger : Brand.muted)
         } else if let notice = account.notice, notice != .sessionExpired || !account.isSignInPresented {
             Text(notice.message(lang))
                 .brandText(.footnote)

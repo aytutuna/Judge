@@ -11,7 +11,8 @@ import SwiftData
 /// `signin-code`, `account` (Settings, signed in), `verdict/<sample>` (a
 /// key of `verdictResponses`), or a Premium state: `tier/locked` (signed
 /// in, monthly allowance used up), `tier/premium` (Premium chosen with
-/// credits), `pricing`, `clarify` (the questions), `evidence` (picked
+/// credits), `pricing`, `pricing-store` (store prices on the buy buttons),
+/// `clarify` (the questions), `evidence` (picked
 /// screenshots in mixed states), `judging-premium`, `mode-both` (Both sides
 /// chosen), `history-cases` ("Your cases") or `case/<state>`: the owner's
 /// case page for a key of `cases.views` or one of the short names `awaiting`,
@@ -37,6 +38,7 @@ struct ScreenshotState {
         case tierLocked
         case tierPremium
         case pricing
+        case pricingStore
         case clarify
         case evidence
         case judgingPremium
@@ -53,7 +55,7 @@ struct ScreenshotState {
     var tab: RootTab {
         switch screen {
         case .home, .homeError, .judging, .verdict, .signIn, .signInCode,
-             .tierLocked, .tierPremium, .pricing, .clarify, .evidence, .judgingPremium, .modeBoth, .caseDetail:
+             .tierLocked, .tierPremium, .pricing, .pricingStore, .clarify, .evidence, .judgingPremium, .modeBoth, .caseDetail:
             return .new
         case .history, .historyCases: return .history
         case .settings, .account: return .settings
@@ -82,6 +84,7 @@ struct ScreenshotState {
         case "tier/locked": screen = .tierLocked
         case "tier/premium": screen = .tierPremium
         case "pricing": screen = .pricing
+        case "pricing-store": screen = .pricingStore
         case "clarify": screen = .clarify
         case "evidence": screen = .evidence
         case "judging-premium": screen = .judgingPremium
@@ -117,13 +120,16 @@ struct ScreenshotState {
             version: base.version,
             build: base.build
         )
+        var gateway: (any PurchaseGateway)?
+        if screen == .pricingStore { gateway = FixedPurchaseGateway(Self.storeOffers(lang)) }
         let app = AppModel(
             config: config,
             container: container,
             defaults: defaults,
             tokenStore: MemoryTokenStore(),
             persistsDraft: false,
-            caseNames: MemoryCaseNamesStore()
+            caseNames: MemoryCaseNamesStore(),
+            purchaseGateway: gateway
         )
         app.account.usesNetwork = false
         app.usesNetwork = false
@@ -176,6 +182,12 @@ struct ScreenshotState {
             app.home.initialScroll = HomeModel.tierAnchor
         case .pricing:
             premium(app, me: "subscriber")
+            app.home.path = [.pricing]
+        case .pricingStore:
+            var config = ScreenshotFixtures.config("full")
+            config?.pricing?.purchasesEnabled = true
+            app.account.showForScreenshot(providers: Self.allProviders, info: ScreenshotFixtures.me("credits7"), config: config)
+            app.purchases.showForScreenshot(offers: Self.storeOffers(lang))
             app.home.path = [.pricing]
         case .clarify:
             premium(app, me: "credits7")
@@ -244,8 +256,41 @@ struct ScreenshotState {
         "appeal-judging": "appeal_judging",
     ]
 
+    /// Store prices as the App Store would show them: US dollars for the
+    /// English shots, Turkish lira for the Turkish ones.
+    static func storeOffers(_ lang: AppLang) -> [StoreOffer] {
+        if lang == .tr {
+            return [
+                StoreOffer(planId: "pack_10", productId: "verdict_credits_10", price: "₺89,99", amount: Decimal(8999) / 100, currencyCode: "TRY"),
+                StoreOffer(planId: "pack_30", productId: "verdict_credits_30", price: "₺229,99", amount: Decimal(22999) / 100, currencyCode: "TRY"),
+                StoreOffer(planId: "monthly", productId: "verdict_premium_monthly", price: "₺229,99", amount: Decimal(22999) / 100, currencyCode: "TRY"),
+            ]
+        }
+        return [
+            StoreOffer(planId: "pack_10", productId: "verdict_credits_10", price: "$1.99", amount: Decimal(199) / 100, currencyCode: "USD"),
+            StoreOffer(planId: "pack_30", productId: "verdict_credits_30", price: "$4.99", amount: Decimal(499) / 100, currencyCode: "USD"),
+            StoreOffer(planId: "monthly", productId: "verdict_premium_monthly", price: "$4.99", amount: Decimal(499) / 100, currencyCode: "USD"),
+        ]
+    }
+
     private static let email = "sam@example.com"
     private static let allProviders = SignInProviders(apple: true, google: true, email: true, emailCode: true)
+}
+
+/// A store that already has its prices and never sells (screenshots).
+@MainActor
+final class FixedPurchaseGateway: PurchaseGateway {
+    private let list: [StoreOffer]
+
+    init(_ list: [StoreOffer]) {
+        self.list = list
+    }
+
+    func logIn(userId: String) async throws {}
+    func logOut() async {}
+    func offers() async throws -> [StoreOffer] { list }
+    func purchase(planId: String) async throws -> PurchaseOutcome { .cancelled }
+    func restore() async throws -> Bool { false }
 }
 
 /// Reads verdicts.json from the app bundle (Debug builds copy it in; Release

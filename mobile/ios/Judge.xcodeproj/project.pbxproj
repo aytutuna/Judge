@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4A1D0000000000000000BF01 /* verdicts.json in Resources */ = {isa = PBXBuildFile; fileRef = 4A1D0000000000000000F006 /* verdicts.json */; };
+		4A1D0000000000000000BF02 /* RevenueCat in Frameworks */ = {isa = PBXBuildFile; productRef = 4A1D0000000000000000AC02 /* RevenueCat */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,6 +78,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A1D0000000000000000BF02 /* RevenueCat in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -149,6 +151,7 @@
 			);
 			name = Judge;
 			packageProductDependencies = (
+				4A1D0000000000000000AC02 /* RevenueCat */,
 			);
 			productName = Judge;
 			productReference = 4A1D0000000000000000F001 /* Judge.app */;
@@ -207,6 +210,9 @@
 			);
 			mainGroup = 4A1D00000000000000006A01;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				4A1D0000000000000000AC01 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 4A1D00000000000000006A02 /* Products */;
 			projectDirPath = "";
@@ -506,6 +512,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		4A1D0000000000000000AC01 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RevenueCat/purchases-ios-spm";
+			requirement = {
+				kind = exactVersion;
+				version = 5.96.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		4A1D0000000000000000AC02 /* RevenueCat */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4A1D0000000000000000AC01 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */;
+			productName = RevenueCat;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 4A1D0000000000000000AA01 /* Project object */;
 }

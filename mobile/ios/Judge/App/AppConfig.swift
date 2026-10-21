@@ -11,6 +11,8 @@ struct AppConfig: Sendable, Equatable {
     let turnstileSiteKey: String
     let version: String
     let build: String
+    /// Public RevenueCat SDK key. Empty means no in-app purchases.
+    var revenueCatAPIKey: String = ""
 
     static let production: URL = {
         guard let url = URL(string: "https://okjudge.com") else { preconditionFailure("invalid production URL") }
@@ -24,14 +26,21 @@ struct AppConfig: Sendable, Equatable {
         }
         let api = parseOrigin(value("JudgeAPIBaseURL")) ?? production
         let share = parseOrigin(value("JudgeShareBaseURL")) ?? api
-        let key = value("JudgeTurnstileSiteKey")
         return AppConfig(
             apiBaseURL: api,
             shareBaseURL: share,
-            turnstileSiteKey: key.contains("$(") ? "" : key,
+            turnstileSiteKey: publicKey(value("JudgeTurnstileSiteKey")),
             version: value("CFBundleShortVersionString").isEmpty ? "0" : value("CFBundleShortVersionString"),
-            build: value("CFBundleVersion").isEmpty ? "0" : value("CFBundleVersion")
+            build: value("CFBundleVersion").isEmpty ? "0" : value("CFBundleVersion"),
+            revenueCatAPIKey: publicKey(value("JudgeRevenueCatAPIKey"))
         )
+    }
+
+    /// A key from Info.plist, or empty when the setting was left blank or
+    /// never expanded (`$(REVENUECAT_API_KEY)`).
+    static func publicKey(_ raw: String) -> String {
+        let text = raw.trimmingCharacters(in: .whitespacesAndNewlines)
+        return text.contains("$(") ? "" : text
     }
 
     /// An http(s) origin without a trailing slash, or nil for empty,

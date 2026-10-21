@@ -1,13 +1,16 @@
 # Judge for iOS
 
 SwiftUI app for okjudge.com. Swift 6 language mode, iOS 17+, Observation,
-URLSession, Codable and SwiftData; no third-party packages. `Judge.xcodeproj`
-is committed and needs no generator.
+URLSession, Codable and SwiftData. One Swift package: RevenueCat
+(github.com/RevenueCat/purchases-ios-spm, pinned to an exact version in the
+project) for in-app purchases; Xcode and `xcodebuild` fetch it on the first
+build. `Judge.xcodeproj` is committed and needs no generator.
 
 ## Build on a Mac
 
 Requirements: Xcode 16 or newer (Swift 6 compiler and the synchronized-folder
-project format; Xcode 26 recommended). Nothing else to install.
+project format; Xcode 26 recommended). Nothing else to install; the first
+build needs network access to fetch the RevenueCat package.
 
 ```sh
 open mobile/ios/Judge.xcodeproj
@@ -64,7 +67,8 @@ port). Screens: `home`, `home-error`, `judging`, `history`, `settings`,
 `signin`, `signin-code`, `account` (Settings, signed in with a fixture
 account), `verdict/<sample>` for any key of `verdictResponses`, and the
 Premium states `tier/locked` (monthly allowance used up), `tier/premium`
-(Premium chosen, credits left), `pricing`, `clarify`, `evidence` (picked
+(Premium chosen, credits left), `pricing`, `pricing-store` (store prices on
+the buy buttons, from a fake store), `clarify`, `evidence` (picked
 screenshots in mixed states) and `judging-premium`, and the case states
 `mode-both`, `history-cases` and `case/<state>` (a key of `cases.views` or
 `awaiting`, `judging`, `judged`, `one-sided`, `appeal`, `appeal-judging`,
@@ -85,7 +89,7 @@ configuration).
 
 ## Configuration
 
-`Config/Shared.xcconfig`, `Debug.xcconfig` and `Release.xcconfig` fill three
+`Config/Shared.xcconfig`, `Debug.xcconfig` and `Release.xcconfig` fill four
 Info.plist keys that `AppConfig` reads at launch:
 
 | Setting | Info.plist key | Default |
@@ -93,6 +97,7 @@ Info.plist keys that `AppConfig` reads at launch:
 | `API_BASE_URL` | `JudgeAPIBaseURL` | `https://okjudge.com` |
 | `SHARE_BASE_URL` | `JudgeShareBaseURL` | the API base |
 | `TURNSTILE_SITE_KEY` | `JudgeTurnstileSiteKey` | empty (no bot check) |
+| `REVENUECAT_API_KEY` | `JudgeRevenueCatAPIKey` | empty (no in-app purchases) |
 
 To point a Debug build at another server, create `Config/Local.xcconfig`
 (gitignored; only Debug includes it):
@@ -151,8 +156,7 @@ The website's Premium flow, natively (lib/tier.ts, app/page.tsx):
   Whether Premium can be picked follows `/api/v1/me` (`canUsePremium`);
   the pick is remembered in UserDefaults, and a remembered Premium only
   counts while it can be used. The note under the switch links to sign-in
-  or to the pricing screen (also in Settings). Buy buttons stay disabled
-  until purchases arrive with the store build.
+  or to the pricing screen (also in Settings). Buying: see Purchases.
 - **Questions first**: `POST /api/v1/clarify`. 400/401/402/403 stop on the
   form (401 signs out, 402 refreshes the account); anything else judges
   without questions. Up to two questions replace the form; skipping sends
@@ -181,6 +185,38 @@ The website's Premium flow, natively (lib/tier.ts, app/page.tsx):
   as URLs, and one the app is opened with goes to Safari; `/c/{id}` links
   open the case page.
 
+## Purchases
+
+In-app purchases go through RevenueCat (StoreKit 2 underneath); the server
+grants them. With `REVENUECAT_API_KEY` set (the public Apple SDK key,
+`appl_...`), the app configures the SDK at launch, calls
+`Purchases.logIn(<Judge user id>)` whenever a sign-in or `/api/v1/me` brings
+the user id (and again right before every purchase and restore), and
+`logOut()` when the session ends, so RevenueCat's `app_user_id` is the Judge
+user id. The RevenueCat webhook turns purchases into credits and
+subscriptions on the server; the app only shows what `/me` says.
+
+- **Pricing screen**: when `GET /api/v1/config` has
+  `pricing.purchasesEnabled`, a key is set and the current offering has
+  loaded, each plan's button shows the store's localized price and buys
+  (signing in first when needed). After a purchase the screen says thanks
+  and asks `/me` again over about 10 s until the balance or subscription
+  changes, else it says the purchase may take a minute to show up.
+  Cancelling says nothing; any other failure shows one generic message.
+  Otherwise the buttons read "Coming soon".
+- **Settings, Account**: "Restore purchases" (when the server allows
+  purchases and a key is set), then `/me` again.
+- **Products**: the current offering's packages are matched by store
+  product id against `STORE_PRODUCTS` in `lib/pricing.ts`, so a product the
+  server cannot grant is never sold: `verdict_credits_10` and
+  `verdict_credits_30` (consumables) and `verdict_premium_monthly`
+  (auto-renewable subscription), or the short ids `pack_10`, `pack_30`,
+  `monthly`.
+- In-app purchase needs no entitlement in `Judge.entitlements`; it is
+  available to every App ID.
+- The purchase copy lives in `PurchaseStrings` (English and Turkish) until
+  it moves into the shared strings exporter.
+
 ## Layout
 
 ```
@@ -191,6 +227,7 @@ Judge/
                              ScreenshotState (Debug-only fixture states)
   Core/API/                  JudgeAPI (URLSession), verdict polling, APIError, BotCheck, TokenStore
   Core/Auth/                 AccountModel, account API calls, Keychain token store, Apple/Google
+  Core/Purchases/            PurchaseModel, PurchaseGateway (RevenueCat behind a protocol), PurchaseStrings
   Core/Model/                Codable wire models, raw-JSON-preserving decoding
   Core/Display/              ports of the website's display logic (pure)
   Core/Data/                 SwiftData SavedVerdict + HistoryStore
@@ -229,6 +266,9 @@ available. It covers:
   failed jobs, transient poll errors, the deadline, cancellation, and the
   direct 200 answer;
 - `HistoryStore` with an in-memory SwiftData container;
+- purchases against a fake `PurchaseGateway`: offers to button labels, the
+  `/me` polling after a purchase, cancel, failure, restore, store log-in and
+  log-out with the session, and everything off without a key;
 - the Debug screenshot states (parsing, fixtures, no network).
 
 `LiveAPITests` sends one real free verdict and is skipped unless
