@@ -113,5 +113,5 @@ object Tiers {
         if (cases) add("pricing.premium.f6")
     }
 
-    val FREE_FEATURE_KEYS = listOf("pricing.free.f1", "pricing.free.f2", "pricing.free.f3")
+    val FREE_FEATURE_KEYS = listOf("pricing.free.f1", "pricing.free.f2", "app.pricing.free.account")
 }

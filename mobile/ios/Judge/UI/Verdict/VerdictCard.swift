@@ -103,6 +103,8 @@ struct VerdictCard: View {
                         .padding(.vertical, 5)
                         .background(Capsule().fill(Brand.sageTint))
                         .lineLimit(1)
+                        .minimumScaleFactor(0.7)
+                        .layoutPriority(1)
                 }
             }
             Spacer(minLength: 0)

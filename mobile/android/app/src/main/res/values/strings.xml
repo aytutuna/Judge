@@ -457,6 +457,7 @@
     <string name="app_history_clear_all">Delete all</string>
     <string name="app_history_clear_confirm">Delete every saved verdict from this phone? Share links keep working.</string>
     <string name="app_history_clear_yes">Yes, delete them</string>
+    <string name="app_pricing_free_account">Sign in with Apple, Google or email</string>
     <string name="app_cancel">Cancel</string>
     <string name="app_retry">Try again</string>
     <string name="app_error_offline">You seem to be offline. Check your connection and try again.</string>

@@ -27,6 +27,10 @@ export const APP_STRINGS: Record<string, { en: string; tr: string }> = {
     tr: "Bu telefondaki bütün kayıtlı kararlar silinsin mi? Paylaşım linkleri çalışmaya devam eder.",
   },
   "app.history.clearYes": { en: "Yes, delete them", tr: "Evet, sil" },
+  "app.pricing.free.account": {
+    en: "Sign in with Apple, Google or email",
+    tr: "Apple, Google ya da e-postayla giriş yap",
+  },
   "app.cancel": { en: "Cancel", tr: "Vazgeç" },
   "app.retry": { en: "Try again", tr: "Tekrar dene" },
   "app.error.offline": {

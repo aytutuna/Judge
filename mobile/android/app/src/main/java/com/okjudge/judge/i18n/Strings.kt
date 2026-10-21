@@ -336,7 +336,7 @@ class Strings(private val res: Resources) {
     val respondIntro: String get() = res.getString(R.string.respond_intro)
     val respondPrivacy: String get() = res.getString(R.string.respond_privacy)
     fun respondFramework(preset: String): String = res.getString(R.string.respond_framework, preset)
-    fun respondLang(lang: String): String = res.getString(R.string.respond_lang, lang)
+    fun respondLang(language: String): String = res.getString(R.string.respond_lang, language)
     val respondLangEn: String get() = res.getString(R.string.respond_lang_en)
     val respondLangTr: String get() = res.getString(R.string.respond_lang_tr)
     val respondLabel: String get() = res.getString(R.string.respond_label)
@@ -459,6 +459,7 @@ class Strings(private val res: Resources) {
     val appHistoryClearAll: String get() = res.getString(R.string.app_history_clear_all)
     val appHistoryClearConfirm: String get() = res.getString(R.string.app_history_clear_confirm)
     val appHistoryClearYes: String get() = res.getString(R.string.app_history_clear_yes)
+    val appPricingFreeAccount: String get() = res.getString(R.string.app_pricing_free_account)
     val appCancel: String get() = res.getString(R.string.app_cancel)
     val appRetry: String get() = res.getString(R.string.app_retry)
     val appErrorOffline: String get() = res.getString(R.string.app_error_offline)
@@ -902,6 +903,7 @@ class Strings(private val res: Resources) {
             "app.history.clearAll" -> R.string.app_history_clear_all
             "app.history.clearConfirm" -> R.string.app_history_clear_confirm
             "app.history.clearYes" -> R.string.app_history_clear_yes
+            "app.pricing.free.account" -> R.string.app_pricing_free_account
             "app.cancel" -> R.string.app_cancel
             "app.retry" -> R.string.app_retry
             "app.error.offline" -> R.string.app_error_offline

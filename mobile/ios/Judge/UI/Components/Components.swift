@@ -90,6 +90,8 @@ struct PrimaryButtonStyle: ButtonStyle {
 
 /// Paper pill with a hairline border (`.btnGhost`).
 struct GhostButtonStyle: ButtonStyle {
+    @Environment(\.isEnabled) private var isEnabled
+
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .brandText(.chip)
@@ -99,6 +101,7 @@ struct GhostButtonStyle: ButtonStyle {
             .background(Capsule().fill(configuration.isPressed ? Color.white : Brand.paper))
             .overlay(Capsule().strokeBorder(Brand.line2, lineWidth: 1))
             .scaleEffect(configuration.isPressed ? 0.98 : 1)
+            .opacity(isEnabled ? 1 : 0.4)
     }
 }
 

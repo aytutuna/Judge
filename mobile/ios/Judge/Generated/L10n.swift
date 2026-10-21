@@ -465,6 +465,7 @@ enum L10n {
     static func appHistoryClearAll(_ lang: AppLang) -> String { string("app.history.clearAll", lang) }
     static func appHistoryClearConfirm(_ lang: AppLang) -> String { string("app.history.clearConfirm", lang) }
     static func appHistoryClearYes(_ lang: AppLang) -> String { string("app.history.clearYes", lang) }
+    static func appPricingFreeAccount(_ lang: AppLang) -> String { string("app.pricing.free.account", lang) }
     static func appCancel(_ lang: AppLang) -> String { string("app.cancel", lang) }
     static func appRetry(_ lang: AppLang) -> String { string("app.retry", lang) }
     static func appErrorOffline(_ lang: AppLang) -> String { string("app.error.offline", lang) }
@@ -909,6 +910,7 @@ enum L10n {
         "app.history.clearAll",
         "app.history.clearConfirm",
         "app.history.clearYes",
+        "app.pricing.free.account",
         "app.cancel",
         "app.retry",
         "app.error.offline",

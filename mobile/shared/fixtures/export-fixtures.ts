@@ -529,7 +529,7 @@ const PREMIUM_POLLS: Record<string, VerdictPollResponse> = {
 // Cases ----------------------------------------------------------------------------
 
 const CASE_ID = "case0000001";
-const INVITE = "https://okjudge.com/respond/Xk3pQ9vLm2Rt7YbN4cWd0A";
+const INVITE = "https://okjudge.com/r/Xk3pQ9vLm2Rt7YbN4cWd0A";
 const CASE_NAMES: NameMapping[] = [
   { original: "I", replacement: "Party A" },
   { original: "Sam", replacement: "Party B" },

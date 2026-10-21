@@ -68,7 +68,7 @@ final class CaseTests: XCTestCase {
 
         let waiting = try view("waiting_for_respondent")
         XCTAssertEqual(waiting.status, .awaitingRespondent)
-        XCTAssertEqual(waiting.inviteUrl, "https://okjudge.com/respond/Xk3pQ9vLm2Rt7YbN4cWd0A")
+        XCTAssertEqual(waiting.inviteUrl, "https://okjudge.com/r/Xk3pQ9vLm2Rt7YbN4cWd0A")
         XCTAssertTrue(waiting.canJudgeNow)
         XCTAssertNil(waiting.mode)
         XCTAssertEqual(waiting.names, [NameMapping(original: "I", replacement: "Party A"), NameMapping(original: "Sam", replacement: "Party B")])

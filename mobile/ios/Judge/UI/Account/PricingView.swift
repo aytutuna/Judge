@@ -77,7 +77,7 @@ struct PricingView: View {
             Text(L10n.pricingFreePrice(lang))
                 .brandText(Self.price)
                 .foregroundStyle(Brand.ink2)
-            features([L10n.pricingFreeF1(lang), L10n.pricingFreeF2(lang), L10n.pricingFreeF3(lang)])
+            features([L10n.pricingFreeF1(lang), L10n.pricingFreeF2(lang), L10n.appPricingFreeAccount(lang)])
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(20)

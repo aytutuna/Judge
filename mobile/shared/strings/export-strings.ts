@@ -149,6 +149,8 @@ const KEYWORDS = new Set([
 ]);
 
 function paramName(slot: string): string {
+  // `lang` is the generated Swift accessors' own first parameter.
+  if (slot === "lang") return "language";
   return KEYWORDS.has(slot) ? `${slot}Value` : slot;
 }
 
