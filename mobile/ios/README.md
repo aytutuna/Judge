@@ -115,7 +115,7 @@ Config/                      xcconfigs
 Judge/
   App/                       JudgeApp (root view, tabs), AppModel, AppConfig,
                              ScreenshotState (Debug-only fixture states)
-  Core/API/                  JudgeAPI (URLSession), APIError, BotCheck, TokenStore
+  Core/API/                  JudgeAPI (URLSession), verdict polling, APIError, BotCheck, TokenStore
   Core/Model/                Codable wire models, raw-JSON-preserving decoding
   Core/Display/              ports of the website's display logic (pure)
   Core/Data/                 SwiftData SavedVerdict + HistoryStore
@@ -149,6 +149,10 @@ available. It covers:
 - error mapping, and `JudgeAPI` against a stub `URLProtocol` (headers,
   timeouts, every error body, 524 and 504, HTML 5xx, offline, no automatic
   retry);
+- async verdicts (`Prefer: respond-async`, 202, then polling
+  `GET /api/v1/verdicts/{id}`): name map and owner token kept from the 202,
+  failed jobs, transient poll errors, the deadline, cancellation, and the
+  direct 200 answer;
 - `HistoryStore` with an in-memory SwiftData container;
 - the Debug screenshot states (parsing, fixtures, no network).
 

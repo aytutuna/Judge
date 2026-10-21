@@ -17,7 +17,9 @@ struct NoTokenStore: TokenStore {
 /// Client for the `/api/v1` JSON API. A value type holding only Sendable
 /// state, so calls run off the main actor and can be made from anywhere.
 /// The verdict POST is never retried automatically: a retry would cost the
-/// user's rate limit and a second verdict.
+/// user's rate limit and a second verdict. It asks to be answered at once
+/// (`Prefer: respond-async`) and then polls for the verdict, because a
+/// proxy ends a request held open for minutes.
 struct JudgeAPI: Sendable {
     enum Timeout {
         /// Server-side work can take about 285 s (judges, escalation, trial).
@@ -30,12 +32,20 @@ struct JudgeAPI: Sendable {
     let session: URLSession
     let tokenStore: any TokenStore
     let userAgent: String
+    let pollPolicy: PollPolicy
 
-    init(baseURL: URL, userAgent: String, tokenStore: any TokenStore = NoTokenStore(), session: URLSession = JudgeAPI.makeSession()) {
+    init(
+        baseURL: URL,
+        userAgent: String,
+        tokenStore: any TokenStore = NoTokenStore(),
+        session: URLSession = JudgeAPI.makeSession(),
+        pollPolicy: PollPolicy = .standard
+    ) {
         self.baseURL = baseURL
         self.userAgent = userAgent
         self.tokenStore = tokenStore
         self.session = session
+        self.pollPolicy = pollPolicy
     }
 
     /// No cookies, no cache; the long verdict timeout as the session default
@@ -55,13 +65,34 @@ struct JudgeAPI: Sendable {
 
     // MARK: - Calls
 
+    /// A verdict, start to finish: the POST, then polling when it was
+    /// accepted. Throws `CancellationError` or an `APIError`.
     func verdict(_ body: VerdictRequest) async throws -> VerdictPayload {
+        switch try await startVerdict(body) {
+        case .ready(let payload):
+            return payload
+        case .accepted(let accepted):
+            do {
+                return try await awaitVerdict(accepted)
+            } catch let failure as VerdictPollError {
+                throw failure.error
+            }
+        }
+    }
+
+    /// The verdict POST alone. A server that ignores the preference (or an
+    /// older one) still answers 200 with the verdict, so the long timeout stays.
+    func startVerdict(_ body: VerdictRequest) async throws -> VerdictStart {
         var request = makeRequest(url: endpoint("verdict"), method: "POST", timeout: Timeout.verdict)
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue(PollPolicy.respondAsync, forHTTPHeaderField: "Prefer")
         request.httpBody = try JSONEncoder().encode(body)
-        let data = try await send(request)
+        let (data, response) = try await exchange(request)
         do {
-            return try WireDecoding.verdictPayload(from: data)
+            if response.statusCode == 202 {
+                return .accepted(try WireDecoding.acceptedPayload(from: data))
+            }
+            return .ready(try WireDecoding.verdictPayload(from: data))
         } catch {
             throw APIError.malformed
         }
@@ -110,6 +141,11 @@ struct JudgeAPI: Sendable {
 
     /// Sends once. Throws `CancellationError` when cancelled, otherwise an `APIError`.
     func send(_ request: URLRequest) async throws -> Data {
+        try await exchange(request).data
+    }
+
+    /// `send`, keeping the response for callers that branch on the status.
+    func exchange(_ request: URLRequest) async throws -> (data: Data, response: HTTPURLResponse) {
         let received: (Data, URLResponse)
         do {
             received = try await session.data(for: request)
@@ -131,6 +167,6 @@ struct JudgeAPI: Sendable {
             }
             throw failure
         }
-        return data
+        return (data, http)
     }
 }

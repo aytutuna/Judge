@@ -35,6 +35,28 @@ final class HomeModel {
     @ObservationIgnored private var arrivedID: String?
     @ObservationIgnored private var request: Task<Void, Never>?
     @ObservationIgnored private var unblock: Task<Void, Never>?
+    @ObservationIgnored private var pending: PendingVerdict?
+
+    /// What was asked: "Try again" with the same request resumes its verdict.
+    private struct RequestKey: Equatable {
+        let text: String
+        let preset: String
+        let lang: AppLang
+    }
+
+    /// A verdict the server accepted (202) but the app has not received:
+    /// kept when polling stopped short (network, server hiccups, the close
+    /// button), so the same request polls the same id again instead of
+    /// asking, and paying, for a second verdict.
+    private struct PendingVerdict {
+        let accepted: VerdictAccepted
+        let key: RequestKey
+        let since: Date
+    }
+
+    /// After this long a pending verdict is dropped and a new one is asked
+    /// for; the server settles every verdict within about 10 minutes.
+    static let resumeWindow: TimeInterval = 15 * 60
 
     init(preset: String) {
         self.preset = Preset.find(preset).id
@@ -70,7 +92,8 @@ final class HomeModel {
     }
 
     /// Starts a free verdict. The request is sent once; "Try again" is the
-    /// only retry, and it is the user's.
+    /// only retry, and it is the user's. When the same request was already
+    /// accepted, it polls for that verdict instead.
     ///
     /// The bot check runs first, with Home still on screen: its interactive
     /// sheet is presented from the root view, which cannot present while the
@@ -87,6 +110,16 @@ final class HomeModel {
         let api = app.api
         let botCheck = app.botCheck
         let history = app.history
+        let key = RequestKey(text: text, preset: preset, lang: lang)
+        if let held = pending, held.key == key, Date.now.timeIntervalSince(held.since) < Self.resumeWindow {
+            isCheckingBot = false
+            isJudging = true
+            request = Task { [weak self] in
+                await self?.judge(.resume(held.accepted), key: key, api: api, history: history, preset: preset)
+            }
+            return
+        }
+        pending = nil
         request = Task { [weak self] in
             let token: String?
             do {
@@ -100,31 +133,73 @@ final class HomeModel {
             guard let self, !Task.isCancelled else { return }
             self.isCheckingBot = false
             self.isJudging = true
-            // A verdict can take minutes: ask for background time so a short
-            // app switch does not suspend the app and drop the connection.
-            let background = BackgroundActivity(name: "verdict")
-            defer { background.end() }
-            do {
-                let body = VerdictRequest(argument: text, framework: .init(preset: preset), lang: lang, turnstileToken: token)
-                let payload = try await api.verdict(body)
-                guard !Task.isCancelled else { return }
-                let session = VerdictSession(id: payload.id, original: payload.result, nameMap: payload.nameMap, translations: [:])
-                self.sessions[session.id] = session
-                try? history.save(session, preset: preset)
-                self.arrivedID = session.id
-                self.arrived = payload.result.result
-            } catch let failure as APIError {
-                guard !Task.isCancelled else { return }
-                // A connection lost after the background time ran out is the
-                // suspension, not the network.
-                self.fail(failure == .offline && background.expired ? .interrupted : failure)
-            } catch is CancellationError {
-                return
-            } catch {
-                guard !Task.isCancelled else { return }
-                self.fail(.malformed)
-            }
+            let body = VerdictRequest(argument: text, framework: .init(preset: preset), lang: lang, turnstileToken: token)
+            await self.judge(.post(body), key: key, api: api, history: history, preset: preset)
         }
+    }
+
+    private enum Start {
+        case post(VerdictRequest)
+        case resume(VerdictAccepted)
+    }
+
+    /// The request behind the judging cover: the POST (unless resuming),
+    /// then polling while the server judges. Cancelling the task (the close
+    /// button) stops either.
+    private func judge(_ start: Start, key: RequestKey, api: JudgeAPI, history: HistoryStore, preset: String) async {
+        // A verdict can take minutes: ask for background time so a short
+        // app switch does not suspend the app and drop the connection.
+        let background = BackgroundActivity(name: "verdict")
+        defer { background.end() }
+        var acceptedID: String?
+        do {
+            let accepted: VerdictAccepted
+            switch start {
+            case .resume(let held):
+                accepted = held
+            case .post(let body):
+                switch try await api.startVerdict(body) {
+                case .ready(let payload):
+                    guard !Task.isCancelled else { return }
+                    deliver(payload, history: history, preset: preset)
+                    return
+                case .accepted(let fresh):
+                    accepted = fresh
+                    pending = PendingVerdict(accepted: fresh, key: key, since: .now)
+                }
+            }
+            acceptedID = accepted.id
+            let payload = try await api.awaitVerdict(accepted)
+            if pending?.accepted.id == accepted.id { pending = nil }
+            guard !Task.isCancelled else { return }
+            deliver(payload, history: history, preset: preset)
+        } catch let failure as VerdictPollError {
+            if !failure.resumable, let acceptedID, pending?.accepted.id == acceptedID { pending = nil }
+            guard !Task.isCancelled else { return }
+            fail(failure.error, background: background)
+        } catch let failure as APIError {
+            guard !Task.isCancelled else { return }
+            fail(failure, background: background)
+        } catch is CancellationError {
+            return
+        } catch {
+            guard !Task.isCancelled else { return }
+            fail(.malformed)
+        }
+    }
+
+    private func deliver(_ payload: VerdictPayload, history: HistoryStore, preset: String) {
+        let session = VerdictSession(id: payload.id, original: payload.result, nameMap: payload.nameMap, translations: [:])
+        sessions[session.id] = session
+        try? history.save(session, preset: preset)
+        arrivedID = session.id
+        arrived = payload.result.result
+    }
+
+    /// A connection lost after the background time ran out is the
+    /// suspension, not the network.
+    private func fail(_ failure: APIError, background: BackgroundActivity) {
+        fail(failure == .offline && background.expired ? .interrupted : failure)
     }
 
     /// The judging cover finished its reveal: hand over to the verdict.

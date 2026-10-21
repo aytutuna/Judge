@@ -8,11 +8,31 @@ struct RawResult: Sendable, Equatable {
     let json: String
 }
 
-/// POST /api/v1/verdict success.
+/// POST /api/v1/verdict success, or a ready poll merged with its 202.
 struct VerdictPayload: Sendable, Equatable {
     let id: String
     let result: RawResult
     let nameMap: [NameMapping]
+    /// Signed-out writers only: proves authorship of the share page.
+    var ownerToken: String? = nil
+}
+
+/// POST /api/v1/verdict answered 202: the verdict is judged in the background
+/// under `id`. `nameMap` and `ownerToken` come only here; the poll answer
+/// does not repeat them.
+struct VerdictAccepted: Sendable, Equatable {
+    let id: String
+    let nameMap: [NameMapping]
+    var ownerToken: String? = nil
+    /// The server's suggested first wait, in milliseconds.
+    var pollAfterMs: Double? = nil
+}
+
+/// GET /api/v1/verdicts/{id} answered 200 (lib/verdict-poll.ts).
+enum PollAnswer: Sendable, Equatable {
+    case judging(pollAfterMs: Double?)
+    case failed(code: String, error: String?)
+    case ready(RawResult)
 }
 
 /// POST /api/v1/verdicts/{id}/translate success.
@@ -43,17 +63,35 @@ enum WireDecoding {
         let object = try topLevelObject(data)
         let id = try string("id", in: object)
         let result = try rawResult(object["result"])
-        var nameMap: [NameMapping] = []
-        if let list = object["name_map"] as? [Any] {
-            for entry in list {
-                guard let pair = entry as? [String: Any],
-                      let original = pair["original"] as? String,
-                      let replacement = pair["replacement"] as? String
-                else { continue }
-                nameMap.append(NameMapping(original: original, replacement: replacement))
-            }
+        return VerdictPayload(id: id, result: result, nameMap: nameMap(in: object), ownerToken: ownerToken(in: object))
+    }
+
+    static func acceptedPayload(from data: Data) throws -> VerdictAccepted {
+        let object = try topLevelObject(data)
+        let wait = (object["pollAfterMs"] as? NSNumber)?.doubleValue
+        return VerdictAccepted(
+            id: try string("id", in: object),
+            nameMap: nameMap(in: object),
+            ownerToken: ownerToken(in: object),
+            pollAfterMs: wait.flatMap { $0.isFinite && $0 >= 0 ? $0 : nil }
+        )
+    }
+
+    /// A 200 poll body. A body with a result and an id but no status is a
+    /// ready verdict from a server older than async verdicts.
+    static func pollAnswer(from data: Data) throws -> PollAnswer {
+        let object = try topLevelObject(data)
+        switch object["status"] as? String {
+        case "judging":
+            let wait = (object["pollAfterMs"] as? NSNumber)?.doubleValue
+            return .judging(pollAfterMs: wait.flatMap { $0.isFinite && $0 >= 0 ? $0 : nil })
+        case "failed":
+            let code = (object["code"] as? String).flatMap { $0.isEmpty ? nil : $0 } ?? "unavailable"
+            return .failed(code: code, error: object["error"] as? String)
+        default:
+            _ = try string("id", in: object)
+            return .ready(try rawResult(object["result"]))
         }
-        return VerdictPayload(id: id, result: result, nameMap: nameMap)
     }
 
     static func translatePayload(from data: Data) throws -> TranslatePayload {
@@ -123,6 +161,22 @@ enum WireDecoding {
     }
 
     // MARK: - Helpers
+
+    private static func nameMap(in object: [String: Any]) -> [NameMapping] {
+        guard let list = object["name_map"] as? [Any] else { return [] }
+        return list.compactMap { entry in
+            guard let pair = entry as? [String: Any],
+                  let original = pair["original"] as? String,
+                  let replacement = pair["replacement"] as? String
+            else { return nil }
+            return NameMapping(original: original, replacement: replacement)
+        }
+    }
+
+    private static func ownerToken(in object: [String: Any]) -> String? {
+        guard let token = object["owner_token"] as? String, !token.isEmpty else { return nil }
+        return token
+    }
 
     private static func topLevelObject(_ data: Data) throws -> [String: Any] {
         guard let object = try JSONSerialization.jsonObject(with: data) as? [String: Any] else {
