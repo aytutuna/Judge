@@ -68,7 +68,9 @@ final class PurchaseModel {
     /// Every plan on the pricing screen has a store offer (the note about
     /// payments not being open yet can go).
     func sellsEveryPlan(_ pricing: PricingInfo) -> Bool {
-        canPurchase(pricing) && (pricing.packs.map(.id) + [pricing.monthly.id]).allSatisfy { offers[$0] != nil }
+        guard canPurchase(pricing) else { return false }
+        let plans = pricing.packs.map { $0.id } + [pricing.monthly.id]
+        return plans.allSatisfy { offers[$0] != nil }
     }
 
     /// The store offer behind a plan's buy button, or nil for "Coming soon".
