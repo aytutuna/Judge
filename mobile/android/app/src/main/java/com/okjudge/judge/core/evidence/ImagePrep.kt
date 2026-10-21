@@ -56,7 +56,7 @@ object ImagePrep {
     const val JPEG_QUALITY = 85
 
     /** Longest picked file read into memory; anything larger is reported as too large without decoding. */
-    const val MAX_READ_BYTES = 40 * 1024 * 1024
+    const val MAX_READ_BYTES = 20 * 1024 * 1024
 
     private const val THUMB_EDGE = 160
 
@@ -90,7 +90,7 @@ object ImagePrep {
 
     /** The whole stream, or null past [MAX_READ_BYTES]. */
     private fun readCapped(input: java.io.InputStream): ByteArray? {
-        val out = ByteArrayOutputStream()
+        val out = ByteArrayOutputStream(256 * 1024)
         val buf = ByteArray(64 * 1024)
         var total = 0
         while (true) {

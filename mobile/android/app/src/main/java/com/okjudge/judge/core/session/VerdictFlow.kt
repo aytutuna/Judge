@@ -286,12 +286,17 @@ class VerdictFlow(
                     val created = res.value
                     caseNames.save(created.case.id, created.nameMap)
                     created.entitlement?.let(onEntitlement)
-                    _creating.value = false
+                    // The form stays held until the case screen has taken over (caseOpened).
                     _navigation.trySend(Nav.Case(created.case.id))
                 }
             }
         }
         return true
+    }
+
+    /** The shell opened the created case: the form may be used again. */
+    fun caseOpened() {
+        _creating.value = false
     }
 
     /** "Back" from the questions: the form again, nothing sent. */
@@ -343,7 +348,14 @@ class VerdictFlow(
                             when (end) {
                                 is PollOutcome.Ready -> {
                                     clearKey(key)
-                                    succeed(end.outcome, input.preset)
+                                    // A retry that joined a running verdict got no name map: the writer's view has it.
+                                    val outcome = if (submission.accepted.replayed && end.outcome.nameMap.isEmpty()) {
+                                        val mine = (api.mineNameMap(end.outcome.id) as? ApiResult.Ok)?.value.orEmpty()
+                                        end.outcome.copy(nameMap = mine)
+                                    } else {
+                                        end.outcome
+                                    }
+                                    succeed(outcome, input.preset)
                                 }
                                 is PollOutcome.Ended -> fail(end.error)
                             }

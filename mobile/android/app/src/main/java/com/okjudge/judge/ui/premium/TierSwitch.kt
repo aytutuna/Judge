@@ -155,7 +155,7 @@ private fun Option(
 ) {
     Row(
         Modifier
-            .defaultMinSize(minHeight = 38.dp)
+            .defaultMinSize(minHeight = 48.dp)
             .clip(JudgeShapes.chip)
             .background(if (selected) Palette.ink else Palette.paper)
             .selectable(selected = selected, enabled = enabled, role = Role.RadioButton, onClick = onClick)

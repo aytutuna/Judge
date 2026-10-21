@@ -167,6 +167,9 @@ class CaseFlowTest {
         )
         assertTrue(flow.createCase("  Sam says a hot dog is a sandwich and I say it is not.  ", Preset.FAIRNESS, AppLang.TR, listOf("e1"), " Ayşe "))
         assertEquals(VerdictFlow.Nav.Case(ID), withTimeout(5_000) { flow.navigation.first() })
+        assertTrue("the form holds until the case screen takes over", flow.creating.value)
+        assertFalse(flow.canStart())
+        flow.caseOpened()
         assertFalse(flow.creating.value)
         val req = routes.requestsTo(CREATE).single()
         assertEquals("ck-1", req.headers["Idempotency-Key"])
@@ -407,6 +410,7 @@ class CaseFlowTest {
         assertNull(DeepLinks.parse("http://okjudge.com/c/abc"))
         assertNull(DeepLinks.parse("https://okjudge.com/c/a%20b"))
         assertNull(DeepLinks.parse("not a url"))
+        assertNull("only the site's own links", DeepLinks.parse("https://evil.example/r/Xk3pQ9vLm2Rt7YbN4cWd0A"))
     }
 
     private companion object {

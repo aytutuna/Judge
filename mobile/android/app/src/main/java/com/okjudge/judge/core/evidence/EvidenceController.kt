@@ -5,8 +5,7 @@ import com.okjudge.judge.core.api.ApiResult
 import com.okjudge.judge.core.display.UiError
 import com.okjudge.judge.core.model.EvidenceUploadResponse
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -87,7 +86,18 @@ class EvidenceController(
         _state.update { it.copy(items = it.items + fresh, failure = null, overLimit = sources.size > room) }
         if (fresh.isEmpty()) return
         scope.launch {
-            val prepared = picked.map { src -> async { runCatching { src.prepare() }.getOrDefault(Prepared.Unsupported) } }.awaitAll()
+            // One at a time: a few full-size photos decoded at once can exhaust the heap.
+            val prepared = picked.map { src ->
+                try {
+                    src.prepare()
+                } catch (e: CancellationException) {
+                    throw e
+                } catch (_: Exception) {
+                    Prepared.Unsupported
+                } catch (_: OutOfMemoryError) {
+                    Prepared.TooLarge
+                }
+            }
             val send = ArrayList<Pair<String, PreparedImage>>()
             val local = HashMap<String, EvidenceStatus>()
             prepared.forEachIndexed { i, p ->

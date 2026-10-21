@@ -133,7 +133,8 @@ class CaseViewModel(
     }
 
     /** A new view (from a load or an action): updates the overlay and restarts polling. */
-    private fun show(view: CaseView) {
+    private fun show(view: CaseView, fromAction: Boolean = false) {
+        if (fromAction) failures = 0
         _state.update { s ->
             val judging = view.status == CaseStatus.JUDGING
             val overlay = when {
@@ -177,7 +178,7 @@ class CaseViewModel(
     /** "Judge now" with only the owner's side ([onlyMine]), or "Try again" after a failure. */
     fun judge(onlyMine: Boolean) {
         if (_state.value.busy) return
-        viewModelScope.launch { action { api.judgeCase(caseId, onlyMine) }?.let(::show) }
+        viewModelScope.launch { action { api.judgeCase(caseId, onlyMine) }?.let { show(it, fromAction = true) } }
     }
 
     /** "Make a new link": the old one stops working. */
@@ -199,7 +200,7 @@ class CaseViewModel(
             val view = res.case ?: return@launch
             names.forget(caseId)
             _state.update { it.copy(localNames = emptyList(), removedNow = true) }
-            show(view)
+            show(view, fromAction = true)
         }
     }
 
@@ -225,7 +226,7 @@ class CaseViewModel(
             when (res) {
                 is ApiResult.Ok -> {
                     _state.update { it.copy(namesBusy = false, typedName = null, namesSaved = true) }
-                    show(res.value)
+                    show(res.value, fromAction = true)
                 }
                 is ApiResult.Err -> {
                     val e = res.error
@@ -274,7 +275,7 @@ class CaseViewModel(
                     created.entitlement?.let(onEntitlement)
                     evidence.clear()
                     _state.update { it.copy(appealSending = false, appealText = "", localNames = names.get(caseId)) }
-                    show(created.case)
+                    show(created.case, fromAction = true)
                 }
                 is ApiResult.Err -> {
                     _state.update { it.copy(appealSending = false, appealError = res.error) }

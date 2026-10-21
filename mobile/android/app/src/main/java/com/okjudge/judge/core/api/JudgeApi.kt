@@ -12,6 +12,7 @@ import com.okjudge.judge.core.model.InviteResponse
 import com.okjudge.judge.core.model.ClarifyResponse
 import com.okjudge.judge.core.model.EvidenceUploadResponse
 import com.okjudge.judge.core.model.MeResponse
+import com.okjudge.judge.core.model.NameMapping
 import com.okjudge.judge.core.model.ServerConfig
 import com.okjudge.judge.core.model.SessionGrant
 import com.okjudge.judge.core.model.StoredVerdict
@@ -116,6 +117,11 @@ class JudgeApi(
         .retryOnConnectionFailure(false)
         .build()
 
+    /** Case and appeal writes: anonymizing takes a while, and a silent replay must never happen. */
+    private val caseWriteClient = translateClient.newBuilder()
+        .retryOnConnectionFailure(false)
+        .build()
+
     private val getClient = client.newBuilder()
         .connectTimeout(15, TimeUnit.SECONDS)
         .readTimeout(timeouts.getSec, TimeUnit.SECONDS)
@@ -201,7 +207,7 @@ class JudgeApi(
             .header("Idempotency-Key", idempotencyKey)
             .post(body.toRequestBody(JSON))
             .build()
-        return execute(translateClient, req) { _, text -> WireJson.json.decodeFromString(CaseWithNames.serializer(), text) }
+        return execute(caseWriteClient, req) { _, text -> WireJson.json.decodeFromString(CaseWithNames.serializer(), text) }
     }
 
     /** GET /api/v1/cases/{id}: the owner's view of a case. */
@@ -221,7 +227,7 @@ class JudgeApi(
     suspend fun judgeCase(id: String, onlyMine: Boolean): ApiResult<CaseView> {
         val body = if (onlyMine) buildJsonObject { put("mode", "only_mine") } else JsonObject(emptyMap())
         val req = request(caseUrl(id, "judge")).post(body.toString().toRequestBody(JSON)).build()
-        return execute(translateClient, req) { _, text -> WireJson.json.decodeFromString(CaseResponse.serializer(), text).case }
+        return execute(caseWriteClient, req) { _, text -> WireJson.json.decodeFromString(CaseResponse.serializer(), text).case }
     }
 
     /** POST /api/v1/cases/{id}/invite: a new invite link; the old one stops working. */
@@ -256,7 +262,19 @@ class JudgeApi(
             .header("Idempotency-Key", idempotencyKey)
             .post(body.toRequestBody(JSON))
             .build()
-        return execute(translateClient, req) { _, text -> WireJson.json.decodeFromString(CaseWithNames.serializer(), text) }
+        return execute(caseWriteClient, req) { _, text -> WireJson.json.decodeFromString(CaseWithNames.serializer(), text) }
+    }
+
+    /**
+     * GET /api/v1/verdicts/{id}/mine: the writer's own name map, for a
+     * premium retry that joined a verdict already judging (its 202 has none).
+     */
+    suspend fun mineNameMap(id: String): ApiResult<List<NameMapping>> {
+        val url = base.newBuilder().addPathSegments("api/v1/verdicts").addPathSegment(id).addPathSegment("mine").build()
+        val req = request(url).cacheControl(CacheControl.FORCE_NETWORK).get().build()
+        return execute(getClient, req) { _, text ->
+            WireJson.decodeNameMap((WireJson.json.parseToJsonElement(text) as? JsonObject)?.get("nameMap")?.toString())
+        }
     }
 
     private fun caseUrl(id: String, action: String? = null): HttpUrl =

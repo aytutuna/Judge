@@ -296,6 +296,23 @@ class PremiumFlowTest {
     }
 
     @Test
+    fun verdict_aRetryThatJoinedARunningVerdict_readsTheNamesFromMine() = runBlocking {
+        routes.on(CLARIFY, Routes.json(200, clarify("none")))
+        val replayed = JsonObject(Json.parseToJsonElement(accepted).jsonObject + ("replayed" to JsonPrimitive(true))).toString()
+        routes.on(VERDICT, Routes.json(202, replayed))
+        routes.on(POLL, Routes.json(200, poll("ready")))
+        routes.on(
+            "GET /api/v1/verdicts/premium001/mine",
+            Routes.json(200, """{"id":"premium001","nameMap":[{"original":"I","replacement":"Party A"},{"original":"Sam","replacement":"Party B"}]}"""),
+        )
+        val f = flow()
+        f.startPremium(argument, Preset.BALANCED, AppLang.EN, emptyList())
+        val done = f.settled() as VerdictFlow.State.Succeeded
+        assertEquals(listOf("I", "Sam"), done.outcome.nameMap.map { it.original })
+        assertEquals(listOf("I", "Sam"), history.rows.value.single().nameMap.map { it.original })
+    }
+
+    @Test
     fun buildClarifications_trimsAndCaps() {
         val q = listOf(
             com.okjudge.judge.core.model.ClarifyQuestion("a", "  First?  "),

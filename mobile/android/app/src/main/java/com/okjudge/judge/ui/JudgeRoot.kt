@@ -117,6 +117,8 @@ fun JudgeRoot(container: AppContainer, links: StateFlow<Uri?> = MutableStateFlow
             val backStack = rememberNavBackStack(HomeKey)
             var clearDraft by rememberSaveable { mutableStateOf(false) }
             var submitAfterSignIn by rememberSaveable { mutableStateOf(false) }
+            // The tier the user saw when they tapped "Get the verdict" signed out (always free then).
+            var tierAtTap by rememberSaveable { mutableStateOf(Tier.FREE) }
             val context = LocalContext.current
             val account = container.account
             val snackbar = remember { SnackbarHostState() }
@@ -135,6 +137,7 @@ fun JudgeRoot(container: AppContainer, links: StateFlow<Uri?> = MutableStateFlow
                             clearDraft = true
                             backStack.removeAll { it is ClarifyKey }
                             backStack.add(CaseKey(nav.id))
+                            container.verdictFlow.caseOpened()
                         }
                     }
                 }
@@ -161,6 +164,11 @@ fun JudgeRoot(container: AppContainer, links: StateFlow<Uri?> = MutableStateFlow
                     }
                     launch { snackbar.showSnackbar(noticeText(currentStrings, notice)) }
                 }
+            }
+            val clarifyOpen = backStack.any { it is ClarifyKey }
+            LaunchedEffect(clarifyOpen) {
+                // Questions left behind another way (a tab, a link) are dropped with their screen.
+                if (!clarifyOpen) container.verdictFlow.leaveClarify()
             }
             val top = backStack.lastOrNull()
             val tab = when {
@@ -220,7 +228,11 @@ fun JudgeRoot(container: AppContainer, links: StateFlow<Uri?> = MutableStateFlow
                             LaunchedEffect(submitAfterSignIn) {
                                 if (submitAfterSignIn) {
                                     submitAfterSignIn = false
-                                    if (account.isSignedIn && vm.submit(lang) == Submitted.JUDGING) backStack.add(JudgingKey)
+                                    // Only the request the user saw goes out by itself: if signing in made
+                                    // Premium the effective tier, they choose again with the switch.
+                                    if (account.isSignedIn && state.tier == tierAtTap && vm.submit(lang) == Submitted.JUDGING) {
+                                        backStack.add(JudgingKey)
+                                    }
                                 }
                             }
                             HomeScreen(
@@ -232,6 +244,7 @@ fun JudgeRoot(container: AppContainer, links: StateFlow<Uri?> = MutableStateFlow
                                     // Every verdict needs an account: sign in first, then go on.
                                     if (!account.isSignedIn) {
                                         if (state.canSubmit && backStack.lastOrNull() !is SignInKey) {
+                                            tierAtTap = state.tier
                                             backStack.add(SignInKey(thenVerdict = true))
                                         }
                                     } else if (vm.submit(lang) == Submitted.JUDGING) {
@@ -556,9 +569,12 @@ object DeepLinks {
 
     private val ID = Regex("^[A-Za-z0-9_-]{1,64}$")
 
+    const val HOST = "okjudge.com"
+
     fun parse(url: String): Target? {
         val u = url.toHttpUrlOrNull() ?: return null
-        if (u.scheme != "https") return null
+        // The activity is exported: only the site's own links are followed.
+        if (u.scheme != "https" || u.host != HOST) return null
         val segments = u.pathSegments.filter { it.isNotEmpty() }
         if (segments.size != 2) return null
         return when (segments[0]) {
