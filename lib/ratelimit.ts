@@ -425,7 +425,14 @@ export async function checkTranslateLimits(ip: string): Promise<LimitDecision> {
  * minutes and 60 per 24 hours; clarifying questions: 20 per 10 minutes and
  * 100 per 24 hours (they spend no credit, so the daily window is what bounds
  * their cost per account). */
-export type UserBucket = "premium_verdict" | "clarify" | "case_create" | "evidence" | "case_evidence" | "verdict_owner";
+export type UserBucket =
+  | "premium_verdict"
+  | "clarify"
+  | "case_create"
+  | "evidence"
+  | "case_evidence"
+  | "verdict_owner"
+  | "apple_code";
 
 type UserWindow = { limit: number; windowMs: number; redisWindow: `${number} ${"m" | "h" | "d"}`; prefix: string };
 
@@ -452,6 +459,11 @@ export const USER_LIMITS: Record<UserBucket, readonly UserWindow[]> = {
   verdict_owner: [
     { limit: 60, windowMs: 10 * MINUTE_MS, redisWindow: "10 m", prefix: "verdict:u:vo10m" },
     { limit: 300, windowMs: DAY_MS, redisWindow: "1 d", prefix: "verdict:u:voday" },
+  ],
+  /** The app sending an Apple authorization code (one Apple round trip each). */
+  apple_code: [
+    { limit: 10, windowMs: 10 * MINUTE_MS, redisWindow: "10 m", prefix: "verdict:u:ac10m" },
+    { limit: 30, windowMs: DAY_MS, redisWindow: "1 d", prefix: "verdict:u:acday" },
   ],
 };
 

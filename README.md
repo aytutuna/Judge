@@ -91,7 +91,7 @@ An `ANTHROPIC_API_KEY` is **required** — without one the API refuses to judge
 | `RATE_LIMIT_SALT` | *(Upstash token)* | Secret key for hashing visitor IPs before they reach the rate-limit store. Any long random string. Unset = the Upstash token is used. Changing it resets every visitor's limits |
 | `DAILY_VERDICT_CAP` | `1000` | Site-wide verdicts per UTC day. `0` pauses the site |
 | `ORIGINALS_KEY` | *(required in production)* | 32 random bytes, base64 (`openssl rand -base64 32`): encrypts every stored original text, name map and share-page display name (AES-256-GCM). Back it up apart from the database (e.g. in a password manager): losing it makes the stored originals unreadable, and leaking it together with a database copy exposes them. Unset in development = a fixed development key (with a warning). Unset or invalid in production = originals and display names are not stored (one error line per process, one warning per skipped item); verdicts still work and share pages show Party A / Party B. See *Stored originals, names and removal* |
-| `ORIGINALS_KEY_PREVIOUS` | *(empty)* | Older keys, comma-separated, used only to decrypt after a rotation. New data is always sealed with `ORIGINALS_KEY` |
+| `ORIGINALS_KEY_PREVIOUS` | *(empty)* | Older keys, comma-separated, used only to decrypt after a rotation. New data is always sealed with `ORIGINALS_KEY`. Keep an old key here as long as anything sealed with it may still be read, including stored Sign in with Apple tokens (see *Key rotation*) |
 | `REMOVAL_LOG` | *(`removals.log` beside a local database file)* | Append-only log of removals (ids, party, reason, time; no text or names), kept outside the database so `scripts/originals.ts replay-removals` can re-apply them after a backup is restored. `off` disables it; a remote (`libsql://`) database has none unless this is set |
 | `NEXT_PUBLIC_TURNSTILE_SITE_KEY` | *(empty)* | Cloudflare Turnstile site key. Unset = no bot-check widget |
 | `TURNSTILE_SECRET_KEY` | *(empty)* | Turnstile secret for server-side verification. Unset = verification skipped (local dev) |
@@ -317,6 +317,14 @@ output is 500 to 800 tokens; not done yet).
   `proxy.ts`), its preview image and `GET /api/v1/verdicts/{id}` answer
   **410**. No row is ever deleted; the anonymized text and the verdict stay
   in the database, unreachable through public routes.
+- **Key rotation.** Put the new key in `ORIGINALS_KEY` and move the old one
+  to `ORIGINALS_KEY_PREVIOUS` (comma-separated); new data is sealed with the
+  new key, old data stays readable through the previous ones. Nothing is
+  re-sealed. That includes the Sign in with Apple refresh tokens kept for
+  revocation (`signin_tokens`): a token is only refreshed at the account's
+  next Apple sign-in, so drop an old key only once no token sealed with it
+  remains. A token that cannot be opened is not revoked at Apple when its
+  account is deleted (logged, recorded as `failed` in the removal log).
 - **Older rows.** Verdicts stored before this feature have no owner and keep
   showing labels. Premium verdicts (linked through their consumed credit)
   and case verdicts are backfilled with an ownership row at startup.
@@ -572,8 +580,10 @@ taken out of the text; the same request can be retried, e.g. with initials), plu
   `200 { "stored": true }`. The server exchanges it with Apple and keeps the
   refresh token (sealed) only to revoke it when the account is deleted. Codes
   are single-use and expire within minutes, so send it at once, on every
-  Apple sign-in. A failure (`400 invalid`, `503 unavailable` or
-  `not_configured`) never undoes the sign-in; the app may ignore it.
+  Apple sign-in. A failure (`400 invalid`, `429 rate_limited` with
+  `Retry-After`, `503 unavailable` or `not_configured`) never undoes the
+  sign-in; the app may ignore it. Limit: 10 per 10 minutes and 30 per day per
+  account.
 - **Google (iOS/Android):** native Google Sign-In, then
   `POST /api/auth/sign-in/social { "provider": "google", "idToken": { "token": "<idToken>" } }`.
   Needs the iOS/Android client ids above.

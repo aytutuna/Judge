@@ -1,4 +1,4 @@
-import { generateKeyPairSync, randomBytes, verify, type KeyObject } from "node:crypto";
+import { generateKeyPairSync, randomBytes, sign, verify, type KeyObject } from "node:crypto";
 import { mkdtempSync, readFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
@@ -29,11 +29,16 @@ process.env.APPLE_PRIVATE_KEY_BASE64 = Buffer.from(
   privateKey.export({ type: "pkcs8", format: "pem" }).toString(),
 ).toString("base64");
 process.env.APPLE_APP_BUNDLE_ID = APP_ID;
+process.env.GOOGLE_CLIENT_ID = "google-web-client";
+process.env.GOOGLE_CLIENT_SECRET = "google-secret";
 
 const { createDevSession, getAuth } = await import("../lib/auth");
 const { getDb } = await import("../lib/db");
 const { aad, openJson } = await import("../lib/originals/crypto");
-const { APPLE_REVOKE_URL, APPLE_TOKEN_URL } = await import("../lib/signin-tokens");
+const signinTokens = await import("../lib/signin-tokens");
+const { APPLE_REVOKE_URL, APPLE_TOKEN_URL } = signinTokens;
+const removal = await import("../lib/originals/removal");
+const ratelimit = await import("../lib/ratelimit");
 const { POST: postCode } = await import("../app/api/v1/auth/apple/code/route");
 const { DELETE: deleteMe } = await import("../app/api/v1/me/route");
 
@@ -85,6 +90,36 @@ const json = (body: unknown, status = 200) =>
 const b64url = (v: unknown) => Buffer.from(JSON.stringify(v)).toString("base64url");
 const fakeIdToken = (claims: Record<string, unknown>) =>
   `${b64url({ alg: "RS256", kid: "k" })}.${b64url({ iss: "https://appleid.apple.com", iat: 1, exp: 9_999_999_999, ...claims })}.sig`;
+
+/** A provider ID-token signer whose public key the mocked JWKS endpoints serve. */
+const idKeys = generateKeyPairSync("rsa", { modulusLength: 2048 });
+const JWKS = { keys: [{ ...idKeys.publicKey.export({ format: "jwk" }), kid: "test-kid", alg: "RS256", use: "sig" }] };
+const JWKS_URLS = ["https://appleid.apple.com/auth/keys", "https://www.googleapis.com/oauth2/v3/certs"];
+function signedIdToken(claims: Record<string, unknown>): string {
+  const now = Math.floor(Date.now() / 1000);
+  const input = `${b64url({ alg: "RS256", kid: "test-kid", typ: "JWT" })}.${b64url({ iat: now, exp: now + 600, ...claims })}`;
+  return `${input}.${sign("sha256", Buffer.from(input), idKeys.privateKey).toString("base64url")}`;
+}
+
+async function idTokenSignIn(provider: "apple" | "google", idToken: Record<string, unknown>) {
+  const auth = await getAuth();
+  return auth.handler(
+    new Request(`${ORIGIN}/api/auth/sign-in/social`, {
+      method: "POST",
+      headers: { "content-type": "application/json", origin: ORIGIN },
+      body: JSON.stringify({ provider, idToken }),
+    }),
+  );
+}
+
+async function accountTokens(userId: string, providerId: string) {
+  const db = await getDb();
+  const res = await db.execute({
+    sql: "SELECT accessToken, refreshToken, idToken FROM account WHERE userId = ? AND providerId = ?",
+    args: [userId, providerId],
+  });
+  return res.rows.map((r) => ({ accessToken: r.accessToken, refreshToken: r.refreshToken, idToken: r.idToken }));
+}
 
 function tokenReply(refreshToken: string, claims: Record<string, unknown>) {
   return json({
@@ -212,6 +247,8 @@ describe("website Sign in with Apple keeps the refresh token", () => {
     rows = await storedTokens(userId);
     expect(rows).toHaveLength(1);
     expect(openJson(rows[0].sealed, aad.signInToken("apple", WEB_ID, userId))).toBe("rt-web-second-SECRET");
+    // The account update on a returning sign-in still writes no token to the row.
+    expect(await accountTokens(userId, "apple")).toEqual([{ accessToken: null, refreshToken: null, idToken: null }]);
 
     expect(logged.join("\n")).not.toMatch(/rt-web-(first|second)-SECRET/);
   });
@@ -224,6 +261,94 @@ describe("website Sign in with Apple keeps the refresh token", () => {
     const rows = await storedTokens(user.id);
     expect(rows).toHaveLength(1);
     expect(openJson(rows[0].sealed, aad.signInToken("apple", WEB_ID, user.id))).toBe("rt-link-SECRET");
+  });
+
+  it("keeps tokens only from Better Auth's OAuth callback, never from another endpoint", async () => {
+    const { user } = await createDevSession("guard1@verdict.local");
+    const account = { providerId: "apple", refreshToken: "rt-body-SECRET", userId: user.id };
+    for (const context of [{ path: "/link-social" }, { path: "/sign-in/social" }, null]) {
+      signinTokens.captureAppleRefreshToken(account, context);
+      await signinTokens.keepCapturedAppleRefreshToken(account, context, WEB_ID);
+    }
+    expect(await storedTokens(user.id)).toHaveLength(0);
+
+    const callback = { path: "/callback/:id" };
+    signinTokens.captureAppleRefreshToken({ ...account, refreshToken: "rt-callback-SECRET" }, callback);
+    await signinTokens.keepCapturedAppleRefreshToken(account, callback, WEB_ID);
+    const rows = await storedTokens(user.id);
+    expect(rows).toHaveLength(1);
+    expect(openJson(rows[0].sealed, aad.signInToken("apple", WEB_ID, user.id))).toBe("rt-callback-SECRET");
+  });
+
+  it("link-social is off, so a client-supplied refresh token cannot replace the stored one", async () => {
+    const claims = { sub: "apple-web-ls", aud: WEB_ID, email: "ls1@verdict.local", email_verified: true };
+    appleReply = (call) => (call.url === APPLE_TOKEN_URL ? tokenReply("rt-real-SECRET", claims) : json({}, 404));
+    expect((await webAppleSignIn("web-ls")).status).toBe(302);
+    const { token, user } = await createDevSession("ls1@verdict.local");
+
+    appleReply = (call) => (JWKS_URLS.includes(call.url) ? json(JWKS) : json({}, 404));
+    const auth = await getAuth();
+    const res = await auth.handler(
+      new Request(`${ORIGIN}/api/auth/link-social`, {
+        method: "POST",
+        headers: { "content-type": "application/json", origin: ORIGIN, authorization: `Bearer ${token}` },
+        body: JSON.stringify({
+          provider: "apple",
+          idToken: {
+            token: signedIdToken({ iss: "https://appleid.apple.com", aud: APP_ID, sub: "apple-web-ls" }),
+            refreshToken: "rt-forged",
+          },
+        }),
+      }),
+    );
+    expect(res.status).toBe(404);
+    const rows = await storedTokens(user.id);
+    expect(rows).toHaveLength(1);
+    expect(openJson(rows[0].sealed, aad.signInToken("apple", WEB_ID, user.id))).toBe("rt-real-SECRET");
+  });
+});
+
+describe("native ID-token sign-in with updateAccountOnSignIn on", () => {
+  beforeEach(() => {
+    appleReply = (call) => (JWKS_URLS.includes(call.url) ? json(JWKS) : json({}, 404));
+  });
+
+  it("a returning Apple ID-token sign-in succeeds, keeps no token and ignores a refresh token in the body", async () => {
+    const idToken = () =>
+      signedIdToken({
+        iss: "https://appleid.apple.com",
+        aud: APP_ID,
+        sub: "apple-idt-1",
+        email: "idt1@verdict.local",
+        email_verified: true,
+      });
+    const first = await idTokenSignIn("apple", { token: idToken(), refreshToken: "rt-forged-1" });
+    expect(first.status).toBe(200);
+    const { user } = (await first.json()) as { user: { id: string } };
+    const again = await idTokenSignIn("apple", { token: idToken(), refreshToken: "rt-forged-2" });
+    expect(again.status).toBe(200);
+    expect(((await again.json()) as { user: { id: string } }).user.id).toBe(user.id);
+    expect(await accountTokens(user.id, "apple")).toEqual([{ accessToken: null, refreshToken: null, idToken: null }]);
+    expect(await storedTokens(user.id)).toHaveLength(0);
+  });
+
+  it("a returning Google ID-token sign-in succeeds and keeps no token", async () => {
+    const idToken = () =>
+      signedIdToken({
+        iss: "https://accounts.google.com",
+        aud: "google-web-client",
+        sub: "google-idt-1",
+        email: "gidt1@verdict.local",
+        email_verified: true,
+      });
+    const first = await idTokenSignIn("google", { token: idToken(), accessToken: "ga-1" });
+    expect(first.status).toBe(200);
+    const { user } = (await first.json()) as { user: { id: string } };
+    const again = await idTokenSignIn("google", { token: idToken(), accessToken: "ga-2" });
+    expect(again.status).toBe(200);
+    expect(((await again.json()) as { user: { id: string } }).user.id).toBe(user.id);
+    expect(await accountTokens(user.id, "google")).toEqual([{ accessToken: null, refreshToken: null, idToken: null }]);
+    expect(await storedTokens(user.id)).toHaveLength(0);
   });
 });
 
@@ -269,6 +394,11 @@ describe("POST /api/v1/auth/apple/code", () => {
     appleReply = () => tokenReply("rt-other-SECRET", { sub: "apple-someone-else", aud: APP_ID });
     const mismatch = await postAppleCode(auth, { code: "c2" });
     expect(mismatch.status).toBe(400);
+    // The other Apple ID's token is revoked, not kept.
+    const revoke = appleCalls.find((c) => c.url === APPLE_REVOKE_URL);
+    expect(revoke?.params.get("token")).toBe("rt-other-SECRET");
+    expect(revoke?.params.get("client_id")).toBe(APP_ID);
+    expectClientSecret(revoke!.params.get("client_secret"), APP_ID);
     appleReply = () => tokenReply("rt-wrongaud-SECRET", { sub: "apple-native-2", aud: WEB_ID });
     expect((await postAppleCode(auth, { code: "c2b" })).status).toBe(400);
 
@@ -302,6 +432,39 @@ describe("POST /api/v1/auth/apple/code", () => {
     const res = await postAppleCode(auth, { code: "c" });
     expect(res.status).toBe(503);
     expect(await res.json()).toMatchObject({ code: "not_configured" });
+    expect(appleCalls).toHaveLength(0);
+  });
+
+  it("does not spend the code when the token could not be sealed", async () => {
+    const { token, user } = await createDevSession("native4@verdict.local");
+    await linkApple(user.id, "apple-native-4");
+    vi.stubEnv("ORIGINALS_KEY", "not-a-key");
+    const res = await postAppleCode({ authorization: `Bearer ${token}` }, { code: "c-nokey" });
+    expect(res.status).toBe(503);
+    expect(await res.json()).toMatchObject({ code: "not_configured" });
+    expect(appleCalls).toHaveLength(0);
+  });
+
+  it("is rate limited per account (10 per 10 minutes), with Retry-After", async () => {
+    const { token, user } = await createDevSession("native5@verdict.local");
+    await linkApple(user.id, "apple-native-5");
+    appleReply = () => json({ error: "invalid_grant" }, 400);
+    const auth = { authorization: `Bearer ${token}` };
+    for (let i = 0; i < 10; i++) expect((await postAppleCode(auth, { code: `rl-${i}` })).status).toBe(400);
+    const limited = await postAppleCode(auth, { code: "rl-10" });
+    expect(limited.status).toBe(429);
+    expect(await limited.json()).toMatchObject({ code: "rate_limited" });
+    expect(Number(limited.headers.get("retry-after"))).toBeGreaterThan(0);
+    expect(appleCalls).toHaveLength(10);
+  });
+
+  it("503 when the limiter is unavailable", async () => {
+    const { token, user } = await createDevSession("native6@verdict.local");
+    await linkApple(user.id, "apple-native-6");
+    vi.spyOn(ratelimit, "checkUserLimits").mockResolvedValueOnce({ ok: false, code: "unavailable", error: "down" });
+    const res = await postAppleCode({ authorization: `Bearer ${token}` }, { code: "c-limiter" });
+    expect(res.status).toBe(503);
+    expect(await res.json()).toMatchObject({ code: "unavailable" });
     expect(appleCalls).toHaveLength(0);
   });
 });
@@ -372,6 +535,25 @@ describe("DELETE /api/v1/me revokes Apple tokens", () => {
     const output = logged.join("\n");
     expect(output).toMatch(/Apple (revocation failed|refused a revocation)/);
     expect(output + readFileSync(removalLog, "utf8")).not.toMatch(/rt-(web|app)-apple-del-2/);
+  });
+
+  it("keeps tokens Apple did not revoke for a retried deletion, which logs the real outcome", async () => {
+    const { token, user } = await userWithBothTokens("del6@verdict.local", "apple-del-6");
+    appleReply = () => json({ error: "server_error" }, 500);
+    vi.spyOn(removal, "removeUserData").mockRejectedValueOnce(new Error("db busy"));
+    const failed = await deleteAccount(token);
+    expect(failed.status).toBe(503);
+    expect(await storedTokens(user.id)).toHaveLength(2);
+    expect(removalEntries().some((e) => e.id === user.id)).toBe(false);
+
+    appleCalls = [];
+    appleReply = () => new Response(null, { status: 200 });
+    const retried = await deleteAccount(token);
+    expect(retried.status).toBe(200);
+    expect(appleCalls.map((c) => c.params.get("token")).sort()).toEqual(["rt-app-apple-del-6", "rt-web-apple-del-6"]);
+    expect(await storedTokens(user.id)).toHaveLength(0);
+    const entry = removalEntries().find((e) => e.kind === "account" && e.id === user.id);
+    expect(entry).toMatchObject({ signInTokens: { apple: "revoked" } });
   });
 
   it("records a partial revocation when only some tokens were revoked", async () => {

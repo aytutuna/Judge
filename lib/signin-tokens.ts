@@ -6,7 +6,8 @@
  * - website (Services ID, APPLE_CLIENT_ID): Better Auth exchanges the
  *   callback code itself; the account hooks in lib/auth.ts hand the refresh
  *   token over here (captureAppleRefreshToken / keepCapturedAppleRefreshToken)
- *   before it is stripped from the account row;
+ *   before it is stripped from the account row. Only tokens from that
+ *   callback are taken: anything a client sends in a request body is not;
  * - the iOS app (APPLE_APP_BUNDLE_ID): the app posts Apple's authorization
  *   code to POST /api/v1/auth/apple/code right after signing in, and
  *   keepNativeAppleToken exchanges it here.
@@ -24,7 +25,7 @@ import type { Client } from "@libsql/client";
 import { appleClientSecret, appleEnv } from "./apple-secret";
 import { getDb } from "./db";
 import { entitlementWriteBatch } from "./entitlements";
-import { aad, openJson, sealJson } from "./originals/crypto";
+import { aad, openJson, originalsKeyState, sealJson } from "./originals/crypto";
 
 type Env = Record<string, string | undefined>;
 
@@ -73,6 +74,11 @@ export async function ensureSignInTokenTables(): Promise<Client> {
   }
   await globalForTokens.__verdictSignInTokensReady!.ready;
   return client;
+}
+
+/** True when a token could be sealed right now (a usable originals key). */
+export function canStoreSignInTokens(env: Env = process.env): boolean {
+  return originalsKeyState(env).ok;
 }
 
 export function isAppleAuthorizationCode(value: unknown): value is string {
@@ -240,11 +246,18 @@ export async function keepNativeAppleToken(userId: string, code: string, env: En
   });
   const appleIds = new Set(linked.rows.map((r) => String(r.accountId)));
   if (appleIds.size === 0) return { ok: false, reason: "no_apple_account" };
+  // Checked before the exchange: a code spent on a token that cannot be kept
+  // is lost (codes are single-use).
+  if (!canStoreSignInTokens(env)) {
+    console.error("[signin-tokens] no originals key: Apple codes are not exchanged");
+    return { ok: false, reason: "no_key" };
+  }
 
   const exchange = await exchangeAppleCode(code, bundleId, env);
   if (!exchange.ok) return exchange;
   if (!exchange.sub || !appleIds.has(exchange.sub)) {
-    console.warn("[signin-tokens] Apple code belongs to another Apple ID: not stored");
+    console.warn("[signin-tokens] Apple code belongs to another Apple ID: revoking it, not stored");
+    await revokeAppleToken(exchange.refreshToken, bundleId, env);
     return { ok: false, reason: "mismatch" };
   }
   const stored = await storeSignInToken({ userId, provider: "apple", clientId: bundleId, refreshToken: exchange.refreshToken }, env);
@@ -253,9 +266,11 @@ export async function keepNativeAppleToken(userId: string, code: string, env: En
 
 /**
  * Account deletion: revokes every stored Apple token with the client id it
- * was issued to, then deletes the stored tokens. Never throws: an Apple or
- * database failure is logged (without the token) and reported in the outcome,
- * and the deletion goes on.
+ * was issued to and deletes the ones Apple accepted. A token Apple did not
+ * revoke stays until deleteAuthUser removes every row, so a retried deletion
+ * (after a later step failed) tries it again; Apple's revocation is
+ * idempotent. Never throws: an Apple or database failure is logged (without
+ * the token) and reported in the outcome, and the deletion goes on.
  */
 export async function revokeSignInTokens(userId: string, env: Env = process.env): Promise<SignInRevocation> {
   let rows: { provider: string; clientId: string; sealed: string }[];
@@ -270,48 +285,60 @@ export async function revokeSignInTokens(userId: string, env: Env = process.env)
     console.error("[signin-tokens] reading the stored tokens failed:", errorMessage(e));
     return { apple: "failed" };
   }
+  const apple = rows.filter((row) => row.provider === "apple");
   const results = await Promise.all(
-    rows
-      .filter((row) => row.provider === "apple")
-      .map(async (row) => {
-        let token: string | null = null;
-        try {
-          const opened = openJson<unknown>(row.sealed, aad.signInToken("apple", row.clientId, userId), env);
-          token = typeof opened === "string" ? opened : null;
-        } catch (e) {
-          console.error("[signin-tokens] a stored Apple token could not be opened:", errorMessage(e));
-        }
-        return token !== null && (await revokeAppleToken(token, row.clientId, env));
-      }),
+    apple.map(async (row) => {
+      let token: string | null = null;
+      try {
+        const opened = openJson<unknown>(row.sealed, aad.signInToken("apple", row.clientId, userId), env);
+        token = typeof opened === "string" ? opened : null;
+      } catch (e) {
+        console.error("[signin-tokens] a stored Apple token could not be opened:", errorMessage(e));
+      }
+      return token !== null && (await revokeAppleToken(token, row.clientId, env));
+    }),
   );
-  const revoked = results.filter(Boolean).length;
-  const failed = results.length - revoked;
-  try {
-    await deleteSignInTokens(userId);
-  } catch (e) {
-    // deleteAuthUser deletes them again; a failure there fails the deletion.
-    console.error("[signin-tokens] deleting the stored tokens failed:", errorMessage(e));
+  const done = apple.filter((_, i) => results[i]);
+  if (done.length > 0) {
+    try {
+      await entitlementWriteBatch(
+        done.map((row) => ({
+          sql: "DELETE FROM signin_tokens WHERE user_id = ? AND provider = ? AND client_id = ? AND sealed = ?",
+          args: [userId, row.provider, row.clientId, row.sealed],
+        })),
+      );
+    } catch (e) {
+      // deleteAuthUser deletes them again; a failure there fails the deletion.
+      console.error("[signin-tokens] deleting the revoked tokens failed:", errorMessage(e));
+    }
   }
-  const apple: RevocationOutcome =
+  const revoked = done.length;
+  const failed = apple.length - revoked;
+  const outcome: RevocationOutcome =
     revoked + failed === 0 ? "none" : failed === 0 ? "revoked" : revoked === 0 ? "failed" : "partial";
-  return { apple };
+  return { apple: outcome };
 }
 
 // --- Website sign-in (Better Auth account hooks) -----------------------------
 
 type AccountLike = { providerId?: unknown; refreshToken?: unknown; userId?: unknown } | null | undefined;
+type EndpointContextLike = { path?: unknown } | null;
+
+/** Better Auth's OAuth callback, where it exchanges Apple's code itself. Any
+ * other endpoint (e.g. link-social with a client-supplied idToken) carries
+ * tokens from the request body, which are never kept. */
+const OAUTH_CALLBACK_PATH = "/callback/:id";
 
 /** Refresh tokens seen by an account `before` hook, keyed by the endpoint
  * context, until the matching `after` hook knows the user. */
 const captured = new WeakMap<object, string>();
 
-/** account create/update `before` hook: notes an Apple refresh token (from
- * Better Auth's own code exchange on the website) before it is stripped. */
-export function captureAppleRefreshToken(account: AccountLike, context: object | null): void {
+/** account create/update `before` hook: notes an Apple refresh token from
+ * Better Auth's own code exchange (the OAuth callback) before it is stripped. */
+export function captureAppleRefreshToken(account: AccountLike, context: EndpointContextLike): void {
+  if (!context || context.path !== OAUTH_CALLBACK_PATH) return;
   if (!account || account.providerId !== "apple") return;
-  if (typeof account.refreshToken !== "string" || !account.refreshToken) return;
-  if (context) captured.set(context, account.refreshToken);
-  else console.warn("[signin-tokens] Apple refresh token outside a request: not stored");
+  if (typeof account.refreshToken === "string" && account.refreshToken) captured.set(context, account.refreshToken);
 }
 
 /** account create/update `after` hook: stores the noted token for the
@@ -319,7 +346,7 @@ export function captureAppleRefreshToken(account: AccountLike, context: object |
  * storage failure cannot break the sign-in. */
 export async function keepCapturedAppleRefreshToken(
   account: AccountLike,
-  context: object | null,
+  context: EndpointContextLike,
   webClientId: string,
 ): Promise<void> {
   if (!context) return;

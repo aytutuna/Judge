@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { apiErrorBody, type ApiErrorCode } from "@/lib/api-errors";
 import { isSameOrigin, resolveViewer } from "@/lib/auth";
 import { deadBearerResponse } from "@/lib/bearer-guard";
+import { checkUserLimits } from "@/lib/ratelimit";
 import { isAppleAuthorizationCode, keepNativeAppleToken, type NativeAppleResult } from "@/lib/signin-tokens";
 
 export const runtime = "nodejs";
@@ -18,7 +19,7 @@ const FAILURES: Record<Exclude<NativeAppleResult, { ok: true }>["reason"], [ApiE
   no_apple_account: ["invalid", "This account has no Sign in with Apple.", 400],
   invalid_code: ["invalid", "Apple did not accept this authorization code.", 400],
   mismatch: ["invalid", "This authorization code belongs to another Apple ID.", 400],
-  no_key: ["unavailable", "The token cannot be stored right now.", 503],
+  no_key: ["not_configured", "Apple tokens cannot be stored on this server.", 503],
   unavailable: ["unavailable", "Apple is unavailable right now. Try again.", 503],
 };
 
@@ -28,7 +29,8 @@ const FAILURES: Record<Exclude<NativeAppleResult, { ok: true }>["reason"], [ApiE
  * signed in with the identity token (bearer session). The server exchanges it
  * with Apple (client id APPLE_APP_BUNDLE_ID) and keeps the refresh token,
  * sealed, only to revoke it when the account is deleted. Codes are single-use
- * and expire after a few minutes. 200 { stored: true } on success.
+ * and expire after a few minutes. 200 { stored: true } on success. Rate
+ * limited per account (USER_LIMITS.apple_code).
  */
 export async function POST(req: Request): Promise<NextResponse> {
   const { viewer, deadBearer } = await resolveViewer(req);
@@ -44,6 +46,19 @@ export async function POST(req: Request): Promise<NextResponse> {
   }
   const code = typeof body === "object" && body !== null ? (body as { code?: unknown }).code : undefined;
   if (!isAppleAuthorizationCode(code)) return fail("invalid", 'Send { "code": "<Apple authorization code>" }.', 400);
+
+  try {
+    const limit = await checkUserLimits(viewer.user.id, "apple_code");
+    if (!limit.ok) {
+      if (limit.code === "unavailable") return fail("unavailable", "Try again in a minute.", 503);
+      return NextResponse.json(
+        apiErrorBody("rate_limited", "Too many requests — try again later.", { retryAfterSec: limit.retryAfterSec }),
+        { status: 429, headers: { ...NO_STORE, "Retry-After": String(limit.retryAfterSec) } },
+      );
+    }
+  } catch {
+    return fail("unavailable", "Try again in a minute.", 503);
+  }
 
   let result: NativeAppleResult;
   try {

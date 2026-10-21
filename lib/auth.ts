@@ -259,6 +259,9 @@ function buildOptions(env: Env, secret: string, client: Awaited<ReturnType<typeo
       "/get-access-token",
       "/refresh-token",
       "/account-info",
+      // Linking happens through the sign-in itself (trusted providers); this
+      // endpoint would also take provider tokens from the request body.
+      "/link-social",
       // Email code plugin: only send-verification-otp and sign-in/email-otp
       // are used.
       "/email-otp/check-verification-otp",
