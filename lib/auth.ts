@@ -29,6 +29,7 @@ import {
   sendSignInEmail,
 } from "./email";
 import { ensureEntitlementTables } from "./entitlements";
+import { captureAppleRefreshToken, deleteSignInTokens, keepCapturedAppleRefreshToken } from "./signin-tokens";
 
 type Env = Record<string, string | undefined>;
 type AuthInstance = Auth<BetterAuthOptions>;
@@ -146,8 +147,11 @@ function authLog(level: "debug" | "info" | "warn" | "error", message: string, ..
   else if (level === "warn") console.warn(line);
 }
 
-const stripProviderTokens = async <T extends Record<string, unknown>>(account: T) => ({
-  data: { ...account, accessToken: null, refreshToken: null, idToken: null },
+const withoutProviderTokens = <T extends Record<string, unknown>>(account: T) => ({
+  ...account,
+  accessToken: null,
+  refreshToken: null,
+  idToken: null,
 });
 
 function buildOptions(env: Env, secret: string, client: Awaited<ReturnType<typeof getDb>>) {
@@ -219,7 +223,10 @@ function buildOptions(env: Env, secret: string, client: Awaited<ReturnType<typeo
     session: { expiresIn: SESSION_DAYS * 24 * 60 * 60, updateAge: 24 * 60 * 60 },
     user: { deleteUser: { enabled: false } },
     account: {
-      updateAccountOnSignIn: false,
+      // On: a returning website Apple sign-in passes its fresh refresh token
+      // through the account update hooks below (the tokens are still stripped
+      // before the row is written).
+      updateAccountOnSignIn: true,
       accountLinking: { enabled: true, trustedProviders: ["apple", "google"] },
     },
     socialProviders: {
@@ -293,10 +300,28 @@ function buildOptions(env: Env, secret: string, client: Awaited<ReturnType<typeo
           before: async (session) => ({ data: { ...session, ipAddress: null, userAgent: null } }),
         },
       },
-      // Provider access/refresh/ID tokens are not needed after sign-in.
+      // Provider access/refresh/ID tokens are never written to the account
+      // row. A website Apple refresh token is kept apart, sealed, only to be
+      // revoked when the account is deleted (lib/signin-tokens.ts).
       account: {
-        create: { before: stripProviderTokens },
-        update: { before: stripProviderTokens },
+        create: {
+          before: async (account, context) => {
+            captureAppleRefreshToken(account, context);
+            return { data: withoutProviderTokens(account) };
+          },
+          after: async (account, context) => {
+            if (appleCfg) await keepCapturedAppleRefreshToken(account, context, appleCfg.clientId);
+          },
+        },
+        update: {
+          before: async (account, context) => {
+            captureAppleRefreshToken(account, context);
+            return { data: withoutProviderTokens(account) };
+          },
+          after: async (account, context) => {
+            if (appleCfg) await keepCapturedAppleRefreshToken(account, context, appleCfg.clientId);
+          },
+        },
       },
     },
     logger: { level: "warn", log: authLog },
@@ -551,10 +576,12 @@ export async function clearSessionCookieHeaders(): Promise<string[]> {
   );
 }
 
-/** Removes the user's sessions, sign-in accounts and user row (the caller
+/** Removes the user's sessions, sign-in accounts, any stored sign-in
+ * provider tokens and the user row (the caller revokes the tokens and
  * deletes the entitlements first). */
 export async function deleteAuthUser(userId: string): Promise<void> {
   const ctx = await (await getAuth()).$context;
+  await deleteSignInTokens(userId);
   await ctx.internalAdapter.deleteUserSessions(userId);
   await ctx.internalAdapter.deleteAccounts(userId);
   await ctx.internalAdapter.deleteUser(userId);

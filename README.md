@@ -389,7 +389,8 @@ The website and the future iOS/Android app share one JSON API. Base URL
 |---|---|
 | `GET /api/v1/config` | Startup: which sign-in methods work, whether Premium is on, prices (`AppConfig`) |
 | `GET /api/v1/me` | The account and its entitlement (`MeResponse`); signed out = `{ "user": null, "entitlement": null }`; a dead bearer token = `401 signin_required` |
-| `DELETE /api/v1/me` `{ "confirm": "delete" }` | Removes every verdict the account owns and its side of every case (originals and names blanked, links closed; no verdict row is deleted), then deletes the account, sessions, sign-ins and entitlements (both stores require in-app deletion) |
+| `DELETE /api/v1/me` `{ "confirm": "delete" }` | Removes every verdict the account owns and its side of every case (originals and names blanked, links closed; no verdict row is deleted), then deletes the account, sessions, sign-ins and entitlements (both stores require in-app deletion). Stored Sign in with Apple tokens are revoked at Apple first; an Apple failure is logged and does not stop the deletion |
+| `POST /api/v1/auth/apple/code` `{ "code": "<authorizationCode>" }` | iOS, right after a native Sign in with Apple: lets the server keep the Apple refresh token so account deletion can revoke it. `200 { "stored": true }` |
 | `GET /api/v1/me/verdicts` | Your one-sided verdicts, newest first (`?limit=1-50&before=<createdAt>`), each with its anonymized `headline` and your `nameMap` to restore names |
 | `POST /api/v1/clarify` | Premium: up to 2 clarifying questions |
 | `POST /api/v1/verdict` | A verdict; `"tier": "premium"` for Premium. Send an `Idempotency-Key` header to retry safely. Adds `owner_token` (signed out only, returned once), `originals_stored`, `display` and `suggested_display_a`. With `Prefer: respond-async`: `202`, then poll (see *Async verdicts* below) |
@@ -565,7 +566,14 @@ taken out of the text; the same request can be retried, e.g. with initials), plu
   its SHA-256), then `POST /api/auth/sign-in/social`
   `{ "provider": "apple", "idToken": { "token": "<identityToken>", "nonce": "<raw nonce>", "user": { "name": { "firstName": "…", "lastName": "…" } } } }`.
   Apple sends the name only on the first sign-in, so pass it then. Needs
-  `APPLE_APP_BUNDLE_ID`.
+  `APPLE_APP_BUNDLE_ID`. Right after that sign-in succeeds, send the
+  credential's `authorizationCode` with the new bearer token:
+  `POST /api/v1/auth/apple/code { "code": "<authorizationCode>" }` →
+  `200 { "stored": true }`. The server exchanges it with Apple and keeps the
+  refresh token (sealed) only to revoke it when the account is deleted. Codes
+  are single-use and expire within minutes, so send it at once, on every
+  Apple sign-in. A failure (`400 invalid`, `503 unavailable` or
+  `not_configured`) never undoes the sign-in; the app may ignore it.
 - **Google (iOS/Android):** native Google Sign-In, then
   `POST /api/auth/sign-in/social { "provider": "google", "idToken": { "token": "<idToken>" } }`.
   Needs the iOS/Android client ids above.

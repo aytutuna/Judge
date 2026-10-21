@@ -30,6 +30,7 @@ Browser (cookie)            Native app (Bearer)
       ├── /api/v1/config           GET   sign-in methods, premium on/off, pricing
       ├── /api/v1/me               GET   viewer + entitlement      DELETE  delete account
       ├── /api/v1/auth/dev-login   POST  dev only
+      ├── /api/v1/auth/apple/code  POST  app: Apple authorization code (kept for revocation)
       ├── /api/v1/clarify          POST  premium: up to 2 questions
       ├── /api/v1/verdict          POST  free | premium   (same handler as /api/verdict)
       ├── /api/v1/verdicts/{id}    GET   stored verdict (no input text)
@@ -87,11 +88,11 @@ evidence send exactly the requests they did before.
 - `POST /verdict` accepts an `Idempotency-Key` header (1 to 64 of `[A-Za-z0-9_-]`): a retry with the same key never spends a second credit; a finished one replays with `replayed: true`.
 
 ### Sign-in flows
-- **Apple (iOS):** `expo-apple-authentication` with a random nonce (Apple gets `SHA256(nonce)`), then `POST /api/auth/sign-in/social { provider: "apple", idToken: { token: identityToken, nonce, user: { name: { firstName, lastName } } } }`. Response `{ redirect: false, token, user }` (and the `set-auth-token` header); keep `token` in SecureStore. Apple sends the name only on the first sign-in. Audience: `APPLE_APP_BUNDLE_ID`.
+- **Apple (iOS):** `expo-apple-authentication` with a random nonce (Apple gets `SHA256(nonce)`), then `POST /api/auth/sign-in/social { provider: "apple", idToken: { token: identityToken, nonce, user: { name: { firstName, lastName } } } }`. Response `{ redirect: false, token, user }` (and the `set-auth-token` header); keep `token` in SecureStore. Apple sends the name only on the first sign-in. Audience: `APPLE_APP_BUNDLE_ID`. Then, at once, `POST /api/v1/auth/apple/code { code: authorizationCode }` with the bearer token → `{ stored: true }`: the server exchanges the code with Apple (client id `APPLE_APP_BUNDLE_ID`, no redirect URI) and keeps the refresh token sealed with `ORIGINALS_KEY`, only to revoke it on account deletion. A failure does not affect the session.
 - **Google (iOS/Android):** native Google Sign-In, then `POST /api/auth/sign-in/social { provider: "google", idToken: { token } }`. Accepted audiences: the web, iOS and Android client ids.
 - Invalid ID tokens answer `401 { code: "INVALID_TOKEN" }`.
 - **Email (apps):** when `signIn.emailCode` is true, `POST /api/auth/email-otp/send-verification-otp?lang=tr { email, type: "sign-in" }` → `{ success: true }` and a 6-digit code by email; then `POST /api/auth/sign-in/email-otp { email, otp }` → `{ token, user }` (and `set-auth-token`). Codes last 10 minutes, 3 wrong tries burn a code (`INVALID_OTP`, `TOO_MANY_ATTEMPTS`, `OTP_EXPIRED`), 3 requests per minute per IP; no Turnstile.
-- **Session:** `GET /api/v1/me`. A bearer token with no live session gets `401 signin_required` on every session-aware route (free verdicts and public reads included); requests without `Authorization` are unaffected. **Sign out:** `POST /api/auth/sign-out`. **Delete account** (required by both stores): `DELETE /api/v1/me { "confirm": "delete" }`.
+- **Session:** `GET /api/v1/me`. A bearer token with no live session gets `401 signin_required` on every session-aware route (free verdicts and public reads included); requests without `Authorization` are unaffected. **Sign out:** `POST /api/auth/sign-out`. **Delete account** (required by both stores): `DELETE /api/v1/me { "confirm": "delete" }`. It first revokes every stored Sign in with Apple refresh token at `https://appleid.apple.com/auth/revoke` with the client id it was issued to (Services ID for website sign-ins, kept from Better Auth's callback exchange; bundle id for the app's codes). Apple failures are logged without the token, recorded in the account's removal-log entry (`signInTokens: { apple: "revoked" | "partial" | "failed" | "none" }`) and never block the deletion. Google sign-in keeps no token, so there is nothing to revoke.
 
 ### Core calls
 | Call | Response |

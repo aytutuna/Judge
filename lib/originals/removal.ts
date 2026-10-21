@@ -13,13 +13,19 @@ import type { InStatement } from "@libsql/client";
 import { getCase, type CaseRow } from "@/lib/cases/db";
 import { entitlementWriteBatch, refundStatements } from "@/lib/entitlements";
 import type { RemovalReason } from "@/lib/originals-types";
+import type { SignInRevocation } from "@/lib/signin-tokens";
 import { getVerdict } from "@/lib/db";
 import { ensureOriginalsTables, getVerdictMeta, userBackfillStatements, type VerdictMeta } from "./db";
 import { ensureVerdictJobTables } from "@/lib/verdict-jobs";
 import { appendRemovalLog, type RemovalLogEntry } from "./removal-log";
 
 /** `log: false`: do not append to the removal log (a replay of it). */
-export type RemovalOptions = { log?: boolean };
+export type RemovalOptions = {
+  log?: boolean;
+  /** Account deletion: the sign-in token revocation outcome, recorded in the
+   * account's removal-log entry. */
+  signInTokens?: SignInRevocation;
+};
 
 const NOT_BUSY = `status <> 'judging'
   AND NOT EXISTS (SELECT 1 FROM case_appeals a WHERE a.case_id = cases.id AND a.status = 'judging')`;
@@ -220,7 +226,15 @@ export async function removeUserData(userId: string, now: Date = new Date(), opt
     },
     { sql: "UPDATE case_appeals SET user_id = NULL WHERE user_id = ?", args: [userId] },
   ]);
-  if (opts.log !== false) await appendRemovalLog({ v: 1, at: nowIso, kind: "account", id: userId });
+  if (opts.log !== false) {
+    await appendRemovalLog({
+      v: 1,
+      at: nowIso,
+      kind: "account",
+      id: userId,
+      ...(opts.signInTokens && { signInTokens: opts.signInTokens }),
+    });
+  }
 }
 
 /**
