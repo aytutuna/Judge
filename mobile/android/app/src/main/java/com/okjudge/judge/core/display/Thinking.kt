@@ -103,9 +103,14 @@ object Thinking {
         else -> STILL_JUDGING_KEY
     }
 
-    /** Progress bar fill (lib/judging-ui.ts progressAt). */
+    /**
+     * Progress bar fill: the curve of lib/judging-ui.ts progressAt (about .62
+     * at 10 s, .89 at 30 s) plus a slow tail toward 98%, so the bar keeps
+     * creeping through a verdict that takes minutes. 1 once the answer is in.
+     */
     fun progressAt(elapsedMs: Long, done: Boolean): Float {
         if (done) return 1f
-        return (0.92 * (1 - exp(-maxOf(0L, elapsedMs) / 9000.0))).toFloat()
+        val t = maxOf(0L, elapsedMs).toDouble()
+        return (0.92 * (1 - exp(-t / 9000.0)) + 0.06 * (1 - exp(-t / 150_000.0))).toFloat()
     }
 }

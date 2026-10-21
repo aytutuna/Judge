@@ -121,6 +121,16 @@ class TextVectorsTest {
     }
 
     @Test
+    fun failedAsyncVerdicts_useTheExistingCopy() {
+        val en = s("en")
+        val tr = s("tr")
+        val server = "English text from the server"
+        assertEquals(en.errorQuota, Errors.message(UiError.Api("quota", 502, serverText = server), en, AppLang.EN))
+        assertEquals(tr.errorUnavailable, Errors.message(UiError.Api("unavailable", 502, serverText = server), tr, AppLang.TR))
+        assertEquals(tr.refusedNote, Errors.message(UiError.Api("refused", 502, serverText = server), tr, AppLang.TR))
+    }
+
+    @Test
     fun pluralWithoutNumber_rendersBothForms() {
         val en = s("en")
         assertEquals("1 independent AI judge voted:", en.judgesVoted(1))

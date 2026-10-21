@@ -189,7 +189,35 @@ data class VerdictOutcome(
     val result: ParsedResult,
     val nameMap: List<NameMapping>,
     val replayed: Boolean = false,
+    /** Signed-out writers only, returned once with the verdict (or its 202). */
+    val ownerToken: String? = null,
 )
+
+/**
+ * 202 from POST /api/v1/verdict sent with `Prefer: respond-async`
+ * (VerdictAcceptedResponse in lib/verdict-poll.ts). The poll answer does not
+ * repeat `name_map` or `owner_token`, so they are kept from here.
+ */
+data class VerdictAccepted(
+    val id: String,
+    val pollAfterMs: Long,
+    val nameMap: List<NameMapping>,
+    val ownerToken: String? = null,
+    val replayed: Boolean = false,
+)
+
+/** What POST /api/v1/verdict answered: the verdict itself (200) or a job to poll (202). */
+sealed interface VerdictSubmission {
+    data class Done(val outcome: VerdictOutcome) : VerdictSubmission
+    data class Accepted(val accepted: VerdictAccepted) : VerdictSubmission
+}
+
+/** GET /api/v1/verdicts/{id} for an async verdict (VerdictPollResponse). */
+sealed interface VerdictPoll {
+    data class Judging(val pollAfterMs: Long?) : VerdictPoll
+    data class Failed(val code: String, val error: String?) : VerdictPoll
+    data class Ready(val id: String, val result: ParsedResult) : VerdictPoll
+}
 
 data class TranslateOutcome(
     val id: String,

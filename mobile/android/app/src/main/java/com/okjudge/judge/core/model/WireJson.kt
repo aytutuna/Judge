@@ -37,12 +37,48 @@ object WireJson {
         val root = json.parseToJsonElement(body).jsonObject
         val id = root.string("id") ?: throw SerializationException("missing id")
         val result = decodeResult(root["result"] ?: throw SerializationException("missing result"))
-        val nameMap = (root["name_map"] as? JsonArray)?.let {
-            json.decodeFromJsonElement(ListSerializer(NameMapping.serializer()), it)
-        } ?: emptyList()
+        val nameMap = decodeNameMapElement(root["name_map"])
         val replayed = (root["replayed"] as? JsonPrimitive)?.booleanOrNull ?: false
-        return VerdictOutcome(id, result, nameMap, replayed)
+        return VerdictOutcome(id, result, nameMap, replayed, root.string("owner_token"))
     }
+
+    /** The 202 body of an async verdict request. */
+    fun decodeAccepted(body: String): VerdictAccepted {
+        val root = json.parseToJsonElement(body).jsonObject
+        return VerdictAccepted(
+            id = root.string("id") ?: throw SerializationException("missing id"),
+            pollAfterMs = root.long("pollAfterMs")?.takeIf { it >= 0 } ?: DEFAULT_POLL_AFTER_MS,
+            nameMap = decodeNameMapElement(root["name_map"]),
+            ownerToken = root.string("owner_token"),
+            replayed = (root["replayed"] as? JsonPrimitive)?.booleanOrNull ?: false,
+        )
+    }
+
+    /**
+     * One poll answer. A body without `status` but with `id` and `result` is
+     * a server from before async verdicts and counts as ready.
+     */
+    fun decodePoll(body: String): VerdictPoll {
+        val root = json.parseToJsonElement(body).jsonObject
+        return when (root.string("status")) {
+            "judging" -> VerdictPoll.Judging(root.long("pollAfterMs")?.takeIf { it >= 0 })
+            "failed" -> VerdictPoll.Failed(root.string("code") ?: "unavailable", root.string("error"))
+            else -> VerdictPoll.Ready(
+                id = root.string("id") ?: throw SerializationException("missing id"),
+                result = decodeResult(root["result"] ?: throw SerializationException("missing result")),
+            )
+        }
+    }
+
+    /** What the server suggests between polls when it does not say (POLL_AFTER_MS). */
+    const val DEFAULT_POLL_AFTER_MS = 2000L
+
+    private fun decodeNameMapElement(element: JsonElement?): List<NameMapping> =
+        (element as? JsonArray)?.let { json.decodeFromJsonElement(ListSerializer(NameMapping.serializer()), it) }
+            ?: emptyList()
+
+    private fun JsonObject.long(key: String): Long? =
+        (this[key] as? JsonPrimitive)?.takeIf { !it.isString }?.let { it.longOrNull ?: it.contentOrNull?.toDoubleOrNull()?.toLong() }
 
     fun decodeTranslateResponse(body: String): TranslateOutcome {
         val root = json.parseToJsonElement(body).jsonObject

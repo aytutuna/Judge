@@ -81,6 +81,8 @@ object Errors {
         serverText: String?,
     ): String {
         val effective = code ?: if (status == 429) "rate_limited" else null
+        // An async verdict that failed with `refused` reads like a refused verdict.
+        if (effective == "refused") return s.refusedNote
         if (effective != null && effective in KNOWN_CODES) {
             return when (effective) {
                 "rate_limited" -> s.errorRateLimited(formatWait(s, retryAfterSec))

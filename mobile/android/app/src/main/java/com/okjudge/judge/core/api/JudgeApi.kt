@@ -4,16 +4,20 @@ import com.okjudge.judge.core.display.UiError
 import com.okjudge.judge.core.model.StoredVerdict
 import com.okjudge.judge.core.model.TranslateOutcome
 import com.okjudge.judge.core.model.VerdictOutcome
+import com.okjudge.judge.core.model.VerdictPoll
 import com.okjudge.judge.core.model.VerdictRequest
+import com.okjudge.judge.core.model.VerdictSubmission
 import com.okjudge.judge.core.model.WireJson
 import com.okjudge.judge.i18n.AppLang
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.currentCoroutineContext
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.SerializationException
+import okhttp3.CacheControl
 import okhttp3.HttpUrl
 import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.MediaType.Companion.toMediaType
@@ -32,10 +36,14 @@ sealed interface ApiResult<out T> {
 }
 
 /**
- * Client for the three phase-1 endpoints of /api/v1. No cookies, no
- * automatic retries of the verdict POST (a retry would cost the user's rate
- * limit and a second verdict), and per-call timeouts sized to the server's
- * real work: a verdict can legitimately take about 285 s.
+ * Client for the phase-1 endpoints of /api/v1. No cookies, no automatic
+ * retries of the verdict POST (a retry would cost the user's rate limit and
+ * a second verdict), and per-call timeouts sized to the server's real work.
+ *
+ * Verdicts are asked for asynchronously (`Prefer: respond-async`): the server
+ * answers 202 once the text is anonymized and the app polls the verdict id
+ * per [pollPolicy]. A server that answers 200 with the verdict (older ones)
+ * still works; that call can legitimately take about 285 s.
  *
  * Main-safe: the call, the body read and the JSON decode all run on [io], so
  * callers on Dispatchers.Main never touch the socket.
@@ -48,6 +56,7 @@ class JudgeApi(
     private val onSignedOut: () -> Unit = {},
     timeouts: Timeouts = Timeouts(),
     private val io: CoroutineDispatcher = Dispatchers.IO,
+    private val pollPolicy: PollPolicy = PollPolicy(),
 ) {
     data class Timeouts(val verdictSec: Long = 310, val translateSec: Long = 90, val getSec: Long = 20)
 
@@ -73,10 +82,41 @@ class JudgeApi(
         .callTimeout(timeouts.getSec, TimeUnit.SECONDS)
         .build()
 
-    suspend fun submitVerdict(request: VerdictRequest): ApiResult<VerdictOutcome> {
+    /** The whole verdict: the POST, then polling when the server accepted it as a job. */
+    suspend fun submitVerdict(request: VerdictRequest): ApiResult<VerdictOutcome> =
+        when (val started = startVerdict(request)) {
+            is ApiResult.Err -> started
+            is ApiResult.Ok -> when (val submission = started.value) {
+                is VerdictSubmission.Done -> ApiResult.Ok(submission.outcome)
+                is VerdictSubmission.Accepted -> awaitVerdict(
+                    accepted = submission.accepted,
+                    policy = pollPolicy,
+                    poll = { pollVerdict(submission.accepted.id, submission.accepted.ownerToken) },
+                    sleep = { delay(it) },
+                    elapsedMs = { System.nanoTime() / 1_000_000 },
+                )
+            }
+        }
+
+    /** POST /api/v1/verdict asking for a 202 (RESPOND_ASYNC in lib/verdict-poll.ts). */
+    suspend fun startVerdict(request: VerdictRequest): ApiResult<VerdictSubmission> {
         val body = WireJson.json.encodeToString(VerdictRequest.serializer(), request)
-        val req = request(url("api", "v1", "verdict")).post(body.toRequestBody(JSON)).build()
-        return execute(verdictClient, req, WireJson::decodeVerdictResponse)
+        val req = request(url("api", "v1", "verdict"))
+            .header("Prefer", RESPOND_ASYNC)
+            .post(body.toRequestBody(JSON))
+            .build()
+        return execute(verdictClient, req) { status, text ->
+            if (status == 202) VerdictSubmission.Accepted(WireJson.decodeAccepted(text))
+            else VerdictSubmission.Done(WireJson.decodeVerdictResponse(text))
+        }
+    }
+
+    /** One poll of an async verdict; [ownerToken] lets a ready answer carry the writer's state. */
+    suspend fun pollVerdict(id: String, ownerToken: String?): ApiResult<VerdictPoll> {
+        val url = base.newBuilder().addPathSegments("api/v1/verdicts").addPathSegment(id).build()
+        val req = request(url).cacheControl(CacheControl.FORCE_NETWORK)
+        ownerToken?.let { req.header("X-Owner-Token", it) }
+        return execute(getClient, req.get().build()) { _, text -> WireJson.decodePoll(text) }
     }
 
     suspend fun translate(id: String, lang: AppLang): ApiResult<TranslateOutcome> {
@@ -87,12 +127,12 @@ class JudgeApi(
             .addQueryParameter("lang", lang.tag)
             .build()
         val req = request(url).post(EMPTY).build()
-        return execute(translateClient, req, WireJson::decodeTranslateResponse)
+        return execute(translateClient, req) { _, text -> WireJson.decodeTranslateResponse(text) }
     }
 
     suspend fun getVerdict(id: String): ApiResult<StoredVerdict> {
         val url = base.newBuilder().addPathSegments("api/v1/verdicts").addPathSegment(id).build()
-        return execute(getClient, request(url).get().build(), WireJson::decodeStoredVerdict)
+        return execute(getClient, request(url).get().build()) { _, text -> WireJson.decodeStoredVerdict(text) }
     }
 
     private fun url(vararg segments: String): HttpUrl =
@@ -107,7 +147,7 @@ class JudgeApi(
         return builder
     }
 
-    private suspend fun <T> execute(client: OkHttpClient, request: Request, decode: (String) -> T): ApiResult<T> {
+    private suspend fun <T> execute(client: OkHttpClient, request: Request, decode: (status: Int, body: String) -> T): ApiResult<T> {
         val hadToken = request.header("Authorization") != null
         val result = try {
             withContext(io) { exchange(client, request, decode) }
@@ -127,12 +167,12 @@ class JudgeApi(
     }
 
     /** Runs on [io]: executes the call, reads the body and decodes it. */
-    private suspend fun <T> exchange(client: OkHttpClient, request: Request, decode: (String) -> T): ApiResult<T> =
+    private suspend fun <T> exchange(client: OkHttpClient, request: Request, decode: (status: Int, body: String) -> T): ApiResult<T> =
             client.newCall(request).executeAsync().use { response ->
                 val text = response.body.string()
                 if (response.isSuccessful) {
                     try {
-                        ApiResult.Ok(decode(text))
+                        ApiResult.Ok(decode(response.code, text))
                     } catch (_: SerializationException) {
                         ApiResult.Err(UiError.Unknown)
                     } catch (_: IllegalArgumentException) {
@@ -144,6 +184,9 @@ class JudgeApi(
             }
 
     companion object {
+        /** The `Prefer` token that asks for a 202 instead of waiting (RFC 7240). */
+        const val RESPOND_ASYNC = "respond-async"
+
         private val JSON = "application/json; charset=utf-8".toMediaType()
         private val EMPTY: RequestBody = ByteArray(0).toRequestBody(null)
 

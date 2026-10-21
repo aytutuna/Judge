@@ -99,7 +99,10 @@ class ThinkingTest {
     fun progress_easesTowardButNeverReachesTheEnd() {
         assertEquals(0f, Thinking.progressAt(0, false), 0f)
         assertEquals(0.62f, Thinking.progressAt(10_000, false), 0.01f)
-        assertTrue(Thinking.progressAt(600_000, false) < 0.93f)
+        assertTrue(Thinking.progressAt(600_000, false) < 0.98f)
+        // Still moving minutes in, while an async verdict is being polled.
+        assertTrue(Thinking.progressAt(60_000, false) + 0.02f < Thinking.progressAt(180_000, false))
+        assertTrue(Thinking.progressAt(180_000, false) + 0.005f < Thinking.progressAt(300_000, false))
         assertEquals(1f, Thinking.progressAt(1, true), 0f)
     }
 }

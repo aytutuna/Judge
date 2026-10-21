@@ -2,19 +2,24 @@ package com.okjudge.judge
 
 import com.okjudge.judge.core.api.ApiResult
 import com.okjudge.judge.core.api.JudgeApi
+import com.okjudge.judge.core.api.PollPolicy
+import com.okjudge.judge.core.api.awaitVerdict
 import com.okjudge.judge.core.display.ContentLang
 import com.okjudge.judge.core.display.UiError
 import com.okjudge.judge.core.display.VerdictDisplay
 import com.okjudge.judge.core.model.FrameworkChoice
+import com.okjudge.judge.core.model.VerdictOutcome
 import com.okjudge.judge.core.model.VerdictRequest
+import com.okjudge.judge.core.model.VerdictSubmission
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import okhttp3.OkHttpClient
 import org.junit.Assume.assumeTrue
 import org.junit.Test
 
 /**
- * One real verdict through the app's API client. Costs a few cents, so it
- * only runs when asked for:
+ * One real verdict through the app's API client, the way the app asks for
+ * it (202, then polling). Costs a few cents, so it only runs when asked for:
  * gradlew testDebugUnitTest --tests "*LiveApiCheck*" -Pjudge.liveCheck=true [-Pjudge.liveBaseUrl=...]
  * Without a bot-check token the production server may answer 403
  * captcha_failed; that outcome is printed too.
@@ -32,9 +37,35 @@ class LiveApiCheck {
             lang = "en",
         )
         val started = System.currentTimeMillis()
-        val res = api.submitVerdict(request)
-        val secs = (System.currentTimeMillis() - started) / 1000.0
-        println("LIVE base=$base took=${secs}s")
+        fun secs() = (System.currentTimeMillis() - started) / 1000.0
+        val res: ApiResult<VerdictOutcome> = when (val start = api.startVerdict(request)) {
+            is ApiResult.Err -> start
+            is ApiResult.Ok -> when (val submission = start.value) {
+                is VerdictSubmission.Done -> {
+                    println("LIVE answered 200 directly after ${secs()}s")
+                    ApiResult.Ok(submission.outcome)
+                }
+                is VerdictSubmission.Accepted -> {
+                    val accepted = submission.accepted
+                    println("LIVE 202 after ${secs()}s id=${accepted.id} pollAfterMs=${accepted.pollAfterMs} owner_token=${accepted.ownerToken != null}")
+                    var polls = 0
+                    awaitVerdict(
+                        accepted = accepted,
+                        policy = PollPolicy(),
+                        poll = {
+                            polls += 1
+                            api.pollVerdict(accepted.id, accepted.ownerToken).also {
+                                val what = (it as? ApiResult.Ok)?.value?.let { p -> p::class.simpleName } ?: it.toString()
+                                println("LIVE poll #$polls at ${secs()}s -> $what")
+                            }
+                        },
+                        sleep = { delay(it) },
+                        elapsedMs = { System.nanoTime() / 1_000_000 },
+                    ).also { println("LIVE polls=$polls") }
+                }
+            }
+        }
+        println("LIVE base=$base took=${secs()}s")
         when (res) {
             is ApiResult.Ok -> {
                 val o = res.value
@@ -45,7 +76,7 @@ class LiveApiCheck {
                 println("LIVE crux=${r.crux}")
                 println("LIVE lean=${r.leanState} trial=${r.cruxTrial?.outcome} escalated=${r.escalated}")
                 println("LIVE tugA=${VerdictDisplay.tugFinal(r)} beamDeg=${VerdictDisplay.finalBeamDeg(r)}")
-                println("LIVE name_map=${o.nameMap}")
+                println("LIVE name_map=${o.nameMap} owner_token=${o.ownerToken != null}")
             }
             is ApiResult.Err -> {
                 val e = res.error
