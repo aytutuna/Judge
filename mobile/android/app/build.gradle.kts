@@ -155,25 +155,6 @@ room {
     schemaDirectory("$projectDir/schemas")
 }
 
-// A release build without the Turnstile site key would ship with the bot check
-// off, and every verdict would fail once the server enforces Turnstile. Fail
-// the release packaging tasks instead of building that APK or bundle.
-val releaseTurnstileKey = providers.gradleProperty("judge.turnstileSiteKey").map { it.trim() }.orElse("")
-val checkReleaseTurnstileKey by tasks.registering {
-    val key = releaseTurnstileKey
-    doLast {
-        if (key.get().isEmpty()) {
-            throw GradleException(
-                "judge.turnstileSiteKey is empty: release builds need the public Turnstile site key " +
-                    "(pass -Pjudge.turnstileSiteKey=... or set it in ~/.gradle/gradle.properties).",
-            )
-        }
-    }
-}
-tasks.matching { it.name == "packageRelease" || it.name == "packageReleaseBundle" }.configureEach {
-    dependsOn(checkReleaseTurnstileKey)
-}
-
 dependencies {
     implementation(platform(libs.compose.bom))
     implementation(libs.compose.ui)

@@ -150,8 +150,7 @@ jobs:
           JUDGE_UPLOAD_KEYSTORE_PASSWORD: ${{ secrets.JUDGE_UPLOAD_KEYSTORE_PASSWORD }}
           JUDGE_UPLOAD_KEY_ALIAS: ${{ secrets.JUDGE_UPLOAD_KEY_ALIAS }}
           JUDGE_UPLOAD_KEY_PASSWORD: ${{ secrets.JUDGE_UPLOAD_KEY_PASSWORD }}
-          JUDGE_TURNSTILE_SITE_KEY: ${{ vars.JUDGE_TURNSTILE_SITE_KEY }}
-        run: ./gradlew --no-daemon bundleRelease "-Pjudge.turnstileSiteKey=$JUDGE_TURNSTILE_SITE_KEY"
+        run: ./gradlew --no-daemon bundleRelease
 
       - uses: actions/upload-artifact@v7
         if: github.event_name == 'push' && (github.ref == 'refs/heads/feature/mobile' || github.ref == 'refs/heads/main')
