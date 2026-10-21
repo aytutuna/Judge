@@ -161,8 +161,11 @@ struct JudgeAPI: Sendable {
                 body: data,
                 retryAfterHeader: http.value(forHTTPHeaderField: "Retry-After")
             )
-            if http.statusCode == 401, failure.code == "signin_required" {
+            if http.statusCode == 401, failure.code == "signin_required",
+               let sent = request.value(forHTTPHeaderField: "Authorization"),
+               let current = tokenStore.token(), sent == "Bearer \(current)" {
                 // The session expired; AccountModel signs out on this code.
+                // A token that replaced the one sent (a new sign-in) stays.
                 tokenStore.clear()
             }
             throw failure

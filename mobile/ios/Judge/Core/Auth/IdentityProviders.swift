@@ -19,10 +19,11 @@ protocol AppleAuthorizing: AnyObject {
     func authorize() async throws -> AppleIdentity
 }
 
-/// Google: an OAuth sign-in in a web authentication sheet, ending in an ID token.
+/// Google: an OAuth sign-in in a web authentication sheet, ending in an ID
+/// token carrying the request's nonce.
 @MainActor
 protocol GoogleAuthorizing: AnyObject {
-    func idToken() async throws -> String
+    func authorize() async throws -> GoogleIdentity
 }
 
 /// Random strings and hashes for nonces, PKCE and OAuth state.
@@ -144,7 +145,7 @@ enum GoogleOAuthClient {
     static let tokenURL = URL(string: "https://oauth2.googleapis.com/token")
 
     /// The authorization request for one sign-in (code flow with PKCE).
-    static func authorizationURL(state: String, codeChallenge: String) -> URL? {
+    static func authorizationURL(state: String, nonce: String, codeChallenge: String) -> URL? {
         guard let base = authorizeURL else { return nil }
         return base.appending(queryItems: [
             URLQueryItem(name: "client_id", value: clientID),
@@ -152,6 +153,7 @@ enum GoogleOAuthClient {
             URLQueryItem(name: "response_type", value: "code"),
             URLQueryItem(name: "scope", value: scope),
             URLQueryItem(name: "state", value: state),
+            URLQueryItem(name: "nonce", value: nonce),
             URLQueryItem(name: "code_challenge", value: codeChallenge),
             URLQueryItem(name: "code_challenge_method", value: "S256"),
             URLQueryItem(name: "prompt", value: "select_account"),
@@ -215,16 +217,17 @@ final class GoogleOAuth: NSObject, GoogleAuthorizing {
         self.urlSession = urlSession
     }
 
-    func idToken() async throws -> String {
+    func authorize() async throws -> GoogleIdentity {
         session?.cancel()
         let verifier = AuthCrypto.randomString(byteCount: 48)
         let state = AuthCrypto.randomString(byteCount: 16)
-        guard let url = GoogleOAuthClient.authorizationURL(state: state, codeChallenge: AuthCrypto.codeChallenge(for: verifier)) else {
+        let nonce = AuthCrypto.randomString()
+        guard let url = GoogleOAuthClient.authorizationURL(state: state, nonce: nonce, codeChallenge: AuthCrypto.codeChallenge(for: verifier)) else {
             throw IdentityProviderError.failed
         }
         let callback: URL = try await withCheckedThrowingContinuation { continuation in
             let once = ResumeOnce(continuation)
-            let session = ASWebAuthenticationSession(url: url, callbackURLScheme: GoogleOAuthClient.scheme) { @Sendable url, error in
+            let completion: @Sendable (URL?, (any Error)?) -> Void = { url, error in
                 if let url {
                     once.resume(.success(url))
                 } else if let error = error as? ASWebAuthenticationSessionError, error.code == .canceledLogin {
@@ -232,6 +235,12 @@ final class GoogleOAuth: NSObject, GoogleAuthorizing {
                 } else {
                     once.resume(.failure(IdentityProviderError.failed))
                 }
+            }
+            let session: ASWebAuthenticationSession
+            if #available(iOS 17.4, *) {
+                session = ASWebAuthenticationSession(url: url, callback: .customScheme(GoogleOAuthClient.scheme), completionHandler: completion)
+            } else {
+                session = ASWebAuthenticationSession(url: url, callbackURLScheme: GoogleOAuthClient.scheme, completionHandler: completion)
             }
             session.presentationContextProvider = self
             session.prefersEphemeralWebBrowserSession = false
@@ -243,7 +252,8 @@ final class GoogleOAuth: NSObject, GoogleAuthorizing {
         }
         session = nil
         let code = try GoogleOAuthClient.code(fromCallback: callback, state: state)
-        return try await GoogleOAuthClient.exchange(code: code, verifier: verifier, session: urlSession)
+        let idToken = try await GoogleOAuthClient.exchange(code: code, verifier: verifier, session: urlSession)
+        return GoogleIdentity(idToken: idToken, rawNonce: nonce)
     }
 }
 

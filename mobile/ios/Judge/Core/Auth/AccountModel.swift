@@ -101,12 +101,14 @@ final class AccountModel {
 
     /// GET /me. A token the server no longer knows answers with no user:
     /// the session ended, so sign out here too. Network trouble keeps the
-    /// token and what was shown.
+    /// token and what was shown. An answer about a token that has since
+    /// been replaced (a new sign-in while the call was out) is ignored.
     func refresh() async {
         guard isSignedIn, usesNetwork else { return }
+        let asked = api.tokenStore.token()
         do {
             let fresh = try await api.me()
-            guard isSignedIn else { return }
+            guard isSignedIn, api.tokenStore.token() == asked else { return }
             if fresh.user == nil {
                 sessionExpired()
             } else {
@@ -115,6 +117,7 @@ final class AccountModel {
             }
         } catch let error as APIError {
             if error.code == "signin_required" {
+                guard isSameSession(asked) else { return }
                 sessionExpired()
             } else if info?.entitlement == nil {
                 failure = .loadFailed
@@ -180,8 +183,8 @@ final class AccountModel {
         failure = nil
         defer { busy = nil }
         do {
-            let idToken = try await google.idToken()
-            let session = try await api.signInWithIDToken(provider: .google, idToken: idToken)
+            let identity = try await google.authorize()
+            let session = try await api.signInWithIDToken(provider: .google, idToken: identity.idToken, nonce: identity.rawNonce)
             finishSignIn(session)
         } catch {
             failure = Self.signInFailure(error)
@@ -289,20 +292,43 @@ final class AccountModel {
 
     /// Deletes the account on the server. The token goes only once the
     /// server confirms; on-device history stays.
+    ///
+    /// When the answer is lost (timeout, or the app was suspended), the
+    /// server may have finished: /me without a user means it did.
     func deleteAccount() async {
         guard isSignedIn, busy == nil else { return }
         busy = .delete
         failure = nil
         defer { busy = nil }
+        let asked = api.tokenStore.token()
         do {
             try await api.deleteAccount()
+            guard isSameSession(asked) else { return }
             clearSession()
             notice = .deleted
         } catch let error as APIError where error.code == "signin_required" {
+            guard isSameSession(asked) else { return }
             sessionExpired()
+        } catch let error as APIError where error == .timeout || error == .interrupted {
+            let check = try? await api.me()
+            guard isSameSession(asked) else { return }
+            if let check, check.user == nil {
+                clearSession()
+                notice = .deleted
+            } else {
+                failure = .deleteFailed
+            }
         } catch {
             failure = .deleteFailed
         }
+    }
+
+    /// Whether the session a call was made with is still the current one:
+    /// the same token, or none because that call's 401 just cleared it.
+    private func isSameSession(_ asked: String?) -> Bool {
+        guard isSignedIn else { return false }
+        let current = api.tokenStore.token()
+        return current == asked || current == nil
     }
 
     /// The server no longer accepts the token (a 401 or a /me without a
@@ -328,6 +354,7 @@ final class AccountModel {
         api.tokenStore.clear()
         isSignedIn = false
         info = nil
+        failure = nil
         step = .choose
         code = ""
     }

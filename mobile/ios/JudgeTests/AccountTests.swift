@@ -19,13 +19,13 @@ private final class FakeApple: AppleAuthorizing {
 
 @MainActor
 private final class FakeGoogle: GoogleAuthorizing {
-    var result: Result<String, any Error>
+    var result: Result<GoogleIdentity, any Error>
 
-    init(_ result: Result<String, any Error>) {
+    init(_ result: Result<GoogleIdentity, any Error>) {
         self.result = result
     }
 
-    func idToken() async throws -> String {
+    func authorize() async throws -> GoogleIdentity {
         try result.get()
     }
 }
@@ -90,7 +90,7 @@ final class AccountTests: XCTestCase {
     private func model(
         _ store: any TokenStore = MemoryTokenStore(),
         apple: Result<AppleIdentity, any Error> = .failure(IdentityProviderError.cancelled),
-        google: Result<String, any Error> = .failure(IdentityProviderError.cancelled)
+        google: Result<GoogleIdentity, any Error> = .failure(IdentityProviderError.cancelled)
     ) -> AccountModel {
         AccountModel(api: api(store), apple: FakeApple(apple), google: FakeGoogle(google))
     }
@@ -225,14 +225,14 @@ final class AccountTests: XCTestCase {
             "/api/v1/me": try json(200, Self.meJSON),
         ])
         let store = MemoryTokenStore()
-        let account = model(store, google: .success("google.id.token"))
+        let account = model(store, google: .success(GoogleIdentity(idToken: "google.id.token", rawNonce: "g00gle-n0nce")))
         await account.signInWithGoogle()
         XCTAssertEqual(store.token(), "sess-google")
         XCTAssertTrue(account.isSignedIn)
         let payload = try body(request("/api/auth/sign-in/social"))
         XCTAssertEqual(payload["provider"] as? String, "google")
         let idToken = try XCTUnwrap(payload["idToken"] as? [String: Any])
-        XCTAssertEqual(idToken as? [String: String], ["token": "google.id.token"])
+        XCTAssertEqual(idToken as? [String: String], ["token": "google.id.token", "nonce": "g00gle-n0nce"], "Google echoes the raw nonce; the server compares it exactly")
     }
 
     @MainActor
@@ -244,7 +244,7 @@ final class AccountTests: XCTestCase {
     }
 
     func testGoogleAuthorizationRequest() throws {
-        let url = try XCTUnwrap(GoogleOAuthClient.authorizationURL(state: "st4te", codeChallenge: "ch4llenge"))
+        let url = try XCTUnwrap(GoogleOAuthClient.authorizationURL(state: "st4te", nonce: "n0nce", codeChallenge: "ch4llenge"))
         let components = try XCTUnwrap(URLComponents(url: url, resolvingAgainstBaseURL: false))
         XCTAssertEqual(components.host, "accounts.google.com")
         let items = Dictionary(uniqueKeysWithValues: (components.queryItems ?? []).map { ($0.name, $0.value ?? "") })
@@ -255,6 +255,7 @@ final class AccountTests: XCTestCase {
         XCTAssertEqual(items["code_challenge_method"], "S256")
         XCTAssertEqual(items["code_challenge"], "ch4llenge")
         XCTAssertEqual(items["state"], "st4te")
+        XCTAssertEqual(items["nonce"], "n0nce")
 
         // RFC 7636 appendix B.
         XCTAssertEqual(AuthCrypto.codeChallenge(for: "dBjftJeZ4CVP-mB92K27uhbUJU1p1r_wW1gFWFOEjXk"), "E9Melhoa2OwvFrEMTJguCHaoeK1t8URWbuGJSstw-cM")
@@ -541,6 +542,96 @@ final class AccountTests: XCTestCase {
         XCTAssertEqual(store.token(), "t0k")
         XCTAssertTrue(account.isSignedIn)
         XCTAssertEqual(account.failure, .deleteFailed)
+        XCTAssertNil(account.notice)
+    }
+
+    @MainActor
+    func testADeleteAnswerWithoutDeletedKeepsTheToken() async throws {
+        route(["/api/v1/me": try json(200, ["ok": true])])
+        let store = MemoryTokenStore(token: "t0k")
+        let account = model(store)
+        await account.deleteAccount()
+        XCTAssertEqual(store.token(), "t0k")
+        XCTAssertTrue(account.isSignedIn)
+        XCTAssertEqual(account.failure, .deleteFailed)
+    }
+
+    @MainActor
+    func testDeleteWithAnExpiredSessionSignsOut() async throws {
+        route(["/api/v1/me": try json(401, ["error": "Sign in first.", "code": "signin_required"])])
+        let store = MemoryTokenStore(token: "expired")
+        let account = model(store)
+        await account.deleteAccount()
+        XCTAssertNil(store.token())
+        XCTAssertFalse(account.isSignedIn)
+        XCTAssertEqual(account.notice, .sessionExpired)
+        XCTAssertTrue(account.isSignInPresented)
+        XCTAssertNil(account.failure)
+    }
+
+    @MainActor
+    func testADeleteThatTimedOutButFinishedCountsAsDeleted() async throws {
+        let signedOut = try json(200, ["user": NSNull(), "entitlement": NSNull()])
+        StubURLProtocol.handler = { request in
+            request.httpMethod == "DELETE" ? StubURLProtocol.Reply(error: URLError(.timedOut)) : signedOut
+        }
+        let store = MemoryTokenStore(token: "t0k")
+        let account = model(store)
+        await account.deleteAccount()
+        XCTAssertEqual(StubURLProtocol.requests.map { $0.httpMethod ?? "" }, ["DELETE", "GET"])
+        XCTAssertNil(store.token())
+        XCTAssertFalse(account.isSignedIn)
+        XCTAssertEqual(account.notice, .deleted)
+        XCTAssertNil(account.failure)
+    }
+
+    @MainActor
+    func testADeleteThatTimedOutWithTheAccountStillThereFails() async throws {
+        let stillThere = try json(200, Self.meJSON)
+        StubURLProtocol.handler = { request in
+            request.httpMethod == "DELETE" ? StubURLProtocol.Reply(error: URLError(.timedOut)) : stillThere
+        }
+        let store = MemoryTokenStore(token: "t0k")
+        let account = model(store)
+        await account.deleteAccount()
+        XCTAssertEqual(store.token(), "t0k")
+        XCTAssertTrue(account.isSignedIn)
+        XCTAssertEqual(account.failure, .deleteFailed)
+        XCTAssertNil(account.notice)
+    }
+
+    // MARK: - Stale answers
+
+    @MainActor
+    func testAStaleSignedOutAnswerDoesNotEndANewerSession() async throws {
+        let store = MemoryTokenStore(token: "old")
+        let signedOut = try json(200, ["user": NSNull(), "entitlement": NSNull()])
+        // A new sign-in lands while the /me for the old token is out.
+        StubURLProtocol.handler = { _ in
+            store.setToken("new")
+            return signedOut
+        }
+        let account = model(store)
+        await account.refresh()
+        XCTAssertEqual(store.token(), "new")
+        XCTAssertTrue(account.isSignedIn)
+        XCTAssertNil(account.notice)
+        XCTAssertFalse(account.isSignInPresented)
+    }
+
+    @MainActor
+    func testAStale401DoesNotClearANewerToken() async throws {
+        let store = MemoryTokenStore(token: "old")
+        let refused = try json(401, ["error": "Sign in first.", "code": "signin_required"])
+        StubURLProtocol.handler = { _ in
+            store.setToken("new")
+            return refused
+        }
+        let account = model(store)
+        await account.refresh()
+        XCTAssertEqual(StubURLProtocol.requests.first?.value(forHTTPHeaderField: "Authorization"), "Bearer old")
+        XCTAssertEqual(store.token(), "new", "only the token that was sent is cleared")
+        XCTAssertTrue(account.isSignedIn)
         XCTAssertNil(account.notice)
     }
 

@@ -159,6 +159,13 @@ struct AppleIdentity: Sendable, Equatable {
     var email: String?
 }
 
+/// What the Google sign-in handed over. Google copies `rawNonce` into the
+/// ID token unchanged; the server compares it exactly.
+struct GoogleIdentity: Sendable, Equatable {
+    let idToken: String
+    let rawNonce: String
+}
+
 enum SocialProvider: String, Sendable {
     case apple, google
 }

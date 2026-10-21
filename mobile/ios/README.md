@@ -124,7 +124,8 @@ shows only the methods `GET /api/v1/config` reports (`signIn.apple`,
 - **Google**: no SDK. `ASWebAuthenticationSession` runs an OAuth code flow
   with PKCE against accounts.google.com using the iOS client id, the app
   trades the code for an ID token at oauth2.googleapis.com (installed-app
-  clients have no secret) and sends that to `/api/auth/sign-in/social`. The
+  clients have no secret) and sends that, with the raw nonce from the
+  authorization request, to `/api/auth/sign-in/social`. The
   redirect scheme (the reversed client id) is registered in Info.plist. The
   server must list the iOS client id in `GOOGLE_IOS_CLIENT_ID`.
 - **Email code**: `POST /api/auth/email-otp/send-verification-otp?lang=…`,

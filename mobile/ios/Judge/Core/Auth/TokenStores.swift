@@ -4,8 +4,13 @@ import Security
 
 /// The session token in the Keychain (a generic password readable after the
 /// first unlock, never synced or restored to another device). Reads are
-/// cached in memory, since every request asks for the token.
+/// cached in memory, since every request asks for the token; a read the
+/// Keychain could not answer (locked before first unlock, for example) is
+/// not cached, so the next request asks again. Failures log the status
+/// code only, never the token.
 final class KeychainTokenStore: TokenStore {
+    private static let log = Logger(subsystem: "com.okjudge.judge", category: "keychain")
+
     private enum Cache: Sendable {
         case unknown
         case known(String?)
@@ -23,15 +28,23 @@ final class KeychainTokenStore: TokenStore {
     func token() -> String? {
         cache.withLock { cache in
             if case .known(let value) = cache { return value }
-            let value = read()
-            cache = .known(value)
+            let (status, value) = lookup()
+            if status == errSecSuccess || status == errSecItemNotFound {
+                cache = .known(value)
+            } else {
+                Self.log.error("token read failed: \(status, privacy: .public)")
+            }
             return value
         }
     }
 
     func setToken(_ token: String) {
         cache.withLock { cache in
-            _ = write(token)
+            let status = write(token)
+            if status != errSecSuccess {
+                Self.log.error("token write failed: \(status, privacy: .public)")
+            }
+            // Kept in memory either way, so this launch stays signed in.
             cache = .known(token)
         }
     }
@@ -53,23 +66,35 @@ final class KeychainTokenStore: TokenStore {
 
     /// The stored token straight from the Keychain (no cache).
     func read() -> String? {
+        lookup().value
+    }
+
+    private func lookup() -> (status: OSStatus, value: String?) {
         var request = query
         request[kSecReturnData as String] = true
         request[kSecMatchLimit as String] = kSecMatchLimitOne
         var item: CFTypeRef?
-        guard SecItemCopyMatching(request as CFDictionary, &item) == errSecSuccess,
+        let status = SecItemCopyMatching(request as CFDictionary, &item)
+        guard status == errSecSuccess,
               let data = item as? Data,
               let text = String(data: data, encoding: .utf8), !text.isEmpty
-        else { return nil }
-        return text
+        else { return (status, nil) }
+        return (status, text)
     }
 
-    /// Replaces the stored token; returns the Keychain status.
+    /// Stores the token: updates the item, or adds it when there is none.
+    /// Returns the Keychain status.
     @discardableResult
     func write(_ token: String) -> OSStatus {
-        delete()
+        let data = Data(token.utf8)
+        let changes: [String: Any] = [
+            kSecValueData as String: data,
+            kSecAttrAccessible as String: kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly,
+        ]
+        let updated = SecItemUpdate(query as CFDictionary, changes as CFDictionary)
+        guard updated == errSecItemNotFound else { return updated }
         var item = query
-        item[kSecValueData as String] = Data(token.utf8)
+        item[kSecValueData as String] = data
         item[kSecAttrAccessible as String] = kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly
         return SecItemAdd(item as CFDictionary, nil)
     }
