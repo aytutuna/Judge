@@ -82,10 +82,15 @@ struct JudgeAPI: Sendable {
 
     /// The verdict POST alone. A server that ignores the preference (or an
     /// older one) still answers 200 with the verdict, so the long timeout stays.
-    func startVerdict(_ body: VerdictRequest) async throws -> VerdictStart {
+    /// Premium requests carry an `Idempotency-Key`: a retry of the same body
+    /// with the same key is replayed or joined by the server, never charged twice.
+    func startVerdict(_ body: VerdictRequest, idempotencyKey: String? = nil) async throws -> VerdictStart {
         var request = makeRequest(url: endpoint("verdict"), method: "POST", timeout: Timeout.verdict)
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue(PollPolicy.respondAsync, forHTTPHeaderField: "Prefer")
+        if let idempotencyKey {
+            request.setValue(idempotencyKey, forHTTPHeaderField: "Idempotency-Key")
+        }
         request.httpBody = try JSONEncoder().encode(body)
         let (data, response) = try await exchange(request)
         do {

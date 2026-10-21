@@ -10,6 +10,7 @@ struct JudgingCover: View {
         JudgingView(
             lang: lang,
             result: home.arrived,
+            premium: home.judgingPremium,
             onFinished: { home.judgingFinished() },
             onCancel: { home.cancel() }
         )
@@ -24,6 +25,8 @@ struct JudgingView: View {
     let lang: AppLang
     /// Non-nil once the verdict has arrived.
     let result: VerdictResult?
+    /// Premium adds the web fact-check line and its own helper text.
+    var premium = false
     let onFinished: () -> Void
     let onCancel: () -> Void
 
@@ -100,7 +103,20 @@ struct JudgingView: View {
                 }
                 .accessibilityHidden(true)
 
-                Text(L10n.thinkingHelper(lang))
+                if premium {
+                    HStack(spacing: 8) {
+                        Image(systemName: done ? "checkmark.circle.fill" : "globe")
+                            .font(.system(size: 13, weight: .semibold))
+                            .foregroundStyle(done ? Brand.sageInk : Brand.terraInk)
+                            .accessibilityHidden(true)
+                        Text(done ? L10n.thinkingFactcheckDone(lang) : L10n.thinkingFactcheck(lang))
+                            .brandText(.slotTitle)
+                            .foregroundStyle(Brand.ink2)
+                    }
+                    .accessibilityElement(children: .combine)
+                }
+
+                Text(premium ? L10n.thinkingPremiumHelper(lang) : L10n.thinkingHelper(lang))
                     .brandText(.slotText)
                     .foregroundStyle(Brand.muted)
                     .multilineTextAlignment(.center)

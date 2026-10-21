@@ -14,7 +14,8 @@ struct VerdictCard: View {
     var restoredNames: [String] = []
     let lang: AppLang
     let status: TranslationStatus
-    let shareURL: URL
+    /// Nil hides the share buttons (a removed case: its links are closed).
+    let shareURL: URL?
     /// The anonymized original headline (anything that leaves the phone
     /// stays anonymized).
     let shareSubject: String
@@ -39,8 +40,13 @@ struct VerdictCard: View {
             if !refused, !result.losingSideBestPoint.isEmpty {
                 BestPointBlock(title: L10n.bestPointTitle(lang), text: result.losingSideBestPoint)
             }
+            if !refused, let wouldChange = result.wouldChange, !wouldChange.isEmpty {
+                WouldChangeBlock(items: wouldChange, lang: lang)
+            }
             footnote
-            actions
+            if shareURL != nil || onJudgeAnother != nil {
+                actions
+            }
         }
         .padding(.horizontal, 20)
         .padding(.top, 26)
@@ -89,6 +95,15 @@ struct VerdictCard: View {
                     .padding(.horizontal, 10)
                     .padding(.vertical, 5)
                     .background(Capsule().fill(Brand.ink))
+                if result.twoSided {
+                    Text(L10n.twoSidedBadge(lang))
+                        .brandText(.micro)
+                        .foregroundStyle(Brand.sageInk)
+                        .padding(.horizontal, 10)
+                        .padding(.vertical, 5)
+                        .background(Capsule().fill(Brand.sageTint))
+                        .lineLimit(1)
+                }
             }
             Spacer(minLength: 0)
             HStack(spacing: 5) {
@@ -237,6 +252,9 @@ struct VerdictCard: View {
                     let models = result.panel?.models ?? []
                     Text(models.isEmpty ? L10n.panelPremium(lang) : L10n.panelPremium(lang) + " " + VerdictDisplay.panelSummary(models: models, lang: lang))
                 }
+                if let evidence = TwoSidedDisplay.evidenceNote(result, lang: lang) {
+                    Text(evidence)
+                }
             }
             .brandText(.footnote)
             .foregroundStyle(Brand.muted)
@@ -256,21 +274,23 @@ struct VerdictCard: View {
 
     @ViewBuilder
     private func shareButtons(message: String) -> some View {
-        ShareLink(item: shareURL, subject: Text(shareSubject), message: Text(message)) {
-            Label(L10n.share(lang), systemImage: "square.and.arrow.up")
-        }
-        .buttonStyle(GhostButtonStyle())
-        Button {
-            UIPasteboard.general.url = shareURL
-            copied = true
-        } label: {
-            Label(copied ? L10n.copied(lang) : L10n.copyLink(lang), systemImage: copied ? "checkmark" : "link")
-        }
-        .buttonStyle(GhostButtonStyle())
-        .task(id: copied) {
-            guard copied else { return }
-            try? await Task.sleep(for: .seconds(2))
-            if !Task.isCancelled { copied = false }
+        if let shareURL {
+            ShareLink(item: shareURL, subject: Text(shareSubject), message: Text(message)) {
+                Label(L10n.share(lang), systemImage: "square.and.arrow.up")
+            }
+            .buttonStyle(GhostButtonStyle())
+            Button {
+                UIPasteboard.general.url = shareURL
+                copied = true
+            } label: {
+                Label(copied ? L10n.copied(lang) : L10n.copyLink(lang), systemImage: copied ? "checkmark" : "link")
+            }
+            .buttonStyle(GhostButtonStyle())
+            .task(id: copied) {
+                guard copied else { return }
+                try? await Task.sleep(for: .seconds(2))
+                if !Task.isCancelled { copied = false }
+            }
         }
     }
 

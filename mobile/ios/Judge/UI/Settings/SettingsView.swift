@@ -13,6 +13,22 @@ struct SettingsView: View {
                 AccountSection(confirmSignOut: $confirmSignOut, confirmDelete: $confirmDelete)
 
                 Section {
+                    NavigationLink {
+                        PricingView()
+                    } label: {
+                        Label {
+                            Text(L10n.navPricing(lang))
+                                .brandText(.body)
+                                .foregroundStyle(Brand.ink)
+                        } icon: {
+                            Image(systemName: "sparkle")
+                                .foregroundStyle(Brand.terraInk)
+                        }
+                    }
+                }
+                .listRowBackground(Brand.paper)
+
+                Section {
                     languageRow(.system, title: L10n.appSettingsLanguageDevice(lang))
                     languageRow(.en, title: L10n.appLangEn(lang))
                     languageRow(.tr, title: L10n.appLangTr(lang))

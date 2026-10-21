@@ -8,6 +8,7 @@ struct HomeView: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     private static let errorID = "home.error"
+    private static let clarifyID = "home.clarify"
 
     var body: some View {
         @Bindable var home = app.home
@@ -17,7 +18,13 @@ struct HomeView: View {
                 VStack(alignment: .leading, spacing: 22) {
                     header(lang)
                     hero(lang)
-                    formCard(lang, home: home)
+                    if let clarify = home.clarify {
+                        // Premium's questions take the form's place.
+                        ClarifyCard(home: home, state: clarify, lang: lang)
+                            .id(Self.clarifyID)
+                    } else {
+                        formCard(lang, home: home)
+                    }
                     Text(L10n.footerNote(lang))
                         .brandText(.footnote)
                         .foregroundStyle(Brand.muted)
@@ -35,6 +42,13 @@ struct HomeView: View {
                 guard error != nil else { return }
                 withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.3)) {
                     proxy.scrollTo(Self.errorID, anchor: .center)
+                }
+            }
+            .onChange(of: home.clarify != nil) { _, shown in
+                guard shown else { return }
+                editorFocused = false
+                withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.3)) {
+                    proxy.scrollTo(Self.clarifyID, anchor: .top)
                 }
             }
         }
@@ -104,6 +118,14 @@ struct HomeView: View {
             editorSection(lang, home: home)
             examplesSection(lang, home: home)
             presetSection(lang, home: home)
+            if app.tierAvailability != .hidden {
+                TierSwitchView(lang: lang, disabled: home.isBusy) {
+                    home.path.append(.pricing)
+                }
+            }
+            if app.evidenceOn {
+                EvidencePickerView(evidence: home.evidence, lang: lang, disabled: home.isBusy)
+            }
             if let error = home.error {
                 errorBanner(error, lang: lang)
                     .id(Self.errorID)
@@ -206,9 +228,11 @@ struct HomeView: View {
     private func submitSection(_ lang: AppLang, home: HomeModel) -> some View {
         VStack(spacing: 12) {
             // `blockedUntil` is cleared by the model when a rate limit ends.
+            let waiting = home.isCheckingBot || home.isCheckingQuestions
             Button { submit() } label: {
-                if home.isCheckingBot {
-                    // The bot check runs before the judging cover goes up.
+                if waiting {
+                    // The bot check (free) or the questions (premium) run
+                    // before the judging cover goes up.
                     ProgressView()
                         .tint(Brand.ivory)
                         .accessibilityLabel(L10n.getVerdict(lang))
@@ -217,7 +241,13 @@ struct HomeView: View {
                 }
             }
             .buttonStyle(PrimaryButtonStyle())
-            .disabled(!home.canSubmit() && !home.isCheckingBot)
+            .disabled(!home.canSubmit(evidenceOn: app.evidenceOn) && !waiting)
+            if home.isCheckingQuestions {
+                Text(L10n.tierChecking(lang))
+                    .brandText(.slotText)
+                    .foregroundStyle(Brand.muted)
+                    .accessibilityAddTraits(.updatesFrequently)
+            }
             VStack(spacing: 2) {
                 Text(L10n.privacyNote(lang))
                     .brandText(.footnote)

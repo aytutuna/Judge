@@ -167,6 +167,8 @@ private struct HomeTab: View {
                         } else {
                             MissingVerdictView()
                         }
+                    case .pricing:
+                        PricingView()
                     }
                 }
         }

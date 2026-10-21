@@ -38,18 +38,87 @@ struct SignInProviders: Decodable, Sendable, Equatable {
 struct ServerConfig: Decodable, Sendable, Equatable {
     var signIn: SignInProviders
     var premiumEnabled: Bool
+    /// Prices for the pricing screen; nil when the server sent none.
+    var pricing: PricingInfo?
+    /// Premium extras this deployment offers (absent on older servers: all off).
+    var features: PremiumFeatures
 
-    private enum CodingKeys: String, CodingKey { case signIn, premiumEnabled }
+    private enum CodingKeys: String, CodingKey { case signIn, premiumEnabled, pricing, features }
 
-    init(signIn: SignInProviders, premiumEnabled: Bool = false) {
+    init(signIn: SignInProviders, premiumEnabled: Bool = false, pricing: PricingInfo? = nil, features: PremiumFeatures = PremiumFeatures()) {
         self.signIn = signIn
         self.premiumEnabled = premiumEnabled
+        self.pricing = pricing
+        self.features = features
     }
 
     init(from decoder: any Decoder) throws {
         let c = try decoder.container(keyedBy: CodingKeys.self)
         signIn = try c.decode(SignInProviders.self, forKey: .signIn)
         premiumEnabled = (try? c.decodeIfPresent(Bool.self, forKey: .premiumEnabled)) == true
+        pricing = try? c.decodeIfPresent(PricingInfo.self, forKey: .pricing)
+        features = (try? c.decodeIfPresent(PremiumFeatures.self, forKey: .features)) ?? PremiumFeatures()
+    }
+}
+
+/// `features` of GET /api/v1/config. A missing flag reads as off.
+struct PremiumFeatures: Decodable, Sendable, Equatable {
+    var cases = false
+    var evidence = false
+
+    init(cases: Bool = false, evidence: Bool = false) {
+        self.cases = cases
+        self.evidence = evidence
+    }
+
+    private enum CodingKeys: String, CodingKey { case cases, evidence }
+
+    init(from decoder: any Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        cases = (try? c.decodeIfPresent(Bool.self, forKey: .cases)) == true
+        evidence = (try? c.decodeIfPresent(Bool.self, forKey: .evidence)) == true
+    }
+}
+
+struct PricingPack: Decodable, Sendable, Equatable, Identifiable {
+    var id: String
+    var credits: Int
+    var priceUsd: Double
+}
+
+struct PricingPlan: Decodable, Sendable, Equatable {
+    var id: String
+    var priceUsd: Double
+    var fairUseCap: Int
+    var periodDays: Int
+}
+
+/// `pricing` of GET /api/v1/config (lib/account-types.ts PricingInfo).
+struct PricingInfo: Decodable, Sendable, Equatable {
+    var currency: String
+    /// False until payments exist: buy buttons read "Coming soon".
+    var purchasesEnabled: Bool
+    var packs: [PricingPack]
+    var monthly: PricingPlan
+
+    /// lib/pricing.ts PRICING, shown until the server's config arrives.
+    static let fallback = PricingInfo(
+        currency: "USD",
+        purchasesEnabled: false,
+        packs: [
+            PricingPack(id: "pack_10", credits: 10, priceUsd: 1.99),
+            PricingPack(id: "pack_30", credits: 30, priceUsd: 4.99),
+        ],
+        monthly: PricingPlan(id: "monthly", priceUsd: 4.99, fairUseCap: 60, periodDays: 30)
+    )
+
+    /// "$1.99" in English, "$1,99" in Turkish (formatPrice in lib/pricing.ts).
+    static func format(_ usd: Double, lang: AppLang) -> String {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .currency
+        formatter.locale = Locale(identifier: lang == .tr ? "tr_TR" : "en_US")
+        formatter.currencyCode = "USD"
+        return formatter.string(from: NSNumber(value: usd)) ?? String(format: "$%.2f", usd)
     }
 }
 

@@ -8,9 +8,12 @@ import SwiftData
 ///
 /// Launch argument: `-JudgeScreenshotState <screen>:<lang>`, where screen is
 /// `home`, `home-error`, `judging`, `history`, `settings`, `signin`,
-/// `signin-code`, `account` (Settings, signed in) or `verdict/<sample>` (a
-/// key of `verdictResponses`), and lang is `en` or `tr`.
-/// Examples: `home:tr`, `verdict/win_a_self:tr`, `history:en`.
+/// `signin-code`, `account` (Settings, signed in), `verdict/<sample>` (a
+/// key of `verdictResponses`), or a Premium state: `tier/locked` (signed
+/// in, monthly allowance used up), `tier/premium` (Premium chosen with
+/// credits), `pricing`, `clarify` (the questions), `evidence` (picked
+/// screenshots in mixed states) or `judging-premium`; lang is `en` or `tr`.
+/// Examples: `home:tr`, `verdict/win_a_self:tr`, `tier/locked:en`.
 ///
 /// The state runs on an in-memory history store and a separate defaults
 /// suite, so it never touches the real data, and the API points at a closed
@@ -26,6 +29,12 @@ struct ScreenshotState {
         case signIn
         case signInCode
         case account
+        case tierLocked
+        case tierPremium
+        case pricing
+        case clarify
+        case evidence
+        case judgingPremium
     }
 
     static let argument = "-JudgeScreenshotState"
@@ -35,7 +44,9 @@ struct ScreenshotState {
 
     var tab: RootTab {
         switch screen {
-        case .home, .homeError, .judging, .verdict, .signIn, .signInCode: return .new
+        case .home, .homeError, .judging, .verdict, .signIn, .signInCode,
+             .tierLocked, .tierPremium, .pricing, .clarify, .evidence, .judgingPremium:
+            return .new
         case .history: return .history
         case .settings, .account: return .settings
         }
@@ -60,6 +71,12 @@ struct ScreenshotState {
         case "signin": screen = .signIn
         case "signin-code": screen = .signInCode
         case "account": screen = .account
+        case "tier/locked": screen = .tierLocked
+        case "tier/premium": screen = .tierPremium
+        case "pricing": screen = .pricing
+        case "clarify": screen = .clarify
+        case "evidence": screen = .evidence
+        case "judging-premium": screen = .judgingPremium
         default:
             guard name.hasPrefix("verdict/") else { return nil }
             let sample = String(name.dropFirst("verdict/".count))
@@ -122,6 +139,37 @@ struct ScreenshotState {
                     entitlement: Entitlement(canUsePremium: false, blockedReason: "premium_required", credits: 0)
                 )
             )
+        case .tierLocked:
+            premium(app, me: "fair_use")
+            app.setTierChoice(.premium)
+            app.home.argument = ExampleArgument.all[0].text(lang)
+        case .tierPremium:
+            premium(app, me: "credits7")
+            app.setTierChoice(.premium)
+            app.home.argument = ExampleArgument.all[0].text(lang)
+        case .pricing:
+            premium(app, me: "subscriber")
+            app.home.path = [.pricing]
+        case .clarify:
+            premium(app, me: "credits7")
+            app.setTierChoice(.premium)
+            app.home.argument = ExampleArgument.all[0].text(lang)
+            app.home.showForScreenshot(questions: ScreenshotFixtures.questions(lang: lang))
+        case .evidence:
+            premium(app, me: "credits7")
+            app.setTierChoice(.premium)
+            app.home.argument = ExampleArgument.all[0].text(lang)
+            let preview = ScreenshotFixtures.evidencePreview()
+            app.home.evidence.showForScreenshot([
+                (status: .ok, preview: preview),
+                (status: .reading, preview: nil),
+                (status: .unreadable, preview: nil),
+            ])
+        case .judgingPremium:
+            premium(app, me: "credits7")
+            app.setTierChoice(.premium)
+            app.home.argument = ExampleArgument.all[0].text(lang)
+            app.home.showForScreenshot(judgingPremium: true)
         case .history:
             // Fixed times, newest first, an hour apart.
             let newest = Date(timeIntervalSince1970: 1_792_000_000)
@@ -133,6 +181,17 @@ struct ScreenshotState {
         }
     }
 
+    /// Signed in with a fixture account on a server with Premium, cases and
+    /// evidence switched on.
+    @MainActor
+    private func premium(_ app: AppModel, me: String) {
+        app.account.showForScreenshot(
+            providers: Self.allProviders,
+            info: ScreenshotFixtures.me(me),
+            config: ScreenshotFixtures.config("full")
+        )
+    }
+
     private static let email = "sam@example.com"
     private static let allProviders = SignInProviders(apple: true, google: true, email: true, emailCode: true)
 }
@@ -140,7 +199,7 @@ struct ScreenshotState {
 /// Reads verdicts.json from the app bundle (Debug builds copy it in; Release
 /// excludes it with EXCLUDED_SOURCE_FILE_NAMES).
 enum ScreenshotFixtures {
-    private static func root() -> [String: Any] {
+    static func root() -> [String: Any] {
         guard let url = Bundle.main.url(forResource: "verdicts", withExtension: "json"),
               let data = try? Data(contentsOf: url),
               let object = try? JSONSerialization.jsonObject(with: data) as? [String: Any]
@@ -165,6 +224,43 @@ enum ScreenshotFixtures {
             translations[lang] = translated.result
         }
         return VerdictSession(id: payload.id, original: payload.result, nameMap: payload.nameMap, translations: translations)
+    }
+
+    /// `config.<name>` as GET /api/v1/config would answer.
+    static func config(_ name: String) -> ServerConfig? {
+        decode(ServerConfig.self, (root()["config"] as? [String: Any])?[name])
+    }
+
+    /// `me.<name>` as GET /api/v1/me would answer.
+    static func me(_ name: String) -> AccountInfo? {
+        decode(AccountInfo.self, (root()["me"] as? [String: Any])?[name])
+    }
+
+    /// The two clarifying questions. The fixture is English; Turkish
+    /// screenshots get the same questions in Turkish.
+    static func questions(lang: AppLang) -> [ClarifyQuestion] {
+        if lang == .tr {
+            return [
+                ClarifyQuestion(id: "q1", text: "Sam'le neyin sandviç sayılacağı konusunda hiç anlaştınız mı?"),
+                ClarifyQuestion(id: "q2", text: "Mesele menüdeki ifade mi, yoksa önüne gelen yemek mi?"),
+            ]
+        }
+        struct Answer: Decodable { var questions: [ClarifyQuestion] }
+        let fixture = ((root()["clarifyResponse"] as? [String: Any])?["two_questions"])
+        return decode(Answer.self, fixture)?.questions ?? []
+    }
+
+    /// The preview text of the first (readable) evidence item.
+    static func evidencePreview() -> String? {
+        let items = (root()["evidenceResponse"] as? [String: Any])?["items"] as? [[String: Any]]
+        return items?.first?["preview"] as? String
+    }
+
+    static func decode<T: Decodable>(_ type: T.Type, _ value: Any?) -> T? {
+        guard let value, JSONSerialization.isValidJSONObject(value),
+              let data = try? JSONSerialization.data(withJSONObject: value)
+        else { return nil }
+        return try? JSONDecoder().decode(type, from: data)
     }
 }
 #endif

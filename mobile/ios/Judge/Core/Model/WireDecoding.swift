@@ -12,9 +12,13 @@ struct RawResult: Sendable, Equatable {
 struct VerdictPayload: Sendable, Equatable {
     let id: String
     let result: RawResult
-    let nameMap: [NameMapping]
+    var nameMap: [NameMapping]
     /// Signed-out writers only: proves authorship of the share page.
     var ownerToken: String? = nil
+    /// Premium: the account's entitlement after this verdict.
+    var entitlement: Entitlement? = nil
+    /// Premium: an Idempotency-Key replay of a finished verdict (no name map).
+    var replayed = false
 }
 
 /// POST /api/v1/verdict answered 202: the verdict is judged in the background
@@ -22,10 +26,15 @@ struct VerdictPayload: Sendable, Equatable {
 /// does not repeat them.
 struct VerdictAccepted: Sendable, Equatable {
     let id: String
-    let nameMap: [NameMapping]
+    var nameMap: [NameMapping]
     var ownerToken: String? = nil
     /// The server's suggested first wait, in milliseconds.
     var pollAfterMs: Double? = nil
+    /// Premium: the entitlement right after the unit was reserved.
+    var entitlement: Entitlement? = nil
+    /// Premium: an Idempotency-Key retry joined a verdict already being
+    /// judged (the name map is empty then).
+    var replayed = false
 }
 
 /// GET /api/v1/verdicts/{id} answered 200 (lib/verdict-poll.ts).
@@ -63,7 +72,14 @@ enum WireDecoding {
         let object = try topLevelObject(data)
         let id = try string("id", in: object)
         let result = try rawResult(object["result"])
-        return VerdictPayload(id: id, result: result, nameMap: nameMap(in: object), ownerToken: ownerToken(in: object))
+        return VerdictPayload(
+            id: id,
+            result: result,
+            nameMap: nameMap(in: object),
+            ownerToken: ownerToken(in: object),
+            entitlement: entitlement(in: object),
+            replayed: (object["replayed"] as? Bool) ?? false
+        )
     }
 
     static func acceptedPayload(from data: Data) throws -> VerdictAccepted {
@@ -73,8 +89,30 @@ enum WireDecoding {
             id: try string("id", in: object),
             nameMap: nameMap(in: object),
             ownerToken: ownerToken(in: object),
-            pollAfterMs: wait.flatMap { $0.isFinite && $0 >= 0 ? $0 : nil }
+            pollAfterMs: wait.flatMap { $0.isFinite && $0 >= 0 ? $0 : nil },
+            entitlement: entitlement(in: object),
+            replayed: (object["replayed"] as? Bool) ?? false
         )
+    }
+
+    /// An `entitlement` object inside a response (premium answers), or nil.
+    static func entitlement(in object: [String: Any]) -> Entitlement? {
+        guard let value = object["entitlement"] as? [String: Any],
+              let data = try? JSONSerialization.data(withJSONObject: value)
+        else { return nil }
+        return try? JSONDecoder().decode(Entitlement.self, from: data)
+    }
+
+    /// A `name_map` list inside any response object.
+    static func nameMapList(_ value: Any?) -> [NameMapping] {
+        guard let list = value as? [Any] else { return [] }
+        return list.compactMap { entry in
+            guard let pair = entry as? [String: Any],
+                  let original = pair["original"] as? String,
+                  let replacement = pair["replacement"] as? String
+            else { return nil }
+            return NameMapping(original: original, replacement: replacement)
+        }
     }
 
     /// A 200 poll body. A body with a result and an id but no status is a
@@ -178,19 +216,19 @@ enum WireDecoding {
         return token
     }
 
-    private static func topLevelObject(_ data: Data) throws -> [String: Any] {
+    static func topLevelObject(_ data: Data) throws -> [String: Any] {
         guard let object = try JSONSerialization.jsonObject(with: data) as? [String: Any] else {
             throw WireDecodingError.notAnObject
         }
         return object
     }
 
-    private static func string(_ key: String, in object: [String: Any]) throws -> String {
+    static func string(_ key: String, in object: [String: Any]) throws -> String {
         guard let value = object[key] as? String, !value.isEmpty else { throw WireDecodingError.missing(key) }
         return value
     }
 
-    private static func rawResult(_ value: Any?) throws -> RawResult {
+    static func rawResult(_ value: Any?) throws -> RawResult {
         guard let value, let object = value as? [String: Any], JSONSerialization.isValidJSONObject(object) else {
             throw WireDecodingError.missing("result")
         }

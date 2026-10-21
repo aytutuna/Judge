@@ -211,18 +211,28 @@ struct FactsView: View {
 /// The premium web fact check (rendered whenever a result carries one).
 struct FactCheckView: View {
     let factCheck: FactCheck
+    /// Words the "nothing to look up" line for the dispute type.
+    var disputeType: DisputeType = .unknown
     let lang: AppLang
     let openURL: (URL) -> Void
 
     /// Most sources shown per claim.
     static let maxSources = 3
 
+    /// The muted line when nothing was looked up (noneKey on the web): a
+    /// factual or mixed dispute turns on facts only the people involved
+    /// know, so "values or meanings, not facts" would contradict its badge.
+    static func emptyText(_ factCheck: FactCheck, disputeType: DisputeType, lang: AppLang) -> String {
+        if factCheck.status == .unavailable { return L10n.factcheckUnavailable(lang) }
+        return disputeType == .factual || disputeType == .mixed ? L10n.factcheckNoneFactual(lang) : L10n.factcheckNone(lang)
+    }
+
     var body: some View {
         let claims = factCheck.status == .checked ? factCheck.claims : []
         VStack(alignment: .leading, spacing: 10) {
             SectionTitle(text: L10n.factcheckTitle(lang))
             if claims.isEmpty {
-                Text(factCheck.status == .unavailable ? L10n.factcheckUnavailable(lang) : L10n.factcheckNone(lang))
+                Text(Self.emptyText(factCheck, disputeType: disputeType, lang: lang))
                     .brandText(.slotText)
                     .foregroundStyle(Brand.muted)
             } else {
@@ -240,7 +250,8 @@ struct FactCheckView: View {
     private func claimRow(_ claim: FactClaim) -> some View {
         VStack(alignment: .leading, spacing: 6) {
             if let status = L10n.text("factcheck.status.\(claim.status.rawValue)", lang) {
-                Text(status)
+                // A shape next to the word, so the chip never relies on colour.
+                Label(status, systemImage: statusGlyph(claim.status))
                     .brandText(.micro)
                     .foregroundStyle(statusColor(claim.status))
                     .padding(.horizontal, 9)
@@ -288,6 +299,15 @@ struct FactCheckView: View {
         case .refuted: return Brand.danger
         case .mixed: return Brand.terraInk
         case .unverified, .unknown: return Brand.ink2
+        }
+    }
+
+    private func statusGlyph(_ status: FactStatus) -> String {
+        switch status {
+        case .supported: return "checkmark"
+        case .refuted: return "xmark"
+        case .mixed: return "minus"
+        case .unverified, .unknown: return "questionmark"
         }
     }
 

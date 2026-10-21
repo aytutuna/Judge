@@ -80,6 +80,25 @@ final class AccountModel {
         return nil
     }
 
+    /// GET /api/v1/config as last loaded (premium switch, prices, features).
+    private(set) var serverConfig: ServerConfig?
+
+    var premiumEnabled: Bool { serverConfig?.premiumEnabled == true }
+    var features: PremiumFeatures { serverConfig?.features ?? PremiumFeatures() }
+    var pricing: PricingInfo { serverConfig?.pricing ?? .fallback }
+
+    /// A premium answer carried the account's new balance: show it at once.
+    func applyEntitlement(_ entitlement: Entitlement) {
+        guard isSignedIn else { return }
+        info = AccountInfo(user: info?.user, entitlement: entitlement)
+    }
+
+    /// Refetches /me in the background (after a premium outcome or a 402).
+    func refreshSoon() {
+        guard isSignedIn, usesNetwork else { return }
+        Task { [weak self] in await self?.refresh() }
+    }
+
     // MARK: - Startup
 
     /// Launch: the server's sign-in methods, then the account when signed in.
@@ -93,7 +112,9 @@ final class AccountModel {
         guard usesNetwork else { return }
         if signInProviders == nil { providers = .loading }
         do {
-            providers = .loaded(try await api.serverConfig().signIn)
+            let config = try await api.serverConfig()
+            serverConfig = config
+            providers = .loaded(config.signIn)
         } catch {
             if signInProviders == nil { providers = .failed }
         }
@@ -442,15 +463,29 @@ extension AccountModel.Notice {
 #if DEBUG
 extension AccountModel {
     /// Screenshot fixtures: a fixed state without a request.
-    func showForScreenshot(providers: SignInProviders, info: AccountInfo? = nil, step: Step = .choose, email: String = "") {
+    func showForScreenshot(
+        providers: SignInProviders,
+        info: AccountInfo? = nil,
+        step: Step = .choose,
+        email: String = "",
+        config: ServerConfig? = nil
+    ) {
         usesNetwork = false
         self.providers = .loaded(providers)
+        if let config { serverConfig = config }
         if let info {
             self.info = info
             isSignedIn = true
         }
         self.step = step
         self.email = email
+    }
+
+    /// Tests: a loaded config and account, keeping the network on.
+    func preload(config: ServerConfig?, info: AccountInfo?) {
+        serverConfig = config
+        if let config { providers = .loaded(config.signIn) }
+        self.info = info
     }
 }
 #endif

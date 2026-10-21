@@ -86,6 +86,8 @@ enum ErrorText {
         "invalid", "too_short", "too_long", "not_configured", "quota", "unavailable", "rate_limited",
         "daily_cap", "captcha_failed", "signin_required", "premium_required", "no_credits", "fair_use",
         "in_progress", "bad_origin", "not_found",
+        "case_closed", "case_expired", "appeal_used", "not_party", "own_case", "too_large", "unsupported_media",
+        "too_many_files", "evidence_invalid", "anonymize_failed", "removed", "names_unavailable",
     ]
 
     /// A wait in seconds as a whole phrase: minutes below 90, hours beyond,

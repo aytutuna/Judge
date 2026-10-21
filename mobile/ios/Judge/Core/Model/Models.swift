@@ -134,6 +134,42 @@ struct Panel: Sendable, Equatable {
     var models: [String]
 }
 
+enum DisputeFinding: String, LenientEnum {
+    case a, b, unsettled
+    case unknown = "_unknown"
+}
+
+enum AppealOutcome: String, LenientEnum {
+    case upheld, overturned, changed
+    case unknown = "_unknown"
+}
+
+/// One fact the two sides of a case dispute, and which way the judges found.
+struct DisputedFact: Sendable, Equatable {
+    var fact: String
+    var partyA: String
+    var partyB: String
+    var finding: DisputeFinding
+    var decisive: Bool
+}
+
+/// Images each party attached that the judges read.
+struct EvidenceUsed: Sendable, Equatable {
+    var a: Int
+    var b: Int
+}
+
+/// On a verdict produced by an appeal: how it compares to the one before.
+struct AppealInfo: Sendable, Equatable {
+    var by: Party
+    var outcome: AppealOutcome
+    var previousId: String
+    var previousVerdict: FinalVerdict
+    var previousConfidence: Int
+    var confidenceChange: Int
+    var summary: String
+}
+
 struct VerdictResult: Sendable, Equatable {
     var verdict: FinalVerdict
     var disputeType: DisputeType
@@ -156,6 +192,15 @@ struct VerdictResult: Sendable, Equatable {
     var tier: String?
     var factCheck: FactCheck?
     var panel: Panel?
+    /// Two-sided case verdicts only.
+    var twoSided = false
+    var agreedFacts: [String]? = nil
+    var disputedFacts: [DisputedFact]? = nil
+    var wouldChange: [String]? = nil
+    /// Images the judges read (premium with evidence, and cases).
+    var evidenceUsed: EvidenceUsed? = nil
+    /// Set on verdicts produced by an appeal.
+    var appeal: AppealInfo? = nil
 
     var isPremium: Bool { tier == "premium" }
 }
@@ -189,8 +234,8 @@ struct ApiErrorBody: Decodable, Sendable, Equatable {
     }
 }
 
-/// POST /api/v1/verdict body. `sliders` and `clarifications` exist for
-/// later phases and are omitted from the JSON while nil.
+/// POST /api/v1/verdict body. Optional fields (`sliders`, premium's
+/// `clarifications` and `evidence`) are omitted from the JSON while nil.
 struct VerdictRequest: Encodable, Sendable, Equatable {
     struct Framework: Encodable, Sendable, Equatable {
         var preset: String
@@ -207,6 +252,8 @@ struct VerdictRequest: Encodable, Sendable, Equatable {
     var lang: AppLang
     var tier: String = "free"
     var clarifications: [Clarification]?
+    /// Premium only: signed tokens from POST /api/v1/evidence, in order.
+    var evidence: [String]? = nil
     var turnstileToken: String?
 }
 
@@ -321,9 +368,58 @@ extension Panel: Decodable {
     }
 }
 
+extension DisputedFact: Decodable {
+    private enum CodingKeys: String, CodingKey {
+        case fact, finding, decisive
+        case partyA = "party_a", partyB = "party_b"
+    }
+    init(from decoder: any Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        fact = (try? c.decodeIfPresent(String.self, forKey: .fact)) ?? ""
+        partyA = (try? c.decodeIfPresent(String.self, forKey: .partyA)) ?? ""
+        partyB = (try? c.decodeIfPresent(String.self, forKey: .partyB)) ?? ""
+        finding = (try? c.decodeIfPresent(DisputeFinding.self, forKey: .finding)) ?? .unknown
+        decisive = (try? c.decodeIfPresent(Bool.self, forKey: .decisive)) ?? false
+    }
+}
+
+extension EvidenceUsed: Decodable {
+    private enum CodingKeys: String, CodingKey { case a, b }
+    init(from decoder: any Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        a = max(0, (try? c.decodeIfPresent(Int.self, forKey: .a)) ?? 0)
+        b = max(0, (try? c.decodeIfPresent(Int.self, forKey: .b)) ?? 0)
+    }
+}
+
+extension AppealInfo: Decodable {
+    private enum CodingKeys: String, CodingKey {
+        case by, outcome, summary
+        case previousId = "previous_id"
+        case previousVerdict = "previous_verdict"
+        case previousConfidence = "previous_confidence"
+        case confidenceChange = "confidence_change"
+    }
+    init(from decoder: any Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        by = (try? c.decodeIfPresent(Party.self, forKey: .by)) ?? .unknown
+        outcome = (try? c.decodeIfPresent(AppealOutcome.self, forKey: .outcome)) ?? .unknown
+        previousId = (try? c.decodeIfPresent(String.self, forKey: .previousId)) ?? ""
+        previousVerdict = (try? c.decodeIfPresent(FinalVerdict.self, forKey: .previousVerdict)) ?? .unknown
+        previousConfidence = (try? c.decodeIfPresent(Int.self, forKey: .previousConfidence)) ?? 0
+        confidenceChange = (try? c.decodeIfPresent(Int.self, forKey: .confidenceChange)) ?? 0
+        summary = (try? c.decodeIfPresent(String.self, forKey: .summary)) ?? ""
+    }
+}
+
 extension VerdictResult: Decodable {
     private enum CodingKeys: String, CodingKey {
-        case verdict, headline, crux, conditional, confidence, runs, demo, lean, escalated, lang, tier, panel
+        case verdict, headline, crux, conditional, confidence, runs, demo, lean, escalated, lang, tier, panel, appeal
+        case twoSided = "two_sided"
+        case agreedFacts = "agreed_facts"
+        case disputedFacts = "disputed_facts"
+        case wouldChange = "would_change"
+        case evidenceUsed = "evidence_used"
         case disputeType = "dispute_type"
         case splitPoints = "split_points"
         case argumentMap = "argument_map"
@@ -371,5 +467,11 @@ extension VerdictResult: Decodable {
         tier = try? c.decodeIfPresent(String.self, forKey: .tier)
         factCheck = try? c.decodeIfPresent(FactCheck.self, forKey: .factCheck)
         panel = try? c.decodeIfPresent(Panel.self, forKey: .panel)
+        twoSided = (try? c.decodeIfPresent(Bool.self, forKey: .twoSided)) ?? false
+        agreedFacts = try? c.decodeIfPresent([String].self, forKey: .agreedFacts)
+        disputedFacts = try? c.decodeIfPresent([DisputedFact].self, forKey: .disputedFacts)
+        wouldChange = try? c.decodeIfPresent([String].self, forKey: .wouldChange)
+        evidenceUsed = try? c.decodeIfPresent(EvidenceUsed.self, forKey: .evidenceUsed)
+        appeal = try? c.decodeIfPresent(AppealInfo.self, forKey: .appeal)
     }
 }

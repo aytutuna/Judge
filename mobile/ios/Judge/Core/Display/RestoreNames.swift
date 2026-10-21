@@ -483,6 +483,19 @@ extension Names {
             }
             out.factCheck = factCheck
         }
+        out.agreedFacts = result.agreedFacts?.map { r($0) }
+        out.disputedFacts = result.disputedFacts?.map { fact in
+            var fact = fact
+            fact.fact = r(fact.fact)
+            fact.partyA = r(fact.partyA)
+            fact.partyB = r(fact.partyB)
+            return fact
+        }
+        out.wouldChange = result.wouldChange?.map { r($0) }
+        if var appeal = result.appeal {
+            appeal.summary = r(appeal.summary)
+            out.appeal = appeal
+        }
         return out
     }
 

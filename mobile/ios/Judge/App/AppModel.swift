@@ -65,6 +65,7 @@ final class AppModel {
         history = HistoryStore(context: container.mainContext)
         home = HomeModel(preset: defaults.string(forKey: Self.presetKey) ?? Preset.defaultID)
         account = AccountModel(api: self.api)
+        loadTierChoice()
     }
 
     /// The UI language right now. Every string lookup takes it explicitly,
@@ -81,4 +82,30 @@ final class AppModel {
     func rememberPreset(_ id: String) {
         defaults.set(id, forKey: Self.presetKey)
     }
+
+    // MARK: - Free or Premium
+
+    /// The last Free / Premium pick, remembered across launches (default
+    /// Free). Only a preference: `effectiveTier` decides what is sent.
+    private(set) var tierChoice: Tier = .free
+    static let tierKey = "settings.tier"
+
+    func loadTierChoice() {
+        tierChoice = defaults.string(forKey: Self.tierKey).flatMap(Tier.init(rawValue:)) ?? .free
+    }
+
+    func setTierChoice(_ tier: Tier) {
+        tierChoice = tier
+        defaults.set(tier.rawValue, forKey: Self.tierKey)
+    }
+
+    var tierAvailability: TierAvailability {
+        TierLogic.availability(config: account.serverConfig, signedIn: account.isSignedIn, entitlement: account.entitlement)
+    }
+
+    /// Premium only while it can be used and was chosen.
+    var effectiveTier: Tier { TierLogic.effective(tierAvailability, choice: tierChoice) }
+
+    /// Screenshot evidence on Home: premium chosen and offered here.
+    var evidenceOn: Bool { effectiveTier == .premium && account.features.evidence }
 }
