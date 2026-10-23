@@ -1,0 +1,81 @@
+# Archives the iOS app and uploads it to TestFlight. Signing is automatic:
+# xcodebuild uses the App Store Connect API key (Admin) to fetch certificates
+# and profiles, so the runner needs nothing in its keychain.
+name: TestFlight
+
+on:
+  push:
+    branches: [feature/mobile]
+    paths:
+      - "mobile/ios/**"
+      - "mobile/shared/**"
+      - ".github/workflows/testflight.yml"
+  workflow_dispatch:
+
+concurrency:
+  group: testflight
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  upload:
+    runs-on: macos-26
+    timeout-minutes: 45
+    defaults:
+      run:
+        working-directory: mobile/ios
+    env:
+      KEY_ID: ${{ vars.ASC_KEY_ID }}
+      ISSUER_ID: ${{ vars.ASC_ISSUER_ID }}
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: API key
+        env:
+          ASC_API_KEY_P8: ${{ secrets.ASC_API_KEY_P8 }}
+        run: |
+          test -n "$ASC_API_KEY_P8" || { echo "ASC_API_KEY_P8 secret is not set"; exit 1; }
+          echo "$ASC_API_KEY_P8" > "$RUNNER_TEMP/AuthKey.p8"
+
+      - name: Archive
+        run: |
+          set -o pipefail
+          xcodebuild -version
+          xcodebuild \
+            -project Judge.xcodeproj \
+            -scheme Judge \
+            -configuration Release \
+            -destination 'generic/platform=iOS' \
+            -archivePath "$RUNNER_TEMP/Judge.xcarchive" \
+            -allowProvisioningUpdates \
+            -authenticationKeyPath "$RUNNER_TEMP/AuthKey.p8" \
+            -authenticationKeyID "$KEY_ID" \
+            -authenticationKeyIssuerID "$ISSUER_ID" \
+            DEVELOPMENT_TEAM=8XT2U634Z4 \
+            CURRENT_PROJECT_VERSION=${{ github.run_number }} \
+            archive 2>&1 | tee "$RUNNER_TEMP/archive.log"
+
+      - name: Upload
+        run: |
+          xcodebuild -exportArchive \
+            -archivePath "$RUNNER_TEMP/Judge.xcarchive" \
+            -exportOptionsPlist ExportOptions.plist \
+            -exportPath "$RUNNER_TEMP/export" \
+            -allowProvisioningUpdates \
+            -authenticationKeyPath "$RUNNER_TEMP/AuthKey.p8" \
+            -authenticationKeyID "$KEY_ID" \
+            -authenticationKeyIssuerID "$ISSUER_ID"
+
+      - uses: actions/upload-artifact@v7
+        if: failure()
+        with:
+          name: testflight-logs
+          path: ${{ runner.temp }}/archive.log
+          retention-days: 5
+          if-no-files-found: ignore
+
+      - name: Remove key
+        if: always()
+        run: rm -f "$RUNNER_TEMP/AuthKey.p8"

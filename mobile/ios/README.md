@@ -58,6 +58,17 @@ A release archive (needs signing and a team id):
 xcodebuild -project Judge.xcodeproj -scheme Judge -configuration Release   -destination 'generic/platform=iOS' -archivePath build/Judge.xcarchive archive
 ```
 
+### TestFlight
+
+`.github/workflows/testflight.yml` archives the app and uploads it to
+TestFlight on every push to `feature/mobile` that touches `mobile/ios` or
+`mobile/shared` (or by hand from the Actions tab). It signs with an App Store
+Connect API key with the Admin role: the `.p8` file in the `ASC_API_KEY_P8`
+secret, its key id and issuer id in the `ASC_KEY_ID` and `ASC_ISSUER_ID`
+repository variables. The build number is the workflow's run number, so
+`CURRENT_PROJECT_VERSION` in `Shared.xcconfig` only matters for local builds;
+bump `MARKETING_VERSION` there for a new release.
+
 ### Screenshot states (Debug builds)
 
 Debug builds accept `-JudgeScreenshotState <screen>:<lang>` and render a fixed
