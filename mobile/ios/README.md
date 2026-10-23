@@ -62,10 +62,14 @@ xcodebuild -project Judge.xcodeproj -scheme Judge -configuration Release   -dest
 
 `.github/workflows/testflight.yml` archives the app and uploads it to
 TestFlight on every push to `feature/mobile` that touches `mobile/ios` or
-`mobile/shared` (or by hand from the Actions tab). It signs with an App Store
-Connect API key with the Admin role: the `.p8` file in the `ASC_API_KEY_P8`
-secret, its key id and issuer id in the `ASC_KEY_ID` and `ASC_ISSUER_ID`
-repository variables. The build number is the workflow's run number, so
+`mobile/shared` (or by hand from the Actions tab). It signs with an Apple
+Distribution certificate (`IOS_DIST_P12_BASE64`, `IOS_DIST_P12_PASSWORD`)
+and the App Store profile "Judge App Store CI" (`IOS_PROFILE_BASE64`), written
+into a gitignored `Config/Signing.xcconfig` on the runner. The upload uses an
+App Store Connect API key: the `.p8` file in the `ASC_API_KEY_P8` secret, its
+key id and issuer id in the `ASC_KEY_ID` and `ASC_ISSUER_ID` repository
+variables. The profile expires after a year; make a new one with the same
+name and replace the secret. The build number is the workflow's run number, so
 `CURRENT_PROJECT_VERSION` in `Shared.xcconfig` only matters for local builds;
 bump `MARKETING_VERSION` there for a new release.
 
