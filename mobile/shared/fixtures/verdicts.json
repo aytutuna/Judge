@@ -2665,6 +2665,188 @@
           ]
         },
         "yourOriginal": "removed"
+      },
+      "waiting_free": {
+        "id": "case0000001",
+        "role": "owner",
+        "yourParty": "a",
+        "status": "awaiting_respondent",
+        "mode": null,
+        "tier": "free",
+        "lang": "en",
+        "framework": {
+          "preset": "balanced"
+        },
+        "createdAt": "2026-10-20T09:00:00.000Z",
+        "expiresAt": "2026-10-27T09:00:00.000Z",
+        "judgedAt": null,
+        "respondentAnswered": false,
+        "inviteUrl": "https://okjudge.com/r/Xk3pQ9vLm2Rt7YbN4cWd0A",
+        "ownInvite": false,
+        "sides": [
+          {
+            "party": "a",
+            "text": "Party B says a hot dog is a sandwich. I say nobody orders a sandwich hoping for a hot dog, and every menu lists them apart.",
+            "evidence": [],
+            "submittedAt": "2026-10-20T09:00:00.000Z"
+          }
+        ],
+        "verdicts": [],
+        "appeals": [],
+        "canJudgeNow": true,
+        "appeal": {
+          "allowed": false,
+          "blockedBy": "not_judged"
+        },
+        "lastError": null,
+        "pollAfterMs": null,
+        "names": [
+          {
+            "original": "I",
+            "replacement": "Party A"
+          },
+          {
+            "original": "Sam",
+            "replacement": "Party B"
+          }
+        ],
+        "display": {
+          "namesVisible": true,
+          "a": null,
+          "b": null
+        },
+        "removed": null,
+        "yourOriginal": "stored"
+      },
+      "judged_free": {
+        "id": "case0000001",
+        "role": "owner",
+        "yourParty": "a",
+        "status": "judged",
+        "mode": "two_sided",
+        "tier": "free",
+        "lang": "en",
+        "framework": {
+          "preset": "balanced"
+        },
+        "createdAt": "2026-10-20T09:00:00.000Z",
+        "expiresAt": "2026-10-27T09:00:00.000Z",
+        "judgedAt": "2026-10-20T11:05:00.000Z",
+        "respondentAnswered": true,
+        "inviteUrl": null,
+        "ownInvite": false,
+        "sides": [
+          {
+            "party": "a",
+            "text": "Party B says a hot dog is a sandwich. I say nobody orders a sandwich hoping for a hot dog, and every menu lists them apart.",
+            "evidence": [],
+            "submittedAt": "2026-10-20T09:00:00.000Z"
+          },
+          {
+            "party": "b",
+            "text": "Party A is stubborn. A filling inside a split roll is a sandwich by any dictionary, and Party A knows it.",
+            "evidence": [],
+            "submittedAt": "2026-10-20T11:00:00.000Z"
+          }
+        ],
+        "verdicts": [
+          {
+            "seq": 1,
+            "id": "caseverd04",
+            "result": {
+              "verdict": "side_a",
+              "dispute_type": "definitional",
+              "headline": "Party A's menu test settles it",
+              "crux": "Whether 'sandwich' follows shape or everyday use.",
+              "split_points": null,
+              "conditional": null,
+              "argument_map": {
+                "side_a": [
+                  {
+                    "claim": "Menus never list hot dogs as sandwiches",
+                    "kind": "fact"
+                  }
+                ],
+                "side_b": [
+                  {
+                    "claim": "A filling in a split roll is a sandwich",
+                    "kind": "definition"
+                  }
+                ],
+                "bedrock_a": "Words mean what people use them to mean",
+                "bedrock_b": "Definitions follow form"
+              },
+              "facts_relied_on": [
+                "Major menus list hot dogs separately from sandwiches"
+              ],
+              "losing_side_best_point": "A split roll with a filling does fit most dictionary definitions.",
+              "confidence": 4,
+              "runs": [
+                "side_a",
+                "side_a",
+                "side_b"
+              ],
+              "demo": false,
+              "lang": "en",
+              "two_sided": true,
+              "tier": "free",
+              "agreed_facts": [
+                "Both agree a hot dog is meat in a split roll.",
+                "Both agree menus list hot dogs separately."
+              ],
+              "disputed_facts": [
+                {
+                  "fact": "Whether a dictionary definition covers a hot dog",
+                  "party_a": "No, definitions assume sliced bread.",
+                  "party_b": "Yes, any filling in bread counts.",
+                  "finding": "a",
+                  "decisive": true
+                },
+                {
+                  "fact": "Who started the argument",
+                  "party_a": "Party B did.",
+                  "party_b": "Party A did.",
+                  "finding": "unsettled",
+                  "decisive": false
+                }
+              ],
+              "would_change": [
+                "A dictionary entry naming hot dogs as sandwiches."
+              ],
+              "evidence_used": {
+                "a": 0,
+                "b": 0
+              }
+            },
+            "appealId": null,
+            "createdAt": "2026-10-20T11:05:00.000Z"
+          }
+        ],
+        "appeals": [],
+        "canJudgeNow": false,
+        "appeal": {
+          "allowed": true,
+          "blockedBy": null
+        },
+        "lastError": null,
+        "pollAfterMs": null,
+        "names": [
+          {
+            "original": "I",
+            "replacement": "Party A"
+          },
+          {
+            "original": "Sam",
+            "replacement": "Party B"
+          }
+        ],
+        "display": {
+          "namesVisible": true,
+          "a": "Alex",
+          "b": "Sam"
+        },
+        "removed": null,
+        "yourOriginal": "stored"
       }
     },
     "list": {

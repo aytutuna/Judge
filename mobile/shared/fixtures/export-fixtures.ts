@@ -26,7 +26,7 @@
  *                           respondent_answered, judging, judged, judged_one_sided,
  *                           judged_tr, appeal_judging, appeal_upheld,
  *                           appeal_overturned, appeal_changed, failed, expired,
- *                           removed), list (GET /api/v1/cases with next),
+ *                           removed, waiting_free, judged_free), list (GET /api/v1/cases with next),
  *                           createResponse (POST /api/v1/cases) and appealResponse
  *   asyncErrors             {status, body} per code in the lib/api-errors.ts
  *                           envelope: signin_required, premium_required,
@@ -729,6 +729,12 @@ const CASE_VIEWS: Record<string, CaseView> = {
     removed: { at: "2026-10-21T08:00:00.000Z", parties: ["a"] },
     names: null,
     yourOriginal: "removed",
+  }),
+  waiting_free: caseView({ tier: "free", inviteUrl: INVITE, canJudgeNow: true }),
+  judged_free: judgedCase({
+    tier: "free",
+    sides: [sideA(), sideB({ evidence: [] })],
+    verdicts: [caseVerdict(1, "caseverd04", twoSided({ tier: "free", evidence_used: { a: 0, b: 0 } }))],
   }),
 };
 

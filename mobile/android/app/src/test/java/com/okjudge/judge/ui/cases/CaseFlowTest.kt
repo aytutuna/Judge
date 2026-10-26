@@ -124,6 +124,8 @@ class CaseFlowTest {
             "failed" to CaseStatus.FAILED,
             "expired" to CaseStatus.EXPIRED,
             "removed" to CaseStatus.JUDGED,
+            "waiting_free" to CaseStatus.AWAITING,
+            "judged_free" to CaseStatus.JUDGED,
         )
         assertEquals(expected.keys, cases["views"]!!.jsonObject.keys)
         for ((name, status) in expected) {
@@ -135,6 +137,9 @@ class CaseFlowTest {
         assertEquals("overturned", view("appeal_overturned").current!!.result.appeal!!.outcome)
         assertTrue(view("removed").sides.first().removed)
         assertNull(view("removed").names)
+        assertTrue(view("judged").premium)
+        assertFalse(view("judged_free").premium)
+        assertEquals("free", WireJson.json.decodeFromString(CaseView.serializer(), """{"id":"x"}""").tier)
     }
 
     @Test

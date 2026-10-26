@@ -156,10 +156,12 @@ private struct CaseScreenContent: View {
                         ask(.resetInvite)
                     }
                 }
-                Text(ErrorText.formatDate(view.expiresAt, lang: lang).map { L10n.caseHeld(lang, date: $0) } ?? L10n.caseHeldSoon(lang))
-                    .brandText(.slotText)
-                    .foregroundStyle(Brand.muted)
-                    .fixedSize(horizontal: false, vertical: true)
+                if let held = CaseLogic.heldNote(view, lang: lang) {
+                    Text(held)
+                        .brandText(.slotText)
+                        .foregroundStyle(Brand.muted)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
             }
             .padding(18)
             .paperSurface(radius: Radius.card)
@@ -186,13 +188,13 @@ private struct CaseScreenContent: View {
                 }
             }
         case .failed:
-            banner(view.lastError == "quota" ? L10n.errorQuota(lang) : L10n.caseFailedBody(lang))
+            banner(CaseLogic.failedBody(view, lang: lang))
             actionError(lang)
             Button(L10n.caseRetry(lang)) { Task { await model.judge(onlyMine: false) } }
                 .buttonStyle(PrimaryButtonStyle())
                 .disabled(model.busy)
         case .expired, .unknown:
-            banner(L10n.caseExpiredBody(lang))
+            banner(CaseLogic.expiredBody(view, lang: lang))
             actionError(lang)
             VStack(spacing: 10) {
                 if view.canJudgeNow {
@@ -272,9 +274,7 @@ private struct CaseScreenContent: View {
 
     private func confirmText(_ item: CaseConfirm, lang: AppLang) -> String {
         switch item {
-        // Waiting: the held unit pays and the invite closes. Expired: the
-        // held unit went back, so this spends a new one; the text says so.
-        case .judgeNow(let expired): return expired ? L10n.caseJudgeExpiredConfirm(lang) : L10n.caseJudgeNowConfirm(lang)
+        case .judgeNow(let expired): return CaseLogic.judgeNowConfirm(expired: expired, tier: model.view?.tier ?? .free, lang: lang).text
         case .resetInvite: return L10n.caseInviteResetConfirm(lang)
         case .remove: return L10n.caseRemoveConfirm(lang)
         }
@@ -282,7 +282,7 @@ private struct CaseScreenContent: View {
 
     private func confirmYes(_ item: CaseConfirm, lang: AppLang) -> String {
         switch item {
-        case .judgeNow(let expired): return expired ? L10n.caseJudgeExpiredYes(lang) : L10n.caseJudgeNowYes(lang)
+        case .judgeNow(let expired): return CaseLogic.judgeNowConfirm(expired: expired, tier: model.view?.tier ?? .free, lang: lang).yes
         case .resetInvite: return L10n.caseInviteResetYes(lang)
         case .remove: return L10n.caseRemoveYes(lang)
         }

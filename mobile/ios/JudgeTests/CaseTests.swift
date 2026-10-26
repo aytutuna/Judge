@@ -37,6 +37,7 @@ final class CaseTests: XCTestCase {
     private static let allViews = [
         "waiting_for_respondent", "respondent_answered", "judging", "judged", "judged_one_sided", "judged_tr",
         "appeal_judging", "appeal_upheld", "appeal_overturned", "appeal_changed", "failed", "expired", "removed",
+        "waiting_free", "judged_free",
     ]
 
     private func api(token: String? = "s3ss10n") -> JudgeAPI {
@@ -100,6 +101,37 @@ final class CaseTests: XCTestCase {
         XCTAssertEqual(removed.yourOriginal, "removed")
 
         XCTAssertEqual(try view("judged_tr").lang, .tr)
+
+        XCTAssertEqual(judged.tier, .premium)
+        XCTAssertEqual(try view("judged_free").tier, .free)
+        XCTAssertEqual(try CaseDecoding.view(["id": "x"]).tier, .free, "the server's default")
+    }
+
+    func testFreeCaseWordingNeverMentionsCredits() throws {
+        XCTAssertNotNil(CaseLogic.heldNote(try view("waiting_for_respondent"), lang: .en))
+        XCTAssertNil(CaseLogic.heldNote(try view("waiting_free"), lang: .en))
+
+        var failed = try view("failed")
+        XCTAssertEqual(CaseLogic.failedBody(failed, lang: .en), L10n.errorQuota(.en))
+        failed.lastError = nil
+        XCTAssertEqual(CaseLogic.failedBody(failed, lang: .en), L10n.caseFailedBody(.en))
+        failed.tier = .free
+        XCTAssertEqual(CaseLogic.failedBody(failed, lang: .en), L10n.caseFailedBodyFree(.en))
+
+        var expired = try view("expired")
+        XCTAssertEqual(CaseLogic.expiredBody(expired, lang: .en), L10n.caseExpiredBody(.en))
+        expired.tier = .free
+        XCTAssertEqual(CaseLogic.expiredBody(expired, lang: .tr), L10n.caseExpiredBodyFree(.tr))
+
+        let waiting = CaseLogic.judgeNowConfirm(expired: false, tier: .free, lang: .en)
+        XCTAssertEqual(waiting.text, L10n.caseJudgeNowConfirm(.en))
+        XCTAssertEqual(waiting.yes, L10n.caseJudgeNowYes(.en))
+        let premiumExpired = CaseLogic.judgeNowConfirm(expired: true, tier: .premium, lang: .en)
+        XCTAssertEqual(premiumExpired.text, L10n.caseJudgeExpiredConfirm(.en))
+        XCTAssertEqual(premiumExpired.yes, L10n.caseJudgeExpiredYes(.en))
+        let freeExpired = CaseLogic.judgeNowConfirm(expired: true, tier: .free, lang: .en)
+        XCTAssertEqual(freeExpired.text, L10n.caseJudgeExpiredConfirmFree(.en))
+        XCTAssertEqual(freeExpired.yes, L10n.caseJudgeNowYes(.en))
     }
 
     func testAppealAreaForEveryView() throws {
@@ -108,6 +140,7 @@ final class CaseTests: XCTestCase {
             "judged": .form(failed: nil), "judged_one_sided": .blocked(reason: "premium_required"), "judged_tr": .form(failed: nil),
             "appeal_judging": .busy, "appeal_upheld": .used, "appeal_overturned": .used, "appeal_changed": .used,
             "failed": .none, "expired": .none, "removed": .none,
+            "waiting_free": .none, "judged_free": .form(failed: nil),
         ]
         for name in Self.allViews {
             XCTAssertEqual(CaseLogic.appealArea(try view(name)), expected[name], name)

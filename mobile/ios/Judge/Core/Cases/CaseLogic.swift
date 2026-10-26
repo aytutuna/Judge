@@ -72,6 +72,31 @@ enum CaseLogic {
         }
     }
 
+    /// The held-unit line under the invite. Only a premium case holds a
+    /// unit, so a free case never mentions credits.
+    static func heldNote(_ view: CaseView, lang: AppLang) -> String? {
+        guard view.tier == .premium else { return nil }
+        return ErrorText.formatDate(view.expiresAt, lang: lang).map { L10n.caseHeld(lang, date: $0) } ?? L10n.caseHeldSoon(lang)
+    }
+
+    static func failedBody(_ view: CaseView, lang: AppLang) -> String {
+        if view.lastError == "quota" { return L10n.errorQuota(lang) }
+        return view.tier == .premium ? L10n.caseFailedBody(lang) : L10n.caseFailedBodyFree(lang)
+    }
+
+    static func expiredBody(_ view: CaseView, lang: AppLang) -> String {
+        view.tier == .premium ? L10n.caseExpiredBody(lang) : L10n.caseExpiredBodyFree(lang)
+    }
+
+    /// Text and button of the "judge with only my side" confirm. Waiting: the
+    /// held unit pays and the invite closes. Expired: the held unit went
+    /// back, so a premium case spends a new one; a free case spends nothing.
+    static func judgeNowConfirm(expired: Bool, tier: Tier, lang: AppLang) -> (text: String, yes: String) {
+        guard expired else { return (L10n.caseJudgeNowConfirm(lang), L10n.caseJudgeNowYes(lang)) }
+        if tier == .premium { return (L10n.caseJudgeExpiredConfirm(lang), L10n.caseJudgeExpiredYes(lang)) }
+        return (L10n.caseJudgeExpiredConfirmFree(lang), L10n.caseJudgeNowYes(lang))
+    }
+
     /// Whether the owner can remove their side right now.
     static func canRemove(_ view: CaseView) -> Bool {
         view.status != .judging && !view.appealJudging && view.removed == nil

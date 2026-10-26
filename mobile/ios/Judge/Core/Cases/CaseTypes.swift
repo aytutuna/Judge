@@ -163,6 +163,8 @@ struct CaseView: Sendable, Equatable {
     var yourParty: Party
     var status: CaseStatus
     var mode: CaseMode?
+    /// Only a premium case holds a unit and takes evidence.
+    var tier: Tier
     var lang: AppLang?
     var preset: String
     var createdAt: String
@@ -238,6 +240,7 @@ private struct CaseViewWire: Decodable {
     var yourParty: Party
     var status: CaseStatus
     var mode: CaseMode?
+    var tier: Tier
     var lang: AppLang?
     var preset: String
     var createdAt: String
@@ -261,7 +264,7 @@ private struct CaseViewWire: Decodable {
     }
 
     private enum CodingKeys: String, CodingKey {
-        case id, role, yourParty, status, mode, lang, framework, createdAt, expiresAt, judgedAt, respondentAnswered
+        case id, role, yourParty, status, mode, tier, lang, framework, createdAt, expiresAt, judgedAt, respondentAnswered
         case inviteUrl, sides, appeals, canJudgeNow, appeal, lastError, pollAfterMs, names, display, removed, yourOriginal
     }
 
@@ -272,6 +275,8 @@ private struct CaseViewWire: Decodable {
         yourParty = (try? c.decodeIfPresent(Party.self, forKey: .yourParty)) ?? .a
         status = (try? c.decodeIfPresent(CaseStatus.self, forKey: .status)) ?? .unknown
         mode = try? c.decodeIfPresent(CaseMode.self, forKey: .mode)
+        let tierRaw: String? = try? c.decodeIfPresent(String.self, forKey: .tier)
+        tier = tierRaw.flatMap(Tier.init(rawValue:)) ?? .free
         let langRaw: String? = try? c.decodeIfPresent(String.self, forKey: .lang)
         lang = langRaw.flatMap(AppLang.init(rawValue:))
         let framework: Framework? = try? c.decodeIfPresent(Framework.self, forKey: .framework)
@@ -318,6 +323,7 @@ enum CaseDecoding {
             yourParty: wire.yourParty,
             status: wire.status,
             mode: wire.mode,
+            tier: wire.tier,
             lang: wire.lang,
             preset: wire.preset,
             createdAt: wire.createdAt,

@@ -245,10 +245,15 @@ fun CaseScreen(
     if (shown != null && view != null) {
         val expired = view.status == CaseStatus.EXPIRED
         val (title, text, yes) = when (shown) {
+            // Expired: the held unit went back, so a premium case spends a new one. A free case spends nothing.
             Confirm.JUDGE_NOW -> Triple(
                 s.caseJudgeNow,
-                if (expired) s.caseJudgeExpiredConfirm else s.caseJudgeNowConfirm,
-                if (expired) s.caseJudgeExpiredYes else s.caseJudgeNowYes,
+                when {
+                    !expired -> s.caseJudgeNowConfirm
+                    view.premium -> s.caseJudgeExpiredConfirm
+                    else -> s.caseJudgeExpiredConfirmFree
+                },
+                if (expired && view.premium) s.caseJudgeExpiredYes else s.caseJudgeNowYes,
             )
             Confirm.RESET -> Triple(s.caseInviteReset, s.caseInviteResetConfirm, s.caseInviteResetYes)
             Confirm.REMOVE -> Triple(s.caseRemove, s.caseRemoveConfirm, s.caseRemoveYes)
@@ -371,7 +376,9 @@ private fun Body(state: CaseUiState, view: CaseView, evidenceOn: Boolean, action
             Note(s.caseNotYet)
             Card {
                 view.inviteUrl?.let { url -> InviteLink(url, view.expiresAt, state, actions) { ask(Confirm.RESET) } }
-                Note(Errors.formatDate(lang, view.expiresAt)?.let { s.caseHeld(it) } ?: s.caseHeldSoon, color = Palette.muted)
+                if (view.premium) {
+                    Note(Errors.formatDate(lang, view.expiresAt)?.let { s.caseHeld(it) } ?: s.caseHeldSoon, color = Palette.muted)
+                }
             }
             ErrorLine(state.actionError)
             if (view.canJudgeNow) {
@@ -392,12 +399,18 @@ private fun Body(state: CaseUiState, view: CaseView, evidenceOn: Boolean, action
             }
         }
         CaseStatus.FAILED -> {
-            Banner(if (view.lastError == "quota") s.errorQuota else s.caseFailedBody)
+            Banner(
+                when {
+                    view.lastError == "quota" -> s.errorQuota
+                    view.premium -> s.caseFailedBody
+                    else -> s.caseFailedBodyFree
+                },
+            )
             ErrorLine(state.actionError)
             PrimaryButton(s.caseRetry, !state.busy, actions.onRetry, Modifier.fillMaxWidth().testTag(CaseTags.RETRY))
         }
         CaseStatus.EXPIRED -> {
-            Banner(s.caseExpiredBody)
+            Banner(if (view.premium) s.caseExpiredBody else s.caseExpiredBodyFree)
             ErrorLine(state.actionError)
             Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                 if (view.canJudgeNow) {

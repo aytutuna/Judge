@@ -8,12 +8,14 @@ import androidx.compose.ui.test.assertIsNotEnabled
 import androidx.compose.ui.test.assertTextContains
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onAllNodesWithTag
+import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollTo
 import com.okjudge.judge.Fixtures
+import com.okjudge.judge.core.display.Errors
 import com.okjudge.judge.core.model.CaseListResponse
 import com.okjudge.judge.core.model.CaseView
 import com.okjudge.judge.core.model.WireJson
@@ -60,7 +62,7 @@ class CaseScreensTest {
         var state by mutableStateOf(stateOf("waiting_for_respondent"))
         compose.setContent { Themed(AppLang.EN) { CaseScreen(state, evidenceOn = true, actions = CaseActions(), reducedMotion = true) } }
         val names = Fixtures.verdicts["cases"]!!.jsonObject["views"]!!.jsonObject.keys
-        assertEquals(13, names.size)
+        assertEquals(15, names.size)
         for (name in names) {
             state = stateOf(name)
             compose.waitForIdle()
@@ -72,6 +74,7 @@ class CaseScreensTest {
                 "judging" -> compose.onNodeWithText(en.caseAnswered).assertExists()
                 "failed" -> compose.onNodeWithTag(CaseTags.BANNER).assertTextContains(en.errorQuota)
                 "expired" -> compose.onNodeWithTag(CaseTags.BANNER).assertTextContains(en.caseExpiredBody)
+                "waiting_free" -> compose.onNodeWithText(en.caseNotYet).assertExists()
                 "removed" -> compose.onNodeWithTag(CaseTags.BANNER).assertTextContains(en.caseRemovedBanner)
                 "judged_one_sided" -> compose.onNodeWithText(en.caseOneSided).assertExists()
                 "appeal_judging" -> compose.onNodeWithTag(CaseTags.APPEAL_NOTE).assertTextContains(en.appealBusy)
@@ -150,6 +153,47 @@ class CaseScreensTest {
         compose.onAllNodesWithTag(CaseTags.JUDGE_NOW).assertCountEquals(0)
         compose.onNodeWithTag(CaseTags.START_OVER).performClick()
         assertEquals(listOf("retry", "over"), calls)
+    }
+
+    @Test
+    fun premiumCase_mentionsTheHeldUnit_freeCaseDoesNot() {
+        val view = view("waiting_for_respondent")
+        val held = Errors.formatDate(AppLang.EN, view.expiresAt)?.let { en.caseHeld(it) } ?: en.caseHeldSoon
+        var state by mutableStateOf(stateOf("waiting_for_respondent"))
+        compose.setContent { Themed(AppLang.EN) { CaseScreen(state, true, CaseActions(), true) } }
+        compose.onAllNodesWithText(held).assertCountEquals(1)
+        state = stateOf("waiting_free")
+        compose.waitForIdle()
+        compose.onNodeWithText(en.caseNotYet).assertExists()
+        compose.onAllNodesWithText(held).assertCountEquals(0)
+        compose.onNodeWithTag(CaseTags.JUDGE_NOW).performClick()
+        compose.onNodeWithText(en.caseJudgeNowConfirm).assertExists()
+    }
+
+    @Test
+    fun freeCase_failedAndExpired_neverMentionCredits() {
+        val free = { name: String -> stateOf(name).let { it.copy(view = it.view!!.copy(tier = "free")) } }
+        var state by mutableStateOf(free("failed").let { it.copy(view = it.view!!.copy(lastError = null)) })
+        compose.setContent { Themed(AppLang.EN) { CaseScreen(state, true, CaseActions(), true) } }
+        compose.onNodeWithTag(CaseTags.BANNER).assertTextContains(en.caseFailedBodyFree)
+        state = stateOf("failed").let { it.copy(view = it.view!!.copy(lastError = null)) }
+        compose.onNodeWithTag(CaseTags.BANNER).assertTextContains(en.caseFailedBody)
+
+        state = free("expired").let { it.copy(view = it.view!!.copy(canJudgeNow = true)) }
+        compose.onNodeWithTag(CaseTags.BANNER).assertTextContains(en.caseExpiredBodyFree)
+        compose.onNodeWithTag(CaseTags.JUDGE_NOW).performClick()
+        compose.onNodeWithText(en.caseJudgeExpiredConfirmFree).assertExists()
+        compose.onNodeWithTag(CaseTags.CONFIRM).assertTextContains(en.caseJudgeNowYes)
+    }
+
+    @Test
+    fun premiumCase_expired_judgeNowSpendsAVerdict() {
+        val state = stateOf("expired").let { it.copy(view = it.view!!.copy(canJudgeNow = true)) }
+        compose.setContent { Themed(AppLang.EN) { CaseScreen(state, true, CaseActions(), true) } }
+        compose.onNodeWithTag(CaseTags.BANNER).assertTextContains(en.caseExpiredBody)
+        compose.onNodeWithTag(CaseTags.JUDGE_NOW).performClick()
+        compose.onNodeWithText(en.caseJudgeExpiredConfirm).assertExists()
+        compose.onNodeWithTag(CaseTags.CONFIRM).assertTextContains(en.caseJudgeExpiredYes)
     }
 
     @Test
