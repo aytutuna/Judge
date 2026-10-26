@@ -658,3 +658,36 @@ final class BackgroundActivity {
         identifier = .invalid
     }
 }
+
+/// The row under the case card (components/home/Recent.tsx): the newest
+/// saved verdicts, dated "Today" or by calendar day in local time.
+enum Recent {
+    static let limit = 8
+
+    struct Card: Identifiable, Equatable {
+        let id: String
+        let title: String
+        let date: String
+    }
+
+    static func cards(_ rows: [SavedVerdict], lang: AppLang, now: Date = .now, calendar: Calendar = .current) -> [Card] {
+        let today = calendar.startOfDay(for: now)
+        return rows.prefix(limit).map { row in
+            // The stored headline is the anonymized original; names go back for display only.
+            let selfLang = row.contentLang
+            let title = Names.restoreNames(row.headline, parties: Names.resolveParties(row.nameMap, selfLang: selfLang), textLang: selfLang)
+            let date = row.createdAt >= today ? L10n.shellToday(lang) : dayMonth(row.createdAt, lang: lang, calendar: calendar)
+            return Card(id: row.id, title: title, date: date)
+        }
+    }
+
+    /// "October 26" / "26 Ekim", as formatDate in lib/i18n.ts.
+    static func dayMonth(_ date: Date, lang: AppLang, calendar: Calendar = .current) -> String {
+        let formatter = DateFormatter()
+        formatter.locale = lang.locale
+        formatter.calendar = calendar
+        formatter.timeZone = calendar.timeZone
+        formatter.dateFormat = lang == .tr ? "d MMMM" : "MMMM d"
+        return formatter.string(from: date)
+    }
+}

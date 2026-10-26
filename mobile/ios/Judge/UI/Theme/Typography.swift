@@ -63,7 +63,6 @@ struct TypeStyle: Sendable {
     var uppercase = false
 
     static let display1 = TypeStyle(face: .interTight, weight: 700, size: 44, lineHeight: 0.98, tracking: -0.04, textStyle: .largeTitle, maxScale: 1.3)
-    static let heroSerif = TypeStyle(face: .serifItalic, weight: 400, size: 48, lineHeight: 1.0, tracking: -0.015, textStyle: .largeTitle, maxScale: 1.3)
     static let verdictLabel = TypeStyle(face: .interTight, weight: 800, size: 36, lineHeight: 1.0, tracking: -0.04, textStyle: .largeTitle, maxScale: 1.3)
     static let verdictLabelLong = TypeStyle(face: .interTight, weight: 800, size: 28, lineHeight: 1.04, tracking: -0.035, textStyle: .title1, maxScale: 1.3)
     static let cruxSerif = TypeStyle(face: .serif, weight: 400, size: 23, lineHeight: 1.28, tracking: 0.005, textStyle: .title2, maxScale: 1.6)
@@ -81,6 +80,9 @@ struct TypeStyle: Sendable {
     static let brand = TypeStyle(face: .interTight, weight: 600, size: 17, lineHeight: 1, tracking: -0.01, textStyle: .headline, maxScale: 1.4)
     static let claim = TypeStyle(face: .inter, weight: 400, size: 14, lineHeight: 1.45, textStyle: .subheadline)
     static let branch = TypeStyle(face: .inter, weight: 400, size: 14.5, lineHeight: 1.5, textStyle: .subheadline)
+    static let caseTitle = TypeStyle(face: .serif, weight: 400, size: 36, lineHeight: 1.05, tracking: -0.01, textStyle: .largeTitle, maxScale: 1.3)
+    /// Italic serif labels: the case card's date and the verdict's section titles.
+    static let serifLabel = TypeStyle(face: .serifItalic, weight: 400, size: 16, lineHeight: 1.25, textStyle: .subheadline, maxScale: 1.6)
 }
 
 @MainActor

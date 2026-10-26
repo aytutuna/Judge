@@ -1,9 +1,14 @@
+import SwiftData
 import SwiftUI
 
+/// Home as the web's empty thread (components/thread/Composer.tsx): one case
+/// file card with the argument, the lens, the tier and the send button,
+/// then the newest saved verdicts and the privacy note.
 struct HomeView: View {
     @Environment(AppModel.self) private var app
     @SceneStorage("home.draft") private var draft = ""
     @State private var webLink: WebLink?
+    @State private var lensOpen = false
     @FocusState private var editorFocused: Bool
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
@@ -15,24 +20,19 @@ struct HomeView: View {
         let lang = app.lang
         ScrollViewReader { proxy in
             ScrollView {
-                VStack(alignment: .leading, spacing: 22) {
+                VStack(alignment: .leading, spacing: 24) {
                     header(lang)
-                    hero(lang)
                     if let clarify = home.clarify {
-                        // Premium's questions take the form's place.
+                        // Premium's questions take the card's place.
                         ClarifyCard(home: home, state: clarify, lang: lang)
                             .id(Self.clarifyID)
                     } else {
-                        formCard(lang, home: home)
+                        caseCard(lang, home: home)
                     }
-                    Text(L10n.footerNote(lang))
-                        .brandText(.footnote)
-                        .foregroundStyle(Brand.muted)
-                        .frame(maxWidth: .infinity)
-                        .multilineTextAlignment(.center)
-                        .padding(.top, 4)
+                    RecentSection(lang: lang)
+                    footer(lang)
                 }
-                .padding(.horizontal, 20)
+                .padding(.horizontal, 16)
                 .padding(.bottom, 32)
             }
             .onAppear {
@@ -63,11 +63,11 @@ struct HomeView: View {
         .safeAreaInset(edge: .top, spacing: 0) {
             Color.clear
                 .frame(height: 0)
-                .background(Brand.ivory)
+                .background(Brand.ivory2)
                 .allowsHitTesting(false)
                 .accessibilityHidden(true)
         }
-        .background(Brand.ivory.ignoresSafeArea())
+        .background(Brand.ivory2.ignoresSafeArea())
         .toolbar(.hidden, for: .navigationBar)
         .onAppear {
             if app.persistsDraft, home.argument.isEmpty, !draft.isEmpty { home.argument = draft }
@@ -96,118 +96,200 @@ struct HomeView: View {
             LangToggle(lang: lang) { app.setLangPreference($0 == .en ? .en : .tr) }
         }
         .padding(.top, 8)
+        .padding(.horizontal, 4)
         .accessibilityElement(children: .contain)
     }
 
-    private func hero(_ lang: AppLang) -> some View {
-        VStack(alignment: .leading, spacing: 12) {
-            Kicker(text: L10n.heroEyebrow(lang))
-            VStack(alignment: .leading, spacing: 0) {
-                Text(L10n.heroTitleLine1(lang))
-                    .brandText(.display1)
-                    .foregroundStyle(Brand.ink)
-                Text(L10n.heroTitleLine2(lang))
-                    .brandText(.heroSerif)
-                    .foregroundStyle(Brand.terra)
-            }
-            .accessibilityElement(children: .combine)
-            .accessibilityAddTraits(.isHeader)
-            Text(L10n.heroLead(lang))
-                .brandText(.lead)
-                .foregroundStyle(Brand.ink2)
-                .fixedSize(horizontal: false, vertical: true)
-        }
-    }
-
-    private func formCard(_ lang: AppLang, home: HomeModel) -> some View {
-        VStack(alignment: .leading, spacing: 18) {
-            editorSection(lang, home: home)
-            examplesSection(lang, home: home)
-            presetSection(lang, home: home)
-            if app.tierAvailability != .hidden {
-                TierSwitchView(lang: lang, disabled: home.isBusy) {
-                    home.path.append(.pricing)
+    private func caseCard(_ lang: AppLang, home: HomeModel) -> some View {
+        let twoSided = home.isTwoSided(app)
+        return VStack(alignment: .leading, spacing: 18) {
+            caseHead(lang)
+            VStack(alignment: .leading, spacing: 14) {
+                editor(lang, home: home, twoSided: twoSided)
+                if !twoSided {
+                    examples(lang, home: home)
                 }
-                .id(HomeModel.tierAnchor)
+                toolbar(lang, home: home)
+                if lensOpen {
+                    presets(lang, home: home)
+                }
+                if app.tierAvailability != .hidden {
+                    TierSwitchView(lang: lang, disabled: home.isBusy) {
+                        home.path.append(.pricing)
+                    }
+                    .id(HomeModel.tierAnchor)
+                }
+                if app.evidenceOn {
+                    EvidencePickerView(evidence: home.evidence, lang: lang, disabled: home.isBusy)
+                        .id(HomeModel.evidenceAnchor)
+                }
+                if twoSided {
+                    CaseNameField(home: home, fallback: Names.firstName(app.account.user?.name) ?? "", lang: lang, disabled: home.isBusy)
+                }
+                if let error = home.error {
+                    errorBanner(error, lang: lang)
+                        .id(Self.errorID)
+                }
+                submitSection(lang, home: home, twoSided: twoSided)
+                if app.casesOn {
+                    Button(twoSided ? L10n.homeOneSide(lang) : L10n.homeInvite(lang)) {
+                        home.mode = twoSided ? .now : .both
+                    }
+                    .buttonStyle(LinkButtonStyle())
+                    .multilineTextAlignment(.center)
+                    .frame(maxWidth: .infinity)
+                    .disabled(home.isBusy)
+                }
             }
-            if app.casesOn {
-                CaseModeSwitch(home: home, lang: lang, disabled: home.isBusy)
-            }
-            if app.evidenceOn {
-                EvidencePickerView(evidence: home.evidence, lang: lang, disabled: home.isBusy)
-                    .id(HomeModel.evidenceAnchor)
-            }
-            if let error = home.error {
-                errorBanner(error, lang: lang)
-                    .id(Self.errorID)
-            }
-            submitSection(lang, home: home)
         }
-        .padding(20)
+        .padding(.horizontal, 20)
+        .padding(.vertical, 22)
         .paperSurface(radius: Radius.card)
         .cardShadow()
     }
 
-    private func editorSection(_ lang: AppLang, home: HomeModel) -> some View {
+    /// "New case" and today's date, the heading and the three steps.
+    private func caseHead(_ lang: AppLang) -> some View {
+        VStack(alignment: .leading, spacing: 12) {
+            HStack(alignment: .firstTextBaseline) {
+                Kicker(text: L10n.homeKicker(lang))
+                Spacer(minLength: 8)
+                Text(Recent.dayMonth(.now, lang: lang))
+                    .brandText(TypeStyle(face: .serifItalic, weight: 400, size: 15, lineHeight: 1.25, textStyle: .subheadline, maxScale: 1.6))
+                    .foregroundStyle(Brand.placeholder)
+            }
+            Text(L10n.homeTitle(lang))
+                .brandText(.caseTitle)
+                .foregroundStyle(Brand.ink)
+                .accessibilityAddTraits(.isHeader)
+            steps(lang)
+                .padding(.top, 2)
+        }
+    }
+
+    private func steps(_ lang: AppLang) -> some View {
+        let labels = [L10n.homeStepArgument(lang), L10n.threadLens(lang), L10n.homeStepRuling(lang)]
+        return HStack(spacing: 0) {
+            ForEach(Array(labels.enumerated()), id: \.offset) { index, label in
+                step(index + 1, label: label, current: index == 0)
+                if index < labels.count - 1 {
+                    Rectangle()
+                        .fill(Brand.line2)
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 1)
+                        .padding(.horizontal, 6)
+                }
+            }
+        }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(labels.enumerated().map { "\($0.offset + 1). \($0.element)" }.joined(separator: ", "))
+    }
+
+    private func step(_ n: Int, label: String, current: Bool) -> some View {
+        HStack(spacing: 6) {
+            Text(verbatim: "\(n)")
+                .brandText(TypeStyle(face: .inter, weight: 600, size: 11, lineHeight: 1, textStyle: .caption2, maxScale: 1.3))
+                .foregroundStyle(current ? Brand.paper : Brand.muted)
+                .frame(width: 20, height: 20)
+                .background(Circle().fill(current ? Brand.ink : Brand.paper))
+                .overlay(Circle().strokeBorder(current ? Brand.ink : Brand.line2, lineWidth: 1))
+            Text(label)
+                .brandText(TypeStyle(face: .inter, weight: 500, size: 12, lineHeight: 1.2, textStyle: .caption2, maxScale: 1.4))
+                .foregroundStyle(current ? Brand.ink : Brand.muted)
+                .lineLimit(1)
+                .minimumScaleFactor(0.8)
+        }
+    }
+
+    private func editor(_ lang: AppLang, home: HomeModel, twoSided: Bool) -> some View {
         @Bindable var home = home
-        let length = home.length
-        let warn = length > HomeModel.warnLength
-        return VStack(alignment: .leading, spacing: 8) {
-            Text(L10n.inputLabel(lang))
-                .brandText(.slotTitle)
+        return ZStack(alignment: .topLeading) {
+            TextEditor(text: $home.argument)
+                .focused($editorFocused)
+                .brandText(.body)
                 .foregroundStyle(Brand.ink)
-            ZStack(alignment: .topLeading) {
-                TextEditor(text: $home.argument)
-                    .focused($editorFocused)
+                .scrollContentBackground(.hidden)
+                .frame(minHeight: 150)
+                .padding(.horizontal, 11)
+                .padding(.vertical, 6)
+                .accessibilityLabel(L10n.inputLabel(lang))
+            if home.argument.isEmpty {
+                Text(twoSided ? L10n.threadPlaceholderTwoSided(lang) : L10n.threadPlaceholder(lang))
                     .brandText(.body)
-                    .foregroundStyle(Brand.ink)
-                    .scrollContentBackground(.hidden)
-                    .frame(minHeight: 180)
-                    .padding(.horizontal, 10)
-                    .padding(.vertical, 8)
-                    .accessibilityLabel(L10n.inputLabel(lang))
-                if home.argument.isEmpty {
-                    Text(L10n.placeholder(lang))
-                        .brandText(.body)
-                        .foregroundStyle(Brand.placeholder)
-                        .padding(.horizontal, 15)
-                        .padding(.vertical, 16)
-                        .allowsHitTesting(false)
-                        .accessibilityHidden(true)
-                }
-            }
-            .paperSurface(radius: Radius.field, fill: Brand.paper, border: editorFocused ? Brand.terraInk : Brand.line2)
-            HStack {
-                Spacer()
-                Text(L10n.appInputCounter(lang, count: String(length), max: String(HomeModel.maxLength)))
-                    .brandText(.footnote)
-                    .monospacedDigit()
-                    .foregroundStyle(warn ? Brand.terraInk : Brand.muted)
+                    .foregroundStyle(Brand.placeholder)
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 14)
+                    .allowsHitTesting(false)
+                    .accessibilityHidden(true)
             }
         }
+        .paperSurface(radius: Radius.field, fill: Brand.ivory, border: editorFocused ? Brand.terraInk : Brand.line2)
     }
 
-    private func examplesSection(_ lang: AppLang, home: HomeModel) -> some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Text(L10n.examplesLabel(lang))
-                .brandText(.slotText)
-                .foregroundStyle(Brand.muted)
-            FlowLayout(spacing: 8, rowSpacing: 8) {
+    private func examples(_ lang: AppLang, home: HomeModel) -> some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: 6) {
                 ForEach(ExampleArgument.all) { example in
+                    let text = example.text(lang)
                     Button(example.label(lang)) {
-                        home.argument = HomeModel.capped(example.text(lang))
+                        home.argument = HomeModel.capped(text)
                     }
-                    .buttonStyle(ChipButtonStyle())
+                    .buttonStyle(ExampleChipStyle(selected: home.argument == text))
                 }
             }
         }
+        .accessibilityElement(children: .contain)
+        .accessibilityLabel(L10n.examplesLabel(lang))
     }
 
-    private func presetSection(_ lang: AppLang, home: HomeModel) -> some View {
+    private func toolbar(_ lang: AppLang, home: HomeModel) -> some View {
+        let length = home.length
+        return HStack(spacing: 8) {
+            lensChip(lang, home: home)
+            Spacer(minLength: 8)
+            Text(L10n.appInputCounter(lang, count: String(length), max: String(HomeModel.maxLength)))
+                .brandText(.footnote)
+                .monospacedDigit()
+                .foregroundStyle(length > HomeModel.warnLength ? Brand.terraInk : Brand.muted)
+                .lineLimit(1)
+        }
+    }
+
+    /// "The lens · Fairness": opens the presets under the toolbar.
+    private func lensChip(_ lang: AppLang, home: HomeModel) -> some View {
+        let preset = Preset.find(home.preset)
+        return Button {
+            withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.2)) { lensOpen.toggle() }
+        } label: {
+            HStack(spacing: 6) {
+                Text(preset.emoji)
+                Text(L10n.threadLens(lang))
+                    .foregroundStyle(lensOpen ? Brand.ink : Brand.ink2)
+                Text("· " + preset.label(lang))
+                    .foregroundStyle(lensOpen ? Brand.ink2 : Brand.muted)
+                    .lineLimit(1)
+                Image(systemName: "chevron.down")
+                    .font(.system(size: 11, weight: .semibold))
+                    .foregroundStyle(Brand.ink2)
+                    .rotationEffect(.degrees(lensOpen ? 180 : 0))
+            }
+            .brandText(TypeStyle(face: .inter, weight: 500, size: 13, lineHeight: 1.2, textStyle: .footnote, maxScale: 1.8))
+            .padding(.horizontal, 12)
+            .frame(minHeight: 40)
+            .background(Capsule().fill(lensOpen ? Brand.ivory2 : Brand.paper))
+            .overlay(Capsule().strokeBorder(Brand.line2, lineWidth: 1))
+            .contentShape(Capsule())
+        }
+        .buttonStyle(.plain)
+        .disabled(home.isBusy)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(L10n.threadLens(lang))
+        .accessibilityValue(preset.label(lang))
+        .accessibilityAddTraits(.isButton)
+    }
+
+    private func presets(_ lang: AppLang, home: HomeModel) -> some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text(L10n.judgeBy(lang))
-                .brandText(.slotTitle)
-                .foregroundStyle(Brand.ink)
             FlowLayout(spacing: 8, rowSpacing: 8) {
                 ForEach(Preset.all) { preset in
                     presetChip(preset, lang: lang, home: home)
@@ -216,6 +298,7 @@ struct HomeView: View {
             Text(Preset.find(home.preset).blurb(lang))
                 .brandText(.slotText)
                 .foregroundStyle(Brand.muted)
+                .fixedSize(horizontal: false, vertical: true)
         }
     }
 
@@ -236,34 +319,42 @@ struct HomeView: View {
         )
     }
 
-    private func submitSection(_ lang: AppLang, home: HomeModel) -> some View {
+    private func submitSection(_ lang: AppLang, home: HomeModel, twoSided: Bool) -> some View {
         VStack(spacing: 12) {
             // `blockedUntil` is cleared by the model when a rate limit ends.
             let waiting = home.isCheckingBot || home.isCheckingQuestions || home.isCreatingCase
-            let twoSided = home.isTwoSided(app)
             let title = twoSided ? L10n.caseCreate(lang) : L10n.getVerdict(lang)
             Button { submit() } label: {
                 if waiting {
                     // The bot check (free), the questions (premium) or the
                     // new case run before anything else goes up.
                     ProgressView()
-                        .tint(Brand.ivory)
+                        .tint(Brand.paper)
                         .accessibilityLabel(title)
                 } else {
-                    Text(title)
+                    HStack(spacing: 10) {
+                        Text(title)
+                            .lineLimit(1)
+                        Image(systemName: "arrow.right")
+                            .font(.system(size: 16, weight: .semibold))
+                            .accessibilityHidden(true)
+                    }
                 }
             }
-            .buttonStyle(PrimaryButtonStyle())
+            .buttonStyle(SubmitButtonStyle())
             .disabled(!home.canSubmit(evidenceOn: app.evidenceOn) && !waiting)
+            .padding(.top, 4)
             if home.isCheckingQuestions || home.isCreatingCase {
                 Text(home.isCreatingCase ? L10n.caseCreating(lang) : L10n.tierChecking(lang))
                     .brandText(.slotText)
                     .foregroundStyle(Brand.muted)
                     .accessibilityAddTraits(.updatesFrequently)
             }
-            if twoSided {
-                CaseNameField(home: home, fallback: Names.firstName(app.account.user?.name) ?? "", lang: lang, disabled: home.isBusy)
-            }
+        }
+    }
+
+    private func footer(_ lang: AppLang) -> some View {
+        VStack(spacing: 10) {
             VStack(spacing: 2) {
                 Text(L10n.privacyNote(lang))
                     .brandText(.footnote)
@@ -273,13 +364,127 @@ struct HomeView: View {
                 }
                 .buttonStyle(LinkButtonStyle())
             }
-            .multilineTextAlignment(.center)
-            .frame(maxWidth: .infinity)
+            Text(L10n.footerNote(lang))
+                .brandText(.footnote)
+                .foregroundStyle(Brand.muted)
         }
+        .multilineTextAlignment(.center)
+        .frame(maxWidth: .infinity)
+        .padding(.horizontal, 8)
     }
 
     private func submit() {
         editorFocused = false
         app.home.submit(app: app)
+    }
+}
+
+/// "Recent" under the case card: the newest saved verdicts in a row of small
+/// cards, with a link to the whole list. Nothing at all while it is empty.
+private struct RecentSection: View {
+    @Environment(AppModel.self) private var app
+    @Query(RecentSection.latest) private var saved: [SavedVerdict]
+    let lang: AppLang
+
+    static var latest: FetchDescriptor<SavedVerdict> {
+        var descriptor = FetchDescriptor<SavedVerdict>(sortBy: [SortDescriptor(\.createdAt, order: .reverse)])
+        descriptor.fetchLimit = Recent.limit
+        return descriptor
+    }
+
+    var body: some View {
+        let cards = Recent.cards(saved, lang: lang)
+        if !cards.isEmpty {
+            VStack(alignment: .leading, spacing: 4) {
+                HStack {
+                    Kicker(text: L10n.homeRecent(lang))
+                        .accessibilityAddTraits(.isHeader)
+                    Spacer()
+                    Button(L10n.homeAll(lang)) {
+                        app.historySegment = .verdicts
+                        app.tab = .history
+                    }
+                    .buttonStyle(LinkButtonStyle())
+                }
+                .padding(.horizontal, 20)
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(alignment: .top, spacing: 10) {
+                        ForEach(cards) { card in
+                            Button {
+                                app.home.path.append(.saved(id: card.id))
+                            } label: {
+                                RecentCardView(card: card, lang: lang)
+                            }
+                            .buttonStyle(.plain)
+                        }
+                    }
+                    .padding(.horizontal, 16)
+                    .padding(.top, 4)
+                    .padding(.bottom, 14)
+                }
+            }
+            .padding(.horizontal, -16)
+        }
+    }
+}
+
+private struct RecentCardView: View {
+    let card: Recent.Card
+    let lang: AppLang
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            Kicker(text: L10n.homeDecided(lang), color: Brand.terraInk)
+            Text(card.title)
+                .brandText(TypeStyle(face: .inter, weight: 500, size: 13, lineHeight: 1.35, textStyle: .footnote))
+                .foregroundStyle(Brand.ink)
+                .multilineTextAlignment(.leading)
+                .lineLimit(2, reservesSpace: true)
+            Text(card.date)
+                .brandText(.footnote)
+                .foregroundStyle(Brand.placeholder)
+                .padding(.top, 2)
+        }
+        .padding(.horizontal, 14)
+        .padding(.top, 14)
+        .padding(.bottom, 12)
+        .frame(width: 180, alignment: .leading)
+        .paperSurface(radius: Radius.field)
+        .softShadow()
+        .contentShape(RoundedRectangle(cornerRadius: Radius.field, style: .continuous))
+        .accessibilityElement(children: .combine)
+    }
+}
+
+/// An example under the field: small, paper, outlined in ink once picked.
+private struct ExampleChipStyle: ButtonStyle {
+    var selected = false
+
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .brandText(TypeStyle(face: .inter, weight: 500, size: 12.5, lineHeight: 1.2, textStyle: .footnote, maxScale: 1.8))
+            .foregroundStyle(selected ? Brand.ink : Brand.ink2)
+            .lineLimit(1)
+            .padding(.horizontal, 12)
+            .frame(minHeight: 32)
+            .background(Capsule().fill(Brand.paper))
+            .overlay(Capsule().strokeBorder(selected ? Brand.ink : Brand.line2, lineWidth: 1))
+            .opacity(configuration.isPressed ? 0.7 : 1)
+    }
+}
+
+/// The case card's send button (thread.module.css .submit).
+private struct SubmitButtonStyle: ButtonStyle {
+    @Environment(\.isEnabled) private var isEnabled
+
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .brandText(.button)
+            .foregroundStyle(Brand.paper)
+            .frame(maxWidth: .infinity, minHeight: 54)
+            .padding(.horizontal, 20)
+            .background(RoundedRectangle(cornerRadius: Radius.field, style: .continuous).fill(Brand.ink.opacity(isEnabled ? 1 : 0.35)))
+            .scaleEffect(configuration.isPressed ? 0.98 : 1)
+            .animation(.easeOut(duration: 0.15), value: configuration.isPressed)
     }
 }

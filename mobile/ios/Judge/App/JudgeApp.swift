@@ -177,6 +177,8 @@ private struct HomeTab: View {
                         } else {
                             MissingVerdictView()
                         }
+                    case .saved(let id):
+                        HistoryDetailView(id: id)
                     case .pricing:
                         PricingView()
                     case .caseDetail(let id):
