@@ -13,6 +13,7 @@ import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonObject
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNull
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
@@ -46,6 +47,25 @@ class TextVectorsTest {
             assertEquals(where, v.str("label"), VerdictDisplay.verdictLabel(outcome.result.result, parties, s(lang)))
             assertEquals(where, v.str("confidence"), VerdictDisplay.confidenceLabel(outcome.result.result, s(lang)))
         }
+    }
+
+    @Test
+    fun confidenceLabel_countsTheJudgesOnThePanelsOwnScale() {
+        val en = s("en")
+        val tr = s("tr")
+        fun result(verdict: String, vararg runs: String) = VerdictResult(verdict = verdict, confidence = 2, runs = runs.toList())
+        assertEquals("Confidence 3 of 3", VerdictDisplay.confidenceLabel(result("side_a", "side_a", "side_a", "side_a"), en))
+        assertEquals(
+            "Confidence 4 of 5",
+            VerdictDisplay.confidenceLabel(result("side_b", "side_b", "side_a", "side_b", "side_b", "side_b"), en),
+        )
+        assertEquals(
+            "Confidence 5 of 7",
+            VerdictDisplay.confidenceLabel(result("side_a", "side_a", "side_b", "side_a", "side_a", "dissolved", "side_a", "side_a"), en),
+        )
+        assertEquals("Güven: 5 üzerinden 4", VerdictDisplay.confidenceLabel(result("side_a", "side_a", "side_a", "side_b", "side_a", "side_a"), tr))
+        assertEquals(en.verdictNoMajority, VerdictDisplay.confidenceLabel(result("too_close", "side_a", "side_b", "side_a"), en))
+        assertNull(VerdictDisplay.confidenceLabel(VerdictResult(verdict = "side_a", confidence = 1, modelRefused = true), en))
     }
 
     @Test

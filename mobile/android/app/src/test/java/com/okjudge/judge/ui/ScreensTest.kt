@@ -41,7 +41,10 @@ import com.okjudge.judge.ui.home.HomeTags
 import com.okjudge.judge.ui.home.HomeUiState
 import com.okjudge.judge.ui.judging.JudgingScreen
 import com.okjudge.judge.ui.judging.JudgingTags
+import com.okjudge.judge.ui.verdict.CardActions
 import com.okjudge.judge.ui.verdict.TranslationStatus
+import com.okjudge.judge.ui.verdict.TranslationView
+import com.okjudge.judge.ui.verdict.VerdictContent
 import com.okjudge.judge.ui.verdict.VerdictThreadHead
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonObject
@@ -216,6 +219,27 @@ class ScreensTest {
                 resetContent()
             }
         }
+    }
+
+    @Test
+    fun verdictCard_confidenceIsTheJudgesAgreement_notTheStoredScore() {
+        val en = UiTestSupport.s(AppLang.EN)
+        val outcome = sample("win_b_named")
+        val r = outcome.result.result.copy(confidence = 2, runs = listOf("side_b", "side_b", "side_a", "side_b", "side_b"), verdict = "side_b")
+        compose.setContent {
+            Themed(AppLang.EN) {
+                VerdictContent(
+                    view = TranslationView(r, TranslationStatus.ORIGINAL, AppLang.EN),
+                    parties = PartyNames.partyNames(outcome.nameMap, AppLang.EN, en),
+                    restoredNames = emptyList(),
+                    actions = CardActions(onShare = {}, onCopy = {}, copied = false),
+                    modifier = Modifier.verticalScroll(rememberScrollState()),
+                )
+            }
+        }
+        compose.onNodeWithText("Confidence 4 of 5").assertExists()
+        compose.onNodeWithText("Confidence 2 of 5").assertDoesNotExist()
+        compose.onNodeWithText("2/5", substring = true).assertDoesNotExist()
     }
 
     @Test
