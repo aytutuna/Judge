@@ -29,11 +29,11 @@ import com.okjudge.judge.core.display.VerdictDisplay
 import com.okjudge.judge.core.model.FactCheck
 import com.okjudge.judge.core.model.FactClaim
 import com.okjudge.judge.core.model.FactSource
+import com.okjudge.judge.core.model.Features
 import com.okjudge.judge.core.model.VerdictOutcome
 import com.okjudge.judge.i18n.AppLang
 import com.okjudge.judge.ui.history.HistoryScreen
 import com.okjudge.judge.ui.history.HistoryTags
-import com.okjudge.judge.core.model.Features
 import com.okjudge.judge.ui.home.CaseMode
 import com.okjudge.judge.ui.home.HomeScreen
 import com.okjudge.judge.ui.home.HomeTags
@@ -44,13 +44,13 @@ import com.okjudge.judge.ui.verdict.TranslationStatus
 import com.okjudge.judge.ui.verdict.VerdictThreadHead
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonObject
-import java.util.Locale
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
+import java.util.Locale
 
 @RunWith(RobolectricTestRunner::class)
 @Config(sdk = [36], qualifiers = "w400dp-h2400dp-xhdpi")

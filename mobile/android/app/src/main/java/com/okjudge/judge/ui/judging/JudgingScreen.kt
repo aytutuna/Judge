@@ -53,12 +53,12 @@ import com.okjudge.judge.core.display.VerdictDisplay
 import com.okjudge.judge.core.model.VerdictResult
 import com.okjudge.judge.i18n.LocalStrings
 import com.okjudge.judge.ui.components.ArgumentBubble
-import com.okjudge.judge.ui.components.JudgesBadge
-import com.okjudge.judge.ui.components.SceneView
 import com.okjudge.judge.ui.components.JudgeIcons
+import com.okjudge.judge.ui.components.JudgesBadge
 import com.okjudge.judge.ui.components.Kicker
-import com.okjudge.judge.ui.components.TintedIcon
+import com.okjudge.judge.ui.components.SceneView
 import com.okjudge.judge.ui.components.TextAction
+import com.okjudge.judge.ui.components.TintedIcon
 import com.okjudge.judge.ui.components.warmShadow
 import com.okjudge.judge.ui.theme.JudgeShapes
 import com.okjudge.judge.ui.theme.JudgeType
