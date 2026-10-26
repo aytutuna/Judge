@@ -322,12 +322,12 @@ class CaseFlowTest {
         val vm = vm()
         vm.until { it.status == CaseLoadStatus.READY }
         vm.onAppealText("  too short to send  ")
-        assertFalse(vm.state.value.appealCanSubmit)
+        assertFalse(vm.until { it.appealText == "  too short to send  " }.appealCanSubmit)
         vm.onAppealText("x".repeat(2100))
-        assertEquals(CaseLogic.MAX_APPEAL_CHARS, vm.state.value.appealText.length)
+        assertEquals(CaseLogic.MAX_APPEAL_CHARS, vm.until { it.appealText.startsWith("x") }.appealText.length)
         val text = "  The judges missed the dictionary I quoted.  "
         vm.onAppealText(text)
-        assertTrue(vm.state.value.appealCanSubmit)
+        assertTrue(vm.until { it.appealText == text }.appealCanSubmit)
 
         vm.submitAppeal()
         val failed = vm.until { it.appealError != null }

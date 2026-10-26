@@ -147,8 +147,9 @@ class VerdictAppealViewModelTest {
         val vm = vm()
         vm.until { it.offered }
         vm.open()
-        vm.onText("  Party B paid me back the next week, so the debt is settled.  ")
-        assertTrue(vm.state.value.draft.canSubmit)
+        val typed = "  Party B paid me back the next week, so the debt is settled.  "
+        vm.onText(typed)
+        assertTrue(vm.until { it.draft.text == typed }.draft.canSubmit)
         vm.submit()
         val done = vm.until { it.finished }
         assertFalse(done.open)

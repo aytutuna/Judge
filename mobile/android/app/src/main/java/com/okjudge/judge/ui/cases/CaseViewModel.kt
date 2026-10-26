@@ -266,7 +266,8 @@ class CaseViewModel(
      * resumes) and the new balance.
      */
     fun submitAppeal() {
-        val s = state.value
+        // Not state.value: the combined copy can trail text typed a moment ago.
+        val s = _state.value.copy(appealEvidence = evidence.state.value)
         if (!s.appealCanSubmit) return
         val tokens = s.appealEvidence.tokens
         val body = WireJson.json.encodeToString(

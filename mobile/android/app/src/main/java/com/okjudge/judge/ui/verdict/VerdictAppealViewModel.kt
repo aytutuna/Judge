@@ -151,7 +151,8 @@ class VerdictAppealViewModel(
      * retried), then wait for the round's verdict.
      */
     fun submit() {
-        val draft = state.value.draft
+        // Not state.value: the combined copy can trail text typed a moment ago.
+        val draft = _state.value.draft.copy(evidence = evidence.state.value)
         if (!draft.canSubmit) return
         val tokens = draft.evidence.tokens
         val body = WireJson.json.encodeToString(
