@@ -231,7 +231,9 @@ export async function listOwnerVerdicts(userId: string, limit: number, before: s
   const rs = await db.execute({
     sql: `SELECT m.verdict_id, m.kind, m.created_at, m.removed_at, o.sealed,
             COALESCE((SELECT av.result FROM verdict_appeals a JOIN verdicts av ON av.id = a.id
-                      WHERE a.verdict_id = m.verdict_id ORDER BY a.created_at DESC, a.id DESC LIMIT 1), v.result) AS result
+                        LEFT JOIN verdict_meta am ON am.verdict_id = a.id
+                      WHERE a.verdict_id = m.verdict_id AND am.removed_at IS NULL
+                      ORDER BY a.created_at DESC, a.id DESC LIMIT 1), v.result) AS result
           FROM verdict_meta m
           JOIN verdicts v ON v.id = m.verdict_id
           LEFT JOIN originals o ON o.subject = 'verdict:' || m.verdict_id

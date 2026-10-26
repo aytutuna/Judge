@@ -449,9 +449,12 @@ export async function runVerdictAppeal(p: VerdictAppealRun): Promise<void> {
   }
 }
 
-/** The verdicts a verdict's judged rounds produced, oldest first. */
+/** The verdicts a verdict's judged rounds produced, oldest first, leaving
+ * out any removed on its own. */
 export async function appealVerdicts(verdictId: string): Promise<StoredVerdict[]> {
   const judged = (await listVerdictAppeals(verdictId)).filter((a) => a.status === "judged");
-  const stored = await Promise.all(judged.map((a) => getVerdict(a.id)));
+  const stored = await Promise.all(
+    judged.map(async (a) => ((await getVerdictMeta(a.id))?.removedAt ? null : getVerdict(a.id))),
+  );
   return stored.filter((v): v is StoredVerdict => v !== null);
 }

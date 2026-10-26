@@ -12,6 +12,7 @@ import { getVerdict, type StoredVerdict } from "@/lib/db";
 import { EMPTY_DISPLAY, normalizeDisplay, type DisplayNames, type DisplayState } from "@/lib/originals-types";
 import { aad, openOrNull } from "./crypto";
 import { getVerdictMeta, type VerdictMeta } from "./db";
+import { roundRoot } from "./removed";
 
 /** A one-sided verdict's display names as stored (ignores the switch). */
 export function openVerdictDisplay(meta: VerdictMeta): DisplayNames {
@@ -61,6 +62,14 @@ async function loadPublicVerdict(id: string): Promise<PublicVerdict | null> {
     // as "no meta" (labels, not removed), like removed.ts.
     const message = e instanceof Error ? e.message : String(e);
     if (!/no such (table|column)/i.test(message)) throw e;
+  }
+  const root = await roundRoot(id);
+  if (root) {
+    // A round's verdict shows what the writer set on the first one: its
+    // names (or none) and its removal, whatever the round's own row says.
+    const first = await loadPublicVerdict(root);
+    const removed = Boolean(meta?.removedAt || first?.removed);
+    return { stored, meta, display: removed ? null : (first?.display ?? null), removed };
   }
   if (!meta) return { stored, meta: null, display: null, removed: false };
   if (meta.kind === "case" && meta.caseId) {

@@ -59,12 +59,15 @@ const dir = mkdtempSync(path.join(tmpdir(), "verdict-appeals-"));
 process.env.DATABASE_URL = `file:${path.join(dir, "test.db").replace(/\\/g, "/")}`;
 
 const { verdictAppealHandler } = await import("../lib/verdict-appeals/http");
-const { roundsBlock, splitStoredInput } = await import("../lib/verdict-appeals/service");
+const { appealVerdicts, roundsBlock, splitStoredInput } = await import("../lib/verdict-appeals/service");
 const ent = await import("../lib/entitlements");
 const { getDb } = await import("../lib/db");
-const { saveVerdictWithOriginals } = await import("../lib/originals/save");
+const { plainVerdictStatement, saveVerdictWithOriginals } = await import("../lib/originals/save");
 const { getVerdictMeta, listOwnerVerdicts } = await import("../lib/originals/db");
-const { removeVerdict } = await import("../lib/originals/removal");
+const { operatorRemoveVerdict, removeVerdict } = await import("../lib/originals/removal");
+const { removalHandler } = await import("../lib/originals/http");
+const { verdictRemoved } = await import("../lib/originals/removed");
+const { ensureVerdictJobTables } = await import("../lib/verdict-jobs");
 const route = await import("../app/api/v1/verdicts/[id]/route");
 import { APPEAL_ONE_SIDED_JUDGE_NOTE } from "../lib/judge";
 import type { VerdictAppealView, VerdictResult } from "../lib/types";
@@ -475,6 +478,64 @@ describe("rounds and removal", () => {
     await removeVerdict((await getVerdictMeta(id))!, "owner");
     await drain();
     expect((await get(first.appeal.id)).status).toBe(410);
+  });
+
+  it("a round's verdict follows the first one: its names, its removal, never its own", async () => {
+    const o = await owner(3);
+    const { id } = await verdict(o);
+    m.anonymizeSubmission.mockImplementationOnce(async () => ({
+      text: "Party B saw the receipt.",
+      evidence: [],
+      nameMap: [{ original: "Alice", replacement: "Party B" }],
+      people: [],
+    }));
+    const first = (await (await post(id, { user: o, body: { text: "Alice saw the receipt." } })).json()) as VerdictAppealResponse;
+    await drain();
+    const round = first.appeal.id;
+    const db = await getDb();
+    await db.execute({ sql: "UPDATE verdict_meta SET names_visible = 0 WHERE verdict_id = ?", args: [id] });
+    const pub = await route.GET(new Request(`${ORIGIN}/api/v1/verdicts/${round}`), { params: Promise.resolve({ id: round }) } as never);
+    expect(((await pub.json()) as { display: unknown }).display).toBeNull();
+
+    const removal = await removalHandler(
+      new Request(`${ORIGIN}/api/v1/verdicts/${round}/removal`, {
+        method: "POST",
+        headers: { "content-type": "application/json", "x-test-user": o, authorization: "Bearer test" },
+        body: JSON.stringify({ confirm: "remove" }),
+      }),
+      round,
+    );
+    expect(removal.status).toBe(404);
+    expect((await get(round)).status).toBe(200);
+
+    // Removed on its own (by an operator): no longer the current ruling anywhere.
+    await operatorRemoveVerdict(round);
+    expect(await appealVerdicts(id)).toEqual([]);
+    expect((await listOwnerVerdicts(o, 10, null))[0].result?.appeal).toBeUndefined();
+  });
+
+  it("a round stored without its own ownership row still closes with the first verdict", async () => {
+    const o = await owner(0);
+    const { id } = await verdict(o);
+    await ensureVerdictJobTables();
+    const round = uid("r").replace(/[^A-Za-z0-9_-]/g, "");
+    const at = new Date().toISOString();
+    const db = await getDb();
+    await db.batch(
+      [
+        plainVerdictStatement({ id: round, input: "doc", framework: { preset: "balanced" }, result: result() }),
+        {
+          sql: `INSERT INTO verdict_appeals (id, verdict_id, text, evidence, base_id, outcome, created_at, updated_at)
+                VALUES (?, ?, 'ctx', '[]', ?, 'upheld', ?, ?)`,
+          args: [round, id, id, at, at],
+        },
+      ],
+      "write",
+    );
+    expect((await get(round)).status).toBe(200);
+    await removeVerdict((await getVerdictMeta(id))!, "owner");
+    expect((await get(round)).status).toBe(410);
+    expect(await verdictRemoved(round)).toBe(true);
   });
 
   it("splits a stored input at its EVIDENCE block, and counts rounds", () => {
