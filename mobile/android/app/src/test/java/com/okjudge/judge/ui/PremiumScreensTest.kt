@@ -427,7 +427,7 @@ class PremiumScreensTest {
         compose.onNodeWithText(en.evidenceUsed("0", "1"), substring = true).assertExists()
         compose.onNodeWithText(en.appealOutcomeOverturned).assertExists()
         compose.onNodeWithText(en.appealBy("Sam")).assertExists()
-        compose.onNodeWithText("${en.appealConfidence("4")} → 3/5").assertExists()
+        compose.onNodeWithText("/5", substring = true).assertDoesNotExist()
     }
 
     @Test

@@ -109,13 +109,7 @@ enum L10n {
     static func trialWhatWasTested(_ lang: AppLang) -> String { string("trial.whatWasTested", lang) }
     static func trialAttackPrefix(_ lang: AppLang) -> String { string("trial.attackPrefix", lang) }
     static func trialRefereePrefix(_ lang: AppLang) -> String { string("trial.refereePrefix", lang) }
-    static func confidence1(_ lang: AppLang) -> String { string("confidence.1", lang) }
-    static func confidence2(_ lang: AppLang) -> String { string("confidence.2", lang) }
-    static func confidence3(_ lang: AppLang) -> String { string("confidence.3", lang) }
-    static func confidence4(_ lang: AppLang) -> String { string("confidence.4", lang) }
-    static func confidence5(_ lang: AppLang) -> String { string("confidence.5", lang) }
-    static func confidenceWord(_ lang: AppLang, word: String, n: String) -> String { format("confidenceWord", lang, word, n) }
-    static func confidenceAria(_ lang: AppLang, n: String) -> String { format("confidenceAria", lang, n) }
+    static func confidence(_ lang: AppLang, n: String, total: String) -> String { format("confidence", lang, n, total) }
     static func verdictAria(_ lang: AppLang, label: String) -> String { format("verdictAria", lang, label) }
     static func partyA(_ lang: AppLang) -> String { string("party.a", lang) }
     static func partyB(_ lang: AppLang) -> String { string("party.b", lang) }
@@ -270,6 +264,7 @@ enum L10n {
     static func errorCaseClosed(_ lang: AppLang) -> String { string("error.case_closed", lang) }
     static func errorCaseExpired(_ lang: AppLang) -> String { string("error.case_expired", lang) }
     static func errorAppealUsed(_ lang: AppLang) -> String { string("error.appeal_used", lang) }
+    static func errorAppealLimit(_ lang: AppLang) -> String { string("error.appeal_limit", lang) }
     static func errorNotParty(_ lang: AppLang) -> String { string("error.not_party", lang) }
     static func errorOwnCase(_ lang: AppLang) -> String { string("error.own_case", lang) }
     static func errorTooLarge(_ lang: AppLang) -> String { string("error.too_large", lang) }
@@ -403,21 +398,20 @@ enum L10n {
     static func appealUpsell(_ lang: AppLang) -> String { string("appeal.upsell", lang) }
     static func appealSignIn(_ lang: AppLang) -> String { string("appeal.signIn", lang) }
     static func appealUsed(_ lang: AppLang) -> String { string("appeal.used", lang) }
+    static func appealLimit(_ lang: AppLang) -> String { string("appeal.limit", lang) }
     static func appealBusy(_ lang: AppLang) -> String { string("appeal.busy", lang) }
     static func appealOutcomeUpheld(_ lang: AppLang) -> String { string("appeal.outcome.upheld", lang) }
     static func appealOutcomeOverturned(_ lang: AppLang) -> String { string("appeal.outcome.overturned", lang) }
     static func appealOutcomeChanged(_ lang: AppLang) -> String { string("appeal.outcome.changed", lang) }
     static func appealBy(_ lang: AppLang, name: String) -> String { format("appeal.by", lang, name) }
     static func appealBySelf(_ lang: AppLang) -> String { string("appeal.bySelf", lang) }
-    static func appealConfidence(_ lang: AppLang, from: String) -> String { format("appeal.confidence", lang, from) }
-    static func appealConfidenceTo(_ lang: AppLang) -> String { string("appeal.confidenceTo", lang) }
-    static func appealConfidenceSame(_ lang: AppLang, n: String) -> String { format("appeal.confidenceSame", lang, n) }
     static func appealGenericUpheld(_ lang: AppLang) -> String { string("appeal.generic.upheld", lang) }
     static func appealGenericOverturned(_ lang: AppLang) -> String { string("appeal.generic.overturned", lang) }
     static func appealGenericChanged(_ lang: AppLang) -> String { string("appeal.generic.changed", lang) }
     static func appealPrevious(_ lang: AppLang) -> String { string("appeal.previous", lang) }
     static func appealFailed(_ lang: AppLang) -> String { string("appeal.failed", lang) }
     static func appealRefused(_ lang: AppLang) -> String { string("appeal.refused", lang) }
+    static func appealLeadVerdict(_ lang: AppLang) -> String { string("appeal.leadVerdict", lang) }
     static func appealHistory(_ lang: AppLang) -> String { string("appeal.history", lang) }
     static func pricingPremiumF5(_ lang: AppLang) -> String { string("pricing.premium.f5", lang) }
     static func pricingPremiumF6(_ lang: AppLang) -> String { string("pricing.premium.f6", lang) }
@@ -478,7 +472,6 @@ enum L10n {
     static func homeAll(_ lang: AppLang) -> String { string("home.all", lang) }
     static func homeWaiting(_ lang: AppLang) -> String { string("home.waiting", lang) }
     static func homeDecided(_ lang: AppLang) -> String { string("home.decided", lang) }
-    static func verdictAgree(_ lang: AppLang, n: String, total: String) -> String { format("verdict.agree", lang, n, total) }
     static func verdictNoMajority(_ lang: AppLang) -> String { string("verdict.noMajority", lang) }
     static func stampSplit(_ lang: AppLang) -> String { string("stamp.split", lang) }
     static func stampConditional(_ lang: AppLang) -> String { string("stamp.conditional", lang) }
@@ -631,11 +624,6 @@ enum L10n {
         "trial.whatWasTested",
         "trial.attackPrefix",
         "trial.refereePrefix",
-        "confidence.1",
-        "confidence.2",
-        "confidence.3",
-        "confidence.4",
-        "confidence.5",
         "party.a",
         "party.b",
         "you",
@@ -768,6 +756,7 @@ enum L10n {
         "error.case_closed",
         "error.case_expired",
         "error.appeal_used",
+        "error.appeal_limit",
         "error.not_party",
         "error.own_case",
         "error.too_large",
@@ -885,18 +874,19 @@ enum L10n {
         "appeal.upsell",
         "appeal.signIn",
         "appeal.used",
+        "appeal.limit",
         "appeal.busy",
         "appeal.outcome.upheld",
         "appeal.outcome.overturned",
         "appeal.outcome.changed",
         "appeal.bySelf",
-        "appeal.confidenceTo",
         "appeal.generic.upheld",
         "appeal.generic.overturned",
         "appeal.generic.changed",
         "appeal.previous",
         "appeal.failed",
         "appeal.refused",
+        "appeal.leadVerdict",
         "appeal.history",
         "pricing.premium.f5",
         "pricing.premium.f6",

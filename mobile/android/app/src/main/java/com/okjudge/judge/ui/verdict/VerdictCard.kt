@@ -133,7 +133,6 @@ fun VerdictContent(
             val byA = appeal.by == "a"
             AppealOutcomeBanner(
                 appeal = appeal,
-                confidence = result.confidence,
                 byName = if (byA) parties.nameA else parties.nameB,
                 bySelf = if (byA) parties.aIsSelf else parties.bIsSelf,
             )
@@ -342,30 +341,13 @@ private fun VerdictReveal(result: VerdictResult, parties: PartyLabels, restoredN
     Branches(result, parties, restoredNames)
 }
 
-/** "Confidence 4 of 5 · (dots) 3 of 3 agree". */
-@OptIn(ExperimentalLayoutApi::class)
+/** "(dots) Confidence 3 of 3", or the split note when there is no majority. */
 @Composable
 private fun Meta(result: VerdictResult) {
-    val s = LocalStrings.current
-    val style = JudgeType.small.copy(color = Palette.ink2)
-    FlowRow(
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
-        verticalArrangement = Arrangement.spacedBy(4.dp),
-        itemVerticalAlignment = Alignment.CenterVertically,
-    ) {
-        Text(s.confidenceAria(VerdictDisplay.confidenceLevel(result.confidence).toString()), style = style)
-        if (result.runs.isNotEmpty()) {
-            Text("\u00b7", style = style, modifier = Modifier.clearAndSetSemantics { })
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                VoteDots(result.runs.map(VerdictDisplay::voteOf))
-                val agreed = VerdictDisplay.agreement(result)
-                Text(
-                    if (agreed != null) s.verdictAgree(agreed.n.toString(), agreed.total.toString()) else s.verdictNoMajority,
-                    style = style,
-                    modifier = Modifier.padding(start = 8.dp),
-                )
-            }
-        }
+    val label = VerdictDisplay.confidenceLabel(result, LocalStrings.current) ?: return
+    Row(verticalAlignment = Alignment.CenterVertically) {
+        VoteDots(result.runs.map(VerdictDisplay::voteOf))
+        Text(label, style = JudgeType.small.copy(color = Palette.ink2), modifier = Modifier.padding(start = 8.dp))
     }
 }
 
@@ -999,13 +981,13 @@ private fun ClaimLine(name: String, claim: String, rule: Color) {
 
 /**
  * Banner on a verdict produced by an appeal (AppealOutcomeBanner): what
- * happened to the verdict, who added context, the confidence change and the
- * summary (or a generic line). "Stands" stays neutral: a green tick would
- * read as "you won".
+ * happened to the verdict, who added context and the summary (or a generic
+ * line). The card below carries the new confidence. "Stands" stays neutral:
+ * a green tick would read as "you won".
  */
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun AppealOutcomeBanner(appeal: AppealInfo, confidence: Int, byName: String, bySelf: Boolean, modifier: Modifier = Modifier) {
+fun AppealOutcomeBanner(appeal: AppealInfo, byName: String, bySelf: Boolean, modifier: Modifier = Modifier) {
     val s = LocalStrings.current
     val outcome = appeal.appealOutcome
     val label = when (outcome) {
@@ -1023,7 +1005,6 @@ fun AppealOutcomeBanner(appeal: AppealInfo, confidence: Int, byName: String, byS
         AppealOutcome.CHANGED -> Palette.sageInk to Palette.sageTint
         else -> Palette.ink2 to Palette.ivory2
     }
-    val from = appeal.previousConfidence
     Column(
         modifier
             .fillMaxWidth()
@@ -1048,11 +1029,6 @@ fun AppealOutcomeBanner(appeal: AppealInfo, confidence: Int, byName: String, byS
                 Text(label, style = JudgeType.small.copy(color = fg))
             }
             Text(if (bySelf) s.appealBySelf else s.appealBy(byName), style = JudgeType.slotText.copy(color = Palette.ink2))
-            Text(
-                if (from == confidence) s.appealConfidenceSame(confidence.toString())
-                else "${s.appealConfidence(from.toString())} → $confidence/5",
-                style = JudgeType.slotText,
-            )
         }
         Text(appeal.summary.trim().ifEmpty { generic }, style = JudgeType.body.copy(fontSize = 15.sp, lineHeight = 22.sp, color = Palette.ink))
     }

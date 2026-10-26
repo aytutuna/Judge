@@ -103,13 +103,7 @@ class Strings(private val res: Resources) {
     val trialWhatWasTested: String get() = res.getString(R.string.trial_what_was_tested)
     val trialAttackPrefix: String get() = res.getString(R.string.trial_attack_prefix)
     val trialRefereePrefix: String get() = res.getString(R.string.trial_referee_prefix)
-    val confidence1: String get() = res.getString(R.string.confidence_1)
-    val confidence2: String get() = res.getString(R.string.confidence_2)
-    val confidence3: String get() = res.getString(R.string.confidence_3)
-    val confidence4: String get() = res.getString(R.string.confidence_4)
-    val confidence5: String get() = res.getString(R.string.confidence_5)
-    fun confidenceWord(word: String, n: String): String = res.getString(R.string.confidence_word, word, n)
-    fun confidenceAria(n: String): String = res.getString(R.string.confidence_aria, n)
+    fun confidence(n: String, total: String): String = res.getString(R.string.confidence, n, total)
     fun verdictAria(label: String): String = res.getString(R.string.verdict_aria, label)
     val partyA: String get() = res.getString(R.string.party_a)
     val partyB: String get() = res.getString(R.string.party_b)
@@ -264,6 +258,7 @@ class Strings(private val res: Resources) {
     val errorCaseClosed: String get() = res.getString(R.string.error_case_closed)
     val errorCaseExpired: String get() = res.getString(R.string.error_case_expired)
     val errorAppealUsed: String get() = res.getString(R.string.error_appeal_used)
+    val errorAppealLimit: String get() = res.getString(R.string.error_appeal_limit)
     val errorNotParty: String get() = res.getString(R.string.error_not_party)
     val errorOwnCase: String get() = res.getString(R.string.error_own_case)
     val errorTooLarge: String get() = res.getString(R.string.error_too_large)
@@ -397,21 +392,20 @@ class Strings(private val res: Resources) {
     val appealUpsell: String get() = res.getString(R.string.appeal_upsell)
     val appealSignIn: String get() = res.getString(R.string.appeal_sign_in)
     val appealUsed: String get() = res.getString(R.string.appeal_used)
+    val appealLimit: String get() = res.getString(R.string.appeal_limit)
     val appealBusy: String get() = res.getString(R.string.appeal_busy)
     val appealOutcomeUpheld: String get() = res.getString(R.string.appeal_outcome_upheld)
     val appealOutcomeOverturned: String get() = res.getString(R.string.appeal_outcome_overturned)
     val appealOutcomeChanged: String get() = res.getString(R.string.appeal_outcome_changed)
     fun appealBy(name: String): String = res.getString(R.string.appeal_by, name)
     val appealBySelf: String get() = res.getString(R.string.appeal_by_self)
-    fun appealConfidence(from: String): String = res.getString(R.string.appeal_confidence, from)
-    val appealConfidenceTo: String get() = res.getString(R.string.appeal_confidence_to)
-    fun appealConfidenceSame(n: String): String = res.getString(R.string.appeal_confidence_same, n)
     val appealGenericUpheld: String get() = res.getString(R.string.appeal_generic_upheld)
     val appealGenericOverturned: String get() = res.getString(R.string.appeal_generic_overturned)
     val appealGenericChanged: String get() = res.getString(R.string.appeal_generic_changed)
     val appealPrevious: String get() = res.getString(R.string.appeal_previous)
     val appealFailed: String get() = res.getString(R.string.appeal_failed)
     val appealRefused: String get() = res.getString(R.string.appeal_refused)
+    val appealLeadVerdict: String get() = res.getString(R.string.appeal_lead_verdict)
     val appealHistory: String get() = res.getString(R.string.appeal_history)
     val pricingPremiumF5: String get() = res.getString(R.string.pricing_premium_f5)
     val pricingPremiumF6: String get() = res.getString(R.string.pricing_premium_f6)
@@ -472,7 +466,6 @@ class Strings(private val res: Resources) {
     val homeAll: String get() = res.getString(R.string.home_all)
     val homeWaiting: String get() = res.getString(R.string.home_waiting)
     val homeDecided: String get() = res.getString(R.string.home_decided)
-    fun verdictAgree(n: String, total: String): String = res.getString(R.string.verdict_agree, n, total)
     val verdictNoMajority: String get() = res.getString(R.string.verdict_no_majority)
     val stampSplit: String get() = res.getString(R.string.stamp_split)
     val stampConditional: String get() = res.getString(R.string.stamp_conditional)
@@ -624,11 +617,6 @@ class Strings(private val res: Resources) {
             "trial.whatWasTested" -> R.string.trial_what_was_tested
             "trial.attackPrefix" -> R.string.trial_attack_prefix
             "trial.refereePrefix" -> R.string.trial_referee_prefix
-            "confidence.1" -> R.string.confidence_1
-            "confidence.2" -> R.string.confidence_2
-            "confidence.3" -> R.string.confidence_3
-            "confidence.4" -> R.string.confidence_4
-            "confidence.5" -> R.string.confidence_5
             "party.a" -> R.string.party_a
             "party.b" -> R.string.party_b
             "you" -> R.string.you
@@ -761,6 +749,7 @@ class Strings(private val res: Resources) {
             "error.case_closed" -> R.string.error_case_closed
             "error.case_expired" -> R.string.error_case_expired
             "error.appeal_used" -> R.string.error_appeal_used
+            "error.appeal_limit" -> R.string.error_appeal_limit
             "error.not_party" -> R.string.error_not_party
             "error.own_case" -> R.string.error_own_case
             "error.too_large" -> R.string.error_too_large
@@ -878,18 +867,19 @@ class Strings(private val res: Resources) {
             "appeal.upsell" -> R.string.appeal_upsell
             "appeal.signIn" -> R.string.appeal_sign_in
             "appeal.used" -> R.string.appeal_used
+            "appeal.limit" -> R.string.appeal_limit
             "appeal.busy" -> R.string.appeal_busy
             "appeal.outcome.upheld" -> R.string.appeal_outcome_upheld
             "appeal.outcome.overturned" -> R.string.appeal_outcome_overturned
             "appeal.outcome.changed" -> R.string.appeal_outcome_changed
             "appeal.bySelf" -> R.string.appeal_by_self
-            "appeal.confidenceTo" -> R.string.appeal_confidence_to
             "appeal.generic.upheld" -> R.string.appeal_generic_upheld
             "appeal.generic.overturned" -> R.string.appeal_generic_overturned
             "appeal.generic.changed" -> R.string.appeal_generic_changed
             "appeal.previous" -> R.string.appeal_previous
             "appeal.failed" -> R.string.appeal_failed
             "appeal.refused" -> R.string.appeal_refused
+            "appeal.leadVerdict" -> R.string.appeal_lead_verdict
             "appeal.history" -> R.string.appeal_history
             "pricing.premium.f5" -> R.string.pricing_premium_f5
             "pricing.premium.f6" -> R.string.pricing_premium_f6

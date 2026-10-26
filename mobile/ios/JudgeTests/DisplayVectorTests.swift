@@ -24,6 +24,7 @@ final class DisplayVectorTests: XCTestCase {
             XCTAssertEqual(parties.bIsSelf, vector["bIsSelf"] as? Bool, context)
 
             XCTAssertEqual(VerdictDisplay.label(result.verdict, parties: parties, lang: lang), vector["label"] as? String, context)
+            XCTAssertEqual(VerdictDisplay.confidenceLabel(result, lang: lang), vector["confidence"] as? String, context)
             XCTAssertEqual(VerdictDisplay.tugFinal(result), (vector["tugA"] as? NSNumber)?.intValue, context)
             let expectedDegrees = try XCTUnwrap((vector["svgRotateDeg"] as? NSNumber)?.doubleValue, context)
             XCTAssertEqual(VerdictDisplay.rotationDegrees(tugA: VerdictDisplay.tugFinal(result)), expectedDegrees, accuracy: 0.001, context)
@@ -71,14 +72,6 @@ final class DisplayVectorTests: XCTestCase {
             let body = try Fixtures.errorBody(vector["body"])
             let message = ErrorText.apiErrorMessage(body, status: status, lang: lang)
             XCTAssertEqual(message, vector["message"] as? String, "\(String(describing: body?.code))/\(String(describing: status))/\(lang)")
-        }
-    }
-
-    func testConfidenceVectors() throws {
-        for vector in try Fixtures.list("confidence", in: Fixtures.vectors()) {
-            let lang = try Fixtures.lang(vector["lang"])
-            let n = try XCTUnwrap((vector["n"] as? NSNumber)?.intValue)
-            XCTAssertEqual(VerdictDisplay.confidenceText(n, lang: lang), vector["text"] as? String)
         }
     }
 

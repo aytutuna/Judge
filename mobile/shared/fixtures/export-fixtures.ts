@@ -47,7 +47,7 @@ import { PRESETS } from "../../../lib/frameworks";
 import { PALETTE, PALETTE_ALPHA } from "../../../lib/palette";
 import { FINISH_CAPTION, FINISH_STEPS, MAX_FINISH_MS, READY, STILL_JUDGING, THINKING_STEPS } from "../../../lib/thinking";
 import { KEY_BY_CAPTION } from "../../../lib/thinking-keys";
-import { leanTally, tugFinal, verdictLabel } from "../../../lib/verdict-display";
+import { confidenceLabel, leanTally, tugFinal, verdictLabel } from "../../../lib/verdict-display";
 import { applyText, checkSegments, extractText, planSegments, reassemble, unflattenText } from "../../../lib/translate";
 import { z } from "zod";
 import type { AppConfig as WebAppConfig, AuthProviders, Entitlement, MeResponse, SubscriptionView, Viewer } from "../../../lib/account-types";
@@ -859,6 +859,7 @@ function displayVectors() {
         selfLang,
         ...p,
         label: verdictLabel(r, p.nameA, p.nameB, p.aIsSelf, p.bIsSelf, lang),
+        confidence: confidenceLabel(lang, r),
         tugA: tugFinal(r),
         svgRotateDeg: Math.round(svgRotateDeg(tugFinal(r)) * 1000) / 1000,
         cruxStyle: cruxStyle(r.crux),
@@ -874,13 +875,6 @@ function displayVectors() {
   const waits = WAIT_SECONDS.flatMap((s) => LANGS.map((lang) => ({ seconds: s, lang, text: formatWait(lang, s) })));
   const errors = ERROR_BODIES.flatMap((e) =>
     LANGS.map((lang) => ({ ...e, lang, message: apiErrorMessage(lang, e.body, e.status) })),
-  );
-  const confidence = [1, 2, 3, 4, 5].flatMap((n) =>
-    LANGS.map((lang) => ({
-      n,
-      lang,
-      text: t(lang, "confidenceWord", { word: t(lang, `confidence.${n}` as "confidence.1"), n }),
-    })),
   );
   // Constants the apps copy by hand, pinned here so a web change fails their tests.
   const presets = PRESETS.map(({ id, emoji }) => ({ id, emoji }));
@@ -914,7 +908,6 @@ function displayVectors() {
     personalizedTranslations,
     waits,
     errors,
-    confidence,
     presets,
     palette: PALETTE,
     paletteAlpha: PALETTE_ALPHA,

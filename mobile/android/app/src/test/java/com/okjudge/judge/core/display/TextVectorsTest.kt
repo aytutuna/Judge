@@ -44,6 +44,7 @@ class TextVectorsTest {
             assertEquals(where, v.bool("aIsSelf"), parties.aIsSelf)
             assertEquals(where, v.bool("bIsSelf"), parties.bIsSelf)
             assertEquals(where, v.str("label"), VerdictDisplay.verdictLabel(outcome.result.result, parties, s(lang)))
+            assertEquals(where, v.str("confidence"), VerdictDisplay.confidenceLabel(outcome.result.result, s(lang)))
         }
     }
 
@@ -119,15 +120,6 @@ class TextVectorsTest {
         } finally {
             TimeZone.setDefault(previous)
         }
-    }
-
-    @Test
-    fun confidenceWords() {
-        for (c in Fixtures.list("confidence")) {
-            val n = c.num("n")!!.toInt()
-            assertEquals(c.str("text"), VerdictDisplay.confidenceText(n, s(c.str("lang")!!)))
-        }
-        assertEquals(VerdictDisplay.confidenceText(5, s("en")), VerdictDisplay.confidenceText(9, s("en")))
     }
 
     @Test

@@ -149,7 +149,6 @@ struct VerdictSections: View {
             if let appeal = result.appeal {
                 AppealOutcomeBanner(
                     appeal: appeal,
-                    confidence: result.confidence,
                     lang: lang,
                     byName: parties.name(appeal.by),
                     bySelf: appeal.by != .unknown && parties.isSelf(appeal.by)

@@ -9,6 +9,7 @@
       "aIsSelf": true,
       "bIsSelf": false,
       "label": "You're right",
+      "confidence": "Confidence 2 of 3",
       "tugA": 80,
       "svgRotateDeg": -10.313,
       "cruxStyle": "serif",
@@ -48,6 +49,7 @@
       "aIsSelf": true,
       "bIsSelf": false,
       "label": "Sen haklısın",
+      "confidence": "Güven: 3 üzerinden 2",
       "tugA": 80,
       "svgRotateDeg": -10.313,
       "cruxStyle": "serif",
@@ -87,6 +89,7 @@
       "aIsSelf": false,
       "bIsSelf": false,
       "label": "Jordan is right",
+      "confidence": "Confidence 3 of 3",
       "tugA": 20,
       "svgRotateDeg": 10.313,
       "cruxStyle": "serif",
@@ -126,6 +129,7 @@
       "aIsSelf": false,
       "bIsSelf": false,
       "label": "Jordan haklı",
+      "confidence": "Güven: 3 üzerinden 3",
       "tugA": 20,
       "svgRotateDeg": 10.313,
       "cruxStyle": "serif",
@@ -165,6 +169,7 @@
       "aIsSelf": false,
       "bIsSelf": false,
       "label": "Too close to call",
+      "confidence": "Judges split",
       "tugA": 38,
       "svgRotateDeg": 4.125,
       "cruxStyle": "serif",
@@ -207,6 +212,7 @@
       "aIsSelf": false,
       "bIsSelf": false,
       "label": "Başa baş, karar çıkmadı",
+      "confidence": "Yargıçlar bölündü",
       "tugA": 38,
       "svgRotateDeg": 4.125,
       "cruxStyle": "serif",
@@ -249,6 +255,7 @@
       "aIsSelf": false,
       "bIsSelf": false,
       "label": "Too close to call",
+      "confidence": "Judges split",
       "tugA": 50,
       "svgRotateDeg": 0,
       "cruxStyle": "serif",
@@ -288,6 +295,7 @@
       "aIsSelf": false,
       "bIsSelf": false,
       "label": "Başa baş, karar çıkmadı",
+      "confidence": "Yargıçlar bölündü",
       "tugA": 50,
       "svgRotateDeg": 0,
       "cruxStyle": "serif",
@@ -327,6 +335,7 @@
       "aIsSelf": false,
       "bIsSelf": false,
       "label": "It depends on your values",
+      "confidence": "Confidence 3 of 3",
       "tugA": 62,
       "svgRotateDeg": -4.125,
       "cruxStyle": "serif",
@@ -375,6 +384,7 @@
       "aIsSelf": false,
       "bIsSelf": false,
       "label": "Değerlerine bağlı",
+      "confidence": "Güven: 3 üzerinden 3",
       "tugA": 62,
       "svgRotateDeg": -4.125,
       "cruxStyle": "serif",
@@ -423,6 +433,7 @@
       "aIsSelf": false,
       "bIsSelf": false,
       "label": "Split decision",
+      "confidence": "Confidence 2 of 3",
       "tugA": 62,
       "svgRotateDeg": -4.125,
       "cruxStyle": "serif",
@@ -468,6 +479,7 @@
       "aIsSelf": false,
       "bIsSelf": false,
       "label": "Bölünmüş karar",
+      "confidence": "Güven: 3 üzerinden 2",
       "tugA": 62,
       "svgRotateDeg": -4.125,
       "cruxStyle": "serif",
@@ -513,6 +525,7 @@
       "aIsSelf": true,
       "bIsSelf": false,
       "label": "You're right",
+      "confidence": "Confidence 2 of 3",
       "tugA": 80,
       "svgRotateDeg": -10.313,
       "cruxStyle": "serif",
@@ -552,6 +565,7 @@
       "aIsSelf": true,
       "bIsSelf": false,
       "label": "Sen haklısın",
+      "confidence": "Güven: 3 üzerinden 2",
       "tugA": 80,
       "svgRotateDeg": -10.313,
       "cruxStyle": "serif",
@@ -591,6 +605,7 @@
       "aIsSelf": false,
       "bIsSelf": false,
       "label": "Too close to call",
+      "confidence": null,
       "tugA": 50,
       "svgRotateDeg": 0,
       "cruxStyle": "serif",
@@ -628,6 +643,7 @@
       "aIsSelf": false,
       "bIsSelf": false,
       "label": "Başa baş, karar çıkmadı",
+      "confidence": null,
       "tugA": 50,
       "svgRotateDeg": 0,
       "cruxStyle": "serif",
@@ -665,6 +681,7 @@
       "aIsSelf": false,
       "bIsSelf": false,
       "label": "Party A is right",
+      "confidence": "Confidence 2 of 3",
       "tugA": 80,
       "svgRotateDeg": -10.313,
       "cruxStyle": "serif",
@@ -708,6 +725,7 @@
       "aIsSelf": false,
       "bIsSelf": false,
       "label": "Taraf A haklı",
+      "confidence": "Güven: 3 üzerinden 2",
       "tugA": 80,
       "svgRotateDeg": -10.313,
       "cruxStyle": "serif",
@@ -2175,58 +2193,6 @@
       "status": 500,
       "lang": "tr",
       "message": "Bir şey ters gitti. Bir daha dener misin?"
-    }
-  ],
-  "confidence": [
-    {
-      "n": 1,
-      "lang": "en",
-      "text": "Very low confidence · 1/5"
-    },
-    {
-      "n": 1,
-      "lang": "tr",
-      "text": "Çok düşük güven · 1/5"
-    },
-    {
-      "n": 2,
-      "lang": "en",
-      "text": "Low confidence · 2/5"
-    },
-    {
-      "n": 2,
-      "lang": "tr",
-      "text": "Düşük güven · 2/5"
-    },
-    {
-      "n": 3,
-      "lang": "en",
-      "text": "Moderate confidence · 3/5"
-    },
-    {
-      "n": 3,
-      "lang": "tr",
-      "text": "Orta güven · 3/5"
-    },
-    {
-      "n": 4,
-      "lang": "en",
-      "text": "High confidence · 4/5"
-    },
-    {
-      "n": 4,
-      "lang": "tr",
-      "text": "Yüksek güven · 4/5"
-    },
-    {
-      "n": 5,
-      "lang": "en",
-      "text": "Very high confidence · 5/5"
-    },
-    {
-      "n": 5,
-      "lang": "tr",
-      "text": "Çok yüksek güven · 5/5"
     }
   ],
   "presets": [

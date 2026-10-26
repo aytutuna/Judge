@@ -169,31 +169,23 @@ struct VerdictCard: View {
         }
     }
 
-    /// "Confidence 4 of 5 · ●●● 3 of 3 agree".
+    /// "●●● Confidence 3 of 3", or the split note when there is no majority.
+    @ViewBuilder
     private var meta: some View {
-        FlowLayout(spacing: 8, rowSpacing: 4) {
-            Text(L10n.confidenceAria(lang, n: String(VerdictDisplay.clampedConfidence(result.confidence))))
-            if !result.runs.isEmpty {
-                Text(verbatim: "·")
-                    .accessibilityHidden(true)
-                HStack(spacing: 8) {
-                    HStack(spacing: 5) {
-                        ForEach(Array(result.runs.enumerated()), id: \.offset) { _, run in
-                            VoteDot(vote: VerdictDisplay.vote(run))
-                        }
-                    }
-                    .accessibilityHidden(true)
-                    if let agreed = VerdictDisplay.agreement(result) {
-                        Text(L10n.verdictAgree(lang, n: String(agreed.n), total: String(agreed.total)))
-                    } else {
-                        Text(L10n.verdictNoMajority(lang))
+        if let confidence = VerdictDisplay.confidenceLabel(result, lang: lang) {
+            HStack(spacing: 8) {
+                HStack(spacing: 5) {
+                    ForEach(Array(result.runs.enumerated()), id: \.offset) { _, run in
+                        VoteDot(vote: VerdictDisplay.vote(run))
                     }
                 }
+                .accessibilityHidden(true)
+                Text(confidence)
             }
+            .brandText(TypeStyle(face: .inter, weight: 500, size: 13, lineHeight: 1.4, textStyle: .footnote))
+            .foregroundStyle(Brand.ink2)
+            .accessibilityElement(children: .combine)
         }
-        .brandText(TypeStyle(face: .inter, weight: 500, size: 13, lineHeight: 1.4, textStyle: .footnote))
-        .foregroundStyle(Brand.ink2)
-        .accessibilityElement(children: .combine)
     }
 
     @ViewBuilder

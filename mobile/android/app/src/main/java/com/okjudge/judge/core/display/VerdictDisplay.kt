@@ -50,6 +50,13 @@ object VerdictDisplay {
         return Agreement(result.runs.count { it == result.verdict }, result.runs.size)
     }
 
+    /** "Confidence 3 of 3", the split note without a majority, null for a refusal (confidenceLabel). */
+    fun confidenceLabel(result: VerdictResult, s: Strings): String? {
+        if (result.runs.isEmpty()) return null
+        val a = agreement(result) ?: return s.verdictNoMajority
+        return s.confidence(a.n.toString(), a.total.toString())
+    }
+
     /** The judges' name in the thread: plain until there is a verdict, then how far they agreed (judgesLabel). */
     fun judgesLabel(result: VerdictResult?, s: Strings): String {
         if (result == null || result.runs.isEmpty()) return s.threadJudges
@@ -115,17 +122,6 @@ object VerdictDisplay {
         if (used.a + used.b == 0) return null
         return if (result.isTwoSided) s.evidenceUsed(used.a.toString(), used.b.toString())
         else s.evidenceUsedOne((used.a + used.b).toString())
-    }
-
-    /** Clamped confidence 1..5 (ConfidenceMeter). */
-    fun confidenceLevel(value: Int): Int = value.coerceIn(1, 5)
-
-    fun confidenceWordKey(value: Int): String = "confidence.${confidenceLevel(value)}"
-
-    /** "High confidence · 4/5". */
-    fun confidenceText(value: Int, s: Strings): String {
-        val n = confidenceLevel(value)
-        return s.confidenceWord(s.text(confidenceWordKey(value)) ?: "", n.toString())
     }
 }
 

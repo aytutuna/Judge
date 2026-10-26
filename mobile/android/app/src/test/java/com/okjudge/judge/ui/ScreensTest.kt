@@ -180,7 +180,7 @@ class ScreensTest {
                 // The fixture translation stands in for the original in the other language,
                 // with real names restored as the web shows them.
                 if (!r.refused) compose.onNodeWithText(personalizedCrux(name, outcome, lang)).assertExists()
-                compose.onNodeWithText(s.confidenceAria(VerdictDisplay.confidenceLevel(r.confidence).toString())).assertExists()
+                VerdictDisplay.confidenceLabel(r, s)?.let { compose.onNodeWithText(it).assertExists() }
                 if (outcome.nameMap.isNotEmpty()) {
                     // The labels never fall back to "Party A/B" when a name map exists.
                     compose.onNodeWithText(s.partyA).assertDoesNotExist()

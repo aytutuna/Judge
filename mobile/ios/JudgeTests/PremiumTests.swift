@@ -330,8 +330,6 @@ final class PremiumDecodingTests: XCTestCase {
         XCTAssertEqual(appeal.outcome, .overturned)
         XCTAssertEqual(appeal.previousConfidence, 4)
         XCTAssertEqual(appeal.previousVerdict, .sideA)
-        XCTAssertEqual(TwoSidedDisplay.confidenceLine(from: 4, to: 3, lang: .en), L10n.appealConfidence(.en, from: "4") + " → 3/5")
-        XCTAssertEqual(TwoSidedDisplay.confidenceLine(from: 3, to: 3, lang: .en), L10n.appealConfidenceSame(.en, n: "3"))
         XCTAssertEqual(TwoSidedDisplay.outcomeLabel(.upheld, lang: .tr), L10n.appealOutcomeUpheld(.tr))
         XCTAssertNil(TwoSidedDisplay.outcomeLabel(.unknown, lang: .tr))
 

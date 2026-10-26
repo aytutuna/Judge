@@ -52,6 +52,14 @@ enum VerdictDisplay {
         return Agreement(n: n, total: result.runs.count)
     }
 
+    /// "Confidence 3 of 3", the split note without a majority, nil for a
+    /// refusal with no runs.
+    static func confidenceLabel(_ result: VerdictResult, lang: AppLang) -> String? {
+        guard !result.runs.isEmpty else { return nil }
+        guard let agreed = agreement(result) else { return L10n.verdictNoMajority(lang) }
+        return L10n.confidence(lang, n: String(agreed.n), total: String(agreed.total))
+    }
+
     /// The judges' name in the thread: plain until there is a verdict, then
     /// how far they agreed.
     static func judgesLabel(_ result: VerdictResult?, lang: AppLang) -> String {
@@ -168,15 +176,6 @@ enum VerdictDisplay {
         }
         .joined(separator: " · ")
     }
-
-    /// "High confidence · 4/5" with the value clamped to 1...5.
-    static func confidenceText(_ value: Int, lang: AppLang) -> String {
-        let n = clampedConfidence(value)
-        let word = L10n.text("confidence.\(n)", lang) ?? ""
-        return L10n.confidenceWord(lang, word: word, n: String(n))
-    }
-
-    static func clampedConfidence(_ value: Int) -> Int { max(1, min(5, value)) }
 
     static func badge(_ type: DisputeType, lang: AppLang) -> String? {
         type == .unknown ? nil : L10n.text("badge.\(type.rawValue)", lang)

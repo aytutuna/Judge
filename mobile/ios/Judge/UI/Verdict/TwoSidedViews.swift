@@ -52,12 +52,6 @@ enum TwoSidedDisplay {
         case .changed, .unknown: return L10n.appealGenericChanged(lang)
         }
     }
-
-    /// "Confidence 4/5 → 3/5" or "Confidence unchanged at 4/5".
-    static func confidenceLine(from: Int, to: Int, lang: AppLang) -> String {
-        if from == to { return L10n.appealConfidenceSame(lang, n: String(to)) }
-        return L10n.appealConfidence(lang, from: String(from)) + " → \(to)/5"
-    }
 }
 
 /// "What would change this verdict": short, inside the card.
@@ -208,11 +202,11 @@ struct TwoSidedFactsView: View {
 
 /// Banner on a verdict produced by an appeal: what happened to the verdict
 /// (stands / flipped / changed, so it never reads as the appeal's own
-/// success), who added context, the confidence change and the summary.
-/// The "stands" chip is neutral: a green tick would read as "you won".
+/// success), who added context and the summary. The card below carries the
+/// new confidence. The "stands" chip is neutral: a green tick would read as
+/// "you won".
 struct AppealOutcomeBanner: View {
     let appeal: AppealInfo
-    let confidence: Int
     let lang: AppLang
     let byName: String
     let bySelf: Bool
@@ -230,9 +224,6 @@ struct AppealOutcomeBanner: View {
                     Text(bySelf ? L10n.appealBySelf(lang) : L10n.appealBy(lang, name: byName))
                         .brandText(.slotTitle)
                         .foregroundStyle(Brand.ink)
-                    Text(TwoSidedDisplay.confidenceLine(from: appeal.previousConfidence, to: confidence, lang: lang))
-                        .brandText(.slotText)
-                        .foregroundStyle(Brand.muted)
                 }
                 let summary = appeal.summary.trimmingCharacters(in: .whitespacesAndNewlines)
                 Text(summary.isEmpty ? TwoSidedDisplay.genericSummary(appeal.outcome, lang: lang) : summary)
