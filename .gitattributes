@@ -3,3 +3,6 @@
 Caddyfile text eol=lf
 *.service text eol=lf
 *.timer text eol=lf
+# The bundled scene is compared byte for byte by build-scene.ts --check.
+mobile/android/app/src/main/assets/scene/index.html -text -diff
+mobile/ios/Judge/Resources/Scene/index.html -text -diff

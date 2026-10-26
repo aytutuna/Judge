@@ -9,6 +9,7 @@ on:
       - "mobile/**"
       - ".github/workflows/mobile.yml"
       - "lib/**"
+      - "components/scene/**"
       - "package.json"
       - "package-lock.json"
   pull_request:
@@ -16,6 +17,7 @@ on:
       - "mobile/**"
       - ".github/workflows/mobile.yml"
       - "lib/**"
+      - "components/scene/**"
       - "package.json"
       - "package-lock.json"
 
@@ -208,3 +210,6 @@ jobs:
 
       - name: Fixtures are current
         run: npx tsx mobile/shared/fixtures/export-fixtures.ts --check
+
+      - name: Scene bundle is current
+        run: npx tsx mobile/shared/scene/build-scene.ts --check

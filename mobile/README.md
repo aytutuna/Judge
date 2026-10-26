@@ -28,3 +28,13 @@ The generated files are committed so neither native build needs Node.
   `.one` beside it (`pricing.pack`, `pricing.pack.one`) is the other form.
 - Leading emoji that the web design strips at render time are stripped in
   the export (`STRIP_EMOJI` in `keys.ts`).
+
+## Balance scene (`shared/scene/`)
+
+The judging card shows the web's three.js balance in a web view. `npm run scene:build`
+bundles `shared/scene/scene.ts` into one offline page, written to
+`android/app/src/main/assets/scene/index.html` and `ios/Judge/Resources/Scene/index.html`
+(`--check` as above). Rebuild after changing the engine or anything it imports from `lib/`.
+Native code calls `window.judgeScene.setMode(...)`, `setReduced`, `setPointer` and `reset`
+and hears back `ready`, `fallback` and `lost` through the `judgeScene` message handler (iOS) or
+the `JudgeScene` JavaScript interface (Android).
