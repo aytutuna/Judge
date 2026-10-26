@@ -36,7 +36,7 @@ async function subscribe(userId: string, opts: { start?: Date; days?: number; ca
     source: "app_store",
     externalId: opts.ext ?? `evt-${Math.random()}`,
     originalTransactionId: opts.otid ?? `otid-${userId}`,
-    productId: "verdict_premium_monthly",
+    productId: "monthly",
     periodStart: start.toISOString(),
     periodEnd: new Date(start.getTime() + (opts.days ?? 30) * DAY).toISOString(),
     willRenew: true,
@@ -272,7 +272,7 @@ describe("entitlements: grants and store events", () => {
       eventId: "rc-1",
       source: "play_store",
       userId: u,
-      productId: "verdict_credits_10",
+      productId: "pack_10",
       credits: 10,
       transactionId: "GPA.1",
     });
@@ -283,7 +283,7 @@ describe("entitlements: grants and store events", () => {
         eventId: "rc-1b",
         source: "play_store",
         userId: u,
-        productId: "verdict_credits_10",
+        productId: "pack_10",
         credits: 10,
         transactionId: "GPA.1",
       }),
@@ -311,14 +311,14 @@ describe("entitlements: grants and store events", () => {
       type: "subscription_active",
       eventId: "e1",
       userId: u,
-      productId: "verdict_premium_monthly",
+      productId: "monthly",
       periodStart: start.toISOString(),
       periodEnd: end.toISOString(),
       willRenew: true,
       ...base,
     });
     let e = await ent.getEntitlement(u);
-    expect(e.subscription).toMatchObject({ willRenew: true, cap: 60, used: 0, periodEnd: end.toISOString() });
+    expect(e.subscription).toMatchObject({ willRenew: true, cap: 35, used: 0, periodEnd: end.toISOString() });
 
     await ent.applyStoreEvent({ type: "subscription_will_not_renew", eventId: "e2", ...base });
     e = await ent.getEntitlement(u);
@@ -331,7 +331,7 @@ describe("entitlements: grants and store events", () => {
       type: "subscription_active",
       eventId: "e3",
       userId: u,
-      productId: "verdict_premium_monthly",
+      productId: "monthly",
       periodStart: renewedStart.toISOString(),
       periodEnd: new Date(renewedStart.getTime() + 30 * DAY).toISOString(),
       willRenew: true,

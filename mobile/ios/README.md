@@ -209,10 +209,8 @@ subscriptions on the server; the app only shows what `/me` says.
   purchases and a key is set), then `/me` again.
 - **Products**: the current offering's packages are matched by store
   product id against `STORE_PRODUCTS` in `lib/pricing.ts`, so a product the
-  server cannot grant is never sold: `verdict_credits_10` and
-  `verdict_credits_30` (consumables) and `verdict_premium_monthly`
-  (auto-renewable subscription), or the short ids `pack_10`, `pack_30`,
-  `monthly`.
+  server cannot grant is never sold: `pack_1` and `pack_10` (consumables)
+  and `monthly` (auto-renewable subscription).
 - In-app purchase needs no entitlement in `Judge.entitlements`; it is
   available to every App ID.
 - The purchase copy lives in `PurchaseStrings` (English and Turkish) until

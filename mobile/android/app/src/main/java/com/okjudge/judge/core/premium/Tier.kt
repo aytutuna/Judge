@@ -93,7 +93,7 @@ object Tiers {
         }
     }
 
-    /** "$1.99" in English, "$1,99" in Turkish (formatPrice). */
+    /** "$7.50" in English, "$7,50" in Turkish (formatPrice). */
     fun formatPrice(usd: Double, lang: AppLang, currency: String = "USD"): String {
         val locale = if (lang == AppLang.TR) Locale.forLanguageTag("tr-TR") else Locale.US
         val nf = NumberFormat.getCurrencyInstance(locale)

@@ -26,8 +26,8 @@ data class PricingInfo(
     val currency: String = "USD",
     /** False until a payment provider is wired up: buy buttons say "Coming soon". */
     val purchasesEnabled: Boolean = false,
-    val packs: List<PricingPack> = listOf(PricingPack("pack_10", 10, 1.99), PricingPack("pack_30", 30, 4.99)),
-    val monthly: PricingPlan = PricingPlan("monthly", 4.99, 60, 30),
+    val packs: List<PricingPack> = listOf(PricingPack("pack_1", 1, 1.0), PricingPack("pack_10", 10, 7.5)),
+    val monthly: PricingPlan = PricingPlan("monthly", 15.0, 35, 30),
 )
 
 /** Premium extras this deployment offers; absent on older servers (all off). */

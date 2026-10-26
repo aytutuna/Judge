@@ -261,15 +261,15 @@ struct ScreenshotState {
     static func storeOffers(_ lang: AppLang) -> [StoreOffer] {
         if lang == .tr {
             return [
-                StoreOffer(planId: "pack_10", productId: "verdict_credits_10", price: "₺89,99", amount: Decimal(8999) / 100, currencyCode: "TRY"),
-                StoreOffer(planId: "pack_30", productId: "verdict_credits_30", price: "₺229,99", amount: Decimal(22999) / 100, currencyCode: "TRY"),
-                StoreOffer(planId: "monthly", productId: "verdict_premium_monthly", price: "₺229,99", amount: Decimal(22999) / 100, currencyCode: "TRY"),
+                StoreOffer(planId: "pack_1", productId: "pack_1", price: "₺44,99", amount: Decimal(4499) / 100, currencyCode: "TRY"),
+                StoreOffer(planId: "pack_10", productId: "pack_10", price: "₺329,99", amount: Decimal(32999) / 100, currencyCode: "TRY"),
+                StoreOffer(planId: "monthly", productId: "monthly", price: "₺649,99", amount: Decimal(64999) / 100, currencyCode: "TRY"),
             ]
         }
         return [
-            StoreOffer(planId: "pack_10", productId: "verdict_credits_10", price: "$1.99", amount: Decimal(199) / 100, currencyCode: "USD"),
-            StoreOffer(planId: "pack_30", productId: "verdict_credits_30", price: "$4.99", amount: Decimal(499) / 100, currencyCode: "USD"),
-            StoreOffer(planId: "monthly", productId: "verdict_premium_monthly", price: "$4.99", amount: Decimal(499) / 100, currencyCode: "USD"),
+            StoreOffer(planId: "pack_1", productId: "pack_1", price: "$1.00", amount: Decimal(100) / 100, currencyCode: "USD"),
+            StoreOffer(planId: "pack_10", productId: "pack_10", price: "$7.50", amount: Decimal(750) / 100, currencyCode: "USD"),
+            StoreOffer(planId: "monthly", productId: "monthly", price: "$15.00", amount: Decimal(1500) / 100, currencyCode: "USD"),
         ]
     }
 

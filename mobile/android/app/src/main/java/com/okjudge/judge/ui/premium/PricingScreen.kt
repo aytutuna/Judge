@@ -176,7 +176,7 @@ fun PricingScreen(
                             else -> Tiers.formatPrice(pack.priceUsd / pack.credits, lang, pricing.currency)
                         }
                         Offer(
-                            name = s.pricingPack(pack.credits.toString()),
+                            name = s.pricingPack(pack.credits),
                             meta = s.pricingPerVerdict(each),
                             price = price,
                             buyLabel = if (storeOn) price else s.pricingComingSoon,

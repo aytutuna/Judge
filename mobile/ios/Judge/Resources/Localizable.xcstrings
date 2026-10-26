@@ -6152,13 +6152,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Up to %1$@ premium verdicts a month"
+            "value" : "%1$@ premium verdicts a month"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ayda en fazla %1$@ premium karar"
+            "value" : "Ayda %1$@ premium karar"
           }
         }
       }
@@ -6222,15 +6222,39 @@
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$@ premium verdicts"
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "1 premium verdict"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld premium verdicts"
+                }
+              }
+            }
           }
         },
         "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$@ premium karar"
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "1 premium karar"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld premium karar"
+                }
+              }
+            }
           }
         }
       }

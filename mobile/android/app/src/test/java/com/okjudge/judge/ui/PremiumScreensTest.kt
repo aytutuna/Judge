@@ -224,7 +224,9 @@ class PremiumScreensTest {
         compose.onNodeWithTag(PricingTags.STATUS).assertExists()
         compose.onNodeWithText("${en.accountPlan}: ${en.accountPlanPremium}").assertExists()
         compose.onNodeWithText(en.pricingPremiumF6).assertExists()
-        compose.onNodeWithText("$1.99").assertExists()
+        compose.onNodeWithText("$7.50").assertExists()
+        compose.onNodeWithText("1 premium verdict").assertExists()
+        compose.onNodeWithText("35 premium verdicts a month").assertExists()
         compose.onAllNodesWithTag(PricingTags.SIGN_IN).assertCountEquals(0)
     }
 
@@ -246,9 +248,9 @@ class PremiumScreensTest {
     private val ps: PurchaseStrings by lazy { PurchaseStrings.of(ApplicationProvider.getApplicationContext(), AppLang.EN) }
 
     private val storeOffers = mapOf(
-        "pack_10" to StoreOffer("pack_10", "TRY 79.99", 79_990_000, "TRY"),
-        "pack_30" to StoreOffer("pack_30", "TRY 199.99", 199_990_000, "TRY"),
-        "monthly" to StoreOffer("monthly", "TRY 149.99", 149_990_000, "TRY"),
+        "pack_1" to StoreOffer("pack_1", "TRY 44.99", 44_990_000, "TRY"),
+        "pack_10" to StoreOffer("pack_10", "TRY 329.99", 329_990_000, "TRY"),
+        "monthly" to StoreOffer("monthly", "TRY 649.99", 649_990_000, "TRY"),
     )
 
     @Test
@@ -262,7 +264,7 @@ class PremiumScreensTest {
             }
         }
         compose.onAllNodesWithText(en.pricingComingSoon).assertCountEquals(3)
-        compose.onAllNodesWithText("TRY 79.99").assertCountEquals(0)
+        compose.onAllNodesWithText("TRY 44.99").assertCountEquals(0)
         compose.onNodeWithText(en.pricingNote).assertExists()
     }
 
@@ -280,14 +282,14 @@ class PremiumScreensTest {
         }
         compose.onAllNodesWithText(en.pricingComingSoon).assertCountEquals(0)
         // The price column and the button both carry the store's price.
-        compose.onAllNodesWithText("TRY 79.99").assertCountEquals(2)
-        compose.onAllNodesWithText("TRY 149.99").assertCountEquals(2)
-        compose.onAllNodesWithText("$1.99").assertCountEquals(0)
+        compose.onAllNodesWithText("TRY 44.99").assertCountEquals(2)
+        compose.onAllNodesWithText("TRY 649.99").assertCountEquals(2)
+        compose.onAllNodesWithText("$1.00").assertCountEquals(0)
         // The "prices in USD, payments not open" footnote goes once the store sells.
         compose.onAllNodesWithText(en.pricingNote).assertCountEquals(0)
         compose.onAllNodesWithTag(PricingTags.BUY)[0].assertIsEnabled().performClick()
         compose.onAllNodesWithTag(PricingTags.BUY)[2].performScrollTo().performClick()
-        assertEquals(listOf("pack_10", "monthly"), bought)
+        assertEquals(listOf("pack_1", "monthly"), bought)
         compose.onAllNodesWithTag(PricingTags.NOTICE).assertCountEquals(0)
     }
 
@@ -301,7 +303,7 @@ class PremiumScreensTest {
                 )
             }
         }
-        compose.onAllNodesWithText("TRY 79.99").assertCountEquals(0)
+        compose.onAllNodesWithText("TRY 44.99").assertCountEquals(0)
         compose.onAllNodesWithTag(PricingTags.BUY)[0].assertIsNotEnabled()
     }
 
@@ -311,7 +313,7 @@ class PremiumScreensTest {
             Themed(AppLang.EN) {
                 PricingScreen(
                     PricingInfo(purchasesEnabled = true), true, Features(true, true), true, true, me("credits7").entitlement, null, {}, {},
-                    store = StoreUi(available = true, offers = storeOffers, buying = "pack_30"),
+                    store = StoreUi(available = true, offers = storeOffers, buying = "pack_10"),
                 )
             }
         }

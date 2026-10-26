@@ -96,9 +96,9 @@ final class PurchaseTests: XCTestCase {
     }
 
     private static let offers = [
-        StoreOffer(planId: "pack_10", productId: "verdict_credits_10", price: "$1.99", amount: Decimal(199) / 100, currencyCode: "USD"),
-        StoreOffer(planId: "pack_30", productId: "verdict_credits_30", price: "$4.99", amount: Decimal(499) / 100, currencyCode: "USD"),
-        StoreOffer(planId: "monthly", productId: "verdict_premium_monthly", price: "$4.99", amount: Decimal(499) / 100, currencyCode: "USD"),
+        StoreOffer(planId: "pack_1", productId: "pack_1", price: "$1.00", amount: Decimal(100) / 100, currencyCode: "USD"),
+        StoreOffer(planId: "pack_10", productId: "pack_10", price: "$7.50", amount: Decimal(750) / 100, currencyCode: "USD"),
+        StoreOffer(planId: "monthly", productId: "monthly", price: "$15.00", amount: Decimal(1500) / 100, currencyCode: "USD"),
     ]
 
     private static func pricing(enabled: Bool) -> PricingInfo {
@@ -157,33 +157,33 @@ final class PurchaseTests: XCTestCase {
         XCTAssertTrue(purchases.canPurchase(pricing))
 
         XCTAssertEqual(
-            purchases.labels(planId: "pack_10", usd: 1.99, credits: 10, pricing: pricing, lang: .en),
-            PurchaseModel.OfferLabels(price: "$1.99", perVerdict: "$0.20", button: "$1.99", purchasable: true)
+            purchases.labels(planId: "pack_10", usd: 7.5, credits: 10, pricing: pricing, lang: .en),
+            PurchaseModel.OfferLabels(price: "$7.50", perVerdict: "$0.75", button: "$7.50", purchasable: true)
         )
         XCTAssertEqual(
-            purchases.labels(planId: "monthly", usd: 4.99, credits: nil, pricing: pricing, lang: .en),
-            PurchaseModel.OfferLabels(price: "$4.99", perVerdict: nil, button: "$4.99", purchasable: true)
+            purchases.labels(planId: "monthly", usd: 15, credits: nil, pricing: pricing, lang: .en),
+            PurchaseModel.OfferLabels(price: "$15.00", perVerdict: nil, button: "$15.00", purchasable: true)
         )
-        XCTAssertNotNil(purchases.labels(planId: "pack_30", usd: 4.99, credits: 30, pricing: pricing, lang: .tr).perVerdict)
+        XCTAssertNotNil(purchases.labels(planId: "pack_1", usd: 1, credits: 1, pricing: pricing, lang: .tr).perVerdict)
 
         // The server switching purchases off brings back "Coming soon".
         let off = Self.pricing(enabled: false)
-        let comingSoon = purchases.labels(planId: "pack_10", usd: 1.99, credits: 10, pricing: off, lang: .en)
+        let comingSoon = purchases.labels(planId: "pack_10", usd: 7.5, credits: 10, pricing: off, lang: .en)
         XCTAssertFalse(comingSoon.purchasable)
         XCTAssertEqual(comingSoon.button, L10n.pricingComingSoon(.en))
-        XCTAssertEqual(comingSoon.price, PricingInfo.format(1.99, lang: .en))
+        XCTAssertEqual(comingSoon.price, PricingInfo.format(7.5, lang: .en))
     }
 
     @MainActor
     func testAPlanMissingFromTheOfferingStaysComingSoon() async {
         let gateway = FakePurchaseGateway()
-        gateway.offerList = [Self.offers[0]]
+        gateway.offerList = [Self.offers[1]]
         let (purchases, _) = model(gateway)
         let pricing = Self.pricing(enabled: true)
         await purchases.loadOffers(pricing: pricing)
-        XCTAssertTrue(purchases.labels(planId: "pack_10", usd: 1.99, credits: 10, pricing: pricing, lang: .en).purchasable)
-        XCTAssertFalse(purchases.labels(planId: "pack_30", usd: 4.99, credits: 30, pricing: pricing, lang: .en).purchasable)
-        XCTAssertFalse(purchases.labels(planId: "monthly", usd: 4.99, credits: nil, pricing: pricing, lang: .en).purchasable)
+        XCTAssertTrue(purchases.labels(planId: "pack_10", usd: 7.5, credits: 10, pricing: pricing, lang: .en).purchasable)
+        XCTAssertFalse(purchases.labels(planId: "pack_1", usd: 1, credits: 1, pricing: pricing, lang: .en).purchasable)
+        XCTAssertFalse(purchases.labels(planId: "monthly", usd: 15, credits: nil, pricing: pricing, lang: .en).purchasable)
     }
 
     @MainActor
@@ -223,14 +223,17 @@ final class PurchaseTests: XCTestCase {
 
     func testCatalogMatchesTheProductsTheServerGrants() {
         let found = StoreCatalog.match([
-            .init(packageId: "$rc_monthly", productId: "verdict_premium_monthly"),
-            .init(packageId: "ten", productId: "verdict_credits_10"),
+            .init(packageId: "$rc_monthly", productId: "monthly"),
+            .init(packageId: "ten", productId: "pack_10"),
             .init(packageId: "pack_10", productId: "pack_10"),
-            .init(packageId: "pack_30", productId: "com.example.unknown"),
+            .init(packageId: "pack_1", productId: "com.example.unknown"),
+            .init(packageId: "thirty", productId: "pack_30"),
+            .init(packageId: "old", productId: "verdict_credits_10"),
         ])
         XCTAssertEqual(found["monthly"]?.packageId, "$rc_monthly")
         XCTAssertEqual(found["pack_10"]?.packageId, "pack_10", "the package named after the plan wins")
-        XCTAssertNil(found["pack_30"], "a product the server cannot grant is not sold")
+        XCTAssertNil(found["pack_1"], "a product the server cannot grant is not sold")
+        XCTAssertEqual(found.count, 2, "retired product ids are not sold")
         XCTAssertEqual(Set(StoreCatalog.productPlans.values), Set(StoreCatalog.planIds))
     }
 
@@ -337,7 +340,7 @@ final class PurchaseTests: XCTestCase {
         let (purchases, _) = model(gateway)
         await purchases.loadOffers(pricing: Self.pricing(enabled: true))
 
-        await purchases.buy("pack_30")
+        await purchases.buy("pack_1")
         XCTAssertNil(purchases.message)
         XCTAssertNil(purchases.buying)
         XCTAssertEqual(meRequests, 0)
@@ -390,8 +393,8 @@ final class PurchaseTests: XCTestCase {
         XCTAssertTrue(PurchaseModel.granted(before: zero, after: Entitlement(credits: 10)))
         XCTAssertTrue(PurchaseModel.granted(before: Entitlement(credits: 7), after: Entitlement(credits: 6)))
         let subscription = SubscriptionInfo(
-            source: "app_store", productId: "verdict_premium_monthly", periodStart: "2026-10-01T00:00:00.000Z",
-            periodEnd: "2026-10-31T00:00:00.000Z", willRenew: true, used: 0, cap: 60
+            source: "app_store", productId: "monthly", periodStart: "2026-10-01T00:00:00.000Z",
+            periodEnd: "2026-10-31T00:00:00.000Z", willRenew: true, used: 0, cap: 35
         )
         XCTAssertTrue(PurchaseModel.granted(before: zero, after: Entitlement(credits: 0, subscription: subscription)))
     }
@@ -471,7 +474,7 @@ final class PurchaseTests: XCTestCase {
         await app.purchases.loadOffers(pricing: pricing)
         XCTAssertEqual(app.purchases.loadState, .idle)
         XCTAssertFalse(app.purchases.canPurchase(pricing))
-        let labels = app.purchases.labels(planId: "pack_10", usd: 1.99, credits: 10, pricing: pricing, lang: .en)
+        let labels = app.purchases.labels(planId: "pack_10", usd: 7.5, credits: 10, pricing: pricing, lang: .en)
         XCTAssertFalse(labels.purchasable)
         XCTAssertEqual(labels.button, L10n.pricingComingSoon(.en))
         await app.purchases.buy("pack_10")

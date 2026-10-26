@@ -244,11 +244,14 @@
     <string name="pricing_premium_f3">Up to two quick questions when a key fact is missing</string>
     <string name="pricing_packs_title">Credit packs</string>
     <string name="pricing_packs_lead">Pay once and use them whenever. One premium verdict uses one credit.</string>
-    <string name="pricing_pack">%1$s premium verdicts</string>
+    <plurals name="pricing_pack">
+        <item quantity="one">1 premium verdict</item>
+        <item quantity="other">%1$d premium verdicts</item>
+    </plurals>
     <string name="pricing_per_verdict">%1$s per verdict</string>
     <string name="pricing_monthly_title">Monthly plan</string>
     <string name="pricing_monthly_renews">Renews every month</string>
-    <string name="pricing_monthly_cap">Up to %1$s premium verdicts a month</string>
+    <string name="pricing_monthly_cap">%1$s premium verdicts a month</string>
     <string name="pricing_coming_soon">Coming soon</string>
     <string name="pricing_note">Prices are in US dollars. Payments aren\'t open yet, so nothing can be bought today.</string>
     <string name="error_signin_required">Sign in to use Premium.</string>

@@ -25,11 +25,11 @@ protocol PurchaseGateway: AnyObject {
 
 /// One product on the pricing screen, priced by the store.
 struct StoreOffer: Sendable, Equatable {
-    /// `pack_10`, `pack_30` or `monthly` (lib/pricing.ts plan ids).
+    /// `pack_1`, `pack_10` or `monthly` (lib/pricing.ts plan ids).
     let planId: String
     /// The App Store product id.
     let productId: String
-    /// Localized price, e.g. "$1.99" or "₺89,99".
+    /// Localized price, e.g. "$7.50" or "₺329,99".
     let price: String
     /// The same price as a number, for the per-verdict line.
     var amount: Decimal?
@@ -65,16 +65,13 @@ enum PurchaseGatewayError: Error, Equatable {
 
 /// Which store products the server grants (lib/pricing.ts STORE_PRODUCTS).
 enum StoreCatalog {
-    static let planIds = ["pack_10", "pack_30", "monthly"]
+    static let planIds = ["pack_1", "pack_10", "monthly"]
 
     /// Store product id → plan id.
     static let productPlans: [String: String] = [
+        "pack_1": "pack_1",
         "pack_10": "pack_10",
-        "pack_30": "pack_30",
         "monthly": "monthly",
-        "verdict_credits_10": "pack_10",
-        "verdict_credits_30": "pack_30",
-        "verdict_premium_monthly": "monthly",
     ]
 
     /// A package of the current offering, as the gateway reads it.

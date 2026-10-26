@@ -4,6 +4,7 @@ import com.okjudge.judge.Fixtures
 import com.okjudge.judge.core.display.Errors
 import com.okjudge.judge.core.model.Entitlement
 import com.okjudge.judge.core.model.MeResponse
+import com.okjudge.judge.core.model.PricingInfo
 import com.okjudge.judge.core.model.ServerConfig
 import com.okjudge.judge.core.model.WireJson
 import com.okjudge.judge.i18n.AppLang
@@ -49,7 +50,10 @@ class TierTest {
         val noSignIn = full.copy(signIn = full.signIn.copy(google = false, emailCode = false, email = false))
         assertEquals(TierAvailability.HIDDEN, availability(noSignIn, me("signed_out")))
         assertEquals("full config carries pricing and features", true, full.features.cases && full.features.evidence)
-        assertEquals(listOf(1.99, 4.99), full.pricing.packs.map { it.priceUsd })
+        assertEquals(listOf("pack_1", "pack_10"), full.pricing.packs.map { it.id })
+        assertEquals(listOf(1.0, 7.5), full.pricing.packs.map { it.priceUsd })
+        assertEquals(35, full.pricing.monthly.fairUseCap)
+        assertEquals("the defaults mirror lib/pricing.ts", PricingInfo(), full.pricing)
     }
 
     @Test
@@ -76,7 +80,7 @@ class TierTest {
             assertEquals(TierNote(en.tierInvite, NoteLink.PRICING, en.tierGetPremium), note(TierAvailability.LOCKED, Tier.FREE, "free"))
             assertEquals(TierNote(en.tierFreeHint), note(TierAvailability.AVAILABLE, Tier.FREE, "credits7"))
             assertEquals(TierNote("${en.tierPremiumHint} ${en.tierCreditsLeft(7)}"), note(TierAvailability.AVAILABLE, Tier.PREMIUM, "credits7"))
-            assertEquals(TierNote("${en.tierPremiumHint} ${en.tierMonthlyLeft("48")}"), note(TierAvailability.AVAILABLE, Tier.PREMIUM, "subscriber"))
+            assertEquals(TierNote("${en.tierPremiumHint} ${en.tierMonthlyLeft("23")}"), note(TierAvailability.AVAILABLE, Tier.PREMIUM, "subscriber"))
 
             val noDate = Entitlement(canUsePremium = false, blockedReason = "fair_use", resetsAt = null)
             assertEquals(en.tierFairUseSoon, Tiers.note(en, AppLang.EN, TierAvailability.LOCKED, Tier.FREE, noDate, false)!!.text)
@@ -89,7 +93,7 @@ class TierTest {
 
     @Test
     fun remaining_monthlyFirstThenCredits() {
-        assertEquals(PremiumRemaining(monthly = true, n = 48), Tiers.remaining(me("subscriber").entitlement))
+        assertEquals(PremiumRemaining(monthly = true, n = 23), Tiers.remaining(me("subscriber").entitlement))
         assertEquals(PremiumRemaining(monthly = false, n = 7), Tiers.remaining(me("credits7").entitlement))
         assertNull(Tiers.remaining(me("fair_use").entitlement))
         assertNull(Tiers.remaining(null))
@@ -97,10 +101,10 @@ class TierTest {
 
     @Test
     fun formatPrice_likeIntl() {
-        assertEquals("$1.99", Tiers.formatPrice(1.99, AppLang.EN))
-        assertEquals("$4.99", Tiers.formatPrice(4.99, AppLang.EN))
-        assertEquals("$0.17", Tiers.formatPrice(4.99 / 30, AppLang.EN))
-        assertEquals("$1,99", Tiers.formatPrice(1.99, AppLang.TR))
+        assertEquals("$7.50", Tiers.formatPrice(7.5, AppLang.EN))
+        assertEquals("$15.00", Tiers.formatPrice(15.0, AppLang.EN))
+        assertEquals("$0.75", Tiers.formatPrice(7.5 / 10, AppLang.EN))
+        assertEquals("$7,50", Tiers.formatPrice(7.5, AppLang.TR))
         assertEquals("$1.234,50", Tiers.formatPrice(1234.5, AppLang.TR))
     }
 

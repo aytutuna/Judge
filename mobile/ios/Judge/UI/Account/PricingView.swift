@@ -116,7 +116,7 @@ struct PricingView: View {
                 let labels = app.purchases.labels(planId: pack.id, usd: pack.priceUsd, credits: pack.credits, pricing: pricing, lang: lang)
                 offer(
                     planId: pack.id,
-                    name: L10n.pricingPack(lang, n: String(pack.credits)),
+                    name: L10n.pricingPack(lang, n: pack.credits),
                     meta: labels.perVerdict.map { L10n.pricingPerVerdict(lang, price: $0) },
                     labels: labels
                 )

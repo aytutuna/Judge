@@ -252,7 +252,7 @@ enum L10n {
     static func pricingPremiumF3(_ lang: AppLang) -> String { string("pricing.premium.f3", lang) }
     static func pricingPacksTitle(_ lang: AppLang) -> String { string("pricing.packsTitle", lang) }
     static func pricingPacksLead(_ lang: AppLang) -> String { string("pricing.packsLead", lang) }
-    static func pricingPack(_ lang: AppLang, n: String) -> String { format("pricing.pack", lang, n) }
+    static func pricingPack(_ lang: AppLang, n: Int) -> String { format("pricing.pack", lang, n) }
     static func pricingPerVerdict(_ lang: AppLang, price: String) -> String { format("pricing.perVerdict", lang, price) }
     static func pricingMonthlyTitle(_ lang: AppLang) -> String { string("pricing.monthly.title", lang) }
     static func pricingMonthlyRenews(_ lang: AppLang) -> String { string("pricing.monthly.renews", lang) }

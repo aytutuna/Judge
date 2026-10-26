@@ -282,9 +282,9 @@ class ScreenshotsTest {
     private fun storeUi(notice: PurchaseController.Notice?, buying: String?) = StoreUi(
         available = true,
         offers = mapOf(
-            "pack_10" to StoreOffer("pack_10", "₺79,99", 79_990_000, "TRY"),
-            "pack_30" to StoreOffer("pack_30", "₺199,99", 199_990_000, "TRY"),
-            "monthly" to StoreOffer("monthly", "₺149,99", 149_990_000, "TRY"),
+            "pack_1" to StoreOffer("pack_1", "₺44,99", 44_990_000, "TRY"),
+            "pack_10" to StoreOffer("pack_10", "₺329,99", 329_990_000, "TRY"),
+            "monthly" to StoreOffer("monthly", "₺649,99", 649_990_000, "TRY"),
         ),
         buying = buying,
         notice = notice,
@@ -305,7 +305,7 @@ class ScreenshotsTest {
         Themed(AppLang.EN) {
             PricingScreen(
                 PricingInfo(purchasesEnabled = true), true, Features(true, true), true, true, me("credits7").entitlement, {}, {}, {},
-                store = storeUi(notice = null, buying = "pack_30"),
+                store = storeUi(notice = null, buying = "pack_10"),
             )
         }
     }

@@ -24,6 +24,7 @@ The generated files are committed so neither native build needs Node.
 - `{name}` slots become positional arguments numbered by their order in the
   English string (`%1$s` on Android, `%1$@` on iOS).
 - Keys ending in `.one` / `.other` become one plural (`R.plurals.*`, an
-  `.xcstrings` plural variation) counted by `{n}`.
+  `.xcstrings` plural variation) counted by `{n}`. A bare key with only a
+  `.one` beside it (`pricing.pack`, `pricing.pack.one`) is the other form.
 - Leading emoji that the web design strips at render time are stripped in
   the export (`STRIP_EMOJI` in `keys.ts`).

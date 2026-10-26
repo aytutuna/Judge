@@ -124,13 +124,13 @@ final class ScreenshotStateTests: XCTestCase {
             XCTAssertTrue(pricing.purchasesEnabled)
             XCTAssertTrue(app.purchases.isConfigured)
             XCTAssertTrue(app.purchases.canPurchase(pricing))
-            let pack = app.purchases.labels(planId: "pack_10", usd: 1.99, credits: 10, pricing: pricing, lang: .en)
-            XCTAssertEqual(pack.button, "$1.99")
+            let pack = app.purchases.labels(planId: "pack_10", usd: 7.5, credits: 10, pricing: pricing, lang: .en)
+            XCTAssertEqual(pack.button, "$7.50")
             XCTAssertTrue(pack.purchasable)
             XCTAssertNil(app.api.tokenStore.token(), "screenshots never hold a real token")
 
             let tr = try XCTUnwrap(ScreenshotState.parse("pricing-store:tr")).makeModel(container: container)
-            XCTAssertEqual(tr.purchases.labels(planId: "monthly", usd: 4.99, credits: nil, pricing: tr.account.pricing, lang: .tr).price, "₺229,99")
+            XCTAssertEqual(tr.purchases.labels(planId: "monthly", usd: 15, credits: nil, pricing: tr.account.pricing, lang: .tr).price, "₺649,99")
 
             let plain = try XCTUnwrap(ScreenshotState.parse("pricing:en")).makeModel(container: container)
             XCTAssertFalse(plain.purchases.isConfigured, "the plain pricing state keeps Coming soon")

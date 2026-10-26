@@ -172,7 +172,7 @@ final class TierTests: XCTestCase {
 
     func testRemaining() throws {
         XCTAssertEqual(TierLogic.remaining(try PremiumFixtures.me("credits7").entitlement), .credits(7))
-        XCTAssertEqual(TierLogic.remaining(try PremiumFixtures.me("subscriber").entitlement), .monthly(48))
+        XCTAssertEqual(TierLogic.remaining(try PremiumFixtures.me("subscriber").entitlement), .monthly(23))
         XCTAssertNil(TierLogic.remaining(try PremiumFixtures.me("fair_use").entitlement))
         XCTAssertNil(TierLogic.remaining(nil))
     }
@@ -215,7 +215,7 @@ final class TierTests: XCTestCase {
             )
             XCTAssertEqual(
                 TierLogic.note(lang: lang, availability: .available, value: .premium, entitlement: try PremiumFixtures.me("subscriber").entitlement, nudged: false)?.text,
-                L10n.tierPremiumHint(lang) + " " + L10n.tierMonthlyLeft(lang, n: "48")
+                L10n.tierPremiumHint(lang) + " " + L10n.tierMonthlyLeft(lang, n: "23")
             )
             XCTAssertEqual(
                 TierLogic.note(lang: lang, availability: .available, value: .free, entitlement: credits, nudged: false)?.text,
@@ -250,8 +250,10 @@ final class PremiumDecodingTests: XCTestCase {
         XCTAssertEqual(full.features, PremiumFeatures(cases: true, evidence: true))
         let pricing = try XCTUnwrap(full.pricing)
         XCTAssertFalse(pricing.purchasesEnabled)
-        XCTAssertEqual(pricing.packs.map(\.credits), [10, 30])
-        XCTAssertEqual(pricing.monthly.fairUseCap, 60)
+        XCTAssertEqual(pricing.packs.map(\.id), ["pack_1", "pack_10"])
+        XCTAssertEqual(pricing.packs.map(\.credits), [1, 10])
+        XCTAssertEqual(pricing.monthly.priceUsd, 15)
+        XCTAssertEqual(pricing.monthly.fairUseCap, 35)
         XCTAssertEqual(pricing, PricingInfo.fallback, "the fallback mirrors lib/pricing.ts")
 
         let minimal = try PremiumFixtures.config("minimal")
@@ -262,11 +264,20 @@ final class PremiumDecodingTests: XCTestCase {
     }
 
     func testPriceFormatting() {
-        XCTAssertEqual(PricingInfo.format(1.99, lang: .en), "$1.99")
-        XCTAssertEqual(PricingInfo.format(1.99 / 10, lang: .en), "$0.20")
-        let tr = PricingInfo.format(1.99, lang: .tr)
-        XCTAssertTrue(tr.contains("1,99"), tr)
+        XCTAssertEqual(PricingInfo.format(7.5, lang: .en), "$7.50")
+        XCTAssertEqual(PricingInfo.format(7.5 / 10, lang: .en), "$0.75")
+        let tr = PricingInfo.format(7.5, lang: .tr)
+        XCTAssertTrue(tr.contains("7,50"), tr)
         XCTAssertTrue(tr.contains("$"), tr)
+    }
+
+    func testPackAndCapLabels() {
+        XCTAssertEqual(L10n.pricingPack(.en, n: 1), "1 premium verdict")
+        XCTAssertEqual(L10n.pricingPack(.en, n: 10), "10 premium verdicts")
+        XCTAssertEqual(L10n.pricingPack(.tr, n: 1), "1 premium karar")
+        XCTAssertEqual(L10n.pricingPack(.tr, n: 10), "10 premium karar")
+        XCTAssertEqual(L10n.pricingMonthlyCap(.en, n: "35"), "35 premium verdicts a month")
+        XCTAssertEqual(L10n.pricingMonthlyCap(.tr, n: "35"), "Ayda 35 premium karar")
     }
 
     @MainActor

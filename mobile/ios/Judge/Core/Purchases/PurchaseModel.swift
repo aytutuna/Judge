@@ -28,7 +28,7 @@ final class PurchaseModel {
         case idle, loading, loaded, failed
     }
 
-    /// Store offers by plan id (`pack_10`, `pack_30`, `monthly`).
+    /// Store offers by plan id (`pack_1`, `pack_10`, `monthly`).
     private(set) var offers: [String: StoreOffer] = [:]
     private(set) var loadState: LoadState = .idle
     /// The plan being bought while the store sheet is up.

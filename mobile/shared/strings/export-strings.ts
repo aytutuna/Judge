@@ -13,7 +13,8 @@
  * Placeholders: `{name}` slots become positional arguments numbered by their
  * first appearance in the ENGLISH string (`%1$s` on Android, `%1$@` on iOS),
  * so a Turkish string may use them in any order. Keys ending in ".one" /
- * ".other" become one plural resource whose count is `{n}` (`%1$d` / `%lld`).
+ * ".other" become one plural resource whose count is `{n}` (`%1$d` / `%lld`);
+ * a bare key with only a ".one" next to it ("pricing.pack") is the other form.
  * Only Node built-ins are used; the generated files are committed so the
  * native builds never need Node.
  */
@@ -94,16 +95,19 @@ function placeholders(s: string): string[] {
 function toItems(entries: Entry[]): Item[] {
   const items: Item[] = [];
   const plurals = new Map<string, Partial<Record<"one" | "other", Entry>>>();
+  const keys = new Set(entries.map((e) => e.key));
   for (const e of entries) {
     const m = /^(.*)\.(one|other)$/.exec(e.key);
-    if (m) {
-      const group = plurals.get(m[1]) ?? {};
-      if (!plurals.has(m[1])) {
-        plurals.set(m[1], group);
+    const bare = !m && keys.has(`${e.key}.one`) && !keys.has(`${e.key}.other`);
+    if (m || bare) {
+      const base = m ? m[1] : e.key;
+      const group = plurals.get(base) ?? {};
+      if (!plurals.has(base)) {
+        plurals.set(base, group);
         // Placeholder item keeps the group in dictionary order.
-        items.push({ kind: "plural", key: m[1], forms: { en: { one: "", other: "" }, tr: { one: "", other: "" } } });
+        items.push({ kind: "plural", key: base, forms: { en: { one: "", other: "" }, tr: { one: "", other: "" } } });
       }
-      group[m[2] as "one" | "other"] = e;
+      group[m ? (m[2] as "one" | "other") : "other"] = e;
       continue;
     }
     const args = placeholders(e.en);

@@ -27,7 +27,7 @@ describe("PricingTable", () => {
       expect(html).toContain(formatPrice(p.priceUsd, "en"));
       expect(html).toContain(`${formatPrice(p.priceUsd / p.credits, "en")} per verdict`);
     }
-    expect(html).toContain(`Up to ${pricing.monthly.fairUseCap} premium verdicts a month`);
+    expect(html).toContain(`${pricing.monthly.fairUseCap} premium verdicts a month`);
     expect(html).toContain("Renews every month");
     expect(html).toContain(formatPrice(pricing.monthly.priceUsd, "en"));
   });
@@ -48,9 +48,9 @@ describe("PricingTable", () => {
 
   it("formats prices the Turkish way in Turkish", () => {
     const html = render({ lang: "tr" });
-    expect(html).toContain(formatPrice(1.99, "tr"));
+    expect(html).toContain(formatPrice(7.5, "tr"));
     expect(html).toContain("Yakında");
-    expect(html).toContain(`Ayda en fazla ${pricing.monthly.fairUseCap} premium karar`);
+    expect(html).toContain(`Ayda ${pricing.monthly.fairUseCap} premium karar`);
   });
 
   it("signed out with premium on: a sign-in call to action back to pricing", () => {

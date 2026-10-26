@@ -50,10 +50,10 @@ describe("GET /api/v1/config", () => {
         currency: "USD",
         purchasesEnabled: false,
         packs: [
-          { id: "pack_10", credits: 10, priceUsd: 1.99 },
-          { id: "pack_30", credits: 30, priceUsd: 4.99 },
+          { id: "pack_1", credits: 1, priceUsd: 1 },
+          { id: "pack_10", credits: 10, priceUsd: 7.5 },
         ],
-        monthly: { id: "monthly", priceUsd: 4.99, fairUseCap: 60, periodDays: 30 },
+        monthly: { id: "monthly", priceUsd: 15, fairUseCap: 35, periodDays: 30 },
       },
       features: { cases: false, evidence: false },
     });
@@ -120,6 +120,6 @@ describe("GET /api/v1/config", () => {
   it("returns a copy: callers cannot mutate the pricing config", async () => {
     const { body } = await call();
     body.pricing.packs[0].priceUsd = 0;
-    expect(PRICING.packs[0].priceUsd).toBe(1.99);
+    expect(PRICING.packs[0].priceUsd).toBe(1);
   });
 });

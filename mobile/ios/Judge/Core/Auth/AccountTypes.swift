@@ -106,13 +106,13 @@ struct PricingInfo: Decodable, Sendable, Equatable {
         currency: "USD",
         purchasesEnabled: false,
         packs: [
-            PricingPack(id: "pack_10", credits: 10, priceUsd: 1.99),
-            PricingPack(id: "pack_30", credits: 30, priceUsd: 4.99),
+            PricingPack(id: "pack_1", credits: 1, priceUsd: 1),
+            PricingPack(id: "pack_10", credits: 10, priceUsd: 7.5),
         ],
-        monthly: PricingPlan(id: "monthly", priceUsd: 4.99, fairUseCap: 60, periodDays: 30)
+        monthly: PricingPlan(id: "monthly", priceUsd: 15, fairUseCap: 35, periodDays: 30)
     )
 
-    /// "$1.99" in English, "$1,99" in Turkish (formatPrice in lib/pricing.ts).
+    /// "$7.50" in English, "$7,50" in Turkish (formatPrice in lib/pricing.ts).
     static func format(_ usd: Double, lang: AppLang) -> String {
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency

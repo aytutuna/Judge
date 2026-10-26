@@ -656,20 +656,20 @@
         "purchasesEnabled": false,
         "packs": [
           {
-            "id": "pack_10",
-            "credits": 10,
-            "priceUsd": 1.99
+            "id": "pack_1",
+            "credits": 1,
+            "priceUsd": 1
           },
           {
-            "id": "pack_30",
-            "credits": 30,
-            "priceUsd": 4.99
+            "id": "pack_10",
+            "credits": 10,
+            "priceUsd": 7.5
           }
         ],
         "monthly": {
           "id": "monthly",
-          "priceUsd": 4.99,
-          "fairUseCap": 60,
+          "priceUsd": 15,
+          "fairUseCap": 35,
           "periodDays": 30
         }
       },
@@ -692,20 +692,20 @@
         "purchasesEnabled": false,
         "packs": [
           {
-            "id": "pack_10",
-            "credits": 10,
-            "priceUsd": 1.99
+            "id": "pack_1",
+            "credits": 1,
+            "priceUsd": 1
           },
           {
-            "id": "pack_30",
-            "credits": 30,
-            "priceUsd": 4.99
+            "id": "pack_10",
+            "credits": 10,
+            "priceUsd": 7.5
           }
         ],
         "monthly": {
           "id": "monthly",
-          "priceUsd": 4.99,
-          "fairUseCap": 60,
+          "priceUsd": 15,
+          "fairUseCap": 35,
           "periodDays": 30
         }
       },
@@ -763,12 +763,12 @@
         "credits": 0,
         "subscription": {
           "source": "app_store",
-          "productId": "verdict_premium_monthly",
+          "productId": "monthly",
           "periodStart": "2026-10-01T00:00:00.000Z",
           "periodEnd": "2026-10-31T00:00:00.000Z",
           "willRenew": true,
           "used": 12,
-          "cap": 60
+          "cap": 35
         },
         "resetsAt": null
       }
@@ -786,12 +786,12 @@
         "credits": 0,
         "subscription": {
           "source": "app_store",
-          "productId": "verdict_premium_monthly",
+          "productId": "monthly",
           "periodStart": "2026-10-01T00:00:00.000Z",
           "periodEnd": "2026-10-31T00:00:00.000Z",
           "willRenew": true,
-          "used": 60,
-          "cap": 60
+          "used": 35,
+          "cap": 35
         },
         "resetsAt": "2026-10-31T00:00:00.000Z"
       }
@@ -951,12 +951,12 @@
         "credits": 0,
         "subscription": {
           "source": "app_store",
-          "productId": "verdict_premium_monthly",
+          "productId": "monthly",
           "periodStart": "2026-10-01T00:00:00.000Z",
           "periodEnd": "2026-10-31T00:00:00.000Z",
           "willRenew": true,
           "used": 13,
-          "cap": 60
+          "cap": 35
         },
         "resetsAt": null
       }
@@ -974,12 +974,12 @@
         "credits": 0,
         "subscription": {
           "source": "app_store",
-          "productId": "verdict_premium_monthly",
+          "productId": "monthly",
           "periodStart": "2026-10-01T00:00:00.000Z",
           "periodEnd": "2026-10-31T00:00:00.000Z",
           "willRenew": true,
           "used": 13,
-          "cap": 60
+          "cap": 35
         },
         "resetsAt": null
       }
@@ -2763,12 +2763,12 @@
         "credits": 0,
         "subscription": {
           "source": "app_store",
-          "productId": "verdict_premium_monthly",
+          "productId": "monthly",
           "periodStart": "2026-10-01T00:00:00.000Z",
           "periodEnd": "2026-10-31T00:00:00.000Z",
           "willRenew": true,
           "used": 13,
-          "cap": 60
+          "cap": 35
         },
         "resetsAt": null
       }

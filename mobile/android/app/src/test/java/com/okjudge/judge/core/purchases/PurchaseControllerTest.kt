@@ -64,9 +64,9 @@ class FakeGateway : PurchaseGateway {
 
     companion object {
         val OFFERS = mapOf(
-            "pack_10" to StoreOffer("pack_10", "₺79,99", 79_990_000, "TRY"),
-            "pack_30" to StoreOffer("pack_30", "₺199,99", 199_990_000, "TRY"),
-            "monthly" to StoreOffer("monthly", "₺199,99", 199_990_000, "TRY"),
+            "pack_1" to StoreOffer("pack_1", "₺44,99", 44_990_000, "TRY"),
+            "pack_10" to StoreOffer("pack_10", "₺329,99", 329_990_000, "TRY"),
+            "monthly" to StoreOffer("monthly", "₺649,99", 649_990_000, "TRY"),
         )
     }
 }
@@ -204,7 +204,7 @@ class PurchaseControllerTest {
         runCurrent()
         assertEquals("pack_10", c.state.value.buying)
         // One purchase at a time.
-        assertNull(c.buy(context, "pack_30"))
+        assertNull(c.buy(context, "pack_1"))
 
         gate.complete(Unit)
         runCurrent()
@@ -261,7 +261,7 @@ class PurchaseControllerTest {
     fun purchase_cancelled_noMessageAndNoRefresh() = runTest {
         val c = ready()
         gateway.purchaseOutcome = PurchaseOutcome.Cancelled
-        c.buy(context, "pack_30")
+        c.buy(context, "pack_1")
         settle()
         assertNull(c.state.value.notice)
         assertNull(c.state.value.buying)
@@ -356,7 +356,7 @@ class PurchaseControllerTest {
 
     @Test
     fun storeProductKeys_dropThePlayBasePlan() {
-        assertEquals("monthly", StoreProducts.key("monthly:monthly-base"))
+        assertEquals("monthly", StoreProducts.key("monthly:p1m"))
         assertEquals("pack_10", StoreProducts.key("pack_10"))
     }
 

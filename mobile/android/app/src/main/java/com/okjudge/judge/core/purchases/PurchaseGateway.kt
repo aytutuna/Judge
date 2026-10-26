@@ -4,11 +4,11 @@ import android.content.Context
 
 /** Store product ids the server knows (STORE_PRODUCTS in lib/pricing.ts). */
 object StoreProducts {
+    const val PACK_1 = "pack_1"
     const val PACK_10 = "pack_10"
-    const val PACK_30 = "pack_30"
     const val MONTHLY = "monthly"
 
-    val ALL = listOf(PACK_10, PACK_30, MONTHLY)
+    val ALL = listOf(PACK_1, PACK_10, MONTHLY)
 
     /**
      * Our product id for a store product id. Play subscriptions come back as

@@ -46,8 +46,8 @@ Toolchain: Gradle 9.8.2, AGP 9.4.1 (built-in Kotlin), Kotlin 2.4.21, KSP
 
 ## Purchases (RevenueCat)
 
-Google Play products: one-time (consumable) `pack_10` and `pack_30`, and the
-subscription `monthly` (any base plan id). The RevenueCat current offering
+Google Play products: one-time (consumable) `pack_1` and `pack_10`, and the
+subscription `monthly` with base plan `p1m`. The RevenueCat current offering
 must contain a package for each; the app matches packages by product id.
 The SDK is configured only once `/api/v1/me` names the signed-in user, with
 that user id as the RevenueCat app user id, and logs out on sign-out. The app

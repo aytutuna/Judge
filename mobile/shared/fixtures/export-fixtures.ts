@@ -426,12 +426,12 @@ const PERIOD_END = "2026-10-31T00:00:00.000Z";
 const NO_SUB: Entitlement = { canUsePremium: false, blockedReason: null, credits: 0, subscription: null, resetsAt: null };
 const subscription = (used: number): SubscriptionView => ({
   source: "app_store",
-  productId: "verdict_premium_monthly",
+  productId: "monthly",
   periodStart: PERIOD_START,
   periodEnd: PERIOD_END,
   willRenew: true,
   used,
-  cap: 60,
+  cap: 35,
 });
 
 const ENTITLEMENTS: Record<string, Entitlement> = {
@@ -439,7 +439,7 @@ const ENTITLEMENTS: Record<string, Entitlement> = {
   credits7: { ...NO_SUB, canUsePremium: true, credits: 7 },
   no_credits: { ...NO_SUB, blockedReason: "no_credits" },
   subscriber: { canUsePremium: true, blockedReason: null, credits: 0, subscription: subscription(12), resetsAt: null },
-  fair_use: { canUsePremium: false, blockedReason: "fair_use", credits: 0, subscription: subscription(60), resetsAt: PERIOD_END },
+  fair_use: { canUsePremium: false, blockedReason: "fair_use", credits: 0, subscription: subscription(35), resetsAt: PERIOD_END },
 };
 
 const viewer = (id: string, name: string, email: string): Viewer => ({ id, email, name, image: null });

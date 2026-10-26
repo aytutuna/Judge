@@ -244,11 +244,14 @@
     <string name="pricing_premium_f3">Önemli bir olgu eksikse en fazla iki kısa soru</string>
     <string name="pricing_packs_title">Kredi paketleri</string>
     <string name="pricing_packs_lead">Bir kez öde, istediğin zaman kullan. Her premium karar bir kredi kullanır.</string>
-    <string name="pricing_pack">%1$s premium karar</string>
+    <plurals name="pricing_pack">
+        <item quantity="one">1 premium karar</item>
+        <item quantity="other">%1$d premium karar</item>
+    </plurals>
     <string name="pricing_per_verdict">Karar başına %1$s</string>
     <string name="pricing_monthly_title">Aylık plan</string>
     <string name="pricing_monthly_renews">Her ay yenilenir</string>
-    <string name="pricing_monthly_cap">Ayda en fazla %1$s premium karar</string>
+    <string name="pricing_monthly_cap">Ayda %1$s premium karar</string>
     <string name="pricing_coming_soon">Yakında</string>
     <string name="pricing_note">Fiyatlar ABD doları cinsinden. Ödemeler henüz açılmadı, yani bugün bir şey satın alınamıyor.</string>
     <string name="error_signin_required">Premium\'u kullanmak için giriş yap.</string>

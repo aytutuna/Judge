@@ -246,7 +246,7 @@ class Strings(private val res: Resources) {
     val pricingPremiumF3: String get() = res.getString(R.string.pricing_premium_f3)
     val pricingPacksTitle: String get() = res.getString(R.string.pricing_packs_title)
     val pricingPacksLead: String get() = res.getString(R.string.pricing_packs_lead)
-    fun pricingPack(n: String): String = res.getString(R.string.pricing_pack, n)
+    fun pricingPack(n: Int): String = res.getQuantityString(R.plurals.pricing_pack, n, n)
     fun pricingPerVerdict(price: String): String = res.getString(R.string.pricing_per_verdict, price)
     val pricingMonthlyTitle: String get() = res.getString(R.string.pricing_monthly_title)
     val pricingMonthlyRenews: String get() = res.getString(R.string.pricing_monthly_renews)
