@@ -78,9 +78,11 @@ bump `MARKETING_VERSION` there for a new release.
 Debug builds accept `-JudgeScreenshotState <screen>:<lang>` and render a fixed
 state from `mobile/shared/fixtures/verdicts.json`, with an in-memory history,
 a separate defaults suite and no network (the API points at a closed local
-port). Screens: `home`, `home-error`, `judging`, `history`, `settings`,
-`signin`, `signin-code`, `account` (Settings, signed in with a fixture
-account), `verdict/<sample>` for any key of `verdictResponses`, and the
+port). Screens: `home`, `home-recent` (the Recent row filled),
+`home-error`, `judging`, `history`, `settings`, `signin`, `signin-code`,
+`account` (Settings, signed in with a fixture account), `verdict/<sample>`
+for any key of `verdictResponses` (opened as a saved verdict),
+`verdict-thread` (a fresh verdict under its argument), and the
 Premium states `tier/locked` (monthly allowance used up), `tier/premium`
 (Premium chosen, credits left), `pricing`, `pricing-store` (store prices on
 the buy buttons, from a fake store), `clarify`, `evidence` (picked
@@ -88,7 +90,8 @@ screenshots in mixed states) and `judging-premium`, and the case states
 `mode-both`, `history-cases` and `case/<state>` (a key of `cases.views` or
 `awaiting`, `judging`, `judged`, `one-sided`, `appeal`, `appeal-judging`,
 `failed`, `expired`, `removed`; Turkish takes the `_tr` view if there is one).
-Languages: `en`, `tr`.
+Languages: `en`, `tr`. These states draw the flat balance in place of the
+bundled 3D scene, so the shots match from run to run.
 
 ```sh
 APP=build/DerivedData/Build/Products/Debug-iphonesimulator/Judge.app

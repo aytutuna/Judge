@@ -43,16 +43,42 @@ final class ScreenshotStateTests: XCTestCase {
     }
 
     @MainActor
-    func testVerdictStateOpensTheVerdictWithoutNetwork() throws {
+    func testVerdictStateOpensTheSavedVerdictWithoutNetwork() throws {
         let state = try XCTUnwrap(ScreenshotState.parse("verdict/win_b_named:en"))
         let container = HistoryContainer.inMemory()
         withExtendedLifetime(container) {
             let app = state.makeModel(container: container)
-            XCTAssertEqual(app.home.path, [.verdict(id: "winB000001")])
-            XCTAssertNotNil(app.home.session("winB000001"))
+            XCTAssertEqual(app.home.path, [.saved(id: "winB000001")])
+            XCTAssertNotNil(try app.history.find(id: "winB000001")?.session())
             XCTAssertEqual(app.config.apiBaseURL.host, "127.0.0.1")
             XCTAssertFalse(app.persistsDraft)
             XCTAssertEqual(app.lang, .en)
+        }
+    }
+
+    func testParsesTheThreadScreens() {
+        XCTAssertEqual(ScreenshotState.parse("home-recent:en")?.screen, .homeRecent)
+        XCTAssertEqual(ScreenshotState.parse("home-recent:tr")?.tab, .new)
+        XCTAssertEqual(ScreenshotState.parse("verdict-thread:tr")?.screen, .verdictThread)
+        XCTAssertEqual(ScreenshotState.parse("verdict-thread:en")?.tab, .new)
+    }
+
+    @MainActor
+    func testThreadStatesNeedNoNetwork() throws {
+        let container = HistoryContainer.inMemory()
+        try withExtendedLifetime(container) {
+            let recent = try XCTUnwrap(ScreenshotState.parse("home-recent:en")).makeModel(container: container)
+            XCTAssertTrue(recent.home.path.isEmpty, "Home itself, with the row filled")
+            XCTAssertEqual(Recent.cards(try recent.history.all(), lang: .en).count, 6)
+
+            let thread = try XCTUnwrap(ScreenshotState.parse("verdict-thread:tr")).makeModel(container: container)
+            XCTAssertEqual(thread.home.path, [.verdict(id: "abc123DEF0")])
+            XCTAssertNotNil(thread.home.session("abc123DEF0"))
+            XCTAssertEqual(thread.home.argument(for: "abc123DEF0"), ExampleArgument.all[0].text(.tr))
+
+            let judging = try XCTUnwrap(ScreenshotState.parse("judging:en")).makeModel(container: container)
+            XCTAssertTrue(judging.home.isJudging)
+            XCTAssertEqual(judging.home.judgedArgument, ExampleArgument.all[0].text(.en), "the cover shows what was sent")
         }
     }
 

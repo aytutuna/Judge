@@ -7,9 +7,11 @@ import SwiftData
 /// only) with no network.
 ///
 /// Launch argument: `-JudgeScreenshotState <screen>:<lang>`, where screen is
-/// `home`, `home-error`, `judging`, `history`, `settings`, `signin`,
-/// `signin-code`, `account` (Settings, signed in), `verdict/<sample>` (a
-/// key of `verdictResponses`), or a Premium state: `tier/locked` (signed
+/// `home`, `home-recent` (saved verdicts in the Recent row), `home-error`,
+/// `judging`, `history`, `settings`, `signin`, `signin-code`, `account`
+/// (Settings, signed in), `verdict/<sample>` (a key of `verdictResponses`,
+/// opened as a saved verdict), `verdict-thread` (a fresh verdict under its
+/// argument), or a Premium state: `tier/locked` (signed
 /// in, monthly allowance used up), `tier/premium` (Premium chosen with
 /// credits), `pricing`, `pricing-store` (store prices on the buy buttons),
 /// `clarify` (the questions), `evidence` (picked
@@ -27,9 +29,11 @@ import SwiftData
 struct ScreenshotState {
     enum Screen: Equatable {
         case home
+        case homeRecent
         case homeError
         case judging
         case verdict(sample: String)
+        case verdictThread
         case history
         case settings
         case signIn
@@ -54,7 +58,7 @@ struct ScreenshotState {
 
     var tab: RootTab {
         switch screen {
-        case .home, .homeError, .judging, .verdict, .signIn, .signInCode,
+        case .home, .homeRecent, .homeError, .judging, .verdict, .verdictThread, .signIn, .signInCode,
              .tierLocked, .tierPremium, .pricing, .pricingStore, .clarify, .evidence, .judgingPremium, .modeBoth, .caseDetail:
             return .new
         case .history, .historyCases: return .history
@@ -74,8 +78,10 @@ struct ScreenshotState {
         let screen: Screen
         switch name {
         case "home": screen = .home
+        case "home-recent": screen = .homeRecent
         case "home-error": screen = .homeError
         case "judging": screen = .judging
+        case "verdict-thread": screen = .verdictThread
         case "history": screen = .history
         case "settings": screen = .settings
         case "signin": screen = .signIn
@@ -151,9 +157,13 @@ struct ScreenshotState {
             app.home.argument = ExampleArgument.all[0].text(lang)
             app.home.showForScreenshot(judgingPremium: false)
         case .verdict(let sample):
+            // Opened as a saved verdict: the card at the top, no thread above it.
             guard let session = ScreenshotFixtures.session(sample) else { return }
-            app.home.updateSession(session)
-            app.home.path = [.verdict(id: session.id)]
+            try? app.history.save(session, preset: Preset.defaultID, now: Self.newest)
+            app.home.path = [.saved(id: session.id)]
+        case .verdictThread:
+            guard let session = ScreenshotFixtures.session("win_a_self") else { return }
+            app.home.showForScreenshot(thread: session, argument: ExampleArgument.all[0].text(lang))
         case .signIn:
             app.home.argument = ExampleArgument.all[0].text(lang)
             app.account.showForScreenshot(providers: Self.allProviders)
@@ -226,14 +236,21 @@ struct ScreenshotState {
             guard let view = localized ?? ScreenshotFixtures.caseView(name) else { return }
             app.seedCase(view)
             app.home.path = [.caseDetail(id: view.id)]
-        case .history:
-            // Fixed times, newest first, an hour apart.
-            let newest = Date(timeIntervalSince1970: 1_792_000_000)
-            let samples = ["win_a_self", "overturned_tr", "win_b_named", "lean_b_majority_escalated", "split", "conditional"]
-            for (offset, name) in samples.enumerated() {
-                guard let session = ScreenshotFixtures.session(name) else { continue }
-                try? app.history.save(session, preset: Preset.defaultID, now: newest.addingTimeInterval(Double(-offset) * 3600))
-            }
+        case .history, .homeRecent:
+            saveSamples(app)
+        }
+    }
+
+    /// A fixed time, so dated rows read the same in every run.
+    private static let newest = Date(timeIntervalSince1970: 1_792_000_000)
+
+    /// Six saved verdicts, newest first, an hour apart.
+    @MainActor
+    private func saveSamples(_ app: AppModel) {
+        let samples = ["win_a_self", "overturned_tr", "win_b_named", "lean_b_majority_escalated", "split", "conditional"]
+        for (offset, name) in samples.enumerated() {
+            guard let session = ScreenshotFixtures.session(name) else { continue }
+            try? app.history.save(session, preset: Preset.defaultID, now: Self.newest.addingTimeInterval(Double(-offset) * 3600))
         }
     }
 

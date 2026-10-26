@@ -638,6 +638,13 @@ extension HomeModel {
         isJudging = true
     }
 
+    /// Screenshot fixtures: a fresh verdict under the argument it judged.
+    func showForScreenshot(thread session: VerdictSession, argument: String) {
+        sessions[session.id] = session
+        arguments[session.id] = argument
+        path = [.verdict(id: session.id)]
+    }
+
     /// Screenshot fixtures: the clarifying step without a request.
     func showForScreenshot(questions: [ClarifyQuestion], answers: [String: String] = [:]) {
         clarify = ClarifyState(questions: questions, answers: answers)
