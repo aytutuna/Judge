@@ -186,7 +186,7 @@ struct AppealSection: View {
                 let capped = HomeModel.capUTF16(value, max: CaseLogic.maxAppeal)
                 if capped != value { model.appealText = capped }
             }
-            if app.account.features.evidence {
+            if CaseLogic.appealEvidenceOn(view, features: app.account.features) {
                 EvidencePickerView(evidence: model.appealEvidence, lang: lang, disabled: model.appealSending)
             }
             if let error = model.appealError {

@@ -97,6 +97,12 @@ enum CaseLogic {
         return (L10n.caseJudgeExpiredConfirmFree(lang), L10n.caseJudgeNowYes(lang))
     }
 
+    /// Whether the appeal form offers a screenshot: the deployment takes
+    /// evidence and the case is premium (the server refuses it on a free one).
+    static func appealEvidenceOn(_ view: CaseView, features: PremiumFeatures) -> Bool {
+        features.evidence && view.tier == .premium
+    }
+
     /// Whether the owner can remove their side right now.
     static func canRemove(_ view: CaseView) -> Bool {
         view.status != .judging && !view.appealJudging && view.removed == nil

@@ -30,6 +30,7 @@ import com.okjudge.judge.ui.cases.CaseUiState
 import com.okjudge.judge.ui.cases.CaseViewModel
 import com.okjudge.judge.ui.history.HistoryScreen
 import com.okjudge.judge.ui.history.HistoryTags
+import com.okjudge.judge.ui.premium.EvidenceTags
 import kotlinx.serialization.json.jsonObject
 import org.junit.Assert.assertEquals
 import org.junit.Rule
@@ -129,6 +130,18 @@ class CaseScreensTest {
         compose.onNodeWithText("20 / 2000").assertExists()
         compose.onNodeWithTag(CaseTags.APPEAL_SUBMIT).assertIsEnabled().performClick()
         assertEquals(1, sent)
+    }
+
+    @Test
+    fun appealForm_offersAScreenshot_onlyOnAPremiumCase() {
+        var state by mutableStateOf(stateOf("judged"))
+        compose.setContent { Themed(AppLang.EN) { CaseScreen(state, evidenceOn = true, actions = CaseActions(), reducedMotion = true) } }
+        compose.onNodeWithTag(CaseTags.APPEAL_SUBMIT).assertExists()
+        compose.onAllNodesWithTag(EvidenceTags.ADD).assertCountEquals(1)
+        state = stateOf("judged_free")
+        compose.waitForIdle()
+        compose.onNodeWithTag(CaseTags.APPEAL_SUBMIT).assertExists()
+        compose.onAllNodesWithTag(EvidenceTags.ADD).assertCountEquals(0)
     }
 
     @Test

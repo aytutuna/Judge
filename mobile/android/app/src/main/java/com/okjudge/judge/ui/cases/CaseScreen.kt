@@ -588,7 +588,8 @@ private fun AppealSection(state: CaseUiState, view: CaseView, evidenceOn: Boolea
                     },
                 )
             }
-            if (evidenceOn) {
+            // The server refuses evidence on a free case's appeal.
+            if (evidenceOn && view.premium) {
                 val pick = rememberEvidencePicker(state.appealEvidence.room, actions.onAddAppealEvidence)
                 EvidencePicker(state.appealEvidence, disabled = state.appealSending, onAdd = pick, onRemove = actions.onRemoveAppealEvidence)
             }

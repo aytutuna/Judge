@@ -169,6 +169,13 @@ final class CaseTests: XCTestCase {
         XCTAssertEqual(CaseLogic.appealArea(refusedBefore), .form(failed: "failed"))
     }
 
+    func testAppealEvidenceOnlyOnPremiumCases() throws {
+        let evidence = PremiumFeatures(cases: true, evidence: true)
+        XCTAssertTrue(CaseLogic.appealEvidenceOn(try view("judged"), features: evidence))
+        XCTAssertFalse(CaseLogic.appealEvidenceOn(try view("judged_free"), features: evidence), "the server refuses it on a free case")
+        XCTAssertFalse(CaseLogic.appealEvidenceOn(try view("judged"), features: PremiumFeatures(cases: true)))
+    }
+
     func testRemovalIsOfferedOnlyWhenNothingIsJudging() throws {
         XCTAssertTrue(CaseLogic.canRemove(try view("waiting_for_respondent")))
         XCTAssertTrue(CaseLogic.canRemove(try view("judged")))
