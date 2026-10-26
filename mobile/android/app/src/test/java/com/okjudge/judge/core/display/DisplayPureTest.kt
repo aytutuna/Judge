@@ -141,4 +141,21 @@ class DisplayPureTest {
         assertEquals(false, ArgumentRules.canSubmit(" ".repeat(30) + "nineteen characters"))
         assertEquals(true, ArgumentRules.canSubmit("exactly twenty chars"))
     }
+
+    @Test
+    fun sceneVerdict_mirrorsSceneVerdictFrom() {
+        val win = VerdictResult(verdict = "side_b", runs = listOf("side_b", "side_a", "split"))
+        assertEquals(SceneMode.Verdict(20, listOf(Vote.B, Vote.A, Vote.OTHER)), VerdictDisplay.sceneVerdict(win))
+        assertEquals(
+            """{"kind":"verdict","verdict":{"tugA":20,"votes":["b","a","other"]}}""",
+            VerdictDisplay.sceneVerdict(win).json(),
+        )
+        val refused = VerdictResult(verdict = "side_a", runs = listOf("side_a"), modelRefused = true)
+        assertEquals(SceneMode.Verdict(50, emptyList()), VerdictDisplay.sceneVerdict(refused))
+        assertEquals("""{"kind":"judging","beat":"deliberate"}""", SceneMode.Judging(SceneBeat.DELIBERATE).json())
+        for (v in Fixtures.list("verdicts")) {
+            val r = Fixtures.sample(v.str("sample")!!).result.result
+            if (!r.refused) assertEquals(v.num("tugA")!!.toInt(), VerdictDisplay.sceneVerdict(r).tugA)
+        }
+    }
 }

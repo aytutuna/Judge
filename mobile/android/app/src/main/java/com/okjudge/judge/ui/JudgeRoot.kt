@@ -90,7 +90,8 @@ import kotlinx.serialization.Serializable
 
 @Serializable data object HomeKey : NavKey
 @Serializable data object JudgingKey : NavKey
-@Serializable data class VerdictKey(val id: String, val fresh: Boolean) : NavKey
+/** [argument]: what a fresh verdict judged, shown above it as the thread. */
+@Serializable data class VerdictKey(val id: String, val fresh: Boolean, val argument: String? = null) : NavKey
 @Serializable data object HistoryKey : NavKey
 @Serializable data object SettingsKey : NavKey
 @Serializable data object ClarifyKey : NavKey
@@ -273,9 +274,9 @@ fun JudgeRoot(container: AppContainer, links: StateFlow<Uri?> = MutableStateFlow
                         entry<JudgingKey> {
                             JudgingEntry(
                                 flow = container.verdictFlow,
-                                onDone = { id ->
+                                onDone = { id, argument ->
                                     backStack.removeAll { it is JudgingKey }
-                                    backStack.add(VerdictKey(id, fresh = true))
+                                    backStack.add(VerdictKey(id, fresh = true, argument = argument))
                                 },
                                 onLeave = { backStack.removeAll { it is JudgingKey } },
                             )
@@ -494,10 +495,11 @@ fun JudgeRoot(container: AppContainer, links: StateFlow<Uri?> = MutableStateFlow
 }
 
 @Composable
-private fun JudgingEntry(flow: VerdictFlow, onDone: (String) -> Unit, onLeave: () -> Unit) {
+private fun JudgingEntry(flow: VerdictFlow, onDone: (String, String?) -> Unit, onLeave: () -> Unit) {
     val state by flow.state.collectAsStateWithLifecycle()
     val reduced = rememberReducedMotion()
     val startedAt = remember { (state as? VerdictFlow.State.Running)?.startedAt ?: System.currentTimeMillis() }
+    val argument = remember { (state as? VerdictFlow.State.Running)?.argument?.takeIf { it.isNotEmpty() } }
     val premium = remember {
         (state as? VerdictFlow.State.Running)?.premium ?: ((state as? VerdictFlow.State.Succeeded)?.outcome?.result?.result?.premium == true)
     }
@@ -519,10 +521,11 @@ private fun JudgingEntry(flow: VerdictFlow, onDone: (String) -> Unit, onLeave: (
         startedAt = startedAt,
         reducedMotion = reduced,
         premium = premium,
+        argument = argument,
         onFinished = {
             if (outcome != null) {
                 flow.acknowledge()
-                onDone(outcome.id)
+                onDone(outcome.id, argument)
             }
         },
         onCancel = {

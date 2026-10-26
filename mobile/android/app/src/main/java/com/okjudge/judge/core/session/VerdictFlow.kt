@@ -58,7 +58,8 @@ class VerdictFlow(
 ) {
     sealed interface State {
         data object Idle : State
-        data class Running(val startedAt: Long, val premium: Boolean = false) : State
+        /** [argument] is what was sent, for the thread on the judging screen. */
+        data class Running(val startedAt: Long, val premium: Boolean = false, val argument: String = "") : State
         data class Succeeded(val outcome: VerdictOutcome) : State
         data class Failed(val error: UiError) : State
     }
@@ -139,8 +140,8 @@ class VerdictFlow(
     fun start(argument: String, preset: Preset, lang: AppLang): Boolean {
         if (!canStart()) return false
         _lastError.value = null
-        _state.value = State.Running(clock())
         val text = argument.trim()
+        _state.value = State.Running(clock(), argument = text)
         val key = RequestKey(text, preset.id, lang)
         val held = pending?.takeIf { it.key == key && clock() - it.since < RESUME_WINDOW_MS }
         if (held == null) pending = null
@@ -309,7 +310,7 @@ class VerdictFlow(
     /** Premium step 2 (judgePremium): the verdict itself. */
     private fun judgePremium(input: PremiumInput, clarifications: List<Clarification>?) {
         _lastError.value = null
-        _state.value = State.Running(clock(), premium = true)
+        _state.value = State.Running(clock(), premium = true, argument = input.text)
         _navigation.trySend(Nav.Judging)
         val request = VerdictRequest(
             argument = input.text,

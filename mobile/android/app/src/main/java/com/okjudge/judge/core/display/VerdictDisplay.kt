@@ -5,6 +5,7 @@ import com.okjudge.judge.core.model.Lean
 import com.okjudge.judge.core.model.LeanTally
 import com.okjudge.judge.core.model.VerdictResult
 import com.okjudge.judge.i18n.Strings
+import java.util.Locale
 import kotlin.math.PI
 
 /**
@@ -40,6 +41,10 @@ object VerdictDisplay {
     /** Beam angle for a finished verdict: a refusal stays level (sceneVerdictFrom). */
     fun finalBeamDeg(result: VerdictResult): Double =
         if (result.refused) 0.0 else svgRotateDeg(tugFinal(result))
+
+    /** What the balance scene settles on (sceneVerdictFrom): a refusal stays level with no votes. */
+    fun sceneVerdict(result: VerdictResult): SceneMode.Verdict =
+        if (result.refused) SceneMode.Verdict(50, emptyList()) else SceneMode.Verdict(tugFinal(result), result.runs.map(::voteOf))
 
     fun leanTally(lean: Lean, runCount: Int): LeanTally = lean.tally ?: LeanTally(runCount - 1, 1)
 
@@ -112,6 +117,11 @@ object VerdictDisplay {
     fun codePointLength(text: String): Int = text.codePointCount(0, text.length)
 }
 
-enum class Vote { A, B, OTHER }
+enum class Vote {
+    A, B, OTHER;
+
+    /** lib/scene-bridge.ts Vote. */
+    val wire: String get() = name.lowercase(Locale.ROOT)
+}
 
 enum class SealSide { A, B, NONE }

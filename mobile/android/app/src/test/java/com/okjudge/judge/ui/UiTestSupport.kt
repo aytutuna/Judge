@@ -15,6 +15,7 @@ import com.okjudge.judge.i18n.LocalLang
 import com.okjudge.judge.i18n.LocalStrings
 import com.okjudge.judge.i18n.LocalizedStrings
 import com.okjudge.judge.i18n.Strings
+import com.okjudge.judge.ui.components.LocalSceneLive
 import com.okjudge.judge.ui.theme.JudgeTheme
 import com.okjudge.judge.ui.theme.Palette
 import com.okjudge.judge.ui.verdict.CardActions
@@ -36,10 +37,10 @@ object UiTestSupport {
     }
 }
 
-/** Theme + language locals, on the ivory background. */
+/** Theme + language locals, on the ivory background, with the flat balance for the scene. */
 @Composable
 fun Themed(lang: AppLang, content: @Composable () -> Unit) {
-    CompositionLocalProvider(LocalLang provides lang, LocalStrings provides UiTestSupport.s(lang)) {
+    CompositionLocalProvider(LocalLang provides lang, LocalStrings provides UiTestSupport.s(lang), LocalSceneLive provides false) {
         JudgeTheme {
             Box(Modifier.background(Palette.ivory)) { content() }
         }

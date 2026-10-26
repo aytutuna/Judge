@@ -104,14 +104,20 @@ class ScreenshotsTest {
     @Test
     fun judging_waiting() = capture("judging_waiting_en") {
         Themed(AppLang.EN) {
-            JudgingScreen(done = false, result = null, startedAt = System.currentTimeMillis() - 4_000, reducedMotion = true, onFinished = {}, onCancel = {})
+            JudgingScreen(
+                done = false, result = null, startedAt = System.currentTimeMillis() - 4_000, reducedMotion = true, onFinished = {}, onCancel = {},
+                argument = UiTestSupport.s(AppLang.EN).exampleHotdogText,
+            )
         }
     }
 
     @Test
     fun judging_final_tipsTowardTheWinner() = capture("judging_final_win_b_tr") {
         Themed(AppLang.TR) {
-            JudgingScreen(done = true, result = sample("win_b_named").result.result, startedAt = 0, reducedMotion = true, onFinished = {}, onCancel = {})
+            JudgingScreen(
+                done = true, result = sample("win_b_named").result.result, startedAt = 0, reducedMotion = true, onFinished = {}, onCancel = {},
+                argument = UiTestSupport.s(AppLang.TR).exampleHotdogText,
+            )
         }
     }
 

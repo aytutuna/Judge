@@ -105,4 +105,16 @@ class ThinkingTest {
         assertTrue(Thinking.progressAt(180_000, false) + 0.005f < Thinking.progressAt(300_000, false))
         assertEquals(1f, Thinking.progressAt(1, true), 0f)
     }
+
+    @Test
+    fun beatFor_followsTheStoryOnce_thenDeliberates() {
+        val beats = loopSteps.map { Thinking.beatFor(loop(it)) }
+        assertEquals(
+            listOf(SceneBeat.LIFT, SceneBeat.SORT, SceneBeat.DIG, SceneBeat.DIG, SceneBeat.DIG, SceneBeat.DIG, SceneBeat.CRUX, SceneBeat.ORBS, SceneBeat.ORBS),
+            beats,
+        )
+        for (step in loopSteps) assertEquals(SceneBeat.DELIBERATE, Thinking.beatFor(loop(step, cycle = 1)))
+        assertEquals(SceneBeat.ORBS, Thinking.beatFor(finish(0, from = 2)))
+        assertEquals(SceneBeat.ORBS, Thinking.beatFor(finish(3, from = 8, cycle = 2)))
+    }
 }

@@ -38,6 +38,8 @@ import com.okjudge.judge.ui.home.CaseMode
 import com.okjudge.judge.ui.home.HomeScreen
 import com.okjudge.judge.ui.home.HomeTags
 import com.okjudge.judge.ui.home.HomeUiState
+import com.okjudge.judge.ui.judging.JudgingScreen
+import com.okjudge.judge.ui.judging.JudgingTags
 import com.okjudge.judge.ui.verdict.TranslationStatus
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonObject
@@ -185,6 +187,20 @@ class ScreensTest {
                 resetContent()
             }
         }
+    }
+
+    @Test
+    fun judging_showsTheArgumentAboveTheScene() {
+        val en = UiTestSupport.s(AppLang.EN)
+        compose.setContent {
+            Themed(AppLang.EN) {
+                JudgingScreen(done = false, result = null, startedAt = 0, reducedMotion = true, onFinished = {}, onCancel = {}, argument = "Hot dogs are sandwiches, says Sam.")
+            }
+        }
+        compose.onNodeWithText("Hot dogs are sandwiches, says Sam.").assertExists()
+        compose.onNodeWithText(en.threadJudges).assertExists()
+        compose.onNodeWithTag(JudgingTags.BALANCE).assertExists()
+        compose.onNodeWithTag(JudgingTags.CAPTION).assertExists()
     }
 
     @Test

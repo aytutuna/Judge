@@ -88,6 +88,17 @@ object Thinking {
         }
     }
 
+    /** The 3D beat for a state (lib/judging-ui.ts judgingBeatFor): later cycles deliberate. */
+    fun beatFor(state: DigState): SceneBeat = when {
+        state is DigState.Finish -> SceneBeat.ORBS
+        state.cycle >= 1 -> SceneBeat.DELIBERATE
+        state.step <= 0 -> SceneBeat.LIFT
+        state.step == 1 -> SceneBeat.SORT
+        state.step <= 5 -> SceneBeat.DIG
+        state.step == 6 -> SceneBeat.CRUX
+        else -> SceneBeat.ORBS
+    }
+
     /** Key of the polite live-region text (announcement()). */
     fun announcementKey(state: DigState, done: Boolean): String = when {
         done || state is DigState.Finish -> READY_KEY
