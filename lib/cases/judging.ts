@@ -102,7 +102,7 @@ function summarySystem(lang: Lang): string {
     lang === "tr"
       ? 'Write in Turkish, in everyday words, with informal "sen" if you address anyone, never "siz". Call the parties "Taraf A" and "Taraf B"; keep other labels such as "Person C" exactly as written.'
       : 'Write in plain everyday English. Call the parties "Party A" and "Party B"; keep other labels such as "Person C" exactly as written.';
-  return `You write one sentence for an argument-settling app. A case was judged, then one party added new context and the whole case was judged again. The app already shows the outcome label and both confidence scores, so never repeat numbers and never contradict the label. Say what the new context changed in the judges' reasoning, or why it did not change the outcome. One short sentence of 12 to 25 words: name the one point that mattered, nothing more. No names, no quotes, no preamble. ${language}`;
+  return `You write one sentence for an argument-settling app. A case was judged, then one party added new context and the whole case was judged again. The app already shows the outcome label, so never quote numbers and never contradict the label. Say what the new context changed in the judges' reasoning, or why it did not change the outcome. One short sentence of 12 to 25 words: name the one point that mattered, nothing more. No names, no quotes, no preamble. ${language}`;
 }
 
 /** One sentence on what the new context changed. Fails open to "". */
@@ -117,11 +117,11 @@ export async function appealSummary(
     const user = [
       `OUTCOME LABEL: ${OUTCOME_MEANING[outcome]}`,
       "",
-      `EARLIER VERDICT: ${prev.verdict} (confidence ${prev.confidence}/5)`,
+      `EARLIER VERDICT: ${prev.verdict}`,
       `Headline: ${prev.headline}`,
       `Crux: ${prev.crux}`,
       "",
-      `NEW VERDICT: ${next.verdict} (confidence ${next.confidence}/5)`,
+      `NEW VERDICT: ${next.verdict}`,
       `Headline: ${next.headline}`,
       `Crux: ${next.crux}`,
       "",
