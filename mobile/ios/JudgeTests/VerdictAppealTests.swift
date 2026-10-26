@@ -323,6 +323,31 @@ final class VerdictAppealTests: XCTestCase {
     }
 
     @MainActor
+    func testOurRoundJudgedWhileOutOfTouchKeepsItsNames() async throws {
+        let router = StubRouter()
+        let down = try PremiumFixtures.json(503, ["error": "down", "code": "unavailable"])
+        router.on("GET", Self.verdictPath, try verdict(gate: gate(true)), try verdict(appeals: [round("judged")], gate: gate(true)))
+        router.on("POST", Self.appealPath, try accepted())
+        router.on("GET", Self.roundPath, down, down, down, try roundReady())
+        router.install()
+        let container = HistoryContainer.inMemory()
+        let app = try PremiumFixtures.app(container: container)
+        let (appeal, shown) = try model(app)
+        await appeal.load()
+        appeal.appealText = Self.context
+        await appeal.submitAppeal()
+        XCTAssertEqual(appeal.judgingID, "r1")
+
+        await appeal.follow("r1")
+        XCTAssertTrue(appeal.finished)
+        XCTAssertEqual(shown.session.rulingID, "r1")
+        let saved = try XCTUnwrap(try app.history.find(id: Self.id)?.session())
+        XCTAssertEqual(saved.currentID, "r1")
+        XCTAssertTrue(saved.nameMap.contains(NameMapping(original: "Kim", replacement: "Person C")))
+        withExtendedLifetime(container) {}
+    }
+
+    @MainActor
     func testARoundFinishedElsewhereIsCaughtUp() async throws {
         let router = StubRouter()
         router.on("GET", Self.verdictPath, try verdict(appeals: [round("judged")], gate: gate(true)))

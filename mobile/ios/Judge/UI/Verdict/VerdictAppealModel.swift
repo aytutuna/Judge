@@ -82,7 +82,10 @@ final class VerdictAppealModel: AppealDraft {
            shown().currentID != latest.id,
            let stored = try? await api.storedVerdict(id: latest.id),
            shown().currentID != latest.id {
-            onRuling(shown().withRuling(VerdictPayload(id: latest.id, result: stored.result, nameMap: [])))
+            // Our own round, judged while polling had lost touch: its 202 still holds the names.
+            let names: [NameMapping] = sent?.id == latest.id ? sent?.nameMap ?? [] : []
+            onRuling(shown().withRuling(VerdictPayload(id: latest.id, result: stored.result, nameMap: names)))
+            sent = nil
         }
         rounds = fresh
         return true
