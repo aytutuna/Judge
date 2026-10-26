@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { cache } from "react";
 import { headers } from "next/headers";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
@@ -19,8 +20,8 @@ import styles from "./page.module.css";
 export const dynamic = "force-dynamic";
 
 /** The verdicts the writer's added context produced, oldest first. A read
- * that fails shows the first verdict alone. */
-async function laterRounds(id: string): Promise<{ id: string; result: VerdictResult; createdAt: string }[]> {
+ * that fails shows the first verdict alone. One read per request. */
+const laterRounds = cache(async (id: string): Promise<{ id: string; result: VerdictResult; createdAt: string }[]> => {
   try {
     const { appealVerdicts } = await import("@/lib/verdict-appeals/service");
     return (await appealVerdicts(id)).map((v) => ({ id: v.id, result: v.result, createdAt: v.createdAt }));
@@ -28,7 +29,7 @@ async function laterRounds(id: string): Promise<{ id: string; result: VerdictRes
     console.error("[verdicts] rounds read failed:", e instanceof Error ? e.message : String(e));
     return [];
   }
-}
+});
 
 /** Chrome language follows the viewer's browser (only a LEADING "tr"
  * counts — q-value parsing is deliberately out of scope). */
@@ -48,11 +49,14 @@ export async function generateMetadata({
     return { title: t(await viewerLang(), "removed.title"), robots: { index: false, follow: false } };
   }
   const { stored, display } = found;
+  // The page leads with the latest ruling, so the link preview does too.
+  const oneSided = found.meta?.kind === "free" || found.meta?.kind === "premium";
+  const r = (oneSided ? (await laterRounds(id)).at(-1)?.result : null) ?? stored.result;
   // Titles carry the display names the page shows (labels when names are off).
-  const lang = verdictLang(stored.result);
+  const lang = verdictLang(r);
   const parties = resolveParties(publicNameMap(display), lang, "A", { noSelf: true });
-  const title = restoreNames(stored.result.headline, parties, lang);
-  const description = restoreNames(stored.result.crux, parties, lang);
+  const title = restoreNames(r.headline, parties, lang);
+  const description = restoreNames(r.crux, parties, lang);
   return {
     title,
     description,

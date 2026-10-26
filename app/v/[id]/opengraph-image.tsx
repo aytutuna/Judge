@@ -5,10 +5,24 @@ import { contentLang, t } from "@/lib/i18n";
 import { resolveParties, restoreNames } from "@/lib/names";
 import { getPublicVerdict } from "@/lib/originals/display";
 import { publicNameMap } from "@/lib/originals-types";
+import type { VerdictResult } from "@/lib/types";
 
 export const alt = "A shared verdict";
 export const size = OG_SIZE;
 export const contentType = "image/png";
+
+/** The latest ruling the writer's added context produced, like the page
+ * shows it; null (the first verdict) when there is none or it cannot be read. */
+async function latestRound(id: string, kind: string | undefined): Promise<VerdictResult | null> {
+  if (kind !== "free" && kind !== "premium") return null;
+  try {
+    const { appealVerdicts } = await import("@/lib/verdict-appeals/service");
+    return (await appealVerdicts(id)).at(-1)?.result ?? null;
+  } catch (e) {
+    console.error("[og] rounds read failed:", e instanceof Error ? e.message : String(e));
+    return null;
+  }
+}
 
 /**
  * Preview card for a shared verdict: the ruling, its headline and the
@@ -54,7 +68,7 @@ export default async function Image({ params }: { params: Promise<{ id: string }
     );
   }
 
-  const r = stored.result;
+  const r = (await latestRound(id, found?.meta?.kind)) ?? stored.result;
   const lang = contentLang(`${r.headline} ${r.crux}`);
   const display = found?.display ?? null;
   const nameA = display?.a ?? t(lang, "party.a");
