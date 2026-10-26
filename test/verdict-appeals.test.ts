@@ -403,6 +403,20 @@ describe("POST /api/v1/verdicts/{id}/appeals", () => {
     expect((await post(id, { user: o, headers: { "idempotency-key": "bad key!" } })).status).toBe(400);
   });
 
+  it("replays a degraded round's key instead of starting another round", async () => {
+    const o = await owner(3);
+    const { id } = await verdict(o);
+    const headers = { "idempotency-key": "k-degraded" };
+    m.judgeAnonymized.mockResolvedValueOnce(okOutcome(undefined, { degraded: true }));
+    const first = (await (await post(id, { user: o, headers })).json()) as VerdictAppealResponse;
+    await drain();
+    const again = (await (await post(id, { user: o, headers })).json()) as VerdictAppealResponse;
+    expect(again).toMatchObject({ replayed: true, appeal: { id: first.appeal.id, status: "judged" } });
+    expect(m.scheduled).toHaveLength(0);
+    expect(await usage(o)).toEqual(["refunded"]);
+    expect(await credits(o)).toBe(3);
+  });
+
   it("takes one screenshot as evidence and shows it to the judges as new evidence", async () => {
     const o = await owner(3);
     const { id } = await verdict(

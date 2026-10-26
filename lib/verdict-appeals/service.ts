@@ -111,12 +111,13 @@ export async function appealRootOf(id: string): Promise<string | null> {
   return rs.rows[0] ? String(rs.rows[0].verdict_id) : null;
 }
 
-/** The round an Idempotency-Key already paid for (or still holds a unit for). */
+/** The round an Idempotency-Key already started: still judging, or judged
+ * (a degraded panel is judged and refunded). A failed round is not one. */
 async function appealByKey(userId: string, usageKey: string): Promise<VerdictAppealRow | null> {
   const db = await appealsDb();
   const rs = await db.execute({
     sql: `${SELECT} JOIN premium_usage p ON p.id = j.reservation_id
-          WHERE p.user_id = ? AND p.idempotency_key = ? AND p.status <> 'refunded'`,
+          WHERE p.user_id = ? AND p.idempotency_key = ? AND (p.status <> 'refunded' OR j.status = 'ready')`,
     args: [userId, usageKey],
   });
   return rs.rows[0] ? mapRow(rs.rows[0]) : null;
