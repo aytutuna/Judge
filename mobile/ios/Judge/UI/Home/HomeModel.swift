@@ -4,6 +4,7 @@ import UIKit
 
 enum HomeRoute: Hashable {
     case verdict(id: String)
+    case saved(id: String)
     case pricing
     case caseDetail(id: String)
 }
