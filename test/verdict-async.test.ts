@@ -199,7 +199,7 @@ describe("free async verdicts", () => {
 
     await drain();
     // The judges saw only the anonymized text.
-    expect(m.judgeSelfConsistent).toHaveBeenCalledWith(ANON, expect.anything(), "en");
+    expect(m.judgeSelfConsistent).toHaveBeenCalledWith(ANON, expect.anything(), "en", {});
 
     const ready = await get(body.id);
     expect(ready.status).toBe(200);

@@ -87,7 +87,7 @@ describe("GET /api/v1/config", () => {
     expect((await call()).body.premiumEnabled).toBe(false);
   });
 
-  it("features follow Premium and the CASES_ENABLED / EVIDENCE_ENABLED switches", async () => {
+  it("features follow the CASES_ENABLED / EVIDENCE_ENABLED switches; only evidence needs Premium", async () => {
     clearAuthEnv();
     vi.stubEnv("NODE_ENV", "production");
     vi.stubEnv("BETTER_AUTH_SECRET", "s".repeat(40));
@@ -102,6 +102,11 @@ describe("GET /api/v1/config", () => {
     vi.stubEnv("CASES_ENABLED", "1");
     vi.stubEnv("EVIDENCE_ENABLED", "1");
     vi.stubEnv("PREMIUM_ENABLED", "0");
+    expect((await call()).body.features).toEqual({ cases: true, evidence: false });
+    vi.stubEnv("ANTHROPIC_API_KEY", "");
+    expect((await call()).body.features).toEqual({ cases: false, evidence: false });
+    vi.stubEnv("ANTHROPIC_API_KEY", "k");
+    vi.stubEnv("BETTER_AUTH_SECRET", "");
     expect((await call()).body.features).toEqual({ cases: false, evidence: false });
   });
 

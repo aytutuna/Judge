@@ -28,7 +28,7 @@ import { apiErrorMessage, t, type Key } from "@/lib/i18n";
 import { useLang } from "@/lib/lang";
 import { nudgeScene, resetScene } from "@/lib/scene-bridge";
 import { MAX_FINISH_MS } from "@/lib/thinking";
-import { effectiveTier, setTierChoice, tierAvailability, useTierChoice } from "@/lib/tier";
+import { effectiveTier, setTierChoice, signInOffered, tierAvailability, useTierChoice } from "@/lib/tier";
 import type {
   Clarification,
   ClarifyResponse,
@@ -113,8 +113,8 @@ export default function Home() {
   // of the same request reuses it, so the server replays or waits instead
   // of charging again. A success or a different request gets a new key.
   const premiumKey = useRef<{ request: string; key: string } | null>(null);
-  // Premium extras: screenshot evidence and two-sided cases, each only when
-  // this deployment offers it (GET /api/v1/config `features`).
+  // Screenshot evidence (Premium) and two-sided cases (any account), each
+  // only when this deployment offers it (GET /api/v1/config `features`).
   const router = useRouter();
   const [caseMode, setCaseMode] = useState<CaseMode>("now");
   const [creating, setCreating] = useState(false);
@@ -127,7 +127,11 @@ export default function Home() {
   const premium = tier === "premium";
   const features = viewer.config?.features;
   const evidenceOn = premium && features?.evidence === true;
-  const casesOn = premium && features?.cases === true;
+  // Two-sided cases need an account, not Premium. Signed out, the switch is
+  // shown locked behind sign-in.
+  const signedIn = Boolean(viewer.me?.user);
+  const casesOn = signedIn && features?.cases === true;
+  const casesLocked = !signedIn && features?.cases === true && signInOffered(viewer.config);
   const twoSided = casesOn && caseMode === "both";
   const holding = checking || creating;
 
@@ -181,8 +185,8 @@ export default function Home() {
         })
       : undefined;
 
-  // Premium skips the human check: the signed-in account is the gate.
-  const needsToken = TURNSTILE_SITE_KEY !== "" && !premium;
+  // Premium and cases skip the human check: the signed-in account is the gate.
+  const needsToken = TURNSTILE_SITE_KEY !== "" && !premium && !twoSided;
   const canSubmit =
     argument.trim().length >= 20 &&
     !holding &&
@@ -402,10 +406,10 @@ export default function Home() {
     }
   }
 
-  /** Premium, both sides: create the case with the owner's side (one
-   * premium verdict is held), keep the returned names in this browser and
-   * open the case page with the invite link. No clarifying step: the other
-   * side's account fills the gaps. */
+  /** Both sides: create the case with the owner's side (a premium case holds
+   * one premium verdict), keep the returned names in this browser and open
+   * the case page with the invite link. No clarifying step: the other side's
+   * account fills the gaps. */
   async function createCase() {
     const tokens = evidenceOn ? evidence.tokens : [];
     clearDraft();
@@ -416,6 +420,7 @@ export default function Home() {
       text: argument,
       framework,
       lang,
+      tier,
       ...(tokens.length ? { evidence: tokens } : {}),
       ...(name ? { displayName: name } : {}),
     });
@@ -490,7 +495,7 @@ export default function Home() {
             argument={argument}
             onArgumentChange={changeArgument}
             onExample={fillExample}
-            onSubmit={() => void (premium ? (twoSided ? createCase() : submitPremium()) : submit())}
+            onSubmit={() => void (twoSided ? createCase() : premium ? submitPremium() : submit())}
             canSubmit={canSubmit}
             error={error}
             framework={framework}
@@ -533,10 +538,16 @@ export default function Home() {
               ) : undefined
             }
             extras={
-              casesOn || evidenceOn ? (
+              casesOn || casesLocked || evidenceOn ? (
                 <>
-                  {casesOn ? (
-                    <CaseModeSwitch lang={lang} value={caseMode} onChange={setCaseMode} disabled={holding} />
+                  {casesOn || casesLocked ? (
+                    <CaseModeSwitch
+                      lang={lang}
+                      value={twoSided ? "both" : "now"}
+                      onChange={setCaseMode}
+                      disabled={holding}
+                      locked={casesLocked}
+                    />
                   ) : null}
                   {evidenceOn ? (
                     <EvidencePicker
@@ -590,7 +601,7 @@ export default function Home() {
           <ScrollStory lang={lang} />
         </SceneStage>
         <SampleVerdict lang={lang} />
-        <Faq lang={lang} features={viewer.config?.premiumEnabled ? (features ?? null) : null} />
+        <Faq lang={lang} features={features ?? null} premium={viewer.config?.premiumEnabled === true} />
       </main>
 
       <SiteFooter lang={lang} toggle />

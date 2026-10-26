@@ -648,6 +648,16 @@
   font-size: 13px;
   line-height: 1.45;
 }
+.modeLink {
+  border-radius: 4px;
+  color: var(--terra-ink);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.modeLink:hover {
+  color: var(--ink);
+}
 .mode:disabled {
   opacity: 0.75;
 }

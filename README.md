@@ -149,7 +149,8 @@ proxy (see *Custom domain behind Cloudflare*).
 ## Accounts and Premium
 
 Accounts are optional. Signed-out and free visitors get exactly the free
-experience above. Signing in (Apple, Google or an emailed link) unlocks
+experience above. Signing in (Apple, Google or an emailed link) adds
+two-sided cases on the free tier (see below) and unlocks
 **Premium**: clarifying questions, web fact-checking with sources and a
 stronger judge panel. It is paid for with credits (one premium verdict = one
 credit) or a monthly plan with a fair-use cap, bought in the apps through
@@ -182,7 +183,7 @@ after sign-in.
 | `PREMIUM_SONNET_EFFORT` | `medium` | Thinking depth for non-Haiku premium judges: `low`, `medium` or `high` |
 | `PREMIUM_FACTCHECK_MODEL` | `claude-haiku-5-5` | Model for the web fact-check |
 | `PREMIUM_FACTCHECK_MAX_SEARCHES` | `3` | Web searches per fact-check (1 to 5), $0.01 each |
-| `CASES_ENABLED` | `1` | `0` turns off two-sided cases and appeals (`/api/v1/cases*` and `/api/v1/respond/*` answer `503 not_configured`, `GET /api/v1/config` reports `features.cases: false`). Always off when Premium is off |
+| `CASES_ENABLED` | `1` | `0` turns off two-sided cases and appeals (`/api/v1/cases*` and `/api/v1/respond/*` answer `503 not_configured`, `GET /api/v1/config` reports `features.cases: false`). Also off without accounts or `ANTHROPIC_API_KEY`; Premium is not needed (with Premium off, free cases still work and appeals and premium cases answer `503 not_configured`) |
 | `EVIDENCE_ENABLED` | `1` | `0` turns off screenshot evidence (upload endpoints answer `503 not_configured`, evidence tokens are refused with `400 evidence_invalid`, `features.evidence: false`). Always off when Premium is off |
 | `EVIDENCE_MODEL` | `claude-haiku-5-5` | Vision model that transcribes evidence images |
 | `PURCHASES_ENABLED` | *(empty)* | `1` = `GET /api/v1/config` reports `pricing.purchasesEnabled: true`, so the apps offer their in-app purchases. Anything else = false ("Coming soon") |
@@ -223,9 +224,9 @@ sign-in does not depend on it.
    `fact_check` and `panel` added, and the reserved credit is consumed
    (or returned, see above).
 
-### Two-sided cases, evidence and appeals (Premium)
+### Two-sided cases (free with an account), evidence and appeals (Premium)
 
-- **Hear both sides.** A Premium user writes their side (`POST /api/v1/cases`)
+- **Hear both sides.** Any signed-in user writes their side (`POST /api/v1/cases`)
   and gets a private invite link `/r/<token>` for the other person. That
   person needs no account: they write their side privately (Turnstile when
   configured, per-IP limits). Neither sees the other's text before the
@@ -235,18 +236,28 @@ sign-in does not depend on it.
   evidence favors and the fact the verdict hinges on) and what would change
   the verdict. The owner can judge with only their side at any time; after
   7 days without an answer the invite expires.
-- **Credits.** One premium verdict per case, held when the case is created
-  (it counts towards the fair-use cap and `PREMIUM_DAILY_CAP` then), spent
+- **Free or premium case.** `"tier"` on create, `"free"` by default. A free
+  case is judged by the free judges (the same self-consistent runs,
+  escalation and crux trial as a free verdict, with the two-account prompt),
+  holds no credit and is not counted against `PREMIUM_DAILY_CAP`. Creating
+  it uses the per-account create limit; the answer or judge-now that starts
+  its judging counts as one free verdict for that caller (the per-IP limits
+  and `DAILY_VERDICT_CAP` below). A premium case gets the fact-check and
+  the stronger panel for one premium verdict, held when the case is created
+  (it counts towards the monthly cap and `PREMIUM_DAILY_CAP` then), spent
   when it is judged, and returned if judging fails, the judges decline, or
   nobody answers in 7 days. Judging runs after the response (Next's
   `after()`, so it needs `next start` or a platform that supports it);
-  anything still judging after 10 minutes is failed and refunded.
+  anything still judging after 10 minutes is failed (and a held credit
+  refunded).
 - **Evidence.** Up to 3 images per side (1 per appeal), PNG/JPEG/WebP/GIF,
   checked by their bytes. The browser shrinks them to 1600 px first. Each
   image is transcribed in memory by `EVIDENCE_MODEL` and then thrown away:
   images are never stored, and the transcript is anonymized with the same
   name map as the text before it is stored or judged. Works for one-sided
-  premium verdicts too (`"evidence"` on `POST /api/v1/verdict`).
+  premium verdicts too (`"evidence"` on `POST /api/v1/verdict`). Evidence
+  on a free case, from either side and on its appeals too, is refused with
+  `402 premium_required`.
 - **Appeals.** After a verdict, each party may add context once (the owner;
   the other person only when signed in with Premium, and only the person who
   wrote side B: the account they answered with, or whoever holds the claim
@@ -415,7 +426,7 @@ The website and the future iOS/Android app share one JSON API. Base URL
 | `POST /api/v1/verdicts/{id}/translate?lang=en\|tr` | A stored verdict in the other language |
 | `POST /api/v1/auth/dev-login` | Local testing only (see above); 404 everywhere else |
 | `POST /api/v1/evidence` | Premium: transcribe 1 to 3 evidence images, get signed evidence tokens |
-| `POST /api/v1/cases` | Premium: start a two-sided case (holds 1 premium verdict) |
+| `POST /api/v1/cases` | Start a two-sided case (signed in; `"tier": "premium"` holds 1 premium verdict) |
 | `GET /api/v1/cases` | Your cases, newest first (`?limit=1-50&before=<createdAt>`); each has the anonymized `headline` of its latest verdict and an `excerpt` of your side |
 | `GET /api/v1/cases/{id}` / `DELETE` | Your case (`CaseView`) / remove your side (kept for older clients; same as `/removal`) |
 | `GET /api/v1/cases/{id}/originals` | Your side (and appeal) as you wrote them |
@@ -509,9 +520,10 @@ module the app can import); every case and respond response is
    sign-in and rate-limit codes. Phone numbers, e-mail addresses, handles and
    account numbers are masked when the transcript is anonymized.
 2. **Create:** `POST /api/v1/cases` with an optional `Idempotency-Key` and
-   `{ "text": "...", "framework": { "preset": "balanced" }, "lang": "en", "evidence": ["v1...."] }`.
-   Add `"displayName": "Aytu"` for the name shown on the share pages (empty
-   or absent = Party A).
+   `{ "text": "...", "framework": { "preset": "balanced" }, "lang": "en", "tier": "premium", "evidence": ["v1...."] }`.
+   `"tier"` is `"free"` (default; no `evidence`) or `"premium"`; `case.tier`
+   echoes it. Add `"displayName": "Aytu"` for the name shown on the share
+   pages (empty or absent = Party A).
    `201 { "case": CaseView, "name_map": [...], "entitlement": {...} }`
    (`200` with `"replayed": true` and an empty `name_map` on a retried key).
    The server keeps an encrypted copy of the name map (`case.names` on every
@@ -522,7 +534,8 @@ module the app can import); every case and respond response is
    `status`: `awaiting_respondent | judging | judged | failed | expired`.
    `case.canJudgeNow` says whether `POST /cases/{id}/judge` makes sense
    (`{ "mode": "only_mine" }` while waiting for the answer; no body needed to
-   retry a failed case; an expired case takes a new unit). `202` when judging
+   retry a failed case; an expired premium case takes a new unit, a free one
+   none). `202` when judging
    started, `200` when it already was.
 4. **The other person** opens `https://<domain>/r/<token>` (or the app calls
    `GET /api/v1/respond/{token}`), then `POST /api/v1/respond/{token}` with

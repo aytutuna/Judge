@@ -38,6 +38,7 @@ function row(over: Partial<CaseRow> = {}): CaseRow {
     ownerId: "owner",
     status: "awaiting_respondent",
     mode: null,
+    tier: "premium",
     framework: { preset: "balanced" },
     lang: "en",
     inviteNonce: "n",

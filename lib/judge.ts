@@ -284,13 +284,15 @@ export async function judgeSelfConsistent(
   anonymizedArgument: string,
   framework: FrameworkChoice,
   lang: Lang = "en",
+  /** A free two-sided case: the same notes, schema and context as judgeOnce. */
+  extra: Pick<JudgeOptions, "context" | "twoSided"> = {},
 ): Promise<JudgeRun[]> {
   // JUDGE_RUNS lets cost-conscious deployments trade confidence for requests
   // (1-3; aggregate caps confidence when fewer runs survive).
   const n = Math.min(3, Math.max(1, Number(process.env.JUDGE_RUNS) || 3));
   const configs = [{}, { analyzeBFirst: true }, {}].slice(0, n);
   return Promise.all(
-    configs.map((config) => judgeOnce(anonymizedArgument, framework, { ...config, lang })),
+    configs.map((config) => judgeOnce(anonymizedArgument, framework, { ...config, lang, ...extra })),
   );
 }
 
@@ -312,7 +314,7 @@ export async function judgeExtra(
   anonymizedArgument: string,
   framework: FrameworkChoice,
   lang: Lang = "en",
-  /** Premium escalation: the same context, notes and schema as the panel. */
+  /** The same context, notes and schema as the first round (premium panel or free case). */
   extra: Pick<JudgeOptions, "context" | "premium" | "twoSided" | "evidence" | "appeal"> = {},
 ): Promise<JudgeRun[]> {
   const configs = Array.from({ length: Math.max(0, n) }, (_, i) => ({

@@ -166,6 +166,19 @@ describe("owner case page", () => {
     expect(html).not.toContain(esc(t("en", "case.judgeNow.confirm")));
   });
 
+  it("a free case never mentions a held or returned credit", () => {
+    const free = (v: CaseView) => caseView({ ...v, tier: "free" });
+    const awaiting = owner(free(OWNER.awaiting));
+    expect(awaiting).toContain(OWNER.awaiting.inviteUrl as string);
+    expect(awaiting).not.toContain("premium verdict is held");
+    expect(owner(free(OWNER.failed))).toContain(t("en", "case.failedBodyFree"));
+    const expired = owner(free(OWNER.expired));
+    expect(expired).toContain(t("en", "case.expiredBodyFree"));
+    expect(expired).toContain(t("en", "case.judgeExpired.confirmFree"));
+    expect(expired).not.toContain(t("en", "case.judgeExpired.yes"));
+    for (const html of [awaiting, owner(free(OWNER.failed)), expired]) expect(html).not.toMatch(/credit|premium verdict/i);
+  });
+
   it("names the viewer's party when this browser has no names for the case", () => {
     const html = owner(OWNER.judged, { names: [] });
     // Owner is Party A; the verdict went to Party B.
@@ -212,6 +225,12 @@ describe("respondent page", () => {
     expect(html).toContain(t("en", "respond.submit"));
     // Nothing of the owner's account before the verdict.
     expect(html).not.toContain(esc(t("en", "case.accountA")));
+  });
+
+  it("form on a free case: no screenshots (evidence is Premium)", () => {
+    const html = respondent(caseView({ ...RESPONDENT.form, tier: "free" }));
+    expect(html).toContain(t("en", "respond.submit"));
+    expect(html).not.toContain(esc(t("en", "evidence.add")));
   });
 
   it("own invite: tells the owner to send it on, no form", () => {
@@ -262,6 +281,15 @@ describe("respondent page", () => {
     expect(ownerAppeal).toContain(t("en", "appeal.submit"));
     expect(ownerAppeal).not.toContain('type="file"');
     expect(owner(OWNER.judged)).toContain('type="file"');
+  });
+
+  it("appeals on a free case offer no screenshots", () => {
+    const ownerAppeal = owner(caseView({ ...OWNER.judged, tier: "free" }));
+    expect(ownerAppeal).toContain(t("en", "appeal.submit"));
+    expect(ownerAppeal).not.toContain('type="file"');
+    const appeal = respondent(caseView({ ...RESPONDENT.judgedPremium, tier: "free" }));
+    expect(appeal).toContain(t("en", "appeal.submit"));
+    expect(appeal).not.toContain('type="file"');
   });
 
   it("settled without them, or expired: says so calmly, with a next step, no verdict", () => {
@@ -344,6 +372,12 @@ describe("small case components", () => {
     expect(now).toContain(t("en", "mode.nowHint"));
     const both = renderToStaticMarkup(<CaseModeSwitch lang="tr" value="both" onChange={noop} />);
     expect(both).toContain(t("tr", "mode.bothHint"));
+  });
+
+  it("CaseModeSwitch locked (signed out): both sides says it needs sign-in, not Premium", () => {
+    const html = renderToStaticMarkup(<CaseModeSwitch lang="en" value="now" onChange={noop} locked />);
+    expect(html).toContain(t("en", "tier.lockedSignIn"));
+    expect(html).not.toMatch(/premium/i);
   });
 
   it("AccountsRead: renders nothing without sides, transcripts as details", () => {

@@ -167,7 +167,8 @@ export type RespondPanelProps = {
   appeal: AppealDraft | null;
   /** Rendered in place of the live human check (tests pass null). */
   turnstile?: ReactNode;
-  /** Show the screenshot pickers (the deployment offers evidence). */
+  /** Show the screenshot pickers (the deployment offers evidence). The
+   * answer's picker also needs a premium case. */
   evidence?: boolean;
   /** An appeal just finished: focus its outcome banner. */
   focusAppeal?: boolean;
@@ -265,7 +266,7 @@ export function RespondPanel({
               aria-describedby={form.error ? "respond-error" : undefined}
             />
           </div>
-          {evidence ? (
+          {evidence && view.tier === "premium" ? (
             <EvidencePicker
               lang={lang}
               max={MAX_EVIDENCE_PER_SIDE}
@@ -324,7 +325,7 @@ export function RespondPanel({
             done={Boolean(overlay?.done)}
             result={overlay?.done ? (current?.result ?? null) : null}
             onFinished={onOverlayFinished}
-            premium
+            premium={view.tier === "premium"}
           />
         </div>
         <AccountsRead lang={lang} title={t(lang, "case.yourSide")} sides={ownSide} yourParty={view.yourParty} />
@@ -410,7 +411,7 @@ export function RespondPanel({
         signInHref={RESPOND_SIGNIN_HREF}
         onSignIn={() => rememberPendingInvite(token)}
         draft={appeal}
-        evidence={evidence}
+        evidence={evidence && view.tier === "premium"}
       />
       <VerdictHistory lang={lang} view={view} names={names} selfParty="B" />
       {ownTools}

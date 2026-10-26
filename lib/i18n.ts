@@ -274,7 +274,7 @@ const en = {
     "Questions, or a request to see, correct or remove your data? Email {email} with the link to the verdict or case.",
   "privacy.accountsTitle": "Accounts (optional)",
   "privacy.accounts":
-    "You only need an account for Premium. If you sign in with Apple or Google, we keep the email address, name and profile picture link they share with us, plus which sign-in method you used, and Apple or Google can see that you signed in to Judge. If you sign in with an email link, that email goes out through Resend, and we briefly keep a record with your email address to check the link: it stops working after 10 minutes and is deleted once used or soon after it expires. We also keep your session records (a random token and when it expires, with no IP address or device details), your credits, your plan and its history, and which premium verdicts used a credit (only the verdict's ID). We also keep which verdicts and cases are yours, so you can find them on any device. Deleting your account on the account page removes all of that, and removes your verdicts and your sides of cases as described under Removal.",
+    "You only need an account for two-sided cases and Premium. If you sign in with Apple or Google, we keep the email address, name and profile picture link they share with us, plus which sign-in method you used, and Apple or Google can see that you signed in to Judge. If you sign in with an email link, that email goes out through Resend, and we briefly keep a record with your email address to check the link: it stops working after 10 minutes and is deleted once used or soon after it expires. We also keep your session records (a random token and when it expires, with no IP address or device details), your credits, your plan and its history, and which premium verdicts used a credit (only the verdict's ID). We also keep which verdicts and cases are yours, so you can find them on any device. Deleting your account on the account page removes all of that, and removes your verdicts and your sides of cases as described under Removal.",
   "privacy.webSearchTitle": "Premium: web search and questions",
   "privacy.webSearch":
     "A Premium verdict sends the anonymized argument to our AI provider with web search turned on. The model writes the search queries from that anonymized text, and the results come from the provider's search partner. The sources it used are shown on the verdict. Premium may first ask you up to two questions: to come up with them, your text as you typed it, names included, goes to the AI provider once more. Your answers are anonymized together with the argument before judging; the questions and your answers as you wrote them are kept with your encrypted original.",
@@ -330,7 +330,7 @@ const en = {
     "Nothing here could be checked on the web: the facts in this one are between the people involved.",
   "factcheck.unavailable": "The web check didn't finish this time, so the judges ruled without it.",
   "signin.title": "Sign in",
-  "signin.lead": "You only need an account for Premium. Free verdicts never ask for one.",
+  "signin.lead": "You only need an account for two-sided cases and Premium. Free verdicts never ask for one.",
   "signin.apple": "Continue with Apple",
   "signin.google": "Continue with Google",
   "signin.emailToggle": "Use email instead",
@@ -379,6 +379,7 @@ const en = {
   "pricing.free.f1": "Three independent judges and an honest confidence score",
   "pricing.free.f2": "Names swapped out before judging",
   "pricing.free.f3": "No account needed",
+  "pricing.free.f4": "Hear both sides: sign in and send the other person a private link to tell theirs",
   "pricing.premium.title": "Premium",
   "pricing.premium.f1": "Facts checked on the web, with the sources on your verdict",
   "pricing.premium.f2": "A stronger panel of AI judges",
@@ -394,7 +395,7 @@ const en = {
   "pricing.note": "Prices are in US dollars. Payments aren't open yet, so nothing can be bought today.",
   "pricing.signIn": "Sign in for Premium",
   "pricing.preview": "Premium isn't switched on here yet. This page is a preview.",
-  "error.signin_required": "Sign in to use Premium.",
+  "error.signin_required": "Sign in to continue.",
   "error.premium_required": "Premium verdicts need credits or the monthly plan.",
   "error.no_credits": "You're out of premium credits. Free verdicts still work.",
   "error.fair_use": "You've used this month's premium verdicts. More on {date}.",
@@ -412,13 +413,14 @@ const en = {
   "error.too_many_files": "That's more images than you can add here.",
   "error.evidence_invalid": "One of your images expired or couldn't be checked. Remove it and add it again.",
   "error.anonymize_failed": "We couldn't take the names out of your text. Try again, or write initials instead of full names.",
-  // --- Premium: two-sided cases, evidence, appeals ---
+  // --- Two-sided cases; evidence and appeals are Premium ---
   "mode.label": "How should we judge it?",
   "mode.now": "Just me (instant)",
   "mode.both": "Both sides (send a link)",
   "mode.nowHint": "You tell it, and the judges rule right away.",
   "mode.bothHint":
     "We'll give you a private link. They tell their side; neither of you sees the other's until the verdict.",
+  "mode.signIn": "Sign in to send a link",
   "case.create": "Create the invite",
   "case.creating": "Anonymizing your side…",
   "case.kicker": "Both sides",
@@ -450,10 +452,12 @@ const en = {
   "case.judgeNow.confirm": "Get a one-sided verdict now? The invite closes and they can't answer anymore.",
   "case.judgeNow.yes": "Yes, judge it now",
   "case.judgeExpired.confirm": "Get a verdict on your side alone? This uses 1 premium verdict.",
+  "case.judgeExpired.confirmFree": "Get a verdict on your side alone?",
   "case.judgeExpired.yes": "Yes, use 1 verdict",
   "case.cancel": "Cancel",
   "case.retry": "Try again",
   "case.failedBody": "Your credit is back. You can try again now.",
+  "case.failedBodyFree": "Something went wrong on our side. You can try again now.",
   "case.yourSide": "Your side, as the judges read it",
   "case.accounts": "What each side told the judges",
   "case.accountA": "Party A's account",
@@ -468,6 +472,7 @@ const en = {
   "case.judgingAlone": "The judges are working on your side.",
   "case.expiredBody":
     "Nobody answered in 7 days, so your credit is back. You can still get a verdict on your side alone.",
+  "case.expiredBodyFree": "Nobody answered in 7 days. You can still get a verdict on your side alone.",
   "case.oneSided": "Judged on your side only.",
   "case.startOver": "Start a new case",
   "case.list.title": "Your cases",
@@ -558,26 +563,29 @@ const en = {
   "appeal.history": "Verdict history",
   "faq.both.q": "Can the other person tell their side?",
   "faq.both.a":
-    "With Premium, yes. Pick “Both sides” and you get a private link to send them. They write their side without an account, and neither of you sees the other's text until the verdict. If they don't answer within 7 days, your premium verdict comes back, and you can get a verdict on your side alone at any time. After the verdict, each of you can add context once with Premium (1 premium verdict) and have it re-judged.",
+    "Yes, once you sign in. Pick “Both sides” and you get a private link to send them. They write their side without an account, and neither of you sees the other's text until the verdict. You can get a verdict on your side alone at any time, and the link stops working after 7 days.",
+  "faq.both.premium":
+    "With Premium, the stronger panel can judge the case (1 premium verdict, back if they don't answer), and after the verdict each of you can add context once and have it re-judged (1 premium verdict).",
   "faq.evidence.q": "Can I add screenshots?",
   "faq.evidence.a":
     "With Premium, up to three per side, like a chat or a receipt. Each image goes to an outside AI service once so its text can be read. The judges see a version with the names hidden. We keep the text read from the image, encrypted, with your original; the image itself is never stored. Screenshots can be cropped or out of context, so the judges treat them as strong evidence, not proof.",
-  "about.premiumTitle": "Hearing both sides (Premium)",
-  "about.premium1":
-    "Two-sided cases: you write your side and send a private link. The other person writes theirs without seeing yours, and the judges weigh both accounts: what they agree on, what they dispute, and what evidence would change the verdict.",
+  "about.casesTitle": "Hearing both sides",
+  "about.cases1":
+    "Two-sided cases: sign in, write your side and send a private link. The other person writes theirs without seeing yours, and the judges weigh both accounts: what they agree on, what they dispute, and what evidence would change the verdict.",
+  "about.cases2": "If nobody answers within 7 days, the link stops working. You can still get a verdict on your side alone.",
+  "about.premiumTitle": "Premium extras",
   "about.premium2":
     "Evidence: add screenshots of chats or documents. We read the text in them, hide the names and throw the image away.",
   "about.premium3":
     "Appeals: after a verdict, each person can add context once. The judges look at everything again and say whether the verdict stands, flipped or changed. Earlier verdicts stay viewable.",
-  "about.premium4": "If nobody answers within 7 days, the held premium verdict comes back.",
-  "privacy.casesTitle": "Premium: two-sided cases and appeals",
+  "about.premium4":
+    "The stronger panel can judge a case too. One premium verdict is held for it and comes back if nobody answers within 7 days.",
+  "privacy.casesTitle": "Two-sided cases and appeals",
   "privacy.cases":
     "In a two-sided case, each side is anonymized when it's sent, the same way as a verdict. The anonymized text is what the judges read; each person's side as they wrote it, with its list of names, is stored encrypted, and only that person can see it. Each person types the name they want shown on the share page when they send their side; left empty, it's Party A or Party B. The other person needs no account; their answers are rate-limited with a keyed hash of their IP address. The invite link is stored only as a hash. If the other person answers while signed in, their account is linked to their side, so only they can add context later or see their original; if they answer signed out, a private code kept in their browser does the same. To give the same person the same label in both accounts, the server keeps coded fingerprints of names inside each case (keyed hashes, not the names themselves). Until the verdict, neither side can read the other's text; after a two-sided verdict, both people can read both anonymized accounts. Context added after a verdict (an appeal) is handled the same way. When the other person answers, we may email you a short note without any case text, if email is set up. Either person can remove their own side: their original and display name are erased, and the case's share links stop working for everyone. Deleting your account does this for every case you started or answered.",
   "privacy.evidenceTitle": "Premium: screenshots",
   "privacy.evidence":
     "Your browser shrinks large images before uploading them. Each image then goes to an outside AI service once so the visible text can be read; we never store the image. The raw transcript, which can still contain names, comes back to you inside a signed token your browser holds for up to 6 hours. When you send your side, the transcript is anonymized together with your text: the anonymized transcript is shown to the judges and stored with the case, and the raw transcript is kept encrypted with your original, where only you can see it. Phone numbers, e-mail addresses, social media handles and account numbers in it are replaced with placeholders for the judges too.",
-  "pricing.premium.f4":
-    "Two-sided cases: the other person tells their side through a private link. One premium verdict per case, held until it's judged and back if nobody answers",
   "pricing.premium.f5": "Screenshot evidence, read and then thrown away, at no extra cost",
   "pricing.premium.f6": "Add context after a verdict and get it re-judged (1 premium verdict)",
   // Intentionally language-invariant: each aria label is written in the
@@ -918,7 +926,7 @@ const tr = {
     "Bir sorun mu var, ya da verilerini görmek, düzeltmek veya kaldırmak mı istiyorsun? Kararın ya da davanın bağlantısıyla {email} adresine yaz.",
   "privacy.accountsTitle": "Hesaplar (isteğe bağlı)",
   "privacy.accounts":
-    "Hesap sadece Premium için gerekir. Apple ya da Google ile giriş yaparsan bizimle paylaştıkları e-posta adresini, adını ve profil fotoğrafı bağlantını, bir de hangi yolla giriş yaptığını saklarız. Apple ya da Google da Judge'a giriş yaptığını görebilir. E-posta bağlantısıyla giriş yaparsan o e-posta Resend üzerinden gönderilir, bağlantıyı doğrulamak için de e-posta adresinle kısa süreli bir kayıt tutarız: bağlantı 10 dakika sonra geçersiz olur, kayıt da kullanılınca ya da süresi dolduktan kısa süre sonra silinir. Ayrıca oturum kayıtlarını (rastgele bir anahtar ve bitiş tarihi; IP adresi ya da cihaz bilgisi yok), kredilerini, planını ve geçmişini, bir de hangi premium kararların kredi kullandığını (sadece kararın kimliği) saklarız. Hangi kararların ve davaların senin olduğunu da tutarız, böylece onları her cihazda bulabilirsin. Hesap sayfasından hesabını silersen bunların hepsi silinir; kararların ve davalardaki tarafların da Kaldırma bölümünde anlatıldığı gibi kaldırılır.",
+    "Hesap sadece iki taraflı davalar ve Premium için gerekir. Apple ya da Google ile giriş yaparsan bizimle paylaştıkları e-posta adresini, adını ve profil fotoğrafı bağlantını, bir de hangi yolla giriş yaptığını saklarız. Apple ya da Google da Judge'a giriş yaptığını görebilir. E-posta bağlantısıyla giriş yaparsan o e-posta Resend üzerinden gönderilir, bağlantıyı doğrulamak için de e-posta adresinle kısa süreli bir kayıt tutarız: bağlantı 10 dakika sonra geçersiz olur, kayıt da kullanılınca ya da süresi dolduktan kısa süre sonra silinir. Ayrıca oturum kayıtlarını (rastgele bir anahtar ve bitiş tarihi; IP adresi ya da cihaz bilgisi yok), kredilerini, planını ve geçmişini, bir de hangi premium kararların kredi kullandığını (sadece kararın kimliği) saklarız. Hangi kararların ve davaların senin olduğunu da tutarız, böylece onları her cihazda bulabilirsin. Hesap sayfasından hesabını silersen bunların hepsi silinir; kararların ve davalardaki tarafların da Kaldırma bölümünde anlatıldığı gibi kaldırılır.",
   "privacy.webSearchTitle": "Premium: internet araması ve sorular",
   "privacy.webSearch":
     "Premium bir karar, anonim tartışmayı internet araması açık olarak yapay zekâ sağlayıcımıza gönderir. Arama sorgularını model bu anonim metinden yazar, sonuçlar da sağlayıcının arama ortağından gelir. Kullanılan kaynaklar kararda gösterilir. Premium önce sana en fazla iki soru sorabilir: bu soruları bulmak için yazdığın metin, isimler dahil, bir kez daha yapay zekâ sağlayıcımıza gider. Cevapların yargılamadan önce tartışmayla birlikte anonimleştirilir; sorular ve cevapların, yazdığın hâliyle, şifreli asıl metninle birlikte saklanır.",
@@ -975,7 +983,7 @@ const tr = {
     "Burada internette kontrol edilebilecek bir şey yok: bu olaydaki olgular yalnızca taraflar arasında.",
   "factcheck.unavailable": "İnternet kontrolü bu kez tamamlanamadı, yargıçlar onsuz karar verdi.",
   "signin.title": "Giriş yap",
-  "signin.lead": "Hesap sadece Premium için gerekir. Ücretsiz kararlar hiç hesap istemez.",
+  "signin.lead": "Hesap sadece iki taraflı davalar ve Premium için gerekir. Ücretsiz kararlar hiç hesap istemez.",
   "signin.apple": "Apple ile devam et",
   "signin.google": "Google ile devam et",
   "signin.emailToggle": "E-postayla devam et",
@@ -1024,6 +1032,7 @@ const tr = {
   "pricing.free.f1": "Üç bağımsız yargıç ve dürüst bir güven puanı",
   "pricing.free.f2": "Yargılamadan önce isimler gizlenir",
   "pricing.free.f3": "Hesap gerekmez",
+  "pricing.free.f4": "İki tarafı da dinle: giriş yap, diğer kişi kendi tarafını anlatsın diye ona özel bir bağlantı gönder",
   "pricing.premium.title": "Premium",
   "pricing.premium.f1": "Olgular internette kontrol edilir, kaynaklar kararında görünür",
   "pricing.premium.f2": "Daha güçlü bir yapay zekâ yargıç kurulu",
@@ -1039,7 +1048,7 @@ const tr = {
   "pricing.note": "Fiyatlar ABD doları cinsinden. Ödemeler henüz açılmadı, yani bugün bir şey satın alınamıyor.",
   "pricing.signIn": "Premium için giriş yap",
   "pricing.preview": "Premium burada henüz açılmadı. Bu sayfa bir önizleme.",
-  "error.signin_required": "Premium'u kullanmak için giriş yap.",
+  "error.signin_required": "Devam etmek için giriş yap.",
   "error.premium_required": "Premium kararlar için kredi ya da aylık plan gerekiyor.",
   "error.no_credits": "Premium kredin bitti. Ücretsiz kararlar yine çalışıyor.",
   "error.fair_use": "Bu ayın premium kararlarını kullandın. Hakların {date} tarihinde yenilenir.",
@@ -1063,6 +1072,7 @@ const tr = {
   "mode.nowHint": "Sen anlatırsın, yargıçlar hemen karar verir.",
   "mode.bothHint":
     "Sana özel bir bağlantı veriyoruz. O da kendi tarafını yazıyor; karar çıkana kadar kimse diğerinin yazdığını görmüyor.",
+  "mode.signIn": "Bağlantı göndermek için giriş yap",
   "case.create": "Daveti oluştur",
   "case.creating": "Tarafını anonimleştiriyoruz…",
   "case.kicker": "İki taraf",
@@ -1097,10 +1107,12 @@ const tr = {
   "case.judgeNow.confirm": "Şimdi tek taraflı bir karar mı istiyorsun? Davet kapanır, o da artık cevap veremez.",
   "case.judgeNow.yes": "Evet, şimdi karar ver",
   "case.judgeExpired.confirm": "Sadece kendi tarafına göre karar mı istiyorsun? Bu, 1 premium karar hakkı kullanır.",
+  "case.judgeExpired.confirmFree": "Sadece kendi tarafına göre karar mı istiyorsun?",
   "case.judgeExpired.yes": "Evet, 1 hak kullan",
   "case.cancel": "Vazgeç",
   "case.retry": "Tekrar dene",
   "case.failedBody": "Kredin geri döndü. Şimdi tekrar deneyebilirsin.",
+  "case.failedBodyFree": "Bizim tarafta bir şeyler ters gitti. Şimdi tekrar deneyebilirsin.",
   "case.yourSide": "Senin tarafın, yargıçların okuduğu hâliyle",
   "case.accounts": "Her taraf yargıçlara ne anlattı",
   "case.accountA": "Taraf A'nın anlatımı",
@@ -1115,6 +1127,7 @@ const tr = {
   "case.judgingAlone": "Yargıçlar senin tarafın üzerinde çalışıyor.",
   "case.expiredBody":
     "7 gün içinde kimse cevap vermedi, kredin geri döndü. Yine de sadece kendi tarafına göre karar alabilirsin.",
+  "case.expiredBodyFree": "7 gün içinde kimse cevap vermedi. Yine de sadece kendi tarafına göre karar alabilirsin.",
   "case.oneSided": "Sadece senin tarafına göre karar verildi.",
   "case.startOver": "Yeni bir dava aç",
   "case.list.title": "Davaların",
@@ -1204,26 +1217,29 @@ const tr = {
   "appeal.history": "Karar geçmişi",
   "faq.both.q": "Diğer kişi de kendi tarafını anlatabilir mi?",
   "faq.both.a":
-    "Premium ile evet. “İki taraf da” seçeneğini seç, ona göndereceğin özel bir bağlantı al. O, hesap açmadan kendi tarafını yazar; karar çıkana kadar kimse diğerinin yazdığını görmez. 7 gün içinde cevap vermezse premium karar hakkın geri gelir, istediğin an sadece kendi tarafınla karar da alabilirsin. Karardan sonra Premium'u olan taraf bir kez bilgi ekleyip davayı yeniden yargılatabilir (1 premium karar).",
+    "Evet, giriş yaptıktan sonra. “İki taraf da” seçeneğini seç, ona göndereceğin özel bir bağlantı al. O, hesap açmadan kendi tarafını yazar; karar çıkana kadar kimse diğerinin yazdığını görmez. İstediğin an sadece kendi tarafınla karar alabilirsin; bağlantı 7 gün sonra çalışmaz olur.",
+  "faq.both.premium":
+    "Premium ile davaya daha güçlü kurul karar verebilir (1 premium karar, cevap gelmezse geri gelir); karardan sonra da her taraf bir kez bilgi ekleyip davayı yeniden yargılatabilir (1 premium karar).",
   "faq.evidence.q": "Ekran görüntüsü ekleyebilir miyim?",
   "faq.evidence.a":
     "Premium ile, taraf başına en fazla üç tane: bir sohbet ya da bir fiş gibi. Her görsel, yazısı okunsun diye bir kez harici bir yapay zekâ hizmetine gider. Yargıçlar isimleri gizlenmiş bir hâlini görür. Görselden okunan yazıyı, yazdığınla birlikte şifreli olarak saklarız; görselin kendisi hiç saklanmaz. Ekran görüntüleri kırpılmış ya da bağlamından kopmuş olabilir, o yüzden yargıçlar onları kesin kanıt değil, güçlü bir ipucu sayar.",
-  "about.premiumTitle": "İki tarafı da dinlemek (Premium)",
-  "about.premium1":
-    "İki taraflı davalar: sen kendi tarafını yazıp özel bir bağlantı gönderirsin. Diğer kişi seninkini görmeden kendi tarafını yazar. Yargıçlar iki anlatımı birlikte tartar: iki tarafın neyde anlaştığını, neyi tartıştığını ve hangi kanıtın kararı değiştireceğini söyler.",
+  "about.casesTitle": "İki tarafı da dinlemek",
+  "about.cases1":
+    "İki taraflı davalar: giriş yapıp kendi tarafını yazar, özel bir bağlantı gönderirsin. Diğer kişi seninkini görmeden kendi tarafını yazar. Yargıçlar iki anlatımı birlikte tartar: iki tarafın neyde anlaştığını, neyi tartıştığını ve hangi kanıtın kararı değiştireceğini söyler.",
+  "about.cases2": "7 gün içinde kimse cevap vermezse bağlantı çalışmaz olur. Yine de sadece kendi tarafına göre karar alabilirsin.",
+  "about.premiumTitle": "Premium ekstraları",
   "about.premium2":
     "Kanıt: sohbet ya da belge ekran görüntüleri ekleyebilirsin. İçlerindeki yazıyı okur, isimleri gizler, görseli atarız.",
   "about.premium3":
     "İtiraz: karardan sonra her kişi bir kez bilgi ekleyebilir. Yargıçlar her şeye yeniden bakar ve sonucu söyler: karar aynı kaldı, tersine döndü ya da değişti. Önceki kararlar görünür kalır.",
-  "about.premium4": "7 gün içinde kimse cevap vermezse ayrılan premium karar hakkı geri gelir.",
-  "privacy.casesTitle": "Premium: iki taraflı davalar ve itirazlar",
+  "about.premium4":
+    "Bir davaya daha güçlü kurul da karar verebilir. Bunun için 1 premium karar hakkı ayrılır; 7 gün içinde kimse cevap vermezse geri gelir.",
+  "privacy.casesTitle": "İki taraflı davalar ve itirazlar",
   "privacy.cases":
     "İki taraflı bir davada her taraf, gönderildiği anda bir karardaki gibi anonimleştirilir. Yargıçlar anonim metni okur; her kişinin kendi yazdığı hâli, isim listesiyle birlikte şifreli saklanır ve yalnızca o kişi görebilir. Her kişi, tarafını gönderirken paylaşım sayfasında görünmesini istediği adı yazar; boş bırakırsa Taraf A ya da Taraf B görünür. Diğer kişinin hesap açması gerekmez; cevapları IP adresinin anahtarlı bir özetiyle sınırlanır. Davet bağlantısı sadece özet (hash) olarak saklanır. Diğer kişi giriş yapmışken cevap verirse, sonradan sadece o bilgi ekleyebilsin ve asıl metnini görebilsin diye hesabı kendi tarafına bağlanır; giriş yapmadan cevap verirse aynı işi gören gizli bir kod onun tarayıcısında saklanır. Aynı kişi iki anlatımda da aynı etiketi alsın diye sunucu, her davanın içinde isimlerin kodlanmış parmak izlerini tutar (isimlerin kendisini değil, anahtarlı özetlerini). Karar çıkana kadar iki taraf da diğerinin yazdığını okuyamaz; iki taraflı bir karardan sonra iki kişi de iki anonim anlatımı okuyabilir. Karardan sonra eklenen bilgiler (itirazlar) de aynı şekilde işlenir. Diğer kişi cevap verince, e-posta kuruluysa sana dava metni içermeyen kısa bir not gönderebiliriz. İki kişiden her biri kendi tarafını kaldırabilir: asıl metni ve görünen adı silinir, davanın paylaşım bağlantıları da herkes için çalışmaz olur. Hesabını silmek bunu başlattığın ya da cevap verdiğin her dava için yapar.",
   "privacy.evidenceTitle": "Premium: ekran görüntüleri",
   "privacy.evidence":
     "Tarayıcın büyük görselleri yüklemeden önce küçültür. Sonra her görsel, görünen yazısı okunsun diye bir kez harici bir yapay zekâ hizmetine gider; görseli hiç saklamayız. İsimler hâlâ içinde olabilen ham döküm sana, tarayıcının en fazla 6 saat tuttuğu imzalı bir anahtarın içinde döner. Tarafını gönderdiğinde döküm metninle birlikte anonimleştirilir: anonim döküm yargıçlara gösterilir ve davayla birlikte saklanır, ham döküm de asıl metninle birlikte şifreli tutulur ve yalnızca sen görebilirsin. İçindeki telefon numaraları, e-posta adresleri, sosyal medya kullanıcı adları ve hesap numaraları da yargıçlar için yer tutucularla değiştirilir.",
-  "pricing.premium.f4":
-    "İki taraflı davalar: diğer kişi kendi tarafını özel bir bağlantıdan anlatır. Dava başına 1 premium karar; karar çıkana kadar ayrılır, kimse cevap vermezse geri gelir",
   "pricing.premium.f5": "Ekran görüntüsü kanıtı: okunur, sonra atılır, ek ücret yok",
   "pricing.premium.f6": "Karardan sonra bilgi ekleyip yeniden yargılatma (1 premium karar)",
   "langToggle.toTr": "Türkçeye geç",

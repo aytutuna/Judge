@@ -14,10 +14,14 @@ import { PageShell } from "./PageShell";
 const FREE_FEATURES: Key[] = ["pricing.free.f1", "pricing.free.f2", "pricing.free.f3"];
 const PREMIUM_FEATURES: Key[] = ["pricing.premium.f1", "pricing.premium.f2", "pricing.premium.f3"];
 
+/** Free's feature list, plus two-sided cases when this deployment offers them. */
+export function freeFeatureKeys(features?: { cases: boolean; evidence: boolean } | null): Key[] {
+  return features?.cases ? [...FREE_FEATURES, "pricing.free.f4"] : FREE_FEATURES;
+}
+
 /** Premium's feature list, plus the extras this deployment offers. */
 export function premiumFeatureKeys(features?: { cases: boolean; evidence: boolean } | null): Key[] {
   const keys = [...PREMIUM_FEATURES];
-  if (features?.cases) keys.push("pricing.premium.f4");
   if (features?.evidence) keys.push("pricing.premium.f5");
   if (features?.cases) keys.push("pricing.premium.f6");
   return keys;
@@ -107,7 +111,7 @@ export function PricingTable({
             {t(lang, "pricing.free.title")}
           </h2>
           <p className={styles.planPrice}>{t(lang, "pricing.free.price")}</p>
-          <Features lang={lang} keys={FREE_FEATURES} />
+          <Features lang={lang} keys={freeFeatureKeys(features)} />
           <Link href="/" className={`${styles.btn} ${styles.secondary}`}>
             {t(lang, "footer.home")}
           </Link>

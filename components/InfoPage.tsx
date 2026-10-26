@@ -22,22 +22,28 @@ function Section({ title, children }: { title: string; children: ReactNode }) {
   );
 }
 
-/** Premium extras this deployment offers (GET /api/v1/config `features`). */
+/** Extras this deployment offers (GET /api/v1/config `features`). */
 export type InfoFeatures = { cases: boolean; evidence: boolean };
 
-/** About's Premium bullets for the features that are switched on. */
+/** About's bullets on two-sided cases, which every account gets. */
+export function caseAboutKeys(features: InfoFeatures | null | undefined): Key[] {
+  return features?.cases ? ["about.cases1", "about.cases2"] : [];
+}
+
+/** About's Premium bullets for the features that are switched on. Pass
+ * null while Premium is off. */
 export function premiumAboutKeys(features: InfoFeatures | null | undefined): Key[] {
   if (!features) return [];
   const keys: Key[] = [];
-  if (features.cases) keys.push("about.premium1");
   if (features.evidence) keys.push("about.premium2");
   if (features.cases) keys.push("about.premium3", "about.premium4");
   return keys;
 }
 
-function About({ lang, features }: { lang: Lang; features: InfoFeatures | null }) {
+function About({ lang, features, premiumOn }: { lang: Lang; features: InfoFeatures | null; premiumOn: boolean }) {
   const limits: Key[] = ["about.limit1", "about.limit2", "about.limit3", "about.limit4"];
-  const premium = premiumAboutKeys(features);
+  const cases = caseAboutKeys(features);
+  const premium = premiumAboutKeys(premiumOn ? features : null);
   return (
     <>
       <Section title={t(lang, "about.methodTitle")}>
@@ -68,6 +74,15 @@ function About({ lang, features }: { lang: Lang; features: InfoFeatures | null }
       <Section title={t(lang, "about.honestTitle")}>
         <p>{t(lang, "about.honest")}</p>
       </Section>
+      {cases.length > 0 ? (
+        <Section title={t(lang, "about.casesTitle")}>
+          <ul className={styles.bullets}>
+            {cases.map((k) => (
+              <li key={k}>{t(lang, k)}</li>
+            ))}
+          </ul>
+        </Section>
+      ) : null}
       {premium.length > 0 ? (
         <Section title={t(lang, "about.premiumTitle")}>
           <ul className={styles.bullets}>
@@ -163,7 +178,7 @@ export function InfoPage({
           </header>
           <div className={styles.prose}>
             {page === "about" ? (
-              <About lang={lang} features={config?.premiumEnabled ? (config.features ?? null) : null} />
+              <About lang={lang} features={config?.features ?? null} premiumOn={config?.premiumEnabled === true} />
             ) : (
               <Privacy lang={lang} contactEmail={contactEmail} />
             )}

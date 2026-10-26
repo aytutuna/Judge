@@ -1,10 +1,11 @@
-import { premiumEnabled } from "./auth";
+import { authConfigured, premiumEnabled } from "./auth";
 
 type Env = Record<string, string | undefined>;
 
-/** Two-sided cases and appeals: on unless CASES_ENABLED=0, and only with Premium. */
+/** Two-sided cases: on unless CASES_ENABLED=0, with accounts and a model key.
+ * Free cases need no Premium; appeals and premium cases still do. */
 export function casesEnabled(env: Env = process.env): boolean {
-  return env.CASES_ENABLED?.trim() !== "0" && premiumEnabled(env);
+  return env.CASES_ENABLED?.trim() !== "0" && authConfigured(env) && Boolean(env.ANTHROPIC_API_KEY);
 }
 
 /** Screenshot evidence: on unless EVIDENCE_ENABLED=0, and only with Premium. */

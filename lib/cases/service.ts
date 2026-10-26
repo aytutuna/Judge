@@ -38,7 +38,7 @@ import {
   type VerifiedEvidence,
 } from "@/lib/evidence";
 import type { Lang } from "@/lib/i18n";
-import type { FrameworkChoice, NameMapping } from "@/lib/types";
+import type { FrameworkChoice, NameMapping, Tier } from "@/lib/types";
 import { composeForJudging } from "./compose";
 import {
   getAppeal,
@@ -64,7 +64,8 @@ function logError(what: string, e: unknown): void {
   console.error(`[cases] ${what}:`, e instanceof Error ? e.message : String(e));
 }
 
-async function refundQuietly(reservationId: string): Promise<void> {
+async function refundQuietly(reservationId: string | null): Promise<void> {
+  if (!reservationId) return;
   try {
     await refundPremiumVerdict(reservationId);
   } catch (e) {
@@ -153,6 +154,8 @@ export type CreateCaseInput = {
   text: string;
   framework: FrameworkChoice;
   lang: Lang;
+  /** "premium" holds one unit until the case is judged; "free" holds nothing. */
+  tier: Tier;
   evidence: VerifiedEvidence[];
   idempotencyKey?: string;
   /** The side exactly as received (before trimming), for the sealed original. */
@@ -183,14 +186,17 @@ export async function createCase(input: CreateCaseInput): Promise<CreateCaseResu
     if (existing) return { ok: true, row: existing, nameMap: [], replayed: true };
   }
 
-  const reserved = await reservePremiumVerdict(input.ownerId, { now });
-  if (!reserved.ok) {
-    if (reserved.code === "premium_required" || reserved.code === "no_credits" || reserved.code === "fair_use") {
-      return { ok: false, code: reserved.code, ...("resetsAt" in reserved && reserved.resetsAt ? { resetsAt: reserved.resetsAt } : {}) };
+  let reservationId: string | null = null;
+  if (input.tier === "premium") {
+    const reserved = await reservePremiumVerdict(input.ownerId, { now });
+    if (!reserved.ok) {
+      if (reserved.code === "premium_required" || reserved.code === "no_credits" || reserved.code === "fair_use") {
+        return { ok: false, code: reserved.code, ...("resetsAt" in reserved && reserved.resetsAt ? { resetsAt: reserved.resetsAt } : {}) };
+      }
+      return { ok: false, code: "unavailable" };
     }
-    return { ok: false, code: "unavailable" };
+    reservationId = reserved.reservation.id;
   }
-  const reservationId = reserved.reservation.id;
 
   const caseId = nanoid(12);
   const nonce = newInviteNonce();
@@ -236,13 +242,14 @@ export async function createCase(input: CreateCaseInput): Promise<CreateCaseResu
     const rs = await entitlementWriteBatch([
       {
         sql: `INSERT INTO cases
-                (id, owner_id, status, mode, framework, lang, invite_nonce, invite_hash, idempotency_key,
+                (id, owner_id, status, mode, tier, framework, lang, invite_nonce, invite_hash, idempotency_key,
                  reservation_id, expires_at, created_at, updated_at, display_a_sealed, display_key_id)
-              VALUES (?, ?, 'awaiting_respondent', NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+              VALUES (?, ?, 'awaiting_respondent', NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
               ON CONFLICT DO NOTHING`,
         args: [
           caseId,
           input.ownerId,
+          input.tier,
           JSON.stringify(input.framework),
           input.lang,
           nonce,
@@ -260,7 +267,7 @@ export async function createCase(input: CreateCaseInput): Promise<CreateCaseResu
       ...(original ? [original] : []),
       // The unit stays held until the invite expires (then the usual
       // 10-minute stale rule applies).
-      holdStatement(reservationId, expiresAt, guard),
+      ...(reservationId ? [holdStatement(reservationId, expiresAt, guard)] : []),
     ]);
     inserted = rs[0].rowsAffected === 1;
   } catch (e) {
@@ -414,7 +421,8 @@ export type JudgeNowResult =
 /**
  * awaiting + only_mine: judge side A alone with the held unit (the invite
  * closes). expired: a new unit, one-sided. failed: a new unit, same mode.
- * Already judging or judged: no-op (idempotent).
+ * A free case takes no unit on any of these. Already judging or judged:
+ * no-op (idempotent).
  */
 export async function judgeNow(input: {
   row: CaseRow;
@@ -455,16 +463,20 @@ export async function judgeNow(input: {
       continue;
     }
 
-    // expired or failed: a fresh unit funds the run.
+    // expired or failed: a fresh unit funds a premium case's run; a free
+    // case just runs again.
     if (status === "expired") await materializeExpiry(row, now);
-    const reserved = await reservePremiumVerdict(row.ownerId, { now });
-    if (!reserved.ok) {
-      if (reserved.code === "premium_required" || reserved.code === "no_credits" || reserved.code === "fair_use") {
-        return { ok: false, code: reserved.code, ...("resetsAt" in reserved && reserved.resetsAt ? { resetsAt: reserved.resetsAt } : {}) };
+    let reservationId: string | null = null;
+    if (row.tier === "premium") {
+      const reserved = await reservePremiumVerdict(row.ownerId, { now });
+      if (!reserved.ok) {
+        if (reserved.code === "premium_required" || reserved.code === "no_credits" || reserved.code === "fair_use") {
+          return { ok: false, code: reserved.code, ...("resetsAt" in reserved && reserved.resetsAt ? { resetsAt: reserved.resetsAt } : {}) };
+        }
+        return { ok: false, code: "unavailable" };
       }
-      return { ok: false, code: "unavailable" };
+      reservationId = reserved.reservation.id;
     }
-    const reservationId = reserved.reservation.id;
     const token = nanoid(16);
     const from = status === "expired" ? "expired" : "failed";
     let won = false;
