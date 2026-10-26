@@ -451,8 +451,35 @@ class Strings(private val res: Resources) {
     val accountVerdictsEmpty: String get() = res.getString(R.string.account_verdicts_empty)
     val accountVerdictsLoadFailed: String get() = res.getString(R.string.account_verdicts_load_failed)
     val accountVerdictsRemoved: String get() = res.getString(R.string.account_verdicts_removed)
+    val shellNew: String get() = res.getString(R.string.shell_new)
+    val shellToday: String get() = res.getString(R.string.shell_today)
+    val threadLabel: String get() = res.getString(R.string.thread_label)
+    val threadYou: String get() = res.getString(R.string.thread_you)
+    val threadJudges: String get() = res.getString(R.string.thread_judges)
+    val threadPlaceholder: String get() = res.getString(R.string.thread_placeholder)
+    val threadPlaceholderTwoSided: String get() = res.getString(R.string.thread_placeholder_two_sided)
+    val threadSample: String get() = res.getString(R.string.thread_sample)
+    val threadLens: String get() = res.getString(R.string.thread_lens)
+    fun threadJudgesAgree(n: String, total: String): String = res.getString(R.string.thread_judges_agree, n, total)
+    val threadJudgesSplit: String get() = res.getString(R.string.thread_judges_split)
+    val homeKicker: String get() = res.getString(R.string.home_kicker)
+    val homeTitle: String get() = res.getString(R.string.home_title)
+    val homeStepArgument: String get() = res.getString(R.string.home_step_argument)
+    val homeStepRuling: String get() = res.getString(R.string.home_step_ruling)
+    val homeInvite: String get() = res.getString(R.string.home_invite)
+    val homeOneSide: String get() = res.getString(R.string.home_one_side)
+    val homeRecent: String get() = res.getString(R.string.home_recent)
+    val homeAll: String get() = res.getString(R.string.home_all)
+    val homeWaiting: String get() = res.getString(R.string.home_waiting)
+    val homeDecided: String get() = res.getString(R.string.home_decided)
     fun verdictAgree(n: String, total: String): String = res.getString(R.string.verdict_agree, n, total)
     val verdictNoMajority: String get() = res.getString(R.string.verdict_no_majority)
+    val stampSplit: String get() = res.getString(R.string.stamp_split)
+    val stampConditional: String get() = res.getString(R.string.stamp_conditional)
+    val stampTooClose: String get() = res.getString(R.string.stamp_too_close)
+    val stampDissolved: String get() = res.getString(R.string.stamp_dissolved)
+    fun bestPointOf(name: String): String = res.getString(R.string.best_point_of, name)
+    val bestPointSelf: String get() = res.getString(R.string.best_point_self)
     val appName: String get() = res.getString(R.string.app_name)
     val appTabNew: String get() = res.getString(R.string.app_tab_new)
     val appTabHistory: String get() = res.getString(R.string.app_tab_history)
@@ -902,7 +929,32 @@ class Strings(private val res: Resources) {
             "account.verdicts.empty" -> R.string.account_verdicts_empty
             "account.verdicts.loadFailed" -> R.string.account_verdicts_load_failed
             "account.verdicts.removed" -> R.string.account_verdicts_removed
+            "shell.new" -> R.string.shell_new
+            "shell.today" -> R.string.shell_today
+            "thread.label" -> R.string.thread_label
+            "thread.you" -> R.string.thread_you
+            "thread.judges" -> R.string.thread_judges
+            "thread.placeholder" -> R.string.thread_placeholder
+            "thread.placeholderTwoSided" -> R.string.thread_placeholder_two_sided
+            "thread.sample" -> R.string.thread_sample
+            "thread.lens" -> R.string.thread_lens
+            "thread.judgesSplit" -> R.string.thread_judges_split
+            "home.kicker" -> R.string.home_kicker
+            "home.title" -> R.string.home_title
+            "home.step.argument" -> R.string.home_step_argument
+            "home.step.ruling" -> R.string.home_step_ruling
+            "home.invite" -> R.string.home_invite
+            "home.oneSide" -> R.string.home_one_side
+            "home.recent" -> R.string.home_recent
+            "home.all" -> R.string.home_all
+            "home.waiting" -> R.string.home_waiting
+            "home.decided" -> R.string.home_decided
             "verdict.noMajority" -> R.string.verdict_no_majority
+            "stamp.split" -> R.string.stamp_split
+            "stamp.conditional" -> R.string.stamp_conditional
+            "stamp.tooClose" -> R.string.stamp_too_close
+            "stamp.dissolved" -> R.string.stamp_dissolved
+            "bestPoint.self" -> R.string.best_point_self
             "app.name" -> R.string.app_name
             "app.tab.new" -> R.string.app_tab_new
             "app.tab.history" -> R.string.app_tab_history

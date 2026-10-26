@@ -457,8 +457,35 @@ enum L10n {
     static func accountVerdictsEmpty(_ lang: AppLang) -> String { string("account.verdicts.empty", lang) }
     static func accountVerdictsLoadFailed(_ lang: AppLang) -> String { string("account.verdicts.loadFailed", lang) }
     static func accountVerdictsRemoved(_ lang: AppLang) -> String { string("account.verdicts.removed", lang) }
+    static func shellNew(_ lang: AppLang) -> String { string("shell.new", lang) }
+    static func shellToday(_ lang: AppLang) -> String { string("shell.today", lang) }
+    static func threadLabel(_ lang: AppLang) -> String { string("thread.label", lang) }
+    static func threadYou(_ lang: AppLang) -> String { string("thread.you", lang) }
+    static func threadJudges(_ lang: AppLang) -> String { string("thread.judges", lang) }
+    static func threadPlaceholder(_ lang: AppLang) -> String { string("thread.placeholder", lang) }
+    static func threadPlaceholderTwoSided(_ lang: AppLang) -> String { string("thread.placeholderTwoSided", lang) }
+    static func threadSample(_ lang: AppLang) -> String { string("thread.sample", lang) }
+    static func threadLens(_ lang: AppLang) -> String { string("thread.lens", lang) }
+    static func threadJudgesAgree(_ lang: AppLang, n: String, total: String) -> String { format("thread.judgesAgree", lang, n, total) }
+    static func threadJudgesSplit(_ lang: AppLang) -> String { string("thread.judgesSplit", lang) }
+    static func homeKicker(_ lang: AppLang) -> String { string("home.kicker", lang) }
+    static func homeTitle(_ lang: AppLang) -> String { string("home.title", lang) }
+    static func homeStepArgument(_ lang: AppLang) -> String { string("home.step.argument", lang) }
+    static func homeStepRuling(_ lang: AppLang) -> String { string("home.step.ruling", lang) }
+    static func homeInvite(_ lang: AppLang) -> String { string("home.invite", lang) }
+    static func homeOneSide(_ lang: AppLang) -> String { string("home.oneSide", lang) }
+    static func homeRecent(_ lang: AppLang) -> String { string("home.recent", lang) }
+    static func homeAll(_ lang: AppLang) -> String { string("home.all", lang) }
+    static func homeWaiting(_ lang: AppLang) -> String { string("home.waiting", lang) }
+    static func homeDecided(_ lang: AppLang) -> String { string("home.decided", lang) }
     static func verdictAgree(_ lang: AppLang, n: String, total: String) -> String { format("verdict.agree", lang, n, total) }
     static func verdictNoMajority(_ lang: AppLang) -> String { string("verdict.noMajority", lang) }
+    static func stampSplit(_ lang: AppLang) -> String { string("stamp.split", lang) }
+    static func stampConditional(_ lang: AppLang) -> String { string("stamp.conditional", lang) }
+    static func stampTooClose(_ lang: AppLang) -> String { string("stamp.tooClose", lang) }
+    static func stampDissolved(_ lang: AppLang) -> String { string("stamp.dissolved", lang) }
+    static func bestPointOf(_ lang: AppLang, name: String) -> String { format("bestPoint.of", lang, name) }
+    static func bestPointSelf(_ lang: AppLang) -> String { string("bestPoint.self", lang) }
     static func appName(_ lang: AppLang) -> String { string("app.name", lang) }
     static func appTabNew(_ lang: AppLang) -> String { string("app.tab.new", lang) }
     static func appTabHistory(_ lang: AppLang) -> String { string("app.tab.history", lang) }
@@ -909,7 +936,32 @@ enum L10n {
         "account.verdicts.empty",
         "account.verdicts.loadFailed",
         "account.verdicts.removed",
+        "shell.new",
+        "shell.today",
+        "thread.label",
+        "thread.you",
+        "thread.judges",
+        "thread.placeholder",
+        "thread.placeholderTwoSided",
+        "thread.sample",
+        "thread.lens",
+        "thread.judgesSplit",
+        "home.kicker",
+        "home.title",
+        "home.step.argument",
+        "home.step.ruling",
+        "home.invite",
+        "home.oneSide",
+        "home.recent",
+        "home.all",
+        "home.waiting",
+        "home.decided",
         "verdict.noMajority",
+        "stamp.split",
+        "stamp.conditional",
+        "stamp.tooClose",
+        "stamp.dissolved",
+        "bestPoint.self",
         "app.name",
         "app.tab.new",
         "app.tab.history",
