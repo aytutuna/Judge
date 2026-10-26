@@ -97,6 +97,10 @@ object JudgeIcons {
 
     fun back(color: Color) = icon("back", 16f, P("M10 3 5 8l5 5", stroke = color, width = 1.8f))
 
+    fun caret(color: Color) = icon("caret", 12f, P("M3 4.5 6 7.5l3-3", stroke = color, width = 1.6f))
+
+    fun arrow(color: Color) = icon("arrow", 20f, P("M4 10h12M10.5 4.5 16 10l-5.5 5.5", stroke = color, width = 2f))
+
     /** Premium's four-point spark (PremiumSpark). */
     fun spark(color: Color) = icon("spark", 12f, P("M6 0.8 7.3 4.7 11.2 6 7.3 7.3 6 11.2 4.7 7.3 0.8 6 4.7 4.7z", fill = color))
 

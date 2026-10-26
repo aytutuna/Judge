@@ -26,7 +26,7 @@ class AppShellTest {
     fun tabs_andLanguageToggle() {
         val en = UiTestSupport.s(AppLang.EN)
         val tr = UiTestSupport.s(AppLang.TR)
-        compose.waitUntil(5_000) { compose.onAllNodesWithText(en.heroTitleLine1).fetchSemanticsNodes().isNotEmpty() }
+        compose.waitUntil(5_000) { compose.onAllNodesWithText(en.homeTitle).fetchSemanticsNodes().isNotEmpty() }
         compose.onNodeWithTag(HomeTags.SUBMIT).assertExists()
 
         compose.onNodeWithText(en.appTabHistory).performClick()
@@ -39,6 +39,6 @@ class AppShellTest {
         compose.waitUntil(5_000) { compose.onAllNodesWithText(tr.appTabSettings).fetchSemanticsNodes().isNotEmpty() }
 
         compose.onNodeWithText(tr.appTabNew).performClick()
-        compose.waitUntil(5_000) { compose.onAllNodesWithText(tr.heroTitleLine1).fetchSemanticsNodes().isNotEmpty() }
+        compose.waitUntil(5_000) { compose.onAllNodesWithText(tr.homeTitle).fetchSemanticsNodes().isNotEmpty() }
     }
 }

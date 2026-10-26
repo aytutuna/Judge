@@ -33,12 +33,16 @@ import com.okjudge.judge.core.model.VerdictOutcome
 import com.okjudge.judge.i18n.AppLang
 import com.okjudge.judge.ui.history.HistoryScreen
 import com.okjudge.judge.ui.history.HistoryTags
+import com.okjudge.judge.core.model.Features
+import com.okjudge.judge.ui.home.CaseMode
 import com.okjudge.judge.ui.home.HomeScreen
 import com.okjudge.judge.ui.home.HomeTags
 import com.okjudge.judge.ui.home.HomeUiState
 import com.okjudge.judge.ui.verdict.TranslationStatus
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonObject
+import java.util.Locale
+import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -84,10 +88,73 @@ class ScreensTest {
     }
 
     @Test
-    fun home_tr_eyebrowUppercasesWithTurkishRules() {
+    fun home_tr_kickerUppercasesWithTurkishRules() {
         home(AppLang.TR)
-        // "Yargıçlar isimleri görmez" must become "YARGIÇLAR İSİMLERİ GÖRMEZ", not "YARGIÇLAR ISIMLERI GÖRMEZ".
-        compose.onNodeWithText("ÜÇ BAĞIMSIZ YARGIÇ · YARGIÇLAR İSİMLERİ GÖRMEZ").assertExists()
+        // "Yeni dava" must become "YENİ DAVA", not "YENI DAVA".
+        compose.onNodeWithText("YENİ DAVA").assertExists()
+        compose.onNodeWithText(UiTestSupport.s(AppLang.TR).homeTitle).assertExists()
+    }
+
+    @Test
+    fun home_lensOpensThePresets() {
+        home(AppLang.EN)
+        val en = UiTestSupport.s(AppLang.EN)
+        compose.onNodeWithText(en.presetOutcomesLabel).assertDoesNotExist()
+        compose.onNodeWithTag(HomeTags.LENS).performClick()
+        compose.onNodeWithText(en.presetOutcomesLabel).performClick()
+        compose.onNodeWithText("· ${en.presetOutcomesLabel}").assertExists()
+    }
+
+    @Test
+    fun home_sidesLinkTogglesTheCaseMode() {
+        val en = UiTestSupport.s(AppLang.EN)
+        var mode by mutableStateOf(CaseMode.NOW)
+        compose.setContent {
+            Themed(AppLang.EN) {
+                HomeScreen(
+                    HomeUiState(signedIn = true, features = Features(cases = true), caseMode = mode),
+                    {}, {}, {}, {}, {}, {}, {},
+                    onCaseMode = { mode = it },
+                )
+            }
+        }
+        compose.onNodeWithTag(HomeTags.SIDES).assertTextEquals(en.homeInvite).performClick()
+        assertEquals(CaseMode.BOTH, mode)
+        compose.onNodeWithTag(HomeTags.SIDES).assertTextEquals(en.homeOneSide)
+        compose.onNodeWithText(en.caseCreate).assertExists()
+        compose.onNodeWithText(en.exampleHotdogLabel).assertDoesNotExist()
+    }
+
+    @Test
+    fun home_sidesLinkNeedsCases() {
+        home(AppLang.EN)
+        compose.onNodeWithTag(HomeTags.SIDES).assertDoesNotExist()
+    }
+
+    @Test
+    fun home_recentRow_hiddenWhenEmpty_opensAVerdict() {
+        val en = UiTestSupport.s(AppLang.EN)
+        var recent by mutableStateOf(emptyList<SavedVerdict>())
+        val opened = mutableListOf<String>()
+        var all = 0
+        compose.setContent {
+            Themed(AppLang.EN) {
+                HomeScreen(HomeUiState(recent = recent), {}, {}, {}, {}, {}, {}, {}, onOpenVerdict = { opened += it }, onAllVerdicts = { all++ })
+            }
+        }
+        compose.onNodeWithTag(HomeTags.RECENT).assertDoesNotExist()
+        compose.onNodeWithText(en.homeRecent.uppercase(Locale.US)).assertDoesNotExist()
+
+        val o = sample("win_a_self")
+        recent = listOf(SavedVerdict(o.id, System.currentTimeMillis(), o.result, o.nameMap, Preset.BALANCED.id, emptyMap()))
+        compose.waitForIdle()
+        compose.onNodeWithTag(HomeTags.RECENT).assertExists()
+        compose.onNodeWithText(personalized("win_a_self").str("headline")!!).assertExists()
+        compose.onNodeWithText(en.shellToday).assertExists()
+        compose.onNodeWithTag(HomeTags.recent(o.id)).performClick()
+        compose.onNodeWithText(en.homeAll).performClick()
+        assertEquals(listOf(o.id), opened)
+        assertEquals(1, all)
     }
 
     @Test

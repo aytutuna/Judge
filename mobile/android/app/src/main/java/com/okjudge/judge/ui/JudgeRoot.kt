@@ -181,7 +181,7 @@ fun JudgeRoot(container: AppContainer, links: StateFlow<Uri?> = MutableStateFlow
             }
 
             Scaffold(
-                containerColor = Palette.ivory,
+                containerColor = if (top is HomeKey) Palette.ivory2 else Palette.ivory,
                 snackbarHost = {
                     SnackbarHost(snackbar) { data ->
                         Snackbar(data, containerColor = Palette.ink, contentColor = Palette.ivory)
@@ -219,6 +219,7 @@ fun JudgeRoot(container: AppContainer, links: StateFlow<Uri?> = MutableStateFlow
                                     accountState = account.state,
                                     providers = account.providers,
                                     uploadEvidence = container.api::uploadEvidence,
+                                    recent = container.history.observeAll(),
                                 )
                             }
                             val state by vm.state.collectAsStateWithLifecycle()
@@ -265,6 +266,8 @@ fun JudgeRoot(container: AppContainer, links: StateFlow<Uri?> = MutableStateFlow
                                 onRemoveEvidence = vm::onRemoveEvidence,
                                 onCaseMode = vm::onCaseMode,
                                 onDisplayName = vm::onDisplayName,
+                                onOpenVerdict = { id -> backStack.add(VerdictKey(id, fresh = false)) },
+                                onAllVerdicts = { backStack.resetTo(listOf(HomeKey, HistoryKey)) },
                             )
                         }
                         entry<JudgingKey> {

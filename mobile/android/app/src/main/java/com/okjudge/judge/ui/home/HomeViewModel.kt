@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.okjudge.judge.core.api.ApiResult
 import com.okjudge.judge.core.auth.Account
 import com.okjudge.judge.core.cases.CaseLogic
+import com.okjudge.judge.core.data.SavedVerdict
 import com.okjudge.judge.core.data.SettingsStore
 import com.okjudge.judge.core.display.ArgumentRules
 import com.okjudge.judge.core.display.Preset
@@ -55,6 +56,8 @@ data class HomeUiState(
     val suggestedName: String? = null,
     /** A two-sided case is being created. */
     val creating: Boolean = false,
+    /** Saved verdicts, newest first, for the "Recent" row. */
+    val recent: List<SavedVerdict> = emptyList(),
 ) {
     val casesOn: Boolean get() = signedIn && features.cases
     val twoSided: Boolean get() = casesOn && caseMode == CaseMode.BOTH
@@ -90,6 +93,7 @@ class HomeViewModel(
     accountState: Flow<Account.State> = flowOf(Account.State.SignedOut),
     providers: Flow<Account.Providers> = flowOf(Account.Providers.Loading),
     uploadEvidence: suspend (List<PreparedImage>) -> ApiResult<EvidenceUploadResponse> = { ApiResult.Err(UiError.Unknown) },
+    recent: Flow<List<SavedVerdict>> = flowOf(emptyList()),
 ) : ViewModel() {
 
     val evidence = EvidenceController(viewModelScope, MAX_EVIDENCE_PER_SIDE, uploadEvidence)
@@ -144,8 +148,9 @@ class HomeViewModel(
 
     private data class CasePart(val mode: CaseMode, val typedName: String?, val suggestedName: String?, val creating: Boolean)
 
-    val state: StateFlow<HomeUiState> = combine(form, premium, casePart) { f, p, c ->
+    val state: StateFlow<HomeUiState> = combine(form, premium, casePart, recent) { f, p, c, saved ->
         f.copy(
+            recent = saved,
             caseMode = c.mode,
             typedName = c.typedName,
             suggestedName = c.suggestedName,

@@ -107,6 +107,29 @@ object JudgeType {
         color = Palette.ink,
     )
 
+    /** The case card's "State your case." (thread.module.css .title). */
+    val caseTitle = TextStyle(
+        fontFamily = BrandFonts.serif,
+        fontWeight = FontWeight.Normal,
+        fontSize = 36.sp,
+        lineHeight = (36 * 1.05).sp,
+        letterSpacing = (-0.01).em,
+        color = Palette.ink,
+    )
+
+    /** The verdict headline (verdict.module.css .ruling); the card picks 30..34 sp by width. */
+    val ruling = caseTitle.copy(fontSize = 32.sp, lineHeight = (32 * 1.05).sp, letterSpacing = 0.em)
+
+    /** Italic serif labels: the card's date and the verdict's section labels. */
+    val serifLabel = TextStyle(
+        fontFamily = BrandFonts.serif,
+        fontStyle = FontStyle.Italic,
+        fontWeight = FontWeight.Normal,
+        fontSize = 16.sp,
+        lineHeight = 20.sp,
+        color = Palette.muted,
+    )
+
     val cruxSans = inter(18f, 500, 1.5f)
     val headline = inter(15.5f, 400, 1.45f, Palette.ink2)
     val lead = inter(17f, 400, 1.5f, Palette.ink2)
