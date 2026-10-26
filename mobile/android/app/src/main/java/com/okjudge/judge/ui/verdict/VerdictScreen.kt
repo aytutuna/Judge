@@ -6,11 +6,9 @@ import android.content.Context
 import android.content.Intent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -30,10 +28,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.okjudge.judge.core.display.PartyNames
 import com.okjudge.judge.core.display.VerdictDisplay
@@ -41,10 +36,8 @@ import com.okjudge.judge.core.model.VerdictResult
 import com.okjudge.judge.i18n.LocalLang
 import com.okjudge.judge.i18n.LocalStrings
 import com.okjudge.judge.ui.components.ArgumentBubble
-import com.okjudge.judge.ui.components.JudgeIcons
 import com.okjudge.judge.ui.components.JudgesBadge
 import com.okjudge.judge.ui.components.SceneView
-import com.okjudge.judge.ui.components.TintedIcon
 import com.okjudge.judge.ui.components.TopBar
 import com.okjudge.judge.ui.components.warmShadow
 import com.okjudge.judge.ui.judging.rememberReducedMotion
@@ -60,7 +53,7 @@ fun shareUrl(shareBaseUrl: String, id: String): String = "${shareBaseUrl.trimEnd
  * The verdict screen, fed by a saved history row (fresh verdicts are saved
  * before the app navigates here, so this works offline and after process death).
  * A fresh verdict stays in its thread: the argument, the judges' badge and
- * the settled scene above the card, with "New argument" docked below.
+ * the settled scene above the card; the header's "+" starts the next one.
  */
 @Composable
 fun VerdictRoute(
@@ -68,7 +61,7 @@ fun VerdictRoute(
     viewModel: VerdictViewModel,
     shareBaseUrl: String,
     onBack: (() -> Unit)?,
-    onJudgeAnother: (() -> Unit)?,
+    thread: Boolean,
     onNew: (() -> Unit)?,
     argument: String? = null,
     fromHome: Boolean = false,
@@ -113,7 +106,7 @@ fun VerdictRoute(
                 .padding(horizontal = 16.dp, vertical = 12.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            if (onJudgeAnother != null) {
+            if (thread) {
                 VerdictThreadHead(
                     argument = argument,
                     result = shown.result,
@@ -136,7 +129,6 @@ fun VerdictRoute(
                 modifier = Modifier.widthIn(max = 640.dp).fillMaxWidth().padding(bottom = 32.dp),
             )
         }
-        onJudgeAnother?.let { NewArgumentDock(it) }
     }
 }
 
@@ -159,33 +151,6 @@ fun VerdictThreadHead(argument: String?, result: VerdictResult, reducedMotion: B
             SceneView(VerdictDisplay.sceneVerdict(result), reducedMotion, Modifier.fillMaxWidth().height(180.dp))
         }
     }
-}
-
-/** "New argument" where the composer was (NextSteps). */
-@Composable
-private fun NewArgumentDock(onNew: () -> Unit) {
-    val s = LocalStrings.current
-    Box(Modifier.fillMaxWidth().background(Palette.ivory).padding(top = 10.dp, bottom = 14.dp), contentAlignment = Alignment.Center) {
-        Row(
-            Modifier
-                .height(48.dp)
-                .warmShadow(4.dp, JudgeShapes.chip)
-                .clip(JudgeShapes.chip)
-                .background(Palette.ink)
-                .clickable(role = Role.Button, onClick = onNew)
-                .testTag(VerdictTags.NEW)
-                .padding(horizontal = 20.dp),
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            TintedIcon(remember { JudgeIcons.plus(Palette.ivory) }, 16)
-            Text(s.shellNew, style = JudgeType.button.copy(fontSize = 15.sp))
-        }
-    }
-}
-
-object VerdictTags {
-    const val NEW = "verdict.new"
 }
 
 /** Native share sheet with the web's share text and the anonymized headline as subject. */

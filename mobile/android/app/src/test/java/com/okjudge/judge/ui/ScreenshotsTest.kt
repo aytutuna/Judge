@@ -108,6 +108,7 @@ class ScreenshotsTest {
             JudgingScreen(
                 done = false, result = null, startedAt = System.currentTimeMillis() - 4_000, reducedMotion = true, onFinished = {}, onCancel = {},
                 argument = UiTestSupport.s(AppLang.EN).exampleHotdogText,
+                onNew = {},
             )
         }
     }
@@ -118,6 +119,7 @@ class ScreenshotsTest {
             JudgingScreen(
                 done = true, result = sample("win_b_named").result.result, startedAt = 0, reducedMotion = true, onFinished = {}, onCancel = {},
                 argument = UiTestSupport.s(AppLang.TR).exampleHotdogText,
+                onNew = {},
             )
         }
     }
@@ -349,7 +351,7 @@ class ScreenshotsTest {
     @Test
     fun judging_premium_en() = capture("judging_premium_en") {
         Themed(AppLang.EN) {
-            JudgingScreen(done = false, result = null, startedAt = System.currentTimeMillis() - 8_000, reducedMotion = true, onFinished = {}, onCancel = {}, premium = true)
+            JudgingScreen(done = false, result = null, startedAt = System.currentTimeMillis() - 8_000, reducedMotion = true, onFinished = {}, onCancel = {}, premium = true, onNew = {})
         }
     }
 

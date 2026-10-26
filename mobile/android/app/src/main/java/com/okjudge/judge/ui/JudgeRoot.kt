@@ -192,7 +192,7 @@ fun JudgeRoot(container: AppContainer, links: StateFlow<Uri?> = MutableStateFlow
                     }
                 },
                 bottomBar = {
-                    if (top !is JudgingKey && top !is SignInKey && top !is ClarifyKey) {
+                    if (showsBottomBar(top)) {
                         BottomBar(tab) { selected ->
                             backStack.resetTo(
                                 when (selected) {
@@ -282,6 +282,7 @@ fun JudgeRoot(container: AppContainer, links: StateFlow<Uri?> = MutableStateFlow
                                     backStack.add(VerdictKey(id, fresh = true, argument = argument))
                                 },
                                 onLeave = { backStack.removeAll { it is JudgingKey } },
+                                onNew = newArgument,
                             )
                         }
                         entry<ClarifyKey> {
@@ -351,10 +352,7 @@ fun JudgeRoot(container: AppContainer, links: StateFlow<Uri?> = MutableStateFlow
                                 viewModel = vm,
                                 shareBaseUrl = container.config.shareBaseUrl,
                                 onBack = if (key.fresh) null else ({ backStack.removeAt(backStack.lastIndex) }),
-                                onJudgeAnother = if (key.fresh) ({
-                                    clearDraft = true
-                                    backStack.resetTo(listOf(HomeKey))
-                                }) else null,
+                                thread = key.fresh,
                                 onNew = newArgument,
                                 argument = key.argument,
                                 fromHome = key.fromHome,
@@ -500,7 +498,7 @@ fun JudgeRoot(container: AppContainer, links: StateFlow<Uri?> = MutableStateFlow
 }
 
 @Composable
-private fun JudgingEntry(flow: VerdictFlow, onDone: (String, String?) -> Unit, onLeave: () -> Unit) {
+private fun JudgingEntry(flow: VerdictFlow, onDone: (String, String?) -> Unit, onLeave: () -> Unit, onNew: () -> Unit) {
     val state by flow.state.collectAsStateWithLifecycle()
     val reduced = rememberReducedMotion()
     val startedAt = remember { (state as? VerdictFlow.State.Running)?.startedAt ?: System.currentTimeMillis() }
@@ -543,7 +541,15 @@ private fun JudgingEntry(flow: VerdictFlow, onDone: (String, String?) -> Unit, o
             flow.cancel()
             onLeave()
         },
+        onNew = onNew,
     )
+}
+
+/** The tab bar stays off the thread (judging and the fresh verdict), sign-in and the questions. */
+internal fun showsBottomBar(top: NavKey?): Boolean = when (top) {
+    is JudgingKey, is SignInKey, is ClarifyKey -> false
+    is VerdictKey -> !top.fresh
+    else -> true
 }
 
 @Composable
