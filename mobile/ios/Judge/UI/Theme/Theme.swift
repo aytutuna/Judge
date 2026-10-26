@@ -55,8 +55,6 @@ enum Brand {
     static let line2 = Color(hex: PaletteHex.ink, opacity: PaletteHex.line2Alpha)
     /// The dashed crux border and map connectors.
     static let dash = Color(hex: PaletteHex.ink, opacity: 0.28)
-    /// verdict.module.css's best-point background.
-    static let bestPoint = Color(hex: 0xFBF6EF)
     /// Warm shadow colour, rgba(60, 40, 20, a).
     static func shadow(_ opacity: Double) -> Color { Color(red: 60 / 255, green: 40 / 255, blue: 20 / 255, opacity: opacity) }
 }

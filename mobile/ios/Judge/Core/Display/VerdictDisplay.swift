@@ -23,6 +23,54 @@ enum VerdictDisplay {
         }
     }
 
+    /// The stamp on the card: the winner as `label` says it, otherwise one short word.
+    static func stampLabel(_ verdict: FinalVerdict, parties: PartyNames, lang: AppLang) -> String {
+        switch verdict {
+        case .sideA, .sideB:
+            return label(verdict, parties: parties, lang: lang)
+        case .split:
+            return L10n.stampSplit(lang)
+        case .conditional:
+            return L10n.stampConditional(lang)
+        case .dissolved:
+            return L10n.stampDissolved(lang)
+        case .tooClose, .unknown:
+            return L10n.stampTooClose(lang)
+        }
+    }
+
+    struct Agreement: Sendable, Equatable {
+        let n: Int
+        let total: Int
+    }
+
+    /// How many judge runs reached the final verdict; nil when there is no
+    /// majority ruling to agree with (too close) or no runs at all.
+    static func agreement(_ result: VerdictResult) -> Agreement? {
+        guard !result.runs.isEmpty, result.verdict != .tooClose, result.verdict != .unknown else { return nil }
+        let n = result.runs.filter { $0.rawValue == result.verdict.rawValue }.count
+        return Agreement(n: n, total: result.runs.count)
+    }
+
+    /// The judges' name in the thread: plain until there is a verdict, then
+    /// how far they agreed.
+    static func judgesLabel(_ result: VerdictResult?, lang: AppLang) -> String {
+        guard let result, !result.runs.isEmpty else { return L10n.threadJudges(lang) }
+        guard let agreed = agreement(result) else { return L10n.threadJudgesSplit(lang) }
+        return L10n.threadJudgesAgree(lang, n: String(agreed.n), total: String(agreed.total))
+    }
+
+    /// "Sam's best point" when one side won, the plain title otherwise.
+    static func bestPointTitle(_ verdict: FinalVerdict, parties: PartyNames, lang: AppLang) -> String {
+        let loser: Party
+        switch verdict {
+        case .sideA: loser = .b
+        case .sideB: loser = .a
+        default: return L10n.bestPointTitle(lang)
+        }
+        return parties.isSelf(loser) ? L10n.bestPointSelf(lang) : L10n.bestPointOf(lang, name: parties.name(loser))
+    }
+
     /// Party A's share of the tug-of-war bar, in percent: 80/20 for a win,
     /// a fixed 62/38 for a forced-ruling lean, 50 otherwise.
     static func tugFinal(_ result: VerdictResult) -> Int {
@@ -137,11 +185,6 @@ enum VerdictDisplay {
     static func kind(_ kind: ClaimKind, lang: AppLang) -> String? {
         kind == .unknown ? nil : L10n.text("kind.\(kind.rawValue)", lang)
     }
-
-    /// Labels longer than this stack the seal above them.
-    static let stackLabelLength = 12
-    /// Labels longer than this use the smaller display size.
-    static let longLabelLength = 18
 }
 
 enum ContentLang {

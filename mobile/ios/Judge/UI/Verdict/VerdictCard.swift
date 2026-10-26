@@ -2,10 +2,11 @@ import CoreText
 import SwiftUI
 import UIKit
 
-/// The paper verdict card, in the order of the web's VerdictView /
-/// VerdictReveal: top row, tug bar, badge, seal and label, headline,
-/// confidence meter, lean / trial / refusal notes, branches, crux, best
-/// point, votes footnote and actions.
+/// The paper verdict card, as the web's VerdictReveal and verdict.module.css
+/// lay it out: the top row with the stamp, the dispute kind, the headline,
+/// confidence and votes, a rule, then the lean / trial / refusal notes, the
+/// branches, the crux, both sides' bedrock, the best point, the footnote and
+/// the share actions.
 struct VerdictCard: View {
     let result: VerdictResult
     let parties: PartyNames
@@ -19,38 +20,75 @@ struct VerdictCard: View {
     /// The anonymized original headline (anything that leaves the phone
     /// stays anonymized).
     let shareSubject: String
-    var onJudgeAnother: (() -> Void)?
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @State private var copied = false
     @State private var appeared = false
+    @State private var width: CGFloat = 0
 
     private var label: String { VerdictDisplay.label(result.verdict, parties: parties, lang: lang) }
     private var refused: Bool { result.modelRefused }
 
+    private static let sectionText = TypeStyle(face: .inter, weight: 400, size: 15, lineHeight: 1.55)
+
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            topRow
-            TugBar(parties: parties, tugA: VerdictDisplay.tugFinal(result), accessibilityText: L10n.verdictAria(lang, label: label))
-            mainBlock
+            HStack(alignment: .top, spacing: 8) {
+                topRow
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                Stamp(text: VerdictDisplay.stampLabel(result.verdict, parties: parties, lang: lang))
+                    .frame(maxWidth: 160, alignment: .trailing)
+            }
+            reveal
+            Rectangle()
+                .fill(Brand.ink.opacity(0.8))
+                .frame(height: 1)
+                .padding(.vertical, 2)
+                .accessibilityHidden(true)
+            slots
             branches
             if !refused {
-                CruxBlock(title: L10n.cruxShort(lang), text: result.crux)
-            }
-            if !refused, !result.losingSideBestPoint.isEmpty {
-                BestPointBlock(title: L10n.bestPointTitle(lang), text: result.losingSideBestPoint)
-            }
-            if !refused, let wouldChange = result.wouldChange, !wouldChange.isEmpty {
-                WouldChangeBlock(items: wouldChange, lang: lang)
+                section(L10n.cruxShort(lang)) {
+                    Text(result.crux)
+                        .brandText(Self.sectionText)
+                        .foregroundStyle(Brand.ink)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                let map = result.argumentMap
+                if !map.bedrockA.isEmpty || !map.bedrockB.isEmpty {
+                    section(L10n.bedrock(lang)) {
+                        HStack(spacing: 10) {
+                            BedrockTile(name: parties.nameA, text: map.bedrockA, color: Brand.terraInk)
+                            BedrockTile(name: parties.nameB, text: map.bedrockB, color: Brand.sageInk)
+                        }
+                        .fixedSize(horizontal: false, vertical: true)
+                    }
+                }
+                if !result.losingSideBestPoint.isEmpty {
+                    section(VerdictDisplay.bestPointTitle(result.verdict, parties: parties, lang: lang)) {
+                        Text(result.losingSideBestPoint)
+                            .brandText(Self.sectionText)
+                            .foregroundStyle(Brand.ink)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+                }
+                if let wouldChange = result.wouldChange, !wouldChange.isEmpty {
+                    WouldChangeBlock(items: wouldChange, lang: lang)
+                }
             }
             footnote
-            if shareURL != nil || onJudgeAnother != nil {
-                actions
-            }
+            actions
         }
         .padding(.horizontal, 20)
-        .padding(.top, 26)
+        .padding(.top, 22)
         .padding(.bottom, 20)
+        .background {
+            GeometryReader { proxy in
+                Color.clear
+                    .onAppear { width = proxy.size.width }
+                    .onChange(of: proxy.size.width) { _, value in width = value }
+            }
+        }
         .paperSurface(radius: Radius.verdict)
         .cardShadow()
         .opacity(appeared || reduceMotion ? 1 : 0)
@@ -64,7 +102,7 @@ struct VerdictCard: View {
     // MARK: - Sections
 
     private var topRow: some View {
-        HStack(spacing: 10) {
+        FlowLayout(spacing: 8, rowSpacing: 6) {
             if let note = status.note(lang) {
                 HStack(spacing: 7) {
                     if status == .loading {
@@ -86,6 +124,7 @@ struct VerdictCard: View {
                         .brandText(TypeStyle(face: .interTight, weight: 600, size: 13, lineHeight: 1, tracking: -0.01, textStyle: .footnote))
                         .foregroundStyle(Brand.muted)
                 }
+                .frame(minHeight: 26)
                 .accessibilityHidden(true)
             }
             if result.isPremium {
@@ -104,79 +143,57 @@ struct VerdictCard: View {
                         .background(Capsule().fill(Brand.sageTint))
                         .lineLimit(1)
                         .minimumScaleFactor(0.7)
-                        .layoutPriority(1)
                 }
             }
-            Spacer(minLength: 0)
-            HStack(spacing: 5) {
-                ForEach(Array(result.runs.enumerated()), id: \.offset) { _, run in
-                    VoteDot(vote: VerdictDisplay.vote(run))
-                }
-            }
-            .accessibilityHidden(true)
         }
-        .frame(minHeight: 22)
     }
 
-    private var mainBlock: some View {
-        VStack(spacing: 10) {
+    /// The dispute kind, the headline as the card's heading (read with the
+    /// ruling first), then confidence and votes.
+    private var reveal: some View {
+        let headline = result.headline.isEmpty ? label : result.headline
+        var style = TypeStyle.ruling
+        // As on Android: 8% of the screen width, between 30 and 34.
+        style.size = min(34, max(30, (width + 32) * 0.08))
+        return VStack(alignment: .leading, spacing: 10) {
             if let badge = VerdictDisplay.badge(result.disputeType, lang: lang) {
-                Text(badge)
-                    .brandText(TypeStyle(face: .inter, weight: 700, size: 11, lineHeight: 1.2, tracking: 0.1, textStyle: .caption2, maxScale: 1.6, uppercase: true))
-                    .foregroundStyle(Brand.ink2)
-                    .padding(.horizontal, 11)
-                    .padding(.vertical, 5)
-                    .background(Capsule().fill(Brand.paper))
-                    .overlay(Capsule().strokeBorder(Brand.line2, lineWidth: 1))
+                Kicker(text: badge)
             }
-            verdictLabel
-            if !result.headline.isEmpty {
-                Text(result.headline)
-                    .brandText(.headline)
-                    .foregroundStyle(Brand.ink2)
-                    .multilineTextAlignment(.center)
-                    .fixedSize(horizontal: false, vertical: true)
-            }
-            ConfidenceMeter(value: result.confidence, lang: lang)
-                .padding(.top, 6)
-            slots
+            Text(headline)
+                .brandText(style)
+                .foregroundStyle(Brand.ink)
+                .fixedSize(horizontal: false, vertical: true)
+                .accessibilityLabel(result.headline.isEmpty ? label : label + ". " + headline)
+                .accessibilityAddTraits(.isHeader)
+            meta
         }
-        .frame(maxWidth: .infinity)
-        .padding(.horizontal, 16)
-        .padding(.top, 22)
-        .padding(.bottom, 20)
-        .background(
-            RoundedRectangle(cornerRadius: Radius.block, style: .continuous)
-                .fill(LinearGradient(colors: [Color(hex: 0xFBF7F0), Color(hex: 0xF7F1E7)], startPoint: .top, endPoint: .bottom))
-        )
-        .overlay(RoundedRectangle(cornerRadius: Radius.block, style: .continuous).strokeBorder(Brand.line, lineWidth: 1))
     }
 
-    private var verdictLabel: some View {
-        let count = label.unicodeScalars.count
-        let long = count > VerdictDisplay.longLabelLength
-        let stacked = count > VerdictDisplay.stackLabelLength
-        let text = Text(label)
-            .brandText(long ? .verdictLabelLong : .verdictLabel)
-            .foregroundStyle(Brand.ink)
-            .multilineTextAlignment(.center)
-            .fixedSize(horizontal: false, vertical: true)
-        return Group {
-            if stacked {
-                VStack(spacing: 10) {
-                    Seal(side: VerdictDisplay.seal(result.verdict))
-                    text
-                }
-            } else {
-                HStack(spacing: 12) {
-                    Seal(side: VerdictDisplay.seal(result.verdict))
-                    text
+    /// "Confidence 4 of 5 · ●●● 3 of 3 agree".
+    private var meta: some View {
+        FlowLayout(spacing: 8, rowSpacing: 4) {
+            Text(L10n.confidenceAria(lang, n: String(VerdictDisplay.clampedConfidence(result.confidence))))
+            if !result.runs.isEmpty {
+                Text(verbatim: "·")
+                    .accessibilityHidden(true)
+                HStack(spacing: 8) {
+                    HStack(spacing: 5) {
+                        ForEach(Array(result.runs.enumerated()), id: \.offset) { _, run in
+                            VoteDot(vote: VerdictDisplay.vote(run))
+                        }
+                    }
+                    .accessibilityHidden(true)
+                    if let agreed = VerdictDisplay.agreement(result) {
+                        Text(L10n.verdictAgree(lang, n: String(agreed.n), total: String(agreed.total)))
+                    } else {
+                        Text(L10n.verdictNoMajority(lang))
+                    }
                 }
             }
         }
-        .padding(.top, 2)
+        .brandText(TypeStyle(face: .inter, weight: 500, size: 13, lineHeight: 1.4, textStyle: .footnote))
+        .foregroundStyle(Brand.ink2)
         .accessibilityElement(children: .combine)
-        .accessibilityAddTraits(.isHeader)
     }
 
     @ViewBuilder
@@ -242,6 +259,18 @@ struct VerdictCard: View {
         }
     }
 
+    /// A titled part of the card under the rule (verdict.module.css .section).
+    private func section<Content: View>(_ title: String, @ViewBuilder content: () -> Content) -> some View {
+        VStack(alignment: .leading, spacing: 6) {
+            Text(title)
+                .brandText(.serifLabel)
+                .foregroundStyle(Brand.muted)
+                .accessibilityAddTraits(.isHeader)
+            content()
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
+
     @ViewBuilder
     private var footnote: some View {
         if !result.runs.isEmpty {
@@ -265,47 +294,94 @@ struct VerdictCard: View {
         }
     }
 
+    /// Share (filled) and copy link (outlined).
+    @ViewBuilder
     private var actions: some View {
-        let message = L10n.shareText(lang)
-        return ViewThatFits(in: .horizontal) {
-            HStack(spacing: 8) { shareButtons(message: message); Spacer(minLength: 8); judgeAnotherButton }
-            VStack(alignment: .leading, spacing: 8) { HStack(spacing: 8) { shareButtons(message: message) }; judgeAnotherButton }
-        }
-        .padding(.top, 2)
-    }
-
-    @ViewBuilder
-    private func shareButtons(message: String) -> some View {
         if let shareURL {
-            ShareLink(item: shareURL, subject: Text(shareSubject), message: Text(message)) {
-                Label(L10n.share(lang), systemImage: "square.and.arrow.up")
+            HStack(spacing: 8) {
+                ShareLink(item: shareURL, subject: Text(shareSubject), message: Text(L10n.shareText(lang))) {
+                    Label(L10n.share(lang), systemImage: "square.and.arrow.up")
+                }
+                .buttonStyle(CardActionStyle(filled: true))
+                Button {
+                    UIPasteboard.general.url = shareURL
+                    copied = true
+                } label: {
+                    Label(copied ? L10n.copied(lang) : L10n.copyLink(lang), systemImage: copied ? "checkmark" : "link")
+                }
+                .buttonStyle(CardActionStyle(filled: false))
+                .task(id: copied) {
+                    guard copied else { return }
+                    try? await Task.sleep(for: .seconds(2))
+                    if !Task.isCancelled { copied = false }
+                }
             }
-            .buttonStyle(GhostButtonStyle())
-            Button {
-                UIPasteboard.general.url = shareURL
-                copied = true
-            } label: {
-                Label(copied ? L10n.copied(lang) : L10n.copyLink(lang), systemImage: copied ? "checkmark" : "link")
-            }
-            .buttonStyle(GhostButtonStyle())
-            .task(id: copied) {
-                guard copied else { return }
-                try? await Task.sleep(for: .seconds(2))
-                if !Task.isCancelled { copied = false }
-            }
-        }
-    }
-
-    @ViewBuilder
-    private var judgeAnotherButton: some View {
-        if let onJudgeAnother {
-            Button(L10n.judgeAnother(lang), action: onJudgeAnother)
-                .buttonStyle(LinkButtonStyle())
+            .padding(.top, 2)
         }
     }
 }
 
 // MARK: - Pieces
+
+/// Decorative: the headline's accessibility label carries the ruling.
+private struct Stamp: View {
+    let text: String
+
+    var body: some View {
+        Text(text)
+            .brandText(TypeStyle(face: .interTight, weight: 800, size: 13, lineHeight: 1.15, tracking: 0.12, textStyle: .footnote, maxScale: 1.4, uppercase: true))
+            .foregroundStyle(Brand.terra)
+            .multilineTextAlignment(.center)
+            .lineLimit(2)
+            .padding(.horizontal, 10)
+            .padding(.vertical, 5)
+            .overlay(RoundedRectangle(cornerRadius: 8, style: .continuous).strokeBorder(Brand.terra, lineWidth: 2))
+            .rotationEffect(.degrees(8))
+            .padding(.top, 4)
+            .accessibilityHidden(true)
+    }
+}
+
+private struct BedrockTile: View {
+    let name: String
+    let text: String
+    let color: Color
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 4) {
+            Text(name)
+                .brandText(TypeStyle(face: .inter, weight: 700, size: 11, lineHeight: 1.3, tracking: 0.1, textStyle: .caption2, maxScale: 1.6, uppercase: true))
+                .foregroundStyle(color)
+                .lineLimit(1)
+            Text(text)
+                .brandText(TypeStyle(face: .inter, weight: 400, size: 14, lineHeight: 1.45, textStyle: .subheadline))
+                .foregroundStyle(Brand.ink)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+        .padding(.horizontal, 14)
+        .padding(.vertical, 12)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .background(RoundedRectangle(cornerRadius: 14, style: .continuous).fill(Brand.ivory))
+        .accessibilityElement(children: .combine)
+    }
+}
+
+/// 48 pt pills under the card: ink when filled, paper with a hairline otherwise.
+private struct CardActionStyle: ButtonStyle {
+    let filled: Bool
+
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .brandText(TypeStyle(face: .interTight, weight: 600, size: 15, lineHeight: 1.2, textStyle: .headline, maxScale: 1.6))
+            .foregroundStyle(filled ? Brand.ivory : Brand.ink)
+            .lineLimit(1)
+            .padding(.horizontal, 18)
+            .frame(maxWidth: filled ? .infinity : nil, minHeight: 48)
+            .background(Capsule().fill(filled ? Brand.ink : (configuration.isPressed ? Color.white : Brand.paper)))
+            .overlay(Capsule().strokeBorder(filled ? Color.clear : Brand.line2, lineWidth: 1))
+            .scaleEffect(configuration.isPressed ? 0.98 : 1)
+    }
+}
 
 private struct VoteDot: View {
     let vote: VerdictDisplay.Vote
@@ -319,126 +395,12 @@ private struct VoteDot: View {
     }
 }
 
-/// Party names over the tug-of-war bar (A's share against B's).
-struct TugBar: View {
-    let parties: PartyNames
-    let tugA: Int
-    let accessibilityText: String
-
-    var body: some View {
-        VStack(spacing: 8) {
-            HStack(spacing: 12) {
-                HStack(spacing: 6) {
-                    Circle().fill(Brand.terra).frame(width: 9, height: 9)
-                    Text(parties.nameA).lineLimit(1).truncationMode(.tail)
-                }
-                Spacer(minLength: 0)
-                HStack(spacing: 6) {
-                    Text(parties.nameB).lineLimit(1).truncationMode(.tail)
-                    Circle().fill(Brand.sageStrong).frame(width: 9, height: 9)
-                }
-            }
-            .brandText(TypeStyle(face: .inter, weight: 600, size: 13, lineHeight: 1.3, textStyle: .footnote))
-            .foregroundStyle(Brand.ink2)
-            GeometryReader { proxy in
-                let share = CGFloat(max(0, min(100, tugA))) / 100
-                ZStack(alignment: .leading) {
-                    Capsule().fill(Brand.sageStrong)
-                    UnevenRoundedRectangle(topLeadingRadius: 5, bottomLeadingRadius: 5, style: .continuous)
-                        .fill(Brand.terra)
-                        .frame(width: proxy.size.width * share)
-                    Circle()
-                        .fill(Brand.paper)
-                        .overlay(Circle().strokeBorder(Brand.ink, lineWidth: 2))
-                        .frame(width: 18, height: 18)
-                        .shadow(color: .black.opacity(0.18), radius: 3, y: 2)
-                        .offset(x: proxy.size.width * share - 9)
-                }
-            }
-            .frame(height: 10)
-            .padding(.vertical, 4)
-        }
-        .accessibilityElement(children: .ignore)
-        .accessibilityLabel(accessibilityText)
-    }
-}
-
-private struct Seal: View {
-    let side: VerdictDisplay.Seal
-
-    var body: some View {
-        ZStack {
-            Circle().fill(color)
-            Circle().fill(LinearGradient(colors: [.white.opacity(0.18), .black.opacity(0.12)], startPoint: .top, endPoint: .bottom))
-            Canvas { context, size in
-                let s = size.width / 16
-                if side == .none {
-                    var beam = Path()
-                    beam.move(to: CGPoint(x: 2.5 * s, y: 6.5 * s))
-                    beam.addLine(to: CGPoint(x: 13.5 * s, y: 6.5 * s))
-                    context.stroke(beam, with: .color(.white), style: StrokeStyle(lineWidth: 2 * s, lineCap: .round))
-                    var pivot = Path()
-                    pivot.move(to: CGPoint(x: 8 * s, y: 6.5 * s))
-                    pivot.addLine(to: CGPoint(x: 5.6 * s, y: 12.5 * s))
-                    pivot.addLine(to: CGPoint(x: 10.4 * s, y: 12.5 * s))
-                    pivot.closeSubpath()
-                    context.fill(pivot, with: .color(.white))
-                } else {
-                    var check = Path()
-                    check.move(to: CGPoint(x: 3.5 * s, y: 8.4 * s))
-                    check.addLine(to: CGPoint(x: 6.6 * s, y: 11.4 * s))
-                    check.addLine(to: CGPoint(x: 12.6 * s, y: 4.9 * s))
-                    context.stroke(check, with: .color(.white), style: StrokeStyle(lineWidth: 2.2 * s, lineCap: .round, lineJoin: .round))
-                }
-            }
-            .frame(width: 17, height: 17)
-        }
-        .frame(width: 34, height: 34)
-        .accessibilityHidden(true)
-    }
-
-    private var color: Color {
-        switch side {
-        case .a: return Brand.terraInk
-        case .b: return Brand.sageInk
-        case .none: return Brand.ink
-        }
-    }
-}
-
-/// Five bars plus "High confidence · 4/5".
-struct ConfidenceMeter: View {
-    let value: Int
-    let lang: AppLang
-
-    var body: some View {
-        let n = VerdictDisplay.clampedConfidence(value)
-        VStack(spacing: 8) {
-            HStack(spacing: 5) {
-                ForEach(1...5, id: \.self) { index in
-                    Capsule()
-                        .fill(index <= n ? Brand.ink : Brand.ink.opacity(0.1))
-                        .frame(width: 30, height: 7)
-                }
-            }
-            .accessibilityHidden(true)
-            Text(VerdictDisplay.confidenceText(value, lang: lang))
-                .brandText(.slotTitle)
-                .foregroundStyle(Brand.ink2)
-        }
-        .accessibilityElement(children: .ignore)
-        .accessibilityLabel(L10n.confidenceAria(lang, n: String(n)))
-        .accessibilityValue(VerdictDisplay.confidenceText(value, lang: lang))
-    }
-}
-
 private struct Slot<Content: View>: View {
     @ViewBuilder let content: Content
 
     var body: some View {
-        VStack(spacing: 4) { content }
-            .multilineTextAlignment(.center)
-            .frame(maxWidth: 420)
+        VStack(alignment: .leading, spacing: 4) { content }
+            .frame(maxWidth: .infinity, alignment: .leading)
     }
 }
 
@@ -557,66 +519,5 @@ private struct Branch<Content: View>: View {
                 }
             }
             .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
-    }
-}
-
-/// Dashed box with a diamond kicker; short cruxes in the display serif.
-struct CruxBlock: View {
-    let title: String
-    let text: String
-
-    var body: some View {
-        let serif = CruxStyle.of(text) == .serif
-        VStack(spacing: 6) {
-            HStack(spacing: 7) {
-                Rectangle()
-                    .fill(Brand.ink)
-                    .frame(width: 8, height: 8)
-                    .rotationEffect(.degrees(45))
-                    .accessibilityHidden(true)
-                Kicker(text: title)
-            }
-            Text(text)
-                .brandText(serif ? .cruxSerif : .cruxSans)
-                .foregroundStyle(Brand.ink)
-                .multilineTextAlignment(serif ? .center : .leading)
-                .frame(maxWidth: .infinity, alignment: serif ? .center : .leading)
-                .fixedSize(horizontal: false, vertical: true)
-        }
-        .padding(.horizontal, 18)
-        .padding(.vertical, 16)
-        .background(RoundedRectangle(cornerRadius: 20, style: .continuous).fill(Brand.paper))
-        .overlay(
-            RoundedRectangle(cornerRadius: 20, style: .continuous)
-                .strokeBorder(Brand.dash, style: StrokeStyle(lineWidth: 1.5, dash: [5, 4]))
-        )
-        .accessibilityElement(children: .combine)
-    }
-}
-
-/// The other side's best point, on a terracotta left rule.
-struct BestPointBlock: View {
-    let title: String
-    let text: String
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: 6) {
-            Kicker(text: title)
-            Text(text)
-                .brandText(TypeStyle(face: .inter, weight: 400, size: 15, lineHeight: 1.5))
-                .foregroundStyle(Brand.ink2)
-                .fixedSize(horizontal: false, vertical: true)
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(.vertical, 14)
-        .padding(.leading, 20)
-        .padding(.trailing, 16)
-        .background(RoundedRectangle(cornerRadius: 18, style: .continuous).fill(Brand.bestPoint))
-        .overlay(alignment: .leading) {
-            Rectangle().fill(Brand.terra).frame(width: 4)
-        }
-        .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
-        .overlay(RoundedRectangle(cornerRadius: 18, style: .continuous).strokeBorder(Brand.line, lineWidth: 1))
-        .accessibilityElement(children: .combine)
     }
 }
