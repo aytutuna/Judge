@@ -131,6 +131,10 @@ fun JudgeRoot(container: AppContainer, links: StateFlow<Uri?> = MutableStateFlow
                 clearDraft = true
                 backStack.resetTo(listOf(HomeKey))
             }
+            // Home's questions check or case creation would still land on the new, empty form.
+            val premiumStep by container.verdictFlow.premiumStep.collectAsStateWithLifecycle()
+            val creating by container.verdictFlow.creating.collectAsStateWithLifecycle()
+            val onNew = newArgument.takeUnless { premiumStep == VerdictFlow.PremiumStep.Checking || creating }
             LaunchedEffect(container.verdictFlow) {
                 // Premium moves on by itself: questions first, then the judging screen.
                 container.verdictFlow.navigation.collect { nav ->
@@ -305,7 +309,7 @@ fun JudgeRoot(container: AppContainer, links: StateFlow<Uri?> = MutableStateFlow
                                         container.verdictFlow.leaveClarify()
                                         backStack.removeAll { it is ClarifyKey }
                                     },
-                                    onNew = newArgument,
+                                    onNew = onNew,
                                 )
                             }
                         }
@@ -333,7 +337,7 @@ fun JudgeRoot(container: AppContainer, links: StateFlow<Uri?> = MutableStateFlow
                                 entitlement = signedIn?.me?.entitlement,
                                 onBack = { backStack.removeAll { it is PricingKey } },
                                 onSignIn = { if (backStack.lastOrNull() !is SignInKey) backStack.add(SignInKey(thenVerdict = false)) },
-                                onNew = newArgument,
+                                onNew = onNew,
                                 store = StoreUi(
                                     available = store.available,
                                     offers = if (purchases.isReady(store)) store.offers else emptyMap(),
@@ -368,7 +372,7 @@ fun JudgeRoot(container: AppContainer, links: StateFlow<Uri?> = MutableStateFlow
                                 shareBaseUrl = container.config.shareBaseUrl,
                                 onBack = if (key.fresh) null else ({ backStack.removeAt(backStack.lastIndex) }),
                                 thread = key.fresh,
-                                onNew = newArgument,
+                                onNew = onNew,
                                 argument = key.argument,
                                 fromHome = key.fromHome,
                                 appeal = appeal,
@@ -396,7 +400,7 @@ fun JudgeRoot(container: AppContainer, links: StateFlow<Uri?> = MutableStateFlow
                                 onOpen = { id -> backStack.add(VerdictKey(id, fresh = false)) },
                                 onDelete = vm::delete,
                                 onDeleteAll = vm::deleteAll,
-                                onNew = newArgument,
+                                onNew = onNew,
                                 cases = cases?.first,
                                 onOpenCase = { id -> backStack.add(CaseKey(id)) },
                                 onRetryCases = { cases?.second?.reload() },
@@ -425,7 +429,7 @@ fun JudgeRoot(container: AppContainer, links: StateFlow<Uri?> = MutableStateFlow
                                 reducedMotion = rememberReducedMotion(),
                                 actions = CaseActions(
                                     onBack = if (backStack.size > 1) ({ backStack.removeAt(backStack.lastIndex) }) else null,
-                                    onNew = newArgument,
+                                    onNew = onNew,
                                     onReload = vm::reload,
                                     onSignIn = { if (backStack.lastOrNull() !is SignInKey) backStack.add(SignInKey(thenVerdict = false)) },
                                     onPricing = { if (backStack.lastOrNull() !is PricingKey) backStack.add(PricingKey) },
@@ -469,7 +473,7 @@ fun JudgeRoot(container: AppContainer, links: StateFlow<Uri?> = MutableStateFlow
                                 langPref = langPref,
                                 versionName = container.config.versionName,
                                 onLangPref = { pref -> scope.launch { container.settings.setLangPref(pref) } },
-                                onNew = newArgument,
+                                onNew = onNew,
                                 onOpenLink = { openLink(context, it) },
                                 siteBaseUrl = container.config.shareBaseUrl,
                                 account = accountState,
@@ -495,7 +499,7 @@ fun JudgeRoot(container: AppContainer, links: StateFlow<Uri?> = MutableStateFlow
                             SignInScreen(
                                 state = state,
                                 onBack = { backStack.removeAll { it is SignInKey } },
-                                onNew = newArgument,
+                                onNew = onNew,
                                 actions = SignInActions(
                                     onGoogle = { vm.google(context) },
                                     onEmailChange = vm::onEmailChange,
