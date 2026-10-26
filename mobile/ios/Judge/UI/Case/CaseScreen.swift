@@ -141,7 +141,7 @@ private struct CaseScreenContent: View {
                 .brandText(.body)
                 .foregroundStyle(Brand.ink2)
                 .accessibilityAddTraits(.updatesFrequently)
-            CaseJudgingCard(lang: lang)
+            CaseJudgingCard(lang: lang, premium: view.tier == .premium)
         case .awaitingRespondent:
             note(L10n.caseNotYet(lang))
             VStack(alignment: .leading, spacing: 14) {
@@ -397,9 +397,10 @@ private struct VerdictHistory: View {
     }
 }
 
-/// While the judges work: the rocking balance and the premium helper line.
+/// While the judges work: the rocking balance and the helper line for the case tier.
 private struct CaseJudgingCard: View {
     let lang: AppLang
+    let premium: Bool
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @State private var started = Date.now
 
@@ -415,7 +416,7 @@ private struct CaseJudgingCard: View {
                     .brandText(.slotTitle)
                     .foregroundStyle(Brand.ink)
             }
-            Text(L10n.thinkingPremiumHelper(lang))
+            Text(premium ? L10n.thinkingPremiumHelper(lang) : L10n.thinkingHelper(lang))
                 .brandText(.slotText)
                 .foregroundStyle(Brand.muted)
                 .multilineTextAlignment(.center)

@@ -204,7 +204,7 @@ fun CaseScreen(
                     reducedMotion = reducedMotion,
                     onFinished = actions.onOverlayFinished,
                     onCancel = { actions.onBack?.invoke() },
-                    premium = true,
+                    premium = view.premium,
                     showCancel = false,
                     modifier = Modifier.weight(1f),
                 )

@@ -431,6 +431,21 @@ class PremiumScreensTest {
     }
 
     @Test
+    fun judging_helperFollowsTheCaseTier() {
+        var premium by mutableStateOf(false)
+        compose.setContent {
+            Themed(AppLang.EN) {
+                JudgingScreen(done = false, result = null, startedAt = 0, reducedMotion = true, onFinished = {}, onCancel = {}, premium = premium)
+            }
+        }
+        compose.onNodeWithText(en.thinkingHelper).assertExists()
+        compose.onNodeWithText(en.thinkingPremiumHelper).assertDoesNotExist()
+        premium = true
+        compose.waitForIdle()
+        compose.onNodeWithText(en.thinkingPremiumHelper).assertExists()
+    }
+
+    @Test
     fun judging_premium_showsTheWebCheckLine() {
         var done by mutableStateOf(false)
         compose.setContent {
