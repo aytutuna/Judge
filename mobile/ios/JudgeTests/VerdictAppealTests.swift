@@ -146,20 +146,21 @@ final class VerdictAppealTests: XCTestCase {
         router.install()
         let container = HistoryContainer.inMemory()
         let app = try PremiumFixtures.app(container: container)
-        let expected: [(String, CaseLogic.AppealArea)] = [
-            ("premium_required", .blocked(reason: "premium_required")),
-            ("no_credits", .blocked(reason: "no_credits")),
-            ("appeal_limit", .limit),
-            ("busy", .busy),
-            ("signin_required", .upsell(signIn: true)),
-            ("claim_required", .none),
+        // The limit and busy notes wait for a panel already out.
+        let expected: [(String, CaseLogic.AppealArea, Bool)] = [
+            ("premium_required", .blocked(reason: "premium_required"), true),
+            ("no_credits", .blocked(reason: "no_credits"), true),
+            ("appeal_limit", .limit, false),
+            ("busy", .busy, false),
+            ("signin_required", .upsell(signIn: true), true),
+            ("claim_required", .none, false),
         ]
-        for (blockedBy, area) in expected {
+        for (blockedBy, area, offered) in expected {
             router.on("GET", Self.verdictPath, try verdict(gate: gate(false, blockedBy)))
             let (appeal, _) = try model(app)
             await appeal.load()
             XCTAssertEqual(appeal.area, area, blockedBy)
-            XCTAssertEqual(appeal.offered, area != .none, blockedBy)
+            XCTAssertEqual(appeal.offered, offered, blockedBy)
         }
         XCTAssertEqual(
             ErrorText.message(.server(status: 409, body: ApiErrorBody(error: "x", code: "appeal_limit")), lang: .en),
@@ -309,6 +310,7 @@ final class VerdictAppealTests: XCTestCase {
         let (appeal, shown) = try model(app)
         await appeal.load()
         XCTAssertEqual(appeal.judgingID, "r1")
+        XCTAssertFalse(appeal.offered, "nothing to add while the judges are at it")
 
         await appeal.follow("r1")
         XCTAssertTrue(appeal.finished)

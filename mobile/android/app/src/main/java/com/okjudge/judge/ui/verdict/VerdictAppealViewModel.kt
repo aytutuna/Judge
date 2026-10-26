@@ -44,8 +44,8 @@ data class VerdictAppealUiState(
 ) {
     val area: AppealArea get() = rounds?.let(CaseLogic::appealArea) ?: AppealArea.None
 
-    /** The card's "Add context": the writer only. */
-    val offered: Boolean get() = area != AppealArea.None
+    /** The card's "Add context": the writer only, and only when the panel has something to do. */
+    val offered: Boolean get() = area is AppealArea.Form || area is AppealArea.Upsell || area is AppealArea.Blocked
 
     /** The panel under the verdict: opened, or while the judges re-judge. */
     val panel: Boolean get() = area != AppealArea.None && (open || area == AppealArea.Judging)

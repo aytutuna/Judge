@@ -131,8 +131,8 @@ class VerdictAppealViewModelTest {
         }
         assertEquals(AppealArea.Blocked("premium_required") to true, areaFor(gate(false, "premium_required")))
         assertEquals(AppealArea.Blocked("no_credits") to true, areaFor(gate(false, "no_credits")))
-        assertEquals(AppealArea.Limit to true, areaFor(gate(false, "appeal_limit")))
-        assertEquals(AppealArea.Busy to true, areaFor(gate(false, "busy")))
+        assertEquals("the note waits for a panel already out", AppealArea.Limit to false, areaFor(gate(false, "appeal_limit")))
+        assertEquals(AppealArea.Busy to false, areaFor(gate(false, "busy")))
         assertEquals(AppealArea.Upsell(signIn = true) to true, areaFor(gate(false, "signin_required")))
         assertEquals("the app keeps no owner token to claim with", AppealArea.None to false, areaFor(gate(false, "claim_required")))
     }
@@ -215,6 +215,16 @@ class VerdictAppealViewModelTest {
         assertEquals(AppealArea.Form("failed"), s.area)
         assertTrue(s.open)
         assertEquals(id, history.observe(id).first()!!.rulingId)
+    }
+
+    @Test
+    fun aRoundStillJudging_offersNothingOnTheCard() = runBlocking {
+        routes.on(get, Routes.json(200, verdictBody(appeals = "[${roundView("judging")}]", owner = gate(false, "busy"))))
+        routes.always(round, Routes.json(200, """{"id":"r1","status":"judging","pollAfterMs":5000}"""))
+        val vm = vm()
+        val s = vm.until { it.area == AppealArea.Judging }
+        assertFalse(s.offered)
+        assertTrue(s.panel)
     }
 
     @Test
