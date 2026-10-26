@@ -127,14 +127,6 @@ object VerdictDisplay {
         val n = confidenceLevel(value)
         return s.confidenceWord(s.text(confidenceWordKey(value)) ?: "", n.toString())
     }
-
-    /** Labels longer than this stack the seal above them (VerdictMain STACK_LABEL). */
-    const val STACK_LABEL = 12
-
-    /** Labels longer than this use the smaller display size (LONG_LABEL). */
-    const val LONG_LABEL = 18
-
-    fun codePointLength(text: String): Int = text.codePointCount(0, text.length)
 }
 
 enum class Vote {

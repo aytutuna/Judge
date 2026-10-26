@@ -77,17 +77,6 @@ object JudgeType {
         color = Palette.ink,
     )
 
-    val verdictLabel = TextStyle(
-        fontFamily = BrandFonts.interTight(800),
-        fontWeight = FontWeight.ExtraBold,
-        fontSize = 36.sp,
-        lineHeight = 36.sp,
-        letterSpacing = (-0.04).em,
-        color = Palette.ink,
-    )
-
-    val verdictLabelLong = verdictLabel.copy(fontSize = 28.sp, lineHeight = (28 * 1.04).sp, letterSpacing = (-0.035).em)
-
     /** The case card's "State your case." (thread.module.css .title). */
     val caseTitle = TextStyle(
         fontFamily = BrandFonts.serif,

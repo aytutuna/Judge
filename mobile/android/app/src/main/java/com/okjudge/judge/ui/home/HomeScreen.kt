@@ -574,7 +574,6 @@ private fun RecentCard(kicker: String, title: String, date: String, onClick: () 
     }
 }
 
-/** "October 26" / "26 Ekim" (formatDate in lib/i18n.ts). */
 /** Today, read again on each resume so Home left open overnight moves on. */
 @Composable
 private fun rememberToday(): LocalDate {
@@ -582,6 +581,7 @@ private fun rememberToday(): LocalDate {
     return remember(state) { LocalDate.now() }
 }
 
+/** "October 26" / "26 Ekim" (formatDate in lib/i18n.ts). */
 private fun dayMonth(date: LocalDate, lang: AppLang): String =
     DateTimeFormatter.ofPattern(if (lang == AppLang.TR) "d MMMM" else "MMMM d", lang.locale).format(date)
 
