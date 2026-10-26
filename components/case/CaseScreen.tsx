@@ -11,6 +11,8 @@ import { useCase } from "@/lib/use-case";
 import { refreshViewer, useViewer } from "@/lib/use-viewer";
 import { JudgingOverlay } from "../JudgingOverlay";
 import { SiteFooter, SiteHeader, SkipLink } from "../SiteChrome";
+import { AppShell } from "../shell/AppShell";
+import { updateHistoryCase } from "../shell/useHistory";
 import { VerdictView } from "../VerdictView";
 import { openConfirm } from "../account/AccountView";
 import account from "../account/AccountPages.module.css";
@@ -37,13 +39,16 @@ export function StatusChip({ lang, status }: { lang: Lang; status: CaseStatus })
   );
 }
 
-/** Chrome shared by the owner's and the respondent's case pages. */
+/** Chrome shared by the owner's and the respondent's case pages. The
+ * owner's page sits in the app shell; the respondent's (`bare`) keeps the
+ * plain header and footer: it is someone else's case. */
 export function CaseShell({
   lang,
   kicker,
   title,
   lead,
   status,
+  bare = false,
   children,
   headingRef,
 }: {
@@ -52,26 +57,37 @@ export function CaseShell({
   title: string;
   lead?: string | null;
   status?: CaseStatus | null;
+  bare?: boolean;
   children: ReactNode;
   headingRef?: React.Ref<HTMLHeadingElement>;
 }) {
+  const main = (
+    <main id="main" tabIndex={-1} className={styles.main}>
+      <div className={`wrap ${styles.column}`}>
+        <header className={styles.intro}>
+          <p className="kicker">{kicker}</p>
+          <h1 ref={headingRef} tabIndex={-1} className={styles.h1}>
+            {title}
+          </h1>
+          {status ? <StatusChip lang={lang} status={status} /> : null}
+          {lead ? <p className={styles.lead}>{lead}</p> : null}
+        </header>
+        {children}
+      </div>
+    </main>
+  );
+  if (!bare) {
+    return (
+      <AppShell lang={lang} toggle>
+        {main}
+      </AppShell>
+    );
+  }
   return (
     <div lang={lang} className="contents">
       <SkipLink lang={lang} />
       <SiteHeader lang={lang} toggle />
-      <main id="main" tabIndex={-1} className={styles.main}>
-        <div className={`wrap ${styles.column}`}>
-          <header className={styles.intro}>
-            <p className="kicker">{kicker}</p>
-            <h1 ref={headingRef} tabIndex={-1} className={styles.h1}>
-              {title}
-            </h1>
-            {status ? <StatusChip lang={lang} status={status} /> : null}
-            {lead ? <p className={styles.lead}>{lead}</p> : null}
-          </header>
-          {children}
-        </div>
-      </main>
+      {main}
       <SiteFooter lang={lang} toggle />
     </div>
   );
@@ -483,6 +499,12 @@ export function CaseScreen({ id }: { id: string }) {
   useEffect(() => {
     if (fresh) headingRef.current?.focus({ preventScroll: true });
   }, [fresh]);
+
+  // My verdicts shows this case's status and headline: judging, a reply
+  // or a removal seen here updates its row.
+  useEffect(() => {
+    if (view) updateHistoryCase(view);
+  }, [view]);
 
   async function post(path: string, init: RequestInit): Promise<unknown | null> {
     setBusy(true);

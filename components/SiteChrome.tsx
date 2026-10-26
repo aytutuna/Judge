@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { ReactNode } from "react";
 import { t, type Lang } from "@/lib/i18n";
 import { AccountMenu } from "./AccountMenu";
 import { BrandMark } from "./BrandMark";
@@ -22,17 +23,21 @@ export function SkipLink({ lang }: { lang: Lang }) {
  * Fixed, blurred 56px nav. By default it also renders a spacer of the same
  * height so the page starts below it; `overlay` drops the spacer for pages
  * whose first section deliberately runs under the nav (the homepage hero).
+ * `children` go before the account entry (the app shell's "My verdicts"
+ * link).
  */
 export function SiteHeader({
   lang,
   toggle = false,
   howLink = false,
   overlay = false,
+  children,
 }: {
   lang: Lang;
   toggle?: boolean;
   howLink?: boolean;
   overlay?: boolean;
+  children?: ReactNode;
 }) {
   return (
     <>
@@ -51,6 +56,7 @@ export function SiteHeader({
               </nav>
             ) : null}
             {toggle ? <LangToggle lang={lang} /> : null}
+            {children}
             <span className={styles.account}>
               <AccountMenu lang={lang} />
             </span>

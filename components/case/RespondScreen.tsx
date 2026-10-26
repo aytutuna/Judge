@@ -521,7 +521,7 @@ export function RespondScreen({ token }: { token: string }) {
           ? t(lang, "respond.notFound")
           : t(lang, "case.loadFailed");
     return (
-      <CaseShell lang={lang} kicker={kicker} title={title}>
+      <CaseShell lang={lang} kicker={kicker} title={title} bare>
         <p className={load.status === "loading" ? styles.note : styles.error} role={load.status === "loading" ? "status" : "alert"}>
           {message}
         </p>
@@ -534,6 +534,7 @@ export function RespondScreen({ token }: { token: string }) {
       lang={lang}
       kicker={kicker}
       title={title}
+      bare
       lead={answering ? t(lang, "respond.intro") : null}
       status={stage === "judging" || stage === "verdict" || stage === "failed" ? view.status : null}
       headingRef={headingRef}
@@ -596,7 +597,7 @@ export function PendingInviteScreen() {
     if (pending) router.replace(`/r/${pending}`);
   }, [pending, router]);
   return (
-    <CaseShell lang={lang} kicker={t(lang, "respond.kicker")} title={t(lang, "respond.inviteTitle")}>
+    <CaseShell lang={lang} kicker={t(lang, "respond.kicker")} title={t(lang, "respond.inviteTitle")} bare>
       <p className={styles.note} role={missing ? "alert" : "status"}>
         {t(lang, missing ? "respond.pendingMissing" : "respond.loading")}
       </p>

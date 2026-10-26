@@ -8,7 +8,7 @@ import { resolveParties, restoreNames } from "@/lib/names";
 import { getPublicVerdict } from "@/lib/originals/display";
 import { publicNameMap } from "@/lib/originals-types";
 import { tugFinal } from "@/lib/verdict-display";
-import { SiteFooter, SiteHeader, SkipLink } from "@/components/SiteChrome";
+import { AppShell } from "@/components/shell/AppShell";
 import { RemovedVerdict } from "@/components/RemovedVerdict";
 import { SharedVerdict } from "@/components/SharedVerdict";
 import { BalanceFallback } from "@/components/scene/BalanceFallback";
@@ -69,9 +69,7 @@ export default async function SharedVerdictPage({ params }: PageProps<"/v/[id]">
   if (found.removed) {
     // Normally answered by proxy.ts with a 410; this is the fallback.
     return (
-      <div lang={lang} className="contents">
-        <SkipLink lang={lang} />
-        <SiteHeader lang={lang} />
+      <AppShell lang={lang}>
         <main id="main" tabIndex={-1} className={styles.main}>
           <div className={`wrap ${styles.inner}`}>
             <div className={styles.card}>
@@ -79,8 +77,7 @@ export default async function SharedVerdictPage({ params }: PageProps<"/v/[id]">
             </div>
           </div>
         </main>
-        <SiteFooter lang={lang} />
-      </div>
+      </AppShell>
     );
   }
 
@@ -88,10 +85,7 @@ export default async function SharedVerdictPage({ params }: PageProps<"/v/[id]">
   const names = display ? publicNameMap(display) : null;
 
   return (
-    <div lang={lang} className="contents">
-      <SkipLink lang={lang} />
-      <SiteHeader lang={lang} />
-
+    <AppShell lang={lang}>
       <main id="main" tabIndex={-1} className={styles.main}>
         <div className={`wrap ${styles.inner}`}>
           {/* The h1 kicker is rendered by SharedVerdict: it changes to "Your
@@ -116,8 +110,6 @@ export default async function SharedVerdictPage({ params }: PageProps<"/v/[id]">
           </section>
         </div>
       </main>
-
-      <SiteFooter lang={lang} />
-    </div>
+    </AppShell>
   );
 }

@@ -9,6 +9,7 @@ import { openConfirm } from "./account/AccountView";
 import account from "./account/AccountPages.module.css";
 import caseStyles from "./case/case.module.css";
 import { ShareDialog, type OwnerShare } from "./ShareDialog";
+import { markVerdictRemoved } from "./shell/useHistory";
 
 /**
  * The writer's own view of a verdict: GET /api/v1/verdicts/{id}/mine with
@@ -167,6 +168,7 @@ export function OwnerPanel({
     const json = (await post("removal", { confirm: "remove" })) as RemovalResponse | null;
     if (json?.removed) {
       forgetOwnerToken(mine.id);
+      markVerdictRemoved(mine.id);
       onRemoved();
     }
   }
