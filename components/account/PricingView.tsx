@@ -129,7 +129,7 @@ export function PricingTable({
           <ul className={styles.offers}>
             {pricing.packs.map((p) => (
               <li key={p.id} className={styles.offer}>
-                <p className={styles.offerName}>{t(lang, "pricing.pack", { n: p.credits })}</p>
+                <p className={styles.offerName}>{p.credits === 1 ? t(lang, "pricing.pack.one") : t(lang, "pricing.pack", { n: p.credits })}</p>
                 <p className={styles.offerMeta}>
                   {t(lang, "pricing.perVerdict", { price: formatPrice(p.priceUsd / p.credits, lang) })}
                 </p>

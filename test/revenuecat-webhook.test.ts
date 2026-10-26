@@ -78,7 +78,7 @@ function rc(over: Body): { api_version: string; event: Body } {
       is_family_share: false,
       country_code: "US",
       currency: "USD",
-      price: 1.99,
+      price: 7.5,
       ...over,
     },
   };
@@ -175,32 +175,32 @@ describe("POST /api/v1/webhooks/revenuecat: credit packs", () => {
     });
   });
 
-  it("store SKUs and Play Store work; pack_30 grants 30", async () => {
+  it("Play Store and Stripe purchases grant the pack", async () => {
     const { user } = await newUser();
-    await send(rc({ ...userFields(user.id), product_id: "verdict_credits_30", store: "PLAY_STORE" }));
-    expect((await ent.getEntitlement(user.id)).credits).toBe(30);
+    await send(rc({ ...userFields(user.id), product_id: "pack_1", store: "PLAY_STORE" }));
+    expect((await ent.getEntitlement(user.id)).credits).toBe(1);
     await send(rc({ ...userFields(user.id), product_id: "pack_10", store: "STRIPE" }));
-    expect((await ent.getEntitlement(user.id)).credits).toBe(40);
+    expect((await ent.getEntitlement(user.id)).credits).toBe(11);
   });
 
   it("a refund (CANCELLATION, CUSTOMER_SUPPORT) takes the credits back once", async () => {
     const { user } = await newUser();
-    await send(rc({ ...userFields(user.id), product_id: "pack_30", transaction_id: "tx-refund-a" }));
-    await send(rc({ ...userFields(user.id), product_id: "pack_10", transaction_id: "tx-refund-b" }));
-    expect((await ent.getEntitlement(user.id)).credits).toBe(40);
+    await send(rc({ ...userFields(user.id), product_id: "pack_10", transaction_id: "tx-refund-a" }));
+    await send(rc({ ...userFields(user.id), product_id: "pack_1", transaction_id: "tx-refund-b" }));
+    expect((await ent.getEntitlement(user.id)).credits).toBe(11);
     const refund = rc({
       ...userFields(user.id),
       type: "CANCELLATION",
       cancel_reason: "CUSTOMER_SUPPORT",
-      product_id: "pack_30",
+      product_id: "pack_10",
       transaction_id: "tx-refund-a",
-      price: -4.99,
+      price: -7.5,
     });
     expect((await send(refund)).json).toEqual({ ok: true, applied: true, action: "refund" });
     expect((await send(refund)).json).toMatchObject({ applied: false });
     // A second refund event for the same purchase changes nothing either.
     expect((await send({ ...refund, event: { ...refund.event, id: `evt-${uid()}` } })).json).toMatchObject({ applied: false });
-    expect((await ent.getEntitlement(user.id)).credits).toBe(10);
+    expect((await ent.getEntitlement(user.id)).credits).toBe(1);
   });
 
   it("a pack CANCELLATION that is not a refund is ignored", async () => {
@@ -244,7 +244,7 @@ describe("POST /api/v1/webhooks/revenuecat: monthly plan", () => {
       periodEnd: new Date(end).toISOString(),
       willRenew: true,
       used: 0,
-      cap: 60,
+      cap: 35,
     });
 
     // Use one unit, then renew into a new period: usage resets.
@@ -286,7 +286,7 @@ describe("POST /api/v1/webhooks/revenuecat: monthly plan", () => {
     expect(e.canUsePremium).toBe(false);
   });
 
-  it("PRODUCT_CHANGE moves to the new product; a refund ends the plan at once", async () => {
+  it("PRODUCT_CHANGE to another base plan keeps the plan; a refund ends the plan at once", async () => {
     const { user } = await newUser();
     const otid = `otid-${uid()}`;
     const base = {
@@ -297,11 +297,11 @@ describe("POST /api/v1/webhooks/revenuecat: monthly plan", () => {
       expiration_at_ms: Date.now() + 30 * DAY,
     };
     await send(rc({ ...base, type: "INITIAL_PURCHASE", product_id: "monthly" }));
-    const change = rc({ ...base, type: "PRODUCT_CHANGE", product_id: "monthly", new_product_id: "verdict_premium_monthly" });
+    const change = rc({ ...base, type: "PRODUCT_CHANGE", product_id: "monthly", new_product_id: "monthly:p1m" });
     expect((await send(change)).json).toMatchObject({ applied: true, action: "subscription_active" });
-    expect((await ent.getEntitlement(user.id)).subscription).toMatchObject({ productId: "verdict_premium_monthly" });
+    expect((await ent.getEntitlement(user.id)).subscription).toMatchObject({ productId: "monthly" });
 
-    const refund = rc({ ...base, type: "CANCELLATION", cancel_reason: "CUSTOMER_SUPPORT", product_id: "verdict_premium_monthly" });
+    const refund = rc({ ...base, type: "CANCELLATION", cancel_reason: "CUSTOMER_SUPPORT", product_id: "monthly:p1m" });
     expect((await send(refund)).json).toEqual({ ok: true, applied: true, action: "refund" });
     expect((await send(refund)).json).toMatchObject({ applied: false });
     const e = await ent.getEntitlement(user.id);
@@ -396,7 +396,7 @@ describe("mapRevenueCatEvent", () => {
   const map = (over: Body) => mapRevenueCatEvent(rc({ app_user_id: "u1", ...over }), { allowSandbox: false });
 
   it("maps a pack purchase to credits_purchased keyed by transaction_id", () => {
-    const out = map({ id: "e1", transaction_id: "t1", product_id: "verdict_credits_10", quantity: 2 });
+    const out = map({ id: "e1", transaction_id: "t1", product_id: "pack_10", quantity: 2 });
     expect(out.kind).toBe("grant");
     if (out.kind !== "grant") return;
     expect(out.userIds).toEqual(["u1"]);
@@ -405,7 +405,7 @@ describe("mapRevenueCatEvent", () => {
       eventId: "e1",
       source: "app_store",
       userId: "u1",
-      productId: "verdict_credits_10",
+      productId: "pack_10",
       credits: 20,
       transactionId: "t1",
     });

@@ -55,7 +55,7 @@ non-Haiku seat succeeded, so the verdict is not the stronger panel that was
 paid for; it is still shown). Turnstile is not used
 for Premium: the account and the per-user limits are the gate.
 
-Funding order: an active subscription under its fair-use cap first, then
+Funding order: an active subscription under its monthly cap first, then
 credits. Reservations still open after 10 minutes are refunded lazily.
 
 ## Two-sided cases, evidence and appeals

@@ -8,14 +8,14 @@ describe("pricing config", () => {
     expect(PRICING.currency).toBe("USD");
     expect(PRICING.purchasesEnabled).toBe(false);
     expect(PRICING.packs).toEqual([
-      { id: "pack_10", credits: 10, priceUsd: 1.99 },
-      { id: "pack_30", credits: 30, priceUsd: 4.99 },
+      { id: "pack_1", credits: 1, priceUsd: 1 },
+      { id: "pack_10", credits: 10, priceUsd: 7.5 },
     ]);
-    expect(PRICING.monthly).toEqual({ id: "monthly", priceUsd: 4.99, fairUseCap: 60, periodDays: 30 });
+    expect(PRICING.monthly).toEqual({ id: "monthly", priceUsd: 15, fairUseCap: 35, periodDays: 30 });
   });
 
   it("packById finds packs and nothing else", () => {
-    expect(packById("pack_30")?.credits).toBe(30);
+    expect(packById("pack_10")?.credits).toBe(10);
     expect(packById("monthly")).toBeUndefined();
     expect(packById("")).toBeUndefined();
   });
@@ -31,8 +31,8 @@ describe("pricing config", () => {
   });
 
   it("formats prices per language", () => {
-    expect(formatPrice(1.99, "en")).toBe("$1.99");
-    expect(formatPrice(4.99, "tr")).toMatch(/^\$4,99$/);
+    expect(formatPrice(7.5, "en")).toBe("$7.50");
+    expect(formatPrice(7.5, "tr")).toMatch(/^\$7,50$/);
     expect(formatPrice(0.166, "en")).toBe("$0.17");
   });
 

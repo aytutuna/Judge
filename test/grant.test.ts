@@ -81,7 +81,7 @@ describe("runGrant", () => {
     const sub = await runGrant({ email, action: { kind: "subscription", days: 30 }, create: false }, now);
     expect(sub.code).toBe(0);
     const e = await getEntitlement(user.id);
-    expect(e.subscription).toMatchObject({ source: "admin", productId: "monthly", cap: 60, willRenew: false });
+    expect(e.subscription).toMatchObject({ source: "admin", productId: "monthly", cap: 35, willRenew: false });
     expect(Date.parse(e.subscription!.periodEnd) - now.getTime()).toBe(30 * 24 * 60 * 60 * 1000);
 
     const show = await runGrant({ email, action: { kind: "show" }, create: false });

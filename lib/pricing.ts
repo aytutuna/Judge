@@ -14,36 +14,32 @@ export const PRICING: PricingInfo & { packs: readonly PricingPack[] } = {
   currency: "USD",
   purchasesEnabled: false,
   packs: [
-    { id: "pack_10", credits: 10, priceUsd: 1.99 },
-    { id: "pack_30", credits: 30, priceUsd: 4.99 },
+    { id: "pack_1", credits: 1, priceUsd: 1 },
+    { id: "pack_10", credits: 10, priceUsd: 7.5 },
   ],
-  // One premium verdict = one credit; the monthly plan is fair-use capped.
-  monthly: { id: "monthly", priceUsd: 4.99, fairUseCap: 60, periodDays: 30 },
+  // One premium verdict = one credit; the monthly plan has a visible monthly cap.
+  monthly: { id: "monthly", priceUsd: 15, fairUseCap: 35, periodDays: 30 },
 };
 
 /**
  * Product ids a purchase can arrive with, mapped to what they grant. The web
- * ids match PRICING; the store SKUs are placeholders to register in App Store
- * Connect and Google Play Console (letters, digits and underscores are valid
- * in both).
+ * ids match PRICING, and the store SKUs use these same ids (register them in
+ * App Store Connect and Google Play Console).
  */
 export const STORE_PRODUCTS: Record<
   string,
   { kind: "credits"; credits: number } | { kind: "subscription"; planId: "monthly" }
 > = {
+  pack_1: { kind: "credits", credits: 1 },
   pack_10: { kind: "credits", credits: 10 },
-  pack_30: { kind: "credits", credits: 30 },
   monthly: { kind: "subscription", planId: "monthly" },
-  verdict_credits_10: { kind: "credits", credits: 10 },
-  verdict_credits_30: { kind: "credits", credits: 30 },
-  verdict_premium_monthly: { kind: "subscription", planId: "monthly" },
 };
 
 export function packById(id: string): PricingPack | undefined {
   return PRICING.packs.find((p) => p.id === id);
 }
 
-/** "$1.99" in English, "$1,99" in Turkish. */
+/** "$7.50" in English, "$7,50" in Turkish. */
 export function formatPrice(usd: number, lang: Lang): string {
   return new Intl.NumberFormat(lang === "tr" ? "tr-TR" : "en-US", {
     style: "currency",

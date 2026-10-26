@@ -153,7 +153,7 @@ experience above. Signing in (Apple, Google or an emailed link) adds
 two-sided cases on the free tier (see below) and unlocks
 **Premium**: clarifying questions, web fact-checking with sources and a
 stronger judge panel. It is paid for with credits (one premium verdict = one
-credit) or a monthly plan with a fair-use cap, bought in the apps through
+credit) or a monthly plan that covers 35 premium verdicts a month, bought in the apps through
 RevenueCat (see *Purchases* below). Prices live in `lib/pricing.ts`; until
 `PURCHASES_ENABLED=1` the buy buttons read "Coming soon". Testers get premium
 from the admin script below.
@@ -292,16 +292,14 @@ about $0.005.
 
 **Margins** have to be worked out on what is left after the app store's cut
 (Apple and Google keep 15 to 30%), since the mobile app is the main target.
-At a 30% cut one credit nets about $0.139 (10 for $1.99) or $0.116 (30 for
-$4.99): enough at the typical cost, though a verdict at the code ceiling
-costs about 3 credits. The monthly plan nets about $3.49 to $4.24 of its
-$4.99: at the current cap of 60 a heavy user costs about $2.40 at the
-measured average ($0.039) and about $3.12 at $0.052 a verdict, which still
-leaves a margin after a 15% store cut but little after 30%. To widen it,
-lower the cap (`PRICING.monthly.fairUseCap` in `lib/pricing.ts`), raise the
-price, or lower the per-verdict ceiling (for
-example a smaller `max_tokens` for the Sonnet judge calls, whose measured
-output is 500 to 800 tokens; not done yet).
+At a 30% cut one credit nets $0.70 (1 for $1.00) or $0.525 (10 for $7.50),
+against a typical cost of about $0.04 and a code ceiling of about 3 credits
+per verdict. The monthly plan nets $10.50 to $12.75 of its $15.00: at the
+cap of 35 a heavy user costs about $1.37 at the measured average ($0.039)
+and about $1.82 at $0.052 a verdict. To change that, move the cap
+(`PRICING.monthly.fairUseCap` in `lib/pricing.ts`) or the prices, or lower
+the per-verdict ceiling (for example a smaller `max_tokens` for the Sonnet
+judge calls, whose measured output is 500 to 800 tokens; not done yet).
 
 ### Stored originals, names and removal
 
@@ -646,11 +644,10 @@ server is the source of truth for what a purchase grants, so no RevenueCat
 entitlement has to be set up (products only).
 
 1. **Products** (App Store Connect and Play Console, then imported into
-   RevenueCat): `pack_10` (consumable, 10 credits), `pack_30` (consumable, 30
+   RevenueCat): `pack_1` (consumable, 1 credit), `pack_10` (consumable, 10
    credits), `monthly` (auto-renewing monthly subscription; on Google Play any
-   base plan id works, `monthly:<base plan>` is read as `monthly`). The
-   `verdict_credits_10`, `verdict_credits_30` and `verdict_premium_monthly`
-   ids in `STORE_PRODUCTS` (`lib/pricing.ts`) are accepted too.
+   base plan id works, `monthly:<base plan>` is read as `monthly`). These are
+   the ids in `STORE_PRODUCTS` (`lib/pricing.ts`).
 2. **Webhook** (RevenueCat → Integrations → Webhooks): URL
    `https://okjudge.com/api/v1/webhooks/revenuecat`, Authorization header
    `Bearer <REVENUECAT_WEBHOOK_SECRET>`, production events (sandbox events
