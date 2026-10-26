@@ -7,6 +7,7 @@ import { t, type Lang } from "@/lib/i18n";
 import { resolveParties, restoreNames } from "@/lib/names";
 import { getPublicVerdict } from "@/lib/originals/display";
 import { publicNameMap } from "@/lib/originals-types";
+import type { VerdictResult } from "@/lib/types";
 import { tugFinal } from "@/lib/verdict-display";
 import { AppShell } from "@/components/shell/AppShell";
 import { RemovedVerdict } from "@/components/RemovedVerdict";
@@ -16,6 +17,18 @@ import { SITE_NAME } from "@/app/site";
 import styles from "./page.module.css";
 
 export const dynamic = "force-dynamic";
+
+/** The verdicts the writer's added context produced, oldest first. A read
+ * that fails shows the first verdict alone. */
+async function laterRounds(id: string): Promise<{ id: string; result: VerdictResult; createdAt: string }[]> {
+  try {
+    const { appealVerdicts } = await import("@/lib/verdict-appeals/service");
+    return (await appealVerdicts(id)).map((v) => ({ id: v.id, result: v.result, createdAt: v.createdAt }));
+  } catch (e) {
+    console.error("[verdicts] rounds read failed:", e instanceof Error ? e.message : String(e));
+    return [];
+  }
+}
 
 /** Chrome language follows the viewer's browser (only a LEADING "tr"
  * counts — q-value parsing is deliberately out of scope). */
@@ -83,6 +96,9 @@ export default async function SharedVerdictPage({ params }: PageProps<"/v/[id]">
 
   const { stored, display } = found;
   const names = display ? publicNameMap(display) : null;
+  const oneSided = found.meta?.kind === "free" || found.meta?.kind === "premium";
+  const rounds = oneSided ? await laterRounds(id) : [];
+  const current = rounds.at(-1)?.result ?? stored.result;
 
   return (
     <AppShell lang={lang}>
@@ -93,11 +109,13 @@ export default async function SharedVerdictPage({ params }: PageProps<"/v/[id]">
           <SharedVerdict
             id={id}
             result={stored.result}
+            createdAt={stored.createdAt}
+            rounds={rounds}
             initialLang={lang}
             publicNames={names}
             kickerClassName={`kicker ${styles.kicker}`}
             cardClassName={styles.card}
-            balance={<BalanceFallback tugA={tugFinal(stored.result)} className={styles.balance} />}
+            balance={<BalanceFallback tugA={tugFinal(current)} className={styles.balance} />}
             cta={
               <section aria-labelledby="cta-title" className={styles.cta}>
                 <h2 id="cta-title" className={styles.ctaTitle}>

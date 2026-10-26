@@ -18,6 +18,8 @@ import styles from "@/components/thread/thread.module.css";
 import { TierSwitch } from "@/components/TierSwitch";
 import { Turnstile, TURNSTILE_SITE_KEY } from "@/components/Turnstile";
 import { VerdictView } from "@/components/VerdictView";
+import { useVerdictAppeal, withRoundNames } from "@/components/VerdictAppeal";
+import { VerdictHistory } from "@/components/case/VerdictHistory";
 import { MAX_EVIDENCE_PER_SIDE, type CreateCaseResponse } from "@/lib/case-types";
 import { saveCaseNames } from "@/lib/case-names-store";
 import { verdictLang } from "@/lib/content-lang";
@@ -209,6 +211,18 @@ export default function Home() {
           onSaved: setOwnerDisplay,
         })
       : undefined;
+
+  // The writer can add context to the verdict they just got.
+  const appeal = useVerdictAppeal({
+    id: response?.id ?? "",
+    lang,
+    token: response?.owner_token ?? null,
+    enabled: phase === "verdict",
+    initial: response ? [{ id: response.id, result: response.result, createdAt: "" }] : [],
+    evidence: features?.evidence === true,
+  });
+  const shown = appeal.verdicts.at(-1) ?? null;
+  const roundNames = withRoundNames(response?.name_map, appeal.names);
 
   // Premium and cases skip the human check: the signed-in account is the gate.
   const needsToken = TURNSTILE_SITE_KEY !== "" && !premium && !twoSided;
@@ -592,7 +606,7 @@ export default function Home() {
                 lang={lang}
                 argument={sent}
                 status={progress}
-                judgesLabel={phase === "verdict" && response ? judgesLabel(lang, response.result) : undefined}
+                judgesLabel={phase === "verdict" && shown ? judgesLabel(lang, shown.result) : undefined}
                 clarify={
                   phase === "clarify" ? (
                     <ClarifyStep
@@ -627,14 +641,32 @@ export default function Home() {
                   ) : null
                 }
                 verdict={
-                  phase === "verdict" && response ? (
+                  phase === "verdict" && response && shown ? (
                     <VerdictView
-                      result={response.result}
-                      nameMap={response.name_map}
+                      result={shown.result}
+                      nameMap={roundNames}
                       shareId={response.id}
+                      verdictId={shown.id === response.id ? undefined : shown.id}
                       fresh
                       owner={owner}
+                      onAddContext={appeal.onAddContext}
+                      focusAppeal={appeal.finished}
                     />
+                  ) : null
+                }
+                followUp={
+                  phase === "verdict" && response && (appeal.panel || appeal.verdicts.length > 1) ? (
+                    <div className="flex flex-col gap-6 min-w-0">
+                      {appeal.panel}
+                      <VerdictHistory
+                        lang={lang}
+                        verdicts={appeal.verdicts}
+                        linked={false}
+                        names={roundNames ?? []}
+                        selfParty="A"
+                        viewerIsSelfParty={false}
+                      />
+                    </div>
                   ) : null
                 }
               />

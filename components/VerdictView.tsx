@@ -75,8 +75,12 @@ function TranslationNote({ view, lang }: { view: TranslationView; lang: Lang }) 
  * nothing and the store wins. With a `shareId`, the verdict TEXT follows
  * `lang` too: a verdict written in the other language is fetched translated
  * and swapped in, with the original kept for switching back.
- * `onJudgeAnother` adds a "Settle another one" action; `fresh` rings the card
- * in sage for a moment when it has just replaced the form.
+ * `onJudgeAnother` adds a "Settle another one" action and `onAddContext` an
+ * "Add context" one in its place (the writer's verdict); `fresh` rings the
+ * card in sage for a moment when it has just replaced the form.
+ * `verdictId` is the shown result's own id when the page is another
+ * verdict's (a round of added context shown on its first verdict's page):
+ * translation follows it, sharing stays on `shareId`.
  * Premium results (`tier: "premium"`) add a badge in the top row, a panel
  * line in the footnote and the web fact-check below the card; free results
  * render exactly as before.
@@ -104,6 +108,8 @@ export function VerdictView({
   shareId,
   lang: langProp,
   onJudgeAnother,
+  onAddContext,
+  verdictId,
   fresh = false,
   selfParty = "A",
   viewerIsSelfParty = false,
@@ -117,6 +123,8 @@ export function VerdictView({
   shareId?: string;
   lang?: Lang;
   onJudgeAnother?: () => void;
+  onAddContext?: () => void;
+  verdictId?: string;
   fresh?: boolean;
   selfParty?: SelfParty;
   viewerIsSelfParty?: boolean;
@@ -132,7 +140,7 @@ export function VerdictView({
   // Narrator detection follows the language the argument was judged in;
   // only the labels follow the display language.
   const selfLang = verdictLang(original);
-  const view = useVerdictTranslation(shareId, original, lang);
+  const view = useVerdictTranslation(verdictId ?? shareId, original, lang);
   const shown = useMemo(() => {
     const s = consistentSelfMap(view.result, nameMap, selfLang, selfParty, opts);
     // "You" can't be restored everywhere: use the viewer's own display name
@@ -291,7 +299,11 @@ export function VerdictView({
             shareId ? <ShareButtons shareId={shareId} title={view.result.headline} lang={lang} owner={owner} /> : null
           }
           again={
-            onJudgeAnother ? { label: t(lang, "judgeAnother"), onClick: onJudgeAnother } : undefined
+            onAddContext
+              ? { label: t(lang, "appeal.title"), onClick: onAddContext }
+              : onJudgeAnother
+                ? { label: t(lang, "judgeAnother"), onClick: onJudgeAnother }
+                : undefined
           }
         />
       </VerdictCardShell>

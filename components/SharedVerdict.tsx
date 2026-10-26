@@ -13,7 +13,9 @@ import { RemovedVerdict } from "./RemovedVerdict";
 import { buildOwnerShare } from "./ShareDialog";
 import { NextSteps } from "./thread/Composer";
 import { Thread } from "./thread/Thread";
+import { useVerdictAppeal, withRoundNames, type ShownVerdict } from "./VerdictAppeal";
 import { VerdictView } from "./VerdictView";
+import { VerdictHistory } from "./case/VerdictHistory";
 import styles from "./verdict/verdict.module.css";
 
 /** Share-page verdict whose language the viewer picks. Starts in the page's
@@ -28,10 +30,16 @@ import styles from "./verdict/verdict.module.css";
  * is recognized. `balance` sits between the kicker and the card, `cta`
  * under it. The writer gets their verdict as a thread instead: what they
  * wrote, the verdict, their tools, and "New argument". After a removal,
- * only the removed card is left, its heading focused. */
+ * only the removed card is left, its heading focused.
+ * `rounds`: the verdicts the writer's added context produced, oldest first.
+ * The last one is the current ruling, so the page shows it (with how it
+ * compares to the one before) under this verdict's link; the writer also
+ * gets the earlier ones and "Add context" as the card's action. */
 export function SharedVerdict({
   id,
   result,
+  createdAt,
+  rounds = [],
   initialLang,
   publicNames = null,
   kickerClassName,
@@ -41,6 +49,8 @@ export function SharedVerdict({
 }: {
   id: string;
   result: VerdictResult;
+  createdAt: string;
+  rounds?: ShownVerdict[];
   initialLang: Lang;
   /** Display name -> label, from the server; null shows the labels. */
   publicNames?: NameMapping[] | null;
@@ -58,13 +68,23 @@ export function SharedVerdict({
   const [removed, setRemoved] = useState(false);
   const removedHeadingId = useId();
   const label = t(lang, "translate.toggle");
+  const ownView = mine && !mine.removed && mine.result ? mine : null;
+  const appeal = useVerdictAppeal({
+    id,
+    lang,
+    token: token ?? null,
+    enabled: Boolean(ownView && !ownView.case),
+    initial: [{ id, result, createdAt }, ...rounds],
+    evidence: viewer.config?.features?.evidence === true,
+  });
+  const current = appeal.verdicts.at(-1) ?? { id, result, createdAt };
+  const roundId = current.id === id ? undefined : current.id;
 
   // The confirm dialog and the Remove button are gone: focus the outcome.
   useEffect(() => {
     if (removed) document.getElementById(removedHeadingId)?.focus();
   }, [removed, removedHeadingId]);
 
-  const ownView = mine && !mine.removed && mine.result ? mine : null;
   const shownDisplay = display ?? ownView?.display ?? null;
   const owner = useMemo(
     () =>
@@ -119,19 +139,31 @@ export function SharedVerdict({
             <div lang={lang} className="flex flex-col gap-4 min-w-0">
               {langRow}
               <VerdictView
-                result={result}
+                result={current.result}
                 lang={lang}
                 shareId={id}
-                nameMap={ownView.nameMap}
+                verdictId={roundId}
+                nameMap={withRoundNames(ownView.nameMap, appeal.names)}
                 selfParty={selfParty}
                 viewerIsSelfParty={Boolean(ownView.case)}
                 selfDisplayName={selfDisplayName}
                 owner={owner && ownView.originalStatus === "stored" ? owner : undefined}
+                onAddContext={appeal.onAddContext}
+                focusAppeal={appeal.finished}
               />
             </div>
           }
           followUp={
-            <div lang={lang}>
+            <div lang={lang} className="flex flex-col gap-6 min-w-0">
+              {appeal.panel}
+              <VerdictHistory
+                lang={lang}
+                verdicts={appeal.verdicts}
+                linked={false}
+                names={withRoundNames(ownView.nameMap, appeal.names) ?? []}
+                selfParty="A"
+                viewerIsSelfParty={false}
+              />
               <OwnerPanel
                 lang={lang}
                 mine={ownView}
@@ -157,7 +189,14 @@ export function SharedVerdict({
       <div className={cardClassName}>
         <div lang={lang} className="flex flex-col gap-4 min-w-0">
           {langRow}
-          <VerdictView result={result} lang={lang} shareId={id} nameMap={publicNames ?? undefined} publicNames />
+          <VerdictView
+            result={current.result}
+            lang={lang}
+            shareId={id}
+            verdictId={roundId}
+            nameMap={publicNames ?? undefined}
+            publicNames
+          />
         </div>
       </div>
       {cta}

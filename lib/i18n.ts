@@ -541,6 +541,7 @@ const en = {
   "appeal.upsell": "Something missing? Add context and have it re-judged. That's a Premium feature.",
   "appeal.signIn": "Sign in to add context",
   "appeal.used": "You've already added context to this case.",
+  "appeal.limit": "You've added context twice. That's the limit for one verdict.",
   "appeal.busy": "The judges are re-judging right now.",
   "appeal.outcome.upheld": "Verdict stands",
   "appeal.outcome.overturned": "Verdict flipped",
@@ -553,6 +554,8 @@ const en = {
   "appeal.previous": "Earlier verdict",
   "appeal.failed": "The re-judge didn't go through. Your credit is back; you can try again.",
   "appeal.refused": "The judges wouldn't re-judge with that context. Your credit is back.",
+  "appeal.leadVerdict":
+    "Something missing or wrong? Add it and the judges look at everything again. Each time costs 1 premium verdict, up to twice per verdict.",
   "appeal.history": "Verdict history",
   "faq.both.q": "Can the other person tell their side?",
   "faq.both.a":
@@ -1232,6 +1235,7 @@ const tr = {
   "appeal.upsell": "Eksik bir şey mi var? Bilgi ekle, yeniden yargılansın. Bu bir Premium özelliği.",
   "appeal.signIn": "Bilgi eklemek için giriş yap",
   "appeal.used": "Bu davaya zaten bilgi ekledin.",
+  "appeal.limit": "İki kez bilgi ekledin. Bir karar için sınır bu.",
   "appeal.busy": "Yargıçlar şu an yeniden yargılıyor.",
   "appeal.outcome.upheld": "Karar aynı kaldı",
   "appeal.outcome.overturned": "Karar tersine döndü",
@@ -1244,6 +1248,8 @@ const tr = {
   "appeal.previous": "Önceki karar",
   "appeal.failed": "Yeniden yargılama gerçekleşmedi. Kredin geri döndü, tekrar deneyebilirsin.",
   "appeal.refused": "Yargıçlar bu bilgiyle yeniden yargılamayı reddetti. Kredin geri döndü.",
+  "appeal.leadVerdict":
+    "Eksik ya da yanlış bir şey mi var? Ekle, yargıçlar her şeye yeniden baksın. Her seferinde 1 premium karar hakkı kullanır, bir karar için en fazla iki kez.",
   "appeal.history": "Karar geçmişi",
   "faq.both.q": "Diğer kişi de kendi tarafını anlatabilir mi?",
   "faq.both.a":

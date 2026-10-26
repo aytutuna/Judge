@@ -2,16 +2,22 @@
 
 import Link from "next/link";
 import { useId, useMemo, useState } from "react";
-import type { AppealResponse, CaseView, PartyLetter } from "@/lib/case-types";
+import type { Entitlement } from "@/lib/account-types";
+import type { CaseAppealView, CaseView } from "@/lib/case-types";
 import { MAX_APPEAL_CHARS, MAX_EVIDENCE_PER_APPEAL, MIN_APPEAL_CHARS } from "@/lib/case-types";
-import { saveCaseNames } from "@/lib/case-names-store";
-import { apiErrorMessage, t, tWithDate, type Lang } from "@/lib/i18n";
+import { apiErrorMessage, t, tWithDate, type Key, type Lang } from "@/lib/i18n";
 import { keyHolder } from "@/lib/use-case";
 import { applyEntitlement, refreshViewer } from "@/lib/use-viewer";
 import { PremiumSpark } from "../PremiumBadge";
 import account from "../account/AccountPages.module.css";
 import { EvidencePicker, useEvidence, type EvidenceController } from "./EvidencePicker";
 import styles from "./case.module.css";
+
+/** What the appeal area reads: a case view, or the same shape built for a
+ * one-sided verdict (VerdictAppeal). */
+export type AppealSubject = Pick<CaseView, "status" | "role" | "yourParty" | "appeal"> & {
+  appeals: readonly Pick<CaseAppealView, "party" | "status" | "error">[];
+};
 
 /**
  * True once an appeal that was being judged has finished (polling swapped in
@@ -20,7 +26,7 @@ import styles from "./case.module.css";
  * Uses React's adjust-state-while-rendering pattern; false again while the
  * next appeal is judging.
  */
-export function useAppealFinished(view: CaseView | null): boolean {
+export function useAppealFinished(view: AppealSubject | null): boolean {
   const judging = view ? view.appeals.some((a) => a.status === "judging") : false;
   const [prev, setPrev] = useState(judging);
   const [finished, setFinished] = useState(false);
@@ -47,25 +53,25 @@ export type AppealDraft = {
 /**
  * State and submission of one "add context" request: POST the appeal
  * endpoint (owner: /api/v1/cases/{id}/appeals; respondent:
- * /api/v1/respond/{token}/appeals) with an Idempotency-Key, keep the
- * returned names in this browser, swap in the new case view (which is now
- * re-judging, so polling resumes) and the new balance. `claim` is the
- * respondent's claim secret from answering signed out, if this browser has it.
+ * /api/v1/respond/{token}/appeals; a one-sided verdict:
+ * /api/v1/verdicts/{id}/appeals) with an Idempotency-Key, apply the new
+ * balance and hand the answer to `onSent` (which keeps the names and swaps
+ * in what is now re-judging). `claim` is the respondent's claim secret from
+ * answering signed out, if this browser has it. `prepare` runs first and
+ * throws to stop the request (keeping a verdict in the account).
  */
-export function useAppealDraft({
+export function useAppealDraft<R extends { entitlement?: Entitlement }>({
   endpoint,
-  caseId,
-  party,
   lang,
-  onView,
+  onSent,
   claim = null,
+  prepare,
 }: {
   endpoint: string;
-  caseId: string;
-  party: PartyLetter;
   lang: Lang;
-  onView: (view: CaseView) => void;
+  onSent: (res: R) => void;
   claim?: string | null;
+  prepare?: () => Promise<void>;
 }): AppealDraft {
   const [text, setText] = useState("");
   const [sending, setSending] = useState(false);
@@ -85,23 +91,23 @@ export function useAppealDraft({
       ...(evidence.tokens.length ? { evidence: evidence.tokens } : {}),
     });
     try {
+      if (prepare) await prepare();
       const res = await fetch(endpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json", "Idempotency-Key": keyFor(body) },
         body: claim ? JSON.stringify({ ...(JSON.parse(body) as object), claim }) : body,
       });
       const json: unknown = await res.json().catch(() => null);
-      const ok = json as AppealResponse | null;
-      if (!res.ok || !ok?.case) {
+      if (!res.ok || typeof json !== "object" || json === null) {
         setError(apiErrorMessage(lang, json, res.status));
         if (res.status === 401 || res.status === 402) void refreshViewer();
         return;
       }
-      saveCaseNames(caseId, party, ok.name_map ?? []);
+      const ok = json as R;
       if (ok.entitlement) applyEntitlement(ok.entitlement);
       setText("");
       evidence.clear();
-      onView(ok.case);
+      onSent(ok);
     } catch {
       setError(t(lang, "errorFallback"));
     } finally {
@@ -120,9 +126,10 @@ export type AppealArea =
   | { kind: "upsell"; signIn: boolean }
   | { kind: "blocked"; reason: "no_credits" | "premium_required" | "fair_use" }
   | { kind: "used" }
+  | { kind: "limit" }
   | { kind: "busy" };
 
-export function appealArea(view: CaseView): AppealArea {
+export function appealArea(view: AppealSubject): AppealArea {
   if (view.status !== "judged") return { kind: "none" };
   const mine = view.appeals.find((a) => a.party === view.yourParty);
   if (view.appeals.some((a) => a.status === "judging")) {
@@ -145,11 +152,25 @@ export function appealArea(view: CaseView): AppealArea {
         : { kind: "blocked", reason: view.appeal.blockedBy };
     case "appeal_used":
       return { kind: "used" };
+    case "appeal_limit":
+      return { kind: "limit" };
     case "busy":
       return { kind: "busy" };
     default:
       return { kind: "none" };
   }
+}
+
+const NOTE_KEY = { busy: "appeal.busy", used: "appeal.used", limit: "appeal.limit" } as const satisfies Record<string, Key>;
+
+/** Brings the appeal form into view and into focus (its text box when
+ * there is one). */
+export function focusAppealForm() {
+  const section = document.querySelector<HTMLElement>('[aria-labelledby="appeal-title"]');
+  const field = section?.querySelector("textarea") ?? null;
+  if (!section) return;
+  (field ?? section).scrollIntoView({ block: "center" });
+  if (field) field.focus({ preventScroll: true });
 }
 
 const BLOCK_KEY = {
@@ -166,9 +187,10 @@ export function AppealSection({
   onSignIn,
   draft,
   evidence = true,
+  lead = "appeal.lead",
 }: {
   lang: Lang;
-  view: CaseView;
+  view: AppealSubject;
   /** Where "Sign in to add context" goes (and comes back from). */
   signInHref: string;
   /** Runs before following the sign-in link (the respondent keeps the invite). */
@@ -176,6 +198,8 @@ export function AppealSection({
   draft: AppealDraft | null;
   /** Show the screenshot picker (the deployment offers evidence). */
   evidence?: boolean;
+  /** The line under the form's title (a verdict takes two rounds). */
+  lead?: Key;
 }) {
   const fieldId = useId();
   const area = appealArea(view);
@@ -188,8 +212,8 @@ export function AppealSection({
       </p>
     );
   }
-  if (area.kind === "busy" || area.kind === "used") {
-    return <p className={styles.note}>{t(lang, area.kind === "busy" ? "appeal.busy" : "appeal.used")}</p>;
+  if (area.kind === "busy" || area.kind === "used" || area.kind === "limit") {
+    return <p className={styles.note}>{t(lang, NOTE_KEY[area.kind])}</p>;
   }
   if (area.kind === "upsell" || area.kind === "blocked") {
     return (
@@ -224,7 +248,7 @@ export function AppealSection({
       <h2 id="appeal-title" className={styles.h2}>
         {t(lang, "appeal.title")}
       </h2>
-      <p className={styles.note}>{t(lang, "appeal.lead")}</p>
+      <p className={styles.note}>{t(lang, lead)}</p>
       {area.failed ? (
         <p className={styles.banner}>{t(lang, area.failed === "refused" ? "appeal.refused" : "appeal.failed")}</p>
       ) : null}

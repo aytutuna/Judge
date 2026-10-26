@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useId, useMemo, useRef, useState, type ReactNode } from "react";
-import type { CaseRemovalResponse, CaseView, RespondResponse } from "@/lib/case-types";
+import type { AppealResponse, CaseRemovalResponse, CaseView, RespondResponse } from "@/lib/case-types";
 import { MAX_EVIDENCE_PER_SIDE } from "@/lib/case-types";
 import { forgetCaseNames, saveCaseNames, useCaseNames } from "@/lib/case-names-store";
 import { firstNameOf } from "@/lib/originals-types";
@@ -26,10 +26,11 @@ import { VerdictView } from "../VerdictView";
 import account from "../account/AccountPages.module.css";
 import { AccountsRead } from "./AccountsRead";
 import { AppealSection, useAppealDraft, useAppealFinished, type AppealDraft } from "./AppealForm";
-import { CaseShell, VerdictHistory, useJudgingOverlay } from "./CaseScreen";
+import { CaseShell, useJudgingOverlay } from "./CaseScreen";
 import { CaseNames, CaseOriginals, useCaseOriginals } from "./CaseOwnTools";
 import { openConfirm } from "../account/AccountView";
 import { EvidencePicker, type EvidenceController, useEvidence } from "./EvidencePicker";
+import { VerdictHistory } from "./VerdictHistory";
 import styles from "./case.module.css";
 
 /** Longest side the form accepts (the API enforces the same cap). */
@@ -413,7 +414,7 @@ export function RespondPanel({
         draft={appeal}
         evidence={evidence && view.tier === "premium"}
       />
-      <VerdictHistory lang={lang} view={view} names={names} selfParty="B" />
+      <VerdictHistory lang={lang} verdicts={view.verdicts} linked={!view.removed} names={names} selfParty="B" />
       {ownTools}
       <AccountsRead
         lang={lang}
@@ -488,12 +489,13 @@ export function RespondScreen({ token }: { token: string }) {
       setRemoveError(t(lang, "errorFallback"));
     }
   }
-  const appeal = useAppealDraft({
+  const appeal = useAppealDraft<AppealResponse>({
     endpoint: `/api/v1/respond/${encodeURIComponent(token)}/appeals`,
-    caseId: caseId ?? "",
-    party: "b",
     lang,
-    onView: setView,
+    onSent: (res) => {
+      saveCaseNames(caseId ?? "", "b", res.name_map ?? []);
+      setView(res.case);
+    },
     claim,
   });
   const appealFinished = useAppealFinished(view);

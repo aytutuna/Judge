@@ -2,9 +2,16 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import type { CaseRemovalResponse, CaseResponse, CaseStatus, CaseView, InviteResponse } from "@/lib/case-types";
-import { forgetCaseNames, useCaseNames } from "@/lib/case-names-store";
-import { apiErrorMessage, formatDate, t, tWithDate, type Key, type Lang } from "@/lib/i18n";
+import type {
+  AppealResponse,
+  CaseRemovalResponse,
+  CaseResponse,
+  CaseStatus,
+  CaseView,
+  InviteResponse,
+} from "@/lib/case-types";
+import { forgetCaseNames, saveCaseNames, useCaseNames } from "@/lib/case-names-store";
+import { apiErrorMessage, t, tWithDate, type Key, type Lang } from "@/lib/i18n";
 import { useLang } from "@/lib/lang";
 import { localizeLabels, resolveParties, restoreNames, textLang } from "@/lib/names";
 import type { NameMapping } from "@/lib/types";
@@ -20,9 +27,17 @@ import { VerdictView } from "../VerdictView";
 import { openConfirm } from "../account/AccountView";
 import account from "../account/AccountPages.module.css";
 import { AccountsRead } from "./AccountsRead";
-import { AppealSection, appealArea, useAppealDraft, useAppealFinished, type AppealDraft } from "./AppealForm";
+import {
+  AppealSection,
+  appealArea,
+  focusAppealForm,
+  useAppealDraft,
+  useAppealFinished,
+  type AppealDraft,
+} from "./AppealForm";
 import { CaseNames, CaseOriginals, useCaseOriginals } from "./CaseOwnTools";
 import { InviteLink } from "./InviteLink";
+import { VerdictHistory } from "./VerdictHistory";
 import styles from "./case.module.css";
 
 const STATUS_KEY = {
@@ -148,49 +163,6 @@ function Confirm({
   );
 }
 
-/** Earlier verdicts of a case, newest first, each collapsed. */
-export function VerdictHistory({
-  lang,
-  view,
-  names,
-  selfParty,
-}: {
-  lang: Lang;
-  view: CaseView;
-  names: NameMapping[];
-  selfParty: "A" | "B";
-}) {
-  const earlier = view.verdicts.slice(0, -1).reverse();
-  // A removed case's verdicts stay readable here; their links are closed.
-  const linked = !view.removed;
-  if (earlier.length === 0) return null;
-  return (
-    <section className={styles.history} aria-labelledby="history-title">
-      <h2 id="history-title" className={styles.h2}>
-        {t(lang, "appeal.history")}
-      </h2>
-      {earlier.map((v) => (
-        <details key={v.id} className={styles.previous}>
-          <summary>
-            <span>{t(lang, "appeal.previous")}</span>
-            <span>{formatDate(lang, v.createdAt) ?? ""}</span>
-          </summary>
-          <div className={styles.previousBody}>
-            <VerdictView
-              result={v.result}
-              nameMap={names}
-              shareId={linked ? v.id : undefined}
-              lang={lang}
-              selfParty={selfParty}
-              viewerIsSelfParty
-            />
-          </div>
-        </details>
-      ))}
-    </section>
-  );
-}
-
 export type CasePanelProps = {
   lang: Lang;
   view: CaseView;
@@ -230,13 +202,6 @@ export function ownSideText(text: string, names: NameMapping[]): string {
   const parties = resolveParties(names, lang, "A");
   for (const [letter, party] of parties) if (party.self) parties.delete(letter);
   return restoreNames(localizeLabels(text, lang), parties, lang);
-}
-
-function focusAppealForm() {
-  const field = document.querySelector<HTMLTextAreaElement>('[aria-labelledby="appeal-title"] textarea');
-  if (!field) return;
-  field.scrollIntoView({ block: "center" });
-  field.focus({ preventScroll: true });
 }
 
 /** Everything on the owner's case page below the title, from one case view:
@@ -421,7 +386,13 @@ export function CasePanel({
                 draft={appeal}
                 evidence={evidenceOn && premium}
               />
-              <VerdictHistory lang={lang} view={view} names={names} selfParty="A" />
+              <VerdictHistory
+                lang={lang}
+                verdicts={view.verdicts}
+                linked={!view.removed}
+                names={names}
+                selfParty="A"
+              />
             </>
           ) : null
         }
@@ -548,7 +519,14 @@ export function CaseScreen({ id }: { id: string }) {
   const [actionError, setActionError] = useState<string | null>(null);
   const [resetDone, setResetDone] = useState(false);
   const [removedNow, setRemovedNow] = useState(false);
-  const appeal = useAppealDraft({ endpoint: `${base}/appeals`, caseId: id, party: "a", lang, onView: setView });
+  const appeal = useAppealDraft<AppealResponse>({
+    endpoint: `${base}/appeals`,
+    lang,
+    onSent: (res) => {
+      saveCaseNames(id, "a", res.name_map ?? []);
+      setView(res.case);
+    },
+  });
   const appealFinished = useAppealFinished(view);
 
   // My verdicts shows this case's status and headline: judging, a reply
