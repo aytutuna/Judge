@@ -82,6 +82,38 @@ final class ScreenshotStateTests: XCTestCase {
         }
     }
 
+    func testParsesTheAddContextScreens() {
+        XCTAssertEqual(ScreenshotState.parse("verdict-context:en")?.screen, .verdictContext(blockedBy: nil))
+        XCTAssertEqual(ScreenshotState.parse("verdict-context-locked:tr")?.screen, .verdictContext(blockedBy: "premium_required"))
+        XCTAssertEqual(ScreenshotState.parse("verdict-context-limit:en")?.screen, .verdictContext(blockedBy: "appeal_limit"))
+        XCTAssertEqual(ScreenshotState.parse("verdict-context:tr")?.tab, .new)
+    }
+
+    @MainActor
+    func testAddContextStatesNeedNoNetwork() throws {
+        let container = HistoryContainer.inMemory()
+        try withExtendedLifetime(container) {
+            let form = try XCTUnwrap(ScreenshotState.parse("verdict-context:en")).makeModel(container: container)
+            XCTAssertEqual(form.home.path, [.saved(id: "abc123DEF0")])
+            XCTAssertTrue(form.account.isSignedIn)
+            XCTAssertFalse(form.usesNetwork)
+            XCTAssertEqual(form.appealSeed?.gate, CaseAppealGate(allowed: true))
+            XCTAssertEqual(form.appealSeed?.text.isEmpty, false, "the form shows typed context")
+
+            let locked = try XCTUnwrap(ScreenshotState.parse("verdict-context-locked:tr")).makeModel(container: container)
+            XCTAssertEqual(locked.appealSeed?.gate.blockedBy, "premium_required")
+            XCTAssertEqual(locked.account.entitlement?.canUsePremium, false, "a free account")
+
+            let limit = try XCTUnwrap(ScreenshotState.parse("verdict-context-limit:en")).makeModel(container: container)
+            let seed = try XCTUnwrap(limit.appealSeed)
+            let session = try XCTUnwrap(try limit.history.find(id: "abc123DEF0")?.session())
+            let appeal = VerdictAppealModel(id: session.id, api: limit.api, account: limit.account, shown: { session }) { _ in }
+            appeal.showForScreenshot(gate: seed.gate, text: seed.text)
+            XCTAssertEqual(appeal.area, .limit)
+            XCTAssertTrue(appeal.panel, "the note shows without a tap")
+        }
+    }
+
     @MainActor
     func testSignInStatesOpenTheSheetWithoutNetwork() throws {
         let container = HistoryContainer.inMemory()

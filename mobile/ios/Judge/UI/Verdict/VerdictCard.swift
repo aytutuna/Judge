@@ -20,6 +20,8 @@ struct VerdictCard: View {
     /// The anonymized original headline (anything that leaves the phone
     /// stays anonymized).
     let shareSubject: String
+    /// Set when the writer can add context: it takes the slot next to Share.
+    var onAddContext: (() -> Void)? = nil
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @State private var copied = false
@@ -286,7 +288,8 @@ struct VerdictCard: View {
         }
     }
 
-    /// Share (filled) and copy link (outlined).
+    /// Share (filled) and copy link (outlined). With "Add context" it takes
+    /// the outlined slot next to Share and copy shrinks to its icon.
     @ViewBuilder
     private var actions: some View {
         if let shareURL {
@@ -295,11 +298,23 @@ struct VerdictCard: View {
                     Label(L10n.share(lang), systemImage: "square.and.arrow.up")
                 }
                 .buttonStyle(CardActionStyle(filled: true))
+                if let onAddContext {
+                    Button(action: onAddContext) {
+                        Label(L10n.appealTitle(lang), systemImage: "plus")
+                            .frame(maxWidth: .infinity)
+                    }
+                    .buttonStyle(CardActionStyle(filled: false))
+                }
                 Button {
                     UIPasteboard.general.url = shareURL
                     copied = true
                 } label: {
-                    Label(copied ? L10n.copied(lang) : L10n.copyLink(lang), systemImage: copied ? "checkmark" : "link")
+                    let copy = Label(copied ? L10n.copied(lang) : L10n.copyLink(lang), systemImage: copied ? "checkmark" : "link")
+                    if onAddContext == nil {
+                        copy
+                    } else {
+                        copy.labelStyle(.iconOnly)
+                    }
                 }
                 .buttonStyle(CardActionStyle(filled: false))
                 .task(id: copied) {

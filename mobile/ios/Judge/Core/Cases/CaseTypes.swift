@@ -121,6 +121,45 @@ struct CaseAppealGate: Decodable, Sendable, Equatable {
     }
 }
 
+/// Context the writer added to a one-sided verdict (VerdictAppealView in
+/// lib/types.ts). Its id is also the id of the verdict it produces.
+struct VerdictAppealRound: Decodable, Sendable, Equatable {
+    var id: String
+    var status: CaseAppealStatus
+    /// "quota" | "unavailable" | "refused" when it failed.
+    var error: String?
+    var outcome: AppealOutcome?
+    /// The verdict it answered: the first one, or the previous round's.
+    var baseId: String
+
+    private enum CodingKeys: String, CodingKey { case id, status, error, outcome, baseId }
+
+    init(from decoder: any Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        id = (try? c.decodeIfPresent(String.self, forKey: .id)) ?? ""
+        status = (try? c.decodeIfPresent(CaseAppealStatus.self, forKey: .status)) ?? .unknown
+        error = try? c.decodeIfPresent(String.self, forKey: .error)
+        outcome = try? c.decodeIfPresent(AppealOutcome.self, forKey: .outcome)
+        baseId = (try? c.decodeIfPresent(String.self, forKey: .baseId)) ?? ""
+    }
+}
+
+/// A one-sided verdict's rounds of added context from GET
+/// /api/v1/verdicts/{id}, oldest first, and the writer's `owner.appeal`
+/// (nil for everyone else).
+struct VerdictRounds: Sendable, Equatable {
+    var appeals: [VerdictAppealRound]
+    var gate: CaseAppealGate?
+}
+
+/// 202 from POST /api/v1/verdicts/{id}/appeals: the rounds now, and the new
+/// round as an accepted verdict (it is polled the same way).
+struct VerdictAppealSubmission: Sendable, Equatable {
+    var appeal: VerdictAppealRound
+    var appeals: [VerdictAppealRound]
+    var accepted: VerdictAccepted
+}
+
 /// The names each party chose for the share pages, and the owner's switch.
 struct CaseDisplay: Decodable, Sendable, Equatable {
     var namesVisible: Bool
@@ -360,6 +399,43 @@ enum CaseDecoding {
             view: try self.view(view),
             nameMap: WireDecoding.nameMapList(object["name_map"]),
             entitlement: WireDecoding.entitlement(in: object)
+        )
+    }
+
+    /// The rounds and the writer's gate in a ready GET /api/v1/verdicts/{id}
+    /// (`appeals`, `owner.appeal`).
+    static func rounds(_ data: Data) throws -> VerdictRounds {
+        struct Owner: Decodable {
+            var appeal: CaseAppealGate?
+        }
+        struct Answer: Decodable {
+            var appeals: [VerdictAppealRound]?
+            var owner: Owner?
+        }
+        let answer = try JSONDecoder().decode(Answer.self, from: data)
+        return VerdictRounds(appeals: answer.appeals ?? [], gate: answer.owner?.appeal)
+    }
+
+    /// `{ appeal, appeals, poll, pollAfterMs, name_map, entitlement?, replayed? }`.
+    static func verdictAppeal(_ data: Data) throws -> VerdictAppealSubmission {
+        struct Answer: Decodable {
+            var appeal: VerdictAppealRound
+            var appeals: [VerdictAppealRound]?
+        }
+        let answer = try JSONDecoder().decode(Answer.self, from: data)
+        guard !answer.appeal.id.isEmpty else { throw WireDecodingError.missing("appeal") }
+        let object = try WireDecoding.topLevelObject(data)
+        let wait = (object["pollAfterMs"] as? NSNumber)?.doubleValue
+        return VerdictAppealSubmission(
+            appeal: answer.appeal,
+            appeals: answer.appeals ?? [answer.appeal],
+            accepted: VerdictAccepted(
+                id: answer.appeal.id,
+                nameMap: WireDecoding.nameMapList(object["name_map"]),
+                pollAfterMs: wait.flatMap { $0.isFinite && $0 >= 0 ? $0 : nil },
+                entitlement: WireDecoding.entitlement(in: object),
+                replayed: (object["replayed"] as? Bool) ?? false
+            )
         )
     }
 

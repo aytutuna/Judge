@@ -85,4 +85,32 @@ final class HistoryStoreTests: XCTestCase {
             XCTAssertTrue(try store.all().isEmpty)
         }
     }
+
+    @MainActor
+    func testALaterRulingReplacesWhatTheEntryShows() throws {
+        try withStore { store in
+            let first = try session("win_b_named")
+            try store.save(first, preset: "balanced", now: Date(timeIntervalSince1970: 100))
+            try store.cacheTranslation(id: first.id, lang: .tr, json: first.original.json)
+            XCTAssertNil(try store.find(id: first.id)?.rulingID, "a fresh entry is its own ruling")
+
+            let later = try Fixtures.sample("win_a_self")
+            let names = [first.nameMap[0], NameMapping(original: "Kim", replacement: "Person C")]
+            try store.saveRuling(first.withRuling(VerdictPayload(id: "r1", result: later.result, nameMap: names)))
+
+            let row = try XCTUnwrap(try store.find(id: first.id))
+            XCTAssertEqual(row.rulingID, "r1")
+            XCTAssertEqual(row.createdAt, Date(timeIntervalSince1970: 100))
+            XCTAssertEqual(row.preset, "balanced")
+            XCTAssertEqual(row.verdict, "side_a")
+            XCTAssertEqual(row.headline, later.result.result.headline)
+            XCTAssertNil(row.translationsJSON, "the earlier ruling's translations are dropped")
+            XCTAssertEqual(row.nameMap, first.nameMap + [NameMapping(original: "Kim", replacement: "Person C")])
+            XCTAssertEqual(row.session()?.currentID, "r1")
+            XCTAssertEqual(try store.all().map(\.id), [first.id])
+
+            try store.saveRuling(VerdictSession(id: "missing", original: later.result, nameMap: [], translations: [:], rulingID: "r2"))
+            XCTAssertNil(try store.find(id: "missing"), "a deleted entry stays deleted")
+        }
+    }
 }

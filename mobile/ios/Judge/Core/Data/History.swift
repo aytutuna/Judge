@@ -22,6 +22,9 @@ final class SavedVerdict {
     var nameMapJSON: String
     /// `{ "tr": <result JSON> }`: translations fetched so far, for offline use.
     var translationsJSON: String?
+    /// The round of added context whose verdict `resultJSON` holds; nil
+    /// while it is the first verdict.
+    var rulingID: String?
 
     init(
         id: String,
@@ -34,7 +37,8 @@ final class SavedVerdict {
         tier: String,
         resultJSON: String,
         nameMapJSON: String,
-        translationsJSON: String? = nil
+        translationsJSON: String? = nil,
+        rulingID: String? = nil
     ) {
         self.id = id
         self.createdAt = createdAt
@@ -47,6 +51,7 @@ final class SavedVerdict {
         self.resultJSON = resultJSON
         self.nameMapJSON = nameMapJSON
         self.translationsJSON = translationsJSON
+        self.rulingID = rulingID
     }
 }
 
@@ -62,7 +67,8 @@ extension SavedVerdict {
             id: id,
             original: RawResult(result: result, json: resultJSON),
             nameMap: nameMap,
-            translations: WireDecoding.translations(fromJSON: translationsJSON)
+            translations: WireDecoding.translations(fromJSON: translationsJSON),
+            rulingID: rulingID
         )
     }
 }
@@ -104,6 +110,24 @@ final class HistoryStore {
                 translationsJSON: WireDecoding.json(of: translations)
             ))
         }
+        try context.save()
+    }
+
+    /// A later ruling on a saved verdict (context added): the entry keeps
+    /// its id, date and preset and shows `session`'s verdict. Translations
+    /// of the earlier ruling no longer apply.
+    func saveRuling(_ session: VerdictSession) throws {
+        guard let row = try find(id: session.id) else { return }
+        let result = session.original.result
+        row.headline = result.headline
+        row.verdict = result.verdict.rawValue
+        row.lang = session.sourceLang.rawValue
+        row.confidence = result.confidence
+        row.tier = result.tier ?? "free"
+        row.resultJSON = session.original.json
+        row.nameMapJSON = WireDecoding.json(of: session.nameMap)
+        row.translationsJSON = nil
+        row.rulingID = session.rulingID
         try context.save()
     }
 

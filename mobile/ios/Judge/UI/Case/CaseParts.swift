@@ -1,3 +1,4 @@
+import Observation
 import SwiftUI
 import UIKit
 
@@ -63,17 +64,35 @@ struct InviteLinkView: View {
     }
 }
 
+/// What the appeal form edits and sends: a case page's, or the writer's
+/// on a one-sided verdict (useAppealDraft).
+@MainActor
+protocol AppealDraft: AnyObject, Observable, Sendable {
+    var appealText: String { get set }
+    var appealEvidence: EvidenceModel { get }
+    var appealSending: Bool { get }
+    var appealError: APIError? { get }
+    var appealCanSubmit: Bool { get }
+    func submitAppeal() async
+}
+
+extension CaseModel: AppealDraft {}
+
 /// The appeal area (components/case/AppealForm.tsx AppealSection): the
-/// "add context" form, its upsell, or why not.
-struct AppealSection: View {
+/// "add context" form, its upsell, or why not. Cases and the writer's
+/// one-sided verdicts share it; `lead` is the line under the title and
+/// `evidenceOn` offers the screenshot picker.
+struct AppealSection<Draft: AppealDraft>: View {
     @Environment(AppModel.self) private var app
-    @Bindable var model: CaseModel
-    let view: CaseView
+    @Bindable var model: Draft
+    let area: CaseLogic.AppealArea
+    let lead: String
+    let evidenceOn: Bool
     let lang: AppLang
     let onPricing: () -> Void
 
     var body: some View {
-        switch CaseLogic.appealArea(view) {
+        switch area {
         case .none:
             EmptyView()
         case .judging:
@@ -88,6 +107,8 @@ struct AppealSection: View {
             note(L10n.appealBusy(lang))
         case .used:
             note(L10n.appealUsed(lang))
+        case .limit:
+            note(L10n.appealLimit(lang))
         case .upsell(let signIn):
             card {
                 title
@@ -139,7 +160,7 @@ struct AppealSection: View {
     private func form(failed: String?) -> some View {
         card {
             title
-            note(L10n.appealLead(lang))
+            note(lead)
             if let failed {
                 Text(failed == "refused" ? L10n.appealRefused(lang) : L10n.appealFailed(lang))
                     .brandText(.slotTitle)
@@ -186,7 +207,7 @@ struct AppealSection: View {
                 let capped = HomeModel.capUTF16(value, max: CaseLogic.maxAppeal)
                 if capped != value { model.appealText = capped }
             }
-            if CaseLogic.appealEvidenceOn(view, features: app.account.features) {
+            if evidenceOn {
                 EvidencePickerView(evidence: model.appealEvidence, lang: lang, disabled: model.appealSending)
             }
             if let error = model.appealError {

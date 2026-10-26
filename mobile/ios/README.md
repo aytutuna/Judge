@@ -82,7 +82,9 @@ port). Screens: `home`, `home-recent` (the Recent row filled),
 `home-error`, `judging`, `history`, `settings`, `signin`, `signin-code`,
 `account` (Settings, signed in with a fixture account), `verdict/<sample>`
 for any key of `verdictResponses` (opened as a saved verdict),
-`verdict-thread` (a fresh verdict under its argument), and the
+`verdict-thread` (a fresh verdict under its argument), `verdict-context`,
+`verdict-context-locked` and `verdict-context-limit` (the writer's "Add
+context" form, its Premium lock and the limit note), and the
 Premium states `tier/locked` (monthly allowance used up), `tier/premium`
 (Premium chosen, credits left), `pricing`, `pricing-store` (store prices on
 the buy buttons, from a fake store), `clarify`, `evidence` (picked

@@ -38,7 +38,7 @@ final class VerdictModel {
         if case .blocked = entries[lang] { entries[lang] = nil }
         inFlight.insert(lang)
         let api = api
-        let id = session.id
+        let id = session.currentID
         Task { [weak self] in
             let outcome: Result<TranslatePayload, APIError>
             do {
@@ -48,11 +48,22 @@ final class VerdictModel {
             } catch {
                 outcome = .failure(.malformed)
             }
-            self?.receive(outcome, lang: lang)
+            self?.receive(outcome, lang: lang, for: id)
         }
     }
 
-    private func receive(_ outcome: Result<TranslatePayload, APIError>, lang: AppLang) {
+    /// A later ruling (context added) takes the screen; it is translated
+    /// under its own id.
+    func show(_ next: VerdictSession, lang: AppLang) {
+        session = next
+        entries = next.translations.mapValues { TranslationEntry.result($0) }
+        inFlight = []
+        ensure(lang)
+    }
+
+    private func receive(_ outcome: Result<TranslatePayload, APIError>, lang: AppLang, for id: String) {
+        // The earlier ruling's translation, arriving after a new one took over.
+        guard id == session.currentID else { return }
         inFlight.remove(lang)
         let entry = TranslationLogic.entry(for: outcome, lang: lang, now: .now)
         entries[lang] = entry

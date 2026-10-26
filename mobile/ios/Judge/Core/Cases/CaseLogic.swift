@@ -32,7 +32,7 @@ enum CaseLogic {
         return .error
     }
 
-    /// What the appeal area shows for a case view, decided from it alone.
+    /// What the appeal area shows for a case view or a one-sided verdict.
     enum AppealArea: Equatable {
         case none
         /// The viewer's own context is being judged.
@@ -44,30 +44,53 @@ enum CaseLogic {
         /// account and sees why).
         case blocked(reason: String)
         case used
+        /// A verdict that already took context twice.
+        case limit
         case busy
     }
 
     static func appealArea(_ view: CaseView) -> AppealArea {
         guard view.status == .judged else { return .none }
         let mine = view.appeals.last { $0.party == view.yourParty }
-        if view.appealJudging {
-            return mine?.status == .judging ? .judging : .busy
+        return appealArea(
+            judging: view.appealJudging, mine: mine?.status, error: mine?.error,
+            gate: view.appeal, respondent: view.role == .respondent
+        )
+    }
+
+    /// A one-sided verdict for its writer (useVerdictAppeal): the latest
+    /// round stands for theirs. Nothing for anyone else.
+    static func appealArea(_ rounds: VerdictRounds) -> AppealArea {
+        guard let gate = rounds.gate else { return .none }
+        let latest = rounds.appeals.last
+        return appealArea(
+            judging: rounds.appeals.contains { $0.status == .judging }, mine: latest?.status, error: latest?.error,
+            gate: gate, respondent: false
+        )
+    }
+
+    private static func appealArea(judging: Bool, mine: CaseAppealStatus?, error: String?, gate: CaseAppealGate, respondent: Bool) -> AppealArea {
+        if judging {
+            return mine == .judging ? .judging : .busy
         }
-        if view.appeal.allowed {
-            let failed: String? = mine?.status == .failed ? (mine?.error == "refused" ? "refused" : "failed") : nil
+        if gate.allowed {
+            let failed: String? = mine == .failed ? (error == "refused" ? "refused" : "failed") : nil
             return .form(failed: failed)
         }
-        switch view.appeal.blockedBy {
+        switch gate.blockedBy {
         case "signin_required":
             return .upsell(signIn: true)
         case "premium_required", "no_credits", "fair_use":
-            let reason = view.appeal.blockedBy ?? "premium_required"
-            return view.role == .respondent ? .upsell(signIn: false) : .blocked(reason: reason)
+            let reason = gate.blockedBy ?? "premium_required"
+            return respondent ? .upsell(signIn: false) : .blocked(reason: reason)
         case "appeal_used":
             return .used
+        case "appeal_limit":
+            return .limit
         case "busy":
             return .busy
         default:
+            // claim_required: the website claims with the owner token, which the app never keeps.
             return .none
         }
     }

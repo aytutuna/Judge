@@ -7,9 +7,28 @@ struct VerdictSession: Sendable, Equatable, Identifiable {
     let original: RawResult
     let nameMap: [NameMapping]
     var translations: [AppLang: RawResult]
+    /// Whose verdict `original` is once context was added (a round's id);
+    /// nil while it is the first one.
+    var rulingID: String? = nil
 
     /// The language the original text is written in.
     var sourceLang: AppLang { ContentLang.verdictLang(original.result) }
+
+    /// The id of the verdict shown now (translations are fetched under it).
+    var currentID: String { rulingID ?? id }
+
+    /// A later ruling (context added): the same entry with the round's
+    /// verdict, its new names joined to the writer's, nothing translated yet.
+    func withRuling(_ payload: VerdictPayload) -> VerdictSession {
+        let known = Set(nameMap.map(\.replacement))
+        return VerdictSession(
+            id: id,
+            original: payload.result,
+            nameMap: nameMap + payload.nameMap.filter { !known.contains($0.replacement) },
+            translations: [:],
+            rulingID: payload.id
+        )
+    }
 }
 
 /// Port of lib/use-translation.ts's pure half.

@@ -48,6 +48,9 @@ final class AppModel {
     let caseList: CaseListModel
     /// Off for screenshot states: case pages neither load nor poll.
     @ObservationIgnored var usesNetwork = true
+    /// Screenshot states: the writer's gate (and typed context) a verdict
+    /// screen opens with, the form out.
+    @ObservationIgnored var appealSeed: (gate: CaseAppealGate, text: String)?
     /// Case views created on this phone, so their page opens at once.
     @ObservationIgnored private var caseSeeds: [String: CaseView] = [:]
     /// One model per case page, so a re-rendered screen keeps its state.

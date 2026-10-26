@@ -180,7 +180,13 @@ private struct CaseScreenContent: View {
                     webLink = WebLink(url: url)
                 }
                 .id("\(current.id)-\(model.names.count)")
-                AppealSection(model: model, view: view, lang: lang) {
+                AppealSection(
+                    model: model,
+                    area: CaseLogic.appealArea(view),
+                    lead: L10n.appealLead(lang),
+                    evidenceOn: CaseLogic.appealEvidenceOn(view, features: app.account.features),
+                    lang: lang
+                ) {
                     showPricing = true
                 }
                 VerdictHistory(app: app, view: view, names: model.names, lang: lang) { url in

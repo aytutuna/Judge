@@ -11,7 +11,9 @@ import SwiftData
 /// `judging`, `history`, `settings`, `signin`, `signin-code`, `account`
 /// (Settings, signed in), `verdict/<sample>` (a key of `verdictResponses`,
 /// opened as a saved verdict), `verdict-thread` (a fresh verdict under its
-/// argument), or a Premium state: `tier/locked` (signed
+/// argument), `verdict-context`, `verdict-context-locked` and
+/// `verdict-context-limit` (the writer's "Add context" form, its Premium
+/// lock and the limit note), or a Premium state: `tier/locked` (signed
 /// in, monthly allowance used up), `tier/premium` (Premium chosen with
 /// credits), `pricing`, `pricing-store` (store prices on the buy buttons),
 /// `clarify` (the questions), `evidence` (picked
@@ -34,6 +36,8 @@ struct ScreenshotState {
         case judging
         case verdict(sample: String)
         case verdictThread
+        /// The writer's gate: nil allows the form, else why not.
+        case verdictContext(blockedBy: String?)
         case history
         case settings
         case signIn
@@ -58,7 +62,7 @@ struct ScreenshotState {
 
     var tab: RootTab {
         switch screen {
-        case .home, .homeRecent, .homeError, .judging, .verdict, .verdictThread, .signIn, .signInCode,
+        case .home, .homeRecent, .homeError, .judging, .verdict, .verdictThread, .verdictContext, .signIn, .signInCode,
              .tierLocked, .tierPremium, .pricing, .pricingStore, .clarify, .evidence, .judgingPremium, .modeBoth, .caseDetail:
             return .new
         case .history, .historyCases: return .history
@@ -82,6 +86,9 @@ struct ScreenshotState {
         case "home-error": screen = .homeError
         case "judging": screen = .judging
         case "verdict-thread": screen = .verdictThread
+        case "verdict-context": screen = .verdictContext(blockedBy: nil)
+        case "verdict-context-locked": screen = .verdictContext(blockedBy: "premium_required")
+        case "verdict-context-limit": screen = .verdictContext(blockedBy: "appeal_limit")
         case "history": screen = .history
         case "settings": screen = .settings
         case "signin": screen = .signIn
@@ -165,6 +172,13 @@ struct ScreenshotState {
         case .verdictThread:
             guard let session = ScreenshotFixtures.session("win_a_self") else { return }
             app.home.showForScreenshot(thread: session, argument: ExampleArgument.all[0].text(lang))
+        case .verdictContext(let blockedBy):
+            // A free account sees the Premium lock.
+            premium(app, me: blockedBy == "premium_required" ? "free" : "credits7")
+            guard let session = ScreenshotFixtures.session("win_a_self") else { return }
+            try? app.history.save(session, preset: Preset.defaultID, now: Self.newest)
+            app.appealSeed = (CaseAppealGate(allowed: blockedBy == nil, blockedBy: blockedBy), blockedBy == nil ? Self.context(lang) : "")
+            app.home.path = [.saved(id: session.id)]
         case .signIn:
             app.home.argument = ExampleArgument.all[0].text(lang)
             app.account.showForScreenshot(providers: Self.allProviders)
@@ -289,6 +303,13 @@ struct ScreenshotState {
             StoreOffer(planId: "pack_10", productId: "pack_10", price: "$7.50", amount: Decimal(750) / 100, currencyCode: "USD"),
             StoreOffer(planId: "monthly", productId: "monthly", price: "$15.00", amount: Decimal(1500) / 100, currencyCode: "USD"),
         ]
+    }
+
+    /// What the writer adds in the "Add context" shot.
+    private static func context(_ lang: AppLang) -> String {
+        lang == .tr
+            ? "Sam sonradan, alıntıladığı menüde sosislilerin sandviçlerden ayrı bir bölümde durduğunu kabul etti."
+            : "Sam later admitted the menu he quoted lists hot dogs in their own section, apart from the sandwiches."
     }
 
     private static let email = "sam@example.com"

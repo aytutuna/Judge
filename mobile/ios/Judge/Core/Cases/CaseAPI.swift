@@ -112,7 +112,8 @@ extension JudgeAPI {
         return try await caseAnswer(try jsonRequest(caseURL(id, "display"), method: "PATCH", timeout: CaseTimeout.call, body: body))
     }
 
-    /// The JSON body of POST /api/v1/cases/{id}/appeals.
+    /// The JSON body of POST /api/v1/cases/{id}/appeals and
+    /// /api/v1/verdicts/{id}/appeals.
     static func appealBody(text: String, evidence: [String]) -> [String: Any] {
         var body: [String: Any] = ["text": text]
         if !evidence.isEmpty { body["evidence"] = evidence }
@@ -127,6 +128,32 @@ extension JudgeAPI {
         let data = try await send(request)
         do {
             return try CaseDecoding.submission(data)
+        } catch {
+            throw APIError.malformed
+        }
+    }
+
+    /// GET /api/v1/verdicts/{id} read for its rounds of added context and,
+    /// for the signed-in writer, whether another may be added.
+    func verdictRounds(id: String) async throws -> VerdictRounds {
+        let url = endpoint("verdicts").appending(component: id)
+        let data = try await send(makeRequest(url: url, method: "GET", timeout: CaseTimeout.call))
+        do {
+            return try CaseDecoding.rounds(data)
+        } catch {
+            throw APIError.malformed
+        }
+    }
+
+    /// POST /api/v1/verdicts/{id}/appeals: the writer adds context to a
+    /// one-sided verdict (202 with the round to poll).
+    func appealVerdict(id: String, text: String, evidence: [String], idempotencyKey: String) async throws -> VerdictAppealSubmission {
+        let body = Self.appealBody(text: text, evidence: evidence)
+        let url = endpoint("verdicts").appending(component: id).appending(path: "appeals")
+        let request = try jsonRequest(url, method: "POST", timeout: CaseTimeout.appeal, body: body, idempotencyKey: idempotencyKey)
+        let data = try await send(request)
+        do {
+            return try CaseDecoding.verdictAppeal(data)
         } catch {
             throw APIError.malformed
         }
