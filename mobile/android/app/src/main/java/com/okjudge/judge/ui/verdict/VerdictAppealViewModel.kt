@@ -81,27 +81,32 @@ class VerdictAppealViewModel(
         viewModelScope.launch { load(follow = true) }
     }
 
-    /** Reads the rounds (false when they could not be read); with [follow], a round still judging is polled to its end. */
-    private suspend fun load(follow: Boolean): Boolean {
+    /**
+     * Reads the rounds (false when they could not be read); with [follow], a round still judging is polled to its end.
+     * [sent] is this session's 202, whose names the round's verdict still needs.
+     */
+    private suspend fun load(follow: Boolean, sent: VerdictAccepted? = null): Boolean {
         val rounds = (api.verdictRounds(id) as? ApiResult.Ok)?.value ?: return false
         _state.update { it.copy(rounds = rounds) }
         val judging = rounds.appeals.lastOrNull { it.status == "judging" }
         if (judging != null) {
-            // Its 202 (and the names it brought) belonged to an earlier session.
-            if (follow) await(VerdictAccepted(judging.id, pollAfterMs = 0, nameMap = emptyList()))
+            // Without our own 202, its names belonged to an earlier session.
+            if (follow) await(VerdictAccepted(judging.id, pollAfterMs = 0, nameMap = namesFor(judging.id, sent)))
         } else {
-            catchUp(rounds)
+            catchUp(rounds, sent)
         }
         return true
     }
 
+    private fun namesFor(roundId: String, sent: VerdictAccepted?) = sent?.takeIf { it.id == roundId }?.nameMap.orEmpty()
+
     /** A round that finished while the app was away, or on the website: the entry takes its verdict. */
-    private suspend fun catchUp(rounds: VerdictRounds) {
+    private suspend fun catchUp(rounds: VerdictRounds, sent: VerdictAccepted? = null) {
         val latest = rounds.appeals.lastOrNull { it.status == "judged" } ?: return
         val saved = history.observe(id).first() ?: return
         if (saved.rulingId == latest.id) return
         val ready = (api.pollVerdict(latest.id, null) as? ApiResult.Ok)?.value as? VerdictPoll.Ready ?: return
-        history.saveRuling(id, VerdictOutcome(latest.id, ready.result, emptyList()))
+        history.saveRuling(id, VerdictOutcome(latest.id, ready.result, namesFor(latest.id, sent)))
     }
 
     private suspend fun await(accepted: VerdictAccepted) {
@@ -115,7 +120,7 @@ class VerdictAppealViewModel(
                     // Out of touch for a while, not failed: the round may still be judging.
                     // Read it again (until the network is back) and follow it from there.
                     var tries = 0
-                    while (!load(follow = true)) delay(min(CaseLogic.MAX_POLL_BACKOFF_MS, 1000L shl min(tries++, 5)))
+                    while (!load(follow = true, sent = accepted)) delay(min(CaseLogic.MAX_POLL_BACKOFF_MS, 1000L shl min(tries++, 5)))
                     when (_state.value.rounds?.appeals?.firstOrNull { it.id == accepted.id }?.status) {
                         "judged" -> _state.update { it.copy(open = false, finished = true) }
                         "failed" -> _state.update { it.copy(open = true) }

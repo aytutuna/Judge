@@ -245,6 +245,23 @@ class VerdictAppealViewModelTest {
     }
 
     @Test
+    fun ourRound_judgedWhileOutOfTouch_keepsTheNamesItsContextBrought() = runBlocking {
+        routes.on(get, Routes.json(200, verdictBody(owner = gate(allowed = true))))
+        routes.always(get, Routes.json(200, verdictBody(appeals = "[${roundView("judged")}]", owner = gate(allowed = true))))
+        routes.on(post, Routes.json(202, accepted()))
+        repeat(3) { routes.on(round, Routes.json(503, """{"error":"down","code":"unavailable"}""")) }
+        routes.always(round, Routes.json(200, """{"id":"r1","status":"ready","createdAt":"2026-10-21T10:00:05.000Z","result":$roundResult}"""))
+        val vm = vm()
+        vm.until { it.offered }
+        vm.onText("Party B paid me back the next week, and Kim saw it.")
+        vm.submit()
+        vm.until { it.finished }
+        val saved = history.observe(id).first()!!
+        assertEquals("r1", saved.rulingId)
+        assertTrue(saved.nameMap.contains(NameMapping("Kim", "Person C")))
+    }
+
+    @Test
     fun aRoundFinishedElsewhere_isCaughtUpInHistory() = runBlocking {
         routes.always(get, Routes.json(200, verdictBody(appeals = "[${roundView("judged")}]", owner = gate(allowed = true))))
         routes.always(round, Routes.json(200, """{"id":"r1","status":"ready","createdAt":"2026-10-21T10:00:05.000Z","result":$roundResult}"""))
