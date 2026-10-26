@@ -60,7 +60,7 @@ class VerdictFlow(
         data object Idle : State
         /** [argument] is what was sent, for the thread on the judging screen. */
         data class Running(val startedAt: Long, val premium: Boolean = false, val argument: String = "") : State
-        data class Succeeded(val outcome: VerdictOutcome) : State
+        data class Succeeded(val outcome: VerdictOutcome, val argument: String = "") : State
         data class Failed(val error: UiError) : State
     }
 
@@ -195,7 +195,8 @@ class VerdictFlow(
 
     private suspend fun succeed(outcome: VerdictOutcome, preset: Preset) {
         history.save(outcome, preset.id)
-        _state.value = State.Succeeded(outcome)
+        val argument = (_state.value as? State.Running)?.argument.orEmpty()
+        _state.value = State.Succeeded(outcome, argument)
     }
 
     private fun fail(error: UiError) {

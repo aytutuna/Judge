@@ -60,6 +60,8 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.LocalLifecycleOwner
+import androidx.lifecycle.compose.currentStateAsState
 import com.okjudge.judge.core.cases.CaseLogic
 import com.okjudge.judge.core.data.SavedVerdict
 import com.okjudge.judge.core.display.ArgumentRules
@@ -342,7 +344,7 @@ private fun CaseCard(
 private fun CaseHead() {
     val s = LocalStrings.current
     val lang = LocalLang.current
-    val today = remember(lang) { dayMonth(LocalDate.now(), lang) }
+    val today = dayMonth(rememberToday(), lang)
     Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Kicker(s.homeKicker, Modifier.weight(1f))
@@ -509,7 +511,7 @@ private fun SubmitButton(text: String, enabled: Boolean, onClick: () -> Unit) {
 private fun Recent(items: List<SavedVerdict>, onOpen: (String) -> Unit, onAll: () -> Unit, modifier: Modifier = Modifier) {
     val s = LocalStrings.current
     val lang = LocalLang.current
-    val today = remember { LocalDate.now() }
+    val today = rememberToday()
     Column(modifier.testTag(HomeTags.RECENT)) {
         Row(Modifier.fillMaxWidth().padding(horizontal = 20.dp), verticalAlignment = Alignment.CenterVertically) {
             Kicker(s.homeRecent, Modifier.weight(1f).semantics { heading() })
@@ -573,6 +575,13 @@ private fun RecentCard(kicker: String, title: String, date: String, onClick: () 
 }
 
 /** "October 26" / "26 Ekim" (formatDate in lib/i18n.ts). */
+/** Today, read again on each resume so Home left open overnight moves on. */
+@Composable
+private fun rememberToday(): LocalDate {
+    val state by LocalLifecycleOwner.current.lifecycle.currentStateAsState()
+    return remember(state) { LocalDate.now() }
+}
+
 private fun dayMonth(date: LocalDate, lang: AppLang): String =
     DateTimeFormatter.ofPattern(if (lang == AppLang.TR) "d MMMM" else "MMMM d", lang.locale).format(date)
 

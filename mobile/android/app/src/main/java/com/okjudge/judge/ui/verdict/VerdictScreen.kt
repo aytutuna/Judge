@@ -71,6 +71,7 @@ fun VerdictRoute(
     onJudgeAnother: (() -> Unit)?,
     onToggleLang: () -> Unit,
     argument: String? = null,
+    fromHome: Boolean = false,
 ) {
     val lang = LocalLang.current
     LaunchedEffect(lang) { viewModel.onLang(lang) }
@@ -87,7 +88,7 @@ fun VerdictRoute(
     val url = shareUrl(shareBaseUrl, id)
 
     Column(Modifier.fillMaxSize()) {
-        TopBar(onBack = onBack, onToggleLang = onToggleLang, backLabel = s.appHistoryTitle)
+        TopBar(onBack = onBack, onToggleLang = onToggleLang, backLabel = if (fromHome) s.homeKicker else s.appHistoryTitle)
         val saved = state.saved
         val view = state.view
         if (saved == null || view == null) {

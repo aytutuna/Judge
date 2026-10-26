@@ -105,6 +105,7 @@ class VerdictFlowTest {
         assertTrue(f.start("  My friend Sam says a hot dog is a sandwich.  ", Preset.LOYALTY, AppLang.TR))
         val done = f.settled() as VerdictFlow.State.Succeeded
         assertEquals("abc123DEF0", done.outcome.id)
+        assertEquals("My friend Sam says a hot dog is a sandwich.", done.argument)
         assertEquals("loyalty", history.rows.value.single().preset)
         val body = Json.parseToJsonElement(server.takeRequest().body!!.utf8()).jsonObject
         assertEquals("My friend Sam says a hot dog is a sandwich.", body["argument"]!!.jsonPrimitive.content)

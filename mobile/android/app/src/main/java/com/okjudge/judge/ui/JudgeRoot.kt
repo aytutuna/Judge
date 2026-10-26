@@ -90,8 +90,8 @@ import kotlinx.serialization.Serializable
 
 @Serializable data object HomeKey : NavKey
 @Serializable data object JudgingKey : NavKey
-/** [argument]: what a fresh verdict judged, shown above it as the thread. */
-@Serializable data class VerdictKey(val id: String, val fresh: Boolean, val argument: String? = null) : NavKey
+/** [argument]: what a fresh verdict judged, shown above it as the thread. [fromHome]: opened from Recent, so back goes Home. */
+@Serializable data class VerdictKey(val id: String, val fresh: Boolean, val argument: String? = null, val fromHome: Boolean = false) : NavKey
 @Serializable data object HistoryKey : NavKey
 @Serializable data object SettingsKey : NavKey
 @Serializable data object ClarifyKey : NavKey
@@ -267,7 +267,7 @@ fun JudgeRoot(container: AppContainer, links: StateFlow<Uri?> = MutableStateFlow
                                 onRemoveEvidence = vm::onRemoveEvidence,
                                 onCaseMode = vm::onCaseMode,
                                 onDisplayName = vm::onDisplayName,
-                                onOpenVerdict = { id -> backStack.add(VerdictKey(id, fresh = false)) },
+                                onOpenVerdict = { id -> backStack.add(VerdictKey(id, fresh = false, fromHome = true)) },
                                 onAllVerdicts = { backStack.resetTo(listOf(HomeKey, HistoryKey)) },
                             )
                         }
@@ -354,6 +354,7 @@ fun JudgeRoot(container: AppContainer, links: StateFlow<Uri?> = MutableStateFlow
                                 }) else null,
                                 onToggleLang = toggleLang,
                                 argument = key.argument,
+                                fromHome = key.fromHome,
                             )
                         }
                         entry<HistoryKey> {
@@ -500,7 +501,13 @@ private fun JudgingEntry(flow: VerdictFlow, onDone: (String, String?) -> Unit, o
     val state by flow.state.collectAsStateWithLifecycle()
     val reduced = rememberReducedMotion()
     val startedAt = remember { (state as? VerdictFlow.State.Running)?.startedAt ?: System.currentTimeMillis() }
-    val argument = remember { (state as? VerdictFlow.State.Running)?.argument?.takeIf { it.isNotEmpty() } }
+    val argument = remember {
+        when (val st = state) {
+            is VerdictFlow.State.Running -> st.argument
+            is VerdictFlow.State.Succeeded -> st.argument
+            else -> ""
+        }.takeIf { it.isNotEmpty() }
+    }
     val premium = remember {
         (state as? VerdictFlow.State.Running)?.premium ?: ((state as? VerdictFlow.State.Succeeded)?.outcome?.result?.result?.premium == true)
     }
