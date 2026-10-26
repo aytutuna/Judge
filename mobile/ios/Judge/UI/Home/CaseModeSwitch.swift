@@ -1,6 +1,6 @@
 import SwiftUI
 
-/// Premium's mode choice (components/case/CaseModeSwitch.tsx): a verdict
+/// The mode choice (components/case/CaseModeSwitch.tsx): a verdict
 /// right away, or both sides with a private link. The hint says what the
 /// chosen mode does.
 struct CaseModeSwitch: View {

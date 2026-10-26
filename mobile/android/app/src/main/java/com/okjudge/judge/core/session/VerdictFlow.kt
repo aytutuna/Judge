@@ -21,6 +21,7 @@ import com.okjudge.judge.core.model.VerdictAccepted
 import com.okjudge.judge.core.model.VerdictOutcome
 import com.okjudge.judge.core.model.VerdictRequest
 import com.okjudge.judge.core.model.VerdictSubmission
+import com.okjudge.judge.core.premium.Tier
 import com.okjudge.judge.i18n.AppLang
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
@@ -258,11 +259,11 @@ class VerdictFlow(
     }
 
     /**
-     * Premium, both sides (createCase): the case with the owner's side and
-     * one premium verdict held. The returned names stay on this phone. No
+     * Both sides (createCase): the case with the owner's side; a premium case
+     * holds one premium verdict. The returned names stay on this phone. No
      * clarifying step: the other side fills the gaps.
      */
-    fun createCase(argument: String, preset: Preset, lang: AppLang, evidence: List<String>, displayName: String?): Boolean {
+    fun createCase(argument: String, preset: Preset, lang: AppLang, tier: Tier, evidence: List<String>, displayName: String?): Boolean {
         if (!canStart()) return false
         _lastError.value = null
         _creating.value = true
@@ -270,7 +271,8 @@ class VerdictFlow(
             text = argument.trim(),
             framework = FrameworkChoice(preset = preset.id),
             lang = lang.tag,
-            evidence = evidence.takeIf { it.isNotEmpty() },
+            tier = tier.raw,
+            evidence = evidence.takeIf { tier == Tier.PREMIUM && it.isNotEmpty() },
             displayName = displayName?.trim()?.takeIf { it.isNotEmpty() },
         )
         val body = WireJson.json.encodeToString(CreateCaseRequest.serializer(), request)

@@ -43,6 +43,7 @@ data class HomeUiState(
     val availability: TierAvailability = TierAvailability.HIDDEN,
     val entitlement: Entitlement? = null,
     val features: Features = Features(),
+    val signedIn: Boolean = false,
     /** Premium is asking whether facts are missing (POST /clarify). */
     val checking: Boolean = false,
     val evidence: EvidenceState = EvidenceState(max = MAX_EVIDENCE_PER_SIDE),
@@ -55,7 +56,7 @@ data class HomeUiState(
     /** A two-sided case is being created. */
     val creating: Boolean = false,
 ) {
-    val casesOn: Boolean get() = premium && features.cases
+    val casesOn: Boolean get() = signedIn && features.cases
     val twoSided: Boolean get() = casesOn && caseMode == CaseMode.BOTH
     val shownName: String get() = typedName ?: suggestedName ?: ""
 
@@ -110,6 +111,7 @@ class HomeViewModel(
             availability = Tiers.availability(config, signedIn, entitlement),
             entitlement = entitlement,
             features = config?.features ?: Features(),
+            signedIn = signedIn,
             checking = step == VerdictFlow.PremiumStep.Checking,
             evidence = ev,
         )
@@ -120,6 +122,7 @@ class HomeViewModel(
         val availability: TierAvailability,
         val entitlement: Entitlement?,
         val features: Features,
+        val signedIn: Boolean,
         val checking: Boolean,
         val evidence: EvidenceState,
     )
@@ -151,6 +154,7 @@ class HomeViewModel(
             availability = p.availability,
             entitlement = p.entitlement,
             features = p.features,
+            signedIn = p.signedIn,
             checking = p.checking,
             evidence = p.evidence,
         )
@@ -190,7 +194,7 @@ class HomeViewModel(
         if ((s.blockedUntil ?: 0) > now) return Submitted.NOTHING
         val tokens = if (s.evidenceOn) s.evidence.tokens else emptyList()
         return if (s.twoSided) {
-            if (flow.createCase(s.argument, s.preset, lang, tokens, s.shownName)) Submitted.CREATING else Submitted.NOTHING
+            if (flow.createCase(s.argument, s.preset, lang, s.tier, tokens, s.shownName)) Submitted.CREATING else Submitted.NOTHING
         } else if (s.premium) {
             if (flow.startPremium(s.argument, s.preset, lang, tokens)) Submitted.CHECKING else Submitted.NOTHING
         } else {

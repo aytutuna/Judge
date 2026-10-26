@@ -246,6 +246,7 @@ enum L10n {
     static func pricingFreeF1(_ lang: AppLang) -> String { string("pricing.free.f1", lang) }
     static func pricingFreeF2(_ lang: AppLang) -> String { string("pricing.free.f2", lang) }
     static func pricingFreeF3(_ lang: AppLang) -> String { string("pricing.free.f3", lang) }
+    static func pricingFreeF4(_ lang: AppLang) -> String { string("pricing.free.f4", lang) }
     static func pricingPremiumTitle(_ lang: AppLang) -> String { string("pricing.premium.title", lang) }
     static func pricingPremiumF1(_ lang: AppLang) -> String { string("pricing.premium.f1", lang) }
     static func pricingPremiumF2(_ lang: AppLang) -> String { string("pricing.premium.f2", lang) }
@@ -715,6 +716,7 @@ enum L10n {
         "pricing.free.f1",
         "pricing.free.f2",
         "pricing.free.f3",
+        "pricing.free.f4",
         "pricing.premium.title",
         "pricing.premium.f1",
         "pricing.premium.f2",

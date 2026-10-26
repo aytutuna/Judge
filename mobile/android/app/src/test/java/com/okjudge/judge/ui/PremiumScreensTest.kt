@@ -240,7 +240,8 @@ class PremiumScreensTest {
             }
         }
         compose.onAllNodesWithTag(PricingTags.SIGN_IN).assertCountEquals(0)
-        compose.onAllNodesWithText(en.pricingPremiumF4).assertCountEquals(0)
+        compose.onAllNodesWithText(en.pricingPremiumF6).assertCountEquals(0)
+        compose.onNodeWithText(en.pricingFreeF4).assertExists()
         compose.onAllNodesWithTag(PricingTags.BUY).assertCountEquals(3)
         compose.onAllNodesWithText(en.pricingComingSoon).assertCountEquals(0)
     }

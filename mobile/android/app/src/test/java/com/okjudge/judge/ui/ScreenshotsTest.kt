@@ -221,6 +221,7 @@ class ScreenshotsTest {
         homeState(lang).copy(
             tierChoice = Tier.PREMIUM,
             availability = availability,
+            signedIn = availability != TierAvailability.SIGNED_OUT,
             entitlement = me(meName).entitlement,
             features = Features(cases = true, evidence = true),
             evidence = evidence,

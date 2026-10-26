@@ -305,7 +305,7 @@ describe("apiErrorMessage", () => {
 
   it("localizes the premium codes, with the fair-use reset date", () => {
     expect(apiErrorMessage("tr", { code: "no_credits" }, 402)).toBe(STRINGS.tr["error.no_credits"]);
-    expect(apiErrorMessage("en", { code: "signin_required" }, 401)).toBe("Sign in to use Premium.");
+    expect(apiErrorMessage("en", { code: "signin_required" }, 401)).toBe("Sign in to continue.");
     expect(
       apiErrorMessage("en", { code: "fair_use", resetsAt: "2026-11-18T12:00:00.000Z" }, 402),
     ).toBe("You've used this month's premium verdicts. More on November 18.");

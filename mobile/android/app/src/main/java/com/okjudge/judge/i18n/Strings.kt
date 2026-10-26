@@ -240,6 +240,7 @@ class Strings(private val res: Resources) {
     val pricingFreeF1: String get() = res.getString(R.string.pricing_free_f1)
     val pricingFreeF2: String get() = res.getString(R.string.pricing_free_f2)
     val pricingFreeF3: String get() = res.getString(R.string.pricing_free_f3)
+    val pricingFreeF4: String get() = res.getString(R.string.pricing_free_f4)
     val pricingPremiumTitle: String get() = res.getString(R.string.pricing_premium_title)
     val pricingPremiumF1: String get() = res.getString(R.string.pricing_premium_f1)
     val pricingPremiumF2: String get() = res.getString(R.string.pricing_premium_f2)
@@ -708,6 +709,7 @@ class Strings(private val res: Resources) {
             "pricing.free.f1" -> R.string.pricing_free_f1
             "pricing.free.f2" -> R.string.pricing_free_f2
             "pricing.free.f3" -> R.string.pricing_free_f3
+            "pricing.free.f4" -> R.string.pricing_free_f4
             "pricing.premium.title" -> R.string.pricing_premium_title
             "pricing.premium.f1" -> R.string.pricing_premium_f1
             "pricing.premium.f2" -> R.string.pricing_premium_f2

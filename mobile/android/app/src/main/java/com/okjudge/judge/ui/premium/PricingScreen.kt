@@ -154,7 +154,7 @@ fun PricingScreen(
                 PlanCard(highlight = false) {
                     Text(s.pricingFreeTitle, style = JudgeType.sectionTitle, modifier = Modifier.semantics { heading() })
                     Text(s.pricingFreePrice, style = JudgeType.lead.copy(color = Palette.ink))
-                    FeatureList(Tiers.FREE_FEATURE_KEYS)
+                    FeatureList(Tiers.freeFeatureKeys(cases = features?.cases == true))
                 }
 
                 PlanCard(highlight = true) {

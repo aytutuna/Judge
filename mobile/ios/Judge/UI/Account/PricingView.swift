@@ -83,7 +83,7 @@ struct PricingView: View {
             Text(L10n.pricingFreePrice(lang))
                 .brandText(Self.price)
                 .foregroundStyle(Brand.ink2)
-            features([L10n.pricingFreeF1(lang), L10n.pricingFreeF2(lang), L10n.appPricingFreeAccount(lang)])
+            features(Self.freeFeatures(app.account.features, lang: lang))
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(20)
@@ -152,11 +152,18 @@ struct PricingView: View {
         .cardShadow()
     }
 
+    /// Free's feature list; two-sided cases are on it wherever the server
+    /// offers them (freeFeatureKeys on the web).
+    static func freeFeatures(_ features: PremiumFeatures, lang: AppLang) -> [String] {
+        var list = [L10n.pricingFreeF1(lang), L10n.pricingFreeF2(lang), L10n.appPricingFreeAccount(lang)]
+        if features.cases { list.append(L10n.pricingFreeF4(lang)) }
+        return list
+    }
+
     /// Premium's feature list plus the extras this deployment offers
     /// (premiumFeatureKeys on the web).
     static func premiumFeatures(_ features: PremiumFeatures?, lang: AppLang) -> [String] {
         var list = [L10n.pricingPremiumF1(lang), L10n.pricingPremiumF2(lang), L10n.pricingPremiumF3(lang)]
-        if features?.cases == true { list.append(L10n.pricingPremiumF4(lang)) }
         if features?.evidence == true { list.append(L10n.pricingPremiumF5(lang)) }
         if features?.cases == true { list.append(L10n.pricingPremiumF6(lang)) }
         return list

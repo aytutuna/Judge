@@ -491,6 +491,7 @@ final class CaseTests: XCTestCase {
         let app = try PremiumFixtures.app(container: container)
         app.setTierChoice(.premium)
         XCTAssertTrue(app.casesOn)
+        XCTAssertEqual(app.effectiveTier, .premium)
         let home = app.home
         home.mode = .both
         XCTAssertEqual(home.shownCaseName(app), "Alex", "prefilled from the account's first name")
@@ -509,6 +510,7 @@ final class CaseTests: XCTestCase {
         XCTAssertEqual((body["framework"] as? [String: Any])?["preset"] as? String, home.preset)
         XCTAssertEqual(body["lang"] as? String, app.lang.rawValue)
         XCTAssertEqual(body["displayName"] as? String, "Alex")
+        XCTAssertEqual(body["tier"] as? String, "premium")
         XCTAssertNil(body["evidence"])
 
         XCTAssertEqual(app.caseNames.names(caseID: Self.caseID).count, 2, "the name map is kept on the phone")
@@ -551,7 +553,47 @@ final class CaseTests: XCTestCase {
         app.home.mode = .both
         XCTAssertTrue(app.home.isTwoSided(app))
         app.setTierChoice(.free)
-        XCTAssertFalse(app.home.isTwoSided(app), "cases are premium only")
+        XCTAssertTrue(app.home.isTwoSided(app), "both sides works on the free tier too")
+        withExtendedLifetime(container) {}
+    }
+
+    @MainActor
+    func testFreeCaseSendsTheFreeTierWithoutEvidence() async throws {
+        let container = HistoryContainer.inMemory()
+        let router = StubRouter()
+        router.on("POST", "/api/v1/cases", try PremiumFixtures.json(201, try PremiumFixtures.section("cases")["createResponse"] as Any))
+        router.install()
+        let app = try PremiumFixtures.app(container: container)
+        app.setTierChoice(.free)
+        XCTAssertTrue(app.casesOn)
+        XCTAssertFalse(app.evidenceOn)
+        app.home.mode = .both
+
+        app.home.submit(app: app)
+        try await PremiumFixtures.waitUntil("the case page") { app.home.path.last == .caseDetail(id: Self.caseID) }
+        let body = try PremiumFixtures.body(router.sentBodies("POST", "/api/v1/cases").first)
+        XCTAssertEqual(body["tier"] as? String, "free")
+        XCTAssertNil(body["evidence"])
+        withExtendedLifetime(container) {}
+    }
+
+    func testCaseBodyCarriesTheTier() {
+        let premium = JudgeAPI.createCaseBody(text: "t", preset: "balanced", lang: .en, tier: .premium, evidence: ["ev1"], displayName: nil)
+        XCTAssertEqual(premium["tier"] as? String, "premium")
+        XCTAssertEqual(premium["evidence"] as? [String], ["ev1"])
+        let free = JudgeAPI.createCaseBody(text: "t", preset: "balanced", lang: .en, tier: .free, evidence: ["ev1"], displayName: nil)
+        XCTAssertEqual(free["tier"] as? String, "free")
+        XCTAssertNil(free["evidence"], "evidence is Premium")
+    }
+
+    @MainActor
+    func testSignedOutHidesTheModeSwitch() throws {
+        let container = HistoryContainer.inMemory()
+        let app = try PremiumFixtures.app(container: container, token: nil)
+        XCTAssertFalse(app.casesOn, "signing in comes first; submit still opens sign-in")
+        app.home.mode = .both
+        XCTAssertFalse(app.home.isTwoSided(app))
+        XCTAssertTrue(app.caseListOffered)
         withExtendedLifetime(container) {}
     }
 

@@ -151,11 +151,12 @@ final class AppModel {
 
     // MARK: - Two-sided cases
 
-    /// The Just me / Both sides choice on Home: premium chosen and cases offered.
-    var casesOn: Bool { effectiveTier == .premium && account.features.cases }
+    /// The Just me / Both sides choice on Home: signed in and cases offered.
+    /// The case itself is free or premium, following the tier switch.
+    var casesOn: Bool { account.isSignedIn && account.features.cases }
 
     /// "Your cases" in the History tab: this server offers cases.
-    var caseListOffered: Bool { account.premiumEnabled && account.features.cases }
+    var caseListOffered: Bool { account.features.cases }
 
     func seedCase(_ view: CaseView) {
         caseSeeds[view.id] = view

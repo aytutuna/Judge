@@ -238,6 +238,7 @@
     <string name="pricing_free_f1">Üç bağımsız yargıç ve dürüst bir güven puanı</string>
     <string name="pricing_free_f2">Yargılamadan önce isimler gizlenir</string>
     <string name="pricing_free_f3">Hesap gerekmez</string>
+    <string name="pricing_free_f4">İki tarafı da dinle: giriş yap, diğer kişi kendi tarafını anlatsın diye ona özel bir bağlantı gönder</string>
     <string name="pricing_premium_title">Premium</string>
     <string name="pricing_premium_f1">Olgular internette kontrol edilir, kaynaklar kararında görünür</string>
     <string name="pricing_premium_f2">Daha güçlü bir yapay zekâ yargıç kurulu</string>
@@ -254,7 +255,7 @@
     <string name="pricing_monthly_cap">Ayda %1$s premium karar</string>
     <string name="pricing_coming_soon">Yakında</string>
     <string name="pricing_note">Fiyatlar ABD doları cinsinden. Ödemeler henüz açılmadı, yani bugün bir şey satın alınamıyor.</string>
-    <string name="error_signin_required">Premium\'u kullanmak için giriş yap.</string>
+    <string name="error_signin_required">Devam etmek için giriş yap.</string>
     <string name="error_premium_required">Premium kararlar için kredi ya da aylık plan gerekiyor.</string>
     <string name="error_no_credits">Premium kredin bitti. Ücretsiz kararlar yine çalışıyor.</string>
     <string name="error_fair_use">Bu ayın premium kararlarını kullandın. Hakların %1$s tarihinde yenilenir.</string>

@@ -8,7 +8,7 @@ enum HomeRoute: Hashable {
     case caseDetail(id: String)
 }
 
-/// Premium's mode on Home (components/case/CaseModeSwitch.tsx): a verdict
+/// The mode on Home (components/case/CaseModeSwitch.tsx): a verdict
 /// right away, or a two-sided case with an invite link.
 enum HomeMode: String, Sendable {
     case now, both
@@ -209,8 +209,8 @@ final class HomeModel {
 
     // MARK: - Two-sided cases
 
-    /// Premium, both sides: create the case with the owner's side (one
-    /// premium verdict is held), keep the returned names on the phone and
+    /// Both sides: create the case with the owner's side (a premium case
+    /// holds one premium verdict), keep the returned names on the phone and
     /// open the case page with the invite link. No clarifying step: the
     /// other side's account fills the gaps.
     private func createCase(app: AppModel) {
@@ -219,17 +219,18 @@ final class HomeModel {
         let text = argument
         let preset = preset
         let lang = app.lang
+        let tier = app.effectiveTier
         let tokens = app.evidenceOn ? evidence.tokens : []
         let name = shownCaseName(app).trimmingCharacters(in: .whitespacesAndNewlines)
         let displayName: String? = name.isEmpty ? nil : name
-        let body = JudgeAPI.createCaseBody(text: text, preset: preset, lang: lang, evidence: tokens, displayName: displayName)
+        let body = JudgeAPI.createCaseBody(text: text, preset: preset, lang: lang, tier: tier, evidence: tokens, displayName: displayName)
         let token = keys.key(for: JudgeAPI.canonical(body))
         let api = app.api
         let names = app.caseNames
         request = Task { [weak self, weak app] in
             do {
                 let created = try await api.createCase(
-                    text: text, preset: preset, lang: lang, evidence: tokens, displayName: displayName, idempotencyKey: token
+                    text: text, preset: preset, lang: lang, tier: tier, evidence: tokens, displayName: displayName, idempotencyKey: token
                 )
                 guard let self, !Task.isCancelled else { return }
                 self.keys.clear(token)

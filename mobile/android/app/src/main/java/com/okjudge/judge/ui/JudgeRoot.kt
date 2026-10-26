@@ -232,8 +232,8 @@ fun JudgeRoot(container: AppContainer, links: StateFlow<Uri?> = MutableStateFlow
                                 if (submitAfterSignIn) {
                                     submitAfterSignIn = false
                                     // Only the request the user saw goes out by itself: if signing in made
-                                    // Premium the effective tier, they choose again with the switch.
-                                    if (account.isSignedIn && state.tier == tierAtTap && vm.submit(lang) == Submitted.JUDGING) {
+                                    // Premium the effective tier or brought back "Both sides", they choose again.
+                                    if (account.isSignedIn && state.tier == tierAtTap && !state.twoSided && vm.submit(lang) == Submitted.JUDGING) {
                                         backStack.add(JudgingKey)
                                     }
                                 }
@@ -357,7 +357,7 @@ fun JudgeRoot(container: AppContainer, links: StateFlow<Uri?> = MutableStateFlow
                             val accountState by account.state.collectAsStateWithLifecycle()
                             val providers by account.providers.collectAsStateWithLifecycle()
                             val config = (providers as? Account.Providers.Ready)?.config
-                            val casesOn = accountState is Account.State.SignedIn && config?.premiumEnabled == true && config.features.cases
+                            val casesOn = accountState is Account.State.SignedIn && config?.features?.cases == true
                             val cases = if (casesOn) {
                                 val listVm = viewModel { CaseListViewModel(container.api) }
                                 LaunchedEffect(Unit) { listVm.reload() }

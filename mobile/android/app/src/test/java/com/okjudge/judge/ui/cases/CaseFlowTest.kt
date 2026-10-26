@@ -17,11 +17,16 @@ import com.okjudge.judge.core.evidence.PreparedImage
 import com.okjudge.judge.core.model.CaseStatus
 import com.okjudge.judge.core.model.CaseView
 import com.okjudge.judge.core.model.Entitlement
+import com.okjudge.judge.core.model.Features
 import com.okjudge.judge.core.model.NameMapping
 import com.okjudge.judge.core.model.WireJson
+import com.okjudge.judge.core.premium.Tier
+import com.okjudge.judge.core.premium.TierAvailability
 import com.okjudge.judge.core.session.VerdictFlow
 import com.okjudge.judge.i18n.AppLang
 import com.okjudge.judge.ui.DeepLinks
+import com.okjudge.judge.ui.home.CaseMode
+import com.okjudge.judge.ui.home.HomeUiState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -165,7 +170,7 @@ class CaseFlowTest {
             newKey = { "ck-${++keys}" },
             caseNames = names,
         )
-        assertTrue(flow.createCase("  Sam says a hot dog is a sandwich and I say it is not.  ", Preset.FAIRNESS, AppLang.TR, listOf("e1"), " Ayşe "))
+        assertTrue(flow.createCase("  Sam says a hot dog is a sandwich and I say it is not.  ", Preset.FAIRNESS, AppLang.TR, Tier.PREMIUM, listOf("e1"), " Ayşe "))
         assertEquals(VerdictFlow.Nav.Case(ID), withTimeout(5_000) { flow.navigation.first() })
         assertTrue("the form holds until the case screen takes over", flow.creating.value)
         assertFalse(flow.canStart())
@@ -177,6 +182,7 @@ class CaseFlowTest {
         assertEquals("Sam says a hot dog is a sandwich and I say it is not.", body["text"]!!.jsonPrimitive.content)
         assertEquals("fairness", body["framework"]!!.jsonObject["preset"]!!.jsonPrimitive.content)
         assertEquals("tr", body["lang"]!!.jsonPrimitive.content)
+        assertEquals("premium", body["tier"]!!.jsonPrimitive.content)
         assertEquals(listOf("e1"), body["evidence"]!!.jsonArray.map { it.jsonPrimitive.content })
         assertEquals("Ayşe", body["displayName"]!!.jsonPrimitive.content)
         assertEquals(listOf(NameMapping("I", "Party A"), NameMapping("Sam", "Party B")), names.get(ID))
@@ -184,11 +190,35 @@ class CaseFlowTest {
     }
 
     @Test
+    fun create_free_sendsTheFreeTier_andNoEvidence() = runBlocking {
+        routes.on(CREATE, Routes.json(201, cases["createResponse"].toString()))
+        val flow = VerdictFlow(api(), NoBotCheck, FakeHistory(), scope, caseNames = names)
+        assertTrue(flow.createCase("Sam says a hot dog is a sandwich and I say it is not.", Preset.BALANCED, AppLang.EN, Tier.FREE, listOf("e1"), "Alex"))
+        assertEquals(VerdictFlow.Nav.Case(ID), withTimeout(5_000) { flow.navigation.first() })
+        val body = bodyOf(CREATE)
+        assertEquals("free", body["tier"]!!.jsonPrimitive.content)
+        assertNull("evidence is Premium", body["evidence"])
+    }
+
+    @Test
+    fun bothSides_needsASignIn_notPremium() {
+        val free = HomeUiState(signedIn = true, features = Features(cases = true), caseMode = CaseMode.BOTH)
+        assertEquals(Tier.FREE, free.tier)
+        assertTrue(free.casesOn)
+        assertTrue(free.twoSided)
+        assertFalse(free.copy(signedIn = false).casesOn)
+        assertFalse(free.copy(features = Features()).casesOn)
+        val premium = free.copy(tierChoice = Tier.PREMIUM, availability = TierAvailability.AVAILABLE)
+        assertEquals(Tier.PREMIUM, premium.tier)
+        assertTrue(premium.twoSided)
+    }
+
+    @Test
     fun create_failure_staysOnHome_andAnAccountErrorRefreshes() = runBlocking {
         val e = Fixtures.verdicts["asyncErrors"]!!.jsonObject["fair_use"]!!.jsonObject
         routes.on(CREATE, Routes.json(402, e["body"].toString()))
         val flow = VerdictFlow(api(), NoBotCheck, FakeHistory(), scope, refreshAccount = { refreshes += Unit }, caseNames = names)
-        flow.createCase("Sam says a hot dog is a sandwich and I say it is not.", Preset.BALANCED, AppLang.EN, emptyList(), "")
+        flow.createCase("Sam says a hot dog is a sandwich and I say it is not.", Preset.BALANCED, AppLang.EN, Tier.PREMIUM, emptyList(), "")
         withTimeout(5_000) { flow.lastError.first { it != null } }
         assertEquals("fair_use", (flow.lastError.value as UiError.Api).code)
         assertFalse(flow.creating.value)

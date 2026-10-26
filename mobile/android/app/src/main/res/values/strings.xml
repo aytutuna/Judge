@@ -238,6 +238,7 @@
     <string name="pricing_free_f1">Three independent judges and an honest confidence score</string>
     <string name="pricing_free_f2">Names swapped out before judging</string>
     <string name="pricing_free_f3">No account needed</string>
+    <string name="pricing_free_f4">Hear both sides: sign in and send the other person a private link to tell theirs</string>
     <string name="pricing_premium_title">Premium</string>
     <string name="pricing_premium_f1">Facts checked on the web, with the sources on your verdict</string>
     <string name="pricing_premium_f2">A stronger panel of AI judges</string>
@@ -254,7 +255,7 @@
     <string name="pricing_monthly_cap">%1$s premium verdicts a month</string>
     <string name="pricing_coming_soon">Coming soon</string>
     <string name="pricing_note">Prices are in US dollars. Payments aren\'t open yet, so nothing can be bought today.</string>
-    <string name="error_signin_required">Sign in to use Premium.</string>
+    <string name="error_signin_required">Sign in to continue.</string>
     <string name="error_premium_required">Premium verdicts need credits or the monthly plan.</string>
     <string name="error_no_credits">You\'re out of premium credits. Free verdicts still work.</string>
     <string name="error_fair_use">You\'ve used this month\'s premium verdicts. More on %1$s.</string>
