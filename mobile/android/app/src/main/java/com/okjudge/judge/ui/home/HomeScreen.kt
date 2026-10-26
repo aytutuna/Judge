@@ -155,7 +155,7 @@ fun HomeScreen(
     val blocked = blockedUntil != null && now < blockedUntil
 
     Column(modifier.fillMaxSize().background(Palette.ivory2)) {
-        TopBar(onBack = null, onNew = onNew?.takeUnless { state.blank })
+        TopBar(onBack = null, onNew = onNew?.takeUnless { state.blank || state.holding })
         Column(
             Modifier
                 .fillMaxSize()

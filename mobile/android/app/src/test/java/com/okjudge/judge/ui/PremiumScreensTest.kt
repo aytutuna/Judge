@@ -33,6 +33,7 @@ import com.okjudge.judge.core.model.VerdictOutcome
 import com.okjudge.judge.core.model.WireJson
 import com.okjudge.judge.core.premium.Tier
 import com.okjudge.judge.core.premium.TierAvailability
+import com.okjudge.judge.ui.components.TopBarTags
 import com.okjudge.judge.i18n.AppLang
 import com.okjudge.judge.ui.home.HomeScreen
 import com.okjudge.judge.ui.home.HomeTags
@@ -209,6 +210,7 @@ class PremiumScreensTest {
             Themed(AppLang.EN) { HomeScreen(premiumHome(EvidenceState(max = 3)).copy(checking = true), {}, {}, {}, {}, {}, {}, {}) }
         }
         compose.onNodeWithTag(HomeTags.STATUS).assertTextContains(en.tierChecking)
+        compose.onNodeWithTag(TopBarTags.NEW).assertDoesNotExist()
         compose.onNodeWithTag(HomeTags.SUBMIT).assertIsNotEnabled()
     }
 

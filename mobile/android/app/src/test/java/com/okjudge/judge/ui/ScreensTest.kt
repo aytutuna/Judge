@@ -160,6 +160,13 @@ class ScreensTest {
     }
 
     @Test
+    fun home_newButton_hiddenWhileARequestIsOnItsWay() {
+        // Clearing now would not stop the request, which then opens its next screen.
+        home(AppLang.EN, HomeUiState(argument = "My roommate never does the dishes", creating = true))
+        compose.onNodeWithTag(TopBarTags.NEW).assertDoesNotExist()
+    }
+
+    @Test
     fun home_sidesLinkNeedsCases() {
         home(AppLang.EN)
         compose.onNodeWithTag(HomeTags.SIDES).assertDoesNotExist()
