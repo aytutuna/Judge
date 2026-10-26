@@ -39,11 +39,6 @@ describe("scene layout: CSS and camera agree", () => {
       `calc(var(--nav-h)+clamp(${STORY_BAND.min}px,calc(var(--unit)*${STORY_BAND.vh}),${STORY_BAND.max}px))`,
     );
   });
-
-  it("the hero's top padding is the nav plus the band", () => {
-    const hero = squash(read("components", "home", "Hero.module.css"));
-    expect(hero).toContain("padding-top:calc(var(--nav-h)+var(--scene-band));");
-  });
 });
 
 describe("scene layout maths", () => {

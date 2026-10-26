@@ -180,24 +180,6 @@ export function subscribeSceneStatus(fn: () => void): () => void {
   };
 }
 
-let judgingFrame = false;
-
-/** True while the hero shows the judging overlay. On narrow screens the hero
- * then scrolls its card down to JUDGING_CARD_TOP (lib/scene-layout.ts) and
- * the balance is framed into the taller band above it. Kept apart from the
- * mode: the verdict mode starts while the overlay still plays its finish. */
-export function getJudgingFrame(): boolean {
-  return judgingFrame;
-}
-
-/** Set by the hero on every phase change. Notifies like a mode change, so a
- * reduced-motion engine renders the new framing. */
-export function setJudgingFrame(on: boolean): void {
-  if (on === judgingFrame) return;
-  judgingFrame = on;
-  emit(modeListeners);
-}
-
 /** Back to idle with no pending motion (page reset, judging error). */
 export function resetScene(): void {
   sceneInput.impulse = 0;

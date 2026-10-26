@@ -116,6 +116,8 @@ describe("owner case page", () => {
   it("judging: shows the judging card and hides delete", () => {
     const html = owner(OWNER.judging, { overlay: { done: false } });
     expect(html).toContain(t("en", "case.answered"));
+    // Announced from a live region that is there before the text arrives.
+    expect(html).toMatch(new RegExp(`role="status" aria-live="polite">${t("en", "case.answered")}<`));
     expect(html).toContain(t("en", "thinking.eyebrow"));
     expect(html).not.toContain(t("en", "case.remove"));
     expect(html).not.toContain(OWNER.awaiting.inviteUrl as string);

@@ -19,26 +19,10 @@ export function SkipLink({ lang }: { lang: Lang }) {
   );
 }
 
-/**
- * Fixed, blurred 56px nav. By default it also renders a spacer of the same
- * height so the page starts below it; `overlay` drops the spacer for pages
- * whose first section deliberately runs under the nav (the homepage hero).
- * `children` go before the account entry (the app shell's "My verdicts"
- * link).
- */
-export function SiteHeader({
-  lang,
-  toggle = false,
-  howLink = false,
-  overlay = false,
-  children,
-}: {
-  lang: Lang;
-  toggle?: boolean;
-  howLink?: boolean;
-  overlay?: boolean;
-  children?: ReactNode;
-}) {
+/** Fixed, blurred 56px nav, with a spacer of the same height so the page
+ * starts below it. `children` go before the account entry (the app shell's
+ * "My verdicts" link). */
+export function SiteHeader({ lang, toggle = false, children }: { lang: Lang; toggle?: boolean; children?: ReactNode }) {
   return (
     <>
       <header className={styles.nav}>
@@ -48,13 +32,6 @@ export function SiteHeader({
             Judge
           </Link>
           <div className={styles.navRight}>
-            {howLink ? (
-              <nav aria-label={t(lang, "nav.primary")} className={styles.primary}>
-                <a href="#how" className={styles.navLink}>
-                  {t(lang, "nav.how")}
-                </a>
-              </nav>
-            ) : null}
             {toggle ? <LangToggle lang={lang} /> : null}
             {children}
             <span className={styles.account}>
@@ -63,7 +40,7 @@ export function SiteHeader({
           </div>
         </div>
       </header>
-      {overlay ? null : <div aria-hidden className={styles.spacer} />}
+      <div aria-hidden className={styles.spacer} />
     </>
   );
 }

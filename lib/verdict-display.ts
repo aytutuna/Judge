@@ -65,6 +65,14 @@ export function agreement(r: VerdictResult): { n: number; total: number } | null
   return { n: r.runs.filter((v) => v === r.verdict).length, total: r.runs.length };
 }
 
+/** The judges' name in a thread: plain until there is a verdict, then how
+ * far they agreed. */
+export function judgesLabel(lang: Lang, r: VerdictResult | null): string {
+  if (!r?.runs.length) return t(lang, "thread.judges");
+  const a = agreement(r);
+  return a ? t(lang, "thread.judgesAgree", a) : t(lang, "thread.judgesSplit");
+}
+
 /** Final divider position of the tug-of-war bar (Party A's share, %).
  * A forced-ruling lean nudges the bar to a single fixed 62/38 — visibly
  * off-center yet clearly milder than the 80/20 win, so "more right, not

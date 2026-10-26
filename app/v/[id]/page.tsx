@@ -88,8 +88,8 @@ export default async function SharedVerdictPage({ params }: PageProps<"/v/[id]">
     <AppShell lang={lang}>
       <main id="main" tabIndex={-1} className={styles.main}>
         <div className={`wrap ${styles.inner}`}>
-          {/* The h1 kicker is rendered by SharedVerdict: it changes to "Your
-              verdict" once the writer is recognized. */}
+          {/* SharedVerdict renders the h1 kicker and the CTA: once the writer
+              is recognized the page becomes their thread instead. */}
           <SharedVerdict
             id={id}
             result={stored.result}
@@ -98,16 +98,17 @@ export default async function SharedVerdictPage({ params }: PageProps<"/v/[id]">
             kickerClassName={`kicker ${styles.kicker}`}
             cardClassName={styles.card}
             balance={<BalanceFallback tugA={tugFinal(stored.result)} className={styles.balance} />}
+            cta={
+              <section aria-labelledby="cta-title" className={styles.cta}>
+                <h2 id="cta-title" className={styles.ctaTitle}>
+                  {t(lang, "shared.ctaLead")}
+                </h2>
+                <Link href="/" className={styles.ctaLink}>
+                  {t(lang, "shared.cta")}
+                </Link>
+              </section>
+            }
           />
-
-          <section aria-labelledby="cta-title" className={styles.cta}>
-            <h2 id="cta-title" className={styles.ctaTitle}>
-              {t(lang, "shared.ctaLead")}
-            </h2>
-            <Link href="/" className={styles.ctaLink}>
-              {t(lang, "shared.cta")}
-            </Link>
-          </section>
         </div>
       </main>
     </AppShell>

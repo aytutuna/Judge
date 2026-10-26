@@ -61,28 +61,7 @@ export function OriginalDisclosure({
       {original ? (
         <div className="flex flex-col gap-3">
           <p className="whitespace-pre-wrap break-words">{original.text}</p>
-          {original.clarifications?.length ? (
-            <>
-              <p className={caseStyles.fieldLabel}>{t(lang, "owner.answers")}</p>
-              <ul className="flex flex-col gap-2">
-                {original.clarifications.map((c, i) => (
-                  <li key={i}>
-                    <strong>{c.question}</strong>
-                    <br />
-                    {c.answer.trim() ? c.answer : t(lang, "owner.skipped")}
-                  </li>
-                ))}
-              </ul>
-            </>
-          ) : null}
-          {original.evidence?.length ? (
-            <>
-              <p className={caseStyles.fieldLabel}>{t(lang, "owner.evidence")}</p>
-              {original.evidence.map((ev, i) => (
-                <pre key={i}>{ev.transcript}</pre>
-              ))}
-            </>
-          ) : null}
+          <OriginalExtras lang={lang} original={original} />
         </div>
       ) : (
         <p className={account.muted}>{t(lang, status === "unreadable" ? "owner.unreadable" : "owner.notStored")}</p>
@@ -91,10 +70,39 @@ export function OriginalDisclosure({
   );
 }
 
+function OriginalExtras({ lang, original }: { lang: Lang; original: OriginalPayload }) {
+  return (
+    <>
+      {original.clarifications?.length ? (
+        <>
+          <p className={caseStyles.fieldLabel}>{t(lang, "owner.answers")}</p>
+          <ul className="flex flex-col gap-2">
+            {original.clarifications.map((c, i) => (
+              <li key={i}>
+                <strong>{c.question}</strong>
+                <br />
+                {c.answer.trim() ? c.answer : t(lang, "owner.skipped")}
+              </li>
+            ))}
+          </ul>
+        </>
+      ) : null}
+      {original.evidence?.length ? (
+        <>
+          <p className={caseStyles.fieldLabel}>{t(lang, "owner.evidence")}</p>
+          {original.evidence.map((ev, i) => (
+            <pre key={i}>{ev.transcript}</pre>
+          ))}
+        </>
+      ) : null}
+    </>
+  );
+}
+
 /**
- * Below the writer's verdict: what they wrote, the names editor, removal
- * (with a confirm that says what happens) and, for a token-owned verdict
- * seen while signed in, keeping it in the account. Case verdicts point to
+ * Below the writer's verdict: their answers and screenshots, the names
+ * editor, removal (with a confirm that says what happens) and, for a
+ * token-owned verdict seen while signed in, keeping it in the account. Case verdicts point to
  * the case page (the owner) or the invite link (Party B), where their names
  * and removal live.
  */
@@ -181,9 +189,20 @@ export function OwnerPanel({
     }
   }
 
+  // The text itself is the thread's first turn; only what came with it is here.
+  const original = mine.originalStatus === "stored" ? mine.original : null;
+  const extras = original?.clarifications?.length || original?.evidence?.length ? original : null;
+
   return (
     <div className={caseStyles.stack}>
-      <OriginalDisclosure lang={lang} title={t(lang, "owner.original")} status={mine.originalStatus} original={mine.original} />
+      {extras ? (
+        <details className={caseStyles.transcript}>
+          <summary>{t(lang, "owner.extras")}</summary>
+          <div className="flex flex-col gap-3">
+            <OriginalExtras lang={lang} original={extras} />
+          </div>
+        </details>
+      ) : null}
       {note ? (
         <p className={caseStyles.calm} role="status">
           {note}

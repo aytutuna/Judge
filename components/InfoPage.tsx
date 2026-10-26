@@ -2,13 +2,16 @@
 
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { HOW_STEPS, stepNumeral } from "@/lib/how-steps";
 import { t, type Key, type Lang } from "@/lib/i18n";
 import { useLang } from "@/lib/lang";
-import { hyphenRuns, noOrphan } from "@/lib/text";
+import { noOrphan } from "@/lib/text";
 import { useViewer } from "@/lib/use-viewer";
+import { Faq } from "./home/Faq";
+import { SampleVerdict } from "./home/SampleVerdict";
+import { ScrollStory } from "./home/ScrollStory";
 import styles from "./InfoPage.module.css";
-import { SiteFooter, SiteHeader, SkipLink } from "./SiteChrome";
+import { SceneStage } from "./scene/SceneStage";
+import { AppShell } from "./shell/AppShell";
 
 /** Prose pages (/about, /privacy). Client-rendered chrome so the TR|EN
  * toggle works the same as on the homepage. */
@@ -44,33 +47,9 @@ function About({ lang, features, premiumOn }: { lang: Lang; features: InfoFeatur
   const limits: Key[] = ["about.limit1", "about.limit2", "about.limit3", "about.limit4"];
   const cases = caseAboutKeys(features);
   const premium = premiumAboutKeys(premiumOn ? features : null);
+  // The method itself is the scroll story above the prose.
   return (
     <>
-      <Section title={t(lang, "about.methodTitle")}>
-        <ol className={styles.method}>
-          {HOW_STEPS.map((s, i) => (
-            <li key={s.title}>
-              <span className={styles.numeral} aria-hidden>
-                {stepNumeral(i)}
-              </span>
-              <span>
-                <strong>
-                  {hyphenRuns(t(lang, s.title)).map((r, j) =>
-                    r.keep ? (
-                      <span key={j} className={styles.nobreak}>
-                        {r.text}
-                      </span>
-                    ) : (
-                      r.text
-                    ),
-                  )}
-                  .
-                </strong> {t(lang, s.body)}
-              </span>
-            </li>
-          ))}
-        </ol>
-      </Section>
       <Section title={t(lang, "about.honestTitle")}>
         <p>{t(lang, "about.honest")}</p>
       </Section>
@@ -161,34 +140,46 @@ export function InfoPage({
 }) {
   const lang = useLang();
   const { config } = useViewer();
+  const about = page === "about";
+  const cta = (
+    <Link href="/" className={styles.cta}>
+      {t(lang, "shared.cta")}
+    </Link>
+  );
   return (
-    // One lang scope for skip link, header, main and footer, so screen
-    // readers voice all of the chrome in the page language.
-    <div lang={lang} className="contents">
-      <SkipLink lang={lang} />
-      <SiteHeader lang={lang} toggle />
+    <AppShell lang={lang} toggle>
       <main id="main" tabIndex={-1} className={styles.main}>
         <div className={`wrap ${styles.column}`}>
           <header className={styles.intro}>
-            <p className="kicker">{t(lang, page === "about" ? "about.kicker" : "privacy.kicker")}</p>
-            <h1 className={styles.h1}>
-              {noOrphan(t(lang, page === "about" ? "about.title" : "privacy.title"))}
-            </h1>
-            <p className={styles.lead}>{t(lang, page === "about" ? "about.lead" : "privacy.lead")}</p>
+            <p className="kicker">{t(lang, about ? "about.kicker" : "privacy.kicker")}</p>
+            <h1 className={styles.h1}>{noOrphan(t(lang, about ? "about.title" : "privacy.title"))}</h1>
+            <p className={styles.lead}>{t(lang, about ? "about.lead" : "privacy.lead")}</p>
           </header>
-          <div className={styles.prose}>
-            {page === "about" ? (
-              <About lang={lang} features={config?.features ?? null} premiumOn={config?.premiumEnabled === true} />
-            ) : (
-              <Privacy lang={lang} contactEmail={contactEmail} />
-            )}
-          </div>
-          <Link href="/" className={styles.cta}>
-            {t(lang, "shared.cta")}
-          </Link>
+          {about ? null : (
+            <>
+              <div className={styles.prose}>
+                <Privacy lang={lang} contactEmail={contactEmail} />
+              </div>
+              {cta}
+            </>
+          )}
         </div>
+        {about ? (
+          <>
+            <SceneStage lang={lang}>
+              <ScrollStory lang={lang} />
+            </SceneStage>
+            <SampleVerdict lang={lang} />
+            <div className={`wrap ${styles.column}`}>
+              <div className={styles.prose}>
+                <About lang={lang} features={config?.features ?? null} premiumOn={config?.premiumEnabled === true} />
+              </div>
+            </div>
+            <Faq lang={lang} features={config?.features ?? null} premium={config?.premiumEnabled === true} />
+            <div className={`wrap ${styles.column}`}>{cta}</div>
+          </>
+        ) : null}
       </main>
-      <SiteFooter lang={lang} toggle />
-    </div>
+    </AppShell>
   );
 }

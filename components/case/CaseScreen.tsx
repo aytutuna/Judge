@@ -6,6 +6,7 @@ import type { CaseRemovalResponse, CaseResponse, CaseStatus, CaseView, InviteRes
 import { forgetCaseNames, useCaseNames } from "@/lib/case-names-store";
 import { apiErrorMessage, formatDate, t, tWithDate, type Key, type Lang } from "@/lib/i18n";
 import { useLang } from "@/lib/lang";
+import { localizeLabels, resolveParties, restoreNames, textLang } from "@/lib/names";
 import type { NameMapping } from "@/lib/types";
 import { useCase } from "@/lib/use-case";
 import { refreshViewer, useViewer } from "@/lib/use-viewer";
@@ -13,11 +14,13 @@ import { JudgingOverlay } from "../JudgingOverlay";
 import { SiteFooter, SiteHeader, SkipLink } from "../SiteChrome";
 import { AppShell } from "../shell/AppShell";
 import { updateHistoryCase } from "../shell/useHistory";
+import { NextSteps } from "../thread/Composer";
+import { Thread } from "../thread/Thread";
 import { VerdictView } from "../VerdictView";
 import { openConfirm } from "../account/AccountView";
 import account from "../account/AccountPages.module.css";
 import { AccountsRead } from "./AccountsRead";
-import { AppealSection, useAppealDraft, useAppealFinished, type AppealDraft } from "./AppealForm";
+import { AppealSection, appealArea, useAppealDraft, useAppealFinished, type AppealDraft } from "./AppealForm";
 import { CaseNames, CaseOriginals, useCaseOriginals } from "./CaseOwnTools";
 import { InviteLink } from "./InviteLink";
 import styles from "./case.module.css";
@@ -215,10 +218,32 @@ export type CasePanelProps = {
   ownTools?: ReactNode;
   /** The owner just removed the case. */
   removedNow?: boolean;
+  /** The owner's side as they wrote it, once this browser has read it. */
+  ownText?: string | null;
 };
 
-/** Everything on the owner's case page below the title, from one case view.
- * Stateless apart from the confirm dialogs, so tests render every state. */
+/** The owner's side as the judges read it, with every name but the
+ * narrator's put back ("you" would read oddly in a first-person account):
+ * shown until the original text is loaded, or when it is not kept. */
+export function ownSideText(text: string, names: NameMapping[]): string {
+  const lang = textLang(text);
+  const parties = resolveParties(names, lang, "A");
+  for (const [letter, party] of parties) if (party.self) parties.delete(letter);
+  return restoreNames(localizeLabels(text, lang), parties, lang);
+}
+
+function focusAppealForm() {
+  const field = document.querySelector<HTMLTextAreaElement>('[aria-labelledby="appeal-title"] textarea');
+  if (!field) return;
+  field.scrollIntoView({ block: "center" });
+  field.focus({ preventScroll: true });
+}
+
+/** Everything on the owner's case page below the title, from one case view:
+ * the case as a thread (their side, then the invite, the judging or the
+ * verdict, then the appeal), the record and the case tools under it, and
+ * the docked next steps. Stateless apart from the confirm dialogs, so tests
+ * render every state. */
 export function CasePanel({
   lang,
   view,
@@ -238,6 +263,7 @@ export function CasePanel({
   focusAppeal = false,
   ownTools = null,
   removedNow = false,
+  ownText = null,
 }: CasePanelProps) {
   const judgeRef = useRef<HTMLDialogElement>(null);
   const judgeCancelRef = useRef<HTMLButtonElement>(null);
@@ -260,27 +286,15 @@ export function CasePanel({
     </p>
   ) : null;
 
-  let body: ReactNode = null;
-  if (overlay) {
-    body = (
-      <>
-        <p className={styles.calm} role="status">
-          {t(lang, view.respondentAnswered ? "case.answered" : "case.judgingAlone")}
-        </p>
-        <div className={account.card}>
-          <JudgingOverlay
-            lang={lang}
-            done={overlay.done}
-            result={overlay.done ? (current?.result ?? null) : null}
-            onFinished={onOverlayFinished}
-            premium={premium}
-          />
-        </div>
-      </>
-    );
-  } else if (view.status === "awaiting_respondent") {
-    body = (
-      <>
+  const own = view.sides.find((side) => side.party === view.yourParty);
+  const argument = ownText ?? (own && !own.removed ? ownSideText(own.text, names) : null);
+  const judged = !overlay && view.status === "judged" && current !== null;
+
+  let invite: ReactNode = null;
+  let notice: ReactNode = null;
+  if (!overlay && view.status === "awaiting_respondent") {
+    invite = (
+      <div className={styles.stack}>
         <p className={styles.note}>{t(lang, "case.notYet")}</p>
         <section className={account.card}>
           {view.inviteUrl ? (
@@ -306,34 +320,10 @@ export function CasePanel({
             {t(lang, "case.judgeNow")}
           </button>
         ) : null}
-      </>
+      </div>
     );
-  } else if (view.status === "judged" && current) {
-    body = (
-      <>
-        {view.mode === "one_sided" ? <p className={styles.note}>{t(lang, "case.oneSided")}</p> : null}
-        <VerdictView
-          result={current.result}
-          nameMap={names}
-          shareId={view.removed ? undefined : current.id}
-          lang={lang}
-          fresh={fresh}
-          selfParty="A"
-          viewerIsSelfParty
-          focusAppeal={focusAppeal}
-        />
-        <AppealSection
-          lang={lang}
-          view={view}
-          signInHref={`/signin?next=${encodeURIComponent(`/c/${view.id}`)}`}
-          draft={appeal}
-          evidence={evidenceOn && premium}
-        />
-        <VerdictHistory lang={lang} view={view} names={names} selfParty="A" />
-      </>
-    );
-  } else if (view.status === "failed") {
-    body = (
+  } else if (!overlay && view.status === "failed") {
+    notice = (
       <>
         <p className={styles.banner} role="status">
           {view.lastError === "quota" ? t(lang, "error.quota") : t(lang, premium ? "case.failedBody" : "case.failedBodyFree")}
@@ -344,8 +334,8 @@ export function CasePanel({
         </button>
       </>
     );
-  } else if (view.status === "expired") {
-    body = (
+  } else if (!overlay && view.status === "expired") {
+    notice = (
       <>
         <p className={styles.banner}>{t(lang, premium ? "case.expiredBody" : "case.expiredBodyFree")}</p>
         {error}
@@ -367,15 +357,75 @@ export function CasePanel({
       </>
     );
   }
+  const removedBanner = view.removed ? (
+    <p className={styles.banner} role="status">
+      {t(lang, removedNow ? "case.removed" : "case.removedBanner")}
+    </p>
+  ) : null;
+
+  const judgingNote = overlay ? t(lang, view.respondentAnswered ? "case.answered" : "case.judgingAlone") : null;
 
   return (
     <>
-      {view.removed ? (
-        <p className={styles.banner} role="status">
-          {t(lang, removedNow ? "case.removed" : "case.removedBanner")}
-        </p>
-      ) : null}
-      {body}
+      <p className="sr-only" role="status" aria-live="polite">
+        {judgingNote}
+      </p>
+      <Thread
+        lang={lang}
+        argument={argument}
+        status={judgingNote}
+        judging={
+          overlay ? (
+            <JudgingOverlay
+              lang={lang}
+              done={overlay.done}
+              result={overlay.done ? (current?.result ?? null) : null}
+              onFinished={onOverlayFinished}
+              premium={premium}
+            />
+          ) : null
+        }
+        invite={invite}
+        notice={
+          removedBanner || notice ? (
+            <div className={styles.stack}>
+              {removedBanner}
+              {notice}
+            </div>
+          ) : null
+        }
+        verdict={
+          judged ? (
+            <div className={styles.stack}>
+              {view.mode === "one_sided" ? <p className={styles.note}>{t(lang, "case.oneSided")}</p> : null}
+              <VerdictView
+                result={current.result}
+                nameMap={names}
+                shareId={view.removed ? undefined : current.id}
+                lang={lang}
+                fresh={fresh}
+                selfParty="A"
+                viewerIsSelfParty
+                focusAppeal={focusAppeal}
+              />
+            </div>
+          ) : null
+        }
+        followUp={
+          judged ? (
+            <>
+              <AppealSection
+                lang={lang}
+                view={view}
+                signInHref={`/signin?next=${encodeURIComponent(`/c/${view.id}`)}`}
+                draft={appeal}
+                evidence={evidenceOn && premium}
+              />
+              <VerdictHistory lang={lang} view={view} names={names} selfParty="A" />
+            </>
+          ) : null
+        }
+      />
       {ownTools}
       <AccountsRead
         lang={lang}
@@ -441,6 +491,13 @@ export function CasePanel({
           onYes={onRemove}
         />
       ) : null}
+      <NextSteps lang={lang}>
+        {judged && appeal && appealArea(view).kind === "form" ? (
+          <button type="button" onClick={focusAppealForm}>
+            {t(lang, "appeal.title")}
+          </button>
+        ) : null}
+      </NextSteps>
     </>
   );
 }
@@ -491,14 +548,8 @@ export function CaseScreen({ id }: { id: string }) {
   const [actionError, setActionError] = useState<string | null>(null);
   const [resetDone, setResetDone] = useState(false);
   const [removedNow, setRemovedNow] = useState(false);
-  const headingRef = useRef<HTMLHeadingElement>(null);
   const appeal = useAppealDraft({ endpoint: `${base}/appeals`, caseId: id, party: "a", lang, onView: setView });
   const appealFinished = useAppealFinished(view);
-
-  // A screen reader lands on the title once the verdict replaces the card.
-  useEffect(() => {
-    if (fresh) headingRef.current?.focus({ preventScroll: true });
-  }, [fresh]);
 
   // My verdicts shows this case's status and headline: judging, a reply
   // or a removal seen here updates its row.
@@ -585,7 +636,7 @@ export function CaseScreen({ id }: { id: string }) {
   }
 
   return (
-    <CaseShell lang={lang} kicker={kicker} title={title} status={view.status} headingRef={headingRef}>
+    <CaseShell lang={lang} kicker={kicker} title={title} status={view.status}>
       <CasePanel
         lang={lang}
         view={view}
@@ -604,6 +655,7 @@ export function CaseScreen({ id }: { id: string }) {
         evidenceOn={viewer.config?.features?.evidence === true}
         focusAppeal={appealFinished}
         removedNow={removedNow}
+        ownText={view.removed ? null : (originals?.side.original?.text ?? null)}
         ownTools={
           <>
             <CaseOriginals lang={lang} data={view.removed ? null : originals} />
