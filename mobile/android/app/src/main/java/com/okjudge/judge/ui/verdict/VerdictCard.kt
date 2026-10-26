@@ -44,6 +44,7 @@ import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.LiveRegionMode
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.clearAndSetSemantics
@@ -103,11 +104,12 @@ data class TranslationView(val result: VerdictResult, val status: TranslationSta
         copy(result = RestoreNames.personalizeResult(result, nameMap, selfLang))
 }
 
-/** Card actions; null hides them (e.g. previews). */
+/** Card actions; null hides them (e.g. previews). [onAddContext]: the writer can add context. */
 data class CardActions(
     val onShare: (() -> Unit)?,
     val onCopy: (() -> Unit)?,
     val copied: Boolean,
+    val onAddContext: (() -> Unit)? = null,
 )
 
 /**
@@ -583,11 +585,15 @@ private fun voteName(run: String, parties: PartyLabels, s: Strings): String = wh
     else -> run
 }
 
-/** Share (filled) and copy link (outlined), 48 dp each. */
+/**
+ * Share (filled) and copy link (outlined), 48 dp each. With "Add context"
+ * it takes the outlined slot next to Share and copy shrinks to its icon.
+ */
 @Composable
 private fun ActionsRow(actions: CardActions) {
     val s = LocalStrings.current
     if (actions.onShare == null && actions.onCopy == null) return
+    val addContext = actions.onAddContext
     Row(Modifier.fillMaxWidth().padding(top = 2.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
         actions.onShare?.let { share ->
             Row(
@@ -605,8 +611,27 @@ private fun ActionsRow(actions: CardActions) {
                 Text(s.share, style = JudgeType.button.copy(fontSize = 15.sp), maxLines = 1)
             }
         }
+        if (addContext != null) {
+            Row(
+                Modifier
+                    .weight(1f)
+                    .height(48.dp)
+                    .clip(JudgeShapes.chip)
+                    .background(Palette.paper)
+                    .border(1.dp, Palette.line2, JudgeShapes.chip)
+                    .clickable(role = Role.Button, onClick = addContext)
+                    .testTag(VerdictTags.ADD_CONTEXT)
+                    .padding(horizontal = 12.dp),
+                horizontalArrangement = Arrangement.spacedBy(7.dp, Alignment.CenterHorizontally),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                TintedIcon(remember { JudgeIcons.plus(Palette.ink) }, 14)
+                Text(s.appealTitle, style = JudgeType.button.copy(fontSize = 15.sp, color = Palette.ink), maxLines = 1, overflow = TextOverflow.Ellipsis)
+            }
+        }
         actions.onCopy?.let { copy ->
             val icon = remember(actions.copied) { if (actions.copied) JudgeIcons.check(Palette.sageInk, 2f) else JudgeIcons.link(Palette.ink) }
+            val label = if (actions.copied) s.copied else s.copyLink
             Row(
                 Modifier
                     .then(if (actions.onShare == null) Modifier.weight(1f) else Modifier)
@@ -615,16 +640,23 @@ private fun ActionsRow(actions: CardActions) {
                     .background(Palette.paper)
                     .border(1.dp, Palette.line2, JudgeShapes.chip)
                     .clickable(role = Role.Button, onClick = copy)
-                    .semantics(mergeDescendants = true) { liveRegion = LiveRegionMode.Polite }
-                    .padding(horizontal = 18.dp),
+                    .semantics(mergeDescendants = true) {
+                        liveRegion = LiveRegionMode.Polite
+                        if (addContext != null) contentDescription = label
+                    }
+                    .padding(horizontal = if (addContext != null) 16.dp else 18.dp),
                 horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 TintedIcon(icon, 15)
-                Text(if (actions.copied) s.copied else s.copyLink, style = JudgeType.button.copy(fontSize = 15.sp, color = Palette.ink), maxLines = 1)
+                if (addContext == null) Text(label, style = JudgeType.button.copy(fontSize = 15.sp, color = Palette.ink), maxLines = 1)
             }
         }
     }
+}
+
+object VerdictTags {
+    const val ADD_CONTEXT = "verdict.addContext"
 }
 
 // --- Below the card ---------------------------------------------------------------

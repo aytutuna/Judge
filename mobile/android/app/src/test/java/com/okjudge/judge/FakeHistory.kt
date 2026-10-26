@@ -25,6 +25,15 @@ class FakeHistory(private var clock: Long = 1_000L) : HistoryRepository {
         rows.update { list -> list.filterNot { it.id == outcome.id } + row }
     }
 
+    override suspend fun saveRuling(id: String, ruling: VerdictOutcome) {
+        rows.update { list ->
+            list.map {
+                if (it.id != id) it
+                else it.copy(original = ruling.result, nameMap = it.nameMap + ruling.nameMap, translations = emptyMap(), rulingId = ruling.id)
+            }
+        }
+    }
+
     override suspend fun cacheTranslation(id: String, lang: AppLang, translation: ParsedResult) {
         cached += id to lang
         rows.update { list -> list.map { if (it.id == id) it.copy(translations = it.translations + (lang to translation)) else it } }

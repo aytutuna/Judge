@@ -20,6 +20,8 @@ data class SavedVerdict(
     val nameMap: List<NameMapping>,
     val preset: String,
     val translations: Map<AppLang, ParsedResult>,
+    /** Whose verdict [original] is: [id], or the round of added context that ruled last. */
+    val rulingId: String = id,
 ) {
     val lang: AppLang get() = ContentLang.verdictLang(original.result)
 }
@@ -29,6 +31,9 @@ interface HistoryRepository {
     fun observeAll(): Flow<List<SavedVerdict>>
     fun observe(id: String): Flow<SavedVerdict?>
     suspend fun save(outcome: VerdictOutcome, preset: String)
+
+    /** A later ruling on saved verdict [id] (added context): the entry keeps its id and date and shows [ruling]. */
+    suspend fun saveRuling(id: String, ruling: VerdictOutcome)
     suspend fun cacheTranslation(id: String, lang: AppLang, translation: ParsedResult)
     suspend fun delete(id: String)
     suspend fun deleteAll()
@@ -66,6 +71,28 @@ class RoomHistoryRepository(
         )
     }
 
+    override suspend fun saveRuling(id: String, ruling: VerdictOutcome) {
+        val row = dao.get(id) ?: return
+        val result = ruling.result.result
+        // The round's own people join the writer's names (withRoundNames).
+        val names = WireJson.decodeNameMap(row.nameMapJson)
+        val have = names.map { it.replacement }.toSet()
+        dao.upsert(
+            row.copy(
+                headline = result.headline,
+                verdict = result.verdict,
+                lang = ContentLang.verdictLang(result).tag,
+                confidence = result.confidence,
+                tier = result.tier ?: "free",
+                resultJson = ruling.result.rawJson,
+                nameMapJson = WireJson.encodeNameMap(names + ruling.nameMap.filter { it.replacement !in have }),
+                // Translations of the earlier ruling no longer apply.
+                translationsJson = null,
+                rulingId = ruling.id,
+            ),
+        )
+    }
+
     override suspend fun cacheTranslation(id: String, lang: AppLang, translation: ParsedResult) {
         val row = dao.get(id) ?: return
         val current = parseTranslations(row.translationsJson)
@@ -98,6 +125,7 @@ class RoomHistoryRepository(
             nameMap = WireJson.decodeNameMap(row.nameMapJson),
             preset = row.preset,
             translations = translations,
+            rulingId = row.rulingId ?: row.id,
         )
     } catch (_: SerializationException) {
         null

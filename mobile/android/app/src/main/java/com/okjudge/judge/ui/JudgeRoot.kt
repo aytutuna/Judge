@@ -82,6 +82,7 @@ import com.okjudge.judge.ui.signin.SignInViewModel
 import com.okjudge.judge.ui.theme.JudgeTheme
 import com.okjudge.judge.ui.theme.JudgeType
 import com.okjudge.judge.ui.theme.Palette
+import com.okjudge.judge.ui.verdict.VerdictAppealViewModel
 import com.okjudge.judge.ui.verdict.VerdictRoute
 import com.okjudge.judge.ui.verdict.VerdictViewModel
 import kotlinx.coroutines.launch
@@ -347,6 +348,20 @@ fun JudgeRoot(container: AppContainer, links: StateFlow<Uri?> = MutableStateFlow
                             val vm = viewModel(key = "verdict-${key.id}") {
                                 VerdictViewModel(key.id, container.history, container.api)
                             }
+                            val accountState by account.state.collectAsStateWithLifecycle()
+                            val providers by account.providers.collectAsStateWithLifecycle()
+                            // Only the signed-in writer is told they may add context.
+                            val appeal = if (accountState is Account.State.SignedIn) {
+                                viewModel(key = "verdict-appeal-${key.id}") {
+                                    VerdictAppealViewModel(
+                                        key.id, container.api, container.history,
+                                        onEntitlement = { account.applyEntitlement(it) },
+                                        refreshAccount = { account.refresh() },
+                                    )
+                                }
+                            } else {
+                                null
+                            }
                             VerdictRoute(
                                 id = key.id,
                                 viewModel = vm,
@@ -356,6 +371,10 @@ fun JudgeRoot(container: AppContainer, links: StateFlow<Uri?> = MutableStateFlow
                                 onNew = newArgument,
                                 argument = key.argument,
                                 fromHome = key.fromHome,
+                                appeal = appeal,
+                                evidenceOn = (providers as? Account.Providers.Ready)?.config?.features?.evidence == true,
+                                onSignIn = { if (backStack.lastOrNull() !is SignInKey) backStack.add(SignInKey(thenVerdict = false)) },
+                                onPricing = { if (backStack.lastOrNull() !is PricingKey) backStack.add(PricingKey) },
                             )
                         }
                         entry<HistoryKey> {

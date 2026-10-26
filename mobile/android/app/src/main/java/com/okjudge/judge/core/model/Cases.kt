@@ -162,6 +162,39 @@ data class CreateCaseRequest(
     val displayName: String? = null,
 )
 
-/** POST /api/v1/cases/{id}/appeals (AppealRequest). */
+/** POST /api/v1/cases/{id}/appeals and /api/v1/verdicts/{id}/appeals (AppealRequest). */
 @Serializable
 data class AppealRequest(val text: String, val evidence: List<String>? = null)
+
+/** One round of context added to a one-sided verdict (VerdictAppealView); its id is also its verdict's. */
+@Serializable
+data class VerdictAppealView(
+    val id: String = "",
+    /** judging | judged | failed */
+    val status: String = "",
+    /** quota | unavailable | refused */
+    val error: String? = null,
+    val outcome: String? = null,
+    val baseId: String = "",
+    val createdAt: String = "",
+)
+
+/**
+ * A one-sided verdict's rounds from GET /api/v1/verdicts/{id}, oldest first.
+ * [gate] is the writer's `owner.appeal`, null for everyone else.
+ */
+data class VerdictRounds(val appeals: List<VerdictAppealView>, val gate: AppealGate?)
+
+/** 202 from POST /api/v1/verdicts/{id}/appeals (VerdictAppealResponse): the round to poll. */
+@Serializable
+data class VerdictAppealResponse(
+    val appeal: VerdictAppealView,
+    val appeals: List<VerdictAppealView> = emptyList(),
+    val pollAfterMs: Long = WireJson.DEFAULT_POLL_AFTER_MS,
+    @SerialName("name_map") val nameMap: List<NameMapping> = emptyList(),
+    val entitlement: Entitlement? = null,
+    val replayed: Boolean = false,
+) {
+    /** The round as an accepted verdict: it is polled the same way. */
+    fun accepted(): VerdictAccepted = VerdictAccepted(appeal.id, pollAfterMs, nameMap, replayed = replayed, entitlement = entitlement)
+}

@@ -114,6 +114,17 @@ object WireJson {
         )
     }
 
+    /** The rounds and the writer's gate of a ready GET /api/v1/verdicts/{id} (`appeals`, `owner.appeal`). */
+    fun decodeRounds(body: String): VerdictRounds {
+        val root = json.parseToJsonElement(body).jsonObject
+        val appeals = (root["appeals"] as? JsonArray)
+            ?.let { json.decodeFromJsonElement(ListSerializer(VerdictAppealView.serializer()), it) }
+            ?: emptyList()
+        val gate = ((root["owner"] as? JsonObject)?.get("appeal") as? JsonObject)
+            ?.let { json.decodeFromJsonElement(AppealGate.serializer(), it) }
+        return VerdictRounds(appeals, gate)
+    }
+
     /** Null when the body is not a JSON object. */
     fun decodeErrorBody(body: String?): ApiErrorBody? {
         if (body.isNullOrBlank()) return null

@@ -125,6 +125,21 @@ class VerdictViewModelTest {
     }
 
     @Test
+    fun aLaterRuling_isTranslatedUnderItsOwnId() = runBlocking {
+        server.enqueue(MockResponse.Builder().code(200).body(translateBody()).build())
+        server.enqueue(MockResponse.Builder().code(200).body(translateBody()).build())
+        val vm = vm()
+        val job = CoroutineScope(Dispatchers.Unconfined).launch { vm.state.collect {} }
+        vm.onLang(AppLang.TR)
+        vm.awaitStatus(TranslationStatus.TRANSLATED)
+        assertEquals("/api/v1/verdicts/${outcome.id}/translate?lang=tr", server.takeRequest().target)
+        history.saveRuling(outcome.id, Fixtures.sample("win_b_named").copy(id = "r1"))
+        assertEquals("/api/v1/verdicts/r1/translate?lang=tr", withTimeout(10_000) { server.takeRequest() }.target)
+        vm.awaitStatus(TranslationStatus.TRANSLATED)
+        job.cancel()
+    }
+
+    @Test
     fun offline_saysSo() = runBlocking {
         val vm = vm("http://unresolvable.invalid/")
         val job = CoroutineScope(Dispatchers.Unconfined).launch { vm.state.collect {} }

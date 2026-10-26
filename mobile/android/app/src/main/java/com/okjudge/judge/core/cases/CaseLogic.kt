@@ -2,8 +2,10 @@ package com.okjudge.judge.core.cases
 
 import android.content.Context
 import com.okjudge.judge.core.display.PartyNames
+import com.okjudge.judge.core.model.AppealGate
 import com.okjudge.judge.core.model.CaseView
 import com.okjudge.judge.core.model.NameMapping
+import com.okjudge.judge.core.model.VerdictRounds
 import com.okjudge.judge.core.model.WireJson
 import com.okjudge.judge.i18n.AppLang
 import kotlin.math.max
@@ -55,7 +57,7 @@ class PrefsCaseNames(context: Context) : CaseNamesStore {
     }
 }
 
-/** What the appeal area shows for a case view (appealArea in components/case/AppealForm.tsx). */
+/** What the appeal area shows (appealArea in components/case/AppealForm.tsx). */
 sealed interface AppealArea {
     data object None : AppealArea
     data object Judging : AppealArea
@@ -64,6 +66,8 @@ sealed interface AppealArea {
     data class Upsell(val signIn: Boolean) : AppealArea
     data class Blocked(val reason: String) : AppealArea
     data object Used : AppealArea
+    /** A verdict that already took context twice. */
+    data object Limit : AppealArea
     data object Busy : AppealArea
 }
 
@@ -88,17 +92,30 @@ object CaseLogic {
     fun appealArea(view: CaseView): AppealArea {
         if (view.statusRaw != "judged") return AppealArea.None
         val mine = view.appeals.firstOrNull { it.party == view.yourParty }
-        if (view.appealJudging) return if (mine?.status == "judging") AppealArea.Judging else AppealArea.Busy
-        if (view.appeal.allowed) {
-            val failed = if (mine?.status == "failed") (if (mine.error == "refused") "refused" else "failed") else null
+        return appealArea(view.appealJudging, mine?.status, mine?.error, view.appeal, respondent = view.role == "respondent")
+    }
+
+    /** A one-sided verdict for its writer (useVerdictAppeal): the latest round stands for theirs. */
+    fun appealArea(rounds: VerdictRounds): AppealArea {
+        val gate = rounds.gate ?: return AppealArea.None
+        val latest = rounds.appeals.lastOrNull()
+        return appealArea(rounds.appeals.any { it.status == "judging" }, latest?.status, latest?.error, gate, respondent = false)
+    }
+
+    private fun appealArea(judging: Boolean, mineStatus: String?, mineError: String?, gate: AppealGate, respondent: Boolean): AppealArea {
+        if (judging) return if (mineStatus == "judging") AppealArea.Judging else AppealArea.Busy
+        if (gate.allowed) {
+            val failed = if (mineStatus == "failed") (if (mineError == "refused") "refused" else "failed") else null
             return AppealArea.Form(failed)
         }
-        return when (val by = view.appeal.blockedBy) {
+        return when (val by = gate.blockedBy) {
             "signin_required" -> AppealArea.Upsell(signIn = true)
             "premium_required", "no_credits", "fair_use" ->
-                if (view.role == "respondent") AppealArea.Upsell(signIn = false) else AppealArea.Blocked(by)
+                if (respondent) AppealArea.Upsell(signIn = false) else AppealArea.Blocked(by)
             "appeal_used" -> AppealArea.Used
+            "appeal_limit" -> AppealArea.Limit
             "busy" -> AppealArea.Busy
+            // claim_required: the website claims with the owner token, which the app never keeps.
             else -> AppealArea.None
         }
     }

@@ -60,11 +60,20 @@ data class CaseUiState(
     val names: List<NameMapping>
         get() = if (view?.yourParty == "a") view.names ?: localNames else emptyList()
 
-    val appealCanSubmit: Boolean
-        get() {
-            val n = appealText.trim().length
-            return n in CaseLogic.MIN_APPEAL_CHARS..CaseLogic.MAX_APPEAL_CHARS && !appealSending && !appealEvidence.busy
-        }
+    val appealDraft: AppealDraft get() = AppealDraft(appealText, appealSending, appealError, appealEvidence)
+
+    val appealCanSubmit: Boolean get() = appealDraft.canSubmit
+}
+
+/** What the appeal form holds (useAppealDraft), for a case or a one-sided verdict. */
+data class AppealDraft(
+    val text: String = "",
+    val sending: Boolean = false,
+    val error: UiError? = null,
+    val evidence: EvidenceState = EvidenceState(max = CaseLogic.MAX_EVIDENCE_PER_APPEAL),
+) {
+    val canSubmit: Boolean
+        get() = text.trim().length in CaseLogic.MIN_APPEAL_CHARS..CaseLogic.MAX_APPEAL_CHARS && !sending && !evidence.busy
 }
 
 sealed interface NamesError {

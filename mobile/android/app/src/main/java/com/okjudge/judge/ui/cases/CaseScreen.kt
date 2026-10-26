@@ -394,7 +394,21 @@ private fun Body(state: CaseUiState, view: CaseView, evidenceOn: Boolean, action
             if (current != null) {
                 if (view.oneSided) Note(s.caseOneSided)
                 CaseVerdict(current, state.names, linked = view.removed == null, actions, Modifier.testTag(CaseTags.VERDICT))
-                AppealSection(state, view, evidenceOn, actions)
+                AppealSection(
+                    area = CaseLogic.appealArea(view),
+                    draft = state.appealDraft,
+                    // The server refuses evidence on a free case's appeal.
+                    evidenceOn = evidenceOn && view.premium,
+                    lead = s.appealLead,
+                    actions = AppealFormActions(
+                        onText = actions.onAppealText,
+                        onAddEvidence = actions.onAddAppealEvidence,
+                        onRemoveEvidence = actions.onRemoveAppealEvidence,
+                        onSubmit = actions.onSubmitAppeal,
+                        onSignIn = actions.onSignIn,
+                        onPricing = actions.onPricing,
+                    ),
+                )
                 VerdictHistory(view, state.names)
             }
         }
@@ -522,22 +536,50 @@ private fun VerdictHistory(view: CaseView, names: List<NameMapping>) {
     }
 }
 
+/** What the appeal form can ask for. */
+data class AppealFormActions(
+    val onText: (String) -> Unit = {},
+    val onAddEvidence: (List<ImageSource>) -> Unit = {},
+    val onRemoveEvidence: (String) -> Unit = {},
+    val onSubmit: () -> Unit = {},
+    val onSignIn: () -> Unit = {},
+    val onPricing: () -> Unit = {},
+)
+
+/**
+ * The appeal area (AppealSection): the "add context" form, its upsell, or
+ * why not. Cases and the writer's one-sided verdicts share it; [lead] is
+ * the line under the title, [evidenceOn] offers the screenshot picker.
+ */
 @Composable
-private fun AppealSection(state: CaseUiState, view: CaseView, evidenceOn: Boolean, actions: CaseActions) {
+fun AppealSection(
+    area: AppealArea,
+    draft: AppealDraft,
+    evidenceOn: Boolean,
+    lead: String,
+    actions: AppealFormActions,
+    modifier: Modifier = Modifier,
+) {
     val s = LocalStrings.current
-    when (val area = CaseLogic.appealArea(view)) {
+    when (area) {
         AppealArea.None -> Unit
         AppealArea.Judging -> Row(
-            Modifier.semantics(mergeDescendants = true) { liveRegion = LiveRegionMode.Polite }.testTag(CaseTags.APPEAL_NOTE),
+            modifier.semantics(mergeDescendants = true) { liveRegion = LiveRegionMode.Polite }.testTag(CaseTags.APPEAL_NOTE),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             CircularProgressIndicator(Modifier.size(14.dp), color = Palette.sageInk, strokeWidth = 1.5.dp)
             Note(s.appealJudging, color = Palette.sageInk)
         }
-        AppealArea.Busy, AppealArea.Used ->
-            Note(if (area == AppealArea.Busy) s.appealBusy else s.appealUsed, Modifier.testTag(CaseTags.APPEAL_NOTE))
-        is AppealArea.Upsell, is AppealArea.Blocked -> Card {
+        AppealArea.Busy, AppealArea.Used, AppealArea.Limit -> Note(
+            when (area) {
+                AppealArea.Busy -> s.appealBusy
+                AppealArea.Limit -> s.appealLimit
+                else -> s.appealUsed
+            },
+            modifier.testTag(CaseTags.APPEAL_NOTE),
+        )
+        is AppealArea.Upsell, is AppealArea.Blocked -> Card(modifier) {
             AppealTitle(spark = true)
             val text = when (area) {
                 is AppealArea.Upsell -> s.appealUpsell
@@ -556,13 +598,13 @@ private fun AppealSection(state: CaseUiState, view: CaseView, evidenceOn: Boolea
                 GhostButton(s.tierGetPremium, null, actions.onPricing, Modifier.testTag(CaseTags.APPEAL_PRICING))
             }
         }
-        is AppealArea.Form -> Card {
+        is AppealArea.Form -> Card(modifier) {
             AppealTitle(spark = false)
-            Note(s.appealLead)
+            Note(lead)
             area.failed?.let { Banner(if (it == "refused") s.appealRefused else s.appealFailed) }
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(s.appealLabel, style = JudgeType.slotTitle, modifier = Modifier.weight(1f))
-                Text("${state.appealText.length} / ${CaseLogic.MAX_APPEAL_CHARS}", style = JudgeType.footnote)
+                Text("${draft.text.length} / ${CaseLogic.MAX_APPEAL_CHARS}", style = JudgeType.footnote)
             }
             Box(
                 Modifier
@@ -574,29 +616,28 @@ private fun AppealSection(state: CaseUiState, view: CaseView, evidenceOn: Boolea
                     .padding(14.dp),
             ) {
                 BasicTextField(
-                    value = state.appealText,
-                    onValueChange = actions.onAppealText,
-                    readOnly = state.appealSending,
+                    value = draft.text,
+                    onValueChange = actions.onText,
+                    readOnly = draft.sending,
                     textStyle = JudgeType.body,
                     cursorBrush = SolidColor(Palette.terraInk),
                     keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Sentences),
                     modifier = Modifier.fillMaxWidth().heightIn(min = 82.dp).testTag(CaseTags.APPEAL_TEXT),
                     decorationBox = { inner ->
-                        if (state.appealText.isEmpty()) Text(s.appealPlaceholder, style = JudgeType.body.copy(color = Palette.placeholder))
+                        if (draft.text.isEmpty()) Text(s.appealPlaceholder, style = JudgeType.body.copy(color = Palette.placeholder))
                         inner()
                     },
                 )
             }
-            // The server refuses evidence on a free case's appeal.
-            if (evidenceOn && view.premium) {
-                val pick = rememberEvidencePicker(state.appealEvidence.room, actions.onAddAppealEvidence)
-                EvidencePicker(state.appealEvidence, disabled = state.appealSending, onAdd = pick, onRemove = actions.onRemoveAppealEvidence)
+            if (evidenceOn) {
+                val pick = rememberEvidencePicker(draft.evidence.room, actions.onAddEvidence)
+                EvidencePicker(draft.evidence, disabled = draft.sending, onAdd = pick, onRemove = actions.onRemoveEvidence)
             }
-            ErrorLine(state.appealError)
+            ErrorLine(draft.error)
             PrimaryButton(
-                if (state.appealSending) s.appealSending else s.appealSubmit,
-                state.appealCanSubmit,
-                actions.onSubmitAppeal,
+                if (draft.sending) s.appealSending else s.appealSubmit,
+                draft.canSubmit,
+                actions.onSubmit,
                 Modifier.fillMaxWidth().testTag(CaseTags.APPEAL_SUBMIT),
             )
         }

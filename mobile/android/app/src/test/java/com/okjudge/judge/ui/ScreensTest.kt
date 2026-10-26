@@ -46,6 +46,7 @@ import com.okjudge.judge.ui.verdict.TranslationStatus
 import com.okjudge.judge.ui.verdict.TranslationView
 import com.okjudge.judge.ui.verdict.VerdictContent
 import com.okjudge.judge.ui.verdict.VerdictThreadHead
+import com.okjudge.judge.ui.verdict.VerdictTags
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonObject
 import org.junit.Assert.assertEquals
@@ -240,6 +241,32 @@ class ScreensTest {
         compose.onNodeWithText("Confidence 4 of 5").assertExists()
         compose.onNodeWithText("Confidence 2 of 5").assertDoesNotExist()
         compose.onNodeWithText("2/5", substring = true).assertDoesNotExist()
+    }
+
+    @Test
+    fun verdictCard_addContext_onlyWhenOffered() {
+        val en = UiTestSupport.s(AppLang.EN)
+        val outcome = sample("win_b_named")
+        var offered by mutableStateOf(false)
+        var taps = 0
+        compose.setContent {
+            Themed(AppLang.EN) {
+                VerdictContent(
+                    view = TranslationView(outcome.result.result, TranslationStatus.ORIGINAL, AppLang.EN),
+                    parties = PartyNames.partyNames(outcome.nameMap, AppLang.EN, en),
+                    restoredNames = emptyList(),
+                    actions = CardActions(onShare = {}, onCopy = {}, copied = false, onAddContext = if (offered) ({ taps++ }) else null),
+                    modifier = Modifier.verticalScroll(rememberScrollState()),
+                )
+            }
+        }
+        compose.onNodeWithTag(VerdictTags.ADD_CONTEXT).assertDoesNotExist()
+        compose.onNodeWithText(en.copyLink).assertExists()
+        offered = true
+        compose.onNodeWithTag(VerdictTags.ADD_CONTEXT).assertTextEquals(en.appealTitle).performClick()
+        assertEquals(1, taps)
+        // Copy keeps its name for screen readers when it shrinks to the icon.
+        compose.onNodeWithContentDescription(en.copyLink).assertExists()
     }
 
     @Test

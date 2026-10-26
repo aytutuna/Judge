@@ -1,6 +1,7 @@
 package com.okjudge.judge.core.data
 
 import android.content.Context
+import androidx.room.AutoMigration
 import androidx.room.ColumnInfo
 import androidx.room.Dao
 import androidx.room.Database
@@ -30,6 +31,8 @@ data class SavedVerdictRow(
     @ColumnInfo(name = "name_map_json") val nameMapJson: String,
     /** `{"tr": <VerdictResult JSON>}`: translations fetched so far, for offline use. */
     @ColumnInfo(name = "translations_json") val translationsJson: String? = null,
+    /** The verdict shown when context was added later (a round's id); null: the first one. */
+    @ColumnInfo(name = "ruling_id") val rulingId: String? = null,
 )
 
 @Dao
@@ -56,7 +59,7 @@ interface HistoryDao {
     suspend fun deleteAll()
 }
 
-@Database(entities = [SavedVerdictRow::class], version = 1, exportSchema = true)
+@Database(entities = [SavedVerdictRow::class], version = 2, exportSchema = true, autoMigrations = [AutoMigration(from = 1, to = 2)])
 abstract class HistoryDb : RoomDatabase() {
     abstract fun history(): HistoryDao
 

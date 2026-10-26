@@ -23,7 +23,9 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.withFrameNanos
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -35,6 +37,8 @@ import com.okjudge.judge.core.display.VerdictDisplay
 import com.okjudge.judge.core.model.VerdictResult
 import com.okjudge.judge.i18n.LocalLang
 import com.okjudge.judge.i18n.LocalStrings
+import com.okjudge.judge.ui.cases.AppealFormActions
+import com.okjudge.judge.ui.cases.AppealSection
 import com.okjudge.judge.ui.components.ArgumentBubble
 import com.okjudge.judge.ui.components.JudgesBadge
 import com.okjudge.judge.ui.components.SceneView
@@ -45,6 +49,7 @@ import com.okjudge.judge.ui.theme.JudgeShapes
 import com.okjudge.judge.ui.theme.JudgeType
 import com.okjudge.judge.ui.theme.Palette
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 /** Share link for a verdict id: `{SHARE_BASE_URL}/v/<id>`. */
 fun shareUrl(shareBaseUrl: String, id: String): String = "${shareBaseUrl.trimEnd('/')}/v/$id"
@@ -54,6 +59,8 @@ fun shareUrl(shareBaseUrl: String, id: String): String = "${shareBaseUrl.trimEnd
  * before the app navigates here, so this works offline and after process death).
  * A fresh verdict stays in its thread: the argument, the judges' badge and
  * the settled scene above the card; the header's "+" starts the next one.
+ * With [appeal] the writer can add context below the verdict; a round's
+ * verdict replaces the saved one and the screen goes back up to its banner.
  */
 @Composable
 fun VerdictRoute(
@@ -65,18 +72,28 @@ fun VerdictRoute(
     onNew: (() -> Unit)?,
     argument: String? = null,
     fromHome: Boolean = false,
+    appeal: VerdictAppealViewModel? = null,
+    evidenceOn: Boolean = false,
+    onSignIn: () -> Unit = {},
+    onPricing: () -> Unit = {},
 ) {
     val lang = LocalLang.current
     LaunchedEffect(lang) { viewModel.onLang(lang) }
     val state by viewModel.state.collectAsStateWithLifecycle()
+    val appealState = appeal?.let { it.state.collectAsStateWithLifecycle().value }
     val context = LocalContext.current
     val s = LocalStrings.current
+    val scroll = rememberScrollState()
+    val scope = rememberCoroutineScope()
     var copied by remember { mutableStateOf(false) }
     LaunchedEffect(copied) {
         if (copied) {
             delay(2000)
             copied = false
         }
+    }
+    LaunchedEffect(appealState?.finished) {
+        if (appealState?.finished == true) scroll.animateScrollTo(0)
     }
     val url = shareUrl(shareBaseUrl, id)
 
@@ -102,7 +119,7 @@ fun VerdictRoute(
             Modifier
                 .weight(1f)
                 .fillMaxWidth()
-                .verticalScroll(rememberScrollState())
+                .verticalScroll(scroll)
                 .padding(horizontal = 16.dp, vertical = 12.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
@@ -125,9 +142,34 @@ fun VerdictRoute(
                         copied = true
                     },
                     copied = copied,
+                    onAddContext = if (appeal != null && appealState?.offered == true) ({
+                        appeal.open()
+                        scope.launch {
+                            // The panel is laid out a frame later.
+                            withFrameNanos { }
+                            scroll.animateScrollTo(scroll.maxValue)
+                        }
+                    }) else null,
                 ),
                 modifier = Modifier.widthIn(max = 640.dp).fillMaxWidth().padding(bottom = 32.dp),
             )
+            if (appeal != null && appealState?.panel == true) {
+                AppealSection(
+                    area = appealState.area,
+                    draft = appealState.draft,
+                    evidenceOn = evidenceOn,
+                    lead = s.appealLeadVerdict,
+                    actions = AppealFormActions(
+                        onText = appeal::onText,
+                        onAddEvidence = appeal::onAddEvidence,
+                        onRemoveEvidence = appeal::onRemoveEvidence,
+                        onSubmit = appeal::submit,
+                        onSignIn = onSignIn,
+                        onPricing = onPricing,
+                    ),
+                    modifier = Modifier.widthIn(max = 640.dp).fillMaxWidth().padding(bottom = 32.dp),
+                )
+            }
         }
     }
 }

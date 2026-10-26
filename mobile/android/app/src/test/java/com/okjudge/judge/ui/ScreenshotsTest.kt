@@ -385,6 +385,47 @@ class ScreenshotsTest {
     @Test
     fun verdict_appealOutcome_en() = shotVerdict("verdict_appeal_overturned_en", caseOutcome("appeal_overturned"), AppLang.EN)
 
+    /** The writer's verdict with "Add context" next to Share and the panel it opens. */
+    private fun shotAddContext(name: String, area: com.okjudge.judge.core.cases.AppealArea, text: String = "") = capture(name, tall = true) {
+        val outcome = sample("win_a_self")
+        val en = UiTestSupport.s(AppLang.EN)
+        Themed(AppLang.EN) {
+            Column(Modifier.fillMaxSize()) {
+                TopBar(onBack = {}, onNew = {})
+                Column(Modifier.padding(horizontal = 16.dp, vertical = 12.dp)) {
+                    com.okjudge.judge.ui.verdict.VerdictContent(
+                        view = sampleView(outcome, AppLang.EN).personalized(outcome.nameMap, AppLang.EN),
+                        parties = com.okjudge.judge.core.display.PartyNames.partyNames(outcome.nameMap, AppLang.EN, en),
+                        restoredNames = com.okjudge.judge.core.display.PartyNames.restoredNames(outcome.nameMap, AppLang.EN),
+                        actions = com.okjudge.judge.ui.verdict.CardActions(onShare = {}, onCopy = {}, copied = false, onAddContext = {}),
+                        modifier = Modifier.padding(bottom = 32.dp),
+                    )
+                    com.okjudge.judge.ui.cases.AppealSection(
+                        area = area,
+                        draft = com.okjudge.judge.ui.cases.AppealDraft(text = text),
+                        evidenceOn = true,
+                        lead = en.appealLeadVerdict,
+                        actions = com.okjudge.judge.ui.cases.AppealFormActions(),
+                    )
+                }
+            }
+        }
+    }
+
+    @Test
+    fun verdict_addContext_en() = shotAddContext(
+        "verdict_add_context_en",
+        com.okjudge.judge.core.cases.AppealArea.Form(null),
+        "Sam paid me back the next week, so the money part is settled.",
+    )
+
+    @Test
+    fun verdict_addContext_locked_en() =
+        shotAddContext("verdict_add_context_locked_en", com.okjudge.judge.core.cases.AppealArea.Blocked("premium_required"))
+
+    @Test
+    fun verdict_addContext_limit_en() = shotAddContext("verdict_add_context_limit_en", com.okjudge.judge.core.cases.AppealArea.Limit)
+
     // --- Two-sided cases ---------------------------------------------------------------
 
     private fun caseState(name: String): com.okjudge.judge.ui.cases.CaseUiState {

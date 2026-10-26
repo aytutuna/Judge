@@ -3,6 +3,7 @@ package com.okjudge.judge.core.data
 import androidx.test.core.app.ApplicationProvider
 import com.okjudge.judge.Fixtures
 import com.okjudge.judge.core.model.LeanState
+import com.okjudge.judge.core.model.NameMapping
 import com.okjudge.judge.core.model.WireJson
 import com.okjudge.judge.i18n.AppLang
 import kotlinx.coroutines.flow.first
@@ -62,6 +63,35 @@ class HistoryRepositoryTest {
         val saved = repo.observe(first.id).first()!!
         assertEquals(first.nameMap, saved.nameMap)
         assertEquals(1_000L, saved.createdAt)
+    }
+
+    @Test
+    fun aLaterRuling_replacesWhatTheEntryShows_butKeepsItsIdDateAndNames() = runBlocking {
+        val first = Fixtures.sample("win_b_named")
+        repo.save(first, "balanced")
+        repo.cacheTranslation(first.id, AppLang.TR, Fixtures.sample("lean_tie").result)
+        now = 5_000L
+        val later = Fixtures.sample("win_a_self")
+        repo.saveRuling(first.id, later.copy(id = "r1", nameMap = first.nameMap.take(1) + NameMapping("Kim", "Person C")))
+        val saved = repo.observe(first.id).first()!!
+        assertEquals("r1", saved.rulingId)
+        assertEquals(1_000L, saved.createdAt)
+        assertEquals("balanced", saved.preset)
+        assertEquals(later.result.result.headline, saved.original.result.headline)
+        assertEquals("the earlier ruling's translations are dropped", emptyMap<AppLang, Any>(), saved.translations)
+        assertEquals(first.nameMap + NameMapping("Kim", "Person C"), saved.nameMap)
+        assertEquals("side_a", db.history().get(first.id)!!.verdict)
+        assertEquals(listOf(first.id), repo.observeAll().first().map { it.id })
+
+        repo.saveRuling("missing", later)
+        assertNull(repo.observe("missing").first())
+    }
+
+    @Test
+    fun aFreshEntry_isItsOwnRuling() = runBlocking {
+        val outcome = Fixtures.sample("win_a_self")
+        repo.save(outcome, "balanced")
+        assertEquals(outcome.id, repo.observe(outcome.id).first()!!.rulingId)
     }
 
     @Test

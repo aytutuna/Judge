@@ -18,9 +18,11 @@ import com.okjudge.judge.core.model.SessionGrant
 import com.okjudge.judge.core.model.StoredVerdict
 import com.okjudge.judge.core.model.TranslateOutcome
 import com.okjudge.judge.core.model.VerdictAccepted
+import com.okjudge.judge.core.model.VerdictAppealResponse
 import com.okjudge.judge.core.model.VerdictOutcome
 import com.okjudge.judge.core.model.VerdictPoll
 import com.okjudge.judge.core.model.VerdictRequest
+import com.okjudge.judge.core.model.VerdictRounds
 import com.okjudge.judge.core.model.VerdictSubmission
 import com.okjudge.judge.core.model.WireJson
 import com.okjudge.judge.i18n.AppLang
@@ -277,8 +279,29 @@ class JudgeApi(
         }
     }
 
+    /**
+     * GET /api/v1/verdicts/{id} read for its rounds of added context and, for
+     * the signed-in writer, whether another may be added (`owner.appeal`).
+     */
+    suspend fun verdictRounds(id: String): ApiResult<VerdictRounds> {
+        val req = request(verdictUrl(id)).cacheControl(CacheControl.FORCE_NETWORK).get().build()
+        return execute(getClient, req) { _, text -> WireJson.decodeRounds(text) }
+    }
+
+    /** POST /api/v1/verdicts/{id}/appeals: the writer adds context (202 with the round to poll). */
+    suspend fun appealVerdict(id: String, body: String, idempotencyKey: String): ApiResult<VerdictAppealResponse> {
+        val req = request(verdictUrl(id, "appeals"))
+            .header("Idempotency-Key", idempotencyKey)
+            .post(body.toRequestBody(JSON))
+            .build()
+        return execute(caseWriteClient, req) { _, text -> WireJson.json.decodeFromString(VerdictAppealResponse.serializer(), text) }
+    }
+
     private fun caseUrl(id: String, action: String? = null): HttpUrl =
         base.newBuilder().addPathSegments("api/v1/cases").addPathSegment(id).apply { action?.let { addPathSegment(it) } }.build()
+
+    private fun verdictUrl(id: String, action: String? = null): HttpUrl =
+        base.newBuilder().addPathSegments("api/v1/verdicts").addPathSegment(id).apply { action?.let { addPathSegment(it) } }.build()
 
     /** One poll of an async verdict; [ownerToken] lets a ready answer carry the writer's state. */
     suspend fun pollVerdict(id: String, ownerToken: String?): ApiResult<VerdictPoll> {

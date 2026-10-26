@@ -16,6 +16,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChangedBy
+import kotlinx.coroutines.flow.drop
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
@@ -64,6 +67,16 @@ class VerdictViewModel(
             }
         }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), VerdictUiState())
 
+    init {
+        // A later ruling (context added) is translated on its own.
+        viewModelScope.launch {
+            history.observe(id).filterNotNull().distinctUntilChangedBy { it.rulingId }.drop(1).collect { saved ->
+                entries.value = emptyMap()
+                lang.value?.let { ensureTranslation(it, saved) }
+            }
+        }
+    }
+
     /** Called whenever the UI language changes (and once on first show). */
     fun onLang(target: AppLang) {
         if (lang.value == target) return
@@ -88,8 +101,8 @@ class VerdictViewModel(
         }
     }
 
-    private suspend fun ensureTranslation(target: AppLang) {
-        val saved = latestSaved ?: history.observeFirst(id) ?: return
+    private suspend fun ensureTranslation(target: AppLang, known: SavedVerdict? = null) {
+        val saved = known ?: latestSaved ?: history.observeFirst(id) ?: return
         if (ContentLang.verdictLang(saved.original.result) == target) return
         if (saved.translations.containsKey(target)) return
         when (val entry = entries.value[target]) {
@@ -98,7 +111,10 @@ class VerdictViewModel(
             is TranslationEntry.Failed, null -> Unit
         }
         entries.update { it + (target to TranslationEntry.Loading) }
-        val next: TranslationEntry = when (val res = api.translate(id, target)) {
+        val res = api.translate(saved.rulingId, target)
+        // Context was added meanwhile: this is the earlier ruling's translation.
+        if (history.observeFirst(id)?.rulingId != saved.rulingId) return
+        val next: TranslationEntry = when (res) {
             is ApiResult.Ok -> {
                 val out = res.value
                 when {
