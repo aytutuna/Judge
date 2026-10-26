@@ -1,12 +1,13 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useEffect, useRef, useState, type ReactNode, type RefObject } from "react";
+import { useEffect, useRef, type ReactNode } from "react";
 import { tiltFromTug } from "@/lib/balance";
 import type { Lang } from "@/lib/i18n";
-import { resetScene, setPointer, setSceneStatus, useSceneMode, useSceneStatus } from "@/lib/scene-bridge";
+import { resetScene, setPointer, useSceneMode, useSceneStatus } from "@/lib/scene-bridge";
 import { avoidOpacityIn, watchAvoidLayout } from "./avoid";
 import { BalanceFallback } from "./BalanceFallback";
+import { useSceneGate } from "./gate";
 import { useReducedMotion } from "./useReducedMotion";
 import styles from "./SceneStage.module.css";
 
@@ -29,68 +30,6 @@ import styles from "./SceneStage.module.css";
 
 const BalanceScene = dynamic(() => import("./BalanceScene"), { ssr: false, loading: () => null });
 
-function hasWebGL(): boolean {
-  try {
-    const c = document.createElement("canvas");
-    const gl = (c.getContext("webgl2") ?? c.getContext("webgl")) as WebGLRenderingContext | null;
-    if (!gl) return false;
-    gl.getExtension("WEBGL_lose_context")?.loseContext();
-    return true;
-  } catch {
-    return false;
-  }
-}
-
-function wantsLessData(): boolean {
-  const nav = navigator as Navigator & { connection?: { saveData?: boolean } };
-  if (nav.connection?.saveData) return true;
-  return window.matchMedia("(prefers-reduced-data: reduce)").matches;
-}
-
-/** True once the 3D scene may load (see the component comment). */
-function useSceneGate(ref: RefObject<HTMLElement | null>): boolean {
-  const [go, setGo] = useState(false);
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    if (wantsLessData() || !hasWebGL()) {
-      setSceneStatus("fallback");
-      return;
-    }
-    let cancelled = false;
-    let io: IntersectionObserver | null = null;
-    let idleId = 0;
-    let timer: ReturnType<typeof setTimeout> | undefined;
-    const watch = () => {
-      if (cancelled) return;
-      io = new IntersectionObserver(
-        (entries) => {
-          if (!entries.some((e) => e.isIntersecting)) return;
-          io?.disconnect();
-          if (!cancelled) setGo(true);
-        },
-        { rootMargin: "200px" },
-      );
-      io.observe(el);
-    };
-    const afterLoad = () => {
-      if (typeof window.requestIdleCallback === "function") {
-        idleId = window.requestIdleCallback(watch, { timeout: 2500 });
-      } else timer = setTimeout(watch, 1200);
-    };
-    if (document.readyState === "complete") afterLoad();
-    else window.addEventListener("load", afterLoad, { once: true });
-    return () => {
-      cancelled = true;
-      window.removeEventListener("load", afterLoad);
-      if (idleId && typeof window.cancelIdleCallback === "function") window.cancelIdleCallback(idleId);
-      if (timer) clearTimeout(timer);
-      io?.disconnect();
-    };
-  }, [ref]);
-  return go;
-}
-
 export function SceneStage({ lang, children }: { lang: Lang; children: ReactNode }) {
   const stageRef = useRef<HTMLDivElement>(null);
   const mode = useSceneMode();
@@ -98,17 +37,28 @@ export function SceneStage({ lang, children }: { lang: Lang; children: ReactNode
   const reduced = useReducedMotion();
   const go = useSceneGate(stageRef);
 
-  // Leaving the page (client navigation) must not leave a stale verdict
-  // tilt for the next visit, whose form starts empty.
-  useEffect(() => () => resetScene(), []);
+  // The judging overlay keeps its verdict tilt published after it unmounts
+  // (home, cases), so a stage opened by client navigation starts level, and
+  // leaving clears it for the next one.
+  useEffect(() => {
+    resetScene();
+    return () => resetScene();
+  }, []);
 
   // Pointer parallax: fine pointers only, passive, no React state.
   useEffect(() => {
     if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
     const onMove = (e: PointerEvent) =>
       setPointer((e.clientX / window.innerWidth) * 2 - 1, (e.clientY / window.innerHeight) * 2 - 1);
+    // Leaving the window recentres the balance instead of freezing it tilted.
+    const onLeave = () => setPointer(0, 0);
+    const root = document.documentElement;
     window.addEventListener("pointermove", onMove, { passive: true });
-    return () => window.removeEventListener("pointermove", onMove);
+    root.addEventListener("mouseleave", onLeave);
+    return () => {
+      window.removeEventListener("pointermove", onMove);
+      root.removeEventListener("mouseleave", onLeave);
+    };
   }, []);
 
   const tugA = mode.kind === "verdict" ? mode.verdict.tugA : undefined;

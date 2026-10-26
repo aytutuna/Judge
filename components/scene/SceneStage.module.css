@@ -63,8 +63,11 @@
   transition: opacity 0.4s linear;
 }
 
+/* The drawing goes first, so it never doubles up with the 3D balance
+   settling onto its pivot. */
 .wrap[data-scene-status="ready"] .fallback {
   opacity: 0;
+  transition-duration: 0.2s;
 }
 
 @media (min-width: 960px) {

@@ -17,6 +17,10 @@ export function ss(a: number, b: number, x: number): number {
   const k = clamp01((x - a) / (b - a));
   return k * k * (3 - 2 * k);
 }
+/** 0 -> 1 -> 0 over x in 0..1, zero outside (and for NaN). */
+export function bump(x: number): number {
+  return x > 0 && x < 1 ? Math.sin(Math.PI * x) : 0;
+}
 export function easeOutBack(x: number): number {
   if (x <= 0) return 0;
   const c1 = 1.5;
@@ -100,6 +104,38 @@ export function orbSlots(n: number): Vec3[] {
   return out;
 }
 
+/** One turn of the deliberation orbit, seconds. */
+export const ORBIT_PERIOD = 16;
+
+/** Ring places by orb index once an escalation grows the panel past the
+ * three that deliberated: those three stay close to where they were and the
+ * extra judges fill the gaps between them. */
+const RING_ORDER: Record<number, readonly number[]> = {
+  4: [0, 2, 3, 1],
+  5: [0, 2, 4, 1, 3],
+  6: [1, 3, 5, 0, 2, 4],
+  7: [1, 3, 5, 0, 2, 4, 6],
+};
+
+/** Where orb i of n drifts while the judges deliberate: a loose ring around
+ * a point above the pivot, each orb at its own phase, radius and height,
+ * tilted toward the camera so orbs passing each other never overlap on
+ * screen, ink rings included. Stays below the top of the resting arc (the
+ * card framing). `time` is the ring's own clock, 0 when the orbs leave the
+ * arc: at 0 the ring keeps the slots' left-to-right order, middle orb on top,
+ * so the orbs ease onto it without crossing. */
+export function orbitPoint<T extends Vec3>(i: number, n: number, time: number, out: T): T {
+  const s = RING_ORDER[n]?.[i] ?? i;
+  const a = 2 * Math.PI * (time / ORBIT_PERIOD + (s - (n - 1) / 2) / n);
+  // Five or more orbs crowd the ring: open it wider and lower.
+  const e = n > 4 ? 0.1 : 0;
+  const r = ORB_HALF_SPAN * (0.9 + e + 0.04 * ((i * 5) % 3));
+  out.x = Math.sin(a) * r;
+  out.y = ORB_Y - 0.19 - e + 0.012 * (((i * 7) % 3) - 1) + Math.cos(a) * (0.36 + e);
+  out.z = ORB_Z + Math.cos(a) * 0.3;
+  return out;
+}
+
 /** Per-orb vote reveal for an overall 0..1 progress, staggered by index. */
 export function voteAt(i: number, n: number, progress: number): number {
   const spread = 0.55;
@@ -135,11 +171,11 @@ export type Pose = {
   drop: number;
   /** Beam target angle, radians (+ = Party A end down). */
   tilt: number;
-  /** Faint crux glow while the judges deliberate. */
+  /** Faint crux glow while the orbs are up and the judges deliberate. */
   glow: number;
   /** Gentle random rocking of the beam (deliberation). */
   rock: number;
-  /** Slow orbit of neutral orbs (deliberation). */
+  /** Slow orbit of the orbs around a point above the pivot (deliberation). */
   orbit: number;
   /** Judging breath on the spheres. */
   busy: number;
@@ -188,6 +224,14 @@ export function zeroPose(): Pose {
 /** The verdict the scroll story ends on: the sample card's hot-dog case
  * (Party B wins, 20/80, three votes for B), so step 5 matches its tug bar. */
 export const STORY_VERDICT: SceneVerdict = { tugA: 20, votes: ["b", "b", "b"] };
+
+/** Which cup a settled verdict emphasises: -1 Party A, 1 Party B, 0 both
+ * (a level result the judges did weigh), null neither. Only an outright win
+ * (80/20) counts; a lean (62/38) is not one, and a refusal has no votes. */
+export function verdictWinner(v: SceneVerdict): -1 | 0 | 1 | null {
+  if (Math.abs(v.tugA - 50) >= 30) return v.tugA > 50 ? -1 : 1;
+  return v.tugA === 50 && v.votes.length > 0 ? 0 : null;
+}
 
 /** Weight of the story pose over the hero pose. */
 export function storyBlend(q: number): number {
@@ -255,7 +299,7 @@ const BEATS: Record<JudgingBeat, Partial<Pose>> = {
   sort: { lift: 1, split: 1, busy: 1 },
   dig: { lift: 1, split: 1, sink: 1, camDown: 0.75, busy: 1 },
   crux: { lift: 1, split: 1, sink: 1, meet: 1, camDown: 0.75, busy: 1 },
-  orbs: { split: 1, sink: 1, meet: 1, collapse: 1, orbs: 1, reform: 1, judgeView: 1 },
+  orbs: { split: 1, sink: 1, meet: 1, collapse: 1, orbs: 1, reform: 1, judgeView: 1, glow: 0.18 },
   deliberate: {
     split: 1,
     sink: 1,
@@ -278,7 +322,7 @@ const BEATS: Record<JudgingBeat, Partial<Pose>> = {
  * votes are in.
  */
 export function heroTargets(mode: SceneMode, live: Pose, out: Pose = zeroPose()): Pose {
-  const { split, sink, meet } = live;
+  const { split, sink, meet, orbit } = live;
   for (const k of POSE_KEYS) out[k] = 0;
   if (mode.kind === "judging") {
     Object.assign(out, BEATS[mode.beat]);
@@ -290,6 +334,9 @@ export function heroTargets(mode: SceneMode, live: Pose, out: Pose = zeroPose())
     out.split = split;
     out.sink = sink;
     out.meet = meet;
+    // The orbs vote where the deliberation left them on the ring; pulling
+    // them back to the arc first would bunch them up mid-way.
+    out.orbit = orbit;
     out.collapse = 1;
     out.orbs = v.votes.length > 0 ? 1 : 0;
     out.reform = 1;
@@ -320,7 +367,8 @@ export const POSE_RATES: Record<keyof Pose, number> = {
   reform: 3,
   camDown: 2.2,
   judgeView: 2.4,
-  votes: 4.5,
+  // Slow enough that the per-orb pops (judges.ts) land about 120 ms apart.
+  votes: 3.6,
   drop: 3.6,
   tilt: 6,
   glow: 2,

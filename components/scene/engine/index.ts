@@ -10,14 +10,15 @@ import {
   WebGLRenderer,
 } from "three";
 import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
+import { PALETTE_NUM } from "@/lib/palette";
 import {
-  getJudgingFrame,
   getSceneMode,
   sceneInput,
   sceneOutput,
   subscribeScene,
   subscribeSceneInput,
   subscribeStoryStep,
+  type SceneMode,
   type Vote,
 } from "@/lib/scene-bridge";
 import {
@@ -39,11 +40,12 @@ import {
   ss,
   storyBlend,
   storyPose,
+  verdictWinner,
   zeroPose,
 } from "@/lib/scene-poses";
-import { createBalance } from "./balance";
+import { createBalance, type Winner } from "./balance";
 import { mobileSceneBand } from "@/lib/scene-layout";
-import { frameCamera, projectContent, type Band } from "./camera";
+import { frameCamera, frameCard, projectContent, type Band } from "./camera";
 import { createCrux } from "./crux";
 import { createFragments } from "./fragments";
 import { createJudges } from "./judges";
@@ -57,6 +59,9 @@ export type EngineOptions = {
   shadows: boolean;
   /** No rAF loop: one frame per mode, step or size change. */
   reduced: boolean;
+  /** "stage": the page-wide hero/story layout. "card": centred in a small
+   * box of its own (the judging card). */
+  frame?: "stage" | "card";
   /** After shaders are compiled and the first frame is on screen. */
   onReady?: () => void;
   /** WebGL context lost: the stage falls back to the SVG. */
@@ -79,6 +84,7 @@ export type BalanceEngine = {
 
 /** Builds the scene on `canvas`. Throws if WebGL is unavailable. */
 export function createBalanceEngine(canvas: HTMLCanvasElement, opts: EngineOptions): BalanceEngine {
+  const card = opts.frame === "card";
   const maxDpr = opts.small ? 1.5 : 2;
   const startDpr = Math.min(window.devicePixelRatio || 1, maxDpr);
   const renderer = new WebGLRenderer({
@@ -101,35 +107,41 @@ export function createBalanceEngine(canvas: HTMLCanvasElement, opts: EngineOptio
   const room = new RoomEnvironment();
   const envRT = pmrem.fromScene(room, 0.04);
   scene.environment = envRT.texture;
-  scene.environmentIntensity = 0.5;
+  scene.environmentIntensity = 0.38;
   bin.add(envRT);
   room.dispose();
   pmrem.dispose();
 
   const camera = new PerspectiveCamera(30, 1, 0.1, 120);
 
-  scene.add(new HemisphereLight(0xfffaf3, 0xd9cfc2, 0.7));
-  const key = new DirectionalLight(0xfff0dc, 2.4);
-  key.position.set(0.4, 10, 1.2);
+  // Warm key from the upper left, steep enough that shadows stay under
+  // their objects; a cool sage fill from the right; a rim from behind for
+  // edges against the ivory page.
+  scene.add(new HemisphereLight(0xfffaf3, 0xd9cfc2, 0.5));
+  const key = new DirectionalLight(0xfff0dc, 2.6);
+  key.position.set(-1.2, 10, 2.2);
   key.castShadow = opts.shadows;
   if (opts.shadows) {
     key.shadow.mapSize.set(1024, 1024);
     Object.assign(key.shadow.camera, { left: -4, right: 4, top: 4, bottom: -4, near: 1, far: 22 });
     key.shadow.bias = -0.0006;
     key.shadow.normalBias = 0.02;
-    key.shadow.radius = 9;
+    key.shadow.radius = 6;
     key.shadow.blurSamples = 12;
   }
   scene.add(key);
-  const rim = new DirectionalLight(0xffe2cc, 0.7);
-  rim.position.set(-5, 3, -4);
+  const fill = new DirectionalLight(PALETTE_NUM.sageTint, 0.6);
+  fill.position.set(6, 2.5, 3);
+  scene.add(fill);
+  const rim = new DirectionalLight(PALETTE_NUM.paper, 1.4);
+  rim.position.set(1.5, 4, -6);
   scene.add(rim);
 
   const mats = createMaterials(bin);
   const segments = opts.small ? 64 : 96;
   const balance = createBalance(scene, mats, bin, { segments, shadows: opts.shadows });
   const fragments = createFragments(scene, mats, bin, { perKind: opts.small ? 4 : 6, shadows: opts.shadows });
-  const crux = createCrux(scene, mats, bin);
+  const crux = createCrux(scene, mats, bin, { small: opts.small });
   const judges = createJudges(scene, mats, bin, { shadows: opts.shadows });
 
   /* ---------- state ---------- */
@@ -153,7 +165,10 @@ export function createBalanceEngine(canvas: HTMLCanvasElement, opts: EngineOptio
   let absorbB = 0;
   let lastVotes: readonly Vote[] | null = null;
   let lastRenderAt = 0;
-  let engaged = 0; // 0..1: mobile framing eases into the judging band
+  let clock = 0; // real seconds, for one-shot effects
+  let enter = 0; // entrance: the beam settles onto the pivot
+  let settledFor: SceneMode | null = null;
+  let settledAt = Number.NaN;
   const band: Band = { top: 0, bottom: 0, yMin: 0 };
   const heroLive = zeroPose();
   const heroTarget = zeroPose();
@@ -167,6 +182,8 @@ export function createBalanceEngine(canvas: HTMLCanvasElement, opts: EngineOptio
     votes: null,
     n: 3,
   };
+  // Critically damped (no bounce), normalised to 0 -> 1 over k = 0..1.
+  const settle = (k: number) => 1 - (1 + 8 * k) * Math.exp(-8 * k);
   const rand = () => (rockSeed = (rockSeed * 16807) % 2147483647) / 2147483647;
 
   // setSize clears the drawing buffer, so every resize is followed by an
@@ -185,11 +202,16 @@ export function createBalanceEngine(canvas: HTMLCanvasElement, opts: EngineOptio
   function update(dt: number, snap: boolean): boolean {
     const nowMs = performance.now();
     const mode = getSceneMode();
+    clock += dt;
+    // A verdict at first paint, or reduced motion, shows the settled pose.
+    if (reduced || (!ready && mode.kind === "verdict")) enter = 1;
+    else if (ready) enter = Math.min(1, enter + dt / 0.8);
     const judging = mode.kind === "judging";
-    const desk = W >= 960;
+    const desk = !card && W >= 960;
     const small = !desk;
 
-    const q = reduced ? snapStoryQ(sceneInput.q) : sceneInput.q;
+    // A card never plays the scroll story.
+    const q = card ? -3 : reduced ? snapStoryQ(sceneInput.q) : sceneInput.q;
     const qMoved = q !== lastQ;
     lastQ = q;
 
@@ -214,7 +236,7 @@ export function createBalanceEngine(canvas: HTMLCanvasElement, opts: EngineOptio
     const ambient = reduced ? 0 : judging ? 1 : idleFactor(nowMs - sceneInput.lastInputAt);
     time += dt * ambient;
 
-    const kp = snap ? 1 : 1 - Math.exp(-dt * 4);
+    const kp = snap ? 1 : 1 - Math.exp(-dt * 3);
     const tpx = reduced ? 0 : sceneInput.px;
     const tpy = reduced ? 0 : sceneInput.py;
     pxs += (tpx - pxs) * kp;
@@ -237,7 +259,9 @@ export function createBalanceEngine(canvas: HTMLCanvasElement, opts: EngineOptio
       omega = 0;
     } else {
       omega += sceneInput.impulse;
-      const acc = 38 * (tau - theta) - 5.2 * omega;
+      // A verdict tips with a single small overshoot, not a seesaw.
+      const damping = mode.kind === "verdict" ? 6.5 : 5.2;
+      const acc = 38 * (tau - theta) - damping * omega;
       omega += acc * dt;
       theta += omega * dt;
       theta = Math.max(-THETA_LIMIT, Math.min(THETA_LIMIT, theta));
@@ -252,35 +276,51 @@ export function createBalanceEngine(canvas: HTMLCanvasElement, opts: EngineOptio
     const bobA = Math.sin(time * 1.3) * 0.05 * lift;
     const bobB = Math.sin(time * 1.3 + 1.7) * 0.05 * lift;
     const pulse = 1 + 0.05 * energy + 0.025 * Math.sin(time * 4) * pose.busy;
-    const a = sphereCentre(-1, theta, lift, bobA);
-    const b = sphereCentre(1, theta, lift, bobB);
+    const breathe = Math.sin(time * 1.1) * 0.02 * pose.busy * (1 - pose.sink);
+    const rise = 1.2 * (1 - settle(enter)) + breathe;
+    const a = sphereCentre(-1, theta, lift, bobA + rise);
+    const b = sphereCentre(1, theta, lift, bobB + rise);
     const base = sphereScale(lift, pulse) * (1 - pose.split * (1 - pose.reform));
     const scaleA = base * (1 + 0.04 * absorbA);
     const scaleB = base * (1 + 0.04 * absorbB);
-    balance.update(theta, a, b, scaleA, scaleB, dt * ambient, pose.camDown);
-    crux.update(pose, time, dt * ambient);
-    fragments.update(pose, time, a, b, crux.glowAt, small);
+    balance.update(theta, a, b, scaleA, scaleB, dt * ambient, pose.camDown, rise);
+    crux.update(pose, time, dt * ambient, dt, snap);
+    fragments.update(pose, time, a, b, crux.glowAt, small, ss(0, 1, enter));
+
+    // Verdict emphasis once the beam has come to rest.
+    let winner: Winner = null;
+    if (mode.kind === "verdict" && w < 0.5) {
+      if (settledFor !== mode) {
+        settledFor = mode;
+        settledAt = Number.NaN;
+      }
+      const resting = heroLive.drop > 0.98 && Math.abs(tau - theta) < 0.012 && Math.abs(omega) < 0.08;
+      if (Number.isNaN(settledAt) && resting) settledAt = snap ? -Infinity : clock;
+      if (!Number.isNaN(settledAt)) winner = verdictWinner(mode.verdict);
+    } else settledFor = null;
+    const since = clock - settledAt;
+    balance.emphasis(winner, since, theta, dt);
 
     view.px = pxs;
     view.py = pys;
     view.time = time;
     view.idle = ambient;
     view.reduced = reduced;
-    const engagedTarget = getJudgingFrame() ? 1 : 0;
-    engaged = snap || reduced ? engagedTarget : engaged + (engagedTarget - engaged) * (1 - Math.exp(-dt * 3));
-    if (Math.abs(engagedTarget - engaged) < 1e-3) engaged = engagedTarget;
     const yMin = lerp(0, BED_TOP - 0.4, pose.camDown);
-    if (!desk) {
-      Object.assign(band, mobileSceneBand(W, H, engaged, ss(-1, -0.2, q)));
-      band.yMin = yMin;
+    if (card) frameCard(camera, pose, W, H, view);
+    else {
+      if (!desk) {
+        Object.assign(band, mobileSceneBand(W, H, ss(-1, -0.2, q)));
+        band.yMin = yMin;
+      }
+      frameCamera(camera, pose, desk, W, H, view, band);
     }
-    frameCamera(camera, pose, desk, W, H, view, band);
 
     if (mode.kind === "verdict") lastVotes = mode.verdict.votes;
     else if (heroLive.orbs < 0.01 && heroLive.drop < 0.01) lastVotes = null;
     heroSrc.votes = mode.kind === "verdict" ? mode.verdict.votes : lastVotes;
     heroSrc.n = heroSrc.votes && heroSrc.votes.length > 0 ? heroSrc.votes.length : 3;
-    const absorbed = judges.update(heroSrc, storySrc, w, time, dt, a, b, camera.quaternion, snap);
+    const absorbed = judges.update(heroSrc, storySrc, w, time, dt * ambient, dt, a, b, camera.quaternion, snap);
     absorbA = absorbed.absorbA;
     absorbB = absorbed.absorbB;
 
@@ -298,7 +338,14 @@ export function createBalanceEngine(canvas: HTMLCanvasElement, opts: EngineOptio
 
     const moving =
       !reduced &&
-      (gap > 1e-3 || springMoving || ambient > 0 || energy > 0 || pointerMoving || qMoved || engaged !== engagedTarget);
+      (gap > 1e-3 ||
+        springMoving ||
+        ambient > 0 ||
+        energy > 0 ||
+        pointerMoving ||
+        qMoved ||
+        enter < 1 ||
+        since < 1);
     sceneOutput.settled = !moving;
     return moving;
   }

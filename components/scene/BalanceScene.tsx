@@ -7,8 +7,9 @@ import { createBalanceEngine, type BalanceEngine } from "./engine";
 import { watchActivity } from "./engine/loop";
 
 /**
- * The WebGL canvas. Loaded lazily by SceneStage (next/dynamic, ssr: false),
- * so three.js lives in its own chunk and never in the initial JS.
+ * The WebGL canvas. Loaded lazily by SceneStage and JudgingScene
+ * (next/dynamic, ssr: false), so three.js lives in its own chunk and never
+ * in the initial JS.
  *
  * Owns the engine's lifecycle: created on mount, sized to the sticky stage,
  * paused offscreen or in a hidden tab, disposed on unmount (client-side
@@ -17,18 +18,28 @@ import { watchActivity } from "./engine/loop";
  * remount on the same element (StrictMode, Fast Refresh) would otherwise
  * inherit a lost context.
  *
- * Under 960px it also fades the canvas where the balance would ghost
- * through text (components/scene/avoid.ts). Judging always shows the canvas.
+ * On the stage, under 960px, it also fades the canvas where the balance
+ * would ghost through text (components/scene/avoid.ts). Judging always
+ * shows the canvas. A card has no text over it and never fades.
  */
 
-export default function BalanceScene({ reduced, className }: { reduced: boolean; className?: string }) {
+export default function BalanceScene({
+  reduced,
+  className,
+  frame = "stage",
+}: {
+  reduced: boolean;
+  className?: string;
+  frame?: "stage" | "card";
+}) {
   const hostRef = useRef<HTMLSpanElement>(null);
   const engineRef = useRef<BalanceEngine | null>(null);
 
   useEffect(() => {
     const stage = hostRef.current?.parentElement;
     if (!stage) return;
-    const wrap: Element = stage.closest("[data-scene-wrap]") ?? stage;
+    const card = frame === "card";
+    const wrap: Element = (!card && stage.closest("[data-scene-wrap]")) || stage;
 
     const canvas = document.createElement("canvas");
     if (className) canvas.className = className;
@@ -73,9 +84,10 @@ export default function BalanceScene({ reduced, className }: { reduced: boolean;
         small,
         shadows: !small && desktop,
         reduced: startReduced,
+        frame,
         onReady: () => setSceneStatus("ready"),
         onLost: () => setSceneStatus("fallback"),
-        onFrame: fade,
+        onFrame: card ? undefined : fade,
       });
     } catch {
       canvas.remove();
@@ -94,7 +106,7 @@ export default function BalanceScene({ reduced, className }: { reduced: boolean;
 
     // The fade also has to follow layout changes when no frames run
     // (reduced motion, a settled scene): scrolling, the hero's phase flip.
-    const stopAvoid = watchAvoidLayout(wrap, fade);
+    const stopAvoid = card ? () => {} : watchAvoidLayout(wrap, fade);
 
     return () => {
       stopAvoid();
@@ -106,7 +118,7 @@ export default function BalanceScene({ reduced, className }: { reduced: boolean;
       // A later mount must crossfade again from the SVG.
       if (getSceneStatus() === "ready") setSceneStatus("loading");
     };
-  }, [className]);
+  }, [className, frame]);
 
   useEffect(() => {
     engineRef.current?.setReduced(reduced);

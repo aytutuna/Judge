@@ -1,11 +1,28 @@
 import { MathUtils, Vector3, type PerspectiveCamera } from "three";
-import { PLINTH, lerp, type Pose } from "@/lib/scene-poses";
+import {
+  BEAM_LEN,
+  BED_TOP,
+  MAX_PULSE,
+  PLINTH,
+  SPHERE_R,
+  THETA_LIMIT,
+  VERDICT_POINTER_RAD,
+  beamPoint,
+  clamp01,
+  lerp,
+  orbRadius,
+  orbSlots,
+  sphereCentre,
+  sphereScale,
+  type Pose,
+} from "@/lib/scene-poses";
 
 /**
- * Camera framing. The balance is fitted into a fraction of the viewport:
- * the right half on desktop (text on the left); on mobile, a band between
- * the nav and the text or card below it (lib/scene-layout.ts), with its base
- * set on the band's bottom edge so no empty gap opens above the text. Also
+ * Camera framing. On the stage the balance is fitted into a fraction of the
+ * viewport: the right half on desktop (text on the left); on mobile, a band
+ * between the nav and the text or card below it (lib/scene-layout.ts), with
+ * its base set on the band's bottom edge so no empty gap opens above the
+ * text. In a card (frameCard) it is centred in the whole canvas. Also
  * projects the balance's bounding box to CSS px so the stage can fade the
  * canvas where it would ghost through text.
  */
@@ -67,13 +84,7 @@ export function frameCamera(
     : view.px * 0.12 + Math.sin(view.time * 0.17) * 0.04 * view.idle + 0.05;
   if (!view.reduced) el += -view.py * 0.035;
 
-  target.set(0, ty, 0);
-  camera.position.set(
-    Math.sin(az) * Math.cos(el) * dist,
-    ty + Math.sin(el) * dist,
-    Math.cos(az) * Math.cos(el) * dist,
-  );
-  camera.lookAt(target);
+  aim(camera, ty, dist, az, el);
   camera.aspect = aspect;
   camera.setViewOffset(W, H, desk ? -W * 0.24 : 0, 0, W, H);
   camera.updateProjectionMatrix();
@@ -86,6 +97,78 @@ export function frameCamera(
   const base = projectedBottom(camera, H, band.yMin);
   camera.setViewOffset(W, H, 0, base - band.bottom, W, H);
   camera.updateProjectionMatrix();
+}
+
+function aim(camera: PerspectiveCamera, ty: number, dist: number, az: number, el: number): void {
+  target.set(0, ty, 0);
+  camera.position.set(
+    Math.sin(az) * Math.cos(el) * dist,
+    ty + Math.sin(el) * dist,
+    Math.cos(az) * Math.cos(el) * dist,
+  );
+  camera.lookAt(target);
+}
+
+/** Share of a card's width and height the content may fill. */
+const CARD_FILL_W = 0.92;
+const CARD_FILL_H = 0.86;
+/** Half-width of everything a card shows: the plinth, a lifted sphere
+ * spread outward, the outer end of a sorted row. */
+export const CARD_HX = 2.85;
+/** How far the nearest content (a lifted sphere's front) sits in front of
+ * the pivot plane; it projects larger than the plane the fit is solved in. */
+const CARD_NEAR = 1;
+
+/**
+ * Heights (world units) a card keeps in frame for a pose: the plinth and its
+ * shadow, or the bedrock while the cutaway is open, up to whatever is
+ * highest (lifted spheres, sorted rows, the orb arc). The beam angle allows
+ * for the pointer, the idle sway, the judging breath and the deliberation
+ * rocking, so the framing does not chase the beam.
+ */
+export function cardSpan(pose: Pose): { yMin: number; yMax: number } {
+  const play = lerp(0.2, VERDICT_POINTER_RAD + 0.01, pose.drop) + 0.1 * pose.rock;
+  const th = Math.min(THETA_LIMIT, Math.abs(pose.tilt) + play);
+  const beam = beamPoint(th, BEAM_LEN / 2, 0.2).y;
+  const c = sphereCentre(1, th, pose.lift, 0.05 * pose.lift);
+  const sphere = c.y + SPHERE_R * sphereScale(pose.lift, MAX_PULSE);
+  const shown = 1 - pose.split * (1 - pose.reform);
+  const rows = pose.split * (1 - pose.sink) * (1 - pose.reform) * (1 - pose.collapse);
+  // Orb radius, orbit wobble and part of a vote's halo.
+  const orbs = orbSlots(1)[0].y + orbRadius(1) + 0.15;
+  const yMax = Math.max(
+    lerp(beam, sphere, shown),
+    lerp(beam, 3.35, rows),
+    lerp(beam, orbs, pose.orbs * (1 - pose.drop)),
+  );
+  const yMin = lerp(-0.2, BED_TOP - 0.42, clamp01(pose.camDown / 0.75));
+  return { yMin, yMax };
+}
+
+/** Card framing: the balance centred in the whole canvas, sized so every
+ * beat fits at any aspect from about 4:3 to 16:7. While the judges
+ * deliberate the camera drifts in a slow arc. */
+export function frameCard(camera: PerspectiveCamera, pose: Pose, W: number, H: number, view: View): void {
+  const { yMin, yMax } = cardSpan(pose);
+  const tanH = Math.tan(MathUtils.degToRad(camera.fov / 2));
+  const aspect = W / H;
+  const dist =
+    Math.max(CARD_HX / (CARD_FILL_W * tanH * aspect), (yMax - yMin) / 2 / (CARD_FILL_H * tanH)) + CARD_NEAR;
+
+  const jv = pose.judgeView * (1 - pose.camDown);
+  let el = lerp(lerp(0.15, 0.06, pose.camDown), 0.18, jv);
+  let az = 0.12;
+  if (!view.reduced) {
+    const drift = pose.rock * view.idle;
+    az = view.px * 0.12 + Math.sin(view.time * 0.17) * 0.04 * view.idle + 0.05;
+    az += Math.sin(view.time * 0.23) * 0.09 * drift;
+    el += -view.py * 0.035 + Math.sin(view.time * 0.31 + 1) * 0.02 * drift;
+  }
+
+  aim(camera, (yMin + yMax) / 2, dist, az, el);
+  camera.aspect = aspect;
+  camera.updateProjectionMatrix();
+  camera.updateMatrixWorld();
 }
 
 /** Lowest projected point (CSS px from the top) of the plinth footprint at

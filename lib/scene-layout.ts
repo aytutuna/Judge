@@ -45,19 +45,12 @@ export function storyCardTopPx(height: number): number {
   return NAV_H + clamp(STORY_BAND.min, height * STORY_BAND.vh, STORY_BAND.max);
 }
 
-/** The band (viewport px) the balance is framed into on mobile. `engaged`
- * 0..1 blends the hero band toward the judging band, `story` 0..1 blends
- * toward the story band. The balance's base sits on `bottom`. */
-export function mobileSceneBand(
-  width: number,
-  height: number,
-  engaged: number,
-  story: number,
-): { top: number; bottom: number } {
+/** The band (viewport px) the balance is framed into on mobile. `story`
+ * 0..1 blends the hero band toward the story band. The balance's base sits
+ * on `bottom`. */
+export function mobileSceneBand(width: number, height: number, story: number): { top: number; bottom: number } {
   const top = NAV_H + 10;
   const hero = NAV_H + heroBandPx(width) - BAND_GAP;
-  const judging = height * JUDGING_CARD_TOP - BAND_GAP;
-  const heroBottom = hero + (Math.max(hero, judging) - hero) * engaged;
   const storyBottom = storyCardTopPx(height) - BAND_GAP;
-  return { top, bottom: heroBottom + (storyBottom - heroBottom) * story };
+  return { top, bottom: hero + (storyBottom - hero) * story };
 }

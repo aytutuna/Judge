@@ -3,7 +3,6 @@ import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import {
   HERO_BAND,
-  JUDGING_CARD_TOP,
   NAV_H,
   STORY_BAND,
   heroBandPx,
@@ -60,20 +59,12 @@ describe("scene layout maths", () => {
     expect(storyCardTopPx(1000)).toBe(NAV_H + STORY_BAND.max);
   });
 
-  it("blends hero, judging and story bands, always below the nav", () => {
-    const hero = mobileSceneBand(390, 844, 0, 0);
-    const judging = mobileSceneBand(390, 844, 1, 0);
-    const story = mobileSceneBand(390, 844, 0, 1);
+  it("blends hero and story bands, always below the nav", () => {
+    const hero = mobileSceneBand(390, 844, 0);
+    const story = mobileSceneBand(390, 844, 1);
     expect(hero.top).toBeGreaterThan(NAV_H);
     expect(hero.bottom).toBeLessThan(NAV_H + heroBandPx(390));
-    expect(judging.bottom).toBeLessThan(844 * JUDGING_CARD_TOP);
-    expect(judging.bottom).toBeGreaterThan(hero.bottom);
     expect(story.bottom).toBeLessThan(storyCardTopPx(844));
-    expect(mobileSceneBand(390, 844, 0.5, 0).bottom).toBeCloseTo((hero.bottom + judging.bottom) / 2);
-  });
-
-  it("never shrinks the band for judging on a short, wide screen", () => {
-    const hero = mobileSceneBand(600, 420, 0, 0);
-    expect(mobileSceneBand(600, 420, 1, 0).bottom).toBe(hero.bottom);
+    expect(mobileSceneBand(390, 844, 0.5).bottom).toBeCloseTo((hero.bottom + story.bottom) / 2);
   });
 });

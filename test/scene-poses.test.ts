@@ -5,19 +5,23 @@ import {
   MAX_PULSE,
   ORB_POSE_THETA,
   POSE_KEYS,
+  POSE_RATES,
   SPHERE_R,
   STORY_VERDICT,
   beamPoint,
   easePose,
   heroTargets,
+  lerp,
   orbRadius,
   orbSlots,
+  orbitPoint,
   snapStoryQ,
   sphereCentre,
   sphereScale,
   ss,
   storyPose,
   storyWeights,
+  verdictWinner,
   voteAt,
   zeroPose,
 } from "../lib/scene-poses";
@@ -143,6 +147,83 @@ describe("orbSlots clearance", () => {
     const three = orbSlots(3);
     expect(three[1].y).toBeGreaterThan(three[0].y);
     expect(three[0].y).toBeCloseTo(three[2].y, 12);
+  });
+});
+
+describe("orbitPoint (deliberation)", () => {
+  const at = (i: number, n: number, t: number) => orbitPoint(i, n, t, { x: 0, y: 0, z: 0 });
+  const times = Array.from({ length: 64 }, (_, i) => i * 0.25);
+  // Outer edge of the ring outline in judges.ts (torus 1.14 + 0.07).
+  const ring = 1.21;
+
+  it("stays clear of the spheres and below the top of the resting arc", () => {
+    const top = orbSlots(1)[0].y;
+    for (let n = 1; n <= 7; n++) {
+      const r = orbRadius(n);
+      for (const t of times) {
+        for (let i = 0; i < n; i++) {
+          const p = at(i, n, t);
+          expect(p.y).toBeLessThanOrEqual(top);
+          expect(p.z).toBeLessThan(0);
+          for (const side of [-1, 1] as const) {
+            const c = sphereCentre(side, 0.13, 0, 0);
+            expect(dist(p, c) - SPHERE_R * MAX_PULSE - r).toBeGreaterThan(0.25);
+          }
+        }
+      }
+    }
+  });
+
+  it("never lets two orbs' ink rings overlap on screen", () => {
+    for (let n = 2; n <= 7; n++) {
+      for (const t of times) {
+        for (let i = 0; i < n; i++) {
+          for (let j = i + 1; j < n; j++) {
+            const a = at(i, n, t);
+            const b = at(j, n, t);
+            expect(Math.hypot(a.x - b.x, a.y - b.y), `${n} orbs at ${t}s`).toBeGreaterThan(2 * ring * orbRadius(n));
+          }
+        }
+      }
+    }
+  });
+
+  it("eases the orbs from the arc onto the ring without their ink rings touching", () => {
+    // As judges.ts runs it: the ring clock starts when the orbit weight does.
+    const slots = orbSlots(3);
+    const dt = 1 / 60;
+    let orbit = 0;
+    let closest = Infinity;
+    for (let f = 1; f <= 12 * 60; f++) {
+      orbit += (1 - orbit) * (1 - Math.exp(-dt * POSE_RATES.orbit));
+      const p = slots.map((s, i) => {
+        const o = at(i, 3, f * dt);
+        return { x: lerp(s.x, o.x, orbit), y: lerp(s.y, o.y, orbit) };
+      });
+      for (let i = 0; i < 3; i++) {
+        for (let j = i + 1; j < 3; j++) closest = Math.min(closest, Math.hypot(p[i].x - p[j].x, p[i].y - p[j].y));
+      }
+    }
+    expect(closest).toBeGreaterThan(2 * ring * orbRadius(3));
+  });
+
+  it("keeps the deliberating three near their places when an escalation adds judges", () => {
+    for (let n = 4; n <= 7; n++) {
+      for (const t of times) {
+        for (let i = 0; i < 3; i++) expect(dist(at(i, 3, t), at(i, n, t)), `${n} orbs at ${t}s`).toBeLessThan(0.8);
+      }
+    }
+  });
+});
+
+describe("verdictWinner", () => {
+  it("emphasises only an outright win, both cups for a weighed tie", () => {
+    expect(verdictWinner({ tugA: 80, votes: ["a", "a", "b"] })).toBe(-1);
+    expect(verdictWinner({ tugA: 20, votes: ["b", "b", "b"] })).toBe(1);
+    expect(verdictWinner({ tugA: 62, votes: ["a", "b", "other"] })).toBeNull();
+    expect(verdictWinner({ tugA: 38, votes: ["other", "other", "other"] })).toBeNull();
+    expect(verdictWinner({ tugA: 50, votes: ["a", "b", "other"] })).toBe(0);
+    expect(verdictWinner({ tugA: 50, votes: [] })).toBeNull();
   });
 });
 
