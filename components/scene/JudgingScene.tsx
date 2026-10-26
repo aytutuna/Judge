@@ -2,7 +2,8 @@
 
 import dynamic from "next/dynamic";
 import { useRef, type PointerEvent } from "react";
-import { setPointer, useSceneMode, useSceneStatus } from "@/lib/scene-bridge";
+import { setPointer } from "@/lib/scene-bridge";
+import { useSceneMode, useSceneStatus } from "@/lib/scene-bridge-react";
 import { BalanceFallback } from "./BalanceFallback";
 import { useSceneGate } from "./gate";
 import { useReducedMotion } from "./useReducedMotion";
