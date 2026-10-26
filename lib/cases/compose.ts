@@ -12,6 +12,10 @@ const LABEL: Record<PartyLetter, string> = { a: "Party A", b: "Party B" };
 const LETTER: Record<PartyLetter, string> = { a: "A", b: "B" };
 const other = (p: PartyLetter): PartyLetter => (p === "a" ? "b" : "a");
 
+/** What composing reads of a side and an appeal (one-sided verdicts reuse it). */
+type Account = Pick<SideRow, "party" | "text">;
+type Context = Pick<AppealRow, "id" | "party" | "text">;
+
 /** Two accounts, labelled and kept apart. With no side B (a one-sided
  * case) the document is side A's text exactly, like a premium argument. */
 export function composeCaseDocument(sideA: string, sideB: string | null): string {
@@ -39,16 +43,16 @@ export function appealSection(party: PartyLetter, text: string, mode: CaseMode, 
   return `${heading}\n${text}`;
 }
 
-export function sideText(sides: readonly SideRow[], party: PartyLetter): string | null {
+export function sideText(sides: readonly Account[], party: PartyLetter): string | null {
   return sides.find((s) => s.party === party)?.text ?? null;
 }
 
 /** The case document for a judging run: both accounts (or side A alone),
  * then earlier judged appeals oldest first, then the appeal being judged. */
 export function composeForJudging(
-  sides: readonly SideRow[],
+  sides: readonly Account[],
   mode: CaseMode,
-  appeals: { earlier: readonly AppealRow[]; current: AppealRow | null },
+  appeals: { earlier: readonly Context[]; current: Context | null },
 ): string {
   const base = composeCaseDocument(sideText(sides, "a") ?? "", mode === "two_sided" ? sideText(sides, "b") ?? "" : null);
   const parts = [base];
@@ -68,7 +72,7 @@ const toVerified = (rows: readonly EvidenceRow[]): VerifiedEvidence[] =>
 export function evidenceGroups(
   evidence: readonly EvidenceRow[],
   mode: CaseMode,
-  appeals: { earlier: readonly AppealRow[]; current: AppealRow | null },
+  appeals: { earlier: readonly Context[]; current: Context | null },
 ): EvidenceGroup[] {
   const groups: EvidenceGroup[] = [];
   const push = (party: PartyLetter, prefix: string, rows: EvidenceRow[]) => {

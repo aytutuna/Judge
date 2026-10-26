@@ -116,19 +116,23 @@ function toJob(row: Row): VerdictJob {
   };
 }
 
+type NewJob = { id: string; kind: VerdictJob["kind"]; reservationId?: string | null; ownerUserId?: string | null };
+
+/** The insert of a job in 'judging', skipped unless `guard` holds. */
+export function jobInsertStatement(job: NewJob, nowIso: string, guard?: StatementGuard): InStatement {
+  const args = [job.id, job.kind, job.reservationId ?? null, job.ownerUserId ?? null, nowIso, nowIso];
+  return guard
+    ? {
+        sql: `INSERT INTO verdict_jobs (${COLUMNS}) SELECT ?, ?, 'judging', NULL, ?, ?, ?, ? WHERE ${guard.sql}`,
+        args: [...args, ...guard.args],
+      }
+    : { sql: `INSERT INTO verdict_jobs (${COLUMNS}) VALUES (?, ?, 'judging', NULL, ?, ?, ?, ?)`, args };
+}
+
 /** Starts a job in 'judging'. Throws when it cannot be written. */
-export async function createVerdictJob(
-  job: { id: string; kind: VerdictJob["kind"]; reservationId?: string | null; ownerUserId?: string | null },
-  now: Date = new Date(),
-): Promise<void> {
+export async function createVerdictJob(job: NewJob, now: Date = new Date()): Promise<void> {
   await ensureVerdictJobTables();
-  const nowIso = now.toISOString();
-  await entitlementWriteBatch([
-    {
-      sql: `INSERT INTO verdict_jobs (${COLUMNS}) VALUES (?, ?, 'judging', NULL, ?, ?, ?, ?)`,
-      args: [job.id, job.kind, job.reservationId ?? null, job.ownerUserId ?? null, nowIso, nowIso],
-    },
-  ]);
+  await entitlementWriteBatch([jobInsertStatement(job, now.toISOString())]);
 }
 
 /** One primary-key read; null when there is no job with that id. */
@@ -156,7 +160,7 @@ export function isStale(job: Pick<VerdictJob, "status" | "createdAt">, now: Date
   return job.status === "judging" && job.createdAt < new Date(now.getTime() - STALE_JOB_MS).toISOString();
 }
 
-const judgingGuard = (id: string): StatementGuard => ({
+export const judgingGuard = (id: string): StatementGuard => ({
   sql: "EXISTS (SELECT 1 FROM verdict_jobs WHERE id = ? AND status = 'judging')",
   args: [id],
 });
@@ -203,14 +207,15 @@ export type JobSettlement = "consume" | "refund" | "none";
  * Stores a judged verdict for its job: the full save (verdict, ownership,
  * sealed original), the settlement of its reservation (consumed, or
  * refunded for a refused/degraded premium verdict) and judging -> ready, as
- * one guarded batch. If that batch fails, the verdict row alone is stored
- * the same way (the outcome then says nothing else was). `stored` is false
- * when the job was no longer judging (nothing was written). Throws when the
- * plain batch fails too; the caller fails the job.
+ * one guarded batch. `extra` statements run in it too, after the save; they
+ * must carry their own guard (judgingGuard). If that batch fails, the
+ * verdict row alone is stored the same way (the outcome then says nothing
+ * else was). `stored` is false when the job was no longer judging (nothing
+ * was written). Throws when the plain batch fails too; the caller fails the job.
  */
 export async function completeVerdictJob(
   v: SaveVerdictInput,
-  opts: { ownerToken: string | null; reservationId: string | null; settle: JobSettlement },
+  opts: { ownerToken: string | null; reservationId: string | null; settle: JobSettlement; extra?: InStatement[] },
 ): Promise<{ stored: boolean; outcome: SaveVerdictOutcome }> {
   await ensureVerdictJobTables();
   const guard = judgingGuard(v.id);
@@ -228,12 +233,12 @@ export async function completeVerdictJob(
   };
   try {
     const { stmts, outcome } = verdictWriteStatements(v, { ownerToken: opts.ownerToken, guard });
-    const rs = await entitlementWriteBatch([...stmts, ...settle, ready]);
+    const rs = await entitlementWriteBatch([...stmts, ...(opts.extra ?? []), ...settle, ready]);
     return { stored: rs[rs.length - 1].rowsAffected === 1, outcome };
   } catch (e) {
     console.error("[verdict-jobs] meta write failed:", e instanceof Error ? e.message : String(e));
   }
-  const rs = await entitlementWriteBatch([plainVerdictStatement(v, guard), ...settle, ready]);
+  const rs = await entitlementWriteBatch([plainVerdictStatement(v, guard), ...(opts.extra ?? []), ...settle, ready]);
   return { stored: rs[rs.length - 1].rowsAffected === 1, outcome: { ...PLAIN_SAVE_OUTCOME } };
 }
 

@@ -208,12 +208,15 @@ describe("free async verdicts", () => {
     expect(readyBody.owner).toBeUndefined();
     expect(JSON.stringify(readyBody)).not.toContain(NAME);
 
-    // The writer (owner token) also gets the share-page state.
+    // The writer (owner token) also gets the share-page state; adding
+    // context needs them signed in.
     const mine = await (await get(body.id, { "x-owner-token": body.owner_token! })).json();
     expect(mine.owner).toEqual({
       originals_stored: true,
       display: expect.objectContaining({ namesVisible: true }),
+      appeal: { allowed: false, blockedBy: "signin_required" },
     });
+    expect(mine.appeals).toEqual([]);
     const wrong = await (await get(body.id, { "x-owner-token": "x".repeat(43) })).json();
     expect(wrong.owner).toBeUndefined();
 

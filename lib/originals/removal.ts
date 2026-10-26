@@ -30,18 +30,21 @@ export type RemovalOptions = {
 const NOT_BUSY = `status <> 'judging'
   AND NOT EXISTS (SELECT 1 FROM case_appeals a WHERE a.case_id = cases.id AND a.status = 'judging')`;
 
+/** The verdict and the verdicts its appeals produced (closed along with it). */
+const WITH_APPEALS = "(verdict_id = ? OR verdict_id IN (SELECT id FROM verdict_appeals WHERE verdict_id = ?))";
+
 function blankVerdictStatements(verdictId: string, reason: RemovalReason, nowIso: string): InStatement[] {
   return [
     {
       sql: `UPDATE verdict_meta SET removed_at = COALESCE(removed_at, ?), removal_reason = COALESCE(removal_reason, ?),
               display_sealed = NULL, display_key_id = NULL, names_visible = 0, updated_at = ?
-            WHERE verdict_id = ?`,
-      args: [nowIso, reason, nowIso, verdictId],
+            WHERE ${WITH_APPEALS}`,
+      args: [nowIso, reason, nowIso, verdictId, verdictId],
     },
     {
       sql: `UPDATE originals SET sealed = NULL, key_id = NULL, removed_at = COALESCE(removed_at, ?), updated_at = ?
-            WHERE verdict_id = ?`,
-      args: [nowIso, nowIso, verdictId],
+            WHERE ${WITH_APPEALS}`,
+      args: [nowIso, nowIso, verdictId, verdictId],
     },
   ];
 }
@@ -80,11 +83,7 @@ export async function operatorRemoveVerdict(
               display_key_id = NULL, names_visible = 0, updated_at = excluded.updated_at`,
       args: [verdictId, nowIso, nowIso, nowIso],
     },
-    {
-      sql: `UPDATE originals SET sealed = NULL, key_id = NULL, removed_at = COALESCE(removed_at, ?), updated_at = ?
-            WHERE verdict_id = ?`,
-      args: [nowIso, nowIso, verdictId],
-    },
+    ...blankVerdictStatements(verdictId, "operator", nowIso),
   ]);
   const fresh = await getVerdictMeta(verdictId);
   const removedAt = fresh?.removedAt ?? nowIso;

@@ -26,6 +26,8 @@ export const API_ERROR_STATUS = {
   case_closed: 409,
   case_expired: 410,
   appeal_used: 409,
+  /** A one-sided verdict already took its two rounds of added context. */
+  appeal_limit: 409,
   not_party: 403,
   own_case: 403,
   too_large: 413,

@@ -9,8 +9,9 @@
  */
 
 import type { Entitlement } from "./account-types";
+import type { AppealBlock } from "./case-types";
 import type { DisplayState } from "./originals-types";
-import type { NameMapping, StoredVerdictResponse } from "./types";
+import type { NameMapping, StoredVerdictResponse, VerdictAppealView } from "./types";
 
 /** The `Prefer` token that asks for a 202 instead of waiting (RFC 7240). */
 export const RESPOND_ASYNC = "respond-async";
@@ -46,7 +47,26 @@ export type VerdictAcceptedResponse = {
 
 /** The writer's share-page state, returned on a ready poll only to the
  * writer (X-Owner-Token header or the owning session). */
-export type VerdictOwnerState = { originals_stored: boolean; display: DisplayState };
+export type VerdictOwnerState = {
+  originals_stored: boolean;
+  display: DisplayState;
+  /** Whether the writer may add context now (absent on case verdicts and
+   * on the verdicts appeals produced). */
+  appeal?: { allowed: boolean; blockedBy: AppealBlock | null };
+};
+
+/** POST /api/v1/verdicts/{id}/appeals (202): the context is anonymized and
+ * being judged. Poll `poll` like an async verdict; keep `name_map`. */
+export type VerdictAppealResponse = {
+  appeal: VerdictAppealView;
+  appeals: VerdictAppealView[];
+  poll: string;
+  pollAfterMs: number;
+  name_map: NameMapping[];
+  entitlement?: Entitlement;
+  /** An Idempotency-Key retry of an appeal already made (name_map is [] then). */
+  replayed?: boolean;
+};
 
 /** GET /api/v1/verdicts/{id}, always HTTP 200 for these three states. */
 export type VerdictPollResponse =

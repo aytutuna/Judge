@@ -21,7 +21,8 @@
  * account or the claim secret (Respondent-Claim header or `claim`).
  * Removal (DELETE /cases/{id}, POST .../removal) blanks that party's
  * personal data and closes every link of the case; no row is deleted.
- * Every response is `Cache-Control: no-store`.
+ * Every response is `Cache-Control: no-store`. The request helpers are
+ * shared with one-sided verdict appeals (lib/verdict-appeals).
  */
 
 import { NextResponse } from "next/server";
@@ -114,7 +115,7 @@ const MESSAGES: Partial<Record<ApiErrorCode, string>> = {
   names_unavailable: "Names can't be saved on this server right now.",
 };
 
-function fail(
+export function fail(
   code: ApiErrorCode,
   error?: string,
   opts: { retryAfterSec?: number; resetsAt?: string } = {},
@@ -128,15 +129,15 @@ function fail(
   });
 }
 
-function json<T>(body: T, status = 200): NextResponse {
+export function json<T>(body: T, status = 200): NextResponse {
   return NextResponse.json(body, { status, headers: NO_STORE });
 }
 
-function blocked(code: PremiumBlock, resetsAt?: string): NextResponse {
+export function blocked(code: PremiumBlock, resetsAt?: string): NextResponse {
   return fail(code, undefined, resetsAt ? { resetsAt } : {});
 }
 
-async function readJson(req: Request, allowEmpty = false): Promise<{ ok: true; body: unknown } | { ok: false }> {
+export async function readJson(req: Request, allowEmpty = false): Promise<{ ok: true; body: unknown } | { ok: false }> {
   try {
     const raw = await req.text();
     if (!raw.trim()) return allowEmpty ? { ok: true, body: {} } : { ok: false };
@@ -148,7 +149,7 @@ async function readJson(req: Request, allowEmpty = false): Promise<{ ok: true; b
 
 /** A zod issue mapped like the verdict route: text length -> too_short /
  * too_long, too many evidence tokens -> too_many_files, else invalid. */
-function invalidBody(issue: { message?: string; path: PropertyKey[]; code: string } | undefined): NextResponse {
+export function invalidBody(issue: { message?: string; path: PropertyKey[]; code: string } | undefined): NextResponse {
   const field = issue?.path[0];
   let code: ApiErrorCode = "invalid";
   if (field === "text" && issue?.code === "too_small") code = "too_short";
@@ -167,7 +168,7 @@ function limitRefusal(decision: Exclude<LimitDecision, { ok: true }>): NextRespo
 }
 
 /** Per-user limit, then (when a unit may be reserved) the site-wide cap. */
-async function limitGate(userId: string, bucket: UserBucket, siteCap: boolean): Promise<NextResponse | null> {
+export async function limitGate(userId: string, bucket: UserBucket, siteCap: boolean): Promise<NextResponse | null> {
   try {
     const user = await checkUserLimits(userId, bucket);
     if (!user.ok) return limitRefusal(user);
@@ -208,14 +209,14 @@ const EVIDENCE_NEEDS_PREMIUM = "Screenshot evidence needs a Premium case.";
 
 type Signed = { viewer: ViewerSession } | { response: NextResponse };
 
-async function signedIn(req: Request): Promise<Signed> {
+export async function signedIn(req: Request): Promise<Signed> {
   const viewer = await getViewer(req);
   if (!viewer) return { response: fail("signin_required") };
   if (viewer.via === "cookie" && !isSameOrigin(req)) return { response: fail("bad_origin") };
   return { viewer };
 }
 
-function verifyEvidence(
+export function verifyEvidence(
   tokens: string[] | undefined,
   audiences: EvidenceAudience[],
   max: number,
@@ -232,7 +233,7 @@ function verifyEvidence(
   return { response: fail(last) };
 }
 
-async function entitlementOrNull(userId: string): Promise<Entitlement | null> {
+export async function entitlementOrNull(userId: string): Promise<Entitlement | null> {
   try {
     return await getEntitlement(userId);
   } catch (e) {
@@ -253,14 +254,19 @@ async function appealBlockFor(
 ): Promise<AppealBlock | null> {
   const structural = structuralAppealBlock(bundle, party, viewerId, now, claimOk);
   if (structural || !viewerId) return structural;
+  return premiumAppealBlock(viewerId);
+}
+
+/** Whether this account can spend a premium unit on an appeal (null = yes). */
+export async function premiumAppealBlock(userId: string): Promise<AppealBlock | null> {
   if (!premiumEnabled()) return "premium_required";
-  const ent = await entitlementOrNull(viewerId);
+  const ent = await entitlementOrNull(userId);
   if (!ent) return "premium_required";
   return ent.canUsePremium ? null : (ent.blockedReason ?? "premium_required");
 }
 
 /** The raw string a JSON body carried for `field` (before zod trims it). */
-function rawField(body: unknown, field: string): string | undefined {
+export function rawField(body: unknown, field: string): string | undefined {
   if (typeof body !== "object" || body === null) return undefined;
   const v = (body as Record<string, unknown>)[field];
   return typeof v === "string" ? v : undefined;
@@ -336,7 +342,7 @@ async function caseByToken(token: string): Promise<CaseRow | null> {
   return getCaseByInviteHash(inviteHash(token));
 }
 
-function guarded(name: string, fn: () => Promise<NextResponse>): Promise<NextResponse> {
+export function guarded(name: string, fn: () => Promise<NextResponse>): Promise<NextResponse> {
   return fn().catch((e: unknown) => {
     console.error(`[cases] ${name} failed:`, e instanceof Error ? e.message : String(e));
     return fail("unavailable");

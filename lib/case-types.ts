@@ -26,6 +26,8 @@ export const IMAGE_LONG_EDGE = 1600;
 export const ACCEPTED_IMAGE_TYPES = ["image/png", "image/jpeg", "image/webp", "image/gif"] as const;
 export const MIN_APPEAL_CHARS = 20;
 export const MAX_APPEAL_CHARS = 2000;
+/** Rounds of added context a one-sided verdict takes (a case: one per party). */
+export const MAX_VERDICT_APPEALS = 2;
 export const CASE_POLL_MS = 3000;
 export const INVITE_TOKEN_PATTERN = /^[A-Za-z0-9_-]{22}$/;
 
@@ -102,9 +104,13 @@ export type AppealBlock =
   | "no_credits"
   | "fair_use"
   | "appeal_used"
+  | "appeal_limit"
   | "not_judged"
   | "busy"
-  | "not_party";
+  | "not_party"
+  /** A one-sided verdict written signed out: keep it in the account first
+   * (POST /api/v1/verdicts/{id}/claim). */
+  | "claim_required";
 
 export type CaseEvidenceView = { id: string; kind: EvidenceKind; transcript: string };
 
