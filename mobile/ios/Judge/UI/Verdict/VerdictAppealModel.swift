@@ -65,18 +65,22 @@ final class VerdictAppealModel: AppealDraft {
         open = true
     }
 
-    /// Reads the rounds. A round that finished while the app was away (or on
-    /// the website) becomes the shown verdict.
-    func load() async {
-        guard usesNetwork, let fresh = try? await api.verdictRounds(id: id) else { return }
+    /// Reads the rounds; false when they could not be read. A round that
+    /// finished while the app was away (or on the website) becomes the shown
+    /// verdict. The rounds are set last: a new `judgingID` restarts the
+    /// screen's follow task, which would cancel the catch-up.
+    @discardableResult
+    func load() async -> Bool {
+        guard usesNetwork, let fresh = try? await api.verdictRounds(id: id) else { return false }
+        if !fresh.appeals.contains(where: { $0.status == .judging }),
+           let latest = fresh.appeals.last(where: { $0.status == .judged }),
+           shown().currentID != latest.id,
+           let stored = try? await api.storedVerdict(id: latest.id),
+           shown().currentID != latest.id {
+            onRuling(shown().withRuling(VerdictPayload(id: latest.id, result: stored.result, nameMap: [])))
+        }
         rounds = fresh
-        guard !fresh.appeals.contains(where: { $0.status == .judging }),
-              let latest = fresh.appeals.last(where: { $0.status == .judged }),
-              shown().currentID != latest.id,
-              let stored = try? await api.storedVerdict(id: latest.id),
-              shown().currentID != latest.id
-        else { return }
-        onRuling(shown().withRuling(VerdictPayload(id: latest.id, result: stored.result, nameMap: [])))
+        return true
     }
 
     /// Polls the round being judged to its end: its verdict is shown, a
@@ -89,11 +93,37 @@ final class VerdictAppealModel: AppealDraft {
             onRuling(shown().withRuling(payload))
             open = false
             finished = true
+        } catch let failure as VerdictPollError where failure.resumable {
+            if Task.isCancelled { return }
+            await resume(roundID)
+            return
         } catch {
             if APIError.isCancellation(error) || Task.isCancelled { return }
             open = true
         }
         await load()
+    }
+
+    /// Polling lost touch for a while, which is not a failure: the round may
+    /// still be judging. Reads the rounds again (until the network is back)
+    /// and carries on from there.
+    private func resume(_ roundID: String) async {
+        var tries = 0
+        while !(await load()) {
+            do { try await Task.sleep(for: .seconds(min(30, 1 << min(tries, 5)))) } catch { return }
+            tries += 1
+        }
+        switch rounds?.appeals.first(where: { $0.id == roundID })?.status {
+        case .judging?:
+            await follow(roundID)
+        case .judged?:
+            open = false
+            finished = true
+        case .failed?:
+            open = true
+        default:
+            break
+        }
     }
 
     var appealCanSubmit: Bool {

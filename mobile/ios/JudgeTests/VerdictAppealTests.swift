@@ -293,6 +293,34 @@ final class VerdictAppealTests: XCTestCase {
     }
 
     @MainActor
+    func testAPollThatLostTouchReadsTheRoundAgainAndFollowsIt() async throws {
+        let router = StubRouter()
+        let down = try PremiumFixtures.json(503, ["error": "down", "code": "unavailable"])
+        router.on(
+            "GET", Self.verdictPath,
+            try verdict(appeals: [round("judging")], gate: gate(false, "busy")),
+            try verdict(appeals: [round("judging")], gate: gate(false, "busy")),
+            try verdict(appeals: [round("judged")], gate: gate(true))
+        )
+        router.on("GET", Self.roundPath, down, down, down, try roundReady())
+        router.install()
+        let container = HistoryContainer.inMemory()
+        let app = try PremiumFixtures.app(container: container)
+        let (appeal, shown) = try model(app)
+        await appeal.load()
+        XCTAssertEqual(appeal.judgingID, "r1")
+
+        await appeal.follow("r1")
+        XCTAssertTrue(appeal.finished)
+        XCTAssertFalse(appeal.open)
+        XCTAssertEqual(router.count("GET", Self.roundPath), 4, "three failed polls, then the round is read again and polled")
+        XCTAssertEqual(shown.session.rulingID, "r1")
+        XCTAssertEqual(try app.history.find(id: Self.id)?.rulingID, "r1")
+        XCTAssertEqual(appeal.area, .form(failed: nil))
+        withExtendedLifetime(container) {}
+    }
+
+    @MainActor
     func testARoundFinishedElsewhereIsCaughtUp() async throws {
         let router = StubRouter()
         router.on("GET", Self.verdictPath, try verdict(appeals: [round("judged")], gate: gate(true)))
