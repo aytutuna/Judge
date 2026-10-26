@@ -82,7 +82,7 @@ data class CaseView(
     /** two_sided | one_sided | null */
     val mode: String? = null,
     /** free | premium: only a premium case holds a unit and takes evidence. */
-    val tier: String = "free",
+    val tier: String = "premium",
     val lang: String = "en",
     val framework: FrameworkChoice = FrameworkChoice(),
     val createdAt: String = "",
@@ -110,7 +110,7 @@ data class CaseView(
     val status: CaseStatus get() = CaseStatus.of(statusRaw)
     val current: CaseVerdictView? get() = verdicts.lastOrNull()
     val oneSided: Boolean get() = mode == "one_sided"
-    val premium: Boolean get() = tier == "premium"
+    val premium: Boolean get() = tier != "free"
     val appealJudging: Boolean get() = appeals.any { it.status == "judging" }
 }
 

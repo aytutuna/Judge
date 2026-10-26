@@ -104,7 +104,7 @@ final class CaseTests: XCTestCase {
 
         XCTAssertEqual(judged.tier, .premium)
         XCTAssertEqual(try view("judged_free").tier, .free)
-        XCTAssertEqual(try CaseDecoding.view(["id": "x"]).tier, .free, "the server's default")
+        XCTAssertEqual(try CaseDecoding.view(["id": "x"]).tier, .premium, "cases from before tiers were premium")
     }
 
     func testFreeCaseWordingNeverMentionsCredits() throws {

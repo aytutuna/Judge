@@ -139,7 +139,7 @@ class CaseFlowTest {
         assertNull(view("removed").names)
         assertTrue(view("judged").premium)
         assertFalse(view("judged_free").premium)
-        assertEquals("free", WireJson.json.decodeFromString(CaseView.serializer(), """{"id":"x"}""").tier)
+        assertEquals("premium", WireJson.json.decodeFromString(CaseView.serializer(), """{"id":"x"}""").tier)
     }
 
     @Test

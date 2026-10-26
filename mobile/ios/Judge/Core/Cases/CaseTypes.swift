@@ -276,7 +276,7 @@ private struct CaseViewWire: Decodable {
         status = (try? c.decodeIfPresent(CaseStatus.self, forKey: .status)) ?? .unknown
         mode = try? c.decodeIfPresent(CaseMode.self, forKey: .mode)
         let tierRaw: String? = try? c.decodeIfPresent(String.self, forKey: .tier)
-        tier = tierRaw.flatMap(Tier.init(rawValue:)) ?? .free
+        tier = tierRaw.flatMap(Tier.init(rawValue:)) ?? .premium
         let langRaw: String? = try? c.decodeIfPresent(String.self, forKey: .lang)
         lang = langRaw.flatMap(AppLang.init(rawValue:))
         let framework: Framework? = try? c.decodeIfPresent(Framework.self, forKey: .framework)
