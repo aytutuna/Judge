@@ -50,7 +50,7 @@ export function PageShell({
   return (
     <div lang={lang} className="contents">
       <SkipLink lang={lang} />
-      <SiteHeader lang={lang} />
+      <SiteHeader lang={lang} toggle />
       {main}
       <SiteFooter lang={lang} toggle />
     </div>

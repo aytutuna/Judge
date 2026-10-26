@@ -20,11 +20,9 @@ export function SkipLink({ lang }: { lang: Lang }) {
 }
 
 /** Fixed, blurred 56px nav, with a spacer of the same height so the page
- * starts below it. Its "+" starts a new argument; `onNew` lets the home page
- * reset itself instead of navigating to itself. `children` go before the
- * account entry (the app shell's "My verdicts" link). */
-export function SiteHeader({ lang, onNew, children }: { lang: Lang; onNew?: () => void; children?: ReactNode }) {
-  const label = t(lang, "shell.new");
+ * starts below it. `children` go before the account entry (the app shell's
+ * "My verdicts" link). */
+export function SiteHeader({ lang, toggle = false, children }: { lang: Lang; toggle?: boolean; children?: ReactNode }) {
   return (
     <>
       <header className={styles.nav}>
@@ -34,24 +32,7 @@ export function SiteHeader({ lang, onNew, children }: { lang: Lang; onNew?: () =
             Judge
           </Link>
           <div className={styles.navRight}>
-            <Link
-              href="/"
-              aria-label={label}
-              title={label}
-              className={styles.new}
-              onClick={
-                onNew
-                  ? (e) => {
-                      e.preventDefault();
-                      onNew();
-                    }
-                  : undefined
-              }
-            >
-              <svg viewBox="0 0 24 24" aria-hidden>
-                <path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" />
-              </svg>
-            </Link>
+            {toggle ? <LangToggle lang={lang} /> : null}
             {children}
             <span className={styles.account}>
               <AccountMenu lang={lang} />

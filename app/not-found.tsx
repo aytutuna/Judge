@@ -12,7 +12,7 @@ export default function NotFound() {
   return (
     <div lang={lang} className="contents">
       <SkipLink lang={lang} />
-      <SiteHeader lang={lang} />
+      <SiteHeader lang={lang} toggle />
       <main id="main" tabIndex={-1} className={styles.main}>
         <div className={`wrap ${styles.inner}`}>
           <BalanceFallback empty className={styles.art} />

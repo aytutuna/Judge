@@ -57,7 +57,7 @@ anonymization fails for any reason (refusal, quota, timeout, malformed
 output, a name that survives the retry), the request fails closed: nothing
 is judged and nothing is stored.
 
-**Türkçe / Turkish**: a TR | EN toggle in the footer switches the whole UI, and
+**Türkçe / Turkish**: a TR | EN toggle in the header switches the whole UI, and
 the chosen language rides along with each request so the judges, the
 cross-examination, and even refusal verdicts are written in natural, informal
 Turkish — JSON structure and enum values stay English. The preference lives in

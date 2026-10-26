@@ -4,34 +4,41 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 import { t, type Lang } from "@/lib/i18n";
+import { useViewer } from "@/lib/use-viewer";
+import { accountEntry } from "../AccountMenu";
 import { SiteFooter, SiteHeader, SkipLink } from "../SiteChrome";
+import { TabBar } from "./TabBar";
 import styles from "./shell.module.css";
 
 /**
- * Page frame for the app's own pages: the header (its "+" for a new
- * argument, and "My verdicts"), the page, and the footer unless `footer` is
- * off. `toggle` shows the footer's TR | EN switch (pages whose chrome reads
- * the client language store). `onNew` lets the home page reset itself from
- * the header's "+".
+ * Page frame for the app's own pages: the header (with "My verdicts" from
+ * the desktop breakpoint), the page, the footer unless `footer` is off,
+ * and below 960px the bottom tabs. `toggle` shows the TR | EN switch
+ * (pages whose chrome reads the client language store). The home page
+ * hides the tabs while its composer is docked (`tabs`), and `onHome` lets
+ * it reset itself from the first tab.
  */
 export function AppShell({
   lang,
   toggle = false,
   footer = true,
-  onNew,
+  tabs = true,
+  onHome,
   children,
 }: {
   lang: Lang;
   toggle?: boolean;
   footer?: boolean;
-  onNew?: () => void;
+  tabs?: boolean;
+  onHome?: () => void;
   children: ReactNode;
 }) {
   const pathname = usePathname();
+  const { config, me } = useViewer();
   return (
-    <div lang={lang} className={styles.shell}>
+    <div lang={lang} className={styles.shell} data-tabs={tabs ? "" : undefined}>
       <SkipLink lang={lang} />
-      <SiteHeader lang={lang} onNew={onNew}>
+      <SiteHeader lang={lang} toggle={toggle}>
         <Link
           href="/verdicts"
           className={styles.headerLink}
@@ -42,6 +49,9 @@ export function AppShell({
       </SiteHeader>
       {children}
       {footer ? <SiteFooter lang={lang} toggle={toggle} /> : null}
+      {tabs ? (
+        <TabBar lang={lang} pathname={pathname} account={accountEntry(config, me)} onHome={onHome} />
+      ) : null}
     </div>
   );
 }
