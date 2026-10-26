@@ -105,13 +105,13 @@ struct HomeView: View {
     private func caseCard(_ lang: AppLang, home: HomeModel) -> some View {
         let twoSided = home.isTwoSided(app)
         return VStack(alignment: .leading, spacing: 18) {
-            caseHead(lang)
+            caseHead(lang, today: home.today ?? .now)
             VStack(alignment: .leading, spacing: 14) {
                 editor(lang, home: home, twoSided: twoSided)
                 if !twoSided {
                     examples(lang, home: home)
                 }
-                toolbar(lang, home: home)
+                toolbar(lang, home: home, twoSided: twoSided)
                 if lensOpen {
                     presets(lang, home: home)
                 }
@@ -151,12 +151,12 @@ struct HomeView: View {
     }
 
     /// "New case" and today's date, the heading and the three steps.
-    private func caseHead(_ lang: AppLang) -> some View {
+    private func caseHead(_ lang: AppLang, today: Date) -> some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack(alignment: .firstTextBaseline) {
                 Kicker(text: L10n.homeKicker(lang))
                 Spacer(minLength: 8)
-                Text(Recent.dayMonth(.now, lang: lang))
+                Text(Recent.dayMonth(today, lang: lang))
                     .brandText(TypeStyle(face: .serifItalic, weight: 400, size: 15, lineHeight: 1.25, textStyle: .subheadline, maxScale: 1.6))
                     .foregroundStyle(Brand.placeholder)
             }
@@ -244,10 +244,19 @@ struct HomeView: View {
         .accessibilityLabel(L10n.examplesLabel(lang))
     }
 
-    private func toolbar(_ lang: AppLang, home: HomeModel) -> some View {
+    private func toolbar(_ lang: AppLang, home: HomeModel, twoSided: Bool) -> some View {
         let length = home.length
         return HStack(spacing: 8) {
             lensChip(lang, home: home)
+            if twoSided {
+                Text(L10n.caseKicker(lang))
+                    .brandText(TypeStyle(face: .inter, weight: 500, size: 12, lineHeight: 1.2, textStyle: .caption2, maxScale: 1.6))
+                    .foregroundStyle(Brand.sageInk)
+                    .lineLimit(1)
+                    .padding(.horizontal, 10)
+                    .padding(.vertical, 4)
+                    .background(Capsule().fill(Brand.sageTint))
+            }
             Spacer(minLength: 8)
             Text(L10n.appInputCounter(lang, count: String(length), max: String(HomeModel.maxLength)))
                 .brandText(.footnote)

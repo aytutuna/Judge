@@ -73,6 +73,8 @@ final class HomeModel {
     @ObservationIgnored var inProgressWait: Duration = .seconds(300)
     /// Scroll anchor Home opens on (screenshot states); nil = the top.
     @ObservationIgnored var initialScroll: String?
+    /// The case card's date (screenshot states); nil = now.
+    @ObservationIgnored var today: Date?
     static let tierAnchor = "home.tier"
     static let evidenceAnchor = "home.evidence"
 

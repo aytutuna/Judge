@@ -147,6 +147,7 @@ struct ScreenshotState {
 
     @MainActor
     private func apply(to app: AppModel) {
+        app.home.today = Self.newest
         switch screen {
         case .home, .settings:
             break

@@ -377,7 +377,7 @@ private struct CardActionStyle: ButtonStyle {
             .lineLimit(1)
             .padding(.horizontal, 18)
             .frame(maxWidth: filled ? .infinity : nil, minHeight: 48)
-            .background(Capsule().fill(filled ? Brand.ink : (configuration.isPressed ? Color.white : Brand.paper)))
+            .background(Capsule().fill(filled ? Brand.ink : (configuration.isPressed ? Brand.ivory : Brand.paper)))
             .overlay(Capsule().strokeBorder(filled ? Color.clear : Brand.line2, lineWidth: 1))
             .scaleEffect(configuration.isPressed ? 0.98 : 1)
     }
