@@ -143,10 +143,12 @@ export function roundsBlock(appeals: readonly VerdictAppealRow[]): "busy" | "app
 const EVIDENCE_MARK = "\n\nEVIDENCE (machine transcripts";
 
 /** A stored one-sided input: the account the judges read, and the EVIDENCE
- * block premium appends when screenshots were attached. */
-export function splitStoredInput(input: string): { account: string; evidence: string | null } {
-  const at = input.indexOf(EVIDENCE_MARK);
-  return at < 0 ? { account: input, evidence: null } : { account: input.slice(0, at), evidence: input.slice(at + 2) };
+ * block premium appends when screenshots were attached. That block is always
+ * last, and only there when evidence was used: the same heading typed into
+ * the account stays part of the account. */
+export function splitStoredInput(v: Pick<StoredVerdict, "input" | "result">): { account: string; evidence: string | null } {
+  const at = (v.result.evidence_used?.a ?? 0) > 0 ? v.input.lastIndexOf(EVIDENCE_MARK) : -1;
+  return at < 0 ? { account: v.input, evidence: null } : { account: v.input.slice(0, at), evidence: v.input.slice(at + 2) };
 }
 
 const contextOf = (a: VerdictAppealRow) => ({ id: a.id, party: "a" as const, text: a.text });
@@ -228,7 +230,7 @@ export async function submitVerdictAppeal(input: VerdictAppealInput): Promise<Ve
   const { reservationId } = unit;
 
   const judged = appeals.filter((a) => a.status === "judged");
-  const { account, evidence: baseEvidence } = splitStoredInput(stored.input);
+  const { account, evidence: baseEvidence } = splitStoredInput(stored);
   const context = [
     composeForJudging([{ party: "a", text: account }], "one_sided", { earlier: judged.map(contextOf), current: null }),
     baseEvidence,
@@ -344,7 +346,7 @@ export async function runVerdictAppeal(p: VerdictAppealRun): Promise<void> {
     }
     const earlier = appeals.filter((a) => a.status === "judged");
     const rounds = { earlier: earlier.map(contextOf), current: contextOf(current) };
-    const { account, evidence: baseEvidence } = splitStoredInput(root.input);
+    const { account, evidence: baseEvidence } = splitStoredInput(root);
     const document = composeForJudging([{ party: "a", text: account }], "one_sided", rounds);
     const added = evidenceBlock(evidenceGroups(evidenceRows([...earlier, current]), "one_sided", rounds));
     const evText = [baseEvidence, added].filter(Boolean).join("\n\n") || null;
