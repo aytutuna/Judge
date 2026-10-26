@@ -6,6 +6,7 @@ import SwiftUI
 /// show store prices and buy; otherwise they read "Coming soon".
 struct PricingView: View {
     @Environment(AppModel.self) private var app
+    @Environment(\.dismiss) private var dismiss
 
     private static let title = TypeStyle(face: .interTight, weight: 700, size: 30, lineHeight: 1.05, tracking: -0.03, textStyle: .title1, maxScale: 1.4)
     private static let planTitle = TypeStyle(face: .interTight, weight: 700, size: 20, lineHeight: 1.2, tracking: -0.01, textStyle: .title3, maxScale: 1.5)
@@ -48,6 +49,16 @@ struct PricingView: View {
         .background(Brand.ivory.ignoresSafeArea())
         .navigationBarTitleDisplayMode(.inline)
         .toolbarBackground(Brand.ivory, for: .navigationBar)
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                // Pushed from Settings or shown as a sheet: either way it goes.
+                NewArgumentButton(lang: lang) {
+                    app.newArgument()
+                    dismiss()
+                }
+                .disabled(app.home.isBusy)
+            }
+        }
         .task { await account.refresh() }
         .task(id: pricing.purchasesEnabled) { await app.purchases.loadOffers(pricing: app.account.pricing) }
         .onDisappear { app.purchases.clearMessage() }

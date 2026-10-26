@@ -49,6 +49,10 @@ struct HistoryView: View {
                         .tint(Brand.danger)
                 }
             }
+            ToolbarItem(placement: .topBarTrailing) {
+                NewArgumentButton(lang: lang) { app.newArgument() }
+                    .disabled(app.home.isBusy)
+            }
         }
         .confirmationDialog(L10n.appHistoryClearConfirm(lang), isPresented: $confirmClear, titleVisibility: .visible) {
             Button(L10n.appHistoryClearYes(lang), role: .destructive) { try? app.history.deleteAll() }
