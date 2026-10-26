@@ -309,6 +309,10 @@ describe("POST /api/v1/verdicts/{id}/appeals", () => {
       allowed: false,
       blockedBy: "claim_required",
     });
+    expect((await get(anon, { token: token!, user: await owner(0) })).body.owner?.appeal).toEqual({
+      allowed: false,
+      blockedBy: "premium_required",
+    });
     expect((await post(anon, { user: stranger })).status).toBe(404);
     const db = await getDb();
     await db.execute({ sql: "UPDATE verdict_meta SET owner_user_id = ? WHERE verdict_id = ?", args: [stranger, anon] });

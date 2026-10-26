@@ -123,7 +123,9 @@ export async function verdictAppealState(
     if (!writer) return { appeals: views };
     let blockedBy: AppealBlock | null;
     if (!writer.viewerId) blockedBy = "signin_required";
-    else if (writer.viewerId !== meta.ownerUserId) blockedBy = meta.ownerUserId ? "not_party" : "claim_required";
+    // Claiming only to be told no afterwards would move the verdict for nothing.
+    else if (writer.viewerId !== meta.ownerUserId)
+      blockedBy = meta.ownerUserId ? "not_party" : ((await premiumAppealBlock(writer.viewerId)) ?? "claim_required");
     else blockedBy = roundsBlock(appeals) ?? (await premiumAppealBlock(writer.viewerId));
     return { appeals: views, appeal: { allowed: blockedBy === null, blockedBy } };
   } catch (e) {
