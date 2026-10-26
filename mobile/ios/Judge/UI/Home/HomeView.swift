@@ -404,7 +404,7 @@ private struct RecentSection: View {
     }
 
     var body: some View {
-        let cards = Recent.cards(saved, lang: lang)
+        let cards = Recent.cards(saved, lang: lang, now: app.home.today ?? .now)
         if !cards.isEmpty {
             VStack(alignment: .leading, spacing: 4) {
                 HStack {
