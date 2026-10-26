@@ -122,6 +122,34 @@ class ScreenshotsTest {
     }
 
     @Test
+    fun home_recent_en() = capture("home_recent_en", tall = true) {
+        val items = listOf("win_a_self", "win_b_named", "lean_tie", "conditional").mapIndexed { i, n ->
+            val o = sample(n)
+            SavedVerdict(o.id, System.currentTimeMillis() - i * 86_400_000L, o.result, o.nameMap, Preset.BALANCED.id, emptyMap())
+        }
+        Themed(AppLang.EN) { HomeScreen(HomeUiState(recent = items), {}, {}, {}, {}, {}, {}, {}) }
+    }
+
+    @Test
+    fun verdict_thread_en() = capture("verdict_thread_win_b_en", tall = true) {
+        val outcome = sample("win_b_named")
+        Themed(AppLang.EN) {
+            Column(Modifier.fillMaxSize()) {
+                TopBar(onBack = null, onToggleLang = {})
+                Column(Modifier.padding(horizontal = 16.dp, vertical = 12.dp)) {
+                    com.okjudge.judge.ui.verdict.VerdictThreadHead(
+                        UiTestSupport.s(AppLang.EN).exampleHotdogText,
+                        outcome.result.result,
+                        reducedMotion = true,
+                        modifier = Modifier.padding(bottom = 16.dp),
+                    )
+                    SampleVerdict(outcome, AppLang.EN)
+                }
+            }
+        }
+    }
+
+    @Test
     fun verdicts_en() {
         for (name in Fixtures.sampleNames) renderVerdict("verdict_${name}_en", name, AppLang.EN)
     }

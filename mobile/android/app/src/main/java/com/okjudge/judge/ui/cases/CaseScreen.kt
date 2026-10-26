@@ -488,7 +488,6 @@ private fun CaseVerdict(verdict: CaseVerdictView, names: List<NameMapping>, link
             onShare = if (linked) actions.onShareVerdict?.let { share -> { share(verdict.id, result.headline) } } else null,
             onCopy = if (linked) actions.onCopyVerdict?.let { copy -> { copy(verdict.id); copied = true } } else null,
             copied = copied,
-            onJudgeAnother = null,
         ),
         modifier = modifier,
     )

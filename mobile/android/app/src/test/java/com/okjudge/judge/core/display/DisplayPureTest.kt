@@ -158,4 +158,12 @@ class DisplayPureTest {
             if (!r.refused) assertEquals(v.num("tugA")!!.toInt(), VerdictDisplay.sceneVerdict(r).tugA)
         }
     }
+
+    @Test
+    fun agreement_countsRunsOnTheFinalVerdict() {
+        assertEquals(VerdictDisplay.Agreement(2, 3), VerdictDisplay.agreement(VerdictResult(verdict = "side_a", runs = listOf("side_a", "side_b", "side_a"))))
+        assertEquals(VerdictDisplay.Agreement(0, 3), VerdictDisplay.agreement(VerdictResult(verdict = "split", runs = listOf("side_a", "side_b", "dissolved"))))
+        assertNull(VerdictDisplay.agreement(VerdictResult(verdict = "too_close", runs = listOf("side_a", "side_b"))))
+        assertNull(VerdictDisplay.agreement(VerdictResult(verdict = "side_a")))
+    }
 }

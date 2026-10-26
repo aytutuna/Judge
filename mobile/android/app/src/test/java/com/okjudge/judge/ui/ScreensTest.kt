@@ -41,6 +41,7 @@ import com.okjudge.judge.ui.home.HomeUiState
 import com.okjudge.judge.ui.judging.JudgingScreen
 import com.okjudge.judge.ui.judging.JudgingTags
 import com.okjudge.judge.ui.verdict.TranslationStatus
+import com.okjudge.judge.ui.verdict.VerdictThreadHead
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonObject
 import java.util.Locale
@@ -174,11 +175,12 @@ class ScreensTest {
                 val s = UiTestSupport.s(lang)
                 val r = outcome.result.result
                 val parties = PartyNames.partyNames(outcome.nameMap, ContentLang.verdictLang(r), s)
-                compose.onNodeWithText(VerdictDisplay.verdictLabel(r, parties, s)).assertExists()
+                // The ruling is read with the headline; the stamp is decorative.
+                compose.onNodeWithContentDescription("${VerdictDisplay.verdictLabel(r, parties, s)}. ", substring = true).assertExists()
                 // The fixture translation stands in for the original in the other language,
                 // with real names restored as the web shows them.
                 if (!r.refused) compose.onNodeWithText(personalizedCrux(name, outcome, lang)).assertExists()
-                compose.onNodeWithText(VerdictDisplay.confidenceText(r.confidence, s)).assertExists()
+                compose.onNodeWithText(s.confidenceAria(VerdictDisplay.confidenceLevel(r.confidence).toString())).assertExists()
                 if (outcome.nameMap.isNotEmpty()) {
                     // The labels never fall back to "Party A/B" when a name map exists.
                     compose.onNodeWithText(s.partyA).assertDoesNotExist()
@@ -187,6 +189,29 @@ class ScreensTest {
                 resetContent()
             }
         }
+    }
+
+    @Test
+    fun verdictCard_namesTheLosersBestPoint_andTheBedrockSides() {
+        val outcome = sample("win_b_named")
+        val r = outcome.result.result
+        val s = UiTestSupport.s(AppLang.EN)
+        val parties = PartyNames.partyNames(outcome.nameMap, ContentLang.verdictLang(r), s)
+        compose.setContent { Themed(AppLang.EN) { SampleVerdict(outcome, AppLang.EN, modifier = Modifier.verticalScroll(rememberScrollState())) } }
+        compose.onNodeWithText(if (parties.aIsSelf) s.bestPointSelf else s.bestPointOf(parties.nameA)).assertExists()
+        compose.onNodeWithText(s.cruxShort).assertExists()
+        compose.onNodeWithText(s.bedrock).assertExists()
+        compose.onNodeWithText(s.share).assertExists()
+        compose.onNodeWithText(s.copyLink).assertExists()
+    }
+
+    @Test
+    fun verdictThread_showsTheArgumentAndHowFarTheJudgesAgreed() {
+        val en = UiTestSupport.s(AppLang.EN)
+        val r = sample("win_b_named").result.result
+        compose.setContent { Themed(AppLang.EN) { VerdictThreadHead("Hot dogs are sandwiches, says Sam.", r, reducedMotion = true) } }
+        compose.onNodeWithText("Hot dogs are sandwiches, says Sam.").assertExists()
+        compose.onNodeWithText(VerdictDisplay.judgesLabel(r, en)).assertExists()
     }
 
     @Test

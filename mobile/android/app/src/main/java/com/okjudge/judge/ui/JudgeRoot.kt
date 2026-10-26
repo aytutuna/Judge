@@ -353,6 +353,7 @@ fun JudgeRoot(container: AppContainer, links: StateFlow<Uri?> = MutableStateFlow
                                     backStack.resetTo(listOf(HomeKey))
                                 }) else null,
                                 onToggleLang = toggleLang,
+                                argument = key.argument,
                             )
                         }
                         entry<HistoryKey> {

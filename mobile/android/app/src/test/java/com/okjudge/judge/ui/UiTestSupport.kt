@@ -61,7 +61,7 @@ fun SampleVerdict(outcome: VerdictOutcome, lang: AppLang, modifier: Modifier = M
         view = sampleView(outcome, lang, status).personalized(outcome.nameMap, selfLang),
         parties = PartyNames.partyNames(outcome.nameMap, selfLang, s),
         restoredNames = PartyNames.restoredNames(outcome.nameMap, selfLang),
-        actions = CardActions(onShare = {}, onCopy = {}, copied = false, onJudgeAnother = {}),
+        actions = CardActions(onShare = {}, onCopy = {}, copied = false),
         modifier = modifier,
     )
 }

@@ -7,6 +7,13 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.unit.em
+import com.okjudge.judge.ui.theme.BrandFonts
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
@@ -36,7 +43,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.drawscope.Stroke
@@ -54,12 +60,9 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.okjudge.judge.core.display.ConditionalClause
-import com.okjudge.judge.core.display.CruxFace
-import com.okjudge.judge.core.display.CruxStyle
 import com.okjudge.judge.core.display.FactSources
 import com.okjudge.judge.core.display.PartyLabels
 import com.okjudge.judge.core.display.RestoreNames
-import com.okjudge.judge.core.display.SealSide
 import com.okjudge.judge.core.display.VerdictDisplay
 import com.okjudge.judge.core.display.Vote
 import com.okjudge.judge.core.model.AppealInfo
@@ -80,11 +83,9 @@ import com.okjudge.judge.i18n.LocalLang
 import com.okjudge.judge.i18n.LocalStrings
 import com.okjudge.judge.i18n.Strings
 import com.okjudge.judge.ui.components.BrandMark
-import com.okjudge.judge.ui.components.GhostButton
 import com.okjudge.judge.ui.components.JudgeIcons
 import com.okjudge.judge.ui.components.Kicker
 import com.okjudge.judge.ui.components.PaperCard
-import com.okjudge.judge.ui.components.TextAction
 import com.okjudge.judge.ui.components.TintedIcon
 import com.okjudge.judge.ui.components.uppercaseForUi
 import com.okjudge.judge.ui.openLink
@@ -107,13 +108,14 @@ data class CardActions(
     val onShare: (() -> Unit)?,
     val onCopy: (() -> Unit)?,
     val copied: Boolean,
-    val onJudgeAnother: (() -> Unit)?,
 )
 
 /**
- * The full verdict display (components/VerdictView.tsx): the card, then the
- * argument map, fact check and facts below it. Text comes from `view.result`
- * (translated when available); party labels follow the UI language.
+ * The full verdict display (components/VerdictView.tsx): the card (stamp,
+ * headline, confidence and votes, notes and branches, then the crux,
+ * bedrock and best point), then the argument map, fact check and facts
+ * below it. Text comes from `view.result` (translated when available);
+ * party labels follow the UI language.
  */
 @Composable
 fun VerdictContent(
@@ -123,6 +125,7 @@ fun VerdictContent(
     actions: CardActions,
     modifier: Modifier = Modifier,
 ) {
+    val s = LocalStrings.current
     val result = view.result
     val busy = view.status == TranslationStatus.LOADING
     Column(modifier, verticalArrangement = Arrangement.spacedBy(28.dp)) {
@@ -136,22 +139,36 @@ fun VerdictContent(
             )
         }
         PaperCard {
-            Column(
-                Modifier.padding(start = 20.dp, end = 20.dp, top = 26.dp, bottom = 20.dp),
-                verticalArrangement = Arrangement.spacedBy(16.dp),
-            ) {
-                CardTopRow(view, result)
+            BoxWithConstraints {
                 Column(
-                    Modifier.alpha(if (busy) 0.55f else 1f).animateContentSize(),
+                    Modifier.padding(start = 20.dp, end = 20.dp, top = 26.dp, bottom = 20.dp),
                     verticalArrangement = Arrangement.spacedBy(16.dp),
                 ) {
-                    VerdictReveal(result, parties, restoredNames)
-                    if (!result.refused) CruxBlock(result.crux)
-                    if (!result.refused && result.losingSideBestPoint.isNotEmpty()) BestPoint(result.losingSideBestPoint)
-                    if (!result.refused) WouldChangeBlock(result.wouldChange.orEmpty())
-                    Footnote(result, parties)
-                    ActionsRow(actions)
+                    CardTopRow(view, result)
+                    Column(
+                        Modifier.alpha(if (busy) 0.55f else 1f).animateContentSize(),
+                        verticalArrangement = Arrangement.spacedBy(16.dp),
+                    ) {
+                        VerdictReveal(result, parties, restoredNames)
+                        if (!result.refused) {
+                            Section(s.cruxShort) { Text(result.crux, style = SectionText) }
+                            val map = result.argumentMap
+                            if (map.bedrockA.isNotEmpty() || map.bedrockB.isNotEmpty()) {
+                                Section(s.bedrock) { BedrockTiles(map.bedrockA, map.bedrockB, parties) }
+                            }
+                            if (result.losingSideBestPoint.isNotEmpty()) {
+                                Section(bestPointTitle(result, parties, s)) { Text(result.losingSideBestPoint, style = SectionText) }
+                            }
+                            WouldChangeBlock(result.wouldChange.orEmpty())
+                        }
+                        Footnote(result, parties)
+                        ActionsRow(actions)
+                    }
                 }
+                Stamp(
+                    VerdictDisplay.stampLabel(result, parties, s),
+                    Modifier.align(Alignment.TopEnd).padding(top = 22.dp, end = 18.dp).widthIn(max = maxWidth * 0.46f),
+                )
             }
         }
         if (!result.refused) {
@@ -170,15 +187,17 @@ fun VerdictContent(
 
 // --- Top row --------------------------------------------------------------------
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun CardTopRow(view: TranslationView, result: VerdictResult) {
     val s = LocalStrings.current
-    Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-        Row(
-            Modifier.weight(1f),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-        ) {
+    // The right half is the stamp's.
+    FlowRow(
+        Modifier.fillMaxWidth(0.5f).heightIn(min = 44.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        verticalArrangement = Arrangement.spacedBy(6.dp),
+        itemVerticalAlignment = Alignment.CenterVertically,
+    ) {
             val note = when (view.status) {
                 TranslationStatus.LOADING -> s.translateLoading
                 TranslationStatus.TRANSLATED -> if (view.source == AppLang.TR) s.translateFromTr else s.translateFromEn
@@ -217,8 +236,6 @@ private fun CardTopRow(view: TranslationView, result: VerdictResult) {
                     )
                 }
             }
-        }
-        VoteDots(VerdictDisplay.votes(result))
     }
 }
 
@@ -258,58 +275,97 @@ fun VoteDot(vote: Vote?, sizeDp: Int) {
     }
 }
 
-// --- Tug bar, main block, slots ---------------------------------------------------
+// --- Stamp, lead, notes -----------------------------------------------------------
 
+/** Decorative: the heading below carries the ruling for screen readers. */
+@Composable
+private fun Stamp(text: String, modifier: Modifier) {
+    Box(
+        modifier
+            .rotate(8f)
+            .clip(RoundedCornerShape(8.dp))
+            .border(2.dp, Palette.terra, RoundedCornerShape(8.dp))
+            .clearAndSetSemantics { }
+            .padding(horizontal = 10.dp, vertical = 5.dp),
+    ) {
+        Text(
+            text.uppercaseForUi(),
+            style = StampText,
+            textAlign = TextAlign.Center,
+            maxLines = 2,
+            overflow = TextOverflow.Ellipsis,
+        )
+    }
+}
+
+private val StampText = TextStyle(
+    fontFamily = BrandFonts.interTight(800),
+    fontWeight = FontWeight.ExtraBold,
+    fontSize = 13.sp,
+    lineHeight = (13 * 1.15).sp,
+    letterSpacing = 0.12.em,
+    color = Palette.terra,
+)
+
+private val SectionText = TextStyle(
+    fontFamily = BrandFonts.inter(400, 15f),
+    fontSize = 15.sp,
+    lineHeight = (15 * 1.55).sp,
+    color = Palette.ink,
+)
+
+/** The dispute kind, the headline as the card's heading, confidence and votes; then notes and branches. */
 @Composable
 private fun VerdictReveal(result: VerdictResult, parties: PartyLabels, restoredNames: List<String>) {
     val s = LocalStrings.current
     val label = VerdictDisplay.verdictLabel(result, parties, s)
-    TugBar(parties, VerdictDisplay.tugFinal(result), s.verdictAria(label))
-    MainBlock(result, parties, label)
+    val headline = result.headline.ifEmpty { label }
+    val size = (LocalConfiguration.current.screenWidthDp * 0.08f).coerceIn(30f, 34f)
+    Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
+        s.text("badge.${result.dispute.raw}")?.let { badge ->
+            Text(badge.uppercaseForUi(), style = JudgeType.micro.copy(fontWeight = FontWeight.SemiBold, letterSpacing = 0.1.em))
+        }
+        Text(
+            headline,
+            style = JudgeType.ruling.copy(fontSize = size.sp, lineHeight = (size * 1.05).sp).cappedScale(),
+            modifier = Modifier.semantics {
+                heading()
+                contentDescription = "$label. $headline"
+            },
+        )
+        Meta(result)
+    }
+    Box(Modifier.fillMaxWidth().padding(vertical = 2.dp).height(1.dp).background(Palette.ink.copy(alpha = 0.8f)))
+    if (result.leanState != LeanState.None || result.cruxTrial != null || result.refused || result.demo) {
+        Column(verticalArrangement = Arrangement.spacedBy(10.dp)) { Slots(result, parties) }
+    }
     Branches(result, parties, restoredNames)
 }
 
+/** "Confidence 4 of 5 · (dots) 3 of 3 agree". */
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
-private fun TugBar(parties: PartyLabels, tugA: Int, aria: String) {
-    Column {
-        Row(Modifier.fillMaxWidth().padding(bottom = 8.dp), horizontalArrangement = Arrangement.SpaceBetween) {
-            NameWithDot(parties.nameA, Palette.terra, dotFirst = true, Modifier.widthIn(max = 160.dp))
-            NameWithDot(parties.nameB, Palette.sageStrong, dotFirst = false, Modifier.widthIn(max = 160.dp))
+private fun Meta(result: VerdictResult) {
+    val s = LocalStrings.current
+    val style = JudgeType.small.copy(color = Palette.ink2)
+    FlowRow(
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        verticalArrangement = Arrangement.spacedBy(4.dp),
+        itemVerticalAlignment = Alignment.CenterVertically,
+    ) {
+        Text(s.confidenceAria(VerdictDisplay.confidenceLevel(result.confidence).toString()), style = style)
+        if (result.runs.isNotEmpty()) {
+            Text("\u00b7", style = style, modifier = Modifier.clearAndSetSemantics { })
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                VoteDots(result.runs.map(VerdictDisplay::voteOf))
+                val agreed = VerdictDisplay.agreement(result)
+                Text(
+                    if (agreed != null) s.verdictAgree(agreed.n.toString(), agreed.total.toString()) else s.verdictNoMajority,
+                    style = style,
+                    modifier = Modifier.padding(start = 8.dp),
+                )
+            }
         }
-        val a = tugA.coerceIn(0, 100) / 100f
-        Canvas(
-            Modifier
-                .fillMaxWidth()
-                .height(18.dp)
-                .semantics { contentDescription = aria },
-        ) {
-            val barH = 10.dp.toPx()
-            val top = (size.height - barH) / 2
-            val r = CornerRadius(barH / 2, barH / 2)
-            drawRoundRect(Palette.sageStrong, topLeft = Offset(0f, top), size = androidx.compose.ui.geometry.Size(size.width, barH), cornerRadius = r)
-            val aw = size.width * a
-            drawRoundRect(Palette.terra, topLeft = Offset(0f, top), size = androidx.compose.ui.geometry.Size(aw, barH), cornerRadius = r)
-            if (aw > barH) drawRect(Palette.terra, topLeft = Offset(aw - barH / 2, top), size = androidx.compose.ui.geometry.Size(barH / 2, barH))
-            val knot = Offset(aw, size.height / 2)
-            drawCircle(Color.Black.copy(alpha = 0.12f), radius = 10.dp.toPx(), center = knot + Offset(0f, 1.5.dp.toPx()))
-            drawCircle(Palette.ink, radius = 9.dp.toPx() + 2.dp.toPx(), center = knot)
-            drawCircle(Palette.paper, radius = 9.dp.toPx(), center = knot)
-        }
-    }
-}
-
-@Composable
-private fun NameWithDot(name: String, color: Color, dotFirst: Boolean, modifier: Modifier) {
-    Row(modifier, verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-        if (dotFirst) Dot(color, 9)
-        Text(
-            name,
-            style = JudgeType.small,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
-            modifier = Modifier.weight(1f, fill = false),
-        )
-        if (!dotFirst) Dot(color, 9)
     }
 }
 
@@ -319,115 +375,13 @@ private fun Dot(color: Color, sizeDp: Int) {
 }
 
 @Composable
-private fun MainBlock(result: VerdictResult, parties: PartyLabels, label: String) {
-    val s = LocalStrings.current
-    Column(
-        Modifier
-            .fillMaxWidth()
-            .clip(JudgeShapes.block)
-            .background(Brush.verticalGradient(listOf(Palette.mainTop, Palette.mainBottom)))
-            .border(1.dp, Palette.line, JudgeShapes.block)
-            .padding(start = 16.dp, end = 16.dp, top = 22.dp, bottom = 20.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(10.dp),
-    ) {
-        s.text("badge.${result.dispute.raw}")?.let { badge ->
-            Text(
-                badge.uppercaseForUi(),
-                style = JudgeType.micro.copy(color = Palette.ink2, letterSpacing = 0.1.sp * 11),
-                modifier = Modifier
-                    .clip(JudgeShapes.chip)
-                    .background(Palette.paper)
-                    .border(1.dp, Palette.line2, JudgeShapes.chip)
-                    .padding(horizontal = 11.dp, vertical = 5.dp),
-            )
-        }
-        VerdictLabel(label, VerdictDisplay.sealOf(result))
-        if (result.headline.isNotEmpty()) {
-            Text(
-                result.headline,
-                style = JudgeType.headline,
-                textAlign = TextAlign.Center,
-                modifier = Modifier.widthIn(max = 340.dp),
-            )
-        }
-        ConfidenceMeter(result.confidence)
-        Slots(result, parties)
-    }
-}
-
-@Composable
-private fun VerdictLabel(label: String, seal: SealSide) {
-    val chars = VerdictDisplay.codePointLength(label)
-    val style = (if (chars > VerdictDisplay.LONG_LABEL) JudgeType.verdictLabelLong else JudgeType.verdictLabel).cappedScale()
-    val modifier = Modifier.padding(top = 2.dp).semantics { heading() }
-    if (chars > VerdictDisplay.STACK_LABEL) {
-        Column(modifier, horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(10.dp)) {
-            Seal(seal)
-            Text(label, style = style, textAlign = TextAlign.Center)
-        }
-    } else {
-        Row(modifier, verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-            Seal(seal)
-            Text(label, style = style, textAlign = TextAlign.Center)
-        }
-    }
-}
-
-@Composable
-private fun Seal(side: SealSide) {
-    val bg = when (side) {
-        SealSide.A -> Palette.terraInk
-        SealSide.B -> Palette.sageInk
-        SealSide.NONE -> Palette.ink
-    }
-    val icon = remember(side) { if (side == SealSide.NONE) JudgeIcons.levelBeam() else JudgeIcons.check() }
-    Box(
-        Modifier.size(34.dp).clip(CircleShape).background(bg).clearAndSetSemantics { },
-        contentAlignment = Alignment.Center,
-    ) {
-        TintedIcon(icon, 17)
-    }
-}
-
-@Composable
-private fun ConfidenceMeter(value: Int) {
-    val s = LocalStrings.current
-    val v = VerdictDisplay.confidenceLevel(value)
-    Column(
-        Modifier.padding(top = 6.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(8.dp),
-    ) {
-        Row(
-            Modifier.clearAndSetSemantics { contentDescription = s.confidenceAria(v.toString()) },
-            horizontalArrangement = Arrangement.spacedBy(5.dp),
-        ) {
-            for (i in 1..5) {
-                Box(
-                    Modifier
-                        .size(width = 30.dp, height = 7.dp)
-                        .clip(RoundedCornerShape(7.dp))
-                        .background(if (i <= v) Palette.ink else Palette.ink.copy(alpha = 0.1f)),
-                )
-            }
-        }
-        Text(VerdictDisplay.confidenceText(value, s), style = JudgeType.small)
-    }
-}
-
-@Composable
 private fun Slot(content: @Composable () -> Unit) {
-    Column(
-        Modifier.widthIn(max = 360.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(4.dp),
-    ) { content() }
+    Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(4.dp)) { content() }
 }
 
 @Composable
-private fun SlotText(text: String, color: Color = Palette.muted, align: TextAlign = TextAlign.Center) {
-    Text(text, style = JudgeType.slotText.copy(color = color), textAlign = align, modifier = Modifier.fillMaxWidth())
+private fun SlotText(text: String, color: Color = Palette.muted) {
+    Text(text, style = JudgeType.slotText.copy(color = color), modifier = Modifier.fillMaxWidth())
 }
 
 @Composable
@@ -441,7 +395,7 @@ private fun Slots(result: VerdictResult, parties: PartyLabels) {
             val name = if (isA) parties.nameA else parties.nameB
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(7.dp)) {
                 Dot(if (isA) Palette.terra else Palette.sageStrong, 9)
-                Text(if (self) s.leanTitleSelf else s.leanTitle(name), style = JudgeType.slotTitle, textAlign = TextAlign.Center)
+                Text(if (self) s.leanTitleSelf else s.leanTitle(name), style = JudgeType.slotTitle)
             }
             SlotText(l.reason)
             if (result.runs.size >= 2) {
@@ -470,7 +424,7 @@ private fun CruxTrialNote(trial: CruxTrial) {
         Slot {
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(4.dp)) {
                 TintedIcon(remember { JudgeIcons.shield(Palette.ink2) }, 14)
-                Text(s.trialSurvived, style = JudgeType.slotText.copy(color = Palette.ink2), textAlign = TextAlign.Center)
+                Text(s.trialSurvived, style = JudgeType.slotText.copy(color = Palette.ink2))
             }
             if (trial.attack.isNotBlank()) {
                 Text(
@@ -479,8 +433,8 @@ private fun CruxTrialNote(trial: CruxTrial) {
                     modifier = Modifier.clip(RoundedCornerShape(8.dp)).clickable { open = !open }.padding(4.dp),
                 )
                 if (open) {
-                    SlotText("${s.trialAttackPrefix} ${trial.attack}", align = TextAlign.Start)
-                    if (trial.reasoning.isNotEmpty()) SlotText("${s.trialRefereePrefix} ${trial.reasoning}", align = TextAlign.Start)
+                    SlotText("${s.trialAttackPrefix} ${trial.attack}")
+                    if (trial.reasoning.isNotEmpty()) SlotText("${s.trialRefereePrefix} ${trial.reasoning}")
                 }
             }
         }
@@ -494,11 +448,10 @@ private fun CruxTrialNote(trial: CruxTrial) {
             Text(
                 if (overturned) s.trialOverturned else s.trialUncertain,
                 style = JudgeType.slotText.copy(color = color),
-                textAlign = TextAlign.Center,
             )
         }
-        SlotText("${s.trialAttackPrefix} ${trial.attack}", align = TextAlign.Start)
-        if (trial.reasoning.isNotEmpty()) SlotText("${s.trialRefereePrefix} ${trial.reasoning}", align = TextAlign.Start)
+        SlotText("${s.trialAttackPrefix} ${trial.attack}")
+        if (trial.reasoning.isNotEmpty()) SlotText("${s.trialRefereePrefix} ${trial.reasoning}")
     }
 }
 
@@ -561,36 +514,54 @@ private fun BranchText(lead: String, rest: String, arrow: String?) {
     Text(text, style = JudgeType.branch)
 }
 
-// --- Crux, best point, footnote, actions -----------------------------------------
+// --- Sections, footnote, actions -------------------------------------------------
+
+/** A titled part of the card under the rule (verdict.module.css .section). */
+@Composable
+private fun Section(label: String, content: @Composable () -> Unit) {
+    Column {
+        Text(label, style = JudgeType.serifLabel, modifier = Modifier.padding(bottom = 6.dp).semantics { heading() })
+        content()
+    }
+}
 
 @Composable
-private fun CruxBlock(crux: String) {
-    val s = LocalStrings.current
-    val serif = CruxStyle.cruxStyle(crux) == CruxFace.SERIF
-    Column(
-        Modifier
-            .fillMaxWidth()
-            .clip(JudgeShapes.crux)
-            .background(Palette.paper)
-            .dashedBorder(Palette.ink.copy(alpha = 0.28f))
-            .padding(horizontal = 18.dp, vertical = 16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        Row(
-            Modifier.padding(bottom = 6.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(7.dp),
-        ) {
-            TintedIcon(JudgeIcons.diamond, 10)
-            Kicker(s.cruxShort)
-        }
-        Text(
-            crux,
-            style = if (serif) JudgeType.cruxSerif.cappedScale() else JudgeType.cruxSans,
-            textAlign = if (serif) TextAlign.Center else TextAlign.Start,
-            modifier = Modifier.fillMaxWidth(),
-        )
+private fun BedrockTiles(a: String, b: String, parties: PartyLabels) {
+    Row(Modifier.fillMaxWidth().height(IntrinsicSize.Min), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+        BedrockTile(parties.nameA, a, Palette.terraInk, Modifier.weight(1f))
+        BedrockTile(parties.nameB, b, Palette.sageInk, Modifier.weight(1f))
     }
+}
+
+@Composable
+private fun BedrockTile(name: String, text: String, color: Color, modifier: Modifier) {
+    Column(
+        modifier
+            .fillMaxHeight()
+            .clip(RoundedCornerShape(14.dp))
+            .background(Palette.ivory)
+            .padding(horizontal = 14.dp, vertical = 12.dp),
+        verticalArrangement = Arrangement.spacedBy(4.dp),
+    ) {
+        Text(
+            name.uppercaseForUi(),
+            style = JudgeType.micro.copy(color = color, letterSpacing = 0.1.em),
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+        )
+        Text(text, style = JudgeType.body.copy(fontSize = 14.sp, lineHeight = (14 * 1.45).sp))
+    }
+}
+
+/** "Deniz's best point" when one side won, the plain title otherwise. */
+private fun bestPointTitle(result: VerdictResult, parties: PartyLabels, s: Strings): String {
+    val loserA = when (result.finalVerdict) {
+        FinalVerdict.SIDE_A -> false
+        FinalVerdict.SIDE_B -> true
+        else -> return s.bestPointTitle
+    }
+    if (if (loserA) parties.aIsSelf else parties.bIsSelf) return s.bestPointSelf
+    return s.bestPointOf(if (loserA) parties.nameA else parties.nameB)
 }
 
 private fun Modifier.dashedBorder(color: Color): Modifier = drawBehind {
@@ -602,25 +573,6 @@ private fun Modifier.dashedBorder(color: Color): Modifier = drawBehind {
         cornerRadius = CornerRadius(20.dp.toPx()),
         style = Stroke(width = stroke, pathEffect = PathEffect.dashPathEffect(floatArrayOf(6.dp.toPx(), 4.dp.toPx()))),
     )
-}
-
-@Composable
-private fun BestPoint(text: String) {
-    val s = LocalStrings.current
-    Row(
-        Modifier
-            .fillMaxWidth()
-            .height(IntrinsicSize.Min)
-            .clip(RoundedCornerShape(18.dp))
-            .background(Palette.bestPointBg)
-            .border(1.dp, Palette.line, RoundedCornerShape(18.dp)),
-    ) {
-        Box(Modifier.width(4.dp).fillMaxHeight().background(Palette.terra))
-        Column(Modifier.padding(horizontal = 16.dp, vertical = 14.dp)) {
-            Kicker(s.bestPointTitle, Modifier.padding(bottom = 6.dp))
-            Text(text, style = JudgeType.body.copy(fontSize = 15.sp, lineHeight = 22.5.sp, color = Palette.ink2))
-        }
-    }
 }
 
 @Composable
@@ -649,25 +601,47 @@ private fun voteName(run: String, parties: PartyLabels, s: Strings): String = wh
     else -> run
 }
 
-@OptIn(ExperimentalLayoutApi::class)
+/** Share (filled) and copy link (outlined), 48 dp each. */
 @Composable
 private fun ActionsRow(actions: CardActions) {
     val s = LocalStrings.current
-    if (actions.onShare == null && actions.onCopy == null && actions.onJudgeAnother == null) return
-    FlowRow(
-        Modifier.fillMaxWidth().padding(top = 2.dp),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalArrangement = Arrangement.spacedBy(10.dp),
-        itemVerticalAlignment = Alignment.CenterVertically,
-    ) {
-        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            actions.onShare?.let { GhostButton(s.share, remember { JudgeIcons.share(Palette.ink) }, it) }
-            actions.onCopy?.let {
-                val icon = remember(actions.copied) { if (actions.copied) JudgeIcons.check(Palette.sageInk, 2f) else JudgeIcons.link(Palette.ink) }
-                GhostButton(if (actions.copied) s.copied else s.copyLink, icon, it, Modifier.semantics { liveRegion = LiveRegionMode.Polite })
+    if (actions.onShare == null && actions.onCopy == null) return
+    Row(Modifier.fillMaxWidth().padding(top = 2.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+        actions.onShare?.let { share ->
+            Row(
+                Modifier
+                    .weight(1f)
+                    .height(48.dp)
+                    .clip(JudgeShapes.chip)
+                    .background(Palette.ink)
+                    .clickable(role = Role.Button, onClick = share)
+                    .padding(horizontal = 18.dp),
+                horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                TintedIcon(remember { JudgeIcons.share(Palette.ivory) }, 15)
+                Text(s.share, style = JudgeType.button.copy(fontSize = 15.sp), maxLines = 1)
             }
         }
-        actions.onJudgeAnother?.let { TextAction(s.judgeAnother, it) }
+        actions.onCopy?.let { copy ->
+            val icon = remember(actions.copied) { if (actions.copied) JudgeIcons.check(Palette.sageInk, 2f) else JudgeIcons.link(Palette.ink) }
+            Row(
+                Modifier
+                    .then(if (actions.onShare == null) Modifier.weight(1f) else Modifier)
+                    .height(48.dp)
+                    .clip(JudgeShapes.chip)
+                    .background(Palette.paper)
+                    .border(1.dp, Palette.line2, JudgeShapes.chip)
+                    .clickable(role = Role.Button, onClick = copy)
+                    .semantics(mergeDescendants = true) { liveRegion = LiveRegionMode.Polite }
+                    .padding(horizontal = 18.dp),
+                horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                TintedIcon(icon, 15)
+                Text(if (actions.copied) s.copied else s.copyLink, style = JudgeType.button.copy(fontSize = 15.sp, color = Palette.ink), maxLines = 1)
+            }
+        }
     }
 }
 

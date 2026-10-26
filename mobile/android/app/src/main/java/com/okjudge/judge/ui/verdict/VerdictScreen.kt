@@ -4,7 +4,13 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -22,13 +28,27 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.okjudge.judge.core.display.PartyNames
+import com.okjudge.judge.core.display.VerdictDisplay
+import com.okjudge.judge.core.model.VerdictResult
 import com.okjudge.judge.i18n.LocalLang
 import com.okjudge.judge.i18n.LocalStrings
+import com.okjudge.judge.ui.components.ArgumentBubble
+import com.okjudge.judge.ui.components.JudgeIcons
+import com.okjudge.judge.ui.components.JudgesBadge
+import com.okjudge.judge.ui.components.SceneView
+import com.okjudge.judge.ui.components.TintedIcon
 import com.okjudge.judge.ui.components.TopBar
+import com.okjudge.judge.ui.components.warmShadow
+import com.okjudge.judge.ui.judging.rememberReducedMotion
+import com.okjudge.judge.ui.theme.JudgeShapes
 import com.okjudge.judge.ui.theme.JudgeType
 import com.okjudge.judge.ui.theme.Palette
 import kotlinx.coroutines.delay
@@ -39,6 +59,8 @@ fun shareUrl(shareBaseUrl: String, id: String): String = "${shareBaseUrl.trimEnd
 /**
  * The verdict screen, fed by a saved history row (fresh verdicts are saved
  * before the app navigates here, so this works offline and after process death).
+ * A fresh verdict stays in its thread: the argument, the judges' badge and
+ * the settled scene above the card, with "New argument" docked below.
  */
 @Composable
 fun VerdictRoute(
@@ -48,6 +70,7 @@ fun VerdictRoute(
     onBack: (() -> Unit)?,
     onJudgeAnother: (() -> Unit)?,
     onToggleLang: () -> Unit,
+    argument: String? = null,
 ) {
     val lang = LocalLang.current
     LaunchedEffect(lang) { viewModel.onLang(lang) }
@@ -83,11 +106,20 @@ fun VerdictRoute(
         val shown = remember(view, saved.nameMap, selfLang) { view.personalized(saved.nameMap, selfLang) }
         Column(
             Modifier
-                .fillMaxSize()
+                .weight(1f)
+                .fillMaxWidth()
                 .verticalScroll(rememberScrollState())
                 .padding(horizontal = 16.dp, vertical = 12.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
+            if (onJudgeAnother != null) {
+                VerdictThreadHead(
+                    argument = argument,
+                    result = shown.result,
+                    reducedMotion = rememberReducedMotion(),
+                    modifier = Modifier.widthIn(max = 640.dp).fillMaxWidth().padding(bottom = 16.dp),
+                )
+            }
             VerdictContent(
                 view = shown,
                 parties = parties,
@@ -99,12 +131,60 @@ fun VerdictRoute(
                         copied = true
                     },
                     copied = copied,
-                    onJudgeAnother = onJudgeAnother,
                 ),
                 modifier = Modifier.widthIn(max = 640.dp).fillMaxWidth().padding(bottom = 32.dp),
             )
         }
+        onJudgeAnother?.let { NewArgumentDock(it) }
     }
+}
+
+/** The thread above a fresh verdict: what was argued, how far the judges agreed and the settled balance. */
+@Composable
+fun VerdictThreadHead(argument: String?, result: VerdictResult, reducedMotion: Boolean, modifier: Modifier = Modifier) {
+    val s = LocalStrings.current
+    Column(modifier, verticalArrangement = Arrangement.spacedBy(16.dp)) {
+        if (argument != null) ArgumentBubble(argument, Modifier.padding(bottom = 12.dp))
+        JudgesBadge(VerdictDisplay.judgesLabel(result, s))
+        Box(
+            Modifier
+                .fillMaxWidth()
+                .warmShadow(3.dp, JudgeShapes.card)
+                .clip(JudgeShapes.card)
+                .background(Palette.paper)
+                .border(1.dp, Palette.line, JudgeShapes.card)
+                .padding(12.dp),
+        ) {
+            SceneView(VerdictDisplay.sceneVerdict(result), reducedMotion, Modifier.fillMaxWidth().height(180.dp))
+        }
+    }
+}
+
+/** "New argument" where the composer was (NextSteps). */
+@Composable
+private fun NewArgumentDock(onNew: () -> Unit) {
+    val s = LocalStrings.current
+    Box(Modifier.fillMaxWidth().background(Palette.ivory).padding(top = 10.dp, bottom = 14.dp), contentAlignment = Alignment.Center) {
+        Row(
+            Modifier
+                .height(48.dp)
+                .warmShadow(4.dp, JudgeShapes.chip)
+                .clip(JudgeShapes.chip)
+                .background(Palette.ink)
+                .clickable(role = Role.Button, onClick = onNew)
+                .testTag(VerdictTags.NEW)
+                .padding(horizontal = 20.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            TintedIcon(remember { JudgeIcons.plus(Palette.ivory) }, 16)
+            Text(s.shellNew, style = JudgeType.button.copy(fontSize = 15.sp))
+        }
+    }
+}
+
+object VerdictTags {
+    const val NEW = "verdict.new"
 }
 
 /** Native share sheet with the web's share text and the anonymized headline as subject. */

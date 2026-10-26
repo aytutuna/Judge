@@ -46,6 +46,30 @@ object VerdictDisplay {
     fun sceneVerdict(result: VerdictResult): SceneMode.Verdict =
         if (result.refused) SceneMode.Verdict(50, emptyList()) else SceneMode.Verdict(tugFinal(result), result.runs.map(::voteOf))
 
+    data class Agreement(val n: Int, val total: Int)
+
+    /** How many runs reached the final verdict; null for too close or no runs (agreement). */
+    fun agreement(result: VerdictResult): Agreement? {
+        if (result.runs.isEmpty() || result.finalVerdict == FinalVerdict.TOO_CLOSE) return null
+        return Agreement(result.runs.count { it == result.verdict }, result.runs.size)
+    }
+
+    /** The judges' name in the thread: plain until there is a verdict, then how far they agreed (judgesLabel). */
+    fun judgesLabel(result: VerdictResult?, s: Strings): String {
+        if (result == null || result.runs.isEmpty()) return s.threadJudges
+        val a = agreement(result) ?: return s.threadJudgesSplit
+        return s.threadJudgesAgree(a.n.toString(), a.total.toString())
+    }
+
+    /** The stamp on the card: the winner as [verdictLabel] says it, otherwise one short word (stampLabel). */
+    fun stampLabel(result: VerdictResult, parties: PartyLabels, s: Strings): String = when (result.finalVerdict) {
+        FinalVerdict.SIDE_A, FinalVerdict.SIDE_B -> verdictLabel(result, parties, s)
+        FinalVerdict.SPLIT -> s.stampSplit
+        FinalVerdict.CONDITIONAL -> s.stampConditional
+        FinalVerdict.DISSOLVED -> s.stampDissolved
+        FinalVerdict.TOO_CLOSE, FinalVerdict.UNKNOWN -> s.stampTooClose
+    }
+
     fun leanTally(lean: Lean, runCount: Int): LeanTally = lean.tally ?: LeanTally(runCount - 1, 1)
 
     fun voteOf(run: String): Vote = when (run) {

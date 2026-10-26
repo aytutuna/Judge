@@ -2,6 +2,7 @@ package com.okjudge.judge.core.display
 
 import androidx.test.core.app.ApplicationProvider
 import com.okjudge.judge.Fixtures
+import com.okjudge.judge.core.model.VerdictResult
 import com.okjudge.judge.i18n.AppLang
 import com.okjudge.judge.i18n.LocalizedStrings
 import com.okjudge.judge.i18n.Strings
@@ -44,6 +45,27 @@ class TextVectorsTest {
             assertEquals(where, v.bool("bIsSelf"), parties.bIsSelf)
             assertEquals(where, v.str("label"), VerdictDisplay.verdictLabel(outcome.result.result, parties, s(lang)))
         }
+    }
+
+    @Test
+    fun judgesLabel_andStampLabel() {
+        val en = s("en")
+        val tr = s("tr")
+        val runs = listOf("side_a", "side_a", "side_b")
+        assertEquals("The judges", VerdictDisplay.judgesLabel(null, en))
+        assertEquals("The judges", VerdictDisplay.judgesLabel(VerdictResult(verdict = "side_a"), en))
+        assertEquals("Judges · 2 of 3 agree", VerdictDisplay.judgesLabel(VerdictResult(verdict = "side_a", runs = runs), en))
+        assertEquals("Yargıçlar · 2/3 aynı fikirde", VerdictDisplay.judgesLabel(VerdictResult(verdict = "side_a", runs = runs), tr))
+        assertEquals("Judges · split", VerdictDisplay.judgesLabel(VerdictResult(verdict = "too_close", runs = runs), en))
+
+        val parties = PartyLabels("Deniz", "Party B", aIsSelf = false, bIsSelf = false)
+        assertEquals("Deniz is right", VerdictDisplay.stampLabel(VerdictResult(verdict = "side_a"), parties, en))
+        assertEquals("You're right", VerdictDisplay.stampLabel(VerdictResult(verdict = "side_b"), parties.copy(bIsSelf = true), en))
+        assertEquals("Split", VerdictDisplay.stampLabel(VerdictResult(verdict = "split"), parties, en))
+        assertEquals("Conditional", VerdictDisplay.stampLabel(VerdictResult(verdict = "conditional"), parties, en))
+        assertEquals("Dissolved", VerdictDisplay.stampLabel(VerdictResult(verdict = "dissolved"), parties, en))
+        assertEquals("Too close", VerdictDisplay.stampLabel(VerdictResult(verdict = "too_close"), parties, en))
+        assertEquals("Başa baş", VerdictDisplay.stampLabel(VerdictResult(verdict = "too_close"), parties, tr))
     }
 
     @Test
