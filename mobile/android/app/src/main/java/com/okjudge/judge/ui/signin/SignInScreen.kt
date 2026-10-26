@@ -95,13 +95,13 @@ data class SignInActions(
 fun SignInScreen(
     state: SignInUiState,
     onBack: (() -> Unit)?,
-    onToggleLang: () -> Unit,
+    onNew: (() -> Unit)?,
     actions: SignInActions,
     modifier: Modifier = Modifier,
 ) {
     val s = LocalStrings.current
     Column(modifier.fillMaxSize()) {
-        TopBar(onBack = onBack, onToggleLang = onToggleLang)
+        TopBar(onBack = onBack, onNew = onNew)
         Column(
             Modifier
                 .fillMaxSize()

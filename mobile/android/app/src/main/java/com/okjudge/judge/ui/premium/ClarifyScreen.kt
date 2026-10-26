@@ -63,13 +63,13 @@ fun ClarifyScreen(
     onSubmit: () -> Unit,
     onSkip: () -> Unit,
     onBack: () -> Unit,
-    onToggleLang: () -> Unit,
+    onNew: (() -> Unit)?,
     modifier: Modifier = Modifier,
 ) {
     val s = LocalStrings.current
     BackHandler(onBack = onBack)
     Column(modifier.fillMaxSize()) {
-        TopBar(onBack = onBack, onToggleLang = onToggleLang, backLabel = s.clarifyBack)
+        TopBar(onBack = onBack, onNew = onNew, backLabel = s.clarifyBack)
         Column(
             Modifier.fillMaxSize().verticalScroll(rememberScrollState()).imePadding().padding(horizontal = 20.dp),
             horizontalAlignment = Alignment.CenterHorizontally,

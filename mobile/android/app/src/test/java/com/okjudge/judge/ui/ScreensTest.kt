@@ -32,6 +32,7 @@ import com.okjudge.judge.core.model.FactSource
 import com.okjudge.judge.core.model.Features
 import com.okjudge.judge.core.model.VerdictOutcome
 import com.okjudge.judge.i18n.AppLang
+import com.okjudge.judge.ui.components.TopBarTags
 import com.okjudge.judge.ui.history.HistoryScreen
 import com.okjudge.judge.ui.history.HistoryTags
 import com.okjudge.judge.ui.home.CaseMode
@@ -69,7 +70,7 @@ class ScreensTest {
                     onPreset = { state = state.copy(preset = it) },
                     onSubmit = {},
                     onDismissError = { state = state.copy(error = null) },
-                    onToggleLang = {},
+                    onNew = {},
                     onOpenPrivacy = {},
                 )
             }
@@ -126,6 +127,32 @@ class ScreensTest {
         compose.onNodeWithTag(HomeTags.SIDES).assertTextEquals(en.homeOneSide)
         compose.onNodeWithText(en.caseCreate).assertExists()
         compose.onNodeWithText(en.exampleHotdogLabel).assertDoesNotExist()
+    }
+
+    @Test
+    fun home_newButton_hiddenWhileBlank_clearsTheForm() {
+        val en = UiTestSupport.s(AppLang.EN)
+        var state by mutableStateOf(HomeUiState())
+        compose.setContent {
+            Themed(AppLang.EN) {
+                HomeScreen(
+                    state = state,
+                    onArgumentChange = { state = state.copy(argument = it) },
+                    onExample = { state = state.copy(argument = it) },
+                    onPreset = {},
+                    onSubmit = {},
+                    onDismissError = {},
+                    onNew = { state = HomeUiState() },
+                    onOpenPrivacy = {},
+                )
+            }
+        }
+        compose.onNodeWithTag(TopBarTags.NEW).assertDoesNotExist()
+        compose.onNodeWithTag(HomeTags.INPUT).performTextInput("My roommate never does the dishes")
+        compose.onNodeWithContentDescription(en.shellNew).assertExists()
+        compose.onNodeWithTag(TopBarTags.NEW).performClick()
+        compose.onNodeWithTag(HomeTags.COUNTER).assertTextEquals("0 / 6,000")
+        compose.onNodeWithTag(TopBarTags.NEW).assertDoesNotExist()
     }
 
     @Test
@@ -268,7 +295,7 @@ class ScreensTest {
         var items by mutableStateOf<List<SavedVerdict>?>(emptyList())
         compose.setContent {
             Themed(AppLang.EN) {
-                HistoryScreen(items = items, onOpen = {}, onDelete = {}, onDeleteAll = {}, onToggleLang = {})
+                HistoryScreen(items = items, onOpen = {}, onDelete = {}, onDeleteAll = {}, onNew = {})
             }
         }
         compose.onNodeWithTag(HistoryTags.EMPTY).assertExists()

@@ -136,7 +136,7 @@ class ScreenshotsTest {
         val outcome = sample("win_b_named")
         Themed(AppLang.EN) {
             Column(Modifier.fillMaxSize()) {
-                TopBar(onBack = null, onToggleLang = {})
+                TopBar(onBack = null, onNew = {})
                 Column(Modifier.padding(horizontal = 16.dp, vertical = 12.dp)) {
                     VerdictThreadHead(
                         UiTestSupport.s(AppLang.EN).exampleHotdogText,
@@ -173,7 +173,7 @@ class ScreenshotsTest {
         val content: @Composable () -> Unit = {
             Themed(lang) {
                 Column(Modifier.fillMaxSize()) {
-                    TopBar(onBack = null, onToggleLang = {})
+                    TopBar(onBack = null, onNew = {})
                     SampleVerdict(outcome, lang, Modifier.padding(horizontal = 16.dp, vertical = 12.dp), status)
                 }
             }
@@ -227,12 +227,12 @@ class ScreenshotsTest {
 
     @Test
     fun signin_en() = capture("signin_en") {
-        Themed(AppLang.EN) { SignInScreen(SignInUiState(providers = bothProviders), onBack = {}, onToggleLang = {}, actions = SignInActions()) }
+        Themed(AppLang.EN) { SignInScreen(SignInUiState(providers = bothProviders), onBack = {}, onNew = {}, actions = SignInActions()) }
     }
 
     @Test
     fun signin_tr() = capture("signin_tr") {
-        Themed(AppLang.TR) { SignInScreen(SignInUiState(providers = bothProviders), onBack = {}, onToggleLang = {}, actions = SignInActions()) }
+        Themed(AppLang.TR) { SignInScreen(SignInUiState(providers = bothProviders), onBack = {}, onNew = {}, actions = SignInActions()) }
     }
 
     @Test
@@ -244,7 +244,7 @@ class ScreenshotsTest {
             code = "482913",
             error = SignInError.CODE_INVALID,
         )
-        Themed(AppLang.EN) { SignInScreen(state, onBack = {}, onToggleLang = {}, actions = SignInActions()) }
+        Themed(AppLang.EN) { SignInScreen(state, onBack = {}, onNew = {}, actions = SignInActions()) }
     }
 
     // --- Premium ---------------------------------------------------------------------
@@ -365,7 +365,7 @@ class ScreenshotsTest {
     private fun shotVerdict(name: String, outcome: VerdictOutcome, lang: AppLang) = capture(name, tall = true) {
         Themed(lang) {
             Column(Modifier.fillMaxSize()) {
-                TopBar(onBack = null, onToggleLang = {})
+                TopBar(onBack = null, onNew = {})
                 SampleVerdict(outcome, lang, Modifier.padding(horizontal = 16.dp, vertical = 12.dp))
             }
         }

@@ -156,7 +156,7 @@ class PremiumScreensTest {
                     onSubmit = { events += "submit" },
                     onSkip = { events += "skip" },
                     onBack = { events += "back" },
-                    onToggleLang = {},
+                    onNew = {},
                 )
             }
         }
@@ -216,7 +216,7 @@ class PremiumScreensTest {
     fun pricing_buyButtonsSayComingSoon_andThePlanShows() {
         compose.setContent {
             Themed(AppLang.EN) {
-                PricingScreen(PricingInfo(), true, Features(true, true), signedIn = true, signInOffered = true, entitlement = me("subscriber").entitlement, onBack = {}, onSignIn = {}, onToggleLang = {})
+                PricingScreen(PricingInfo(), true, Features(true, true), signedIn = true, signInOffered = true, entitlement = me("subscriber").entitlement, onBack = {}, onSignIn = {}, onNew = {})
             }
         }
         compose.onAllNodesWithTag(PricingTags.BUY).assertCountEquals(3)

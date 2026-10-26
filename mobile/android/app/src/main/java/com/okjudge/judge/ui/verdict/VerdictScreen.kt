@@ -69,7 +69,7 @@ fun VerdictRoute(
     shareBaseUrl: String,
     onBack: (() -> Unit)?,
     onJudgeAnother: (() -> Unit)?,
-    onToggleLang: () -> Unit,
+    onNew: (() -> Unit)?,
     argument: String? = null,
     fromHome: Boolean = false,
 ) {
@@ -88,7 +88,7 @@ fun VerdictRoute(
     val url = shareUrl(shareBaseUrl, id)
 
     Column(Modifier.fillMaxSize()) {
-        TopBar(onBack = onBack, onToggleLang = onToggleLang, backLabel = if (fromHome) s.homeKicker else s.appHistoryTitle)
+        TopBar(onBack = onBack, onNew = onNew, backLabel = if (fromHome) s.homeKicker else s.appHistoryTitle)
         val saved = state.saved
         val view = state.view
         if (saved == null || view == null) {

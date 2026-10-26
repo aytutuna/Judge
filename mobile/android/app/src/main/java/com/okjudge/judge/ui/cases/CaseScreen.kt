@@ -117,7 +117,7 @@ object CaseTags {
 /** Everything the case screen can ask for; the route wires these to [CaseViewModel] and the app shell. */
 data class CaseActions(
     val onBack: (() -> Unit)? = null,
-    val onToggleLang: () -> Unit = {},
+    val onNew: (() -> Unit)? = null,
     val onReload: () -> Unit = {},
     val onSignIn: () -> Unit = {},
     val onPricing: () -> Unit = {},
@@ -163,7 +163,7 @@ fun CaseScreen(
     val kicker = if (view?.oneSided == true) s.caseKickerOneSided else s.caseKicker
 
     Column(modifier.fillMaxSize()) {
-        TopBar(onBack = actions.onBack, onToggleLang = actions.onToggleLang, backLabel = s.appHistoryTitle)
+        TopBar(onBack = actions.onBack, onNew = actions.onNew, backLabel = s.appHistoryTitle)
         if (view == null) {
             Column(Modifier.fillMaxSize().padding(horizontal = 20.dp), verticalArrangement = Arrangement.spacedBy(14.dp)) {
                 Header(kicker, null)

@@ -126,7 +126,7 @@ fun HomeScreen(
     onPreset: (Preset) -> Unit,
     onSubmit: () -> Unit,
     onDismissError: () -> Unit,
-    onToggleLang: () -> Unit,
+    onNew: (() -> Unit)?,
     onOpenPrivacy: () -> Unit,
     modifier: Modifier = Modifier,
     onTier: (Tier) -> Unit = {},
@@ -155,7 +155,7 @@ fun HomeScreen(
     val blocked = blockedUntil != null && now < blockedUntil
 
     Column(modifier.fillMaxSize().background(Palette.ivory2)) {
-        TopBar(onBack = null, onToggleLang = onToggleLang)
+        TopBar(onBack = null, onNew = onNew?.takeUnless { state.blank })
         Column(
             Modifier
                 .fillMaxSize()

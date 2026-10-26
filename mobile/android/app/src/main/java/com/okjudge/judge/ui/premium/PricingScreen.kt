@@ -93,7 +93,7 @@ fun PricingScreen(
     entitlement: Entitlement?,
     onBack: (() -> Unit)?,
     onSignIn: () -> Unit,
-    onToggleLang: () -> Unit,
+    onNew: (() -> Unit)?,
     modifier: Modifier = Modifier,
     store: StoreUi = StoreUi(),
     onBuy: (productId: String) -> Unit = {},
@@ -105,7 +105,7 @@ fun PricingScreen(
     // The store's offer for a product, when this account can buy it now.
     fun offerFor(id: String): StoreOffer? = if (storeOn && signedIn) store.offers[id] else null
     Column(modifier.fillMaxSize()) {
-        TopBar(onBack = onBack, onToggleLang = onToggleLang)
+        TopBar(onBack = onBack, onNew = onNew)
         Column(
             Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(horizontal = 20.dp),
             horizontalAlignment = Alignment.CenterHorizontally,

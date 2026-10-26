@@ -65,7 +65,7 @@ fun SettingsScreen(
     langPref: LangPref,
     versionName: String,
     onLangPref: (LangPref) -> Unit,
-    onToggleLang: () -> Unit,
+    onNew: (() -> Unit)?,
     onOpenLink: (String) -> Unit,
     siteBaseUrl: String,
     modifier: Modifier = Modifier,
@@ -81,7 +81,7 @@ fun SettingsScreen(
     val s = LocalStrings.current
     val base = siteBaseUrl.trimEnd('/')
     Column(modifier.fillMaxSize()) {
-        TopBar(onBack = null, onToggleLang = onToggleLang)
+        TopBar(onBack = null, onNew = onNew)
         Column(
             Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(horizontal = 20.dp, vertical = 8.dp),
             verticalArrangement = Arrangement.spacedBy(24.dp),

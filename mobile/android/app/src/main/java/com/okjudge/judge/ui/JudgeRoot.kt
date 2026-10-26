@@ -43,7 +43,6 @@ import com.okjudge.judge.AppContainer
 import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import com.okjudge.judge.core.auth.Account
 import com.okjudge.judge.core.session.VerdictFlow
-import com.okjudge.judge.i18n.AppLang
 import com.okjudge.judge.i18n.LangPref
 import com.okjudge.judge.i18n.LocalLang
 import com.okjudge.judge.i18n.LocalStrings
@@ -112,9 +111,6 @@ fun JudgeRoot(container: AppContainer, links: StateFlow<Uri?> = MutableStateFlow
     val lang = langPref.resolve(deviceTag)
     val strings = remember(lang) { container.strings.of(lang) }
     val scope = rememberCoroutineScope()
-    val toggleLang: () -> Unit = {
-        scope.launch { container.settings.setLangPref(if (lang == AppLang.EN) LangPref.TR else LangPref.EN) }
-    }
 
     CompositionLocalProvider(LocalLang provides lang, LocalStrings provides strings) {
         JudgeTheme {
@@ -127,6 +123,13 @@ fun JudgeRoot(container: AppContainer, links: StateFlow<Uri?> = MutableStateFlow
             val account = container.account
             val snackbar = remember { SnackbarHostState() }
             val currentStrings by rememberUpdatedState(strings)
+            // "+": a new argument on an empty form. Leaving the judging screen this way
+            // cancels it, like its own Cancel.
+            val newArgument: () -> Unit = {
+                if (backStack.lastOrNull() is JudgingKey) container.verdictFlow.cancel()
+                clearDraft = true
+                backStack.resetTo(listOf(HomeKey))
+            }
             LaunchedEffect(container.verdictFlow) {
                 // Premium moves on by itself: questions first, then the judging screen.
                 container.verdictFlow.navigation.collect { nav ->
@@ -257,7 +260,7 @@ fun JudgeRoot(container: AppContainer, links: StateFlow<Uri?> = MutableStateFlow
                                     }
                                 },
                                 onDismissError = vm::dismissError,
-                                onToggleLang = toggleLang,
+                                onNew = newArgument,
                                 onOpenPrivacy = { openLink(context, "${container.config.shareBaseUrl.trimEnd('/')}/privacy") },
                                 onTier = vm::onTier,
                                 onPremiumIntent = { vm.onTier(Tier.PREMIUM) },
@@ -300,7 +303,7 @@ fun JudgeRoot(container: AppContainer, links: StateFlow<Uri?> = MutableStateFlow
                                         container.verdictFlow.leaveClarify()
                                         backStack.removeAll { it is ClarifyKey }
                                     },
-                                    onToggleLang = toggleLang,
+                                    onNew = newArgument,
                                 )
                             }
                         }
@@ -328,7 +331,7 @@ fun JudgeRoot(container: AppContainer, links: StateFlow<Uri?> = MutableStateFlow
                                 entitlement = signedIn?.me?.entitlement,
                                 onBack = { backStack.removeAll { it is PricingKey } },
                                 onSignIn = { if (backStack.lastOrNull() !is SignInKey) backStack.add(SignInKey(thenVerdict = false)) },
-                                onToggleLang = toggleLang,
+                                onNew = newArgument,
                                 store = StoreUi(
                                     available = store.available,
                                     offers = if (purchases.isReady(store)) store.offers else emptyMap(),
@@ -352,7 +355,7 @@ fun JudgeRoot(container: AppContainer, links: StateFlow<Uri?> = MutableStateFlow
                                     clearDraft = true
                                     backStack.resetTo(listOf(HomeKey))
                                 }) else null,
-                                onToggleLang = toggleLang,
+                                onNew = newArgument,
                                 argument = key.argument,
                                 fromHome = key.fromHome,
                             )
@@ -376,7 +379,7 @@ fun JudgeRoot(container: AppContainer, links: StateFlow<Uri?> = MutableStateFlow
                                 onOpen = { id -> backStack.add(VerdictKey(id, fresh = false)) },
                                 onDelete = vm::delete,
                                 onDeleteAll = vm::deleteAll,
-                                onToggleLang = toggleLang,
+                                onNew = newArgument,
                                 cases = cases?.first,
                                 onOpenCase = { id -> backStack.add(CaseKey(id)) },
                                 onRetryCases = { cases?.second?.reload() },
@@ -405,7 +408,7 @@ fun JudgeRoot(container: AppContainer, links: StateFlow<Uri?> = MutableStateFlow
                                 reducedMotion = rememberReducedMotion(),
                                 actions = CaseActions(
                                     onBack = if (backStack.size > 1) ({ backStack.removeAt(backStack.lastIndex) }) else null,
-                                    onToggleLang = toggleLang,
+                                    onNew = newArgument,
                                     onReload = vm::reload,
                                     onSignIn = { if (backStack.lastOrNull() !is SignInKey) backStack.add(SignInKey(thenVerdict = false)) },
                                     onPricing = { if (backStack.lastOrNull() !is PricingKey) backStack.add(PricingKey) },
@@ -449,7 +452,7 @@ fun JudgeRoot(container: AppContainer, links: StateFlow<Uri?> = MutableStateFlow
                                 langPref = langPref,
                                 versionName = container.config.versionName,
                                 onLangPref = { pref -> scope.launch { container.settings.setLangPref(pref) } },
-                                onToggleLang = toggleLang,
+                                onNew = newArgument,
                                 onOpenLink = { openLink(context, it) },
                                 siteBaseUrl = container.config.shareBaseUrl,
                                 account = accountState,
@@ -475,7 +478,7 @@ fun JudgeRoot(container: AppContainer, links: StateFlow<Uri?> = MutableStateFlow
                             SignInScreen(
                                 state = state,
                                 onBack = { backStack.removeAll { it is SignInKey } },
-                                onToggleLang = toggleLang,
+                                onNew = newArgument,
                                 actions = SignInActions(
                                     onGoogle = { vm.google(context) },
                                     onEmailChange = vm::onEmailChange,

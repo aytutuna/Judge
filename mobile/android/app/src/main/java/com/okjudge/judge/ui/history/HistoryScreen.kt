@@ -103,7 +103,7 @@ fun HistoryScreen(
     onOpen: (String) -> Unit,
     onDelete: (String) -> Unit,
     onDeleteAll: () -> Unit,
-    onToggleLang: () -> Unit,
+    onNew: (() -> Unit)?,
     modifier: Modifier = Modifier,
     /** The account's two-sided cases; null hides the section (cases off, signed out). */
     cases: CaseListState? = null,
@@ -118,7 +118,7 @@ fun HistoryScreen(
     var confirmOne by rememberSaveable { mutableStateOf<String?>(null) }
 
     Column(modifier.fillMaxSize()) {
-        TopBar(onBack = null, onToggleLang = onToggleLang)
+        TopBar(onBack = null, onNew = onNew)
         Row(
             Modifier.fillMaxWidth().padding(horizontal = 20.dp, vertical = 4.dp),
             verticalAlignment = Alignment.CenterVertically,

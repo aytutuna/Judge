@@ -71,6 +71,9 @@ data class HomeUiState(
     /** A premium request is being prepared: the form and the switch hold still. */
     val holding: Boolean get() = checking || creating
 
+    /** Nothing typed or attached: the "+" has nothing to clear here. */
+    val blank: Boolean get() = argument.isEmpty() && evidence.items.isEmpty()
+
     val canSubmit: Boolean
         get() = ArgumentRules.canSubmit(argument) && !holding && !(evidenceOn && evidence.busy)
 }
