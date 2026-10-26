@@ -120,6 +120,7 @@ export function buildCaseView(bundle: CaseBundle, ctx: ViewContext): CaseView {
     yourParty,
     status,
     mode: row.mode,
+    tier: row.tier,
     lang: row.lang,
     framework: row.framework,
     createdAt: row.createdAt,

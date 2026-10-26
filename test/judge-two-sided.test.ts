@@ -13,6 +13,7 @@ import {
   TWO_SIDED_JUDGE_NOTE,
   TWO_SIDED_JUDGE_SCHEMA,
 } from "../lib/judge";
+import { judgeFreeAnonymized } from "../lib/free-run";
 import { TwoSidedJudgeRunOutput, type JudgeRunOutput } from "../lib/types";
 
 const mockClaude = vi.mocked(claudeJson);
@@ -115,6 +116,24 @@ describe("judgeOnce options", () => {
     mockClaude.mockResolvedValue({ ok: true, data: RUN });
     const run = await judgeOnce("x", { preset: "balanced" }, { twoSided: true });
     expect(run.ok).toBe(false);
+  });
+
+  it("the free judges take the two-sided options and add no premium keys", async () => {
+    vi.stubEnv("CRUX_TRIAL", "0");
+    vi.stubEnv("JUDGE_RUNS", "");
+    mockClaude.mockResolvedValue({ ok: true, data: TWO });
+    const judged = await judgeFreeAnonymized("doc", { preset: "balanced" }, "en", { twoSided: true });
+    vi.unstubAllEnvs();
+    expect(mockClaude).toHaveBeenCalledTimes(3);
+    for (let i = 0; i < 3; i++) {
+      expect(call(i).schema).toBe(TWO_SIDED_JUDGE_SCHEMA);
+      expect(call(i).system).toContain(TWO_SIDED_JUDGE_NOTE);
+      expect(call(i).system).not.toContain(PREMIUM_JUDGE_NOTE);
+      expect(call(i).user).toBe("THE CASE:\n\ndoc");
+    }
+    if (!judged.ok) throw new Error("expected a verdict");
+    expect(judged.result.agreed_facts).toEqual(["There was a bill"]);
+    for (const key of ["tier", "fact_check", "panel"]) expect(judged.result).not.toHaveProperty(key);
   });
 
   it("judgeExtra passes the case options to every run", async () => {

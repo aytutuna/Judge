@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
-# One-time setup of Verdict on a fresh AWS Lightsail Ubuntu 24.04 LTS
+# One-time setup of Judge on a fresh AWS Lightsail Ubuntu 24.04 LTS
 # instance. Run it as the default "ubuntu" user from the browser SSH window:
 #
-#   curl -fsSL https://raw.githubusercontent.com/aytutuna/Verdict/main/deploy/aws-lightsail/setup.sh -o setup.sh && sudo bash setup.sh
+#   curl -fsSL https://raw.githubusercontent.com/aytutuna/Judge/main/deploy/aws-lightsail/setup.sh -o setup.sh && sudo bash setup.sh
 #
 # Options:
 #   --branch NAME    deploy another branch (default: main)
-#   --repo URL       clone another repository (default: the Verdict repo)
+#   --repo URL       clone another repository (default: the Judge repo)
 #   --reconfigure    ask for the API key and site address again (e.g. to move
 #                    the site to your own domain, with or without Cloudflare)
 #
@@ -18,7 +18,7 @@
 # /etc/verdict/verdict.env, then builds and starts the site with update.sh.
 set -euo pipefail
 
-REPO_URL_DEFAULT=https://github.com/aytutuna/Verdict.git
+REPO_URL_DEFAULT=https://github.com/aytutuna/Judge.git
 BRANCH_DEFAULT=main
 NODE_MAJOR=24
 APP_USER=verdict
@@ -407,7 +407,7 @@ write_env_file() {
     local tmp
     tmp=$(mktemp "$ENV_DIR/.verdict.env.XXXXXX")
     cat >"$tmp" <<EOF
-# Verdict settings. Read by systemd (verdict.service) at start and by
+# Judge settings. Read by systemd (verdict.service) at start and by
 # update.sh at build time. Format: KEY=value, one per line, no quotes needed.
 #
 # After editing (sudo nano $ENV_FILE):
@@ -472,6 +472,8 @@ TURNSTILE_SECRET_KEY=
 # APPLE_PRIVATE_KEY_BASE64=
 # RESEND_API_KEY=
 # EMAIL_FROM=Judge <signin@okjudge.com>
+# REVIEW_ACCOUNT_EMAIL=   (store reviewers' test account; with REVIEW_ACCOUNT_CODE, a 6-digit code)
+# REVIEW_ACCOUNT_CODE=
 # PREMIUM_DAILY_CAP=500
 
 $(cloudflare_settings_block)

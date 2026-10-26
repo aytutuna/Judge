@@ -129,7 +129,6 @@ class Strings(private val res: Resources) {
     fun waitMinutes(n: String): String = res.getString(R.string.wait_minutes, n)
     val waitHour: String get() = res.getString(R.string.wait_hour)
     fun waitHours(n: String): String = res.getString(R.string.wait_hours, n)
-    val navHow: String get() = res.getString(R.string.nav_how)
     val examplesLabel: String get() = res.getString(R.string.examples_label)
     val exampleHotdogLabel: String get() = res.getString(R.string.example_hotdog_label)
     val exampleHotdogText: String get() = res.getString(R.string.example_hotdog_text)
@@ -145,6 +144,7 @@ class Strings(private val res: Resources) {
     fun advancedCurrent(label: String): String = res.getString(R.string.advanced_current, label)
     val turnstileLabel: String get() = res.getString(R.string.turnstile_label)
     val privacyLink: String get() = res.getString(R.string.privacy_link)
+    val howTitle: String get() = res.getString(R.string.how_title)
     val footerAbout: String get() = res.getString(R.string.footer_about)
     val footerPrivacy: String get() = res.getString(R.string.footer_privacy)
     val footerNote: String get() = res.getString(R.string.footer_note)
@@ -276,6 +276,7 @@ class Strings(private val res: Resources) {
     val modeBoth: String get() = res.getString(R.string.mode_both)
     val modeNowHint: String get() = res.getString(R.string.mode_now_hint)
     val modeBothHint: String get() = res.getString(R.string.mode_both_hint)
+    val modeSignIn: String get() = res.getString(R.string.mode_sign_in)
     val caseCreate: String get() = res.getString(R.string.case_create)
     val caseCreating: String get() = res.getString(R.string.case_creating)
     val caseKicker: String get() = res.getString(R.string.case_kicker)
@@ -307,10 +308,12 @@ class Strings(private val res: Resources) {
     val caseJudgeNowConfirm: String get() = res.getString(R.string.case_judge_now_confirm)
     val caseJudgeNowYes: String get() = res.getString(R.string.case_judge_now_yes)
     val caseJudgeExpiredConfirm: String get() = res.getString(R.string.case_judge_expired_confirm)
+    val caseJudgeExpiredConfirmFree: String get() = res.getString(R.string.case_judge_expired_confirm_free)
     val caseJudgeExpiredYes: String get() = res.getString(R.string.case_judge_expired_yes)
     val caseCancel: String get() = res.getString(R.string.case_cancel)
     val caseRetry: String get() = res.getString(R.string.case_retry)
     val caseFailedBody: String get() = res.getString(R.string.case_failed_body)
+    val caseFailedBodyFree: String get() = res.getString(R.string.case_failed_body_free)
     val caseYourSide: String get() = res.getString(R.string.case_your_side)
     val caseAccounts: String get() = res.getString(R.string.case_accounts)
     val caseAccountA: String get() = res.getString(R.string.case_account_a)
@@ -324,6 +327,7 @@ class Strings(private val res: Resources) {
     val caseAnswered: String get() = res.getString(R.string.case_answered)
     val caseJudgingAlone: String get() = res.getString(R.string.case_judging_alone)
     val caseExpiredBody: String get() = res.getString(R.string.case_expired_body)
+    val caseExpiredBodyFree: String get() = res.getString(R.string.case_expired_body_free)
     val caseOneSided: String get() = res.getString(R.string.case_one_sided)
     val caseStartOver: String get() = res.getString(R.string.case_start_over)
     val caseListTitle: String get() = res.getString(R.string.case_list_title)
@@ -409,7 +413,6 @@ class Strings(private val res: Resources) {
     val appealFailed: String get() = res.getString(R.string.appeal_failed)
     val appealRefused: String get() = res.getString(R.string.appeal_refused)
     val appealHistory: String get() = res.getString(R.string.appeal_history)
-    val pricingPremiumF4: String get() = res.getString(R.string.pricing_premium_f4)
     val pricingPremiumF5: String get() = res.getString(R.string.pricing_premium_f5)
     val pricingPremiumF6: String get() = res.getString(R.string.pricing_premium_f6)
     val langToggleToTr: String get() = res.getString(R.string.lang_toggle_to_tr)
@@ -448,6 +451,8 @@ class Strings(private val res: Resources) {
     val accountVerdictsEmpty: String get() = res.getString(R.string.account_verdicts_empty)
     val accountVerdictsLoadFailed: String get() = res.getString(R.string.account_verdicts_load_failed)
     val accountVerdictsRemoved: String get() = res.getString(R.string.account_verdicts_removed)
+    fun verdictAgree(n: String, total: String): String = res.getString(R.string.verdict_agree, n, total)
+    val verdictNoMajority: String get() = res.getString(R.string.verdict_no_majority)
     val appName: String get() = res.getString(R.string.app_name)
     val appTabNew: String get() = res.getString(R.string.app_tab_new)
     val appTabHistory: String get() = res.getString(R.string.app_tab_history)
@@ -611,7 +616,6 @@ class Strings(private val res: Resources) {
             "wait.moment" -> R.string.wait_moment
             "wait.minute" -> R.string.wait_minute
             "wait.hour" -> R.string.wait_hour
-            "nav.how" -> R.string.nav_how
             "examples.label" -> R.string.examples_label
             "example.hotdog.label" -> R.string.example_hotdog_label
             "example.hotdog.text" -> R.string.example_hotdog_text
@@ -626,6 +630,7 @@ class Strings(private val res: Resources) {
             "advanced.summary" -> R.string.advanced_summary
             "turnstile.label" -> R.string.turnstile_label
             "privacyLink" -> R.string.privacy_link
+            "how.title" -> R.string.how_title
             "footer.about" -> R.string.footer_about
             "footer.privacy" -> R.string.footer_privacy
             "footer.note" -> R.string.footer_note
@@ -741,6 +746,7 @@ class Strings(private val res: Resources) {
             "mode.both" -> R.string.mode_both
             "mode.nowHint" -> R.string.mode_now_hint
             "mode.bothHint" -> R.string.mode_both_hint
+            "mode.signIn" -> R.string.mode_sign_in
             "case.create" -> R.string.case_create
             "case.creating" -> R.string.case_creating
             "case.kicker" -> R.string.case_kicker
@@ -770,10 +776,12 @@ class Strings(private val res: Resources) {
             "case.judgeNow.confirm" -> R.string.case_judge_now_confirm
             "case.judgeNow.yes" -> R.string.case_judge_now_yes
             "case.judgeExpired.confirm" -> R.string.case_judge_expired_confirm
+            "case.judgeExpired.confirmFree" -> R.string.case_judge_expired_confirm_free
             "case.judgeExpired.yes" -> R.string.case_judge_expired_yes
             "case.cancel" -> R.string.case_cancel
             "case.retry" -> R.string.case_retry
             "case.failedBody" -> R.string.case_failed_body
+            "case.failedBodyFree" -> R.string.case_failed_body_free
             "case.yourSide" -> R.string.case_your_side
             "case.accounts" -> R.string.case_accounts
             "case.accountA" -> R.string.case_account_a
@@ -784,6 +792,7 @@ class Strings(private val res: Resources) {
             "case.answered" -> R.string.case_answered
             "case.judgingAlone" -> R.string.case_judging_alone
             "case.expiredBody" -> R.string.case_expired_body
+            "case.expiredBodyFree" -> R.string.case_expired_body_free
             "case.oneSided" -> R.string.case_one_sided
             "case.startOver" -> R.string.case_start_over
             "case.list.title" -> R.string.case_list_title
@@ -855,7 +864,6 @@ class Strings(private val res: Resources) {
             "appeal.failed" -> R.string.appeal_failed
             "appeal.refused" -> R.string.appeal_refused
             "appeal.history" -> R.string.appeal_history
-            "pricing.premium.f4" -> R.string.pricing_premium_f4
             "pricing.premium.f5" -> R.string.pricing_premium_f5
             "pricing.premium.f6" -> R.string.pricing_premium_f6
             "langToggle.toTr" -> R.string.lang_toggle_to_tr
@@ -894,6 +902,7 @@ class Strings(private val res: Resources) {
             "account.verdicts.empty" -> R.string.account_verdicts_empty
             "account.verdicts.loadFailed" -> R.string.account_verdicts_load_failed
             "account.verdicts.removed" -> R.string.account_verdicts_removed
+            "verdict.noMajority" -> R.string.verdict_no_majority
             "app.name" -> R.string.app_name
             "app.tab.new" -> R.string.app_tab_new
             "app.tab.history" -> R.string.app_tab_history

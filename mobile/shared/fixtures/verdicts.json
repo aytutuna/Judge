@@ -1080,6 +1080,7 @@
         "yourParty": "a",
         "status": "awaiting_respondent",
         "mode": null,
+        "tier": "premium",
         "lang": "en",
         "framework": {
           "preset": "balanced"
@@ -1131,6 +1132,7 @@
         "yourParty": "b",
         "status": "judging",
         "mode": "two_sided",
+        "tier": "premium",
         "lang": "en",
         "framework": {
           "preset": "balanced"
@@ -1182,6 +1184,7 @@
         "yourParty": "a",
         "status": "judging",
         "mode": "two_sided",
+        "tier": "premium",
         "lang": "en",
         "framework": {
           "preset": "balanced"
@@ -1233,6 +1236,7 @@
         "yourParty": "a",
         "status": "judged",
         "mode": "two_sided",
+        "tier": "premium",
         "lang": "en",
         "framework": {
           "preset": "balanced"
@@ -1368,6 +1372,7 @@
         "yourParty": "a",
         "status": "judged",
         "mode": "one_sided",
+        "tier": "premium",
         "lang": "en",
         "framework": {
           "preset": "balanced"
@@ -1467,6 +1472,7 @@
         "yourParty": "a",
         "status": "judged",
         "mode": "two_sided",
+        "tier": "premium",
         "lang": "tr",
         "framework": {
           "preset": "balanced"
@@ -1588,6 +1594,7 @@
         "yourParty": "a",
         "status": "judged",
         "mode": "two_sided",
+        "tier": "premium",
         "lang": "en",
         "framework": {
           "preset": "balanced"
@@ -1735,6 +1742,7 @@
         "yourParty": "a",
         "status": "judged",
         "mode": "two_sided",
+        "tier": "premium",
         "lang": "en",
         "framework": {
           "preset": "balanced"
@@ -1962,6 +1970,7 @@
         "yourParty": "a",
         "status": "judged",
         "mode": "two_sided",
+        "tier": "premium",
         "lang": "en",
         "framework": {
           "preset": "balanced"
@@ -2189,6 +2198,7 @@
         "yourParty": "a",
         "status": "judged",
         "mode": "two_sided",
+        "tier": "premium",
         "lang": "en",
         "framework": {
           "preset": "balanced"
@@ -2425,6 +2435,7 @@
         "yourParty": "a",
         "status": "failed",
         "mode": "two_sided",
+        "tier": "premium",
         "lang": "en",
         "framework": {
           "preset": "balanced"
@@ -2476,6 +2487,7 @@
         "yourParty": "a",
         "status": "expired",
         "mode": null,
+        "tier": "premium",
         "lang": "en",
         "framework": {
           "preset": "balanced"
@@ -2527,6 +2539,7 @@
         "yourParty": "a",
         "status": "judged",
         "mode": "two_sided",
+        "tier": "premium",
         "lang": "en",
         "framework": {
           "preset": "balanced"
@@ -2702,6 +2715,7 @@
         "yourParty": "a",
         "status": "awaiting_respondent",
         "mode": null,
+        "tier": "premium",
         "lang": "en",
         "framework": {
           "preset": "balanced"
@@ -2780,6 +2794,7 @@
         "yourParty": "a",
         "status": "judged",
         "mode": "two_sided",
+        "tier": "premium",
         "lang": "en",
         "framework": {
           "preset": "balanced"

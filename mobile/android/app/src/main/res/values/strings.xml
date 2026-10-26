@@ -124,7 +124,6 @@
     <string name="wait_minutes">%1$s minutes</string>
     <string name="wait_hour">1 hour</string>
     <string name="wait_hours">%1$s hours</string>
-    <string name="nav_how">How it works</string>
     <string name="examples_label">Stuck? Try one of these:</string>
     <string name="example_hotdog_label">🌭 Is a hot dog a sandwich?</string>
     <string name="example_hotdog_text">My friend Sam says a hot dog is a sandwich: it\'s a filling inside sliced bread, end of story. I say it\'s its own thing. Nobody orders a sandwich and expects a hot dog, and no menu lists it under sandwiches.</string>
@@ -140,6 +139,7 @@
     <string name="advanced_current">Now: %1$s</string>
     <string name="turnstile_label">Quick check that you\'re human</string>
     <string name="privacy_link">What happens to your text</string>
+    <string name="how_title">How it works</string>
     <string name="footer_about">About</string>
     <string name="footer_privacy">Privacy</string>
     <string name="footer_note">For fun and clarity, not legal advice.</string>
@@ -195,7 +195,7 @@
     <string name="factcheck_none_factual">Nothing here could be checked on the web: the facts in this one are between the people involved.</string>
     <string name="factcheck_unavailable">The web check didn\'t finish this time, so the judges ruled without it.</string>
     <string name="signin_title">Sign in</string>
-    <string name="signin_lead">You only need an account for Premium. Free verdicts never ask for one.</string>
+    <string name="signin_lead">You only need an account for two-sided cases and Premium. Free verdicts never ask for one.</string>
     <string name="signin_apple">Continue with Apple</string>
     <string name="signin_google">Continue with Google</string>
     <string name="signin_email_toggle">Use email instead</string>
@@ -277,6 +277,7 @@
     <string name="mode_both">Both sides (send a link)</string>
     <string name="mode_now_hint">You tell it, and the judges rule right away.</string>
     <string name="mode_both_hint">We\'ll give you a private link. They tell their side; neither of you sees the other\'s until the verdict.</string>
+    <string name="mode_sign_in">Sign in to send a link</string>
     <string name="case_create">Create the invite</string>
     <string name="case_creating">Anonymizing your side…</string>
     <string name="case_kicker">Both sides</string>
@@ -308,10 +309,12 @@
     <string name="case_judge_now_confirm">Get a one-sided verdict now? The invite closes and they can\'t answer anymore.</string>
     <string name="case_judge_now_yes">Yes, judge it now</string>
     <string name="case_judge_expired_confirm">Get a verdict on your side alone? This uses 1 premium verdict.</string>
+    <string name="case_judge_expired_confirm_free">Get a verdict on your side alone?</string>
     <string name="case_judge_expired_yes">Yes, use 1 verdict</string>
     <string name="case_cancel">Cancel</string>
     <string name="case_retry">Try again</string>
     <string name="case_failed_body">Your credit is back. You can try again now.</string>
+    <string name="case_failed_body_free">Something went wrong on our side. You can try again now.</string>
     <string name="case_your_side">Your side, as the judges read it</string>
     <string name="case_accounts">What each side told the judges</string>
     <string name="case_account_a">Party A\'s account</string>
@@ -325,6 +328,7 @@
     <string name="case_answered">They answered. The judges are working on it.</string>
     <string name="case_judging_alone">The judges are working on your side.</string>
     <string name="case_expired_body">Nobody answered in 7 days, so your credit is back. You can still get a verdict on your side alone.</string>
+    <string name="case_expired_body_free">Nobody answered in 7 days. You can still get a verdict on your side alone.</string>
     <string name="case_one_sided">Judged on your side only.</string>
     <string name="case_start_over">Start a new case</string>
     <string name="case_list_title">Your cases</string>
@@ -410,7 +414,6 @@
     <string name="appeal_failed">The re-judge didn\'t go through. Your credit is back; you can try again.</string>
     <string name="appeal_refused">The judges wouldn\'t re-judge with that context. Your credit is back.</string>
     <string name="appeal_history">Verdict history</string>
-    <string name="pricing_premium_f4">Two-sided cases: the other person tells their side through a private link. One premium verdict per case, held until it\'s judged and back if nobody answers</string>
     <string name="pricing_premium_f5">Screenshot evidence, read and then thrown away, at no extra cost</string>
     <string name="pricing_premium_f6">Add context after a verdict and get it re-judged (1 premium verdict)</string>
     <string name="lang_toggle_to_tr">Türkçeye geç</string>
@@ -449,6 +452,8 @@
     <string name="account_verdicts_empty">No verdicts yet.</string>
     <string name="account_verdicts_load_failed">We couldn\'t load your verdicts.</string>
     <string name="account_verdicts_removed">Removed</string>
+    <string name="verdict_agree">%1$s of %2$s agree</string>
+    <string name="verdict_no_majority">Judges split</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">New</string>
     <string name="app_tab_history">My verdicts</string>

@@ -16,9 +16,7 @@ import { mkdirSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { chromium, type Browser, type BrowserContext, type Page } from "playwright-core";
-import { tiltFromTug } from "../lib/balance";
 import type { JudgeVerdict, VerdictResponse, VerdictResult } from "../lib/types";
-import { tugFinal } from "../lib/verdict-display";
 
 const args = process.argv.slice(2);
 const arg = (name: string, fallback: string) => {
@@ -179,11 +177,12 @@ async function scrollStory(page: Page, q: number): Promise<void> {
 async function staticPages(browser: Browser): Promise<void> {
   const routes: { name: string; path: string }[] = [
     { name: "home", path: "/" },
-    { name: "how", path: "/#how" },
-    { name: "sample", path: "/#sample" },
-    { name: "faq", path: "/#faq" },
+    { name: "how", path: "/about#how" },
+    { name: "sample", path: "/about#sample" },
+    { name: "faq", path: "/about#faq" },
     { name: "about", path: "/about" },
     { name: "privacy", path: "/privacy" },
+    { name: "verdicts", path: "/verdicts" },
     { name: "404", path: "/no-such-page" },
   ];
   for (const vp of [
@@ -195,7 +194,7 @@ async function staticPages(browser: Browser): Promise<void> {
       if (!wanted(name)) continue;
       const { ctx, page } = await newPage(browser, { viewport: vp.viewport });
       await page.goto(BASE + r.path, { waitUntil: "load" });
-      if (r.path === "/") await waitForScene(page);
+      if (r.path.startsWith("/about")) await waitForScene(page);
       else await page.waitForTimeout(1200);
       await shot(page, name);
       await ctx.close();
@@ -212,7 +211,7 @@ async function story(browser: Browser): Promise<void> {
       const base = `story-${vp.tag}${reduced ? "-reduced" : ""}`;
       if (!wanted(base)) continue;
       const { ctx, page } = await newPage(browser, { viewport: vp.viewport, reduced });
-      await page.goto(BASE + "/", { waitUntil: "load" });
+      await page.goto(BASE + "/about", { waitUntil: "load" });
       const status = await waitForScene(page);
       check(`${base}: scene loads`, status === "ready", `status ${status}`);
       for (let step = 0; step < 5; step++) {
@@ -237,36 +236,8 @@ async function story(browser: Browser): Promise<void> {
   }
 }
 
-async function overlap(browser: Browser): Promise<void> {
-  if (!wanted("overlap")) return;
-  const { ctx, page } = await newPage(browser, { viewport: MOBILE, lang: "tr" });
-  await page.goto(BASE + "/", { waitUntil: "load" });
-  await waitForScene(page);
-  await page.waitForTimeout(1200); // let the SVG-to-canvas crossfade finish
-  const restOpacity = await page.evaluate(() => {
-    const c = document.querySelector("[data-scene-wrap] canvas");
-    return c ? Number(getComputedStyle(c).opacity) : -1;
-  });
-  console.log(`  canvas opacity at rest (TR, 390px): ${restOpacity}`);
-  // Scroll until the TR h1 sits inside the balance's box.
-  await page.evaluate(() => window.scrollTo({ top: innerHeight * 0.22, behavior: "instant" as ScrollBehavior }));
-  await page.waitForTimeout(900);
-  const res = await page.evaluate(() => {
-    const c = document.querySelector("[data-scene-wrap] canvas") as HTMLElement | null;
-    const h1 = document.querySelector("#hero-title")?.getBoundingClientRect();
-    return {
-      opacity: c ? Number(c.style.opacity || getComputedStyle(c).opacity) : -1,
-      visibility: c ? getComputedStyle(c).visibility : "none",
-      h1Top: h1?.top ?? -1,
-    };
-  });
-  check("overlap: canvas hidden while the TR h1 crosses the balance", res.opacity === 0, JSON.stringify(res));
-  await shot(page, "overlap-tr-m");
-  await ctx.close();
-}
-
 /** First screen: the CTA on laptops, the textarea on phones (EN and TR),
- * and the #sample deep link clear of the last story card. */
+ * and the about page's #sample deep link clear of the last story card. */
 async function fold(browser: Browser): Promise<void> {
   if (!wanted("fold")) return;
   for (const lang of ["en", "tr"] as const) {
@@ -293,7 +264,7 @@ async function fold(browser: Browser): Promise<void> {
       await ctx.close();
     }
     const { ctx, page } = await newPage(browser, { viewport: MOBILE, lang });
-    await page.goto(BASE + "/#sample", { waitUntil: "load" });
+    await page.goto(BASE + "/about#sample", { waitUntil: "load" });
     await page.waitForTimeout(2000);
     const res = await page.evaluate(() => {
       const last = document.querySelector("#how ol > li:last-child")?.firstElementChild?.getBoundingClientRect();
@@ -304,26 +275,96 @@ async function fold(browser: Browser): Promise<void> {
   }
 }
 
-async function heroLayout(browser: Browser): Promise<void> {
-  if (!wanted("hero-layout")) return;
+async function composerLayout(browser: Browser): Promise<void> {
+  if (!wanted("composer-layout")) return;
   for (const lang of ["en", "tr"] as const) {
     const { ctx, page } = await newPage(browser, { viewport: MOBILE, lang });
     await page.goto(BASE + "/", { waitUntil: "load" });
     const res = await page.evaluate(() => {
-      const chips = document.querySelector('[role="group"][aria-labelledby="hero-spark"]') as HTMLElement | null;
-      const summary = document.querySelector("#main summary") as HTMLElement | null;
-      const cut = summary
-        ? [...summary.querySelectorAll<HTMLElement>("*")].filter((el) => el.scrollWidth > el.clientWidth + 1).length
-        : -1;
+      const tops = [...document.querySelectorAll('[role="group"][aria-labelledby="composer-examples"] button')].map(
+        (el) => el.getBoundingClientRect().top,
+      );
+      const bar = document.querySelector("#main form button[aria-expanded]")?.parentElement ?? null;
       return {
-        chipsWrap: chips ? chips.scrollWidth <= chips.clientWidth + 1 : false,
-        summaryCut: cut,
+        chipsRow:
+          tops.length > 0 &&
+          Math.max(...tops) - Math.min(...tops) <= 1 &&
+          document.documentElement.scrollWidth <= window.innerWidth,
+        barFits: bar ? bar.scrollWidth <= bar.clientWidth + 1 : false,
       };
     });
-    check(`hero-layout ${lang}: chips wrap (no horizontal scroll)`, res.chipsWrap);
-    check(`hero-layout ${lang}: mode label not cut off`, res.summaryCut === 0, `cut elements ${res.summaryCut}`);
+    check(`composer-layout ${lang}: chips on one row, page does not widen`, res.chipsRow);
+    check(`composer-layout ${lang}: toolbar fits on one row`, res.barFits);
     await ctx.close();
   }
+}
+
+/** The bottom tabs on phones: shown on an empty home page, gone while the
+ * composer is docked for a running argument, back under the "New argument"
+ * bar after the verdict without the two overlapping. Desktop has the
+ * header link instead. */
+async function tabs(browser: Browser): Promise<void> {
+  if (!wanted("tabs")) return;
+  const f = FIXTURES[0];
+  const { ctx, page } = await newPage(browser, { viewport: MOBILE });
+  await page.route("**/api/verdict", async (route) => {
+    if (route.request().method() !== "POST") return route.continue();
+    await new Promise((r) => setTimeout(r, f.delayMs));
+    await route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(f.body) });
+  });
+  const bar = () =>
+    page.evaluate(() => {
+      const nav = document.querySelector("nav[aria-label] a[href='/verdicts']")?.closest("nav") ?? null;
+      return nav && getComputedStyle(nav).display !== "none" ? nav.getBoundingClientRect().top : null;
+    });
+  await page.goto(BASE + "/", { waitUntil: "load" });
+  await page.waitForTimeout(800);
+  check("tabs: shown on the empty home page", (await bar()) !== null);
+  await shot(page, "tabs-empty-m");
+  await page.click('[role="group"][aria-labelledby="composer-examples"] button');
+  await page.waitForFunction(() => {
+    const b = document.querySelector('#main form button[type="submit"]') as HTMLButtonElement | null;
+    return b && !b.disabled;
+  });
+  await page.click('#main form button[type="submit"]');
+  await page.waitForTimeout(800);
+  check("tabs: hidden while the composer is docked", (await bar()) === null);
+  await shot(page, "tabs-judging-m");
+  await page.waitForSelector('[data-part="verdict"]', { timeout: f.delayMs + 15000 });
+  await page.evaluate(() => window.scrollTo({ top: document.body.scrollHeight, behavior: "instant" as ScrollBehavior }));
+  await page.waitForTimeout(600);
+  const top = await bar();
+  const dock = await page.evaluate(() => {
+    const next = [...document.querySelectorAll("#main button, #main a")].find((el) =>
+      /New argument/.test(el.textContent ?? ""),
+    );
+    return next ? next.getBoundingClientRect().bottom : null;
+  });
+  check("tabs: back after the verdict", top !== null);
+  const clear = top !== null && dock !== null && dock <= top;
+  check("tabs: New argument bar sits above the tabs", clear, `dock ${dock}, tabs ${top}`);
+  await shot(page, "tabs-verdict-m");
+  await page.goto(BASE + "/verdicts", { waitUntil: "load" });
+  await page.waitForTimeout(800);
+  const current = await page.locator("nav a[aria-current='page'][href='/verdicts']").count();
+  check("tabs: My verdicts tab is current on /verdicts", current === 1);
+  check("tabs: the verdict just written is listed", (await page.locator(`a[href="/v/${f.body.id}"]`).count()) > 0);
+  await shot(page, "tabs-verdicts-m");
+  await ctx.close();
+
+  const desk = await newPage(browser, { viewport: DESKTOP });
+  await desk.page.goto(BASE + "/", { waitUntil: "load" });
+  await desk.page.waitForTimeout(800);
+  const res = await desk.page.evaluate(() => {
+    const link = document.querySelector("header a[href='/verdicts']");
+    const nav = document.querySelector("nav a[href='/verdicts']")?.closest("nav");
+    return {
+      header: link ? getComputedStyle(link).display !== "none" : false,
+      tabs: nav ? getComputedStyle(nav).display !== "none" : false,
+    };
+  });
+  check("tabs: desktop has the header link and no tab bar", res.header && !res.tabs, JSON.stringify(res));
+  await desk.ctx.close();
 }
 
 async function judging(browser: Browser): Promise<void> {
@@ -343,8 +384,7 @@ async function judging(browser: Browser): Promise<void> {
         await route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(f.body) });
       });
       await page.goto(BASE + "/", { waitUntil: "load" });
-      await waitForScene(page);
-      await page.click('[role="group"][aria-labelledby="hero-spark"] button');
+      await page.click('[role="group"][aria-labelledby="composer-examples"] button');
       await page.waitForFunction(() => {
         const b = document.querySelector('#main form button[type="submit"]') as HTMLButtonElement | null;
         return b && !b.disabled;
@@ -352,33 +392,33 @@ async function judging(browser: Browser): Promise<void> {
       const t0 = Date.now();
       await page.click('#main form button[type="submit"]');
       await page.waitForTimeout(1500);
-      const mid = await page.evaluate(() => ({
-        mode: document.querySelector("[data-scene-wrap]")?.getAttribute("data-scene-mode"),
-        live: document.querySelector('[role="status"]')?.textContent ?? "",
-      }));
-      check(`${name}: judging mode while pending`, mid.mode === "judging", JSON.stringify(mid));
-      check(`${name}: live region speaks`, mid.live.length > 0);
+      const live = await page.evaluate(
+        () => document.querySelector('[data-part="judging"] [role="status"]')?.textContent ?? "",
+      );
+      check(`${name}: judging turn in the thread while pending`, live.length > 0, live);
       await shot(page, `${name}-pending`);
 
       if (f.delayMs > 20000) {
         // Second loop cycle: the overlay must say the judges are still out.
         await page.waitForTimeout(Math.max(0, 19000 - (Date.now() - t0)));
-        const still = await page.evaluate(() => document.querySelector('[role="status"]')?.textContent ?? "");
+        const still = await page.evaluate(
+          () => document.querySelector('[data-part="judging"] [role="status"]')?.textContent ?? "",
+        );
         check(`${name}: loops gracefully (still judging)`, /still|hâlâ/i.test(still), still);
         await shot(page, `${name}-deliberate`);
       }
 
-      const want = tiltFromTug(tugFinal(f.body.result)).toFixed(3);
-      await page.waitForFunction(() => document.querySelector("[data-scene-wrap]")?.getAttribute("data-scene-mode") === "verdict", undefined, {
-        timeout: f.delayMs + 10000,
+      const card = await page
+        .waitForSelector('[data-part="verdict"]', { timeout: f.delayMs + 15000 })
+        .then(() => true)
+        .catch(() => false);
+      const kept = await page.evaluate(() => {
+        const judging = document.querySelector('[data-part="judging"]');
+        const verdict = document.querySelector('[data-part="verdict"]');
+        return !!judging && !!verdict && !!judging.querySelector('[data-scene-mode="verdict"]') &&
+          !!(judging.compareDocumentPosition(verdict) & Node.DOCUMENT_POSITION_FOLLOWING);
       });
-      await page.waitForTimeout(2500);
-      const tilt = await page.getAttribute("[data-scene-wrap]", "data-tilt");
-      check(`${name}: settles to the verdict tilt`, tilt === want, `data-tilt ${tilt}, want ${want}`);
-      await shot(page, `${name}-settled`);
-      await page.waitForTimeout(3500);
-      const card = await page.evaluate(() => !!document.querySelector("#main article, #main [data-verdict]"));
-      check(`${name}: verdict card replaces the overlay`, card);
+      check(`${name}: scene stays above the verdict`, card && kept);
       await shot(page, `${name}-verdict`);
       await ctx.close();
     }
@@ -390,7 +430,7 @@ async function noWebGL(): Promise<void> {
   const browser = await chromium.launch({ channel: "msedge", args: ["--disable-3d-apis"] });
   try {
     const { ctx, page } = await newPage(browser, { viewport: MOBILE });
-    await page.goto(BASE + "/", { waitUntil: "load" });
+    await page.goto(BASE + "/about", { waitUntil: "load" });
     const status = await waitForScene(page, 6000);
     // BalanceScene (and with it the three.js chunk) is only imported once mounted.
     const canvas = await page.evaluate(() => !!document.querySelector("[data-scene-wrap] canvas"));
@@ -410,9 +450,9 @@ const browser = await chromium.launch({
 try {
   await staticPages(browser);
   await story(browser);
-  await overlap(browser);
   await fold(browser);
-  await heroLayout(browser);
+  await composerLayout(browser);
+  await tabs(browser);
   await judging(browser);
 } finally {
   await browser.close();

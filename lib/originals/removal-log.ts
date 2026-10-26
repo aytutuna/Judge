@@ -5,17 +5,27 @@
  * removed originals, names and share links back; replaying this log after a
  * restore (scripts/originals.ts replay-removals, run by verdict-restore)
  * applies every removal again. One JSON object per line: ids, party, reason
- * and time, never any text or names. Server only.
+ * and time (and, for an account, the sign-in token revocation outcome), never
+ * any text, names or tokens. Server only.
  */
 
 import { appendFile, readFile } from "node:fs/promises";
 import path from "node:path";
 import type { RemovalReason } from "@/lib/originals-types";
+import type { SignInRevocation } from "@/lib/signin-tokens";
 
 export type RemovalLogEntry =
   | { v: 1; at: string; kind: "verdict"; id: string; reason: RemovalReason }
   | { v: 1; at: string; kind: "case_side"; id: string; party: "a" | "b"; reason: RemovalReason }
-  | { v: 1; at: string; kind: "account"; id: string };
+  | {
+      v: 1;
+      at: string;
+      kind: "account";
+      id: string;
+      /** What became of the account's Sign in with Apple tokens (outcome
+       * only, never a token). Informational: replay ignores it. */
+      signInTokens?: SignInRevocation;
+    };
 
 /** Where the log lives, or null (disabled, or a remote database). */
 export function removalLogPath(env: NodeJS.ProcessEnv = process.env): string | null {

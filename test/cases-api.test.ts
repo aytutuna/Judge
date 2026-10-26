@@ -19,6 +19,7 @@ const m = vi.hoisted(() => ({
   verifyEvidenceTokens: vi.fn(),
   handleEvidenceUpload: vi.fn(),
   judgeAnonymized: vi.fn(),
+  judgeFreeAnonymized: vi.fn(),
   claudeJson: vi.fn(),
   scheduled: [] as (() => Promise<void>)[],
 }));
@@ -52,6 +53,7 @@ vi.mock("@/lib/premium/run", () => ({
   judgeAnonymized: m.judgeAnonymized,
   premiumLogLine: () => "[premium] test",
 }));
+vi.mock("@/lib/free-run", () => ({ judgeFreeAnonymized: m.judgeFreeAnonymized }));
 vi.mock("@/lib/claude", async (importOriginal) => ({
   ...(await importOriginal<typeof import("@/lib/claude")>()),
   claudeJson: m.claudeJson,
@@ -125,6 +127,13 @@ function result(overrides: Partial<VerdictResult> = {}): VerdictResult {
   };
 }
 
+/** What the free judges return: no tier, fact-check or panel. */
+function freeResult(overrides: Partial<VerdictResult> = {}): VerdictResult {
+  const { tier: _t, ...rest } = result(overrides);
+  void _t;
+  return rest;
+}
+
 function okOutcome(r: VerdictResult = result(), extra: { refused?: boolean; degraded?: boolean } = {}) {
   return { status: "ok", result: r, input: "doc", refused: false, degraded: false, ...extra };
 }
@@ -173,9 +182,10 @@ async function owner(creditCount = 2): Promise<string> {
   return id;
 }
 
+/** A premium case unless `extra` says otherwise (the API's default is free). */
 async function create(ownerId: string, extra: Record<string, unknown> = {}, headers: Record<string, string> = {}) {
   const res = await http.createCaseHandler(
-    req("POST", "/api/v1/cases", { user: ownerId, body: { text: SIDE_A, lang: "en", ...extra }, headers }),
+    req("POST", "/api/v1/cases", { user: ownerId, body: { text: SIDE_A, lang: "en", tier: "premium", ...extra }, headers }),
   );
   return { res, data: await body<{ case: CaseView; name_map: unknown[]; replayed?: boolean; code?: string }>(res) };
 }
@@ -204,7 +214,7 @@ function respond(token: string, opts: Opts & { text?: string; evidence?: string[
 }
 
 function judgeNow(ownerId: string, id: string, b: unknown = { mode: "only_mine" }) {
-  return http.judgeCaseHandler(req("POST", `/api/v1/cases/${id}/judge`, { user: ownerId, body: b }), id);
+  return http.judgeCaseHandler(req("POST", `/api/v1/cases/${id}/judge`, { user: ownerId, body: b, ip: ip() }), id);
 }
 
 function ownerAppeal(ownerId: string, id: string, text = "The receipt shows the payment on April 3rd, which Party B ignored.", headers: Record<string, string> = {}) {
@@ -221,6 +231,7 @@ beforeEach(() => {
   vi.stubEnv("CASES_ENABLED", "");
   vi.stubEnv("EVIDENCE_ENABLED", "");
   vi.stubEnv("PREMIUM_ENABLED", "");
+  vi.stubEnv("ANTHROPIC_API_KEY", "test-key");
   vi.stubEnv("BETTER_AUTH_URL", "");
   vi.stubEnv("NEXT_PUBLIC_SITE_URL", "");
   m.getViewer.mockImplementation(async (r: Request) => {
@@ -256,6 +267,7 @@ beforeEach(() => {
   );
   m.handleEvidenceUpload.mockImplementation(async () => Response.json({ items: [] }));
   m.judgeAnonymized.mockResolvedValue(okOutcome());
+  m.judgeFreeAnonymized.mockResolvedValue({ ok: true, result: freeResult() });
   m.claudeJson.mockResolvedValue({ ok: true, data: { summary: "The receipt settled the disputed payment." } });
   vi.spyOn(console, "error").mockImplementation(() => {});
   vi.spyOn(console, "info").mockImplementation(() => {});
@@ -313,7 +325,7 @@ describe("POST /api/v1/cases", () => {
     expect(await credits(o)).toBe(2);
   });
 
-  it("gates: signed out 401, cross-site cookie 403, no credits 402, kill switch 503", async () => {
+  it("gates: signed out 401, cross-site cookie 403, premium without credits 402, kill switch 503", async () => {
     expect((await http.createCaseHandler(req("POST", "/api/v1/cases", { body: { text: SIDE_A } }))).status).toBe(401);
     const o = await owner(1);
     const cross = await http.createCaseHandler(
@@ -323,6 +335,12 @@ describe("POST /api/v1/cases", () => {
     const broke = await create(await owner(0));
     expect(broke.res.status).toBe(402);
     expect(broke.data.code).toBe("premium_required");
+    vi.stubEnv("PREMIUM_ENABLED", "0");
+    const premiumOff = await create(o);
+    expect(premiumOff.res.status).toBe(503);
+    expect(premiumOff.data.code).toBe("not_configured");
+    expect((await create(o, { tier: "free" })).res.status).toBe(201);
+    vi.stubEnv("PREMIUM_ENABLED", "");
     vi.stubEnv("CASES_ENABLED", "0");
     const off = await create(o);
     expect(off.res.status).toBe(503);
@@ -330,13 +348,15 @@ describe("POST /api/v1/cases", () => {
     expect(await credits(o)).toBe(1);
   });
 
-  it("validates the body: too_short, too_long, too_many_files, evidence_invalid, bad JSON", async () => {
+  it("validates the body: too_short, too_long, too_many_files, evidence_invalid, tier, bad JSON", async () => {
     const o = await owner(2);
-    const code = async (b: unknown) => (await body(await http.createCaseHandler(req("POST", "/api/v1/cases", { user: o, body: b })))).code;
+    const code = async (b: object | string) =>
+      (await body(await http.createCaseHandler(req("POST", "/api/v1/cases", { user: o, body: typeof b === "string" ? b : { tier: "premium", ...b } })))).code;
     expect(await code({ text: "short" })).toBe("too_short");
     expect(await code({ text: "x".repeat(6001) })).toBe("too_long");
     expect(await code({ text: SIDE_A, evidence: ["a", "b", "c", "d"] })).toBe("too_many_files");
     expect(await code({ text: SIDE_A, evidence: ["good:u:someone-else"] })).toBe("evidence_invalid");
+    expect(await code({ text: SIDE_A, tier: "gold" })).toBe("invalid");
     expect(await code("{nope")).toBe("invalid");
     expect(await credits(o)).toBe(2);
   });
@@ -544,6 +564,193 @@ describe("respondent: GET and POST /api/v1/respond/{token}", () => {
     expect(view.verdicts[0].result.evidence_used).toEqual({ a: 0, b: 1 });
     const closed = await http.respondEvidenceHandler(req("POST", `/api/v1/respond/${token}/evidence`), token);
     expect((await body(closed)).code).toBe("case_closed");
+  });
+});
+
+describe("free cases", () => {
+  beforeEach(() => {
+    m.judgeAnonymized.mockClear();
+    m.judgeFreeAnonymized.mockClear();
+    m.handleEvidenceUpload.mockClear();
+  });
+
+  async function storedResult(verdictId: string): Promise<Record<string, unknown>> {
+    const db = await getDb();
+    const rs = await db.execute({ sql: "SELECT result FROM verdicts WHERE id = ?", args: [verdictId] });
+    return JSON.parse(String(rs.rows[0].result)) as Record<string, unknown>;
+  }
+
+  it("needs no credits: 201, no unit held, and the premium site cap does not apply", async () => {
+    vi.stubEnv("PREMIUM_DAILY_CAP", "0");
+    const o = await owner(0);
+    const { res, data } = await create(o, { tier: "free" });
+    expect(res.status).toBe(201);
+    expect(data.case.tier).toBe("free");
+    expect(data.case.status).toBe("awaiting_respondent");
+    expect(data.case.inviteUrl).toMatch(/\/r\//);
+    expect(await usage(o)).toEqual([]);
+    // No tier at all is free too; a premium case is still capped.
+    const plain = await http.createCaseHandler(req("POST", "/api/v1/cases", { user: o, body: { text: SIDE_A } }));
+    expect(plain.status).toBe(201);
+    expect((await body<{ case: CaseView }>(plain)).case.tier).toBe("free");
+    expect((await create(await owner(2))).data.code).toBe("daily_cap");
+    const db = await getDb();
+    const row = (await db.execute({ sql: "SELECT tier, reservation_id FROM cases WHERE id = ?", args: [data.case.id] })).rows[0];
+    expect(row.tier).toBe("free");
+    expect(row.reservation_id).toBeNull();
+  });
+
+  it("the answer is judged by the free judges: two accounts, nothing charged, no premium keys stored", async () => {
+    const o = await owner(0);
+    const { data } = await create(o, { tier: "free" });
+    const token = tokenOf(data.case);
+    expect((await respond(token)).status).toBe(202);
+    await drain();
+    expect(m.judgeAnonymized).not.toHaveBeenCalled();
+    const [text, framework, lang, opts] = m.judgeFreeAnonymized.mock.calls.at(-1)!;
+    expect(text).toMatch(/^PARTY A'S ACCOUNT/);
+    expect(text).toContain("PARTY B'S ACCOUNT");
+    expect(framework).toEqual({ preset: "balanced" });
+    expect(lang).toBe("en");
+    expect(opts).toEqual({ twoSided: true });
+
+    const view = await getOwner(o, data.case.id);
+    expect(view.status).toBe("judged");
+    expect(view.tier).toBe("free");
+    const r = view.verdicts[0].result;
+    expect(r.two_sided).toBe(true);
+    expect(r.disputed_facts!.filter((d) => d.decisive)).toHaveLength(1);
+    const stored = await storedResult(view.verdicts[0].id);
+    for (const key of ["tier", "fact_check", "panel"]) expect(stored).not.toHaveProperty(key);
+    expect(await usage(o)).toEqual([]);
+    // Adding context is still Premium: without credits it is refused.
+    expect(view.appeal.blockedBy).toBe("premium_required");
+    expect((await ownerAppeal(o, data.case.id)).status).toBe(402);
+  });
+
+  it("an appeal on a free case reserves the appealer's unit and re-judges with the premium panel", async () => {
+    const o = await owner(0);
+    const { data } = await create(o, { tier: "free" });
+    await respond(tokenOf(data.case));
+    await drain();
+    await ent.grantCredits({ userId: o, credits: 1, source: "admin", externalId: `g2:${o}` });
+    expect((await ownerAppeal(o, data.case.id)).status).toBe(202);
+    await drain();
+    expect(m.judgeAnonymized).toHaveBeenCalledTimes(1);
+    expect(m.judgeFreeAnonymized).toHaveBeenCalledTimes(1);
+    expect(await usage(o)).toEqual(["consumed"]);
+    expect((await getOwner(o, data.case.id)).verdicts).toHaveLength(2);
+  });
+
+  it("evidence is Premium: 402 premium_required at create, on the answer and on the upload", async () => {
+    const o = await owner(2);
+    const withEvidence = await create(o, { tier: "free", evidence: [`good:u:${o}`] });
+    expect(withEvidence.res.status).toBe(402);
+    expect(withEvidence.data.code).toBe("premium_required");
+    expect(await usage(o)).toEqual([]);
+
+    const { data } = await create(o, { tier: "free" });
+    const token = tokenOf(data.case);
+    const up = await http.respondEvidenceHandler(req("POST", `/api/v1/respond/${token}/evidence`, { body: { images: [] } }), token);
+    expect(up.status).toBe(402);
+    expect((await body(up)).code).toBe("premium_required");
+    expect(m.handleEvidenceUpload).not.toHaveBeenCalled();
+    const answer = await respond(token, { evidence: [`good:r:${data.case.id}`] });
+    expect(answer.status).toBe(402);
+    expect((await body(answer)).code).toBe("premium_required");
+    expect((await getOwner(o, data.case.id)).status).toBe("awaiting_respondent");
+    expect(await credits(o)).toBe(2);
+
+    expect((await respond(token)).status).toBe(202);
+    await drain();
+    const appeal = await http.ownerAppealHandler(
+      req("POST", `/api/v1/cases/${data.case.id}/appeals`, {
+        user: o,
+        body: { text: "The receipt shows the payment on April 3rd, which Party B ignored.", evidence: [`good:u:${o}`] },
+      }),
+      data.case.id,
+    );
+    expect(appeal.status).toBe(402);
+    expect((await body(appeal)).code).toBe("premium_required");
+    expect(await credits(o)).toBe(2);
+    expect(await usage(o)).toEqual([]);
+  });
+
+  it("starting the free judges counts against DAILY_VERDICT_CAP; a premium case does not", async () => {
+    const o = await owner(2);
+    const free = (await create(o, { tier: "free" })).data.case;
+    const lone = (await create(o, { tier: "free" })).data.case;
+    const premium = (await create(o, { tier: "premium" })).data.case;
+    vi.stubEnv("DAILY_VERDICT_CAP", "0");
+    const answer = await respond(tokenOf(free));
+    expect(answer.status).toBe(503);
+    expect((await body(answer)).code).toBe("daily_cap");
+    expect((await getOwner(o, free.id)).status).toBe("awaiting_respondent");
+    const now = await judgeNow(o, lone.id);
+    expect((await body(now)).code).toBe("daily_cap");
+    expect((await respond(tokenOf(premium))).status).toBe(202);
+    await drain();
+    expect(m.judgeFreeAnonymized).not.toHaveBeenCalled();
+    expect(m.judgeAnonymized).toHaveBeenCalledTimes(1);
+  });
+
+  it("judge-now, failure, retry, refusal and expiry never touch a unit", async () => {
+    const o = await owner(0);
+    const first = (await create(o, { tier: "free" })).data.case;
+    m.judgeFreeAnonymized.mockResolvedValueOnce({ ok: false, code: "unavailable", detail: "Claude HTTP 529" });
+    expect((await judgeNow(o, first.id)).status).toBe(202);
+    await drain();
+    expect((await getOwner(o, first.id)).status).toBe("failed");
+    expect(m.judgeFreeAnonymized.mock.calls.at(-1)![3]).toEqual({});
+    expect((await judgeNow(o, first.id)).status).toBe(202);
+    await drain();
+    expect((await getOwner(o, first.id)).status).toBe("judged");
+
+    const refused = (await create(o, { tier: "free" })).data.case;
+    m.judgeFreeAnonymized.mockResolvedValueOnce({ ok: true, result: { ...freeResult(), model_refused: true } });
+    await judgeNow(o, refused.id);
+    await drain();
+    const refusedView = await getOwner(o, refused.id);
+    expect(refusedView.status).toBe("judged");
+    expect(refusedView.verdicts[0].result.model_refused).toBe(true);
+
+    const expiring = (await create(o, { tier: "free" })).data.case;
+    await setCase(expiring.id, "expires_at = ?", [new Date(Date.now() - 1000).toISOString()]);
+    expect((await sweepCases()).expired).toBeGreaterThanOrEqual(1);
+    expect((await getOwner(o, expiring.id)).status).toBe("expired");
+    expect((await judgeNow(o, expiring.id)).status).toBe(202);
+    await drain();
+    expect((await getOwner(o, expiring.id)).mode).toBe("one_sided");
+    expect(m.judgeAnonymized).not.toHaveBeenCalled();
+    expect(await usage(o)).toEqual([]);
+  });
+
+  it("a premium case still holds its unit, runs the premium panel and consumes it", async () => {
+    const o = await owner(2);
+    const { data } = await create(o, { tier: "premium" });
+    expect(data.case.tier).toBe("premium");
+    expect(await usage(o)).toEqual(["reserved"]);
+    await respond(tokenOf(data.case));
+    await drain();
+    expect(m.judgeAnonymized).toHaveBeenCalledTimes(1);
+    expect(m.judgeFreeAnonymized).not.toHaveBeenCalled();
+    expect(await usage(o)).toEqual(["consumed"]);
+    expect(await credits(o)).toBe(1);
+  });
+
+  it("with Premium off, an open premium case refuses the answer and a free one still takes it", async () => {
+    const o = await owner(2);
+    const premium = (await create(o, { tier: "premium" })).data.case;
+    const free = (await create(o, { tier: "free" })).data.case;
+    vi.stubEnv("PREMIUM_ENABLED", "0");
+    const refused = await respond(tokenOf(premium));
+    expect(refused.status).toBe(503);
+    expect((await body<{ code: string }>(refused)).code).toBe("not_configured");
+    expect((await respond(tokenOf(free))).status).toBe(202);
+    await drain();
+    expect(m.judgeAnonymized).not.toHaveBeenCalled();
+    expect((await getOwner(o, premium.id)).status).toBe("awaiting_respondent");
+    expect(await usage(o)).toEqual(["reserved"]);
   });
 });
 
@@ -1034,7 +1241,7 @@ describe("originals, display names and removal of a side", () => {
     const created = await http.createCaseHandler(
       req("POST", "/api/v1/cases", {
         user: o,
-        body: { text: raw, lang: "en", displayName: "Aytu", evidence: [`good:u:${o}`] },
+        body: { text: raw, lang: "en", tier: "premium", displayName: "Aytu", evidence: [`good:u:${o}`] },
       }),
     );
     const c = (await body<{ case: CaseView }>(created)).case;

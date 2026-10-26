@@ -33,6 +33,46 @@ export function verdictLabel(
   }
 }
 
+/** The stamp on the verdict card: the winner as verdictLabel says it,
+ * otherwise one short word. */
+export function stampLabel(
+  r: VerdictResult,
+  nameA: string,
+  nameB: string,
+  aIsSelf: boolean,
+  bIsSelf: boolean,
+  lang: Lang,
+): string {
+  switch (r.verdict) {
+    case "side_a":
+    case "side_b":
+      return verdictLabel(r, nameA, nameB, aIsSelf, bIsSelf, lang);
+    case "split":
+      return t(lang, "stamp.split");
+    case "conditional":
+      return t(lang, "stamp.conditional");
+    case "dissolved":
+      return t(lang, "stamp.dissolved");
+    case "too_close":
+      return t(lang, "stamp.tooClose");
+  }
+}
+
+/** How many judge runs reached the final verdict. Null when there is no
+ * majority ruling to agree with (too close) or no runs at all. */
+export function agreement(r: VerdictResult): { n: number; total: number } | null {
+  if (!r.runs.length || r.verdict === "too_close") return null;
+  return { n: r.runs.filter((v) => v === r.verdict).length, total: r.runs.length };
+}
+
+/** The judges' name in a thread: plain until there is a verdict, then how
+ * far they agreed. */
+export function judgesLabel(lang: Lang, r: VerdictResult | null): string {
+  if (!r?.runs.length) return t(lang, "thread.judges");
+  const a = agreement(r);
+  return a ? t(lang, "thread.judgesAgree", a) : t(lang, "thread.judgesSplit");
+}
+
 /** Final divider position of the tug-of-war bar (Party A's share, %).
  * A forced-ruling lean nudges the bar to a single fixed 62/38 — visibly
  * off-center yet clearly milder than the 80/20 win, so "more right, not

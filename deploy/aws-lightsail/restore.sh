@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Restores the Verdict database from a nightly backup.
+# Restores the Judge database from a nightly backup.
 #
 #   sudo verdict-restore                         # list available backups
 #   sudo verdict-restore verdict-20261018-033512.db.gz

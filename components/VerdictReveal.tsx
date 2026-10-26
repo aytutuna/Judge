@@ -1,9 +1,9 @@
 import type { CruxTrial, VerdictResult } from "@/lib/types";
 import { t, type Key, type Lang } from "@/lib/i18n";
-import { stripLeadingEmoji } from "@/lib/text";
-import { leanTally, tugFinal, verdictLabel } from "@/lib/verdict-display";
-import { TugBar } from "./verdict/TugBar";
-import { MainSlot, VerdictMain, type SealSide } from "./verdict/VerdictMain";
+import { hyphenRuns, stripLeadingEmoji } from "@/lib/text";
+import { agreement, leanTally, stampLabel, tugFinal, verdictLabel } from "@/lib/verdict-display";
+import { MainSlot } from "./verdict/VerdictMain";
+import { VoteDots, voteOf } from "./verdict/VoteDots";
 import styles from "./verdict/verdict.module.css";
 
 export { leanTally, tugFinal, verdictLabel };
@@ -117,15 +117,13 @@ function CruxTrialNote({ trial, lang }: { trial: CruxTrial; lang: Lang }) {
   );
 }
 
-function sealOf(result: VerdictResult): SealSide {
-  return result.verdict === "side_a" ? "a" : result.verdict === "side_b" ? "b" : "none";
-}
-
 /**
- * The verdict itself, as the top of a VerdictCardShell body: tug-of-war bar,
- * main block (badge, seal and label, headline, meter, then the lean, trial,
- * refusal and demo notes), and the split / conditional branches. The card's
- * `animate` drives the entrance; this markup is always the final state.
+ * The verdict itself, as the top of a VerdictCardShell body: the stamp
+ * (decorative; the heading carries the ruling for screen readers), the
+ * dispute kind, the headline as the card's heading, confidence and how far
+ * the judges agreed, then the lean, trial, refusal and demo notes and the
+ * split / conditional branches. The card's `animate` drives the entrance;
+ * this markup is always the final state.
  */
 export function VerdictReveal({
   result,
@@ -148,8 +146,9 @@ export function VerdictReveal({
    * conditional opening with one keeps its capital. Never the narrator. */
   restoredNames?: readonly string[];
 }) {
-  const final = tugFinal(result);
   const label = verdictLabel(result, nameA, nameB, aIsSelf, bIsSelf, lang);
+  const confidence = Math.max(1, Math.min(5, Math.round(result.confidence)));
+  const agreed = agreement(result);
   const lean = result.lean;
   const leanIsSelf = lean ? (lean.party === "a" ? aIsSelf : bIsSelf) : false;
   const leanName = lean ? (lean.party === "a" ? nameA : nameB) : "";
@@ -158,27 +157,52 @@ export function VerdictReveal({
 
   return (
     <>
-      <TugBar
-        nameA={nameA}
-        nameB={nameB}
-        tugA={final}
-        ariaLabel={t(lang, "verdictAria", { label })}
-      />
+      <span className={styles.stamp} aria-hidden>
+        <span className={styles.stampText}>{stampLabel(result, nameA, nameB, aIsSelf, bIsSelf, lang)}</span>
+      </span>
 
-      <VerdictMain
-        badge={t(lang, BADGE_KEY[result.dispute_type])}
-        label={label}
-        labelId={labelId}
-        seal={sealOf(result)}
-        headline={result.headline}
-        confidence={result.confidence}
-        lang={lang}
-      >
-        {/* Forced ruling: directly BELOW the meter — the meter scores the
-            MAIN verdict and stays bound to the headline; the lean neither
-            borrows the meter's confidence nor gets deflated by it. Lean and
+      <div className={styles.lead}>
+        <p className={styles.dispute}>{t(lang, BADGE_KEY[result.dispute_type])}</p>
+        <h2 id={labelId} className={styles.ruling}>
+          <span className="sr-only">{label}. </span>
+          {hyphenRuns(result.headline).map((r, i) =>
+            r.keep ? (
+              <span key={i} className={styles.nobreak}>
+                {r.text}
+              </span>
+            ) : (
+              r.text
+            ),
+          )}
+        </h2>
+        <div className={styles.meta}>
+          <span
+            role="meter"
+            aria-valuemin={1}
+            aria-valuemax={5}
+            aria-valuenow={confidence}
+            aria-label={t(lang, "confidenceAria", { n: confidence })}
+          >
+            {t(lang, "confidenceAria", { n: confidence })}
+          </span>
+          {result.runs.length ? (
+            <>
+              <span aria-hidden>·</span>
+              <VoteDots
+                votes={result.runs.map(voteOf)}
+                label={agreed ? t(lang, "verdict.agree", agreed) : t(lang, "verdict.noMajority")}
+              />
+            </>
+          ) : null}
+        </div>
+      </div>
+      <hr className={styles.rule} />
+
+      <div className={styles.notes}>
+        {/* Forced ruling: the confidence above scores the MAIN verdict; the
+            lean neither borrows it nor gets deflated by it. Lean and
             crux_trial never coexist (trials are winner-only, leans are
-            non-winner-only), so this shares the trial-note slot. */}
+            non-winner-only). */}
         {lean ? (
           <MainSlot>
             <p className={styles.slotTitle}>
@@ -216,7 +240,7 @@ export function VerdictReveal({
             <p className={styles.slotText}>{stripLeadingEmoji(t(lang, "demoNote"))}</p>
           </MainSlot>
         ) : null}
-      </VerdictMain>
+      </div>
 
       {result.verdict === "split" && result.split_points?.length ? (
         <div className={styles.branches}>

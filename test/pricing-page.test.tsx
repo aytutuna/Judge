@@ -23,7 +23,7 @@ describe("PricingTable", () => {
     expect(html).toContain('id="plan-free"');
     expect(html).toContain('id="plan-premium"');
     for (const p of pricing.packs) {
-      expect(html).toContain(`${p.credits} premium verdicts`);
+      expect(html).toContain(p.credits === 1 ? "1 premium verdict" : `${p.credits} premium verdicts`);
       expect(html).toContain(formatPrice(p.priceUsd, "en"));
       expect(html).toContain(`${formatPrice(p.priceUsd / p.credits, "en")} per verdict`);
     }

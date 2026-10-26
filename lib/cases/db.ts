@@ -20,7 +20,7 @@ import { getDb } from "@/lib/db";
 import { ensureEntitlementTables } from "@/lib/entitlements";
 import type { KnownPerson } from "@/lib/evidence";
 import type { Lang } from "@/lib/i18n";
-import { VerdictResult, type AppealOutcome, type EvidenceKind, type FrameworkChoice } from "@/lib/types";
+import { VerdictResult, type AppealOutcome, type EvidenceKind, type FrameworkChoice, type Tier } from "@/lib/types";
 
 const SCHEMA = [
   `CREATE TABLE IF NOT EXISTS cases (
@@ -148,7 +148,8 @@ async function addClaimColumn(db: Client): Promise<void> {
 }
 
 /** Columns added after the first release of the case tables (stored
- * originals, display names, removal). No CHECK on added columns. */
+ * originals, display names, removal, free cases). Every case created
+ * before tier existed held a premium unit, hence the default. */
 const ADDED_COLUMNS: [string, string][] = [
   ["names_visible", "INTEGER NOT NULL DEFAULT 1"],
   ["display_a_sealed", "TEXT"],
@@ -157,6 +158,7 @@ const ADDED_COLUMNS: [string, string][] = [
   ["removed_at", "TEXT"],
   ["removed_a_at", "TEXT"],
   ["removed_b_at", "TEXT"],
+  ["tier", "TEXT NOT NULL DEFAULT 'premium' CHECK (tier IN ('free','premium'))"],
 ];
 
 async function addCaseColumns(db: Client): Promise<void> {
@@ -187,6 +189,8 @@ export type CaseRow = {
   /** As stored; see effectiveStatus for what readers report. */
   status: CaseStatus;
   mode: CaseMode | null;
+  /** Which judges run the case's first verdict, and whether a unit is held. */
+  tier: Tier;
   framework: FrameworkChoice;
   lang: Lang;
   inviteNonce: string;
@@ -281,6 +285,7 @@ export function mapCase(r: Row): CaseRow {
     ownerId: str(r.owner_id),
     status: str(r.status) as CaseStatus,
     mode: strOrNull(r.mode) as CaseMode | null,
+    tier: str(r.tier) === "free" ? "free" : "premium",
     framework: parseJson<FrameworkChoice>(r.framework, { preset: "balanced" }),
     lang: str(r.lang) === "tr" ? "tr" : "en",
     inviteNonce: str(r.invite_nonce),

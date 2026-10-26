@@ -9,6 +9,7 @@ import { OWNER_TOKEN_PATTERN, ownerTokenKey } from "./originals-types";
  * mobile app keeps the same values in secure storage.
  */
 
+const OWNER_PREFIX = ownerTokenKey("");
 const listeners = new Set<() => void>();
 
 export function loadOwnerToken(verdictId: string): string | null {
@@ -28,6 +29,20 @@ export function saveOwnerToken(verdictId: string, token: string | null | undefin
     // Storage unavailable: the token lasts for this page view only.
   }
   for (const fn of listeners) fn();
+}
+
+/** Every verdict this browser holds a token for. */
+export function ownerTokenIds(): string[] {
+  const ids: string[] = [];
+  try {
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (key?.startsWith(OWNER_PREFIX)) ids.push(key.slice(OWNER_PREFIX.length));
+    }
+  } catch {
+    // Storage unavailable: no tokens either.
+  }
+  return ids;
 }
 
 /** After a removal: the token has nothing left to open. */

@@ -110,7 +110,7 @@ export function SampleVerdict({ lang }: { lang: Lang }) {
               title={stripLeadingEmoji(t(lang, "bestPointTitle"))}
               text={t(lang, "sample.bestPoint")}
             />
-            <CardActions again={{ label: t(lang, "footer.home"), href: "#main" }} />
+            <CardActions again={{ label: t(lang, "footer.home"), href: "/" }} />
           </VerdictCardShell>
         </div>
       </div>

@@ -1,6 +1,7 @@
 /**
- * Encryption at rest for originals, name maps and display names, and the
- * owner tokens of signed-out writers. Server only.
+ * Encryption at rest for originals, name maps and display names, stored
+ * Sign in with Apple refresh tokens, and the owner tokens of signed-out
+ * writers. Server only.
  *
  * AES-256-GCM with a 32-byte app key from ORIGINALS_KEY (base64 or
  * base64url). ORIGINALS_KEY_PREVIOUS (comma-separated) holds older keys,
@@ -44,6 +45,8 @@ export const aad = {
   original: (subject: string) => `judge:originals:v1:${subject}`,
   verdictDisplay: (verdictId: string) => `judge:display:v1:verdict:${verdictId}`,
   caseDisplay: (caseId: string, party: "a" | "b") => `judge:display:v1:case:${caseId}:${party}`,
+  signInToken: (provider: string, clientId: string, userId: string) =>
+    `judge:signin-token:v1:${provider}:${clientId}:${userId}`,
 };
 
 /** 32 bytes from base64 or base64url, or null. */

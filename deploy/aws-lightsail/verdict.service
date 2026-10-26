@@ -1,4 +1,4 @@
-# Verdict web app (Next.js) on 127.0.0.1:3000, behind Caddy.
+# Judge web app (Next.js) on 127.0.0.1:3000, behind Caddy.
 # Installed to /etc/systemd/system/ by update.sh; edits there are overwritten.
 #
 # Run exactly ONE instance: rate limits are decided in this process's memory
@@ -6,8 +6,8 @@
 # double every limit.
 
 [Unit]
-Description=Verdict web app
-Documentation=https://github.com/aytutuna/Verdict
+Description=Judge web app
+Documentation=https://github.com/aytutuna/Judge
 After=network-online.target
 Wants=network-online.target
 

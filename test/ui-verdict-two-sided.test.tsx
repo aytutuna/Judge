@@ -1,8 +1,8 @@
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
-import { PricingTable, premiumFeatureKeys } from "../components/account/PricingView";
+import { PricingTable, freeFeatureKeys, premiumFeatureKeys } from "../components/account/PricingView";
 import { Faq, FAQ_ITEMS, faqItems } from "../components/home/Faq";
-import { premiumAboutKeys } from "../components/InfoPage";
+import { caseAboutKeys, premiumAboutKeys } from "../components/InfoPage";
 import { VerdictView } from "../components/VerdictView";
 import { STRINGS, t } from "../lib/i18n";
 import { PRICING } from "../lib/pricing";
@@ -156,15 +156,22 @@ describe("VerdictView: finding chips read naturally", () => {
 });
 
 describe("copy only claims what the deployment offers", () => {
-  it("pricing lists the extras only when switched on", () => {
+  it("pricing lists the extras only when switched on; both sides is on the free plan", () => {
     expect(premiumFeatureKeys(null)).toEqual(["pricing.premium.f1", "pricing.premium.f2", "pricing.premium.f3"]);
-    expect(premiumFeatureKeys({ cases: true, evidence: false })).toContain("pricing.premium.f6");
+    expect(premiumFeatureKeys({ cases: true, evidence: false })).toEqual([
+      "pricing.premium.f1",
+      "pricing.premium.f2",
+      "pricing.premium.f3",
+      "pricing.premium.f6",
+    ]);
     expect(premiumFeatureKeys({ cases: false, evidence: true })).toEqual([
       "pricing.premium.f1",
       "pricing.premium.f2",
       "pricing.premium.f3",
       "pricing.premium.f5",
     ]);
+    expect(freeFeatureKeys(null)).not.toContain("pricing.free.f4");
+    expect(freeFeatureKeys({ cases: true, evidence: false })).toContain("pricing.free.f4");
     const on = html(
       <PricingTable
         lang="en"
@@ -175,11 +182,14 @@ describe("copy only claims what the deployment offers", () => {
         features={{ cases: true, evidence: true }}
       />,
     );
-    expect(on).toContain(esc(t("en", "pricing.premium.f4")));
+    expect(on).toContain(esc(t("en", "pricing.free.f4")));
+    expect(on).toContain(esc(t("en", "pricing.premium.f6")));
+    // Premium off: cases stay on the free plan, the Premium extras go.
     const off = html(
-      <PricingTable lang="en" pricing={PRICING} premiumEnabled={false} signedIn={false} signInOffered features={{ cases: true, evidence: true }} />,
+      <PricingTable lang="en" pricing={PRICING} premiumEnabled={false} signedIn={false} signInOffered features={{ cases: true, evidence: false }} />,
     );
-    expect(off).not.toContain(esc(t("en", "pricing.premium.f4")));
+    expect(off).toContain(esc(t("en", "pricing.free.f4")));
+    expect(off).not.toContain(esc(t("en", "pricing.premium.f6")));
   });
 
   it("the FAQ adds the premium questions only when switched on", () => {
@@ -191,12 +201,23 @@ describe("copy only claims what the deployment offers", () => {
     const out = html(<Faq lang="tr" features={{ cases: true, evidence: false }} />);
     expect(out).toContain(esc(t("tr", "faq.both.q")));
     expect(out).not.toContain(esc(t("tr", "faq.evidence.q")));
+    // The Premium part of the cases answer only where Premium is sold.
+    expect(out).not.toContain(esc(t("tr", "faq.both.premium")));
+    const sold = html(<Faq lang="tr" features={{ cases: true, evidence: false }} premium />);
+    expect(sold).toContain(esc(t("tr", "faq.both.premium")));
   });
 
-  it("About lists the premium extras only when switched on", () => {
+  it("About lists both sides on its own and the premium extras only when switched on", () => {
+    expect(caseAboutKeys(null)).toEqual([]);
+    expect(caseAboutKeys({ cases: true, evidence: false })).toEqual(["about.cases1", "about.cases2"]);
     expect(premiumAboutKeys(null)).toEqual([]);
     expect(premiumAboutKeys({ cases: false, evidence: true })).toEqual(["about.premium2"]);
-    expect(premiumAboutKeys({ cases: true, evidence: true })).toHaveLength(4);
+    expect(premiumAboutKeys({ cases: true, evidence: true })).toEqual(["about.premium2", "about.premium3", "about.premium4"]);
+    // The Premium bullets talk about evidence, appeals and premium cases, never the free feature itself.
+    for (const lang of ["en", "tr"] as const) {
+      expect(t(lang, "about.premiumTitle")).not.toMatch(/both sides|iki taraf/i);
+      expect(t(lang, "faq.both.a")).not.toMatch(/^(With Premium|Premium ile)/);
+    }
   });
 
   it("privacy tells the truth about images, names, originals and removal in both languages", () => {

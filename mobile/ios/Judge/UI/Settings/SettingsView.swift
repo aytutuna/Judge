@@ -39,7 +39,7 @@ struct SettingsView: View {
 
                 Section {
                     linkRow(L10n.appSettingsAbout(lang), path: "about")
-                    linkRow(L10n.navHow(lang), path: "#how")
+                    linkRow(L10n.howTitle(lang), path: "#how")
                     linkRow(L10n.footerPrivacy(lang), path: "privacy")
                 }
                 .listRowBackground(Brand.paper)
@@ -121,11 +121,11 @@ struct SettingsView: View {
         .buttonStyle(.plain)
     }
 
-    /// `#how` is an anchor on the home page; everything else is a path.
+    /// `#how` is an anchor on the about page; everything else is a path.
     private func siteURL(_ path: String) -> URL {
         guard path.hasPrefix("#") else { return app.config.siteURL(path) }
         var components = URLComponents(url: app.config.shareBaseURL, resolvingAgainstBaseURL: false)
-        components?.path = "/"
+        components?.path = "/about"
         components?.fragment = String(path.dropFirst())
         return components?.url ?? app.config.shareBaseURL
     }

@@ -124,7 +124,6 @@
     <string name="wait_minutes">%1$s dakika</string>
     <string name="wait_hour">1 saat</string>
     <string name="wait_hours">%1$s saat</string>
-    <string name="nav_how">Nasıl çalışır</string>
     <string name="examples_label">Fikir mi lazım? Şunlardan birini dene:</string>
     <string name="example_hotdog_label">🌭 Sosisli bir sandviç mi?</string>
     <string name="example_hotdog_text">Arkadaşım Mert sosislinin bir sandviç olduğunu söylüyor: dilimlenmiş ekmeğin içinde bir dolgu, bu kadar. Bence sosisli kendi başına bir şey. Kimse sandviç isteyip önüne sosisli gelmesini beklemez, hiçbir menü onu sandviçlerin altında yazmaz.</string>
@@ -140,6 +139,7 @@
     <string name="advanced_current">Şu an: %1$s</string>
     <string name="turnstile_label">Hızlı bir kontrol: insan mısın?</string>
     <string name="privacy_link">Yazdıklarına ne oluyor?</string>
+    <string name="how_title">Nasıl çalışır</string>
     <string name="footer_about">Hakkında</string>
     <string name="footer_privacy">Gizlilik</string>
     <string name="footer_note">Eğlence ve netlik için, hukuki tavsiye değil.</string>
@@ -195,7 +195,7 @@
     <string name="factcheck_none_factual">Burada internette kontrol edilebilecek bir şey yok: bu olaydaki olgular yalnızca taraflar arasında.</string>
     <string name="factcheck_unavailable">İnternet kontrolü bu kez tamamlanamadı, yargıçlar onsuz karar verdi.</string>
     <string name="signin_title">Giriş yap</string>
-    <string name="signin_lead">Hesap sadece Premium için gerekir. Ücretsiz kararlar hiç hesap istemez.</string>
+    <string name="signin_lead">Hesap sadece iki taraflı davalar ve Premium için gerekir. Ücretsiz kararlar hiç hesap istemez.</string>
     <string name="signin_apple">Apple ile devam et</string>
     <string name="signin_google">Google ile devam et</string>
     <string name="signin_email_toggle">E-postayla devam et</string>
@@ -277,6 +277,7 @@
     <string name="mode_both">İki taraf da (bağlantı gönder)</string>
     <string name="mode_now_hint">Sen anlatırsın, yargıçlar hemen karar verir.</string>
     <string name="mode_both_hint">Sana özel bir bağlantı veriyoruz. O da kendi tarafını yazıyor; karar çıkana kadar kimse diğerinin yazdığını görmüyor.</string>
+    <string name="mode_sign_in">Bağlantı göndermek için giriş yap</string>
     <string name="case_create">Daveti oluştur</string>
     <string name="case_creating">Tarafını anonimleştiriyoruz…</string>
     <string name="case_kicker">İki taraf</string>
@@ -308,10 +309,12 @@
     <string name="case_judge_now_confirm">Şimdi tek taraflı bir karar mı istiyorsun? Davet kapanır, o da artık cevap veremez.</string>
     <string name="case_judge_now_yes">Evet, şimdi karar ver</string>
     <string name="case_judge_expired_confirm">Sadece kendi tarafına göre karar mı istiyorsun? Bu, 1 premium karar hakkı kullanır.</string>
+    <string name="case_judge_expired_confirm_free">Sadece kendi tarafına göre karar mı istiyorsun?</string>
     <string name="case_judge_expired_yes">Evet, 1 hak kullan</string>
     <string name="case_cancel">Vazgeç</string>
     <string name="case_retry">Tekrar dene</string>
     <string name="case_failed_body">Kredin geri döndü. Şimdi tekrar deneyebilirsin.</string>
+    <string name="case_failed_body_free">Bizim tarafta bir şeyler ters gitti. Şimdi tekrar deneyebilirsin.</string>
     <string name="case_your_side">Senin tarafın, yargıçların okuduğu hâliyle</string>
     <string name="case_accounts">Her taraf yargıçlara ne anlattı</string>
     <string name="case_account_a">Taraf A\'nın anlatımı</string>
@@ -325,6 +328,7 @@
     <string name="case_answered">Cevap verdi. Yargıçlar üzerinde çalışıyor.</string>
     <string name="case_judging_alone">Yargıçlar senin tarafın üzerinde çalışıyor.</string>
     <string name="case_expired_body">7 gün içinde kimse cevap vermedi, kredin geri döndü. Yine de sadece kendi tarafına göre karar alabilirsin.</string>
+    <string name="case_expired_body_free">7 gün içinde kimse cevap vermedi. Yine de sadece kendi tarafına göre karar alabilirsin.</string>
     <string name="case_one_sided">Sadece senin tarafına göre karar verildi.</string>
     <string name="case_start_over">Yeni bir dava aç</string>
     <string name="case_list_title">Davaların</string>
@@ -410,7 +414,6 @@
     <string name="appeal_failed">Yeniden yargılama gerçekleşmedi. Kredin geri döndü, tekrar deneyebilirsin.</string>
     <string name="appeal_refused">Yargıçlar bu bilgiyle yeniden yargılamayı reddetti. Kredin geri döndü.</string>
     <string name="appeal_history">Karar geçmişi</string>
-    <string name="pricing_premium_f4">İki taraflı davalar: diğer kişi kendi tarafını özel bir bağlantıdan anlatır. Dava başına 1 premium karar; karar çıkana kadar ayrılır, kimse cevap vermezse geri gelir</string>
     <string name="pricing_premium_f5">Ekran görüntüsü kanıtı: okunur, sonra atılır, ek ücret yok</string>
     <string name="pricing_premium_f6">Karardan sonra bilgi ekleyip yeniden yargılatma (1 premium karar)</string>
     <string name="lang_toggle_to_tr">Türkçeye geç</string>
@@ -449,6 +452,8 @@
     <string name="account_verdicts_empty">Henüz kararın yok.</string>
     <string name="account_verdicts_load_failed">Kararlarını yükleyemedik.</string>
     <string name="account_verdicts_removed">Kaldırıldı</string>
+    <string name="verdict_agree">%1$s/%2$s aynı fikirde</string>
+    <string name="verdict_no_majority">Yargıçlar bölündü</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">Yeni</string>
     <string name="app_tab_history">Kararlarım</string>

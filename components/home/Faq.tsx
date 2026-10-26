@@ -10,14 +10,18 @@ export const FAQ_ITEMS = [
   { q: "faq.legal.q", a: "faq.legal.a" },
 ] as const satisfies readonly { q: Key; a: Key }[];
 
-/** Premium questions, shown only for the features this deployment offers. */
+/** Questions shown only for the features this deployment offers. */
 export const FAQ_CASES_ITEM = { q: "faq.both.q", a: "faq.both.a" } as const satisfies { q: Key; a: Key };
 export const FAQ_EVIDENCE_ITEM = { q: "faq.evidence.q", a: "faq.evidence.a" } as const satisfies { q: Key; a: Key };
 
-export function faqItems(features?: { cases: boolean; evidence: boolean } | null): readonly { q: Key; a: Key }[] {
-  const items: { q: Key; a: Key }[] = [...FAQ_ITEMS];
-  const extra: { q: Key; a: Key }[] = [];
-  if (features?.cases) extra.push(FAQ_CASES_ITEM);
+type FaqItem = { q: Key; a: Key; more?: Key };
+
+/** `premium`: whether this deployment sells Premium, which adds the premium
+ * case and appeals to the cases answer. */
+export function faqItems(features?: { cases: boolean; evidence: boolean } | null, premium = false): readonly FaqItem[] {
+  const items: FaqItem[] = [...FAQ_ITEMS];
+  const extra: FaqItem[] = [];
+  if (features?.cases) extra.push(premium ? { ...FAQ_CASES_ITEM, more: "faq.both.premium" } : FAQ_CASES_ITEM);
   if (features?.evidence) extra.push(FAQ_EVIDENCE_ITEM);
   // After "Is my text private?", before how it is powered.
   items.splice(2, 0, ...extra);
@@ -28,14 +32,16 @@ export function faqItems(features?: { cases: boolean; evidence: boolean } | null
  * FAQ: native <details>, so keyboard and screen-reader support come free.
  * The open/close animation is pure CSS where the browser supports it; other
  * browsers open instantly. No hooks: the parent passes the language and the
- * Premium features this deployment offers (none by default).
+ * features this deployment offers (none by default).
  */
 export function Faq({
   lang,
   features = null,
+  premium = false,
 }: {
   lang: Lang;
   features?: { cases: boolean; evidence: boolean } | null;
+  premium?: boolean;
 }) {
   return (
     <section id="faq" className={styles.faq} aria-labelledby="faq-title">
@@ -47,14 +53,14 @@ export function Faq({
           </h2>
         </div>
         <div className={styles.list} data-reveal="">
-          {faqItems(features).map((item) => (
+          {faqItems(features, premium).map((item) => (
             <details key={item.q} className={styles.item}>
               <summary className={styles.summary}>
                 <span>{t(lang, item.q)}</span>
                 <span className={styles.pm} aria-hidden />
               </summary>
               <div className={styles.answer}>
-                <p>{t(lang, item.a)}</p>
+                <p>{item.more ? `${t(lang, item.a)} ${t(lang, item.more)}` : t(lang, item.a)}</p>
               </div>
             </details>
           ))}

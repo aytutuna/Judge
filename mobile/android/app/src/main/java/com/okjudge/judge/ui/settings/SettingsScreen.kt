@@ -119,7 +119,7 @@ fun SettingsScreen(
             Group(null) {
                 LinkRow(s.appSettingsAbout) { onOpenLink("$base/about") }
                 HorizontalDivider(color = Palette.line)
-                LinkRow(s.navHow) { onOpenLink("$base/#how") }
+                LinkRow(s.howTitle) { onOpenLink("$base/about#how") }
                 HorizontalDivider(color = Palette.line)
                 LinkRow(s.footerPrivacy) { onOpenLink("$base/privacy") }
             }

@@ -8,7 +8,7 @@
 # changes firewall rules.
 
 [Unit]
-Description=Refresh the Cloudflare address ranges for Verdict
+Description=Refresh the Cloudflare address ranges for Judge
 Wants=network-online.target
 After=network-online.target caddy.service
 

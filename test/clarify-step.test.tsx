@@ -1,8 +1,6 @@
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import { ClarifyStep, MAX_ANSWER, buildClarifications } from "../components/ClarifyStep";
-import { DEFAULT_FRAMEWORK } from "../lib/frameworks";
-import { Hero, type HeroProps } from "../components/home/Hero";
 import { t } from "../lib/i18n";
 import { Clarification } from "../lib/types";
 
@@ -74,59 +72,5 @@ describe("ClarifyStep", () => {
     expect(html).toContain(t("tr", "clarify.back"));
     expect(html).toContain('id="clarify-title"');
     expect(html).toContain('tabindex="-1"');
-  });
-});
-
-function hero(over: Partial<HeroProps>): string {
-  const props: HeroProps = {
-    lang: "en",
-    phase: "intake",
-    argument: "",
-    onArgumentChange: noop,
-    onExample: noop,
-    onSubmit: noop,
-    canSubmit: true,
-    error: null,
-    framework: DEFAULT_FRAMEWORK,
-    onFrameworkChange: noop,
-    turnstile: null,
-    judging: <div data-testid="judging" />,
-    verdict: <div data-testid="verdict" />,
-    ...over,
-  };
-  return renderToStaticMarkup(<Hero {...props} />);
-}
-
-describe("Hero premium slots", () => {
-  it("without a switch, renders no status region and no clarify layer", () => {
-    const html = hero({ clarify: <div data-testid="clarify" /> });
-    expect(html).not.toContain('role="status"');
-    expect(html).not.toContain('data-testid="clarify"');
-  });
-
-  it("hides the example chips in two-sided mode only", () => {
-    expect(hero({})).toContain('id="hero-spark"');
-    const both = hero({ twoSided: true });
-    expect(both).not.toContain('id="hero-spark"');
-    expect(both).not.toContain('aria-labelledby="hero-spark"');
-  });
-
-  it("puts the switch before the Premium extras and the CTA, and a polite status line under the CTA", () => {
-    const html = hero({
-      tierSwitch: <div data-testid="switch" />,
-      extras: <div data-testid="mode" />,
-      status: "Checking if anything's missing…",
-    });
-    expect(html.indexOf('data-testid="switch"')).toBeLessThan(html.indexOf('data-testid="mode"'));
-    expect(html.indexOf('data-testid="mode"')).toBeLessThan(html.indexOf('type="submit"'));
-    expect(html).toMatch(/role="status" aria-live="polite">.*Checking if anything&#x27;s missing…<\/p>/);
-  });
-
-  it("clarify phase: the form stays mounted but hidden, the step shows in the card", () => {
-    const html = hero({ phase: "clarify", clarify: <div data-testid="clarify" />, tierSwitch: <i /> });
-    expect(html).toMatch(/<form[^>]*hidden=""/);
-    expect(html).toContain('data-testid="clarify"');
-    expect(html).toContain('data-phase="clarify"');
-    expect(html).not.toContain('data-testid="judging"');
   });
 });

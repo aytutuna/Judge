@@ -15,7 +15,7 @@ export type VerdictListState =
 
 /** The headline with the writer's own names put back (same conservative
  * rules as the verdict card). */
-export function restoredHeadline(v: OwnerVerdictSummary): string | null {
+export function restoredHeadline(v: Pick<OwnerVerdictSummary, "headline" | "nameMap">): string | null {
   if (!v.headline) return null;
   const lang = textLang(v.headline);
   return restoreNames(v.headline, resolveParties(v.nameMap, lang, "A"), lang);

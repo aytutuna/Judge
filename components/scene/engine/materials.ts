@@ -5,6 +5,7 @@ import {
   MeshPhysicalMaterial,
   MeshStandardMaterial,
   NormalBlending,
+  PointsMaterial,
   ShadowMaterial,
   SpriteMaterial,
   SRGBColorSpace,
@@ -50,6 +51,25 @@ export function radialTexture(bin: Bin, rgb: string, stops: readonly [number, nu
   return bin.add(t);
 }
 
+/** Light centre, slightly darker rim: a multiply map so the plinth top is
+ * not a flat slab. */
+function shadeTexture(bin: Bin): Texture {
+  const c = document.createElement("canvas");
+  c.width = c.height = 128;
+  const g = c.getContext("2d");
+  if (g) {
+    const r = g.createRadialGradient(64, 64, 0, 64, 64, 90);
+    r.addColorStop(0, "#ffffff");
+    r.addColorStop(0.55, "#fafafa");
+    r.addColorStop(1, "#e4e4e4");
+    g.fillStyle = r;
+    g.fillRect(0, 0, 128, 128);
+  }
+  const t = new CanvasTexture(c);
+  t.colorSpace = SRGBColorSpace;
+  return bin.add(t);
+}
+
 function rgbOf(hex: string): string {
   const n = Number.parseInt(hex.slice(1), 16);
   return `${(n >> 16) & 255},${(n >> 8) & 255},${n & 255}`;
@@ -66,14 +86,17 @@ export function createMaterials(bin: Bin) {
     }),
   );
   const plaster = bin.add(new MeshStandardMaterial({ color: PALETTE_NUM.ivory2, roughness: 0.92 }));
+  const plinth = bin.add(
+    new MeshStandardMaterial({ color: PALETTE_NUM.ivory2, roughness: 0.92, map: shadeTexture(bin) }),
+  );
 
   const sphere = (color: number, sheen: string) =>
     bin.add(
       new MeshPhysicalMaterial({
         color,
-        roughness: 0.6,
-        clearcoat: 0.18,
-        clearcoatRoughness: 0.55,
+        roughness: 0.58,
+        clearcoat: 0.45,
+        clearcoatRoughness: 0.28,
         sheen: 0.5,
         sheenColor: new Color(sheen),
         sheenRoughness: 0.7,
@@ -120,6 +143,14 @@ export function createMaterials(bin: Bin) {
     [1, 0],
   ]);
 
+  const ringTex = radialTexture(bin, "255,255,255", [
+    [0, 0],
+    [0.5, 0],
+    [0.78, 0.85],
+    [0.9, 0.3],
+    [1, 0],
+  ]);
+
   const blob = (opacity: number) =>
     bin.add(new MeshBasicMaterial({ map: shadowTex, transparent: true, depthWrite: false, opacity }));
   const glow = (color: string) =>
@@ -133,9 +164,25 @@ export function createMaterials(bin: Bin) {
         opacity: 0,
       }),
     );
-  const ground = bin.add(new ShadowMaterial({ color: PALETTE_NUM.ink2, opacity: 0.12 }));
+  const ring = (color: string) =>
+    bin.add(
+      new MeshBasicMaterial({ map: ringTex, color: new Color(color), transparent: true, depthWrite: false, opacity: 0 }),
+    );
+  const motes = bin.add(
+    new PointsMaterial({
+      map: glowTex,
+      color: new Color(PALETTE.terra),
+      size: 0.2,
+      transparent: true,
+      depthWrite: false,
+      vertexColors: true,
+    }),
+  );
+  // No depth write: in the cutaway the crux and its glow sit below the floor
+  // plane, which would otherwise hide every transparent thing under it.
+  const ground = bin.add(new ShadowMaterial({ color: PALETTE_NUM.ink2, opacity: 0.16, depthWrite: false }));
 
-  return { ink, plaster, partyA, partyB, stone, strata, gem, blob, glow, ground };
+  return { ink, plaster, plinth, partyA, partyB, stone, strata, gem, blob, glow, ring, motes, ground };
 }
 
 export type Materials = ReturnType<typeof createMaterials>;

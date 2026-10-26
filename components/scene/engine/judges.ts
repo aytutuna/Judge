@@ -16,10 +16,12 @@ import {
   MAX_ORBS,
   ORB_SPLIT_POS,
   PIVOT_Y,
+  bump,
   easeOutBack,
   lerp,
   orbRadius,
   orbSlots,
+  orbitPoint,
   ss,
   voteAt,
   type Pose,
@@ -35,12 +37,28 @@ import type { Bin, Materials } from "./materials";
  * Party B's sphere". "Other" votes (split, conditional, dissolved) keep the
  * hollow ink ring. On the verdict, voting orbs fly into their cup and other
  * votes sink into the pivot.
+ *
+ * While the judges deliberate the orbs drift on a slow ring and each one
+ * pulses faintly at its own rate. A revealed vote pops the orb once, the
+ * pops spaced at least POP_GAP apart.
  */
 
 /** One side of the hero/story blend. */
 export type OrbSource = { pose: Pose; votes: readonly Vote[] | null; n: number };
 
-type OrbLook = { pos: Vector3; scale: number; wa: number; wb: number; absorbA: number; absorbB: number };
+type OrbLook = {
+  pos: Vector3;
+  scale: number;
+  wa: number;
+  wb: number;
+  /** Reveal progress of any vote, "other" included. */
+  rev: number;
+  absorbA: number;
+  absorbB: number;
+};
+
+const POP_S = 0.35;
+const POP_GAP = 0.12;
 
 const easeInOut = (x: number) => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
 
@@ -51,6 +69,7 @@ export function createJudges(scene: Scene, mats: Materials, bin: Bin, opts: { sh
   const terra = new Color(PALETTE.terra);
   const sage = new Color(PALETTE.sageInk);
   const black = new Color(0x000000);
+  const warm = new Color(PALETTE.terraTint);
 
   const orbs = Array.from({ length: MAX_ORBS }, () => {
     const mat = bin.add(
@@ -74,7 +93,7 @@ export function createJudges(scene: Scene, mats: Materials, bin: Bin, opts: { sh
     const haloMat = mats.glow(PALETTE.paper);
     const halo = new Sprite(haloMat);
     scene.add(halo);
-    return { mesh, mat, ring, ringMat, halo, haloMat, slot: new Vector3(), slotReady: false };
+    return { mesh, mat, ring, ringMat, halo, haloMat, at: new Vector3(), r: 0, ready: false, popAt: Number.NaN };
   });
 
   const split = new Vector3(ORB_SPLIT_POS.x, ORB_SPLIT_POS.y, ORB_SPLIT_POS.z);
@@ -83,37 +102,30 @@ export function createJudges(scene: Scene, mats: Materials, bin: Bin, opts: { sh
   const sb = new Vector3();
   const tmp = new Vector3();
   const storySlot = new Vector3();
+  const drift = new Vector3();
   const looks: [OrbLook, OrbLook] = [
-    { pos: new Vector3(), scale: 0, wa: 0, wb: 0, absorbA: 0, absorbB: 0 },
-    { pos: new Vector3(), scale: 0, wa: 0, wb: 0, absorbA: 0, absorbB: 0 },
+    { pos: new Vector3(), scale: 0, wa: 0, wb: 0, rev: 0, absorbA: 0, absorbB: 0 },
+    { pos: new Vector3(), scale: 0, wa: 0, wb: 0, rev: 0, absorbA: 0, absorbB: 0 },
   ];
+  let clock = 0;
+  let ringT = 0;
+  let lastPop = -Infinity;
   const col = new Color();
   const emi = new Color();
 
-  function look(
-    out: OrbLook,
-    i: number,
-    src: OrbSource,
-    slot: Vector3,
-    time: number,
-  ): OrbLook {
+  function look(out: OrbLook, i: number, src: OrbSource, at: Vector3, radius: number): OrbLook {
     const { pose, votes, n } = src;
     const fan = ss(0.35, 0.9, pose.orbs);
-    tmp.copy(slot);
-    if (pose.orbit > 0) {
-      tmp.x += Math.sin(time * 0.5 + i * 2.1) * 0.07 * pose.orbit;
-      tmp.y += Math.cos(time * 0.7 + i * 1.3) * 0.05 * pose.orbit;
-      tmp.z += Math.sin(time * 0.4 + i) * 0.05 * pose.orbit;
-    }
-    out.pos.copy(split).lerp(tmp, easeOutBack(fan));
+    out.pos.copy(split).lerp(at, easeOutBack(fan));
     const v = votes?.[i];
     const r = v ? voteAt(i, n, pose.votes) : 0;
+    out.rev = r;
     out.wa = v === "a" ? r : 0;
     out.wb = v === "b" ? r : 0;
     const d = v ? easeInOut(voteAt(i, n, pose.drop)) : 0;
     if (d > 0) out.pos.lerp(v === "a" ? sa : v === "b" ? sb : pivot, d);
     const gone = ss(0.6, 1, d);
-    out.scale = i < n ? orbRadius(n) * fan * (1 - gone) : 0;
+    out.scale = radius * fan * (1 - gone);
     out.absorbA = v === "a" ? gone : 0;
     out.absorbB = v === "b" ? gone : 0;
     return out;
@@ -126,6 +138,7 @@ export function createJudges(scene: Scene, mats: Materials, bin: Bin, opts: { sh
       story: OrbSource,
       w: number,
       time: number,
+      ambientDt: number,
       dt: number,
       sphereA: Vec3,
       sphereB: Vec3,
@@ -137,22 +150,46 @@ export function createJudges(scene: Scene, mats: Materials, bin: Bin, opts: { sh
       const heroSlots = orbSlots(hero.n);
       const storySlots = orbSlots(story.n);
       const k = snap ? 1 : 1 - Math.exp(-dt * 6);
+      clock += dt;
+      // The ring starts turning when the orbs leave the arc, so they ease onto
+      // it in the slots' order. Only the hero orbits; the story never does.
+      ringT = hero.pose.orbit > 0 ? ringT + ambientDt : 0;
+      const orbit = lerp(hero.pose.orbit, story.pose.orbit, w);
       let absorbA = 0;
       let absorbB = 0;
       orbs.forEach((o, i) => {
-        // Hero slots ease when an escalation changes the orb count mid-air.
-        const target = heroSlots[i] ?? storySlots[i] ?? ORB_SPLIT_POS;
-        if (!o.slotReady || snap) {
-          o.slot.set(target.x, target.y, target.z);
-          o.slotReady = true;
-        } else o.slot.lerp(tmp.set(target.x, target.y, target.z), k);
-        const sSlot = storySlots[i] ?? heroSlots[i] ?? ORB_SPLIT_POS;
-        const h = look(looks[0], i, hero, o.slot, time);
-        const s = look(looks[1], i, story, storySlot.set(sSlot.x, sSlot.y, sSlot.z), time);
+        // Eased, so an escalation that changes the orb count mid-air moves the
+        // panel over instead of jumping: new orbs grow out of the split point,
+        // dropped ones shrink where they are.
+        const slot = heroSlots[i];
+        if (slot) {
+          tmp.set(slot.x, slot.y, slot.z);
+          if (hero.pose.orbit > 0) tmp.lerp(orbitPoint(i, hero.n, ringT, drift), hero.pose.orbit);
+        } else tmp.copy(o.r > 0.004 ? o.at : split);
+        const r = slot ? orbRadius(hero.n) : 0;
+        if (!o.ready || snap) {
+          o.at.copy(tmp);
+          o.r = r;
+          o.ready = true;
+        } else {
+          o.at.lerp(tmp, k);
+          o.r += (r - o.r) * k;
+        }
+        const sSlot = storySlots[i] ?? ORB_SPLIT_POS;
+        storySlot.set(sSlot.x, sSlot.y, sSlot.z);
+        const h = look(looks[0], i, hero, o.at, o.r);
+        const s = look(looks[1], i, story, storySlot, i < story.n ? orbRadius(story.n) : 0);
 
-        const scale = lerp(h.scale, s.scale, w);
         const wa = lerp(h.wa, s.wa, w);
         const wb = lerp(h.wb, s.wb, w);
+        const rev = lerp(h.rev, s.rev, w);
+        if (rev < 0.01) o.popAt = Number.NaN;
+        else if (Number.isNaN(o.popAt)) {
+          // A snapped frame shows the vote without the pop.
+          o.popAt = snap ? -Infinity : Math.max(clock, lastPop + POP_GAP);
+          if (!snap) lastPop = o.popAt;
+        }
+        const scale = lerp(h.scale, s.scale, w) * (1 + 0.25 * bump((clock - o.popAt) / POP_S));
         absorbA += lerp(h.absorbA, s.absorbA, w);
         absorbB += lerp(h.absorbB, s.absorbB, w);
         const visible = scale > 0.004;
@@ -169,11 +206,16 @@ export function createJudges(scene: Scene, mats: Materials, bin: Bin, opts: { sh
         o.halo.scale.setScalar(scale * 5.5);
 
         const voted = Math.min(1, wa + wb);
-        col.copy(neutral).multiplyScalar(1 - voted);
+        // Deliberation pulse. With the rate linear in i a linear phase would
+        // line every orb up every 17 s; a quadratic one keeps the panel from
+        // ever brightening in step.
+        const beat = orbit * (1 - voted) * (0.5 + 0.5 * Math.sin(time * (1.1 + 0.37 * i) + i * i * 2.4));
+        col.copy(neutral).multiplyScalar((1 - voted) * (0.9 + 0.1 * beat));
         col.add(emi.copy(terra).multiplyScalar(wa));
         col.add(emi.copy(sage).multiplyScalar(wb));
         o.mat.color.copy(col);
         emi.copy(black).add(col.copy(terra).multiplyScalar(wa)).add(col.copy(sage).multiplyScalar(wb));
+        emi.add(col.copy(warm).multiplyScalar(0.5 * beat));
         o.mat.emissive.copy(emi);
         o.ringMat.opacity = 0.85 * (1 - voted);
         o.haloMat.color.copy(wa >= wb ? terra : sage);

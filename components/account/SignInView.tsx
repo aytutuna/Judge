@@ -306,6 +306,7 @@ export function SignInView({ next: rawNext }: { next?: string | string[] }) {
       kicker={t(lang, "nav.account")}
       title={t(lang, "signin.title")}
       lead={t(lang, "signin.lead")}
+      bare
     >
       <SignInPanel
         lang={lang}

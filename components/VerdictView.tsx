@@ -18,9 +18,6 @@ import { ShareButtons } from "./ShareButtons";
 import type { OwnerShare } from "./ShareDialog";
 import { VerdictCardShell } from "./verdict/VerdictCardShell";
 import { CardBrand, CardTopRow } from "./verdict/CardTopRow";
-import { voteOf } from "./verdict/VoteDots";
-import { CruxBlock } from "./verdict/CruxBlock";
-import { BestPointBlock } from "./verdict/BestPointBlock";
 import { CardActions } from "./verdict/CardActions";
 import { AppealOutcomeBanner } from "./case/AppealOutcome";
 import { TwoSidedFacts, WouldChangeBlock, evidenceNote } from "./case/TwoSidedBlocks";
@@ -35,6 +32,18 @@ const VOTE_KEY = {
   conditional: "vote.conditional",
   dissolved: "vote.dissolved",
 } as const satisfies Record<string, Key>;
+
+/** "Deniz's best point" when one side won, the plain title otherwise. */
+function bestPointTitle(
+  lang: Lang,
+  result: VerdictResult,
+  p: { nameA: string; nameB: string; aIsSelf: boolean; bIsSelf: boolean },
+): string {
+  if (result.verdict !== "side_a" && result.verdict !== "side_b") return stripLeadingEmoji(t(lang, "bestPointTitle"));
+  const loserA = result.verdict === "side_b";
+  if (loserA ? p.aIsSelf : p.bIsSelf) return t(lang, "bestPoint.self");
+  return t(lang, "bestPoint.of", { name: loserA ? p.nameA : p.nameB });
+}
 
 /** Small status pill above a verdict whose text is (being) translated.
  * Polite live region, so a screen reader hears "Translating…" and then the
@@ -58,8 +67,9 @@ function TranslationNote({ view, lang }: { view: TranslationView; lang: Lang }) 
   );
 }
 
-/** Full verdict display: the card (tug bar, ruling, branches, crux, best
- * point, votes, actions), then the argument map and facts below it.
+/** Full verdict display: the card (stamp, headline, confidence and votes,
+ * branches, crux, bedrock, best point, actions), then the argument map and
+ * facts below it.
  * `lang` prop: the share page passes its own selected language (the store is
  * the viewer's own preference and never applies there); the main page passes
  * nothing and the store wins. With a `shareId`, the verdict TEXT follows
@@ -190,7 +200,7 @@ export function VerdictView({
                 pill
               )
             }
-            votes={result.runs.map(voteOf)}
+            votes={[]}
           />
         }
       >
@@ -206,14 +216,37 @@ export function VerdictView({
         />
 
         {!refused ? (
-          <CruxBlock title={stripLeadingEmoji(t(lang, "cruxShort"))} text={result.crux} />
+          <section className={styles.section}>
+            <h3 className={styles.sectionLabel}>{stripLeadingEmoji(t(lang, "cruxShort"))}</h3>
+            <p className={styles.sectionText}>{result.crux}</p>
+          </section>
+        ) : null}
+
+        {!refused && (result.argument_map.bedrock_a || result.argument_map.bedrock_b) ? (
+          <section className={styles.section}>
+            <h3 className={styles.sectionLabel}>{stripLeadingEmoji(t(lang, "bedrock"))}</h3>
+            <div className={styles.tiles}>
+              <div className={styles.tile}>
+                <span className={styles.tileName} data-party="a">
+                  {nameA}
+                </span>
+                <p>{result.argument_map.bedrock_a}</p>
+              </div>
+              <div className={styles.tile}>
+                <span className={styles.tileName} data-party="b">
+                  {nameB}
+                </span>
+                <p>{result.argument_map.bedrock_b}</p>
+              </div>
+            </div>
+          </section>
         ) : null}
 
         {!refused && result.losing_side_best_point ? (
-          <BestPointBlock
-            title={stripLeadingEmoji(t(lang, "bestPointTitle"))}
-            text={result.losing_side_best_point}
-          />
+          <section className={styles.section}>
+            <h3 className={styles.sectionLabel}>{bestPointTitle(lang, result, parties)}</h3>
+            <p className={styles.sectionText}>{result.losing_side_best_point}</p>
+          </section>
         ) : null}
 
         {!refused && result.would_change?.length ? (

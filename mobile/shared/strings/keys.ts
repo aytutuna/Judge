@@ -101,7 +101,7 @@ export const WEB_KEYS: readonly string[] = [
   "footer.privacy",
   "footer.language",
   "footer.note",
-  "nav.how",
+  "how.title",
   "nav.signIn",
   "nav.account",
   "nav.pricing",

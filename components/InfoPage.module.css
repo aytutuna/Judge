@@ -66,33 +66,6 @@
   letter-spacing: -0.025em;
 }
 
-.method {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-.method li {
-  display: grid;
-  grid-template-columns: 40px minmax(0, 1fr);
-  gap: 12px;
-  align-items: baseline;
-}
-.method strong {
-  color: var(--ink);
-  font-weight: 600;
-}
-
-.numeral {
-  color: var(--terra-ink);
-  font-family: var(--font-serif);
-  font-size: 26px;
-  font-style: italic;
-  line-height: 1;
-}
-
 .bullets {
   display: flex;
   flex-direction: column;
@@ -144,8 +117,4 @@
   .main {
     padding: 96px 0 140px;
   }
-}
-
-.nobreak {
-  white-space: nowrap;
 }

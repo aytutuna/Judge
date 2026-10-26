@@ -29,6 +29,7 @@ import {
   sendSignInEmail,
 } from "./email";
 import { ensureEntitlementTables } from "./entitlements";
+import { captureAppleRefreshToken, deleteSignInTokens, keepCapturedAppleRefreshToken } from "./signin-tokens";
 
 type Env = Record<string, string | undefined>;
 type AuthInstance = Auth<BetterAuthOptions>;
@@ -84,6 +85,38 @@ export function authConfigured(env: Env = process.env): boolean {
 /** Premium is offered when not switched off, auth works and a model key is set. */
 export function premiumEnabled(env: Env = process.env): boolean {
   return env.PREMIUM_ENABLED?.trim() !== "0" && authConfigured(env) && Boolean(env.ANTHROPIC_API_KEY);
+}
+
+/**
+ * The store-review account: one address whose emailed sign-in code is always
+ * REVIEW_ACCOUNT_CODE, and to which no email is sent (App Review has no inbox
+ * of ours). Needs REVIEW_ACCOUNT_EMAIL, a 6-digit code that is not a trivial
+ * run of digits, and email sign-in configured (the code plugin is only loaded
+ * then). It is an ordinary account otherwise: same limits, nothing granted.
+ */
+export function reviewAccount(env: Env = process.env): { email: string; code: string } | null {
+  const email = env.REVIEW_ACCOUNT_EMAIL?.trim().toLowerCase() ?? "";
+  const code = env.REVIEW_ACCOUNT_CODE?.trim() ?? "";
+  if (!email || !code) return null;
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return null;
+  if (!/^\d{6}$/.test(code)) return null;
+  if (/^(\d)\1{5}$/.test(code) || code === "123456" || code === "654321") return null;
+  return { email, code };
+}
+
+/** Code requests for the review address per hour, process-wide. Each request
+ * resets the per-code guess count, so without this a guess-and-resend search
+ * of the fixed code would be bounded only by the per-IP rate limit; with it,
+ * REVIEW_SENDS_PER_HOUR * EMAIL_CODE_ATTEMPTS guesses an hour. Past the cap
+ * the address gets a random code that is never sent: locked until the window
+ * moves on. */
+const REVIEW_SENDS_PER_HOUR = 10;
+const reviewSends: number[] = [];
+function reviewSendAllowed(now = Date.now()): boolean {
+  while (reviewSends.length && now - reviewSends[0] > 3_600_000) reviewSends.shift();
+  if (reviewSends.length >= REVIEW_SENDS_PER_HOUR) return false;
+  reviewSends.push(now);
+  return true;
 }
 
 function originOf(raw: string | undefined): string | null {
@@ -146,8 +179,11 @@ function authLog(level: "debug" | "info" | "warn" | "error", message: string, ..
   else if (level === "warn") console.warn(line);
 }
 
-const stripProviderTokens = async <T extends Record<string, unknown>>(account: T) => ({
-  data: { ...account, accessToken: null, refreshToken: null, idToken: null },
+const withoutProviderTokens = <T extends Record<string, unknown>>(account: T) => ({
+  ...account,
+  accessToken: null,
+  refreshToken: null,
+  idToken: null,
 });
 
 function buildOptions(env: Env, secret: string, client: Awaited<ReturnType<typeof getDb>>) {
@@ -176,8 +212,16 @@ function buildOptions(env: Env, secret: string, client: Awaited<ReturnType<typeo
         allowedAttempts: EMAIL_CODE_ATTEMPTS,
         storeOTP: "hashed",
         rateLimit: EMAIL_SIGNIN_RATE,
+        // The review account gets its fixed code (see reviewAccount); anyone
+        // else a random one.
+        generateOTP: ({ email, type }) => {
+          const review = reviewAccount(env);
+          if (type !== "sign-in" || !review || email.toLowerCase() !== review.email) return undefined;
+          return reviewSendAllowed() ? review.code : undefined;
+        },
         sendVerificationOTP: async ({ email, otp, type }, ctx) => {
           if (type !== "sign-in") return; // refused earlier by hooks.before
+          if (reviewAccount(env)?.email === email.trim().toLowerCase()) return; // the reviewer knows the code
           await sendSignInCodeEmail({ to: email, code: otp, lang: langFromRequestUrl(ctx?.request?.url) });
         },
       }),
@@ -219,7 +263,10 @@ function buildOptions(env: Env, secret: string, client: Awaited<ReturnType<typeo
     session: { expiresIn: SESSION_DAYS * 24 * 60 * 60, updateAge: 24 * 60 * 60 },
     user: { deleteUser: { enabled: false } },
     account: {
-      updateAccountOnSignIn: false,
+      // On: a returning website Apple sign-in passes its fresh refresh token
+      // through the account update hooks below (the tokens are still stripped
+      // before the row is written).
+      updateAccountOnSignIn: true,
       accountLinking: { enabled: true, trustedProviders: ["apple", "google"] },
     },
     socialProviders: {
@@ -252,6 +299,9 @@ function buildOptions(env: Env, secret: string, client: Awaited<ReturnType<typeo
       "/get-access-token",
       "/refresh-token",
       "/account-info",
+      // Linking happens through the sign-in itself (trusted providers); this
+      // endpoint would also take provider tokens from the request body.
+      "/link-social",
       // Email code plugin: only send-verification-otp and sign-in/email-otp
       // are used.
       "/email-otp/check-verification-otp",
@@ -293,10 +343,28 @@ function buildOptions(env: Env, secret: string, client: Awaited<ReturnType<typeo
           before: async (session) => ({ data: { ...session, ipAddress: null, userAgent: null } }),
         },
       },
-      // Provider access/refresh/ID tokens are not needed after sign-in.
+      // Provider access/refresh/ID tokens are never written to the account
+      // row. A website Apple refresh token is kept apart, sealed, only to be
+      // revoked when the account is deleted (lib/signin-tokens.ts).
       account: {
-        create: { before: stripProviderTokens },
-        update: { before: stripProviderTokens },
+        create: {
+          before: async (account, context) => {
+            captureAppleRefreshToken(account, context);
+            return { data: withoutProviderTokens(account) };
+          },
+          after: async (account, context) => {
+            if (appleCfg) await keepCapturedAppleRefreshToken(account, context, appleCfg.clientId);
+          },
+        },
+        update: {
+          before: async (account, context) => {
+            captureAppleRefreshToken(account, context);
+            return { data: withoutProviderTokens(account) };
+          },
+          after: async (account, context) => {
+            if (appleCfg) await keepCapturedAppleRefreshToken(account, context, appleCfg.clientId);
+          },
+        },
       },
     },
     logger: { level: "warn", log: authLog },
@@ -331,6 +399,8 @@ const CONFIG_KEYS = [
   "APPLE_PRIVATE_KEY_BASE64",
   "APPLE_APP_BUNDLE_ID",
   "RESEND_API_KEY",
+  "REVIEW_ACCOUNT_EMAIL",
+  "REVIEW_ACCOUNT_CODE",
   "EMAIL_FROM",
   "TURNSTILE_SECRET_KEY",
 ];
@@ -551,13 +621,26 @@ export async function clearSessionCookieHeaders(): Promise<string[]> {
   );
 }
 
-/** Removes the user's sessions, sign-in accounts and user row (the caller
+/** Removes the user's sessions, sign-in accounts, any stored sign-in
+ * provider tokens and the user row (the caller revokes the tokens and
  * deletes the entitlements first). */
 export async function deleteAuthUser(userId: string): Promise<void> {
   const ctx = await (await getAuth()).$context;
+  await deleteSignInTokens(userId);
   await ctx.internalAdapter.deleteUserSessions(userId);
   await ctx.internalAdapter.deleteAccounts(userId);
   await ctx.internalAdapter.deleteUser(userId);
+}
+
+/** The first of these ids that is an existing account, else null (store
+ * webhooks name the buyer by our user id). */
+export async function findExistingUserId(ids: readonly string[]): Promise<string | null> {
+  const ctx = await (await getAuth()).$context;
+  for (const id of ids) {
+    const user = await ctx.internalAdapter.findUserById(id);
+    if (user) return user.id;
+  }
+  return null;
 }
 
 export const DEV_LOGIN_DEFAULT_EMAIL = "test@verdict.local";

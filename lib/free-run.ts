@@ -7,7 +7,7 @@
 
 import { aggregate } from "@/lib/aggregate";
 import { t, type Lang } from "@/lib/i18n";
-import { judgeExtra, judgeSelfConsistent, type JudgeRun } from "@/lib/judge";
+import { judgeExtra, judgeSelfConsistent, type JudgeOptions, type JudgeRun } from "@/lib/judge";
 import { applyCruxTrial, runCruxTrial, shouldTryCrux } from "@/lib/trial";
 import type { FrameworkChoice, JudgeRunOutput, VerdictResult } from "@/lib/types";
 
@@ -51,14 +51,16 @@ export type FreeJudged =
   | { ok: false; code: "quota" | "unavailable"; detail: string };
 
 /** Judges anonymized text. A refusal by every judge is an ok refused
- * result; `result.lang` is set. */
+ * result; `result.lang` is set. `opts` is for free two-sided cases: the
+ * two-account note and schema, and any extra context after the text. */
 export async function judgeFreeAnonymized(
   anonymized: string,
   framework: FrameworkChoice,
   lang: Lang,
+  opts: Pick<JudgeOptions, "context" | "twoSided"> = {},
 ): Promise<FreeJudged> {
   let result: VerdictResult;
-  const runs = await judgeSelfConsistent(anonymized, framework, lang);
+  const runs = await judgeSelfConsistent(anonymized, framework, lang, opts);
   const ok = runs.filter((r) => r.ok).map((r) => r.data as JudgeRunOutput);
   if (ok.length === 0) {
     if (!runs.every((r) => !r.ok && r.blocked)) {
@@ -75,7 +77,7 @@ export async function judgeFreeAnonymized(
     // run succeeds, the first result stands as it was.
     const extra = intEnv("JUDGE_EXTRA_RUNS", 2, 0, 4);
     if (extra > 0 && result.confidence <= intEnv("JUDGE_ESCALATE_AT", 2, 0, 5)) {
-      const more = await judgeExtra(extra, anonymized, framework, lang).catch((): JudgeRun[] => []);
+      const more = await judgeExtra(extra, anonymized, framework, lang, opts).catch((): JudgeRun[] => []);
       const moreOk = more.filter((r) => r.ok).map((r) => r.data as JudgeRunOutput);
       console.info(
         `[verdict] escalated at confidence ${result.confidence}: ${moreOk.length}/${extra} extra runs ok, ${ok.length + moreOk.length} runs counted`,
@@ -87,7 +89,7 @@ export async function judgeFreeAnonymized(
     // and never exceeds its ~60s deadline; null means the verdict ships
     // untried (failure-open). CRUX_TRIAL=0 is the tight-quota kill switch.
     if (process.env.CRUX_TRIAL !== "0" && shouldTryCrux(result)) {
-      const trial = await runCruxTrial(anonymized, result, lang);
+      const trial = await runCruxTrial(opts.context ? `${anonymized}\n\n${opts.context}` : anonymized, result, lang);
       if (trial) result = applyCruxTrial(result, trial);
     }
   }

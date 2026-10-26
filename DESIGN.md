@@ -1,4 +1,4 @@
-# Verdict: accounts, Premium and the API for mobile
+# Judge: accounts, Premium and the API for mobile
 
 This file records how accounts, entitlements and Premium judging are built,
 and the contract the future iOS/Android app will use. Setup, env vars and
@@ -9,7 +9,7 @@ the admin script are in the README ("Accounts and Premium").
 | Topic | Decision |
 |---|---|
 | Product | The website and a later native app (iOS + Android, likely Expo / React Native) share one backend. The app will be the main product, so every capability is a versioned JSON HTTP API. No server actions, no cookie-only flows. |
-| Tiers | **Free**: the original pipeline, limits and UI flow, unchanged, for signed-out and free users. **Premium**: clarifying questions, web fact-check with sources, stronger judge panel. |
+| Tiers | **Free**: the original pipeline, limits and UI flow, unchanged, for signed-out and free users; signed-in free users also get two-sided cases. **Premium**: clarifying questions, web fact-check with sources, stronger judge panel, evidence and appeals. |
 | Auth | [Better Auth](https://www.better-auth.com) 1.7 on the existing libSQL database (`@libsql/kysely-libsql`; an npm `overrides` entry keeps one `@libsql/client`). Browser: HttpOnly cookie `verdict.session_token` (`__Secure-` on https). App: the same session token as `Authorization: Bearer`. 30-day sliding sessions. |
 | Sign-in | Apple and Google (web redirect and native ID token), email magic link (website) or 6-digit email code (apps), both through Resend, and a dev-only test login. Methods without credentials are reported unavailable by `GET /api/v1/config` and shown disabled. |
 | Dev login | Only when the code is not a production build (the `process.env.NODE_ENV` literal is inlined by `next build`, so starting a build with another `NODE_ENV` does not help) **and** `DEV_LOGIN=1` **and** the server listens on loopback only (`next dev -H 127.0.0.1`, read from Next's recorded listen origin) **and** the `Host` header is `localhost`/`127.0.0.1`/`[::1]` (`X-Forwarded-Host` ignored). Otherwise 404. |
@@ -30,10 +30,12 @@ Browser (cookie)            Native app (Bearer)
       ├── /api/v1/config           GET   sign-in methods, premium on/off, pricing
       ├── /api/v1/me               GET   viewer + entitlement      DELETE  delete account
       ├── /api/v1/auth/dev-login   POST  dev only
+      ├── /api/v1/auth/apple/code  POST  app: Apple authorization code (kept for revocation)
       ├── /api/v1/clarify          POST  premium: up to 2 questions
       ├── /api/v1/verdict          POST  free | premium   (same handler as /api/verdict)
       ├── /api/v1/verdicts/{id}    GET   stored verdict (no input text)
-      └── /api/v1/verdicts/{id}/translate POST  (same handler as /api/verdict/{id}/translate)
+      ├── /api/v1/verdicts/{id}/translate POST  (same handler as /api/verdict/{id}/translate)
+      └── /api/v1/webhooks/revenuecat     POST  RevenueCat only (shared secret)
 ```
 
 The free request path in `app/api/verdict/route.ts` is untouched: one early
@@ -53,7 +55,7 @@ non-Haiku seat succeeded, so the verdict is not the stronger panel that was
 paid for; it is still shown). Turnstile is not used
 for Premium: the account and the per-user limits are the gate.
 
-Funding order: an active subscription under its fair-use cap first, then
+Funding order: an active subscription under its monthly cap first, then
 credits. Reservations still open after 10 minutes are refunded lazily.
 
 ## Two-sided cases, evidence and appeals
@@ -70,13 +72,13 @@ evidence send exactly the requests they did before.
 | Invite links | 128-bit token = HMAC(derived key, case id + nonce), base64url. The table stores the nonce and sha256(token); the owner's link is re-derived, and a new nonce turns the old one off. The token never goes into a sign-in redirect: the respondent's sign-in returns to `/r`, which reads the token back from the browser. |
 | Who is Party B | Fixed when side B is submitted: a signed-in answer sets `respondent_user_id` in the same guarded UPDATE; a signed-out answer stores `respondent_claim_nonce` and returns a claim secret = HMAC(derived key, case id + nonce) (re-derived for a replayed key; never stored). A Party B appeal needs the bound account, or the claim (the first accepted appeal then binds the account). Holding the link alone is not enough. |
 | States | `awaiting_respondent -> judging -> judged`, plus `failed` (retryable, refunded) and `expired` (7 days, refunded; reads report it before the sweep writes it). Transitions are one conditional UPDATE, so a respondent and a judge-now race has exactly one winner. |
-| Credits | The owner's unit is reserved in `premium_usage` at creation with `hold_until = expires_at`; the stale sweep refunds 10 minutes after `COALESCE(hold_until, created_at)`. Judging consumes it in the same batch that links the verdict; failure, refusal, a degraded panel, expiry and deletion refund it. Appeals reserve the appealer's unit. |
+| Credits | `cases.tier` (`free` or `premium`, `premium` for rows from before the column) is fixed at creation and decides every later path. A premium case reserves the owner's unit in `premium_usage` at creation with `hold_until = expires_at`; the stale sweep refunds 10 minutes after `COALESCE(hold_until, created_at)`. Judging consumes it in the same batch that links the verdict; failure, refusal, a degraded panel, expiry and deletion refund it. A free case reserves nothing, on creation, judge-now, retries or expiry, and skips `PREMIUM_DAILY_CAP`; the request that starts its judging (the answer or judge-now) counts as one free verdict against the caller's IP windows and `DAILY_VERDICT_CAP`. Appeals reserve the appealer's unit on either tier. |
 | Judging | After the response (`after()`), clients poll `GET` every `pollAfterMs`. Every write of a run is guarded by a fresh token (`judging_token` / `attempt_token`), so a run the 10-minute sweep already failed, or a deleted case, changes nothing. |
-| Judges | Same premium pipeline (fact-check on the document, 2 x Sonnet + Haiku, escalation, crux trial). Two-sided runs add `TWO_SIDED_JUDGE_NOTE` and `TWO_SIDED_JUDGE_SCHEMA` (`agreed_facts`, `disputed_facts`, `would_change` before the forced ruling, which stays last); evidence adds `EVIDENCE_JUDGE_NOTE`; appeals add `APPEAL_JUDGE_NOTE` (`APPEAL_ONE_SIDED_JUDGE_NOTE` on a case judged on one side, where nobody answered either text) and re-judge the whole record without showing the earlier verdict. When the crux trial overturns a two-sided ruling, the decisive dispute is stored as `unsettled`. Deadline gates count from the request that scheduled the run, so anonymizing in that request counts; a refused seat's Haiku rerun is skipped past 220 s. Each case's model calls are logged with its id (`[premium] ... case=<id>` for judging, `[cases] usage case=<id> step=...` for each anonymize call and the appeal summary). |
+| Judges | A free case's first verdict uses the free pipeline (`judgeFreeAnonymized` with `twoSided`: self-consistent runs, escalation, crux trial; the result carries no `tier`, `fact_check` or `panel`, and a refusal is stored as the refused result). A premium case and every appeal use the premium pipeline (fact-check on the document, 2 x Sonnet + Haiku, escalation, crux trial). Two-sided runs add `TWO_SIDED_JUDGE_NOTE` and `TWO_SIDED_JUDGE_SCHEMA` (`agreed_facts`, `disputed_facts`, `would_change` before the forced ruling, which stays last); evidence adds `EVIDENCE_JUDGE_NOTE`; appeals add `APPEAL_JUDGE_NOTE` (`APPEAL_ONE_SIDED_JUDGE_NOTE` on a case judged on one side, where nobody answered either text) and re-judge the whole record without showing the earlier verdict. When the crux trial overturns a two-sided ruling, the decisive dispute is stored as `unsettled`. Deadline gates count from the request that scheduled the run, so anonymizing in that request counts; a refused seat's Haiku rerun is skipped past 220 s. Each case's model calls are logged with its id (`[premium] ... case=<id>` for judging, `[cases] usage case=<id> step=...` for each anonymize call and the appeal summary). |
 | Appeals | One per party per case (at most two), owner or the signed-in Premium respondent who wrote side B (see above). The verdict it answers is read inside the INSERT (latest seq), not from the pre-anonymize snapshot. Labelled `upheld / overturned / changed` (shown as "Verdict stands / flipped / changed") against that verdict, with the confidence change and a one-sentence summary (Haiku, fails open to empty). A refused re-judge fails the appeal and refunds instead of storing a refused card. |
-| Evidence | Images are checked by magic bytes, transcribed in memory, and thrown away; the client gets a signed token (6 h) holding the raw transcript, and the submission anonymizes it with the text. Only anonymized transcripts are stored. |
+| Evidence | Images are checked by magic bytes, transcribed in memory, and thrown away; the client gets a signed token (6 h) holding the raw transcript, and the submission anonymizes it with the text. Only anonymized transcripts are stored. A free case takes no evidence on either side (`402 premium_required`, upload and appeals included). |
 | Deletion | `DELETE /cases/{id}` and account deletion remove sides, evidence, fingerprints, appeals, case verdicts and their translations; bindings to the deleted account elsewhere are cleared. |
-| Kill switches | `CASES_ENABLED=0`, `EVIDENCE_ENABLED=0` (also off whenever Premium is off); `GET /api/v1/config` reports `features`. |
+| Kill switches | `CASES_ENABLED=0` (also off without accounts or a model key, but not tied to Premium: with Premium off, free cases go on, while answering or judging a premium case and appealing answer `503 not_configured`), `EVIDENCE_ENABLED=0` (also off whenever Premium is off); `GET /api/v1/config` reports `features`. |
 
 ## API for mobile
 
@@ -87,11 +89,11 @@ evidence send exactly the requests they did before.
 - `POST /verdict` accepts an `Idempotency-Key` header (1 to 64 of `[A-Za-z0-9_-]`): a retry with the same key never spends a second credit; a finished one replays with `replayed: true`.
 
 ### Sign-in flows
-- **Apple (iOS):** `expo-apple-authentication` with a random nonce (Apple gets `SHA256(nonce)`), then `POST /api/auth/sign-in/social { provider: "apple", idToken: { token: identityToken, nonce, user: { name: { firstName, lastName } } } }`. Response `{ redirect: false, token, user }` (and the `set-auth-token` header); keep `token` in SecureStore. Apple sends the name only on the first sign-in. Audience: `APPLE_APP_BUNDLE_ID`.
+- **Apple (iOS):** `expo-apple-authentication` with a random nonce (Apple gets `SHA256(nonce)`), then `POST /api/auth/sign-in/social { provider: "apple", idToken: { token: identityToken, nonce, user: { name: { firstName, lastName } } } }`. Response `{ redirect: false, token, user }` (and the `set-auth-token` header); keep `token` in SecureStore. Apple sends the name only on the first sign-in. Audience: `APPLE_APP_BUNDLE_ID`. Then, at once, `POST /api/v1/auth/apple/code { code: authorizationCode }` with the bearer token → `{ stored: true }`: the server exchanges the code with Apple (client id `APPLE_APP_BUNDLE_ID`, no redirect URI) and keeps the refresh token sealed with `ORIGINALS_KEY`, only to revoke it on account deletion. A failure does not affect the session.
 - **Google (iOS/Android):** native Google Sign-In, then `POST /api/auth/sign-in/social { provider: "google", idToken: { token } }`. Accepted audiences: the web, iOS and Android client ids.
 - Invalid ID tokens answer `401 { code: "INVALID_TOKEN" }`.
 - **Email (apps):** when `signIn.emailCode` is true, `POST /api/auth/email-otp/send-verification-otp?lang=tr { email, type: "sign-in" }` → `{ success: true }` and a 6-digit code by email; then `POST /api/auth/sign-in/email-otp { email, otp }` → `{ token, user }` (and `set-auth-token`). Codes last 10 minutes, 3 wrong tries burn a code (`INVALID_OTP`, `TOO_MANY_ATTEMPTS`, `OTP_EXPIRED`), 3 requests per minute per IP; no Turnstile.
-- **Session:** `GET /api/v1/me`. A bearer token with no live session gets `401 signin_required` on every session-aware route (free verdicts and public reads included); requests without `Authorization` are unaffected. **Sign out:** `POST /api/auth/sign-out`. **Delete account** (required by both stores): `DELETE /api/v1/me { "confirm": "delete" }`.
+- **Session:** `GET /api/v1/me`. A bearer token with no live session gets `401 signin_required` on every session-aware route (free verdicts and public reads included); requests without `Authorization` are unaffected. **Sign out:** `POST /api/auth/sign-out`. **Delete account** (required by both stores): `DELETE /api/v1/me { "confirm": "delete" }`. It first revokes every stored Sign in with Apple refresh token at `https://appleid.apple.com/auth/revoke` with the client id it was issued to (Services ID for website sign-ins, kept from Better Auth's callback exchange; bundle id for the app's codes). Apple failures are logged without the token, recorded in the account's removal-log entry (`signInTokens: { apple: "revoked" | "partial" | "failed" | "none" }`) and never block the deletion. Google sign-in keeps no token, so there is nothing to revoke.
 
 ### Core calls
 | Call | Response |
@@ -108,7 +110,7 @@ Free verdicts from the app need a bot check before launch, because Turnstile
 is web-only: App Attest / Play Integrity, or free verdicts for signed-in
 bearer users under a per-user limit. Decide before the app ships.
 
-### Purchases and entitlement webhooks (future)
+### Purchases and entitlement webhooks
 Every grant stores its source (`admin | app_store | play_store | web | promo`)
 and is applied at most once per `(source, external id)`. The single entry
 point is `applyStoreEvent(e: StoreEvent)` in `lib/entitlements.ts`:
@@ -123,27 +125,52 @@ type StoreEvent =
   | { type: "refund"; eventId; source; transactionId };  // credits taken back (never below 0); subscription ends
 ```
 
-Recommended: RevenueCat for App Store, Play Store and web billing, so there
-is one webhook. The app calls `Purchases.logIn(<our user.id>)` before buying.
+RevenueCat handles App Store, Play Store and web billing, so there is one
+webhook. The app calls `Purchases.logIn(<our user.id>)` before buying.
 RevenueCat calls `POST /api/v1/webhooks/revenuecat` with
-`Authorization: Bearer ${REVENUECAT_WEBHOOK_SECRET}`; the handler maps the
-event and calls `applyStoreEvent()`; the app then refreshes `GET /me`.
-Mapping (verify field names against RevenueCat's docs when implementing):
+`Authorization: Bearer ${REVENUECAT_WEBHOOK_SECRET}` (constant-time compare;
+503 when unset; then 600 requests per 10 min per IP, counted only after the
+secret matches so forged requests cannot exhaust RevenueCat's allowance;
+256 KB body cap). The route
+(`app/api/v1/webhooks/revenuecat/route.ts`) maps the event with
+`mapRevenueCatEvent()` (`lib/revenuecat.ts`, no database access), resolves the
+buyer for grants and calls `applyStoreEvent()`; the app then refreshes
+`GET /me`. Field names follow RevenueCat's "Event Types and Fields" reference.
 
 | RevenueCat `type` | StoreEvent |
 |---|---|
-| `INITIAL_PURCHASE`, `RENEWAL`, `UNCANCELLATION`, `PRODUCT_CHANGE` (subscription) | `subscription_active` |
-| `NON_RENEWING_PURCHASE` (pack) | `credits_purchased` (credits from `STORE_PRODUCTS` in `lib/pricing.ts`) |
-| `CANCELLATION` (not a refund) | `subscription_will_not_renew` |
-| `CANCELLATION` with `cancel_reason: "CUSTOMER_SUPPORT"` | `refund` |
-| `EXPIRATION` | `subscription_expired` |
-| `TEST` | ignored |
+| `INITIAL_PURCHASE`, `RENEWAL`, `UNCANCELLATION`, `PRODUCT_CHANGE` (subscription; `new_product_id` when given) | `subscription_active` (`purchased_at_ms` → `expiration_at_ms`, `willRenew: true`, keyed by `original_transaction_id`) |
+| `NON_RENEWING_PURCHASE` or `INITIAL_PURCHASE` (pack) | `credits_purchased` (credits from `STORE_PRODUCTS` × `quantity`, keyed by `transaction_id`) |
+| `CANCELLATION` (subscription, not a refund) | `subscription_will_not_renew` |
+| `CANCELLATION` with `cancel_reason: "CUSTOMER_SUPPORT"` | `refund` (`transaction_id` for a pack, `original_transaction_id` for the plan) |
+| `EXPIRATION` (subscription) | `subscription_expired` at `expiration_at_ms` |
+| `TEST` | `200 { ok, test }` |
+| `BILLING_ISSUE`, `SUBSCRIPTION_PAUSED` (access continues; `EXPIRATION` ends it), `TRANSFER` (the ledger has no move between accounts), a pack `CANCELLATION` with another reason, other types | `200 { ignored, reason }` |
 
-`store`: `APP_STORE` → `app_store`, `PLAY_STORE` → `play_store`,
-`STRIPE`/`RC_BILLING` → `web`; `eventId = event.id`; sandbox events only
-with an explicit opt-in. A direct web provider maps its own webhook to the
-same union. Apple's multiplatform rule: items bought on the web may be used
-in the iOS app only if they are also sold as in-app purchases there.
+`store`: `APP_STORE`/`MAC_APP_STORE` → `app_store`, `PLAY_STORE` →
+`play_store`, `STRIPE`/`RC_BILLING`/`PADDLE` → `web`, others ignored. Google
+Play product ids `<subscription>:<base plan>` are read by the part before the
+colon. `eventId = event.id` (RevenueCat retries reuse it). Sandbox events are
+ignored unless `ALLOW_SANDBOX_PURCHASES=1`. Grants go to the first existing
+account among `app_user_id`, `original_app_user_id` and `aliases` (anonymous
+`$RCAnonymousID:` ids skipped); none = `200 { ignored: "unknown_user" }`, so
+RevenueCat does not retry forever. Events keyed by a transaction alone
+(will-not-renew, expiry, refund) need no account: one nobody has is
+`200 { applied: false }`. A database failure answers 503 so RevenueCat
+retries. A direct web provider maps its own webhook to the same union.
+Apple's multiplatform rule: items bought on the web may be used in the iOS
+app only if they are also sold as in-app purchases there.
+
+Known limits of the ledger rules (unchanged by the webhook): a purchase whose
+delivery failed and is retried after its refund was already applied is
+granted again (a subscription row that is not active is reactivated; a refund
+of credits not yet granted finds nothing). It needs a refund inside the
+roughly 80-minute retry window. `PRODUCT_CHANGE` applies the new product at
+once with the current period, which is harmless while there is one plan and
+must be revisited before a second (e.g. yearly) plan. `TRANSFER` is ignored:
+after a restore moves a purchase to another account, the next `RENEWAL`
+reassigns the subscription; RevenueCat's restore behavior can be set to keep
+purchases with the original App User ID.
 
 ## Domain and go-live
 

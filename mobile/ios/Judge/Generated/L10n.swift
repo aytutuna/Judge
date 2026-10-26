@@ -135,7 +135,6 @@ enum L10n {
     static func waitMinutes(_ lang: AppLang, n: String) -> String { format("wait.minutes", lang, n) }
     static func waitHour(_ lang: AppLang) -> String { string("wait.hour", lang) }
     static func waitHours(_ lang: AppLang, n: String) -> String { format("wait.hours", lang, n) }
-    static func navHow(_ lang: AppLang) -> String { string("nav.how", lang) }
     static func examplesLabel(_ lang: AppLang) -> String { string("examples.label", lang) }
     static func exampleHotdogLabel(_ lang: AppLang) -> String { string("example.hotdog.label", lang) }
     static func exampleHotdogText(_ lang: AppLang) -> String { string("example.hotdog.text", lang) }
@@ -151,6 +150,7 @@ enum L10n {
     static func advancedCurrent(_ lang: AppLang, label: String) -> String { format("advanced.current", lang, label) }
     static func turnstileLabel(_ lang: AppLang) -> String { string("turnstile.label", lang) }
     static func privacyLink(_ lang: AppLang) -> String { string("privacyLink", lang) }
+    static func howTitle(_ lang: AppLang) -> String { string("how.title", lang) }
     static func footerAbout(_ lang: AppLang) -> String { string("footer.about", lang) }
     static func footerPrivacy(_ lang: AppLang) -> String { string("footer.privacy", lang) }
     static func footerNote(_ lang: AppLang) -> String { string("footer.note", lang) }
@@ -282,6 +282,7 @@ enum L10n {
     static func modeBoth(_ lang: AppLang) -> String { string("mode.both", lang) }
     static func modeNowHint(_ lang: AppLang) -> String { string("mode.nowHint", lang) }
     static func modeBothHint(_ lang: AppLang) -> String { string("mode.bothHint", lang) }
+    static func modeSignIn(_ lang: AppLang) -> String { string("mode.signIn", lang) }
     static func caseCreate(_ lang: AppLang) -> String { string("case.create", lang) }
     static func caseCreating(_ lang: AppLang) -> String { string("case.creating", lang) }
     static func caseKicker(_ lang: AppLang) -> String { string("case.kicker", lang) }
@@ -313,10 +314,12 @@ enum L10n {
     static func caseJudgeNowConfirm(_ lang: AppLang) -> String { string("case.judgeNow.confirm", lang) }
     static func caseJudgeNowYes(_ lang: AppLang) -> String { string("case.judgeNow.yes", lang) }
     static func caseJudgeExpiredConfirm(_ lang: AppLang) -> String { string("case.judgeExpired.confirm", lang) }
+    static func caseJudgeExpiredConfirmFree(_ lang: AppLang) -> String { string("case.judgeExpired.confirmFree", lang) }
     static func caseJudgeExpiredYes(_ lang: AppLang) -> String { string("case.judgeExpired.yes", lang) }
     static func caseCancel(_ lang: AppLang) -> String { string("case.cancel", lang) }
     static func caseRetry(_ lang: AppLang) -> String { string("case.retry", lang) }
     static func caseFailedBody(_ lang: AppLang) -> String { string("case.failedBody", lang) }
+    static func caseFailedBodyFree(_ lang: AppLang) -> String { string("case.failedBodyFree", lang) }
     static func caseYourSide(_ lang: AppLang) -> String { string("case.yourSide", lang) }
     static func caseAccounts(_ lang: AppLang) -> String { string("case.accounts", lang) }
     static func caseAccountA(_ lang: AppLang) -> String { string("case.accountA", lang) }
@@ -330,6 +333,7 @@ enum L10n {
     static func caseAnswered(_ lang: AppLang) -> String { string("case.answered", lang) }
     static func caseJudgingAlone(_ lang: AppLang) -> String { string("case.judgingAlone", lang) }
     static func caseExpiredBody(_ lang: AppLang) -> String { string("case.expiredBody", lang) }
+    static func caseExpiredBodyFree(_ lang: AppLang) -> String { string("case.expiredBodyFree", lang) }
     static func caseOneSided(_ lang: AppLang) -> String { string("case.oneSided", lang) }
     static func caseStartOver(_ lang: AppLang) -> String { string("case.startOver", lang) }
     static func caseListTitle(_ lang: AppLang) -> String { string("case.list.title", lang) }
@@ -415,7 +419,6 @@ enum L10n {
     static func appealFailed(_ lang: AppLang) -> String { string("appeal.failed", lang) }
     static func appealRefused(_ lang: AppLang) -> String { string("appeal.refused", lang) }
     static func appealHistory(_ lang: AppLang) -> String { string("appeal.history", lang) }
-    static func pricingPremiumF4(_ lang: AppLang) -> String { string("pricing.premium.f4", lang) }
     static func pricingPremiumF5(_ lang: AppLang) -> String { string("pricing.premium.f5", lang) }
     static func pricingPremiumF6(_ lang: AppLang) -> String { string("pricing.premium.f6", lang) }
     static func langToggleToTr(_ lang: AppLang) -> String { string("langToggle.toTr", lang) }
@@ -454,6 +457,8 @@ enum L10n {
     static func accountVerdictsEmpty(_ lang: AppLang) -> String { string("account.verdicts.empty", lang) }
     static func accountVerdictsLoadFailed(_ lang: AppLang) -> String { string("account.verdicts.loadFailed", lang) }
     static func accountVerdictsRemoved(_ lang: AppLang) -> String { string("account.verdicts.removed", lang) }
+    static func verdictAgree(_ lang: AppLang, n: String, total: String) -> String { format("verdict.agree", lang, n, total) }
+    static func verdictNoMajority(_ lang: AppLang) -> String { string("verdict.noMajority", lang) }
     static func appName(_ lang: AppLang) -> String { string("app.name", lang) }
     static func appTabNew(_ lang: AppLang) -> String { string("app.tab.new", lang) }
     static func appTabHistory(_ lang: AppLang) -> String { string("app.tab.history", lang) }
@@ -618,7 +623,6 @@ enum L10n {
         "wait.moment",
         "wait.minute",
         "wait.hour",
-        "nav.how",
         "examples.label",
         "example.hotdog.label",
         "example.hotdog.text",
@@ -633,6 +637,7 @@ enum L10n {
         "advanced.summary",
         "turnstile.label",
         "privacyLink",
+        "how.title",
         "footer.about",
         "footer.privacy",
         "footer.note",
@@ -748,6 +753,7 @@ enum L10n {
         "mode.both",
         "mode.nowHint",
         "mode.bothHint",
+        "mode.signIn",
         "case.create",
         "case.creating",
         "case.kicker",
@@ -777,10 +783,12 @@ enum L10n {
         "case.judgeNow.confirm",
         "case.judgeNow.yes",
         "case.judgeExpired.confirm",
+        "case.judgeExpired.confirmFree",
         "case.judgeExpired.yes",
         "case.cancel",
         "case.retry",
         "case.failedBody",
+        "case.failedBodyFree",
         "case.yourSide",
         "case.accounts",
         "case.accountA",
@@ -791,6 +799,7 @@ enum L10n {
         "case.answered",
         "case.judgingAlone",
         "case.expiredBody",
+        "case.expiredBodyFree",
         "case.oneSided",
         "case.startOver",
         "case.list.title",
@@ -862,7 +871,6 @@ enum L10n {
         "appeal.failed",
         "appeal.refused",
         "appeal.history",
-        "pricing.premium.f4",
         "pricing.premium.f5",
         "pricing.premium.f6",
         "langToggle.toTr",
@@ -901,6 +909,7 @@ enum L10n {
         "account.verdicts.empty",
         "account.verdicts.loadFailed",
         "account.verdicts.removed",
+        "verdict.noMajority",
         "app.name",
         "app.tab.new",
         "app.tab.history",

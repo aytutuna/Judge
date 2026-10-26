@@ -111,6 +111,7 @@ export function caseView(over: Partial<CaseView> = {}): CaseView {
     yourParty: "a",
     status: "awaiting_respondent",
     mode: null,
+    tier: "premium",
     lang: "en",
     framework: { preset: "balanced" },
     createdAt: ISO,

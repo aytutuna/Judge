@@ -14,7 +14,7 @@ import type { FrameworkChoice } from "./types";
 export type Draft = { argument: string; framework: FrameworkChoice };
 
 export const DRAFT_KEY = "verdict-draft";
-/** Same cap as the form (components/home/Hero MAX_ARGUMENT). */
+/** Same cap as the form (components/thread/Composer MAX_ARGUMENT). */
 const MAX_DRAFT = 6000;
 
 let source: (() => Draft | null) | null = null;

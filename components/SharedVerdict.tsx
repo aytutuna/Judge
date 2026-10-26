@@ -11,6 +11,8 @@ import { LangToggle } from "./LangToggle";
 import { OwnerPanel, useMine } from "./OwnerTools";
 import { RemovedVerdict } from "./RemovedVerdict";
 import { buildOwnerShare } from "./ShareDialog";
+import { NextSteps } from "./thread/Composer";
+import { Thread } from "./thread/Thread";
 import { VerdictView } from "./VerdictView";
 import styles from "./verdict/verdict.module.css";
 
@@ -23,8 +25,10 @@ import styles from "./verdict/verdict.module.css";
  * their stored map, what they wrote, the names editor and removal.
  * It renders the page's h1 kicker (in the page language, `initialLang`):
  * "Someone shared this ruling" for everyone, "Your verdict" once the writer
- * is recognized. `balance` sits between the kicker and the card. After a
- * removal, only the removed card is left, its heading focused. */
+ * is recognized. `balance` sits between the kicker and the card, `cta`
+ * under it. The writer gets their verdict as a thread instead: what they
+ * wrote, the verdict, their tools, and "New argument". After a removal,
+ * only the removed card is left, its heading focused. */
 export function SharedVerdict({
   id,
   result,
@@ -33,6 +37,7 @@ export function SharedVerdict({
   kickerClassName,
   cardClassName,
   balance = null,
+  cta = null,
 }: {
   id: string;
   result: VerdictResult;
@@ -42,6 +47,7 @@ export function SharedVerdict({
   kickerClassName?: string;
   cardClassName?: string;
   balance?: ReactNode;
+  cta?: ReactNode;
 }) {
   const [lang, setLang] = useState<Lang>(initialLang);
   const token = useOwnerToken(id);
@@ -78,36 +84,40 @@ export function SharedVerdict({
   );
 
   if (removed) {
-    // The page keeps its own "settle your own argument" block below.
+    // The "settle your own argument" block stays below it.
     return (
-      <div className={cardClassName}>
-        <RemovedVerdict lang={initialLang} headingLevel={1} headingId={removedHeadingId} cta={false} />
-      </div>
+      <>
+        <div className={cardClassName}>
+          <RemovedVerdict lang={initialLang} headingLevel={1} headingId={removedHeadingId} cta={false} />
+        </div>
+        {cta}
+      </>
     );
   }
 
   const selfParty = ownView?.case?.party === "b" ? "B" : "A";
   // The writer's own display name, as the share page shows it (names on).
   const selfDisplayName = shownDisplay?.namesVisible ? (selfParty === "A" ? shownDisplay.a : shownDisplay.b) : null;
-  const kicker = ownView
-    ? "shared.ownKicker"
-    : publicNames && publicNames.length > 0
-      ? "shared.subtitle"
-      : "shared.subtitleHidden";
-  return (
-    <>
-      <h1 className={kickerClassName}>{t(initialLang, kicker)}</h1>
-      {balance}
-      <div className={cardClassName}>
-        <div lang={lang} className="flex flex-col gap-4 min-w-0">
-          <div className={styles.langRow}>
-            <span className={styles.langLabel} aria-hidden>
-              {label}
-            </span>
-            <LangToggle lang={lang} onSelect={setLang} label={label} />
-          </div>
-          {ownView ? (
-            <>
+  const langRow = (
+    <div className={styles.langRow}>
+      <span className={styles.langLabel} aria-hidden>
+        {label}
+      </span>
+      <LangToggle lang={lang} onSelect={setLang} label={label} />
+    </div>
+  );
+
+  if (ownView) {
+    return (
+      <>
+        <h1 className={kickerClassName}>{t(initialLang, "shared.ownKicker")}</h1>
+        <Thread
+          lang={initialLang}
+          argument={ownView.originalStatus === "stored" ? (ownView.original?.text ?? null) : null}
+          missing={ownView.originalStatus === "unreadable" ? "owner.unreadable" : "owner.notStored"}
+          verdict={
+            <div lang={lang} className="flex flex-col gap-4 min-w-0">
+              {langRow}
               <VerdictView
                 result={result}
                 lang={lang}
@@ -118,6 +128,10 @@ export function SharedVerdict({
                 selfDisplayName={selfDisplayName}
                 owner={owner && ownView.originalStatus === "stored" ? owner : undefined}
               />
+            </div>
+          }
+          followUp={
+            <div lang={lang}>
               <OwnerPanel
                 lang={lang}
                 mine={ownView}
@@ -126,18 +140,27 @@ export function SharedVerdict({
                 signedIn={Boolean(viewer.me?.user)}
                 onRemoved={() => setRemoved(true)}
               />
-            </>
-          ) : (
-            <VerdictView
-              result={result}
-              lang={lang}
-              shareId={id}
-              nameMap={publicNames ?? undefined}
-              publicNames
-            />
-          )}
+            </div>
+          }
+        />
+        <NextSteps lang={initialLang} />
+      </>
+    );
+  }
+
+  return (
+    <>
+      <h1 className={kickerClassName}>
+        {t(initialLang, publicNames && publicNames.length > 0 ? "shared.subtitle" : "shared.subtitleHidden")}
+      </h1>
+      {balance}
+      <div className={cardClassName}>
+        <div lang={lang} className="flex flex-col gap-4 min-w-0">
+          {langRow}
+          <VerdictView result={result} lang={lang} shareId={id} nameMap={publicNames ?? undefined} publicNames />
         </div>
       </div>
+      {cta}
     </>
   );
 }

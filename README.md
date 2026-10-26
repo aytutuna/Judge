@@ -1,6 +1,6 @@
 # ⚖️ Judge
 
-> The product is called Judge. Internal names (repo, `/opt/verdict`, `verdict.service`, `verdict-update`, the `/api/verdict` route, database paths) keep "verdict".
+> The product and the repository are called Judge. Server-side names (`/opt/verdict`, `verdict.service`, `verdict-update`, the `/api/verdict` route, database paths) keep "verdict".
 
 Tell it the argument. It digs to bedrock and rules.
 
@@ -91,7 +91,7 @@ An `ANTHROPIC_API_KEY` is **required** — without one the API refuses to judge
 | `RATE_LIMIT_SALT` | *(Upstash token)* | Secret key for hashing visitor IPs before they reach the rate-limit store. Any long random string. Unset = the Upstash token is used. Changing it resets every visitor's limits |
 | `DAILY_VERDICT_CAP` | `1000` | Site-wide verdicts per UTC day. `0` pauses the site |
 | `ORIGINALS_KEY` | *(required in production)* | 32 random bytes, base64 (`openssl rand -base64 32`): encrypts every stored original text, name map and share-page display name (AES-256-GCM). Back it up apart from the database (e.g. in a password manager): losing it makes the stored originals unreadable, and leaking it together with a database copy exposes them. Unset in development = a fixed development key (with a warning). Unset or invalid in production = originals and display names are not stored (one error line per process, one warning per skipped item); verdicts still work and share pages show Party A / Party B. See *Stored originals, names and removal* |
-| `ORIGINALS_KEY_PREVIOUS` | *(empty)* | Older keys, comma-separated, used only to decrypt after a rotation. New data is always sealed with `ORIGINALS_KEY` |
+| `ORIGINALS_KEY_PREVIOUS` | *(empty)* | Older keys, comma-separated, used only to decrypt after a rotation. New data is always sealed with `ORIGINALS_KEY`. Keep an old key here as long as anything sealed with it may still be read, including stored Sign in with Apple tokens (see *Key rotation*) |
 | `REMOVAL_LOG` | *(`removals.log` beside a local database file)* | Append-only log of removals (ids, party, reason, time; no text or names), kept outside the database so `scripts/originals.ts replay-removals` can re-apply them after a backup is restored. `off` disables it; a remote (`libsql://`) database has none unless this is set |
 | `NEXT_PUBLIC_TURNSTILE_SITE_KEY` | *(empty)* | Cloudflare Turnstile site key. Unset = no bot-check widget |
 | `TURNSTILE_SECRET_KEY` | *(empty)* | Turnstile secret for server-side verification. Unset = verification skipped (local dev) |
@@ -149,12 +149,14 @@ proxy (see *Custom domain behind Cloudflare*).
 ## Accounts and Premium
 
 Accounts are optional. Signed-out and free visitors get exactly the free
-experience above. Signing in (Apple, Google or an emailed link) unlocks
+experience above. Signing in (Apple, Google or an emailed link) adds
+two-sided cases on the free tier (see below) and unlocks
 **Premium**: clarifying questions, web fact-checking with sources and a
 stronger judge panel. It is paid for with credits (one premium verdict = one
-credit) or a monthly plan with a fair-use cap. There is no payment provider
-yet: prices live in `lib/pricing.ts`, the buy buttons read "Coming soon", and
-testers get premium from the admin script below.
+credit) or a monthly plan that covers 35 premium verdicts a month, bought in the apps through
+RevenueCat (see *Purchases* below). Prices live in `lib/pricing.ts`; until
+`PURCHASES_ENABLED=1` the buy buttons read "Coming soon". Testers get premium
+from the admin script below.
 
 Accounts use [Better Auth](https://www.better-auth.com) on the same database
 (`DATABASE_URL`). The tables (`user`, `session`, `account`, `verification`
@@ -173,6 +175,7 @@ after sign-in.
 | `APPLE_PRIVATE_KEY_BASE64` | *(empty)* | The whole `AuthKey_<KEYID>.p8` file, base64-encoded on one line (`base64 -w0 AuthKey_XXXX.p8`). The app signs Apple's client secret from it and renews it on its own. All four Apple values set = the Apple button works |
 | `APPLE_APP_BUNDLE_ID` | *(empty)* | The iOS app's bundle id, accepted as an extra audience for native Sign in with Apple |
 | `RESEND_API_KEY`, `EMAIL_FROM` | *(empty)* | [Resend](https://resend.com) API key and sender, e.g. `Judge <signin@okjudge.com>` on a domain verified in Resend. Both set = email sign-in links (website) and email sign-in codes (apps) work. With `TURNSTILE_SECRET_KEY` set, the website's email form needs a Turnstile token too; the app code endpoints rely on rate limits instead |
+| `REVIEW_ACCOUNT_EMAIL`, `REVIEW_ACCOUNT_CODE` | *(empty)* | The store-review account (App Review, Play review): this address always gets this 6-digit sign-in code in the apps' email option, and no email is sent to it. Both set, plus email sign-in configured, turns it on; the code must not be a repeated digit or `123456`/`654321`. Put the same values in the review notes when submitting. Use a dedicated address on your own domain, never a real person's: that address stops receiving codes, and whoever owns the mailbox at Apple or Google could also sign into the account. At most 10 code requests an hour for this address (each allows 3 guesses); clear or change the code after each review. It is an ordinary account otherwise |
 | `DEV_LOGIN` | *(empty)* | `1` shows a "test sign-in" for local testing. It works only when **all** hold: not a production build (`next build` output is production whatever `NODE_ENV` it is started with), `DEV_LOGIN=1`, the server listens on `127.0.0.1` or `::1` only (`npm run dev:login`, i.e. `next dev -H 127.0.0.1`; plain `npm run dev` listens on every interface and is refused), and the request's `Host` is `localhost`, `127.0.0.1` or `[::1]`. Anywhere else the endpoint answers 404 |
 | `PREMIUM_ENABLED` | `1` | `0` turns Premium off (the switch disappears; premium requests get `503 not_configured`) |
 | `PREMIUM_DAILY_CAP` | `500` | Site-wide premium runs per UTC day, counted from the database, refunded ones included (a refused or failed run still costs its model calls). A cost circuit breaker; `0` pauses Premium. Clarifying questions are not counted; the per-account limit below bounds them |
@@ -180,9 +183,12 @@ after sign-in.
 | `PREMIUM_SONNET_EFFORT` | `medium` | Thinking depth for non-Haiku premium judges: `low`, `medium` or `high` |
 | `PREMIUM_FACTCHECK_MODEL` | `claude-haiku-5-5` | Model for the web fact-check |
 | `PREMIUM_FACTCHECK_MAX_SEARCHES` | `3` | Web searches per fact-check (1 to 5), $0.01 each |
-| `CASES_ENABLED` | `1` | `0` turns off two-sided cases and appeals (`/api/v1/cases*` and `/api/v1/respond/*` answer `503 not_configured`, `GET /api/v1/config` reports `features.cases: false`). Always off when Premium is off |
+| `CASES_ENABLED` | `1` | `0` turns off two-sided cases and appeals (`/api/v1/cases*` and `/api/v1/respond/*` answer `503 not_configured`, `GET /api/v1/config` reports `features.cases: false`). Also off without accounts or `ANTHROPIC_API_KEY`; Premium is not needed (with Premium off, free cases still work and appeals and premium cases answer `503 not_configured`) |
 | `EVIDENCE_ENABLED` | `1` | `0` turns off screenshot evidence (upload endpoints answer `503 not_configured`, evidence tokens are refused with `400 evidence_invalid`, `features.evidence: false`). Always off when Premium is off |
 | `EVIDENCE_MODEL` | `claude-haiku-5-5` | Vision model that transcribes evidence images |
+| `PURCHASES_ENABLED` | *(empty)* | `1` = `GET /api/v1/config` reports `pricing.purchasesEnabled: true`, so the apps offer their in-app purchases. Anything else = false ("Coming soon") |
+| `REVENUECAT_WEBHOOK_SECRET` | *(empty)* | Shared secret for `POST /api/v1/webhooks/revenuecat`; set RevenueCat's webhook Authorization header to `Bearer <secret>`. Unset = the webhook answers `503 not_configured` |
+| `ALLOW_SANDBOX_PURCHASES` | *(empty)* | `1` = also apply RevenueCat events with `environment: SANDBOX` (TestFlight, Play test tracks). Leave unset on the live server: sandbox purchases are free |
 
 Sign-in providers without credentials are reported as unavailable by
 `GET /api/v1/config`, and the sign-in page shows them disabled.
@@ -218,9 +224,9 @@ sign-in does not depend on it.
    `fact_check` and `panel` added, and the reserved credit is consumed
    (or returned, see above).
 
-### Two-sided cases, evidence and appeals (Premium)
+### Two-sided cases (free with an account), evidence and appeals (Premium)
 
-- **Hear both sides.** A Premium user writes their side (`POST /api/v1/cases`)
+- **Hear both sides.** Any signed-in user writes their side (`POST /api/v1/cases`)
   and gets a private invite link `/r/<token>` for the other person. That
   person needs no account: they write their side privately (Turnstile when
   configured, per-IP limits). Neither sees the other's text before the
@@ -230,18 +236,28 @@ sign-in does not depend on it.
   evidence favors and the fact the verdict hinges on) and what would change
   the verdict. The owner can judge with only their side at any time; after
   7 days without an answer the invite expires.
-- **Credits.** One premium verdict per case, held when the case is created
-  (it counts towards the fair-use cap and `PREMIUM_DAILY_CAP` then), spent
+- **Free or premium case.** `"tier"` on create, `"free"` by default. A free
+  case is judged by the free judges (the same self-consistent runs,
+  escalation and crux trial as a free verdict, with the two-account prompt),
+  holds no credit and is not counted against `PREMIUM_DAILY_CAP`. Creating
+  it uses the per-account create limit; the answer or judge-now that starts
+  its judging counts as one free verdict for that caller (the per-IP limits
+  and `DAILY_VERDICT_CAP` below). A premium case gets the fact-check and
+  the stronger panel for one premium verdict, held when the case is created
+  (it counts towards the monthly cap and `PREMIUM_DAILY_CAP` then), spent
   when it is judged, and returned if judging fails, the judges decline, or
   nobody answers in 7 days. Judging runs after the response (Next's
   `after()`, so it needs `next start` or a platform that supports it);
-  anything still judging after 10 minutes is failed and refunded.
+  anything still judging after 10 minutes is failed (and a held credit
+  refunded).
 - **Evidence.** Up to 3 images per side (1 per appeal), PNG/JPEG/WebP/GIF,
   checked by their bytes. The browser shrinks them to 1600 px first. Each
   image is transcribed in memory by `EVIDENCE_MODEL` and then thrown away:
   images are never stored, and the transcript is anonymized with the same
   name map as the text before it is stored or judged. Works for one-sided
-  premium verdicts too (`"evidence"` on `POST /api/v1/verdict`).
+  premium verdicts too (`"evidence"` on `POST /api/v1/verdict`). Evidence
+  on a free case, from either side and on its appeals too, is refused with
+  `402 premium_required`.
 - **Appeals.** After a verdict, each party may add context once (the owner;
   the other person only when signed in with Premium, and only the person who
   wrote side B: the account they answered with, or whoever holds the claim
@@ -276,16 +292,14 @@ about $0.005.
 
 **Margins** have to be worked out on what is left after the app store's cut
 (Apple and Google keep 15 to 30%), since the mobile app is the main target.
-At a 30% cut one credit nets about $0.139 (10 for $1.99) or $0.116 (30 for
-$4.99): enough at the typical cost, though a verdict at the code ceiling
-costs about 3 credits. The monthly plan nets about $3.49 to $4.24 of its
-$4.99: at the current cap of 60 a heavy user costs about $2.40 at the
-measured average ($0.039) and about $3.12 at $0.052 a verdict, which still
-leaves a margin after a 15% store cut but little after 30%. To widen it,
-lower the cap (`PRICING.monthly.fairUseCap` in `lib/pricing.ts`), raise the
-price, or lower the per-verdict ceiling (for
-example a smaller `max_tokens` for the Sonnet judge calls, whose measured
-output is 500 to 800 tokens; not done yet).
+At a 30% cut one credit nets $0.70 (1 for $1.00) or $0.525 (10 for $7.50),
+against a typical cost of about $0.04 and a code ceiling of about 3 credits
+per verdict. The monthly plan nets $10.50 to $12.75 of its $15.00: at the
+cap of 35 a heavy user costs about $1.37 at the measured average ($0.039)
+and about $1.82 at $0.052 a verdict. To change that, move the cap
+(`PRICING.monthly.fairUseCap` in `lib/pricing.ts`) or the prices, or lower
+the per-verdict ceiling (for example a smaller `max_tokens` for the Sonnet
+judge calls, whose measured output is 500 to 800 tokens; not done yet).
 
 ### Stored originals, names and removal
 
@@ -317,6 +331,14 @@ output is 500 to 800 tokens; not done yet).
   `proxy.ts`), its preview image and `GET /api/v1/verdicts/{id}` answer
   **410**. No row is ever deleted; the anonymized text and the verdict stay
   in the database, unreachable through public routes.
+- **Key rotation.** Put the new key in `ORIGINALS_KEY` and move the old one
+  to `ORIGINALS_KEY_PREVIOUS` (comma-separated); new data is sealed with the
+  new key, old data stays readable through the previous ones. Nothing is
+  re-sealed. That includes the Sign in with Apple refresh tokens kept for
+  revocation (`signin_tokens`): a token is only refreshed at the account's
+  next Apple sign-in, so drop an old key only once no token sealed with it
+  remains. A token that cannot be opened is not revoked at Apple when its
+  account is deleted (logged, recorded as `failed` in the removal log).
 - **Older rows.** Verdicts stored before this feature have no owner and keep
   showing labels. Premium verdicts (linked through their consumed credit)
   and case verdicts are backfilled with an ownership row at startup.
@@ -389,7 +411,8 @@ The website and the future iOS/Android app share one JSON API. Base URL
 |---|---|
 | `GET /api/v1/config` | Startup: which sign-in methods work, whether Premium is on, prices (`AppConfig`) |
 | `GET /api/v1/me` | The account and its entitlement (`MeResponse`); signed out = `{ "user": null, "entitlement": null }`; a dead bearer token = `401 signin_required` |
-| `DELETE /api/v1/me` `{ "confirm": "delete" }` | Removes every verdict the account owns and its side of every case (originals and names blanked, links closed; no verdict row is deleted), then deletes the account, sessions, sign-ins and entitlements (both stores require in-app deletion) |
+| `DELETE /api/v1/me` `{ "confirm": "delete" }` | Removes every verdict the account owns and its side of every case (originals and names blanked, links closed; no verdict row is deleted), then deletes the account, sessions, sign-ins and entitlements (both stores require in-app deletion). Stored Sign in with Apple tokens are revoked at Apple first; an Apple failure is logged and does not stop the deletion |
+| `POST /api/v1/auth/apple/code` `{ "code": "<authorizationCode>" }` | iOS, right after a native Sign in with Apple: lets the server keep the Apple refresh token so account deletion can revoke it. `200 { "stored": true }` |
 | `GET /api/v1/me/verdicts` | Your one-sided verdicts, newest first (`?limit=1-50&before=<createdAt>`), each with its anonymized `headline` and your `nameMap` to restore names |
 | `POST /api/v1/clarify` | Premium: up to 2 clarifying questions |
 | `POST /api/v1/verdict` | A verdict; `"tier": "premium"` for Premium. Send an `Idempotency-Key` header to retry safely. Adds `owner_token` (signed out only, returned once), `originals_stored`, `display` and `suggested_display_a`. With `Prefer: respond-async`: `202`, then poll (see *Async verdicts* below) |
@@ -401,7 +424,7 @@ The website and the future iOS/Android app share one JSON API. Base URL
 | `POST /api/v1/verdicts/{id}/translate?lang=en\|tr` | A stored verdict in the other language |
 | `POST /api/v1/auth/dev-login` | Local testing only (see above); 404 everywhere else |
 | `POST /api/v1/evidence` | Premium: transcribe 1 to 3 evidence images, get signed evidence tokens |
-| `POST /api/v1/cases` | Premium: start a two-sided case (holds 1 premium verdict) |
+| `POST /api/v1/cases` | Start a two-sided case (signed in; `"tier": "premium"` holds 1 premium verdict) |
 | `GET /api/v1/cases` | Your cases, newest first (`?limit=1-50&before=<createdAt>`); each has the anonymized `headline` of its latest verdict and an `excerpt` of your side |
 | `GET /api/v1/cases/{id}` / `DELETE` | Your case (`CaseView`) / remove your side (kept for older clients; same as `/removal`) |
 | `GET /api/v1/cases/{id}/originals` | Your side (and appeal) as you wrote them |
@@ -413,6 +436,7 @@ The website and the future iOS/Android app share one JSON API. Base URL
 | `GET /api/v1/respond/{token}` / `POST` | The invite as the other person sees it / their side (no account) |
 | `POST /api/v1/respond/{token}/evidence` | The other person's evidence images |
 | `POST /api/v1/respond/{token}/appeals` | The other person adds context (signed in, Premium) |
+| `POST /api/v1/webhooks/revenuecat` | RevenueCat only (`Authorization: Bearer ${REVENUECAT_WEBHOOK_SECRET}`): applies a purchase event once; see *Purchases* |
 | `GET /api/v1/respond/{token}/originals` / `PATCH .../display` / `POST .../removal` | Party B (bound account or `Respondent-Claim` / `claim`): their original, their display name, removing their side |
 
 **Async verdicts (use these in the apps).** The site sits behind
@@ -494,9 +518,10 @@ module the app can import); every case and respond response is
    sign-in and rate-limit codes. Phone numbers, e-mail addresses, handles and
    account numbers are masked when the transcript is anonymized.
 2. **Create:** `POST /api/v1/cases` with an optional `Idempotency-Key` and
-   `{ "text": "...", "framework": { "preset": "balanced" }, "lang": "en", "evidence": ["v1...."] }`.
-   Add `"displayName": "Aytu"` for the name shown on the share pages (empty
-   or absent = Party A).
+   `{ "text": "...", "framework": { "preset": "balanced" }, "lang": "en", "tier": "premium", "evidence": ["v1...."] }`.
+   `"tier"` is `"free"` (default; no `evidence`) or `"premium"`; `case.tier`
+   echoes it. Add `"displayName": "Aytu"` for the name shown on the share
+   pages (empty or absent = Party A).
    `201 { "case": CaseView, "name_map": [...], "entitlement": {...} }`
    (`200` with `"replayed": true` and an empty `name_map` on a retried key).
    The server keeps an encrypted copy of the name map (`case.names` on every
@@ -507,7 +532,8 @@ module the app can import); every case and respond response is
    `status`: `awaiting_respondent | judging | judged | failed | expired`.
    `case.canJudgeNow` says whether `POST /cases/{id}/judge` makes sense
    (`{ "mode": "only_mine" }` while waiting for the answer; no body needed to
-   retry a failed case; an expired case takes a new unit). `202` when judging
+   retry a failed case; an expired premium case takes a new unit, a free one
+   none). `202` when judging
    started, `200` when it already was.
 4. **The other person** opens `https://<domain>/r/<token>` (or the app calls
    `GET /api/v1/respond/{token}`), then `POST /api/v1/respond/{token}` with
@@ -565,7 +591,16 @@ taken out of the text; the same request can be retried, e.g. with initials), plu
   its SHA-256), then `POST /api/auth/sign-in/social`
   `{ "provider": "apple", "idToken": { "token": "<identityToken>", "nonce": "<raw nonce>", "user": { "name": { "firstName": "…", "lastName": "…" } } } }`.
   Apple sends the name only on the first sign-in, so pass it then. Needs
-  `APPLE_APP_BUNDLE_ID`.
+  `APPLE_APP_BUNDLE_ID`. Right after that sign-in succeeds, send the
+  credential's `authorizationCode` with the new bearer token:
+  `POST /api/v1/auth/apple/code { "code": "<authorizationCode>" }` →
+  `200 { "stored": true }`. The server exchanges it with Apple and keeps the
+  refresh token (sealed) only to revoke it when the account is deleted. Codes
+  are single-use and expire within minutes, so send it at once, on every
+  Apple sign-in. A failure (`400 invalid`, `429 rate_limited` with
+  `Retry-After`, `503 unavailable` or `not_configured`) never undoes the
+  sign-in; the app may ignore it. Limit: 10 per 10 minutes and 30 per day per
+  account.
 - **Google (iOS/Android):** native Google Sign-In, then
   `POST /api/auth/sign-in/social { "provider": "google", "idToken": { "token": "<idToken>" } }`.
   Needs the iOS/Android client ids above.
@@ -602,23 +637,52 @@ taken out of the text; the same request can be retried, e.g. with initials), plu
   (e.g. App Attest / Play Integrity, or free verdicts for signed-in users
   under a per-user limit) before the app ships.
 
-**Purchases (future):** all purchase sources feed one account. Each grant
-records its source (`app_store`, `play_store`, `web`, `admin`, `promo`) and
-applies at most once per external transaction/event id. A webhook (for
-example RevenueCat, `POST /api/v1/webhooks/revenuecat` checked against a
-shared secret) maps each store event to one normalized `StoreEvent` and calls
-`applyStoreEvent()` in `lib/entitlements.ts`:
+### Purchases
 
-| StoreEvent | When |
+The apps sell through the App Store and Google Play with RevenueCat; the
+server is the source of truth for what a purchase grants, so no RevenueCat
+entitlement has to be set up (products only).
+
+1. **Products** (App Store Connect and Play Console, then imported into
+   RevenueCat): `pack_1` (consumable, 1 credit), `pack_10` (consumable, 10
+   credits), `monthly` (auto-renewing monthly subscription; on Google Play any
+   base plan id works, `monthly:<base plan>` is read as `monthly`). These are
+   the ids in `STORE_PRODUCTS` (`lib/pricing.ts`).
+2. **Webhook** (RevenueCat → Integrations → Webhooks): URL
+   `https://okjudge.com/api/v1/webhooks/revenuecat`, Authorization header
+   `Bearer <REVENUECAT_WEBHOOK_SECRET>`, production events (sandbox events
+   are ignored unless `ALLOW_SANDBOX_PURCHASES=1`).
+3. **App:** `Purchases.logIn(user.id)` with our account id before buying,
+   then refresh `GET /api/v1/me` after a purchase.
+4. Set `PURCHASES_ENABLED=1` when the products are live.
+
+Every event the server has decided about answers `200`: applied
+(`{ "ok": true, "applied": true|false, "action": "<StoreEvent type>" }`,
+`applied: false` = already applied or nothing to apply it to), or ignored
+(`{ "ok": true, "ignored": true, "reason" }`, e.g. `unknown_product`,
+`unknown_user`, `sandbox`); the `TEST` event answers
+`{ "ok": true, "test": true }`. `401` wrong secret, `400`/`413` malformed or
+over 256 KB, `429` over 600 requests per 10 minutes per IP, `503` not
+configured or the database failing (RevenueCat retries for about 80
+minutes). Each purchase is granted at most once, whatever RevenueCat
+retries or replays:
+
+| RevenueCat event | Result |
 |---|---|
-| `{ type: "credits_purchased", eventId, source, userId, productId, credits, transactionId }` | A credit pack was bought (credits from `STORE_PRODUCTS` in `lib/pricing.ts`); granted once per `transactionId` |
-| `{ type: "subscription_active", eventId, source, userId, productId, originalTransactionId, periodStart, periodEnd, willRenew }` | Purchase, renewal, un-cancel or plan change; a new period resets the fair-use count |
-| `{ type: "subscription_will_not_renew", eventId, source, originalTransactionId }` | Auto-renew turned off; access stays until the period ends |
-| `{ type: "subscription_expired", eventId, source, originalTransactionId, at }` | The subscription ended (ignored if a later renewal already arrived) |
-| `{ type: "refund", eventId, source, transactionId }` | A refund: credits are taken back (never below 0), a refunded subscription ends at once |
+| `NON_RENEWING_PURCHASE` (or `INITIAL_PURCHASE`) of a pack | `credits_purchased`: the pack's credits, once per `transaction_id` |
+| `INITIAL_PURCHASE`, `RENEWAL`, `UNCANCELLATION`, `PRODUCT_CHANGE` of the plan | `subscription_active`: period `purchased_at_ms` to `expiration_at_ms`, renewing; a new period resets the fair-use count |
+| `CANCELLATION` of the plan, any reason but `CUSTOMER_SUPPORT` | `subscription_will_not_renew`: access stays until the period ends |
+| `CANCELLATION` with `cancel_reason: CUSTOMER_SUPPORT` (a refund) | `refund`: a pack's credits are taken back (never below 0); the plan ends at once |
+| `EXPIRATION` of the plan | `subscription_expired` at `expiration_at_ms` (ignored after a later renewal) |
+| `TEST` | `{ ok, test }`, nothing changes |
+| `BILLING_ISSUE`, `SUBSCRIPTION_PAUSED`, `TRANSFER`, a pack `CANCELLATION` that is not a refund, any other type | ignored |
 
-The app identifies the buyer to the store SDK with our `user.id` (e.g.
-RevenueCat `Purchases.logIn(user.id)`), then refreshes `GET /api/v1/me`.
+Stores: `APP_STORE`/`MAC_APP_STORE` → `app_store`, `PLAY_STORE` →
+`play_store`, `STRIPE`/`RC_BILLING`/`PADDLE` → `web`; others are ignored.
+The buyer is the first existing account among `app_user_id`,
+`original_app_user_id` and `aliases` (anonymous RevenueCat ids never match).
+`applyStoreEvent()` in `lib/entitlements.ts` is the single entry point, so a
+direct web provider can map its own webhook to the same `StoreEvent` union.
 Apple's rule for multiplatform services: credits or plans bought on the web
 may be used in the iOS app only if the same items are also sold as in-app
 purchases there.
@@ -628,7 +692,7 @@ purchases there.
 One small Linux server runs everything: the app, its SQLite database file,
 and [Caddy](https://caddyserver.com) for HTTPS. Besides AWS you only need
 your Anthropic API key, and the code on GitHub at
-`github.com/aytutuna/Verdict` (public). No Turso, Upstash or Cloudflare
+`github.com/aytutuna/Judge` (public). No Turso, Upstash or Cloudflare
 account is needed: verdicts are stored on the server's disk, and rate limits
 are counted in the app's memory and logged to a small file in `/run`, so
 restarts and deploys keep them (a reboot of the server resets them). That
@@ -732,7 +796,7 @@ check on github.com that `main` now has `deploy/aws-lightsail/setup.sh` and
    right-click the terminal. Paste and run this line:
 
    ```bash
-   curl -fsSL https://raw.githubusercontent.com/aytutuna/Verdict/main/deploy/aws-lightsail/setup.sh -o setup.sh && sudo bash setup.sh
+   curl -fsSL https://raw.githubusercontent.com/aytutuna/Judge/main/deploy/aws-lightsail/setup.sh -o setup.sh && sudo bash setup.sh
    ```
 
 3. Answer its two questions: the site address (press Enter for the

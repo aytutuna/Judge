@@ -8,12 +8,15 @@
  * verdict gets its ownership row (verdict_meta, kind 'case') in that batch,
  * already removed if the case was. A stored verdict consumes the unit exactly once; a
  * failure refunds it; a refused or degraded panel shows the verdict but
- * refunds (rules of lib/premium/handler.ts). Never throws.
+ * refunds (rules of lib/premium/handler.ts). A free case's first verdict
+ * comes from the free judges and touches no unit; appeals are premium on
+ * every case. Never throws.
  */
 
 import { nanoid } from "nanoid";
 import type { CaseMode } from "@/lib/case-types";
 import { claudeJson, LITE_MODEL, withUsageMeter, type UsageTotals } from "@/lib/claude";
+import { judgeFreeAnonymized } from "@/lib/free-run";
 import type { InStatement } from "@libsql/client";
 import { consumeStatement, entitlementWriteBatch, refundStatements, type StatementGuard } from "@/lib/entitlements";
 import { CASE_REMOVAL_REASON_SQL, ensureOriginalsTables } from "@/lib/originals/db";
@@ -207,6 +210,33 @@ async function judge(
   return { outcome, error, log: (id, o) => console.info(`${premiumLogLine(id, o, { usage, stats })} case=${caseId}`) };
 }
 
+/** A free case's first verdict: the free judges, in the same outcome shape
+ * so the caller stores it the same way. Nothing is charged, so a refusal is
+ * simply stored as the refused result and there is no degraded panel. */
+async function judgeFree(
+  caseId: string,
+  input: { text: string; framework: FrameworkChoice; lang: Lang; twoSided: boolean },
+): Promise<Judged> {
+  const judgingFrom = Date.now();
+  let usage: UsageTotals = { calls: 0, input: 0, output: 0, searches: 0, byModel: {} };
+  let outcome: JudgedOutcome | null = null;
+  let error: string | null = null;
+  try {
+    const metered = await withUsageMeter(() =>
+      judgeFreeAnonymized(input.text, input.framework, input.lang, input.twoSided ? { twoSided: true } : {}),
+    );
+    usage = metered.usage;
+    const judged = metered.value;
+    outcome = judged.ok
+      ? { status: "ok", result: judged.result, input: input.text, refused: judged.result.model_refused === true, degraded: false }
+      : { status: "failed", code: judged.code, error: judged.detail };
+  } catch (e) {
+    error = e instanceof Error ? e.message : String(e);
+  }
+  const ms = Date.now() - judgingFrom;
+  return { outcome, error, log: (id, o) => console.info(`${casesUsageLine(caseId, "judge_free", usage, ms, o)} id=${id ?? "-"}`) };
+}
+
 const verdictGuard = (verdictId: string): StatementGuard => ({
   sql: "EXISTS (SELECT 1 FROM case_verdicts WHERE verdict_id = ?)",
   args: [verdictId],
@@ -279,14 +309,19 @@ export async function runCaseJudging(
   const document = composeForJudging(bundle.sides, mode, noAppeals);
   const evText = evidenceText(bundle, mode, noAppeals);
 
-  const run = await judge(caseId, {
-    text: document,
-    context: evText,
-    framework: row.framework,
-    lang: row.lang,
-    ...(twoSided ? { twoSided: true } : {}),
-    ...(evText ? { evidence: true } : {}),
-  }, startedAt);
+  // Free cases never carry evidence (refused when submitted), so the free
+  // judges get the document alone.
+  const run =
+    row.tier === "free"
+      ? await judgeFree(caseId, { text: document, framework: row.framework, lang: row.lang, twoSided })
+      : await judge(caseId, {
+          text: document,
+          context: evText,
+          framework: row.framework,
+          lang: row.lang,
+          ...(twoSided ? { twoSided: true } : {}),
+          ...(evText ? { evidence: true } : {}),
+        }, startedAt);
   const outcome = run.outcome;
   if (!outcome || outcome.status === "failed") {
     const code = outcome?.status === "failed" ? outcome.code : "unavailable";
@@ -301,13 +336,14 @@ export async function runCaseJudging(
   });
   const verdictId = nanoid(10);
   const at = nowIso();
-  const free = outcome.refused || outcome.degraded;
+  const giveBack = outcome.refused || outcome.degraded;
   const runGuard: StatementGuard = {
     sql: "EXISTS (SELECT 1 FROM cases WHERE id = ? AND status = 'judging' AND judging_token = ?)",
     args: [caseId, judgingToken],
   };
+  // A free case holds no unit: nothing to consume or refund.
   const charge = row.reservationId
-    ? free
+    ? giveBack
       ? refundStatements(row.reservationId, at, verdictGuard(verdictId))
       : [consumeStatement(row.reservationId, verdictId, at, verdictGuard(verdictId))]
     : [];

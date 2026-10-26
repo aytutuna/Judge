@@ -5,6 +5,7 @@ import { clearSessionCookieHeaders, deleteAuthUser, getViewer, isSameOrigin, res
 import { deadBearerResponse } from "@/lib/bearer-guard";
 import { deleteUserEntitlements, getEntitlement } from "@/lib/entitlements";
 import { removeUserData } from "@/lib/originals/removal";
+import { revokeSignInTokens } from "@/lib/signin-tokens";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -33,10 +34,12 @@ export async function GET(req: Request): Promise<NextResponse> {
   }
 }
 
-/** DELETE /api/v1/me { confirm: "delete" }: removes every verdict the
- * account owns and its side of every case (originals, name maps and display
- * names blanked, share links closed; no verdict row is deleted), then
- * deletes its entitlements, sign-ins and sessions. */
+/** DELETE /api/v1/me { confirm: "delete" }: revokes the account's stored
+ * Sign in with Apple tokens at Apple (a failure there is logged and recorded,
+ * and does not stop the deletion), removes every verdict the account owns and
+ * its side of every case (originals, name maps and display names blanked,
+ * share links closed; no verdict row is deleted), then deletes its
+ * entitlements, sign-ins, stored tokens and sessions. */
 export async function DELETE(req: Request): Promise<NextResponse> {
   const viewer = await getViewer(req);
   if (!viewer) {
@@ -61,7 +64,8 @@ export async function DELETE(req: Request): Promise<NextResponse> {
     });
   }
   try {
-    await removeUserData(viewer.user.id);
+    const signInTokens = await revokeSignInTokens(viewer.user.id);
+    await removeUserData(viewer.user.id, new Date(), { signInTokens });
     await deleteUserEntitlements(viewer.user.id);
     await deleteAuthUser(viewer.user.id);
   } catch (e) {

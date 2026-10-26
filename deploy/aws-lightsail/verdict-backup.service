@@ -1,8 +1,8 @@
-# Nightly copy of the Verdict database; started by verdict-backup.timer.
+# Nightly copy of the Judge database; started by verdict-backup.timer.
 # Installed to /etc/systemd/system/ by update.sh; edits there are overwritten.
 
 [Unit]
-Description=Back up the Verdict database
+Description=Back up the Judge database
 After=verdict.service
 
 [Service]
