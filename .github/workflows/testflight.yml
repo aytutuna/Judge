@@ -1,0 +1,103 @@
+# Archives the iOS app and uploads it to TestFlight. Signs with the Apple
+# Distribution certificate and the "Judge App Store CI" profile from the repo
+# secrets; the App Store Connect API key is only used for the upload.
+name: TestFlight
+
+on:
+  push:
+    branches: [feature/mobile]
+    paths:
+      - "mobile/ios/**"
+      - "mobile/shared/**"
+      - ".github/workflows/testflight.yml"
+  workflow_dispatch:
+
+concurrency:
+  group: testflight
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  upload:
+    runs-on: macos-26
+    timeout-minutes: 45
+    defaults:
+      run:
+        working-directory: mobile/ios
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Signing
+        env:
+          ASC_API_KEY_P8: ${{ secrets.ASC_API_KEY_P8 }}
+          DIST_P12: ${{ secrets.IOS_DIST_P12_BASE64 }}
+          DIST_P12_PASSWORD: ${{ secrets.IOS_DIST_P12_PASSWORD }}
+          PROFILE: ${{ secrets.IOS_PROFILE_BASE64 }}
+        run: |
+          for v in ASC_API_KEY_P8 DIST_P12 DIST_P12_PASSWORD PROFILE; do
+            test -n "${!v}" || { echo "$v is not set"; exit 1; }
+          done
+          echo "$ASC_API_KEY_P8" > "$RUNNER_TEMP/AuthKey.p8"
+
+          kc="$RUNNER_TEMP/signing.keychain-db"
+          kcpw=$(uuidgen)
+          security create-keychain -p "$kcpw" "$kc"
+          security set-keychain-settings -lut 21600 "$kc"
+          security unlock-keychain -p "$kcpw" "$kc"
+          echo "$DIST_P12" | base64 --decode > "$RUNNER_TEMP/dist.p12"
+          security import "$RUNNER_TEMP/dist.p12" -P "$DIST_P12_PASSWORD" -A -t cert -f pkcs12 -k "$kc"
+          security set-key-partition-list -S apple-tool:,apple: -k "$kcpw" "$kc" > /dev/null
+          security list-keychains -d user -s "$kc" $(security list-keychains -d user | tr -d '"')
+          rm "$RUNNER_TEMP/dist.p12"
+
+          # Xcode 16 reads profiles from UserData; older tools from MobileDevice.
+          for dir in "$HOME/Library/Developer/Xcode/UserData/Provisioning Profiles" "$HOME/Library/MobileDevice/Provisioning Profiles"; do
+            mkdir -p "$dir"
+            echo "$PROFILE" | base64 --decode > "$dir/judge-app-store-ci.mobileprovision"
+          done
+
+          cat > Config/Signing.xcconfig <<'EOF'
+          DEVELOPMENT_TEAM = 8XT2U634Z4
+          CODE_SIGN_STYLE = Manual
+          CODE_SIGN_IDENTITY = Apple Distribution
+          PROVISIONING_PROFILE_SPECIFIER = Judge App Store CI
+          EOF
+
+      - name: Archive
+        run: |
+          set -o pipefail
+          xcodebuild -version
+          xcodebuild \
+            -project Judge.xcodeproj \
+            -scheme Judge \
+            -configuration Release \
+            -destination 'generic/platform=iOS' \
+            -archivePath "$RUNNER_TEMP/Judge.xcarchive" \
+            CURRENT_PROJECT_VERSION=${{ github.run_number }} \
+            archive 2>&1 | tee "$RUNNER_TEMP/archive.log"
+
+      - name: Upload
+        run: |
+          xcodebuild -exportArchive \
+            -archivePath "$RUNNER_TEMP/Judge.xcarchive" \
+            -exportOptionsPlist ExportOptions.plist \
+            -exportPath "$RUNNER_TEMP/export" \
+            -authenticationKeyPath "$RUNNER_TEMP/AuthKey.p8" \
+            -authenticationKeyID "${{ vars.ASC_KEY_ID }}" \
+            -authenticationKeyIssuerID "${{ vars.ASC_ISSUER_ID }}"
+
+      - uses: actions/upload-artifact@v7
+        if: failure()
+        with:
+          name: testflight-logs
+          path: ${{ runner.temp }}/archive.log
+          retention-days: 5
+          if-no-files-found: ignore
+
+      - name: Clean up
+        if: always()
+        run: |
+          rm -f "$RUNNER_TEMP/AuthKey.p8"
+          security delete-keychain "$RUNNER_TEMP/signing.keychain-db" 2>/dev/null || true
