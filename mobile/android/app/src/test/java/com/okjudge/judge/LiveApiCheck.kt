@@ -75,7 +75,7 @@ class LiveApiCheck {
                 println("LIVE headline=${r.headline}")
                 println("LIVE crux=${r.crux}")
                 println("LIVE lean=${r.leanState} trial=${r.cruxTrial?.outcome} escalated=${r.escalated}")
-                println("LIVE tugA=${VerdictDisplay.tugFinal(r)} beamDeg=${VerdictDisplay.finalBeamDeg(r)}")
+                println("LIVE tugA=${VerdictDisplay.tugFinal(r)}")
                 println("LIVE name_map=${o.nameMap} owner_token=${o.ownerToken != null}")
             }
             is ApiResult.Err -> {

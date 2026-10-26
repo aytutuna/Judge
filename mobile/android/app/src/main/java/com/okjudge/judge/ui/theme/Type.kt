@@ -77,16 +77,6 @@ object JudgeType {
         color = Palette.ink,
     )
 
-    val heroSerif = TextStyle(
-        fontFamily = BrandFonts.serif,
-        fontStyle = FontStyle.Italic,
-        fontWeight = FontWeight.Normal,
-        fontSize = (44 * 1.1).sp,
-        lineHeight = (44 * 1.1).sp,
-        letterSpacing = (-0.015).em,
-        color = Palette.terra,
-    )
-
     val verdictLabel = TextStyle(
         fontFamily = BrandFonts.interTight(800),
         fontWeight = FontWeight.ExtraBold,
@@ -97,15 +87,6 @@ object JudgeType {
     )
 
     val verdictLabelLong = verdictLabel.copy(fontSize = 28.sp, lineHeight = (28 * 1.04).sp, letterSpacing = (-0.035).em)
-
-    val cruxSerif = TextStyle(
-        fontFamily = BrandFonts.serif,
-        fontWeight = FontWeight.Normal,
-        fontSize = 23.sp,
-        lineHeight = (23 * 1.28).sp,
-        letterSpacing = 0.005.em,
-        color = Palette.ink,
-    )
 
     /** The case card's "State your case." (thread.module.css .title). */
     val caseTitle = TextStyle(
@@ -130,7 +111,6 @@ object JudgeType {
         color = Palette.muted,
     )
 
-    val cruxSans = inter(18f, 500, 1.5f)
     val headline = inter(15.5f, 400, 1.45f, Palette.ink2)
     val lead = inter(17f, 400, 1.5f, Palette.ink2)
     val body = inter(16f, 400, 1.5f)

@@ -38,10 +38,6 @@ object VerdictDisplay {
         return if (deg == 0.0) 0.0 else deg
     }
 
-    /** Beam angle for a finished verdict: a refusal stays level (sceneVerdictFrom). */
-    fun finalBeamDeg(result: VerdictResult): Double =
-        if (result.refused) 0.0 else svgRotateDeg(tugFinal(result))
-
     /** What the balance scene settles on (sceneVerdictFrom): a refusal stays level with no votes. */
     fun sceneVerdict(result: VerdictResult): SceneMode.Verdict =
         if (result.refused) SceneMode.Verdict(50, emptyList()) else SceneMode.Verdict(tugFinal(result), result.runs.map(::voteOf))

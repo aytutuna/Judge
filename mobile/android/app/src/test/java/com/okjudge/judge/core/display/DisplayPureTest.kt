@@ -52,7 +52,7 @@ class DisplayPureTest {
         assertEquals(0.0, VerdictDisplay.svgRotateDeg(50), 0.0)
         // A refusal stays level even if a verdict field says otherwise.
         val refused = VerdictResult(verdict = "side_a", modelRefused = true)
-        assertEquals(0.0, VerdictDisplay.finalBeamDeg(refused), 0.0)
+        assertEquals(50, VerdictDisplay.sceneVerdict(refused).tugA)
         assertEquals(emptyList<Vote>(), VerdictDisplay.votes(refused.copy(runs = listOf("side_a"))))
     }
 

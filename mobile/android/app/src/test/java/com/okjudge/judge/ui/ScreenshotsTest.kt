@@ -37,6 +37,7 @@ import com.okjudge.judge.ui.signin.SignInScreen
 import com.okjudge.judge.ui.signin.SignInStep
 import com.okjudge.judge.ui.signin.SignInUiState
 import com.okjudge.judge.ui.verdict.TranslationStatus
+import com.okjudge.judge.ui.verdict.VerdictThreadHead
 import com.okjudge.judge.core.evidence.EvidenceItem
 import com.okjudge.judge.core.evidence.EvidenceState
 import com.okjudge.judge.core.evidence.EvidenceStatus
@@ -137,7 +138,7 @@ class ScreenshotsTest {
             Column(Modifier.fillMaxSize()) {
                 TopBar(onBack = null, onToggleLang = {})
                 Column(Modifier.padding(horizontal = 16.dp, vertical = 12.dp)) {
-                    com.okjudge.judge.ui.verdict.VerdictThreadHead(
+                    VerdictThreadHead(
                         UiTestSupport.s(AppLang.EN).exampleHotdogText,
                         outcome.result.result,
                         reducedMotion = true,
