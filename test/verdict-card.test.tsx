@@ -5,6 +5,8 @@ import { VerdictView } from "../components/VerdictView";
 import { ArgumentMap } from "../components/ArgumentMap";
 import { SampleVerdict, SAMPLE_TUG_A } from "../components/home/SampleVerdict";
 import { VoteDots, voteOf } from "../components/verdict/VoteDots";
+import { t } from "../lib/i18n";
+import { stripLeadingEmoji } from "../lib/text";
 import { tugFinal } from "../lib/verdict-display";
 
 /** Server-rendered markup of the verdict card: the accessibility contract
@@ -36,6 +38,7 @@ const base: VerdictResult = {
 
 const html = (el: React.ReactElement) => renderToStaticMarkup(el);
 const count = (s: string, needle: string) => s.split(needle).length - 1;
+const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/'/g, "&#x27;");
 
 describe("VerdictView", () => {
   it("keeps the translation live region mounted (empty) on a shared verdict", () => {
@@ -50,9 +53,11 @@ describe("VerdictView", () => {
 
   it("states the verdict, confidence and votes in text", () => {
     const out = html(<VerdictView result={base} lang="en" />);
-    expect(out).toContain('role="img" aria-label="Verdict: Party B is right"');
-    expect(out).toMatch(/role="meter"[^>]*aria-valuenow="4"/);
-    expect(out).toContain("High confidence · 4/5");
+    // The stamp is decorative; the heading says the ruling to screen readers.
+    expect(out).toMatch(/aria-hidden="true"><span[^>]*>Party B is right<\/span>/);
+    expect(out).toMatch(/<h2[^>]*><span class="sr-only">Party B is right\. <\/span>Nobody orders/);
+    expect(out).toMatch(/role="meter"[^>]*aria-valuenow="4"[^>]*>Confidence 4 of 5</);
+    expect(out).toContain(">2 of 3 agree<");
     expect(out).toContain("3 independent AI judges voted: Party B · Party B · Party A");
     // one decorative dot per run
     expect(count(out, '<i aria-hidden="true" class="')).toBeGreaterThanOrEqual(3);
@@ -63,6 +68,18 @@ describe("VerdictView", () => {
     const id = /<article[^>]*aria-labelledby="([^"]+)"/.exec(out)?.[1];
     expect(id).toBeTruthy();
     expect(out).toContain(`<h2 id="${id}"`);
+  });
+
+  it("stamps a short ruling, sets the bedrock side by side and names the losing side's best point", () => {
+    const out = html(<VerdictView result={base} lang="en" />);
+    expect(out).toContain(">Bedrock</h3>");
+    expect(out).toMatch(/data-party="a">Party A<\/span><p>Structure defines the category\.<\/p>/);
+    expect(out).toMatch(/data-party="b">Party B<\/span><p>Usage defines the category\.<\/p>/);
+    expect(out).toContain("Party A&#x27;s best point");
+    const split = html(<VerdictView result={{ ...base, verdict: "too_close", runs: ["side_a", "side_b", "split"] }} lang="tr" />);
+    expect(split).toMatch(new RegExp(`aria-hidden="true"><span[^>]*>${t("tr", "stamp.tooClose")}</span>`));
+    expect(split).toContain(`>${t("tr", "verdict.noMajority")}<`);
+    expect(split).toContain(esc(stripLeadingEmoji(t("tr", "bestPointTitle"))));
   });
 
   it("shows the crux once: on the card, not again in the map", () => {

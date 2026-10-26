@@ -365,6 +365,164 @@
   color: var(--ink-2);
 }
 
+/* The live verdict (VerdictReveal): a stamp in the corner, the headline
+   as the heading, then confidence and the votes on one line. The top row
+   keeps clear of the stamp. */
+.stamp {
+  position: absolute;
+  top: 22px;
+  right: 18px;
+  max-width: 46%;
+  padding: 5px 10px;
+  border: 2px solid var(--terra);
+  border-radius: 8px;
+  color: var(--terra);
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: 0.12em;
+  text-align: center;
+  text-transform: uppercase;
+  overflow-wrap: anywhere;
+  transform: rotate(8deg);
+  pointer-events: none;
+}
+/* Clamped on an inner span: clamping the bordered box itself lets the third
+   line show through its bottom padding. A long winner name would otherwise
+   run the stamp down over the headline. */
+.stampText {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+.shell:has(.stamp) .top {
+  min-height: 44px;
+  padding-right: 50%;
+}
+.lead {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+}
+.dispute {
+  margin: 0;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.ruling {
+  max-width: 24ch;
+  margin: 0;
+  color: var(--ink);
+  font-family: var(--font-serif);
+  font-size: clamp(30px, 8vw, 34px);
+  font-weight: 400;
+  line-height: 1.05;
+  text-wrap: balance;
+  overflow-wrap: break-word;
+}
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 8px;
+  color: var(--ink-2);
+  font-size: 13px;
+  font-weight: 600;
+}
+.meta .votes {
+  margin: 0;
+  color: inherit;
+  font-size: inherit;
+}
+.meta .votesText {
+  display: inline;
+  order: 1;
+  margin: 0 0 0 3px;
+}
+.rule {
+  width: 100%;
+  height: 1px;
+  margin: 2px 0;
+  border: 0;
+  background: var(--ink);
+  opacity: 0.8;
+}
+.notes {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.notes:empty {
+  display: none;
+}
+.notes .slot {
+  align-items: flex-start;
+  max-width: none;
+}
+.notes .details summary {
+  text-align: left;
+}
+
+.section {
+  min-width: 0;
+}
+.sectionLabel {
+  margin: 0 0 6px;
+  color: var(--muted);
+  font-family: var(--font-serif);
+  font-size: 16px;
+  font-style: italic;
+  font-weight: 400;
+}
+.sectionText {
+  margin: 0;
+  color: var(--ink);
+  font-size: 15px;
+  line-height: 1.55;
+  text-wrap: pretty;
+}
+.tiles {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+.tile {
+  min-width: 0;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: var(--ivory);
+}
+.tile p {
+  margin: 4px 0 0;
+  color: var(--ink);
+  font-size: 14px;
+  line-height: 1.45;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+.tileName {
+  display: block;
+  overflow: hidden;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.tileName[data-party="a"] {
+  color: var(--terra-ink);
+}
+.tileName[data-party="b"] {
+  color: var(--sage-ink);
+}
+
 /* ---------- Split / conditional branches ---------- */
 .branches {
   display: grid;
@@ -525,6 +683,36 @@
 .btnLink:hover {
   text-decoration: underline;
   text-underline-offset: 3px;
+}
+
+/* In the card's bottom row: the first share button is the main action,
+   the text action ("Settle another one") sits beside it outlined. */
+.actions .shareGroup {
+  flex: 1 1 auto;
+}
+.actions .btnGhost,
+.actions .btnLink {
+  justify-content: center;
+  min-height: 48px;
+  padding: 0 18px;
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-chip);
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 15px;
+}
+.actions .shareGroup > :first-child {
+  flex: 1 1 auto;
+  border-color: var(--ink);
+  background: var(--ink);
+  color: var(--paper);
+}
+.actions .shareGroup > :first-child:hover {
+  background: var(--ink-2);
+}
+.actions .btnLink:hover {
+  border-color: rgba(28, 25, 22, 0.22);
+  text-decoration: none;
 }
 
 /* ---------- Below the card: argument map and facts ---------- */
@@ -751,6 +939,10 @@
   animation-delay: calc(0.7s + var(--i, 0) * 0.14s);
 }
 .animateBelow { animation: card-in 0.5s var(--ease) 0.45s both; }
+@keyframes stamp-in {
+  from { opacity: 0; transform: rotate(8deg) scale(1.5); }
+}
+.animate .stamp { animation: stamp-in 0.45s var(--ease-spring) 0.4s both; }
 
 /* ---------- Sample play (SampleVerdict sets data-state) ---------- */
 /* "armed" is only ever set by script when motion is allowed; without it
