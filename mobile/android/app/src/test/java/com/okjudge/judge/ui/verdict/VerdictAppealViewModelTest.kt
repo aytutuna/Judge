@@ -218,6 +218,23 @@ class VerdictAppealViewModelTest {
     }
 
     @Test
+    fun aPollThatLostTouch_readsTheRoundAgain_andFollowsItToTheEnd() = runBlocking {
+        routes.on(get, Routes.json(200, verdictBody(appeals = "[${roundView("judging")}]", owner = gate(false, "busy"))))
+        // Still offline when the poll gives up: the rounds are read again a moment later.
+        routes.on(get, Routes.json(503, """{"error":"down","code":"unavailable"}"""))
+        routes.on(get, Routes.json(200, verdictBody(appeals = "[${roundView("judging")}]", owner = gate(false, "busy"))))
+        routes.always(get, Routes.json(200, verdictBody(appeals = "[${roundView("judged")}]", owner = gate(allowed = true))))
+        repeat(3) { routes.on(round, Routes.json(503, """{"error":"down","code":"unavailable"}""")) }
+        routes.always(round, Routes.json(200, """{"id":"r1","status":"ready","createdAt":"2026-10-21T10:00:05.000Z","result":$roundResult}"""))
+        val vm = vm()
+        val done = vm.until { it.finished }
+        assertEquals(AppealArea.Form(null), vm.until { it.area is AppealArea.Form }.area)
+        assertFalse(done.open)
+        assertEquals(4, routes.requestsTo(round).size)
+        assertEquals("r1", history.observe(id).first()!!.rulingId)
+    }
+
+    @Test
     fun aRoundFinishedElsewhere_isCaughtUpInHistory() = runBlocking {
         routes.always(get, Routes.json(200, verdictBody(appeals = "[${roundView("judged")}]", owner = gate(allowed = true))))
         routes.always(round, Routes.json(200, """{"id":"r1","status":"ready","createdAt":"2026-10-21T10:00:05.000Z","result":$roundResult}"""))

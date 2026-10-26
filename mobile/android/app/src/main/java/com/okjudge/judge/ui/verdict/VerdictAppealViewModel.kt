@@ -21,6 +21,7 @@ import com.okjudge.judge.core.model.VerdictPoll
 import com.okjudge.judge.core.model.VerdictRounds
 import com.okjudge.judge.core.model.WireJson
 import com.okjudge.judge.ui.cases.AppealDraft
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -30,6 +31,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.util.UUID
+import kotlin.math.min
 
 data class VerdictAppealUiState(
     /** Null until read, and the gate inside is null for anyone but the writer. */
@@ -79,9 +81,9 @@ class VerdictAppealViewModel(
         viewModelScope.launch { load(follow = true) }
     }
 
-    /** Reads the rounds; with [follow], a round still judging is polled to its end. */
-    private suspend fun load(follow: Boolean) {
-        val rounds = (api.verdictRounds(id) as? ApiResult.Ok)?.value ?: return
+    /** Reads the rounds (false when they could not be read); with [follow], a round still judging is polled to its end. */
+    private suspend fun load(follow: Boolean): Boolean {
+        val rounds = (api.verdictRounds(id) as? ApiResult.Ok)?.value ?: return false
         _state.update { it.copy(rounds = rounds) }
         val judging = rounds.appeals.lastOrNull { it.status == "judging" }
         if (judging != null) {
@@ -90,6 +92,7 @@ class VerdictAppealViewModel(
         } else {
             catchUp(rounds)
         }
+        return true
     }
 
     /** A round that finished while the app was away, or on the website: the entry takes its verdict. */
@@ -107,8 +110,21 @@ class VerdictAppealViewModel(
                 history.saveRuling(id, end.outcome)
                 _state.update { it.copy(open = false, finished = true) }
             }
-            // The form says it didn't go through and that the credit is back.
-            is PollOutcome.Ended -> _state.update { it.copy(open = true) }
+            is PollOutcome.Ended -> {
+                if (end.resumable) {
+                    // Out of touch for a while, not failed: the round may still be judging.
+                    // Read it again (until the network is back) and follow it from there.
+                    var tries = 0
+                    while (!load(follow = true)) delay(min(CaseLogic.MAX_POLL_BACKOFF_MS, 1000L shl min(tries++, 5)))
+                    when (_state.value.rounds?.appeals?.firstOrNull { it.id == accepted.id }?.status) {
+                        "judged" -> _state.update { it.copy(open = false, finished = true) }
+                        "failed" -> _state.update { it.copy(open = true) }
+                    }
+                    return
+                }
+                // The form says it didn't go through and that the credit is back.
+                _state.update { it.copy(open = true) }
+            }
         }
         load(follow = false)
     }
