@@ -1,6 +1,6 @@
 # Judge: mağaza listesi (Türkçe)
 
-Bilgiler web sitesi metinlerinden alındı (lib/i18n.ts). Premium satın alma henüz açık değil, bu yüzden fiyat yazılmadı.
+Bilgiler web sitesi metinlerinden (lib/i18n.ts) ve lib/pricing.ts'ten alındı. Fiyat yazılmadı, mağazalar kendisi gösteriyor.
 
 ## Uygulama adı (en fazla 30)
 
@@ -49,19 +49,19 @@ Her kavganın bir kazananı olmaz. Karar net bir galibiyet, bölünmüş karar, 
 - Yargılamadan önce isimler değiştirilir
 - Kontrol edebilmen için olgular listelenir
 - Geçmiş kararların şifreli saklanır, giriş yaptığın her cihazda görürsün
+- İki tarafı da dinle: karşı taraf özel bir bağlantıyla kendi tarafını anlatır, karar çıkana kadar kimse diğerinin metnini görmez
 - Kararı bağlantıyla paylaş; yalnızca seçtiğin isimler görünür (ya da hiç isim görünmez)
 - Bir kararı ya da hesabının tamamını istediğin an kaldır
 - Türkçe ve İngilizce
 
-PREMIUM (YAKINDA)
+PREMIUM
 Premium, gerçekten önemli kavgalar için biraz daha fazlasını getirir:
 - Olgular internette kontrol edilir, kaynaklar kararda görünür
 - Daha güçlü bir yapay zekâ yargıç kurulu
 - Önemli bir bilgi eksikse en fazla iki kısa soru
-- İki taraflı davalar: karşı taraf özel bir bağlantıyla kendi tarafını anlatır, karar çıkana kadar kimse diğerinin metnini görmez
 - Ekran görüntüsü kanıtı (bir sohbet ya da fiş gibi): okunur, sonra atılır
 - Karardan sonra bilgi ekleyip yeniden yargılatma
-Satın alma henüz açık değil. Yukarıdaki ücretsiz özellikler bugün çalışıyor.
+Premium kararları kredi paketleriyle ya da ayda 35 premium karar içeren aylık planla alabilirsin. Özellikler bölümündekilerin hepsi ücretsiz kalır.
 
 GİZLİLİĞİN
 - Apple, Google ya da e-postayla gelen kodla giriş yaparsın.
@@ -106,4 +106,4 @@ Anketleri dürüstçe doldur; beklenen sonuç düşük bir yaş sınırıdır, a
 
 ## Uygulama Gizliliği / Veri güvenliği
 
-Cevaplar İngilizce dosyadaki tabloyla aynıdır: e-posta ve ad (girişten), kullanıcı içeriği (tartışma metni, şifreli saklanır), ileride satın alma geçmişi, oturum anahtarı; hepsi kullanıcıyla ilişkili, takip için kullanılmaz, reklam yok, veri satılmaz. Hesap silme: Ayarlar > Hesap > Hesabı sil.
+Cevaplar İngilizce dosyadaki tabloyla aynıdır: e-posta ve ad (girişten), kullanıcı içeriği (tartışma metni, şifreli saklanır), satın alma geçmişi (kredi paketleri ve aylık plan), oturum anahtarı; hepsi kullanıcıyla ilişkili, takip için kullanılmaz, reklam yok, veri satılmaz. Hesap silme: Ayarlar > Hesap > Hesabı sil.

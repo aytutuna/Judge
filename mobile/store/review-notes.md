@@ -22,7 +22,11 @@ Settings > Account > Delete account. This removes the account, sign-in details, 
 
 ## Purchases
 
-In-app purchases are not enabled in this version. Premium is shown as "coming soon" and nothing can be bought, so there is nothing to test there.
+Premium is sold through in-app purchase: two consumable credit packs (`pack_1`, `pack_10`) and an auto-renewable monthly subscription (`monthly`) that includes 35 premium verdicts a month. The sandbox works for testing: sign in with the reviewer account, open Settings > Pricing, and buy with a sandbox account. The credits or the plan show up within a few seconds. Restore purchases is under Settings > Account.
+
+## Two-sided cases
+
+Two-sided cases are free for any signed-in user, no purchase needed. Pick "Both sides" on the home screen, create the invite, then open the link in a browser to answer as the other person.
 
 ## Other
 

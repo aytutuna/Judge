@@ -1,6 +1,6 @@
 # Judge: store listing (English)
 
-Facts come from the website copy (lib/i18n.ts). Premium purchases are not live, so no prices appear here.
+Facts come from the website copy (lib/i18n.ts) and lib/pricing.ts. No prices appear here: the stores show them.
 
 ## App name (max 30)
 
@@ -49,19 +49,19 @@ FEATURES
 - Names swapped out before judging
 - Facts listed so you can check them
 - Your past verdicts saved and encrypted, on any device you sign in on
+- Hear both sides: the other person tells their side through a private link, and neither of you sees the other's text until the verdict
 - Share a verdict with a link, showing only the names you choose (or none)
 - Remove a verdict, or your whole account, any time
 - English and Turkish
 
-PREMIUM (COMING SOON)
+PREMIUM
 Premium adds more for the fights that really matter:
 - Facts checked on the web, with sources shown on your verdict
 - A stronger panel of AI judges
 - Up to two quick questions when a key fact is missing
-- Two-sided cases: the other person tells their side through a private link, and neither of you sees the other's text until the verdict
 - Screenshot evidence, such as a chat or a receipt, read and then thrown away
 - Add context after a verdict and have it re-judged
-Purchases are not available yet. The free features above work today.
+Get premium verdicts as credit packs, or with the monthly plan, which includes 35 premium verdicts a month. Everything under Features stays free.
 
 YOUR PRIVACY
 - Sign in with Apple, Google or an emailed code.
@@ -115,7 +115,7 @@ Data collected, all linked to the user, none used for tracking:
 | Email address (Apple, Google or email code sign-in) | Account, sign-in | Yes | No |
 | Name (Apple or Google sign-in) | Account | Yes | No |
 | User content: the argument text and answers (stored encrypted) | App functionality: judging, history | Yes | No |
-| Purchase history (later, once purchases open) | App functionality: credits and plan | Yes | No |
+| Purchase history (credit packs and the monthly plan) | App functionality: credits and plan | Yes | No |
 | Other IDs: session token | App functionality | Yes | No |
 
 Also true:
