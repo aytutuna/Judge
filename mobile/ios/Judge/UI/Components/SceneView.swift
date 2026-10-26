@@ -176,15 +176,24 @@ final class SceneBridge: NSObject, WKScriptMessageHandler, WKNavigationDelegate 
     }
 
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: any Error) {
+        failed(error)
+    }
+
+    func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: any Error) {
+        failed(error)
+    }
+
+    private func failed(_ error: any Error) {
         guard (error as NSError).code != NSURLErrorCancelled else { return }
         page = .idle
         onFallback()
     }
 
+    /// Usually memory pressure, which a reload would only repeat, so the flat
+    /// balance takes over for good.
     func webViewWebContentProcessDidTerminate(_ webView: WKWebView) {
         page = .idle
-        lost = true
-        if active { load() }
+        onFallback()
     }
 
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
