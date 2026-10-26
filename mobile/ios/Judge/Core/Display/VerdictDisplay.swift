@@ -40,6 +40,13 @@ enum VerdictDisplay {
         result.modelRefused ? 50 : tugFinal(result)
     }
 
+    /// What the 3D scene settles on (sceneVerdictFrom): a refusal stays
+    /// level with no votes.
+    static func sceneVerdict(_ result: VerdictResult) -> SceneMode {
+        if result.modelRefused { return .verdict(tugA: 50, votes: []) }
+        return .verdict(tugA: tugFinal(result), votes: result.runs.map(vote))
+    }
+
     /// Largest verdict tilt in radians (about 17 degrees at 100/0).
     static let maxTiltRadians = 0.3
 
@@ -75,7 +82,8 @@ enum VerdictDisplay {
         return L10n.panelModels(lang, list: parts.joined(separator: " + "))
     }
 
-    enum Vote: Sendable, Equatable {
+    /// Raw values are the scene bridge's (lib/scene-bridge.ts Vote).
+    enum Vote: String, Sendable, Equatable {
         case a, b, other
     }
 

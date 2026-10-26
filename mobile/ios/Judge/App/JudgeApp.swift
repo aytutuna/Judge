@@ -6,6 +6,7 @@ import WebKit
 struct JudgeApp: App {
     private let container: ModelContainer
     @State private var app: AppModel
+    private let sceneLive: Bool
 
     init() {
         #if DEBUG
@@ -15,18 +16,21 @@ struct JudgeApp: App {
             let model = screenshot.makeModel(container: container)
             model.tab = screenshot.tab
             _app = State(initialValue: model)
+            sceneLive = false
             return
         }
         #endif
         let container = HistoryContainer.make()
         self.container = container
         _app = State(initialValue: AppModel(config: .load(), container: container))
+        sceneLive = true
     }
 
     var body: some Scene {
         WindowGroup {
             RootView()
                 .environment(app)
+                .environment(\.sceneLive, sceneLive)
                 .modelContainer(container)
                 .preferredColorScheme(.light)
                 .tint(Brand.terraInk)

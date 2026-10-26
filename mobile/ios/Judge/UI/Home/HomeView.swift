@@ -11,6 +11,7 @@ struct HomeView: View {
     @State private var lensOpen = false
     @FocusState private var editorFocused: Bool
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.sceneLive) private var sceneLive
 
     private static let errorID = "home.error"
     private static let clarifyID = "home.clarify"
@@ -80,6 +81,7 @@ struct HomeView: View {
         .onChange(of: home.preset) { _, value in app.rememberPreset(value) }
         .fullScreenCover(isPresented: $home.isJudging) {
             JudgingCover(home: home, lang: lang)
+                .environment(\.sceneLive, sceneLive)
         }
         .sheet(item: $webLink) { link in
             SafariView(url: link.url).ignoresSafeArea()

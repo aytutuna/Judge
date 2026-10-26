@@ -75,6 +75,24 @@ enum Thinking {
         }
     }
 
+    /// The 3D beat for a state (lib/judging-ui.ts judgingBeatFor): the
+    /// story once, then the judges deliberate on later cycles.
+    static func beat(for state: DigState) -> SceneBeat {
+        switch state {
+        case .finish:
+            return .orbs
+        case .loop(let step, let cycle):
+            if cycle >= 1 { return .deliberate }
+            switch step {
+            case ...0: return .lift
+            case 1: return .sort
+            case 2...5: return .dig
+            case 6: return .crux
+            default: return .orbs
+            }
+        }
+    }
+
     /// Key of the polite live-region text, also used as the visible caption:
     /// the story once, "still judging" on later cycles, "ready" when done.
     static func announcementKey(_ state: DigState, done: Bool) -> String {

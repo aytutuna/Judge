@@ -149,7 +149,7 @@ struct ScreenshotState {
             app.home.showForScreenshot(error: .timeout)
         case .judging:
             app.home.argument = ExampleArgument.all[0].text(lang)
-            app.home.isJudging = true
+            app.home.showForScreenshot(judgingPremium: false)
         case .verdict(let sample):
             guard let session = ScreenshotFixtures.session(sample) else { return }
             app.home.updateSession(session)

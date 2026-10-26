@@ -9,6 +9,7 @@ struct JudgingCover: View {
     var body: some View {
         JudgingView(
             lang: lang,
+            argument: home.judgedArgument,
             result: home.arrived,
             premium: home.judgingPremium,
             onFinished: { home.judgingFinished() },
@@ -17,12 +18,15 @@ struct JudgingCover: View {
     }
 }
 
-/// Full-screen cover while a verdict is pending: the rocking balance, the
-/// judge dots and rotating captions, driven by the port of lib/thinking.ts.
-/// When the verdict lands the finish sequence plays, the beam springs to
-/// the winner's side, and after a short hold `onFinished` hands over.
+/// The judging turn of the thread, full screen while a verdict is pending:
+/// the argument, the judges' badge and a card with the 3D balance (the
+/// beats of lib/judging-ui.ts while waiting, the verdict tilt once it is
+/// in) over the judge dots and the rotating captions of lib/thinking.ts.
+/// After the finish sequence and a short hold `onFinished` hands over.
 struct JudgingView: View {
     let lang: AppLang
+    /// What was sent; empty hides the bubble.
+    var argument = ""
     /// Non-nil once the verdict has arrived.
     let result: VerdictResult?
     /// Premium adds the web fact-check line and its own helper text.
@@ -37,7 +41,7 @@ struct JudgingView: View {
     @State private var started = Date.now
     @State private var settle: Settle?
 
-    /// When and from which angle the beam started springing to its verdict.
+    /// When and from which angle the flat beam started springing to its verdict.
     private struct Settle: Equatable {
         let start: Date
         let from: Double
@@ -53,6 +57,11 @@ struct JudgingView: View {
 
     private var done: Bool { result != nil }
     private var skip: Bool { reduceMotion || scenePhase != .active }
+
+    private var sceneMode: SceneMode {
+        if let result { return VerdictDisplay.sceneVerdict(result) }
+        return .judging(Thinking.beat(for: state))
+    }
 
     var body: some View {
         let captionKey = Thinking.announcementKey(state, done: done)
@@ -72,61 +81,20 @@ struct JudgingView: View {
             .padding(.horizontal, 20)
             .padding(.top, 8)
 
-            Spacer(minLength: 24)
-
-            VStack(spacing: 28) {
-                Kicker(text: L10n.thinkingEyebrow(lang))
-
-                TimelineView(.animation(minimumInterval: nil, paused: timelinePaused)) { context in
-                    VStack(spacing: 26) {
-                        BalanceCanvas(angle: angle(at: context.date))
-                            .frame(width: 240, height: 190)
-                        dots(at: context.date)
+            ScrollView {
+                VStack(alignment: .leading, spacing: 16) {
+                    if !argument.isEmpty {
+                        ArgumentBubble(text: argument, lang: lang)
+                            .padding(.bottom, 12)
                     }
+                    JudgesBadge(label: L10n.threadJudges(lang))
+                    card(captionKey: captionKey)
                 }
-
-                VStack(spacing: 14) {
-                    ZStack {
-                        Text(L10n.text(captionKey, lang) ?? "")
-                            .brandText(.lead)
-                            .foregroundStyle(Brand.ink)
-                            .multilineTextAlignment(.center)
-                            .id(captionKey)
-                            .transition(.opacity)
-                    }
-                    .frame(minHeight: 56, alignment: .top)
-                    .animation(reduceMotion ? nil : .easeInOut(duration: 0.3), value: captionKey)
-
-                    TimelineView(.animation(minimumInterval: 0.25, paused: done)) { context in
-                        progressBar(Thinking.progressAt(elapsedMs: context.date.timeIntervalSince(started) * 1000, done: done))
-                    }
-                }
-                .accessibilityHidden(true)
-
-                if premium {
-                    HStack(spacing: 8) {
-                        Image(systemName: done ? "checkmark.circle.fill" : "globe")
-                            .font(.system(size: 13, weight: .semibold))
-                            .foregroundStyle(done ? Brand.sageInk : Brand.terraInk)
-                            .accessibilityHidden(true)
-                        Text(done ? L10n.thinkingFactcheckDone(lang) : L10n.thinkingFactcheck(lang))
-                            .brandText(.slotTitle)
-                            .foregroundStyle(Brand.ink2)
-                    }
-                    .accessibilityElement(children: .combine)
-                }
-
-                Text(premium ? L10n.thinkingPremiumHelper(lang) : L10n.thinkingHelper(lang))
-                    .brandText(.slotText)
-                    .foregroundStyle(Brand.muted)
-                    .multilineTextAlignment(.center)
-                    .padding(.horizontal, 12)
+                .padding(16)
+                .frame(maxWidth: 640)
+                .frame(maxWidth: .infinity)
             }
-            .padding(.horizontal, 28)
-
-            Spacer(minLength: 24)
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Brand.ivory.ignoresSafeArea())
         .task(id: TickKey(state: state, done: done, finished: finished, skip: skip)) {
             await tick()
@@ -140,6 +108,71 @@ struct JudgingView: View {
             AccessibilityNotification.Announcement(L10n.text(captionKey, lang) ?? "").post()
         }
         .sensoryFeedback(.impact(weight: .light), trigger: done) { _, isDone in isDone && !reduceMotion }
+    }
+
+    private func card(captionKey: String) -> some View {
+        VStack(spacing: 0) {
+            SceneView(mode: sceneMode) {
+                TimelineView(.animation(minimumInterval: nil, paused: timelinePaused)) { context in
+                    BalanceCanvas(angle: angle(at: context.date))
+                }
+            }
+            .aspectRatio(4.0 / 3.0, contentMode: .fit)
+            .frame(maxWidth: 480)
+            .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
+
+            Kicker(text: L10n.thinkingEyebrow(lang))
+                .padding(.top, 20)
+
+            TimelineView(.animation(minimumInterval: nil, paused: reduceMotion || done)) { context in
+                dots(at: context.date)
+            }
+            .padding(.top, 14)
+
+            VStack(spacing: 18) {
+                ZStack {
+                    Text(L10n.text(captionKey, lang) ?? "")
+                        .brandText(.lead)
+                        .foregroundStyle(Brand.ink)
+                        .multilineTextAlignment(.center)
+                        .id(captionKey)
+                        .transition(.opacity)
+                }
+                .frame(minHeight: 56, alignment: .top)
+                .animation(reduceMotion ? nil : .easeInOut(duration: 0.3), value: captionKey)
+
+                TimelineView(.animation(minimumInterval: 0.25, paused: done)) { context in
+                    progressBar(Thinking.progressAt(elapsedMs: context.date.timeIntervalSince(started) * 1000, done: done))
+                }
+            }
+            .padding(.top, 16)
+            .accessibilityHidden(true)
+
+            if premium {
+                HStack(spacing: 8) {
+                    Image(systemName: done ? "checkmark.circle.fill" : "globe")
+                        .font(.system(size: 13, weight: .semibold))
+                        .foregroundStyle(done ? Brand.sageInk : Brand.terraInk)
+                        .accessibilityHidden(true)
+                    Text(done ? L10n.thinkingFactcheckDone(lang) : L10n.thinkingFactcheck(lang))
+                        .brandText(.slotTitle)
+                        .foregroundStyle(Brand.ink2)
+                }
+                .accessibilityElement(children: .combine)
+                .padding(.top, 14)
+            }
+
+            Text(premium ? L10n.thinkingPremiumHelper(lang) : L10n.thinkingHelper(lang))
+                .brandText(.slotText)
+                .foregroundStyle(Brand.muted)
+                .multilineTextAlignment(.center)
+                .frame(maxWidth: 360)
+                .padding(.top, 16)
+        }
+        .padding(22)
+        .frame(maxWidth: .infinity)
+        .paperSurface(radius: Radius.card)
+        .cardShadow()
     }
 
     /// One step of the state machine (re-run whenever its inputs change).
@@ -167,7 +200,8 @@ struct JudgingView: View {
         }
     }
 
-    /// The verdict is in: spring from wherever the rock is to the verdict angle.
+    /// The verdict is in: the flat beam springs from wherever the rock is to
+    /// the verdict angle (the 3D scene settles by itself).
     private func startSettle() {
         guard settle == nil, let result else { return }
         let target = VerdictDisplay.rotationDegrees(tugA: VerdictDisplay.sceneTug(result))

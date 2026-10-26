@@ -51,6 +51,8 @@ final class HomeModel {
     /// Kept until the next submit or cancel, so the cover keeps its final
     /// frame while it animates out.
     private(set) var arrived: VerdictResult?
+    /// The argument the running request sent: the thread's first bubble.
+    private(set) var judgedArgument = ""
     private(set) var error: APIError?
     private(set) var blockedUntil: Date?
     /// Screenshots picked for the next premium request.
@@ -79,6 +81,8 @@ final class HomeModel {
     }
 
     @ObservationIgnored private var sessions: [String: VerdictSession] = [:]
+    /// What each verdict judged on this run of the app, by verdict id.
+    @ObservationIgnored private var arguments: [String: String] = [:]
     @ObservationIgnored private var arrivedID: String?
     @ObservationIgnored private var request: Task<Void, Never>?
     @ObservationIgnored private var unblock: Task<Void, Never>?
@@ -173,6 +177,8 @@ final class HomeModel {
     }
 
     func session(_ id: String) -> VerdictSession? { sessions[id] }
+
+    func argument(for id: String) -> String? { arguments[id] }
 
     func updateSession(_ session: VerdictSession) {
         sessions[session.id] = session
@@ -276,6 +282,7 @@ final class HomeModel {
         let botCheck = app.botCheck
         let history = app.history
         let key = RequestKey(text: text, preset: preset, lang: lang)
+        judgedArgument = text
         if let held = pending, held.key == key, Date.now.timeIntervalSince(held.since) < Self.resumeWindow {
             isCheckingBot = false
             isJudging = true
@@ -327,6 +334,7 @@ final class HomeModel {
             evidence: app.evidenceOn ? evidence.tokens : []
         )
         premiumInput = input
+        judgedArgument = input.argument
         let api = app.api
         let history = app.history
         let key = input.requestKey
@@ -405,6 +413,7 @@ final class HomeModel {
         arrived = nil
         arrivedID = nil
         pending = nil
+        judgedArgument = input.argument
         judgingPremium = true
         isJudging = true
         let body = VerdictRequest(
@@ -536,6 +545,7 @@ final class HomeModel {
     private func deliver(_ payload: VerdictPayload, history: HistoryStore, preset: String) {
         let session = VerdictSession(id: payload.id, original: payload.result, nameMap: payload.nameMap, translations: [:])
         sessions[session.id] = session
+        arguments[session.id] = judgedArgument
         try? history.save(session, preset: preset)
         arrivedID = session.id
         arrived = payload.result.result
@@ -624,6 +634,7 @@ extension HomeModel {
     /// Screenshot fixtures: the judging cover without a request.
     func showForScreenshot(judgingPremium: Bool) {
         self.judgingPremium = judgingPremium
+        judgedArgument = argument
         isJudging = true
     }
 
