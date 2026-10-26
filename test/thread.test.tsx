@@ -104,11 +104,12 @@ describe("case page as a thread", () => {
       />,
     );
 
-  it("waiting: the owner's side, then the invite link, and no docked bar", () => {
+  it("waiting: the owner's side, then the invite link, then New argument", () => {
     const html = panel();
     expect(order(html)).toEqual(["argument", "judges", "invite"]);
     expect(html.indexOf("Deniz&#x27;s turn")).toBeLessThan(html.indexOf(OWNER.awaiting.inviteUrl as string));
-    expect(html).not.toContain(t("en", "shell.new"));
+    expect(html).toContain(`href="/">`);
+    expect(html).toContain(t("en", "shell.new"));
   });
 
   it("prefers the side as written once it is loaded", () => {
@@ -211,15 +212,11 @@ describe("Composer", () => {
 });
 
 describe("NextSteps", () => {
-  it("docks the thread's follow-ups and nothing else", () => {
-    const html = renderToStaticMarkup(
-      <NextSteps>
-        <button type="button">Appeal</button>
-      </NextSteps>,
-    );
-    expect(html).toContain('<button type="button">Appeal</button>');
-    expect(html).not.toContain(t("en", "shell.new"));
-    expect(renderToStaticMarkup(<NextSteps>{null}</NextSteps>)).toBe("");
+  it("resets the page in place when it can, else links home", () => {
+    const reset = renderToStaticMarkup(<NextSteps lang="tr" onNew={noop} />);
+    expect(reset).toContain('<button type="button">');
+    expect(reset).toContain(t("tr", "shell.new"));
+    expect(renderToStaticMarkup(<NextSteps lang="en" />)).toContain('href="/"');
   });
 });
 

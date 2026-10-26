@@ -12,7 +12,7 @@ import { Recent } from "@/components/home/Recent";
 import JudgingScene from "@/components/scene/JudgingScene";
 import { AppShell } from "@/components/shell/AppShell";
 import { refreshHistory, useHistory } from "@/components/shell/useHistory";
-import { Composer } from "@/components/thread/Composer";
+import { Composer, NextSteps } from "@/components/thread/Composer";
 import { Thread } from "@/components/thread/Thread";
 import styles from "@/components/thread/thread.module.css";
 import { TierSwitch } from "@/components/TierSwitch";
@@ -134,7 +134,7 @@ export default function Home() {
   const [caseMode, setCaseMode] = useState<CaseMode>("now");
   const [creating, setCreating] = useState(false);
   const evidence = useEvidence(EVIDENCE_ENDPOINT, MAX_EVIDENCE_PER_SIDE);
-  // The current argument. The header's "+" or leaving the page aborts it:
+  // The current argument. "New argument" or leaving the page aborts it:
   // the clarify check is cancelled, while a verdict or case already sent
   // runs to the end so its owner token and history entry are kept, just
   // without touching the screen any more.
@@ -664,7 +664,9 @@ export default function Home() {
               />
             </>
           )}
-          {phase === "verdict" || phase === "judging" ? null : (
+          {phase === "verdict" ? (
+            <NextSteps lang={lang} onNew={reset} />
+          ) : phase === "judging" ? null : (
             <Composer
               lang={lang}
               value={argument}

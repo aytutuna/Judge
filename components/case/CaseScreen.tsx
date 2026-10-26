@@ -462,7 +462,7 @@ export function CasePanel({
           onYes={onRemove}
         />
       ) : null}
-      <NextSteps>
+      <NextSteps lang={lang}>
         {judged && appeal && appealArea(view).kind === "form" ? (
           <button type="button" onClick={focusAppealForm}>
             {t(lang, "appeal.title")}
