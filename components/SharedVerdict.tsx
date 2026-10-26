@@ -11,7 +11,6 @@ import { LangToggle } from "./LangToggle";
 import { OwnerPanel, useMine } from "./OwnerTools";
 import { RemovedVerdict } from "./RemovedVerdict";
 import { buildOwnerShare } from "./ShareDialog";
-import { NextSteps } from "./thread/Composer";
 import { Thread } from "./thread/Thread";
 import { useVerdictAppeal, withRoundNames, type ShownVerdict } from "./VerdictAppeal";
 import { VerdictView } from "./VerdictView";
@@ -29,7 +28,7 @@ import styles from "./verdict/verdict.module.css";
  * "Someone shared this ruling" for everyone, "Your verdict" once the writer
  * is recognized. `balance` sits between the kicker and the card, `cta`
  * under it. The writer gets their verdict as a thread instead: what they
- * wrote, the verdict, their tools, and "New argument". After a removal,
+ * wrote, the verdict and their tools. After a removal,
  * only the removed card is left, its heading focused.
  * `rounds`: the verdicts the writer's added context produced, oldest first.
  * The last one is the current ruling, so the page shows it (with how it
@@ -175,7 +174,6 @@ export function SharedVerdict({
             </div>
           }
         />
-        <NextSteps lang={initialLang} />
       </>
     );
   }
