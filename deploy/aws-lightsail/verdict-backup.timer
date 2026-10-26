@@ -2,7 +2,7 @@
 # Installed to /etc/systemd/system/ by update.sh; edits there are overwritten.
 
 [Unit]
-Description=Nightly Verdict database backup
+Description=Nightly Judge database backup
 
 [Timer]
 OnCalendar=*-*-* 03:30:00

@@ -1,4 +1,4 @@
-# Caddy config for Verdict. update.sh renders this template to
+# Caddy config for Judge. update.sh renders this template to
 # /etc/caddy/Caddyfile, replacing __SITE_ADDRESS__ with the host name from
 # NEXT_PUBLIC_SITE_URL in /etc/verdict/verdict.env. Edits made directly to
 # /etc/caddy/Caddyfile are overwritten on the next update.

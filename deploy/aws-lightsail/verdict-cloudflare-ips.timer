@@ -3,7 +3,7 @@
 # edits there are overwritten.
 
 [Unit]
-Description=Weekly refresh of the Cloudflare address ranges for Verdict
+Description=Weekly refresh of the Cloudflare address ranges for Judge
 
 [Timer]
 OnCalendar=weekly

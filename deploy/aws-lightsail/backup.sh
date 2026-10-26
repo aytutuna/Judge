@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Copies the Verdict SQLite database to /var/lib/verdict/backups and deletes
+# Copies the Judge SQLite database to /var/lib/verdict/backups and deletes
 # copies older than 14 days (and databases set aside by verdict-restore, so
 # removed data is gone from every copy within that time; the privacy page
 # promises it). Runs nightly via verdict-backup.timer, as the

@@ -1,6 +1,6 @@
 # ⚖️ Judge
 
-> The product is called Judge. Internal names (repo, `/opt/verdict`, `verdict.service`, `verdict-update`, the `/api/verdict` route, database paths) keep "verdict".
+> The product and the repository are called Judge. Server-side names (`/opt/verdict`, `verdict.service`, `verdict-update`, the `/api/verdict` route, database paths) keep "verdict".
 
 Tell it the argument. It digs to bedrock and rules.
 
@@ -682,7 +682,7 @@ purchases there.
 One small Linux server runs everything: the app, its SQLite database file,
 and [Caddy](https://caddyserver.com) for HTTPS. Besides AWS you only need
 your Anthropic API key, and the code on GitHub at
-`github.com/aytutuna/Verdict` (public). No Turso, Upstash or Cloudflare
+`github.com/aytutuna/Judge` (public). No Turso, Upstash or Cloudflare
 account is needed: verdicts are stored on the server's disk, and rate limits
 are counted in the app's memory and logged to a small file in `/run`, so
 restarts and deploys keep them (a reboot of the server resets them). That
@@ -786,7 +786,7 @@ check on github.com that `main` now has `deploy/aws-lightsail/setup.sh` and
    right-click the terminal. Paste and run this line:
 
    ```bash
-   curl -fsSL https://raw.githubusercontent.com/aytutuna/Verdict/main/deploy/aws-lightsail/setup.sh -o setup.sh && sudo bash setup.sh
+   curl -fsSL https://raw.githubusercontent.com/aytutuna/Judge/main/deploy/aws-lightsail/setup.sh -o setup.sh && sudo bash setup.sh
    ```
 
 3. Answer its two questions: the site address (press Enter for the

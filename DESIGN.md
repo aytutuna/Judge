@@ -1,4 +1,4 @@
-# Verdict: accounts, Premium and the API for mobile
+# Judge: accounts, Premium and the API for mobile
 
 This file records how accounts, entitlements and Premium judging are built,
 and the contract the future iOS/Android app will use. Setup, env vars and
