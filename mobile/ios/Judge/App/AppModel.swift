@@ -173,7 +173,9 @@ final class AppModel {
         return model
     }
 
-    func selectHome() {
+    /// The header's "+": an empty form on the Home tab.
+    func newArgument() {
+        home.judgeAnother()
         tab = .new
     }
 

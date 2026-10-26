@@ -221,3 +221,31 @@ final class RecentTests: XCTestCase {
         XCTAssertEqual(Recent.dayMonth(try day(26, hour: 12), lang: .tr), "26 Ekim")
     }
 }
+
+/// The header's "+" in place of the language switch.
+final class NewArgumentTests: XCTestCase {
+    @MainActor
+    func testTheEmptyHomeHasNothingToClear() {
+        let home = HomeModel(preset: Preset.defaultID)
+        XCTAssertTrue(home.isBlank)
+        home.argument = "My friend Sam says"
+        XCTAssertFalse(home.isBlank)
+        home.argument = ""
+        home.evidence.reserve(1)
+        XCTAssertFalse(home.isBlank, "a picked screenshot is something to clear")
+    }
+
+    @MainActor
+    func testThePlusStartsOverOnHome() throws {
+        let container = HistoryContainer.inMemory()
+        try withExtendedLifetime(container) {
+            let app = try PremiumFixtures.app(container: container)
+            app.home.path = [.verdict(id: "abc123DEF0"), .pricing]
+            app.tab = .history
+            app.newArgument()
+            XCTAssertTrue(app.home.path.isEmpty, "back to the empty case card")
+            XCTAssertTrue(app.home.isBlank)
+            XCTAssertEqual(app.tab, .new)
+        }
+    }
+}

@@ -197,33 +197,25 @@ struct FlowLayout: Layout {
     }
 }
 
-/// EN | TR pill, mirroring the website's language toggle.
-struct LangToggle: View {
+/// The header's "+": a new argument on an empty form. The language
+/// switch lives in Settings.
+struct NewArgumentButton: View {
     let lang: AppLang
-    let onSelect: (AppLang) -> Void
+    let action: () -> Void
 
     var body: some View {
-        HStack(spacing: 2) {
-            ForEach(AppLang.allCases, id: \.self) { option in
-                Button {
-                    onSelect(option)
-                } label: {
-                    Text(option.rawValue.uppercased())
-                        .brandText(.micro)
-                        .foregroundStyle(option == lang ? Brand.ivory : Brand.ink2)
-                        .frame(minWidth: 36, minHeight: 30)
-                        .background(Capsule().fill(option == lang ? Brand.ink : Color.clear))
-                }
-                .buttonStyle(.plain)
-                .accessibilityLabel(option == .en ? L10n.appLangEn(lang) : L10n.appLangTr(lang))
-                .accessibilityAddTraits(option == lang ? .isSelected : [])
-            }
+        Button(action: action) {
+            Image(systemName: "plus")
+                .font(.system(size: 15, weight: .semibold))
+                .foregroundStyle(Brand.ink)
+                .frame(width: 36, height: 36)
+                .background(Circle().fill(Brand.paper))
+                .overlay(Circle().strokeBorder(Brand.line2, lineWidth: 1))
+                .frame(width: 44, height: 44)
+                .contentShape(Rectangle())
         }
-        .padding(3)
-        .background(Capsule().fill(Brand.paper))
-        .overlay(Capsule().strokeBorder(Brand.line2, lineWidth: 1))
-        .accessibilityElement(children: .contain)
-        .accessibilityLabel(L10n.footerLanguage(lang))
+        .buttonStyle(.plain)
+        .accessibilityLabel(L10n.shellNew(lang))
     }
 }
 

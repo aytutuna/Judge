@@ -25,6 +25,7 @@ private struct VerdictScreenContent: View {
     let onJudgeAnother: (() -> Void)?
     @State private var model: VerdictModel
     @State private var webLink: WebLink?
+    @Environment(\.dismiss) private var dismiss
 
     @MainActor
     init(app: AppModel, session: VerdictSession, argument: String?, onJudgeAnother: (() -> Void)?) {
@@ -70,7 +71,10 @@ private struct VerdictScreenContent: View {
         .toolbarBackground(Brand.ivory, for: .navigationBar)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
-                LangToggle(lang: lang) { app.setLangPreference($0 == .en ? .en : .tr) }
+                NewArgumentButton(lang: lang) {
+                    app.newArgument()
+                    dismiss()
+                }
             }
         }
         .sheet(item: $webLink) { link in

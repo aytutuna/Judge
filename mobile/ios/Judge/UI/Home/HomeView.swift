@@ -22,7 +22,7 @@ struct HomeView: View {
         ScrollViewReader { proxy in
             ScrollView {
                 VStack(alignment: .leading, spacing: 24) {
-                    header(lang)
+                    header(lang, home: home)
                     if let clarify = home.clarify {
                         // Premium's questions take the card's place.
                         ClarifyCard(home: home, state: clarify, lang: lang)
@@ -88,15 +88,20 @@ struct HomeView: View {
         }
     }
 
-    private func header(_ lang: AppLang) -> some View {
+    private func header(_ lang: AppLang, home: HomeModel) -> some View {
         HStack(spacing: 10) {
             BrandMark(width: 30)
             Text(L10n.appName(lang))
                 .brandText(.brand)
                 .foregroundStyle(Brand.ink)
             Spacer()
-            LangToggle(lang: lang) { app.setLangPreference($0 == .en ? .en : .tr) }
+            // An empty form has nothing for the "+" to clear.
+            if !home.isBlank {
+                NewArgumentButton(lang: lang) { home.judgeAnother() }
+                    .disabled(home.isBusy)
+            }
         }
+        .frame(minHeight: 44)
         .padding(.top, 8)
         .padding(.horizontal, 4)
         .accessibilityElement(children: .contain)

@@ -146,6 +146,9 @@ final class HomeModel {
     /// Something the form started is still running: the switches hold still.
     var isBusy: Bool { isCheckingBot || isCheckingQuestions || isJudging || isCreatingCase }
 
+    /// Nothing typed or attached: Home's "+" stays hidden.
+    var isBlank: Bool { argument.isEmpty && evidence.items.isEmpty }
+
     /// Both sides chosen while cases can be used: "Create the invite".
     func isTwoSided(_ app: AppModel) -> Bool {
         app.casesOn && mode == .both
@@ -580,7 +583,7 @@ final class HomeModel {
         arrivedID = nil
     }
 
-    /// "Judge another": back to an empty form.
+    /// The header's "+" and "Start a new case": back to an empty form.
     func judgeAnother() {
         argument = ""
         error = nil

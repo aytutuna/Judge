@@ -64,7 +64,7 @@ private struct CaseScreenContent: View {
         .toolbarBackground(Brand.ivory, for: .navigationBar)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
-                LangToggle(lang: lang) { app.setLangPreference($0 == .en ? .en : .tr) }
+                NewArgumentButton(lang: lang, action: startOver)
             }
         }
         // Polling restarts whenever a new view arrives (generation).
@@ -249,10 +249,9 @@ private struct CaseScreenContent: View {
             .accessibilityAddTraits(.updatesFrequently)
     }
 
-    /// "Start a new case": back to an empty form on Home.
+    /// "Start a new case" and the header's "+": back to an empty form on Home.
     private func startOver() {
-        app.home.judgeAnother()
-        app.selectHome()
+        app.newArgument()
         dismiss()
     }
 

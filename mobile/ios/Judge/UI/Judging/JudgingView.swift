@@ -13,7 +13,12 @@ struct JudgingCover: View {
             result: home.arrived,
             premium: home.judgingPremium,
             onFinished: { home.judgingFinished() },
-            onCancel: { home.cancel() }
+            onCancel: { home.cancel() },
+            onNew: {
+                // Leaving this way cancels it, like the close button.
+                home.cancel()
+                home.judgeAnother()
+            }
         )
     }
 }
@@ -33,6 +38,8 @@ struct JudgingView: View {
     var premium = false
     let onFinished: () -> Void
     let onCancel: () -> Void
+    /// The header's "+": a new argument on an empty form.
+    var onNew: (() -> Void)?
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.scenePhase) private var scenePhase
@@ -67,6 +74,9 @@ struct JudgingView: View {
         let captionKey = Thinking.announcementKey(state, done: done)
         VStack(spacing: 0) {
             HStack {
+                if let onNew {
+                    NewArgumentButton(lang: lang, action: onNew)
+                }
                 Spacer()
                 Button(action: onCancel) {
                     Image(systemName: "xmark")
