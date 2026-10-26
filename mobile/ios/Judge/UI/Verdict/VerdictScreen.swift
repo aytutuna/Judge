@@ -5,33 +5,33 @@ import SwiftUI
 /// language is fetched translated (and cached in history) with the original
 /// kept for switching back. A fresh verdict stays in its thread: the
 /// argument, the judges' badge and the settled scene above the card, with
-/// "New argument" docked below.
+/// no tab bar; the header's "+" starts the next one.
 struct VerdictScreen: View {
     @Environment(AppModel.self) private var app
     let session: VerdictSession
     /// What a fresh verdict judged, for the thread's first bubble.
     var argument: String?
-    /// Set for a fresh verdict (shows the thread and the dock).
-    var onJudgeAnother: (() -> Void)?
+    /// A fresh verdict: shows the thread.
+    var thread = false
 
     var body: some View {
-        VerdictScreenContent(app: app, session: session, argument: argument, onJudgeAnother: onJudgeAnother)
+        VerdictScreenContent(app: app, session: session, argument: argument, thread: thread)
     }
 }
 
 private struct VerdictScreenContent: View {
     let app: AppModel
     let argument: String?
-    let onJudgeAnother: (() -> Void)?
+    let thread: Bool
     @State private var model: VerdictModel
     @State private var webLink: WebLink?
     @Environment(\.dismiss) private var dismiss
 
     @MainActor
-    init(app: AppModel, session: VerdictSession, argument: String?, onJudgeAnother: (() -> Void)?) {
+    init(app: AppModel, session: VerdictSession, argument: String?, thread: Bool) {
         self.app = app
         self.argument = argument
-        self.onJudgeAnother = onJudgeAnother
+        self.thread = thread
         let history = app.history
         let home = app.home
         _model = State(initialValue: VerdictModel(session: session, api: app.api) { updated, lang, raw in
@@ -44,7 +44,7 @@ private struct VerdictScreenContent: View {
         let lang = app.lang
         ScrollView {
             VStack(spacing: 16) {
-                if onJudgeAnother != nil {
+                if thread {
                     VerdictThreadHead(argument: argument, result: model.session.original.result, lang: lang)
                 }
                 VerdictSections(
@@ -60,13 +60,8 @@ private struct VerdictScreenContent: View {
             .padding(.bottom, 32)
         }
         .background(Brand.ivory.ignoresSafeArea())
-        .safeAreaInset(edge: .bottom, spacing: 0) {
-            if let onJudgeAnother {
-                NewArgumentDock(lang: lang, action: onJudgeAnother)
-            }
-        }
-        // The dock stands where the composer was, so the tab bar steps aside.
-        .toolbar(onJudgeAnother == nil ? .automatic : .hidden, for: .tabBar)
+        // The thread has no tab bar: the header's "+" is the way back.
+        .toolbar(thread ? .hidden : .automatic, for: .tabBar)
         .navigationBarTitleDisplayMode(.inline)
         .toolbarBackground(Brand.ivory, for: .navigationBar)
         .toolbar {
@@ -105,29 +100,6 @@ private struct VerdictThreadHead: View {
                 .paperSurface(radius: Radius.card)
                 .softShadow()
         }
-    }
-}
-
-/// "New argument" where the composer was (the web thread's NextSteps).
-private struct NewArgumentDock: View {
-    let lang: AppLang
-    let action: () -> Void
-
-    var body: some View {
-        Button(action: action) {
-            Label(L10n.shellNew(lang), systemImage: "plus")
-                .brandText(TypeStyle(face: .interTight, weight: 600, size: 15, lineHeight: 1.2, textStyle: .headline, maxScale: 1.6))
-                .foregroundStyle(Brand.ivory)
-                .padding(.horizontal, 20)
-                .frame(minHeight: 48)
-                .background(Capsule().fill(Brand.ink))
-                .softShadow()
-        }
-        .buttonStyle(.plain)
-        .frame(maxWidth: .infinity)
-        .padding(.top, 10)
-        .padding(.bottom, 14)
-        .background(Brand.ivory.ignoresSafeArea())
     }
 }
 
