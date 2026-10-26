@@ -109,8 +109,8 @@ const en = {
   refusedNote: "The AI sat this one out. We'd rather show nothing than fake a ruling.",
   demoNote: "🎭 Demo mode: no AI key set up, so this is a sample verdict",
   "trial.survived": "🛡️ The ruling held up under a tough cross-examination. Confidence stays put.",
-  "trial.uncertain": "⚠️ The cross-examination raised real doubts, so confidence is capped",
-  "trial.overturned": "⚠️ The ruling didn't hold up under cross-examination, so confidence is capped",
+  "trial.uncertain": "⚠️ The cross-examination raised real doubts about this ruling",
+  "trial.overturned": "⚠️ The ruling didn't hold up under cross-examination",
   "trial.whatWasTested": "What got tested",
   "trial.attackPrefix": "Toughest objection:",
   "trial.refereePrefix": "Referee:",
@@ -183,7 +183,7 @@ const en = {
     "Three judges rule separately, and a close call brings in more. Confidence comes from how much they agree, not how sure they sound.",
   "how.step5.title": "Verdict, then cross-examination",
   "how.step5.body":
-    "You get the ruling and a confidence score, plus the other side's best point. A win on the facts also gets cross-examined, and if it wobbles, the confidence drops.",
+    "You get the ruling and a confidence score, plus the other side's best point. A win on the facts also gets cross-examined, and if it wobbles, you get a warning.",
   "sample.title": "What a verdict looks like",
   "sample.kicker": "The result",
   "sample.lead":
@@ -801,8 +801,8 @@ const tr = {
   refusedNote: "Yapay zekâ bu kez pas geçti. Sahte bir karar göstermektense hiç göstermeyiz.",
   demoNote: "🎭 Demo modu: API anahtarı yok, bu örnek bir karar",
   "trial.survived": "🛡️ Karar sert bir çapraz sorgudan sağ çıktı. Güven puanı aynı kaldı.",
-  "trial.uncertain": "⚠️ Çapraz sorgu ciddi şüphe bıraktı, o yüzden güven puanı sınırlandı",
-  "trial.overturned": "⚠️ Karar çapraz sorguda tutunamadı, o yüzden güven puanı sınırlandı",
+  "trial.uncertain": "⚠️ Çapraz sorgu bu karar hakkında ciddi şüphe bıraktı",
+  "trial.overturned": "⚠️ Karar çapraz sorguda tutunamadı",
   "trial.whatWasTested": "Neyi sınadık",
   "trial.attackPrefix": "En sert itiraz:",
   "trial.refereePrefix": "Hakem:",
@@ -875,7 +875,7 @@ const tr = {
     "Üç yargıç ayrı ayrı karar verir, oylar başa başsa ek yargıç çağrılır. Güven puanı ne kadar emin konuştuklarına değil, ne kadar anlaştıklarına bakar.",
   "how.step5.title": "Önce karar, sonra çapraz sorgu",
   "how.step5.body":
-    "Kararı ve güven puanını alırsın, yanında karşı tarafın en sağlam kozu da gelir. Olgulara dayanan bir galibiyet ayrıca çapraz sorguya girer, sallanırsa güven puanı düşer.",
+    "Kararı ve güven puanını alırsın, yanında karşı tarafın en sağlam kozu da gelir. Olgulara dayanan bir galibiyet ayrıca çapraz sorguya girer, sallanırsa bir uyarı görürsün.",
   "sample.title": "Bir karar neye benzer",
   "sample.kicker": "Sonuç",
   "sample.lead":
