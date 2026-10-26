@@ -11,6 +11,9 @@
  *   it was removed.
  * - originals: one sealed JSON blob per submission (a one-sided verdict, a
  *   case side, a case appeal). Blanked (NULL) on removal, never deleted.
+ * - verdict_appeals: context the writer added to a one-sided verdict
+ *   (anonymized). Its id is also the id of its verdict_jobs row and of the
+ *   verdict it produces; its state is that job's (lib/verdict-appeals).
  *
  * A verdict without a verdict_meta row (free verdicts stored before this
  * feature) has no owner, is not removed and shows labels on its share page.
@@ -57,6 +60,17 @@ const SCHEMA = [
   )`,
   "CREATE INDEX IF NOT EXISTS originals_verdict ON originals (verdict_id) WHERE verdict_id IS NOT NULL",
   "CREATE INDEX IF NOT EXISTS originals_case ON originals (case_id, party) WHERE case_id IS NOT NULL",
+  `CREATE TABLE IF NOT EXISTS verdict_appeals (
+    id          TEXT PRIMARY KEY,
+    verdict_id  TEXT NOT NULL,
+    text        TEXT NOT NULL,
+    evidence    TEXT NOT NULL DEFAULT '[]',
+    base_id     TEXT NOT NULL,
+    outcome     TEXT CHECK (outcome IN ('upheld','overturned','changed')),
+    created_at  TEXT NOT NULL,
+    updated_at  TEXT NOT NULL
+  )`,
+  "CREATE INDEX IF NOT EXISTS verdict_appeals_verdict ON verdict_appeals (verdict_id, created_at)",
 ];
 
 /** Which party's removal a case verdict inherits (SQL over alias `c`). */
@@ -209,15 +223,22 @@ export type OwnerVerdictRow = {
   sealed: string | null;
 };
 
-/** One-sided verdicts owned by a user, newest first. */
+/** One-sided verdicts owned by a user, newest first, each with its current
+ * ruling (the latest appeal's verdict, if any). The verdicts appeals
+ * produced are not listed on their own. */
 export async function listOwnerVerdicts(userId: string, limit: number, before: string | null): Promise<OwnerVerdictRow[]> {
   const db = await originalsDb();
   const rs = await db.execute({
-    sql: `SELECT m.verdict_id, m.kind, m.created_at, m.removed_at, v.result, o.sealed
+    sql: `SELECT m.verdict_id, m.kind, m.created_at, m.removed_at, o.sealed,
+            COALESCE((SELECT av.result FROM verdict_appeals a JOIN verdicts av ON av.id = a.id
+                        LEFT JOIN verdict_meta am ON am.verdict_id = a.id
+                      WHERE a.verdict_id = m.verdict_id AND am.removed_at IS NULL
+                      ORDER BY a.created_at DESC, a.id DESC LIMIT 1), v.result) AS result
           FROM verdict_meta m
           JOIN verdicts v ON v.id = m.verdict_id
           LEFT JOIN originals o ON o.subject = 'verdict:' || m.verdict_id
           WHERE m.owner_user_id = ? AND m.kind IN ('free','premium') AND (? IS NULL OR m.created_at < ?)
+            AND NOT EXISTS (SELECT 1 FROM verdict_appeals a WHERE a.id = m.verdict_id)
           ORDER BY m.created_at DESC, m.verdict_id DESC
           LIMIT ?`,
     args: [userId, before, before, limit],

@@ -32,13 +32,14 @@ honest label.
 
 **Confidence is computed, not claimed**: the judge runs up to three times
 independently (one run analyzes the sides in reverse order as a position-bias
-check), and the 1–5 confidence meter comes from how often the runs agreed.
-When that first round lands at low confidence (2 or below), two more judges
-are called in and every vote is counted again, so a close call gets a bigger
-panel instead of a coin flip; the verdict notes when this happened.
-Fact/logic winner rulings are then cross-examined — an adversarial attack on
-the crux, judged by a separate referee; a ruling that does not survive keeps
-its verdict but its confidence is capped, and the attack is shown.
+check), and the card shows how many of them voted for the ruling
+("Confidence 3 of 3"). Behind it is a 1–5 score from the same agreement; when
+that first round lands at 2 or below, two more judges are called in and every
+vote is counted again ("of 5"), so a close call gets a bigger panel instead of
+a coin flip; the verdict notes when this happened. Fact/logic winner rulings
+are then cross-examined — an adversarial attack on the crux, judged by a
+separate referee; a ruling that does not survive keeps its verdict, its
+internal score is capped, and the attack is shown with a warning.
 
 **Privacy = fairness**: before judging or storing anything, names are replaced
 with *Party A* / *Party B*. The judge never knows who is who — which is also the

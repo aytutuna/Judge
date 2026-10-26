@@ -56,8 +56,10 @@ describe("VerdictView", () => {
     // The stamp is decorative; the heading says the ruling to screen readers.
     expect(out).toMatch(/aria-hidden="true"><span[^>]*>Party B is right<\/span>/);
     expect(out).toMatch(/<h2[^>]*><span class="sr-only">Party B is right\. <\/span>Nobody orders/);
-    expect(out).toMatch(/role="meter"[^>]*aria-valuenow="4"[^>]*>Confidence 4 of 5</);
-    expect(out).toContain(">2 of 3 agree<");
+    // Confidence is the judges' agreement, not the stored 1-5 score; the dots come first.
+    expect(out).toMatch(/<p[^>]*aria-hidden="true">(<i [^>]*><\/i>){3}<\/p><span>Confidence 2 of 3<\/span>/);
+    expect(out).not.toContain("of 5");
+    expect(out).not.toContain("agree<");
     expect(out).toContain("3 independent AI judges voted: Party B · Party B · Party A");
     // one decorative dot per run
     expect(count(out, '<i aria-hidden="true" class="')).toBeGreaterThanOrEqual(3);
@@ -98,6 +100,7 @@ describe("VerdictView", () => {
     );
     expect(out).toContain("It was close, so we called in extra judges.");
     expect(out).toContain("5 independent AI judges voted: Party B · Party A · split · Party B · Party B");
+    expect(out).toContain(">Confidence 3 of 5<");
   });
 
   it("adds Settle another one only with onJudgeAnother", () => {
@@ -118,6 +121,8 @@ describe("VerdictView", () => {
     expect(out).not.toContain(base.losing_side_best_point);
     expect(out).not.toContain("down to bedrock");
     expect(out).toContain("The AI sat this one out.");
+    expect(out).not.toContain("Confidence");
+    expect(out).not.toContain(t("en", "verdict.noMajority"));
   });
 
   it("keeps the forced-ruling lean and its tally", () => {
@@ -183,6 +188,8 @@ describe("SampleVerdict", () => {
     expect(out).toContain("You&#x27;re right");
     expect(out).toContain('<span class="sr-only">3 independent AI judges voted: You · You · You</span>');
     expect(out).toMatch(/<h3[^>]*>/);
+    expect(out).toMatch(/role="meter"[^>]*aria-valuenow="3"[^>]*aria-label="Confidence 3 of 3"/);
+    expect(out).toContain(">Confidence 3 of 3</p>");
   });
 
   it("keeps the sample tilt equal to a B win", () => {

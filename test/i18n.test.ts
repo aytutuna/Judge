@@ -87,8 +87,8 @@ describe("t()", () => {
   });
 
   it("substitutes multiple vars in one string", () => {
-    expect(t("en", "confidenceWord", { word: "High", n: 4 })).toBe("High confidence · 4/5");
-    expect(t("tr", "confidenceWord", { word: "Yüksek", n: 4 })).toBe("Yüksek güven · 4/5");
+    expect(t("en", "confidence", { n: 4, total: 5 })).toBe("Confidence 4 of 5");
+    expect(t("tr", "confidence", { n: 4, total: 5 })).toBe("Güven: 5 üzerinden 4");
     expect(t("tr", "slider.aria", { left: "Akıl", right: "Kalp" })).toBe(
       "Akıl / Kalp dengesi",
     );

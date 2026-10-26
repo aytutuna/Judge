@@ -1,22 +1,28 @@
 import { ImageResponse } from "next/og";
 import { ACCENT_A, ACCENT_B, OG_SIZE, OgCard, ogFonts } from "@/components/OgCard";
-import { tugFinal, verdictLabel } from "@/lib/verdict-display";
-import { contentLang, t, type Key } from "@/lib/i18n";
+import { confidenceLabel, tugFinal, verdictLabel } from "@/lib/verdict-display";
+import { contentLang, t } from "@/lib/i18n";
 import { resolveParties, restoreNames } from "@/lib/names";
 import { getPublicVerdict } from "@/lib/originals/display";
 import { publicNameMap } from "@/lib/originals-types";
+import type { VerdictResult } from "@/lib/types";
 
 export const alt = "A shared verdict";
 export const size = OG_SIZE;
 export const contentType = "image/png";
 
-const CONF_KEY = [
-  "confidence.1",
-  "confidence.2",
-  "confidence.3",
-  "confidence.4",
-  "confidence.5",
-] as const satisfies readonly Key[];
+/** The latest ruling the writer's added context produced, like the page
+ * shows it; null (the first verdict) when there is none or it cannot be read. */
+async function latestRound(id: string, kind: string | undefined): Promise<VerdictResult | null> {
+  if (kind !== "free" && kind !== "premium") return null;
+  try {
+    const { appealVerdicts } = await import("@/lib/verdict-appeals/service");
+    return (await appealVerdicts(id)).at(-1)?.result ?? null;
+  } catch (e) {
+    console.error("[og] rounds read failed:", e instanceof Error ? e.message : String(e));
+    return null;
+  }
+}
 
 /**
  * Preview card for a shared verdict: the ruling, its headline and the
@@ -62,7 +68,7 @@ export default async function Image({ params }: { params: Promise<{ id: string }
     );
   }
 
-  const r = stored.result;
+  const r = (await latestRound(id, found?.meta?.kind)) ?? stored.result;
   const lang = contentLang(`${r.headline} ${r.crux}`);
   const display = found?.display ?? null;
   const nameA = display?.a ?? t(lang, "party.a");
@@ -76,7 +82,7 @@ export default async function Image({ params }: { params: Promise<{ id: string }
   const accent =
     r.verdict === "side_a" ? ACCENT_A : r.verdict === "side_b" ? ACCENT_B : undefined;
   const cta = t(lang, "shared.cta").replace(/\s*→$/, "");
-  const n = Math.max(1, Math.min(5, Math.round(r.confidence)));
+  const confidence = confidenceLabel(lang, r);
 
   return new ImageResponse(
     (
@@ -84,7 +90,7 @@ export default async function Image({ params }: { params: Promise<{ id: string }
         eyebrow={leanLine ?? t(lang, `badge.${r.dispute_type}`)}
         title={label}
         subtitle={restoreNames(r.headline, parties, lang)}
-        footer={`${t(lang, "confidenceWord", { word: t(lang, CONF_KEY[n - 1]), n })}  ·  ${cta}`}
+        footer={confidence ? `${confidence}  ·  ${cta}` : cta}
         tugA={tugFinal(r)}
         accent={accent}
       />

@@ -64,7 +64,7 @@ function logError(what: string, e: unknown): void {
   console.error(`[cases] ${what}:`, e instanceof Error ? e.message : String(e));
 }
 
-async function refundQuietly(reservationId: string | null): Promise<void> {
+export async function refundQuietly(reservationId: string | null): Promise<void> {
   if (!reservationId) return;
   try {
     await refundPremiumVerdict(reservationId);
@@ -122,7 +122,7 @@ function submissionStatements(
 
 /** Labels already used in a case: the parties, known fingerprints, and any
  * "Person X" in the anonymized material. */
-function labelsInUse(context: string, people: readonly KnownPerson[]): string[] {
+export function labelsInUse(context: string, people: readonly KnownPerson[]): string[] {
   const found = new Set<string>(["Party A", "Party B", ...people.map((p) => p.label)]);
   for (const m of context.matchAll(/(?<![\p{L}])(Person [C-Z])(?![\p{L}\p{N}])/gu)) found.add(m[1]);
   return [...found];
@@ -130,7 +130,7 @@ function labelsInUse(context: string, people: readonly KnownPerson[]): string[] 
 
 /** The sealed original of one submission: the text exactly as received,
  * the raw transcripts of its screenshots, and its name map. */
-function originalPayload(text: string, evidence: readonly VerifiedEvidence[], sub: AnonymizedSubmission): OriginalPayload {
+export function originalPayload(text: string, evidence: readonly VerifiedEvidence[], sub: AnonymizedSubmission): OriginalPayload {
   return {
     v: 1,
     text,
@@ -173,7 +173,7 @@ export type CreateCaseResult =
 /** A failed anonymization: "anonymize_failed" when a name could not be taken
  * out of the text (the person can rewrite it, e.g. with initials, and try
  * again), else "unavailable" (a refusal, a timeout, an API or output error). */
-function anonymizeFailure(e: unknown): "anonymize_failed" | "unavailable" {
+export function anonymizeFailure(e: unknown): "anonymize_failed" | "unavailable" {
   return e instanceof AnonymizeError && /survived|identical to the input/.test(e.message) ? "anonymize_failed" : "unavailable";
 }
 
@@ -577,6 +577,22 @@ export function mayActAsRespondent(row: CaseRow, userId: string, claim: string |
   return claimMatches(row, claim);
 }
 
+/** The premium unit an appeal spends (case or one-sided verdict).
+ * `replayed`: the Idempotency-Key already holds or spent one. */
+export async function reserveAppealUnit(
+  userId: string,
+  usageKey: string | undefined,
+  now: Date,
+): Promise<{ reservationId: string } | { replayed: true } | Blocked | Failure<"unavailable">> {
+  const reserved = await reservePremiumVerdict(userId, { ...(usageKey ? { idempotencyKey: usageKey } : {}), now });
+  if (reserved.ok) return { reservationId: reserved.reservation.id };
+  if (reserved.code === "premium_required" || reserved.code === "no_credits" || reserved.code === "fair_use") {
+    return { ok: false, code: reserved.code, ...("resetsAt" in reserved && reserved.resetsAt ? { resetsAt: reserved.resetsAt } : {}) };
+  }
+  if (reserved.code === "replay" || reserved.code === "in_progress") return { replayed: true };
+  return { ok: false, code: "unavailable" };
+}
+
 export async function submitAppeal(input: AppealInput): Promise<AppealResult> {
   const startedAt = Date.now();
   const now = input.now ?? new Date();
@@ -599,15 +615,10 @@ export async function submitAppeal(input: AppealInput): Promise<AppealResult> {
   if (bundle.appeals.some((a) => a.party === party && a.status === "judged")) return { ok: false, code: "appeal_used" };
   if (bundle.appeals.some((a) => a.status === "judging")) return { ok: false, code: "in_progress" };
 
-  const reserved = await reservePremiumVerdict(userId, { ...(usageKey ? { idempotencyKey: usageKey } : {}), now });
-  if (!reserved.ok) {
-    if (reserved.code === "premium_required" || reserved.code === "no_credits" || reserved.code === "fair_use") {
-      return { ok: false, code: reserved.code, ...("resetsAt" in reserved && reserved.resetsAt ? { resetsAt: reserved.resetsAt } : {}) };
-    }
-    if (reserved.code === "replay" || reserved.code === "in_progress") return { ok: true, row, nameMap: [], replayed: true };
-    return { ok: false, code: "unavailable" };
-  }
-  const reservationId = reserved.reservation.id;
+  const unit = await reserveAppealUnit(userId, usageKey, now);
+  if ("replayed" in unit) return { ok: true, row, nameMap: [], replayed: true };
+  if (!("reservationId" in unit)) return unit;
+  const { reservationId } = unit;
 
   const context = rosterContext(bundle);
   let sub: AnonymizedSubmission;

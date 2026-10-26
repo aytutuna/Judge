@@ -4,7 +4,7 @@ const getVerdict = vi.hoisted(() => vi.fn());
 vi.mock("@/lib/db", () => ({ getVerdict }));
 const getVerdictMeta = vi.hoisted(() => vi.fn());
 vi.mock("@/lib/originals/db", () => ({ getVerdictMeta }));
-vi.mock("@/lib/originals/removed", () => ({ verdictRemoved: async () => false }));
+vi.mock("@/lib/originals/removed", () => ({ verdictRemoved: async () => false, roundRoot: async () => null }));
 vi.mock("@/lib/premium/handler", () => ({ clarifyHandler: vi.fn(), premiumVerdict: vi.fn() }));
 const jobs = vi.hoisted(() => ({
   getVerdictJob: vi.fn(),

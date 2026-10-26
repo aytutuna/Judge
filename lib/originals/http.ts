@@ -43,6 +43,7 @@ import { caseDisplayNames, partyOriginals } from "./cases";
 import { getOriginal, getVerdictMeta, listOwnerVerdicts, originalsDb, subjects, type VerdictMeta } from "./db";
 import { openVerdictDisplay } from "./display";
 import { removeVerdict } from "./removal";
+import { roundRoot } from "./removed";
 
 const NO_STORE = { "Cache-Control": "no-store" } as const;
 const ID_PATTERN = /^[A-Za-z0-9_-]{1,64}$/;
@@ -120,6 +121,8 @@ async function ownerOf(req: Request, id: string, write: boolean): Promise<Owner>
   }
   const meta = await getVerdictMeta(id);
   if (!meta) return { response: fail("not_found") };
+  // A round's verdict follows the first one: names, claim and removal are set there.
+  if (write && (await roundRoot(id))) return { response: fail("not_found") };
   const sessionWriteOk = () => !write || viewer?.via !== "cookie" || isSameOrigin(req);
 
   if (meta.kind === "case") {

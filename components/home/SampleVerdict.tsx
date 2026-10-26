@@ -13,11 +13,10 @@ import { CardActions } from "../verdict/CardActions";
 import type { Vote } from "../verdict/VoteDots";
 import styles from "./SampleVerdict.module.css";
 
-/** The hot dog case: Party B ("You") wins 3–0 with high confidence. The 3D
+/** The hot dog case: Party B ("You") wins 3–0, confidence 3 of 3. The 3D
  * story's verdict step uses the same tugA, so the scene and the card agree. */
 export const SAMPLE_TUG_A = 20;
 const SAMPLE_VOTES: readonly Vote[] = ["b", "b", "b"];
-const SAMPLE_CONFIDENCE = 4;
 
 /** Share of the card that must be on screen before it plays. A card taller
  * than the viewport also plays once it fills half the screen. */
@@ -102,7 +101,7 @@ export function SampleVerdict({ lang }: { lang: Lang }) {
               labelAs="h3"
               seal="b"
               headline={t(lang, "sample.headline")}
-              confidence={SAMPLE_CONFIDENCE}
+              agreement={{ n: SAMPLE_VOTES.length, total: SAMPLE_VOTES.length }}
               lang={lang}
             />
             <CruxBlock title={stripLeadingEmoji(t(lang, "cruxShort"))} text={t(lang, "sample.crux")} />

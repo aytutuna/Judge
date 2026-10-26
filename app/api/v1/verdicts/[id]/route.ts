@@ -72,19 +72,24 @@ async function jobAnswer(req: Request, job: VerdictJob): Promise<NextResponse> {
 
 /** The writer's share-page state, only for the writer: the owner token in
  * X-Owner-Token, or the owning session. Undefined for everyone else, and
- * not looked up at all for a request without credentials. */
-async function ownerState(req: Request, meta: VerdictMeta | null): Promise<VerdictOwnerState | undefined> {
+ * not looked up at all for a request without credentials. `viewerId` is
+ * the signed-in account, if any. */
+async function ownerState(
+  req: Request,
+  meta: VerdictMeta | null,
+): Promise<{ state: VerdictOwnerState; viewerId: string | null } | undefined> {
   if (!meta || meta.kind === "case" || meta.removedAt) return undefined;
   const token = req.headers.get("x-owner-token")?.trim() || null;
-  if (!token && !req.headers.has("authorization") && !req.headers.has("cookie")) return undefined;
+  const session = req.headers.has("authorization") || req.headers.has("cookie");
+  if (!token && !session) return undefined;
   try {
     const { ownerTokenMatches } = await import("@/lib/originals/crypto");
-    let mine = ownerTokenMatches(token, meta.ownerTokenHash);
-    if (!mine && meta.ownerUserId) {
+    let viewerId: string | null = null;
+    if (session) {
       const { getViewer } = await import("@/lib/auth");
-      const viewer = await getViewer(req).catch(() => null);
-      mine = viewer?.user.id === meta.ownerUserId;
+      viewerId = (await getViewer(req).catch(() => null))?.user.id ?? null;
     }
+    const mine = ownerTokenMatches(token, meta.ownerTokenHash) || (meta.ownerUserId !== null && viewerId === meta.ownerUserId);
     if (!mine) return undefined;
     const [{ getOriginal, subjects }, { openVerdictDisplay }] = await Promise.all([
       import("@/lib/originals/db"),
@@ -92,8 +97,11 @@ async function ownerState(req: Request, meta: VerdictMeta | null): Promise<Verdi
     ]);
     const original = await getOriginal(subjects.verdict(meta.verdictId));
     return {
-      originals_stored: Boolean(original?.sealed),
-      display: { ...openVerdictDisplay(meta), namesVisible: meta.namesVisible },
+      state: {
+        originals_stored: Boolean(original?.sealed),
+        display: { ...openVerdictDisplay(meta), namesVisible: meta.namesVisible },
+      },
+      viewerId,
     };
   } catch (e) {
     console.error("[verdicts] owner state read failed:", e instanceof Error ? e.message : String(e));
@@ -103,8 +111,9 @@ async function ownerState(req: Request, meta: VerdictMeta | null): Promise<Verdi
 
 /**
  * GET /api/v1/verdicts/{id}: a stored verdict, public like a share link,
- * with the display names the share page shows (null = the labels) and
- * `status: "ready"`. The stored input text is never returned. A removed
+ * with the display names the share page shows (null = the labels),
+ * `status: "ready"` and, on a one-sided verdict, its rounds of added
+ * context (`appeals`; the last judged one's verdict is the current ruling). The stored input text is never returned. A removed
  * verdict answers 410. An async verdict still being judged answers
  * `{ status: "judging", pollAfterMs }`, a failed one
  * `{ status: "failed", code, error }` (both HTTP 200).
@@ -134,13 +143,16 @@ export async function GET(req: Request, ctx: RouteContext<"/api/v1/verdicts/[id]
   }
   const { stored, display } = found;
   const owner = await ownerState(req, found.meta);
+  const { verdictAppealState } = await import("@/lib/verdict-appeals/http");
+  const { appeals, appeal } = found.meta ? await verdictAppealState(found.meta, owner ?? null) : {};
   const body: StoredVerdictResponse & { status: "ready"; owner?: VerdictOwnerState } = {
     id: stored.id,
     result: stored.result,
     createdAt: stored.createdAt,
     display,
     status: "ready",
-    ...(owner ? { owner } : {}),
+    ...(appeals ? { appeals } : {}),
+    ...(owner ? { owner: { ...owner.state, ...(appeal ? { appeal } : {}) } } : {}),
   };
   return NextResponse.json(body, { headers: NO_STORE });
 }

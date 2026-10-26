@@ -6,6 +6,7 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 const m = vi.hoisted(() => ({ getVerdictMeta: vi.fn() }));
 
 vi.mock("@/lib/originals/db", () => ({ getVerdictMeta: m.getVerdictMeta }));
+vi.mock("@/lib/originals/removed", () => ({ roundRoot: async () => null }));
 vi.mock("@/lib/db", () => ({
   getVerdict: async (id: string) => ({
     id,

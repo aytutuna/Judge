@@ -167,6 +167,20 @@ export const AppealInfo = z.object({
 });
 export type AppealInfo = z.infer<typeof AppealInfo>;
 
+/** Context the writer added to a one-sided verdict. Its id is also the id
+ * of the verdict it produces: poll GET /api/v1/verdicts/{id} for it. */
+export type VerdictAppealView = {
+  id: string;
+  status: "judging" | "judged" | "failed";
+  error: "quota" | "unavailable" | "refused" | null;
+  outcome: AppealOutcome | null;
+  /** The verdict it answered: the first one, or the previous appeal's. */
+  baseId: string;
+  createdAt: string;
+  /** The writer only: the context as the judges read it (anonymized). */
+  text?: string;
+};
+
 /** One judge run on a two-sided case (lib/judge.ts TWO_SIDED_JUDGE_SCHEMA). */
 export const TwoSidedJudgeRunOutput = JudgeRunOutput.extend({
   agreed_facts: z.array(z.string()),
@@ -317,4 +331,7 @@ export type StoredVerdictResponse = {
   result: VerdictResult;
   createdAt: string;
   display?: { a: string | null; b: string | null; others: Record<string, string> } | null;
+  /** A one-sided verdict's added context, oldest first. The verdict of the
+   * last judged one is the current ruling. */
+  appeals?: VerdictAppealView[];
 };
