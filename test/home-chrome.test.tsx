@@ -39,11 +39,18 @@ describe("Faq", () => {
 });
 
 describe("SiteChrome", () => {
-  it("adds a spacer under the fixed nav and the toggle only when asked", () => {
-    const html = renderToStaticMarkup(<SiteHeader lang="tr" toggle />);
-    expect(count(html, 'aria-hidden="true" class=')).toBe(1);
-    expect(html).toContain(`aria-label="${t("tr", "footer.language")}"`);
-    expect(renderToStaticMarkup(<SiteHeader lang="en" />)).not.toContain(t("en", "footer.language"));
+  it("adds a spacer under the fixed nav and a + for a new argument instead of the language switch", () => {
+    const html = renderToStaticMarkup(<SiteHeader lang="tr" />);
+    expect(count(html, '<div aria-hidden="true" class=')).toBe(1);
+    expect(html).toContain(`aria-label="${t("tr", "shell.new")}"`);
+    expect(html).toContain(`title="${t("tr", "shell.new")}"`);
+    expect(count(html, 'href="/"')).toBe(2);
+    expect(html).not.toContain(t("tr", "footer.language"));
+  });
+
+  it("keeps the language switch in the footer when asked", () => {
+    expect(renderToStaticMarkup(<SiteFooter lang="tr" toggle />)).toContain(`aria-label="${t("tr", "footer.language")}"`);
+    expect(renderToStaticMarkup(<SiteFooter lang="en" />)).not.toContain(t("en", "footer.language"));
   });
 
   it("links home, about and privacy in the footer", () => {

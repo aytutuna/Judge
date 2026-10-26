@@ -585,15 +585,7 @@ export default function Home() {
   }, [empty]);
 
   return (
-    // The tab bar gives way to the docked composer while an argument runs;
-    // after the verdict it is back under the "New argument" bar.
-    <AppShell
-      lang={lang}
-      toggle
-      footer={false}
-      tabs={empty || phase === "verdict"}
-      onHome={empty ? undefined : reset}
-    >
+    <AppShell lang={lang} toggle footer={false} onNew={empty ? undefined : reset}>
       <main id="main" tabIndex={-1} className={styles.main} data-empty={empty ? "" : undefined}>
         <div className={`wrap ${styles.column}`}>
           <p className="sr-only" role="status" aria-live="polite">

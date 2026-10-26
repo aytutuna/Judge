@@ -72,6 +72,26 @@
   min-width: 0;
 }
 
+.new {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(28, 25, 22, 0.07);
+  color: var(--ink);
+  transition: background-color var(--dur-1);
+}
+.new:hover {
+  background: rgba(28, 25, 22, 0.12);
+}
+.new svg {
+  width: 20px;
+  height: 20px;
+}
+
 /* The account entry (client-rendered; empty until the viewer store has
    answered) takes no box of its own. */
 .account {
