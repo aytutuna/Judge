@@ -46,7 +46,7 @@ final class ScreenshotStateTests: XCTestCase {
     func testVerdictStateOpensTheSavedVerdictWithoutNetwork() throws {
         let state = try XCTUnwrap(ScreenshotState.parse("verdict/win_b_named:en"))
         let container = HistoryContainer.inMemory()
-        withExtendedLifetime(container) {
+        try withExtendedLifetime(container) {
             let app = state.makeModel(container: container)
             XCTAssertEqual(app.home.path, [.saved(id: "winB000001")])
             XCTAssertNotNil(try app.history.find(id: "winB000001")?.session())
