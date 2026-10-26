@@ -65,6 +65,7 @@ private struct CaseScreenContent: View {
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 NewArgumentButton(lang: lang, action: startOver)
+                    .disabled(app.home.isBusy)
             }
         }
         // Polling restarts whenever a new view arrives (generation).

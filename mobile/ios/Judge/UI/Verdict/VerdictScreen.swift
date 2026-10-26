@@ -131,6 +131,7 @@ private struct VerdictScreenContent: View {
                     app.newArgument()
                     dismiss()
                 }
+                .disabled(app.home.isBusy)
             }
         }
         .sheet(item: $webLink) { link in
