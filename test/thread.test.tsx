@@ -9,7 +9,7 @@ import { Thread } from "../components/thread/Thread";
 import { DEFAULT_FRAMEWORK } from "../lib/frameworks";
 import { t } from "../lib/i18n";
 import type { VerdictResult } from "../lib/types";
-import { judgesLabel } from "../lib/verdict-display";
+import { confidenceLabel, judgesLabel } from "../lib/verdict-display";
 import { OWNER, OWNER_NAMES } from "./ui-case-fixtures";
 
 const noop = () => {};
@@ -311,6 +311,16 @@ describe("judges label", () => {
     expect(judgesLabel("en", result("split", ["split", "split", "side_a"]))).toBe("Judges · 2 of 3 agree");
     expect(judgesLabel("en", result("side_a", []))).toBe(t("en", "thread.judges"));
     expect(judgesLabel("en", null)).toBe(t("en", "thread.judges"));
+  });
+
+  it("shows confidence on the panel's own scale", () => {
+    expect(confidenceLabel("en", result("side_a", ["side_a", "side_a", "side_a"]))).toBe("Confidence 3 of 3");
+    expect(confidenceLabel("en", result("side_b", ["side_b", "side_b", "side_a", "side_b", "side_b"]))).toBe(
+      "Confidence 4 of 5",
+    );
+    expect(confidenceLabel("tr", result("side_b", ["side_b", "side_a", "side_b"]))).toBe("Güven: 3 üzerinden 2");
+    expect(confidenceLabel("en", result("too_close", ["side_a", "side_b", "split"]))).toBe("Judges split");
+    expect(confidenceLabel("en", result("side_a", []))).toBeNull();
   });
 
   it("replaces the judges' name in the thread", () => {

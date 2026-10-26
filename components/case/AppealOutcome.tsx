@@ -35,9 +35,9 @@ function OutcomeGlyph({ outcome }: { outcome: AppealOutcome }) {
 /**
  * Banner on a verdict produced by an appeal: the outcome label, which names
  * what happened to the verdict (stands / flipped / changed) so it never
- * reads as the appeal's own success, who added context, the confidence
- * change on the 1-5 scale and the one-sentence summary (or a generic line
- * when the summary is empty). The "stands" chip is neutral: a green tick
+ * reads as the appeal's own success, who added context and the one-sentence
+ * summary (or a generic line when the summary is empty). The card below
+ * carries the new confidence. The "stands" chip is neutral: a green tick
  * would read as "you won".
  * `byName` is the display name of the appealing party; `bySelf` switches to
  * the second-person line on that party's own view. `focus` moves keyboard
@@ -46,14 +46,12 @@ function OutcomeGlyph({ outcome }: { outcome: AppealOutcome }) {
  */
 export function AppealOutcomeBanner({
   appeal,
-  confidence,
   lang,
   byName,
   bySelf,
   focus = false,
 }: {
   appeal: AppealInfo;
-  confidence: number;
   lang: Lang;
   byName: string;
   bySelf: boolean;
@@ -63,8 +61,6 @@ export function AppealOutcomeBanner({
   useEffect(() => {
     if (focus) ref.current?.focus({ preventScroll: false });
   }, [focus]);
-  const from = appeal.previous_confidence;
-  const to = confidence;
   return (
     <section
       ref={ref}
@@ -79,16 +75,6 @@ export function AppealOutcomeBanner({
         </span>
         <span className={styles.outcomeBy}>
           {bySelf ? t(lang, "appeal.bySelf") : t(lang, "appeal.by", { name: byName })}
-        </span>
-        <span className={styles.outcomeConf}>
-          {from === to ? (
-            t(lang, "appeal.confidenceSame", { n: to })
-          ) : (
-            <>
-              {t(lang, "appeal.confidence", { from })} <span aria-hidden>→</span>
-              <span className="sr-only">{t(lang, "appeal.confidenceTo")}</span> {to}/5
-            </>
-          )}
         </span>
       </div>
       <p className={styles.outcomeText}>{appeal.summary.trim() || t(lang, GENERIC_KEY[appeal.outcome])}</p>

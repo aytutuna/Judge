@@ -65,6 +65,15 @@ export function agreement(r: VerdictResult): { n: number; total: number } | null
   return { n: r.runs.filter((v) => v === r.verdict).length, total: r.runs.length };
 }
 
+/** The confidence shown to users: how many judges voted the final verdict,
+ * on the panel's own scale ("Confidence 4 of 5" after an escalation). The
+ * stored 1-5 score stays internal. Null for a refusal (no runs). */
+export function confidenceLabel(lang: Lang, r: VerdictResult): string | null {
+  if (!r.runs.length) return null;
+  const a = agreement(r);
+  return a ? t(lang, "confidence", a) : t(lang, "verdict.noMajority");
+}
+
 /** The judges' name in a thread: plain until there is a verdict, then how
  * far they agreed. */
 export function judgesLabel(lang: Lang, r: VerdictResult | null): string {

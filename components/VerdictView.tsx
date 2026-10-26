@@ -175,7 +175,6 @@ export function VerdictView({
       {result.appeal ? (
         <AppealOutcomeBanner
           appeal={result.appeal}
-          confidence={result.confidence}
           lang={lang}
           byName={result.appeal.by === "a" ? nameA : nameB}
           bySelf={result.appeal.by === "a" ? aIsSelf : bIsSelf}

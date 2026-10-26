@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 import { ACCENT_A, ACCENT_B, OG_SIZE, OgCard, ogFonts } from "@/components/OgCard";
-import { tugFinal, verdictLabel } from "@/lib/verdict-display";
-import { contentLang, t, type Key } from "@/lib/i18n";
+import { confidenceLabel, tugFinal, verdictLabel } from "@/lib/verdict-display";
+import { contentLang, t } from "@/lib/i18n";
 import { resolveParties, restoreNames } from "@/lib/names";
 import { getPublicVerdict } from "@/lib/originals/display";
 import { publicNameMap } from "@/lib/originals-types";
@@ -9,14 +9,6 @@ import { publicNameMap } from "@/lib/originals-types";
 export const alt = "A shared verdict";
 export const size = OG_SIZE;
 export const contentType = "image/png";
-
-const CONF_KEY = [
-  "confidence.1",
-  "confidence.2",
-  "confidence.3",
-  "confidence.4",
-  "confidence.5",
-] as const satisfies readonly Key[];
 
 /**
  * Preview card for a shared verdict: the ruling, its headline and the
@@ -76,7 +68,7 @@ export default async function Image({ params }: { params: Promise<{ id: string }
   const accent =
     r.verdict === "side_a" ? ACCENT_A : r.verdict === "side_b" ? ACCENT_B : undefined;
   const cta = t(lang, "shared.cta").replace(/\s*→$/, "");
-  const n = Math.max(1, Math.min(5, Math.round(r.confidence)));
+  const confidence = confidenceLabel(lang, r);
 
   return new ImageResponse(
     (
@@ -84,7 +76,7 @@ export default async function Image({ params }: { params: Promise<{ id: string }
         eyebrow={leanLine ?? t(lang, `badge.${r.dispute_type}`)}
         title={label}
         subtitle={restoreNames(r.headline, parties, lang)}
-        footer={`${t(lang, "confidenceWord", { word: t(lang, CONF_KEY[n - 1]), n })}  ·  ${cta}`}
+        footer={confidence ? `${confidence}  ·  ${cta}` : cta}
         tugA={tugFinal(r)}
         accent={accent}
       />

@@ -1,7 +1,7 @@
 import type { CruxTrial, VerdictResult } from "@/lib/types";
 import { t, type Key, type Lang } from "@/lib/i18n";
 import { hyphenRuns, stripLeadingEmoji } from "@/lib/text";
-import { agreement, leanTally, stampLabel, tugFinal, verdictLabel } from "@/lib/verdict-display";
+import { confidenceLabel, leanTally, stampLabel, tugFinal, verdictLabel } from "@/lib/verdict-display";
 import { MainSlot } from "./verdict/VerdictMain";
 import { VoteDots, voteOf } from "./verdict/VoteDots";
 import styles from "./verdict/verdict.module.css";
@@ -120,9 +120,9 @@ function CruxTrialNote({ trial, lang }: { trial: CruxTrial; lang: Lang }) {
 /**
  * The verdict itself, as the top of a VerdictCardShell body: the stamp
  * (decorative; the heading carries the ruling for screen readers), the
- * dispute kind, the headline as the card's heading, confidence and how far
- * the judges agreed, then the lean, trial, refusal and demo notes and the
- * split / conditional branches. The card's `animate` drives the entrance;
+ * dispute kind, the headline as the card's heading, the votes and the
+ * confidence (how many judges agreed), then the lean, trial, refusal and
+ * demo notes and the split / conditional branches. The card's `animate` drives the entrance;
  * this markup is always the final state.
  */
 export function VerdictReveal({
@@ -147,8 +147,7 @@ export function VerdictReveal({
   restoredNames?: readonly string[];
 }) {
   const label = verdictLabel(result, nameA, nameB, aIsSelf, bIsSelf, lang);
-  const confidence = Math.max(1, Math.min(5, Math.round(result.confidence)));
-  const agreed = agreement(result);
+  const confidence = confidenceLabel(lang, result);
   const lean = result.lean;
   const leanIsSelf = lean ? (lean.party === "a" ? aIsSelf : bIsSelf) : false;
   const leanName = lean ? (lean.party === "a" ? nameA : nameB) : "";
@@ -175,26 +174,12 @@ export function VerdictReveal({
             ),
           )}
         </h2>
-        <div className={styles.meta}>
-          <span
-            role="meter"
-            aria-valuemin={1}
-            aria-valuemax={5}
-            aria-valuenow={confidence}
-            aria-label={t(lang, "confidenceAria", { n: confidence })}
-          >
-            {t(lang, "confidenceAria", { n: confidence })}
-          </span>
-          {result.runs.length ? (
-            <>
-              <span aria-hidden>·</span>
-              <VoteDots
-                votes={result.runs.map(voteOf)}
-                label={agreed ? t(lang, "verdict.agree", agreed) : t(lang, "verdict.noMajority")}
-              />
-            </>
-          ) : null}
-        </div>
+        {confidence ? (
+          <div className={styles.meta}>
+            <VoteDots votes={result.runs.map(voteOf)} />
+            <span>{confidence}</span>
+          </div>
+        ) : null}
       </div>
       <hr className={styles.rule} />
 

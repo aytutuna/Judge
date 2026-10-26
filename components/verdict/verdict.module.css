@@ -366,7 +366,7 @@
 }
 
 /* The live verdict (VerdictReveal): a stamp in the corner, the headline
-   as the heading, then confidence and the votes on one line. The top row
+   as the heading, then the votes and the confidence on one line. The top row
    keeps clear of the stamp. */
 .stamp {
   position: absolute;
@@ -439,11 +439,6 @@
   margin: 0;
   color: inherit;
   font-size: inherit;
-}
-.meta .votesText {
-  display: inline;
-  order: 1;
-  margin: 0 0 0 3px;
 }
 .rule {
   width: 100%;

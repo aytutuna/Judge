@@ -48,8 +48,8 @@ function SealIcon({ side }: { side: SealSide }) {
 
 /**
  * The centre of the card: dispute badge, seal plus verdict label, headline,
- * confidence meter, then `children` as the slot for the forced-ruling lean,
- * cross-examination, refusal and demo notes. The meter scores the MAIN
+ * confidence meter (how many judges agreed), then `children` as the slot
+ * for the forced-ruling lean, cross-examination, refusal and demo notes. The meter scores the MAIN
  * verdict and stays bound to the headline; the slots sit below it.
  */
 export function VerdictMain({
@@ -59,7 +59,7 @@ export function VerdictMain({
   labelAs: Label = "h2",
   seal,
   headline,
-  confidence,
+  agreement,
   lang,
   children,
 }: {
@@ -69,7 +69,7 @@ export function VerdictMain({
   labelAs?: "h2" | "h3" | "p";
   seal: SealSide;
   headline: string;
-  confidence: number;
+  agreement: { n: number; total: number };
   lang: Lang;
   children?: ReactNode;
 }) {
@@ -101,7 +101,7 @@ export function VerdictMain({
           )}
         </p>
       ) : null}
-      <ConfidenceMeter value={confidence} lang={lang} />
+      <ConfidenceMeter n={agreement.n} total={agreement.total} lang={lang} />
       {children}
     </div>
   );

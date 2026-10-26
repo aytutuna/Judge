@@ -120,11 +120,11 @@ describe("VerdictView: a two-sided verdict", () => {
 });
 
 describe("VerdictView: an appeal verdict", () => {
-  it("shows the outcome, who added context and the confidence change", () => {
+  it("shows the outcome and who added context, and leaves confidence to the card", () => {
     const out = html(<VerdictView result={APPEAL_RESULT} lang="en" />);
     expect(out).toContain(t("en", "appeal.outcome.changed"));
     expect(out).toContain("After new context from Party A");
-    expect(out).toContain('Confidence 4/5 <span aria-hidden="true">→</span><span class="sr-only">to</span> 3/5');
+    expect(out).not.toContain("/5");
     expect(out).toContain(esc("Party A's screenshot of the March swap made the turn order unclear."));
   });
 
@@ -135,15 +135,9 @@ describe("VerdictView: an appeal verdict", () => {
     expect(out).toContain(t("tr", "appeal.generic.upheld"));
   });
 
-  it("names what happened to the verdict, not the appeal, and gives the confidence scale", () => {
+  it("names what happened to the verdict, not the appeal", () => {
     expect(t("en", "appeal.outcome.upheld")).toBe("Verdict stands");
     expect(t("tr", "appeal.outcome.upheld")).toBe("Karar aynı kaldı");
-    const same = { ...APPEAL_RESULT, confidence: 4, appeal: { ...APPEAL_RESULT.appeal!, outcome: "upheld" as const } };
-    const out = html(<VerdictView result={same} lang="en" />);
-    expect(out).toContain("Confidence unchanged at 4/5");
-    expect(out).not.toContain("→");
-    const tr = html(<VerdictView result={{ ...APPEAL_RESULT, lang: "tr" }} lang="tr" />);
-    expect(tr).toContain('Güven 4/5 <span aria-hidden="true">→</span><span class="sr-only">iken şimdi</span> 3/5');
   });
 });
 

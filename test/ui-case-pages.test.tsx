@@ -144,7 +144,6 @@ describe("owner case page", () => {
     const html = owner(OWNER.appealed);
     expect(html).toContain(t("en", "appeal.outcome.changed"));
     expect(html).toContain(t("en", "appeal.bySelf"));
-    expect(html).toContain('Confidence 4/5 <span aria-hidden="true">→</span><span class="sr-only">to</span> 3/5');
     expect(html).toContain(esc("Your screenshot of the March swap made the turn order unclear."));
     expect(html).toContain(t("en", "appeal.history"));
     expect(html).toContain(t("en", "appeal.previous"));
@@ -415,7 +414,6 @@ describe("small case components", () => {
           confidence_change: 0,
           summary: "",
         }}
-        confidence={3}
         lang="en"
         byName="Party A"
         bySelf
