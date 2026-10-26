@@ -126,6 +126,32 @@ final class ThreadLabelTests: XCTestCase {
         XCTAssertNil(VerdictDisplay.agreement(refused))
     }
 
+    /// The judges who voted the final verdict, on the panel's own scale; the
+    /// stored 1-5 score never shows.
+    func testConfidenceLabelCountsTheJudges() throws {
+        let (base, _) = try sample("win_a_self", lang: .en)
+        func result(_ verdict: FinalVerdict, _ runs: [JudgeVerdict]) -> VerdictResult {
+            var result = base
+            result.verdict = verdict
+            result.runs = runs
+            result.confidence = 2
+            return result
+        }
+        XCTAssertEqual(VerdictDisplay.confidenceLabel(result(.sideA, [.sideA, .sideA, .sideA]), lang: .en), "Confidence 3 of 3")
+        XCTAssertEqual(
+            VerdictDisplay.confidenceLabel(result(.sideB, [.sideB, .sideA, .sideB, .sideB, .sideB]), lang: .en),
+            "Confidence 4 of 5"
+        )
+        XCTAssertEqual(
+            VerdictDisplay.confidenceLabel(result(.sideA, [.sideA, .sideB, .sideA, .sideA, .dissolved, .sideA, .sideA]), lang: .en),
+            "Confidence 5 of 7"
+        )
+        XCTAssertEqual(VerdictDisplay.confidenceLabel(result(.sideA, [.sideA, .sideA, .sideB, .sideA, .sideA]), lang: .tr), "Güven: 5 üzerinden 4")
+        XCTAssertEqual(VerdictDisplay.confidenceLabel(result(.tooClose, [.sideA, .sideB, .sideA]), lang: .en), L10n.verdictNoMajority(.en))
+        let (refused, _) = try sample("refused", lang: .en)
+        XCTAssertNil(VerdictDisplay.confidenceLabel(refused, lang: .en), "no runs, no line")
+    }
+
     func testStampLabelInEnglish() throws {
         let (win, you) = try sample("win_a_self", lang: .en)
         XCTAssertEqual(VerdictDisplay.stampLabel(win.verdict, parties: you, lang: .en), "You're right")
