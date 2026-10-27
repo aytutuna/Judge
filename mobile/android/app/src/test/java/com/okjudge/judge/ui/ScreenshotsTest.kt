@@ -373,7 +373,7 @@ class ScreenshotsTest {
     private fun shotVerdict(name: String, outcome: VerdictOutcome, lang: AppLang) = capture(name, tall = true) {
         Themed(lang) {
             Column(Modifier.fillMaxSize()) {
-                TopBar(onBack = null, onNew = {})
+                TopBar(onBack = {}, onNew = {}, backText = UiTestSupport.s(lang).appVerdictBack)
                 SampleVerdict(outcome, lang, Modifier.padding(horizontal = 16.dp, vertical = 12.dp))
             }
         }
