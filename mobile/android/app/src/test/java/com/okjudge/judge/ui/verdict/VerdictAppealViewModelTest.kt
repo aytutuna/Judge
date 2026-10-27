@@ -189,6 +189,9 @@ class VerdictAppealViewModelTest {
         assertEquals("overturned", saved.original.result.appeal!!.outcome)
         assertTrue(saved.nameMap.contains(NameMapping("Kim", "Person C")))
         assertEquals("", vm.state.value.draft.text)
+
+        vm.consumeFinished()
+        assertFalse("handled once, not again after a rotation", vm.until { !it.finished }.finished)
     }
 
     @Test
