@@ -93,6 +93,8 @@ fun VerdictRoute(
         if (appealState?.finished == true) {
             details = false
             scroll.animateScrollTo(0)
+            // After the scroll: clearing it first would cancel this effect mid-way.
+            appeal?.consumeFinished()
         }
     }
     BackHandler(enabled = details) { showDetails(false) }

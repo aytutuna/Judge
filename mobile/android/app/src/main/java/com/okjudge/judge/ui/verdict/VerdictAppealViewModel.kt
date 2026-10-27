@@ -146,6 +146,11 @@ class VerdictAppealViewModel(
         _state.update { it.copy(open = false) }
     }
 
+    /** The screen went back up to the new ruling; a later recomposition must not do it again. */
+    fun consumeFinished() {
+        _state.update { it.copy(finished = false) }
+    }
+
     fun onText(text: String) {
         _state.update { it.copy(draft = it.draft.copy(text = text.take(CaseLogic.MAX_APPEAL_CHARS))) }
     }
