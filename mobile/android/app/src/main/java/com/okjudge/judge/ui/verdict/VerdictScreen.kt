@@ -22,6 +22,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -42,6 +43,7 @@ import com.okjudge.judge.ui.judging.rememberReducedMotion
 import com.okjudge.judge.ui.theme.JudgeType
 import com.okjudge.judge.ui.theme.Palette
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 /** Share link for a verdict id: `{SHARE_BASE_URL}/v/<id>`. */
 fun shareUrl(shareBaseUrl: String, id: String): String = "${shareBaseUrl.trimEnd('/')}/v/$id"
@@ -74,6 +76,12 @@ fun VerdictRoute(
     val s = LocalStrings.current
     val scroll = rememberScrollState()
     var details by rememberSaveable(id) { mutableStateOf(false) }
+    val scope = rememberCoroutineScope()
+    // Reset on the toggle itself: an effect keyed on details also runs after rotation and undoes the restored scroll.
+    val showDetails = { on: Boolean ->
+        details = on
+        scope.launch { scroll.scrollTo(0) }
+    }
     var copied by remember { mutableStateOf(false) }
     LaunchedEffect(copied) {
         if (copied) {
@@ -87,13 +95,12 @@ fun VerdictRoute(
             scroll.animateScrollTo(0)
         }
     }
-    BackHandler(enabled = details) { details = false }
-    LaunchedEffect(details) { scroll.scrollTo(0) }
+    BackHandler(enabled = details) { showDetails(false) }
     val url = shareUrl(shareBaseUrl, id)
 
     Column(Modifier.fillMaxSize()) {
         if (details) {
-            TopBar(onBack = { details = false }, onNew = onNew, backLabel = s.appVerdictBack, backText = s.appVerdictBack)
+            TopBar(onBack = { showDetails(false) }, onNew = onNew, backLabel = s.appVerdictBack, backText = s.appVerdictBack)
         } else {
             TopBar(onBack = onBack, onNew = onNew, backLabel = if (fromHome) s.homeKicker else s.appHistoryTitle)
         }
@@ -135,7 +142,7 @@ fun VerdictRoute(
                 val restored = remember(saved.nameMap, selfLang) { PartyNames.restoredNames(saved.nameMap, selfLang) }
                 VerdictDetails(shown, parties, restored, actions, width.padding(bottom = 32.dp))
             } else {
-                RulingSummary(shown, parties, actions, onDetails = { details = true }, reducedMotion = rememberReducedMotion(), modifier = width)
+                RulingSummary(shown, parties, actions, onDetails = { showDetails(true) }, reducedMotion = rememberReducedMotion(), modifier = width)
                 // The sheet takes the form; re-judging, or why no more context fits, shows here.
                 if (appealState?.panel == true) AppealNote(area, width.padding(top = 16.dp))
                 Spacer(Modifier.height(32.dp))
