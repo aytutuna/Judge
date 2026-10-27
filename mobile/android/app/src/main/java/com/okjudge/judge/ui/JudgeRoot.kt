@@ -96,7 +96,8 @@ import kotlinx.serialization.Serializable
 @Serializable data object SettingsKey : NavKey
 @Serializable data object ClarifyKey : NavKey
 @Serializable data object PricingKey : NavKey
-@Serializable data class CaseKey(val id: String) : NavKey
+/** [otherName]: who a case just created here waits for, as typed on Home. */
+@Serializable data class CaseKey(val id: String, val otherName: String? = null) : NavKey
 
 /** Sign-in; [thenVerdict] when it was opened by "Get the verdict", which goes on after signing in. */
 @Serializable data class SignInKey(val thenVerdict: Boolean) : NavKey
@@ -148,7 +149,7 @@ fun JudgeRoot(container: AppContainer, links: StateFlow<Uri?> = MutableStateFlow
                             // The form's work is now the case: it starts empty next time.
                             clearDraft = true
                             backStack.removeAll { it is ClarifyKey }
-                            backStack.add(CaseKey(nav.id))
+                            backStack.add(CaseKey(nav.id, nav.otherName))
                             container.verdictFlow.caseOpened()
                         }
                     }
@@ -190,7 +191,7 @@ fun JudgeRoot(container: AppContainer, links: StateFlow<Uri?> = MutableStateFlow
             }
 
             Scaffold(
-                containerColor = if (top is HomeKey) Palette.ivory2 else Palette.ivory,
+                containerColor = Palette.ivory,
                 snackbarHost = {
                     SnackbarHost(snackbar) { data ->
                         Snackbar(data, containerColor = Palette.ink, contentColor = Palette.ivory)
@@ -242,8 +243,8 @@ fun JudgeRoot(container: AppContainer, links: StateFlow<Uri?> = MutableStateFlow
                                 if (submitAfterSignIn) {
                                     submitAfterSignIn = false
                                     // Only the request the user saw goes out by itself: if signing in made
-                                    // Premium the effective tier or brought back "Both sides", they choose again.
-                                    if (account.isSignedIn && state.tier == tierAtTap && !state.twoSided && vm.submit(lang) == Submitted.JUDGING) {
+                                    // Premium the effective tier, they choose again.
+                                    if (account.isSignedIn && state.tier == tierAtTap && vm.submit(lang, strings) == Submitted.JUDGING) {
                                         backStack.add(JudgingKey)
                                     }
                                 }
@@ -251,19 +252,21 @@ fun JudgeRoot(container: AppContainer, links: StateFlow<Uri?> = MutableStateFlow
                             HomeScreen(
                                 state = state,
                                 onArgumentChange = vm::onArgumentChange,
-                                onExample = vm::onExample,
+                                onOtherSideChange = vm::onOtherSideChange,
+                                onOtherName = vm::onOtherName,
                                 onPreset = vm::onPreset,
                                 onSubmit = {
                                     // Every verdict needs an account: sign in first, then go on.
                                     if (!account.isSignedIn) {
-                                        if (state.canSubmit && backStack.lastOrNull() !is SignInKey) {
+                                        if (state.canSubmit && state.fits(strings) && backStack.lastOrNull() !is SignInKey) {
                                             tierAtTap = state.tier
                                             backStack.add(SignInKey(thenVerdict = true))
                                         }
-                                    } else if (vm.submit(lang) == Submitted.JUDGING) {
+                                    } else if (vm.submit(lang, strings) == Submitted.JUDGING) {
                                         backStack.add(JudgingKey)
                                     }
                                 },
+                                onSendLink = { vm.sendLink(lang) },
                                 onDismissError = vm::dismissError,
                                 onNew = newArgument,
                                 onOpenPrivacy = { openLink(context, "${container.config.shareBaseUrl.trimEnd('/')}/privacy") },
@@ -273,7 +276,6 @@ fun JudgeRoot(container: AppContainer, links: StateFlow<Uri?> = MutableStateFlow
                                 onPricing = { if (backStack.lastOrNull() !is PricingKey) backStack.add(PricingKey) },
                                 onAddEvidence = vm::onAddEvidence,
                                 onRemoveEvidence = vm::onRemoveEvidence,
-                                onCaseMode = vm::onCaseMode,
                                 onDisplayName = vm::onDisplayName,
                                 onOpenVerdict = { id -> backStack.add(VerdictKey(id, fresh = false, fromHome = true)) },
                                 onAllVerdicts = { backStack.resetTo(listOf(HomeKey, HistoryKey)) },

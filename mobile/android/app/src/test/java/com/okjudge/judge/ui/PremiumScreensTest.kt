@@ -190,7 +190,7 @@ class PremiumScreensTest {
         val removed = mutableListOf<String>()
         compose.setContent {
             Themed(AppLang.EN) {
-                HomeScreen(premiumHome(EvidenceState(items, max = 3)), {}, {}, {}, {}, {}, {}, {}, onRemoveEvidence = { removed += it })
+                HomeScreen(premiumHome(EvidenceState(items, max = 3)), {}, {}, {}, {}, {}, {}, onRemoveEvidence = { removed += it })
             }
         }
         compose.onNodeWithTag(EvidenceTags.status(1)).assertTextContains(en.evidenceOk)
@@ -207,7 +207,7 @@ class PremiumScreensTest {
     @Test
     fun home_checking_showsTheStatusLine() {
         compose.setContent {
-            Themed(AppLang.EN) { HomeScreen(premiumHome(EvidenceState(max = 3)).copy(checking = true), {}, {}, {}, {}, {}, {}, {}) }
+            Themed(AppLang.EN) { HomeScreen(premiumHome(EvidenceState(max = 3)).copy(checking = true), {}, {}, {}, {}, {}, {}) }
         }
         compose.onNodeWithTag(HomeTags.STATUS).assertTextContains(en.tierChecking)
         compose.onNodeWithTag(TopBarTags.NEW).assertDoesNotExist()

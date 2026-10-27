@@ -10,6 +10,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.test.assertIsEnabled
 import androidx.compose.ui.test.assertIsNotEnabled
+import androidx.compose.ui.test.assertIsNotSelected
+import androidx.compose.ui.test.assertIsSelected
 import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
@@ -35,7 +37,6 @@ import com.okjudge.judge.i18n.AppLang
 import com.okjudge.judge.ui.components.TopBarTags
 import com.okjudge.judge.ui.history.HistoryScreen
 import com.okjudge.judge.ui.history.HistoryTags
-import com.okjudge.judge.ui.home.CaseMode
 import com.okjudge.judge.ui.home.HomeScreen
 import com.okjudge.judge.ui.home.HomeTags
 import com.okjudge.judge.ui.home.HomeUiState
@@ -50,6 +51,7 @@ import com.okjudge.judge.ui.verdict.VerdictTags
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonObject
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -63,74 +65,81 @@ class ScreensTest {
     @get:Rule
     val compose = createComposeRule()
 
-    private fun home(lang: AppLang, initial: HomeUiState = HomeUiState()) {
+    private fun home(lang: AppLang, initial: HomeUiState = HomeUiState(), onSendLink: () -> Unit = {}) {
         compose.setContent {
             Themed(lang) {
                 var state by remember { mutableStateOf(initial) }
                 HomeScreen(
                     state = state,
                     onArgumentChange = { state = state.copy(argument = it) },
-                    onExample = { state = state.copy(argument = it) },
                     onPreset = { state = state.copy(preset = it) },
                     onSubmit = {},
                     onDismissError = { state = state.copy(error = null) },
                     onNew = {},
                     onOpenPrivacy = {},
+                    onOtherSideChange = { state = state.copy(otherSide = it) },
+                    onOtherName = { state = state.copy(otherName = it) },
+                    onDisplayName = { state = state.copy(typedName = it) },
+                    onSendLink = onSendLink,
                 )
             }
         }
     }
 
     @Test
-    fun home_counter_disabledUntil20Chars_andChipFillsTheText() {
+    fun home_disabledUntil20Chars_andCountsWhatIsSent() {
         home(AppLang.EN)
         val en = UiTestSupport.s(AppLang.EN)
-        compose.onNodeWithTag(HomeTags.COUNTER).assertTextEquals("0 / 6,000")
+        compose.onNodeWithTag(HomeTags.COUNTER).assertDoesNotExist()
         compose.onNodeWithTag(HomeTags.SUBMIT).assertIsNotEnabled()
         compose.onNodeWithTag(HomeTags.INPUT).performTextInput("nineteen characters")
         compose.onNodeWithTag(HomeTags.SUBMIT).assertIsNotEnabled()
         compose.onNodeWithTag(HomeTags.INPUT).performTextInput("!")
         compose.onNodeWithTag(HomeTags.SUBMIT).assertIsEnabled()
-        compose.onNodeWithText(en.exampleHotdogLabel).performClick()
-        compose.onNodeWithTag(HomeTags.COUNTER).assertTextEquals("${"%,d".format(en.exampleHotdogText.length)} / 6,000")
+        compose.onNodeWithTag(HomeTags.COUNTER).assertTextEquals("20 / 6,000")
+        compose.onNodeWithTag(HomeTags.NAME).performTextInput("Alex")
+        compose.onNodeWithTag(HomeTags.OTHER).performTextInput("It is a sandwich.")
+        val joined = HomeUiState.joined("nineteen characters!", "It is a sandwich.", "Alex", "", en)
+        assertEquals("Alex says: nineteen characters!\n\nTheir side: It is a sandwich.", joined)
+        compose.onNodeWithTag(HomeTags.COUNTER).assertTextEquals("${joined.length} / 6,000")
     }
 
     @Test
-    fun home_tr_kickerUppercasesWithTurkishRules() {
+    fun home_bothSidesTogetherCanGoOverTheLimit() {
+        val half = "x".repeat(3000)
+        home(AppLang.EN, HomeUiState(argument = half, otherSide = half))
+        compose.onNodeWithTag(HomeTags.SUBMIT).assertIsNotEnabled()
+        val sent = HomeUiState.joined(half, half, "", "", UiTestSupport.s(AppLang.EN)).length
+        assertTrue(sent > 6000)
+        compose.onNodeWithTag(HomeTags.COUNTER).assertTextEquals("${"%,d".format(sent)} / 6,000")
+    }
+
+    @Test
+    fun home_tr_sideLabelsUppercaseWithTurkishRules() {
         home(AppLang.TR)
-        // "Yeni dava" must become "YENİ DAVA", not "YENI DAVA".
-        compose.onNodeWithText("YENİ DAVA").assertExists()
-        compose.onNodeWithText(UiTestSupport.s(AppLang.TR).homeTitle).assertExists()
+        // "Senin tarafın" must become "SENİN TARAFIN", not "SENIN TARAFIN".
+        compose.onNodeWithText("SENİN TARAFIN").assertExists()
+        compose.onNodeWithText(UiTestSupport.s(AppLang.TR).appHomeTitle).assertExists()
     }
 
     @Test
-    fun home_lensOpensThePresets() {
+    fun home_presetsAreOneRowOfChoices() {
         home(AppLang.EN)
-        val en = UiTestSupport.s(AppLang.EN)
-        compose.onNodeWithText(en.presetOutcomesLabel).assertDoesNotExist()
-        compose.onNodeWithTag(HomeTags.LENS).performClick()
-        compose.onNodeWithText(en.presetOutcomesLabel).performClick()
-        compose.onNodeWithText("· ${en.presetOutcomesLabel}").assertExists()
+        compose.onNodeWithTag(HomeTags.preset(Preset.BALANCED.id)).assertIsSelected()
+        compose.onNodeWithTag(HomeTags.preset(Preset.OUTCOMES.id)).performClick().assertIsSelected()
+        compose.onNodeWithTag(HomeTags.preset(Preset.BALANCED.id)).assertIsNotSelected()
     }
 
     @Test
-    fun home_sidesLinkTogglesTheCaseMode() {
-        val en = UiTestSupport.s(AppLang.EN)
-        var mode by mutableStateOf(CaseMode.NOW)
-        compose.setContent {
-            Themed(AppLang.EN) {
-                HomeScreen(
-                    HomeUiState(signedIn = true, features = Features(cases = true), caseMode = mode),
-                    {}, {}, {}, {}, {}, {}, {},
-                    onCaseMode = { mode = it },
-                )
-            }
-        }
-        compose.onNodeWithTag(HomeTags.SIDES).assertTextEquals(en.homeInvite).performClick()
-        assertEquals(CaseMode.BOTH, mode)
-        compose.onNodeWithTag(HomeTags.SIDES).assertTextEquals(en.homeOneSide)
-        compose.onNodeWithText(en.caseCreate).assertExists()
-        compose.onNodeWithText(en.exampleHotdogLabel).assertDoesNotExist()
+    fun home_sendLink_onlyWhileTheirSideIsEmpty() {
+        var sent = 0
+        home(AppLang.EN, HomeUiState(signedIn = true, features = Features(cases = true)), onSendLink = { sent++ })
+        compose.onNodeWithTag(HomeTags.SEND_LINK).assertIsNotEnabled()
+        compose.onNodeWithTag(HomeTags.INPUT).performTextInput("My roommate never does the dishes")
+        compose.onNodeWithTag(HomeTags.SEND_LINK).assertIsEnabled().performClick()
+        assertEquals(1, sent)
+        compose.onNodeWithTag(HomeTags.OTHER).performTextInput("I did them on Sunday.")
+        compose.onNodeWithTag(HomeTags.SEND_LINK).assertDoesNotExist()
     }
 
     @Test
@@ -142,20 +151,20 @@ class ScreensTest {
                 HomeScreen(
                     state = state,
                     onArgumentChange = { state = state.copy(argument = it) },
-                    onExample = { state = state.copy(argument = it) },
                     onPreset = {},
                     onSubmit = {},
                     onDismissError = {},
                     onNew = { state = HomeUiState() },
                     onOpenPrivacy = {},
+                    onOtherSideChange = { state = state.copy(otherSide = it) },
                 )
             }
         }
         compose.onNodeWithTag(TopBarTags.NEW).assertDoesNotExist()
-        compose.onNodeWithTag(HomeTags.INPUT).performTextInput("My roommate never does the dishes")
+        compose.onNodeWithTag(HomeTags.OTHER).performTextInput("My roommate never does the dishes")
         compose.onNodeWithContentDescription(en.shellNew).assertExists()
         compose.onNodeWithTag(TopBarTags.NEW).performClick()
-        compose.onNodeWithTag(HomeTags.COUNTER).assertTextEquals("0 / 6,000")
+        compose.onNodeWithTag(HomeTags.COUNTER).assertDoesNotExist()
         compose.onNodeWithTag(TopBarTags.NEW).assertDoesNotExist()
     }
 
@@ -167,9 +176,9 @@ class ScreensTest {
     }
 
     @Test
-    fun home_sidesLinkNeedsCases() {
+    fun home_sendLinkNeedsCases() {
         home(AppLang.EN)
-        compose.onNodeWithTag(HomeTags.SIDES).assertDoesNotExist()
+        compose.onNodeWithTag(HomeTags.SEND_LINK).assertDoesNotExist()
     }
 
     @Test
@@ -180,7 +189,7 @@ class ScreensTest {
         var all = 0
         compose.setContent {
             Themed(AppLang.EN) {
-                HomeScreen(HomeUiState(recent = recent), {}, {}, {}, {}, {}, {}, {}, onOpenVerdict = { opened += it }, onAllVerdicts = { all++ })
+                HomeScreen(HomeUiState(recent = recent), {}, {}, {}, {}, {}, {}, onOpenVerdict = { opened += it }, onAllVerdicts = { all++ })
             }
         }
         compose.onNodeWithTag(HomeTags.RECENT).assertDoesNotExist()

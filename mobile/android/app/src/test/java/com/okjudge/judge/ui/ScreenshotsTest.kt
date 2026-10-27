@@ -92,13 +92,13 @@ class ScreenshotsTest {
 
     @Test
     fun home_en() = capture("home_en") {
-        Themed(AppLang.EN) { HomeScreen(HomeUiState(), {}, {}, {}, {}, {}, {}, {}) }
+        Themed(AppLang.EN) { HomeScreen(HomeUiState(), {}, {}, {}, {}, {}, {}) }
     }
 
     @Test
     fun home_tr_filled_withError() = capture("home_tr_error", tall = true) {
         Themed(AppLang.TR) {
-            HomeScreen(homeState(AppLang.TR).copy(error = UiError.Api("rate_limited", 429, 420.0)), {}, {}, {}, {}, {}, {}, {})
+            HomeScreen(homeState(AppLang.TR).copy(error = UiError.Api("rate_limited", 429, 420.0)), {}, {}, {}, {}, {}, {})
         }
     }
 
@@ -130,7 +130,7 @@ class ScreenshotsTest {
             val o = sample(n)
             SavedVerdict(o.id, System.currentTimeMillis() - i * 86_400_000L, o.result, o.nameMap, Preset.BALANCED.id, emptyMap())
         }
-        Themed(AppLang.EN) { HomeScreen(HomeUiState(recent = items), {}, {}, {}, {}, {}, {}, {}) }
+        Themed(AppLang.EN) { HomeScreen(HomeUiState(recent = items), {}, {}, {}, {}, {}, {}) }
     }
 
     @Test
@@ -266,13 +266,13 @@ class ScreenshotsTest {
 
     @Test
     fun tier_lockedFairUse_en() = capture("tier_locked_fair_use_en", tall = true) {
-        Themed(AppLang.EN) { HomeScreen(premiumHome(AppLang.EN, "fair_use", TierAvailability.LOCKED), {}, {}, {}, {}, {}, {}, {}) }
+        Themed(AppLang.EN) { HomeScreen(premiumHome(AppLang.EN, "fair_use", TierAvailability.LOCKED), {}, {}, {}, {}, {}, {}) }
     }
 
     @Test
     fun tier_availablePremium_en() = capture("tier_available_premium_en", tall = true) {
         Themed(AppLang.EN) {
-            HomeScreen(premiumHome(AppLang.EN, "subscriber", TierAvailability.AVAILABLE).copy(features = Features()), {}, {}, {}, {}, {}, {}, {})
+            HomeScreen(premiumHome(AppLang.EN, "subscriber", TierAvailability.AVAILABLE).copy(features = Features()), {}, {}, {}, {}, {}, {})
         }
     }
 
@@ -287,7 +287,7 @@ class ScreenshotsTest {
             EvidenceItem("ev3", 3, EvidenceStatus.UNREADABLE),
         )
         Themed(AppLang.EN) {
-            HomeScreen(premiumHome(AppLang.EN, "credits7", TierAvailability.AVAILABLE, EvidenceState(items, max = 3)), {}, {}, {}, {}, {}, {}, {})
+            HomeScreen(premiumHome(AppLang.EN, "credits7", TierAvailability.AVAILABLE, EvidenceState(items, max = 3)), {}, {}, {}, {}, {}, {})
         }
     }
 
@@ -476,11 +476,16 @@ class ScreenshotsTest {
     }
 
     @Test
-    fun home_bothSides_en() = capture("home_both_sides_en", tall = true) {
+    fun home_twoSides_en() = capture("home_two_sides_en", tall = true) {
         Themed(AppLang.EN) {
             HomeScreen(
-                premiumHome(AppLang.EN, "credits7", TierAvailability.AVAILABLE).copy(caseMode = com.okjudge.judge.ui.home.CaseMode.BOTH, suggestedName = "Alex"),
-                {}, {}, {}, {}, {}, {}, {},
+                premiumHome(AppLang.EN, "credits7", TierAvailability.AVAILABLE).copy(
+                    argument = "A hot dog is its own thing. Nobody orders a sandwich and expects one, and no menu lists it under sandwiches.",
+                    otherSide = "It's a filling inside sliced bread. That's a sandwich, end of story.",
+                    suggestedName = "Alex",
+                    otherName = "Sam",
+                ),
+                {}, {}, {}, {}, {}, {},
             )
         }
     }

@@ -58,11 +58,14 @@ class VerdictFlow(
 ) {
     sealed interface State {
         data object Idle : State
-        /** [argument] is what was sent, for the thread on the judging screen. */
-        data class Running(val startedAt: Long, val premium: Boolean = false, val argument: String = "") : State
-        data class Succeeded(val outcome: VerdictOutcome, val argument: String = "") : State
+        /** [argument] is what was sent; [sides] what was written, for the judging screen's tiles. */
+        data class Running(val startedAt: Long, val premium: Boolean = false, val argument: String = "", val sides: List<Side> = emptyList()) : State
+        data class Succeeded(val outcome: VerdictOutcome, val argument: String = "", val sides: List<Side> = emptyList()) : State
         data class Failed(val error: UiError) : State
     }
+
+    /** One written side as the judging screen shows it; an empty [name] reads "Your side" / "Their side". */
+    data class Side(val mine: Boolean, val name: String, val text: String)
 
     private val _state = MutableStateFlow<State>(State.Idle)
     val state: StateFlow<State> = _state.asStateFlow()
@@ -88,8 +91,8 @@ class VerdictFlow(
     sealed interface Nav {
         data object Clarify : Nav
         data object Judging : Nav
-        /** A two-sided case was created: open its screen. */
-        data class Case(val id: String) : Nav
+        /** A two-sided case was created: open its screen. [otherName] is who it waits for, as typed. */
+        data class Case(val id: String, val otherName: String? = null) : Nav
     }
 
     private val _creating = MutableStateFlow(false)
@@ -103,7 +106,7 @@ class VerdictFlow(
     val navigation: Flow<Nav> = _navigation.receiveAsFlow()
 
     /** What a premium request judges, fixed when it is submitted. */
-    private data class PremiumInput(val text: String, val preset: Preset, val lang: AppLang, val evidence: List<String>)
+    private data class PremiumInput(val text: String, val preset: Preset, val lang: AppLang, val evidence: List<String>, val sides: List<Side>)
 
     @Volatile private var premiumInput: PremiumInput? = null
 
@@ -137,11 +140,11 @@ class VerdictFlow(
 
     @Volatile private var pending: PendingVerdict? = null
 
-    fun start(argument: String, preset: Preset, lang: AppLang): Boolean {
+    fun start(argument: String, preset: Preset, lang: AppLang, sides: List<Side> = emptyList()): Boolean {
         if (!canStart()) return false
         _lastError.value = null
         val text = argument.trim()
-        _state.value = State.Running(clock(), argument = text)
+        _state.value = State.Running(clock(), argument = text, sides = sides)
         val key = RequestKey(text, preset.id, lang)
         val held = pending?.takeIf { it.key == key && clock() - it.since < RESUME_WINDOW_MS }
         if (held == null) pending = null
@@ -195,8 +198,8 @@ class VerdictFlow(
 
     private suspend fun succeed(outcome: VerdictOutcome, preset: Preset) {
         history.save(outcome, preset.id)
-        val argument = (_state.value as? State.Running)?.argument.orEmpty()
-        _state.value = State.Succeeded(outcome, argument)
+        val running = _state.value as? State.Running
+        _state.value = State.Succeeded(outcome, running?.argument.orEmpty(), running?.sides.orEmpty())
     }
 
     private fun fail(error: UiError) {
@@ -224,10 +227,10 @@ class VerdictFlow(
      * verdict: it goes ahead without questions. Account problems (401, 402),
      * a refusal (403) and bad input (400) stop on Home with the error.
      */
-    fun startPremium(argument: String, preset: Preset, lang: AppLang, evidence: List<String>): Boolean {
+    fun startPremium(argument: String, preset: Preset, lang: AppLang, evidence: List<String>, sides: List<Side> = emptyList()): Boolean {
         if (!canStart()) return false
         _lastError.value = null
-        val input = PremiumInput(argument.trim(), preset, lang, evidence.toList())
+        val input = PremiumInput(argument.trim(), preset, lang, evidence.toList(), sides)
         premiumInput = input
         _premiumStep.value = PremiumStep.Checking
         job = scope.launch {
@@ -265,7 +268,15 @@ class VerdictFlow(
      * holds one premium verdict. The returned names stay on this phone. No
      * clarifying step: the other side fills the gaps.
      */
-    fun createCase(argument: String, preset: Preset, lang: AppLang, tier: Tier, evidence: List<String>, displayName: String?): Boolean {
+    fun createCase(
+        argument: String,
+        preset: Preset,
+        lang: AppLang,
+        tier: Tier,
+        evidence: List<String>,
+        displayName: String?,
+        otherName: String? = null,
+    ): Boolean {
         if (!canStart()) return false
         _lastError.value = null
         _creating.value = true
@@ -291,7 +302,7 @@ class VerdictFlow(
                     caseNames.save(created.case.id, created.nameMap)
                     created.entitlement?.let(onEntitlement)
                     // The form stays held until the case screen has taken over (caseOpened).
-                    _navigation.trySend(Nav.Case(created.case.id))
+                    _navigation.trySend(Nav.Case(created.case.id, otherName?.trim()?.takeIf { it.isNotEmpty() }))
                 }
             }
         }
@@ -311,7 +322,7 @@ class VerdictFlow(
     /** Premium step 2 (judgePremium): the verdict itself. */
     private fun judgePremium(input: PremiumInput, clarifications: List<Clarification>?) {
         _lastError.value = null
-        _state.value = State.Running(clock(), premium = true, argument = input.text)
+        _state.value = State.Running(clock(), premium = true, argument = input.text, sides = input.sides)
         _navigation.trySend(Nav.Judging)
         val request = VerdictRequest(
             argument = input.text,
