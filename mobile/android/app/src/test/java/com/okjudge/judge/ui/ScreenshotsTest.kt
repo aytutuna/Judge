@@ -53,6 +53,7 @@ import com.okjudge.judge.ui.premium.PricingScreen
 import com.okjudge.judge.ui.premium.StoreUi
 import com.okjudge.judge.core.purchases.PurchaseController
 import com.okjudge.judge.core.purchases.StoreOffer
+import com.okjudge.judge.core.session.VerdictFlow
 import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
@@ -107,7 +108,10 @@ class ScreenshotsTest {
         Themed(AppLang.EN) {
             JudgingScreen(
                 done = false, result = null, startedAt = System.currentTimeMillis() - 4_000, reducedMotion = true, onFinished = {}, onCancel = {},
-                argument = UiTestSupport.s(AppLang.EN).exampleHotdogText,
+                sides = listOf(
+                    VerdictFlow.Side(mine = true, name = "Alex", text = "A hot dog is its own thing. Nobody orders a sandwich and expects one."),
+                    VerdictFlow.Side(mine = false, name = "Sam", text = "It's a filling inside sliced bread. That's a sandwich, end of story."),
+                ),
                 onNew = {},
             )
         }
@@ -118,7 +122,7 @@ class ScreenshotsTest {
         Themed(AppLang.TR) {
             JudgingScreen(
                 done = true, result = sample("win_b_named").result.result, startedAt = 0, reducedMotion = true, onFinished = {}, onCancel = {},
-                argument = UiTestSupport.s(AppLang.TR).exampleHotdogText,
+                sides = listOf(VerdictFlow.Side(mine = true, name = "", text = UiTestSupport.s(AppLang.TR).exampleHotdogText)),
                 onNew = {},
             )
         }

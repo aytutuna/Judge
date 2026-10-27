@@ -12,7 +12,9 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -45,21 +47,25 @@ import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.em
+import androidx.compose.ui.unit.sp
 import com.okjudge.judge.core.display.SceneMode
 import com.okjudge.judge.core.display.Thinking
 import com.okjudge.judge.core.display.VerdictDisplay
 import com.okjudge.judge.core.model.VerdictResult
+import com.okjudge.judge.core.session.VerdictFlow
 import com.okjudge.judge.i18n.LocalStrings
-import com.okjudge.judge.ui.components.ArgumentBubble
 import com.okjudge.judge.ui.components.JudgeIcons
-import com.okjudge.judge.ui.components.JudgesBadge
 import com.okjudge.judge.ui.components.Kicker
 import com.okjudge.judge.ui.components.SceneView
 import com.okjudge.judge.ui.components.TextAction
 import com.okjudge.judge.ui.components.TintedIcon
 import com.okjudge.judge.ui.components.TopBar
+import com.okjudge.judge.ui.components.uppercaseForUi
 import com.okjudge.judge.ui.components.warmShadow
 import com.okjudge.judge.ui.theme.JudgeShapes
 import com.okjudge.judge.ui.theme.JudgeType
@@ -83,12 +89,12 @@ object JudgingTags {
 }
 
 /**
- * The judging turn of the thread: the user's argument, the judges' badge
- * and a card with the 3D balance (beats from lib/judging-ui.ts while
- * waiting, the verdict tilt once it is in) over the rotating captions of
- * lib/thinking.ts. After the finish steps and a short hold [onFinished]
- * hands over. [argument] is null where it is not shown (a case's judging);
- * [onNew] puts the header with its "+" on top (the home thread).
+ * The judges at work: what each side wrote as short tiles, then a card with
+ * the 3D balance (beats from lib/judging-ui.ts while waiting, the verdict
+ * tilt once it is in) over the rotating captions of lib/thinking.ts. After
+ * the finish steps and a short hold [onFinished] hands over. [sides] is
+ * empty where they are not shown (a case's judging); [onNew] puts the
+ * header with its "+" on top (Home's request).
  */
 @Composable
 fun JudgingScreen(
@@ -101,7 +107,7 @@ fun JudgingScreen(
     modifier: Modifier = Modifier,
     premium: Boolean = false,
     showCancel: Boolean = true,
-    argument: String? = null,
+    sides: List<VerdictFlow.Side> = emptyList(),
     onNew: (() -> Unit)? = null,
 ) {
     val s = LocalStrings.current
@@ -147,10 +153,9 @@ fun JudgingScreen(
                 .fillMaxWidth()
                 .verticalScroll(rememberScrollState())
                 .padding(horizontal = 16.dp, vertical = 16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
-            if (argument != null) ArgumentBubble(argument, Modifier.padding(bottom = 12.dp))
-            JudgesBadge(s.threadJudges)
+            if (sides.isNotEmpty()) SideTiles(sides)
             Column(
                 Modifier
                     .fillMaxWidth()
@@ -198,6 +203,40 @@ fun JudgingScreen(
             }
         }
         if (showCancel) TextAction(s.appCancel, onCancel, Modifier.padding(vertical = 12.dp), color = Palette.ink2)
+    }
+}
+
+/** What each side wrote, three lines at most, yours first. */
+@Composable
+private fun SideTiles(sides: List<VerdictFlow.Side>) {
+    val s = LocalStrings.current
+    Row(Modifier.fillMaxWidth().height(IntrinsicSize.Min), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+        sides.forEach { side ->
+            val (ink, tint) = if (side.mine) Palette.terraInk to Palette.terraTint else Palette.sageInk to Palette.sageTint
+            Column(
+                Modifier
+                    .weight(1f)
+                    .fillMaxHeight()
+                    .clip(RoundedCornerShape(18.dp))
+                    .background(tint)
+                    .semantics(mergeDescendants = true) {}
+                    .padding(horizontal = 12.dp, vertical = 10.dp),
+                verticalArrangement = Arrangement.spacedBy(4.dp),
+            ) {
+                Text(
+                    side.name.ifEmpty { if (side.mine) s.appHomeYourSide else s.appHomeTheirSide }.uppercaseForUi(),
+                    style = JudgeType.micro.copy(color = ink, letterSpacing = 0.08.em),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                )
+                Text(
+                    side.text,
+                    style = JudgeType.body.copy(fontSize = 13.sp, lineHeight = (13 * 1.4).sp, fontWeight = FontWeight.Normal),
+                    maxLines = 3,
+                    overflow = TextOverflow.Ellipsis,
+                )
+            }
+        }
     }
 }
 

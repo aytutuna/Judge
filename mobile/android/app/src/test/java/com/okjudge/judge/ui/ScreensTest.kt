@@ -32,6 +32,7 @@ import com.okjudge.judge.core.model.FactCheck
 import com.okjudge.judge.core.model.FactClaim
 import com.okjudge.judge.core.model.FactSource
 import com.okjudge.judge.core.model.Features
+import com.okjudge.judge.core.session.VerdictFlow
 import com.okjudge.judge.core.model.VerdictOutcome
 import com.okjudge.judge.i18n.AppLang
 import com.okjudge.judge.ui.components.TopBarTags
@@ -309,15 +310,20 @@ class ScreensTest {
     }
 
     @Test
-    fun judging_showsTheArgumentAboveTheScene() {
+    fun judging_showsEachSideAboveTheScene() {
         val en = UiTestSupport.s(AppLang.EN)
+        val sides = listOf(
+            VerdictFlow.Side(mine = true, name = "", text = "A hot dog is its own thing."),
+            VerdictFlow.Side(mine = false, name = "Sam", text = "Hot dogs are sandwiches."),
+        )
         compose.setContent {
             Themed(AppLang.EN) {
-                JudgingScreen(done = false, result = null, startedAt = 0, reducedMotion = true, onFinished = {}, onCancel = {}, argument = "Hot dogs are sandwiches, says Sam.")
+                JudgingScreen(done = false, result = null, startedAt = 0, reducedMotion = true, onFinished = {}, onCancel = {}, sides = sides)
             }
         }
-        compose.onNodeWithText("Hot dogs are sandwiches, says Sam.").assertExists()
-        compose.onNodeWithText(en.threadJudges).assertExists()
+        compose.onNodeWithText("A hot dog is its own thing.").assertExists()
+        compose.onNodeWithText(en.appHomeYourSide.uppercase(Locale.US)).assertExists()
+        compose.onNodeWithText("SAM").assertExists()
         compose.onNodeWithTag(JudgingTags.BALANCE).assertExists()
         compose.onNodeWithTag(JudgingTags.CAPTION).assertExists()
     }

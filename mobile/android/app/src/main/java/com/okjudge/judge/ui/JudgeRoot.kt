@@ -534,6 +534,14 @@ private fun JudgingEntry(flow: VerdictFlow, onDone: (String, String?) -> Unit, o
             else -> ""
         }.takeIf { it.isNotEmpty() }
     }
+    // Before the sides were kept (or after a restart) the sent text stands for your side.
+    val sides = remember {
+        when (val st = state) {
+            is VerdictFlow.State.Running -> st.sides
+            is VerdictFlow.State.Succeeded -> st.sides
+            else -> emptyList()
+        }.ifEmpty { listOfNotNull(argument?.let { VerdictFlow.Side(mine = true, name = "", text = it) }) }
+    }
     val premium = remember {
         (state as? VerdictFlow.State.Running)?.premium ?: ((state as? VerdictFlow.State.Succeeded)?.outcome?.result?.result?.premium == true)
     }
@@ -555,7 +563,7 @@ private fun JudgingEntry(flow: VerdictFlow, onDone: (String, String?) -> Unit, o
         startedAt = startedAt,
         reducedMotion = reduced,
         premium = premium,
-        argument = argument,
+        sides = sides,
         onFinished = {
             if (outcome != null) {
                 flow.acknowledge()
