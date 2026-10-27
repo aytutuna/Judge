@@ -4,8 +4,8 @@ import SwiftUI
 /// The text follows the UI language: a verdict written in the other
 /// language is fetched translated (and cached in history) with the original
 /// kept for switching back. A fresh verdict has no tab bar; the header's
-/// "+" starts the next one. The signed-in writer can add context under the
-/// card; a round's verdict then takes its place.
+/// "+" starts the next one. The signed-in writer can add context in a
+/// sheet; a round's verdict then takes the card's place.
 struct VerdictScreen: View {
     @Environment(AppModel.self) private var app
     let session: VerdictSession
@@ -21,7 +21,7 @@ private struct VerdictScreenContent: View {
     let app: AppModel
     let thread: Bool
     @State private var model: VerdictModel
-    /// The writer's "Add context" (nothing shows for anyone else).
+    /// The writer's "Add context & appeal" (nothing shows for anyone else).
     @State private var appeal: VerdictAppealModel
     @State private var webLink: WebLink?
     @State private var showPricing = false
@@ -66,13 +66,24 @@ private struct VerdictScreenContent: View {
                         lang: lang,
                         shareURL: app.config.shareURL(id: model.session.id),
                         openURL: { url in webLink = WebLink(url: url) },
-                        onAddContext: signedIn && appeal.offered ? { appeal.openForm() } : nil
-                    )
-                    if signedIn, appeal.panel {
+                        appealArea: signedIn ? appeal.area : CaseLogic.AppealArea.none,
+                        appealStartsOpen: appeal.open,
+                        onAppealOpen: { appeal.openForm() }
+                    ) {
+                        AppealSheet(
+                            model: appeal,
+                            area: appeal.area,
+                            cost: L10n.appAppealCost(lang, left: String(appeal.rounds.map(CaseLogic.appealsLeft) ?? CaseLogic.maxVerdictAppeals)),
+                            evidenceOn: app.account.features.evidence,
+                            lang: lang
+                        )
+                        .environment(app)
+                    }
+                    // The judging, busy and limit lines; the form is in the sheet.
+                    if signedIn, appeal.panel, !appeal.area.inSheet {
                         AppealSection(
                             model: appeal,
                             area: appeal.area,
-                            lead: L10n.appealLeadVerdict(lang),
                             evidenceOn: app.account.features.evidence,
                             lang: lang
                         ) {
@@ -87,14 +98,10 @@ private struct VerdictScreenContent: View {
                 .padding(.bottom, 32)
             }
             .task {
-                // Screenshot states open with the form out: show it under the card.
-                guard appeal.open else { return }
+                // Screenshot states with a note out: show it under the card.
+                guard appeal.panel, !appeal.area.inSheet else { return }
                 try? await Task.sleep(for: .milliseconds(300))
                 proxy.scrollTo(Self.appealID, anchor: .bottom)
-            }
-            .onChange(of: appeal.open) { _, open in
-                guard open else { return }
-                withAnimation { proxy.scrollTo(Self.appealID, anchor: .top) }
             }
             .onChange(of: appeal.finished) { _, finished in
                 // Back up to the outcome banner over the new verdict.
@@ -137,15 +144,27 @@ private struct VerdictScreenContent: View {
 /// screen and the actions. Embeddable (the verdict screen and case pages).
 /// Real names go back into the shown text only; the session, history and
 /// share subject keep the anonymized text.
-struct VerdictSections: View {
+struct VerdictSections<Appeal: View>: View {
     let model: VerdictModel
     let lang: AppLang
     /// Nil hides the share buttons.
     let shareURL: URL?
     let openURL: (URL) -> Void
-    /// "Add context & appeal", for the writer.
-    var onAddContext: (() -> Void)? = nil
+    /// Where the writer's "Add context & appeal" stands: the button shows
+    /// while the sheet has something to offer.
+    var appealArea: CaseLogic.AppealArea = .none
+    /// Opens the sheet as the screen comes up (screenshot states).
+    var appealStartsOpen = false
+    var onAppealOpen: () -> Void = {}
+    /// The sheet's content.
+    @ViewBuilder var appeal: () -> Appeal
+
     @State private var showDetails = false
+    /// A sheet is presented from the screen on top: the card's, or the
+    /// details screen's while that one is pushed.
+    @State private var appealShown = false
+    @State private var detailsAppealShown = false
+    @State private var openedAtStart = false
 
     var body: some View {
         let session = model.session
@@ -153,6 +172,7 @@ struct VerdictSections: View {
         let selfLang = session.sourceLang
         let parties = Names.partyNames(session.nameMap, lang: lang, selfLang: selfLang)
         let result = Names.personalizeResult(view.result, nameMap: session.nameMap, selfLang: selfLang)
+        let offered = appealArea.inSheet
         VStack(spacing: 12) {
             if let outcome = result.appeal {
                 AppealOutcomeBanner(
@@ -177,31 +197,51 @@ struct VerdictSections: View {
                 shareURL: shareURL,
                 shareSubject: session.original.result.headline,
                 lang: lang,
-                onAddContext: onAddContext
+                onAddContext: offered ? { openAppeal() } : nil
             )
             .padding(.top, 4)
         }
         .opacity(view.status == .loading ? 0.55 : 1)
         .animation(.easeOut(duration: 0.25), value: view.status == .loading)
+        .sheet(isPresented: $appealShown, content: appeal)
         .navigationDestination(isPresented: $showDetails) {
             VerdictDetails(
                 model: model,
                 lang: lang,
                 shareURL: shareURL,
                 openURL: openURL,
-                onAddContext: addContextFromDetails()
+                onAddContext: offered ? { openAppeal() } : nil,
+                appealShown: $detailsAppealShown,
+                appeal: appeal
             )
+        }
+        .onChange(of: appealArea) { old, new in
+            if !new.inSheet {
+                appealShown = false
+                detailsAppealShown = false
+            } else if old == .judging, case .form(failed: .some) = new {
+                // The round failed: back to the form, which says why.
+                openAppeal()
+            }
+        }
+        .task {
+            // Only the first time: coming back from the details runs this again.
+            guard !openedAtStart else { return }
+            openedAtStart = true
+            guard appealStartsOpen, offered else { return }
+            try? await Task.sleep(for: .milliseconds(300))
+            appealShown = true
         }
         .onAppear { model.ensure(lang) }
         .onChange(of: lang) { _, newLang in model.languageChanged(to: newLang) }
     }
 
-    /// The form opens under the card, so the details screen goes first.
-    private func addContextFromDetails() -> (() -> Void)? {
-        guard let onAddContext else { return nil }
-        return {
-            showDetails = false
-            onAddContext()
+    private func openAppeal() {
+        onAppealOpen()
+        if showDetails {
+            detailsAppealShown = true
+        } else {
+            appealShown = true
         }
     }
 }

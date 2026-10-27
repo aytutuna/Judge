@@ -52,13 +52,8 @@ final class VerdictAppealModel: AppealDraft {
         return CaseLogic.appealArea(rounds)
     }
 
-    /// The card's "Add context": the writer only, and only when the panel has something to do.
-    var offered: Bool {
-        switch area {
-        case .form, .upsell, .blocked: return true
-        case .none, .judging, .used, .limit, .busy: return false
-        }
-    }
+    /// "Add context & appeal": the writer only, and only when the sheet has something to do.
+    var offered: Bool { area.inSheet }
 
     /// The area under the verdict: opened, or while the judges re-judge.
     var panel: Bool { area != .none && (open || area == .judging) }

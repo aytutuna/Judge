@@ -47,6 +47,15 @@ enum CaseLogic {
         /// A verdict that already took context twice.
         case limit
         case busy
+
+        /// The form and the reasons it is locked open in the "Add context &
+        /// appeal" sheet; the other states are a line under the verdict.
+        var inSheet: Bool {
+            switch self {
+            case .form, .upsell, .blocked: return true
+            case .none, .judging, .used, .limit, .busy: return false
+            }
+        }
     }
 
     static func appealArea(_ view: CaseView) -> AppealArea {
@@ -143,6 +152,14 @@ enum CaseLogic {
     static let maxAppeal = 2000
     /// MAX_EVIDENCE_PER_APPEAL.
     static let maxAppealEvidence = 1
+    /// MAX_VERDICT_APPEALS: rounds a one-sided verdict takes.
+    static let maxVerdictAppeals = 2
+
+    /// Rounds the writer can still add, counted as the server does: only
+    /// judged rounds use one up (a failed one gives its credit back).
+    static func appealsLeft(_ rounds: VerdictRounds) -> Int {
+        max(0, maxVerdictAppeals - rounds.appeals.filter { $0.status == .judged }.count)
+    }
 
     /// Whether the appeal text is long enough and not too long (trimmed,
     /// counted in UTF-16 like the server).

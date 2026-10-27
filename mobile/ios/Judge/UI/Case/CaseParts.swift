@@ -102,13 +102,15 @@ extension CaseModel: AppealDraft {}
 
 /// The appeal area (components/case/AppealForm.tsx AppealSection): the
 /// "add context" form, its upsell, or why not. Cases and the writer's
-/// one-sided verdicts share it; `lead` is the line under the title and
-/// `evidenceOn` offers the screenshot picker.
+/// one-sided verdicts share it. The form and its upsells live in
+/// `AppealSheet`; the judging, busy, used and limit lines sit under the
+/// verdict. `cost` is the note over the send button and `evidenceOn`
+/// offers the screenshot picker.
 struct AppealSection<Draft: AppealDraft>: View {
     @Environment(AppModel.self) private var app
     @Bindable var model: Draft
     let area: CaseLogic.AppealArea
-    let lead: String
+    var cost = ""
     let evidenceOn: Bool
     let lang: AppLang
     let onPricing: () -> Void
@@ -132,8 +134,7 @@ struct AppealSection<Draft: AppealDraft>: View {
         case .limit:
             note(L10n.appealLimit(lang))
         case .upsell(let signIn):
-            card {
-                title
+            stack {
                 note(L10n.appealUpsell(lang))
                 if signIn {
                     Button(L10n.appealSignIn(lang)) { app.account.presentSignIn() }
@@ -144,8 +145,7 @@ struct AppealSection<Draft: AppealDraft>: View {
                 }
             }
         case .blocked(let reason):
-            card {
-                title
+            stack {
                 note(blockedText(reason))
                 Button(L10n.tierGetPremium(lang), action: onPricing)
                     .buttonStyle(GhostButtonStyle())
@@ -153,18 +153,6 @@ struct AppealSection<Draft: AppealDraft>: View {
         case .form(let failed):
             form(failed: failed)
         }
-    }
-
-    private var title: some View {
-        HStack(spacing: 6) {
-            Image(systemName: "sparkle")
-                .foregroundStyle(Brand.terraInk)
-                .accessibilityHidden(true)
-            Text(L10n.appealTitle(lang))
-                .brandText(TypeStyle(face: .interTight, weight: 700, size: 20, lineHeight: 1.2, tracking: -0.01, textStyle: .title3, maxScale: 1.5))
-                .foregroundStyle(Brand.ink)
-        }
-        .accessibilityAddTraits(.isHeader)
     }
 
     /// The owner sees why it is blocked. Fair use names the reset date when
@@ -180,9 +168,11 @@ struct AppealSection<Draft: AppealDraft>: View {
     }
 
     private func form(failed: String?) -> some View {
-        card {
-            title
-            note(lead)
+        stack {
+            Text(L10n.appAppealIntro(lang))
+                .brandText(TypeStyle(face: .inter, weight: 400, size: 14, lineHeight: 1.5, textStyle: .subheadline))
+                .foregroundStyle(Brand.ink2)
+                .fixedSize(horizontal: false, vertical: true)
             if let failed {
                 Text(failed == "refused" ? L10n.appealRefused(lang) : L10n.appealFailed(lang))
                     .brandText(.slotTitle)
@@ -193,8 +183,8 @@ struct AppealSection<Draft: AppealDraft>: View {
             }
             VStack(alignment: .leading, spacing: 6) {
                 HStack {
-                    Text(L10n.appealLabel(lang))
-                        .brandText(.slotTitle)
+                    Text(L10n.appAppealAsk(lang))
+                        .brandText(TypeStyle(face: .inter, weight: 600, size: 13, lineHeight: 1.3, textStyle: .footnote))
                         .foregroundStyle(Brand.ink)
                     Spacer()
                     Text(verbatim: "\(model.appealText.utf16.count) / \(CaseLogic.maxAppeal)")
@@ -205,25 +195,25 @@ struct AppealSection<Draft: AppealDraft>: View {
                 }
                 ZStack(alignment: .topLeading) {
                     TextEditor(text: $model.appealText)
-                        .brandText(.body)
+                        .brandText(TypeStyle(face: .inter, weight: 400, size: 15, lineHeight: 1.5))
                         .foregroundStyle(Brand.ink)
                         .scrollContentBackground(.hidden)
                         .frame(minHeight: 120)
-                        .padding(.horizontal, 8)
+                        .padding(.horizontal, 9)
                         .padding(.vertical, 6)
                         .disabled(model.appealSending)
-                        .accessibilityLabel(L10n.appealLabel(lang))
+                        .accessibilityLabel(L10n.appAppealAsk(lang))
                     if model.appealText.isEmpty {
-                        Text(L10n.appealPlaceholder(lang))
-                            .brandText(.body)
+                        Text(L10n.appAppealPlaceholder(lang))
+                            .brandText(TypeStyle(face: .inter, weight: 400, size: 15, lineHeight: 1.5))
                             .foregroundStyle(Brand.placeholder)
-                            .padding(.horizontal, 13)
+                            .padding(.horizontal, 14)
                             .padding(.vertical, 14)
                             .allowsHitTesting(false)
                             .accessibilityHidden(true)
                     }
                 }
-                .paperSurface(radius: Radius.field, fill: Brand.paper, border: Brand.line2)
+                .paperSurface(radius: Radius.field, fill: Brand.ivory, border: Brand.line2)
             }
             .onChange(of: model.appealText) { _, value in
                 let capped = HomeModel.capUTF16(value, max: CaseLogic.maxAppeal)
@@ -232,13 +222,28 @@ struct AppealSection<Draft: AppealDraft>: View {
             if evidenceOn {
                 EvidencePickerView(evidence: model.appealEvidence, lang: lang, disabled: model.appealSending)
             }
+            if !cost.isEmpty {
+                Text(cost)
+                    .brandText(TypeStyle(face: .inter, weight: 400, size: 13, lineHeight: 1.4, textStyle: .footnote))
+                    .foregroundStyle(Brand.ink2)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.horizontal, 14)
+                    .padding(.vertical, 12)
+                    .background(RoundedRectangle(cornerRadius: 16, style: .continuous).fill(Brand.ivory2))
+            }
             if let error = model.appealError {
                 ErrorBanner(message: ErrorText.message(error, lang: lang))
+                let code = error.code
+                if code == "premium_required" || code == "no_credits" || code == "fair_use" {
+                    Button(L10n.tierGetPremium(lang), action: onPricing)
+                        .buttonStyle(GhostButtonStyle())
+                }
             }
             Button {
                 Task { await model.submitAppeal() }
             } label: {
-                Text(model.appealSending ? L10n.appealSending(lang) : L10n.appealSubmit(lang))
+                Text(model.appealSending ? L10n.appealSending(lang) : L10n.appAppealSubmit(lang))
             }
             .buttonStyle(PrimaryButtonStyle())
             .disabled(!model.appealCanSubmit)
@@ -252,13 +257,66 @@ struct AppealSection<Draft: AppealDraft>: View {
             .fixedSize(horizontal: false, vertical: true)
     }
 
-    private func card<Content: View>(@ViewBuilder _ content: () -> Content) -> some View {
-        VStack(alignment: .leading, spacing: 12) {
+    private func stack<Content: View>(@ViewBuilder _ content: () -> Content) -> some View {
+        VStack(alignment: .leading, spacing: 14) {
             content()
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(18)
-        .paperSurface(radius: Radius.card)
+    }
+}
+
+/// "Add context & appeal" as a sheet over the ruling: the form, or why it
+/// is locked. It closes once the judges start on the context, or when the
+/// area has nothing left to offer here.
+struct AppealSheet<Draft: AppealDraft>: View {
+    @Environment(AppModel.self) private var app
+    @Environment(\.dismiss) private var dismiss
+    let model: Draft
+    let area: CaseLogic.AppealArea
+    let cost: String
+    let evidenceOn: Bool
+    let lang: AppLang
+    @State private var showPricing = false
+
+    var body: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 14) {
+                HStack(alignment: .center, spacing: 8) {
+                    Text(L10n.appAppealTitle(lang))
+                        .brandText(TypeStyle(face: .serif, weight: 400, size: 28, lineHeight: 1.1, textStyle: .title2, maxScale: 1.3))
+                        .foregroundStyle(Brand.ink)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .accessibilityAddTraits(.isHeader)
+                    Spacer(minLength: 0)
+                    Button {
+                        dismiss()
+                    } label: {
+                        Image(systemName: "xmark")
+                            .font(.system(size: 15, weight: .semibold))
+                            .foregroundStyle(Brand.ink2)
+                            .frame(width: 44, height: 44)
+                    }
+                    .accessibilityLabel(L10n.appClose(lang))
+                }
+                AppealSection(model: model, area: area, cost: cost, evidenceOn: evidenceOn, lang: lang) {
+                    showPricing = true
+                }
+            }
+            .padding(.horizontal, 20)
+            .padding(.top, 18)
+            .padding(.bottom, 22)
+        }
+        .scrollDismissesKeyboard(.interactively)
+        .background(Brand.paper.ignoresSafeArea())
+        .presentationDragIndicator(.visible)
+        .presentationCornerRadius(Radius.card)
+        .onChange(of: area.inSheet) { _, inSheet in
+            if !inSheet { dismiss() }
+        }
+        .sheet(isPresented: $showPricing) {
+            NavigationStack { PricingView() }
+                .environment(app)
+        }
     }
 }
 

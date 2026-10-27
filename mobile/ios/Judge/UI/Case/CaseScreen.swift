@@ -197,21 +197,26 @@ private struct CaseScreenContent: View {
             }
         case .judged:
             if let current = view.current {
+                let area = CaseLogic.appealArea(view)
+                let evidenceOn = CaseLogic.appealEvidenceOn(view, features: app.account.features)
                 if view.mode == .oneSided {
                     note(L10n.caseOneSided(lang))
                 }
-                CaseVerdictBlock(app: app, verdict: current, names: model.names, shareable: view.removed == nil) { url in
+                CaseVerdictBlock(
+                    app: app,
+                    verdict: current,
+                    names: model.names,
+                    shareable: view.removed == nil,
+                    appeal: (draft: model, area: area, evidenceOn: evidenceOn)
+                ) { url in
                     webLink = WebLink(url: url)
                 }
                 .id("\(current.id)-\(model.names.count)")
-                AppealSection(
-                    model: model,
-                    area: CaseLogic.appealArea(view),
-                    lead: L10n.appealLead(lang),
-                    evidenceOn: CaseLogic.appealEvidenceOn(view, features: app.account.features),
-                    lang: lang
-                ) {
-                    showPricing = true
+                // The judging, busy and used lines; the form is in the sheet.
+                if !area.inSheet {
+                    AppealSection(model: model, area: area, evidenceOn: evidenceOn, lang: lang) {
+                        showPricing = true
+                    }
                 }
                 VerdictHistory(app: app, view: view, names: model.names, lang: lang) { url in
                     webLink = WebLink(url: url)
@@ -437,29 +442,46 @@ struct CaseStatusChip: View {
 }
 
 /// The verdict of a case, translated like any verdict, with Party A's real
-/// names put back for the owner.
+/// names put back for the owner. The current one carries the case's
+/// "Add context & appeal".
 private struct CaseVerdictBlock: View {
     let app: AppModel
     let shareable: Bool
+    let appeal: (draft: CaseModel, area: CaseLogic.AppealArea, evidenceOn: Bool)?
     let openURL: (URL) -> Void
     @State private var model: VerdictModel
 
     @MainActor
-    init(app: AppModel, verdict: CaseVerdict, names: [NameMapping], shareable: Bool, openURL: @escaping (URL) -> Void) {
+    init(
+        app: AppModel,
+        verdict: CaseVerdict,
+        names: [NameMapping],
+        shareable: Bool,
+        appeal: (draft: CaseModel, area: CaseLogic.AppealArea, evidenceOn: Bool)? = nil,
+        openURL: @escaping (URL) -> Void
+    ) {
         self.app = app
         self.shareable = shareable
+        self.appeal = appeal
         self.openURL = openURL
         let session = VerdictSession(id: verdict.id, original: verdict.result, nameMap: names, translations: [:])
         _model = State(initialValue: VerdictModel(session: session, api: app.api) { _, _, _ in })
     }
 
     var body: some View {
+        let lang = app.lang
         VerdictSections(
             model: model,
-            lang: app.lang,
+            lang: lang,
             shareURL: shareable ? app.config.shareURL(id: model.session.id) : nil,
-            openURL: openURL
-        )
+            openURL: openURL,
+            appealArea: appeal?.area ?? CaseLogic.AppealArea.none
+        ) {
+            if let appeal {
+                AppealSheet(model: appeal.draft, area: appeal.area, cost: L10n.appAppealCostCase(lang), evidenceOn: appeal.evidenceOn, lang: lang)
+                    .environment(app)
+            }
+        }
     }
 }
 

@@ -169,6 +169,14 @@ final class VerdictAppealTests: XCTestCase {
         withExtendedLifetime(container) {}
     }
 
+    func testRoundsLeftCountOnlyJudgedOnes() throws {
+        let json = #"[{"id":"r1","status":"judged","baseId":"v1"},{"id":"r2","status":"failed","baseId":"r1"}]"#
+        let appeals = try JSONDecoder().decode([VerdictAppealRound].self, from: Data(json.utf8))
+        XCTAssertEqual(CaseLogic.appealsLeft(VerdictRounds(appeals: [], gate: nil)), 2)
+        XCTAssertEqual(CaseLogic.appealsLeft(VerdictRounds(appeals: appeals, gate: nil)), 1, "a failed round gives its credit back")
+        XCTAssertEqual(CaseLogic.appealsLeft(VerdictRounds(appeals: appeals + appeals + appeals, gate: nil)), 0)
+    }
+
     @MainActor
     func testSubmitSendsTheContextPollsTheRoundAndSavesItsVerdict() async throws {
         let router = StubRouter()

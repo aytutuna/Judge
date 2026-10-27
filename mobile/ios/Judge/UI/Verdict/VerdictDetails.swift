@@ -51,7 +51,7 @@ struct VerdictReasons: View {
 /// losing side's best point, the two-sided facts, the facts relied on, the
 /// web check, what would change it and the votes. Sections without data
 /// are left out.
-struct VerdictDetails: View {
+struct VerdictDetails<Appeal: View>: View {
     @Environment(AppModel.self) private var app
     @Environment(\.dismiss) private var dismiss
     let model: VerdictModel
@@ -59,8 +59,9 @@ struct VerdictDetails: View {
     let shareURL: URL?
     let openURL: (URL) -> Void
     var onAddContext: (() -> Void)?
-
-    private static let text = TypeStyle(face: .inter, weight: 400, size: 15, lineHeight: 1.5)
+    /// The "Add context & appeal" sheet over this screen.
+    @Binding var appealShown: Bool
+    @ViewBuilder var appeal: () -> Appeal
 
     var body: some View {
         let session = model.session
@@ -115,6 +116,7 @@ struct VerdictDetails: View {
                 .disabled(app.home.isBusy)
             }
         }
+        .sheet(isPresented: $appealShown, content: appeal)
     }
 
     private func summary(_ result: VerdictResult, parties: PartyNames) -> some View {
@@ -194,7 +196,7 @@ struct VerdictDetails: View {
             card {
                 SectionTitle(text: VerdictDisplay.bestPointTitle(result.verdict, parties: parties, lang: lang))
                 Text(result.losingSideBestPoint)
-                    .brandText(Self.text)
+                    .brandText(TypeStyle(face: .inter, weight: 400, size: 15, lineHeight: 1.5))
                     .foregroundStyle(Brand.ink)
                     .fixedSize(horizontal: false, vertical: true)
             }
