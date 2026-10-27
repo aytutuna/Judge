@@ -329,18 +329,12 @@ final class TextHelperTests: XCTestCase {
 
     @MainActor
     func testBothSidesJoinIntoOneText() {
-        XCTAssertEqual(HomeModel.joined(mine: "mine", theirs: " 
-", myName: "Alex", theirName: "Sam", lang: .en), "mine", "one side goes as written")
+        XCTAssertEqual(HomeModel.joined(mine: "mine", theirs: " \n", myName: "Alex", theirName: "Sam", lang: .en), "mine", "one side goes as written")
         XCTAssertEqual(
-            HomeModel.joined(mine: " mine
-", theirs: "theirs ", myName: "Alex", theirName: " Sam", lang: .en),
-            "Alex says: mine
-
-Sam says: theirs"
+            HomeModel.joined(mine: " mine\n", theirs: "theirs ", myName: "Alex", theirName: " Sam", lang: .en),
+            "Alex says: mine\n\nSam says: theirs"
         )
-        XCTAssertEqual(HomeModel.joined(mine: "mine", theirs: "theirs", myName: "", theirName: "", lang: .en), "My side: mine
-
-Their side: theirs")
+        XCTAssertEqual(HomeModel.joined(mine: "mine", theirs: "theirs", myName: "", theirName: "", lang: .en), "My side: mine\n\nTheir side: theirs")
         XCTAssertEqual(HomeModel.joined(mine: "", theirs: "theirs", myName: "Alex", theirName: "Sam", lang: .tr), "Sam diyor ki: theirs")
 
         let sides = HomeModel.sides(mine: "mine", theirs: "  ", myName: " Alex ", theirName: "Sam")
