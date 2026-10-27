@@ -121,14 +121,34 @@ private struct CaseScreenContent: View {
 
     private func header(_ view: CaseView, lang: AppLang) -> some View {
         VStack(alignment: .leading, spacing: 10) {
-            // A case judged on the owner's side alone is not "both sides" anymore.
-            Kicker(text: view.mode == .oneSided ? L10n.caseKickerOneSided(lang) : L10n.caseKicker(lang))
-            Text(L10n.caseTitle(lang))
-                .brandText(Self.title)
-                .foregroundStyle(Brand.ink)
-                .accessibilityAddTraits(.isHeader)
-            CaseStatusChip(status: view.status, lang: lang)
+            if view.status == .awaitingRespondent {
+                waitingHead(app.caseOtherName(view.id), lang: lang)
+            } else {
+                // A case judged on the owner's side alone is not "both sides" anymore.
+                Kicker(text: view.mode == .oneSided ? L10n.caseKickerOneSided(lang) : L10n.caseKicker(lang))
+                Text(L10n.caseTitle(lang))
+                    .brandText(Self.title)
+                    .foregroundStyle(Brand.ink)
+                    .accessibilityAddTraits(.isHeader)
+                CaseStatusChip(status: view.status, lang: lang)
+            }
         }
+    }
+
+    /// The other side's name is only known when it was typed on Home on
+    /// this run of the app.
+    @ViewBuilder
+    private func waitingHead(_ other: String?, lang: AppLang) -> some View {
+        Kicker(text: L10n.appCaseWaitingKicker(lang), color: Brand.sageInk)
+        Text(other.map { L10n.appCaseWaitingFor(lang, name: $0) } ?? CaseLogic.statusText(.awaitingRespondent, lang: lang))
+            .brandText(TypeStyle(face: .serif, weight: 400, size: 34, lineHeight: 1.04, textStyle: .largeTitle, maxScale: 1.3))
+            .foregroundStyle(Brand.ink)
+            .fixedSize(horizontal: false, vertical: true)
+            .accessibilityAddTraits(.isHeader)
+        Text(other.map { L10n.appCaseWaitingLead(lang, name: $0) } ?? L10n.appCaseWaitingLeadAnon(lang))
+            .brandText(TypeStyle(face: .inter, weight: 400, size: 14, lineHeight: 1.45, textStyle: .subheadline))
+            .foregroundStyle(Brand.ink2)
+            .fixedSize(horizontal: false, vertical: true)
     }
 
     @ViewBuilder
@@ -144,33 +164,36 @@ private struct CaseScreenContent: View {
                 .accessibilityAddTraits(.updatesFrequently)
             CaseJudgingCard(lang: lang, premium: view.tier == .premium)
         case .awaitingRespondent:
-            note(L10n.caseNotYet(lang))
-            VStack(alignment: .leading, spacing: 14) {
-                if let url = view.inviteUrl {
-                    InviteLinkView(
-                        url: url,
-                        expiresAt: view.expiresAt,
-                        lang: lang,
-                        resetting: model.busy,
-                        resetDone: model.resetDone
-                    ) {
-                        ask(.resetInvite)
-                    }
-                }
-                if let held = CaseLogic.heldNote(view, lang: lang) {
-                    Text(held)
-                        .brandText(.slotText)
-                        .foregroundStyle(Brand.muted)
-                        .fixedSize(horizontal: false, vertical: true)
+            let other = app.caseOtherName(view.id)
+            if let url = view.inviteUrl {
+                InviteLinkView(
+                    url: url,
+                    expiresAt: view.expiresAt,
+                    title: other.map { L10n.appCaseSendTo(lang, name: $0) } ?? L10n.caseInviteLabel(lang),
+                    lang: lang,
+                    resetting: model.busy,
+                    resetDone: model.resetDone
+                ) {
+                    ask(.resetInvite)
                 }
             }
-            .padding(18)
-            .paperSurface(radius: Radius.card)
+            if let held = CaseLogic.heldNote(view, lang: lang) {
+                Text(held)
+                    .brandText(.slotText)
+                    .foregroundStyle(Brand.muted)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            WaitingSteps(other: other, judgeNow: view.canJudgeNow, lang: lang)
             actionError(lang)
             if view.canJudgeNow {
-                Button(L10n.caseJudgeNow(lang)) { ask(.judgeNow(expired: false)) }
-                    .buttonStyle(GhostButtonStyle())
-                    .disabled(model.busy)
+                Button {
+                    ask(.judgeNow(expired: false))
+                } label: {
+                    Text(other.map { L10n.appCaseJudgeNowWithout(lang, name: $0) } ?? L10n.caseJudgeNow(lang))
+                        .frame(maxWidth: .infinity, minHeight: 48)
+                }
+                .buttonStyle(GhostButtonStyle())
+                .disabled(model.busy)
             }
         case .judged:
             if let current = view.current {
@@ -304,6 +327,81 @@ private struct CaseScreenContent: View {
         case .judgeNow: await model.judge(onlyMine: true)
         case .resetInvite: await model.resetInvite()
         case .remove: await model.remove()
+        }
+    }
+}
+
+/// Where a waiting case stands: your side is in, theirs is next, then the
+/// judges (or now, on your side alone, when the case allows it).
+private struct WaitingSteps: View {
+    let other: String?
+    let judgeNow: Bool
+    let lang: AppLang
+
+    private enum Mark {
+        case done, current, next
+    }
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            step(.done, title: L10n.appCaseStepYou(lang), note: L10n.appCaseStepYouNote(lang))
+            step(
+                .current,
+                title: other.map { L10n.appCaseStepThem(lang, name: $0) } ?? L10n.appCaseStepThemAnon(lang),
+                note: L10n.appCaseStepThemNote(lang)
+            )
+            step(.next, title: L10n.appCaseStepJudges(lang), note: judgeNow ? L10n.appCaseStepJudgesNote(lang) : nil)
+        }
+        .padding(.horizontal, 4)
+    }
+
+    private func step(_ mark: Mark, title: String, note: String?) -> some View {
+        HStack(alignment: .top, spacing: 12) {
+            VStack(spacing: 0) {
+                disc(mark)
+                if mark != .next {
+                    Rectangle()
+                        .fill(Brand.stone)
+                        .frame(width: 2)
+                        .frame(minHeight: 26, maxHeight: .infinity)
+                }
+            }
+            .accessibilityHidden(true)
+            VStack(alignment: .leading, spacing: 2) {
+                Text(title)
+                    .brandText(.slotTitle)
+                    .foregroundStyle(mark == .next ? Brand.ink2 : Brand.ink)
+                if let note {
+                    Text(note)
+                        .brandText(.footnote)
+                        .foregroundStyle(Brand.muted)
+                }
+            }
+            .fixedSize(horizontal: false, vertical: true)
+            .padding(.top, 2)
+            .padding(.bottom, mark == .next ? 0 : 10)
+        }
+        .accessibilityElement(children: .combine)
+    }
+
+    @ViewBuilder
+    private func disc(_ mark: Mark) -> some View {
+        switch mark {
+        case .done:
+            Image(systemName: "checkmark")
+                .font(.system(size: 11, weight: .bold))
+                .foregroundStyle(Brand.paper)
+                .frame(width: 24, height: 24)
+                .background(Circle().fill(Brand.terra))
+        case .current:
+            Circle()
+                .fill(Brand.sageTint)
+                .overlay(Circle().strokeBorder(Brand.sageInk, lineWidth: 2))
+                .frame(width: 24, height: 24)
+        case .next:
+            Circle()
+                .strokeBorder(Brand.stone, lineWidth: 2)
+                .frame(width: 24, height: 24)
         }
     }
 }
