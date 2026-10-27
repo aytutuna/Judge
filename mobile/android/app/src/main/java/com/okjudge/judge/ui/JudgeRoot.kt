@@ -158,7 +158,7 @@ fun JudgeRoot(container: AppContainer, links: StateFlow<Uri?> = MutableStateFlow
             val link by links.collectAsStateWithLifecycle()
             LaunchedEffect(link) {
                 when (val target = link?.let { DeepLinks.parse(it.toString()) }) {
-                    is DeepLinks.Target.Case -> if (backStack.lastOrNull() != CaseKey(target.id)) backStack.add(CaseKey(target.id))
+                    is DeepLinks.Target.Case -> if ((backStack.lastOrNull() as? CaseKey)?.id != target.id) backStack.add(CaseKey(target.id))
                     // Invites are answered on the website: the app only passes them on.
                     is DeepLinks.Target.Invite -> openLink(context, target.url)
                     null -> Unit
