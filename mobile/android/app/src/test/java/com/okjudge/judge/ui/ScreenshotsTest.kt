@@ -380,10 +380,10 @@ class ScreenshotsTest {
     }
 
     @Test
-    fun verdict_premiumFactCheck_en() = shotVerdict("verdict_premium_factcheck_en", premiumOutcome(), AppLang.EN)
+    fun verdict_premiumFactCheck_en() = shotVerdict("verdict_premium_en", premiumOutcome(), AppLang.EN)
 
     @Test
-    fun verdict_premiumFactCheck_tr() = shotVerdict("verdict_premium_factcheck_tr", premiumOutcome(), AppLang.TR)
+    fun verdict_premiumFactCheck_tr() = shotVerdict("verdict_premium_tr", premiumOutcome(), AppLang.TR)
 
     @Test
     fun verdict_twoSided_en() = shotVerdict("verdict_two_sided_en", caseOutcome("judged"), AppLang.EN)
