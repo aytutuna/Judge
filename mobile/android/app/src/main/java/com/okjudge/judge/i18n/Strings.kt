@@ -522,6 +522,48 @@ class Strings(private val res: Resources) {
     val appAccountSignOutConfirm: String get() = res.getString(R.string.app_account_sign_out_confirm)
     val appAccountSignedOut: String get() = res.getString(R.string.app_account_signed_out)
     val appAccountSessionExpired: String get() = res.getString(R.string.app_account_session_expired)
+    val appClose: String get() = res.getString(R.string.app_close)
+    val appHomeTitle: String get() = res.getString(R.string.app_home_title)
+    val appHomeLead: String get() = res.getString(R.string.app_home_lead)
+    val appHomeLeadSolo: String get() = res.getString(R.string.app_home_lead_solo)
+    val appHomeYourSide: String get() = res.getString(R.string.app_home_your_side)
+    val appHomeTheirSide: String get() = res.getString(R.string.app_home_their_side)
+    val appHomeYourName: String get() = res.getString(R.string.app_home_your_name)
+    val appHomeTheirName: String get() = res.getString(R.string.app_home_their_name)
+    val appHomeYourPlaceholder: String get() = res.getString(R.string.app_home_your_placeholder)
+    val appHomeTheirPlaceholder: String get() = res.getString(R.string.app_home_their_placeholder)
+    val appHomeYourSideLabel: String get() = res.getString(R.string.app_home_your_side_label)
+    val appHomeTheirSideLabel: String get() = res.getString(R.string.app_home_their_side_label)
+    val appHomeSendLink: String get() = res.getString(R.string.app_home_send_link)
+    fun appHomeSays(name: String): String = res.getString(R.string.app_home_says, name)
+    val appHomeMySide: String get() = res.getString(R.string.app_home_my_side)
+    val appHomeOtherSide: String get() = res.getString(R.string.app_home_other_side)
+    val appCaseWaitingKicker: String get() = res.getString(R.string.app_case_waiting_kicker)
+    fun appCaseWaitingFor(name: String): String = res.getString(R.string.app_case_waiting_for, name)
+    fun appCaseWaitingLead(name: String): String = res.getString(R.string.app_case_waiting_lead, name)
+    val appCaseWaitingLeadAnon: String get() = res.getString(R.string.app_case_waiting_lead_anon)
+    fun appCaseSendTo(name: String): String = res.getString(R.string.app_case_send_to, name)
+    val appCaseStepYou: String get() = res.getString(R.string.app_case_step_you)
+    val appCaseStepYouNote: String get() = res.getString(R.string.app_case_step_you_note)
+    fun appCaseStepThem(name: String): String = res.getString(R.string.app_case_step_them, name)
+    val appCaseStepThemAnon: String get() = res.getString(R.string.app_case_step_them_anon)
+    val appCaseStepThemNote: String get() = res.getString(R.string.app_case_step_them_note)
+    val appCaseStepJudges: String get() = res.getString(R.string.app_case_step_judges)
+    val appCaseStepJudgesNote: String get() = res.getString(R.string.app_case_step_judges_note)
+    fun appCaseJudgeNowWithout(name: String): String = res.getString(R.string.app_case_judge_now_without, name)
+    val appVerdictVs: String get() = res.getString(R.string.app_verdict_vs)
+    fun appVerdictLeanTo(name: String): String = res.getString(R.string.app_verdict_lean_to, name)
+    val appVerdictLeanNone: String get() = res.getString(R.string.app_verdict_lean_none)
+    val appVerdictSides: String get() = res.getString(R.string.app_verdict_sides)
+    val appVerdictClaims: String get() = res.getString(R.string.app_verdict_claims)
+    val appVerdictBack: String get() = res.getString(R.string.app_verdict_back)
+    val appAppealTitle: String get() = res.getString(R.string.app_appeal_title)
+    val appAppealIntro: String get() = res.getString(R.string.app_appeal_intro)
+    val appAppealAsk: String get() = res.getString(R.string.app_appeal_ask)
+    val appAppealPlaceholder: String get() = res.getString(R.string.app_appeal_placeholder)
+    fun appAppealCost(left: String): String = res.getString(R.string.app_appeal_cost, left)
+    val appAppealCostCase: String get() = res.getString(R.string.app_appeal_cost_case)
+    val appAppealSubmit: String get() = res.getString(R.string.app_appeal_submit)
 
     /** A placeholder-free string by its lib/i18n.ts key, for keys built at
      * runtime ("badge.$type", "preset.$id.label"). Null when unknown. */
@@ -990,6 +1032,40 @@ class Strings(private val res: Resources) {
             "app.account.signOutConfirm" -> R.string.app_account_sign_out_confirm
             "app.account.signedOut" -> R.string.app_account_signed_out
             "app.account.sessionExpired" -> R.string.app_account_session_expired
+            "app.close" -> R.string.app_close
+            "app.home.title" -> R.string.app_home_title
+            "app.home.lead" -> R.string.app_home_lead
+            "app.home.leadSolo" -> R.string.app_home_lead_solo
+            "app.home.yourSide" -> R.string.app_home_your_side
+            "app.home.theirSide" -> R.string.app_home_their_side
+            "app.home.yourName" -> R.string.app_home_your_name
+            "app.home.theirName" -> R.string.app_home_their_name
+            "app.home.yourPlaceholder" -> R.string.app_home_your_placeholder
+            "app.home.theirPlaceholder" -> R.string.app_home_their_placeholder
+            "app.home.yourSideLabel" -> R.string.app_home_your_side_label
+            "app.home.theirSideLabel" -> R.string.app_home_their_side_label
+            "app.home.sendLink" -> R.string.app_home_send_link
+            "app.home.mySide" -> R.string.app_home_my_side
+            "app.home.otherSide" -> R.string.app_home_other_side
+            "app.case.waitingKicker" -> R.string.app_case_waiting_kicker
+            "app.case.waitingLeadAnon" -> R.string.app_case_waiting_lead_anon
+            "app.case.stepYou" -> R.string.app_case_step_you
+            "app.case.stepYouNote" -> R.string.app_case_step_you_note
+            "app.case.stepThemAnon" -> R.string.app_case_step_them_anon
+            "app.case.stepThemNote" -> R.string.app_case_step_them_note
+            "app.case.stepJudges" -> R.string.app_case_step_judges
+            "app.case.stepJudgesNote" -> R.string.app_case_step_judges_note
+            "app.verdict.vs" -> R.string.app_verdict_vs
+            "app.verdict.leanNone" -> R.string.app_verdict_lean_none
+            "app.verdict.sides" -> R.string.app_verdict_sides
+            "app.verdict.claims" -> R.string.app_verdict_claims
+            "app.verdict.back" -> R.string.app_verdict_back
+            "app.appeal.title" -> R.string.app_appeal_title
+            "app.appeal.intro" -> R.string.app_appeal_intro
+            "app.appeal.ask" -> R.string.app_appeal_ask
+            "app.appeal.placeholder" -> R.string.app_appeal_placeholder
+            "app.appeal.costCase" -> R.string.app_appeal_cost_case
+            "app.appeal.submit" -> R.string.app_appeal_submit
             else -> null
         }
     }

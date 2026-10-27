@@ -528,6 +528,48 @@ enum L10n {
     static func appAccountSignOutConfirm(_ lang: AppLang) -> String { string("app.account.signOutConfirm", lang) }
     static func appAccountSignedOut(_ lang: AppLang) -> String { string("app.account.signedOut", lang) }
     static func appAccountSessionExpired(_ lang: AppLang) -> String { string("app.account.sessionExpired", lang) }
+    static func appClose(_ lang: AppLang) -> String { string("app.close", lang) }
+    static func appHomeTitle(_ lang: AppLang) -> String { string("app.home.title", lang) }
+    static func appHomeLead(_ lang: AppLang) -> String { string("app.home.lead", lang) }
+    static func appHomeLeadSolo(_ lang: AppLang) -> String { string("app.home.leadSolo", lang) }
+    static func appHomeYourSide(_ lang: AppLang) -> String { string("app.home.yourSide", lang) }
+    static func appHomeTheirSide(_ lang: AppLang) -> String { string("app.home.theirSide", lang) }
+    static func appHomeYourName(_ lang: AppLang) -> String { string("app.home.yourName", lang) }
+    static func appHomeTheirName(_ lang: AppLang) -> String { string("app.home.theirName", lang) }
+    static func appHomeYourPlaceholder(_ lang: AppLang) -> String { string("app.home.yourPlaceholder", lang) }
+    static func appHomeTheirPlaceholder(_ lang: AppLang) -> String { string("app.home.theirPlaceholder", lang) }
+    static func appHomeYourSideLabel(_ lang: AppLang) -> String { string("app.home.yourSideLabel", lang) }
+    static func appHomeTheirSideLabel(_ lang: AppLang) -> String { string("app.home.theirSideLabel", lang) }
+    static func appHomeSendLink(_ lang: AppLang) -> String { string("app.home.sendLink", lang) }
+    static func appHomeSays(_ lang: AppLang, name: String) -> String { format("app.home.says", lang, name) }
+    static func appHomeMySide(_ lang: AppLang) -> String { string("app.home.mySide", lang) }
+    static func appHomeOtherSide(_ lang: AppLang) -> String { string("app.home.otherSide", lang) }
+    static func appCaseWaitingKicker(_ lang: AppLang) -> String { string("app.case.waitingKicker", lang) }
+    static func appCaseWaitingFor(_ lang: AppLang, name: String) -> String { format("app.case.waitingFor", lang, name) }
+    static func appCaseWaitingLead(_ lang: AppLang, name: String) -> String { format("app.case.waitingLead", lang, name) }
+    static func appCaseWaitingLeadAnon(_ lang: AppLang) -> String { string("app.case.waitingLeadAnon", lang) }
+    static func appCaseSendTo(_ lang: AppLang, name: String) -> String { format("app.case.sendTo", lang, name) }
+    static func appCaseStepYou(_ lang: AppLang) -> String { string("app.case.stepYou", lang) }
+    static func appCaseStepYouNote(_ lang: AppLang) -> String { string("app.case.stepYouNote", lang) }
+    static func appCaseStepThem(_ lang: AppLang, name: String) -> String { format("app.case.stepThem", lang, name) }
+    static func appCaseStepThemAnon(_ lang: AppLang) -> String { string("app.case.stepThemAnon", lang) }
+    static func appCaseStepThemNote(_ lang: AppLang) -> String { string("app.case.stepThemNote", lang) }
+    static func appCaseStepJudges(_ lang: AppLang) -> String { string("app.case.stepJudges", lang) }
+    static func appCaseStepJudgesNote(_ lang: AppLang) -> String { string("app.case.stepJudgesNote", lang) }
+    static func appCaseJudgeNowWithout(_ lang: AppLang, name: String) -> String { format("app.case.judgeNowWithout", lang, name) }
+    static func appVerdictVs(_ lang: AppLang) -> String { string("app.verdict.vs", lang) }
+    static func appVerdictLeanTo(_ lang: AppLang, name: String) -> String { format("app.verdict.leanTo", lang, name) }
+    static func appVerdictLeanNone(_ lang: AppLang) -> String { string("app.verdict.leanNone", lang) }
+    static func appVerdictSides(_ lang: AppLang) -> String { string("app.verdict.sides", lang) }
+    static func appVerdictClaims(_ lang: AppLang) -> String { string("app.verdict.claims", lang) }
+    static func appVerdictBack(_ lang: AppLang) -> String { string("app.verdict.back", lang) }
+    static func appAppealTitle(_ lang: AppLang) -> String { string("app.appeal.title", lang) }
+    static func appAppealIntro(_ lang: AppLang) -> String { string("app.appeal.intro", lang) }
+    static func appAppealAsk(_ lang: AppLang) -> String { string("app.appeal.ask", lang) }
+    static func appAppealPlaceholder(_ lang: AppLang) -> String { string("app.appeal.placeholder", lang) }
+    static func appAppealCost(_ lang: AppLang, left: String) -> String { format("app.appeal.cost", lang, left) }
+    static func appAppealCostCase(_ lang: AppLang) -> String { string("app.appeal.costCase", lang) }
+    static func appAppealSubmit(_ lang: AppLang) -> String { string("app.appeal.submit", lang) }
 
     /// A placeholder-free string by its lib/i18n.ts key, for keys built at
     /// runtime ("badge.\(type)"). Nil when unknown.
@@ -997,6 +1039,40 @@ enum L10n {
         "app.account.signOutConfirm",
         "app.account.signedOut",
         "app.account.sessionExpired",
+        "app.close",
+        "app.home.title",
+        "app.home.lead",
+        "app.home.leadSolo",
+        "app.home.yourSide",
+        "app.home.theirSide",
+        "app.home.yourName",
+        "app.home.theirName",
+        "app.home.yourPlaceholder",
+        "app.home.theirPlaceholder",
+        "app.home.yourSideLabel",
+        "app.home.theirSideLabel",
+        "app.home.sendLink",
+        "app.home.mySide",
+        "app.home.otherSide",
+        "app.case.waitingKicker",
+        "app.case.waitingLeadAnon",
+        "app.case.stepYou",
+        "app.case.stepYouNote",
+        "app.case.stepThemAnon",
+        "app.case.stepThemNote",
+        "app.case.stepJudges",
+        "app.case.stepJudgesNote",
+        "app.verdict.vs",
+        "app.verdict.leanNone",
+        "app.verdict.sides",
+        "app.verdict.claims",
+        "app.verdict.back",
+        "app.appeal.title",
+        "app.appeal.intro",
+        "app.appeal.ask",
+        "app.appeal.placeholder",
+        "app.appeal.costCase",
+        "app.appeal.submit",
     ]
 
     private static func string(_ key: String, _ lang: AppLang) -> String {

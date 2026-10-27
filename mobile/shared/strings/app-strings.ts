@@ -119,4 +119,78 @@ export const APP_STRINGS: Record<string, { en: string; tr: string }> = {
     en: "You've been signed out. Sign in again to continue.",
     tr: "Oturumun kapandı. Devam etmek için tekrar giriş yap.",
   },
+  "app.close": { en: "Close", tr: "Kapat" },
+  // Home with both sides on one screen. The joined text is what the judges
+  // read when one person writes both sides.
+  "app.home.title": { en: "Two sides, one ruling.", tr: "İki taraf, tek karar." },
+  "app.home.lead": {
+    en: "Write both sides, or send the other person a link to write theirs.",
+    tr: "İki tarafı da yaz ya da karşı tarafa bir bağlantı gönder, kendi tarafını o yazsın.",
+  },
+  "app.home.leadSolo": {
+    en: "Write your side, and theirs if you know it.",
+    tr: "Kendi tarafını yaz, biliyorsan onunkini de.",
+  },
+  "app.home.yourSide": { en: "Your side", tr: "Senin tarafın" },
+  "app.home.theirSide": { en: "Their side", tr: "Karşı taraf" },
+  "app.home.yourName": { en: "Your name", tr: "Adın" },
+  "app.home.theirName": { en: "Their name", tr: "Onun adı" },
+  "app.home.yourPlaceholder": { en: "What happened, from where you stand?", tr: "Senin açından ne oldu?" },
+  "app.home.theirPlaceholder": {
+    en: "What do they say? Write it the way they would.",
+    tr: "O ne diyor? Onun anlatacağı gibi yaz.",
+  },
+  "app.home.yourSideLabel": { en: "Your side of the argument", tr: "Tartışmada senin tarafın" },
+  "app.home.theirSideLabel": { en: "Their side of the argument", tr: "Tartışmada karşı tarafın görüşü" },
+  "app.home.sendLink": { en: "Or send them a link to write it", tr: "Ya da bağlantı gönder, kendisi yazsın" },
+  "app.home.says": { en: "{name} says:", tr: "{name} diyor ki:" },
+  "app.home.mySide": { en: "My side:", tr: "Benim tarafım:" },
+  "app.home.otherSide": { en: "Their side:", tr: "Onun tarafı:" },
+  // The case page while the other side has not written yet.
+  "app.case.waitingKicker": { en: "Case · waiting", tr: "Dava · bekleniyor" },
+  "app.case.waitingFor": { en: "Waiting for {name}", tr: "{name} bekleniyor" },
+  "app.case.waitingLead": {
+    en: "{name} writes their side without an account. Neither of you sees the other's words until the ruling.",
+    tr: "{name} tarafını hesap açmadan yazar. Karar çıkana kadar ikiniz de birbirinizin yazdığını görmezsiniz.",
+  },
+  "app.case.waitingLeadAnon": {
+    en: "They write their side without an account. Neither of you sees the other's words until the ruling.",
+    tr: "Karşı taraf, tarafını hesap açmadan yazar. Karar çıkana kadar ikiniz de birbirinizin yazdığını görmezsiniz.",
+  },
+  "app.case.sendTo": { en: "Send {name} this link", tr: "Bu bağlantıyı {name} ile paylaş" },
+  "app.case.stepYou": { en: "You wrote your side", tr: "Sen tarafını yazdın" },
+  "app.case.stepYouNote": { en: "Sealed until the ruling", tr: "Karara kadar mühürlü" },
+  "app.case.stepThem": { en: "{name} writes theirs", tr: "{name} kendi tarafını yazıyor" },
+  "app.case.stepThemAnon": { en: "They write theirs", tr: "Karşı taraf kendi tarafını yazıyor" },
+  "app.case.stepThemNote": { en: "This page updates when it's in", tr: "Gelince bu sayfa kendiliğinden güncellenir" },
+  "app.case.stepJudges": { en: "Three judges rule", tr: "Üç yargıç karar verir" },
+  "app.case.stepJudgesNote": { en: "Or judge now on your side alone", tr: "Ya da şimdi sadece senin tarafınla karar verilsin" },
+  "app.case.judgeNowWithout": { en: "Judge now without {name}", tr: "{name} olmadan şimdi karar ver" },
+  // The ruling card and its details screen.
+  "app.verdict.vs": { en: "vs", tr: "ile" },
+  "app.verdict.leanTo": { en: "The panel leaned to {name}", tr: "Kurul {name} tarafına yattı" },
+  "app.verdict.leanNone": { en: "The panel didn't lean either way", tr: "Kurul iki taraftan birine yatmadı" },
+  "app.verdict.sides": { en: "What each side stands on", tr: "Her taraf neye dayanıyor" },
+  "app.verdict.claims": { en: "How each side got there", tr: "Taraflar oraya nasıl vardı" },
+  "app.verdict.back": { en: "Ruling", tr: "Karar" },
+  // Adding context to a ruling (one-sided verdicts and cases).
+  "app.appeal.title": { en: "Add context & appeal", tr: "Bağlam ekle ve itiraz et" },
+  "app.appeal.intro": {
+    en: "Something the judges missed? Add it and they rule again. The first ruling stays on record.",
+    tr: "Yargıçların kaçırdığı bir şey mi var? Ekle, yeniden karar versinler. İlk karar kayıtta kalır.",
+  },
+  "app.appeal.ask": { en: "What should they know?", tr: "Neyi bilmeleri gerekiyor?" },
+  "app.appeal.placeholder": {
+    en: "A fact, a message, or what was actually agreed.",
+    tr: "Bir olgu, bir mesaj ya da aslında neyde anlaştığınız.",
+  },
+  "app.appeal.cost": {
+    en: "Uses 1 premium verdict. You can do this twice per ruling; {left} left.",
+    tr: "1 premium karar hakkı kullanır. Bunu bir karar için iki kez yapabilirsin; {left} hakkın kaldı.",
+  },
+  "app.appeal.costCase": {
+    en: "Uses 1 premium verdict. You can do this once per case.",
+    tr: "1 premium karar hakkı kullanır. Bunu bir dava için bir kez yapabilirsin.",
+  },
+  "app.appeal.submit": { en: "Rule again", tr: "Yeniden karar ver" },
 };
