@@ -620,7 +620,7 @@ final class PremiumFlowTests: XCTestCase {
 
         home.submit(app: app)
         XCTAssertTrue(home.isCheckingQuestions)
-        XCTAssertFalse(home.canSubmit(), "no second submit while the questions are asked")
+        XCTAssertFalse(home.canSubmit(app), "no second submit while the questions are asked")
         try await PremiumFixtures.waitUntil("the questions") { home.clarify != nil }
         XCTAssertEqual(home.clarify?.questions.map(\.id), ["q1", "q2"])
         XCTAssertFalse(home.isCheckingQuestions)
@@ -934,7 +934,7 @@ final class PremiumFlowTests: XCTestCase {
         XCTAssertTrue(app.evidenceOn)
 
         let ids = home.evidence.reserve(3)
-        XCTAssertFalse(home.canSubmit(evidenceOn: app.evidenceOn), "images still being read hold the submit")
+        XCTAssertFalse(home.canSubmit(app), "images still being read hold the submit")
         home.submit(app: app)
         XCTAssertEqual(router.count("POST", Self.clarifyPath), 0)
 
@@ -943,7 +943,7 @@ final class PremiumFlowTests: XCTestCase {
             EvidenceUploadItem(index: 1, status: "unreadable"),
             EvidenceUploadItem(index: 2, status: "ok", token: "tok-3", preview: "three"),
         ], sent: ids)
-        XCTAssertTrue(home.canSubmit(evidenceOn: app.evidenceOn))
+        XCTAssertTrue(home.canSubmit(app))
         home.submit(app: app)
         try await PremiumFixtures.waitUntil("the verdict") { home.arrived != nil }
         let body = try PremiumFixtures.body(router.sentBodies("POST", Self.verdictPath).first)

@@ -53,6 +53,9 @@ final class AppModel {
     @ObservationIgnored var appealSeed: (gate: CaseAppealGate, text: String)?
     /// Case views created on this phone, so their page opens at once.
     @ObservationIgnored private var caseSeeds: [String: CaseView] = [:]
+    /// The other side's name typed on Home, for the waiting page. Only for
+    /// this run of the app: the server never gets it.
+    @ObservationIgnored private var caseOthers: [String: String] = [:]
     /// One model per case page, so a re-rendered screen keeps its state.
     @ObservationIgnored private var caseModels: [String: CaseModel] = [:]
 
@@ -161,10 +164,13 @@ final class AppModel {
     /// "Your cases" in the History tab: this server offers cases.
     var caseListOffered: Bool { account.features.cases }
 
-    func seedCase(_ view: CaseView) {
+    func seedCase(_ view: CaseView, otherName: String? = nil) {
         caseSeeds[view.id] = view
         caseModels[view.id] = nil
+        if let otherName { caseOthers[view.id] = otherName }
     }
+
+    func caseOtherName(_ id: String) -> String? { caseOthers[id] }
 
     /// The model behind one case page (kept per case), starting from a view
     /// created here.

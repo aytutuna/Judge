@@ -177,7 +177,7 @@ private struct HomeTab: View {
                     switch route {
                     case .verdict(let id):
                         if let session = home.session(id) {
-                            VerdictScreen(session: session, argument: home.argument(for: id), thread: true)
+                            VerdictScreen(session: session, thread: true)
                         } else {
                             MissingVerdictView()
                         }

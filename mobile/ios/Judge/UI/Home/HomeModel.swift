@@ -34,7 +34,12 @@ final class HomeModel {
     /// MAX_EVIDENCE_PER_SIDE (lib/case-types.ts).
     static let maxEvidence = 3
 
+    /// Your side.
     var argument = ""
+    /// The other side, when the user writes it too; empty sends `argument` alone.
+    var otherSide = ""
+    /// The other side's name over their card; nil until typed.
+    var otherName: String?
     var preset: String
     var path: [HomeRoute] = []
 
@@ -52,16 +57,16 @@ final class HomeModel {
     /// Kept until the next submit or cancel, so the cover keeps its final
     /// frame while it animates out.
     private(set) var arrived: VerdictResult?
-    /// The argument the running request sent: the thread's first bubble.
-    private(set) var judgedArgument = ""
+    /// The sides the running request sent, for the judging cover.
+    private(set) var judgedSides: [JudgedSide] = []
     private(set) var error: APIError?
     private(set) var blockedUntil: Date?
     /// Screenshots picked for the next premium request.
     let evidence: EvidenceModel
     /// Just me (a verdict now) or both sides (a case), when cases are offered.
     var mode: HomeMode = .now
-    /// The owner's name on a new case's share pages; nil = the account's
-    /// first name until the user types.
+    /// Your name over your card, in the joined text and on a new case's
+    /// share pages; nil = the account's first name until the user types.
     var caseName: String?
     /// POST /api/v1/cases is running (the owner's side is being anonymized).
     private(set) var isCreatingCase = false
@@ -78,14 +83,20 @@ final class HomeModel {
     static let tierAnchor = "home.tier"
     static let evidenceAnchor = "home.evidence"
 
+    /// One written side as the judging cover shows it; an empty name reads
+    /// "Your side" / "Their side".
+    struct JudgedSide: Equatable {
+        let mine: Bool
+        let name: String
+        let text: String
+    }
+
     struct ClarifyState: Equatable {
         var questions: [ClarifyQuestion]
         var answers: [String: String] = [:]
     }
 
     @ObservationIgnored private var sessions: [String: VerdictSession] = [:]
-    /// What each verdict judged on this run of the app, by verdict id.
-    @ObservationIgnored private var arguments: [String: String] = [:]
     @ObservationIgnored private var arrivedID: String?
     @ObservationIgnored private var request: Task<Void, Never>?
     @ObservationIgnored private var unblock: Task<Void, Never>?
@@ -138,16 +149,52 @@ final class HomeModel {
         evidence = EvidenceModel(max: Self.maxEvidence)
     }
 
-    /// UTF-16 length, as the website's `maxLength` and the server count it.
-    var length: Int { argument.utf16.count }
+    /// What the judges read: your side as written, or with the other side
+    /// filled in, both joined into one text with a name in front of each.
+    func outgoing(_ app: AppModel) -> String {
+        Self.joined(mine: argument, theirs: otherSide, myName: shownCaseName(app), theirName: otherName ?? "", lang: app.lang)
+    }
 
-    var trimmedLength: Int { argument.trimmingCharacters(in: .whitespacesAndNewlines).utf16.count }
+    static func joined(mine: String, theirs: String, myName: String, theirName: String, lang: AppLang) -> String {
+        let theirs = theirs.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !theirs.isEmpty else { return mine }
+        let mine = mine.trimmingCharacters(in: .whitespacesAndNewlines)
+        func part(_ text: String, name: String, unnamed: String) -> String {
+            let name = name.trimmingCharacters(in: .whitespacesAndNewlines)
+            return (name.isEmpty ? unnamed : L10n.appHomeSays(lang, name: name)) + " " + text
+        }
+        var parts: [String] = []
+        if !mine.isEmpty { parts.append(part(mine, name: myName, unnamed: L10n.appHomeMySide(lang))) }
+        parts.append(part(theirs, name: theirName, unnamed: L10n.appHomeOtherSide(lang)))
+        return parts.joined(separator: "\n\n")
+    }
+
+    /// The written sides, yours first.
+    static func sides(mine: String, theirs: String, myName: String, theirName: String) -> [JudgedSide] {
+        func side(_ isMine: Bool, _ text: String, _ name: String) -> JudgedSide {
+            JudgedSide(
+                mine: isMine,
+                name: name.trimmingCharacters(in: .whitespacesAndNewlines),
+                text: text.trimmingCharacters(in: .whitespacesAndNewlines)
+            )
+        }
+        return [side(true, mine, myName), side(false, theirs, theirName)].filter { !$0.text.isEmpty }
+    }
+
+    /// UTF-16 length of what would be sent, as the website's `maxLength`
+    /// and the server count it.
+    func length(_ app: AppModel) -> Int { outgoing(app).utf16.count }
+
+    /// What the user wrote, without the names and labels the join adds.
+    var writtenLength: Int {
+        [argument, otherSide].map { $0.trimmingCharacters(in: .whitespacesAndNewlines).utf16.count }.reduce(0, +)
+    }
 
     /// Something the form started is still running: the switches hold still.
     var isBusy: Bool { isCheckingBot || isCheckingQuestions || isJudging || isCreatingCase }
 
     /// Nothing typed or attached: Home's "+" stays hidden.
-    var isBlank: Bool { argument.isEmpty && evidence.items.isEmpty }
+    var isBlank: Bool { argument.isEmpty && otherSide.isEmpty && evidence.items.isEmpty }
 
     /// Both sides chosen while cases can be used: "Create the invite".
     func isTwoSided(_ app: AppModel) -> Bool {
@@ -159,9 +206,9 @@ final class HomeModel {
         caseName ?? Names.firstName(app.account.user?.name) ?? ""
     }
 
-    func canSubmit(now: Date = .now, evidenceOn: Bool = false) -> Bool {
-        guard trimmedLength >= Self.minLength, length <= Self.maxLength, !isBusy else { return false }
-        if evidenceOn, evidence.busy { return false }
+    func canSubmit(_ app: AppModel, now: Date = .now) -> Bool {
+        guard writtenLength >= Self.minLength, length(app) <= Self.maxLength, !isBusy else { return false }
+        if app.evidenceOn, evidence.busy { return false }
         if let blockedUntil, blockedUntil > now { return false }
         return true
     }
@@ -184,8 +231,6 @@ final class HomeModel {
 
     func session(_ id: String) -> VerdictSession? { sessions[id] }
 
-    func argument(for id: String) -> String? { arguments[id] }
-
     func updateSession(_ session: VerdictSession) {
         sessions[session.id] = session
     }
@@ -194,7 +239,7 @@ final class HomeModel {
     /// sign-in and submits once the user has signed in. Premium (chosen and
     /// usable) goes through the clarifying step first.
     func submit(app: AppModel) {
-        guard canSubmit(evidenceOn: app.evidenceOn) else { return }
+        guard canSubmit(app) else { return }
         account = app.account
         guard app.account.isSignedIn else {
             // What the user tapped for. Signing in can unlock Premium (and a
@@ -219,6 +264,13 @@ final class HomeModel {
         }
     }
 
+    /// "Or send them a link to write it": a two-sided case with your side;
+    /// the other person writes theirs.
+    func sendLink(app: AppModel) {
+        mode = .both
+        submit(app: app)
+    }
+
     // MARK: - Two-sided cases
 
     /// Both sides: create the case with the owner's side (a premium case
@@ -235,6 +287,7 @@ final class HomeModel {
         let tokens = app.evidenceOn ? evidence.tokens : []
         let name = shownCaseName(app).trimmingCharacters(in: .whitespacesAndNewlines)
         let displayName: String? = name.isEmpty ? nil : name
+        let other = otherName?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
         let body = JudgeAPI.createCaseBody(text: text, preset: preset, lang: lang, tier: tier, evidence: tokens, displayName: displayName)
         let token = keys.key(for: JudgeAPI.canonical(body))
         let api = app.api
@@ -248,10 +301,12 @@ final class HomeModel {
                 self.keys.clear(token)
                 names.save(caseID: created.view.id, created.nameMap)
                 if let entitlement = created.entitlement { self.account?.applyEntitlement(entitlement) }
-                app?.seedCase(created.view)
+                app?.seedCase(created.view, otherName: other.isEmpty ? nil : other)
                 self.evidence.clear()
                 self.argument = ""
                 self.caseName = nil
+                self.otherName = nil
+                self.mode = .now
                 self.isCreatingCase = false
                 self.path.append(.caseDetail(id: created.view.id))
             } catch is CancellationError {
@@ -281,14 +336,14 @@ final class HomeModel {
         arrivedID = nil
         judgingPremium = false
         isCheckingBot = true
-        let text = argument
+        let text = outgoing(app)
         let preset = preset
         let lang = app.lang
         let api = app.api
         let botCheck = app.botCheck
         let history = app.history
         let key = RequestKey(text: text, preset: preset, lang: lang)
-        judgedArgument = text
+        judgedSides = Self.sides(mine: argument, theirs: otherSide, myName: shownCaseName(app), theirName: otherName ?? "")
         if let held = pending, held.key == key, Date.now.timeIntervalSince(held.since) < Self.resumeWindow {
             isCheckingBot = false
             isJudging = true
@@ -334,13 +389,13 @@ final class HomeModel {
         arrivedID = nil
         clarify = nil
         let input = PremiumInput(
-            argument: argument,
+            argument: outgoing(app),
             preset: preset,
             lang: app.lang,
             evidence: app.evidenceOn ? evidence.tokens : []
         )
         premiumInput = input
-        judgedArgument = input.argument
+        judgedSides = Self.sides(mine: argument, theirs: otherSide, myName: shownCaseName(app), theirName: otherName ?? "")
         let api = app.api
         let history = app.history
         let key = input.requestKey
@@ -419,7 +474,6 @@ final class HomeModel {
         arrived = nil
         arrivedID = nil
         pending = nil
-        judgedArgument = input.argument
         judgingPremium = true
         isJudging = true
         let body = VerdictRequest(
@@ -551,7 +605,6 @@ final class HomeModel {
     private func deliver(_ payload: VerdictPayload, history: HistoryStore, preset: String) {
         let session = VerdictSession(id: payload.id, original: payload.result, nameMap: payload.nameMap, translations: [:])
         sessions[session.id] = session
-        arguments[session.id] = judgedArgument
         try? history.save(session, preset: preset)
         arrivedID = session.id
         arrived = payload.result.result
@@ -586,6 +639,9 @@ final class HomeModel {
     /// The header's "+" and "Start a new case": back to an empty form.
     func judgeAnother() {
         argument = ""
+        otherSide = ""
+        otherName = nil
+        mode = .now
         error = nil
         clarify = nil
         judgingPremium = false
@@ -640,14 +696,13 @@ extension HomeModel {
     /// Screenshot fixtures: the judging cover without a request.
     func showForScreenshot(judgingPremium: Bool) {
         self.judgingPremium = judgingPremium
-        judgedArgument = argument
+        judgedSides = Self.sides(mine: argument, theirs: otherSide, myName: caseName ?? "", theirName: otherName ?? "")
         isJudging = true
     }
 
-    /// Screenshot fixtures: a fresh verdict under the argument it judged.
-    func showForScreenshot(thread session: VerdictSession, argument: String) {
+    /// Screenshot fixtures: a fresh verdict.
+    func showForScreenshot(thread session: VerdictSession) {
         sessions[session.id] = session
-        arguments[session.id] = argument
         path = [.verdict(id: session.id)]
     }
 

@@ -1,17 +1,20 @@
 import SwiftData
 import SwiftUI
 
-/// Home as the web's empty thread (components/thread/Composer.tsx): one case
-/// file card with the argument, the lens, the tier and the send button,
-/// then the newest saved verdicts and the privacy note.
+/// Home: your side and theirs in two cards, the lens, the tier and the send
+/// button, then the newest saved verdicts and the privacy note.
 struct HomeView: View {
     @Environment(AppModel.self) private var app
     @SceneStorage("home.draft") private var draft = ""
+    @SceneStorage("home.draftOther") private var draftOther = ""
     @State private var webLink: WebLink?
-    @State private var lensOpen = false
-    @FocusState private var editorFocused: Bool
+    @FocusState private var focused: Field?
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.sceneLive) private var sceneLive
+
+    private enum Field: Hashable {
+        case mine, theirs
+    }
 
     private static let errorID = "home.error"
     private static let clarifyID = "home.clarify"
@@ -23,12 +26,13 @@ struct HomeView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 24) {
                     header(lang, home: home)
+                        .padding(.bottom, -16)
                     if let clarify = home.clarify {
-                        // Premium's questions take the card's place.
+                        // Premium's questions take the form's place.
                         ClarifyCard(home: home, state: clarify, lang: lang)
                             .id(Self.clarifyID)
                     } else {
-                        caseCard(lang, home: home)
+                        form(lang, home: home)
                     }
                     RecentSection(lang: lang)
                     footer(lang)
@@ -53,7 +57,7 @@ struct HomeView: View {
             }
             .onChange(of: home.clarify != nil) { _, shown in
                 guard shown else { return }
-                editorFocused = false
+                focused = nil
                 withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.3)) {
                     proxy.scrollTo(Self.clarifyID, anchor: .top)
                 }
@@ -64,19 +68,26 @@ struct HomeView: View {
         .safeAreaInset(edge: .top, spacing: 0) {
             Color.clear
                 .frame(height: 0)
-                .background(Brand.ivory2)
+                .background(Brand.ivory)
                 .allowsHitTesting(false)
                 .accessibilityHidden(true)
         }
-        .background(Brand.ivory2.ignoresSafeArea())
+        .background(Brand.ivory.ignoresSafeArea())
         .toolbar(.hidden, for: .navigationBar)
         .onAppear {
-            if app.persistsDraft, home.argument.isEmpty, !draft.isEmpty { home.argument = draft }
+            guard app.persistsDraft else { return }
+            if home.argument.isEmpty, !draft.isEmpty { home.argument = draft }
+            if home.otherSide.isEmpty, !draftOther.isEmpty { home.otherSide = draftOther }
         }
         .onChange(of: home.argument) { _, value in
             let capped = HomeModel.capped(value)
             if capped != value { home.argument = capped }
             if app.persistsDraft { draft = capped }
+        }
+        .onChange(of: home.otherSide) { _, value in
+            let capped = HomeModel.capped(value)
+            if capped != value { home.otherSide = capped }
+            if app.persistsDraft { draftOther = capped }
         }
         .onChange(of: home.preset) { _, value in app.rememberPreset(value) }
         .fullScreenCover(isPresented: $home.isJudging) {
@@ -107,223 +118,160 @@ struct HomeView: View {
         .accessibilityElement(children: .contain)
     }
 
-    private func caseCard(_ lang: AppLang, home: HomeModel) -> some View {
-        let twoSided = home.isTwoSided(app)
-        return VStack(alignment: .leading, spacing: 18) {
-            caseHead(lang, today: home.today ?? .now)
-            VStack(alignment: .leading, spacing: 14) {
-                editor(lang, home: home, twoSided: twoSided)
-                if !twoSided {
-                    examples(lang, home: home)
-                }
-                toolbar(lang, home: home, twoSided: twoSided)
-                if lensOpen {
-                    presets(lang, home: home)
-                }
-                if app.tierAvailability != .hidden {
-                    TierSwitchView(lang: lang, disabled: home.isBusy) {
-                        home.path.append(.pricing)
-                    }
-                    .id(HomeModel.tierAnchor)
-                }
-                if app.evidenceOn {
-                    EvidencePickerView(evidence: home.evidence, lang: lang, disabled: home.isBusy)
-                        .id(HomeModel.evidenceAnchor)
-                }
-                if twoSided {
-                    CaseNameField(home: home, fallback: Names.firstName(app.account.user?.name) ?? "", lang: lang, disabled: home.isBusy)
-                }
-                if let error = home.error {
-                    errorBanner(error, lang: lang)
-                        .id(Self.errorID)
-                }
-                submitSection(lang, home: home, twoSided: twoSided)
-                if app.casesOn {
-                    Button(twoSided ? L10n.homeOneSide(lang) : L10n.homeInvite(lang)) {
-                        home.mode = twoSided ? .now : .both
-                    }
-                    .buttonStyle(LinkButtonStyle())
-                    .multilineTextAlignment(.center)
-                    .frame(maxWidth: .infinity)
-                    .disabled(home.isBusy)
-                }
-            }
-        }
-        .padding(.horizontal, 20)
-        .padding(.vertical, 22)
-        .paperSurface(radius: Radius.card)
-        .cardShadow()
-    }
-
-    /// "New case" and today's date, the heading and the three steps.
-    private func caseHead(_ lang: AppLang, today: Date) -> some View {
+    /// Both sides, the lens and the tier: your side in terracotta, theirs
+    /// in sage. Written together they go to the judges as one text; "Or
+    /// send them a link" makes a two-sided case instead.
+    private func form(_ lang: AppLang, home: HomeModel) -> some View {
         VStack(alignment: .leading, spacing: 12) {
-            HStack(alignment: .firstTextBaseline) {
-                Kicker(text: L10n.homeKicker(lang))
-                Spacer(minLength: 8)
-                Text(Recent.dayMonth(today, lang: lang))
-                    .brandText(TypeStyle(face: .serifItalic, weight: 400, size: 15, lineHeight: 1.25, textStyle: .subheadline, maxScale: 1.6))
-                    .foregroundStyle(Brand.placeholder)
-            }
-            Text(L10n.homeTitle(lang))
-                .brandText(.caseTitle)
-                .foregroundStyle(Brand.ink)
-                .accessibilityAddTraits(.isHeader)
-            steps(lang)
-                .padding(.top, 2)
-        }
-    }
-
-    private func steps(_ lang: AppLang) -> some View {
-        let labels = [L10n.homeStepArgument(lang), L10n.threadLens(lang), L10n.homeStepRuling(lang)]
-        return HStack(spacing: 0) {
-            ForEach(Array(labels.enumerated()), id: \.offset) { index, label in
-                step(index + 1, label: label, current: index == 0)
-                if index < labels.count - 1 {
-                    Rectangle()
-                        .fill(Brand.line2)
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 1)
-                        .padding(.horizontal, 6)
+            heading(lang, compact: !home.isBlank)
+            sideCard(lang, home: home, mine: true)
+            sideCard(lang, home: home, mine: false)
+            counter(lang, home: home)
+            presets(lang, home: home)
+            if app.tierAvailability != .hidden {
+                TierSwitchView(lang: lang, disabled: home.isBusy) {
+                    home.path.append(.pricing)
                 }
+                .id(HomeModel.tierAnchor)
+            }
+            if let error = home.error {
+                errorBanner(error, lang: lang)
+                    .id(Self.errorID)
+            }
+            submitSection(lang, home: home)
+        }
+    }
+
+    private func heading(_ lang: AppLang, compact: Bool) -> some View {
+        var title = TypeStyle.caseTitle
+        if compact { title.size = 30 }
+        return VStack(alignment: .leading, spacing: 4) {
+            Text(L10n.appHomeTitle(lang))
+                .brandText(title)
+                .foregroundStyle(Brand.ink)
+                .fixedSize(horizontal: false, vertical: true)
+                .accessibilityAddTraits(.isHeader)
+            if !compact {
+                Text(app.casesOn ? L10n.appHomeLead(lang) : L10n.appHomeLeadSolo(lang))
+                    .brandText(TypeStyle(face: .inter, weight: 400, size: 14, lineHeight: 1.45, textStyle: .subheadline))
+                    .foregroundStyle(Brand.ink2)
+                    .fixedSize(horizontal: false, vertical: true)
             }
         }
-        .accessibilityElement(children: .ignore)
-        .accessibilityLabel(labels.enumerated().map { "\($0.offset + 1). \($0.element)" }.joined(separator: ", "))
+        .padding(.horizontal, 4)
     }
 
-    private func step(_ n: Int, label: String, current: Bool) -> some View {
-        HStack(spacing: 6) {
-            Text(verbatim: "\(n)")
-                .brandText(TypeStyle(face: .inter, weight: 600, size: 11, lineHeight: 1, textStyle: .caption2, maxScale: 1.3))
-                .foregroundStyle(current ? Brand.paper : Brand.muted)
-                .frame(width: 20, height: 20)
-                .background(Circle().fill(current ? Brand.ink : Brand.paper))
-                .overlay(Circle().strokeBorder(current ? Brand.ink : Brand.line2, lineWidth: 1))
-            Text(label)
-                .brandText(TypeStyle(face: .inter, weight: 500, size: 12, lineHeight: 1.2, textStyle: .caption2, maxScale: 1.4))
-                .foregroundStyle(current ? Brand.ink : Brand.muted)
-                .lineLimit(1)
-                .minimumScaleFactor(0.8)
-        }
-    }
-
-    private func editor(_ lang: AppLang, home: HomeModel, twoSided: Bool) -> some View {
+    private func sideCard(_ lang: AppLang, home: HomeModel, mine: Bool) -> some View {
         @Bindable var home = home
-        return ZStack(alignment: .topLeading) {
-            TextEditor(text: $home.argument)
-                .focused($editorFocused)
-                .brandText(.body)
+        let field: Field = mine ? .mine : .theirs
+        let ink = mine ? Brand.terraInk : Brand.sageInk
+        return VStack(alignment: .leading, spacing: 8) {
+            HStack(spacing: 8) {
+                PartyAvatar(party: mine ? .a : .b)
+                CaseNameField(
+                    name: mine ? $home.caseName : $home.otherName,
+                    fallback: mine ? Names.firstName(app.account.user?.name) ?? "" : "",
+                    placeholder: mine ? L10n.appHomeYourName(lang) : L10n.appHomeTheirName(lang),
+                    disabled: home.isBusy
+                )
+                Text(mine ? L10n.appHomeYourSide(lang) : L10n.appHomeTheirSide(lang))
+                    .brandText(TypeStyle(face: .inter, weight: 600, size: 11, lineHeight: 1.2, tracking: 0.08, textStyle: .caption2, maxScale: 1.6, uppercase: true))
+                    .foregroundStyle(ink)
+                    .lineLimit(1)
+                    .accessibilityHidden(true)
+            }
+            editor(
+                mine ? $home.argument : $home.otherSide,
+                field: field,
+                placeholder: mine ? L10n.appHomeYourPlaceholder(lang) : L10n.appHomeTheirPlaceholder(lang),
+                label: mine ? L10n.appHomeYourSideLabel(lang) : L10n.appHomeTheirSideLabel(lang),
+                minHeight: mine ? 96 : 56
+            )
+            .disabled(home.isBusy)
+            if mine, app.evidenceOn {
+                EvidencePickerView(evidence: home.evidence, lang: lang, disabled: home.isBusy)
+                    .id(HomeModel.evidenceAnchor)
+                    .padding(.top, 4)
+            }
+            if !mine, app.casesOn, home.otherSide.isEmpty {
+                sendLink(lang, home: home)
+            }
+        }
+        .padding(.horizontal, 16)
+        .padding(.vertical, 14)
+        .paperSurface(radius: Radius.block, border: focused == field ? ink.opacity(0.6) : Brand.line)
+        .softShadow()
+        .accessibilityElement(children: .contain)
+    }
+
+    private func editor(_ text: Binding<String>, field: Field, placeholder: String, label: String, minHeight: CGFloat) -> some View {
+        ZStack(alignment: .topLeading) {
+            TextEditor(text: text)
+                .focused($focused, equals: field)
+                .brandText(TypeStyle(face: .inter, weight: 400, size: 15, lineHeight: 1.5))
                 .foregroundStyle(Brand.ink)
                 .scrollContentBackground(.hidden)
-                .frame(minHeight: 150)
-                .padding(.horizontal, 11)
-                .padding(.vertical, 6)
-                .accessibilityLabel(L10n.inputLabel(lang))
-            if home.argument.isEmpty {
-                Text(twoSided ? L10n.threadPlaceholderTwoSided(lang) : L10n.threadPlaceholder(lang))
-                    .brandText(.body)
+                .frame(minHeight: minHeight)
+                // TextEditor insets its text; this lines it up with the name above.
+                .padding(.horizontal, -5)
+                .padding(.vertical, -8)
+                .accessibilityLabel(label)
+            if text.wrappedValue.isEmpty {
+                Text(placeholder)
+                    .brandText(TypeStyle(face: .inter, weight: 400, size: 15, lineHeight: 1.5))
                     .foregroundStyle(Brand.placeholder)
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 14)
                     .allowsHitTesting(false)
                     .accessibilityHidden(true)
             }
         }
-        .paperSurface(radius: Radius.field, fill: Brand.ivory, border: editorFocused ? Brand.terraInk : Brand.line2)
     }
 
-    private func examples(_ lang: AppLang, home: HomeModel) -> some View {
+    /// Only before their side is written: the link means they write it.
+    private func sendLink(_ lang: AppLang, home: HomeModel) -> some View {
+        let ready = home.canSubmit(app)
+        return Button {
+            focused = nil
+            home.sendLink(app: app)
+        } label: {
+            Label(L10n.appHomeSendLink(lang), systemImage: "link")
+                .brandText(TypeStyle(face: .inter, weight: 600, size: 13, lineHeight: 1.2, textStyle: .footnote, maxScale: 1.8))
+                .foregroundStyle(Brand.sageInk)
+                .frame(minHeight: 32)
+                .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .disabled(!ready)
+        .opacity(ready ? 1 : 0.5)
+    }
+
+    /// The joined text's length against the limit, as the single field had it.
+    private func counter(_ lang: AppLang, home: HomeModel) -> some View {
+        let length = home.length(app)
+        return Text(L10n.appInputCounter(lang, count: String(length), max: String(HomeModel.maxLength)))
+            .brandText(.footnote)
+            .monospacedDigit()
+            .foregroundStyle(length > HomeModel.warnLength ? Brand.terraInk : Brand.muted)
+            .lineLimit(1)
+            .frame(maxWidth: .infinity, alignment: .trailing)
+            .padding(.horizontal, 4)
+            .padding(.vertical, -4)
+    }
+
+    private func presets(_ lang: AppLang, home: HomeModel) -> some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 6) {
-                ForEach(ExampleArgument.all) { example in
-                    let text = example.text(lang)
-                    Button(example.label(lang)) {
-                        home.argument = HomeModel.capped(text)
-                    }
-                    .buttonStyle(ExampleChipStyle(selected: home.argument == text))
+                ForEach(Preset.all) { preset in
+                    let selected = preset.id == home.preset
+                    Button(preset.label(lang)) { home.preset = preset.id }
+                        .buttonStyle(LensChipStyle(selected: selected))
+                        .disabled(home.isBusy)
+                        .accessibilityAddTraits(selected ? .isSelected : [])
+                        .accessibilityHint(preset.blurb(lang))
                 }
             }
         }
         .accessibilityElement(children: .contain)
-        .accessibilityLabel(L10n.examplesLabel(lang))
-    }
-
-    private func toolbar(_ lang: AppLang, home: HomeModel, twoSided: Bool) -> some View {
-        let length = home.length
-        return HStack(spacing: 8) {
-            lensChip(lang, home: home)
-            if twoSided {
-                Text(L10n.caseKicker(lang))
-                    .brandText(TypeStyle(face: .inter, weight: 500, size: 12, lineHeight: 1.2, textStyle: .caption2, maxScale: 1.6))
-                    .foregroundStyle(Brand.sageInk)
-                    .lineLimit(1)
-                    .padding(.horizontal, 10)
-                    .padding(.vertical, 4)
-                    .background(Capsule().fill(Brand.sageTint))
-            }
-            Spacer(minLength: 8)
-            Text(L10n.appInputCounter(lang, count: String(length), max: String(HomeModel.maxLength)))
-                .brandText(.footnote)
-                .monospacedDigit()
-                .foregroundStyle(length > HomeModel.warnLength ? Brand.terraInk : Brand.muted)
-                .lineLimit(1)
-        }
-    }
-
-    /// "The lens · Fairness": opens the presets under the toolbar.
-    private func lensChip(_ lang: AppLang, home: HomeModel) -> some View {
-        let preset = Preset.find(home.preset)
-        return Button {
-            withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.2)) { lensOpen.toggle() }
-        } label: {
-            HStack(spacing: 6) {
-                Text(preset.emoji)
-                Text(L10n.threadLens(lang))
-                    .foregroundStyle(lensOpen ? Brand.ink : Brand.ink2)
-                Text("· " + preset.label(lang))
-                    .foregroundStyle(lensOpen ? Brand.ink2 : Brand.muted)
-                    .lineLimit(1)
-                Image(systemName: "chevron.down")
-                    .font(.system(size: 11, weight: .semibold))
-                    .foregroundStyle(Brand.ink2)
-                    .rotationEffect(.degrees(lensOpen ? 180 : 0))
-            }
-            .brandText(TypeStyle(face: .inter, weight: 500, size: 13, lineHeight: 1.2, textStyle: .footnote, maxScale: 1.8))
-            .padding(.horizontal, 12)
-            .frame(minHeight: 40)
-            .background(Capsule().fill(lensOpen ? Brand.ivory2 : Brand.paper))
-            .overlay(Capsule().strokeBorder(Brand.line2, lineWidth: 1))
-            .contentShape(Capsule())
-        }
-        .buttonStyle(.plain)
-        .disabled(home.isBusy)
-        .accessibilityElement(children: .ignore)
         .accessibilityLabel(L10n.threadLens(lang))
-        .accessibilityValue(preset.label(lang))
-        .accessibilityAddTraits(.isButton)
-    }
-
-    private func presets(_ lang: AppLang, home: HomeModel) -> some View {
-        VStack(alignment: .leading, spacing: 8) {
-            FlowLayout(spacing: 8, rowSpacing: 8) {
-                ForEach(Preset.all) { preset in
-                    presetChip(preset, lang: lang, home: home)
-                }
-            }
-            Text(Preset.find(home.preset).blurb(lang))
-                .brandText(.slotText)
-                .foregroundStyle(Brand.muted)
-                .fixedSize(horizontal: false, vertical: true)
-        }
-    }
-
-    private func presetChip(_ preset: Preset, lang: AppLang, home: HomeModel) -> some View {
-        let selected = preset.id == home.preset
-        let title = preset.emoji + " " + preset.label(lang)
-        return Button(title) { home.preset = preset.id }
-            .buttonStyle(ChipButtonStyle(selected: selected))
-            .accessibilityAddTraits(selected ? .isSelected : [])
     }
 
     private func errorBanner(_ error: APIError, lang: AppLang) -> some View {
@@ -335,12 +283,15 @@ struct HomeView: View {
         )
     }
 
-    private func submitSection(_ lang: AppLang, home: HomeModel, twoSided: Bool) -> some View {
+    private func submitSection(_ lang: AppLang, home: HomeModel) -> some View {
         VStack(spacing: 12) {
             // `blockedUntil` is cleared by the model when a rate limit ends.
             let waiting = home.isCheckingBot || home.isCheckingQuestions || home.isCreatingCase
-            let title = twoSided ? L10n.caseCreate(lang) : L10n.getVerdict(lang)
-            Button { submit() } label: {
+            let title = L10n.getVerdict(lang)
+            Button {
+                home.mode = .now
+                submit()
+            } label: {
                 if waiting {
                     // The bot check (free), the questions (premium) or the
                     // new case run before anything else goes up.
@@ -358,7 +309,7 @@ struct HomeView: View {
                 }
             }
             .buttonStyle(SubmitButtonStyle())
-            .disabled(!home.canSubmit(evidenceOn: app.evidenceOn) && !waiting)
+            .disabled(!home.canSubmit(app) && !waiting)
             .padding(.top, 4)
             if home.isCheckingQuestions || home.isCreatingCase {
                 Text(home.isCreatingCase ? L10n.caseCreating(lang) : L10n.tierChecking(lang))
@@ -389,8 +340,9 @@ struct HomeView: View {
         .padding(.horizontal, 8)
     }
 
+    /// Also "Try again", which repeats whatever was sent last (a verdict or a case).
     private func submit() {
-        editorFocused = false
+        focused = nil
         app.home.submit(app: app)
     }
 }
@@ -472,24 +424,25 @@ private struct RecentCardView: View {
     }
 }
 
-/// An example under the field: small, paper, outlined in ink once picked.
-private struct ExampleChipStyle: ButtonStyle {
+/// A lens under the cards: ink once picked, outlined otherwise.
+private struct LensChipStyle: ButtonStyle {
     var selected = false
 
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .brandText(TypeStyle(face: .inter, weight: 500, size: 12.5, lineHeight: 1.2, textStyle: .footnote, maxScale: 1.8))
-            .foregroundStyle(selected ? Brand.ink : Brand.ink2)
+            .brandText(TypeStyle(face: .inter, weight: 600, size: 13, lineHeight: 1.2, textStyle: .footnote, maxScale: 1.8))
+            .foregroundStyle(selected ? Brand.paper : Brand.ink2)
             .lineLimit(1)
-            .padding(.horizontal, 12)
-            .frame(minHeight: 32)
-            .background(Capsule().fill(Brand.paper))
-            .overlay(Capsule().strokeBorder(selected ? Brand.ink : Brand.line2, lineWidth: 1))
+            .padding(.horizontal, 16)
+            .frame(minHeight: 38)
+            .background(Capsule().fill(selected ? Brand.ink : Color.clear))
+            .overlay(Capsule().strokeBorder(selected ? Color.clear : Brand.line2, lineWidth: 1))
+            .contentShape(Capsule())
             .opacity(configuration.isPressed ? 0.7 : 1)
     }
 }
 
-/// The case card's send button (thread.module.css .submit).
+/// "Get the verdict" (thread.module.css .submit).
 private struct SubmitButtonStyle: ButtonStyle {
     @Environment(\.isEnabled) private var isEnabled
 

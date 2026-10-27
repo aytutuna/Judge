@@ -4,25 +4,21 @@ import SwiftUI
 /// The text follows the UI language: a verdict written in the other
 /// language is fetched translated (and cached in history) with the original
 /// kept for switching back. A fresh verdict stays in its thread: the
-/// argument, the judges' badge and the settled scene above the card, with
-/// no tab bar; the header's "+" starts the next one. The signed-in writer
+/// judges' badge and the settled scene above the card, with no tab bar; the header's "+" starts the next one. The signed-in writer
 /// can add context under the card; a round's verdict then takes its place.
 struct VerdictScreen: View {
     @Environment(AppModel.self) private var app
     let session: VerdictSession
-    /// What a fresh verdict judged, for the thread's first bubble.
-    var argument: String?
     /// A fresh verdict: shows the thread.
     var thread = false
 
     var body: some View {
-        VerdictScreenContent(app: app, session: session, argument: argument, thread: thread)
+        VerdictScreenContent(app: app, session: session, thread: thread)
     }
 }
 
 private struct VerdictScreenContent: View {
     let app: AppModel
-    let argument: String?
     let thread: Bool
     @State private var model: VerdictModel
     /// The writer's "Add context" (nothing shows for anyone else).
@@ -35,9 +31,8 @@ private struct VerdictScreenContent: View {
     private static let appealID = "verdict.appeal"
 
     @MainActor
-    init(app: AppModel, session: VerdictSession, argument: String?, thread: Bool) {
+    init(app: AppModel, session: VerdictSession, thread: Bool) {
         self.app = app
-        self.argument = argument
         self.thread = thread
         let history = app.history
         let home = app.home
@@ -67,7 +62,7 @@ private struct VerdictScreenContent: View {
             ScrollView {
                 VStack(spacing: 16) {
                     if thread {
-                        VerdictThreadHead(argument: argument, result: model.session.original.result, lang: lang)
+                        VerdictThreadHead(result: model.session.original.result, lang: lang)
                     }
                     VerdictSections(
                         model: model,
@@ -140,19 +135,14 @@ private struct VerdictScreenContent: View {
     }
 }
 
-/// The thread above a fresh verdict: what was argued, how far the judges
-/// agreed and the balance settled on the ruling.
+/// The thread above a fresh verdict: how far the judges agreed and the
+/// balance settled on the ruling.
 private struct VerdictThreadHead: View {
-    let argument: String?
     let result: VerdictResult
     let lang: AppLang
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            if let argument, !argument.isEmpty {
-                ArgumentBubble(text: argument, lang: lang)
-                    .padding(.bottom, 12)
-            }
             JudgesBadge(label: VerdictDisplay.judgesLabel(result, lang: lang))
             SceneView(mode: VerdictDisplay.sceneVerdict(result))
                 .frame(maxWidth: .infinity)

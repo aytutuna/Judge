@@ -1,48 +1,43 @@
 import SwiftUI
 
-/// "Your name on the shared verdict" under "Create the invite": prefilled
-/// with the account's first name until the user types (at most 40 characters).
+/// A side's name in its card on Home (at most 40 characters). Your side is
+/// prefilled with the account's first name until the user types.
 struct CaseNameField: View {
-    let home: HomeModel
+    @Binding var name: String?
     /// The account first name the field falls back to.
     let fallback: String
-    let lang: AppLang
+    let placeholder: String
     let disabled: Bool
     @State private var text: String
 
     @MainActor
-    init(home: HomeModel, fallback: String, lang: AppLang, disabled: Bool) {
-        self.home = home
+    init(name: Binding<String?>, fallback: String, placeholder: String, disabled: Bool) {
+        _name = name
         self.fallback = fallback
-        self.lang = lang
+        self.placeholder = placeholder
         self.disabled = disabled
-        _text = State(initialValue: home.caseName ?? fallback)
+        _text = State(initialValue: name.wrappedValue ?? fallback)
     }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 6) {
-            Text(L10n.caseDisplayName(lang))
-                .brandText(.slotText)
-                .foregroundStyle(Brand.ink2)
-            TextField("", text: $text)
-                .textContentType(.givenName)
-                .brandText(.body)
-                .foregroundStyle(Brand.ink)
-                .padding(.horizontal, 12)
-                .padding(.vertical, 10)
-                .paperSurface(radius: 12, fill: Brand.paper, border: Brand.line2)
-                .disabled(disabled)
-                .accessibilityLabel(L10n.caseDisplayName(lang))
-                .onChange(of: text) { _, value in
-                    let capped = HomeModel.capUTF16(value, max: 40)
-                    if capped != value { text = capped }
-                    if capped != (home.caseName ?? fallback) { home.caseName = capped }
-                }
-                .onChange(of: home.caseName) { _, value in
-                    // A created case clears the name: show the default again.
-                    if value == nil { text = fallback }
-                }
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
+        TextField("", text: $text, prompt: Text(placeholder).foregroundStyle(Brand.placeholder))
+            .textContentType(.givenName)
+            .brandText(TypeStyle(face: .inter, weight: 600, size: 14, lineHeight: 1.2, textStyle: .subheadline, maxScale: 1.8))
+            .foregroundStyle(Brand.ink)
+            .frame(minHeight: 32)
+            .disabled(disabled)
+            .accessibilityLabel(placeholder)
+            .onChange(of: text) { _, value in
+                let capped = HomeModel.capUTF16(value, max: 40)
+                if capped != value { text = capped }
+                if capped != (name ?? fallback) { name = capped }
+            }
+            .onChange(of: name) { _, value in
+                // A created case or the "+" clears the name: show the default again.
+                if value == nil { text = fallback }
+            }
+            .onChange(of: fallback) { _, value in
+                if name == nil { text = value }
+            }
     }
 }

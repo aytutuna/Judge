@@ -303,6 +303,26 @@ final class TextHelperTests: XCTestCase {
         XCTAssertEqual(cut.utf16.count, 6000)
         XCTAssertTrue(turkish.hasPrefix(cut))
     }
+
+    @MainActor
+    func testBothSidesJoinIntoOneText() {
+        XCTAssertEqual(HomeModel.joined(mine: "mine", theirs: " 
+", myName: "Alex", theirName: "Sam", lang: .en), "mine", "one side goes as written")
+        XCTAssertEqual(
+            HomeModel.joined(mine: " mine
+", theirs: "theirs ", myName: "Alex", theirName: " Sam", lang: .en),
+            "Alex says: mine
+
+Sam says: theirs"
+        )
+        XCTAssertEqual(HomeModel.joined(mine: "mine", theirs: "theirs", myName: "", theirName: "", lang: .en), "My side: mine
+
+Their side: theirs")
+        XCTAssertEqual(HomeModel.joined(mine: "", theirs: "theirs", myName: "Alex", theirName: "Sam", lang: .tr), "Sam diyor ki: theirs")
+
+        let sides = HomeModel.sides(mine: "mine", theirs: "  ", myName: " Alex ", theirName: "Sam")
+        XCTAssertEqual(sides, [HomeModel.JudgedSide(mine: true, name: "Alex", text: "mine")])
+    }
 }
 
 final class TranslationLogicTests: XCTestCase {

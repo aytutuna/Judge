@@ -9,7 +9,7 @@ struct JudgingCover: View {
     var body: some View {
         JudgingView(
             lang: lang,
-            argument: home.judgedArgument,
+            sides: home.judgedSides,
             result: home.arrived,
             premium: home.judgingPremium,
             onFinished: { home.judgingFinished() },
@@ -24,14 +24,14 @@ struct JudgingCover: View {
 }
 
 /// The judging turn of the thread, full screen while a verdict is pending:
-/// the argument, the judges' badge and a card with the 3D balance (the
+/// the sides that were sent, the judges' badge and a card with the 3D balance (the
 /// beats of lib/judging-ui.ts while waiting, the verdict tilt once it is
 /// in) over the judge dots and the rotating captions of lib/thinking.ts.
 /// After the finish sequence and a short hold `onFinished` hands over.
 struct JudgingView: View {
     let lang: AppLang
-    /// What was sent; empty hides the bubble.
-    var argument = ""
+    /// What was sent, a tile per written side.
+    var sides: [HomeModel.JudgedSide] = []
     /// Non-nil once the verdict has arrived.
     let result: VerdictResult?
     /// Premium adds the web fact-check line and its own helper text.
@@ -93,9 +93,9 @@ struct JudgingView: View {
 
             ScrollView {
                 VStack(alignment: .leading, spacing: 16) {
-                    if !argument.isEmpty {
-                        ArgumentBubble(text: argument, lang: lang)
-                            .padding(.bottom, 12)
+                    if !sides.isEmpty {
+                        SideTiles(sides: sides, lang: lang)
+                            .padding(.bottom, 4)
                     }
                     JudgesBadge(label: L10n.threadJudges(lang))
                     card(captionKey: captionKey)
@@ -286,5 +286,37 @@ struct JudgingView: View {
 
     private func stroke(_ dot: Thinking.Dot) -> Color {
         dot == .vote(.other) ? Brand.ink : .clear
+    }
+}
+
+/// What each side said, cut to three lines: yours in terracotta, theirs in
+/// sage. A verdict on one side has one tile.
+private struct SideTiles: View {
+    let sides: [HomeModel.JudgedSide]
+    let lang: AppLang
+
+    var body: some View {
+        HStack(alignment: .top, spacing: 8) {
+            ForEach(sides, id: \.mine) { side in
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(side.name.isEmpty ? (side.mine ? L10n.appHomeYourSide(lang) : L10n.appHomeTheirSide(lang)) : side.name)
+                        .brandText(TypeStyle(face: .inter, weight: 700, size: 11, lineHeight: 1.2, tracking: 0.08, textStyle: .caption2, maxScale: 1.6, uppercase: true))
+                        .foregroundStyle(side.mine ? Brand.terraInk : Brand.sageInk)
+                        .lineLimit(1)
+                    Text(side.text)
+                        .brandText(TypeStyle(face: .inter, weight: 400, size: 13, lineHeight: 1.4, textStyle: .footnote))
+                        .foregroundStyle(Brand.ink)
+                        .lineLimit(3)
+                }
+                .padding(.horizontal, 12)
+                .padding(.vertical, 10)
+                .frame(maxWidth: .infinity, alignment: .topLeading)
+                .background(
+                    RoundedRectangle(cornerRadius: Radius.field, style: .continuous)
+                        .fill(side.mine ? Brand.terraTint : Brand.sageTint)
+                )
+                .accessibilityElement(children: .combine)
+            }
+        }
     }
 }

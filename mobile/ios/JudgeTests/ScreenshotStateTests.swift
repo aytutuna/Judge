@@ -74,11 +74,11 @@ final class ScreenshotStateTests: XCTestCase {
             let thread = try XCTUnwrap(ScreenshotState.parse("verdict-thread:tr")).makeModel(container: container)
             XCTAssertEqual(thread.home.path, [.verdict(id: "abc123DEF0")])
             XCTAssertNotNil(thread.home.session("abc123DEF0"))
-            XCTAssertEqual(thread.home.argument(for: "abc123DEF0"), ExampleArgument.all[0].text(.tr))
 
             let judging = try XCTUnwrap(ScreenshotState.parse("judging:en")).makeModel(container: container)
             XCTAssertTrue(judging.home.isJudging)
-            XCTAssertEqual(judging.home.judgedArgument, ExampleArgument.all[0].text(.en), "the cover shows what was sent")
+            let sent = ExampleArgument.all[0].text(.en).trimmingCharacters(in: .whitespacesAndNewlines)
+            XCTAssertEqual(judging.home.judgedSides.map(\.text), [sent], "the cover shows what was sent")
         }
     }
 

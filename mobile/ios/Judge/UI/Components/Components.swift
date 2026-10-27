@@ -144,6 +144,21 @@ struct Kicker: View {
     }
 }
 
+/// A side's letter disc: terracotta for A (the writer), sage for B.
+struct PartyAvatar: View {
+    let party: Party
+    var size: CGFloat = 24
+
+    var body: some View {
+        Text(verbatim: party == .b ? "B" : "A")
+            .brandText(TypeStyle(face: .inter, weight: 700, size: (size * 0.45).rounded(), lineHeight: 1, textStyle: .caption2, maxScale: 1.2))
+            .foregroundStyle(Brand.paper)
+            .frame(width: size, height: size)
+            .background(Circle().fill(party == .b ? Brand.sageInk : Brand.terra))
+            .accessibilityHidden(true)
+    }
+}
+
 /// Wraps children onto as many rows as needed (chips).
 struct FlowLayout: Layout {
     var spacing: CGFloat = 8

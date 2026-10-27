@@ -171,7 +171,7 @@ struct ScreenshotState {
             app.home.path = [.saved(id: session.id)]
         case .verdictThread:
             guard let session = ScreenshotFixtures.session("win_a_self") else { return }
-            app.home.showForScreenshot(thread: session, argument: ExampleArgument.all[0].text(lang))
+            app.home.showForScreenshot(thread: session)
         case .verdictContext(let blockedBy):
             // A free account sees the Premium lock.
             premium(app, me: blockedBy == "premium_required" ? "free" : "credits7")
