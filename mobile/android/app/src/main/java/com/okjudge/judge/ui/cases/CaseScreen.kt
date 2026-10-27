@@ -344,7 +344,7 @@ private fun WaitingHeader(name: String?) {
     Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
         Kicker(s.appCaseWaitingKicker, color = Palette.sageInk)
         Text(
-            if (name != null) s.appCaseWaitingFor(name) else s.caseTitle,
+            if (name != null) s.appCaseWaitingFor(name) else s.caseStatusAwaiting,
             style = JudgeType.caseTitle.copy(fontSize = 34.sp, lineHeight = (34 * 1.04).sp),
             modifier = Modifier.semantics { heading() },
         )
