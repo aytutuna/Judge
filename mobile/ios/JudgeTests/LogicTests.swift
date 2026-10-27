@@ -28,6 +28,29 @@ final class TugAndTiltTests: XCTestCase {
         XCTAssertEqual(VerdictDisplay.tugFinal(result(.sideB, lean: lean(.a))), 20)
     }
 
+    @MainActor
+    func testLeanBarFollowsTheVotes() throws {
+        var win = result(.sideA)
+        win.runs = [.sideA, .sideA, .sideB]
+        XCTAssertEqual(try XCTUnwrap(VerdictCard.leanShare(win)), 2.0 / 3.0, accuracy: 0.0001)
+        var mixed = result(.sideB)
+        mixed.runs = [.sideB, .split, .sideB, .sideA]
+        XCTAssertEqual(try XCTUnwrap(VerdictCard.leanShare(mixed)), 1.0 / 3.0, accuracy: 0.0001, "only votes for a side count")
+        var close = result(.tooClose)
+        close.runs = [.sideA, .sideA, .sideB]
+        XCTAssertEqual(VerdictCard.leanShare(close), 0.5, "too close sits in the middle")
+        var split = result(.split)
+        split.runs = [.split, .split, .sideA]
+        XCTAssertEqual(VerdictCard.leanShare(split), 0.5)
+        var sideless = result(.conditional)
+        sideless.runs = [.conditional, .conditional]
+        XCTAssertEqual(VerdictCard.leanShare(sideless), 0.5)
+        XCTAssertNil(VerdictCard.leanShare(result(.sideA, refused: true)), "no bar on a refusal")
+        var empty = result(.tooClose)
+        empty.runs = []
+        XCTAssertNil(VerdictCard.leanShare(empty), "no bar without votes")
+    }
+
     func testWinnerEndGoesDown() {
         // Clockwise-positive: negative lowers Party A's (left) end.
         XCTAssertEqual(VerdictDisplay.rotationDegrees(tugA: 80), -10.313, accuracy: 0.001)

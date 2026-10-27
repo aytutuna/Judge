@@ -1,177 +1,16 @@
 import SwiftUI
 
-/// Section heading below the card (`.sectionTitle`).
-private struct SectionTitle: View {
+/// A section heading on the verdict details screen.
+struct SectionTitle: View {
     let text: String
 
     var body: some View {
-        Kicker(text: text)
+        var style = TypeStyle.serifLabel
+        style.size = 17
+        return Text(text)
+            .brandText(style)
+            .foregroundStyle(Brand.muted)
             .accessibilityAddTraits(.isHeader)
-            .padding(.bottom, 4)
-    }
-}
-
-/// The two-column argument map: party chips, claims with kind glyphs, a
-/// connector and each side's bedrock.
-struct ArgumentMapView: View {
-    let map: ArgumentMap
-    let parties: PartyNames
-    let lang: AppLang
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            SectionTitle(text: L10n.mapTitle(lang))
-            HStack(alignment: .top, spacing: 10) {
-                column(.a, name: parties.nameA, claims: map.sideA, bedrock: map.bedrockA)
-                column(.b, name: parties.nameB, claims: map.sideB, bedrock: map.bedrockB)
-            }
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-    }
-
-    private func column(_ party: Party, name: String, claims: [Claim], bedrock: String) -> some View {
-        let isA = party == .a
-        return VStack(spacing: 8) {
-            HStack(spacing: 8) {
-                Text(verbatim: isA ? "A" : "B")
-                    .brandText(TypeStyle(face: .inter, weight: 700, size: 11, lineHeight: 1, textStyle: .caption2, maxScale: 1.4))
-                    .foregroundStyle(.white)
-                    .frame(width: 22, height: 22)
-                    .background(Circle().fill(isA ? Brand.terraInk : Brand.sageInk))
-                    .accessibilityHidden(true)
-                Text(name)
-                    .brandText(.slotTitle)
-                    .foregroundStyle(Brand.ink)
-                    .lineLimit(1)
-                    .truncationMode(.tail)
-                Spacer(minLength: 0)
-            }
-            .padding(.vertical, 6)
-            .padding(.leading, 6)
-            .padding(.trailing, 10)
-            .background(Capsule().fill(isA ? Brand.terraTint : Brand.sageTint))
-            .accessibilityElement(children: .combine)
-            .accessibilityAddTraits(.isHeader)
-
-            ForEach(Array(claims.enumerated()), id: \.offset) { _, claim in
-                ClaimCard(claim: claim, rule: isA ? Brand.terra : Brand.sageStrong, lang: lang)
-            }
-
-            if !bedrock.isEmpty {
-                Rectangle()
-                    .fill(.clear)
-                    .frame(width: 1.5, height: 14)
-                    .overlay(
-                        Path { path in
-                            path.move(to: .zero)
-                            path.addLine(to: CGPoint(x: 0, y: 14))
-                        }
-                        .stroke(Brand.dash, style: StrokeStyle(lineWidth: 1.5, dash: [3, 3]))
-                    )
-                    .accessibilityHidden(true)
-                VStack(spacing: 6) {
-                    Kicker(text: L10n.bedrock(lang), color: Brand.ink2)
-                    Text(bedrock)
-                        .brandText(TypeStyle(face: .inter, weight: 500, size: 14, lineHeight: 1.45, textStyle: .subheadline))
-                        .foregroundStyle(Brand.ink)
-                        .multilineTextAlignment(.center)
-                        .fixedSize(horizontal: false, vertical: true)
-                }
-                .frame(maxWidth: .infinity)
-                .padding(.horizontal, 12)
-                .padding(.vertical, 10)
-                .background(
-                    RoundedRectangle(cornerRadius: 14, style: .continuous).fill(Brand.strata)
-                )
-                .overlay(alignment: .bottom) {
-                    Rectangle().fill(Brand.stone).frame(height: 3)
-                }
-                .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
-                .overlay(RoundedRectangle(cornerRadius: 14, style: .continuous).strokeBorder(Brand.stone, lineWidth: 1))
-                .accessibilityElement(children: .combine)
-            }
-        }
-        .frame(maxWidth: .infinity, alignment: .top)
-    }
-}
-
-private struct ClaimCard: View {
-    let claim: Claim
-    let rule: Color
-    let lang: AppLang
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: 6) {
-            if let kind = VerdictDisplay.kind(claim.kind, lang: lang) {
-                HStack(spacing: 6) {
-                    KindGlyph(kind: claim.kind).frame(width: 11, height: 11)
-                    Text(kind)
-                        .brandText(TypeStyle(face: .inter, weight: 700, size: 11, lineHeight: 1.2, tracking: 0.1, textStyle: .caption2, maxScale: 1.6, uppercase: true))
-                        .foregroundStyle(Brand.ink2)
-                }
-            }
-            Text(claim.claim)
-                .brandText(.claim)
-                .foregroundStyle(Brand.ink)
-                .fixedSize(horizontal: false, vertical: true)
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(.vertical, 10)
-        .padding(.leading, 15)
-        .padding(.trailing, 12)
-        .background(RoundedRectangle(cornerRadius: 14, style: .continuous).fill(Brand.paper))
-        .overlay(alignment: .leading) { Rectangle().fill(rule).frame(width: 3) }
-        .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
-        .overlay(RoundedRectangle(cornerRadius: 14, style: .continuous).strokeBorder(Brand.line, lineWidth: 1))
-        .accessibilityElement(children: .combine)
-    }
-}
-
-/// Ink shape per claim kind: cube = fact, circle = value, triangle =
-/// definition, diamond = logic (shape plus the written kind).
-private struct KindGlyph: View {
-    let kind: ClaimKind
-
-    var body: some View {
-        Canvas { context, size in
-            let s = size.width / 12
-            func p(_ x: CGFloat, _ y: CGFloat) -> CGPoint { CGPoint(x: x * s, y: y * s) }
-            var shape = Path()
-            switch kind {
-            case .fact:
-                shape.move(to: p(6, 0.8))
-                shape.addLine(to: p(11, 3.6))
-                shape.addLine(to: p(11, 8.4))
-                shape.addLine(to: p(6, 11.2))
-                shape.addLine(to: p(1, 8.4))
-                shape.addLine(to: p(1, 3.6))
-                shape.closeSubpath()
-                context.fill(shape, with: .color(Brand.ink))
-                var edges = Path()
-                edges.move(to: p(6, 6)); edges.addLine(to: p(6, 11.2))
-                edges.move(to: p(6, 6)); edges.addLine(to: p(1, 3.6))
-                edges.move(to: p(6, 6)); edges.addLine(to: p(11, 3.6))
-                context.stroke(edges, with: .color(Brand.paper), style: StrokeStyle(lineWidth: 0.9 * s, lineJoin: .round))
-                return
-            case .value:
-                shape = Path(ellipseIn: CGRect(x: s, y: s, width: 10 * s, height: 10 * s))
-            case .definition:
-                shape.move(to: p(6, 1.2))
-                shape.addLine(to: p(11.2, 10.6))
-                shape.addLine(to: p(0.8, 10.6))
-                shape.closeSubpath()
-            case .logic:
-                shape.move(to: p(6, 0.8))
-                shape.addLine(to: p(11.2, 6))
-                shape.addLine(to: p(6, 11.2))
-                shape.addLine(to: p(0.8, 6))
-                shape.closeSubpath()
-            case .unknown:
-                return
-            }
-            context.fill(shape, with: .color(Brand.ink))
-        }
-        .accessibilityHidden(true)
     }
 }
 
@@ -200,7 +39,7 @@ struct FactsView: View {
                     }
                     .padding(.vertical, 11)
                     .padding(.horizontal, 14)
-                    .paperSurface(radius: 14)
+                    .paperSurface(radius: 14, fill: Brand.ivory)
                 }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -230,7 +69,16 @@ struct FactCheckView: View {
     var body: some View {
         let claims = factCheck.status == .checked ? factCheck.claims : []
         VStack(alignment: .leading, spacing: 10) {
-            SectionTitle(text: L10n.factcheckTitle(lang))
+            HStack {
+                SectionTitle(text: L10n.factcheckTitle(lang))
+                Spacer(minLength: 8)
+                Text(L10n.premiumBadge(lang))
+                    .brandText(TypeStyle(face: .inter, weight: 600, size: 11, lineHeight: 1.2, textStyle: .caption2, maxScale: 1.6))
+                    .foregroundStyle(Brand.paper)
+                    .padding(.horizontal, 8)
+                    .padding(.vertical, 3)
+                    .background(Capsule().fill(Brand.ink))
+            }
             if claims.isEmpty {
                 Text(Self.emptyText(factCheck, disputeType: disputeType, lang: lang))
                     .brandText(.slotText)

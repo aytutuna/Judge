@@ -54,7 +54,7 @@ enum TwoSidedDisplay {
     }
 }
 
-/// "What would change this verdict": short, inside the card.
+/// "What would change this verdict": short, on the details screen.
 struct WouldChangeBlock: View {
     let items: [String]
     let lang: AppLang
@@ -63,8 +63,7 @@ struct WouldChangeBlock: View {
         let list = Array(items.filter { !$0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }.prefix(TwoSidedDisplay.maxWouldChange))
         if !list.isEmpty {
             VStack(alignment: .leading, spacing: 8) {
-                Kicker(text: L10n.twoSidedWouldChange(lang))
-                    .accessibilityAddTraits(.isHeader)
+                SectionTitle(text: L10n.twoSidedWouldChange(lang))
                 ForEach(Array(list.enumerated()), id: \.offset) { _, item in
                     HStack(alignment: .firstTextBaseline, spacing: 8) {
                         Text(verbatim: "•")
@@ -78,14 +77,12 @@ struct WouldChangeBlock: View {
                 }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(14)
-            .paperSurface(radius: 18, fill: Brand.ivory)
             .accessibilityElement(children: .contain)
         }
     }
 }
 
-/// Agreed and disputed facts of a two-sided verdict, below the card. Each
+/// Agreed and disputed facts of a two-sided verdict, on the details screen. Each
 /// finding says its side in words; the decisive dispute also gets a dashed
 /// frame and its own label.
 struct TwoSidedFactsView: View {
@@ -102,8 +99,7 @@ struct TwoSidedFactsView: View {
             VStack(alignment: .leading, spacing: 22) {
                 if !agreed.isEmpty {
                     VStack(alignment: .leading, spacing: 8) {
-                        Kicker(text: L10n.twoSidedAgreed(lang))
-                            .accessibilityAddTraits(.isHeader)
+                        SectionTitle(text: L10n.twoSidedAgreed(lang))
                         ForEach(Array(agreed.enumerated()), id: \.offset) { _, fact in
                             HStack(alignment: .firstTextBaseline, spacing: 10) {
                                 HStack(spacing: -3) {
@@ -119,14 +115,13 @@ struct TwoSidedFactsView: View {
                             }
                             .padding(.vertical, 11)
                             .padding(.horizontal, 14)
-                            .paperSurface(radius: 14)
+                            .paperSurface(radius: 14, fill: Brand.ivory)
                         }
                     }
                 }
                 if !disputed.isEmpty {
                     VStack(alignment: .leading, spacing: 10) {
-                        Kicker(text: L10n.twoSidedDisputed(lang))
-                            .accessibilityAddTraits(.isHeader)
+                        SectionTitle(text: L10n.twoSidedDisputed(lang))
                         ForEach(Array(disputed.enumerated()), id: \.offset) { index, fact in
                             dispute(fact, decisive: index == decisiveAt)
                         }
