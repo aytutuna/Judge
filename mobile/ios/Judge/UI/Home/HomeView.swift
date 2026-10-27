@@ -193,7 +193,7 @@ struct HomeView: View {
                     .id(HomeModel.evidenceAnchor)
                     .padding(.top, 4)
             }
-            if !mine, app.casesOn, home.otherSide.isEmpty {
+            if !mine, app.casesOn, home.otherSide.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
                 sendLink(lang, home: home)
             }
         }
