@@ -1,5 +1,6 @@
 package com.okjudge.judge.ui.verdict
 
+import androidx.lifecycle.viewModelScope
 import com.okjudge.judge.FakeHistory
 import com.okjudge.judge.Fixtures
 import com.okjudge.judge.core.api.JudgeApi
@@ -13,7 +14,9 @@ import com.okjudge.judge.core.model.VerdictAppealView
 import com.okjudge.judge.core.model.VerdictRounds
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.job
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
@@ -44,6 +47,7 @@ class VerdictAppealViewModelTest {
     private val id = outcome.id
     private val applied = Collections.synchronizedList(mutableListOf<Entitlement>())
     private var keys = 0
+    private val vms = mutableListOf<VerdictAppealViewModel>()
 
     private val get get() = "GET /api/v1/verdicts/$id"
     private val post get() = "POST /api/v1/verdicts/$id/appeals"
@@ -60,6 +64,8 @@ class VerdictAppealViewModelTest {
 
     @After
     fun tearDown() {
+        // A round's last re-read can still be running on Main; resetting Main under it throws.
+        runBlocking { vms.forEach { it.viewModelScope.coroutineContext.job.cancelAndJoin() } }
         server.close()
         Dispatchers.resetMain()
     }
@@ -72,7 +78,7 @@ class VerdictAppealViewModelTest {
         history,
         onEntitlement = { applied += it },
         newKey = { "vk-${++keys}" },
-    )
+    ).also { vms += it }
 
     private suspend fun VerdictAppealViewModel.until(predicate: (VerdictAppealUiState) -> Boolean): VerdictAppealUiState =
         withTimeout(5_000) { state.first(predicate) }
