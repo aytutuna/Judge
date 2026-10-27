@@ -17,6 +17,7 @@ import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollTo
 import com.okjudge.judge.Fixtures
 import com.okjudge.judge.core.display.Errors
+import com.okjudge.judge.core.model.AppealGate
 import com.okjudge.judge.core.model.CaseListResponse
 import com.okjudge.judge.core.model.CaseView
 import com.okjudge.judge.core.model.WireJson
@@ -163,6 +164,21 @@ class CaseScreensTest {
         compose.onNodeWithTag(CaseTags.APPEAL_NOTE).assertTextContains(en.errorPremiumRequired)
         compose.onNodeWithTag(CaseTags.APPEAL_PRICING).performClick()
         assertEquals(1, pricing)
+    }
+
+    @Test
+    fun aRefusedRound_bringsTheSheetBack_withWhy() {
+        val judging = stateOf("appeal_judging").let { st ->
+            st.copy(view = st.view!!.copy(appeals = st.view!!.appeals.map { it.copy(party = "a") }))
+        }
+        var state by mutableStateOf(judging)
+        compose.setContent { Themed(AppLang.EN) { CaseScreen(state, false, CaseActions(), true) } }
+        compose.onNodeWithTag(CaseTags.APPEAL_NOTE).assertTextContains(en.appealJudging)
+        val v = judging.view!!
+        state = judging.copy(
+            view = v.copy(appeals = v.appeals.map { it.copy(status = "failed", error = "refused") }, appeal = AppealGate(allowed = true)),
+        )
+        compose.onNodeWithText(en.appealRefused).assertExists()
     }
 
     @Test

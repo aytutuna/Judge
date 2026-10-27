@@ -176,9 +176,13 @@ fun CaseScreen(
     val kicker = if (view?.oneSided == true) s.caseKickerOneSided else s.caseKicker
     val current = view?.current?.takeIf { view.status == CaseStatus.JUDGED }
     val area = view?.let(CaseLogic::appealArea) ?: AppealArea.None
+    var wasJudging by remember { mutableStateOf(false) }
     LaunchedEffect(area) {
         // Sent, or locked in the meantime: the sheet has nothing left to do.
         if (!area.opensSheet) appealOpen = false
+        // The round failed: back to the form, which says why.
+        if (wasJudging && area is AppealArea.Form && area.failed != null) appealOpen = true
+        wasJudging = area == AppealArea.Judging
     }
     val addContext: (() -> Unit)? = if (area.opensSheet) ({ appealOpen = true }) else null
 
