@@ -21,7 +21,8 @@ import com.okjudge.judge.ui.theme.Palette
 import com.okjudge.judge.ui.verdict.CardActions
 import com.okjudge.judge.ui.verdict.TranslationStatus
 import com.okjudge.judge.ui.verdict.TranslationView
-import com.okjudge.judge.ui.verdict.VerdictContent
+import com.okjudge.judge.ui.verdict.RulingSummary
+import com.okjudge.judge.ui.verdict.VerdictDetails
 import java.io.File
 
 object UiTestSupport {
@@ -49,21 +50,29 @@ fun Themed(lang: AppLang, content: @Composable () -> Unit) {
 
 /**
  * A fixture sample rendered like a fresh verdict (labels from its name map,
- * real names restored in the text as VerdictRoute does). Shown in another
+ * real names restored in the text as VerdictRoute does): its details, or
+ * the ruling at a glance with [summary]. Shown in another
  * language, it carries the fixture translation when there is one for it (as
  * the iOS screenshot states do), unless [status] asks for a specific pill.
  */
 @Composable
-fun SampleVerdict(outcome: VerdictOutcome, lang: AppLang, modifier: Modifier = Modifier, status: TranslationStatus = TranslationStatus.ORIGINAL) {
+fun SampleVerdict(
+    outcome: VerdictOutcome,
+    lang: AppLang,
+    modifier: Modifier = Modifier,
+    status: TranslationStatus = TranslationStatus.ORIGINAL,
+    summary: Boolean = false,
+) {
     val selfLang = ContentLang.verdictLang(outcome.result.result)
     val s = UiTestSupport.s(lang)
-    VerdictContent(
-        view = sampleView(outcome, lang, status).personalized(outcome.nameMap, selfLang),
-        parties = PartyNames.partyNames(outcome.nameMap, selfLang, s),
-        restoredNames = PartyNames.restoredNames(outcome.nameMap, selfLang),
-        actions = CardActions(onShare = {}, onCopy = {}, copied = false),
-        modifier = modifier,
-    )
+    val view = sampleView(outcome, lang, status).personalized(outcome.nameMap, selfLang)
+    val parties = PartyNames.partyNames(outcome.nameMap, selfLang, s)
+    val actions = CardActions(onShare = {}, onCopy = {}, copied = false)
+    if (summary) {
+        RulingSummary(view, parties, actions, onDetails = {}, reducedMotion = true, modifier = modifier)
+    } else {
+        VerdictDetails(view, parties, PartyNames.restoredNames(outcome.nameMap, selfLang), actions, modifier)
+    }
 }
 
 fun sample(name: String): VerdictOutcome = Fixtures.sample(name)

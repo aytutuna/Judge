@@ -8,6 +8,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.test.assertContentDescriptionEquals
 import androidx.compose.ui.test.assertIsEnabled
 import androidx.compose.ui.test.assertIsNotEnabled
 import androidx.compose.ui.test.assertIsNotSelected
@@ -46,8 +47,7 @@ import com.okjudge.judge.ui.judging.JudgingTags
 import com.okjudge.judge.ui.verdict.CardActions
 import com.okjudge.judge.ui.verdict.TranslationStatus
 import com.okjudge.judge.ui.verdict.TranslationView
-import com.okjudge.judge.ui.verdict.VerdictContent
-import com.okjudge.judge.ui.verdict.VerdictThreadHead
+import com.okjudge.judge.ui.verdict.RulingSummary
 import com.okjudge.judge.ui.verdict.VerdictTags
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonObject
@@ -223,8 +223,7 @@ class ScreensTest {
                 val s = UiTestSupport.s(lang)
                 val r = outcome.result.result
                 val parties = PartyNames.partyNames(outcome.nameMap, ContentLang.verdictLang(r), s)
-                // The ruling is read with the headline; the stamp is decorative.
-                compose.onNodeWithContentDescription("${VerdictDisplay.verdictLabel(r, parties, s)}. ", substring = true).assertExists()
+                compose.onNodeWithText(VerdictDisplay.verdictLabel(r, parties, s).uppercase(lang.locale)).assertExists()
                 // The fixture translation stands in for the original in the other language,
                 // with real names restored as the web shows them.
                 if (!r.refused) compose.onNodeWithText(personalizedCrux(name, outcome, lang)).assertExists()
@@ -246,11 +245,12 @@ class ScreensTest {
         val r = outcome.result.result.copy(confidence = 2, runs = listOf("side_b", "side_b", "side_a", "side_b", "side_b"), verdict = "side_b")
         compose.setContent {
             Themed(AppLang.EN) {
-                VerdictContent(
+                RulingSummary(
                     view = TranslationView(r, TranslationStatus.ORIGINAL, AppLang.EN),
                     parties = PartyNames.partyNames(outcome.nameMap, AppLang.EN, en),
-                    restoredNames = emptyList(),
                     actions = CardActions(onShare = {}, onCopy = {}, copied = false),
+                    onDetails = {},
+                    reducedMotion = true,
                     modifier = Modifier.verticalScroll(rememberScrollState()),
                 )
             }
@@ -268,11 +268,12 @@ class ScreensTest {
         var taps = 0
         compose.setContent {
             Themed(AppLang.EN) {
-                VerdictContent(
+                RulingSummary(
                     view = TranslationView(outcome.result.result, TranslationStatus.ORIGINAL, AppLang.EN),
                     parties = PartyNames.partyNames(outcome.nameMap, AppLang.EN, en),
-                    restoredNames = emptyList(),
                     actions = CardActions(onShare = {}, onCopy = {}, copied = false, onAddContext = if (offered) ({ taps++ }) else null),
+                    onDetails = {},
+                    reducedMotion = true,
                     modifier = Modifier.verticalScroll(rememberScrollState()),
                 )
             }
@@ -280,10 +281,9 @@ class ScreensTest {
         compose.onNodeWithTag(VerdictTags.ADD_CONTEXT).assertDoesNotExist()
         compose.onNodeWithText(en.copyLink).assertExists()
         offered = true
-        compose.onNodeWithTag(VerdictTags.ADD_CONTEXT).assertTextEquals(en.appealTitle).performClick()
+        compose.onNodeWithTag(VerdictTags.ADD_CONTEXT).assertTextEquals(en.appAppealTitle).performClick()
         assertEquals(1, taps)
-        // Copy keeps its name for screen readers when it shrinks to the icon.
-        compose.onNodeWithContentDescription(en.copyLink).assertExists()
+        compose.onNodeWithText(en.copyLink).assertDoesNotExist()
     }
 
     @Test
@@ -295,18 +295,57 @@ class ScreensTest {
         compose.setContent { Themed(AppLang.EN) { SampleVerdict(outcome, AppLang.EN, modifier = Modifier.verticalScroll(rememberScrollState())) } }
         compose.onNodeWithText(if (parties.aIsSelf) s.bestPointSelf else s.bestPointOf(parties.nameA)).assertExists()
         compose.onNodeWithText(s.cruxShort).assertExists()
-        compose.onNodeWithText(s.bedrock).assertExists()
+        compose.onNodeWithText(s.appVerdictSides).assertExists()
         compose.onNodeWithText(s.share).assertExists()
         compose.onNodeWithText(s.copyLink).assertExists()
     }
 
     @Test
-    fun verdictThread_showsTheArgumentAndHowFarTheJudgesAgreed() {
+    fun rulingSummary_leansTowardTheWinner_andItsRowsOpenTheDetails() {
         val en = UiTestSupport.s(AppLang.EN)
-        val r = sample("win_b_named").result.result
-        compose.setContent { Themed(AppLang.EN) { VerdictThreadHead("Hot dogs are sandwiches, says Sam.", r, reducedMotion = true) } }
-        compose.onNodeWithText("Hot dogs are sandwiches, says Sam.").assertExists()
-        compose.onNodeWithText(VerdictDisplay.judgesLabel(r, en)).assertExists()
+        val outcome = sample("win_b_named")
+        val r = outcome.result.result
+        val parties = PartyNames.partyNames(outcome.nameMap, ContentLang.verdictLang(r), en)
+        var opened = 0
+        compose.setContent {
+            Themed(AppLang.EN) {
+                RulingSummary(
+                    view = TranslationView(r, TranslationStatus.ORIGINAL, AppLang.EN),
+                    parties = parties,
+                    actions = CardActions(onShare = {}, onCopy = {}, copied = false),
+                    onDetails = { opened++ },
+                    reducedMotion = true,
+                    modifier = Modifier.verticalScroll(rememberScrollState()),
+                )
+            }
+        }
+        compose.onNodeWithTag(VerdictTags.LEAN).assertContentDescriptionEquals(en.appVerdictLeanTo(parties.nameB))
+        compose.onNodeWithText(en.appVerdictVs).assertExists()
+        compose.onNodeWithTag(VerdictTags.CRUX_ROW).performClick()
+        compose.onNodeWithTag(VerdictTags.SIDES_ROW).performClick()
+        compose.onNodeWithTag(VerdictTags.BEST_ROW).assertTextEquals(if (parties.aIsSelf) en.bestPointSelf else en.bestPointOf(parties.nameA)).performClick()
+        assertEquals(3, opened)
+        // The crux itself waits for the details.
+        compose.onNodeWithText(r.crux).assertDoesNotExist()
+    }
+
+    @Test
+    fun rulingSummary_refusal_hasNoLeanAndNoRows() {
+        val outcome = sample("win_b_named")
+        val r = outcome.result.result.copy(modelRefused = true)
+        compose.setContent {
+            Themed(AppLang.EN) {
+                RulingSummary(
+                    view = TranslationView(r, TranslationStatus.ORIGINAL, AppLang.EN),
+                    parties = PartyNames.partyNames(outcome.nameMap, AppLang.EN, UiTestSupport.s(AppLang.EN)),
+                    actions = CardActions(onShare = {}, onCopy = {}, copied = false),
+                    onDetails = {},
+                    reducedMotion = true,
+                )
+            }
+        }
+        compose.onNodeWithTag(VerdictTags.LEAN).assertDoesNotExist()
+        compose.onNodeWithTag(VerdictTags.CRUX_ROW).assertDoesNotExist()
     }
 
     @Test

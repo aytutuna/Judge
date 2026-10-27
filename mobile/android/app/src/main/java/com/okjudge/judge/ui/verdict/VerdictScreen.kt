@@ -4,11 +4,10 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Arrangement
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -23,44 +22,36 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.runtime.withFrameNanos
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.okjudge.judge.core.cases.AppealArea
 import com.okjudge.judge.core.display.PartyNames
-import com.okjudge.judge.core.display.VerdictDisplay
-import com.okjudge.judge.core.model.VerdictResult
 import com.okjudge.judge.i18n.LocalLang
 import com.okjudge.judge.i18n.LocalStrings
 import com.okjudge.judge.ui.cases.AppealFormActions
-import com.okjudge.judge.ui.cases.AppealSection
-import com.okjudge.judge.ui.components.ArgumentBubble
-import com.okjudge.judge.ui.components.JudgesBadge
-import com.okjudge.judge.ui.components.SceneView
+import com.okjudge.judge.ui.cases.AppealNote
+import com.okjudge.judge.ui.cases.AppealSheet
+import com.okjudge.judge.ui.cases.opensSheet
 import com.okjudge.judge.ui.components.TopBar
-import com.okjudge.judge.ui.components.warmShadow
 import com.okjudge.judge.ui.judging.rememberReducedMotion
-import com.okjudge.judge.ui.theme.JudgeShapes
 import com.okjudge.judge.ui.theme.JudgeType
 import com.okjudge.judge.ui.theme.Palette
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 /** Share link for a verdict id: `{SHARE_BASE_URL}/v/<id>`. */
 fun shareUrl(shareBaseUrl: String, id: String): String = "${shareBaseUrl.trimEnd('/')}/v/$id"
 
 /**
  * The verdict screen, fed by a saved history row (fresh verdicts are saved
- * before the app navigates here, so this works offline and after process death).
- * A fresh verdict stays in its thread: the argument, the judges' badge and
- * the settled scene above the card; the header's "+" starts the next one.
- * With [appeal] the writer can add context below the verdict; a round's
- * verdict replaces the saved one and the screen goes back up to its banner.
+ * before the app navigates here, so this works offline and after process
+ * death): the ruling, and its details pushed over it. With [appeal] the
+ * writer can add context and appeal in a sheet; a round's verdict replaces
+ * the saved one and the screen goes back up to its banner.
  */
 @Composable
 fun VerdictRoute(
@@ -68,9 +59,7 @@ fun VerdictRoute(
     viewModel: VerdictViewModel,
     shareBaseUrl: String,
     onBack: (() -> Unit)?,
-    thread: Boolean,
     onNew: (() -> Unit)?,
-    argument: String? = null,
     fromHome: Boolean = false,
     appeal: VerdictAppealViewModel? = null,
     evidenceOn: Boolean = false,
@@ -84,7 +73,7 @@ fun VerdictRoute(
     val context = LocalContext.current
     val s = LocalStrings.current
     val scroll = rememberScrollState()
-    val scope = rememberCoroutineScope()
+    var details by rememberSaveable(id) { mutableStateOf(false) }
     var copied by remember { mutableStateOf(false) }
     LaunchedEffect(copied) {
         if (copied) {
@@ -93,12 +82,20 @@ fun VerdictRoute(
         }
     }
     LaunchedEffect(appealState?.finished) {
-        if (appealState?.finished == true) scroll.animateScrollTo(0)
+        if (appealState?.finished == true) {
+            details = false
+            scroll.animateScrollTo(0)
+        }
     }
+    BackHandler(enabled = details) { details = false }
     val url = shareUrl(shareBaseUrl, id)
 
     Column(Modifier.fillMaxSize()) {
-        TopBar(onBack = onBack, onNew = onNew, backLabel = if (fromHome) s.homeKicker else s.appHistoryTitle)
+        if (details) {
+            TopBar(onBack = { details = false }, onNew = onNew, backLabel = s.appVerdictBack, backText = s.appVerdictBack)
+        } else {
+            TopBar(onBack = onBack, onNew = onNew, backLabel = if (fromHome) s.homeKicker else s.appHistoryTitle)
+        }
         val saved = state.saved
         val view = state.view
         if (saved == null || view == null) {
@@ -113,84 +110,52 @@ fun VerdictRoute(
         }
         val selfLang = saved.lang
         val parties = PartyNames.partyNames(saved.nameMap, selfLang, s)
-        val restored = remember(saved.nameMap, selfLang) { PartyNames.restoredNames(saved.nameMap, selfLang) }
         val shown = remember(view, saved.nameMap, selfLang) { view.personalized(saved.nameMap, selfLang) }
+        val area = appealState?.area ?: AppealArea.None
+        val actions = CardActions(
+            onShare = { shareVerdict(context, s.appShareTitle, view.result.headline, s.shareText, url) },
+            onCopy = {
+                copyLink(context, url)
+                copied = true
+            },
+            copied = copied,
+            onAddContext = if (appeal != null && appealState?.offered == true) appeal::open else null,
+        )
+        val width = Modifier.widthIn(max = 640.dp).fillMaxWidth()
         Column(
             Modifier
                 .weight(1f)
                 .fillMaxWidth()
                 .verticalScroll(scroll)
-                .padding(horizontal = 16.dp, vertical = 12.dp),
+                .padding(horizontal = 16.dp, vertical = 4.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            if (thread) {
-                VerdictThreadHead(
-                    argument = argument,
-                    result = shown.result,
-                    reducedMotion = rememberReducedMotion(),
-                    modifier = Modifier.widthIn(max = 640.dp).fillMaxWidth().padding(bottom = 16.dp),
-                )
-            }
-            VerdictContent(
-                view = shown,
-                parties = parties,
-                restoredNames = restored,
-                actions = CardActions(
-                    onShare = { shareVerdict(context, s.appShareTitle, view.result.headline, s.shareText, url) },
-                    onCopy = {
-                        copyLink(context, url)
-                        copied = true
-                    },
-                    copied = copied,
-                    onAddContext = if (appeal != null && appealState?.offered == true) ({
-                        appeal.open()
-                        scope.launch {
-                            // The panel is laid out a frame later.
-                            withFrameNanos { }
-                            scroll.animateScrollTo(scroll.maxValue)
-                        }
-                    }) else null,
-                ),
-                modifier = Modifier.widthIn(max = 640.dp).fillMaxWidth().padding(bottom = 32.dp),
-            )
-            if (appeal != null && appealState?.panel == true) {
-                AppealSection(
-                    area = appealState.area,
-                    draft = appealState.draft,
-                    evidenceOn = evidenceOn,
-                    lead = s.appealLeadVerdict,
-                    actions = AppealFormActions(
-                        onText = appeal::onText,
-                        onAddEvidence = appeal::onAddEvidence,
-                        onRemoveEvidence = appeal::onRemoveEvidence,
-                        onSubmit = appeal::submit,
-                        onSignIn = onSignIn,
-                        onPricing = onPricing,
-                    ),
-                    modifier = Modifier.widthIn(max = 640.dp).fillMaxWidth().padding(bottom = 32.dp),
-                )
+            if (details) {
+                val restored = remember(saved.nameMap, selfLang) { PartyNames.restoredNames(saved.nameMap, selfLang) }
+                VerdictDetails(shown, parties, restored, actions, width.padding(bottom = 32.dp))
+            } else {
+                RulingSummary(shown, parties, actions, onDetails = { details = true }, reducedMotion = rememberReducedMotion(), modifier = width)
+                // The sheet takes the form; re-judging, or why no more context fits, shows here.
+                if (appealState?.panel == true) AppealNote(area, width.padding(top = 16.dp))
+                Spacer(Modifier.height(32.dp))
             }
         }
-    }
-}
-
-/** The thread above a fresh verdict: what was argued, how far the judges agreed and the settled balance. */
-@Composable
-fun VerdictThreadHead(argument: String?, result: VerdictResult, reducedMotion: Boolean, modifier: Modifier = Modifier) {
-    val s = LocalStrings.current
-    Column(modifier, verticalArrangement = Arrangement.spacedBy(16.dp)) {
-        if (argument != null) ArgumentBubble(argument, Modifier.padding(bottom = 12.dp))
-        JudgesBadge(VerdictDisplay.judgesLabel(result, s))
-        Box(
-            Modifier
-                .fillMaxWidth()
-                .warmShadow(3.dp, JudgeShapes.card)
-                .clip(JudgeShapes.card)
-                .background(Palette.paper)
-                .border(1.dp, Palette.line, JudgeShapes.card)
-                .padding(12.dp),
-        ) {
-            SceneView(VerdictDisplay.sceneVerdict(result), reducedMotion, Modifier.fillMaxWidth().height(180.dp))
+        if (appeal != null && appealState != null && appealState.open && area.opensSheet) {
+            AppealSheet(
+                area = area,
+                draft = appealState.draft,
+                evidenceOn = evidenceOn,
+                cost = s.appAppealCost(appealState.left.toString()),
+                actions = AppealFormActions(
+                    onText = appeal::onText,
+                    onAddEvidence = appeal::onAddEvidence,
+                    onRemoveEvidence = appeal::onRemoveEvidence,
+                    onSubmit = appeal::submit,
+                    onSignIn = onSignIn,
+                    onPricing = onPricing,
+                ),
+                onClose = appeal::close,
+            )
         }
     }
 }

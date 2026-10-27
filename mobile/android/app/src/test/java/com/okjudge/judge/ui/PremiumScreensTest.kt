@@ -395,8 +395,8 @@ class PremiumScreensTest {
                 SampleVerdict(outcome, AppLang.EN, Modifier.verticalScroll(rememberScrollState()).padding(16.dp))
             }
         }
-        compose.onNodeWithText(en.premiumBadge.uppercase(Locale.US)).assertExists()
-        compose.onNodeWithText(en.factcheckTitle.uppercase(Locale.US)).assertExists()
+        compose.onNodeWithText(en.premiumBadge).assertExists()
+        compose.onNodeWithText(en.factcheckTitle).assertExists()
         compose.onNodeWithText(en.factcheckStatusSupported.uppercase(Locale.US)).assertExists()
         compose.onNodeWithText("example.com").assertExists()
         compose.onNodeWithText(en.panelPremium, substring = true).assertExists()
@@ -419,13 +419,12 @@ class PremiumScreensTest {
         compose.setContent {
             Themed(AppLang.EN) { SampleVerdict(outcome, AppLang.EN, Modifier.verticalScroll(rememberScrollState()).padding(16.dp)) }
         }
-        compose.onNodeWithText(en.twoSidedBadge.uppercase(Locale.US)).assertExists()
-        compose.onNodeWithText(en.twoSidedAgreed.uppercase(Locale.US)).assertExists()
-        compose.onNodeWithText(en.twoSidedDisputed.uppercase(Locale.US)).assertExists()
+        compose.onNodeWithText(en.twoSidedAgreed).assertExists()
+        compose.onNodeWithText(en.twoSidedDisputed).assertExists()
         compose.onNodeWithText(en.twoSidedDecisive.uppercase(Locale.US)).assertExists()
         compose.onNodeWithText(en.twoSidedFindingSelf).assertExists()
         compose.onNodeWithText(en.twoSidedFindingUnsettled).assertExists()
-        compose.onNodeWithText(en.twoSidedWouldChange.uppercase(Locale.US)).assertExists()
+        compose.onNodeWithText(en.twoSidedWouldChange).assertExists()
         compose.onNodeWithText(en.evidenceUsed("0", "1"), substring = true).assertExists()
         compose.onNodeWithText(en.appealOutcomeOverturned).assertExists()
         compose.onNodeWithText(en.appealBy("Sam")).assertExists()

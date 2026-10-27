@@ -3,6 +3,7 @@ package com.okjudge.judge.ui
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.test.assertContentDescriptionEquals
 import androidx.compose.ui.test.assertIsEnabled
 import androidx.compose.ui.test.assertIsNotEnabled
 import androidx.compose.ui.test.assertTextContains
@@ -31,6 +32,8 @@ import com.okjudge.judge.ui.cases.CaseViewModel
 import com.okjudge.judge.ui.history.HistoryScreen
 import com.okjudge.judge.ui.history.HistoryTags
 import com.okjudge.judge.ui.premium.EvidenceTags
+import com.okjudge.judge.ui.verdict.VerdictTags
+import java.util.Locale
 import kotlinx.serialization.json.jsonObject
 import org.junit.Assert.assertEquals
 import org.junit.Rule
@@ -68,14 +71,18 @@ class CaseScreensTest {
             state = stateOf(name)
             compose.waitForIdle()
             val v = view(name)
-            compose.onNodeWithTag(CaseTags.STATUS).assertTextContains(en.text(v.status.key)!!)
+            if (v.statusRaw == "awaiting_respondent") {
+                compose.onNodeWithText(en.appCaseWaitingKicker.uppercase(Locale.US)).assertExists()
+            } else {
+                compose.onNodeWithTag(CaseTags.STATUS).assertTextContains(en.text(v.status.key)!!)
+            }
             when (name) {
-                "waiting_for_respondent" -> compose.onNodeWithText(en.caseNotYet).assertExists()
+                "waiting_for_respondent" -> compose.onNodeWithText(en.appCaseStepThemAnon).assertExists()
                 "respondent_answered" -> compose.onNodeWithText(en.caseAnswered).assertExists()
                 "judging" -> compose.onNodeWithText(en.caseAnswered).assertExists()
                 "failed" -> compose.onNodeWithTag(CaseTags.BANNER).assertTextContains(en.errorQuota)
                 "expired" -> compose.onNodeWithTag(CaseTags.BANNER).assertTextContains(en.caseExpiredBody)
-                "waiting_free" -> compose.onNodeWithText(en.caseNotYet).assertExists()
+                "waiting_free" -> compose.onNodeWithText(en.appCaseStepThemAnon).assertExists()
                 "removed" -> compose.onNodeWithTag(CaseTags.BANNER).assertTextContains(en.caseRemovedBanner)
                 "judged_one_sided" -> compose.onNodeWithText(en.caseOneSided).assertExists()
                 "appeal_judging" -> compose.onNodeWithTag(CaseTags.APPEAL_NOTE).assertTextContains(en.appealBusy)
@@ -101,7 +108,7 @@ class CaseScreensTest {
         )
         compose.setContent { Themed(AppLang.EN) { CaseScreen(stateOf("waiting_for_respondent"), true, actions, true) } }
         val url = view("waiting_for_respondent").inviteUrl!!
-        compose.onNodeWithTag(CaseTags.INVITE_URL).assertTextContains(url)
+        compose.onNodeWithTag(CaseTags.INVITE_URL).assertContentDescriptionEquals(url)
         compose.onNodeWithTag(CaseTags.COPY).performClick()
         compose.onNodeWithText(en.caseInviteCopied).assertExists()
         compose.onNodeWithTag(CaseTags.SHARE).performClick()
@@ -123,7 +130,10 @@ class CaseScreensTest {
                 CaseScreen(state, false, CaseActions(onAppealText = { state = state.copy(appealText = it) }, onSubmitAppeal = { sent++ }), true)
             }
         }
-        compose.onNodeWithTag(CaseTags.APPEAL_SUBMIT).performScrollTo().assertIsNotEnabled()
+        compose.onNodeWithTag(CaseTags.APPEAL_SUBMIT).assertDoesNotExist()
+        compose.onNodeWithTag(VerdictTags.ADD_CONTEXT).performScrollTo().performClick()
+        compose.onNodeWithTag(CaseTags.APPEAL_SUBMIT).assertIsNotEnabled()
+        compose.onNodeWithText(en.appAppealCostCase).assertExists()
         state = state.copy(appealText = "x".repeat(19))
         compose.onNodeWithTag(CaseTags.APPEAL_SUBMIT).assertIsNotEnabled()
         state = state.copy(appealText = "x".repeat(20))
@@ -136,6 +146,7 @@ class CaseScreensTest {
     fun appealForm_offersAScreenshot_onlyOnAPremiumCase() {
         var state by mutableStateOf(stateOf("judged"))
         compose.setContent { Themed(AppLang.EN) { CaseScreen(state, evidenceOn = true, actions = CaseActions(), reducedMotion = true) } }
+        compose.onNodeWithTag(VerdictTags.ADD_CONTEXT).performScrollTo().performClick()
         compose.onNodeWithTag(CaseTags.APPEAL_SUBMIT).assertExists()
         compose.onAllNodesWithTag(EvidenceTags.ADD).assertCountEquals(1)
         state = stateOf("judged_free")
@@ -148,8 +159,9 @@ class CaseScreensTest {
     fun appealBlocked_forTheOwner_saysWhy_andOffersPricing() {
         var pricing = 0
         compose.setContent { Themed(AppLang.EN) { CaseScreen(stateOf("judged_one_sided"), true, CaseActions(onPricing = { pricing++ }), true) } }
+        compose.onNodeWithTag(VerdictTags.ADD_CONTEXT).performScrollTo().performClick()
         compose.onNodeWithTag(CaseTags.APPEAL_NOTE).assertTextContains(en.errorPremiumRequired)
-        compose.onNodeWithTag(CaseTags.APPEAL_PRICING).performScrollTo().performClick()
+        compose.onNodeWithTag(CaseTags.APPEAL_PRICING).performClick()
         assertEquals(1, pricing)
     }
 
@@ -169,6 +181,31 @@ class CaseScreensTest {
     }
 
     @Test
+    fun awaiting_namesWhoItWaitsFor() {
+        var judgeNow = 0
+        compose.setContent {
+            Themed(AppLang.EN) {
+                CaseScreen(stateOf("waiting_for_respondent"), true, CaseActions(onJudgeNow = { judgeNow++ }), true, otherName = " Sam ")
+            }
+        }
+        compose.onNodeWithText(en.appCaseWaitingFor("Sam")).assertExists()
+        compose.onNodeWithText(en.appCaseSendTo("Sam")).assertExists()
+        compose.onNodeWithText(en.appCaseStepThem("Sam")).assertExists()
+        compose.onNodeWithTag(CaseTags.JUDGE_NOW).assertTextContains(en.appCaseJudgeNowWithout("Sam")).performClick()
+        compose.onNodeWithTag(CaseTags.CONFIRM).performClick()
+        assertEquals(1, judgeNow)
+    }
+
+    @Test
+    fun judged_rowsOpenTheDetails_andBackReturns() {
+        compose.setContent { Themed(AppLang.EN) { CaseScreen(stateOf("judged"), true, CaseActions(), true) } }
+        compose.onNodeWithText(en.appVerdictBack).assertDoesNotExist()
+        compose.onNodeWithTag(VerdictTags.CRUX_ROW).performScrollTo().performClick()
+        compose.onNodeWithText(en.appVerdictBack).assertExists().performClick()
+        compose.onNodeWithTag(VerdictTags.CRUX_ROW).assertExists()
+    }
+
+    @Test
     fun premiumCase_mentionsTheHeldUnit_freeCaseDoesNot() {
         val view = view("waiting_for_respondent")
         val held = Errors.formatDate(AppLang.EN, view.expiresAt)?.let { en.caseHeld(it) } ?: en.caseHeldSoon
@@ -177,7 +214,7 @@ class CaseScreensTest {
         compose.onAllNodesWithText(held).assertCountEquals(1)
         state = stateOf("waiting_free")
         compose.waitForIdle()
-        compose.onNodeWithText(en.caseNotYet).assertExists()
+        compose.onNodeWithText(en.appCaseStepThemAnon).assertExists()
         compose.onAllNodesWithText(held).assertCountEquals(0)
         compose.onNodeWithTag(CaseTags.JUDGE_NOW).performClick()
         compose.onNodeWithText(en.caseJudgeNowConfirm).assertExists()

@@ -38,16 +38,30 @@ object TopBarTags {
 /**
  * Brand row with an optional back button and the "+" that starts a new
  * argument ([onNew], null hides it). `backLabel` names where back goes,
- * for screen readers.
+ * for screen readers; `backText` writes it next to the arrow as well.
  */
 @Composable
-fun TopBar(onBack: (() -> Unit)?, onNew: (() -> Unit)?, modifier: Modifier = Modifier, backLabel: String? = null) {
+fun TopBar(onBack: (() -> Unit)?, onNew: (() -> Unit)?, modifier: Modifier = Modifier, backLabel: String? = null, backText: String? = null) {
     val s = LocalStrings.current
     Row(
         modifier.fillMaxWidth().height(56.dp).padding(horizontal = 12.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        if (onBack != null) {
+        if (onBack != null && backText != null) {
+            Row(
+                Modifier
+                    .height(44.dp)
+                    .clip(CircleShape)
+                    .semantics(mergeDescendants = true) { role = Role.Button }
+                    .clickable(onClick = onBack)
+                    .padding(start = 8.dp, end = 12.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(4.dp),
+            ) {
+                TintedIcon(remember { JudgeIcons.back(Palette.ink) }, 18)
+                Text(backText, style = JudgeType.slotTitle.copy(fontSize = 15.sp))
+            }
+        } else if (onBack != null) {
             RoundButton(backLabel ?: s.appCancel, onBack) {
                 TintedIcon(remember { JudgeIcons.back(Palette.ink) }, 20)
             }

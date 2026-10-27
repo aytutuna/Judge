@@ -9,6 +9,8 @@ import com.okjudge.judge.core.cases.AppealArea
 import com.okjudge.judge.core.display.UiError
 import com.okjudge.judge.core.model.Entitlement
 import com.okjudge.judge.core.model.NameMapping
+import com.okjudge.judge.core.model.VerdictAppealView
+import com.okjudge.judge.core.model.VerdictRounds
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
@@ -116,8 +118,21 @@ class VerdictAppealViewModelTest {
         assertTrue(s.offered)
         assertEquals(AppealArea.Form(null), s.area)
         assertFalse("the panel waits for the card's action", s.panel)
+        assertEquals(2, s.left)
         vm.open()
         assertTrue(vm.until { it.open }.panel)
+        vm.close()
+        assertFalse(vm.until { !it.open }.panel)
+    }
+
+    @Test
+    fun roundsLeft_countOnlyJudgedRounds() {
+        fun left(vararg statuses: String) =
+            VerdictAppealUiState(rounds = VerdictRounds(statuses.map { VerdictAppealView(status = it) }, null)).left
+        assertEquals(2, left())
+        assertEquals("a failed round gave its unit back", 2, left("failed"))
+        assertEquals(1, left("judged", "failed"))
+        assertEquals(0, left("judged", "judged"))
     }
 
     @Test

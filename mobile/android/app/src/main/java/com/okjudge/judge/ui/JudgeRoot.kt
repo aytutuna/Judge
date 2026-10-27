@@ -90,8 +90,8 @@ import kotlinx.serialization.Serializable
 
 @Serializable data object HomeKey : NavKey
 @Serializable data object JudgingKey : NavKey
-/** [argument]: what a fresh verdict judged, shown above it as the thread. [fromHome]: opened from Recent, so back goes Home. */
-@Serializable data class VerdictKey(val id: String, val fresh: Boolean, val argument: String? = null, val fromHome: Boolean = false) : NavKey
+/** [fresh]: straight from judging, without the tab bar. [fromHome]: opened from Recent, so back goes Home. */
+@Serializable data class VerdictKey(val id: String, val fresh: Boolean, val fromHome: Boolean = false) : NavKey
 @Serializable data object HistoryKey : NavKey
 @Serializable data object SettingsKey : NavKey
 @Serializable data object ClarifyKey : NavKey
@@ -284,9 +284,9 @@ fun JudgeRoot(container: AppContainer, links: StateFlow<Uri?> = MutableStateFlow
                         entry<JudgingKey> {
                             JudgingEntry(
                                 flow = container.verdictFlow,
-                                onDone = { id, argument ->
+                                onDone = { id ->
                                     backStack.removeAll { it is JudgingKey }
-                                    backStack.add(VerdictKey(id, fresh = true, argument = argument))
+                                    backStack.add(VerdictKey(id, fresh = true))
                                 },
                                 onLeave = { backStack.removeAll { it is JudgingKey } },
                                 onNew = newArgument,
@@ -373,9 +373,7 @@ fun JudgeRoot(container: AppContainer, links: StateFlow<Uri?> = MutableStateFlow
                                 viewModel = vm,
                                 shareBaseUrl = container.config.shareBaseUrl,
                                 onBack = if (key.fresh) null else ({ backStack.removeAt(backStack.lastIndex) }),
-                                thread = key.fresh,
                                 onNew = onNew,
-                                argument = key.argument,
                                 fromHome = key.fromHome,
                                 appeal = appeal,
                                 evidenceOn = (providers as? Account.Providers.Ready)?.config?.features?.evidence == true,
@@ -429,6 +427,7 @@ fun JudgeRoot(container: AppContainer, links: StateFlow<Uri?> = MutableStateFlow
                                 state = state,
                                 evidenceOn = (providers as? Account.Providers.Ready)?.config?.features?.evidence == true,
                                 reducedMotion = rememberReducedMotion(),
+                                otherName = key.otherName,
                                 actions = CaseActions(
                                     onBack = if (backStack.size > 1) ({ backStack.removeAt(backStack.lastIndex) }) else null,
                                     onNew = onNew,
@@ -523,7 +522,7 @@ fun JudgeRoot(container: AppContainer, links: StateFlow<Uri?> = MutableStateFlow
 }
 
 @Composable
-private fun JudgingEntry(flow: VerdictFlow, onDone: (String, String?) -> Unit, onLeave: () -> Unit, onNew: () -> Unit) {
+private fun JudgingEntry(flow: VerdictFlow, onDone: (String) -> Unit, onLeave: () -> Unit, onNew: () -> Unit) {
     val state by flow.state.collectAsStateWithLifecycle()
     val reduced = rememberReducedMotion()
     val startedAt = remember { (state as? VerdictFlow.State.Running)?.startedAt ?: System.currentTimeMillis() }
@@ -567,7 +566,7 @@ private fun JudgingEntry(flow: VerdictFlow, onDone: (String, String?) -> Unit, o
         onFinished = {
             if (outcome != null) {
                 flow.acknowledge()
-                onDone(outcome.id, argument)
+                onDone(outcome.id)
             }
         },
         onCancel = {
@@ -578,7 +577,7 @@ private fun JudgingEntry(flow: VerdictFlow, onDone: (String, String?) -> Unit, o
     )
 }
 
-/** The tab bar stays off the thread (judging and the fresh verdict), sign-in and the questions. */
+/** The tab bar stays off judging and the fresh verdict, sign-in and the questions. */
 internal fun showsBottomBar(top: NavKey?): Boolean = when (top) {
     is JudgingKey, is SignInKey, is ClarifyKey -> false
     is VerdictKey -> !top.fresh
