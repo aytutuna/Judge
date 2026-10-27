@@ -97,6 +97,8 @@ object JudgeIcons {
 
     fun back(color: Color) = icon("back", 16f, P("M10 3 5 8l5 5", stroke = color, width = 1.8f))
 
+    fun chevron(color: Color) = icon("chevron", 16f, P("M6 3l5 5-5 5", stroke = color, width = 1.8f))
+
     fun caret(color: Color) = icon("caret", 12f, P("M3 4.5 6 7.5l3-3", stroke = color, width = 1.6f))
 
     fun arrow(color: Color) = icon("arrow", 20f, P("M4 10h12M10.5 4.5 16 10l-5.5 5.5", stroke = color, width = 2f))

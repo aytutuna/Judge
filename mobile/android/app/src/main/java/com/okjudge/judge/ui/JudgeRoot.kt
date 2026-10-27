@@ -90,13 +90,14 @@ import kotlinx.serialization.Serializable
 
 @Serializable data object HomeKey : NavKey
 @Serializable data object JudgingKey : NavKey
-/** [argument]: what a fresh verdict judged, shown above it as the thread. [fromHome]: opened from Recent, so back goes Home. */
-@Serializable data class VerdictKey(val id: String, val fresh: Boolean, val argument: String? = null, val fromHome: Boolean = false) : NavKey
+/** [fresh]: straight from judging, without the tab bar. [fromHome]: opened from Recent, so back goes Home. */
+@Serializable data class VerdictKey(val id: String, val fresh: Boolean, val fromHome: Boolean = false) : NavKey
 @Serializable data object HistoryKey : NavKey
 @Serializable data object SettingsKey : NavKey
 @Serializable data object ClarifyKey : NavKey
 @Serializable data object PricingKey : NavKey
-@Serializable data class CaseKey(val id: String) : NavKey
+/** [otherName]: who a case just created here waits for, as typed on Home. */
+@Serializable data class CaseKey(val id: String, val otherName: String? = null) : NavKey
 
 /** Sign-in; [thenVerdict] when it was opened by "Get the verdict", which goes on after signing in. */
 @Serializable data class SignInKey(val thenVerdict: Boolean) : NavKey
@@ -148,7 +149,7 @@ fun JudgeRoot(container: AppContainer, links: StateFlow<Uri?> = MutableStateFlow
                             // The form's work is now the case: it starts empty next time.
                             clearDraft = true
                             backStack.removeAll { it is ClarifyKey }
-                            backStack.add(CaseKey(nav.id))
+                            backStack.add(CaseKey(nav.id, nav.otherName))
                             container.verdictFlow.caseOpened()
                         }
                     }
@@ -190,7 +191,7 @@ fun JudgeRoot(container: AppContainer, links: StateFlow<Uri?> = MutableStateFlow
             }
 
             Scaffold(
-                containerColor = if (top is HomeKey) Palette.ivory2 else Palette.ivory,
+                containerColor = Palette.ivory,
                 snackbarHost = {
                     SnackbarHost(snackbar) { data ->
                         Snackbar(data, containerColor = Palette.ink, contentColor = Palette.ivory)
@@ -242,8 +243,8 @@ fun JudgeRoot(container: AppContainer, links: StateFlow<Uri?> = MutableStateFlow
                                 if (submitAfterSignIn) {
                                     submitAfterSignIn = false
                                     // Only the request the user saw goes out by itself: if signing in made
-                                    // Premium the effective tier or brought back "Both sides", they choose again.
-                                    if (account.isSignedIn && state.tier == tierAtTap && !state.twoSided && vm.submit(lang) == Submitted.JUDGING) {
+                                    // Premium the effective tier, they choose again.
+                                    if (account.isSignedIn && state.tier == tierAtTap && vm.submit(lang, strings) == Submitted.JUDGING) {
                                         backStack.add(JudgingKey)
                                     }
                                 }
@@ -251,19 +252,21 @@ fun JudgeRoot(container: AppContainer, links: StateFlow<Uri?> = MutableStateFlow
                             HomeScreen(
                                 state = state,
                                 onArgumentChange = vm::onArgumentChange,
-                                onExample = vm::onExample,
+                                onOtherSideChange = vm::onOtherSideChange,
+                                onOtherName = vm::onOtherName,
                                 onPreset = vm::onPreset,
                                 onSubmit = {
                                     // Every verdict needs an account: sign in first, then go on.
                                     if (!account.isSignedIn) {
-                                        if (state.canSubmit && backStack.lastOrNull() !is SignInKey) {
+                                        if (state.canSubmit && state.fits(strings) && backStack.lastOrNull() !is SignInKey) {
                                             tierAtTap = state.tier
                                             backStack.add(SignInKey(thenVerdict = true))
                                         }
-                                    } else if (vm.submit(lang) == Submitted.JUDGING) {
+                                    } else if (vm.submit(lang, strings) == Submitted.JUDGING) {
                                         backStack.add(JudgingKey)
                                     }
                                 },
+                                onSendLink = { vm.sendLink(lang) },
                                 onDismissError = vm::dismissError,
                                 onNew = newArgument,
                                 onOpenPrivacy = { openLink(context, "${container.config.shareBaseUrl.trimEnd('/')}/privacy") },
@@ -273,7 +276,6 @@ fun JudgeRoot(container: AppContainer, links: StateFlow<Uri?> = MutableStateFlow
                                 onPricing = { if (backStack.lastOrNull() !is PricingKey) backStack.add(PricingKey) },
                                 onAddEvidence = vm::onAddEvidence,
                                 onRemoveEvidence = vm::onRemoveEvidence,
-                                onCaseMode = vm::onCaseMode,
                                 onDisplayName = vm::onDisplayName,
                                 onOpenVerdict = { id -> backStack.add(VerdictKey(id, fresh = false, fromHome = true)) },
                                 onAllVerdicts = { backStack.resetTo(listOf(HomeKey, HistoryKey)) },
@@ -282,9 +284,9 @@ fun JudgeRoot(container: AppContainer, links: StateFlow<Uri?> = MutableStateFlow
                         entry<JudgingKey> {
                             JudgingEntry(
                                 flow = container.verdictFlow,
-                                onDone = { id, argument ->
+                                onDone = { id ->
                                     backStack.removeAll { it is JudgingKey }
-                                    backStack.add(VerdictKey(id, fresh = true, argument = argument))
+                                    backStack.add(VerdictKey(id, fresh = true))
                                 },
                                 onLeave = { backStack.removeAll { it is JudgingKey } },
                                 onNew = newArgument,
@@ -371,9 +373,7 @@ fun JudgeRoot(container: AppContainer, links: StateFlow<Uri?> = MutableStateFlow
                                 viewModel = vm,
                                 shareBaseUrl = container.config.shareBaseUrl,
                                 onBack = if (key.fresh) null else ({ backStack.removeAt(backStack.lastIndex) }),
-                                thread = key.fresh,
                                 onNew = onNew,
-                                argument = key.argument,
                                 fromHome = key.fromHome,
                                 appeal = appeal,
                                 evidenceOn = (providers as? Account.Providers.Ready)?.config?.features?.evidence == true,
@@ -427,6 +427,7 @@ fun JudgeRoot(container: AppContainer, links: StateFlow<Uri?> = MutableStateFlow
                                 state = state,
                                 evidenceOn = (providers as? Account.Providers.Ready)?.config?.features?.evidence == true,
                                 reducedMotion = rememberReducedMotion(),
+                                otherName = key.otherName,
                                 actions = CaseActions(
                                     onBack = if (backStack.size > 1) ({ backStack.removeAt(backStack.lastIndex) }) else null,
                                     onNew = onNew,
@@ -521,7 +522,7 @@ fun JudgeRoot(container: AppContainer, links: StateFlow<Uri?> = MutableStateFlow
 }
 
 @Composable
-private fun JudgingEntry(flow: VerdictFlow, onDone: (String, String?) -> Unit, onLeave: () -> Unit, onNew: () -> Unit) {
+private fun JudgingEntry(flow: VerdictFlow, onDone: (String) -> Unit, onLeave: () -> Unit, onNew: () -> Unit) {
     val state by flow.state.collectAsStateWithLifecycle()
     val reduced = rememberReducedMotion()
     val startedAt = remember { (state as? VerdictFlow.State.Running)?.startedAt ?: System.currentTimeMillis() }
@@ -531,6 +532,14 @@ private fun JudgingEntry(flow: VerdictFlow, onDone: (String, String?) -> Unit, o
             is VerdictFlow.State.Succeeded -> st.argument
             else -> ""
         }.takeIf { it.isNotEmpty() }
+    }
+    // Before the sides were kept (or after a restart) the sent text stands for your side.
+    val sides = remember {
+        when (val st = state) {
+            is VerdictFlow.State.Running -> st.sides
+            is VerdictFlow.State.Succeeded -> st.sides
+            else -> emptyList()
+        }.ifEmpty { listOfNotNull(argument?.let { VerdictFlow.Side(mine = true, name = "", text = it) }) }
     }
     val premium = remember {
         (state as? VerdictFlow.State.Running)?.premium ?: ((state as? VerdictFlow.State.Succeeded)?.outcome?.result?.result?.premium == true)
@@ -553,11 +562,11 @@ private fun JudgingEntry(flow: VerdictFlow, onDone: (String, String?) -> Unit, o
         startedAt = startedAt,
         reducedMotion = reduced,
         premium = premium,
-        argument = argument,
+        sides = sides,
         onFinished = {
             if (outcome != null) {
                 flow.acknowledge()
-                onDone(outcome.id, argument)
+                onDone(outcome.id)
             }
         },
         onCancel = {
@@ -568,7 +577,7 @@ private fun JudgingEntry(flow: VerdictFlow, onDone: (String, String?) -> Unit, o
     )
 }
 
-/** The tab bar stays off the thread (judging and the fresh verdict), sign-in and the questions. */
+/** The tab bar stays off judging and the fresh verdict, sign-in and the questions. */
 internal fun showsBottomBar(top: NavKey?): Boolean = when (top) {
     is JudgingKey, is SignInKey, is ClarifyKey -> false
     is VerdictKey -> !top.fresh

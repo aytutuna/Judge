@@ -78,6 +78,9 @@ object CaseLogic {
     const val MAX_EVIDENCE_PER_APPEAL = 1
     const val MAX_DISPLAY_NAME = 40
 
+    /** Rounds of context one verdict takes; only judged rounds count (MAX_VERDICT_APPEALS). */
+    const val MAX_VERDICT_APPEALS = 2
+
     /** Longest wait between polls after repeated failures (MAX_POLL_BACKOFF_MS). */
     const val MAX_POLL_BACKOFF_MS = 30_000L
 

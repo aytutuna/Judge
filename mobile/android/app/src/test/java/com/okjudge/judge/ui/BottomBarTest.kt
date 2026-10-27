@@ -8,7 +8,7 @@ class BottomBarTest {
     @Test
     fun hiddenOnTheThread() {
         assertFalse(showsBottomBar(JudgingKey))
-        assertFalse(showsBottomBar(VerdictKey("v1", fresh = true, argument = "a")))
+        assertFalse(showsBottomBar(VerdictKey("v1", fresh = true)))
     }
 
     @Test

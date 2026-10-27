@@ -32,7 +32,7 @@ class AppShellTest {
     fun tabs_andLanguageToggle() {
         val en = UiTestSupport.s(AppLang.EN)
         val tr = UiTestSupport.s(AppLang.TR)
-        awaitText(en.homeTitle)
+        awaitText(en.appHomeTitle)
         compose.onNodeWithTag(HomeTags.SUBMIT).assertExists()
 
         compose.onNodeWithText(en.appTabHistory).performClick()
@@ -45,24 +45,24 @@ class AppShellTest {
         awaitText(tr.appTabSettings)
 
         compose.onNodeWithText(tr.appTabNew).performClick()
-        awaitText(tr.homeTitle)
+        awaitText(tr.appHomeTitle)
     }
 
     @Test
     fun newButton_clearsTheDraft_andComesBackFromOtherTabs() {
         val en = UiTestSupport.s(AppLang.EN)
-        awaitText(en.homeTitle)
+        awaitText(en.appHomeTitle)
         compose.onNodeWithTag(TopBarTags.NEW).assertDoesNotExist()
         compose.onNodeWithTag(HomeTags.INPUT).performTextInput("My roommate never does the dishes")
         compose.onNodeWithTag(TopBarTags.NEW).performClick()
         compose.waitForIdle()
-        compose.onNodeWithTag(HomeTags.COUNTER).assertTextEquals("0 / 6,000")
+        compose.onNodeWithTag(HomeTags.COUNTER).assertDoesNotExist()
         compose.onNodeWithTag(TopBarTags.NEW).assertDoesNotExist()
 
         compose.onNodeWithText(en.appTabHistory).performClick()
         awaitText(en.appHistoryEmpty)
         compose.onNodeWithTag(TopBarTags.NEW).performClick()
-        awaitText(en.homeTitle)
+        awaitText(en.appHomeTitle)
         compose.onNodeWithTag(HistoryTags.EMPTY).assertDoesNotExist()
     }
 }

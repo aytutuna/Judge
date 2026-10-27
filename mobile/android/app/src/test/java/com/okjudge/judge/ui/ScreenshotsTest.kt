@@ -1,5 +1,6 @@
 package com.okjudge.judge.ui
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -32,12 +33,12 @@ import com.okjudge.judge.ui.home.HomeScreen
 import com.okjudge.judge.ui.home.HomeUiState
 import com.okjudge.judge.ui.judging.JudgingScreen
 import com.okjudge.judge.ui.settings.SettingsScreen
+import com.okjudge.judge.ui.theme.Palette
 import com.okjudge.judge.ui.signin.SignInActions
 import com.okjudge.judge.ui.signin.SignInScreen
 import com.okjudge.judge.ui.signin.SignInStep
 import com.okjudge.judge.ui.signin.SignInUiState
 import com.okjudge.judge.ui.verdict.TranslationStatus
-import com.okjudge.judge.ui.verdict.VerdictThreadHead
 import com.okjudge.judge.core.evidence.EvidenceItem
 import com.okjudge.judge.core.evidence.EvidenceState
 import com.okjudge.judge.core.evidence.EvidenceStatus
@@ -53,6 +54,7 @@ import com.okjudge.judge.ui.premium.PricingScreen
 import com.okjudge.judge.ui.premium.StoreUi
 import com.okjudge.judge.core.purchases.PurchaseController
 import com.okjudge.judge.core.purchases.StoreOffer
+import com.okjudge.judge.core.session.VerdictFlow
 import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
@@ -92,13 +94,13 @@ class ScreenshotsTest {
 
     @Test
     fun home_en() = capture("home_en") {
-        Themed(AppLang.EN) { HomeScreen(HomeUiState(), {}, {}, {}, {}, {}, {}, {}) }
+        Themed(AppLang.EN) { HomeScreen(HomeUiState(), {}, {}, {}, {}, {}, {}) }
     }
 
     @Test
     fun home_tr_filled_withError() = capture("home_tr_error", tall = true) {
         Themed(AppLang.TR) {
-            HomeScreen(homeState(AppLang.TR).copy(error = UiError.Api("rate_limited", 429, 420.0)), {}, {}, {}, {}, {}, {}, {})
+            HomeScreen(homeState(AppLang.TR).copy(error = UiError.Api("rate_limited", 429, 420.0)), {}, {}, {}, {}, {}, {})
         }
     }
 
@@ -107,7 +109,10 @@ class ScreenshotsTest {
         Themed(AppLang.EN) {
             JudgingScreen(
                 done = false, result = null, startedAt = System.currentTimeMillis() - 4_000, reducedMotion = true, onFinished = {}, onCancel = {},
-                argument = UiTestSupport.s(AppLang.EN).exampleHotdogText,
+                sides = listOf(
+                    VerdictFlow.Side(mine = true, name = "Alex", text = "A hot dog is its own thing. Nobody orders a sandwich and expects one."),
+                    VerdictFlow.Side(mine = false, name = "Sam", text = "It's a filling inside sliced bread. That's a sandwich, end of story."),
+                ),
                 onNew = {},
             )
         }
@@ -118,7 +123,7 @@ class ScreenshotsTest {
         Themed(AppLang.TR) {
             JudgingScreen(
                 done = true, result = sample("win_b_named").result.result, startedAt = 0, reducedMotion = true, onFinished = {}, onCancel = {},
-                argument = UiTestSupport.s(AppLang.TR).exampleHotdogText,
+                sides = listOf(VerdictFlow.Side(mine = true, name = "", text = UiTestSupport.s(AppLang.TR).exampleHotdogText)),
                 onNew = {},
             )
         }
@@ -130,24 +135,25 @@ class ScreenshotsTest {
             val o = sample(n)
             SavedVerdict(o.id, System.currentTimeMillis() - i * 86_400_000L, o.result, o.nameMap, Preset.BALANCED.id, emptyMap())
         }
-        Themed(AppLang.EN) { HomeScreen(HomeUiState(recent = items), {}, {}, {}, {}, {}, {}, {}) }
+        Themed(AppLang.EN) { HomeScreen(HomeUiState(recent = items), {}, {}, {}, {}, {}, {}) }
     }
 
     @Test
-    fun verdict_thread_en() = capture("verdict_thread_win_b_en", tall = true) {
-        val outcome = sample("win_b_named")
+    fun verdict_ruling_en() = capture("verdict_ruling_win_b_en") {
         Themed(AppLang.EN) {
             Column(Modifier.fillMaxSize()) {
                 TopBar(onBack = null, onNew = {})
-                Column(Modifier.padding(horizontal = 16.dp, vertical = 12.dp)) {
-                    VerdictThreadHead(
-                        UiTestSupport.s(AppLang.EN).exampleHotdogText,
-                        outcome.result.result,
-                        reducedMotion = true,
-                        modifier = Modifier.padding(bottom = 16.dp),
-                    )
-                    SampleVerdict(outcome, AppLang.EN)
-                }
+                SampleVerdict(sample("win_b_named"), AppLang.EN, Modifier.padding(horizontal = 16.dp, vertical = 4.dp), summary = true)
+            }
+        }
+    }
+
+    @Test
+    fun verdict_ruling_tooClose_tr() = capture("verdict_ruling_too_close_tr") {
+        Themed(AppLang.TR) {
+            Column(Modifier.fillMaxSize()) {
+                TopBar(onBack = null, onNew = {})
+                SampleVerdict(sample("lean_tie"), AppLang.TR, Modifier.padding(horizontal = 16.dp, vertical = 4.dp), summary = true)
             }
         }
     }
@@ -175,8 +181,8 @@ class ScreenshotsTest {
         val content: @Composable () -> Unit = {
             Themed(lang) {
                 Column(Modifier.fillMaxSize()) {
-                    TopBar(onBack = null, onNew = {})
-                    SampleVerdict(outcome, lang, Modifier.padding(horizontal = 16.dp, vertical = 12.dp), status)
+                    TopBar(onBack = {}, onNew = {}, backText = UiTestSupport.s(lang).appVerdictBack)
+                    SampleVerdict(outcome, lang, Modifier.padding(horizontal = 16.dp, vertical = 4.dp), status)
                 }
             }
         }
@@ -266,13 +272,13 @@ class ScreenshotsTest {
 
     @Test
     fun tier_lockedFairUse_en() = capture("tier_locked_fair_use_en", tall = true) {
-        Themed(AppLang.EN) { HomeScreen(premiumHome(AppLang.EN, "fair_use", TierAvailability.LOCKED), {}, {}, {}, {}, {}, {}, {}) }
+        Themed(AppLang.EN) { HomeScreen(premiumHome(AppLang.EN, "fair_use", TierAvailability.LOCKED), {}, {}, {}, {}, {}, {}) }
     }
 
     @Test
     fun tier_availablePremium_en() = capture("tier_available_premium_en", tall = true) {
         Themed(AppLang.EN) {
-            HomeScreen(premiumHome(AppLang.EN, "subscriber", TierAvailability.AVAILABLE).copy(features = Features()), {}, {}, {}, {}, {}, {}, {})
+            HomeScreen(premiumHome(AppLang.EN, "subscriber", TierAvailability.AVAILABLE).copy(features = Features()), {}, {}, {}, {}, {}, {})
         }
     }
 
@@ -287,7 +293,7 @@ class ScreenshotsTest {
             EvidenceItem("ev3", 3, EvidenceStatus.UNREADABLE),
         )
         Themed(AppLang.EN) {
-            HomeScreen(premiumHome(AppLang.EN, "credits7", TierAvailability.AVAILABLE, EvidenceState(items, max = 3)), {}, {}, {}, {}, {}, {}, {})
+            HomeScreen(premiumHome(AppLang.EN, "credits7", TierAvailability.AVAILABLE, EvidenceState(items, max = 3)), {}, {}, {}, {}, {}, {})
         }
     }
 
@@ -367,17 +373,17 @@ class ScreenshotsTest {
     private fun shotVerdict(name: String, outcome: VerdictOutcome, lang: AppLang) = capture(name, tall = true) {
         Themed(lang) {
             Column(Modifier.fillMaxSize()) {
-                TopBar(onBack = null, onNew = {})
+                TopBar(onBack = {}, onNew = {}, backText = UiTestSupport.s(lang).appVerdictBack)
                 SampleVerdict(outcome, lang, Modifier.padding(horizontal = 16.dp, vertical = 12.dp))
             }
         }
     }
 
     @Test
-    fun verdict_premiumFactCheck_en() = shotVerdict("verdict_premium_factcheck_en", premiumOutcome(), AppLang.EN)
+    fun verdict_premiumFactCheck_en() = shotVerdict("verdict_premium_en", premiumOutcome(), AppLang.EN)
 
     @Test
-    fun verdict_premiumFactCheck_tr() = shotVerdict("verdict_premium_factcheck_tr", premiumOutcome(), AppLang.TR)
+    fun verdict_premiumFactCheck_tr() = shotVerdict("verdict_premium_tr", premiumOutcome(), AppLang.TR)
 
     @Test
     fun verdict_twoSided_en() = shotVerdict("verdict_two_sided_en", caseOutcome("judged"), AppLang.EN)
@@ -385,27 +391,29 @@ class ScreenshotsTest {
     @Test
     fun verdict_appealOutcome_en() = shotVerdict("verdict_appeal_overturned_en", caseOutcome("appeal_overturned"), AppLang.EN)
 
-    /** The writer's verdict with "Add context" next to Share and the panel it opens. */
+    /** The writer's ruling with "Add context & appeal" next to Share, and the sheet it opens (drawn in place). */
     private fun shotAddContext(name: String, area: com.okjudge.judge.core.cases.AppealArea, text: String = "") = capture(name, tall = true) {
         val outcome = sample("win_a_self")
         val en = UiTestSupport.s(AppLang.EN)
         Themed(AppLang.EN) {
             Column(Modifier.fillMaxSize()) {
                 TopBar(onBack = {}, onNew = {})
-                Column(Modifier.padding(horizontal = 16.dp, vertical = 12.dp)) {
-                    com.okjudge.judge.ui.verdict.VerdictContent(
-                        view = sampleView(outcome, AppLang.EN).personalized(outcome.nameMap, AppLang.EN),
-                        parties = com.okjudge.judge.core.display.PartyNames.partyNames(outcome.nameMap, AppLang.EN, en),
-                        restoredNames = com.okjudge.judge.core.display.PartyNames.restoredNames(outcome.nameMap, AppLang.EN),
-                        actions = com.okjudge.judge.ui.verdict.CardActions(onShare = {}, onCopy = {}, copied = false, onAddContext = {}),
-                        modifier = Modifier.padding(bottom = 32.dp),
-                    )
-                    com.okjudge.judge.ui.cases.AppealSection(
+                com.okjudge.judge.ui.verdict.RulingSummary(
+                    view = sampleView(outcome, AppLang.EN).personalized(outcome.nameMap, AppLang.EN),
+                    parties = com.okjudge.judge.core.display.PartyNames.partyNames(outcome.nameMap, AppLang.EN, en),
+                    actions = com.okjudge.judge.ui.verdict.CardActions(onShare = {}, onCopy = {}, copied = false, onAddContext = {}),
+                    onDetails = {},
+                    reducedMotion = true,
+                    modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 4.dp, bottom = 24.dp),
+                )
+                Box(Modifier.background(Palette.paper)) {
+                    com.okjudge.judge.ui.cases.AppealPanel(
                         area = area,
                         draft = com.okjudge.judge.ui.cases.AppealDraft(text = text),
                         evidenceOn = true,
-                        lead = en.appealLeadVerdict,
+                        cost = en.appAppealCost("2"),
                         actions = com.okjudge.judge.ui.cases.AppealFormActions(),
+                        onClose = {},
                     )
                 }
             }
@@ -423,8 +431,6 @@ class ScreenshotsTest {
     fun verdict_addContext_locked_en() =
         shotAddContext("verdict_add_context_locked_en", com.okjudge.judge.core.cases.AppealArea.Blocked("premium_required"))
 
-    @Test
-    fun verdict_addContext_limit_en() = shotAddContext("verdict_add_context_limit_en", com.okjudge.judge.core.cases.AppealArea.Limit)
 
     // --- Two-sided cases ---------------------------------------------------------------
 
@@ -465,6 +471,19 @@ class ScreenshotsTest {
     fun case_judged_tr() = shotCase("case_judged_tr", "judged_tr", AppLang.TR)
 
     @Test
+    fun case_awaiting_named_en() = capture("case_awaiting_named_en", tall = true) {
+        Themed(AppLang.EN) {
+            com.okjudge.judge.ui.cases.CaseScreen(
+                caseState("waiting_for_respondent"),
+                evidenceOn = true,
+                actions = com.okjudge.judge.ui.cases.CaseActions(onBack = {}),
+                reducedMotion = true,
+                otherName = "Sam",
+            )
+        }
+    }
+
+    @Test
     fun history_cases_en() = capture("history_cases_en") {
         val list = WireJson.json.decodeFromString(
             com.okjudge.judge.core.model.CaseListResponse.serializer(),
@@ -476,11 +495,16 @@ class ScreenshotsTest {
     }
 
     @Test
-    fun home_bothSides_en() = capture("home_both_sides_en", tall = true) {
+    fun home_twoSides_en() = capture("home_two_sides_en", tall = true) {
         Themed(AppLang.EN) {
             HomeScreen(
-                premiumHome(AppLang.EN, "credits7", TierAvailability.AVAILABLE).copy(caseMode = com.okjudge.judge.ui.home.CaseMode.BOTH, suggestedName = "Alex"),
-                {}, {}, {}, {}, {}, {}, {},
+                premiumHome(AppLang.EN, "credits7", TierAvailability.AVAILABLE).copy(
+                    argument = "A hot dog is its own thing. Nobody orders a sandwich and expects one, and no menu lists it under sandwiches.",
+                    otherSide = "It's a filling inside sliced bread. That's a sandwich, end of story.",
+                    suggestedName = "Alex",
+                    otherName = "Sam",
+                ),
+                {}, {}, {}, {}, {}, {},
             )
         }
     }

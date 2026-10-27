@@ -42,6 +42,19 @@ object VerdictDisplay {
     fun sceneVerdict(result: VerdictResult): SceneMode.Verdict =
         if (result.refused) SceneMode.Verdict(50, emptyList()) else SceneMode.Verdict(tugFinal(result), result.runs.map(::voteOf))
 
+    /**
+     * Party A's share of the votes for either side, for the lean bar: the
+     * middle when it was too close or split (or no vote picked a side), null
+     * when there is nothing to show (no votes, a refusal).
+     */
+    fun leanShare(result: VerdictResult): Float? {
+        if (result.refused || result.runs.isEmpty()) return null
+        if (result.finalVerdict == FinalVerdict.TOO_CLOSE || result.finalVerdict == FinalVerdict.SPLIT) return 0.5f
+        val a = result.runs.count { it == "side_a" }
+        val b = result.runs.count { it == "side_b" }
+        return if (a + b == 0) 0.5f else a.toFloat() / (a + b)
+    }
+
     data class Agreement(val n: Int, val total: Int)
 
     /** How many runs reached the final verdict; null for too close or no runs (agreement). */

@@ -1,5 +1,6 @@
 package com.okjudge.judge.ui.cases
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -10,10 +11,12 @@ import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
@@ -24,10 +27,13 @@ import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -43,12 +49,14 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.LiveRegionMode
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardCapitalization
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.okjudge.judge.core.cases.AppealArea
@@ -82,9 +90,10 @@ import com.okjudge.judge.ui.theme.JudgeShapes
 import com.okjudge.judge.ui.theme.JudgeType
 import com.okjudge.judge.ui.theme.Palette
 import com.okjudge.judge.ui.verdict.CardActions
+import com.okjudge.judge.ui.verdict.RulingSummary
 import com.okjudge.judge.ui.verdict.TranslationStatus
 import com.okjudge.judge.ui.verdict.TranslationView
-import com.okjudge.judge.ui.verdict.VerdictContent
+import com.okjudge.judge.ui.verdict.VerdictDetails
 import kotlinx.coroutines.delay
 
 object CaseTags {
@@ -145,9 +154,10 @@ private enum class Confirm { JUDGE_NOW, RESET, REMOVE }
 /**
  * The owner's case screen (components/case/CaseScreen.tsx), stateless: the
  * status of the case decides the body (waiting with the invite link,
- * judging, the verdict with appeals and history, failed, expired), with
+ * judging, the ruling with appeals and history, failed, expired), with
  * the removed banner, the owner's names, the accounts as the judges read
- * them and removal below.
+ * them and removal below. The ruling's details replace the page while open.
+ * [otherName] is who the case waits for, as typed on Home.
  */
 @Composable
 fun CaseScreen(
@@ -156,13 +166,40 @@ fun CaseScreen(
     actions: CaseActions,
     reducedMotion: Boolean,
     modifier: Modifier = Modifier,
+    otherName: String? = null,
 ) {
     val s = LocalStrings.current
     val view = state.view
     var confirm by rememberSaveable { mutableStateOf<Confirm?>(null) }
+    var details by rememberSaveable { mutableStateOf(false) }
+    var appealOpen by rememberSaveable { mutableStateOf(false) }
     val kicker = if (view?.oneSided == true) s.caseKickerOneSided else s.caseKicker
+    val current = view?.current?.takeIf { view.status == CaseStatus.JUDGED }
+    val area = view?.let(CaseLogic::appealArea) ?: AppealArea.None
+    LaunchedEffect(area) {
+        // Sent, or locked in the meantime: the sheet has nothing left to do.
+        if (!area.opensSheet) appealOpen = false
+    }
+    val addContext: (() -> Unit)? = if (area.opensSheet) ({ appealOpen = true }) else null
 
     Column(modifier.fillMaxSize()) {
+        if (details && current != null) {
+            BackHandler { details = false }
+            TopBar(onBack = { details = false }, onNew = actions.onNew, backLabel = s.appVerdictBack, backText = s.appVerdictBack)
+            Column(
+                Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(horizontal = 16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                CaseVerdict(
+                    current, state.names, linked = view.removed == null, actions, addContext,
+                    details = true,
+                    onDetails = {},
+                    reducedMotion = reducedMotion,
+                    modifier = Modifier.widthIn(max = 640.dp).fillMaxWidth().padding(top = 4.dp, bottom = 32.dp),
+                )
+            }
+            return@Column
+        }
         TopBar(onBack = actions.onBack, onNew = actions.onNew, backLabel = s.appHistoryTitle)
         if (view == null) {
             Column(Modifier.fillMaxSize().padding(horizontal = 20.dp), verticalArrangement = Arrangement.spacedBy(14.dp)) {
@@ -189,7 +226,6 @@ fun CaseScreen(
 
         val overlay = state.overlay
         if (overlay != null) {
-            val current = view.current
             Column(Modifier.fillMaxSize().padding(horizontal = 20.dp)) {
                 Header(kicker, view.status)
                 Text(
@@ -199,7 +235,7 @@ fun CaseScreen(
                 )
                 JudgingScreen(
                     done = overlay.done,
-                    result = if (overlay.done) current?.result else null,
+                    result = if (overlay.done) view.current?.result else null,
                     startedAt = remember { System.currentTimeMillis() },
                     reducedMotion = reducedMotion,
                     onFinished = actions.onOverlayFinished,
@@ -212,6 +248,7 @@ fun CaseScreen(
             return@Column
         }
 
+        val waitingFor = otherName?.trim()?.takeIf { it.isNotEmpty() } ?: view.display.b?.trim()?.takeIf { it.isNotEmpty() }
         Column(
             Modifier.fillMaxSize().verticalScroll(rememberScrollState()).imePadding().padding(horizontal = 16.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -220,11 +257,11 @@ fun CaseScreen(
                 Modifier.widthIn(max = 640.dp).fillMaxWidth().padding(top = 4.dp, bottom = 40.dp),
                 verticalArrangement = Arrangement.spacedBy(18.dp),
             ) {
-                Header(kicker, view.status)
+                if (view.status == CaseStatus.AWAITING) WaitingHeader(waitingFor) else Header(kicker, view.status)
                 if (view.removed != null) {
                     Banner(if (state.removedNow) s.caseRemoved else s.caseRemovedBanner)
                 }
-                Body(state, view, evidenceOn, actions) { confirm = it }
+                Body(state, view, waitingFor, actions, addContext, onDetails = { details = true }, reducedMotion) { confirm = it }
                 if (view.verdicts.isNotEmpty() && view.removed == null) NamesTools(state, view, actions)
                 val bothRead = view.sides.size > 1
                 AccountsRead(
@@ -239,6 +276,25 @@ fun CaseScreen(
                 }
             }
         }
+    }
+
+    if (appealOpen && area.opensSheet && view != null) {
+        AppealSheet(
+            area = area,
+            draft = state.appealDraft,
+            // The server refuses evidence on a free case's appeal.
+            evidenceOn = evidenceOn && view.premium,
+            cost = s.appAppealCostCase,
+            actions = AppealFormActions(
+                onText = actions.onAppealText,
+                onAddEvidence = actions.onAddAppealEvidence,
+                onRemoveEvidence = actions.onRemoveAppealEvidence,
+                onSubmit = actions.onSubmitAppeal,
+                onSignIn = actions.onSignIn,
+                onPricing = actions.onPricing,
+            ),
+            onClose = { appealOpen = false },
+        )
     }
 
     val shown = confirm
@@ -277,6 +333,24 @@ fun CaseScreen(
             },
             dismissButton = { TextButton(onClick = { confirm = null }) { Text(s.caseCancel, color = Palette.ink) } },
             containerColor = Palette.paper,
+        )
+    }
+}
+
+/** "Case · waiting", who for, and that neither side sees the other's words until the ruling. */
+@Composable
+private fun WaitingHeader(name: String?) {
+    val s = LocalStrings.current
+    Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
+        Kicker(s.appCaseWaitingKicker, color = Palette.sageInk)
+        Text(
+            if (name != null) s.appCaseWaitingFor(name) else s.caseTitle,
+            style = JudgeType.caseTitle.copy(fontSize = 34.sp, lineHeight = (34 * 1.04).sp),
+            modifier = Modifier.semantics { heading() },
+        )
+        Text(
+            if (name != null) s.appCaseWaitingLead(name) else s.appCaseWaitingLeadAnon,
+            style = JudgeType.body.copy(fontSize = 14.sp, lineHeight = (14 * 1.45).sp, color = Palette.ink2),
         )
     }
 }
@@ -368,21 +442,45 @@ private fun Card(modifier: Modifier = Modifier, content: @Composable ColumnScope
 }
 
 @Composable
-private fun Body(state: CaseUiState, view: CaseView, evidenceOn: Boolean, actions: CaseActions, ask: (Confirm) -> Unit) {
+private fun Body(
+    state: CaseUiState,
+    view: CaseView,
+    waitingFor: String?,
+    actions: CaseActions,
+    onAddContext: (() -> Unit)?,
+    onDetails: () -> Unit,
+    reducedMotion: Boolean,
+    ask: (Confirm) -> Unit,
+) {
     val s = LocalStrings.current
     val lang = LocalLang.current
     when (view.status) {
         CaseStatus.AWAITING -> {
-            Note(s.caseNotYet)
             Card {
-                view.inviteUrl?.let { url -> InviteLink(url, view.expiresAt, state, actions) { ask(Confirm.RESET) } }
+                view.inviteUrl?.let { url -> InviteLink(url, view.expiresAt, waitingFor, state, actions) { ask(Confirm.RESET) } }
                 if (view.premium) {
                     Note(Errors.formatDate(lang, view.expiresAt)?.let { s.caseHeld(it) } ?: s.caseHeldSoon, color = Palette.muted)
                 }
             }
+            WaitingSteps(waitingFor, view.canJudgeNow)
             ErrorLine(state.actionError)
             if (view.canJudgeNow) {
-                GhostButton(s.caseJudgeNow, null, { if (!state.busy) ask(Confirm.JUDGE_NOW) }, Modifier.testTag(CaseTags.JUDGE_NOW))
+                Box(
+                    Modifier
+                        .fillMaxWidth()
+                        .heightIn(min = 48.dp)
+                        .clip(RoundedCornerShape(16.dp))
+                        .border(1.dp, Palette.line2, RoundedCornerShape(16.dp))
+                        .clickable(role = Role.Button) { if (!state.busy) ask(Confirm.JUDGE_NOW) }
+                        .testTag(CaseTags.JUDGE_NOW)
+                        .padding(horizontal = 16.dp, vertical = 12.dp),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    Text(
+                        if (waitingFor != null) s.appCaseJudgeNowWithout(waitingFor) else s.caseJudgeNow,
+                        style = JudgeType.slotTitle.copy(color = Palette.ink),
+                    )
+                }
             }
         }
         CaseStatus.JUDGING -> {
@@ -393,23 +491,15 @@ private fun Body(state: CaseUiState, view: CaseView, evidenceOn: Boolean, action
             val current = view.current
             if (current != null) {
                 if (view.oneSided) Note(s.caseOneSided)
-                CaseVerdict(current, state.names, linked = view.removed == null, actions, Modifier.testTag(CaseTags.VERDICT))
-                AppealSection(
-                    area = CaseLogic.appealArea(view),
-                    draft = state.appealDraft,
-                    // The server refuses evidence on a free case's appeal.
-                    evidenceOn = evidenceOn && view.premium,
-                    lead = s.appealLead,
-                    actions = AppealFormActions(
-                        onText = actions.onAppealText,
-                        onAddEvidence = actions.onAddAppealEvidence,
-                        onRemoveEvidence = actions.onRemoveAppealEvidence,
-                        onSubmit = actions.onSubmitAppeal,
-                        onSignIn = actions.onSignIn,
-                        onPricing = actions.onPricing,
-                    ),
+                CaseVerdict(
+                    current, state.names, linked = view.removed == null, actions, onAddContext,
+                    details = false,
+                    onDetails = onDetails,
+                    reducedMotion = reducedMotion,
+                    modifier = Modifier.testTag(CaseTags.VERDICT),
                 )
-                VerdictHistory(view, state.names)
+                AppealNote(CaseLogic.appealArea(view))
+                VerdictHistory(view, state.names, reducedMotion)
             }
         }
         CaseStatus.FAILED -> {
@@ -436,8 +526,9 @@ private fun Body(state: CaseUiState, view: CaseView, evidenceOn: Boolean, action
     }
 }
 
+/** "Send Sam this link", the link with Share and Copy, and until when it works (when the case says). */
 @Composable
-private fun InviteLink(url: String, expiresAt: String, state: CaseUiState, actions: CaseActions, onReset: () -> Unit) {
+private fun InviteLink(url: String, expiresAt: String, name: String?, state: CaseUiState, actions: CaseActions, onReset: () -> Unit) {
     val s = LocalStrings.current
     val lang = LocalLang.current
     var copied by remember { mutableStateOf(false) }
@@ -447,42 +538,113 @@ private fun InviteLink(url: String, expiresAt: String, state: CaseUiState, actio
             copied = false
         }
     }
-    Text(s.caseInviteLabel, style = JudgeType.slotTitle)
+    Text(if (name != null) s.appCaseSendTo(name) else s.caseInviteLabel, style = JudgeType.slotTitle.copy(fontSize = 13.sp))
     SelectionContainer {
         Text(
-            url,
-            style = JudgeType.body.copy(fontFamily = FontFamily.Monospace, fontSize = 13.sp, color = Palette.ink),
+            url.removePrefix("https://"),
+            style = JudgeType.body.copy(fontSize = 14.sp, fontWeight = FontWeight.Medium, color = Palette.ink2),
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
             modifier = Modifier
                 .fillMaxWidth()
-                .clip(RoundedCornerShape(12.dp))
+                .clip(RoundedCornerShape(14.dp))
                 .background(Palette.ivory)
-                .border(1.dp, Palette.line2, RoundedCornerShape(12.dp))
+                .semantics { contentDescription = url }
                 .testTag(CaseTags.INVITE_URL)
-                .padding(12.dp),
+                .padding(horizontal = 14.dp, vertical = 12.dp),
         )
     }
     Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-        GhostButton(
-            if (copied) s.caseInviteCopied else s.caseInviteCopy,
-            remember(copied) { if (copied) JudgeIcons.check(Palette.sageInk, 2f) else JudgeIcons.link(Palette.ink) },
-            {
-                actions.onCopyInvite(url)
-                copied = true
-            },
-            Modifier.testTag(CaseTags.COPY).semantics { liveRegion = LiveRegionMode.Polite },
-        )
-        GhostButton(s.caseInviteShare, remember { JudgeIcons.share(Palette.ink) }, { actions.onShareInvite(url) }, Modifier.testTag(CaseTags.SHARE))
+        Row(
+            Modifier
+                .weight(1f)
+                .height(46.dp)
+                .clip(RoundedCornerShape(14.dp))
+                .background(Palette.ink)
+                .clickable(role = Role.Button) { actions.onShareInvite(url) }
+                .testTag(CaseTags.SHARE),
+            horizontalArrangement = Arrangement.spacedBy(6.dp, Alignment.CenterHorizontally),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            TintedIcon(remember { JudgeIcons.share(Palette.paper) }, 15)
+            Text(s.caseInviteShare, style = JudgeType.slotTitle.copy(color = Palette.paper))
+        }
+        Row(
+            Modifier
+                .weight(1f)
+                .height(46.dp)
+                .clip(RoundedCornerShape(14.dp))
+                .border(1.dp, Palette.line2, RoundedCornerShape(14.dp))
+                .clickable(role = Role.Button) {
+                    actions.onCopyInvite(url)
+                    copied = true
+                }
+                .semantics(mergeDescendants = true) { liveRegion = LiveRegionMode.Polite }
+                .testTag(CaseTags.COPY),
+            horizontalArrangement = Arrangement.spacedBy(6.dp, Alignment.CenterHorizontally),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            if (copied) TintedIcon(remember { JudgeIcons.check(Palette.sageInk, 2f) }, 15)
+            Text(if (copied) s.caseInviteCopied else s.caseInviteCopy, style = JudgeType.slotTitle)
+        }
     }
-    Note(Errors.formatDate(lang, expiresAt)?.let { s.caseInviteExpires(it) } ?: s.caseInviteExpiresSoon, color = Palette.muted)
+    Errors.formatDate(lang, expiresAt)?.let { Note(s.caseInviteExpires(it), color = Palette.muted) }
     TextAction(s.caseInviteReset, { if (!state.busy) onReset() }, Modifier.testTag(CaseTags.RESET), color = Palette.ink2)
     if (state.resetDone) {
         Note(s.caseInviteResetDone, Modifier.semantics { liveRegion = LiveRegionMode.Polite }, color = Palette.sageInk)
     }
 }
 
-/** A case verdict with the owner's names restored; share and copy only while the case's links are open. */
+/** Your side is in, theirs is next, then the judges. */
 @Composable
-private fun CaseVerdict(verdict: CaseVerdictView, names: List<NameMapping>, linked: Boolean, actions: CaseActions, modifier: Modifier = Modifier) {
+private fun WaitingSteps(name: String?, canJudgeNow: Boolean) {
+    val s = LocalStrings.current
+    Column(Modifier.fillMaxWidth().semantics(mergeDescendants = true) {}) {
+        Step(StepState.DONE, s.appCaseStepYou, s.appCaseStepYouNote, last = false)
+        Step(StepState.NOW, if (name != null) s.appCaseStepThem(name) else s.appCaseStepThemAnon, s.appCaseStepThemNote, last = false)
+        Step(StepState.LATER, s.appCaseStepJudges, if (canJudgeNow) s.appCaseStepJudgesNote else null, last = true)
+    }
+}
+
+private enum class StepState { DONE, NOW, LATER }
+
+@Composable
+private fun Step(state: StepState, title: String, note: String?, last: Boolean) {
+    Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            val dot = Modifier.size(24.dp).clip(CircleShape)
+            when (state) {
+                StepState.DONE -> Box(dot.background(Palette.terra), contentAlignment = Alignment.Center) {
+                    TintedIcon(remember { JudgeIcons.check(Palette.paper, 2.4f) }, 12)
+                }
+                StepState.NOW -> Box(dot.background(Palette.sageTint).border(2.dp, Palette.sageInk, CircleShape))
+                StepState.LATER -> Box(dot.border(2.dp, Palette.stone, CircleShape))
+            }
+            if (!last) Box(Modifier.width(2.dp).height(26.dp).background(Palette.stone))
+        }
+        Column(Modifier.padding(top = 2.dp), verticalArrangement = Arrangement.spacedBy(2.dp)) {
+            Text(title, style = JudgeType.slotTitle.copy(color = if (state == StepState.LATER) Palette.ink2 else Palette.ink))
+            if (note != null) Text(note, style = JudgeType.footnote.copy(fontSize = 12.sp))
+        }
+    }
+}
+
+/**
+ * A case ruling with the owner's names restored: the summary, or its
+ * details when [details]. Share and copy only while the case's links are open.
+ */
+@Composable
+private fun CaseVerdict(
+    verdict: CaseVerdictView,
+    names: List<NameMapping>,
+    linked: Boolean,
+    actions: CaseActions,
+    onAddContext: (() -> Unit)?,
+    details: Boolean,
+    onDetails: () -> Unit,
+    reducedMotion: Boolean,
+    modifier: Modifier = Modifier,
+) {
     val s = LocalStrings.current
     val result = verdict.result
     val selfLang = ContentLang.verdictLang(result)
@@ -494,22 +656,23 @@ private fun CaseVerdict(verdict: CaseVerdictView, names: List<NameMapping>, link
             copied = false
         }
     }
-    VerdictContent(
-        view = view,
-        parties = PartyNames.partyNames(names, selfLang, s),
-        restoredNames = PartyNames.restoredNames(names, selfLang),
-        actions = CardActions(
-            onShare = if (linked) actions.onShareVerdict?.let { share -> { share(verdict.id, result.headline) } } else null,
-            onCopy = if (linked) actions.onCopyVerdict?.let { copy -> { copy(verdict.id); copied = true } } else null,
-            copied = copied,
-        ),
-        modifier = modifier,
+    val parties = PartyNames.partyNames(names, selfLang, s)
+    val cardActions = CardActions(
+        onShare = if (linked) actions.onShareVerdict?.let { share -> { share(verdict.id, result.headline) } } else null,
+        onCopy = if (linked) actions.onCopyVerdict?.let { copy -> { copy(verdict.id); copied = true } } else null,
+        copied = copied,
+        onAddContext = onAddContext,
     )
+    if (details) {
+        VerdictDetails(view, parties, PartyNames.restoredNames(names, selfLang), cardActions, modifier)
+    } else {
+        RulingSummary(view, parties, cardActions, onDetails, reducedMotion, modifier)
+    }
 }
 
-/** Earlier verdicts of the case, newest first, each collapsed (VerdictHistory). */
+/** Earlier rulings of the case, newest first, each collapsed until opened in full (VerdictHistory). */
 @Composable
-private fun VerdictHistory(view: CaseView, names: List<NameMapping>) {
+private fun VerdictHistory(view: CaseView, names: List<NameMapping>, reducedMotion: Boolean) {
     val earlier = view.verdicts.dropLast(1).reversed()
     if (earlier.isEmpty()) return
     val s = LocalStrings.current
@@ -531,7 +694,9 @@ private fun VerdictHistory(view: CaseView, names: List<NameMapping>) {
                 Text((if (open) "▾ " else "▸ ") + s.appealPrevious, style = JudgeType.slotTitle, modifier = Modifier.weight(1f))
                 Text(Errors.formatDate(lang, v.createdAt) ?: "", style = JudgeType.footnote)
             }
-            if (open) CaseVerdict(v, names, linked = false, actions = CaseActions())
+            if (open) {
+                CaseVerdict(v, names, linked = false, CaseActions(), null, details = true, onDetails = {}, reducedMotion = reducedMotion)
+            }
         }
     }
 }
@@ -546,23 +711,11 @@ data class AppealFormActions(
     val onPricing: () -> Unit = {},
 )
 
-/**
- * The appeal area (AppealSection): the "add context" form, its upsell, or
- * why not. Cases and the writer's one-sided verdicts share it; [lead] is
- * the line under the title, [evidenceOn] offers the screenshot picker.
- */
+/** The appeal area's inline notes: re-judging, or why no more context can be added. Nothing for the others. */
 @Composable
-fun AppealSection(
-    area: AppealArea,
-    draft: AppealDraft,
-    evidenceOn: Boolean,
-    lead: String,
-    actions: AppealFormActions,
-    modifier: Modifier = Modifier,
-) {
+fun AppealNote(area: AppealArea, modifier: Modifier = Modifier) {
     val s = LocalStrings.current
     when (area) {
-        AppealArea.None -> Unit
         AppealArea.Judging -> Row(
             modifier.semantics(mergeDescendants = true) { liveRegion = LiveRegionMode.Polite }.testTag(CaseTags.APPEAL_NOTE),
             verticalAlignment = Alignment.CenterVertically,
@@ -579,79 +732,156 @@ fun AppealSection(
             },
             modifier.testTag(CaseTags.APPEAL_NOTE),
         )
-        is AppealArea.Upsell, is AppealArea.Blocked -> Card(modifier) {
-            AppealTitle(spark = true)
-            val text = when (area) {
-                is AppealArea.Upsell -> s.appealUpsell
-                is AppealArea.Blocked -> when (area.reason) {
-                    // The web reads fair use without a date here (tWithDate with null).
-                    "fair_use" -> s.errorFairUseSoon
-                    "no_credits" -> s.errorNoCredits
-                    else -> s.errorPremiumRequired
-                }
-                else -> ""
-            }
-            Note(text, Modifier.testTag(CaseTags.APPEAL_NOTE))
-            if (area is AppealArea.Upsell && area.signIn) {
-                PrimaryButton(s.appealSignIn, true, actions.onSignIn, Modifier.fillMaxWidth().testTag(CaseTags.APPEAL_SIGN_IN))
-            } else {
-                GhostButton(s.tierGetPremium, null, actions.onPricing, Modifier.testTag(CaseTags.APPEAL_PRICING))
-            }
-        }
-        is AppealArea.Form -> Card(modifier) {
-            AppealTitle(spark = false)
-            Note(lead)
-            area.failed?.let { Banner(if (it == "refused") s.appealRefused else s.appealFailed) }
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Text(s.appealLabel, style = JudgeType.slotTitle, modifier = Modifier.weight(1f))
-                Text("${draft.text.length} / ${CaseLogic.MAX_APPEAL_CHARS}", style = JudgeType.footnote)
-            }
+        else -> Unit
+    }
+}
+
+/** Whether "Add context & appeal" has a sheet to open: the form, or why it is locked. */
+val AppealArea.opensSheet: Boolean
+    get() = this is AppealArea.Form || this is AppealArea.Upsell || this is AppealArea.Blocked
+
+/** "Add context & appeal" as a bottom sheet over the ruling; see [AppealPanel]. */
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun AppealSheet(
+    area: AppealArea,
+    draft: AppealDraft,
+    evidenceOn: Boolean,
+    cost: String,
+    actions: AppealFormActions,
+    onClose: () -> Unit,
+) {
+    ModalBottomSheet(
+        onDismissRequest = onClose,
+        sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
+        containerColor = Palette.paper,
+        scrimColor = Palette.ink.copy(alpha = 0.42f),
+        shape = RoundedCornerShape(topStart = 28.dp, topEnd = 28.dp),
+        dragHandle = { Box(Modifier.padding(top = 10.dp).size(width = 40.dp, height = 5.dp).clip(JudgeShapes.chip).background(Palette.stone)) },
+    ) {
+        AppealPanel(area, draft, evidenceOn, cost, actions, onClose, Modifier.verticalScroll(rememberScrollState()).imePadding())
+    }
+}
+
+/**
+ * The sheet's content (AppealSection): the title and close, then the form
+ * (what the judges missed, a screenshot, what it costs, "Rule again"), or
+ * the sign-in or pricing way in while it is locked. Cases and the writer's
+ * one-sided verdicts share it; [cost] says what one round spends.
+ */
+@Composable
+fun AppealPanel(
+    area: AppealArea,
+    draft: AppealDraft,
+    evidenceOn: Boolean,
+    cost: String,
+    actions: AppealFormActions,
+    onClose: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val s = LocalStrings.current
+    Column(
+        modifier.fillMaxWidth().padding(start = 20.dp, end = 20.dp, top = 4.dp, bottom = 22.dp),
+        verticalArrangement = Arrangement.spacedBy(14.dp),
+    ) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Text(
+                s.appAppealTitle,
+                style = JudgeType.caseTitle.copy(fontSize = 28.sp, lineHeight = 32.sp),
+                modifier = Modifier.weight(1f).semantics { heading() },
+            )
             Box(
                 Modifier
-                    .fillMaxWidth()
-                    .heightIn(min = 110.dp)
-                    .clip(JudgeShapes.field)
-                    .background(Palette.ivory)
-                    .border(1.dp, Palette.line2, JudgeShapes.field)
-                    .padding(14.dp),
-            ) {
-                BasicTextField(
-                    value = draft.text,
-                    onValueChange = actions.onText,
-                    readOnly = draft.sending,
-                    textStyle = JudgeType.body,
-                    cursorBrush = SolidColor(Palette.terraInk),
-                    keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Sentences),
-                    modifier = Modifier.fillMaxWidth().heightIn(min = 82.dp).testTag(CaseTags.APPEAL_TEXT),
-                    decorationBox = { inner ->
-                        if (draft.text.isEmpty()) Text(s.appealPlaceholder, style = JudgeType.body.copy(color = Palette.placeholder))
-                        inner()
-                    },
+                    .size(44.dp)
+                    .clip(CircleShape)
+                    .semantics { contentDescription = s.appClose }
+                    .clickable(role = Role.Button, onClick = onClose),
+                contentAlignment = Alignment.Center,
+            ) { TintedIcon(remember { JudgeIcons.close(Palette.ink2) }, 18) }
+        }
+        when (area) {
+            is AppealArea.Upsell, is AppealArea.Blocked -> {
+                val text = when (area) {
+                    is AppealArea.Upsell -> s.appealUpsell
+                    is AppealArea.Blocked -> when (area.reason) {
+                        // The web reads fair use without a date here (tWithDate with null).
+                        "fair_use" -> s.errorFairUseSoon
+                        "no_credits" -> s.errorNoCredits
+                        else -> s.errorPremiumRequired
+                    }
+                    else -> ""
+                }
+                Note(text, Modifier.testTag(CaseTags.APPEAL_NOTE))
+                if (area is AppealArea.Upsell && area.signIn) {
+                    PrimaryButton(s.appealSignIn, true, actions.onSignIn, Modifier.fillMaxWidth().testTag(CaseTags.APPEAL_SIGN_IN))
+                } else {
+                    PrimaryButton(s.tierGetPremium, true, actions.onPricing, Modifier.fillMaxWidth().testTag(CaseTags.APPEAL_PRICING))
+                }
+            }
+            is AppealArea.Form -> {
+                Note(s.appAppealIntro)
+                area.failed?.let { Banner(if (it == "refused") s.appealRefused else s.appealFailed) }
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text(s.appAppealAsk, style = JudgeType.slotTitle.copy(fontSize = 13.sp), modifier = Modifier.weight(1f))
+                    Text("${draft.text.length} / ${CaseLogic.MAX_APPEAL_CHARS}", style = JudgeType.footnote)
+                }
+                Box(
+                    Modifier
+                        .fillMaxWidth()
+                        .heightIn(min = 130.dp)
+                        .clip(JudgeShapes.field)
+                        .background(Palette.ivory)
+                        .border(1.dp, Palette.line2, JudgeShapes.field)
+                        .padding(14.dp),
+                ) {
+                    BasicTextField(
+                        value = draft.text,
+                        onValueChange = actions.onText,
+                        readOnly = draft.sending,
+                        textStyle = AppealText,
+                        cursorBrush = SolidColor(Palette.terraInk),
+                        keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Sentences),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .heightIn(min = 100.dp)
+                            .semantics { contentDescription = s.appAppealAsk }
+                            .testTag(CaseTags.APPEAL_TEXT),
+                        decorationBox = { inner ->
+                            if (draft.text.isEmpty()) Text(s.appAppealPlaceholder, style = AppealText.copy(color = Palette.placeholder))
+                            inner()
+                        },
+                    )
+                }
+                if (evidenceOn) {
+                    val pick = rememberEvidencePicker(draft.evidence.room, actions.onAddEvidence)
+                    EvidencePicker(draft.evidence, disabled = draft.sending, onAdd = pick, onRemove = actions.onRemoveEvidence)
+                }
+                Row(
+                    Modifier
+                        .fillMaxWidth()
+                        .clip(RoundedCornerShape(16.dp))
+                        .background(Palette.ivory2)
+                        .padding(horizontal = 14.dp, vertical = 12.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                ) {
+                    TintedIcon(remember { JudgeIcons.spark(Palette.terra) }, 14)
+                    Text(cost, style = AppealText.copy(fontSize = 13.sp, lineHeight = (13 * 1.4).sp, color = Palette.ink2))
+                }
+                ErrorLine(draft.error)
+                PrimaryButton(
+                    if (draft.sending) s.appealSending else s.appAppealSubmit,
+                    draft.canSubmit,
+                    actions.onSubmit,
+                    Modifier.fillMaxWidth().testTag(CaseTags.APPEAL_SUBMIT),
                 )
             }
-            if (evidenceOn) {
-                val pick = rememberEvidencePicker(draft.evidence.room, actions.onAddEvidence)
-                EvidencePicker(draft.evidence, disabled = draft.sending, onAdd = pick, onRemove = actions.onRemoveEvidence)
-            }
-            ErrorLine(draft.error)
-            PrimaryButton(
-                if (draft.sending) s.appealSending else s.appealSubmit,
-                draft.canSubmit,
-                actions.onSubmit,
-                Modifier.fillMaxWidth().testTag(CaseTags.APPEAL_SUBMIT),
-            )
+            else -> Unit
         }
     }
 }
 
-@Composable
-private fun AppealTitle(spark: Boolean) {
-    val s = LocalStrings.current
-    Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-        if (spark) TintedIcon(remember { JudgeIcons.spark(Palette.terra) }, 13)
-        Text(s.appealTitle, style = JudgeType.sectionTitle, modifier = Modifier.semantics { heading() })
-    }
-}
+private val AppealText = JudgeType.body.copy(fontSize = 15.sp, lineHeight = (15 * 1.5).sp)
 
 /** The owner's name on the share pages and the names switch (CaseNames). */
 @Composable

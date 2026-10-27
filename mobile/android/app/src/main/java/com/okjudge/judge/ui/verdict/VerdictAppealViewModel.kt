@@ -36,7 +36,7 @@ import kotlin.math.min
 data class VerdictAppealUiState(
     /** Null until read, and the gate inside is null for anyone but the writer. */
     val rounds: VerdictRounds? = null,
-    /** "Add context" was tapped (or the last round failed): the panel is out. */
+    /** "Add context & appeal" was tapped (or the last round failed): the sheet is out. */
     val open: Boolean = false,
     val draft: AppealDraft = AppealDraft(),
     /** A round just finished: its verdict is the saved one now. */
@@ -47,8 +47,12 @@ data class VerdictAppealUiState(
     /** The card's "Add context": the writer only, and only when the panel has something to do. */
     val offered: Boolean get() = area is AppealArea.Form || area is AppealArea.Upsell || area is AppealArea.Blocked
 
-    /** The panel under the verdict: opened, or while the judges re-judge. */
+    /** Something to show for the appeal: opened, or while the judges re-judge. */
     val panel: Boolean get() = area != AppealArea.None && (open || area == AppealArea.Judging)
+
+    /** Rounds this verdict can still take, counted the way the server limits them. */
+    val left: Int
+        get() = (CaseLogic.MAX_VERDICT_APPEALS - rounds?.appeals.orEmpty().count { it.status == "judged" }).coerceAtLeast(0)
 }
 
 /**
@@ -136,6 +140,10 @@ class VerdictAppealViewModel(
 
     fun open() {
         _state.update { it.copy(open = true) }
+    }
+
+    fun close() {
+        _state.update { it.copy(open = false) }
     }
 
     fun onText(text: String) {

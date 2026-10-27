@@ -190,7 +190,7 @@ class PremiumScreensTest {
         val removed = mutableListOf<String>()
         compose.setContent {
             Themed(AppLang.EN) {
-                HomeScreen(premiumHome(EvidenceState(items, max = 3)), {}, {}, {}, {}, {}, {}, {}, onRemoveEvidence = { removed += it })
+                HomeScreen(premiumHome(EvidenceState(items, max = 3)), {}, {}, {}, {}, {}, {}, onRemoveEvidence = { removed += it })
             }
         }
         compose.onNodeWithTag(EvidenceTags.status(1)).assertTextContains(en.evidenceOk)
@@ -207,7 +207,7 @@ class PremiumScreensTest {
     @Test
     fun home_checking_showsTheStatusLine() {
         compose.setContent {
-            Themed(AppLang.EN) { HomeScreen(premiumHome(EvidenceState(max = 3)).copy(checking = true), {}, {}, {}, {}, {}, {}, {}) }
+            Themed(AppLang.EN) { HomeScreen(premiumHome(EvidenceState(max = 3)).copy(checking = true), {}, {}, {}, {}, {}, {}) }
         }
         compose.onNodeWithTag(HomeTags.STATUS).assertTextContains(en.tierChecking)
         compose.onNodeWithTag(TopBarTags.NEW).assertDoesNotExist()
@@ -395,8 +395,8 @@ class PremiumScreensTest {
                 SampleVerdict(outcome, AppLang.EN, Modifier.verticalScroll(rememberScrollState()).padding(16.dp))
             }
         }
-        compose.onNodeWithText(en.premiumBadge.uppercase(Locale.US)).assertExists()
-        compose.onNodeWithText(en.factcheckTitle.uppercase(Locale.US)).assertExists()
+        compose.onNodeWithText(en.premiumBadge).assertExists()
+        compose.onNodeWithText(en.factcheckTitle).assertExists()
         compose.onNodeWithText(en.factcheckStatusSupported.uppercase(Locale.US)).assertExists()
         compose.onNodeWithText("example.com").assertExists()
         compose.onNodeWithText(en.panelPremium, substring = true).assertExists()
@@ -419,13 +419,12 @@ class PremiumScreensTest {
         compose.setContent {
             Themed(AppLang.EN) { SampleVerdict(outcome, AppLang.EN, Modifier.verticalScroll(rememberScrollState()).padding(16.dp)) }
         }
-        compose.onNodeWithText(en.twoSidedBadge.uppercase(Locale.US)).assertExists()
-        compose.onNodeWithText(en.twoSidedAgreed.uppercase(Locale.US)).assertExists()
-        compose.onNodeWithText(en.twoSidedDisputed.uppercase(Locale.US)).assertExists()
+        compose.onNodeWithText(en.twoSidedAgreed).assertExists()
+        compose.onNodeWithText(en.twoSidedDisputed).assertExists()
         compose.onNodeWithText(en.twoSidedDecisive.uppercase(Locale.US)).assertExists()
         compose.onNodeWithText(en.twoSidedFindingSelf).assertExists()
         compose.onNodeWithText(en.twoSidedFindingUnsettled).assertExists()
-        compose.onNodeWithText(en.twoSidedWouldChange.uppercase(Locale.US)).assertExists()
+        compose.onNodeWithText(en.twoSidedWouldChange).assertExists()
         compose.onNodeWithText(en.evidenceUsed("0", "1"), substring = true).assertExists()
         compose.onNodeWithText(en.appealOutcomeOverturned).assertExists()
         compose.onNodeWithText(en.appealBy("Sam")).assertExists()

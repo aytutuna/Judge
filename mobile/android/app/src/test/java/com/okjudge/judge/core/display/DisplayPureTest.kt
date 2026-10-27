@@ -166,4 +166,15 @@ class DisplayPureTest {
         assertNull(VerdictDisplay.agreement(VerdictResult(verdict = "too_close", runs = listOf("side_a", "side_b"))))
         assertNull(VerdictDisplay.agreement(VerdictResult(verdict = "side_a")))
     }
+
+    @Test
+    fun leanShare_isAsShareOfTheVotesForEitherSide() {
+        assertEquals(0.75f, VerdictDisplay.leanShare(VerdictResult(verdict = "side_a", runs = listOf("side_a", "side_a", "side_b", "side_a", "dissolved"))))
+        assertEquals(0f, VerdictDisplay.leanShare(VerdictResult(verdict = "side_b", runs = listOf("side_b", "side_b", "side_b"))))
+        assertEquals("too close sits in the middle", 0.5f, VerdictDisplay.leanShare(VerdictResult(verdict = "too_close", runs = listOf("side_a", "side_b", "side_a"))))
+        assertEquals(0.5f, VerdictDisplay.leanShare(VerdictResult(verdict = "split", runs = listOf("side_a", "side_a", "split"))))
+        assertEquals(0.5f, VerdictDisplay.leanShare(VerdictResult(verdict = "dissolved", runs = listOf("dissolved", "conditional", "dissolved"))))
+        assertNull(VerdictDisplay.leanShare(VerdictResult(verdict = "side_a")))
+        assertNull(VerdictDisplay.leanShare(VerdictResult(verdict = "side_a", runs = listOf("side_a"), modelRefused = true)))
+    }
 }

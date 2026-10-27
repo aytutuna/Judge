@@ -25,7 +25,6 @@ import com.okjudge.judge.core.premium.TierAvailability
 import com.okjudge.judge.core.session.VerdictFlow
 import com.okjudge.judge.i18n.AppLang
 import com.okjudge.judge.ui.DeepLinks
-import com.okjudge.judge.ui.home.CaseMode
 import com.okjudge.judge.ui.home.HomeUiState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -198,24 +197,25 @@ class CaseFlowTest {
     fun create_free_sendsTheFreeTier_andNoEvidence() = runBlocking {
         routes.on(CREATE, Routes.json(201, cases["createResponse"].toString()))
         val flow = VerdictFlow(api(), NoBotCheck, FakeHistory(), scope, caseNames = names)
-        assertTrue(flow.createCase("Sam says a hot dog is a sandwich and I say it is not.", Preset.BALANCED, AppLang.EN, Tier.FREE, listOf("e1"), "Alex"))
-        assertEquals(VerdictFlow.Nav.Case(ID), withTimeout(5_000) { flow.navigation.first() })
+        assertTrue(flow.createCase("Sam says a hot dog is a sandwich and I say it is not.", Preset.BALANCED, AppLang.EN, Tier.FREE, listOf("e1"), "Alex", " Sam "))
+        assertEquals("the case screen is told who it waits for", VerdictFlow.Nav.Case(ID, "Sam"), withTimeout(5_000) { flow.navigation.first() })
         val body = bodyOf(CREATE)
         assertEquals("free", body["tier"]!!.jsonPrimitive.content)
         assertNull("evidence is Premium", body["evidence"])
     }
 
     @Test
-    fun bothSides_needsASignIn_notPremium() {
-        val free = HomeUiState(signedIn = true, features = Features(cases = true), caseMode = CaseMode.BOTH)
+    fun sendLink_needsASignInAndCases_notPremium_andAnEmptyOtherSide() {
+        val free = HomeUiState(argument = "Sam says a hot dog is a sandwich and I say it is not.", signedIn = true, features = Features(cases = true))
         assertEquals(Tier.FREE, free.tier)
-        assertTrue(free.casesOn)
-        assertTrue(free.twoSided)
-        assertFalse(free.copy(signedIn = false).casesOn)
-        assertFalse(free.copy(features = Features()).casesOn)
+        assertTrue(free.canSendLink)
+        assertFalse(free.copy(signedIn = false).canSendLink)
+        assertFalse(free.copy(features = Features()).canSendLink)
+        assertFalse("their side is already written here", free.copy(otherSide = "It is a sandwich.").canSendLink)
+        assertFalse("your side alone must be long enough", free.copy(argument = "Too short").canSendLink)
         val premium = free.copy(tierChoice = Tier.PREMIUM, availability = TierAvailability.AVAILABLE)
         assertEquals(Tier.PREMIUM, premium.tier)
-        assertTrue(premium.twoSided)
+        assertTrue(premium.canSendLink)
     }
 
     @Test

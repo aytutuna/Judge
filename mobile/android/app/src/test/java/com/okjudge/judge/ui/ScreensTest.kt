@@ -8,8 +8,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.test.assertContentDescriptionEquals
 import androidx.compose.ui.test.assertIsEnabled
 import androidx.compose.ui.test.assertIsNotEnabled
+import androidx.compose.ui.test.assertIsNotSelected
+import androidx.compose.ui.test.assertIsSelected
 import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
@@ -30,12 +33,12 @@ import com.okjudge.judge.core.model.FactCheck
 import com.okjudge.judge.core.model.FactClaim
 import com.okjudge.judge.core.model.FactSource
 import com.okjudge.judge.core.model.Features
+import com.okjudge.judge.core.session.VerdictFlow
 import com.okjudge.judge.core.model.VerdictOutcome
 import com.okjudge.judge.i18n.AppLang
 import com.okjudge.judge.ui.components.TopBarTags
 import com.okjudge.judge.ui.history.HistoryScreen
 import com.okjudge.judge.ui.history.HistoryTags
-import com.okjudge.judge.ui.home.CaseMode
 import com.okjudge.judge.ui.home.HomeScreen
 import com.okjudge.judge.ui.home.HomeTags
 import com.okjudge.judge.ui.home.HomeUiState
@@ -44,12 +47,12 @@ import com.okjudge.judge.ui.judging.JudgingTags
 import com.okjudge.judge.ui.verdict.CardActions
 import com.okjudge.judge.ui.verdict.TranslationStatus
 import com.okjudge.judge.ui.verdict.TranslationView
-import com.okjudge.judge.ui.verdict.VerdictContent
-import com.okjudge.judge.ui.verdict.VerdictThreadHead
+import com.okjudge.judge.ui.verdict.RulingSummary
 import com.okjudge.judge.ui.verdict.VerdictTags
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonObject
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -63,74 +66,81 @@ class ScreensTest {
     @get:Rule
     val compose = createComposeRule()
 
-    private fun home(lang: AppLang, initial: HomeUiState = HomeUiState()) {
+    private fun home(lang: AppLang, initial: HomeUiState = HomeUiState(), onSendLink: () -> Unit = {}) {
         compose.setContent {
             Themed(lang) {
                 var state by remember { mutableStateOf(initial) }
                 HomeScreen(
                     state = state,
                     onArgumentChange = { state = state.copy(argument = it) },
-                    onExample = { state = state.copy(argument = it) },
                     onPreset = { state = state.copy(preset = it) },
                     onSubmit = {},
                     onDismissError = { state = state.copy(error = null) },
                     onNew = {},
                     onOpenPrivacy = {},
+                    onOtherSideChange = { state = state.copy(otherSide = it) },
+                    onOtherName = { state = state.copy(otherName = it) },
+                    onDisplayName = { state = state.copy(typedName = it) },
+                    onSendLink = onSendLink,
                 )
             }
         }
     }
 
     @Test
-    fun home_counter_disabledUntil20Chars_andChipFillsTheText() {
+    fun home_disabledUntil20Chars_andCountsWhatIsSent() {
         home(AppLang.EN)
         val en = UiTestSupport.s(AppLang.EN)
-        compose.onNodeWithTag(HomeTags.COUNTER).assertTextEquals("0 / 6,000")
+        compose.onNodeWithTag(HomeTags.COUNTER).assertDoesNotExist()
         compose.onNodeWithTag(HomeTags.SUBMIT).assertIsNotEnabled()
         compose.onNodeWithTag(HomeTags.INPUT).performTextInput("nineteen characters")
         compose.onNodeWithTag(HomeTags.SUBMIT).assertIsNotEnabled()
         compose.onNodeWithTag(HomeTags.INPUT).performTextInput("!")
         compose.onNodeWithTag(HomeTags.SUBMIT).assertIsEnabled()
-        compose.onNodeWithText(en.exampleHotdogLabel).performClick()
-        compose.onNodeWithTag(HomeTags.COUNTER).assertTextEquals("${"%,d".format(en.exampleHotdogText.length)} / 6,000")
+        compose.onNodeWithTag(HomeTags.COUNTER).assertTextEquals("20 / 6,000")
+        compose.onNodeWithTag(HomeTags.NAME).performTextInput("Alex")
+        compose.onNodeWithTag(HomeTags.OTHER).performTextInput("It is a sandwich.")
+        val joined = HomeUiState.joined("nineteen characters!", "It is a sandwich.", "Alex", "", en)
+        assertEquals("Alex says: nineteen characters!\n\nTheir side: It is a sandwich.", joined)
+        compose.onNodeWithTag(HomeTags.COUNTER).assertTextEquals("${joined.length} / 6,000")
     }
 
     @Test
-    fun home_tr_kickerUppercasesWithTurkishRules() {
+    fun home_bothSidesTogetherCanGoOverTheLimit() {
+        val half = "x".repeat(3000)
+        home(AppLang.EN, HomeUiState(argument = half, otherSide = half))
+        compose.onNodeWithTag(HomeTags.SUBMIT).assertIsNotEnabled()
+        val sent = HomeUiState.joined(half, half, "", "", UiTestSupport.s(AppLang.EN)).length
+        assertTrue(sent > 6000)
+        compose.onNodeWithTag(HomeTags.COUNTER).assertTextEquals("${"%,d".format(sent)} / 6,000")
+    }
+
+    @Test
+    fun home_tr_sideLabelsUppercaseWithTurkishRules() {
         home(AppLang.TR)
-        // "Yeni dava" must become "YENİ DAVA", not "YENI DAVA".
-        compose.onNodeWithText("YENİ DAVA").assertExists()
-        compose.onNodeWithText(UiTestSupport.s(AppLang.TR).homeTitle).assertExists()
+        // "Senin tarafın" must become "SENİN TARAFIN", not "SENIN TARAFIN".
+        compose.onNodeWithText("SENİN TARAFIN").assertExists()
+        compose.onNodeWithText(UiTestSupport.s(AppLang.TR).appHomeTitle).assertExists()
     }
 
     @Test
-    fun home_lensOpensThePresets() {
+    fun home_presetsAreOneRowOfChoices() {
         home(AppLang.EN)
-        val en = UiTestSupport.s(AppLang.EN)
-        compose.onNodeWithText(en.presetOutcomesLabel).assertDoesNotExist()
-        compose.onNodeWithTag(HomeTags.LENS).performClick()
-        compose.onNodeWithText(en.presetOutcomesLabel).performClick()
-        compose.onNodeWithText("· ${en.presetOutcomesLabel}").assertExists()
+        compose.onNodeWithTag(HomeTags.preset(Preset.BALANCED.id)).assertIsSelected()
+        compose.onNodeWithTag(HomeTags.preset(Preset.OUTCOMES.id)).performClick().assertIsSelected()
+        compose.onNodeWithTag(HomeTags.preset(Preset.BALANCED.id)).assertIsNotSelected()
     }
 
     @Test
-    fun home_sidesLinkTogglesTheCaseMode() {
-        val en = UiTestSupport.s(AppLang.EN)
-        var mode by mutableStateOf(CaseMode.NOW)
-        compose.setContent {
-            Themed(AppLang.EN) {
-                HomeScreen(
-                    HomeUiState(signedIn = true, features = Features(cases = true), caseMode = mode),
-                    {}, {}, {}, {}, {}, {}, {},
-                    onCaseMode = { mode = it },
-                )
-            }
-        }
-        compose.onNodeWithTag(HomeTags.SIDES).assertTextEquals(en.homeInvite).performClick()
-        assertEquals(CaseMode.BOTH, mode)
-        compose.onNodeWithTag(HomeTags.SIDES).assertTextEquals(en.homeOneSide)
-        compose.onNodeWithText(en.caseCreate).assertExists()
-        compose.onNodeWithText(en.exampleHotdogLabel).assertDoesNotExist()
+    fun home_sendLink_onlyWhileTheirSideIsEmpty() {
+        var sent = 0
+        home(AppLang.EN, HomeUiState(signedIn = true, features = Features(cases = true)), onSendLink = { sent++ })
+        compose.onNodeWithTag(HomeTags.SEND_LINK).assertIsNotEnabled()
+        compose.onNodeWithTag(HomeTags.INPUT).performTextInput("My roommate never does the dishes")
+        compose.onNodeWithTag(HomeTags.SEND_LINK).assertIsEnabled().performClick()
+        assertEquals(1, sent)
+        compose.onNodeWithTag(HomeTags.OTHER).performTextInput("I did them on Sunday.")
+        compose.onNodeWithTag(HomeTags.SEND_LINK).assertDoesNotExist()
     }
 
     @Test
@@ -142,20 +152,20 @@ class ScreensTest {
                 HomeScreen(
                     state = state,
                     onArgumentChange = { state = state.copy(argument = it) },
-                    onExample = { state = state.copy(argument = it) },
                     onPreset = {},
                     onSubmit = {},
                     onDismissError = {},
                     onNew = { state = HomeUiState() },
                     onOpenPrivacy = {},
+                    onOtherSideChange = { state = state.copy(otherSide = it) },
                 )
             }
         }
         compose.onNodeWithTag(TopBarTags.NEW).assertDoesNotExist()
-        compose.onNodeWithTag(HomeTags.INPUT).performTextInput("My roommate never does the dishes")
+        compose.onNodeWithTag(HomeTags.OTHER).performTextInput("My roommate never does the dishes")
         compose.onNodeWithContentDescription(en.shellNew).assertExists()
         compose.onNodeWithTag(TopBarTags.NEW).performClick()
-        compose.onNodeWithTag(HomeTags.COUNTER).assertTextEquals("0 / 6,000")
+        compose.onNodeWithTag(HomeTags.COUNTER).assertDoesNotExist()
         compose.onNodeWithTag(TopBarTags.NEW).assertDoesNotExist()
     }
 
@@ -167,9 +177,9 @@ class ScreensTest {
     }
 
     @Test
-    fun home_sidesLinkNeedsCases() {
+    fun home_sendLinkNeedsCases() {
         home(AppLang.EN)
-        compose.onNodeWithTag(HomeTags.SIDES).assertDoesNotExist()
+        compose.onNodeWithTag(HomeTags.SEND_LINK).assertDoesNotExist()
     }
 
     @Test
@@ -180,7 +190,7 @@ class ScreensTest {
         var all = 0
         compose.setContent {
             Themed(AppLang.EN) {
-                HomeScreen(HomeUiState(recent = recent), {}, {}, {}, {}, {}, {}, {}, onOpenVerdict = { opened += it }, onAllVerdicts = { all++ })
+                HomeScreen(HomeUiState(recent = recent), {}, {}, {}, {}, {}, {}, onOpenVerdict = { opened += it }, onAllVerdicts = { all++ })
             }
         }
         compose.onNodeWithTag(HomeTags.RECENT).assertDoesNotExist()
@@ -213,8 +223,7 @@ class ScreensTest {
                 val s = UiTestSupport.s(lang)
                 val r = outcome.result.result
                 val parties = PartyNames.partyNames(outcome.nameMap, ContentLang.verdictLang(r), s)
-                // The ruling is read with the headline; the stamp is decorative.
-                compose.onNodeWithContentDescription("${VerdictDisplay.verdictLabel(r, parties, s)}. ", substring = true).assertExists()
+                compose.onNodeWithText(VerdictDisplay.verdictLabel(r, parties, s).uppercase(lang.locale)).assertExists()
                 // The fixture translation stands in for the original in the other language,
                 // with real names restored as the web shows them.
                 if (!r.refused) compose.onNodeWithText(personalizedCrux(name, outcome, lang)).assertExists()
@@ -236,11 +245,12 @@ class ScreensTest {
         val r = outcome.result.result.copy(confidence = 2, runs = listOf("side_b", "side_b", "side_a", "side_b", "side_b"), verdict = "side_b")
         compose.setContent {
             Themed(AppLang.EN) {
-                VerdictContent(
+                RulingSummary(
                     view = TranslationView(r, TranslationStatus.ORIGINAL, AppLang.EN),
                     parties = PartyNames.partyNames(outcome.nameMap, AppLang.EN, en),
-                    restoredNames = emptyList(),
                     actions = CardActions(onShare = {}, onCopy = {}, copied = false),
+                    onDetails = {},
+                    reducedMotion = true,
                     modifier = Modifier.verticalScroll(rememberScrollState()),
                 )
             }
@@ -258,11 +268,12 @@ class ScreensTest {
         var taps = 0
         compose.setContent {
             Themed(AppLang.EN) {
-                VerdictContent(
+                RulingSummary(
                     view = TranslationView(outcome.result.result, TranslationStatus.ORIGINAL, AppLang.EN),
                     parties = PartyNames.partyNames(outcome.nameMap, AppLang.EN, en),
-                    restoredNames = emptyList(),
                     actions = CardActions(onShare = {}, onCopy = {}, copied = false, onAddContext = if (offered) ({ taps++ }) else null),
+                    onDetails = {},
+                    reducedMotion = true,
                     modifier = Modifier.verticalScroll(rememberScrollState()),
                 )
             }
@@ -270,10 +281,9 @@ class ScreensTest {
         compose.onNodeWithTag(VerdictTags.ADD_CONTEXT).assertDoesNotExist()
         compose.onNodeWithText(en.copyLink).assertExists()
         offered = true
-        compose.onNodeWithTag(VerdictTags.ADD_CONTEXT).assertTextEquals(en.appealTitle).performClick()
+        compose.onNodeWithTag(VerdictTags.ADD_CONTEXT).assertTextEquals(en.appAppealTitle).performClick()
         assertEquals(1, taps)
-        // Copy keeps its name for screen readers when it shrinks to the icon.
-        compose.onNodeWithContentDescription(en.copyLink).assertExists()
+        compose.onNodeWithText(en.copyLink).assertDoesNotExist()
     }
 
     @Test
@@ -285,30 +295,74 @@ class ScreensTest {
         compose.setContent { Themed(AppLang.EN) { SampleVerdict(outcome, AppLang.EN, modifier = Modifier.verticalScroll(rememberScrollState())) } }
         compose.onNodeWithText(if (parties.aIsSelf) s.bestPointSelf else s.bestPointOf(parties.nameA)).assertExists()
         compose.onNodeWithText(s.cruxShort).assertExists()
-        compose.onNodeWithText(s.bedrock).assertExists()
+        compose.onNodeWithText(s.appVerdictSides).assertExists()
         compose.onNodeWithText(s.share).assertExists()
         compose.onNodeWithText(s.copyLink).assertExists()
     }
 
     @Test
-    fun verdictThread_showsTheArgumentAndHowFarTheJudgesAgreed() {
+    fun rulingSummary_leansTowardTheWinner_andItsRowsOpenTheDetails() {
         val en = UiTestSupport.s(AppLang.EN)
-        val r = sample("win_b_named").result.result
-        compose.setContent { Themed(AppLang.EN) { VerdictThreadHead("Hot dogs are sandwiches, says Sam.", r, reducedMotion = true) } }
-        compose.onNodeWithText("Hot dogs are sandwiches, says Sam.").assertExists()
-        compose.onNodeWithText(VerdictDisplay.judgesLabel(r, en)).assertExists()
+        val outcome = sample("win_b_named")
+        val r = outcome.result.result
+        val parties = PartyNames.partyNames(outcome.nameMap, ContentLang.verdictLang(r), en)
+        var opened = 0
+        compose.setContent {
+            Themed(AppLang.EN) {
+                RulingSummary(
+                    view = TranslationView(r, TranslationStatus.ORIGINAL, AppLang.EN),
+                    parties = parties,
+                    actions = CardActions(onShare = {}, onCopy = {}, copied = false),
+                    onDetails = { opened++ },
+                    reducedMotion = true,
+                    modifier = Modifier.verticalScroll(rememberScrollState()),
+                )
+            }
+        }
+        compose.onNodeWithTag(VerdictTags.LEAN).assertContentDescriptionEquals(en.appVerdictLeanTo(parties.nameB))
+        compose.onNodeWithText(en.appVerdictVs).assertExists()
+        compose.onNodeWithTag(VerdictTags.CRUX_ROW).performClick()
+        compose.onNodeWithTag(VerdictTags.SIDES_ROW).performClick()
+        compose.onNodeWithTag(VerdictTags.BEST_ROW).assertTextEquals(if (parties.aIsSelf) en.bestPointSelf else en.bestPointOf(parties.nameA)).performClick()
+        assertEquals(3, opened)
+        // The crux itself waits for the details.
+        compose.onNodeWithText(r.crux).assertDoesNotExist()
     }
 
     @Test
-    fun judging_showsTheArgumentAboveTheScene() {
-        val en = UiTestSupport.s(AppLang.EN)
+    fun rulingSummary_refusal_hasNoLeanAndNoRows() {
+        val outcome = sample("win_b_named")
+        val r = outcome.result.result.copy(modelRefused = true)
         compose.setContent {
             Themed(AppLang.EN) {
-                JudgingScreen(done = false, result = null, startedAt = 0, reducedMotion = true, onFinished = {}, onCancel = {}, argument = "Hot dogs are sandwiches, says Sam.")
+                RulingSummary(
+                    view = TranslationView(r, TranslationStatus.ORIGINAL, AppLang.EN),
+                    parties = PartyNames.partyNames(outcome.nameMap, AppLang.EN, UiTestSupport.s(AppLang.EN)),
+                    actions = CardActions(onShare = {}, onCopy = {}, copied = false),
+                    onDetails = {},
+                    reducedMotion = true,
+                )
             }
         }
-        compose.onNodeWithText("Hot dogs are sandwiches, says Sam.").assertExists()
-        compose.onNodeWithText(en.threadJudges).assertExists()
+        compose.onNodeWithTag(VerdictTags.LEAN).assertDoesNotExist()
+        compose.onNodeWithTag(VerdictTags.CRUX_ROW).assertDoesNotExist()
+    }
+
+    @Test
+    fun judging_showsEachSideAboveTheScene() {
+        val en = UiTestSupport.s(AppLang.EN)
+        val sides = listOf(
+            VerdictFlow.Side(mine = true, name = "", text = "A hot dog is its own thing."),
+            VerdictFlow.Side(mine = false, name = "Sam", text = "Hot dogs are sandwiches."),
+        )
+        compose.setContent {
+            Themed(AppLang.EN) {
+                JudgingScreen(done = false, result = null, startedAt = 0, reducedMotion = true, onFinished = {}, onCancel = {}, sides = sides)
+            }
+        }
+        compose.onNodeWithText("A hot dog is its own thing.").assertExists()
+        compose.onNodeWithText(en.appHomeYourSide.uppercase(Locale.US)).assertExists()
+        compose.onNodeWithText("SAM").assertExists()
         compose.onNodeWithTag(JudgingTags.BALANCE).assertExists()
         compose.onNodeWithTag(JudgingTags.CAPTION).assertExists()
     }
