@@ -88,6 +88,7 @@ fun VerdictRoute(
         }
     }
     BackHandler(enabled = details) { details = false }
+    LaunchedEffect(details) { scroll.scrollTo(0) }
     val url = shareUrl(shareBaseUrl, id)
 
     Column(Modifier.fillMaxSize()) {
