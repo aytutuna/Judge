@@ -24,9 +24,9 @@ struct JudgingCover: View {
 }
 
 /// The judging turn of the thread, full screen while a verdict is pending:
-/// the sides that were sent, the judges' badge and a card with the 3D balance (the
-/// beats of lib/judging-ui.ts while waiting, the verdict tilt once it is
-/// in) over the judge dots and the rotating captions of lib/thinking.ts.
+/// the sides that were sent and a card with the 3D balance (the beats of
+/// lib/judging-ui.ts while waiting, the verdict tilt once it is in) over
+/// the judge dots and the rotating captions of lib/thinking.ts, then Cancel.
 /// After the finish sequence and a short hold `onFinished` hands over.
 struct JudgingView: View {
     let lang: AppLang
@@ -73,37 +73,41 @@ struct JudgingView: View {
     var body: some View {
         let captionKey = Thinking.announcementKey(state, done: done)
         VStack(spacing: 0) {
-            HStack {
+            HStack(spacing: 10) {
+                BrandMark(width: 30)
+                Text(L10n.appName(lang))
+                    .brandText(.brand)
+                    .foregroundStyle(Brand.ink)
+                Spacer()
                 if let onNew {
                     NewArgumentButton(lang: lang, action: onNew)
                 }
-                Spacer()
-                Button(action: onCancel) {
-                    Image(systemName: "xmark")
-                        .font(.system(size: 15, weight: .semibold))
-                        .foregroundStyle(Brand.ink2)
-                        .frame(width: 44, height: 44)
-                        .background(Circle().fill(Brand.paper))
-                        .overlay(Circle().strokeBorder(Brand.line2, lineWidth: 1))
-                }
-                .accessibilityLabel(L10n.appCancel(lang))
             }
+            .frame(minHeight: 44)
             .padding(.horizontal, 20)
             .padding(.top, 8)
+            .accessibilityElement(children: .contain)
 
             ScrollView {
                 VStack(alignment: .leading, spacing: 16) {
                     if !sides.isEmpty {
                         SideTiles(sides: sides, lang: lang)
-                            .padding(.bottom, 4)
                     }
-                    JudgesBadge(label: L10n.threadJudges(lang))
                     card(captionKey: captionKey)
                 }
                 .padding(16)
                 .frame(maxWidth: 640)
                 .frame(maxWidth: .infinity)
             }
+
+            Button(L10n.appCancel(lang), action: onCancel)
+                .brandText(TypeStyle(face: .inter, weight: 600, size: 14, lineHeight: 1.2, textStyle: .subheadline, maxScale: 1.8))
+                .foregroundStyle(Brand.ink2)
+                .padding(.horizontal, 20)
+                .frame(minHeight: 44)
+                .contentShape(Rectangle())
+                .buttonStyle(.plain)
+                .padding(.bottom, 8)
         }
         .background(Brand.ivory.ignoresSafeArea())
         .task(id: TickKey(state: state, done: done, finished: finished, skip: skip)) {
