@@ -289,6 +289,9 @@ struct HomeView: View {
             let waiting = home.isCheckingBot || home.isCheckingQuestions || home.isCreatingCase
             let title = L10n.getVerdict(lang)
             Button {
+                // Still enabled while waiting so the spinner isn't dimmed; a
+                // tap then must not turn a case being created into a verdict.
+                guard home.canSubmit(app) else { return }
                 home.mode = .now
                 submit()
             } label: {
