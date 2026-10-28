@@ -199,6 +199,7 @@ class CaseFlowTest {
         val flow = VerdictFlow(api(), NoBotCheck, FakeHistory(), scope, caseNames = names)
         assertTrue(flow.createCase("Sam says a hot dog is a sandwich and I say it is not.", Preset.BALANCED, AppLang.EN, Tier.FREE, listOf("e1"), "Alex", " Sam "))
         assertEquals("the case screen is told who it waits for", VerdictFlow.Nav.Case(ID, "Sam"), withTimeout(5_000) { flow.navigation.first() })
+        assertEquals("and keeps it for later visits", "Sam", names.otherName(ID))
         val body = bodyOf(CREATE)
         assertEquals("free", body["tier"]!!.jsonPrimitive.content)
         assertNull("evidence is Premium", body["evidence"])

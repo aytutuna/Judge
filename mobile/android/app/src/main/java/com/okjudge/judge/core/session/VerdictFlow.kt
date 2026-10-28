@@ -300,9 +300,11 @@ class VerdictFlow(
                     clearKey(key)
                     val created = res.value
                     caseNames.save(created.case.id, created.nameMap)
+                    val other = otherName?.trim()?.takeIf { it.isNotEmpty() }
+                    other?.let { caseNames.saveOtherName(created.case.id, it) }
                     created.entitlement?.let(onEntitlement)
                     // The form stays held until the case screen has taken over (caseOpened).
-                    _navigation.trySend(Nav.Case(created.case.id, otherName?.trim()?.takeIf { it.isNotEmpty() }))
+                    _navigation.trySend(Nav.Case(created.case.id, other))
                 }
             }
         }

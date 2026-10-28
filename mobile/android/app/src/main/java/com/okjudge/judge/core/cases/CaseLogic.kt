@@ -21,10 +21,15 @@ interface CaseNamesStore {
     fun get(caseId: String): List<NameMapping>
     fun save(caseId: String, names: List<NameMapping>)
     fun forget(caseId: String)
+
+    /** Who the case waits for, as typed on Home; the server never gets it. */
+    fun otherName(caseId: String): String?
+    fun saveOtherName(caseId: String, name: String)
 }
 
 class MemoryCaseNames : CaseNamesStore {
     private val map = HashMap<String, List<NameMapping>>()
+    private val others = HashMap<String, String>()
 
     @Synchronized override fun get(caseId: String): List<NameMapping> = map[caseId].orEmpty()
 
@@ -35,6 +40,13 @@ class MemoryCaseNames : CaseNamesStore {
 
     @Synchronized override fun forget(caseId: String) {
         map.remove(caseId)
+        others.remove(caseId)
+    }
+
+    @Synchronized override fun otherName(caseId: String): String? = others[caseId]
+
+    @Synchronized override fun saveOtherName(caseId: String, name: String) {
+        others[caseId] = name
     }
 }
 
@@ -53,7 +65,13 @@ class PrefsCaseNames(context: Context) : CaseNamesStore {
     }
 
     @Synchronized override fun forget(caseId: String) {
-        prefs.edit().remove(key(caseId)).apply()
+        prefs.edit().remove(key(caseId)).remove("other:$caseId").apply()
+    }
+
+    @Synchronized override fun otherName(caseId: String): String? = prefs.getString("other:$caseId", null)
+
+    @Synchronized override fun saveOtherName(caseId: String, name: String) {
+        prefs.edit().putString("other:$caseId", name).apply()
     }
 }
 

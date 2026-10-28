@@ -427,7 +427,7 @@ fun JudgeRoot(container: AppContainer, links: StateFlow<Uri?> = MutableStateFlow
                                 state = state,
                                 evidenceOn = (providers as? Account.Providers.Ready)?.config?.features?.evidence == true,
                                 reducedMotion = rememberReducedMotion(),
-                                otherName = key.otherName,
+                                otherName = key.otherName ?: vm.otherName,
                                 actions = CaseActions(
                                     onBack = if (backStack.size > 1) ({ backStack.removeAt(backStack.lastIndex) }) else null,
                                     onNew = onNew,

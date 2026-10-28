@@ -100,6 +100,9 @@ class CaseViewModel(
 
     private val _state = MutableStateFlow(CaseUiState(localNames = names.get(caseId)))
 
+    /** Opened from History or a link, the case still knows who it waits for. */
+    val otherName: String? = names.otherName(caseId)
+
     val evidence = EvidenceController(viewModelScope, CaseLogic.MAX_EVIDENCE_PER_APPEAL) { api.uploadEvidence(it) }
 
     val state: StateFlow<CaseUiState> = combine(_state, evidence.state) { s, ev -> s.copy(appealEvidence = ev) }
