@@ -68,6 +68,7 @@ import org.robolectric.RobolectricTestRunner
 import org.robolectric.RuntimeEnvironment
 import org.robolectric.annotation.Config
 import org.robolectric.annotation.GraphicsMode
+import java.time.Instant
 
 /**
  * Screenshots for visual review against the web. They are written only in
@@ -494,6 +495,9 @@ class ScreenshotsTest {
         }
     }
 
+    /** The day after the history fixture's newest row, as on iOS, so the invite still reads as open. */
+    private val listNow = Instant.parse("2026-10-21T08:00:00Z").toEpochMilli()
+
     /**
      * The account's list from the viewer's side: waiting for them, judges
      * thinking, your turn, ready either way, a case you answered, removed by
@@ -503,7 +507,7 @@ class ScreenshotsTest {
     fun history_cases_en() = capture("history_cases_en") {
         val page = historyPage()
         val entries = mergeHistory(page.items, listOf(savedSample("win_b_named", 1_760_700_000_000L)), user = "u1")
-        Themed(AppLang.EN) { HistoryScreen(entries, {}, { _, _ -> }, {}, paging = HistoryPaging(next = page.next, loadedAt = 1L)) }
+        Themed(AppLang.EN) { HistoryScreen(entries, {}, { _, _ -> }, {}, paging = HistoryPaging(next = page.next, loadedAt = 1L), now = listNow) }
     }
 
     /** Select mode with two rows picked; rows that can't be removed stay dimmed. */
@@ -512,7 +516,7 @@ class ScreenshotsTest {
         val page = historyPage()
         val entries = mergeHistory(page.items, listOf(savedSample("win_b_named", 1_760_700_000_000L)), user = "u1")
         compose.setContent {
-            Themed(AppLang.EN) { HistoryScreen(entries, {}, { _, _ -> }, {}) }
+            Themed(AppLang.EN) { HistoryScreen(entries, {}, { _, _ -> }, {}, now = listNow) }
         }
         compose.onNodeWithTag(HistoryTags.SELECT).performClick()
         compose.onNodeWithTag(HistoryTags.row("c:case0000010")).performClick()
