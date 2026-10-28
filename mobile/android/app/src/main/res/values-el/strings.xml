@@ -403,8 +403,8 @@
     <string name="case_appeal_original">Οι πληροφορίες που πρόσθεσες, όπως τις έγραψες</string>
     <string name="case_display_name">Το όνομά σου στην κοινοποιημένη απόφαση</string>
     <string name="case_display_save">Αποθήκευση ονόματος</string>
-    <string name="respond_keep">Keep this case in your account</string>
-    <string name="respond_kept">This case is in your account now. It shows on your Verdicts page on every device.</string>
+    <string name="respond_keep">Κράτα αυτή την υπόθεση στον λογαριασμό σου</string>
+    <string name="respond_kept">Αυτή η υπόθεση είναι πλέον στον λογαριασμό σου. Εμφανίζεται στη σελίδα «Αποφάσεις» σε κάθε συσκευή.</string>
     <string name="respond_remove">Αφαίρεση της πλευράς μου</string>
     <string name="respond_remove_confirm">Να αφαιρεθούν το αρχικό σου κείμενο και το εμφανιζόμενο όνομά σου; Οι σύνδεσμοι κοινοποίησης της υπόθεσης σταματούν να λειτουργούν (προεπισκοπήσεις που έχουν ήδη σταλεί σε συνομιλίες μπορεί να εμφανίζονται μέχρι να τις ανανεώσουν οι εφαρμογές). Αυτό δεν αναιρείται.</string>
     <string name="names_title">Ονόματα στην κοινοποιημένη σελίδα</string>
@@ -422,20 +422,20 @@
     <string name="shell_load_failed">Δεν μπορέσαμε να φορτώσουμε το ιστορικό σου.</string>
     <string name="shell_load_more">Περισσότερα</string>
     <string name="shell_untitled">Απόφαση χωρίς τίτλο</string>
-    <string name="history_state_judging">Judges thinking</string>
-    <string name="history_state_rejudging">Judges thinking again</string>
-    <string name="history_state_failed">Didn\'t finish</string>
-    <string name="history_state_rejudge_failed">New context didn\'t go through</string>
-    <string name="history_state_waiting">Waiting for %1$s to answer</string>
-    <string name="history_state_waiting_other">Waiting for the other side to answer</string>
-    <string name="history_state_expired">Link expired</string>
-    <string name="history_state_removed">Removed</string>
-    <string name="history_state_removed_by">Removed by %1$s</string>
-    <string name="history_state_removed_by_other">Removed by the other side</string>
-    <string name="history_state_ready">Verdict ready</string>
-    <string name="history_context_added">After new context</string>
-    <string name="history_your_move">Your turn</string>
-    <string name="history_answered">You answered</string>
+    <string name="history_state_judging">Οι κριτές σκέφτονται</string>
+    <string name="history_state_rejudging">Οι κριτές σκέφτονται ξανά</string>
+    <string name="history_state_failed">Δεν ολοκληρώθηκε</string>
+    <string name="history_state_rejudge_failed">Η νέα κρίση δεν ολοκληρώθηκε</string>
+    <string name="history_state_waiting">Αναμονή απάντησης από: %1$s</string>
+    <string name="history_state_waiting_other">Αναμονή απάντησης από την άλλη πλευρά</string>
+    <string name="history_state_expired">Ο σύνδεσμος έληξε</string>
+    <string name="history_state_removed">Αφαιρέθηκε</string>
+    <string name="history_state_removed_by">Αφαιρέθηκε από: %1$s</string>
+    <string name="history_state_removed_by_other">Αφαιρέθηκε από την άλλη πλευρά</string>
+    <string name="history_state_ready">Η απόφαση είναι έτοιμη</string>
+    <string name="history_context_added">Μετά από νέες πληροφορίες</string>
+    <string name="history_your_move">Σειρά σου</string>
+    <string name="history_answered">Απάντησες</string>
     <string name="thread_label">Αυτή η διαφωνία</string>
     <string name="thread_you">Έγραψες</string>
     <string name="thread_judges">Οι κριτές</string>
@@ -492,21 +492,21 @@
     </plurals>
     <string name="app_history_row_selected">Επιλεγμένη</string>
     <string name="app_history_row_not_selected">Μη επιλεγμένη</string>
-    <string name="app_history_phone_only">Only on this phone</string>
-    <string name="app_history_phone_only_note">Not in your account: these are saved on this phone only. Deleting one here doesn\'t take down its share link.</string>
+    <string name="app_history_phone_only">Μόνο σε αυτό το τηλέφωνο</string>
+    <string name="app_history_phone_only_note">Αυτές οι αποφάσεις δεν υπάρχουν στον λογαριασμό σου· είναι αποθηκευμένες μόνο σε αυτό το τηλέφωνο. Αν διαγράψεις μία από εδώ, ο σύνδεσμος κοινοποίησής της θα συνεχίσει να λειτουργεί.</string>
     <plurals name="app_history_remove_confirm">
-        <item quantity="one">Remove this verdict from your account? What you wrote and the names are erased and its share link stops working, on every device. This can\'t be undone.</item>
-        <item quantity="other">Remove %1$s verdicts from your account? What you wrote and the names are erased and their share links stop working, on every device. This can\'t be undone.</item>
+        <item quantity="one">Να αφαιρεθεί αυτή η απόφαση από τον λογαριασμό σου, σε όλες τις συσκευές; Όσα έγραψες και τα ονόματα σβήνονται και ο σύνδεσμος κοινοποίησής της σταματά να λειτουργεί. Αυτό δεν αναιρείται.</item>
+        <item quantity="other">Να αφαιρεθούν %1$s αποφάσεις από τον λογαριασμό σου, σε όλες τις συσκευές; Όσα έγραψες και τα ονόματα σβήνονται και οι σύνδεσμοι κοινοποίησής τους σταματούν να λειτουργούν. Αυτό δεν αναιρείται.</item>
     </plurals>
     <plurals name="app_history_phone_only_also">
-        <item quantity="one">1 saved only on this phone is deleted from it; its share link keeps working.</item>
-        <item quantity="other">%1$s saved only on this phone are deleted from it; their share links keep working.</item>
+        <item quantity="one">Θα διαγραφεί επίσης μία απόφαση που υπάρχει μόνο σε αυτό το τηλέφωνο· ο σύνδεσμος κοινοποίησής της θα συνεχίσει να λειτουργεί.</item>
+        <item quantity="other">Θα διαγραφούν επίσης %1$s αποφάσεις που υπάρχουν μόνο σε αυτό το τηλέφωνο· οι σύνδεσμοι κοινοποίησής τους θα συνεχίσουν να λειτουργούν.</item>
     </plurals>
     <plurals name="app_history_remove_failed">
-        <item quantity="one">Couldn\'t remove it. Check your connection and try again.</item>
-        <item quantity="other">Couldn\'t remove %1$s of them. Check your connection and try again.</item>
+        <item quantity="one">Δεν μπορέσαμε να την αφαιρέσουμε. Έλεγξε τη σύνδεσή σου και δοκίμασε ξανά.</item>
+        <item quantity="other">Δεν μπορέσαμε να αφαιρέσουμε %1$s από αυτές. Έλεγξε τη σύνδεσή σου και δοκίμασε ξανά.</item>
     </plurals>
-    <string name="app_history_offline_remove">You\'re offline. Removing needs a connection.</string>
+    <string name="app_history_offline_remove">Είσαι εκτός σύνδεσης. Για να αφαιρέσεις αποφάσεις χρειάζεσαι σύνδεση στο ίντερνετ.</string>
     <string name="app_pricing_free_account">Σύνδεση με Apple, Google ή email</string>
     <string name="app_pricing_headline">Την πρώτη απόφαση την κερνάμε εμείς.</string>
     <string name="app_pricing_sub">Φτιάξε λογαριασμό και η πρώτη σου απόφαση είναι δωρεάν, με όλες τις λειτουργίες. Μετά διαλέγεις πακέτο ή μηνιαίο πρόγραμμα.</string>

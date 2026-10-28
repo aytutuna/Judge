@@ -19,6 +19,14 @@ const fi: AppLocale = {
     "app.history.deleteConfirm": "Poistetaanko {n} tuomiota tästä puhelimesta? Niiden jakolinkit toimivat edelleen.",
     "app.history.rowSelected": "Valittu",
     "app.history.rowNotSelected": "Ei valittu",
+    "app.history.phoneOnly": "Vain tässä puhelimessa",
+    "app.history.phoneOnlyNote":
+      "Nämä eivät ole tililläsi, vaan ne on tallennettu vain tähän puhelimeen. Jos poistat tuomion täältä, sen jakolinkki toimii edelleen.",
+    "app.history.removeConfirm":
+      "Poistetaanko {n} tuomiota tililtäsi? Poisto koskee kaikkia laitteitasi: kirjoittamasi teksti ja nimet pyyhitään, ja niiden jakolinkit lakkaavat toimimasta. Tätä ei voi perua.",
+    "app.history.phoneOnlyAlso": "{n} vain tähän puhelimeen tallennettua tuomiota poistetaan puhelimesta; niiden jakolinkit toimivat edelleen.",
+    "app.history.removeFailed": "{n} tuomion poistaminen ei onnistunut. Tarkista yhteys ja yritä uudelleen.",
+    "app.history.offlineRemove": "Verkkoyhteys puuttuu. Poistaminen vaatii yhteyden.",
     "app.pricing.free.account": "Kirjaudu Applella, Googlella tai sähköpostilla",
     "app.pricing.headline": "Ensimmäinen tuomio on meiltä.",
     "app.pricing.sub":
@@ -173,6 +181,11 @@ const fi: AppLocale = {
     "app.balance.left": { one: "{n} tuomio jäljellä" },
     "app.history.selected": { one: "{n} valittu" },
     "app.history.deleteConfirm": { one: "Poistetaanko tämä tuomio tästä puhelimesta? Sen jakolinkki toimii edelleen." },
+    "app.history.removeConfirm": {
+      one: "Poistetaanko tämä tuomio tililtäsi? Poisto koskee kaikkia laitteitasi: kirjoittamasi teksti ja nimet pyyhitään, ja sen jakolinkki lakkaa toimimasta. Tätä ei voi perua.",
+    },
+    "app.history.phoneOnlyAlso": { one: "1 vain tähän puhelimeen tallennettu tuomio poistetaan puhelimesta; sen jakolinkki toimii edelleen." },
+    "app.history.removeFailed": { one: "Poistaminen ei onnistunut. Tarkista yhteys ja yritä uudelleen." },
   },
 };
 

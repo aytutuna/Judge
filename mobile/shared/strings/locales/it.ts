@@ -20,6 +20,15 @@ const it: AppLocale = {
       "Eliminare {n} verdetti da questo telefono? I loro link di condivisione continuano a funzionare.",
     "app.history.rowSelected": "Selezionato",
     "app.history.rowNotSelected": "Non selezionato",
+    "app.history.phoneOnly": "Solo su questo telefono",
+    "app.history.phoneOnlyNote":
+      "Non sono nel tuo account: sono salvati solo su questo telefono. Se ne elimini uno qui, il suo link di condivisione continua a funzionare.",
+    "app.history.removeConfirm":
+      "Rimuovere {n} verdetti dal tuo account? Quello che hai scritto e i nomi vengono cancellati e i loro link di condivisione smettono di funzionare, su tutti i dispositivi. Non si può annullare.",
+    "app.history.phoneOnlyAlso":
+      "{n} verdetti salvati solo su questo telefono vengono eliminati da qui; i loro link di condivisione continuano a funzionare.",
+    "app.history.removeFailed": "Non è stato possibile rimuoverne {n}. Controlla la connessione e riprova.",
+    "app.history.offlineRemove": "Sei offline. Per rimuovere serve una connessione.",
     "app.pricing.free.account": "Accedi con Apple, Google o email",
     "app.pricing.headline": "Il primo verdetto lo offriamo noi.",
     "app.pricing.sub":
@@ -178,6 +187,13 @@ const it: AppLocale = {
     "app.history.deleteConfirm": {
       one: "Eliminare questo verdetto da questo telefono? Il suo link di condivisione continua a funzionare.",
     },
+    "app.history.removeConfirm": {
+      one: "Rimuovere questo verdetto dal tuo account? Quello che hai scritto e i nomi vengono cancellati e il suo link di condivisione smette di funzionare, su tutti i dispositivi. Non si può annullare.",
+    },
+    "app.history.phoneOnlyAlso": {
+      one: "{n} verdetto salvato solo su questo telefono viene eliminato da qui; il suo link di condivisione continua a funzionare.",
+    },
+    "app.history.removeFailed": { one: "Non è stato possibile rimuoverlo. Controlla la connessione e riprova." },
   },
 };
 

@@ -21,6 +21,15 @@ const nb: AppLocale = {
       "Vil du slette {n} dommer fra denne telefonen? Delingslenkene virker fortsatt.",
     "app.history.rowSelected": "Valgt",
     "app.history.rowNotSelected": "Ikke valgt",
+    "app.history.phoneOnly": "Bare på denne telefonen",
+    "app.history.phoneOnlyNote":
+      "Ikke i kontoen din: disse er bare lagret på denne telefonen. Sletter du en dom her, fjernes ikke delingslenken.",
+    "app.history.removeConfirm":
+      "Vil du fjerne {n} dommer fra kontoen din? Det du skrev og navnene slettes, og delingslenkene slutter å virke på alle enheter. Dette kan ikke angres.",
+    "app.history.phoneOnlyAlso":
+      "{n} dommer som bare er lagret på denne telefonen, slettes herfra. Delingslenkene virker fortsatt.",
+    "app.history.removeFailed": "Vi fikk ikke fjernet {n} av dem. Sjekk tilkoblingen og prøv igjen.",
+    "app.history.offlineRemove": "Du er ikke på nett. Du trenger nettforbindelse for å fjerne dommer.",
     "app.pricing.free.account": "Logg inn med Apple, Google eller e-post",
     "app.pricing.headline": "Den første dommen spanderer vi.",
     "app.pricing.sub":
@@ -197,8 +206,15 @@ const nb: AppLocale = {
     "app.balance.left": { one: "{n} dom igjen" },
     "app.history.selected": { one: "{n} valgt" },
     "app.history.deleteConfirm": {
-      one: "Vil du slette dommen fra denne telefonen? Delingslenken virker fortsatt.",
+      one: "Vil du slette denne dommen fra telefonen? Delingslenken virker fortsatt.",
     },
+    "app.history.removeConfirm": {
+      one: "Vil du fjerne denne dommen fra kontoen din? Det du skrev og navnene slettes, og delingslenken slutter å virke på alle enheter. Dette kan ikke angres.",
+    },
+    "app.history.phoneOnlyAlso": {
+      one: "1 dom som bare er lagret på denne telefonen, slettes herfra. Delingslenken virker fortsatt.",
+    },
+    "app.history.removeFailed": { one: "Vi fikk ikke fjernet den. Sjekk tilkoblingen og prøv igjen." },
   },
 };
 

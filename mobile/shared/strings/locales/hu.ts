@@ -18,6 +18,14 @@ const hu: AppLocale = {
     "app.history.deleteConfirm": "Törlöd a kijelölt {n} ítéletet erről a telefonról? A megosztási linkjeik továbbra is működnek.",
     "app.history.rowSelected": "Kijelölve",
     "app.history.rowNotSelected": "Nincs kijelölve",
+    "app.history.phoneOnly": "Csak ezen a telefonon",
+    "app.history.phoneOnlyNote":
+      "Nincsenek a fiókodban: ezek csak ezen a telefonon vannak elmentve. Ha innen törölsz egyet, a megosztási linkje attól még működik.",
+    "app.history.removeConfirm":
+      "Eltávolítod a kijelölt {n} ítéletet a fiókodból? Az eredeti szövegeid és a nevek törlődnek, a megosztási linkjeik pedig minden eszközön megszűnnek működni. Ez nem vonható vissza.",
+    "app.history.phoneOnlyAlso": "A csak ezen a telefonon tárolt {n} ítélet innen törlődik; a megosztási linkjeik továbbra is működnek.",
+    "app.history.removeFailed": "{n} ítéletet nem sikerült eltávolítani. Ellenőrizd az internetkapcsolatot, és próbáld újra.",
+    "app.history.offlineRemove": "Nincs internetkapcsolat. Eltávolítani csak online lehet.",
     "app.pricing.free.account": "Belépés Apple-lel, Google-lal vagy e-maillel",
     "app.pricing.headline": "Az első ítélet ajándék.",
     "app.pricing.sub":
@@ -171,6 +179,11 @@ const hu: AppLocale = {
     "app.balance.left": { one: "Még {n} ítéleted maradt" },
     "app.history.selected": { one: "{n} kijelölve" },
     "app.history.deleteConfirm": { one: "Törlöd ezt az ítéletet erről a telefonról? A megosztási linkje továbbra is működik." },
+    "app.history.removeConfirm": {
+      one: "Eltávolítod ezt az ítéletet a fiókodból? Az eredeti szöveged és a nevek törlődnek, a megosztási linkje pedig minden eszközön megszűnik működni. Ez nem vonható vissza.",
+    },
+    "app.history.phoneOnlyAlso": { one: "A csak ezen a telefonon tárolt 1 ítélet innen törlődik; a megosztási linkje továbbra is működik." },
+    "app.history.removeFailed": { one: "Nem sikerült eltávolítani az ítéletet. Ellenőrizd az internetkapcsolatot, és próbáld újra." },
   },
 };
 

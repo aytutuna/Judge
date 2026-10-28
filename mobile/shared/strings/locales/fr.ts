@@ -20,6 +20,15 @@ const fr: AppLocale = {
       "Supprimer {n} verdicts de ce téléphone ? Leurs liens de partage continueront de fonctionner.",
     "app.history.rowSelected": "Sélectionné",
     "app.history.rowNotSelected": "Non sélectionné",
+    "app.history.phoneOnly": "Uniquement sur ce téléphone",
+    "app.history.phoneOnlyNote":
+      "Pas dans ton compte : ces verdicts sont enregistrés uniquement sur ce téléphone. En supprimer un ici ne désactive pas son lien de partage.",
+    "app.history.removeConfirm":
+      "Supprimer {n} verdicts de ton compte, sur tous tes appareils ? Ce que tu as écrit et les noms seront effacés, et leurs liens de partage cesseront de fonctionner. Cette action est irréversible.",
+    "app.history.phoneOnlyAlso":
+      "{n} verdicts enregistrés uniquement sur ce téléphone seront supprimés de l’appareil ; leurs liens de partage continueront de fonctionner.",
+    "app.history.removeFailed": "Impossible d’en supprimer {n}. Vérifie ta connexion et réessaie.",
+    "app.history.offlineRemove": "Tu es hors ligne. Il faut une connexion pour supprimer.",
     "app.pricing.free.account": "Connecte-toi avec Apple, Google ou par e-mail",
     "app.pricing.headline": "Ton premier verdict est offert.",
     "app.pricing.sub":
@@ -178,6 +187,13 @@ const fr: AppLocale = {
     "app.history.deleteConfirm": {
       one: "Supprimer {n} verdict de ce téléphone ? Son lien de partage continuera de fonctionner.",
     },
+    "app.history.removeConfirm": {
+      one: "Supprimer {n} verdict de ton compte, sur tous tes appareils ? Ce que tu as écrit et les noms seront effacés, et son lien de partage cessera de fonctionner. Cette action est irréversible.",
+    },
+    "app.history.phoneOnlyAlso": {
+      one: "{n} verdict enregistré uniquement sur ce téléphone sera supprimé de l’appareil ; son lien de partage continuera de fonctionner.",
+    },
+    "app.history.removeFailed": { one: "Impossible d’en supprimer {n}. Vérifie ta connexion et réessaie." },
   },
 };
 

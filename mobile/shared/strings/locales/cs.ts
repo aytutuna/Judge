@@ -20,6 +20,15 @@ const cs: AppLocale = {
       "Smazat {n} verdiktů z tohohle telefonu? Jejich sdílené odkazy budou fungovat dál.",
     "app.history.rowSelected": "Vybráno",
     "app.history.rowNotSelected": "Nevybráno",
+    "app.history.phoneOnly": "Jen v tomhle telefonu",
+    "app.history.phoneOnlyNote":
+      "Tyhle verdikty nejsou ve tvém účtu, jsou uložené jen v tomhle telefonu. Když tu některý smažeš, jeho sdílený odkaz bude fungovat dál.",
+    "app.history.removeConfirm":
+      "Odstranit {n} verdiktů ze svého účtu? Tvůj text i jména se vymažou a jejich sdílené odkazy přestanou fungovat, a to na všech zařízeních. Tohle nejde vrátit.",
+    "app.history.phoneOnlyAlso":
+      "{n} verdiktů uložených jen v tomhle telefonu se z něj smaže; jejich sdílené odkazy budou fungovat dál.",
+    "app.history.removeFailed": "{n} z nich se nepodařilo odstranit. Zkontroluj připojení a zkus to znovu.",
+    "app.history.offlineRemove": "Nejsi online. K odstranění potřebuješ připojení.",
     "app.pricing.free.account": "Přihlas se přes Apple, Google nebo e-mail",
     "app.pricing.headline": "První verdikt máš od nás.",
     "app.pricing.sub":
@@ -174,6 +183,18 @@ const cs: AppLocale = {
     "app.history.deleteConfirm": {
       one: "Smazat tenhle verdikt z tohohle telefonu? Jeho sdílený odkaz bude fungovat dál.",
       few: "Smazat {n} verdikty z tohohle telefonu? Jejich sdílené odkazy budou fungovat dál.",
+    },
+    "app.history.removeConfirm": {
+      one: "Odstranit tenhle verdikt ze svého účtu? Tvůj text i jména se vymažou a jeho sdílený odkaz přestane fungovat, a to na všech zařízeních. Tohle nejde vrátit.",
+      few: "Odstranit {n} verdikty ze svého účtu? Tvůj text i jména se vymažou a jejich sdílené odkazy přestanou fungovat, a to na všech zařízeních. Tohle nejde vrátit.",
+    },
+    "app.history.phoneOnlyAlso": {
+      one: "Jeden verdikt uložený jen v tomhle telefonu se z něj smaže; jeho sdílený odkaz bude fungovat dál.",
+      few: "{n} verdikty uložené jen v tomhle telefonu se z něj smažou; jejich sdílené odkazy budou fungovat dál.",
+    },
+    "app.history.removeFailed": {
+      one: "Verdikt se nepodařilo odstranit. Zkontroluj připojení a zkus to znovu.",
+      few: "{n} z nich se nepodařilo odstranit. Zkontroluj připojení a zkus to znovu.",
     },
   },
 };

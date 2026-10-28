@@ -403,8 +403,8 @@
     <string name="case_appeal_original">ଆପଣ ଯୋଡ଼ିଥିବା ବିବରଣୀ, ଆପଣ ଯେମିତି ଲେଖିଥିଲେ</string>
     <string name="case_display_name">ସେୟାର୍ ହୋଇଥିବା ରାୟରେ ଆପଣଙ୍କ ନାମ</string>
     <string name="case_display_save">ନାମ ସେଭ୍ କରନ୍ତୁ</string>
-    <string name="respond_keep">Keep this case in your account</string>
-    <string name="respond_kept">This case is in your account now. It shows on your Verdicts page on every device.</string>
+    <string name="respond_keep">ଏହି ମାମଲା ଆପଣଙ୍କ ଆକାଉଣ୍ଟରେ ରଖନ୍ତୁ</string>
+    <string name="respond_kept">ଏହି ମାମଲା ଏବେ ଆପଣଙ୍କ ଆକାଉଣ୍ଟରେ ଅଛି। ଏହା ସବୁ ଡିଭାଇସ୍‌ରେ ଆପଣଙ୍କ “ରାୟ” ପୃଷ୍ଠାରେ ଦେଖାଯାଏ।</string>
     <string name="respond_remove">ମୋ କଥା ହଟାନ୍ତୁ</string>
     <string name="respond_remove_confirm">ଆପଣଙ୍କ ମୂଳ ଲେଖା ଓ ପ୍ରଦର୍ଶିତ ନାମ ହଟାଇବେ? ମାମଲାର ସେୟାର୍ ଲିଙ୍କ୍ କାମ କରିବା ବନ୍ଦ କରିବ (ଚାଟ୍‌ରେ ଆଗରୁ ପୋଷ୍ଟ ହୋଇଥିବା ପ୍ରିଭ୍ୟୁ ସେହି ଆପ୍ ରିଫ୍ରେସ୍ ନ କରିବା ଯାଏଁ ଦେଖାଯାଇପାରେ)। ଏହାକୁ ଆଉ ଫେରାଇହେବ ନାହିଁ।</string>
     <string name="names_title">ସେୟାର୍ ପୃଷ୍ଠାରେ ନାମ</string>
@@ -422,20 +422,20 @@
     <string name="shell_load_failed">ଆପଣଙ୍କ ଇତିହାସ ଲୋଡ୍ କରିପାରିଲୁ ନାହିଁ।</string>
     <string name="shell_load_more">ଆହୁରି ଦେଖାନ୍ତୁ</string>
     <string name="shell_untitled">ଶିରୋନାମା ବିନା ରାୟ</string>
-    <string name="history_state_judging">Judges thinking</string>
-    <string name="history_state_rejudging">Judges thinking again</string>
-    <string name="history_state_failed">Didn\'t finish</string>
-    <string name="history_state_rejudge_failed">New context didn\'t go through</string>
-    <string name="history_state_waiting">Waiting for %1$s to answer</string>
-    <string name="history_state_waiting_other">Waiting for the other side to answer</string>
-    <string name="history_state_expired">Link expired</string>
-    <string name="history_state_removed">Removed</string>
-    <string name="history_state_removed_by">Removed by %1$s</string>
-    <string name="history_state_removed_by_other">Removed by the other side</string>
-    <string name="history_state_ready">Verdict ready</string>
-    <string name="history_context_added">After new context</string>
-    <string name="history_your_move">Your turn</string>
-    <string name="history_answered">You answered</string>
+    <string name="history_state_judging">ବିଚାରକମାନେ ଭାବୁଛନ୍ତି</string>
+    <string name="history_state_rejudging">ବିଚାରକମାନେ ପୁଣି ଭାବୁଛନ୍ତି</string>
+    <string name="history_state_failed">ଶେଷ ହେଲା ନାହିଁ</string>
+    <string name="history_state_rejudge_failed">ନୂଆ ବିବରଣୀ ସହ ପୁଣି ବିଚାର ହେଲା ନାହିଁ</string>
+    <string name="history_state_waiting">%1$sଙ୍କ ଉତ୍ତର ଅପେକ୍ଷାରେ</string>
+    <string name="history_state_waiting_other">ଅନ୍ୟ ପକ୍ଷର ଉତ୍ତର ଅପେକ୍ଷାରେ</string>
+    <string name="history_state_expired">ଲିଙ୍କ୍‌ର ମିଆଦ ସରିଗଲା</string>
+    <string name="history_state_removed">ହଟାଯାଇଛି</string>
+    <string name="history_state_removed_by">%1$s ହଟାଇଦେଲେ</string>
+    <string name="history_state_removed_by_other">ଅନ୍ୟ ପକ୍ଷ ହଟାଇଦେଲେ</string>
+    <string name="history_state_ready">ରାୟ ପ୍ରସ୍ତୁତ</string>
+    <string name="history_context_added">ନୂଆ ବିବରଣୀ ଯୋଡ଼ିବା ପରେ</string>
+    <string name="history_your_move">ଆପଣଙ୍କ ପାଳି</string>
+    <string name="history_answered">ଆପଣ ଉତ୍ତର ଦେଇଛନ୍ତି</string>
     <string name="thread_label">ଏହି ବିବାଦ</string>
     <string name="thread_you">ଆପଣ ଲେଖିଲେ</string>
     <string name="thread_judges">ବିଚାରକମାନେ</string>
@@ -492,21 +492,21 @@
     </plurals>
     <string name="app_history_row_selected">ଚୟନ କରାଯାଇଛି</string>
     <string name="app_history_row_not_selected">ଚୟନ କରାଯାଇନାହିଁ</string>
-    <string name="app_history_phone_only">Only on this phone</string>
-    <string name="app_history_phone_only_note">Not in your account: these are saved on this phone only. Deleting one here doesn\'t take down its share link.</string>
+    <string name="app_history_phone_only">କେବଳ ଏହି ଫୋନ୍‌ରେ</string>
+    <string name="app_history_phone_only_note">ଆପଣଙ୍କ ଆକାଉଣ୍ଟରେ ନାହିଁ: ଏଗୁଡ଼ିକ କେବଳ ଏହି ଫୋନ୍‌ରେ ସେଭ୍ ହୋଇଛି। ଏଠାରୁ କୌଣସି ରାୟ ଡିଲିଟ୍ କଲେ ବି ତା\'ର ସେୟାର୍ ଲିଙ୍କ୍ ବନ୍ଦ ହୁଏ ନାହିଁ।</string>
     <plurals name="app_history_remove_confirm">
-        <item quantity="one">Remove this verdict from your account? What you wrote and the names are erased and its share link stops working, on every device. This can\'t be undone.</item>
-        <item quantity="other">Remove %1$s verdicts from your account? What you wrote and the names are erased and their share links stop working, on every device. This can\'t be undone.</item>
+        <item quantity="one">ଆପଣଙ୍କ ଆକାଉଣ୍ଟରୁ ଏହି ରାୟ ହଟାଇବେ? ସବୁ ଡିଭାଇସ୍‌ରେ ଆପଣ ଲେଖିଥିବା କଥା ଓ ନାମଗୁଡ଼ିକ ଲିଭିଯିବ, ଆଉ ଏହାର ସେୟାର୍ ଲିଙ୍କ୍ କାମ କରିବା ବନ୍ଦ କରିବ। ଏହାକୁ ଆଉ ଫେରାଇହେବ ନାହିଁ।</item>
+        <item quantity="other">ଆପଣଙ୍କ ଆକାଉଣ୍ଟରୁ %1$sଟି ରାୟ ହଟାଇବେ? ସବୁ ଡିଭାଇସ୍‌ରେ ଆପଣ ଲେଖିଥିବା କଥା ଓ ନାମଗୁଡ଼ିକ ଲିଭିଯିବ, ଆଉ ସେଗୁଡ଼ିକର ସେୟାର୍ ଲିଙ୍କ୍ କାମ କରିବା ବନ୍ଦ କରିବ। ଏହାକୁ ଆଉ ଫେରାଇହେବ ନାହିଁ।</item>
     </plurals>
     <plurals name="app_history_phone_only_also">
-        <item quantity="one">1 saved only on this phone is deleted from it; its share link keeps working.</item>
-        <item quantity="other">%1$s saved only on this phone are deleted from it; their share links keep working.</item>
+        <item quantity="one">କେବଳ ଏହି ଫୋନ୍‌ରେ ସେଭ୍ ହୋଇଥିବା 1ଟି ରାୟ ଫୋନ୍‌ରୁ ଡିଲିଟ୍ ହେବ; ଏହାର ସେୟାର୍ ଲିଙ୍କ୍ ଚାଲୁ ରହିବ।</item>
+        <item quantity="other">କେବଳ ଏହି ଫୋନ୍‌ରେ ସେଭ୍ ହୋଇଥିବା %1$sଟି ରାୟ ଫୋନ୍‌ରୁ ଡିଲିଟ୍ ହେବ; ସେଗୁଡ଼ିକର ସେୟାର୍ ଲିଙ୍କ୍ ଚାଲୁ ରହିବ।</item>
     </plurals>
     <plurals name="app_history_remove_failed">
-        <item quantity="one">Couldn\'t remove it. Check your connection and try again.</item>
-        <item quantity="other">Couldn\'t remove %1$s of them. Check your connection and try again.</item>
+        <item quantity="one">ଏହାକୁ ହଟାଇପାରିଲୁ ନାହିଁ। ଇଣ୍ଟରନେଟ୍ ସଂଯୋଗ ଯାଞ୍ଚ କରି ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ।</item>
+        <item quantity="other">ସେଥିରୁ %1$sଟି ହଟାଇପାରିଲୁ ନାହିଁ। ଇଣ୍ଟରନେଟ୍ ସଂଯୋଗ ଯାଞ୍ଚ କରି ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ।</item>
     </plurals>
-    <string name="app_history_offline_remove">You\'re offline. Removing needs a connection.</string>
+    <string name="app_history_offline_remove">ଆପଣ ଅଫଲାଇନ୍ ଅଛନ୍ତି। ହଟାଇବାକୁ ଇଣ୍ଟରନେଟ୍ ସଂଯୋଗ ଦରକାର।</string>
     <string name="app_pricing_free_account">Apple, Google ବା ଇମେଲ୍ ସହ ସାଇନ୍ ଇନ୍ କରନ୍ତୁ</string>
     <string name="app_pricing_headline">ପ୍ରଥମ ରାୟ ଆମ ତରଫରୁ।</string>
     <string name="app_pricing_sub">ଆକାଉଣ୍ଟ ଖୋଲନ୍ତୁ, ପ୍ରଥମ ରାୟ ସବୁ ସୁବିଧା ସହ ମାଗଣା। ତା\'ପରେ ଗୋଟେ ପ୍ୟାକ୍ ବାଛନ୍ତୁ ବା ମାସିକ ପ୍ଲାନ୍ ନିଅନ୍ତୁ।</string>

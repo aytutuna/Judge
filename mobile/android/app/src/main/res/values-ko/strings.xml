@@ -249,7 +249,7 @@
     <string name="case_not_found">사건을 찾을 수 없어요. 삭제됐거나 다른 계정의 사건일 수 있어요.</string>
     <string name="case_sign_in">로그인하면 사건을 볼 수 있어요.</string>
     <string name="case_status_awaiting">상대방 답변 기다리는 중</string>
-    <string name="case_status_judging">판사들이 검토하는 중</string>
+    <string name="case_status_judging">판사들이 검토 중</string>
     <string name="case_status_judged">판결 완료</string>
     <string name="case_status_failed">판사들이 판결을 마치지 못했어요</string>
     <string name="case_status_expired">초대 만료</string>
@@ -395,8 +395,8 @@
     <string name="case_appeal_original">내가 쓴 그대로의 추가 맥락</string>
     <string name="case_display_name">공유된 판결에 보일 내 이름</string>
     <string name="case_display_save">이름 저장</string>
-    <string name="respond_keep">Keep this case in your account</string>
-    <string name="respond_kept">This case is in your account now. It shows on your Verdicts page on every device.</string>
+    <string name="respond_keep">이 사건을 내 계정에 저장</string>
+    <string name="respond_kept">이제 이 사건이 내 계정에 저장됐어요. 어느 기기에서든 ‘판결’ 페이지에서 볼 수 있어요.</string>
     <string name="respond_remove">내 입장 삭제</string>
     <string name="respond_remove_confirm">내 원문과 표시 이름을 삭제할까요? 사건의 공유 링크가 열리지 않게 돼요(이미 대화방에 올라간 미리보기는 해당 앱이 새로 고칠 때까지 보일 수 있어요). 되돌릴 수 없어요.</string>
     <string name="names_title">공유 페이지에 보일 이름</string>
@@ -414,20 +414,20 @@
     <string name="shell_load_failed">기록을 불러오지 못했어요.</string>
     <string name="shell_load_more">더 보기</string>
     <string name="shell_untitled">제목 없는 판결</string>
-    <string name="history_state_judging">Judges thinking</string>
-    <string name="history_state_rejudging">Judges thinking again</string>
-    <string name="history_state_failed">Didn\'t finish</string>
-    <string name="history_state_rejudge_failed">New context didn\'t go through</string>
-    <string name="history_state_waiting">Waiting for %1$s to answer</string>
-    <string name="history_state_waiting_other">Waiting for the other side to answer</string>
-    <string name="history_state_expired">Link expired</string>
-    <string name="history_state_removed">Removed</string>
-    <string name="history_state_removed_by">Removed by %1$s</string>
-    <string name="history_state_removed_by_other">Removed by the other side</string>
-    <string name="history_state_ready">Verdict ready</string>
-    <string name="history_context_added">After new context</string>
-    <string name="history_your_move">Your turn</string>
-    <string name="history_answered">You answered</string>
+    <string name="history_state_judging">판사들이 검토 중</string>
+    <string name="history_state_rejudging">판사들이 다시 검토 중</string>
+    <string name="history_state_failed">마치지 못함</string>
+    <string name="history_state_rejudge_failed">새 맥락을 반영하지 못함</string>
+    <string name="history_state_waiting">%1$s의 답변 기다리는 중</string>
+    <string name="history_state_waiting_other">상대방 답변 기다리는 중</string>
+    <string name="history_state_expired">링크 만료</string>
+    <string name="history_state_removed">삭제됨</string>
+    <string name="history_state_removed_by">%1$s의 요청으로 삭제됨</string>
+    <string name="history_state_removed_by_other">상대방 요청으로 삭제됨</string>
+    <string name="history_state_ready">판결 완료</string>
+    <string name="history_context_added">새 맥락 반영 후</string>
+    <string name="history_your_move">내 차례</string>
+    <string name="history_answered">내가 답변함</string>
     <string name="thread_label">이 논쟁</string>
     <string name="thread_you">내가 쓴 글</string>
     <string name="thread_judges">판사들</string>
@@ -479,18 +479,18 @@
     </plurals>
     <string name="app_history_row_selected">선택됨</string>
     <string name="app_history_row_not_selected">선택 안 됨</string>
-    <string name="app_history_phone_only">Only on this phone</string>
-    <string name="app_history_phone_only_note">Not in your account: these are saved on this phone only. Deleting one here doesn\'t take down its share link.</string>
+    <string name="app_history_phone_only">이 휴대폰에만 저장됨</string>
+    <string name="app_history_phone_only_note">계정에 없고 이 휴대폰에만 저장된 판결이에요. 여기서 삭제해도 공유 링크는 계속 열려요.</string>
     <plurals name="app_history_remove_confirm">
-        <item quantity="other">Remove %1$s verdicts from your account? What you wrote and the names are erased and their share links stop working, on every device. This can\'t be undone.</item>
+        <item quantity="other">판결 %1$s건을 계정에서 삭제할까요? 내가 쓴 글과 이름이 지워지고 공유 링크도 더 이상 열리지 않아요. 모든 기기에 적용되며 되돌릴 수 없어요.</item>
     </plurals>
     <plurals name="app_history_phone_only_also">
-        <item quantity="other">%1$s saved only on this phone are deleted from it; their share links keep working.</item>
+        <item quantity="other">이 휴대폰에만 저장된 %1$s건은 이 휴대폰에서만 삭제되고, 공유 링크는 계속 열려요.</item>
     </plurals>
     <plurals name="app_history_remove_failed">
-        <item quantity="other">Couldn\'t remove %1$s of them. Check your connection and try again.</item>
+        <item quantity="other">%1$s건을 삭제하지 못했어요. 인터넷 연결을 확인하고 다시 시도해 주세요.</item>
     </plurals>
-    <string name="app_history_offline_remove">You\'re offline. Removing needs a connection.</string>
+    <string name="app_history_offline_remove">오프라인 상태예요. 삭제하려면 인터넷 연결이 필요해요.</string>
     <string name="app_pricing_free_account">Apple, Google 또는 이메일로 로그인</string>
     <string name="app_pricing_headline">첫 판결은 저희가 쏠게요.</string>
     <string name="app_pricing_sub">계정을 만들면 첫 판결을 모든 기능 그대로 무료로 받을 수 있어요. 그다음엔 팩을 고르거나 월간 요금제를 이용해 보세요.</string>

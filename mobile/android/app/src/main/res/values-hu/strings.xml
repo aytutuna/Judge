@@ -403,8 +403,8 @@
     <string name="case_appeal_original">A kiegészítésed, ahogy megírtad</string>
     <string name="case_display_name">A neved a megosztott ítéleten</string>
     <string name="case_display_save">Név mentése</string>
-    <string name="respond_keep">Keep this case in your account</string>
-    <string name="respond_kept">This case is in your account now. It shows on your Verdicts page on every device.</string>
+    <string name="respond_keep">Ügy mentése a fiókodba</string>
+    <string name="respond_kept">Ez az ügy már a fiókodban van. Bármelyik eszközödön megjelenik az Ítéletek oldalon.</string>
     <string name="respond_remove">A verzióm eltávolítása</string>
     <string name="respond_remove_confirm">Eltávolítod az eredeti szövegedet és a megjelenített nevedet? Az ügy megosztási linkjei nem működnek tovább (a csetekben már kiküldött előnézetek még látszhatnak, amíg az adott app nem frissíti őket). Ez nem vonható vissza.</string>
     <string name="names_title">Nevek a megosztott oldalon</string>
@@ -422,20 +422,20 @@
     <string name="shell_load_failed">Nem sikerült betölteni az előzményeidet.</string>
     <string name="shell_load_more">Továbbiak</string>
     <string name="shell_untitled">Cím nélküli ítélet</string>
-    <string name="history_state_judging">Judges thinking</string>
-    <string name="history_state_rejudging">Judges thinking again</string>
-    <string name="history_state_failed">Didn\'t finish</string>
-    <string name="history_state_rejudge_failed">New context didn\'t go through</string>
-    <string name="history_state_waiting">Waiting for %1$s to answer</string>
-    <string name="history_state_waiting_other">Waiting for the other side to answer</string>
-    <string name="history_state_expired">Link expired</string>
-    <string name="history_state_removed">Removed</string>
-    <string name="history_state_removed_by">Removed by %1$s</string>
-    <string name="history_state_removed_by_other">Removed by the other side</string>
-    <string name="history_state_ready">Verdict ready</string>
-    <string name="history_context_added">After new context</string>
-    <string name="history_your_move">Your turn</string>
-    <string name="history_answered">You answered</string>
+    <string name="history_state_judging">A bírák mérlegelnek</string>
+    <string name="history_state_rejudging">A bírák újra mérlegelnek</string>
+    <string name="history_state_failed">Nem fejeződött be</string>
+    <string name="history_state_rejudge_failed">Az újraítélés nem fejeződött be</string>
+    <string name="history_state_waiting">%1$s válaszára vár</string>
+    <string name="history_state_waiting_other">A másik fél válaszára vár</string>
+    <string name="history_state_expired">Lejárt a link</string>
+    <string name="history_state_removed">Eltávolítva</string>
+    <string name="history_state_removed_by">%1$s eltávolította</string>
+    <string name="history_state_removed_by_other">A másik fél eltávolította</string>
+    <string name="history_state_ready">Kész az ítélet</string>
+    <string name="history_context_added">Új kiegészítés után</string>
+    <string name="history_your_move">Te jössz</string>
+    <string name="history_answered">Te válaszoltál</string>
     <string name="thread_label">Ez a vita</string>
     <string name="thread_you">Ezt írtad</string>
     <string name="thread_judges">A bírák</string>
@@ -492,21 +492,21 @@
     </plurals>
     <string name="app_history_row_selected">Kijelölve</string>
     <string name="app_history_row_not_selected">Nincs kijelölve</string>
-    <string name="app_history_phone_only">Only on this phone</string>
-    <string name="app_history_phone_only_note">Not in your account: these are saved on this phone only. Deleting one here doesn\'t take down its share link.</string>
+    <string name="app_history_phone_only">Csak ezen a telefonon</string>
+    <string name="app_history_phone_only_note">Nincsenek a fiókodban: ezek csak ezen a telefonon vannak elmentve. Ha innen törölsz egyet, a megosztási linkje attól még működik.</string>
     <plurals name="app_history_remove_confirm">
-        <item quantity="one">Remove this verdict from your account? What you wrote and the names are erased and its share link stops working, on every device. This can\'t be undone.</item>
-        <item quantity="other">Remove %1$s verdicts from your account? What you wrote and the names are erased and their share links stop working, on every device. This can\'t be undone.</item>
+        <item quantity="one">Eltávolítod ezt az ítéletet a fiókodból? Az eredeti szöveged és a nevek törlődnek, a megosztási linkje pedig minden eszközön megszűnik működni. Ez nem vonható vissza.</item>
+        <item quantity="other">Eltávolítod a kijelölt %1$s ítéletet a fiókodból? Az eredeti szövegeid és a nevek törlődnek, a megosztási linkjeik pedig minden eszközön megszűnnek működni. Ez nem vonható vissza.</item>
     </plurals>
     <plurals name="app_history_phone_only_also">
-        <item quantity="one">1 saved only on this phone is deleted from it; its share link keeps working.</item>
-        <item quantity="other">%1$s saved only on this phone are deleted from it; their share links keep working.</item>
+        <item quantity="one">A csak ezen a telefonon tárolt 1 ítélet innen törlődik; a megosztási linkje továbbra is működik.</item>
+        <item quantity="other">A csak ezen a telefonon tárolt %1$s ítélet innen törlődik; a megosztási linkjeik továbbra is működnek.</item>
     </plurals>
     <plurals name="app_history_remove_failed">
-        <item quantity="one">Couldn\'t remove it. Check your connection and try again.</item>
-        <item quantity="other">Couldn\'t remove %1$s of them. Check your connection and try again.</item>
+        <item quantity="one">Nem sikerült eltávolítani az ítéletet. Ellenőrizd az internetkapcsolatot, és próbáld újra.</item>
+        <item quantity="other">%1$s ítéletet nem sikerült eltávolítani. Ellenőrizd az internetkapcsolatot, és próbáld újra.</item>
     </plurals>
-    <string name="app_history_offline_remove">You\'re offline. Removing needs a connection.</string>
+    <string name="app_history_offline_remove">Nincs internetkapcsolat. Eltávolítani csak online lehet.</string>
     <string name="app_pricing_free_account">Belépés Apple-lel, Google-lal vagy e-maillel</string>
     <string name="app_pricing_headline">Az első ítélet ajándék.</string>
     <string name="app_pricing_sub">Hozz létre egy fiókot, és az első ítéleted ingyenes, minden funkcióval. Utána válassz csomagot, vagy fizess elő havonta.</string>

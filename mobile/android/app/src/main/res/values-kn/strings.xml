@@ -403,8 +403,8 @@
     <string name="case_appeal_original">ನೀವು ಬರೆದಂತೆಯೇ ನೀವು ಸೇರಿಸಿದ ವಿವರ</string>
     <string name="case_display_name">ಹಂಚಿದ ತೀರ್ಪಿನಲ್ಲಿ ನಿಮ್ಮ ಹೆಸರು</string>
     <string name="case_display_save">ಹೆಸರು ಉಳಿಸಿ</string>
-    <string name="respond_keep">Keep this case in your account</string>
-    <string name="respond_kept">This case is in your account now. It shows on your Verdicts page on every device.</string>
+    <string name="respond_keep">ಈ ಕೇಸ್ ಅನ್ನು ನಿಮ್ಮ ಖಾತೆಯಲ್ಲಿ ಇಟ್ಟುಕೊಳ್ಳಿ</string>
+    <string name="respond_kept">ಈ ಕೇಸ್ ಈಗ ನಿಮ್ಮ ಖಾತೆಯಲ್ಲಿದೆ. ಯಾವ ಸಾಧನದಲ್ಲಾದರೂ ನಿಮ್ಮ “ತೀರ್ಪುಗಳು” ಪುಟದಲ್ಲಿ ಇದು ಕಾಣುತ್ತದೆ.</string>
     <string name="respond_remove">ನನ್ನ ಕಡೆಯ ಮಾತು ತೆಗೆದುಹಾಕಿ</string>
     <string name="respond_remove_confirm">ನಿಮ್ಮ ಮೂಲ ಪಠ್ಯ ಮತ್ತು ಪ್ರದರ್ಶನ ಹೆಸರನ್ನು ತೆಗೆದುಹಾಕಬೇಕೇ? ಕೇಸ್‌ನ ಹಂಚಿಕೆ ಲಿಂಕ್‌ಗಳು ಕೆಲಸ ಮಾಡುವುದನ್ನು ನಿಲ್ಲಿಸುತ್ತವೆ (ಚಾಟ್‌ಗಳಲ್ಲಿ ಈಗಾಗಲೇ ಹಾಕಿರುವ ಪೂರ್ವವೀಕ್ಷಣೆಗಳು ಆ ಆ್ಯಪ್‌ಗಳು ರಿಫ್ರೆಶ್ ಮಾಡುವವರೆಗೂ ಕಾಣಬಹುದು). ಇದನ್ನು ವಾಪಸ್ ಪಡೆಯಲು ಆಗುವುದಿಲ್ಲ.</string>
     <string name="names_title">ಹಂಚಿದ ಪುಟದಲ್ಲಿ ಹೆಸರುಗಳು</string>
@@ -422,20 +422,20 @@
     <string name="shell_load_failed">ನಿಮ್ಮ ಇತಿಹಾಸ ಲೋಡ್ ಆಗಲಿಲ್ಲ.</string>
     <string name="shell_load_more">ಇನ್ನಷ್ಟು ತೋರಿಸಿ</string>
     <string name="shell_untitled">ಹೆಸರಿಲ್ಲದ ತೀರ್ಪು</string>
-    <string name="history_state_judging">Judges thinking</string>
-    <string name="history_state_rejudging">Judges thinking again</string>
-    <string name="history_state_failed">Didn\'t finish</string>
-    <string name="history_state_rejudge_failed">New context didn\'t go through</string>
-    <string name="history_state_waiting">Waiting for %1$s to answer</string>
-    <string name="history_state_waiting_other">Waiting for the other side to answer</string>
-    <string name="history_state_expired">Link expired</string>
-    <string name="history_state_removed">Removed</string>
-    <string name="history_state_removed_by">Removed by %1$s</string>
-    <string name="history_state_removed_by_other">Removed by the other side</string>
-    <string name="history_state_ready">Verdict ready</string>
-    <string name="history_context_added">After new context</string>
-    <string name="history_your_move">Your turn</string>
-    <string name="history_answered">You answered</string>
+    <string name="history_state_judging">ತೀರ್ಪುಗಾರರು ಯೋಚಿಸುತ್ತಿದ್ದಾರೆ</string>
+    <string name="history_state_rejudging">ತೀರ್ಪುಗಾರರು ಮತ್ತೆ ಯೋಚಿಸುತ್ತಿದ್ದಾರೆ</string>
+    <string name="history_state_failed">ಮುಗಿಯಲಿಲ್ಲ</string>
+    <string name="history_state_rejudge_failed">ಹೊಸ ವಿವರ ತಲುಪಲಿಲ್ಲ</string>
+    <string name="history_state_waiting">%1$s ಅವರ ಉತ್ತರಕ್ಕಾಗಿ ಕಾಯುತ್ತಿದೆ</string>
+    <string name="history_state_waiting_other">ಎದುರಿನವರ ಉತ್ತರಕ್ಕಾಗಿ ಕಾಯುತ್ತಿದೆ</string>
+    <string name="history_state_expired">ಲಿಂಕ್‌ನ ಅವಧಿ ಮುಗಿದಿದೆ</string>
+    <string name="history_state_removed">ತೆಗೆದುಹಾಕಲಾಗಿದೆ</string>
+    <string name="history_state_removed_by">%1$s ತೆಗೆದುಹಾಕಿದ್ದಾರೆ</string>
+    <string name="history_state_removed_by_other">ಎದುರಿನವರು ತೆಗೆದುಹಾಕಿದ್ದಾರೆ</string>
+    <string name="history_state_ready">ತೀರ್ಪು ಸಿದ್ಧ</string>
+    <string name="history_context_added">ಹೊಸ ವಿವರದ ನಂತರ</string>
+    <string name="history_your_move">ನಿಮ್ಮ ಸರದಿ</string>
+    <string name="history_answered">ನೀವು ಉತ್ತರಿಸಿದ್ದೀರಿ</string>
     <string name="thread_label">ಈ ವಾದ</string>
     <string name="thread_you">ನೀವು ಬರೆದದ್ದು</string>
     <string name="thread_judges">ತೀರ್ಪುಗಾರರು</string>
@@ -492,21 +492,21 @@
     </plurals>
     <string name="app_history_row_selected">ಆಯ್ಕೆಮಾಡಲಾಗಿದೆ</string>
     <string name="app_history_row_not_selected">ಆಯ್ಕೆಮಾಡಲಾಗಿಲ್ಲ</string>
-    <string name="app_history_phone_only">Only on this phone</string>
-    <string name="app_history_phone_only_note">Not in your account: these are saved on this phone only. Deleting one here doesn\'t take down its share link.</string>
+    <string name="app_history_phone_only">ಈ ಫೋನ್‌ನಲ್ಲಿ ಮಾತ್ರ</string>
+    <string name="app_history_phone_only_note">ನಿಮ್ಮ ಖಾತೆಯಲ್ಲಿ ಇಲ್ಲ: ಇವನ್ನು ಈ ಫೋನ್‌ನಲ್ಲಿ ಮಾತ್ರ ಉಳಿಸಲಾಗಿದೆ. ಒಂದು ತೀರ್ಪನ್ನು ಇಲ್ಲಿಂದ ಅಳಿಸಿದರೂ ಅದರ ಹಂಚಿಕೆ ಲಿಂಕ್ ಕೆಲಸ ಮಾಡುತ್ತಲೇ ಇರುತ್ತದೆ.</string>
     <plurals name="app_history_remove_confirm">
-        <item quantity="one">Remove this verdict from your account? What you wrote and the names are erased and its share link stops working, on every device. This can\'t be undone.</item>
-        <item quantity="other">Remove %1$s verdicts from your account? What you wrote and the names are erased and their share links stop working, on every device. This can\'t be undone.</item>
+        <item quantity="one">ನಿಮ್ಮ ಖಾತೆಯಿಂದ %1$s ತೀರ್ಪನ್ನು ತೆಗೆದುಹಾಕಬೇಕೇ? ಎಲ್ಲಾ ಸಾಧನಗಳಲ್ಲೂ ನೀವು ಬರೆದದ್ದು ಮತ್ತು ಹೆಸರುಗಳು ಅಳಿಸಿಹೋಗುತ್ತವೆ ಮತ್ತು ಅದರ ಹಂಚಿಕೆ ಲಿಂಕ್ ಕೆಲಸ ಮಾಡುವುದನ್ನು ನಿಲ್ಲಿಸುತ್ತದೆ. ಇದನ್ನು ವಾಪಸ್ ಪಡೆಯಲು ಆಗುವುದಿಲ್ಲ.</item>
+        <item quantity="other">ನಿಮ್ಮ ಖಾತೆಯಿಂದ %1$s ತೀರ್ಪುಗಳನ್ನು ತೆಗೆದುಹಾಕಬೇಕೇ? ಎಲ್ಲಾ ಸಾಧನಗಳಲ್ಲೂ ನೀವು ಬರೆದದ್ದು ಮತ್ತು ಹೆಸರುಗಳು ಅಳಿಸಿಹೋಗುತ್ತವೆ ಮತ್ತು ಅವುಗಳ ಹಂಚಿಕೆ ಲಿಂಕ್‌ಗಳು ಕೆಲಸ ಮಾಡುವುದನ್ನು ನಿಲ್ಲಿಸುತ್ತವೆ. ಇದನ್ನು ವಾಪಸ್ ಪಡೆಯಲು ಆಗುವುದಿಲ್ಲ.</item>
     </plurals>
     <plurals name="app_history_phone_only_also">
-        <item quantity="one">1 saved only on this phone is deleted from it; its share link keeps working.</item>
-        <item quantity="other">%1$s saved only on this phone are deleted from it; their share links keep working.</item>
+        <item quantity="one">ಈ ಫೋನ್‌ನಲ್ಲಿ ಮಾತ್ರ ಉಳಿಸಿದ %1$s ತೀರ್ಪನ್ನು ಫೋನ್‌ನಿಂದ ಅಳಿಸಲಾಗುತ್ತದೆ; ಅದರ ಹಂಚಿಕೆ ಲಿಂಕ್ ಕೆಲಸ ಮಾಡುತ್ತಲೇ ಇರುತ್ತದೆ.</item>
+        <item quantity="other">ಈ ಫೋನ್‌ನಲ್ಲಿ ಮಾತ್ರ ಉಳಿಸಿದ %1$s ತೀರ್ಪುಗಳನ್ನು ಫೋನ್‌ನಿಂದ ಅಳಿಸಲಾಗುತ್ತದೆ; ಅವುಗಳ ಹಂಚಿಕೆ ಲಿಂಕ್‌ಗಳು ಕೆಲಸ ಮಾಡುತ್ತಲೇ ಇರುತ್ತವೆ.</item>
     </plurals>
     <plurals name="app_history_remove_failed">
-        <item quantity="one">Couldn\'t remove it. Check your connection and try again.</item>
-        <item quantity="other">Couldn\'t remove %1$s of them. Check your connection and try again.</item>
+        <item quantity="one">%1$s ತೀರ್ಪನ್ನು ತೆಗೆದುಹಾಕಲು ಆಗಲಿಲ್ಲ. ಇಂಟರ್ನೆಟ್ ಸಂಪರ್ಕ ಪರಿಶೀಲಿಸಿ ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.</item>
+        <item quantity="other">ಅವುಗಳಲ್ಲಿ %1$s ತೀರ್ಪುಗಳನ್ನು ತೆಗೆದುಹಾಕಲು ಆಗಲಿಲ್ಲ. ಇಂಟರ್ನೆಟ್ ಸಂಪರ್ಕ ಪರಿಶೀಲಿಸಿ ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.</item>
     </plurals>
-    <string name="app_history_offline_remove">You\'re offline. Removing needs a connection.</string>
+    <string name="app_history_offline_remove">ನೀವು ಆಫ್‌ಲೈನ್ ಇದ್ದೀರಿ. ತೆಗೆದುಹಾಕಲು ಇಂಟರ್ನೆಟ್ ಸಂಪರ್ಕ ಬೇಕು.</string>
     <string name="app_pricing_free_account">Apple, Google ಅಥವಾ ಇಮೇಲ್ ಮೂಲಕ ಸೈನ್ ಇನ್ ಮಾಡಿ</string>
     <string name="app_pricing_headline">ನಿಮ್ಮ ಮೊದಲ ತೀರ್ಪು ನಮ್ಮ ಕಡೆಯಿಂದ ಉಚಿತ.</string>
     <string name="app_pricing_sub">ಖಾತೆ ತೆರೆಯಿರಿ, ನಿಮ್ಮ ಮೊದಲ ತೀರ್ಪು ಎಲ್ಲಾ ಸೌಲಭ್ಯಗಳ ಸಮೇತ ಉಚಿತ. ಅದರ ನಂತರ ಒಂದು ಪ್ಯಾಕ್ ಆರಿಸಿ ಅಥವಾ ಮಾಸಿಕ ಪ್ಲಾನ್ ತೆಗೆದುಕೊಳ್ಳಿ.</string>

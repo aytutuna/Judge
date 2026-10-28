@@ -17,8 +17,16 @@ const mr: AppLocale = {
     "app.history.selected": "{n} निवडले",
     "app.history.deleteCount": "डिलीट करा ({count})",
     "app.history.deleteConfirm": "या फोनवरून {n} निकाल डिलीट करायचे? त्यांच्या शेअर लिंक चालू राहतील.",
-    "app.history.rowSelected": "निवडले",
-    "app.history.rowNotSelected": "निवडले नाही",
+    "app.history.rowSelected": "निवडलेले",
+    "app.history.rowNotSelected": "निवडलेले नाही",
+    "app.history.phoneOnly": "फक्त या फोनवर",
+    "app.history.phoneOnlyNote":
+      "तुमच्या खात्यात नाहीत: हे निकाल फक्त या फोनवर सेव्ह आहेत. इथून एखादा डिलीट केला तरी त्याची शेअर लिंक चालू राहते.",
+    "app.history.removeConfirm":
+      "तुमच्या खात्यातून {n} निकाल काढून टाकायचे? तुम्ही लिहिलेला मजकूर आणि नावे पुसली जातील, आणि त्यांच्या शेअर लिंक चालणे बंद होईल. हे सगळ्या डिव्हाइसवर लागू होते आणि परत आणता येणार नाही.",
+    "app.history.phoneOnlyAlso": "फक्त या फोनवर सेव्ह असलेले {n} निकाल फोनवरून डिलीट होतील; त्यांच्या शेअर लिंक चालू राहतील.",
+    "app.history.removeFailed": "त्यांपैकी {n} निकाल काढून टाकता आले नाहीत. कनेक्शन तपासून पुन्हा प्रयत्न करा.",
+    "app.history.offlineRemove": "तुम्ही ऑफलाइन आहात. काढून टाकण्यासाठी कनेक्शन लागते.",
     "app.pricing.free.account": "Apple, Google किंवा ईमेलने साइन इन करा",
     "app.pricing.headline": "पहिला निकाल आमच्याकडून.",
     "app.pricing.sub":
@@ -172,6 +180,11 @@ const mr: AppLocale = {
     "app.balance.left": { one: "{n} निकाल शिल्लक" },
     "app.history.selected": { one: "{n} निवडला" },
     "app.history.deleteConfirm": { one: "हा निकाल या फोनवरून डिलीट करायचा? त्याची शेअर लिंक चालू राहील." },
+    "app.history.removeConfirm": {
+      one: "हा निकाल तुमच्या खात्यातून काढून टाकायचा? तुम्ही लिहिलेला मजकूर आणि नावे पुसली जातील, आणि त्याची शेअर लिंक चालणे बंद होईल. हे सगळ्या डिव्हाइसवर लागू होते आणि परत आणता येणार नाही.",
+    },
+    "app.history.phoneOnlyAlso": { one: "फक्त या फोनवर सेव्ह असलेला 1 निकाल फोनवरून डिलीट होईल; त्याची शेअर लिंक चालू राहील." },
+    "app.history.removeFailed": { one: "हा निकाल काढून टाकता आला नाही. कनेक्शन तपासून पुन्हा प्रयत्न करा." },
   },
 };
 

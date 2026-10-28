@@ -19,6 +19,14 @@ const nl: AppLocale = {
     "app.history.deleteConfirm": "{n} uitspraken van deze telefoon verwijderen? De deellinks blijven gewoon werken.",
     "app.history.rowSelected": "Geselecteerd",
     "app.history.rowNotSelected": "Niet geselecteerd",
+    "app.history.phoneOnly": "Alleen op deze telefoon",
+    "app.history.phoneOnlyNote":
+      "Niet in je account: deze staan alleen op deze telefoon. Verwijder je hier een uitspraak, dan blijft de deellink gewoon werken.",
+    "app.history.removeConfirm":
+      "{n} uitspraken uit je account verwijderen? Ze verdwijnen van al je apparaten: wat je schreef en de namen worden gewist en de deellinks werken niet meer. Dit kan niet ongedaan worden gemaakt.",
+    "app.history.phoneOnlyAlso": "{n} uitspraken die alleen op deze telefoon staan, worden hier verwijderd; hun deellinks blijven gewoon werken.",
+    "app.history.removeFailed": "{n} ervan konden niet worden verwijderd. Check je verbinding en probeer het opnieuw.",
+    "app.history.offlineRemove": "Je bent offline. Om te verwijderen heb je een verbinding nodig.",
     "app.pricing.free.account": "Log in met Apple, Google of e-mail",
     "app.pricing.headline": "Je eerste uitspraak is van het huis.",
     "app.pricing.sub":
@@ -177,6 +185,11 @@ const nl: AppLocale = {
     "app.balance.left": { one: "Nog {n} uitspraak over" },
     "app.history.selected": { one: "{n} geselecteerd" },
     "app.history.deleteConfirm": { one: "Deze uitspraak van deze telefoon verwijderen? De deellink blijft gewoon werken." },
+    "app.history.removeConfirm": {
+      one: "Deze uitspraak uit je account verwijderen? Hij verdwijnt van al je apparaten: wat je schreef en de namen worden gewist en de deellink werkt niet meer. Dit kan niet ongedaan worden gemaakt.",
+    },
+    "app.history.phoneOnlyAlso": { one: "1 uitspraak die alleen op deze telefoon staat, wordt hier verwijderd; de deellink blijft gewoon werken." },
+    "app.history.removeFailed": { one: "Verwijderen is niet gelukt. Check je verbinding en probeer het opnieuw." },
   },
 };
 

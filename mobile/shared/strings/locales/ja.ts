@@ -15,9 +15,17 @@ const ja: AppLocale = {
     "app.history.deselectAll": "すべての選択を解除",
     "app.history.selected": "{n}件を選択中",
     "app.history.deleteCount": "削除（{count}）",
-    "app.history.deleteConfirm": "この端末から{n}件の判定を削除しますか？シェア用リンクはそのまま使えます。",
+    "app.history.deleteConfirm": "この端末から{n}件の判定を削除しますか？　シェア用リンクはそのまま使えます。",
     "app.history.rowSelected": "選択済み",
     "app.history.rowNotSelected": "未選択",
+    "app.history.phoneOnly": "この端末にのみ保存",
+    "app.history.phoneOnlyNote":
+      "アカウントには保存されておらず、この端末にだけ保存されています。ここで削除しても、シェア用リンクはそのまま使えます。",
+    "app.history.removeConfirm":
+      "{n}件の判定をアカウントから削除しますか？　あなたが書いた内容と名前が消去され、シェア用リンクは使えなくなります。すべての端末に反映されます。この操作は取り消せません。",
+    "app.history.phoneOnlyAlso": "この端末にだけ保存されている{n}件は、この端末から削除されます。シェア用リンクはそのまま使えます。",
+    "app.history.removeFailed": "{n}件を削除できませんでした。接続を確認して、もう一度お試しください。",
+    "app.history.offlineRemove": "オフラインのため削除できません。接続してからもう一度お試しください。",
     "app.pricing.free.account": "Apple、Google、またはメールアドレスでログイン",
     "app.pricing.headline": "最初の判定は無料です。",
     "app.pricing.sub":

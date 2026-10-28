@@ -18,6 +18,14 @@ const vi: AppLocale = {
     "app.history.deleteConfirm": "Xóa {n} phán quyết khỏi điện thoại này? Liên kết chia sẻ vẫn hoạt động.",
     "app.history.rowSelected": "Đã chọn",
     "app.history.rowNotSelected": "Chưa chọn",
+    "app.history.phoneOnly": "Chỉ có trên điện thoại này",
+    "app.history.phoneOnlyNote":
+      "Không có trong tài khoản của bạn: các phán quyết này chỉ lưu trên điện thoại này. Xóa một phán quyết ở đây thì liên kết chia sẻ của nó vẫn hoạt động.",
+    "app.history.removeConfirm":
+      "Gỡ {n} phán quyết khỏi tài khoản của bạn trên mọi thiết bị? Những gì bạn viết và các tên sẽ bị xóa, liên kết chia sẻ sẽ ngừng hoạt động. Không thể hoàn tác.",
+    "app.history.phoneOnlyAlso": "{n} phán quyết chỉ lưu trên điện thoại này sẽ bị xóa khỏi máy; liên kết chia sẻ vẫn hoạt động.",
+    "app.history.removeFailed": "Không gỡ được {n} phán quyết. Kiểm tra kết nối rồi thử lại nhé.",
+    "app.history.offlineRemove": "Bạn đang mất mạng. Cần có kết nối mới gỡ được.",
     "app.pricing.free.account": "Đăng nhập bằng Apple, Google hoặc email",
     "app.pricing.headline": "Phán quyết đầu tiên, chúng tôi mời.",
     "app.pricing.sub":

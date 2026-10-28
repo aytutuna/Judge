@@ -21,6 +21,15 @@ const sl: AppLocale = {
       "Želiš s tega telefona izbrisati {n} razsodb? Njihove povezave za deljenje še vedno delujejo.",
     "app.history.rowSelected": "Izbrano",
     "app.history.rowNotSelected": "Ni izbrano",
+    "app.history.phoneOnly": "Samo na tem telefonu",
+    "app.history.phoneOnlyNote":
+      "Ni v tvojem računu: te razsodbe so shranjene samo na tem telefonu. Če razsodbo izbrišeš tukaj, njena povezava za deljenje še vedno deluje.",
+    "app.history.removeConfirm":
+      "Želiš iz svojega računa odstraniti {n} razsodb? Na vseh napravah se izbrišejo tvoje besedilo in imena, njihove povezave za deljenje pa prenehajo delovati. Tega ni mogoče razveljaviti.",
+    "app.history.phoneOnlyAlso":
+      "{n} razsodb, shranjenih samo na tem telefonu, se izbriše s telefona; njihove povezave za deljenje še vedno delujejo.",
+    "app.history.removeFailed": "{n} razsodb ni bilo mogoče odstraniti. Preveri povezavo in poskusi znova.",
+    "app.history.offlineRemove": "Ni povezave s spletom. Za odstranitev jo potrebuješ.",
     "app.pricing.free.account": "Prijavi se z Apple, Googlom ali e-pošto",
     "app.pricing.headline": "Prva razsodba gre na naš račun.",
     "app.pricing.sub":
@@ -208,6 +217,21 @@ const sl: AppLocale = {
       one: "Želiš s tega telefona izbrisati {n} razsodbo? Njena povezava za deljenje še vedno deluje.",
       two: "Želiš s tega telefona izbrisati {n} razsodbi? Njuni povezavi za deljenje še vedno delujeta.",
       few: "Želiš s tega telefona izbrisati {n} razsodbe? Njihove povezave za deljenje še vedno delujejo.",
+    },
+    "app.history.removeConfirm": {
+      one: "Želiš iz svojega računa odstraniti {n} razsodbo? Na vseh napravah se izbrišejo tvoje besedilo in imena, njena povezava za deljenje pa preneha delovati. Tega ni mogoče razveljaviti.",
+      two: "Želiš iz svojega računa odstraniti {n} razsodbi? Na vseh napravah se izbrišejo tvoje besedilo in imena, njuni povezavi za deljenje pa prenehata delovati. Tega ni mogoče razveljaviti.",
+      few: "Želiš iz svojega računa odstraniti {n} razsodbe? Na vseh napravah se izbrišejo tvoje besedilo in imena, njihove povezave za deljenje pa prenehajo delovati. Tega ni mogoče razveljaviti.",
+    },
+    "app.history.phoneOnlyAlso": {
+      one: "{n} razsodba, shranjena samo na tem telefonu, se izbriše s telefona; njena povezava za deljenje še vedno deluje.",
+      two: "{n} razsodbi, shranjeni samo na tem telefonu, se izbrišeta s telefona; njuni povezavi za deljenje še vedno delujeta.",
+      few: "{n} razsodbe, shranjene samo na tem telefonu, se izbrišejo s telefona; njihove povezave za deljenje še vedno delujejo.",
+    },
+    "app.history.removeFailed": {
+      one: "{n} razsodbe ni bilo mogoče odstraniti. Preveri povezavo in poskusi znova.",
+      two: "{n} razsodb ni bilo mogoče odstraniti. Preveri povezavo in poskusi znova.",
+      few: "{n} razsodb ni bilo mogoče odstraniti. Preveri povezavo in poskusi znova.",
     },
   },
 };

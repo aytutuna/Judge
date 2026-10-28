@@ -20,6 +20,15 @@ const pl: AppLocale = {
     "app.history.deleteConfirm": "Usunąć {n} werdyktów z tego telefonu? Ich linki do udostępniania nadal będą działać.",
     "app.history.rowSelected": "Zaznaczone",
     "app.history.rowNotSelected": "Niezaznaczone",
+    "app.history.phoneOnly": "Tylko na tym telefonie",
+    "app.history.phoneOnlyNote":
+      "Nie ma ich na twoim koncie: są zapisane tylko na tym telefonie. Usunięcie werdyktu tutaj nie wyłącza linku do udostępniania.",
+    "app.history.removeConfirm":
+      "Usunąć {n} werdyktów ze swojego konta? Twoje teksty i imiona zostaną wymazane, a ich linki do udostępniania przestaną działać na wszystkich urządzeniach. Tego nie da się cofnąć.",
+    "app.history.phoneOnlyAlso":
+      "{n} werdyktów zapisanych tylko na tym telefonie zostanie z niego usuniętych; ich linki do udostępniania nadal będą działać.",
+    "app.history.removeFailed": "Nie udało się usunąć {n} z nich. Sprawdź połączenie i spróbuj ponownie.",
+    "app.history.offlineRemove": "Jesteś offline. Usuwanie wymaga połączenia z internetem.",
     "app.pricing.free.account": "Zaloguj się przez Apple, Google albo e-mail",
     "app.pricing.headline": "Pierwszy werdykt na nasz koszt.",
     "app.pricing.sub":
@@ -183,6 +192,21 @@ const pl: AppLocale = {
       one: "Usunąć ten werdykt z tego telefonu? Jego link do udostępniania nadal będzie działać.",
       few: "Usunąć {n} werdykty z tego telefonu? Ich linki do udostępniania nadal będą działać.",
       many: "Usunąć {n} werdyktów z tego telefonu? Ich linki do udostępniania nadal będą działać.",
+    },
+    "app.history.removeConfirm": {
+      one: "Usunąć ten werdykt ze swojego konta? Twój tekst i imiona zostaną wymazane, a jego link do udostępniania przestanie działać na wszystkich urządzeniach. Tego nie da się cofnąć.",
+      few: "Usunąć {n} werdykty ze swojego konta? Twoje teksty i imiona zostaną wymazane, a ich linki do udostępniania przestaną działać na wszystkich urządzeniach. Tego nie da się cofnąć.",
+      many: "Usunąć {n} werdyktów ze swojego konta? Twoje teksty i imiona zostaną wymazane, a ich linki do udostępniania przestaną działać na wszystkich urządzeniach. Tego nie da się cofnąć.",
+    },
+    "app.history.phoneOnlyAlso": {
+      one: "1 werdykt zapisany tylko na tym telefonie zostanie z niego usunięty; jego link do udostępniania nadal będzie działać.",
+      few: "{n} werdykty zapisane tylko na tym telefonie zostaną z niego usunięte; ich linki do udostępniania nadal będą działać.",
+      many: "{n} werdyktów zapisanych tylko na tym telefonie zostanie z niego usuniętych; ich linki do udostępniania nadal będą działać.",
+    },
+    "app.history.removeFailed": {
+      one: "Nie udało się usunąć werdyktu. Sprawdź połączenie i spróbuj ponownie.",
+      few: "Nie udało się usunąć {n} z nich. Sprawdź połączenie i spróbuj ponownie.",
+      many: "Nie udało się usunąć {n} z nich. Sprawdź połączenie i spróbuj ponownie.",
     },
   },
 };

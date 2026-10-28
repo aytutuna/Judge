@@ -395,8 +395,8 @@
     <string name="case_appeal_original">Thông tin bạn bổ sung, đúng như bạn viết</string>
     <string name="case_display_name">Tên của bạn trên phán quyết được chia sẻ</string>
     <string name="case_display_save">Lưu tên</string>
-    <string name="respond_keep">Keep this case in your account</string>
-    <string name="respond_kept">This case is in your account now. It shows on your Verdicts page on every device.</string>
+    <string name="respond_keep">Lưu vụ này vào tài khoản</string>
+    <string name="respond_kept">Vụ này giờ đã nằm trong tài khoản của bạn và hiện ở mục Phán quyết trên mọi thiết bị của bạn.</string>
     <string name="respond_remove">Gỡ phần của tôi</string>
     <string name="respond_remove_confirm">Gỡ bản gốc và tên hiển thị của bạn? Các liên kết chia sẻ của vụ sẽ ngừng hoạt động (các bản xem trước đã đăng trong đoạn chat có thể vẫn hiện cho đến khi ứng dụng làm mới). Không thể hoàn tác.</string>
     <string name="names_title">Tên trên trang chia sẻ</string>
@@ -414,20 +414,20 @@
     <string name="shell_load_failed">Không tải được lịch sử.</string>
     <string name="shell_load_more">Xem thêm</string>
     <string name="shell_untitled">Phán quyết chưa có tiêu đề</string>
-    <string name="history_state_judging">Judges thinking</string>
-    <string name="history_state_rejudging">Judges thinking again</string>
-    <string name="history_state_failed">Didn\'t finish</string>
-    <string name="history_state_rejudge_failed">New context didn\'t go through</string>
-    <string name="history_state_waiting">Waiting for %1$s to answer</string>
-    <string name="history_state_waiting_other">Waiting for the other side to answer</string>
-    <string name="history_state_expired">Link expired</string>
-    <string name="history_state_removed">Removed</string>
-    <string name="history_state_removed_by">Removed by %1$s</string>
-    <string name="history_state_removed_by_other">Removed by the other side</string>
-    <string name="history_state_ready">Verdict ready</string>
-    <string name="history_context_added">After new context</string>
-    <string name="history_your_move">Your turn</string>
-    <string name="history_answered">You answered</string>
+    <string name="history_state_judging">Ban giám khảo đang cân nhắc</string>
+    <string name="history_state_rejudging">Ban giám khảo đang xét lại</string>
+    <string name="history_state_failed">Không phân xử xong</string>
+    <string name="history_state_rejudge_failed">Chưa xét được thông tin mới</string>
+    <string name="history_state_waiting">Đang chờ %1$s trả lời</string>
+    <string name="history_state_waiting_other">Đang chờ phía bên kia trả lời</string>
+    <string name="history_state_expired">Liên kết đã hết hạn</string>
+    <string name="history_state_removed">Đã gỡ</string>
+    <string name="history_state_removed_by">%1$s đã gỡ</string>
+    <string name="history_state_removed_by_other">Phía bên kia đã gỡ</string>
+    <string name="history_state_ready">Đã có phán quyết</string>
+    <string name="history_context_added">Sau khi bổ sung thông tin</string>
+    <string name="history_your_move">Đến lượt bạn</string>
+    <string name="history_answered">Bạn đã trả lời</string>
     <string name="thread_label">Cuộc tranh cãi này</string>
     <string name="thread_you">Bạn đã viết</string>
     <string name="thread_judges">Ban giám khảo</string>
@@ -479,18 +479,18 @@
     </plurals>
     <string name="app_history_row_selected">Đã chọn</string>
     <string name="app_history_row_not_selected">Chưa chọn</string>
-    <string name="app_history_phone_only">Only on this phone</string>
-    <string name="app_history_phone_only_note">Not in your account: these are saved on this phone only. Deleting one here doesn\'t take down its share link.</string>
+    <string name="app_history_phone_only">Chỉ có trên điện thoại này</string>
+    <string name="app_history_phone_only_note">Không có trong tài khoản của bạn: các phán quyết này chỉ lưu trên điện thoại này. Xóa một phán quyết ở đây thì liên kết chia sẻ của nó vẫn hoạt động.</string>
     <plurals name="app_history_remove_confirm">
-        <item quantity="other">Remove %1$s verdicts from your account? What you wrote and the names are erased and their share links stop working, on every device. This can\'t be undone.</item>
+        <item quantity="other">Gỡ %1$s phán quyết khỏi tài khoản của bạn trên mọi thiết bị? Những gì bạn viết và các tên sẽ bị xóa, liên kết chia sẻ sẽ ngừng hoạt động. Không thể hoàn tác.</item>
     </plurals>
     <plurals name="app_history_phone_only_also">
-        <item quantity="other">%1$s saved only on this phone are deleted from it; their share links keep working.</item>
+        <item quantity="other">%1$s phán quyết chỉ lưu trên điện thoại này sẽ bị xóa khỏi máy; liên kết chia sẻ vẫn hoạt động.</item>
     </plurals>
     <plurals name="app_history_remove_failed">
-        <item quantity="other">Couldn\'t remove %1$s of them. Check your connection and try again.</item>
+        <item quantity="other">Không gỡ được %1$s phán quyết. Kiểm tra kết nối rồi thử lại nhé.</item>
     </plurals>
-    <string name="app_history_offline_remove">You\'re offline. Removing needs a connection.</string>
+    <string name="app_history_offline_remove">Bạn đang mất mạng. Cần có kết nối mới gỡ được.</string>
     <string name="app_pricing_free_account">Đăng nhập bằng Apple, Google hoặc email</string>
     <string name="app_pricing_headline">Phán quyết đầu tiên, chúng tôi mời.</string>
     <string name="app_pricing_sub">Tạo tài khoản là có ngay phán quyết đầu tiên miễn phí, đủ mọi tính năng. Sau đó, chọn một gói lượt hoặc dùng gói tháng.</string>

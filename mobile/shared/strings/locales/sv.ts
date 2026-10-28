@@ -20,6 +20,15 @@ const sv: AppLocale = {
       "Ta bort {n} domar från den här telefonen? Delningslänkarna fortsätter att fungera.",
     "app.history.rowSelected": "Markerad",
     "app.history.rowNotSelected": "Inte markerad",
+    "app.history.phoneOnly": "Bara på den här telefonen",
+    "app.history.phoneOnlyNote":
+      "Inte i ditt konto: de här sparas bara på den här telefonen. Tar du bort en dom här fortsätter delningslänken att fungera.",
+    "app.history.removeConfirm":
+      "Ta bort {n} domar från ditt konto? Det du skrev och namnen raderas och delningslänkarna slutar fungera, på alla enheter. Det går inte att ångra.",
+    "app.history.phoneOnlyAlso":
+      "{n} domar som bara finns på den här telefonen tas bort därifrån; delningslänkarna fortsätter att fungera.",
+    "app.history.removeFailed": "Det gick inte att ta bort {n} av dem. Kolla din uppkoppling och försök igen.",
+    "app.history.offlineRemove": "Du är offline. Du måste vara uppkopplad för att ta bort.",
     "app.pricing.free.account": "Logga in med Apple, Google eller e-post",
     "app.pricing.headline": "Din första dom bjuder vi på.",
     "app.pricing.sub":
@@ -175,6 +184,13 @@ const sv: AppLocale = {
     "app.history.deleteConfirm": {
       one: "Ta bort domen från den här telefonen? Delningslänken fortsätter att fungera.",
     },
+    "app.history.removeConfirm": {
+      one: "Ta bort domen från ditt konto? Det du skrev och namnen raderas och delningslänken slutar fungera, på alla enheter. Det går inte att ångra.",
+    },
+    "app.history.phoneOnlyAlso": {
+      one: "1 dom som bara finns på den här telefonen tas bort därifrån; delningslänken fortsätter att fungera.",
+    },
+    "app.history.removeFailed": { one: "Det gick inte att ta bort den. Kolla din uppkoppling och försök igen." },
   },
 };
 

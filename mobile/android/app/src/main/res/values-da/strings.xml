@@ -403,8 +403,8 @@
     <string name="case_appeal_original">Din tilføjede kontekst, som du skrev den</string>
     <string name="case_display_name">Dit navn på den delte dom</string>
     <string name="case_display_save">Gem navn</string>
-    <string name="respond_keep">Keep this case in your account</string>
-    <string name="respond_kept">This case is in your account now. It shows on your Verdicts page on every device.</string>
+    <string name="respond_keep">Gem sagen på din konto</string>
+    <string name="respond_kept">Sagen ligger nu på din konto. Den vises på siden Domme på alle dine enheder.</string>
     <string name="respond_remove">Fjern min side</string>
     <string name="respond_remove_confirm">Vil du fjerne din originale tekst og dit viste navn? Sagens delingslinks holder op med at virke (forhåndsvisninger, der allerede er sendt i chats, kan stadig blive vist, indtil de apps opdaterer dem). Det kan ikke fortrydes.</string>
     <string name="names_title">Navne på den delte side</string>
@@ -422,20 +422,20 @@
     <string name="shell_load_failed">Vi kunne ikke hente din historik.</string>
     <string name="shell_load_more">Vis flere</string>
     <string name="shell_untitled">Dom uden titel</string>
-    <string name="history_state_judging">Judges thinking</string>
-    <string name="history_state_rejudging">Judges thinking again</string>
-    <string name="history_state_failed">Didn\'t finish</string>
-    <string name="history_state_rejudge_failed">New context didn\'t go through</string>
-    <string name="history_state_waiting">Waiting for %1$s to answer</string>
-    <string name="history_state_waiting_other">Waiting for the other side to answer</string>
-    <string name="history_state_expired">Link expired</string>
-    <string name="history_state_removed">Removed</string>
-    <string name="history_state_removed_by">Removed by %1$s</string>
-    <string name="history_state_removed_by_other">Removed by the other side</string>
-    <string name="history_state_ready">Verdict ready</string>
-    <string name="history_context_added">After new context</string>
-    <string name="history_your_move">Your turn</string>
-    <string name="history_answered">You answered</string>
+    <string name="history_state_judging">Dommerne tænker</string>
+    <string name="history_state_rejudging">Dommerne tænker igen</string>
+    <string name="history_state_failed">Blev ikke færdig</string>
+    <string name="history_state_rejudge_failed">Den nye kontekst gik ikke igennem</string>
+    <string name="history_state_waiting">Venter på svar fra %1$s</string>
+    <string name="history_state_waiting_other">Venter på svar fra den anden side</string>
+    <string name="history_state_expired">Linket er udløbet</string>
+    <string name="history_state_removed">Fjernet</string>
+    <string name="history_state_removed_by">Fjernet af %1$s</string>
+    <string name="history_state_removed_by_other">Fjernet af den anden side</string>
+    <string name="history_state_ready">Dommen er klar</string>
+    <string name="history_context_added">Efter ny kontekst</string>
+    <string name="history_your_move">Din tur</string>
+    <string name="history_answered">Du har svaret</string>
     <string name="thread_label">Denne diskussion</string>
     <string name="thread_you">Du skrev</string>
     <string name="thread_judges">Dommerne</string>
@@ -492,21 +492,21 @@
     </plurals>
     <string name="app_history_row_selected">Valgt</string>
     <string name="app_history_row_not_selected">Ikke valgt</string>
-    <string name="app_history_phone_only">Only on this phone</string>
-    <string name="app_history_phone_only_note">Not in your account: these are saved on this phone only. Deleting one here doesn\'t take down its share link.</string>
+    <string name="app_history_phone_only">Kun på denne telefon</string>
+    <string name="app_history_phone_only_note">Ikke på din konto, kun gemt på denne telefon. Sletter du en her, virker dens delingslink stadig.</string>
     <plurals name="app_history_remove_confirm">
-        <item quantity="one">Remove this verdict from your account? What you wrote and the names are erased and its share link stops working, on every device. This can\'t be undone.</item>
-        <item quantity="other">Remove %1$s verdicts from your account? What you wrote and the names are erased and their share links stop working, on every device. This can\'t be undone.</item>
+        <item quantity="one">Vil du fjerne dommen fra din konto? Det, du skrev, og navnene bliver slettet, og dens delingslink holder op med at virke på alle enheder. Det kan ikke fortrydes.</item>
+        <item quantity="other">Vil du fjerne %1$s domme fra din konto? Det, du skrev, og navnene bliver slettet, og deres delingslinks holder op med at virke på alle enheder. Det kan ikke fortrydes.</item>
     </plurals>
     <plurals name="app_history_phone_only_also">
-        <item quantity="one">1 saved only on this phone is deleted from it; its share link keeps working.</item>
-        <item quantity="other">%1$s saved only on this phone are deleted from it; their share links keep working.</item>
+        <item quantity="one">1 dom, der kun er gemt på denne telefon, bliver slettet herfra; dens delingslink virker stadig.</item>
+        <item quantity="other">%1$s domme, der kun er gemt på denne telefon, bliver slettet herfra; deres delingslinks virker stadig.</item>
     </plurals>
     <plurals name="app_history_remove_failed">
-        <item quantity="one">Couldn\'t remove it. Check your connection and try again.</item>
-        <item quantity="other">Couldn\'t remove %1$s of them. Check your connection and try again.</item>
+        <item quantity="one">Vi kunne ikke fjerne den. Tjek din forbindelse, og prøv igen.</item>
+        <item quantity="other">Vi kunne ikke fjerne %1$s af dem. Tjek din forbindelse, og prøv igen.</item>
     </plurals>
-    <string name="app_history_offline_remove">You\'re offline. Removing needs a connection.</string>
+    <string name="app_history_offline_remove">Du er offline. Du skal have forbindelse for at fjerne domme.</string>
     <string name="app_pricing_free_account">Log ind med Apple, Google eller e-mail</string>
     <string name="app_pricing_headline">Din første dom er på husets regning.</string>
     <string name="app_pricing_sub">Opret en konto, så er din første dom gratis, med alle funktioner. Derefter vælger du en pakke eller et månedsabonnement.</string>

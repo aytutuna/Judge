@@ -13,12 +13,20 @@ const hi: AppLocale = {
     "app.history.delete": "हटाएँ",
     "app.history.select": "चुनें",
     "app.history.selectAll": "सभी चुनें",
-    "app.history.deselectAll": "चयन हटाएँ",
+    "app.history.deselectAll": "चयन रद्द करें",
     "app.history.selected": "{n} चुने गए",
     "app.history.deleteCount": "हटाएँ ({count})",
     "app.history.deleteConfirm": "इस फ़ोन से {n} फ़ैसले हटाएँ? उनके शेयर लिंक काम करते रहेंगे।",
     "app.history.rowSelected": "चुना गया",
     "app.history.rowNotSelected": "नहीं चुना गया",
+    "app.history.phoneOnly": "सिर्फ़ इसी फ़ोन में",
+    "app.history.phoneOnlyNote":
+      "आपके अकाउंट में नहीं: ये सिर्फ़ इसी फ़ोन में सेव हैं। यहाँ से कोई फ़ैसला हटाने पर भी उसका शेयर लिंक बंद नहीं होता।",
+    "app.history.removeConfirm":
+      "अपने अकाउंट से {n} फ़ैसले हटाएँ? आपका लिखा टेक्स्ट और नाम हर डिवाइस से मिट जाएँगे, और उनके शेयर लिंक काम करना बंद कर देंगे। इसे पहले जैसा नहीं किया जा सकता।",
+    "app.history.phoneOnlyAlso": "जो {n} फ़ैसले सिर्फ़ इसी फ़ोन में सेव हैं, वे यहाँ से हटा दिए जाएँगे; उनके शेयर लिंक काम करते रहेंगे।",
+    "app.history.removeFailed": "इनमें से {n} नहीं हटाए जा सके। इंटरनेट कनेक्शन जाँचकर फिर कोशिश करें।",
+    "app.history.offlineRemove": "आप ऑफ़लाइन हैं। हटाने के लिए इंटरनेट कनेक्शन चाहिए।",
     "app.pricing.free.account": "Apple, Google या ईमेल से साइन इन करें",
     "app.pricing.headline": "पहला फ़ैसला हमारी तरफ़ से।",
     "app.pricing.sub":
@@ -171,6 +179,11 @@ const hi: AppLocale = {
     "app.balance.left": { one: "{n} फ़ैसला बाकी" },
     "app.history.selected": { one: "{n} चुना गया" },
     "app.history.deleteConfirm": { one: "इस फ़ोन से {n} फ़ैसला हटाएँ? उसका शेयर लिंक काम करता रहेगा।" },
+    "app.history.removeConfirm": {
+      one: "अपने अकाउंट से {n} फ़ैसला हटाएँ? आपका लिखा टेक्स्ट और नाम हर डिवाइस से मिट जाएँगे, और उसका शेयर लिंक काम करना बंद कर देगा। इसे पहले जैसा नहीं किया जा सकता।",
+    },
+    "app.history.phoneOnlyAlso": { one: "जो {n} फ़ैसला सिर्फ़ इसी फ़ोन में सेव है, वह यहाँ से हटा दिया जाएगा; उसका शेयर लिंक काम करता रहेगा।" },
+    "app.history.removeFailed": { one: "{n} फ़ैसला नहीं हटाया जा सका। इंटरनेट कनेक्शन जाँचकर फिर कोशिश करें।" },
   },
 };
 

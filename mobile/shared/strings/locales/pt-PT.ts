@@ -18,6 +18,15 @@ const ptPT: AppLocale = {
     "app.history.deleteConfirm": "Apagar {n} veredictos deste telemóvel? Os links de partilha continuam ativos.",
     "app.history.rowSelected": "Selecionado",
     "app.history.rowNotSelected": "Não selecionado",
+    "app.history.phoneOnly": "Só neste telemóvel",
+    "app.history.phoneOnlyNote":
+      "Não estão na tua conta: ficam guardados só neste telemóvel. Se apagares um aqui, o link de partilha continua ativo.",
+    "app.history.removeConfirm":
+      "Remover {n} veredictos da tua conta? O que escreveste e os nomes são apagados e os links de partilha deixam de funcionar, em todos os dispositivos. Isto não pode ser desfeito.",
+    "app.history.phoneOnlyAlso":
+      "{n} veredictos guardados só neste telemóvel são apagados daqui; os links de partilha continuam ativos.",
+    "app.history.removeFailed": "Não conseguimos remover {n} deles. Verifica a ligação e tenta outra vez.",
+    "app.history.offlineRemove": "Estás sem internet. É preciso ligação para remover.",
     "app.pricing.free.account": "Entra com a Apple, o Google ou o e-mail",
     "app.pricing.headline": "O primeiro veredicto é por nossa conta.",
     "app.pricing.sub":
@@ -173,6 +182,13 @@ const ptPT: AppLocale = {
     "app.balance.left": { one: "Resta {n} veredicto" },
     "app.history.selected": { one: "{n} selecionado" },
     "app.history.deleteConfirm": { one: "Apagar este veredicto do telemóvel? O link de partilha continua ativo." },
+    "app.history.removeConfirm": {
+      one: "Remover este veredicto da tua conta? O que escreveste e os nomes são apagados e o link de partilha deixa de funcionar, em todos os dispositivos. Isto não pode ser desfeito.",
+    },
+    "app.history.phoneOnlyAlso": {
+      one: "1 veredicto guardado só neste telemóvel é apagado daqui; o link de partilha continua ativo.",
+    },
+    "app.history.removeFailed": { one: "Não conseguimos removê-lo. Verifica a ligação e tenta outra vez." },
   },
 };
 

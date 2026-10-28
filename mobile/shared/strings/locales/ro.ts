@@ -20,6 +20,15 @@ const ro: AppLocale = {
       "Ștergi {n} de verdicte de pe acest telefon? Linkurile lor de distribuire rămân active.",
     "app.history.rowSelected": "Selectat",
     "app.history.rowNotSelected": "Neselectat",
+    "app.history.phoneOnly": "Doar pe acest telefon",
+    "app.history.phoneOnlyNote":
+      "Acestea nu sunt în contul tău, ci salvate doar pe acest telefon. Dacă ștergi unul de aici, linkul lui de distribuire rămâne activ.",
+    "app.history.removeConfirm":
+      "Elimini {n} de verdicte din contul tău, de pe toate dispozitivele? Ce ai scris și numele sunt șterse, iar linkurile lor de distribuire nu mai funcționează. Acțiunea nu poate fi anulată.",
+    "app.history.phoneOnlyAlso":
+      "Se șterg și {n} de verdicte salvate doar pe acest telefon; linkurile lor de distribuire rămân active.",
+    "app.history.removeFailed": "N-am putut elimina {n} dintre ele. Verifică-ți conexiunea și încearcă din nou.",
+    "app.history.offlineRemove": "Ești offline. Ca să elimini verdicte, ai nevoie de conexiune.",
     "app.pricing.free.account": "Conectează-te cu Apple, Google sau prin e-mail",
     "app.pricing.headline": "Primul verdict e din partea casei.",
     "app.pricing.sub":
@@ -179,6 +188,18 @@ const ro: AppLocale = {
     "app.history.deleteConfirm": {
       one: "Ștergi verdictul de pe acest telefon? Linkul lui de distribuire rămâne activ.",
       few: "Ștergi {n} verdicte de pe acest telefon? Linkurile lor de distribuire rămân active.",
+    },
+    "app.history.removeConfirm": {
+      one: "Elimini verdictul din contul tău, de pe toate dispozitivele? Ce ai scris și numele sunt șterse, iar linkul lui de distribuire nu mai funcționează. Acțiunea nu poate fi anulată.",
+      few: "Elimini {n} verdicte din contul tău, de pe toate dispozitivele? Ce ai scris și numele sunt șterse, iar linkurile lor de distribuire nu mai funcționează. Acțiunea nu poate fi anulată.",
+    },
+    "app.history.phoneOnlyAlso": {
+      one: "Se șterge și 1 verdict salvat doar pe acest telefon; linkul lui de distribuire rămâne activ.",
+      few: "Se șterg și {n} verdicte salvate doar pe acest telefon; linkurile lor de distribuire rămân active.",
+    },
+    "app.history.removeFailed": {
+      one: "N-am putut elimina verdictul. Verifică-ți conexiunea și încearcă din nou.",
+      few: "N-am putut elimina {n} dintre ele. Verifică-ți conexiunea și încearcă din nou.",
     },
   },
 };

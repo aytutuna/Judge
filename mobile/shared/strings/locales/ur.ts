@@ -20,6 +20,14 @@ const ur: AppLocale = {
     "app.history.deleteConfirm": "اس فون سے {n} فیصلے حذف کریں؟ ان کے شیئر لنکس کام کرتے رہیں گے۔",
     "app.history.rowSelected": "منتخب",
     "app.history.rowNotSelected": "غیر منتخب",
+    "app.history.phoneOnly": "صرف اسی فون پر",
+    "app.history.phoneOnlyNote":
+      "یہ فیصلے آپ کے اکاؤنٹ میں نہیں، صرف اسی فون پر محفوظ ہیں۔ یہاں سے کوئی فیصلہ حذف کرنے سے اس کا شیئر لنک بند نہیں ہوتا۔",
+    "app.history.removeConfirm":
+      "{n} فیصلے اپنے اکاؤنٹ سے ہٹائیں؟ ہر ڈیوائس پر آپ کا لکھا ہوا اور نام مٹا دیے جائیں گے اور ان کے شیئر لنکس کام کرنا بند کر دیں گے۔ یہ واپس نہیں ہو سکتا۔",
+    "app.history.phoneOnlyAlso": "صرف اسی فون پر محفوظ {n} فیصلے اس فون سے حذف ہو جائیں گے؛ ان کے شیئر لنکس کام کرتے رہیں گے۔",
+    "app.history.removeFailed": "ان میں سے {n} نہیں ہٹ سکے۔ اپنا کنکشن چیک کر کے دوبارہ کوشش کریں۔",
+    "app.history.offlineRemove": "آپ آف لائن ہیں۔ ہٹانے کے لیے کنکشن ضروری ہے۔",
     "app.pricing.free.account": "Apple، Google یا ای میل سے سائن ان کریں",
     "app.pricing.headline": "پہلا فیصلہ ہماری طرف سے۔",
     "app.pricing.sub":
@@ -174,6 +182,11 @@ const ur: AppLocale = {
     "app.balance.left": { one: "{n} فیصلہ باقی" },
     "app.history.selected": { one: "{n} فیصلہ منتخب" },
     "app.history.deleteConfirm": { one: "یہ فیصلہ اس فون سے حذف کریں؟ اس کا شیئر لنک کام کرتا رہے گا۔" },
+    "app.history.removeConfirm": {
+      one: "یہ فیصلہ اپنے اکاؤنٹ سے ہٹائیں؟ ہر ڈیوائس پر آپ کا لکھا ہوا اور نام مٹا دیے جائیں گے اور اس کا شیئر لنک کام کرنا بند کر دے گا۔ یہ واپس نہیں ہو سکتا۔",
+    },
+    "app.history.phoneOnlyAlso": { one: "صرف اسی فون پر محفوظ 1 فیصلہ اس فون سے حذف ہو جائے گا؛ اس کا شیئر لنک کام کرتا رہے گا۔" },
+    "app.history.removeFailed": { one: "یہ نہیں ہٹ سکا۔ اپنا کنکشن چیک کر کے دوبارہ کوشش کریں۔" },
   },
 };
 

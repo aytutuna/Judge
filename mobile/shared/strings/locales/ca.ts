@@ -20,6 +20,15 @@ const ca: AppLocale = {
       "Vols eliminar {n} veredictes del telèfon? Els seus enllaços per compartir continuaran funcionant.",
     "app.history.rowSelected": "Seleccionat",
     "app.history.rowNotSelected": "No seleccionat",
+    "app.history.phoneOnly": "Només en aquest telèfon",
+    "app.history.phoneOnlyNote":
+      "No són al teu compte: només es desen en aquest telèfon. Si n'elimines un aquí, el seu enllaç per compartir continuarà funcionant.",
+    "app.history.removeConfirm":
+      "Vols eliminar {n} veredictes del teu compte? S'esborraran el que vas escriure i els noms, i els seus enllaços per compartir deixaran de funcionar a tots els dispositius. No es pot desfer.",
+    "app.history.phoneOnlyAlso":
+      "També s'eliminaran del telèfon {n} veredictes que només hi estaven desats; els seus enllaços per compartir continuaran funcionant.",
+    "app.history.removeFailed": "No n'hem pogut eliminar {n}. Comprova la connexió i torna-ho a provar.",
+    "app.history.offlineRemove": "No tens connexió. Per eliminar cal estar connectat.",
     "app.pricing.free.account": "Inicia sessió amb Apple, Google o el correu",
     "app.pricing.headline": "El primer veredicte, et convidem.",
     "app.pricing.sub":
@@ -178,6 +187,13 @@ const ca: AppLocale = {
     "app.history.deleteConfirm": {
       one: "Vols eliminar aquest veredicte del telèfon? El seu enllaç per compartir continuarà funcionant.",
     },
+    "app.history.removeConfirm": {
+      one: "Vols eliminar aquest veredicte del teu compte? S'esborraran el que vas escriure i els noms, i el seu enllaç per compartir deixarà de funcionar a tots els dispositius. No es pot desfer.",
+    },
+    "app.history.phoneOnlyAlso": {
+      one: "També s'eliminarà del telèfon 1 veredicte que només hi estava desat; el seu enllaç per compartir continuarà funcionant.",
+    },
+    "app.history.removeFailed": { one: "No l'hem pogut eliminar. Comprova la connexió i torna-ho a provar." },
   },
 };
 

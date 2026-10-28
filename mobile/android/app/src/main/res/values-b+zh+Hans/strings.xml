@@ -395,8 +395,8 @@
     <string name="case_appeal_original">你写的原始补充</string>
     <string name="case_display_name">你在分享页上显示的名字</string>
     <string name="case_display_save">保存名字</string>
-    <string name="respond_keep">Keep this case in your account</string>
-    <string name="respond_kept">This case is in your account now. It shows on your Verdicts page on every device.</string>
+    <string name="respond_keep">把这个案子保存到你的账号</string>
+    <string name="respond_kept">这个案子已保存到你的账号，在任何设备的“裁决”页面上都能看到。</string>
     <string name="respond_remove">删除我的说法</string>
     <string name="respond_remove_confirm">删除你的原文和显示名称？案子的分享链接将会失效（已经发到聊天里的预览，在这些应用刷新前可能仍会显示）。此操作无法撤销。</string>
     <string name="names_title">分享页面上的名字</string>
@@ -414,20 +414,20 @@
     <string name="shell_load_failed">没能加载历史记录。</string>
     <string name="shell_load_more">显示更多</string>
     <string name="shell_untitled">未命名裁决</string>
-    <string name="history_state_judging">Judges thinking</string>
-    <string name="history_state_rejudging">Judges thinking again</string>
-    <string name="history_state_failed">Didn\'t finish</string>
-    <string name="history_state_rejudge_failed">New context didn\'t go through</string>
-    <string name="history_state_waiting">Waiting for %1$s to answer</string>
-    <string name="history_state_waiting_other">Waiting for the other side to answer</string>
-    <string name="history_state_expired">Link expired</string>
-    <string name="history_state_removed">Removed</string>
-    <string name="history_state_removed_by">Removed by %1$s</string>
-    <string name="history_state_removed_by_other">Removed by the other side</string>
-    <string name="history_state_ready">Verdict ready</string>
-    <string name="history_context_added">After new context</string>
-    <string name="history_your_move">Your turn</string>
-    <string name="history_answered">You answered</string>
+    <string name="history_state_judging">评委思考中</string>
+    <string name="history_state_rejudging">评委重新思考中</string>
+    <string name="history_state_failed">未完成</string>
+    <string name="history_state_rejudge_failed">补充重审未完成</string>
+    <string name="history_state_waiting">等待%1$s回复</string>
+    <string name="history_state_waiting_other">等待对方回复</string>
+    <string name="history_state_expired">链接已过期</string>
+    <string name="history_state_removed">已删除</string>
+    <string name="history_state_removed_by">已被%1$s删除</string>
+    <string name="history_state_removed_by_other">已被对方删除</string>
+    <string name="history_state_ready">裁决已出</string>
+    <string name="history_context_added">补充说明后</string>
+    <string name="history_your_move">轮到你了</string>
+    <string name="history_answered">你已回复</string>
     <string name="thread_label">这场争论</string>
     <string name="thread_you">你写的</string>
     <string name="thread_judges">评委</string>
@@ -479,18 +479,18 @@
     </plurals>
     <string name="app_history_row_selected">已选中</string>
     <string name="app_history_row_not_selected">未选中</string>
-    <string name="app_history_phone_only">Only on this phone</string>
-    <string name="app_history_phone_only_note">Not in your account: these are saved on this phone only. Deleting one here doesn\'t take down its share link.</string>
+    <string name="app_history_phone_only">只在这台手机上</string>
+    <string name="app_history_phone_only_note">不在你的账号里：这些只保存在这台手机上。在这里删掉一条，它的分享链接仍然有效。</string>
     <plurals name="app_history_remove_confirm">
-        <item quantity="other">Remove %1$s verdicts from your account? What you wrote and the names are erased and their share links stop working, on every device. This can\'t be undone.</item>
+        <item quantity="other">要从你的账号中删除 %1$s 条裁决吗？在所有设备上，你写的内容和名字都会被抹去，分享链接也会失效。此操作无法撤销。</item>
     </plurals>
     <plurals name="app_history_phone_only_also">
-        <item quantity="other">%1$s saved only on this phone are deleted from it; their share links keep working.</item>
+        <item quantity="other">另有 %1$s 条只保存在这台手机上的裁决会从手机上删除，它们的分享链接仍然有效。</item>
     </plurals>
     <plurals name="app_history_remove_failed">
-        <item quantity="other">Couldn\'t remove %1$s of them. Check your connection and try again.</item>
+        <item quantity="other">有 %1$s 条没能删除。检查一下网络连接，再试一次。</item>
     </plurals>
-    <string name="app_history_offline_remove">You\'re offline. Removing needs a connection.</string>
+    <string name="app_history_offline_remove">你现在没联网，删除需要网络连接。</string>
     <string name="app_pricing_free_account">用 Apple、Google 或邮箱登录</string>
     <string name="app_pricing_headline">第一次裁决，我们请客。</string>
     <string name="app_pricing_sub">注册账号，第一次裁决免费，所有功能都能用。之后可以买次数包，或者按月订阅。</string>

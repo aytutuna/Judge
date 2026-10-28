@@ -403,8 +403,8 @@
     <string name="case_appeal_original">آپ کی شامل کی گئی تفصیل، جیسے آپ نے لکھی</string>
     <string name="case_display_name">شیئر کیے گئے فیصلے پر آپ کا نام</string>
     <string name="case_display_save">نام محفوظ کریں</string>
-    <string name="respond_keep">Keep this case in your account</string>
-    <string name="respond_kept">This case is in your account now. It shows on your Verdicts page on every device.</string>
+    <string name="respond_keep">یہ کیس اپنے اکاؤنٹ میں رکھیں</string>
+    <string name="respond_kept">یہ کیس اب آپ کے اکاؤنٹ میں ہے۔ یہ ہر ڈیوائس پر آپ کے “فیصلے” کے صفحے پر نظر آتا ہے۔</string>
     <string name="respond_remove">میری بات ہٹائیں</string>
     <string name="respond_remove_confirm">آپ کا اصل متن اور ڈسپلے نام ہٹا دیں؟ کیس کے شیئر لنکس کام کرنا بند کر دیں گے (چیٹس میں پہلے سے پوسٹ ہوئے پریویو تب تک دکھ سکتے ہیں جب تک وہ ایپس انہیں ریفریش نہ کریں)۔ یہ واپس نہیں ہو سکتا۔</string>
     <string name="names_title">شیئر صفحے پر نام</string>
@@ -422,20 +422,20 @@
     <string name="shell_load_failed">آپ کی ہسٹری لوڈ نہیں ہو سکی۔</string>
     <string name="shell_load_more">مزید دکھائیں</string>
     <string name="shell_untitled">بے عنوان فیصلہ</string>
-    <string name="history_state_judging">Judges thinking</string>
-    <string name="history_state_rejudging">Judges thinking again</string>
-    <string name="history_state_failed">Didn\'t finish</string>
-    <string name="history_state_rejudge_failed">New context didn\'t go through</string>
-    <string name="history_state_waiting">Waiting for %1$s to answer</string>
-    <string name="history_state_waiting_other">Waiting for the other side to answer</string>
-    <string name="history_state_expired">Link expired</string>
-    <string name="history_state_removed">Removed</string>
-    <string name="history_state_removed_by">Removed by %1$s</string>
-    <string name="history_state_removed_by_other">Removed by the other side</string>
-    <string name="history_state_ready">Verdict ready</string>
-    <string name="history_context_added">After new context</string>
-    <string name="history_your_move">Your turn</string>
-    <string name="history_answered">You answered</string>
+    <string name="history_state_judging">جج سوچ رہے ہیں</string>
+    <string name="history_state_rejudging">جج دوبارہ سوچ رہے ہیں</string>
+    <string name="history_state_failed">مکمل نہیں ہوا</string>
+    <string name="history_state_rejudge_failed">نئی تفصیل شامل نہیں ہو سکی</string>
+    <string name="history_state_waiting">%1$s کے جواب کا انتظار</string>
+    <string name="history_state_waiting_other">دوسری طرف کے جواب کا انتظار</string>
+    <string name="history_state_expired">لنک کی میعاد ختم</string>
+    <string name="history_state_removed">ہٹا دیا گیا</string>
+    <string name="history_state_removed_by">%1$s نے ہٹا دیا</string>
+    <string name="history_state_removed_by_other">دوسری طرف نے ہٹا دیا</string>
+    <string name="history_state_ready">فیصلہ تیار ہے</string>
+    <string name="history_context_added">نئی تفصیل کے بعد</string>
+    <string name="history_your_move">آپ کی باری</string>
+    <string name="history_answered">آپ نے جواب دیا</string>
     <string name="thread_label">یہ بحث</string>
     <string name="thread_you">آپ نے لکھا</string>
     <string name="thread_judges">جج</string>
@@ -492,21 +492,21 @@
     </plurals>
     <string name="app_history_row_selected">منتخب</string>
     <string name="app_history_row_not_selected">غیر منتخب</string>
-    <string name="app_history_phone_only">Only on this phone</string>
-    <string name="app_history_phone_only_note">Not in your account: these are saved on this phone only. Deleting one here doesn\'t take down its share link.</string>
+    <string name="app_history_phone_only">صرف اسی فون پر</string>
+    <string name="app_history_phone_only_note">یہ فیصلے آپ کے اکاؤنٹ میں نہیں، صرف اسی فون پر محفوظ ہیں۔ یہاں سے کوئی فیصلہ حذف کرنے سے اس کا شیئر لنک بند نہیں ہوتا۔</string>
     <plurals name="app_history_remove_confirm">
-        <item quantity="one">Remove this verdict from your account? What you wrote and the names are erased and its share link stops working, on every device. This can\'t be undone.</item>
-        <item quantity="other">Remove %1$s verdicts from your account? What you wrote and the names are erased and their share links stop working, on every device. This can\'t be undone.</item>
+        <item quantity="one">یہ فیصلہ اپنے اکاؤنٹ سے ہٹائیں؟ ہر ڈیوائس پر آپ کا لکھا ہوا اور نام مٹا دیے جائیں گے اور اس کا شیئر لنک کام کرنا بند کر دے گا۔ یہ واپس نہیں ہو سکتا۔</item>
+        <item quantity="other">%1$s فیصلے اپنے اکاؤنٹ سے ہٹائیں؟ ہر ڈیوائس پر آپ کا لکھا ہوا اور نام مٹا دیے جائیں گے اور ان کے شیئر لنکس کام کرنا بند کر دیں گے۔ یہ واپس نہیں ہو سکتا۔</item>
     </plurals>
     <plurals name="app_history_phone_only_also">
-        <item quantity="one">1 saved only on this phone is deleted from it; its share link keeps working.</item>
-        <item quantity="other">%1$s saved only on this phone are deleted from it; their share links keep working.</item>
+        <item quantity="one">صرف اسی فون پر محفوظ 1 فیصلہ اس فون سے حذف ہو جائے گا؛ اس کا شیئر لنک کام کرتا رہے گا۔</item>
+        <item quantity="other">صرف اسی فون پر محفوظ %1$s فیصلے اس فون سے حذف ہو جائیں گے؛ ان کے شیئر لنکس کام کرتے رہیں گے۔</item>
     </plurals>
     <plurals name="app_history_remove_failed">
-        <item quantity="one">Couldn\'t remove it. Check your connection and try again.</item>
-        <item quantity="other">Couldn\'t remove %1$s of them. Check your connection and try again.</item>
+        <item quantity="one">یہ نہیں ہٹ سکا۔ اپنا کنکشن چیک کر کے دوبارہ کوشش کریں۔</item>
+        <item quantity="other">ان میں سے %1$s نہیں ہٹ سکے۔ اپنا کنکشن چیک کر کے دوبارہ کوشش کریں۔</item>
     </plurals>
-    <string name="app_history_offline_remove">You\'re offline. Removing needs a connection.</string>
+    <string name="app_history_offline_remove">آپ آف لائن ہیں۔ ہٹانے کے لیے کنکشن ضروری ہے۔</string>
     <string name="app_pricing_free_account">Apple، Google یا ای میل سے سائن ان کریں</string>
     <string name="app_pricing_headline">پہلا فیصلہ ہماری طرف سے۔</string>
     <string name="app_pricing_sub">اکاؤنٹ بنائیں اور پہلا فیصلہ مفت پائیں، تمام فیچرز کے ساتھ۔ اس کے بعد کوئی پیک لیں یا ماہانہ پلان۔</string>

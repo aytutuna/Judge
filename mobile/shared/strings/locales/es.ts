@@ -20,6 +20,15 @@ const es: AppLocale = {
       "¿Eliminar {n} veredictos de este teléfono? Sus enlaces para compartir seguirán funcionando.",
     "app.history.rowSelected": "Seleccionado",
     "app.history.rowNotSelected": "No seleccionado",
+    "app.history.phoneOnly": "Solo en este teléfono",
+    "app.history.phoneOnlyNote":
+      "No están en tu cuenta: solo se guardan en este teléfono. Eliminar uno aquí no desactiva su enlace para compartir.",
+    "app.history.removeConfirm":
+      "¿Eliminar {n} veredictos de tu cuenta? Lo que escribiste y los nombres se borrarán de todos los dispositivos, y sus enlaces para compartir dejarán de funcionar. No se puede deshacer.",
+    "app.history.phoneOnlyAlso":
+      "Además, se eliminarán {n} veredictos guardados solo en este teléfono; sus enlaces para compartir seguirán funcionando.",
+    "app.history.removeFailed": "No se pudieron eliminar {n} veredictos. Revisa tu conexión e inténtalo de nuevo.",
+    "app.history.offlineRemove": "Estás sin conexión. Conéctate a internet para eliminar.",
     "app.pricing.free.account": "Inicia sesión con Apple, Google o tu correo",
     "app.pricing.headline": "Tu primer veredicto corre por nuestra cuenta.",
     "app.pricing.sub":
@@ -176,8 +185,15 @@ const es: AppLocale = {
     "app.balance.left": { one: "Te queda {n} veredicto" },
     "app.history.selected": { one: "{n} seleccionado" },
     "app.history.deleteConfirm": {
-      one: "¿Eliminar este veredicto del teléfono? Su enlace para compartir seguirá funcionando.",
+      one: "¿Eliminar este veredicto de este teléfono? Su enlace para compartir seguirá funcionando.",
     },
+    "app.history.removeConfirm": {
+      one: "¿Eliminar este veredicto de tu cuenta? Lo que escribiste y los nombres se borrarán de todos los dispositivos, y su enlace para compartir dejará de funcionar. No se puede deshacer.",
+    },
+    "app.history.phoneOnlyAlso": {
+      one: "Además, se eliminará 1 veredicto guardado solo en este teléfono; su enlace para compartir seguirá funcionando.",
+    },
+    "app.history.removeFailed": { one: "No se pudo eliminar. Revisa tu conexión e inténtalo de nuevo." },
   },
 };
 

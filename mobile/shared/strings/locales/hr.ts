@@ -21,6 +21,15 @@ const hr: AppLocale = {
       "Izbrisati {n} presuda s ovog telefona? Poveznice za dijeljenje i dalje rade.",
     "app.history.rowSelected": "Odabrano",
     "app.history.rowNotSelected": "Nije odabrano",
+    "app.history.phoneOnly": "Samo na ovom telefonu",
+    "app.history.phoneOnlyNote":
+      "Nisu na tvom računu: ove su presude spremljene samo na ovom telefonu. Ako neku od njih izbrišeš ovdje, njezina poveznica za dijeljenje i dalje radi.",
+    "app.history.removeConfirm":
+      "Ukloniti {n} presuda s tvog računa? Na svim uređajima brišu se tvoj tekst i imena, a poveznice za dijeljenje prestaju raditi. Ovo se ne može poništiti.",
+    "app.history.phoneOnlyAlso":
+      "S ovog telefona briše se i {n} presuda spremljenih samo na njemu; njihove poveznice za dijeljenje i dalje rade.",
+    "app.history.removeFailed": "Nismo uspjeli ukloniti {n} presuda. Provjeri vezu i pokušaj ponovno.",
+    "app.history.offlineRemove": "Nemaš pristup internetu. Za uklanjanje je potrebna veza.",
     "app.pricing.free.account": "Prijavi se s Appleom, Googleom ili e-poštom",
     "app.pricing.headline": "Prvu presudu častimo.",
     "app.pricing.sub":
@@ -177,6 +186,18 @@ const hr: AppLocale = {
     "app.history.deleteConfirm": {
       one: "Izbrisati {n} presudu s ovog telefona? Poveznice za dijeljenje i dalje rade.",
       few: "Izbrisati {n} presude s ovog telefona? Poveznice za dijeljenje i dalje rade.",
+    },
+    "app.history.removeConfirm": {
+      one: "Ukloniti {n} presudu s tvog računa? Na svim uređajima brišu se tvoj tekst i imena, a poveznice za dijeljenje prestaju raditi. Ovo se ne može poništiti.",
+      few: "Ukloniti {n} presude s tvog računa? Na svim uređajima brišu se tvoj tekst i imena, a poveznice za dijeljenje prestaju raditi. Ovo se ne može poništiti.",
+    },
+    "app.history.phoneOnlyAlso": {
+      one: "S ovog telefona briše se i {n} presuda spremljena samo na njemu; poveznice za dijeljenje i dalje rade.",
+      few: "S ovog telefona brišu se i {n} presude spremljene samo na njemu; njihove poveznice za dijeljenje i dalje rade.",
+    },
+    "app.history.removeFailed": {
+      one: "Nismo uspjeli ukloniti {n} presudu. Provjeri vezu i pokušaj ponovno.",
+      few: "Nismo uspjeli ukloniti {n} presude. Provjeri vezu i pokušaj ponovno.",
     },
   },
 };

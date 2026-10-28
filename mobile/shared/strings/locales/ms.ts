@@ -20,6 +20,15 @@ const ms: AppLocale = {
     "app.history.deleteConfirm": "Padam {n} keputusan daripada telefon ini? Pautan kongsinya akan terus berfungsi.",
     "app.history.rowSelected": "Dipilih",
     "app.history.rowNotSelected": "Tidak dipilih",
+    "app.history.phoneOnly": "Dalam telefon ini sahaja",
+    "app.history.phoneOnlyNote":
+      "Tiada dalam akaun anda: keputusan ini disimpan dalam telefon ini sahaja. Memadam satu keputusan di sini tidak mematikan pautan kongsinya.",
+    "app.history.removeConfirm":
+      "Buang {n} keputusan daripada akaun anda? Apa yang anda tulis dan nama-namanya akan dihapuskan, dan pautan kongsinya akan berhenti berfungsi pada setiap peranti. Tindakan ini tidak boleh dibatalkan.",
+    "app.history.phoneOnlyAlso":
+      "{n} keputusan yang hanya disimpan dalam telefon ini turut dipadam; pautan kongsinya akan terus berfungsi.",
+    "app.history.removeFailed": "{n} keputusan tidak dapat dibuang. Semak sambungan anda dan cuba lagi.",
+    "app.history.offlineRemove": "Anda di luar talian. Sambungan diperlukan untuk membuang keputusan.",
     "app.pricing.free.account": "Log masuk dengan Apple, Google atau e-mel",
     "app.pricing.headline": "Keputusan pertama anda, kami belanja.",
     "app.pricing.sub":

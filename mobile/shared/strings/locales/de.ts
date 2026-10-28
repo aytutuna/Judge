@@ -19,6 +19,14 @@ const de: AppLocale = {
     "app.history.deleteConfirm": "{n} Urteile von diesem Handy löschen? Die geteilten Links funktionieren weiter.",
     "app.history.rowSelected": "Ausgewählt",
     "app.history.rowNotSelected": "Nicht ausgewählt",
+    "app.history.phoneOnly": "Nur auf diesem Handy",
+    "app.history.phoneOnlyNote":
+      "Nicht in deinem Konto: Diese Urteile sind nur auf diesem Handy gespeichert. Wenn du hier eins löschst, funktioniert sein geteilter Link weiter.",
+    "app.history.removeConfirm":
+      "{n} Urteile aus deinem Konto entfernen? Sie verschwinden von allen Geräten: Was du geschrieben hast und die Namen werden gelöscht, und die geteilten Links funktionieren nicht mehr. Das lässt sich nicht rückgängig machen.",
+    "app.history.phoneOnlyAlso": "{n} Urteile, die nur auf diesem Handy gespeichert sind, werden hier gelöscht; ihre geteilten Links funktionieren weiter.",
+    "app.history.removeFailed": "{n} davon konnten nicht entfernt werden. Prüf deine Verbindung und versuch es noch mal.",
+    "app.history.offlineRemove": "Du bist offline. Zum Entfernen brauchst du eine Verbindung.",
     "app.pricing.free.account": "Mit Apple, Google oder E-Mail anmelden",
     "app.pricing.headline": "Dein erstes Urteil geht auf uns.",
     "app.pricing.sub":
@@ -176,6 +184,11 @@ const de: AppLocale = {
     "app.balance.left": { one: "1 Urteil übrig" },
     "app.history.selected": { one: "{n} ausgewählt" },
     "app.history.deleteConfirm": { one: "Dieses Urteil von diesem Handy löschen? Der geteilte Link funktioniert weiter." },
+    "app.history.removeConfirm": {
+      one: "Dieses Urteil aus deinem Konto entfernen? Es verschwindet von allen Geräten: Was du geschrieben hast und die Namen werden gelöscht, und der geteilte Link funktioniert nicht mehr. Das lässt sich nicht rückgängig machen.",
+    },
+    "app.history.phoneOnlyAlso": { one: "1 Urteil, das nur auf diesem Handy gespeichert ist, wird hier gelöscht; sein geteilter Link funktioniert weiter." },
+    "app.history.removeFailed": { one: "Das Urteil konnte nicht entfernt werden. Prüf deine Verbindung und versuch es noch mal." },
   },
 };
 

@@ -20,6 +20,15 @@ const ptBR: AppLocale = {
       "Excluir {n} vereditos deste celular? Os links de compartilhamento deles continuam funcionando.",
     "app.history.rowSelected": "Selecionado",
     "app.history.rowNotSelected": "Não selecionado",
+    "app.history.phoneOnly": "Só neste celular",
+    "app.history.phoneOnlyNote":
+      "Não estão na sua conta: ficam salvos só neste celular. Excluir um aqui não tira do ar o link de compartilhamento dele.",
+    "app.history.removeConfirm":
+      "Remover {n} vereditos da sua conta? O que você escreveu e os nomes são apagados, e os links de compartilhamento deles param de funcionar, em todos os dispositivos. Não dá para desfazer.",
+    "app.history.phoneOnlyAlso":
+      "{n} vereditos salvos só neste celular também são excluídos daqui; os links de compartilhamento deles continuam funcionando.",
+    "app.history.removeFailed": "Não foi possível remover {n} deles. Confira sua conexão e tente de novo.",
+    "app.history.offlineRemove": "Você está sem internet. Para remover, é preciso ter conexão.",
     "app.pricing.free.account": "Entre com Apple, Google ou e-mail",
     "app.pricing.headline": "Seu primeiro veredito é por nossa conta.",
     "app.pricing.sub":
@@ -177,6 +186,13 @@ const ptBR: AppLocale = {
     "app.history.deleteConfirm": {
       one: "Excluir {n} veredito deste celular? O link de compartilhamento dele continua funcionando.",
     },
+    "app.history.removeConfirm": {
+      one: "Remover {n} veredito da sua conta? O que você escreveu e os nomes são apagados, e o link de compartilhamento dele para de funcionar, em todos os dispositivos. Não dá para desfazer.",
+    },
+    "app.history.phoneOnlyAlso": {
+      one: "{n} veredito salvo só neste celular também é excluído daqui; o link de compartilhamento dele continua funcionando.",
+    },
+    "app.history.removeFailed": { one: "Não foi possível remover {n} veredito. Confira sua conexão e tente de novo." },
   },
 };
 

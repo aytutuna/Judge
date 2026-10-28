@@ -18,6 +18,14 @@ const da: AppLocale = {
     "app.history.deleteConfirm": "Vil du slette {n} domme fra denne telefon? Delingslinkene virker stadig.",
     "app.history.rowSelected": "Valgt",
     "app.history.rowNotSelected": "Ikke valgt",
+    "app.history.phoneOnly": "Kun på denne telefon",
+    "app.history.phoneOnlyNote":
+      "Ikke på din konto, kun gemt på denne telefon. Sletter du en her, virker dens delingslink stadig.",
+    "app.history.removeConfirm":
+      "Vil du fjerne {n} domme fra din konto? Det, du skrev, og navnene bliver slettet, og deres delingslinks holder op med at virke på alle enheder. Det kan ikke fortrydes.",
+    "app.history.phoneOnlyAlso": "{n} domme, der kun er gemt på denne telefon, bliver slettet herfra; deres delingslinks virker stadig.",
+    "app.history.removeFailed": "Vi kunne ikke fjerne {n} af dem. Tjek din forbindelse, og prøv igen.",
+    "app.history.offlineRemove": "Du er offline. Du skal have forbindelse for at fjerne domme.",
     "app.pricing.free.account": "Log ind med Apple, Google eller e-mail",
     "app.pricing.headline": "Din første dom er på husets regning.",
     "app.pricing.sub":
@@ -172,6 +180,11 @@ const da: AppLocale = {
     "app.balance.left": { one: "{n} dom tilbage" },
     "app.history.selected": { one: "{n} valgt" },
     "app.history.deleteConfirm": { one: "Vil du slette dommen fra denne telefon? Delingslinket virker stadig." },
+    "app.history.removeConfirm": {
+      one: "Vil du fjerne dommen fra din konto? Det, du skrev, og navnene bliver slettet, og dens delingslink holder op med at virke på alle enheder. Det kan ikke fortrydes.",
+    },
+    "app.history.phoneOnlyAlso": { one: "1 dom, der kun er gemt på denne telefon, bliver slettet herfra; dens delingslink virker stadig." },
+    "app.history.removeFailed": { one: "Vi kunne ikke fjerne den. Tjek din forbindelse, og prøv igen." },
   },
 };
 

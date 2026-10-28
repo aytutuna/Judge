@@ -403,8 +403,8 @@
     <string name="case_appeal_original">Je aanvulling zoals je die schreef</string>
     <string name="case_display_name">Je naam op de gedeelde uitspraak</string>
     <string name="case_display_save">Naam opslaan</string>
-    <string name="respond_keep">Keep this case in your account</string>
-    <string name="respond_kept">This case is in your account now. It shows on your Verdicts page on every device.</string>
+    <string name="respond_keep">Deze zaak in je account bewaren</string>
+    <string name="respond_kept">Deze zaak staat nu in je account. Je ziet hem op elk apparaat op de pagina Uitspraken.</string>
     <string name="respond_remove">Mijn kant verwijderen</string>
     <string name="respond_remove_confirm">Je oorspronkelijke tekst en je weergavenaam verwijderen? De deellinks van de zaak werken niet meer (previews die al in chats zijn gedeeld, kunnen zichtbaar blijven tot die apps ze vernieuwen). Dit kan niet ongedaan worden gemaakt.</string>
     <string name="names_title">Namen op de gedeelde pagina</string>
@@ -422,20 +422,20 @@
     <string name="shell_load_failed">We konden je geschiedenis niet laden.</string>
     <string name="shell_load_more">Meer tonen</string>
     <string name="shell_untitled">Uitspraak zonder titel</string>
-    <string name="history_state_judging">Judges thinking</string>
-    <string name="history_state_rejudging">Judges thinking again</string>
-    <string name="history_state_failed">Didn\'t finish</string>
-    <string name="history_state_rejudge_failed">New context didn\'t go through</string>
-    <string name="history_state_waiting">Waiting for %1$s to answer</string>
-    <string name="history_state_waiting_other">Waiting for the other side to answer</string>
-    <string name="history_state_expired">Link expired</string>
-    <string name="history_state_removed">Removed</string>
-    <string name="history_state_removed_by">Removed by %1$s</string>
-    <string name="history_state_removed_by_other">Removed by the other side</string>
-    <string name="history_state_ready">Verdict ready</string>
-    <string name="history_context_added">After new context</string>
-    <string name="history_your_move">Your turn</string>
-    <string name="history_answered">You answered</string>
+    <string name="history_state_judging">De rechters denken na</string>
+    <string name="history_state_rejudging">De rechters denken opnieuw na</string>
+    <string name="history_state_failed">Niet afgerond</string>
+    <string name="history_state_rejudge_failed">Aanvulling niet verwerkt</string>
+    <string name="history_state_waiting">Wacht op antwoord van %1$s</string>
+    <string name="history_state_waiting_other">Wacht op antwoord van de ander</string>
+    <string name="history_state_expired">Link verlopen</string>
+    <string name="history_state_removed">Verwijderd</string>
+    <string name="history_state_removed_by">Verwijderd door %1$s</string>
+    <string name="history_state_removed_by_other">Verwijderd door de ander</string>
+    <string name="history_state_ready">Uitspraak klaar</string>
+    <string name="history_context_added">Na aanvulling</string>
+    <string name="history_your_move">Jij bent aan zet</string>
+    <string name="history_answered">Je hebt geantwoord</string>
     <string name="thread_label">Deze discussie</string>
     <string name="thread_you">Jij schreef</string>
     <string name="thread_judges">De rechters</string>
@@ -492,21 +492,21 @@
     </plurals>
     <string name="app_history_row_selected">Geselecteerd</string>
     <string name="app_history_row_not_selected">Niet geselecteerd</string>
-    <string name="app_history_phone_only">Only on this phone</string>
-    <string name="app_history_phone_only_note">Not in your account: these are saved on this phone only. Deleting one here doesn\'t take down its share link.</string>
+    <string name="app_history_phone_only">Alleen op deze telefoon</string>
+    <string name="app_history_phone_only_note">Niet in je account: deze staan alleen op deze telefoon. Verwijder je hier een uitspraak, dan blijft de deellink gewoon werken.</string>
     <plurals name="app_history_remove_confirm">
-        <item quantity="one">Remove this verdict from your account? What you wrote and the names are erased and its share link stops working, on every device. This can\'t be undone.</item>
-        <item quantity="other">Remove %1$s verdicts from your account? What you wrote and the names are erased and their share links stop working, on every device. This can\'t be undone.</item>
+        <item quantity="one">Deze uitspraak uit je account verwijderen? Hij verdwijnt van al je apparaten: wat je schreef en de namen worden gewist en de deellink werkt niet meer. Dit kan niet ongedaan worden gemaakt.</item>
+        <item quantity="other">%1$s uitspraken uit je account verwijderen? Ze verdwijnen van al je apparaten: wat je schreef en de namen worden gewist en de deellinks werken niet meer. Dit kan niet ongedaan worden gemaakt.</item>
     </plurals>
     <plurals name="app_history_phone_only_also">
-        <item quantity="one">1 saved only on this phone is deleted from it; its share link keeps working.</item>
-        <item quantity="other">%1$s saved only on this phone are deleted from it; their share links keep working.</item>
+        <item quantity="one">1 uitspraak die alleen op deze telefoon staat, wordt hier verwijderd; de deellink blijft gewoon werken.</item>
+        <item quantity="other">%1$s uitspraken die alleen op deze telefoon staan, worden hier verwijderd; hun deellinks blijven gewoon werken.</item>
     </plurals>
     <plurals name="app_history_remove_failed">
-        <item quantity="one">Couldn\'t remove it. Check your connection and try again.</item>
-        <item quantity="other">Couldn\'t remove %1$s of them. Check your connection and try again.</item>
+        <item quantity="one">Verwijderen is niet gelukt. Check je verbinding en probeer het opnieuw.</item>
+        <item quantity="other">%1$s ervan konden niet worden verwijderd. Check je verbinding en probeer het opnieuw.</item>
     </plurals>
-    <string name="app_history_offline_remove">You\'re offline. Removing needs a connection.</string>
+    <string name="app_history_offline_remove">Je bent offline. Om te verwijderen heb je een verbinding nodig.</string>
     <string name="app_pricing_free_account">Log in met Apple, Google of e-mail</string>
     <string name="app_pricing_headline">Je eerste uitspraak is van het huis.</string>
     <string name="app_pricing_sub">Maak een account aan en je eerste uitspraak is gratis, met alles erop en eraan. Daarna kies je een bundel of neem je een maandabonnement.</string>

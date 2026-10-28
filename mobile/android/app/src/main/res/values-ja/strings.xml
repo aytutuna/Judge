@@ -395,8 +395,8 @@
     <string name="case_appeal_original">あなたが書いたままの補足</string>
     <string name="case_display_name">シェアされる判定に表示する名前</string>
     <string name="case_display_save">名前を保存</string>
-    <string name="respond_keep">Keep this case in your account</string>
-    <string name="respond_kept">This case is in your account now. It shows on your Verdicts page on every device.</string>
+    <string name="respond_keep">このケースをアカウントに保存</string>
+    <string name="respond_kept">このケースはアカウントに保存されました。どの端末でも「判定一覧」ページに表示されます。</string>
     <string name="respond_remove">自分の言い分を削除</string>
     <string name="respond_remove_confirm">あなたの元の文章と表示名を削除しますか？　ケースのシェア用リンクは使えなくなります（チャットにすでに投稿されたプレビューは、そのアプリが更新するまで表示されることがあります）。この操作は取り消せません。</string>
     <string name="names_title">シェアページに表示する名前</string>
@@ -414,20 +414,20 @@
     <string name="shell_load_failed">履歴を読み込めませんでした。</string>
     <string name="shell_load_more">もっと見る</string>
     <string name="shell_untitled">無題の判定</string>
-    <string name="history_state_judging">Judges thinking</string>
-    <string name="history_state_rejudging">Judges thinking again</string>
-    <string name="history_state_failed">Didn\'t finish</string>
-    <string name="history_state_rejudge_failed">New context didn\'t go through</string>
-    <string name="history_state_waiting">Waiting for %1$s to answer</string>
-    <string name="history_state_waiting_other">Waiting for the other side to answer</string>
-    <string name="history_state_expired">Link expired</string>
-    <string name="history_state_removed">Removed</string>
-    <string name="history_state_removed_by">Removed by %1$s</string>
-    <string name="history_state_removed_by_other">Removed by the other side</string>
-    <string name="history_state_ready">Verdict ready</string>
-    <string name="history_context_added">After new context</string>
-    <string name="history_your_move">Your turn</string>
-    <string name="history_answered">You answered</string>
+    <string name="history_state_judging">審査員が判定中</string>
+    <string name="history_state_rejudging">審査員が再判定中</string>
+    <string name="history_state_failed">判定できませんでした</string>
+    <string name="history_state_rejudge_failed">補足を反映できませんでした</string>
+    <string name="history_state_waiting">%1$sの返事待ち</string>
+    <string name="history_state_waiting_other">相手の返事待ち</string>
+    <string name="history_state_expired">招待の期限切れ</string>
+    <string name="history_state_removed">削除済み</string>
+    <string name="history_state_removed_by">%1$sが削除</string>
+    <string name="history_state_removed_by_other">相手が削除</string>
+    <string name="history_state_ready">判定が出ました</string>
+    <string name="history_context_added">補足後の判定</string>
+    <string name="history_your_move">あなたの番</string>
+    <string name="history_answered">あなたが回答</string>
     <string name="thread_label">この揉めごと</string>
     <string name="thread_you">あなたの投稿</string>
     <string name="thread_judges">審査員</string>
@@ -475,22 +475,22 @@
     </plurals>
     <string name="app_history_delete_count">削除（%1$s）</string>
     <plurals name="app_history_delete_confirm">
-        <item quantity="other">この端末から%1$s件の判定を削除しますか？シェア用リンクはそのまま使えます。</item>
+        <item quantity="other">この端末から%1$s件の判定を削除しますか？　シェア用リンクはそのまま使えます。</item>
     </plurals>
     <string name="app_history_row_selected">選択済み</string>
     <string name="app_history_row_not_selected">未選択</string>
-    <string name="app_history_phone_only">Only on this phone</string>
-    <string name="app_history_phone_only_note">Not in your account: these are saved on this phone only. Deleting one here doesn\'t take down its share link.</string>
+    <string name="app_history_phone_only">この端末にのみ保存</string>
+    <string name="app_history_phone_only_note">アカウントには保存されておらず、この端末にだけ保存されています。ここで削除しても、シェア用リンクはそのまま使えます。</string>
     <plurals name="app_history_remove_confirm">
-        <item quantity="other">Remove %1$s verdicts from your account? What you wrote and the names are erased and their share links stop working, on every device. This can\'t be undone.</item>
+        <item quantity="other">%1$s件の判定をアカウントから削除しますか？　あなたが書いた内容と名前が消去され、シェア用リンクは使えなくなります。すべての端末に反映されます。この操作は取り消せません。</item>
     </plurals>
     <plurals name="app_history_phone_only_also">
-        <item quantity="other">%1$s saved only on this phone are deleted from it; their share links keep working.</item>
+        <item quantity="other">この端末にだけ保存されている%1$s件は、この端末から削除されます。シェア用リンクはそのまま使えます。</item>
     </plurals>
     <plurals name="app_history_remove_failed">
-        <item quantity="other">Couldn\'t remove %1$s of them. Check your connection and try again.</item>
+        <item quantity="other">%1$s件を削除できませんでした。接続を確認して、もう一度お試しください。</item>
     </plurals>
-    <string name="app_history_offline_remove">You\'re offline. Removing needs a connection.</string>
+    <string name="app_history_offline_remove">オフラインのため削除できません。接続してからもう一度お試しください。</string>
     <string name="app_pricing_free_account">Apple、Google、またはメールアドレスでログイン</string>
     <string name="app_pricing_headline">最初の判定は無料です。</string>
     <string name="app_pricing_sub">アカウントを作成すると、最初の判定はすべての機能つきで無料。その後はパックか月額プランを選べます。</string>

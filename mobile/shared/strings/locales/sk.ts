@@ -19,6 +19,15 @@ const sk: AppLocale = {
     "app.history.deleteConfirm": "Vymazať {n} verdiktov z tohto telefónu? Ich odkazy na zdieľanie budú fungovať ďalej.",
     "app.history.rowSelected": "Vybrané",
     "app.history.rowNotSelected": "Nevybrané",
+    "app.history.phoneOnly": "Len v tomto telefóne",
+    "app.history.phoneOnlyNote":
+      "Tieto verdikty nie sú v tvojom účte, sú uložené len v tomto telefóne. Keď tu niektorý vymažeš, jeho odkaz na zdieľanie bude fungovať ďalej.",
+    "app.history.removeConfirm":
+      "Odstrániť {n} verdiktov zo svojho účtu? Tvoj text aj mená sa vymažú na všetkých zariadeniach a ich odkazy na zdieľanie prestanú fungovať. Nedá sa to vrátiť späť.",
+    "app.history.phoneOnlyAlso":
+      "{n} verdiktov uložených len v tomto telefóne sa z neho vymaže; ich odkazy na zdieľanie budú fungovať ďalej.",
+    "app.history.removeFailed": "{n} z nich sa nepodarilo odstrániť. Skontroluj pripojenie a skús to znova.",
+    "app.history.offlineRemove": "Si offline. Na odstránenie potrebuješ pripojenie.",
     "app.pricing.free.account": "Prihlás sa cez Apple, Google alebo e-mail",
     "app.pricing.headline": "Prvý verdikt ide na nás.",
     "app.pricing.sub":
@@ -174,6 +183,18 @@ const sk: AppLocale = {
     "app.history.deleteConfirm": {
       one: "Vymazať tento verdikt z tohto telefónu? Jeho odkaz na zdieľanie bude fungovať ďalej.",
       few: "Vymazať {n} verdikty z tohto telefónu? Ich odkazy na zdieľanie budú fungovať ďalej.",
+    },
+    "app.history.removeConfirm": {
+      one: "Odstrániť tento verdikt zo svojho účtu? Tvoj text aj mená sa vymažú na všetkých zariadeniach a jeho odkaz na zdieľanie prestane fungovať. Nedá sa to vrátiť späť.",
+      few: "Odstrániť {n} verdikty zo svojho účtu? Tvoj text aj mená sa vymažú na všetkých zariadeniach a ich odkazy na zdieľanie prestanú fungovať. Nedá sa to vrátiť späť.",
+    },
+    "app.history.phoneOnlyAlso": {
+      one: "1 verdikt uložený len v tomto telefóne sa z neho vymaže; jeho odkaz na zdieľanie bude fungovať ďalej.",
+      few: "{n} verdikty uložené len v tomto telefóne sa z neho vymažú; ich odkazy na zdieľanie budú fungovať ďalej.",
+    },
+    "app.history.removeFailed": {
+      one: "Nepodarilo sa ho odstrániť. Skontroluj pripojenie a skús to znova.",
+      few: "{n} z nich sa nepodarilo odstrániť. Skontroluj pripojenie a skús to znova.",
     },
   },
 };
