@@ -505,6 +505,19 @@ class ScreenshotsTest {
     }
 
     @Test
+    fun case_judged_respondent_en() = capture("case_judged_respondent_en", tall = true) {
+        val view = caseState("judged").view!!.copy(role = "respondent", yourParty = "b")
+        Themed(AppLang.EN) {
+            com.okjudge.judge.ui.cases.CaseScreen(
+                com.okjudge.judge.ui.cases.CaseViewModel.preview(view),
+                evidenceOn = true,
+                actions = com.okjudge.judge.ui.cases.CaseActions(onBack = {}),
+                reducedMotion = true,
+            )
+        }
+    }
+
+    @Test
     fun home_twoSides_en() = capture("home_two_sides_en", tall = true) {
         Themed(AppLang.EN) {
             HomeScreen(

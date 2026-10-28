@@ -62,6 +62,7 @@ import com.okjudge.judge.ui.components.TintedIcon
 import com.okjudge.judge.ui.components.TopBar
 import com.okjudge.judge.ui.theme.JudgeShapes
 import com.okjudge.judge.ui.theme.JudgeType
+import com.okjudge.judge.ui.theme.LocalSides
 import com.okjudge.judge.ui.theme.Palette
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -230,8 +231,8 @@ private fun HistoryRow(item: SavedVerdict, onOpen: () -> Unit, onLongPress: () -
             .format(Instant.ofEpochMilli(item.createdAt).atZone(ZoneId.systemDefault()))
     }
     val sealColor = when (VerdictDisplay.sealOf(result)) {
-        SealSide.A -> Palette.terraInk
-        SealSide.B -> Palette.sageInk
+        SealSide.A -> LocalSides.current.a.ink
+        SealSide.B -> LocalSides.current.b.ink
         SealSide.NONE -> Palette.ink
     }
     Row(
