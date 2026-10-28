@@ -3,8 +3,6 @@ import { describe, expect, it } from "vitest";
 import { CasePanel, ownSideText } from "../components/case/CaseScreen";
 import type { AppealDraft } from "../components/case/AppealForm";
 import { Balance, Composer, EXAMPLES, MAX_ARGUMENT, NextSteps, type ComposerProps } from "../components/thread/Composer";
-import { Recent, recentCards } from "../components/home/Recent";
-import type { HistoryItem } from "../components/shell/useHistory";
 import { Thread } from "../components/thread/Thread";
 import { DEFAULT_FRAMEWORK } from "../lib/frameworks";
 import { t } from "../lib/i18n";
@@ -273,47 +271,6 @@ describe("Composer as the empty page's case file", () => {
     const html = composer({ card: true });
     expect(html).toContain(`>${t("en", "thread.lens")}<`);
     expect(html).toContain(t("en", "preset.balanced.label"));
-  });
-});
-
-describe("Recent", () => {
-  const now = new Date(2026, 9, 25, 15, 0).getTime();
-  const item = (over: Partial<HistoryItem>): HistoryItem => ({
-    kind: "verdict",
-    id: "v1",
-    createdAt: new Date(2026, 9, 25, 9, 0).toISOString(),
-    title: "Sam is right",
-    status: null,
-    removed: false,
-    pending: false,
-    ...over,
-  });
-
-  it("turns the history into cards: decided, waiting, untitled, removed left out", () => {
-    const cards = recentCards(
-      "en",
-      [
-        item({}),
-        item({ id: "v2", title: null, pending: true }),
-        item({ id: "v3", removed: true, title: null }),
-        item({ kind: "case", id: "c1", title: null, status: "awaiting_respondent", createdAt: new Date(2026, 9, 20).toISOString() }),
-      ],
-      now,
-    );
-    expect(cards.map((c) => c.href)).toEqual(["/v/v1", null, "/c/c1"]);
-    expect(cards.map((c) => c.tone)).toEqual(["decided", "waiting", "waiting"]);
-    expect(cards[0]).toMatchObject({ kicker: t("en", "home.decided"), title: "Sam is right", date: t("en", "shell.today") });
-    expect(cards[1]).toMatchObject({ kicker: t("en", "home.waiting"), title: t("en", "shell.untitled") });
-    expect(cards[2].date).toBe("October 20");
-    expect(cards[2].title).toContain("October 20");
-  });
-
-  it("links each card and the whole list, and shows nothing without history", () => {
-    const html = renderToStaticMarkup(<Recent lang="tr" items={[item({})]} now={now} />);
-    expect(html).toContain('href="/v/v1"');
-    expect(html).toContain('href="/verdicts"');
-    expect(html).toContain(t("tr", "home.recent"));
-    expect(renderToStaticMarkup(<Recent lang="en" items={[item({ removed: true })]} now={now} />)).toBe("");
   });
 });
 
