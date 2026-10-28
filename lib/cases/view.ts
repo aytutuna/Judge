@@ -26,6 +26,7 @@ import {
   type CaseView,
   type PartyLetter,
 } from "@/lib/case-types";
+import { excerptOf } from "@/lib/history-state";
 import type { OriginalStatus } from "@/lib/originals-types";
 import type { NameMapping } from "@/lib/types";
 import type { CaseBundle, CaseListRow, EvidenceRow } from "./db";
@@ -179,18 +180,7 @@ export function structuralAppealBlock(
   return null;
 }
 
-/** Longest list excerpt, in characters. */
-export const EXCERPT_CHARS = 80;
-
-/** The first words of an anonymized side, cut at a word boundary. */
-export function excerptOf(text: string | null, max = EXCERPT_CHARS): string | null {
-  const flat = (text ?? "").replace(/\s+/g, " ").trim();
-  if (!flat) return null;
-  if (flat.length <= max) return flat;
-  const cut = flat.slice(0, max);
-  const space = cut.lastIndexOf(" ");
-  return `${(space > max / 2 ? cut.slice(0, space) : cut).replace(/[\s,;:.\-–—]+$/u, "")}…`;
-}
+export { excerptOf } from "@/lib/history-state";
 
 export function caseSummary(r: CaseListRow, now: Date): CaseSummary {
   return {

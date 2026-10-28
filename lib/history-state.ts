@@ -4,7 +4,7 @@
 
 import { CASE_EXPIRY_DAYS, type AppealStatus, type CaseStatus, type CaseView, type PartyLetter } from "./case-types";
 import type { HistoryRow, HistoryState } from "./history-types";
-import type { FinalVerdict } from "./types";
+import type { FinalVerdict, NameMapping } from "./types";
 
 export type DerivedState = Pick<HistoryRow, "state" | "yourMove" | "removable" | "verdict" | "contextAdded" | "contextBy">;
 
@@ -105,4 +105,48 @@ export function historyStateFromView(view: CaseView, now: Date): DerivedState {
     },
     now,
   );
+}
+
+/** A case page's view as a Verdicts row. `at`, the names and the token are
+ * what the list already knows (a respondent's view carries no side of theirs
+ * before the verdict). */
+export function historyRowFromView(
+  view: CaseView,
+  now: Date,
+  known: { at: string; nameMap: NameMapping[]; inviteToken: string | null },
+): HistoryRow {
+  const derived = historyStateFromView(view, now);
+  const own = derived.state === "removed";
+  const headline = own ? null : (view.verdicts.at(-1)?.result.headline ?? null);
+  const side = view.sides.find((s) => s.party === view.yourParty && !s.removed);
+  const respondent = view.role === "respondent";
+  return {
+    kind: "case",
+    id: view.id,
+    role: view.role,
+    party: view.yourParty,
+    at: known.at,
+    createdAt: view.createdAt,
+    ...derived,
+    removable: derived.removable && (!respondent || known.inviteToken !== null),
+    headline,
+    excerpt: own || headline ? null : excerptOf(side?.text ?? null),
+    nameMap: own ? [] : known.nameMap,
+    expiresAt: derived.state === "waiting" ? view.expiresAt : null,
+    removed: view.removed !== null,
+    inviteToken: respondent ? known.inviteToken : null,
+  };
+}
+
+/** Longest list excerpt, in characters. */
+export const EXCERPT_CHARS = 80;
+
+/** The first words of an anonymized side, cut at a word boundary. */
+export function excerptOf(text: string | null, max = EXCERPT_CHARS): string | null {
+  const flat = (text ?? "").replace(/\s+/g, " ").trim();
+  if (!flat) return null;
+  if (flat.length <= max) return flat;
+  const cut = flat.slice(0, max);
+  const space = cut.lastIndexOf(" ");
+  return `${(space > max / 2 ? cut.slice(0, space) : cut).replace(/[\s,;:.\-–—]+$/u, "")}…`;
 }
