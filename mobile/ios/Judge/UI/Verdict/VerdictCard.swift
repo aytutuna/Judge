@@ -41,9 +41,13 @@ struct VerdictCard: View {
             if let note = status.note(lang) {
                 TranslationNote(note: note, loading: status == .loading)
             }
+            // Party A on the left and Party B on the right in every
+            // language, as in the scene above.
             names
+                .environment(\.layoutDirection, .leftToRight)
             if let share = Self.leanShare(result) {
                 leanBar(share)
+                    .environment(\.layoutDirection, .leftToRight)
             }
             RulingLine(result: result, parties: parties, lang: lang)
             headline

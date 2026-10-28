@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import com.okjudge.judge.R
+import com.okjudge.judge.i18n.LocalLang
 
 /**
  * Brand faces (all OFL, bundled from google/fonts): variable Inter (wght +
@@ -68,7 +69,7 @@ object JudgeType {
             color = color,
         )
 
-    val display1 = TextStyle(
+    private val Display1 = TextStyle(
         fontFamily = BrandFonts.interTight(700),
         fontWeight = FontWeight.Bold,
         fontSize = 44.sp,
@@ -78,7 +79,7 @@ object JudgeType {
     )
 
     /** The case card's "State your case." (thread.module.css .title). */
-    val caseTitle = TextStyle(
+    private val CaseTitle = TextStyle(
         fontFamily = BrandFonts.serif,
         fontWeight = FontWeight.Normal,
         fontSize = 36.sp,
@@ -88,7 +89,7 @@ object JudgeType {
     )
 
     /** The verdict headline (verdict.module.css .ruling); the card picks 30..34 sp by width. */
-    val ruling = caseTitle.copy(fontSize = 32.sp, lineHeight = (32 * 1.05).sp, letterSpacing = 0.em)
+    val ruling = CaseTitle.copy(fontSize = 32.sp, lineHeight = (32 * 1.05).sp, letterSpacing = 0.em)
 
     /** Italic serif labels: the card's date and the verdict's section labels. */
     val serifLabel = TextStyle(
@@ -110,7 +111,7 @@ object JudgeType {
     val branch = inter(14.5f, 400, 1.5f)
     val branchLead = inter(14.5f, 600, 1.5f)
     val small = inter(13f, 600, 1.35f, Palette.ink2)
-    val sectionTitle = TextStyle(
+    private val SectionTitle = TextStyle(
         fontFamily = BrandFonts.interTight(700),
         fontWeight = FontWeight.Bold,
         fontSize = 20.sp,
@@ -119,7 +120,7 @@ object JudgeType {
         color = Palette.ink,
     )
 
-    val micro = TextStyle(
+    private val Micro = TextStyle(
         fontFamily = BrandFonts.inter(700, 14f),
         fontWeight = FontWeight.Bold,
         fontSize = 11.sp,
@@ -136,7 +137,7 @@ object JudgeType {
         color = Palette.ivory,
     )
 
-    val brandTag = TextStyle(
+    private val BrandTag = TextStyle(
         fontFamily = BrandFonts.interTight(600),
         fontWeight = FontWeight.SemiBold,
         fontSize = 13.sp,
@@ -145,10 +146,17 @@ object JudgeType {
         color = Palette.muted,
     )
 
+    // Tracked styles: no letter-spacing in the scripts it breaks.
+    val display1: TextStyle @Composable @ReadOnlyComposable get() = Display1.forScript()
+    val caseTitle: TextStyle @Composable @ReadOnlyComposable get() = CaseTitle.forScript()
+    val sectionTitle: TextStyle @Composable @ReadOnlyComposable get() = SectionTitle.forScript()
+    val micro: TextStyle @Composable @ReadOnlyComposable get() = Micro.forScript()
+    val brandTag: TextStyle @Composable @ReadOnlyComposable get() = BrandTag.forScript()
+
     val material = Typography(
-        displayLarge = display1,
-        headlineMedium = sectionTitle,
-        titleLarge = sectionTitle,
+        displayLarge = Display1,
+        headlineMedium = SectionTitle,
+        titleLarge = SectionTitle,
         titleMedium = inter(16f, 600, 1.4f),
         titleSmall = slotTitle,
         bodyLarge = body,
@@ -156,9 +164,18 @@ object JudgeType {
         bodySmall = slotText,
         labelLarge = button.copy(color = Palette.ink),
         labelMedium = inter(12f, 600, 1.3f),
-        labelSmall = micro,
+        labelSmall = Micro,
     )
 }
+
+/**
+ * Letter-spacing is for Latin, Greek and Cyrillic. It breaks the joins of
+ * Arabic, the headline bar of the Indic scripts and the stacked marks of
+ * Thai, so it is off in those languages (and in Hebrew), as on the web.
+ */
+@Composable
+@ReadOnlyComposable
+fun TextStyle.forScript(): TextStyle = if (LocalLang.current.tracking) this else copy(letterSpacing = 0.sp)
 
 /**
  * Display sizes follow the user's font scale up to 1.3x, so the hero and the

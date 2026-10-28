@@ -55,6 +55,7 @@ struct VerdictReasons: View {
 struct VerdictDetails<Appeal: View>: View {
     @Environment(AppModel.self) private var app
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.layoutDirection) private var layoutDirection
     let model: VerdictModel
     let lang: AppLang
     let shareURL: URL?
@@ -192,10 +193,15 @@ struct VerdictDetails<Appeal: View>: View {
             card {
                 SectionTitle(text: L10n.appVerdictSides(lang))
                 if !map.bedrockA.isEmpty || !map.bedrockB.isEmpty {
+                    // A's tile left and B's right in every language; the text
+                    // in each runs in the language's direction.
                     HStack(spacing: 8) {
                         BedrockTile(name: parties.nameA, text: map.bedrockA, color: Brand.terraInk, tint: Brand.terraTint)
+                            .environment(\.layoutDirection, layoutDirection)
                         BedrockTile(name: parties.nameB, text: map.bedrockB, color: Brand.sageInk, tint: Brand.sageTint)
+                            .environment(\.layoutDirection, layoutDirection)
                     }
+                    .environment(\.layoutDirection, .leftToRight)
                     .fixedSize(horizontal: false, vertical: true)
                 }
                 if !map.sideA.isEmpty || !map.sideB.isEmpty {

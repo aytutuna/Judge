@@ -11,9 +11,8 @@ import com.okjudge.judge.core.display.ContentLang
 import com.okjudge.judge.core.display.PartyNames
 import com.okjudge.judge.core.model.VerdictOutcome
 import com.okjudge.judge.i18n.AppLang
-import com.okjudge.judge.i18n.LocalLang
-import com.okjudge.judge.i18n.LocalStrings
 import com.okjudge.judge.i18n.LocalizedStrings
+import com.okjudge.judge.i18n.ProvideLang
 import com.okjudge.judge.i18n.Strings
 import com.okjudge.judge.ui.components.LocalSceneLive
 import com.okjudge.judge.ui.theme.JudgeTheme
@@ -41,9 +40,11 @@ object UiTestSupport {
 /** Theme + language locals, on the ivory background, with the flat balance for the scene. */
 @Composable
 fun Themed(lang: AppLang, content: @Composable () -> Unit) {
-    CompositionLocalProvider(LocalLang provides lang, LocalStrings provides UiTestSupport.s(lang), LocalSceneLive provides false) {
-        JudgeTheme {
-            Box(Modifier.background(Palette.ivory)) { content() }
+    CompositionLocalProvider(LocalSceneLive provides false) {
+        ProvideLang(lang, UiTestSupport.s(lang)) {
+            JudgeTheme {
+                Box(Modifier.background(Palette.ivory)) { content() }
+            }
         }
     }
 }

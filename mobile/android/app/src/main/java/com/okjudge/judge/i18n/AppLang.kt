@@ -5,7 +5,11 @@ import android.content.Context
 import android.content.res.Configuration
 import android.content.res.Resources
 import android.os.Build
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.unit.LayoutDirection
 import java.util.EnumMap
 import java.util.Locale
 
@@ -87,3 +91,15 @@ class LocalizedStrings(private val context: Context) {
 
 val LocalLang = staticCompositionLocalOf { AppLang.EN }
 val LocalStrings = staticCompositionLocalOf<Strings> { error("LocalStrings not provided") }
+
+/** [lang] and its [strings] for everything below, laid out right to left in
+ * Arabic, Hebrew and Urdu whatever the phone's own language. */
+@Composable
+fun ProvideLang(lang: AppLang, strings: Strings, content: @Composable () -> Unit) {
+    CompositionLocalProvider(
+        LocalLang provides lang,
+        LocalStrings provides strings,
+        LocalLayoutDirection provides if (lang.rtl) LayoutDirection.Rtl else LayoutDirection.Ltr,
+        content = content,
+    )
+}

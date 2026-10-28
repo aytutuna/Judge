@@ -15,7 +15,6 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -44,8 +43,8 @@ import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import com.okjudge.judge.core.auth.Account
 import com.okjudge.judge.core.session.VerdictFlow
 import com.okjudge.judge.i18n.LangPref
-import com.okjudge.judge.i18n.LocalLang
 import com.okjudge.judge.i18n.LocalStrings
+import com.okjudge.judge.i18n.ProvideLang
 import com.okjudge.judge.i18n.Strings
 import com.okjudge.judge.i18n.deviceLanguageTags
 import com.okjudge.judge.ui.components.JudgeIcons
@@ -114,7 +113,7 @@ fun JudgeRoot(container: AppContainer, links: StateFlow<Uri?> = MutableStateFlow
     val strings = remember(lang) { container.strings.of(lang) }
     val scope = rememberCoroutineScope()
 
-    CompositionLocalProvider(LocalLang provides lang, LocalStrings provides strings) {
+    ProvideLang(lang, strings) {
         JudgeTheme {
             val backStack = rememberNavBackStack(HomeKey)
             var clearDraft by rememberSaveable { mutableStateOf(false) }

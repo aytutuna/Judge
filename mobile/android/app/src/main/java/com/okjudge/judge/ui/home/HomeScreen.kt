@@ -70,6 +70,7 @@ import com.okjudge.judge.ui.premium.rememberEvidencePicker
 import com.okjudge.judge.ui.theme.JudgeShapes
 import com.okjudge.judge.ui.theme.JudgeType
 import com.okjudge.judge.ui.theme.Palette
+import com.okjudge.judge.ui.theme.forScript
 import kotlinx.coroutines.delay
 import java.text.NumberFormat
 
@@ -293,7 +294,7 @@ private fun SideCard(
             )
             Text(
                 label.uppercaseForUi(),
-                style = JudgeType.micro.copy(fontWeight = FontWeight.SemiBold, letterSpacing = 0.08.em, color = colors.ink),
+                style = JudgeType.micro.copy(fontWeight = FontWeight.SemiBold, letterSpacing = 0.08.em, color = colors.ink).forScript(),
                 maxLines = 1,
             )
         }

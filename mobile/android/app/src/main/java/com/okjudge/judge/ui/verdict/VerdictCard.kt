@@ -26,6 +26,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -42,6 +43,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.LiveRegionMode
 import androidx.compose.ui.semantics.Role
@@ -54,6 +56,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
@@ -90,6 +93,7 @@ import com.okjudge.judge.ui.theme.JudgeShapes
 import com.okjudge.judge.ui.theme.JudgeType
 import com.okjudge.judge.ui.theme.Palette
 import com.okjudge.judge.ui.theme.cappedScale
+import com.okjudge.judge.ui.theme.forScript
 
 /** What the translation pill says (lib/use-translation.ts statuses plus offline). */
 enum class TranslationStatus { ORIGINAL, LOADING, TRANSLATED, ERROR, OFFLINE }
@@ -153,8 +157,8 @@ fun RulingSummary(
             TranslationLine(view)
             if (scene) SceneView(VerdictDisplay.sceneVerdict(result), reducedMotion, Modifier.fillMaxWidth().height(118.dp))
             Column(Modifier.alpha(if (view.status == TranslationStatus.LOADING) 0.55f else 1f), verticalArrangement = Arrangement.spacedBy(14.dp)) {
-                Contenders(parties)
-                VerdictDisplay.leanShare(result)?.let { LeanBar(it, parties) }
+                PartySides { Contenders(parties) }
+                VerdictDisplay.leanShare(result)?.let { share -> PartySides { LeanBar(share, parties) } }
                 LabelRow(result, parties, dots = true)
                 Text(
                     result.headline.ifEmpty { VerdictDisplay.verdictLabel(result, parties, s) },
@@ -288,6 +292,17 @@ private fun TranslationNote(text: String, loading: Boolean) {
     }
 }
 
+/**
+ * Party A on the left and Party B on the right in every language, as in the
+ * scene above; [content] is handed the app's own direction for the text
+ * inside each side.
+ */
+@Composable
+private fun PartySides(content: @Composable (direction: LayoutDirection) -> Unit) {
+    val direction = LocalLayoutDirection.current
+    CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) { content(direction) }
+}
+
 /** "(A) Alex  vs  Sam (B)". */
 @Composable
 private fun Contenders(parties: PartyLabels) {
@@ -356,7 +371,7 @@ private fun LabelRow(result: VerdictResult, parties: PartyLabels, dots: Boolean)
     Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
         Text(
             VerdictDisplay.verdictLabel(result, parties, s).uppercaseForUi(),
-            style = LabelText.copy(color = color),
+            style = LabelText.copy(color = color).forScript(),
             modifier = Modifier.weight(1f),
         )
         val votes = VerdictDisplay.votes(result)
@@ -681,9 +696,11 @@ private fun SidesSection(result: VerdictResult, parties: PartyLabels) {
     if (map.bedrockA.isEmpty() && map.bedrockB.isEmpty() && claims.isEmpty()) return
     DetailSection(s.appVerdictSides) {
         if (map.bedrockA.isNotEmpty() || map.bedrockB.isNotEmpty()) {
-            Row(Modifier.fillMaxWidth().height(IntrinsicSize.Min), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                BedrockTile(parties.nameA, map.bedrockA, isA = true, Modifier.weight(1f))
-                BedrockTile(parties.nameB, map.bedrockB, isA = false, Modifier.weight(1f))
+            PartySides { direction ->
+                Row(Modifier.fillMaxWidth().height(IntrinsicSize.Min), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    BedrockTile(parties.nameA, map.bedrockA, isA = true, direction, Modifier.weight(1f))
+                    BedrockTile(parties.nameB, map.bedrockB, isA = false, direction, Modifier.weight(1f))
+                }
             }
         }
         if (claims.isNotEmpty()) {
@@ -696,7 +713,12 @@ private fun SidesSection(result: VerdictResult, parties: PartyLabels) {
 }
 
 @Composable
-private fun BedrockTile(name: String, text: String, isA: Boolean, modifier: Modifier) {
+private fun BedrockTile(name: String, text: String, isA: Boolean, direction: LayoutDirection, modifier: Modifier) {
+    CompositionLocalProvider(LocalLayoutDirection provides direction) { BedrockTileBody(name, text, isA, modifier) }
+}
+
+@Composable
+private fun BedrockTileBody(name: String, text: String, isA: Boolean, modifier: Modifier) {
     Column(
         modifier
             .fillMaxHeight()
@@ -707,7 +729,7 @@ private fun BedrockTile(name: String, text: String, isA: Boolean, modifier: Modi
     ) {
         Text(
             name.uppercaseForUi(),
-            style = JudgeType.micro.copy(color = if (isA) Palette.terraInk else Palette.sageInk, letterSpacing = 0.08.em),
+            style = JudgeType.micro.copy(color = if (isA) Palette.terraInk else Palette.sageInk, letterSpacing = 0.08.em).forScript(),
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
         )

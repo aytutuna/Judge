@@ -78,6 +78,8 @@ struct RootView: View {
         .sheet(item: $webLink) { link in
             SafariView(url: link.url).ignoresSafeArea()
         }
+        // Outside the sheets, so they turn with the rest of the app.
+        .environment(\.layoutDirection, lang.isRTL ? .rightToLeft : .leftToRight)
         .overlay {
             // The first frame repeats the launch screen, then fades into Home.
             if showLaunchMark {

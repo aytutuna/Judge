@@ -68,6 +68,19 @@ final class LanguageTests: XCTestCase {
         XCTAssertEqual(ContentLang.verdictLang(result), .zhHant)
     }
 
+    func testRightToLeftAndTrackingFollowTheScript() {
+        XCTAssertEqual(AppLang.allCases.filter(\.isRTL), [.ar, .he, .ur])
+        XCTAssertFalse(AppLang.ar.tracks)
+        XCTAssertFalse(AppLang.hi.tracks)
+        XCTAssertFalse(AppLang.th.tracks)
+        XCTAssertTrue(AppLang.ru.tracks)
+        XCTAssertTrue(AppLang.ja.tracks)
+        // The locale the views get back to the language, as the type styles read it.
+        for lang in AppLang.enabled {
+            XCTAssertEqual(AppLang(languageTag: lang.locale.identifier), lang, lang.rawValue)
+        }
+    }
+
     func testEveryEnabledLanguageHasItsStrings() {
         for lang in AppLang.enabled {
             XCTAssertFalse(L10n.getVerdict(lang).isEmpty, lang.rawValue)

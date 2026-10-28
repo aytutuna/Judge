@@ -128,13 +128,17 @@ enum BrandFont {
 private struct BrandTextModifier: ViewModifier {
     let style: TypeStyle
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+    @Environment(\.locale) private var locale
 
     func body(content: Content) -> some View {
         let font = BrandFont.uiFont(style, sizeCategory: UIContentSizeCategory(dynamicTypeSize))
         let extraLeading = max(0, style.lineHeight * font.pointSize - font.lineHeight)
+        // Letter-spacing breaks the joins of Arabic, the headline bar of the
+        // Indic scripts and the marks of Thai; off there, as on the web.
+        let tracks = AppLang(languageTag: locale.identifier)?.tracks ?? true
         content
             .font(Font(font as CTFont))
-            .tracking(style.tracking * font.pointSize)
+            .tracking(tracks ? style.tracking * font.pointSize : 0)
             .lineSpacing(extraLeading)
             .textCase(style.uppercase ? .uppercase : nil)
     }

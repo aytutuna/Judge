@@ -70,6 +70,7 @@ import com.okjudge.judge.ui.components.warmShadow
 import com.okjudge.judge.ui.theme.JudgeShapes
 import com.okjudge.judge.ui.theme.JudgeType
 import com.okjudge.judge.ui.theme.Palette
+import com.okjudge.judge.ui.theme.forScript
 import com.okjudge.judge.ui.verdict.VoteDot
 import kotlinx.coroutines.delay
 
@@ -225,7 +226,7 @@ private fun SideTiles(sides: List<VerdictFlow.Side>) {
             ) {
                 Text(
                     side.name.ifEmpty { if (side.mine) s.appHomeYourSide else s.appHomeTheirSide }.uppercaseForUi(),
-                    style = JudgeType.micro.copy(color = ink, letterSpacing = 0.08.em),
+                    style = JudgeType.micro.copy(color = ink, letterSpacing = 0.08.em).forScript(),
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                 )
