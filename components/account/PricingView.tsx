@@ -154,12 +154,14 @@ export function PricingView() {
   const { config, me, status } = useViewer();
   const known = status === "ready" || status === "error";
   const signedIn = Boolean(me?.user);
+  // Only promise the free first verdict once we know nobody is signed in.
+  const member = signedIn || !known;
   return (
     <PageShell
       lang={lang}
       kicker={t(lang, "nav.pricing")}
-      title={t(lang, signedIn ? "pricing.titleMember" : "pricing.title")}
-      lead={t(lang, signedIn ? "pricing.leadMember" : "pricing.lead")}
+      title={t(lang, member ? "pricing.titleMember" : "pricing.title")}
+      lead={t(lang, member ? "pricing.leadMember" : "pricing.lead")}
       wide
     >
       <PricingTable
