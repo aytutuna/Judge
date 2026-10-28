@@ -492,6 +492,12 @@ enum L10n {
     static func appHistoryClearConfirm(_ lang: AppLang) -> String { string("app.history.clearConfirm", lang) }
     static func appHistoryClearYes(_ lang: AppLang) -> String { string("app.history.clearYes", lang) }
     static func appPricingFreeAccount(_ lang: AppLang) -> String { string("app.pricing.free.account", lang) }
+    static func appPricingHeadline(_ lang: AppLang) -> String { string("app.pricing.headline", lang) }
+    static func appPricingSub(_ lang: AppLang) -> String { string("app.pricing.sub", lang) }
+    static func appBalanceLeft(_ lang: AppLang, n: Int) -> String { format("app.balance.left", lang, n) }
+    static func appBalanceMonthly(_ lang: AppLang, left: String, cap: String) -> String { format("app.balance.monthly", lang, left, cap) }
+    static func appBalanceNone(_ lang: AppLang) -> String { string("app.balance.none", lang) }
+    static func appBalanceCaseCost(_ lang: AppLang) -> String { string("app.balance.caseCost", lang) }
     static func appCancel(_ lang: AppLang) -> String { string("app.cancel", lang) }
     static func appRetry(_ lang: AppLang) -> String { string("app.retry", lang) }
     static func appErrorOffline(_ lang: AppLang) -> String { string("app.error.offline", lang) }
@@ -544,6 +550,39 @@ enum L10n {
     static func appHomeSays(_ lang: AppLang, name: String) -> String { format("app.home.says", lang, name) }
     static func appHomeMySide(_ lang: AppLang) -> String { string("app.home.mySide", lang) }
     static func appHomeOtherSide(_ lang: AppLang) -> String { string("app.home.otherSide", lang) }
+    static func appHomeExample(_ lang: AppLang) -> String { string("app.home.example", lang) }
+    static func appExampleDishwasherAName(_ lang: AppLang) -> String { string("app.example.dishwasher.aName", lang) }
+    static func appExampleDishwasherA(_ lang: AppLang) -> String { string("app.example.dishwasher.a", lang) }
+    static func appExampleDishwasherBName(_ lang: AppLang) -> String { string("app.example.dishwasher.bName", lang) }
+    static func appExampleDishwasherB(_ lang: AppLang) -> String { string("app.example.dishwasher.b", lang) }
+    static func appExampleBillAName(_ lang: AppLang) -> String { string("app.example.bill.aName", lang) }
+    static func appExampleBillA(_ lang: AppLang) -> String { string("app.example.bill.a", lang) }
+    static func appExampleBillBName(_ lang: AppLang) -> String { string("app.example.bill.bName", lang) }
+    static func appExampleBillB(_ lang: AppLang) -> String { string("app.example.bill.b", lang) }
+    static func appExampleThermostatAName(_ lang: AppLang) -> String { string("app.example.thermostat.aName", lang) }
+    static func appExampleThermostatA(_ lang: AppLang) -> String { string("app.example.thermostat.a", lang) }
+    static func appExampleThermostatBName(_ lang: AppLang) -> String { string("app.example.thermostat.bName", lang) }
+    static func appExampleThermostatB(_ lang: AppLang) -> String { string("app.example.thermostat.b", lang) }
+    static func appExampleRoadTripAName(_ lang: AppLang) -> String { string("app.example.roadTrip.aName", lang) }
+    static func appExampleRoadTripA(_ lang: AppLang) -> String { string("app.example.roadTrip.a", lang) }
+    static func appExampleRoadTripBName(_ lang: AppLang) -> String { string("app.example.roadTrip.bName", lang) }
+    static func appExampleRoadTripB(_ lang: AppLang) -> String { string("app.example.roadTrip.b", lang) }
+    static func appExampleSeatAName(_ lang: AppLang) -> String { string("app.example.seat.aName", lang) }
+    static func appExampleSeatA(_ lang: AppLang) -> String { string("app.example.seat.a", lang) }
+    static func appExampleSeatBName(_ lang: AppLang) -> String { string("app.example.seat.bName", lang) }
+    static func appExampleSeatB(_ lang: AppLang) -> String { string("app.example.seat.b", lang) }
+    static func appExampleSpoilerAName(_ lang: AppLang) -> String { string("app.example.spoiler.aName", lang) }
+    static func appExampleSpoilerA(_ lang: AppLang) -> String { string("app.example.spoiler.a", lang) }
+    static func appExampleSpoilerBName(_ lang: AppLang) -> String { string("app.example.spoiler.bName", lang) }
+    static func appExampleSpoilerB(_ lang: AppLang) -> String { string("app.example.spoiler.b", lang) }
+    static func appExampleJacketAName(_ lang: AppLang) -> String { string("app.example.jacket.aName", lang) }
+    static func appExampleJacketA(_ lang: AppLang) -> String { string("app.example.jacket.a", lang) }
+    static func appExampleJacketBName(_ lang: AppLang) -> String { string("app.example.jacket.bName", lang) }
+    static func appExampleJacketB(_ lang: AppLang) -> String { string("app.example.jacket.b", lang) }
+    static func appExampleLastSliceAName(_ lang: AppLang) -> String { string("app.example.lastSlice.aName", lang) }
+    static func appExampleLastSliceA(_ lang: AppLang) -> String { string("app.example.lastSlice.a", lang) }
+    static func appExampleLastSliceBName(_ lang: AppLang) -> String { string("app.example.lastSlice.bName", lang) }
+    static func appExampleLastSliceB(_ lang: AppLang) -> String { string("app.example.lastSlice.b", lang) }
     static func appCaseWaitingKicker(_ lang: AppLang) -> String { string("app.case.waitingKicker", lang) }
     static func appCaseWaitingFor(_ lang: AppLang, name: String) -> String { format("app.case.waitingFor", lang, name) }
     static func appCaseWaitingLead(_ lang: AppLang, name: String) -> String { format("app.case.waitingLead", lang, name) }
@@ -1010,6 +1049,10 @@ enum L10n {
         "app.history.clearConfirm",
         "app.history.clearYes",
         "app.pricing.free.account",
+        "app.pricing.headline",
+        "app.pricing.sub",
+        "app.balance.none",
+        "app.balance.caseCost",
         "app.cancel",
         "app.retry",
         "app.error.offline",
@@ -1058,6 +1101,39 @@ enum L10n {
         "app.home.sendLink",
         "app.home.mySide",
         "app.home.otherSide",
+        "app.home.example",
+        "app.example.dishwasher.aName",
+        "app.example.dishwasher.a",
+        "app.example.dishwasher.bName",
+        "app.example.dishwasher.b",
+        "app.example.bill.aName",
+        "app.example.bill.a",
+        "app.example.bill.bName",
+        "app.example.bill.b",
+        "app.example.thermostat.aName",
+        "app.example.thermostat.a",
+        "app.example.thermostat.bName",
+        "app.example.thermostat.b",
+        "app.example.roadTrip.aName",
+        "app.example.roadTrip.a",
+        "app.example.roadTrip.bName",
+        "app.example.roadTrip.b",
+        "app.example.seat.aName",
+        "app.example.seat.a",
+        "app.example.seat.bName",
+        "app.example.seat.b",
+        "app.example.spoiler.aName",
+        "app.example.spoiler.a",
+        "app.example.spoiler.bName",
+        "app.example.spoiler.b",
+        "app.example.jacket.aName",
+        "app.example.jacket.a",
+        "app.example.jacket.bName",
+        "app.example.jacket.b",
+        "app.example.lastSlice.aName",
+        "app.example.lastSlice.a",
+        "app.example.lastSlice.bName",
+        "app.example.lastSlice.b",
         "app.case.waitingKicker",
         "app.case.waitingLeadAnon",
         "app.case.stepYou",

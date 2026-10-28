@@ -31,6 +31,20 @@ export const APP_STRINGS: Record<string, { en: string; tr: string }> = {
     en: "Sign in with Apple, Google or email",
     tr: "Apple, Google ya da e-postayla giriş yap",
   },
+  "app.pricing.headline": { en: "Your first verdict is on us.", tr: "İlk karar bizden." },
+  "app.pricing.sub": {
+    en: "Create an account and your first verdict is free, with every feature. After that, pick a pack or go monthly.",
+    tr: "Hesap açtığında ilk kararın bütün özellikleriyle ücretsiz. Sonrasında bir paket seç ya da aylık plana geç.",
+  },
+  // Every verdict, a case included, uses one credit or one of the monthly plan's.
+  "app.balance.left.one": { en: "{n} verdict left", tr: "{n} karar hakkın kaldı" },
+  "app.balance.left.other": { en: "{n} verdicts left", tr: "{n} karar hakkın kaldı" },
+  "app.balance.monthly": {
+    en: "{left} of {cap} left this month",
+    tr: "Bu ay {cap} hakkından {left} tanesi kaldı",
+  },
+  "app.balance.none": { en: "No verdicts left", tr: "Karar hakkın kalmadı" },
+  "app.balance.caseCost": { en: "Sending a link uses 1 verdict", tr: "Bağlantı göndermek 1 karar hakkı kullanır" },
   "app.cancel": { en: "Cancel", tr: "Vazgeç" },
   "app.retry": { en: "Try again", tr: "Tekrar dene" },
   "app.error.offline": {
@@ -146,6 +160,88 @@ export const APP_STRINGS: Record<string, { en: string; tr: string }> = {
   "app.home.says": { en: "{name} says:", tr: "{name} diyor ki:" },
   "app.home.mySide": { en: "My side:", tr: "Benim tarafım:" },
   "app.home.otherSide": { en: "Their side:", tr: "Onun tarafı:" },
+  "app.home.example": { en: "Try an example", tr: "Bir örnek dene" },
+  // Cases the example button fills in, a on "your side" and b on "theirs".
+  "app.example.dishwasher.aName": { en: "Alex", tr: "Elif" },
+  "app.example.dishwasher.a": {
+    en: "You put the bowls on the top rack again. They never come out clean up there, that's what the bottom is for.",
+    tr: "Kâseleri yine üst rafa koymuşsun. Orada hiç temiz çıkmıyorlar, alt raf bunun için var.",
+  },
+  "app.example.dishwasher.bName": { en: "Sam", tr: "Can" },
+  "app.example.dishwasher.b": {
+    en: "They fit fine up there and it leaves the bottom free for the pans. I've loaded it like this for years and nothing's come out dirty.",
+    tr: "Üstte gayet sığıyorlar, alt raf da tencerelere kalıyor. Yıllardır böyle diziyorum, bir kere bile kirli çıkmadı.",
+  },
+  "app.example.bill.aName": { en: "Priya", tr: "Zeynep" },
+  "app.example.bill.a": {
+    en: "I didn't drink anything, so I shouldn't pay a quarter of the wine. Splitting the food evenly is fine with me.",
+    tr: "Hiç içmedim, şarabın dörtte birini ben ödememeliyim. Yemeği eşit bölelim, ona itirazım yok.",
+  },
+  "app.example.bill.bName": { en: "Jordan", tr: "Mert" },
+  "app.example.bill.b": {
+    en: "We always just split it four ways. Working out who had what every time is a pain, and it's not much of a difference anyway.",
+    tr: "Hep dörde bölüyoruz zaten. Her seferinde kim ne yedi diye hesap yapmak çok uğraştırıyor, fark da o kadar değil.",
+  },
+  "app.example.thermostat.aName": { en: "Taylor", tr: "Selin" },
+  "app.example.thermostat.a": {
+    en: "It's 19 degrees in here and I'm cold even in a hoodie. Turning it up to 22 isn't crazy.",
+    tr: "İçerisi 19 derece, kapüşonluyla bile üşüyorum. Kombiyi 22'ye almak abartı değil.",
+  },
+  "app.example.thermostat.bName": { en: "Chris", tr: "Emre" },
+  "app.example.thermostat.b": {
+    en: "22 is way too warm to sleep in. You can put on another layer, I can't take anything else off.",
+    tr: "22 derecede uyunmaz, çok sıcak. Sen bir kat daha giyebilirsin ama ben daha fazla bir şey çıkaramam.",
+  },
+  "app.example.roadTrip.aName": { en: "Morgan", tr: "Deniz" },
+  "app.example.roadTrip.a": {
+    en: "I drove the whole six hours there. It's only fair that you drive us back.",
+    tr: "Gidişte altı saat boyunca hep ben sürdüm. Dönüşte senin sürmen adil olur.",
+  },
+  "app.example.roadTrip.bName": { en: "Riley", tr: "Burak" },
+  "app.example.roadTrip.b": {
+    en: "I said before we left that I hate driving at night, and we're leaving at 7. I'll take the morning drives next trip.",
+    tr: "Yola çıkmadan gece araba kullanmaktan nefret ettiğimi söyledim, akşam yedide çıkıyoruz. Bir dahaki yolculukta sabahları ben sürerim.",
+  },
+  "app.example.seat.aName": { en: "Jamie", tr: "Ece" },
+  "app.example.seat.a": {
+    en: "My seat reclines, so I'm reclining it. It's a night flight and everyone's trying to sleep.",
+    tr: "Koltuğum yatıyor, ben de yatırıyorum. Gece uçuşu, herkes uyumaya çalışıyor.",
+  },
+  "app.example.seat.bName": { en: "Casey", tr: "Kaan" },
+  "app.example.seat.b": {
+    en: "I'm 6'3\" and my knees are already pressed into your seat. You could at least ask before dropping it all the way back.",
+    tr: "Boyum 1,90, dizlerim zaten koltuğuna değiyor. Sonuna kadar yatırmadan önce en azından sorabilirdin.",
+  },
+  "app.example.spoiler.aName": { en: "Maya", tr: "Defne" },
+  "app.example.spoiler.a": {
+    en: "You told me who the killer was before I'd even started the last episode. I'd been waiting all week for it.",
+    tr: "Son bölümü açmadan katilin kim olduğunu söyledin. Bütün hafta onu bekliyordum.",
+  },
+  "app.example.spoiler.bName": { en: "Leo", tr: "Ozan" },
+  "app.example.spoiler.b": {
+    en: "It came out three weeks ago and you said you'd finished it. I can't keep track of where everyone is.",
+    tr: "Üç hafta önce çıktı, sen de bitirdim demiştin. Herkesin hangi bölümde olduğunu takip edemem.",
+  },
+  "app.example.jacket.aName": { en: "Noah", tr: "Ayşe" },
+  "app.example.jacket.a": {
+    en: "You wore my denim jacket to the concert without asking. It came back smelling like smoke.",
+    tr: "Kot ceketimi bana sormadan konsere giymişsin. Sigara kokarak geri geldi.",
+  },
+  "app.example.jacket.bName": { en: "Ava", tr: "Berk" },
+  "app.example.jacket.b": {
+    en: "It was hanging by the door and you never wear it. I would've asked, but you were asleep and I was already late.",
+    tr: "Kapının yanında asılıydı, sen de hiç giymiyorsun. Sorardım ama uyuyordun, ben de zaten geç kalmıştım.",
+  },
+  "app.example.lastSlice.aName": { en: "Ben", tr: "Cem" },
+  "app.example.lastSlice.a": {
+    en: "I called dibs on the last slice before the movie started. Everyone heard me.",
+    tr: "Film başlamadan \"son dilim benim\" dedim. Herkes duydu.",
+  },
+  "app.example.lastSlice.bName": { en: "Lily", tr: "Naz" },
+  "app.example.lastSlice.b": {
+    en: "You can't call dibs and then not touch it for two hours. It was just sitting there going cold, so I ate it.",
+    tr: "\"Benim\" deyip iki saat dokunmamak olmaz. Orada soğuyup duruyordu, ben de yedim.",
+  },
   // The case page while the other side has not written yet.
   "app.case.waitingKicker": { en: "Case · waiting", tr: "Dava · bekleniyor" },
   "app.case.waitingFor": { en: "Waiting for {name}", tr: "{name} bekleniyor" },
