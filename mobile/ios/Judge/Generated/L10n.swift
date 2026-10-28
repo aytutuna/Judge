@@ -570,6 +570,10 @@ enum L10n {
     static func appAppealCost(_ lang: AppLang, left: String) -> String { format("app.appeal.cost", lang, left) }
     static func appAppealCostCase(_ lang: AppLang) -> String { string("app.appeal.costCase", lang) }
     static func appAppealSubmit(_ lang: AppLang) -> String { string("app.appeal.submit", lang) }
+    static func appAppealUpsell(_ lang: AppLang) -> String { string("app.appeal.upsell", lang) }
+    static func appAppealSignIn(_ lang: AppLang) -> String { string("app.appeal.signIn", lang) }
+    static func appAppealUsed(_ lang: AppLang) -> String { string("app.appeal.used", lang) }
+    static func appAppealLimit(_ lang: AppLang) -> String { string("app.appeal.limit", lang) }
 
     /// A placeholder-free string by its lib/i18n.ts key, for keys built at
     /// runtime ("badge.\(type)"). Nil when unknown.
@@ -1073,6 +1077,10 @@ enum L10n {
         "app.appeal.placeholder",
         "app.appeal.costCase",
         "app.appeal.submit",
+        "app.appeal.upsell",
+        "app.appeal.signIn",
+        "app.appeal.used",
+        "app.appeal.limit",
     ]
 
     private static func string(_ key: String, _ lang: AppLang) -> String {

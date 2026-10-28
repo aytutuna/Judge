@@ -130,14 +130,14 @@ struct AppealSection<Draft: AppealDraft>: View {
         case .busy:
             note(L10n.appealBusy(lang))
         case .used:
-            note(L10n.appealUsed(lang))
+            note(L10n.appAppealUsed(lang))
         case .limit:
-            note(L10n.appealLimit(lang))
+            note(L10n.appAppealLimit(lang))
         case .upsell(let signIn):
             stack {
-                note(L10n.appealUpsell(lang))
+                note(L10n.appAppealUpsell(lang))
                 if signIn {
-                    Button(L10n.appealSignIn(lang)) { app.account.presentSignIn() }
+                    Button(L10n.appAppealSignIn(lang)) { app.account.presentSignIn() }
                         .buttonStyle(PrimaryButtonStyle())
                 } else {
                     Button(L10n.tierGetPremium(lang), action: onPricing)

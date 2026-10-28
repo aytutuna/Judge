@@ -565,4 +565,8 @@
     <string name="app_appeal_cost">1 premium karar hakkı kullanır. Bunu bir karar için iki kez yapabilirsin; %1$s hakkın kaldı.</string>
     <string name="app_appeal_cost_case">1 premium karar hakkı kullanır. Bunu bir dava için bir kez yapabilirsin.</string>
     <string name="app_appeal_submit">Yeniden yargılat</string>
+    <string name="app_appeal_upsell">Eksik bir şey mi var? Bağlam ekle, yeniden yargılansın. Bu bir Premium özelliği.</string>
+    <string name="app_appeal_sign_in">Bağlam ekleyip itiraz etmek için giriş yap</string>
+    <string name="app_appeal_used">Bu davaya zaten bağlam ekledin.</string>
+    <string name="app_appeal_limit">İki kez bağlam ekledin. Bir karar için sınır bu.</string>
 </resources>

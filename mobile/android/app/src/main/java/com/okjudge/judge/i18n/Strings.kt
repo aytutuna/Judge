@@ -564,6 +564,10 @@ class Strings(private val res: Resources) {
     fun appAppealCost(left: String): String = res.getString(R.string.app_appeal_cost, left)
     val appAppealCostCase: String get() = res.getString(R.string.app_appeal_cost_case)
     val appAppealSubmit: String get() = res.getString(R.string.app_appeal_submit)
+    val appAppealUpsell: String get() = res.getString(R.string.app_appeal_upsell)
+    val appAppealSignIn: String get() = res.getString(R.string.app_appeal_sign_in)
+    val appAppealUsed: String get() = res.getString(R.string.app_appeal_used)
+    val appAppealLimit: String get() = res.getString(R.string.app_appeal_limit)
 
     /** A placeholder-free string by its lib/i18n.ts key, for keys built at
      * runtime ("badge.$type", "preset.$id.label"). Null when unknown. */
@@ -1066,6 +1070,10 @@ class Strings(private val res: Resources) {
             "app.appeal.placeholder" -> R.string.app_appeal_placeholder
             "app.appeal.costCase" -> R.string.app_appeal_cost_case
             "app.appeal.submit" -> R.string.app_appeal_submit
+            "app.appeal.upsell" -> R.string.app_appeal_upsell
+            "app.appeal.signIn" -> R.string.app_appeal_sign_in
+            "app.appeal.used" -> R.string.app_appeal_used
+            "app.appeal.limit" -> R.string.app_appeal_limit
             else -> null
         }
     }

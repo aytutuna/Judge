@@ -193,4 +193,15 @@ export const APP_STRINGS: Record<string, { en: string; tr: string }> = {
     tr: "1 premium karar hakkı kullanır. Bunu bir dava için bir kez yapabilirsin.",
   },
   "app.appeal.submit": { en: "Rule again", tr: "Yeniden yargılat" },
+  // The web's appeal.* lines in the sheet's wording.
+  "app.appeal.upsell": {
+    en: "Something missing? Add context and have it re-judged. That's a Premium feature.",
+    tr: "Eksik bir şey mi var? Bağlam ekle, yeniden yargılansın. Bu bir Premium özelliği.",
+  },
+  "app.appeal.signIn": { en: "Sign in to add context & appeal", tr: "Bağlam ekleyip itiraz etmek için giriş yap" },
+  "app.appeal.used": { en: "You've already added context to this case.", tr: "Bu davaya zaten bağlam ekledin." },
+  "app.appeal.limit": {
+    en: "You've added context twice. That's the limit for one verdict.",
+    tr: "İki kez bağlam ekledin. Bir karar için sınır bu.",
+  },
 };
