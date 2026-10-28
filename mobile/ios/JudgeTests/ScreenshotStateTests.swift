@@ -21,7 +21,7 @@ final class ScreenshotStateTests: XCTestCase {
     }
 
     func testRejectsMalformedValues() {
-        for raw in ["", "home", "home:de", "verdict/:en", "verdict:en", "nope:en", "home:en:extra"] {
+        for raw in ["", "home", "home:xx", "verdict/:en", "verdict:en", "nope:en", "home:en:extra"] {
             XCTAssertNil(ScreenshotState.parse(raw), raw)
         }
     }
