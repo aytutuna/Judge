@@ -12,7 +12,7 @@ struct VerdictReasons: View {
         let map = result.argumentMap
         let rows = [
             result.crux.isEmpty ? nil : L10n.cruxShort(lang),
-            map.bedrockA.isEmpty && map.bedrockB.isEmpty ? nil : L10n.appVerdictSides(lang),
+            map.bedrockA.isEmpty && map.bedrockB.isEmpty && map.sideA.isEmpty && map.sideB.isEmpty ? nil : L10n.appVerdictSides(lang),
             result.losingSideBestPoint.isEmpty ? nil : VerdictDisplay.bestPointTitle(result.verdict, parties: parties, lang: lang),
         ].compactMap { $0 }
         if !rows.isEmpty {
