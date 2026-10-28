@@ -127,7 +127,9 @@ struct HomeView: View {
     /// send them a link" makes a two-sided case instead.
     private func form(_ lang: AppLang, home: HomeModel) -> some View {
         VStack(alignment: .leading, spacing: 12) {
-            heading(lang, compact: !home.isBlank)
+            if home.isBlank {
+                lead(lang)
+            }
             sideCard(lang, home: home, mine: true)
             sideCard(lang, home: home, mine: false)
             counter(lang, home: home)
@@ -146,23 +148,12 @@ struct HomeView: View {
         }
     }
 
-    private func heading(_ lang: AppLang, compact: Bool) -> some View {
-        var title = TypeStyle.caseTitle
-        if compact { title.size = 30 }
-        return VStack(alignment: .leading, spacing: 4) {
-            Text(L10n.appHomeTitle(lang))
-                .brandText(title)
-                .foregroundStyle(Brand.ink)
-                .fixedSize(horizontal: false, vertical: true)
-                .accessibilityAddTraits(.isHeader)
-            if !compact {
-                Text(app.casesOn ? L10n.appHomeLead(lang) : L10n.appHomeLeadSolo(lang))
-                    .brandText(TypeStyle(face: .inter, weight: 400, size: 14, lineHeight: 1.45, textStyle: .subheadline))
-                    .foregroundStyle(Brand.ink2)
-                    .fixedSize(horizontal: false, vertical: true)
-            }
-        }
-        .padding(.horizontal, 4)
+    private func lead(_ lang: AppLang) -> some View {
+        Text(app.casesOn ? L10n.appHomeLead(lang) : L10n.appHomeLeadSolo(lang))
+            .brandText(TypeStyle(face: .inter, weight: 400, size: 14, lineHeight: 1.45, textStyle: .subheadline))
+            .foregroundStyle(Brand.ink2)
+            .fixedSize(horizontal: false, vertical: true)
+            .padding(.horizontal, 4)
     }
 
     private func sideCard(_ lang: AppLang, home: HomeModel, mine: Bool) -> some View {

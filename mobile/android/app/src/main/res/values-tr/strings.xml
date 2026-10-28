@@ -533,7 +533,6 @@
     <string name="app_account_signed_out">Çıkış yaptın.</string>
     <string name="app_account_session_expired">Oturumun kapandı. Devam etmek için tekrar giriş yap.</string>
     <string name="app_close">Kapat</string>
-    <string name="app_home_title">İki taraf, tek karar.</string>
     <string name="app_home_lead">İki tarafı da yaz ya da karşı tarafa bir bağlantı gönder, kendi tarafını o yazsın.</string>
     <string name="app_home_lead_solo">Kendi tarafını yaz, biliyorsan onunkini de.</string>
     <string name="app_home_your_side">Senin tarafın</string>

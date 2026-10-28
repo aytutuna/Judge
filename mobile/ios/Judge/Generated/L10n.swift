@@ -535,7 +535,6 @@ enum L10n {
     static func appAccountSignedOut(_ lang: AppLang) -> String { string("app.account.signedOut", lang) }
     static func appAccountSessionExpired(_ lang: AppLang) -> String { string("app.account.sessionExpired", lang) }
     static func appClose(_ lang: AppLang) -> String { string("app.close", lang) }
-    static func appHomeTitle(_ lang: AppLang) -> String { string("app.home.title", lang) }
     static func appHomeLead(_ lang: AppLang) -> String { string("app.home.lead", lang) }
     static func appHomeLeadSolo(_ lang: AppLang) -> String { string("app.home.leadSolo", lang) }
     static func appHomeYourSide(_ lang: AppLang) -> String { string("app.home.yourSide", lang) }
@@ -1087,7 +1086,6 @@ enum L10n {
         "app.account.signedOut",
         "app.account.sessionExpired",
         "app.close",
-        "app.home.title",
         "app.home.lead",
         "app.home.leadSolo",
         "app.home.yourSide",

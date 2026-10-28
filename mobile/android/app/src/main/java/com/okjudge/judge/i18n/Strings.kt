@@ -529,7 +529,6 @@ class Strings(private val res: Resources) {
     val appAccountSignedOut: String get() = res.getString(R.string.app_account_signed_out)
     val appAccountSessionExpired: String get() = res.getString(R.string.app_account_session_expired)
     val appClose: String get() = res.getString(R.string.app_close)
-    val appHomeTitle: String get() = res.getString(R.string.app_home_title)
     val appHomeLead: String get() = res.getString(R.string.app_home_lead)
     val appHomeLeadSolo: String get() = res.getString(R.string.app_home_lead_solo)
     val appHomeYourSide: String get() = res.getString(R.string.app_home_your_side)
@@ -1080,7 +1079,6 @@ class Strings(private val res: Resources) {
             "app.account.signedOut" -> R.string.app_account_signed_out
             "app.account.sessionExpired" -> R.string.app_account_session_expired
             "app.close" -> R.string.app_close
-            "app.home.title" -> R.string.app_home_title
             "app.home.lead" -> R.string.app_home_lead
             "app.home.leadSolo" -> R.string.app_home_lead_solo
             "app.home.yourSide" -> R.string.app_home_your_side

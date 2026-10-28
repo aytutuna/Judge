@@ -136,7 +136,6 @@ export const APP_STRINGS: Record<string, { en: string; tr: string }> = {
   "app.close": { en: "Close", tr: "Kapat" },
   // Home with both sides on one screen. The joined text is what the judges
   // read when one person writes both sides.
-  "app.home.title": { en: "Two sides, one ruling.", tr: "İki taraf, tek karar." },
   "app.home.lead": {
     en: "Write both sides, or send the other person a link to write theirs.",
     tr: "İki tarafı da yaz ya da karşı tarafa bir bağlantı gönder, kendi tarafını o yazsın.",
