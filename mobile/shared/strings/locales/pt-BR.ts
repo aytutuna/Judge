@@ -11,10 +11,6 @@ const ptBR: AppLocale = {
     "app.history.deviceOnly":
       "Ficam salvos só neste celular. Excluir um aqui não tira do ar o link de compartilhamento dele.",
     "app.history.delete": "Excluir",
-    "app.history.clearAll": "Excluir todos",
-    "app.history.clearConfirm":
-      "Excluir todos os vereditos salvos neste celular? Os links de compartilhamento continuam funcionando.",
-    "app.history.clearYes": "Sim, excluir",
     "app.pricing.free.account": "Entre com Apple, Google ou e-mail",
     "app.pricing.headline": "Seu primeiro veredito é por nossa conta.",
     "app.pricing.sub":

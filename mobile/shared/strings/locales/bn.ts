@@ -11,9 +11,6 @@ const bn: AppLocale = {
     "app.history.empty": "এখনও কোনো রায় নেই। প্রথম তর্কের ফয়সালা করলে সেটা এখানে দেখা যাবে।",
     "app.history.deviceOnly": "শুধু এই ফোনে সেভ করা আছে। এখান থেকে কোনো রায় মুছলেও তার শেয়ার লিংক বন্ধ হয় না।",
     "app.history.delete": "মুছুন",
-    "app.history.clearAll": "সব মুছুন",
-    "app.history.clearConfirm": "এই ফোনে সেভ করা সব রায় মুছে ফেলবেন? শেয়ার লিংকগুলো কাজ করতে থাকবে।",
-    "app.history.clearYes": "হ্যাঁ, মুছে ফেলুন",
     "app.pricing.free.account": "Apple, Google বা ইমেইল দিয়ে সাইন ইন করুন",
     "app.pricing.headline": "প্রথম রায়টা আমাদের তরফ থেকে।",
     "app.pricing.sub":

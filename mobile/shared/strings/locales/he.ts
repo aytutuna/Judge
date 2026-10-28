@@ -11,9 +11,6 @@ const he: AppLocale = {
     "app.history.empty": "עוד אין פסקי דין. כשהוויכוח הראשון שלך יוכרע, פסק הדין יופיע כאן.",
     "app.history.deviceOnly": "פסקי הדין שמורים רק בטלפון הזה. מחיקה של פסק דין כאן לא מבטלת את קישור השיתוף שלו.",
     "app.history.delete": "מחיקה",
-    "app.history.clearAll": "מחיקת הכול",
-    "app.history.clearConfirm": "למחוק מהטלפון הזה את כל פסקי הדין השמורים? קישורי השיתוף ימשיכו לעבוד.",
-    "app.history.clearYes": "כן, למחוק הכול",
     "app.pricing.free.account": "התחברות עם Apple, Google או אימייל",
     "app.pricing.headline": "פסק הדין הראשון עלינו.",
     "app.pricing.sub":

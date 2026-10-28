@@ -11,9 +11,6 @@ const te: AppLocale = {
     "app.history.empty": "ఇంకా తీర్పులేవీ లేవు. మీ మొదటి గొడవ తేల్చుకోండి, దాని తీర్పు ఇక్కడ కనిపిస్తుంది.",
     "app.history.deviceOnly": "ఇవి ఈ ఫోన్‌లో మాత్రమే సేవ్ అయ్యాయి. ఇక్కడ ఒకదాన్ని డిలీట్ చేసినా దాని షేర్ లింక్ ఆగిపోదు.",
     "app.history.delete": "డిలీట్",
-    "app.history.clearAll": "అన్నీ డిలీట్ చేయండి",
-    "app.history.clearConfirm": "ఈ ఫోన్‌లో సేవ్ అయిన తీర్పులన్నీ డిలీట్ చేయాలా? షేర్ లింక్‌లు పనిచేస్తూనే ఉంటాయి.",
-    "app.history.clearYes": "అవును, డిలీట్ చేయండి",
     "app.pricing.free.account": "Apple, Google లేదా ఈమెయిల్‌తో సైన్ ఇన్ చేయండి",
     "app.pricing.headline": "మీ మొదటి తీర్పు మా ఖాతాలో.",
     "app.pricing.sub":

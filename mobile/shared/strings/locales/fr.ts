@@ -11,10 +11,6 @@ const fr: AppLocale = {
     "app.history.deviceOnly":
       "Enregistrés uniquement sur ce téléphone. En supprimer un ici ne désactive pas son lien de partage.",
     "app.history.delete": "Supprimer",
-    "app.history.clearAll": "Tout supprimer",
-    "app.history.clearConfirm":
-      "Supprimer tous les verdicts enregistrés sur ce téléphone ? Les liens de partage continueront de fonctionner.",
-    "app.history.clearYes": "Oui, tout supprimer",
     "app.pricing.free.account": "Connecte-toi avec Apple, Google ou par e-mail",
     "app.pricing.headline": "Ton premier verdict est offert.",
     "app.pricing.sub":

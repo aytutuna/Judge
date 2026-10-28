@@ -474,9 +474,6 @@
     </plurals>
     <string name="app_history_row_selected">Selected</string>
     <string name="app_history_row_not_selected">Not selected</string>
-    <string name="app_history_clear_all">Slett alle</string>
-    <string name="app_history_clear_confirm">Vil du slette alle lagrede dommer fra denne telefonen? Delingslenkene virker fortsatt.</string>
-    <string name="app_history_clear_yes">Ja, slett dem</string>
     <string name="app_pricing_free_account">Logg inn med Apple, Google eller e-post</string>
     <string name="app_pricing_headline">Den første dommen spanderer vi.</string>
     <string name="app_pricing_sub">Opprett en konto, så er den første dommen gratis, med alle funksjoner. Etter det velger du en pakke eller går over til månedsabonnement.</string>

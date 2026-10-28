@@ -11,10 +11,6 @@ const it: AppLocale = {
     "app.history.deviceOnly":
       "Salvati solo su questo telefono. Se ne elimini uno qui, il suo link di condivisione continua a funzionare.",
     "app.history.delete": "Elimina",
-    "app.history.clearAll": "Elimina tutti",
-    "app.history.clearConfirm":
-      "Vuoi eliminare tutti i verdetti salvati su questo telefono? I link di condivisione continuano a funzionare.",
-    "app.history.clearYes": "Sì, eliminali",
     "app.pricing.free.account": "Accedi con Apple, Google o email",
     "app.pricing.headline": "Il primo verdetto lo offriamo noi.",
     "app.pricing.sub":

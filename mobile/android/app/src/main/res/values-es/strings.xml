@@ -487,9 +487,6 @@
     </plurals>
     <string name="app_history_row_selected">Selected</string>
     <string name="app_history_row_not_selected">Not selected</string>
-    <string name="app_history_clear_all">Eliminar todo</string>
-    <string name="app_history_clear_confirm">¿Eliminar todos los veredictos guardados en este teléfono? Los enlaces para compartir seguirán funcionando.</string>
-    <string name="app_history_clear_yes">Sí, eliminarlos</string>
     <string name="app_pricing_free_account">Inicia sesión con Apple, Google o tu correo</string>
     <string name="app_pricing_headline">Tu primer veredicto corre por nuestra cuenta.</string>
     <string name="app_pricing_sub">Crea una cuenta y tu primer veredicto es gratis, con todas las funciones. Después, elige un paquete o pásate al plan mensual.</string>

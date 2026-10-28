@@ -12,10 +12,6 @@ const ar: AppLocale = {
     "app.history.deviceOnly":
       "الأحكام محفوظة على هذا الهاتف فقط. حذف حكم من هنا لا يوقف رابط مشاركته.",
     "app.history.delete": "حذف",
-    "app.history.clearAll": "حذف الكل",
-    "app.history.clearConfirm":
-      "هل تريد حذف كل الأحكام المحفوظة من هذا الهاتف؟ ستظل روابط المشاركة تعمل.",
-    "app.history.clearYes": "نعم، احذفها",
     "app.pricing.free.account":
       "سجّل الدخول باستخدام Apple أو Google أو البريد الإلكتروني",
     "app.pricing.headline": "حكمك الأول على حسابنا.",

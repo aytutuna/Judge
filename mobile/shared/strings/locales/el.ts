@@ -12,10 +12,6 @@ const el: AppLocale = {
     "app.history.deviceOnly":
       "Αποθηκεύονται μόνο σε αυτό το τηλέφωνο. Αν διαγράψεις μια απόφαση από εδώ, ο σύνδεσμος κοινοποίησής της θα συνεχίσει να λειτουργεί.",
     "app.history.delete": "Διαγραφή",
-    "app.history.clearAll": "Διαγραφή όλων",
-    "app.history.clearConfirm":
-      "Να διαγραφούν όλες οι αποθηκευμένες αποφάσεις από αυτό το τηλέφωνο; Οι σύνδεσμοι κοινοποίησης θα συνεχίσουν να λειτουργούν.",
-    "app.history.clearYes": "Ναι, διάγραψέ τις",
     "app.pricing.free.account": "Σύνδεση με Apple, Google ή email",
     "app.pricing.headline": "Την πρώτη απόφαση την κερνάμε εμείς.",
     "app.pricing.sub":

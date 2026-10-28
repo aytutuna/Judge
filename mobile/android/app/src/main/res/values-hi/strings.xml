@@ -474,9 +474,6 @@
     </plurals>
     <string name="app_history_row_selected">Selected</string>
     <string name="app_history_row_not_selected">Not selected</string>
-    <string name="app_history_clear_all">सब हटाएँ</string>
-    <string name="app_history_clear_confirm">इस फ़ोन में सेव सारे फ़ैसले हटा दें? शेयर लिंक काम करते रहेंगे।</string>
-    <string name="app_history_clear_yes">हाँ, सब हटाएँ</string>
     <string name="app_pricing_free_account">Apple, Google या ईमेल से साइन इन करें</string>
     <string name="app_pricing_headline">पहला फ़ैसला हमारी तरफ़ से।</string>
     <string name="app_pricing_sub">अकाउंट बनाइए और पहला फ़ैसला मुफ़्त पाइए, सारी सुविधाओं के साथ। उसके बाद कोई पैक चुनें या मासिक प्लान लें।</string>

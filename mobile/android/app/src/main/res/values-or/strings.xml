@@ -474,9 +474,6 @@
     </plurals>
     <string name="app_history_row_selected">Selected</string>
     <string name="app_history_row_not_selected">Not selected</string>
-    <string name="app_history_clear_all">ସବୁ ଡିଲିଟ୍ କରନ୍ତୁ</string>
-    <string name="app_history_clear_confirm">ଏହି ଫୋନ୍‌ରେ ସେଭ୍ ହୋଇଥିବା ସବୁ ରାୟ ଡିଲିଟ୍ କରିବେ? ସେୟାର୍ ଲିଙ୍କ୍‌ଗୁଡ଼ିକ କାମ କରୁଥିବ।</string>
-    <string name="app_history_clear_yes">ହଁ, ସବୁ ଡିଲିଟ୍ କରନ୍ତୁ</string>
     <string name="app_pricing_free_account">Apple, Google ବା ଇମେଲ୍ ସହ ସାଇନ୍ ଇନ୍ କରନ୍ତୁ</string>
     <string name="app_pricing_headline">ପ୍ରଥମ ରାୟ ଆମ ତରଫରୁ।</string>
     <string name="app_pricing_sub">ଆକାଉଣ୍ଟ ଖୋଲନ୍ତୁ, ପ୍ରଥମ ରାୟ ସବୁ ସୁବିଧା ସହ ମାଗଣା। ତା\'ପରେ ଗୋଟେ ପ୍ୟାକ୍ ବାଛନ୍ତୁ ବା ମାସିକ ପ୍ଲାନ୍ ନିଅନ୍ତୁ।</string>

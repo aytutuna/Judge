@@ -461,9 +461,6 @@
     </plurals>
     <string name="app_history_row_selected">Selected</string>
     <string name="app_history_row_not_selected">Not selected</string>
-    <string name="app_history_clear_all">Hapus semua</string>
-    <string name="app_history_clear_confirm">Hapus semua putusan yang tersimpan di ponsel ini? Tautan berbagi tetap berfungsi.</string>
-    <string name="app_history_clear_yes">Ya, hapus semua</string>
     <string name="app_pricing_free_account">Masuk dengan Apple, Google, atau email</string>
     <string name="app_pricing_headline">Putusan pertamamu kami traktir.</string>
     <string name="app_pricing_sub">Buat akun dan putusan pertamamu gratis, lengkap dengan semua fitur. Setelah itu, pilih paket atau berlangganan bulanan.</string>

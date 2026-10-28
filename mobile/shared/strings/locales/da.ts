@@ -10,9 +10,6 @@ const da: AppLocale = {
     "app.history.empty": "Ingen domme endnu. Få afgjort din første diskussion, så dukker den op her.",
     "app.history.deviceOnly": "Kun gemt på denne telefon. Sletter du en her, virker dens delingslink stadig.",
     "app.history.delete": "Slet",
-    "app.history.clearAll": "Slet alle",
-    "app.history.clearConfirm": "Vil du slette alle gemte domme fra denne telefon? Delingslinks bliver ved med at virke.",
-    "app.history.clearYes": "Ja, slet dem",
     "app.pricing.free.account": "Log ind med Apple, Google eller e-mail",
     "app.pricing.headline": "Din første dom er på husets regning.",
     "app.pricing.sub":

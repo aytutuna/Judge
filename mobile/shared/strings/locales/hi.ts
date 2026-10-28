@@ -11,9 +11,6 @@ const hi: AppLocale = {
     "app.history.empty": "अभी तक कोई फ़ैसला नहीं। अपनी पहली बहस सुलझाएँ, उसका फ़ैसला यहीं दिखेगा।",
     "app.history.deviceOnly": "ये सिर्फ़ इसी फ़ोन में सेव हैं। यहाँ से कोई फ़ैसला हटाने पर भी उसका शेयर लिंक बंद नहीं होता।",
     "app.history.delete": "हटाएँ",
-    "app.history.clearAll": "सब हटाएँ",
-    "app.history.clearConfirm": "इस फ़ोन में सेव सारे फ़ैसले हटा दें? शेयर लिंक काम करते रहेंगे।",
-    "app.history.clearYes": "हाँ, सब हटाएँ",
     "app.pricing.free.account": "Apple, Google या ईमेल से साइन इन करें",
     "app.pricing.headline": "पहला फ़ैसला हमारी तरफ़ से।",
     "app.pricing.sub":

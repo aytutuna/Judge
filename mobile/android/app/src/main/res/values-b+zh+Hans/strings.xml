@@ -461,9 +461,6 @@
     </plurals>
     <string name="app_history_row_selected">Selected</string>
     <string name="app_history_row_not_selected">Not selected</string>
-    <string name="app_history_clear_all">全部删除</string>
-    <string name="app_history_clear_confirm">要从这台手机上删除所有已保存的裁决吗？分享链接仍然有效。</string>
-    <string name="app_history_clear_yes">是的，全部删除</string>
     <string name="app_pricing_free_account">用 Apple、Google 或邮箱登录</string>
     <string name="app_pricing_headline">第一次裁决，我们请客。</string>
     <string name="app_pricing_sub">注册账号，第一次裁决免费，所有功能都能用。之后可以买次数包，或者按月订阅。</string>

@@ -474,9 +474,6 @@
     </plurals>
     <string name="app_history_row_selected">Selected</string>
     <string name="app_history_row_not_selected">Not selected</string>
-    <string name="app_history_clear_all">সব মুছুন</string>
-    <string name="app_history_clear_confirm">এই ফোনে সেভ করা সব রায় মুছে ফেলবেন? শেয়ার লিংকগুলো কাজ করতে থাকবে।</string>
-    <string name="app_history_clear_yes">হ্যাঁ, মুছে ফেলুন</string>
     <string name="app_pricing_free_account">Apple, Google বা ইমেইল দিয়ে সাইন ইন করুন</string>
     <string name="app_pricing_headline">প্রথম রায়টা আমাদের তরফ থেকে।</string>
     <string name="app_pricing_sub">অ্যাকাউন্ট খুললেই প্রথম রায় ফ্রি, সব ফিচারসহ। এরপর একটা প্যাক বেছে নিন বা মাসিক প্ল্যান নিন।</string>

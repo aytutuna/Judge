@@ -11,9 +11,6 @@ const mr: AppLocale = {
     "app.history.empty": "अजून एकही निकाल नाही. तुमचा पहिला वाद सोडवा, त्याचा निकाल इथे दिसेल.",
     "app.history.deviceOnly": "हे निकाल फक्त या फोनवर सेव्ह होतात. इथून एखादा निकाल डिलीट केला तरी त्याची शेअर लिंक चालू राहते.",
     "app.history.delete": "डिलीट करा",
-    "app.history.clearAll": "सगळे डिलीट करा",
-    "app.history.clearConfirm": "या फोनवरचे सगळे सेव्ह केलेले निकाल डिलीट करायचे? शेअर लिंक चालू राहतील.",
-    "app.history.clearYes": "हो, डिलीट करा",
     "app.pricing.free.account": "Apple, Google किंवा ईमेलने साइन इन करा",
     "app.pricing.headline": "पहिला निकाल आमच्याकडून.",
     "app.pricing.sub":

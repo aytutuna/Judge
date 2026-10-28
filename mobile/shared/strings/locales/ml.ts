@@ -11,10 +11,6 @@ const ml: AppLocale = {
     "app.history.deviceOnly":
       "ഈ ഫോണിൽ മാത്രമാണ് സേവ് ചെയ്തിരിക്കുന്നത്. ഇവിടെനിന്ന് ഒരു വിധി ഡിലീറ്റ് ചെയ്താലും അതിന്റെ ഷെയർ ലിങ്ക് തുടർന്നും പ്രവർത്തിക്കും.",
     "app.history.delete": "ഡിലീറ്റ്",
-    "app.history.clearAll": "എല്ലാം ഡിലീറ്റ് ചെയ്യൂ",
-    "app.history.clearConfirm":
-      "സേവ് ചെയ്ത എല്ലാ വിധികളും ഈ ഫോണിൽ നിന്ന് ഡിലീറ്റ് ചെയ്യണോ? ഷെയർ ലിങ്കുകൾ തുടർന്നും പ്രവർത്തിക്കും.",
-    "app.history.clearYes": "അതെ, ഡിലീറ്റ് ചെയ്യൂ",
     "app.pricing.free.account": "Apple, Google അല്ലെങ്കിൽ ഇമെയിൽ വഴി സൈൻ ഇൻ ചെയ്യൂ",
     "app.pricing.headline": "ആദ്യ വിധി ഞങ്ങളുടെ വക.",
     "app.pricing.sub":

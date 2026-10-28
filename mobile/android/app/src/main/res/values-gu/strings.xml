@@ -474,9 +474,6 @@
     </plurals>
     <string name="app_history_row_selected">Selected</string>
     <string name="app_history_row_not_selected">Not selected</string>
-    <string name="app_history_clear_all">બધું ડિલીટ કરો</string>
-    <string name="app_history_clear_confirm">આ ફોનમાં સેવ થયેલા બધા ચુકાદા ડિલીટ કરવા છે? શેર લિંક ચાલુ રહેશે.</string>
-    <string name="app_history_clear_yes">હા, ડિલીટ કરો</string>
     <string name="app_pricing_free_account">Apple, Google કે ઈમેલથી સાઇન ઇન કરો</string>
     <string name="app_pricing_headline">તમારો પહેલો ચુકાદો અમારા તરફથી.</string>
     <string name="app_pricing_sub">એકાઉન્ટ બનાવો અને પહેલો ચુકાદો મફત, બધી સુવિધાઓ સાથે. પછી કોઈ પૅક પસંદ કરો કે માસિક પ્લાન લો.</string>

@@ -13,10 +13,6 @@ const gu: AppLocale = {
     "app.history.deviceOnly":
       "ફક્ત આ ફોનમાં સેવ થયેલા છે. અહીંથી કોઈ ચુકાદો ડિલીટ કરવાથી એની શેર લિંક બંધ થતી નથી.",
     "app.history.delete": "ડિલીટ કરો",
-    "app.history.clearAll": "બધું ડિલીટ કરો",
-    "app.history.clearConfirm":
-      "આ ફોનમાં સેવ થયેલા બધા ચુકાદા ડિલીટ કરવા છે? શેર લિંક ચાલુ રહેશે.",
-    "app.history.clearYes": "હા, ડિલીટ કરો",
     "app.pricing.free.account": "Apple, Google કે ઈમેલથી સાઇન ઇન કરો",
     "app.pricing.headline": "તમારો પહેલો ચુકાદો અમારા તરફથી.",
     "app.pricing.sub":

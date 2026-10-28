@@ -500,9 +500,6 @@
     </plurals>
     <string name="app_history_row_selected">Selected</string>
     <string name="app_history_row_not_selected">Not selected</string>
-    <string name="app_history_clear_all">Usuń wszystkie</string>
-    <string name="app_history_clear_confirm">Usunąć z tego telefonu wszystkie zapisane werdykty? Linki do udostępniania nadal będą działać.</string>
-    <string name="app_history_clear_yes">Tak, usuń je</string>
     <string name="app_pricing_free_account">Zaloguj się przez Apple, Google albo e-mail</string>
     <string name="app_pricing_headline">Pierwszy werdykt na nasz koszt.</string>
     <string name="app_pricing_sub">Załóż konto, a pierwszy werdykt dostaniesz za darmo, ze wszystkimi funkcjami. Potem wybierz pakiet albo plan miesięczny.</string>

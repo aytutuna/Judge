@@ -487,9 +487,6 @@
     </plurals>
     <string name="app_history_row_selected">Selected</string>
     <string name="app_history_row_not_selected">Not selected</string>
-    <string name="app_history_clear_all">מחיקת הכול</string>
-    <string name="app_history_clear_confirm">למחוק מהטלפון הזה את כל פסקי הדין השמורים? קישורי השיתוף ימשיכו לעבוד.</string>
-    <string name="app_history_clear_yes">כן, למחוק הכול</string>
     <string name="app_pricing_free_account">התחברות עם Apple, Google או אימייל</string>
     <string name="app_pricing_headline">פסק הדין הראשון עלינו.</string>
     <string name="app_pricing_sub">פותחים חשבון, ופסק הדין הראשון בחינם, עם כל האפשרויות. אחר כך אפשר לבחור חבילה או תוכנית חודשית.</string>

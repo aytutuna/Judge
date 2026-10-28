@@ -10,9 +10,6 @@ const vi: AppLocale = {
     "app.history.empty": "Chưa có phán quyết nào. Phân xử cuộc tranh cãi đầu tiên của bạn, kết quả sẽ hiện ở đây.",
     "app.history.deviceOnly": "Chỉ lưu trên điện thoại này. Xóa một phán quyết ở đây thì liên kết chia sẻ của nó vẫn hoạt động.",
     "app.history.delete": "Xóa",
-    "app.history.clearAll": "Xóa tất cả",
-    "app.history.clearConfirm": "Xóa mọi phán quyết đã lưu trên điện thoại này? Liên kết chia sẻ vẫn hoạt động.",
-    "app.history.clearYes": "Có, xóa hết",
     "app.pricing.free.account": "Đăng nhập bằng Apple, Google hoặc email",
     "app.pricing.headline": "Phán quyết đầu tiên, chúng tôi mời.",
     "app.pricing.sub":

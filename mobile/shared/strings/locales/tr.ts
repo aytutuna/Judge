@@ -18,10 +18,6 @@ const tr: AppLocale = {
     "app.history.deleteConfirm": "Bu telefondan {n} karar silinsin mi? Paylaşım linkleri çalışmaya devam eder.",
     "app.history.rowSelected": "Seçili",
     "app.history.rowNotSelected": "Seçili değil",
-    "app.history.clearAll": "Hepsini sil",
-    "app.history.clearConfirm":
-      "Bu telefondaki bütün kayıtlı kararlar silinsin mi? Paylaşım linkleri çalışmaya devam eder.",
-    "app.history.clearYes": "Evet, sil",
     "app.pricing.free.account": "Apple, Google ya da e-postayla giriş yap",
     "app.pricing.headline": "İlk karar bizden.",
     "app.pricing.sub":

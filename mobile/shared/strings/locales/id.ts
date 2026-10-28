@@ -11,9 +11,6 @@ const id: AppLocale = {
     "app.history.deviceOnly":
       "Hanya tersimpan di ponsel ini. Menghapus putusan di sini tidak mematikan tautan berbaginya.",
     "app.history.delete": "Hapus",
-    "app.history.clearAll": "Hapus semua",
-    "app.history.clearConfirm": "Hapus semua putusan yang tersimpan di ponsel ini? Tautan berbagi tetap berfungsi.",
-    "app.history.clearYes": "Ya, hapus semua",
     "app.pricing.free.account": "Masuk dengan Apple, Google, atau email",
     "app.pricing.headline": "Putusan pertamamu kami traktir.",
     "app.pricing.sub":

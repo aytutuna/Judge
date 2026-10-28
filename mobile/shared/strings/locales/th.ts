@@ -11,9 +11,6 @@ const th: AppLocale = {
     "app.history.empty": "ยังไม่มีคำตัดสิน ลองเคลียร์เรื่องที่เถียงกันเรื่องแรกดู แล้วคำตัดสินจะขึ้นที่นี่",
     "app.history.deviceOnly": "บันทึกไว้ในโทรศัพท์เครื่องนี้เท่านั้น ถึงจะลบออกจากที่นี่ ลิงก์แชร์ก็ยังใช้ได้อยู่",
     "app.history.delete": "ลบ",
-    "app.history.clearAll": "ลบทั้งหมด",
-    "app.history.clearConfirm": "ลบคำตัดสินทั้งหมดที่บันทึกไว้ในโทรศัพท์เครื่องนี้ไหม? ลิงก์แชร์ยังใช้ได้ตามเดิม",
-    "app.history.clearYes": "ใช่ ลบเลย",
     "app.pricing.free.account": "เข้าสู่ระบบด้วย Apple, Google หรืออีเมล",
     "app.pricing.headline": "คำตัดสินแรก เราเลี้ยงเอง",
     "app.pricing.sub":

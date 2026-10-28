@@ -474,9 +474,6 @@
     </plurals>
     <string name="app_history_row_selected">Selected</string>
     <string name="app_history_row_not_selected">Not selected</string>
-    <string name="app_history_clear_all">Alle löschen</string>
-    <string name="app_history_clear_confirm">Alle gespeicherten Urteile von diesem Handy löschen? Geteilte Links funktionieren weiter.</string>
-    <string name="app_history_clear_yes">Ja, alle löschen</string>
     <string name="app_pricing_free_account">Mit Apple, Google oder E-Mail anmelden</string>
     <string name="app_pricing_headline">Dein erstes Urteil geht auf uns.</string>
     <string name="app_pricing_sub">Erstell ein Konto, und dein erstes Urteil ist gratis, mit allen Funktionen. Danach wählst du ein Paket oder das Monatsabo.</string>

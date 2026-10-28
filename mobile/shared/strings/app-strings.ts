@@ -27,9 +27,6 @@ export const APP_EN = {
   "app.history.deleteConfirm": "Delete {n} verdicts from this phone? Their share links keep working.",
   "app.history.rowSelected": "Selected",
   "app.history.rowNotSelected": "Not selected",
-  "app.history.clearAll": "Delete all",
-  "app.history.clearConfirm": "Delete every saved verdict from this phone? Share links keep working.",
-  "app.history.clearYes": "Yes, delete them",
   "app.pricing.free.account": "Sign in with Apple, Google or email",
   "app.pricing.headline": "Your first verdict is on us.",
   "app.pricing.sub":

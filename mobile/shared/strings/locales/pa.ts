@@ -10,9 +10,6 @@ const pa: AppLocale = {
     "app.history.empty": "ਹਾਲੇ ਕੋਈ ਫ਼ੈਸਲਾ ਨਹੀਂ। ਆਪਣੀ ਪਹਿਲੀ ਬਹਿਸ ਦਾ ਨਿਬੇੜਾ ਕਰਾਓ, ਫ਼ੈਸਲਾ ਇੱਥੇ ਦਿਖੇਗਾ।",
     "app.history.deviceOnly": "ਇਹ ਸਿਰਫ਼ ਇਸ ਫ਼ੋਨ ’ਤੇ ਸੇਵ ਹਨ। ਇੱਥੋਂ ਕੋਈ ਫ਼ੈਸਲਾ ਮਿਟਾਉਣ ਨਾਲ ਉਸ ਦਾ ਸਾਂਝਾ ਲਿੰਕ ਬੰਦ ਨਹੀਂ ਹੁੰਦਾ।",
     "app.history.delete": "ਮਿਟਾਓ",
-    "app.history.clearAll": "ਸਾਰੇ ਮਿਟਾਓ",
-    "app.history.clearConfirm": "ਇਸ ਫ਼ੋਨ ਤੋਂ ਸਾਰੇ ਸੇਵ ਕੀਤੇ ਫ਼ੈਸਲੇ ਮਿਟਾਉਣੇ ਹਨ? ਸਾਂਝੇ ਲਿੰਕ ਚੱਲਦੇ ਰਹਿਣਗੇ।",
-    "app.history.clearYes": "ਹਾਂ, ਮਿਟਾ ਦਿਓ",
     "app.pricing.free.account": "Apple, Google ਜਾਂ ਈਮੇਲ ਨਾਲ ਸਾਈਨ ਇਨ ਕਰੋ",
     "app.pricing.headline": "ਪਹਿਲਾ ਫ਼ੈਸਲਾ ਸਾਡੇ ਵੱਲੋਂ।",
     "app.pricing.sub":

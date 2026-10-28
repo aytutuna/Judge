@@ -11,10 +11,6 @@ const sv: AppLocale = {
     "app.history.deviceOnly":
       "Sparas bara på den här telefonen. Tar du bort en dom här fortsätter delningslänken att fungera.",
     "app.history.delete": "Ta bort",
-    "app.history.clearAll": "Ta bort alla",
-    "app.history.clearConfirm":
-      "Ta bort alla sparade domar från den här telefonen? Delningslänkarna fortsätter att fungera.",
-    "app.history.clearYes": "Ja, ta bort dem",
     "app.pricing.free.account": "Logga in med Apple, Google eller e-post",
     "app.pricing.headline": "Din första dom bjuder vi på.",
     "app.pricing.sub":

@@ -11,10 +11,6 @@ const ro: AppLocale = {
     "app.history.deviceOnly":
       "Salvate doar pe acest telefon. Dacă ștergi unul de aici, linkul lui de distribuire rămâne activ.",
     "app.history.delete": "Șterge",
-    "app.history.clearAll": "Șterge tot",
-    "app.history.clearConfirm":
-      "Ștergi toate verdictele salvate pe acest telefon? Linkurile de distribuire rămân active.",
-    "app.history.clearYes": "Da, șterge-le",
     "app.pricing.free.account": "Conectează-te cu Apple, Google sau prin e-mail",
     "app.pricing.headline": "Primul verdict e din partea casei.",
     "app.pricing.sub":

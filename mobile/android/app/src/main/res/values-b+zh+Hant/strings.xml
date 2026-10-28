@@ -461,9 +461,6 @@
     </plurals>
     <string name="app_history_row_selected">Selected</string>
     <string name="app_history_row_not_selected">Not selected</string>
-    <string name="app_history_clear_all">全部刪除</string>
-    <string name="app_history_clear_confirm">要刪除這支手機上保存的所有判決嗎？分享連結還是可以用。</string>
-    <string name="app_history_clear_yes">是，全部刪除</string>
     <string name="app_pricing_free_account">用 Apple、Google 或電子郵件登入</string>
     <string name="app_pricing_headline">第一次判決，我們請客。</string>
     <string name="app_pricing_sub">建立帳號，第一次判決免費，所有功能都能用。之後可以買額度包，或改用月費方案。</string>

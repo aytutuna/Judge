@@ -10,9 +10,6 @@ const ja: AppLocale = {
     "app.history.empty": "まだ判定はありません。最初の揉めごとに白黒つけると、ここに表示されます。",
     "app.history.deviceOnly": "この端末にだけ保存されています。ここで削除しても、シェア用リンクはそのまま使えます。",
     "app.history.delete": "削除",
-    "app.history.clearAll": "すべて削除",
-    "app.history.clearConfirm": "この端末に保存した判定をすべて削除しますか？　シェア用リンクはそのまま使えます。",
-    "app.history.clearYes": "すべて削除する",
     "app.pricing.free.account": "Apple、Google、またはメールアドレスでログイン",
     "app.pricing.headline": "最初の判定は無料です。",
     "app.pricing.sub":

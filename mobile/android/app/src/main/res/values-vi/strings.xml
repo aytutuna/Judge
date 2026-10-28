@@ -461,9 +461,6 @@
     </plurals>
     <string name="app_history_row_selected">Selected</string>
     <string name="app_history_row_not_selected">Not selected</string>
-    <string name="app_history_clear_all">Xóa tất cả</string>
-    <string name="app_history_clear_confirm">Xóa mọi phán quyết đã lưu trên điện thoại này? Liên kết chia sẻ vẫn hoạt động.</string>
-    <string name="app_history_clear_yes">Có, xóa hết</string>
     <string name="app_pricing_free_account">Đăng nhập bằng Apple, Google hoặc email</string>
     <string name="app_pricing_headline">Phán quyết đầu tiên, chúng tôi mời.</string>
     <string name="app_pricing_sub">Tạo tài khoản là có ngay phán quyết đầu tiên miễn phí, đủ mọi tính năng. Sau đó, chọn một gói lượt hoặc dùng gói tháng.</string>

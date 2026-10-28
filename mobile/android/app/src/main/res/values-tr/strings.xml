@@ -474,9 +474,6 @@
     </plurals>
     <string name="app_history_row_selected">Seçili</string>
     <string name="app_history_row_not_selected">Seçili değil</string>
-    <string name="app_history_clear_all">Hepsini sil</string>
-    <string name="app_history_clear_confirm">Bu telefondaki bütün kayıtlı kararlar silinsin mi? Paylaşım linkleri çalışmaya devam eder.</string>
-    <string name="app_history_clear_yes">Evet, sil</string>
     <string name="app_pricing_free_account">Apple, Google ya da e-postayla giriş yap</string>
     <string name="app_pricing_headline">İlk karar bizden.</string>
     <string name="app_pricing_sub">Hesap açtığında ilk kararın bütün özellikleriyle ücretsiz. Sonrasında bir paket seç ya da aylık plana geç.</string>

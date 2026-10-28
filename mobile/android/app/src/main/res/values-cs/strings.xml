@@ -500,9 +500,6 @@
     </plurals>
     <string name="app_history_row_selected">Selected</string>
     <string name="app_history_row_not_selected">Not selected</string>
-    <string name="app_history_clear_all">Smazat vše</string>
-    <string name="app_history_clear_confirm">Smazat z tohohle telefonu všechny uložené verdikty? Sdílené odkazy budou fungovat dál.</string>
-    <string name="app_history_clear_yes">Ano, smazat</string>
     <string name="app_pricing_free_account">Přihlas se přes Apple, Google nebo e-mail</string>
     <string name="app_pricing_headline">První verdikt máš od nás.</string>
     <string name="app_pricing_sub">Založ si účet a první verdikt máš zdarma, se vším všudy. Potom si vyber balíček nebo měsíční plán.</string>

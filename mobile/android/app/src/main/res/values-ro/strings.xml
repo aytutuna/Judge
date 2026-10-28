@@ -487,9 +487,6 @@
     </plurals>
     <string name="app_history_row_selected">Selected</string>
     <string name="app_history_row_not_selected">Not selected</string>
-    <string name="app_history_clear_all">Șterge tot</string>
-    <string name="app_history_clear_confirm">Ștergi toate verdictele salvate pe acest telefon? Linkurile de distribuire rămân active.</string>
-    <string name="app_history_clear_yes">Da, șterge-le</string>
     <string name="app_pricing_free_account">Conectează-te cu Apple, Google sau prin e-mail</string>
     <string name="app_pricing_headline">Primul verdict e din partea casei.</string>
     <string name="app_pricing_sub">Fă-ți un cont și primul verdict e gratuit, cu toate funcțiile. După aceea, alege un pachet sau treci pe planul lunar.</string>

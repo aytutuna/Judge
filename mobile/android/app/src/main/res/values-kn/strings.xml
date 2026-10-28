@@ -474,9 +474,6 @@
     </plurals>
     <string name="app_history_row_selected">Selected</string>
     <string name="app_history_row_not_selected">Not selected</string>
-    <string name="app_history_clear_all">ಎಲ್ಲವನ್ನೂ ಅಳಿಸಿ</string>
-    <string name="app_history_clear_confirm">ಈ ಫೋನ್‌ನಲ್ಲಿ ಉಳಿಸಿರುವ ಎಲ್ಲಾ ತೀರ್ಪುಗಳನ್ನು ಅಳಿಸಬೇಕೇ? ಹಂಚಿಕೆ ಲಿಂಕ್‌ಗಳು ಕೆಲಸ ಮಾಡುತ್ತಲೇ ಇರುತ್ತವೆ.</string>
-    <string name="app_history_clear_yes">ಹೌದು, ಎಲ್ಲವನ್ನೂ ಅಳಿಸಿ</string>
     <string name="app_pricing_free_account">Apple, Google ಅಥವಾ ಇಮೇಲ್ ಮೂಲಕ ಸೈನ್ ಇನ್ ಮಾಡಿ</string>
     <string name="app_pricing_headline">ನಿಮ್ಮ ಮೊದಲ ತೀರ್ಪು ನಮ್ಮ ಕಡೆಯಿಂದ ಉಚಿತ.</string>
     <string name="app_pricing_sub">ಖಾತೆ ತೆರೆಯಿರಿ, ನಿಮ್ಮ ಮೊದಲ ತೀರ್ಪು ಎಲ್ಲಾ ಸೌಲಭ್ಯಗಳ ಸಮೇತ ಉಚಿತ. ಅದರ ನಂತರ ಒಂದು ಪ್ಯಾಕ್ ಆರಿಸಿ ಅಥವಾ ಮಾಸಿಕ ಪ್ಲಾನ್ ತೆಗೆದುಕೊಳ್ಳಿ.</string>

@@ -461,9 +461,6 @@
     </plurals>
     <string name="app_history_row_selected">Selected</string>
     <string name="app_history_row_not_selected">Not selected</string>
-    <string name="app_history_clear_all">すべて削除</string>
-    <string name="app_history_clear_confirm">この端末に保存した判定をすべて削除しますか？　シェア用リンクはそのまま使えます。</string>
-    <string name="app_history_clear_yes">すべて削除する</string>
     <string name="app_pricing_free_account">Apple、Google、またはメールアドレスでログイン</string>
     <string name="app_pricing_headline">最初の判定は無料です。</string>
     <string name="app_pricing_sub">アカウントを作成すると、最初の判定はすべての機能つきで無料。その後はパックか月額プランを選べます。</string>

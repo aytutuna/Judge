@@ -474,9 +474,6 @@
     </plurals>
     <string name="app_history_row_selected">Selected</string>
     <string name="app_history_row_not_selected">Not selected</string>
-    <string name="app_history_clear_all">Delete all</string>
-    <string name="app_history_clear_confirm">Delete every saved verdict from this phone? Share links keep working.</string>
-    <string name="app_history_clear_yes">Yes, delete them</string>
     <string name="app_pricing_free_account">Sign in with Apple, Google or email</string>
     <string name="app_pricing_headline">Your first verdict is on us.</string>
     <string name="app_pricing_sub">Create an account and your first verdict is free, with every feature. After that, pick a pack or go monthly.</string>

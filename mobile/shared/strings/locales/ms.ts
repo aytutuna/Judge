@@ -12,10 +12,6 @@ const ms: AppLocale = {
     "app.history.deviceOnly":
       "Disimpan dalam telefon ini sahaja. Memadam satu keputusan di sini tidak mematikan pautan kongsinya.",
     "app.history.delete": "Padam",
-    "app.history.clearAll": "Padam semua",
-    "app.history.clearConfirm":
-      "Padam semua keputusan yang disimpan dalam telefon ini? Pautan kongsi akan terus berfungsi.",
-    "app.history.clearYes": "Ya, padam semua",
     "app.pricing.free.account": "Log masuk dengan Apple, Google atau e-mel",
     "app.pricing.headline": "Keputusan pertama anda, kami belanja.",
     "app.pricing.sub":

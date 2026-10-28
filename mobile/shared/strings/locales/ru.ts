@@ -12,9 +12,6 @@ const ru: AppLocale = {
     "app.history.deviceOnly":
       "Вердикты хранятся только на этом телефоне. Если удалить вердикт здесь, ссылка на него продолжит работать.",
     "app.history.delete": "Удалить",
-    "app.history.clearAll": "Удалить все",
-    "app.history.clearConfirm": "Удалить все сохранённые вердикты с этого телефона? Ссылки на них продолжат работать.",
-    "app.history.clearYes": "Да, удалить",
     "app.pricing.free.account": "Вход через Apple, Google или почту",
     "app.pricing.headline": "Первый вердикт — за наш счёт.",
     "app.pricing.sub":

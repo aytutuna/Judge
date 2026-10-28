@@ -11,9 +11,6 @@ const nl: AppLocale = {
     "app.history.deviceOnly":
       "Alleen op deze telefoon bewaard. Verwijder je hier een uitspraak, dan blijft de deellink gewoon werken.",
     "app.history.delete": "Verwijderen",
-    "app.history.clearAll": "Alles verwijderen",
-    "app.history.clearConfirm": "Alle bewaarde uitspraken van deze telefoon verwijderen? Deellinks blijven werken.",
-    "app.history.clearYes": "Ja, verwijderen",
     "app.pricing.free.account": "Log in met Apple, Google of e-mail",
     "app.pricing.headline": "Je eerste uitspraak is van het huis.",
     "app.pricing.sub":

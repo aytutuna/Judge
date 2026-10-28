@@ -526,9 +526,6 @@
     </plurals>
     <string name="app_history_row_selected">Selected</string>
     <string name="app_history_row_not_selected">Not selected</string>
-    <string name="app_history_clear_all">حذف الكل</string>
-    <string name="app_history_clear_confirm">هل تريد حذف كل الأحكام المحفوظة من هذا الهاتف؟ ستظل روابط المشاركة تعمل.</string>
-    <string name="app_history_clear_yes">نعم، احذفها</string>
     <string name="app_pricing_free_account">سجّل الدخول باستخدام Apple أو Google أو البريد الإلكتروني</string>
     <string name="app_pricing_headline">حكمك الأول على حسابنا.</string>
     <string name="app_pricing_sub">أنشئ حسابًا واحصل على أول حكم مجانًا، بكل المزايا. بعد ذلك، اختر باقة أو اشترك شهريًا.</string>

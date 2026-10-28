@@ -474,9 +474,6 @@
     </plurals>
     <string name="app_history_row_selected">Selected</string>
     <string name="app_history_row_not_selected">Not selected</string>
-    <string name="app_history_clear_all">سب حذف کریں</string>
-    <string name="app_history_clear_confirm">اس فون سے تمام محفوظ فیصلے حذف کر دیں؟ شیئر لنکس کام کرتے رہیں گے۔</string>
-    <string name="app_history_clear_yes">ہاں، حذف کر دیں</string>
     <string name="app_pricing_free_account">Apple، Google یا ای میل سے سائن ان کریں</string>
     <string name="app_pricing_headline">پہلا فیصلہ ہماری طرف سے۔</string>
     <string name="app_pricing_sub">اکاؤنٹ بنائیں اور پہلا فیصلہ مفت پائیں، تمام فیچرز کے ساتھ۔ اس کے بعد کوئی پیک لیں یا ماہانہ پلان۔</string>

@@ -461,9 +461,6 @@
     </plurals>
     <string name="app_history_row_selected">Selected</string>
     <string name="app_history_row_not_selected">Not selected</string>
-    <string name="app_history_clear_all">ลบทั้งหมด</string>
-    <string name="app_history_clear_confirm">ลบคำตัดสินทั้งหมดที่บันทึกไว้ในโทรศัพท์เครื่องนี้ไหม? ลิงก์แชร์ยังใช้ได้ตามเดิม</string>
-    <string name="app_history_clear_yes">ใช่ ลบเลย</string>
     <string name="app_pricing_free_account">เข้าสู่ระบบด้วย Apple, Google หรืออีเมล</string>
     <string name="app_pricing_headline">คำตัดสินแรก เราเลี้ยงเอง</string>
     <string name="app_pricing_sub">สร้างบัญชีแล้วรับคำตัดสินแรกฟรี ใช้ได้ทุกฟีเจอร์ หลังจากนั้นเลือกแพ็กเครดิตหรือสมัครรายเดือน</string>

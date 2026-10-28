@@ -487,9 +487,6 @@
     </plurals>
     <string name="app_history_row_selected">Selected</string>
     <string name="app_history_row_not_selected">Not selected</string>
-    <string name="app_history_clear_all">Izbriši sve</string>
-    <string name="app_history_clear_confirm">Izbrisati sve spremljene presude s ovog telefona? Poveznice za dijeljenje i dalje rade.</string>
-    <string name="app_history_clear_yes">Da, izbriši sve</string>
     <string name="app_pricing_free_account">Prijavi se s Appleom, Googleom ili e-poštom</string>
     <string name="app_pricing_headline">Prvu presudu častimo.</string>
     <string name="app_pricing_sub">Otvori račun i prva presuda je besplatna, sa svim mogućnostima. Nakon toga odaberi paket ili prijeđi na mjesečni plan.</string>

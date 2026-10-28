@@ -12,10 +12,6 @@ const kn: AppLocale = {
     "app.history.deviceOnly":
       "ಈ ಫೋನ್‌ನಲ್ಲಿ ಮಾತ್ರ ಉಳಿಸಲಾಗಿದೆ. ಒಂದು ತೀರ್ಪನ್ನು ಇಲ್ಲಿಂದ ಅಳಿಸಿದರೂ ಅದರ ಹಂಚಿಕೆ ಲಿಂಕ್ ಕೆಲಸ ಮಾಡುತ್ತಲೇ ಇರುತ್ತದೆ.",
     "app.history.delete": "ಅಳಿಸಿ",
-    "app.history.clearAll": "ಎಲ್ಲವನ್ನೂ ಅಳಿಸಿ",
-    "app.history.clearConfirm":
-      "ಈ ಫೋನ್‌ನಲ್ಲಿ ಉಳಿಸಿರುವ ಎಲ್ಲಾ ತೀರ್ಪುಗಳನ್ನು ಅಳಿಸಬೇಕೇ? ಹಂಚಿಕೆ ಲಿಂಕ್‌ಗಳು ಕೆಲಸ ಮಾಡುತ್ತಲೇ ಇರುತ್ತವೆ.",
-    "app.history.clearYes": "ಹೌದು, ಎಲ್ಲವನ್ನೂ ಅಳಿಸಿ",
     "app.pricing.free.account": "Apple, Google ಅಥವಾ ಇಮೇಲ್ ಮೂಲಕ ಸೈನ್ ಇನ್ ಮಾಡಿ",
     "app.pricing.headline": "ನಿಮ್ಮ ಮೊದಲ ತೀರ್ಪು ನಮ್ಮ ಕಡೆಯಿಂದ ಉಚಿತ.",
     "app.pricing.sub":

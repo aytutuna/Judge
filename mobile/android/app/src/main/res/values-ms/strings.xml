@@ -461,9 +461,6 @@
     </plurals>
     <string name="app_history_row_selected">Selected</string>
     <string name="app_history_row_not_selected">Not selected</string>
-    <string name="app_history_clear_all">Padam semua</string>
-    <string name="app_history_clear_confirm">Padam semua keputusan yang disimpan dalam telefon ini? Pautan kongsi akan terus berfungsi.</string>
-    <string name="app_history_clear_yes">Ya, padam semua</string>
     <string name="app_pricing_free_account">Log masuk dengan Apple, Google atau e-mel</string>
     <string name="app_pricing_headline">Keputusan pertama anda, kami belanja.</string>
     <string name="app_pricing_sub">Buat akaun dan keputusan pertama anda percuma, lengkap dengan semua ciri. Selepas itu, pilih pek atau langgan bulanan.</string>

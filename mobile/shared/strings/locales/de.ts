@@ -11,9 +11,6 @@ const de: AppLocale = {
     "app.history.deviceOnly":
       "Nur auf diesem Handy gespeichert. Wenn du hier ein Urteil löschst, funktioniert der geteilte Link weiter.",
     "app.history.delete": "Löschen",
-    "app.history.clearAll": "Alle löschen",
-    "app.history.clearConfirm": "Alle gespeicherten Urteile von diesem Handy löschen? Geteilte Links funktionieren weiter.",
-    "app.history.clearYes": "Ja, alle löschen",
     "app.pricing.free.account": "Mit Apple, Google oder E-Mail anmelden",
     "app.pricing.headline": "Dein erstes Urteil geht auf uns.",
     "app.pricing.sub":

@@ -11,10 +11,6 @@ const es: AppLocale = {
     "app.history.deviceOnly":
       "Solo se guardan en este teléfono. Eliminar uno aquí no desactiva su enlace para compartir.",
     "app.history.delete": "Eliminar",
-    "app.history.clearAll": "Eliminar todo",
-    "app.history.clearConfirm":
-      "¿Eliminar todos los veredictos guardados en este teléfono? Los enlaces para compartir seguirán funcionando.",
-    "app.history.clearYes": "Sí, eliminarlos",
     "app.pricing.free.account": "Inicia sesión con Apple, Google o tu correo",
     "app.pricing.headline": "Tu primer veredicto corre por nuestra cuenta.",
     "app.pricing.sub":

@@ -474,9 +474,6 @@
     </plurals>
     <string name="app_history_row_selected">Selected</string>
     <string name="app_history_row_not_selected">Not selected</string>
-    <string name="app_history_clear_all">Ta bort alla</string>
-    <string name="app_history_clear_confirm">Ta bort alla sparade domar från den här telefonen? Delningslänkarna fortsätter att fungera.</string>
-    <string name="app_history_clear_yes">Ja, ta bort dem</string>
     <string name="app_pricing_free_account">Logga in med Apple, Google eller e-post</string>
     <string name="app_pricing_headline">Din första dom bjuder vi på.</string>
     <string name="app_pricing_sub">Skapa ett konto så är din första dom gratis, med alla funktioner. Sedan väljer du ett paket eller ett månadsabonnemang.</string>

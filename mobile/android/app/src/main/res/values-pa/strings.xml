@@ -474,9 +474,6 @@
     </plurals>
     <string name="app_history_row_selected">Selected</string>
     <string name="app_history_row_not_selected">Not selected</string>
-    <string name="app_history_clear_all">ਸਾਰੇ ਮਿਟਾਓ</string>
-    <string name="app_history_clear_confirm">ਇਸ ਫ਼ੋਨ ਤੋਂ ਸਾਰੇ ਸੇਵ ਕੀਤੇ ਫ਼ੈਸਲੇ ਮਿਟਾਉਣੇ ਹਨ? ਸਾਂਝੇ ਲਿੰਕ ਚੱਲਦੇ ਰਹਿਣਗੇ।</string>
-    <string name="app_history_clear_yes">ਹਾਂ, ਮਿਟਾ ਦਿਓ</string>
     <string name="app_pricing_free_account">Apple, Google ਜਾਂ ਈਮੇਲ ਨਾਲ ਸਾਈਨ ਇਨ ਕਰੋ</string>
     <string name="app_pricing_headline">ਪਹਿਲਾ ਫ਼ੈਸਲਾ ਸਾਡੇ ਵੱਲੋਂ।</string>
     <string name="app_pricing_sub">ਖਾਤਾ ਬਣਾਓ ਅਤੇ ਪਹਿਲਾ ਫ਼ੈਸਲਾ ਮੁਫ਼ਤ ਪਾਓ, ਸਾਰੀਆਂ ਸਹੂਲਤਾਂ ਸਮੇਤ। ਉਸ ਤੋਂ ਬਾਅਦ ਕੋਈ ਪੈਕ ਚੁਣੋ ਜਾਂ ਮਹੀਨਾਵਾਰ ਪਲਾਨ ਲਓ।</string>

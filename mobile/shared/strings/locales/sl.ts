@@ -12,10 +12,6 @@ const sl: AppLocale = {
     "app.history.deviceOnly":
       "Shranjeno samo na tem telefonu. Če razsodbo izbrišeš tukaj, njena povezava za deljenje še vedno deluje.",
     "app.history.delete": "Izbriši",
-    "app.history.clearAll": "Izbriši vse",
-    "app.history.clearConfirm":
-      "Želiš s tega telefona izbrisati vse shranjene razsodbe? Povezave za deljenje bodo še naprej delovale.",
-    "app.history.clearYes": "Da, izbriši vse",
     "app.pricing.free.account": "Prijavi se z Apple, Googlom ali e-pošto",
     "app.pricing.headline": "Prva razsodba gre na naš račun.",
     "app.pricing.sub":

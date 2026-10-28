@@ -11,10 +11,6 @@ const ca: AppLocale = {
     "app.history.deviceOnly":
       "Només es desen en aquest telèfon. Si n'elimines un aquí, el seu enllaç per compartir continuarà funcionant.",
     "app.history.delete": "Elimina",
-    "app.history.clearAll": "Elimina-ho tot",
-    "app.history.clearConfirm":
-      "Vols eliminar tots els veredictes desats en aquest telèfon? Els enllaços per compartir continuaran funcionant.",
-    "app.history.clearYes": "Sí, elimina'ls",
     "app.pricing.free.account": "Inicia sessió amb Apple, Google o el correu",
     "app.pricing.headline": "El primer veredicte, et convidem.",
     "app.pricing.sub":

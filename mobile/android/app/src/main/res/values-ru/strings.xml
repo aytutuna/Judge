@@ -500,9 +500,6 @@
     </plurals>
     <string name="app_history_row_selected">Selected</string>
     <string name="app_history_row_not_selected">Not selected</string>
-    <string name="app_history_clear_all">Удалить все</string>
-    <string name="app_history_clear_confirm">Удалить все сохранённые вердикты с этого телефона? Ссылки на них продолжат работать.</string>
-    <string name="app_history_clear_yes">Да, удалить</string>
     <string name="app_pricing_free_account">Вход через Apple, Google или почту</string>
     <string name="app_pricing_headline">Первый вердикт — за наш счёт.</string>
     <string name="app_pricing_sub">Создайте аккаунт, и первый вердикт со всеми возможностями будет бесплатным. Дальше выберите пакет или оформите подписку.</string>

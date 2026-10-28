@@ -12,10 +12,6 @@ const pl: AppLocale = {
     "app.history.deviceOnly":
       "Zapisane tylko na tym telefonie. Usunięcie werdyktu tutaj nie wyłącza linku do udostępniania.",
     "app.history.delete": "Usuń",
-    "app.history.clearAll": "Usuń wszystkie",
-    "app.history.clearConfirm":
-      "Usunąć z tego telefonu wszystkie zapisane werdykty? Linki do udostępniania nadal będą działać.",
-    "app.history.clearYes": "Tak, usuń je",
     "app.pricing.free.account": "Zaloguj się przez Apple, Google albo e-mail",
     "app.pricing.headline": "Pierwszy werdykt na nasz koszt.",
     "app.pricing.sub":

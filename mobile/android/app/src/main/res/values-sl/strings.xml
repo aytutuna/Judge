@@ -500,9 +500,6 @@
     </plurals>
     <string name="app_history_row_selected">Selected</string>
     <string name="app_history_row_not_selected">Not selected</string>
-    <string name="app_history_clear_all">Izbriši vse</string>
-    <string name="app_history_clear_confirm">Želiš s tega telefona izbrisati vse shranjene razsodbe? Povezave za deljenje bodo še naprej delovale.</string>
-    <string name="app_history_clear_yes">Da, izbriši vse</string>
     <string name="app_pricing_free_account">Prijavi se z Apple, Googlom ali e-pošto</string>
     <string name="app_pricing_headline">Prva razsodba gre na naš račun.</string>
     <string name="app_pricing_sub">Ustvari račun in prva razsodba je brezplačna, z vsemi funkcijami. Potem izberi paket ali mesečno naročnino.</string>

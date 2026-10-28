@@ -474,9 +474,6 @@
     </plurals>
     <string name="app_history_row_selected">Selected</string>
     <string name="app_history_row_not_selected">Not selected</string>
-    <string name="app_history_clear_all">सगळे डिलीट करा</string>
-    <string name="app_history_clear_confirm">या फोनवरचे सगळे सेव्ह केलेले निकाल डिलीट करायचे? शेअर लिंक चालू राहतील.</string>
-    <string name="app_history_clear_yes">हो, डिलीट करा</string>
     <string name="app_pricing_free_account">Apple, Google किंवा ईमेलने साइन इन करा</string>
     <string name="app_pricing_headline">पहिला निकाल आमच्याकडून.</string>
     <string name="app_pricing_sub">खाते उघडा, तुमचा पहिला निकाल सगळ्या सुविधांसह मोफत. त्यानंतर एखादा पॅक निवडा किंवा मासिक प्लॅन घ्या.</string>

@@ -11,10 +11,6 @@ const sk: AppLocale = {
     "app.history.deviceOnly":
       "Uložené len v tomto telefóne. Keď tu verdikt vymažeš, jeho odkaz na zdieľanie bude fungovať ďalej.",
     "app.history.delete": "Vymazať",
-    "app.history.clearAll": "Vymazať všetko",
-    "app.history.clearConfirm":
-      "Vymazať z tohto telefónu všetky uložené verdikty? Odkazy na zdieľanie budú fungovať ďalej.",
-    "app.history.clearYes": "Áno, vymazať",
     "app.pricing.free.account": "Prihlás sa cez Apple, Google alebo e-mail",
     "app.pricing.headline": "Prvý verdikt ide na nás.",
     "app.pricing.sub":

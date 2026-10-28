@@ -11,9 +11,6 @@ const or: AppLocale = {
     "app.history.empty": "ଏଯାଏଁ କୌଣସି ରାୟ ନାହିଁ। ଆପଣଙ୍କ ପ୍ରଥମ ଝଗଡ଼ା ମେଣ୍ଟାନ୍ତୁ, ତା'ର ରାୟ ଏଠାରେ ଦେଖାଯିବ।",
     "app.history.deviceOnly": "କେବଳ ଏହି ଫୋନ୍‌ରେ ସେଭ୍ ହୋଇଛି। ଏଠାରୁ କୌଣସି ରାୟ ଡିଲିଟ୍ କଲେ ବି ତା'ର ସେୟାର୍ ଲିଙ୍କ୍ ବନ୍ଦ ହୁଏ ନାହିଁ।",
     "app.history.delete": "ଡିଲିଟ୍",
-    "app.history.clearAll": "ସବୁ ଡିଲିଟ୍ କରନ୍ତୁ",
-    "app.history.clearConfirm": "ଏହି ଫୋନ୍‌ରେ ସେଭ୍ ହୋଇଥିବା ସବୁ ରାୟ ଡିଲିଟ୍ କରିବେ? ସେୟାର୍ ଲିଙ୍କ୍‌ଗୁଡ଼ିକ କାମ କରୁଥିବ।",
-    "app.history.clearYes": "ହଁ, ସବୁ ଡିଲିଟ୍ କରନ୍ତୁ",
     "app.pricing.free.account": "Apple, Google ବା ଇମେଲ୍ ସହ ସାଇନ୍ ଇନ୍ କରନ୍ତୁ",
     "app.pricing.headline": "ପ୍ରଥମ ରାୟ ଆମ ତରଫରୁ।",
     "app.pricing.sub":

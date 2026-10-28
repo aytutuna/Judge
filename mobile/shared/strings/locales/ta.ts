@@ -11,10 +11,6 @@ const ta: AppLocale = {
     "app.history.deviceOnly":
       "இவை இந்தப் போனில் மட்டுமே சேமிக்கப்பட்டுள்ளன. இங்கே ஒன்றை நீக்கினாலும், அதன் பகிர்வு லிங்க் தொடர்ந்து வேலை செய்யும்.",
     "app.history.delete": "நீக்கு",
-    "app.history.clearAll": "அனைத்தையும் நீக்கு",
-    "app.history.clearConfirm":
-      "இந்தப் போனில் சேமித்த எல்லாத் தீர்ப்புகளையும் நீக்கவா? பகிர்வு லிங்க்குகள் தொடர்ந்து வேலை செய்யும்.",
-    "app.history.clearYes": "ஆம், அனைத்தையும் நீக்கு",
     "app.pricing.free.account": "Apple, Google அல்லது ஈமெயில் மூலம் உள்நுழையுங்கள்",
     "app.pricing.headline": "முதல் தீர்ப்பு எங்கள் செலவில்.",
     "app.pricing.sub":

@@ -474,9 +474,6 @@
     </plurals>
     <string name="app_history_row_selected">Selected</string>
     <string name="app_history_row_not_selected">Not selected</string>
-    <string name="app_history_clear_all">Alles verwijderen</string>
-    <string name="app_history_clear_confirm">Alle bewaarde uitspraken van deze telefoon verwijderen? Deellinks blijven werken.</string>
-    <string name="app_history_clear_yes">Ja, verwijderen</string>
     <string name="app_pricing_free_account">Log in met Apple, Google of e-mail</string>
     <string name="app_pricing_headline">Je eerste uitspraak is van het huis.</string>
     <string name="app_pricing_sub">Maak een account aan en je eerste uitspraak is gratis, met alles erop en eraan. Daarna kies je een bundel of neem je een maandabonnement.</string>

@@ -12,10 +12,6 @@ const uk: AppLocale = {
     "app.history.deviceOnly":
       "Вердикти зберігаються лише на цьому телефоні. Якщо видалити вердикт тут, посилання на нього й далі працюватиме.",
     "app.history.delete": "Видалити",
-    "app.history.clearAll": "Видалити всі",
-    "app.history.clearConfirm":
-      "Видалити всі збережені вердикти з цього телефона? Посилання для поширення працюватимуть і далі.",
-    "app.history.clearYes": "Так, видалити",
     "app.pricing.free.account": "Увійди через Apple, Google або пошту",
     "app.pricing.headline": "Перший вердикт — за наш рахунок.",
     "app.pricing.sub":

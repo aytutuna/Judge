@@ -12,9 +12,6 @@ const ur: AppLocale = {
     "app.history.deviceOnly":
       "یہ فیصلے صرف اسی فون پر محفوظ ہیں۔ یہاں سے کوئی فیصلہ حذف کرنے سے اس کا شیئر لنک بند نہیں ہوتا۔",
     "app.history.delete": "حذف کریں",
-    "app.history.clearAll": "سب حذف کریں",
-    "app.history.clearConfirm": "اس فون سے تمام محفوظ فیصلے حذف کر دیں؟ شیئر لنکس کام کرتے رہیں گے۔",
-    "app.history.clearYes": "ہاں، حذف کر دیں",
     "app.pricing.free.account": "Apple، Google یا ای میل سے سائن ان کریں",
     "app.pricing.headline": "پہلا فیصلہ ہماری طرف سے۔",
     "app.pricing.sub":

@@ -474,9 +474,6 @@
     </plurals>
     <string name="app_history_row_selected">Selected</string>
     <string name="app_history_row_not_selected">Not selected</string>
-    <string name="app_history_clear_all">அனைத்தையும் நீக்கு</string>
-    <string name="app_history_clear_confirm">இந்தப் போனில் சேமித்த எல்லாத் தீர்ப்புகளையும் நீக்கவா? பகிர்வு லிங்க்குகள் தொடர்ந்து வேலை செய்யும்.</string>
-    <string name="app_history_clear_yes">ஆம், அனைத்தையும் நீக்கு</string>
     <string name="app_pricing_free_account">Apple, Google அல்லது ஈமெயில் மூலம் உள்நுழையுங்கள்</string>
     <string name="app_pricing_headline">முதல் தீர்ப்பு எங்கள் செலவில்.</string>
     <string name="app_pricing_sub">கணக்கைத் தொடங்குங்கள், முதல் தீர்ப்பு எல்லா அம்சங்களுடனும் இலவசம். அதன் பிறகு ஒரு பேக்கைத் தேர்ந்தெடுங்கள் அல்லது மாதாந்திர பிளானுக்கு மாறுங்கள்.</string>

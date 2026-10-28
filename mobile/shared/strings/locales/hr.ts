@@ -12,10 +12,6 @@ const hr: AppLocale = {
     "app.history.deviceOnly":
       "Spremljeno samo na ovom telefonu. Ako presudu izbrišeš ovdje, njezina poveznica za dijeljenje i dalje radi.",
     "app.history.delete": "Izbriši",
-    "app.history.clearAll": "Izbriši sve",
-    "app.history.clearConfirm":
-      "Izbrisati sve spremljene presude s ovog telefona? Poveznice za dijeljenje i dalje rade.",
-    "app.history.clearYes": "Da, izbriši sve",
     "app.pricing.free.account": "Prijavi se s Appleom, Googleom ili e-poštom",
     "app.pricing.headline": "Prvu presudu častimo.",
     "app.pricing.sub":

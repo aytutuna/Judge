@@ -11,9 +11,6 @@ const cs: AppLocale = {
     "app.history.deviceOnly":
       "Uloženo jen v tomhle telefonu. Když tu verdikt smažeš, jeho sdílený odkaz bude fungovat dál.",
     "app.history.delete": "Smazat",
-    "app.history.clearAll": "Smazat vše",
-    "app.history.clearConfirm": "Smazat z tohohle telefonu všechny uložené verdikty? Sdílené odkazy budou fungovat dál.",
-    "app.history.clearYes": "Ano, smazat",
     "app.pricing.free.account": "Přihlas se přes Apple, Google nebo e-mail",
     "app.pricing.headline": "První verdikt máš od nás.",
     "app.pricing.sub":

@@ -579,9 +579,6 @@ enum L10n {
     static func appHistoryDeleteConfirm(_ lang: AppLang, n: Int) -> String { plural("app.history.deleteConfirm", lang, n) }
     static func appHistoryRowSelected(_ lang: AppLang) -> String { string("app.history.rowSelected", lang) }
     static func appHistoryRowNotSelected(_ lang: AppLang) -> String { string("app.history.rowNotSelected", lang) }
-    static func appHistoryClearAll(_ lang: AppLang) -> String { string("app.history.clearAll", lang) }
-    static func appHistoryClearConfirm(_ lang: AppLang) -> String { string("app.history.clearConfirm", lang) }
-    static func appHistoryClearYes(_ lang: AppLang) -> String { string("app.history.clearYes", lang) }
     static func appPricingFreeAccount(_ lang: AppLang) -> String { string("app.pricing.free.account", lang) }
     static func appPricingHeadline(_ lang: AppLang) -> String { string("app.pricing.headline", lang) }
     static func appPricingSub(_ lang: AppLang) -> String { string("app.pricing.sub", lang) }
@@ -1107,9 +1104,6 @@ enum L10n {
         "app.history.deselectAll",
         "app.history.rowSelected",
         "app.history.rowNotSelected",
-        "app.history.clearAll",
-        "app.history.clearConfirm",
-        "app.history.clearYes",
         "app.pricing.free.account",
         "app.pricing.headline",
         "app.pricing.sub",

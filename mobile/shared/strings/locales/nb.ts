@@ -12,10 +12,6 @@ const nb: AppLocale = {
     "app.history.deviceOnly":
       "Lagres bare på denne telefonen. Sletter du en dom her, fjernes ikke delingslenken.",
     "app.history.delete": "Slett",
-    "app.history.clearAll": "Slett alle",
-    "app.history.clearConfirm":
-      "Vil du slette alle lagrede dommer fra denne telefonen? Delingslenkene virker fortsatt.",
-    "app.history.clearYes": "Ja, slett dem",
     "app.pricing.free.account": "Logg inn med Apple, Google eller e-post",
     "app.pricing.headline": "Den første dommen spanderer vi.",
     "app.pricing.sub":
