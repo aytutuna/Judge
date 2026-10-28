@@ -219,6 +219,8 @@ enum L10n {
     static func accountLoading(_ lang: AppLang) -> String { string("account.loading", lang) }
     static func pricingTitle(_ lang: AppLang) -> String { string("pricing.title", lang) }
     static func pricingLead(_ lang: AppLang) -> String { string("pricing.lead", lang) }
+    static func pricingTitleMember(_ lang: AppLang) -> String { string("pricing.titleMember", lang) }
+    static func pricingLeadMember(_ lang: AppLang) -> String { string("pricing.leadMember", lang) }
     static func pricingIncludedTitle(_ lang: AppLang) -> String { string("pricing.included.title", lang) }
     static func pricingBuyTitle(_ lang: AppLang) -> String { string("pricing.buy.title", lang) }
     static func pricingPremiumF1(_ lang: AppLang) -> String { string("pricing.premium.f1", lang) }
@@ -478,6 +480,8 @@ enum L10n {
     static func appPricingFreeAccount(_ lang: AppLang) -> String { string("app.pricing.free.account", lang) }
     static func appPricingHeadline(_ lang: AppLang) -> String { string("app.pricing.headline", lang) }
     static func appPricingSub(_ lang: AppLang) -> String { string("app.pricing.sub", lang) }
+    static func appPricingHeadlineMember(_ lang: AppLang) -> String { string("app.pricing.headlineMember", lang) }
+    static func appPricingSubMember(_ lang: AppLang) -> String { string("app.pricing.subMember", lang) }
     static func appBalanceLeft(_ lang: AppLang, n: Int) -> String { format("app.balance.left", lang, n) }
     static func appBalanceMonthly(_ lang: AppLang, left: String, cap: String) -> String { format("app.balance.monthly", lang, left, cap) }
     static func appBalanceNone(_ lang: AppLang) -> String { string("app.balance.none", lang) }
@@ -786,6 +790,8 @@ enum L10n {
         "account.loading",
         "pricing.title",
         "pricing.lead",
+        "pricing.titleMember",
+        "pricing.leadMember",
         "pricing.included.title",
         "pricing.buy.title",
         "pricing.premium.f1",
@@ -1019,6 +1025,8 @@ enum L10n {
         "app.pricing.free.account",
         "app.pricing.headline",
         "app.pricing.sub",
+        "app.pricing.headlineMember",
+        "app.pricing.subMember",
         "app.balance.none",
         "app.balance.caseCost",
         "app.cancel",

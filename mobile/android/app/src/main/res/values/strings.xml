@@ -208,6 +208,8 @@
     <string name="account_loading">Loading your account…</string>
     <string name="pricing_title">Your first verdict is on us.</string>
     <string name="pricing_lead">Create an account and your first verdict is free, with every feature. After that, pick a pack or go monthly.</string>
+    <string name="pricing_title_member">Get more verdicts.</string>
+    <string name="pricing_lead_member">Pick a pack or go monthly. Every verdict gets the full panel.</string>
     <string name="pricing_included_title">Every verdict</string>
     <string name="pricing_buy_title">Packs and the monthly plan</string>
     <string name="pricing_premium_f1">Facts checked on the web, with the sources on your verdict</string>
@@ -473,6 +475,8 @@
     <string name="app_pricing_free_account">Sign in with Apple, Google or email</string>
     <string name="app_pricing_headline">Your first verdict is on us.</string>
     <string name="app_pricing_sub">Create an account and your first verdict is free, with every feature. After that, pick a pack or go monthly.</string>
+    <string name="app_pricing_headline_member">Get more verdicts.</string>
+    <string name="app_pricing_sub_member">Pick a pack or go monthly. Every verdict gets the full panel.</string>
     <plurals name="app_balance_left">
         <item quantity="one">%1$d verdict left</item>
         <item quantity="other">%1$d verdicts left</item>

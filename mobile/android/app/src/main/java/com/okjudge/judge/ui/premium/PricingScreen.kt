@@ -116,11 +116,11 @@ fun PricingScreen(
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     Kicker(s.navPricing)
                     Text(
-                        s.appPricingHeadline,
+                        if (signedIn) s.appPricingHeadlineMember else s.appPricingHeadline,
                         style = JudgeType.sectionTitle.copy(fontSize = JudgeType.sectionTitle.fontSize * 1.3f),
                         modifier = Modifier.semantics { heading() },
                     )
-                    Text(s.appPricingSub, style = JudgeType.lead)
+                    Text(if (signedIn) s.appPricingSubMember else s.appPricingSub, style = JudgeType.lead)
                 }
 
                 if (signedIn && entitlement != null) {

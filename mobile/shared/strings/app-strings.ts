@@ -36,6 +36,11 @@ export const APP_STRINGS: Record<string, { en: string; tr: string }> = {
     en: "Create an account and your first verdict is free, with every feature. After that, pick a pack or go monthly.",
     tr: "Hesap açtığında ilk kararın bütün özellikleriyle ücretsiz. Sonrasında bir paket seç ya da aylık plana geç.",
   },
+  "app.pricing.headlineMember": { en: "Get more verdicts.", tr: "Daha fazla karar al." },
+  "app.pricing.subMember": {
+    en: "Pick a pack or go monthly. Every verdict gets the full panel.",
+    tr: "Bir paket seç ya da aylık plana geç. Her karar eksiksiz yargılanır.",
+  },
   // Every verdict, a case included, uses one credit or one of the monthly plan's.
   "app.balance.left.one": { en: "{n} verdict left", tr: "{n} karar hakkın kaldı" },
   "app.balance.left.other": { en: "{n} verdicts left", tr: "{n} karar hakkın kaldı" },

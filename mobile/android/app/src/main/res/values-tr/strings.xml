@@ -208,6 +208,8 @@
     <string name="account_loading">Hesabın yükleniyor…</string>
     <string name="pricing_title">İlk kararın bizden.</string>
     <string name="pricing_lead">Bir hesap aç, ilk kararın tüm özellikleriyle ücretsiz. Sonrasında bir paket seç ya da aylık plana geç.</string>
+    <string name="pricing_title_member">Daha fazla karar al.</string>
+    <string name="pricing_lead_member">Bir paket seç ya da aylık plana geç. Her karar eksiksiz yargılanır.</string>
     <string name="pricing_included_title">Her kararda</string>
     <string name="pricing_buy_title">Paketler ve aylık plan</string>
     <string name="pricing_premium_f1">Olgular internette kontrol edilir, kaynaklar kararında görünür</string>
@@ -473,6 +475,8 @@
     <string name="app_pricing_free_account">Apple, Google ya da e-postayla giriş yap</string>
     <string name="app_pricing_headline">İlk karar bizden.</string>
     <string name="app_pricing_sub">Hesap açtığında ilk kararın bütün özellikleriyle ücretsiz. Sonrasında bir paket seç ya da aylık plana geç.</string>
+    <string name="app_pricing_headline_member">Daha fazla karar al.</string>
+    <string name="app_pricing_sub_member">Bir paket seç ya da aylık plana geç. Her karar eksiksiz yargılanır.</string>
     <plurals name="app_balance_left">
         <item quantity="one">%1$d karar hakkın kaldı</item>
         <item quantity="other">%1$d karar hakkın kaldı</item>

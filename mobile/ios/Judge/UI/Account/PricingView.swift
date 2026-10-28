@@ -24,11 +24,11 @@ struct PricingView: View {
             VStack(alignment: .leading, spacing: 20) {
                 VStack(alignment: .leading, spacing: 10) {
                     Kicker(text: L10n.navPricing(lang))
-                    Text(L10n.appPricingHeadline(lang))
+                    Text(account.isSignedIn ? L10n.appPricingHeadlineMember(lang) : L10n.appPricingHeadline(lang))
                         .brandText(Self.title)
                         .foregroundStyle(Brand.ink)
                         .accessibilityAddTraits(.isHeader)
-                    Text(L10n.appPricingSub(lang))
+                    Text(account.isSignedIn ? L10n.appPricingSubMember(lang) : L10n.appPricingSub(lang))
                         .brandText(.lead)
                         .foregroundStyle(Brand.ink2)
                         .fixedSize(horizontal: false, vertical: true)

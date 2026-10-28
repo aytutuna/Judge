@@ -213,6 +213,8 @@ class Strings(private val res: Resources) {
     val accountLoading: String get() = res.getString(R.string.account_loading)
     val pricingTitle: String get() = res.getString(R.string.pricing_title)
     val pricingLead: String get() = res.getString(R.string.pricing_lead)
+    val pricingTitleMember: String get() = res.getString(R.string.pricing_title_member)
+    val pricingLeadMember: String get() = res.getString(R.string.pricing_lead_member)
     val pricingIncludedTitle: String get() = res.getString(R.string.pricing_included_title)
     val pricingBuyTitle: String get() = res.getString(R.string.pricing_buy_title)
     val pricingPremiumF1: String get() = res.getString(R.string.pricing_premium_f1)
@@ -472,6 +474,8 @@ class Strings(private val res: Resources) {
     val appPricingFreeAccount: String get() = res.getString(R.string.app_pricing_free_account)
     val appPricingHeadline: String get() = res.getString(R.string.app_pricing_headline)
     val appPricingSub: String get() = res.getString(R.string.app_pricing_sub)
+    val appPricingHeadlineMember: String get() = res.getString(R.string.app_pricing_headline_member)
+    val appPricingSubMember: String get() = res.getString(R.string.app_pricing_sub_member)
     fun appBalanceLeft(n: Int): String = res.getQuantityString(R.plurals.app_balance_left, n, n)
     fun appBalanceMonthly(left: String, cap: String): String = res.getString(R.string.app_balance_monthly, left, cap)
     val appBalanceNone: String get() = res.getString(R.string.app_balance_none)
@@ -779,6 +783,8 @@ class Strings(private val res: Resources) {
             "account.loading" -> R.string.account_loading
             "pricing.title" -> R.string.pricing_title
             "pricing.lead" -> R.string.pricing_lead
+            "pricing.titleMember" -> R.string.pricing_title_member
+            "pricing.leadMember" -> R.string.pricing_lead_member
             "pricing.included.title" -> R.string.pricing_included_title
             "pricing.buy.title" -> R.string.pricing_buy_title
             "pricing.premium.f1" -> R.string.pricing_premium_f1
@@ -1012,6 +1018,8 @@ class Strings(private val res: Resources) {
             "app.pricing.free.account" -> R.string.app_pricing_free_account
             "app.pricing.headline" -> R.string.app_pricing_headline
             "app.pricing.sub" -> R.string.app_pricing_sub
+            "app.pricing.headlineMember" -> R.string.app_pricing_headline_member
+            "app.pricing.subMember" -> R.string.app_pricing_sub_member
             "app.balance.none" -> R.string.app_balance_none
             "app.balance.caseCost" -> R.string.app_balance_case_cost
             "app.cancel" -> R.string.app_cancel
