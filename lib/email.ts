@@ -7,7 +7,7 @@
  */
 
 import { emailCopy, loadLocales, type EmailCopy, type Lang } from "./i18n";
-import { isLang } from "./langs";
+import { isLang, langDir } from "./langs";
 import { PALETTE as P } from "./palette";
 
 const RESEND_URL = "https://api.resend.com/emails";
@@ -60,6 +60,11 @@ export function langFromMagicLink(url: string): Lang {
   }
 }
 
+/** The opening html tag; right-to-left languages say so. */
+function htmlTag(lang: Lang): string {
+  return langDir(lang) === "rtl" ? `<html lang="${lang}" dir="rtl">` : `<html lang="${lang}">`;
+}
+
 function escapeHtml(s: string): string {
   return s
     .replace(/&/g, "&amp;")
@@ -73,7 +78,7 @@ export function signInEmailContent(url: string, lang: Lang): EmailContent {
   const c = copy(lang).signIn;
   const text = `${c.intro}\n\n${url}\n\n${c.expiry}\n${c.ignore}\n`;
   // Ivory & Terracotta, inline styles only (email clients drop <style>).
-  const html = `<!doctype html><html lang="${lang}"><body style="margin:0;padding:32px 16px;background:${P.ivory};font-family:Georgia,'Times New Roman',serif;color:${P.ink}">
+  const html = `<!doctype html>${htmlTag(lang)}<body style="margin:0;padding:32px 16px;background:${P.ivory};font-family:Georgia,'Times New Roman',serif;color:${P.ink}">
 <div style="max-width:480px;margin:0 auto;background:${P.paper};border:1px solid ${P.strata};border-radius:12px;padding:32px">
 <p style="font-size:22px;margin:0 0 16px">Judge</p>
 <p style="font-size:16px;line-height:1.5;margin:0 0 24px">${escapeHtml(c.intro)}</p>
@@ -131,7 +136,7 @@ ${code}
 ${c.expiry}
 ${c.ignore}
 `;
-  const html = `<!doctype html><html lang="${lang}"><body style="margin:0;padding:32px 16px;background:${P.ivory};font-family:Georgia,'Times New Roman',serif;color:${P.ink}">
+  const html = `<!doctype html>${htmlTag(lang)}<body style="margin:0;padding:32px 16px;background:${P.ivory};font-family:Georgia,'Times New Roman',serif;color:${P.ink}">
 <div style="max-width:480px;margin:0 auto;background:${P.paper};border:1px solid ${P.strata};border-radius:12px;padding:32px">
 <p style="font-size:22px;margin:0 0 16px">Judge</p>
 <p style="font-size:16px;line-height:1.5;margin:0 0 16px">${escapeHtml(c.intro)}</p>
@@ -151,7 +156,7 @@ export async function sendSignInCodeEmail({ to, code, lang }: { to: string; code
 export function caseReadyEmailContent(url: string, lang: Lang): EmailContent {
   const c = copy(lang).caseReady;
   const text = `${c.intro}\n\n${url}\n\n${c.note}\n`;
-  const html = `<!doctype html><html lang="${lang}"><body style="margin:0;padding:32px 16px;background:${P.ivory};font-family:Georgia,'Times New Roman',serif;color:${P.ink}">
+  const html = `<!doctype html>${htmlTag(lang)}<body style="margin:0;padding:32px 16px;background:${P.ivory};font-family:Georgia,'Times New Roman',serif;color:${P.ink}">
 <div style="max-width:480px;margin:0 auto;background:${P.paper};border:1px solid ${P.strata};border-radius:12px;padding:32px">
 <p style="font-size:22px;margin:0 0 16px">Judge</p>
 <p style="font-size:16px;line-height:1.5;margin:0 0 24px">${escapeHtml(c.intro)}</p>

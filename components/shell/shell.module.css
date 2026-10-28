@@ -167,7 +167,7 @@ a.row:hover .title {
   max-width: 45%;
   color: var(--muted);
   font-size: 13px;
-  text-align: right;
+  text-align: end;
 }
 
 .note {

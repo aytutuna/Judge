@@ -1,6 +1,6 @@
 import { useEffect, useSyncExternalStore } from "react";
 import { hasStrings, loadLocale, subscribeLocales, type Lang } from "./i18n";
-import { isEnabled, matchLang } from "./langs";
+import { isEnabled, langDir, matchLang } from "./langs";
 
 /**
  * Client-side language preference: a module-level external store consumed
@@ -42,7 +42,9 @@ function wanted(): Lang {
 }
 
 function applyDocumentLang(l: Lang): void {
-  if (typeof document !== "undefined") document.documentElement.lang = l;
+  if (typeof document === "undefined") return;
+  document.documentElement.lang = l;
+  document.documentElement.dir = langDir(l);
 }
 
 export function setLang(l: Lang): void {

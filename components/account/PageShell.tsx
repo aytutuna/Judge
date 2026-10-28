@@ -2,6 +2,7 @@
 
 import type { ReactNode } from "react";
 import { type Lang } from "@/lib/i18n";
+import { langDir } from "@/lib/langs";
 import { noOrphan } from "@/lib/text";
 import { SiteFooter, SiteHeader, SkipLink } from "../SiteChrome";
 import { AppShell } from "../shell/AppShell";
@@ -48,7 +49,7 @@ export function PageShell({
     );
   }
   return (
-    <div lang={lang} className="contents">
+    <div lang={lang} dir={langDir(lang)} className="contents">
       <SkipLink lang={lang} />
       <SiteHeader lang={lang} toggle />
       {main}

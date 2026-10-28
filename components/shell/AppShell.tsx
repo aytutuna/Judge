@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 import { t, type Lang } from "@/lib/i18n";
+import { langDir } from "@/lib/langs";
 import { useViewer } from "@/lib/use-viewer";
 import { accountEntry } from "../AccountMenu";
 import { SiteFooter, SiteHeader, SkipLink } from "../SiteChrome";
@@ -36,7 +37,7 @@ export function AppShell({
   const pathname = usePathname();
   const { config, me } = useViewer();
   return (
-    <div lang={lang} className={styles.shell} data-tabs={tabs ? "" : undefined}>
+    <div lang={lang} dir={langDir(lang)} className={styles.shell} data-tabs={tabs ? "" : undefined}>
       <SkipLink lang={lang} />
       <SiteHeader lang={lang} toggle={toggle}>
         <Link

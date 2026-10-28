@@ -46,13 +46,13 @@
     gap: 72px;
   }
   .copy {
-    text-align: left;
+    text-align: start;
   }
   .title {
     max-inline-size: 14ch;
   }
   .lead {
-    margin-left: 0;
+    margin-inline-start: 0;
   }
   .cardWrap {
     max-width: none;

@@ -52,7 +52,7 @@
   display: inline-block;
   width: 14px;
   height: 14px;
-  margin-right: 4px;
+  margin-inline-end: 4px;
   vertical-align: -1px;
   color: var(--terra);
 }
@@ -308,10 +308,10 @@
   background: var(--paper);
 }
 .accountA {
-  border-left: 4px solid var(--terra);
+  border-inline-start: 4px solid var(--terra);
 }
 .accountB {
-  border-left: 4px solid var(--sage-strong);
+  border-inline-start: 4px solid var(--sage-strong);
 }
 .accountHead {
   display: flex;
@@ -720,7 +720,7 @@
   background: var(--terra);
 }
 .both i:last-child {
-  margin-left: -3px;
+  margin-inline-start: -3px;
   background: var(--sage-strong);
   box-shadow: 0 0 0 1.5px var(--paper);
 }
@@ -837,7 +837,7 @@
   padding: 14px 16px;
   border-radius: 18px;
   border: 1px solid var(--line);
-  border-left: 4px solid var(--ink);
+  border-inline-start: 4px solid var(--ink);
   background: #fbf6ef;
 }
 .wouldChange ul {
@@ -845,7 +845,7 @@
   flex-direction: column;
   gap: 6px;
   margin: 0;
-  padding-left: 18px;
+  padding-inline-start: 18px;
   color: var(--ink-2);
   font-size: 15px;
   line-height: 1.5;

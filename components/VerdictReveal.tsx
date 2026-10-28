@@ -1,5 +1,6 @@
 import type { CruxTrial, VerdictResult } from "@/lib/types";
 import { t, type Key, type Lang } from "@/lib/i18n";
+import { langDir } from "@/lib/langs";
 import { hyphenRuns, stripLeadingEmoji } from "@/lib/text";
 import { confidenceLabel, leanTally, stampLabel, tugFinal, verdictLabel } from "@/lib/verdict-display";
 import { MainSlot } from "./verdict/VerdictMain";
@@ -261,7 +262,7 @@ export function VerdictReveal({
               <span className={styles.branchLead}>
                 {t(lang, "ifPrefix")} {conditionalClause(c.if_value, lang, keepCase)}
               </span>
-              <span aria-hidden> → </span>
+              <span aria-hidden> {langDir(lang) === "rtl" ? "←" : "→"} </span>
               {c.then}
             </div>
           ))}

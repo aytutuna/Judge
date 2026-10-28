@@ -3,6 +3,7 @@
 import { useId, useMemo } from "react";
 import type { NameMapping, VerdictResult } from "@/lib/types";
 import { languageName, t, type Key, type Lang } from "@/lib/i18n";
+import { langDir } from "@/lib/langs";
 import { useLang } from "@/lib/lang";
 import { consistentSelfMap, partyNames, personalizeResult, resolveParties, type SelfParty } from "@/lib/names";
 import { verdictLang } from "@/lib/content-lang";
@@ -48,7 +49,7 @@ function bestPointTitle(
  * "German → English", which needs no grammar in any language. */
 function translatedFrom(lang: Lang, source: Lang): string {
   if (source === "en" || source === "tr") return t(lang, source === "tr" ? "translate.from.tr" : "translate.from.en");
-  return `${languageName(lang, source)} → ${languageName(lang, lang)}`;
+  return `${languageName(lang, source)} ${langDir(lang) === "rtl" ? "←" : "→"} ${languageName(lang, lang)}`;
 }
 
 /** Small status pill above a verdict whose text is (being) translated.

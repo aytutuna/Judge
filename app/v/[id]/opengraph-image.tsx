@@ -1,7 +1,8 @@
 import { ImageResponse } from "next/og";
-import { ACCENT_A, ACCENT_B, OG_SIZE, OgCard, ogFonts } from "@/components/OgCard";
+import { ACCENT_A, ACCENT_B, OG_SIZE, OgCard, ogCanDraw, ogFonts } from "@/components/OgCard";
+import { verdictLang } from "@/lib/content-lang";
 import { confidenceLabel, tugFinal, verdictLabel } from "@/lib/verdict-display";
-import { contentLang, loadLocales, t } from "@/lib/i18n";
+import { loadLocales, t } from "@/lib/i18n";
 import { resolveParties, restoreNames } from "@/lib/names";
 import { getPublicVerdict } from "@/lib/originals/display";
 import { publicNameMap } from "@/lib/originals-types";
@@ -27,7 +28,9 @@ async function latestRound(id: string, kind: string | undefined): Promise<Verdic
 /**
  * Preview card for a shared verdict: the ruling, its headline and the
  * tug-of-war bar. Crawlers send no language preference, so the label follows
- * the language the verdict text was judged in. Party names are the display
+ * the language the verdict text was judged in. A verdict in a script the
+ * card's fonts cannot draw gets the plain English card with its tug-of-war
+ * bar instead. Party names are the display
  * names the writer chose for the share page (labels when there are none or
  * names are switched off). A removed verdict gets a plain "removed" card
  * (no ruling pill, no tug-of-war bar) with HTTP 410. When the removal state
@@ -46,31 +49,33 @@ export default async function Image({ params }: { params: Promise<{ id: string }
   await loadLocales();
 
   if (found?.removed) {
-    const lang = contentLang(`${found.stored.result.headline} ${found.stored.result.crux}`);
+    const judged = verdictLang(found.stored.result);
+    const lang = ogCanDraw(t(judged, "removed.title"), t(judged, "removed.body")) ? judged : "en";
     return new ImageResponse(
       <OgCard title={t(lang, "removed.title")} footer={t(lang, "removed.body")} />,
       { ...size, fonts, status: 410, headers: { "Cache-Control": "no-store" } },
     );
   }
 
-  const stored = found?.stored ?? null;
-  if (!stored) {
-    return new ImageResponse(
+  const generic = (tugA: number) =>
+    new ImageResponse(
       (
         <OgCard
           eyebrow="Three independent AI judges"
           title={t("en", "hero.titleLine1")}
           titleSerif={t("en", "hero.titleLine2")}
           footer="Settle your own argument"
-          tugA={50}
+          tugA={tugA}
         />
       ),
       { ...size, fonts },
     );
-  }
+
+  const stored = found?.stored ?? null;
+  if (!stored) return generic(50);
 
   const r = (await latestRound(id, found?.meta?.kind)) ?? stored.result;
-  const lang = contentLang(`${r.headline} ${r.crux}`);
+  const lang = verdictLang(r);
   const display = found?.display ?? null;
   const nameA = display?.a ?? t(lang, "party.a");
   const nameB = display?.b ?? t(lang, "party.b");
@@ -82,19 +87,16 @@ export default async function Image({ params }: { params: Promise<{ id: string }
     : undefined;
   const accent =
     r.verdict === "side_a" ? ACCENT_A : r.verdict === "side_b" ? ACCENT_B : undefined;
-  const cta = t(lang, "shared.cta").replace(/\s*→$/, "");
+  const cta = t(lang, "shared.cta").replace(/\s*[→←]$/, "");
   const confidence = confidenceLabel(lang, r);
+  const eyebrow = leanLine ?? t(lang, `badge.${r.dispute_type}`);
+  const subtitle = restoreNames(r.headline, parties, lang);
+  const footer = confidence ? `${confidence}  ·  ${cta}` : cta;
+  if (!ogCanDraw(eyebrow, label, subtitle, footer)) return generic(tugFinal(r));
 
   return new ImageResponse(
     (
-      <OgCard
-        eyebrow={leanLine ?? t(lang, `badge.${r.dispute_type}`)}
-        title={label}
-        subtitle={restoreNames(r.headline, parties, lang)}
-        footer={confidence ? `${confidence}  ·  ${cta}` : cta}
-        tugA={tugFinal(r)}
-        accent={accent}
-      />
+      <OgCard eyebrow={eyebrow} title={label} subtitle={subtitle} footer={footer} tugA={tugFinal(r)} accent={accent} />
     ),
     { ...size, fonts },
   );

@@ -3,6 +3,7 @@
 import { useEffect, useId, useMemo, useState, type ReactNode } from "react";
 import { verdictLang } from "@/lib/content-lang";
 import { t, type Lang } from "@/lib/i18n";
+import { langDir } from "@/lib/langs";
 import { useLocaleLang } from "@/lib/lang";
 import type { DisplayState } from "@/lib/originals-types";
 import { useOwnerToken } from "@/lib/owner-store";
@@ -138,7 +139,7 @@ export function SharedVerdict({
           argument={ownView.originalStatus === "stored" ? (ownView.original?.text ?? null) : null}
           missing={ownView.originalStatus === "unreadable" ? "owner.unreadable" : "owner.notStored"}
           verdict={
-            <div lang={lang} className="flex flex-col gap-4 min-w-0">
+            <div lang={lang} dir={langDir(lang)} className="flex flex-col gap-4 min-w-0">
               {langRow}
               <VerdictView
                 result={current.result}
@@ -156,7 +157,7 @@ export function SharedVerdict({
             </div>
           }
           followUp={
-            <div lang={lang} className="flex flex-col gap-6 min-w-0">
+            <div lang={lang} dir={langDir(lang)} className="flex flex-col gap-6 min-w-0">
               {appeal.panel}
               <VerdictHistory
                 lang={lang}
@@ -189,7 +190,7 @@ export function SharedVerdict({
       </h1>
       {balance}
       <div className={cardClassName}>
-        <div lang={lang} className="flex flex-col gap-4 min-w-0">
+        <div lang={lang} dir={langDir(lang)} className="flex flex-col gap-4 min-w-0">
           {langRow}
           <VerdictView
             result={current.result}
