@@ -68,7 +68,7 @@ Perguntas ou pedidos sobre os teus dados: https://okjudge.com
 
 ## Keywords (App Store, max 100, no spaces after commas)
 
-discussão,zanga,casal,namorados,colegas,árbitro,juiz,mediador,debate,veredicto,conflito,justo,factos
+discussão,zanga,casal,namorados,colegas,árbitro,rixa,mediador,debate,veredicto,conflito,justo,factos
 
 ## What's new in 1.0 (max 500)
 

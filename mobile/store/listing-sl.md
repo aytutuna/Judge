@@ -2,7 +2,7 @@
 
 ## App name (max 30)
 
-Judge – Razsodi prepir
+Judge - Razsodi prepir
 
 ## Subtitle (App Store, max 30)
 

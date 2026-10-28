@@ -2,7 +2,7 @@
 
 ## App name (max 30)
 
-Judge – Kdo má pravdu?
+Judge - Kdo má pravdu?
 
 ## Subtitle (App Store, max 30)
 

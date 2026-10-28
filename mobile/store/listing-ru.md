@@ -2,7 +2,7 @@
 
 ## App name (max 30)
 
-Judge — кто прав в споре?
+Judge - кто прав в споре?
 
 ## Subtitle (App Store, max 30)
 

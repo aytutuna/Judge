@@ -68,7 +68,7 @@ Pytania lub prośby dotyczące twoich danych: https://okjudge.com
 
 ## Keywords (App Store, max 100, no spaces after commas)
 
-kłótnia,spór,sprzeczka,rozjemca,arbiter,sędzia,debata,dyskusja,konflikt,związek,para,współlokator
+kłótnia,spór,sprzeczka,rozjemca,arbiter,mediator,debata,dyskusja,konflikt,związek,para,współlokator
 
 ## What's new in 1.0 (max 500)
 
