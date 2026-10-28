@@ -7,7 +7,8 @@ import SwiftData
 /// only) with no network.
 ///
 /// Launch argument: `-JudgeScreenshotState <screen>:<lang>`, where screen is
-/// `home`, `home-recent` (saved verdicts in the Recent row), `home-error`,
+/// `home`, `home-recent` (saved verdicts in the Recent row), `home-example`
+/// (both sides filled by "Try an example"), `home-error`,
 /// `judging`, `history`, `settings`, `signin`, `signin-code`, `account`
 /// (Settings, signed in), `verdict/<sample>` (a key of `verdictResponses`,
 /// opened as a saved verdict), `verdict-thread` (a fresh verdict under its
@@ -32,6 +33,7 @@ struct ScreenshotState {
     enum Screen: Equatable {
         case home
         case homeRecent
+        case homeExample
         case homeError
         case judging
         case verdict(sample: String)
@@ -62,7 +64,7 @@ struct ScreenshotState {
 
     var tab: RootTab {
         switch screen {
-        case .home, .homeRecent, .homeError, .judging, .verdict, .verdictThread, .verdictContext, .signIn, .signInCode,
+        case .home, .homeRecent, .homeExample, .homeError, .judging, .verdict, .verdictThread, .verdictContext, .signIn, .signInCode,
              .tierLocked, .tierPremium, .pricing, .pricingStore, .clarify, .evidence, .judgingPremium, .modeBoth, .caseDetail:
             return .new
         case .history, .historyCases: return .history
@@ -83,6 +85,7 @@ struct ScreenshotState {
         switch name {
         case "home": screen = .home
         case "home-recent": screen = .homeRecent
+        case "home-example": screen = .homeExample
         case "home-error": screen = .homeError
         case "judging": screen = .judging
         case "verdict-thread": screen = .verdictThread
@@ -158,6 +161,12 @@ struct ScreenshotState {
         switch screen {
         case .home, .settings:
             break
+        case .homeExample:
+            let example = ExampleCase.all[0]
+            app.home.caseName = example.myName(lang)
+            app.home.argument = example.mine(lang)
+            app.home.otherName = example.theirName(lang)
+            app.home.otherSide = example.theirs(lang)
         case .homeError:
             app.home.argument = ExampleArgument.all[0].text(lang)
             app.home.showForScreenshot(error: .timeout)

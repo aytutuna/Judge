@@ -296,3 +296,21 @@ struct ExampleArgument: Sendable, Identifiable {
 
     static let all: [ExampleArgument] = ["hotdog", "tomato", "whiteLie", "knuckles", "pineapple"].map { ExampleArgument(id: $0) }
 }
+
+/// "Try an example" on Home: both names and both sides of a made-up argument.
+struct ExampleCase: Sendable, Equatable {
+    let id: String
+
+    func myName(_ lang: AppLang) -> String { L10n.text("app.example.\(id).aName", lang) ?? "" }
+    func mine(_ lang: AppLang) -> String { L10n.text("app.example.\(id).a", lang) ?? "" }
+    func theirName(_ lang: AppLang) -> String { L10n.text("app.example.\(id).bName", lang) ?? "" }
+    func theirs(_ lang: AppLang) -> String { L10n.text("app.example.\(id).b", lang) ?? "" }
+
+    static let all: [ExampleCase] = ["dishwasher", "bill", "thermostat", "roadTrip", "seat", "spoiler", "jacket", "lastSlice"]
+        .map { ExampleCase(id: $0) }
+
+    /// Any example but `last`, so every tap changes what is on screen.
+    static func random(after last: String?) -> ExampleCase {
+        all.filter { $0.id != last }.randomElement() ?? all[0]
+    }
+}

@@ -127,6 +127,7 @@ struct HomeView: View {
     /// send them a link" makes a two-sided case instead.
     private func form(_ lang: AppLang, home: HomeModel) -> some View {
         VStack(alignment: .leading, spacing: 12) {
+            exampleButton(lang, home: home)
             if home.isBlank {
                 lead(lang)
             }
@@ -146,6 +147,17 @@ struct HomeView: View {
             }
             submitSection(lang, home: home)
         }
+    }
+
+    private func exampleButton(_ lang: AppLang, home: HomeModel) -> some View {
+        Button {
+            focused = nil
+            home.fillExample(lang: lang)
+        } label: {
+            Label(L10n.appHomeExample(lang), systemImage: "shuffle")
+        }
+        .buttonStyle(ChipButtonStyle())
+        .disabled(home.isBusy)
     }
 
     private func lead(_ lang: AppLang) -> some View {

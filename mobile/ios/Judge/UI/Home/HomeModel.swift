@@ -104,6 +104,8 @@ final class HomeModel {
     /// What a premium request judges, fixed when it was submitted.
     @ObservationIgnored private var premiumInput: PremiumInput?
     @ObservationIgnored private let keys = IdempotencyKeys()
+    /// The example "Try an example" filled in last, so the next tap picks another.
+    @ObservationIgnored private var lastExample: String?
     /// Told when the server refuses the session (401 signin_required) and
     /// when a premium outcome changes the balance.
     @ObservationIgnored private weak var account: AccountModel?
@@ -647,6 +649,17 @@ final class HomeModel {
         judgingPremium = false
         evidence.clear()
         path.removeAll()
+    }
+
+    /// "Try an example": both names and both sides from a random example,
+    /// over whatever was typed.
+    func fillExample(lang: AppLang) {
+        let example = ExampleCase.random(after: lastExample)
+        lastExample = example.id
+        caseName = example.myName(lang)
+        argument = example.mine(lang)
+        otherName = example.theirName(lang)
+        otherSide = example.theirs(lang)
     }
 
     func dismissError() {
