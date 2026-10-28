@@ -552,7 +552,6 @@
     </plurals>
     <string name="app_balance_monthly">Tento měsíc ti zbývá %1$s z %2$s</string>
     <string name="app_balance_none">Došly ti verdikty</string>
-    <string name="app_balance_case_cost">Odeslání odkazu stojí 1 verdikt</string>
     <string name="app_cancel">Zrušit</string>
     <string name="app_retry">Zkusit znovu</string>
     <string name="app_error_offline">Vypadá to, že nejsi online. Zkontroluj připojení a zkus to znovu.</string>

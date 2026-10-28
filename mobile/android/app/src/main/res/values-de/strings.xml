@@ -518,7 +518,6 @@
     </plurals>
     <string name="app_balance_monthly">Noch %1$s von %2$s diesen Monat</string>
     <string name="app_balance_none">Keine Urteile mehr übrig</string>
-    <string name="app_balance_case_cost">Einen Link zu schicken kostet 1 Urteil</string>
     <string name="app_cancel">Abbrechen</string>
     <string name="app_retry">Noch mal versuchen</string>
     <string name="app_error_offline">Du bist anscheinend offline. Prüf deine Verbindung und versuch es noch mal.</string>

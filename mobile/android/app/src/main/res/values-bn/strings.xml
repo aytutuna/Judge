@@ -518,7 +518,6 @@
     </plurals>
     <string name="app_balance_monthly">এ মাসে %2$sটির মধ্যে %1$sটি বাকি</string>
     <string name="app_balance_none">আর কোনো রায় বাকি নেই</string>
-    <string name="app_balance_case_cost">লিংক পাঠালে 1টি রায় খরচ হয়</string>
     <string name="app_cancel">বাতিল</string>
     <string name="app_retry">আবার চেষ্টা করুন</string>
     <string name="app_error_offline">মনে হচ্ছে আপনি অফলাইনে আছেন। ইন্টারনেট সংযোগ দেখে আবার চেষ্টা করুন।</string>

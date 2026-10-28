@@ -39,7 +39,6 @@ const el: AppLocale = {
     "app.balance.left": "Σου έμειναν {n} αποφάσεις",
     "app.balance.monthly": "Απομένουν {left} από {cap} αυτόν τον μήνα",
     "app.balance.none": "Δεν σου έμειναν αποφάσεις",
-    "app.balance.caseCost": "Η αποστολή συνδέσμου κοστίζει 1 απόφαση",
     "app.cancel": "Άκυρο",
     "app.retry": "Δοκίμασε ξανά",
     "app.error.offline": "Μάλλον είσαι εκτός σύνδεσης. Έλεγξε τη σύνδεσή σου και δοκίμασε ξανά.",

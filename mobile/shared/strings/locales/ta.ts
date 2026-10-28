@@ -39,7 +39,6 @@ const ta: AppLocale = {
     "app.balance.left": "{n} தீர்ப்புகள் மீதம்",
     "app.balance.monthly": "இந்த மாதம் {cap}-இல் {left} மீதம்",
     "app.balance.none": "தீர்ப்புகள் எதுவும் மீதம் இல்லை",
-    "app.balance.caseCost": "லிங்க் அனுப்ப 1 தீர்ப்பு செலவாகும்",
     "app.cancel": "ரத்துசெய்",
     "app.retry": "மீண்டும் முயல்க",
     "app.error.offline": "நீங்கள் ஆஃப்லைனில் இருப்பதுபோல் தெரிகிறது. இணைப்பைச் சரிபார்த்து மீண்டும் முயலுங்கள்.",

@@ -87,7 +87,6 @@ object HomeTags {
     const val SEND_LINK = "home.sendLink"
     const val EXAMPLE = "home.example"
     const val BALANCE = "home.balance"
-    const val CASE_COST = "home.caseCost"
 }
 
 /**
@@ -198,7 +197,6 @@ fun HomeScreen(
                     // Once their side is written here there is nothing left for them to write.
                     if (state.casesOn && state.otherSide.isBlank()) {
                         SendLink(enabled = state.canSendLink && !blocked, onClick = onSendLink)
-                        Text(s.appBalanceCaseCost, style = JudgeType.slotText.copy(color = Palette.ink2), modifier = Modifier.testTag(HomeTags.CASE_COST))
                     }
                 }
                 if (!state.blank) Counter(length, lang, Modifier.align(Alignment.End))

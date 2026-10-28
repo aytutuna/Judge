@@ -37,7 +37,6 @@ const ur: AppLocale = {
     "app.balance.left": "{n} فیصلے باقی",
     "app.balance.monthly": "اس مہینے {cap} میں سے {left} باقی",
     "app.balance.none": "کوئی فیصلہ باقی نہیں",
-    "app.balance.caseCost": "لنک بھیجنے میں 1 فیصلہ استعمال ہوتا ہے",
     "app.cancel": "منسوخ کریں",
     "app.retry": "دوبارہ کوشش کریں",
     "app.error.offline": "لگتا ہے آپ آف لائن ہیں۔ اپنا کنکشن چیک کر کے دوبارہ کوشش کریں۔",

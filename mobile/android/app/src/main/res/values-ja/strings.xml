@@ -501,7 +501,6 @@
     </plurals>
     <string name="app_balance_monthly">今月の残り：%2$s回中%1$s回</string>
     <string name="app_balance_none">判定回数が残っていません</string>
-    <string name="app_balance_case_cost">リンクを送ると判定1回分を使います</string>
     <string name="app_cancel">キャンセル</string>
     <string name="app_retry">もう一度試す</string>
     <string name="app_error_offline">オフラインのようです。接続を確認して、もう一度お試しください。</string>

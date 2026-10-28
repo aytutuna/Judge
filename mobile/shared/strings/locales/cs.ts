@@ -38,7 +38,6 @@ const cs: AppLocale = {
     "app.balance.left": "Zbývá ti {n} verdiktů",
     "app.balance.monthly": "Tento měsíc ti zbývá {left} z {cap}",
     "app.balance.none": "Došly ti verdikty",
-    "app.balance.caseCost": "Odeslání odkazu stojí 1 verdikt",
     "app.cancel": "Zrušit",
     "app.retry": "Zkusit znovu",
     "app.error.offline": "Vypadá to, že nejsi online. Zkontroluj připojení a zkus to znovu.",

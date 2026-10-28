@@ -34,7 +34,6 @@ const ko: AppLocale = {
     "app.balance.left": "판결 {n}회 남음",
     "app.balance.monthly": "이번 달 {cap}회 중 {left}회 남음",
     "app.balance.none": "남은 판결 없음",
-    "app.balance.caseCost": "링크를 보내면 판결 1회를 사용해요",
     "app.cancel": "취소",
     "app.retry": "다시 시도",
     "app.error.offline": "오프라인 상태인 것 같아요. 인터넷 연결을 확인하고 다시 시도해 주세요.",

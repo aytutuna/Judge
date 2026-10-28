@@ -518,7 +518,6 @@
     </plurals>
     <string name="app_balance_monthly">या महिन्यात %2$s पैकी %1$s शिल्लक</string>
     <string name="app_balance_none">एकही निकाल शिल्लक नाही</string>
-    <string name="app_balance_case_cost">लिंक पाठवण्यासाठी 1 निकाल लागतो</string>
     <string name="app_cancel">रद्द करा</string>
     <string name="app_retry">पुन्हा प्रयत्न करा</string>
     <string name="app_error_offline">तुम्ही ऑफलाइन आहात असे दिसते. कनेक्शन तपासून पुन्हा प्रयत्न करा.</string>

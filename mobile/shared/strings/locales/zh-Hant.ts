@@ -32,7 +32,6 @@ const zhHant: AppLocale = {
     "app.balance.left": "剩 {n} 次判決",
     "app.balance.monthly": "本月剩 {left}/{cap} 次",
     "app.balance.none": "判決次數用完了",
-    "app.balance.caseCost": "傳送連結會用掉 1 次判決",
     "app.cancel": "取消",
     "app.retry": "再試一次",
     "app.error.offline": "你好像沒有連上網路。檢查一下連線，再試一次。",

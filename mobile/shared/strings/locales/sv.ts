@@ -38,7 +38,6 @@ const sv: AppLocale = {
     "app.balance.left": "{n} domar kvar",
     "app.balance.monthly": "{left} av {cap} kvar den här månaden",
     "app.balance.none": "Inga domar kvar",
-    "app.balance.caseCost": "Att skicka en länk kostar 1 dom",
     "app.cancel": "Avbryt",
     "app.retry": "Försök igen",
     "app.error.offline": "Du verkar vara offline. Kolla din uppkoppling och försök igen.",

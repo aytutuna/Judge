@@ -36,7 +36,6 @@ const ptPT: AppLocale = {
     "app.balance.left": "Restam {n} veredictos",
     "app.balance.monthly": "{left} de {cap} por usar este mês",
     "app.balance.none": "Não te restam veredictos",
-    "app.balance.caseCost": "Enviar um link gasta 1 veredicto",
     "app.cancel": "Cancelar",
     "app.retry": "Tentar outra vez",
     "app.error.offline": "Parece que estás sem internet. Verifica a ligação e tenta outra vez.",

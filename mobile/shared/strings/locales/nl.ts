@@ -36,7 +36,6 @@ const nl: AppLocale = {
     "app.balance.left": "Nog {n} uitspraken over",
     "app.balance.monthly": "Nog {left} van {cap} deze maand",
     "app.balance.none": "Geen uitspraken meer over",
-    "app.balance.caseCost": "Een link sturen kost 1 uitspraak",
     "app.cancel": "Annuleren",
     "app.retry": "Opnieuw proberen",
     "app.error.offline": "Je lijkt offline te zijn. Check je verbinding en probeer het opnieuw.",

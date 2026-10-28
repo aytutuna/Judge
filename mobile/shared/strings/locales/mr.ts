@@ -36,7 +36,6 @@ const mr: AppLocale = {
     "app.balance.left": "{n} निकाल शिल्लक",
     "app.balance.monthly": "या महिन्यात {cap} पैकी {left} शिल्लक",
     "app.balance.none": "एकही निकाल शिल्लक नाही",
-    "app.balance.caseCost": "लिंक पाठवण्यासाठी 1 निकाल लागतो",
     "app.cancel": "रद्द करा",
     "app.retry": "पुन्हा प्रयत्न करा",
     "app.error.offline": "तुम्ही ऑफलाइन आहात असे दिसते. कनेक्शन तपासून पुन्हा प्रयत्न करा.",

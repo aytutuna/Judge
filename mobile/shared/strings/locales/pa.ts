@@ -35,7 +35,6 @@ const pa: AppLocale = {
     "app.balance.left": "{n} ਫ਼ੈਸਲੇ ਬਾਕੀ",
     "app.balance.monthly": "ਇਸ ਮਹੀਨੇ {cap} ਵਿੱਚੋਂ {left} ਬਾਕੀ",
     "app.balance.none": "ਕੋਈ ਫ਼ੈਸਲਾ ਬਾਕੀ ਨਹੀਂ",
-    "app.balance.caseCost": "ਲਿੰਕ ਭੇਜਣ ’ਤੇ 1 ਫ਼ੈਸਲਾ ਲੱਗਦਾ ਹੈ",
     "app.cancel": "ਰੱਦ ਕਰੋ",
     "app.retry": "ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ",
     "app.error.offline": "ਲੱਗਦਾ ਹੈ ਤੁਸੀਂ ਆਫ਼ਲਾਈਨ ਹੋ। ਆਪਣਾ ਕਨੈਕਸ਼ਨ ਦੇਖ ਕੇ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।",

@@ -38,7 +38,6 @@ const uk: AppLocale = {
     "app.balance.left": "Залишилося {n} вердиктів",
     "app.balance.monthly": "Цього місяця залишилося {left} з {cap}",
     "app.balance.none": "Вердиктів не залишилося",
-    "app.balance.caseCost": "Надсилання посилання спише 1 вердикт",
     "app.cancel": "Скасувати",
     "app.retry": "Спробувати ще раз",
     "app.error.offline": "Схоже, немає інтернету. Перевір з’єднання й спробуй ще раз.",

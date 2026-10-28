@@ -36,7 +36,6 @@ const he: AppLocale = {
     "app.balance.left": "נשארו {n} פסקי דין",
     "app.balance.monthly": "יתרה החודש: {left} מתוך {cap}",
     "app.balance.none": "לא נשארו פסקי דין",
-    "app.balance.caseCost": "שליחת קישור עולה פסק דין אחד",
     "app.cancel": "ביטול",
     "app.retry": "לנסות שוב",
     "app.error.offline": "נראה שאין חיבור לאינטרנט. כדאי לבדוק את החיבור ולנסות שוב.",

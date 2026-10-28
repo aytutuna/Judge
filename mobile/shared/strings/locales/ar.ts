@@ -41,7 +41,6 @@ const ar: AppLocale = {
     "app.balance.left": "بقي لك {n} حكم",
     "app.balance.monthly": "المتبقي هذا الشهر: {left} من {cap}",
     "app.balance.none": "لم يبقَ لك أي حكم",
-    "app.balance.caseCost": "إرسال الرابط يستهلك حكمًا واحدًا",
     "app.cancel": "إلغاء",
     "app.retry": "إعادة المحاولة",
     "app.error.offline":

@@ -535,7 +535,6 @@
     </plurals>
     <string name="app_balance_monthly">Disponibles este mes: %1$s de %2$s</string>
     <string name="app_balance_none">No te quedan veredictos</string>
-    <string name="app_balance_case_cost">Enviar un enlace usa 1 veredicto</string>
     <string name="app_cancel">Cancelar</string>
     <string name="app_retry">Reintentar</string>
     <string name="app_error_offline">Parece que no tienes conexión. Revísala y vuelve a intentarlo.</string>

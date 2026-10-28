@@ -552,7 +552,6 @@
     </plurals>
     <string name="app_balance_monthly">Ta mesec na voljo še %1$s od %2$s</string>
     <string name="app_balance_none">Nimaš več razsodb</string>
-    <string name="app_balance_case_cost">Pošiljanje povezave porabi 1 razsodbo</string>
     <string name="app_cancel">Prekliči</string>
     <string name="app_retry">Poskusi znova</string>
     <string name="app_error_offline">Kaže, da ni povezave s spletom. Preveri povezavo in poskusi znova.</string>

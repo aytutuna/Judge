@@ -552,7 +552,6 @@
     </plurals>
     <string name="app_balance_monthly">Цього місяця залишилося %1$s з %2$s</string>
     <string name="app_balance_none">Вердиктів не залишилося</string>
-    <string name="app_balance_case_cost">Надсилання посилання спише 1 вердикт</string>
     <string name="app_cancel">Скасувати</string>
     <string name="app_retry">Спробувати ще раз</string>
     <string name="app_error_offline">Схоже, немає інтернету. Перевір з’єднання й спробуй ще раз.</string>

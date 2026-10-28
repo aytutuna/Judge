@@ -36,7 +36,6 @@ const de: AppLocale = {
     "app.balance.left": "{n} Urteile übrig",
     "app.balance.monthly": "Noch {left} von {cap} diesen Monat",
     "app.balance.none": "Keine Urteile mehr übrig",
-    "app.balance.caseCost": "Einen Link zu schicken kostet 1 Urteil",
     "app.cancel": "Abbrechen",
     "app.retry": "Noch mal versuchen",
     "app.error.offline": "Du bist anscheinend offline. Prüf deine Verbindung und versuch es noch mal.",

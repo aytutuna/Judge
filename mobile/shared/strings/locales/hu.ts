@@ -35,7 +35,6 @@ const hu: AppLocale = {
     "app.balance.left": "Még {n} ítéleted maradt",
     "app.balance.monthly": "Ebben a hónapban még {left}/{cap} maradt",
     "app.balance.none": "Elfogytak az ítéleteid",
-    "app.balance.caseCost": "A link elküldése 1 ítéletbe kerül",
     "app.cancel": "Mégse",
     "app.retry": "Újrapróbálás",
     "app.error.offline": "Úgy tűnik, nincs internetkapcsolatod. Ellenőrizd, és próbáld újra.",

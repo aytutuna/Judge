@@ -36,7 +36,6 @@ const bn: AppLocale = {
     "app.balance.left": "আর {n}টি রায় বাকি",
     "app.balance.monthly": "এ মাসে {cap}টির মধ্যে {left}টি বাকি",
     "app.balance.none": "আর কোনো রায় বাকি নেই",
-    "app.balance.caseCost": "লিংক পাঠালে 1টি রায় খরচ হয়",
     "app.cancel": "বাতিল",
     "app.retry": "আবার চেষ্টা করুন",
     "app.error.offline": "মনে হচ্ছে আপনি অফলাইনে আছেন। ইন্টারনেট সংযোগ দেখে আবার চেষ্টা করুন।",

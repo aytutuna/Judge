@@ -586,7 +586,6 @@
     </plurals>
     <string name="app_balance_monthly">المتبقي هذا الشهر: %1$s من %2$s</string>
     <string name="app_balance_none">لم يبقَ لك أي حكم</string>
-    <string name="app_balance_case_cost">إرسال الرابط يستهلك حكمًا واحدًا</string>
     <string name="app_cancel">إلغاء</string>
     <string name="app_retry">إعادة المحاولة</string>
     <string name="app_error_offline">يبدو أنك غير متصل بالإنترنت. تحقّق من اتصالك وحاول مجددًا.</string>

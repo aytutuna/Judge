@@ -38,7 +38,6 @@ const pl: AppLocale = {
     "app.balance.left": "Zostało ci {n} werdyktów",
     "app.balance.monthly": "Zostało w tym miesiącu: {left} z {cap}",
     "app.balance.none": "Skończyły ci się werdykty",
-    "app.balance.caseCost": "Wysłanie linku zużywa 1 werdykt",
     "app.cancel": "Anuluj",
     "app.retry": "Spróbuj ponownie",
     "app.error.offline": "Wygląda na to, że nie masz internetu. Sprawdź połączenie i spróbuj ponownie.",

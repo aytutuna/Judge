@@ -35,7 +35,6 @@ const vi: AppLocale = {
     "app.balance.left": "Còn {n} lượt phán quyết",
     "app.balance.monthly": "Tháng này còn {left}/{cap} lượt",
     "app.balance.none": "Hết lượt phán quyết",
-    "app.balance.caseCost": "Gửi liên kết sẽ dùng 1 lượt phán quyết",
     "app.cancel": "Hủy",
     "app.retry": "Thử lại",
     "app.error.offline": "Có vẻ bạn đang mất mạng. Kiểm tra kết nối rồi thử lại nhé.",

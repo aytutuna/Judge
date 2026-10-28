@@ -39,7 +39,6 @@ const ro: AppLocale = {
     "app.balance.left": "Mai ai {n} de verdicte",
     "app.balance.monthly": "Mai ai {left} din {cap} luna asta",
     "app.balance.none": "Nu mai ai verdicte",
-    "app.balance.caseCost": "Trimiterea unui link folosește 1 verdict",
     "app.cancel": "Anulează",
     "app.retry": "Încearcă din nou",
     "app.error.offline": "Se pare că nu ai internet. Verifică-ți conexiunea și încearcă din nou.",

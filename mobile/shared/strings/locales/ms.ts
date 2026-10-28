@@ -38,7 +38,6 @@ const ms: AppLocale = {
     "app.balance.left": "Tinggal {n} keputusan",
     "app.balance.monthly": "Tinggal {left} daripada {cap} bulan ini",
     "app.balance.none": "Keputusan sudah habis",
-    "app.balance.caseCost": "Menghantar pautan menggunakan 1 keputusan",
     "app.cancel": "Batal",
     "app.retry": "Cuba lagi",
     "app.error.offline": "Nampaknya anda di luar talian. Semak sambungan anda dan cuba lagi.",

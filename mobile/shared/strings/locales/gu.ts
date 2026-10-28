@@ -41,7 +41,6 @@ const gu: AppLocale = {
     "app.balance.left": "{n} ચુકાદા બાકી",
     "app.balance.monthly": "આ મહિને {cap}માંથી {left} બાકી",
     "app.balance.none": "કોઈ ચુકાદો બાકી નથી",
-    "app.balance.caseCost": "લિંક મોકલવામાં 1 ચુકાદો વપરાય છે",
     "app.cancel": "રદ કરો",
     "app.retry": "ફરી પ્રયાસ કરો",
     "app.error.offline":

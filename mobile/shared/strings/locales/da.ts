@@ -35,7 +35,6 @@ const da: AppLocale = {
     "app.balance.left": "{n} domme tilbage",
     "app.balance.monthly": "{left} af {cap} tilbage denne måned",
     "app.balance.none": "Ingen domme tilbage",
-    "app.balance.caseCost": "Det koster 1 dom at sende et link",
     "app.cancel": "Annuller",
     "app.retry": "Prøv igen",
     "app.error.offline": "Det ser ud til, at du er offline. Tjek din forbindelse, og prøv igen.",

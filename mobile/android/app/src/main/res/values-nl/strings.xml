@@ -518,7 +518,6 @@
     </plurals>
     <string name="app_balance_monthly">Nog %1$s van %2$s deze maand</string>
     <string name="app_balance_none">Geen uitspraken meer over</string>
-    <string name="app_balance_case_cost">Een link sturen kost 1 uitspraak</string>
     <string name="app_cancel">Annuleren</string>
     <string name="app_retry">Opnieuw proberen</string>
     <string name="app_error_offline">Je lijkt offline te zijn. Check je verbinding en probeer het opnieuw.</string>

@@ -518,7 +518,6 @@
     </plurals>
     <string name="app_balance_monthly">Ebben a hónapban még %1$s/%2$s maradt</string>
     <string name="app_balance_none">Elfogytak az ítéleteid</string>
-    <string name="app_balance_case_cost">A link elküldése 1 ítéletbe kerül</string>
     <string name="app_cancel">Mégse</string>
     <string name="app_retry">Újrapróbálás</string>
     <string name="app_error_offline">Úgy tűnik, nincs internetkapcsolatod. Ellenőrizd, és próbáld újra.</string>

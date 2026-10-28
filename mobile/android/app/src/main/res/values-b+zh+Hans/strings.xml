@@ -501,7 +501,6 @@
     </plurals>
     <string name="app_balance_monthly">本月还剩 %1$s/%2$s 次</string>
     <string name="app_balance_none">裁决次数已用完</string>
-    <string name="app_balance_case_cost">发送链接会消耗 1 次裁决</string>
     <string name="app_cancel">取消</string>
     <string name="app_retry">重试</string>
     <string name="app_error_offline">你好像没联网。检查一下网络连接，再试一次。</string>

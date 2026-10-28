@@ -38,7 +38,6 @@ const ru: AppLocale = {
     "app.balance.left": "Осталось {n} вердиктов",
     "app.balance.monthly": "В этом месяце осталось {left} из {cap}",
     "app.balance.none": "Вердиктов не осталось",
-    "app.balance.caseCost": "Отправка ссылки спишет 1 вердикт",
     "app.cancel": "Отмена",
     "app.retry": "Повторить",
     "app.error.offline": "Похоже, вы не в сети. Проверьте подключение и попробуйте снова.",

@@ -38,7 +38,6 @@ const es: AppLocale = {
     "app.balance.left": "Te quedan {n} veredictos",
     "app.balance.monthly": "Disponibles este mes: {left} de {cap}",
     "app.balance.none": "No te quedan veredictos",
-    "app.balance.caseCost": "Enviar un enlace usa 1 veredicto",
     "app.cancel": "Cancelar",
     "app.retry": "Reintentar",
     "app.error.offline": "Parece que no tienes conexión. Revísala y vuelve a intentarlo.",

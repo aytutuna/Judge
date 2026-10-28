@@ -552,7 +552,6 @@
     </plurals>
     <string name="app_balance_monthly">В этом месяце осталось %1$s из %2$s</string>
     <string name="app_balance_none">Вердиктов не осталось</string>
-    <string name="app_balance_case_cost">Отправка ссылки спишет 1 вердикт</string>
     <string name="app_cancel">Отмена</string>
     <string name="app_retry">Повторить</string>
     <string name="app_error_offline">Похоже, вы не в сети. Проверьте подключение и попробуйте снова.</string>

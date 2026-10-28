@@ -40,7 +40,6 @@ const sl: AppLocale = {
     "app.balance.left": "Na voljo še {n} razsodb",
     "app.balance.monthly": "Ta mesec na voljo še {left} od {cap}",
     "app.balance.none": "Nimaš več razsodb",
-    "app.balance.caseCost": "Pošiljanje povezave porabi 1 razsodbo",
     "app.cancel": "Prekliči",
     "app.retry": "Poskusi znova",
     "app.error.offline":

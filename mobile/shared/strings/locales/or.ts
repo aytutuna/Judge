@@ -36,7 +36,6 @@ const or: AppLocale = {
     "app.balance.left": "{n}ଟି ରାୟ ବାକି",
     "app.balance.monthly": "ଏହି ମାସ {cap}ଟିରୁ {left}ଟି ବାକି",
     "app.balance.none": "ଆଉ କୌଣସି ରାୟ ବାକି ନାହିଁ",
-    "app.balance.caseCost": "ଲିଙ୍କ୍ ପଠାଇଲେ 1ଟି ରାୟ ଖର୍ଚ୍ଚ ହୁଏ",
     "app.cancel": "ବାତିଲ୍",
     "app.retry": "ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ",
     "app.error.offline": "ଆପଣ ଅଫଲାଇନ୍ ଥିବା ପରି ଲାଗୁଛି। ଇଣ୍ଟରନେଟ୍ ସଂଯୋଗ ଯାଞ୍ଚ କରି ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ।",

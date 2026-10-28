@@ -518,7 +518,6 @@
     </plurals>
     <string name="app_balance_monthly">இந்த மாதம் %2$s-இல் %1$s மீதம்</string>
     <string name="app_balance_none">தீர்ப்புகள் எதுவும் மீதம் இல்லை</string>
-    <string name="app_balance_case_cost">லிங்க் அனுப்ப 1 தீர்ப்பு செலவாகும்</string>
     <string name="app_cancel">ரத்துசெய்</string>
     <string name="app_retry">மீண்டும் முயல்க</string>
     <string name="app_error_offline">நீங்கள் ஆஃப்லைனில் இருப்பதுபோல் தெரிகிறது. இணைப்பைச் சரிபார்த்து மீண்டும் முயலுங்கள்.</string>

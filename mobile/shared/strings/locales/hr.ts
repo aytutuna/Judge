@@ -40,7 +40,6 @@ const hr: AppLocale = {
     "app.balance.left": "Još {n} presuda",
     "app.balance.monthly": "Ovaj mjesec još {left} od {cap}",
     "app.balance.none": "Nemaš više presuda",
-    "app.balance.caseCost": "Slanje poveznice troši 1 presudu",
     "app.cancel": "Odustani",
     "app.retry": "Pokušaj ponovno",
     "app.error.offline": "Čini se da nemaš pristup internetu. Provjeri vezu i pokušaj ponovno.",

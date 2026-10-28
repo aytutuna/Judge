@@ -74,13 +74,12 @@ class PremiumScreensTest {
         WireJson.json.decodeFromString(MeResponse.serializer(), Fixtures.verdicts["me"]!!.jsonObject[name].toString())
 
     @Test
-    fun home_balanceUnderTheButton_andTheCaseCost_onlyWhenSignedIn() {
+    fun home_balanceUnderTheButton_onlyWhenSignedIn() {
         var state by mutableStateOf(premiumHome(EvidenceState(max = 3)))
         compose.setContent {
             Themed(AppLang.EN) { HomeScreen(state, {}, {}, {}, {}) }
         }
         compose.onNodeWithTag(HomeTags.BALANCE).assertTextEquals(en.appBalanceLeft(7))
-        compose.onNodeWithTag(HomeTags.CASE_COST).assertTextEquals(en.appBalanceCaseCost)
         state = state.copy(entitlement = me("no_credits").entitlement)
         compose.onNodeWithTag(HomeTags.BALANCE).assertTextEquals(en.appBalanceNone)
         compose.onNodeWithTag(HomeTags.SUBMIT).assertIsEnabled()
@@ -88,7 +87,6 @@ class PremiumScreensTest {
         compose.onAllNodesWithTag(HomeTags.BALANCE).assertCountEquals(0)
         state = state.copy(signedIn = false, entitlement = me("credits7").entitlement)
         compose.onAllNodesWithTag(HomeTags.BALANCE).assertCountEquals(0)
-        compose.onAllNodesWithTag(HomeTags.CASE_COST).assertCountEquals(0)
         compose.onAllNodesWithTag(EvidenceTags.ADD).assertCountEquals(0)
     }
 

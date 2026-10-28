@@ -518,7 +518,6 @@
     </plurals>
     <string name="app_balance_monthly">ఈ నెల %2$sలో మిగిలినవి: %1$s</string>
     <string name="app_balance_none">తీర్పులేవీ మిగల్లేదు</string>
-    <string name="app_balance_case_cost">లింక్ పంపితే 1 తీర్పు ఖర్చవుతుంది</string>
     <string name="app_cancel">రద్దు</string>
     <string name="app_retry">మళ్లీ ప్రయత్నించండి</string>
     <string name="app_error_offline">మీరు ఆఫ్‌లైన్‌లో ఉన్నట్టున్నారు. కనెక్షన్ చెక్ చేసి మళ్లీ ప్రయత్నించండి.</string>

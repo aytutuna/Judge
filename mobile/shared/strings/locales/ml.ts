@@ -38,7 +38,6 @@ const ml: AppLocale = {
     "app.balance.left": "{n} വിധികൾ ബാക്കി",
     "app.balance.monthly": "ഈ മാസം {cap}-ൽ {left} ബാക്കി",
     "app.balance.none": "വിധികളൊന്നും ബാക്കിയില്ല",
-    "app.balance.caseCost": "ലിങ്ക് അയയ്ക്കാൻ 1 വിധി ഉപയോഗിക്കും",
     "app.cancel": "റദ്ദാക്കൂ",
     "app.retry": "വീണ്ടും ശ്രമിക്കൂ",
     "app.error.offline": "നിങ്ങൾ ഓഫ്‌ലൈനാണെന്ന് തോന്നുന്നു. കണക്ഷൻ പരിശോധിച്ച് വീണ്ടും ശ്രമിക്കൂ.",

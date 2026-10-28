@@ -39,7 +39,6 @@ const kn: AppLocale = {
     "app.balance.left": "{n} ತೀರ್ಪುಗಳು ಉಳಿದಿವೆ",
     "app.balance.monthly": "ಈ ತಿಂಗಳು {cap}ರಲ್ಲಿ {left} ಬಾಕಿ ಇದೆ",
     "app.balance.none": "ತೀರ್ಪುಗಳು ಉಳಿದಿಲ್ಲ",
-    "app.balance.caseCost": "ಲಿಂಕ್ ಕಳುಹಿಸಲು 1 ತೀರ್ಪು ಖರ್ಚಾಗುತ್ತದೆ",
     "app.cancel": "ರದ್ದುಮಾಡಿ",
     "app.retry": "ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ",
     "app.error.offline": "ನೀವು ಆಫ್‌ಲೈನ್ ಇರುವಂತಿದೆ. ಇಂಟರ್ನೆಟ್ ಸಂಪರ್ಕ ಪರಿಶೀಲಿಸಿ ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.",

@@ -535,7 +535,6 @@
     </plurals>
     <string name="app_balance_monthly">Et queden %1$s de %2$s aquest mes</string>
     <string name="app_balance_none">No et queden veredictes</string>
-    <string name="app_balance_case_cost">Enviar un enllaç gasta 1 veredicte</string>
     <string name="app_cancel">Cancel·la</string>
     <string name="app_retry">Torna-ho a provar</string>
     <string name="app_error_offline">Sembla que no tens connexió. Comprova-la i torna-ho a provar.</string>

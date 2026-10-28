@@ -518,7 +518,6 @@
     </plurals>
     <string name="app_balance_monthly">%1$s of %2$s left this month</string>
     <string name="app_balance_none">No verdicts left</string>
-    <string name="app_balance_case_cost">Sending a link uses 1 verdict</string>
     <string name="app_cancel">Cancel</string>
     <string name="app_retry">Try again</string>
     <string name="app_error_offline">You seem to be offline. Check your connection and try again.</string>

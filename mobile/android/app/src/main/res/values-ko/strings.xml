@@ -501,7 +501,6 @@
     </plurals>
     <string name="app_balance_monthly">이번 달 %2$s회 중 %1$s회 남음</string>
     <string name="app_balance_none">남은 판결 없음</string>
-    <string name="app_balance_case_cost">링크를 보내면 판결 1회를 사용해요</string>
     <string name="app_cancel">취소</string>
     <string name="app_retry">다시 시도</string>
     <string name="app_error_offline">오프라인 상태인 것 같아요. 인터넷 연결을 확인하고 다시 시도해 주세요.</string>

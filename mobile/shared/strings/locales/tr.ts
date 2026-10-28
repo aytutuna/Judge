@@ -35,7 +35,6 @@ const tr: AppLocale = {
     "app.balance.left": "{n} karar hakkın kaldı",
     "app.balance.monthly": "Bu ay {cap} hakkından {left} tanesi kaldı",
     "app.balance.none": "Karar hakkın kalmadı",
-    "app.balance.caseCost": "Bağlantı göndermek 1 karar hakkı kullanır",
     "app.cancel": "Vazgeç",
     "app.retry": "Tekrar dene",
     "app.error.offline": "İnternete bağlı değilsin gibi. Bağlantını kontrol edip tekrar dene.",

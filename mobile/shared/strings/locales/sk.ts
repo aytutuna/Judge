@@ -37,7 +37,6 @@ const sk: AppLocale = {
     "app.balance.left": "Zostáva {n} verdiktov",
     "app.balance.monthly": "Zostávajúce verdikty tento mesiac: {left} z {cap}",
     "app.balance.none": "Nezostal ti žiadny verdikt",
-    "app.balance.caseCost": "Odoslanie odkazu stojí 1 verdikt",
     "app.cancel": "Zrušiť",
     "app.retry": "Skúsiť znova",
     "app.error.offline": "Vyzerá to, že nie si online. Skontroluj pripojenie a skús to znova.",

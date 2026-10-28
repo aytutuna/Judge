@@ -36,7 +36,6 @@ const fi: AppLocale = {
     "app.balance.left": "{n} tuomiota jäljellä",
     "app.balance.monthly": "Tässä kuussa jäljellä {left}/{cap}",
     "app.balance.none": "Ei tuomioita jäljellä",
-    "app.balance.caseCost": "Linkin lähettäminen käyttää 1 tuomion",
     "app.cancel": "Peruuta",
     "app.retry": "Yritä uudelleen",
     "app.error.offline": "Verkkoyhteys näyttää puuttuvan. Tarkista yhteys ja yritä uudelleen.",

@@ -37,7 +37,6 @@ const th: AppLocale = {
     "app.balance.left": "เหลือคำตัดสิน {n} ครั้ง",
     "app.balance.monthly": "เดือนนี้เหลือ {left} จาก {cap} ครั้ง",
     "app.balance.none": "คำตัดสินหมดแล้ว",
-    "app.balance.caseCost": "การส่งลิงก์ใช้คำตัดสิน 1 ครั้ง",
     "app.cancel": "ยกเลิก",
     "app.retry": "ลองอีกครั้ง",
     "app.error.offline": "ดูเหมือนคุณจะออฟไลน์อยู่ เช็กการเชื่อมต่อแล้วลองอีกครั้ง",

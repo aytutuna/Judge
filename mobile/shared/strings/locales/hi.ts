@@ -36,7 +36,6 @@ const hi: AppLocale = {
     "app.balance.left": "{n} फ़ैसले बाकी",
     "app.balance.monthly": "इस महीने {cap} में से {left} बाकी",
     "app.balance.none": "कोई फ़ैसला बाकी नहीं",
-    "app.balance.caseCost": "लिंक भेजने में 1 फ़ैसला लगता है",
     "app.cancel": "रद्द करें",
     "app.retry": "फिर कोशिश करें",
     "app.error.offline": "लगता है आप ऑफ़लाइन हैं। इंटरनेट कनेक्शन जाँचकर फिर कोशिश करें।",

@@ -33,7 +33,6 @@ const zhHans: AppLocale = {
     "app.balance.left": "还剩 {n} 次裁决",
     "app.balance.monthly": "本月还剩 {left}/{cap} 次",
     "app.balance.none": "裁决次数已用完",
-    "app.balance.caseCost": "发送链接会消耗 1 次裁决",
     "app.cancel": "取消",
     "app.retry": "重试",
     "app.error.offline": "你好像没联网。检查一下网络连接，再试一次。",

@@ -544,7 +544,6 @@ class Strings(private val res: Resources) {
     fun appBalanceLeft(n: Int): String = res.getQuantityString(R.plurals.app_balance_left, n, n.toString())
     fun appBalanceMonthly(left: String, cap: String): String = res.getString(R.string.app_balance_monthly, left, cap)
     val appBalanceNone: String get() = res.getString(R.string.app_balance_none)
-    val appBalanceCaseCost: String get() = res.getString(R.string.app_balance_case_cost)
     val appCancel: String get() = res.getString(R.string.app_cancel)
     val appRetry: String get() = res.getString(R.string.app_retry)
     val appErrorOffline: String get() = res.getString(R.string.app_error_offline)
@@ -1085,7 +1084,6 @@ class Strings(private val res: Resources) {
             "app.pricing.headlineMember" -> R.string.app_pricing_headline_member
             "app.pricing.subMember" -> R.string.app_pricing_sub_member
             "app.balance.none" -> R.string.app_balance_none
-            "app.balance.caseCost" -> R.string.app_balance_case_cost
             "app.cancel" -> R.string.app_cancel
             "app.retry" -> R.string.app_retry
             "app.error.offline" -> R.string.app_error_offline

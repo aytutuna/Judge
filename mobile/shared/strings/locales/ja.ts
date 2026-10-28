@@ -35,7 +35,6 @@ const ja: AppLocale = {
     "app.balance.left": "残り{n}回",
     "app.balance.monthly": "今月の残り：{cap}回中{left}回",
     "app.balance.none": "判定回数が残っていません",
-    "app.balance.caseCost": "リンクを送ると判定1回分を使います",
     "app.cancel": "キャンセル",
     "app.retry": "もう一度試す",
     "app.error.offline": "オフラインのようです。接続を確認して、もう一度お試しください。",

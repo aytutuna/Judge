@@ -518,7 +518,6 @@
     </plurals>
     <string name="app_balance_monthly">اس مہینے %2$s میں سے %1$s باقی</string>
     <string name="app_balance_none">کوئی فیصلہ باقی نہیں</string>
-    <string name="app_balance_case_cost">لنک بھیجنے میں 1 فیصلہ استعمال ہوتا ہے</string>
     <string name="app_cancel">منسوخ کریں</string>
     <string name="app_retry">دوبارہ کوشش کریں</string>
     <string name="app_error_offline">لگتا ہے آپ آف لائن ہیں۔ اپنا کنکشن چیک کر کے دوبارہ کوشش کریں۔</string>

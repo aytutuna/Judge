@@ -535,7 +535,6 @@
     </plurals>
     <string name="app_balance_monthly">Mai ai %1$s din %2$s luna asta</string>
     <string name="app_balance_none">Nu mai ai verdicte</string>
-    <string name="app_balance_case_cost">Trimiterea unui link folosește 1 verdict</string>
     <string name="app_cancel">Anulează</string>
     <string name="app_retry">Încearcă din nou</string>
     <string name="app_error_offline">Se pare că nu ai internet. Verifică-ți conexiunea și încearcă din nou.</string>

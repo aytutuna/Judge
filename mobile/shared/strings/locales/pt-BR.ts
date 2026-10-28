@@ -38,7 +38,6 @@ const ptBR: AppLocale = {
     "app.balance.left": "Restam {n} vereditos",
     "app.balance.monthly": "Restam {left} de {cap} neste mês",
     "app.balance.none": "Nenhum veredito restante",
-    "app.balance.caseCost": "Enviar um link usa 1 veredito",
     "app.cancel": "Cancelar",
     "app.retry": "Tentar de novo",
     "app.error.offline": "Parece que você está sem internet. Confira sua conexão e tente de novo.",

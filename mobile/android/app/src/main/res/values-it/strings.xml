@@ -535,7 +535,6 @@
     </plurals>
     <string name="app_balance_monthly">Verdetti rimasti questo mese: %1$s su %2$s</string>
     <string name="app_balance_none">Verdetti esauriti</string>
-    <string name="app_balance_case_cost">Inviare un link costa 1 verdetto</string>
     <string name="app_cancel">Annulla</string>
     <string name="app_retry">Riprova</string>
     <string name="app_error_offline">Sembra che tu sia offline. Controlla la connessione e riprova.</string>

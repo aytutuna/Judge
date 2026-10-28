@@ -48,7 +48,6 @@ export const APP_EN = {
   "app.balance.left": "{n} verdicts left",
   "app.balance.monthly": "{left} of {cap} left this month",
   "app.balance.none": "No verdicts left",
-  "app.balance.caseCost": "Sending a link uses 1 verdict",
   "app.cancel": "Cancel",
   "app.retry": "Try again",
   "app.error.offline": "You seem to be offline. Check your connection and try again.",

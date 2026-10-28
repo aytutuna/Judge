@@ -518,7 +518,6 @@
     </plurals>
     <string name="app_balance_monthly">ਇਸ ਮਹੀਨੇ %2$s ਵਿੱਚੋਂ %1$s ਬਾਕੀ</string>
     <string name="app_balance_none">ਕੋਈ ਫ਼ੈਸਲਾ ਬਾਕੀ ਨਹੀਂ</string>
-    <string name="app_balance_case_cost">ਲਿੰਕ ਭੇਜਣ ’ਤੇ 1 ਫ਼ੈਸਲਾ ਲੱਗਦਾ ਹੈ</string>
     <string name="app_cancel">ਰੱਦ ਕਰੋ</string>
     <string name="app_retry">ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ</string>
     <string name="app_error_offline">ਲੱਗਦਾ ਹੈ ਤੁਸੀਂ ਆਫ਼ਲਾਈਨ ਹੋ। ਆਪਣਾ ਕਨੈਕਸ਼ਨ ਦੇਖ ਕੇ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।</string>

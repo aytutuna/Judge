@@ -611,7 +611,6 @@ enum L10n {
     static func appBalanceLeft(_ lang: AppLang, n: Int) -> String { plural("app.balance.left", lang, n) }
     static func appBalanceMonthly(_ lang: AppLang, left: String, cap: String) -> String { format("app.balance.monthly", lang, left, cap) }
     static func appBalanceNone(_ lang: AppLang) -> String { string("app.balance.none", lang) }
-    static func appBalanceCaseCost(_ lang: AppLang) -> String { string("app.balance.caseCost", lang) }
     static func appCancel(_ lang: AppLang) -> String { string("app.cancel", lang) }
     static func appRetry(_ lang: AppLang) -> String { string("app.retry", lang) }
     static func appErrorOffline(_ lang: AppLang) -> String { string("app.error.offline", lang) }
@@ -1153,7 +1152,6 @@ enum L10n {
         "app.pricing.headlineMember",
         "app.pricing.subMember",
         "app.balance.none",
-        "app.balance.caseCost",
         "app.cancel",
         "app.retry",
         "app.error.offline",

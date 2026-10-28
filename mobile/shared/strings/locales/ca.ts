@@ -38,7 +38,6 @@ const ca: AppLocale = {
     "app.balance.left": "Et queden {n} veredictes",
     "app.balance.monthly": "Et queden {left} de {cap} aquest mes",
     "app.balance.none": "No et queden veredictes",
-    "app.balance.caseCost": "Enviar un enllaç gasta 1 veredicte",
     "app.cancel": "Cancel·la",
     "app.retry": "Torna-ho a provar",
     "app.error.offline": "Sembla que no tens connexió. Comprova-la i torna-ho a provar.",

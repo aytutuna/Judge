@@ -518,7 +518,6 @@
     </plurals>
     <string name="app_balance_monthly">ଏହି ମାସ %2$sଟିରୁ %1$sଟି ବାକି</string>
     <string name="app_balance_none">ଆଉ କୌଣସି ରାୟ ବାକି ନାହିଁ</string>
-    <string name="app_balance_case_cost">ଲିଙ୍କ୍ ପଠାଇଲେ 1ଟି ରାୟ ଖର୍ଚ୍ଚ ହୁଏ</string>
     <string name="app_cancel">ବାତିଲ୍</string>
     <string name="app_retry">ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ</string>
     <string name="app_error_offline">ଆପଣ ଅଫଲାଇନ୍ ଥିବା ପରି ଲାଗୁଛି। ଇଣ୍ଟରନେଟ୍ ସଂଯୋଗ ଯାଞ୍ଚ କରି ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ।</string>

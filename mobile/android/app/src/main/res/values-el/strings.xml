@@ -518,7 +518,6 @@
     </plurals>
     <string name="app_balance_monthly">Απομένουν %1$s από %2$s αυτόν τον μήνα</string>
     <string name="app_balance_none">Δεν σου έμειναν αποφάσεις</string>
-    <string name="app_balance_case_cost">Η αποστολή συνδέσμου κοστίζει 1 απόφαση</string>
     <string name="app_cancel">Άκυρο</string>
     <string name="app_retry">Δοκίμασε ξανά</string>
     <string name="app_error_offline">Μάλλον είσαι εκτός σύνδεσης. Έλεγξε τη σύνδεσή σου και δοκίμασε ξανά.</string>

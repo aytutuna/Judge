@@ -518,7 +518,6 @@
     </plurals>
     <string name="app_balance_monthly">Bu ay %2$s hakkından %1$s tanesi kaldı</string>
     <string name="app_balance_none">Karar hakkın kalmadı</string>
-    <string name="app_balance_case_cost">Bağlantı göndermek 1 karar hakkı kullanır</string>
     <string name="app_cancel">Vazgeç</string>
     <string name="app_retry">Tekrar dene</string>
     <string name="app_error_offline">İnternete bağlı değilsin gibi. Bağlantını kontrol edip tekrar dene.</string>

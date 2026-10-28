@@ -518,7 +518,6 @@
     </plurals>
     <string name="app_balance_monthly">%1$s af %2$s tilbage denne måned</string>
     <string name="app_balance_none">Ingen domme tilbage</string>
-    <string name="app_balance_case_cost">Det koster 1 dom at sende et link</string>
     <string name="app_cancel">Annuller</string>
     <string name="app_retry">Prøv igen</string>
     <string name="app_error_offline">Det ser ud til, at du er offline. Tjek din forbindelse, og prøv igen.</string>

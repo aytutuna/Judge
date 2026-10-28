@@ -40,7 +40,6 @@ const nb: AppLocale = {
     "app.balance.left": "{n} dommer igjen",
     "app.balance.monthly": "{left} av {cap} igjen denne måneden",
     "app.balance.none": "Ingen dommer igjen",
-    "app.balance.caseCost": "Å sende en lenke koster 1 dom",
     "app.cancel": "Avbryt",
     "app.retry": "Prøv igjen",
     "app.error.offline":

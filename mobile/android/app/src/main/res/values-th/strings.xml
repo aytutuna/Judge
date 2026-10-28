@@ -501,7 +501,6 @@
     </plurals>
     <string name="app_balance_monthly">เดือนนี้เหลือ %1$s จาก %2$s ครั้ง</string>
     <string name="app_balance_none">คำตัดสินหมดแล้ว</string>
-    <string name="app_balance_case_cost">การส่งลิงก์ใช้คำตัดสิน 1 ครั้ง</string>
     <string name="app_cancel">ยกเลิก</string>
     <string name="app_retry">ลองอีกครั้ง</string>
     <string name="app_error_offline">ดูเหมือนคุณจะออฟไลน์อยู่ เช็กการเชื่อมต่อแล้วลองอีกครั้ง</string>

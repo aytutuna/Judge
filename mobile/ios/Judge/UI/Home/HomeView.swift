@@ -238,10 +238,6 @@ struct HomeView: View {
             .buttonStyle(.plain)
             .disabled(!ready)
             .opacity(ready ? 1 : 0.5)
-            Text(L10n.appBalanceCaseCost(lang))
-                .brandText(.slotText)
-                .foregroundStyle(Brand.muted)
-                .fixedSize(horizontal: false, vertical: true)
         }
     }
 

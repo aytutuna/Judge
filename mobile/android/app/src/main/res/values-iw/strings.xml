@@ -535,7 +535,6 @@
     </plurals>
     <string name="app_balance_monthly">יתרה החודש: %1$s מתוך %2$s</string>
     <string name="app_balance_none">לא נשארו פסקי דין</string>
-    <string name="app_balance_case_cost">שליחת קישור עולה פסק דין אחד</string>
     <string name="app_cancel">ביטול</string>
     <string name="app_retry">לנסות שוב</string>
     <string name="app_error_offline">נראה שאין חיבור לאינטרנט. כדאי לבדוק את החיבור ולנסות שוב.</string>

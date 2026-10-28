@@ -37,7 +37,6 @@ const id: AppLocale = {
     "app.balance.left": "Sisa {n} putusan",
     "app.balance.monthly": "Sisa {left} dari {cap} bulan ini",
     "app.balance.none": "Jatah putusan habis",
-    "app.balance.caseCost": "Mengirim tautan memakai 1 putusan",
     "app.cancel": "Batal",
     "app.retry": "Coba lagi",
     "app.error.offline": "Sepertinya kamu sedang offline. Cek koneksimu, lalu coba lagi.",

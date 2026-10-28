@@ -36,7 +36,6 @@ const te: AppLocale = {
     "app.balance.left": "{n} తీర్పులు మిగిలాయి",
     "app.balance.monthly": "ఈ నెల {cap}లో మిగిలినవి: {left}",
     "app.balance.none": "తీర్పులేవీ మిగల్లేదు",
-    "app.balance.caseCost": "లింక్ పంపితే 1 తీర్పు ఖర్చవుతుంది",
     "app.cancel": "రద్దు",
     "app.retry": "మళ్లీ ప్రయత్నించండి",
     "app.error.offline": "మీరు ఆఫ్‌లైన్‌లో ఉన్నట్టున్నారు. కనెక్షన్ చెక్ చేసి మళ్లీ ప్రయత్నించండి.",
