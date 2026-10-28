@@ -207,9 +207,16 @@ describe("settleHistory", () => {
     expect(Date.now() - Number(storage.getItem(SEED_TURN_KEY))).toBeLessThan(60_000);
   });
 
-  it("looks again at a case it answered that was still being judged", async () => {
+  it("looks again at a case it answered that was still being judged, dropping one whose link is gone", async () => {
     const storage = fakeStorage();
-    storage.setItem(ANSWERED_KEY, JSON.stringify([answeredRow("c1", "2026-10-21T10:00:00.000Z", { state: "judging" })]));
+    const dead = "D".repeat(22);
+    storage.setItem(
+      ANSWERED_KEY,
+      JSON.stringify([
+        answeredRow("c1", "2026-10-21T10:00:00.000Z", { state: "judging" }),
+        answeredRow("c2", "2026-10-20T10:00:00.000Z", { state: "judging", inviteToken: dead }),
+      ]),
+    );
     storage.setItem(HISTORY_KEY, "[]");
     storage.setItem("settle.claim.c1", CLAIM);
     vi.stubGlobal("localStorage", storage);
@@ -218,11 +225,16 @@ describe("settleHistory", () => {
       "fetch",
       vi.fn(async (url: string, init?: RequestInit) => {
         calls.push({ url, claim: new Headers(init?.headers).get("respondent-claim") });
+        if (url.endsWith(dead)) return json(404, { error: { code: "not_found" } });
         return json(200, { case: view({ id: "c1", status: "judged", verdicts: [verdictView("side_b", "Party B paid")] }) });
       }),
     );
     await settleHistory();
-    expect(calls).toEqual([{ url: `/api/v1/respond/${TOKEN}`, claim: CLAIM }]);
+    expect(calls).toEqual([
+      { url: `/api/v1/respond/${TOKEN}`, claim: CLAIM },
+      { url: `/api/v1/respond/${dead}`, claim: null },
+    ]);
+    expect(loadAnswered()).toHaveLength(1);
     expect(loadAnswered()[0]).toMatchObject({ id: "c1", state: "ready", verdict: "side_b", headline: "Party B paid" });
   });
 });

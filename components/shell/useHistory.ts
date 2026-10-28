@@ -353,7 +353,12 @@ async function lookUpAnswered(row: HistoryRow): Promise<boolean> {
     cache: "no-store",
     headers: claim ? { "Respondent-Claim": claim } : {},
   });
-  if (!res.ok) return res.status === 404;
+  if (res.status === 404) {
+    // The link no longer opens (the case is gone or its secret changed).
+    dropAnswered(row.id);
+    return true;
+  }
+  if (!res.ok) return false;
   updateHistoryCase(((await res.json()) as { case: CaseView }).case);
   return true;
 }
