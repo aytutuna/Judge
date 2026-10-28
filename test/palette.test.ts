@@ -96,7 +96,10 @@ describe("palette contrast (WCAG 2.x)", () => {
       ["terraInk", "ivory2"],
       ["terraInk", "paper"],
       ["sageInk", "ivory"],
+      ["sageInk", "ivory2"],
       ["sageInk", "paper"],
+      ["sageInk", "sageTint"],
+      ["terraInk", "terraTint"],
       ["danger", "paper"],
       ["danger", "ivory"],
     ];
