@@ -1,16 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { EMAIL_EN } from "../lib/email";
-import { COUNT_KEYS, EN, formatWait, loadedDict, pluralCategory, registerLocale, t, type Locale } from "../lib/i18n";
-
-const ru: Locale = {
-  voice: "",
-  strings: { ...EN, "wait.minutes": "{n} минут", "home.left.other": "Осталось вердиктов: {n}" },
-  plurals: {
-    "wait.minutes": { one: "{n} минута", few: "{n} минуты", many: "{n} минут" },
-  },
-  email: EMAIL_EN,
-};
-registerLocale("ru", ru);
+import { COUNT_KEYS, EN, formatWait, loadedDict, pluralCategory, t } from "../lib/i18n";
+import ru from "../lib/locales/ru";
 
 describe("plural forms", () => {
   it("knows each language's categories", () => {
@@ -25,9 +15,9 @@ describe("plural forms", () => {
   it("picks the form for n and falls back to the base string", () => {
     expect(t("ru", "wait.minutes", { n: 2 })).toBe("2 минуты");
     expect(t("ru", "wait.minutes", { n: 5 })).toBe("5 минут");
-    expect(t("ru", "wait.minutes", { n: 21 })).toBe("21 минута");
+    expect(t("ru", "wait.minutes", { n: 21 })).toBe("21 минуту");
     expect(t("ru", "wait.minutes", { n: 1.5 })).toBe("1.5 минут");
-    expect(t("ru", "home.left.other", { n: 3 })).toBe("Осталось вердиктов: 3");
+    expect(t("ru", "home.left.other", { n: 3 })).toBe("Осталось 3 вердикта");
     expect(formatWait("ru", 60 * 22)).toBe("22 минуты");
   });
 
