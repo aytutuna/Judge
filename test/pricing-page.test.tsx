@@ -1,5 +1,12 @@
 import { renderToStaticMarkup } from "react-dom/server";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
+
+const viewer = vi.hoisted(() => ({ me: null as unknown }));
+vi.mock("../lib/use-viewer", async (orig) => ({
+  ...(await orig<typeof import("../lib/use-viewer")>()),
+  useViewer: () => ({ config: null, me: viewer.me, status: "ready" }),
+}));
+
 import { PricingTable, PricingView, type PricingTableProps } from "../components/account/PricingView";
 import type { PricingInfo } from "../lib/account-types";
 import { t } from "../lib/i18n";
@@ -25,6 +32,20 @@ describe("PricingTable", () => {
     expect(t("en", "pricing.title")).toBe("Your first verdict is on us.");
     expect(t("tr", "pricing.title")).toBe("İlk kararın bizden.");
     expect(render()).not.toContain('id="plan-free"');
+  });
+
+  it("signed in: asks for more verdicts instead of promising the first one", () => {
+    viewer.me = { user: { id: "u1", name: "Ada", email: "ada@example.com" }, entitlement: null };
+    try {
+      const html = renderToStaticMarkup(<PricingView />).replaceAll(" ", " ");
+      expect(html).toContain("Get more verdicts.");
+      expect(html).toContain("Every verdict gets the full panel.");
+      expect(html).not.toContain("on us");
+      expect(html).not.toContain("your first verdict is free");
+    } finally {
+      viewer.me = null;
+    }
+    expect(t("tr", "pricing.titleMember")).toBe("Daha fazla karar al.");
   });
 
   it("lists what every verdict gets, every pack and the monthly plan", () => {

@@ -351,6 +351,8 @@ const en = {
   "pricing.title": "Your first verdict is on us.",
   "pricing.lead":
     "Create an account and your first verdict is free, with every feature. After that, pick a pack or go monthly.",
+  "pricing.titleMember": "Get more verdicts.",
+  "pricing.leadMember": "Pick a pack or go monthly. Every verdict gets the full panel.",
   "pricing.included.title": "Every verdict",
   "pricing.buy.title": "Packs and the monthly plan",
   "pricing.premium.f1": "Facts checked on the web, with the sources on your verdict",
@@ -1027,6 +1029,8 @@ const tr = {
   "pricing.title": "İlk kararın bizden.",
   "pricing.lead":
     "Bir hesap aç, ilk kararın tüm özellikleriyle ücretsiz. Sonrasında bir paket seç ya da aylık plana geç.",
+  "pricing.titleMember": "Daha fazla karar al.",
+  "pricing.leadMember": "Bir paket seç ya da aylık plana geç. Her karar eksiksiz yargılanır.",
   "pricing.included.title": "Her kararda",
   "pricing.buy.title": "Paketler ve aylık plan",
   "pricing.premium.f1": "Olgular internette kontrol edilir, kaynaklar kararında görünür",
