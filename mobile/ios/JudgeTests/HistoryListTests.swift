@@ -156,13 +156,28 @@ final class HistoryListTests: XCTestCase {
             XCTAssertEqual(listed.key, "v:" + first.id)
             XCTAssertEqual(listed.at, "2026-10-20T09:00:00.000Z")
             XCTAssertEqual(listed.historyState, .ready)
-            XCTAssertNil(try store.find(id: first.id)?.ownerUserID, "the account confirms it on the next load")
+            XCTAssertEqual(try store.find(id: first.id)?.ownerUserID, "u1")
 
             let later = try Fixtures.sample("win_a_self")
             try store.saveRuling(first.withRuling(VerdictPayload(id: "r1", result: later.result, nameMap: [])))
             let ruled = try XCTUnwrap(try store.cached(user: "u1").first)
             XCTAssertEqual(ruled.verdict, "side_a")
             XCTAssertTrue(ruled.contextAdded)
+        }
+    }
+
+    @MainActor
+    func testAVerdictJudgedSignedInLeavesWithTheAccountBeforeTheListLoads() throws {
+        try withStore { store in
+            try store.setAccount("u1")
+            try store.save(try session("win_a_self"))
+            try store.forgetAccounts()
+            XCTAssertNil(try store.find(id: "abc123DEF0"))
+
+            try store.setAccount("u1")
+            try store.save(try session("win_a_self"))
+            try store.setAccount("u2")
+            XCTAssertNil(try store.find(id: "abc123DEF0"))
         }
     }
 

@@ -30,7 +30,7 @@ data class SavedVerdict(
     val translations: Map<AppLang, ParsedResult>,
     /** Whose verdict [original] is: [id], or the round of added context that ruled last. */
     val rulingId: String = id,
-    /** The account whose list has it; null: judged signed out or by an older version. */
+    /** The account it was judged in or listed by; null: judged signed out or by an older version. */
     val ownerUserId: String? = null,
 ) {
     val lang: AppLang get() = ContentLang.verdictLang(original.result)
@@ -110,7 +110,7 @@ class RoomHistoryRepository(
 
     override suspend fun save(outcome: VerdictOutcome) {
         val existing = dao.get(outcome.id)
-        write(outcome, existing, existing?.createdAt ?: clock(), existing?.ownerUserId)
+        write(outcome, existing, existing?.createdAt ?: clock(), existing?.ownerUserId ?: account)
         // Listed at once; the next load of the list confirms it.
         val user = account ?: return
         if (dao.cachedRow(user, "v:${outcome.id}") != null) return

@@ -247,12 +247,25 @@ class HistoryRepositoryTest {
         assertEquals("2026-10-20T09:00:00.000Z", listed.at)
         assertEquals("ready", listed.state)
         assertEquals(outcome.result.result.headline, listed.headline)
-        assertNull("the account confirms it on the next load", repo.observe(outcome.id).first()!!.ownerUserId)
+        assertEquals("u1", repo.observe(outcome.id).first()!!.ownerUserId)
 
         repo.saveRuling(outcome.id, Fixtures.sample("win_a_self").copy(id = "r1"))
         val ruled = repo.observeCached("u1").first().single()
         assertEquals("side_a", ruled.verdict)
         assertTrue(ruled.contextAdded)
+    }
+
+    @Test
+    fun aVerdictJudgedSignedIn_leavesWithTheAccount_beforeTheListLoads() = runBlocking {
+        repo.setAccount("u1")
+        repo.save(Fixtures.sample("win_a_self"))
+        repo.forgetAccounts()
+        assertNull(repo.observe("abc123DEF0").first())
+
+        repo.setAccount("u1")
+        repo.save(Fixtures.sample("win_a_self"))
+        repo.setAccount("u2")
+        assertNull(repo.observe("abc123DEF0").first())
     }
 
     @Test

@@ -27,7 +27,7 @@ final class SavedVerdict {
     /// The round of added context whose verdict `resultJSON` holds; nil
     /// while it is the first verdict.
     var rulingID: String?
-    /// The account whose list has it, set once that list names it; nil rows
+    /// The account it was judged in, or whose list later named it; nil rows
     /// were judged signed out or by an older version.
     var ownerUserID: String?
 
@@ -121,7 +121,7 @@ final class HistoryStore {
 
     /// Saves (or replaces) a verdict right after it arrives.
     func save(_ session: VerdictSession, now: Date = .now) throws {
-        try keepVerdict(session, createdAt: now, owner: nil)
+        try keepVerdict(session, createdAt: now, owner: account)
         // Listed at once; the next load of the list confirms it.
         guard let account, try cachedRow(user: account, key: "v:" + session.id) == nil else { return }
         let result = session.original.result

@@ -17,9 +17,9 @@ import kotlinx.coroutines.flow.Flow
 /**
  * One verdict kept on the phone, for offline reading. `nameMapJson` is the
  * author's own name map (backups and device transfer are off for the app);
- * the account holds it too, encrypted. [ownerUserId] is set once the
- * account's list has the verdict; null rows were judged signed out or by an
- * older version and may be on this phone only.
+ * the account holds it too, encrypted. [ownerUserId] is the account it was
+ * judged in, or whose list later named it; null rows were judged signed out
+ * or by an older version and may be on this phone only.
  */
 @Entity(tableName = "saved_verdicts")
 data class SavedVerdictRow(
