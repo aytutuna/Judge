@@ -535,6 +535,7 @@ export function RespondScreen({ token }: { token: string }) {
       bare
       lead={answering ? t(lang, "respond.intro") : null}
       status={stage === "judging" || stage === "verdict" || stage === "failed" ? view.status : null}
+      you={view.yourParty}
       headingRef={headingRef}
     >
       <RespondPanel

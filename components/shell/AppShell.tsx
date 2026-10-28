@@ -12,7 +12,7 @@ import { TabBar } from "./TabBar";
 import styles from "./shell.module.css";
 
 /**
- * Page frame for the app's own pages: the header (with "My verdicts" from
+ * Page frame for the app's own pages: the header (with "Verdicts" from
  * the desktop breakpoint), the page, the footer unless `footer` is off,
  * and below 960px the bottom tabs. `toggle` shows the language picker
  * (pages whose chrome reads the client language store). The home page

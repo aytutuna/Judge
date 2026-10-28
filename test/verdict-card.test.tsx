@@ -1,11 +1,17 @@
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import { renderToStaticMarkup } from "react-dom/server";
 import type { VerdictResult } from "../lib/types";
 import { VerdictView } from "../components/VerdictView";
 import { ArgumentMap } from "../components/ArgumentMap";
+import { CaseShell } from "../components/case/CaseScreen";
+import { BalanceFallback } from "../components/scene/BalanceFallback";
+import { OG_SIDES, OgCard } from "../components/OgCard";
 import { SampleVerdict, SAMPLE_TUG_A } from "../components/home/SampleVerdict";
 import { VoteDots, voteOf } from "../components/verdict/VoteDots";
 import { t } from "../lib/i18n";
+import { PALETTE, sideColors } from "../lib/palette";
 import { stripLeadingEmoji } from "../lib/text";
 import { tugFinal } from "../lib/verdict-display";
 
@@ -273,5 +279,73 @@ describe("VoteDots", () => {
 
   it("renders nothing for no votes and no label", () => {
     expect(html(<VoteDots votes={[]} />)).toBe("");
+  });
+});
+
+describe("side colours", () => {
+  const sides = (out: string) => [...out.matchAll(/data-you="([ab])"/g)].map((m) => m[1]);
+
+  it("the writer's own verdict draws Party A as theirs", () => {
+    expect(sides(html(<VerdictView result={base} lang="en" />))).toEqual(["a"]);
+  });
+
+  it("the other side of a case gets Party B in green", () => {
+    expect(sides(html(<VerdictView result={base} lang="en" selfParty="B" viewerIsSelfParty />))).toEqual(["b"]);
+    const shell = html(
+      <CaseShell lang="en" kicker="Case" title="Who pays" you="b" bare>
+        <p>side</p>
+      </CaseShell>,
+    );
+    expect(shell).toMatch(/<main [^>]*data-you="b"/);
+  });
+
+  it("a stranger on a share link sees Party A in green", () => {
+    const out = html(
+      <VerdictView result={base} lang="en" shareId="abc123" nameMap={[{ original: "Sam", replacement: "Party A" }]} publicNames />,
+    );
+    expect(sides(out)).toEqual(["a"]);
+  });
+
+  it("the home sample is the reader's own case: its \"You\" side is green", () => {
+    expect(t("en", "sample.nameB")).toBe("You");
+    expect(sides(html(<SampleVerdict lang="en" />))).toEqual(["b"]);
+  });
+
+  it("the stamp takes the winner's side colour, ink when nobody wins", () => {
+    expect(html(<VerdictView result={base} lang="en" />)).toMatch(/data-party="b" aria-hidden="true"><span[^>]*>Party B is right</);
+    const close = html(<VerdictView result={{ ...base, verdict: "too_close" }} lang="en" />);
+    expect(close).not.toMatch(/data-party="[ab]" aria-hidden="true"><span/);
+    const css = readFileSync(join(__dirname, "..", "components", "verdict", "verdict.module.css"), "utf8");
+    expect(css).toContain('.stamp[data-party="a"] { color: var(--party-a-ink); }');
+    expect(css).toContain('.stamp[data-party="b"] { color: var(--party-b-ink); }');
+  });
+
+  it("party marks on the card use the side tokens, never a fixed colour", () => {
+    const css = readFileSync(join(__dirname, "..", "components", "verdict", "verdict.module.css"), "utf8");
+    for (const sel of [".dotA", ".dotB", ".tugA", ".sealA", ".sealB", ".branchA", ".branchB", ".colHeadA", ".partyChipB", ".claimA"]) {
+      const rule = css.slice(css.indexOf(`${sel} {`), css.indexOf("}", css.indexOf(`${sel} {`)));
+      expect(rule, sel).toMatch(/var\(--party-[ab]/);
+      expect(rule, sel).not.toMatch(/--terra|--sage|rgba/);
+    }
+  });
+});
+
+describe("BalanceFallback sides", () => {
+  const fills = (out: string) => [...out.matchAll(/<circle [^>]*r="36" fill="(#[0-9A-F]{6})"/g)].map((m) => m[1]);
+
+  it("draws Party A green unless the viewer is Party B", () => {
+    expect(fills(html(<BalanceFallback tugA={30} />))).toEqual([PALETTE.sage, PALETTE.terra]);
+    expect(fills(html(<BalanceFallback tugA={30} you="a" />))).toEqual([PALETTE.sage, PALETTE.terra]);
+    expect(fills(html(<BalanceFallback tugA={30} you="b" />))).toEqual([PALETTE.terra, PALETTE.sage]);
+    expect(fills(html(<BalanceFallback empty />))).toEqual([]);
+  });
+});
+
+describe("share image sides", () => {
+  it("a link preview has no viewer: Party A's share is green, Party B's red", () => {
+    expect(OG_SIDES).toEqual(sideColors(null));
+    const out = html(<OgCard title="Sam is right" footer="Judge" tugA={70} />);
+    expect(out).toContain(`width:70%;height:100%;background:${PALETTE.sageStrong}`);
+    expect(out).toContain(`background:${PALETTE.terra}`);
   });
 });

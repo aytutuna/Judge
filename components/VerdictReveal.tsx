@@ -167,7 +167,11 @@ export function VerdictReveal({
 
   return (
     <>
-      <span className={styles.stamp} aria-hidden>
+      <span
+        className={styles.stamp}
+        data-party={result.verdict === "side_a" ? "a" : result.verdict === "side_b" ? "b" : undefined}
+        aria-hidden
+      >
         <span className={styles.stampText}>{stampLabel(result, nameA, nameB, aIsSelf, bIsSelf, lang)}</span>
       </span>
 
@@ -207,7 +211,7 @@ export function VerdictReveal({
               <i
                 aria-hidden
                 className={styles.nameDot}
-                style={{ background: lean.party === "a" ? "var(--terra)" : "var(--sage-strong)" }}
+                style={{ background: `var(--party-${lean.party}-strong)` }}
               />
               {leanIsSelf ? t(lang, "lean.titleSelf") : t(lang, "lean.title", { name: leanName })}
             </p>

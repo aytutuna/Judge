@@ -3,7 +3,7 @@
 import dynamic from "next/dynamic";
 import { useRef, type PointerEvent } from "react";
 import { setPointer } from "@/lib/scene-bridge";
-import { useSceneMode, useSceneStatus } from "@/lib/scene-bridge-react";
+import { useSceneMode, useSceneStatus, useSceneYou } from "@/lib/scene-bridge-react";
 import { BalanceFallback } from "./BalanceFallback";
 import { useSceneGate } from "./gate";
 import { useReducedMotion } from "./useReducedMotion";
@@ -37,6 +37,7 @@ export default function JudgingScene({ className }: { className?: string }) {
   const ref = useRef<HTMLDivElement>(null);
   const mode = useSceneMode();
   const status = useSceneStatus();
+  const you = useSceneYou();
   const reduced = useReducedMotion();
   const go = useSceneGate(ref);
   const tugA = mode.kind === "verdict" ? mode.verdict.tugA : undefined;
@@ -51,7 +52,7 @@ export default function JudgingScene({ className }: { className?: string }) {
       onPointerMove={onMove}
       onPointerLeave={onLeave}
     >
-      <BalanceFallback tugA={tugA} className={styles.fallback} />
+      <BalanceFallback tugA={tugA} you={you} className={styles.fallback} />
       {go && status !== "fallback" ? <BalanceScene reduced={reduced} frame="card" className={styles.canvas} /> : null}
     </div>
   );

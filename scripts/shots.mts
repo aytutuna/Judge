@@ -347,7 +347,7 @@ async function tabs(browser: Browser): Promise<void> {
   await page.goto(BASE + "/verdicts", { waitUntil: "load" });
   await page.waitForTimeout(800);
   const current = await page.locator("nav a[aria-current='page'][href='/verdicts']").count();
-  check("tabs: My verdicts tab is current on /verdicts", current === 1);
+  check("tabs: Verdicts tab is current on /verdicts", current === 1);
   check("tabs: the verdict just written is listed", (await page.locator(`a[href="/v/${f.body.id}"]`).count()) > 0);
   await shot(page, "tabs-verdicts-m");
   await ctx.close();

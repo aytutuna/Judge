@@ -1,4 +1,5 @@
 import {
+  Color,
   ConeGeometry,
   CylinderGeometry,
   Group,
@@ -8,7 +9,7 @@ import {
   type Scene,
 } from "three";
 import { RoundedBoxGeometry } from "three/addons/geometries/RoundedBoxGeometry.js";
-import { PALETTE } from "@/lib/palette";
+import { PALETTE, sideColors, type Party } from "@/lib/palette";
 import { BEAM_LEN, END, PIVOT_Y, PLINTH, SPHERE_R, bump, clamp01, lerp, ss, type Vec3 } from "@/lib/scene-poses";
 import type { Bin, Materials } from "./materials";
 
@@ -21,7 +22,8 @@ export type Winner = -1 | 0 | 1 | null;
  * shadows land on it, not on the floor), the cone, the axle, the beam with
  * its cups, the two party spheres and the baked contact shadows. Once a
  * verdict settles, the winner flashes and a soft ring marks the plinth under
- * its cup.
+ * its cup. The spheres and the ring take the side colours: the viewer's own
+ * side green, the other red (paintSides).
  */
 export function createBalance(
   scene: Scene,
@@ -102,18 +104,30 @@ export function createBalance(
   // fading and spreading with height.
   const sphereBlobs = opts.shadows ? [] : [blob(1, 1, 0, top + 0.002), blob(1, 1, 0, top + 0.002)];
 
-  const ringMat = mats.ring(PALETTE.terra);
+  const ringMat = mats.ring(PALETTE.paper);
   const ring = new Mesh(blobGeo, ringMat);
   ring.rotation.x = -Math.PI / 2;
   ring.position.y = top + 0.004;
   ring.renderOrder = 2;
   ring.visible = false;
   scene.add(ring);
-  const terraRing = ringMat.color.clone();
-  const sageRing = ringMat.color.clone().set(PALETTE.sageStrong);
-  mats.partyA.emissive.set(PALETTE.terra);
-  mats.partyB.emissive.set(PALETTE.sage);
+  const ringA = new Color();
+  const ringB = new Color();
   mats.partyA.emissiveIntensity = mats.partyB.emissiveIntensity = 0;
+
+  function paintSides(you: Party | null) {
+    const c = sideColors(you);
+    for (const [mat, side, ringColor] of [
+      [mats.partyA, c.a, ringA],
+      [mats.partyB, c.b, ringB],
+    ] as const) {
+      mat.color.set(side.fill);
+      mat.sheenColor.set(side.tint);
+      mat.emissive.set(side.fill);
+      ringColor.set(side.strong);
+    }
+  }
+  paintSides(null);
   let ringSide = 0;
 
   const blobMat = (m: Mesh) => m.material as { opacity: number };
@@ -122,6 +136,7 @@ export function createBalance(
     beam,
     sphereA,
     sphereB,
+    paintSides,
     /** `rise` lifts the beam, axle and cups (the entrance, the breathing
      * bob); the sphere centres already include it. */
     update(
@@ -171,7 +186,7 @@ export function createBalance(
 
       if (winner === -1 || winner === 1) {
         ringSide = winner;
-        ringMat.color.copy(winner === -1 ? terraRing : sageRing);
+        ringMat.color.copy(winner === -1 ? ringA : ringB);
         const grow = ss(0, 0.7, since);
         ring.scale.setScalar(lerp(0.9, 1.35, 1 - (1 - grow) * (1 - grow)));
         ringMat.opacity = clamp01(since / 0.12) * (0.28 + 0.24 * (1 - ss(0.2, 0.9, since)));

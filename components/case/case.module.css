@@ -308,10 +308,10 @@
   background: var(--paper);
 }
 .accountA {
-  border-inline-start: 4px solid var(--terra);
+  border-inline-start: 4px solid var(--party-a-strong);
 }
 .accountB {
-  border-inline-start: 4px solid var(--sage-strong);
+  border-inline-start: 4px solid var(--party-b-strong);
 }
 .accountHead {
   display: flex;
@@ -717,11 +717,11 @@
   border-radius: 50%;
 }
 .both i:first-child {
-  background: var(--terra);
+  background: var(--party-a-strong);
 }
 .both i:last-child {
   margin-inline-start: -3px;
-  background: var(--sage-strong);
+  background: var(--party-b-strong);
   box-shadow: 0 0 0 1.5px var(--paper);
 }
 .disputes {
@@ -779,16 +779,16 @@
   color: var(--ink);
 }
 .claimA {
-  background: var(--terra-tint);
+  background: var(--party-a-tint);
 }
 .claimA dt {
-  color: var(--terra-ink);
+  color: var(--party-a-ink);
 }
 .claimB {
-  background: var(--sage-tint);
+  background: var(--party-b-tint);
 }
 .claimB dt {
-  color: var(--sage-ink);
+  color: var(--party-b-ink);
 }
 @media (min-width: 560px) {
   .claims {
@@ -806,12 +806,12 @@
   font-weight: 700;
 }
 .finding[data-finding="a"] {
-  background: var(--terra-tint);
-  color: var(--terra-ink);
+  background: var(--party-a-tint);
+  color: var(--party-a-ink);
 }
 .finding[data-finding="b"] {
-  background: var(--sage-tint);
-  color: var(--sage-ink);
+  background: var(--party-b-tint);
+  color: var(--party-b-ink);
 }
 .finding[data-finding="unsettled"] {
   border: 1px solid var(--line-2);
@@ -960,57 +960,6 @@
   padding: 4px 12px 14px;
 }
 
-/* ---------- Case list (account) ---------- */
-.caseList {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-.caseLink {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-items: center;
-  gap: 4px 12px;
-  min-height: 56px;
-  padding: 12px 14px;
-  border: 1px solid var(--line-2);
-  border-radius: 16px;
-  background: var(--ivory);
-  color: var(--ink);
-  text-decoration: none;
-  transition:
-    border-color var(--dur-1),
-    background-color var(--dur-1);
-}
-.caseLink:hover {
-  border-color: rgba(28, 25, 22, 0.26);
-  background: var(--paper);
-}
-.caseHeadline {
-  display: -webkit-box;
-  overflow: hidden;
-  font-size: 15px;
-  font-weight: 600;
-  line-height: 1.35;
-  overflow-wrap: anywhere;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  line-clamp: 2;
-}
-.caseMeta {
-  color: var(--muted);
-  font-size: 13px;
-}
-.caseLink .status {
-  grid-row: 1 / span 2;
-  grid-column: 2;
-  min-height: 28px;
-  font-size: 12.5px;
-}
-
 @media (min-width: 960px) {
   .main {
     padding-top: 64px;
@@ -1033,8 +982,7 @@
   .account,
   .dispute,
   .evItem,
-  .previous,
-  .caseLink {
+  .previous {
     border-color: CanvasText;
   }
   .modeInput:checked + .modeFace {
