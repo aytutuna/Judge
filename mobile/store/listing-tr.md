@@ -54,14 +54,14 @@ Her kavganın bir kazananı olmaz. Karar net bir galibiyet, bölünmüş karar, 
 - Bir kararı ya da hesabının tamamını istediğin an kaldır
 - Türkçe ve İngilizce
 
-PREMIUM
-Premium, gerçekten önemli kavgalar için biraz daha fazlasını getirir:
+HER KARARDA
+Her karar eksiksiz yargılanır:
 - Olgular internette kontrol edilir, kaynaklar kararda görünür
-- Daha güçlü bir yapay zekâ yargıç kurulu
+- Güçlü bir yapay zekâ yargıç kurulu
 - Önemli bir bilgi eksikse en fazla iki kısa soru
 - Ekran görüntüsü kanıtı (bir sohbet ya da fiş gibi): okunur, sonra atılır
 - Karardan sonra bilgi ekleyip yeniden yargılatma
-Premium kararları kredi paketleriyle ya da ayda 35 premium karar içeren aylık planla alabilirsin. Özellikler bölümündekilerin hepsi ücretsiz kalır.
+Yeni hesapla ilk kararın ücretsiz. Sonrasında kararları paketlerle ya da ayda 35 karar içeren aylık planla alabilirsin.
 
 GİZLİLİĞİN
 - Apple, Google ya da e-postayla gelen kodla giriş yaparsın.

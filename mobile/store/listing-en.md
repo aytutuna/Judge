@@ -54,14 +54,14 @@ FEATURES
 - Remove a verdict, or your whole account, any time
 - English and Turkish
 
-PREMIUM
-Premium adds more for the fights that really matter:
+EVERY VERDICT
+Every verdict gets the full treatment:
 - Facts checked on the web, with sources shown on your verdict
-- A stronger panel of AI judges
+- A strong panel of AI judges
 - Up to two quick questions when a key fact is missing
 - Screenshot evidence, such as a chat or a receipt, read and then thrown away
 - Add context after a verdict and have it re-judged
-Get premium verdicts as credit packs, or with the monthly plan, which includes 35 premium verdicts a month. Everything under Features stays free.
+Your first verdict is free with a new account. After that, get verdicts in packs, or with the monthly plan, which includes 35 verdicts a month.
 
 YOUR PRIVACY
 - Sign in with Apple, Google or an emailed code.

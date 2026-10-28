@@ -22,11 +22,11 @@ Settings > Account > Delete account. This removes the account, sign-in details, 
 
 ## Purchases
 
-Premium is sold through in-app purchase: two consumable credit packs (`pack_1`, `pack_10`) and an auto-renewable monthly subscription (`monthly`) that includes 35 premium verdicts a month. The sandbox works for testing: sign in with the reviewer account, open Settings > Pricing, and buy with a sandbox account. The credits or the plan show up within a few seconds. Restore purchases is under Settings > Account.
+Every verdict uses one credit or one of the monthly plan's verdicts. A new account gets its first verdict free; after that verdicts are sold through in-app purchase: two consumable credit packs (`pack_1`, `pack_10`) and an auto-renewable monthly subscription (`monthly`) that includes 35 verdicts a month. The reviewer account has credits, so verdicts work without buying anything. The sandbox works for testing: sign in with the reviewer account, open Settings > Pricing, and buy with a sandbox account. The credits or the plan show up within a few seconds. Restore purchases is under Settings > Account.
 
 ## Two-sided cases
 
-Two-sided cases are free for any signed-in user, no purchase needed. Pick "Both sides" on the home screen, create the invite, then open the link in a browser to answer as the other person.
+A two-sided case uses one verdict, like any other. Write your side on the home screen, tap "Or send them a link to write it", then open the link in a browser to answer as the other person.
 
 ## Other
 
