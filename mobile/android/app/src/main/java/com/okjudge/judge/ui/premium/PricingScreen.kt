@@ -136,8 +136,11 @@ fun PricingScreen(
                         verticalArrangement = Arrangement.spacedBy(2.dp),
                     ) {
                         Tiers.balance(s, entitlement)?.let { Text(it, style = JudgeType.bodyStrong) }
-                        Text("${s.accountCredits}: ${entitlement.credits}", style = JudgeType.body.copy(color = Palette.ink2))
                         if (sub != null) {
+                            // The line above counts the plan first, so credits kept beside it need their own line.
+                            if (entitlement.credits > 0) {
+                                Text("${s.accountCredits}: ${entitlement.credits}", style = JudgeType.body.copy(color = Palette.ink2))
+                            }
                             val date = Errors.formatDate(lang, sub.periodEnd) ?: sub.periodEnd
                             Text(
                                 if (sub.willRenew) s.accountSubscriptionRenews(date) else s.accountSubscriptionUntil(date),
