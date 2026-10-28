@@ -181,8 +181,6 @@ private fun AccountGroup(
                 )
                 if (user != null) {
                     HorizontalDivider(color = Palette.line)
-                    FactRow(s.accountPlan, if (e?.isPremium == true) s.accountPlanPremium else s.accountPlanFree)
-                    HorizontalDivider(color = Palette.line)
                     FactRow(s.accountCredits, (e?.credits ?: 0).toString())
                     e?.subscription?.let { sub ->
                         val date = Errors.formatDate(lang, sub.periodEnd) ?: sub.periodEnd

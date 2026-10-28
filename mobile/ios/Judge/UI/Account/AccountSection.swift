@@ -42,10 +42,6 @@ struct AccountSection: View {
             }
         }
         if let entitlement = account.entitlement {
-            fact(
-                L10n.accountPlan(lang),
-                value: entitlement.isPremium ? L10n.accountPlanPremium(lang) : L10n.accountPlanFree(lang)
-            )
             fact(L10n.accountCredits(lang), value: String(entitlement.credits))
             if let subscription = entitlement.subscription {
                 fact(L10n.accountSubscription(lang), value: subscriptionText(subscription, lang: lang))
