@@ -15,14 +15,14 @@ const ja: AppLocale = {
     "app.history.clearAll": "すべて削除",
     "app.history.clearConfirm": "この端末に保存した判定をすべて削除しますか？　シェア用リンクはそのまま使えます。",
     "app.history.clearYes": "すべて削除する",
-    "app.pricing.free.account": "Apple、Google、メールアドレスでログイン",
+    "app.pricing.free.account": "Apple、Google、またはメールアドレスでログイン",
     "app.pricing.headline": "最初の判定は無料です。",
     "app.pricing.sub":
       "アカウントを作成すると、最初の判定はすべての機能つきで無料。その後はパックか月額プランを選べます。",
     "app.pricing.headlineMember": "判定をもっと。",
     "app.pricing.subMember": "パックか月額プランを選べます。どの判定も審査員がフルメンバーで担当します。",
     "app.balance.left": "残り{n}回",
-    "app.balance.monthly": "今月の残り{left}回（{cap}回中）",
+    "app.balance.monthly": "今月の残り：{cap}回中{left}回",
     "app.balance.none": "判定回数が残っていません",
     "app.balance.caseCost": "リンクを送ると判定1回分を使います",
     "app.cancel": "キャンセル",
@@ -30,11 +30,11 @@ const ja: AppLocale = {
     "app.error.offline": "オフラインのようです。接続を確認して、もう一度お試しください。",
     "app.error.timeout": "審査員の回答に時間がかかりすぎました。1分ほどしてからもう一度お試しください。",
     "app.error.interrupted":
-      "Judgeがバックグラウンドにある間に接続が切れました。もう一度お試しください。判定が届くまでは、アプリを開いたままにしてください。",
+      "Judgeがバックグラウンドにあるあいだに接続が切れました。もう一度お試しのうえ、判定が届くまでアプリを開いたままにしてください。",
     "app.turnstile.error": "確認用のチェックを読み込めませんでした。接続を確認して、もう一度お試しください。",
     "app.factcheck.sourceAria": "{title}（ウェブページを開きます）",
     "app.error.badOrigin":
-      "見覚えのない場所から送られたリクエストです。アプリを最新版にして、もう一度お試しください。",
+      "見覚えのない場所から送られたリクエストです。アプリが最新版になっているか確認して、もう一度お試しください。",
     "app.translate.offline": "オフラインのため翻訳できません。原文を表示しています。",
     "app.share.title": "判定をシェア",
     "app.settings.language": "言語",
@@ -53,7 +53,7 @@ const ja: AppLocale = {
     "app.signin.codeResend": "新しいコードを送る",
     "app.signin.changeEmail": "別のメールアドレスを使う",
     "app.signin.rateLimited": "試行回数が多すぎます。1分ほど待ってから、もう一度お試しください。",
-    "app.signin.unavailable": "いまはログインできません。しばらくしてからお試しください。",
+    "app.signin.unavailable": "いまはログインできません。しばらくしてからもう一度お試しください。",
     "app.account.deleteTitle": "アカウントを削除しますか？",
     "app.account.deleteBody":
       "ログイン情報、クレジット、プラン、個人データが削除され、シェア用リンクも使えなくなります。判定の本文は、プライバシーポリシーに記載のとおり、あなたの名前を除いた形で残ります。",
@@ -91,7 +91,7 @@ const ja: AppLocale = {
     "app.example.bill.b":
       "いつも4人で割り勘にしてるじゃん。毎回誰が何を頼んだか計算するのは面倒だし、どうせたいした差じゃないよ。",
     "app.example.thermostat.aName": "結衣",
-    "app.example.thermostat.a": "部屋が19℃で、パーカーを着てても寒いの。エアコンを22℃にするくらい普通でしょ。",
+    "app.example.thermostat.a": "この部屋、19℃しかないんだよ。パーカーを着てても寒いの。暖房を22℃にするくらい、別におかしくないでしょ。",
     "app.example.thermostat.bName": "翔",
     "app.example.thermostat.b":
       "22℃じゃ暑すぎて寝られないよ。そっちはもう1枚着ればいいけど、こっちはこれ以上脱げないんだから。",

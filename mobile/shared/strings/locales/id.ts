@@ -31,15 +31,15 @@ const id: AppLocale = {
     "app.error.offline": "Sepertinya kamu sedang offline. Cek koneksimu, lalu coba lagi.",
     "app.error.timeout": "Para hakim terlalu lama menjawab. Tunggu sebentar, lalu coba lagi.",
     "app.error.interrupted":
-      "Koneksi terputus saat Judge berjalan di latar belakang. Coba lagi, dan kali ini biarkan aplikasinya tetap terbuka sampai putusan keluar.",
+      "Koneksi terputus saat Judge berjalan di latar belakang. Coba lagi, dan biarkan aplikasinya tetap terbuka sampai putusannya keluar.",
     "app.turnstile.error": "Pengecekan manusia gagal dimuat. Cek koneksimu, lalu coba lagi.",
     "app.factcheck.sourceAria": "{title}, membuka halaman web",
     "app.error.badOrigin":
-      "Permintaan itu datang dari tempat yang tidak kami kenali. Pastikan aplikasimu sudah versi terbaru, lalu coba lagi.",
+      "Permintaan itu datang dari tempat yang tidak kami kenali. Pastikan aplikasimu sudah diperbarui, lalu coba lagi.",
     "app.translate.offline": "Tidak bisa menerjemahkan saat offline, jadi ini versi aslinya.",
     "app.share.title": "Bagikan putusan",
     "app.settings.language": "Bahasa",
-    "app.settings.languageDevice": "Sama dengan ponsel",
+    "app.settings.languageDevice": "Ikuti ponsel",
     "app.settings.about": "Tentang Judge",
     "app.settings.version": "Versi {version}",
     "app.signin.required": "Masuk untuk mendapat putusan.",
@@ -48,7 +48,7 @@ const id: AppLocale = {
     "app.signin.codeSent": "Kami sudah mengirim kode ke {email}. Kodenya berlaku 10 menit.",
     "app.signin.codeLabel": "Masukkan kode 6 digit",
     "app.signin.codeSubmit": "Masuk",
-    "app.signin.codeInvalid": "Kodenya salah. Cek emailnya, lalu coba lagi.",
+    "app.signin.codeInvalid": "Kodenya salah. Periksa emailnya, lalu coba lagi.",
     "app.signin.codeExpired": "Kode itu sudah kedaluwarsa. Minta kode baru.",
     "app.signin.codeTooMany": "Kode ini sudah terlalu sering salah dimasukkan. Minta kode baru.",
     "app.signin.codeResend": "Kirim kode baru",
@@ -62,7 +62,7 @@ const id: AppLocale = {
     "app.account.deleted": "Akunmu sudah dihapus.",
     "app.account.signOutConfirm": "Keluar dari Judge di ponsel ini?",
     "app.account.signedOut": "Kamu sudah keluar.",
-    "app.account.sessionExpired": "Sesi masukmu sudah berakhir. Masuk lagi untuk lanjut.",
+    "app.account.sessionExpired": "Sesimu sudah berakhir. Masuk lagi untuk melanjutkan.",
     "app.close": "Tutup",
     "app.home.lead": "Tulis versi kedua pihak, atau kirim tautan ke lawan debatmu agar dia menulis versinya sendiri.",
     "app.home.leadSolo": "Tulis versimu, dan versi dia juga kalau kamu tahu.",
@@ -116,16 +116,16 @@ const id: AppLocale = {
     "app.example.spoiler.b":
       "Episodenya sudah keluar tiga minggu lalu dan kamu bilang sudah selesai nonton. Aku nggak bisa ingat semua orang sudah nonton sampai mana.",
     "app.example.jacket.aName": "Tika",
-    "app.example.jacket.a": "Kamu pakai jaket jinku ke konser tanpa izin. Begitu kembali, jaketnya bau asap rokok.",
+    "app.example.jacket.a": "Kamu pakai jaket jinku ke konser tanpa izin. Pas dikembalikan, jaketnya bau asap rokok.",
     "app.example.jacket.bName": "Reza",
     "app.example.jacket.b":
-      "Jaketnya tergantung dekat pintu dan kamu nggak pernah memakainya. Tadinya aku mau minta izin, tapi kamu lagi tidur dan aku sudah telat.",
+      "Jaketnya tergantung dekat pintu dan kamu nggak pernah pakai. Tadinya aku mau minta izin, tapi kamu lagi tidur dan aku sudah telat.",
     "app.example.lastSlice.aName": "Eko",
     "app.example.lastSlice.a":
       "Sebelum filmnya mulai, aku sudah bilang “potongan terakhir punyaku”. Semua orang dengar.",
     "app.example.lastSlice.bName": "Lia",
     "app.example.lastSlice.b":
-      "Nggak bisa dong bilang “punyaku” terus dianggurin dua jam. Pizzanya dibiarkan sampai dingin, jadi aku makan.",
+      "Nggak bisa dong bilang “punyaku” terus dianggurin dua jam. Pizzanya dibiarkan sampai dingin, jadi aku makan saja.",
     "app.case.waitingKicker": "Kasus · menunggu",
     "app.case.waitingFor": "Menunggu {name}",
     "app.case.waitingLead":
