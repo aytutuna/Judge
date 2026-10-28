@@ -172,7 +172,7 @@ final class JudgeAPITests: XCTestCase {
         } catch let error as APIError {
             XCTAssertEqual(error.code, "rate_limited")
             XCTAssertEqual(error.retryAfterSec, 120)
-            XCTAssertEqual(ErrorText.message(error, lang: .en), L10n.errorRateLimited(.en, wait: L10n.waitMinutes(.en, n: "2")))
+            XCTAssertEqual(ErrorText.message(error, lang: .en), L10n.errorRateLimited(.en, wait: L10n.waitMinutes(.en, n: 2)))
         }
     }
 

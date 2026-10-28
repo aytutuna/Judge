@@ -249,8 +249,9 @@ Judge/
 JudgeTests/                  XCTest suites; fixtures come from ../shared/fixtures
 ```
 
-Never edit the generated strings by hand. Change `lib/i18n.ts` (or
-`mobile/shared/strings/app-strings.ts`) and run, from the repo root:
+Never edit the generated strings by hand. Change `lib/i18n.ts` and
+`lib/locales` (or `mobile/shared/strings/app-strings.ts` and its `locales`)
+and run, from the repo root:
 
 ```sh
 npx tsx mobile/shared/strings/export-strings.ts

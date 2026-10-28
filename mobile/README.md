@@ -7,25 +7,34 @@ root README).
 
 ## Shared copy and fixtures (`shared/`)
 
-The EN/TR copy lives in `lib/i18n.ts`; the apps never get a hand-edited
-copy of it. After changing a string there (or in
-`shared/strings/app-strings.ts` for app-only text, or the key list in
-`shared/strings/keys.ts`), regenerate from the repo root:
+The copy lives in `lib/i18n.ts` (English) and `lib/locales/<code>.ts` (every
+other language); the apps never get a hand-edited copy of it. App-only text is
+in `shared/strings/app-strings.ts` (English) and `shared/strings/locales/<code>.ts`,
+and the key list in `shared/strings/keys.ts`. After changing any of them,
+regenerate from the repo root:
 
 ```sh
 npm ci
+npm run check:app-locales                           # app-only strings of every language
 npx tsx mobile/shared/strings/export-strings.ts     # strings.xml, Strings.kt, Localizable.xcstrings, L10n.swift
 npx tsx mobile/shared/fixtures/export-fixtures.ts   # golden test data from the web's display logic
 ```
 
-Both accept `--check`, which exits non-zero when a committed file is stale.
-The generated files are committed so neither native build needs Node.
+Both exports accept `--check`, which exits non-zero when a committed file is
+stale. The generated files are committed so neither native build needs Node.
 
+- Every enabled language of `lib/langs.ts` is exported. One without its
+  `shared/strings/locales/<code>.ts` yet reads English for the app-only keys.
 - `{name}` slots become positional arguments numbered by their order in the
   English string (`%1$s` on Android, `%1$@` on iOS).
-- Keys ending in `.one` / `.other` become one plural (`R.plurals.*`, an
-  `.xcstrings` plural variation) counted by `{n}`. A bare key with only a
-  `.one` beside it (`pricing.pack`, `pricing.pack.one`) is the other form.
+- Count strings (`COUNT_KEYS` on the web, `APP_COUNT_KEYS` here) become one
+  plural (`R.plurals.*`, an `.xcstrings` plural variation) with every plural
+  category of the language, counted by `{n}`. Where the web says 1 with a key
+  of its own (`SINGULAR_KEYS` in `keys.ts`), the accessor returns that key
+  for exactly 1.
+- The export also keeps `res/xml/locales_config.xml`, `CFBundleLocalizations`
+  in `ios/Judge/Info.plist` and the project's `knownRegions` in step with the
+  languages.
 - Leading emoji that the web design strips at render time are stripped in
   the export (`STRIP_EMOJI` in `keys.ts`).
 

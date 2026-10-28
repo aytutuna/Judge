@@ -73,7 +73,7 @@ enum VerdictDisplay {
     static func judgesLabel(_ result: VerdictResult?, lang: AppLang) -> String {
         guard let result, !result.runs.isEmpty else { return L10n.threadJudges(lang) }
         guard let agreed = agreement(result) else { return L10n.threadJudgesSplit(lang) }
-        return L10n.threadJudgesAgree(lang, n: String(agreed.n), total: String(agreed.total))
+        return L10n.threadJudgesAgree(lang, n: agreed.n, total: String(agreed.total))
     }
 
     /// "Sam's best point" when one side won, the plain title otherwise.
@@ -141,8 +141,8 @@ enum VerdictDisplay {
         let quick = models.filter { $0.lowercased().contains("haiku") }.count
         let strong = models.count - quick
         var parts: [String] = []
-        if strong > 0 { parts.append(L10n.panelStrong(lang, n: String(strong))) }
-        if quick > 0 { parts.append(L10n.panelQuick(lang, n: String(quick))) }
+        if strong > 0 { parts.append(L10n.panelStrong(lang, n: strong)) }
+        if quick > 0 { parts.append(L10n.panelQuick(lang, n: quick)) }
         return L10n.panelModels(lang, list: parts.joined(separator: " + "))
     }
 

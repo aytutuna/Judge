@@ -208,8 +208,8 @@ final class PremiumDecodingTests: XCTestCase {
         XCTAssertEqual(L10n.pricingPack(.en, n: 10), "10 verdicts")
         XCTAssertEqual(L10n.pricingPack(.tr, n: 1), "1 karar")
         XCTAssertEqual(L10n.pricingPack(.tr, n: 10), "10 karar")
-        XCTAssertEqual(L10n.pricingMonthlyCap(.en, n: "35"), "35 verdicts a month")
-        XCTAssertEqual(L10n.pricingMonthlyCap(.tr, n: "35"), "Ayda 35 karar")
+        XCTAssertEqual(L10n.pricingMonthlyCap(.en, n: 35), "35 verdicts a month")
+        XCTAssertEqual(L10n.pricingMonthlyCap(.tr, n: 35), "Ayda 35 karar")
     }
 
     @MainActor
@@ -299,7 +299,7 @@ final class PremiumDecodingTests: XCTestCase {
         }
         XCTAssertEqual(
             ErrorText.apiErrorMessage(ApiErrorBody(error: "x", code: "daily_cap", retryAfterSec: 120), status: 503, lang: .en),
-            L10n.errorDailyCap(.en, wait: L10n.waitMinutes(.en, n: "2"))
+            L10n.errorDailyCap(.en, wait: L10n.waitMinutes(.en, n: 2))
         )
         XCTAssertEqual(ErrorText.apiErrorMessage(ApiErrorBody(error: "x", code: "fair_use"), status: 402, lang: .tr), L10n.errorFairUseSoon(.tr))
     }

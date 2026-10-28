@@ -177,7 +177,8 @@ class ScreensTest {
 
     @Test
     fun verdictCard_rendersEverySample_withRestoredLabels() {
-        for (lang in AppLang.entries) {
+        // The fixtures carry English and Turkish verdicts and translations.
+        for (lang in listOf(AppLang.EN, AppLang.TR)) {
             for (name in Fixtures.sampleNames) {
                 val outcome = sample(name)
                 compose.setContentOnce { Themed(lang) { SampleVerdict(outcome, lang, modifier = Modifier.verticalScroll(rememberScrollState()).padding(16.dp)) } }

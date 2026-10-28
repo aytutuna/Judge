@@ -129,7 +129,7 @@ fun EvidencePicker(
         }
         Row(verticalAlignment = Alignment.Top, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
             TintedIcon(remember { JudgeIcons.lock(Palette.muted) }, 12, Modifier.padding(top = 2.dp))
-            Text(if (single) s.evidenceHintOne else s.evidenceHint(state.max.toString()), style = JudgeType.slotText)
+            Text(if (single) s.evidenceHintOne else s.evidenceHint(state.max), style = JudgeType.slotText)
         }
         if (state.overLimit) Text(s.evidenceLimit, style = JudgeType.slotText.copy(color = Palette.ink2))
         state.failure?.let {

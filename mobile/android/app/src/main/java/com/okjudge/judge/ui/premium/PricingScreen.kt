@@ -176,7 +176,7 @@ fun PricingScreen(
                     val monthlyOffer = offerFor(monthlyId)
                     val monthly = monthlyOffer?.price ?: Tiers.formatPrice(pricing.monthly.priceUsd, lang, pricing.currency)
                     Offer(
-                        name = s.pricingMonthlyCap(pricing.monthly.fairUseCap.toString()),
+                        name = s.pricingMonthlyCap(pricing.monthly.fairUseCap),
                         meta = s.pricingMonthlyRenews,
                         price = monthly,
                         buyLabel = if (storeOn) monthly else s.pricingComingSoon,

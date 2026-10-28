@@ -56,9 +56,10 @@
     <string name="share_text">Kavgayı yargıçlara sorduk. Bak kim kazandı.</string>
     <string name="copy_prompt">Bu bağlantıyı kopyala:</string>
     <string name="judge_another">Bir tane daha çözelim</string>
+    <string name="judges_voted_one">1 bağımsız yapay zekâ yargıcı oy verdi:</string>
     <plurals name="judges_voted">
-        <item quantity="one">%1$d bağımsız yapay zekâ yargıcı oy verdi:</item>
-        <item quantity="other">%1$d bağımsız yapay zekâ yargıcı oy verdi:</item>
+        <item quantity="one">%1$s bağımsız yapay zekâ yargıcı oy verdi:</item>
+        <item quantity="other">%1$s bağımsız yapay zekâ yargıcı oy verdi:</item>
     </plurals>
     <string name="escalated">Oylar çok yakındı, o yüzden ek yargıç çağırdık.</string>
     <string name="translate_loading">Çevriliyor…</string>
@@ -94,9 +95,15 @@
     <string name="error_captcha_failed">İnsan olduğunu doğrulayamadık. Kontrolü bir daha dene, sonra yeniden gönder.</string>
     <string name="wait_moment">birkaç dakika</string>
     <string name="wait_minute">1 dakika</string>
-    <string name="wait_minutes">%1$s dakika</string>
+    <plurals name="wait_minutes">
+        <item quantity="one">%1$s dakika</item>
+        <item quantity="other">%1$s dakika</item>
+    </plurals>
     <string name="wait_hour">1 saat</string>
-    <string name="wait_hours">%1$s saat</string>
+    <plurals name="wait_hours">
+        <item quantity="one">%1$s saat</item>
+        <item quantity="other">%1$s saat</item>
+    </plurals>
     <string name="examples_label">Fikir mi lazım? Şunlardan birini dene:</string>
     <string name="example_hotdog_label">🌭 Sosisli bir sandviç mi?</string>
     <string name="example_hotdog_text">Arkadaşım Mert sosislinin bir sandviç olduğunu söylüyor: dilimlenmiş ekmeğin içinde bir dolgu, bu kadar. Bence sosisli kendi başına bir şey. Kimse sandviç isteyip önüne sosisli gelmesini beklemez, hiçbir menü onu sandviçlerin altında yazmaz.</string>
@@ -135,8 +142,14 @@
     <string name="thinking_premium_helper">Olguları internette kontrol etmek biraz daha uzun sürer. Bir iki dakika verebilirsin.</string>
     <string name="panel_premium">İnternette olgu kontrolüyle yargılandı.</string>
     <string name="panel_models">Yargıçlar: %1$s</string>
-    <string name="panel_strong">%1$s güçlü</string>
-    <string name="panel_quick">%1$s hızlı</string>
+    <plurals name="panel_strong">
+        <item quantity="one">%1$s güçlü</item>
+        <item quantity="other">%1$s güçlü</item>
+    </plurals>
+    <plurals name="panel_quick">
+        <item quantity="one">%1$s hızlı</item>
+        <item quantity="other">%1$s hızlı</item>
+    </plurals>
     <string name="factcheck_title">İnternette kontrol edildi</string>
     <string name="factcheck_lead">Yargıçlar karar vermeden önce bu arama sonuçlarını gördü. Bunlar kanıt, kararın kendisi değil.</string>
     <string name="factcheck_status_supported">Doğru çıktı</string>
@@ -195,13 +208,17 @@
     <string name="pricing_packs_title">Kredi paketleri</string>
     <string name="pricing_packs_lead">Bir kez öde, istediğin zaman kullan. Her karar bir kredi kullanır.</string>
     <plurals name="pricing_pack">
-        <item quantity="one">1 karar</item>
-        <item quantity="other">%1$d karar</item>
+        <item quantity="one">%1$s karar</item>
+        <item quantity="other">%1$s karar</item>
     </plurals>
+    <string name="pricing_pack_one">1 karar</string>
     <string name="pricing_per_verdict">Karar başına %1$s</string>
     <string name="pricing_monthly_title">Aylık plan</string>
     <string name="pricing_monthly_renews">Her ay yenilenir</string>
-    <string name="pricing_monthly_cap">Ayda %1$s karar</string>
+    <plurals name="pricing_monthly_cap">
+        <item quantity="one">Ayda %1$s karar</item>
+        <item quantity="other">Ayda %1$s karar</item>
+    </plurals>
     <string name="pricing_coming_soon">Yakında</string>
     <string name="pricing_note">Fiyatlar ABD doları cinsinden. Ödemeler henüz açılmadı, yani bugün bir şey satın alınamıyor.</string>
     <string name="error_signin_required">Devam etmek için giriş yap.</string>
@@ -311,7 +328,10 @@
     <string name="evidence_label">Ekran görüntüleri (isteğe bağlı)</string>
     <string name="evidence_add">Ekran görüntüsü ekle</string>
     <string name="evidence_add_one">Bir ekran görüntüsü ekle</string>
-    <string name="evidence_hint">En fazla %1$s görsel. Yazıları okuyor, isimleri gizliyor, görselleri hiç saklamıyoruz.</string>
+    <plurals name="evidence_hint">
+        <item quantity="one">En fazla %1$s görsel. Yazıları okuyor, isimleri gizliyor, görselleri hiç saklamıyoruz.</item>
+        <item quantity="other">En fazla %1$s görsel. Yazıları okuyor, isimleri gizliyor, görselleri hiç saklamıyoruz.</item>
+    </plurals>
     <string name="evidence_hint_one">Tek görsel. Yazıyı okuyor, isimleri gizliyor, görseli hiç saklamıyoruz.</string>
     <string name="evidence_reading">Okunuyor…</string>
     <string name="evidence_ok">Okundu</string>
@@ -409,7 +429,10 @@
     <string name="thread_placeholder">Tartışma ne? Kim ne diyor, neden?</string>
     <string name="thread_placeholder_two_sided">Senin gözünden ne oldu?</string>
     <string name="thread_options">Seçenekler</string>
-    <string name="thread_judges_agree">Yargıçlar · %1$s/%2$s aynı fikirde</string>
+    <plurals name="thread_judges_agree">
+        <item quantity="one">Yargıçlar · %1$s/%2$s aynı fikirde</item>
+        <item quantity="other">Yargıçlar · %1$s/%2$s aynı fikirde</item>
+    </plurals>
     <string name="thread_judges_split">Yargıçlar · oylar bölündü</string>
     <string name="home_kicker">Yeni dava</string>
     <string name="home_title">Derdini anlat.</string>
@@ -417,11 +440,15 @@
     <string name="home_step_ruling">Karar</string>
     <string name="home_invite">Ya da karşı tarafı davet et, o da anlatsın</string>
     <string name="home_one_side">Sadece benim tarafımla devam et</string>
+    <string name="home_left_one">1 karar hakkın kaldı</string>
     <plurals name="home_left">
-        <item quantity="one">1 karar hakkın kaldı</item>
-        <item quantity="other">%1$d karar hakkın kaldı</item>
+        <item quantity="one">%1$s karar hakkın kaldı</item>
+        <item quantity="other">%1$s karar hakkın kaldı</item>
     </plurals>
-    <string name="home_month_left">Bu ay %2$s kararın %1$s tanesi kaldı</string>
+    <plurals name="home_month_left">
+        <item quantity="one">Bu ay %2$s kararın %1$s tanesi kaldı</item>
+        <item quantity="other">Bu ay %2$s kararın %1$s tanesi kaldı</item>
+    </plurals>
     <string name="home_out">Karar hakkın kalmadı.</string>
     <string name="home_pricing">Fiyatlara bak</string>
     <string name="verdict_no_majority">Yargıçlar bölündü</string>
@@ -449,8 +476,8 @@
     <string name="app_pricing_headline_member">Daha fazla karar al.</string>
     <string name="app_pricing_sub_member">Bir paket seç ya da aylık plana geç. Her karar eksiksiz yargılanır.</string>
     <plurals name="app_balance_left">
-        <item quantity="one">%1$d karar hakkın kaldı</item>
-        <item quantity="other">%1$d karar hakkın kaldı</item>
+        <item quantity="one">%1$s karar hakkın kaldı</item>
+        <item quantity="other">%1$s karar hakkın kaldı</item>
     </plurals>
     <string name="app_balance_monthly">Bu ay %2$s hakkından %1$s tanesi kaldı</string>
     <string name="app_balance_none">Karar hakkın kalmadı</string>

@@ -146,6 +146,21 @@ export const STRIP_EMOJI: readonly string[] = [
   "trial.*",
 ];
 
+/**
+ * Count strings (COUNT_KEYS in lib/i18n.ts) whose callers say 1 with a key
+ * of its own, as the web does. The apps get one plural per count string,
+ * named after it without ".other", and its accessor returns the singular
+ * key for exactly 1.
+ */
+export const SINGULAR_KEYS: Readonly<Record<string, string>> = {
+  "judgesVoted.other": "judgesVoted.one",
+  "wait.minutes": "wait.minute",
+  "wait.hours": "wait.hour",
+  "pricing.pack": "pricing.pack.one",
+  "evidence.hint": "evidence.hintOne",
+  "home.left.other": "home.left.one",
+};
+
 /** Keys that must exist in the export (fails loudly if one is renamed on
  * the web side, so a phase-1 screen never loses its copy silently). */
 export const REQUIRED_KEYS: readonly string[] = [

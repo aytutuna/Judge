@@ -3,6 +3,75 @@ package com.okjudge.judge.i18n
 
 import android.content.res.Resources
 import com.okjudge.judge.R
+import java.util.Locale
+
+/**
+ * Every language of lib/langs.ts, so stored verdicts in any of them decode.
+ * [tag] is the code the server takes, [bcp47] the tag to format with,
+ * [nativeName] what the language picker shows. Only [enabled] ones have strings.
+ */
+enum class AppLang(
+    val tag: String,
+    val bcp47: String,
+    val nativeName: String,
+    val rtl: Boolean,
+    /** False for scripts that must not be letter-spaced (Arabic, Hebrew, Thai, Indic). */
+    val tracking: Boolean,
+) {
+    EN("en", "en-US", "English", false, true),
+    TR("tr", "tr-TR", "Türkçe", false, true),
+    AR("ar", "ar", "العربية", true, false),
+    BN("bn", "bn", "বাংলা", false, false),
+    CA("ca", "ca", "Català", false, true),
+    ZH_HANS("zh-Hans", "zh-Hans", "简体中文", false, true),
+    ZH_HANT("zh-Hant", "zh-Hant", "繁體中文", false, true),
+    HR("hr", "hr", "Hrvatski", false, true),
+    CS("cs", "cs", "Čeština", false, true),
+    DA("da", "da", "Dansk", false, true),
+    NL("nl", "nl", "Nederlands", false, true),
+    FI("fi", "fi", "Suomi", false, true),
+    FR("fr", "fr", "Français", false, true),
+    DE("de", "de", "Deutsch", false, true),
+    EL("el", "el", "Ελληνικά", false, true),
+    GU("gu", "gu", "ગુજરાતી", false, false),
+    HE("he", "he", "עברית", true, false),
+    HI("hi", "hi", "हिन्दी", false, false),
+    HU("hu", "hu", "Magyar", false, true),
+    ID("id", "id", "Bahasa Indonesia", false, true),
+    IT("it", "it", "Italiano", false, true),
+    JA("ja", "ja", "日本語", false, true),
+    KN("kn", "kn", "ಕನ್ನಡ", false, false),
+    KO("ko", "ko", "한국어", false, true),
+    MS("ms", "ms", "Bahasa Melayu", false, true),
+    ML("ml", "ml", "മലയാളം", false, false),
+    MR("mr", "mr", "मराठी", false, false),
+    NB("nb", "nb", "Norsk bokmål", false, true),
+    OR("or", "or", "ଓଡ଼ିଆ", false, false),
+    PL("pl", "pl", "Polski", false, true),
+    PT_BR("pt-BR", "pt-BR", "Português (Brasil)", false, true),
+    PT_PT("pt-PT", "pt-PT", "Português (Portugal)", false, true),
+    PA("pa", "pa", "ਪੰਜਾਬੀ", false, false),
+    RO("ro", "ro", "Română", false, true),
+    RU("ru", "ru", "Русский", false, true),
+    SK("sk", "sk", "Slovenčina", false, true),
+    SL("sl", "sl", "Slovenščina", false, true),
+    ES("es", "es", "Español", false, true),
+    SV("sv", "sv", "Svenska", false, true),
+    TA("ta", "ta", "தமிழ்", false, false),
+    TE("te", "te", "తెలుగు", false, false),
+    TH("th", "th", "ไทย", false, false),
+    UK("uk", "uk", "Українська", false, true),
+    UR("ur", "ur", "اردو", true, false),
+    VI("vi", "vi", "Tiếng Việt", false, true);
+
+    val locale: Locale get() = Locale.forLanguageTag(bcp47)
+
+    companion object {
+        val enabled: List<AppLang> = listOf(EN, TR, AR, BN, CA, ZH_HANS, ZH_HANT, HR, CS, DA, NL, FI, FR, DE, EL, GU, HE, HI, HU, ID, IT, JA, KN, KO, MS, ML, MR, NB, OR, PL, PT_BR, PT_PT, PA, RO, RU, SK, SL, ES, SV, TA, TE, TH, UK, UR, VI)
+
+        fun fromTag(tag: String?): AppLang? = entries.firstOrNull { it.tag == tag }
+    }
+}
 
 /**
  * Typed access to the shared copy. Pass the Resources of the language to
@@ -64,7 +133,8 @@ class Strings(private val res: Resources) {
     val shareText: String get() = res.getString(R.string.share_text)
     val copyPrompt: String get() = res.getString(R.string.copy_prompt)
     val judgeAnother: String get() = res.getString(R.string.judge_another)
-    fun judgesVoted(n: Int): String = res.getQuantityString(R.plurals.judges_voted, n, n)
+    val judgesVotedOne: String get() = res.getString(R.string.judges_voted_one)
+    fun judgesVoted(n: Int): String = if (n == 1) res.getString(R.string.judges_voted_one) else res.getQuantityString(R.plurals.judges_voted, n, n.toString())
     val escalated: String get() = res.getString(R.string.escalated)
     val translateLoading: String get() = res.getString(R.string.translate_loading)
     val translateFromEn: String get() = res.getString(R.string.translate_from_en)
@@ -99,9 +169,9 @@ class Strings(private val res: Resources) {
     val errorCaptchaFailed: String get() = res.getString(R.string.error_captcha_failed)
     val waitMoment: String get() = res.getString(R.string.wait_moment)
     val waitMinute: String get() = res.getString(R.string.wait_minute)
-    fun waitMinutes(n: String): String = res.getString(R.string.wait_minutes, n)
+    fun waitMinutes(n: Int): String = if (n == 1) res.getString(R.string.wait_minute) else res.getQuantityString(R.plurals.wait_minutes, n, n.toString())
     val waitHour: String get() = res.getString(R.string.wait_hour)
-    fun waitHours(n: String): String = res.getString(R.string.wait_hours, n)
+    fun waitHours(n: Int): String = if (n == 1) res.getString(R.string.wait_hour) else res.getQuantityString(R.plurals.wait_hours, n, n.toString())
     val examplesLabel: String get() = res.getString(R.string.examples_label)
     val exampleHotdogLabel: String get() = res.getString(R.string.example_hotdog_label)
     val exampleHotdogText: String get() = res.getString(R.string.example_hotdog_text)
@@ -140,8 +210,8 @@ class Strings(private val res: Resources) {
     val thinkingPremiumHelper: String get() = res.getString(R.string.thinking_premium_helper)
     val panelPremium: String get() = res.getString(R.string.panel_premium)
     fun panelModels(list: String): String = res.getString(R.string.panel_models, list)
-    fun panelStrong(n: String): String = res.getString(R.string.panel_strong, n)
-    fun panelQuick(n: String): String = res.getString(R.string.panel_quick, n)
+    fun panelStrong(n: Int): String = res.getQuantityString(R.plurals.panel_strong, n, n.toString())
+    fun panelQuick(n: Int): String = res.getQuantityString(R.plurals.panel_quick, n, n.toString())
     val factcheckTitle: String get() = res.getString(R.string.factcheck_title)
     val factcheckLead: String get() = res.getString(R.string.factcheck_lead)
     val factcheckStatusSupported: String get() = res.getString(R.string.factcheck_status_supported)
@@ -199,11 +269,12 @@ class Strings(private val res: Resources) {
     val pricingPremiumF4: String get() = res.getString(R.string.pricing_premium_f4)
     val pricingPacksTitle: String get() = res.getString(R.string.pricing_packs_title)
     val pricingPacksLead: String get() = res.getString(R.string.pricing_packs_lead)
-    fun pricingPack(n: Int): String = res.getQuantityString(R.plurals.pricing_pack, n, n)
+    fun pricingPack(n: Int): String = if (n == 1) res.getString(R.string.pricing_pack_one) else res.getQuantityString(R.plurals.pricing_pack, n, n.toString())
+    val pricingPackOne: String get() = res.getString(R.string.pricing_pack_one)
     fun pricingPerVerdict(price: String): String = res.getString(R.string.pricing_per_verdict, price)
     val pricingMonthlyTitle: String get() = res.getString(R.string.pricing_monthly_title)
     val pricingMonthlyRenews: String get() = res.getString(R.string.pricing_monthly_renews)
-    fun pricingMonthlyCap(n: String): String = res.getString(R.string.pricing_monthly_cap, n)
+    fun pricingMonthlyCap(n: Int): String = res.getQuantityString(R.plurals.pricing_monthly_cap, n, n.toString())
     val pricingComingSoon: String get() = res.getString(R.string.pricing_coming_soon)
     val pricingNote: String get() = res.getString(R.string.pricing_note)
     val errorSigninRequired: String get() = res.getString(R.string.error_signin_required)
@@ -313,7 +384,7 @@ class Strings(private val res: Resources) {
     val evidenceLabel: String get() = res.getString(R.string.evidence_label)
     val evidenceAdd: String get() = res.getString(R.string.evidence_add)
     val evidenceAddOne: String get() = res.getString(R.string.evidence_add_one)
-    fun evidenceHint(n: String): String = res.getString(R.string.evidence_hint, n)
+    fun evidenceHint(n: Int): String = if (n == 1) res.getString(R.string.evidence_hint_one) else res.getQuantityString(R.plurals.evidence_hint, n, n.toString())
     val evidenceHintOne: String get() = res.getString(R.string.evidence_hint_one)
     val evidenceReading: String get() = res.getString(R.string.evidence_reading)
     val evidenceOk: String get() = res.getString(R.string.evidence_ok)
@@ -411,7 +482,7 @@ class Strings(private val res: Resources) {
     val threadPlaceholder: String get() = res.getString(R.string.thread_placeholder)
     val threadPlaceholderTwoSided: String get() = res.getString(R.string.thread_placeholder_two_sided)
     val threadOptions: String get() = res.getString(R.string.thread_options)
-    fun threadJudgesAgree(n: String, total: String): String = res.getString(R.string.thread_judges_agree, n, total)
+    fun threadJudgesAgree(n: Int, total: String): String = res.getQuantityString(R.plurals.thread_judges_agree, n, n.toString(), total)
     val threadJudgesSplit: String get() = res.getString(R.string.thread_judges_split)
     val homeKicker: String get() = res.getString(R.string.home_kicker)
     val homeTitle: String get() = res.getString(R.string.home_title)
@@ -419,8 +490,9 @@ class Strings(private val res: Resources) {
     val homeStepRuling: String get() = res.getString(R.string.home_step_ruling)
     val homeInvite: String get() = res.getString(R.string.home_invite)
     val homeOneSide: String get() = res.getString(R.string.home_one_side)
-    fun homeLeft(n: Int): String = res.getQuantityString(R.plurals.home_left, n, n)
-    fun homeMonthLeft(n: String, cap: String): String = res.getString(R.string.home_month_left, n, cap)
+    val homeLeftOne: String get() = res.getString(R.string.home_left_one)
+    fun homeLeft(n: Int): String = if (n == 1) res.getString(R.string.home_left_one) else res.getQuantityString(R.plurals.home_left, n, n.toString())
+    fun homeMonthLeft(n: Int, cap: String): String = res.getQuantityString(R.plurals.home_month_left, n, n.toString(), cap)
     val homeOut: String get() = res.getString(R.string.home_out)
     val homePricing: String get() = res.getString(R.string.home_pricing)
     val verdictNoMajority: String get() = res.getString(R.string.verdict_no_majority)
@@ -447,7 +519,7 @@ class Strings(private val res: Resources) {
     val appPricingSub: String get() = res.getString(R.string.app_pricing_sub)
     val appPricingHeadlineMember: String get() = res.getString(R.string.app_pricing_headline_member)
     val appPricingSubMember: String get() = res.getString(R.string.app_pricing_sub_member)
-    fun appBalanceLeft(n: Int): String = res.getQuantityString(R.plurals.app_balance_left, n, n)
+    fun appBalanceLeft(n: Int): String = res.getQuantityString(R.plurals.app_balance_left, n, n.toString())
     fun appBalanceMonthly(left: String, cap: String): String = res.getString(R.string.app_balance_monthly, left, cap)
     val appBalanceNone: String get() = res.getString(R.string.app_balance_none)
     val appBalanceCaseCost: String get() = res.getString(R.string.app_balance_case_cost)
@@ -632,6 +704,7 @@ class Strings(private val res: Resources) {
             "shareText" -> R.string.share_text
             "copyPrompt" -> R.string.copy_prompt
             "judgeAnother" -> R.string.judge_another
+            "judgesVoted.one" -> R.string.judges_voted_one
             "escalated" -> R.string.escalated
             "translate.loading" -> R.string.translate_loading
             "translate.from.en" -> R.string.translate_from_en
@@ -751,6 +824,7 @@ class Strings(private val res: Resources) {
             "pricing.premium.f4" -> R.string.pricing_premium_f4
             "pricing.packsTitle" -> R.string.pricing_packs_title
             "pricing.packsLead" -> R.string.pricing_packs_lead
+            "pricing.pack.one" -> R.string.pricing_pack_one
             "pricing.monthly.title" -> R.string.pricing_monthly_title
             "pricing.monthly.renews" -> R.string.pricing_monthly_renews
             "pricing.comingSoon" -> R.string.pricing_coming_soon
@@ -950,6 +1024,7 @@ class Strings(private val res: Resources) {
             "home.step.ruling" -> R.string.home_step_ruling
             "home.invite" -> R.string.home_invite
             "home.oneSide" -> R.string.home_one_side
+            "home.left.one" -> R.string.home_left_one
             "home.out" -> R.string.home_out
             "home.pricing" -> R.string.home_pricing
             "verdict.noMajority" -> R.string.verdict_no_majority

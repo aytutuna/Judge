@@ -126,7 +126,7 @@ struct PricingView: View {
                 .padding(.top, 4)
             offer(
                 planId: pricing.monthly.id,
-                name: L10n.pricingMonthlyCap(lang, n: String(pricing.monthly.fairUseCap)),
+                name: L10n.pricingMonthlyCap(lang, n: pricing.monthly.fairUseCap),
                 meta: L10n.pricingMonthlyRenews(lang),
                 labels: app.purchases.labels(planId: pricing.monthly.id, usd: pricing.monthly.priceUsd, credits: nil, pricing: pricing, lang: lang)
             )

@@ -7,34 +7,15 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import java.util.EnumMap
 import java.util.Locale
 
-/**
- * The two languages the app speaks. Passed explicitly to every string
- * lookup (like the web's `t(lang, key)`), so the in-app toggle switches the
- * whole UI at once without recreating the Activity.
- */
-enum class AppLang(val tag: String) {
-    EN("en"),
-    TR("tr");
-
-    val locale: Locale get() = Locale.forLanguageTag(tag)
-
-    companion object {
-        fun fromTag(tag: String?): AppLang? = entries.firstOrNull { it.tag == tag }
-
-        /** Same rule as lib/lang.ts: Turkish when the device language starts with "tr". */
-        fun fromDeviceTag(languageTag: String?): AppLang =
-            if (languageTag?.lowercase(Locale.ROOT)?.startsWith("tr") == true) TR else EN
-    }
-}
-
 /** What the user picked in Settings. SYSTEM follows the phone. */
 enum class LangPref(val stored: String) {
     SYSTEM("system"),
     EN("en"),
     TR("tr");
 
+    /** System is Turkish when the device language starts with "tr" (lib/lang.ts). */
     fun resolve(deviceLanguageTag: String?): AppLang = when (this) {
-        SYSTEM -> AppLang.fromDeviceTag(deviceLanguageTag)
+        SYSTEM -> if (deviceLanguageTag?.lowercase(Locale.ROOT)?.startsWith("tr") == true) AppLang.TR else AppLang.EN
         EN -> AppLang.EN
         TR -> AppLang.TR
     }

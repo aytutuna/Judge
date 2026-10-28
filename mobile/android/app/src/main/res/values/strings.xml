@@ -56,9 +56,10 @@
     <string name="share_text">We let the judges settle it. See who won.</string>
     <string name="copy_prompt">Copy this link:</string>
     <string name="judge_another">Settle another one</string>
+    <string name="judges_voted_one">1 independent AI judge voted:</string>
     <plurals name="judges_voted">
-        <item quantity="one">1 independent AI judge voted:</item>
-        <item quantity="other">%1$d independent AI judges voted:</item>
+        <item quantity="one">%1$s independent AI judges voted:</item>
+        <item quantity="other">%1$s independent AI judges voted:</item>
     </plurals>
     <string name="escalated">It was close, so we called in extra judges.</string>
     <string name="translate_loading">Translating…</string>
@@ -94,9 +95,15 @@
     <string name="error_captcha_failed">We couldn\'t tell if you\'re human. Try the check again, then send it.</string>
     <string name="wait_moment">a few minutes</string>
     <string name="wait_minute">1 minute</string>
-    <string name="wait_minutes">%1$s minutes</string>
+    <plurals name="wait_minutes">
+        <item quantity="one">%1$s minutes</item>
+        <item quantity="other">%1$s minutes</item>
+    </plurals>
     <string name="wait_hour">1 hour</string>
-    <string name="wait_hours">%1$s hours</string>
+    <plurals name="wait_hours">
+        <item quantity="one">%1$s hours</item>
+        <item quantity="other">%1$s hours</item>
+    </plurals>
     <string name="examples_label">Stuck? Try one of these:</string>
     <string name="example_hotdog_label">🌭 Is a hot dog a sandwich?</string>
     <string name="example_hotdog_text">My friend Sam says a hot dog is a sandwich: it\'s a filling inside sliced bread, end of story. I say it\'s its own thing. Nobody orders a sandwich and expects a hot dog, and no menu lists it under sandwiches.</string>
@@ -135,8 +142,14 @@
     <string name="thinking_premium_helper">Checking the facts on the web takes a little longer. Give it a minute or two.</string>
     <string name="panel_premium">Judged with a web fact-check.</string>
     <string name="panel_models">Judges: %1$s</string>
-    <string name="panel_strong">%1$s strong</string>
-    <string name="panel_quick">%1$s quick</string>
+    <plurals name="panel_strong">
+        <item quantity="one">%1$s strong</item>
+        <item quantity="other">%1$s strong</item>
+    </plurals>
+    <plurals name="panel_quick">
+        <item quantity="one">%1$s quick</item>
+        <item quantity="other">%1$s quick</item>
+    </plurals>
     <string name="factcheck_title">Checked on the web</string>
     <string name="factcheck_lead">The judges saw these search results before ruling. They\'re evidence, not the ruling itself.</string>
     <string name="factcheck_status_supported">Holds up</string>
@@ -195,13 +208,17 @@
     <string name="pricing_packs_title">Credit packs</string>
     <string name="pricing_packs_lead">Pay once and use them whenever. Each verdict uses one credit.</string>
     <plurals name="pricing_pack">
-        <item quantity="one">1 verdict</item>
-        <item quantity="other">%1$d verdicts</item>
+        <item quantity="one">%1$s verdicts</item>
+        <item quantity="other">%1$s verdicts</item>
     </plurals>
+    <string name="pricing_pack_one">1 verdict</string>
     <string name="pricing_per_verdict">%1$s per verdict</string>
     <string name="pricing_monthly_title">Monthly plan</string>
     <string name="pricing_monthly_renews">Renews every month</string>
-    <string name="pricing_monthly_cap">%1$s verdicts a month</string>
+    <plurals name="pricing_monthly_cap">
+        <item quantity="one">%1$s verdicts a month</item>
+        <item quantity="other">%1$s verdicts a month</item>
+    </plurals>
     <string name="pricing_coming_soon">Coming soon</string>
     <string name="pricing_note">Prices are in US dollars. Payments aren\'t open yet, so nothing can be bought today.</string>
     <string name="error_signin_required">Sign in to continue.</string>
@@ -311,7 +328,10 @@
     <string name="evidence_label">Screenshots (optional)</string>
     <string name="evidence_add">Add screenshots</string>
     <string name="evidence_add_one">Add a screenshot</string>
-    <string name="evidence_hint">Up to %1$s images. We read the text, hide the names, and never keep the images.</string>
+    <plurals name="evidence_hint">
+        <item quantity="one">Up to %1$s images. We read the text, hide the names, and never keep the images.</item>
+        <item quantity="other">Up to %1$s images. We read the text, hide the names, and never keep the images.</item>
+    </plurals>
     <string name="evidence_hint_one">One image. We read the text, hide the names, and never keep the image.</string>
     <string name="evidence_reading">Reading…</string>
     <string name="evidence_ok">Read</string>
@@ -409,7 +429,10 @@
     <string name="thread_placeholder">What\'s the argument? Who says what, and why?</string>
     <string name="thread_placeholder_two_sided">What happened, from where you stand?</string>
     <string name="thread_options">Options</string>
-    <string name="thread_judges_agree">Judges · %1$s of %2$s agree</string>
+    <plurals name="thread_judges_agree">
+        <item quantity="one">Judges · %1$s of %2$s agree</item>
+        <item quantity="other">Judges · %1$s of %2$s agree</item>
+    </plurals>
     <string name="thread_judges_split">Judges · split</string>
     <string name="home_kicker">New case</string>
     <string name="home_title">State your case.</string>
@@ -417,11 +440,15 @@
     <string name="home_step_ruling">Ruling</string>
     <string name="home_invite">Or invite the other side to tell theirs</string>
     <string name="home_one_side">Judge just my side instead</string>
+    <string name="home_left_one">1 verdict left</string>
     <plurals name="home_left">
-        <item quantity="one">1 verdict left</item>
-        <item quantity="other">%1$d verdicts left</item>
+        <item quantity="one">%1$s verdicts left</item>
+        <item quantity="other">%1$s verdicts left</item>
     </plurals>
-    <string name="home_month_left">%1$s of %2$s left this month</string>
+    <plurals name="home_month_left">
+        <item quantity="one">%1$s of %2$s left this month</item>
+        <item quantity="other">%1$s of %2$s left this month</item>
+    </plurals>
     <string name="home_out">No verdicts left.</string>
     <string name="home_pricing">See pricing</string>
     <string name="verdict_no_majority">Judges split</string>
@@ -449,8 +476,8 @@
     <string name="app_pricing_headline_member">Get more verdicts.</string>
     <string name="app_pricing_sub_member">Pick a pack or go monthly. Every verdict gets the full panel.</string>
     <plurals name="app_balance_left">
-        <item quantity="one">%1$d verdict left</item>
-        <item quantity="other">%1$d verdicts left</item>
+        <item quantity="one">%1$s verdict left</item>
+        <item quantity="other">%1$s verdicts left</item>
     </plurals>
     <string name="app_balance_monthly">%1$s of %2$s left this month</string>
     <string name="app_balance_none">No verdicts left</string>

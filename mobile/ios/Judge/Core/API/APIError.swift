@@ -92,10 +92,9 @@ enum ErrorText {
         guard let seconds, seconds.isFinite, seconds > 0 else { return L10n.waitMoment(lang) }
         let minutes = Int((seconds / 60).rounded(.up))
         if minutes < 90 {
-            return minutes == 1 ? L10n.waitMinute(lang) : L10n.waitMinutes(lang, n: String(minutes))
+            return L10n.waitMinutes(lang, n: minutes)
         }
-        let hours = Int((seconds / 3600).rounded(.up))
-        return hours == 1 ? L10n.waitHour(lang) : L10n.waitHours(lang, n: String(hours))
+        return L10n.waitHours(lang, n: Int((seconds / 3600).rounded(.up)))
     }
 
     /// An ISO timestamp as "November 18" / "18 Kasım"; nil when unusable.

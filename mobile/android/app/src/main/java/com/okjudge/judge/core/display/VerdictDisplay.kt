@@ -77,7 +77,7 @@ object VerdictDisplay {
     fun judgesLabel(result: VerdictResult?, s: Strings): String {
         if (result == null || result.runs.isEmpty()) return s.threadJudges
         val a = agreement(result) ?: return s.threadJudgesSplit
-        return s.threadJudgesAgree(a.n.toString(), a.total.toString())
+        return s.threadJudgesAgree(a.n, a.total.toString())
     }
 
     /** The stamp on the card: the winner as [verdictLabel] says it, otherwise one short word (stampLabel). */
@@ -126,8 +126,8 @@ object VerdictDisplay {
         val quick = models.count { QUICK_MODEL.containsMatchIn(it) }
         val strong = models.size - quick
         val parts = buildList {
-            if (strong > 0) add(s.panelStrong(strong.toString()))
-            if (quick > 0) add(s.panelQuick(quick.toString()))
+            if (strong > 0) add(s.panelStrong(strong))
+            if (quick > 0) add(s.panelQuick(quick))
         }
         return s.panelModels(parts.joinToString(" + "))
     }

@@ -1,12 +1,13 @@
 package com.okjudge.judge.core.display
 
+import android.icu.text.DateFormat
+import android.icu.util.TimeZone
 import com.okjudge.judge.i18n.AppLang
 import com.okjudge.judge.i18n.Strings
 import java.time.Instant
 import java.time.ZoneId
-import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
-import java.util.Locale
+import java.util.Date
 import kotlin.math.ceil
 
 /**
@@ -50,12 +51,12 @@ object Errors {
     fun formatWait(s: Strings, seconds: Double?): String {
         if (seconds == null || !seconds.isFinite() || seconds <= 0) return s.waitMoment
         val minutes = ceil(seconds / 60).toLong()
-        if (minutes < 90) return if (minutes == 1L) s.waitMinute else s.waitMinutes(minutes.toString())
-        val hours = ceil(seconds / 3600).toLong()
-        return if (hours == 1L) s.waitHour else s.waitHours(hours.toString())
+        if (minutes < 90) return s.waitMinutes(minutes.toInt())
+        return s.waitHours(ceil(seconds / 3600).toInt())
     }
 
-    /** "November 18" / "18 Kasım", or null for a missing or unparseable timestamp. */
+    /** Month and day in the language's own order ("November 18", "18 Kasım"),
+     * like Intl on the web; null for a missing or unparseable timestamp. */
     fun formatDate(lang: AppLang, iso: String?, zone: ZoneId = ZoneId.systemDefault()): String? {
         if (iso.isNullOrEmpty()) return null
         val instant = try {
@@ -63,11 +64,9 @@ object Errors {
         } catch (_: DateTimeParseException) {
             return null
         }
-        val formatter = when (lang) {
-            AppLang.EN -> DateTimeFormatter.ofPattern("MMMM d", Locale.US)
-            AppLang.TR -> DateTimeFormatter.ofPattern("d MMMM", Locale.forLanguageTag("tr-TR"))
-        }
-        return formatter.format(instant.atZone(zone))
+        val format = DateFormat.getInstanceForSkeleton("MMMMd", lang.locale)
+        format.timeZone = TimeZone.getTimeZone(zone.id)
+        return format.format(Date.from(instant))
     }
 
     /** Localized message for an API error body (apiErrorMessage). */

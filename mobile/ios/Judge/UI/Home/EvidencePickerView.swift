@@ -44,7 +44,7 @@ struct EvidencePickerView: View {
                 Image(systemName: "lock")
                     .font(.system(size: 11, weight: .semibold))
                     .accessibilityHidden(true)
-                Text(single ? L10n.evidenceHintOne(lang) : L10n.evidenceHint(lang, n: String(evidence.max)))
+                Text(single ? L10n.evidenceHintOne(lang) : L10n.evidenceHint(lang, n: evidence.max))
                     .fixedSize(horizontal: false, vertical: true)
             }
             .brandText(.footnote)
