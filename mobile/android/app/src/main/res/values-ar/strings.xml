@@ -614,8 +614,8 @@
     <string name="app_example_last_slice_b">لا يصح أن تقول «هذه لي» ثم لا تلمسها ساعتين. ظلّت في مكانها تبرد، فأكلتها أنا.</string>
     <string name="app_case_waiting_kicker">قضية · بانتظار الرد</string>
     <string name="app_case_waiting_for">بانتظار %1$s</string>
-    <string name="app_case_waiting_lead">رواية %1$s تُكتب دون حساب، ولا يرى أيٌّ منكما كلام الآخر حتى صدور الحكم.</string>
-    <string name="app_case_waiting_lead_anon">يكتب الطرف الآخر روايته دون حساب، ولا يرى أيٌّ منكما كلام الآخر حتى صدور الحكم.</string>
+    <string name="app_case_waiting_lead">تُكتب رواية %1$s دون الحاجة إلى إنشاء حساب، ولا يرى أيٌّ منكما كلام الآخر حتى صدور الحكم.</string>
+    <string name="app_case_waiting_lead_anon">يكتب الطرف الآخر روايته دون الحاجة إلى إنشاء حساب، ولا يرى أيٌّ منكما كلام الآخر حتى صدور الحكم.</string>
     <string name="app_case_send_to">أرسل هذا الرابط إلى %1$s</string>
     <string name="app_case_step_you">كتبت روايتك</string>
     <string name="app_case_step_you_note">لن تُكشف قبل صدور الحكم</string>
