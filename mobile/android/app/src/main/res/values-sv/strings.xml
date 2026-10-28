@@ -486,7 +486,7 @@
     <string name="app_retry">Försök igen</string>
     <string name="app_error_offline">Du verkar vara offline. Kolla din uppkoppling och försök igen.</string>
     <string name="app_error_timeout">Domarna tog för lång tid på sig att svara. Försök igen om en minut.</string>
-    <string name="app_error_interrupted">Uppkopplingen bröts medan Judge låg i bakgrunden. Försök igen och ha appen öppen tills domen är klar.</string>
+    <string name="app_error_interrupted">Uppkopplingen bröts medan Judge låg i bakgrunden. Försök igen och låt appen vara öppen tills domen har kommit.</string>
     <string name="app_turnstile_error">Människokontrollen kunde inte laddas. Kolla din uppkoppling och försök igen.</string>
     <string name="app_factcheck_source_aria">%1$s, öppnas i webbläsaren</string>
     <string name="app_error_bad_origin">Förfrågan kom från ett ställe vi inte känner igen. Se till att appen är uppdaterad och försök igen.</string>
@@ -499,7 +499,7 @@
     <string name="app_signin_required">Logga in för att få en dom.</string>
     <string name="app_signin_or">eller</string>
     <string name="app_signin_code_request">Mejla mig en kod</string>
-    <string name="app_signin_code_sent">Vi har mejlat en kod till %1$s. Den fungerar i 10 minuter.</string>
+    <string name="app_signin_code_sent">Vi har mejlat en kod till %1$s. Den gäller i 10 minuter.</string>
     <string name="app_signin_code_label">Skriv in den sexsiffriga koden</string>
     <string name="app_signin_code_submit">Logga in</string>
     <string name="app_signin_code_invalid">Koden stämmer inte. Kolla mejlet och försök igen.</string>
@@ -510,7 +510,7 @@
     <string name="app_signin_rate_limited">För många försök. Vänta en minut och försök igen.</string>
     <string name="app_signin_unavailable">Det går inte att logga in just nu. Försök igen senare.</string>
     <string name="app_account_delete_title">Radera ditt konto?</string>
-    <string name="app_account_delete_body">Dina inloggningsuppgifter, krediter, ditt abonnemang och dina personuppgifter raderas, och dina delningslänkar slutar fungera. Texten i dina domar sparas kvar utan ditt namn, som beskrivs i integritetspolicyn.</string>
+    <string name="app_account_delete_body">Dina inloggningsuppgifter, dina krediter, ditt abonnemang och dina personuppgifter raderas, och dina delningslänkar slutar fungera. Texten i dina domar sparas kvar utan ditt namn, som beskrivs i integritetspolicyn.</string>
     <string name="app_account_delete_confirm">Radera konto</string>
     <string name="app_account_deleted">Ditt konto är raderat.</string>
     <string name="app_account_sign_out_confirm">Logga ut från Judge på den här telefonen?</string>
@@ -518,7 +518,7 @@
     <string name="app_account_session_expired">Du har loggats ut. Logga in igen för att fortsätta.</string>
     <string name="app_close">Stäng</string>
     <string name="app_home_lead">Skriv båda sidorna, eller skicka en länk så att den andra kan skriva sin.</string>
-    <string name="app_home_lead_solo">Skriv din sida, och den andras om du vet den.</string>
+    <string name="app_home_lead_solo">Skriv din sida, och den andras om du känner till den.</string>
     <string name="app_home_your_side">Din sida</string>
     <string name="app_home_their_side">Den andras sida</string>
     <string name="app_home_your_name">Ditt namn</string>
@@ -547,15 +547,15 @@
     <string name="app_example_road_trip_a_name">Ida</string>
     <string name="app_example_road_trip_a">Jag körde hela vägen dit, sex timmar. Det är bara rättvist att du kör hem.</string>
     <string name="app_example_road_trip_b_name">Viktor</string>
-    <string name="app_example_road_trip_b">Jag sa innan vi åkte att jag hatar att köra i mörker, och vi åker inte förrän sju i kväll. Nästa gång kör jag på morgnarna.</string>
+    <string name="app_example_road_trip_b">Jag sa innan vi åkte att jag hatar att köra i mörker, och vi åker sju i kväll. Nästa gång kör jag på morgnarna.</string>
     <string name="app_example_seat_a_name">Klara</string>
     <string name="app_example_seat_a">Mitt säte går att fälla bakåt, så jag fäller det. Det är ett nattflyg och alla försöker sova.</string>
     <string name="app_example_seat_b_name">Filip</string>
-    <string name="app_example_seat_b">Jag är 191 cm lång och knäna trycker redan mot ditt säte. Du kunde åtminstone fråga innan du fäller det hela vägen bak.</string>
+    <string name="app_example_seat_b">Jag är 191 cm lång och knäna trycker redan mot ditt säte. Du kunde åtminstone fråga innan du fäller det ända bak.</string>
     <string name="app_example_spoiler_a_name">Wilma</string>
     <string name="app_example_spoiler_a">Du berättade vem mördaren var innan jag ens hade börjat på sista avsnittet. Jag hade väntat på det hela veckan.</string>
     <string name="app_example_spoiler_b_name">Axel</string>
-    <string name="app_example_spoiler_b">Det kom ut för tre veckor sedan och du sa att du hade sett klart. Jag kan inte hålla koll på var alla är.</string>
+    <string name="app_example_spoiler_b">Det kom ut för tre veckor sedan och du sa att du hade sett klart. Jag kan inte hålla koll på hur långt alla har kommit.</string>
     <string name="app_example_jacket_a_name">Albin</string>
     <string name="app_example_jacket_a">Du hade på dig min jeansjacka på konserten utan att fråga. Den luktade rök när jag fick tillbaka den.</string>
     <string name="app_example_jacket_b_name">Ebba</string>
@@ -575,7 +575,7 @@
     <string name="app_case_step_them_anon">Den andra skriver sin</string>
     <string name="app_case_step_them_note">Sidan uppdateras när svaret har kommit in</string>
     <string name="app_case_step_judges">Tre domare dömer</string>
-    <string name="app_case_step_judges_note">Eller döm nu med bara din sida</string>
+    <string name="app_case_step_judges_note">Eller döm nu på bara din sida</string>
     <string name="app_case_judge_now_without">Döm nu utan %1$s</string>
     <string name="app_verdict_vs">mot</string>
     <string name="app_verdict_lean_to">Panelen lutade åt %1$s</string>

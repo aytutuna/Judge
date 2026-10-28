@@ -459,13 +459,13 @@
     <string name="best_point_of">Το δυνατό χαρτί (%1$s)</string>
     <string name="best_point_self">Το δικό σου δυνατό χαρτί</string>
     <string name="app_name">Judge</string>
-    <string name="app_tab_new">Νέα</string>
+    <string name="app_tab_new">Νέα διαφωνία</string>
     <string name="app_tab_history">Αποφάσεις</string>
     <string name="app_tab_settings">Ρυθμίσεις</string>
     <string name="app_input_counter">%1$s / %2$s</string>
     <string name="app_history_title">Οι αποφάσεις μου</string>
-    <string name="app_history_empty">Καμία απόφαση ακόμα. Λύσε την πρώτη σου διαφωνία και θα εμφανιστεί εδώ.</string>
-    <string name="app_history_device_only">Αποθηκεύονται μόνο σε αυτό το τηλέφωνο. Αν διαγράψεις μία από εδώ, ο σύνδεσμος κοινοποίησής της συνεχίζει να λειτουργεί.</string>
+    <string name="app_history_empty">Δεν έχεις αποφάσεις ακόμα. Λύσε την πρώτη σου διαφωνία και η απόφαση θα εμφανιστεί εδώ.</string>
+    <string name="app_history_device_only">Αποθηκεύονται μόνο σε αυτό το τηλέφωνο. Αν διαγράψεις μια απόφαση από εδώ, ο σύνδεσμος κοινοποίησής της θα συνεχίσει να λειτουργεί.</string>
     <string name="app_history_delete">Διαγραφή</string>
     <string name="app_history_clear_all">Διαγραφή όλων</string>
     <string name="app_history_clear_confirm">Να διαγραφούν όλες οι αποθηκευμένες αποφάσεις από αυτό το τηλέφωνο; Οι σύνδεσμοι κοινοποίησης θα συνεχίσουν να λειτουργούν.</string>
@@ -479,9 +479,9 @@
         <item quantity="one">Σου έμεινε %1$s απόφαση</item>
         <item quantity="other">Σου έμειναν %1$s αποφάσεις</item>
     </plurals>
-    <string name="app_balance_monthly">Μηνιαίο υπόλοιπο: %1$s από %2$s</string>
+    <string name="app_balance_monthly">Απομένουν %1$s από %2$s αυτόν τον μήνα</string>
     <string name="app_balance_none">Δεν σου έμειναν αποφάσεις</string>
-    <string name="app_balance_case_cost">Η αποστολή συνδέσμου χρεώνει 1 απόφαση</string>
+    <string name="app_balance_case_cost">Η αποστολή συνδέσμου κοστίζει 1 απόφαση</string>
     <string name="app_cancel">Άκυρο</string>
     <string name="app_retry">Δοκίμασε ξανά</string>
     <string name="app_error_offline">Μάλλον είσαι εκτός σύνδεσης. Έλεγξε τη σύνδεσή σου και δοκίμασε ξανά.</string>
@@ -498,9 +498,9 @@
     <string name="app_settings_version">Έκδοση %1$s</string>
     <string name="app_signin_required">Συνδέσου για να ζητήσεις απόφαση.</string>
     <string name="app_signin_or">ή</string>
-    <string name="app_signin_code_request">Στείλε μου κωδικό</string>
+    <string name="app_signin_code_request">Στείλε μου κωδικό στο email</string>
     <string name="app_signin_code_sent">Στείλαμε κωδικό στο %1$s. Ισχύει για 10 λεπτά.</string>
-    <string name="app_signin_code_label">Γράψε τον 6ψήφιο κωδικό</string>
+    <string name="app_signin_code_label">Γράψε τον εξαψήφιο κωδικό</string>
     <string name="app_signin_code_submit">Σύνδεση</string>
     <string name="app_signin_code_invalid">Ο κωδικός δεν είναι σωστός. Έλεγξε το email και δοκίμασε ξανά.</string>
     <string name="app_signin_code_expired">Ο κωδικός έληξε. Ζήτα καινούργιο.</string>
@@ -566,8 +566,8 @@
     <string name="app_example_last_slice_b">Δεν γίνεται να λες «δικό μου» και μετά να μην το αγγίζεις δύο ώρες. Καθόταν εκεί και κρύωνε, οπότε το έφαγα.</string>
     <string name="app_case_waiting_kicker">Υπόθεση · σε αναμονή</string>
     <string name="app_case_waiting_for">Περιμένουμε: %1$s</string>
-    <string name="app_case_waiting_lead">%1$s γράφει χωρίς λογαριασμό. Κανείς σας δεν βλέπει το κείμενο του άλλου πριν βγει η απόφαση.</string>
-    <string name="app_case_waiting_lead_anon">Η άλλη πλευρά γράφει χωρίς λογαριασμό. Κανείς σας δεν βλέπει το κείμενο του άλλου πριν βγει η απόφαση.</string>
+    <string name="app_case_waiting_lead">%1$s γράφει την άλλη πλευρά χωρίς λογαριασμό. Κανείς από τους δύο δεν βλέπει τι έγραψε ο άλλος πριν βγει η απόφαση.</string>
+    <string name="app_case_waiting_lead_anon">Η άλλη πλευρά γράφει τη δική της εκδοχή χωρίς λογαριασμό. Κανείς από τους δύο δεν βλέπει τι έγραψε ο άλλος πριν βγει η απόφαση.</string>
     <string name="app_case_send_to">Στείλε αυτόν τον σύνδεσμο σε: %1$s</string>
     <string name="app_case_step_you">Έγραψες την πλευρά σου</string>
     <string name="app_case_step_you_note">Σφραγισμένη μέχρι την απόφαση</string>
@@ -587,10 +587,10 @@
     <string name="app_appeal_intro">Κάτι ξέφυγε από τους κριτές; Πρόσθεσέ το και θα κρίνουν ξανά. Η πρώτη απόφαση μένει καταγεγραμμένη.</string>
     <string name="app_appeal_ask">Τι πρέπει να ξέρουν;</string>
     <string name="app_appeal_placeholder">Ένα γεγονός, ένα μήνυμα ή τι ακριβώς είχατε συμφωνήσει.</string>
-    <string name="app_appeal_cost">Χρεώνεται 1 απόφαση. Μπορείς να το κάνεις δύο φορές ανά απόφαση· απομένουν: %1$s.</string>
-    <string name="app_appeal_cost_case">Χρεώνεται 1 απόφαση. Μπορείς να το κάνεις μία φορά ανά υπόθεση.</string>
+    <string name="app_appeal_cost">Κοστίζει 1 απόφαση. Μπορείς να το κάνεις δύο φορές για κάθε απόφαση· απομένουν %1$s.</string>
+    <string name="app_appeal_cost_case">Κοστίζει 1 απόφαση. Μπορείς να το κάνεις μία φορά για κάθε υπόθεση.</string>
     <string name="app_appeal_submit">Νέα κρίση</string>
-    <string name="app_appeal_upsell">Λείπει κάτι; Πρόσθεσε πληροφορίες και ζήτα νέα κρίση με 1 απόφαση.</string>
+    <string name="app_appeal_upsell">Λείπει κάτι; Πρόσθεσε πληροφορίες και ζήτα νέα κρίση. Κοστίζει 1 απόφαση.</string>
     <string name="app_appeal_sign_in">Συνδέσου για να προσθέσεις πληροφορίες</string>
     <string name="app_appeal_used">Έχεις ήδη προσθέσει πληροφορίες σε αυτή την υπόθεση.</string>
     <string name="app_appeal_limit">Έχεις προσθέσει πληροφορίες δύο φορές. Αυτό είναι το όριο για μία απόφαση.</string>

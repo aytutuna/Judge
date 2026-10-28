@@ -6410,7 +6410,7 @@
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kirjautumistietosi, tuomiosaldosi, tilauksesi ja henkilötietosi poistetaan, ja jakolinkkisi lakkaavat toimimasta. Tuomioiden teksti säilytetään ilman nimeäsi, kuten tietosuojakäytännössä kerrotaan."
+            "value" : "Kirjautumistietosi, tuomiosaldosi, tilauksesi ja henkilötietosi poistetaan, ja jakolinkkisi lakkaavat toimimasta. Tuomioiden teksti säilyy tallessa ilman nimeäsi, kuten tietosuojakäytännössä kerrotaan."
           }
         },
         "fr" : {
@@ -6440,7 +6440,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Brišu se tvoji podaci za prijavu, krediti, plan i osobni podaci, a tvoje poveznice za dijeljenje prestaju raditi. Tekst presuda ostaje spremljen bez tvog imena, kako je objašnjeno u Pravilima privatnosti."
+            "value" : "Brišu se tvoji podaci za prijavu, krediti, plan i ostali osobni podaci, a tvoje poveznice za dijeljenje prestaju raditi. Tekst presuda ostaje spremljen bez tvog imena, kako je objašnjeno u Pravilima privatnosti."
           }
         },
         "hu" : {
@@ -6470,25 +6470,25 @@
         "kn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ನಿಮ್ಮ ಸೈನ್ ಇನ್ ವಿವರಗಳು, ಕ್ರೆಡಿಟ್‌ಗಳು, ಪ್ಲಾನ್ ಮತ್ತು ವೈಯಕ್ತಿಕ ಡೇಟಾ ಅಳಿಸಿಹೋಗುತ್ತವೆ, ನಿಮ್ಮ ಹಂಚಿಕೆ ಲಿಂಕ್‌ಗಳು ಕೆಲಸ ಮಾಡುವುದನ್ನು ನಿಲ್ಲಿಸುತ್ತವೆ. ಗೌಪ್ಯತಾ ನೀತಿಯಲ್ಲಿ ಹೇಳಿರುವಂತೆ, ತೀರ್ಪುಗಳ ಪಠ್ಯ ನಿಮ್ಮ ಹೆಸರಿಲ್ಲದೆ ಸಂಗ್ರಹವಾಗಿ ಉಳಿಯುತ್ತದೆ."
+            "value" : "ನಿಮ್ಮ ಸೈನ್ ಇನ್ ವಿವರಗಳು, ಕ್ರೆಡಿಟ್‌ಗಳು, ಪ್ಲಾನ್ ಮತ್ತು ವೈಯಕ್ತಿಕ ಡೇಟಾ ಅಳಿಸಿಹೋಗುತ್ತವೆ ಮತ್ತು ನಿಮ್ಮ ಹಂಚಿಕೆ ಲಿಂಕ್‌ಗಳು ಕೆಲಸ ಮಾಡುವುದನ್ನು ನಿಲ್ಲಿಸುತ್ತವೆ. ಗೌಪ್ಯತಾ ನೀತಿಯಲ್ಲಿ ಹೇಳಿರುವಂತೆ, ತೀರ್ಪುಗಳ ಪಠ್ಯ ನಿಮ್ಮ ಹೆಸರಿಲ್ಲದೆ ಸಂಗ್ರಹವಾಗಿ ಉಳಿಯುತ್ತದೆ."
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "로그인 정보, 크레딧, 요금제, 개인 정보가 삭제되고 공유 링크도 더 이상 열리지 않아요. 판결 내용은 개인정보 처리방침에 설명된 대로 이름을 뺀 채 보관돼요."
+            "value" : "로그인 정보, 크레딧, 요금제, 개인정보가 삭제되고 공유 링크도 더 이상 열리지 않아요. 판결 내용은 개인정보 처리방침에 설명된 대로 이름을 뺀 채 보관돼요."
           }
         },
         "ml" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "നിങ്ങളുടെ സൈൻ-ഇൻ വിവരങ്ങളും ക്രെഡിറ്റുകളും പ്ലാനും വ്യക്തിഗത ഡാറ്റയും ഡിലീറ്റ് ആകും, ഷെയർ ലിങ്കുകൾ പ്രവർത്തിക്കാതാകും. സ്വകാര്യതാ നയത്തിൽ പറഞ്ഞതുപോലെ, വിധികളുടെ ടെക്സ്റ്റ് നിങ്ങളുടെ പേരില്ലാതെ സൂക്ഷിക്കും."
+            "value" : "നിങ്ങളുടെ സൈൻ-ഇൻ വിവരങ്ങളും ക്രെഡിറ്റുകളും പ്ലാനും വ്യക്തിഗത ഡാറ്റയും ഡിലീറ്റ് ചെയ്യും, നിങ്ങളുടെ ഷെയർ ലിങ്കുകൾ പ്രവർത്തിക്കാതാകും. സ്വകാര്യതാ നയത്തിൽ പറഞ്ഞിട്ടുള്ളതുപോലെ, വിധികളുടെ ടെക്സ്റ്റ് നിങ്ങളുടെ പേരില്ലാതെ സൂക്ഷിക്കും."
           }
         },
         "mr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "तुमची साइन-इनची माहिती, क्रेडिट, प्लॅन आणि वैयक्तिक डेटा डिलीट होईल, आणि तुमच्या शेअर लिंक चालणे बंद होईल. गोपनीयता धोरणात सांगितल्याप्रमाणे निकालांचा मजकूर तुमच्या नावाशिवाय साठवलेला राहतो."
+            "value" : "तुमची साइन-इनची माहिती, क्रेडिट, प्लॅन आणि वैयक्तिक डेटा डिलीट होतील, आणि तुमच्या शेअर लिंक चालणे बंद होईल. गोपनीयता धोरणात सांगितल्याप्रमाणे निकालांचा मजकूर तुमच्या नावाशिवाय साठवलेला राहतो."
           }
         },
         "ms" : {
@@ -6506,7 +6506,7 @@
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Je inloggegevens, credits, abonnement en persoonsgegevens worden gewist, en je deellinks werken niet meer. De tekst van uitspraken blijft zonder je naam bewaard, zoals uitgelegd in het privacybeleid."
+            "value" : "Je inloggegevens, credits, abonnement en persoonsgegevens worden gewist, en je deellinks werken niet meer. De tekst van uitspraken blijft zonder je naam bewaard, zoals beschreven in het privacybeleid."
           }
         },
         "or" : {
@@ -6518,7 +6518,7 @@
         "pa" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ਤੁਹਾਡੇ ਸਾਈਨ ਇਨ ਦੇ ਵੇਰਵੇ, ਕ੍ਰੈਡਿਟ, ਪਲਾਨ ਅਤੇ ਨਿੱਜੀ ਡਾਟਾ ਮਿਟ ਜਾਣਗੇ, ਅਤੇ ਤੁਹਾਡੇ ਸਾਂਝੇ ਲਿੰਕ ਕੰਮ ਕਰਨਾ ਬੰਦ ਕਰ ਦੇਣਗੇ। ਫ਼ੈਸਲਿਆਂ ਦੀ ਲਿਖਤ ਤੁਹਾਡੇ ਨਾਂ ਤੋਂ ਬਿਨਾਂ ਸਾਡੇ ਕੋਲ ਰਹਿੰਦੀ ਹੈ, ਜਿਵੇਂ ਪਰਦੇਦਾਰੀ ਨੀਤੀ ਵਿੱਚ ਦੱਸਿਆ ਗਿਆ ਹੈ।"
+            "value" : "ਤੁਹਾਡੇ ਸਾਈਨ ਇਨ ਦੇ ਵੇਰਵੇ, ਕ੍ਰੈਡਿਟ, ਪਲਾਨ ਅਤੇ ਨਿੱਜੀ ਡਾਟਾ ਮਿਟ ਜਾਣਗੇ, ਅਤੇ ਤੁਹਾਡੇ ਸਾਂਝੇ ਲਿੰਕ ਕੰਮ ਕਰਨਾ ਬੰਦ ਕਰ ਦੇਣਗੇ। ਫ਼ੈਸਲਿਆਂ ਦੀ ਲਿਖਤ ਤੁਹਾਡੇ ਨਾਂ ਤੋਂ ਬਿਨਾਂ ਸਾਡੇ ਕੋਲ ਸੇਵ ਰਹੇਗੀ, ਜਿਵੇਂ ਪਰਦੇਦਾਰੀ ਨੀਤੀ ਵਿੱਚ ਦੱਸਿਆ ਗਿਆ ਹੈ।"
           }
         },
         "pl" : {
@@ -6542,13 +6542,13 @@
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Se șterg informațiile de conectare, creditele, planul și datele tale personale, iar linkurile tale de distribuire nu vor mai funcționa. Textul verdictelor rămâne stocat fără numele tău, așa cum explică Politica de confidențialitate."
+            "value" : "Se șterg datele de conectare, creditele, planul și informațiile tale personale, iar linkurile tale de distribuire nu vor mai funcționa. Textul verdictelor rămâne stocat fără numele tău, așa cum se explică în Politica de confidențialitate."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ваши данные для входа, баланс вердиктов, тариф и личные данные будут удалены, а ссылки, которыми вы делились, перестанут работать. Тексты вердиктов мы сохраним без вашего имени, как описано в Политике конфиденциальности."
+            "value" : "Ваши данные для входа, баланс вердиктов, тариф и личная информация будут удалены, а ссылки, которыми вы делились, перестанут работать. Тексты вердиктов останутся у нас без вашего имени, как описано в Политике конфиденциальности."
           }
         },
         "sk" : {
@@ -6560,19 +6560,19 @@
         "sl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Podatki za prijavo, krediti, naročnina in tvoji osebni podatki se izbrišejo, povezave za deljenje pa prenehajo delovati. Besedilo razsodb ostane shranjeno brez tvojega imena, kot pojasnjuje politika zasebnosti."
+            "value" : "Izbrišejo se tvoji podatki za prijavo, krediti, naročnina in osebni podatki, povezave za deljenje pa prenehajo delovati. Besedilo razsodb ostane shranjeno brez tvojega imena, kot je pojasnjeno v politiki zasebnosti."
           }
         },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Dina inloggningsuppgifter, krediter, ditt abonnemang och dina personuppgifter raderas, och dina delningslänkar slutar fungera. Texten i dina domar sparas kvar utan ditt namn, som beskrivs i integritetspolicyn."
+            "value" : "Dina inloggningsuppgifter, dina krediter, ditt abonnemang och dina personuppgifter raderas, och dina delningslänkar slutar fungera. Texten i dina domar sparas kvar utan ditt namn, som beskrivs i integritetspolicyn."
           }
         },
         "ta" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "உங்கள் உள்நுழைவு விவரங்கள், கிரெடிட்கள், பிளான், தனிப்பட்ட தரவு ஆகியவை நீக்கப்படும், உங்கள் பகிர்வு லிங்க்குகளும் வேலை செய்யாது. தனியுரிமைக் கொள்கையில் விளக்கியுள்ளபடி, தீர்ப்புகளின் உரை மட்டும் உங்கள் பெயர் இல்லாமல் சேமிப்பில் இருக்கும்."
+            "value" : "உங்கள் உள்நுழைவு விவரங்கள், கிரெடிட்கள், பிளான், தனிப்பட்ட தரவு ஆகியவை நீக்கப்படும், உங்கள் பகிர்வு லிங்க்குகளும் வேலை செய்யாது. தனியுரிமைக் கொள்கையில் விளக்கியுள்ளபடி, தீர்ப்புகளின் உரை உங்கள் பெயர் இல்லாமல் சேமிப்பில் இருக்கும்."
           }
         },
         "te" : {
@@ -6584,7 +6584,7 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ข้อมูลการเข้าสู่ระบบ เครดิต แพ็กเกจ และข้อมูลส่วนตัวของคุณจะถูกลบ ลิงก์แชร์ของคุณจะใช้ไม่ได้อีก ส่วนข้อความคำตัดสินจะยังเก็บไว้โดยไม่มีชื่อของคุณ ตามที่อธิบายไว้ในนโยบายความเป็นส่วนตัว"
+            "value" : "ข้อมูลการเข้าสู่ระบบ เครดิต แพ็กเกจ และข้อมูลส่วนตัวของคุณจะถูกลบ ลิงก์แชร์ของคุณจะใช้ไม่ได้อีกต่อไป ส่วนข้อความคำตัดสินจะยังเก็บไว้โดยไม่มีชื่อของคุณ ตามที่อธิบายไว้ในนโยบายความเป็นส่วนตัว"
           }
         },
         "tr" : {
@@ -6596,7 +6596,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Буде видалено твої дані для входу, баланс вердиктів, тариф та інші персональні дані, а посилання для поширення перестануть працювати. Текст вердиктів збережеться без твого імені, як описано в Політиці конфіденційності."
+            "value" : "Ми видалимо твої дані для входу, баланс вердиктів, тариф і особисту інформацію, а твої посилання для поширення перестануть працювати. Текст вердиктів залишиться збереженим без твого імені, як пояснено в Політиці конфіденційності."
           }
         },
         "ur" : {
@@ -6608,7 +6608,7 @@
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Thông tin đăng nhập, lượt phán quyết, gói và dữ liệu cá nhân của bạn sẽ bị xóa, các liên kết chia sẻ cũng ngừng hoạt động. Nội dung phán quyết vẫn được lưu nhưng không kèm tên bạn, như đã nêu trong Chính sách quyền riêng tư."
+            "value" : "Thông tin đăng nhập, lượt phán quyết, gói và dữ liệu cá nhân của bạn sẽ bị xóa, các liên kết chia sẻ của bạn cũng ngừng hoạt động. Nội dung phán quyết vẫn được lưu nhưng không kèm tên bạn, như đã nêu trong Chính sách quyền riêng tư."
           }
         },
         "zh-Hans" : {
@@ -6620,7 +6620,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "你的登入資料、額度、方案和個人資料都會被刪除，分享連結也會失效。判決內容會以不含你名字的形式保留，詳見隱私權政策。"
+            "value" : "你的登入資料、額度、方案和個人資料都會刪除，分享連結也會失效。判決內容會拿掉你的名字後繼續保存，詳見隱私權政策。"
           }
         }
       }
@@ -7538,13 +7538,13 @@
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "आपका साइन आउट हो गया है। जारी रखने के लिए फिर से साइन इन करें।"
+            "value" : "आपको साइन आउट कर दिया गया है। जारी रखने के लिए फिर से साइन इन करें।"
           }
         },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tvoja je sesija istekla. Prijavi se ponovno za nastavak."
+            "value" : "Prijava je istekla. Prijavi se ponovno za nastavak."
           }
         },
         "hu" : {
@@ -7556,7 +7556,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sesi masukmu sudah berakhir. Masuk lagi untuk lanjut."
+            "value" : "Sesimu sudah berakhir. Masuk lagi untuk melanjutkan."
           }
         },
         "it" : {
@@ -7598,7 +7598,7 @@
         "ms" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sesi anda sudah tamat. Log masuk semula untuk teruskan."
+            "value" : "Anda telah dilog keluar. Log masuk semula untuk meneruskan."
           }
         },
         "nb" : {
@@ -7628,7 +7628,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sesja wygasła. Zaloguj się ponownie, żeby kontynuować."
+            "value" : "Wylogowano cię. Zaloguj się ponownie, żeby kontynuować."
           }
         },
         "pt-BR" : {
@@ -7658,7 +7658,7 @@
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Prihlásenie vypršalo. Ak chceš pokračovať, prihlás sa znova."
+            "value" : "Odhlásili sme ťa. Ak chceš pokračovať, prihlás sa znova."
           }
         },
         "sl" : {
@@ -7676,7 +7676,7 @@
         "ta" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "உங்கள் உள்நுழைவு காலாவதியாகிவிட்டது. தொடர மீண்டும் உள்நுழையுங்கள்."
+            "value" : "நீங்கள் கணக்கிலிருந்து வெளியேறியுள்ளீர்கள். தொடர மீண்டும் உள்நுழையுங்கள்."
           }
         },
         "te" : {
@@ -7706,7 +7706,7 @@
         "ur" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "آپ کا سیشن ختم ہو گیا۔ جاری رکھنے کے لیے دوبارہ سائن ان کریں۔"
+            "value" : "آپ کو سائن آؤٹ کر دیا گیا ہے۔ جاری رکھنے کے لیے دوبارہ سائن ان کریں۔"
           }
         },
         "vi" : {
@@ -7784,7 +7784,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "¿Cerrar sesión de Judge en este teléfono?"
+            "value" : "¿Cerrar la sesión de Judge en este teléfono?"
           }
         },
         "fi" : {
@@ -7940,7 +7940,7 @@
         "sl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Se želiš na tem telefonu odjaviti iz Judge?"
+            "value" : "Se želiš na tem telefonu odjaviti iz aplikacije Judge?"
           }
         },
         "sv" : {
@@ -8354,7 +8354,7 @@
         "gu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "એમણે શું જાણવું જોઈએ?"
+            "value" : "જજોને શું ખબર હોવી જોઈએ?"
           }
         },
         "he" : {
@@ -8366,7 +8366,7 @@
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "उन्हें क्या पता होना चाहिए?"
+            "value" : "जजों को क्या पता होना चाहिए?"
           }
         },
         "hr" : {
@@ -8378,7 +8378,7 @@
         "hu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mit kell tudniuk?"
+            "value" : "Mit kellene tudniuk?"
           }
         },
         "id" : {
@@ -8510,7 +8510,7 @@
         "te" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "వాళ్లు ఏం తెలుసుకోవాలి?"
+            "value" : "జడ్జీలకు ఏం తెలియాలి?"
           }
         },
         "th" : {
@@ -8576,7 +8576,7 @@
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Gasta 1 veredicte. Pots fer-ho dues vegades per veredicte (te'n queden: %1$@)."
+            "value" : "Gasta 1 veredicte. Pots fer-ho dues vegades per veredicte (restants: %1$@)."
           }
         },
         "cs" : {
@@ -8600,7 +8600,7 @@
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Χρεώνεται 1 απόφαση. Μπορείς να το κάνεις δύο φορές ανά απόφαση· απομένουν: %1$@."
+            "value" : "Κοστίζει 1 απόφαση. Μπορείς να το κάνεις δύο φορές για κάθε απόφαση· απομένουν %1$@."
           }
         },
         "en" : {
@@ -8612,7 +8612,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Usa 1 veredicto. Puedes hacerlo dos veces por decisión. Disponibles: %1$@."
+            "value" : "Usa 1 veredicto. Puedes hacerlo dos veces por decisión. Apelaciones restantes: %1$@."
           }
         },
         "fi" : {
@@ -8624,7 +8624,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Coûte 1 verdict. Tu peux le faire deux fois par verdict (reste : %1$@)."
+            "value" : "Coûte 1 verdict. Tu peux le faire deux fois par verdict ; il t’en reste %1$@."
           }
         },
         "gu" : {
@@ -8642,7 +8642,7 @@
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "इसमें 1 फ़ैसला लगता है। एक फ़ैसले पर आप ऐसा दो बार कर सकते हैं; %1$@ बार बाकी।"
+            "value" : "इसमें 1 फ़ैसला लगता है। एक फ़ैसले पर आप ऐसा दो बार कर सकते हैं; अभी %1$@ बार बाकी।"
           }
         },
         "hr" : {
@@ -8756,7 +8756,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Стоит 1 вердикт. Пересмотр можно запросить дважды, осталось попыток: %1$@."
+            "value" : "Спишет 1 вердикт. Пересмотр можно запросить дважды, осталось попыток: %1$@."
           }
         },
         "sk" : {
@@ -8804,7 +8804,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Спише 1 вердикт. Для одного вердикту це можна зробити двічі; залишилося: %1$@."
+            "value" : "Спише 1 вердикт. Для одного вердикту це можна зробити двічі. Залишилося спроб: %1$@."
           }
         },
         "ur" : {
@@ -8876,7 +8876,7 @@
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Χρεώνεται 1 απόφαση. Μπορείς να το κάνεις μία φορά ανά υπόθεση."
+            "value" : "Κοστίζει 1 απόφαση. Μπορείς να το κάνεις μία φορά για κάθε υπόθεση."
           }
         },
         "en" : {
@@ -9032,7 +9032,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Стоит 1 вердикт. В одном деле это можно сделать один раз."
+            "value" : "Спишет 1 вердикт. В каждом деле это можно сделать только один раз."
           }
         },
         "sk" : {
@@ -9140,13 +9140,13 @@
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Har dommerne overset noget? Tilføj det, så dømmer de igen. Den første dom bliver gemt i domshistorikken."
+            "value" : "Har dommerne overset noget? Tilføj det, så dømmer de igen. Den første dom bliver gemt."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Haben die Richter etwas übersehen? Ergänze es, und sie urteilen neu. Das erste Urteil bleibt sichtbar."
+            "value" : "Haben die Richter etwas übersehen? Ergänze es, und sie urteilen neu. Das erste Urteil bleibt erhalten."
           }
         },
         "el" : {
@@ -9200,7 +9200,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Suci su nešto propustili? Dodaj to i presudit će ponovno. Prva presuda ostaje zabilježena."
+            "value" : "Suci su nešto propustili? Dodaj to i ponovno će presuditi. Prva presuda ostaje zabilježena."
           }
         },
         "hu" : {
@@ -9314,7 +9314,7 @@
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sudcom niečo ušlo? Doplň to a rozhodnú znova. Prvý verdikt zostane uložený."
+            "value" : "Sudcom niečo ušlo? Doplň to a rozhodnú znova. Prvý verdikt zostane v histórii."
           }
         },
         "sl" : {
@@ -9446,7 +9446,7 @@
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Olet lisännyt tietoa jo kahdesti, eikä yhteen tuomioon voi lisätä enempää."
+            "value" : "Olet lisännyt tietoa jo kahdesti, eikä samaan tuomioon voi lisätä enempää."
           }
         },
         "fr" : {
@@ -9674,7 +9674,7 @@
         "bn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "একটা তথ্য, একটা মেসেজ, বা আসলে কী ঠিক করা হয়েছিল।"
+            "value" : "একটা তথ্য, একটা মেসেজ বা আসলে কী ঠিক হয়েছিল।"
           }
         },
         "ca" : {
@@ -9728,7 +9728,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Un fait, un message, ou ce qui avait vraiment été convenu."
+            "value" : "Un fait, un message ou ce qui avait vraiment été convenu."
           }
         },
         "gu" : {
@@ -9758,7 +9758,7 @@
         "hu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Egy tény, egy üzenet vagy az, hogy valójában miben egyeztetek meg."
+            "value" : "Egy tény, egy üzenet vagy az, hogy miben állapodtatok meg valójában."
           }
         },
         "id" : {
@@ -9872,7 +9872,7 @@
         "sl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Dejstvo, sporočilo ali to, kar ste se v resnici dogovorili."
+            "value" : "Dejstvo, sporočilo ali to, kar je bilo v resnici dogovorjeno."
           }
         },
         "sv" : {
@@ -9884,7 +9884,7 @@
         "ta" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ஓர் உண்மை, ஒரு மெசேஜ், அல்லது உண்மையில் என்ன ஒப்புக்கொள்ளப்பட்டது என்பது."
+            "value" : "ஒரு விவரம், ஒரு மெசேஜ், அல்லது உண்மையில் என்ன ஒப்புக்கொள்ளப்பட்டது என்பது."
           }
         },
         "te" : {
@@ -9914,13 +9914,13 @@
         "ur" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "کوئی حقیقت، کوئی میسج، یا اصل میں کیا طے ہوا تھا۔"
+            "value" : "کوئی حقیقت، کوئی میسج، یا یہ کہ اصل میں کیا طے ہوا تھا۔"
           }
         },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Một sự thật, một tin nhắn, hoặc điều hai bên thật sự đã thỏa thuận."
+            "value" : "Một sự thật, một tin nhắn hoặc điều hai bên đã thật sự thỏa thuận."
           }
         },
         "zh-Hans" : {
@@ -10112,7 +10112,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zaloguj się, żeby dodać kontekst i złożyć odwołanie"
+            "value" : "Zaloguj się, żeby dodać kontekst i się odwołać"
           }
         },
         "pt-BR" : {
@@ -10250,7 +10250,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Neu urteilen lassen"
+            "value" : "Neu beurteilen lassen"
           }
         },
         "el" : {
@@ -10322,7 +10322,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Fai rivalutare"
+            "value" : "Fai decidere di nuovo"
           }
         },
         "ja" : {
@@ -10502,7 +10502,7 @@
         "bn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "নতুন তথ্য যোগ করে আপিল"
+            "value" : "নতুন তথ্য যোগ করে আপিল করুন"
           }
         },
         "ca" : {
@@ -10520,7 +10520,7 @@
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tilføj kontekst og anke"
+            "value" : "Tilføj kontekst og ank"
           }
         },
         "de" : {
@@ -10664,7 +10664,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Dodaj kontekst i złóż odwołanie"
+            "value" : "Dodaj kontekst i odwołaj się"
           }
         },
         "pt-BR" : {
@@ -10748,7 +10748,7 @@
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bổ sung thông tin & xét lại"
+            "value" : "Bổ sung thông tin và xét lại"
           }
         },
         "zh-Hans" : {
@@ -10802,13 +10802,13 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Fehlt etwas? Ergänze Kontext und lass für 1 Urteil neu urteilen."
+            "value" : "Fehlt etwas? Ergänze Kontext und lass den Fall für 1 Urteil neu beurteilen."
           }
         },
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Λείπει κάτι; Πρόσθεσε πληροφορίες και ζήτα νέα κρίση με 1 απόφαση."
+            "value" : "Λείπει κάτι; Πρόσθεσε πληροφορίες και ζήτα νέα κρίση. Κοστίζει 1 απόφαση."
           }
         },
         "en" : {
@@ -10838,7 +10838,7 @@
         "gu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "કંઈ ખૂટે છે? વિગત ઉમેરો અને 1 ચુકાદામાં ફરી ફેંસલો કરાવો."
+            "value" : "કંઈ ખૂટે છે? વિગત ઉમેરો અને 1 ચુકાદો વાપરીને ફરી ફેંસલો કરાવો."
           }
         },
         "he" : {
@@ -11360,7 +11360,7 @@
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Η αποστολή συνδέσμου χρεώνει 1 απόφαση"
+            "value" : "Η αποστολή συνδέσμου κοστίζει 1 απόφαση"
           }
         },
         "en" : {
@@ -11633,7 +11633,7 @@
               "zero" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "بقي لك %lld حكم"
+                  "value" : "لم يبقَ لك أي حكم"
                 }
               }
             }
@@ -11795,7 +11795,7 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Te queda 1 veredicto"
+                  "value" : "Te queda %lld veredicto"
                 }
               },
               "other" : {
@@ -11885,7 +11885,7 @@
               "two" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "נשארו %lld פסקי דין"
+                  "value" : "נשארו שני פסקי דין"
                 }
               }
             }
@@ -12317,25 +12317,25 @@
               "few" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Še %lld razsodbe"
+                  "value" : "Na voljo še %lld razsodbe"
                 }
               },
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Še %lld razsodba"
+                  "value" : "Na voljo še %lld razsodba"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Še %lld razsodb"
+                  "value" : "Na voljo še %lld razsodb"
                 }
               },
               "two" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Še %lld razsodbi"
+                  "value" : "Na voljo še %lld razsodbi"
                 }
               }
             }
@@ -12530,13 +12530,13 @@
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Disponibles aquest mes: %1$@ de %2$@"
+            "value" : "Et queden %1$@ de %2$@ aquest mes"
           }
         },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tento měsíc k dispozici: %1$@ z %2$@"
+            "value" : "Tento měsíc ti zbývá %1$@ z %2$@"
           }
         },
         "da" : {
@@ -12554,7 +12554,7 @@
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Μηνιαίο υπόλοιπο: %1$@ από %2$@"
+            "value" : "Απομένουν %1$@ από %2$@ αυτόν τον μήνα"
           }
         },
         "en" : {
@@ -12626,7 +12626,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "今月の残り%1$@回（%2$@回中）"
+            "value" : "今月の残り：%2$@回中%1$@回"
           }
         },
         "kn" : {
@@ -12692,7 +12692,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Restantes neste mês: %1$@ de %2$@"
+            "value" : "Restam %1$@ de %2$@ neste mês"
           }
         },
         "pt-PT" : {
@@ -12722,7 +12722,7 @@
         "sl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ta mesec še %1$@ od %2$@"
+            "value" : "Ta mesec na voljo še %1$@ od %2$@"
           }
         },
         "sv" : {
@@ -12758,7 +12758,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Цього місяця залишилося: %1$@ з %2$@"
+            "value" : "Цього місяця залишилося %1$@ з %2$@"
           }
         },
         "ur" : {
@@ -12962,7 +12962,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nie masz już werdyktów"
+            "value" : "Skończyły ci się werdykty"
           }
         },
         "pt-BR" : {
@@ -12992,7 +12992,7 @@
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Verdikty sa minuli"
+            "value" : "Nezostal ti žiadny verdikt"
           }
         },
         "sl" : {
@@ -13094,7 +13094,7 @@
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Annullér"
+            "value" : "Annuller"
           }
         },
         "de" : {
@@ -13514,7 +13514,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Oceń teraz bez wersji: %1$@"
+            "value" : "Oceń teraz, nie czekając na: %1$@"
           }
         },
         "pt-BR" : {
@@ -13544,7 +13544,7 @@
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Rozsúdiť hneď bez odpovede od: %1$@"
+            "value" : "Rozsúdiť hneď a nečakať, kým %1$@ odpovie"
           }
         },
         "sl" : {
@@ -13976,7 +13976,7 @@
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "तीन जज फ़ैसला करते हैं"
+            "value" : "तीन जज फ़ैसला सुनाते हैं"
           }
         },
         "hr" : {
@@ -14144,7 +14144,7 @@
         "ur" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "تین جج فیصلہ کرتے ہیں"
+            "value" : "تین جج فیصلہ کریں گے"
           }
         },
         "vi" : {
@@ -14180,7 +14180,7 @@
         "bn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "অথবা এখনই শুধু আপনার বক্তব্যে রায় নিন"
+            "value" : "অথবা এখনই শুধু আপনার বক্তব্যের ভিত্তিতে রায় নিন"
           }
         },
         "ca" : {
@@ -14384,7 +14384,7 @@
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Eller döm nu med bara din sida"
+            "value" : "Eller döm nu på bara din sida"
           }
         },
         "ta" : {
@@ -14438,7 +14438,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "或現在只用你的說法判決"
+            "value" : "或現在只憑你的說法判決"
           }
         }
       }
@@ -14450,13 +14450,13 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$@ يكتب روايته"
+            "value" : "الدور على %1$@"
           }
         },
         "bn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$@ নিজের বক্তব্য লিখছেন"
+            "value" : "%1$@ নিজের বক্তব্য লিখবেন"
           }
         },
         "ca" : {
@@ -14522,7 +14522,7 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "עכשיו הצד של %1$@"
+            "value" : "עכשיו התור של %1$@"
           }
         },
         "hi" : {
@@ -14732,7 +14732,7 @@
         "bn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "অন্যজন নিজের বক্তব্য লিখছেন"
+            "value" : "অন্যজন নিজের বক্তব্য লিখবেন"
           }
         },
         "ca" : {
@@ -15002,7 +15002,7 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "تُحدَّث هذه الصفحة حين تصل روايته"
+            "value" : "تُحدَّث هذه الصفحة حين يصل الرد"
           }
         },
         "bn" : {
@@ -15032,7 +15032,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Hier aktualisiert sich alles, sobald die Antwort da ist"
+            "value" : "Diese Ansicht aktualisiert sich, sobald die Antwort da ist"
           }
         },
         "el" : {
@@ -15068,13 +15068,13 @@
         "gu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "એ આવશે એટલે આ પેજ અપડેટ થશે"
+            "value" : "એમની વાત આવતાં જ આ પેજ અપડેટ થશે"
           }
         },
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "הדף יתעדכן ברגע שהוא יגיע"
+            "value" : "הדף יתעדכן כשהתשובה תגיע"
           }
         },
         "hi" : {
@@ -15242,7 +15242,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Сторінка оновиться, щойно вона надійде"
+            "value" : "Сторінка оновиться, щойно надійде відповідь"
           }
         },
         "ur" : {
@@ -15542,7 +15542,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "你已寫下你的說法"
+            "value" : "你已寫下自己的說法"
           }
         }
       }
@@ -15722,7 +15722,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zapieczętowana do werdyktu"
+            "value" : "Zapieczętowana do czasu werdyktu"
           }
         },
         "pt-BR" : {
@@ -15806,13 +15806,13 @@
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Niêm phong đến khi có phán quyết"
+            "value" : "Giữ kín đến khi có phán quyết"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "裁决之前保密"
+            "value" : "裁决出来之前保密"
           }
         },
         "zh-Hant" : {
@@ -16334,7 +16334,7 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "เคส · รอคำตอบ"
+            "value" : "เคส · รออีกฝ่าย"
           }
         },
         "tr" : {
@@ -16382,7 +16382,7 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "يكتب %1$@ روايته دون حساب. ولا يرى أيٌّ منكما كلام الآخر حتى صدور الحكم."
+            "value" : "رواية %1$@ تُكتب دون حساب، ولا يرى أيٌّ منكما كلام الآخر حتى صدور الحكم."
           }
         },
         "bn" : {
@@ -16418,7 +16418,7 @@
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$@ γράφει χωρίς λογαριασμό. Κανείς σας δεν βλέπει το κείμενο του άλλου πριν βγει η απόφαση."
+            "value" : "%1$@ γράφει την άλλη πλευρά χωρίς λογαριασμό. Κανείς από τους δύο δεν βλέπει τι έγραψε ο άλλος πριν βγει η απόφαση."
           }
         },
         "en" : {
@@ -16430,7 +16430,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$@ escribe su versión sin crear una cuenta. Ninguno de los dos ve lo que escribió el otro hasta el veredicto."
+            "value" : "%1$@ escribe su versión sin crear una cuenta. Ninguno de los dos ve la versión del otro hasta el veredicto."
           }
         },
         "fi" : {
@@ -16460,7 +16460,7 @@
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$@ को अपनी बात लिखने के लिए अकाउंट की ज़रूरत नहीं। फ़ैसला आने तक किसी को दूसरे का लिखा नहीं दिखेगा।"
+            "value" : "%1$@ को अपनी बात लिखने के लिए अकाउंट की ज़रूरत नहीं। फ़ैसला आने तक आप दोनों एक-दूसरे का लिखा नहीं देख पाएँगे।"
           }
         },
         "hr" : {
@@ -16532,7 +16532,7 @@
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$@ schrijft een eigen kant, zonder account. Jullie zien elkaars tekst pas bij de uitspraak."
+            "value" : "%1$@ schrijft zijn of haar kant, zonder account. Jullie zien elkaars tekst pas bij de uitspraak."
           }
         },
         "or" : {
@@ -16550,7 +16550,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$@ opisuje swoją wersję bez zakładania konta. Do werdyktu żadne z was nie widzi wersji drugiej osoby."
+            "value" : "%1$@ opisuje swoją wersję bez zakładania konta. Dopóki nie zapadnie werdykt, żadne z was nie widzi wersji drugiej osoby."
           }
         },
         "pt-BR" : {
@@ -16562,7 +16562,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$@ escreve o seu lado sem precisar de conta. Nenhum de vocês vê o texto do outro até ao veredicto."
+            "value" : "%1$@ escreve o seu lado sem precisar de conta. Nenhum de vocês vê o que o outro escreveu até ao veredicto."
           }
         },
         "ro" : {
@@ -16580,7 +16580,7 @@
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$@ napíše svoju verziu bez účtu. Ani jeden z vás neuvidí text toho druhého pred verdiktom."
+            "value" : "%1$@ napíše svoju verziu, účet nepotrebuje. Ani jeden z vás neuvidí text toho druhého, kým nepríde verdikt."
           }
         },
         "sl" : {
@@ -16610,7 +16610,7 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$@ เขียนฝั่งของตัวเองได้โดยไม่ต้องมีบัญชี และทั้งสองคนจะไม่เห็นข้อความของกันและกันจนกว่าจะมีคำตัดสิน"
+            "value" : "%1$@ เขียนฝั่งของตัวเองได้โดยไม่ต้องมีบัญชี คุณทั้งคู่จะไม่เห็นข้อความของอีกฝ่ายจนกว่าจะมีคำตัดสิน"
           }
         },
         "tr" : {
@@ -16622,7 +16622,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$@ пише свою версію без акаунта. До вердикту ніхто з вас не бачить версії іншого."
+            "value" : "%1$@ пише свою версію без акаунта. До вердикту ніхто з вас не бачить тексту іншого."
           }
         },
         "ur" : {
@@ -16634,13 +16634,13 @@
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$@ kể phần của họ mà không cần tài khoản. Không ai thấy lời kể của người kia cho đến khi có phán quyết."
+            "value" : "%1$@ kể phần của họ mà không cần tài khoản. Hai người không thấy lời của nhau cho đến khi có phán quyết."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$@不需要账号就能写下自己的说法。裁决出来之前，你们都看不到对方写的内容。"
+            "value" : "%1$@不需要账号就能写下自己的说法。裁决出来之前，你们谁都看不到对方写了什么。"
           }
         },
         "zh-Hant" : {
@@ -16658,7 +16658,7 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "يكتب الطرف الآخر روايته دون حساب. ولا يرى أيٌّ منكما كلام الآخر حتى صدور الحكم."
+            "value" : "يكتب الطرف الآخر روايته دون حساب، ولا يرى أيٌّ منكما كلام الآخر حتى صدور الحكم."
           }
         },
         "bn" : {
@@ -16694,7 +16694,7 @@
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Η άλλη πλευρά γράφει χωρίς λογαριασμό. Κανείς σας δεν βλέπει το κείμενο του άλλου πριν βγει η απόφαση."
+            "value" : "Η άλλη πλευρά γράφει τη δική της εκδοχή χωρίς λογαριασμό. Κανείς από τους δύο δεν βλέπει τι έγραψε ο άλλος πριν βγει η απόφαση."
           }
         },
         "en" : {
@@ -16706,7 +16706,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "La otra persona escribe su versión sin crear una cuenta. Ninguno de los dos ve lo que escribió el otro hasta el veredicto."
+            "value" : "La otra persona escribe su versión sin crear una cuenta. Ninguno de los dos ve la versión del otro hasta el veredicto."
           }
         },
         "fi" : {
@@ -16736,7 +16736,7 @@
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "उन्हें अपनी बात लिखने के लिए अकाउंट की ज़रूरत नहीं। फ़ैसला आने तक किसी को दूसरे का लिखा नहीं दिखेगा।"
+            "value" : "उन्हें अपनी बात लिखने के लिए अकाउंट की ज़रूरत नहीं। फ़ैसला आने तक आप दोनों एक-दूसरे का लिखा नहीं देख पाएँगे।"
           }
         },
         "hr" : {
@@ -16808,7 +16808,7 @@
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "De ander schrijft een eigen kant, zonder account. Jullie zien elkaars tekst pas bij de uitspraak."
+            "value" : "De ander schrijft zijn of haar kant, zonder account. Jullie zien elkaars tekst pas bij de uitspraak."
           }
         },
         "or" : {
@@ -16826,7 +16826,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Druga strona opisuje swoją wersję bez zakładania konta. Do werdyktu żadne z was nie widzi wersji drugiej osoby."
+            "value" : "Druga strona opisuje swoją wersję bez zakładania konta. Dopóki nie zapadnie werdykt, żadne z was nie widzi wersji drugiej osoby."
           }
         },
         "pt-BR" : {
@@ -16838,7 +16838,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "A outra pessoa escreve o seu lado sem precisar de conta. Nenhum de vocês vê o texto do outro até ao veredicto."
+            "value" : "A outra pessoa escreve o seu lado sem precisar de conta. Nenhum de vocês vê o que o outro escreveu até ao veredicto."
           }
         },
         "ro" : {
@@ -16856,7 +16856,7 @@
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Druhá strana napíše svoju verziu bez účtu. Ani jeden z vás neuvidí text toho druhého pred verdiktom."
+            "value" : "Druhá strana napíše svoju verziu, účet nepotrebuje. Ani jeden z vás neuvidí text toho druhého, kým nepríde verdikt."
           }
         },
         "sl" : {
@@ -16886,7 +16886,7 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "อีกฝ่ายเขียนฝั่งของตัวเองได้โดยไม่ต้องมีบัญชี และทั้งสองคนจะไม่เห็นข้อความของกันและกันจนกว่าจะมีคำตัดสิน"
+            "value" : "อีกฝ่ายเขียนฝั่งของตัวเองได้โดยไม่ต้องมีบัญชี คุณทั้งคู่จะไม่เห็นข้อความของอีกฝ่ายจนกว่าจะมีคำตัดสิน"
           }
         },
         "tr" : {
@@ -16898,7 +16898,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Інша сторона пише свою версію без акаунта. До вердикту ніхто з вас не бачить версії іншого."
+            "value" : "Інша сторона пише свою версію без акаунта. До вердикту ніхто з вас не бачить тексту іншого."
           }
         },
         "ur" : {
@@ -16910,13 +16910,13 @@
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Người kia kể phần của họ mà không cần tài khoản. Không ai thấy lời kể của người kia cho đến khi có phán quyết."
+            "value" : "Người kia kể phần của họ mà không cần tài khoản. Hai người không thấy lời của nhau cho đến khi có phán quyết."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "对方不需要账号就能写下自己的说法。裁决出来之前，你们都看不到对方写的内容。"
+            "value" : "对方不需要账号就能写下自己的说法。裁决出来之前，你们谁都看不到对方写了什么。"
           }
         },
         "zh-Hant" : {
@@ -17234,7 +17234,7 @@
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Den anmodning kom et sted fra, vi ikke kender. Tjek, at appen er opdateret, og prøv igen."
+            "value" : "Anmodningen kom fra et sted, vi ikke kender. Tjek, at appen er opdateret, og prøv igen."
           }
         },
         "de" : {
@@ -17264,13 +17264,13 @@
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pyyntö tuli paikasta, jota emme tunnista. Varmista, että sovellus on ajan tasalla, ja yritä uudelleen."
+            "value" : "Emme tunnista, mistä pyyntö tuli. Varmista, että sovellus on ajan tasalla, ja yritä uudelleen."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cette demande vient d’un endroit qu’on ne reconnaît pas. Vérifie que l’appli est à jour et réessaie."
+            "value" : "Cette demande provient d’une source qu’on ne reconnaît pas. Vérifie que l’appli est à jour et réessaie."
           }
         },
         "gu" : {
@@ -17288,7 +17288,7 @@
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "यह अनुरोध किसी अनजान जगह से आया है। देख लें कि ऐप का नया वर्शन है, फिर कोशिश करें।"
+            "value" : "यह अनुरोध किसी अनजान जगह से आया है। पक्का कर लें कि ऐप का नया वर्शन इंस्टॉल है, फिर कोशिश करें।"
           }
         },
         "hr" : {
@@ -17300,13 +17300,13 @@
         "hu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ez a kérés számunkra ismeretlen helyről jött. Nézd meg, hogy naprakész-e az app, és próbáld újra."
+            "value" : "Ez a kérés számunkra ismeretlen helyről érkezett. Nézd meg, hogy naprakész-e az app, és próbáld újra."
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Permintaan itu datang dari tempat yang tidak kami kenali. Pastikan aplikasimu sudah versi terbaru, lalu coba lagi."
+            "value" : "Permintaan itu datang dari tempat yang tidak kami kenali. Pastikan aplikasimu sudah diperbarui, lalu coba lagi."
           }
         },
         "it" : {
@@ -17318,7 +17318,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "見覚えのない場所から送られたリクエストです。アプリを最新版にして、もう一度お試しください。"
+            "value" : "見覚えのない場所から送られたリクエストです。アプリが最新版になっているか確認して、もう一度お試しください。"
           }
         },
         "kn" : {
@@ -17372,7 +17372,7 @@
         "pa" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ਇਹ ਬੇਨਤੀ ਕਿਸੇ ਅਣਜਾਣ ਥਾਂ ਤੋਂ ਆਈ ਹੈ। ਪੱਕਾ ਕਰੋ ਕਿ ਐਪ ਦਾ ਨਵਾਂ ਵਰਜ਼ਨ ਹੈ, ਫਿਰ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।"
+            "value" : "ਇਹ ਬੇਨਤੀ ਕਿਸੇ ਅਣਜਾਣ ਥਾਂ ਤੋਂ ਆਈ ਹੈ। ਪੱਕਾ ਕਰ ਲਓ ਕਿ ਐਪ ਅੱਪਡੇਟ ਕੀਤੀ ਹੋਈ ਹੈ, ਫਿਰ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।"
           }
         },
         "pl" : {
@@ -17402,7 +17402,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Мы не узнали, откуда пришёл запрос. Убедитесь, что приложение обновлено, и попробуйте снова."
+            "value" : "Мы не распознали источник запроса. Убедитесь, что у вас последняя версия приложения, и попробуйте снова."
           }
         },
         "sk" : {
@@ -17438,7 +17438,7 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "คำขอนี้มาจากแหล่งที่เราไม่รู้จัก อัปเดตแอปเป็นเวอร์ชันล่าสุดแล้วลองอีกครั้ง"
+            "value" : "คำขอนี้มาจากแหล่งที่เราไม่รู้จัก เช็กว่าแอปเป็นเวอร์ชันล่าสุด แล้วลองอีกครั้ง"
           }
         },
         "tr" : {
@@ -17450,7 +17450,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Цей запит надійшов з невідомого нам джерела. Переконайся, що застосунок оновлено, і спробуй ще раз."
+            "value" : "Цей запит надійшов із незнайомого нам джерела. Переконайся, що застосунок оновлено, і спробуй ще раз."
           }
         },
         "ur" : {
@@ -17468,7 +17468,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "这个请求的来源我们无法识别。请确认 App 已更新到最新版本，再试一次。"
+            "value" : "我们无法识别这个请求的来源。请确认 App 已更新到最新版本，然后再试一次。"
           }
         },
         "zh-Hant" : {
@@ -17504,7 +17504,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Spojení se přerušilo, když byla aplikace Judge na pozadí. Zkus to znovu a nech aplikaci otevřenou, dokud verdikt nedorazí."
+            "value" : "Spojení se přerušilo, zatímco aplikace Judge běžela na pozadí. Zkus to znovu a nech aplikaci otevřenou, dokud verdikt nedorazí."
           }
         },
         "da" : {
@@ -17558,7 +17558,7 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "החיבור נקטע בזמן ש-Judge היה ברקע. אפשר לנסות שוב, והפעם להשאיר את האפליקציה פתוחה עד שפסק הדין יגיע."
+            "value" : "החיבור נקטע בזמן ש-Judge היה ברקע. אפשר לנסות שוב ולהשאיר את האפליקציה פתוחה עד שפסק הדין יגיע."
           }
         },
         "hi" : {
@@ -17570,7 +17570,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Veza je prekinuta dok je Judge bio u pozadini. Pokušaj ponovno i drži aplikaciju otvorenom dok presuda ne stigne."
+            "value" : "Veza se prekinula dok je Judge bio u pozadini. Pokušaj ponovno i ostavi aplikaciju otvorenu dok presuda ne stigne."
           }
         },
         "hu" : {
@@ -17582,7 +17582,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Koneksi terputus saat Judge berjalan di latar belakang. Coba lagi, dan kali ini biarkan aplikasinya tetap terbuka sampai putusan keluar."
+            "value" : "Koneksi terputus saat Judge berjalan di latar belakang. Coba lagi, dan biarkan aplikasinya tetap terbuka sampai putusannya keluar."
           }
         },
         "it" : {
@@ -17594,19 +17594,19 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Judgeがバックグラウンドにある間に接続が切れました。もう一度お試しください。判定が届くまでは、アプリを開いたままにしてください。"
+            "value" : "Judgeがバックグラウンドにあるあいだに接続が切れました。もう一度お試しのうえ、判定が届くまでアプリを開いたままにしてください。"
           }
         },
         "kn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Judge ಹಿನ್ನೆಲೆಯಲ್ಲಿದ್ದಾಗ ಸಂಪರ್ಕ ಕಡಿತಗೊಂಡಿತು. ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ, ತೀರ್ಪು ಬರುವವರೆಗೂ ಆ್ಯಪ್ ತೆರೆದೇ ಇಡಿ."
+            "value" : "Judge ಹಿನ್ನೆಲೆಯಲ್ಲಿದ್ದಾಗ ಸಂಪರ್ಕ ಕಡಿತಗೊಂಡಿತು. ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ, ಮತ್ತು ತೀರ್ಪು ಬರುವವರೆಗೂ ಆ್ಯಪ್ ಅನ್ನು ತೆರೆದೇ ಇಡಿ."
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Judge가 백그라운드에 있는 동안 연결이 끊겼어요. 다시 시도하고, 판결이 나올 때까지 앱을 켜 두세요."
+            "value" : "Judge가 백그라운드에 있는 동안 연결이 끊겼어요. 다시 시도해 주세요. 판결이 나올 때까지 앱을 계속 열어 두세요."
           }
         },
         "ml" : {
@@ -17678,7 +17678,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Связь прервалась, пока Judge работал в фоне. Попробуйте снова и не закрывайте приложение, пока не придёт вердикт."
+            "value" : "Связь прервалась, когда Judge был свёрнут. Попробуйте ещё раз и не сворачивайте приложение, пока не придёт вердикт."
           }
         },
         "sk" : {
@@ -17696,7 +17696,7 @@
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Uppkopplingen bröts medan Judge låg i bakgrunden. Försök igen och ha appen öppen tills domen är klar."
+            "value" : "Uppkopplingen bröts medan Judge låg i bakgrunden. Försök igen och låt appen vara öppen tills domen har kommit."
           }
         },
         "ta" : {
@@ -17726,19 +17726,19 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "З’єднання обірвалося, поки Judge був у фоні. Спробуй ще раз і не закривай застосунок, доки не надійде вердикт."
+            "value" : "З’єднання обірвалося, поки Judge працював у фоні. Спробуй ще раз і тримай застосунок відкритим, доки не надійде вердикт."
           }
         },
         "ur" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Judge بیک گراؤنڈ میں تھا اور کنکشن ٹوٹ گیا۔ دوبارہ کوشش کریں، اور فیصلہ آنے تک ایپ کھلی رکھیں۔"
+            "value" : "Judge کے بیک گراؤنڈ میں ہوتے ہوئے کنکشن ٹوٹ گیا۔ دوبارہ کوشش کریں، اور فیصلہ آنے تک ایپ کھلی رکھیں۔"
           }
         },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kết nối bị ngắt khi Judge đang chạy ngầm. Thử lại nhé, và để ứng dụng mở cho đến khi có phán quyết."
+            "value" : "Kết nối bị ngắt khi Judge đang chạy ngầm. Thử lại nhé, và giữ ứng dụng mở cho đến khi nhận được phán quyết."
           }
         },
         "zh-Hans" : {
@@ -17750,7 +17750,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Judge 在背景執行時連線中斷了。請再試一次，並在判決出爐前讓 App 保持開啟。"
+            "value" : "Judge 在背景執行時連線中斷了。請再試一次，判決出爐前先不要離開 App。"
           }
         }
       }
@@ -17840,19 +17840,19 @@
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "लगता है आप ऑफ़लाइन हैं। अपना कनेक्शन जाँचें और फिर कोशिश करें।"
+            "value" : "लगता है आप ऑफ़लाइन हैं। इंटरनेट कनेक्शन जाँचकर फिर कोशिश करें।"
           }
         },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Čini se da nisi na internetu. Provjeri vezu i pokušaj ponovno."
+            "value" : "Čini se da nemaš pristup internetu. Provjeri vezu i pokušaj ponovno."
           }
         },
         "hu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Úgy tűnik, nem vagy online. Ellenőrizd az internetkapcsolatot, és próbáld újra."
+            "value" : "Úgy tűnik, nincs internetkapcsolatod. Ellenőrizd, és próbáld újra."
           }
         },
         "id" : {
@@ -18092,7 +18092,7 @@
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tuomareilla kesti liian kauan. Yritä uudelleen minuutin päästä."
+            "value" : "Tuomareilla kesti liian kauan vastata. Yritä uudelleen minuutin päästä."
           }
         },
         "fr" : {
@@ -18122,7 +18122,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sucima je trebalo predugo. Pokušaj ponovno za minutu."
+            "value" : "Suci se nisu javili na vrijeme. Pokušaj ponovno za minutu."
           }
         },
         "hu" : {
@@ -18236,7 +18236,7 @@
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sudcom to trvalo priveľmi dlho. Skús to znova o minútu."
+            "value" : "Sudcom odpoveď trvala príliš dlho. Skús to znova o minútu."
           }
         },
         "sl" : {
@@ -18266,7 +18266,7 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "กรรมการใช้เวลาตอบนานเกินไป รอสักนาทีแล้วลองใหม่"
+            "value" : "กรรมการตอบช้าเกินไป รอสักนาทีแล้วลองใหม่"
           }
         },
         "tr" : {
@@ -18368,7 +18368,7 @@
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "En juonut mitään, joten minun ei pitäisi maksaa neljäsosaa viineistä. Ruoan voi minun puolestani jakaa tasan."
+            "value" : "En juonut mitään, joten minun ei pitäisi maksaa neljäsosaa viinistä. Ruoan voi minun puolestani jakaa tasan."
           }
         },
         "fr" : {
@@ -18392,13 +18392,13 @@
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "मैंने कुछ पिया ही नहीं, तो वाइन का एक-चौथाई मैं क्यों दूँ? खाने का बिल बराबर बाँटने में मुझे कोई दिक्कत नहीं।"
+            "value" : "मैंने कुछ पिया ही नहीं, तो वाइन के पैसों का चौथा हिस्सा मैं क्यों दूँ? खाने का बिल बराबर बाँटने में मुझे कोई दिक्कत नहीं।"
           }
         },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nisam ništa pila, pa ne bih trebala platiti četvrtinu vina. Hranu možemo podijeliti na ravne časti, to mi je u redu."
+            "value" : "Nisam ništa pila, pa ne bih trebala platiti četvrtinu vina. Hranu možemo podijeliti na jednake dijelove, to mi je u redu."
           }
         },
         "hu" : {
@@ -18458,7 +18458,7 @@
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Jeg drakk ingenting, så jeg burde ikke betale en fjerdedel av vinen. Å dele maten likt har jeg ikke noe imot."
+            "value" : "Jeg drakk ingenting, så jeg burde ikke betale for en fjerdedel av vinen. Å dele maten likt har jeg ikke noe imot."
           }
         },
         "nl" : {
@@ -18476,13 +18476,13 @@
         "pa" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ਮੈਂ ਤਾਂ ਕੁਝ ਪੀਤਾ ਹੀ ਨਹੀਂ, ਫਿਰ ਮੈਂ ਡ੍ਰਿੰਕਸ ਦਾ ਚੌਥਾ ਹਿੱਸਾ ਕਿਉਂ ਦੇਵਾਂ? ਖਾਣੇ ਦੇ ਪੈਸੇ ਬਰਾਬਰ ਵੰਡਣ ਵਿੱਚ ਮੈਨੂੰ ਕੋਈ ਇਤਰਾਜ਼ ਨਹੀਂ।"
+            "value" : "ਮੈਂ ਤਾਂ ਕੁਝ ਪੀਤਾ ਹੀ ਨਹੀਂ, ਫਿਰ ਮੈਂ ਵਾਈਨ ਦਾ ਚੌਥਾ ਹਿੱਸਾ ਕਿਉਂ ਦੇਵਾਂ? ਖਾਣੇ ਦੇ ਪੈਸੇ ਬਰਾਬਰ ਵੰਡਣ ਵਿੱਚ ਮੈਨੂੰ ਕੋਈ ਇਤਰਾਜ਼ ਨਹੀਂ।"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nic nie piłam, więc nie powinnam płacić jednej czwartej za wino. Jedzenie podzielmy po równo, to mi pasuje."
+            "value" : "Nic nie piłam, więc nie powinnam płacić jednej czwartej rachunku za wino. Jedzenie możemy podzielić po równo, to mi pasuje."
           }
         },
         "pt-BR" : {
@@ -18506,13 +18506,13 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Я ничего не пила, так что платить четверть за вино не должна. А еду поделить поровну — пожалуйста."
+            "value" : "Я ничего не пила, так что не должна платить четверть за вино. А еду поделить поровну — пожалуйста."
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nič som nepila, tak by som nemala platiť štvrtinu vína. Jedlo si pokojne rozdeľme rovnakým dielom."
+            "value" : "Nič som nepila, tak by som nemala platiť štvrtinu vína. Jedlo si pokojne rozdeľme rovným dielom."
           }
         },
         "sl" : {
@@ -18554,7 +18554,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Я не пила вина, тож не маю платити за чверть пляшки. Їжу поділити порівну — без проблем."
+            "value" : "Я взагалі нічого не пила, тож не маю платити чверть за вино. А їжу поділити порівну — я не проти."
           }
         },
         "ur" : {
@@ -18572,7 +18572,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "我一口酒都没喝，凭什么要摊四分之一的酒钱？菜钱平摊我没意见。"
+            "value" : "我一口酒都没喝，不该摊四分之一的酒钱吧。菜钱平摊我没意见。"
           }
         },
         "zh-Hant" : {
@@ -18920,7 +18920,7 @@
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Jaamme laskun aina neljään osaan. On rasittavaa laskea joka kerta, kuka söi ja joi mitäkin, eikä ero ole edes iso."
+            "value" : "Jaamme laskun aina neljään osaan. On rasittavaa selvittää joka kerta, kuka söi ja joi mitäkin, eikä ero ole edes iso."
           }
         },
         "fr" : {
@@ -18944,7 +18944,7 @@
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "हम हमेशा चार बराबर हिस्से ही करते हैं। हर बार हिसाब लगाना कि किसने क्या लिया, बड़ा सिरदर्द है, और फ़र्क भी कोई ख़ास नहीं।"
+            "value" : "हम तो हमेशा बिल चार बराबर हिस्सों में बाँटते हैं। हर बार हिसाब लगाना कि किसने क्या लिया, बड़ा सिरदर्द है, और फ़र्क भी कोई ख़ास नहीं पड़ता।"
           }
         },
         "hr" : {
@@ -18992,7 +18992,7 @@
         "ml" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "നമ്മൾ എപ്പോഴും ബിൽ നാലായി വീതിക്കാറാണല്ലോ. ഓരോ തവണയും ആര് എന്ത് കഴിച്ചെന്ന് കണക്കുകൂട്ടുന്നത് വലിയ തലവേദനയാണ്, പിന്നെ വ്യത്യാസവും അത്ര വലുതൊന്നുമല്ല."
+            "value" : "നമ്മൾ എപ്പോഴും ബിൽ നാലായി വീതിക്കാറുണ്ടല്ലോ. ഓരോ തവണയും ആര് എന്ത് കഴിച്ചെന്ന് കണക്കുകൂട്ടുന്നത് വലിയ തലവേദനയാണ്, പിന്നെ വ്യത്യാസവും അത്ര വലുതൊന്നുമല്ല."
           }
         },
         "mr" : {
@@ -19010,7 +19010,7 @@
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Vi deler jo alltid på fire. Å regne ut hvem som hadde hva hver gang er et ork, og det er uansett ikke stor forskjell."
+            "value" : "Vi deler jo alltid på fire. Å regne ut hvem som hadde hva hver gang, er et ork, og det er uansett ikke stor forskjell."
           }
         },
         "nl" : {
@@ -19034,7 +19034,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zawsze po prostu dzielimy na cztery. Liczenie za każdym razem, kto co zamówił, to męczarnia, a różnica i tak jest niewielka."
+            "value" : "Zawsze po prostu dzielimy rachunek na cztery. Liczenie za każdym razem, kto co zamówił, to męczarnia, a różnica i tak jest niewielka."
           }
         },
         "pt-BR" : {
@@ -19046,13 +19046,13 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Dividimos sempre por quatro. Andar a fazer contas a quem comeu o quê de cada vez é uma seca, e a diferença nem é assim tanta."
+            "value" : "Dividimos sempre por quatro. Andar sempre a fazer contas a quem comeu o quê é uma seca, e a diferença nem é assim tanta."
           }
         },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mereu împărțim nota la patru și gata. E o bătaie de cap să socotim de fiecare dată cine ce a luat, și oricum nu e mare diferență."
+            "value" : "Mereu împărțim nota la patru și gata. E o bătaie de cap să socotim de fiecare dată cine ce a luat, iar diferența oricum nu e mare."
           }
         },
         "ru" : {
@@ -19064,7 +19064,7 @@
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Vždy to proste delíme na štyri. Zakaždým rátať, kto mal čo, je otrava, a ten rozdiel aj tak nie je veľký."
+            "value" : "Vždy to proste delíme na štyroch. Zakaždým rátať, kto mal čo, je otrava, a ten rozdiel aj tak nie je veľký."
           }
         },
         "sl" : {
@@ -19106,7 +19106,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ми завжди просто ділимо на чотирьох. Щоразу рахувати, хто що їв, — морока, та й різниця невелика."
+            "value" : "Ми завжди просто ділимо на чотирьох. Щоразу рахувати, хто що замовляв, — морока, та й різниця невелика."
           }
         },
         "ur" : {
@@ -19418,7 +19418,7 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ما زلت تضع الأوعية في الرف العلوي. هناك لا تخرج نظيفة أبدًا، والرف السفلي موجود لهذا الغرض."
+            "value" : "وضعت الأوعية في الرف العلوي مرة أخرى. لا تخرج من هناك نظيفة أبدًا، والرف السفلي موجود لهذا بالذات."
           }
         },
         "bn" : {
@@ -19472,7 +19472,7 @@
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Laitoit kulhot taas ylätelineeseen. Ne eivät ikinä puhdistu siellä, alateline on niitä varten."
+            "value" : "Laitoit kulhot taas yläkoriin. Ne eivät ikinä puhdistu siellä, alakori on niitä varten."
           }
         },
         "fr" : {
@@ -19598,7 +19598,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Voltaste a pôr as taças no cesto de cima. Lá em cima nunca ficam bem lavadas, é para isso que serve o de baixo."
+            "value" : "Voltaste a pôr as tigelas no cesto de cima. Lá em cima nunca ficam bem lavadas, o de baixo é que serve para isso."
           }
         },
         "ro" : {
@@ -19646,7 +19646,7 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "เอาชามไปไว้ชั้นบนอีกแล้ว อยู่ข้างบนทีไรไม่เคยสะอาดเลย ชั้นล่างมีไว้ใส่ชามอยู่แล้ว"
+            "value" : "ใส่ชามไว้ชั้นบนอีกแล้ว อยู่ข้างบนทีไรล้างไม่เคยสะอาดเลย ชั้นล่างมีไว้ใส่ชามอยู่แล้ว"
           }
         },
         "tr" : {
@@ -19970,7 +19970,7 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "الرف العلوي يتّسع لها تمامًا، وهكذا يبقى السفلي فارغًا للقدور. أرتّب الغسالة بهذه الطريقة منذ سنوات، ولم يخرج منها شيء متّسخًا."
+            "value" : "الرف العلوي يتّسع لها تمامًا، وهكذا يبقى السفلي فارغًا للقدور. أرتّب غسالة الصحون بهذه الطريقة منذ سنوات، ولم يخرج منها شيء متّسخًا."
           }
         },
         "bn" : {
@@ -20024,7 +20024,7 @@
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ne mahtuvat sinne ihan hyvin, ja alas jää tilaa kattiloille. Olen täyttänyt koneen näin vuosia, eikä mikään ole tullut likaisena ulos."
+            "value" : "Ne mahtuvat sinne ihan hyvin, ja alas jää tilaa kattiloille. Olen täyttänyt koneen näin jo vuosia, eikä mikään ole jäänyt likaiseksi."
           }
         },
         "fr" : {
@@ -20060,7 +20060,7 @@
         "hu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Simán elférnek fent, és így az alsó kosár szabad marad a lábasoknak. Évek óta így pakolom, és még semmi nem jött ki koszosan."
+            "value" : "Simán elférnek fent, és így az alsó kosár szabad marad a lábasoknak. Évek óta így pakolom, és még soha semmi nem jött ki koszosan."
           }
         },
         "id" : {
@@ -20096,7 +20096,7 @@
         "ml" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "മുകളിൽ അവ നന്നായി കൊള്ളും, താഴെ ചട്ടികൾക്കും കലങ്ങൾക്കും സ്ഥലം കിട്ടുകയും ചെയ്യും. വർഷങ്ങളായി ഞാൻ ഇങ്ങനെയാണ് അടുക്കുന്നത്, ഒന്നും ഇതുവരെ വൃത്തിയാകാതെ വന്നിട്ടില്ല."
+            "value" : "മുകളിൽ അവ നന്നായി കൊള്ളും, താഴെ ചട്ടികൾക്കും കലങ്ങൾക്കും സ്ഥലം കിട്ടുകയും ചെയ്യും. വർഷങ്ങളായി ഞാൻ ഇങ്ങനെയാണ് അടുക്കിവെക്കുന്നത്, ഒന്നും ഇതുവരെ വൃത്തിയാകാതെ വന്നിട്ടില്ല."
           }
         },
         "mr" : {
@@ -20132,13 +20132,13 @@
         "pa" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ਉੱਪਰ ਇਹ ਆਰਾਮ ਨਾਲ ਆ ਜਾਂਦੀਆਂ ਹਨ, ਅਤੇ ਹੇਠਾਂ ਪਤੀਲਿਆਂ ਲਈ ਥਾਂ ਬਚ ਜਾਂਦੀ ਹੈ। ਮੈਂ ਸਾਲਾਂ ਤੋਂ ਇੰਝ ਹੀ ਭਾਂਡੇ ਲਾਉਂਦਾ ਹਾਂ ਅਤੇ ਕਦੇ ਕੁਝ ਗੰਦਾ ਨਹੀਂ ਨਿਕਲਿਆ।"
+            "value" : "ਉੱਪਰ ਇਹ ਆਰਾਮ ਨਾਲ ਆ ਜਾਂਦੀਆਂ ਹਨ, ਅਤੇ ਹੇਠਾਂ ਪਤੀਲਿਆਂ ਲਈ ਥਾਂ ਬਚ ਜਾਂਦੀ ਹੈ। ਮੈਂ ਸਾਲਾਂ ਤੋਂ ਇੰਝ ਹੀ ਭਾਂਡੇ ਰੱਖਦਾ ਆ ਰਿਹਾ ਹਾਂ ਅਤੇ ਕਦੇ ਕੁਝ ਗੰਦਾ ਨਹੀਂ ਨਿਕਲਿਆ।"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mieszczą się tam bez problemu, a dół zostaje wolny na garnki. Od lat tak układam zmywarkę i jeszcze nic nie wyszło brudne."
+            "value" : "Mieszczą się tam bez problemu, a dół zostaje wolny na garnki. Od lat tak ładuję zmywarkę i nigdy nic nie wyszło niedomyte."
           }
         },
         "pt-BR" : {
@@ -20150,7 +20150,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cabem lá perfeitamente e deixam o de baixo livre para as panelas. Arrumo a máquina assim há anos e nunca saiu nada sujo."
+            "value" : "Cabem lá perfeitamente e deixam o de baixo livre para as panelas. Ponho a loiça assim há anos e nunca saiu nada sujo."
           }
         },
         "ro" : {
@@ -20216,7 +20216,7 @@
         "ur" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "اوپر آرام سے آ جاتے ہیں، اور نیچے کی جگہ دیگچیوں کے لیے بچ جاتی ہے۔ میں برسوں سے ایسے ہی لگاتا آ رہا ہوں، اور آج تک ایک برتن بھی گندا نہیں نکلا۔"
+            "value" : "اوپر آرام سے آ جاتے ہیں، اور نیچے کی جگہ دیگچیوں کے لیے بچ جاتی ہے۔ میں برسوں سے ایسے ہی رکھتا آیا ہوں، اور آج تک ایک برتن بھی گندا نہیں نکلا۔"
           }
         },
         "vi" : {
@@ -20522,13 +20522,13 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "لبست سترة الجينز الخاصة بي في الحفل دون أن تستأذنيني، وأعدتها ورائحة الدخان تفوح منها."
+            "value" : "لبستِ سترتي الجينز إلى الحفل دون أن تستأذنيني، وأعدتِها ورائحة الدخان تفوح منها."
           }
         },
         "bn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "আমাকে না বলে তুমি আমার ডেনিম জ্যাকেটটা পরে কনসার্টে গেছ। ফেরত এল সিগারেটের গন্ধ নিয়ে।"
+            "value" : "আমাকে জিজ্ঞেস না করেই তুমি আমার ডেনিম জ্যাকেটটা পরে কনসার্টে গেছ। ফেরত এল ধোঁয়ার গন্ধ নিয়ে।"
           }
         },
         "ca" : {
@@ -20570,13 +20570,13 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Te llevaste mi chaqueta al concierto sin preguntarme. Volvió oliendo a humo."
+            "value" : "Te llevaste mi chaqueta vaquera al concierto sin preguntarme. Volvió oliendo a humo."
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pidit farkkutakkiani keikalla kysymättä lupaa. Kun sain sen takaisin, se haisi tupakalta."
+            "value" : "Pidit farkkutakkiani keikalla kysymättä. Kun sain sen takaisin, se haisi tupakalta."
           }
         },
         "fr" : {
@@ -20594,7 +20594,7 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "לקחת את ז'קט הג'ינס שלי להופעה בלי לשאול. הוא חזר עם ריח של סיגריות."
+            "value" : "לבשת את ז'קט הג'ינס שלי להופעה בלי לשאול. הוא חזר עם ריח של עשן."
           }
         },
         "hi" : {
@@ -20606,19 +20606,19 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Obukla si moju traper jaknu na koncert, a nisi me pitala. Vratila se i smrdi po dimu."
+            "value" : "Obukla si moju traper jaknu na koncert, a nisi me ni pitala. Vratila si je i sad sva smrdi po dimu."
           }
         },
         "hu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kérdezés nélkül vitted el a farmerdzsekimet a koncertre. Füstszagúan kaptam vissza."
+            "value" : "Meg sem kérdeztél, csak felvetted a farmerdzsekimet a koncertre. Füstszagúan kaptam vissza."
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kamu pakai jaket jinku ke konser tanpa izin. Begitu kembali, jaketnya bau asap rokok."
+            "value" : "Kamu pakai jaket jinku ke konser tanpa izin. Pas dikembalikan, jaketnya bau asap rokok."
           }
         },
         "it" : {
@@ -20636,7 +20636,7 @@
         "kn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ನೀನು ನನ್ನನ್ನು ಕೇಳದೆಯೇ ನನ್ನ ಡೆನಿಮ್ ಜಾಕೆಟ್ ಹಾಕಿಕೊಂಡು ಕನ್ಸರ್ಟ್‌ಗೆ ಹೋದೆ. ಅದು ವಾಪಸ್ ಬಂದಾಗ ಸಿಗರೇಟ್ ಹೊಗೆಯ ವಾಸನೆ ಹೊಡೆಯುತ್ತಿತ್ತು."
+            "value" : "ನೀನು ನನ್ನನ್ನು ಕೇಳದೆಯೇ ನನ್ನ ಡೆನಿಮ್ ಜಾಕೆಟ್ ಹಾಕಿಕೊಂಡು ಕನ್ಸರ್ಟ್‌ಗೆ ಹೋದೆ. ಅದು ವಾಪಸ್ ಬಂದಾಗ ಹೊಗೆಯ ವಾಸನೆ ಹೊಡೆಯುತ್ತಿತ್ತು."
           }
         },
         "ko" : {
@@ -20648,7 +20648,7 @@
         "ml" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ചോദിക്കാതെ എന്റെ ഡെനിം ജാക്കറ്റും ഇട്ടാണ് നിങ്ങൾ കൺസേർട്ടിന് പോയത്. തിരിച്ചുകിട്ടിയപ്പോൾ അതിന് സിഗരറ്റ് പുകയുടെ മണമായിരുന്നു."
+            "value" : "ചോദിക്കാതെ എന്റെ ഡെനിം ജാക്കറ്റും ഇട്ടാണ് നിങ്ങൾ കൺസേർട്ടിന് പോയത്. തിരിച്ചുകിട്ടിയപ്പോൾ അതിന് പുകമണമായിരുന്നു."
           }
         },
         "mr" : {
@@ -20684,7 +20684,7 @@
         "pa" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ਤੁਸੀਂ ਮੈਨੂੰ ਪੁੱਛੇ ਬਿਨਾਂ ਮੇਰੀ ਡੈਨਿਮ ਜੈਕਟ ਕੌਂਸਰਟ ’ਤੇ ਪਾ ਲਈ। ਵਾਪਸ ਆਈ ਤਾਂ ਉਸ ਵਿੱਚੋਂ ਧੂੰਏਂ ਦੀ ਬੋ ਆ ਰਹੀ ਸੀ।"
+            "value" : "ਤੁਸੀਂ ਮੈਨੂੰ ਪੁੱਛੇ ਬਿਨਾਂ ਮੇਰੀ ਡੈਨਿਮ ਜੈਕਟ ਪਾ ਕੇ ਕੌਂਸਰਟ ’ਤੇ ਚਲੇ ਗਏ। ਵਾਪਸ ਆਈ ਤਾਂ ਉਸ ਵਿੱਚੋਂ ਧੂੰਏਂ ਦੀ ਬੋ ਆ ਰਹੀ ਸੀ।"
           }
         },
         "pl" : {
@@ -20726,7 +20726,7 @@
         "sl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mojo jeans jakno si brez vprašanja oblekla na koncert. Vrnila si mi jo vso prepojeno z dimom."
+            "value" : "Mojo jeans jakno si oblekla na koncert, ne da bi me vprašala. Vrnila si jo vso smrdečo po dimu."
           }
         },
         "sv" : {
@@ -20750,7 +20750,7 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "เอาแจ็กเก็ตยีนส์ของเราไปใส่ดูคอนเสิร์ตโดยไม่ถามสักคำ ได้คืนมาก็เหม็นบุหรี่หึ่งเลย"
+            "value" : "เอาแจ็กเก็ตยีนส์ของเราไปใส่ดูคอนเสิร์ตโดยไม่ถามสักคำ ได้คืนมาก็เหม็นควันหึ่งเลย"
           }
         },
         "tr" : {
@@ -20762,7 +20762,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ти без дозволу вдягла мою джинсову куртку на концерт. Вона повернулася вся просякнута димом."
+            "value" : "Ти вдягла мою джинсову куртку на концерт і навіть не спитала. Вона повернулася вся просякнута димом."
           }
         },
         "ur" : {
@@ -21086,7 +21086,7 @@
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Era penjada al costat de la porta i no te la poses mai. T'ho hauria preguntat, però dormies i jo ja feia tard."
+            "value" : "Estava penjada al costat de la porta i no te la poses mai. T'ho hauria preguntat, però dormies i jo ja feia tard."
           }
         },
         "cs" : {
@@ -21104,7 +21104,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sie hing an der Tür, und du trägst sie nie. Ich hätte ja gefragt, aber du hast geschlafen, und ich war eh schon spät dran."
+            "value" : "Sie hing an der Garderobe, und du trägst sie nie. Ich hätte ja gefragt, aber du hast geschlafen, und ich war eh schon spät dran."
           }
         },
         "el" : {
@@ -21170,7 +21170,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Jaketnya tergantung dekat pintu dan kamu nggak pernah memakainya. Tadinya aku mau minta izin, tapi kamu lagi tidur dan aku sudah telat."
+            "value" : "Jaketnya tergantung dekat pintu dan kamu nggak pernah pakai. Tadinya aku mau minta izin, tapi kamu lagi tidur dan aku sudah telat."
           }
         },
         "it" : {
@@ -21248,13 +21248,13 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Estava pendurada perto da porta e você nunca usa. Eu teria pedido, mas você estava dormindo e eu já estava em cima da hora."
+            "value" : "Estava pendurada perto da porta e você nunca usa. Eu teria pedido, mas você estava dormindo e eu já estava atrasada."
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Estava pendurado ao pé da porta e tu nunca o usas. Tinha-te perguntado, mas estavas a dormir e eu já ia atrasada."
+            "value" : "Estava pendurado ao pé da porta e tu nunca o usas. Ia perguntar-te, mas estavas a dormir e eu já ia atrasada."
           }
         },
         "ro" : {
@@ -21770,7 +21770,7 @@
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Jeg ropte «siste pizzabit er min» før filmen begynte. Alle hørte det."
+            "value" : "Jeg tinget det siste pizzastykket før filmen begynte. Alle hørte det."
           }
         },
         "nl" : {
@@ -22178,7 +22178,7 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "لا يصح أن تقول «هذه لي» ثم لا تلمسها ساعتين. كانت هناك تبرد، فأكلتها أنا."
+            "value" : "لا يصح أن تقول «هذه لي» ثم لا تلمسها ساعتين. ظلّت في مكانها تبرد، فأكلتها أنا."
           }
         },
         "bn" : {
@@ -22202,7 +22202,7 @@
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Man kan ikke reservere noget og så lade det ligge i to timer. Det lå bare og blev koldt, så jeg spiste det."
+            "value" : "Man kan ikke kalde det sit og så lade det ligge i to timer. Det lå bare og blev koldt, så jeg spiste det."
           }
         },
         "de" : {
@@ -22274,7 +22274,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nggak bisa dong bilang “punyaku” terus dianggurin dua jam. Pizzanya dibiarkan sampai dingin, jadi aku makan."
+            "value" : "Nggak bisa dong bilang “punyaku” terus dianggurin dua jam. Pizzanya dibiarkan sampai dingin, jadi aku makan saja."
           }
         },
         "it" : {
@@ -22322,7 +22322,7 @@
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Du kan ikke rope «min» og så la den ligge urørt i to timer. Den lå der og ble kald, så jeg spiste den."
+            "value" : "Du kan ikke tinge noe og så la det ligge urørt i to timer. Det lå bare der og ble kaldt, så jeg spiste det."
           }
         },
         "nl" : {
@@ -22346,7 +22346,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nie możesz czegoś zaklepać i potem nie ruszać tego przez dwie godziny. Leżał tam i stygł, więc go zjadłam."
+            "value" : "Nie możesz czegoś zaklepać, a potem nie tknąć tego przez dwie godziny. Leżał tam i stygł, więc go zjadłam."
           }
         },
         "pt-BR" : {
@@ -22400,7 +22400,7 @@
         "te" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "“నాది” అని చెప్పి రెండు గంటలు దాన్ని ముట్టుకోకపోతే ఎలా? అది అలాగే చల్లారిపోతోంది, అందుకే నేను తినేశాను."
+            "value" : "“నాది” అని చెప్పి రెండు గంటలు దాన్ని ముట్టుకోకపోతే ఎలా? అది అలాగే పడి చల్లారిపోతుంటే నేను తినేశాను."
           }
         },
         "th" : {
@@ -22808,13 +22808,13 @@
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "जाते वक़्त पूरे छह घंटे गाड़ी मैंने चलाई। वापसी में तुम चलाओ, यही ठीक है।"
+            "value" : "जाते वक़्त पूरे छह घंटे गाड़ी मैंने चलाई। वापसी में तुम चलाओ, इतना तो बनता है।"
           }
         },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Vozila sam cijelih šest sati do tamo. Pošteno je da ti voziš natrag."
+            "value" : "Do tamo sam vozila cijelih šest sati. Pošteno je da ti voziš natrag."
           }
         },
         "hu" : {
@@ -22898,13 +22898,13 @@
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Całe sześć godzin w tamtą stronę prowadziłam ja. Uczciwie będzie, jak ty poprowadzisz z powrotem."
+            "value" : "Całe sześć godzin w tamtą stronę prowadziłam ja. Uczciwie będzie, jeśli w drodze powrotnej poprowadzisz ty."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Eu dirigi as seis horas da ida inteirinhas. Nada mais justo que você dirigir na volta."
+            "value" : "Eu dirigi as seis horas da ida inteirinhas. Nada mais justo do que você dirigir na volta."
           }
         },
         "pt-PT" : {
@@ -22958,7 +22958,7 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ขาไปเราขับคนเดียวตลอด 6 ชั่วโมง ขากลับก็ต้องเป็นตาเก่งขับสิ ถึงจะแฟร์"
+            "value" : "ขาไปเราขับคนเดียวตลอด 6 ชั่วโมง ขากลับก็ต้องเป็นเก่งขับบ้างสิ ถึงจะแฟร์"
           }
         },
         "tr" : {
@@ -23288,7 +23288,7 @@
         "bn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "বেরোনোর আগেই বলেছিলাম রাতে গাড়ি চালাতে আমার একদম ভালো লাগে না, আর আমরা বেরোচ্ছি সন্ধ্যা 7টায়। পরের ট্রিপে সকালের ড্রাইভগুলো আমি নেব।"
+            "value" : "বেরোনোর আগেই বলেছিলাম রাতে গাড়ি চালাতে আমার একদম ভালো লাগে না, আর আমরা বেরোচ্ছি সন্ধ্যা 7টায়। পরের ট্রিপে সকালের ড্রাইভগুলো আমার।"
           }
         },
         "ca" : {
@@ -23396,7 +23396,7 @@
         "kn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ರಾತ್ರಿ ಡ್ರೈವ್ ಮಾಡುವುದು ನನಗೆ ಸ್ವಲ್ಪವೂ ಇಷ್ಟವಿಲ್ಲ ಅಂತ ಹೊರಡುವ ಮೊದಲೇ ಹೇಳಿದ್ದೆ, ಈಗ ನಾವು ವಾಪಸ್ ಹೊರಡುತ್ತಿರುವುದೇ ಸಂಜೆ 7ಕ್ಕೆ. ಮುಂದಿನ ಟ್ರಿಪ್‌ನಲ್ಲಿ ಬೆಳಗಿನ ಡ್ರೈವ್ ಎಲ್ಲಾ ನಾನೇ ಮಾಡುತ್ತೇನೆ."
+            "value" : "ರಾತ್ರಿ ಡ್ರೈವ್ ಮಾಡುವುದು ನನಗೆ ಸ್ವಲ್ಪವೂ ಇಷ್ಟವಿಲ್ಲ ಅಂತ ಹೊರಡುವ ಮೊದಲೇ ಹೇಳಿದ್ದೆ, ಈಗ ನಾವು ವಾಪಸ್ ಹೊರಡುತ್ತಿರುವುದೇ ಸಂಜೆ 7ಕ್ಕೆ. ಮುಂದಿನ ಟ್ರಿಪ್‌ನಲ್ಲಿ ಬೆಳಗಿನ ಡ್ರೈವಿಂಗ್ ಎಲ್ಲಾ ನಾನೇ ಮಾಡುತ್ತೇನೆ."
           }
         },
         "ko" : {
@@ -23426,7 +23426,7 @@
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Jeg sa før vi dro at jeg hater å kjøre i mørket, og vi drar klokka sju. På neste tur tar jeg morgenetappene."
+            "value" : "Jeg sa før vi dro, at jeg hater å kjøre i mørket, og vi drar klokka sju. På neste tur tar jeg morgenetappene."
           }
         },
         "nl" : {
@@ -23450,13 +23450,13 @@
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Przed wyjazdem mówiłem, że nie znoszę jeździć po nocy, a wyjeżdżamy o 19. Następnym razem to ja jadę rano."
+            "value" : "Przed wyjazdem mówiłem, że nie znoszę jeździć po nocy, a wyjeżdżamy o 19. Następnym razem to ja prowadzę rano."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Antes da viagem eu avisei que odeio dirigir à noite, e a gente vai sair às sete da noite. Na próxima eu pego os trechos de manhã."
+            "value" : "Antes da viagem eu avisei que odeio dirigir à noite, e a gente vai sair às sete. Na próxima viagem eu pego os trechos de manhã."
           }
         },
         "pt-PT" : {
@@ -23468,7 +23468,7 @@
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ți-am zis înainte de plecare că urăsc să conduc noaptea, și plecăm la 7 seara. Data viitoare conduc eu dimineața."
+            "value" : "Ți-am zis înainte de plecare că urăsc să conduc noaptea, iar noi plecăm la 7 seara. Data viitoare conduc eu dimineața."
           }
         },
         "ru" : {
@@ -23492,7 +23492,7 @@
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Jag sa innan vi åkte att jag hatar att köra i mörker, och vi åker inte förrän sju i kväll. Nästa gång kör jag på morgnarna."
+            "value" : "Jag sa innan vi åkte att jag hatar att köra i mörker, och vi åker sju i kväll. Nästa gång kör jag på morgnarna."
           }
         },
         "ta" : {
@@ -23504,7 +23504,7 @@
         "te" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "రాత్రిపూట డ్రైవ్ చేయడం నాకు అస్సలు ఇష్టం లేదని బయలుదేరే ముందే చెప్పాను, మనం సాయంత్రం 7కి బయలుదేరుతున్నాం. వచ్చే ట్రిప్‌లో పొద్దున్నపూట డ్రైవింగ్ అంతా నాదే."
+            "value" : "రాత్రిపూట డ్రైవ్ చేయడం నాకు అస్సలు ఇష్టం లేదని ట్రిప్ మొదలవకముందే చెప్పాను, ఇక్కడి నుంచి మనం బయలుదేరేదే సాయంత్రం 7కి. వచ్చే ట్రిప్‌లో పొద్దున్నపూట డ్రైవింగ్ అంతా నాదే."
           }
         },
         "th" : {
@@ -23528,7 +23528,7 @@
         "ur" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "نکلنے سے پہلے ہی میں نے کہہ دیا تھا کہ مجھے رات کو گاڑی چلانا بالکل پسند نہیں، اور ہم شام 7 بجے نکل رہے ہیں۔ اگلی بار صبح کی ڈرائیو میں کر لوں گی۔"
+            "value" : "نکلنے سے پہلے ہی میں نے کہہ دیا تھا کہ مجھے رات کو گاڑی چلانا بالکل پسند نہیں، اور ہم شام 7 بجے نکل رہے ہیں۔ اگلے سفر میں صبح کے وقت گاڑی میں چلا لوں گی۔"
           }
         },
         "vi" : {
@@ -23540,13 +23540,13 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "出发前我就说过我最怕开夜车，我们晚上 7 点才走。下次出去，白天的路都我来开。"
+            "value" : "出发前我就说过我最怕开夜车，可我们晚上 7 点才往回走。下次出去，早上那段都归我开。"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "出發前我就說過我很討厭開夜車，而回程晚上 7 點才出發。下次出去玩，早上的路段都我來開。"
+            "value" : "出發前我就說過我很討厭開夜車，回程又是晚上 7 點才出發。下次出去玩，早上的路段都我來開。"
           }
         }
       }
@@ -23906,7 +23906,7 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "המושב שלי נשען אחורה, אז אני מורידה אותו. זו טיסת לילה וכולם מנסים לישון."
+            "value" : "המושב שלי יורד אחורה, אז אני מורידה אותו. זו טיסת לילה וכולם מנסים לישון."
           }
         },
         "hi" : {
@@ -23918,7 +23918,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Naslon mi se spušta, pa ga spuštam. Noćni je let i svi pokušavaju spavati."
+            "value" : "Naslon se može spustiti, pa ga spuštam. Noćni je let i svi pokušavaju spavati."
           }
         },
         "hu" : {
@@ -23978,7 +23978,7 @@
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Setet mitt kan lenes bakover, så det gjør jeg. Det er nattfly, og alle prøver å sove."
+            "value" : "Setet mitt kan lenes bakover, så det gjør jeg. Det er et nattfly, og alle prøver å sove."
           }
         },
         "nl" : {
@@ -24002,7 +24002,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mój fotel się rozkłada, więc go rozkładam. To nocny lot, wszyscy próbują spać."
+            "value" : "Mój fotel się odchyla, więc go odchylam. To nocny lot, wszyscy próbują spać."
           }
         },
         "pt-BR" : {
@@ -24440,7 +24440,7 @@
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Olen 190-senttinen, ja polveni painavat jo valmiiksi penkkiäsi. Olisit voinut edes kysyä ennen kuin laskit selkänojan ihan pohjaan."
+            "value" : "Olen 190-senttinen, ja polveni painavat jo valmiiksi penkkiäsi. Olisit voinut edes kysyä, ennen kuin laskit selkänojan ihan pohjaan."
           }
         },
         "fr" : {
@@ -24452,19 +24452,19 @@
         "gu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "મારી હાઇટ 6 ફૂટ 3 ઇંચ છે, અને મારા ઘૂંટણ પહેલેથી તમારી સીટમાં દબાય છે. છેક પાછળ નમાવતાં પહેલાં પૂછી તો શકો."
+            "value" : "મારી હાઇટ 6 ફૂટ 3 ઇંચ છે, અને મારા ઘૂંટણ પહેલેથી તમારી સીટમાં દબાય છે. છેક પાછળ નમાવતાં પહેલાં ઓછામાં ઓછું પૂછી તો શકો."
           }
         },
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "אני מטר תשעים, והברכיים שלי כבר נלחצות לגב המושב שלך. יכולת לפחות לשאול לפני שהורדת אותו עד הסוף."
+            "value" : "אני מטר תשעים, והברכיים שלי כבר תקועות בגב המושב שלך. יכולת לפחות לשאול לפני שהורדת אותו עד הסוף."
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "मेरा कद 6 फ़ुट 3 इंच है और मेरे घुटने पहले से आपकी सीट में धँसे हुए हैं। पूरी पीछे करने से पहले आप कम से कम पूछ तो सकती थीं।"
+            "value" : "मेरा कद 6 फ़ुट 3 इंच है और मेरे घुटने पहले ही आपकी सीट में गड़ रहे हैं। सीट पूरी पीछे करने से पहले आप कम से कम पूछ तो सकती थीं।"
           }
         },
         "hr" : {
@@ -24512,7 +24512,7 @@
         "ml" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "എനിക്ക് 190 സെന്റിമീറ്റർ പൊക്കമുണ്ട്, എന്റെ മുട്ടുകൾ ഇപ്പോൾ തന്നെ നിങ്ങളുടെ സീറ്റിൽ തട്ടിനിൽക്കുകയാണ്. മുഴുവനായി പിന്നോട്ട് ചായ്ക്കും മുമ്പ് ഒന്ന് ചോദിക്കാമായിരുന്നു."
+            "value" : "എനിക്ക് 190 സെന്റിമീറ്റർ പൊക്കമുണ്ട്, എന്റെ മുട്ടുകൾ ഇപ്പോൾ തന്നെ നിങ്ങളുടെ സീറ്റിൽ തട്ടിനിൽക്കുകയാണ്. മുഴുവനായി പിന്നോട്ട് ചായ്ക്കും മുമ്പ് ഒന്ന് ചോദിക്കുകയെങ്കിലും ചെയ്യാമായിരുന്നു."
           }
         },
         "mr" : {
@@ -24542,19 +24542,19 @@
         "or" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ମୁଁ 6 ଫୁଟ 3 ଇଞ୍ଚ ଡେଙ୍ଗା, ମୋ ଆଣ୍ଠୁ ଆଗରୁ ଆପଣଙ୍କ ସିଟ୍‌ରେ ଲାଗିଛି। ପୂରା ପଛକୁ ଢଳାଇବା ଆଗରୁ ଅନ୍ତତଃ ଥରେ ପଚାରିପାରିଥାନ୍ତେ।"
+            "value" : "ମୁଁ 6 ଫୁଟ 3 ଇଞ୍ଚ ଡେଙ୍ଗା, ମୋ ଆଣ୍ଠୁ ଆଗରୁ ଆପଣଙ୍କ ସିଟ୍‌ରେ ଚିପି ହେଉଛି। ପୂରା ପଛକୁ ଢଳାଇବା ଆଗରୁ ଅନ୍ତତଃ ଥରେ ପଚାରିପାରିଥାନ୍ତେ।"
           }
         },
         "pa" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ਮੇਰਾ ਕੱਦ 1.90 ਮੀਟਰ ਹੈ ਅਤੇ ਮੇਰੇ ਗੋਡੇ ਪਹਿਲਾਂ ਹੀ ਤੁਹਾਡੀ ਸੀਟ ਨਾਲ ਲੱਗੇ ਹੋਏ ਹਨ। ਪੂਰੀ ਪਿੱਛੇ ਕਰਨ ਤੋਂ ਪਹਿਲਾਂ ਘੱਟੋ-ਘੱਟ ਪੁੱਛ ਤਾਂ ਲੈਂਦੇ।"
+            "value" : "ਮੇਰਾ ਕੱਦ 6 ਫ਼ੁੱਟ 3 ਇੰਚ ਹੈ ਅਤੇ ਮੇਰੇ ਗੋਡੇ ਪਹਿਲਾਂ ਹੀ ਤੁਹਾਡੀ ਸੀਟ ਨਾਲ ਲੱਗੇ ਹੋਏ ਹਨ। ਪੂਰੀ ਪਿੱਛੇ ਕਰਨ ਤੋਂ ਪਹਿਲਾਂ ਘੱਟੋ-ਘੱਟ ਪੁੱਛ ਤਾਂ ਲੈਂਦੇ।"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mam 190 cm wzrostu, a kolana i tak już wbijają mi się w twój fotel. Mogłaś chociaż zapytać, zanim rozłożyłaś go do końca."
+            "value" : "Mam 190 cm wzrostu, a kolana i tak już wbijają mi się w twój fotel. Mogłaś chociaż zapytać, zanim odchyliłaś go do oporu."
           }
         },
         "pt-BR" : {
@@ -24584,7 +24584,7 @@
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Meriam 190 centimetrov a kolenami sa už teraz opieram o tvoje sedadlo. Mohla si sa aspoň opýtať, skôr než si ho sklopila úplne dozadu."
+            "value" : "Mám 190 centimetrov a kolená mám už teraz zapreté o tvoje sedadlo. Mohla si sa aspoň opýtať, skôr než si ho sklopila úplne dozadu."
           }
         },
         "sl" : {
@@ -24596,7 +24596,7 @@
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Jag är 191 cm lång och knäna trycker redan mot ditt säte. Du kunde åtminstone fråga innan du fäller det hela vägen bak."
+            "value" : "Jag är 191 cm lång och knäna trycker redan mot ditt säte. Du kunde åtminstone fråga innan du fäller det ända bak."
           }
         },
         "ta" : {
@@ -25016,13 +25016,13 @@
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "आख़िरी एपिसोड शुरू करने से पहले ही तुमने बता दिया कि क़ातिल कौन है। मैं पूरे हफ़्ते से उसका इंतज़ार कर रही थी।"
+            "value" : "मैंने आख़िरी एपिसोड शुरू भी नहीं किया था कि तुमने बता दिया क़ातिल कौन है। मैं पूरे हफ़्ते से उसका इंतज़ार कर रही थी।"
           }
         },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Rekao si mi tko je ubojica prije nego što sam uopće počela zadnju epizodu. Cijeli tjedan sam je čekala."
+            "value" : "Rekao si mi tko je ubojica prije nego što sam uopće počela gledati zadnju epizodu. Cijeli tjedan sam je čekala."
           }
         },
         "hu" : {
@@ -25118,7 +25118,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Disseste-me quem era o assassino antes de eu sequer começar o último episódio. Estive a semana inteira à espera dele."
+            "value" : "Disseste-me quem era o assassino antes de eu sequer ter começado o último episódio. Estive a semana inteira à espera dele."
           }
         },
         "ro" : {
@@ -25178,7 +25178,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Я ще навіть не почала останню серію, а від тебе вже дізналася, хто вбивця. Я цілий тиждень на неї чекала."
+            "value" : "Ти розповів мені, хто вбивця, ще до того, як я почала останню серію. Я чекала на неї цілий тиждень."
           }
         },
         "ur" : {
@@ -25562,7 +25562,7 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "זה יצא לפני שלושה שבועות, ואמרת שסיימת. אני לא יכול לזכור איפה כל אחד עומד."
+            "value" : "זה יצא לפני שלושה שבועות, ואמרת שסיימת. אני לא יכול לזכור מי הגיע לאיזה פרק."
           }
         },
         "hi" : {
@@ -25592,7 +25592,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "È uscita tre settimane fa e mi avevi detto di averla finita. Non posso tenere il conto di dove è arrivato ognuno."
+            "value" : "È uscita tre settimane fa e mi avevi detto di averla finita. Non posso sapere a che punto è ognuno."
           }
         },
         "ja" : {
@@ -25616,7 +25616,7 @@
         "ml" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "അത് ഇറങ്ങിയിട്ട് മൂന്നാഴ്ചയായി, കണ്ടുതീർത്തെന്ന് നിങ്ങൾ പറയുകയും ചെയ്തു. ഓരോരുത്തരും എവിടെ വരെ കണ്ടെന്ന് ഓർത്തുവെക്കാൻ എനിക്ക് പറ്റില്ല."
+            "value" : "അത് ഇറങ്ങിയിട്ട് മൂന്നാഴ്ചയായി, കണ്ടുതീർത്തെന്ന് നിങ്ങൾ പറയുകയും ചെയ്തു. ഓരോരുത്തരും എവിടെവരെ കണ്ടെന്ന് ഓർത്തുവെക്കാൻ എനിക്ക് പറ്റില്ല."
           }
         },
         "mr" : {
@@ -25688,7 +25688,7 @@
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Vyšlo to pred tromi týždňami a hovorila si, že to máš dopozerané. Nemôžem si pamätať, kto má čo dopozerané."
+            "value" : "Vyšlo to pred tromi týždňami a hovorila si, že to máš dopozerané. Nemôžem predsa sledovať, kto má čo dopozerané."
           }
         },
         "sl" : {
@@ -25700,7 +25700,7 @@
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Det kom ut för tre veckor sedan och du sa att du hade sett klart. Jag kan inte hålla koll på var alla är."
+            "value" : "Det kom ut för tre veckor sedan och du sa att du hade sett klart. Jag kan inte hålla koll på hur långt alla har kommit."
           }
         },
         "ta" : {
@@ -26072,7 +26072,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Hier drin sind 19 Grad, und mir ist sogar im Hoodie kalt. Die Heizung auf 22 zu drehen, ist doch nicht übertrieben."
+            "value" : "Hier drin sind 19 Grad, und mir ist sogar im Hoodie kalt. Die Heizung auf 22 zu drehen ist doch nicht übertrieben."
           }
         },
         "el" : {
@@ -26120,7 +26120,7 @@
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "AC 19 डिग्री पर है और मुझे हुडी में भी ठंड लग रही है। 22 कर देना कोई ज़्यादती नहीं।"
+            "value" : "AC 19 डिग्री पर है और मुझे हुडी में भी ठंड लग रही है। 22 कर देना कोई ज़्यादती नहीं है।"
           }
         },
         "hr" : {
@@ -26150,7 +26150,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "部屋が19℃で、パーカーを着てても寒いの。エアコンを22℃にするくらい普通でしょ。"
+            "value" : "この部屋、19℃しかないんだよ。パーカーを着てても寒いの。暖房を22℃にするくらい、別におかしくないでしょ。"
           }
         },
         "kn" : {
@@ -26168,7 +26168,7 @@
         "ml" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "എസി 19 ഡിഗ്രിയിലാണ്, ഹൂഡി ഇട്ടിട്ടും എനിക്ക് തണുക്കുന്നു. 22 ആക്കുന്നതിൽ ഒരു തെറ്റുമില്ല."
+            "value" : "എസി 19 ഡിഗ്രിയിലാണ്, ഹൂഡി ഇട്ടിട്ടും എനിക്ക് തണുക്കുന്നു. 22 ആക്കുന്നത് അത്ര വലിയ കാര്യമൊന്നുമല്ലല്ലോ."
           }
         },
         "mr" : {
@@ -26186,7 +26186,7 @@
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Det er 19 grader her inne, og jeg fryser selv med hettegenser. Å skru opp til 22 er ikke galskap."
+            "value" : "Det er 19 grader her inne, og jeg fryser selv i hettegenser. Å skru opp til 22 er ikke galskap."
           }
         },
         "nl" : {
@@ -26210,7 +26210,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Jest tu 19 stopni i marznę nawet w bluzie. Podkręcić ogrzewanie do 22 to żadna przesada."
+            "value" : "Jest tu 19 stopni i marznę nawet w bluzie. Podkręcenie ogrzewania do 22 to żadna przesada."
           }
         },
         "pt-BR" : {
@@ -26246,7 +26246,7 @@
         "sl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tukaj je 19 stopinj in me zebe celo v puloverju s kapuco. 22 stopinj res ni pretirano."
+            "value" : "Tukaj je 19 stopinj in me zebe celo v puloverju s kapuco. Gretje naviti na 22 res ni nič pretiranega."
           }
         },
         "sv" : {
@@ -26270,7 +26270,7 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "แอร์ตั้งไว้ 22 องศา ห่มผ้าแล้วยังหนาวอยู่เลย ขอปรับเป็น 25 ไม่ได้เกินไปหรอก"
+            "value" : "แอร์ตั้งไว้ 22 องศา ห่มผ้าแล้วยังหนาวอยู่เลย ปรับเป็น 25 ก็ไม่ได้เกินไปหรอก"
           }
         },
         "tr" : {
@@ -26282,7 +26282,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Тут 19 градусів, і мені холодно навіть у худі. Підкрутити до 22 — це ж не забагато."
+            "value" : "Тут 19 градусів, і мені холодно навіть у худі. Підкрутити до 22 — це ж не якась примха."
           }
         },
         "ur" : {
@@ -26612,7 +26612,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Při 22 stupních se nedá spát, je na to moc teplo. Ty si můžeš vzít další vrstvu, já už ze sebe nic sundat nemůžu."
+            "value" : "Při 22 stupních je na spaní moc teplo. Ty si můžeš vzít další vrstvu, já už ze sebe nic sundat nemůžu."
           }
         },
         "da" : {
@@ -26666,7 +26666,7 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ב-22 מעלות אי אפשר לישון, חם מדי. את יכולה לשים עוד שכבה, לי כבר אין מה להוריד."
+            "value" : "ב-22 מעלות אי אפשר לישון, חם מדי. את יכולה ללבוש עוד שכבה, לי כבר אין מה להוריד."
           }
         },
         "hi" : {
@@ -26678,7 +26678,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Na 22 je prevruće za spavanje. Ti možeš obući još nešto, a ja nemam što više skinuti."
+            "value" : "Na 22 je prevruće za spavanje. Ti možeš obući još nešto, a ja više nemam što skinuti."
           }
         },
         "hu" : {
@@ -26762,19 +26762,19 @@
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Przy 22 stopniach nie da się spać, jest za gorąco. Ty możesz założyć coś jeszcze, a ja już nic więcej nie zdejmę."
+            "value" : "Przy 22 stopniach nie da się spać, jest za gorąco. Ty możesz coś jeszcze na siebie narzucić, a ja już nic więcej nie zdejmę."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Com 22 graus não dá para dormir, fica quente demais. Você pode pôr mais uma coberta, eu não tenho mais o que tirar."
+            "value" : "Com 22 graus não dá para dormir, fica quente demais. Você pode vestir mais alguma coisa, eu não tenho mais o que tirar."
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Com 22 graus não se consegue dormir, é calor a mais. Tu podes vestir mais qualquer coisa, eu já não tenho mais nada para tirar."
+            "value" : "Com 22 graus não se consegue dormir, é calor a mais. Tu podes vestir mais qualquer coisa, eu já não posso tirar mais nada."
           }
         },
         "ro" : {
@@ -26822,7 +26822,7 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "25 องศามันร้อนจนนอนไม่หลับ หนาวก็ห่มผ้าเพิ่มได้ แต่ร้อนนี่ทำอะไรไม่ได้แล้ว"
+            "value" : "25 องศามันร้อนจนนอนไม่หลับ หนาวก็ห่มผ้าเพิ่มได้ แต่เราไม่มีอะไรให้ถอดแล้วนะ"
           }
         },
         "tr" : {
@@ -26834,7 +26834,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Коли 22, спати надто жарко. Ти можеш вдягнути ще щось, а мені вже нічого знімати."
+            "value" : "Коли 22 градуси, спати надто жарко. Ти можеш вдягнути ще щось, а мені вже нема чого знімати."
           }
         },
         "ur" : {
@@ -27158,7 +27158,7 @@
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$@, obre la pàgina web"
+            "value" : "%1$@, s'obre la pàgina web"
           }
         },
         "cs" : {
@@ -27194,13 +27194,13 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$@, se abre la página web"
+            "value" : "%1$@, abre la página web"
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$@, avautuu selaimeen"
+            "value" : "%1$@, avaa verkkosivun"
           }
         },
         "fr" : {
@@ -27212,7 +27212,7 @@
         "gu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$@, વેબ પેજ ખૂલે છે"
+            "value" : "%1$@, વેબ પેજ ખોલે છે"
           }
         },
         "he" : {
@@ -27236,7 +27236,7 @@
         "hu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$@, megnyitja a weboldalt"
+            "value" : "%1$@, weboldal megnyitása"
           }
         },
         "id" : {
@@ -27302,7 +27302,7 @@
         "or" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$@, ୱେବ୍ ପୃଷ୍ଠା ଖୋଲେ"
+            "value" : "%1$@, ୱେବ୍ ପୃଷ୍ଠାଟି ଖୋଲିବ"
           }
         },
         "pa" : {
@@ -27404,13 +27404,13 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$@，打开网页"
+            "value" : "%1$@，会打开网页"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$@，開啟網頁"
+            "value" : "%1$@，會開啟網頁"
           }
         }
       }
@@ -27716,7 +27716,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Smazat z tohoto telefonu všechny uložené verdikty? Sdílené odkazy budou fungovat dál."
+            "value" : "Smazat z tohohle telefonu všechny uložené verdikty? Sdílené odkazy budou fungovat dál."
           }
         },
         "da" : {
@@ -27854,7 +27854,7 @@
         "or" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ଏହି ଫୋନ୍‌ରେ ସେଭ୍ ହୋଇଥିବା ସବୁ ରାୟ ଡିଲିଟ୍ କରିବେ? ସେୟାର୍ ଲିଙ୍କ୍ କାମ କରୁଥିବ।"
+            "value" : "ଏହି ଫୋନ୍‌ରେ ସେଭ୍ ହୋଇଥିବା ସବୁ ରାୟ ଡିଲିଟ୍ କରିବେ? ସେୟାର୍ ଲିଙ୍କ୍‌ଗୁଡ଼ିକ କାମ କରୁଥିବ।"
           }
         },
         "pa" : {
@@ -27902,7 +27902,7 @@
         "sl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Želiš s tega telefona izbrisati vse shranjene razsodbe? Povezave za deljenje bodo še delovale."
+            "value" : "Želiš s tega telefona izbrisati vse shranjene razsodbe? Povezave za deljenje bodo še naprej delovale."
           }
         },
         "sv" : {
@@ -28046,7 +28046,7 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "כן, למחוק"
+            "value" : "כן, למחוק הכול"
           }
         },
         "hi" : {
@@ -28088,7 +28088,7 @@
         "kn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ಹೌದು, ಅಳಿಸಿ"
+            "value" : "ಹೌದು, ಎಲ್ಲವನ್ನೂ ಅಳಿಸಿ"
           }
         },
         "ko" : {
@@ -28130,7 +28130,7 @@
         "or" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ହଁ, ଡିଲିଟ୍ କରନ୍ତୁ"
+            "value" : "ହଁ, ସବୁ ଡିଲିଟ୍ କରନ୍ତୁ"
           }
         },
         "pa" : {
@@ -28190,7 +28190,7 @@
         "ta" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ஆம், நீக்கு"
+            "value" : "ஆம், அனைத்தையும் நீக்கு"
           }
         },
         "te" : {
@@ -28532,7 +28532,7 @@
         "bn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "শুধু এই ফোনে সেভ করা আছে। এখান থেকে মুছলে শেয়ার লিংক বন্ধ হয় না।"
+            "value" : "শুধু এই ফোনে সেভ করা আছে। এখান থেকে কোনো রায় মুছলেও তার শেয়ার লিংক বন্ধ হয় না।"
           }
         },
         "ca" : {
@@ -28562,7 +28562,7 @@
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Αποθηκεύονται μόνο σε αυτό το τηλέφωνο. Αν διαγράψεις μία από εδώ, ο σύνδεσμος κοινοποίησής της συνεχίζει να λειτουργεί."
+            "value" : "Αποθηκεύονται μόνο σε αυτό το τηλέφωνο. Αν διαγράψεις μια απόφαση από εδώ, ο σύνδεσμος κοινοποίησής της θα συνεχίσει να λειτουργεί."
           }
         },
         "en" : {
@@ -28580,7 +28580,7 @@
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tallennettu vain tähän puhelimeen. Tuomion poistaminen täältä ei poista sen jakolinkkiä käytöstä."
+            "value" : "Tallennettu vain tähän puhelimeen. Jos poistat tuomion täältä, sen jakolinkki toimii edelleen."
           }
         },
         "fr" : {
@@ -28592,19 +28592,19 @@
         "gu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ફક્ત આ ફોનમાં સેવ છે. અહીંથી ડિલીટ કરવાથી એની શેર લિંક બંધ થતી નથી."
+            "value" : "ફક્ત આ ફોનમાં સેવ થયેલા છે. અહીંથી કોઈ ચુકાદો ડિલીટ કરવાથી એની શેર લિંક બંધ થતી નથી."
           }
         },
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "פסקי הדין שמורים רק בטלפון הזה. מחיקה כאן לא מבטלת את קישור השיתוף."
+            "value" : "פסקי הדין שמורים רק בטלפון הזה. מחיקה של פסק דין כאן לא מבטלת את קישור השיתוף שלו."
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ये सिर्फ़ इसी फ़ोन में सेव हैं। यहाँ से कोई फ़ैसला हटाने पर उसका शेयर लिंक बंद नहीं होता।"
+            "value" : "ये सिर्फ़ इसी फ़ोन में सेव हैं। यहाँ से कोई फ़ैसला हटाने पर भी उसका शेयर लिंक बंद नहीं होता।"
           }
         },
         "hr" : {
@@ -28616,7 +28616,7 @@
         "hu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Csak ezen a telefonon van elmentve. Ha innen törölsz egyet, a megosztási linkje attól még működik."
+            "value" : "Csak ezen a telefonon vannak elmentve. Ha innen törölsz egyet, a megosztási linkje attól még működik."
           }
         },
         "id" : {
@@ -28652,7 +28652,7 @@
         "ml" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ഈ ഫോണിൽ മാത്രമാണ് സേവ് ചെയ്തിരിക്കുന്നത്. ഇവിടെ നിന്ന് ഒരെണ്ണം ഡിലീറ്റ് ചെയ്താലും അതിന്റെ ഷെയർ ലിങ്ക് പ്രവർത്തിക്കും."
+            "value" : "ഈ ഫോണിൽ മാത്രമാണ് സേവ് ചെയ്തിരിക്കുന്നത്. ഇവിടെനിന്ന് ഒരു വിധി ഡിലീറ്റ് ചെയ്താലും അതിന്റെ ഷെയർ ലിങ്ക് തുടർന്നും പ്രവർത്തിക്കും."
           }
         },
         "mr" : {
@@ -28676,13 +28676,13 @@
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Alleen op deze telefoon bewaard. Verwijder je er hier een, dan blijft de deellink gewoon werken."
+            "value" : "Alleen op deze telefoon bewaard. Verwijder je hier een uitspraak, dan blijft de deellink gewoon werken."
           }
         },
         "or" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "କେବଳ ଏହି ଫୋନ୍‌ରେ ସେଭ୍ ହୋଇଛି। ଏଠାରୁ ଡିଲିଟ୍ କଲେ ସେୟାର୍ ଲିଙ୍କ୍ ବନ୍ଦ ହୁଏ ନାହିଁ।"
+            "value" : "କେବଳ ଏହି ଫୋନ୍‌ରେ ସେଭ୍ ହୋଇଛି। ଏଠାରୁ କୌଣସି ରାୟ ଡିଲିଟ୍ କଲେ ବି ତା'ର ସେୟାର୍ ଲିଙ୍କ୍ ବନ୍ଦ ହୁଏ ନାହିଁ।"
           }
         },
         "pa" : {
@@ -28718,13 +28718,13 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Хранятся только на этом телефоне. Если удалить вердикт здесь, ссылка на него продолжит работать."
+            "value" : "Вердикты хранятся только на этом телефоне. Если удалить вердикт здесь, ссылка на него продолжит работать."
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Uložené len v tomto telefóne. Keď verdikt vymažeš tu, jeho odkaz na zdieľanie bude fungovať ďalej."
+            "value" : "Uložené len v tomto telefóne. Keď tu verdikt vymažeš, jeho odkaz na zdieľanie bude fungovať ďalej."
           }
         },
         "sl" : {
@@ -28754,7 +28754,7 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "บันทึกไว้ในโทรศัพท์เครื่องนี้เท่านั้น ลบออกจากที่นี่ ลิงก์แชร์ก็ยังใช้ได้อยู่"
+            "value" : "บันทึกไว้ในโทรศัพท์เครื่องนี้เท่านั้น ถึงจะลบออกจากที่นี่ ลิงก์แชร์ก็ยังใช้ได้อยู่"
           }
         },
         "tr" : {
@@ -28766,7 +28766,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Вердикти зберігаються лише на цьому телефоні. Якщо видалити вердикт тут, його посилання для поширення й далі працюватиме."
+            "value" : "Вердикти зберігаються лише на цьому телефоні. Якщо видалити вердикт тут, посилання на нього й далі працюватиме."
           }
         },
         "ur" : {
@@ -28778,7 +28778,7 @@
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Chỉ lưu trên điện thoại này. Xóa ở đây không làm mất liên kết chia sẻ."
+            "value" : "Chỉ lưu trên điện thoại này. Xóa một phán quyết ở đây thì liên kết chia sẻ của nó vẫn hoạt động."
           }
         },
         "zh-Hans" : {
@@ -28838,7 +28838,7 @@
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Καμία απόφαση ακόμα. Λύσε την πρώτη σου διαφωνία και θα εμφανιστεί εδώ."
+            "value" : "Δεν έχεις αποφάσεις ακόμα. Λύσε την πρώτη σου διαφωνία και η απόφαση θα εμφανιστεί εδώ."
           }
         },
         "en" : {
@@ -28880,7 +28880,7 @@
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "अभी कोई फ़ैसला नहीं। अपनी पहली बहस सुलझाएँ, उसका फ़ैसला यहाँ दिखेगा।"
+            "value" : "अभी तक कोई फ़ैसला नहीं। अपनी पहली बहस सुलझाएँ, उसका फ़ैसला यहीं दिखेगा।"
           }
         },
         "hr" : {
@@ -28892,7 +28892,7 @@
         "hu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Még nincs ítéleted. Dönts el egy vitát, és itt megjelenik."
+            "value" : "Még nincs ítéleted. Amint eldől az első vitád, itt megjelenik."
           }
         },
         "id" : {
@@ -28958,7 +28958,7 @@
         "or" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ଏଯାଏଁ କୌଣସି ରାୟ ନାହିଁ। ପ୍ରଥମ ବିବାଦଟି ମେଣ୍ଟାନ୍ତୁ, ତାହା ଏଠାରେ ଦେଖାଯିବ।"
+            "value" : "ଏଯାଏଁ କୌଣସି ରାୟ ନାହିଁ। ଆପଣଙ୍କ ପ୍ରଥମ ଝଗଡ଼ା ମେଣ୍ଟାନ୍ତୁ, ତା'ର ରାୟ ଏଠାରେ ଦେଖାଯିବ।"
           }
         },
         "pa" : {
@@ -29000,7 +29000,7 @@
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zatiaľ žiadne verdikty. Rozsúď svoj prvý spor a objaví sa tu."
+            "value" : "Zatiaľ tu nie sú žiadne verdikty. Nechaj rozsúdiť svoj prvý spor a verdikt nájdeš tu."
           }
         },
         "sl" : {
@@ -29024,13 +29024,13 @@
         "te" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ఇంకా తీర్పులేవీ లేవు. మీ మొదటి గొడవను తేల్చుకోండి, అది ఇక్కడ కనిపిస్తుంది."
+            "value" : "ఇంకా తీర్పులేవీ లేవు. మీ మొదటి గొడవ తేల్చుకోండి, దాని తీర్పు ఇక్కడ కనిపిస్తుంది."
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ยังไม่มีคำตัดสิน เล่าเรื่องแรกที่เถียงกันได้เลย แล้วคำตัดสินจะขึ้นที่นี่"
+            "value" : "ยังไม่มีคำตัดสิน ลองเคลียร์เรื่องที่เถียงกันเรื่องแรกดู แล้วคำตัดสินจะขึ้นที่นี่"
           }
         },
         "tr" : {
@@ -29060,7 +29060,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "还没有裁决。评完第一场争论，裁决就会出现在这里。"
+            "value" : "还没有裁决。第一场争论评出结果后，裁决会出现在这里。"
           }
         },
         "zh-Hant" : {
@@ -29360,7 +29360,7 @@
         "bn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "একটা উদাহরণ দেখুন"
+            "value" : "একটা উদাহরণ দিয়ে দেখুন"
           }
         },
         "ca" : {
@@ -29510,7 +29510,7 @@
         "or" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ଗୋଟେ ଉଦାହରଣ ଦେଖନ୍ତୁ"
+            "value" : "ଗୋଟେ ଉଦାହରଣ ନେଇ ଦେଖନ୍ତୁ"
           }
         },
         "pa" : {
@@ -29642,7 +29642,7 @@
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Escriu les dues versions, o envia un enllaç a l'altra persona perquè escrigui la seva."
+            "value" : "Escriu les dues versions o envia un enllaç a l'altra persona perquè escrigui la seva."
           }
         },
         "cs" : {
@@ -29708,7 +29708,7 @@
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "दोनों की बात लिखें, या दूसरे व्यक्ति को लिंक भेजें ताकि वे अपनी बात ख़ुद लिखें।"
+            "value" : "दोनों पक्षों की बात लिखें, या दूसरे व्यक्ति को लिंक भेजें ताकि वे अपनी बात ख़ुद लिखें।"
           }
         },
         "hr" : {
@@ -29768,7 +29768,7 @@
         "ms" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tulis kedua-dua versi, atau hantar pautan kepada pihak satu lagi supaya dia tulis versinya sendiri."
+            "value" : "Tulis kedua-dua versi, atau hantar pautan kepada pihak satu lagi supaya dia menulis versinya sendiri."
           }
         },
         "nb" : {
@@ -29804,13 +29804,13 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Escreva os dois lados, ou mande um link para a outra pessoa escrever o dela."
+            "value" : "Escreva os dois lados ou mande um link para a outra pessoa escrever o dela."
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Escreve os dois lados, ou envia à outra pessoa um link para ela escrever o dela."
+            "value" : "Escreve os dois lados ou envia à outra pessoa um link para ela escrever o dela."
           }
         },
         "ro" : {
@@ -29924,13 +29924,13 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Napiš svůj pohled, a jestli ho znáš, tak i ten druhý."
+            "value" : "Napiš svůj pohled, případně i ten druhý, pokud ho znáš."
           }
         },
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Skriv din side, og den andens, hvis du kender den."
+            "value" : "Skriv din side og den andens, hvis du kender den."
           }
         },
         "de" : {
@@ -29990,13 +29990,13 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Napiši svoju stranu, a i drugu ako je znaš."
+            "value" : "Napiši svoju stranu, a ako je znaš, i drugu."
           }
         },
         "hu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Írd le a te verziódat, és az övét is, ha tudod."
+            "value" : "Írd le a te verziódat, és az övét is, ha ismered."
           }
         },
         "id" : {
@@ -30032,7 +30032,7 @@
         "ml" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "നിങ്ങളുടെ ഭാഗം എഴുതൂ; അറിയാമെങ്കിൽ അവരുടേതും."
+            "value" : "നിങ്ങളുടെ ഭാഗം എഴുതൂ, അറിയാമെങ്കിൽ അവരുടേതും."
           }
         },
         "mr" : {
@@ -30080,13 +30080,13 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Escreva o seu lado, e o da outra pessoa se você souber."
+            "value" : "Escreva o seu lado e, se souber, o da outra pessoa."
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Escreve o teu lado, e o da outra pessoa se o souberes."
+            "value" : "Escreve o teu lado e, se o souberes, o da outra pessoa."
           }
         },
         "ro" : {
@@ -30104,7 +30104,7 @@
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Napíš svoju verziu a ak ju poznáš, aj verziu druhej strany."
+            "value" : "Napíš svoju verziu a aj verziu druhej strany, ak ju poznáš."
           }
         },
         "sl" : {
@@ -30116,7 +30116,7 @@
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Skriv din sida, och den andras om du vet den."
+            "value" : "Skriv din sida, och den andras om du känner till den."
           }
         },
         "ta" : {
@@ -31076,7 +31076,7 @@
         "gu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "અથવા એમને લિંક મોકલો, એ જાતે લખે"
+            "value" : "અથવા એમને લિંક મોકલો, જેથી એ જાતે લખે"
           }
         },
         "he" : {
@@ -31112,7 +31112,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Oppure manda un link all'altra persona"
+            "value" : "Oppure manda un link perché la scriva l'altra persona"
           }
         },
         "ja" : {
@@ -31130,7 +31130,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "아니면 링크를 보내서 직접 쓰게 하기"
+            "value" : "아니면 링크를 보내 상대방이 직접 쓰게 하기"
           }
         },
         "ml" : {
@@ -31148,7 +31148,7 @@
         "ms" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Atau hantar pautan supaya dia tulis sendiri"
+            "value" : "Atau hantar pautan supaya dia menulis sendiri"
           }
         },
         "nb" : {
@@ -31190,7 +31190,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ou envia-lhe um link para o escrever"
+            "value" : "Ou envia-lhe um link para ela o escrever"
           }
         },
         "ro" : {
@@ -31208,13 +31208,13 @@
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Alebo pošli odkaz druhej strane"
+            "value" : "Alebo pošli druhej strane odkaz, nech napíše svoju verziu"
           }
         },
         "sl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ali pa drugi osebi pošlji povezavo"
+            "value" : "Ali pa drugi osebi pošlji povezavo, da svojo plat napiše sama"
           }
         },
         "sv" : {
@@ -31250,7 +31250,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Або надішли посилання іншій стороні"
+            "value" : "Або надішли іншій стороні посилання для її версії"
           }
         },
         "ur" : {
@@ -31334,7 +31334,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Su nombre"
+            "value" : "Nombre de la otra persona"
           }
         },
         "fi" : {
@@ -31562,13 +31562,13 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ماذا يقول الطرف الآخر؟ اكتب روايته كما كان سيرويها هو."
+            "value" : "ماذا يقول الطرف الآخر؟ اكتب روايته كما يرويها هو."
           }
         },
         "bn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "অন্যজন কী বলছেন? তিনি যেভাবে বলবেন, ঠিক সেভাবেই লিখুন।"
+            "value" : "অন্যজন কী বলছেন? তিনি যেভাবে বলতেন, ঠিক সেভাবেই লিখুন।"
           }
         },
         "ca" : {
@@ -31586,7 +31586,7 @@
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Hvad siger den anden? Skriv det, som vedkommende selv ville sige det."
+            "value" : "Hvad siger den anden? Skriv det, sådan som den anden selv ville sige det."
           }
         },
         "de" : {
@@ -31700,7 +31700,7 @@
         "ms" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Apa katanya? Tulis seperti yang dia sendiri akan katakan."
+            "value" : "Apa kata dia? Tulis seperti yang dia sendiri akan katakan."
           }
         },
         "nb" : {
@@ -31784,7 +31784,7 @@
         "te" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "వాళ్లు ఏమంటున్నారు? వాళ్లు చెప్పినట్టే రాయండి."
+            "value" : "వాళ్లు ఏమంటున్నారు? వాళ్లు ఎలా చెబుతారో అలాగే రాయండి."
           }
         },
         "th" : {
@@ -31808,7 +31808,7 @@
         "ur" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "وہ کیا کہتے ہیں؟ ویسے لکھیں جیسے وہ خود کہتے۔"
+            "value" : "وہ کیا کہتے ہیں؟ ویسے ہی لکھیں جیسے وہ خود کہتے۔"
           }
         },
         "vi" : {
@@ -32750,7 +32750,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Što se dogodilo, kako ti to vidiš?"
+            "value" : "Što se dogodilo, iz tvoje perspektive?"
           }
         },
         "hu" : {
@@ -34154,7 +34154,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Apple、Google、メールアドレスでログイン"
+            "value" : "Apple、Google、またはメールアドレスでログイン"
           }
         },
         "kn" : {
@@ -34346,7 +34346,7 @@
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Den første dom er på husets regning."
+            "value" : "Din første dom er på husets regning."
           }
         },
         "de" : {
@@ -34520,7 +34520,7 @@
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Prvý verdikt je na nás."
+            "value" : "Prvý verdikt ide na nás."
           }
         },
         "sl" : {
@@ -34826,7 +34826,7 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ซื้อคำตัดสินเพิ่ม"
+            "value" : "เติมคำตัดสิน"
           }
         },
         "tr" : {
@@ -34880,7 +34880,7 @@
         "bn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "অ্যাকাউন্ট খুলুন, প্রথম রায় সব ফিচারসহ ফ্রি। এরপর একটা প্যাক বেছে নিন বা মাসিক প্ল্যান নিন।"
+            "value" : "অ্যাকাউন্ট খুললেই প্রথম রায় ফ্রি, সব ফিচারসহ। এরপর একটা প্যাক বেছে নিন বা মাসিক প্ল্যান নিন।"
           }
         },
         "ca" : {
@@ -35132,7 +35132,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "注册账号，第一次裁决免费，所有功能全都有。之后可以买次数包，或者按月订阅。"
+            "value" : "注册账号，第一次裁决免费，所有功能都能用。之后可以买次数包，或者按月订阅。"
           }
         },
         "zh-Hant" : {
@@ -35168,7 +35168,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Vyber si balíček nebo měsíční plán. Každý verdikt dostane plnou porotu."
+            "value" : "Vyber si balíček nebo měsíční plán. Každý verdikt posoudí kompletní sestava soudců."
           }
         },
         "da" : {
@@ -35408,7 +35408,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "买次数包或按月订阅。每次裁决都是完整的评委阵容。"
+            "value" : "买次数包或按月订阅。每次裁决都有完整的评委阵容。"
           }
         },
         "zh-Hant" : {
@@ -35768,7 +35768,7 @@
         "gu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ખરીદી થાય છે…"
+            "value" : "ખરીદી ચાલુ છે…"
           }
         },
         "he" : {
@@ -35942,7 +35942,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Купівля…"
+            "value" : "Купуємо…"
           }
         },
         "ur" : {
@@ -36092,7 +36092,7 @@
         "kn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ಖರೀದಿ ಪೂರ್ಣಗೊಳ್ಳಲಿಲ್ಲ. ಸ್ವಲ್ಪ ಹೊತ್ತಿನ ನಂತರ ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ."
+            "value" : "ಖರೀದಿ ಪೂರ್ಣಗೊಳ್ಳಲಿಲ್ಲ. ಸ್ವಲ್ಪ ಹೊತ್ತು ಬಿಟ್ಟು ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ."
           }
         },
         "ko" : {
@@ -36134,7 +36134,7 @@
         "or" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "କିଣିବା ସଫଳ ହେଲା ନାହିଁ। ଟିକେ ପରେ ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ।"
+            "value" : "କିଣା ସଫଳ ହେଲା ନାହିଁ। ଟିକେ ପରେ ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ।"
           }
         },
         "pa" : {
@@ -36176,7 +36176,7 @@
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nákup neprebehol. Skús to znova o chvíľu."
+            "value" : "Nákup sa nepodaril. Skús to znova o chvíľu."
           }
         },
         "sl" : {
@@ -36260,7 +36260,7 @@
         "bn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "আপনার কেনাকাটা প্রসেস হচ্ছে। এখানে আসতে এক মিনিটের মতো লাগতে পারে।"
+            "value" : "আপনার কেনাকাটা প্রসেস হচ্ছে। দেখা যেতে এক মিনিটের মতো লাগতে পারে।"
           }
         },
         "ca" : {
@@ -36338,7 +36338,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tvoja se kupnja obrađuje. Moglo bi potrajati minutu dok se ne prikaže."
+            "value" : "Kupnja se obrađuje. Može potrajati minutu dok se ne pojavi."
           }
         },
         "hu" : {
@@ -36380,7 +36380,7 @@
         "ml" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "നിങ്ങളുടെ വാങ്ങൽ പ്രോസസ്സ് ചെയ്യുന്നു. ഇവിടെ കാണിക്കാൻ ഒരു മിനിറ്റ് എടുത്തേക്കാം."
+            "value" : "നിങ്ങളുടെ വാങ്ങൽ പ്രോസസ്സ് ചെയ്യുന്നു. ഇവിടെ കാണാൻ ഒരു മിനിറ്റ് എടുത്തേക്കാം."
           }
         },
         "mr" : {
@@ -36392,7 +36392,7 @@
         "ms" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pembelian anda sedang diproses. Mungkin ambil masa seminit untuk muncul."
+            "value" : "Pembelian anda sedang diproses. Mungkin mengambil masa seminit untuk muncul."
           }
         },
         "nb" : {
@@ -36410,7 +36410,7 @@
         "or" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ଆପଣଙ୍କ କିଣିବା ପ୍ରକ୍ରିୟାରେ ଅଛି। ଦେଖାଯିବାକୁ ମିନିଟିଏ ଲାଗିପାରେ।"
+            "value" : "ଆପଣଙ୍କ କିଣା ପ୍ରକ୍ରିୟାରେ ଅଛି। ଏଠାରେ ଦେଖାଯିବାକୁ ମିନିଟିଏ ଲାଗିପାରେ।"
           }
         },
         "pa" : {
@@ -36470,7 +36470,7 @@
         "ta" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "உங்கள் வாங்குதல் செயலாக்கப்படுகிறது. உங்கள் கணக்கில் அது தெரிய ஒரு நிமிடம் ஆகலாம்."
+            "value" : "உங்கள் வாங்குதல் செயலாக்கப்படுகிறது. அது தெரிய ஒரு நிமிடம் ஆகலாம்."
           }
         },
         "te" : {
@@ -36512,7 +36512,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "你的购买正在处理中，可能要过一分钟才会显示。"
+            "value" : "订单正在处理中，可能要过一分钟才会显示。"
           }
         },
         "zh-Hant" : {
@@ -36890,7 +36890,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tvoje su kupnje vraćene."
+            "value" : "Kupnje su vraćene."
           }
         },
         "hu" : {
@@ -37274,7 +37274,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Нет покупок для восстановления."
+            "value" : "Покупок для восстановления нет."
           }
         },
         "sk" : {
@@ -37364,7 +37364,7 @@
         "bn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "এখানে আসতে এক মিনিটের মতো লাগতে পারে।"
+            "value" : "এখানে দেখা যেতে এক মিনিটের মতো লাগতে পারে।"
           }
         },
         "ca" : {
@@ -37442,7 +37442,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Moglo bi potrajati minutu dok se ovdje ne prikaže."
+            "value" : "Može potrajati minutu dok se ovdje ne pojavi."
           }
         },
         "hu" : {
@@ -37484,7 +37484,7 @@
         "ml" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ഇവിടെ കാണിക്കാൻ ഒരു മിനിറ്റ് എടുത്തേക്കാം."
+            "value" : "ഇവിടെ കാണാൻ ഒരു മിനിറ്റ് എടുത്തേക്കാം."
           }
         },
         "mr" : {
@@ -37496,7 +37496,7 @@
         "ms" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mungkin ambil masa seminit untuk muncul di sini."
+            "value" : "Mungkin mengambil masa seminit untuk muncul di sini."
           }
         },
         "nb" : {
@@ -37550,7 +37550,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Здесь они могут появиться через минуту."
+            "value" : "Они могут появиться здесь примерно через минуту."
           }
         },
         "sk" : {
@@ -37748,7 +37748,7 @@
         "kn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ಧನ್ಯವಾದ! ನಿಮ್ಮ ಖರೀದಿ ಪೂರ್ಣಗೊಂಡಿದೆ."
+            "value" : "ಧನ್ಯವಾದಗಳು! ನಿಮ್ಮ ಖರೀದಿ ಪೂರ್ಣಗೊಂಡಿದೆ."
           }
         },
         "ko" : {
@@ -37790,7 +37790,7 @@
         "or" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ଧନ୍ୟବାଦ! ଆପଣଙ୍କ କିଣିବା ସଫଳ ହେଲା।"
+            "value" : "ଧନ୍ୟବାଦ! ଆପଣଙ୍କ କିଣା ସଫଳ ହେଲା।"
           }
         },
         "pa" : {
@@ -37826,13 +37826,13 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Спасибо! Покупка прошла."
+            "value" : "Спасибо! Покупка прошла успешно."
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Vďaka! Nákup prebehol."
+            "value" : "Vďaka! Nákup prebehol úspešne."
           }
         },
         "sl" : {
@@ -37874,7 +37874,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Дякуємо! Покупку здійснено."
+            "value" : "Дякуємо! Покупка пройшла успішно."
           }
         },
         "ur" : {
@@ -38198,7 +38198,7 @@
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sobre Judge"
+            "value" : "Quant a Judge"
           }
         },
         "cs" : {
@@ -38834,13 +38834,13 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sama dengan ponsel"
+            "value" : "Ikuti ponsel"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Come il telefono"
+            "value" : "Lingua del telefono"
           }
         },
         "ja" : {
@@ -38912,7 +38912,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Igual ao celular"
+            "value" : "Igual ao do celular"
           }
         },
         "pt-PT" : {
@@ -39002,7 +39002,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "跟手機一樣"
+            "value" : "跟手機設定一樣"
           }
         }
       }
@@ -40172,13 +40172,13 @@
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Koodi ei ole oikein. Tarkista sähköpostisi ja yritä uudelleen."
+            "value" : "Koodi on väärä. Tarkista se sähköpostista ja yritä uudelleen."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ce code n’est pas bon. Vérifie l’e-mail et réessaie."
+            "value" : "Ce code est incorrect. Vérifie l’e-mail et réessaie."
           }
         },
         "gu" : {
@@ -40202,7 +40202,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Taj kod nije točan. Provjeri e-poštu i pokušaj ponovno."
+            "value" : "Taj kod nije točan. Provjeri e-poruku i pokušaj ponovno."
           }
         },
         "hu" : {
@@ -40214,7 +40214,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kodenya salah. Cek emailnya, lalu coba lagi."
+            "value" : "Kodenya salah. Periksa emailnya, lalu coba lagi."
           }
         },
         "it" : {
@@ -40292,7 +40292,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Esse código está errado. Confira o e-mail e tente de novo."
+            "value" : "Esse código não está certo. Confira o e-mail e tente de novo."
           }
         },
         "pt-PT" : {
@@ -40370,13 +40370,13 @@
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mã không đúng. Kiểm tra lại email rồi thử lại nhé."
+            "value" : "Mã này không đúng. Kiểm tra lại email rồi thử lại nhé."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "验证码不对。看看邮件，再试一次。"
+            "value" : "验证码不对。核对一下邮件，再试一次。"
           }
         },
         "zh-Hant" : {
@@ -40418,7 +40418,7 @@
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Skriv den 6-cifrede kode"
+            "value" : "Indtast den 6-cifrede kode"
           }
         },
         "de" : {
@@ -40430,7 +40430,7 @@
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Γράψε τον 6ψήφιο κωδικό"
+            "value" : "Γράψε τον εξαψήφιο κωδικό"
           }
         },
         "en" : {
@@ -40448,7 +40448,7 @@
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Syötä 6-numeroinen koodi"
+            "value" : "Syötä kuusinumeroinen koodi"
           }
         },
         "fr" : {
@@ -40466,7 +40466,7 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "קוד בן 6 ספרות"
+            "value" : "מזינים את הקוד בן 6 הספרות"
           }
         },
         "hi" : {
@@ -40646,7 +40646,7 @@
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nhập mã gồm 6 chữ số"
+            "value" : "Nhập mã 6 chữ số"
           }
         },
         "zh-Hans" : {
@@ -40706,7 +40706,7 @@
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Στείλε μου κωδικό"
+            "value" : "Στείλε μου κωδικό στο email"
           }
         },
         "en" : {
@@ -40730,7 +40730,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "M’envoyer un code"
+            "value" : "M’envoyer un code par e-mail"
           }
         },
         "gu" : {
@@ -40772,7 +40772,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Inviami un codice"
+            "value" : "Inviami un codice via email"
           }
         },
         "ja" : {
@@ -40820,7 +40820,7 @@
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Stuur me een code"
+            "value" : "Mail me een code"
           }
         },
         "or" : {
@@ -40874,7 +40874,7 @@
         "sl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pošlji mi kodo"
+            "value" : "Pošlji mi kodo po e-pošti"
           }
         },
         "sv" : {
@@ -40898,7 +40898,7 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ส่งรหัสทางอีเมล"
+            "value" : "ส่งรหัสมาทางอีเมล"
           }
         },
         "tr" : {
@@ -40928,7 +40928,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "给我发验证码"
+            "value" : "把验证码发到我邮箱"
           }
         },
         "zh-Hant" : {
@@ -41246,7 +41246,7 @@
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Vi har sendt en kode til %1$@. Den virker i 10 minutter."
+            "value" : "Vi har sendt en kode til %1$@. Den gælder i 10 minutter."
           }
         },
         "de" : {
@@ -41348,7 +41348,7 @@
         "ml" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$@ എന്ന വിലാസത്തിലേക്ക് ഒരു കോഡ് അയച്ചിട്ടുണ്ട്. അടുത്ത 10 മിനിറ്റ് അത് ഉപയോഗിക്കാം."
+            "value" : "%1$@ എന്ന വിലാസത്തിലേക്ക് ഒരു കോഡ് അയച്ചിട്ടുണ്ട്. 10 മിനിറ്റ് നേരത്തേക്ക് അത് പ്രവർത്തിക്കും."
           }
         },
         "mr" : {
@@ -41384,7 +41384,7 @@
         "pa" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ਅਸੀਂ %1$@ ’ਤੇ ਇੱਕ ਕੋਡ ਭੇਜਿਆ ਹੈ। ਇਹ 10 ਮਿੰਟ ਤੱਕ ਚੱਲੇਗਾ।"
+            "value" : "ਅਸੀਂ %1$@ ’ਤੇ ਇੱਕ ਕੋਡ ਭੇਜਿਆ ਹੈ। ਇਹ 10 ਮਿੰਟ ਚੱਲੇਗਾ।"
           }
         },
         "pl" : {
@@ -41432,7 +41432,7 @@
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Vi har mejlat en kod till %1$@. Den fungerar i 10 minuter."
+            "value" : "Vi har mejlat en kod till %1$@. Den gäller i 10 minuter."
           }
         },
         "ta" : {
@@ -41444,7 +41444,7 @@
         "te" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$@ కు ఒక కోడ్ పంపాం. అది 10 నిమిషాలు పనిచేస్తుంది."
+            "value" : "%1$@కు ఒక కోడ్ పంపాం. అది 10 నిమిషాలు పనిచేస్తుంది."
           }
         },
         "th" : {
@@ -41780,7 +41780,7 @@
         "bn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "এই কোডে অনেকবার ভুল চেষ্টা হয়েছে। নতুন একটা কোড চেয়ে নিন।"
+            "value" : "এই কোড দিয়ে অনেকবার ভুল চেষ্টা হয়ে গেছে। নতুন একটা কোড চেয়ে নিন।"
           }
         },
         "ca" : {
@@ -41792,7 +41792,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "U tohohle kódu bylo moc špatných pokusů. Požádej o nový."
+            "value" : "Příliš mnoho špatných pokusů s tímhle kódem. Požádej o nový."
           }
         },
         "da" : {
@@ -41834,13 +41834,13 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Trop d’essais incorrects pour ce code. Demandes-en un nouveau."
+            "value" : "Trop de tentatives incorrectes pour ce code. Demandes-en un nouveau."
           }
         },
         "gu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "આ કોડ માટે ઘણા ખોટા પ્રયાસ થયા. નવો કોડ માગો."
+            "value" : "આ કોડ માટે ઘણી વાર ખોટો પ્રયાસ થયો. નવો કોડ માગો."
           }
         },
         "he" : {
@@ -41894,7 +41894,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "이 코드로 너무 여러 번 틀렸어요. 새 코드를 요청해 주세요."
+            "value" : "이 코드를 너무 여러 번 잘못 입력했어요. 새 코드를 요청해 주세요."
           }
         },
         "ml" : {
@@ -41930,7 +41930,7 @@
         "or" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ଏହି କୋଡ୍ ପାଇଁ ବହୁତ ଥର ଭୁଲ ଚେଷ୍ଟା ହେଲା। ନୂଆ କୋଡ୍ ମାଗନ୍ତୁ।"
+            "value" : "ଏହି କୋଡ୍ ବହୁତ ଥର ଭୁଲ ଦିଆଗଲା। ନୂଆ କୋଡ୍ ମାଗନ୍ତୁ।"
           }
         },
         "pa" : {
@@ -41990,7 +41990,7 @@
         "ta" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "இந்தக் குறியீட்டுக்குத் தவறான முயற்சிகள் அதிகமாகிவிட்டன. புதிய குறியீட்டைக் கேளுங்கள்."
+            "value" : "இந்தக் குறியீட்டைப் பலமுறை தவறாக உள்ளிட்டுவிட்டீர்கள். புதிய குறியீட்டைக் கேளுங்கள்."
           }
         },
         "te" : {
@@ -42020,7 +42020,7 @@
         "ur" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "اس کوڈ کے لیے بہت زیادہ غلط کوششیں ہو گئیں۔ نیا کوڈ منگوائیں۔"
+            "value" : "اس کوڈ کے ساتھ بہت بار غلط کوشش ہو چکی ہے۔ نیا کوڈ منگوائیں۔"
           }
         },
         "vi" : {
@@ -42344,7 +42344,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Moc pokusů. Počkej minutu a zkus to znovu."
+            "value" : "Příliš mnoho pokusů. Počkej minutu a zkus to znovu."
           }
         },
         "da" : {
@@ -42386,7 +42386,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Trop d’essais. Attends une minute et réessaie."
+            "value" : "Trop de tentatives. Attends une minute et réessaie."
           }
         },
         "gu" : {
@@ -42440,13 +42440,13 @@
         "kn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ತುಂಬಾ ಪ್ರಯತ್ನಗಳಾದವು. ಒಂದು ನಿಮಿಷ ಕಾದು ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ."
+            "value" : "ತುಂಬಾ ಸಲ ಪ್ರಯತ್ನಿಸಿದ್ದೀರಿ. ಒಂದು ನಿಮಿಷ ಕಾದು ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ."
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "시도가 너무 많았어요. 1분 정도 기다렸다가 다시 시도해 주세요."
+            "value" : "시도 횟수가 너무 많아요. 1분 정도 기다렸다가 다시 시도해 주세요."
           }
         },
         "ml" : {
@@ -42542,7 +42542,7 @@
         "ta" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "முயற்சிகள் அதிகமாகிவிட்டன. ஒரு நிமிடம் பொறுத்து மீண்டும் முயலுங்கள்."
+            "value" : "பலமுறை முயன்றுவிட்டீர்கள். ஒரு நிமிடம் பொறுத்து மீண்டும் முயலுங்கள்."
           }
         },
         "te" : {
@@ -42590,7 +42590,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "嘗試太多次了。等一分鐘再試。"
+            "value" : "嘗試太多次了，等一分鐘再試。"
           }
         }
       }
@@ -42956,7 +42956,7 @@
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "अभी साइन इन नहीं हो सकता। थोड़ी देर बाद कोशिश करें।"
+            "value" : "अभी साइन इन नहीं हो सकता। थोड़ी देर बाद फिर कोशिश करें।"
           }
         },
         "hr" : {
@@ -42968,7 +42968,7 @@
         "hu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "A belépés most nem elérhető. Próbáld újra később."
+            "value" : "A belépés most nem érhető el. Próbáld újra később."
           }
         },
         "id" : {
@@ -42986,7 +42986,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "いまはログインできません。しばらくしてからお試しください。"
+            "value" : "いまはログインできません。しばらくしてからもう一度お試しください。"
           }
         },
         "kn" : {
@@ -43466,7 +43466,7 @@
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Νέα"
+            "value" : "Νέα διαφωνία"
           }
         },
         "en" : {
@@ -43670,7 +43670,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Нове"
+            "value" : "Нова справа"
           }
         },
         "ur" : {
@@ -44012,7 +44012,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Offline können wir nicht übersetzen, deshalb hier das Original."
+            "value" : "Offline können wir nicht übersetzen, deshalb siehst du das Original."
           }
         },
         "el" : {
@@ -44282,13 +44282,13 @@
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Menneske-tjekket kunne ikke indlæses. Tjek din forbindelse, og prøv igen."
+            "value" : "Mennesketjekket kunne ikke indlæses. Tjek din forbindelse, og prøv igen."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Der Menschen-Check konnte nicht laden. Prüf deine Verbindung und versuch es noch mal."
+            "value" : "Der Bot-Check ließ sich nicht laden. Prüf deine Verbindung und versuch es noch mal."
           }
         },
         "el" : {
@@ -44324,7 +44324,7 @@
         "gu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "માણસ હોવાની ચકાસણી લોડ ન થઈ. કનેક્શન તપાસીને ફરી પ્રયાસ કરો."
+            "value" : "તમે માણસ છો કે નહીં એની ચકાસણી લોડ ન થઈ શકી. કનેક્શન તપાસીને ફરી પ્રયાસ કરો."
           }
         },
         "he" : {
@@ -44336,13 +44336,13 @@
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "इंसान होने की जाँच लोड नहीं हो पाई। अपना कनेक्शन जाँचें और फिर कोशिश करें।"
+            "value" : "इंसान होने की जाँच लोड नहीं हो पाई। इंटरनेट कनेक्शन जाँचकर फिर कोशिश करें।"
           }
         },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Provjera jesi li čovjek nije se uspjela učitati. Provjeri vezu i pokušaj ponovno."
+            "value" : "Provjera jesi li čovjek nije se učitala. Provjeri vezu i pokušaj ponovno."
           }
         },
         "hu" : {
@@ -44414,7 +44414,7 @@
         "or" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ମଣିଷ ଯାଞ୍ଚ ଲୋଡ୍ ହେଲା ନାହିଁ। ସଂଯୋଗ ଯାଞ୍ଚ କରି ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ।"
+            "value" : "ମଣିଷ ଯାଞ୍ଚ ଲୋଡ୍ ହେଲା ନାହିଁ। ଇଣ୍ଟରନେଟ୍ ସଂଯୋଗ ଦେଖି ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ।"
           }
         },
         "pa" : {
@@ -44426,7 +44426,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nie udało się wczytać weryfikacji. Sprawdź połączenie i spróbuj ponownie."
+            "value" : "Nie udało się wczytać weryfikacji, czy jesteś człowiekiem. Sprawdź połączenie i spróbuj ponownie."
           }
         },
         "pt-BR" : {
@@ -44450,7 +44450,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Не удалось загрузить проверку, что вы человек. Проверьте подключение и попробуйте снова."
+            "value" : "Не удалось загрузить проверку «человек ли вы». Проверьте подключение и попробуйте снова."
           }
         },
         "sk" : {
@@ -44498,7 +44498,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Не вдалося завантажити перевірку на людину. Перевір з’єднання й спробуй ще раз."
+            "value" : "Не вдалося завантажити перевірку, що ти людина. Перевір з’єднання й спробуй ще раз."
           }
         },
         "ur" : {
@@ -44936,13 +44936,13 @@
         "ml" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ഓരോ ഭാഗവും അവിടെ എത്തിയത് എങ്ങനെ"
+            "value" : "ഓരോ ഭാഗവും ആ നിലപാടിൽ എത്തിയത് എങ്ങനെ"
           }
         },
         "mr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "प्रत्येक बाजू तिथपर्यंत कशी पोहोचली"
+            "value" : "प्रत्येक बाजू आपल्या मतापर्यंत कशी पोहोचली"
           }
         },
         "ms" : {
@@ -44972,7 +44972,7 @@
         "pa" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ਹਰ ਪੱਖ ਇੱਥੇ ਤੱਕ ਕਿਵੇਂ ਪਹੁੰਚਿਆ"
+            "value" : "ਹਰ ਪੱਖ ਆਪਣੀ ਗੱਲ ਤੱਕ ਕਿਵੇਂ ਪਹੁੰਚਿਆ"
           }
         },
         "pl" : {
@@ -45026,7 +45026,7 @@
         "ta" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ஒவ்வொரு தரப்பும் அந்த முடிவுக்கு வந்தது எப்படி"
+            "value" : "ஒவ்வொரு தரப்பும் அந்த முடிவுக்கு எப்படி வந்தது"
           }
         },
         "te" : {
@@ -45104,7 +45104,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Porota se nepřiklonila ani na jednu stranu"
+            "value" : "Soudci se nepřiklonili na žádnou stranu"
           }
         },
         "da" : {
@@ -45230,7 +45230,7 @@
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Dommerne tar ikke side"
+            "value" : "Dommerne heller ikke mot noen av sidene"
           }
         },
         "nl" : {
@@ -45248,19 +45248,19 @@
         "pa" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ਪੈਨਲ ਦਾ ਝੁਕਾਅ ਕਿਸੇ ਪਾਸੇ ਨਹੀਂ ਸੀ"
+            "value" : "ਪੈਨਲ ਦਾ ਝੁਕਾਅ ਕਿਸੇ ਪਾਸੇ ਨਹੀਂ ਰਿਹਾ"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sędziowie nie przechylili szali w żadną stronę"
+            "value" : "Sędziowie nie skłonili się ku żadnej ze stron"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "O painel não pendeu para nenhum lado"
+            "value" : "Os juízes não penderam para nenhum lado"
           }
         },
         "pt-PT" : {
@@ -45374,13 +45374,13 @@
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Els jutges s'han decantat cap a %1$@"
+            "value" : "Els jutges s'han decantat per %1$@"
           }
         },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$@ má u poroty navrch"
+            "value" : "U soudců má navrch %1$@"
           }
         },
         "da" : {
@@ -45518,7 +45518,7 @@
         "or" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ବିଚାରକ ଦଳର ଝୁଙ୍କ %1$@ ଆଡ଼କୁ"
+            "value" : "ବିଚାରକମାନେ %1$@ଙ୍କ ଆଡ଼କୁ ଝୁଙ୍କିଲେ"
           }
         },
         "pa" : {
@@ -45530,13 +45530,13 @@
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sędziowie przechylili szalę na korzyść: %1$@"
+            "value" : "Zdaniem sędziów więcej racji ma %1$@"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "O painel pendeu para %1$@"
+            "value" : "Os juízes penderam para %1$@"
           }
         },
         "pt-PT" : {
@@ -45704,7 +45704,7 @@
         "gu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "દરેક બાજુનો પાયો શું છે"
+            "value" : "દરેક બાજુ શાના પર ટકેલી છે"
           }
         },
         "he" : {
@@ -45782,13 +45782,13 @@
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Det hver side står på"
+            "value" : "Hva hver side bygger på"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Waar elke kant op steunt"
+            "value" : "Waar elke kant zich op baseert"
           }
         },
         "or" : {
@@ -45800,7 +45800,7 @@
         "pa" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ਹਰ ਪੱਖ ਕਿਸ ਗੱਲ ’ਤੇ ਖੜ੍ਹਾ ਹੈ"
+            "value" : "ਹਰ ਪੱਖ ਕਿਸ ਗੱਲ ’ਤੇ ਟਿਕਿਆ ਹੈ"
           }
         },
         "pl" : {
@@ -45854,7 +45854,7 @@
         "ta" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ஒவ்வொரு தரப்பின் அடித்தளம்"
+            "value" : "ஒவ்வொரு தரப்பும் எதை நம்பி நிற்கிறது"
           }
         },
         "te" : {
@@ -45884,7 +45884,7 @@
         "ur" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ہر طرف کس بات پر کھڑی ہے"
+            "value" : "ہر طرف کی بات کس بنیاد پر ہے"
           }
         },
         "vi" : {

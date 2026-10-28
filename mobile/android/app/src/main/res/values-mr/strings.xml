@@ -510,7 +510,7 @@
     <string name="app_signin_rate_limited">खूप प्रयत्न झाले. एखादे मिनिट थांबून पुन्हा प्रयत्न करा.</string>
     <string name="app_signin_unavailable">साइन-इन आत्ता उपलब्ध नाही. थोड्या वेळाने पुन्हा प्रयत्न करा.</string>
     <string name="app_account_delete_title">तुमचे खाते डिलीट करायचे?</string>
-    <string name="app_account_delete_body">तुमची साइन-इनची माहिती, क्रेडिट, प्लॅन आणि वैयक्तिक डेटा डिलीट होईल, आणि तुमच्या शेअर लिंक चालणे बंद होईल. गोपनीयता धोरणात सांगितल्याप्रमाणे निकालांचा मजकूर तुमच्या नावाशिवाय साठवलेला राहतो.</string>
+    <string name="app_account_delete_body">तुमची साइन-इनची माहिती, क्रेडिट, प्लॅन आणि वैयक्तिक डेटा डिलीट होतील, आणि तुमच्या शेअर लिंक चालणे बंद होईल. गोपनीयता धोरणात सांगितल्याप्रमाणे निकालांचा मजकूर तुमच्या नावाशिवाय साठवलेला राहतो.</string>
     <string name="app_account_delete_confirm">खाते डिलीट करा</string>
     <string name="app_account_deleted">तुमचे खाते डिलीट झाले.</string>
     <string name="app_account_sign_out_confirm">या फोनवर Judge मधून साइन आउट करायचे?</string>
@@ -581,7 +581,7 @@
     <string name="app_verdict_lean_to">परीक्षकांचा कल %1$sच्या बाजूने होता</string>
     <string name="app_verdict_lean_none">परीक्षकांचा कल कोणत्याच बाजूला नव्हता</string>
     <string name="app_verdict_sides">प्रत्येक बाजू कशावर उभी आहे</string>
-    <string name="app_verdict_claims">प्रत्येक बाजू तिथपर्यंत कशी पोहोचली</string>
+    <string name="app_verdict_claims">प्रत्येक बाजू आपल्या मतापर्यंत कशी पोहोचली</string>
     <string name="app_verdict_back">निकाल</string>
     <string name="app_appeal_title">माहिती जोडून फेरविचार मागा</string>
     <string name="app_appeal_intro">परीक्षकांकडून काही सुटले? ते जोडा, म्हणजे परीक्षक पुन्हा निकाल देतील. पहिला निकाल नोंदीत राहतो.</string>

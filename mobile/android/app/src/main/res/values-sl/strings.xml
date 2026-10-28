@@ -490,7 +490,7 @@
     <string name="app_history_device_only">Shranjeno samo na tem telefonu. Če razsodbo izbrišeš tukaj, njena povezava za deljenje še vedno deluje.</string>
     <string name="app_history_delete">Izbriši</string>
     <string name="app_history_clear_all">Izbriši vse</string>
-    <string name="app_history_clear_confirm">Želiš s tega telefona izbrisati vse shranjene razsodbe? Povezave za deljenje bodo še delovale.</string>
+    <string name="app_history_clear_confirm">Želiš s tega telefona izbrisati vse shranjene razsodbe? Povezave za deljenje bodo še naprej delovale.</string>
     <string name="app_history_clear_yes">Da, izbriši vse</string>
     <string name="app_pricing_free_account">Prijavi se z Apple, Googlom ali e-pošto</string>
     <string name="app_pricing_headline">Prva razsodba gre na naš račun.</string>
@@ -498,12 +498,12 @@
     <string name="app_pricing_headline_member">Več razsodb.</string>
     <string name="app_pricing_sub_member">Izberi paket ali mesečno naročnino. Pri vsaki razsodbi sodelujejo vsi sodniki.</string>
     <plurals name="app_balance_left">
-        <item quantity="one">Še %1$s razsodba</item>
-        <item quantity="two">Še %1$s razsodbi</item>
-        <item quantity="few">Še %1$s razsodbe</item>
-        <item quantity="other">Še %1$s razsodb</item>
+        <item quantity="one">Na voljo še %1$s razsodba</item>
+        <item quantity="two">Na voljo še %1$s razsodbi</item>
+        <item quantity="few">Na voljo še %1$s razsodbe</item>
+        <item quantity="other">Na voljo še %1$s razsodb</item>
     </plurals>
-    <string name="app_balance_monthly">Ta mesec še %1$s od %2$s</string>
+    <string name="app_balance_monthly">Ta mesec na voljo še %1$s od %2$s</string>
     <string name="app_balance_none">Nimaš več razsodb</string>
     <string name="app_balance_case_cost">Pošiljanje povezave porabi 1 razsodbo</string>
     <string name="app_cancel">Prekliči</string>
@@ -522,7 +522,7 @@
     <string name="app_settings_version">Različica %1$s</string>
     <string name="app_signin_required">Prijavi se in dobi razsodbo.</string>
     <string name="app_signin_or">ali</string>
-    <string name="app_signin_code_request">Pošlji mi kodo</string>
+    <string name="app_signin_code_request">Pošlji mi kodo po e-pošti</string>
     <string name="app_signin_code_sent">Na %1$s smo poslali kodo. Velja 10 minut.</string>
     <string name="app_signin_code_label">Vpiši 6-mestno kodo</string>
     <string name="app_signin_code_submit">Prijavi se</string>
@@ -534,10 +534,10 @@
     <string name="app_signin_rate_limited">Preveč poskusov. Počakaj minuto in poskusi znova.</string>
     <string name="app_signin_unavailable">Prijava trenutno ni na voljo. Poskusi pozneje.</string>
     <string name="app_account_delete_title">Želiš izbrisati račun?</string>
-    <string name="app_account_delete_body">Podatki za prijavo, krediti, naročnina in tvoji osebni podatki se izbrišejo, povezave za deljenje pa prenehajo delovati. Besedilo razsodb ostane shranjeno brez tvojega imena, kot pojasnjuje politika zasebnosti.</string>
+    <string name="app_account_delete_body">Izbrišejo se tvoji podatki za prijavo, krediti, naročnina in osebni podatki, povezave za deljenje pa prenehajo delovati. Besedilo razsodb ostane shranjeno brez tvojega imena, kot je pojasnjeno v politiki zasebnosti.</string>
     <string name="app_account_delete_confirm">Izbriši račun</string>
     <string name="app_account_deleted">Tvoj račun je izbrisan.</string>
-    <string name="app_account_sign_out_confirm">Se želiš na tem telefonu odjaviti iz Judge?</string>
+    <string name="app_account_sign_out_confirm">Se želiš na tem telefonu odjaviti iz aplikacije Judge?</string>
     <string name="app_account_signed_out">Odjava je uspela.</string>
     <string name="app_account_session_expired">Seja je potekla. Za nadaljevanje se znova prijavi.</string>
     <string name="app_close">Zapri</string>
@@ -551,7 +551,7 @@
     <string name="app_home_their_placeholder">Kaj pravi druga oseba? Napiši tako, kot bi povedala sama.</string>
     <string name="app_home_your_side_label">Tvoja plat v prepiru</string>
     <string name="app_home_their_side_label">Plat druge osebe v prepiru</string>
-    <string name="app_home_send_link">Ali pa drugi osebi pošlji povezavo</string>
+    <string name="app_home_send_link">Ali pa drugi osebi pošlji povezavo, da svojo plat napiše sama</string>
     <string name="app_home_says">%1$s pravi:</string>
     <string name="app_home_my_side">Moja plat:</string>
     <string name="app_home_other_side">Plat druge osebe:</string>
@@ -565,7 +565,7 @@
     <string name="app_example_bill_b_name">Jure</string>
     <string name="app_example_bill_b">Vedno vse razdelimo na štiri. Vsakič računati, kdo je kaj imel, je muka, razlika pa tako ali tako ni velika.</string>
     <string name="app_example_thermostat_a_name">Nina</string>
-    <string name="app_example_thermostat_a">Tukaj je 19 stopinj in me zebe celo v puloverju s kapuco. 22 stopinj res ni pretirano.</string>
+    <string name="app_example_thermostat_a">Tukaj je 19 stopinj in me zebe celo v puloverju s kapuco. Gretje naviti na 22 res ni nič pretiranega.</string>
     <string name="app_example_thermostat_b_name">Gašper</string>
     <string name="app_example_thermostat_b">Pri 22 stopinjah se ne da spati, prevroče je. Ti lahko oblečeš še eno plast, jaz pa ne morem sleči ničesar več.</string>
     <string name="app_example_road_trip_a_name">Tina</string>
@@ -581,7 +581,7 @@
     <string name="app_example_spoiler_b_name">Jan</string>
     <string name="app_example_spoiler_b">Serija je izšla pred tremi tedni, ti pa si rekla, da si jo že pogledala do konca. Ne morem si zapomniti, do kod je kdo prišel.</string>
     <string name="app_example_jacket_a_name">Matej</string>
-    <string name="app_example_jacket_a">Mojo jeans jakno si brez vprašanja oblekla na koncert. Vrnila si mi jo vso prepojeno z dimom.</string>
+    <string name="app_example_jacket_a">Mojo jeans jakno si oblekla na koncert, ne da bi me vprašala. Vrnila si jo vso smrdečo po dimu.</string>
     <string name="app_example_jacket_b_name">Eva</string>
     <string name="app_example_jacket_b">Visela je pri vratih, ti pa je nikoli ne nosiš. Vprašala bi te, ampak si spal, jaz pa sem že tako zamujala.</string>
     <string name="app_example_last_slice_a_name">Nejc</string>
@@ -610,7 +610,7 @@
     <string name="app_appeal_title">Dodaj kontekst za ponovno presojo</string>
     <string name="app_appeal_intro">So sodniki kaj spregledali? Dodaj to in znova bodo razsodili. Prva razsodba ostane zabeležena.</string>
     <string name="app_appeal_ask">Kaj bi morali vedeti?</string>
-    <string name="app_appeal_placeholder">Dejstvo, sporočilo ali to, kar ste se v resnici dogovorili.</string>
+    <string name="app_appeal_placeholder">Dejstvo, sporočilo ali to, kar je bilo v resnici dogovorjeno.</string>
     <string name="app_appeal_cost">Porabi 1 razsodbo. Pri eni razsodbi lahko to narediš dvakrat – še na voljo: %1$s.</string>
     <string name="app_appeal_cost_case">Porabi 1 razsodbo. Pri enem sporu lahko to narediš enkrat.</string>
     <string name="app_appeal_submit">Znova razsodi</string>

@@ -469,7 +469,7 @@
     <string name="app_history_delete">ಅಳಿಸಿ</string>
     <string name="app_history_clear_all">ಎಲ್ಲವನ್ನೂ ಅಳಿಸಿ</string>
     <string name="app_history_clear_confirm">ಈ ಫೋನ್‌ನಲ್ಲಿ ಉಳಿಸಿರುವ ಎಲ್ಲಾ ತೀರ್ಪುಗಳನ್ನು ಅಳಿಸಬೇಕೇ? ಹಂಚಿಕೆ ಲಿಂಕ್‌ಗಳು ಕೆಲಸ ಮಾಡುತ್ತಲೇ ಇರುತ್ತವೆ.</string>
-    <string name="app_history_clear_yes">ಹೌದು, ಅಳಿಸಿ</string>
+    <string name="app_history_clear_yes">ಹೌದು, ಎಲ್ಲವನ್ನೂ ಅಳಿಸಿ</string>
     <string name="app_pricing_free_account">Apple, Google ಅಥವಾ ಇಮೇಲ್ ಮೂಲಕ ಸೈನ್ ಇನ್ ಮಾಡಿ</string>
     <string name="app_pricing_headline">ನಿಮ್ಮ ಮೊದಲ ತೀರ್ಪು ನಮ್ಮ ಕಡೆಯಿಂದ ಉಚಿತ.</string>
     <string name="app_pricing_sub">ಖಾತೆ ತೆರೆಯಿರಿ, ನಿಮ್ಮ ಮೊದಲ ತೀರ್ಪು ಎಲ್ಲಾ ಸೌಲಭ್ಯಗಳ ಸಮೇತ ಉಚಿತ. ಅದರ ನಂತರ ಒಂದು ಪ್ಯಾಕ್ ಆರಿಸಿ ಅಥವಾ ಮಾಸಿಕ ಪ್ಲಾನ್ ತೆಗೆದುಕೊಳ್ಳಿ.</string>
@@ -486,7 +486,7 @@
     <string name="app_retry">ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ</string>
     <string name="app_error_offline">ನೀವು ಆಫ್‌ಲೈನ್ ಇರುವಂತಿದೆ. ಇಂಟರ್ನೆಟ್ ಸಂಪರ್ಕ ಪರಿಶೀಲಿಸಿ ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.</string>
     <string name="app_error_timeout">ತೀರ್ಪುಗಾರರು ಉತ್ತರಿಸಲು ತುಂಬಾ ಹೊತ್ತು ತೆಗೆದುಕೊಂಡರು. ಒಂದು ನಿಮಿಷ ಬಿಟ್ಟು ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.</string>
-    <string name="app_error_interrupted">Judge ಹಿನ್ನೆಲೆಯಲ್ಲಿದ್ದಾಗ ಸಂಪರ್ಕ ಕಡಿತಗೊಂಡಿತು. ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ, ತೀರ್ಪು ಬರುವವರೆಗೂ ಆ್ಯಪ್ ತೆರೆದೇ ಇಡಿ.</string>
+    <string name="app_error_interrupted">Judge ಹಿನ್ನೆಲೆಯಲ್ಲಿದ್ದಾಗ ಸಂಪರ್ಕ ಕಡಿತಗೊಂಡಿತು. ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ, ಮತ್ತು ತೀರ್ಪು ಬರುವವರೆಗೂ ಆ್ಯಪ್ ಅನ್ನು ತೆರೆದೇ ಇಡಿ.</string>
     <string name="app_turnstile_error">ಮಾನವ ಪರಿಶೀಲನೆ ಲೋಡ್ ಆಗಲಿಲ್ಲ. ಇಂಟರ್ನೆಟ್ ಸಂಪರ್ಕ ಪರಿಶೀಲಿಸಿ ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.</string>
     <string name="app_factcheck_source_aria">%1$s, ವೆಬ್ ಪುಟವನ್ನು ತೆರೆಯುತ್ತದೆ</string>
     <string name="app_error_bad_origin">ಈ ವಿನಂತಿ ನಮಗೆ ಗೊತ್ತಿಲ್ಲದ ಕಡೆಯಿಂದ ಬಂದಿದೆ. ಆ್ಯಪ್ ಅಪ್‌ಡೇಟ್ ಆಗಿದೆಯೇ ಎಂದು ನೋಡಿ ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.</string>
@@ -507,10 +507,10 @@
     <string name="app_signin_code_too_many">ಈ ಕೋಡ್ ಅನ್ನು ತುಂಬಾ ಸಲ ತಪ್ಪಾಗಿ ನಮೂದಿಸಲಾಗಿದೆ. ಹೊಸ ಕೋಡ್ ಕೇಳಿ.</string>
     <string name="app_signin_code_resend">ಹೊಸ ಕೋಡ್ ಕಳುಹಿಸಿ</string>
     <string name="app_signin_change_email">ಬೇರೆ ಇಮೇಲ್ ಬಳಸಿ</string>
-    <string name="app_signin_rate_limited">ತುಂಬಾ ಪ್ರಯತ್ನಗಳಾದವು. ಒಂದು ನಿಮಿಷ ಕಾದು ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.</string>
+    <string name="app_signin_rate_limited">ತುಂಬಾ ಸಲ ಪ್ರಯತ್ನಿಸಿದ್ದೀರಿ. ಒಂದು ನಿಮಿಷ ಕಾದು ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.</string>
     <string name="app_signin_unavailable">ಈಗ ಸೈನ್ ಇನ್ ಲಭ್ಯವಿಲ್ಲ. ಸ್ವಲ್ಪ ಹೊತ್ತಿನ ನಂತರ ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.</string>
     <string name="app_account_delete_title">ನಿಮ್ಮ ಖಾತೆ ಅಳಿಸಬೇಕೇ?</string>
-    <string name="app_account_delete_body">ನಿಮ್ಮ ಸೈನ್ ಇನ್ ವಿವರಗಳು, ಕ್ರೆಡಿಟ್‌ಗಳು, ಪ್ಲಾನ್ ಮತ್ತು ವೈಯಕ್ತಿಕ ಡೇಟಾ ಅಳಿಸಿಹೋಗುತ್ತವೆ, ನಿಮ್ಮ ಹಂಚಿಕೆ ಲಿಂಕ್‌ಗಳು ಕೆಲಸ ಮಾಡುವುದನ್ನು ನಿಲ್ಲಿಸುತ್ತವೆ. ಗೌಪ್ಯತಾ ನೀತಿಯಲ್ಲಿ ಹೇಳಿರುವಂತೆ, ತೀರ್ಪುಗಳ ಪಠ್ಯ ನಿಮ್ಮ ಹೆಸರಿಲ್ಲದೆ ಸಂಗ್ರಹವಾಗಿ ಉಳಿಯುತ್ತದೆ.</string>
+    <string name="app_account_delete_body">ನಿಮ್ಮ ಸೈನ್ ಇನ್ ವಿವರಗಳು, ಕ್ರೆಡಿಟ್‌ಗಳು, ಪ್ಲಾನ್ ಮತ್ತು ವೈಯಕ್ತಿಕ ಡೇಟಾ ಅಳಿಸಿಹೋಗುತ್ತವೆ ಮತ್ತು ನಿಮ್ಮ ಹಂಚಿಕೆ ಲಿಂಕ್‌ಗಳು ಕೆಲಸ ಮಾಡುವುದನ್ನು ನಿಲ್ಲಿಸುತ್ತವೆ. ಗೌಪ್ಯತಾ ನೀತಿಯಲ್ಲಿ ಹೇಳಿರುವಂತೆ, ತೀರ್ಪುಗಳ ಪಠ್ಯ ನಿಮ್ಮ ಹೆಸರಿಲ್ಲದೆ ಸಂಗ್ರಹವಾಗಿ ಉಳಿಯುತ್ತದೆ.</string>
     <string name="app_account_delete_confirm">ಖಾತೆ ಅಳಿಸಿ</string>
     <string name="app_account_deleted">ನಿಮ್ಮ ಖಾತೆ ಅಳಿಸಲಾಗಿದೆ.</string>
     <string name="app_account_sign_out_confirm">ಈ ಫೋನ್‌ನಲ್ಲಿ Judge ಖಾತೆಯಿಂದ ಸೈನ್ ಔಟ್ ಮಾಡಬೇಕೇ?</string>
@@ -547,7 +547,7 @@
     <string name="app_example_road_trip_a_name">ರೋಹಿತ್</string>
     <string name="app_example_road_trip_a">ಹೋಗುವಾಗ ಆರು ಗಂಟೆ ಪೂರ್ತಿ ನಾನೇ ಡ್ರೈವ್ ಮಾಡಿದೆ. ವಾಪಸ್ ಬರುವಾಗ ನೀನು ಡ್ರೈವ್ ಮಾಡುವುದೇ ನ್ಯಾಯ.</string>
     <string name="app_example_road_trip_b_name">ಮೇಘನಾ</string>
-    <string name="app_example_road_trip_b">ರಾತ್ರಿ ಡ್ರೈವ್ ಮಾಡುವುದು ನನಗೆ ಸ್ವಲ್ಪವೂ ಇಷ್ಟವಿಲ್ಲ ಅಂತ ಹೊರಡುವ ಮೊದಲೇ ಹೇಳಿದ್ದೆ, ಈಗ ನಾವು ವಾಪಸ್ ಹೊರಡುತ್ತಿರುವುದೇ ಸಂಜೆ 7ಕ್ಕೆ. ಮುಂದಿನ ಟ್ರಿಪ್‌ನಲ್ಲಿ ಬೆಳಗಿನ ಡ್ರೈವ್ ಎಲ್ಲಾ ನಾನೇ ಮಾಡುತ್ತೇನೆ.</string>
+    <string name="app_example_road_trip_b">ರಾತ್ರಿ ಡ್ರೈವ್ ಮಾಡುವುದು ನನಗೆ ಸ್ವಲ್ಪವೂ ಇಷ್ಟವಿಲ್ಲ ಅಂತ ಹೊರಡುವ ಮೊದಲೇ ಹೇಳಿದ್ದೆ, ಈಗ ನಾವು ವಾಪಸ್ ಹೊರಡುತ್ತಿರುವುದೇ ಸಂಜೆ 7ಕ್ಕೆ. ಮುಂದಿನ ಟ್ರಿಪ್‌ನಲ್ಲಿ ಬೆಳಗಿನ ಡ್ರೈವಿಂಗ್ ಎಲ್ಲಾ ನಾನೇ ಮಾಡುತ್ತೇನೆ.</string>
     <string name="app_example_seat_a_name">ಅಕ್ಷಯ್</string>
     <string name="app_example_seat_a">ನನ್ನ ಸೀಟ್ ಹಿಂದಕ್ಕೆ ಬಾಗುತ್ತದೆ, ಅದಕ್ಕೇ ಬಾಗಿಸಿದ್ದೇನೆ. ಇದು ರಾತ್ರಿಯ ಫ್ಲೈಟ್, ಎಲ್ಲರೂ ನಿದ್ದೆ ಮಾಡಲು ನೋಡುತ್ತಿದ್ದಾರೆ.</string>
     <string name="app_example_seat_b_name">ಸಹನಾ</string>
@@ -557,7 +557,7 @@
     <string name="app_example_spoiler_b_name">ನಿಖಿಲ್</string>
     <string name="app_example_spoiler_b">ಅದು ಬಂದು ಮೂರು ವಾರ ಆಯಿತು, ನೋಡಿ ಮುಗಿಸಿದೆ ಅಂತ ನೀನೇ ಹೇಳಿದ್ದೆ. ಯಾರು ಎಲ್ಲಿಯವರೆಗೆ ನೋಡಿದ್ದಾರೆ ಅಂತ ನೆನಪಿಟ್ಟುಕೊಳ್ಳಲು ನನಗೆ ಆಗುವುದಿಲ್ಲ.</string>
     <string name="app_example_jacket_a_name">ಅಮೂಲ್ಯ</string>
-    <string name="app_example_jacket_a">ನೀನು ನನ್ನನ್ನು ಕೇಳದೆಯೇ ನನ್ನ ಡೆನಿಮ್ ಜಾಕೆಟ್ ಹಾಕಿಕೊಂಡು ಕನ್ಸರ್ಟ್‌ಗೆ ಹೋದೆ. ಅದು ವಾಪಸ್ ಬಂದಾಗ ಸಿಗರೇಟ್ ಹೊಗೆಯ ವಾಸನೆ ಹೊಡೆಯುತ್ತಿತ್ತು.</string>
+    <string name="app_example_jacket_a">ನೀನು ನನ್ನನ್ನು ಕೇಳದೆಯೇ ನನ್ನ ಡೆನಿಮ್ ಜಾಕೆಟ್ ಹಾಕಿಕೊಂಡು ಕನ್ಸರ್ಟ್‌ಗೆ ಹೋದೆ. ಅದು ವಾಪಸ್ ಬಂದಾಗ ಹೊಗೆಯ ವಾಸನೆ ಹೊಡೆಯುತ್ತಿತ್ತು.</string>
     <string name="app_example_jacket_b_name">ಕಾರ್ತಿಕ್</string>
     <string name="app_example_jacket_b">ಅದು ಬಾಗಿಲ ಹತ್ತಿರ ನೇತಾಡುತ್ತಿತ್ತು, ನೀನು ಅದನ್ನು ಹಾಕುವುದೇ ಇಲ್ಲ. ಕೇಳಿಯೇ ತೆಗೆದುಕೊಳ್ಳುತ್ತಿದ್ದೆ, ಆದರೆ ನೀನು ನಿದ್ದೆ ಮಾಡುತ್ತಿದ್ದೆ, ನನಗೆ ಆಗಲೇ ತಡವಾಗಿತ್ತು.</string>
     <string name="app_example_last_slice_a_name">ವರುಣ್</string>
@@ -595,11 +595,11 @@
     <string name="app_appeal_used">ಈ ಕೇಸ್‌ಗೆ ನೀವು ಈಗಾಗಲೇ ಹೆಚ್ಚಿನ ವಿವರ ಸೇರಿಸಿದ್ದೀರಿ.</string>
     <string name="app_appeal_limit">ನೀವು ಎರಡು ಸಲ ವಿವರ ಸೇರಿಸಿದ್ದೀರಿ. ಒಂದು ತೀರ್ಪಿಗೆ ಅಷ್ಟೇ ಮಿತಿ.</string>
     <string name="app_purchase_buying">ಖರೀದಿಸಲಾಗುತ್ತಿದೆ…</string>
-    <string name="app_purchase_success">ಧನ್ಯವಾದ! ನಿಮ್ಮ ಖರೀದಿ ಪೂರ್ಣಗೊಂಡಿದೆ.</string>
+    <string name="app_purchase_success">ಧನ್ಯವಾದಗಳು! ನಿಮ್ಮ ಖರೀದಿ ಪೂರ್ಣಗೊಂಡಿದೆ.</string>
     <string name="app_purchase_pending">ನಿಮ್ಮ ಖರೀದಿ ಪ್ರಕ್ರಿಯೆಯಲ್ಲಿದೆ. ಅದು ಕಾಣಿಸಿಕೊಳ್ಳಲು ಒಂದು ನಿಮಿಷ ಆಗಬಹುದು.</string>
     <string name="app_purchase_arriving">ನಿಮ್ಮ ಕ್ರೆಡಿಟ್‌ಗಳು ಬರುತ್ತಿವೆ…</string>
     <string name="app_purchase_slow">ಇಲ್ಲಿ ಕಾಣಿಸಿಕೊಳ್ಳಲು ಒಂದು ನಿಮಿಷ ಆಗಬಹುದು.</string>
-    <string name="app_purchase_failed">ಖರೀದಿ ಪೂರ್ಣಗೊಳ್ಳಲಿಲ್ಲ. ಸ್ವಲ್ಪ ಹೊತ್ತಿನ ನಂತರ ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.</string>
+    <string name="app_purchase_failed">ಖರೀದಿ ಪೂರ್ಣಗೊಳ್ಳಲಿಲ್ಲ. ಸ್ವಲ್ಪ ಹೊತ್ತು ಬಿಟ್ಟು ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.</string>
     <string name="app_purchase_restore">ಖರೀದಿಗಳನ್ನು ಮರುಸ್ಥಾಪಿಸಿ</string>
     <string name="app_purchase_restore_done">ನಿಮ್ಮ ಖರೀದಿಗಳನ್ನು ಮರುಸ್ಥಾಪಿಸಲಾಗಿದೆ.</string>
     <string name="app_purchase_restore_none">ಮರುಸ್ಥಾಪಿಸಲು ಯಾವ ಖರೀದಿಯೂ ಇಲ್ಲ.</string>

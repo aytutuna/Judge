@@ -522,7 +522,7 @@
     <string name="app_signin_rate_limited">Prea multe încercări. Așteaptă un minut și încearcă din nou.</string>
     <string name="app_signin_unavailable">Conectarea nu e disponibilă acum. Încearcă mai târziu.</string>
     <string name="app_account_delete_title">Îți ștergi contul?</string>
-    <string name="app_account_delete_body">Se șterg informațiile de conectare, creditele, planul și datele tale personale, iar linkurile tale de distribuire nu vor mai funcționa. Textul verdictelor rămâne stocat fără numele tău, așa cum explică Politica de confidențialitate.</string>
+    <string name="app_account_delete_body">Se șterg datele de conectare, creditele, planul și informațiile tale personale, iar linkurile tale de distribuire nu vor mai funcționa. Textul verdictelor rămâne stocat fără numele tău, așa cum se explică în Politica de confidențialitate.</string>
     <string name="app_account_delete_confirm">Șterge contul</string>
     <string name="app_account_deleted">Contul tău a fost șters.</string>
     <string name="app_account_sign_out_confirm">Te deconectezi de la Judge pe acest telefon?</string>
@@ -551,7 +551,7 @@
     <string name="app_example_bill_a_name">Elena</string>
     <string name="app_example_bill_a">N-am băut nimic, deci n-ar trebui să plătesc un sfert din vin. Mâncarea s-o împărțim egal, cu asta n-am nicio problemă.</string>
     <string name="app_example_bill_b_name">Vlad</string>
-    <string name="app_example_bill_b">Mereu împărțim nota la patru și gata. E o bătaie de cap să socotim de fiecare dată cine ce a luat, și oricum nu e mare diferență.</string>
+    <string name="app_example_bill_b">Mereu împărțim nota la patru și gata. E o bătaie de cap să socotim de fiecare dată cine ce a luat, iar diferența oricum nu e mare.</string>
     <string name="app_example_thermostat_a_name">Irina</string>
     <string name="app_example_thermostat_a">Sunt 19 grade aici și mi-e frig și cu hanoracul pe mine. Nu e o nebunie să dăm căldura la 22.</string>
     <string name="app_example_thermostat_b_name">Radu</string>
@@ -559,7 +559,7 @@
     <string name="app_example_road_trip_a_name">Cristina</string>
     <string name="app_example_road_trip_a">Eu am condus toate cele șase ore la dus. E corect să conduci tu la întoarcere.</string>
     <string name="app_example_road_trip_b_name">Bogdan</string>
-    <string name="app_example_road_trip_b">Ți-am zis înainte de plecare că urăsc să conduc noaptea, și plecăm la 7 seara. Data viitoare conduc eu dimineața.</string>
+    <string name="app_example_road_trip_b">Ți-am zis înainte de plecare că urăsc să conduc noaptea, iar noi plecăm la 7 seara. Data viitoare conduc eu dimineața.</string>
     <string name="app_example_seat_a_name">Diana</string>
     <string name="app_example_seat_a">Scaunul meu se lasă pe spate, așa că îl las. E zbor de noapte și toată lumea încearcă să doarmă.</string>
     <string name="app_example_seat_b_name">Sorin</string>

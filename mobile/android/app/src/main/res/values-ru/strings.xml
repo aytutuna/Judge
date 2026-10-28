@@ -487,7 +487,7 @@
     <string name="app_input_counter">%1$s / %2$s</string>
     <string name="app_history_title">Мои вердикты</string>
     <string name="app_history_empty">Вердиктов пока нет. Рассудите первый спор — вердикт появится здесь.</string>
-    <string name="app_history_device_only">Хранятся только на этом телефоне. Если удалить вердикт здесь, ссылка на него продолжит работать.</string>
+    <string name="app_history_device_only">Вердикты хранятся только на этом телефоне. Если удалить вердикт здесь, ссылка на него продолжит работать.</string>
     <string name="app_history_delete">Удалить</string>
     <string name="app_history_clear_all">Удалить все</string>
     <string name="app_history_clear_confirm">Удалить все сохранённые вердикты с этого телефона? Ссылки на них продолжат работать.</string>
@@ -510,10 +510,10 @@
     <string name="app_retry">Повторить</string>
     <string name="app_error_offline">Похоже, вы не в сети. Проверьте подключение и попробуйте снова.</string>
     <string name="app_error_timeout">Судьи слишком долго не отвечали. Попробуйте ещё раз через минуту.</string>
-    <string name="app_error_interrupted">Связь прервалась, пока Judge работал в фоне. Попробуйте снова и не закрывайте приложение, пока не придёт вердикт.</string>
-    <string name="app_turnstile_error">Не удалось загрузить проверку, что вы человек. Проверьте подключение и попробуйте снова.</string>
+    <string name="app_error_interrupted">Связь прервалась, когда Judge был свёрнут. Попробуйте ещё раз и не сворачивайте приложение, пока не придёт вердикт.</string>
+    <string name="app_turnstile_error">Не удалось загрузить проверку «человек ли вы». Проверьте подключение и попробуйте снова.</string>
     <string name="app_factcheck_source_aria">%1$s, откроется веб-страница</string>
-    <string name="app_error_bad_origin">Мы не узнали, откуда пришёл запрос. Убедитесь, что приложение обновлено, и попробуйте снова.</string>
+    <string name="app_error_bad_origin">Мы не распознали источник запроса. Убедитесь, что у вас последняя версия приложения, и попробуйте снова.</string>
     <string name="app_translate_offline">Без интернета перевести не получится, поэтому показываем оригинал.</string>
     <string name="app_share_title">Поделиться вердиктом</string>
     <string name="app_settings_language">Язык</string>
@@ -534,7 +534,7 @@
     <string name="app_signin_rate_limited">Слишком много попыток. Подождите минуту и попробуйте снова.</string>
     <string name="app_signin_unavailable">Вход сейчас недоступен. Попробуйте позже.</string>
     <string name="app_account_delete_title">Удалить аккаунт?</string>
-    <string name="app_account_delete_body">Ваши данные для входа, баланс вердиктов, тариф и личные данные будут удалены, а ссылки, которыми вы делились, перестанут работать. Тексты вердиктов мы сохраним без вашего имени, как описано в Политике конфиденциальности.</string>
+    <string name="app_account_delete_body">Ваши данные для входа, баланс вердиктов, тариф и личная информация будут удалены, а ссылки, которыми вы делились, перестанут работать. Тексты вердиктов останутся у нас без вашего имени, как описано в Политике конфиденциальности.</string>
     <string name="app_account_delete_confirm">Удалить аккаунт</string>
     <string name="app_account_deleted">Аккаунт удалён.</string>
     <string name="app_account_sign_out_confirm">Выйти из Judge на этом телефоне?</string>
@@ -561,7 +561,7 @@
     <string name="app_example_dishwasher_b_name">Дима</string>
     <string name="app_example_dishwasher_b">Наверху они отлично помещаются, а внизу остаётся место для кастрюль. Я так загружаю уже много лет, и ни разу ничего не осталось грязным.</string>
     <string name="app_example_bill_a_name">Катя</string>
-    <string name="app_example_bill_a">Я ничего не пила, так что платить четверть за вино не должна. А еду поделить поровну — пожалуйста.</string>
+    <string name="app_example_bill_a">Я ничего не пила, так что не должна платить четверть за вино. А еду поделить поровну — пожалуйста.</string>
     <string name="app_example_bill_b_name">Олег</string>
     <string name="app_example_bill_b">Мы всегда просто делим счёт на четверых. Каждый раз выяснять, кто что ел, — морока, да и разница небольшая.</string>
     <string name="app_example_thermostat_a_name">Лена</string>
@@ -611,20 +611,20 @@
     <string name="app_appeal_intro">Судьи что-то упустили? Добавьте это, и они пересмотрят дело. Первый вердикт сохранится в истории.</string>
     <string name="app_appeal_ask">Что судьям нужно знать?</string>
     <string name="app_appeal_placeholder">Факт, сообщение или то, о чём вы на самом деле договорились.</string>
-    <string name="app_appeal_cost">Стоит 1 вердикт. Пересмотр можно запросить дважды, осталось попыток: %1$s.</string>
-    <string name="app_appeal_cost_case">Стоит 1 вердикт. В одном деле это можно сделать один раз.</string>
+    <string name="app_appeal_cost">Спишет 1 вердикт. Пересмотр можно запросить дважды, осталось попыток: %1$s.</string>
+    <string name="app_appeal_cost_case">Спишет 1 вердикт. В каждом деле это можно сделать только один раз.</string>
     <string name="app_appeal_submit">Отправить на пересмотр</string>
     <string name="app_appeal_upsell">Чего-то не хватает? Добавьте подробности и получите пересмотр за 1 вердикт.</string>
     <string name="app_appeal_sign_in">Войдите, чтобы добавить подробности</string>
     <string name="app_appeal_used">Вы уже добавляли подробности к этому делу.</string>
     <string name="app_appeal_limit">Вы уже дважды добавляли подробности. Для одного вердикта это предел.</string>
     <string name="app_purchase_buying">Оформляем покупку…</string>
-    <string name="app_purchase_success">Спасибо! Покупка прошла.</string>
+    <string name="app_purchase_success">Спасибо! Покупка прошла успешно.</string>
     <string name="app_purchase_pending">Покупка обрабатывается. Это может занять около минуты.</string>
     <string name="app_purchase_arriving">Вердикты уже в пути…</string>
-    <string name="app_purchase_slow">Здесь они могут появиться через минуту.</string>
+    <string name="app_purchase_slow">Они могут появиться здесь примерно через минуту.</string>
     <string name="app_purchase_failed">Покупка не прошла. Попробуйте чуть позже.</string>
     <string name="app_purchase_restore">Восстановить покупки</string>
     <string name="app_purchase_restore_done">Покупки восстановлены.</string>
-    <string name="app_purchase_restore_none">Нет покупок для восстановления.</string>
+    <string name="app_purchase_restore_none">Покупок для восстановления нет.</string>
 </resources>

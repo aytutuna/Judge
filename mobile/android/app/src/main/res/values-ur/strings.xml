@@ -486,7 +486,7 @@
     <string name="app_retry">دوبارہ کوشش کریں</string>
     <string name="app_error_offline">لگتا ہے آپ آف لائن ہیں۔ اپنا کنکشن چیک کر کے دوبارہ کوشش کریں۔</string>
     <string name="app_error_timeout">ججوں نے جواب دینے میں بہت دیر لگا دی۔ ایک منٹ بعد دوبارہ کوشش کریں۔</string>
-    <string name="app_error_interrupted">Judge بیک گراؤنڈ میں تھا اور کنکشن ٹوٹ گیا۔ دوبارہ کوشش کریں، اور فیصلہ آنے تک ایپ کھلی رکھیں۔</string>
+    <string name="app_error_interrupted">Judge کے بیک گراؤنڈ میں ہوتے ہوئے کنکشن ٹوٹ گیا۔ دوبارہ کوشش کریں، اور فیصلہ آنے تک ایپ کھلی رکھیں۔</string>
     <string name="app_turnstile_error">انسان ہونے کی جانچ لوڈ نہیں ہو سکی۔ اپنا کنکشن چیک کر کے دوبارہ کوشش کریں۔</string>
     <string name="app_factcheck_source_aria">%1$s، ویب صفحہ کھلے گا</string>
     <string name="app_error_bad_origin">یہ درخواست کسی انجان جگہ سے آئی ہے۔ دیکھ لیں کہ ایپ اپ ڈیٹ ہے، پھر دوبارہ کوشش کریں۔</string>
@@ -504,7 +504,7 @@
     <string name="app_signin_code_submit">سائن ان کریں</string>
     <string name="app_signin_code_invalid">یہ کوڈ درست نہیں۔ ای میل دیکھ کر دوبارہ کوشش کریں۔</string>
     <string name="app_signin_code_expired">اس کوڈ کی میعاد ختم ہو گئی ہے۔ نیا کوڈ منگوائیں۔</string>
-    <string name="app_signin_code_too_many">اس کوڈ کے لیے بہت زیادہ غلط کوششیں ہو گئیں۔ نیا کوڈ منگوائیں۔</string>
+    <string name="app_signin_code_too_many">اس کوڈ کے ساتھ بہت بار غلط کوشش ہو چکی ہے۔ نیا کوڈ منگوائیں۔</string>
     <string name="app_signin_code_resend">نیا کوڈ بھیجیں</string>
     <string name="app_signin_change_email">کوئی اور ای میل استعمال کریں</string>
     <string name="app_signin_rate_limited">بہت زیادہ کوششیں ہو گئیں۔ ایک منٹ رک کر دوبارہ کوشش کریں۔</string>
@@ -515,7 +515,7 @@
     <string name="app_account_deleted">آپ کا اکاؤنٹ حذف ہو گیا۔</string>
     <string name="app_account_sign_out_confirm">اس فون پر Judge سے سائن آؤٹ کریں؟</string>
     <string name="app_account_signed_out">سائن آؤٹ ہو گیا۔</string>
-    <string name="app_account_session_expired">آپ کا سیشن ختم ہو گیا۔ جاری رکھنے کے لیے دوبارہ سائن ان کریں۔</string>
+    <string name="app_account_session_expired">آپ کو سائن آؤٹ کر دیا گیا ہے۔ جاری رکھنے کے لیے دوبارہ سائن ان کریں۔</string>
     <string name="app_close">بند کریں</string>
     <string name="app_home_lead">دونوں طرف کی بات لکھیں، یا دوسرے شخص کو لنک بھیجیں تاکہ وہ اپنی بات خود لکھیں۔</string>
     <string name="app_home_lead_solo">اپنی بات لکھیں، اور معلوم ہو تو ان کی بھی۔</string>
@@ -524,7 +524,7 @@
     <string name="app_home_your_name">آپ کا نام</string>
     <string name="app_home_their_name">ان کا نام</string>
     <string name="app_home_your_placeholder">آپ کی نظر میں کیا ہوا؟</string>
-    <string name="app_home_their_placeholder">وہ کیا کہتے ہیں؟ ویسے لکھیں جیسے وہ خود کہتے۔</string>
+    <string name="app_home_their_placeholder">وہ کیا کہتے ہیں؟ ویسے ہی لکھیں جیسے وہ خود کہتے۔</string>
     <string name="app_home_your_side_label">بحث میں آپ کی بات</string>
     <string name="app_home_their_side_label">بحث میں ان کی بات</string>
     <string name="app_home_send_link">یا انہیں لنک بھیجیں تاکہ وہ خود لکھیں</string>
@@ -535,7 +535,7 @@
     <string name="app_example_dishwasher_a_name">عائشہ</string>
     <string name="app_example_dishwasher_a">تم نے پیالے پھر اوپر والے ریک میں رکھ دیے۔ وہاں وہ کبھی صاف نہیں نکلتے، نیچے والا ریک اسی کام کے لیے ہے۔</string>
     <string name="app_example_dishwasher_b_name">بلال</string>
-    <string name="app_example_dishwasher_b">اوپر آرام سے آ جاتے ہیں، اور نیچے کی جگہ دیگچیوں کے لیے بچ جاتی ہے۔ میں برسوں سے ایسے ہی لگاتا آ رہا ہوں، اور آج تک ایک برتن بھی گندا نہیں نکلا۔</string>
+    <string name="app_example_dishwasher_b">اوپر آرام سے آ جاتے ہیں، اور نیچے کی جگہ دیگچیوں کے لیے بچ جاتی ہے۔ میں برسوں سے ایسے ہی رکھتا آیا ہوں، اور آج تک ایک برتن بھی گندا نہیں نکلا۔</string>
     <string name="app_example_bill_a_name">فاطمہ</string>
     <string name="app_example_bill_a">میں نے کولڈ ڈرنک پی ہی نہیں، تو ڈرنکس کا چوتھا حصہ میں کیوں دوں؟ کھانے کا بل برابر بانٹنے پر مجھے کوئی اعتراض نہیں۔</string>
     <string name="app_example_bill_b_name">عمر</string>
@@ -547,7 +547,7 @@
     <string name="app_example_road_trip_a_name">عثمان</string>
     <string name="app_example_road_trip_a">جاتے ہوئے پورے چھ گھنٹے میں نے گاڑی چلائی۔ انصاف یہی ہے کہ واپسی پر تم چلاؤ۔</string>
     <string name="app_example_road_trip_b_name">مریم</string>
-    <string name="app_example_road_trip_b">نکلنے سے پہلے ہی میں نے کہہ دیا تھا کہ مجھے رات کو گاڑی چلانا بالکل پسند نہیں، اور ہم شام 7 بجے نکل رہے ہیں۔ اگلی بار صبح کی ڈرائیو میں کر لوں گی۔</string>
+    <string name="app_example_road_trip_b">نکلنے سے پہلے ہی میں نے کہہ دیا تھا کہ مجھے رات کو گاڑی چلانا بالکل پسند نہیں، اور ہم شام 7 بجے نکل رہے ہیں۔ اگلے سفر میں صبح کے وقت گاڑی میں چلا لوں گی۔</string>
     <string name="app_example_seat_a_name">ثنا</string>
     <string name="app_example_seat_a">سیٹ پیچھے جھکنے کے لیے ہی بنی ہے، تو میں اسے جھکا رہی ہوں۔ رات کی فلائٹ ہے اور سب سونے کی کوشش کر رہے ہیں۔</string>
     <string name="app_example_seat_b_name">دانیال</string>
@@ -574,19 +574,19 @@
     <string name="app_case_step_them">اب %1$s کی باری</string>
     <string name="app_case_step_them_anon">اب ان کی باری</string>
     <string name="app_case_step_them_note">ان کی بات آتے ہی یہ صفحہ اپ ڈیٹ ہو جائے گا</string>
-    <string name="app_case_step_judges">تین جج فیصلہ کرتے ہیں</string>
+    <string name="app_case_step_judges">تین جج فیصلہ کریں گے</string>
     <string name="app_case_step_judges_note">یا ابھی صرف اپنی بات پر فیصلہ لیں</string>
     <string name="app_case_judge_now_without">%1$s کے بغیر ابھی فیصلہ کروائیں</string>
     <string name="app_verdict_vs">بمقابلہ</string>
     <string name="app_verdict_lean_to">پینل کا جھکاؤ %1$s کی طرف رہا</string>
     <string name="app_verdict_lean_none">پینل کا جھکاؤ کسی طرف نہیں رہا</string>
-    <string name="app_verdict_sides">ہر طرف کس بات پر کھڑی ہے</string>
+    <string name="app_verdict_sides">ہر طرف کی بات کس بنیاد پر ہے</string>
     <string name="app_verdict_claims">ہر طرف اپنے نتیجے تک کیسے پہنچی</string>
     <string name="app_verdict_back">فیصلہ</string>
     <string name="app_appeal_title">مزید تفصیل اور نظرثانی</string>
     <string name="app_appeal_intro">ججوں سے کچھ رہ گیا؟ شامل کریں اور وہ دوبارہ فیصلہ کریں گے۔ پہلا فیصلہ ریکارڈ پر رہے گا۔</string>
     <string name="app_appeal_ask">انہیں کیا پتا ہونا چاہیے؟</string>
-    <string name="app_appeal_placeholder">کوئی حقیقت، کوئی میسج، یا اصل میں کیا طے ہوا تھا۔</string>
+    <string name="app_appeal_placeholder">کوئی حقیقت، کوئی میسج، یا یہ کہ اصل میں کیا طے ہوا تھا۔</string>
     <string name="app_appeal_cost">اس میں 1 فیصلہ استعمال ہوتا ہے۔ ہر فیصلے پر یہ دو بار ہو سکتا ہے؛ باقی: %1$s۔</string>
     <string name="app_appeal_cost_case">اس میں 1 فیصلہ استعمال ہوتا ہے۔ ہر کیس میں یہ ایک بار ہو سکتا ہے۔</string>
     <string name="app_appeal_submit">دوبارہ فیصلہ کروائیں</string>

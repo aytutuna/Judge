@@ -491,7 +491,7 @@
         <item quantity="many">Et queden %1$s veredictes</item>
         <item quantity="other">Et queden %1$s veredictes</item>
     </plurals>
-    <string name="app_balance_monthly">Disponibles aquest mes: %1$s de %2$s</string>
+    <string name="app_balance_monthly">Et queden %1$s de %2$s aquest mes</string>
     <string name="app_balance_none">No et queden veredictes</string>
     <string name="app_balance_case_cost">Enviar un enllaç gasta 1 veredicte</string>
     <string name="app_cancel">Cancel·la</string>
@@ -500,13 +500,13 @@
     <string name="app_error_timeout">Els jutges han trigat massa a respondre. Torna-ho a provar d\'aquí a un minut.</string>
     <string name="app_error_interrupted">La connexió s\'ha tallat mentre Judge estava en segon pla. Torna-ho a provar i deixa l\'app oberta fins que arribi el veredicte.</string>
     <string name="app_turnstile_error">No s\'ha pogut carregar la verificació. Comprova la connexió i torna-ho a provar.</string>
-    <string name="app_factcheck_source_aria">%1$s, obre la pàgina web</string>
+    <string name="app_factcheck_source_aria">%1$s, s\'obre la pàgina web</string>
     <string name="app_error_bad_origin">Aquesta sol·licitud ve d\'un lloc que no reconeixem. Comprova que tens l\'app actualitzada i torna-ho a provar.</string>
     <string name="app_translate_offline">Sense connexió no podem traduir, així que et mostrem l\'original.</string>
     <string name="app_share_title">Comparteix el veredicte</string>
     <string name="app_settings_language">Idioma</string>
     <string name="app_settings_language_device">El mateix que el telèfon</string>
-    <string name="app_settings_about">Sobre Judge</string>
+    <string name="app_settings_about">Quant a Judge</string>
     <string name="app_settings_version">Versió %1$s</string>
     <string name="app_signin_required">Inicia sessió per obtenir un veredicte.</string>
     <string name="app_signin_or">o</string>
@@ -529,7 +529,7 @@
     <string name="app_account_signed_out">Has tancat la sessió.</string>
     <string name="app_account_session_expired">S\'ha tancat la sessió. Torna a iniciar sessió per continuar.</string>
     <string name="app_close">Tanca</string>
-    <string name="app_home_lead">Escriu les dues versions, o envia un enllaç a l\'altra persona perquè escrigui la seva.</string>
+    <string name="app_home_lead">Escriu les dues versions o envia un enllaç a l\'altra persona perquè escrigui la seva.</string>
     <string name="app_home_lead_solo">Escriu la teva versió, i la de l\'altra persona si la coneixes.</string>
     <string name="app_home_your_side">La teva versió</string>
     <string name="app_home_their_side">La seva versió</string>
@@ -571,7 +571,7 @@
     <string name="app_example_jacket_a_name">Ona</string>
     <string name="app_example_jacket_a">Et vas posar la meva jaqueta texana per anar al concert sense preguntar-m\'ho. Me la vas tornar fent pudor de fum.</string>
     <string name="app_example_jacket_b_name">Guillem</string>
-    <string name="app_example_jacket_b">Era penjada al costat de la porta i no te la poses mai. T\'ho hauria preguntat, però dormies i jo ja feia tard.</string>
+    <string name="app_example_jacket_b">Estava penjada al costat de la porta i no te la poses mai. T\'ho hauria preguntat, però dormies i jo ja feia tard.</string>
     <string name="app_example_last_slice_a_name">Roger</string>
     <string name="app_example_last_slice_a">Abans que comencés la pel·li vaig dir que l\'últim tros de pizza era meu. Tothom em va sentir.</string>
     <string name="app_example_last_slice_b_name">Carla</string>
@@ -590,7 +590,7 @@
     <string name="app_case_step_judges_note">O jutja ara només amb la teva versió</string>
     <string name="app_case_judge_now_without">Jutja ara sense %1$s</string>
     <string name="app_verdict_vs">contra</string>
-    <string name="app_verdict_lean_to">Els jutges s\'han decantat cap a %1$s</string>
+    <string name="app_verdict_lean_to">Els jutges s\'han decantat per %1$s</string>
     <string name="app_verdict_lean_none">Els jutges no s\'han decantat per cap part</string>
     <string name="app_verdict_sides">En què es basa cada part</string>
     <string name="app_verdict_claims">Com hi ha arribat cada part</string>
@@ -599,7 +599,7 @@
     <string name="app_appeal_intro">Els jutges s\'han deixat alguna cosa? Afegeix-la i tornaran a jutjar. El primer veredicte queda registrat.</string>
     <string name="app_appeal_ask">Què haurien de saber?</string>
     <string name="app_appeal_placeholder">Un fet, un missatge o el que realment vau acordar.</string>
-    <string name="app_appeal_cost">Gasta 1 veredicte. Pots fer-ho dues vegades per veredicte (te\'n queden: %1$s).</string>
+    <string name="app_appeal_cost">Gasta 1 veredicte. Pots fer-ho dues vegades per veredicte (restants: %1$s).</string>
     <string name="app_appeal_cost_case">Gasta 1 veredicte. Pots fer-ho un cop per cas.</string>
     <string name="app_appeal_submit">Torna a jutjar</string>
     <string name="app_appeal_upsell">Hi falta alguna cosa? Afegeix context i fes que es torni a jutjar per 1 veredicte.</string>

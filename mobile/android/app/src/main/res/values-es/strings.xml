@@ -487,7 +487,7 @@
     <string name="app_pricing_headline_member">Consigue más veredictos.</string>
     <string name="app_pricing_sub_member">Elige un paquete o pásate al plan mensual. Cada veredicto cuenta con el panel completo de jueces.</string>
     <plurals name="app_balance_left">
-        <item quantity="one">Te queda 1 veredicto</item>
+        <item quantity="one">Te queda %1$s veredicto</item>
         <item quantity="many">Te quedan %1$s veredictos</item>
         <item quantity="other">Te quedan %1$s veredictos</item>
     </plurals>
@@ -500,7 +500,7 @@
     <string name="app_error_timeout">Los jueces tardaron demasiado en responder. Vuelve a intentarlo en un minuto.</string>
     <string name="app_error_interrupted">La conexión se cortó mientras Judge estaba en segundo plano. Vuelve a intentarlo y deja la app abierta hasta que llegue el veredicto.</string>
     <string name="app_turnstile_error">No se pudo cargar la verificación antibots. Revisa tu conexión y vuelve a intentarlo.</string>
-    <string name="app_factcheck_source_aria">%1$s, se abre la página web</string>
+    <string name="app_factcheck_source_aria">%1$s, abre la página web</string>
     <string name="app_error_bad_origin">Esa solicitud llegó desde un sitio que no reconocemos. Asegúrate de tener la app actualizada y vuelve a intentarlo.</string>
     <string name="app_translate_offline">No se puede traducir sin conexión, así que aquí tienes el original.</string>
     <string name="app_share_title">Compartir el veredicto</string>
@@ -525,7 +525,7 @@
     <string name="app_account_delete_body">Se eliminarán tus datos de inicio de sesión, tus créditos, tu plan y tu información personal, y tus enlaces para compartir dejarán de funcionar. El texto de los veredictos se seguirá guardando sin tu nombre, como se explica en la Política de privacidad.</string>
     <string name="app_account_delete_confirm">Eliminar cuenta</string>
     <string name="app_account_deleted">Tu cuenta se ha eliminado.</string>
-    <string name="app_account_sign_out_confirm">¿Cerrar sesión de Judge en este teléfono?</string>
+    <string name="app_account_sign_out_confirm">¿Cerrar la sesión de Judge en este teléfono?</string>
     <string name="app_account_signed_out">Has cerrado sesión.</string>
     <string name="app_account_session_expired">Se cerró tu sesión. Vuelve a iniciar sesión para continuar.</string>
     <string name="app_close">Cerrar</string>
@@ -534,7 +534,7 @@
     <string name="app_home_your_side">Tu versión</string>
     <string name="app_home_their_side">La otra versión</string>
     <string name="app_home_your_name">Tu nombre</string>
-    <string name="app_home_their_name">Su nombre</string>
+    <string name="app_home_their_name">Nombre de la otra persona</string>
     <string name="app_home_your_placeholder">¿Qué pasó, según tú?</string>
     <string name="app_home_their_placeholder">¿Qué dice la otra persona? Escríbelo como lo contaría ella.</string>
     <string name="app_home_your_side_label">Tu versión de la discusión</string>
@@ -569,7 +569,7 @@
     <string name="app_example_spoiler_b_name">Mateo</string>
     <string name="app_example_spoiler_b">Salió hace tres semanas y dijiste que ya habías terminado la serie. No puedo estar pendiente de por dónde va cada uno.</string>
     <string name="app_example_jacket_a_name">Marta</string>
-    <string name="app_example_jacket_a">Te llevaste mi chaqueta al concierto sin preguntarme. Volvió oliendo a humo.</string>
+    <string name="app_example_jacket_a">Te llevaste mi chaqueta vaquera al concierto sin preguntarme. Volvió oliendo a humo.</string>
     <string name="app_example_jacket_b_name">Sergio</string>
     <string name="app_example_jacket_b">Estaba colgada junto a la puerta y nunca te la pones. Te habría preguntado, pero estabas dormida y yo ya llegaba tarde.</string>
     <string name="app_example_last_slice_a_name">Tomás</string>
@@ -578,8 +578,8 @@
     <string name="app_example_last_slice_b">No puedes decir que es tuya y luego no tocarla en dos horas. Estaba ahí enfriándose, así que me la comí.</string>
     <string name="app_case_waiting_kicker">Caso · en espera</string>
     <string name="app_case_waiting_for">Esperando a %1$s</string>
-    <string name="app_case_waiting_lead">%1$s escribe su versión sin crear una cuenta. Ninguno de los dos ve lo que escribió el otro hasta el veredicto.</string>
-    <string name="app_case_waiting_lead_anon">La otra persona escribe su versión sin crear una cuenta. Ninguno de los dos ve lo que escribió el otro hasta el veredicto.</string>
+    <string name="app_case_waiting_lead">%1$s escribe su versión sin crear una cuenta. Ninguno de los dos ve la versión del otro hasta el veredicto.</string>
+    <string name="app_case_waiting_lead_anon">La otra persona escribe su versión sin crear una cuenta. Ninguno de los dos ve la versión del otro hasta el veredicto.</string>
     <string name="app_case_send_to">Envía este enlace a %1$s</string>
     <string name="app_case_step_you">Escribiste tu versión</string>
     <string name="app_case_step_you_note">Oculta hasta el veredicto</string>
@@ -599,7 +599,7 @@
     <string name="app_appeal_intro">¿Se les pasó algo a los jueces? Añádelo y volverán a decidir. La primera decisión queda registrada.</string>
     <string name="app_appeal_ask">¿Qué deberían saber?</string>
     <string name="app_appeal_placeholder">Un dato, un mensaje o lo que de verdad se acordó.</string>
-    <string name="app_appeal_cost">Usa 1 veredicto. Puedes hacerlo dos veces por decisión. Disponibles: %1$s.</string>
+    <string name="app_appeal_cost">Usa 1 veredicto. Puedes hacerlo dos veces por decisión. Apelaciones restantes: %1$s.</string>
     <string name="app_appeal_cost_case">Usa 1 veredicto. Puedes hacerlo una vez por caso.</string>
     <string name="app_appeal_submit">Volver a juzgar</string>
     <string name="app_appeal_upsell">¿Falta algo? Añade contexto y que lo vuelvan a juzgar por 1 veredicto.</string>

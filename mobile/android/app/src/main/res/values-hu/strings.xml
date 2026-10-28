@@ -464,8 +464,8 @@
     <string name="app_tab_settings">Beállítások</string>
     <string name="app_input_counter">%1$s / %2$s</string>
     <string name="app_history_title">Ítéleteim</string>
-    <string name="app_history_empty">Még nincs ítéleted. Dönts el egy vitát, és itt megjelenik.</string>
-    <string name="app_history_device_only">Csak ezen a telefonon van elmentve. Ha innen törölsz egyet, a megosztási linkje attól még működik.</string>
+    <string name="app_history_empty">Még nincs ítéleted. Amint eldől az első vitád, itt megjelenik.</string>
+    <string name="app_history_device_only">Csak ezen a telefonon vannak elmentve. Ha innen törölsz egyet, a megosztási linkje attól még működik.</string>
     <string name="app_history_delete">Törlés</string>
     <string name="app_history_clear_all">Összes törlése</string>
     <string name="app_history_clear_confirm">Törlöd az összes mentett ítéletet erről a telefonról? A megosztási linkek továbbra is működnek.</string>
@@ -484,12 +484,12 @@
     <string name="app_balance_case_cost">A link elküldése 1 ítéletbe kerül</string>
     <string name="app_cancel">Mégse</string>
     <string name="app_retry">Újrapróbálás</string>
-    <string name="app_error_offline">Úgy tűnik, nem vagy online. Ellenőrizd az internetkapcsolatot, és próbáld újra.</string>
+    <string name="app_error_offline">Úgy tűnik, nincs internetkapcsolatod. Ellenőrizd, és próbáld újra.</string>
     <string name="app_error_timeout">A bírák túl lassan válaszoltak. Próbáld újra egy perc múlva.</string>
     <string name="app_error_interrupted">Megszakadt a kapcsolat, amíg a Judge a háttérben futott. Próbáld újra, és hagyd nyitva az appot, amíg megérkezik az ítélet.</string>
     <string name="app_turnstile_error">Nem töltött be az emberellenőrzés. Ellenőrizd az internetkapcsolatot, és próbáld újra.</string>
-    <string name="app_factcheck_source_aria">%1$s, megnyitja a weboldalt</string>
-    <string name="app_error_bad_origin">Ez a kérés számunkra ismeretlen helyről jött. Nézd meg, hogy naprakész-e az app, és próbáld újra.</string>
+    <string name="app_factcheck_source_aria">%1$s, weboldal megnyitása</string>
+    <string name="app_error_bad_origin">Ez a kérés számunkra ismeretlen helyről érkezett. Nézd meg, hogy naprakész-e az app, és próbáld újra.</string>
     <string name="app_translate_offline">Internet nélkül nem tudunk fordítani, ezért az eredetit mutatjuk.</string>
     <string name="app_share_title">Ítélet megosztása</string>
     <string name="app_settings_language">Nyelv</string>
@@ -508,7 +508,7 @@
     <string name="app_signin_code_resend">Új kód küldése</string>
     <string name="app_signin_change_email">Másik e-mail-cím használata</string>
     <string name="app_signin_rate_limited">Túl sok próbálkozás. Várj egy percet, és próbáld újra.</string>
-    <string name="app_signin_unavailable">A belépés most nem elérhető. Próbáld újra később.</string>
+    <string name="app_signin_unavailable">A belépés most nem érhető el. Próbáld újra később.</string>
     <string name="app_account_delete_title">Törlöd a fiókodat?</string>
     <string name="app_account_delete_body">A belépési adataid, a kreditjeid, az előfizetésed és a személyes adataid törlődnek, a megosztási linkjeid pedig megszűnnek működni. Az ítéletek szövegét a neved nélkül megőrizzük, ahogy az Adatvédelmi tájékoztató leírja.</string>
     <string name="app_account_delete_confirm">Fiók törlése</string>
@@ -518,7 +518,7 @@
     <string name="app_account_session_expired">Lejárt a belépésed. A folytatáshoz lépj be újra.</string>
     <string name="app_close">Bezárás</string>
     <string name="app_home_lead">Írd le mindkét fél verzióját, vagy küldj egy linket a másiknak, hogy ő írja meg a sajátját.</string>
-    <string name="app_home_lead_solo">Írd le a te verziódat, és az övét is, ha tudod.</string>
+    <string name="app_home_lead_solo">Írd le a te verziódat, és az övét is, ha ismered.</string>
     <string name="app_home_your_side">A te verziód</string>
     <string name="app_home_their_side">Az ő verziója</string>
     <string name="app_home_your_name">A neved</string>
@@ -535,7 +535,7 @@
     <string name="app_example_dishwasher_a_name">Kata</string>
     <string name="app_example_dishwasher_a">Már megint a felső kosárba raktad a tálakat. Ott sosem lesznek tiszták, arra való az alsó.</string>
     <string name="app_example_dishwasher_b_name">Ádám</string>
-    <string name="app_example_dishwasher_b">Simán elférnek fent, és így az alsó kosár szabad marad a lábasoknak. Évek óta így pakolom, és még semmi nem jött ki koszosan.</string>
+    <string name="app_example_dishwasher_b">Simán elférnek fent, és így az alsó kosár szabad marad a lábasoknak. Évek óta így pakolom, és még soha semmi nem jött ki koszosan.</string>
     <string name="app_example_bill_a_name">Eszter</string>
     <string name="app_example_bill_a">Én nem ittam semmit, úgyhogy nem kéne kifizetnem a bor negyedét. Az ételt nyugodtan osszuk el egyenlően.</string>
     <string name="app_example_bill_b_name">Máté</string>
@@ -557,7 +557,7 @@
     <string name="app_example_spoiler_b_name">Levente</string>
     <string name="app_example_spoiler_b">Három hete jött ki, és azt mondtad, már a végére értél. Nem tudom fejben tartani, ki hol tart.</string>
     <string name="app_example_jacket_a_name">Dani</string>
-    <string name="app_example_jacket_a">Kérdezés nélkül vitted el a farmerdzsekimet a koncertre. Füstszagúan kaptam vissza.</string>
+    <string name="app_example_jacket_a">Meg sem kérdeztél, csak felvetted a farmerdzsekimet a koncertre. Füstszagúan kaptam vissza.</string>
     <string name="app_example_jacket_b_name">Lili</string>
     <string name="app_example_jacket_b">Az ajtó mellett lógott, és sosem hordod. Megkérdeztelek volna, de aludtál, én meg már késésben voltam.</string>
     <string name="app_example_last_slice_a_name">Marci</string>
@@ -585,8 +585,8 @@
     <string name="app_verdict_back">Ítélet</string>
     <string name="app_appeal_title">Kiegészítés és fellebbezés</string>
     <string name="app_appeal_intro">Valami elkerülte a bírák figyelmét? Add hozzá, és újra döntenek. Az első ítélet is megmarad.</string>
-    <string name="app_appeal_ask">Mit kell tudniuk?</string>
-    <string name="app_appeal_placeholder">Egy tény, egy üzenet vagy az, hogy valójában miben egyeztetek meg.</string>
+    <string name="app_appeal_ask">Mit kellene tudniuk?</string>
+    <string name="app_appeal_placeholder">Egy tény, egy üzenet vagy az, hogy miben állapodtatok meg valójában.</string>
     <string name="app_appeal_cost">1 ítéletbe kerül. Ítéletenként kétszer teheted meg, ebből még %1$s maradt.</string>
     <string name="app_appeal_cost_case">1 ítéletbe kerül. Ügyenként egyszer teheted meg.</string>
     <string name="app_appeal_submit">Újraítélés</string>

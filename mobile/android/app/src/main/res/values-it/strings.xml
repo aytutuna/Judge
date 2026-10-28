@@ -505,12 +505,12 @@
     <string name="app_translate_offline">Non possiamo tradurre mentre sei offline, quindi ecco l\'originale.</string>
     <string name="app_share_title">Condividi il verdetto</string>
     <string name="app_settings_language">Lingua</string>
-    <string name="app_settings_language_device">Come il telefono</string>
+    <string name="app_settings_language_device">Lingua del telefono</string>
     <string name="app_settings_about">Info su Judge</string>
     <string name="app_settings_version">Versione %1$s</string>
     <string name="app_signin_required">Accedi per avere un verdetto.</string>
     <string name="app_signin_or">oppure</string>
-    <string name="app_signin_code_request">Inviami un codice</string>
+    <string name="app_signin_code_request">Inviami un codice via email</string>
     <string name="app_signin_code_sent">Abbiamo inviato un codice a %1$s. Vale per 10 minuti.</string>
     <string name="app_signin_code_label">Inserisci il codice a 6 cifre</string>
     <string name="app_signin_code_submit">Accedi</string>
@@ -539,7 +539,7 @@
     <string name="app_home_their_placeholder">Cosa sostiene l\'altra persona? Scrivilo come lo direbbe lei.</string>
     <string name="app_home_your_side_label">La tua versione della discussione</string>
     <string name="app_home_their_side_label">La versione dell\'altra persona</string>
-    <string name="app_home_send_link">Oppure manda un link all\'altra persona</string>
+    <string name="app_home_send_link">Oppure manda un link perché la scriva l\'altra persona</string>
     <string name="app_home_says">%1$s dice:</string>
     <string name="app_home_my_side">La mia versione:</string>
     <string name="app_home_other_side">La versione dell\'altra persona:</string>
@@ -567,7 +567,7 @@
     <string name="app_example_spoiler_a_name">Anna</string>
     <string name="app_example_spoiler_a">Mi hai detto chi era l\'assassino prima ancora che iniziassi l\'ultima puntata. L\'aspettavo da tutta la settimana.</string>
     <string name="app_example_spoiler_b_name">Lorenzo</string>
-    <string name="app_example_spoiler_b">È uscita tre settimane fa e mi avevi detto di averla finita. Non posso tenere il conto di dove è arrivato ognuno.</string>
+    <string name="app_example_spoiler_b">È uscita tre settimane fa e mi avevi detto di averla finita. Non posso sapere a che punto è ognuno.</string>
     <string name="app_example_jacket_a_name">Riccardo</string>
     <string name="app_example_jacket_a">Hai messo il mio giubbotto di jeans per andare al concerto senza chiedermelo. È tornato che puzzava di fumo.</string>
     <string name="app_example_jacket_b_name">Sofia</string>
@@ -601,7 +601,7 @@
     <string name="app_appeal_placeholder">Un fatto, un messaggio o quello che avevate davvero concordato.</string>
     <string name="app_appeal_cost">Costa 1 verdetto. Puoi farlo due volte per verdetto (rimanenti: %1$s).</string>
     <string name="app_appeal_cost_case">Costa 1 verdetto. Puoi farlo una volta per caso.</string>
-    <string name="app_appeal_submit">Fai rivalutare</string>
+    <string name="app_appeal_submit">Fai decidere di nuovo</string>
     <string name="app_appeal_upsell">Manca qualcosa? Aggiungi contesto e fai rivalutare tutto per 1 verdetto.</string>
     <string name="app_appeal_sign_in">Accedi per aggiungere contesto e fare appello</string>
     <string name="app_appeal_used">Hai già aggiunto contesto a questo caso.</string>

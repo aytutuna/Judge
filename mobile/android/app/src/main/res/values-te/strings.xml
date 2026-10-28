@@ -464,7 +464,7 @@
     <string name="app_tab_settings">సెట్టింగ్‌లు</string>
     <string name="app_input_counter">%1$s / %2$s</string>
     <string name="app_history_title">నా తీర్పులు</string>
-    <string name="app_history_empty">ఇంకా తీర్పులేవీ లేవు. మీ మొదటి గొడవను తేల్చుకోండి, అది ఇక్కడ కనిపిస్తుంది.</string>
+    <string name="app_history_empty">ఇంకా తీర్పులేవీ లేవు. మీ మొదటి గొడవ తేల్చుకోండి, దాని తీర్పు ఇక్కడ కనిపిస్తుంది.</string>
     <string name="app_history_device_only">ఇవి ఈ ఫోన్‌లో మాత్రమే సేవ్ అయ్యాయి. ఇక్కడ ఒకదాన్ని డిలీట్ చేసినా దాని షేర్ లింక్ ఆగిపోదు.</string>
     <string name="app_history_delete">డిలీట్</string>
     <string name="app_history_clear_all">అన్నీ డిలీట్ చేయండి</string>
@@ -499,7 +499,7 @@
     <string name="app_signin_required">తీర్పు కోసం సైన్ ఇన్ చేయండి.</string>
     <string name="app_signin_or">లేదా</string>
     <string name="app_signin_code_request">ఈమెయిల్‌కు కోడ్ పంపండి</string>
-    <string name="app_signin_code_sent">%1$s కు ఒక కోడ్ పంపాం. అది 10 నిమిషాలు పనిచేస్తుంది.</string>
+    <string name="app_signin_code_sent">%1$sకు ఒక కోడ్ పంపాం. అది 10 నిమిషాలు పనిచేస్తుంది.</string>
     <string name="app_signin_code_label">6 అంకెల కోడ్ ఎంటర్ చేయండి</string>
     <string name="app_signin_code_submit">సైన్ ఇన్</string>
     <string name="app_signin_code_invalid">ఈ కోడ్ సరిగ్గా లేదు. ఈమెయిల్ చూసి మళ్లీ ప్రయత్నించండి.</string>
@@ -524,7 +524,7 @@
     <string name="app_home_your_name">మీ పేరు</string>
     <string name="app_home_their_name">వాళ్ల పేరు</string>
     <string name="app_home_your_placeholder">మీ వైపు నుంచి చూస్తే ఏం జరిగింది?</string>
-    <string name="app_home_their_placeholder">వాళ్లు ఏమంటున్నారు? వాళ్లు చెప్పినట్టే రాయండి.</string>
+    <string name="app_home_their_placeholder">వాళ్లు ఏమంటున్నారు? వాళ్లు ఎలా చెబుతారో అలాగే రాయండి.</string>
     <string name="app_home_your_side_label">వాదనలో మీ వైపు కథ</string>
     <string name="app_home_their_side_label">వాదనలో వాళ్ల వైపు కథ</string>
     <string name="app_home_send_link">లేదా వాళ్లకే లింక్ పంపి రాయమనండి</string>
@@ -547,7 +547,7 @@
     <string name="app_example_road_trip_a_name">రాజేష్</string>
     <string name="app_example_road_trip_a">వెళ్లేటప్పుడు ఆరు గంటలూ నేనే డ్రైవ్ చేశాను. తిరుగు ప్రయాణంలో మీరు డ్రైవ్ చేయడమే న్యాయం.</string>
     <string name="app_example_road_trip_b_name">హరిత</string>
-    <string name="app_example_road_trip_b">రాత్రిపూట డ్రైవ్ చేయడం నాకు అస్సలు ఇష్టం లేదని బయలుదేరే ముందే చెప్పాను, మనం సాయంత్రం 7కి బయలుదేరుతున్నాం. వచ్చే ట్రిప్‌లో పొద్దున్నపూట డ్రైవింగ్ అంతా నాదే.</string>
+    <string name="app_example_road_trip_b">రాత్రిపూట డ్రైవ్ చేయడం నాకు అస్సలు ఇష్టం లేదని ట్రిప్ మొదలవకముందే చెప్పాను, ఇక్కడి నుంచి మనం బయలుదేరేదే సాయంత్రం 7కి. వచ్చే ట్రిప్‌లో పొద్దున్నపూట డ్రైవింగ్ అంతా నాదే.</string>
     <string name="app_example_seat_a_name">మౌనిక</string>
     <string name="app_example_seat_a">నా సీటు వెనక్కి వాలుతుంది, అందుకే వాల్చుకున్నాను. ఇది నైట్ బస్సు, అందరూ నిద్రపోవాలని చూస్తున్నారు.</string>
     <string name="app_example_seat_b_name">సందీప్</string>
@@ -563,7 +563,7 @@
     <string name="app_example_last_slice_a_name">వెంకట్</string>
     <string name="app_example_last_slice_a">సినిమా మొదలవకముందే చివరి పిజ్జా ముక్క నాదే అని చెప్పాను. అందరూ విన్నారు.</string>
     <string name="app_example_last_slice_b_name">లావణ్య</string>
-    <string name="app_example_last_slice_b">“నాది” అని చెప్పి రెండు గంటలు దాన్ని ముట్టుకోకపోతే ఎలా? అది అలాగే చల్లారిపోతోంది, అందుకే నేను తినేశాను.</string>
+    <string name="app_example_last_slice_b">“నాది” అని చెప్పి రెండు గంటలు దాన్ని ముట్టుకోకపోతే ఎలా? అది అలాగే పడి చల్లారిపోతుంటే నేను తినేశాను.</string>
     <string name="app_case_waiting_kicker">కేసు · ఎదురుచూపు</string>
     <string name="app_case_waiting_for">%1$s కోసం ఎదురుచూస్తున్నాం</string>
     <string name="app_case_waiting_lead">%1$s అకౌంట్ లేకుండానే తమ వైపు కథ రాస్తారు. తీర్పు వచ్చేవరకు మీ ఇద్దరిలో ఎవరికీ అవతలివారిది కనిపించదు.</string>
@@ -585,7 +585,7 @@
     <string name="app_verdict_back">తీర్పు</string>
     <string name="app_appeal_title">వివరాలు జోడించి అప్పీల్ చేయండి</string>
     <string name="app_appeal_intro">జడ్జీలు ఏదైనా మిస్ అయ్యారా? జోడించండి, వాళ్లు మళ్లీ తీర్పు చెబుతారు. మొదటి తీర్పు రికార్డులో ఉంటుంది.</string>
-    <string name="app_appeal_ask">వాళ్లు ఏం తెలుసుకోవాలి?</string>
+    <string name="app_appeal_ask">జడ్జీలకు ఏం తెలియాలి?</string>
     <string name="app_appeal_placeholder">ఒక వాస్తవం, ఒక మెసేజ్, లేదా అసలు ఏం ఒప్పుకున్నారో.</string>
     <string name="app_appeal_cost">1 తీర్పు ఖర్చవుతుంది. ఒక తీర్పుకు ఇలా రెండుసార్లు చేయొచ్చు; ఇంకా మిగిలినవి: %1$s.</string>
     <string name="app_appeal_cost_case">1 తీర్పు ఖర్చవుతుంది. ఒక కేసుకు ఇలా ఒక్కసారే చేయొచ్చు.</string>

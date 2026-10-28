@@ -465,7 +465,7 @@
     <string name="app_input_counter">%1$s / %2$s</string>
     <string name="app_history_title">Mijn uitspraken</string>
     <string name="app_history_empty">Nog geen uitspraken. Leg je eerste discussie voor, dan verschijnt de uitspraak hier.</string>
-    <string name="app_history_device_only">Alleen op deze telefoon bewaard. Verwijder je er hier een, dan blijft de deellink gewoon werken.</string>
+    <string name="app_history_device_only">Alleen op deze telefoon bewaard. Verwijder je hier een uitspraak, dan blijft de deellink gewoon werken.</string>
     <string name="app_history_delete">Verwijderen</string>
     <string name="app_history_clear_all">Alles verwijderen</string>
     <string name="app_history_clear_confirm">Alle bewaarde uitspraken van deze telefoon verwijderen? Deellinks blijven werken.</string>
@@ -498,7 +498,7 @@
     <string name="app_settings_version">Versie %1$s</string>
     <string name="app_signin_required">Log in voor een uitspraak.</string>
     <string name="app_signin_or">of</string>
-    <string name="app_signin_code_request">Stuur me een code</string>
+    <string name="app_signin_code_request">Mail me een code</string>
     <string name="app_signin_code_sent">We hebben een code gemaild naar %1$s. Die werkt 10 minuten.</string>
     <string name="app_signin_code_label">Vul de 6-cijferige code in</string>
     <string name="app_signin_code_submit">Inloggen</string>
@@ -510,7 +510,7 @@
     <string name="app_signin_rate_limited">Te veel pogingen. Wacht een minuutje en probeer het opnieuw.</string>
     <string name="app_signin_unavailable">Inloggen lukt nu even niet. Probeer het later opnieuw.</string>
     <string name="app_account_delete_title">Je account verwijderen?</string>
-    <string name="app_account_delete_body">Je inloggegevens, credits, abonnement en persoonsgegevens worden gewist, en je deellinks werken niet meer. De tekst van uitspraken blijft zonder je naam bewaard, zoals uitgelegd in het privacybeleid.</string>
+    <string name="app_account_delete_body">Je inloggegevens, credits, abonnement en persoonsgegevens worden gewist, en je deellinks werken niet meer. De tekst van uitspraken blijft zonder je naam bewaard, zoals beschreven in het privacybeleid.</string>
     <string name="app_account_delete_confirm">Account verwijderen</string>
     <string name="app_account_deleted">Je account is verwijderd.</string>
     <string name="app_account_sign_out_confirm">Uitloggen bij Judge op deze telefoon?</string>
@@ -566,8 +566,8 @@
     <string name="app_example_last_slice_b">Je kunt niet roepen dat het van jou is en het dan twee uur laten liggen. Het lag daar maar koud te worden, dus ik heb het opgegeten.</string>
     <string name="app_case_waiting_kicker">Zaak · wacht op antwoord</string>
     <string name="app_case_waiting_for">Wachten op %1$s</string>
-    <string name="app_case_waiting_lead">%1$s schrijft een eigen kant, zonder account. Jullie zien elkaars tekst pas bij de uitspraak.</string>
-    <string name="app_case_waiting_lead_anon">De ander schrijft een eigen kant, zonder account. Jullie zien elkaars tekst pas bij de uitspraak.</string>
+    <string name="app_case_waiting_lead">%1$s schrijft zijn of haar kant, zonder account. Jullie zien elkaars tekst pas bij de uitspraak.</string>
+    <string name="app_case_waiting_lead_anon">De ander schrijft zijn of haar kant, zonder account. Jullie zien elkaars tekst pas bij de uitspraak.</string>
     <string name="app_case_send_to">Stuur deze link naar %1$s</string>
     <string name="app_case_step_you">Jij hebt je kant geschreven</string>
     <string name="app_case_step_you_note">Verzegeld tot de uitspraak</string>
@@ -580,7 +580,7 @@
     <string name="app_verdict_vs">tegen</string>
     <string name="app_verdict_lean_to">De rechters neigden naar %1$s</string>
     <string name="app_verdict_lean_none">De rechters neigden geen kant op</string>
-    <string name="app_verdict_sides">Waar elke kant op steunt</string>
+    <string name="app_verdict_sides">Waar elke kant zich op baseert</string>
     <string name="app_verdict_claims">Hoe elke kant tot zijn standpunt kwam</string>
     <string name="app_verdict_back">Uitspraak</string>
     <string name="app_appeal_title">Iets aanvullen</string>

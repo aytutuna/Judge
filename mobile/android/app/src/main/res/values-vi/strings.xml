@@ -454,7 +454,7 @@
     <string name="app_input_counter">%1$s / %2$s</string>
     <string name="app_history_title">Phán quyết của bạn</string>
     <string name="app_history_empty">Chưa có phán quyết nào. Phân xử cuộc tranh cãi đầu tiên của bạn, kết quả sẽ hiện ở đây.</string>
-    <string name="app_history_device_only">Chỉ lưu trên điện thoại này. Xóa ở đây không làm mất liên kết chia sẻ.</string>
+    <string name="app_history_device_only">Chỉ lưu trên điện thoại này. Xóa một phán quyết ở đây thì liên kết chia sẻ của nó vẫn hoạt động.</string>
     <string name="app_history_delete">Xóa</string>
     <string name="app_history_clear_all">Xóa tất cả</string>
     <string name="app_history_clear_confirm">Xóa mọi phán quyết đã lưu trên điện thoại này? Liên kết chia sẻ vẫn hoạt động.</string>
@@ -474,7 +474,7 @@
     <string name="app_retry">Thử lại</string>
     <string name="app_error_offline">Có vẻ bạn đang mất mạng. Kiểm tra kết nối rồi thử lại nhé.</string>
     <string name="app_error_timeout">Ban giám khảo trả lời lâu quá. Thử lại sau một phút nhé.</string>
-    <string name="app_error_interrupted">Kết nối bị ngắt khi Judge đang chạy ngầm. Thử lại nhé, và để ứng dụng mở cho đến khi có phán quyết.</string>
+    <string name="app_error_interrupted">Kết nối bị ngắt khi Judge đang chạy ngầm. Thử lại nhé, và giữ ứng dụng mở cho đến khi nhận được phán quyết.</string>
     <string name="app_turnstile_error">Không tải được bước kiểm tra người thật. Kiểm tra kết nối rồi thử lại nhé.</string>
     <string name="app_factcheck_source_aria">%1$s, mở trang web</string>
     <string name="app_error_bad_origin">Yêu cầu này đến từ một nơi chúng tôi không nhận ra. Hãy cập nhật ứng dụng lên bản mới nhất rồi thử lại.</string>
@@ -488,9 +488,9 @@
     <string name="app_signin_or">hoặc</string>
     <string name="app_signin_code_request">Gửi mã qua email</string>
     <string name="app_signin_code_sent">Chúng tôi đã gửi mã tới %1$s. Mã có hiệu lực trong 10 phút.</string>
-    <string name="app_signin_code_label">Nhập mã gồm 6 chữ số</string>
+    <string name="app_signin_code_label">Nhập mã 6 chữ số</string>
     <string name="app_signin_code_submit">Đăng nhập</string>
-    <string name="app_signin_code_invalid">Mã không đúng. Kiểm tra lại email rồi thử lại nhé.</string>
+    <string name="app_signin_code_invalid">Mã này không đúng. Kiểm tra lại email rồi thử lại nhé.</string>
     <string name="app_signin_code_expired">Mã này đã hết hạn. Hãy yêu cầu mã mới.</string>
     <string name="app_signin_code_too_many">Bạn đã nhập sai mã này quá nhiều lần. Hãy yêu cầu mã mới.</string>
     <string name="app_signin_code_resend">Gửi mã mới</string>
@@ -498,7 +498,7 @@
     <string name="app_signin_rate_limited">Bạn thử quá nhiều lần rồi. Đợi một phút rồi thử lại nhé.</string>
     <string name="app_signin_unavailable">Tạm thời chưa thể đăng nhập. Thử lại sau nhé.</string>
     <string name="app_account_delete_title">Xóa tài khoản của bạn?</string>
-    <string name="app_account_delete_body">Thông tin đăng nhập, lượt phán quyết, gói và dữ liệu cá nhân của bạn sẽ bị xóa, các liên kết chia sẻ cũng ngừng hoạt động. Nội dung phán quyết vẫn được lưu nhưng không kèm tên bạn, như đã nêu trong Chính sách quyền riêng tư.</string>
+    <string name="app_account_delete_body">Thông tin đăng nhập, lượt phán quyết, gói và dữ liệu cá nhân của bạn sẽ bị xóa, các liên kết chia sẻ của bạn cũng ngừng hoạt động. Nội dung phán quyết vẫn được lưu nhưng không kèm tên bạn, như đã nêu trong Chính sách quyền riêng tư.</string>
     <string name="app_account_delete_confirm">Xóa tài khoản</string>
     <string name="app_account_deleted">Đã xóa tài khoản của bạn.</string>
     <string name="app_account_sign_out_confirm">Đăng xuất khỏi Judge trên điện thoại này?</string>
@@ -554,11 +554,11 @@
     <string name="app_example_last_slice_b">Xí rồi để đó hai tiếng không đụng tới thì không tính. Nó nằm đó nguội ngắt, nên mình ăn luôn.</string>
     <string name="app_case_waiting_kicker">Vụ · đang chờ</string>
     <string name="app_case_waiting_for">Đang chờ %1$s</string>
-    <string name="app_case_waiting_lead">%1$s kể phần của họ mà không cần tài khoản. Không ai thấy lời kể của người kia cho đến khi có phán quyết.</string>
-    <string name="app_case_waiting_lead_anon">Người kia kể phần của họ mà không cần tài khoản. Không ai thấy lời kể của người kia cho đến khi có phán quyết.</string>
+    <string name="app_case_waiting_lead">%1$s kể phần của họ mà không cần tài khoản. Hai người không thấy lời của nhau cho đến khi có phán quyết.</string>
+    <string name="app_case_waiting_lead_anon">Người kia kể phần của họ mà không cần tài khoản. Hai người không thấy lời của nhau cho đến khi có phán quyết.</string>
     <string name="app_case_send_to">Gửi liên kết này cho %1$s</string>
     <string name="app_case_step_you">Bạn đã kể phần của mình</string>
-    <string name="app_case_step_you_note">Niêm phong đến khi có phán quyết</string>
+    <string name="app_case_step_you_note">Giữ kín đến khi có phán quyết</string>
     <string name="app_case_step_them">%1$s kể phần của họ</string>
     <string name="app_case_step_them_anon">Người kia kể phần của họ</string>
     <string name="app_case_step_them_note">Trang này tự cập nhật khi họ gửi</string>
@@ -571,10 +571,10 @@
     <string name="app_verdict_sides">Mỗi bên dựa vào điều gì</string>
     <string name="app_verdict_claims">Mỗi bên đi đến kết luận thế nào</string>
     <string name="app_verdict_back">Phán quyết</string>
-    <string name="app_appeal_title">Bổ sung thông tin &amp; xét lại</string>
+    <string name="app_appeal_title">Bổ sung thông tin và xét lại</string>
     <string name="app_appeal_intro">Ban giám khảo bỏ sót điều gì? Bổ sung vào và họ sẽ phân xử lại. Phán quyết đầu tiên vẫn được lưu lại.</string>
     <string name="app_appeal_ask">Họ cần biết thêm điều gì?</string>
-    <string name="app_appeal_placeholder">Một sự thật, một tin nhắn, hoặc điều hai bên thật sự đã thỏa thuận.</string>
+    <string name="app_appeal_placeholder">Một sự thật, một tin nhắn hoặc điều hai bên đã thật sự thỏa thuận.</string>
     <string name="app_appeal_cost">Dùng 1 lượt. Mỗi phán quyết được bổ sung tối đa hai lần; bạn còn %1$s lần.</string>
     <string name="app_appeal_cost_case">Dùng 1 lượt. Mỗi vụ chỉ được bổ sung một lần.</string>
     <string name="app_appeal_submit">Phân xử lại</string>

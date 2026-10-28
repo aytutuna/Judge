@@ -487,10 +487,10 @@
     <string name="app_error_offline">Du bist anscheinend offline. Prüf deine Verbindung und versuch es noch mal.</string>
     <string name="app_error_timeout">Die Richter haben zu lange für eine Antwort gebraucht. Versuch es in einer Minute noch mal.</string>
     <string name="app_error_interrupted">Die Verbindung ist abgebrochen, während Judge im Hintergrund lief. Versuch es noch mal und lass die App offen, bis das Urteil da ist.</string>
-    <string name="app_turnstile_error">Der Menschen-Check konnte nicht laden. Prüf deine Verbindung und versuch es noch mal.</string>
+    <string name="app_turnstile_error">Der Bot-Check ließ sich nicht laden. Prüf deine Verbindung und versuch es noch mal.</string>
     <string name="app_factcheck_source_aria">%1$s, öffnet die Webseite</string>
     <string name="app_error_bad_origin">Diese Anfrage kam von einer Quelle, die wir nicht kennen. Prüf, ob die App aktuell ist, und versuch es noch mal.</string>
-    <string name="app_translate_offline">Offline können wir nicht übersetzen, deshalb hier das Original.</string>
+    <string name="app_translate_offline">Offline können wir nicht übersetzen, deshalb siehst du das Original.</string>
     <string name="app_share_title">Urteil teilen</string>
     <string name="app_settings_language">Sprache</string>
     <string name="app_settings_language_device">Wie auf dem Handy</string>
@@ -541,7 +541,7 @@
     <string name="app_example_bill_b_name">Max</string>
     <string name="app_example_bill_b">Wir teilen doch immer einfach durch vier. Jedes Mal auszurechnen, wer was hatte, nervt, und so groß ist der Unterschied auch nicht.</string>
     <string name="app_example_thermostat_a_name">Laura</string>
-    <string name="app_example_thermostat_a">Hier drin sind 19 Grad, und mir ist sogar im Hoodie kalt. Die Heizung auf 22 zu drehen, ist doch nicht übertrieben.</string>
+    <string name="app_example_thermostat_a">Hier drin sind 19 Grad, und mir ist sogar im Hoodie kalt. Die Heizung auf 22 zu drehen ist doch nicht übertrieben.</string>
     <string name="app_example_thermostat_b_name">Jan</string>
     <string name="app_example_thermostat_b">Bei 22 Grad kann man nicht schlafen, viel zu warm. Du kannst dir noch was anziehen, ich kann nichts mehr ausziehen.</string>
     <string name="app_example_road_trip_a_name">Sarah</string>
@@ -559,7 +559,7 @@
     <string name="app_example_jacket_a_name">Leon</string>
     <string name="app_example_jacket_a">Du hast meine Jeansjacke ungefragt zum Konzert angezogen. Sie kam total verraucht zurück.</string>
     <string name="app_example_jacket_b_name">Hannah</string>
-    <string name="app_example_jacket_b">Sie hing an der Tür, und du trägst sie nie. Ich hätte ja gefragt, aber du hast geschlafen, und ich war eh schon spät dran.</string>
+    <string name="app_example_jacket_b">Sie hing an der Garderobe, und du trägst sie nie. Ich hätte ja gefragt, aber du hast geschlafen, und ich war eh schon spät dran.</string>
     <string name="app_example_last_slice_a_name">Niklas</string>
     <string name="app_example_last_slice_a">Ich hab schon vor dem Film gesagt: „Das letzte Stück Pizza ist meins!“ Alle haben es gehört.</string>
     <string name="app_example_last_slice_b_name">Sophie</string>
@@ -573,7 +573,7 @@
     <string name="app_case_step_you_note">Versiegelt bis zum Urteil</string>
     <string name="app_case_step_them">%1$s schreibt die eigene Seite</string>
     <string name="app_case_step_them_anon">Die andere Person schreibt ihre Seite</string>
-    <string name="app_case_step_them_note">Hier aktualisiert sich alles, sobald die Antwort da ist</string>
+    <string name="app_case_step_them_note">Diese Ansicht aktualisiert sich, sobald die Antwort da ist</string>
     <string name="app_case_step_judges">Drei Richter urteilen</string>
     <string name="app_case_step_judges_note">Oder jetzt nur deine Seite beurteilen lassen</string>
     <string name="app_case_judge_now_without">Jetzt ohne %1$s urteilen lassen</string>
@@ -584,13 +584,13 @@
     <string name="app_verdict_claims">Wie jede Seite zu ihrer Sicht kam</string>
     <string name="app_verdict_back">Urteil</string>
     <string name="app_appeal_title">Einspruch mit neuem Kontext</string>
-    <string name="app_appeal_intro">Haben die Richter etwas übersehen? Ergänze es, und sie urteilen neu. Das erste Urteil bleibt sichtbar.</string>
+    <string name="app_appeal_intro">Haben die Richter etwas übersehen? Ergänze es, und sie urteilen neu. Das erste Urteil bleibt erhalten.</string>
     <string name="app_appeal_ask">Was sollten sie wissen?</string>
     <string name="app_appeal_placeholder">Ein Fakt, eine Nachricht oder was wirklich abgemacht war.</string>
     <string name="app_appeal_cost">Kostet 1 Urteil. Das geht zweimal pro Urteil, noch %1$s übrig.</string>
     <string name="app_appeal_cost_case">Kostet 1 Urteil. Das geht einmal pro Fall.</string>
-    <string name="app_appeal_submit">Neu urteilen lassen</string>
-    <string name="app_appeal_upsell">Fehlt etwas? Ergänze Kontext und lass für 1 Urteil neu urteilen.</string>
+    <string name="app_appeal_submit">Neu beurteilen lassen</string>
+    <string name="app_appeal_upsell">Fehlt etwas? Ergänze Kontext und lass den Fall für 1 Urteil neu beurteilen.</string>
     <string name="app_appeal_sign_in">Melde dich an, um Kontext zu ergänzen</string>
     <string name="app_appeal_used">Du hast diesem Fall schon Kontext hinzugefügt.</string>
     <string name="app_appeal_limit">Du hast schon zweimal Kontext ergänzt. Mehr geht pro Urteil nicht.</string>

@@ -491,7 +491,7 @@
         <item quantity="many">Restam %1$s vereditos</item>
         <item quantity="other">Restam %1$s vereditos</item>
     </plurals>
-    <string name="app_balance_monthly">Restantes neste mês: %1$s de %2$s</string>
+    <string name="app_balance_monthly">Restam %1$s de %2$s neste mês</string>
     <string name="app_balance_none">Nenhum veredito restante</string>
     <string name="app_balance_case_cost">Enviar um link usa 1 veredito</string>
     <string name="app_cancel">Cancelar</string>
@@ -505,7 +505,7 @@
     <string name="app_translate_offline">Não dá para traduzir sem internet, então aqui está o original.</string>
     <string name="app_share_title">Compartilhar o veredito</string>
     <string name="app_settings_language">Idioma</string>
-    <string name="app_settings_language_device">Igual ao celular</string>
+    <string name="app_settings_language_device">Igual ao do celular</string>
     <string name="app_settings_about">Sobre o Judge</string>
     <string name="app_settings_version">Versão %1$s</string>
     <string name="app_signin_required">Entre para receber um veredito.</string>
@@ -514,7 +514,7 @@
     <string name="app_signin_code_sent">Enviamos um código para %1$s. Ele vale por 10 minutos.</string>
     <string name="app_signin_code_label">Digite o código de 6 dígitos</string>
     <string name="app_signin_code_submit">Entrar</string>
-    <string name="app_signin_code_invalid">Esse código está errado. Confira o e-mail e tente de novo.</string>
+    <string name="app_signin_code_invalid">Esse código não está certo. Confira o e-mail e tente de novo.</string>
     <string name="app_signin_code_expired">Esse código expirou. Peça um novo.</string>
     <string name="app_signin_code_too_many">Muitas tentativas erradas com este código. Peça um novo.</string>
     <string name="app_signin_code_resend">Enviar novo código</string>
@@ -529,8 +529,8 @@
     <string name="app_account_signed_out">Você saiu da conta.</string>
     <string name="app_account_session_expired">Sua sessão foi encerrada. Entre de novo para continuar.</string>
     <string name="app_close">Fechar</string>
-    <string name="app_home_lead">Escreva os dois lados, ou mande um link para a outra pessoa escrever o dela.</string>
-    <string name="app_home_lead_solo">Escreva o seu lado, e o da outra pessoa se você souber.</string>
+    <string name="app_home_lead">Escreva os dois lados ou mande um link para a outra pessoa escrever o dela.</string>
+    <string name="app_home_lead_solo">Escreva o seu lado e, se souber, o da outra pessoa.</string>
     <string name="app_home_your_side">Seu lado</string>
     <string name="app_home_their_side">O outro lado</string>
     <string name="app_home_your_name">Seu nome</string>
@@ -555,11 +555,11 @@
     <string name="app_example_thermostat_a_name">Juliana</string>
     <string name="app_example_thermostat_a">O ar está em 19 graus e eu estou com frio até de moletom. Subir para 22 não é nenhum absurdo.</string>
     <string name="app_example_thermostat_b_name">Rafael</string>
-    <string name="app_example_thermostat_b">Com 22 graus não dá para dormir, fica quente demais. Você pode pôr mais uma coberta, eu não tenho mais o que tirar.</string>
+    <string name="app_example_thermostat_b">Com 22 graus não dá para dormir, fica quente demais. Você pode vestir mais alguma coisa, eu não tenho mais o que tirar.</string>
     <string name="app_example_road_trip_a_name">Fernanda</string>
-    <string name="app_example_road_trip_a">Eu dirigi as seis horas da ida inteirinhas. Nada mais justo que você dirigir na volta.</string>
+    <string name="app_example_road_trip_a">Eu dirigi as seis horas da ida inteirinhas. Nada mais justo do que você dirigir na volta.</string>
     <string name="app_example_road_trip_b_name">Bruno</string>
-    <string name="app_example_road_trip_b">Antes da viagem eu avisei que odeio dirigir à noite, e a gente vai sair às sete da noite. Na próxima eu pego os trechos de manhã.</string>
+    <string name="app_example_road_trip_b">Antes da viagem eu avisei que odeio dirigir à noite, e a gente vai sair às sete. Na próxima viagem eu pego os trechos de manhã.</string>
     <string name="app_example_seat_a_name">Larissa</string>
     <string name="app_example_seat_a">Minha poltrona reclina, então eu vou reclinar. É um voo noturno e todo mundo está tentando dormir.</string>
     <string name="app_example_seat_b_name">Thiago</string>
@@ -571,7 +571,7 @@
     <string name="app_example_jacket_a_name">Mateus</string>
     <string name="app_example_jacket_a">Você foi ao show com a minha jaqueta jeans sem pedir. Ela voltou com cheiro de cigarro.</string>
     <string name="app_example_jacket_b_name">Letícia</string>
-    <string name="app_example_jacket_b">Estava pendurada perto da porta e você nunca usa. Eu teria pedido, mas você estava dormindo e eu já estava em cima da hora.</string>
+    <string name="app_example_jacket_b">Estava pendurada perto da porta e você nunca usa. Eu teria pedido, mas você estava dormindo e eu já estava atrasada.</string>
     <string name="app_example_last_slice_a_name">Gustavo</string>
     <string name="app_example_last_slice_a">Eu falei “o último pedaço é meu” antes de o filme começar. Todo mundo ouviu.</string>
     <string name="app_example_last_slice_b_name">Mariana</string>
@@ -590,8 +590,8 @@
     <string name="app_case_step_judges_note">Ou julgue agora só com o seu lado</string>
     <string name="app_case_judge_now_without">Julgar agora sem %1$s</string>
     <string name="app_verdict_vs">x</string>
-    <string name="app_verdict_lean_to">O painel pendeu para %1$s</string>
-    <string name="app_verdict_lean_none">O painel não pendeu para nenhum lado</string>
+    <string name="app_verdict_lean_to">Os juízes penderam para %1$s</string>
+    <string name="app_verdict_lean_none">Os juízes não penderam para nenhum lado</string>
     <string name="app_verdict_sides">Em que cada lado se apoia</string>
     <string name="app_verdict_claims">Como cada lado chegou lá</string>
     <string name="app_verdict_back">Veredito</string>
