@@ -61,7 +61,7 @@ Her karar eksiksiz yargılanır:
 - Önemli bir bilgi eksikse en fazla iki kısa soru
 - Ekran görüntüsü kanıtı (bir sohbet ya da fiş gibi): okunur, sonra atılır
 - Karardan sonra bilgi ekleyip yeniden yargılatma
-Yeni hesapla ilk kararın ücretsiz. Sonrasında kararları paketlerle ya da ayda 35 karar içeren aylık planla alabilirsin. İki taraflı davalar da tek karar kullanır.
+Yeni hesapla ilk kararın ücretsiz. Sonrasında kararları paketlerle ya da ayda 35 karar içeren aylık planla alabilirsin. İki taraflı davalar da bir karar hakkı kullanır.
 
 GİZLİLİĞİN
 - Apple, Google ya da e-postayla gelen kodla giriş yaparsın.
