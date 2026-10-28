@@ -13,7 +13,7 @@ const gu: AppLocale = {
     "app.history.empty":
       "હજી કોઈ ચુકાદો નથી. તમારા પહેલા વિવાદનો ફેંસલો કરાવો, એ અહીં દેખાશે.",
     "app.history.deviceOnly":
-      "ફક્ત આ ફોનમાં સેવ છે. અહીંથી ડિલીટ કરવાથી એની શેર લિંક બંધ થતી નથી.",
+      "ફક્ત આ ફોનમાં સેવ થયેલા છે. અહીંથી કોઈ ચુકાદો ડિલીટ કરવાથી એની શેર લિંક બંધ થતી નથી.",
     "app.history.delete": "ડિલીટ કરો",
     "app.history.clearAll": "બધું ડિલીટ કરો",
     "app.history.clearConfirm":
@@ -39,8 +39,8 @@ const gu: AppLocale = {
     "app.error.interrupted":
       "Judge બૅકગ્રાઉન્ડમાં હતું ત્યારે કનેક્શન તૂટી ગયું. ફરી પ્રયાસ કરો અને ચુકાદો આવે ત્યાં સુધી ઍપ ખુલ્લી રાખો.",
     "app.turnstile.error":
-      "માણસ હોવાની ચકાસણી લોડ ન થઈ. કનેક્શન તપાસીને ફરી પ્રયાસ કરો.",
-    "app.factcheck.sourceAria": "{title}, વેબ પેજ ખૂલે છે",
+      "તમે માણસ છો કે નહીં એની ચકાસણી લોડ ન થઈ શકી. કનેક્શન તપાસીને ફરી પ્રયાસ કરો.",
+    "app.factcheck.sourceAria": "{title}, વેબ પેજ ખોલે છે",
     "app.error.badOrigin":
       "આ વિનંતી કોઈ અજાણી જગ્યાએથી આવી. ઍપ અપડેટ કરેલી છે એની ખાતરી કરીને ફરી પ્રયાસ કરો.",
     "app.translate.offline":
@@ -59,7 +59,7 @@ const gu: AppLocale = {
     "app.signin.codeSubmit": "સાઇન ઇન કરો",
     "app.signin.codeInvalid": "આ કોડ બરાબર નથી. ઈમેલ તપાસીને ફરી પ્રયાસ કરો.",
     "app.signin.codeExpired": "આ કોડની મુદત પૂરી થઈ ગઈ. નવો કોડ માગો.",
-    "app.signin.codeTooMany": "આ કોડ માટે ઘણા ખોટા પ્રયાસ થયા. નવો કોડ માગો.",
+    "app.signin.codeTooMany": "આ કોડ માટે ઘણી વાર ખોટો પ્રયાસ થયો. નવો કોડ માગો.",
     "app.signin.codeResend": "નવો કોડ મોકલો",
     "app.signin.changeEmail": "બીજો ઈમેલ વાપરો",
     "app.signin.rateLimited":
@@ -87,7 +87,7 @@ const gu: AppLocale = {
     "app.home.theirPlaceholder": "એ શું કહે છે? એ જે રીતે કહે એ રીતે લખો.",
     "app.home.yourSideLabel": "વિવાદમાં તમારી વાત",
     "app.home.theirSideLabel": "વિવાદમાં એમની વાત",
-    "app.home.sendLink": "અથવા એમને લિંક મોકલો, એ જાતે લખે",
+    "app.home.sendLink": "અથવા એમને લિંક મોકલો, જેથી એ જાતે લખે",
     "app.home.says": "{name} કહે છે:",
     "app.home.mySide": "મારી વાત:",
     "app.home.otherSide": "સામેવાળાની વાત:",
@@ -121,7 +121,7 @@ const gu: AppLocale = {
       "મારી સીટ પાછળ નમે છે, તો હું નમાવું છું. રાતની ફ્લાઇટ છે અને બધા સૂવાનો પ્રયાસ કરે છે.",
     "app.example.seat.bName": "હાર્દિક",
     "app.example.seat.b":
-      "મારી હાઇટ 6 ફૂટ 3 ઇંચ છે, અને મારા ઘૂંટણ પહેલેથી તમારી સીટમાં દબાય છે. છેક પાછળ નમાવતાં પહેલાં પૂછી તો શકો.",
+      "મારી હાઇટ 6 ફૂટ 3 ઇંચ છે, અને મારા ઘૂંટણ પહેલેથી તમારી સીટમાં દબાય છે. છેક પાછળ નમાવતાં પહેલાં ઓછામાં ઓછું પૂછી તો શકો.",
     "app.example.spoiler.aName": "ખુશી",
     "app.example.spoiler.a":
       "મેં છેલ્લો એપિસોડ શરૂ પણ નહોતો કર્યો ને તેં કહી દીધું કે ખૂની કોણ છે. આખું અઠવાડિયું હું એની રાહ જોતી હતી.",
@@ -151,20 +151,20 @@ const gu: AppLocale = {
     "app.case.stepYouNote": "ચુકાદા સુધી સીલબંધ",
     "app.case.stepThem": "{name} પોતાની વાત લખે છે",
     "app.case.stepThemAnon": "તેઓ પોતાની વાત લખે છે",
-    "app.case.stepThemNote": "એ આવશે એટલે આ પેજ અપડેટ થશે",
+    "app.case.stepThemNote": "એમની વાત આવતાં જ આ પેજ અપડેટ થશે",
     "app.case.stepJudges": "ત્રણ જજ ચુકાદો આપે છે",
     "app.case.stepJudgesNote": "અથવા હમણાં ફક્ત તમારી વાત પરથી ચુકાદો મેળવો",
     "app.case.judgeNowWithout": "{name} વગર હમણાં ચુકાદો મેળવો",
     "app.verdict.vs": "વિ.",
     "app.verdict.leanTo": "પેનલ {name}ની તરફ ઝૂકી",
     "app.verdict.leanNone": "પેનલ કોઈ તરફ ન ઝૂકી",
-    "app.verdict.sides": "દરેક બાજુનો પાયો શું છે",
+    "app.verdict.sides": "દરેક બાજુ શાના પર ટકેલી છે",
     "app.verdict.claims": "દરેક બાજુ આ તારણ પર કેવી રીતે પહોંચી",
     "app.verdict.back": "ચુકાદો",
     "app.appeal.title": "વિગત ઉમેરો અને અપીલ કરો",
     "app.appeal.intro":
       "જજ કંઈ ચૂકી ગયા? એ ઉમેરો અને તેઓ ફરી ફેંસલો કરશે. પહેલો ચુકાદો રેકૉર્ડમાં રહે છે.",
-    "app.appeal.ask": "એમણે શું જાણવું જોઈએ?",
+    "app.appeal.ask": "જજોને શું ખબર હોવી જોઈએ?",
     "app.appeal.placeholder":
       "કોઈ હકીકત, કોઈ મેસેજ, કે ખરેખર શું નક્કી થયું હતું.",
     "app.appeal.cost":
@@ -173,12 +173,12 @@ const gu: AppLocale = {
       "આમાં 1 ચુકાદો વપરાશે. એક કેસમાં આવું એક જ વાર કરી શકાય.",
     "app.appeal.submit": "ફરી ફેંસલો કરો",
     "app.appeal.upsell":
-      "કંઈ ખૂટે છે? વિગત ઉમેરો અને 1 ચુકાદામાં ફરી ફેંસલો કરાવો.",
+      "કંઈ ખૂટે છે? વિગત ઉમેરો અને 1 ચુકાદો વાપરીને ફરી ફેંસલો કરાવો.",
     "app.appeal.signIn": "વિગત ઉમેરવા અને અપીલ કરવા સાઇન ઇન કરો",
     "app.appeal.used": "તમે આ કેસમાં પહેલેથી વિગત ઉમેરી દીધી છે.",
     "app.appeal.limit":
       "તમે બે વાર વિગત ઉમેરી છે. એક ચુકાદા માટે આ જ મર્યાદા છે.",
-    "app.purchase.buying": "ખરીદી થાય છે…",
+    "app.purchase.buying": "ખરીદી ચાલુ છે…",
     "app.purchase.success": "આભાર! તમારી ખરીદી પૂરી થઈ.",
     "app.purchase.pending":
       "તમારી ખરીદી પ્રોસેસ થઈ રહી છે. દેખાતાં એકાદ મિનિટ લાગી શકે.",
