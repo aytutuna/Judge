@@ -619,6 +619,22 @@ describe("localizeLabels / textLang", () => {
     expect(localizeLabelsAuto("Party A dedi ki Party B'ye para verdi.")).toBe("Taraf A dedi ki Taraf B'ye para verdi.");
     expect(localizeLabelsAuto("Party A paid Party B.")).toBe("Party A paid Party B.");
   });
+
+  it("leaves English that says Part A or Part B alone", async () => {
+    const { localizeLabelsAuto, restoreNames, textLang } = await import("../lib/names");
+    const parties = new Map([
+      ["A", { name: "Sam", self: false }],
+      ["B", { name: "Alex", self: false }],
+    ]);
+    expect(restoreNames("Party A says Medicare Part B covers the visit, Party B disagrees.", parties, "en")).toBe(
+      "Sam says Medicare Part B covers the visit, Alex disagrees.",
+    );
+    expect(textLang("Party A only finished Part A of the exam.")).toBe("en");
+    expect(textLang("Medicare Part B covers the visit")).toBe("en");
+    expect(localizeLabelsAuto("Party A only finished Part A of the exam.")).toBe("Party A only finished Part A of the exam.");
+    expect(textLang("Part A har ret, Part B skylder intet.")).toBe("ca");
+    expect(restoreNames("Part A har ret, Part B skylder intet.", parties, "da")).toBe("Sam har ret, Alex skylder intet.");
+  });
 });
 
 describe("consistentSelfMap: the viewer is named one way per verdict", () => {

@@ -286,9 +286,14 @@ const LABEL_IN_TEXT = new RegExp(
   "gu",
 );
 
-/** Whether a label's word and letter go together: A and B are parties,
- * C to Z other people. */
-function labelFits(word: string, letter: string): boolean {
+/** Label words that are also ordinary English ("Medicare Part B"). */
+const EN_LOOKALIKES = ["Part "];
+
+/** Whether a label's word and letter go together in text of `lang`: A and B
+ * are parties, C to Z other people. A word that reads as plain English is a
+ * label only in text of a language that uses it. */
+function labelFits(word: string, letter: string, lang: Lang): boolean {
+  if (EN_LOOKALIKES.includes(word) && PARTY_LABELS[lang]?.[0].slice(0, -1) !== word) return false;
   return (letter === "A" || letter === "B") === PARTY_WORDS.includes(word);
 }
 
@@ -607,7 +612,7 @@ export function restoreNames(text: string, parties: Parties, textLang: Lang): st
   let m: RegExpExecArray | null;
   while ((m = re.exec(text))) {
     const [whole, word, letter, apos = "", suffix] = m;
-    if (!labelFits(word, letter)) continue;
+    if (!labelFits(word, letter, textLang)) continue;
     const party = parties.get(letter);
     if (!party) continue;
     const before = text.slice(0, m.index);
@@ -706,11 +711,17 @@ const ANY_LABEL = new RegExp(String.raw`(${wordsRe([...PARTY_WORDS, ...PERSON_WO
  * party labels. */
 const OWN_LABELS = (Object.entries(PARTY_LABELS) as [Lang, readonly [string, string]][])
   .filter(([l, [a]]) => l !== "en" && l !== "tr" && a !== PARTY_LABELS.en[0])
-  .map(([l, [a]]) => [l, new RegExp(`(?:${wordsRe([a.slice(0, -1)])})[AB]${LABEL_END}`, "u")] as const);
+  .map(([l, [a]]) => {
+    const word = a.slice(0, -1);
+    return [l, new RegExp(`(?:${wordsRe([word])})[AB]${LABEL_END}`, "u"), EN_LOOKALIKES.includes(word)] as const;
+  });
 
 /** Common Turkish function words for telling a text's language when it has
  * no Turkish-only letter. */
 const TR_WORDS = /(?<![\p{L}])(?:ve|bir|bu|ama|için|çok|değil|gibi|ile|diye|sonra|çünkü|hiç|daha|kadar|ediyor|dedi|oldu)(?![\p{L}])/giu;
+/** English labels or words that the languages labelled "Part A" never use:
+ * an English text that mentions a "Part B" is still English. */
+const EN_HINT = /(?<![\p{L}])(?:Party [AB]|the|and|that|with|was|this|they)(?![\p{L}])/iu;
 const EN_WORDS = /(?<![\p{L}])(?:the|and|is|was|that|with|for|said|says|this|they|because|would|have)(?![\p{L}])/giu;
 
 /** The language an anonymized text is written in: the Turkish labels or
@@ -720,7 +731,7 @@ const EN_WORDS = /(?<![\p{L}])(?:the|and|is|was|that|with|for|said|says|this|the
  * place name ("moved to Beşiktaş") stays English. */
 export function textLang(text: string): Lang {
   if (/(?<![\p{L}])(?:Taraf [AB]|Kişi [C-Z])(?![\p{L}])/u.test(text)) return "tr";
-  const own = OWN_LABELS.find(([, re]) => re.test(text));
+  const own = OWN_LABELS.find(([, re, lookalike]) => re.test(text) && !(lookalike && EN_HINT.test(text)));
   if (own) return own[0];
   const tr = text.match(TR_WORDS)?.length ?? 0;
   const en = text.match(EN_WORDS)?.length ?? 0;
@@ -739,7 +750,7 @@ export function textLang(text: string): Lang {
 export function localizeLabels(text: string, lang: Lang): string {
   if (!text) return text;
   return text.replace(ANY_LABEL, (whole: string, word: string, letter: string) => {
-    if (!labelFits(word, letter)) return whole;
+    if (!labelFits(word, letter, lang)) return whole;
     if (letter !== "A" && letter !== "B") return `${lang === "tr" ? "Kişi" : "Person"} ${letter}`;
     return (PARTY_LABELS[lang] ?? PARTY_LABELS.en)[0].slice(0, -1) + letter;
   });
