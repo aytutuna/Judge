@@ -149,21 +149,9 @@ class Strings(private val res: Resources) {
     val navAccount: String get() = res.getString(R.string.nav_account)
     val navPricing: String get() = res.getString(R.string.nav_pricing)
     val navSignOut: String get() = res.getString(R.string.nav_sign_out)
-    val tierLabel: String get() = res.getString(R.string.tier_label)
-    val tierFree: String get() = res.getString(R.string.tier_free)
     val tierPremium: String get() = res.getString(R.string.tier_premium)
-    val tierFreeHint: String get() = res.getString(R.string.tier_free_hint)
-    val tierPremiumHint: String get() = res.getString(R.string.tier_premium_hint)
-    val tierSignInToUse: String get() = res.getString(R.string.tier_sign_in_to_use)
     val tierLockedSignIn: String get() = res.getString(R.string.tier_locked_sign_in)
-    val tierLockedNoAllowance: String get() = res.getString(R.string.tier_locked_no_allowance)
     val tierGetPremium: String get() = res.getString(R.string.tier_get_premium)
-    fun tierCreditsLeft(n: Int): String = res.getQuantityString(R.plurals.tier_credits_left, n, n)
-    fun tierMonthlyLeft(n: String): String = res.getString(R.string.tier_monthly_left, n)
-    val tierInvite: String get() = res.getString(R.string.tier_invite)
-    val tierOutOfCredits: String get() = res.getString(R.string.tier_out_of_credits)
-    fun tierFairUse(date: String): String = res.getString(R.string.tier_fair_use, date)
-    val tierFairUseSoon: String get() = res.getString(R.string.tier_fair_use_soon)
     val tierChecking: String get() = res.getString(R.string.tier_checking)
     val clarifyTitle: String get() = res.getString(R.string.clarify_title)
     val clarifyLead: String get() = res.getString(R.string.clarify_lead)
@@ -209,8 +197,6 @@ class Strings(private val res: Resources) {
     val accountTitle: String get() = res.getString(R.string.account_title)
     fun accountSignedInAs(email: String): String = res.getString(R.string.account_signed_in_as, email)
     val accountPlan: String get() = res.getString(R.string.account_plan)
-    val accountPlanFree: String get() = res.getString(R.string.account_plan_free)
-    val accountPlanPremium: String get() = res.getString(R.string.account_plan_premium)
     val accountCredits: String get() = res.getString(R.string.account_credits)
     val accountSubscription: String get() = res.getString(R.string.account_subscription)
     val accountSubscriptionNone: String get() = res.getString(R.string.account_subscription_none)
@@ -229,16 +215,12 @@ class Strings(private val res: Resources) {
     val accountLoading: String get() = res.getString(R.string.account_loading)
     val pricingTitle: String get() = res.getString(R.string.pricing_title)
     val pricingLead: String get() = res.getString(R.string.pricing_lead)
-    val pricingFreeTitle: String get() = res.getString(R.string.pricing_free_title)
-    val pricingFreePrice: String get() = res.getString(R.string.pricing_free_price)
-    val pricingFreeF1: String get() = res.getString(R.string.pricing_free_f1)
-    val pricingFreeF2: String get() = res.getString(R.string.pricing_free_f2)
-    val pricingFreeF3: String get() = res.getString(R.string.pricing_free_f3)
-    val pricingFreeF4: String get() = res.getString(R.string.pricing_free_f4)
-    val pricingPremiumTitle: String get() = res.getString(R.string.pricing_premium_title)
+    val pricingIncludedTitle: String get() = res.getString(R.string.pricing_included_title)
+    val pricingBuyTitle: String get() = res.getString(R.string.pricing_buy_title)
     val pricingPremiumF1: String get() = res.getString(R.string.pricing_premium_f1)
     val pricingPremiumF2: String get() = res.getString(R.string.pricing_premium_f2)
     val pricingPremiumF3: String get() = res.getString(R.string.pricing_premium_f3)
+    val pricingPremiumF4: String get() = res.getString(R.string.pricing_premium_f4)
     val pricingPacksTitle: String get() = res.getString(R.string.pricing_packs_title)
     val pricingPacksLead: String get() = res.getString(R.string.pricing_packs_lead)
     fun pricingPack(n: Int): String = res.getQuantityString(R.plurals.pricing_pack, n, n)
@@ -303,7 +285,6 @@ class Strings(private val res: Resources) {
     val caseJudgeNowConfirm: String get() = res.getString(R.string.case_judge_now_confirm)
     val caseJudgeNowYes: String get() = res.getString(R.string.case_judge_now_yes)
     val caseJudgeExpiredConfirm: String get() = res.getString(R.string.case_judge_expired_confirm)
-    val caseJudgeExpiredConfirmFree: String get() = res.getString(R.string.case_judge_expired_confirm_free)
     val caseJudgeExpiredYes: String get() = res.getString(R.string.case_judge_expired_yes)
     val caseCancel: String get() = res.getString(R.string.case_cancel)
     val caseRetry: String get() = res.getString(R.string.case_retry)
@@ -409,6 +390,7 @@ class Strings(private val res: Resources) {
     val appealHistory: String get() = res.getString(R.string.appeal_history)
     val pricingPremiumF5: String get() = res.getString(R.string.pricing_premium_f5)
     val pricingPremiumF6: String get() = res.getString(R.string.pricing_premium_f6)
+    val pricingPremiumF7: String get() = res.getString(R.string.pricing_premium_f7)
     val langToggleToTr: String get() = res.getString(R.string.lang_toggle_to_tr)
     val langToggleToEn: String get() = res.getString(R.string.lang_toggle_to_en)
     val removedTitle: String get() = res.getString(R.string.removed_title)
@@ -740,18 +722,9 @@ class Strings(private val res: Resources) {
             "nav.account" -> R.string.nav_account
             "nav.pricing" -> R.string.nav_pricing
             "nav.signOut" -> R.string.nav_sign_out
-            "tier.label" -> R.string.tier_label
-            "tier.free" -> R.string.tier_free
             "tier.premium" -> R.string.tier_premium
-            "tier.freeHint" -> R.string.tier_free_hint
-            "tier.premiumHint" -> R.string.tier_premium_hint
-            "tier.signInToUse" -> R.string.tier_sign_in_to_use
             "tier.lockedSignIn" -> R.string.tier_locked_sign_in
-            "tier.lockedNoAllowance" -> R.string.tier_locked_no_allowance
             "tier.getPremium" -> R.string.tier_get_premium
-            "tier.invite" -> R.string.tier_invite
-            "tier.outOfCredits" -> R.string.tier_out_of_credits
-            "tier.fairUseSoon" -> R.string.tier_fair_use_soon
             "tier.checking" -> R.string.tier_checking
             "clarify.title" -> R.string.clarify_title
             "clarify.lead" -> R.string.clarify_lead
@@ -791,8 +764,6 @@ class Strings(private val res: Resources) {
             "signin.loading" -> R.string.signin_loading
             "account.title" -> R.string.account_title
             "account.plan" -> R.string.account_plan
-            "account.plan.free" -> R.string.account_plan_free
-            "account.plan.premium" -> R.string.account_plan_premium
             "account.credits" -> R.string.account_credits
             "account.subscription" -> R.string.account_subscription
             "account.subscriptionNone" -> R.string.account_subscription_none
@@ -808,16 +779,12 @@ class Strings(private val res: Resources) {
             "account.loading" -> R.string.account_loading
             "pricing.title" -> R.string.pricing_title
             "pricing.lead" -> R.string.pricing_lead
-            "pricing.free.title" -> R.string.pricing_free_title
-            "pricing.free.price" -> R.string.pricing_free_price
-            "pricing.free.f1" -> R.string.pricing_free_f1
-            "pricing.free.f2" -> R.string.pricing_free_f2
-            "pricing.free.f3" -> R.string.pricing_free_f3
-            "pricing.free.f4" -> R.string.pricing_free_f4
-            "pricing.premium.title" -> R.string.pricing_premium_title
+            "pricing.included.title" -> R.string.pricing_included_title
+            "pricing.buy.title" -> R.string.pricing_buy_title
             "pricing.premium.f1" -> R.string.pricing_premium_f1
             "pricing.premium.f2" -> R.string.pricing_premium_f2
             "pricing.premium.f3" -> R.string.pricing_premium_f3
+            "pricing.premium.f4" -> R.string.pricing_premium_f4
             "pricing.packsTitle" -> R.string.pricing_packs_title
             "pricing.packsLead" -> R.string.pricing_packs_lead
             "pricing.monthly.title" -> R.string.pricing_monthly_title
@@ -876,7 +843,6 @@ class Strings(private val res: Resources) {
             "case.judgeNow.confirm" -> R.string.case_judge_now_confirm
             "case.judgeNow.yes" -> R.string.case_judge_now_yes
             "case.judgeExpired.confirm" -> R.string.case_judge_expired_confirm
-            "case.judgeExpired.confirmFree" -> R.string.case_judge_expired_confirm_free
             "case.judgeExpired.yes" -> R.string.case_judge_expired_yes
             "case.cancel" -> R.string.case_cancel
             "case.retry" -> R.string.case_retry
@@ -967,6 +933,7 @@ class Strings(private val res: Resources) {
             "appeal.history" -> R.string.appeal_history
             "pricing.premium.f5" -> R.string.pricing_premium_f5
             "pricing.premium.f6" -> R.string.pricing_premium_f6
+            "pricing.premium.f7" -> R.string.pricing_premium_f7
             "langToggle.toTr" -> R.string.lang_toggle_to_tr
             "langToggle.toEn" -> R.string.lang_toggle_to_en
             "removed.title" -> R.string.removed_title

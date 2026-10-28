@@ -155,21 +155,9 @@ enum L10n {
     static func navAccount(_ lang: AppLang) -> String { string("nav.account", lang) }
     static func navPricing(_ lang: AppLang) -> String { string("nav.pricing", lang) }
     static func navSignOut(_ lang: AppLang) -> String { string("nav.signOut", lang) }
-    static func tierLabel(_ lang: AppLang) -> String { string("tier.label", lang) }
-    static func tierFree(_ lang: AppLang) -> String { string("tier.free", lang) }
     static func tierPremium(_ lang: AppLang) -> String { string("tier.premium", lang) }
-    static func tierFreeHint(_ lang: AppLang) -> String { string("tier.freeHint", lang) }
-    static func tierPremiumHint(_ lang: AppLang) -> String { string("tier.premiumHint", lang) }
-    static func tierSignInToUse(_ lang: AppLang) -> String { string("tier.signInToUse", lang) }
     static func tierLockedSignIn(_ lang: AppLang) -> String { string("tier.lockedSignIn", lang) }
-    static func tierLockedNoAllowance(_ lang: AppLang) -> String { string("tier.lockedNoAllowance", lang) }
     static func tierGetPremium(_ lang: AppLang) -> String { string("tier.getPremium", lang) }
-    static func tierCreditsLeft(_ lang: AppLang, n: Int) -> String { format("tier.creditsLeft", lang, n) }
-    static func tierMonthlyLeft(_ lang: AppLang, n: String) -> String { format("tier.monthlyLeft", lang, n) }
-    static func tierInvite(_ lang: AppLang) -> String { string("tier.invite", lang) }
-    static func tierOutOfCredits(_ lang: AppLang) -> String { string("tier.outOfCredits", lang) }
-    static func tierFairUse(_ lang: AppLang, date: String) -> String { format("tier.fairUse", lang, date) }
-    static func tierFairUseSoon(_ lang: AppLang) -> String { string("tier.fairUseSoon", lang) }
     static func tierChecking(_ lang: AppLang) -> String { string("tier.checking", lang) }
     static func clarifyTitle(_ lang: AppLang) -> String { string("clarify.title", lang) }
     static func clarifyLead(_ lang: AppLang) -> String { string("clarify.lead", lang) }
@@ -215,8 +203,6 @@ enum L10n {
     static func accountTitle(_ lang: AppLang) -> String { string("account.title", lang) }
     static func accountSignedInAs(_ lang: AppLang, email: String) -> String { format("account.signedInAs", lang, email) }
     static func accountPlan(_ lang: AppLang) -> String { string("account.plan", lang) }
-    static func accountPlanFree(_ lang: AppLang) -> String { string("account.plan.free", lang) }
-    static func accountPlanPremium(_ lang: AppLang) -> String { string("account.plan.premium", lang) }
     static func accountCredits(_ lang: AppLang) -> String { string("account.credits", lang) }
     static func accountSubscription(_ lang: AppLang) -> String { string("account.subscription", lang) }
     static func accountSubscriptionNone(_ lang: AppLang) -> String { string("account.subscriptionNone", lang) }
@@ -235,16 +221,12 @@ enum L10n {
     static func accountLoading(_ lang: AppLang) -> String { string("account.loading", lang) }
     static func pricingTitle(_ lang: AppLang) -> String { string("pricing.title", lang) }
     static func pricingLead(_ lang: AppLang) -> String { string("pricing.lead", lang) }
-    static func pricingFreeTitle(_ lang: AppLang) -> String { string("pricing.free.title", lang) }
-    static func pricingFreePrice(_ lang: AppLang) -> String { string("pricing.free.price", lang) }
-    static func pricingFreeF1(_ lang: AppLang) -> String { string("pricing.free.f1", lang) }
-    static func pricingFreeF2(_ lang: AppLang) -> String { string("pricing.free.f2", lang) }
-    static func pricingFreeF3(_ lang: AppLang) -> String { string("pricing.free.f3", lang) }
-    static func pricingFreeF4(_ lang: AppLang) -> String { string("pricing.free.f4", lang) }
-    static func pricingPremiumTitle(_ lang: AppLang) -> String { string("pricing.premium.title", lang) }
+    static func pricingIncludedTitle(_ lang: AppLang) -> String { string("pricing.included.title", lang) }
+    static func pricingBuyTitle(_ lang: AppLang) -> String { string("pricing.buy.title", lang) }
     static func pricingPremiumF1(_ lang: AppLang) -> String { string("pricing.premium.f1", lang) }
     static func pricingPremiumF2(_ lang: AppLang) -> String { string("pricing.premium.f2", lang) }
     static func pricingPremiumF3(_ lang: AppLang) -> String { string("pricing.premium.f3", lang) }
+    static func pricingPremiumF4(_ lang: AppLang) -> String { string("pricing.premium.f4", lang) }
     static func pricingPacksTitle(_ lang: AppLang) -> String { string("pricing.packsTitle", lang) }
     static func pricingPacksLead(_ lang: AppLang) -> String { string("pricing.packsLead", lang) }
     static func pricingPack(_ lang: AppLang, n: Int) -> String { format("pricing.pack", lang, n) }
@@ -309,7 +291,6 @@ enum L10n {
     static func caseJudgeNowConfirm(_ lang: AppLang) -> String { string("case.judgeNow.confirm", lang) }
     static func caseJudgeNowYes(_ lang: AppLang) -> String { string("case.judgeNow.yes", lang) }
     static func caseJudgeExpiredConfirm(_ lang: AppLang) -> String { string("case.judgeExpired.confirm", lang) }
-    static func caseJudgeExpiredConfirmFree(_ lang: AppLang) -> String { string("case.judgeExpired.confirmFree", lang) }
     static func caseJudgeExpiredYes(_ lang: AppLang) -> String { string("case.judgeExpired.yes", lang) }
     static func caseCancel(_ lang: AppLang) -> String { string("case.cancel", lang) }
     static func caseRetry(_ lang: AppLang) -> String { string("case.retry", lang) }
@@ -415,6 +396,7 @@ enum L10n {
     static func appealHistory(_ lang: AppLang) -> String { string("appeal.history", lang) }
     static func pricingPremiumF5(_ lang: AppLang) -> String { string("pricing.premium.f5", lang) }
     static func pricingPremiumF6(_ lang: AppLang) -> String { string("pricing.premium.f6", lang) }
+    static func pricingPremiumF7(_ lang: AppLang) -> String { string("pricing.premium.f7", lang) }
     static func langToggleToTr(_ lang: AppLang) -> String { string("langToggle.toTr", lang) }
     static func langToggleToEn(_ lang: AppLang) -> String { string("langToggle.toEn", lang) }
     static func removedTitle(_ lang: AppLang) -> String { string("removed.title", lang) }
@@ -747,18 +729,9 @@ enum L10n {
         "nav.account",
         "nav.pricing",
         "nav.signOut",
-        "tier.label",
-        "tier.free",
         "tier.premium",
-        "tier.freeHint",
-        "tier.premiumHint",
-        "tier.signInToUse",
         "tier.lockedSignIn",
-        "tier.lockedNoAllowance",
         "tier.getPremium",
-        "tier.invite",
-        "tier.outOfCredits",
-        "tier.fairUseSoon",
         "tier.checking",
         "clarify.title",
         "clarify.lead",
@@ -798,8 +771,6 @@ enum L10n {
         "signin.loading",
         "account.title",
         "account.plan",
-        "account.plan.free",
-        "account.plan.premium",
         "account.credits",
         "account.subscription",
         "account.subscriptionNone",
@@ -815,16 +786,12 @@ enum L10n {
         "account.loading",
         "pricing.title",
         "pricing.lead",
-        "pricing.free.title",
-        "pricing.free.price",
-        "pricing.free.f1",
-        "pricing.free.f2",
-        "pricing.free.f3",
-        "pricing.free.f4",
-        "pricing.premium.title",
+        "pricing.included.title",
+        "pricing.buy.title",
         "pricing.premium.f1",
         "pricing.premium.f2",
         "pricing.premium.f3",
+        "pricing.premium.f4",
         "pricing.packsTitle",
         "pricing.packsLead",
         "pricing.monthly.title",
@@ -883,7 +850,6 @@ enum L10n {
         "case.judgeNow.confirm",
         "case.judgeNow.yes",
         "case.judgeExpired.confirm",
-        "case.judgeExpired.confirmFree",
         "case.judgeExpired.yes",
         "case.cancel",
         "case.retry",
@@ -974,6 +940,7 @@ enum L10n {
         "appeal.history",
         "pricing.premium.f5",
         "pricing.premium.f6",
+        "pricing.premium.f7",
         "langToggle.toTr",
         "langToggle.toEn",
         "removed.title",

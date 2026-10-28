@@ -2122,7 +2122,7 @@
       },
       "status": 402,
       "lang": "en",
-      "message": "You've used this month's premium verdicts. More on November 18."
+      "message": "You've used this month's verdicts. More on November 18."
     },
     {
       "body": {
@@ -2132,7 +2132,7 @@
       },
       "status": 402,
       "lang": "tr",
-      "message": "Bu ayın premium kararlarını kullandın. Hakların 18 Kasım tarihinde yenilenir."
+      "message": "Bu ayın kararlarını kullandın. Hakların 18 Kasım tarihinde yenilenir."
     },
     {
       "body": {
@@ -2141,7 +2141,7 @@
       },
       "status": 402,
       "lang": "en",
-      "message": "You've used this month's premium verdicts. More soon."
+      "message": "You've used this month's verdicts. More soon."
     },
     {
       "body": {
@@ -2150,7 +2150,7 @@
       },
       "status": 402,
       "lang": "tr",
-      "message": "Bu ayın premium kararlarını kullandın. Hakların yakında yenilenir."
+      "message": "Bu ayın kararlarını kullandın. Hakların yakında yenilenir."
     },
     {
       "body": null,

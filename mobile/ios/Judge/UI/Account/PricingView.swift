@@ -89,7 +89,7 @@ struct PricingView: View {
                 Image(systemName: "sparkle")
                     .foregroundStyle(Brand.terraInk)
                     .accessibilityHidden(true)
-                Text(L10n.pricingPremiumTitle(lang))
+                Text(L10n.pricingIncludedTitle(lang))
                     .brandText(Self.planTitle)
                     .foregroundStyle(Brand.ink)
             }
@@ -133,7 +133,7 @@ struct PricingView: View {
             }
 
             if account.premiumEnabled, !account.isSignedIn, account.signInProviders?.any == true {
-                Button(L10n.tierSignInToUse(lang)) { account.presentSignIn() }
+                Button(L10n.navSignIn(lang)) { account.presentSignIn() }
                     .buttonStyle(PrimaryButtonStyle())
                     .padding(.top, 4)
             }

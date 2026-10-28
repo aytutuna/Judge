@@ -153,7 +153,7 @@ fun PricingScreen(
                 PlanCard {
                     Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                         TintedIcon(remember { JudgeIcons.spark(Palette.terra) }, 14)
-                        Text(s.pricingPremiumTitle, style = JudgeType.sectionTitle, modifier = Modifier.semantics { heading() })
+                        Text(s.pricingIncludedTitle, style = JudgeType.sectionTitle, modifier = Modifier.semantics { heading() })
                     }
                     FeatureList(Tiers.premiumFeatureKeys(cases = features?.cases == true, evidence = features?.evidence == true))
 
