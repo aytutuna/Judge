@@ -4,13 +4,13 @@ import type { AppConfig, Entitlement, MeResponse } from "./account-types";
 /**
  * Client store for "who is signed in, what can they use, and what does this
  * deployment offer": GET /api/v1/me plus GET /api/v1/config, loaded once per
- * page on first use and shared by the nav, the hero switch and the account,
+ * page on first use and shared by the nav, the home page and the account,
  * sign-in and pricing pages.
  *
  * Module-level external store read through useSyncExternalStore (the shape
  * of lib/lang.ts). The server snapshot is the empty "idle" state, so server
  * HTML and the first client render never show account UI: nothing renders
- * until the real answer is in, and a free visitor's page stays as it was.
+ * until the real answer is in.
  *
  * lib/auth-client is imported lazily: the Better Auth client stays out of
  * the homepage's first bundle and only loads once the store starts.
@@ -27,6 +27,13 @@ export type ViewerState = {
 };
 
 const IDLE: ViewerState = { status: "idle", me: null, config: null };
+
+/** True when this deployment offers at least one way to sign in. Without
+ * one, nothing should point a signed-out visitor to /signin. */
+export function signInOffered(config: AppConfig | null): boolean {
+  const s = config?.signIn;
+  return Boolean(s && (s.apple || s.google || s.email || s.dev));
+}
 
 let state: ViewerState = IDLE;
 let inflight: Promise<void> | null = null;

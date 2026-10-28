@@ -6,8 +6,7 @@ import { useEffect, useId, useRef, useState } from "react";
 import type { AppConfig, MeResponse } from "@/lib/account-types";
 import { saveDraftForSignIn } from "@/lib/draft";
 import { t, type Lang } from "@/lib/i18n";
-import { signInOffered } from "@/lib/tier";
-import { markSignedOut, useViewer } from "@/lib/use-viewer";
+import { markSignedOut, signInOffered, useViewer } from "@/lib/use-viewer";
 import styles from "./AccountMenu.module.css";
 
 /** Whether the nav shows an account entry at all: only once /me and
