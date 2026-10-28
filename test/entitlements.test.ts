@@ -399,15 +399,18 @@ describe("entitlements: grants and store events", () => {
     ).rejects.toThrow();
   });
 
-  it("deleteUserEntitlements leaves no rows", async () => {
+  it("deleteUserEntitlements leaves no rows of the user", async () => {
     const u = newUser();
     await credits(u, 3);
     await subscribe(u);
     const r = await ent.reservePremiumVerdict(u, { idempotencyKey: "k" });
     if (!r.ok) throw new Error("expected a reservation");
+    const today = await ent.countPremiumToday();
     await ent.deleteUserEntitlements(u);
     for (const table of ["entitlement_accounts", "entitlement_grants", "subscriptions", "premium_usage"]) {
       expect(await count(table, u), table).toBe(0);
     }
+    // The run still counts towards the site-wide daily cap.
+    expect(await ent.countPremiumToday()).toBe(today);
   });
 });

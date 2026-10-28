@@ -145,12 +145,16 @@ export async function checkTranslateLimits(ip: string): Promise<LimitDecision> {
 /** Per-account buckets for signed-in features. Premium verdicts: 10 per 10
  * minutes and 60 per 24 hours; clarifying questions: 20 per 10 minutes and
  * 100 per 24 hours (they spend no credit, so the daily window is what bounds
- * their cost per account). */
+ * their cost per account). An account that never had anything but its
+ * welcome credit gets the welcome_ buckets instead: it may keep that credit
+ * unspent forever, and every sign-up has one. */
 export type UserBucket =
   | "premium_verdict"
   | "clarify"
+  | "welcome_clarify"
   | "case_create"
   | "evidence"
+  | "welcome_evidence"
   | "case_evidence"
   | "verdict_owner"
   | "apple_code";
@@ -166,6 +170,7 @@ export const USER_LIMITS: Record<UserBucket, readonly UserWindow[]> = {
     { limit: 20, windowMs: 10 * MINUTE_MS, redisWindow: "10 m", prefix: "verdict:u:cl10m" },
     { limit: 100, windowMs: DAY_MS, redisWindow: "1 d", prefix: "verdict:u:clday" },
   ],
+  welcome_clarify: [{ limit: 5, windowMs: DAY_MS, redisWindow: "1 d", prefix: "verdict:u:wclday" }],
   case_create: [
     { limit: 10, windowMs: 10 * MINUTE_MS, redisWindow: "10 m", prefix: "verdict:u:cc10m" },
     { limit: 30, windowMs: DAY_MS, redisWindow: "1 d", prefix: "verdict:u:ccday" },
@@ -174,6 +179,7 @@ export const USER_LIMITS: Record<UserBucket, readonly UserWindow[]> = {
     { limit: 30, windowMs: 10 * MINUTE_MS, redisWindow: "10 m", prefix: "verdict:u:ev10m" },
     { limit: 150, windowMs: DAY_MS, redisWindow: "1 d", prefix: "verdict:u:evday" },
   ],
+  welcome_evidence: [{ limit: 5, windowMs: DAY_MS, redisWindow: "1 d", prefix: "verdict:u:wevday" }],
   /** Keyed "case:<id>:b": respondent uploads per case. */
   case_evidence: [{ limit: 12, windowMs: DAY_MS, redisWindow: "1 d", prefix: "verdict:c:evday" }],
   /** A writer reading or changing their own verdicts and case sides (session). */
@@ -322,12 +328,23 @@ export async function checkIpLimits(ip: string, bucket: IpBucket): Promise<Limit
 }
 
 const DEFAULT_PREMIUM_DAILY_CAP = 500;
+const DEFAULT_WELCOME_DAILY_CAP = 100;
+
+function dailyCap(value: string | undefined, fallback: number): number {
+  const raw = value?.trim();
+  const n = Number(raw);
+  return raw && Number.isInteger(n) && n >= 0 ? n : fallback;
+}
 
 /** PREMIUM_DAILY_CAP as a non-negative integer (0 pauses premium). */
 export function premiumDailyCap(env: Record<string, string | undefined> = process.env): number {
-  const raw = env.PREMIUM_DAILY_CAP?.trim();
-  const n = Number(raw);
-  return raw && Number.isInteger(n) && n >= 0 ? n : DEFAULT_PREMIUM_DAILY_CAP;
+  return dailyCap(env.PREMIUM_DAILY_CAP, DEFAULT_PREMIUM_DAILY_CAP);
+}
+
+/** WELCOME_DAILY_CAP: the share of the daily cap that accounts on their
+ * welcome credit alone may use. */
+export function welcomeDailyCap(env: Record<string, string | undefined> = process.env): number {
+  return dailyCap(env.WELCOME_DAILY_CAP, DEFAULT_WELCOME_DAILY_CAP);
 }
 
 /**
@@ -336,15 +353,20 @@ export function premiumDailyCap(env: Record<string, string | undefined> = proces
  * the main database, refunded ones included (a refused or failed run still
  * cost its model calls), so it holds across restarts and instances without
  * extra state. Clarifying questions are not counted here; the per-account
- * daily clarify window bounds them. Fails closed.
+ * daily clarify window bounds them. An account that never had anything but
+ * its welcome credit is also held to WELCOME_DAILY_CAP, so throwaway
+ * sign-ups cannot use up the runs paying accounts rely on. Fails closed.
  */
-export async function checkPremiumSiteCap(now: Date = new Date()): Promise<LimitDecision> {
+export async function checkPremiumSiteCap(userId: string, now: Date = new Date()): Promise<LimitDecision> {
   const cap = premiumDailyCap();
   const nextDayMs = (Math.floor(now.getTime() / DAY_MS) + 1) * DAY_MS;
   try {
-    const { countPremiumToday } = await import("./entitlements");
-    const count = cap === 0 ? 0 : await countPremiumToday(now);
-    if (count >= cap) {
+    const ent = await import("./entitlements");
+    const full =
+      cap === 0 ||
+      (await ent.countPremiumToday(now)) >= cap ||
+      ((await ent.hasWelcomeCreditOnly(userId)) && (await ent.countWelcomeToday(now)) >= welcomeDailyCap());
+    if (full) {
       return { ok: false, code: "daily_cap", retryAfterSec: retryAfterSec(nextDayMs, now.getTime()) };
     }
     return { ok: true };

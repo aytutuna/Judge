@@ -22,13 +22,10 @@ const LEAN: Lean = { party: "a", unanimous: false, reason: "r" };
 const TR_KEYS = Object.keys(STRINGS.tr).sort();
 
 /** Intentionally language-invariant: each toggle aria label is written in
- * the language of the audience it serves. "Premium" is the product name in
- * both languages. */
+ * the language of the audience it serves. */
 const IDENTICAL_ALLOWLIST = new Set<Key>([
   "langToggle.toTr",
   "langToggle.toEn",
-  "tier.premium",
-  "premium.badge",
 ]);
 
 describe("STRINGS table", () => {

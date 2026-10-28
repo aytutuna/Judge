@@ -207,7 +207,8 @@ describe("async verdicts", () => {
     expect(viaBody.status).toBe(202);
     m.scheduled.length = 0;
 
-    const sync = await post({});
+    // Its own key: without one, the same text this soon would join the first.
+    const sync = await post({}, { "idempotency-key": "sync-1" });
     expect(sync.status).toBe(200);
     const body = await sync.json();
     expect(body.result.verdict).toBe("side_b");

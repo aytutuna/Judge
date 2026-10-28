@@ -36,7 +36,7 @@ function track<T extends (...args: never[]) => unknown>(name: string, fn: T) {
 
 vi.mock("@/lib/auth", () => ({
   getViewer: track("viewer", m.getViewer),
-  resolveViewer: async (req: Request) => ({ viewer: (await m.getViewer(req)) ?? null, deadBearer: false }),
+  resolveViewer: track("viewer", async (req: Request) => ({ viewer: (await m.getViewer(req)) ?? null, deadBearer: false })),
   hasDeadBearer: async () => false,
   isSameOrigin: track("origin", m.isSameOrigin),
   authConfigured: m.authConfigured,
@@ -267,6 +267,16 @@ describe("every verdict is premium", () => {
     expect(m.anonymize).not.toHaveBeenCalled();
   });
 
+  it("without an Idempotency-Key, the same request soon after reuses one key", async () => {
+    await POST(request({ argument: ARGUMENT, tier: "free" }));
+    await POST(request({ argument: ARGUMENT, tier: "free" }));
+    await POST(request({ argument: `${ARGUMENT} Really.`, tier: "free" }));
+    const keys = m.reservePremiumVerdict.mock.calls.map((c) => (c[1] as { idempotencyKey: string }).idempotencyKey);
+    expect(keys[0]).toMatch(/^auto-[A-Za-z0-9_-]{40}$/);
+    expect(keys[1]).toBe(keys[0]);
+    expect(keys[2]).not.toBe(keys[0]);
+  });
+
   it("an unknown tier is a 400 before anything else", async () => {
     const res = await POST(request({ argument: ARGUMENT, tier: "gold" }));
     expect(res.status).toBe(400);
@@ -385,6 +395,13 @@ describe("premium verdict: gates and error codes", () => {
     m.getViewer.mockResolvedValue(null);
     await expectError(await POST(request(premium())), 401, "signin_required");
     expect(m.calls).toEqual(["viewer"]);
+  });
+
+  it("503 unavailable, not signin_required, when the session lookup fails", async () => {
+    const auth = await import("@/lib/auth");
+    vi.spyOn(auth, "resolveViewer").mockResolvedValueOnce({ viewer: null, deadBearer: false, failed: true });
+    await expectError(await POST(request(premium())), 503, "unavailable");
+    expect(m.reservePremiumVerdict).not.toHaveBeenCalled();
   });
 
   it("403 bad_origin for a cookie session from another origin; bearer is exempt", async () => {

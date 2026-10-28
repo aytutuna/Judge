@@ -6,6 +6,7 @@ const m = vi.hoisted(() => ({
   isSameOrigin: vi.fn(),
   authConfigured: vi.fn(),
   getEntitlement: vi.fn(),
+  hasWelcomeCreditOnly: vi.fn(),
   checkUserLimits: vi.fn(),
   claudeJson: vi.fn(),
 }));
@@ -19,7 +20,7 @@ function track<T extends (...args: never[]) => unknown>(name: string, fn: T) {
 
 vi.mock("@/lib/auth", () => ({
   getViewer: track("viewer", m.getViewer),
-  resolveViewer: async (req: Request) => ({ viewer: (await m.getViewer(req)) ?? null, deadBearer: false }),
+  resolveViewer: track("viewer", async (req: Request) => ({ viewer: (await m.getViewer(req)) ?? null, deadBearer: false })),
   hasDeadBearer: async () => false,
   isSameOrigin: track("origin", m.isSameOrigin),
   authConfigured: m.authConfigured,
@@ -29,6 +30,7 @@ vi.mock("@/lib/auth", () => ({
 }));
 vi.mock("@/lib/entitlements", () => ({
   getEntitlement: track("entitlement", m.getEntitlement),
+  hasWelcomeCreditOnly: m.hasWelcomeCreditOnly,
   reservePremiumVerdict: vi.fn(),
   consumePremiumVerdict: vi.fn(),
   refundPremiumVerdict: vi.fn(),
@@ -64,6 +66,7 @@ beforeEach(() => {
   m.isSameOrigin.mockReturnValue(true);
   m.authConfigured.mockReturnValue(true);
   m.getEntitlement.mockResolvedValue(CAN);
+  m.hasWelcomeCreditOnly.mockResolvedValue(false);
   m.checkUserLimits.mockResolvedValue({ ok: true });
   m.claudeJson.mockResolvedValue({ ok: true, data: { questions: ["Did you agree to split before ordering?"] } });
   vi.spyOn(console, "warn").mockImplementation(() => {});
@@ -94,6 +97,12 @@ describe("POST /api/v1/clarify", () => {
     expect(await res.json()).toEqual({ questions: [{ id: "q1", text: "Did you agree to split before ordering?" }] });
     expect(m.calls).toEqual(["viewer", "userLimits", "entitlement", "model"]);
     expect(m.checkUserLimits).toHaveBeenCalledWith("u1", "clarify");
+  });
+
+  it("an account on its welcome credit alone gets the smaller welcome bucket", async () => {
+    m.hasWelcomeCreditOnly.mockResolvedValue(true);
+    expect((await POST(request({ argument: ARGUMENT, lang: "en" }))).status).toBe(200);
+    expect(m.checkUserLimits).toHaveBeenCalledWith("u1", "welcome_clarify");
   });
 
   it("validates the body first", async () => {

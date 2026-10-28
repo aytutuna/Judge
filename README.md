@@ -152,8 +152,11 @@ signin_required` otherwise), and the site stays browsable signed out. Each
 verdict, two-sided case and appeal costs one premium unit: a credit, or one
 of the monthly plan's 35 verdicts a month, bought in the apps through
 RevenueCat (see *Purchases* below). Every new account gets one credit when it
-is created (a `promo` grant keyed `welcome:<user id>`, so at most once);
-accounts from before this got nothing. A `tier` sent by older app builds is
+is created (a `promo` grant keyed `welcome:<user id>`), once per email
+address: a keyed hash of the address goes into `welcome_claims`, which
+account deletion leaves alone. A grant lost at sign-up (a failed write or a
+restart) is given on the account's next `GET /api/v1/me`. Accounts from
+before this got nothing. A `tier` sent by older app builds is
 ignored. `GET /api/v1/config` reports `freeTier: false` and
 `welcomeCredits: 1`. Prices live in `lib/pricing.ts`; until
 `PURCHASES_ENABLED=1` the buy buttons read "Coming soon". Testers get premium
@@ -180,6 +183,7 @@ after sign-in.
 | `DEV_LOGIN` | *(empty)* | `1` shows a "test sign-in" for local testing. It works only when **all** hold: not a production build (`next build` output is production whatever `NODE_ENV` it is started with), `DEV_LOGIN=1`, the server listens on `127.0.0.1` or `::1` only (`npm run dev:login`, i.e. `next dev -H 127.0.0.1`; plain `npm run dev` listens on every interface and is refused), and the request's `Host` is `localhost`, `127.0.0.1` or `[::1]`. Anywhere else the endpoint answers 404 |
 | `PREMIUM_ENABLED` | `1` | `0` turns Premium off (the switch disappears; premium requests get `503 not_configured`) |
 | `PREMIUM_DAILY_CAP` | `500` | Site-wide premium runs per UTC day, counted from the database, refunded ones included (a refused or failed run still costs its model calls). A cost circuit breaker; `0` pauses Premium. Clarifying questions are not counted; the per-account limit below bounds them |
+| `WELCOME_DAILY_CAP` | `100` | The part of `PREMIUM_DAILY_CAP` that accounts which never had anything but their welcome credit may use per UTC day, so sign-ups made for the free verdict cannot use up the runs paying accounts rely on |
 | `PREMIUM_JUDGE_MODELS` | `claude-sonnet-5-5,claude-sonnet-5-5,claude-haiku-5-5` | Premium panel seats, in order (1 to 5) |
 | `PREMIUM_SONNET_EFFORT` | `medium` | Thinking depth for non-Haiku premium judges: `low`, `medium` or `high` |
 | `PREMIUM_FACTCHECK_MODEL` | `claude-haiku-5-5` | Model for the web fact-check |
@@ -197,7 +201,9 @@ Sign-in providers without credentials are reported as unavailable by
 **Limits for Premium:** per account 10 premium verdicts per 10 minutes and
 60 per 24 hours, 20 clarifying-question requests per 10 minutes and 100 per
 24 hours (`429 rate_limited`), plus `PREMIUM_DAILY_CAP` (`503 daily_cap`).
-Verdicts skip Turnstile: the signed-in account and these limits are the gate. A
+An account that never had anything but its welcome credit gets 5
+clarifying-question requests and 5 evidence uploads per 24 hours instead,
+since it can hold that credit unspent indefinitely. Verdicts skip Turnstile: the signed-in account and these limits are the gate. A
 premium credit is reserved before any model call and returned automatically
 if the verdict fails, if the judges decline, or if every Sonnet seat failed
 and the verdict rests on Haiku alone (that verdict is still shown).
@@ -409,7 +415,7 @@ The website and the future iOS/Android app share one JSON API. Base URL
 | `POST /api/v1/auth/apple/code` `{ "code": "<authorizationCode>" }` | iOS, right after a native Sign in with Apple: lets the server keep the Apple refresh token so account deletion can revoke it. `200 { "stored": true }` |
 | `GET /api/v1/me/verdicts` | Your one-sided verdicts, newest first (`?limit=1-50&before=<createdAt>`), each with its anonymized `headline` and your `nameMap` to restore names |
 | `POST /api/v1/clarify` | Premium: up to 2 clarifying questions |
-| `POST /api/v1/verdict` | A verdict (signed in; one premium unit; `401 signin_required` signed out, `402 no_credits` / `fair_use` without a unit). `"tier"` is accepted and ignored. Send an `Idempotency-Key` header to retry safely. Adds `originals_stored`, `display`, `suggested_display_a` and `entitlement`. With `Prefer: respond-async`: `202`, then poll (see *Async verdicts* below) |
+| `POST /api/v1/verdict` | A verdict (signed in; one premium unit; `401 signin_required` signed out, `402 no_credits` / `fair_use` without a unit). `"tier"` is accepted and ignored. Send an `Idempotency-Key` header to retry safely; without one, the same request within the same 10 minutes counts as a retry. Adds `originals_stored`, `display`, `suggested_display_a` and `entitlement`. With `Prefer: respond-async`: `202`, then poll (see *Async verdicts* below) |
 | `GET /api/v1/verdicts/{id}` | A stored verdict (`"status": "ready"`), with `display` (the share page's names, null = labels); `410 removed` once removed. An async verdict still judging or failed answers `"status": "judging"` / `"failed"` |
 | `GET /api/v1/verdicts/{id}/mine` | The writer's view (session or `X-Owner-Token`): `original` as written, `nameMap`, `display`, `originalStatus` (`stored`, `not_stored`, `removed` or `unreadable`); 404 for anyone else |
 | `PATCH /api/v1/verdicts/{id}/display` | Writer: `{ "namesVisible"?, "a"?, "b"?, "others"?: { "Person C": "Leo" } }` (null = the label; labels such as "Party A" refused); `503 names_unavailable` for names when the server has no key |
@@ -877,7 +883,8 @@ All commands run in the browser SSH window (**Connect using SSH**).
   and run `replay-removals <that file>` on the new one before opening it.
 - **Reboots:** if the terminal says *System restart required* after security
   updates, run `sudo reboot`; the app and Caddy start again on their own.
-  A reboot also starts every rate limit and the daily cap over.
+  A restart or reboot starts the rate limits over; the daily cap is counted
+  from the database and carries on.
 
 Where things live: code in `/opt/verdict/repo` (owned by root, so the app
 and the packages its build runs cannot change what root runs), builds in

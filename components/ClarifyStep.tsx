@@ -3,7 +3,6 @@
 import { useEffect, useRef } from "react";
 import { t, type Lang } from "@/lib/i18n";
 import type { Clarification, ClarifyResponse } from "@/lib/types";
-import { PremiumSpark } from "./PremiumBadge";
 import styles from "./ClarifyStep.module.css";
 
 export type ClarifyQuestion = ClarifyResponse["questions"][number];
@@ -64,10 +63,6 @@ export function ClarifyStep({
         onSubmit();
       }}
     >
-      <p className={styles.eyebrow}>
-        <PremiumSpark className={styles.spark} />
-        {t(lang, "tier.premium")}
-      </p>
       <h2 id="clarify-title" ref={headingRef} tabIndex={-1} className={styles.title}>
         {t(lang, "clarify.title")}
       </h2>

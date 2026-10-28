@@ -1,9 +1,8 @@
 # Judge web app (Next.js) on 127.0.0.1:3000, behind Caddy.
 # Installed to /etc/systemd/system/ by update.sh; edits there are overwritten.
 #
-# Run exactly ONE instance: rate limits are decided in this process's memory
-# (and logged to /run/verdict so a restart keeps them), so a second copy would
-# double every limit.
+# Run exactly ONE instance: rate limits are decided in this process's memory,
+# so a second copy would double every limit.
 
 [Unit]
 Description=Judge web app
@@ -33,19 +32,12 @@ RestartSec=5
 # within about 5 minutes, so wait that long instead of killing it; a stop or
 # restart takes longer only while something is judging.
 TimeoutStopSec=320
-# /run/verdict holds the rate-limit log (RATE_LIMIT_DB in the env file). It
-# is kept when the app stops or restarts and cleared only by a reboot, and it
-# never reaches the disk, backups or snapshots.
-RuntimeDirectory=verdict
-RuntimeDirectoryMode=0750
-RuntimeDirectoryPreserve=yes
-
 # 512 MB instance: leave room for Caddy and the OS.
 MemoryHigh=350M
 MemoryMax=400M
 
 # Hardening. The whole file system is read-only for the app except its
-# database directory, /run/verdict and the active release's .next directory
+# database directory and the active release's .next directory
 # (Next.js writes its runtime cache under .next).
 NoNewPrivileges=true
 ProtectSystem=strict

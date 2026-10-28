@@ -15,15 +15,17 @@
  * background (./async) and the request answers 202 with the job id.
  */
 
+import { createHash } from "node:crypto";
 import { NextResponse } from "next/server";
 import { nanoid } from "nanoid";
 import type { Entitlement } from "@/lib/account-types";
 import { API_ERROR_STATUS, apiErrorBody, type ApiErrorBody, type ApiErrorCode } from "@/lib/api-errors";
-import { getViewer, isSameOrigin, premiumEnabled } from "@/lib/auth";
+import { isSameOrigin, premiumEnabled, resolveViewer } from "@/lib/auth";
 import { getVerdict } from "@/lib/db";
 import {
   consumePremiumVerdict,
   getEntitlement,
+  hasWelcomeCreditOnly,
   refundPremiumVerdict,
   reservePremiumVerdict,
   type ReserveResult,
@@ -41,6 +43,8 @@ import { idempotencyKey } from "./context";
 import { premiumLogLine, runPremiumPipeline, type PremiumRun } from "./run";
 
 const UNAVAILABLE_MESSAGE = "The judge is unavailable right now — try again in a minute.";
+
+const IMPLIED_KEY_WINDOW_MS = 10 * 60_000;
 
 const BLOCK_MESSAGES = {
   premium_required: "Premium verdicts need credits or a monthly plan.",
@@ -68,9 +72,12 @@ function unavailable(status = 503): NextResponse {
 
 type Gate = { userId: string; name: string } | { response: NextResponse };
 
-/** Session, origin and configuration checks shared by both handlers. */
+/** Session, origin and configuration checks shared by both handlers. A
+ * failed session lookup is a 503, not signin_required: the apps drop their
+ * token on that code. */
 async function signedInGate(req: Request): Promise<Gate> {
-  const viewer = await getViewer(req);
+  const { viewer, failed } = await resolveViewer(req);
+  if (failed) return { response: unavailable() };
   if (!viewer) return { response: fail("signin_required", "Sign in to get a verdict.") };
   if (viewer.via === "cookie" && !isSameOrigin(req)) {
     return { response: fail("bad_origin", "This request came from another site.") };
@@ -95,7 +102,7 @@ async function limitGate(userId: string, bucket: UserBucket): Promise<NextRespon
           });
     }
     if (bucket !== "premium_verdict") return null;
-    const site = await checkPremiumSiteCap();
+    const site = await checkPremiumSiteCap(userId);
     if (!site.ok) {
       if (site.code === "unavailable") return unavailable();
       return fail("daily_cap", "Premium has used today's capacity — try again tomorrow.", {
@@ -198,14 +205,24 @@ function reserveRefusal(res: Exclude<ReserveResult, { ok: true }>): NextResponse
   }
 }
 
+/** The Idempotency-Key for a request sent without one (older app builds):
+ * the same request in the same ten minutes counts as a retry, so a lost
+ * response is not paid for twice. */
+function impliedKey(data: VerdictRequest, now: number): string {
+  const slot = Math.floor(now / IMPLIED_KEY_WINDOW_MS);
+  const hash = createHash("sha256").update(`${slot}:${JSON.stringify(data)}`).digest("base64url");
+  return `auto-${hash.slice(0, 40)}`;
+}
+
 /** POST /api/v1/verdict. `data` is the parsed body;
  * `rawBody` the body as sent (the original is stored exactly as written). */
 export async function premiumVerdict(req: Request, data: VerdictRequest, rawBody?: unknown): Promise<NextResponse> {
   const startedAt = Date.now();
-  const key = idempotencyKey(req.headers);
-  if (key === null) {
+  const sentKey = idempotencyKey(req.headers);
+  if (sentKey === null) {
     return fail("invalid", "Idempotency-Key must be 1 to 64 letters, digits, '_' or '-'.");
   }
+  const key = sentKey ?? impliedKey(data, startedAt);
 
   const gate = await signedInGate(req);
   if ("response" in gate) return gate.response;
@@ -238,7 +255,7 @@ export async function premiumVerdict(req: Request, data: VerdictRequest, rawBody
 
   let reserved: ReserveResult;
   try {
-    reserved = await reservePremiumVerdict(userId, key ? { idempotencyKey: key } : {});
+    reserved = await reservePremiumVerdict(userId, { idempotencyKey: key });
   } catch (e) {
     console.error("[premium] reserve failed:", e instanceof Error ? e.message : String(e));
     return unavailable();
@@ -246,7 +263,7 @@ export async function premiumVerdict(req: Request, data: VerdictRequest, rawBody
   const asyncMode = wantsAsync(req.headers, rawBody);
   if (!reserved.ok) {
     if (reserved.code === "replay") return replay(userId, reserved.verdictId);
-    if (reserved.code === "in_progress" && asyncMode && key) {
+    if (reserved.code === "in_progress" && asyncMode) {
       const joined = await joinJudging(userId, key);
       if (joined) return joined;
     }
@@ -483,7 +500,14 @@ export async function clarifyHandler(req: Request): Promise<NextResponse> {
   if ("response" in gate) return gate.response;
   const { userId } = gate;
 
-  const limited = await limitGate(userId, "clarify");
+  let welcome: boolean;
+  try {
+    welcome = await hasWelcomeCreditOnly(userId);
+  } catch (e) {
+    console.error("[clarify] account read failed:", e instanceof Error ? e.message : String(e));
+    return unavailable();
+  }
+  const limited = await limitGate(userId, welcome ? "welcome_clarify" : "clarify");
   if (limited) return limited;
 
   let entitlement: Entitlement;

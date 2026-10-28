@@ -13,7 +13,6 @@ import { VerdictReveal } from "./VerdictReveal";
 import { ArgumentMap } from "./ArgumentMap";
 import { FactChips } from "./FactChips";
 import { FactCheckList } from "./FactCheckList";
-import { PremiumBadge } from "./PremiumBadge";
 import { ShareButtons } from "./ShareButtons";
 import type { OwnerShare } from "./ShareDialog";
 import { VerdictCardShell } from "./verdict/VerdictCardShell";
@@ -81,9 +80,8 @@ function TranslationNote({ view, lang }: { view: TranslationView; lang: Lang }) 
  * `verdictId` is the shown result's own id when the page is another
  * verdict's (a round of added context shown on its first verdict's page):
  * translation follows it, sharing stays on `shareId`.
- * Premium results (`tier: "premium"`) add a badge in the top row, a panel
- * line in the footnote and the web fact-check below the card; free results
- * render exactly as before.
+ * Premium results (`tier: "premium"`) add a panel line in the footnote and
+ * the web fact-check below the card; old free results render as before.
  * With a `nameMap` (the writer's own view) the real names go back into the
  * verdict text as well as the labels. Share pages pass the writer's chosen
  * display names as the map with `publicNames`: nobody is "You" there and a
@@ -197,11 +195,10 @@ export function VerdictView({
         top={
           <CardTopRow
             pill={
-              premium ? (
+              twoSided ? (
                 <span className={styles.pillGroup}>
                   {pill}
-                  <PremiumBadge lang={lang} />
-                  {twoSided ? <span className={caseStyles.tsBadge}>{t(lang, "twoSided.badge")}</span> : null}
+                  <span className={caseStyles.tsBadge}>{t(lang, "twoSided.badge")}</span>
                 </span>
               ) : (
                 pill

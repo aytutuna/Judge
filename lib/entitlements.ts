@@ -81,6 +81,11 @@ const SCHEMA = [
     WHERE idempotency_key IS NOT NULL`,
   "CREATE INDEX IF NOT EXISTS premium_usage_user ON premium_usage (user_id, status, created_at)",
   "CREATE INDEX IF NOT EXISTS premium_usage_created ON premium_usage (created_at)",
+  // Kept when an account is deleted: one welcome credit per email, ever.
+  `CREATE TABLE IF NOT EXISTS welcome_claims (
+    claim       TEXT PRIMARY KEY,
+    created_at  TEXT NOT NULL
+  )`,
 ];
 
 const globalForEntitlements = globalThis as unknown as {
@@ -509,6 +514,31 @@ export async function countPremiumToday(now: Date = new Date()): Promise<number>
   return Number(rs.rows[0]?.n ?? 0);
 }
 
+/** No grant on the account but its welcome credit, for a user id column. */
+const welcomeOnly = (userIdSql: string) =>
+  `NOT EXISTS (SELECT 1 FROM entitlement_grants g WHERE g.user_id = ${userIdSql}
+               AND NOT (g.source = 'promo' AND g.external_id LIKE 'welcome:%'))`;
+
+/** True while the account has never had anything but its welcome credit. */
+export async function hasWelcomeCreditOnly(userId: string): Promise<boolean> {
+  const db = await client();
+  const rs = await db.execute({ sql: `SELECT ${welcomeOnly("?")} AS only`, args: [userId] });
+  return Number(rs.rows[0]?.only) === 1;
+}
+
+/** The part of countPremiumToday run on accounts that never had anything
+ * but their welcome credit (deleted accounts' runs included). */
+export async function countWelcomeToday(now: Date = new Date()): Promise<number> {
+  const db = await client();
+  const dayStart = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
+  const rs = await db.execute({
+    sql: `SELECT count(*) AS n FROM premium_usage p
+          WHERE p.created_at >= ? AND p.funded_by = 'credits' AND ${welcomeOnly("p.user_id")}`,
+    args: [iso(dayStart)],
+  });
+  return Number(rs.rows[0]?.n ?? 0);
+}
+
 // --- Grants (admin, stores, web payments) -------------------------------------
 
 /** false = a duplicate (source, externalId), or nothing to apply it to. */
@@ -552,16 +582,51 @@ export async function grantCredits(g: {
 /** Premium verdicts every new account starts with. */
 export const WELCOME_CREDITS = 1;
 
-/** The new account's welcome credit. Keyed by the user id, so it is granted
- * at most once per account. */
-export async function grantWelcomeCredit(userId: string): Promise<GrantResult> {
-  return grantCredits({
-    userId,
-    credits: WELCOME_CREDITS,
-    source: "promo",
-    externalId: `welcome:${userId}`,
-    note: "welcome",
+/** The new account's welcome credit, once per `claim` (welcomeClaim of the
+ * email in lib/auth) and once per account. */
+export async function grantWelcomeCredit(userId: string, claim: string): Promise<GrantResult> {
+  assertId(userId, "userId");
+  const id = nanoid();
+  const nowIso = iso(new Date());
+  const guard = grantExists(id);
+  const results = await writeBatch([
+    {
+      sql: "INSERT INTO welcome_claims (claim, created_at) VALUES (?, ?) ON CONFLICT (claim) DO NOTHING",
+      args: [claim, nowIso],
+    },
+    {
+      sql: `INSERT INTO entitlement_grants
+              (id, user_id, source, external_id, kind, credits_delta, note, created_at)
+            SELECT ?, ?, 'promo', ?, 'credits', ?, 'welcome', ? WHERE changes() = 1
+            ON CONFLICT (source, external_id) DO NOTHING`,
+      args: [id, userId, `welcome:${userId}`, WELCOME_CREDITS, nowIso],
+    },
+    {
+      sql: `INSERT INTO entitlement_accounts (user_id, credits, updated_at)
+            SELECT ?, ?, ? WHERE ${guard.sql}
+            ON CONFLICT (user_id) DO UPDATE SET credits = credits + excluded.credits, updated_at = excluded.updated_at`,
+      args: [userId, WELCOME_CREDITS, nowIso, ...guard.args],
+    },
+  ]);
+  return { applied: results[1].rowsAffected === 1 };
+}
+
+/** The welcome credit of an account whose grant at sign-up never landed (a
+ * failed write, or a restart right after the user row). Only for accounts
+ * made since the first welcome credit went out, so older ones still get
+ * nothing, and only while the email has no claim. */
+export async function grantMissedWelcomeCredit(userId: string, claim: string, createdAt: Date): Promise<GrantResult> {
+  const db = await client();
+  const rs = await db.execute({
+    sql: `SELECT (SELECT min(created_at) FROM welcome_claims) AS since,
+                 EXISTS (SELECT 1 FROM welcome_claims WHERE claim = ?) AS claimed`,
+    args: [claim],
   });
+  const row = rs.rows[0];
+  if (row?.since == null || Number(row.claimed) === 1 || iso(createdAt) < String(row.since)) {
+    return { applied: false };
+  }
+  return grantWelcomeCredit(userId, claim);
 }
 
 /**
@@ -803,10 +868,16 @@ export async function revokeAll(
   return { applied: results[0].rowsAffected === 1 };
 }
 
-/** Account deletion: removes every entitlement row of the user. */
+/** Account deletion: removes every entitlement row of the user. The
+ * reservations stay, cut loose from the account and the verdict, because
+ * the site-wide daily cap counts them. */
 export async function deleteUserEntitlements(userId: string): Promise<void> {
   await writeBatch([
-    { sql: "DELETE FROM premium_usage WHERE user_id = ?", args: [userId] },
+    {
+      sql: `UPDATE premium_usage SET user_id = '', idempotency_key = NULL, verdict_id = NULL, subscription_id = NULL
+            WHERE user_id = ?`,
+      args: [userId],
+    },
     { sql: "DELETE FROM subscriptions WHERE user_id = ?", args: [userId] },
     { sql: "DELETE FROM entitlement_grants WHERE user_id = ?", args: [userId] },
     { sql: "DELETE FROM entitlement_accounts WHERE user_id = ?", args: [userId] },

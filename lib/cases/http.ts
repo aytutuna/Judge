@@ -173,17 +173,17 @@ export async function limitGate(userId: string, bucket: UserBucket, siteCap: boo
     console.error("[cases] limit check failed:", e instanceof Error ? e.message : String(e));
     return fail("unavailable");
   }
-  return siteCap ? premiumGate() : null;
+  return siteCap ? premiumGate(userId) : null;
 }
 
 const PREMIUM_OFF = "Premium is not available on this server right now.";
 
 /** What a premium run needs on top of the per-user limit: Premium switched
  * on, and the site-wide cap. */
-async function premiumGate(): Promise<NextResponse | null> {
+async function premiumGate(userId: string): Promise<NextResponse | null> {
   if (!premiumEnabled()) return fail("not_configured", PREMIUM_OFF);
   try {
-    const site = await checkPremiumSiteCap();
+    const site = await checkPremiumSiteCap(userId);
     return site.ok ? null : limitRefusal(site);
   } catch (e) {
     console.error("[cases] limit check failed:", e instanceof Error ? e.message : String(e));

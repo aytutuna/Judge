@@ -1,7 +1,14 @@
 import { NextResponse } from "next/server";
 import type { MeResponse } from "@/lib/account-types";
 import { apiErrorBody } from "@/lib/api-errors";
-import { clearSessionCookieHeaders, deleteAuthUser, getViewer, isSameOrigin, resolveViewer } from "@/lib/auth";
+import {
+  clearSessionCookieHeaders,
+  deleteAuthUser,
+  getViewer,
+  isSameOrigin,
+  resolveViewer,
+  retryWelcomeCredit,
+} from "@/lib/auth";
 import { deadBearerResponse } from "@/lib/bearer-guard";
 import { deleteUserEntitlements, getEntitlement } from "@/lib/entitlements";
 import { removeUserData } from "@/lib/originals/removal";
@@ -23,7 +30,11 @@ export async function GET(req: Request): Promise<NextResponse> {
     return NextResponse.json(body, { headers: NO_STORE });
   }
   try {
-    const body: MeResponse = { user: viewer.user, entitlement: await getEntitlement(viewer.user.id) };
+    let entitlement = await getEntitlement(viewer.user.id);
+    if (entitlement.credits === 0 && !entitlement.subscription && (await missedWelcome(viewer.user.id))) {
+      entitlement = await getEntitlement(viewer.user.id);
+    }
+    const body: MeResponse = { user: viewer.user, entitlement };
     return NextResponse.json(body, { headers: NO_STORE });
   } catch (e) {
     console.error("[me] entitlement lookup failed:", e instanceof Error ? e.message : String(e));
@@ -31,6 +42,15 @@ export async function GET(req: Request): Promise<NextResponse> {
       status: 503,
       headers: NO_STORE,
     });
+  }
+}
+
+async function missedWelcome(userId: string): Promise<boolean> {
+  try {
+    return await retryWelcomeCredit(userId);
+  } catch (e) {
+    console.error("[me] welcome credit retry failed:", e instanceof Error ? e.message : String(e));
+    return false;
   }
 }
 

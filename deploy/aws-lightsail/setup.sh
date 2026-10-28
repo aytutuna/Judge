@@ -140,10 +140,6 @@ add_missing_settings() {
     info "Added ORIGINALS_KEY (encrypts stored originals). Back it up apart from the database:"
     info "  sudo grep ^ORIGINALS_KEY= $ENV_FILE"
   fi
-  if ! grep -qE '^[#[:space:]]*RATE_LIMIT_DB=' "$ENV_FILE"; then
-    set_env RATE_LIMIT_DB "file:/run/verdict/ratelimit.db"
-    info "Added RATE_LIMIT_DB (rate limits now survive app restarts)."
-  fi
   if ! grep -qE '^[#[:space:]]*CLOUDFLARE_PROXY=' "$ENV_FILE"; then
     printf '\n%s\n' "$(cloudflare_settings_block)" >>"$ENV_FILE"
     info "Added the (empty) custom domain and Cloudflare settings."
@@ -429,15 +425,13 @@ PORT=3000
 DATABASE_URL=file:$DATA_DIR/verdict.db
 
 # --- Abuse and cost limits ----------------------------------------------------
-# Rate limits are counted in the app's memory and also written to this file,
-# so app restarts, crashes and deploys keep them. /run is cleared when the
-# server reboots, and the limits start over then; the spend limit in the
-# Anthropic Console is the only hard cap. Exactly ONE app process may run:
-# never start a second copy of the app on this server.
-RATE_LIMIT_DB=file:/run/verdict/ratelimit.db
+# Rate limits are counted in the app's memory, so a restart or deploy starts
+# them over. Exactly ONE app process may run: never start a second copy of
+# the app on this server.
 RATE_LIMIT_SALT=$(openssl rand -hex 32)
-# Site-wide verdicts per UTC day. 0 pauses the site.
-DAILY_VERDICT_CAP=1000
+# Site-wide verdicts per UTC day, counted from the database. 0 pauses
+# verdicts. Keep a spend limit in the Anthropic Console as well.
+PREMIUM_DAILY_CAP=500
 
 # --- Stored originals ---------------------------------------------------------
 # Encrypts what people wrote (and the names) at rest. Back it up apart from
@@ -474,7 +468,6 @@ TURNSTILE_SECRET_KEY=
 # EMAIL_FROM=Judge <signin@okjudge.com>
 # REVIEW_ACCOUNT_EMAIL=   (store reviewers' test account; with REVIEW_ACCOUNT_CODE, a 6-digit code)
 # REVIEW_ACCOUNT_CODE=
-# PREMIUM_DAILY_CAP=500
 
 $(cloudflare_settings_block)
 EOF

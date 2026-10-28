@@ -28,7 +28,7 @@ import {
   sendSignInCodeEmail,
   sendSignInEmail,
 } from "./email";
-import { ensureEntitlementTables, grantWelcomeCredit } from "./entitlements";
+import { ensureEntitlementTables, grantMissedWelcomeCredit, grantWelcomeCredit } from "./entitlements";
 import { captureAppleRefreshToken, deleteSignInTokens, keepCapturedAppleRefreshToken } from "./signin-tokens";
 
 type Env = Record<string, string | undefined>;
@@ -68,13 +68,20 @@ function authSecret(env: Env): string | null {
   return DEV_SECRET;
 }
 
-export type SecretPurpose = "evidence-token" | "case-invite" | "case-names" | "respondent-claim";
+export type SecretPurpose = "evidence-token" | "case-invite" | "case-names" | "respondent-claim" | "welcome-claim";
 
 /** A 32-byte key for one purpose, derived from the auth secret, or null when
  * accounts are not configured. Rotating BETTER_AUTH_SECRET rotates every key. */
 export function derivedSecret(purpose: SecretPurpose, env: Env = process.env): Buffer | null {
   const secret = authSecret(env);
   return secret ? createHmac("sha256", secret).update(`settle:${purpose}:v1`).digest() : null;
+}
+
+/** What the welcome credit is remembered by: a keyed hash of the email, so
+ * deleting the account and signing up again with it gets no second one. */
+export function welcomeClaim(email: string): string | null {
+  const key = derivedSecret("welcome-claim");
+  return key && createHmac("sha256", key).update(email.trim().toLowerCase()).digest("hex");
 }
 
 /** True when accounts can work: a real secret, or any non-production run. */
@@ -343,7 +350,9 @@ function buildOptions(env: Env, secret: string, client: Awaited<ReturnType<typeo
       user: {
         create: {
           after: async (user) => {
-            await grantWelcomeCredit(user.id).catch((e: unknown) =>
+            const claim = welcomeClaim(user.email);
+            if (!claim) return;
+            await grantWelcomeCredit(user.id, claim).catch((e: unknown) =>
               console.error("[auth] welcome credit failed:", e instanceof Error ? e.message : String(e)),
             );
           },
@@ -494,6 +503,8 @@ export type ViewerLookup = {
   /** The request carried `Authorization: Bearer <token>` and the token
    * matches no live session (unknown, expired or signed out). */
   deadBearer: boolean;
+  /** The lookup itself failed, so the request may well be signed in. */
+  failed?: true;
 };
 
 /**
@@ -501,8 +512,9 @@ export type ViewerLookup = {
  * sent that no longer works. A request with a bearer token is judged by that
  * token alone (a cookie next to it is ignored); without one, by the session
  * cookie. Never throws: a lookup failure is logged and treated as signed out
- * with deadBearer false (the token itself may be fine). With auth off there
- * are no sessions, so nothing counts as a dead token either.
+ * with deadBearer false (the token itself may be fine) and `failed` set.
+ * With auth off there are no sessions, so nothing counts as a dead token
+ * either.
  */
 export async function resolveViewer(req: Request): Promise<ViewerLookup> {
   if (!authConfigured()) return { viewer: null, deadBearer: false };
@@ -518,7 +530,7 @@ export async function resolveViewer(req: Request): Promise<ViewerLookup> {
     };
   } catch (e) {
     console.error("[auth] session lookup failed:", e instanceof Error ? e.message : String(e));
-    return { viewer: null, deadBearer: false };
+    return { viewer: null, deadBearer: false, failed: true };
   }
 }
 
@@ -642,6 +654,14 @@ export async function deleteAuthUser(userId: string): Promise<void> {
   await ctx.internalAdapter.deleteUserSessions(userId);
   await ctx.internalAdapter.deleteAccounts(userId);
   await ctx.internalAdapter.deleteUser(userId);
+}
+
+/** grantMissedWelcomeCredit for this account; true when it was given now. */
+export async function retryWelcomeCredit(userId: string): Promise<boolean> {
+  const ctx = await (await getAuth()).$context;
+  const user = await ctx.internalAdapter.findUserById(userId);
+  const claim = user && welcomeClaim(user.email);
+  return claim ? (await grantMissedWelcomeCredit(userId, claim, new Date(user.createdAt))).applied : false;
 }
 
 /** The first of these ids that is an existing account, else null (store

@@ -167,17 +167,20 @@ describe("owner case page", () => {
     expect(html).not.toContain(esc(t("en", "case.judgeNow.confirm")));
   });
 
-  it("an old free case mentions no held or returned credit, but judging it alone costs one", () => {
+  it("an old free case mentions no held or returned credit, but judging it alone or again costs one", () => {
     const free = (v: CaseView) => caseView({ ...v, tier: "free" });
     const awaiting = owner(free(OWNER.awaiting));
     expect(awaiting).toContain(OWNER.awaiting.inviteUrl as string);
     expect(awaiting).not.toContain("verdict is held");
-    expect(owner(free(OWNER.failed))).toContain(t("en", "case.failedBodyFree"));
+    const failed = owner(free(OWNER.failed));
+    expect(failed).toContain(t("en", "case.failedBodyFree"));
+    expect(failed).toContain("Trying again uses 1 verdict.");
     const expired = owner(free(OWNER.expired));
     expect(expired).toContain(t("en", "case.expiredBodyFree"));
     expect(expired).toContain(t("en", "case.judgeExpired.confirm"));
     expect(expired).toContain(t("en", "case.judgeExpired.yes"));
-    for (const html of [awaiting, owner(free(OWNER.failed))]) expect(html).not.toMatch(/credit|1 verdict/i);
+    expect(awaiting).not.toMatch(/credit|1 verdict/i);
+    expect(failed).not.toMatch(/credit/i);
   });
 
   it("names the viewer's party when this browser has no names for the case", () => {

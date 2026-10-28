@@ -555,6 +555,17 @@
   text-underline-offset: 3px;
 }
 
+.note {
+  margin: 0;
+  color: var(--ink-2);
+  font-size: 13px;
+  text-align: center;
+}
+.note a {
+  color: var(--terra-ink);
+  font-weight: 600;
+}
+
 .field {
   display: flex;
   flex-direction: column;
