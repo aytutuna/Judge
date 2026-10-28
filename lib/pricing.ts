@@ -49,5 +49,5 @@ export function formatPrice(usd: number, lang: Lang): string {
   }).format(usd);
   // Arabic's "7.50 US$" ends on a neutral "$" that a right-to-left line
   // moves in front of "US"; a closing LRM keeps it in place.
-  return langDir(lang) === "rtl" ? s + "‎" : s;
+  return langDir(lang) === "rtl" ? s + "\u200E" : s;
 }
