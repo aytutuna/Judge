@@ -20,6 +20,8 @@ const PURE = [
   "pricing",
   "case-types",
   "originals-types",
+  "history-types",
+  "history-state",
   "langs",
   ...readdirSync(join(__dirname, "..", "lib", "locales"))
     .filter((f) => f !== "check.ts")
