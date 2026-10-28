@@ -13,24 +13,6 @@
   animation: clarify-in 0.45s var(--ease) both;
 }
 
-.eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  margin: 0 0 8px;
-  color: var(--terra-ink);
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-.spark {
-  width: 10px;
-  height: 10px;
-  flex: none;
-}
-
 .title {
   margin: 0;
   color: var(--ink);
