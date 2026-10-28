@@ -104,7 +104,10 @@ An `ANTHROPIC_API_KEY` is **required** — without one the API refuses to judge
 | `JUDGE_ESCALATE_AT` | `2` | Confidence (1–5) at or below which a verdict escalates. Only low-confidence verdicts escalate; with `JUDGE_RUNS=1` that is every verdict (one run caps confidence at 2), so set `JUDGE_EXTRA_RUNS=0` there if you want exactly one judge call |
 | `CRUX_TRIAL` | `1` | Cross-examination of fact/logic winner rulings (up to 2 extra calls). Set `0` to skip it |
 
-**Cost and latency:** one verdict costs 1 anonymizer call + `JUDGE_RUNS` judge
+**Cost and latency of the baseline pipeline** (`scripts/eval.ts`,
+`scripts/live-check.ts`; the site and the apps run the premium pipeline
+below, which uses `JUDGE_EXTRA_RUNS`, `JUDGE_ESCALATE_AT` and `CRUX_TRIAL`
+too): one run costs 1 anonymizer call + `JUDGE_RUNS` judge
 calls (in parallel), plus up to 2 sequential trial calls when a fact/logic
 winner is declared, so winner verdicts take a little longer. Only a
 low-confidence verdict adds `JUDGE_EXTRA_RUNS` more judge calls (one more
@@ -112,8 +115,7 @@ parallel round, about **$0.002** extra at the default 2). Measured on
 Haiku 5.5 ($0.10 / $0.50 per 1M input / output tokens), a judge call uses
 about 3,050 input and 1,300 output tokens, so a full verdict (3 judges +
 anonymizer + up to 2 trial calls) costs roughly **$0.004–0.006** — about
-**$4–6 per 1,000 verdicts**. With the default `DAILY_VERDICT_CAP=1000`, the
-worst case is about $6 a day, plus about $2 if every verdict escalated.
+**$4–6 per 1,000 verdicts**.
 Each call has a fixed time budget (60s for the anonymizer, retry included, 120s for judges,
 45s for escalation judges, 60s total for the trial), so a verdict never hangs
 indefinitely and the worst case (285s) fits the route's 300s limit. The SDK retries rate-limit and overload errors
@@ -143,13 +145,17 @@ proxy (see *Custom domain behind Cloudflare*).
 
 ## Accounts and Premium
 
-Accounts are optional. Signed-out and free visitors get exactly the free
-experience above. Signing in (Apple, Google or an emailed link) adds
-two-sided cases on the free tier (see below) and unlocks
-**Premium**: clarifying questions, web fact-checking with sources and a
-stronger judge panel. It is paid for with credits (one premium verdict = one
-credit) or a monthly plan that covers 35 premium verdicts a month, bought in the apps through
-RevenueCat (see *Purchases* below). Prices live in `lib/pricing.ts`; until
+Every verdict is **Premium**: clarifying questions, web fact-checking with
+sources and the Sonnet/Haiku judge panel. There is no free tier: getting a
+verdict needs an account (Apple, Google or an emailed link; `401
+signin_required` otherwise), and the site stays browsable signed out. Each
+verdict, two-sided case and appeal costs one premium unit: a credit, or one
+of the monthly plan's 35 verdicts a month, bought in the apps through
+RevenueCat (see *Purchases* below). Every new account gets one credit when it
+is created (a `promo` grant keyed `welcome:<user id>`, so at most once);
+accounts from before this got nothing. A `tier` sent by older app builds is
+ignored. `GET /api/v1/config` reports `freeTier: false` and
+`welcomeCredits: 1`. Prices live in `lib/pricing.ts`; until
 `PURCHASES_ENABLED=1` the buy buttons read "Coming soon". Testers get premium
 from the admin script below.
 
@@ -178,7 +184,7 @@ after sign-in.
 | `PREMIUM_SONNET_EFFORT` | `medium` | Thinking depth for non-Haiku premium judges: `low`, `medium` or `high` |
 | `PREMIUM_FACTCHECK_MODEL` | `claude-haiku-5-5` | Model for the web fact-check |
 | `PREMIUM_FACTCHECK_MAX_SEARCHES` | `3` | Web searches per fact-check (1 to 5), $0.01 each |
-| `CASES_ENABLED` | `1` | `0` turns off two-sided cases and appeals (`/api/v1/cases*` and `/api/v1/respond/*` answer `503 not_configured`, `GET /api/v1/config` reports `features.cases: false`). Also off without accounts or `ANTHROPIC_API_KEY`; Premium is not needed (with Premium off, free cases still work and appeals and premium cases answer `503 not_configured`) |
+| `CASES_ENABLED` | `1` | `0` turns off two-sided cases and appeals (`/api/v1/cases*` and `/api/v1/respond/*` answer `503 not_configured`, `GET /api/v1/config` reports `features.cases: false`). Also off whenever Premium is off |
 | `EVIDENCE_ENABLED` | `1` | `0` turns off screenshot evidence (upload endpoints answer `503 not_configured`, evidence tokens are refused with `400 evidence_invalid`, `features.evidence: false`). Always off when Premium is off |
 | `EVIDENCE_MODEL` | `claude-haiku-5-5` | Vision model that transcribes evidence images |
 | `PURCHASES_ENABLED` | *(empty)* | `1` = `GET /api/v1/config` reports `pricing.purchasesEnabled: true`, so the apps offer their in-app purchases. Anything else = false ("Coming soon") |
@@ -190,8 +196,8 @@ Sign-in providers without credentials are reported as unavailable by
 
 **Limits for Premium:** per account 10 premium verdicts per 10 minutes and
 60 per 24 hours, 20 clarifying-question requests per 10 minutes and 100 per
-24 hours (`429 rate_limited`), plus `PREMIUM_DAILY_CAP` (`503 daily_cap`). Premium
-skips Turnstile: the signed-in account and these limits are the gate. A
+24 hours (`429 rate_limited`), plus `PREMIUM_DAILY_CAP` (`503 daily_cap`).
+Verdicts skip Turnstile: the signed-in account and these limits are the gate. A
 premium credit is reserved before any model call and returned automatically
 if the verdict fails, if the judges decline, or if every Sonnet seat failed
 and the verdict rests on Haiku alone (that verdict is still shown).
@@ -214,12 +220,11 @@ sign-in does not depend on it.
    are not searched. A failure or a 40 s timeout lets the judges rule without
    it ("unavailable").
 3. **Judge panel**: 2 × Sonnet + 1 × Haiku in parallel, each seeing the
-   fact-check. Escalation and the crux trial work as on the free tier.
-4. The verdict is stored like a free one (anonymized), with `tier`,
-   `fact_check` and `panel` added, and the reserved credit is consumed
-   (or returned, see above).
+   fact-check, then escalation on a low-confidence panel and the crux trial.
+4. The verdict is stored anonymized, with `tier`, `fact_check` and `panel`,
+   and the reserved credit is consumed (or returned, see above).
 
-### Two-sided cases (free with an account), evidence and appeals (Premium)
+### Two-sided cases, evidence and appeals
 
 - **Hear both sides.** Any signed-in user writes their side (`POST /api/v1/cases`)
   and gets a private invite link `/r/<token>` for the other person. That
@@ -231,28 +236,23 @@ sign-in does not depend on it.
   evidence favors and the fact the verdict hinges on) and what would change
   the verdict. The owner can judge with only their side at any time; after
   7 days without an answer the invite expires.
-- **Free or premium case.** `"tier"` on create, `"free"` by default. A free
-  case is judged by the free judges (the same self-consistent runs,
-  escalation and crux trial as a free verdict, with the two-account prompt),
-  holds no credit and is not counted against `PREMIUM_DAILY_CAP`. Creating
-  it uses the per-account create limit; the answer or judge-now that starts
-  its judging counts as one free verdict for that caller (the per-IP limits
-  and `DAILY_VERDICT_CAP` below). A premium case gets the fact-check and
-  the stronger panel for one premium verdict, held when the case is created
+- **One premium verdict per case.** A `"tier"` on create is ignored. The
+  case gets the fact-check and the panel for one premium verdict, held when
+  the case is created
   (it counts towards the monthly cap and `PREMIUM_DAILY_CAP` then), spent
   when it is judged, and returned if judging fails, the judges decline, or
   nobody answers in 7 days. Judging runs after the response (Next's
   `after()`, so it needs `next start` or a platform that supports it);
   anything still judging after 10 minutes is failed (and a held credit
-  refunded).
+  refunded). Cases created as free before this (`cases.tier = 'free'`) hold
+  nothing and are still judged once without a charge, by the premium panel;
+  judging one again after a failure or expiry takes a unit like any case.
 - **Evidence.** Up to 3 images per side (1 per appeal), PNG/JPEG/WebP/GIF,
   checked by their bytes. The browser shrinks them to 1600 px first. Each
   image is transcribed in memory by `EVIDENCE_MODEL` and then thrown away:
   images are never stored, and the transcript is anonymized with the same
   name map as the text before it is stored or judged. Works for one-sided
-  premium verdicts too (`"evidence"` on `POST /api/v1/verdict`). Evidence
-  on a free case, from either side and on its appeals too, is refused with
-  `402 premium_required`.
+  verdicts too (`"evidence"` on `POST /api/v1/verdict`).
 - **Appeals.** After a verdict, each party may add context once (the owner;
   the other person only when signed in with Premium, and only the person who
   wrote side B: the account they answered with, or whoever holds the claim
@@ -282,8 +282,7 @@ most of it. That is the typical range, not a limit: every model call may
 write up to 16k output tokens, so the code allows up to about **$0.43** for
 one verdict (anonymize $0.008, fact-check with 3 searches $0.044, two Sonnet
 seats $0.34, Haiku seat $0.008, escalation $0.017, crux trial $0.017). Each
-clarifying-question call can add up to about $0.008. A free verdict costs
-about $0.005.
+clarifying-question call can add up to about $0.008.
 
 **Margins** have to be worked out on what is left after the app store's cut
 (Apple and Google keep 15 to 30%), since the mobile app is the main target.
@@ -404,13 +403,13 @@ The website and the future iOS/Android app share one JSON API. Base URL
 
 | Call | Purpose |
 |---|---|
-| `GET /api/v1/config` | Startup: which sign-in methods work, whether Premium is on, prices (`AppConfig`) |
+| `GET /api/v1/config` | Startup: which sign-in methods work, whether Premium is on, prices, `freeTier: false` and `welcomeCredits` (`AppConfig`) |
 | `GET /api/v1/me` | The account and its entitlement (`MeResponse`); signed out = `{ "user": null, "entitlement": null }`; a dead bearer token = `401 signin_required` |
 | `DELETE /api/v1/me` `{ "confirm": "delete" }` | Removes every verdict the account owns and its side of every case (originals and names blanked, links closed; no verdict row is deleted), then deletes the account, sessions, sign-ins and entitlements (both stores require in-app deletion). Stored Sign in with Apple tokens are revoked at Apple first; an Apple failure is logged and does not stop the deletion |
 | `POST /api/v1/auth/apple/code` `{ "code": "<authorizationCode>" }` | iOS, right after a native Sign in with Apple: lets the server keep the Apple refresh token so account deletion can revoke it. `200 { "stored": true }` |
 | `GET /api/v1/me/verdicts` | Your one-sided verdicts, newest first (`?limit=1-50&before=<createdAt>`), each with its anonymized `headline` and your `nameMap` to restore names |
 | `POST /api/v1/clarify` | Premium: up to 2 clarifying questions |
-| `POST /api/v1/verdict` | A verdict; `"tier": "premium"` for Premium. Send an `Idempotency-Key` header to retry safely. Adds `owner_token` (signed out only, returned once), `originals_stored`, `display` and `suggested_display_a`. With `Prefer: respond-async`: `202`, then poll (see *Async verdicts* below) |
+| `POST /api/v1/verdict` | A verdict (signed in; one premium unit; `401 signin_required` signed out, `402 no_credits` / `fair_use` without a unit). `"tier"` is accepted and ignored. Send an `Idempotency-Key` header to retry safely. Adds `originals_stored`, `display`, `suggested_display_a` and `entitlement`. With `Prefer: respond-async`: `202`, then poll (see *Async verdicts* below) |
 | `GET /api/v1/verdicts/{id}` | A stored verdict (`"status": "ready"`), with `display` (the share page's names, null = labels); `410 removed` once removed. An async verdict still judging or failed answers `"status": "judging"` / `"failed"` |
 | `GET /api/v1/verdicts/{id}/mine` | The writer's view (session or `X-Owner-Token`): `original` as written, `nameMap`, `display`, `originalStatus` (`stored`, `not_stored`, `removed` or `unreadable`); 404 for anyone else |
 | `PATCH /api/v1/verdicts/{id}/display` | Writer: `{ "namesVisible"?, "a"?, "b"?, "others"?: { "Person C": "Leo" } }` (null = the label; labels such as "Party A" refused); `503 names_unavailable` for names when the server has no key |
@@ -419,7 +418,7 @@ The website and the future iOS/Android app share one JSON API. Base URL
 | `POST /api/v1/verdicts/{id}/translate?lang=en\|tr` | A stored verdict in the other language |
 | `POST /api/v1/auth/dev-login` | Local testing only (see above); 404 everywhere else |
 | `POST /api/v1/evidence` | Premium: transcribe 1 to 3 evidence images, get signed evidence tokens |
-| `POST /api/v1/cases` | Start a two-sided case (signed in; `"tier": "premium"` holds 1 premium verdict) |
+| `POST /api/v1/cases` | Start a two-sided case (signed in; holds 1 premium verdict; `"tier"` is ignored) |
 | `GET /api/v1/cases` | Your cases, newest first (`?limit=1-50&before=<createdAt>`); each has the anonymized `headline` of its latest verdict and an `excerpt` of your side |
 | `GET /api/v1/cases/{id}` / `DELETE` | Your case (`CaseView`) / remove your side (kept for older clients; same as `/removal`) |
 | `GET /api/v1/cases/{id}/originals` | Your side (and appeal) as you wrote them |
@@ -443,10 +442,10 @@ without it keep the old behavior (the response arrives when the verdict is
 done), so older pages and app builds keep working.
 
 1. **Request:** `POST /api/v1/verdict` as before, plus the header
-   `Prefer: respond-async` (or `"async": true` in the JSON body). Free and
-   one-sided premium alike; premium keeps its `Idempotency-Key`.
+   `Prefer: respond-async` (or `"async": true` in the JSON body), with its
+   `Idempotency-Key`.
    Everything that can refuse the request still answers at once with the
-   usual status and `code`: validation, Turnstile, rate limits and caps,
+   usual status and `code`: validation, rate limits and caps,
    sign-in, credits (the unit is reserved now) and anonymization (`503
    unavailable` when a name cannot be taken out; nothing is judged or
    stored, and a reserved unit is refunded).
@@ -513,9 +512,9 @@ module the app can import); every case and respond response is
    sign-in and rate-limit codes. Phone numbers, e-mail addresses, handles and
    account numbers are masked when the transcript is anonymized.
 2. **Create:** `POST /api/v1/cases` with an optional `Idempotency-Key` and
-   `{ "text": "...", "framework": { "preset": "balanced" }, "lang": "en", "tier": "premium", "evidence": ["v1...."] }`.
-   `"tier"` is `"free"` (default; no `evidence`) or `"premium"`; `case.tier`
-   echoes it. Add `"displayName": "Aytu"` for the name shown on the share
+   `{ "text": "...", "framework": { "preset": "balanced" }, "lang": "en", "evidence": ["v1...."] }`.
+   A `"tier"` is ignored; `case.tier` is `"premium"` (`"free"` only on cases
+   from before every verdict was premium). Add `"displayName": "Aytu"` for the name shown on the share
    pages (empty or absent = Party A).
    `201 { "case": CaseView, "name_map": [...], "entitlement": {...} }`
    (`200` with `"replayed": true` and an empty `name_map` on a retried key).
@@ -527,8 +526,8 @@ module the app can import); every case and respond response is
    `status`: `awaiting_respondent | judging | judged | failed | expired`.
    `case.canJudgeNow` says whether `POST /cases/{id}/judge` makes sense
    (`{ "mode": "only_mine" }` while waiting for the answer; no body needed to
-   retry a failed case; an expired premium case takes a new unit, a free one
-   none). `202` when judging
+   retry a failed case; an expired or failed case takes a new unit). `202`
+   when judging
    started, `200` when it already was.
 4. **The other person** opens `https://<domain>/r/<token>` (or the app calls
    `GET /api/v1/respond/{token}`), then `POST /api/v1/respond/{token}` with
@@ -608,8 +607,8 @@ taken out of the text; the same request can be retried, e.g. with initials), plu
   expired, signed out, account deleted) answers `401` with code
   `signin_required` on every route that reads the session, before any other
   work (`{ "error": "Sign in first.", "code": "signin_required" }` where the
-  route would otherwise serve a signed-out caller): `POST /api/v1/verdict`
-  (free too), `GET /api/v1/verdicts/{id}` (polls and share reads),
+  route would otherwise serve a signed-out caller): `POST /api/v1/verdict`,
+  `GET /api/v1/verdicts/{id}` (polls and share reads),
   `GET /api/v1/me`, the writer and respondent routes, and every route that
   needs an account. Drop the token and sign in again. Requests without an
   `Authorization` header (the website, share viewers) are unaffected; an
@@ -628,9 +627,6 @@ taken out of the text; the same request can be retried, e.g. with initials), plu
   after 3 wrong codes the code is burned: `403 { "code": "TOO_MANY_ATTEMPTS" }`;
   late: `400 { "code": "OTP_EXPIRED" }`. Both endpoints allow 3 requests per
   minute per IP (`429`). No Turnstile token is needed.
-- **Free verdicts from the app** need a bot check other than Turnstile
-  (e.g. App Attest / Play Integrity, or free verdicts for signed-in users
-  under a per-user limit) before the app ships.
 
 ### Purchases
 
@@ -1048,15 +1044,12 @@ switch the records to *DNS only* (grey cloud), empty `CLOUDFLARE_PROXY=` and
 | Item | Cost |
 |---|---|
 | Lightsail $5 plan (static IP and 1 TB transfer included) | $5 |
-| Model usage | about $4–6 per 1,000 verdicts (see *Cost and latency*) |
+| Model usage | about $30–50 per 1,000 verdicts (see *Cost per premium verdict*) |
 | Automatic snapshots (optional) | a little per GB stored |
 
-`DAILY_VERDICT_CAP` (1000 by default) holds model spend to about $6 per UTC
-day in normal running: the count survives app restarts, crashes and deploys
-(it is logged to `/run/verdict`). It is not a hard cap: a reboot of the
-server starts the count over, so a day with reboots can go past it. Lower
-the cap to what you are willing to pay, and treat the Anthropic spend limit
-(step 6) as the only hard stop.
+Every verdict is paid for with a credit or the monthly plan, and
+`PREMIUM_DAILY_CAP` (500 by default, counted from the database) bounds a
+day's runs. Treat the Anthropic spend limit (step 6) as the only hard stop.
 
 ## Deploy to Vercel (alternative)
 
@@ -1094,9 +1087,9 @@ non-commercial use only; a commercial site needs the Pro plan.
    `TURNSTILE_SECRET_KEY`. `NEXT_PUBLIC_` values are baked in at build time,
    so redeploy after changing them. (For local testing, Cloudflare publishes
    test keys that always pass.)
-6. **Model and budget.** Set `ANTHROPIC_API_KEY`, and `DAILY_VERDICT_CAP` to
+6. **Model and budget.** Set `ANTHROPIC_API_KEY`, and `PREMIUM_DAILY_CAP` to
    the most verdicts per day you are willing to pay for (each costs about
-   half a cent; see *Cost and latency* above). Also set `RATE_LIMIT_SALT`
+   4 cents; see *Cost per premium verdict* above). Also set `RATE_LIMIT_SALT`
    to a long random string (e.g. the output of `openssl rand -hex 32`).
 7. **Site details.** Set `CONTACT_EMAIL` to an inbox you read; the privacy
    page offers it for removal requests and hides the contact section until
