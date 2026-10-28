@@ -212,6 +212,8 @@ struct VerdictSections<Appeal: View>: View {
             if !new.inSheet {
                 appealShown = false
                 detailsAppealShown = false
+                // The judging line sits under the card, not on the details screen.
+                if new == .judging { showDetails = false }
             } else if old == .judging, case .form(failed: .some) = new {
                 // The round failed: back to the form, which says why.
                 openAppeal()
