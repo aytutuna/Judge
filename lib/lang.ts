@@ -47,10 +47,11 @@ function applyDocumentLang(l: Lang): void {
   document.documentElement.dir = langDir(l);
 }
 
+/** The page's lang and dir follow once the strings are here (useLang), so a
+ * failed download never leaves English text marked up as another language. */
 export function setLang(l: Lang): void {
   current = l;
   void loadLocale(l);
-  applyDocumentLang(l);
   try {
     localStorage.setItem(STORAGE_KEY, l);
   } catch {

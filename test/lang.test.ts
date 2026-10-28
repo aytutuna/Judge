@@ -4,14 +4,11 @@ import { setLang } from "../lib/lang";
 describe("setLang", () => {
   afterEach(() => vi.unstubAllGlobals());
 
-  it("mirrors the language and its direction onto <html>", () => {
+  it("leaves <html> alone until the strings are here", () => {
     const root = { lang: "en", dir: "ltr" };
     vi.stubGlobal("document", { documentElement: root });
-    setLang("tr");
-    expect(root).toEqual({ lang: "tr", dir: "ltr" });
+    // Arabic is not enabled, so its strings never arrive.
     setLang("ar");
-    expect(root).toEqual({ lang: "ar", dir: "rtl" });
-    setLang("en");
     expect(root).toEqual({ lang: "en", dir: "ltr" });
   });
 
