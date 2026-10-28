@@ -137,8 +137,8 @@ fun PricingScreen(
                     ) {
                         Tiers.balance(s, entitlement)?.let { Text(it, style = JudgeType.bodyStrong) }
                         if (sub != null) {
-                            // The line above counts the plan first, so credits kept beside it need their own line.
-                            if (entitlement.credits > 0) {
+                            // Credits kept beside the plan need their own line; past the cap the line above counts them.
+                            if (Tiers.remaining(entitlement)?.monthly == true && entitlement.credits > 0) {
                                 Text("${s.accountCredits}: ${entitlement.credits}", style = JudgeType.body.copy(color = Palette.ink2))
                             }
                             val date = Errors.formatDate(lang, sub.periodEnd) ?: sub.periodEnd

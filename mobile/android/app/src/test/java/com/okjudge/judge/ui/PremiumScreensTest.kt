@@ -188,6 +188,22 @@ class PremiumScreensTest {
     }
 
     @Test
+    fun pricing_creditsBesideThePlan_areCountedOnce() {
+        val sub = me("subscriber").entitlement!!.subscription!!
+        var entitlement by mutableStateOf(me("subscriber").entitlement!!.copy(credits = 3))
+        compose.setContent {
+            Themed(AppLang.EN) {
+                PricingScreen(PricingInfo(), Features(true, true), signedIn = true, signInOffered = true, entitlement = entitlement, onBack = {}, onSignIn = {}, onNew = {})
+            }
+        }
+        compose.onNodeWithText("${en.accountCredits}: 3").assertExists()
+
+        entitlement = entitlement.copy(subscription = sub.copy(used = sub.cap))
+        compose.onNodeWithText(en.appBalanceLeft(3)).assertExists()
+        compose.onAllNodesWithText("${en.accountCredits}: 3").assertCountEquals(0)
+    }
+
+    @Test
     fun pricing_signedOut_offersSignIn_andTheExtrasOnOffer() {
         compose.setContent {
             Themed(AppLang.EN) {
