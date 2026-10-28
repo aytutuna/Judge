@@ -576,10 +576,12 @@ function renderEn(party: Party, suffix: string | undefined, apos: string, before
 }
 
 /** Any other language: the name as written where the bare label stood. The
- * narrator, and a label with a suffix, stay as written: there is no grammar
+ * narrator, and a label with a suffix (after an apostrophe, or the hyphen
+ * or colon of "Fél A-t", "Part A:s"), stay as written: there is no grammar
  * here to make "you" or an inflected name right. */
-function renderPlain(party: Party, suffix: string | undefined): Rendered {
-  return party.self || suffix !== undefined ? null : { text: party.name, consumed: 0 };
+function renderPlain(party: Party, suffix: string | undefined, after: string): Rendered {
+  if (party.self || suffix !== undefined || /^[-:]\p{L}/u.test(after)) return null;
+  return { text: party.name, consumed: 0 };
 }
 
 function renderTr(party: Party, suffix: string | undefined, apos: string, before: string, after: string): Rendered {
@@ -622,7 +624,7 @@ export function restoreNames(text: string, parties: Parties, textLang: Lang): st
         ? renderTr(party, suffix, apos, before, after)
         : textLang === "en"
           ? renderEn(party, suffix, apos, before, after)
-          : renderPlain(party, suffix);
+          : renderPlain(party, suffix, after);
     if (!r) continue;
     out += text.slice(pos, m.index) + r.text;
     pos = m.index + whole.length + r.consumed;

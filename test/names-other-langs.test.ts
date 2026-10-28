@@ -40,6 +40,12 @@ describe("names in a language added later", () => {
     expect(restoreNames("Partei A hat recht und Partei B nicht.", self, "de")).toBe("Partei A hat recht und Jonas nicht.");
   });
 
+  it("keeps a label with a hyphen or colon suffix as written", () => {
+    expect(restoreNames("Fél A-t Fél B hívta fel.", named, "hu")).toBe("Fél A-t Jonas hívta fel.");
+    expect(restoreNames("Part A:s förslag, Part B svarar.", named, "sv")).toBe("Part A:s förslag, Jonas svarar.");
+    expect(restoreNames("Partei A-Seite", named, "de")).toBe("Partei A-Seite");
+  });
+
   it("leaves words that only start like a label", () => {
     expect(restoreNames("Parteiausschluss, Partei Abc, ParteiA", named, "de")).toBe("Parteiausschluss, Partei Abc, ParteiA");
   });
