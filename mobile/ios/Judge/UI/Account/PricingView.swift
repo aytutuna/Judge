@@ -103,18 +103,6 @@ struct PricingView: View {
     private func premiumPlan(_ pricing: PricingInfo, lang: AppLang) -> some View {
         let account = app.account
         return VStack(alignment: .leading, spacing: 14) {
-            HStack(spacing: 6) {
-                Image(systemName: "sparkle")
-                    .foregroundStyle(Brand.terraInk)
-                    .accessibilityHidden(true)
-                Text(L10n.pricingIncludedTitle(lang))
-                    .brandText(Self.planTitle)
-                    .foregroundStyle(Brand.ink)
-            }
-            .accessibilityAddTraits(.isHeader)
-            features(Self.premiumFeatures(account.premiumEnabled ? account.features : nil, lang: lang))
-
-            Divider().overlay(Brand.line)
             Text(L10n.pricingPacksTitle(lang))
                 .brandText(.slotTitle)
                 .foregroundStyle(Brand.ink)
@@ -156,6 +144,18 @@ struct PricingView: View {
                     .buttonStyle(PrimaryButtonStyle())
                     .padding(.top, 4)
             }
+
+            Divider().overlay(Brand.line)
+            HStack(spacing: 6) {
+                Image(systemName: "sparkle")
+                    .foregroundStyle(Brand.terraInk)
+                    .accessibilityHidden(true)
+                Text(L10n.pricingIncludedTitle(lang))
+                    .brandText(Self.planTitle)
+                    .foregroundStyle(Brand.ink)
+            }
+            .accessibilityAddTraits(.isHeader)
+            features(Self.premiumFeatures(account.premiumEnabled ? account.features : nil, lang: lang))
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(20)

@@ -151,13 +151,7 @@ fun PricingScreen(
                 }
 
                 PlanCard {
-                    Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                        TintedIcon(remember { JudgeIcons.spark(Palette.terra) }, 14)
-                        Text(s.pricingIncludedTitle, style = JudgeType.sectionTitle, modifier = Modifier.semantics { heading() })
-                    }
-                    FeatureList(Tiers.premiumFeatureKeys(cases = features?.cases == true, evidence = features?.evidence == true))
-
-                    Text(s.pricingPacksTitle, style = JudgeType.slotTitle.copy(color = Palette.ink), modifier = Modifier.padding(top = 8.dp))
+                    Text(s.pricingPacksTitle, style = JudgeType.slotTitle.copy(color = Palette.ink))
                     Text(s.pricingPacksLead, style = JudgeType.slotText)
                     pricing.packs.forEach { pack ->
                         val offer = offerFor(pack.id)
@@ -217,6 +211,16 @@ fun PricingScreen(
                             modifier = Modifier.fillMaxWidth().padding(top = 8.dp).testTag(PricingTags.SIGN_IN),
                         )
                     }
+
+                    Row(
+                        Modifier.padding(top = 8.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    ) {
+                        TintedIcon(remember { JudgeIcons.spark(Palette.terra) }, 14)
+                        Text(s.pricingIncludedTitle, style = JudgeType.sectionTitle, modifier = Modifier.semantics { heading() })
+                    }
+                    FeatureList(Tiers.premiumFeatureKeys(cases = features?.cases == true, evidence = features?.evidence == true))
                 }
 
                 // "Prices in USD, payments not open yet" is wrong once the store sells in the buyer's currency.
