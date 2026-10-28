@@ -118,7 +118,7 @@ private struct CaseScreenContent: View {
     private func header(_ view: CaseView, lang: AppLang) -> some View {
         VStack(alignment: .leading, spacing: 10) {
             if view.status == .awaitingRespondent {
-                waitingHead(app.caseOtherName(view.id), lang: lang)
+                waitingHead(otherName(view), lang: lang)
             } else {
                 // A case judged on the owner's side alone is not "both sides" anymore.
                 Kicker(text: view.mode == .oneSided ? L10n.caseKickerOneSided(lang) : L10n.caseKicker(lang))
@@ -131,8 +131,14 @@ private struct CaseScreenContent: View {
         }
     }
 
-    /// The other side's name is only known when it was typed on Home on
-    /// this run of the app.
+    /// The other side's name as typed on Home on this run of the app, else
+    /// the one the case carries.
+    private func otherName(_ view: CaseView) -> String? {
+        [app.caseOtherName(view.id), view.display.b]
+            .compactMap { $0?.trimmingCharacters(in: .whitespacesAndNewlines) }
+            .first { !$0.isEmpty }
+    }
+
     @ViewBuilder
     private func waitingHead(_ other: String?, lang: AppLang) -> some View {
         Kicker(text: L10n.appCaseWaitingKicker(lang), color: Brand.sageInk)
@@ -160,7 +166,7 @@ private struct CaseScreenContent: View {
                 .accessibilityAddTraits(.updatesFrequently)
             CaseJudgingCard(lang: lang, premium: view.tier == .premium)
         case .awaitingRespondent:
-            let other = app.caseOtherName(view.id)
+            let other = otherName(view)
             if let url = view.inviteUrl {
                 InviteLinkView(
                     url: url,
