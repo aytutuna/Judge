@@ -7,7 +7,6 @@ import { CaseModeSwitch, type CaseMode } from "@/components/case/CaseModeSwitch"
 import { EvidencePicker, useEvidence } from "@/components/case/EvidencePicker";
 import { ClarifyStep, buildClarifications, type ClarifyQuestion } from "@/components/ClarifyStep";
 import { JudgingOverlay } from "@/components/JudgingOverlay";
-import { Recent } from "@/components/home/Recent";
 import JudgingScene from "@/components/scene/JudgingScene";
 import { AppShell } from "@/components/shell/AppShell";
 import { refreshHistory, useHistory } from "@/components/shell/useHistory";
@@ -110,8 +109,9 @@ export default function Home() {
   // the account's first name until they type).
   const [caseName, setCaseName] = useState<string | null>(null);
   const viewer = useViewer();
-  const history = useHistory(viewer);
-  const [now] = useState(Date.now);
+  // Nothing from it is listed here; the hook still settles entries left
+  // judging and warms the Verdicts tab.
+  useHistory(viewer);
   const [checking, setChecking] = useState(false);
   const [questions, setQuestions] = useState<ClarifyQuestion[]>([]);
   const [answers, setAnswers] = useState<Record<string, string>>({});
@@ -665,18 +665,15 @@ export default function Home() {
             />
           )}
           {empty ? (
-            <>
-              <Recent lang={lang} items={history.items} now={now} />
-              <div className={styles.below}>
-                <Link href="/about#sample" className={styles.sample}>
-                  {t(lang, "thread.sample")} <span aria-hidden>→</span>
-                </Link>
-                <p className={styles.privacy}>
-                  {t(lang, "privacyNote")} <Link href="/privacy">{t(lang, "privacyLink")}</Link>
-                </p>
-                <p className={styles.privacy}>{t(lang, "footer.note")}</p>
-              </div>
-            </>
+            <div className={styles.below}>
+              <Link href="/about#sample" className={styles.sample}>
+                {t(lang, "thread.sample")} <span aria-hidden>→</span>
+              </Link>
+              <p className={styles.privacy}>
+                {t(lang, "privacyNote")} <Link href="/privacy">{t(lang, "privacyLink")}</Link>
+              </p>
+              <p className={styles.privacy}>{t(lang, "footer.note")}</p>
+            </div>
           ) : null}
         </div>
       </main>
