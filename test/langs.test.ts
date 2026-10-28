@@ -12,7 +12,7 @@ import {
   matchLang,
 } from "../lib/langs";
 import { CreateCaseRequest } from "../lib/case-types";
-import { VerdictRequest, VerdictResult } from "../lib/types";
+import { ClarifyRequest, VerdictRequest, VerdictResult } from "../lib/types";
 import { formatDate } from "../lib/i18n";
 import { formatPrice } from "../lib/pricing";
 import { TR_RESULT } from "./translate-fixtures";
@@ -115,10 +115,13 @@ describe("schemas", () => {
     expect(VerdictResult.safeParse({ ...result, lang: "xx" }).success).toBe(false);
   });
 
-  it("default requests to English", () => {
+  it("default requests to English and take only enabled languages", () => {
     const argument = "We argued about whose turn it was to do the dishes.";
     expect(VerdictRequest.parse({ argument }).lang).toBe("en");
-    expect(VerdictRequest.parse({ argument, lang: "ja" }).lang).toBe("ja");
-    expect(CreateCaseRequest.safeParse({ text: argument, lang: "ar" }).success).toBe(true);
+    expect(VerdictRequest.parse({ argument, lang: "tr" }).lang).toBe("tr");
+    expect(VerdictRequest.safeParse({ argument, lang: "ja" }).success).toBe(false);
+    expect(ClarifyRequest.safeParse({ argument, lang: "ja" }).success).toBe(false);
+    expect(CreateCaseRequest.safeParse({ text: argument, lang: "tr" }).success).toBe(true);
+    expect(CreateCaseRequest.safeParse({ text: argument, lang: "ar" }).success).toBe(false);
   });
 });

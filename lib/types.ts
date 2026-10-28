@@ -1,6 +1,6 @@
 import { z } from "zod";
 import type { Entitlement } from "./account-types";
-import { LANG_CODES } from "./langs";
+import { isEnabled, LANG_CODES } from "./langs";
 
 export const ClaimKind = z.enum(["fact", "value", "definition", "logic"]);
 export type ClaimKind = z.infer<typeof ClaimKind>;
@@ -261,11 +261,15 @@ export const Clarification = z.object({
 });
 export type Clarification = z.infer<typeof Clarification>;
 
+/** The language a new verdict or case is written in. Only an enabled one
+ * has the voice note the prompts rely on; stored results take any code. */
+export const RequestLang = z.enum(LANG_CODES).refine(isEnabled, "This language isn't available yet.");
+
 export const VerdictRequest = z.object({
   argument: ArgumentText,
   // Older app builds still send a judging style as `framework`; zod strips unknown keys.
   /** UI + judge output language. Stored as the result's `lang`. */
-  lang: z.enum(LANG_CODES).default("en"),
+  lang: RequestLang.default("en"),
   /** Ignored: every verdict is premium. Older app builds still send it. */
   tier: Tier.optional(),
   /** Answers to the clarifying questions. */
@@ -277,7 +281,7 @@ export type VerdictRequest = z.infer<typeof VerdictRequest>;
 
 export const ClarifyRequest = z.object({
   argument: ArgumentText,
-  lang: z.enum(LANG_CODES).default("en"),
+  lang: RequestLang.default("en"),
 });
 export type ClarifyRequest = z.infer<typeof ClarifyRequest>;
 
