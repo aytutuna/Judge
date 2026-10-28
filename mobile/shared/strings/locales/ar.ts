@@ -1,0 +1,201 @@
+import type { AppLocale } from "../app-strings";
+
+// Modern Standard Arabic, second person singular, as on the web. The example
+// cases address the other person, so their verbs follow that person's gender.
+const ar: AppLocale = {
+  strings: {
+    "app.name": "Judge",
+    "app.tab.new": "جديد",
+    "app.tab.history": "أحكامي",
+    "app.tab.settings": "الإعدادات",
+    "app.input.counter": "{count} / {max}",
+    "app.history.title": "أحكامي",
+    "app.history.empty": "لا أحكام بعد. احسم أول خلاف لك وسيظهر حكمه هنا.",
+    "app.history.deviceOnly":
+      "الأحكام محفوظة على هذا الهاتف فقط. حذف حكم من هنا لا يوقف رابط مشاركته.",
+    "app.history.delete": "حذف",
+    "app.history.clearAll": "حذف الكل",
+    "app.history.clearConfirm":
+      "هل تريد حذف كل الأحكام المحفوظة من هذا الهاتف؟ ستظل روابط المشاركة تعمل.",
+    "app.history.clearYes": "نعم، احذفها",
+    "app.pricing.free.account":
+      "سجّل الدخول باستخدام Apple أو Google أو البريد الإلكتروني",
+    "app.pricing.headline": "حكمك الأول على حسابنا.",
+    "app.pricing.sub":
+      "أنشئ حسابًا واحصل على أول حكم مجانًا، بكل المزايا. بعد ذلك، اختر باقة أو اشترك شهريًا.",
+    "app.pricing.headlineMember": "احصل على المزيد من الأحكام.",
+    "app.pricing.subMember":
+      "اختر باقة أو اشترك شهريًا. كل حكم يحصل على هيئة القضاة كاملة.",
+    "app.balance.left": "بقي لك {n} حكم",
+    "app.balance.monthly": "المتبقي هذا الشهر: {left} من {cap}",
+    "app.balance.none": "لم يبقَ لك أي حكم",
+    "app.balance.caseCost": "إرسال الرابط يستهلك حكمًا واحدًا",
+    "app.cancel": "إلغاء",
+    "app.retry": "إعادة المحاولة",
+    "app.error.offline":
+      "يبدو أنك غير متصل بالإنترنت. تحقّق من اتصالك وحاول مجددًا.",
+    "app.error.timeout": "تأخّر القضاة كثيرًا في الرد. حاول مجددًا بعد دقيقة.",
+    "app.error.interrupted":
+      "انقطع الاتصال بينما كان Judge يعمل في الخلفية. أبقِ التطبيق مفتوحًا حتى يصل الحكم، ثم حاول مجددًا.",
+    "app.turnstile.error":
+      "تعذّر تحميل التحقق البشري. تحقّق من اتصالك وحاول مجددًا.",
+    "app.factcheck.sourceAria": "{title}، يفتح صفحة الويب",
+    "app.error.badOrigin":
+      "جاء هذا الطلب من مصدر لا نعرفه. تأكّد من أن التطبيق محدَّث وحاول مجددًا.",
+    "app.translate.offline":
+      "لا يمكن الترجمة وأنت غير متصل بالإنترنت، فإليك النص الأصلي.",
+    "app.share.title": "مشاركة الحكم",
+    "app.settings.language": "اللغة",
+    "app.settings.languageDevice": "لغة الهاتف",
+    "app.settings.about": "عن Judge",
+    "app.settings.version": "الإصدار {version}",
+    "app.signin.required": "سجّل الدخول لتحصل على حكم.",
+    "app.signin.or": "أو",
+    "app.signin.codeRequest": "أرسل لي رمز الدخول",
+    "app.signin.codeSent":
+      "أرسلنا رمزًا إلى {email}. يعمل الرمز لمدة 10 دقائق.",
+    "app.signin.codeLabel": "أدخل الرمز المكوّن من 6 أرقام",
+    "app.signin.codeSubmit": "تسجيل الدخول",
+    "app.signin.codeInvalid":
+      "هذا الرمز غير صحيح. تحقّق من الرسالة وحاول مجددًا.",
+    "app.signin.codeExpired": "انتهت صلاحية هذا الرمز. اطلب رمزًا جديدًا.",
+    "app.signin.codeTooMany":
+      "تجاوزت عدد المحاولات المسموح بها لهذا الرمز. اطلب رمزًا جديدًا.",
+    "app.signin.codeResend": "إرسال رمز جديد",
+    "app.signin.changeEmail": "استخدام بريد إلكتروني آخر",
+    "app.signin.rateLimited": "محاولات كثيرة جدًا. انتظر دقيقة وحاول مجددًا.",
+    "app.signin.unavailable": "تسجيل الدخول غير متاح الآن. حاول لاحقًا.",
+    "app.account.deleteTitle": "هل تريد حذف حسابك؟",
+    "app.account.deleteBody":
+      "ستُحذف بيانات تسجيل دخولك ورصيدك وخطتك وبياناتك الشخصية، وستتوقف روابط مشاركتك عن العمل. أما نصوص الأحكام فتبقى محفوظة دون اسمك، كما هو موضح في سياسة الخصوصية.",
+    "app.account.deleteConfirm": "حذف الحساب",
+    "app.account.deleted": "تم حذف حسابك.",
+    "app.account.signOutConfirm":
+      "هل تريد تسجيل الخروج من Judge على هذا الهاتف؟",
+    "app.account.signedOut": "تم تسجيل خروجك.",
+    "app.account.sessionExpired":
+      "تم تسجيل خروجك. سجّل الدخول مجددًا للمتابعة.",
+    "app.close": "إغلاق",
+    "app.home.lead":
+      "اكتب رواية الطرفين، أو أرسل إلى الطرف الآخر رابطًا ليكتب روايته بنفسه.",
+    "app.home.leadSolo": "اكتب روايتك، ورواية الطرف الآخر إن كنت تعرفها.",
+    "app.home.yourSide": "روايتك",
+    "app.home.theirSide": "رواية الطرف الآخر",
+    "app.home.yourName": "اسمك",
+    "app.home.theirName": "اسم الطرف الآخر",
+    "app.home.yourPlaceholder": "ماذا حدث من وجهة نظرك؟",
+    "app.home.theirPlaceholder":
+      "ماذا يقول الطرف الآخر؟ اكتب روايته كما كان سيرويها هو.",
+    "app.home.yourSideLabel": "روايتك للخلاف",
+    "app.home.theirSideLabel": "رواية الطرف الآخر للخلاف",
+    "app.home.sendLink": "أو أرسل إليه رابطًا ليكتبها بنفسه",
+    "app.home.says": "رواية {name}:",
+    "app.home.mySide": "روايتي:",
+    "app.home.otherSide": "رواية الطرف الآخر:",
+    "app.home.example": "جرّب مثالًا",
+    "app.example.dishwasher.aName": "ليلى",
+    "app.example.dishwasher.a":
+      "ما زلت تضع الأوعية في الرف العلوي. هناك لا تخرج نظيفة أبدًا، والرف السفلي موجود لهذا الغرض.",
+    "app.example.dishwasher.bName": "كريم",
+    "app.example.dishwasher.b":
+      "الرف العلوي يتّسع لها تمامًا، وهكذا يبقى السفلي فارغًا للقدور. أرتّب الغسالة بهذه الطريقة منذ سنوات، ولم يخرج منها شيء متّسخًا.",
+    "app.example.bill.aName": "هند",
+    "app.example.bill.a":
+      "لم أطلب أي مشروب، فلا يصح أن أدفع ربع ثمن المشروبات. أما تقسيم ثمن الطعام بالتساوي فلا مانع عندي.",
+    "app.example.bill.bName": "يوسف",
+    "app.example.bill.b":
+      "نحن نقسم الفاتورة على أربعة دائمًا. حساب مَن أخذ ماذا في كل مرة متعب، والفرق ليس كبيرًا أصلًا.",
+    "app.example.thermostat.aName": "سلمى",
+    "app.example.thermostat.a":
+      "الحرارة هنا 19 درجة، وأشعر بالبرد حتى وأنا ألبس كنزة. رفع التدفئة إلى 22 ليس مبالغة.",
+    "app.example.thermostat.bName": "خالد",
+    "app.example.thermostat.b":
+      "على 22 درجة لا يمكن النوم من الحر. يمكنك أن ترتدي طبقة إضافية، أما أنا فلم يبقَ عليّ ما أخلعه.",
+    "app.example.roadTrip.aName": "طارق",
+    "app.example.roadTrip.a":
+      "أنا مَن قاد السيارة طوال الساعات الست في الذهاب. من العدل أن تقودي أنتِ في العودة.",
+    "app.example.roadTrip.bName": "دينا",
+    "app.example.roadTrip.b":
+      "قلت لك قبل أن ننطلق إنني أكره القيادة ليلًا، ونحن سنغادر في السابعة مساءً. سأتولى القيادة في الصباح في الرحلة القادمة.",
+    "app.example.seat.aName": "رنا",
+    "app.example.seat.a":
+      "مقعدي يميل إلى الخلف، لذلك أُميله. الرحلة ليلية والجميع يحاولون النوم.",
+    "app.example.seat.bName": "فارس",
+    "app.example.seat.b":
+      "طولي 190 سم، وركبتاي ملتصقتان بمقعدك أصلًا. كان يمكنك على الأقل أن تسألي قبل أن تُميليه إلى آخره.",
+    "app.example.spoiler.aName": "مريم",
+    "app.example.spoiler.a":
+      "أخبرتني مَن القاتل قبل أن أبدأ الحلقة الأخيرة أصلًا. كنت أنتظرها طوال الأسبوع.",
+    "app.example.spoiler.bName": "زياد",
+    "app.example.spoiler.b":
+      "عُرضت قبل ثلاثة أسابيع، وقلت إنك أنهيتها. لا أستطيع أن أتابع أين وصل كل واحد.",
+    "app.example.jacket.aName": "أحمد",
+    "app.example.jacket.a":
+      "لبست سترة الجينز الخاصة بي في الحفل دون أن تستأذنيني، وأعدتها ورائحة الدخان تفوح منها.",
+    "app.example.jacket.bName": "لينا",
+    "app.example.jacket.b":
+      "كانت معلّقة عند الباب، وأنت لا تلبسها أبدًا. كنت سأستأذنك، لكنك كنت نائمًا وأنا متأخرة أصلًا.",
+    "app.example.lastSlice.aName": "علي",
+    "app.example.lastSlice.a":
+      "قبل أن يبدأ الفيلم قلت: «القطعة الأخيرة لي». الجميع سمعني.",
+    "app.example.lastSlice.bName": "يارا",
+    "app.example.lastSlice.b":
+      "لا يصح أن تقول «هذه لي» ثم لا تلمسها ساعتين. كانت هناك تبرد، فأكلتها أنا.",
+    "app.case.waitingKicker": "قضية · بانتظار الرد",
+    "app.case.waitingFor": "بانتظار {name}",
+    "app.case.waitingLead":
+      "يكتب {name} روايته دون حساب. ولا يرى أيٌّ منكما كلام الآخر حتى صدور الحكم.",
+    "app.case.waitingLeadAnon":
+      "يكتب الطرف الآخر روايته دون حساب. ولا يرى أيٌّ منكما كلام الآخر حتى صدور الحكم.",
+    "app.case.sendTo": "أرسل هذا الرابط إلى {name}",
+    "app.case.stepYou": "كتبت روايتك",
+    "app.case.stepYouNote": "لن تُكشف قبل صدور الحكم",
+    "app.case.stepThem": "{name} يكتب روايته",
+    "app.case.stepThemAnon": "الطرف الآخر يكتب روايته",
+    "app.case.stepThemNote": "تُحدَّث هذه الصفحة حين تصل روايته",
+    "app.case.stepJudges": "ثلاثة قضاة يحكمون",
+    "app.case.stepJudgesNote": "أو احصل الآن على حكم بروايتك وحدها",
+    "app.case.judgeNowWithout": "الحكم الآن دون {name}",
+    "app.verdict.vs": "ضد",
+    "app.verdict.leanTo": "مالت هيئة القضاة إلى {name}",
+    "app.verdict.leanNone": "لم تمل هيئة القضاة إلى أي جانب",
+    "app.verdict.sides": "ما يستند إليه كل طرف",
+    "app.verdict.claims": "كيف وصل كل طرف إلى رأيه",
+    "app.verdict.back": "الحكم",
+    "app.appeal.title": "إضافة توضيح والاعتراض على الحكم",
+    "app.appeal.intro":
+      "هل فات القضاة شيء؟ أضفه وسيحكمون من جديد. ويبقى الحكم الأول في السجل.",
+    "app.appeal.ask": "ما الذي ينبغي أن يعرفوه؟",
+    "app.appeal.placeholder": "حقيقة، أو رسالة، أو ما اتفقتما عليه فعلًا.",
+    "app.appeal.cost":
+      "يستهلك حكمًا واحدًا. يمكنك فعل ذلك مرتين لكل حكم؛ المتبقي: {left}.",
+    "app.appeal.costCase":
+      "يستهلك حكمًا واحدًا. يمكنك فعل ذلك مرة واحدة لكل قضية.",
+    "app.appeal.submit": "إعادة الحكم",
+    "app.appeal.upsell":
+      "هل ينقص شيء؟ أضف توضيحًا ليُعاد الحكم مقابل حكم واحد.",
+    "app.appeal.signIn": "سجّل الدخول لإضافة توضيح والاعتراض على الحكم",
+    "app.appeal.used": "سبق أن أضفت توضيحًا إلى هذه القضية.",
+    "app.appeal.limit": "أضفت توضيحًا مرتين، وهذا الحد الأقصى للحكم الواحد.",
+    "app.purchase.buying": "جارٍ الشراء…",
+    "app.purchase.success": "شكرًا! تمت عملية الشراء.",
+    "app.purchase.pending":
+      "عملية الشراء قيد المعالجة. قد يستغرق ظهورها دقيقة.",
+    "app.purchase.arriving": "رصيدك في الطريق…",
+    "app.purchase.slow": "قد يستغرق ظهوره هنا دقيقة.",
+    "app.purchase.failed": "لم تكتمل عملية الشراء. حاول مجددًا بعد قليل.",
+    "app.purchase.restore": "استعادة المشتريات",
+    "app.purchase.restoreDone": "تمت استعادة مشترياتك.",
+    "app.purchase.restoreNone": "لا توجد مشتريات لاستعادتها.",
+  },
+  plurals: {
+    "app.balance.left": {
+      one: "بقي لك حكم واحد",
+      two: "بقي لك حكمان",
+      few: "بقي لك {n} أحكام",
+      many: "بقي لك {n} حكمًا",
+    },
+  },
+};
+
+export default ar;
