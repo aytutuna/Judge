@@ -103,7 +103,7 @@ struct VerdictCard: View {
             ZStack(alignment: .leading) {
                 Capsule().fill(sides.b.tint)
                 Capsule()
-                    .fill(sides.a.strong)
+                    .fill(sides.a.ink)
                     .frame(width: proxy.size.width * share)
             }
         }

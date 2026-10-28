@@ -358,7 +358,7 @@ private fun LeanBar(share: Float, parties: PartyLabels) {
             .semantics { contentDescription = said }
             .testTag(VerdictTags.LEAN),
     ) {
-        if (share > 0f) Box(Modifier.fillMaxWidth(share).fillMaxHeight().clip(JudgeShapes.chip).background(sides.a.strong))
+        if (share > 0f) Box(Modifier.fillMaxWidth(share).fillMaxHeight().clip(JudgeShapes.chip).background(sides.a.ink))
     }
 }
 
