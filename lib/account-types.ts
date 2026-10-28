@@ -74,7 +74,12 @@ export type AppConfig = {
   premiumEnabled: boolean;
   pricing: PricingInfo;
   /** Premium features this deployment offers. Absent on older servers: treat as all false. */
-  features?: { cases: boolean; evidence: boolean };
+  features?: {
+    cases: boolean;
+    evidence: boolean;
+    /** GET /api/v1/me/history is served. Absent on older servers. */
+    history?: boolean;
+  };
   /** Always false: every verdict is premium. Absent on older servers, which had a free tier. */
   freeTier?: boolean;
   /** Premium verdicts a new account starts with. */

@@ -157,6 +157,7 @@ export type UserBucket =
   | "welcome_evidence"
   | "case_evidence"
   | "verdict_owner"
+  | "history_list"
   | "apple_code";
 
 type UserWindow = { limit: number; windowMs: number; redisWindow: `${number} ${"m" | "h" | "d"}`; prefix: string };
@@ -186,6 +187,11 @@ export const USER_LIMITS: Record<UserBucket, readonly UserWindow[]> = {
   verdict_owner: [
     { limit: 60, windowMs: 10 * MINUTE_MS, redisWindow: "10 m", prefix: "verdict:u:vo10m" },
     { limit: 300, windowMs: DAY_MS, redisWindow: "1 d", prefix: "verdict:u:voday" },
+  ],
+  /** The Verdicts list (GET /api/v1/me/history), refreshed while rows are being judged. */
+  history_list: [
+    { limit: 120, windowMs: 10 * MINUTE_MS, redisWindow: "10 m", prefix: "verdict:u:hl10m" },
+    { limit: 1500, windowMs: DAY_MS, redisWindow: "1 d", prefix: "verdict:u:hlday" },
   ],
   /** The app sending an Apple authorization code (one Apple round trip each). */
   apple_code: [

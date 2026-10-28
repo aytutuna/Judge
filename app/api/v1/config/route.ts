@@ -20,7 +20,7 @@ export function GET(req: Request): NextResponse<AppConfig> {
       packs: PRICING.packs.map((p) => ({ ...p })),
       monthly: { ...PRICING.monthly },
     },
-    features: { cases: casesEnabled(), evidence: evidenceEnabled() },
+    features: { cases: casesEnabled(), evidence: evidenceEnabled(), history: true },
     freeTier: false,
     welcomeCredits: WELCOME_CREDITS,
   };
