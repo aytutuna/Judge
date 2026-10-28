@@ -314,7 +314,7 @@ describe("POST /api/v1/verdicts/{id}/appeals", () => {
     });
     expect((await get(anon, { token: token!, user: await owner(0) })).body.owner?.appeal).toEqual({
       allowed: false,
-      blockedBy: "premium_required",
+      blockedBy: "no_credits",
     });
     expect((await post(anon, { user: stranger })).status).toBe(404);
     const db = await getDb();
@@ -325,11 +325,11 @@ describe("POST /api/v1/verdicts/{id}/appeals", () => {
   it("is Premium: without credits it is refused before anything is written", async () => {
     const o = await owner(0);
     const { id } = await verdict(o);
-    expect((await get(id, { user: o })).body.owner?.appeal).toEqual({ allowed: false, blockedBy: "premium_required" });
+    expect((await get(id, { user: o })).body.owner?.appeal).toEqual({ allowed: false, blockedBy: "no_credits" });
     m.anonymizeSubmission.mockClear();
     const res = await post(id, { user: o });
     expect(res.status).toBe(402);
-    expect(((await res.json()) as { code: string }).code).toBe("premium_required");
+    expect(((await res.json()) as { code: string }).code).toBe("no_credits");
     expect(m.anonymizeSubmission).not.toHaveBeenCalled();
     expect((await get(id)).body.appeals).toEqual([]);
 

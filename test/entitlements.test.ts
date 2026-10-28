@@ -51,11 +51,11 @@ async function count(table: string, userId: string): Promise<number> {
 }
 
 describe("entitlements: state", () => {
-  it("a new user is premium_required with nothing", async () => {
+  it("a user with nothing is out of credits", async () => {
     const e = await ent.getEntitlement(newUser());
     expect(e).toEqual({
       canUsePremium: false,
-      blockedReason: "premium_required",
+      blockedReason: "no_credits",
       credits: 0,
       subscription: null,
       resetsAt: null,
@@ -73,8 +73,8 @@ describe("entitlements: state", () => {
     expect(await ent.reservePremiumVerdict(u)).toEqual({ ok: false, code: "no_credits" });
   });
 
-  it("never-premium users are refused with premium_required", async () => {
-    expect(await ent.reservePremiumVerdict(newUser())).toEqual({ ok: false, code: "premium_required" });
+  it("users who never bought anything are refused with no_credits", async () => {
+    expect(await ent.reservePremiumVerdict(newUser())).toEqual({ ok: false, code: "no_credits" });
   });
 });
 

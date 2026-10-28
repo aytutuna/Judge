@@ -300,22 +300,18 @@ export async function getEntitlement(userId: string, now: Date = new Date()): Pr
   await maybeSweep(now);
   const db = await client();
   const nowIso = iso(now);
-  const [subs, acct, grants] = await Promise.all([
+  const [subs, acct] = await Promise.all([
     activeSubscriptions(db, userId, nowIso),
     db.execute({ sql: "SELECT credits FROM entitlement_accounts WHERE user_id = ?", args: [userId] }),
-    db.execute({ sql: "SELECT 1 FROM entitlement_grants WHERE user_id = ? LIMIT 1", args: [userId] }),
   ]);
   const credits = Number(acct.rows[0]?.credits ?? 0);
   const sub = subs[0] ?? null;
   const subUsable = sub !== null && sub.used < sub.cap;
   const canUsePremium = subUsable || credits > 0;
 
-  let blockedReason: PremiumBlock | null = null;
-  if (!canUsePremium) {
-    if (sub) blockedReason = "fair_use";
-    else if (grants.rows.length > 0) blockedReason = "no_credits";
-    else blockedReason = "premium_required";
-  }
+  // Every verdict is premium, so an account that never bought anything is
+  // simply out of credits too.
+  const blockedReason: PremiumBlock | null = canUsePremium ? null : sub ? "fair_use" : "no_credits";
   return {
     canUsePremium,
     blockedReason,

@@ -334,7 +334,7 @@ describe("POST /api/v1/cases", () => {
     expect((await body(cross)).code).toBe("bad_origin");
     const broke = await create(await owner(0));
     expect(broke.res.status).toBe(402);
-    expect(broke.data.code).toBe("premium_required");
+    expect(broke.data.code).toBe("no_credits");
     vi.stubEnv("PREMIUM_ENABLED", "0");
     const premiumOff = await create(o);
     expect(premiumOff.res.status).toBe(503);
@@ -624,7 +624,7 @@ describe("free cases", () => {
     for (const key of ["tier", "fact_check", "panel"]) expect(stored).not.toHaveProperty(key);
     expect(await usage(o)).toEqual([]);
     // Adding context is still Premium: without credits it is refused.
-    expect(view.appeal.blockedBy).toBe("premium_required");
+    expect(view.appeal.blockedBy).toBe("no_credits");
     expect((await ownerAppeal(o, data.case.id)).status).toBe(402);
   });
 
@@ -1094,7 +1094,7 @@ describe("appeals", () => {
   it("a respondent without Premium sees the upsell reason and gets 402 when trying", async () => {
     const { token, claim } = await judgedCase();
     const r = uid("free");
-    expect((await getRespondent(token, r, claim)).view!.appeal.blockedBy).toBe("premium_required");
+    expect((await getRespondent(token, r, claim)).view!.appeal.blockedBy).toBe("no_credits");
     const res = await respondentAppeal(token, r, claim);
     expect(res.status).toBe(402);
   });
