@@ -431,7 +431,7 @@ final class PurchaseTests: XCTestCase {
         let gateway = FakePurchaseGateway()
         let container = HistoryContainer.inMemory()
         let defaults = try XCTUnwrap(UserDefaults(suiteName: "judge.tests.\(UUID().uuidString)"))
-        let config = AppConfig(apiBaseURL: AppConfig.production, shareBaseURL: AppConfig.production, turnstileSiteKey: "", version: "1", build: "1")
+        let config = AppConfig(apiBaseURL: AppConfig.production, shareBaseURL: AppConfig.production, version: "1", build: "1")
         let app = AppModel(
             config: config, container: container, defaults: defaults, persistsDraft: false,
             api: Self.api(), caseNames: MemoryCaseNamesStore(), purchaseGateway: gateway
@@ -465,7 +465,7 @@ final class PurchaseTests: XCTestCase {
     func testWithoutAKeyPurchasesStayOff() async throws {
         let container = HistoryContainer.inMemory()
         let defaults = try XCTUnwrap(UserDefaults(suiteName: "judge.tests.\(UUID().uuidString)"))
-        let config = AppConfig(apiBaseURL: AppConfig.production, shareBaseURL: AppConfig.production, turnstileSiteKey: "", version: "1", build: "1")
+        let config = AppConfig(apiBaseURL: AppConfig.production, shareBaseURL: AppConfig.production, version: "1", build: "1")
         XCTAssertEqual(config.revenueCatAPIKey, "")
         let app = AppModel(config: config, container: container, defaults: defaults, tokenStore: MemoryTokenStore(), persistsDraft: false)
         let pricing = Self.pricing(enabled: true)

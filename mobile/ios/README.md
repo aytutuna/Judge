@@ -109,14 +109,13 @@ configuration).
 
 ## Configuration
 
-`Config/Shared.xcconfig`, `Debug.xcconfig` and `Release.xcconfig` fill four
+`Config/Shared.xcconfig`, `Debug.xcconfig` and `Release.xcconfig` fill three
 Info.plist keys that `AppConfig` reads at launch:
 
 | Setting | Info.plist key | Default |
 |---|---|---|
 | `API_BASE_URL` | `JudgeAPIBaseURL` | `https://okjudge.com` |
 | `SHARE_BASE_URL` | `JudgeShareBaseURL` | the API base |
-| `TURNSTILE_SITE_KEY` | `JudgeTurnstileSiteKey` | empty (no bot check) |
 | `REVENUECAT_API_KEY` | `JudgeRevenueCatAPIKey` | empty (no in-app purchases) |
 
 To point a Debug build at another server, create `Config/Local.xcconfig`
@@ -124,21 +123,10 @@ To point a Debug build at another server, create `Config/Local.xcconfig`
 
 ```
 API_BASE_URL = http:/$()/192.168.1.20:3000
-TURNSTILE_SITE_KEY =
 ```
 
 `$()` stops `//` from being read as a comment. Plain `http` works for local
 network addresses (`NSAllowsLocalNetworking`).
-
-**Bot check.** With `TURNSTILE_SITE_KEY` empty the app sends no Turnstile
-token, which only works against a server without `TURNSTILE_SECRET_KEY`; a
-server with the secret set answers such requests with `403 captcha_failed`.
-With the key set, the app runs an invisible Turnstile widget in a web view
-whose base URL is the API origin (`TurnstileBotCheck`); when Cloudflare asks
-for a tap, the widget appears in a sheet. The check runs before the judging
-cover is presented (the sheet hangs off the root view, which cannot present
-over the cover). Whether Cloudflare accepts tokens from a web view has to be
-tried against production before release.
 
 ## Sign-in
 
@@ -293,7 +281,7 @@ available. It covers:
   log-out with the session, and everything off without a key;
 - the Debug screenshot states (parsing, fixtures, no network).
 
-`LiveAPITests` sends one real free verdict and is skipped unless
+`LiveAPITests` sends one real verdict and is skipped unless
 `JUDGE_LIVE_BASE_URL` is set. It costs a few cents and a rate-limit slot, so
 run it on purpose only:
 
@@ -301,8 +289,8 @@ run it on purpose only:
 TEST_RUNNER_JUDGE_LIVE_BASE_URL=https://okjudge.com xcodebuild   -project Judge.xcodeproj -scheme Judge   -destination 'platform=iOS Simulator,name=iPhone 17'   CODE_SIGNING_ALLOWED=NO -only-testing:JudgeTests/LiveAPITests test
 ```
 
-`TEST_RUNNER_JUDGE_LIVE_TURNSTILE_TOKEN` passes a bot-check token for servers
-that require one.
+It predates verdicts needing an account and fails against servers that
+want one until it passes a session token.
 
 ## Assets
 

@@ -1,6 +1,5 @@
 import SwiftData
 import SwiftUI
-import WebKit
 
 @main
 struct JudgeApp: App {
@@ -66,7 +65,6 @@ struct RootView: View {
         .toolbarBackground(Brand.ivory, for: .tabBar)
         .toolbarBackground(.visible, for: .tabBar)
         .environment(\.locale, lang.locale)
-        .turnstileHost(app.turnstile, lang: lang)
         .sheet(isPresented: $account.isSignInPresented, onDismiss: { app.account.signInDismissed() }) {
             SignInView()
                 .environment(app)
@@ -101,68 +99,6 @@ struct RootView: View {
     private func open(_ url: URL) {
         guard let link = AppLink.parse(url, site: app.config.shareBaseURL) else { return }
         if let web = app.open(link) { webLink = WebLink(url: web) }
-    }
-}
-
-/// Keeps the Turnstile web view in the window (1 pt, invisible) so its
-/// scripts run normally, and moves it into a sheet when Cloudflare wants a tap.
-private struct TurnstileHost: ViewModifier {
-    @Bindable var check: TurnstileBotCheck
-    let lang: AppLang
-
-    func body(content: Content) -> some View {
-        content
-            .overlay(alignment: .bottomTrailing) {
-                if !check.needsInteraction {
-                    WebViewHost(webView: check.webView)
-                        .frame(width: 1, height: 1)
-                        .opacity(0.01)
-                        .allowsHitTesting(false)
-                        .accessibilityHidden(true)
-                }
-            }
-            .sheet(isPresented: $check.needsInteraction, onDismiss: { check.dismissInteraction() }) {
-                TurnstileSheet(webView: check.webView, lang: lang)
-                    .presentationDetents([.height(260)])
-            }
-    }
-}
-
-extension View {
-    @ViewBuilder
-    func turnstileHost(_ check: TurnstileBotCheck?, lang: AppLang) -> some View {
-        if let check {
-            modifier(TurnstileHost(check: check, lang: lang))
-        } else {
-            self
-        }
-    }
-}
-
-/// Hosts an existing web view (the Turnstile widget).
-struct WebViewHost: UIViewRepresentable {
-    let webView: WKWebView
-
-    func makeUIView(context: Context) -> WKWebView { webView }
-    func updateUIView(_ uiView: WKWebView, context: Context) {}
-}
-
-private struct TurnstileSheet: View {
-    let webView: WKWebView
-    let lang: AppLang
-
-    var body: some View {
-        VStack(spacing: 16) {
-            Text(L10n.turnstileLabel(lang))
-                .brandText(.slotTitle)
-                .foregroundStyle(Brand.ink)
-                .multilineTextAlignment(.center)
-            WebViewHost(webView: webView)
-                .frame(width: 320, height: 90)
-        }
-        .padding(24)
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Brand.ivory)
     }
 }
 

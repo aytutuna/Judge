@@ -78,7 +78,7 @@ final class JudgeAPITests: XCTestCase {
     }
 
     private func request() -> VerdictRequest {
-        VerdictRequest(argument: "My friend Sam says a hot dog is a sandwich.", framework: .init(preset: "fairness"), lang: .en, turnstileToken: "tok")
+        VerdictRequest(argument: "My friend Sam says a hot dog is a sandwich.", framework: .init(preset: "fairness"), lang: .en)
     }
 
     private func reply(_ status: Int, json: Any?, headers: [String: String] = [:]) throws -> StubURLProtocol.Reply {
@@ -105,7 +105,6 @@ final class JudgeAPITests: XCTestCase {
         XCTAssertEqual(sent.timeoutInterval, 310)
         let body = try XCTUnwrap(JSONSerialization.jsonObject(with: XCTUnwrap(sent.httpBody)) as? [String: Any])
         XCTAssertEqual(body["argument"] as? String, request().argument)
-        XCTAssertEqual(body["turnstileToken"] as? String, "tok")
         XCTAssertEqual(body["tier"] as? String, "free")
     }
 
@@ -247,7 +246,6 @@ final class ErrorMappingTests: XCTestCase {
         XCTAssertEqual(ErrorText.message(.offline, lang: .tr), L10n.appErrorOffline(.tr))
         XCTAssertEqual(ErrorText.message(.timeout, lang: .en), L10n.appErrorTimeout(.en))
         XCTAssertEqual(ErrorText.message(.malformed, lang: .en), L10n.errorFallback(.en))
-        XCTAssertEqual(ErrorText.message(.botCheck, lang: .en), L10n.appTurnstileError(.en))
         XCTAssertEqual(ErrorText.message(.interrupted, lang: .tr), L10n.appErrorInterrupted(.tr))
         let badOrigin = APIError.server(status: 403, body: ApiErrorBody(code: "bad_origin"))
         XCTAssertEqual(ErrorText.message(badOrigin, lang: .tr), L10n.appErrorBadOrigin(.tr))

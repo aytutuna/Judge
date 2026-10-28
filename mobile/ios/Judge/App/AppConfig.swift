@@ -7,8 +7,6 @@ struct AppConfig: Sendable, Equatable {
     let apiBaseURL: URL
     /// Origin used for share links (`/v/<id>`); defaults to the API origin.
     let shareBaseURL: URL
-    /// Public Turnstile site key. Empty means no bot check (local servers).
-    let turnstileSiteKey: String
     let version: String
     let build: String
     /// Public RevenueCat SDK key. Empty means no in-app purchases.
@@ -29,7 +27,6 @@ struct AppConfig: Sendable, Equatable {
         return AppConfig(
             apiBaseURL: api,
             shareBaseURL: share,
-            turnstileSiteKey: publicKey(value("JudgeTurnstileSiteKey")),
             version: value("CFBundleShortVersionString").isEmpty ? "0" : value("CFBundleShortVersionString"),
             build: value("CFBundleVersion").isEmpty ? "0" : value("CFBundleVersion"),
             revenueCatAPIKey: publicKey(value("JudgeRevenueCatAPIKey"))

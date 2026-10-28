@@ -130,7 +130,6 @@ struct ScreenshotState {
         let config = AppConfig(
             apiBaseURL: offline,
             shareBaseURL: base.shareBaseURL,
-            turnstileSiteKey: "",
             version: base.version,
             build: base.build
         )

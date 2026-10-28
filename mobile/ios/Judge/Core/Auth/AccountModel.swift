@@ -447,7 +447,7 @@ final class AccountModel {
             if status >= 500 || error.code == "unavailable" { return .unavailable }
             if status == 404 { return .unavailable }
             return nil
-        case .malformed, .botCheck: return nil
+        case .malformed: return nil
         }
     }
 }

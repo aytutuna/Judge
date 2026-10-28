@@ -27,9 +27,6 @@ final class AppModel {
 
     let config: AppConfig
     let api: JudgeAPI
-    let botCheck: any BotCheck
-    /// Set when a Turnstile site key is configured; the root view hosts its web view.
-    let turnstile: TurnstileBotCheck?
     let history: HistoryStore
     let home: HomeModel
     let account: AccountModel
@@ -80,14 +77,6 @@ final class AppModel {
         caseList = CaseListModel()
         langPreference = defaults.string(forKey: Self.langKey).flatMap(LangPreference.init(rawValue:)) ?? .system
         self.api = api ?? JudgeAPI(baseURL: config.apiBaseURL, userAgent: config.userAgent, tokenStore: tokenStore)
-        if config.turnstileSiteKey.isEmpty {
-            turnstile = nil
-            botCheck = NoBotCheck()
-        } else {
-            let check = TurnstileBotCheck(siteKey: config.turnstileSiteKey, origin: config.apiBaseURL)
-            turnstile = check
-            botCheck = check
-        }
         history = HistoryStore(context: container.mainContext)
         home = HomeModel(preset: defaults.string(forKey: Self.presetKey) ?? Preset.defaultID)
         account = AccountModel(api: self.api)

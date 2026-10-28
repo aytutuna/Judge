@@ -39,7 +39,7 @@ final class DisplayVectorTests: XCTestCase {
                 XCTAssertNil(result.lean.value, context)
             }
 
-            let config = AppConfig(apiBaseURL: AppConfig.production, shareBaseURL: AppConfig.production, turnstileSiteKey: "", version: "1", build: "1")
+            let config = AppConfig(apiBaseURL: AppConfig.production, shareBaseURL: AppConfig.production, version: "1", build: "1")
             XCTAssertEqual(config.shareURL(id: payload.id).absoluteString, vector["shareUrl"] as? String, context)
         }
     }

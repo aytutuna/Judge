@@ -105,7 +105,7 @@ enum PremiumFixtures {
     /// A signed-in app on a server with Premium, cases and evidence on.
     @MainActor
     static func app(container: ModelContainer, me: String = "credits7", token: String? = "s3ss10n") throws -> AppModel {
-        let config = AppConfig(apiBaseURL: AppConfig.production, shareBaseURL: AppConfig.production, turnstileSiteKey: "", version: "1", build: "1")
+        let config = AppConfig(apiBaseURL: AppConfig.production, shareBaseURL: AppConfig.production, version: "1", build: "1")
         let defaults = try XCTUnwrap(UserDefaults(suiteName: "judge.tests.\(UUID().uuidString)"))
         let api = JudgeAPI(
             baseURL: AppConfig.production,
@@ -593,7 +593,6 @@ final class PremiumFlowTests: XCTestCase {
         XCTAssertEqual(body["tier"] as? String, "premium")
         XCTAssertNil(body["clarifications"])
         XCTAssertNil(body["evidence"])
-        XCTAssertNil(body["turnstileToken"], "premium skips the bot check")
         XCTAssertEqual((body["framework"] as? [String: Any])?["preset"] as? String, home.preset)
 
         // The 202's entitlement first, then /me after the outcome.

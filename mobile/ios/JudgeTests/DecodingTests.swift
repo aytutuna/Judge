@@ -125,7 +125,6 @@ final class DecodingTests: XCTestCase {
         XCTAssertEqual((object["framework"] as? [String: Any])?["preset"] as? String, "balanced")
         XCTAssertNil((object["framework"] as? [String: Any])?["sliders"])
         XCTAssertNil(object["clarifications"])
-        XCTAssertNil(object["turnstileToken"])
     }
 
     func testNameMapAndTranslationsRoundTrip() throws {

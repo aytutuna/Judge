@@ -307,7 +307,7 @@ final class TextHelperTests: XCTestCase {
         XCTAssertNil(AppConfig.parseOrigin(""))
         XCTAssertNil(AppConfig.parseOrigin("$(API_BASE_URL)"))
         XCTAssertNil(AppConfig.parseOrigin("ftp://okjudge.com"))
-        let config = AppConfig(apiBaseURL: AppConfig.production, shareBaseURL: AppConfig.production, turnstileSiteKey: "", version: "1.0.0", build: "7")
+        let config = AppConfig(apiBaseURL: AppConfig.production, shareBaseURL: AppConfig.production, version: "1.0.0", build: "7")
         XCTAssertEqual(config.shareURL(id: "abc123DEF0").absoluteString, "https://okjudge.com/v/abc123DEF0")
         XCTAssertEqual(config.siteURL("privacy").absoluteString, "https://okjudge.com/privacy")
         XCTAssertEqual(config.userAgent, "Judge-iOS/1.0.0 (7)")
@@ -404,15 +404,5 @@ final class TranslationLogicTests: XCTestCase {
         XCTAssertTrue(TranslationLogic.needsFetch(original: original, lang: .tr, entry: .blocked(until: now), now: now))
         let entries: [AppLang: TranslationEntry] = [.tr: .failed(offline: false), .en: .same]
         XCTAssertEqual(TranslationLogic.dropRetryable(entries), [.en: .same])
-    }
-}
-
-final class TurnstilePageTests: XCTestCase {
-    @MainActor
-    func testSiteKeyIsEscapedIntoThePage() {
-        let page = TurnstileBotCheck.page(siteKey: "0x4AAA\"</script>")
-        XCTAssertTrue(page.contains(#"sitekey:"0x4AAA\"<\/script>""#) || page.contains(#"sitekey:"0x4AAA\"</script>""#))
-        XCTAssertTrue(page.contains("window.webkit.messageHandlers.\(TurnstileBridge.name)"))
-        XCTAssertTrue(page.contains("appearance:'interaction-only'"))
     }
 }

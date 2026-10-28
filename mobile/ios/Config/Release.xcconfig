@@ -1,6 +1,5 @@
 #include "Shared.xcconfig"
 
-// Production values. Set TURNSTILE_SITE_KEY to the live site key before
-// shipping (it is public, the same value the website embeds).
+// Production values.
 API_BASE_URL = https:/$()/okjudge.com
 SHARE_BASE_URL = https:/$()/okjudge.com

@@ -66,7 +66,7 @@ final class VerdictPollingTests: XCTestCase {
     }
 
     private func request() -> VerdictRequest {
-        VerdictRequest(argument: "Alex says Jordan should pay for the broken lamp.", framework: .init(preset: "fairness"), lang: .en, turnstileToken: "tok")
+        VerdictRequest(argument: "Alex says Jordan should pay for the broken lamp.", framework: .init(preset: "fairness"), lang: .en)
     }
 
     private func fixture(_ name: String) throws -> [String: Any] {
@@ -414,7 +414,7 @@ final class HomeResumeTests: XCTestCase {
     /// Verdicts need an account, so the app starts signed in unless told otherwise.
     @MainActor
     private func makeApp(container: ModelContainer, token: String? = "s3ss10n") throws -> AppModel {
-        let config = AppConfig(apiBaseURL: AppConfig.production, shareBaseURL: AppConfig.production, turnstileSiteKey: "", version: "1", build: "1")
+        let config = AppConfig(apiBaseURL: AppConfig.production, shareBaseURL: AppConfig.production, version: "1", build: "1")
         let defaults = try XCTUnwrap(UserDefaults(suiteName: "judge.tests.\(UUID().uuidString)"))
         let api = JudgeAPI(
             baseURL: AppConfig.production,

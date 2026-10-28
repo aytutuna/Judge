@@ -254,7 +254,6 @@ struct VerdictRequest: Encodable, Sendable, Equatable {
     var clarifications: [Clarification]?
     /// Premium only: signed tokens from POST /api/v1/evidence, in order.
     var evidence: [String]? = nil
-    var turnstileToken: String?
 }
 
 // MARK: - Decoding

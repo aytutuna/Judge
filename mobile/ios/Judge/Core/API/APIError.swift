@@ -12,8 +12,6 @@ enum APIError: Error, Sendable, Equatable {
     case timeout
     /// A 2xx whose body did not decode.
     case malformed
-    /// The bot check could not produce a token.
-    case botCheck
     /// The connection dropped after iOS suspended the app mid-request
     /// (its background time ran out). The server may still have finished.
     case interrupted
@@ -37,8 +35,6 @@ enum APIError: Error, Sendable, Equatable {
             return true
         case .server:
             return code == "unavailable" || code == "quota" || code == nil
-        case .botCheck:
-            return false
         }
     }
 
@@ -154,7 +150,6 @@ enum ErrorText {
         case .offline: return L10n.appErrorOffline(lang)
         case .timeout: return L10n.appErrorTimeout(lang)
         case .malformed: return L10n.errorFallback(lang)
-        case .botCheck: return L10n.appTurnstileError(lang)
         case .interrupted: return L10n.appErrorInterrupted(lang)
         }
     }
