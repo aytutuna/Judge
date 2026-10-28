@@ -62,6 +62,7 @@ const en = {
   "kind.definition": "definition",
   "kind.logic": "logic",
   bedrock: "🪨 Bedrock",
+  why: "Why",
   cruxShort: "⚡ The crux",
   cruxTitle: "⚡ The crux: what this is really about",
   mapTitle: "The argument, down to bedrock",
@@ -172,6 +173,8 @@ const en = {
   "sample.headline": "Nobody orders a sandwich hoping for a hot dog",
   "sample.crux":
     "On shape alone a hot dog could pass as a sandwich, but that's not how anyone actually uses the word.",
+  "sample.why":
+    "Sam's case rests on shape alone. A word means what people use it for, and a sandwich order at any deli never comes back as a hot dog.",
   "sample.bestPoint":
     "A split roll with a filling inside does fit most dictionary definitions of a sandwich.",
   "faq.title": "Things people ask",
@@ -710,6 +713,7 @@ const tr = {
   "kind.definition": "tanım",
   "kind.logic": "mantık",
   bedrock: "🪨 Temel taşı",
+  why: "Neden",
   cruxShort: "⚡ Düğüm noktası",
   cruxTitle: "⚡ Düğüm noktası: kavga aslında ne üstüne",
   mapTitle: "Tartışma, temel taşlarına kadar",
@@ -820,6 +824,8 @@ const tr = {
   "sample.headline": "Kimse sandviç isteyip sosisli beklemez",
   "sample.crux":
     "Şekline bakarsan sosisli sandviç sayılabilir, ama günlük dilde sandviç deyince akla sosisli gelmez.",
+  "sample.why":
+    "Mert'in dayanağı sadece şekil. Ama bir kelimenin anlamını insanların onu nasıl kullandığı belirler, büfede sandviç isteyene de sosisli gelmez.",
   "sample.bestPoint":
     "İçine bir şey konmuş yarık bir ekmek, çoğu sözlükteki sandviç tanımına gerçekten uyuyor.",
   "faq.title": "Merak edilenler",

@@ -56,6 +56,7 @@ export function looksLikeVerdict(x: unknown): x is VerdictResult {
     oneOf(FINAL_VERDICTS, x.verdict) &&
     oneOf(DISPUTE_TYPES, x.dispute_type) &&
     isStr(x.headline) &&
+    (x.why === undefined || isStr(x.why)) &&
     isStr(x.crux) &&
     isStr(x.losing_side_best_point) &&
     Number.isInteger(x.confidence) &&

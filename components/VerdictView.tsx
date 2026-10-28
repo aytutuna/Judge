@@ -18,6 +18,7 @@ import type { OwnerShare } from "./ShareDialog";
 import { VerdictCardShell } from "./verdict/VerdictCardShell";
 import { CardBrand, CardTopRow } from "./verdict/CardTopRow";
 import { CardActions } from "./verdict/CardActions";
+import { WhyBlock } from "./verdict/WhyBlock";
 import { AppealOutcomeBanner } from "./case/AppealOutcome";
 import { TwoSidedFacts, WouldChangeBlock, evidenceNote } from "./case/TwoSidedBlocks";
 import caseStyles from "./case/case.module.css";
@@ -67,7 +68,7 @@ function TranslationNote({ view, lang }: { view: TranslationView; lang: Lang }) 
 }
 
 /** Full verdict display: the card (stamp, headline, confidence and votes,
- * branches, crux, bedrock, best point, actions), then the argument map and
+ * branches, why, crux, bedrock, best point, actions), then the argument map and
  * facts below it.
  * `lang` prop: the share page passes its own selected language (the store is
  * the viewer's own preference and never applies there); the main page passes
@@ -218,6 +219,8 @@ export function VerdictView({
           labelId={labelId}
           restoredNames={restoredNames}
         />
+
+        {!refused && result.why ? <WhyBlock title={t(lang, "why")} text={result.why} /> : null}
 
         {!refused ? (
           <section className={styles.section}>

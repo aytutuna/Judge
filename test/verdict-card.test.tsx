@@ -91,6 +91,22 @@ describe("VerdictView", () => {
     expect(out).not.toContain("⚡");
   });
 
+  it("shows why under the headline, above the crux", () => {
+    const why = "Words go by how people use them. Ask for a sandwich and you won't get a hot dog.";
+    const out = html(<VerdictView result={{ ...base, why }} lang="en" />);
+    expect(out).toMatch(/<h3 class="[^"]*sectionLabel[^"]*">Why<\/h3>/);
+    expect(count(out, esc(why))).toBe(1);
+    expect(out.indexOf(base.headline)).toBeLessThan(out.indexOf(esc(why)));
+    expect(out.indexOf(esc(why))).toBeLessThan(out.indexOf("The crux"));
+    expect(html(<VerdictView result={{ ...base, why, lang: "tr" }} lang="tr" />)).toContain(">Neden</h3>");
+  });
+
+  it("leaves out why on older verdicts that have none", () => {
+    const out = html(<VerdictView result={base} lang="en" />);
+    expect(out).not.toContain(">Why</h3>");
+    expect(html(<VerdictView result={{ ...base, why: "" }} lang="en" />)).not.toContain(">Why</h3>");
+  });
+
   it("shows the escalation note and every extra judge", () => {
     const out = html(
       <VerdictView
@@ -116,7 +132,9 @@ describe("VerdictView", () => {
   });
 
   it("hides crux, best point, map and facts when the model refused", () => {
-    const out = html(<VerdictView result={{ ...base, model_refused: true, runs: [] }} lang="en" />);
+    const out = html(<VerdictView result={{ ...base, why: "It was paid.", model_refused: true, runs: [] }} lang="en" />);
+    expect(out).not.toContain("It was paid.");
+    expect(out).not.toContain(">Why</h3>");
     expect(out).not.toContain(base.crux);
     expect(out).not.toContain(base.losing_side_best_point);
     expect(out).not.toContain("down to bedrock");
@@ -190,6 +208,16 @@ describe("SampleVerdict", () => {
     expect(out).toMatch(/<h3[^>]*>/);
     expect(out).toMatch(/role="meter"[^>]*aria-valuenow="3"[^>]*aria-label="Confidence 3 of 3"/);
     expect(out).toContain(">Confidence 3 of 3</p>");
+  });
+
+  it("shows why between the headline and the crux in both languages", () => {
+    for (const lang of ["en", "tr"] as const) {
+      const out = html(<SampleVerdict lang={lang} />);
+      const why = out.indexOf(esc(t(lang, "sample.why")));
+      expect(why).toBeGreaterThan(out.indexOf(esc(t(lang, "sample.headline"))));
+      expect(why).toBeLessThan(out.indexOf(esc(t(lang, "sample.crux"))));
+      expect(out).toContain(`>${t(lang, "why")}</h3>`);
+    }
   });
 
   it("keeps the sample tilt equal to a B win", () => {
