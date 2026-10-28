@@ -88,9 +88,7 @@ An `ANTHROPIC_API_KEY` is **required** — without one the API refuses to judge
 | `DATABASE_URL` | `file:./dev.db` | Local SQLite file (on a single server, e.g. `file:/var/lib/verdict/verdict.db` in the Lightsail guide), or a Turso `libsql://…` URL on serverless hosts such as Vercel |
 | `DATABASE_AUTH_TOKEN` | *(empty)* | Turso database token (only for a `libsql://` URL) |
 | `UPSTASH_REDIS_REST_URL` / `UPSTASH_REDIS_REST_TOKEN` | *(empty)* | Upstash Redis for rate limits shared by every server instance. Unset = in-memory limits, which only hold within one process: fine locally and on a single-process server (the Lightsail guide), not on serverless hosts that run many instances |
-| `RATE_LIMIT_DB` | *(empty)* | Without Upstash: a libSQL file URL (e.g. `file:/run/verdict/ratelimit.db` in the Lightsail guide) where the in-memory limits log each counted verdict, so a restarted app process keeps its limits and daily count. Unset = they start over on every restart. If the file cannot be written, verdicts are refused (`503 unavailable`) |
 | `RATE_LIMIT_SALT` | *(Upstash token)* | Secret key for hashing visitor IPs before they reach the rate-limit store. Any long random string. Unset = the Upstash token is used. Changing it resets every visitor's limits |
-| `DAILY_VERDICT_CAP` | `1000` | Site-wide verdicts per UTC day. `0` pauses the site |
 | `ORIGINALS_KEY` | *(required in production)* | 32 random bytes, base64 (`openssl rand -base64 32`): encrypts every stored original text, name map and share-page display name (AES-256-GCM). Back it up apart from the database (e.g. in a password manager): losing it makes the stored originals unreadable, and leaking it together with a database copy exposes them. Unset in development = a fixed development key (with a warning). Unset or invalid in production = originals and display names are not stored (one error line per process, one warning per skipped item); verdicts still work and share pages show Party A / Party B. See *Stored originals, names and removal* |
 | `ORIGINALS_KEY_PREVIOUS` | *(empty)* | Older keys, comma-separated, used only to decrypt after a rotation. New data is always sealed with `ORIGINALS_KEY`. Keep an old key here as long as anything sealed with it may still be read, including stored Sign in with Apple tokens (see *Key rotation*) |
 | `REMOVAL_LOG` | *(`removals.log` beside a local database file)* | Append-only log of removals (ids, party, reason, time; no text or names), kept outside the database so `scripts/originals.ts replay-removals` can re-apply them after a backup is restored. `off` disables it; a remote (`libsql://`) database has none unless this is set |
@@ -124,23 +122,19 @@ error.
 
 ## Abuse protection
 
-Every `POST /api/verdict` passes these gates, in order, before any model call:
-
-1. **Bot check** — the Cloudflare Turnstile token from the page is verified
-   server-side (`lib/turnstile.ts`). Missing or invalid → `403 captcha_failed`.
-2. **Rate limits** (`lib/ratelimit.ts`) — per visitor IP: 5 verdicts per
-   10 minutes and 20 per 24 hours (`429 rate_limited`); site-wide:
-   `DAILY_VERDICT_CAP` per UTC day (`503 daily_cap`). Both include
-   `retryAfterSec`. An IPv6 visitor is counted per /64 prefix, since one
-   client usually holds a whole /64. The store only sees a keyed hash
-   (HMAC-SHA256 with `RATE_LIMIT_SALT`) of the IPv4 address or IPv6 prefix,
-   kept for up to 24 hours. The store is Upstash Redis when configured, else
-   the app's memory, optionally logged to `RATE_LIMIT_DB` so restarts keep
-   it. If Redis or that log is down or slow, requests are refused
-   (`503 unavailable`) rather than let through unmetered.
-
-Then: API key check → anonymize → judges (→ extra judges if confidence is
-low) → crux trial → save.
+Every verdict needs a signed-in account (`401 signin_required` otherwise)
+and one premium unit, so the account is the main gate. On top of that,
+`lib/ratelimit.ts` counts premium verdicts per account and the site-wide
+`PREMIUM_DAILY_CAP` (see *Accounts and Premium*), and the routes anyone can
+reach without an account (translations, the respondent's answer, polling)
+per visitor IP. An IPv6 visitor is counted per /64 prefix, since one client
+usually holds a whole /64. The store only sees a keyed hash (HMAC-SHA256
+with `RATE_LIMIT_SALT`) of the IPv4 address or IPv6 prefix, kept for up to
+24 hours. The store is Upstash Redis when configured, else the app's
+memory. If Redis is down or slow, requests are refused (`503 unavailable`)
+rather than let through unmetered. The Cloudflare Turnstile check
+(`lib/turnstile.ts`) guards the steps that need no account: asking for a
+sign-in email and the respondent's answer to a two-sided case.
 
 The visitor IP comes from the first `X-Forwarded-For` entry, so it is only
 trustworthy behind a proxy that overwrites that header: Vercel does, and so

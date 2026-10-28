@@ -29,7 +29,6 @@ vi.mock("@/lib/auth", () => ({
 }));
 vi.mock("@/lib/ratelimit", async (importOriginal) => ({
   ...(await importOriginal<typeof import("@/lib/ratelimit")>()),
-  checkVerdictLimits: async () => ({ ok: true }),
   checkUserLimits: async () => ({ ok: true }),
   checkPremiumSiteCap: async () => ({ ok: true }),
 }));

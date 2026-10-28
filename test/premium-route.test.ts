@@ -9,10 +9,8 @@ const m = vi.hoisted(() => ({
   consumePremiumVerdict: vi.fn(),
   refundPremiumVerdict: vi.fn(),
   getEntitlement: vi.fn(),
-  checkVerdictLimits: vi.fn(),
   checkUserLimits: vi.fn(),
   checkPremiumSiteCap: vi.fn(),
-  verifyTurnstile: vi.fn(),
   hasApiKey: vi.fn(),
   anonymize: vi.fn(),
   judgeSelfConsistent: vi.fn(),
@@ -53,11 +51,9 @@ vi.mock("@/lib/entitlements", () => ({
   getEntitlement: track("entitlement", m.getEntitlement),
 }));
 vi.mock("@/lib/ratelimit", () => ({
-  checkVerdictLimits: track("limits", m.checkVerdictLimits),
   checkUserLimits: track("userLimits", m.checkUserLimits),
   checkPremiumSiteCap: track("siteCap", m.checkPremiumSiteCap),
 }));
-vi.mock("@/lib/turnstile", () => ({ verifyTurnstile: track("turnstile", m.verifyTurnstile) }));
 vi.mock("@/lib/claude", async (importOriginal) => ({
   ...(await importOriginal<typeof import("@/lib/claude")>()),
   hasApiKey: track("key", m.hasApiKey),
@@ -208,8 +204,6 @@ beforeEach(() => {
   m.consumePremiumVerdict.mockResolvedValue(undefined);
   m.refundPremiumVerdict.mockResolvedValue(undefined);
   m.getEntitlement.mockResolvedValue(ENTITLEMENT);
-  m.checkVerdictLimits.mockResolvedValue({ ok: true });
-  m.verifyTurnstile.mockResolvedValue("ok");
   m.hasApiKey.mockReturnValue(true);
   m.anonymize.mockResolvedValue({ text: ANON, nameMap: [{ original: "Mark", replacement: "Party A" }] });
   m.judgeSelfConsistent.mockResolvedValue([ok(RUN), ok(RUN), ok(RUN)]);
@@ -254,8 +248,6 @@ describe("every verdict is premium", () => {
       expect(json.entitlement).toEqual(ENTITLEMENT);
     }
     expect(m.judgeSelfConsistent).not.toHaveBeenCalled();
-    expect(m.verifyTurnstile).not.toHaveBeenCalled();
-    expect(m.checkVerdictLimits).not.toHaveBeenCalled();
   });
 
   it("tier free signed out is 401 signin_required, never an anonymous verdict", async () => {
@@ -300,8 +292,6 @@ describe("premium verdict: success", () => {
     ]);
     expect(m.checkUserLimits).toHaveBeenCalledWith("u1", "premium_verdict");
     expect(m.reservePremiumVerdict).toHaveBeenCalledWith("u1", { idempotencyKey: "abc-123" });
-    expect(m.verifyTurnstile).not.toHaveBeenCalled();
-    expect(m.checkVerdictLimits).not.toHaveBeenCalled();
     expect(m.consumePremiumVerdict).toHaveBeenCalledTimes(1);
     expect(m.refundPremiumVerdict).not.toHaveBeenCalled();
 
