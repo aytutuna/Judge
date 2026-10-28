@@ -14,7 +14,6 @@ const PURE = [
   "verdict-display",
   "names",
   "palette",
-  "frameworks",
   "content-lang",
   "api-errors",
   "account-types",

@@ -4,7 +4,6 @@ import { CasePanel, ownSideText } from "../components/case/CaseScreen";
 import type { AppealDraft } from "../components/case/AppealForm";
 import { Balance, Composer, EXAMPLES, MAX_ARGUMENT, NextSteps, type ComposerProps } from "../components/thread/Composer";
 import { Thread } from "../components/thread/Thread";
-import { DEFAULT_FRAMEWORK } from "../lib/frameworks";
 import { t } from "../lib/i18n";
 import type { VerdictResult } from "../lib/types";
 import { confidenceLabel, judgesLabel } from "../lib/verdict-display";
@@ -138,8 +137,6 @@ function composer(over: Partial<ComposerProps> = {}): string {
     onChange: noop,
     onSubmit: noop,
     canSubmit: false,
-    framework: DEFAULT_FRAMEWORK,
-    onFrameworkChange: noop,
     expanded: false,
     onExpandedChange: noop,
     submitLabel: t("en", "getVerdict"),
@@ -162,15 +159,20 @@ describe("Composer", () => {
     expect(html).toContain(`aria-label="${t("en", "getVerdict")}"`);
   });
 
-  it("expanded: the framework presets and the extras in a panel the button controls", () => {
+  it("expanded: the extras in a panel the button controls", () => {
     const html = composer({ expanded: true });
     expect(html).toContain('aria-expanded="true"');
     const panel = html.match(/aria-controls="([^"]+)"/)?.[1];
     expect(panel).toBeTruthy();
     expect(html).toContain(`id="${panel}"`);
-    expect(html).toContain('aria-pressed="true"');
     expect(html).toContain('data-testid="extras"');
-    expect(html).toContain(t("en", "judgeBy"));
+    expect(html).not.toContain("aria-pressed");
+  });
+
+  it("offers no options button when there are no options", () => {
+    const html = composer({ extras: undefined, expanded: true });
+    expect(html).not.toContain("aria-expanded");
+    expect(html).not.toContain(t("en", "thread.options"));
   });
 
   it("sends once submittable", () => {
@@ -243,7 +245,7 @@ describe("Composer as the empty page's case file", () => {
     expect(html.match(/<h1/g)).toHaveLength(1);
     expect(html).toContain(t("en", "home.title"));
     expect(html).toContain(t("en", "home.kicker"));
-    for (const key of ["home.step.argument", "thread.lens", "home.step.ruling"] as const) {
+    for (const key of ["home.step.argument", "home.step.ruling"] as const) {
       expect(html).toContain(t("en", key));
     }
     expect(html.split('aria-current="step"').length - 1).toBe(1);
@@ -267,10 +269,10 @@ describe("Composer as the empty page's case file", () => {
     expect(composer({ card: true, onSwitchSides: noop, lang: "tr" })).toContain(t("tr", "home.invite"));
   });
 
-  it("names the options button as the lens, with the preset", () => {
+  it("names the options button plainly, with no judging style", () => {
     const html = composer({ card: true });
-    expect(html).toContain(`>${t("en", "thread.lens")}<`);
-    expect(html).toContain(t("en", "preset.balanced.label"));
+    expect(html).toContain(`>${t("en", "thread.options")}<`);
+    expect(html).not.toContain("Balanced");
   });
 });
 

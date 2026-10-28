@@ -18,7 +18,7 @@ the admin script are in the README ("Accounts and Premium").
 | Fact-check | One Claude call: `claude-haiku-5-5` + `web_search_20250305` (`max_uses` 3) + JSON-schema output. Only source URLs that appeared in the search results survive. `web_search_20260209` was dropped: on Haiku it sometimes rejected every search and fell back to code execution, which returns no verifiable URLs. Sonnet skipped the search at low effort, so the fact-check stays on Haiku. |
 | Panel | `claude-sonnet-5-5` (A first), `claude-sonnet-5-5` (B first), `claude-haiku-5-5` (A first), configurable with `PREMIUM_JUDGE_MODELS`. A blocked Sonnet seat is retried once on Haiku. Escalation and crux trial stay on Haiku. Sonnet requests set `effort` explicitly and never send `temperature` or `thinking: disabled` (both are 400s). |
 | Clarify | `POST /api/v1/clarify`, Haiku, low effort, at most 2 questions, never spends a credit, fails open to no questions. Per account 20 per 10 min and 100 per 24 h. The raw text goes to Anthropic (not stored); answers are appended before anonymization. |
-| Shared code | Plain TypeScript modules with no Next, DOM or Node imports, enforced by `test/pure-modules.test.ts`: `lib/types.ts`, `lib/i18n.ts`, `lib/verdict-display.ts`, `lib/names.ts`, `lib/palette.ts`, `lib/frameworks.ts`, `lib/content-lang.ts`, `lib/api-errors.ts`, `lib/account-types.ts`, `lib/pricing.ts`. |
+| Shared code | Plain TypeScript modules with no Next, DOM or Node imports, enforced by `test/pure-modules.test.ts`: `lib/types.ts`, `lib/i18n.ts`, `lib/verdict-display.ts`, `lib/names.ts`, `lib/palette.ts`, `lib/content-lang.ts`, `lib/api-errors.ts`, `lib/account-types.ts`, `lib/pricing.ts`. |
 
 ## Architecture
 
@@ -102,7 +102,7 @@ the requests it did before.
 | `GET /me` | `MeResponse`; signed out = `{ user: null, entitlement: null }` (200) |
 | `DELETE /me` | `{ deleted: true }` |
 | `POST /clarify { argument, lang }` | `{ questions: [{ id, text }] }` (0 to 2) |
-| `POST /verdict { argument, framework?, lang, clarifications?, evidence? }` | `VerdictApiResponse` (`lib/types.ts`) with `entitlement`; signed out `401 signin_required`; a `tier` is ignored |
+| `POST /verdict { argument, lang, clarifications?, evidence? }` | `VerdictApiResponse` (`lib/types.ts`) with `entitlement`; signed out `401 signin_required`; a `tier` or `framework` is ignored |
 | `GET /verdicts/{id}` | `{ id, result, createdAt }` |
 | `POST /verdicts/{id}/translate?lang=en\|tr` | the stored verdict translated |
 

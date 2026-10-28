@@ -23,7 +23,6 @@ import { firstNameOf, type DisplayState, type MineResponse } from "@/lib/origina
 import { ownerTokenIds } from "@/lib/owner-store";
 import { buildOwnerShare } from "@/components/ShareDialog";
 import { clearDraft, registerDraftSource, saveDraftForSignIn, takeDraft } from "@/lib/draft";
-import { DEFAULT_FRAMEWORK } from "@/lib/frameworks";
 import { startHistory } from "@/lib/history-store";
 import { apiErrorMessage, t, type Key } from "@/lib/i18n";
 import { useLang } from "@/lib/lang";
@@ -33,7 +32,6 @@ import { judgesLabel } from "@/lib/verdict-display";
 import type {
   Clarification,
   ClarifyResponse,
-  FrameworkChoice,
   VerdictApiResponse,
   VerdictResponse,
 } from "@/lib/types";
@@ -84,7 +82,7 @@ function wakefulSleep(ms: number): Promise<void> {
 
 /** What a verdict request judges, fixed when it is submitted. `evidence`
  * holds signed screenshot tokens. */
-type PremiumInput = { argument: string; framework: FrameworkChoice; evidence: string[] };
+type PremiumInput = { argument: string; evidence: string[] };
 
 /** Signed-in screenshot uploads (the respondent's page uses its own). */
 const EVIDENCE_ENDPOINT = "/api/v1/evidence";
@@ -99,7 +97,6 @@ export default function Home() {
   const [argument, setArgument] = useState("");
   const [sent, setSent] = useState<string | null>(null);
   const [options, setOptions] = useState(false);
-  const [framework, setFramework] = useState<FrameworkChoice>(DEFAULT_FRAMEWORK);
   const [phase, setPhase] = useState<Phase>("intake");
   const [error, setError] = useState<string | null>(null);
   const [response, setResponse] = useState<VerdictResponse | null>(null);
@@ -171,7 +168,6 @@ export default function Home() {
     if (!draft) return;
     // eslint-disable-next-line react-hooks/set-state-in-effect -- one-time read of browser storage
     setArgument(draft.argument);
-    setFramework(draft.framework);
   }, []);
 
   // The index has to exist before the first addHistory, or the verdicts
@@ -182,9 +178,9 @@ export default function Home() {
   useEffect(
     () =>
       registerDraftSource(() =>
-        phase === "intake" || phase === "clarify" ? { argument: sent ?? argument, framework } : null,
+        phase === "intake" || phase === "clarify" ? { argument: sent ?? argument } : null,
       ),
-    [argument, sent, framework, phase],
+    [argument, sent, phase],
   );
 
   const shownCaseName = caseName ?? firstNameOf(viewer.me?.user?.name) ?? "";
@@ -313,7 +309,7 @@ export default function Home() {
    * questions. Account problems (401/402) and bad input stop on the form. */
   async function submitPremium() {
     // Judged as submitted: later edits never mix into this request.
-    const input: PremiumInput = { argument, framework, evidence: evidenceOn ? evidence.tokens : [] };
+    const input: PremiumInput = { argument, evidence: evidenceOn ? evidence.tokens : [] };
     const signal = threadSignal();
     premiumInput.current = input;
     clearDraft();
@@ -368,7 +364,6 @@ export default function Home() {
     setPhase("judging");
     const body = JSON.stringify({
       argument: input.argument,
-      framework: input.framework,
       lang,
       ...(clarifications ? { clarifications } : {}),
       ...(input.evidence.length ? { evidence: input.evidence } : {}),
@@ -434,7 +429,6 @@ export default function Home() {
     const name = shownCaseName.trim();
     const body = JSON.stringify({
       text,
-      framework,
       lang,
       ...(tokens.length ? { evidence: tokens } : {}),
       ...(name ? { displayName: name } : {}),
@@ -614,45 +608,45 @@ export default function Home() {
               canSubmit={canSubmit}
               disabled={!empty}
               error={error}
-              framework={framework}
-              onFrameworkChange={setFramework}
               expanded={options}
               onExpandedChange={setOptions}
               extras={
-                <>
-                  {casesOn || casesLocked ? (
-                    <CaseModeSwitch
-                      lang={lang}
-                      value={twoSided ? "both" : "now"}
-                      onChange={setCaseMode}
-                      locked={casesLocked}
-                    />
-                  ) : null}
-                  {twoSided ? (
-                    <label className={styles.field}>
-                      <span className={styles.fieldLabel}>{t(lang, "case.displayName")}</span>
-                      <input
-                        className={styles.fieldInput}
-                        value={shownCaseName}
-                        maxLength={40}
-                        autoComplete="given-name"
-                        onChange={(e) => setCaseName(e.target.value)}
+                casesOn || casesLocked || evidenceOn ? (
+                  <>
+                    {casesOn || casesLocked ? (
+                      <CaseModeSwitch
+                        lang={lang}
+                        value={twoSided ? "both" : "now"}
+                        onChange={setCaseMode}
+                        locked={casesLocked}
                       />
-                    </label>
-                  ) : null}
-                  {evidenceOn ? (
-                    <EvidencePicker
-                      lang={lang}
-                      max={MAX_EVIDENCE_PER_SIDE}
-                      items={evidence.items}
-                      full={evidence.full}
-                      failure={evidence.failure}
-                      overLimit={evidence.overLimit}
-                      onAdd={evidence.add}
-                      onRemove={evidence.remove}
-                    />
-                  ) : null}
-                </>
+                    ) : null}
+                    {twoSided ? (
+                      <label className={styles.field}>
+                        <span className={styles.fieldLabel}>{t(lang, "case.displayName")}</span>
+                        <input
+                          className={styles.fieldInput}
+                          value={shownCaseName}
+                          maxLength={40}
+                          autoComplete="given-name"
+                          onChange={(e) => setCaseName(e.target.value)}
+                        />
+                      </label>
+                    ) : null}
+                    {evidenceOn ? (
+                      <EvidencePicker
+                        lang={lang}
+                        max={MAX_EVIDENCE_PER_SIDE}
+                        items={evidence.items}
+                        full={evidence.full}
+                        failure={evidence.failure}
+                        overLimit={evidence.overLimit}
+                        onAdd={evidence.add}
+                        onRemove={evidence.remove}
+                      />
+                    ) : null}
+                  </>
+                ) : null
               }
               twoSided={twoSided}
               submitLabel={t(lang, twoSided ? "case.create" : "getVerdict")}

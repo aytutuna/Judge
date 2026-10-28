@@ -30,30 +30,23 @@ const ARG = "Ada says tomatoes are vegetables; Ben says they are fruit.";
 
 describe("draft round trip through sign-in", () => {
   it("saves the registered form on the way to sign-in and gives it back once", () => {
-    unregister = registerDraftSource(() => ({ argument: ARG, framework: { preset: "balanced" } }));
+    unregister = registerDraftSource(() => ({ argument: ARG }));
     saveDraftForSignIn();
     expect(storage.map.has(DRAFT_KEY)).toBe(true);
-    expect(takeDraft()).toEqual({ argument: ARG, framework: { preset: "balanced" } });
+    expect(takeDraft()).toEqual({ argument: ARG });
     expect(takeDraft()).toBeNull();
   });
 
   it("gives nothing back after 30 minutes, and drops the stale draft", () => {
-    unregister = registerDraftSource(() => ({ argument: ARG, framework: { preset: "balanced" } }));
+    unregister = registerDraftSource(() => ({ argument: ARG }));
     saveDraftForSignIn();
     expect(takeDraft(Date.now() + 31 * 60_000)).toBeNull();
     expect(storage.map.size).toBe(0);
   });
 
-  it("keeps sliders", () => {
-    const framework = { preset: "custom", sliders: { harm: 80, fairness: 20 } };
-    unregister = registerDraftSource(() => ({ argument: ARG, framework }));
-    saveDraftForSignIn();
-    expect(takeDraft()).toEqual({ argument: ARG, framework });
-  });
-
   it("saves nothing without a form, with an empty argument, or when the form has nothing unsent", () => {
     saveDraftForSignIn();
-    unregister = registerDraftSource(() => ({ argument: "   ", framework: { preset: "balanced" } }));
+    unregister = registerDraftSource(() => ({ argument: "   " }));
     saveDraftForSignIn();
     unregister();
     unregister = registerDraftSource(() => null);
@@ -62,15 +55,15 @@ describe("draft round trip through sign-in", () => {
   });
 
   it("an old registration cannot unregister a newer one", () => {
-    const first = registerDraftSource(() => ({ argument: "first draft text", framework: { preset: "balanced" } }));
-    unregister = registerDraftSource(() => ({ argument: ARG, framework: { preset: "balanced" } }));
+    const first = registerDraftSource(() => ({ argument: "first draft text" }));
+    unregister = registerDraftSource(() => ({ argument: ARG }));
     first();
     saveDraftForSignIn();
     expect(takeDraft()?.argument).toBe(ARG);
   });
 
   it("clearDraft removes a saved draft", () => {
-    unregister = registerDraftSource(() => ({ argument: ARG, framework: { preset: "balanced" } }));
+    unregister = registerDraftSource(() => ({ argument: ARG }));
     saveDraftForSignIn();
     clearDraft();
     expect(takeDraft()).toBeNull();
@@ -88,7 +81,7 @@ describe("draft round trip through sign-in", () => {
         throw new Error("denied");
       },
     });
-    unregister = registerDraftSource(() => ({ argument: ARG, framework: { preset: "balanced" } }));
+    unregister = registerDraftSource(() => ({ argument: ARG }));
     expect(() => saveDraftForSignIn()).not.toThrow();
     expect(takeDraft()).toBeNull();
     expect(() => clearDraft()).not.toThrow();
@@ -101,21 +94,21 @@ describe("parseDraft", () => {
       "not json",
       "null",
       "[]",
-      JSON.stringify({ argument: 5, framework: { preset: "balanced" } }),
-      JSON.stringify({ argument: "", framework: { preset: "balanced" } }),
-      JSON.stringify({ argument: "x".repeat(6001), framework: { preset: "balanced" } }),
-      JSON.stringify({ argument: ARG }),
-      JSON.stringify({ argument: ARG, framework: { preset: 1 } }),
-      JSON.stringify({ argument: ARG, framework: { preset: "balanced", sliders: { a: 101 } } }),
-      JSON.stringify({ argument: ARG, framework: { preset: "balanced", sliders: { a: "50" } } }),
-      JSON.stringify({ argument: ARG, framework: { preset: "balanced", sliders: [1] } }),
+      JSON.stringify({ argument: 5 }),
+      JSON.stringify({ argument: "" }),
+      JSON.stringify({ argument: "x".repeat(6001) }),
     ]) {
       expect(parseDraft(raw), raw.slice(0, 60)).toBeNull();
     }
   });
 
   it("drops unknown keys", () => {
-    const raw = JSON.stringify({ argument: ARG, framework: { preset: "balanced", extra: 1 }, other: true });
-    expect(parseDraft(raw)).toEqual({ argument: ARG, framework: { preset: "balanced" } });
+    const raw = JSON.stringify({ argument: ARG, other: true });
+    expect(parseDraft(raw)).toEqual({ argument: ARG });
+  });
+
+  it("still loads a draft saved with a judging style", () => {
+    const raw = JSON.stringify({ argument: ARG, framework: { preset: "loyalty", sliders: { head_heart: 80 } } });
+    expect(parseDraft(raw)).toEqual({ argument: ARG });
   });
 });
