@@ -118,5 +118,4 @@ internal fun failedError(failed: VerdictPoll.Failed): UiError =
 private fun isTransient(error: UiError): Boolean = when (error) {
     is UiError.Api -> error.status >= 500 || error.status == 429 || error.status == 408
     UiError.Offline, UiError.Timeout, UiError.Unknown -> true
-    UiError.BotCheck -> false
 }

@@ -40,7 +40,6 @@ Toolchain: Gradle 9.8.2, AGP 9.4.1 (built-in Kotlin), Kotlin 2.4.21, KSP
 |---|---|---|
 | `judge.apiBaseUrl` | `https://okjudge.com` | Debug API base (release is always production) |
 | `judge.shareBaseUrl` | API base | `/v/<id>` share links |
-| `judge.turnstileSiteKey` | empty | Public Turnstile key; empty disables the bot check (debug only: release packaging fails without it) |
 | `judge.googleServerClientId` | Judge's web client id | OAuth client id Google issues ID tokens for (public) |
 | `judge.revenuecatApiKey` | empty | Public RevenueCat SDK key for Google Play (`goog_...`); empty keeps purchases off ("Coming soon") |
 

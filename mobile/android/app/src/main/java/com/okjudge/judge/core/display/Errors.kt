@@ -30,9 +30,6 @@ sealed interface UiError {
     /** Client timeout, or Cloudflare's 524 when the origin took longer than 100 s. */
     data object Timeout : UiError
 
-    /** The bot check could not produce a token. */
-    data object BotCheck : UiError
-
     /** A 200 whose body did not parse. */
     data object Unknown : UiError
 }
@@ -104,7 +101,6 @@ object Errors {
         is UiError.Api -> apiErrorMessage(s, lang, error.code, error.status, error.retryAfterSec, error.resetsAt, error.serverText)
         UiError.Offline -> s.appErrorOffline
         UiError.Timeout -> s.appErrorTimeout
-        UiError.BotCheck -> s.appTurnstileError
         UiError.Unknown -> s.errorFallback
     }
 
@@ -125,7 +121,7 @@ object Errors {
     fun isRetryable(error: UiError): Boolean = when (error) {
         is UiError.Api -> error.code in setOf("unavailable", "quota", "captcha_failed") ||
             (error.code == null && error.status >= 500)
-        UiError.Offline, UiError.Timeout, UiError.BotCheck, UiError.Unknown -> true
+        UiError.Offline, UiError.Timeout, UiError.Unknown -> true
     }
 
     /** How long the submit button stays disabled after this failure, in seconds. */

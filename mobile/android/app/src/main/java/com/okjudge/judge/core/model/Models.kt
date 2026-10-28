@@ -215,7 +215,6 @@ data class VerdictRequest(
     val tier: String = "premium",
     val clarifications: List<Clarification>? = null,
     val evidence: List<String>? = null,
-    val turnstileToken: String? = null,
 )
 
 /** POST /api/v1/clarify. */

@@ -231,7 +231,7 @@ class Account(
 
         private fun common(e: UiError): SignInError? = when (e) {
             UiError.Offline -> SignInError.OFFLINE
-            UiError.Timeout, UiError.Unknown, UiError.BotCheck -> SignInError.FAILED
+            UiError.Timeout, UiError.Unknown -> SignInError.FAILED
             is UiError.Api -> when {
                 e.status == 429 -> SignInError.RATE_LIMITED
                 e.status >= 500 -> SignInError.UNAVAILABLE

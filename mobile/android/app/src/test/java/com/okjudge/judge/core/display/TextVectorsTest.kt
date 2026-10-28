@@ -147,7 +147,6 @@ class TextVectorsTest {
         val en = s("en")
         assertEquals(en.appErrorOffline, Errors.message(UiError.Offline, en, AppLang.EN))
         assertEquals(en.appErrorTimeout, Errors.message(UiError.Timeout, en, AppLang.EN))
-        assertEquals(en.appTurnstileError, Errors.message(UiError.BotCheck, en, AppLang.EN))
         val tr = s("tr")
         assertEquals(tr.appErrorBadOrigin, Errors.message(UiError.Api("bad_origin", 403), tr, AppLang.TR))
         assertEquals(en.errorFallback, Errors.message(UiError.Unknown, en, AppLang.EN))

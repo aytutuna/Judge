@@ -66,7 +66,7 @@ class JudgeApiTest {
         val body = Json.parseToJsonElement(recorded.body!!.utf8()).jsonObject
         assertEquals("premium", body["tier"]!!.jsonPrimitive.content)
         assertEquals("balanced", body["framework"]!!.jsonObject["preset"]!!.jsonPrimitive.content)
-        assertTrue("no null fields on the wire", "turnstileToken" !in body && "clarifications" !in body)
+        assertTrue("no null fields on the wire", "clarifications" !in body && "evidence" !in body)
     }
 
     @Test

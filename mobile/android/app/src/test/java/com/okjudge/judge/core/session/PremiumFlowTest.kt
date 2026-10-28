@@ -147,7 +147,6 @@ class PremiumFlowTest {
             val sent = body(VERDICT, i)
             assertEquals("premium", sent["tier"]!!.jsonPrimitive.content)
             assertNull("no clarifications without questions", sent["clarifications"])
-            assertNull("no bot check", sent["turnstileToken"])
             assertNull(f.lastError.value)
         }
     }

@@ -1,11 +1,8 @@
 package com.okjudge.judge
 
 import android.content.Context
-import com.okjudge.judge.core.api.BotCheck
 import com.okjudge.judge.core.api.JudgeApi
-import com.okjudge.judge.core.api.NoBotCheck
 import com.okjudge.judge.core.api.TokenStore
-import com.okjudge.judge.core.api.TurnstileBotCheck
 import com.okjudge.judge.core.auth.Account
 import com.okjudge.judge.core.cases.CaseNamesStore
 import com.okjudge.judge.core.cases.PrefsCaseNames
@@ -30,7 +27,6 @@ import okhttp3.OkHttpClient
 data class AppConfig(
     val apiBaseUrl: String,
     val shareBaseUrl: String,
-    val turnstileSiteKey: String,
     val googleServerClientId: String,
     /** Public RevenueCat SDK key; empty turns store purchases off. */
     val revenueCatApiKey: String = "",
@@ -43,7 +39,6 @@ data class AppConfig(
         fun fromBuildConfig() = AppConfig(
             apiBaseUrl = BuildConfig.API_BASE_URL,
             shareBaseUrl = BuildConfig.SHARE_BASE_URL.ifBlank { BuildConfig.API_BASE_URL },
-            turnstileSiteKey = BuildConfig.TURNSTILE_SITE_KEY,
             googleServerClientId = BuildConfig.GOOGLE_SERVER_CLIENT_ID,
             revenueCatApiKey = BuildConfig.REVENUECAT_API_KEY,
             versionName = BuildConfig.VERSION_NAME,
@@ -79,11 +74,6 @@ class AppContainer(context: Context, val config: AppConfig = AppConfig.fromBuild
 
     val account: Account by lazy {
         Account(api, tokenStore, CredentialManagerGoogle(config.googleServerClientId), appScope)
-    }
-
-    val botCheck: BotCheck by lazy {
-        if (config.turnstileSiteKey.isBlank()) NoBotCheck
-        else TurnstileBotCheck(appContext, config.turnstileSiteKey, pageBaseUrl = config.apiBaseUrl.trimEnd('/') + "/")
     }
 
     private val db: HistoryDb by lazy { HistoryDb.create(appContext) }

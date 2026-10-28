@@ -28,19 +28,3 @@ class MemoryTokenStore(private var token: String? = null) : TokenStore {
         token = null
     }
 }
-
-/**
- * Human check for free verdicts. A token is fetched right before each
- * POST /api/v1/verdict because tokens are single-use. `null` means the
- * build has no site key (servers without a Turnstile secret accept that).
- */
-interface BotCheck {
-    /** @throws BotCheckException when a token was needed but could not be produced. */
-    suspend fun token(): String?
-}
-
-object NoBotCheck : BotCheck {
-    override suspend fun token(): String? = null
-}
-
-class BotCheckException(message: String, cause: Throwable? = null) : Exception(message, cause)
