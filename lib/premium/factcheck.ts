@@ -10,7 +10,8 @@
  */
 
 import { claudeSearchJson, type Effort } from "../claude";
-import type { Lang } from "../i18n";
+import { loadLocales, voiceNote, type Lang } from "../i18n";
+import { LANGS } from "../langs";
 import { FactStatus, type FactCheck, type FactClaim, type FactSource } from "../types";
 
 export const FACTCHECK_TIMEOUT_MS = 40_000;
@@ -26,6 +27,15 @@ export const FACTCHECK_SYSTEM = `You fact-check the checkable factual claims in 
 const TR_FACTCHECK_BLOCK = `
 
 LANGUAGE: Write each claim and summary in Turkish, in everyday words, addressing the reader with informal "sen", never "siz". Refer to the parties as "Taraf A" and "Taraf B". Keep every source title and URL exactly as it appeared in the search results, untranslated. Keep the status values exactly as specified in the schema (English identifiers).`;
+
+function factCheckLanguageBlock(lang: Lang): string {
+  if (lang === "en") return "";
+  if (lang === "tr") return TR_FACTCHECK_BLOCK;
+  const voice = voiceNote(lang);
+  return `
+
+LANGUAGE: Write each claim and summary in ${LANGS[lang].name}, in everyday words.${voice ? ` ${voice}` : ""} Keep every source title and URL exactly as it appeared in the search results, untranslated. Keep the status values exactly as specified in the schema (English identifiers).`;
+}
 
 /** Output schema (compact form, converted by toClaudeSchema). */
 export const FACTCHECK_SCHEMA = {
@@ -177,8 +187,9 @@ const FACTCHECK_EFFORT: Effort = "low";
 /** Runs the fact-check on the anonymized text. Never throws. */
 export async function runFactCheck(anonymizedText: string, lang: Lang): Promise<FactCheck> {
   try {
+    await loadLocales();
     const res = await claudeSearchJson<unknown>({
-      system: `${FACTCHECK_SYSTEM}${lang === "tr" ? TR_FACTCHECK_BLOCK : ""}`,
+      system: `${FACTCHECK_SYSTEM}${factCheckLanguageBlock(lang)}`,
       user: `THE DISPUTE:\n\n${anonymizedText}`,
       schema: FACTCHECK_SCHEMA as unknown as Record<string, unknown>,
       model: factCheckModel(),

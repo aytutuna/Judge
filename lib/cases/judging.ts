@@ -21,7 +21,8 @@ import { STORED_FRAMEWORK } from "@/lib/db";
 import { consumeStatement, entitlementWriteBatch, refundStatements, type StatementGuard } from "@/lib/entitlements";
 import { CASE_REMOVAL_REASON_SQL, ensureOriginalsTables } from "@/lib/originals/db";
 import { evidenceBlock } from "@/lib/evidence";
-import type { Lang } from "@/lib/i18n";
+import { loadLocales, voiceNote, type Lang } from "@/lib/i18n";
+import { LANGS } from "@/lib/langs";
 import { APPEAL_JUDGE_NOTE, APPEAL_ONE_SIDED_JUDGE_NOTE } from "@/lib/judge";
 import { judgeAnonymized, premiumLogLine, type JudgedOutcome, type PremiumStats } from "@/lib/premium/run";
 import type { AppealInfo, AppealOutcome, DisputedFact, EvidenceUsed, VerdictResult } from "@/lib/types";
@@ -97,11 +98,19 @@ const SUMMARY_SCHEMA = {
   required: ["summary"],
 } as const;
 
+function summaryLanguage(lang: Lang): string {
+  if (lang === "en") {
+    return 'Write in plain everyday English. Call the parties "Party A" and "Party B"; keep other labels such as "Person C" exactly as written.';
+  }
+  if (lang === "tr") {
+    return 'Write in Turkish, in everyday words, with informal "sen" if you address anyone, never "siz". Call the parties "Taraf A" and "Taraf B"; keep other labels such as "Person C" exactly as written.';
+  }
+  const voice = voiceNote(lang);
+  return `Write in plain everyday ${LANGS[lang].name}.${voice ? ` ${voice}` : ""} Keep other labels such as "Person C" exactly as written.`;
+}
+
 function summarySystem(lang: Lang): string {
-  const language =
-    lang === "tr"
-      ? 'Write in Turkish, in everyday words, with informal "sen" if you address anyone, never "siz". Call the parties "Taraf A" and "Taraf B"; keep other labels such as "Person C" exactly as written.'
-      : 'Write in plain everyday English. Call the parties "Party A" and "Party B"; keep other labels such as "Person C" exactly as written.';
+  const language = summaryLanguage(lang);
   return `You write one sentence for an argument-settling app. A case was judged, then one party added new context and the whole case was judged again. The app already shows the outcome label, so never quote numbers and never contradict the label. Say what the new context changed in the judges' reasoning, or why it did not change the outcome. One short sentence of 12 to 25 words: name the one point that mattered, nothing more. No names, no quotes, no preamble. ${language}`;
 }
 
@@ -130,6 +139,7 @@ export async function appealSummary(
       `NEW CONTEXT FROM PARTY ${appeal.party.toUpperCase()}:`,
       appeal.text,
     ].join("\n");
+    await loadLocales();
     const res = await claudeJson<{ summary?: unknown }>({
       system: summarySystem(lang),
       user,

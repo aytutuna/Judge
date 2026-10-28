@@ -1,4 +1,5 @@
 import type { Lang } from "./i18n";
+import { LANGS } from "./langs";
 
 /**
  * The writing voice for every model-written string a reader sees (verdict
@@ -29,6 +30,12 @@ export const HUMAN_STYLE_TR = `ÜSLUP (VOICE): The two people who argued will re
 - Don't show your working: never mention çerçeve, standart, ispat yükü or mahkeme. Give the actual reason in plain words.
 - Go easy on punctuation: no em dashes, colons or semicolons; a period or a comma does the job. No emoji, no markdown.`;
 
+/** Every other language takes the English rules, carried over: its own
+ * register, labels and grammar come from the LANGUAGE note ahead of this. */
 export function humanStyle(lang: Lang): string {
-  return lang === "tr" ? HUMAN_STYLE_TR : HUMAN_STYLE_EN;
+  if (lang === "en") return HUMAN_STYLE_EN;
+  if (lang === "tr") return HUMAN_STYLE_TR;
+  const name = LANGS[lang].name;
+  return `${HUMAN_STYLE_EN}
+- These rules are written for English. Apply them to ${name}: write it the way a native speaker would say it out loud, not as a translation from English, and avoid ${name}'s own stock phrases and officialese. Where the LANGUAGE note sets the register, the party labels or the grammar, it wins over these rules.`;
 }

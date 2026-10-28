@@ -14,7 +14,8 @@
 
 import { z } from "zod";
 import { claudeJson } from "./claude";
-import type { Lang } from "./i18n";
+import { loadLocales, voiceNote, type Lang } from "./i18n";
+import { LANGS } from "./langs";
 import { humanStyle } from "./style";
 import { CruxTrial, type VerdictResult } from "./types";
 
@@ -59,7 +60,8 @@ RULES:
 
 /** Appended to BOTH trial system prompts when the request asked for Turkish,
  * ahead of the Turkish voice block (lib/style.ts). The outcome enum stays
- * English (stored data invariant). */
+ * English (stored data invariant). Other languages get the same from their
+ * voice note (trialLanguageBlock). */
 const TR_TRIAL_BLOCK = `
 
 LANGUAGE: Write the attack and reasoning text in Turkish, following the VOICE rules below, addressing the reader with informal "sen", never "siz". Refer to the parties as "Taraf A" and "Taraf B". Keep all JSON enum values exactly as specified in the schema (English identifiers).`;
@@ -151,6 +153,15 @@ function rulingSummary(result: VerdictResult): string {
   ].join("\n");
 }
 
+function trialLanguageBlock(lang: Lang): string {
+  if (lang === "en") return "";
+  if (lang === "tr") return TR_TRIAL_BLOCK;
+  const voice = voiceNote(lang);
+  return `
+
+LANGUAGE: Write the attack and reasoning text in ${LANGS[lang].name}, following the VOICE rules below.${voice ? ` ${voice}` : ""} Keep all JSON enum values exactly as specified in the schema (English identifiers).`;
+}
+
 async function trialCalls(
   anonymizedArgument: string,
   result: VerdictResult,
@@ -160,7 +171,8 @@ async function trialCalls(
   const summary = rulingSummary(result);
   const context = `THE ARGUMENT:\n\n${anonymizedArgument}\n\nTHE RULING:\n\n${summary}`;
   // Both texts are shown on the verdict card, so both calls get the voice.
-  const langBlock = `${lang === "tr" ? TR_TRIAL_BLOCK : ""}\n\n${humanStyle(lang)}`;
+  await loadLocales();
+  const langBlock = `${trialLanguageBlock(lang)}\n\n${humanStyle(lang)}`;
 
   const attackRes = await claudeJson<unknown>({
     system: `${ATTACKER_SYSTEM}${langBlock}`,

@@ -1,6 +1,33 @@
 import type { Locale } from "../i18n";
 
 const tr: Locale = {
+  // The register and if_value sentences are load-bearing: without them the
+  // judges default to formal "siz" (clashing with the all-"sen" UI on the
+  // same card) and write indicative or self-prefixed conditionals that break
+  // the "Eğer … →" card.
+  voice:
+    'Address the reader with informal "sen", never "siz". Refer to the parties as "Taraf A" and "Taraf B" in prose. Write each conditional if_value as a bare conditional clause ending in -sa/-se (e.g. "dürüstlüğe en çok değer veriyorsan"), with no leading "Eğer".',
+  email: {
+    signIn: {
+      subject: "Judge giriş bağlantın",
+      intro: "Judge'a giriş yapmak için aşağıdaki düğmeye dokun.",
+      button: "Judge'a giriş yap",
+      expiry: "Bağlantı tek kullanımlık ve 10 dakika geçerli.",
+      ignore: "Bu isteği sen yapmadıysan bu e-postayı yok sayabilirsin.",
+    },
+    signInCode: {
+      subject: "Judge giriş kodun",
+      intro: "Giriş yapmak için bu kodu Judge uygulamasına gir:",
+      expiry: "Kod tek kullanımlık ve 10 dakika geçerli.",
+      ignore: "Bu isteği sen yapmadıysan bu e-postayı yok sayabilirsin.",
+    },
+    caseReady: {
+      subject: "Cevap geldi: Judge kararın hazır",
+      intro: "Diğer kişi kendi tarafını anlattı ve yargıçlar iki anlatıma göre karar verdi.",
+      button: "Kararı gör",
+      note: "Bu e-postayı Judge'da bu davayı sen başlattığın için alıyorsun.",
+    },
+  },
   strings: {
     "hero.title": "Kim haklı? Hemen çözelim.",
     "hero.titleLine1": "Kim haklı?",

@@ -9,9 +9,9 @@ process.env.BETTER_AUTH_SECRET = "test-secret-".padEnd(48, "x");
 process.env.BETTER_AUTH_URL = "http://localhost:3600";
 
 const auth = await import("../lib/auth");
-const { SIGNIN_CODE_EMAIL, langFromRequestUrl, sendSignInCodeEmail, signInCodeEmailContent } = await import(
-  "../lib/email"
-);
+const { EMAIL_EN, langFromRequestUrl, sendSignInCodeEmail, signInCodeEmailContent } = await import("../lib/email");
+const { default: tr } = await import("../lib/locales/tr");
+const SIGNIN_CODE_EMAIL = { en: EMAIL_EN.signInCode, tr: tr.email.signInCode };
 const { GET: getMe } = await import("../app/api/v1/me/route");
 const { GET: getConfig } = await import("../app/api/v1/config/route");
 

@@ -30,7 +30,11 @@ const BADGE_KEY = {
  * clause starts with the party label "Taraf" or a restored real name
  * (`keep`). */
 function conditionalClause(raw: string, lang: Lang, keep: readonly string[] = []): string {
-  const s = raw.replace(/^(eğer|if)\s+/i, "");
+  let s = raw.replace(/^(eğer|if)\s+/i, "");
+  if (lang !== "en" && lang !== "tr") {
+    const own = t(lang, "ifPrefix").replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    s = s.replace(new RegExp(`^${own}(?![\\p{L}\\p{N}])\\s*`, "iu"), "");
+  }
   if (lang === "tr") {
     if (s.startsWith("Taraf") || keep.some((name) => name && s.startsWith(name))) return s;
     return s.charAt(0).toLocaleLowerCase("tr") + s.slice(1);

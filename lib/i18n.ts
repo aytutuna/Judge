@@ -1,4 +1,4 @@
-import { ENABLED, importLocale, langTag, type Lang } from "./langs";
+import { ENABLED, importLocale, LANGS, langTag, type Lang } from "./langs";
 import type { ClaimKind } from "./types";
 
 /**
@@ -667,8 +667,27 @@ export type Key = keyof typeof en;
 
 /** A translation of the interface, one file per language under lib/locales. */
 export type Locale = {
+  /**
+   * How the judges should write this language, in English, for the model
+   * prompts: the register (Turkish: informal "sen", never "siz"), what the
+   * party labels are in prose, grammar the cards depend on (the conditional
+   * clause after "If"), punctuation and number conventions. One short
+   * paragraph of plain sentences.
+   */
+  voice: string;
   /** Every key of the English table, nothing else. */
   strings: Record<Key, string>;
+  /** The emails, same fields as English (lib/email.ts). */
+  email: EmailCopy;
+};
+
+/** Sign-in link, sign-in code (the apps sign in by typing it) and "the other
+ * side answered" email copy. The case notice names no one and quotes nothing
+ * from the case. */
+export type EmailCopy = {
+  signIn: { subject: string; intro: string; button: string; expiry: string; ignore: string };
+  signInCode: { subject: string; intro: string; expiry: string; ignore: string };
+  caseReady: { subject: string; intro: string; button: string; note: string };
 };
 
 /** The English table, the source every locale is checked against. */
@@ -677,12 +696,13 @@ export const EN: Record<Key, string> = en;
 /** The part of a locale the browser needs. */
 export type Dict = Pick<Locale, "strings">;
 
-const loaded: Partial<Record<Lang, Dict>> = {};
+// Whole locales when downloaded, browser parts when a server page handed them over.
+const loaded: Partial<Record<Lang, Dict & Partial<Locale>>> = {};
 const pending = new Map<Lang, Promise<void>>();
 const listeners = new Set<() => void>();
 
 /** Makes a language's strings readable by t(). The first one registered stays. */
-export function registerLocale(lang: Lang, dict: Dict): void {
+export function registerLocale(lang: Lang, dict: Dict & Partial<Locale>): void {
   if (lang === "en" || loaded[lang]) return;
   loaded[lang] = dict;
   for (const fn of listeners) fn();
@@ -697,6 +717,17 @@ export function hasStrings(lang: Lang): boolean {
 export function loadedDict(lang: Lang): Dict | null {
   const dict = lang === "en" ? undefined : loaded[lang];
   return dict ? { strings: dict.strings } : null;
+}
+
+/** A loaded language's note on how to write it, for the model prompts. ""
+ * for English and for a language that is not loaded. */
+export function voiceNote(lang: Lang): string {
+  return loaded[lang]?.voice ?? "";
+}
+
+/** A loaded language's email copy; null for English or when not loaded. */
+export function emailCopy(lang: Lang): EmailCopy | null {
+  return loaded[lang]?.email ?? null;
 }
 
 /** Fetches an enabled language's strings once. Never rejects: a language
@@ -743,6 +774,13 @@ export function t(lang: Lang, key: Key, vars?: Record<string, string | number>):
     }
   }
   return s;
+}
+
+/** The name of language `of` in the words of `ui` ("Turkish", "İngilizce").
+ * English and Turkish have their own strings; the rest come from Intl. */
+export function languageName(ui: Lang, of: Lang): string {
+  if (of === "en" || of === "tr") return t(ui, of === "tr" ? "respond.lang.tr" : "respond.lang.en");
+  return new Intl.DisplayNames([langTag(ui)], { type: "language" }).of(of) ?? LANGS[of].native;
 }
 
 /** Claim-kind tag labels, shared by ArgumentMap and the judging checklist. */

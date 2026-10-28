@@ -2,7 +2,7 @@
 
 import { useId, useMemo } from "react";
 import type { NameMapping, VerdictResult } from "@/lib/types";
-import { t, type Key, type Lang } from "@/lib/i18n";
+import { languageName, t, type Key, type Lang } from "@/lib/i18n";
 import { useLang } from "@/lib/lang";
 import { consistentSelfMap, partyNames, personalizeResult, resolveParties, type SelfParty } from "@/lib/names";
 import { verdictLang } from "@/lib/content-lang";
@@ -44,6 +44,13 @@ function bestPointTitle(
   return t(lang, "bestPoint.of", { name: loserA ? p.nameA : p.nameB });
 }
 
+/** "Translated from Turkish". A source with no sentence of its own reads
+ * "German → English", which needs no grammar in any language. */
+function translatedFrom(lang: Lang, source: Lang): string {
+  if (source === "en" || source === "tr") return t(lang, source === "tr" ? "translate.from.tr" : "translate.from.en");
+  return `${languageName(lang, source)} → ${languageName(lang, lang)}`;
+}
+
 /** Small status pill above a verdict whose text is (being) translated.
  * Polite live region, so a screen reader hears "Translating…" and then the
  * outcome without losing its place. */
@@ -52,7 +59,7 @@ function TranslationNote({ view, lang }: { view: TranslationView; lang: Lang }) 
     view.status === "loading"
       ? t(lang, "translate.loading")
       : view.status === "translated"
-        ? t(lang, view.source === "tr" ? "translate.from.tr" : "translate.from.en")
+        ? translatedFrom(lang, view.source)
         : view.status === "error"
           ? t(lang, "translate.failed")
           : "";

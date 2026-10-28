@@ -6,7 +6,7 @@
  * case text.
  */
 
-import type { Lang } from "./i18n";
+import { emailCopy, loadLocales, type EmailCopy, type Lang } from "./i18n";
 import { isLang } from "./langs";
 import { PALETTE as P } from "./palette";
 
@@ -19,26 +19,33 @@ export function emailConfigured(env: Record<string, string | undefined> = proces
   return Boolean(env.RESEND_API_KEY?.trim() && env.EMAIL_FROM?.trim());
 }
 
-/** Email copy per language. Turkish speaks to the reader as "sen". */
-export const SIGNIN_EMAIL: Record<
-  "en" | "tr",
-  { subject: string; intro: string; button: string; expiry: string; ignore: string }
-> = {
-  en: {
+/** English email copy; other languages carry theirs in lib/locales. */
+export const EMAIL_EN: EmailCopy = {
+  signIn: {
     subject: "Your Judge sign-in link",
     intro: "Tap the button below to sign in to Judge.",
     button: "Sign in to Judge",
     expiry: "The link works once and expires in 10 minutes.",
     ignore: "If you didn't ask for this, you can ignore this email.",
   },
-  tr: {
-    subject: "Judge giriş bağlantın",
-    intro: "Judge'a giriş yapmak için aşağıdaki düğmeye dokun.",
-    button: "Judge'a giriş yap",
-    expiry: "Bağlantı tek kullanımlık ve 10 dakika geçerli.",
-    ignore: "Bu isteği sen yapmadıysan bu e-postayı yok sayabilirsin.",
+  signInCode: {
+    subject: "Your Judge sign-in code",
+    intro: "Enter this code in the Judge app to sign in:",
+    expiry: "The code works once and expires in 10 minutes.",
+    ignore: "If you didn't ask for this, you can ignore this email.",
+  },
+  caseReady: {
+    subject: "They answered: your Judge verdict is ready",
+    intro: "The other person told their side, and the judges have ruled on both accounts.",
+    button: "See the verdict",
+    note: "You're getting this because you started this case on Judge.",
   },
 };
+
+/** The copy for `lang` once its locale is loaded, else English. */
+function copy(lang: Lang): EmailCopy {
+  return emailCopy(lang) ?? EMAIL_EN;
+}
 
 /** The email language: the `lang` query param of the magic link's
  * callbackURL (the website sends `/account?lang=tr`), default English. */
@@ -63,7 +70,7 @@ function escapeHtml(s: string): string {
 }
 
 export function signInEmailContent(url: string, lang: Lang): EmailContent {
-  const c = SIGNIN_EMAIL[lang === "tr" ? "tr" : "en"];
+  const c = copy(lang).signIn;
   const text = `${c.intro}\n\n${url}\n\n${c.expiry}\n${c.ignore}\n`;
   // Ivory & Terracotta, inline styles only (email clients drop <style>).
   const html = `<!doctype html><html lang="${lang}"><body style="margin:0;padding:32px 16px;background:${P.ivory};font-family:Georgia,'Times New Roman',serif;color:${P.ink}">
@@ -99,28 +106,9 @@ async function deliver(to: string, content: EmailContent, label: string, unconfi
 /** Sends the sign-in link. Throws on failure (Better Auth then answers the
  * request with an error); the message never contains the address or link. */
 export async function sendSignInEmail({ to, url, lang }: { to: string; url: string; lang: Lang }): Promise<void> {
+  await loadLocales();
   await deliver(to, signInEmailContent(url, lang), "sign-in email", "email sign-in is not configured");
 }
-
-/** Sign-in code email copy (the apps sign in by typing this code). Turkish
- * speaks to the reader as "sen". */
-export const SIGNIN_CODE_EMAIL: Record<
-  "en" | "tr",
-  { subject: string; intro: string; expiry: string; ignore: string }
-> = {
-  en: {
-    subject: "Your Judge sign-in code",
-    intro: "Enter this code in the Judge app to sign in:",
-    expiry: "The code works once and expires in 10 minutes.",
-    ignore: "If you didn't ask for this, you can ignore this email.",
-  },
-  tr: {
-    subject: "Judge giriş kodun",
-    intro: "Giriş yapmak için bu kodu Judge uygulamasına gir:",
-    expiry: "Kod tek kullanımlık ve 10 dakika geçerli.",
-    ignore: "Bu isteği sen yapmadıysan bu e-postayı yok sayabilirsin.",
-  },
-};
 
 /** The code email's language: `lang=tr` in the request URL's query (the apps
  * call `/api/auth/email-otp/send-verification-otp?lang=tr`), default English. */
@@ -135,7 +123,7 @@ export function langFromRequestUrl(url: string | undefined): Lang {
 }
 
 export function signInCodeEmailContent(code: string, lang: Lang): EmailContent {
-  const c = SIGNIN_CODE_EMAIL[lang === "tr" ? "tr" : "en"];
+  const c = copy(lang).signInCode;
   const text = `${c.intro}
 
 ${code}
@@ -156,28 +144,12 @@ ${c.ignore}
 /** Sends a sign-in code. Throws on failure; the message never contains the
  * address or code. */
 export async function sendSignInCodeEmail({ to, code, lang }: { to: string; code: string; lang: Lang }): Promise<void> {
+  await loadLocales();
   await deliver(to, signInCodeEmailContent(code, lang), "sign-in code email", "email sign-in is not configured");
 }
 
-/** "The other side answered" notice copy. It names no one and quotes nothing
- * from the case. Turkish speaks to the reader as "sen". */
-export const CASE_READY_EMAIL: Record<"en" | "tr", { subject: string; intro: string; button: string; note: string }> = {
-  en: {
-    subject: "They answered: your Judge verdict is ready",
-    intro: "The other person told their side, and the judges have ruled on both accounts.",
-    button: "See the verdict",
-    note: "You're getting this because you started this case on Judge.",
-  },
-  tr: {
-    subject: "Cevap geldi: Judge kararın hazır",
-    intro: "Diğer kişi kendi tarafını anlattı ve yargıçlar iki anlatıma göre karar verdi.",
-    button: "Kararı gör",
-    note: "Bu e-postayı Judge'da bu davayı sen başlattığın için alıyorsun.",
-  },
-};
-
 export function caseReadyEmailContent(url: string, lang: Lang): EmailContent {
-  const c = CASE_READY_EMAIL[lang === "tr" ? "tr" : "en"];
+  const c = copy(lang).caseReady;
   const text = `${c.intro}\n\n${url}\n\n${c.note}\n`;
   const html = `<!doctype html><html lang="${lang}"><body style="margin:0;padding:32px 16px;background:${P.ivory};font-family:Georgia,'Times New Roman',serif;color:${P.ink}">
 <div style="max-width:480px;margin:0 auto;background:${P.paper};border:1px solid ${P.strata};border-radius:12px;padding:32px">
@@ -192,5 +164,6 @@ export function caseReadyEmailContent(url: string, lang: Lang): EmailContent {
 /** Sends the "your case is ready" notice. Throws on failure; the message
  * never contains the address or link. */
 export async function sendCaseReadyEmail({ to, url, lang }: { to: string; url: string; lang: Lang }): Promise<void> {
+  await loadLocales();
   await deliver(to, caseReadyEmailContent(url, lang), "case email", "email is not configured");
 }
