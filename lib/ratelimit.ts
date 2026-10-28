@@ -145,12 +145,16 @@ export async function checkTranslateLimits(ip: string): Promise<LimitDecision> {
 /** Per-account buckets for signed-in features. Premium verdicts: 10 per 10
  * minutes and 60 per 24 hours; clarifying questions: 20 per 10 minutes and
  * 100 per 24 hours (they spend no credit, so the daily window is what bounds
- * their cost per account). */
+ * their cost per account). An account that never had anything but its
+ * welcome credit gets the welcome_ buckets instead: it may keep that credit
+ * unspent forever, and every sign-up has one. */
 export type UserBucket =
   | "premium_verdict"
   | "clarify"
+  | "welcome_clarify"
   | "case_create"
   | "evidence"
+  | "welcome_evidence"
   | "case_evidence"
   | "verdict_owner"
   | "apple_code";
@@ -166,6 +170,7 @@ export const USER_LIMITS: Record<UserBucket, readonly UserWindow[]> = {
     { limit: 20, windowMs: 10 * MINUTE_MS, redisWindow: "10 m", prefix: "verdict:u:cl10m" },
     { limit: 100, windowMs: DAY_MS, redisWindow: "1 d", prefix: "verdict:u:clday" },
   ],
+  welcome_clarify: [{ limit: 5, windowMs: DAY_MS, redisWindow: "1 d", prefix: "verdict:u:wclday" }],
   case_create: [
     { limit: 10, windowMs: 10 * MINUTE_MS, redisWindow: "10 m", prefix: "verdict:u:cc10m" },
     { limit: 30, windowMs: DAY_MS, redisWindow: "1 d", prefix: "verdict:u:ccday" },
@@ -174,6 +179,7 @@ export const USER_LIMITS: Record<UserBucket, readonly UserWindow[]> = {
     { limit: 30, windowMs: 10 * MINUTE_MS, redisWindow: "10 m", prefix: "verdict:u:ev10m" },
     { limit: 150, windowMs: DAY_MS, redisWindow: "1 d", prefix: "verdict:u:evday" },
   ],
+  welcome_evidence: [{ limit: 5, windowMs: DAY_MS, redisWindow: "1 d", prefix: "verdict:u:wevday" }],
   /** Keyed "case:<id>:b": respondent uploads per case. */
   case_evidence: [{ limit: 12, windowMs: DAY_MS, redisWindow: "1 d", prefix: "verdict:c:evday" }],
   /** A writer reading or changing their own verdicts and case sides (session). */

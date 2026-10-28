@@ -7,7 +7,7 @@
 import { NextResponse } from "next/server";
 import { API_ERROR_STATUS, apiErrorBody, type ApiErrorBody, type ApiErrorCode } from "@/lib/api-errors";
 import { getViewer, isSameOrigin } from "@/lib/auth";
-import { getEntitlement } from "@/lib/entitlements";
+import { getEntitlement, hasWelcomeCreditOnly } from "@/lib/entitlements";
 import { evidenceEnabled } from "@/lib/features";
 import { checkUserLimits } from "@/lib/ratelimit";
 import { handleEvidenceUpload } from "./upload";
@@ -34,18 +34,20 @@ export async function evidenceUploadRoute(req: Request): Promise<Response> {
   if (viewer.via === "cookie" && !isSameOrigin(req)) return fail("bad_origin", "This request came from another site.");
   const userId = viewer.user.id;
 
+  let welcome: boolean;
   try {
     const entitlement = await getEntitlement(userId);
     if (!entitlement.canUsePremium) {
       const code = entitlement.blockedReason ?? "premium_required";
       return fail(code, BLOCK_MESSAGES[code], entitlement.resetsAt && code === "fair_use" ? { resetsAt: entitlement.resetsAt } : {});
     }
+    welcome = await hasWelcomeCreditOnly(userId);
   } catch (e) {
     console.error("[evidence] entitlement read failed:", e instanceof Error ? e.message : String(e));
     return unavailable();
   }
 
-  const limit = await checkUserLimits(userId, "evidence");
+  const limit = await checkUserLimits(userId, welcome ? "welcome_evidence" : "evidence");
   if (!limit.ok) {
     if (limit.code === "unavailable") return unavailable();
     return fail("rate_limited", "Too many uploads from your account — try again later.", {

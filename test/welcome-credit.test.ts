@@ -95,6 +95,13 @@ describe("welcome credit", () => {
     expect((await ent.getEntitlement(user.id)).credits).toBe(0);
   });
 
+  it("an account counts as welcome-only until it gets any other grant", async () => {
+    const { user } = await createDevSession("welcome9@verdict.local");
+    expect(await ent.hasWelcomeCreditOnly(user.id)).toBe(true);
+    await ent.grantCredits({ userId: user.id, credits: 1, source: "admin", externalId: "admin:welcome9" });
+    expect(await ent.hasWelcomeCreditOnly(user.id)).toBe(false);
+  });
+
   it("accounts made by the admin script get it too", async () => {
     const res = await findOrCreateUserByEmail("welcome4@example.com", true);
     expect(res?.created).toBe(true);

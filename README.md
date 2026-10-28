@@ -201,7 +201,9 @@ Sign-in providers without credentials are reported as unavailable by
 **Limits for Premium:** per account 10 premium verdicts per 10 minutes and
 60 per 24 hours, 20 clarifying-question requests per 10 minutes and 100 per
 24 hours (`429 rate_limited`), plus `PREMIUM_DAILY_CAP` (`503 daily_cap`).
-Verdicts skip Turnstile: the signed-in account and these limits are the gate. A
+An account that never had anything but its welcome credit gets 5
+clarifying-question requests and 5 evidence uploads per 24 hours instead,
+since it can hold that credit unspent indefinitely. Verdicts skip Turnstile: the signed-in account and these limits are the gate. A
 premium credit is reserved before any model call and returned automatically
 if the verdict fails, if the judges decline, or if every Sonnet seat failed
 and the verdict rests on Haiku alone (that verdict is still shown).

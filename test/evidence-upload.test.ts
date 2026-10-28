@@ -5,6 +5,7 @@ const m = vi.hoisted(() => ({
   getViewer: vi.fn(),
   isSameOrigin: vi.fn(),
   getEntitlement: vi.fn(),
+  hasWelcomeCreditOnly: vi.fn(),
   checkUserLimits: vi.fn(),
   dbCalls: [] as string[],
   fsWrites: [] as string[],
@@ -21,7 +22,10 @@ vi.mock("@/lib/auth", async (importOriginal) => ({
   resolveViewer: async (req: Request) => ({ viewer: (await m.getViewer(req)) ?? null, deadBearer: false }),
   hasDeadBearer: async () => false,
 }));
-vi.mock("@/lib/entitlements", () => ({ getEntitlement: m.getEntitlement }));
+vi.mock("@/lib/entitlements", () => ({
+  getEntitlement: m.getEntitlement,
+  hasWelcomeCreditOnly: m.hasWelcomeCreditOnly,
+}));
 vi.mock("@/lib/ratelimit", () => ({ checkUserLimits: m.checkUserLimits }));
 // Any database use from the upload path is recorded (and must never happen).
 vi.mock("@/lib/db", () => ({
@@ -98,6 +102,7 @@ beforeEach(() => {
   m.getViewer.mockResolvedValue({ user: { id: "u1" }, via: "bearer", sessionId: "s" });
   m.isSameOrigin.mockReturnValue(true);
   m.getEntitlement.mockResolvedValue(ENTITLED);
+  m.hasWelcomeCreditOnly.mockResolvedValue(false);
   m.checkUserLimits.mockResolvedValue({ ok: true });
   vi.spyOn(console, "info").mockImplementation(() => {});
   vi.spyOn(console, "warn").mockImplementation(() => {});
@@ -286,6 +291,12 @@ describe("POST /api/v1/evidence gates", () => {
     expect(m.checkUserLimits).toHaveBeenCalledWith("u1", "evidence");
     m.checkUserLimits.mockResolvedValueOnce({ ok: false, code: "unavailable", error: "x" });
     expect((await POST(upload())).status).toBe(503);
+  });
+
+  it("holds an account on its welcome credit alone to the welcome bucket", async () => {
+    m.hasWelcomeCreditOnly.mockResolvedValueOnce(true);
+    expect((await POST(upload())).status).toBe(200);
+    expect(m.checkUserLimits).toHaveBeenCalledWith("u1", "welcome_evidence");
   });
 
   it("uploads for the signed-in user", async () => {

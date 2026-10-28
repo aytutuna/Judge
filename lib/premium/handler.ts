@@ -24,6 +24,7 @@ import { getVerdict } from "@/lib/db";
 import {
   consumePremiumVerdict,
   getEntitlement,
+  hasWelcomeCreditOnly,
   refundPremiumVerdict,
   reservePremiumVerdict,
   type ReserveResult,
@@ -486,7 +487,14 @@ export async function clarifyHandler(req: Request): Promise<NextResponse> {
   if ("response" in gate) return gate.response;
   const { userId } = gate;
 
-  const limited = await limitGate(userId, "clarify");
+  let welcome: boolean;
+  try {
+    welcome = await hasWelcomeCreditOnly(userId);
+  } catch (e) {
+    console.error("[clarify] account read failed:", e instanceof Error ? e.message : String(e));
+    return unavailable();
+  }
+  const limited = await limitGate(userId, welcome ? "welcome_clarify" : "clarify");
   if (limited) return limited;
 
   let entitlement: Entitlement;
