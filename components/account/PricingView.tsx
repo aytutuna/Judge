@@ -96,19 +96,6 @@ export function PricingTable({
       ) : null}
       {premiumEnabled === false ? <p className={styles.notice}>{t(lang, "pricing.preview")}</p> : null}
       <div className={styles.plans}>
-        <section className={styles.plan} aria-labelledby="plan-included">
-          <h2 id="plan-included" className={styles.planTitle}>
-            <PremiumSpark />
-            {t(lang, "pricing.included.title")}
-          </h2>
-          <Features lang={lang} keys={featureKeys(premiumEnabled ? features : null)} />
-          {premiumEnabled && !signedIn && signInOffered ? (
-            <Link href="/signin?next=%2Fpricing" className={`${styles.btn} ${styles.primary}`}>
-              {t(lang, "pricing.signIn")}
-            </Link>
-          ) : null}
-        </section>
-
         <section className={`${styles.plan} ${styles.planHighlight}`} aria-labelledby="plan-buy">
           <h2 id="plan-buy" className={styles.planTitle}>
             {t(lang, "pricing.buy.title")}
@@ -140,6 +127,19 @@ export function PricingTable({
               {buy(formatPrice(pricing.monthly.priceUsd, lang))}
             </li>
           </ul>
+          {premiumEnabled && !signedIn && signInOffered ? (
+            <Link href="/signin?next=%2Fpricing" className={`${styles.btn} ${styles.primary}`}>
+              {t(lang, "pricing.signIn")}
+            </Link>
+          ) : null}
+        </section>
+
+        <section className={styles.plan} aria-labelledby="plan-included">
+          <h2 id="plan-included" className={styles.planTitle}>
+            <PremiumSpark />
+            {t(lang, "pricing.included.title")}
+          </h2>
+          <Features lang={lang} keys={featureKeys(premiumEnabled ? features : null)} />
         </section>
       </div>
       <p className={styles.small}>{t(lang, "pricing.note")}</p>
