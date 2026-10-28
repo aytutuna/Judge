@@ -22,7 +22,7 @@ Settings > Account > Delete account. This removes the account, sign-in details, 
 
 ## Purchases
 
-Every verdict uses one credit or one of the monthly plan's verdicts. A new account gets its first verdict free; after that verdicts are sold through in-app purchase: two consumable credit packs (`pack_1`, `pack_10`) and an auto-renewable monthly subscription (`monthly`) that includes 35 verdicts a month. The reviewer account has credits, so verdicts work without buying anything. The sandbox works for testing: sign in with the reviewer account, open Settings > Pricing, and buy with a sandbox account. The credits or the plan show up within a few seconds. Restore purchases is under Settings > Account.
+Every verdict uses one credit or one of the monthly plan's verdicts. A new account gets its first verdict free; after that verdicts are sold through in-app purchase: two consumable credit packs (`pack_1`, `pack_10`) and an auto-renewable monthly subscription (`monthly`) that includes 35 verdicts a month. The reviewer account has credits, so verdicts, two-sided cases and appeals work without buying anything. The packs and the plan are under Settings > Pricing; restore purchases is under Settings > Account.
 
 ## Two-sided cases
 
