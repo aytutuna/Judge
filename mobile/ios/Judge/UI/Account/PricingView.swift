@@ -65,10 +65,17 @@ struct PricingView: View {
     }
 
     private func planStatus(_ entitlement: Entitlement, lang: AppLang) -> some View {
-        VStack(alignment: .leading, spacing: 4) {
-            Text(Balance(entitlement).line(lang))
+        let balance = Balance(entitlement)
+        return VStack(alignment: .leading, spacing: 4) {
+            Text(balance.line(lang))
                 .brandText(.slotTitle)
                 .foregroundStyle(Brand.ink)
+            // Past the monthly cap the line above already counts the credits.
+            if case .monthly = balance, entitlement.credits > 0 {
+                Text("\(L10n.accountCredits(lang)): \(entitlement.credits)")
+                    .brandText(.slotText)
+                    .foregroundStyle(Brand.ink2)
+            }
             if let sub = entitlement.subscription {
                 let date = ErrorText.formatDate(sub.periodEnd, lang: lang) ?? sub.periodEnd
                 Text(sub.willRenew ? L10n.accountSubscriptionRenews(lang, date: date) : L10n.accountSubscriptionUntil(lang, date: date))
