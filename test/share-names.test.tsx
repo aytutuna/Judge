@@ -1,7 +1,7 @@
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import { VerdictView } from "../components/VerdictView";
-import { restoredHeadline, VerdictList } from "../components/account/VerdictList";
+import { restoredHeadline } from "../components/shell/useHistory";
 import { RemovedVerdict } from "../components/RemovedVerdict";
 import { t } from "../lib/i18n";
 import { defaultDisplay, DisplayNameInput, firstNameOf, publicNameMap } from "../lib/originals-types";
@@ -92,31 +92,17 @@ describe("display-name rules", () => {
   });
 });
 
-describe("account list", () => {
-  it("restores the writer's names in headlines and greys out removed verdicts", () => {
+describe("history titles", () => {
+  it("restore the writer's names in headlines", () => {
     const v = {
-      id: "v1",
-      kind: "free" as const,
-      createdAt: "2026-10-20T10:00:00.000Z",
-      verdict: "side_b" as const,
       headline: "Party B is right",
       nameMap: [
         { original: "I", replacement: "Party A" },
         { original: "Harry", replacement: "Party B" },
       ],
-      removed: false,
     };
     expect(restoredHeadline(v)).toBe("Harry is right");
-    const out = html(
-      <VerdictList
-        lang="en"
-        state={{ status: "ready", verdicts: [v, { ...v, id: "v2", headline: null, nameMap: [], removed: true }] }}
-      />,
-    );
-    expect(out).toContain('href="/v/v1"');
-    expect(out).toContain(esc("Harry is right"));
-    expect(out).not.toContain('href="/v/v2"');
-    expect(out).toContain(t("en", "account.verdicts.removed"));
+    expect(restoredHeadline({ ...v, headline: null })).toBeNull();
   });
 });
 

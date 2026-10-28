@@ -8,7 +8,6 @@ import { useLang } from "@/lib/lang";
 import { markSignedOut, useViewer, type ViewerState } from "@/lib/use-viewer";
 import styles from "./AccountPages.module.css";
 import { PageShell } from "./PageShell";
-import { VerdictList, useVerdictList, type VerdictListState } from "./VerdictList";
 
 /** How long the "account deleted" note stays before going home. */
 const DELETED_HOLD_MS = 1800;
@@ -33,8 +32,6 @@ export type AccountPanelProps = {
   deleteError: string | null;
   onSignOut: () => void;
   onDelete: () => void;
-  /** "Your verdicts" (signed in). */
-  verdicts?: VerdictListState | null;
 };
 
 /** Everything on /account below the title, stateless apart from the
@@ -47,7 +44,6 @@ export function AccountPanel({
   deleteError,
   onSignOut,
   onDelete,
-  verdicts = null,
 }: AccountPanelProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const cancelRef = useRef<HTMLButtonElement>(null);
@@ -144,8 +140,6 @@ export function AccountPanel({
         </div>
       </section>
 
-      {verdicts ? <VerdictList lang={lang} state={verdicts} /> : null}
-
       <section className={styles.card}>
         {deleteError ? (
           <p className={styles.error} role="alert">
@@ -201,8 +195,6 @@ export function AccountView() {
   const [deleting, setDeleting] = useState(false);
   const [deleted, setDeleted] = useState(false);
   const [deleteError, setDeleteError] = useState<string | null>(null);
-  const signedIn = Boolean(viewer.me?.user);
-  const verdicts = useVerdictList(signedIn);
 
   useEffect(() => {
     if (!deleted) return;
@@ -245,7 +237,6 @@ export function AccountView() {
         deleteError={deleteError}
         onSignOut={() => void signOut()}
         onDelete={() => void remove()}
-        verdicts={signedIn ? verdicts : null}
       />
     </PageShell>
   );

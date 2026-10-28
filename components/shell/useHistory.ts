@@ -14,12 +14,11 @@ import {
   useLocalHistory,
   type HistoryEntry,
 } from "@/lib/history-store";
-import { localizeLabelsAuto } from "@/lib/names";
+import { localizeLabelsAuto, resolveParties, restoreNames, textLang } from "@/lib/names";
 import type { MineResponse, OwnerVerdictListResponse, OwnerVerdictSummary } from "@/lib/originals-types";
 import type { VerdictPollResponse } from "@/lib/verdict-poll";
 import { loadOwnerToken, ownerHeaders, ownerTokenIds } from "@/lib/owner-store";
 import type { ViewerState } from "@/lib/use-viewer";
-import { restoredHeadline } from "../account/VerdictList";
 
 export type HistoryItem = {
   kind: "verdict" | "case";
@@ -57,6 +56,14 @@ const STALE_MS = 2 * 60_000;
 // across all tabs per window.
 const LOOKUPS_PER_LOAD = 10;
 const SEED_GAP_MS = 10 * 60_000;
+
+/** The headline with the writer's own names put back (same conservative
+ * rules as the verdict card). */
+export function restoredHeadline(v: Pick<OwnerVerdictSummary, "headline" | "nameMap">): string | null {
+  if (!v.headline) return null;
+  const lang = textLang(v.headline);
+  return restoreNames(v.headline, resolveParties(v.nameMap, lang, "A"), lang);
+}
 
 function fromVerdict(v: OwnerVerdictSummary): HistoryItem {
   return {

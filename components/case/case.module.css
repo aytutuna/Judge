@@ -960,51 +960,6 @@
   padding: 4px 12px 14px;
 }
 
-/* ---------- Case list (account) ---------- */
-.caseList {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-.caseLink {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-items: center;
-  gap: 4px 12px;
-  min-height: 56px;
-  padding: 12px 14px;
-  border: 1px solid var(--line-2);
-  border-radius: 16px;
-  background: var(--ivory);
-  color: var(--ink);
-  text-decoration: none;
-  transition:
-    border-color var(--dur-1),
-    background-color var(--dur-1);
-}
-.caseLink:hover {
-  border-color: rgba(28, 25, 22, 0.26);
-  background: var(--paper);
-}
-.caseHeadline {
-  display: -webkit-box;
-  overflow: hidden;
-  font-size: 15px;
-  font-weight: 600;
-  line-height: 1.35;
-  overflow-wrap: anywhere;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  line-clamp: 2;
-}
-.caseMeta {
-  color: var(--muted);
-  font-size: 13px;
-}
-
 @media (min-width: 960px) {
   .main {
     padding-top: 64px;
@@ -1027,8 +982,7 @@
   .account,
   .dispute,
   .evItem,
-  .previous,
-  .caseLink {
+  .previous {
     border-color: CanvasText;
   }
   .modeInput:checked + .modeFace {
