@@ -20,8 +20,6 @@ import com.okjudge.judge.core.evidence.PreparedImage
 import com.okjudge.judge.core.model.Entitlement
 import com.okjudge.judge.core.model.EvidenceUploadResponse
 import com.okjudge.judge.core.model.Features
-import com.okjudge.judge.core.premium.Tier
-import com.okjudge.judge.core.premium.TierAvailability
 import com.okjudge.judge.core.premium.Tiers
 import com.okjudge.judge.core.session.VerdictFlow
 import com.okjudge.judge.i18n.AppLang
@@ -44,13 +42,10 @@ data class HomeUiState(
     val preset: Preset = Preset.DEFAULT,
     val error: UiError? = null,
     val blockedUntil: Long? = null,
-    /** The remembered Free / Premium choice (a preference only). */
-    val tierChoice: Tier = Tier.FREE,
-    val availability: TierAvailability = TierAvailability.HIDDEN,
     val entitlement: Entitlement? = null,
     val features: Features = Features(),
     val signedIn: Boolean = false,
-    /** Premium is asking whether facts are missing (POST /clarify). */
+    /** Asking whether facts are missing (POST /clarify). */
     val checking: Boolean = false,
     val evidence: EvidenceState = EvidenceState(max = MAX_EVIDENCE_PER_SIDE),
     /** Your name over your card, in the joined text and on a new case's share pages; null until typed. */
@@ -68,13 +63,12 @@ data class HomeUiState(
 ) {
     val casesOn: Boolean get() = signedIn && features.cases
     val shownName: String get() = typedName ?: suggestedName ?: ""
+    val evidenceOn: Boolean get() = signedIn && features.evidence
 
-    /** The effective tier: premium only while it can be used and was chosen. */
-    val tier: Tier get() = Tiers.effective(availability, tierChoice)
-    val premium: Boolean get() = tier == Tier.PREMIUM
-    val evidenceOn: Boolean get() = premium && features.evidence
+    /** Signed in with nothing left to spend; unknown while the account loads, so the server decides then. */
+    val outOfUnits: Boolean get() = signedIn && entitlement != null && Tiers.remaining(entitlement) == null
 
-    /** A premium request is being prepared: the form and the switch hold still. */
+    /** A request is being prepared: the form holds still. */
     val holding: Boolean get() = checking || creating
 
     /** Nothing typed or attached: the "+" has nothing to clear here. */
@@ -117,15 +111,15 @@ data class HomeUiState(
     }
 }
 
-/** What a submit started. */
-enum class Submitted { NOTHING, JUDGING, CHECKING, CREATING }
+/** What a submit started, or the screen it needs first. */
+enum class Submitted { NOTHING, CHECKING, CREATING, SIGN_IN, PRICING }
 
 /**
  * The argument form: your side, and theirs when you know it. The draft
  * survives rotation and process death through [SavedStateHandle]; the
- * request itself runs in [VerdictFlow]. The tier switch reads the server
- * config and the account; screenshots are held by an [EvidenceController]
- * for as long as the form lives.
+ * request itself runs in [VerdictFlow]. The balance comes from the account
+ * and the extras on offer from the server config; screenshots are held by
+ * an [EvidenceController] for as long as the form lives.
  */
 class HomeViewModel(
     private val saved: SavedStateHandle,
@@ -155,25 +149,18 @@ class HomeViewModel(
         HomeUiState(argument, preset, error, blocked, otherSide = other, otherName = otherName)
     }
 
-    private val premium = combine(settings.tierChoice, accountState, providers, flow.premiumStep, evidence.state) {
-            choice, account, prov, step, ev ->
+    private val premium = combine(accountState, providers, flow.premiumStep, evidence.state) { account, prov, step, ev ->
         val config = (prov as? Account.Providers.Ready)?.config
-        val signedIn = account is Account.State.SignedIn
-        val entitlement = (account as? Account.State.SignedIn)?.me?.entitlement
         PremiumPart(
-            choice = choice,
-            availability = Tiers.availability(config, signedIn, entitlement),
-            entitlement = entitlement,
+            entitlement = (account as? Account.State.SignedIn)?.me?.entitlement,
             features = config?.features ?: Features(),
-            signedIn = signedIn,
+            signedIn = account is Account.State.SignedIn,
             checking = step == VerdictFlow.PremiumStep.Checking,
             evidence = ev,
         )
     }
 
     private data class PremiumPart(
-        val choice: Tier,
-        val availability: TierAvailability,
         val entitlement: Entitlement?,
         val features: Features,
         val signedIn: Boolean,
@@ -202,8 +189,6 @@ class HomeViewModel(
             typedName = c.typedName,
             suggestedName = c.suggestedName,
             creating = c.creating,
-            tierChoice = p.choice,
-            availability = p.availability,
             entitlement = p.entitlement,
             features = p.features,
             signedIn = p.signedIn,
@@ -232,11 +217,6 @@ class HomeViewModel(
         viewModelScope.launch { settings.setLastPreset(preset) }
     }
 
-    /** A tier picked on the switch (a locked Premium remembers the intent: see onPremiumIntent). */
-    fun onTier(tier: Tier) {
-        viewModelScope.launch { settings.setTierChoice(tier) }
-    }
-
     fun onDisplayName(name: String) {
         saved[KEY_NAME] = name.take(CaseLogic.MAX_DISPLAY_NAME)
         saved[KEY_EXAMPLE_NAME] = false
@@ -261,27 +241,26 @@ class HomeViewModel(
 
     /**
      * Starts a verdict on what was written, joined in the words of [strings]
-     * when both sides are: the free request, or premium's clarify step.
+     * when both sides are: the clarify step first. Signed out or with nothing
+     * left to spend it starts nothing and names the screen to open instead.
      */
     fun submit(lang: AppLang, strings: Strings, now: Long = System.currentTimeMillis()): Submitted {
         val s = state.value
         if (!s.canSubmit || !s.fits(strings)) return Submitted.NOTHING
         if ((s.blockedUntil ?: 0) > now) return Submitted.NOTHING
-        val text = s.outgoing(strings)
-        return if (s.premium) {
-            val tokens = if (s.evidenceOn) s.evidence.tokens else emptyList()
-            if (flow.startPremium(text, s.preset, lang, tokens, s.sides)) Submitted.CHECKING else Submitted.NOTHING
-        } else {
-            if (flow.start(text, s.preset, lang, s.sides)) Submitted.JUDGING else Submitted.NOTHING
-        }
+        if (!s.signedIn) return Submitted.SIGN_IN
+        if (s.outOfUnits) return Submitted.PRICING
+        val tokens = if (s.evidenceOn) s.evidence.tokens else emptyList()
+        return if (flow.startPremium(s.outgoing(strings), s.preset, lang, tokens, s.sides)) Submitted.CHECKING else Submitted.NOTHING
     }
 
     /** "Or send them a link to write it": a two-sided case with your side; the other person writes theirs. */
     fun sendLink(lang: AppLang, now: Long = System.currentTimeMillis()): Submitted {
         val s = state.value
         if (!s.canSendLink || (s.blockedUntil ?: 0) > now) return Submitted.NOTHING
+        if (s.outOfUnits) return Submitted.PRICING
         val tokens = if (s.evidenceOn) s.evidence.tokens else emptyList()
-        val started = flow.createCase(s.argument, s.preset, lang, s.tier, tokens, s.shownName, s.otherName)
+        val started = flow.createCase(s.argument, s.preset, lang, tokens, s.shownName, s.otherName)
         return if (started) Submitted.CREATING else Submitted.NOTHING
     }
 

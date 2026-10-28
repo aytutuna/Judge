@@ -151,13 +151,13 @@ data class InviteResponse(val inviteUrl: String = "")
 @Serializable
 data class CaseRemovalResponse(val removed: Boolean = false, val removedAt: String = "", @SerialName("case") val case: CaseView? = null)
 
-/** POST /api/v1/cases (CreateCaseRequest). Null fields are left out; evidence only on a premium case. */
+/** POST /api/v1/cases (CreateCaseRequest). Null fields are left out. */
 @Serializable
 data class CreateCaseRequest(
     val text: String,
     val framework: FrameworkChoice = FrameworkChoice(),
     val lang: String = "en",
-    val tier: String = "free",
+    val tier: String = "premium",
     val evidence: List<String>? = null,
     val displayName: String? = null,
 )

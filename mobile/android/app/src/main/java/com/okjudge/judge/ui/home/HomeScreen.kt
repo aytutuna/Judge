@@ -70,7 +70,7 @@ import com.okjudge.judge.core.display.Preset
 import com.okjudge.judge.core.display.RestoreNames
 import com.okjudge.judge.core.display.UiError
 import com.okjudge.judge.core.evidence.ImageSource
-import com.okjudge.judge.core.premium.Tier
+import com.okjudge.judge.core.premium.Tiers
 import com.okjudge.judge.i18n.AppLang
 import com.okjudge.judge.i18n.LocalLang
 import com.okjudge.judge.i18n.LocalStrings
@@ -82,7 +82,6 @@ import com.okjudge.judge.ui.components.TopBar
 import com.okjudge.judge.ui.components.uppercaseForUi
 import com.okjudge.judge.ui.components.warmShadow
 import com.okjudge.judge.ui.premium.EvidencePicker
-import com.okjudge.judge.ui.premium.TierSwitch
 import com.okjudge.judge.ui.premium.rememberEvidencePicker
 import com.okjudge.judge.ui.theme.JudgeShapes
 import com.okjudge.judge.ui.theme.JudgeType
@@ -105,6 +104,8 @@ object HomeTags {
     const val OTHER_NAME = "home.otherName"
     const val SEND_LINK = "home.sendLink"
     const val EXAMPLE = "home.example"
+    const val BALANCE = "home.balance"
+    const val CASE_COST = "home.caseCost"
     const val RECENT = "home.recent"
     fun preset(id: String) = "home.preset.$id"
     fun recent(id: String) = "home.recent.$id"
@@ -121,8 +122,8 @@ private val Theirs = SideColors(Palette.sageInk, Palette.sageInk)
 
 /**
  * Home: a card for your side and one for theirs (or a link for them to
- * write it), the lens, the tier and the send button, then the newest saved
- * verdicts and the privacy note.
+ * write it), the lens, the send button with what is left to spend, then the
+ * newest saved verdicts and the privacy note.
  */
 @Composable
 fun HomeScreen(
@@ -138,10 +139,6 @@ fun HomeScreen(
     onOtherName: (String) -> Unit = {},
     onSendLink: () -> Unit = {},
     onExample: () -> Unit = {},
-    onTier: (Tier) -> Unit = {},
-    onPremiumIntent: () -> Unit = {},
-    onSignIn: () -> Unit = {},
-    onPricing: () -> Unit = {},
     onAddEvidence: (List<ImageSource>) -> Unit = {},
     onRemoveEvidence: (String) -> Unit = {},
     onDisplayName: (String) -> Unit = {},
@@ -236,25 +233,26 @@ fun HomeScreen(
                     // Once their side is written here there is nothing left for them to write.
                     if (state.casesOn && state.otherSide.isBlank()) {
                         SendLink(enabled = state.canSendLink && !blocked, onClick = onSendLink)
+                        Text(s.appBalanceCaseCost, style = JudgeType.slotText.copy(color = Palette.ink2), modifier = Modifier.testTag(HomeTags.CASE_COST))
                     }
                 }
                 Presets(state.preset, enabled = !state.holding, onPreset = onPreset)
-                TierSwitch(
-                    availability = state.availability,
-                    value = state.tier,
-                    entitlement = state.entitlement,
-                    disabled = state.holding,
-                    onChange = onTier,
-                    onPremiumIntent = onPremiumIntent,
-                    onSignIn = onSignIn,
-                    onPricing = onPricing,
-                )
                 if (!state.blank) Counter(length, lang, Modifier.align(Alignment.End))
                 SubmitButton(
                     text = s.getVerdict,
                     enabled = state.canSubmit && length <= ArgumentRules.MAX && !blocked,
                     onClick = onSubmit,
                 )
+                if (state.signedIn) {
+                    Tiers.balance(s, state.entitlement)?.let {
+                        Text(
+                            it,
+                            style = JudgeType.slotText.copy(color = Palette.ink2),
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier.fillMaxWidth().testTag(HomeTags.BALANCE),
+                        )
+                    }
+                }
                 if (state.checking || state.creating) {
                     Row(
                         Modifier.fillMaxWidth().semantics(mergeDescendants = true) { liveRegion = LiveRegionMode.Polite }.testTag(HomeTags.STATUS),

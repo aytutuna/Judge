@@ -104,7 +104,7 @@ class AppContainer(context: Context, val config: AppConfig = AppConfig.fromBuild
 
     val verdictFlow: VerdictFlow by lazy {
         VerdictFlow(
-            api, botCheck, history, appScope,
+            api, history, appScope,
             onEntitlement = { account.applyEntitlement(it) },
             refreshAccount = { account.refresh() },
             caseNames = caseNames,

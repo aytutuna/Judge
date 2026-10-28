@@ -71,7 +71,6 @@ import com.okjudge.judge.ui.premium.PricingScreen
 import com.okjudge.judge.ui.premium.StoreUi
 import com.okjudge.judge.core.purchases.PurchaseController
 import com.okjudge.judge.core.model.PricingInfo
-import com.okjudge.judge.core.premium.Tier
 import com.okjudge.judge.ui.judging.JudgingScreen
 import com.okjudge.judge.ui.judging.rememberReducedMotion
 import com.okjudge.judge.ui.settings.RestoreUi
@@ -119,8 +118,6 @@ fun JudgeRoot(container: AppContainer, links: StateFlow<Uri?> = MutableStateFlow
             val backStack = rememberNavBackStack(HomeKey)
             var clearDraft by rememberSaveable { mutableStateOf(false) }
             var submitAfterSignIn by rememberSaveable { mutableStateOf(false) }
-            // The tier the user saw when they tapped "Get the verdict" signed out (always free then).
-            var tierAtTap by rememberSaveable { mutableStateOf(Tier.FREE) }
             val context = LocalContext.current
             val account = container.account
             val snackbar = remember { SnackbarHostState() }
@@ -136,8 +133,9 @@ fun JudgeRoot(container: AppContainer, links: StateFlow<Uri?> = MutableStateFlow
             val premiumStep by container.verdictFlow.premiumStep.collectAsStateWithLifecycle()
             val creating by container.verdictFlow.creating.collectAsStateWithLifecycle()
             val onNew = newArgument.takeUnless { premiumStep == VerdictFlow.PremiumStep.Checking || creating }
+            val openPricing: () -> Unit = { if (backStack.lastOrNull() !is PricingKey) backStack.add(PricingKey) }
             LaunchedEffect(container.verdictFlow) {
-                // Premium moves on by itself: questions first, then the judging screen.
+                // A verdict moves on by itself: questions first, then the judging screen.
                 container.verdictFlow.navigation.collect { nav ->
                     when (nav) {
                         VerdictFlow.Nav.Clarify -> if (backStack.none { it is ClarifyKey }) backStack.add(ClarifyKey)
@@ -151,6 +149,15 @@ fun JudgeRoot(container: AppContainer, links: StateFlow<Uri?> = MutableStateFlow
                             backStack.removeAll { it is ClarifyKey }
                             backStack.add(CaseKey(nav.id, nav.otherName))
                             container.verdictFlow.caseOpened()
+                        }
+                        // The verdict was refused for the account: no judging screen behind the answer.
+                        VerdictFlow.Nav.Pricing -> {
+                            backStack.removeAll { it is ClarifyKey || it is JudgingKey }
+                            openPricing()
+                        }
+                        VerdictFlow.Nav.SignIn -> {
+                            backStack.removeAll { it is ClarifyKey || it is JudgingKey }
+                            if (backStack.none { it is SignInKey }) backStack.add(SignInKey(thenVerdict = false))
                         }
                     }
                 }
@@ -242,11 +249,7 @@ fun JudgeRoot(container: AppContainer, links: StateFlow<Uri?> = MutableStateFlow
                             LaunchedEffect(submitAfterSignIn) {
                                 if (submitAfterSignIn) {
                                     submitAfterSignIn = false
-                                    // Only the request the user saw goes out by itself: if signing in made
-                                    // Premium the effective tier, they choose again.
-                                    if (account.isSignedIn && state.tier == tierAtTap && vm.submit(lang, strings) == Submitted.JUDGING) {
-                                        backStack.add(JudgingKey)
-                                    }
+                                    if (vm.submit(lang, strings) == Submitted.PRICING) openPricing()
                                 }
                             }
                             HomeScreen(
@@ -256,25 +259,18 @@ fun JudgeRoot(container: AppContainer, links: StateFlow<Uri?> = MutableStateFlow
                                 onOtherName = vm::onOtherName,
                                 onPreset = vm::onPreset,
                                 onSubmit = {
-                                    // Every verdict needs an account: sign in first, then go on.
-                                    if (!account.isSignedIn) {
-                                        if (state.canSubmit && state.fits(strings) && backStack.lastOrNull() !is SignInKey) {
-                                            tierAtTap = state.tier
-                                            backStack.add(SignInKey(thenVerdict = true))
-                                        }
-                                    } else if (vm.submit(lang, strings) == Submitted.JUDGING) {
-                                        backStack.add(JudgingKey)
+                                    when (vm.submit(lang, strings)) {
+                                        // Every verdict needs an account: sign in first, then go on.
+                                        Submitted.SIGN_IN -> if (backStack.lastOrNull() !is SignInKey) backStack.add(SignInKey(thenVerdict = true))
+                                        Submitted.PRICING -> openPricing()
+                                        else -> Unit
                                     }
                                 },
-                                onSendLink = { vm.sendLink(lang) },
+                                onSendLink = { if (vm.sendLink(lang) == Submitted.PRICING) openPricing() },
                                 onExample = { vm.fillExample(strings) },
                                 onDismissError = vm::dismissError,
                                 onNew = newArgument,
                                 onOpenPrivacy = { openLink(context, "${container.config.shareBaseUrl.trimEnd('/')}/privacy") },
-                                onTier = vm::onTier,
-                                onPremiumIntent = { vm.onTier(Tier.PREMIUM) },
-                                onSignIn = { if (backStack.lastOrNull() !is SignInKey) backStack.add(SignInKey(thenVerdict = false)) },
-                                onPricing = { if (backStack.lastOrNull() !is PricingKey) backStack.add(PricingKey) },
                                 onAddEvidence = vm::onAddEvidence,
                                 onRemoveEvidence = vm::onRemoveEvidence,
                                 onDisplayName = vm::onDisplayName,

@@ -42,7 +42,7 @@ object Errors {
     /** Stable API codes the dictionary has a message for (ERROR_KEY_BY_CODE). */
     val KNOWN_CODES: Set<String> = setOf(
         "invalid", "too_short", "too_long", "not_configured", "quota", "unavailable",
-        "rate_limited", "daily_cap", "captcha_failed", "signin_required", "premium_required",
+        "rate_limited", "daily_cap", "captcha_failed", "signin_required", "sign_in_required", "premium_required",
         "no_credits", "fair_use", "in_progress", "bad_origin", "not_found",
         "case_closed", "case_expired", "appeal_used", "appeal_limit", "not_party", "own_case", "too_large",
         "unsupported_media", "too_many_files", "evidence_invalid", "anonymize_failed", "removed",
@@ -92,6 +92,7 @@ object Errors {
                 "daily_cap" -> s.errorDailyCap(formatWait(s, retryAfterSec))
                 "fair_use" -> formatDate(lang, resetsAt)?.let { s.errorFairUse(it) } ?: s.errorFairUseSoon
                 "bad_origin" -> s.appErrorBadOrigin
+                "sign_in_required" -> s.errorSigninRequired
                 else -> s.text("error.$effective") ?: s.errorFallback
             }
         }
@@ -109,6 +110,16 @@ object Errors {
 
     /** Account-side failures (401, 402): the entitlement on screen is stale, read /me again. */
     fun isAccountError(error: UiError?): Boolean = error is UiError.Api && (error.status == 401 || error.status == 402)
+
+    /** A screen that answers a failure better than a message: sign-in (401) or pricing (402, out of units). */
+    enum class Opens { PRICING, SIGN_IN }
+
+    fun opens(error: UiError): Opens? = when {
+        error !is UiError.Api -> null
+        error.status == 401 -> Opens.SIGN_IN
+        error.status == 402 -> Opens.PRICING
+        else -> null
+    }
 
     /** Whether a "Try again" button makes sense for this failure. */
     fun isRetryable(error: UiError): Boolean = when (error) {

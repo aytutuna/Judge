@@ -3,11 +3,15 @@ package com.okjudge.judge.ui.home
 import androidx.lifecycle.SavedStateHandle
 import com.okjudge.judge.FakeHistory
 import com.okjudge.judge.core.api.JudgeApi
-import com.okjudge.judge.core.api.NoBotCheck
+import com.okjudge.judge.core.auth.Account
 import com.okjudge.judge.core.data.SettingsStore
 import com.okjudge.judge.core.display.Examples
 import com.okjudge.judge.core.display.Preset
-import com.okjudge.judge.core.premium.Tier
+import com.okjudge.judge.core.model.Entitlement
+import com.okjudge.judge.core.model.Features
+import com.okjudge.judge.core.model.MeResponse
+import com.okjudge.judge.core.model.ServerConfig
+import com.okjudge.judge.core.model.Viewer
 import com.okjudge.judge.core.session.VerdictFlow
 import com.okjudge.judge.i18n.AppLang
 import com.okjudge.judge.i18n.LangPref
@@ -18,6 +22,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
 import okhttp3.OkHttpClient
@@ -41,10 +46,8 @@ class HomeViewModelTest {
     private class FakeSettings : SettingsStore {
         override val langPref = MutableStateFlow(LangPref.SYSTEM)
         override val lastPreset = MutableStateFlow(Preset.DEFAULT)
-        override val tierChoice = MutableStateFlow(Tier.FREE)
         override suspend fun setLangPref(pref: LangPref) { langPref.value = pref }
         override suspend fun setLastPreset(preset: Preset) { lastPreset.value = preset }
-        override suspend fun setTierChoice(tier: Tier) { tierChoice.value = tier }
     }
 
     @Before
@@ -58,10 +61,16 @@ class HomeViewModelTest {
         Dispatchers.resetMain()
     }
 
-    private fun vm(random: Random = Random(7)): HomeViewModel {
-        val api = JudgeApi("http://localhost:1/", OkHttpClient(), "ua")
-        return HomeViewModel(SavedStateHandle(), FakeSettings(), VerdictFlow(api, NoBotCheck, FakeHistory(), scope), random = random)
+    private val flow = VerdictFlow(JudgeApi("http://localhost:1/", OkHttpClient(), "ua"), FakeHistory(), scope)
+
+    private fun vm(random: Random = Random(7), account: Account.State = Account.State.SignedOut): HomeViewModel {
+        val ready = Account.Providers.Ready(ServerConfig(features = Features(cases = true)))
+        return HomeViewModel(SavedStateHandle(), FakeSettings(), flow, flowOf(account), flowOf(ready), random = random)
     }
+
+    private fun signedIn(e: Entitlement?) = Account.State.SignedIn(MeResponse(Viewer("u1", "ada@example.com"), e))
+
+    private val argument = "My roommate never does the dishes and says it is my turn."
 
     @Test
     fun everyExample_hasBothNamesAndBothSides_inBothLanguages() {
@@ -117,5 +126,33 @@ class HomeViewModelTest {
         vm.clear()
         assertEquals("Ada", vm.state.value.shownName)
         assertTrue(vm.state.value.blank)
+    }
+
+    @Test
+    fun submit_signedOut_asksForASignIn_andSendsNothing() {
+        val vm = vm()
+        vm.onArgumentChange(argument)
+        assertEquals(Submitted.SIGN_IN, vm.submit(AppLang.EN, UiTestSupport.s(AppLang.EN)))
+        assertTrue(flow.canStart())
+    }
+
+    @Test
+    fun submit_andSendLink_withNothingLeft_openPricing() {
+        val vm = vm(account = signedIn(Entitlement(credits = 0)))
+        vm.onArgumentChange(argument)
+        assertTrue(vm.state.value.outOfUnits)
+        assertEquals(Submitted.PRICING, vm.submit(AppLang.EN, UiTestSupport.s(AppLang.EN)))
+        assertEquals(Submitted.PRICING, vm.sendLink(AppLang.EN))
+        assertTrue(flow.canStart())
+    }
+
+    @Test
+    fun submit_withACredit_orBeforeTheBalanceLoads_goesToTheQuestions() {
+        for (e in listOf(Entitlement(canUsePremium = true, credits = 1), null)) {
+            val vm = vm(account = signedIn(e))
+            vm.onArgumentChange(argument)
+            assertEquals(Submitted.CHECKING, vm.submit(AppLang.EN, UiTestSupport.s(AppLang.EN)))
+            flow.cancel()
+        }
     }
 }

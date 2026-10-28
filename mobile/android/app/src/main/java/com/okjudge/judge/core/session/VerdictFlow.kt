@@ -1,8 +1,6 @@
 package com.okjudge.judge.core.session
 
 import com.okjudge.judge.core.api.ApiResult
-import com.okjudge.judge.core.api.BotCheck
-import com.okjudge.judge.core.api.BotCheckException
 import com.okjudge.judge.core.api.JudgeApi
 import com.okjudge.judge.core.api.PollOutcome
 import com.okjudge.judge.core.data.HistoryRepository
@@ -17,11 +15,9 @@ import com.okjudge.judge.core.model.ClarifyQuestion
 import com.okjudge.judge.core.model.Entitlement
 import com.okjudge.judge.core.model.FrameworkChoice
 import com.okjudge.judge.core.model.WireJson
-import com.okjudge.judge.core.model.VerdictAccepted
 import com.okjudge.judge.core.model.VerdictOutcome
 import com.okjudge.judge.core.model.VerdictRequest
 import com.okjudge.judge.core.model.VerdictSubmission
-import com.okjudge.judge.core.premium.Tier
 import com.okjudge.judge.i18n.AppLang
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
@@ -37,14 +33,13 @@ import kotlinx.coroutines.launch
 
 /**
  * One verdict request at a time, owned by the app scope so it survives
- * configuration changes while the judging screen animates. The request is
- * sent once: "Try again" is always a new user action, never automatic, and
- * when the same request was already accepted it polls that verdict again
- * instead of asking (and paying) for a second one.
+ * configuration changes while the judging screen animates. Every verdict
+ * is a premium one. The request is sent once: "Try again" is always a new
+ * user action, never automatic, and the same request reuses its
+ * Idempotency-Key so the server joins it instead of charging again.
  */
 class VerdictFlow(
     private val api: JudgeApi,
-    private val botCheck: BotCheck,
     private val history: HistoryRepository,
     private val scope: CoroutineScope,
     private val clock: () -> Long = System::currentTimeMillis,
@@ -87,12 +82,15 @@ class VerdictFlow(
         data class Clarify(val questions: List<ClarifyQuestion>) : PremiumStep
     }
 
-    /** Where the app shell should go next on the premium path. */
+    /** Where the app shell should go next. */
     sealed interface Nav {
         data object Clarify : Nav
         data object Judging : Nav
         /** A two-sided case was created: open its screen. [otherName] is who it waits for, as typed. */
         data class Case(val id: String, val otherName: String? = null) : Nav
+        /** Nothing left to spend: the pricing screen. */
+        data object Pricing : Nav
+        data object SignIn : Nav
     }
 
     private val _creating = MutableStateFlow(false)
@@ -128,74 +126,6 @@ class VerdictFlow(
         if (heldKey?.second == key) heldKey = null
     }
 
-    /** What was asked: the same request resumes its verdict. */
-    private data class RequestKey(val text: String, val preset: String, val lang: AppLang)
-
-    /**
-     * A verdict the server accepted (202) but the app has not received:
-     * kept when polling stopped short (network, server hiccups, the
-     * deadline, cancel), dropped once the server settled it.
-     */
-    private data class PendingVerdict(val accepted: VerdictAccepted, val key: RequestKey, val since: Long)
-
-    @Volatile private var pending: PendingVerdict? = null
-
-    fun start(argument: String, preset: Preset, lang: AppLang, sides: List<Side> = emptyList()): Boolean {
-        if (!canStart()) return false
-        _lastError.value = null
-        val text = argument.trim()
-        _state.value = State.Running(clock(), argument = text, sides = sides)
-        val key = RequestKey(text, preset.id, lang)
-        val held = pending?.takeIf { it.key == key && clock() - it.since < RESUME_WINDOW_MS }
-        if (held == null) pending = null
-        job = scope.launch {
-            val accepted = held?.accepted ?: run {
-                val token = try {
-                    botCheck.token()
-                } catch (_: BotCheckException) {
-                    fail(UiError.BotCheck)
-                    return@launch
-                }
-                val request = VerdictRequest(
-                    argument = text,
-                    framework = FrameworkChoice(preset = preset.id),
-                    lang = lang.tag,
-                    turnstileToken = token,
-                )
-                when (val started = api.startVerdict(request)) {
-                    is ApiResult.Err -> {
-                        fail(started.error)
-                        return@launch
-                    }
-                    is ApiResult.Ok -> when (val submission = started.value) {
-                        is VerdictSubmission.Done -> {
-                            succeed(submission.outcome, preset)
-                            return@launch
-                        }
-                        is VerdictSubmission.Accepted -> submission.accepted.also {
-                            pending = PendingVerdict(it, key, clock())
-                        }
-                    }
-                }
-            }
-            when (val end = api.awaitAccepted(accepted)) {
-                is PollOutcome.Ready -> {
-                    dropPending(accepted)
-                    succeed(end.outcome, preset)
-                }
-                is PollOutcome.Ended -> {
-                    if (!end.resumable) dropPending(accepted)
-                    fail(end.error)
-                }
-            }
-        }
-        return true
-    }
-
-    private fun dropPending(accepted: VerdictAccepted) {
-        if (pending?.accepted?.id == accepted.id) pending = null
-    }
-
     private suspend fun succeed(outcome: VerdictOutcome, preset: Preset) {
         history.save(outcome, preset.id)
         val running = _state.value as? State.Running
@@ -207,9 +137,17 @@ class VerdictFlow(
         _state.value = State.Failed(error)
     }
 
-    /** Shows [error] on Home (and blocks the button for a rate limit) without a judging screen. */
+    /**
+     * Shows [error] on Home (and blocks the button for a rate limit) without
+     * a judging screen. Out of units or signed out opens pricing or sign-in
+     * instead of a banner.
+     */
     fun report(error: UiError) {
-        _lastError.value = error
+        when (Errors.opens(error)) {
+            null -> _lastError.value = error
+            Errors.Opens.PRICING -> _navigation.trySend(Nav.Pricing)
+            Errors.Opens.SIGN_IN -> _navigation.trySend(Nav.SignIn)
+        }
         Errors.blockSeconds(error)?.let { _blockedUntil.value = clock() + (it * 1000).toLong() }
         if (Errors.isAccountError(error)) scope.launch { refreshAccount() }
     }
@@ -264,15 +202,14 @@ class VerdictFlow(
     }
 
     /**
-     * Both sides (createCase): the case with the owner's side; a premium case
-     * holds one premium verdict. The returned names stay on this phone. No
-     * clarifying step: the other side fills the gaps.
+     * Both sides (createCase): the case with the owner's side, holding one
+     * verdict. The returned names stay on this phone. No clarifying step:
+     * the other side fills the gaps.
      */
     fun createCase(
         argument: String,
         preset: Preset,
         lang: AppLang,
-        tier: Tier,
         evidence: List<String>,
         displayName: String?,
         otherName: String? = null,
@@ -284,8 +221,7 @@ class VerdictFlow(
             text = argument.trim(),
             framework = FrameworkChoice(preset = preset.id),
             lang = lang.tag,
-            tier = tier.raw,
-            evidence = evidence.takeIf { tier == Tier.PREMIUM && it.isNotEmpty() },
+            evidence = evidence.takeIf { it.isNotEmpty() },
             displayName = displayName?.trim()?.takeIf { it.isNotEmpty() },
         )
         val body = WireJson.json.encodeToString(CreateCaseRequest.serializer(), request)
@@ -384,8 +320,8 @@ class VerdictFlow(
         }
     }
 
-    /** Abandons the request (the server may still finish and save it; an
-     * accepted verdict stays pending, so the same request resumes it). */
+    /** Abandons the request (the server may still finish and save it; the
+     * same request again keeps its key, so the server joins that verdict). */
     fun cancel() {
         job?.cancel()
         job = null
@@ -425,9 +361,5 @@ class VerdictFlow(
                 )
             }
         }
-
-        /** After this long a pending verdict is dropped and a new one is asked
-         * for; the server settles every verdict within about 10 minutes. */
-        const val RESUME_WINDOW_MS = 15 * 60_000L
     }
 }
