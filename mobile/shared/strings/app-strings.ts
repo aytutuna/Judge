@@ -216,6 +216,8 @@ export const APP_PLURALS_EN: Partial<Record<AppCountKey, PluralForms>> = {
 
 /** The app strings in one language other than English, ./locales/<code>.ts. */
 export type AppLocale = {
-  strings: Record<AppKey, string>;
+  // Partial so a key can be added in English first; check:app-locales lists
+  // the gaps and the export fills them with English.
+  strings: Partial<Record<AppKey, string>>;
   plurals?: Partial<Record<AppCountKey, PluralForms>>;
 };
