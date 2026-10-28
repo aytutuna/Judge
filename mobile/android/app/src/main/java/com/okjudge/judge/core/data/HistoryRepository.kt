@@ -25,7 +25,7 @@ data class SavedVerdict(
     val lang: AppLang get() = ContentLang.verdictLang(original.result)
 }
 
-/** "My verdicts": stored on this phone only. */
+/** Saved verdicts, listed under Verdicts: stored on this phone only. */
 interface HistoryRepository {
     fun observeAll(): Flow<List<SavedVerdict>>
     fun observe(id: String): Flow<SavedVerdict?>

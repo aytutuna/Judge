@@ -475,9 +475,9 @@
     <string name="app_history_select_all">Selecionar tudo</string>
     <string name="app_history_deselect_all">Desmarcar tudo</string>
     <plurals name="app_history_selected">
-        <item quantity="one">Selecionados: %1$s</item>
-        <item quantity="many">Selecionados: %1$s</item>
-        <item quantity="other">Selecionados: %1$s</item>
+        <item quantity="one">%1$s selecionado</item>
+        <item quantity="many">%1$s selecionados</item>
+        <item quantity="other">%1$s selecionados</item>
     </plurals>
     <string name="app_history_delete_count">Excluir (%1$s)</string>
     <plurals name="app_history_delete_confirm">

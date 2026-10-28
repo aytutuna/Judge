@@ -176,7 +176,7 @@ const nl: AppLocale = {
   plurals: {
     "app.balance.left": { one: "Nog {n} uitspraak over" },
     "app.history.selected": { one: "{n} geselecteerd" },
-    "app.history.deleteConfirm": { one: "Uitspraak van deze telefoon verwijderen? De deellink blijft gewoon werken." },
+    "app.history.deleteConfirm": { one: "Deze uitspraak van deze telefoon verwijderen? De deellink blijft gewoon werken." },
   },
 };
 

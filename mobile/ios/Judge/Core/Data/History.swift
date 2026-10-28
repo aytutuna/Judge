@@ -1,7 +1,7 @@
 import Foundation
 import SwiftData
 
-/// One saved verdict ("My verdicts"). Same fields as the Android table.
+/// One saved verdict, listed under Verdicts. Same fields as the Android table.
 /// `nameMapJSON` holds the submitter's real names; it never leaves the
 /// device and the store is excluded from backups.
 @Model
@@ -75,7 +75,7 @@ extension SavedVerdict {
 }
 
 /// Main-actor wrapper around the SwiftData context that the list's `@Query`
-/// also reads, so saves show up in "My verdicts" immediately.
+/// also reads, so saves show up in Verdicts immediately.
 @MainActor
 final class HistoryStore {
     let context: ModelContext

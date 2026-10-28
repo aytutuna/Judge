@@ -14,7 +14,7 @@ const ptBR: AppLocale = {
     "app.history.select": "Selecionar",
     "app.history.selectAll": "Selecionar tudo",
     "app.history.deselectAll": "Desmarcar tudo",
-    "app.history.selected": "Selecionados: {n}",
+    "app.history.selected": "{n} selecionados",
     "app.history.deleteCount": "Excluir ({count})",
     "app.history.deleteConfirm":
       "Excluir {n} vereditos deste celular? Os links de compartilhamento deles continuam funcionando.",
@@ -173,7 +173,7 @@ const ptBR: AppLocale = {
   plurals: {
     "app.balance.left": { one: "Resta {n} veredito" },
     // The count is 0 when selecting starts, and "0 selecionado" reads wrong.
-    "app.history.selected": { one: "Selecionados: {n}" },
+    "app.history.selected": { one: "{n} selecionado" },
     "app.history.deleteConfirm": {
       one: "Excluir {n} veredito deste celular? O link de compartilhamento dele continua funcionando.",
     },

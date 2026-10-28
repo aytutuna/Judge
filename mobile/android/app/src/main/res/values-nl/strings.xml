@@ -469,7 +469,7 @@
     </plurals>
     <string name="app_history_delete_count">Verwijderen (%1$s)</string>
     <plurals name="app_history_delete_confirm">
-        <item quantity="one">Uitspraak van deze telefoon verwijderen? De deellink blijft gewoon werken.</item>
+        <item quantity="one">Deze uitspraak van deze telefoon verwijderen? De deellink blijft gewoon werken.</item>
         <item quantity="other">%1$s uitspraken van deze telefoon verwijderen? De deellinks blijven gewoon werken.</item>
     </plurals>
     <string name="app_history_row_selected">Geselecteerd</string>

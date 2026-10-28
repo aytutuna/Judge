@@ -27371,7 +27371,7 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Uitspraak van deze telefoon verwijderen? De deellink blijft gewoon werken."
+                  "value" : "Deze uitspraak van deze telefoon verwijderen? De deellink blijft gewoon werken."
                 }
               },
               "other" : {
@@ -30581,19 +30581,19 @@
               "many" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Selecionados: %lld"
+                  "value" : "%lld selecionados"
                 }
               },
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Selecionados: %lld"
+                  "value" : "%lld selecionado"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Selecionados: %lld"
+                  "value" : "%lld selecionados"
                 }
               }
             }
