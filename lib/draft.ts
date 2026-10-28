@@ -2,13 +2,13 @@ import type { FrameworkChoice } from "./types";
 
 /**
  * The homepage form's unsent argument, kept for the round trip through
- * /signin. The home page registers where the draft comes from; the sign-in
- * links (the Premium nudge and the header's "Sign in") save it to
- * sessionStorage on click, and the home page takes it back once when it
- * mounts. So an Apple or Google redirect, or the Back button, brings the
- * visitor back to the text they typed. Nothing is saved on any other path,
- * so the free flow is otherwise unchanged. sessionStorage is per tab and
- * cleared with it.
+ * /signin. The home page registers where the draft comes from; sending the
+ * form signed out and the header's "Sign in" save it on click, and the home
+ * page takes it back once when it mounts. So an Apple or Google redirect,
+ * the Back button, or an email link opened in a new tab brings the visitor
+ * back to the text they typed. It sits in localStorage, which every tab of
+ * the browser shares, and is only given back within 30 minutes of saving.
+ * Nothing is saved on any other path.
  */
 
 export type Draft = { argument: string; framework: FrameworkChoice };
@@ -16,6 +16,7 @@ export type Draft = { argument: string; framework: FrameworkChoice };
 export const DRAFT_KEY = "verdict-draft";
 /** Same cap as the form (components/thread/Composer MAX_ARGUMENT). */
 const MAX_DRAFT = 6000;
+const DRAFT_TTL_MS = 30 * 60_000;
 
 let source: (() => Draft | null) | null = null;
 
@@ -33,18 +34,21 @@ export function saveDraftForSignIn(): void {
   const draft = source?.();
   if (!draft || !draft.argument.trim()) return;
   try {
-    sessionStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
+    localStorage.setItem(DRAFT_KEY, JSON.stringify({ ...draft, savedAt: Date.now() }));
   } catch {
     // Storage unavailable: the draft is simply not kept.
   }
 }
 
-/** The saved draft, removed as it is read. Null when none or malformed. */
-export function takeDraft(): Draft | null {
+/** The saved draft, removed as it is read. Null when none, malformed or
+ * older than 30 minutes. */
+export function takeDraft(now: number = Date.now()): Draft | null {
   try {
-    const raw = sessionStorage.getItem(DRAFT_KEY);
+    const raw = localStorage.getItem(DRAFT_KEY);
     if (raw === null) return null;
-    sessionStorage.removeItem(DRAFT_KEY);
+    localStorage.removeItem(DRAFT_KEY);
+    const savedAt = (JSON.parse(raw) as { savedAt?: unknown } | null)?.savedAt;
+    if (typeof savedAt !== "number" || now - savedAt > DRAFT_TTL_MS) return null;
     return parseDraft(raw);
   } catch {
     return null;
@@ -53,7 +57,7 @@ export function takeDraft(): Draft | null {
 
 export function clearDraft(): void {
   try {
-    sessionStorage.removeItem(DRAFT_KEY);
+    localStorage.removeItem(DRAFT_KEY);
   } catch {
     // Nothing to clear.
   }

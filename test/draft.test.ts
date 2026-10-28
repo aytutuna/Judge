@@ -1,7 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { DRAFT_KEY, clearDraft, parseDraft, registerDraftSource, saveDraftForSignIn, takeDraft } from "../lib/draft";
 
-/** A minimal sessionStorage for the node test environment. */
+/** A minimal localStorage for the node test environment. */
 function fakeStorage() {
   const map = new Map<string, string>();
   return {
@@ -17,7 +17,7 @@ let unregister: (() => void) | null = null;
 
 beforeEach(() => {
   storage = fakeStorage();
-  vi.stubGlobal("sessionStorage", storage);
+  vi.stubGlobal("localStorage", storage);
 });
 
 afterEach(() => {
@@ -35,6 +35,13 @@ describe("draft round trip through sign-in", () => {
     expect(storage.map.has(DRAFT_KEY)).toBe(true);
     expect(takeDraft()).toEqual({ argument: ARG, framework: { preset: "balanced" } });
     expect(takeDraft()).toBeNull();
+  });
+
+  it("gives nothing back after 30 minutes, and drops the stale draft", () => {
+    unregister = registerDraftSource(() => ({ argument: ARG, framework: { preset: "balanced" } }));
+    saveDraftForSignIn();
+    expect(takeDraft(Date.now() + 31 * 60_000)).toBeNull();
+    expect(storage.map.size).toBe(0);
   });
 
   it("keeps sliders", () => {
@@ -70,7 +77,7 @@ describe("draft round trip through sign-in", () => {
   });
 
   it("never throws when storage is unavailable", () => {
-    vi.stubGlobal("sessionStorage", {
+    vi.stubGlobal("localStorage", {
       getItem: () => {
         throw new Error("denied");
       },

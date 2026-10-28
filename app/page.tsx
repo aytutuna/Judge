@@ -163,7 +163,7 @@ export default function Home() {
     return thread.current.signal;
   }
 
-  // A draft saved on the way to /signin comes back once. sessionStorage
+  // A draft saved on the way to /signin comes back once. localStorage
   // does not exist during server rendering, so it is read after mount.
   useEffect(() => {
     const draft = takeDraft();
