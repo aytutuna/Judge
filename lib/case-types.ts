@@ -37,9 +37,9 @@ export const CreateCaseRequest = z.object({
   text: ArgumentText,
   framework: FrameworkChoice.default({ preset: "balanced" }),
   lang: z.enum(["en", "tr"]).default("en"),
-  /** "free" runs the free judges and holds nothing; "premium" holds one
-   * premium verdict and allows evidence. */
-  tier: Tier.default("free"),
+  /** Ignored: every case holds one premium verdict. Older app builds
+   * still send it. */
+  tier: Tier.optional(),
   evidence: EvidenceTokens.max(MAX_EVIDENCE_PER_SIDE).optional(),
   /** How the owner appears on the case's share pages; empty or null = "Party A". */
   displayName: z.union([z.literal(""), DisplayNameInput]).nullable().optional(),
@@ -154,7 +154,8 @@ export type CaseView = {
   yourParty: PartyLetter;
   status: CaseStatus;
   mode: CaseMode | null;
-  /** "premium": a unit is held and evidence is allowed. Appeals are premium either way. */
+  /** "free" only on cases created before every verdict was premium: they
+   * hold no unit. */
   tier: Tier;
   lang: Lang;
   framework: FrameworkChoice;
