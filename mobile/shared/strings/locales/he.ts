@@ -11,6 +11,14 @@ const he: AppLocale = {
     "app.history.empty": "עוד אין פסקי דין. כשהוויכוח הראשון שלך יוכרע, פסק הדין יופיע כאן.",
     "app.history.deviceOnly": "פסקי הדין שמורים רק בטלפון הזה. מחיקה של פסק דין כאן לא מבטלת את קישור השיתוף שלו.",
     "app.history.delete": "מחיקה",
+    "app.history.select": "בחירה",
+    "app.history.selectAll": "בחירת הכול",
+    "app.history.deselectAll": "ביטול הבחירה",
+    "app.history.selected": "{n} נבחרו",
+    "app.history.deleteCount": "מחיקה ({count})",
+    "app.history.deleteConfirm": "למחוק {n} פסקי דין מהטלפון הזה? קישורי השיתוף שלהם ימשיכו לעבוד.",
+    "app.history.rowSelected": "נבחר",
+    "app.history.rowNotSelected": "לא נבחר",
     "app.pricing.free.account": "התחברות עם Apple, Google או אימייל",
     "app.pricing.headline": "פסק הדין הראשון עלינו.",
     "app.pricing.sub":
@@ -160,6 +168,11 @@ const he: AppLocale = {
   },
   plurals: {
     "app.balance.left": { one: "נשאר פסק דין אחד", two: "נשארו שני פסקי דין" },
+    "app.history.selected": { one: "{n} נבחר", two: "{n} נבחרו" },
+    "app.history.deleteConfirm": {
+      one: "למחוק את פסק הדין מהטלפון הזה? קישור השיתוף שלו ימשיך לעבוד.",
+      two: "למחוק את שני פסקי הדין מהטלפון הזה? קישורי השיתוף שלהם ימשיכו לעבוד.",
+    },
   },
 };
 

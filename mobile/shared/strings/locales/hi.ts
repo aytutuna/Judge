@@ -11,6 +11,14 @@ const hi: AppLocale = {
     "app.history.empty": "अभी तक कोई फ़ैसला नहीं। अपनी पहली बहस सुलझाएँ, उसका फ़ैसला यहीं दिखेगा।",
     "app.history.deviceOnly": "ये सिर्फ़ इसी फ़ोन में सेव हैं। यहाँ से कोई फ़ैसला हटाने पर भी उसका शेयर लिंक बंद नहीं होता।",
     "app.history.delete": "हटाएँ",
+    "app.history.select": "चुनें",
+    "app.history.selectAll": "सभी चुनें",
+    "app.history.deselectAll": "चयन हटाएँ",
+    "app.history.selected": "{n} चुने गए",
+    "app.history.deleteCount": "हटाएँ ({count})",
+    "app.history.deleteConfirm": "इस फ़ोन से {n} फ़ैसले हटाएँ? उनके शेयर लिंक काम करते रहेंगे।",
+    "app.history.rowSelected": "चुना गया",
+    "app.history.rowNotSelected": "नहीं चुना गया",
     "app.pricing.free.account": "Apple, Google या ईमेल से साइन इन करें",
     "app.pricing.headline": "पहला फ़ैसला हमारी तरफ़ से।",
     "app.pricing.sub":
@@ -161,6 +169,8 @@ const hi: AppLocale = {
   },
   plurals: {
     "app.balance.left": { one: "{n} फ़ैसला बाकी" },
+    "app.history.selected": { one: "{n} चुना गया" },
+    "app.history.deleteConfirm": { one: "इस फ़ोन से {n} फ़ैसला हटाएँ? उसका शेयर लिंक काम करता रहेगा।" },
   },
 };
 

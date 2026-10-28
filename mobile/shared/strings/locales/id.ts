@@ -11,6 +11,14 @@ const id: AppLocale = {
     "app.history.deviceOnly":
       "Hanya tersimpan di ponsel ini. Menghapus putusan di sini tidak mematikan tautan berbaginya.",
     "app.history.delete": "Hapus",
+    "app.history.select": "Pilih",
+    "app.history.selectAll": "Pilih semua",
+    "app.history.deselectAll": "Batal pilih semua",
+    "app.history.selected": "{n} dipilih",
+    "app.history.deleteCount": "Hapus ({count})",
+    "app.history.deleteConfirm": "Hapus {n} putusan dari ponsel ini? Tautan berbaginya tetap berfungsi.",
+    "app.history.rowSelected": "Dipilih",
+    "app.history.rowNotSelected": "Tidak dipilih",
     "app.pricing.free.account": "Masuk dengan Apple, Google, atau email",
     "app.pricing.headline": "Putusan pertamamu kami traktir.",
     "app.pricing.sub":

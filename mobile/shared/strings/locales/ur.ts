@@ -12,6 +12,14 @@ const ur: AppLocale = {
     "app.history.deviceOnly":
       "یہ فیصلے صرف اسی فون پر محفوظ ہیں۔ یہاں سے کوئی فیصلہ حذف کرنے سے اس کا شیئر لنک بند نہیں ہوتا۔",
     "app.history.delete": "حذف کریں",
+    "app.history.select": "منتخب کریں",
+    "app.history.selectAll": "سب منتخب کریں",
+    "app.history.deselectAll": "سب غیر منتخب کریں",
+    "app.history.selected": "{n} فیصلے منتخب",
+    "app.history.deleteCount": "حذف کریں ({count})",
+    "app.history.deleteConfirm": "اس فون سے {n} فیصلے حذف کریں؟ ان کے شیئر لنکس کام کرتے رہیں گے۔",
+    "app.history.rowSelected": "منتخب",
+    "app.history.rowNotSelected": "غیر منتخب",
     "app.pricing.free.account": "Apple، Google یا ای میل سے سائن ان کریں",
     "app.pricing.headline": "پہلا فیصلہ ہماری طرف سے۔",
     "app.pricing.sub":
@@ -164,6 +172,8 @@ const ur: AppLocale = {
   },
   plurals: {
     "app.balance.left": { one: "{n} فیصلہ باقی" },
+    "app.history.selected": { one: "{n} فیصلہ منتخب" },
+    "app.history.deleteConfirm": { one: "یہ فیصلہ اس فون سے حذف کریں؟ اس کا شیئر لنک کام کرتا رہے گا۔" },
   },
 };
 

@@ -12,6 +12,15 @@ const el: AppLocale = {
     "app.history.deviceOnly":
       "Αποθηκεύονται μόνο σε αυτό το τηλέφωνο. Αν διαγράψεις μια απόφαση από εδώ, ο σύνδεσμος κοινοποίησής της θα συνεχίσει να λειτουργεί.",
     "app.history.delete": "Διαγραφή",
+    "app.history.select": "Επιλογή",
+    "app.history.selectAll": "Επιλογή όλων",
+    "app.history.deselectAll": "Αποεπιλογή όλων",
+    "app.history.selected": "Επιλέχθηκαν {n}",
+    "app.history.deleteCount": "Διαγραφή ({count})",
+    "app.history.deleteConfirm":
+      "Να διαγραφούν {n} αποφάσεις από αυτό το τηλέφωνο; Οι σύνδεσμοι κοινοποίησής τους θα συνεχίσουν να λειτουργούν.",
+    "app.history.rowSelected": "Επιλεγμένη",
+    "app.history.rowNotSelected": "Μη επιλεγμένη",
     "app.pricing.free.account": "Σύνδεση με Apple, Google ή email",
     "app.pricing.headline": "Την πρώτη απόφαση την κερνάμε εμείς.",
     "app.pricing.sub":
@@ -167,6 +176,10 @@ const el: AppLocale = {
   },
   plurals: {
     "app.balance.left": { one: "Σου έμεινε {n} απόφαση" },
+    "app.history.selected": { one: "Επιλέχθηκε {n}" },
+    "app.history.deleteConfirm": {
+      one: "Να διαγραφεί η απόφαση από αυτό το τηλέφωνο; Ο σύνδεσμος κοινοποίησής της θα συνεχίσει να λειτουργεί.",
+    },
   },
 };
 

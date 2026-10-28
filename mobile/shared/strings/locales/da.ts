@@ -10,6 +10,14 @@ const da: AppLocale = {
     "app.history.empty": "Ingen domme endnu. Få afgjort din første diskussion, så dukker den op her.",
     "app.history.deviceOnly": "Kun gemt på denne telefon. Sletter du en her, virker dens delingslink stadig.",
     "app.history.delete": "Slet",
+    "app.history.select": "Vælg",
+    "app.history.selectAll": "Vælg alle",
+    "app.history.deselectAll": "Fravælg alle",
+    "app.history.selected": "{n} valgt",
+    "app.history.deleteCount": "Slet ({count})",
+    "app.history.deleteConfirm": "Vil du slette {n} domme fra denne telefon? Delingslinkene virker stadig.",
+    "app.history.rowSelected": "Valgt",
+    "app.history.rowNotSelected": "Ikke valgt",
     "app.pricing.free.account": "Log ind med Apple, Google eller e-mail",
     "app.pricing.headline": "Din første dom er på husets regning.",
     "app.pricing.sub":
@@ -162,6 +170,8 @@ const da: AppLocale = {
   },
   plurals: {
     "app.balance.left": { one: "{n} dom tilbage" },
+    "app.history.selected": { one: "{n} valgt" },
+    "app.history.deleteConfirm": { one: "Vil du slette dommen fra denne telefon? Delingslinket virker stadig." },
   },
 };
 

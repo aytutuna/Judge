@@ -11,6 +11,15 @@ const fr: AppLocale = {
     "app.history.deviceOnly":
       "Enregistrés uniquement sur ce téléphone. En supprimer un ici ne désactive pas son lien de partage.",
     "app.history.delete": "Supprimer",
+    "app.history.select": "Sélectionner",
+    "app.history.selectAll": "Tout sélectionner",
+    "app.history.deselectAll": "Tout désélectionner",
+    "app.history.selected": "{n} sélectionnés",
+    "app.history.deleteCount": "Supprimer ({count})",
+    "app.history.deleteConfirm":
+      "Supprimer {n} verdicts de ce téléphone ? Leurs liens de partage continueront de fonctionner.",
+    "app.history.rowSelected": "Sélectionné",
+    "app.history.rowNotSelected": "Non sélectionné",
     "app.pricing.free.account": "Connecte-toi avec Apple, Google ou par e-mail",
     "app.pricing.headline": "Ton premier verdict est offert.",
     "app.pricing.sub":
@@ -165,6 +174,10 @@ const fr: AppLocale = {
   },
   plurals: {
     "app.balance.left": { one: "Il te reste {n} verdict" },
+    "app.history.selected": { one: "{n} sélectionné" },
+    "app.history.deleteConfirm": {
+      one: "Supprimer {n} verdict de ce téléphone ? Son lien de partage continuera de fonctionner.",
+    },
   },
 };
 

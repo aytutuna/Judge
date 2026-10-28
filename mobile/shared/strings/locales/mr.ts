@@ -11,6 +11,14 @@ const mr: AppLocale = {
     "app.history.empty": "अजून एकही निकाल नाही. तुमचा पहिला वाद सोडवा, त्याचा निकाल इथे दिसेल.",
     "app.history.deviceOnly": "हे निकाल फक्त या फोनवर सेव्ह होतात. इथून एखादा निकाल डिलीट केला तरी त्याची शेअर लिंक चालू राहते.",
     "app.history.delete": "डिलीट करा",
+    "app.history.select": "निवडा",
+    "app.history.selectAll": "सर्व निवडा",
+    "app.history.deselectAll": "सर्व निवड रद्द करा",
+    "app.history.selected": "{n} निवडले",
+    "app.history.deleteCount": "डिलीट करा ({count})",
+    "app.history.deleteConfirm": "या फोनवरून {n} निकाल डिलीट करायचे? त्यांच्या शेअर लिंक चालू राहतील.",
+    "app.history.rowSelected": "निवडले",
+    "app.history.rowNotSelected": "निवडले नाही",
     "app.pricing.free.account": "Apple, Google किंवा ईमेलने साइन इन करा",
     "app.pricing.headline": "पहिला निकाल आमच्याकडून.",
     "app.pricing.sub":
@@ -162,6 +170,8 @@ const mr: AppLocale = {
   },
   plurals: {
     "app.balance.left": { one: "{n} निकाल शिल्लक" },
+    "app.history.selected": { one: "{n} निवडला" },
+    "app.history.deleteConfirm": { one: "हा निकाल या फोनवरून डिलीट करायचा? त्याची शेअर लिंक चालू राहील." },
   },
 };
 

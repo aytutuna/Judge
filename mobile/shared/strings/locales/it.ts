@@ -11,6 +11,15 @@ const it: AppLocale = {
     "app.history.deviceOnly":
       "Salvati solo su questo telefono. Se ne elimini uno qui, il suo link di condivisione continua a funzionare.",
     "app.history.delete": "Elimina",
+    "app.history.select": "Seleziona",
+    "app.history.selectAll": "Seleziona tutto",
+    "app.history.deselectAll": "Deseleziona tutto",
+    "app.history.selected": "{n} selezionati",
+    "app.history.deleteCount": "Elimina ({count})",
+    "app.history.deleteConfirm":
+      "Eliminare {n} verdetti da questo telefono? I loro link di condivisione continuano a funzionare.",
+    "app.history.rowSelected": "Selezionato",
+    "app.history.rowNotSelected": "Non selezionato",
     "app.pricing.free.account": "Accedi con Apple, Google o email",
     "app.pricing.headline": "Il primo verdetto lo offriamo noi.",
     "app.pricing.sub":
@@ -165,6 +174,10 @@ const it: AppLocale = {
   },
   plurals: {
     "app.balance.left": { one: "Ti resta {n} verdetto" },
+    "app.history.selected": { one: "{n} selezionato" },
+    "app.history.deleteConfirm": {
+      one: "Eliminare questo verdetto da questo telefono? Il suo link di condivisione continua a funzionare.",
+    },
   },
 };
 

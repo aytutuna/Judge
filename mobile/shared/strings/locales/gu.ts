@@ -13,6 +13,15 @@ const gu: AppLocale = {
     "app.history.deviceOnly":
       "ફક્ત આ ફોનમાં સેવ થયેલા છે. અહીંથી કોઈ ચુકાદો ડિલીટ કરવાથી એની શેર લિંક બંધ થતી નથી.",
     "app.history.delete": "ડિલીટ કરો",
+    "app.history.select": "પસંદ કરો",
+    "app.history.selectAll": "બધા પસંદ કરો",
+    "app.history.deselectAll": "પસંદગી હટાવો",
+    "app.history.selected": "{n} પસંદ કર્યા",
+    "app.history.deleteCount": "ડિલીટ કરો ({count})",
+    "app.history.deleteConfirm":
+      "આ ફોનમાંથી {n} ચુકાદા ડિલીટ કરવા છે? એમની શેર લિંક કામ કરતી રહેશે.",
+    "app.history.rowSelected": "પસંદ કરેલ",
+    "app.history.rowNotSelected": "પસંદ કરેલ નથી",
     "app.pricing.free.account": "Apple, Google કે ઈમેલથી સાઇન ઇન કરો",
     "app.pricing.headline": "તમારો પહેલો ચુકાદો અમારા તરફથી.",
     "app.pricing.sub":
@@ -185,6 +194,10 @@ const gu: AppLocale = {
   },
   plurals: {
     "app.balance.left": { one: "{n} ચુકાદો બાકી" },
+    "app.history.selected": { one: "{n} પસંદ કર્યો" },
+    "app.history.deleteConfirm": {
+      one: "આ ફોનમાંથી {n} ચુકાદો ડિલીટ કરવો છે? એની શેર લિંક કામ કરતી રહેશે.",
+    },
   },
 };
 

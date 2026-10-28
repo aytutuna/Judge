@@ -11,6 +11,15 @@ const ca: AppLocale = {
     "app.history.deviceOnly":
       "Només es desen en aquest telèfon. Si n'elimines un aquí, el seu enllaç per compartir continuarà funcionant.",
     "app.history.delete": "Elimina",
+    "app.history.select": "Selecciona",
+    "app.history.selectAll": "Selecciona-ho tot",
+    "app.history.deselectAll": "Desselecciona-ho tot",
+    "app.history.selected": "{n} seleccionats",
+    "app.history.deleteCount": "Elimina ({count})",
+    "app.history.deleteConfirm":
+      "Vols eliminar {n} veredictes del telèfon? Els seus enllaços per compartir continuaran funcionant.",
+    "app.history.rowSelected": "Seleccionat",
+    "app.history.rowNotSelected": "No seleccionat",
     "app.pricing.free.account": "Inicia sessió amb Apple, Google o el correu",
     "app.pricing.headline": "El primer veredicte, et convidem.",
     "app.pricing.sub":
@@ -165,6 +174,10 @@ const ca: AppLocale = {
   },
   plurals: {
     "app.balance.left": { one: "Et queda {n} veredicte" },
+    "app.history.selected": { one: "{n} seleccionat" },
+    "app.history.deleteConfirm": {
+      one: "Vols eliminar aquest veredicte del telèfon? El seu enllaç per compartir continuarà funcionant.",
+    },
   },
 };
 

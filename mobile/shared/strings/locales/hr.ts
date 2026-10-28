@@ -12,6 +12,15 @@ const hr: AppLocale = {
     "app.history.deviceOnly":
       "Spremljeno samo na ovom telefonu. Ako presudu izbrišeš ovdje, njezina poveznica za dijeljenje i dalje radi.",
     "app.history.delete": "Izbriši",
+    "app.history.select": "Odaberi",
+    "app.history.selectAll": "Odaberi sve",
+    "app.history.deselectAll": "Poništi odabir",
+    "app.history.selected": "Odabrano: {n}",
+    "app.history.deleteCount": "Izbriši ({count})",
+    "app.history.deleteConfirm":
+      "Izbrisati {n} presuda s ovog telefona? Poveznice za dijeljenje i dalje rade.",
+    "app.history.rowSelected": "Odabrano",
+    "app.history.rowNotSelected": "Nije odabrano",
     "app.pricing.free.account": "Prijavi se s Appleom, Googleom ili e-poštom",
     "app.pricing.headline": "Prvu presudu častimo.",
     "app.pricing.sub":
@@ -164,6 +173,11 @@ const hr: AppLocale = {
   },
   plurals: {
     "app.balance.left": { one: "Još {n} presuda", few: "Još {n} presude" },
+    "app.history.selected": { one: "Odabrano: {n}", few: "Odabrano: {n}" },
+    "app.history.deleteConfirm": {
+      one: "Izbrisati {n} presudu s ovog telefona? Poveznice za dijeljenje i dalje rade.",
+      few: "Izbrisati {n} presude s ovog telefona? Poveznice za dijeljenje i dalje rade.",
+    },
   },
 };
 

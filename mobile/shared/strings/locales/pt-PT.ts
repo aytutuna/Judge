@@ -10,6 +10,14 @@ const ptPT: AppLocale = {
     "app.history.empty": "Ainda não há veredictos. Tira a tua primeira teima e o veredicto aparece aqui.",
     "app.history.deviceOnly": "Ficam guardados só neste telemóvel. Se apagares um aqui, o link de partilha continua ativo.",
     "app.history.delete": "Apagar",
+    "app.history.select": "Selecionar",
+    "app.history.selectAll": "Selecionar tudo",
+    "app.history.deselectAll": "Desmarcar tudo",
+    "app.history.selected": "{n} selecionados",
+    "app.history.deleteCount": "Apagar ({count})",
+    "app.history.deleteConfirm": "Apagar {n} veredictos deste telemóvel? Os links de partilha continuam ativos.",
+    "app.history.rowSelected": "Selecionado",
+    "app.history.rowNotSelected": "Não selecionado",
     "app.pricing.free.account": "Entra com a Apple, o Google ou o e-mail",
     "app.pricing.headline": "O primeiro veredicto é por nossa conta.",
     "app.pricing.sub":
@@ -163,6 +171,8 @@ const ptPT: AppLocale = {
   },
   plurals: {
     "app.balance.left": { one: "Resta {n} veredicto" },
+    "app.history.selected": { one: "{n} selecionado" },
+    "app.history.deleteConfirm": { one: "Apagar este veredicto do telemóvel? O link de partilha continua ativo." },
   },
 };
 

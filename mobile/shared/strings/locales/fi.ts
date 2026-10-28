@@ -11,6 +11,14 @@ const fi: AppLocale = {
     "app.history.empty": "Ei vielä tuomioita. Ratkaise ensimmäinen kiistasi, niin tuomio näkyy täällä.",
     "app.history.deviceOnly": "Tallennettu vain tähän puhelimeen. Jos poistat tuomion täältä, sen jakolinkki toimii edelleen.",
     "app.history.delete": "Poista",
+    "app.history.select": "Valitse",
+    "app.history.selectAll": "Valitse kaikki",
+    "app.history.deselectAll": "Poista valinnat",
+    "app.history.selected": "{n} valittua",
+    "app.history.deleteCount": "Poista ({count})",
+    "app.history.deleteConfirm": "Poistetaanko {n} tuomiota tästä puhelimesta? Niiden jakolinkit toimivat edelleen.",
+    "app.history.rowSelected": "Valittu",
+    "app.history.rowNotSelected": "Ei valittu",
     "app.pricing.free.account": "Kirjaudu Applella, Googlella tai sähköpostilla",
     "app.pricing.headline": "Ensimmäinen tuomio on meiltä.",
     "app.pricing.sub":
@@ -163,6 +171,8 @@ const fi: AppLocale = {
   },
   plurals: {
     "app.balance.left": { one: "{n} tuomio jäljellä" },
+    "app.history.selected": { one: "{n} valittu" },
+    "app.history.deleteConfirm": { one: "Poistetaanko tämä tuomio tästä puhelimesta? Sen jakolinkki toimii edelleen." },
   },
 };
 

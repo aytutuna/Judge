@@ -11,6 +11,15 @@ const ro: AppLocale = {
     "app.history.deviceOnly":
       "Salvate doar pe acest telefon. Dacă ștergi unul de aici, linkul lui de distribuire rămâne activ.",
     "app.history.delete": "Șterge",
+    "app.history.select": "Selectează",
+    "app.history.selectAll": "Selectează tot",
+    "app.history.deselectAll": "Deselectează tot",
+    "app.history.selected": "{n} selectate",
+    "app.history.deleteCount": "Șterge ({count})",
+    "app.history.deleteConfirm":
+      "Ștergi {n} de verdicte de pe acest telefon? Linkurile lor de distribuire rămân active.",
+    "app.history.rowSelected": "Selectat",
+    "app.history.rowNotSelected": "Neselectat",
     "app.pricing.free.account": "Conectează-te cu Apple, Google sau prin e-mail",
     "app.pricing.headline": "Primul verdict e din partea casei.",
     "app.pricing.sub":
@@ -166,6 +175,11 @@ const ro: AppLocale = {
   // As on the web, the base string carries "de" (20 and up) and "few" drops it.
   plurals: {
     "app.balance.left": { one: "Mai ai 1 verdict", few: "Mai ai {n} verdicte" },
+    "app.history.selected": { one: "1 selectat", few: "{n} selectate" },
+    "app.history.deleteConfirm": {
+      one: "Ștergi verdictul de pe acest telefon? Linkul lui de distribuire rămâne activ.",
+      few: "Ștergi {n} verdicte de pe acest telefon? Linkurile lor de distribuire rămân active.",
+    },
   },
 };
 

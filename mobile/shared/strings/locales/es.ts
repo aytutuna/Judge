@@ -11,6 +11,15 @@ const es: AppLocale = {
     "app.history.deviceOnly":
       "Solo se guardan en este teléfono. Eliminar uno aquí no desactiva su enlace para compartir.",
     "app.history.delete": "Eliminar",
+    "app.history.select": "Seleccionar",
+    "app.history.selectAll": "Seleccionar todo",
+    "app.history.deselectAll": "Deseleccionar todo",
+    "app.history.selected": "{n} seleccionados",
+    "app.history.deleteCount": "Eliminar ({count})",
+    "app.history.deleteConfirm":
+      "¿Eliminar {n} veredictos de este teléfono? Sus enlaces para compartir seguirán funcionando.",
+    "app.history.rowSelected": "Seleccionado",
+    "app.history.rowNotSelected": "No seleccionado",
     "app.pricing.free.account": "Inicia sesión con Apple, Google o tu correo",
     "app.pricing.headline": "Tu primer veredicto corre por nuestra cuenta.",
     "app.pricing.sub":
@@ -165,6 +174,10 @@ const es: AppLocale = {
   },
   plurals: {
     "app.balance.left": { one: "Te queda {n} veredicto" },
+    "app.history.selected": { one: "{n} seleccionado" },
+    "app.history.deleteConfirm": {
+      one: "¿Eliminar este veredicto del teléfono? Su enlace para compartir seguirá funcionando.",
+    },
   },
 };
 

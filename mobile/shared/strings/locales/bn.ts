@@ -11,6 +11,14 @@ const bn: AppLocale = {
     "app.history.empty": "এখনও কোনো রায় নেই। প্রথম তর্কের ফয়সালা করলে সেটা এখানে দেখা যাবে।",
     "app.history.deviceOnly": "শুধু এই ফোনে সেভ করা আছে। এখান থেকে কোনো রায় মুছলেও তার শেয়ার লিংক বন্ধ হয় না।",
     "app.history.delete": "মুছুন",
+    "app.history.select": "বেছে নিন",
+    "app.history.selectAll": "সব বেছে নিন",
+    "app.history.deselectAll": "বাছাই বাতিল করুন",
+    "app.history.selected": "{n}টি নির্বাচিত",
+    "app.history.deleteCount": "মুছুন ({count})",
+    "app.history.deleteConfirm": "এই ফোন থেকে {n}টি রায় মুছবেন? সেগুলোর শেয়ার লিংক চালু থাকবে।",
+    "app.history.rowSelected": "নির্বাচিত",
+    "app.history.rowNotSelected": "নির্বাচিত নয়",
     "app.pricing.free.account": "Apple, Google বা ইমেইল দিয়ে সাইন ইন করুন",
     "app.pricing.headline": "প্রথম রায়টা আমাদের তরফ থেকে।",
     "app.pricing.sub":
@@ -162,6 +170,8 @@ const bn: AppLocale = {
   },
   plurals: {
     "app.balance.left": { one: "আর {n}টি রায় বাকি" },
+    "app.history.selected": { one: "{n}টি নির্বাচিত" },
+    "app.history.deleteConfirm": { one: "এই ফোন থেকে {n}টি রায় মুছবেন? সেটির শেয়ার লিংক চালু থাকবে।" },
   },
 };
 

@@ -12,6 +12,14 @@ const ru: AppLocale = {
     "app.history.deviceOnly":
       "Вердикты хранятся только на этом телефоне. Если удалить вердикт здесь, ссылка на него продолжит работать.",
     "app.history.delete": "Удалить",
+    "app.history.select": "Выбрать",
+    "app.history.selectAll": "Выбрать все",
+    "app.history.deselectAll": "Отменить выбор",
+    "app.history.selected": "Выбрано: {n}",
+    "app.history.deleteCount": "Удалить ({count})",
+    "app.history.deleteConfirm": "Удалить {n} вердиктов с этого телефона? Ссылки на них продолжат работать.",
+    "app.history.rowSelected": "Выбрано",
+    "app.history.rowNotSelected": "Не выбрано",
     "app.pricing.free.account": "Вход через Apple, Google или почту",
     "app.pricing.headline": "Первый вердикт — за наш счёт.",
     "app.pricing.sub":
@@ -166,6 +174,16 @@ const ru: AppLocale = {
       one: "Остался {n} вердикт",
       few: "Осталось {n} вердикта",
       many: "Осталось {n} вердиктов",
+    },
+    "app.history.selected": {
+      one: "Выбрано: {n}",
+      few: "Выбрано: {n}",
+      many: "Выбрано: {n}",
+    },
+    "app.history.deleteConfirm": {
+      one: "Удалить {n} вердикт с этого телефона? Ссылка на него продолжит работать.",
+      few: "Удалить {n} вердикта с этого телефона? Ссылки на них продолжат работать.",
+      many: "Удалить {n} вердиктов с этого телефона? Ссылки на них продолжат работать.",
     },
   },
 };

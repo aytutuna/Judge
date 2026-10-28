@@ -10,6 +10,14 @@ const hu: AppLocale = {
     "app.history.empty": "Még nincs ítéleted. Amint eldől az első vitád, itt megjelenik.",
     "app.history.deviceOnly": "Csak ezen a telefonon vannak elmentve. Ha innen törölsz egyet, a megosztási linkje attól még működik.",
     "app.history.delete": "Törlés",
+    "app.history.select": "Kijelölés",
+    "app.history.selectAll": "Összes kijelölése",
+    "app.history.deselectAll": "Kijelölés megszüntetése",
+    "app.history.selected": "{n} kijelölve",
+    "app.history.deleteCount": "Törlés ({count})",
+    "app.history.deleteConfirm": "Törlöd a kijelölt {n} ítéletet erről a telefonról? A megosztási linkjeik továbbra is működnek.",
+    "app.history.rowSelected": "Kijelölve",
+    "app.history.rowNotSelected": "Nincs kijelölve",
     "app.pricing.free.account": "Belépés Apple-lel, Google-lal vagy e-maillel",
     "app.pricing.headline": "Az első ítélet ajándék.",
     "app.pricing.sub":
@@ -161,6 +169,8 @@ const hu: AppLocale = {
   },
   plurals: {
     "app.balance.left": { one: "Még {n} ítéleted maradt" },
+    "app.history.selected": { one: "{n} kijelölve" },
+    "app.history.deleteConfirm": { one: "Törlöd ezt az ítéletet erről a telefonról? A megosztási linkje továbbra is működik." },
   },
 };
 

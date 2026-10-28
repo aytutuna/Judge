@@ -11,6 +11,15 @@ const ml: AppLocale = {
     "app.history.deviceOnly":
       "ഈ ഫോണിൽ മാത്രമാണ് സേവ് ചെയ്തിരിക്കുന്നത്. ഇവിടെനിന്ന് ഒരു വിധി ഡിലീറ്റ് ചെയ്താലും അതിന്റെ ഷെയർ ലിങ്ക് തുടർന്നും പ്രവർത്തിക്കും.",
     "app.history.delete": "ഡിലീറ്റ്",
+    "app.history.select": "തിരഞ്ഞെടുക്കൂ",
+    "app.history.selectAll": "എല്ലാം തിരഞ്ഞെടുക്കൂ",
+    "app.history.deselectAll": "എല്ലാം തിരഞ്ഞെടുത്തത് മാറ്റൂ",
+    "app.history.selected": "{n} എണ്ണം തിരഞ്ഞെടുത്തു",
+    "app.history.deleteCount": "ഡിലീറ്റ് ({count})",
+    "app.history.deleteConfirm":
+      "ഈ ഫോണിൽനിന്ന് {n} വിധികൾ ഡിലീറ്റ് ചെയ്യണോ? അവയുടെ ഷെയർ ലിങ്കുകൾ തുടർന്നും പ്രവർത്തിക്കും.",
+    "app.history.rowSelected": "തിരഞ്ഞെടുത്തു",
+    "app.history.rowNotSelected": "തിരഞ്ഞെടുത്തിട്ടില്ല",
     "app.pricing.free.account": "Apple, Google അല്ലെങ്കിൽ ഇമെയിൽ വഴി സൈൻ ഇൻ ചെയ്യൂ",
     "app.pricing.headline": "ആദ്യ വിധി ഞങ്ങളുടെ വക.",
     "app.pricing.sub":
@@ -166,6 +175,10 @@ const ml: AppLocale = {
   },
   plurals: {
     "app.balance.left": { one: "{n} വിധി ബാക്കി" },
+    "app.history.selected": { one: "{n} എണ്ണം തിരഞ്ഞെടുത്തു" },
+    "app.history.deleteConfirm": {
+      one: "ഈ വിധി ഈ ഫോണിൽനിന്ന് ഡിലീറ്റ് ചെയ്യണോ? അതിന്റെ ഷെയർ ലിങ്ക് തുടർന്നും പ്രവർത്തിക്കും.",
+    },
   },
 };
 

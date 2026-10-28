@@ -11,6 +11,14 @@ const nl: AppLocale = {
     "app.history.deviceOnly":
       "Alleen op deze telefoon bewaard. Verwijder je hier een uitspraak, dan blijft de deellink gewoon werken.",
     "app.history.delete": "Verwijderen",
+    "app.history.select": "Selecteren",
+    "app.history.selectAll": "Alles selecteren",
+    "app.history.deselectAll": "Alles deselecteren",
+    "app.history.selected": "{n} geselecteerd",
+    "app.history.deleteCount": "Verwijderen ({count})",
+    "app.history.deleteConfirm": "{n} uitspraken van deze telefoon verwijderen? De deellinks blijven gewoon werken.",
+    "app.history.rowSelected": "Geselecteerd",
+    "app.history.rowNotSelected": "Niet geselecteerd",
     "app.pricing.free.account": "Log in met Apple, Google of e-mail",
     "app.pricing.headline": "Je eerste uitspraak is van het huis.",
     "app.pricing.sub":
@@ -167,6 +175,8 @@ const nl: AppLocale = {
   },
   plurals: {
     "app.balance.left": { one: "Nog {n} uitspraak over" },
+    "app.history.selected": { one: "{n} geselecteerd" },
+    "app.history.deleteConfirm": { one: "Uitspraak van deze telefoon verwijderen? De deellink blijft gewoon werken." },
   },
 };
 

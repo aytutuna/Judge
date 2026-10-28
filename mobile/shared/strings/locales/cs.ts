@@ -11,6 +11,15 @@ const cs: AppLocale = {
     "app.history.deviceOnly":
       "Uloženo jen v tomhle telefonu. Když tu verdikt smažeš, jeho sdílený odkaz bude fungovat dál.",
     "app.history.delete": "Smazat",
+    "app.history.select": "Vybrat",
+    "app.history.selectAll": "Vybrat vše",
+    "app.history.deselectAll": "Zrušit výběr",
+    "app.history.selected": "Vybráno: {n}",
+    "app.history.deleteCount": "Smazat ({count})",
+    "app.history.deleteConfirm":
+      "Smazat {n} verdiktů z tohohle telefonu? Jejich sdílené odkazy budou fungovat dál.",
+    "app.history.rowSelected": "Vybráno",
+    "app.history.rowNotSelected": "Nevybráno",
     "app.pricing.free.account": "Přihlas se přes Apple, Google nebo e-mail",
     "app.pricing.headline": "První verdikt máš od nás.",
     "app.pricing.sub":
@@ -161,6 +170,11 @@ const cs: AppLocale = {
   },
   plurals: {
     "app.balance.left": { one: "Zbývá ti {n} verdikt", few: "Zbývají ti {n} verdikty" },
+    "app.history.selected": { one: "Vybráno: {n}", few: "Vybráno: {n}" },
+    "app.history.deleteConfirm": {
+      one: "Smazat tenhle verdikt z tohohle telefonu? Jeho sdílený odkaz bude fungovat dál.",
+      few: "Smazat {n} verdikty z tohohle telefonu? Jejich sdílené odkazy budou fungovat dál.",
+    },
   },
 };
 

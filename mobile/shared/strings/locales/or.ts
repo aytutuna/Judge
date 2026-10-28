@@ -11,6 +11,14 @@ const or: AppLocale = {
     "app.history.empty": "ଏଯାଏଁ କୌଣସି ରାୟ ନାହିଁ। ଆପଣଙ୍କ ପ୍ରଥମ ଝଗଡ଼ା ମେଣ୍ଟାନ୍ତୁ, ତା'ର ରାୟ ଏଠାରେ ଦେଖାଯିବ।",
     "app.history.deviceOnly": "କେବଳ ଏହି ଫୋନ୍‌ରେ ସେଭ୍ ହୋଇଛି। ଏଠାରୁ କୌଣସି ରାୟ ଡିଲିଟ୍ କଲେ ବି ତା'ର ସେୟାର୍ ଲିଙ୍କ୍ ବନ୍ଦ ହୁଏ ନାହିଁ।",
     "app.history.delete": "ଡିଲିଟ୍",
+    "app.history.select": "ଚୟନ କରନ୍ତୁ",
+    "app.history.selectAll": "ସବୁ ଚୟନ କରନ୍ତୁ",
+    "app.history.deselectAll": "ସବୁ ଚୟନ ହଟାନ୍ତୁ",
+    "app.history.selected": "{n}ଟି ଚୟନ କରାଯାଇଛି",
+    "app.history.deleteCount": "ଡିଲିଟ୍ ({count})",
+    "app.history.deleteConfirm": "ଏହି ଫୋନ୍‌ରୁ {n}ଟି ରାୟ ଡିଲିଟ୍ କରିବେ? ସେଗୁଡ଼ିକର ସେୟାର୍ ଲିଙ୍କ୍ ଚାଲୁ ରହିବ।",
+    "app.history.rowSelected": "ଚୟନ କରାଯାଇଛି",
+    "app.history.rowNotSelected": "ଚୟନ କରାଯାଇନାହିଁ",
     "app.pricing.free.account": "Apple, Google ବା ଇମେଲ୍ ସହ ସାଇନ୍ ଇନ୍ କରନ୍ତୁ",
     "app.pricing.headline": "ପ୍ରଥମ ରାୟ ଆମ ତରଫରୁ।",
     "app.pricing.sub":
@@ -163,6 +171,8 @@ const or: AppLocale = {
   },
   plurals: {
     "app.balance.left": { one: "{n}ଟି ରାୟ ବାକି" },
+    "app.history.selected": { one: "{n}ଟି ଚୟନ କରାଯାଇଛି" },
+    "app.history.deleteConfirm": { one: "ଏହି ଫୋନ୍‌ରୁ ରାୟଟି ଡିଲିଟ୍ କରିବେ? ଏହାର ସେୟାର୍ ଲିଙ୍କ୍ ଚାଲୁ ରହିବ।" },
   },
 };
 

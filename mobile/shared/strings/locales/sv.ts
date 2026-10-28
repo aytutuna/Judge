@@ -11,6 +11,15 @@ const sv: AppLocale = {
     "app.history.deviceOnly":
       "Sparas bara på den här telefonen. Tar du bort en dom här fortsätter delningslänken att fungera.",
     "app.history.delete": "Ta bort",
+    "app.history.select": "Välj",
+    "app.history.selectAll": "Markera alla",
+    "app.history.deselectAll": "Avmarkera alla",
+    "app.history.selected": "{n} markerade",
+    "app.history.deleteCount": "Ta bort ({count})",
+    "app.history.deleteConfirm":
+      "Ta bort {n} domar från den här telefonen? Delningslänkarna fortsätter att fungera.",
+    "app.history.rowSelected": "Markerad",
+    "app.history.rowNotSelected": "Inte markerad",
     "app.pricing.free.account": "Logga in med Apple, Google eller e-post",
     "app.pricing.headline": "Din första dom bjuder vi på.",
     "app.pricing.sub":
@@ -162,6 +171,10 @@ const sv: AppLocale = {
   },
   plurals: {
     "app.balance.left": { one: "{n} dom kvar" },
+    "app.history.selected": { one: "{n} markerad" },
+    "app.history.deleteConfirm": {
+      one: "Ta bort domen från den här telefonen? Delningslänken fortsätter att fungera.",
+    },
   },
 };
 

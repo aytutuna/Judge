@@ -12,6 +12,14 @@ const uk: AppLocale = {
     "app.history.deviceOnly":
       "Вердикти зберігаються лише на цьому телефоні. Якщо видалити вердикт тут, посилання на нього й далі працюватиме.",
     "app.history.delete": "Видалити",
+    "app.history.select": "Вибрати",
+    "app.history.selectAll": "Вибрати все",
+    "app.history.deselectAll": "Зняти вибір",
+    "app.history.selected": "Вибрано: {n}",
+    "app.history.deleteCount": "Видалити ({count})",
+    "app.history.deleteConfirm": "Видалити {n} вердиктів із цього телефону? Посилання на них і далі працюватимуть.",
+    "app.history.rowSelected": "Вибрано",
+    "app.history.rowNotSelected": "Не вибрано",
     "app.pricing.free.account": "Увійди через Apple, Google або пошту",
     "app.pricing.headline": "Перший вердикт — за наш рахунок.",
     "app.pricing.sub":
@@ -168,6 +176,17 @@ const uk: AppLocale = {
       one: "Залишився {n} вердикт",
       few: "Залишилося {n} вердикти",
       many: "Залишилося {n} вердиктів",
+    },
+    "app.history.selected": {
+      one: "Вибрано: {n}",
+      few: "Вибрано: {n}",
+      many: "Вибрано: {n}",
+    },
+    // "one" also covers 21, 31, so it can't say "this verdict".
+    "app.history.deleteConfirm": {
+      one: "Видалити {n} вердикт із цього телефону? Відкрити за посиланням можна буде й далі.",
+      few: "Видалити {n} вердикти з цього телефону? Посилання на них і далі працюватимуть.",
+      many: "Видалити {n} вердиктів із цього телефону? Посилання на них і далі працюватимуть.",
     },
   },
 };

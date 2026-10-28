@@ -12,6 +12,15 @@ const ar: AppLocale = {
     "app.history.deviceOnly":
       "الأحكام محفوظة على هذا الهاتف فقط. حذف حكم من هنا لا يوقف رابط مشاركته.",
     "app.history.delete": "حذف",
+    "app.history.select": "تحديد",
+    "app.history.selectAll": "تحديد الكل",
+    "app.history.deselectAll": "إلغاء تحديد الكل",
+    "app.history.selected": "تم تحديد {n} حكم",
+    "app.history.deleteCount": "حذف ({count})",
+    "app.history.deleteConfirm":
+      "هل تريد حذف {n} حكم من هذا الهاتف؟ ستبقى روابط مشاركتها تعمل.",
+    "app.history.rowSelected": "محدد",
+    "app.history.rowNotSelected": "غير محدد",
     "app.pricing.free.account":
       "سجّل الدخول باستخدام Apple أو Google أو البريد الإلكتروني",
     "app.pricing.headline": "حكمك الأول على حسابنا.",
@@ -189,6 +198,20 @@ const ar: AppLocale = {
       two: "بقي لك حكمان",
       few: "بقي لك {n} أحكام",
       many: "بقي لك {n} حكمًا",
+    },
+    "app.history.selected": {
+      zero: "لم يُحدَّد أي حكم",
+      one: "تم تحديد حكم واحد",
+      two: "تم تحديد حكمين",
+      few: "تم تحديد {n} أحكام",
+      many: "تم تحديد {n} حكمًا",
+    },
+    "app.history.deleteConfirm": {
+      zero: "لا أحكام محددة للحذف.",
+      one: "هل تريد حذف هذا الحكم من هذا الهاتف؟ سيبقى رابط مشاركته يعمل.",
+      two: "هل تريد حذف حكمين من هذا الهاتف؟ سيبقى رابطا مشاركتهما يعملان.",
+      few: "هل تريد حذف {n} أحكام من هذا الهاتف؟ ستبقى روابط مشاركتها تعمل.",
+      many: "هل تريد حذف {n} حكمًا من هذا الهاتف؟ ستبقى روابط مشاركتها تعمل.",
     },
   },
 };

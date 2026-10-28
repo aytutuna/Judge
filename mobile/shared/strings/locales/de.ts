@@ -11,6 +11,14 @@ const de: AppLocale = {
     "app.history.deviceOnly":
       "Nur auf diesem Handy gespeichert. Wenn du hier ein Urteil löschst, funktioniert der geteilte Link weiter.",
     "app.history.delete": "Löschen",
+    "app.history.select": "Auswählen",
+    "app.history.selectAll": "Alle auswählen",
+    "app.history.deselectAll": "Auswahl aufheben",
+    "app.history.selected": "{n} ausgewählt",
+    "app.history.deleteCount": "Löschen ({count})",
+    "app.history.deleteConfirm": "{n} Urteile von diesem Handy löschen? Die geteilten Links funktionieren weiter.",
+    "app.history.rowSelected": "Ausgewählt",
+    "app.history.rowNotSelected": "Nicht ausgewählt",
     "app.pricing.free.account": "Mit Apple, Google oder E-Mail anmelden",
     "app.pricing.headline": "Dein erstes Urteil geht auf uns.",
     "app.pricing.sub":
@@ -166,6 +174,8 @@ const de: AppLocale = {
   },
   plurals: {
     "app.balance.left": { one: "1 Urteil übrig" },
+    "app.history.selected": { one: "{n} ausgewählt" },
+    "app.history.deleteConfirm": { one: "Dieses Urteil von diesem Handy löschen? Der geteilte Link funktioniert weiter." },
   },
 };
 

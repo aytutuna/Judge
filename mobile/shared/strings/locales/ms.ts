@@ -12,6 +12,14 @@ const ms: AppLocale = {
     "app.history.deviceOnly":
       "Disimpan dalam telefon ini sahaja. Memadam satu keputusan di sini tidak mematikan pautan kongsinya.",
     "app.history.delete": "Padam",
+    "app.history.select": "Pilih",
+    "app.history.selectAll": "Pilih semua",
+    "app.history.deselectAll": "Nyahpilih semua",
+    "app.history.selected": "{n} dipilih",
+    "app.history.deleteCount": "Padam ({count})",
+    "app.history.deleteConfirm": "Padam {n} keputusan daripada telefon ini? Pautan kongsinya akan terus berfungsi.",
+    "app.history.rowSelected": "Dipilih",
+    "app.history.rowNotSelected": "Tidak dipilih",
     "app.pricing.free.account": "Log masuk dengan Apple, Google atau e-mel",
     "app.pricing.headline": "Keputusan pertama anda, kami belanja.",
     "app.pricing.sub":
