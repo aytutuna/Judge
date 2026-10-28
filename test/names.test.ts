@@ -408,6 +408,7 @@ const BASE: VerdictResult = {
   verdict: "side_b",
   dispute_type: "factual",
   headline: "Taraf B haklı: çay hazır değildi",
+  why: "Demlenmemiş çay hazır sayılmaz. Taraf B'nin itirazı yerinde.",
   crux: "Taraf A'nın çayı demlemeden servis etmesi yeterli mi?",
   split_points: null,
   conditional: null,
@@ -446,6 +447,7 @@ describe("personalizeResult", () => {
     expect(out.argument_map.bedrock_b).toBe("Deniz'in damak zevki");
     expect(out.facts_relied_on[0]).toBe("Çay 5 dakika demlenir; Deniz'in dediği doğru.");
     expect(out.lean?.reason).toBe("Senden beklenen demlemekti.");
+    expect(out.why).toBe("Demlenmemiş çay hazır sayılmaz. Deniz'in itirazı yerinde.");
     expect(out.fact_check?.claims[0].claim).toBe("Deniz'in iddiası");
     expect(out.fact_check?.claims[0].summary).toBe("Sana katılmıyor.");
     // The stored verdict object is untouched.

@@ -70,6 +70,7 @@ const RUN: JudgeRunOutput = {
   verdict: "side_b",
   dispute_type: "values",
   headline: "Party B is right",
+  why: "Photos from orbit show nothing at that scale. The wall is too narrow to see.",
   crux: "Whether it is visible",
   split_points: null,
   conditional: null,
@@ -251,7 +252,6 @@ describe("other routes with a dead bearer token", () => {
     const saved = await saveVerdictWithOriginals({
       id,
       input: "Party A says it; Party B says it is not.",
-      framework: { preset: "balanced" },
       result,
       kind: "free",
       ownerUserId: null,

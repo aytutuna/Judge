@@ -403,7 +403,7 @@ The website and the future iOS/Android app share one JSON API. Base URL
   `error.<code>` keys in `lib/i18n.ts`.
 - **Shared plain-TypeScript modules** (no Next or DOM imports) the app can
   reuse: `lib/types.ts`, `lib/i18n.ts`, `lib/verdict-display.ts`,
-  `lib/names.ts`, `lib/palette.ts`, `lib/frameworks.ts`, `lib/api-errors.ts`,
+  `lib/names.ts`, `lib/palette.ts`, `lib/api-errors.ts`,
   `lib/account-types.ts`, `lib/pricing.ts`, `lib/case-types.ts`,
   `lib/originals-types.ts`, `lib/verdict-poll.ts`.
 
@@ -518,7 +518,7 @@ module the app can import); every case and respond response is
    sign-in and rate-limit codes. Phone numbers, e-mail addresses, handles and
    account numbers are masked when the transcript is anonymized.
 2. **Create:** `POST /api/v1/cases` with an optional `Idempotency-Key` and
-   `{ "text": "...", "framework": { "preset": "balanced" }, "lang": "en", "evidence": ["v1...."] }`.
+   `{ "text": "...", "lang": "en", "evidence": ["v1...."] }`.
    A `"tier"` is ignored; `case.tier` is `"premium"` (`"free"` only on cases
    from before every verdict was premium). Add `"displayName": "Aytu"` for the name shown on the share
    pages (empty or absent = Party A).
@@ -1124,8 +1124,11 @@ input ──▶ anonymize (names → Party A/B) ──▶ judge ×N (structured 
 - One well-crafted structured-output prompt does parse → steelman → classify
   claims (fact / value / definition / logic) → bedrock → crux → verdict
   (`lib/judge.ts`), forced through a JSON schema (structured outputs) so it always parses.
-- The value framework (preset chips + fine-tuning sliders) is injected into the
-  prompt and only matters when the crux is a values clash (`lib/frameworks.ts`).
+- Each run also writes `why`, two or three sentences on what decided it. Rows
+  stored before it existed have none, and a "too close" verdict drops it.
+- Every verdict uses the same common-sense value framework, written into the
+  prompt; it only matters when the crux is a values clash. A `framework` sent
+  by older app builds is ignored.
 - Aggregation and the confidence rules live in `lib/aggregate.ts`.
 - If the model's own safety filter refuses, the app says so honestly instead of
   inventing a ruling.

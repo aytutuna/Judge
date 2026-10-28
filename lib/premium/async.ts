@@ -9,7 +9,6 @@
 
 import type { UsageTotals } from "@/lib/claude";
 import type { OriginalPayload } from "@/lib/originals-types";
-import type { FrameworkChoice } from "@/lib/types";
 import type { Lang } from "@/lib/i18n";
 import { completeVerdictJob, failVerdictJob, maybeSweepVerdictJobs } from "@/lib/verdict-jobs";
 import { premiumLogLine, runPreparedPipeline, type PreparedPremium, type PremiumRun } from "./run";
@@ -19,7 +18,6 @@ export type PremiumJobInput = {
   userId: string;
   reservationId: string;
   prepared: PreparedPremium;
-  framework: FrameworkChoice;
   lang: Lang;
   original: OriginalPayload;
   startedAt: number;
@@ -33,7 +31,7 @@ export async function runPremiumJob(job: PremiumJobInput): Promise<void> {
   try {
     run = await runPreparedPipeline(
       job.prepared,
-      { framework: job.framework, lang: job.lang },
+      { lang: job.lang },
       { startedAt: job.startedAt, ...(job.anonymizeUsage ? { anonymizeUsage: job.anonymizeUsage } : {}) },
     );
     const outcome = run.outcome;
@@ -51,7 +49,6 @@ export async function runPremiumJob(job: PremiumJobInput): Promise<void> {
       {
         id: job.id,
         input: outcome.input,
-        framework: job.framework,
         result: outcome.result,
         kind: "premium",
         ownerUserId: job.userId,

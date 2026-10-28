@@ -67,7 +67,7 @@ function TranslationNote({ view, lang }: { view: TranslationView; lang: Lang }) 
 }
 
 /** Full verdict display: the card (stamp, headline, confidence and votes,
- * branches, crux, bedrock, best point, actions), then the argument map and
+ * branches, why, crux, bedrock, best point, actions), then the argument map and
  * facts below it.
  * `lang` prop: the share page passes its own selected language (the store is
  * the viewer's own preference and never applies there); the main page passes

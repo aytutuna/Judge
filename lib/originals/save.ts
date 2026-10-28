@@ -9,7 +9,7 @@
  */
 
 import type { InStatement, InValue } from "@libsql/client";
-import { saveVerdict } from "@/lib/db";
+import { saveVerdict, STORED_FRAMEWORK } from "@/lib/db";
 import { entitlementWriteBatch, type StatementGuard } from "@/lib/entitlements";
 import type { Lang } from "@/lib/i18n";
 import {
@@ -19,7 +19,7 @@ import {
   type DisplayState,
   type OriginalPayload,
 } from "@/lib/originals-types";
-import type { FrameworkChoice, VerdictResult } from "@/lib/types";
+import type { VerdictResult } from "@/lib/types";
 import { aad, newOwnerToken, ownerTokenHash, sealJson } from "./crypto";
 import { ensureOriginalsTables, subjects } from "./db";
 
@@ -68,7 +68,6 @@ export function caseOriginalStatement(
 export type SaveVerdictInput = {
   id: string;
   input: string;
-  framework: FrameworkChoice;
   result: VerdictResult;
   kind: "free" | "premium";
   /** Signed-in writer; null -> an owner token is issued. */
@@ -97,12 +96,12 @@ function insert(head: string, values: InValue[], guard?: StatementGuard): InStat
 
 /** The verdict row alone (the fallback when the full batch fails). */
 export function plainVerdictStatement(
-  v: Pick<SaveVerdictInput, "id" | "input" | "framework" | "result">,
+  v: Pick<SaveVerdictInput, "id" | "input" | "result">,
   guard?: StatementGuard,
 ): InStatement {
   return insert(
     "INSERT INTO verdicts (id, input, framework, result)",
-    [v.id, v.input, JSON.stringify(v.framework), JSON.stringify(v.result)],
+    [v.id, v.input, STORED_FRAMEWORK, JSON.stringify(v.result)],
     guard,
   );
 }
@@ -193,6 +192,6 @@ export async function saveVerdictWithOriginals(v: SaveVerdictInput): Promise<Sav
   } catch (e) {
     console.error("[originals] meta write failed:", e instanceof Error ? e.message : String(e));
   }
-  await saveVerdict({ id: v.id, input: v.input, framework: v.framework, result: v.result });
+  await saveVerdict({ id: v.id, input: v.input, result: v.result });
   return { ...PLAIN_SAVE_OUTCOME };
 }

@@ -32,6 +32,8 @@ const MIN_RETRY_BUDGET_MS = 15_000;
  * original order and length; null marks a group the verdict does not have. */
 export type TranslatableText = {
   headline: string;
+  /** Absent on verdicts stored before it existed. */
+  why?: string;
   crux: string;
   split_points: string[] | null;
   conditional: { if_value: string; then: string }[] | null;
@@ -77,6 +79,7 @@ const SegmentsReply = z.object({
 export function extractText(r: VerdictResult): TranslatableText {
   return {
     headline: r.headline,
+    ...(r.why !== undefined ? { why: r.why } : {}),
     crux: r.crux,
     split_points: r.split_points ? r.split_points.map((p) => p.point) : null,
     conditional: r.conditional ? r.conditional.map((c) => ({ if_value: c.if_value, then: c.then })) : null,
@@ -110,6 +113,7 @@ export function flattenText(x: TranslatableText): Slot[] {
   const other = (text: string): Slot => ({ field: "other", text });
   return [
     { field: "headline", text: x.headline },
+    ...(x.why === undefined ? [] : [other(x.why)]),
     other(x.crux),
     ...(x.split_points ?? []).map(other),
     ...(x.conditional ?? []).flatMap((c): Slot[] => [{ field: "if_value", text: c.if_value }, other(c.then)]),
@@ -134,6 +138,7 @@ export function unflattenText(template: TranslatableText, flat: readonly string[
   let k = 0;
   const next = () => flat[k++] ?? "";
   const headline = next();
+  const why = template.why === undefined ? undefined : next();
   const crux = next();
   const split_points = template.split_points ? template.split_points.map(() => next()) : null;
   const conditional = template.conditional
@@ -169,6 +174,7 @@ export function unflattenText(template: TranslatableText, flat: readonly string[
   const appeal_summary = template.appeal_summary === undefined ? undefined : next();
   return {
     headline,
+    ...(why !== undefined ? { why } : {}),
     crux,
     split_points,
     conditional,
@@ -364,6 +370,7 @@ export function applyText(r: VerdictResult, text: TranslatableText, target: Lang
   return {
     ...r,
     headline: m(text.headline),
+    ...(r.why !== undefined ? { why: m(text.why ?? r.why) } : {}),
     crux: m(text.crux),
     split_points: r.split_points
       ? r.split_points.map((p, i) => ({ ...p, point: m(text.split_points?.[i] ?? p.point) }))

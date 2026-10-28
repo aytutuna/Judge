@@ -25,7 +25,7 @@ const open = async () => null;
 let seq = 0;
 async function newVerdict(result = TR_RESULT): Promise<string> {
   const id = `tr${String(++seq).padStart(8, "0")}`;
-  await saveVerdict({ id, input: "Taraf A ... Taraf B ...", framework: { preset: "balanced" }, result });
+  await saveVerdict({ id, input: "Taraf A ... Taraf B ...", result });
   return id;
 }
 

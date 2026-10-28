@@ -4,10 +4,7 @@ import Link from "next/link";
 import { useId, useLayoutEffect, useRef, useSyncExternalStore, type ReactNode } from "react";
 import type { Entitlement } from "@/lib/account-types";
 import { saveDraftForSignIn } from "@/lib/draft";
-import { getPreset } from "@/lib/frameworks";
 import { formatDate, t, type Key, type Lang } from "@/lib/i18n";
-import type { FrameworkChoice } from "@/lib/types";
-import { FrameworkPicker } from "../FrameworkPicker";
 import styles from "./thread.module.css";
 
 /** Longest argument the form accepts (the API enforces the same cap). */
@@ -22,7 +19,7 @@ export const EXAMPLES = [
   { label: "example.pineapple.label", text: "example.pineapple.text" },
 ] as const satisfies readonly { label: Key; text: Key }[];
 
-const STEPS = ["home.step.argument", "thread.lens", "home.step.ruling"] as const satisfies readonly Key[];
+const STEPS = ["home.step.argument", "home.step.ruling"] as const satisfies readonly Key[];
 
 function subscribeNever(): () => void {
   return () => {};
@@ -37,12 +34,10 @@ export type ComposerProps = {
   /** An argument is in the thread: nothing changes until it is done. */
   disabled?: boolean;
   error?: string | null;
-  framework: FrameworkChoice;
-  onFrameworkChange: (next: FrameworkChoice) => void;
-  /** The options panel (framework, mode, name, screenshots) is open. */
+  /** The options panel (mode, name, screenshots) is open. */
   expanded: boolean;
   onExpandedChange: (expanded: boolean) => void;
-  /** In the options panel, after the framework. */
+  /** The options panel's content; without it there is no options button. */
   extras?: ReactNode;
   twoSided?: boolean;
   submitLabel: string;
@@ -88,7 +83,7 @@ function CaseHead({ lang }: { lang: Lang }) {
 
 /**
  * The argument box: an auto-growing textarea over one toolbar row (the
- * lens button and send). Everything else sits in the options
+ * options button and send). Everything else sits in the options
  * panel under that row (after the button in tab order), so the docked box
  * stays two rows tall. As the empty page's `card` it also holds the
  * heading and sends from a full-width button under the toolbar.
@@ -103,8 +98,6 @@ export function Composer({
   canSubmit,
   disabled = false,
   error = null,
-  framework,
-  onFrameworkChange,
   expanded,
   onExpandedChange,
   extras,
@@ -117,7 +110,6 @@ export function Composer({
 }: ComposerProps) {
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const panelId = useId();
-  const preset = getPreset(framework.preset);
   const ready = canSubmit && !disabled;
 
   // Grows with the text up to the CSS max-height, then scrolls.
@@ -189,23 +181,20 @@ export function Composer({
             </div>
           ) : null}
           <div className={styles.toolbar}>
-            <button
-              type="button"
-              className={styles.options}
-              aria-expanded={expanded}
-              aria-controls={expanded ? panelId : undefined}
-              onClick={() => onExpandedChange(!expanded)}
-            >
-              <span aria-hidden>{preset.emoji}</span>
-              <span className={styles.lens}>{t(lang, "thread.lens")}</span>
-              <span className={styles.optionsLabel}>
-                <span aria-hidden>· </span>
-                {t(lang, `preset.${preset.id}.label`)}
-              </span>
-              <svg className={styles.caret} viewBox="0 0 12 12" aria-hidden>
-                <path d="M3 4.5 6 7.5l3-3" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-              </svg>
-            </button>
+            {extras ? (
+              <button
+                type="button"
+                className={styles.options}
+                aria-expanded={expanded}
+                aria-controls={expanded ? panelId : undefined}
+                onClick={() => onExpandedChange(!expanded)}
+              >
+                {t(lang, "thread.options")}
+                <svg className={styles.caret} viewBox="0 0 12 12" aria-hidden>
+                  <path d="M3 4.5 6 7.5l3-3" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+                </svg>
+              </button>
+            ) : null}
             {twoSided ? <span className={styles.mode}>{t(lang, "case.kicker")}</span> : null}
             {value.length > MAX_ARGUMENT - 500 ? (
               <span className={styles.count} aria-hidden>
@@ -220,9 +209,8 @@ export function Composer({
               </button>
             )}
           </div>
-          {expanded ? (
+          {expanded && extras ? (
             <div id={panelId} className={styles.panel}>
-              <FrameworkPicker value={framework} onChange={onFrameworkChange} />
               {extras}
             </div>
           ) : null}

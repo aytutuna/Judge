@@ -17,13 +17,14 @@ import { nanoid } from "nanoid";
 import type { CaseMode } from "@/lib/case-types";
 import { claudeJson, LITE_MODEL, withUsageMeter, type UsageTotals } from "@/lib/claude";
 import type { InStatement } from "@libsql/client";
+import { STORED_FRAMEWORK } from "@/lib/db";
 import { consumeStatement, entitlementWriteBatch, refundStatements, type StatementGuard } from "@/lib/entitlements";
 import { CASE_REMOVAL_REASON_SQL, ensureOriginalsTables } from "@/lib/originals/db";
 import { evidenceBlock } from "@/lib/evidence";
 import type { Lang } from "@/lib/i18n";
 import { APPEAL_JUDGE_NOTE, APPEAL_ONE_SIDED_JUDGE_NOTE } from "@/lib/judge";
 import { judgeAnonymized, premiumLogLine, type JudgedOutcome, type PremiumStats } from "@/lib/premium/run";
-import type { AppealInfo, AppealOutcome, DisputedFact, EvidenceUsed, FrameworkChoice, VerdictResult } from "@/lib/types";
+import type { AppealInfo, AppealOutcome, DisputedFact, EvidenceUsed, VerdictResult } from "@/lib/types";
 import { composeForJudging, evidenceCounts, evidenceGroups } from "./compose";
 import { getCase, loadCaseBundle, type AppealRow, type CaseBundle } from "./db";
 import { notifyOwnerCaseReady } from "./notify";
@@ -118,10 +119,12 @@ export async function appealSummary(
       "",
       `EARLIER VERDICT: ${prev.verdict}`,
       `Headline: ${prev.headline}`,
+      ...(prev.why ? [`Why: ${prev.why}`] : []),
       `Crux: ${prev.crux}`,
       "",
       `NEW VERDICT: ${next.verdict}`,
       `Headline: ${next.headline}`,
+      ...(next.why ? [`Why: ${next.why}`] : []),
       `Crux: ${next.crux}`,
       "",
       `NEW CONTEXT FROM PARTY ${appeal.party.toUpperCase()}:`,
@@ -221,7 +224,6 @@ function verdictRowStatements(
   verdictId: string,
   caseId: string,
   input: string,
-  framework: FrameworkChoice,
   result: VerdictResult,
   runGuard: StatementGuard,
   nowIso: string,
@@ -229,7 +231,7 @@ function verdictRowStatements(
   return [
     {
       sql: `INSERT INTO verdicts (id, input, framework, result) SELECT ?, ?, ?, ? WHERE ${runGuard.sql}`,
-      args: [verdictId, input, JSON.stringify(framework), JSON.stringify(result), ...runGuard.args],
+      args: [verdictId, input, STORED_FRAMEWORK, JSON.stringify(result), ...runGuard.args],
     },
     {
       sql: `INSERT INTO verdict_meta (verdict_id, kind, case_id, names_visible, removed_at, removal_reason, created_at, updated_at)
@@ -284,7 +286,6 @@ export async function runCaseJudging(
   const run = await judge(caseId, {
     text: document,
     context: evText,
-    framework: row.framework,
     lang: row.lang,
     ...(twoSided ? { twoSided: true } : {}),
     ...(evText ? { evidence: true } : {}),
@@ -321,7 +322,6 @@ export async function runCaseJudging(
         verdictId,
         caseId,
         evText ? `${document}\n\n${evText}` : document,
-        row.framework,
         result,
         runGuard,
         at,
@@ -399,7 +399,6 @@ export async function runAppealJudging(
   const run = await judge(caseId, {
     text: document,
     context: evText,
-    framework: row.framework,
     lang: row.lang,
     ...(twoSided ? { twoSided: true } : {}),
     ...(evText ? { evidence: true } : {}),
@@ -454,7 +453,6 @@ export async function runAppealJudging(
         verdictId,
         caseId,
         evText ? `${document}\n\n${evText}` : document,
-        row.framework,
         result,
         runGuard,
         at,

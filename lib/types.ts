@@ -53,6 +53,8 @@ export const JudgeOutput = z.object({
   verdict: JudgeVerdict,
   dispute_type: DisputeType,
   headline: z.string(),
+  /** What decided it, in a few plain sentences. */
+  why: z.string(),
   crux: z.string(),
   split_points: z
     .array(z.object({ party: z.enum(["a", "b"]), point: z.string() }))
@@ -193,6 +195,9 @@ export type TwoSidedJudgeRunOutput = z.infer<typeof TwoSidedJudgeRunOutput>;
  * from self-consistency (how often the judges agreed), never model-claimed. */
 export const VerdictResult = JudgeOutput.extend({
   verdict: FinalVerdict,
+  /** Optional so rows stored before it existed keep parsing. Also absent on
+   * refusals and "too_close" verdicts. */
+  why: z.string().optional(),
   confidence: z.number().int().min(1).max(5),
   /** Which verdict each self-consistency run reached, for transparency. */
   runs: z.array(JudgeVerdict),
@@ -243,13 +248,6 @@ export const TranslateResponse = z.object({
 });
 export type TranslateResponse = z.infer<typeof TranslateResponse>;
 
-export const FrameworkChoice = z.object({
-  preset: z.string(),
-  /** slider id -> 0..100 (50 = neutral). Omitted sliders count as neutral. */
-  sliders: z.record(z.string(), z.number().min(0).max(100)).optional(),
-});
-export type FrameworkChoice = z.infer<typeof FrameworkChoice>;
-
 export const ArgumentText = z.string().trim().min(20, "Tell us a bit more about the argument.").max(
   6000,
   "Keep it under 6000 characters.",
@@ -264,7 +262,7 @@ export type Clarification = z.infer<typeof Clarification>;
 
 export const VerdictRequest = z.object({
   argument: ArgumentText,
-  framework: FrameworkChoice.default({ preset: "balanced" }),
+  // Older app builds still send a judging style as `framework`; zod strips unknown keys.
   /** UI + judge output language. Stored as the result's `lang`. */
   lang: z.enum(["en", "tr"]).default("en"),
   /** Ignored: every verdict is premium. Older app builds still send it. */

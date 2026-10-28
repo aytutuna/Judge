@@ -8,6 +8,7 @@ import { CardTopRow, ExamplePill } from "../verdict/CardTopRow";
 import { TugBar } from "../verdict/TugBar";
 import { VerdictMain } from "../verdict/VerdictMain";
 import { CruxBlock } from "../verdict/CruxBlock";
+import { WhyBlock } from "../verdict/WhyBlock";
 import { BestPointBlock } from "../verdict/BestPointBlock";
 import { CardActions } from "../verdict/CardActions";
 import type { Vote } from "../verdict/VoteDots";
@@ -104,6 +105,7 @@ export function SampleVerdict({ lang }: { lang: Lang }) {
               agreement={{ n: SAMPLE_VOTES.length, total: SAMPLE_VOTES.length }}
               lang={lang}
             />
+            <WhyBlock title={t(lang, "why")} text={t(lang, "sample.why")} />
             <CruxBlock title={stripLeadingEmoji(t(lang, "cruxShort"))} text={t(lang, "sample.crux")} />
             <BestPointBlock
               title={stripLeadingEmoji(t(lang, "bestPointTitle"))}

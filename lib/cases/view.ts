@@ -122,7 +122,6 @@ export function buildCaseView(bundle: CaseBundle, ctx: ViewContext): CaseView {
     mode: row.mode,
     tier: row.tier,
     lang: row.lang,
-    framework: row.framework,
     createdAt: row.createdAt,
     expiresAt: row.expiresAt,
     judgedAt: row.judgedAt,

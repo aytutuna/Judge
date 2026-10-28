@@ -50,8 +50,17 @@ describe("POST /api/verdict", () => {
       expect(await res.json()).toEqual({ ok: true });
       const [passedReq, data] = premiumVerdict.mock.calls.at(-1)!;
       expect(passedReq).toBe(req);
-      expect(data).toMatchObject({ argument: ARGUMENT, framework: { preset: "balanced" }, lang: "tr" });
+      expect(data).toMatchObject({ argument: ARGUMENT, lang: "tr" });
     }
     expect(premiumVerdict).toHaveBeenCalledTimes(3);
+  });
+
+  it("accepts the judging style older app builds still send, and drops it", async () => {
+    premiumVerdict.mockImplementation(async () => Response.json({ ok: true }));
+    const framework = { preset: "loyalty", sliders: { head_heart: 90 } };
+    const res = await POST(request({ argument: ARGUMENT, framework }));
+    expect(res.status).toBe(200);
+    const [, data] = premiumVerdict.mock.calls.at(-1)!;
+    expect(data).not.toHaveProperty("framework");
   });
 });

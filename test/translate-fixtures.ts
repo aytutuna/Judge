@@ -7,6 +7,7 @@ export const TR_RESULT: VerdictResult = {
   dispute_type: "mixed",
   confidence: 3,
   headline: "İkisi de kısmen haklı",
+  why: "Botanikte domates meyve, mutfakta sebze. İkisi de kendi alanında doğru.",
   crux: "Taraf A'nın iddiası ile Taraf B'nin itirazı",
   split_points: [
     { party: "a", point: "Taraf A botanik konusunda haklı." },
@@ -35,6 +36,7 @@ export const TR_RESULT: VerdictResult = {
 /** What a well-behaved model returns for TR_RESULT -> en. */
 export const EN_TEXT: TranslatableText = {
   headline: "Both are partly right",
+  why: "In botany a tomato is a fruit, in the kitchen a vegetable. Both are right in their own field.",
   crux: "Party A's claim against Party B's objection",
   split_points: ["Party A is right about botany.", "Party B is right about cooking."],
   conditional: [{ if_value: "you go by botany", then: "Party A wins." }],

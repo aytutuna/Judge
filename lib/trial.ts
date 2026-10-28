@@ -35,7 +35,7 @@ RULES:
 - No rhetoric: no appeals to feelings, fairness, sympathy, stakes, or how either party was described. You attack the ruling's basis, not the losing party, and you do not re-argue their case.
 - Pick the ONE strongest line of attack and make it precise. One sharp attack beats three vague ones.
 - If no facts are listed, the ruling rests on logic — attack the inference.
-- If the ruling rests entirely on the user's value framework rather than on fact or logic, say so and concede — that is not attackable ground.
+- If the ruling rests entirely on a value judgment rather than on fact or logic, say so and concede — that is not attackable ground.
 - Concede only if you can construct no factual or logical challenge at all; a weak attack is more useful than a false concession. Do not concede merely because the ruling seems reasonable — reasonable rulings with a real weak point are exactly what you are here to catch.
 - If, after honestly trying, no substantive attack exists, set has_substantive_attack to false and use the attack field to state plainly why nothing sticks.
 

@@ -614,6 +614,7 @@ export function personalizeResult(
   return {
     ...result,
     headline: r(result.headline),
+    ...(result.why !== undefined ? { why: r(result.why) } : {}),
     crux: r(result.crux),
     losing_side_best_point: r(result.losing_side_best_point),
     split_points: result.split_points?.map((p) => ({ ...p, point: r(p.point) })) ?? null,
@@ -712,6 +713,7 @@ function resultTexts(result: VerdictResult): string[] {
   const map = result.argument_map;
   return [
     result.headline,
+    result.why,
     result.crux,
     result.losing_side_best_point,
     ...(result.split_points ?? []).map((p) => p.point),

@@ -19,6 +19,7 @@ const RUN: JudgeRunOutput = {
   verdict: "side_a",
   dispute_type: "factual",
   headline: "h",
+  why: "w",
   crux: "c",
   split_points: null,
   conditional: null,
@@ -86,7 +87,7 @@ describe("judgePremiumPanel", () => {
     mockClaude.mockImplementation(
       () => new Promise((resolve) => release.push(() => resolve({ ok: true, data: RUN }))),
     );
-    const pending = judgePremiumPanel("Party A says x.", { preset: "balanced" }, "tr", CONTEXT, premiumPanel({}));
+    const pending = judgePremiumPanel("Party A says x.", "tr", CONTEXT, premiumPanel({}));
     await vi.waitFor(() => expect(mockClaude).toHaveBeenCalledTimes(3));
     release.forEach((r) => r());
     const { runs, models } = await pending;
@@ -107,7 +108,7 @@ describe("judgePremiumPanel", () => {
 
   it("sends no context when there is none", async () => {
     mockClaude.mockResolvedValue({ ok: true, data: RUN });
-    await judgePremiumPanel("text", { preset: "balanced" }, "en", null, premiumPanel({}));
+    await judgePremiumPanel("text", "en", null, premiumPanel({}));
     for (const [c] of mockClaude.mock.calls) expect((c as ClaudeJsonCall).user).toBe("THE ARGUMENT:\n\ntext");
   });
 
@@ -117,7 +118,7 @@ describe("judgePremiumPanel", () => {
         ? { ok: false, blocked: true, reason: "general_harms" }
         : { ok: true, data: RUN },
     );
-    const { runs, models } = await judgePremiumPanel("text", { preset: "balanced" }, "en", null, premiumPanel({}));
+    const { runs, models } = await judgePremiumPanel("text", "en", null, premiumPanel({}));
     expect(runs).toHaveLength(3);
     expect(runs.every((r) => r.ok)).toBe(true);
     expect(models).toEqual(["claude-haiku-5-5", "claude-sonnet-5-5", "claude-haiku-5-5"]);
@@ -133,7 +134,7 @@ describe("judgePremiumPanel", () => {
       if (call.system.includes(B_FIRST)) return { ok: false, blocked: false, error: "Claude HTTP 529" };
       return { ok: true, data: RUN };
     });
-    const { runs, models } = await judgePremiumPanel("text", { preset: "balanced" }, "en", null, premiumPanel({}));
+    const { runs, models } = await judgePremiumPanel("text", "en", null, premiumPanel({}));
     expect(mockClaude).toHaveBeenCalledTimes(3);
     expect(runs.map((r) => r.ok)).toEqual([true, false, false]);
     expect(models).toEqual(["claude-sonnet-5-5"]);
@@ -141,7 +142,7 @@ describe("judgePremiumPanel", () => {
 
   it("never throws when a seat rejects", async () => {
     mockClaude.mockRejectedValueOnce(new Error("boom")).mockResolvedValue({ ok: true, data: RUN });
-    const { runs, models } = await judgePremiumPanel("text", { preset: "balanced" }, "en", null, premiumPanel({}));
+    const { runs, models } = await judgePremiumPanel("text", "en", null, premiumPanel({}));
     expect(runs[0]).toMatchObject({ ok: false, blocked: false });
     expect(models).toHaveLength(2);
   });

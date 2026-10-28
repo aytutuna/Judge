@@ -4,6 +4,7 @@ import { hyphenRuns, stripLeadingEmoji } from "@/lib/text";
 import { confidenceLabel, leanTally, stampLabel, tugFinal, verdictLabel } from "@/lib/verdict-display";
 import { MainSlot } from "./verdict/VerdictMain";
 import { VoteDots, voteOf } from "./verdict/VoteDots";
+import { WhyBlock } from "./verdict/WhyBlock";
 import styles from "./verdict/verdict.module.css";
 
 export { leanTally, tugFinal, verdictLabel };
@@ -121,7 +122,7 @@ function CruxTrialNote({ trial, lang }: { trial: CruxTrial; lang: Lang }) {
  * The verdict itself, as the top of a VerdictCardShell body: the stamp
  * (decorative; the heading carries the ruling for screen readers), the
  * dispute kind, the headline as the card's heading, the votes and the
- * confidence (how many judges agreed), then the lean, trial, refusal and
+ * confidence (how many judges agreed), then the why, the lean, trial, refusal and
  * demo notes and the split / conditional branches. The card's `animate` drives the entrance;
  * this markup is always the final state.
  */
@@ -182,6 +183,8 @@ export function VerdictReveal({
         ) : null}
       </div>
       <hr className={styles.rule} />
+
+      {!result.model_refused && result.why ? <WhyBlock title={t(lang, "why")} text={result.why} /> : null}
 
       <div className={styles.notes}>
         {/* Forced ruling: the confidence above scores the MAIN verdict; the

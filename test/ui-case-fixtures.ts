@@ -113,7 +113,6 @@ export function caseView(over: Partial<CaseView> = {}): CaseView {
     mode: null,
     tier: "premium",
     lang: "en",
-    framework: { preset: "balanced" },
     createdAt: ISO,
     expiresAt: EXPIRES,
     judgedAt: null,

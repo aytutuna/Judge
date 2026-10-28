@@ -604,6 +604,16 @@ describe("every case is premium", () => {
     expect(broke.data.code).toBe("no_credits");
   });
 
+  it("a judging style sent by older app builds is ignored", async () => {
+    const o = await owner(1);
+    const { res, data } = await create(o, { framework: { preset: "outcomes", sliders: { head_heart: 10 } } });
+    expect(res.status).toBe(201);
+    expect(data.case).not.toHaveProperty("framework");
+    const db = await getDb();
+    const row = (await db.execute({ sql: "SELECT framework FROM cases WHERE id = ?", args: [data.case.id] })).rows[0];
+    expect(row.framework).toBe('{"preset":"balanced"}');
+  });
+
   it("the answer is judged by the premium panel and consumes the held unit", async () => {
     const o = await owner(1);
     const { data } = await create(o, { tier: "free" });

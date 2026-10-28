@@ -292,7 +292,6 @@ export async function premiumVerdict(req: Request, data: VerdictRequest, rawBody
       {
         argument: data.argument,
         clarifications: data.clarifications,
-        framework: data.framework,
         lang: data.lang,
         ...(evidence ? { evidence } : {}),
       },
@@ -320,7 +319,6 @@ export async function premiumVerdict(req: Request, data: VerdictRequest, rawBody
       saved = await saveVerdictWithOriginals({
         id,
         input: outcome.input,
-        framework: data.framework,
         result: outcome.result,
         kind: "premium",
         ownerUserId: userId,
@@ -457,7 +455,6 @@ async function startPremiumJob(p: {
       userId,
       reservationId: p.reservationId,
       prepared: prepared.prepared,
-      framework: data.framework,
       lang: data.lang,
       original: {
         v: 1,

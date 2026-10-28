@@ -20,7 +20,7 @@ import { getDb } from "@/lib/db";
 import { ensureEntitlementTables } from "@/lib/entitlements";
 import type { KnownPerson } from "@/lib/evidence";
 import type { Lang } from "@/lib/i18n";
-import { VerdictResult, type AppealOutcome, type EvidenceKind, type FrameworkChoice, type Tier } from "@/lib/types";
+import { VerdictResult, type AppealOutcome, type EvidenceKind, type Tier } from "@/lib/types";
 
 const SCHEMA = [
   `CREATE TABLE IF NOT EXISTS cases (
@@ -191,7 +191,6 @@ export type CaseRow = {
   mode: CaseMode | null;
   /** Which judges run the case's first verdict, and whether a unit is held. */
   tier: Tier;
-  framework: FrameworkChoice;
   lang: Lang;
   inviteNonce: string;
   inviteHash: string;
@@ -286,7 +285,6 @@ export function mapCase(r: Row): CaseRow {
     status: str(r.status) as CaseStatus,
     mode: strOrNull(r.mode) as CaseMode | null,
     tier: str(r.tier) === "free" ? "free" : "premium",
-    framework: parseJson<FrameworkChoice>(r.framework, { preset: "balanced" }),
     lang: str(r.lang) === "tr" ? "tr" : "en",
     inviteNonce: str(r.invite_nonce),
     inviteHash: str(r.invite_hash),

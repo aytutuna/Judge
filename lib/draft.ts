@@ -1,5 +1,3 @@
-import type { FrameworkChoice } from "./types";
-
 /**
  * The homepage form's unsent argument, kept for the round trip through
  * /signin or /pricing. The home page registers where the draft comes from;
@@ -12,7 +10,7 @@ import type { FrameworkChoice } from "./types";
  * Nothing is saved on any other path.
  */
 
-export type Draft = { argument: string; framework: FrameworkChoice };
+export type Draft = { argument: string };
 
 export const DRAFT_KEY = "verdict-draft";
 /** Same cap as the form (components/thread/Composer MAX_ARGUMENT). */
@@ -64,15 +62,6 @@ export function clearDraft(): void {
   }
 }
 
-function isFramework(v: unknown): v is FrameworkChoice {
-  if (typeof v !== "object" || v === null) return false;
-  const { preset, sliders } = v as { preset?: unknown; sliders?: unknown };
-  if (typeof preset !== "string" || preset.length > 64) return false;
-  if (sliders === undefined) return true;
-  if (typeof sliders !== "object" || sliders === null || Array.isArray(sliders)) return false;
-  return Object.values(sliders).every((n) => typeof n === "number" && Number.isFinite(n) && n >= 0 && n <= 100);
-}
-
 /** Validates a stored draft (it is user-writable storage). */
 export function parseDraft(raw: string): Draft | null {
   let v: unknown;
@@ -82,11 +71,7 @@ export function parseDraft(raw: string): Draft | null {
     return null;
   }
   if (typeof v !== "object" || v === null) return null;
-  const { argument, framework } = v as { argument?: unknown; framework?: unknown };
+  const { argument } = v as { argument?: unknown };
   if (typeof argument !== "string" || !argument.trim() || argument.length > MAX_DRAFT) return null;
-  if (!isFramework(framework)) return null;
-  return {
-    argument,
-    framework: framework.sliders ? { preset: framework.preset, sliders: framework.sliders } : { preset: framework.preset },
-  };
+  return { argument };
 }

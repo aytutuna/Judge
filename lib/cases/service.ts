@@ -18,6 +18,7 @@ import { nanoid } from "nanoid";
 import type { InStatement } from "@libsql/client";
 import { CASE_EXPIRY_DAYS, type PartyLetter } from "@/lib/case-types";
 import type { PremiumBlock } from "@/lib/account-types";
+import { STORED_FRAMEWORK } from "@/lib/db";
 import {
   entitlementWriteBatch,
   holdStatement,
@@ -38,7 +39,7 @@ import {
   type VerifiedEvidence,
 } from "@/lib/evidence";
 import type { Lang } from "@/lib/i18n";
-import type { FrameworkChoice, NameMapping } from "@/lib/types";
+import type { NameMapping } from "@/lib/types";
 import { composeForJudging } from "./compose";
 import {
   getAppeal,
@@ -152,7 +153,6 @@ function rosterContext(bundle: CaseBundle): string {
 export type CreateCaseInput = {
   ownerId: string;
   text: string;
-  framework: FrameworkChoice;
   lang: Lang;
   evidence: VerifiedEvidence[];
   idempotencyKey?: string;
@@ -244,7 +244,7 @@ export async function createCase(input: CreateCaseInput): Promise<CreateCaseResu
         args: [
           caseId,
           input.ownerId,
-          JSON.stringify(input.framework),
+          STORED_FRAMEWORK,
           input.lang,
           nonce,
           inviteHash(token),

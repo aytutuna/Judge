@@ -61,7 +61,7 @@ describe("judge prompt voice", () => {
   });
 
   it("English prompt ends with the English voice and has no Turkish block", async () => {
-    await judgeOnce("arg", { preset: "balanced" }, { lang: "en" });
+    await judgeOnce("arg", { lang: "en" });
     const [system] = systems();
     expect(system.endsWith(HUMAN_STYLE_EN)).toBe(true);
     expect(system).not.toContain("LANGUAGE:");
@@ -69,7 +69,7 @@ describe("judge prompt voice", () => {
   });
 
   it("Turkish prompt keeps the load-bearing LANGUAGE rules ahead of the Turkish voice", async () => {
-    await judgeOnce("arg", { preset: "balanced" }, { lang: "tr" });
+    await judgeOnce("arg", { lang: "tr" });
     const [system] = systems();
     const language = system.indexOf("LANGUAGE:");
     expect(language).toBeGreaterThan(-1);
@@ -79,6 +79,7 @@ describe("judge prompt voice", () => {
     expect(block).toContain('informal "sen", never "siz"');
     expect(block).toContain("-sa/-se");
     expect(block).toContain("headline stays at most 10 words");
+    expect(block).toContain("(headline, why, crux,");
     expect(system).not.toContain(HUMAN_STYLE_EN);
   });
 });

@@ -8,7 +8,6 @@
 import { defaultJudgeEffort, type Effort } from "../claude";
 import type { Lang } from "../i18n";
 import { judgeOnce, type JudgeOptions, type JudgeRun } from "../judge";
-import type { FrameworkChoice } from "../types";
 
 export const HAIKU_MODEL = "claude-haiku-5-5";
 export const DEFAULT_PANEL = ["claude-sonnet-5-5", "claude-sonnet-5-5", HAIKU_MODEL] as const;
@@ -66,7 +65,6 @@ export function premiumPanel(env: Record<string, string | undefined> = process.e
  */
 export async function judgePremiumPanel(
   text: string,
-  framework: FrameworkChoice,
   lang: Lang,
   context: string | null,
   seats: PanelSeat[] = premiumPanel(),
@@ -85,7 +83,7 @@ export async function judgePremiumPanel(
   };
   const served = await Promise.all(
     seats.map(async (seat, i): Promise<{ run: JudgeRun; model: string }> => {
-      const run = await judgeOnce(text, framework, {
+      const run = await judgeOnce(text, {
         ...common,
         analyzeBFirst: seat.analyzeBFirst,
         model: seat.model,
@@ -105,7 +103,7 @@ export async function judgePremiumPanel(
         return { run, model: seat.model };
       }
       console.warn(`[premium] ${seat.model} seat refused; rerunning it on ${HAIKU_MODEL}`);
-      const retry = await judgeOnce(text, framework, {
+      const retry = await judgeOnce(text, {
         ...common,
         analyzeBFirst: seat.analyzeBFirst,
         model: HAIKU_MODEL,

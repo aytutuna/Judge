@@ -7,7 +7,6 @@ import type { Lang } from "./i18n";
 import { DisplayNameInput, type OriginalStatus } from "./originals-types";
 import {
   ArgumentText,
-  FrameworkChoice,
   type AppealOutcome,
   type EvidenceKind,
   type FinalVerdict,
@@ -35,7 +34,6 @@ const EvidenceTokens = z.array(z.string().min(1).max(16_000));
 
 export const CreateCaseRequest = z.object({
   text: ArgumentText,
-  framework: FrameworkChoice.default({ preset: "balanced" }),
   lang: z.enum(["en", "tr"]).default("en"),
   /** Ignored: every case holds one premium verdict. Older app builds
    * still send it. */
@@ -158,7 +156,6 @@ export type CaseView = {
    * hold no unit. */
   tier: Tier;
   lang: Lang;
-  framework: FrameworkChoice;
   createdAt: string;
   expiresAt: string;
   judgedAt: string | null;

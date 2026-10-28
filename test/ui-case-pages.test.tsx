@@ -219,9 +219,9 @@ describe("respondent page", () => {
     );
   });
 
-  it("form: the framework, the language, the textarea, screenshots and the privacy promise", () => {
+  it("form: the language, the textarea, screenshots and the privacy promise", () => {
     const html = respondent(RESPONDENT.form);
-    expect(html).toContain(esc(t("en", "respond.framework", { preset: "⚖️ Balanced" })).slice(0, 30));
+    expect(html).not.toContain("weigh it by");
     expect(html).toContain("The verdict will be written in English.");
     expect(html).toContain(t("en", "respond.label"));
     expect(html).toContain(esc(t("en", "evidence.add")));

@@ -110,7 +110,9 @@ describe("looksLikeVerdict (client shape check, no zod)", () => {
   });
 
   it("accepts what the server schema accepts", () => {
-    for (const r of [TR_RESULT, EN_COPY]) {
+    const { why: _why, ...old } = TR_RESULT;
+    void _why;
+    for (const r of [TR_RESULT, EN_COPY, old]) {
       expect(VerdictResult.safeParse(r).success).toBe(true);
       expect(looksLikeVerdict(r)).toBe(true);
     }
@@ -124,6 +126,7 @@ describe("looksLikeVerdict (client shape check, no zod)", () => {
       {},
       { ...TR_RESULT, verdict: "maybe" },
       { ...TR_RESULT, headline: 3 },
+      { ...TR_RESULT, why: null },
       { ...TR_RESULT, confidence: 0 },
       { ...TR_RESULT, confidence: 2.5 },
       { ...TR_RESULT, runs: ["side_a", "too_close"] },

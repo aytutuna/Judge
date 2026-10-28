@@ -84,9 +84,7 @@ describe("t()", () => {
   it("substitutes multiple vars in one string", () => {
     expect(t("en", "confidence", { n: 4, total: 5 })).toBe("Confidence 4 of 5");
     expect(t("tr", "confidence", { n: 4, total: 5 })).toBe("Güven: 5 üzerinden 4");
-    expect(t("tr", "slider.aria", { left: "Akıl", right: "Kalp" })).toBe(
-      "Akıl / Kalp dengesi",
-    );
+    expect(t("tr", "home.monthLeft", { n: 30, cap: 35 })).toBe("Bu ay 35 kararın 30 tanesi kaldı");
   });
 
   it("leaves unknown braces alone", () => {

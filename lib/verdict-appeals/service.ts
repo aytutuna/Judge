@@ -359,7 +359,6 @@ export async function runVerdictAppeal(p: VerdictAppealRun): Promise<void> {
         {
           text: document,
           context: evText,
-          framework: root.framework,
           lang,
           ...(evText ? { evidence: true } : {}),
           appeal: APPEAL_ONE_SIDED_JUDGE_NOTE,
@@ -403,7 +402,6 @@ export async function runVerdictAppeal(p: VerdictAppealRun): Promise<void> {
       {
         id: p.id,
         input: evText ? `${document}\n\n${evText}` : document,
-        framework: root.framework,
         result: { ...next, appeal: info },
         kind: "premium",
         ownerUserId: p.userId,

@@ -27,7 +27,7 @@ const CASE_IDS = [
   "mixed-dishwasher",
 ];
 const LANGS: Lang[] = ["en", "tr"];
-const SHOWN = ["headline", "crux", "losing_side_best_point", "leaning_reason"] as const;
+const SHOWN = ["headline", "why", "crux", "losing_side_best_point", "leaning_reason"] as const;
 
 type Sample = { id: string; lang: Lang; fields: Record<string, string>; allText: string[] };
 
@@ -35,6 +35,7 @@ type Sample = { id: string; lang: Lang; fields: Record<string, string>; allText:
 function freeText(d: JudgeRunOutput): string[] {
   return [
     d.headline,
+    d.why,
     d.crux,
     d.losing_side_best_point,
     d.leaning_reason,
@@ -60,7 +61,7 @@ async function run(outPath: string, judgePath?: string) {
     jobs.map(async ({ id, lang }): Promise<Sample | null> => {
       const c = cases.find((x) => x.id === id);
       if (!c) throw new Error(`unknown case ${id}`);
-      const res = await mod.judgeOnce(c.argument, { preset: "balanced" }, { lang });
+      const res = await mod.judgeOnce(c.argument, { lang });
       if (!res.ok) {
         console.warn(`${id}/${lang}: run failed (${res.error})`);
         return null;

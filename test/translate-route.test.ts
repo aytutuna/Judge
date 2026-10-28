@@ -32,7 +32,6 @@ function post(id: string, lang: string | null) {
 const STORED = {
   id: "abc123defg",
   input: "x",
-  framework: { preset: "balanced" },
   result: TR_RESULT,
   createdAt: "2026-10-19 10:00:00",
 };

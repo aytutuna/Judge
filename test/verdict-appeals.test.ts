@@ -181,7 +181,6 @@ async function verdict(ownerUserId: string | null, input = ACCOUNT, stored = res
   const saved = await saveVerdictWithOriginals({
     id,
     input,
-    framework: { preset: "balanced" },
     result: stored,
     kind: "free",
     ownerUserId,
@@ -285,6 +284,19 @@ describe("POST /api/v1/verdicts/{id}/appeals", () => {
     // The round's verdict is not a verdict of its own to add context to.
     expect((await get(body.appeal.id, { user: o })).body.owner?.appeal).toBeUndefined();
     expect((await post(body.appeal.id, { user: o })).status).toBe(404);
+  });
+
+  it("keeps why on the new verdict and shows it to the summary, where the older verdict has none", async () => {
+    const o = await owner(2);
+    const { id } = await verdict(o);
+    const why = "The receipt shows the payment going out in April.";
+    m.judgeAnonymized.mockResolvedValue(okOutcome(result({ verdict: "side_a", confidence: 4, tier: "premium", why })));
+    const body = (await (await post(id, { user: o })).json()) as VerdictAppealResponse;
+    await drain();
+    const user = String(m.claudeJson.mock.calls.at(-1)![0].user);
+    expect(user).toContain(`NEW VERDICT: side_a\nHeadline: Party B has the stronger case\nWhy: ${why}\nCrux:`);
+    expect(user.split("Why:")).toHaveLength(2);
+    expect((await get(body.appeal.id)).body.result.why).toBe(why);
   });
 
   it("needs a session, from this site", async () => {
@@ -523,7 +535,7 @@ describe("rounds and removal", () => {
     const db = await getDb();
     await db.batch(
       [
-        plainVerdictStatement({ id: round, input: "doc", framework: { preset: "balanced" }, result: result() }),
+        plainVerdictStatement({ id: round, input: "doc", result: result() }),
         {
           sql: `INSERT INTO verdict_appeals (id, verdict_id, text, evidence, base_id, outcome, created_at, updated_at)
                 VALUES (?, ?, 'ctx', '[]', ?, 'upheld', ?, ?)`,

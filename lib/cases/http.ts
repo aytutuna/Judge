@@ -360,7 +360,6 @@ export function createCaseHandler(req: Request): Promise<NextResponse> {
       text: parsed.data.text,
       rawText: rawField(read.body, "text") ?? parsed.data.text,
       displayName: parsed.data.displayName || null,
-      framework: parsed.data.framework,
       lang: parsed.data.lang,
       evidence: ev.items,
       ...(key ? { idempotencyKey: key } : {}),
