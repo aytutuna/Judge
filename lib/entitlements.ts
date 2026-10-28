@@ -825,10 +825,16 @@ export async function revokeAll(
   return { applied: results[0].rowsAffected === 1 };
 }
 
-/** Account deletion: removes every entitlement row of the user. */
+/** Account deletion: removes every entitlement row of the user. The
+ * reservations stay, cut loose from the account and the verdict, because
+ * the site-wide daily cap counts them. */
 export async function deleteUserEntitlements(userId: string): Promise<void> {
   await writeBatch([
-    { sql: "DELETE FROM premium_usage WHERE user_id = ?", args: [userId] },
+    {
+      sql: `UPDATE premium_usage SET user_id = '', idempotency_key = NULL, verdict_id = NULL, subscription_id = NULL
+            WHERE user_id = ?`,
+      args: [userId],
+    },
     { sql: "DELETE FROM subscriptions WHERE user_id = ?", args: [userId] },
     { sql: "DELETE FROM entitlement_grants WHERE user_id = ?", args: [userId] },
     { sql: "DELETE FROM entitlement_accounts WHERE user_id = ?", args: [userId] },
