@@ -67,7 +67,8 @@ describe("runGrant", () => {
     const res = await runGrant({ email: "new@example.com", action: { kind: "credits", credits: 5 }, create: true });
     expect(res.code).toBe(0);
     expect(res.lines[0]).toMatch(/^Created account new@example\.com/);
-    expect(res.lines.join("\n")).toContain('"credits": 5');
+    // The welcome credit came with the new account.
+    expect(res.lines.join("\n")).toContain('"credits": 6');
   });
 
   it("credits, subscription, show and revoke on an existing account", async () => {
@@ -76,7 +77,7 @@ describe("runGrant", () => {
     const now = new Date();
 
     await runGrant({ email, action: { kind: "credits", credits: 20 }, create: false }, now);
-    expect((await getEntitlement(user.id)).credits).toBe(20);
+    expect((await getEntitlement(user.id)).credits).toBe(21);
 
     const sub = await runGrant({ email, action: { kind: "subscription", days: 30 }, create: false }, now);
     expect(sub.code).toBe(0);
@@ -85,7 +86,7 @@ describe("runGrant", () => {
     expect(Date.parse(e.subscription!.periodEnd) - now.getTime()).toBe(30 * 24 * 60 * 60 * 1000);
 
     const show = await runGrant({ email, action: { kind: "show" }, create: false });
-    expect(JSON.parse(show.lines.slice(-1)[0])).toMatchObject({ credits: 20, canUsePremium: true });
+    expect(JSON.parse(show.lines.slice(-1)[0])).toMatchObject({ credits: 21, canUsePremium: true });
 
     await runGrant({ email, action: { kind: "revoke" }, create: false });
     expect(await getEntitlement(user.id)).toMatchObject({

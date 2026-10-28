@@ -553,6 +553,21 @@ export async function grantCredits(g: {
   return { applied: results[0].rowsAffected === 1 };
 }
 
+/** Premium verdicts every new account starts with. */
+export const WELCOME_CREDITS = 1;
+
+/** The new account's welcome credit. Keyed by the user id, so it is granted
+ * at most once per account. */
+export async function grantWelcomeCredit(userId: string): Promise<GrantResult> {
+  return grantCredits({
+    userId,
+    credits: WELCOME_CREDITS,
+    source: "promo",
+    externalId: `welcome:${userId}`,
+    note: "welcome",
+  });
+}
+
 /**
  * Starts or renews a subscription, keyed by (source, originalTransactionId).
  * A new periodStart resets the period's usage. An event for an older period

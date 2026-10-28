@@ -28,7 +28,7 @@ import {
   sendSignInCodeEmail,
   sendSignInEmail,
 } from "./email";
-import { ensureEntitlementTables } from "./entitlements";
+import { ensureEntitlementTables, grantWelcomeCredit } from "./entitlements";
 import { captureAppleRefreshToken, deleteSignInTokens, keepCapturedAppleRefreshToken } from "./signin-tokens";
 
 type Env = Record<string, string | undefined>;
@@ -92,7 +92,8 @@ export function premiumEnabled(env: Env = process.env): boolean {
  * REVIEW_ACCOUNT_CODE, and to which no email is sent (App Review has no inbox
  * of ours). Needs REVIEW_ACCOUNT_EMAIL, a 6-digit code that is not a trivial
  * run of digits, and email sign-in configured (the code plugin is only loaded
- * then). It is an ordinary account otherwise: same limits, nothing granted.
+ * then). It is an ordinary account otherwise: same limits, only the welcome
+ * credit.
  */
 export function reviewAccount(env: Env = process.env): { email: string; code: string } | null {
   const email = env.REVIEW_ACCOUNT_EMAIL?.trim().toLowerCase() ?? "";
@@ -337,6 +338,17 @@ function buildOptions(env: Env, secret: string, client: Awaited<ReturnType<typeo
       ipAddress: { ipAddressHeaders: ["x-forwarded-for"] },
     },
     databaseHooks: {
+      // Only on creation, so accounts that existed before the welcome
+      // credit get nothing. A failed grant must not break the sign-in.
+      user: {
+        create: {
+          after: async (user) => {
+            await grantWelcomeCredit(user.id).catch((e: unknown) =>
+              console.error("[auth] welcome credit failed:", e instanceof Error ? e.message : String(e)),
+            );
+          },
+        },
+      },
       // Privacy: no IP address or device string is stored with a session.
       session: {
         create: {
