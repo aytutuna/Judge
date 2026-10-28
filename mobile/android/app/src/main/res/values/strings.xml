@@ -144,7 +144,6 @@
     <string name="nav_account">Account</string>
     <string name="nav_pricing">Pricing</string>
     <string name="nav_sign_out">Sign out</string>
-    <string name="tier_premium">Premium</string>
     <string name="tier_locked_sign_in">(locked: sign in to use it)</string>
     <string name="tier_get_premium">Get more verdicts</string>
     <string name="tier_checking">Checking if anything\'s missing…</string>
@@ -158,8 +157,7 @@
     <string name="thinking_factcheck">Checking the facts on the web…</string>
     <string name="thinking_factcheck_done">Web check finished.</string>
     <string name="thinking_premium_helper">Checking the facts on the web takes a little longer. Give it a minute or two.</string>
-    <string name="premium_badge">Premium</string>
-    <string name="panel_premium">Premium panel with a web fact-check.</string>
+    <string name="panel_premium">Judged with a web fact-check.</string>
     <string name="panel_models">Judges: %1$s</string>
     <string name="panel_strong">%1$s strong</string>
     <string name="panel_quick">%1$s quick</string>
@@ -287,7 +285,7 @@
     <string name="case_cancel">Cancel</string>
     <string name="case_retry">Try again</string>
     <string name="case_failed_body">Your credit is back. You can try again now.</string>
-    <string name="case_failed_body_free">Something went wrong on our side. You can try again now.</string>
+    <string name="case_failed_body_free">Something went wrong on our side. Trying again uses 1 verdict.</string>
     <string name="case_your_side">Your side, as the judges read it</string>
     <string name="case_accounts">What each side told the judges</string>
     <string name="case_account_a">Party A\'s account</string>
@@ -442,6 +440,13 @@
     <string name="home_step_ruling">Ruling</string>
     <string name="home_invite">Or invite the other side to tell theirs</string>
     <string name="home_one_side">Judge just my side instead</string>
+    <plurals name="home_left">
+        <item quantity="one">1 verdict left</item>
+        <item quantity="other">%1$d verdicts left</item>
+    </plurals>
+    <string name="home_month_left">%1$s of %2$s left this month</string>
+    <string name="home_out">No verdicts left.</string>
+    <string name="home_pricing">See pricing</string>
     <string name="home_recent">Recent</string>
     <string name="home_all">All</string>
     <string name="home_waiting">Waiting</string>

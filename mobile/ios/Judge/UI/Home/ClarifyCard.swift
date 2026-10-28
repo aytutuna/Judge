@@ -14,13 +14,6 @@ struct ClarifyCard: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            HStack(spacing: 6) {
-                Image(systemName: "sparkle")
-                    .font(.system(size: 11, weight: .bold))
-                    .foregroundStyle(Brand.terraInk)
-                    .accessibilityHidden(true)
-                Kicker(text: L10n.tierPremium(lang), color: Brand.terraInk)
-            }
             Text(L10n.clarifyTitle(lang))
                 .brandText(Self.title)
                 .foregroundStyle(Brand.ink)

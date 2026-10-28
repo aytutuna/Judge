@@ -3,10 +3,8 @@ package com.okjudge.judge.ui.premium
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
@@ -19,7 +17,6 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -33,11 +30,8 @@ import androidx.compose.ui.unit.dp
 import com.okjudge.judge.core.model.ClarifyQuestion
 import com.okjudge.judge.core.session.VerdictFlow
 import com.okjudge.judge.i18n.LocalStrings
-import com.okjudge.judge.ui.components.JudgeIcons
-import com.okjudge.judge.ui.components.Kicker
 import com.okjudge.judge.ui.components.PrimaryButton
 import com.okjudge.judge.ui.components.TextAction
-import com.okjudge.judge.ui.components.TintedIcon
 import com.okjudge.judge.ui.components.TopBar
 import com.okjudge.judge.ui.theme.JudgeShapes
 import com.okjudge.judge.ui.theme.JudgeType
@@ -75,10 +69,6 @@ fun ClarifyScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Column(Modifier.widthIn(max = 640.dp).fillMaxWidth().padding(top = 12.dp, bottom = 40.dp)) {
-                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                    TintedIcon(remember { JudgeIcons.spark(Palette.terra) }, 12)
-                    Kicker(s.tierPremium, color = Palette.terraInk)
-                }
                 Text(
                     s.clarifyTitle,
                     style = JudgeType.sectionTitle.copy(fontSize = JudgeType.sectionTitle.fontSize * 1.3f),

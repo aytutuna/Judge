@@ -279,16 +279,6 @@ private fun TranslationNote(text: String, loading: Boolean) {
     }
 }
 
-@Composable
-private fun PremiumBadge() {
-    val s = LocalStrings.current
-    Text(
-        s.premiumBadge,
-        style = JudgeType.small.copy(fontSize = 11.sp, color = Palette.paper),
-        modifier = Modifier.clip(JudgeShapes.chip).background(Palette.ink).padding(horizontal = 8.dp, vertical = 3.dp),
-    )
-}
-
 /** "(A) Alex  vs  Sam (B)". */
 @Composable
 private fun Contenders(parties: PartyLabels) {
@@ -502,11 +492,10 @@ private fun DetailCard(content: @Composable ColumnScope.() -> Unit) {
 
 /** A titled card of the details (the italic serif label over its content). */
 @Composable
-private fun DetailSection(title: String, trailing: (@Composable () -> Unit)? = null, content: @Composable ColumnScope.() -> Unit) {
+private fun DetailSection(title: String, content: @Composable ColumnScope.() -> Unit) {
     DetailCard {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(title, style = JudgeType.serifLabel.copy(fontSize = 17.sp), modifier = Modifier.weight(1f).semantics { heading() })
-            trailing?.invoke()
         }
         content()
     }
@@ -805,7 +794,7 @@ private fun FactCheckSection(check: FactCheck, dispute: DisputeType) {
     // As on the web: only a "checked" result with claims gets the list; an
     // empty one reads as "none".
     val claims = if (check.status == "checked") check.claims else emptyList()
-    DetailSection(s.factcheckTitle, trailing = { PremiumBadge() }) {
+    DetailSection(s.factcheckTitle) {
         if (claims.isEmpty()) {
             val none = if (dispute == DisputeType.FACTUAL || dispute == DisputeType.MIXED) s.factcheckNoneFactual else s.factcheckNone
             Text(if (check.status == "unavailable") s.factcheckUnavailable else none, style = JudgeType.slotText)

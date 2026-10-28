@@ -144,7 +144,6 @@
     <string name="nav_account">Hesap</string>
     <string name="nav_pricing">Fiyatlar</string>
     <string name="nav_sign_out">Çıkış yap</string>
-    <string name="tier_premium">Premium</string>
     <string name="tier_locked_sign_in">(kilitli: kullanmak için giriş yap)</string>
     <string name="tier_get_premium">Daha fazla karar al</string>
     <string name="tier_checking">Eksik bir şey var mı diye bakıyoruz…</string>
@@ -158,8 +157,7 @@
     <string name="thinking_factcheck">Olguları internette kontrol ediyoruz…</string>
     <string name="thinking_factcheck_done">İnternet kontrolü bitti.</string>
     <string name="thinking_premium_helper">Olguları internette kontrol etmek biraz daha uzun sürer. Bir iki dakika verebilirsin.</string>
-    <string name="premium_badge">Premium</string>
-    <string name="panel_premium">İnternette olgu kontrolüyle premium kurul.</string>
+    <string name="panel_premium">İnternette olgu kontrolüyle yargılandı.</string>
     <string name="panel_models">Yargıçlar: %1$s</string>
     <string name="panel_strong">%1$s güçlü</string>
     <string name="panel_quick">%1$s hızlı</string>
@@ -287,7 +285,7 @@
     <string name="case_cancel">Vazgeç</string>
     <string name="case_retry">Tekrar dene</string>
     <string name="case_failed_body">Kredin geri döndü. Şimdi tekrar deneyebilirsin.</string>
-    <string name="case_failed_body_free">Bizim tarafta bir şeyler ters gitti. Şimdi tekrar deneyebilirsin.</string>
+    <string name="case_failed_body_free">Bizim tarafta bir şeyler ters gitti. Tekrar denemek 1 karar hakkı kullanır.</string>
     <string name="case_your_side">Senin tarafın, yargıçların okuduğu hâliyle</string>
     <string name="case_accounts">Her taraf yargıçlara ne anlattı</string>
     <string name="case_account_a">Taraf A\'nın anlatımı</string>
@@ -442,6 +440,13 @@
     <string name="home_step_ruling">Karar</string>
     <string name="home_invite">Ya da karşı tarafı davet et, o da anlatsın</string>
     <string name="home_one_side">Sadece benim tarafımla devam et</string>
+    <plurals name="home_left">
+        <item quantity="one">1 karar hakkın kaldı</item>
+        <item quantity="other">%1$d karar hakkın kaldı</item>
+    </plurals>
+    <string name="home_month_left">Bu ay %2$s kararın %1$s tanesi kaldı</string>
+    <string name="home_out">Karar hakkın kalmadı.</string>
+    <string name="home_pricing">Fiyatlara bak</string>
     <string name="home_recent">Son kararlar</string>
     <string name="home_all">Tümü</string>
     <string name="home_waiting">Bekliyor</string>

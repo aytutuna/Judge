@@ -152,16 +152,13 @@ struct VerdictDetails<Appeal: View>: View {
     @ViewBuilder
     private func badges(_ result: VerdictResult) -> some View {
         let kind = VerdictDisplay.badge(result.disputeType, lang: lang)
-        if kind != nil || result.isPremium {
+        if kind != nil || result.twoSided {
             FlowLayout(spacing: 8, rowSpacing: 6) {
                 if let kind {
                     Kicker(text: kind)
                 }
-                if result.isPremium {
-                    chip(L10n.premiumBadge(lang), color: Brand.ivory, fill: Brand.ink)
-                    if result.twoSided {
-                        chip(L10n.twoSidedBadge(lang), color: Brand.sageInk, fill: Brand.sageTint)
-                    }
+                if result.twoSided {
+                    chip(L10n.twoSidedBadge(lang), color: Brand.sageInk, fill: Brand.sageTint)
                 }
             }
         }

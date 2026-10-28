@@ -155,7 +155,6 @@ enum L10n {
     static func navAccount(_ lang: AppLang) -> String { string("nav.account", lang) }
     static func navPricing(_ lang: AppLang) -> String { string("nav.pricing", lang) }
     static func navSignOut(_ lang: AppLang) -> String { string("nav.signOut", lang) }
-    static func tierPremium(_ lang: AppLang) -> String { string("tier.premium", lang) }
     static func tierLockedSignIn(_ lang: AppLang) -> String { string("tier.lockedSignIn", lang) }
     static func tierGetPremium(_ lang: AppLang) -> String { string("tier.getPremium", lang) }
     static func tierChecking(_ lang: AppLang) -> String { string("tier.checking", lang) }
@@ -169,7 +168,6 @@ enum L10n {
     static func thinkingFactcheck(_ lang: AppLang) -> String { string("thinking.factcheck", lang) }
     static func thinkingFactcheckDone(_ lang: AppLang) -> String { string("thinking.factcheckDone", lang) }
     static func thinkingPremiumHelper(_ lang: AppLang) -> String { string("thinking.premiumHelper", lang) }
-    static func premiumBadge(_ lang: AppLang) -> String { string("premium.badge", lang) }
     static func panelPremium(_ lang: AppLang) -> String { string("panel.premium", lang) }
     static func panelModels(_ lang: AppLang, list: String) -> String { format("panel.models", lang, list) }
     static func panelStrong(_ lang: AppLang, n: String) -> String { format("panel.strong", lang, n) }
@@ -450,6 +448,10 @@ enum L10n {
     static func homeStepRuling(_ lang: AppLang) -> String { string("home.step.ruling", lang) }
     static func homeInvite(_ lang: AppLang) -> String { string("home.invite", lang) }
     static func homeOneSide(_ lang: AppLang) -> String { string("home.oneSide", lang) }
+    static func homeLeft(_ lang: AppLang, n: Int) -> String { format("home.left", lang, n) }
+    static func homeMonthLeft(_ lang: AppLang, n: String, cap: String) -> String { format("home.monthLeft", lang, n, cap) }
+    static func homeOut(_ lang: AppLang) -> String { string("home.out", lang) }
+    static func homePricing(_ lang: AppLang) -> String { string("home.pricing", lang) }
     static func homeRecent(_ lang: AppLang) -> String { string("home.recent", lang) }
     static func homeAll(_ lang: AppLang) -> String { string("home.all", lang) }
     static func homeWaiting(_ lang: AppLang) -> String { string("home.waiting", lang) }
@@ -729,7 +731,6 @@ enum L10n {
         "nav.account",
         "nav.pricing",
         "nav.signOut",
-        "tier.premium",
         "tier.lockedSignIn",
         "tier.getPremium",
         "tier.checking",
@@ -742,7 +743,6 @@ enum L10n {
         "thinking.factcheck",
         "thinking.factcheckDone",
         "thinking.premiumHelper",
-        "premium.badge",
         "panel.premium",
         "factcheck.title",
         "factcheck.lead",
@@ -993,6 +993,8 @@ enum L10n {
         "home.step.ruling",
         "home.invite",
         "home.oneSide",
+        "home.out",
+        "home.pricing",
         "home.recent",
         "home.all",
         "home.waiting",

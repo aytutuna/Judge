@@ -69,16 +69,7 @@ struct FactCheckView: View {
     var body: some View {
         let claims = factCheck.status == .checked ? factCheck.claims : []
         VStack(alignment: .leading, spacing: 10) {
-            HStack {
-                SectionTitle(text: L10n.factcheckTitle(lang))
-                Spacer(minLength: 8)
-                Text(L10n.premiumBadge(lang))
-                    .brandText(TypeStyle(face: .inter, weight: 600, size: 11, lineHeight: 1.2, textStyle: .caption2, maxScale: 1.6))
-                    .foregroundStyle(Brand.paper)
-                    .padding(.horizontal, 8)
-                    .padding(.vertical, 3)
-                    .background(Capsule().fill(Brand.ink))
-            }
+            SectionTitle(text: L10n.factcheckTitle(lang))
             if claims.isEmpty {
                 Text(Self.emptyText(factCheck, disputeType: disputeType, lang: lang))
                     .brandText(.slotText)

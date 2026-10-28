@@ -69,7 +69,6 @@ export const WEB_KEYS: readonly string[] = [
   "notFound.title",
   "notFound.body",
   // Premium results can already be rendered (fact check, panel line).
-  "premium.badge",
   "panel.premium",
   "panel.models",
   "panel.strong",
@@ -183,7 +182,6 @@ export const REQUIRED_KEYS: readonly string[] = [
   "account.signedInAs",
   "account.signOut",
   "account.delete",
-  "tier.premium",
   "clarify.title",
   "evidence.label",
   "case.status.judged",

@@ -366,7 +366,6 @@ class PremiumScreensTest {
                 SampleVerdict(outcome, AppLang.EN, Modifier.verticalScroll(rememberScrollState()).padding(16.dp))
             }
         }
-        compose.onNodeWithText(en.premiumBadge).assertExists()
         compose.onNodeWithText(en.factcheckTitle).assertExists()
         compose.onNodeWithText(en.factcheckStatusSupported.uppercase(Locale.US)).assertExists()
         compose.onNodeWithText("example.com").assertExists()

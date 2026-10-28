@@ -149,7 +149,6 @@ class Strings(private val res: Resources) {
     val navAccount: String get() = res.getString(R.string.nav_account)
     val navPricing: String get() = res.getString(R.string.nav_pricing)
     val navSignOut: String get() = res.getString(R.string.nav_sign_out)
-    val tierPremium: String get() = res.getString(R.string.tier_premium)
     val tierLockedSignIn: String get() = res.getString(R.string.tier_locked_sign_in)
     val tierGetPremium: String get() = res.getString(R.string.tier_get_premium)
     val tierChecking: String get() = res.getString(R.string.tier_checking)
@@ -163,7 +162,6 @@ class Strings(private val res: Resources) {
     val thinkingFactcheck: String get() = res.getString(R.string.thinking_factcheck)
     val thinkingFactcheckDone: String get() = res.getString(R.string.thinking_factcheck_done)
     val thinkingPremiumHelper: String get() = res.getString(R.string.thinking_premium_helper)
-    val premiumBadge: String get() = res.getString(R.string.premium_badge)
     val panelPremium: String get() = res.getString(R.string.panel_premium)
     fun panelModels(list: String): String = res.getString(R.string.panel_models, list)
     fun panelStrong(n: String): String = res.getString(R.string.panel_strong, n)
@@ -444,6 +442,10 @@ class Strings(private val res: Resources) {
     val homeStepRuling: String get() = res.getString(R.string.home_step_ruling)
     val homeInvite: String get() = res.getString(R.string.home_invite)
     val homeOneSide: String get() = res.getString(R.string.home_one_side)
+    fun homeLeft(n: Int): String = res.getQuantityString(R.plurals.home_left, n, n)
+    fun homeMonthLeft(n: String, cap: String): String = res.getString(R.string.home_month_left, n, cap)
+    val homeOut: String get() = res.getString(R.string.home_out)
+    val homePricing: String get() = res.getString(R.string.home_pricing)
     val homeRecent: String get() = res.getString(R.string.home_recent)
     val homeAll: String get() = res.getString(R.string.home_all)
     val homeWaiting: String get() = res.getString(R.string.home_waiting)
@@ -722,7 +724,6 @@ class Strings(private val res: Resources) {
             "nav.account" -> R.string.nav_account
             "nav.pricing" -> R.string.nav_pricing
             "nav.signOut" -> R.string.nav_sign_out
-            "tier.premium" -> R.string.tier_premium
             "tier.lockedSignIn" -> R.string.tier_locked_sign_in
             "tier.getPremium" -> R.string.tier_get_premium
             "tier.checking" -> R.string.tier_checking
@@ -735,7 +736,6 @@ class Strings(private val res: Resources) {
             "thinking.factcheck" -> R.string.thinking_factcheck
             "thinking.factcheckDone" -> R.string.thinking_factcheck_done
             "thinking.premiumHelper" -> R.string.thinking_premium_helper
-            "premium.badge" -> R.string.premium_badge
             "panel.premium" -> R.string.panel_premium
             "factcheck.title" -> R.string.factcheck_title
             "factcheck.lead" -> R.string.factcheck_lead
@@ -986,6 +986,8 @@ class Strings(private val res: Resources) {
             "home.step.ruling" -> R.string.home_step_ruling
             "home.invite" -> R.string.home_invite
             "home.oneSide" -> R.string.home_one_side
+            "home.out" -> R.string.home_out
+            "home.pricing" -> R.string.home_pricing
             "home.recent" -> R.string.home_recent
             "home.all" -> R.string.home_all
             "home.waiting" -> R.string.home_waiting
