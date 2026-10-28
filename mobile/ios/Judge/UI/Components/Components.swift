@@ -1,36 +1,6 @@
 import SafariServices
 import SwiftUI
 
-/// The Judge mark (components/BrandMark.tsx): an ink beam tipped toward a
-/// terracotta sphere, a sage sphere and an ink pivot, in a 28x20 box.
-struct BrandMark: View {
-    var width: CGFloat = 28
-
-    var body: some View {
-        Canvas { context, size in
-            let s = size.width / 28
-            var beam = Path()
-            beam.move(to: CGPoint(x: 2.5 * s, y: 12.6 * s))
-            beam.addLine(to: CGPoint(x: 25.5 * s, y: 9.4 * s))
-            context.stroke(beam, with: .color(Brand.ink), style: StrokeStyle(lineWidth: 2 * s, lineCap: .round))
-            context.fill(circle(x: 6.4, y: 8.1, r: 3.9, s: s), with: .color(Brand.terra))
-            context.fill(circle(x: 21.6, y: 6, r: 3.9, s: s), with: .color(Brand.sage))
-            var pivot = Path()
-            pivot.move(to: CGPoint(x: 14 * s, y: 11.4 * s))
-            pivot.addLine(to: CGPoint(x: 10.6 * s, y: 18.6 * s))
-            pivot.addLine(to: CGPoint(x: 17.4 * s, y: 18.6 * s))
-            pivot.closeSubpath()
-            context.fill(pivot, with: .color(Brand.ink))
-        }
-        .frame(width: width, height: width * 20 / 28)
-        .accessibilityHidden(true)
-    }
-
-    private func circle(x: CGFloat, y: CGFloat, r: CGFloat, s: CGFloat) -> Path {
-        Path(ellipseIn: CGRect(x: (x - r) * s, y: (y - r) * s, width: 2 * r * s, height: 2 * r * s))
-    }
-}
-
 /// The judging balance: the brand mark redrawn with a level beam that
 /// rotates about the pivot tip. `angle` is clockwise-positive degrees, so a
 /// negative angle lowers Party A's (left, terracotta) end.

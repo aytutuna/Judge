@@ -64,15 +64,12 @@ struct HistoryView: View {
     private func verdicts(_ lang: AppLang) -> some View {
         Group {
             if saved.isEmpty {
-                VStack(spacing: 14) {
-                    BrandMark(width: 56)
-                    Text(L10n.appHistoryEmpty(lang))
-                        .brandText(.body)
-                        .foregroundStyle(Brand.ink2)
-                        .multilineTextAlignment(.center)
-                }
-                .padding(32)
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                Text(L10n.appHistoryEmpty(lang))
+                    .brandText(.body)
+                    .foregroundStyle(Brand.ink2)
+                    .multilineTextAlignment(.center)
+                    .padding(32)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
             } else {
                 List {
                     Section {
