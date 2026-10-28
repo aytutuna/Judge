@@ -42,7 +42,6 @@ import com.okjudge.judge.core.purchases.StoreOffer
 import com.okjudge.judge.core.purchases.StoreProducts
 import com.okjudge.judge.i18n.LocalLang
 import com.okjudge.judge.i18n.LocalStrings
-import com.okjudge.judge.i18n.rememberPurchaseStrings
 import com.okjudge.judge.ui.components.JudgeIcons
 import com.okjudge.judge.ui.components.Kicker
 import com.okjudge.judge.ui.components.PrimaryButton
@@ -98,7 +97,6 @@ fun PricingScreen(
     onBuy: (productId: String) -> Unit = {},
 ) {
     val s = LocalStrings.current
-    val ps = rememberPurchaseStrings()
     val lang = LocalLang.current
     val storeOn = pricing.purchasesEnabled && store.available
     // The store's offer for a product, when this account can buy it now.
@@ -168,7 +166,7 @@ fun PricingScreen(
                             buyLabel = if (storeOn) price else s.pricingComingSoon,
                             enabled = offer != null && store.buying == null,
                             buying = store.buying == pack.id,
-                            buyingLabel = ps.buying,
+                            buyingLabel = s.appPurchaseBuying,
                             onBuy = { onBuy(pack.id) },
                         )
                     }
@@ -184,16 +182,16 @@ fun PricingScreen(
                         buyLabel = if (storeOn) monthly else s.pricingComingSoon,
                         enabled = monthlyOffer != null && store.buying == null,
                         buying = store.buying == monthlyId,
-                        buyingLabel = ps.buying,
+                        buyingLabel = s.appPurchaseBuying,
                         onBuy = { onBuy(monthlyId) },
                     )
 
                     val notice = when (store.notice) {
-                        PurchaseController.Notice.ARRIVING -> "${ps.success} ${ps.pending}"
-                        PurchaseController.Notice.ARRIVED -> ps.success
-                        PurchaseController.Notice.SLOW -> "${ps.success} ${ps.slow}"
-                        PurchaseController.Notice.FAILED -> ps.failed
-                        null -> if (store.subscriptionPending && signedIn) ps.pending else null
+                        PurchaseController.Notice.ARRIVING -> "${s.appPurchaseSuccess} ${s.appPurchaseArriving}"
+                        PurchaseController.Notice.ARRIVED -> s.appPurchaseSuccess
+                        PurchaseController.Notice.SLOW -> "${s.appPurchaseSuccess} ${s.appPurchaseSlow}"
+                        PurchaseController.Notice.FAILED -> s.appPurchaseFailed
+                        null -> if (store.subscriptionPending && signedIn) s.appPurchasePending else null
                     }
                     if (notice != null) {
                         PurchaseNotice(

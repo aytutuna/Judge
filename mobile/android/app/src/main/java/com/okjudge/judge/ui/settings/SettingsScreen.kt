@@ -40,7 +40,6 @@ import com.okjudge.judge.core.purchases.PurchaseController
 import com.okjudge.judge.i18n.LangPref
 import com.okjudge.judge.i18n.LocalLang
 import com.okjudge.judge.i18n.LocalStrings
-import com.okjudge.judge.i18n.rememberPurchaseStrings
 import com.okjudge.judge.ui.components.Kicker
 import com.okjudge.judge.ui.components.TopBar
 import com.okjudge.judge.ui.theme.JudgeShapes
@@ -233,13 +232,13 @@ private fun AccountGroup(
 
 @Composable
 private fun RestoreRow(restore: RestoreUi, enabled: Boolean, onRestore: () -> Unit) {
-    val ps = rememberPurchaseStrings()
+    val s = LocalStrings.current
     Column {
-        ActionRow(ps.restore, Modifier.testTag(SettingsTags.RESTORE), enabled = enabled && !restore.working, onClick = onRestore)
+        ActionRow(s.appPurchaseRestore, Modifier.testTag(SettingsTags.RESTORE), enabled = enabled && !restore.working, onClick = onRestore)
         val note = when (restore.notice) {
-            PurchaseController.RestoreNotice.DONE -> ps.restoreDone
-            PurchaseController.RestoreNotice.NONE -> ps.restoreNone
-            PurchaseController.RestoreNotice.FAILED -> ps.failed
+            PurchaseController.RestoreNotice.DONE -> s.appPurchaseRestoreDone
+            PurchaseController.RestoreNotice.NONE -> s.appPurchaseRestoreNone
+            PurchaseController.RestoreNotice.FAILED -> s.appPurchaseFailed
             null -> null
         }
         if (restore.working) {

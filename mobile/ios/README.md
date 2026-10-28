@@ -225,8 +225,6 @@ subscriptions on the server; the app only shows what `/me` says.
   and `monthly` (auto-renewable subscription).
 - In-app purchase needs no entitlement in `Judge.entitlements`; it is
   available to every App ID.
-- The purchase copy lives in `PurchaseStrings` (English and Turkish) until
-  it moves into the shared strings exporter.
 
 ## Layout
 
@@ -238,7 +236,7 @@ Judge/
                              ScreenshotState (Debug-only fixture states)
   Core/API/                  JudgeAPI (URLSession), verdict polling, APIError, BotCheck, TokenStore
   Core/Auth/                 AccountModel, account API calls, Keychain token store, Apple/Google
-  Core/Purchases/            PurchaseModel, PurchaseGateway (RevenueCat behind a protocol), PurchaseStrings
+  Core/Purchases/            PurchaseModel, PurchaseGateway (RevenueCat behind a protocol), PurchaseMessages
   Core/Model/                Codable wire models, raw-JSON-preserving decoding
   Core/Display/              ports of the website's display logic (pure)
   Core/Data/                 SwiftData SavedVerdict + HistoryStore

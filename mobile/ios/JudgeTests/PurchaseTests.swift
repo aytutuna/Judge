@@ -386,7 +386,7 @@ final class PurchaseTests: XCTestCase {
         XCTAssertEqual(purchases.message, .failed)
         XCTAssertNil(purchases.buying)
         XCTAssertEqual(meRequests, 0)
-        XCTAssertEqual(PurchaseModel.Message.failed.text(.en), PurchaseStrings.failed(.en))
+        XCTAssertEqual(PurchaseModel.Message.failed.text(.en), L10n.appPurchaseFailed(.en))
     }
 
     @MainActor

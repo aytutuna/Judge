@@ -49,7 +49,7 @@ struct AccountSection: View {
         }
         if app.purchases.canRestore(account.pricing) {
             let purchases = app.purchases
-            actionRow(PurchaseStrings.restore(lang), busy: purchases.isRestoring, color: Brand.ink) {
+            actionRow(L10n.appPurchaseRestore(lang), busy: purchases.isRestoring, color: Brand.ink) {
                 Task { await purchases.restore() }
             }
             .disabled(purchases.isRestoring || account.busy != nil)

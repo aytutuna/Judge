@@ -103,7 +103,7 @@ final class PurchaseModel {
             return OfferLabels(
                 price: store.price,
                 perVerdict: credits.flatMap { store.perVerdict(credits: $0, lang: lang) },
-                button: buying == planId ? PurchaseStrings.buying(lang) : store.price,
+                button: buying == planId ? L10n.appPurchaseBuying(lang) : store.price,
                 purchasable: true
             )
         }

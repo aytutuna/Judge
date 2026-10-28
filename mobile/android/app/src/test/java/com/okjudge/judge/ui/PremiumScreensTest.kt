@@ -46,14 +46,12 @@ import com.okjudge.judge.ui.premium.StoreUi
 import com.okjudge.judge.core.purchases.PurchaseController
 import com.okjudge.judge.core.purchases.StoreOffer
 import com.okjudge.judge.core.auth.Account
-import com.okjudge.judge.i18n.PurchaseStrings
 import com.okjudge.judge.i18n.LangPref
 import com.okjudge.judge.ui.settings.RestoreUi
 import com.okjudge.judge.ui.settings.SettingsScreen
 import com.okjudge.judge.ui.settings.SettingsTags
 import androidx.compose.ui.test.assertIsEnabled
 import androidx.compose.ui.test.performScrollTo
-import androidx.test.core.app.ApplicationProvider
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
 import org.junit.Assert.assertEquals
@@ -221,8 +219,6 @@ class PremiumScreensTest {
         compose.onAllNodesWithText(en.pricingComingSoon).assertCountEquals(0)
     }
 
-    private val ps: PurchaseStrings by lazy { PurchaseStrings.of(ApplicationProvider.getApplicationContext(), AppLang.EN) }
-
     private val storeOffers = mapOf(
         "pack_1" to StoreOffer("pack_1", "TRY 44.99", 44_990_000, "TRY"),
         "pack_10" to StoreOffer("pack_10", "TRY 329.99", 329_990_000, "TRY"),
@@ -293,7 +289,7 @@ class PremiumScreensTest {
                 )
             }
         }
-        compose.onNodeWithText(ps.buying).assertExists()
+        compose.onNodeWithText(en.appPurchaseBuying).assertExists()
         compose.onAllNodesWithTag(PricingTags.BUY)[0].assertIsNotEnabled()
         compose.onAllNodesWithTag(PricingTags.BUY)[2].assertIsNotEnabled()
     }
@@ -309,15 +305,15 @@ class PremiumScreensTest {
                 )
             }
         }
-        compose.onNodeWithText(ps.pending, substring = true).assertExists()
+        compose.onNodeWithText(en.appPurchaseArriving, substring = true).assertExists()
         store = store.copy(notice = PurchaseController.Notice.ARRIVED)
-        compose.onNodeWithText(ps.success).assertExists()
+        compose.onNodeWithText(en.appPurchaseSuccess).assertExists()
         store = store.copy(notice = PurchaseController.Notice.SLOW)
-        compose.onNodeWithText(ps.slow, substring = true).assertExists()
+        compose.onNodeWithText(en.appPurchaseSlow, substring = true).assertExists()
         store = store.copy(notice = PurchaseController.Notice.FAILED)
-        compose.onNodeWithText(ps.failed).assertExists()
+        compose.onNodeWithText(en.appPurchaseFailed).assertExists()
         store = store.copy(notice = null, subscriptionPending = true)
-        compose.onNodeWithText(ps.pending).assertExists()
+        compose.onNodeWithText(en.appPurchasePending).assertExists()
         store = store.copy(subscriptionPending = false)
         compose.onAllNodesWithTag(PricingTags.NOTICE).assertCountEquals(0)
     }
@@ -338,23 +334,23 @@ class PremiumScreensTest {
         }
         compose.onAllNodesWithTag(SettingsTags.RESTORE).assertCountEquals(0)
         restore = RestoreUi()
-        compose.onNodeWithTag(SettingsTags.RESTORE).assertTextContains(ps.restore).performClick()
+        compose.onNodeWithTag(SettingsTags.RESTORE).assertTextContains(en.appPurchaseRestore).performClick()
         assertEquals(1, taps)
         restore = RestoreUi(working = true)
         compose.onNodeWithTag(SettingsTags.RESTORE).assertIsNotEnabled()
         restore = RestoreUi(notice = PurchaseController.RestoreNotice.DONE)
-        compose.onNodeWithTag(SettingsTags.RESTORE_NOTE).assertTextContains(ps.restoreDone)
+        compose.onNodeWithTag(SettingsTags.RESTORE_NOTE).assertTextContains(en.appPurchaseRestoreDone)
         restore = RestoreUi(notice = PurchaseController.RestoreNotice.NONE)
-        compose.onNodeWithTag(SettingsTags.RESTORE_NOTE).assertTextContains(ps.restoreNone)
+        compose.onNodeWithTag(SettingsTags.RESTORE_NOTE).assertTextContains(en.appPurchaseRestoreNone)
         restore = RestoreUi(notice = PurchaseController.RestoreNotice.FAILED)
-        compose.onNodeWithTag(SettingsTags.RESTORE_NOTE).assertTextContains(ps.failed)
+        compose.onNodeWithTag(SettingsTags.RESTORE_NOTE).assertTextContains(en.appPurchaseFailed)
     }
 
     @Test
     fun purchaseStrings_followTheAppLanguage() {
-        val tr = PurchaseStrings.of(ApplicationProvider.getApplicationContext(), AppLang.TR)
-        assertEquals("Satın alımları geri yükle", tr.restore)
-        assertEquals("Restore purchases", ps.restore)
+        val tr = UiTestSupport.s(AppLang.TR)
+        assertEquals("Satın alımları geri yükle", tr.appPurchaseRestore)
+        assertEquals("Restore purchases", en.appPurchaseRestore)
     }
 
     private fun premiumOutcome(): VerdictOutcome =
