@@ -1,4 +1,5 @@
 import SwiftUI
+import UIKit
 
 /// The rows under the ruling card that open the details screen: the crux,
 /// both sides' bedrock and the losing side's best point, when there are.
@@ -89,6 +90,7 @@ struct VerdictDetails<Appeal: View>: View {
             .padding(.bottom, 32)
         }
         .background(Brand.ivory.ignoresSafeArea())
+        .background(EdgeSwipeBack().frame(width: 0, height: 0))
         .navigationBarBackButtonHidden(true)
         .navigationBarTitleDisplayMode(.inline)
         .toolbarBackground(Brand.ivory, for: .navigationBar)
@@ -289,5 +291,30 @@ struct VerdictDetails<Appeal: View>: View {
         .padding(.horizontal, 18)
         .padding(.vertical, 16)
         .paperSurface(radius: Radius.block)
+    }
+}
+
+/// Hiding the back button for "‹ Ruling" also turns off the edge swipe back.
+/// With no delegate the swipe always starts; the navigation controller's own
+/// delegate comes back as the screen goes, so the root screen can't be swiped.
+private struct EdgeSwipeBack: UIViewControllerRepresentable {
+    func makeUIViewController(context: Context) -> Controller { Controller() }
+
+    func updateUIViewController(_ controller: Controller, context: Context) {}
+
+    final class Controller: UIViewController {
+        private weak var saved: (any UIGestureRecognizerDelegate)?
+
+        override func viewDidAppear(_ animated: Bool) {
+            super.viewDidAppear(animated)
+            guard let pop = navigationController?.interactivePopGestureRecognizer else { return }
+            if let delegate = pop.delegate { saved = delegate }
+            pop.delegate = nil
+        }
+
+        override func viewWillDisappear(_ animated: Bool) {
+            super.viewWillDisappear(animated)
+            navigationController?.interactivePopGestureRecognizer?.delegate = saved
+        }
     }
 }
