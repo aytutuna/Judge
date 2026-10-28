@@ -49,7 +49,7 @@ struct VerdictReasons: View {
 
 /// Every part of a ruling on its own screen, pushed from the card: the
 /// summary, the crux, what each side stands on and how they got there, the
-/// losing side's best point, the two-sided facts, the facts relied on, the
+/// losing side's best point, the facts relied on, the two-sided facts, the
 /// web check, what would change it and the votes. Sections without data
 /// are left out.
 struct VerdictDetails<Appeal: View>: View {
@@ -206,14 +206,14 @@ struct VerdictDetails<Appeal: View>: View {
                     .fixedSize(horizontal: false, vertical: true)
             }
         }
-        if result.twoSided, !TwoSidedDisplay.agreed(result).isEmpty || !TwoSidedDisplay.disputed(result).isEmpty {
-            card {
-                TwoSidedFactsView(result: result, parties: parties, lang: lang)
-            }
-        }
         if !result.factsReliedOn.isEmpty {
             card {
                 FactsView(facts: result.factsReliedOn, lang: lang)
+            }
+        }
+        if result.twoSided, !TwoSidedDisplay.agreed(result).isEmpty || !TwoSidedDisplay.disputed(result).isEmpty {
+            card {
+                TwoSidedFactsView(result: result, parties: parties, lang: lang)
             }
         }
         if let factCheck = result.factCheck {
