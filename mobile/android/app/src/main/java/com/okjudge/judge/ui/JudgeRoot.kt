@@ -89,8 +89,8 @@ import kotlinx.serialization.Serializable
 
 @Serializable data object HomeKey : NavKey
 @Serializable data object JudgingKey : NavKey
-/** [fresh]: straight from judging, without the tab bar. [fromHome]: opened from Recent, so back goes Home. */
-@Serializable data class VerdictKey(val id: String, val fresh: Boolean, val fromHome: Boolean = false) : NavKey
+/** [fresh]: straight from judging, without the tab bar. */
+@Serializable data class VerdictKey(val id: String, val fresh: Boolean) : NavKey
 @Serializable data object HistoryKey : NavKey
 @Serializable data object SettingsKey : NavKey
 @Serializable data object ClarifyKey : NavKey
@@ -363,7 +363,6 @@ fun JudgeRoot(container: AppContainer, links: StateFlow<Uri?> = MutableStateFlow
                                 shareBaseUrl = container.config.shareBaseUrl,
                                 onBack = if (key.fresh) null else ({ backStack.removeAt(backStack.lastIndex) }),
                                 onNew = onNew,
-                                fromHome = key.fromHome,
                                 appeal = appeal,
                                 evidenceOn = (providers as? Account.Providers.Ready)?.config?.features?.evidence == true,
                                 onSignIn = { if (backStack.lastOrNull() !is SignInKey) backStack.add(SignInKey(thenVerdict = false)) },

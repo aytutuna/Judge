@@ -62,7 +62,6 @@ fun VerdictRoute(
     shareBaseUrl: String,
     onBack: (() -> Unit)?,
     onNew: (() -> Unit)?,
-    fromHome: Boolean = false,
     appeal: VerdictAppealViewModel? = null,
     evidenceOn: Boolean = false,
     onSignIn: () -> Unit = {},
@@ -104,7 +103,7 @@ fun VerdictRoute(
         if (details) {
             TopBar(onBack = { showDetails(false) }, onNew = onNew, backLabel = s.appVerdictBack, backText = s.appVerdictBack)
         } else {
-            TopBar(onBack = onBack, onNew = onNew, backLabel = if (fromHome) s.homeKicker else s.appHistoryTitle)
+            TopBar(onBack = onBack, onNew = onNew, backLabel = s.appHistoryTitle)
         }
         val saved = state.saved
         val view = state.view
