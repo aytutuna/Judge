@@ -653,7 +653,7 @@ private fun Branches(result: VerdictResult, parties: PartyLabels, restoredNames:
         Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
             conditional.forEach { c ->
                 Branch(Palette.paper, null) {
-                    BranchText("${s.ifPrefix} ${ConditionalClause.clause(c.ifValue, lang, keep)}", c.then, "→")
+                    BranchText(ConditionalClause.lead(c.ifValue, lang, s.ifPrefix, keep), c.then, ConditionalClause.arrow(lang))
                 }
             }
         }

@@ -164,9 +164,9 @@ struct VerdictBranches: View {
             let keep = [parties.aIsSelf ? "" : parties.nameA, parties.bIsSelf ? "" : parties.nameB] + restoredNames
             VStack(spacing: 8) {
                 ForEach(Array(items.enumerated()), id: \.offset) { _, branch in
-                    let clause = ConditionalClause.format(branch.ifValue, lang: lang, keep: keep)
+                    let lead = ConditionalClause.lead(branch.ifValue, lang: lang, keep: keep)
                     Branch(tint: Brand.paper, rule: nil) {
-                        LeadText(lead: L10n.ifPrefix(lang) + " " + clause, leadColor: Brand.ink2, rest: " → " + branch.then)
+                        LeadText(lead: lead, leadColor: Brand.ink2, rest: " \(ConditionalClause.arrow(lang)) " + branch.then)
                     }
                 }
             }

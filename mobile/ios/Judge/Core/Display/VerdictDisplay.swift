@@ -246,12 +246,17 @@ enum CruxStyle: String, Sendable {
 }
 
 /// Port of `conditionalClause` (components/VerdictReveal.tsx): the branch
-/// clause after the "If"/"Eğer" prefix. Both markers are stripped in both
-/// languages; Turkish lowercases with Turkish rules and keeps the capital of
-/// a party label or real name; English lowercases a leading "You"/"Your".
+/// clause after the "If" prefix. "If" and "Eğer" are stripped in every
+/// language, and the language's own prefix in the others; Turkish lowercases
+/// with Turkish rules and keeps the capital of a party label or real name;
+/// the rest lowercase a leading "You"/"Your".
 enum ConditionalClause {
+    /// Scripts that write the prefix straight into the clause.
+    private static let unspaced: Set<AppLang> = [.ja, .zhHans, .zhHant, .th]
+
     static func format(_ raw: String, lang: AppLang, keep: [String] = []) -> String {
-        let text = stripMarker(raw)
+        var text = stripMarker(raw)
+        if lang != .en && lang != .tr { text = stripOwn(text, lang: lang) }
         guard let first = text.first else { return text }
         let rest = text.dropFirst()
         if lang == .tr {
@@ -260,6 +265,23 @@ enum ConditionalClause {
         }
         let word = text.prefix { $0.isASCII && ($0.isLetter || $0.isNumber || $0 == "_") }
         return word == "You" || word == "Your" ? String(first).lowercased() + rest : text
+    }
+
+    /// The prefix and the clause, as the branch's lead.
+    static func lead(_ raw: String, lang: AppLang, keep: [String] = []) -> String {
+        L10n.ifPrefix(lang) + (unspaced.contains(lang) ? "" : " ") + format(raw, lang: lang, keep: keep)
+    }
+
+    /// Points from the condition to its outcome, so leftwards in right-to-left languages.
+    static func arrow(_ lang: AppLang) -> String { lang.isRTL ? "←" : "→" }
+
+    /// `^<ifPrefix>(?![\p{L}\p{N}])\s*`, case-insensitive; the unspaced
+    /// scripts need no word end.
+    private static func stripOwn(_ text: String, lang: AppLang) -> String {
+        guard let range = text.range(of: L10n.ifPrefix(lang), options: [.anchored, .caseInsensitive]) else { return text }
+        let rest = text[range.upperBound...]
+        if !unspaced.contains(lang), let next = rest.first, next.isLetter || next.isNumber { return text }
+        return String(rest.drop { $0.isWhitespace })
     }
 
     /// `^(eğer|if)\s+`, case-insensitive.

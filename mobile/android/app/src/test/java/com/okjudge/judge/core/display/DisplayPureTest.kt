@@ -126,14 +126,34 @@ class DisplayPureTest {
 
     @Test
     fun conditionalClause_portsTheWebRules() {
-        assertEquals("you value honesty", ConditionalClause.clause("If You value honesty", AppLang.EN))
-        assertEquals("Party A values honesty", ConditionalClause.clause("if Party A values honesty", AppLang.EN))
-        assertEquals("dürüstlüğe önem veriyorsan", ConditionalClause.clause("Eğer Dürüstlüğe önem veriyorsan", AppLang.TR))
-        assertEquals("ıslak kek seviyorsan", ConditionalClause.clause("Islak kek seviyorsan", AppLang.TR))
-        assertEquals("Taraf A haklıysa", ConditionalClause.clause("eğer Taraf A haklıysa", AppLang.TR))
-        assertEquals("Deniz haklıysa", ConditionalClause.clause("Deniz haklıysa", AppLang.TR, listOf("", "Deniz")))
+        assertEquals("you value honesty", ConditionalClause.clause("If You value honesty", AppLang.EN, "If"))
+        assertEquals("Party A values honesty", ConditionalClause.clause("if Party A values honesty", AppLang.EN, "If"))
+        assertEquals("dürüstlüğe önem veriyorsan", ConditionalClause.clause("Eğer Dürüstlüğe önem veriyorsan", AppLang.TR, "Eğer"))
+        assertEquals("ıslak kek seviyorsan", ConditionalClause.clause("Islak kek seviyorsan", AppLang.TR, "Eğer"))
+        assertEquals("Taraf A haklıysa", ConditionalClause.clause("eğer Taraf A haklıysa", AppLang.TR, "Eğer"))
+        assertEquals("Deniz haklıysa", ConditionalClause.clause("Deniz haklıysa", AppLang.TR, "Eğer", listOf("", "Deniz")))
         // Both markers are stripped in both languages: no "Eğer If".
-        assertEquals("you agree", ConditionalClause.clause("If you agree", AppLang.TR))
+        assertEquals("you agree", ConditionalClause.clause("If you agree", AppLang.TR, "Eğer"))
+    }
+
+    @Test
+    fun conditionalClause_stripsEachLanguagesOwnPrefix() {
+        assertEquals("Wenn Partei A recht hat", ConditionalClause.lead("Wenn Partei A recht hat", AppLang.DE, "Wenn"))
+        assertEquals("Wenn Partei A recht hat", ConditionalClause.lead("WENN  Partei A recht hat", AppLang.DE, "Wenn"))
+        assertEquals("Wenn you agree", ConditionalClause.lead("If You agree", AppLang.DE, "Wenn"))
+        // Only the whole word: "Wenngleich" is not "Wenn".
+        assertEquals("Wenn Wenngleich es regnet", ConditionalClause.lead("Wenngleich es regnet", AppLang.DE, "Wenn"))
+        assertEquals("إذا كان الطرف A محقًا", ConditionalClause.lead("إذا كان الطرف A محقًا", AppLang.AR, "إذا"))
+        assertEquals("ಒಂದು ವೇಳೆ ಮಳೆ ಬಂದರೆ", ConditionalClause.lead("ಒಂದು ವೇಳೆ ಮಳೆ ಬಂದರೆ", AppLang.KN, "ಒಂದು ವೇಳೆ"))
+        // No space after the prefix in Japanese, Chinese and Thai.
+        assertEquals("もし雨なら", ConditionalClause.lead("もし 雨なら", AppLang.JA, "もし"))
+        assertEquals("もし雨なら", ConditionalClause.lead("雨なら", AppLang.JA, "もし"))
+        assertEquals("如果下雨", ConditionalClause.lead("如果下雨", AppLang.ZH_HANS, "如果"))
+        assertEquals("ถ้าฝนตก", ConditionalClause.lead("ถ้าฝนตก", AppLang.TH, "ถ้า"))
+        assertEquals("If you agree", ConditionalClause.lead("you agree", AppLang.EN, "If"))
+        assertEquals("→", ConditionalClause.arrow(AppLang.EN))
+        assertEquals("→", ConditionalClause.arrow(AppLang.JA))
+        for (lang in listOf(AppLang.AR, AppLang.HE, AppLang.UR)) assertEquals("←", ConditionalClause.arrow(lang))
     }
 
     @Test

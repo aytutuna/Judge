@@ -276,6 +276,25 @@ final class TextHelperTests: XCTestCase {
         XCTAssertEqual(ConditionalClause.format("EĞER kurallar önemliyse", lang: .tr), "kurallar önemliyse")
     }
 
+    func testConditionalLeadInOtherLanguages() {
+        XCTAssertEqual(ConditionalClause.lead("Wenn Partei A recht hat", lang: .de), "Wenn Partei A recht hat")
+        XCTAssertEqual(ConditionalClause.lead("WENN  Partei A recht hat", lang: .de), "Wenn Partei A recht hat")
+        XCTAssertEqual(ConditionalClause.lead("If You agree", lang: .de), "Wenn you agree")
+        // Only the whole word: "Wenngleich" is not "Wenn".
+        XCTAssertEqual(ConditionalClause.lead("Wenngleich es regnet", lang: .de), "Wenn Wenngleich es regnet")
+        XCTAssertEqual(ConditionalClause.lead("إذا كان الطرف A محقًا", lang: .ar), "إذا كان الطرف A محقًا")
+        XCTAssertEqual(ConditionalClause.lead("ಒಂದು ವೇಳೆ ಮಳೆ ಬಂದರೆ", lang: .kn), "ಒಂದು ವೇಳೆ ಮಳೆ ಬಂದರೆ")
+        // No space after the prefix in Japanese, Chinese and Thai.
+        XCTAssertEqual(ConditionalClause.lead("もし 雨なら", lang: .ja), "もし雨なら")
+        XCTAssertEqual(ConditionalClause.lead("雨なら", lang: .ja), "もし雨なら")
+        XCTAssertEqual(ConditionalClause.lead("如果下雨", lang: .zhHans), "如果下雨")
+        XCTAssertEqual(ConditionalClause.lead("ถ้าฝนตก", lang: .th), "ถ้าฝนตก")
+        XCTAssertEqual(ConditionalClause.lead("you agree", lang: .en), "If you agree")
+        XCTAssertEqual(ConditionalClause.arrow(.en), "→")
+        XCTAssertEqual(ConditionalClause.arrow(.ja), "→")
+        XCTAssertEqual([AppLang.ar, .he, .ur].map(ConditionalClause.arrow), ["←", "←", "←"])
+    }
+
     func testFormatDate() {
         let utc = TimeZone(identifier: "UTC") ?? .current
         XCTAssertEqual(ErrorText.formatDate("2026-11-18T10:00:00.000Z", lang: .en, timeZone: utc), "November 18")
