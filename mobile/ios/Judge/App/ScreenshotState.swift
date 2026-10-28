@@ -19,8 +19,9 @@ import SwiftData
 /// the buy buttons), `pricing-buy` (the same, scrolled to the packs and the
 /// monthly plan), `clarify` (the questions), `evidence` (picked
 /// screenshots in mixed states), `mode-both` (a case being sent),
-/// `history-cases` (the Verdicts list with cases in it), `history-select` (the
-/// same list in select mode, two verdicts picked) or `case/<state>`: the owner's
+/// `history-cases` (the account's Verdicts list: waiting, thinking, your turn,
+/// ready either way, an answered case, a phone-only verdict), `history-select`
+/// (the same list in select mode, two rows picked) or `case/<state>`: the owner's
 /// case page for a key of `cases.views` or one of the short names `awaiting`,
 /// `judging`, `judged`, `one-sided`, `appeal`, `appeal-judging`, `failed`,
 /// `expired`, `removed` (Turkish takes the `_tr` view when there is one);
@@ -149,7 +150,7 @@ struct ScreenshotState {
         )
         app.account.usesNetwork = false
         app.usesNetwork = false
-        app.caseList.usesNetwork = false
+        app.historyList.usesNetwork = false
         app.setLangPreference(.fixed(lang))
         apply(to: app)
         return app
@@ -248,13 +249,11 @@ struct ScreenshotState {
             app.home.argument = ExampleArgument.all[0].text(lang)
         case .historyCases:
             premium(app, me: "credits7")
-            saveSamples(app)
-            app.caseList.showForScreenshot(ScreenshotFixtures.caseList())
+            accountList(app)
         case .historySelect:
             premium(app, me: "credits7")
-            saveSamples(app)
-            app.caseList.showForScreenshot(ScreenshotFixtures.caseList())
-            app.historySelectionSeed = Set(["win_a_self", "win_b_named"].compactMap { ScreenshotFixtures.session($0)?.id })
+            accountList(app)
+            app.historySelectionSeed = ["c:case0000010", "v:verdict0021"]
         case .caseDetail(let name):
             premium(app, me: "credits7")
             let localized = lang == .tr ? ScreenshotFixtures.caseView(name + "_tr") : nil
@@ -268,6 +267,21 @@ struct ScreenshotState {
 
     /// A fixed time, so dated rows read the same in every run.
     private static let newest = Date(timeIntervalSince1970: 1_792_000_000)
+
+    /// The fixture page of the account's list as just loaded (the day after
+    /// its newest row), and one older verdict kept only on this phone.
+    @MainActor
+    private func accountList(_ app: AppModel) {
+        guard let page = ScreenshotFixtures.history(), let user = app.account.user?.id else { return }
+        try? app.history.setAccount(user)
+        try? app.history.apply(page, user: user, above: nil)
+        app.historyUser = user
+        let loaded = ErrorText.parseISO("2026-10-21T08:00:00.000Z") ?? Self.newest
+        app.historyList.showForScreenshot(next: page.next, last: page.items.last, at: loaded)
+        guard let session = ScreenshotFixtures.session("win_b_named") else { return }
+        try? app.history.setAccount(nil)
+        try? app.history.save(session, now: ErrorText.parseISO("2026-10-17T08:00:00.000Z") ?? Self.newest)
+    }
 
     /// Six saved verdicts, newest first, an hour apart.
     @MainActor
@@ -410,13 +424,12 @@ enum ScreenshotFixtures {
         return try? CaseDecoding.view(object)
     }
 
-    /// `cases.list` as GET /api/v1/cases would answer.
-    static func caseList() -> [CaseSummary] {
-        let list = (root()["cases"] as? [String: Any])?["list"]
-        guard let list, JSONSerialization.isValidJSONObject(list),
-              let data = try? JSONSerialization.data(withJSONObject: list)
-        else { return [] }
-        return (try? CaseDecoding.list(data)) ?? []
+    /// `history` as GET /api/v1/me/history would answer.
+    static func history() -> HistoryPage? {
+        guard let page = root()["history"], JSONSerialization.isValidJSONObject(page),
+              let data = try? JSONSerialization.data(withJSONObject: page)
+        else { return nil }
+        return try? HistoryPage.decode(data)
     }
 
     static func decode<T: Decodable>(_ type: T.Type, _ value: Any?) -> T? {

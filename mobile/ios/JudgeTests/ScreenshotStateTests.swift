@@ -262,17 +262,17 @@ final class ScreenshotStateTests: XCTestCase {
             XCTAssertEqual(tr.makeCaseModel(id: "case0000001").view?.lang, .tr, "Turkish takes the Turkish view")
 
             let list = try XCTUnwrap(ScreenshotState.parse("history-cases:en")).makeModel(container: container)
-            XCTAssertTrue(list.caseListOffered)
-            if case .ready(let cases) = list.caseList.state {
-                XCTAssertEqual(cases.count, 3)
-            } else {
-                XCTFail("the fixture list is shown")
-            }
+            let user = try XCTUnwrap(list.historyUser)
+            XCTAssertEqual(try list.history.cached(user: user).count, 7, "the fixture page is listed")
+            XCTAssertNotNil(list.historyList.next, "with Show more under it")
+            XCTAssertFalse(list.historyList.usesNetwork)
+            let phone = try XCTUnwrap(try list.history.find(id: "winB000001"), "and one verdict only on this phone")
+            XCTAssertNil(phone.ownerUserID)
 
             let select = try XCTUnwrap(ScreenshotState.parse("history-select:en")).makeModel(container: container)
-            XCTAssertEqual(select.historySelectionSeed, ["abc123DEF0", "winB000001"])
-            XCTAssertNotNil(try select.history.find(id: "winB000001"), "the picked verdicts are in the list")
-            XCTAssertTrue(select.caseListOffered)
+            XCTAssertEqual(select.historySelectionSeed, ["c:case0000010", "v:verdict0021"])
+            let rows = try select.history.cached(user: try XCTUnwrap(select.historyUser))
+            XCTAssertTrue(rows.filter { ["c:case0000010", "v:verdict0021"].contains($0.key) }.allSatisfy(\.removable), "the picked rows can be removed")
 
             let both = try XCTUnwrap(ScreenshotState.parse("mode-both:en")).makeModel(container: container)
             XCTAssertTrue(both.home.isTwoSided(both))

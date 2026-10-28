@@ -513,23 +513,6 @@ final class CaseTests: XCTestCase {
         let date = try XCTUnwrap(ErrorText.formatDate(untitled.createdAt, lang: .en))
         XCTAssertEqual(CaseLogic.listTitle(untitled, lang: .en), L10n.caseListUntitled(.en, date: date))
         XCTAssertEqual(CaseLogic.statusText(.awaitingRespondent, lang: .tr), L10n.caseStatusAwaiting(.tr))
-
-        // A verdict saved between the first two cases sits between them.
-        let saved = SavedVerdict(
-            id: "v1",
-            createdAt: try XCTUnwrap(ErrorText.parseISO("2026-10-19T12:00:00Z")),
-            headline: "",
-            verdict: "side_a",
-            lang: "en",
-            confidence: 3,
-            tier: "free",
-            resultJSON: "{}",
-            nameMapJSON: "[]"
-        )
-        XCTAssertEqual(
-            HistoryEntry.merge(saved: [saved], cases: cases).map(\.id),
-            ["c:case0000001", "v:v1", "c:case0000002", "c:case0000003"]
-        )
     }
 
     // MARK: - Creating a case on Home
@@ -633,7 +616,6 @@ final class CaseTests: XCTestCase {
         XCTAssertFalse(app.casesOn, "signing in comes first; submit still opens sign-in")
         app.home.mode = .both
         XCTAssertFalse(app.home.isTwoSided(app))
-        XCTAssertTrue(app.caseListOffered)
         withExtendedLifetime(container) {}
     }
 

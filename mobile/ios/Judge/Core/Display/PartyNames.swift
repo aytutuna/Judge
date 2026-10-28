@@ -71,18 +71,19 @@ enum Names {
     }
 
     /// Who each label letter stands for. The pronoun -> narrator rule applies
-    /// only to slot A (the anonymizer always puts a first-person narrator
-    /// there), and the Turkish forms only when the argument was judged in
-    /// Turkish. For names, a capitalized entry beats a lowercase description.
-    static func resolveParties(_ nameMap: [NameMapping], selfLang: AppLang) -> [String: Resolved] {
+    /// only to the narrator's slot, `selfParty` (the anonymizer puts a
+    /// first-person writer in A; the side that answered a case is B), and the
+    /// Turkish forms only when the argument was judged in Turkish. For names,
+    /// a capitalized entry beats a lowercase description.
+    static func resolveParties(_ nameMap: [NameMapping], selfLang: AppLang, selfParty: String = "A") -> [String: Resolved] {
         var parties: [String: Resolved] = [:]
         for mapping in nameMap {
             guard let letter = labelLetter(mapping.replacement) else { continue }
             let name = bareName(mapping.original)
             guard !name.isEmpty else { continue }
             let current = parties[letter]
-            if letter == "A", isSelfOriginal(name, selfLang: selfLang) {
-                parties["A"] = Resolved(name: name, isSelf: true)
+            if letter == selfParty, isSelfOriginal(name, selfLang: selfLang) {
+                parties[letter] = Resolved(name: name, isSelf: true)
             } else if let current {
                 if !current.isSelf, !startsUpper(current.name), startsUpper(name) {
                     parties[letter] = Resolved(name: name, isSelf: false)

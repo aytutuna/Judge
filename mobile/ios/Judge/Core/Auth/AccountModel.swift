@@ -319,7 +319,8 @@ final class AccountModel {
     }
 
     /// Ends the session on the server, then forgets the token whatever the
-    /// server said. On-device history stays.
+    /// server said. The account's verdicts leave the phone with it
+    /// (`onSessionEnded`); ones no account has stay.
     func signOut() async {
         guard isSignedIn, busy == nil else { return }
         busy = .signOut
@@ -330,7 +331,7 @@ final class AccountModel {
     }
 
     /// Deletes the account on the server. The token goes only once the
-    /// server confirms; on-device history stays.
+    /// server confirms; its verdicts leave the phone as on sign-out.
     ///
     /// When the answer is lost (timeout, or the app was suspended), the
     /// server may have finished: /me without a user means it did.

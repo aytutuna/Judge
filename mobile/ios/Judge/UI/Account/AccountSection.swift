@@ -2,9 +2,9 @@ import SwiftUI
 
 /// Settings → Account: who is signed in, plan and credits, restore
 /// purchases (when the store is set up), sign out and delete; signed out, a
-/// way into sign-in. On-device history is never
-/// touched by either action. The confirmations are alerts owned by the
-/// list (alerts on list sections are unreliable).
+/// way into sign-in. Either action takes the account's verdicts off the
+/// phone; ones no account has stay. The confirmations are alerts owned by
+/// the list (alerts on list sections are unreliable).
 struct AccountSection: View {
     @Environment(AppModel.self) private var app
     @Binding var confirmSignOut: Bool

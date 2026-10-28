@@ -56,8 +56,14 @@ final class AppModel {
     let caseNames: any CaseNamesStore
     /// The selected tab (links and "Start a new case" switch it).
     var tab: RootTab = .new
-    /// The account's cases, listed with the verdicts.
-    let caseList: CaseListModel
+    /// The Verdicts tab's pages.
+    var historyPath: [HistoryRoute] = []
+    /// The account's Verdicts list (GET /api/v1/me/history and its cache).
+    let historyList: HistoryListModel
+    /// Whose list Verdicts shows: the signed-in account once known; at
+    /// launch, until /me answers, the account the list was last loaded for,
+    /// so it shows offline. Nil signed out.
+    var historyUser: String?
     /// Off for screenshot states: case pages neither load nor poll.
     @ObservationIgnored var usesNetwork = true
     /// Screenshot states: the writer's gate (and typed context) a verdict
@@ -93,12 +99,12 @@ final class AppModel {
         self.persistsDraft = persistsDraft
         self.defaults = defaults
         self.caseNames = caseNames ?? KeychainCaseNamesStore()
-        caseList = CaseListModel()
         langPreference = LangPreference(stored: defaults.string(forKey: Self.langKey))
         self.api = api ?? JudgeAPI(baseURL: config.apiBaseURL, userAgent: config.userAgent, tokenStore: tokenStore)
         history = HistoryStore(context: container.mainContext)
         home = HomeModel()
         account = AccountModel(api: self.api)
+        historyList = HistoryListModel(api: self.api, store: history, account: account)
         let gateway: (any PurchaseGateway)?
         if let purchaseGateway {
             gateway = purchaseGateway
@@ -109,16 +115,31 @@ final class AppModel {
         }
         purchases = PurchaseModel(gateway: gateway, account: account)
         let names = self.caseNames
-        let list = caseList
+        let list = historyList
+        let store = history
         let purchases = self.purchases
         account.onSessionEnded = { [weak self, weak purchases] byUser in
             list.reset()
+            self?.historyUser = nil
+            self?.historyPath = []
             self?.caseModels = [:]
             purchases?.userSignedOut()
-            // Real names kept for this account's cases go with it.
-            if byUser { names.forgetAll() }
+            // Real names kept for this account's cases go with it, and so do
+            // its verdicts on this phone (they come back from the account).
+            // An expired session keeps them, unlisted, for the same person.
+            if byUser {
+                names.forgetAll()
+                try? store.forgetAccounts()
+            } else {
+                try? store.setAccount(nil)
+            }
         }
-        account.onUserKnown = { [weak purchases] id in purchases?.userSignedIn(id) }
+        account.onUserKnown = { [weak self, weak purchases] id in
+            purchases?.userSignedIn(id)
+            try? store.setAccount(id)
+            self?.historyUser = id
+        }
+        if account.isSignedIn { historyUser = try? history.cachedUser() }
     }
 
     /// The UI language right now. Every string lookup takes it explicitly,
@@ -139,9 +160,6 @@ final class AppModel {
 
     /// "Or send them a link" on Home: signed in and cases offered.
     var casesOn: Bool { account.isSignedIn && account.features.cases }
-
-    /// "Your cases" in the History tab: this server offers cases.
-    var caseListOffered: Bool { account.features.cases }
 
     func seedCase(_ view: CaseView, otherName: String? = nil) {
         caseSeeds[view.id] = view

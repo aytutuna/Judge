@@ -222,8 +222,21 @@ final class PremiumFlowEdgeTests: XCTestCase {
 
     // MARK: - Ending the session
 
+    /// The account's list on this phone: one listed verdict kept for
+    /// offline reading, plus one the account doesn't have.
     @MainActor
-    func testSigningOutForgetsCaseNamesAndTheList() async throws {
+    private func fillHistory(_ app: AppModel, user: String) throws {
+        let listed = try Fixtures.sample("win_a_self")
+        let phone = try Fixtures.sample("split")
+        try app.history.save(VerdictSession(id: listed.id, original: listed.result, nameMap: listed.nameMap, translations: [:]))
+        try app.history.save(VerdictSession(id: "phone1", original: phone.result, nameMap: phone.nameMap, translations: [:]))
+        let row = HistoryItem(kind: "verdict", id: listed.id, at: "2026-10-05T00:00:00.000Z", state: "ready")
+        try app.history.apply(HistoryPage(items: [row], next: nil), user: user, above: nil)
+        app.historyUser = user
+    }
+
+    @MainActor
+    func testSigningOutForgetsCaseNamesAndTheAccountsVerdicts() async throws {
         let container = HistoryContainer.inMemory()
         let router = StubRouter()
         router.on("POST", "/api/auth/sign-out", try PremiumFixtures.json(200, ["success": true]))
@@ -231,24 +244,29 @@ final class PremiumFlowEdgeTests: XCTestCase {
         let app = try PremiumFixtures.app(container: container)
         let names = [NameMapping(original: "Sam", replacement: "Party B")]
         app.caseNames.save(caseID: "c1", names)
-        app.caseList.showForScreenshot([])
-        XCTAssertNotEqual(app.caseList.state, .idle)
+        try fillHistory(app, user: "usr_alex001")
 
         await app.account.signOut()
         XCTAssertTrue(app.caseNames.names(caseID: "c1").isEmpty)
-        XCTAssertEqual(app.caseList.state, .idle)
+        XCTAssertNil(app.historyUser)
+        XCTAssertTrue(try app.history.cached(user: "usr_alex001").isEmpty)
+        XCTAssertNil(try app.history.find(id: "abc123DEF0"), "it comes back from the account on sign-in")
+        XCTAssertNotNil(try app.history.find(id: "phone1"), "a verdict no account has stays")
         withExtendedLifetime(container) {}
     }
 
     @MainActor
-    func testAnExpiredSessionKeepsCaseNames() throws {
+    func testAnExpiredSessionKeepsCaseNamesAndTheList() throws {
         let container = HistoryContainer.inMemory()
         let app = try PremiumFixtures.app(container: container)
         app.caseNames.save(caseID: "c1", [NameMapping(original: "Sam", replacement: "Party B")])
-        app.caseList.showForScreenshot([])
+        try fillHistory(app, user: "usr_alex001")
         app.account.sessionExpired()
         XCTAssertFalse(app.caseNames.names(caseID: "c1").isEmpty, "the same person usually signs back in")
-        XCTAssertEqual(app.caseList.state, .idle)
+        XCTAssertNil(app.historyUser, "unlisted until a sign-in")
+        XCTAssertEqual(try app.history.cached(user: "usr_alex001").map(\.key), ["v:abc123DEF0"])
+        XCTAssertNotNil(try app.history.find(id: "abc123DEF0"))
+        XCTAssertEqual(try app.history.cachedUser(), "usr_alex001")
         withExtendedLifetime(container) {}
     }
 

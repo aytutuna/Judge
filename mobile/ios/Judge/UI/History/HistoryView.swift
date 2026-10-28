@@ -6,101 +6,36 @@ enum HistoryRoute: Hashable {
     case caseDetail(id: String)
 }
 
-/// A row of the Verdicts list: a verdict saved on this phone or one of the
-/// account's cases.
-enum HistoryEntry: Identifiable {
-    case savedVerdict(SavedVerdict)
-    case caseSummary(CaseSummary)
-
-    var id: String {
-        switch self {
-        case .savedVerdict(let row): return "v:" + row.id
-        case .caseSummary(let summary): return "c:" + summary.id
-        }
-    }
-
-    var date: Date {
-        switch self {
-        case .savedVerdict(let row): return row.createdAt
-        case .caseSummary(let summary): return ErrorText.parseISO(summary.createdAt) ?? .distantPast
-        }
-    }
-
-    /// Both kinds in one list, newest first (mergeHistory on the web).
-    static func merge(saved: [SavedVerdict], cases: [CaseSummary]) -> [HistoryEntry] {
-        // date parses the case's ISO string, so do it once per entry, not per comparison
-        let entries = saved.map(HistoryEntry.savedVerdict) + cases.map(HistoryEntry.caseSummary)
-        return entries.map { ($0, $0.date) }.sorted { $0.1 > $1.1 }.map(\.0)
-    }
-}
-
-/// Select mode of the Verdicts list. Only verdicts saved on this phone can
-/// be picked: a case has no delete in the app.
-struct HistorySelection: Equatable {
-    var isActive = false
-    var ids: Set<String> = []
-
-    static func selectable(_ entries: [HistoryEntry]) -> [String] {
-        entries.compactMap { entry in
-            if case .savedVerdict(let row) = entry { return row.id }
-            return nil
-        }
-    }
-
-    mutating func start() {
-        isActive = true
-        ids = []
-    }
-
-    mutating func end() {
-        isActive = false
-        ids = []
-    }
-
-    mutating func toggle(_ id: String) {
-        if ids.contains(id) { ids.remove(id) } else { ids.insert(id) }
-    }
-
-    func allOf(_ selectable: [String]) -> Bool {
-        !selectable.isEmpty && ids.isSuperset(of: selectable)
-    }
-
-    mutating func toggleAll(_ selectable: [String]) {
-        ids = allOf(selectable) ? [] : Set(selectable)
-    }
-
-    /// Deletes each picked verdict as its row's own Delete does, then leaves
-    /// select mode.
-    @MainActor
-    mutating func deleteSelected(from history: HistoryStore) {
-        for id in ids { try? history.delete(id: id) }
-        end()
-    }
-}
-
-/// "Verdicts": everything judged on this phone and, signed in where the
-/// server offers cases, the account's cases with their state, newest first.
+/// "Verdicts": the account's verdicts and cases (started or answered) with
+/// where each one stands, and verdicts kept only on this phone, newest
+/// first. More load near the end, or with Show more.
 struct HistoryView: View {
     @Environment(AppModel.self) private var app
+    @Environment(\.scenePhase) private var scenePhase
     @Query(sort: \SavedVerdict.createdAt, order: .reverse) private var saved: [SavedVerdict]
+    @Query private var cachedRows: [HistoryCacheRow]
     @State private var selection = HistorySelection()
-    @State private var confirmDelete = false
+    @State private var confirming: [String]?
+    @State private var webLink: WebLink?
 
     var body: some View {
         let lang = app.lang
-        let list = app.caseList
-        let casesShown = app.caseListOffered && app.account.isSignedIn
-        let entries = HistoryEntry.merge(saved: saved, cases: casesShown ? readyCases : [])
+        let list = app.historyList
+        let entries = currentEntries
         let selectable = HistorySelection.selectable(entries)
+        let thinking = entries.contains { entry in
+            if case .account(let item) = entry { return item.historyState?.thinking == true }
+            return false
+        }
         Group {
-            if entries.isEmpty, casesShown, list.state == .idle || list.state == .loading {
+            if entries.isEmpty, list.loading {
                 message(L10n.caseLoading(lang)) { ProgressView().tint(Brand.muted) }
-            } else if entries.isEmpty, casesShown, list.state == .failed {
+            } else if entries.isEmpty, list.failed {
                 message(L10n.shellLoadFailed(lang)) { retry(lang) }
             } else if entries.isEmpty {
                 message(L10n.appHistoryEmpty(lang)) { EmptyView() }
             } else {
-                rows(entries, lang: lang, casesFailed: casesShown && list.state == .failed)
+                rows(entries, lang: lang)
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -112,30 +47,49 @@ struct HistoryView: View {
         .toolbar(selection.isActive ? .hidden : .visible, for: .tabBar)
         .toolbar { toolbarItems(lang, selectable: selectable) }
         .confirmationDialog(
-            L10n.appHistoryDeleteConfirm(lang, n: selection.ids.count),
-            isPresented: $confirmDelete,
+            confirmText(entries, lang: lang),
+            isPresented: Binding(get: { confirming != nil }, set: { if !$0 { confirming = nil } }),
             titleVisibility: .visible
         ) {
-            Button(L10n.appHistoryDelete(lang), role: .destructive) { selection.deleteSelected(from: app.history) }
+            Button(L10n.appHistoryDelete(lang), role: .destructive) { remove(confirming ?? [], from: entries) }
             Button(L10n.appCancel(lang), role: .cancel) {}
+        }
+        .sheet(item: $webLink) { link in
+            SafariView(url: link.url).ignoresSafeArea()
         }
         .onChange(of: app.tab) { _, tab in
             if tab != .history { selection.end() }
         }
-        // Each appearance refreshes the cases (they may have changed
-        // meanwhile); signing in loads them. A load already running is not
-        // repeated.
+        // Each appearance reads page 1 again (at most once a minute).
         .onAppear {
             if let seed = app.historySelectionSeed {
                 selection.start()
                 selection.ids = seed
                 app.historySelectionSeed = nil
             }
-            loadCases()
+            refresh()
         }
-        .onChange(of: app.account.isSignedIn) { _, signedIn in
-            if signedIn { loadCases() } else { list.reset() }
+        .onChange(of: app.historyUser) { _, _ in refresh(force: true) }
+        .onChange(of: app.account.features.history) { _, _ in refresh() }
+        // While the judges work on a row, the list is read again now and then.
+        .task(id: thinking && scenePhase == .active) {
+            guard thinking, scenePhase == .active else { return }
+            while !Task.isCancelled {
+                try? await Task.sleep(for: HistoryListModel.pollEvery)
+                if Task.isCancelled { return }
+                await list.refresh(user: app.historyUser, enabled: app.account.features.history, force: true)
+            }
         }
+    }
+
+    private var currentEntries: [HistoryEntry] {
+        let user = app.historyUser
+        let cached = user.map { id in
+            cachedRows.filter { $0.userID == id }
+                .compactMap(\.item)
+                .sorted { HistoryOrder.before(($0.at, $0.key), ($1.at, $1.key)) }
+        } ?? []
+        return HistoryEntry.merge(cached: cached, saved: saved, user: user, cutoff: app.historyList.cutoff)
     }
 
     @ToolbarContentBuilder
@@ -152,7 +106,7 @@ struct HistoryView: View {
             }
             ToolbarItem(placement: .bottomBar) {
                 Button(L10n.appHistoryDeleteCount(lang, count: String(selection.ids.count)), role: .destructive) {
-                    confirmDelete = true
+                    confirming = Array(selection.ids)
                 }
                 .tint(Brand.danger)
                 .disabled(selection.ids.isEmpty)
@@ -170,19 +124,72 @@ struct HistoryView: View {
         }
     }
 
-    private var readyCases: [CaseSummary] {
-        if case .ready(let cases) = app.caseList.state { return cases }
-        return []
+    private func refresh(force: Bool = false) {
+        let list = app.historyList
+        let user = app.historyUser
+        let enabled = app.account.features.history
+        Task { await list.refresh(user: user, enabled: enabled, force: force) }
     }
 
-    private func loadCases() {
-        guard app.caseListOffered else { return }
-        Task { await app.caseList.load(api: app.api, account: app.account) }
+    private func confirmText(_ entries: [HistoryEntry], lang: AppLang) -> String {
+        let keys = Set(confirming ?? [])
+        return HistoryLabels.removeConfirm(entries.filter { keys.contains($0.id) }, lang: lang)
     }
 
-    private func rows(_ entries: [HistoryEntry], lang: AppLang, casesFailed: Bool) -> some View {
-        List {
-            if casesFailed {
+    private func remove(_ keys: [String], from entries: [HistoryEntry]) {
+        let wanted = Set(keys)
+        let picked = entries.filter { wanted.contains($0.id) }
+        let list = app.historyList
+        let user = app.historyUser
+        let enabled = app.account.features.history
+        let selecting = selection.isActive
+        Task {
+            let failed = await list.remove(picked, user: user, enabled: enabled)
+            guard selecting else { return }
+            if failed.isEmpty {
+                selection.end()
+            } else {
+                selection.ids = failed
+            }
+        }
+    }
+
+    private func open(_ entry: HistoryEntry) {
+        switch entry {
+        case .phone(let row):
+            app.historyPath.append(.detail(id: row.id))
+        case .account(let item):
+            guard HistoryLabels.openable(item) else { return }
+            if !item.isCase {
+                let list = app.historyList
+                let user = app.historyUser
+                Task {
+                    if await list.openVerdict(item, user: user) { app.historyPath.append(.detail(id: item.id)) }
+                }
+            } else if item.isRespondent, let token = item.inviteToken {
+                // Answering is done on the website: the case opens there too.
+                webLink = WebLink(url: app.config.siteURL("r").appending(component: token))
+            } else {
+                app.historyPath.append(.caseDetail(id: item.id))
+            }
+        }
+    }
+
+    private func rows(_ entries: [HistoryEntry], lang: AppLang) -> some View {
+        let list = app.historyList
+        let now = list.now()
+        return List {
+            if let notice = list.notice {
+                Section {
+                    Text(noticeText(notice, lang: lang))
+                        .brandText(.body)
+                        .foregroundStyle(Brand.danger)
+                        .frame(maxWidth: .infinity)
+                        .multilineTextAlignment(.center)
+                        .listRowBackground(Color.clear)
+                }
+            }
+            if list.failed {
                 Section {
                     VStack(spacing: 10) {
                         Text(L10n.shellLoadFailed(lang))
@@ -196,51 +203,32 @@ struct HistoryView: View {
                 }
             }
             Section {
-                ForEach(entries) { entry in
-                    switch entry {
-                    case .savedVerdict(let row):
-                        if selection.isActive {
-                            PickableRow(row: row, lang: lang, selected: selection.ids.contains(row.id)) {
-                                selection.toggle(row.id)
-                            }
-                            .listRowBackground(selection.ids.contains(row.id) ? Brand.terraTint : Brand.paper)
-                        } else {
-                            NavigationLink(value: HistoryRoute.detail(id: row.id)) {
-                                HistoryRow(row: row, lang: lang)
-                            }
-                            .listRowBackground(Brand.paper)
-                            .swipeActions(edge: .trailing, allowsFullSwipe: true) {
-                                Button(role: .destructive) {
-                                    try? app.history.delete(id: row.id)
-                                } label: {
-                                    Label(L10n.appHistoryDelete(lang), systemImage: "trash")
-                                }
-                            }
-                            .contextMenu {
-                                Button(role: .destructive) {
-                                    try? app.history.delete(id: row.id)
-                                } label: {
-                                    Label(L10n.appHistoryDelete(lang), systemImage: "trash")
-                                }
+                ForEach(Array(entries.enumerated()), id: \.element.id) { index, entry in
+                    row(entry, lang: lang, now: now)
+                        .onAppear {
+                            if index >= entries.count - 3, list.next != nil {
+                                Task { await list.loadMore(user: app.historyUser) }
                             }
                         }
-                    case .caseSummary(let summary):
-                        if selection.isActive {
-                            CaseRow(summary: summary, lang: lang)
-                                .opacity(0.4)
-                                .disabled(true)
-                                .listRowBackground(Brand.paper)
+                }
+                if list.next != nil {
+                    HStack {
+                        Spacer()
+                        if list.loadingMore {
+                            ProgressView().tint(Brand.muted)
                         } else {
-                            NavigationLink(value: HistoryRoute.caseDetail(id: summary.id)) {
-                                CaseRow(summary: summary, lang: lang)
+                            Button(L10n.shellLoadMore(lang)) {
+                                Task { await list.loadMore(user: app.historyUser) }
                             }
-                            .listRowBackground(Brand.paper)
+                            .buttonStyle(GhostButtonStyle())
                         }
+                        Spacer()
                     }
+                    .listRowBackground(Color.clear)
                 }
             } footer: {
-                if !saved.isEmpty {
-                    Text(L10n.appHistoryDeviceOnly(lang))
+                if entries.contains(where: \.isPhone) {
+                    Text(L10n.appHistoryPhoneOnlyNote(lang))
                         .brandText(.footnote)
                         .foregroundStyle(Brand.muted)
                         .padding(.top, 8)
@@ -248,11 +236,74 @@ struct HistoryView: View {
             }
         }
         .scrollContentBackground(.hidden)
-        .refreshable { await app.caseList.load(api: app.api, account: app.account) }
+        .refreshable { await list.refresh(user: app.historyUser, enabled: app.account.features.history, force: true) }
+    }
+
+    @ViewBuilder
+    private func row(_ entry: HistoryEntry, lang: AppLang, now: Date) -> some View {
+        if selection.isActive {
+            if entry.selectable {
+                PickableRow(entry: entry, lang: lang, now: now, selected: selection.ids.contains(entry.id)) {
+                    selection.toggle(entry.id)
+                }
+                .listRowBackground(selection.ids.contains(entry.id) ? Brand.terraTint : Brand.paper)
+            } else {
+                EntryRow(entry: entry, lang: lang, now: now)
+                    .opacity(0.4)
+                    .disabled(true)
+                    .listRowBackground(Brand.paper)
+            }
+        } else if entry.selectable {
+            openButton(entry, lang: lang, now: now)
+                .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                    Button(role: .destructive) { confirming = [entry.id] } label: {
+                        Label(L10n.appHistoryDelete(lang), systemImage: "trash")
+                    }
+                }
+                .contextMenu {
+                    Button(role: .destructive) { confirming = [entry.id] } label: {
+                        Label(L10n.appHistoryDelete(lang), systemImage: "trash")
+                    }
+                }
+        } else {
+            openButton(entry, lang: lang, now: now)
+        }
+    }
+
+    private func openButton(_ entry: HistoryEntry, lang: AppLang, now: Date) -> some View {
+        let opens = opens(entry)
+        return Button { open(entry) } label: {
+            HStack {
+                EntryRow(entry: entry, lang: lang, now: now)
+                if opens {
+                    Image(systemName: "chevron.forward")
+                        .font(.footnote.weight(.semibold))
+                        .foregroundStyle(Brand.muted)
+                        .accessibilityHidden(true)
+                }
+            }
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .disabled(!opens)
+        .listRowBackground(Brand.paper)
+    }
+
+    private func opens(_ entry: HistoryEntry) -> Bool {
+        if case .account(let item) = entry { return HistoryLabels.openable(item) }
+        return true
+    }
+
+    private func noticeText(_ notice: HistoryListModel.Notice, lang: AppLang) -> String {
+        switch notice {
+        case .offline: return L10n.appHistoryOfflineRemove(lang)
+        case .removeFailed(let n): return L10n.appHistoryRemoveFailed(lang, n: n)
+        case .openFailed: return L10n.errorFallback(lang)
+        }
     }
 
     private func retry(_ lang: AppLang) -> some View {
-        Button(L10n.caseRetry(lang)) { loadCases() }
+        Button(L10n.caseRetry(lang)) { refresh(force: true) }
             .buttonStyle(GhostButtonStyle())
     }
 
@@ -269,10 +320,11 @@ struct HistoryView: View {
     }
 }
 
-/// A saved verdict in select mode: a tap picks it instead of opening it.
+/// A row in select mode: a tap picks it instead of opening it.
 private struct PickableRow: View {
-    let row: SavedVerdict
+    let entry: HistoryEntry
     let lang: AppLang
+    let now: Date
     let selected: Bool
     let toggle: () -> Void
 
@@ -280,7 +332,7 @@ private struct PickableRow: View {
         Button(action: toggle) {
             HStack(spacing: 12) {
                 SelectCircle(selected: selected)
-                HistoryRow(row: row, lang: lang)
+                EntryRow(entry: entry, lang: lang, now: now)
             }
             .contentShape(Rectangle())
         }
@@ -300,7 +352,98 @@ private struct SelectCircle: View {
     }
 }
 
-private struct HistoryRow: View {
+private struct EntryRow: View {
+    let entry: HistoryEntry
+    let lang: AppLang
+    let now: Date
+
+    var body: some View {
+        switch entry {
+        case .account(let item): AccountRow(item: item, lang: lang, now: now)
+        case .phone(let row): PhoneRow(row: row, lang: lang)
+        }
+    }
+}
+
+/// A row of the account's list: its state from the viewer's side, its
+/// title, the date and tags.
+private struct AccountRow: View {
+    let item: HistoryItem
+    let lang: AppLang
+    let now: Date
+
+    @Environment(\.sides) private var sides
+
+    var body: some View {
+        let status = HistoryLabels.status(item, lang: lang, now: now)
+        let muted = HistoryLabels.muted(item, now: now)
+        let date = ErrorText.parseISO(item.at).map(dateText)
+        let meta = ([date].compactMap { $0 } + HistoryLabels.tags(item, lang: lang)).joined(separator: " · ")
+        HStack(alignment: .top, spacing: 12) {
+            Circle()
+                .fill(dot(HistoryLabels.tone(item, now: now)))
+                .frame(width: 12, height: 12)
+                .padding(.top, 4)
+                .accessibilityHidden(true)
+            VStack(alignment: .leading, spacing: 4) {
+                if status != nil || item.yourMove {
+                    HStack(spacing: 8) {
+                        if let status {
+                            Text(status)
+                                .brandText(.slotTitle)
+                                .foregroundStyle(muted ? Brand.muted : Brand.ink)
+                        }
+                        if item.yourMove { YourMoveChip(text: L10n.historyYourMove(lang)) }
+                    }
+                }
+                Text(HistoryLabels.title(item, lang: lang))
+                    .brandText(.slotText)
+                    .foregroundStyle(muted ? Brand.muted : Brand.ink2)
+                    .lineLimit(2)
+                if !meta.isEmpty {
+                    Text(meta)
+                        .brandText(.footnote)
+                        .foregroundStyle(Brand.muted)
+                }
+            }
+        }
+        .padding(.vertical, 4)
+        .accessibilityElement(children: .combine)
+    }
+
+    private func dateText(_ date: Date) -> String {
+        date.formatted(Date.FormatStyle(date: .abbreviated, time: .shortened).locale(lang.locale))
+    }
+
+    private func dot(_ tone: HistoryLabels.Tone) -> Color {
+        switch tone {
+        case .yours: return sides.mine.ink
+        case .theirs: return sides.theirs.ink
+        case .neutral: return Brand.ink
+        case .thinking: return Brand.stone
+        case .waiting: return Brand.terra
+        case .attention: return Brand.danger
+        case .muted: return Brand.muted
+        }
+    }
+}
+
+/// "Your turn": something waits on the viewer.
+private struct YourMoveChip: View {
+    let text: String
+
+    var body: some View {
+        Text(text)
+            .brandText(TypeStyle(face: .inter, weight: 600, size: 12, lineHeight: 1.3, textStyle: .footnote))
+            .foregroundStyle(Brand.terraInk)
+            .padding(.horizontal, 9)
+            .padding(.vertical, 3)
+            .background(Capsule().fill(Brand.terraTint))
+    }
+}
+
+/// A verdict kept on this phone that the account doesn't have.
+private struct PhoneRow: View {
     let row: SavedVerdict
     let lang: AppLang
 
@@ -314,6 +457,7 @@ private struct HistoryRow: View {
         // original's, so it is written in the language it was judged in.
         let headline = Names.restoreNames(row.headline, parties: Names.resolveParties(nameMap, selfLang: selfLang), textLang: selfLang)
         let verdict = row.finalVerdict
+        let date = row.createdAt.formatted(Date.FormatStyle(date: .abbreviated, time: .shortened).locale(lang.locale))
         HStack(alignment: .top, spacing: 12) {
             Circle()
                 .fill(sealColor(VerdictDisplay.seal(verdict)))
@@ -328,7 +472,7 @@ private struct HistoryRow: View {
                     .brandText(.slotText)
                     .foregroundStyle(Brand.ink2)
                     .lineLimit(2)
-                Text(row.createdAt.formatted(Date.FormatStyle(date: .abbreviated, time: .shortened).locale(lang.locale)))
+                Text(date + " · " + L10n.appHistoryPhoneOnly(lang))
                     .brandText(.footnote)
                     .foregroundStyle(Brand.muted)
             }
@@ -346,8 +490,8 @@ private struct HistoryRow: View {
     }
 }
 
-/// A saved verdict, viewable offline (translations come from the cache
-/// first, otherwise they are fetched when online).
+/// A verdict kept on the phone, viewable offline (translations come from
+/// the cache first, otherwise they are fetched when online).
 struct HistoryDetailView: View {
     @Environment(AppModel.self) private var app
     let id: String

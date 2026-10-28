@@ -90,7 +90,8 @@ account states `balance/welcome` (a new account's free verdict),
 (store prices on the buy buttons, from a fake store), `pricing-buy` (the
 same, scrolled to the packs and the monthly plan), `clarify` and
 `evidence` (picked screenshots in mixed states), and the case states
-`mode-both`, `history-cases`, `history-select` (select mode, two verdicts
+`mode-both`, `history-cases` (the account's list with every kind of row and
+a verdict kept only on the phone), `history-select` (select mode, two rows
 picked) and `case/<state>` (a key of `cases.views` or
 `awaiting`, `judging`, `judged`, `one-sided`, `appeal`, `appeal-judging`,
 `failed`, `expired`, `removed`; Turkish takes the `_tr` view if there is one).
@@ -156,7 +157,9 @@ The session token lives in the Keychain (`KeychainTokenStore`, readable
 after first unlock, this device only) and goes out as `Authorization:
 Bearer`. A `401 signin_required`, or `/api/v1/me` answering without a user,
 signs the app out and offers sign-in again. Sign out and delete account
-forget the token; neither touches the on-device history.
+forget the token and take the account's verdicts off the phone (they come
+back from the account on sign-in); verdicts no account has stay. An expired
+session keeps them, unlisted, until the next sign-in.
 
 ## Premium
 
@@ -193,8 +196,9 @@ flow, natively (app/page.tsx):
   `pollAfterMs` while something is judging (backing off to 30 s on errors)
   and offers the invite link (copy, share sheet, new link), judging on the
   owner's side alone, retry, removal, the names on the share pages and
-  adding context (appeals). "Your cases" is the second list in the History
-  tab. Invite links (`/r/…`) are never answered in the app: they are shared
+  adding context (appeals). The Verdicts tab lists the account's verdicts
+  and cases, started or answered, from `GET /api/v1/me/history`, cached in
+  SwiftData so it shows at once and offline. Invite links (`/r/…`) are never answered in the app: they are shared
   as URLs, and one the app is opened with goes to Safari; `/c/{id}` links
   open the case page.
 

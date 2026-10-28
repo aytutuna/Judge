@@ -132,8 +132,11 @@ private struct HomeTab: View {
 }
 
 private struct HistoryTab: View {
+    @Environment(AppModel.self) private var app
+
     var body: some View {
-        NavigationStack {
+        @Bindable var model = app
+        NavigationStack(path: $model.historyPath) {
             HistoryView()
                 .navigationDestination(for: HistoryRoute.self) { route in
                     switch route {
