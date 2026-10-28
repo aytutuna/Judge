@@ -2,7 +2,7 @@ import type { Locale } from "../i18n";
 
 const hu: Locale = {
   voice:
-    'Address the reader with informal "te" (tegezés), never the formal "Ön" or "maga"; the interface says "te" everywhere. Refer to the parties as "Fél A" and "Fél B" in prose, like names, with no article in front (never "a Fél A"). Keep the labels in their base form: use them as the subject, as a possessor straight before the possessed noun without -nak/-nek (e.g. "Fél A érve", "Fél B álláspontja"), or before a postposition (szerint, számára, javára, mellett, ellen); rephrase rather than add a case ending, and only when one truly cannot be avoided attach it with a hyphen (e.g. "Fél A-t", "Fél B-vel"). Keep "Person C", "Person D" exactly as written, under the same rules. The card prints "Ha", then your if_value, then an arrow and the outcome, so write each if_value as a bare Hungarian conditional clause in the indicative, with no leading "Ha" or "Amennyiben", no "akkor" and no trailing comma, starting in lowercase unless it opens with a party label or a name (e.g. "a becsületesség a legfontosabb neked"). Use Hungarian quotation marks („…”), a decimal comma, and a space as the thousands separator from five digits up (6000, but 12 000).',
+    'Address the reader with informal "te" (tegezés), never the formal "Ön" or "maga"; the interface says "te" everywhere. Refer to the parties as "Fél A" and "Fél B" in prose, like names, with no article in front (never "a Fél A"). Keep the labels in their base form and never attach a case ending or any other suffix to them, not even with a hyphen ("Fél A-t", "Fél B-vel", "Fél A-nak" are all wrong): the real names are put back afterwards, and a hyphenated ending would come out misspelled. Use a label as the subject, as a possessor straight before the possessed noun without -nak/-nek (e.g. "Fél A érve", "Fél B álláspontja"), or before a postposition (szerint, számára, javára, mellett, ellen, miatt, felé), and rephrase any sentence that would need an ending (write "Fél B szerint Fél A a hibás", not "Fél B Fél A-t hibáztatja"). Keep "Person C", "Person D" exactly as written, under the same rules. The card prints "Ha", then your if_value, then an arrow and the outcome, so write each if_value as a bare Hungarian conditional clause in the indicative, with no leading "Ha" or "Amennyiben", no "akkor" and no trailing comma, starting in lowercase unless it opens with a party label or a name (e.g. "a becsületesség a legfontosabb neked"). Use Hungarian quotation marks („…”), a decimal comma, and a space as the thousands separator from five digits up (6000, but 12 000).',
   email: {
     signIn: {
       subject: "Belépési linked a Judge-hoz",
@@ -60,7 +60,7 @@ const hu: Locale = {
     "lean.titleSelf": "Kényszerdöntés: inkább te nyersz",
     "lean.unanimous": "Minden bíró erre hajlott.",
     "lean.majority": "A bírák {for}–{against} arányban erre hajlottak.",
-    "lean.tie": "Még amikor dönteniük kellett, a bírák akkor is pontosan fele-fele arányban oszlottak meg.",
+    "lean.tie": "Döntésre kényszerítve is pontosan kettéoszlottak a bírák.",
     splitWin: "Ebben {name} nyer:",
     splitWinSelf: "Ebben te nyersz:",
     ifPrefix: "Ha",
@@ -86,7 +86,7 @@ const hu: Locale = {
     shareText: "A bírákra bíztuk a döntést. Nézd meg, ki nyert!",
     copyPrompt: "Másold ki ezt a linket:",
     judgeAnother: "Jöhet a következő",
-    "judgesVoted.one": "1 független MI-bíró szavazott:",
+    "judgesVoted.one": "Egy független MI-bíró szavazott:",
     "judgesVoted.other": "{n} független MI-bíró szavazott:",
     escalated: "Szoros volt, ezért további bírákat is behívtunk.",
     "translate.loading": "Fordítás…",
@@ -165,7 +165,7 @@ const hu: Locale = {
       "Minden állítás címkét kap: tény, érték, definíció vagy logika, mert mindegyiket máshogy kell eldönteni.",
     "how.step3.title": "A kulcskérdés felkutatása",
     "how.step3.body":
-      "Mindkét oldalnál leás egészen az alapkövekig, és megtalálja azt az egy pontot, amelyen az egész vita múlik.",
+      "Mindkét oldalnál leásunk egészen az alapkövekig, és megtaláljuk azt az egy pontot, amelyen az egész vita múlik.",
     "how.step4.title": "Három független bíró",
     "how.step4.body":
       "Három bíró dönt egymástól függetlenül, szoros állásnál pedig további bírák is beszállnak. A bizonyosság abból jön, mennyire értenek egyet, nem abból, milyen magabiztosan beszélnek.",
@@ -255,7 +255,7 @@ const hu: Locale = {
       "Kérdésed van, vagy szeretnéd megnézni, kijavíttatni vagy töröltetni az adataidat? Írj nekünk ide: {email}, és küldd el az ítélet vagy az ügy linkjét.",
     "privacy.accountsTitle": "Fiókok",
     "privacy.accounts":
-      "Ítélethez fiók kell; egy kétoldalú ügyben a másik fél fiók nélkül is válaszolhat. Ha Apple- vagy Google-fiókkal lépsz be, tároljuk az általuk velünk megosztott e-mail-címet, nevet és profilkép-linket, valamint azt, hogy melyik belépési módot használtad, az Apple vagy a Google pedig láthatja, hogy beléptél a Judge-ba. Ha e-mailes linkkel lépsz be, azt az e-mailt a Resend küldi ki, a link ellenőrzéséhez pedig rövid ideig tárolunk egy bejegyzést az e-mail-címeddel: a link 10 perc után nem működik, a bejegyzést pedig felhasználáskor vagy nem sokkal a lejárata után töröljük. Tároljuk továbbá a munkameneteid adatait (egy véletlenszerű tokent és a lejárati idejét, IP-cím és eszközadatok nélkül), a kreditjeidet, az előfizetésedet és annak előzményeit, valamint azt, hogy mely ítéletek használtak fel kreditet (csak az ítélet azonosítóját). Azt is tároljuk, mely ítéletek és ügyek a tieid, hogy bármelyik eszközön megtaláld őket. Ha a fiókoldalon törlöd a fiókodat, mindez törlődik, az ítéleteidet és az ügyekben beküldött verzióidat pedig az Eltávolítás részben leírtak szerint eltávolítjuk. Az e-mail-címedet csak összekevert formában őrizzük meg, hogy egy vele létrehozott új fiók ne kapjon második ingyenes ítéletet.",
+      "Ítélethez fiók kell; egy kétoldalú ügyben a másik fél fiók nélkül is válaszolhat. Ha Apple- vagy Google-fiókkal lépsz be, tároljuk az általuk velünk megosztott e-mail-címet, nevet és profilkép-linket, valamint azt, hogy melyik belépési módot használtad, az Apple vagy a Google pedig láthatja, hogy beléptél a Judge-ba. Ha e-mailes linkkel lépsz be, azt az e-mailt a Resend küldi ki, a link ellenőrzéséhez pedig rövid ideig tárolunk egy bejegyzést az e-mail-címeddel: a link 10 perc után nem működik, a bejegyzést pedig felhasználáskor vagy nem sokkal a lejárata után töröljük. Tároljuk továbbá a munkameneteid adatait (egy véletlenszerű tokent és a lejárati idejét, IP-cím és eszközadatok nélkül), a kreditjeidet, az előfizetésedet és annak előzményeit, valamint azt, hogy mely ítéletek használtak fel kreditet (csak az ítélet azonosítóját). Azt is tároljuk, mely ítéletek és ügyek a tieid, hogy bármelyik eszközön megtaláld őket. Ha a fiókoldalon törlöd a fiókodat, mindez törlődik, az ítéleteidet és az ügyekben beküldött verzióidat pedig az Eltávolítás részben leírtak szerint eltávolítjuk. Az e-mail-címedet csak hash-elt formában őrizzük meg, hogy egy vele létrehozott új fiók ne kapjon második ingyenes ítéletet.",
     "privacy.webSearchTitle": "Webes keresés és kérdések",
     "privacy.webSearch":
       "Minden ítéletnél elküldjük az anonimizált vitát az MI-szolgáltatónknak, bekapcsolt webes kereséssel. A keresőkifejezéseket a modell ebből az anonimizált szövegből írja meg, a találatok pedig a szolgáltató keresőpartnerétől jönnek. A felhasznált források megjelennek az ítéleten. A bírák előbb feltehetnek neked legfeljebb két kérdést: ezek kitalálásához a szöveged, úgy, ahogy begépelted, a nevekkel együtt még egyszer eljut az MI-szolgáltatóhoz. A válaszaidat az ítélet előtt a vitával együtt anonimizáljuk; a kérdéseket és a válaszaidat, ahogy megírtad őket, a titkosított eredeti szövegeddel együtt őrizzük meg.",
@@ -312,7 +312,7 @@ const hu: Locale = {
     "signin.devNote": "Csak helyi teszteléshez. Az éles oldalon ez a gomb sosem jelenik meg.",
     "signin.unavailable": "Ezen az oldalon még nincs beállítva a belépés.",
     "signin.providerUnavailable": "Még nem elérhető",
-    "signin.failed": "Nem sikerült beléptetni. Megpróbálod újra?",
+    "signin.failed": "Nem sikerült a belépés. Megpróbálod újra?",
     "signin.legal": "A vitáidat egy külső MI olvassa. A folytatással elfogadod az",
     "signin.legalLink": "Adatvédelmi tájékoztatót",
     "signin.legalAfter": ".",
@@ -350,7 +350,7 @@ const hu: Locale = {
     "pricing.premium.f3": "Legfeljebb két gyors kérdés, ha hiányzik egy fontos tény",
     "pricing.premium.f4": "Névcsere az ítélet előtt",
     "pricing.packsTitle": "Kreditcsomagok",
-    "pricing.packsLead": "Egyszer fizetsz, és akkor használod, amikor akarod. Minden ítélet egy kreditbe kerül.",
+    "pricing.packsLead": "Egyszer fizetsz, és akkor használod fel, amikor csak akarod. Minden ítélet egy kreditbe kerül.",
     "pricing.pack": "{n} ítélet",
     "pricing.pack.one": "1 ítélet",
     "pricing.perVerdict": "Ítéletenként {price}",
@@ -417,7 +417,7 @@ const hu: Locale = {
       "Erre az ügyre félretettünk 1 ítéletet. Ha a határidőig ({date}) senki sem válaszol, visszakapod.",
     "case.heldSoon":
       "Erre az ügyre félretettünk 1 ítéletet. Ha 7 napon belül senki sem válaszol, visszakapod.",
-    "case.judgeNow": "Csak az én verzióm alapján",
+    "case.judgeNow": "Ítélet csak az én verzióm alapján",
     "case.judgeNow.confirm": "Kérsz most egy egyoldalú ítéletet? A meghívó lezárul, és a másik fél már nem válaszolhat.",
     "case.judgeNow.yes": "Igen, döntsenek most",
     "case.judgeExpired.confirm": "Kérsz ítéletet csak a te verziód alapján? Ez 1 ítéletbe kerül.",
@@ -519,9 +519,9 @@ const hu: Locale = {
     "appeal.outcome.changed": "Változott az ítélet",
     "appeal.by": "{name} kiegészítése után",
     "appeal.bySelf": "A te kiegészítésed után",
-    "appeal.generic.upheld": "Az új információ nem változtatott az eredményen.",
-    "appeal.generic.overturned": "Az új információ megfordította az eredményt.",
-    "appeal.generic.changed": "Az új információ megváltoztatta az ítéletet.",
+    "appeal.generic.upheld": "A kiegészítés nem változtatott az eredményen.",
+    "appeal.generic.overturned": "A kiegészítés megfordította az eredményt.",
+    "appeal.generic.changed": "A kiegészítés megváltoztatta az ítéletet.",
     "appeal.previous": "Korábbi ítélet",
     "appeal.failed": "Az újraítélés nem sikerült. Visszakaptad a kreditedet, megpróbálhatod újra.",
     "appeal.refused": "A bírák ezzel a kiegészítéssel nem voltak hajlandók újra dönteni. Visszakaptad a kreditedet.",
@@ -606,7 +606,7 @@ const hu: Locale = {
     "owner.unreadable": "Amit írtál, most nem jeleníthető meg.",
     "owner.claim": "Ítélet mentése a fiókodba",
     "owner.claimed": "Ez az ítélet már a fiókodban van.",
-    "owner.case": "Ez az ítélet egy ügyhöz tartozik. A neveket az ügy oldalán módosíthatod, és ott is távolíthatod el.",
+    "owner.case": "Ez az ítélet egy ügyhöz tartozik. A neveket az ügy oldalán módosíthatod, és az ítéletet is ott távolíthatod el.",
     "owner.caseRespondent":
       "Ez az ítélet egy olyan ügyhöz tartozik, amelyre te válaszoltál. A neved módosításához vagy a verziód eltávolításához nyisd meg azt a meghívólinket, amelyről válaszoltál.",
     "owner.caseLink": "Ügy megnyitása",
@@ -645,7 +645,7 @@ const hu: Locale = {
     "home.step.ruling": "Ítélet",
     "home.invite": "Vagy hívd meg a másik felet, hogy elmondja a sajátját",
     "home.oneSide": "Inkább csak az én verzióm alapján",
-    "home.left.one": "Még 1 ítéleted maradt",
+    "home.left.one": "Még egy ítéleted maradt",
     "home.left.other": "Még {n} ítéleted maradt",
     "home.monthLeft": "Ebben a hónapban még {n}/{cap} maradt",
     "home.out": "Elfogytak az ítéleteid.",
@@ -659,7 +659,7 @@ const hu: Locale = {
     "bestPoint.self": "A te legjobb érved",
     "privacy.accessTitle": "Ki mit láthat",
     "privacy.access":
-      "Te: az eredeti szövegedet és a neveket, belépve bármelyik eszközön, vagy azon az eszközön, amelyet használtál, egy a böngésződben vagy az appban elmentett privát kód révén (mi ennek a kódnak csak összekevert formáját őrizzük). A belépés nélkül írt ítéletek – még abból az időből, amikor nem kellett hozzájuk fiók – a címsorukkal és az általad írt nevekkel együtt abban a böngészőben listázva maradnak, hogy az Ítéleteim megjeleníthesse őket: ezt a listát bárki látja, aki ugyanazt a böngészőt használja. Közös számítógépen lépj be, vagy használj privát ablakot; ha a böngészőben törlöd az oldal adatait, a lista is törlődik. Egy kétoldalú ügyben mindenki csak a saját eredetijét látja; az ítélet után mindketten látják mindkét anonimizált beszámolót, úgy, ahogy a bírák olvasták. A bírák (az MI-szolgáltatónk által futtatott modellek): csak az anonimizált változatot. Bárki, akinél ott a megosztási link: az ítéletet a megjelenített nevekkel. Alapértelmezés szerint ez a magadnak választott név és a többiek keresztneve, ahogy te írtad; ezeket bármikor módosíthatod, vagy kikapcsolhatod a neveket, és akkor az oldal Fél A-t és Fél B-t mutat. Mi: a kulccsal vissza tudjuk fejteni az eredetiket, és csak akkor tesszük, ha a kéréseidre válaszolunk, hibát javítunk, vagy ha a törvény előírja.",
+      "Te: az eredeti szövegedet és a neveket, belépve bármelyik eszközön, vagy azon az eszközön, amelyet használtál, egy a böngésződben vagy az appban elmentett privát kód révén (ennek a kódnak mi csak a hash-ét őrizzük meg). A belépés nélkül írt ítéletek – még abból az időből, amikor nem kellett hozzájuk fiók – a címsorukkal és az általad írt nevekkel együtt abban a böngészőben listázva maradnak, hogy az Ítéleteim megjeleníthesse őket: ezt a listát bárki látja, aki ugyanazt a böngészőt használja. Közös számítógépen lépj be, vagy használj privát ablakot; ha a böngészőben törlöd az oldal adatait, a lista is törlődik. Egy kétoldalú ügyben mindenki csak a saját eredetijét látja; az ítélet után mindketten látják mindkét anonimizált beszámolót, úgy, ahogy a bírák olvasták. A bírák (az MI-szolgáltatónk által futtatott modellek): csak az anonimizált változatot. Bárki, akinél ott a megosztási link: az ítéletet a megjelenített nevekkel. Alapértelmezés szerint ez a magadnak választott név és a többiek keresztneve, ahogy te írtad; ezeket bármikor módosíthatod, vagy kikapcsolhatod a neveket, és akkor az oldal Fél A-t és Fél B-t mutat. Mi: a kulccsal vissza tudjuk fejteni az eredetiket, és csak akkor tesszük, ha a kéréseidre válaszolunk, hibát javítunk, vagy ha a törvény előírja.",
     "privacy.removalTitle": "Eltávolítás",
     "privacy.removal":
       "Az eltávolítást kérheted az ítélet oldalán (belépve a fiókoldaladról is megnyithatod), kétoldalú ügynél az ügy oldalán, a fiókod törlésével vagy e-mailben. Az eltávolítás törli az eredeti szövegedet, a névlistát és a megjelenített neveket (kétoldalú ügyben a te verziód eredetijét és a megjelenített nevedet), a megosztási link és az előnézeti képe pedig senkinek sem töltődik be többé. A csetalkalmazásokban már kiküldött előnézeteket azok az appok tárolják, és amíg nem frissítik őket, még látszhatnak. Az anonimizált szöveget és az ítéletet nevek nélkül megőrizzük a nyilvántartásunkban; ezek a linken keresztül már nem nyithatók meg. A fiókod törlése ezt minden ítéletednél és az ügyekben beküldött összes verziódnál elvégzi, és törli a belépési adataidat, a kreditjeidet és az előfizetésedet. Az eltávolított adatok a biztonsági mentéseinkben maradnak, amíg azok le nem járnak (legfeljebb 14 nap, lásd lent); ha valaha visszaállítunk egy mentést, minden eltávolítást újra végrehajtunk (ehhez listát vezetünk arról, mit és mikor távolítottunk el, szöveg és nevek nélkül).",

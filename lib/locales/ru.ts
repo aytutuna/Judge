@@ -2,7 +2,7 @@ import type { Locale } from "../i18n";
 
 const ru: Locale = {
   voice:
-    'Address the reader with lowercase "вы" and plural verb forms, never "ты"; keep the tone casual and friendly, not bureaucratic. Refer to the parties as "Сторона A" and "Сторона B" in prose, like names, always capitalized, with the Latin letters A and B, and never inflected ("Стороны A", "Стороне B", "Сторону A" are wrong): build each sentence so the label is the subject in the nominative, follows a colon or a dash, or stands in a nominative phrase (e.g. "Сторона A считает…", "довод, который приводит Сторона B"). Do not put the labels in quotation marks in your text. Real names replace the labels later, so use present-tense verbs with a label (retelling what happened in the present tense is natural in Russian), avoid past-tense verbs and short adjectives that show gender ("права", "сказала", "уверена"), and repeat the label instead of using "она"/"её" for a party. Other people stay "Person C", "Person D" exactly as written, also uninflected. The card prints "Если" before each conditional if_value, so write that clause as a bare present-tense condition that reads on from "Если" (e.g. "вам честность важнее вежливости"), never starting with "Если", "Когда" or "При условии", and starting lowercase unless it begins with a party label or a name. Use Russian quotation marks «…», a spaced em dash (—), the letter ё where it belongs, no space before ? or !, a decimal comma and a space as the thousands separator.',
+    'Address the reader with lowercase "вы" and plural verb forms, never "ты"; keep the tone casual and friendly, not bureaucratic, and write the way a Russian speaker would say it, not word for word from English. Refer to the parties as "Сторона A" and "Сторона B" in prose, like names, always capitalized, with the Latin letters A and B, and never inflected ("Стороны A", "Стороне B", "Сторону A", "со Стороной B" are wrong): build each sentence so the label is the subject in the nominative, follows a colon or a dash, or stands in a nominative phrase (e.g. "Сторона A считает…", "довод, который приводит Сторона B"). When a sentence seems to need another case, rephrase it: "как считает Сторона A" rather than "по мнению Стороны A", "здесь Сторона B не ошибается" rather than "Сторона B права", "Сторона A ставит честность выше" rather than "для Стороны A важнее честность". Do not put the labels in quotation marks in your text. Real names replace the labels later, so use present-tense verbs with a label (retelling what happened in the present tense is natural in Russian), avoid past-tense verbs and short adjectives that show gender ("права", "сказала", "уверена"), and repeat the label instead of using "он", "она" or "её" for a party. Other people stay "Person C", "Person D" exactly as written, also uninflected. The card prints "Если" before each conditional if_value, so write that clause as a bare present-tense condition that reads on from "Если" (e.g. "вам честность важнее вежливости"), never starting with "Если", "Когда" or "При условии", and starting lowercase unless it begins with a party label or a name. Use Russian quotation marks «…», a spaced em dash (—), the letter ё where it belongs, no space before ? or !, a decimal comma and a space as the thousands separator.',
   email: {
     signIn: {
       subject: "Ссылка для входа в Judge",
@@ -18,7 +18,7 @@ const ru: Locale = {
       ignore: "Если вы не запрашивали вход, просто не обращайте внимания на это письмо.",
     },
     caseReady: {
-      subject: "Ответ получен: ваш вердикт Judge готов",
+      subject: "Вам ответили: вердикт Judge готов",
       intro: "Другой человек рассказал свою версию, и судьи вынесли вердикт с учётом обеих.",
       button: "Посмотреть вердикт",
       note: "Вы получили это письмо, потому что начали это дело в Judge.",
@@ -222,7 +222,7 @@ const ru: Locale = {
       "Не в каждом споре есть победитель. Вердикт может быть явной победой, «каждый отчасти прав», «зависит от ваших ценностей» или «одно слово, разные смыслы». Если вам всё же нужен победитель, будет вынужденный вердикт — с честной пометкой.",
     "about.limitsTitle": "Ограничения",
     "about.limit1":
-      "Он знает только то, что вы ему рассказали, а от того, как вы это расскажете, зависит результат. Изложите и позицию другой стороны так, как изложила бы она сама.",
+      "Judge знает только то, что вы ему рассказали, а результат зависит от того, как вы подали историю. Изложите и позицию другой стороны так, как изложила бы она сама.",
     "about.limit2":
       "ИИ-судьи могут ошибаться в фактах. В каждом вердикте перечислены факты, на которые он опирается, — их можно проверить.",
     "about.limit3":
@@ -324,8 +324,8 @@ const ru: Locale = {
     "account.subscription": "Месячная подписка",
     "account.subscriptionNone": "Не активна",
     "account.subscriptionUntil": "Активна до {date}",
-    "account.subscriptionRenews": "Продлится {date}",
-    "account.fairUse": "Вердикты в этом месяце: {used} из {cap}",
+    "account.subscriptionRenews": "Следующее продление: {date}",
+    "account.fairUse": "Использовано в этом месяце: {used} из {cap}",
     "account.getPremium": "Больше вердиктов",
     "account.signOut": "Выйти",
     "account.delete": "Удалить аккаунт",
@@ -350,7 +350,7 @@ const ru: Locale = {
     "pricing.premium.f3": "До двух коротких вопросов, если не хватает важного факта",
     "pricing.premium.f4": "Имена заменяются ещё до вынесения вердикта",
     "pricing.packsTitle": "Пакеты вердиктов",
-    "pricing.packsLead": "Платите один раз и пользуйтесь когда угодно. За каждый вердикт из пакета списывается один.",
+    "pricing.packsLead": "Платите один раз, а тратите когда угодно: на каждый спор уходит один вердикт из пакета.",
     "pricing.pack": "{n} вердиктов",
     "pricing.pack.one": "1 вердикт",
     "pricing.perVerdict": "{price} за вердикт",
@@ -367,7 +367,7 @@ const ru: Locale = {
     "error.fair_use": "Вердикты на этот месяц закончились. Новые появятся {date}.",
     "error.fair_useSoon": "Вердикты на этот месяц закончились. Скоро появятся новые.",
     "error.in_progress": "Над этим вердиктом ещё работают. Подождите немного.",
-    "error.bad_origin": "Мы не узнали, откуда пришёл запрос. Обновите страницу и попробуйте снова.",
+    "error.bad_origin": "Запрос пришёл с незнакомого сайта. Обновите страницу и попробуйте снова.",
     "error.not_found": "Ничего не нашли.",
     "error.case_closed": "В этом деле так уже нельзя.",
     "error.case_expired": "Срок действия приглашения истёк.",
@@ -378,7 +378,7 @@ const ru: Locale = {
     "error.too_large": "Слишком большой файл. Попробуйте изображение поменьше.",
     "error.unsupported_media": "Мы читаем только изображения PNG, JPEG, WebP или GIF.",
     "error.too_many_files": "Здесь нельзя добавить столько изображений.",
-    "error.evidence_invalid": "Одно из изображений больше недействительно или не прошло проверку. Удалите его и добавьте снова.",
+    "error.evidence_invalid": "Одно из изображений устарело или не прошло проверку. Удалите его и добавьте снова.",
     "error.anonymize_failed": "Не получилось убрать имена из текста. Попробуйте ещё раз или напишите инициалы вместо полных имён.",
     "mode.label": "Как будем судить?",
     "mode.now": "Только я (сразу)",
@@ -398,7 +398,7 @@ const ru: Locale = {
     "case.signIn": "Войдите, чтобы увидеть своё дело.",
     "case.status.awaiting": "Ждём другую сторону",
     "case.status.judging": "Судьи работают",
-    "case.status.judged": "Вердикт",
+    "case.status.judged": "Вердикт вынесен",
     "case.status.failed": "Судьи не смогли закончить",
     "case.status.expired": "Срок приглашения истёк",
     "case.invite.label": "Отправьте эту ссылку другому человеку",
@@ -515,8 +515,8 @@ const ru: Locale = {
     "appeal.outcome.upheld": "Вердикт в силе",
     "appeal.outcome.overturned": "Вердикт сменился на противоположный",
     "appeal.outcome.changed": "Вердикт изменился",
-    "appeal.by": "После новых подробностей ({name})",
-    "appeal.bySelf": "После ваших новых подробностей",
+    "appeal.by": "Новые подробности — {name}",
+    "appeal.bySelf": "Новые подробности — от вас",
     "appeal.generic.upheld": "Новые подробности не изменили итог.",
     "appeal.generic.overturned": "Из-за новых подробностей итог сменился на противоположный.",
     "appeal.generic.changed": "Новые подробности изменили вердикт.",
@@ -524,7 +524,7 @@ const ru: Locale = {
     "appeal.failed": "Пересмотр не состоялся. Вердикт вернулся на баланс, можно попробовать снова.",
     "appeal.refused": "Судьи отказались пересматривать дело с такими подробностями. Вердикт вернулся на баланс.",
     "appeal.leadVerdict":
-      "Чего-то не хватает или что-то не так? Добавьте это, и судьи пересмотрят всё заново. Каждый раз это стоит 1 вердикт, и не больше двух раз на один вердикт.",
+      "Чего-то не хватает или что-то не так? Добавьте это, и судьи пересмотрят всё заново. Каждый пересмотр стоит 1 вердикт, и для одного вердикта их может быть не больше двух.",
     "appeal.history": "История вердикта",
     "faq.both.q": "А другой человек может рассказать свою версию?",
     "faq.both.a":
@@ -653,7 +653,7 @@ const ru: Locale = {
     "stamp.conditional": "Зависит",
     "stamp.tooClose": "Почти ничья",
     "stamp.dissolved": "Спор о словах",
-    "bestPoint.of": "{name}: самый сильный довод",
+    "bestPoint.of": "Самый сильный довод, который приводит {name}",
     "bestPoint.self": "Ваш самый сильный довод",
     "privacy.accessTitle": "Кто что видит",
     "privacy.access":

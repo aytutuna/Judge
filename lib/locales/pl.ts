@@ -2,7 +2,7 @@ import type { Locale } from "../i18n";
 
 const pl: Locale = {
   voice:
-    'Address the reader with informal "ty" (lowercase "ty", "twój" mid-sentence), never "Pan"/"Pani" or "Państwo", and avoid gendered past-tense or adjective forms for the reader (prefer present tense or impersonal phrasing, e.g. "masz rację", "warto sprawdzić"). Refer to the parties as "Strona A" and "Strona B" in prose, like names, with no word in front, and never inflect the label (no "Strony A", "Stronie A", "Stronę A"): build each sentence so the label stays in the nominative, as the subject, after a colon or after a dash. Instead of a possessive or an object form, use a verb or a relative clause: "Strona A uważa, że…", "argument, który przedstawia Strona A", "rację ma Strona B". Use present-tense verbs with a label and avoid past-tense verbs, adjectives or pronouns that agree with its feminine gender (no "Strona A powiedziała", "jej zdaniem"), because a real name of either gender may replace it later. "Person C", "Person D" stay exactly as written, also uninflected. The card prints "Jeśli" before each conditional if_value, so write the if_value as a bare lowercase condition clause in the present tense that reads on from "Jeśli" (e.g. "bardziej cenisz szczerość niż takt"), never starting with "Jeśli", "Jeżeli", "Gdy" or "Kiedy". Use Polish quotation marks „…”, a spaced en dash ( – ) for dashes, a decimal comma and a space as the thousands separator.',
+    'Address the reader with informal "ty" (lowercase "ty", "twój" mid-sentence), never "Pan"/"Pani" or "Państwo", and avoid gendered past-tense or adjective forms for the reader (prefer present tense or impersonal phrasing, e.g. "masz rację", "warto sprawdzić"). Refer to the parties as "Strona A" and "Strona B" in prose, like names, with no word in front, and never inflect the label (no "Strony A", "Stronie A", "Stronę A"): build each sentence so the label stays in the nominative, as the subject, after a colon or after a dash. Instead of a possessive or an object form, use a verb or a relative clause: "Strona A uważa, że…", "argument, który przedstawia Strona A", "rację ma Strona B". Keep the prose natural and varied rather than stiff: put the label after a colon ("Rację ma Strona B: …"), use impersonal forms ("trudno się nie zgodzić, że…", "brakuje tu dowodu na…") or talk about the argument itself ("ten argument pomija…"). Use present-tense verbs with a label and avoid past-tense verbs, adjectives or pronouns that agree with its feminine gender (no "Strona A powiedziała", "jej zdaniem"), because a real name of either gender may replace it later. "Person C", "Person D" stay exactly as written, also uninflected. The card prints "Jeśli" before each conditional if_value, so write the if_value as a bare lowercase condition clause in the present tense that reads on from "Jeśli" (e.g. "bardziej cenisz szczerość niż takt"), never starting with "Jeśli", "Jeżeli", "Gdy" or "Kiedy". Use Polish quotation marks „…”, a spaced en dash ( – ) for dashes, a decimal comma and a space as the thousands separator.',
   email: {
     signIn: {
       subject: "Twój link do logowania w Judge",
@@ -18,10 +18,10 @@ const pl: Locale = {
       ignore: "Jeśli to nie ty, po prostu zignoruj tę wiadomość.",
     },
     caseReady: {
-      subject: "Jest odpowiedź: twój werdykt w Judge jest gotowy",
+      subject: "Druga strona odpowiedziała: twój werdykt w Judge jest gotowy",
       intro: "Druga osoba opisała swoją wersję, a sędziowie rozstrzygnęli spór na podstawie obu relacji.",
       button: "Zobacz werdykt",
-      note: "Dostajesz tę wiadomość, bo ta sprawa w Judge należy do ciebie.",
+      note: "Dostajesz tę wiadomość, bo to twoja sprawa w Judge.",
     },
   },
   strings: {
@@ -97,11 +97,11 @@ const pl: Locale = {
     "vote.split": "pół na pół",
     "vote.conditional": "zależy",
     "vote.dissolved": "spór o słowa",
-    refusedNote: "AI wstrzymało się w tej sprawie od głosu. Wolimy nic nie pokazać, niż udawać werdykt.",
+    refusedNote: "Tym razem AI wstrzymuje się od głosu. Wolimy nic nie pokazać, niż udawać werdykt.",
     demoNote: "🎭 Tryb demo: brak klucza AI, więc to przykładowy werdykt",
-    "trial.survived": "🛡️ Werdykt przetrwał ostry krzyżowy ogień pytań. Pewność bez zmian.",
-    "trial.uncertain": "⚠️ Krzyżowy ogień pytań zasiał poważne wątpliwości co do tego werdyktu",
-    "trial.overturned": "⚠️ Werdykt nie przetrwał krzyżowego ognia pytań",
+    "trial.survived": "🛡️ Werdykt przetrwał ostre przesłuchanie krzyżowe. Pewność bez zmian.",
+    "trial.uncertain": "⚠️ Przesłuchanie krzyżowe wzbudziło poważne wątpliwości co do tego werdyktu",
+    "trial.overturned": "⚠️ Werdykt nie przetrwał przesłuchania krzyżowego",
     "trial.whatWasTested": "Co sprawdziliśmy",
     "trial.attackPrefix": "Najmocniejszy zarzut:",
     "trial.refereePrefix": "Arbiter:",
@@ -126,9 +126,9 @@ const pl: Locale = {
     "error.captcha_failed":
       "Nie udało się potwierdzić, że jesteś człowiekiem. Przejdź weryfikację jeszcze raz i wyślij ponownie.",
     "wait.moment": "kilka minut",
-    "wait.minute": "1 minutę",
+    "wait.minute": "minutę",
     "wait.minutes": "{n} minut",
-    "wait.hour": "1 godzinę",
+    "wait.hour": "godzinę",
     "wait.hours": "{n} godzin",
     "refused.headline": "AI nie chce się wypowiadać w tej sprawie",
     "refused.crux":
@@ -171,9 +171,9 @@ const pl: Locale = {
     "how.step4.title": "Trzech niezależnych sędziów",
     "how.step4.body":
       "Trzech sędziów decyduje osobno, a przy wyrównanym wyniku dochodzą kolejni. Pewność wynika z tego, na ile się zgadzają, a nie z tego, jak pewnie brzmią.",
-    "how.step5.title": "Werdykt, potem ogień pytań",
+    "how.step5.title": "Werdykt i przesłuchanie krzyżowe",
     "how.step5.body":
-      "Dostajesz werdykt i poziom pewności, a do tego najmocniejszy argument drugiej strony. Wygrana oparta na faktach przechodzi jeszcze krzyżowy ogień pytań, a jeśli się chwieje, dostajesz ostrzeżenie.",
+      "Dostajesz werdykt i poziom pewności, a do tego najmocniejszy argument drugiej strony. Wygrana oparta na faktach przechodzi jeszcze przesłuchanie krzyżowe, a jeśli się chwieje, dostajesz ostrzeżenie.",
     "sample.title": "Jak wygląda werdykt",
     "sample.kicker": "Wynik",
     "sample.lead":
@@ -193,13 +193,13 @@ const pl: Locale = {
     "faq.kicker": "FAQ",
     "faq.fair.q": "Czy to uczciwe?",
     "faq.fair.a":
-      "Bardzo się stara. Imiona zamieniamy na Stronę A i Stronę B, więc sędziowie nie wiedzą, kto jest kim. Obie strony są przedstawiane w najmocniejszej wersji, a trzech sędziów decyduje osobno. Jeśli się nie zgadzają, poziom pewności spada i od razu to widać. Przy wyrównanym wyniku najpierw dochodzą kolejni sędziowie. Mimo to może się mylić, więc sprawdź fakty, które wypisuje.",
+      "Robimy wszystko, żeby tak było. Imiona zamieniamy na Stronę A i Stronę B, więc sędziowie nie wiedzą, kto jest kim. Obie strony są przedstawiane w najmocniejszej wersji, a trzech sędziów decyduje osobno. Jeśli się nie zgadzają, poziom pewności spada i od razu to widać. Przy wyrównanym wyniku najpierw dochodzą kolejni sędziowie. Mimo to werdykt może być błędny, więc sprawdź fakty, na których się opiera.",
     "faq.private.q": "Czy mój tekst jest prywatny?",
     "faq.private.a":
       "Do werdyktu potrzebne jest konto. Twój tekst trafia do zewnętrznej usługi AI, która zamienia imiona na Stronę A i Stronę B, i oceniana jest tylko ta wersja. To, co piszesz, łącznie z imionami, przechowujemy w formie zaszyfrowanej, więc zawsze możesz do tego wrócić; w każdej chwili możesz też poprosić o usunięcie. Linki do udostępniania pokazują wybrane przez ciebie imiona albo żadne.",
     "faq.powers.q": "Na czym to działa?",
     "faq.powers.a":
-      "Na modelu AI od zewnętrznego dostawcy. Trzech sędziów pracuje równolegle według tych samych, szczegółowych zasad oceniania, a przy wyrównanym wyniku dołączają kolejni. Zwycięskie werdykty oparte na faktach przechodzą osobny krzyżowy ogień pytań. Poziom pewności liczy zwykły kod, który sprawdza, jak często sędziowie się zgadzają.",
+      "Na modelu AI od zewnętrznego dostawcy. Trzech sędziów pracuje równolegle według tych samych, szczegółowych zasad oceniania, a przy wyrównanym wyniku dołączają kolejni. Zwycięskie werdykty oparte na faktach przechodzą osobne przesłuchanie krzyżowe. Poziom pewności liczy zwykły kod, który sprawdza, jak często sędziowie się zgadzają.",
     "faq.taste.q": "A jeśli to kwestia gustu?",
     "faq.taste.a":
       "Wtedy usłyszysz: „Zależy, co cenicie” albo „To samo słowo, inne znaczenia”. Nadal zobaczysz, w którą stronę skłaniają się sędziowie – jako werdykt na siłę, wyraźnie tak oznaczony.",
@@ -232,7 +232,7 @@ const pl: Locale = {
     "about.limit4": "To zabawa i sposób na jaśniejsze spojrzenie, a nie porada prawna, medyczna ani finansowa.",
     "about.builtTitle": "Pod maską",
     "about.built":
-      "Judge działa na modelu AI od zewnętrznego dostawcy. Trzech sędziów pracuje równolegle, a przy wyrównanym wyniku dochodzą kolejni. To, na ile się zgadzają, wyznacza poziom pewności, a zwycięski werdykt oparty na faktach musi jeszcze przetrwać osobny krzyżowy ogień pytań.",
+      "Judge działa na modelu AI od zewnętrznego dostawcy. Trzech sędziów pracuje równolegle, a przy wyrównanym wyniku dochodzą kolejni. To, na ile się zgadzają, wyznacza poziom pewności, a zwycięski werdykt oparty na faktach musi jeszcze przetrwać osobne przesłuchanie krzyżowe.",
     "privacy.title": "Prywatność",
     "privacy.kicker": "Twoje dane",
     "privacy.lead":
@@ -245,7 +245,7 @@ const pl: Locale = {
       "Żadnych trackerów reklamowych i nigdy nie sprzedajemy danych. Wybrany język jest zapisany w pamięci lokalnej twojej przeglądarki i nigdzie indziej.",
     "privacy.ipTitle": "Limity użycia",
     "privacy.ip":
-      "Żeby usługa była dostępna dla wszystkich, ograniczamy liczbę werdyktów na konto i liczbę tłumaczeń na odwiedzającego. Przy tłumaczeniach i odpowiedziach w sprawach dwustronnych przechowujemy w magazynie limitów, przez maksymalnie 24 godziny, kluczowany skrót (hash) twojego adresu IP, a nie sam adres. Jeśli weryfikacja człowieka jest włączona, twój adres IP trafia też do Cloudflare na potrzeby tej weryfikacji. Nigdy nie jest zapisywany razem z twoim werdyktem.",
+      "Żeby usługa była dostępna dla wszystkich, ograniczamy liczbę werdyktów na konto i liczbę tłumaczeń na odwiedzającego. Przy tłumaczeniach i odpowiedziach w sprawach dwustronnych przechowujemy w magazynie limitów, przez maksymalnie 24 godziny, skrót (hash) twojego adresu IP liczony z tajnym kluczem, a nie sam adres. Jeśli weryfikacja człowieka jest włączona, twój adres IP trafia też do Cloudflare na potrzeby tej weryfikacji. Nigdy nie jest zapisywany razem z twoim werdyktem.",
     "privacy.processorsTitle": "Kto jeszcze przetwarza twój tekst",
     "privacy.processors":
       "Wpisany przez ciebie tekst, łącznie z prawdziwymi imionami, najpierw trafia do naszego dostawcy AI w Stanach Zjednoczonych, żeby usunąć z niego imiona. Ocenie podlega tylko wersja zanonimizowana; twój oryginał jest przechowywany w formie zaszyfrowanej, jak opisano wyżej. Jeśli weryfikacja człowieka jest włączona, Cloudflare Turnstile działa w twojej przeglądarce i sprawdza wynik w Cloudflare. Jeśli się logujesz, logowanie obsługuje Apple albo Google (zależnie od wyboru), a e-maile do logowania wysyłamy przez Resend. Nasz dostawca hostingu prowadzi standardowe logi serwera.",
@@ -371,7 +371,7 @@ const pl: Locale = {
     "error.in_progress": "Ten werdykt wciąż powstaje. Daj mu chwilę.",
     "error.bad_origin": "To żądanie przyszło z nieznanego miejsca. Odśwież stronę i spróbuj ponownie.",
     "error.not_found": "Nie udało się tego znaleźć.",
-    "error.case_closed": "Ta sprawa już tego nie przyjmuje.",
+    "error.case_closed": "W tej sprawie nie da się już tego zrobić.",
     "error.case_expired": "To zaproszenie wygasło.",
     "error.appeal_used": "Twój kontekst do tej sprawy został już dodany.",
     "error.appeal_limit": "Kontekst do tego werdyktu dodano już dwa razy. To limit dla jednego werdyktu.",
@@ -507,7 +507,7 @@ const pl: Locale = {
     "twoSided.wouldChange": "Co mogłoby zmienić ten werdykt",
     "appeal.title": "Dodaj kontekst",
     "appeal.lead":
-      "Czegoś brakuje albo coś się nie zgadza? Dodaj to raz, a sędziowie przyjrzą się wszystkiemu od nowa. Kosztuje to 1 werdykt.",
+      "Czegoś brakuje albo coś się nie zgadza? Możesz to raz dopisać, a sędziowie przyjrzą się wszystkiemu od nowa. Kosztuje to 1 werdykt.",
     "appeal.label": "Twój kontekst",
     "appeal.placeholder": "Co umknęło sędziom?",
     "appeal.submit": "Oceń ponownie z kontekstem",
@@ -554,7 +554,7 @@ const pl: Locale = {
       "Sprawa dwustronna zużywa 1 werdykt. Jest rezerwowany, gdy wysyłasz link, i wraca, jeśli nikt nie odpowie w ciągu 7 dni.",
     "privacy.casesTitle": "Sprawy dwustronne i odwołania",
     "privacy.cases":
-      "W sprawie dwustronnej każda wersja jest anonimizowana w chwili wysłania, tak samo jak przy zwykłym werdykcie. Sędziowie czytają tekst zanonimizowany; wersja każdej osoby w oryginale, wraz z listą imion, jest przechowywana w formie zaszyfrowanej i widzi ją tylko ta osoba. Wysyłając swoją wersję, każda osoba wpisuje imię, które ma się wyświetlać na stronie udostępniania; jeśli pole zostanie puste, pojawi się Strona A albo Strona B. Druga osoba nie potrzebuje konta; liczbę jej odpowiedzi ograniczamy na podstawie kluczowanego skrótu (hash) jej adresu IP. Link z zaproszeniem jest przechowywany tylko jako skrót (hash). Jeśli druga osoba odpowiada po zalogowaniu, jej konto zostaje powiązane z jej wersją, więc tylko ona może później dodać kontekst albo zobaczyć swój oryginał; jeśli odpowiada bez logowania, to samo zapewnia prywatny kod zapisany w jej przeglądarce. Żeby ta sama osoba miała tę samą etykietę w obu relacjach, serwer przechowuje w ramach każdej sprawy zakodowane odciski imion (kluczowane skróty, a nie same imiona). Przed werdyktem żadna ze stron nie może przeczytać tekstu drugiej; po werdykcie w sprawie dwustronnej obie osoby mogą przeczytać obie zanonimizowane relacje. Kontekst dodany po werdykcie (odwołanie) jest traktowany tak samo. Gdy druga osoba odpowie, możemy wysłać ci krótką wiadomość e-mail bez żadnej treści sprawy, jeśli wysyłka e-maili jest skonfigurowana. Każda z osób może usunąć swoją wersję: jej oryginał i nazwa wyświetlana zostają wymazane, a linki do udostępniania sprawy przestają działać dla wszystkich. Usunięcie konta robi to samo we wszystkich twoich sprawach: zarówno rozpoczętych przez ciebie, jak i tych, w których odpowiadasz.",
+      "W sprawie dwustronnej każda wersja jest anonimizowana w chwili wysłania, tak samo jak przy zwykłym werdykcie. Sędziowie czytają tekst zanonimizowany; wersja każdej osoby w oryginale, wraz z listą imion, jest przechowywana w formie zaszyfrowanej i widzi ją tylko ta osoba. Wysyłając swoją wersję, każda osoba wpisuje imię, które ma się wyświetlać na stronie udostępniania; jeśli pole zostanie puste, pojawi się Strona A albo Strona B. Druga osoba nie potrzebuje konta; liczbę jej odpowiedzi ograniczamy na podstawie skrótu (hash) jej adresu IP liczonego z tajnym kluczem. Link z zaproszeniem jest przechowywany tylko jako skrót (hash). Jeśli druga osoba odpowiada po zalogowaniu, jej konto zostaje powiązane z jej wersją, więc tylko ona może później dodać kontekst albo zobaczyć swój oryginał; jeśli odpowiada bez logowania, to samo zapewnia prywatny kod zapisany w jej przeglądarce. Żeby ta sama osoba miała tę samą etykietę w obu relacjach, serwer przechowuje w ramach każdej sprawy zakodowane odciski imion (skróty liczone z tajnym kluczem, a nie same imiona). Przed werdyktem żadna ze stron nie może przeczytać tekstu drugiej; po werdykcie w sprawie dwustronnej obie osoby mogą przeczytać obie zanonimizowane relacje. Kontekst dodany po werdykcie (odwołanie) jest traktowany tak samo. Gdy druga osoba odpowie, możemy wysłać ci krótką wiadomość e-mail bez żadnej treści sprawy, jeśli wysyłka e-maili jest skonfigurowana. Każda z osób może usunąć swoją wersję: jej oryginał i nazwa wyświetlana zostają wymazane, a linki do udostępniania sprawy przestają działać dla wszystkich. Usunięcie konta robi to samo we wszystkich twoich sprawach: zarówno rozpoczętych przez ciebie, jak i tych, w których odpowiadasz.",
     "privacy.evidenceTitle": "Zrzuty ekranu",
     "privacy.evidence":
       "Twoja przeglądarka zmniejsza duże obrazy przed wysłaniem. Następnie każdy obraz raz trafia do zewnętrznej usługi AI, żeby odczytać widoczny tekst; samego obrazu nigdy nie przechowujemy. Surowa transkrypcja, która może jeszcze zawierać imiona, wraca do ciebie w podpisanym tokenie, który twoja przeglądarka przechowuje przez maksymalnie 6 godzin. Gdy wysyłasz swoją wersję, transkrypcja jest anonimizowana razem z twoim tekstem: zanonimizowana transkrypcja trafia do sędziów i jest przechowywana razem ze sprawą, a surowa transkrypcja jest przechowywana w formie zaszyfrowanej z twoim oryginałem, gdzie widzisz ją tylko ty. Numery telefonów, adresy e-mail, nazwy kont w mediach społecznościowych i numery kont, które się w niej znajdują, są dla sędziów również zastępowane symbolami zastępczymi.",
@@ -650,7 +650,7 @@ const pl: Locale = {
     "home.step.ruling": "Werdykt",
     "home.invite": "Albo zaproś drugą stronę, żeby opisała swoją wersję",
     "home.oneSide": "Oceń jednak tylko moją wersję",
-    "home.left.one": "Został ci 1 werdykt",
+    "home.left.one": "Został ci ostatni werdykt",
     "home.left.other": "Zostało ci {n} werdyktów",
     "home.monthLeft": "Zostało ci {n} z {cap} w tym miesiącu",
     "home.out": "Nie masz już werdyktów.",
@@ -664,7 +664,7 @@ const pl: Locale = {
     "bestPoint.self": "Twój najmocniejszy argument",
     "privacy.accessTitle": "Kto co widzi",
     "privacy.access":
-      "Ty: swój oryginalny tekst i imiona – na każdym urządzeniu po zalogowaniu albo na urządzeniu, z którego korzystasz, dzięki prywatnemu kodowi zapisanemu w przeglądarce lub aplikacji (my przechowujemy tylko przekształconą postać tego kodu). Werdykty napisane bez logowania, zanim konto było wymagane, pozostają na liście w tamtej przeglądarce wraz z nagłówkami i imionami w takiej postaci, w jakiej je wpisano, żeby mogły się pojawić w „Moich werdyktach”: każdy, kto korzysta z tej samej przeglądarki, widzi tę listę. Na wspólnym komputerze zaloguj się albo użyj okna prywatnego; wyczyszczenie danych strony w przeglądarce usuwa listę. W sprawie dwustronnej każda osoba widzi tylko swój oryginał; po werdykcie obie widzą obie zanonimizowane relacje, tak jak czytają je sędziowie. Sędziowie (modele AI uruchamiane przez naszego dostawcę AI): tylko wersję zanonimizowaną. Każdy, kto ma link do udostępniania: werdykt z nazwami wyświetlanymi. Domyślnie to imię, które wybierasz dla siebie, oraz imiona pozostałych osób w takiej postaci, w jakiej je wpisano; możesz je zmienić albo wyłączyć w dowolnym momencie, a wtedy strona pokazuje Stronę A i Stronę B. My: możemy odszyfrować oryginały za pomocą klucza i robimy to tylko po to, żeby odpowiedzieć na twoje prośby, naprawić problemy albo gdy wymaga tego prawo.",
+      "Ty: swój oryginalny tekst i imiona – na każdym urządzeniu po zalogowaniu albo na urządzeniu, z którego korzystasz, dzięki prywatnemu kodowi zapisanemu w przeglądarce lub aplikacji (my przechowujemy tylko przekształconą postać tego kodu). Werdykty uzyskane bez logowania, zanim konto było wymagane, pozostają na liście w tamtej przeglądarce wraz z nagłówkami i imionami w takiej postaci, w jakiej je wpisano, żeby mogły się pojawić w „Moich werdyktach”: każdy, kto korzysta z tej samej przeglądarki, widzi tę listę. Na wspólnym komputerze zaloguj się albo użyj okna prywatnego; wyczyszczenie danych strony w przeglądarce usuwa listę. W sprawie dwustronnej każda osoba widzi tylko swój oryginał; po werdykcie obie widzą obie zanonimizowane relacje, tak jak czytają je sędziowie. Sędziowie (modele AI uruchamiane przez naszego dostawcę AI): tylko wersję zanonimizowaną. Każdy, kto ma link do udostępniania: werdykt z nazwami wyświetlanymi. Domyślnie to imię, które wybierasz dla siebie, oraz imiona pozostałych osób w takiej postaci, w jakiej je wpisano; możesz je zmienić albo wyłączyć w dowolnym momencie, a wtedy strona pokazuje Stronę A i Stronę B. My: możemy odszyfrować oryginały za pomocą klucza i robimy to tylko po to, żeby odpowiedzieć na twoje prośby, naprawić problemy albo gdy wymaga tego prawo.",
     "privacy.removalTitle": "Usuwanie",
     "privacy.removal":
       "O usunięcie możesz poprosić na stronie werdyktu (po zalogowaniu otworzysz ją ze strony konta), na stronie sprawy w przypadku sprawy dwustronnej, usuwając konto albo e-mailem. Usunięcie wymazuje twój oryginalny tekst, listę imion i nazwy wyświetlane (w sprawie dwustronnej: oryginał twojej wersji i twoją nazwę wyświetlaną), a link do udostępniania i jego obrazek podglądu przestają się wczytywać dla wszystkich. Podglądy wysłane już w komunikatorach są przechowywane przez te aplikacje i mogą być widoczne, dopóki ich nie odświeżą. Zanonimizowany tekst i werdykt, bez imion, zachowujemy w naszych zapisach; nie da się ich już otworzyć przez link. Usunięcie konta robi to dla wszystkich twoich werdyktów i twoich wersji w sprawach, a także kasuje dane logowania, pulę werdyktów i plan. Usunięte dane pozostają w kopiach zapasowych, dopóki te nie wygasną (najwyżej 14 dni, patrz niżej); jeśli kiedykolwiek przywrócimy kopię zapasową, ponownie zastosujemy każde usunięcie (w tym celu przechowujemy listę tego, co i kiedy usunięto, bez żadnych tekstów ani imion).",

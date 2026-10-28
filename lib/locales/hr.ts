@@ -2,7 +2,7 @@ import type { Locale } from "../i18n";
 
 const hr: Locale = {
   voice:
-    'Address the reader with informal "ti", never "Vi". Refer to the parties as "Strana A" and "Strana B" in prose, like names, and always write them exactly in that form, never inflected ("Strani A", "Stranu B" and the like are wrong): build the sentence so the label is the subject or stands after a colon (e.g. "Strana A tvrdi…", "argument koji iznosi Strana B"). Other people stay "Person C", "Person D" exactly as written. Real names are put back in place of the labels later, so prefer the present tense for what the parties say and do, and avoid past-tense forms and adjectives that show anyone\'s gender, the reader\'s included (write "Strana A smatra", not "Strana A je uvjerena"). Write each conditional if_value as a bare present-tense clause that reads after the card\'s "Ako" (e.g. "ti je iskrenost važnija od pristojnosti"), starting with a lowercase letter unless it begins with a party label or a name, and never repeat "Ako" at its start. Write standard Croatian (tisuća, točno, podrijetlo), never Serbian or Bosnian forms. Use Croatian quotation marks „…“, a decimal comma and a space as the thousands separator.',
+    'Address the reader with informal "ti", never "Vi". Refer to the parties as "Strana A" and "Strana B" in prose, like names, with nothing in front of them, and always write them exactly in that form, never inflected ("Strani A", "Stranu B", "Strane A" and the like are wrong): build the sentence so the label stays in the nominative, as the subject, after a colon or after a dash. Where English would use a possessive or an object, use a verb or a relative clause instead (e.g. "Strana A tvrdi…", "argument koji iznosi Strana B", "u pravu je Strana B", "Strana A i Strana B slažu se da…"). Other people stay "Person C", "Person D" exactly as written. Real names are put back in place of the labels later, so prefer the present tense for what the parties say and do, and avoid past-tense forms, adjectives and pronouns that show anyone\'s gender, the reader\'s included (write "Strana A smatra", not "Strana A je uvjerena"; repeat the label instead of "ona" or "njezin", since "Strana" is feminine but the person may not be). Keep sentences short and conversational, the way a friend would explain it, not legal or bureaucratic prose. Write each conditional if_value as a bare present-tense clause that reads after the card\'s "Ako" (e.g. "ti je iskrenost važnija od pristojnosti"), starting with a lowercase letter unless it begins with a party label or a name, and never repeat "Ako" at its start. Write standard Croatian (tisuća, točno, podrijetlo), never Serbian or Bosnian forms. Use Croatian quotation marks „…“, a spaced en dash ( – ), a decimal comma and a space as the thousands separator.',
   email: {
     signIn: {
       subject: "Tvoja poveznica za prijavu u Judge",
@@ -120,9 +120,9 @@ const hr: Locale = {
     "error.too_short": "Ovo je malo šturo. Reci nam više o raspravi.",
     "error.too_long": "To je baš puno! Skrati tekst na manje od 6000 znakova.",
     "error.invalid": "Taj zahtjev ne izgleda ispravno.",
-    "error.rate_limited": "Red u sudnici! Zasad je dosegnuto ograničenje. Pokušaj ponovno za {wait}.",
+    "error.rate_limited": "Red u sudnici! Zasad je dosta. Pokušaj ponovno za {wait}.",
     "error.daily_cap":
-      "Sud je za danas zatvoren. Saslušao je sve svađe koje može podnijeti. Vraća se za {wait}.",
+      "Sud je za danas zatvoren. Saslušao je sve svađe koje može podnijeti. Ponovno se otvara za {wait}.",
     "error.captcha_failed": "Nismo uspjeli provjeriti jesi li čovjek. Ponovi provjeru pa pošalji.",
     "wait.moment": "nekoliko minuta",
     "wait.minute": "1 minutu",
@@ -174,7 +174,7 @@ const hr: Locale = {
     "sample.title": "Kako izgleda presuda",
     "sample.kicker": "Rezultat",
     "sample.lead":
-      "Evo slučaja s burekom. Tvoja presuda će uz to svaku tvrdnju razložiti do temelja i navesti činjenice na koje se oslanja.",
+      "Evo slučaja s burekom. Tvoja će presuda uz to svaku tvrdnju razložiti do temelja i navesti činjenice na koje se oslanja.",
     "sample.badge": "Primjer",
     "sample.nameA": "Luka",
     "sample.nameB": "Ti",
@@ -211,7 +211,7 @@ const hr: Locale = {
     "footer.nav": "Poveznice stranice",
     "shared.ctaLead": "Imaš i ti neku raspravu?",
     "notFound.title": "Ova je presuda napustila sudnicu",
-    "notFound.body": "Možda je u poveznici tipfeler ili presuda više ne postoji.",
+    "notFound.body": "Možda je poveznica krivo upisana ili presuda više ne postoji.",
     "about.title": "O aplikaciji Judge",
     "about.kicker": "Kako presuđujemo",
     "about.lead":
@@ -357,7 +357,7 @@ const hr: Locale = {
     "pricing.monthly.renews": "Obnavlja se svaki mjesec",
     "pricing.monthly.cap": "{n} presuda mjesečno",
     "pricing.comingSoon": "Uskoro",
-    "pricing.note": "Cijene su u američkim dolarima. Plaćanje još nije omogućeno, pa danas još ništa ne možeš kupiti.",
+    "pricing.note": "Cijene su u američkim dolarima. Plaćanje još nije omogućeno, pa zasad ništa ne možeš kupiti.",
     "pricing.signIn": "Otvori račun za besplatnu presudu",
     "pricing.preview": "Presude ovdje još nisu uključene. Ova je stranica samo pregled.",
     "error.signin_required": "Prijavi se za nastavak.",
@@ -428,8 +428,8 @@ const hr: Locale = {
     "case.accountA": "Kako to vidi Strana A",
     "case.accountB": "Kako to vidi Strana B",
     "case.accountYou": "Kako to vidiš ti ({label})",
-    "case.contextA": "Strana A dodaje kontekst",
-    "case.contextB": "Strana B dodaje kontekst",
+    "case.contextA": "Dodatni kontekst: Strana A",
+    "case.contextB": "Dodatni kontekst: Strana B",
     "case.contextYou": "Tvoj dodatni kontekst ({label})",
     "case.evidenceItem": "{n}. slika, onako kako su je suci pročitali",
     "case.notYet": "Odgovor još nije stigao.",
@@ -535,7 +535,7 @@ const hr: Locale = {
       "Možeš, najviše tri po strani, npr. razgovor u porukama ili račun iz trgovine. Svaka slika jednom ide vanjskoj AI usluzi kako bi se pročitao njezin tekst. Suci vide verziju sa skrivenim imenima. Tekst pročitan sa slike čuvamo šifrirano, uz tvoj izvorni tekst; samu sliku nikad ne spremamo. Snimke zaslona mogu biti izrezane ili izvučene iz konteksta, pa ih suci smatraju jakim pokazateljem, a ne neoborivim dokazom.",
     "about.casesTitle": "Obje strane imaju riječ",
     "about.cases1":
-      "Dvostrani slučajevi: prijaviš se, napišeš svoju stranu i pošalješ privatnu poveznicu. Druga osoba piše svoju ne vidjevši tvoju, a suci važu oba iskaza: u čemu se slažete, oko čega se sporite i koji bi dokaz promijenio presudu.",
+      "Dvostrani slučajevi: prijaviš se, napišeš svoju stranu i pošalješ privatnu poveznicu. Druga osoba piše svoju, a da ne vidi tvoju. Suci važu oba iskaza: u čemu se slažete, oko čega se sporite i koji bi dokaz promijenio presudu.",
     "about.cases2": "Ako nitko ne odgovori u roku od 7 dana, poveznica prestaje raditi. I dalje možeš dobiti presudu samo na temelju svoje strane.",
     "about.premiumTitle": "Dodaci",
     "about.premium2":
@@ -593,7 +593,7 @@ const hr: Locale = {
     "names.edit": "Uredi imena",
     "names.saved": "Imena su spremljena.",
     "names.failed": "Nismo uspjeli spremiti imena. Pokušaj ponovno.",
-    "names.invalid": "Upiši od 1 do 40 znakova. Oznake poput Strana A nisu dopuštene.",
+    "names.invalid": "Upiši od 1 do 40 znakova. Oznake poput „Strana A“ nisu dopuštene.",
     "owner.original": "Tvoj izvorni tekst",
     "owner.answers": "Tvoji odgovori na pitanja",
     "owner.extras": "Tvoji odgovori i snimke zaslona",
@@ -602,7 +602,7 @@ const hr: Locale = {
     "owner.notStored": "Tvoj tekst nije spremljen uz ovu presudu.",
     "owner.unreadable": "Tvoj tekst trenutačno se ne može prikazati.",
     "owner.claim": "Spremi ovu presudu na svoj račun",
-    "owner.claimed": "Ova presuda sada je na tvom računu.",
+    "owner.claimed": "Ova je presuda sada na tvom računu.",
     "owner.case": "Ova presuda pripada slučaju. Imena možeš promijeniti ili je ukloniti na stranici slučaja.",
     "owner.caseRespondent":
       "Ova presuda pripada slučaju u kojem si druga strana. Da promijeniš ime ili ukloniš svoju stranu, otvori poveznicu poziva preko koje je stigao tvoj odgovor.",

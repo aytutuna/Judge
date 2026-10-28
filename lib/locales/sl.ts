@@ -2,7 +2,7 @@ import type { Locale } from "../i18n";
 
 const sl: Locale = {
   voice:
-    'Address the reader with informal "ti", never "vi" (no vikanje), the same register as the interface. Refer to the parties as "Stranka A" and "Stranka B" in prose, like names, with nothing in front of them, and always write them exactly in that form, never inflected ("Stranke A", "Stranki B", "Stranko A" and the like are wrong): build each sentence so the label is the subject or stands after a colon (e.g. "Stranka A trdi …", "argument, ki ga navaja Stranka B", "Stranka A in Stranka B se strinjata"). "Person C", "Person D" stay exactly as written, also uninflected. Real names replace the labels later, so use present-tense verbs with a label and avoid past-tense forms or adjectives that show anyone\'s gender, the reader\'s included (write "imaš prav", not "si bil" or "si bila"). The card prints "Če" before each conditional if_value, so write if_value as a bare present-tense condition clause that reads on from "Če" (e.g. "ti je iskrenost pomembnejša od vljudnosti"), starting with a lowercase letter unless it begins with a party label or a name, and never starting with "Če" or "Ako". Use the dual where Slovenian needs it, Slovenian quotation marks „…“, a spaced en dash –, a decimal comma and a period as the thousands separator.',
+    'Address the reader with informal "ti", never "vi" (no vikanje), the same register as the interface. Refer to the parties as "Stranka A" and "Stranka B" in prose, like names, with nothing in front of them, and always write them exactly in that form, never inflected ("Stranke A", "Stranki B", "Stranko A" and the like are wrong): build each sentence so the label stays in the nominative, as the subject or after a colon, and where English would use a possessive or an object, use a verb or a relative clause instead (e.g. "Stranka A trdi …", "argument, ki ga navaja Stranka B", "prav ima Stranka B", "Stranka A in Stranka B se strinjata, da …"). "Person C", "Person D" stay exactly as written, also uninflected. Real names replace the labels later, so use present-tense verbs with a label and avoid past-tense forms, adjectives and pronouns that show anyone\'s gender, the reader\'s included: write "Stranka A meni", not "Stranka A je prepričana"; repeat the label instead of "ona" or "njen"; write "imaš prav", not "si bil" or "si bila". So the prose does not go stiff, tell past events through the event itself rather than through the label (e.g. "sporočilo je ostalo brez odgovora", "dogovor ni zdržal") and talk about the arguments directly ("ta argument spregleda, da …"). Keep sentences short and conversational, the way a friend would explain it, in natural standard Slovenian, not legal or bureaucratic prose and not translated English. The card prints "Če" before each conditional if_value, so write if_value as a bare present-tense condition clause that reads on from "Če" (e.g. "ti je iskrenost pomembnejša od vljudnosti"), starting with a lowercase letter unless it begins with a party label or a name, and never starting with "Če" or "Ako". Use the dual where Slovenian needs it, Slovenian quotation marks „…“, a spaced en dash –, a decimal comma and a period as the thousands separator.',
   email: {
     signIn: {
       subject: "Tvoja povezava za prijavo v Judge",
@@ -21,7 +21,7 @@ const sl: Locale = {
       subject: "Druga oseba je odgovorila: tvoja razsodba je pripravljena",
       intro: "Druga oseba je povedala svojo plat, sodniki pa so razsodili na podlagi obeh pripovedi.",
       button: "Poglej razsodbo",
-      note: "To sporočilo dobivaš, ker je bil ta spor v Judge začet s tvojega računa.",
+      note: "To sporočilo dobivaš, ker je bil ta spor v aplikaciji Judge začet s tvojega računa.",
     },
   },
   strings: {
@@ -38,7 +38,7 @@ const sl: Locale = {
       "Kaj se je zgodilo? Kdo kaj trdi in zakaj?\n\nPlat druge osebe napiši tako, kot bi jo povedala sama. Sodniki tako ali tako za obe plati sestavijo najmočnejši argument.",
     getVerdict: "Razsodi",
     "thinking.eyebrow": "Kaj počnejo sodniki",
-    "thinking.read": "Beremo obe plati in vsaki damo najboljšo priložnost…",
+    "thinking.read": "Beremo obe plati in vsako postavimo v najboljšo luč…",
     "thinking.label": "Vsako trditev razvrščamo: dejstvo, vrednota, definicija ali logika…",
     "thinking.dig": "Kopljemo do temeljev…",
     "thinking.reach": "Iščemo, na čem v resnici stoji vsaka plat…",
@@ -52,7 +52,7 @@ const sl: Locale = {
     "thinking.ready": "Razsodba je pripravljena.",
     "verdict.win": "{name} ima prav",
     "verdict.winSelf": "Prav imaš",
-    "verdict.split": "Razdeljena odločitev",
+    "verdict.split": "Oba imata delno prav",
     "verdict.conditional": "Odvisno od tvojih vrednot",
     "verdict.dissolved": "Ista beseda, različni pomeni",
     "verdict.tooClose": "Preveč izenačeno za razsodbo",
@@ -94,7 +94,7 @@ const sl: Locale = {
     "translate.from.tr": "Prevedeno iz turščine",
     "translate.failed": "Prevod tokrat ni uspel, zato je tu izvirnik.",
     "translate.toggle": "Jezik razsodbe",
-    "vote.split": "razdeljeno",
+    "vote.split": "pol-pol",
     "vote.conditional": "odvisno",
     "vote.dissolved": "nesporazum",
     refusedNote: "UI se je tokrat vzdržala. Raje ne pokažemo ničesar, kot da bi si razsodbo izmislili.",
@@ -125,9 +125,9 @@ const sl: Locale = {
       "Sodišče je za danes zaprto. Slišalo je vse prepire, ki jih zmore. Spet odpremo čez {wait}.",
     "error.captcha_failed": "Nismo mogli preveriti, da si človek. Ponovi preverjanje in nato pošlji.",
     "wait.moment": "nekaj minut",
-    "wait.minute": "1 minuto",
+    "wait.minute": "minuto",
     "wait.minutes": "{n} minut",
-    "wait.hour": "1 uro",
+    "wait.hour": "eno uro",
     "wait.hours": "{n} ur",
     "refused.headline": "UI se o tem ni hotela izreči",
     "refused.crux":
@@ -139,7 +139,7 @@ const sl: Locale = {
     "examples.label": "Ne veš, kje začeti? Poskusi s katerim od teh:",
     "example.hotdog.label": "🌭 Je hot dog sendvič?",
     "example.hotdog.text":
-      "Prijatelj Žiga pravi, da je hot dog sendvič: nadev v prerezani štručki in pika. Jaz pravim, da je hot dog pač hot dog. Kdor naroči sendvič, ne pričakuje hot doga, in noben jedilnik ga ne uvršča med sendviče.",
+      "Prijatelj Žiga pravi, da je hot dog sendvič: nadev v prerezani štručki in pika. Jaz pravim, da je hot dog pač hot dog. Kdor naroči sendvič, ne pričakuje hot doga in noben jedilnik ga ne uvršča med sendviče.",
     "example.tomato.label": "🍅 Je paradižnik sadje?",
     "example.tomato.text":
       "Nika vztraja, da je paradižnik zelenjava, ker ga vsi tako kuhamo in jemo. Jaz pravim, da je sadje, ker botanično gledano zraste iz cveta in v sebi nosi semena.",
@@ -157,7 +157,7 @@ const sl: Locale = {
     "how.title": "Kako deluje",
     "how.kicker": "Pet korakov",
     "how.lead": "Brez metanja kovanca. Vsak prepir gre skozi istih pet korakov.",
-    "how.step1.title": "Vsaki plati najboljšo priložnost",
+    "how.step1.title": "Vsaka plat v najboljši luči",
     "how.step1.body": "Vsako plat predstavimo v najmočnejši obliki, tudi tisto, za katero misliš, da nima prav.",
     "how.step2.title": "Razvrščanje trditev",
     "how.step2.body":
@@ -170,7 +170,7 @@ const sl: Locale = {
       "Trije sodniki razsojajo ločeno, ob tesnem izidu pa se pridruži še kdo. Zanesljivost izhaja iz tega, koliko se strinjajo, ne iz tega, kako prepričano zvenijo.",
     "how.step5.title": "Razsodba, nato navzkrižno zaslišanje",
     "how.step5.body":
-      "Dobiš razsodbo in oceno zanesljivosti, zraven pa še najboljši argument druge plati. Zmaga na podlagi dejstev gre še na navzkrižno zaslišanje, in če se zamaje, dobiš opozorilo.",
+      "Dobiš razsodbo in oceno zanesljivosti, zraven pa še najboljši argument druge plati. Zmaga na podlagi dejstev mora prestati še navzkrižno zaslišanje. Če se zamaje, dobiš opozorilo.",
     "sample.title": "Kako je videti razsodba",
     "sample.kicker": "Rezultat",
     "sample.lead":
@@ -206,7 +206,7 @@ const sl: Locale = {
     "footer.about": "O aplikaciji",
     "footer.privacy": "Zasebnost",
     "footer.home": "Razsodi prepir",
-    "footer.note": "Za zabavo in jasnost, ne pravni nasvet.",
+    "footer.note": "Za zabavo in jasnost, ne kot pravni nasvet.",
     "footer.language": "Jezik",
     "footer.nav": "Povezave strani",
     "shared.ctaLead": "Imaš tudi ti kakšen prepir?",
@@ -218,7 +218,7 @@ const sl: Locale = {
       "Judge je majhen, odločen razsodnik za vsakdanje prepire. Povej, za kaj se prepirate, in povedal bo, kdo ima prav. Ali pa, kar je enako koristno, zakaj nihče nima prav.",
     "about.honestTitle": "Iskrene oznake",
     "about.honest":
-      "Nima vsak prepir zmagovalca. Razsodba je lahko jasna zmaga, razdeljena odločitev, „odvisno od tvojih vrednot“ ali „ista beseda, različni pomeni“. Če vseeno hočeš zmagovalca, dobiš odločitev na silo, z jasno oznako.",
+      "Nima vsak prepir zmagovalca. Razsodba je lahko jasna zmaga, „oba imata delno prav“, „odvisno od tvojih vrednot“ ali „ista beseda, različni pomeni“. Če vseeno hočeš zmagovalca, dobiš odločitev na silo, z jasno oznako.",
     "about.limitsTitle": "Omejitve",
     "about.limit1":
       "Ve samo to, kar mu poveš, in to, kako zgodbo poveš, vpliva na izid. Dodaj tudi plat druge osebe, tako kot bi jo povedala sama.",
@@ -226,7 +226,7 @@ const sl: Locale = {
       "Sodniki UI se lahko pri dejstvih zmotijo. Vsaka razsodba našteje dejstva, na katera se opira, da jih lahko preveriš.",
     "about.limit3":
       "Zamenjava imen večinoma deluje, nenavadna imena ali vzdevki pa lahko uidejo.",
-    "about.limit4": "Za zabavo in jasnost, ne pravni, zdravstveni ali finančni nasvet.",
+    "about.limit4": "Za zabavo in jasnost, ne kot pravni, zdravstveni ali finančni nasvet.",
     "about.builtTitle": "Pod pokrovom",
     "about.built":
       "Judge deluje na modelu UI zunanjega ponudnika. Trije sodniki delajo vzporedno, ob tesnem izidu pa se pridruži še kdo. Koliko se strinjajo, določa oceno zanesljivosti, zmagovita razsodba o dejstvih pa mora pred potrditvijo prestati še svoje navzkrižno zaslišanje.",
@@ -365,7 +365,7 @@ const sl: Locale = {
     "error.no_credits": "Razsodb ti je zmanjkalo. Na strani Cene izberi paket ali mesečno naročnino.",
     "error.fair_use": "Razsodbe za ta mesec so porabljene. Nove bodo na voljo: {date}.",
     "error.fair_useSoon": "Razsodbe za ta mesec so porabljene. Nove bodo kmalu na voljo.",
-    "error.in_progress": "Ta razsodba je še v delu. Počakaj trenutek.",
+    "error.in_progress": "Ta razsodba še nastaja. Počakaj trenutek.",
     "error.bad_origin": "Ta zahteva je prišla iz neznanega vira. Znova naloži stran in poskusi še enkrat.",
     "error.not_found": "Tega nismo našli.",
     "error.case_closed": "Ta spor tega ne sprejema več.",
@@ -410,7 +410,7 @@ const sl: Locale = {
     "case.invite.resetConfirm": "Že poslana povezava bo prenehala delovati. Ustvarim novo?",
     "case.invite.resetYes": "Da, ustvari novo",
     "case.invite.resetDone": "Stara povezava je izklopljena. Pošlji novo.",
-    "case.invite.expires": "Povezava velja do roka: {date}.",
+    "case.invite.expires": "Rok veljavnosti povezave: {date}.",
     "case.invite.expiresSoon": "Povezava velja 7 dni.",
     "case.held":
       "Za ta spor je rezervirana 1 razsodba. Vrnemo ti jo, če nihče ne odgovori do roka ({date}).",
@@ -430,8 +430,8 @@ const sl: Locale = {
     "case.accountA": "Kako to vidi Stranka A",
     "case.accountB": "Kako to vidi Stranka B",
     "case.accountYou": "Kako to vidiš ti ({label})",
-    "case.contextA": "Dodani kontekst – Stranka A",
-    "case.contextB": "Dodani kontekst – Stranka B",
+    "case.contextA": "Stranka A je dodala kontekst",
+    "case.contextB": "Stranka B je dodala kontekst",
     "case.contextYou": "Tvoj dodani kontekst ({label})",
     "case.evidenceItem": "Slika {n}, kot so jo prebrali sodniki",
     "case.notYet": "Druga oseba še ni odgovorila.",
@@ -623,7 +623,7 @@ const sl: Locale = {
     "shell.loadFailed": "Zgodovine nismo mogli naložiti.",
     "shell.loadMore": "Pokaži več",
     "shell.untitled": "Razsodba brez naslova",
-    "shell.local": "Te so shranjene samo v tem brskalniku.",
+    "shell.local": "Te razsodbe so shranjene samo v tem brskalniku.",
     "shell.localSignIn": "Prijavi se in imej razsodbe na vseh napravah",
     "shell.case.waiting": "Čaka na odgovor",
     "shell.case.judging": "V razsojanju",
@@ -650,7 +650,7 @@ const sl: Locale = {
     "home.out": "Nimaš več razsodb.",
     "home.pricing": "Poglej cene",
     "verdict.noMajority": "Sodniki so razdeljeni",
-    "stamp.split": "Razdeljeno",
+    "stamp.split": "Pol-pol",
     "stamp.conditional": "Odvisno",
     "stamp.tooClose": "Izenačeno",
     "stamp.dissolved": "Nesporazum",
