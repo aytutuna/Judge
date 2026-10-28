@@ -5,10 +5,11 @@ import path from "node:path";
 import { afterAll, afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 /**
- * GET /api/v1/me/history against a real (temporary) database: one-sided
- * verdicts and their jobs and rounds, cases started and answered, merged
- * with one cursor; access per viewer. Model calls, sessions, Turnstile and
- * the evidence package are mocked; background judging runs with drain().
+ * GET /api/v1/me/history and POST /api/v1/cases/{id}/claim against a real
+ * (temporary) database: one-sided verdicts and their jobs and rounds, cases
+ * started and answered, merged with one cursor; access per viewer; the
+ * respondent's claim into their account. Model calls, sessions, Turnstile
+ * and the evidence package are mocked; background judging runs with drain().
  */
 
 const m = vi.hoisted(() => ({
@@ -199,6 +200,10 @@ async function all(user: string, limit = 50): Promise<HistoryRow[]> {
 
 const keys = (rows: HistoryRow[]) => rows.map((r) => `${r.kind === "verdict" ? "v" : "c"}:${r.id}`);
 
+function claim(id: string, user: string | undefined, claimSecret: unknown, extra: Opts = {}) {
+  return http.respondentClaimHandler(req("POST", `/api/v1/cases/${id}/claim`, { user, body: { claim: claimSecret }, ...extra }), id);
+}
+
 beforeEach(() => {
   m.scheduled.length = 0;
   vi.stubEnv("CASES_ENABLED", "");
@@ -342,6 +347,7 @@ describe("GET /api/v1/me/history: one list", () => {
     const page = await http.respondGetHandler(req("GET", `/api/v1/respond/${token}`, { user: u }), token);
     const view = (await body<{ case: CaseView }>(page)).case;
     expect(view.role).toBe("respondent");
+    expect(view.inAccount).toBe(true);
 
     // The other owner sees their case as its owner, never as the respondent.
     const theirRows = await all(other);
@@ -450,5 +456,91 @@ describe("GET /api/v1/me/history: one list", () => {
     const v = await saveVerdict(u);
     vi.stubEnv("CASES_ENABLED", "0");
     expect(keys(await all(u))).toEqual([`v:${v}`]);
+  });
+});
+
+describe("POST /api/v1/cases/{id}/claim", () => {
+  async function answeredSignedOut() {
+    const o = await owner();
+    const c = await startCase(o);
+    const claimSecret = (await answer(tokenOf(c)))!;
+    await drain();
+    expect(claimSecret).toMatch(/^[A-Za-z0-9_-]{22}$/);
+    return { o, c, token: tokenOf(c), claimSecret };
+  }
+
+  it("links side B to the signed-in account; again is fine; it then lists and acts without the claim", async () => {
+    const { c, token, claimSecret } = await answeredSignedOut();
+    const r = await owner(2);
+    expect((await all(r)).length).toBe(0);
+    const before = await http.respondGetHandler(req("GET", `/api/v1/respond/${token}`, { user: r, headers: { "respondent-claim": claimSecret } }), token);
+    expect((await body<{ case: CaseView }>(before)).case.inAccount).toBe(false);
+
+    const res = await claim(c.id, r, claimSecret);
+    expect(res.status).toBe(200);
+    expect(await body(res)).toEqual({ claimed: true });
+    expect(await body(await claim(c.id, r, claimSecret))).toEqual({ claimed: true });
+
+    const rows = await all(r);
+    expect(rows).toHaveLength(1);
+    expect(rows[0]).toMatchObject({ id: c.id, role: "respondent", state: "ready", inviteToken: token });
+    const view = (await body<{ case: CaseView }>(await http.respondGetHandler(req("GET", `/api/v1/respond/${token}`, { user: r }), token))).case;
+    expect(view.inAccount).toBe(true);
+    expect(view.appeal).toEqual({ allowed: true, blockedBy: null });
+  });
+
+  it("the same 404 for a wrong claim, the owner, a side bound to someone else or a one-sided case", async () => {
+    const { o, c, claimSecret } = await answeredSignedOut();
+    const r = await owner();
+    expect((await claim(c.id, r, "A".repeat(22))).status).toBe(404);
+    expect((await claim(c.id, o, claimSecret)).status).toBe(404);
+    expect((await claim("nope", r, claimSecret)).status).toBe(404);
+    expect((await claim(c.id, r, claimSecret)).status).toBe(200);
+    const late = await claim(c.id, await owner(), claimSecret);
+    expect(late.status).toBe(404);
+    expect((await body(late)).code).toBe("not_found");
+
+    const alone = await startCase(o);
+    await http.judgeCaseHandler(req("POST", `/api/v1/cases/${alone.id}/judge`, { user: o, body: { mode: "only_mine" } }), alone.id);
+    await drain();
+    expect((await claim(alone.id, r, claimSecret)).status).toBe(404);
+  });
+
+  it("a removed side B answers removed, but only to the holder of its claim", async () => {
+    const { c, token, claimSecret } = await answeredSignedOut();
+    const removal = await http.respondRemovalHandler(
+      req("POST", `/api/v1/respond/${token}/removal`, { body: { confirm: "remove", claim: claimSecret } }),
+      token,
+    );
+    expect(removal.status).toBe(200);
+    const r = await owner();
+    expect((await body(await claim(c.id, r, "B".repeat(22)))).code).toBe("not_found");
+    expect((await body(await claim(c.id, r, claimSecret))).code).toBe("removed");
+  });
+
+  it("gates: signed out, a cross-site cookie, a bad body, cases switched off", async () => {
+    const { c, claimSecret } = await answeredSignedOut();
+    const r = await owner();
+    expect((await claim(c.id, undefined, claimSecret)).status).toBe(401);
+    expect((await body(await claim(c.id, r, claimSecret, { via: "cookie", headers: { "x-test-cross": "1" } }))).code).toBe("bad_origin");
+    expect((await claim(c.id, r, 42)).status).toBe(400);
+    vi.stubEnv("CASES_ENABLED", "0");
+    expect((await body(await claim(c.id, r, claimSecret))).code).toBe("not_configured");
+  });
+
+  it("no case has Party B context from an account while side B is unbound", async () => {
+    const { token, claimSecret } = await answeredSignedOut();
+    const r = await owner(2);
+    const appeal = await http.respondAppealHandler(
+      req("POST", `/api/v1/respond/${token}/appeals`, { user: r, body: { text: "Party A's receipt is from March, not April.", claim: claimSecret } }),
+      token,
+    );
+    expect(appeal.status).toBe(202);
+    await drain();
+    const rs = await sql(
+      `SELECT COUNT(*) AS n FROM cases c WHERE c.respondent_user_id IS NULL
+         AND EXISTS (SELECT 1 FROM case_appeals a WHERE a.case_id = c.id AND a.party = 'b' AND a.user_id IS NOT NULL)`,
+    );
+    expect(Number(rs.rows[0].n)).toBe(0);
   });
 });

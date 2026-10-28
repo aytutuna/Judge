@@ -69,6 +69,10 @@ export const AppealRequest = z.object({
 });
 export type AppealRequest = z.infer<typeof AppealRequest>;
 
+/** POST /api/v1/cases/{id}/claim: the `respondent_claim` from answering signed out. */
+export const CaseClaimRequest = z.object({ claim: z.string().max(64) });
+export type CaseClaimRequest = z.infer<typeof CaseClaimRequest>;
+
 export const EvidenceJsonUpload = z.object({
   images: z
     .array(z.object({ data: z.string().min(1), mediaType: z.string().max(64).optional() }))
@@ -185,6 +189,10 @@ export type CaseView = {
   removed: { at: string; parties: PartyLetter[] } | null;
   /** Status of the viewer's own side original. */
   yourOriginal: OriginalStatus;
+  /** Respondent role: side B is linked to the signed-in account, so the case
+   * is on its Verdicts list. False for an answer kept only by this
+   * browser's claim (POST /api/v1/cases/{id}/claim links it). */
+  inAccount?: boolean;
 };
 
 export type CaseSummary = {
@@ -234,3 +242,5 @@ export type InviteResponse = { inviteUrl: string };
 export type DeleteCaseResponse = { deleted: true; removed: true; removedAt: string };
 /** POST /api/v1/cases/{id}/removal and /respond/{token}/removal */
 export type CaseRemovalResponse = { removed: true; removedAt: string; case: CaseView };
+/** POST /api/v1/cases/{id}/claim */
+export type CaseClaimResponse = { claimed: true };
