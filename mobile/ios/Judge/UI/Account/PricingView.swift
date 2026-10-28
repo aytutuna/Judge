@@ -131,6 +131,15 @@ struct PricingView: View {
                 labels: app.purchases.labels(planId: pricing.monthly.id, usd: pricing.monthly.priceUsd, credits: nil, pricing: pricing, lang: lang)
             )
 
+            // TestFlight-only debug aid, so the English text is not localized.
+            if AppConfig.isTestFlight, let diagnostic = app.purchases.diagnostic {
+                Text(diagnostic)
+                    .font(.caption)
+                    .foregroundStyle(Brand.muted)
+                    .textSelection(.enabled)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+
             if let message = app.purchases.message {
                 Text(message.text(lang))
                     .brandText(.slotText)

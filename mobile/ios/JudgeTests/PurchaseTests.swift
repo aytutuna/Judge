@@ -175,6 +175,34 @@ final class PurchaseTests: XCTestCase {
     }
 
     @MainActor
+    func testLoadFailureSetsADiagnosticAndSuccessClearsIt() async {
+        let gateway = FakePurchaseGateway()
+        gateway.offersError = NSError(domain: "Store", code: 7, userInfo: [
+            NSLocalizedDescriptionKey: "no products",
+            NSUnderlyingErrorKey: NSError(domain: "StoreKit", code: 2, userInfo: [NSLocalizedDescriptionKey: "unavailable"]),
+        ])
+        let (purchases, _) = model(gateway)
+        let pricing = Self.pricing(enabled: true)
+        await purchases.loadOffers(pricing: pricing)
+        XCTAssertEqual(purchases.diagnostic, "no products (Store 7); underlying: unavailable (StoreKit 2)")
+
+        gateway.offersError = nil
+        gateway.offerList = Self.offers
+        await purchases.loadOffers(pricing: pricing)
+        XCTAssertNil(purchases.diagnostic)
+    }
+
+    @MainActor
+    func testNoMatchingPlansListsTheProductIds() async {
+        let gateway = FakePurchaseGateway()
+        gateway.offersError = PurchaseGatewayError.noMatch(seen: ["com.x.one", "com.x.two"])
+        let (purchases, _) = model(gateway)
+        await purchases.loadOffers(pricing: Self.pricing(enabled: true))
+        XCTAssertEqual(purchases.loadState, .failed)
+        XCTAssertEqual(purchases.diagnostic, "store returned 2 packages: com.x.one, com.x.two, matched none")
+    }
+
+    @MainActor
     func testAPlanMissingFromTheOfferingStaysComingSoon() async {
         let gateway = FakePurchaseGateway()
         gateway.offerList = [Self.offers[1]]

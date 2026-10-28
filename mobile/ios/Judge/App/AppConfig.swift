@@ -12,6 +12,15 @@ struct AppConfig: Sendable, Equatable {
     /// Public RevenueCat SDK key. Empty means no in-app purchases.
     var revenueCatAPIKey: String = ""
 
+    /// TestFlight and sandbox builds (and Debug), never the App Store.
+    static var isTestFlight: Bool {
+        #if DEBUG
+        true
+        #else
+        Bundle.main.appStoreReceiptURL?.lastPathComponent == "sandboxReceipt"
+        #endif
+    }
+
     static let production: URL = {
         guard let url = URL(string: "https://okjudge.com") else { preconditionFailure("invalid production URL") }
         return url

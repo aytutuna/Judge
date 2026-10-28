@@ -61,6 +61,9 @@ enum PurchaseGatewayError: Error, Equatable {
     case unavailable
     /// No signed-in account to buy for.
     case signedOut
+    /// The offering has packages but none the server grants; carries their
+    /// product ids (shown in TestFlight builds only).
+    case noMatch(seen: [String])
 }
 
 /// Which store products the server grants (lib/pricing.ts STORE_PRODUCTS).

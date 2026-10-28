@@ -36,6 +36,8 @@ final class PurchaseModel {
     private(set) var message: Message?
     private(set) var isRestoring = false
     private(set) var restoreResult: RestoreResult?
+    /// Why the offers did not load, for the TestFlight-only note on pricing.
+    private(set) var diagnostic: String?
 
     let gateway: (any PurchaseGateway)?
     private let account: AccountModel
@@ -124,9 +126,24 @@ final class PurchaseModel {
             let list = try await gateway.offers()
             offers = Dictionary(list.map { ($0.planId, $0) }, uniquingKeysWith: { first, _ in first })
             loadState = offers.isEmpty ? .idle : .loaded
+            diagnostic = offers.isEmpty ? "store returned no packages" : nil
+        } catch PurchaseGatewayError.noMatch(let seen) {
+            loadState = .failed
+            diagnostic = "store returned \(seen.count) packages: \(seen.joined(separator: ", ")), matched none"
         } catch {
             loadState = .failed
+            diagnostic = Self.describe(error)
         }
+    }
+
+    /// The error's text, its domain and code, and the underlying error.
+    nonisolated static func describe(_ error: any Error) -> String {
+        let ns = error as NSError
+        var text = "\(ns.localizedDescription) (\(ns.domain) \(ns.code))"
+        if let under = ns.userInfo[NSUnderlyingErrorKey] as? NSError {
+            text += "; underlying: \(under.localizedDescription) (\(under.domain) \(under.code))"
+        }
+        return text
     }
 
     // MARK: - Buying

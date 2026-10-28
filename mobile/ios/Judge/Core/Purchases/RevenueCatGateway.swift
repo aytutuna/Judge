@@ -34,6 +34,7 @@ final class RevenueCatGateway: PurchaseGateway {
     func offers() async throws -> [StoreOffer] {
         let offerings = try await Purchases.shared.offerings()
         let available = offerings.current?.availablePackages ?? []
+        let seen = available.map { $0.storeProduct.productIdentifier }
         let byPlan = StoreCatalog.match(available.map {
             StoreCatalog.Candidate(packageId: $0.identifier, productId: $0.storeProduct.productIdentifier)
         })
@@ -53,6 +54,7 @@ final class RevenueCatGateway: PurchaseGateway {
             ))
         }
         self.packages = packages
+        if offers.isEmpty { throw PurchaseGatewayError.noMatch(seen: seen) }
         return offers
     }
 
