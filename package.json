@@ -12,6 +12,7 @@
     "test": "vitest run",
     "eval": "tsx --env-file=.env scripts/eval.ts",
     "check:locales": "tsx scripts/check-locales.ts",
+    "check:app-locales": "tsx mobile/shared/strings/check-app-locales.ts",
     "scene:build": "tsx mobile/shared/scene/build-scene.ts"
   },
   "dependencies": {

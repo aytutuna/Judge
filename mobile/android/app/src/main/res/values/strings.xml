@@ -569,4 +569,13 @@
     <string name="app_appeal_sign_in">Sign in to add context &amp; appeal</string>
     <string name="app_appeal_used">You\'ve already added context to this case.</string>
     <string name="app_appeal_limit">You\'ve added context twice. That\'s the limit for one verdict.</string>
+    <string name="app_purchase_buying">Buying…</string>
+    <string name="app_purchase_success">Thanks! Your purchase went through.</string>
+    <string name="app_purchase_pending">Your purchase is being processed. It may take a minute to show up.</string>
+    <string name="app_purchase_arriving">Your credits are on their way…</string>
+    <string name="app_purchase_slow">It may take a minute to show up here.</string>
+    <string name="app_purchase_failed">The purchase didn\'t go through. Try again in a moment.</string>
+    <string name="app_purchase_restore">Restore purchases</string>
+    <string name="app_purchase_restore_done">Your purchases were restored.</string>
+    <string name="app_purchase_restore_none">No purchases to restore.</string>
 </resources>

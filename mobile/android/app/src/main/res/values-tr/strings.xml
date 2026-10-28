@@ -569,4 +569,13 @@
     <string name="app_appeal_sign_in">Bağlam ekleyip itiraz etmek için giriş yap</string>
     <string name="app_appeal_used">Bu davaya zaten bağlam ekledin.</string>
     <string name="app_appeal_limit">İki kez bağlam ekledin. Bir karar için sınır bu.</string>
+    <string name="app_purchase_buying">Satın alınıyor…</string>
+    <string name="app_purchase_success">Teşekkürler! Satın alma tamamlandı.</string>
+    <string name="app_purchase_pending">Satın alman işleniyor. Hesabına yansıması bir dakika sürebilir.</string>
+    <string name="app_purchase_arriving">Kredilerin yolda…</string>
+    <string name="app_purchase_slow">Burada görünmesi bir dakika sürebilir.</string>
+    <string name="app_purchase_failed">Satın alma tamamlanamadı. Birazdan tekrar dene.</string>
+    <string name="app_purchase_restore">Satın alımları geri yükle</string>
+    <string name="app_purchase_restore_done">Satın alımların geri yüklendi.</string>
+    <string name="app_purchase_restore_none">Geri yüklenecek bir satın alım bulunamadı.</string>
 </resources>

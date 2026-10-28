@@ -22,7 +22,8 @@ import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
 import { EN, loadedDict, loadLocales, type Key } from "../../../lib/i18n";
 import { stripLeadingEmoji } from "../../../lib/text";
-import { APP_STRINGS } from "./app-strings";
+import { APP_COUNT_KEYS, APP_EN, APP_PLURALS_EN, type AppKey, type AppLocale } from "./app-strings";
+import { loadAppLocale } from "./app-locales";
 import { EXCLUDE_KEYS, REQUIRED_KEYS, STRIP_EMOJI, WEB_KEYS } from "./keys";
 
 type Lang = "en" | "tr";
@@ -53,6 +54,12 @@ function matches(pattern: string, key: string): boolean {
 }
 
 /** The web table of each language the apps speak. */
+async function appLocale(): Promise<AppLocale> {
+  const tr = await loadAppLocale("tr");
+  if (!tr) throw new Error("mobile/shared/strings/locales/tr.ts is missing");
+  return tr;
+}
+
 async function webStrings(): Promise<Record<Lang, Record<Key, string>>> {
   await loadLocales();
   const tr = loadedDict("tr");
@@ -60,7 +67,7 @@ async function webStrings(): Promise<Record<Lang, Record<Key, string>>> {
   return { en: EN, tr: { ...EN, ...tr.strings } };
 }
 
-function selectEntries(web: Record<Lang, Record<Key, string>>): Entry[] {
+function selectEntries(web: Record<Lang, Record<Key, string>>, tr: AppLocale): Entry[] {
   const webKeys = Object.keys(web.en) as Key[];
   for (const pattern of [...WEB_KEYS, ...STRIP_EMOJI]) {
     if (!webKeys.some((k) => matches(pattern, k))) {
@@ -82,9 +89,16 @@ function selectEntries(web: Record<Lang, Record<Key, string>>): Entry[] {
     };
     entries.push({ key, en: pick("en"), tr: pick("tr") });
   }
-  for (const [key, text] of Object.entries(APP_STRINGS)) {
+  for (const key of Object.keys(APP_EN) as AppKey[]) {
     if (key in web.en) throw new Error(`app string "${key}" shadows a web key`);
-    entries.push({ key, en: text.en, tr: text.tr });
+    if ((APP_COUNT_KEYS as readonly string[]).includes(key)) {
+      const one = (forms: { one?: string } | undefined, other: string) => forms?.one ?? other;
+      const countKey = key as (typeof APP_COUNT_KEYS)[number];
+      entries.push({ key: `${key}.one`, en: one(APP_PLURALS_EN[countKey], APP_EN[key]), tr: one(tr.plurals?.[countKey], tr.strings[key]) });
+      entries.push({ key: `${key}.other`, en: APP_EN[key], tr: tr.strings[key] });
+      continue;
+    }
+    entries.push({ key, en: APP_EN[key], tr: tr.strings[key] });
   }
   for (const key of REQUIRED_KEYS) {
     if (!entries.some((e) => e.key === key)) throw new Error(`required key "${key}" is not exported`);
@@ -367,7 +381,7 @@ function swift(items: Item[]): string {
 
 async function main(): Promise<void> {
   const check = process.argv.includes("--check");
-  const items = toItems(selectEntries(await webStrings()));
+  const items = toItems(selectEntries(await webStrings(), await appLocale()));
   checkUnique(items);
   const outputs: [string, string][] = [
     [join(ANDROID_RES, "values/strings.xml"), androidXml(items, "en")],

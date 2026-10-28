@@ -565,6 +565,15 @@ class Strings(private val res: Resources) {
     val appAppealSignIn: String get() = res.getString(R.string.app_appeal_sign_in)
     val appAppealUsed: String get() = res.getString(R.string.app_appeal_used)
     val appAppealLimit: String get() = res.getString(R.string.app_appeal_limit)
+    val appPurchaseBuying: String get() = res.getString(R.string.app_purchase_buying)
+    val appPurchaseSuccess: String get() = res.getString(R.string.app_purchase_success)
+    val appPurchasePending: String get() = res.getString(R.string.app_purchase_pending)
+    val appPurchaseArriving: String get() = res.getString(R.string.app_purchase_arriving)
+    val appPurchaseSlow: String get() = res.getString(R.string.app_purchase_slow)
+    val appPurchaseFailed: String get() = res.getString(R.string.app_purchase_failed)
+    val appPurchaseRestore: String get() = res.getString(R.string.app_purchase_restore)
+    val appPurchaseRestoreDone: String get() = res.getString(R.string.app_purchase_restore_done)
+    val appPurchaseRestoreNone: String get() = res.getString(R.string.app_purchase_restore_none)
 
     /** A placeholder-free string by its lib/i18n.ts key, for keys built at
      * runtime ("badge.$type", "kind.$kind"). Null when unknown. */
@@ -1070,6 +1079,15 @@ class Strings(private val res: Resources) {
             "app.appeal.signIn" -> R.string.app_appeal_sign_in
             "app.appeal.used" -> R.string.app_appeal_used
             "app.appeal.limit" -> R.string.app_appeal_limit
+            "app.purchase.buying" -> R.string.app_purchase_buying
+            "app.purchase.success" -> R.string.app_purchase_success
+            "app.purchase.pending" -> R.string.app_purchase_pending
+            "app.purchase.arriving" -> R.string.app_purchase_arriving
+            "app.purchase.slow" -> R.string.app_purchase_slow
+            "app.purchase.failed" -> R.string.app_purchase_failed
+            "app.purchase.restore" -> R.string.app_purchase_restore
+            "app.purchase.restoreDone" -> R.string.app_purchase_restore_done
+            "app.purchase.restoreNone" -> R.string.app_purchase_restore_none
             else -> null
         }
     }

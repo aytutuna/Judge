@@ -571,6 +571,15 @@ enum L10n {
     static func appAppealSignIn(_ lang: AppLang) -> String { string("app.appeal.signIn", lang) }
     static func appAppealUsed(_ lang: AppLang) -> String { string("app.appeal.used", lang) }
     static func appAppealLimit(_ lang: AppLang) -> String { string("app.appeal.limit", lang) }
+    static func appPurchaseBuying(_ lang: AppLang) -> String { string("app.purchase.buying", lang) }
+    static func appPurchaseSuccess(_ lang: AppLang) -> String { string("app.purchase.success", lang) }
+    static func appPurchasePending(_ lang: AppLang) -> String { string("app.purchase.pending", lang) }
+    static func appPurchaseArriving(_ lang: AppLang) -> String { string("app.purchase.arriving", lang) }
+    static func appPurchaseSlow(_ lang: AppLang) -> String { string("app.purchase.slow", lang) }
+    static func appPurchaseFailed(_ lang: AppLang) -> String { string("app.purchase.failed", lang) }
+    static func appPurchaseRestore(_ lang: AppLang) -> String { string("app.purchase.restore", lang) }
+    static func appPurchaseRestoreDone(_ lang: AppLang) -> String { string("app.purchase.restoreDone", lang) }
+    static func appPurchaseRestoreNone(_ lang: AppLang) -> String { string("app.purchase.restoreNone", lang) }
 
     /// A placeholder-free string by its lib/i18n.ts key, for keys built at
     /// runtime ("badge.\(type)"). Nil when unknown.
@@ -1077,6 +1086,15 @@ enum L10n {
         "app.appeal.signIn",
         "app.appeal.used",
         "app.appeal.limit",
+        "app.purchase.buying",
+        "app.purchase.success",
+        "app.purchase.pending",
+        "app.purchase.arriving",
+        "app.purchase.slow",
+        "app.purchase.failed",
+        "app.purchase.restore",
+        "app.purchase.restoreDone",
+        "app.purchase.restoreNone",
     ]
 
     private static func string(_ key: String, _ lang: AppLang) -> String {
