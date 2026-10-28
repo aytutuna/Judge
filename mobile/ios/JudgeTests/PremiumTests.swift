@@ -220,8 +220,6 @@ final class PremiumDecodingTests: XCTestCase {
             [L10n.pricingPremiumF1(.en), L10n.pricingPremiumF2(.en), L10n.pricingPremiumF3(.en), L10n.pricingPremiumF5(.en), L10n.pricingPremiumF6(.en)],
             "two-sided cases are not sold as Premium"
         )
-        XCTAssertEqual(PricingView.freeFeatures(PremiumFeatures(), lang: .en).count, 3)
-        XCTAssertEqual(PricingView.freeFeatures(PremiumFeatures(cases: true, evidence: false), lang: .en).last, L10n.pricingFreeF4(.en))
         XCTAssertEqual(
             PricingView.premiumFeatures(PremiumFeatures(cases: false, evidence: true), lang: .en),
             [L10n.pricingPremiumF1(.en), L10n.pricingPremiumF2(.en), L10n.pricingPremiumF3(.en), L10n.pricingPremiumF5(.en)]

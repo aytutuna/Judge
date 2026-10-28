@@ -1,9 +1,10 @@
 import SwiftUI
 
-/// Free and Premium side by side (components/account/PricingView.tsx), with
-/// prices from GET /api/v1/config (lib/pricing.ts until it answers). When the
-/// server allows purchases and the store's offering has loaded, the buttons
-/// show store prices and buy; otherwise they read "Coming soon".
+/// The packs and the monthly plan (components/account/PricingView.tsx); a
+/// new account's first verdict is free. Prices come from GET /api/v1/config
+/// (lib/pricing.ts until it answers). When the server allows purchases and
+/// the store's offering has loaded, the buttons show store prices and buy;
+/// otherwise they read "Coming soon".
 struct PricingView: View {
     @Environment(AppModel.self) private var app
     @Environment(\.dismiss) private var dismiss
@@ -20,11 +21,11 @@ struct PricingView: View {
             VStack(alignment: .leading, spacing: 20) {
                 VStack(alignment: .leading, spacing: 10) {
                     Kicker(text: L10n.navPricing(lang))
-                    Text(L10n.pricingTitle(lang))
+                    Text(L10n.appPricingHeadline(lang))
                         .brandText(Self.title)
                         .foregroundStyle(Brand.ink)
                         .accessibilityAddTraits(.isHeader)
-                    Text(L10n.pricingLead(lang))
+                    Text(L10n.appPricingSub(lang))
                         .brandText(.lead)
                         .foregroundStyle(Brand.ink2)
                         .fixedSize(horizontal: false, vertical: true)
@@ -32,7 +33,6 @@ struct PricingView: View {
                 if account.isSignedIn, let entitlement = account.entitlement {
                     planStatus(entitlement, lang: lang)
                 }
-                freePlan(lang)
                 premiumPlan(pricing, lang: lang)
                 // The note says payments are not open yet and prices are in USD.
                 if !app.purchases.sellsEveryPlan(pricing) {
@@ -66,12 +66,9 @@ struct PricingView: View {
 
     private func planStatus(_ entitlement: Entitlement, lang: AppLang) -> some View {
         VStack(alignment: .leading, spacing: 4) {
-            Text(L10n.accountPlan(lang) + ": " + (entitlement.isPremium ? L10n.accountPlanPremium(lang) : L10n.accountPlanFree(lang)))
+            Text(Balance(entitlement).line(lang))
                 .brandText(.slotTitle)
                 .foregroundStyle(Brand.ink)
-            Text(L10n.accountCredits(lang) + ": " + String(entitlement.credits))
-                .brandText(.slotText)
-                .foregroundStyle(Brand.ink2)
             if let sub = entitlement.subscription {
                 let date = ErrorText.formatDate(sub.periodEnd, lang: lang) ?? sub.periodEnd
                 Text(sub.willRenew ? L10n.accountSubscriptionRenews(lang, date: date) : L10n.accountSubscriptionUntil(lang, date: date))
@@ -83,22 +80,6 @@ struct PricingView: View {
         .padding(14)
         .paperSurface(radius: 16, fill: Brand.sageTint.opacity(0.6), border: Brand.sage.opacity(0.4))
         .accessibilityElement(children: .combine)
-    }
-
-    private func freePlan(_ lang: AppLang) -> some View {
-        VStack(alignment: .leading, spacing: 12) {
-            Text(L10n.pricingFreeTitle(lang))
-                .brandText(Self.planTitle)
-                .foregroundStyle(Brand.ink)
-                .accessibilityAddTraits(.isHeader)
-            Text(L10n.pricingFreePrice(lang))
-                .brandText(Self.price)
-                .foregroundStyle(Brand.ink2)
-            features(Self.freeFeatures(app.account.features, lang: lang))
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(20)
-        .paperSurface(radius: Radius.card)
     }
 
     private func premiumPlan(_ pricing: PricingInfo, lang: AppLang) -> some View {
@@ -161,14 +142,6 @@ struct PricingView: View {
         .padding(20)
         .paperSurface(radius: Radius.card, fill: Brand.paper, border: Brand.terra.opacity(0.45))
         .cardShadow()
-    }
-
-    /// Free's feature list; two-sided cases are on it wherever the server
-    /// offers them (freeFeatureKeys on the web).
-    static func freeFeatures(_ features: PremiumFeatures, lang: AppLang) -> [String] {
-        var list = [L10n.pricingFreeF1(lang), L10n.pricingFreeF2(lang), L10n.appPricingFreeAccount(lang)]
-        if features.cases { list.append(L10n.pricingFreeF4(lang)) }
-        return list
     }
 
     /// Premium's feature list plus the extras this deployment offers
