@@ -68,10 +68,11 @@ fun SampleVerdict(
     val view = sampleView(outcome, lang, status).personalized(outcome.nameMap, selfLang)
     val parties = PartyNames.partyNames(outcome.nameMap, selfLang, s)
     val actions = CardActions(onShare = {}, onCopy = {}, copied = false)
+    val restored = PartyNames.restoredNames(outcome.nameMap, selfLang)
     if (summary) {
-        RulingSummary(view, parties, actions, onDetails = {}, reducedMotion = true, modifier = modifier)
+        RulingSummary(view, parties, actions, onDetails = {}, reducedMotion = true, modifier = modifier, restoredNames = restored)
     } else {
-        VerdictDetails(view, parties, PartyNames.restoredNames(outcome.nameMap, selfLang), actions, modifier)
+        VerdictDetails(view, parties, restored, actions, modifier)
     }
 }
 

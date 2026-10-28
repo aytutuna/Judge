@@ -667,10 +667,11 @@ private fun CaseVerdict(
         copied = copied,
         onAddContext = onAddContext,
     )
+    val restored = PartyNames.restoredNames(names, selfLang)
     if (details) {
-        VerdictDetails(view, parties, PartyNames.restoredNames(names, selfLang), cardActions, modifier)
+        VerdictDetails(view, parties, restored, cardActions, modifier)
     } else {
-        RulingSummary(view, parties, cardActions, onDetails, reducedMotion, modifier)
+        RulingSummary(view, parties, cardActions, onDetails, reducedMotion, modifier, restoredNames = restored)
     }
 }
 

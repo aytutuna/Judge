@@ -118,9 +118,9 @@ object VerdictTags {
 
 /**
  * The ruling at a glance: a short settled scene, the two sides and which
- * way the panel leaned, who is right and how sure, the headline; then rows
- * into the details ([onDetails]) and the actions. [scene] is off for
- * earlier rulings of a case.
+ * way the panel leaned, who is right and how sure, the headline and, for a
+ * split or conditional ruling, who won what; then rows into the details
+ * ([onDetails]) and the actions. [scene] is off for earlier rulings of a case.
  */
 @Composable
 fun RulingSummary(
@@ -131,6 +131,7 @@ fun RulingSummary(
     reducedMotion: Boolean,
     modifier: Modifier = Modifier,
     scene: Boolean = true,
+    restoredNames: List<String> = emptyList(),
 ) {
     val s = LocalStrings.current
     val result = view.result
@@ -158,6 +159,7 @@ fun RulingSummary(
                     style = JudgeType.ruling.copy(fontSize = 30.sp, lineHeight = (30 * 1.06).sp).cappedScale(),
                     modifier = Modifier.semantics { heading() },
                 )
+                Branches(result, parties, restoredNames)
                 if (result.refused) SlotText(s.refusedNote)
             }
         }

@@ -552,11 +552,11 @@
     <string name="app_case_step_judges">Üç yargıç karar verir</string>
     <string name="app_case_step_judges_note">Ya da şimdi sadece senin tarafınla karar verilsin</string>
     <string name="app_case_judge_now_without">%1$s olmadan şimdi karar ver</string>
-    <string name="app_verdict_vs">ile</string>
+    <string name="app_verdict_vs">–</string>
     <string name="app_verdict_lean_to">Kurul %1$s tarafına yattı</string>
     <string name="app_verdict_lean_none">Kurul iki taraftan birine yatmadı</string>
     <string name="app_verdict_sides">Her taraf neye dayanıyor</string>
-    <string name="app_verdict_claims">Taraflar oraya nasıl vardı</string>
+    <string name="app_verdict_claims">Her taraf görüşüne nasıl vardı</string>
     <string name="app_verdict_back">Karar</string>
     <string name="app_appeal_title">Bağlam ekle ve itiraz et</string>
     <string name="app_appeal_intro">Yargıçların kaçırdığı bir şey mi var? Ekle, yeniden karar versinler. İlk karar kayıtta kalır.</string>
@@ -564,5 +564,5 @@
     <string name="app_appeal_placeholder">Bir olgu, bir mesaj ya da aslında neyde anlaştığınız.</string>
     <string name="app_appeal_cost">1 premium karar hakkı kullanır. Bunu bir karar için iki kez yapabilirsin; %1$s hakkın kaldı.</string>
     <string name="app_appeal_cost_case">1 premium karar hakkı kullanır. Bunu bir dava için bir kez yapabilirsin.</string>
-    <string name="app_appeal_submit">Yeniden karar ver</string>
+    <string name="app_appeal_submit">Yeniden yargılat</string>
 </resources>

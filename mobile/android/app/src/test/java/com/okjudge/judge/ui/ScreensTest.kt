@@ -15,6 +15,7 @@ import androidx.compose.ui.test.assertIsNotSelected
 import androidx.compose.ui.test.assertIsSelected
 import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
@@ -327,6 +328,24 @@ class ScreensTest {
         assertEquals(3, opened)
         // The crux itself waits for the details.
         compose.onNodeWithText(r.crux).assertDoesNotExist()
+    }
+
+    @Test
+    fun rulingSummary_saysWhoWonEachPointOfASplit() {
+        val en = UiTestSupport.s(AppLang.EN)
+        val outcome = sample("split")
+        val r = outcome.result.result
+        val parties = PartyNames.partyNames(outcome.nameMap, ContentLang.verdictLang(r), en)
+        compose.setContent {
+            Themed(AppLang.EN) { SampleVerdict(outcome, AppLang.EN, Modifier.verticalScroll(rememberScrollState()), summary = true) }
+        }
+        val first = r.splitPoints!!.first()
+        val lead = if (first.party == "a") {
+            if (parties.aIsSelf) en.splitWinSelf else en.splitWin(parties.nameA)
+        } else {
+            if (parties.bIsSelf) en.splitWinSelf else en.splitWin(parties.nameB)
+        }
+        assertTrue(compose.onAllNodesWithText(lead, substring = true).fetchSemanticsNodes().isNotEmpty())
     }
 
     @Test

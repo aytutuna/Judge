@@ -140,11 +140,14 @@ fun VerdictRoute(
                 .padding(horizontal = 16.dp, vertical = 4.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
+            val restored = remember(saved.nameMap, selfLang) { PartyNames.restoredNames(saved.nameMap, selfLang) }
             if (details) {
-                val restored = remember(saved.nameMap, selfLang) { PartyNames.restoredNames(saved.nameMap, selfLang) }
                 VerdictDetails(shown, parties, restored, actions, width.padding(bottom = 32.dp))
             } else {
-                RulingSummary(shown, parties, actions, onDetails = { showDetails(true) }, reducedMotion = rememberReducedMotion(), modifier = width)
+                RulingSummary(
+                    shown, parties, actions, onDetails = { showDetails(true) }, reducedMotion = rememberReducedMotion(), modifier = width,
+                    restoredNames = restored,
+                )
                 // The sheet takes the form; re-judging, or why no more context fits, shows here.
                 if (appealState?.panel == true) AppealNote(area, width.padding(top = 16.dp))
                 Spacer(Modifier.height(32.dp))
