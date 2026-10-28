@@ -11,7 +11,9 @@ import com.okjudge.judge.core.model.ClarifyRequest
 import com.okjudge.judge.core.model.InviteResponse
 import com.okjudge.judge.core.model.ClarifyResponse
 import com.okjudge.judge.core.model.EvidenceUploadResponse
+import com.okjudge.judge.core.model.HistoryPage
 import com.okjudge.judge.core.model.MeResponse
+import com.okjudge.judge.core.model.MineVerdict
 import com.okjudge.judge.core.model.NameMapping
 import com.okjudge.judge.core.model.ServerConfig
 import com.okjudge.judge.core.model.SessionGrant
@@ -25,6 +27,8 @@ import com.okjudge.judge.core.model.VerdictRequest
 import com.okjudge.judge.core.model.VerdictRounds
 import com.okjudge.judge.core.model.VerdictSubmission
 import com.okjudge.judge.core.model.WireJson
+import com.okjudge.judge.core.model.decodeHistoryPage
+import com.okjudge.judge.core.model.decodeMineVerdict
 import com.okjudge.judge.i18n.AppLang
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineDispatcher
@@ -265,6 +269,37 @@ class JudgeApi(
             .post(body.toRequestBody(JSON))
             .build()
         return execute(caseWriteClient, req) { _, text -> WireJson.json.decodeFromString(CaseWithNames.serializer(), text) }
+    }
+
+    /** GET /api/v1/me/history: the account's verdicts and cases, newest first, a page at a time. */
+    suspend fun history(limit: Int = 20, cursor: String? = null): ApiResult<HistoryPage> {
+        val url = url("api", "v1", "me", "history").newBuilder()
+            .addQueryParameter("limit", limit.toString())
+            .apply { cursor?.let { addQueryParameter("cursor", it) } }
+            .build()
+        val req = request(url).cacheControl(CacheControl.FORCE_NETWORK).get().build()
+        return execute(getClient, req) { _, text -> decodeHistoryPage(text) }
+    }
+
+    /** POST /api/v1/verdicts/{id}/removal: the writer's text and names are erased and the share link closes. */
+    suspend fun removeVerdict(id: String): ApiResult<Unit> {
+        val body = buildJsonObject { put("confirm", "remove") }.toString()
+        val req = request(verdictUrl(id, "removal")).post(body.toRequestBody(JSON)).build()
+        return execute(accountClient, req) { _, _ -> }
+    }
+
+    /** POST /api/v1/respond/{token}/removal: the answering side of a case, for the account it is linked to. */
+    suspend fun removeAnsweredCase(token: String): ApiResult<Unit> {
+        val body = buildJsonObject { put("confirm", "remove") }.toString()
+        val url = base.newBuilder().addPathSegments("api/v1/respond").addPathSegment(token).addPathSegment("removal").build()
+        val req = request(url).post(body.toRequestBody(JSON)).build()
+        return execute(accountClient, req) { _, _ -> }
+    }
+
+    /** GET /api/v1/verdicts/{id}/mine: the writer's verdict with their names, to keep it on the phone. */
+    suspend fun mineVerdict(id: String): ApiResult<MineVerdict> {
+        val req = request(verdictUrl(id, "mine")).cacheControl(CacheControl.FORCE_NETWORK).get().build()
+        return execute(getClient, req) { _, text -> decodeMineVerdict(text) }
     }
 
     /**

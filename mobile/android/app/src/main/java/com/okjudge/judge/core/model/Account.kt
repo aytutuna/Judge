@@ -30,9 +30,9 @@ data class PricingInfo(
     val monthly: PricingPlan = PricingPlan("monthly", 15.0, 35, 30),
 )
 
-/** Premium extras this deployment offers; absent on older servers (all off). */
+/** Premium extras this deployment offers; absent on older servers (all off). [history]: GET /api/v1/me/history. */
 @Serializable
-data class Features(val cases: Boolean = false, val evidence: Boolean = false)
+data class Features(val cases: Boolean = false, val evidence: Boolean = false, val history: Boolean = false)
 
 /** GET /api/v1/config, the parts the app reads. */
 @Serializable

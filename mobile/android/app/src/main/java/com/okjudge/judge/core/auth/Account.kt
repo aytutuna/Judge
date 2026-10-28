@@ -86,6 +86,9 @@ class Account(
 
     val isSignedIn: Boolean get() = _state.value is State.SignedIn
 
+    /** Runs when the user signed out or deleted the account (not when the session expired). */
+    var onEndedByUser: suspend () -> Unit = {}
+
     /** A sign-out or deletion is in flight: the account actions wait for it. */
     private val _working = MutableStateFlow(false)
     val working: StateFlow<Boolean> = _working.asStateFlow()
@@ -180,7 +183,7 @@ class Account(
         }
     }
 
-    /** Deletes the account; true when the server confirmed. History on the phone stays. */
+    /** Deletes the account; true when the server confirmed. */
     suspend fun deleteAccount(): Boolean {
         if (!_working.compareAndSet(expect = false, update = true)) return false
         try {
@@ -219,6 +222,7 @@ class Account(
     private suspend fun endLocally(notice: Notice) {
         withContext(io) { tokens.clear() }
         _state.value = State.SignedOut
+        onEndedByUser()
         _notices.trySend(notice)
     }
 

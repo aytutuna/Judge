@@ -217,4 +217,65 @@ class JudgeApiTest {
             executor.shutdownNow()
         }
     }
+
+    @Test
+    fun history_passesTheCursor_andDecodesThePage() = runBlocking {
+        server.enqueue(json(200, Fixtures.verdicts["history"].toString()))
+        val res = api(tokens = FixedTokens("tok")).history(limit = 20, cursor = "abc")
+        val page = (res as ApiResult.Ok).value
+        val recorded = server.takeRequest()
+        assertEquals("/api/v1/me/history", recorded.url.encodedPath)
+        assertEquals("20", recorded.url.queryParameter("limit"))
+        assertEquals("abc", recorded.url.queryParameter("cursor"))
+        assertEquals("Bearer tok", recorded.headers["Authorization"])
+        assertEquals(7, page.items.size)
+        assertEquals("c:case0000010", page.items.first().key)
+        val answered = page.items.first { it.isRespondent }
+        assertEquals("b", answered.party)
+        assertEquals("case0000013.inviteTokenFixture0001", answered.inviteToken)
+        assertTrue(page.next!!.isNotEmpty())
+    }
+
+    @Test
+    fun history_keepsRowsItCanRead_andToleratesNewStates() = runBlocking {
+        val body = """{"items":[
+            {"kind":"verdict","id":"v1","at":"2026-10-05T00:00:00.000Z","state":"archived"},
+            {"kind":"case","id":"c1","at":"2026-10-04T00:00:00.000Z","state":"ready","verdict":"split","nameMap":"nope"},
+            {"kind":"case","at":"2026-10-03T00:00:00.000Z"}
+        ],"next":null}"""
+        server.enqueue(json(200, body))
+        val page = (api().history() as ApiResult.Ok).value
+        assertEquals(listOf("v:v1"), page.items.map { it.key })
+        assertNull("a state this build doesn't know", page.items.single().historyState)
+        assertNull(page.next)
+    }
+
+    @Test
+    fun removals_postTheConfirmation_toEachSidesOwnEndpoint() = runBlocking {
+        repeat(2) { server.enqueue(json(200, """{"removed":true,"removedAt":"2026-10-21T00:00:00.000Z"}""")) }
+        assertTrue(api().removeVerdict("v1") is ApiResult.Ok)
+        assertTrue(api().removeAnsweredCase("tok_1") is ApiResult.Ok)
+        val verdict = server.takeRequest()
+        val answered = server.takeRequest()
+        assertEquals("/api/v1/verdicts/v1/removal", verdict.url.encodedPath)
+        assertEquals("/api/v1/respond/tok_1/removal", answered.url.encodedPath)
+        for (r in listOf(verdict, answered)) {
+            assertEquals("POST", r.method)
+            assertEquals("remove", Json.parseToJsonElement(r.body!!.utf8()).jsonObject["confirm"]!!.jsonPrimitive.content)
+        }
+    }
+
+    @Test
+    fun config_readsTheHistorySwitch() = runBlocking {
+        server.enqueue(json(200, Fixtures.verdicts["config"]!!.jsonObject["full"].toString()))
+        server.enqueue(json(200, """{"signIn":{"google":true},"features":{"cases":true}}"""))
+        assertTrue((api().config() as ApiResult.Ok).value.features.history)
+        assertTrue("an older server has no list", !(api().config() as ApiResult.Ok).value.features.history)
+    }
+
+    private class FixedTokens(private val token: String) : TokenStore {
+        override fun get(): String = token
+        override fun set(token: String) {}
+        override fun clear() {}
+    }
 }

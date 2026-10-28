@@ -21,6 +21,10 @@ import com.okjudge.judge.i18n.LocalizedStrings
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
 
 /** Build-time configuration (BuildConfig, set from `judge.*` Gradle properties). */
@@ -78,7 +82,16 @@ class AppContainer(context: Context, val config: AppConfig = AppConfig.fromBuild
 
     private val db: HistoryDb by lazy { HistoryDb.create(appContext) }
 
-    val history: HistoryRepository by lazy { RoomHistoryRepository(db.history()) }
+    val history: HistoryRepository by lazy { RoomHistoryRepository(db) }
+
+    private val _historyUser = MutableStateFlow<String?>(null)
+
+    /**
+     * Whose Verdicts list the phone shows: the signed-in account once /me
+     * names it; at launch, until then, the account the list was last loaded
+     * for, so it shows offline. Null signed out.
+     */
+    val historyUser: StateFlow<String?> = _historyUser.asStateFlow()
 
     val settings: SettingsStore by lazy { DataStoreSettings(appContext) }
 
@@ -90,6 +103,32 @@ class AppContainer(context: Context, val config: AppConfig = AppConfig.fromBuild
 
     val purchases: PurchaseController by lazy {
         PurchaseController(purchaseGateway, account.state, refreshAccount = { account.refresh() }, scope = appScope)
+    }
+
+    /** Keeps the Verdicts cache with the session: signing out (or deleting the account) takes the account's rows off the phone. */
+    fun start() {
+        account.onEndedByUser = { history.forgetAccounts() }
+        appScope.launch {
+            var launching = true
+            account.state.collect { state ->
+                when (state) {
+                    Account.State.SignedOut -> {
+                        history.setAccount(null)
+                        _historyUser.value = null
+                    }
+                    is Account.State.SignedIn -> {
+                        val id = state.me?.user?.id
+                        if (id != null) {
+                            history.setAccount(id)
+                            _historyUser.value = id
+                        } else if (launching) {
+                            _historyUser.value = history.cachedUser()
+                        }
+                    }
+                }
+                launching = false
+            }
+        }
     }
 
     val verdictFlow: VerdictFlow by lazy {
