@@ -677,9 +677,37 @@ export type Locale = {
   voice: string;
   /** Every key of the English table, nothing else. */
   strings: Record<Key, string>;
+  /** Extra forms of the count strings, by plural category (see COUNT_KEYS). */
+  plurals?: Partial<Record<CountKey, PluralForms>>;
   /** The emails, same fields as English (lib/email.ts). */
   email: EmailCopy;
 };
+
+/**
+ * Strings whose {n} counts the thing they name. A language whose nouns take
+ * more than a singular and a plural (Russian "2 минуты" but "5 минут") gives
+ * them extra forms by Intl.PluralRules category; the base string is the
+ * "other" form and stands in for any form left out. The callers already pick
+ * a separate singular key for 1, so English and other one/other languages
+ * need none.
+ */
+export const COUNT_KEYS = [
+  "judgesVoted.other",
+  "wait.minutes",
+  "wait.hours",
+  "panel.strong",
+  "panel.quick",
+  "pricing.pack",
+  "pricing.monthly.cap",
+  "evidence.hint",
+  "home.left.other",
+  "home.monthLeft",
+  "thread.judgesAgree",
+] as const satisfies readonly Key[];
+
+export type CountKey = (typeof COUNT_KEYS)[number];
+
+export type PluralForms = Partial<Record<Exclude<Intl.LDMLPluralRule, "other">, string>>;
 
 /** Sign-in link, sign-in code (the apps sign in by typing it) and "the other
  * side answered" email copy. The case notice names no one and quotes nothing
@@ -694,7 +722,7 @@ export type EmailCopy = {
 export const EN: Record<Key, string> = en;
 
 /** The part of a locale the browser needs. */
-export type Dict = Pick<Locale, "strings">;
+export type Dict = Pick<Locale, "strings" | "plurals">;
 
 // Whole locales when downloaded, browser parts when a server page handed them over.
 const loaded: Partial<Record<Lang, Dict & Partial<Locale>>> = {};
@@ -716,7 +744,7 @@ export function hasStrings(lang: Lang): boolean {
  * browser (see LocaleStrings); null for English or when not loaded. */
 export function loadedDict(lang: Lang): Dict | null {
   const dict = lang === "en" ? undefined : loaded[lang];
-  return dict ? { strings: dict.strings } : null;
+  return dict ? { strings: dict.strings, ...(dict.plurals ? { plurals: dict.plurals } : {}) } : null;
 }
 
 /** A loaded language's note on how to write it, for the model prompts. ""
@@ -764,10 +792,29 @@ export function subscribeLocales(fn: () => void): () => void {
   };
 }
 
+const pluralRules = new Map<Lang, Intl.PluralRules>();
+
+/** The plural category of `n` in `lang` ("one", "few", "many", ...). */
+export function pluralCategory(lang: Lang, n: number): Intl.LDMLPluralRule {
+  let rules = pluralRules.get(lang);
+  if (!rules) {
+    rules = new Intl.PluralRules(langTag(lang));
+    pluralRules.set(lang, rules);
+  }
+  return rules.select(n);
+}
+
 /** Look up a string and interpolate `{var}` slots. Unknown braces are left
- * alone. A language whose strings are not loaded reads English. */
+ * alone. A numeric `n` picks the language's plural form of a count string.
+ * A language whose strings are not loaded reads English. */
 export function t(lang: Lang, key: Key, vars?: Record<string, string | number>): string {
-  let s: string = (loaded[lang]?.strings ?? en)[key];
+  const dict = loaded[lang];
+  let s: string = (dict?.strings ?? en)[key];
+  const forms = dict?.plurals?.[key as CountKey];
+  if (forms && typeof vars?.n === "number") {
+    const category = pluralCategory(lang, vars.n);
+    if (category !== "other") s = forms[category] ?? s;
+  }
   if (vars) {
     for (const [k, v] of Object.entries(vars)) {
       s = s.split(`{${k}}`).join(String(v));
