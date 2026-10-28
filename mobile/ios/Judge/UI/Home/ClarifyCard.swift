@@ -41,7 +41,7 @@ struct ClarifyCard: View {
                     hideKeyboard()
                     home.finishClarify(skip: false, app: app)
                 } label: {
-                    Text(L10n.clarifySubmit(lang) + " →")
+                    Text(L10n.clarifySubmit(lang) + (lang.isRTL ? " ←" : " →"))
                 }
                 .buttonStyle(PrimaryButtonStyle())
                 Button(L10n.clarifySkip(lang)) {
@@ -50,7 +50,7 @@ struct ClarifyCard: View {
                 }
                 .buttonStyle(GhostButtonStyle())
                 .frame(maxWidth: .infinity)
-                Button("← " + L10n.clarifyBack(lang)) {
+                Button((lang.isRTL ? "→ " : "← ") + L10n.clarifyBack(lang)) {
                     hideKeyboard()
                     home.clarifyBack()
                 }

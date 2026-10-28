@@ -29,6 +29,7 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.unit.dp
 import com.okjudge.judge.core.model.ClarifyQuestion
 import com.okjudge.judge.core.session.VerdictFlow
+import com.okjudge.judge.i18n.LocalLang
 import com.okjudge.judge.i18n.LocalStrings
 import com.okjudge.judge.ui.components.PrimaryButton
 import com.okjudge.judge.ui.components.TextAction
@@ -61,6 +62,7 @@ fun ClarifyScreen(
     modifier: Modifier = Modifier,
 ) {
     val s = LocalStrings.current
+    val rtl = LocalLang.current.rtl
     BackHandler(onBack = onBack)
     Column(modifier.fillMaxSize()) {
         TopBar(onBack = onBack, onNew = onNew, backLabel = s.clarifyBack)
@@ -86,7 +88,7 @@ fun ClarifyScreen(
                     )
                 }
                 PrimaryButton(
-                    text = s.clarifySubmit + "  →",
+                    text = s.clarifySubmit + if (rtl) "  ←" else "  →",
                     enabled = true,
                     onClick = onSubmit,
                     modifier = Modifier.fillMaxWidth().padding(top = 28.dp).testTag(ClarifyTags.SUBMIT),
@@ -95,7 +97,7 @@ fun ClarifyScreen(
                     TextAction(s.clarifySkip, onSkip, Modifier.testTag(ClarifyTags.SKIP), color = Palette.ink)
                 }
                 Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
-                    TextAction("← " + s.clarifyBack, onBack, Modifier.testTag(ClarifyTags.BACK), color = Palette.ink2)
+                    TextAction((if (rtl) "→ " else "← ") + s.clarifyBack, onBack, Modifier.testTag(ClarifyTags.BACK), color = Palette.ink2)
                 }
             }
         }
