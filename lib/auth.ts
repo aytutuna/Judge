@@ -68,13 +68,20 @@ function authSecret(env: Env): string | null {
   return DEV_SECRET;
 }
 
-export type SecretPurpose = "evidence-token" | "case-invite" | "case-names" | "respondent-claim";
+export type SecretPurpose = "evidence-token" | "case-invite" | "case-names" | "respondent-claim" | "welcome-claim";
 
 /** A 32-byte key for one purpose, derived from the auth secret, or null when
  * accounts are not configured. Rotating BETTER_AUTH_SECRET rotates every key. */
 export function derivedSecret(purpose: SecretPurpose, env: Env = process.env): Buffer | null {
   const secret = authSecret(env);
   return secret ? createHmac("sha256", secret).update(`settle:${purpose}:v1`).digest() : null;
+}
+
+/** What the welcome credit is remembered by: a keyed hash of the email, so
+ * deleting the account and signing up again with it gets no second one. */
+export function welcomeClaim(email: string): string | null {
+  const key = derivedSecret("welcome-claim");
+  return key && createHmac("sha256", key).update(email.trim().toLowerCase()).digest("hex");
 }
 
 /** True when accounts can work: a real secret, or any non-production run. */
@@ -343,7 +350,9 @@ function buildOptions(env: Env, secret: string, client: Awaited<ReturnType<typeo
       user: {
         create: {
           after: async (user) => {
-            await grantWelcomeCredit(user.id).catch((e: unknown) =>
+            const claim = welcomeClaim(user.email);
+            if (!claim) return;
+            await grantWelcomeCredit(user.id, claim).catch((e: unknown) =>
               console.error("[auth] welcome credit failed:", e instanceof Error ? e.message : String(e)),
             );
           },

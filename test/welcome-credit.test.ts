@@ -7,7 +7,7 @@ const dir = mkdtempSync(path.join(tmpdir(), "verdict-welcome-"));
 process.env.DATABASE_URL = `file:${path.join(dir, "test.db").replace(/\\/g, "/")}`;
 process.env.BETTER_AUTH_SECRET = "test-secret-".padEnd(48, "x");
 
-const { createDevSession, findOrCreateUserByEmail } = await import("../lib/auth");
+const { createDevSession, deleteAuthUser, findOrCreateUserByEmail, welcomeClaim } = await import("../lib/auth");
 const ent = await import("../lib/entitlements");
 const { getDb } = await import("../lib/db");
 
@@ -40,7 +40,7 @@ describe("welcome credit", () => {
   it("is granted once: signing in again and a repeated grant add nothing", async () => {
     const { user } = await createDevSession("welcome2@verdict.local");
     await createDevSession("welcome2@verdict.local");
-    expect(await ent.grantWelcomeCredit(user.id)).toEqual({ applied: false });
+    expect(await ent.grantWelcomeCredit(user.id, welcomeClaim(user.email)!)).toEqual({ applied: false });
     expect((await ent.getEntitlement(user.id)).credits).toBe(1);
     expect(await welcomeGrants(user.id)).toBe(1);
   });
@@ -52,6 +52,16 @@ describe("welcome credit", () => {
     await ent.consumePremiumVerdict(spent.reservation.id, "v-welcome3");
     await createDevSession("welcome3@verdict.local");
     expect(await ent.getEntitlement(user.id)).toMatchObject({ canUsePremium: false, credits: 0 });
+  });
+
+  it("deleting the account and signing up again with the same email gets no second one", async () => {
+    const first = await createDevSession("welcome6@verdict.local");
+    await ent.deleteUserEntitlements(first.user.id);
+    await deleteAuthUser(first.user.id);
+    const { user } = await createDevSession("welcome6@verdict.local");
+    expect(user.id).not.toBe(first.user.id);
+    expect(await ent.getEntitlement(user.id)).toMatchObject({ canUsePremium: false, credits: 0 });
+    expect(await welcomeGrants(user.id)).toBe(0);
   });
 
   it("accounts made by the admin script get it too", async () => {

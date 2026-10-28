@@ -81,6 +81,11 @@ const SCHEMA = [
     WHERE idempotency_key IS NOT NULL`,
   "CREATE INDEX IF NOT EXISTS premium_usage_user ON premium_usage (user_id, status, created_at)",
   "CREATE INDEX IF NOT EXISTS premium_usage_created ON premium_usage (created_at)",
+  // Kept when an account is deleted: one welcome credit per email, ever.
+  `CREATE TABLE IF NOT EXISTS welcome_claims (
+    claim       TEXT PRIMARY KEY,
+    created_at  TEXT NOT NULL
+  )`,
 ];
 
 const globalForEntitlements = globalThis as unknown as {
@@ -552,16 +557,33 @@ export async function grantCredits(g: {
 /** Premium verdicts every new account starts with. */
 export const WELCOME_CREDITS = 1;
 
-/** The new account's welcome credit. Keyed by the user id, so it is granted
- * at most once per account. */
-export async function grantWelcomeCredit(userId: string): Promise<GrantResult> {
-  return grantCredits({
-    userId,
-    credits: WELCOME_CREDITS,
-    source: "promo",
-    externalId: `welcome:${userId}`,
-    note: "welcome",
-  });
+/** The new account's welcome credit, once per `claim` (welcomeClaim of the
+ * email in lib/auth) and once per account. */
+export async function grantWelcomeCredit(userId: string, claim: string): Promise<GrantResult> {
+  assertId(userId, "userId");
+  const id = nanoid();
+  const nowIso = iso(new Date());
+  const guard = grantExists(id);
+  const results = await writeBatch([
+    {
+      sql: "INSERT INTO welcome_claims (claim, created_at) VALUES (?, ?) ON CONFLICT (claim) DO NOTHING",
+      args: [claim, nowIso],
+    },
+    {
+      sql: `INSERT INTO entitlement_grants
+              (id, user_id, source, external_id, kind, credits_delta, note, created_at)
+            SELECT ?, ?, 'promo', ?, 'credits', ?, 'welcome', ? WHERE changes() = 1
+            ON CONFLICT (source, external_id) DO NOTHING`,
+      args: [id, userId, `welcome:${userId}`, WELCOME_CREDITS, nowIso],
+    },
+    {
+      sql: `INSERT INTO entitlement_accounts (user_id, credits, updated_at)
+            SELECT ?, ?, ? WHERE ${guard.sql}
+            ON CONFLICT (user_id) DO UPDATE SET credits = credits + excluded.credits, updated_at = excluded.updated_at`,
+      args: [userId, WELCOME_CREDITS, nowIso, ...guard.args],
+    },
+  ]);
+  return { applied: results[1].rowsAffected === 1 };
 }
 
 /**
