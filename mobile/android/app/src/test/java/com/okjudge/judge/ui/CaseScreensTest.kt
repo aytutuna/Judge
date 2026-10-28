@@ -237,7 +237,7 @@ class CaseScreensTest {
     }
 
     @Test
-    fun freeCase_failedAndExpired_neverMentionCredits() {
+    fun oldFreeCase_bannersSkipCredits_butJudgingNowSpendsOne() {
         val free = { name: String -> stateOf(name).let { it.copy(view = it.view!!.copy(tier = "free")) } }
         var state by mutableStateOf(free("failed").let { it.copy(view = it.view!!.copy(lastError = null)) })
         compose.setContent { Themed(AppLang.EN) { CaseScreen(state, true, CaseActions(), true) } }
@@ -248,8 +248,8 @@ class CaseScreensTest {
         state = free("expired").let { it.copy(view = it.view!!.copy(canJudgeNow = true)) }
         compose.onNodeWithTag(CaseTags.BANNER).assertTextContains(en.caseExpiredBodyFree)
         compose.onNodeWithTag(CaseTags.JUDGE_NOW).performClick()
-        compose.onNodeWithText(en.caseJudgeExpiredConfirmFree).assertExists()
-        compose.onNodeWithTag(CaseTags.CONFIRM).assertTextContains(en.caseJudgeNowYes)
+        compose.onNodeWithText(en.caseJudgeExpiredConfirm).assertExists()
+        compose.onNodeWithTag(CaseTags.CONFIRM).assertTextContains(en.caseJudgeExpiredYes)
     }
 
     @Test

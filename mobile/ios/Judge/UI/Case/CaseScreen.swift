@@ -306,7 +306,7 @@ private struct CaseScreenContent: View {
 
     private func confirmText(_ item: CaseConfirm, lang: AppLang) -> String {
         switch item {
-        case .judgeNow(let expired): return CaseLogic.judgeNowConfirm(expired: expired, tier: model.view?.tier ?? .premium, lang: lang).text
+        case .judgeNow(let expired): return CaseLogic.judgeNowConfirm(expired: expired, lang: lang).text
         case .resetInvite: return L10n.caseInviteResetConfirm(lang)
         case .remove: return L10n.caseRemoveConfirm(lang)
         }
@@ -314,7 +314,7 @@ private struct CaseScreenContent: View {
 
     private func confirmYes(_ item: CaseConfirm, lang: AppLang) -> String {
         switch item {
-        case .judgeNow(let expired): return CaseLogic.judgeNowConfirm(expired: expired, tier: model.view?.tier ?? .premium, lang: lang).yes
+        case .judgeNow(let expired): return CaseLogic.judgeNowConfirm(expired: expired, lang: lang).yes
         case .resetInvite: return L10n.caseInviteResetYes(lang)
         case .remove: return L10n.caseRemoveYes(lang)
         }

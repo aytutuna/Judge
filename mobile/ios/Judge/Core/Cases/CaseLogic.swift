@@ -122,11 +122,11 @@ enum CaseLogic {
 
     /// Text and button of the "judge with only my side" confirm. Waiting: the
     /// held unit pays and the invite closes. Expired: the held unit went
-    /// back, so a premium case spends a new one; a free case spends nothing.
-    static func judgeNowConfirm(expired: Bool, tier: Tier, lang: AppLang) -> (text: String, yes: String) {
-        guard expired else { return (L10n.caseJudgeNowConfirm(lang), L10n.caseJudgeNowYes(lang)) }
-        if tier == .premium { return (L10n.caseJudgeExpiredConfirm(lang), L10n.caseJudgeExpiredYes(lang)) }
-        return (L10n.caseJudgeExpiredConfirmFree(lang), L10n.caseJudgeNowYes(lang))
+    /// back, so a new one is spent.
+    static func judgeNowConfirm(expired: Bool, lang: AppLang) -> (text: String, yes: String) {
+        expired
+            ? (L10n.caseJudgeExpiredConfirm(lang), L10n.caseJudgeExpiredYes(lang))
+            : (L10n.caseJudgeNowConfirm(lang), L10n.caseJudgeNowYes(lang))
     }
 
     /// Whether the appeal form offers a screenshot: the deployment takes

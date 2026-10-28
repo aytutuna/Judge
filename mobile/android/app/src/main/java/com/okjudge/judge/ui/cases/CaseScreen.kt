@@ -305,15 +305,11 @@ fun CaseScreen(
     if (shown != null && view != null) {
         val expired = view.status == CaseStatus.EXPIRED
         val (title, text, yes) = when (shown) {
-            // Expired: the held unit went back, so a premium case spends a new one. A free case spends nothing.
+            // Expired: the held unit went back, so a new one is spent.
             Confirm.JUDGE_NOW -> Triple(
                 s.caseJudgeNow,
-                when {
-                    !expired -> s.caseJudgeNowConfirm
-                    view.premium -> s.caseJudgeExpiredConfirm
-                    else -> s.caseJudgeExpiredConfirmFree
-                },
-                if (expired && view.premium) s.caseJudgeExpiredYes else s.caseJudgeNowYes,
+                if (expired) s.caseJudgeExpiredConfirm else s.caseJudgeNowConfirm,
+                if (expired) s.caseJudgeExpiredYes else s.caseJudgeNowYes,
             )
             Confirm.RESET -> Triple(s.caseInviteReset, s.caseInviteResetConfirm, s.caseInviteResetYes)
             Confirm.REMOVE -> Triple(s.caseRemove, s.caseRemoveConfirm, s.caseRemoveYes)

@@ -123,15 +123,12 @@ final class CaseTests: XCTestCase {
         expired.tier = .free
         XCTAssertEqual(CaseLogic.expiredBody(expired, lang: .tr), L10n.caseExpiredBodyFree(.tr))
 
-        let waiting = CaseLogic.judgeNowConfirm(expired: false, tier: .free, lang: .en)
+        let waiting = CaseLogic.judgeNowConfirm(expired: false, lang: .en)
         XCTAssertEqual(waiting.text, L10n.caseJudgeNowConfirm(.en))
         XCTAssertEqual(waiting.yes, L10n.caseJudgeNowYes(.en))
-        let premiumExpired = CaseLogic.judgeNowConfirm(expired: true, tier: .premium, lang: .en)
-        XCTAssertEqual(premiumExpired.text, L10n.caseJudgeExpiredConfirm(.en))
-        XCTAssertEqual(premiumExpired.yes, L10n.caseJudgeExpiredYes(.en))
-        let freeExpired = CaseLogic.judgeNowConfirm(expired: true, tier: .free, lang: .en)
-        XCTAssertEqual(freeExpired.text, L10n.caseJudgeExpiredConfirmFree(.en))
-        XCTAssertEqual(freeExpired.yes, L10n.caseJudgeNowYes(.en))
+        let expired = CaseLogic.judgeNowConfirm(expired: true, lang: .en)
+        XCTAssertEqual(expired.text, L10n.caseJudgeExpiredConfirm(.en))
+        XCTAssertEqual(expired.yes, L10n.caseJudgeExpiredYes(.en))
     }
 
     func testAppealAreaForEveryView() throws {
