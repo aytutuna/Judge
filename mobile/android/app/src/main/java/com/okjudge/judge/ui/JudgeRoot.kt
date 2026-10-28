@@ -582,7 +582,7 @@ private fun BottomBar(selected: Tab, onSelect: (Tab) -> Unit) {
         )
         listOf(
             Triple(Tab.NEW, s.appTabNew, JudgeIcons.plus(Palette.ink)),
-            Triple(Tab.HISTORY, s.appTabHistory, JudgeIcons.list(Palette.ink)),
+            Triple(Tab.HISTORY, s.navVerdicts, JudgeIcons.list(Palette.ink)),
             Triple(Tab.SETTINGS, s.appTabSettings, JudgeIcons.gear(Palette.ink)),
         ).forEach { (tab, label, icon) ->
             NavigationBarItem(

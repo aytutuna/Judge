@@ -224,7 +224,7 @@ private fun CaseScreenBody(
             }
             return@Column
         }
-        TopBar(onBack = actions.onBack, onNew = actions.onNew, backLabel = s.appHistoryTitle)
+        TopBar(onBack = actions.onBack, onNew = actions.onNew, backLabel = s.navVerdicts)
         if (view == null) {
             Column(Modifier.fillMaxSize().padding(horizontal = 20.dp), verticalArrangement = Arrangement.spacedBy(14.dp)) {
                 Header(kicker, null)

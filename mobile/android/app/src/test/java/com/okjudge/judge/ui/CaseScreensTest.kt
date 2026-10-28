@@ -16,6 +16,7 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollTo
 import com.okjudge.judge.Fixtures
+import com.okjudge.judge.core.data.SavedVerdict
 import com.okjudge.judge.core.display.Errors
 import com.okjudge.judge.core.display.UiError
 import com.okjudge.judge.core.model.AppealGate
@@ -33,8 +34,10 @@ import com.okjudge.judge.ui.cases.CaseUiState
 import com.okjudge.judge.ui.cases.CaseViewModel
 import com.okjudge.judge.ui.history.HistoryScreen
 import com.okjudge.judge.ui.history.HistoryTags
+import com.okjudge.judge.ui.history.mergeHistory
 import com.okjudge.judge.ui.premium.EvidenceTags
 import com.okjudge.judge.ui.verdict.VerdictTags
+import java.time.Instant
 import java.util.Locale
 import kotlinx.serialization.json.jsonObject
 import org.junit.Assert.assertEquals
@@ -293,19 +296,47 @@ class CaseScreensTest {
     }
 
     @Test
-    fun history_showsTheCasesSegment_withTheirTitles() {
+    fun history_listsCasesWithTheVerdicts_newestFirst() {
         val list = WireJson.json.decodeFromString(CaseListResponse.serializer(), Fixtures.verdicts["cases"]!!.jsonObject["list"].toString())
+        val o = sample("win_a_self")
+        // Between the first two cases (Oct 20 and Oct 18).
+        val saved = SavedVerdict(o.id, Instant.parse("2026-10-19T12:00:00Z").toEpochMilli(), o.result, o.nameMap, emptyMap())
         val opened = mutableListOf<String>()
         compose.setContent {
             Themed(AppLang.EN) {
-                HistoryScreen(emptyList(), {}, {}, {}, {}, cases = CaseListState.Ready(list.cases), onOpenCase = { opened += it })
+                HistoryScreen(listOf(saved), {}, {}, {}, {}, cases = CaseListState.Ready(list.cases), onOpenCase = { opened += it })
             }
         }
-        compose.onNodeWithTag(HistoryTags.segment(1)).performClick()
-        compose.onNodeWithTag(CaseListTags.LIST).assertExists()
+        compose.onNodeWithText(en.navVerdicts).assertExists()
+        compose.onNodeWithTag(HistoryTags.LIST).assertExists()
+        compose.onNodeWithTag(HistoryTags.row(o.id)).assertExists()
         compose.onNodeWithText("Party A's menu test settles it").assertExists()
+        compose.onNodeWithText(en.caseStatusAwaiting).assertExists()
         compose.onNodeWithText(en.accountVerdictsRemoved).assertExists()
         compose.onNodeWithTag(CaseListTags.row("case0000002")).performClick()
         assertEquals(listOf("case0000002"), opened)
+        assertEquals(
+            listOf("c:case0000001", "v:${o.id}", "c:case0000002", "c:case0000003"),
+            mergeHistory(listOf(saved), list.cases).map { it.key },
+        )
+    }
+
+    @Test
+    fun history_saysWhenTheCasesFailed_andKeepsTheVerdicts() {
+        val o = sample("win_a_self")
+        var retried = 0
+        compose.setContent {
+            Themed(AppLang.EN) {
+                HistoryScreen(
+                    listOf(SavedVerdict(o.id, 1_760_900_000_000L, o.result, o.nameMap, emptyMap())), {}, {}, {}, {},
+                    cases = CaseListState.Error,
+                    onRetryCases = { retried++ },
+                )
+            }
+        }
+        compose.onNodeWithTag(CaseListTags.ERROR).assertExists()
+        compose.onNodeWithTag(HistoryTags.row(o.id)).assertExists()
+        compose.onNodeWithText(en.appRetry).performClick()
+        assertEquals(1, retried)
     }
 }

@@ -499,8 +499,12 @@ class ScreenshotsTest {
             com.okjudge.judge.core.model.CaseListResponse.serializer(),
             Fixtures.verdicts["cases"]!!.jsonObject["list"].toString(),
         )
+        val items = listOf("win_a_self", "win_b_named", "lean_tie").mapIndexed { i, n ->
+            val o = sample(n)
+            SavedVerdict(o.id, 1_761_000_000_000L - i * 2 * 86_400_000L, o.result, o.nameMap, emptyMap())
+        }
         Themed(AppLang.EN) {
-            HistoryScreen(emptyList(), {}, {}, {}, {}, cases = com.okjudge.judge.ui.cases.CaseListState.Ready(list.cases), initiallyCases = true)
+            HistoryScreen(items, {}, {}, {}, {}, cases = com.okjudge.judge.ui.cases.CaseListState.Ready(list.cases))
         }
     }
 
