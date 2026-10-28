@@ -364,6 +364,22 @@ final class TextHelperTests: XCTestCase {
         }
         XCTAssertGreaterThan(Set(shown).count, 1)
     }
+
+    @MainActor
+    func testNewCaseDropsTheExampleNameButKeepsOneTheUserTyped() {
+        let home = HomeModel(preset: Preset.defaultID)
+        home.fillExample(lang: .en)
+        home.judgeAnother()
+        XCTAssertNil(home.caseName, "the account's first name comes back")
+        XCTAssertNil(home.otherName)
+        XCTAssertTrue(home.isBlank)
+
+        home.fillExample(lang: .en)
+        home.caseName = "Ada"
+        home.judgeAnother()
+        XCTAssertEqual(home.caseName, "Ada")
+        XCTAssertTrue(home.isBlank)
+    }
 }
 
 final class TranslationLogicTests: XCTestCase {

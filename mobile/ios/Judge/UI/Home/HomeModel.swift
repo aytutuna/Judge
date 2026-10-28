@@ -102,6 +102,8 @@ final class HomeModel {
     @ObservationIgnored private let keys = IdempotencyKeys()
     /// The example "Try an example" filled in last, so the next tap picks another.
     @ObservationIgnored private var lastExample: String?
+    /// The name the example wrote: "+" drops it, but keeps one the user typed.
+    @ObservationIgnored private var exampleName: String?
     /// Told when the server refuses the session (401) and when an outcome
     /// changes the balance.
     @ObservationIgnored private weak var account: AccountModel?
@@ -579,6 +581,8 @@ final class HomeModel {
         argument = ""
         otherSide = ""
         otherName = nil
+        if caseName == exampleName { caseName = nil }
+        exampleName = nil
         mode = .now
         error = nil
         clarify = nil
@@ -592,6 +596,7 @@ final class HomeModel {
         let example = ExampleCase.random(after: lastExample)
         lastExample = example.id
         caseName = example.myName(lang)
+        exampleName = caseName
         argument = example.mine(lang)
         otherName = example.theirName(lang)
         otherSide = example.theirs(lang)
