@@ -9,7 +9,7 @@ final class HistoryListTests: XCTestCase {
     private func withStore(_ body: (HistoryStore) throws -> Void) throws {
         let container = HistoryContainer.inMemory()
         try withExtendedLifetime(container) {
-            try body(HistoryStore(context: container.mainContext))
+            try body(HistoryStore(container: container))
         }
     }
 
@@ -223,7 +223,7 @@ final class HistoryListTests: XCTestCase {
             try old.mainContext.save()
         }
         let current = try ModelContainer(for: SavedVerdict.self, HistoryCacheRow.self, configurations: ModelConfiguration(url: url))
-        let store = HistoryStore(context: current.mainContext)
+        let store = HistoryStore(container: current)
         let rows = try store.all()
         XCTAssertEqual(rows.count, 2)
         XCTAssertTrue(rows.allSatisfy { $0.ownerUserID == nil })

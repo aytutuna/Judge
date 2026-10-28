@@ -112,11 +112,15 @@ extension SavedVerdict {
 @MainActor
 final class HistoryStore {
     let context: ModelContext
+    /// Kept because the context doesn't keep it alive, and a context whose
+    /// container is gone traps (a late /me still calls `setAccount`).
+    private let container: ModelContainer
     /// The signed-in account, once known: a verdict saved now is listed for it at once.
     private(set) var account: String?
 
-    init(context: ModelContext) {
-        self.context = context
+    init(container: ModelContainer) {
+        self.container = container
+        context = container.mainContext
     }
 
     /// Saves (or replaces) a verdict right after it arrives.

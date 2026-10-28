@@ -8,7 +8,7 @@ final class HistoryStoreTests: XCTestCase {
     private func withStore(_ body: (HistoryStore) throws -> Void) throws {
         let container = HistoryContainer.inMemory()
         try withExtendedLifetime(container) {
-            try body(HistoryStore(context: container.mainContext))
+            try body(HistoryStore(container: container))
         }
     }
 

@@ -104,7 +104,7 @@ final class AppModel {
         self.caseNames = caseNames ?? KeychainCaseNamesStore()
         langPreference = LangPreference(stored: defaults.string(forKey: Self.langKey))
         self.api = api ?? JudgeAPI(baseURL: config.apiBaseURL, userAgent: config.userAgent, tokenStore: tokenStore)
-        history = HistoryStore(context: container.mainContext)
+        history = HistoryStore(container: container)
         home = HomeModel()
         account = AccountModel(api: self.api)
         historyList = HistoryListModel(api: self.api, store: history, account: account)
