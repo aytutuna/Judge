@@ -74,7 +74,6 @@ struct JudgingView: View {
         let captionKey = Thinking.announcementKey(state, done: done)
         VStack(spacing: 0) {
             HStack(spacing: 10) {
-                BrandMark(width: 30)
                 Text(L10n.appName(lang))
                     .brandText(.brand)
                     .foregroundStyle(Brand.ink)

@@ -106,7 +106,6 @@ struct HomeView: View {
 
     private func header(_ lang: AppLang, home: HomeModel) -> some View {
         HStack(spacing: 10) {
-            BrandMark(width: 30)
             Text(L10n.appName(lang))
                 .brandText(.brand)
                 .foregroundStyle(Brand.ink)
