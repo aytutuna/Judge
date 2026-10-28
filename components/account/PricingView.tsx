@@ -153,19 +153,20 @@ export function PricingView() {
   const lang = useLang();
   const { config, me, status } = useViewer();
   const known = status === "ready" || status === "error";
+  const signedIn = Boolean(me?.user);
   return (
     <PageShell
       lang={lang}
       kicker={t(lang, "nav.pricing")}
-      title={t(lang, "pricing.title")}
-      lead={t(lang, "pricing.lead")}
+      title={t(lang, signedIn ? "pricing.titleMember" : "pricing.title")}
+      lead={t(lang, signedIn ? "pricing.leadMember" : "pricing.lead")}
       wide
     >
       <PricingTable
         lang={lang}
         pricing={config?.pricing ?? PRICING}
         premiumEnabled={known ? config?.premiumEnabled === true : null}
-        signedIn={Boolean(me?.user)}
+        signedIn={signedIn}
         signInOffered={signInOffered(config)}
         entitlement={me?.entitlement ?? null}
         features={config?.features ?? null}
