@@ -619,9 +619,11 @@ final class HomeModel {
             return
         }
         if case .server(let status, _) = failure, status == 402 {
-            // no_credits or fair_use: the balance on screen is stale.
+            // no_credits or fair_use: the pricing screen answers it, not a
+            // banner left over for when the user comes back with a pack.
             account?.refreshSoon()
-            path.append(.pricing)
+            if path.last != .pricing { path.append(.pricing) }
+            return
         }
         error = failure
         if failure.code == "rate_limited", let wait = failure.retryAfterSec, wait > 0 {

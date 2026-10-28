@@ -732,16 +732,17 @@ final class PremiumFlowTests: XCTestCase {
             let home = app.home
 
             home.submit(app: app)
-            try await PremiumFixtures.waitUntil("the \(code) error") { home.error != nil }
-            XCTAssertEqual(home.error?.code, code)
+            try await PremiumFixtures.waitUntil("the \(code) answer") { home.error != nil || !home.path.isEmpty }
             XCTAssertNil(home.clarify)
             XCTAssertFalse(home.isJudging)
             XCTAssertEqual(router.count("POST", Self.verdictPath), 0, "\(code) never reaches the verdict")
             if status == 402 {
                 XCTAssertEqual(home.path, [.pricing], "out of verdicts opens pricing")
+                XCTAssertNil(home.error, "pricing answers it, not a banner")
                 try await PremiumFixtures.waitUntil("the account refresh") { router.count("GET", Self.mePath) >= 1 }
                 try await PremiumFixtures.waitUntil("the spent balance") { app.account.entitlement.map(Balance.init) == .empty }
             } else {
+                XCTAssertEqual(home.error?.code, code)
                 XCTAssertTrue(home.path.isEmpty)
             }
             withExtendedLifetime(container) {}

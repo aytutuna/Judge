@@ -567,9 +567,9 @@ final class CaseTests: XCTestCase {
         app.home.caseName = ""
 
         app.home.submit(app: app)
-        try await PremiumFixtures.waitUntil("the error") { app.home.error != nil }
-        XCTAssertEqual(app.home.error?.code, "no_credits")
+        try await PremiumFixtures.waitUntil("pricing") { !app.home.path.isEmpty }
         XCTAssertEqual(app.home.path, [.pricing], "out of verdicts opens pricing over the form")
+        XCTAssertNil(app.home.error, "pricing answers it, not a banner")
         XCTAssertFalse(app.home.argument.isEmpty)
         let body = try PremiumFixtures.body(router.sentBodies("POST", "/api/v1/cases").first)
         XCTAssertNil(body["displayName"], "an empty name is left out")
