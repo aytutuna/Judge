@@ -29,6 +29,9 @@
  *                           appeal_overturned, appeal_changed, failed, expired,
  *                           removed, waiting_free, judged_free), list (GET /api/v1/cases with next),
  *                           createResponse (POST /api/v1/cases) and appealResponse
+ *   history                 GET /api/v1/me/history: one page mixing every kind of
+ *                           row (waiting, judging, your turn, ready either way,
+ *                           an answered case, removed by the other side)
  *   asyncErrors             {status, body} per code in the lib/api-errors.ts
  *                           envelope: signin_required, premium_required,
  *                           no_credits, fair_use, in_progress, appeal_used,
@@ -64,6 +67,7 @@ import {
   type EvidenceUploadResponse,
 } from "../../../lib/case-types";
 import type { DisplayState } from "../../../lib/originals-types";
+import { compareHistory, historyKey, type HistoryResponse, type HistoryRow } from "../../../lib/history-types";
 import { PRICING } from "../../../lib/pricing";
 import { POLL_AFTER_MS, type VerdictAcceptedResponse, type VerdictPollResponse } from "../../../lib/verdict-poll";
 import {
@@ -410,7 +414,7 @@ const ERROR_BODIES: { body: unknown; status?: number }[] = [
 /** Live AppConfig: the emailed-code sign-in flag and the feature switches. */
 type AppConfig = Omit<WebAppConfig, "signIn"> & {
   signIn: AuthProviders & { emailCode: boolean };
-  features?: { cases: boolean; evidence: boolean };
+  features?: { cases: boolean; evidence: boolean; history: boolean };
 };
 /** Live lib/api-errors.ts envelope and default statuses for the codes below. */
 type AsyncErrorCode =
@@ -474,13 +478,13 @@ const CONFIG_BODIES: Record<string, AppConfig> = {
     signIn: { apple: true, google: true, email: true, emailCode: true, dev: false },
     premiumEnabled: true,
     pricing: pricing(),
-    features: { cases: true, evidence: true },
+    features: { cases: true, evidence: true, history: true },
   },
   minimal: {
     signIn: { apple: false, google: true, email: false, emailCode: false, dev: false },
     premiumEnabled: false,
     pricing: pricing(),
-    features: { cases: false, evidence: false },
+    features: { cases: false, evidence: false, history: false },
   },
 };
 
@@ -796,6 +800,103 @@ const CASE_LIST: CaseListResponse = {
   next: "eyJjIjoiMjAyNi0xMC0xNVQwODoxMDowMC4wMDBaIiwiaSI6ImNhc2UwMDAwMDAzIn0",
 };
 
+const historyRow = (row: Partial<HistoryRow> & Pick<HistoryRow, "kind" | "id" | "at" | "state">): HistoryRow => ({
+  role: "owner",
+  party: "a",
+  createdAt: row.at,
+  yourMove: false,
+  verdict: null,
+  contextAdded: false,
+  contextBy: null,
+  headline: null,
+  excerpt: null,
+  nameMap: [],
+  expiresAt: null,
+  removed: false,
+  removable: false,
+  inviteToken: null,
+  ...row,
+});
+
+const OWNER_NAMES = [
+  { original: "I", replacement: "Party A" },
+  { original: "Sam", replacement: "Party B" },
+];
+
+const HISTORY_ROWS: HistoryRow[] = [
+  historyRow({
+    kind: "case",
+    id: "case0000010",
+    at: "2026-10-20T09:00:00.000Z",
+    state: "waiting",
+    excerpt: "Party B says a hot dog is a sandwich. I say nobody orders a sandwich hoping",
+    nameMap: OWNER_NAMES,
+    expiresAt: "2026-10-27T09:00:00.000Z",
+    removable: true,
+  }),
+  historyRow({ kind: "verdict", id: "verdict0020", at: "2026-10-19T21:15:00.000Z", state: "judging" }),
+  historyRow({
+    kind: "case",
+    id: "case0000011",
+    at: "2026-10-18T08:00:00.000Z",
+    state: "expired",
+    yourMove: true,
+    excerpt: "Party B borrowed my car for a week and brought it back on empty",
+    nameMap: [{ original: "I", replacement: "Party A" }, { original: "Jordan", replacement: "Party B" }],
+    removable: true,
+  }),
+  historyRow({
+    kind: "verdict",
+    id: "verdict0021",
+    at: "2026-10-17T19:40:00.000Z",
+    state: "ready",
+    verdict: "side_a",
+    headline: "Party A is right about the thermostat",
+    nameMap: [{ original: "I", replacement: "Party A" }, { original: "Deniz", replacement: "Party B" }],
+    removable: true,
+  }),
+  historyRow({
+    kind: "case",
+    id: "case0000012",
+    at: "2026-10-16T12:30:00.000Z",
+    state: "ready",
+    verdict: "side_b",
+    contextAdded: true,
+    headline: "Party B's dictionary test wins",
+    nameMap: OWNER_NAMES,
+    removable: true,
+  }),
+  historyRow({
+    kind: "case",
+    id: "case0000013",
+    role: "respondent",
+    party: "b",
+    at: "2026-10-15T18:05:00.000Z",
+    createdAt: "2026-10-14T10:00:00.000Z",
+    state: "ready",
+    verdict: "side_b",
+    headline: "Party A owes half the deposit",
+    nameMap: [{ original: "Alex", replacement: "Party A" }, { original: "me", replacement: "Party B" }],
+    removable: true,
+    inviteToken: "case0000013.inviteTokenFixture0001",
+  }),
+  historyRow({
+    kind: "case",
+    id: "case0000014",
+    at: "2026-10-12T07:45:00.000Z",
+    state: "removed_by_other",
+    verdict: "side_a",
+    headline: "Party A keeps the couch",
+    nameMap: OWNER_NAMES,
+    removed: true,
+  }),
+];
+
+const HISTORY_PAGE: HistoryResponse = {
+  items: HISTORY_ROWS,
+  next: Buffer.from(JSON.stringify([HISTORY_ROWS[HISTORY_ROWS.length - 1].at, historyKey(HISTORY_ROWS[HISTORY_ROWS.length - 1])])).toString("base64url"),
+};
+
 const CREATE_CASE_RESPONSE: CreateCaseResponse = {
   case: CASE_VIEWS.waiting_for_respondent,
   name_map: CASE_NAMES,
@@ -828,6 +929,10 @@ function validateCases(): void {
   for (const c of CASE_LIST.cases) {
     if (c.verdict !== null && !FinalVerdict.safeParse(c.verdict).success) throw new Error(`case list ${c.id}: bad verdict`);
   }
+  HISTORY_ROWS.forEach((row, i) => {
+    if (row.verdict !== null && !FinalVerdict.safeParse(row.verdict).success) throw new Error(`history ${row.id}: bad verdict`);
+    if (i > 0 && compareHistory(HISTORY_ROWS[i - 1], row) >= 0) throw new Error(`history ${row.id}: rows must be newest first`);
+  });
 }
 
 const ASYNC_ERRORS = Object.fromEntries(
@@ -858,6 +963,7 @@ function premiumFixtures() {
     evidenceResponse: { items: EVIDENCE_ITEMS } satisfies EvidenceUploadResponse,
     premiumVerdictResponse: { response: PREMIUM_RESPONSE, accepted: PREMIUM_ACCEPTED, polls: PREMIUM_POLLS },
     cases: { views: CASE_VIEWS, list: CASE_LIST, createResponse: CREATE_CASE_RESPONSE, appealResponse: APPEAL_RESPONSE },
+    history: HISTORY_PAGE,
     asyncErrors: ASYNC_ERRORS,
   };
 }

@@ -678,7 +678,8 @@
       },
       "features": {
         "cases": true,
-        "evidence": true
+        "evidence": true,
+        "history": true
       }
     },
     "minimal": {
@@ -714,7 +715,8 @@
       },
       "features": {
         "cases": false,
-        "evidence": false
+        "evidence": false,
+        "history": false
       }
     }
   },
@@ -3097,6 +3099,205 @@
         "resetsAt": null
       }
     }
+  },
+  "history": {
+    "items": [
+      {
+        "role": "owner",
+        "party": "a",
+        "createdAt": "2026-10-20T09:00:00.000Z",
+        "yourMove": false,
+        "verdict": null,
+        "contextAdded": false,
+        "contextBy": null,
+        "headline": null,
+        "excerpt": "Party B says a hot dog is a sandwich. I say nobody orders a sandwich hoping",
+        "nameMap": [
+          {
+            "original": "I",
+            "replacement": "Party A"
+          },
+          {
+            "original": "Sam",
+            "replacement": "Party B"
+          }
+        ],
+        "expiresAt": "2026-10-27T09:00:00.000Z",
+        "removed": false,
+        "removable": true,
+        "inviteToken": null,
+        "kind": "case",
+        "id": "case0000010",
+        "at": "2026-10-20T09:00:00.000Z",
+        "state": "waiting"
+      },
+      {
+        "role": "owner",
+        "party": "a",
+        "createdAt": "2026-10-19T21:15:00.000Z",
+        "yourMove": false,
+        "verdict": null,
+        "contextAdded": false,
+        "contextBy": null,
+        "headline": null,
+        "excerpt": null,
+        "nameMap": [],
+        "expiresAt": null,
+        "removed": false,
+        "removable": false,
+        "inviteToken": null,
+        "kind": "verdict",
+        "id": "verdict0020",
+        "at": "2026-10-19T21:15:00.000Z",
+        "state": "judging"
+      },
+      {
+        "role": "owner",
+        "party": "a",
+        "createdAt": "2026-10-18T08:00:00.000Z",
+        "yourMove": true,
+        "verdict": null,
+        "contextAdded": false,
+        "contextBy": null,
+        "headline": null,
+        "excerpt": "Party B borrowed my car for a week and brought it back on empty",
+        "nameMap": [
+          {
+            "original": "I",
+            "replacement": "Party A"
+          },
+          {
+            "original": "Jordan",
+            "replacement": "Party B"
+          }
+        ],
+        "expiresAt": null,
+        "removed": false,
+        "removable": true,
+        "inviteToken": null,
+        "kind": "case",
+        "id": "case0000011",
+        "at": "2026-10-18T08:00:00.000Z",
+        "state": "expired"
+      },
+      {
+        "role": "owner",
+        "party": "a",
+        "createdAt": "2026-10-17T19:40:00.000Z",
+        "yourMove": false,
+        "verdict": "side_a",
+        "contextAdded": false,
+        "contextBy": null,
+        "headline": "Party A is right about the thermostat",
+        "excerpt": null,
+        "nameMap": [
+          {
+            "original": "I",
+            "replacement": "Party A"
+          },
+          {
+            "original": "Deniz",
+            "replacement": "Party B"
+          }
+        ],
+        "expiresAt": null,
+        "removed": false,
+        "removable": true,
+        "inviteToken": null,
+        "kind": "verdict",
+        "id": "verdict0021",
+        "at": "2026-10-17T19:40:00.000Z",
+        "state": "ready"
+      },
+      {
+        "role": "owner",
+        "party": "a",
+        "createdAt": "2026-10-16T12:30:00.000Z",
+        "yourMove": false,
+        "verdict": "side_b",
+        "contextAdded": true,
+        "contextBy": null,
+        "headline": "Party B's dictionary test wins",
+        "excerpt": null,
+        "nameMap": [
+          {
+            "original": "I",
+            "replacement": "Party A"
+          },
+          {
+            "original": "Sam",
+            "replacement": "Party B"
+          }
+        ],
+        "expiresAt": null,
+        "removed": false,
+        "removable": true,
+        "inviteToken": null,
+        "kind": "case",
+        "id": "case0000012",
+        "at": "2026-10-16T12:30:00.000Z",
+        "state": "ready"
+      },
+      {
+        "role": "respondent",
+        "party": "b",
+        "createdAt": "2026-10-14T10:00:00.000Z",
+        "yourMove": false,
+        "verdict": "side_b",
+        "contextAdded": false,
+        "contextBy": null,
+        "headline": "Party A owes half the deposit",
+        "excerpt": null,
+        "nameMap": [
+          {
+            "original": "Alex",
+            "replacement": "Party A"
+          },
+          {
+            "original": "me",
+            "replacement": "Party B"
+          }
+        ],
+        "expiresAt": null,
+        "removed": false,
+        "removable": true,
+        "inviteToken": "case0000013.inviteTokenFixture0001",
+        "kind": "case",
+        "id": "case0000013",
+        "at": "2026-10-15T18:05:00.000Z",
+        "state": "ready"
+      },
+      {
+        "role": "owner",
+        "party": "a",
+        "createdAt": "2026-10-12T07:45:00.000Z",
+        "yourMove": false,
+        "verdict": "side_a",
+        "contextAdded": false,
+        "contextBy": null,
+        "headline": "Party A keeps the couch",
+        "excerpt": null,
+        "nameMap": [
+          {
+            "original": "I",
+            "replacement": "Party A"
+          },
+          {
+            "original": "Sam",
+            "replacement": "Party B"
+          }
+        ],
+        "expiresAt": null,
+        "removed": true,
+        "removable": false,
+        "inviteToken": null,
+        "kind": "case",
+        "id": "case0000014",
+        "at": "2026-10-12T07:45:00.000Z",
+        "state": "removed_by_other"
+      }
+    ],
+    "next": "WyIyMDI2LTEwLTEyVDA3OjQ1OjAwLjAwMFoiLCJjOmNhc2UwMDAwMDE0Il0"
   },
   "asyncErrors": {
     "signin_required": {
