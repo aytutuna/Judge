@@ -1,26 +1,18 @@
 # Judge: store listing (English)
 
-Facts come from the website copy (lib/i18n.ts) and lib/pricing.ts. No prices appear here: the stores show them.
+Facts come from the website copy (lib/i18n.ts), lib/pricing.ts and the judging code. No prices appear here: the stores show them.
 
 ## App name (max 30)
 
-Judge
+Judge - Settle your argument
 
 ## Subtitle (App Store, max 30)
 
-Pick one:
-
-1. `Who's right? Settle it.` (recommended)
-2. `Settle any argument, fairly`
-3. `Three AI judges. One verdict.`
+Three AI judges. One verdict.
 
 ## Short description (Google Play, max 80)
 
-Pick one:
-
-1. `Tell Judge what the fight is about. Three AI judges say who's right.` (recommended)
-2. `Settle everyday arguments with three AI judges and an honest confidence score.`
-3. `Who's right? Three AI judges rule separately, then tell you how much they agree.`
+Tell Judge what the fight is about. Three AI judges say who's right.
 
 ## Promotional text (App Store, max 170)
 
@@ -39,6 +31,7 @@ HOW IT WORKS
 - Names are swapped for Party A and Party B before judging, so the judges never know who's who.
 - Three independent AI judges each make the call on their own. On a close call, more judges are called in.
 - You get a verdict and a confidence score. If the judges disagree, the score drops and tells you.
+- A short "Why" says in two or three plain sentences what actually decided it.
 - Every verdict lists the facts it leans on, so you can check them yourself.
 
 HONEST VERDICTS
@@ -48,19 +41,19 @@ FEATURES
 - Three independent AI judges and an honest confidence score
 - Names swapped out before judging
 - Facts listed so you can check them
-- Your past verdicts saved and encrypted, on any device you sign in on
+- Your past verdicts on any device you sign in on, with what you wrote stored encrypted
 - Hear both sides: the other person tells their side through a private link, and neither of you sees the other's text until the verdict
 - Share a verdict with a link, showing only the names you choose (or none)
 - Remove a verdict, or your whole account, any time
-- English and Turkish
+- Available in 45 languages
 
 EVERY VERDICT
 Every verdict gets the full treatment:
 - Facts checked on the web, with sources shown on your verdict
-- A strong panel of AI judges
+- The full panel of AI judges
 - Up to two quick questions when a key fact is missing
-- Screenshot evidence, such as a chat or a receipt, read and then thrown away
-- Add context after a verdict and have it re-judged
+- Screenshot evidence, such as a chat or a receipt: we read the text and never keep the image
+- Add context after a verdict and have it re-judged, for 1 verdict
 Your first verdict is free with a new account. After that, get verdicts in packs, or with the monthly plan, which includes 35 verdicts a month. Two-sided cases use one verdict too.
 
 YOUR PRIVACY
@@ -77,11 +70,15 @@ Questions or requests about your data: https://okjudge.com
 
 ## Keywords (App Store, max 100, no spaces after commas)
 
-argument,debate,disagreement,referee,fight,couple,roommate,decision,fair,verdict,quarrel,AI,dispute
+debate,dispute,disagreement,referee,fight,quarrel,couple,roommate,fair,right,facts,decision,mediator
 
-## What's new in 1.0
+## What's new in 1.0 (max 500)
 
-Hello, Judge! Tell us what the fight is about, and three AI judges will say who's right, or why nobody is. Sign in with Apple, Google or an emailed code.
+Hello, Judge! Tell us what the fight is about, and three AI judges will say who's right, or why nobody is. Every verdict explains why in a few plain sentences. Available in 45 languages. Sign in with Apple, Google or an emailed code.
+
+---
+
+Everything below this line is English-only and is not localized.
 
 ## URLs
 
@@ -101,8 +98,8 @@ Answer the questionnaires honestly; the expected outcome is a low rating, though
 - Violence, sexual content, nudity, profanity, horror, drugs, alcohol, gambling, contests: None.
 - Medical or treatment information: None. The app says it is not medical, legal or financial advice.
 - Unrestricted web access: No.
-- User-generated content: users type their own arguments. These are private to the user and are not shared publicly unless the user chooses to share a link; share pages ask search engines not to index them. No feed, no comments, no messaging between users.
-- Reporting and removal: users can remove their own verdicts and delete their account in the app; contact via https://okjudge.com.
+- User-generated content: users type their own arguments and can attach screenshots. These are private to the user and are not shared publicly unless the user chooses to share a link; share pages ask search engines not to index them. In a two-sided case the other person writes their own side, and after the verdict both see both anonymized accounts. No feed, no comments, no messaging between users.
+- Reporting and removal: users can remove their own verdicts and sides of cases, and delete their account, in the app; contact via https://okjudge.com.
 
 ## App Privacy (App Store) and Data safety (Google Play)
 
@@ -113,16 +110,19 @@ Data collected, all linked to the user, none used for tracking:
 | Data | Why | Linked to user | Tracking |
 |---|---|---|---|
 | Email address (Apple, Google or email code sign-in) | Account, sign-in | Yes | No |
-| Name (Apple or Google sign-in) | Account | Yes | No |
-| User content: the argument text and answers (stored encrypted) | App functionality: judging, history | Yes | No |
+| Name, and the profile picture link Google shares (Apple or Google sign-in) | Account | Yes | No |
+| User content: the argument text, answers to the judges' questions, added context, and text read from screenshots (stored encrypted) | App functionality: judging, history | Yes | No |
+| Photos: screenshots the user attaches, read once for their text and never stored | App functionality: evidence | Yes | No |
 | Purchase history (credit packs and the monthly plan) | App functionality: credits and plan | Yes | No |
+| User ID: the account ID, also used for store purchases | App functionality | Yes | No |
 | Other IDs: session token | App functionality | Yes | No |
 
 Also true:
 - No advertising, no ad SDKs, no tracking across other apps and sites, no data sold.
 - Not collected: location, contacts, health, financial info, browsing history, device identifiers.
-- A keyed hash of the IP address is kept up to 24 hours for rate limiting and is not saved with the verdict.
+- A keyed hash of the IP address is kept up to 24 hours for rate limiting (translations and answers to two-sided cases) and is not saved with the verdict.
 - Data is encrypted in transit. User text is encrypted at rest.
-- Others who handle data: an outside AI service (US) reads the text; Apple or Google for sign-in; an email provider for sign-in codes; Cloudflare in front of the service. Servers are in Germany.
+- Others who handle data: an outside AI service (US) reads the text and screenshots and runs the web search; Apple or Google for sign-in; an email provider for sign-in codes; RevenueCat for store purchases, keyed to the account ID; Cloudflare in front of the service. Servers are in Germany.
+- TODO: the privacy policy doesn't name RevenueCat yet, and its SDK's own data list (device identifiers in particular) should be checked before submitting.
 - Deletion: users can delete their account and verdicts in the app (Settings > Account > Delete account) or by email request.
-- Google Play Data safety: the text sent to an outside AI service is a service provider transfer needed for the feature, so declare it as processed on behalf of the developer.
+- Google Play Data safety: the text and screenshots sent to an outside AI service are a service provider transfer needed for the feature, so declare it as processed on behalf of the developer. Mark photos as processed ephemerally.
