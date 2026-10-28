@@ -877,7 +877,8 @@ All commands run in the browser SSH window (**Connect using SSH**).
   and run `replay-removals <that file>` on the new one before opening it.
 - **Reboots:** if the terminal says *System restart required* after security
   updates, run `sudo reboot`; the app and Caddy start again on their own.
-  A reboot also starts every rate limit and the daily cap over.
+  A restart or reboot starts the rate limits over; the daily cap is counted
+  from the database and carries on.
 
 Where things live: code in `/opt/verdict/repo` (owned by root, so the app
 and the packages its build runs cannot change what root runs), builds in
