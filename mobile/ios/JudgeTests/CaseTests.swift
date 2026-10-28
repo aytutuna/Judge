@@ -529,9 +529,7 @@ final class CaseTests: XCTestCase {
         router.on("POST", "/api/v1/cases", created)
         router.install()
         let app = try PremiumFixtures.app(container: container)
-        app.setTierChoice(.premium)
         XCTAssertTrue(app.casesOn)
-        XCTAssertEqual(app.effectiveTier, .premium)
         let home = app.home
         home.mode = .both
         XCTAssertEqual(home.shownCaseName(app), "Alex", "prefilled from the account's first name")
@@ -568,14 +566,13 @@ final class CaseTests: XCTestCase {
         router.on("GET", "/api/v1/me", try PremiumFixtures.json(200, try PremiumFixtures.object("me", "no_credits")))
         router.install()
         let app = try PremiumFixtures.app(container: container)
-        app.setTierChoice(.premium)
         app.home.mode = .both
         app.home.caseName = ""
 
         app.home.submit(app: app)
         try await PremiumFixtures.waitUntil("the error") { app.home.error != nil }
         XCTAssertEqual(app.home.error?.code, "no_credits")
-        XCTAssertTrue(app.home.path.isEmpty)
+        XCTAssertEqual(app.home.path, [.pricing], "out of verdicts opens pricing over the form")
         XCTAssertFalse(app.home.argument.isEmpty)
         let body = try PremiumFixtures.body(router.sentBodies("POST", "/api/v1/cases").first)
         XCTAssertNil(body["displayName"], "an empty name is left out")
@@ -587,43 +584,33 @@ final class CaseTests: XCTestCase {
     func testJustMeStillJudgesAtOnce() throws {
         let container = HistoryContainer.inMemory()
         let app = try PremiumFixtures.app(container: container)
-        app.setTierChoice(.premium)
         XCTAssertEqual(app.home.mode, .now, "Just me by default")
         XCTAssertFalse(app.home.isTwoSided(app))
         app.home.mode = .both
         XCTAssertTrue(app.home.isTwoSided(app))
-        app.setTierChoice(.free)
-        XCTAssertTrue(app.home.isTwoSided(app), "both sides works on the free tier too")
         withExtendedLifetime(container) {}
     }
 
     @MainActor
-    func testFreeCaseSendsTheFreeTierWithoutEvidence() async throws {
+    func testSendingALinkWithNothingLeftOpensPricing() async throws {
         let container = HistoryContainer.inMemory()
         let router = StubRouter()
-        router.on("POST", "/api/v1/cases", try PremiumFixtures.json(201, try PremiumFixtures.section("cases")["createResponse"] as Any))
         router.install()
-        let app = try PremiumFixtures.app(container: container)
-        app.setTierChoice(.free)
-        XCTAssertTrue(app.casesOn)
-        XCTAssertFalse(app.evidenceOn)
-        app.home.mode = .both
+        let app = try PremiumFixtures.app(container: container, me: "no_credits")
 
-        app.home.submit(app: app)
-        try await PremiumFixtures.waitUntil("the case page") { app.home.path.last == .caseDetail(id: Self.caseID) }
-        let body = try PremiumFixtures.body(router.sentBodies("POST", "/api/v1/cases").first)
-        XCTAssertEqual(body["tier"] as? String, "free")
-        XCTAssertNil(body["evidence"])
+        app.home.sendLink(app: app)
+        XCTAssertEqual(app.home.path, [.pricing])
+        XCTAssertFalse(app.home.isCreatingCase)
+        try await Task.sleep(for: .milliseconds(50))
+        XCTAssertEqual(router.count("POST", "/api/v1/cases"), 0)
         withExtendedLifetime(container) {}
     }
 
-    func testCaseBodyCarriesTheTier() {
-        let premium = JudgeAPI.createCaseBody(text: "t", preset: "balanced", lang: .en, tier: .premium, evidence: ["ev1"], displayName: nil)
-        XCTAssertEqual(premium["tier"] as? String, "premium")
-        XCTAssertEqual(premium["evidence"] as? [String], ["ev1"])
-        let free = JudgeAPI.createCaseBody(text: "t", preset: "balanced", lang: .en, tier: .free, evidence: ["ev1"], displayName: nil)
-        XCTAssertEqual(free["tier"] as? String, "free")
-        XCTAssertNil(free["evidence"], "evidence is Premium")
+    func testCaseBodyIsPremium() {
+        let body = JudgeAPI.createCaseBody(text: "t", preset: "balanced", lang: .en, evidence: ["ev1"], displayName: nil)
+        XCTAssertEqual(body["tier"] as? String, "premium")
+        XCTAssertEqual(body["evidence"] as? [String], ["ev1"])
+        XCTAssertNil(JudgeAPI.createCaseBody(text: "t", preset: "balanced", lang: .en, evidence: [], displayName: nil)["evidence"])
     }
 
     @MainActor

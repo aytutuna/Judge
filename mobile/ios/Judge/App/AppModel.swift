@@ -100,7 +100,6 @@ final class AppModel {
             gateway = RevenueCatGateway(apiKey: config.revenueCatAPIKey)
         }
         purchases = PurchaseModel(gateway: gateway, account: account)
-        loadTierChoice()
         let names = self.caseNames
         let list = caseList
         let purchases = self.purchases
@@ -129,36 +128,12 @@ final class AppModel {
         defaults.set(id, forKey: Self.presetKey)
     }
 
-    // MARK: - Free or Premium
-
-    /// The last Free / Premium pick, remembered across launches (default
-    /// Free). Only a preference: `effectiveTier` decides what is sent.
-    private(set) var tierChoice: Tier = .free
-    static let tierKey = "settings.tier"
-
-    func loadTierChoice() {
-        tierChoice = defaults.string(forKey: Self.tierKey).flatMap(Tier.init(rawValue:)) ?? .free
-    }
-
-    func setTierChoice(_ tier: Tier) {
-        tierChoice = tier
-        defaults.set(tier.rawValue, forKey: Self.tierKey)
-    }
-
-    var tierAvailability: TierAvailability {
-        TierLogic.availability(config: account.serverConfig, signedIn: account.isSignedIn, entitlement: account.entitlement)
-    }
-
-    /// Premium only while it can be used and was chosen.
-    var effectiveTier: Tier { TierLogic.effective(tierAvailability, choice: tierChoice) }
-
-    /// Screenshot evidence on Home: premium chosen and offered here.
-    var evidenceOn: Bool { effectiveTier == .premium && account.features.evidence }
+    /// Screenshot evidence on Home: uploading needs an account.
+    var evidenceOn: Bool { account.isSignedIn && account.features.evidence }
 
     // MARK: - Two-sided cases
 
-    /// The Just me / Both sides choice on Home: signed in and cases offered.
-    /// The case itself is free or premium, following the tier switch.
+    /// "Or send them a link" on Home: signed in and cases offered.
     var casesOn: Bool { account.isSignedIn && account.features.cases }
 
     /// "Your cases" in the History tab: this server offers cases.

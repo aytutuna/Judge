@@ -79,16 +79,16 @@ Debug builds accept `-JudgeScreenshotState <screen>:<lang>` and render a fixed
 state from `mobile/shared/fixtures/verdicts.json`, with an in-memory history,
 a separate defaults suite and no network (the API points at a closed local
 port). Screens: `home`, `home-recent` (the Recent row filled),
-`home-error`, `judging`, `history`, `settings`, `signin`, `signin-code`,
+`home-example` (both sides from "Try an example"), `home-error`, `judging`, `history`, `settings`, `signin`, `signin-code`,
 `account` (Settings, signed in with a fixture account), `verdict/<sample>`
 for any key of `verdictResponses` (opened as a saved verdict),
 `verdict-thread` (a fresh verdict under its argument), `verdict-context`,
 `verdict-context-locked` and `verdict-context-limit` (the writer's "Add
 context" form, its Premium lock and the limit note), and the
-Premium states `tier/locked` (monthly allowance used up), `tier/premium`
-(Premium chosen, credits left), `pricing`, `pricing-store` (store prices on
-the buy buttons, from a fake store), `clarify`, `evidence` (picked
-screenshots in mixed states) and `judging-premium`, and the case states
+account states `balance/welcome` (a new account's free verdict),
+`balance/none` (monthly allowance used up), `pricing`, `pricing-store`
+(store prices on the buy buttons, from a fake store), `clarify` and
+`evidence` (picked screenshots in mixed states), and the case states
 `mode-both`, `history-cases` and `case/<state>` (a key of `cases.views` or
 `awaiting`, `judging`, `judged`, `one-sided`, `appeal`, `appeal-judging`,
 `failed`, `expired`, `removed`; Turkish takes the `_tr` view if there is one).
@@ -170,13 +170,15 @@ forget the token; neither touches the on-device history.
 
 ## Premium
 
-The website's Premium flow, natively (lib/tier.ts, app/page.tsx):
+Every verdict is Premium and costs one unit: a credit, or one of the
+monthly plan's 35. A new account starts with one credit. The website's
+flow, natively (app/page.tsx):
 
-- **Free / Premium** on Home when `GET /api/v1/config` has `premiumEnabled`.
-  Whether Premium can be picked follows `/api/v1/me` (`canUsePremium`);
-  the pick is remembered in UserDefaults, and a remembered Premium only
-  counts while it can be used. The note under the switch links to sign-in
-  or to the pricing screen (also in Settings). Buying: see Purchases.
+- **Balance**: the line under "Get the verdict" reads `/api/v1/me`
+  (monthly allowance first, then credits). With nothing left, "Get the
+  verdict" and "Or send them a link" open the pricing screen (also in
+  Settings) instead; a `402` (`no_credits`, `fair_use`) from the server
+  does the same. Buying: see Purchases.
 - **Questions first**: `POST /api/v1/clarify`. 400/401/402/403 stop on the
   form (401 signs out, 402 refreshes the account); anything else judges
   without questions. Up to two questions replace the form; skipping sends
@@ -184,7 +186,7 @@ The website's Premium flow, natively (lib/tier.ts, app/page.tsx):
 - **The verdict**: `POST /api/v1/verdict` with `tier: "premium"`, an
   `Idempotency-Key` kept for retries of the same body (dropped after a
   success) and `Prefer: respond-async`. `409 in_progress` is asked again
-  every 4 s for up to 300 s; a 202 is polled like a free verdict. The
+  every 4 s for up to 300 s; a 202 is polled until it is ready. The
   answer's entitlement shows at once and `/me` is refetched after every
   outcome.
 - **Screenshots** (when `features.evidence`): up to three from the photo
@@ -193,7 +195,8 @@ The website's Premium flow, natively (lib/tier.ts, app/page.tsx):
   `POST /api/v1/evidence` (multipart, `image` parts). Only the tokens of
   images read successfully are sent, in order; images still being read
   hold the submit.
-- **Both sides** (when `features.cases`): "Both sides" on Home creates a case
+- **Both sides** (when `features.cases`): "Or send them a link" on Home
+  creates a case, which costs a verdict
   (`POST /api/v1/cases` with an `Idempotency-Key`); the returned name map is
   kept in the Keychain per case (`KeychainCaseNamesStore`) as the fallback
   for `case.names`. The case page polls `GET /api/v1/cases/{id}` every

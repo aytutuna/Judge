@@ -34,14 +34,14 @@ extension JudgeAPI {
     }
 
     /// The JSON body of POST /api/v1/cases, also the Idempotency-Key's input.
-    static func createCaseBody(text: String, preset: String, lang: AppLang, tier: Tier, evidence: [String], displayName: String?) -> [String: Any] {
+    static func createCaseBody(text: String, preset: String, lang: AppLang, evidence: [String], displayName: String?) -> [String: Any] {
         var body: [String: Any] = [
             "text": text,
             "framework": ["preset": preset],
             "lang": lang.rawValue,
-            "tier": tier.rawValue,
+            "tier": Tier.premium.rawValue,
         ]
-        if tier == .premium, !evidence.isEmpty { body["evidence"] = evidence }
+        if !evidence.isEmpty { body["evidence"] = evidence }
         if let displayName, !displayName.isEmpty { body["displayName"] = displayName }
         return body
     }
@@ -52,9 +52,9 @@ extension JudgeAPI {
         return String(decoding: data, as: UTF8.self)
     }
 
-    /// POST /api/v1/cases: the owner's side; a premium case holds one premium verdict.
-    func createCase(text: String, preset: String, lang: AppLang, tier: Tier, evidence: [String], displayName: String?, idempotencyKey: String) async throws -> CaseSubmission {
-        let body = Self.createCaseBody(text: text, preset: preset, lang: lang, tier: tier, evidence: evidence, displayName: displayName)
+    /// POST /api/v1/cases: the owner's side; the case holds one verdict's unit.
+    func createCase(text: String, preset: String, lang: AppLang, evidence: [String], displayName: String?, idempotencyKey: String) async throws -> CaseSubmission {
+        let body = Self.createCaseBody(text: text, preset: preset, lang: lang, evidence: evidence, displayName: displayName)
         let request = try jsonRequest(endpoint("cases"), method: "POST", timeout: CaseTimeout.create, body: body, idempotencyKey: idempotencyKey)
         let data = try await send(request)
         do {

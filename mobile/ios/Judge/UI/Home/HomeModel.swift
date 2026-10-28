@@ -18,10 +18,10 @@ enum HomeMode: String, Sendable {
 /// The Home flow: argument, preset, the pending request and its outcome.
 /// Owned by `AppModel` so a verdict in progress survives tab switches.
 ///
-/// Free verdicts post once (a bot check first). Premium verdicts follow the
-/// website (app/page.tsx): POST /api/v1/clarify for up to two questions,
-/// then the verdict with an Idempotency-Key, retried while the server says
-/// the same request is still being judged (409 in_progress).
+/// Every verdict is premium and follows the website (app/page.tsx): POST
+/// /api/v1/clarify for up to two questions, then the verdict with an
+/// Idempotency-Key, retried while the server says the same request is
+/// still being judged (409 in_progress).
 @MainActor
 @Observable
 final class HomeModel {
@@ -43,15 +43,11 @@ final class HomeModel {
     var preset: String
     var path: [HomeRoute] = []
 
-    /// The bot check is running (before the judging cover goes up).
-    private(set) var isCheckingBot = false
-    /// Premium step 1: asking whether key facts are missing.
+    /// Step 1: asking whether key facts are missing.
     private(set) var isCheckingQuestions = false
     /// Shows the judging cover.
     var isJudging = false
-    /// The cover shows the premium variant (the web check line).
-    private(set) var judgingPremium = false
-    /// Premium's questions, shown in place of the form.
+    /// The clarifying questions, shown in place of the form.
     private(set) var clarify: ClarifyState?
     /// The verdict, once it has arrived (the cover then plays its finish).
     /// Kept until the next submit or cancel, so the cover keeps its final
@@ -61,7 +57,7 @@ final class HomeModel {
     private(set) var judgedSides: [JudgedSide] = []
     private(set) var error: APIError?
     private(set) var blockedUntil: Date?
-    /// Screenshots picked for the next premium request.
+    /// Screenshots picked for the next request.
     let evidence: EvidenceModel
     /// Just me (a verdict now) or both sides (a case), when cases are offered.
     var mode: HomeMode = .now
@@ -80,7 +76,7 @@ final class HomeModel {
     @ObservationIgnored var initialScroll: String?
     /// The case card's date (screenshot states); nil = now.
     @ObservationIgnored var today: Date?
-    static let tierAnchor = "home.tier"
+    static let submitAnchor = "home.submit"
     static let evidenceAnchor = "home.evidence"
 
     /// One written side as the judging cover shows it; an empty name reads
@@ -101,13 +97,13 @@ final class HomeModel {
     @ObservationIgnored private var request: Task<Void, Never>?
     @ObservationIgnored private var unblock: Task<Void, Never>?
     @ObservationIgnored private var pending: PendingVerdict?
-    /// What a premium request judges, fixed when it was submitted.
+    /// What a request judges, fixed when it was submitted.
     @ObservationIgnored private var premiumInput: PremiumInput?
     @ObservationIgnored private let keys = IdempotencyKeys()
     /// The example "Try an example" filled in last, so the next tap picks another.
     @ObservationIgnored private var lastExample: String?
-    /// Told when the server refuses the session (401 signin_required) and
-    /// when a premium outcome changes the balance.
+    /// Told when the server refuses the session (401) and when an outcome
+    /// changes the balance.
     @ObservationIgnored private weak var account: AccountModel?
 
     /// What was asked: "Try again" with the same request resumes its verdict.
@@ -115,7 +111,7 @@ final class HomeModel {
         let text: String
         let preset: String
         let lang: AppLang
-        /// Premium: the tier and the evidence tokens.
+        /// The evidence tokens.
         var extra = ""
     }
 
@@ -193,7 +189,7 @@ final class HomeModel {
     }
 
     /// Something the form started is still running: the switches hold still.
-    var isBusy: Bool { isCheckingBot || isCheckingQuestions || isJudging || isCreatingCase }
+    var isBusy: Bool { isCheckingQuestions || isJudging || isCreatingCase }
 
     /// Nothing typed or attached: Home's "+" stays hidden.
     var isBlank: Bool { argument.isEmpty && otherSide.isEmpty && evidence.items.isEmpty }
@@ -238,31 +234,25 @@ final class HomeModel {
     }
 
     /// "Get the verdict". Verdicts need an account: signed out, this opens
-    /// sign-in and submits once the user has signed in. Premium (chosen and
-    /// usable) goes through the clarifying step first.
+    /// sign-in and submits once the user has signed in. A verdict goes
+    /// through the clarifying step first.
     func submit(app: AppModel) {
         guard canSubmit(app) else { return }
         account = app.account
         guard app.account.isSignedIn else {
-            // What the user tapped for. Signing in can unlock Premium (and a
-            // remembered Premium choice); then the switch shows the new
-            // state and nothing is sent until the user taps again.
-            let tierAtTap = app.effectiveTier
+            // Signing in can turn on cases; then nothing is sent until the
+            // user taps again.
             let twoSidedAtTap = isTwoSided(app)
             app.account.requireSignIn { [weak self, weak app] in
-                guard let self, let app,
-                      app.effectiveTier == tierAtTap, self.isTwoSided(app) == twoSidedAtTap
-                else { return }
+                guard let self, let app, self.isTwoSided(app) == twoSidedAtTap else { return }
                 self.submit(app: app)
             }
             return
         }
         if isTwoSided(app) {
             createCase(app: app)
-        } else if app.effectiveTier == .premium {
-            submitPremium(app: app)
         } else {
-            submitFree(app: app)
+            submitPremium(app: app)
         }
     }
 
@@ -273,31 +263,39 @@ final class HomeModel {
         submit(app: app)
     }
 
+    /// Nothing left to spend: pricing instead of a request the server
+    /// would refuse. Until /me has answered the server decides.
+    private func openPricingIfOut(_ app: AppModel) -> Bool {
+        guard let entitlement = app.account.entitlement, Balance(entitlement) == .empty else { return false }
+        path.append(.pricing)
+        return true
+    }
+
     // MARK: - Two-sided cases
 
-    /// Both sides: create the case with the owner's side (a premium case
-    /// holds one premium verdict), keep the returned names on the phone and
-    /// open the case page with the invite link. No clarifying step: the
-    /// other side's account fills the gaps.
+    /// Both sides: create the case with the owner's side (it holds one
+    /// verdict's unit), keep the returned names on the phone and open the
+    /// case page with the invite link. No clarifying step: the other side's
+    /// account fills the gaps.
     private func createCase(app: AppModel) {
+        if openPricingIfOut(app) { return }
         error = nil
         isCreatingCase = true
         let text = argument
         let preset = preset
         let lang = app.lang
-        let tier = app.effectiveTier
         let tokens = app.evidenceOn ? evidence.tokens : []
         let name = shownCaseName(app).trimmingCharacters(in: .whitespacesAndNewlines)
         let displayName: String? = name.isEmpty ? nil : name
         let other = otherName?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
-        let body = JudgeAPI.createCaseBody(text: text, preset: preset, lang: lang, tier: tier, evidence: tokens, displayName: displayName)
+        let body = JudgeAPI.createCaseBody(text: text, preset: preset, lang: lang, evidence: tokens, displayName: displayName)
         let token = keys.key(for: JudgeAPI.canonical(body))
         let api = app.api
         let names = app.caseNames
         request = Task { [weak self, weak app] in
             do {
                 let created = try await api.createCase(
-                    text: text, preset: preset, lang: lang, tier: tier, evidence: tokens, displayName: displayName, idempotencyKey: token
+                    text: text, preset: preset, lang: lang, evidence: tokens, displayName: displayName, idempotencyKey: token
                 )
                 guard let self, !Task.isCancelled else { return }
                 self.keys.clear(token)
@@ -325,66 +323,18 @@ final class HomeModel {
         }
     }
 
-    /// A free verdict. The request is sent once; "Try again" is the only
-    /// retry, and it is the user's. When the same request was already
-    /// accepted, it polls for that verdict instead.
-    ///
-    /// The bot check runs first, with Home still on screen: its interactive
-    /// sheet is presented from the root view, which cannot present while the
-    /// judging cover is up. The cover goes up once there is a token.
-    private func submitFree(app: AppModel) {
-        error = nil
-        arrived = nil
-        arrivedID = nil
-        judgingPremium = false
-        isCheckingBot = true
-        let text = outgoing(app)
-        let preset = preset
-        let lang = app.lang
-        let api = app.api
-        let botCheck = app.botCheck
-        let history = app.history
-        let key = RequestKey(text: text, preset: preset, lang: lang)
-        judgedSides = Self.sides(mine: argument, theirs: otherSide, myName: shownCaseName(app), theirName: otherName ?? "")
-        if let held = pending, held.key == key, Date.now.timeIntervalSince(held.since) < Self.resumeWindow {
-            isCheckingBot = false
-            isJudging = true
-            request = Task { [weak self] in
-                await self?.judge(.resume(held.accepted, idempotencyKey: held.idempotencyKey), requestKey: key, api: api, history: history, preset: preset)
-            }
-            return
-        }
-        pending = nil
-        request = Task { [weak self] in
-            let token: String?
-            do {
-                token = try await botCheck.token()
-            } catch {
-                guard let self, !Task.isCancelled else { return }
-                self.isCheckingBot = false
-                self.fail(.botCheck)
-                return
-            }
-            guard let self, !Task.isCancelled else { return }
-            self.isCheckingBot = false
-            self.isJudging = true
-            let body = VerdictRequest(argument: text, framework: .init(preset: preset), lang: lang, turnstileToken: token)
-            await self.judge(.post(body), requestKey: key, api: api, history: history, preset: preset)
-        }
-    }
-
-    // MARK: - Premium
+    // MARK: - Verdicts
 
     private enum QuestionsOutcome {
         case questions([ClarifyQuestion])
         case stop(APIError)
     }
 
-    /// Premium step 1: ask whether key facts are missing. Network trouble or
-    /// a server error never blocks the verdict: it goes ahead without
+    /// Step 1: ask whether key facts are missing. Network trouble or a
+    /// server error never blocks the verdict: it goes ahead without
     /// questions. Account problems (401, 402) and bad input (400, 403) stop
-    /// on the form. A premium request already accepted for the same input
-    /// is picked up again instead.
+    /// on the form. A request already accepted for the same input is picked
+    /// up again instead, even with nothing left to spend: it is paid for.
     private func submitPremium(app: AppModel) {
         error = nil
         arrived = nil
@@ -402,13 +352,13 @@ final class HomeModel {
         let history = app.history
         let key = input.requestKey
         if let held = pending, held.key == key, Date.now.timeIntervalSince(held.since) < Self.resumeWindow {
-            judgingPremium = true
             isJudging = true
             request = Task { [weak self] in
-                await self?.judge(.resume(held.accepted, idempotencyKey: held.idempotencyKey), requestKey: key, api: api, history: history, preset: input.preset, premium: true)
+                await self?.judge(.resume(held.accepted, idempotencyKey: held.idempotencyKey), requestKey: key, api: api, history: history, preset: input.preset)
             }
             return
         }
+        if openPricingIfOut(app) { return }
         isCheckingQuestions = true
         request = Task { [weak self] in
             let asked = await Self.askQuestions(api: api, argument: input.argument, lang: input.lang)
@@ -469,14 +419,13 @@ final class HomeModel {
         }
     }
 
-    /// Premium step 2: the verdict itself, behind the premium judging cover.
+    /// Step 2: the verdict itself, behind the judging cover.
     private func judgePremium(_ input: PremiumInput, clarifications: [VerdictRequest.Clarification]?, api: JudgeAPI, history: HistoryStore) {
         clarify = nil
         error = nil
         arrived = nil
         arrivedID = nil
         pending = nil
-        judgingPremium = true
         isJudging = true
         let body = VerdictRequest(
             argument: input.argument,
@@ -489,11 +438,11 @@ final class HomeModel {
         let token = keys.key(for: IdempotencyKeys.canonical(body))
         let key = input.requestKey
         request = Task { [weak self] in
-            await self?.judge(.premium(body, idempotencyKey: token), requestKey: key, api: api, history: history, preset: input.preset, premium: true)
+            await self?.judge(.post(body, idempotencyKey: token), requestKey: key, api: api, history: history, preset: input.preset)
         }
     }
 
-    /// The premium POST, asked again every few seconds while the server
+    /// The POST, asked again every few seconds while the server
     /// answers 409 in_progress, until the route's time is up.
     private func startPremium(_ body: VerdictRequest, idempotencyKey: String, api: JudgeAPI) async throws -> VerdictStart {
         let clock = ContinuousClock()
@@ -507,7 +456,7 @@ final class HomeModel {
         }
     }
 
-    /// A replayed premium verdict comes without its name map: the writer's
+    /// A replayed verdict comes without its name map: the writer's
     /// view has it. Best effort; the labels stay otherwise.
     private func withNames(_ payload: VerdictPayload, api: JudgeAPI) async -> VerdictPayload {
         guard payload.nameMap.isEmpty,
@@ -521,8 +470,7 @@ final class HomeModel {
     // MARK: - The request
 
     private enum Start {
-        case post(VerdictRequest)
-        case premium(VerdictRequest, idempotencyKey: String)
+        case post(VerdictRequest, idempotencyKey: String)
         case resume(VerdictAccepted, idempotencyKey: String?)
     }
 
@@ -534,16 +482,15 @@ final class HomeModel {
         requestKey: RequestKey,
         api: JudgeAPI,
         history: HistoryStore,
-        preset: String,
-        premium: Bool = false
+        preset: String
     ) async {
         // A verdict can take minutes: ask for background time so a short
         // app switch does not suspend the app and drop the connection.
         let background = BackgroundActivity(name: "verdict")
         defer { background.end() }
-        // Any premium outcome (a refusal or failure gives the unit back) can
-        // change the balance.
-        defer { if premium { account?.refreshSoon() } }
+        // Any outcome (a refusal or failure gives the unit back) can change
+        // the balance.
+        defer { account?.refreshSoon() }
         var acceptedID: String?
         var idempotencyKey: String?
         do {
@@ -552,17 +499,7 @@ final class HomeModel {
             case .resume(let held, let token):
                 accepted = held
                 idempotencyKey = token
-            case .post(let body):
-                switch try await api.startVerdict(body) {
-                case .ready(let payload):
-                    guard !Task.isCancelled else { return }
-                    deliver(payload, history: history, preset: preset)
-                    return
-                case .accepted(let fresh):
-                    accepted = fresh
-                    pending = PendingVerdict(accepted: fresh, key: requestKey, since: .now)
-                }
-            case .premium(let body, let token):
+            case .post(let body, let token):
                 idempotencyKey = token
                 switch try await startPremium(body, idempotencyKey: token, api: api) {
                 case .ready(let payload):
@@ -631,7 +568,6 @@ final class HomeModel {
     func cancel() {
         request?.cancel()
         request = nil
-        isCheckingBot = false
         isCheckingQuestions = false
         isJudging = false
         arrived = nil
@@ -646,7 +582,6 @@ final class HomeModel {
         mode = .now
         error = nil
         clarify = nil
-        judgingPremium = false
         evidence.clear()
         path.removeAll()
     }
@@ -672,14 +607,16 @@ final class HomeModel {
             // A token expired or failed its check: those images must be added again.
             evidence.invalidateTokens()
         }
-        if failure.code == "signin_required", let account {
-            // The token is already cleared; sign-in comes up once the cover is gone.
+        if case .server(let status, _) = failure, status == 401, let account {
+            // signin_required, or sign_in_required from a server that wants
+            // an account first. Sign-in comes up once the cover is gone.
             account.sessionExpired(presentAfter: .milliseconds(600))
             return
         }
         if case .server(let status, _) = failure, status == 402 {
-            // The balance on screen is stale: the tier note updates with it.
+            // no_credits or fair_use: the balance on screen is stale.
             account?.refreshSoon()
+            path.append(.pricing)
         }
         error = failure
         if failure.code == "rate_limited", let wait = failure.retryAfterSec, wait > 0 {
@@ -707,8 +644,7 @@ extension HomeModel {
     }
 
     /// Screenshot fixtures: the judging cover without a request.
-    func showForScreenshot(judgingPremium: Bool) {
-        self.judgingPremium = judgingPremium
+    func showJudgingForScreenshot() {
         judgedSides = Self.sides(mine: argument, theirs: otherSide, myName: caseName ?? "", theirName: otherName ?? "")
         isJudging = true
     }

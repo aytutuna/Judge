@@ -408,7 +408,8 @@ final class HomeResumeTests: XCTestCase {
         super.tearDown()
     }
 
-    private var posts: Int { StubURLProtocol.requests.filter { $0.httpMethod == "POST" }.count }
+    /// Verdict POSTs only: every verdict asks POST /api/v1/clarify first.
+    private var posts: Int { StubURLProtocol.requests.filter { $0.httpMethod == "POST" && $0.url?.path == "/api/v1/verdict" }.count }
 
     /// Verdicts need an account, so the app starts signed in unless told otherwise.
     @MainActor

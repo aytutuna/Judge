@@ -1,8 +1,9 @@
 import SwiftData
 import SwiftUI
 
-/// Home: your side and theirs in two cards, the lens, the tier and the send
-/// button, then the newest saved verdicts and the privacy note.
+/// Home: your side and theirs in two cards, the lens and the send button
+/// with what is left to spend, then the newest saved verdicts and the
+/// privacy note.
 struct HomeView: View {
     @Environment(AppModel.self) private var app
     @SceneStorage("home.draft") private var draft = ""
@@ -28,7 +29,7 @@ struct HomeView: View {
                     header(lang, home: home)
                         .padding(.bottom, -16)
                     if let clarify = home.clarify {
-                        // Premium's questions take the form's place.
+                        // The clarifying questions take the form's place.
                         ClarifyCard(home: home, state: clarify, lang: lang)
                             .id(Self.clarifyID)
                     } else {
@@ -122,9 +123,9 @@ struct HomeView: View {
         .accessibilityElement(children: .contain)
     }
 
-    /// Both sides, the lens and the tier: your side in terracotta, theirs
-    /// in sage. Written together they go to the judges as one text; "Or
-    /// send them a link" makes a two-sided case instead.
+    /// Both sides and the lens: your side in terracotta, theirs in sage.
+    /// Written together they go to the judges as one text; "Or send them a
+    /// link" makes a two-sided case instead.
     private func form(_ lang: AppLang, home: HomeModel) -> some View {
         VStack(alignment: .leading, spacing: 12) {
             exampleButton(lang, home: home)
@@ -135,17 +136,12 @@ struct HomeView: View {
             sideCard(lang, home: home, mine: false)
             counter(lang, home: home)
             presets(lang, home: home)
-            if app.tierAvailability != .hidden {
-                TierSwitchView(lang: lang, disabled: home.isBusy) {
-                    home.path.append(.pricing)
-                }
-                .id(HomeModel.tierAnchor)
-            }
             if let error = home.error {
                 errorBanner(error, lang: lang)
                     .id(Self.errorID)
             }
             submitSection(lang, home: home)
+                .id(HomeModel.submitAnchor)
         }
     }
 
@@ -234,21 +230,28 @@ struct HomeView: View {
     }
 
     /// Only before their side is written: the link means they write it.
+    /// The case costs a verdict like any other.
     private func sendLink(_ lang: AppLang, home: HomeModel) -> some View {
         let ready = home.canSubmit(app)
-        return Button {
-            focused = nil
-            home.sendLink(app: app)
-        } label: {
-            Label(L10n.appHomeSendLink(lang), systemImage: "link")
-                .brandText(TypeStyle(face: .inter, weight: 600, size: 13, lineHeight: 1.2, textStyle: .footnote, maxScale: 1.8))
-                .foregroundStyle(Brand.sageInk)
-                .frame(minHeight: 32)
-                .contentShape(Rectangle())
+        return VStack(alignment: .leading, spacing: 0) {
+            Button {
+                focused = nil
+                home.sendLink(app: app)
+            } label: {
+                Label(L10n.appHomeSendLink(lang), systemImage: "link")
+                    .brandText(TypeStyle(face: .inter, weight: 600, size: 13, lineHeight: 1.2, textStyle: .footnote, maxScale: 1.8))
+                    .foregroundStyle(Brand.sageInk)
+                    .frame(minHeight: 32)
+                    .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
+            .disabled(!ready)
+            .opacity(ready ? 1 : 0.5)
+            Text(L10n.appBalanceCaseCost(lang))
+                .brandText(.slotText)
+                .foregroundStyle(Brand.muted)
+                .fixedSize(horizontal: false, vertical: true)
         }
-        .buttonStyle(.plain)
-        .disabled(!ready)
-        .opacity(ready ? 1 : 0.5)
     }
 
     /// The joined text's length against the limit, as the single field had it.
@@ -293,7 +296,7 @@ struct HomeView: View {
     private func submitSection(_ lang: AppLang, home: HomeModel) -> some View {
         VStack(spacing: 12) {
             // `blockedUntil` is cleared by the model when a rate limit ends.
-            let waiting = home.isCheckingBot || home.isCheckingQuestions || home.isCreatingCase
+            let waiting = home.isCheckingQuestions || home.isCreatingCase
             let title = L10n.getVerdict(lang)
             Button {
                 // Still enabled while waiting so the spinner isn't dimmed; a
@@ -303,8 +306,8 @@ struct HomeView: View {
                 submit()
             } label: {
                 if waiting {
-                    // The bot check (free), the questions (premium) or the
-                    // new case run before anything else goes up.
+                    // The questions or the new case run before anything
+                    // else goes up.
                     ProgressView()
                         .tint(Brand.paper)
                         .accessibilityLabel(title)
@@ -326,6 +329,10 @@ struct HomeView: View {
                     .brandText(.slotText)
                     .foregroundStyle(Brand.muted)
                     .accessibilityAddTraits(.updatesFrequently)
+            } else if app.account.isSignedIn, let entitlement = app.account.entitlement {
+                Text(Balance(entitlement).line(lang))
+                    .brandText(.slotText)
+                    .foregroundStyle(Brand.muted)
             }
         }
     }

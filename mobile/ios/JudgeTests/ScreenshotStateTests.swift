@@ -166,16 +166,17 @@ final class ScreenshotStateTests: XCTestCase {
     }
 
     func testParsesThePremiumScreens() {
-        XCTAssertEqual(ScreenshotState.parse("tier/locked:en")?.screen, .tierLocked)
-        XCTAssertEqual(ScreenshotState.parse("tier/premium:tr")?.screen, .tierPremium)
+        XCTAssertEqual(ScreenshotState.parse("balance/welcome:en")?.screen, .balanceWelcome)
+        XCTAssertEqual(ScreenshotState.parse("balance/none:tr")?.screen, .balanceNone)
+        XCTAssertEqual(ScreenshotState.parse("balance/none:tr")?.tab, .new)
         XCTAssertEqual(ScreenshotState.parse("pricing:en")?.screen, .pricing)
         XCTAssertEqual(ScreenshotState.parse("clarify:en")?.screen, .clarify)
         XCTAssertEqual(ScreenshotState.parse("evidence:tr")?.screen, .evidence)
-        XCTAssertEqual(ScreenshotState.parse("judging-premium:en")?.screen, .judgingPremium)
         XCTAssertEqual(ScreenshotState.parse("pricing:en")?.tab, .new)
         XCTAssertEqual(ScreenshotState.parse("pricing-store:tr")?.screen, .pricingStore)
         XCTAssertEqual(ScreenshotState.parse("pricing-store:en")?.tab, .new)
-        XCTAssertNil(ScreenshotState.parse("tier:en"))
+        XCTAssertNil(ScreenshotState.parse("tier/locked:en"), "the tier switch is gone")
+        XCTAssertNil(ScreenshotState.parse("judging-premium:en"))
     }
 
     @MainActor
@@ -205,16 +206,16 @@ final class ScreenshotStateTests: XCTestCase {
     func testPremiumStatesNeedNoNetwork() throws {
         let container = HistoryContainer.inMemory()
         try withExtendedLifetime(container) {
-            let locked = try XCTUnwrap(ScreenshotState.parse("tier/locked:en")).makeModel(container: container)
-            XCTAssertEqual(locked.tierAvailability, .locked)
-            XCTAssertEqual(locked.tierChoice, .premium)
-            XCTAssertEqual(locked.effectiveTier, .free)
-            XCTAssertEqual(locked.account.entitlement?.blockedReason, "fair_use")
-            XCTAssertNil(locked.api.tokenStore.token(), "screenshots never hold a real token")
+            let none = try XCTUnwrap(ScreenshotState.parse("balance/none:en")).makeModel(container: container)
+            XCTAssertEqual(none.account.entitlement?.blockedReason, "fair_use")
+            XCTAssertEqual(none.account.entitlement.map(Balance.init), .empty)
+            XCTAssertEqual(none.home.initialScroll, HomeModel.submitAnchor)
+            XCTAssertNil(none.api.tokenStore.token(), "screenshots never hold a real token")
 
-            let premium = try XCTUnwrap(ScreenshotState.parse("tier/premium:en")).makeModel(container: container)
-            XCTAssertEqual(premium.effectiveTier, .premium)
-            XCTAssertTrue(premium.evidenceOn)
+            let welcome = try XCTUnwrap(ScreenshotState.parse("balance/welcome:en")).makeModel(container: container)
+            XCTAssertEqual(welcome.account.entitlement.map(Balance.init), .credits(1))
+            XCTAssertTrue(welcome.evidenceOn)
+            XCTAssertTrue(welcome.casesOn)
 
             let pricing = try XCTUnwrap(ScreenshotState.parse("pricing:tr")).makeModel(container: container)
             XCTAssertEqual(pricing.home.path, [.pricing])
@@ -229,9 +230,6 @@ final class ScreenshotStateTests: XCTestCase {
             XCTAssertEqual(evidence.home.evidence.items.map(\.status), [.ok, .reading, .unreadable])
             XCTAssertNotNil(evidence.home.evidence.items.first?.preview)
 
-            let judging = try XCTUnwrap(ScreenshotState.parse("judging-premium:en")).makeModel(container: container)
-            XCTAssertTrue(judging.home.isJudging)
-            XCTAssertTrue(judging.home.judgingPremium)
         }
     }
 

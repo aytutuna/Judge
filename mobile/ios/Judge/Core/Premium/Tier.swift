@@ -1,97 +1,35 @@
 import Foundation
 
-/// Free or Premium, as the user picked it on Home.
+/// A case's tier. Every new verdict and case is premium; free ones are
+/// cases from before that.
 enum Tier: String, Sendable, CaseIterable {
     case free, premium
 }
 
-/// What the viewer may pick (lib/tier.ts TierAvailability).
-/// - hidden: premium is off here (or the config has not loaded), or the
-///   viewer is signed out and no sign-in method is offered: no switch.
-/// - signedOut: switch shown, Premium locked behind sign-in.
-/// - locked: signed in, but nothing to spend right now.
-/// - available: both options selectable.
-enum TierAvailability: Sendable, Equatable {
-    case hidden, signedOut, locked, available
-}
+/// What is left to spend: the subscription's allowance first (it funds a
+/// verdict before credits do), then credit packs. A new account's free
+/// verdict is one credit.
+enum Balance: Sendable, Equatable {
+    case monthly(left: Int, cap: Int)
+    case credits(Int)
+    case empty
 
-/// Port of lib/tier.ts and the note of components/TierSwitch.tsx.
-enum TierLogic {
-    static func availability(config: ServerConfig?, signedIn: Bool, entitlement: Entitlement?) -> TierAvailability {
-        guard let config, config.premiumEnabled else { return .hidden }
-        guard signedIn else { return config.signIn.any ? .signedOut : .hidden }
-        return entitlement?.canUsePremium == true ? .available : .locked
+    init(_ entitlement: Entitlement) {
+        if let sub = entitlement.subscription, sub.cap - sub.used > 0 {
+            self = .monthly(left: sub.cap - sub.used, cap: sub.cap)
+        } else if entitlement.credits > 0 {
+            self = .credits(entitlement.credits)
+        } else {
+            self = .empty
+        }
     }
 
-    /// A remembered "premium" only counts while premium can be used, so a
-    /// stale choice never sends a premium request.
-    static func effective(_ availability: TierAvailability, choice: Tier) -> Tier {
-        availability == .available && choice == .premium ? .premium : .free
-    }
-
-    /// What is left to spend: the subscription's allowance first (it funds a
-    /// verdict before credits do), then credit packs.
-    enum Remaining: Sendable, Equatable {
-        case monthly(Int)
-        case credits(Int)
-    }
-
-    static func remaining(_ entitlement: Entitlement?) -> Remaining? {
-        guard let entitlement else { return nil }
-        if let sub = entitlement.subscription, sub.cap - sub.used > 0 { return .monthly(sub.cap - sub.used) }
-        if entitlement.credits > 0 { return .credits(entitlement.credits) }
-        return nil
-    }
-
-    /// Where the note's link goes.
-    enum Link: Sendable, Equatable {
-        case signIn, pricing
-    }
-
-    /// The line under the switch: text, then an optional link.
-    struct Note: Sendable, Equatable {
-        let text: String
-        let link: Link?
-        let linkTitle: String?
-    }
-
-    /// `nudged` turns true once a signed-out viewer reached for the locked
-    /// Premium option; only then the sign-in link shows (as on the web).
-    static func note(
-        lang: AppLang,
-        availability: TierAvailability,
-        value: Tier,
-        entitlement: Entitlement?,
-        nudged: Bool
-    ) -> Note? {
-        switch availability {
-        case .hidden:
-            return nil
-        case .signedOut:
-            return nudged ? Note(text: "", link: .signIn, linkTitle: L10n.tierSignInToUse(lang)) : nil
-        case .locked:
-            // Signed in but /me has not answered yet: nothing to say.
-            guard let entitlement else { return nil }
-            let title = L10n.tierGetPremium(lang)
-            switch entitlement.blockedReason {
-            case "fair_use":
-                let text = ErrorText.formatDate(entitlement.resetsAt, lang: lang).map { L10n.tierFairUse(lang, date: $0) }
-                    ?? L10n.tierFairUseSoon(lang)
-                return Note(text: text, link: .pricing, linkTitle: title)
-            case "no_credits":
-                return Note(text: L10n.tierOutOfCredits(lang), link: .pricing, linkTitle: title)
-            default:
-                return Note(text: L10n.tierInvite(lang), link: .pricing, linkTitle: title)
-            }
-        case .available:
-            if value == .free { return Note(text: L10n.tierFreeHint(lang), link: nil, linkTitle: nil) }
-            var parts = [L10n.tierPremiumHint(lang)]
-            switch remaining(entitlement) {
-            case .monthly(let n): parts.append(L10n.tierMonthlyLeft(lang, n: String(n)))
-            case .credits(let n): parts.append(L10n.tierCreditsLeft(lang, n: n))
-            case nil: break
-            }
-            return Note(text: parts.joined(separator: " "), link: nil, linkTitle: nil)
+    /// The line under "Get the verdict".
+    func line(_ lang: AppLang) -> String {
+        switch self {
+        case .monthly(let left, let cap): return L10n.appBalanceMonthly(lang, left: String(left), cap: String(cap))
+        case .credits(let n): return L10n.appBalanceLeft(lang, n: n)
+        case .empty: return L10n.appBalanceNone(lang)
         }
     }
 }

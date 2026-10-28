@@ -11,7 +11,6 @@ struct JudgingCover: View {
             lang: lang,
             sides: home.judgedSides,
             result: home.arrived,
-            premium: home.judgingPremium,
             onFinished: { home.judgingFinished() },
             onCancel: { home.cancel() },
             onNew: {
@@ -34,8 +33,6 @@ struct JudgingView: View {
     var sides: [HomeModel.JudgedSide] = []
     /// Non-nil once the verdict has arrived.
     let result: VerdictResult?
-    /// Premium adds the web fact-check line and its own helper text.
-    var premium = false
     let onFinished: () -> Void
     let onCancel: () -> Void
     /// The header's "+": a new argument on an empty form.
@@ -161,21 +158,19 @@ struct JudgingView: View {
             .padding(.top, 16)
             .accessibilityHidden(true)
 
-            if premium {
-                HStack(spacing: 8) {
-                    Image(systemName: done ? "checkmark.circle.fill" : "globe")
-                        .font(.system(size: 13, weight: .semibold))
-                        .foregroundStyle(done ? Brand.sageInk : Brand.terraInk)
-                        .accessibilityHidden(true)
-                    Text(done ? L10n.thinkingFactcheckDone(lang) : L10n.thinkingFactcheck(lang))
-                        .brandText(.slotTitle)
-                        .foregroundStyle(Brand.ink2)
-                }
-                .accessibilityElement(children: .combine)
-                .padding(.top, 14)
+            HStack(spacing: 8) {
+                Image(systemName: done ? "checkmark.circle.fill" : "globe")
+                    .font(.system(size: 13, weight: .semibold))
+                    .foregroundStyle(done ? Brand.sageInk : Brand.terraInk)
+                    .accessibilityHidden(true)
+                Text(done ? L10n.thinkingFactcheckDone(lang) : L10n.thinkingFactcheck(lang))
+                    .brandText(.slotTitle)
+                    .foregroundStyle(Brand.ink2)
             }
+            .accessibilityElement(children: .combine)
+            .padding(.top, 14)
 
-            Text(premium ? L10n.thinkingPremiumHelper(lang) : L10n.thinkingHelper(lang))
+            Text(L10n.thinkingPremiumHelper(lang))
                 .brandText(.slotText)
                 .foregroundStyle(Brand.muted)
                 .multilineTextAlignment(.center)

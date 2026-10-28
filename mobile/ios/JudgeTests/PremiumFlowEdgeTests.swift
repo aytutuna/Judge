@@ -60,36 +60,33 @@ final class PremiumFlowEdgeTests: XCTestCase {
     // MARK: - Signing in midway
 
     @MainActor
-    func testSigningInThatUnlocksPremiumSendsNothing() async throws {
+    func testSigningInSubmitsAsTapped() async throws {
         let container = HistoryContainer.inMemory()
         let router = StubRouter()
         try signInRoutes(router, me: "credits7")
+        router.on("POST", Self.clarifyPath, try noQuestions())
+        router.on("POST", Self.verdictPath, try accepted())
+        router.on("GET", Self.pollPath, try ready())
         router.install()
         let app = try PremiumFixtures.app(container: container, token: nil)
-        app.setTierChoice(.premium)
-        XCTAssertEqual(app.effectiveTier, .free, "signed out, the remembered Premium does not count")
 
         app.home.submit(app: app)
         XCTAssertTrue(app.account.isSignInPresented)
         await signIn(app)
-        try await PremiumFixtures.waitUntil("Premium unlocked by /me") { app.effectiveTier == .premium }
+        try await PremiumFixtures.waitUntil("the account") { app.account.entitlement != nil }
         app.account.signInDismissed()
-        try await Task.sleep(for: .milliseconds(100))
-
-        XCTAssertEqual(router.count("POST", Self.verdictPath), 0, "the user tapped for Free; Premium is now shown instead")
-        XCTAssertEqual(router.count("POST", Self.clarifyPath), 0)
-        XCTAssertEqual(router.count("POST", "/api/v1/cases"), 0)
-        XCTAssertFalse(app.home.isBusy)
+        try await PremiumFixtures.waitUntil("the verdict") { app.home.arrived != nil }
+        XCTAssertEqual(router.count("POST", Self.clarifyPath), 1)
+        let body = try PremiumFixtures.body(router.sentBodies("POST", Self.verdictPath).first)
+        XCTAssertEqual(body["tier"] as? String, "premium")
         withExtendedLifetime(container) {}
     }
 
     @MainActor
-    func testSigningInThatChangesNothingSubmitsAsTapped() async throws {
+    func testSigningInWithNothingLeftOpensPricing() async throws {
         let container = HistoryContainer.inMemory()
         let router = StubRouter()
         try signInRoutes(router, me: "free")
-        let sample = try XCTUnwrap(Fixtures.verdicts()["verdictResponses"] as? [String: Any])["win_a_self"]
-        router.on("POST", Self.verdictPath, try PremiumFixtures.json(200, try XCTUnwrap(sample)))
         router.install()
         let app = try PremiumFixtures.app(container: container, token: nil)
 
@@ -97,9 +94,10 @@ final class PremiumFlowEdgeTests: XCTestCase {
         await signIn(app)
         try await PremiumFixtures.waitUntil("the account") { app.account.entitlement != nil }
         app.account.signInDismissed()
-        try await PremiumFixtures.waitUntil("the free verdict") { app.home.arrived != nil }
-        let body = try PremiumFixtures.body(router.sentBodies("POST", Self.verdictPath).first)
-        XCTAssertEqual(body["tier"] as? String, "free")
+        XCTAssertEqual(app.home.path, [.pricing])
+        XCTAssertEqual(router.count("POST", Self.clarifyPath), 0)
+        XCTAssertEqual(router.count("POST", Self.verdictPath), 0)
+        XCTAssertFalse(app.home.isBusy)
         withExtendedLifetime(container) {}
     }
 
@@ -116,7 +114,6 @@ final class PremiumFlowEdgeTests: XCTestCase {
         router.on("GET", "/api/v1/me", try me("credits7"))
         router.install()
         let app = try PremiumFixtures.app(container: container)
-        app.setTierChoice(.premium)
         let home = app.home
 
         home.submit(app: app)
@@ -139,6 +136,30 @@ final class PremiumFlowEdgeTests: XCTestCase {
         withExtendedLifetime(container) {}
     }
 
+    @MainActor
+    func testAPaidVerdictIsPickedUpWithNothingLeft() async throws {
+        let container = HistoryContainer.inMemory()
+        let router = StubRouter()
+        let down = try PremiumFixtures.json(503, ["error": "x", "code": "unavailable"])
+        router.on("POST", Self.clarifyPath, try noQuestions())
+        router.on("POST", Self.verdictPath, try accepted())
+        router.on("GET", Self.pollPath, down, down, down, try ready())
+        router.on("GET", "/api/v1/me", try me("no_credits"))
+        router.install()
+        let app = try PremiumFixtures.app(container: container)
+        let home = app.home
+
+        home.submit(app: app)
+        try await PremiumFixtures.waitUntil("polling to give up") { home.error != nil }
+        try await PremiumFixtures.waitUntil("the spent balance") { app.account.entitlement.map(Balance.init) == .empty }
+
+        home.submit(app: app)
+        try await PremiumFixtures.waitUntil("the resumed verdict") { home.arrived != nil }
+        XCTAssertEqual(router.count("POST", Self.verdictPath), 1)
+        XCTAssertTrue(home.path.isEmpty, "a verdict already paid for is picked up, not sent to pricing")
+        withExtendedLifetime(container) {}
+    }
+
     // MARK: - Evidence
 
     @MainActor
@@ -150,7 +171,6 @@ final class PremiumFlowEdgeTests: XCTestCase {
         router.on("GET", "/api/v1/me", try me("credits7"))
         router.install()
         let app = try PremiumFixtures.app(container: container)
-        app.setTierChoice(.premium)
         let home = app.home
         let ids = home.evidence.reserve(2)
         home.evidence.apply([

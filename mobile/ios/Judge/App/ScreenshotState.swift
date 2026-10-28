@@ -14,17 +14,17 @@ import SwiftData
 /// opened as a saved verdict), `verdict-thread` (a fresh verdict under its
 /// argument), `verdict-context`, `verdict-context-locked` and
 /// `verdict-context-limit` (the writer's "Add context" form, its Premium
-/// lock and the limit note), or a Premium state: `tier/locked` (signed
-/// in, monthly allowance used up), `tier/premium` (Premium chosen with
-/// credits), `pricing`, `pricing-store` (store prices on the buy buttons),
-/// `clarify` (the questions), `evidence` (picked
-/// screenshots in mixed states), `judging-premium`, `mode-both` (Both sides
-/// chosen), `history-cases` ("Your cases") or `case/<state>`: the owner's
+/// lock and the limit note), or an account state: `balance/welcome` (signed
+/// in with a new account's free verdict), `balance/none` (signed in, the
+/// monthly allowance used up), `pricing`, `pricing-store` (store prices on
+/// the buy buttons), `clarify` (the questions), `evidence` (picked
+/// screenshots in mixed states), `mode-both` (a case being sent),
+/// `history-cases` ("Your cases") or `case/<state>`: the owner's
 /// case page for a key of `cases.views` or one of the short names `awaiting`,
 /// `judging`, `judged`, `one-sided`, `appeal`, `appeal-judging`, `failed`,
 /// `expired`, `removed` (Turkish takes the `_tr` view when there is one);
 /// lang is `en` or `tr`.
-/// Examples: `home:tr`, `verdict/win_a_self:tr`, `tier/locked:en`, `case/judged:en`.
+/// Examples: `home:tr`, `verdict/win_a_self:tr`, `balance/none:en`, `case/judged:en`.
 ///
 /// The state runs on an in-memory history store and a separate defaults
 /// suite, so it never touches the real data, and the API points at a closed
@@ -45,13 +45,12 @@ struct ScreenshotState {
         case signIn
         case signInCode
         case account
-        case tierLocked
-        case tierPremium
+        case balanceWelcome
+        case balanceNone
         case pricing
         case pricingStore
         case clarify
         case evidence
-        case judgingPremium
         case modeBoth
         case historyCases
         case caseDetail(view: String)
@@ -65,7 +64,7 @@ struct ScreenshotState {
     var tab: RootTab {
         switch screen {
         case .home, .homeRecent, .homeExample, .homeError, .judging, .verdict, .verdictThread, .verdictContext, .signIn, .signInCode,
-             .tierLocked, .tierPremium, .pricing, .pricingStore, .clarify, .evidence, .judgingPremium, .modeBoth, .caseDetail:
+             .balanceWelcome, .balanceNone, .pricing, .pricingStore, .clarify, .evidence, .modeBoth, .caseDetail:
             return .new
         case .history, .historyCases: return .history
         case .settings, .account: return .settings
@@ -97,13 +96,12 @@ struct ScreenshotState {
         case "signin": screen = .signIn
         case "signin-code": screen = .signInCode
         case "account": screen = .account
-        case "tier/locked": screen = .tierLocked
-        case "tier/premium": screen = .tierPremium
+        case "balance/welcome": screen = .balanceWelcome
+        case "balance/none": screen = .balanceNone
         case "pricing": screen = .pricing
         case "pricing-store": screen = .pricingStore
         case "clarify": screen = .clarify
         case "evidence": screen = .evidence
-        case "judging-premium": screen = .judgingPremium
         case "mode-both": screen = .modeBoth
         case "history-cases": screen = .historyCases
         default:
@@ -172,7 +170,7 @@ struct ScreenshotState {
             app.home.showForScreenshot(error: .timeout)
         case .judging:
             app.home.argument = ExampleArgument.all[0].text(lang)
-            app.home.showForScreenshot(judgingPremium: false)
+            app.home.showJudgingForScreenshot()
         case .verdict(let sample):
             // Opened as a saved verdict: the card at the top, no thread above it.
             guard let session = ScreenshotFixtures.session(sample) else { return }
@@ -204,16 +202,21 @@ struct ScreenshotState {
                     entitlement: Entitlement(canUsePremium: false, blockedReason: "premium_required", credits: 0)
                 )
             )
-        case .tierLocked:
+        case .balanceWelcome:
+            app.account.showForScreenshot(
+                providers: Self.allProviders,
+                info: AccountInfo(
+                    user: Viewer(id: "user000001", email: Self.email, name: "Sam"),
+                    entitlement: Entitlement(canUsePremium: true, credits: 1)
+                ),
+                config: ScreenshotFixtures.config("full")
+            )
+            app.home.argument = ExampleArgument.all[0].text(lang)
+            app.home.initialScroll = HomeModel.submitAnchor
+        case .balanceNone:
             premium(app, me: "fair_use")
-            app.setTierChoice(.premium)
             app.home.argument = ExampleArgument.all[0].text(lang)
-            app.home.initialScroll = HomeModel.tierAnchor
-        case .tierPremium:
-            premium(app, me: "credits7")
-            app.setTierChoice(.premium)
-            app.home.argument = ExampleArgument.all[0].text(lang)
-            app.home.initialScroll = HomeModel.tierAnchor
+            app.home.initialScroll = HomeModel.submitAnchor
         case .pricing:
             premium(app, me: "subscriber")
             app.home.path = [.pricing]
@@ -225,12 +228,10 @@ struct ScreenshotState {
             app.home.path = [.pricing]
         case .clarify:
             premium(app, me: "credits7")
-            app.setTierChoice(.premium)
             app.home.argument = ExampleArgument.all[0].text(lang)
             app.home.showForScreenshot(questions: ScreenshotFixtures.questions(lang: lang))
         case .evidence:
             premium(app, me: "credits7")
-            app.setTierChoice(.premium)
             app.home.argument = ExampleArgument.all[0].text(lang)
             app.home.initialScroll = HomeModel.evidenceAnchor
             let preview = ScreenshotFixtures.evidencePreview()
@@ -239,17 +240,10 @@ struct ScreenshotState {
                 (status: .reading, preview: nil),
                 (status: .unreadable, preview: nil),
             ])
-        case .judgingPremium:
-            premium(app, me: "credits7")
-            app.setTierChoice(.premium)
-            app.home.argument = ExampleArgument.all[0].text(lang)
-            app.home.showForScreenshot(judgingPremium: true)
         case .modeBoth:
             premium(app, me: "credits7")
-            app.setTierChoice(.premium)
             app.home.mode = .both
             app.home.argument = ExampleArgument.all[0].text(lang)
-            app.home.initialScroll = HomeModel.tierAnchor
         case .historyCases:
             premium(app, me: "credits7")
             app.historySegment = .cases

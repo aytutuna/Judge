@@ -149,95 +149,27 @@ enum PremiumFixtures {
     }
 }
 
-// MARK: - Tier
+// MARK: - Balance
 
-final class TierTests: XCTestCase {
-    func testAvailability() throws {
-        let full = try PremiumFixtures.config("full")
-        let minimal = try PremiumFixtures.config("minimal")
-        XCTAssertEqual(TierLogic.availability(config: nil, signedIn: true, entitlement: nil), .hidden)
-        XCTAssertEqual(TierLogic.availability(config: minimal, signedIn: true, entitlement: nil), .hidden, "premium off")
-        XCTAssertEqual(TierLogic.availability(config: full, signedIn: false, entitlement: nil), .signedOut)
-        var noSignIn = full
-        noSignIn.signIn = SignInProviders(email: true, dev: true)
-        XCTAssertEqual(TierLogic.availability(config: noSignIn, signedIn: false, entitlement: nil), .hidden, "no app sign-in method")
-        XCTAssertEqual(TierLogic.availability(config: full, signedIn: true, entitlement: try PremiumFixtures.me("free").entitlement), .locked)
-        XCTAssertEqual(TierLogic.availability(config: full, signedIn: true, entitlement: try PremiumFixtures.me("credits7").entitlement), .available)
-
-        XCTAssertEqual(TierLogic.effective(.available, choice: .premium), .premium)
-        XCTAssertEqual(TierLogic.effective(.available, choice: .free), .free)
-        XCTAssertEqual(TierLogic.effective(.locked, choice: .premium), .free)
-        XCTAssertEqual(TierLogic.effective(.signedOut, choice: .premium), .free)
+final class BalanceTests: XCTestCase {
+    func testMonthlyFirstThenCredits() throws {
+        XCTAssertEqual(Balance(try XCTUnwrap(PremiumFixtures.me("credits7").entitlement)), .credits(7))
+        XCTAssertEqual(Balance(try XCTUnwrap(PremiumFixtures.me("subscriber").entitlement)), .monthly(left: 23, cap: 35))
+        XCTAssertEqual(Balance(try XCTUnwrap(PremiumFixtures.me("fair_use").entitlement)), .empty)
+        XCTAssertEqual(Balance(try XCTUnwrap(PremiumFixtures.me("no_credits").entitlement)), .empty)
+        XCTAssertEqual(Balance(try XCTUnwrap(PremiumFixtures.me("free").entitlement)), .empty)
+        var used = try XCTUnwrap(PremiumFixtures.me("fair_use").entitlement)
+        used.credits = 2
+        XCTAssertEqual(Balance(used), .credits(2), "credits once the month is used up")
     }
 
-    func testRemaining() throws {
-        XCTAssertEqual(TierLogic.remaining(try PremiumFixtures.me("credits7").entitlement), .credits(7))
-        XCTAssertEqual(TierLogic.remaining(try PremiumFixtures.me("subscriber").entitlement), .monthly(23))
-        XCTAssertNil(TierLogic.remaining(try PremiumFixtures.me("fair_use").entitlement))
-        XCTAssertNil(TierLogic.remaining(nil))
-    }
-
-    func testNotes() throws {
-        for lang in AppLang.allCases {
-            XCTAssertNil(TierLogic.note(lang: lang, availability: .hidden, value: .free, entitlement: nil, nudged: true))
-            XCTAssertNil(TierLogic.note(lang: lang, availability: .signedOut, value: .free, entitlement: nil, nudged: false))
-            XCTAssertEqual(
-                TierLogic.note(lang: lang, availability: .signedOut, value: .free, entitlement: nil, nudged: true),
-                TierLogic.Note(text: "", link: .signIn, linkTitle: L10n.tierSignInToUse(lang))
-            )
-
-            let fairUse = try XCTUnwrap(PremiumFixtures.me("fair_use").entitlement)
-            let date = try XCTUnwrap(ErrorText.formatDate(fairUse.resetsAt, lang: lang))
-            XCTAssertEqual(
-                TierLogic.note(lang: lang, availability: .locked, value: .free, entitlement: fairUse, nudged: false),
-                TierLogic.Note(text: L10n.tierFairUse(lang, date: date), link: .pricing, linkTitle: L10n.tierGetPremium(lang))
-            )
-            var undated = fairUse
-            undated.resetsAt = nil
-            XCTAssertEqual(
-                TierLogic.note(lang: lang, availability: .locked, value: .free, entitlement: undated, nudged: false)?.text,
-                L10n.tierFairUseSoon(lang)
-            )
-            XCTAssertEqual(
-                TierLogic.note(lang: lang, availability: .locked, value: .free, entitlement: try PremiumFixtures.me("no_credits").entitlement, nudged: false)?.text,
-                L10n.tierOutOfCredits(lang)
-            )
-            XCTAssertEqual(
-                TierLogic.note(lang: lang, availability: .locked, value: .free, entitlement: try PremiumFixtures.me("free").entitlement, nudged: false),
-                TierLogic.Note(text: L10n.tierInvite(lang), link: .pricing, linkTitle: L10n.tierGetPremium(lang))
-            )
-            XCTAssertNil(TierLogic.note(lang: lang, availability: .locked, value: .free, entitlement: nil, nudged: false), "account still loading")
-
-            let credits = try PremiumFixtures.me("credits7").entitlement
-            XCTAssertEqual(
-                TierLogic.note(lang: lang, availability: .available, value: .premium, entitlement: credits, nudged: false)?.text,
-                L10n.tierPremiumHint(lang) + " " + L10n.tierCreditsLeft(lang, n: 7)
-            )
-            XCTAssertEqual(
-                TierLogic.note(lang: lang, availability: .available, value: .premium, entitlement: try PremiumFixtures.me("subscriber").entitlement, nudged: false)?.text,
-                L10n.tierPremiumHint(lang) + " " + L10n.tierMonthlyLeft(lang, n: "23")
-            )
-            XCTAssertEqual(
-                TierLogic.note(lang: lang, availability: .available, value: .free, entitlement: credits, nudged: false)?.text,
-                L10n.tierFreeHint(lang)
-            )
-        }
-        XCTAssertEqual(L10n.tierCreditsLeft(.en, n: 1), "1 premium verdict left.")
-        XCTAssertEqual(L10n.tierCreditsLeft(.en, n: 7), "7 premium verdicts left.")
-    }
-
-    @MainActor
-    func testTheChoiceIsRemembered() throws {
-        let container = HistoryContainer.inMemory()
-        let defaults = try XCTUnwrap(UserDefaults(suiteName: "judge.tests.\(UUID().uuidString)"))
-        let config = AppConfig(apiBaseURL: AppConfig.production, shareBaseURL: AppConfig.production, turnstileSiteKey: "", version: "1", build: "1")
-        let first = AppModel(config: config, container: container, defaults: defaults, tokenStore: MemoryTokenStore(), persistsDraft: false)
-        XCTAssertEqual(first.tierChoice, .free, "Free by default")
-        first.setTierChoice(.premium)
-        let second = AppModel(config: config, container: container, defaults: defaults, tokenStore: MemoryTokenStore(), persistsDraft: false)
-        XCTAssertEqual(second.tierChoice, .premium)
-        XCTAssertEqual(second.effectiveTier, .free, "a remembered Premium sends nothing premium while signed out")
-        withExtendedLifetime(container) {}
+    func testLines() {
+        XCTAssertEqual(Balance.credits(1).line(.en), "1 verdict left")
+        XCTAssertEqual(Balance.credits(7).line(.en), "7 verdicts left")
+        XCTAssertEqual(Balance.credits(1).line(.tr), "1 karar hakkın kaldı")
+        XCTAssertEqual(Balance.monthly(left: 23, cap: 35).line(.en), "23 of 35 left this month")
+        XCTAssertEqual(Balance.monthly(left: 23, cap: 35).line(.tr), "Bu ay 35 hakkından 23 tanesi kaldı")
+        XCTAssertEqual(Balance.empty.line(.en), "No verdicts left")
     }
 }
 
@@ -604,10 +536,7 @@ final class PremiumFlowTests: XCTestCase {
     @MainActor
     private func premiumApp(_ router: StubRouter, container: ModelContainer, me: String = "credits7") throws -> AppModel {
         router.install()
-        let app = try PremiumFixtures.app(container: container, me: me)
-        app.setTierChoice(.premium)
-        XCTAssertEqual(app.effectiveTier, .premium)
-        return app
+        return try PremiumFixtures.app(container: container, me: me)
     }
 
     @MainActor
@@ -651,7 +580,6 @@ final class PremiumFlowTests: XCTestCase {
 
         home.submit(app: app)
         try await PremiumFixtures.waitUntil("the verdict") { home.arrived != nil }
-        XCTAssertTrue(home.judgingPremium)
         XCTAssertTrue(home.arrived?.isPremium == true)
         XCTAssertNil(home.error)
 
@@ -813,8 +741,11 @@ final class PremiumFlowTests: XCTestCase {
             XCTAssertFalse(home.isJudging)
             XCTAssertEqual(router.count("POST", Self.verdictPath), 0, "\(code) never reaches the verdict")
             if status == 402 {
+                XCTAssertEqual(home.path, [.pricing], "out of verdicts opens pricing")
                 try await PremiumFixtures.waitUntil("the account refresh") { router.count("GET", Self.mePath) >= 1 }
-                try await PremiumFixtures.waitUntil("the locked tier") { app.tierAvailability == .locked }
+                try await PremiumFixtures.waitUntil("the spent balance") { app.account.entitlement.map(Balance.init) == .empty }
+            } else {
+                XCTAssertTrue(home.path.isEmpty)
             }
             withExtendedLifetime(container) {}
         }
@@ -958,22 +889,19 @@ final class PremiumFlowTests: XCTestCase {
     }
 
     @MainActor
-    func testFreeTierStillSendsAFreeVerdict() async throws {
+    func testNothingLeftOpensPricingWithoutARequest() async throws {
         let container = HistoryContainer.inMemory()
         let router = StubRouter()
-        let sample = try XCTUnwrap(Fixtures.verdicts()["verdictResponses"] as? [String: Any])["win_a_self"]
-        router.on("POST", Self.verdictPath, try PremiumFixtures.json(200, try XCTUnwrap(sample)))
-        let app = try premiumApp(router, container: container)
-        app.setTierChoice(.free)
+        let app = try premiumApp(router, container: container, me: "no_credits")
         let home = app.home
 
         home.submit(app: app)
-        try await PremiumFixtures.waitUntil("the verdict") { home.arrived != nil }
+        XCTAssertEqual(home.path, [.pricing])
+        XCTAssertFalse(home.isBusy)
+        XCTAssertNil(home.error)
+        try await Task.sleep(for: .milliseconds(50))
         XCTAssertEqual(router.count("POST", Self.clarifyPath), 0)
-        let body = try PremiumFixtures.body(router.sentBodies("POST", Self.verdictPath).first)
-        XCTAssertEqual(body["tier"] as? String, "free")
-        XCTAssertNil(router.sentHeaders("POST", Self.verdictPath).first?["Idempotency-Key"])
-        XCTAssertFalse(home.judgingPremium)
+        XCTAssertEqual(router.count("POST", Self.verdictPath), 0)
         withExtendedLifetime(container) {}
     }
 }
