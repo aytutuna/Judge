@@ -45,6 +45,10 @@ async function bundle(): Promise<string> {
     target: "es2020",
     legalComments: "none",
     define: { "process.env.NODE_ENV": '"production"' },
+    // lib/balance.ts reaches lib/i18n.ts, whose languages load on demand. The
+    // scene never shows text, so leave those imports unresolved rather than
+    // inline every language.
+    external: ["./locales/*"],
     write: false,
     logLevel: "warning",
   });
