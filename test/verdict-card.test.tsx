@@ -7,10 +7,11 @@ import { VerdictView } from "../components/VerdictView";
 import { ArgumentMap } from "../components/ArgumentMap";
 import { CaseShell } from "../components/case/CaseScreen";
 import { BalanceFallback } from "../components/scene/BalanceFallback";
+import { OG_SIDES, OgCard } from "../components/OgCard";
 import { SampleVerdict, SAMPLE_TUG_A } from "../components/home/SampleVerdict";
 import { VoteDots, voteOf } from "../components/verdict/VoteDots";
 import { t } from "../lib/i18n";
-import { PALETTE } from "../lib/palette";
+import { PALETTE, sideColors } from "../lib/palette";
 import { stripLeadingEmoji } from "../lib/text";
 import { tugFinal } from "../lib/verdict-display";
 
@@ -328,5 +329,14 @@ describe("BalanceFallback sides", () => {
     expect(fills(html(<BalanceFallback tugA={30} you="a" />))).toEqual([PALETTE.sage, PALETTE.terra]);
     expect(fills(html(<BalanceFallback tugA={30} you="b" />))).toEqual([PALETTE.terra, PALETTE.sage]);
     expect(fills(html(<BalanceFallback empty />))).toEqual([]);
+  });
+});
+
+describe("share image sides", () => {
+  it("a link preview has no viewer: Party A's share is green, Party B's red", () => {
+    expect(OG_SIDES).toEqual(sideColors(null));
+    const out = html(<OgCard title="Sam is right" footer="Judge" tugA={70} />);
+    expect(out).toContain(`width:70%;height:100%;background:${PALETTE.sageStrong}`);
+    expect(out).toContain(`background:${PALETTE.terra}`);
   });
 });

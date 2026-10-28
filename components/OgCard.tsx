@@ -9,17 +9,15 @@
 
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
-import { PALETTE, PALETTE_ALPHA } from "@/lib/palette";
+import { PALETTE, PALETTE_ALPHA, sideColors } from "@/lib/palette";
 import { BrandMark } from "./BrandMark";
 
 export const OG_SIZE = { width: 1200, height: 630 };
 
-/** Tug-bar fills: terracotta for A, strong sage for B (thin marks, 3:1). */
-export const PARTY_A = PALETTE.terra;
-export const PARTY_B = PALETTE.sageStrong;
-/** Title colour when a side wins outright: the text-contrast inks. */
-export const ACCENT_A = PALETTE.terraInk;
-export const ACCENT_B = PALETTE.sageInk;
+/** Nobody is known to be looking at a link preview, so Party A, who
+ * started it, is the green side. Tug-bar fills use the 3:1 mark colours and
+ * a winner's title the text inks. */
+export const OG_SIDES = sideColors(null);
 
 const DISPLAY = "Inter Tight";
 const TEXT = "Inter";
@@ -190,10 +188,10 @@ export function OgCard({
               height: 18,
               borderRadius: 999,
               overflow: "hidden",
-              background: PARTY_B,
+              background: OG_SIDES.b.strong,
             }}
           >
-            <div style={{ display: "flex", width: `${a}%`, height: "100%", background: PARTY_A }} />
+            <div style={{ display: "flex", width: `${a}%`, height: "100%", background: OG_SIDES.a.strong }} />
           </div>
           <div
             style={{
