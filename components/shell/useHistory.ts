@@ -1,21 +1,29 @@
 "use client";
 
 import { useEffect, useMemo, useSyncExternalStore } from "react";
-import type { CaseListResponse, CaseStatus, CaseSummary, CaseView } from "@/lib/case-types";
+import type { CaseView } from "@/lib/case-types";
 import {
+  addAnswered,
   addHistory,
+  dropAnswered,
   dropHistory,
+  loadAnswered,
   loadHistory,
   markHistoryRemoved,
   seeded,
   seedQueue,
   startHistory,
   takeSeedTurn,
+  useLocalAnswered,
   useLocalHistory,
   type HistoryEntry,
 } from "@/lib/history-store";
+import { historyRowFromView } from "@/lib/history-state";
+import { historyKey, type HistoryResponse, type HistoryRow, type HistoryState } from "@/lib/history-types";
 import { localizeLabelsAuto, resolveParties, restoreNames, textLang } from "@/lib/names";
-import type { MineResponse, OwnerVerdictListResponse, OwnerVerdictSummary } from "@/lib/originals-types";
+import { firstNameOf, type MineResponse } from "@/lib/originals-types";
+import { loadClaim } from "@/lib/respondent-store";
+import type { FinalVerdict, NameMapping } from "@/lib/types";
 import type { VerdictPollResponse } from "@/lib/verdict-poll";
 import { loadOwnerToken, ownerHeaders, ownerTokenIds } from "@/lib/owner-store";
 import type { ViewerState } from "@/lib/use-viewer";
@@ -23,13 +31,24 @@ import type { ViewerState } from "@/lib/use-viewer";
 export type HistoryItem = {
   kind: "verdict" | "case";
   id: string;
-  createdAt: string;
+  /** Sort time: asked for, started, or for a case you answered, answered. */
+  at: string;
+  role: "owner" | "respondent";
+  /** The viewer's party. */
+  party: "a" | "b";
   title: string | null;
-  /** Cases only. */
-  status: CaseStatus | null;
+  /** Null: nothing known beyond the title (an entry of this browser's). */
+  state: HistoryState | null;
+  verdict: FinalVerdict | null;
+  /** First names from the viewer's own map: the other party, and the viewer
+   * when they wrote about themselves by name. */
+  other: string | null;
+  self: string | null;
+  yourMove: boolean;
+  contextAdded: boolean;
   removed: boolean;
-  /** A verdict this browser sent that has no stored result yet. */
-  pending: boolean;
+  /** Where the row opens; null when it is listed but not linked. */
+  href: string | null;
 };
 
 export type HistoryView = {
@@ -39,97 +58,133 @@ export type HistoryView = {
   loadingMore: boolean;
 };
 
-export type ServerHistory = {
-  verdicts: OwnerVerdictSummary[];
-  cases: CaseSummary[];
-  /** The lists' `next` cursors (createdAt of the last row), null at the end. */
-  nextVerdicts: string | null;
-  nextCases: string | null;
-};
+export type ServerHistory = { rows: HistoryRow[]; next: string | null };
 
 const PAGE = 20;
-// The lists count against the owner's rate limit (shared with their own
-// verdict and case pages), so a page change reuses a recent copy.
+// A page change reuses a recent copy.
 const STALE_MS = 2 * 60_000;
-// Lookups also share that limit, per address when signed out (60 per 10
-// minutes): the queue gets at most this many per page load, and one turn
+// While the judges work on a listed row, the first page is reloaded this often.
+const POLL_MS = 20_000;
+// Lookups share the owner's rate limit, per address when signed out (60 per
+// 10 minutes): the queue gets at most this many per page load, and one turn
 // across all tabs per window.
 const LOOKUPS_PER_LOAD = 10;
 const SEED_GAP_MS = 10 * 60_000;
 
+const THINKING: ReadonlySet<HistoryState | null> = new Set(["judging", "rejudging"]);
+
 /** The headline with the writer's own names put back (same conservative
  * rules as the verdict card). */
-export function restoredHeadline(v: Pick<OwnerVerdictSummary, "headline" | "nameMap">): string | null {
+export function restoredHeadline(v: { headline: string | null; nameMap: NameMapping[] }): string | null {
   if (!v.headline) return null;
   const lang = textLang(v.headline);
   return restoreNames(v.headline, resolveParties(v.nameMap, lang, "A"), lang);
 }
 
-function fromVerdict(v: OwnerVerdictSummary): HistoryItem {
-  return {
-    kind: "verdict",
-    id: v.id,
-    createdAt: v.createdAt,
-    title: v.removed ? null : restoredHeadline(v),
-    status: null,
-    removed: v.removed,
-    pending: false,
-  };
+function hrefOf(row: HistoryRow): string | null {
+  const id = encodeURIComponent(row.id);
+  if (row.kind === "verdict") return row.removed || row.state === "judging" || row.state === "failed" ? null : `/v/${id}`;
+  if (row.role === "respondent") return row.inviteToken ? `/r/${row.inviteToken}` : null;
+  return `/c/${id}`;
 }
 
-function fromCase(c: CaseSummary): HistoryItem {
+export function fromRow(row: HistoryRow): HistoryItem {
+  const text = row.headline ?? row.excerpt;
+  const lang = textLang(text ?? "");
+  const own = row.party === "a" ? "A" : "B";
+  const parties = resolveParties(row.nameMap, lang, own);
+  const named = (letter: string) => {
+    const p = parties.get(letter);
+    return p && !p.self ? (firstNameOf(p.name) ?? p.name) : null;
+  };
   return {
-    kind: "case",
-    id: c.id,
-    createdAt: c.createdAt,
-    title: c.headline ?? (c.excerpt ? localizeLabelsAuto(c.excerpt) : null),
-    status: c.status,
-    removed: c.removed,
-    pending: false,
+    kind: row.kind,
+    id: row.id,
+    at: row.at,
+    role: row.role,
+    party: row.party,
+    title: text ? localizeLabelsAuto(restoreNames(text, parties, lang)) : null,
+    state: row.state,
+    verdict: row.verdict,
+    other: named(own === "A" ? "B" : "A"),
+    // In a case the viewer is known to be their party: "You're right" even
+    // when they named themselves.
+    self: row.kind === "verdict" ? named(own) : null,
+    yourMove: row.yourMove,
+    contextAdded: row.contextAdded,
+    removed: row.removed,
+    href: hrefOf(row),
   };
 }
 
 function fromEntry(e: HistoryEntry): HistoryItem {
+  const removed = e.removed === true;
+  const pending = e.pending === true;
   return {
     kind: "verdict",
     id: e.id,
-    createdAt: e.createdAt,
+    at: e.createdAt,
+    role: "owner",
+    party: "a",
     title: e.headline,
-    status: null,
-    removed: e.removed === true,
-    pending: e.pending === true,
+    state: removed ? "removed" : pending ? "judging" : null,
+    verdict: null,
+    other: null,
+    self: null,
+    yourMove: false,
+    contextAdded: false,
+    removed,
+    // Its share page 404s until the verdict is stored, and closes once removed.
+    href: removed || pending ? null : `/v/${encodeURIComponent(e.id)}`,
   };
 }
 
-/**
- * One list, newest first: the account's verdicts and cases plus this
- * browser's own entries the server did not list. Two cursors page
- * independently, so anything older than the later of them is held back
- * until "load more" reaches it; otherwise an old case could show up above
- * verdicts that are still on the next page.
- */
-export function mergeHistory(server: ServerHistory | null, local: HistoryEntry[]): HistoryItem[] {
-  const items: HistoryItem[] = [];
-  const seen = new Set<string>();
-  for (const v of server?.verdicts ?? []) {
-    seen.add(v.id);
-    items.push(fromVerdict(v));
-  }
-  for (const c of server?.cases ?? []) items.push(fromCase(c));
-  for (const e of local) if (!seen.has(e.id)) items.push(fromEntry(e));
-  const cursors = [server?.nextVerdicts, server?.nextCases].filter((c): c is string => typeof c === "string");
-  const cutoff = cursors.length ? Math.max(...cursors.map((c) => Date.parse(c))) : null;
-  return items
-    .filter((i) => cutoff === null || Date.parse(i.createdAt) >= cutoff)
-    .sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt));
+/** Newest first; local entries' times are compared as dates. */
+type Sortable = Pick<HistoryRow, "kind" | "id" | "at">;
+
+function newestFirst(x: Sortable, y: Sortable): number {
+  const d = Date.parse(y.at) - Date.parse(x.at);
+  if (d !== 0) return d;
+  const kx = historyKey(x);
+  const ky = historyKey(y);
+  return kx === ky ? 0 : kx < ky ? 1 : -1;
 }
 
-// The account's lists live at module level so a page change, which mounts
-// the list again, shows them at once and only refreshes the first page.
+/**
+ * One list, newest first: the account's rows plus this browser's own
+ * entries (verdicts written and cases answered signed out) the server did
+ * not list. While a page is left, local entries older than the last row
+ * loaded wait for "Show more", so nothing shows up above rows still to come.
+ */
+export function mergeHistory(server: ServerHistory | null, local: HistoryEntry[], answered: HistoryRow[] = []): HistoryItem[] {
+  const seen = new Set((server?.rows ?? []).map(historyKey));
+  const items = (server?.rows ?? []).map(fromRow);
+  const extra = [
+    ...local.filter((e) => !seen.has(`v:${e.id}`)).map(fromEntry),
+    ...answered.filter((r) => !seen.has(historyKey(r))).map(fromRow),
+  ];
+  const floor = server?.next ? server.rows.at(-1) : undefined;
+  for (const item of extra) if (!floor || newestFirst(item, floor) <= 0) items.push(item);
+  return items.sort(newestFirst);
+}
+
+/** A reloaded first page over the rows already loaded: down to its last
+ * row the page is the truth (rows gone from it were removed), older loaded
+ * rows stay. The cursor is the deeper of the two, null once all is loaded. */
+export function mergeFirstPage(fresh: ServerHistory, old: ServerHistory | null): ServerHistory {
+  const floor = fresh.rows.at(-1);
+  if (!old || fresh.next === null || !floor) return fresh;
+  const below = old.rows.filter((r) => newestFirst(r, floor) > 0);
+  const oldLast = old.rows.at(-1);
+  const next = old.next === null ? null : oldLast && newestFirst(oldLast, floor) > 0 ? old.next : fresh.next;
+  return { rows: [...fresh.rows, ...below], next };
+}
+
+// The account's list lives at module level so a page change, which mounts
+// the list again, shows it at once and only refreshes the first page.
 
 type ServerState = {
   user: string;
-  cases: boolean;
   status: "loading" | "ready" | "error";
   data: ServerHistory | null;
   loadingMore: boolean;
@@ -144,59 +199,23 @@ function emit(next: ServerState | null): void {
   for (const fn of listeners) fn();
 }
 
-async function fetchPage<T>(path: string, before: string | null): Promise<T> {
-  const q = `limit=${PAGE}${before ? `&before=${encodeURIComponent(before)}` : ""}`;
-  const res = await fetch(`${path}?${q}`, { cache: "no-store" });
+async function fetchPage(cursor: string | null): Promise<HistoryResponse> {
+  const q = `limit=${PAGE}${cursor ? `&cursor=${encodeURIComponent(cursor)}` : ""}`;
+  const res = await fetch(`/api/v1/me/history?${q}`, { cache: "no-store" });
   if (!res.ok) throw new Error(String(res.status));
-  return (await res.json()) as T;
+  return (await res.json()) as HistoryResponse;
 }
 
-function union<T extends { id: string; createdAt: string }>(fresh: T[], old: T[]): T[] {
-  const ids = new Set(fresh.map((x) => x.id));
-  return [...fresh, ...old.filter((x) => !ids.has(x.id))].sort(
-    (a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt),
-  );
-}
-
-/** A reloaded first page over the rows already loaded: down to its last
- * row the page is the truth (rows gone from it were removed), older loaded
- * rows stay. The cursor is the older of the two, null once all is loaded. */
-export function mergeFirstPage<T extends { id: string; createdAt: string }>(
-  fresh: { rows: T[]; next: string | null },
-  old: { rows: T[]; next: string | null } | null,
-): { rows: T[]; next: string | null } {
-  if (!old || fresh.next === null) return fresh;
-  const floor = Date.parse(fresh.next);
-  const next = old.next === null ? null : Date.parse(old.next) < floor ? old.next : fresh.next;
-  return { rows: union(fresh.rows, old.rows.filter((x) => Date.parse(x.createdAt) < floor)), next };
-}
-
-/** Reloads the first page of each list, keeping older pages already
- * loaded. A no-op while nobody is signed in. */
+/** Reloads the first page, keeping older pages already loaded. A no-op
+ * while nobody is signed in. */
 export async function refreshHistory(): Promise<void> {
   const start = state;
   if (!start) return;
   fetchedAt = Date.now();
   try {
-    const [v, c] = await Promise.all([
-      fetchPage<OwnerVerdictListResponse>("/api/v1/me/verdicts", null),
-      start.cases ? fetchPage<CaseListResponse>("/api/v1/cases", null) : null,
-    ]);
+    const page = await fetchPage(null);
     if (state?.user !== start.user) return;
-    const old = state.data;
-    const verdicts = mergeFirstPage(
-      { rows: v.verdicts, next: v.next },
-      old ? { rows: old.verdicts, next: old.nextVerdicts } : null,
-    );
-    const cases = mergeFirstPage(
-      { rows: c?.cases ?? [], next: c?.next ?? null },
-      old ? { rows: old.cases, next: old.nextCases } : null,
-    );
-    emit({
-      ...state,
-      status: "ready",
-      data: { verdicts: verdicts.rows, cases: cases.rows, nextVerdicts: verdicts.next, nextCases: cases.next },
-    });
+    emit({ ...state, status: "ready", data: mergeFirstPage({ rows: page.items, next: page.next }, state.data) });
   } catch {
     if (state?.user === start.user && !state.data) emit({ ...state, status: "error" });
   }
@@ -204,69 +223,84 @@ export async function refreshHistory(): Promise<void> {
 
 async function loadMore(): Promise<void> {
   const start = state;
-  if (!start?.data || start.loadingMore) return;
-  const { nextVerdicts, nextCases } = start.data;
-  if (!nextVerdicts && !nextCases) return;
+  if (!start?.data?.next || start.loadingMore) return;
   emit({ ...start, loadingMore: true });
   try {
-    const [v, c] = await Promise.all([
-      nextVerdicts ? fetchPage<OwnerVerdictListResponse>("/api/v1/me/verdicts", nextVerdicts) : null,
-      nextCases ? fetchPage<CaseListResponse>("/api/v1/cases", nextCases) : null,
-    ]);
+    const page = await fetchPage(start.data.next);
     if (state?.user !== start.user || !state.data) return;
-    const data = state.data;
+    const have = new Set(state.data.rows.map(historyKey));
     emit({
       ...state,
       loadingMore: false,
-      data: {
-        verdicts: v ? union(v.verdicts, data.verdicts) : data.verdicts,
-        cases: c ? union(c.cases, data.cases) : data.cases,
-        nextVerdicts: v ? v.next : data.nextVerdicts,
-        nextCases: c ? c.next : data.nextCases,
-      },
+      data: { rows: [...state.data.rows, ...page.items.filter((r) => !have.has(historyKey(r)))], next: page.next },
     });
   } catch {
     if (state?.user === start.user) emit({ ...state, loadingMore: false });
   }
 }
 
+function patchRow(key: string, update: (row: HistoryRow) => HistoryRow): void {
+  const data = state?.data;
+  const row = data?.rows.find((r) => historyKey(r) === key);
+  if (!state || !data || !row) return;
+  const next = update(row);
+  if (JSON.stringify(next) === JSON.stringify(row)) return;
+  emit({ ...state, data: { ...data, rows: data.rows.map((r) => (r === row ? next : r)) } });
+}
+
 /** After the writer removed a verdict: its row goes muted at once, on
  * whichever page it was loaded, in the account's list and this browser's. */
 export function markVerdictRemoved(id: string): void {
   markHistoryRemoved(id);
-  const data = state?.data;
-  if (!state || !data?.verdicts.some((v) => v.id === id)) return;
-  emit({
-    ...state,
-    data: { ...data, verdicts: data.verdicts.map((v) => (v.id === id ? { ...v, headline: null, removed: true } : v)) },
-  });
+  patchRow(`v:${id}`, (r) => ({
+    ...r,
+    state: "removed",
+    yourMove: false,
+    removable: false,
+    verdict: null,
+    contextAdded: false,
+    contextBy: null,
+    headline: null,
+    nameMap: [],
+    removed: true,
+  }));
 }
 
-/** A case page's latest state, put into its row (the Verdicts list shows its
- * status and headline). */
+// Side B is linked to no account: only this browser's claim keeps the case.
+// Once it is in one, the browser lists it no more, so whoever uses the
+// browser next does not see it.
+const localOnly = (view: CaseView) => view.inAccount === false && !view.inOtherAccount;
+
+/** A case page's latest state, put into its row: in the account's list and,
+ * for a case this browser answered, in its own. */
 export function updateHistoryCase(view: CaseView): void {
-  const data = state?.data;
-  const row = data?.cases.find((c) => c.id === view.id);
-  if (!state || !data || !row) return;
-  const latest = view.verdicts.at(-1)?.result ?? null;
-  const next: CaseSummary = {
-    ...row,
-    status: view.status,
-    respondentAnswered: view.respondentAnswered,
-    removed: view.removed !== null,
-    verdict: latest?.verdict ?? row.verdict,
-    headline: view.removed ? null : (latest?.headline ?? row.headline),
-  };
-  if (
-    next.status === row.status &&
-    next.respondentAnswered === row.respondentAnswered &&
-    next.removed === row.removed &&
-    next.verdict === row.verdict &&
-    next.headline === row.headline
-  ) {
+  const now = new Date();
+  patchRow(`c:${view.id}`, (r) =>
+    r.role === view.role
+      ? historyRowFromView(view, now, { at: r.at, nameMap: view.names ?? r.nameMap, inviteToken: r.inviteToken })
+      : r,
+  );
+  if (view.role !== "respondent") return;
+  if (!localOnly(view)) {
+    dropAnswered(view.id);
     return;
   }
-  emit({ ...state, data: { ...data, cases: data.cases.map((c) => (c.id === view.id ? next : c)) } });
+  const local = loadAnswered().find((r) => r.id === view.id);
+  if (local) addAnswered(historyRowFromView(view, now, { at: local.at, nameMap: view.names ?? local.nameMap, inviteToken: local.inviteToken }));
+}
+
+/** A case this browser answered signed out (it holds the claim), listed
+ * here until it is in an account; refreshed whenever its page shows it. */
+export function rememberAnswered(view: CaseView, token: string, names: NameMapping[]): void {
+  if (view.role !== "respondent" || !view.respondentAnswered || view.ownInvite || !localOnly(view)) return;
+  const known = loadAnswered().find((r) => r.id === view.id);
+  addAnswered(
+    historyRowFromView(view, new Date(), {
+      at: known?.at ?? view.sides.find((s) => s.party === "b")?.submittedAt ?? new Date().toISOString(),
+      nameMap: names.length ? names : (known?.nameMap ?? []),
+      inviteToken: token,
+    }),
+  );
 }
 
 function forget(id: string): void {
@@ -311,6 +345,24 @@ async function lookUp(id: string): Promise<boolean> {
   return true;
 }
 
+/** A case this browser answered, still being judged when last seen. */
+async function lookUpAnswered(row: HistoryRow): Promise<boolean> {
+  const claim = loadClaim(row.id);
+  if (!row.inviteToken) return true;
+  const res = await fetch(`/api/v1/respond/${row.inviteToken}`, {
+    cache: "no-store",
+    headers: claim ? { "Respondent-Claim": claim } : {},
+  });
+  if (res.status === 404) {
+    // The link no longer opens (the case is gone or its secret changed).
+    dropAnswered(row.id);
+    return true;
+  }
+  if (!res.ok) return false;
+  updateHistoryCase(((await res.json()) as { case: CaseView }).case);
+  return true;
+}
+
 let lookups = 0;
 let settling = false;
 
@@ -324,6 +376,11 @@ export async function settleHistory(): Promise<void> {
   settling = true;
   try {
     startHistory(ownerTokenIds());
+    for (const row of loadAnswered().filter((r) => THINKING.has(r.state))) {
+      if (lookups >= LOOKUPS_PER_LOAD) return;
+      lookups++;
+      if (!(await lookUpAnswered(row).catch(() => false))) return;
+    }
     const pending = loadHistory()
       .filter((e) => e.pending)
       .map((e) => e.id);
@@ -347,16 +404,17 @@ function subscribe(onChange: () => void): () => void {
 }
 
 /** The Verdicts list for this viewer: this browser's entries at once, and the
- * account's lists once they load. */
-export function useHistory(viewer: ViewerState): HistoryView & { loadMore: () => void } {
+ * account's list once it loads. `poll`: while it is on screen, reload the
+ * first page now and then while the judges work on a row. */
+export function useHistory(viewer: ViewerState, poll = false): HistoryView & { loadMore: () => void } {
   const local = useLocalHistory();
+  const answered = useLocalAnswered();
   const server = useSyncExternalStore(
     subscribe,
     () => state,
     () => null,
   );
   const user = viewer.me?.user?.id ?? null;
-  const cases = viewer.config?.features?.cases === true;
 
   useEffect(() => {
     void settleHistory();
@@ -367,16 +425,25 @@ export function useHistory(viewer: ViewerState): HistoryView & { loadMore: () =>
       if (state) emit(null);
       return;
     }
-    if (state?.user !== user || state.cases !== cases) {
-      emit({ user, cases, status: "loading", data: null, loadingMore: false });
+    if (state?.user !== user) {
+      emit({ user, status: "loading", data: null, loadingMore: false });
     } else if (state.data && Date.now() - fetchedAt < STALE_MS) {
       return;
     }
     void refreshHistory();
-  }, [user, cases]);
+  }, [user]);
 
   const mine = server && server.user === user ? server : null;
-  const items = useMemo(() => mergeHistory(mine?.data ?? null, local), [mine?.data, local]);
+  const thinking = poll && Boolean(mine?.data?.rows.some((r) => THINKING.has(r.state)));
+  useEffect(() => {
+    if (!thinking) return;
+    const timer = setInterval(() => {
+      if (document.visibilityState === "visible") void refreshHistory();
+    }, POLL_MS);
+    return () => clearInterval(timer);
+  }, [thinking]);
+
+  const items = useMemo(() => mergeHistory(mine?.data ?? null, local, answered), [mine?.data, local, answered]);
   return {
     items,
     status: mine
@@ -384,7 +451,7 @@ export function useHistory(viewer: ViewerState): HistoryView & { loadMore: () =>
       : user || viewer.status === "idle" || viewer.status === "loading"
         ? "loading"
         : "ready",
-    more: Boolean(mine?.data?.nextVerdicts || mine?.data?.nextCases),
+    more: Boolean(mine?.data?.next),
     loadingMore: mine?.loadingMore ?? false,
     loadMore: () => void loadMore(),
   };

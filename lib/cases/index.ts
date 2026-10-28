@@ -19,6 +19,7 @@ export {
   respondDisplayHandler,
   respondOriginalsHandler,
   respondRemovalHandler,
+  respondentClaimHandler,
   respondEvidenceHandler,
   respondGetHandler,
   respondPostHandler,

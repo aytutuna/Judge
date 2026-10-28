@@ -1,19 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import type { CaseStatus } from "@/lib/case-types";
 import { saveDraftForSignIn } from "@/lib/draft";
-import { t, tWithDate, type Key, type Lang } from "@/lib/i18n";
+import { t, tWithDate, type Lang } from "@/lib/i18n";
 import type { HistoryItem, HistoryView } from "./useHistory";
 import styles from "./shell.module.css";
-
-const CASE_KEY = {
-  awaiting_respondent: "shell.case.waiting",
-  judging: "shell.case.judging",
-  judged: "shell.case.judged",
-  failed: "shell.case.failed",
-  expired: "shell.case.expired",
-} as const satisfies Record<CaseStatus, Key>;
 
 const GROUP_KEY = { today: "shell.today", week: "shell.week", earlier: "shell.earlier" } as const;
 
@@ -31,44 +22,105 @@ export function groupHistory(items: HistoryItem[], now: number): HistoryGroup[] 
     { key: "earlier", items: [] },
   ];
   for (const item of items) {
-    const at = Date.parse(item.createdAt);
+    const at = Date.parse(item.at);
     groups[at >= today ? 0 : at >= week ? 1 : 2].items.push(item);
   }
   return groups.filter((g) => g.items.length > 0);
 }
 
-export function historyHref(item: HistoryItem): string {
-  return `/${item.kind === "verdict" ? "v" : "c"}/${encodeURIComponent(item.id)}`;
+/** The ruling from the viewer's side: "You're right", "{name} is right",
+ * or the outcome itself. */
+function rulingLabel(lang: Lang, item: HistoryItem): string {
+  switch (item.verdict) {
+    case "side_a":
+    case "side_b": {
+      const yours = item.verdict === (item.party === "a" ? "side_a" : "side_b");
+      if (yours) return item.self ? t(lang, "verdict.win", { name: item.self }) : t(lang, "verdict.winSelf");
+      return t(lang, "verdict.win", { name: item.other ?? t(lang, item.party === "a" ? "party.b" : "party.a") });
+    }
+    case "split":
+      return t(lang, "verdict.split");
+    case "conditional":
+      return t(lang, "verdict.conditional");
+    case "dissolved":
+      return t(lang, "verdict.dissolved");
+    case "too_close":
+      return t(lang, "verdict.tooClose");
+    default:
+      return t(lang, "history.state.ready");
+  }
+}
+
+/** The row's state in a few plain words; null when there is nothing to say. */
+export function stateLabel(lang: Lang, item: HistoryItem): string | null {
+  switch (item.state) {
+    case "judging":
+      return t(lang, "history.state.judging");
+    case "rejudging":
+      return t(lang, "history.state.rejudging");
+    case "failed":
+      return t(lang, "history.state.failed");
+    case "rejudge_failed":
+      return t(lang, "history.state.rejudgeFailed");
+    case "waiting":
+      return item.other ? t(lang, "history.state.waiting", { name: item.other }) : t(lang, "history.state.waitingOther");
+    case "expired":
+      return t(lang, "history.state.expired");
+    case "removed":
+      return t(lang, "history.state.removed");
+    case "removed_by_other":
+      return item.other ? t(lang, "history.state.removedBy", { name: item.other }) : t(lang, "history.state.removedByOther");
+    case "ready":
+      return rulingLabel(lang, item);
+    default:
+      return null;
+  }
+}
+
+/** Green when the ruling went the viewer's way, red when it went the other's. */
+function tone(item: HistoryItem): "yours" | "theirs" | undefined {
+  if (item.state !== "ready" || (item.verdict !== "side_a" && item.verdict !== "side_b")) return undefined;
+  return item.verdict === (item.party === "a" ? "side_a" : "side_b") ? "yours" : "theirs";
 }
 
 function Row({ lang, item }: { lang: Lang; item: HistoryItem }) {
-  const removed = t(lang, "account.verdicts.removed");
-  if (item.kind === "verdict" && item.removed) {
-    // Its share page no longer opens: listed, not linked.
-    return (
-      <span className={styles.row} data-removed="">
-        <span className={styles.title}>{removed}</span>
-      </span>
-    );
-  }
+  const ownRemoval = item.state === "removed";
   const title =
     item.title ??
-    (item.kind === "case" ? tWithDate(lang, "case.list.untitled", item.createdAt) : t(lang, "shell.untitled"));
-  if (item.pending) {
-    // Its share page 404s until the verdict is stored.
-    return (
-      <span className={styles.row}>
-        <span className={styles.title}>{title}</span>
-        <span className={styles.state}>{t(lang, "shell.case.judging")}</span>
+    (item.kind === "case"
+      ? tWithDate(lang, "case.list.untitled", item.at)
+      : ownRemoval
+        ? t(lang, "history.state.removed")
+        : t(lang, "shell.untitled"));
+  // A removed verdict says so in its title already.
+  const state = item.kind === "verdict" && ownRemoval ? null : stateLabel(lang, item);
+  const tags = [
+    item.role === "respondent" ? t(lang, "history.answered") : null,
+    item.contextAdded && item.state === "ready" ? t(lang, "history.contextAdded") : null,
+  ].filter((x): x is string => x !== null);
+  const inner = (
+    <>
+      <span className={styles.title}>
+        {title}
+        {tags.length ? <span className={styles.tags}>{tags.join(" · ")}</span> : null}
       </span>
-    );
-  }
-  const state = item.kind === "case" ? (item.removed ? removed : item.status ? t(lang, CASE_KEY[item.status]) : null) : null;
-  return (
-    <Link href={historyHref(item)} className={styles.row} data-removed={item.removed ? "" : undefined}>
-      <span className={styles.title}>{title}</span>
-      {state ? <span className={styles.state}>{state}</span> : null}
+      {state || item.yourMove ? (
+        <span className={styles.state} data-tone={tone(item)}>
+          {state}
+          {item.yourMove ? <span className={styles.move}>{t(lang, "history.yourMove")}</span> : null}
+        </span>
+      ) : null}
+    </>
+  );
+  const muted = item.removed || item.state === "expired" ? "" : undefined;
+  return item.href ? (
+    <Link href={item.href} className={styles.row} data-removed={muted}>
+      {inner}
     </Link>
+  ) : (
+    <span className={styles.row} data-removed={muted}>
+      {inner}
+    </span>
   );
 }
 

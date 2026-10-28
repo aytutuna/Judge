@@ -26,6 +26,7 @@ import {
   type CaseView,
   type PartyLetter,
 } from "@/lib/case-types";
+import { excerptOf } from "@/lib/history-state";
 import type { OriginalStatus } from "@/lib/originals-types";
 import type { NameMapping } from "@/lib/types";
 import type { CaseBundle, CaseListRow, EvidenceRow } from "./db";
@@ -40,6 +41,10 @@ export type ViewContext = {
   ownInvite: boolean;
   /** Why the viewer cannot appeal right now (null = allowed). */
   appealBlock: AppealBlock | null;
+  /** Respondent role: side B is bound to the signed-in viewer. */
+  inAccount?: boolean;
+  /** Respondent role, claim holder: side B is bound to some other account. */
+  inOtherAccount?: boolean;
   /** Decrypted by the caller: the viewer's own name map (null when not
    * stored or the viewer is not proven to be that party), both display
    * names, and the status of the viewer's side original. */
@@ -145,6 +150,7 @@ export function buildCaseView(bundle: CaseBundle, ctx: ViewContext): CaseView {
     },
     removed: row.removedAt ? { at: row.removedAt, parties: removedParties } : null,
     yourOriginal: ctx.originals?.yourOriginal ?? "not_stored",
+    ...(ctx.role === "respondent" ? { inAccount: ctx.inAccount === true, inOtherAccount: ctx.inOtherAccount === true } : {}),
   };
 }
 
@@ -176,18 +182,7 @@ export function structuralAppealBlock(
   return null;
 }
 
-/** Longest list excerpt, in characters. */
-export const EXCERPT_CHARS = 80;
-
-/** The first words of an anonymized side, cut at a word boundary. */
-export function excerptOf(text: string | null, max = EXCERPT_CHARS): string | null {
-  const flat = (text ?? "").replace(/\s+/g, " ").trim();
-  if (!flat) return null;
-  if (flat.length <= max) return flat;
-  const cut = flat.slice(0, max);
-  const space = cut.lastIndexOf(" ");
-  return `${(space > max / 2 ? cut.slice(0, space) : cut).replace(/[\s,;:.\-–—]+$/u, "")}…`;
-}
+export { excerptOf } from "@/lib/history-state";
 
 export function caseSummary(r: CaseListRow, now: Date): CaseSummary {
   return {

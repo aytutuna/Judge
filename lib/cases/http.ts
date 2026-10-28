@@ -30,6 +30,7 @@ import { getViewer, isSameOrigin, premiumEnabled, resolveViewer, type ViewerSess
 import { deadBearerResponse } from "@/lib/bearer-guard";
 import {
   AppealRequest,
+  CaseClaimRequest,
   CreateCaseRequest,
   JudgeNowRequest,
   MAX_EVIDENCE_PER_APPEAL,
@@ -37,6 +38,7 @@ import {
   RespondRequest,
   type AppealBlock,
   type AppealResponse,
+  type CaseClaimResponse,
   type CaseListResponse,
   type CaseRemovalResponse,
   type CaseResponse,
@@ -298,12 +300,15 @@ async function respondentView(
   now = new Date(),
 ): Promise<CaseView> {
   const bundle = await loadCaseBundle(row);
+  const claimOk = claimMatches(row, claim);
   return buildCaseView(bundle, {
     role: "respondent",
     now,
     inviteUrl: null,
     ownInvite: viewerId !== null && viewerId === row.ownerId,
-    appealBlock: await appealBlockFor(row, bundle, "b", viewerId, now, claimMatches(row, claim)),
+    appealBlock: await appealBlockFor(row, bundle, "b", viewerId, now, claimOk),
+    inAccount: viewerId !== null && row.mode === "two_sided" && row.respondentUserId === viewerId,
+    inOtherAccount: claimOk && row.respondentUserId !== null && row.respondentUserId !== viewerId,
     originals: await viewOriginals(row, "b", provenRespondent(row, viewerId, claim)),
   });
 }
@@ -867,6 +872,51 @@ export function caseRemovalHandler(req: Request, id: string): Promise<NextRespon
   return guarded("removal", () =>
     removal(req, () => ownerParty(req, id, true), "a", (row, viewerId) => ownerView(row, req, viewerId ?? row.ownerId)),
   );
+}
+
+/** POST /api/v1/cases/{id}/claim { claim }: a signed-in respondent who
+ * answered signed out links side B to their account, so the case is listed
+ * there. It grants nothing the claim did not already allow (adding context
+ * signed in binds the side the same way). Wrong claim, the owner, a
+ * one-sided case or a side already bound to someone else all get the same
+ * 404, checked before anything about the case is told. */
+export function respondentClaimHandler(req: Request, id: string): Promise<NextResponse> {
+  return guarded("claim", async () => {
+    if (!casesEnabled()) return fail("not_configured");
+    const read = await readJson(req);
+    if (!read.ok) return fail("invalid", "Invalid JSON body");
+    const parsed = CaseClaimRequest.safeParse(read.body);
+    if (!parsed.success) return fail("invalid", 'Send { "claim": "..." } from your answer.');
+    const gate = await signedIn(req);
+    if ("response" in gate) return gate.response;
+    const userId = gate.viewer.user.id;
+    const limited = await ownerLimit(userId, req);
+    if (limited) return limited;
+    if (!CASE_ID.test(id)) return fail("not_found");
+    const row = await getCase(id);
+    if (!row || row.mode !== "two_sided" || row.ownerId === userId || !claimMatches(row, parsed.data.claim)) {
+      return fail("not_found");
+    }
+    if (row.removedBAt) return fail("removed");
+    const claimed: CaseClaimResponse = { claimed: true };
+    if (row.respondentUserId === userId) return json(claimed);
+    if (row.respondentUserId) return fail("not_found");
+    await caseDb();
+    const rs = await entitlementWriteBatch([
+      {
+        sql: `UPDATE cases SET respondent_user_id = ?, updated_at = ?
+              WHERE id = ? AND respondent_user_id IS NULL AND respondent_claim_nonce = ? AND owner_id <> ?
+                AND removed_b_at IS NULL`,
+        args: [userId, new Date().toISOString(), row.id, row.respondentClaimNonce, userId],
+      },
+    ]);
+    if (rs[0].rowsAffected !== 1) {
+      const fresh = await getCase(row.id);
+      if (fresh?.removedBAt) return fail("removed");
+      return fresh?.respondentUserId === userId ? json(claimed) : fail("not_found");
+    }
+    return json(claimed);
+  });
 }
 
 /** POST /api/v1/respond/{token}/removal { confirm: "remove", claim? }: Party B's side. */

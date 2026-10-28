@@ -57,6 +57,8 @@ const SCHEMA = [
   )`,
   "CREATE INDEX IF NOT EXISTS verdict_jobs_judging ON verdict_jobs (created_at) WHERE status = 'judging'",
   "CREATE INDEX IF NOT EXISTS verdict_jobs_reservation ON verdict_jobs (reservation_id) WHERE reservation_id IS NOT NULL",
+  // The Verdicts list reads an account's jobs.
+  "CREATE INDEX IF NOT EXISTS verdict_jobs_owner ON verdict_jobs (owner_user_id, created_at) WHERE owner_user_id IS NOT NULL",
 ];
 
 const globalForJobs = globalThis as unknown as {
