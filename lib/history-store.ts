@@ -179,8 +179,6 @@ export function useLocalHistory(): HistoryEntry[] {
   return useSyncExternalStore(verdicts.subscribe, verdicts.load, () => EMPTY);
 }
 
-// --- cases answered signed out -------------------------------------------------
-
 const EMPTY_ROWS: HistoryRow[] = [];
 
 /** One stored row: what the case's page last showed, the respondent's own
@@ -222,6 +220,12 @@ export function loadAnswered(): HistoryRow[] {
 export function addAnswered(row: HistoryRow): void {
   const rows = [row, ...answered.load().filter((r) => r.id !== row.id)].sort(compareHistory);
   answered.save(rows.slice(0, HISTORY_MAX));
+}
+
+/** A case now in an account, or whose link is gone. */
+export function dropAnswered(id: string): void {
+  const rows = answered.load();
+  if (rows.some((r) => r.id === id)) answered.save(rows.filter((r) => r.id !== id));
 }
 
 export function useLocalAnswered(): HistoryRow[] {

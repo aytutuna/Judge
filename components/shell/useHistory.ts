@@ -5,6 +5,7 @@ import type { CaseView } from "@/lib/case-types";
 import {
   addAnswered,
   addHistory,
+  dropAnswered,
   dropHistory,
   loadAnswered,
   loadHistory,
@@ -265,6 +266,11 @@ export function markVerdictRemoved(id: string): void {
   }));
 }
 
+// Side B is linked to no account: only this browser's claim keeps the case.
+// Once it is in one, the browser lists it no more, so whoever uses the
+// browser next does not see it.
+const localOnly = (view: CaseView) => view.inAccount === false && !view.inOtherAccount;
+
 /** A case page's latest state, put into its row: in the account's list and,
  * for a case this browser answered, in its own. */
 export function updateHistoryCase(view: CaseView): void {
@@ -275,14 +281,18 @@ export function updateHistoryCase(view: CaseView): void {
       : r,
   );
   if (view.role !== "respondent") return;
+  if (!localOnly(view)) {
+    dropAnswered(view.id);
+    return;
+  }
   const local = loadAnswered().find((r) => r.id === view.id);
   if (local) addAnswered(historyRowFromView(view, now, { at: local.at, nameMap: view.names ?? local.nameMap, inviteToken: local.inviteToken }));
 }
 
 /** A case this browser answered signed out (it holds the claim), listed
- * here until it is in the account; refreshed whenever its page shows it. */
+ * here until it is in an account; refreshed whenever its page shows it. */
 export function rememberAnswered(view: CaseView, token: string, names: NameMapping[]): void {
-  if (view.role !== "respondent" || !view.respondentAnswered || view.ownInvite) return;
+  if (view.role !== "respondent" || !view.respondentAnswered || view.ownInvite || !localOnly(view)) return;
   const known = loadAnswered().find((r) => r.id === view.id);
   addAnswered(
     historyRowFromView(view, new Date(), {

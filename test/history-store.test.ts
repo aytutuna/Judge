@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { mergeFirstPage, mergeHistory, rememberAnswered, settleHistory } from "../components/shell/useHistory";
+import { mergeFirstPage, mergeHistory, rememberAnswered, settleHistory, updateHistoryCase } from "../components/shell/useHistory";
 import {
   ANSWERED_KEY,
   HISTORY_KEY,
@@ -318,6 +318,20 @@ describe("cases answered signed out", () => {
     rememberAnswered(view({ id: "c2", ownInvite: true }), TOKEN, []);
     rememberAnswered(view({ id: "c3", respondentAnswered: false }), TOKEN, []);
     expect(loadAnswered().map((r) => r.id)).toEqual(["c1"]);
+  });
+
+  it("are not listed once side B is in an account, the viewer's or another", () => {
+    vi.stubGlobal("localStorage", fakeStorage());
+    rememberAnswered(view({ id: "c2", inAccount: true }), TOKEN, []);
+    rememberAnswered(view({ id: "c3", inOtherAccount: true }), TOKEN, []);
+    expect(loadAnswered()).toEqual([]);
+
+    rememberAnswered(view({}), TOKEN, []);
+    rememberAnswered(view({ id: "c4" }), TOKEN, []);
+    // Kept in the account, or seen bound to another: the browser forgets it.
+    updateHistoryCase(view({ inAccount: true }));
+    updateHistoryCase(view({ id: "c4", inOtherAccount: true }));
+    expect(loadAnswered()).toEqual([]);
   });
 });
 

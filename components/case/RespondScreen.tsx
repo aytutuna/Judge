@@ -456,7 +456,7 @@ export function RespondScreen({ token }: { token: string }) {
   const canProve = Boolean(claim) || Boolean(viewer.me?.user);
   // Answered signed out, now signed in: the case can join the account.
   const canKeep =
-    Boolean(viewer.me?.user) && Boolean(claim) && view?.inAccount === false && view.respondentAnswered && !view.removed;
+    Boolean(viewer.me?.user) && Boolean(claim) && view?.inAccount === false && !view.inOtherAccount && view.respondentAnswered && !view.removed;
   const { overlay, fresh, finish } = useJudgingOverlay(view?.status ?? null);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const form = useRespondForm(
@@ -513,7 +513,7 @@ export function RespondScreen({ token }: { token: string }) {
   }
 
   // The Verdicts list follows this page; a case answered signed out is
-  // listed in this browser.
+  // listed in this browser until it joins an account.
   useEffect(() => {
     if (!view) return;
     updateHistoryCase(view);
