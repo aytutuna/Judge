@@ -2,7 +2,8 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it, vi } from "vitest";
 import { LocaleStrings } from "../components/LocaleStrings";
 import { SkipLink } from "../components/SiteChrome";
-import { EN, hasStrings, loadedDict, loadLocale, registerLocale, t } from "../lib/i18n";
+import { EN, loadedDict, registerLocale, t } from "../lib/i18n";
+import de from "../lib/locales/de";
 import tr from "../lib/locales/tr";
 
 describe("loading languages on demand", () => {
@@ -29,15 +30,22 @@ describe("loading languages on demand", () => {
   });
 
   it("leaves languages that are not enabled in English", async () => {
-    await expect(loadLocale("de")).resolves.toBeUndefined();
-    expect(hasStrings("de")).toBe(false);
-    expect(t("de", "nav.skip")).toBe(EN["nav.skip"]);
+    vi.resetModules();
+    vi.doMock("../lib/langs", async (importOriginal) => ({
+      ...(await importOriginal<typeof import("../lib/langs")>()),
+      importLocale: () => null,
+    }));
+    const fresh = await import("../lib/i18n");
+    vi.doUnmock("../lib/langs");
+    await expect(fresh.loadLocale("de")).resolves.toBeUndefined();
+    expect(fresh.hasStrings("de")).toBe(false);
+    expect(fresh.t("de", "nav.skip")).toBe(EN["nav.skip"]);
   });
 
   it("hands the browser only what it needs, never for English", () => {
     expect(loadedDict("en")).toBeNull();
-    expect(loadedDict("de")).toBeNull();
     expect(loadedDict("tr")).toEqual({ strings: tr.strings, plurals: tr.plurals });
+    expect(loadedDict("de")).toEqual({ strings: de.strings, plurals: de.plurals, legalNotice: de.legalNotice });
   });
 
   it("registers server-rendered strings before the page renders with them", () => {

@@ -1,6 +1,13 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { EMAIL_EN } from "../lib/email";
-import { EN, legalLang, legalNotice, loadedDict, registerLocale, t, type LegalKey, type Locale } from "../lib/i18n";
+import type { LegalKey, Locale } from "../lib/i18n";
+import tr from "../lib/locales/tr";
+
+// A copy with nothing loaded, so the stand-ins below take the place of the
+// real German and French files.
+vi.resetModules();
+const { EN, legalLang, legalNotice, loadedDict, registerLocale, t } = await import("../lib/i18n");
+registerLocale("tr", tr);
 
 const legal = Object.keys(EN).filter((k) => k.startsWith("privacy.")) as LegalKey[];
 const withoutLegal = Object.fromEntries(Object.entries(EN).filter(([k]) => !k.startsWith("privacy."))) as Locale["strings"];

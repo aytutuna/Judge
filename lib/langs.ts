@@ -69,6 +69,18 @@ export const LANG_CODES = Object.keys(LANGS) as [Lang, ...Lang[]];
  */
 const LOCALES: Partial<Record<Lang, () => Promise<{ default: Locale }>>> = {
   tr: () => import("./locales/tr"),
+  ca: () => import("./locales/ca"),
+  da: () => import("./locales/da"),
+  nl: () => import("./locales/nl"),
+  fi: () => import("./locales/fi"),
+  fr: () => import("./locales/fr"),
+  de: () => import("./locales/de"),
+  it: () => import("./locales/it"),
+  nb: () => import("./locales/nb"),
+  "pt-BR": () => import("./locales/pt-BR"),
+  "pt-PT": () => import("./locales/pt-PT"),
+  es: () => import("./locales/es"),
+  sv: () => import("./locales/sv"),
 };
 
 /**
@@ -84,6 +96,18 @@ export const PARTY_LABELS: Partial<Record<Lang, readonly [a: string, b: string]>
 } = {
   en: ["Party A", "Party B"],
   tr: ["Taraf A", "Taraf B"],
+  ca: ["Part A", "Part B"],
+  da: ["Part A", "Part B"],
+  nl: ["Partij A", "Partij B"],
+  fi: ["Osapuoli A", "Osapuoli B"],
+  fr: ["Partie A", "Partie B"],
+  de: ["Partei A", "Partei B"],
+  it: ["Parte A", "Parte B"],
+  nb: ["Part A", "Part B"],
+  "pt-BR": ["Parte A", "Parte B"],
+  "pt-PT": ["Parte A", "Parte B"],
+  es: ["Parte A", "Parte B"],
+  sv: ["Part A", "Part B"],
 };
 
 /** Enabled languages, in registry order (English first). */

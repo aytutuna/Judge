@@ -50,7 +50,7 @@ beforeEach(() => {
 
 describe("POST /api/verdict/[id]/translate", () => {
   it("rejects a missing or unknown lang with 400", async () => {
-    for (const lang of [null, "de"]) {
+    for (const lang of [null, "xx"]) {
       const res = await post("abc123defg", lang);
       expect(res.status).toBe(400);
       expect(await res.json()).toMatchObject({ code: "invalid" });

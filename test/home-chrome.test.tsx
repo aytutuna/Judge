@@ -5,6 +5,7 @@ import { LangPicker } from "../components/LangPicker";
 import { SiteFooter, SiteHeader } from "../components/SiteChrome";
 import { HOW_STEPS, stepNumeral } from "../lib/how-steps";
 import { t, type Lang } from "../lib/i18n";
+import { ENABLED } from "../lib/langs";
 import { STRINGS } from "./strings";
 
 const count = (html: string, needle: string) => html.split(needle).length - 1;
@@ -60,7 +61,7 @@ describe("LangPicker", () => {
     expect(html).toContain('aria-label="Display language"');
     expect(html).toMatch(/<option value="en" lang="en">English<\/option>/);
     expect(html).toMatch(/<option value="tr" lang="tr" selected="">Türkçe<\/option>/);
-    expect(html.match(/<option/g)).toHaveLength(2);
+    expect(html.match(/<option/g)).toHaveLength(ENABLED.length);
   });
 
   it("labels itself in the page language by default", () => {

@@ -4,22 +4,14 @@ vi.mock("../lib/claude", () => ({ claudeJson: vi.fn(), claudeSearchJson: vi.fn()
 
 import { claudeJson, claudeSearchJson, type ClaudeJsonCall } from "../lib/claude";
 import { EMAIL_EN, signInEmailContent } from "../lib/email";
-import { EN, languageName, registerLocale, type Locale } from "../lib/i18n";
+import { languageName } from "../lib/i18n";
 import { judgeOnce } from "../lib/judge";
 import { clarifyQuestions } from "../lib/premium/clarify";
 import { runFactCheck } from "../lib/premium/factcheck";
+import de from "../lib/locales/de";
 import { humanStyle } from "../lib/style";
 import { inTargetLanguage, planSegments, translateSystemPrompt, translateUserMessage } from "../lib/translate";
 import { EN_TEXT } from "./translate-fixtures";
-
-// A language as a translator would add it, registered the way loadLocale does.
-const de: Locale = {
-  voice:
-    'Address the reader with informal "du", never "Sie". Refer to the parties as "Partei A" and "Partei B" in prose. Write each conditional if_value as a clause that reads on from "Wenn", with no leading "Wenn".',
-  strings: { ...EN, "party.a": "Partei A", "party.b": "Partei B", ifPrefix: "Wenn" },
-  email: { ...EMAIL_EN, signIn: { ...EMAIL_EN.signIn, subject: "Dein Judge-Anmeldelink" } },
-};
-registerLocale("de", de);
 
 const mockClaude = vi.mocked(claudeJson);
 const mockSearch = vi.mocked(claudeSearchJson);
@@ -89,8 +81,8 @@ describe("translating to and from a language added later", () => {
 
 describe("emails and language names", () => {
   it("uses a loaded language's email copy and English otherwise", () => {
-    expect(signInEmailContent("https://x.test/l", "de").subject).toBe("Dein Judge-Anmeldelink");
-    expect(signInEmailContent("https://x.test/l", "fr").subject).toBe(EMAIL_EN.signIn.subject);
+    expect(signInEmailContent("https://x.test/l", "de").subject).toBe(de.email.signIn.subject);
+    expect(signInEmailContent("https://x.test/l", "en").subject).toBe(EMAIL_EN.signIn.subject);
   });
 
   it("names languages in the reader's language", () => {

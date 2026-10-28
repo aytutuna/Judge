@@ -1,4 +1,4 @@
-import { readFileSync } from "node:fs";
+import { readdirSync, readFileSync } from "node:fs";
 import { join, posix } from "node:path";
 import { describe, expect, it } from "vitest";
 
@@ -21,7 +21,9 @@ const PURE = [
   "case-types",
   "originals-types",
   "langs",
-  "locales/tr",
+  ...readdirSync(join(__dirname, "..", "lib", "locales"))
+    .filter((f) => f !== "check.ts")
+    .map((f) => `locales/${f.replace(/\.ts$/, "")}`),
 ] as const;
 
 const ALLOWED_PACKAGES = new Set(["zod"]);

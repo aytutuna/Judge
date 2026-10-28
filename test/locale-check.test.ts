@@ -25,7 +25,11 @@ describe("locale check", () => {
     expect(requiredPluralForms("de", "panel.quick")).toEqual(["one"]);
     expect(requiredPluralForms("ja", "panel.quick")).toEqual([]);
     expect(requiredPluralForms("pl", "home.monthLeft").sort()).toEqual(["few", "many", "one"]);
-    const locale = { voice: 'Refer to the parties as "Party A" and "Party B".', strings: EN, email: EMAIL_EN } as unknown as Locale;
+    const locale = {
+      voice: 'Refer to the parties as "Parte A" and "Parte B".',
+      strings: { ...EN, "party.a": "Parte A", "party.b": "Parte B" },
+      email: EMAIL_EN,
+    } as unknown as Locale;
     expect(checkLocale("es", locale)).toEqual([
       "plurals.panel.strong.one: missing",
       "plurals.panel.quick.one: missing",

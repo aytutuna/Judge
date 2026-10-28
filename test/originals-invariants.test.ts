@@ -61,7 +61,7 @@ describe("proxy.ts", () => {
     expect(html).toContain('lang="tr" dir="ltr"');
     expect(html).toContain("Bu karar kaldırıldı");
     // Same pick as the share page: the first enabled language in the header.
-    const second = await proxy(new NextRequest("http://localhost/v/gone123", { headers: { "accept-language": "de-DE,tr;q=0.8" } }));
+    const second = await proxy(new NextRequest("http://localhost/v/gone123", { headers: { "accept-language": "xx-YY,tr;q=0.8" } }));
     expect(await second.text()).toContain("Sen de kendi tartışmanı çözdür");
     const live = await proxy(new NextRequest("http://localhost/v/live123"));
     expect(live.status).toBe(200);

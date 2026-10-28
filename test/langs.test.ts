@@ -1,3 +1,5 @@
+import { readdirSync } from "node:fs";
+import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import {
   acceptLanguageTags,
@@ -41,10 +43,11 @@ describe("language registry", () => {
     expect(langDir("en")).toBe("ltr");
   });
 
-  it("enables English and Turkish only", () => {
-    expect(ENABLED).toEqual(["en", "tr"]);
+  it("enables every language that has strings, in registry order", () => {
+    const files = new Set(readdirSync(join(__dirname, "..", "lib", "locales")).map((f) => f.replace(/\.ts$/, "")));
+    expect(ENABLED).toEqual(LANG_CODES.filter((l) => l === "en" || files.has(l)));
     expect(isEnabled("tr")).toBe(true);
-    expect(isEnabled("de")).toBe(false);
+    expect(isEnabled("de")).toBe(true);
     expect(isEnabled("xx")).toBe(false);
   });
 
@@ -87,10 +90,13 @@ describe("matching browser languages", () => {
   });
 
   it("takes the first preference that is enabled, else English", () => {
+    const enTr = ["en", "tr"] as const;
     expect(matchLang(["tr-TR", "en"])).toBe("tr");
     expect(matchLang(["en-US", "tr"])).toBe("en");
-    expect(matchLang(["de-DE", "tr"])).toBe("tr");
-    expect(matchLang(["de-DE", "fr"])).toBe("en");
+    expect(matchLang(["de-DE", "tr"])).toBe("de");
+    expect(matchLang(["de-DE", "tr"], enTr)).toBe("tr");
+    expect(matchLang(["de-DE", "fr"], enTr)).toBe("en");
+    expect(matchLang(["xx-YY", "tr"])).toBe("tr");
     expect(matchLang([])).toBe("en");
     expect(matchLang(["zh-TW", "en"], all)).toBe("zh-Hant");
     expect(matchLang(["pt-PT"], all)).toBe("pt-PT");
@@ -100,7 +106,8 @@ describe("matching browser languages", () => {
   it("reads Accept-Language in the order sent", () => {
     expect(acceptLanguageTags("tr-TR,tr;q=0.9,en-US;q=0.8,*;q=0.5")).toEqual(["tr-TR", "tr", "en-US"]);
     expect(acceptLanguageTags("")).toEqual([]);
-    expect(matchLang(acceptLanguageTags("de-DE,de;q=0.9,tr;q=0.8"))).toBe("tr");
+    expect(matchLang(acceptLanguageTags("de-DE,de;q=0.9,tr;q=0.8"))).toBe("de");
+    expect(matchLang(acceptLanguageTags("de-DE,de;q=0.9,tr;q=0.8"), ["en", "tr"])).toBe("tr");
   });
 });
 
@@ -119,9 +126,10 @@ describe("schemas", () => {
     const argument = "We argued about whose turn it was to do the dishes.";
     expect(VerdictRequest.parse({ argument }).lang).toBe("en");
     expect(VerdictRequest.parse({ argument, lang: "tr" }).lang).toBe("tr");
-    expect(VerdictRequest.safeParse({ argument, lang: "ja" }).success).toBe(false);
-    expect(ClarifyRequest.safeParse({ argument, lang: "ja" }).success).toBe(false);
-    expect(CreateCaseRequest.safeParse({ text: argument, lang: "tr" }).success).toBe(true);
-    expect(CreateCaseRequest.safeParse({ text: argument, lang: "ar" }).success).toBe(false);
+    expect(VerdictRequest.parse({ argument, lang: "de" }).lang).toBe("de");
+    expect(VerdictRequest.safeParse({ argument, lang: "xx" }).success).toBe(false);
+    expect(ClarifyRequest.safeParse({ argument, lang: "xx" }).success).toBe(false);
+    expect(CreateCaseRequest.safeParse({ text: argument, lang: "fr" }).success).toBe(true);
+    expect(CreateCaseRequest.safeParse({ text: argument, lang: "pt" }).success).toBe(false);
   });
 });
