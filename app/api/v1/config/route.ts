@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import type { AppConfig } from "@/lib/account-types";
 import { authProviders, premiumEnabled } from "@/lib/auth";
+import { WELCOME_CREDITS } from "@/lib/entitlements";
 import { casesEnabled, evidenceEnabled, purchasesEnabled } from "@/lib/features";
 import { PRICING } from "@/lib/pricing";
 
@@ -20,6 +21,8 @@ export function GET(req: Request): NextResponse<AppConfig> {
       monthly: { ...PRICING.monthly },
     },
     features: { cases: casesEnabled(), evidence: evidenceEnabled() },
+    freeTier: false,
+    welcomeCredits: WELCOME_CREDITS,
   };
   return NextResponse.json(body, { headers: { "Cache-Control": "no-store" } });
 }

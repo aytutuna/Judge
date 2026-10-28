@@ -57,6 +57,8 @@ describe("GET /api/v1/config", () => {
         monthly: { id: "monthly", priceUsd: 15, fairUseCap: 35, periodDays: 30 },
       },
       features: { cases: false, evidence: false },
+      freeTier: false,
+      welcomeCredits: 1,
     });
     expect(body.pricing).toEqual(PRICING);
   });
