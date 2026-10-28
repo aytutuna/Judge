@@ -675,13 +675,22 @@ export type Locale = {
    * paragraph of plain sentences.
    */
   voice: string;
-  /** Every key of the English table, nothing else. */
-  strings: Record<Key, string>;
+  /** Every key of the English table, nothing else. The privacy page's
+   * strings may be left out as a whole: that page then shows in English. */
+  strings: Strings;
+  /** On a translated privacy page, one line saying the English version
+   * applies where the two differ. */
+  legalNotice?: string;
   /** Extra forms of the count strings, by plural category (see COUNT_KEYS). */
   plurals?: Partial<Record<CountKey, PluralForms>>;
   /** The emails, same fields as English (lib/email.ts). */
   email: EmailCopy;
 };
+
+/** The privacy page's strings, which a locale may leave to English. */
+export type LegalKey = Extract<Key, `privacy.${string}`>;
+
+export type Strings = Record<Exclude<Key, LegalKey>, string> & Partial<Record<LegalKey, string>>;
 
 /**
  * Strings whose {n} counts the thing they name. A language whose nouns take
@@ -722,7 +731,7 @@ export type EmailCopy = {
 export const EN: Record<Key, string> = en;
 
 /** The part of a locale the browser needs. */
-export type Dict = Pick<Locale, "strings" | "plurals">;
+export type Dict = Pick<Locale, "strings" | "plurals" | "legalNotice">;
 
 // Whole locales when downloaded, browser parts when a server page handed them over.
 const loaded: Partial<Record<Lang, Dict & Partial<Locale>>> = {};
@@ -744,7 +753,9 @@ export function hasStrings(lang: Lang): boolean {
  * browser (see LocaleStrings); null for English or when not loaded. */
 export function loadedDict(lang: Lang): Dict | null {
   const dict = lang === "en" ? undefined : loaded[lang];
-  return dict ? { strings: dict.strings, ...(dict.plurals ? { plurals: dict.plurals } : {}) } : null;
+  if (!dict) return null;
+  const { strings, plurals, legalNotice } = dict;
+  return { strings, ...(plurals ? { plurals } : {}), ...(legalNotice ? { legalNotice } : {}) };
 }
 
 /** A loaded language's note on how to write it, for the model prompts. ""
@@ -809,7 +820,7 @@ export function pluralCategory(lang: Lang, n: number): Intl.LDMLPluralRule {
  * A language whose strings are not loaded reads English. */
 export function t(lang: Lang, key: Key, vars?: Record<string, string | number>): string {
   const dict = loaded[lang];
-  let s: string = (dict?.strings ?? en)[key];
+  let s: string = dict?.strings[key] ?? en[key];
   const forms = dict?.plurals?.[key as CountKey];
   if (forms && typeof vars?.n === "number") {
     const category = pluralCategory(lang, vars.n);
@@ -821,6 +832,18 @@ export function t(lang: Lang, key: Key, vars?: Record<string, string | number>):
     }
   }
   return s;
+}
+
+/** The language the privacy page shows in: `lang` when its locale has the
+ * page, else English. */
+export function legalLang(lang: Lang): Lang {
+  return loaded[lang]?.strings["privacy.title"] !== undefined ? lang : "en";
+}
+
+/** The "English version applies" line for a translated privacy page, if the
+ * locale has one. */
+export function legalNotice(lang: Lang): string | null {
+  return (legalLang(lang) === lang && loaded[lang]?.legalNotice) || null;
 }
 
 /** The name of language `of` in the words of `ui` ("Turkish", "İngilizce").
