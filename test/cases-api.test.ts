@@ -571,6 +571,24 @@ describe("every case is premium", () => {
     return data.case;
   }
 
+  it("signed out, every step that judges answers 401 signin_required", async () => {
+    const o = await owner(2);
+    const { data } = await create(o);
+    const id = data.case.id;
+    const token = tokenOf(data.case);
+    const signedOut = [
+      await http.createCaseHandler(req("POST", "/api/v1/cases", { body: { text: SIDE_A, tier: "free" } })),
+      await http.judgeCaseHandler(req("POST", `/api/v1/cases/${id}/judge`, { body: { mode: "only_mine" } }), id),
+      await http.ownerAppealHandler(req("POST", `/api/v1/cases/${id}/appeals`, { body: { text: SIDE_B } }), id),
+      await http.respondAppealHandler(req("POST", `/api/v1/respond/${token}/appeals`, { body: { text: SIDE_B } }), token),
+    ];
+    for (const res of signedOut) {
+      expect(res.status).toBe(401);
+      expect((await body(res)).code).toBe("signin_required");
+    }
+    expect(await usage(o)).toEqual(["reserved"]);
+  });
+
   it("a tier sent by older app builds is ignored: free or none holds a unit like premium", async () => {
     const o = await owner(2);
     const free = await create(o, { tier: "free" });
