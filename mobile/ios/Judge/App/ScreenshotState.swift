@@ -17,7 +17,8 @@ import SwiftData
 /// lock and the limit note), or an account state: `balance/welcome` (signed
 /// in with a new account's free verdict), `balance/none` (signed in, the
 /// monthly allowance used up), `pricing`, `pricing-store` (store prices on
-/// the buy buttons), `clarify` (the questions), `evidence` (picked
+/// the buy buttons), `pricing-buy` (the same, scrolled to the packs and the
+/// monthly plan), `clarify` (the questions), `evidence` (picked
 /// screenshots in mixed states), `mode-both` (a case being sent),
 /// `history-cases` ("Your cases") or `case/<state>`: the owner's
 /// case page for a key of `cases.views` or one of the short names `awaiting`,
@@ -49,6 +50,7 @@ struct ScreenshotState {
         case balanceNone
         case pricing
         case pricingStore
+        case pricingBuy
         case clarify
         case evidence
         case modeBoth
@@ -64,7 +66,7 @@ struct ScreenshotState {
     var tab: RootTab {
         switch screen {
         case .home, .homeRecent, .homeExample, .homeError, .judging, .verdict, .verdictThread, .verdictContext, .signIn, .signInCode,
-             .balanceWelcome, .balanceNone, .pricing, .pricingStore, .clarify, .evidence, .modeBoth, .caseDetail:
+             .balanceWelcome, .balanceNone, .pricing, .pricingStore, .pricingBuy, .clarify, .evidence, .modeBoth, .caseDetail:
             return .new
         case .history, .historyCases: return .history
         case .settings, .account: return .settings
@@ -100,6 +102,7 @@ struct ScreenshotState {
         case "balance/none": screen = .balanceNone
         case "pricing": screen = .pricing
         case "pricing-store": screen = .pricingStore
+        case "pricing-buy": screen = .pricingBuy
         case "clarify": screen = .clarify
         case "evidence": screen = .evidence
         case "mode-both": screen = .modeBoth
@@ -134,7 +137,7 @@ struct ScreenshotState {
             build: base.build
         )
         var gateway: (any PurchaseGateway)?
-        if screen == .pricingStore { gateway = FixedPurchaseGateway(Self.storeOffers(lang)) }
+        if screen == .pricingStore || screen == .pricingBuy { gateway = FixedPurchaseGateway(Self.storeOffers(lang)) }
         let app = AppModel(
             config: config,
             container: container,
@@ -219,12 +222,13 @@ struct ScreenshotState {
         case .pricing:
             premium(app, me: "subscriber")
             app.home.path = [.pricing]
-        case .pricingStore:
+        case .pricingStore, .pricingBuy:
             var config = ScreenshotFixtures.config("full")
             config?.pricing?.purchasesEnabled = true
             app.account.showForScreenshot(providers: Self.allProviders, info: ScreenshotFixtures.me("credits7"), config: config)
             app.purchases.showForScreenshot(offers: Self.storeOffers(lang))
             app.home.path = [.pricing]
+            if screen == .pricingBuy { app.pricingScroll = PricingView.packsAnchor }
         case .clarify:
             premium(app, me: "credits7")
             app.home.argument = ExampleArgument.all[0].text(lang)

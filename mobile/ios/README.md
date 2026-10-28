@@ -87,7 +87,8 @@ for any key of `verdictResponses` (opened as a saved verdict),
 context" form, its Premium lock and the limit note), and the
 account states `balance/welcome` (a new account's free verdict),
 `balance/none` (monthly allowance used up), `pricing`, `pricing-store`
-(store prices on the buy buttons, from a fake store), `clarify` and
+(store prices on the buy buttons, from a fake store), `pricing-buy` (the
+same, scrolled to the packs and the monthly plan), `clarify` and
 `evidence` (picked screenshots in mixed states), and the case states
 `mode-both`, `history-cases` and `case/<state>` (a key of `cases.views` or
 `awaiting`, `judging`, `judged`, `one-sided`, `appeal`, `appeal-judging`,

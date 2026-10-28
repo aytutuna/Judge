@@ -13,10 +13,13 @@ struct PricingView: View {
     private static let planTitle = TypeStyle(face: .interTight, weight: 700, size: 20, lineHeight: 1.2, tracking: -0.01, textStyle: .title3, maxScale: 1.5)
     private static let price = TypeStyle(face: .interTight, weight: 700, size: 18, lineHeight: 1.2, textStyle: .headline, maxScale: 1.5)
 
+    static let packsAnchor = "pricing.packs"
+
     var body: some View {
         let lang = app.lang
         let account = app.account
         let pricing = account.pricing
+        ScrollViewReader { proxy in
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
                 VStack(alignment: .leading, spacing: 10) {
@@ -45,6 +48,14 @@ struct PricingView: View {
             .padding(.horizontal, 20)
             .padding(.top, 8)
             .padding(.bottom, 32)
+        }
+        .task {
+            // Screenshot states open on the buy options; the end of the list
+            // stops the scroll, so the monthly row stays clear of the tab bar.
+            guard let target = app.pricingScroll else { return }
+            try? await Task.sleep(for: .milliseconds(300))
+            proxy.scrollTo(target, anchor: .top)
+        }
         }
         .background(Brand.ivory.ignoresSafeArea())
         .navigationBarTitleDisplayMode(.inline)
@@ -107,6 +118,7 @@ struct PricingView: View {
             Text(L10n.pricingPacksTitle(lang))
                 .brandText(.slotTitle)
                 .foregroundStyle(Brand.ink)
+                .id(Self.packsAnchor)
             Text(L10n.pricingPacksLead(lang))
                 .brandText(.slotText)
                 .foregroundStyle(Brand.muted)

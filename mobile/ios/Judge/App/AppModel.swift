@@ -48,6 +48,8 @@ final class AppModel {
     /// Screenshot states: the writer's gate (and typed context) a verdict
     /// screen opens with, the form out.
     @ObservationIgnored var appealSeed: (gate: CaseAppealGate, text: String)?
+    /// Screenshot states: the Pricing anchor the screen scrolls to; nil = the top.
+    @ObservationIgnored var pricingScroll: String?
     /// Case views created on this phone, so their page opens at once.
     @ObservationIgnored private var caseSeeds: [String: CaseView] = [:]
     /// The other side's name typed on Home, for the waiting page. Only for

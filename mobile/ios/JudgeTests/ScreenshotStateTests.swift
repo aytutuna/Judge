@@ -175,6 +175,8 @@ final class ScreenshotStateTests: XCTestCase {
         XCTAssertEqual(ScreenshotState.parse("pricing:en")?.tab, .new)
         XCTAssertEqual(ScreenshotState.parse("pricing-store:tr")?.screen, .pricingStore)
         XCTAssertEqual(ScreenshotState.parse("pricing-store:en")?.tab, .new)
+        XCTAssertEqual(ScreenshotState.parse("pricing-buy:tr")?.screen, .pricingBuy)
+        XCTAssertEqual(ScreenshotState.parse("pricing-buy:en")?.tab, .new)
         XCTAssertNil(ScreenshotState.parse("tier/locked:en"), "the tier switch is gone")
         XCTAssertNil(ScreenshotState.parse("judging-premium:en"))
     }
@@ -196,6 +198,12 @@ final class ScreenshotStateTests: XCTestCase {
 
             let tr = try XCTUnwrap(ScreenshotState.parse("pricing-store:tr")).makeModel(container: container)
             XCTAssertEqual(tr.purchases.labels(planId: "monthly", usd: 15, credits: nil, pricing: tr.account.pricing, lang: .tr).price, "₺649,99")
+
+            let buy = try XCTUnwrap(ScreenshotState.parse("pricing-buy:en")).makeModel(container: container)
+            XCTAssertEqual(buy.home.path, [.pricing])
+            XCTAssertTrue(buy.purchases.isConfigured)
+            XCTAssertEqual(buy.pricingScroll, PricingView.packsAnchor)
+            XCTAssertNil(app.pricingScroll, "the plain store state opens at the top")
 
             let plain = try XCTUnwrap(ScreenshotState.parse("pricing:en")).makeModel(container: container)
             XCTAssertFalse(plain.purchases.isConfigured, "the plain pricing state keeps Coming soon")
