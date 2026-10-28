@@ -267,6 +267,16 @@ describe("every verdict is premium", () => {
     expect(m.anonymize).not.toHaveBeenCalled();
   });
 
+  it("without an Idempotency-Key, the same request soon after reuses one key", async () => {
+    await POST(request({ argument: ARGUMENT, tier: "free" }));
+    await POST(request({ argument: ARGUMENT, tier: "free" }));
+    await POST(request({ argument: `${ARGUMENT} Really.`, tier: "free" }));
+    const keys = m.reservePremiumVerdict.mock.calls.map((c) => (c[1] as { idempotencyKey: string }).idempotencyKey);
+    expect(keys[0]).toMatch(/^auto-[A-Za-z0-9_-]{40}$/);
+    expect(keys[1]).toBe(keys[0]);
+    expect(keys[2]).not.toBe(keys[0]);
+  });
+
   it("an unknown tier is a 400 before anything else", async () => {
     const res = await POST(request({ argument: ARGUMENT, tier: "gold" }));
     expect(res.status).toBe(400);

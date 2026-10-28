@@ -15,6 +15,7 @@
  * background (./async) and the request answers 202 with the job id.
  */
 
+import { createHash } from "node:crypto";
 import { NextResponse } from "next/server";
 import { nanoid } from "nanoid";
 import type { Entitlement } from "@/lib/account-types";
@@ -42,6 +43,8 @@ import { idempotencyKey } from "./context";
 import { premiumLogLine, runPremiumPipeline, type PremiumRun } from "./run";
 
 const UNAVAILABLE_MESSAGE = "The judge is unavailable right now — try again in a minute.";
+
+const IMPLIED_KEY_WINDOW_MS = 10 * 60_000;
 
 const BLOCK_MESSAGES = {
   premium_required: "Premium verdicts need credits or a monthly plan.",
@@ -202,14 +205,24 @@ function reserveRefusal(res: Exclude<ReserveResult, { ok: true }>): NextResponse
   }
 }
 
+/** The Idempotency-Key for a request sent without one (older app builds):
+ * the same request in the same ten minutes counts as a retry, so a lost
+ * response is not paid for twice. */
+function impliedKey(data: VerdictRequest, now: number): string {
+  const slot = Math.floor(now / IMPLIED_KEY_WINDOW_MS);
+  const hash = createHash("sha256").update(`${slot}:${JSON.stringify(data)}`).digest("base64url");
+  return `auto-${hash.slice(0, 40)}`;
+}
+
 /** POST /api/v1/verdict. `data` is the parsed body;
  * `rawBody` the body as sent (the original is stored exactly as written). */
 export async function premiumVerdict(req: Request, data: VerdictRequest, rawBody?: unknown): Promise<NextResponse> {
   const startedAt = Date.now();
-  const key = idempotencyKey(req.headers);
-  if (key === null) {
+  const sentKey = idempotencyKey(req.headers);
+  if (sentKey === null) {
     return fail("invalid", "Idempotency-Key must be 1 to 64 letters, digits, '_' or '-'.");
   }
+  const key = sentKey ?? impliedKey(data, startedAt);
 
   const gate = await signedInGate(req);
   if ("response" in gate) return gate.response;
@@ -242,7 +255,7 @@ export async function premiumVerdict(req: Request, data: VerdictRequest, rawBody
 
   let reserved: ReserveResult;
   try {
-    reserved = await reservePremiumVerdict(userId, key ? { idempotencyKey: key } : {});
+    reserved = await reservePremiumVerdict(userId, { idempotencyKey: key });
   } catch (e) {
     console.error("[premium] reserve failed:", e instanceof Error ? e.message : String(e));
     return unavailable();
@@ -250,7 +263,7 @@ export async function premiumVerdict(req: Request, data: VerdictRequest, rawBody
   const asyncMode = wantsAsync(req.headers, rawBody);
   if (!reserved.ok) {
     if (reserved.code === "replay") return replay(userId, reserved.verdictId);
-    if (reserved.code === "in_progress" && asyncMode && key) {
+    if (reserved.code === "in_progress" && asyncMode) {
       const joined = await joinJudging(userId, key);
       if (joined) return joined;
     }
