@@ -368,6 +368,7 @@
     <string name="lang_toggle_to_en">Switch to English</string>
     <string name="removed_title">This verdict was removed</string>
     <string name="removed_body">Its share link no longer works.</string>
+    <string name="removed_cta">Settle your own argument</string>
     <string name="error_removed">This was removed. Its link no longer works.</string>
     <string name="error_names_unavailable">Names can\'t be saved right now. Try again later.</string>
     <string name="verdict_remove">Remove this verdict</string>

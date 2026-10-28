@@ -376,6 +376,7 @@ enum L10n {
     static func langToggleToEn(_ lang: AppLang) -> String { string("langToggle.toEn", lang) }
     static func removedTitle(_ lang: AppLang) -> String { string("removed.title", lang) }
     static func removedBody(_ lang: AppLang) -> String { string("removed.body", lang) }
+    static func removedCta(_ lang: AppLang) -> String { string("removed.cta", lang) }
     static func errorRemoved(_ lang: AppLang) -> String { string("error.removed", lang) }
     static func errorNamesUnavailable(_ lang: AppLang) -> String { string("error.names_unavailable", lang) }
     static func verdictRemove(_ lang: AppLang) -> String { string("verdict.remove", lang) }
@@ -899,6 +900,7 @@ enum L10n {
         "langToggle.toEn",
         "removed.title",
         "removed.body",
+        "removed.cta",
         "error.removed",
         "error.names_unavailable",
         "verdict.remove",

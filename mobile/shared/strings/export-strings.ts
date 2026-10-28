@@ -20,7 +20,7 @@
  */
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
-import { STRINGS } from "../../../lib/i18n";
+import { EN, loadedDict, loadLocales, type Key } from "../../../lib/i18n";
 import { stripLeadingEmoji } from "../../../lib/text";
 import { APP_STRINGS } from "./app-strings";
 import { EXCLUDE_KEYS, REQUIRED_KEYS, STRIP_EMOJI, WEB_KEYS } from "./keys";
@@ -52,15 +52,23 @@ function matches(pattern: string, key: string): boolean {
   return pattern.endsWith("*") ? key.startsWith(pattern.slice(0, -1)) : key === pattern;
 }
 
-function selectEntries(): Entry[] {
-  const webKeys = Object.keys(STRINGS.en) as (keyof typeof STRINGS.en)[];
+/** The web table of each language the apps speak. */
+async function webStrings(): Promise<Record<Lang, Record<Key, string>>> {
+  await loadLocales();
+  const tr = loadedDict("tr");
+  if (!tr) throw new Error("lib/locales/tr.ts did not load");
+  return { en: EN, tr: { ...EN, ...tr.strings } };
+}
+
+function selectEntries(web: Record<Lang, Record<Key, string>>): Entry[] {
+  const webKeys = Object.keys(web.en) as Key[];
   for (const pattern of [...WEB_KEYS, ...STRIP_EMOJI]) {
     if (!webKeys.some((k) => matches(pattern, k))) {
       throw new Error(`keys.ts entry "${pattern}" matches no key in lib/i18n.ts`);
     }
   }
   for (const key of EXCLUDE_KEYS) {
-    if (!webKeys.includes(key as keyof typeof STRINGS.en)) {
+    if (!webKeys.includes(key as Key)) {
       throw new Error(`keys.ts EXCLUDE_KEYS entry "${key}" is not a key in lib/i18n.ts`);
     }
   }
@@ -69,13 +77,13 @@ function selectEntries(): Entry[] {
     if (!WEB_KEYS.some((p) => matches(p, key)) || EXCLUDE_KEYS.includes(key)) continue;
     const strip = STRIP_EMOJI.some((p) => matches(p, key));
     const pick = (lang: Lang) => {
-      const s: string = STRINGS[lang][key];
+      const s: string = web[lang][key];
       return strip ? stripLeadingEmoji(s) : s;
     };
     entries.push({ key, en: pick("en"), tr: pick("tr") });
   }
   for (const [key, text] of Object.entries(APP_STRINGS)) {
-    if (key in STRINGS.en) throw new Error(`app string "${key}" shadows a web key`);
+    if (key in web.en) throw new Error(`app string "${key}" shadows a web key`);
     entries.push({ key, en: text.en, tr: text.tr });
   }
   for (const key of REQUIRED_KEYS) {
@@ -357,9 +365,9 @@ function swift(items: Item[]): string {
 
 // --- Main -------------------------------------------------------------------
 
-function main(): void {
+async function main(): Promise<void> {
   const check = process.argv.includes("--check");
-  const items = toItems(selectEntries());
+  const items = toItems(selectEntries(await webStrings()));
   checkUnique(items);
   const outputs: [string, string][] = [
     [join(ANDROID_RES, "values/strings.xml"), androidXml(items, "en")],
@@ -396,4 +404,4 @@ function main(): void {
   }
 }
 
-main();
+void main();

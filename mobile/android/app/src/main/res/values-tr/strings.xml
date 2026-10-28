@@ -368,6 +368,7 @@
     <string name="lang_toggle_to_en">Switch to English</string>
     <string name="removed_title">Bu karar kaldırıldı</string>
     <string name="removed_body">Paylaşım bağlantısı artık çalışmıyor.</string>
+    <string name="removed_cta">Sen de kendi tartışmanı çözdür</string>
     <string name="error_removed">Bu kaldırıldı. Bağlantısı artık çalışmıyor.</string>
     <string name="error_names_unavailable">İsimler şu an kaydedilemiyor. Daha sonra tekrar dene.</string>
     <string name="verdict_remove">Bu kararı kaldır</string>

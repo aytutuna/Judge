@@ -40,7 +40,7 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { join, relative, resolve } from "node:path";
 import { cruxStyle } from "../../../lib/crux-style";
 import { verdictLang } from "../../../lib/content-lang";
-import { apiErrorMessage, formatWait, t, type Lang } from "../../../lib/i18n";
+import { apiErrorMessage, formatWait, loadLocales, t, type Lang } from "../../../lib/i18n";
 import { partyNames, personalizeResult, resolveParties, restoreNames } from "../../../lib/names";
 import { svgRotateDeg } from "../../../lib/balance";
 import { PALETTE, PALETTE_ALPHA } from "../../../lib/palette";
@@ -923,7 +923,10 @@ function displayVectors() {
   };
 }
 
-function main(): void {
+async function main(): Promise<void> {
+  // Every language but English loads on demand; without this the Turkish
+  // vectors would quietly read English.
+  await loadLocales();
   const check = process.argv.includes("--check");
   for (const [name, { response }] of Object.entries(SAMPLES)) {
     const parsed = VerdictResponse.safeParse(response);
@@ -974,4 +977,4 @@ function main(): void {
   if (stale) process.exit(1);
 }
 
-main();
+void main();

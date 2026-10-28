@@ -370,6 +370,7 @@ class Strings(private val res: Resources) {
     val langToggleToEn: String get() = res.getString(R.string.lang_toggle_to_en)
     val removedTitle: String get() = res.getString(R.string.removed_title)
     val removedBody: String get() = res.getString(R.string.removed_body)
+    val removedCta: String get() = res.getString(R.string.removed_cta)
     val errorRemoved: String get() = res.getString(R.string.error_removed)
     val errorNamesUnavailable: String get() = res.getString(R.string.error_names_unavailable)
     val verdictRemove: String get() = res.getString(R.string.verdict_remove)
@@ -892,6 +893,7 @@ class Strings(private val res: Resources) {
             "langToggle.toEn" -> R.string.lang_toggle_to_en
             "removed.title" -> R.string.removed_title
             "removed.body" -> R.string.removed_body
+            "removed.cta" -> R.string.removed_cta
             "error.removed" -> R.string.error_removed
             "error.names_unavailable" -> R.string.error_names_unavailable
             "verdict.remove" -> R.string.verdict_remove
