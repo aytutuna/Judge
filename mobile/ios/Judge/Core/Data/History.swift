@@ -242,8 +242,8 @@ final class HistoryStore {
         account = user
         guard let user else { return }
         let owner: String? = user
-        try context.delete(model: HistoryCacheRow.self, where: #Predicate<HistoryCacheRow> { $0.userID != user })
-        try context.delete(model: SavedVerdict.self, where: #Predicate<SavedVerdict> { $0.ownerUserID != nil && $0.ownerUserID != owner })
+        try deleteEach(FetchDescriptor<HistoryCacheRow>(predicate: #Predicate<HistoryCacheRow> { $0.userID != user }))
+        try deleteEach(FetchDescriptor<SavedVerdict>(predicate: #Predicate<SavedVerdict> { $0.ownerUserID != nil && $0.ownerUserID != owner }))
         try context.save()
     }
 
@@ -252,9 +252,15 @@ final class HistoryStore {
     /// account has stay.
     func forgetAccounts() throws {
         account = nil
-        try context.delete(model: HistoryCacheRow.self)
-        try context.delete(model: SavedVerdict.self, where: #Predicate<SavedVerdict> { $0.ownerUserID != nil })
+        try deleteEach(FetchDescriptor<HistoryCacheRow>())
+        try deleteEach(FetchDescriptor<SavedVerdict>(predicate: #Predicate<SavedVerdict> { $0.ownerUserID != nil }))
         try context.save()
+    }
+
+    /// Row by row, not a batch delete: the list's `@Query` holds these
+    /// objects and only sees deletes made through the context.
+    private func deleteEach<Row: PersistentModel>(_ descriptor: FetchDescriptor<Row>) throws {
+        for row in try context.fetch(descriptor) { context.delete(row) }
     }
 
     /// One page of the account's list. Cached rows between `above` (the
