@@ -589,8 +589,6 @@ export function respondPostHandler(req: Request, token: string): Promise<NextRes
     const row = await caseByToken(token);
     if (!row) return fail("not_found", "No invite with that link.");
     if (row.removedAt) return fail("removed");
-    // The case is judged by the premium panel as soon as side B lands.
-    if (!premiumEnabled()) return fail("not_configured", PREMIUM_OFF);
 
     const { viewer, deadBearer } = await resolveViewer(req);
     if (deadBearer) return deadBearerResponse();
