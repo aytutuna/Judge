@@ -25,7 +25,6 @@ const en = {
   placeholder:
     "What happened? Who says what, and why?\n\nPut the other person's side the way they'd say it. The judges build the strongest case for both sides either way.",
   getVerdict: "Get the verdict",
-  privacyNote: "We swap names for Party A and Party B before judging, so the judges never know who's who.",
   "thinking.eyebrow": "What the judges are doing",
   "thinking.read": "Reading both sides and giving each its best shot…",
   "thinking.label": "Sorting each claim into fact, value, definition or logic…",
@@ -145,7 +144,6 @@ const en = {
   "advanced.current": "Now: {label}",
   "turnstile.label": "Quick check that you're human",
   "turnstile.error": "The human check couldn't load. Refresh the page and try again.",
-  privacyLink: "What happens to your text",
   "how.title": "How it works",
   "how.kicker": "Five steps",
   "how.lead": "No coin flips. Every argument goes through the same five steps.",
@@ -622,7 +620,6 @@ const en = {
   "thread.judges": "The judges",
   "thread.placeholder": "What's the argument? Who says what, and why?",
   "thread.placeholderTwoSided": "What happened, from where you stand?",
-  "thread.sample": "See a sample verdict",
   "thread.options": "Options",
   "thread.judgesAgree": "Judges · {n} of {total} agree",
   "thread.judgesSplit": "Judges · split",
@@ -676,8 +673,6 @@ const tr = {
   placeholder:
     "Ne oldu? Kim ne diyor, neden?\n\nKarşı tarafın görüşünü onun anlatacağı gibi yaz. Yargıçlar zaten iki tarafı da en güçlü hâliyle ele alır.",
   getVerdict: "Kararı öğren",
-  privacyNote:
-    "Yargılamadan önce isimleri Taraf A ve Taraf B yapıyoruz, yani yargıçlar kimin kim olduğunu hiç bilmez.",
   "thinking.eyebrow": "Yargıçlar ne yapıyor",
   "thinking.read": "İki tarafı da okuyup en sağlam hâline getiriyoruz…",
   "thinking.label": "İddiaları ayırıyoruz: olgu mu, değer mi, tanım mı, mantık mı…",
@@ -797,7 +792,6 @@ const tr = {
   "advanced.current": "Şu an: {label}",
   "turnstile.label": "Hızlı bir kontrol: insan mısın?",
   "turnstile.error": "İnsan doğrulaması yüklenemedi. Sayfayı yenileyip tekrar dene.",
-  privacyLink: "Yazdıklarına ne oluyor?",
   "how.title": "Nasıl çalışır",
   "how.kicker": "Beş adım",
   "how.lead": "Yazı tura yok. Her tartışma aynı beş adımdan geçer.",
@@ -1272,7 +1266,6 @@ const tr = {
   "thread.judges": "Yargıçlar",
   "thread.placeholder": "Tartışma ne? Kim ne diyor, neden?",
   "thread.placeholderTwoSided": "Senin gözünden ne oldu?",
-  "thread.sample": "Örnek bir karara bak",
   "thread.options": "Seçenekler",
   "thread.judgesAgree": "Yargıçlar · {n}/{total} aynı fikirde",
   "thread.judgesSplit": "Yargıçlar · oylar bölündü",

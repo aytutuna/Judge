@@ -33,40 +33,6 @@
   margin-bottom: 32px;
 }
 
-.below {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  text-align: center;
-}
-.sample {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  min-height: 36px;
-  color: var(--terra-ink);
-  font-size: 14px;
-  font-weight: 600;
-  text-decoration: none;
-}
-.sample:hover {
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-.privacy {
-  max-width: 52ch;
-  margin: 0;
-  color: var(--placeholder);
-  font-size: 12.5px;
-  line-height: 1.5;
-}
-.privacy a {
-  color: inherit;
-  text-decoration: underline;
-  text-underline-offset: 2px;
-}
-
 /* ---------- Thread ---------- */
 
 .thread {

@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { CaseModeSwitch, type CaseMode } from "@/components/case/CaseModeSwitch";
@@ -658,17 +657,6 @@ export default function Home() {
               note={entitlement ? <Balance lang={lang} entitlement={entitlement} /> : null}
             />
           )}
-          {empty ? (
-            <div className={styles.below}>
-              <Link href="/about#sample" className={styles.sample}>
-                {t(lang, "thread.sample")} <span aria-hidden>→</span>
-              </Link>
-              <p className={styles.privacy}>
-                {t(lang, "privacyNote")} <Link href="/privacy">{t(lang, "privacyLink")}</Link>
-              </p>
-              <p className={styles.privacy}>{t(lang, "footer.note")}</p>
-            </div>
-          ) : null}
         </div>
       </main>
     </AppShell>
