@@ -75,7 +75,6 @@ struct TypeStyle: Sendable {
     static let brand = TypeStyle(face: .interTight, weight: 600, size: 17, lineHeight: 1, tracking: -0.01, textStyle: .headline, maxScale: 1.4)
     static let claim = TypeStyle(face: .inter, weight: 400, size: 14, lineHeight: 1.45, textStyle: .subheadline)
     static let branch = TypeStyle(face: .inter, weight: 400, size: 14.5, lineHeight: 1.5, textStyle: .subheadline)
-    static let caseTitle = TypeStyle(face: .serif, weight: 400, size: 36, lineHeight: 1.05, tracking: -0.01, textStyle: .largeTitle, maxScale: 1.3)
     /// The verdict headline; the card sets the size between 30 and 34 by width.
     static let ruling = TypeStyle(face: .serif, weight: 400, size: 32, lineHeight: 1.05, textStyle: .title1, maxScale: 1.3)
     /// Italic serif labels: the case card's date and the verdict's section titles.
