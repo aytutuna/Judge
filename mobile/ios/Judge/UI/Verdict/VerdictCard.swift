@@ -18,6 +18,7 @@ struct VerdictCard: View {
     let status: TranslationStatus
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.sides) private var sides
     @State private var appeared = false
 
     /// Party A's share of the votes cast for a side, for the lean bar. Too
@@ -100,9 +101,9 @@ struct VerdictCard: View {
         }
         return GeometryReader { proxy in
             ZStack(alignment: .leading) {
-                Capsule().fill(Brand.sageTint)
+                Capsule().fill(sides.b.tint)
                 Capsule()
-                    .fill(Brand.terra)
+                    .fill(sides.a.strong)
                     .frame(width: proxy.size.width * share)
             }
         }
@@ -150,12 +151,14 @@ struct VerdictBranches: View {
     var restoredNames: [String] = []
     let lang: AppLang
 
+    @Environment(\.sides) private var sides
+
     var body: some View {
         if result.verdict == .split, let points = result.splitPoints, !points.isEmpty {
             VStack(spacing: 8) {
                 ForEach(Array(points.enumerated()), id: \.offset) { _, point in
                     let lead = parties.isSelf(point.party) ? L10n.splitWinSelf(lang) : L10n.splitWin(lang, name: parties.name(point.party))
-                    Branch(tint: point.party == .a ? Brand.terraTint : Brand.sageTint, rule: point.party == .a ? Brand.terra : Brand.sageStrong) {
+                    Branch(tint: sides.of(point.party).tint, rule: sides.of(point.party).strong) {
                         LeadText(lead: lead, leadColor: Brand.ink, rest: " " + point.point)
                     }
                 }
@@ -180,6 +183,8 @@ struct RulingLine: View {
     let result: VerdictResult
     let parties: PartyNames
     let lang: AppLang
+
+    @Environment(\.sides) private var sides
 
     var body: some View {
         let label = VerdictDisplay.label(result.verdict, parties: parties, lang: lang)
@@ -207,8 +212,8 @@ struct RulingLine: View {
 
     private var color: Color {
         switch result.verdict {
-        case .sideA: return Brand.terraInk
-        case .sideB: return Brand.sageInk
+        case .sideA: return sides.a.ink
+        case .sideB: return sides.b.ink
         default: return Brand.ink2
         }
     }
@@ -221,12 +226,14 @@ struct VerdictNotes: View {
     let parties: PartyNames
     let lang: AppLang
 
+    @Environment(\.sides) private var sides
+
     var body: some View {
         switch result.lean {
         case .lean(let lean):
             Slot {
                 HStack(spacing: 7) {
-                    Circle().fill(lean.party == .a ? Brand.terra : Brand.sageStrong).frame(width: 9, height: 9)
+                    Circle().fill(sides.of(lean.party).strong).frame(width: 9, height: 9)
                         .accessibilityHidden(true)
                     Text(parties.isSelf(lean.party) ? L10n.leanTitleSelf(lang) : L10n.leanTitle(lang, name: parties.name(lean.party)))
                         .brandText(.slotTitle)
@@ -381,10 +388,12 @@ private struct CardActionStyle: ButtonStyle {
 private struct VoteDot: View {
     let vote: VerdictDisplay.Vote
 
+    @Environment(\.sides) private var sides
+
     var body: some View {
         switch vote {
-        case .a: Circle().fill(Brand.terra).frame(width: 10, height: 10)
-        case .b: Circle().fill(Brand.sageStrong).frame(width: 10, height: 10)
+        case .a: Circle().fill(sides.a.strong).frame(width: 10, height: 10)
+        case .b: Circle().fill(sides.b.strong).frame(width: 10, height: 10)
         case .other: Circle().strokeBorder(Brand.ink, lineWidth: 1.5).frame(width: 10, height: 10)
         }
     }

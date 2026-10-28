@@ -111,6 +111,8 @@ private struct HistoryRow: View {
     let row: SavedVerdict
     let lang: AppLang
 
+    @Environment(\.sides) private var sides
+
     var body: some View {
         let nameMap = row.nameMap
         let selfLang = row.contentLang
@@ -144,8 +146,8 @@ private struct HistoryRow: View {
 
     private func sealColor(_ seal: VerdictDisplay.Seal) -> Color {
         switch seal {
-        case .a: return Brand.terraInk
-        case .b: return Brand.sageInk
+        case .a: return sides.a.ink
+        case .b: return sides.b.ink
         case .none: return Brand.ink
         }
     }

@@ -441,3 +441,26 @@ final class TranslationLogicTests: XCTestCase {
         XCTAssertEqual(TranslationLogic.dropRetryable(entries), [.en: .same])
     }
 }
+
+final class SidesTests: XCTestCase {
+    func testPartyAIsGreenUnlessTheViewerIsB() {
+        for you in [nil, Party.a, Party.unknown] {
+            let sides = Sides(you: you)
+            XCTAssertEqual(sides.a.fill, Brand.sage)
+            XCTAssertEqual(sides.a.ink, Brand.sageInk)
+            XCTAssertEqual(sides.b.fill, Brand.terra)
+            XCTAssertEqual(sides.b.ink, Brand.terraInk)
+        }
+        let b = Sides(you: .b)
+        XCTAssertEqual(b.a.fill, Brand.terra)
+        XCTAssertEqual(b.b.strong, Brand.sageStrong)
+        XCTAssertEqual(b.of(.b).tint, Brand.sageTint)
+    }
+
+    func testMineIsAlwaysGreen() {
+        for you in [Party.a, Party.b] {
+            XCTAssertEqual(Sides(you: you).mine.ink, Brand.sageInk)
+            XCTAssertEqual(Sides(you: you).theirs.ink, Brand.terraInk)
+        }
+    }
+}

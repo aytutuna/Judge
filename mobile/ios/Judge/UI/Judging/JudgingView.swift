@@ -40,6 +40,7 @@ struct JudgingView: View {
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.scenePhase) private var scenePhase
+    @Environment(\.sides) private var colors
     @State private var state: Thinking.DigState = .initial
     @State private var finished = false
     @State private var started = Date.now
@@ -233,15 +234,16 @@ struct JudgingView: View {
         return BalanceMotion.springAngle(from: settle.from, to: settle.target, elapsed: date.timeIntervalSince(settle.start))
     }
 
-    /// Thin bar under the caption, like the website's: the terra-to-sage
-    /// gradient spans the full track and is revealed from the leading edge.
+    /// Thin bar under the caption, like the website's: the gradient from
+    /// Party A's colour to Party B's spans the full track and is revealed
+    /// from the leading edge.
     private func progressBar(_ value: Double) -> some View {
         let fill = min(max(value, 0), 1)
         return GeometryReader { geo in
             ZStack(alignment: .leading) {
                 Capsule().fill(Brand.ink.opacity(0.08))
                 Capsule()
-                    .fill(LinearGradient(colors: [Brand.terra, Brand.sageStrong], startPoint: .leading, endPoint: .trailing))
+                    .fill(LinearGradient(colors: [colors.a.strong, colors.b.strong], startPoint: .leading, endPoint: .trailing))
                     .mask(alignment: .leading) {
                         Capsule().frame(width: geo.size.width * fill)
                     }
@@ -276,8 +278,8 @@ struct JudgingView: View {
     private func fill(_ dot: Thinking.Dot) -> Color {
         switch dot {
         case .pending: return Brand.ink.opacity(0.35)
-        case .vote(.a): return Brand.terra
-        case .vote(.b): return Brand.sageStrong
+        case .vote(.a): return colors.a.strong
+        case .vote(.b): return colors.b.strong
         case .vote(.other): return .clear
         }
     }
@@ -287,11 +289,13 @@ struct JudgingView: View {
     }
 }
 
-/// What each side said, cut to three lines: yours in terracotta, theirs in
-/// sage. A verdict on one side has one tile.
+/// What each side said, cut to three lines: yours in green, theirs in red.
+/// A verdict on one side has one tile.
 private struct SideTiles: View {
     let sides: [HomeModel.JudgedSide]
     let lang: AppLang
+
+    @Environment(\.sides) private var colors
 
     var body: some View {
         HStack(alignment: .top, spacing: 8) {
@@ -299,7 +303,7 @@ private struct SideTiles: View {
                 VStack(alignment: .leading, spacing: 4) {
                     Text(side.name.isEmpty ? (side.mine ? L10n.appHomeYourSide(lang) : L10n.appHomeTheirSide(lang)) : side.name)
                         .brandText(TypeStyle(face: .inter, weight: 700, size: 11, lineHeight: 1.2, tracking: 0.08, textStyle: .caption2, maxScale: 1.6, uppercase: true))
-                        .foregroundStyle(side.mine ? Brand.terraInk : Brand.sageInk)
+                        .foregroundStyle(side.mine ? colors.mine.ink : colors.theirs.ink)
                         .lineLimit(1)
                     Text(side.text)
                         .brandText(TypeStyle(face: .inter, weight: 400, size: 13, lineHeight: 1.4, textStyle: .footnote))
@@ -311,7 +315,7 @@ private struct SideTiles: View {
                 .frame(maxWidth: .infinity, alignment: .topLeading)
                 .background(
                     RoundedRectangle(cornerRadius: Radius.field, style: .continuous)
-                        .fill(side.mine ? Brand.terraTint : Brand.sageTint)
+                        .fill(side.mine ? colors.mine.tint : colors.theirs.tint)
                 )
                 .accessibilityElement(children: .combine)
             }

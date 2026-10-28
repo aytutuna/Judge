@@ -413,6 +413,8 @@ struct AccountsReadView: View {
     let view: CaseView
     let lang: AppLang
 
+    @Environment(\.sides) private var colors
+
     var body: some View {
         let bothRead = view.sides.count > 1
         let sides = (bothRead ? view.sides : view.sides.filter { $0.party == view.yourParty })
@@ -492,7 +494,7 @@ struct AccountsReadView: View {
         .padding(14)
         .background(RoundedRectangle(cornerRadius: 16, style: .continuous).fill(Brand.paper))
         .overlay(alignment: .leading) {
-            Rectangle().fill(party == .a ? Brand.terra : Brand.sageStrong).frame(width: 3)
+            Rectangle().fill(colors.of(party).strong).frame(width: 3)
         }
         .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
         .overlay(RoundedRectangle(cornerRadius: 16, style: .continuous).strokeBorder(Brand.line, lineWidth: 1))

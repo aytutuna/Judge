@@ -18,13 +18,15 @@ private struct SceneLiveKey: EnvironmentKey {
 /// The web's three.js balance (Resources/Scene, built by mobile/shared/scene)
 /// in a web view, driven through `window.judgeScene`. Decorative: the
 /// captions around it carry the meaning, and touches go to the page.
-/// `fallback` is drawn instead when the page reports it cannot render.
+/// `fallback` is drawn instead when the page reports it cannot render. The
+/// viewer's side is drawn green (`\.sides`).
 struct SceneView<Fallback: View>: View {
     let mode: SceneMode
     @ViewBuilder var fallback: Fallback
 
     @Environment(\.sceneLive) private var live
     @Environment(\.scenePhase) private var scenePhase
+    @Environment(\.sides) private var sides
     @State private var visible = false
     @State private var failed = false
 
@@ -32,7 +34,7 @@ struct SceneView<Fallback: View>: View {
         ZStack {
             Brand.paper
             if live && !failed {
-                SceneWebView(mode: mode, active: visible && scenePhase == .active) { failed = true }
+                SceneWebView(mode: mode, you: sides.you, active: visible && scenePhase == .active) { failed = true }
             } else {
                 fallback
                     .padding(.horizontal, 32)
@@ -56,6 +58,7 @@ extension SceneView where Fallback == BalanceCanvas {
 
 private struct SceneWebView: UIViewRepresentable {
     let mode: SceneMode
+    let you: Party
     /// On screen with the app in front.
     let active: Bool
     let onFallback: () -> Void
@@ -79,14 +82,14 @@ private struct SceneWebView: UIViewRepresentable {
         view.allowsLinkPreview = false
         view.accessibilityElementsHidden = true
         view.navigationDelegate = bridge
-        bridge.attach(view, mode: mode, onFallback: onFallback)
+        bridge.attach(view, mode: mode, you: you, onFallback: onFallback)
         return view
     }
 
     func updateUIView(_ view: WKWebView, context: Context) {
         let bridge = context.coordinator
         bridge.onFallback = onFallback
-        bridge.show(mode)
+        bridge.show(mode, you: you)
         bridge.setActive(active)
     }
 
@@ -119,21 +122,24 @@ final class SceneBridge: NSObject, WKScriptMessageHandler, WKNavigationDelegate 
     var onFallback: () -> Void = {}
     private weak var webView: WKWebView?
     private var mode: SceneMode?
+    private var you = Party.a
     private var page = Page.idle
     private var active = false
     /// WebGL dropped its context (usually in the background): the page shows
     /// its flat drawing until it is loaded again.
     private var lost = false
 
-    func attach(_ view: WKWebView, mode: SceneMode, onFallback: @escaping () -> Void) {
+    func attach(_ view: WKWebView, mode: SceneMode, you: Party, onFallback: @escaping () -> Void) {
         webView = view
         self.mode = mode
+        self.you = you
         self.onFallback = onFallback
     }
 
-    func show(_ mode: SceneMode) {
-        guard mode != self.mode else { return }
+    func show(_ mode: SceneMode, you: Party) {
+        guard mode != self.mode || you != self.you else { return }
         self.mode = mode
+        self.you = you
         send()
     }
 
@@ -164,6 +170,7 @@ final class SceneBridge: NSObject, WKScriptMessageHandler, WKNavigationDelegate 
 
     private func send() {
         guard page == .ready, let mode, let webView else { return }
+        webView.evaluateJavaScript("window.judgeScene.setYou(\"\(you.rawValue)\")", completionHandler: nil)
         webView.evaluateJavaScript("window.judgeScene.setMode(\(mode.json))", completionHandler: nil)
     }
 
