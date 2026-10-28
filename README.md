@@ -183,6 +183,7 @@ after sign-in.
 | `DEV_LOGIN` | *(empty)* | `1` shows a "test sign-in" for local testing. It works only when **all** hold: not a production build (`next build` output is production whatever `NODE_ENV` it is started with), `DEV_LOGIN=1`, the server listens on `127.0.0.1` or `::1` only (`npm run dev:login`, i.e. `next dev -H 127.0.0.1`; plain `npm run dev` listens on every interface and is refused), and the request's `Host` is `localhost`, `127.0.0.1` or `[::1]`. Anywhere else the endpoint answers 404 |
 | `PREMIUM_ENABLED` | `1` | `0` turns Premium off (the switch disappears; premium requests get `503 not_configured`) |
 | `PREMIUM_DAILY_CAP` | `500` | Site-wide premium runs per UTC day, counted from the database, refunded ones included (a refused or failed run still costs its model calls). A cost circuit breaker; `0` pauses Premium. Clarifying questions are not counted; the per-account limit below bounds them |
+| `WELCOME_DAILY_CAP` | `100` | The part of `PREMIUM_DAILY_CAP` that accounts which never had anything but their welcome credit may use per UTC day, so sign-ups made for the free verdict cannot use up the runs paying accounts rely on |
 | `PREMIUM_JUDGE_MODELS` | `claude-sonnet-5-5,claude-sonnet-5-5,claude-haiku-5-5` | Premium panel seats, in order (1 to 5) |
 | `PREMIUM_SONNET_EFFORT` | `medium` | Thinking depth for non-Haiku premium judges: `low`, `medium` or `high` |
 | `PREMIUM_FACTCHECK_MODEL` | `claude-haiku-5-5` | Model for the web fact-check |

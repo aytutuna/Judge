@@ -114,31 +114,46 @@ describe("checkPremiumSiteCap", () => {
     expect(rl.premiumDailyCap({ PREMIUM_DAILY_CAP: "25" })).toBe(25);
     expect(rl.premiumDailyCap({ PREMIUM_DAILY_CAP: "-1" })).toBe(500);
     expect(rl.premiumDailyCap({ PREMIUM_DAILY_CAP: "abc" })).toBe(500);
+    expect(rl.welcomeDailyCap({})).toBe(100);
+    expect(rl.welcomeDailyCap({ WELCOME_DAILY_CAP: "3" })).toBe(3);
   });
 
   it("0 pauses premium until the next UTC day", async () => {
     vi.stubEnv("PREMIUM_DAILY_CAP", "0");
     const now = new Date("2026-10-19T23:00:00Z");
-    expect(await rl.checkPremiumSiteCap(now)).toEqual({ ok: false, code: "daily_cap", retryAfterSec: 3600 });
+    expect(await rl.checkPremiumSiteCap("cap-user", now)).toEqual({ ok: false, code: "daily_cap", retryAfterSec: 3600 });
   });
 
   it("counts today's started premium runs from the database; a refund does not free a slot", async () => {
     vi.stubEnv("PREMIUM_DAILY_CAP", "2");
-    expect((await rl.checkPremiumSiteCap()).ok).toBe(true);
+    expect((await rl.checkPremiumSiteCap("cap-user")).ok).toBe(true);
     await ent.grantCredits({ userId: "cap-user", credits: 5, source: "admin", externalId: "admin:cap" });
     const a = await ent.reservePremiumVerdict("cap-user");
     const b = await ent.reservePremiumVerdict("cap-user");
     if (!a.ok || !b.ok) throw new Error("expected reservations");
-    expect(await rl.checkPremiumSiteCap()).toMatchObject({ ok: false, code: "daily_cap" });
+    expect(await rl.checkPremiumSiteCap("cap-user")).toMatchObject({ ok: false, code: "daily_cap" });
     // A refused or failed run still paid for its model calls.
     await ent.refundPremiumVerdict(b.reservation.id);
-    expect(await rl.checkPremiumSiteCap()).toMatchObject({ ok: false, code: "daily_cap" });
+    expect(await rl.checkPremiumSiteCap("cap-user")).toMatchObject({ ok: false, code: "daily_cap" });
+  });
+
+  it("holds welcome-credit-only accounts to WELCOME_DAILY_CAP, not paying ones", async () => {
+    vi.stubEnv("PREMIUM_DAILY_CAP", "100");
+    vi.stubEnv("WELCOME_DAILY_CAP", "1");
+    await ent.grantWelcomeCredit("new-1", "claim-new-1");
+    await ent.grantWelcomeCredit("new-2", "claim-new-2");
+    await ent.grantCredits({ userId: "paid-1", credits: 1, source: "admin", externalId: "admin:paid-1" });
+    expect((await rl.checkPremiumSiteCap("new-2")).ok).toBe(true);
+    const run = await ent.reservePremiumVerdict("new-1");
+    if (!run.ok) throw new Error("expected a reservation");
+    expect(await rl.checkPremiumSiteCap("new-2")).toMatchObject({ ok: false, code: "daily_cap" });
+    expect((await rl.checkPremiumSiteCap("paid-1")).ok).toBe(true);
   });
 
   it("fails closed when the count fails", async () => {
     vi.stubEnv("PREMIUM_DAILY_CAP", "5");
     vi.spyOn(console, "error").mockImplementation(() => {});
     vi.spyOn(ent, "countPremiumToday").mockRejectedValueOnce(new Error("db down"));
-    expect(await rl.checkPremiumSiteCap()).toMatchObject({ ok: false, code: "unavailable" });
+    expect(await rl.checkPremiumSiteCap("cap-user")).toMatchObject({ ok: false, code: "unavailable" });
   });
 });

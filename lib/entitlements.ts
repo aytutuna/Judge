@@ -514,6 +514,31 @@ export async function countPremiumToday(now: Date = new Date()): Promise<number>
   return Number(rs.rows[0]?.n ?? 0);
 }
 
+/** No grant on the account but its welcome credit, for a user id column. */
+const welcomeOnly = (userIdSql: string) =>
+  `NOT EXISTS (SELECT 1 FROM entitlement_grants g WHERE g.user_id = ${userIdSql}
+               AND NOT (g.source = 'promo' AND g.external_id LIKE 'welcome:%'))`;
+
+/** True while the account has never had anything but its welcome credit. */
+export async function hasWelcomeCreditOnly(userId: string): Promise<boolean> {
+  const db = await client();
+  const rs = await db.execute({ sql: `SELECT ${welcomeOnly("?")} AS only`, args: [userId] });
+  return Number(rs.rows[0]?.only) === 1;
+}
+
+/** The part of countPremiumToday run on accounts that never had anything
+ * but their welcome credit (deleted accounts' runs included). */
+export async function countWelcomeToday(now: Date = new Date()): Promise<number> {
+  const db = await client();
+  const dayStart = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
+  const rs = await db.execute({
+    sql: `SELECT count(*) AS n FROM premium_usage p
+          WHERE p.created_at >= ? AND p.funded_by = 'credits' AND ${welcomeOnly("p.user_id")}`,
+    args: [iso(dayStart)],
+  });
+  return Number(rs.rows[0]?.n ?? 0);
+}
+
 // --- Grants (admin, stores, web payments) -------------------------------------
 
 /** false = a duplicate (source, externalId), or nothing to apply it to. */

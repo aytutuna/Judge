@@ -98,7 +98,7 @@ async function limitGate(userId: string, bucket: UserBucket): Promise<NextRespon
           });
     }
     if (bucket !== "premium_verdict") return null;
-    const site = await checkPremiumSiteCap();
+    const site = await checkPremiumSiteCap(userId);
     if (!site.ok) {
       if (site.code === "unavailable") return unavailable();
       return fail("daily_cap", "Premium has used today's capacity — try again tomorrow.", {
