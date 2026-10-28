@@ -474,7 +474,7 @@ describe("POST /api/v1/cases/{id}/claim", () => {
     const r = await owner(2);
     expect((await all(r)).length).toBe(0);
     const before = await http.respondGetHandler(req("GET", `/api/v1/respond/${token}`, { user: r, headers: { "respondent-claim": claimSecret } }), token);
-    expect((await body<{ case: CaseView }>(before)).case.inAccount).toBe(false);
+    expect((await body<{ case: CaseView }>(before)).case).toMatchObject({ inAccount: false, inOtherAccount: false });
 
     const res = await claim(c.id, r, claimSecret);
     expect(res.status).toBe(200);
@@ -485,8 +485,19 @@ describe("POST /api/v1/cases/{id}/claim", () => {
     expect(rows).toHaveLength(1);
     expect(rows[0]).toMatchObject({ id: c.id, role: "respondent", state: "ready", inviteToken: token });
     const view = (await body<{ case: CaseView }>(await http.respondGetHandler(req("GET", `/api/v1/respond/${token}`, { user: r }), token))).case;
-    expect(view.inAccount).toBe(true);
+    expect(view).toMatchObject({ inAccount: true, inOtherAccount: false });
     expect(view.appeal).toEqual({ allowed: true, blockedBy: null });
+
+    // The same browser signed out, or signed in as someone else: the claim
+    // still opens the case, but it now belongs to r.
+    const someone = await owner(3);
+    for (const user of [undefined, someone]) {
+      const res = await http.respondGetHandler(req("GET", `/api/v1/respond/${token}`, { user, headers: { "respondent-claim": claimSecret } }), token);
+      expect((await body<{ case: CaseView }>(res)).case).toMatchObject({ inAccount: false, inOtherAccount: true });
+    }
+    // Without the claim the link says nothing about it.
+    const bare = await http.respondGetHandler(req("GET", `/api/v1/respond/${token}`, { user: someone }), token);
+    expect((await body<{ case: CaseView }>(bare)).case.inOtherAccount).toBe(false);
   });
 
   it("the same 404 for a wrong claim, the owner, a side bound to someone else or a one-sided case", async () => {

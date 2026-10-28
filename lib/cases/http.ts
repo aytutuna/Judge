@@ -300,13 +300,15 @@ async function respondentView(
   now = new Date(),
 ): Promise<CaseView> {
   const bundle = await loadCaseBundle(row);
+  const claimOk = claimMatches(row, claim);
   return buildCaseView(bundle, {
     role: "respondent",
     now,
     inviteUrl: null,
     ownInvite: viewerId !== null && viewerId === row.ownerId,
-    appealBlock: await appealBlockFor(row, bundle, "b", viewerId, now, claimMatches(row, claim)),
+    appealBlock: await appealBlockFor(row, bundle, "b", viewerId, now, claimOk),
     inAccount: viewerId !== null && row.mode === "two_sided" && row.respondentUserId === viewerId,
+    inOtherAccount: claimOk && row.respondentUserId !== null && row.respondentUserId !== viewerId,
     originals: await viewOriginals(row, "b", provenRespondent(row, viewerId, claim)),
   });
 }

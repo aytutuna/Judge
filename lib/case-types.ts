@@ -193,6 +193,10 @@ export type CaseView = {
    * is on its Verdicts list. False for an answer kept only by this
    * browser's claim (POST /api/v1/cases/{id}/claim links it). */
   inAccount?: boolean;
+  /** Respondent role, for a request carrying the claim: side B is linked to
+   * an account other than the viewer's (answered signed in, or kept), so
+   * this browser neither lists the case nor offers to keep it. */
+  inOtherAccount?: boolean;
 };
 
 export type CaseSummary = {

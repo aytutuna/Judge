@@ -43,6 +43,8 @@ export type ViewContext = {
   appealBlock: AppealBlock | null;
   /** Respondent role: side B is bound to the signed-in viewer. */
   inAccount?: boolean;
+  /** Respondent role, claim holder: side B is bound to some other account. */
+  inOtherAccount?: boolean;
   /** Decrypted by the caller: the viewer's own name map (null when not
    * stored or the viewer is not proven to be that party), both display
    * names, and the status of the viewer's side original. */
@@ -148,7 +150,7 @@ export function buildCaseView(bundle: CaseBundle, ctx: ViewContext): CaseView {
     },
     removed: row.removedAt ? { at: row.removedAt, parties: removedParties } : null,
     yourOriginal: ctx.originals?.yourOriginal ?? "not_stored",
-    ...(ctx.role === "respondent" ? { inAccount: ctx.inAccount === true } : {}),
+    ...(ctx.role === "respondent" ? { inAccount: ctx.inAccount === true, inOtherAccount: ctx.inOtherAccount === true } : {}),
   };
 }
 
