@@ -9,6 +9,7 @@
 
 import type { PricingInfo, PricingPack } from "./account-types";
 import type { Lang } from "./i18n";
+import { langTag } from "./langs";
 
 export const PRICING: PricingInfo & { packs: readonly PricingPack[] } = {
   currency: "USD",
@@ -39,9 +40,10 @@ export function packById(id: string): PricingPack | undefined {
   return PRICING.packs.find((p) => p.id === id);
 }
 
-/** "$7.50" in English, "$7,50" in Turkish. */
+/** US dollars in the language's number format: "$7.50" in English, "$7,50"
+ * in Turkish. */
 export function formatPrice(usd: number, lang: Lang): string {
-  return new Intl.NumberFormat(lang === "tr" ? "tr-TR" : "en-US", {
+  return new Intl.NumberFormat(langTag(lang), {
     style: "currency",
     currency: PRICING.currency,
   }).format(usd);

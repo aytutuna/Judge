@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { clientIp } from "@/lib/client-ip";
-import type { Lang } from "@/lib/i18n";
+import { ENABLED, isEnabled } from "@/lib/langs";
 import { verdictRemoved } from "@/lib/originals/removed";
 import { checkTranslateLimits, type LimitDecision } from "@/lib/ratelimit";
 import { translatedVerdict } from "@/lib/translate";
@@ -28,7 +28,7 @@ const ID_PATTERN = /^[A-Za-z0-9_-]{1,64}$/;
 type Refusal = Exclude<LimitDecision, { ok: true }>;
 
 /**
- * POST /api/verdict/[id]/translate?lang=en|tr
+ * POST /api/verdict/[id]/translate?lang=<an enabled language>
  * The verdict's content in `lang`: the original when it is already in that
  * language, a stored translation when there is one, else a new translation
  * (stored for everyone after). Only new translations pass the per-IP limit;
@@ -37,10 +37,11 @@ type Refusal = Exclude<LimitDecision, { ok: true }>;
 export async function POST(req: Request, ctx: RouteContext<"/api/verdict/[id]/translate">) {
   const { id } = await ctx.params;
   const raw = new URL(req.url).searchParams.get("lang");
-  if (raw !== "en" && raw !== "tr") {
-    return NextResponse.json({ error: "lang must be en or tr", code: "invalid" }, { status: 400 });
+  // Only languages the apps offer: each new pair is a model call.
+  if (!isEnabled(raw)) {
+    return NextResponse.json({ error: `lang must be one of ${ENABLED.join(", ")}`, code: "invalid" }, { status: 400 });
   }
-  const lang: Lang = raw;
+  const lang = raw;
   if (!ID_PATTERN.test(id)) return notFound();
   // A removed verdict is not translated (or served translated) any more.
   try {

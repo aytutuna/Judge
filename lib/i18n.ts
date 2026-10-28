@@ -1,3 +1,4 @@
+import { langTag, type Lang } from "./langs";
 import tr from "./locales/tr";
 import type { ClaimKind } from "./types";
 
@@ -11,7 +12,7 @@ import type { ClaimKind } from "./types";
  * Pure module (no "use client") — safe to import from server code.
  */
 
-export type Lang = "en" | "tr";
+export type { Lang } from "./langs";
 
 const en = {
   "hero.title": "Who's right? Settle it.",
@@ -670,9 +671,12 @@ export type Locale = {
 
 export const STRINGS = { en, tr: tr.strings } as const;
 
-/** Look up a string and interpolate `{var}` slots. Unknown braces are left alone. */
+const TABLES: Partial<Record<Lang, Record<Key, string>>> = STRINGS;
+
+/** Look up a string and interpolate `{var}` slots. Unknown braces are left
+ * alone. A language without strings reads English. */
 export function t(lang: Lang, key: Key, vars?: Record<string, string | number>): string {
-  let s: string = STRINGS[lang][key];
+  let s: string = (TABLES[lang] ?? en)[key];
   if (vars) {
     for (const [k, v] of Object.entries(vars)) {
       s = s.split(`{${k}}`).join(String(v));
@@ -741,7 +745,7 @@ export function formatDate(lang: Lang, iso: unknown): string | null {
   if (typeof iso !== "string" || !iso) return null;
   const d = new Date(iso);
   if (Number.isNaN(d.getTime())) return null;
-  return new Intl.DateTimeFormat(lang === "tr" ? "tr-TR" : "en-US", {
+  return new Intl.DateTimeFormat(langTag(lang), {
     month: "long",
     day: "numeric",
   }).format(d);

@@ -1,5 +1,6 @@
 import { z } from "zod";
 import type { Entitlement } from "./account-types";
+import { LANG_CODES } from "./langs";
 
 export const ClaimKind = z.enum(["fact", "value", "definition", "logic"]);
 export type ClaimKind = z.infer<typeof ClaimKind>;
@@ -218,7 +219,7 @@ export const VerdictResult = JudgeOutput.extend({
   /** Language the free text is written in: the judging language, or the
    * target language of a stored translation. Optional so rows written before
    * it existed keep parsing; those fall back to verdictLang's heuristic. */
-  lang: z.enum(["en", "tr"]).optional(),
+  lang: z.enum(LANG_CODES).optional(),
   /** "premium" on premium verdicts; absent on free (and all older) rows. */
   tier: Tier.optional(),
   /** Web fact-check run before judging (premium only). */
@@ -241,8 +242,8 @@ export type VerdictResult = z.infer<typeof VerdictResult>;
  * when `translated` is false (the verdict was already in `lang`). */
 export const TranslateResponse = z.object({
   id: z.string(),
-  lang: z.enum(["en", "tr"]),
-  source: z.enum(["en", "tr"]),
+  lang: z.enum(LANG_CODES),
+  source: z.enum(LANG_CODES),
   translated: z.boolean(),
   result: VerdictResult,
 });
@@ -264,7 +265,7 @@ export const VerdictRequest = z.object({
   argument: ArgumentText,
   // Older app builds still send a judging style as `framework`; zod strips unknown keys.
   /** UI + judge output language. Stored as the result's `lang`. */
-  lang: z.enum(["en", "tr"]).default("en"),
+  lang: z.enum(LANG_CODES).default("en"),
   /** Ignored: every verdict is premium. Older app builds still send it. */
   tier: Tier.optional(),
   /** Answers to the clarifying questions. */
@@ -276,7 +277,7 @@ export type VerdictRequest = z.infer<typeof VerdictRequest>;
 
 export const ClarifyRequest = z.object({
   argument: ArgumentText,
-  lang: z.enum(["en", "tr"]).default("en"),
+  lang: z.enum(LANG_CODES).default("en"),
 });
 export type ClarifyRequest = z.infer<typeof ClarifyRequest>;
 

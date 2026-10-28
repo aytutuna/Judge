@@ -21,7 +21,7 @@ Ask ONLY about missing facts that would change who wins and that the text does n
 
 If nothing decisive is missing, return an empty questions array. Most well-described arguments need no questions.`;
 
-const LANGUAGE_LINE: Record<Lang, string> = {
+const LANGUAGE_LINE: Record<"en" | "tr", string> = {
   en: "\n\nLANGUAGE: write the questions in English.",
   tr: '\n\nLANGUAGE: write the questions in Turkish, in everyday words, addressing the person with informal "sen", never "siz".',
 };
@@ -61,7 +61,7 @@ export function toClarifyResponse(raw: unknown): ClarifyResponse {
 export async function clarifyQuestions(argument: string, lang: Lang): Promise<ClarifyResponse> {
   try {
     const res = await claudeJson<unknown>({
-      system: `${CLARIFY_SYSTEM}${LANGUAGE_LINE[lang]}`,
+      system: `${CLARIFY_SYSTEM}${LANGUAGE_LINE[lang === "tr" ? "tr" : "en"]}`,
       user: `THE ARGUMENT:\n\n${argument}`,
       schema: SCHEMA,
       model: LITE_MODEL,

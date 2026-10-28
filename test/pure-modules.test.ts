@@ -20,6 +20,7 @@ const PURE = [
   "pricing",
   "case-types",
   "originals-types",
+  "langs",
   "locales/tr",
 ] as const;
 

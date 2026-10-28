@@ -7,6 +7,7 @@
  */
 
 import type { Lang } from "./i18n";
+import { isLang } from "./langs";
 import { PALETTE as P } from "./palette";
 
 const RESEND_URL = "https://api.resend.com/emails";
@@ -20,7 +21,7 @@ export function emailConfigured(env: Record<string, string | undefined> = proces
 
 /** Email copy per language. Turkish speaks to the reader as "sen". */
 export const SIGNIN_EMAIL: Record<
-  Lang,
+  "en" | "tr",
   { subject: string; intro: string; button: string; expiry: string; ignore: string }
 > = {
   en: {
@@ -46,7 +47,7 @@ export function langFromMagicLink(url: string): Lang {
     const callback = new URL(url).searchParams.get("callbackURL");
     if (!callback) return "en";
     const lang = new URL(callback, "http://localhost").searchParams.get("lang");
-    return lang === "tr" ? "tr" : "en";
+    return isLang(lang) ? lang : "en";
   } catch {
     return "en";
   }
@@ -62,7 +63,7 @@ function escapeHtml(s: string): string {
 }
 
 export function signInEmailContent(url: string, lang: Lang): EmailContent {
-  const c = SIGNIN_EMAIL[lang];
+  const c = SIGNIN_EMAIL[lang === "tr" ? "tr" : "en"];
   const text = `${c.intro}\n\n${url}\n\n${c.expiry}\n${c.ignore}\n`;
   // Ivory & Terracotta, inline styles only (email clients drop <style>).
   const html = `<!doctype html><html lang="${lang}"><body style="margin:0;padding:32px 16px;background:${P.ivory};font-family:Georgia,'Times New Roman',serif;color:${P.ink}">
@@ -104,7 +105,7 @@ export async function sendSignInEmail({ to, url, lang }: { to: string; url: stri
 /** Sign-in code email copy (the apps sign in by typing this code). Turkish
  * speaks to the reader as "sen". */
 export const SIGNIN_CODE_EMAIL: Record<
-  Lang,
+  "en" | "tr",
   { subject: string; intro: string; expiry: string; ignore: string }
 > = {
   en: {
@@ -126,14 +127,15 @@ export const SIGNIN_CODE_EMAIL: Record<
 export function langFromRequestUrl(url: string | undefined): Lang {
   if (!url) return "en";
   try {
-    return new URL(url, "http://localhost").searchParams.get("lang") === "tr" ? "tr" : "en";
+    const lang = new URL(url, "http://localhost").searchParams.get("lang");
+    return isLang(lang) ? lang : "en";
   } catch {
     return "en";
   }
 }
 
 export function signInCodeEmailContent(code: string, lang: Lang): EmailContent {
-  const c = SIGNIN_CODE_EMAIL[lang];
+  const c = SIGNIN_CODE_EMAIL[lang === "tr" ? "tr" : "en"];
   const text = `${c.intro}
 
 ${code}
@@ -159,7 +161,7 @@ export async function sendSignInCodeEmail({ to, code, lang }: { to: string; code
 
 /** "The other side answered" notice copy. It names no one and quotes nothing
  * from the case. Turkish speaks to the reader as "sen". */
-export const CASE_READY_EMAIL: Record<Lang, { subject: string; intro: string; button: string; note: string }> = {
+export const CASE_READY_EMAIL: Record<"en" | "tr", { subject: string; intro: string; button: string; note: string }> = {
   en: {
     subject: "They answered: your Judge verdict is ready",
     intro: "The other person told their side, and the judges have ruled on both accounts.",
@@ -175,7 +177,7 @@ export const CASE_READY_EMAIL: Record<Lang, { subject: string; intro: string; bu
 };
 
 export function caseReadyEmailContent(url: string, lang: Lang): EmailContent {
-  const c = CASE_READY_EMAIL[lang];
+  const c = CASE_READY_EMAIL[lang === "tr" ? "tr" : "en"];
   const text = `${c.intro}\n\n${url}\n\n${c.note}\n`;
   const html = `<!doctype html><html lang="${lang}"><body style="margin:0;padding:32px 16px;background:${P.ivory};font-family:Georgia,'Times New Roman',serif;color:${P.ink}">
 <div style="max-width:480px;margin:0 auto;background:${P.paper};border:1px solid ${P.strata};border-radius:12px;padding:32px">

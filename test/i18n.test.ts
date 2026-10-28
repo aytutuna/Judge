@@ -162,11 +162,11 @@ describe("VerdictRequest.lang", () => {
     if (parsed.success) expect(parsed.data.lang).toBe("en");
   });
 
-  it('accepts "tr" and rejects "de"', () => {
+  it('accepts "tr" and rejects a code outside the registry', () => {
     const tr = VerdictRequest.safeParse({ argument, lang: "tr" });
     expect(tr.success).toBe(true);
     if (tr.success) expect(tr.data.lang).toBe("tr");
-    expect(VerdictRequest.safeParse({ argument, lang: "de" }).success).toBe(false);
+    expect(VerdictRequest.safeParse({ argument, lang: "xx" }).success).toBe(false);
   });
 });
 

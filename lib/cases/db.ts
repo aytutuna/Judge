@@ -20,6 +20,7 @@ import { getDb } from "@/lib/db";
 import { ensureEntitlementTables } from "@/lib/entitlements";
 import type { KnownPerson } from "@/lib/evidence";
 import type { Lang } from "@/lib/i18n";
+import { isLang } from "@/lib/langs";
 import { VerdictResult, type AppealOutcome, type EvidenceKind, type Tier } from "@/lib/types";
 
 const SCHEMA = [
@@ -285,7 +286,7 @@ export function mapCase(r: Row): CaseRow {
     status: str(r.status) as CaseStatus,
     mode: strOrNull(r.mode) as CaseMode | null,
     tier: str(r.tier) === "free" ? "free" : "premium",
-    lang: str(r.lang) === "tr" ? "tr" : "en",
+    lang: isLang(r.lang) ? r.lang : "en",
     inviteNonce: str(r.invite_nonce),
     inviteHash: str(r.invite_hash),
     idempotencyKey: strOrNull(r.idempotency_key),

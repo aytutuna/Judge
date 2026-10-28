@@ -6,7 +6,7 @@
 import type { Lang } from "../i18n";
 import type { Clarification } from "../types";
 
-const LABELS: Record<Lang, { heading: string; q: string; a: string }> = {
+const LABELS: Record<"en" | "tr", { heading: string; q: string; a: string }> = {
   en: { heading: "More details from the person asking:", q: "Q", a: "A" },
   tr: { heading: "Soran kişiden ek bilgiler:", q: "S", a: "C" },
 };
@@ -26,7 +26,7 @@ export function withClarifications(
     .map((c) => ({ question: c.question.trim(), answer: c.answer.trim() }))
     .filter((c) => c.question && c.answer);
   if (answered.length === 0) return argument;
-  const l = LABELS[lang];
+  const l = LABELS[lang === "tr" ? "tr" : "en"];
   const lines = answered.map((c) => `- ${l.q}: ${c.question}\n  ${l.a}: ${c.answer}`);
   return `${argument}\n\n${l.heading}\n${lines.join("\n")}`;
 }

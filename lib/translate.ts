@@ -19,6 +19,7 @@ import { claudeJson, LITE_MODEL, type ClaudeJsonResult, type Effort } from "./cl
 import { verdictLang } from "./content-lang";
 import { getTranslation, getVerdict, saveTranslation } from "./db";
 import { contentLang, t, type Lang } from "./i18n";
+import { LANGS } from "./langs";
 import { z } from "zod";
 import type { VerdictResult } from "./types";
 
@@ -201,7 +202,7 @@ export type Segment = { i: number; text: string; note?: string };
  * Strings with no letters (empty, a dash) are not sent and stay as they are. */
 export type SegmentPlan = { slots: Slot[]; segments: Segment[]; slotOf: number[] };
 
-const NOTES: Record<Lang, Partial<Record<Field, string>>> = {
+const NOTES: Record<"en" | "tr", Partial<Record<Field, string>>> = {
   en: {
     headline: "headline, at most 10 words",
     if_value: 'condition clause printed after "If": no leading "If"',
@@ -218,7 +219,7 @@ export function planSegments(text: TranslatableText, target: Lang): SegmentPlan 
   const slotOf: number[] = [];
   slots.forEach((slot, k) => {
     if (!/\p{L}/u.test(slot.text)) return;
-    const note = NOTES[target][slot.field];
+    const note = NOTES[target === "tr" ? "tr" : "en"][slot.field];
     segments.push({ i: segments.length, text: slot.text, ...(note ? { note } : {}) });
     slotOf.push(k);
   });
@@ -232,7 +233,7 @@ export function reassemble(plan: SegmentPlan, translated: readonly string[]): st
   return flat;
 }
 
-const LABELS: Record<Lang, { a: string; b: string }> = {
+const LABELS: Record<"en" | "tr", { a: string; b: string }> = {
   en: { a: "Party A", b: "Party B" },
   tr: { a: "Taraf A", b: "Taraf B" },
 };
@@ -358,7 +359,7 @@ export function checkSegments(segments: readonly Segment[], payload: unknown, ta
     .filter((s, i) => mustChange(s.text) && normalized(s.text, target) === normalized(texts[i], target))
     .map((s) => s.i);
   if (echoed.length) return { ok: false, error: `segments ${list(echoed)} came back untranslated` };
-  if (!inTargetLanguage(texts, target)) return { ok: false, error: `translation is not in ${LANG_NAME[target]}` };
+  if (!inTargetLanguage(texts, target)) return { ok: false, error: `translation is not in ${LANGS[target].name}` };
   return { ok: true, texts };
 }
 
@@ -428,30 +429,28 @@ export function applyText(r: VerdictResult, text: TranslatableText, target: Lang
   };
 }
 
-const LANG_NAME: Record<Lang, string> = { en: "English", tr: "Turkish" };
-
 /** One line on wording. Faithfulness stays first: the judges' full voice
  * rules (no named frameworks, say it bluntly) would rewrite what a ruling
  * says, so they are not part of this prompt. */
-const NATURAL: Record<Lang, string> = {
+const NATURAL: Record<"en" | "tr", string> = {
   en: "Natural wording: write the everyday English a native speaker would use, not word-for-word translationese. Natural wording never overrides rule 1.",
   tr: 'Natural wording: write the everyday Turkish a native speaker would say, not word-for-word translationese or officialese. Use informal "sen", never "siz", wherever the text speaks to a reader. Natural wording never overrides rule 1.',
 };
 
 export function translateSystemPrompt(source: Lang, target: Lang): string {
-  const from = LANG_NAME[source];
-  const to = LANG_NAME[target];
+  const from = LANGS[source].name;
+  const to = LANGS[target].name;
   return `You are a careful translator for an argument-settling app. You translate the text of one written ruling from ${from} into ${to}, segment by segment.
 
 RULES, in priority order:
 1. Faithful meaning. Never add, drop, soften or strengthen anything. Keep every claim, number, unit, name, quote, hedge and degree of certainty exactly as strong as in the source. Don't correct, summarise or comment on the content.
 2. Complete. Every input segment gets exactly one output segment with the same i, fully translated into ${to}. Never return a segment in ${from}.
 3. Party labels map exactly: "Party A" <-> "Taraf A", "Party B" <-> "Taraf B". "Person C", "Person D" and so on stand in for other people's names and stay exactly as written in both languages. Never swap a label for a name or a pronoun.
-4. ${NATURAL[target]}`;
+4. ${NATURAL[target === "tr" ? "tr" : "en"]}`;
 }
 
 /** The label rule for one direction, with the suffix handling spelled out. */
-const PARTY_RULE: Record<Lang, string> = {
+const PARTY_RULE: Record<"en" | "tr", string> = {
   en: `Party labels: "Taraf A" is "Party A" and "Taraf B" is "Party B". Turn a Turkish case suffix on a label into English grammar and drop it from the label: "Taraf A'nın" -> "Party A's", "Taraf B'nin" -> "Party B's", "Taraf B'ye" -> "to Party B", "Taraf A'dan" -> "from Party A". Never leave a Turkish suffix on "Party A" or "Party B". "Person C", "Person D" and so on are name placeholders: keep them as written, with English grammar ("Person C'nin" -> "Person C's").`,
   tr: `Party labels: "Party A" is "Taraf A" and "Party B" is "Taraf B". Give the label the Turkish suffix the sentence needs, after an apostrophe and in harmony with how the letter is read (A is "a", B is "be"): "Party A's" -> "Taraf A'nın", "Party B's" -> "Taraf B'nin", "to Party A" -> "Taraf A'ya", "to Party B" -> "Taraf B'ye", "from Party B" -> "Taraf B'den". Never leave "'s" on "Taraf A" or "Taraf B". "Person C", "Person D" and so on are name placeholders: keep them in English, untranslated, with any Turkish suffix after an apostrophe ("Person C's" -> "Person C'nin").`,
 };
@@ -465,12 +464,12 @@ export function translateUserMessage(
   segments: readonly Segment[],
   rejected?: string,
 ): string {
-  const from = LANG_NAME[source];
-  const to = LANG_NAME[target];
+  const from = LANGS[source].name;
+  const to = LANGS[target].name;
   const last = segments.length - 1;
   const parts = [
     `Translate every segment from ${from} to ${to}. Return the same i values: {"segments": [{"i": 0, "text": "<${to} translation of segment 0>"}, ...]}, exactly one item per input segment. Translate every segment, short ones too. Don't merge, split, skip or add segments, and leave no ${from} text behind.`,
-    PARTY_RULE[target],
+    PARTY_RULE[target === "tr" ? "tr" : "en"],
   ];
   if (segments.some((s) => s.note)) parts.push(`A segment's "note" is context for you. Don't translate it or return it.`);
   if (rejected) {

@@ -77,7 +77,7 @@ async function run(outPath: string, judgePath?: string) {
 
 /** Stock phrasing that reads as machine-written. Matched case-insensitively
  * as substrings (Turkish lowercased with the tr locale). */
-const TELLS: Record<Lang, string[]> = {
+const TELLS: Partial<Record<Lang, string[]>> = {
   en: [
     "it's important to note", "it is important to note", "worth noting", "delve",
     "ultimately", "in conclusion", "nuanced", "multifaceted", "navigate", "landscape",
@@ -107,7 +107,7 @@ function metrics(samples: Sample[], lang: Lang) {
   const joined = texts.join("\n");
   const words = joined.split(/\s+/).filter(Boolean).length || 1;
   const hits: Record<string, number> = {};
-  for (const t of TELLS[lang]) {
+  for (const t of TELLS[lang] ?? []) {
     const n = lower(joined, lang).split(t).length - 1;
     if (n) hits[t] = n;
   }
