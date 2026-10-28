@@ -156,6 +156,8 @@ final class ScreenshotStateTests: XCTestCase {
             XCTAssertEqual(rows.map(\.id).first, "abc123DEF0")
             XCTAssertEqual(rows.count, 6)
             XCTAssertEqual(app.lang, .tr)
+            let listed = try app.history.cached(user: try XCTUnwrap(app.historyUser))
+            XCTAssertEqual(listed.count, 6, "signed in: every row is the account's, none phone-only")
         }
     }
 

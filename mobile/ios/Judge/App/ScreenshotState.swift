@@ -261,7 +261,13 @@ struct ScreenshotState {
             app.seedCase(view)
             app.home.path = [.caseDetail(id: view.id)]
         case .history:
+            // Signed in, so the six verdicts read as the account's.
+            premium(app, me: "credits7")
+            guard let user = app.account.user?.id else { return }
+            try? app.history.setAccount(user)
+            app.historyUser = user
             saveSamples(app)
+            app.historyList.showForScreenshot(next: nil, last: nil, at: Self.newest)
         }
     }
 
