@@ -283,6 +283,7 @@ private fun noticeText(notice: HistoryNotice, s: Strings) = when (notice) {
     HistoryNotice.Offline -> s.appHistoryOfflineRemove
     is HistoryNotice.RemoveFailed -> s.appHistoryRemoveFailed(notice.count)
     HistoryNotice.OpenFailed -> s.errorFallback
+    HistoryNotice.LoadMoreFailed -> s.shellLoadFailed
 }
 
 @Composable

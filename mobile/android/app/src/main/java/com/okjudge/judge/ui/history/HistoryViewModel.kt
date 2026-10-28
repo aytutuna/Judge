@@ -82,6 +82,7 @@ sealed interface HistoryNotice {
     data object Offline : HistoryNotice
     data class RemoveFailed(val count: Int) : HistoryNotice
     data object OpenFailed : HistoryNotice
+    data object LoadMoreFailed : HistoryNotice
 }
 
 /**
@@ -158,6 +159,7 @@ class HistoryViewModel(
         val cursor = p.next ?: return
         if (p.loading || p.loadingMore) return
         _paging.update { it.copy(loadingMore = true) }
+        if (_notice.value == HistoryNotice.LoadMoreFailed) _notice.value = null
         viewModelScope.launch {
             when (val res = api.history(LIMIT, cursor)) {
                 is ApiResult.Ok -> {
@@ -167,7 +169,10 @@ class HistoryViewModel(
                         it.copy(loadingMore = false, next = res.value.next, last = res.value.items.lastOrNull() ?: it.last, loadedAll = res.value.next == null)
                     }
                 }
-                is ApiResult.Err -> _paging.update { it.copy(loadingMore = false) }
+                is ApiResult.Err -> {
+                    _paging.update { it.copy(loadingMore = false) }
+                    _notice.value = HistoryNotice.LoadMoreFailed
+                }
             }
         }
     }

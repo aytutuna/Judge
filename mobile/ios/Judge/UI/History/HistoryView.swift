@@ -299,6 +299,7 @@ struct HistoryView: View {
         case .offline: return L10n.appHistoryOfflineRemove(lang)
         case .removeFailed(let n): return L10n.appHistoryRemoveFailed(lang, n: n)
         case .openFailed: return L10n.errorFallback(lang)
+        case .loadMoreFailed: return L10n.shellLoadFailed(lang)
         }
     }
 

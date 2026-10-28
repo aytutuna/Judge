@@ -111,6 +111,26 @@ class HistoryViewModelTest {
     }
 
     @Test
+    fun aShowMoreThatFails_saysSo_andTheNextTryClearsIt() = runBlocking {
+        server.enqueue(json(200, pageJson(listOf(item("a", "2026-10-05T00:00:00.000Z")), "cur1")))
+        server.enqueue(json(500, """{"error":"Something went wrong."}"""))
+        server.enqueue(json(200, pageJson(listOf(item("b", "2026-10-01T00:00:00.000Z")), null)))
+        val model = vm()
+        user.value = "u1"
+        take()
+        withTimeout(5_000) { model.paging.first { it.next == "cur1" } }
+        model.loadMore()
+        take()
+        withTimeout(5_000) { model.notice.first { it == HistoryNotice.LoadMoreFailed } }
+        assertEquals("cur1", model.paging.value.next)
+        withTimeout(5_000) { model.paging.first { !it.loadingMore } }
+        model.loadMore()
+        take()
+        keys(model, "v:a", "v:b")
+        assertNull(model.notice.value)
+    }
+
+    @Test
     fun phoneRowsOlderThanWhatIsLoaded_waitForTheAccountsList() = runBlocking {
         val old = Fixtures.sample("win_a_self")
         now = java.time.Instant.parse("2026-09-01T00:00:00Z").toEpochMilli()

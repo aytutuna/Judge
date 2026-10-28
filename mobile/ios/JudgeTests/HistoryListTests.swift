@@ -352,6 +352,27 @@ final class HistoryListTests: XCTestCase {
     }
 
     @MainActor
+    func testAShowMoreThatFailsSaysSoAndTheNextTryClearsIt() async throws {
+        let container = HistoryContainer.inMemory()
+        let router = StubRouter()
+        router.on(
+            "GET", "/api/v1/me/history",
+            try PremiumFixtures.json(200, try pageBody([item("a", "2026-10-05T00:00:00.000Z")], next: "cur1")),
+            try PremiumFixtures.json(500, ["error": "Something went wrong."]),
+            try PremiumFixtures.json(200, try pageBody([item("b", "2026-10-01T00:00:00.000Z")], next: nil))
+        )
+        let (app, list) = try model(container, router: router)
+        await list.refresh(user: "u1", enabled: true)
+        await list.loadMore(user: "u1")
+        XCTAssertEqual(list.notice, .loadMoreFailed)
+        XCTAssertEqual(list.next, "cur1", "Show more stays, to try again")
+        await list.loadMore(user: "u1")
+        XCTAssertNil(list.notice)
+        XCTAssertEqual(try app.history.cached(user: "u1").map(\.key), ["v:a", "v:b"])
+        withExtendedLifetime(container) {}
+    }
+
+    @MainActor
     func testRemoveSendsEachRowToItsOwnRemoval() async throws {
         let container = HistoryContainer.inMemory()
         let router = StubRouter()

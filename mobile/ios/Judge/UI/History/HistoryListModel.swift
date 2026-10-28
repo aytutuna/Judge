@@ -90,7 +90,7 @@ struct HistorySelection: Equatable {
 @Observable
 final class HistoryListModel {
     enum Notice: Equatable {
-        case offline, removeFailed(Int), openFailed
+        case offline, removeFailed(Int), openFailed, loadMoreFailed
     }
 
     static let limit = 20
@@ -193,6 +193,7 @@ final class HistoryListModel {
         guard usesNetwork, let user, owner == user, let cursor = next, !loading, !loadingMore else { return }
         loadingMore = true
         defer { loadingMore = false }
+        if notice == .loadMoreFailed { notice = nil }
         let above = last
         do {
             let page = try await api.history(limit: Self.limit, cursor: cursor)
@@ -201,7 +202,13 @@ final class HistoryListModel {
             next = page.next
             if let pageLast = page.items.last { last = pageLast }
             loadedAll = page.next == nil
-        } catch {}
+        } catch is CancellationError {
+        } catch let error as APIError {
+            if error.code == "signin_required" { account.sessionExpired() }
+            notice = .loadMoreFailed
+        } catch {
+            notice = .loadMoreFailed
+        }
     }
 
     /// Removes `picked`: account rows through the server, as each one's page
