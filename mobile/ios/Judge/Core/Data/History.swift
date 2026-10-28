@@ -236,13 +236,6 @@ final class HistoryStore {
         return try context.fetch(descriptor).first
     }
 
-    /// The account the list was last loaded for.
-    func cachedUser() throws -> String? {
-        var descriptor = FetchDescriptor<HistoryCacheRow>()
-        descriptor.fetchLimit = 1
-        return try context.fetch(descriptor).first?.userID
-    }
-
     /// `user` is signed in: other accounts' rows leave the phone. Nil: signed
     /// out, the rows stay (unlisted) for when the same person signs back in.
     func setAccount(_ user: String?) throws {

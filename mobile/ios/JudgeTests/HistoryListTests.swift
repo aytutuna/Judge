@@ -132,7 +132,7 @@ final class HistoryListTests: XCTestCase {
             try store.save(try session("win_a_self"))
             try store.save(try session("split", id: "phone1"))
             try store.apply(page(item("abc123DEF0", "2026-10-05T00:00:00.000Z"), next: nil), user: "u1", above: nil)
-            XCTAssertEqual(try store.cachedUser(), "u1")
+            XCTAssertEqual(try store.cached(user: "u1").count, 1)
             try store.setAccount("u2")
             XCTAssertTrue(try store.cached(user: "u1").isEmpty)
             XCTAssertNil(try store.find(id: "abc123DEF0"))

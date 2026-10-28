@@ -53,8 +53,6 @@ class FakeHistory(private var clock: Long = 1_000L) : HistoryRepository {
     override fun observeCached(user: String): Flow<List<HistoryItem>> =
         listed.map { all -> all[user].orEmpty().sortedWith { x, y -> HistoryOrder.compare(x.at to x.key, y.at to y.key) } }
 
-    override suspend fun cachedUser(): String? = listed.value.keys.firstOrNull()
-
     override suspend fun setAccount(user: String?) {}
 
     override suspend fun forgetAccounts() {

@@ -54,9 +54,6 @@ interface HistoryRepository {
     /** The account's list rows as last loaded, newest first. */
     fun observeCached(user: String): Flow<List<HistoryItem>>
 
-    /** The account the cache was last filled for. */
-    suspend fun cachedUser(): String?
-
     /** [user] is signed in: other accounts' rows leave the phone. Null: signed out (rows stay, unlisted). */
     suspend fun setAccount(user: String?)
 
@@ -193,8 +190,6 @@ class RoomHistoryRepository(
 
     override fun observeCached(user: String): Flow<List<HistoryItem>> =
         dao.observeCached(user).map { rows -> rows.mapNotNull(::decodeItem) }
-
-    override suspend fun cachedUser(): String? = dao.anyCachedUser()
 
     override suspend fun setAccount(user: String?) {
         account = user

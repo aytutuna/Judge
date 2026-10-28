@@ -1,3 +1,4 @@
+import CryptoKit
 import Foundation
 import Observation
 import SwiftData
@@ -61,8 +62,8 @@ final class AppModel {
     /// The account's Verdicts list (GET /api/v1/me/history and its cache).
     let historyList: HistoryListModel
     /// Whose list Verdicts shows: the signed-in account once known; at
-    /// launch, until /me answers, the account the list was last loaded for,
-    /// so it shows offline. Nil signed out.
+    /// launch, until /me answers, the account /me last named for the same
+    /// session token, so it shows offline. Nil signed out.
     var historyUser: String?
     /// Off for screenshot states: case pages neither load nor poll.
     @ObservationIgnored var usesNetwork = true
@@ -84,6 +85,8 @@ final class AppModel {
 
     private let defaults: UserDefaults
     private static let langKey = "settings.lang"
+    private static let userKey = "session.user"
+    private static let userSessionKey = "session.userToken"
 
     init(
         config: AppConfig,
@@ -124,6 +127,7 @@ final class AppModel {
             self?.historyPath = []
             self?.caseModels = [:]
             purchases?.userSignedOut()
+            self?.forgetUser()
             // Real names kept for this account's cases go with it, and so do
             // its verdicts on this phone (they come back from the account).
             // An expired session keeps them, unlisted, for the same person.
@@ -138,8 +142,34 @@ final class AppModel {
             purchases?.userSignedIn(id)
             try? store.setAccount(id)
             self?.historyUser = id
+            self?.rememberUser(id)
         }
-        if account.isSignedIn { historyUser = try? history.cachedUser() }
+        if account.isSignedIn, let id = knownUser() {
+            try? history.setAccount(id)
+            historyUser = id
+        }
+    }
+
+    /// The account /me named, with a digest of the session token it named
+    /// it for: another session (a sign-in /me hasn't answered yet) is not it.
+    private func rememberUser(_ id: String) {
+        guard let token = api.tokenStore.token() else { return }
+        defaults.set(id, forKey: Self.userKey)
+        defaults.set(Self.digest(token), forKey: Self.userSessionKey)
+    }
+
+    private func knownUser() -> String? {
+        guard let token = api.tokenStore.token(), defaults.string(forKey: Self.userSessionKey) == Self.digest(token) else { return nil }
+        return defaults.string(forKey: Self.userKey)
+    }
+
+    private func forgetUser() {
+        defaults.removeObject(forKey: Self.userKey)
+        defaults.removeObject(forKey: Self.userSessionKey)
+    }
+
+    private static func digest(_ token: String) -> String {
+        SHA256.hash(data: Data(token.utf8)).map { String(format: "%02x", $0) }.joined()
     }
 
     /// The UI language right now. Every string lookup takes it explicitly,

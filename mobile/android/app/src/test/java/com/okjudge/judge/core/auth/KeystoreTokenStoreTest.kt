@@ -40,6 +40,20 @@ class KeystoreTokenStoreTest {
     }
 
     @Test
+    fun theUser_belongsToTheTokenItWasNamedFor() {
+        val store = KeystoreTokenStore(prefs, FakeCipher())
+        store.set("a")
+        store.setUser("u1")
+        assertEquals("u1", KeystoreTokenStore(prefs, FakeCipher()).user())
+        store.set("b")
+        assertNull("a new session waits for /me", KeystoreTokenStore(prefs, FakeCipher()).user())
+        store.setUser("u2")
+        store.clear()
+        assertNull(store.user())
+        assertNull(prefs.getString(KeystoreTokenStore.USER, null))
+    }
+
+    @Test
     fun anUndecryptableToken_countsAsSignedOut_andIsDropped() {
         prefs.edit().putString(KeystoreTokenStore.KEY, "garbage").commit()
         assertNull(KeystoreTokenStore(prefs, FakeCipher()).get())

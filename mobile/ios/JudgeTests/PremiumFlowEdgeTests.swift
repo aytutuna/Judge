@@ -266,7 +266,25 @@ final class PremiumFlowEdgeTests: XCTestCase {
         XCTAssertNil(app.historyUser, "unlisted until a sign-in")
         XCTAssertEqual(try app.history.cached(user: "usr_alex001").map(\.key), ["v:abc123DEF0"])
         XCTAssertNotNil(try app.history.find(id: "abc123DEF0"))
-        XCTAssertEqual(try app.history.cachedUser(), "usr_alex001")
+        withExtendedLifetime(container) {}
+    }
+
+    @MainActor
+    func testALaunchListsTheAccountMeNamedForThisSessionOnly() throws {
+        let container = HistoryContainer.inMemory()
+        let config = AppConfig(apiBaseURL: AppConfig.production, shareBaseURL: AppConfig.production, version: "1", build: "1")
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: "judge.tests.\(UUID().uuidString)"))
+        func launch(token: String) -> AppModel {
+            let api = JudgeAPI(baseURL: AppConfig.production, userAgent: "Judge-iOS/test", tokenStore: MemoryTokenStore(token: token))
+            return AppModel(config: config, container: container, defaults: defaults, persistsDraft: false, api: api, caseNames: MemoryCaseNamesStore())
+        }
+        let first = launch(token: "s3ss10n")
+        XCTAssertNil(first.historyUser, "no answer from /me yet")
+        first.account.onUserKnown?("usr_alex001")
+        XCTAssertEqual(launch(token: "s3ss10n").historyUser, "usr_alex001")
+        XCTAssertNil(launch(token: "n3wer").historyUser, "a newer session waits for /me")
+        first.account.sessionExpired()
+        XCTAssertNil(launch(token: "s3ss10n").historyUser)
         withExtendedLifetime(container) {}
     }
 

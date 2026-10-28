@@ -153,6 +153,7 @@ class AccountTest {
         assertEquals("sealed:" + "session-g".reversed(), prefs.getString(KeystoreTokenStore.KEY, null))
         assertEquals("session-g", store().get())
         assertTrue(account(store()).isSignedIn)
+        assertEquals("the account /me named, for the next launch", "u1", store().user())
     }
 
     @Test

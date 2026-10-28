@@ -277,5 +277,7 @@ class JudgeApiTest {
         override fun get(): String = token
         override fun set(token: String) {}
         override fun clear() {}
+        override fun user(): String? = null
+        override fun setUser(id: String) {}
     }
 }

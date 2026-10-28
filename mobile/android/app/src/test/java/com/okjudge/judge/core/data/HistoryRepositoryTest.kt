@@ -221,7 +221,6 @@ class HistoryRepositoryTest {
         assertEquals(emptyList<String>(), keys("u1"))
         assertNull(repo.observe("abc123DEF0").first())
         assertTrue(repo.observe("phone1").first() != null)
-        assertNull(repo.cachedUser())
     }
 
     @Test
@@ -229,7 +228,7 @@ class HistoryRepositoryTest {
         repo.save(Fixtures.sample("win_a_self"))
         repo.save(Fixtures.sample("split").copy(id = "phone1"))
         repo.applyPage("u1", page(item("abc123DEF0", "2026-10-05T00:00:00.000Z"), next = null), above = null)
-        assertEquals("u1", repo.cachedUser())
+        assertEquals(listOf("v:abc123DEF0"), keys())
         repo.forgetAccounts()
         assertEquals(emptyList<String>(), keys())
         assertNull(repo.observe("abc123DEF0").first())

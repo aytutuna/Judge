@@ -94,9 +94,6 @@ interface HistoryDao {
     @Query("DELETE FROM history_rows WHERE user_id = :user AND `key` IN (:keys)")
     suspend fun deleteCached(user: String, keys: List<String>)
 
-    @Query("SELECT user_id FROM history_rows LIMIT 1")
-    suspend fun anyCachedUser(): String?
-
     @Query("UPDATE saved_verdicts SET owner_user_id = :user WHERE id = :id AND owner_user_id IS NULL")
     suspend fun claimSaved(id: String, user: String)
 

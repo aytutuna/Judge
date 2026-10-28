@@ -117,6 +117,7 @@ class Account(
             is ApiResult.Ok -> if (res.value.user == null) {
                 expire()
             } else {
+                tokens.setUser(res.value.user.id)
                 if (_state.value is State.SignedIn) _state.value = State.SignedIn(res.value)
             }
             is ApiResult.Err -> {

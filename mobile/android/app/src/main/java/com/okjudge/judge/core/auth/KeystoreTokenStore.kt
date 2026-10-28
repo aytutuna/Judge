@@ -97,7 +97,7 @@ class KeystoreTokenStore(
             cached = token
             loaded = true
             val sealed = runCatching { cipher.encrypt(token) }.getOrNull()
-            prefs.edit().apply { if (sealed != null) putString(KEY, sealed) else remove(KEY) }.apply()
+            prefs.edit().apply { if (sealed != null) putString(KEY, sealed) else remove(KEY) }.remove(USER).apply()
         }
     }
 
@@ -105,8 +105,14 @@ class KeystoreTokenStore(
         synchronized(lock) {
             cached = null
             loaded = true
-            prefs.edit().remove(KEY).apply()
+            prefs.edit().remove(KEY).remove(USER).apply()
         }
+    }
+
+    override fun user(): String? = if (get() == null) null else prefs.getString(USER, null)
+
+    override fun setUser(id: String) {
+        prefs.edit().putString(USER, id).apply()
     }
 
     private fun read(): String? {
@@ -120,5 +126,6 @@ class KeystoreTokenStore(
     companion object {
         const val FILE = "session"
         const val KEY = "token"
+        const val USER = "user"
     }
 }

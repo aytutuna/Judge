@@ -88,8 +88,8 @@ class AppContainer(context: Context, val config: AppConfig = AppConfig.fromBuild
 
     /**
      * Whose Verdicts list the phone shows: the signed-in account once /me
-     * names it; at launch, until then, the account the list was last loaded
-     * for, so it shows offline. Null signed out.
+     * names it; at launch, until then, the account /me last named for the
+     * same session token, so it shows offline. Null signed out.
      */
     val historyUser: StateFlow<String?> = _historyUser.asStateFlow()
 
@@ -122,7 +122,9 @@ class AppContainer(context: Context, val config: AppConfig = AppConfig.fromBuild
                             history.setAccount(id)
                             _historyUser.value = id
                         } else if (launching) {
-                            _historyUser.value = history.cachedUser()
+                            val known = tokenStore.user()
+                            history.setAccount(known)
+                            _historyUser.value = known
                         }
                     }
                 }
