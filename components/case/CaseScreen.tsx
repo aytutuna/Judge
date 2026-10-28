@@ -522,7 +522,7 @@ export function CaseScreen({ id }: { id: string }) {
   });
   const appealFinished = useAppealFinished(view);
 
-  // My verdicts shows this case's status and headline: judging, a reply
+  // The Verdicts list shows this case's status and headline: judging, a reply
   // or a removal seen here updates its row.
   useEffect(() => {
     if (view) updateHistoryCase(view);

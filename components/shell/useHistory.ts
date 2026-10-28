@@ -242,7 +242,7 @@ export function markVerdictRemoved(id: string): void {
   });
 }
 
-/** A case page's latest state, put into its row (My verdicts shows its
+/** A case page's latest state, put into its row (the Verdicts list shows its
  * status and headline). */
 export function updateHistoryCase(view: CaseView): void {
   const data = state?.data;
@@ -346,7 +346,7 @@ function subscribe(onChange: () => void): () => void {
   };
 }
 
-/** My verdicts for this viewer: this browser's entries at once, and the
+/** The Verdicts list for this viewer: this browser's entries at once, and the
  * account's lists once they load. */
 export function useHistory(viewer: ViewerState): HistoryView & { loadMore: () => void } {
   const local = useLocalHistory();
