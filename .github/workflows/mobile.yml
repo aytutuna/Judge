@@ -100,6 +100,15 @@ jobs:
               xcrun simctl io "$UDID" screenshot "$OUT/${state//\//_}_$lang.png" > /dev/null
             done
           done
+          # Right to left, and two scripts the brand fonts lack, on the main screens.
+          for lang in ar hi ja; do
+            for state in home judging verdict-thread settings pricing; do
+              xcrun simctl terminate "$UDID" com.okjudge.judge 2>/dev/null || true
+              xcrun simctl launch "$UDID" com.okjudge.judge -JudgeScreenshotState "$state:$lang" > /dev/null
+              sleep 4
+              xcrun simctl io "$UDID" screenshot "$OUT/${state}_$lang.png" > /dev/null
+            done
+          done
           ls "$OUT"
 
       - uses: actions/upload-artifact@v7
@@ -213,3 +222,8 @@ jobs:
 
       - name: Scene bundle is current
         run: npx tsx mobile/shared/scene/build-scene.ts --check
+
+      # Last, so a language still waiting for its app strings does not hide
+      # a stale file above.
+      - name: App strings of every language
+        run: npm run check:app-locales
