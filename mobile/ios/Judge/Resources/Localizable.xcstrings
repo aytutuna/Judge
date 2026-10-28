@@ -716,7 +716,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Yeniden karar ver"
+            "value" : "Yeniden yargılat"
           }
         }
       }
@@ -2048,7 +2048,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Taraflar oraya nasıl vardı"
+            "value" : "Her taraf görüşüne nasıl vardı"
           }
         }
       }
@@ -2120,7 +2120,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ile"
+            "value" : "–"
           }
         }
       }

@@ -167,11 +167,11 @@ export const APP_STRINGS: Record<string, { en: string; tr: string }> = {
   "app.case.stepJudgesNote": { en: "Or judge now on your side alone", tr: "Ya da şimdi sadece senin tarafınla karar verilsin" },
   "app.case.judgeNowWithout": { en: "Judge now without {name}", tr: "{name} olmadan şimdi karar ver" },
   // The ruling card and its details screen.
-  "app.verdict.vs": { en: "vs", tr: "ile" },
+  "app.verdict.vs": { en: "vs", tr: "–" },
   "app.verdict.leanTo": { en: "The panel leaned to {name}", tr: "Kurul {name} tarafına yattı" },
   "app.verdict.leanNone": { en: "The panel didn't lean either way", tr: "Kurul iki taraftan birine yatmadı" },
   "app.verdict.sides": { en: "What each side stands on", tr: "Her taraf neye dayanıyor" },
-  "app.verdict.claims": { en: "How each side got there", tr: "Taraflar oraya nasıl vardı" },
+  "app.verdict.claims": { en: "How each side got there", tr: "Her taraf görüşüne nasıl vardı" },
   "app.verdict.back": { en: "Ruling", tr: "Karar" },
   // Adding context to a ruling (one-sided verdicts and cases).
   "app.appeal.title": { en: "Add context & appeal", tr: "Bağlam ekle ve itiraz et" },
@@ -192,5 +192,5 @@ export const APP_STRINGS: Record<string, { en: string; tr: string }> = {
     en: "Uses 1 premium verdict. You can do this once per case.",
     tr: "1 premium karar hakkı kullanır. Bunu bir dava için bir kez yapabilirsin.",
   },
-  "app.appeal.submit": { en: "Rule again", tr: "Yeniden karar ver" },
+  "app.appeal.submit": { en: "Rule again", tr: "Yeniden yargılat" },
 };
