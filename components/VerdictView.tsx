@@ -18,7 +18,6 @@ import type { OwnerShare } from "./ShareDialog";
 import { VerdictCardShell } from "./verdict/VerdictCardShell";
 import { CardBrand, CardTopRow } from "./verdict/CardTopRow";
 import { CardActions } from "./verdict/CardActions";
-import { WhyBlock } from "./verdict/WhyBlock";
 import { AppealOutcomeBanner } from "./case/AppealOutcome";
 import { TwoSidedFacts, WouldChangeBlock, evidenceNote } from "./case/TwoSidedBlocks";
 import caseStyles from "./case/case.module.css";
@@ -219,8 +218,6 @@ export function VerdictView({
           labelId={labelId}
           restoredNames={restoredNames}
         />
-
-        {!refused && result.why ? <WhyBlock title={t(lang, "why")} text={result.why} /> : null}
 
         {!refused ? (
           <section className={styles.section}>

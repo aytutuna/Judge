@@ -101,6 +101,30 @@ describe("VerdictView", () => {
     expect(html(<VerdictView result={{ ...base, why, lang: "tr" }} lang="tr" />)).toContain(">Neden</h3>");
   });
 
+  it("keeps why right under the headline when notes or branches follow", () => {
+    const why = "Neither reading covers the whole menu.";
+    const trial = html(
+      <VerdictView
+        result={{ ...base, why, crux_trial: { attack: "Menus vary by country.", outcome: "survived", reasoning: "" } }}
+        lang="en"
+      />,
+    );
+    expect(trial.indexOf(esc(why))).toBeLessThan(trial.indexOf("Menus vary by country."));
+    const split = html(
+      <VerdictView
+        result={{
+          ...base,
+          why,
+          verdict: "split",
+          split_points: [{ party: "a", point: "The bread is a sandwich roll." }],
+        }}
+        lang="en"
+      />,
+    );
+    expect(split.indexOf(base.headline)).toBeLessThan(split.indexOf(esc(why)));
+    expect(split.indexOf(esc(why))).toBeLessThan(split.indexOf("The bread is a sandwich roll."));
+  });
+
   it("leaves out why on older verdicts that have none", () => {
     const out = html(<VerdictView result={base} lang="en" />);
     expect(out).not.toContain(">Why</h3>");
