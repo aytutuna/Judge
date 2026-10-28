@@ -543,7 +543,7 @@ const vi: Locale = {
       "Một vụ hai bên dùng 1 lượt. Lượt được giữ lại khi bạn gửi liên kết và hoàn lại nếu không ai trả lời trong 7 ngày.",
     "privacy.casesTitle": "Vụ hai bên và xét lại",
     "privacy.cases":
-      "Trong một vụ hai bên, lời kể của mỗi bên được ẩn danh ngay khi gửi, giống như một phán quyết thông thường. Giám khảo đọc văn bản đã ẩn danh; lời kể của mỗi người đúng như họ viết, cùng danh sách tên, được lưu ở dạng mã hóa và chỉ người đó xem được. Khi gửi lời kể của mình, mỗi người tự nhập tên muốn hiển thị trên trang chia sẻ; nếu để trống, tên hiển thị là Bên A hoặc Bên B. Người kia không cần tài khoản; câu trả lời của họ bị giới hạn lượt bằng một mã băm có khóa của địa chỉ IP. Liên kết mời chỉ được lưu dưới dạng mã băm. Nếu người kia trả lời khi đã đăng nhập, tài khoản của họ được gắn với lời kể của họ, để sau này chỉ họ mới bổ sung thông tin hoặc xem được bản gốc của mình; nếu họ trả lời khi chưa đăng nhập, một mã riêng lưu trong trình duyệt của họ làm việc tương tự. Để cùng một người mang cùng một nhãn trong cả hai lời kể, máy chủ lưu dấu vân tay dạng mã của các tên trong từng vụ (mã băm có khóa, không phải bản thân các tên). Trước khi có phán quyết, không bên nào đọc được lời của bên kia; sau một phán quyết hai bên, cả hai người đều đọc được cả hai lời kể đã ẩn danh. Thông tin bổ sung sau phán quyết (xét lại) được xử lý theo cách tương tự. Khi người kia trả lời, chúng tôi có thể gửi bạn một email ngắn không chứa nội dung nào của vụ, nếu email đã được thiết lập. Mỗi người đều có thể gỡ phần của mình: bản gốc và tên hiển thị của họ bị xóa, và các liên kết chia sẻ của vụ ngừng hoạt động với mọi người. Xóa tài khoản sẽ làm điều này cho mọi vụ bạn đã bắt đầu hoặc đã trả lời.",
+      "Trong một vụ hai bên, lời kể của mỗi bên được ẩn danh ngay khi gửi, giống như một phán quyết thông thường. Giám khảo đọc văn bản đã ẩn danh; lời kể của mỗi người đúng như họ viết, cùng danh sách tên, được lưu ở dạng mã hóa và chỉ người đó xem được. Khi gửi lời kể của mình, mỗi người tự nhập tên muốn hiển thị trên trang chia sẻ; nếu để trống, tên hiển thị là Bên A hoặc Bên B. Người kia không cần tài khoản; câu trả lời của họ bị giới hạn lượt bằng một mã băm có khóa của địa chỉ IP. Liên kết mời chỉ được lưu dưới dạng mã băm. Nếu người kia trả lời khi đã đăng nhập, tài khoản của họ được gắn với lời kể của họ, để sau này chỉ họ mới bổ sung thông tin hoặc xem được bản gốc của mình; nếu họ trả lời khi chưa đăng nhập, một mã riêng lưu trong trình duyệt của họ làm việc tương tự, và nếu sau này đăng nhập trên chính trình duyệt đó, họ có thể lưu vụ vào tài khoản của mình. Để cùng một người mang cùng một nhãn trong cả hai lời kể, máy chủ lưu dấu vân tay dạng mã của các tên trong từng vụ (mã băm có khóa, không phải bản thân các tên). Trước khi có phán quyết, không bên nào đọc được lời của bên kia; sau một phán quyết hai bên, cả hai người đều đọc được cả hai lời kể đã ẩn danh. Thông tin bổ sung sau phán quyết (xét lại) được xử lý theo cách tương tự. Khi người kia trả lời, chúng tôi có thể gửi bạn một email ngắn không chứa nội dung nào của vụ, nếu email đã được thiết lập. Mỗi người đều có thể gỡ phần của mình: bản gốc và tên hiển thị của họ bị xóa, và các liên kết chia sẻ của vụ ngừng hoạt động với mọi người. Xóa tài khoản sẽ làm điều này cho mọi vụ bạn đã bắt đầu hoặc đã trả lời.",
     "privacy.evidenceTitle": "Ảnh chụp màn hình",
     "privacy.evidence":
       "Trình duyệt của bạn thu nhỏ ảnh lớn trước khi tải lên. Sau đó mỗi ảnh được gửi tới một dịch vụ AI bên ngoài một lần để đọc phần chữ hiển thị; chúng tôi không bao giờ lưu ảnh. Bản chép thô, vẫn có thể chứa tên, được trả về cho bạn trong một mã có chữ ký mà trình duyệt của bạn giữ tối đa 6 giờ. Khi bạn gửi lời kể của mình, bản chép được ẩn danh cùng với nội dung của bạn: bản chép đã ẩn danh được hiển thị cho giám khảo và lưu cùng vụ, còn bản chép thô được lưu ở dạng mã hóa cùng bản gốc của bạn, nơi chỉ bạn xem được. Số điện thoại, địa chỉ email, tên tài khoản mạng xã hội và số tài khoản trong đó cũng được thay bằng ký hiệu giữ chỗ trong bản giám khảo đọc.",
@@ -579,6 +579,8 @@ const vi: Locale = {
     "case.appealOriginal": "Thông tin bạn bổ sung, đúng như bạn viết",
     "case.displayName": "Tên của bạn trên phán quyết được chia sẻ",
     "case.displaySave": "Lưu tên",
+    "respond.keep": "Lưu vụ này vào tài khoản",
+    "respond.kept": "Vụ này giờ đã nằm trong tài khoản của bạn và hiện ở mục Phán quyết trên mọi thiết bị của bạn.",
     "respond.remove": "Gỡ phần của tôi",
     "respond.remove.confirm":
       "Gỡ bản gốc và tên hiển thị của bạn? Các liên kết chia sẻ của vụ sẽ ngừng hoạt động (các bản xem trước đã đăng trong đoạn chat có thể vẫn hiện cho đến khi ứng dụng làm mới). Không thể hoàn tác.",
@@ -622,6 +624,20 @@ const vi: Locale = {
     "shell.case.judged": "Đã phân xử",
     "shell.case.failed": "Chưa xong",
     "shell.case.expired": "Đã hết hạn",
+    "history.state.judging": "Ban giám khảo đang cân nhắc",
+    "history.state.rejudging": "Ban giám khảo đang xét lại",
+    "history.state.failed": "Không phân xử xong",
+    "history.state.rejudgeFailed": "Chưa xét được thông tin mới",
+    "history.state.waiting": "Đang chờ {name} trả lời",
+    "history.state.waitingOther": "Đang chờ phía bên kia trả lời",
+    "history.state.expired": "Liên kết đã hết hạn",
+    "history.state.removed": "Đã gỡ",
+    "history.state.removedBy": "{name} đã gỡ",
+    "history.state.removedByOther": "Phía bên kia đã gỡ",
+    "history.state.ready": "Đã có phán quyết",
+    "history.contextAdded": "Sau khi bổ sung thông tin",
+    "history.yourMove": "Đến lượt bạn",
+    "history.answered": "Bạn đã trả lời",
     "thread.label": "Cuộc tranh cãi này",
     "thread.you": "Bạn đã viết",
     "thread.judges": "Ban giám khảo",
@@ -650,7 +666,7 @@ const vi: Locale = {
     "bestPoint.self": "Điểm mạnh nhất của bạn",
     "privacy.accessTitle": "Ai xem được gì",
     "privacy.access":
-      "Bạn: bản gốc và các tên của bạn, trên mọi thiết bị khi bạn đã đăng nhập, hoặc trên thiết bị bạn đã dùng nhờ một mã riêng lưu trong trình duyệt hoặc ứng dụng (chúng tôi chỉ giữ dạng đã xáo trộn của mã đó). Các phán quyết tạo khi chưa đăng nhập, từ hồi chưa cần tài khoản, vẫn được liệt kê trong trình duyệt đó kèm tiêu đề và các tên đúng như bạn viết, để mục Phán quyết hiển thị được: bất kỳ ai dùng cùng trình duyệt đều thấy danh sách này. Trên máy tính dùng chung, hãy đăng nhập hoặc dùng cửa sổ ẩn danh; xóa dữ liệu của trang trong trình duyệt sẽ xóa danh sách. Trong một vụ hai bên, mỗi người chỉ thấy bản gốc của mình; sau phán quyết, cả hai thấy cả hai lời kể đã ẩn danh, đúng như giám khảo đã đọc. Ban giám khảo (các mô hình AI do nhà cung cấp AI của chúng tôi vận hành): chỉ bản ẩn danh. Bất kỳ ai có liên kết chia sẻ: phán quyết kèm tên hiển thị. Mặc định đó là tên bạn chọn cho mình và tên gọi của những người khác đúng như bạn đã viết; bạn có thể đổi hoặc tắt tên bất cứ lúc nào, khi đó trang sẽ hiển thị Bên A và Bên B. Chúng tôi: có thể giải mã bản gốc bằng khóa, và chỉ làm vậy để đáp ứng yêu cầu của bạn, khắc phục sự cố, hoặc khi pháp luật yêu cầu.",
+      "Bạn: bản gốc và các tên của bạn, trên mọi thiết bị khi bạn đã đăng nhập, hoặc trên thiết bị bạn đã dùng nhờ một mã riêng lưu trong trình duyệt hoặc ứng dụng (chúng tôi chỉ giữ dạng đã xáo trộn của mã đó). Các phán quyết tạo khi chưa đăng nhập, từ hồi chưa cần tài khoản, và các vụ bạn trả lời khi chưa đăng nhập vẫn được liệt kê trong trình duyệt đó kèm tiêu đề và các tên đúng như bạn viết, để mục Phán quyết hiển thị được: bất kỳ ai dùng cùng trình duyệt đều thấy danh sách này. Trên máy tính dùng chung, hãy đăng nhập hoặc dùng cửa sổ ẩn danh; xóa dữ liệu của trang trong trình duyệt sẽ xóa danh sách. Trong một vụ hai bên, mỗi người chỉ thấy bản gốc của mình; sau phán quyết, cả hai thấy cả hai lời kể đã ẩn danh, đúng như giám khảo đã đọc. Ban giám khảo (các mô hình AI do nhà cung cấp AI của chúng tôi vận hành): chỉ bản ẩn danh. Bất kỳ ai có liên kết chia sẻ: phán quyết kèm tên hiển thị. Mặc định đó là tên bạn chọn cho mình và tên gọi của những người khác đúng như bạn đã viết; bạn có thể đổi hoặc tắt tên bất cứ lúc nào, khi đó trang sẽ hiển thị Bên A và Bên B. Chúng tôi: có thể giải mã bản gốc bằng khóa, và chỉ làm vậy để đáp ứng yêu cầu của bạn, khắc phục sự cố, hoặc khi pháp luật yêu cầu.",
     "privacy.removalTitle": "Gỡ bỏ",
     "privacy.removal":
       "Bạn có thể yêu cầu gỡ bỏ ở trang phán quyết (khi đã đăng nhập, bạn mở được trang này từ mục Phán quyết), ở trang của vụ đối với vụ hai bên, bằng cách xóa tài khoản, hoặc qua email. Gỡ bỏ sẽ xóa bản gốc, danh sách tên và tên hiển thị (trong vụ hai bên là bản gốc và tên hiển thị trong phần của bạn), và liên kết chia sẻ cùng ảnh xem trước sẽ không tải được nữa với mọi người. Các bản xem trước đã đăng trong ứng dụng nhắn tin do chính các ứng dụng đó lưu giữ và có thể vẫn hiện cho đến khi chúng làm mới. Chúng tôi giữ văn bản ẩn danh và phán quyết, không kèm tên, trong hồ sơ của mình; chúng không còn mở được qua liên kết. Xóa tài khoản sẽ làm điều này cho tất cả phán quyết và phần của bạn trong các vụ, đồng thời xóa thông tin đăng nhập, lượt và gói của bạn. Dữ liệu đã gỡ vẫn còn trong các bản sao lưu cho đến khi chúng hết hạn (tối đa 14 ngày, xem bên dưới); nếu có lúc phải khôi phục một bản sao lưu, chúng tôi sẽ áp dụng lại mọi lần gỡ bỏ (vì thế chúng tôi giữ một danh sách những gì đã gỡ và thời điểm gỡ, không kèm văn bản hay tên).",
