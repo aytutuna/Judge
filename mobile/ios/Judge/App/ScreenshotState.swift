@@ -7,10 +7,9 @@ import SwiftData
 /// only) with no network.
 ///
 /// Launch argument: `-JudgeScreenshotState <screen>:<lang>`, where screen is
-/// `home`, `home-recent` (saved verdicts in the Recent row), `home-example`
-/// (both sides filled by "Try an example"), `home-error`,
-/// `judging`, `history`, `settings`, `signin`, `signin-code`, `account`
-/// (Settings, signed in), `verdict/<sample>` (a key of `verdictResponses`,
+/// `home`, `home-example` (both sides filled by "Try an example"),
+/// `home-error`, `judging`, `history`, `settings`, `signin`, `signin-code`,
+/// `account` (Settings, signed in), `verdict/<sample>` (a key of `verdictResponses`,
 /// opened as a saved verdict), `verdict-thread` (a fresh verdict under its
 /// argument), `verdict-context`, `verdict-context-locked` and
 /// `verdict-context-limit` (the writer's "Add context" form, its Premium
@@ -33,7 +32,6 @@ import SwiftData
 struct ScreenshotState {
     enum Screen: Equatable {
         case home
-        case homeRecent
         case homeExample
         case homeError
         case judging
@@ -65,7 +63,7 @@ struct ScreenshotState {
 
     var tab: RootTab {
         switch screen {
-        case .home, .homeRecent, .homeExample, .homeError, .judging, .verdict, .verdictThread, .verdictContext, .signIn, .signInCode,
+        case .home, .homeExample, .homeError, .judging, .verdict, .verdictThread, .verdictContext, .signIn, .signInCode,
              .balanceWelcome, .balanceNone, .pricing, .pricingStore, .pricingBuy, .clarify, .evidence, .modeBoth, .caseDetail:
             return .new
         case .history, .historyCases: return .history
@@ -85,7 +83,6 @@ struct ScreenshotState {
         let screen: Screen
         switch name {
         case "home": screen = .home
-        case "home-recent": screen = .homeRecent
         case "home-example": screen = .homeExample
         case "home-error": screen = .homeError
         case "judging": screen = .judging
@@ -157,7 +154,6 @@ struct ScreenshotState {
 
     @MainActor
     private func apply(to app: AppModel) {
-        app.home.today = Self.newest
         switch screen {
         case .home, .settings:
             break
@@ -257,7 +253,7 @@ struct ScreenshotState {
             guard let view = localized ?? ScreenshotFixtures.caseView(name) else { return }
             app.seedCase(view)
             app.home.path = [.caseDetail(id: view.id)]
-        case .history, .homeRecent:
+        case .history:
             saveSamples(app)
         }
     }

@@ -185,69 +185,6 @@ final class ThreadLabelTests: XCTestCase {
     }
 }
 
-/// The Recent row on Home.
-final class RecentTests: XCTestCase {
-    @MainActor
-    private func withStore(_ body: (HistoryStore) throws -> Void) throws {
-        let container = HistoryContainer.inMemory()
-        try withExtendedLifetime(container) {
-            try body(HistoryStore(context: container.mainContext))
-        }
-    }
-
-    private func session(_ name: String) throws -> VerdictSession {
-        let payload = try Fixtures.sample(name)
-        return VerdictSession(id: payload.id, original: payload.result, nameMap: payload.nameMap, translations: [:])
-    }
-
-    private func day(_ day: Int, hour: Int) throws -> Date {
-        try XCTUnwrap(Calendar.current.date(from: DateComponents(year: 2026, month: 10, day: day, hour: hour)))
-    }
-
-    @MainActor
-    func testEmptyHistoryShowsNoRow() throws {
-        try withStore { store in
-            XCTAssertTrue(Recent.cards(try store.all(), lang: .en).isEmpty)
-            XCTAssertTrue(Recent.cards([], lang: .tr).isEmpty)
-        }
-    }
-
-    @MainActor
-    func testCardsAreNewestFirstAndDatedByDay() throws {
-        try withStore { store in
-            try store.save(try session("win_a_self"), preset: "balanced", now: try day(21, hour: 12))
-            try store.save(try session("win_b_named"), preset: "balanced", now: try day(26, hour: 8))
-            let now = try day(26, hour: 15)
-
-            let en = Recent.cards(try store.all(), lang: .en, now: now)
-            XCTAssertEqual(en.map(\.id), ["winB000001", "abc123DEF0"])
-            XCTAssertEqual(en.map(\.date), ["Today", "October 21"])
-            XCTAssertEqual(Recent.cards(try store.all(), lang: .tr, now: now).map(\.date), ["Bugün", "21 Ekim"])
-
-            // Display only: the real names go back into the stored headline.
-            XCTAssertTrue(en[1].title.contains("Sam"), en[1].title)
-            XCTAssertFalse(en[1].title.contains("Party B"), en[1].title)
-            XCTAssertEqual(try store.find(id: "abc123DEF0")?.headline.contains("Party B"), true)
-        }
-    }
-
-    @MainActor
-    func testRowStopsAtEight() throws {
-        try withStore { store in
-            for (offset, name) in try Fixtures.sampleNames().enumerated() {
-                try store.save(try session(name), preset: "balanced", now: Date(timeIntervalSince1970: Double(offset) * 60))
-            }
-            XCTAssertGreaterThan(try store.all().count, Recent.limit)
-            XCTAssertEqual(Recent.cards(try store.all(), lang: .en).count, Recent.limit)
-        }
-    }
-
-    func testDayMonth() throws {
-        XCTAssertEqual(Recent.dayMonth(try day(26, hour: 12), lang: .en), "October 26")
-        XCTAssertEqual(Recent.dayMonth(try day(26, hour: 12), lang: .tr), "26 Ekim")
-    }
-}
-
 /// The header's "+" in place of the language switch.
 final class NewArgumentTests: XCTestCase {
     @MainActor

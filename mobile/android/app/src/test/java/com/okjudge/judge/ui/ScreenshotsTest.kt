@@ -130,15 +130,6 @@ class ScreenshotsTest {
     }
 
     @Test
-    fun home_recent_en() = capture("home_recent_en", tall = true) {
-        val items = listOf("win_a_self", "win_b_named", "lean_tie", "conditional").mapIndexed { i, n ->
-            val o = sample(n)
-            SavedVerdict(o.id, System.currentTimeMillis() - i * 86_400_000L, o.result, o.nameMap, Preset.BALANCED.id, emptyMap())
-        }
-        Themed(AppLang.EN) { HomeScreen(HomeUiState(recent = items), {}, {}, {}, {}, {}, {}) }
-    }
-
-    @Test
     fun verdict_ruling_en() = capture("verdict_ruling_win_b_en") {
         Themed(AppLang.EN) {
             Column(Modifier.fillMaxSize()) {

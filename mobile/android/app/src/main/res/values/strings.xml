@@ -449,10 +449,6 @@
     <string name="home_month_left">%1$s of %2$s left this month</string>
     <string name="home_out">No verdicts left.</string>
     <string name="home_pricing">See pricing</string>
-    <string name="home_recent">Recent</string>
-    <string name="home_all">All</string>
-    <string name="home_waiting">Waiting</string>
-    <string name="home_decided">Verdict</string>
     <string name="verdict_no_majority">Judges split</string>
     <string name="stamp_split">Split</string>
     <string name="stamp_conditional">Conditional</string>

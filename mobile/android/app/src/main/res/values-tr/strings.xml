@@ -449,10 +449,6 @@
     <string name="home_month_left">Bu ay %2$s kararın %1$s tanesi kaldı</string>
     <string name="home_out">Karar hakkın kalmadı.</string>
     <string name="home_pricing">Fiyatlara bak</string>
-    <string name="home_recent">Son kararlar</string>
-    <string name="home_all">Tümü</string>
-    <string name="home_waiting">Bekliyor</string>
-    <string name="home_decided">Karar</string>
     <string name="verdict_no_majority">Yargıçlar bölündü</string>
     <string name="stamp_split">Bölünmüş</string>
     <string name="stamp_conditional">Duruma bağlı</string>

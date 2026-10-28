@@ -236,7 +236,6 @@ fun JudgeRoot(container: AppContainer, links: StateFlow<Uri?> = MutableStateFlow
                                     accountState = account.state,
                                     providers = account.providers,
                                     uploadEvidence = container.api::uploadEvidence,
-                                    recent = container.history.observeAll(),
                                 )
                             }
                             val state by vm.state.collectAsStateWithLifecycle()
@@ -274,8 +273,6 @@ fun JudgeRoot(container: AppContainer, links: StateFlow<Uri?> = MutableStateFlow
                                 onAddEvidence = vm::onAddEvidence,
                                 onRemoveEvidence = vm::onRemoveEvidence,
                                 onDisplayName = vm::onDisplayName,
-                                onOpenVerdict = { id -> backStack.add(VerdictKey(id, fresh = false, fromHome = true)) },
-                                onAllVerdicts = { backStack.resetTo(listOf(HomeKey, HistoryKey)) },
                             )
                         }
                         entry<JudgingKey> {

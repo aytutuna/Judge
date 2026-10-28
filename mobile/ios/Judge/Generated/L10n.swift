@@ -454,10 +454,6 @@ enum L10n {
     static func homeMonthLeft(_ lang: AppLang, n: String, cap: String) -> String { format("home.monthLeft", lang, n, cap) }
     static func homeOut(_ lang: AppLang) -> String { string("home.out", lang) }
     static func homePricing(_ lang: AppLang) -> String { string("home.pricing", lang) }
-    static func homeRecent(_ lang: AppLang) -> String { string("home.recent", lang) }
-    static func homeAll(_ lang: AppLang) -> String { string("home.all", lang) }
-    static func homeWaiting(_ lang: AppLang) -> String { string("home.waiting", lang) }
-    static func homeDecided(_ lang: AppLang) -> String { string("home.decided", lang) }
     static func verdictNoMajority(_ lang: AppLang) -> String { string("verdict.noMajority", lang) }
     static func stampSplit(_ lang: AppLang) -> String { string("stamp.split", lang) }
     static func stampConditional(_ lang: AppLang) -> String { string("stamp.conditional", lang) }
@@ -1001,10 +997,6 @@ enum L10n {
         "home.oneSide",
         "home.out",
         "home.pricing",
-        "home.recent",
-        "home.all",
-        "home.waiting",
-        "home.decided",
         "verdict.noMajority",
         "stamp.split",
         "stamp.conditional",

@@ -448,10 +448,6 @@ class Strings(private val res: Resources) {
     fun homeMonthLeft(n: String, cap: String): String = res.getString(R.string.home_month_left, n, cap)
     val homeOut: String get() = res.getString(R.string.home_out)
     val homePricing: String get() = res.getString(R.string.home_pricing)
-    val homeRecent: String get() = res.getString(R.string.home_recent)
-    val homeAll: String get() = res.getString(R.string.home_all)
-    val homeWaiting: String get() = res.getString(R.string.home_waiting)
-    val homeDecided: String get() = res.getString(R.string.home_decided)
     val verdictNoMajority: String get() = res.getString(R.string.verdict_no_majority)
     val stampSplit: String get() = res.getString(R.string.stamp_split)
     val stampConditional: String get() = res.getString(R.string.stamp_conditional)
@@ -994,10 +990,6 @@ class Strings(private val res: Resources) {
             "home.oneSide" -> R.string.home_one_side
             "home.out" -> R.string.home_out
             "home.pricing" -> R.string.home_pricing
-            "home.recent" -> R.string.home_recent
-            "home.all" -> R.string.home_all
-            "home.waiting" -> R.string.home_waiting
-            "home.decided" -> R.string.home_decided
             "verdict.noMajority" -> R.string.verdict_no_majority
             "stamp.split" -> R.string.stamp_split
             "stamp.conditional" -> R.string.stamp_conditional

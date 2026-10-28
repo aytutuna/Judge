@@ -184,32 +184,6 @@ class ScreensTest {
     }
 
     @Test
-    fun home_recentRow_hiddenWhenEmpty_opensAVerdict() {
-        val en = UiTestSupport.s(AppLang.EN)
-        var recent by mutableStateOf(emptyList<SavedVerdict>())
-        val opened = mutableListOf<String>()
-        var all = 0
-        compose.setContent {
-            Themed(AppLang.EN) {
-                HomeScreen(HomeUiState(recent = recent), {}, {}, {}, {}, {}, {}, onOpenVerdict = { opened += it }, onAllVerdicts = { all++ })
-            }
-        }
-        compose.onNodeWithTag(HomeTags.RECENT).assertDoesNotExist()
-        compose.onNodeWithText(en.homeRecent.uppercase(Locale.US)).assertDoesNotExist()
-
-        val o = sample("win_a_self")
-        recent = listOf(SavedVerdict(o.id, System.currentTimeMillis(), o.result, o.nameMap, Preset.BALANCED.id, emptyMap()))
-        compose.waitForIdle()
-        compose.onNodeWithTag(HomeTags.RECENT).assertExists()
-        compose.onNodeWithText(personalized("win_a_self").str("headline")!!).assertExists()
-        compose.onNodeWithText(en.shellToday).assertExists()
-        compose.onNodeWithTag(HomeTags.recent(o.id)).performClick()
-        compose.onNodeWithText(en.homeAll).performClick()
-        assertEquals(listOf(o.id), opened)
-        assertEquals(1, all)
-    }
-
-    @Test
     fun home_showsLocalizedErrors() {
         home(AppLang.TR, HomeUiState(error = UiError.Api("rate_limited", 429, retryAfterSec = 420.0)))
         compose.onNodeWithText("Ağır ol, burası mahkeme! Şimdilik sınıra geldin. 7 dakika sonra tekrar dene.").assertExists()

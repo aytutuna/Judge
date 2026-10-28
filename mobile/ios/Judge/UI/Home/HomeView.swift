@@ -1,9 +1,7 @@
-import SwiftData
 import SwiftUI
 
 /// Home: your side and theirs in two cards, the lens and the send button
-/// with what is left to spend, then the newest saved verdicts and the
-/// privacy note.
+/// with what is left to spend, then the privacy note.
 struct HomeView: View {
     @Environment(AppModel.self) private var app
     @SceneStorage("home.draft") private var draft = ""
@@ -35,7 +33,6 @@ struct HomeView: View {
                     } else {
                         form(lang, home: home)
                     }
-                    RecentSection(lang: lang)
                     footer(lang)
                 }
                 .padding(.horizontal, 16)
@@ -361,83 +358,6 @@ struct HomeView: View {
     private func submit() {
         focused = nil
         app.home.submit(app: app)
-    }
-}
-
-/// "Recent" under the case card: the newest saved verdicts in a row of small
-/// cards, with a link to the whole list. Nothing at all while it is empty.
-private struct RecentSection: View {
-    @Environment(AppModel.self) private var app
-    @Query(RecentSection.latest) private var saved: [SavedVerdict]
-    let lang: AppLang
-
-    static var latest: FetchDescriptor<SavedVerdict> {
-        var descriptor = FetchDescriptor<SavedVerdict>(sortBy: [SortDescriptor(\.createdAt, order: .reverse)])
-        descriptor.fetchLimit = Recent.limit
-        return descriptor
-    }
-
-    var body: some View {
-        let cards = Recent.cards(saved, lang: lang, now: app.home.today ?? .now)
-        if !cards.isEmpty {
-            VStack(alignment: .leading, spacing: 4) {
-                HStack {
-                    Kicker(text: L10n.homeRecent(lang))
-                        .accessibilityAddTraits(.isHeader)
-                    Spacer()
-                    Button(L10n.homeAll(lang)) {
-                        app.historySegment = .verdicts
-                        app.tab = .history
-                    }
-                    .buttonStyle(LinkButtonStyle())
-                }
-                .padding(.horizontal, 20)
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(alignment: .top, spacing: 10) {
-                        ForEach(cards) { card in
-                            Button {
-                                app.home.path.append(.saved(id: card.id))
-                            } label: {
-                                RecentCardView(card: card, lang: lang)
-                            }
-                            .buttonStyle(.plain)
-                        }
-                    }
-                    .padding(.horizontal, 16)
-                    .padding(.top, 4)
-                    .padding(.bottom, 14)
-                }
-            }
-            .padding(.horizontal, -16)
-        }
-    }
-}
-
-private struct RecentCardView: View {
-    let card: Recent.Card
-    let lang: AppLang
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: 6) {
-            Kicker(text: L10n.homeDecided(lang), color: Brand.terraInk)
-            Text(card.title)
-                .brandText(TypeStyle(face: .inter, weight: 500, size: 13, lineHeight: 1.35, textStyle: .footnote))
-                .foregroundStyle(Brand.ink)
-                .multilineTextAlignment(.leading)
-                .lineLimit(2, reservesSpace: true)
-            Text(card.date)
-                .brandText(.footnote)
-                .foregroundStyle(Brand.placeholder)
-                .padding(.top, 2)
-        }
-        .padding(.horizontal, 14)
-        .padding(.top, 14)
-        .padding(.bottom, 12)
-        .frame(width: 180, alignment: .leading)
-        .paperSurface(radius: Radius.field)
-        .softShadow()
-        .contentShape(RoundedRectangle(cornerRadius: Radius.field, style: .continuous))
-        .accessibilityElement(children: .combine)
     }
 }
 

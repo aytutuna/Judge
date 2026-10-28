@@ -7,11 +7,8 @@ import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.defaultMinSize
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -19,7 +16,6 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.selectable
@@ -48,7 +44,6 @@ import androidx.compose.ui.semantics.LiveRegionMode
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
-import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
@@ -60,14 +55,10 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.compose.LocalLifecycleOwner
-import androidx.lifecycle.compose.currentStateAsState
 import com.okjudge.judge.core.cases.CaseLogic
-import com.okjudge.judge.core.data.SavedVerdict
 import com.okjudge.judge.core.display.ArgumentRules
 import com.okjudge.judge.core.display.Errors
 import com.okjudge.judge.core.display.Preset
-import com.okjudge.judge.core.display.RestoreNames
 import com.okjudge.judge.core.display.UiError
 import com.okjudge.judge.core.evidence.ImageSource
 import com.okjudge.judge.core.premium.Tiers
@@ -76,7 +67,6 @@ import com.okjudge.judge.i18n.LocalLang
 import com.okjudge.judge.i18n.LocalStrings
 import com.okjudge.judge.ui.components.GhostButton
 import com.okjudge.judge.ui.components.JudgeIcons
-import com.okjudge.judge.ui.components.Kicker
 import com.okjudge.judge.ui.components.TintedIcon
 import com.okjudge.judge.ui.components.TopBar
 import com.okjudge.judge.ui.components.uppercaseForUi
@@ -88,10 +78,6 @@ import com.okjudge.judge.ui.theme.JudgeType
 import com.okjudge.judge.ui.theme.Palette
 import kotlinx.coroutines.delay
 import java.text.NumberFormat
-import java.time.Instant
-import java.time.LocalDate
-import java.time.ZoneId
-import java.time.format.DateTimeFormatter
 
 object HomeTags {
     const val INPUT = "home.input"
@@ -106,13 +92,8 @@ object HomeTags {
     const val EXAMPLE = "home.example"
     const val BALANCE = "home.balance"
     const val CASE_COST = "home.caseCost"
-    const val RECENT = "home.recent"
     fun preset(id: String) = "home.preset.$id"
-    fun recent(id: String) = "home.recent.$id"
 }
-
-/** Cards in the "Recent" row (Recent.tsx MAX). */
-private const val RECENT_MAX = 8
 
 /** Your side and theirs, each on its own card, in these colours. */
 private data class SideColors(val avatar: Color, val ink: Color)
@@ -123,7 +104,7 @@ private val Theirs = SideColors(Palette.sageInk, Palette.sageInk)
 /**
  * Home: a card for your side and one for theirs (or a link for them to
  * write it), the lens, the send button with what is left to spend, then the
- * newest saved verdicts and the privacy note.
+ * privacy note.
  */
 @Composable
 fun HomeScreen(
@@ -142,8 +123,6 @@ fun HomeScreen(
     onAddEvidence: (List<ImageSource>) -> Unit = {},
     onRemoveEvidence: (String) -> Unit = {},
     onDisplayName: (String) -> Unit = {},
-    onOpenVerdict: (String) -> Unit = {},
-    onAllVerdicts: () -> Unit = {},
 ) {
     val s = LocalStrings.current
     val lang = LocalLang.current
@@ -263,9 +242,6 @@ fun HomeScreen(
                         Text(if (state.creating) s.caseCreating else s.tierChecking, style = JudgeType.slotText.copy(color = Palette.ink2))
                     }
                 }
-            }
-            if (state.recent.isNotEmpty()) {
-                Recent(state.recent.take(RECENT_MAX), onOpenVerdict, onAllVerdicts, Modifier.widthIn(max = 640.dp).fillMaxWidth())
             }
             Column(
                 Modifier.widthIn(max = 520.dp).padding(horizontal = 24.dp),
@@ -454,85 +430,6 @@ private fun SubmitButton(text: String, enabled: Boolean, onClick: () -> Unit) {
         TintedIcon(remember(fg) { JudgeIcons.arrow(fg) }, 18)
     }
 }
-
-/** "Recent": the newest saved verdicts in a row of small cards (Recent.tsx). */
-@Composable
-private fun Recent(items: List<SavedVerdict>, onOpen: (String) -> Unit, onAll: () -> Unit, modifier: Modifier = Modifier) {
-    val s = LocalStrings.current
-    val lang = LocalLang.current
-    val today = rememberToday()
-    Column(modifier.testTag(HomeTags.RECENT)) {
-        Row(Modifier.fillMaxWidth().padding(horizontal = 20.dp), verticalAlignment = Alignment.CenterVertically) {
-            Kicker(s.homeRecent, Modifier.weight(1f).semantics { heading() })
-            Text(
-                s.homeAll,
-                style = JudgeType.small.copy(color = Palette.terraInk),
-                modifier = Modifier
-                    .clip(JudgeShapes.chip)
-                    .clickable(role = Role.Button, onClick = onAll)
-                    .padding(horizontal = 6.dp, vertical = 10.dp),
-            )
-        }
-        Row(
-            Modifier
-                .fillMaxWidth()
-                .horizontalScroll(rememberScrollState())
-                .height(IntrinsicSize.Min)
-                .padding(start = 16.dp, end = 16.dp, top = 4.dp, bottom = 14.dp),
-            horizontalArrangement = Arrangement.spacedBy(10.dp),
-        ) {
-            items.forEach { item ->
-                val shown = item.translations[lang]?.result ?: item.original.result
-                val title = remember(shown, item.nameMap, item.lang) { RestoreNames.headline(shown, item.nameMap, item.lang) }
-                val day = Instant.ofEpochMilli(item.createdAt).atZone(ZoneId.systemDefault()).toLocalDate()
-                RecentCard(
-                    kicker = s.homeDecided,
-                    title = title,
-                    date = if (day == today) s.shellToday else dayMonth(day, lang),
-                    onClick = { onOpen(item.id) },
-                    modifier = Modifier.testTag(HomeTags.recent(item.id)),
-                )
-            }
-        }
-    }
-}
-
-@Composable
-private fun RecentCard(kicker: String, title: String, date: String, onClick: () -> Unit, modifier: Modifier = Modifier) {
-    Column(
-        modifier
-            .width(180.dp)
-            .fillMaxHeight()
-            .warmShadow(3.dp, JudgeShapes.field)
-            .clip(JudgeShapes.field)
-            .background(Palette.paper)
-            .border(1.dp, Palette.line, JudgeShapes.field)
-            .clickable(role = Role.Button, onClick = onClick)
-            .padding(start = 14.dp, end = 14.dp, top = 14.dp, bottom = 12.dp),
-        verticalArrangement = Arrangement.spacedBy(6.dp),
-    ) {
-        Text(kicker.uppercaseForUi(), style = JudgeType.micro.copy(fontSize = 10.sp, letterSpacing = 1.sp, color = Palette.terraInk))
-        Text(
-            title,
-            style = JudgeType.small.copy(color = Palette.ink, lineHeight = (13 * 1.35).sp),
-            maxLines = 2,
-            overflow = TextOverflow.Ellipsis,
-        )
-        Spacer(Modifier.weight(1f))
-        Text(date, style = JudgeType.footnote.copy(fontSize = 12.sp, color = Palette.placeholder))
-    }
-}
-
-/** Today, read again on each resume so Home left open overnight moves on. */
-@Composable
-private fun rememberToday(): LocalDate {
-    val state by LocalLifecycleOwner.current.lifecycle.currentStateAsState()
-    return remember(state) { LocalDate.now() }
-}
-
-/** "October 26" / "26 Ekim" (formatDate in lib/i18n.ts). */
-private fun dayMonth(date: LocalDate, lang: AppLang): String =
-    DateTimeFormatter.ofPattern(if (lang == AppLang.TR) "d MMMM" else "MMMM d", lang.locale).format(date)
 
 private val ErrorShape = RoundedCornerShape(14.dp)
 

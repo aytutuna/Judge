@@ -57,8 +57,6 @@ final class ScreenshotStateTests: XCTestCase {
     }
 
     func testParsesTheThreadScreens() {
-        XCTAssertEqual(ScreenshotState.parse("home-recent:en")?.screen, .homeRecent)
-        XCTAssertEqual(ScreenshotState.parse("home-recent:tr")?.tab, .new)
         XCTAssertEqual(ScreenshotState.parse("home-example:en")?.screen, .homeExample)
         XCTAssertEqual(ScreenshotState.parse("verdict-thread:tr")?.screen, .verdictThread)
         XCTAssertEqual(ScreenshotState.parse("verdict-thread:en")?.tab, .new)
@@ -68,10 +66,6 @@ final class ScreenshotStateTests: XCTestCase {
     func testThreadStatesNeedNoNetwork() throws {
         let container = HistoryContainer.inMemory()
         try withExtendedLifetime(container) {
-            let recent = try XCTUnwrap(ScreenshotState.parse("home-recent:en")).makeModel(container: container)
-            XCTAssertTrue(recent.home.path.isEmpty, "Home itself, with the row filled")
-            XCTAssertEqual(Recent.cards(try recent.history.all(), lang: .en).count, 6)
-
             let example = try XCTUnwrap(ScreenshotState.parse("home-example:tr")).makeModel(container: container)
             XCTAssertEqual(example.home.argument, ExampleCase.all[0].mine(.tr))
             XCTAssertEqual(example.home.otherSide, ExampleCase.all[0].theirs(.tr))
