@@ -36,7 +36,7 @@ function track<T extends (...args: never[]) => unknown>(name: string, fn: T) {
 
 vi.mock("@/lib/auth", () => ({
   getViewer: track("viewer", m.getViewer),
-  resolveViewer: async (req: Request) => ({ viewer: (await m.getViewer(req)) ?? null, deadBearer: false }),
+  resolveViewer: track("viewer", async (req: Request) => ({ viewer: (await m.getViewer(req)) ?? null, deadBearer: false })),
   hasDeadBearer: async () => false,
   isSameOrigin: track("origin", m.isSameOrigin),
   authConfigured: m.authConfigured,
@@ -385,6 +385,13 @@ describe("premium verdict: gates and error codes", () => {
     m.getViewer.mockResolvedValue(null);
     await expectError(await POST(request(premium())), 401, "signin_required");
     expect(m.calls).toEqual(["viewer"]);
+  });
+
+  it("503 unavailable, not signin_required, when the session lookup fails", async () => {
+    const auth = await import("@/lib/auth");
+    vi.spyOn(auth, "resolveViewer").mockResolvedValueOnce({ viewer: null, deadBearer: false, failed: true });
+    await expectError(await POST(request(premium())), 503, "unavailable");
+    expect(m.reservePremiumVerdict).not.toHaveBeenCalled();
   });
 
   it("403 bad_origin for a cookie session from another origin; bearer is exempt", async () => {

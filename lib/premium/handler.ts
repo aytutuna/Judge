@@ -19,7 +19,7 @@ import { NextResponse } from "next/server";
 import { nanoid } from "nanoid";
 import type { Entitlement } from "@/lib/account-types";
 import { API_ERROR_STATUS, apiErrorBody, type ApiErrorBody, type ApiErrorCode } from "@/lib/api-errors";
-import { getViewer, isSameOrigin, premiumEnabled } from "@/lib/auth";
+import { isSameOrigin, premiumEnabled, resolveViewer } from "@/lib/auth";
 import { getVerdict } from "@/lib/db";
 import {
   consumePremiumVerdict,
@@ -68,9 +68,12 @@ function unavailable(status = 503): NextResponse {
 
 type Gate = { userId: string; name: string } | { response: NextResponse };
 
-/** Session, origin and configuration checks shared by both handlers. */
+/** Session, origin and configuration checks shared by both handlers. A
+ * failed session lookup is a 503, not signin_required: the apps drop their
+ * token on that code. */
 async function signedInGate(req: Request): Promise<Gate> {
-  const viewer = await getViewer(req);
+  const { viewer, failed } = await resolveViewer(req);
+  if (failed) return { response: unavailable() };
   if (!viewer) return { response: fail("signin_required", "Sign in to get a verdict.") };
   if (viewer.via === "cookie" && !isSameOrigin(req)) {
     return { response: fail("bad_origin", "This request came from another site.") };

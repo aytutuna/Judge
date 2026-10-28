@@ -494,6 +494,8 @@ export type ViewerLookup = {
   /** The request carried `Authorization: Bearer <token>` and the token
    * matches no live session (unknown, expired or signed out). */
   deadBearer: boolean;
+  /** The lookup itself failed, so the request may well be signed in. */
+  failed?: true;
 };
 
 /**
@@ -501,8 +503,9 @@ export type ViewerLookup = {
  * sent that no longer works. A request with a bearer token is judged by that
  * token alone (a cookie next to it is ignored); without one, by the session
  * cookie. Never throws: a lookup failure is logged and treated as signed out
- * with deadBearer false (the token itself may be fine). With auth off there
- * are no sessions, so nothing counts as a dead token either.
+ * with deadBearer false (the token itself may be fine) and `failed` set.
+ * With auth off there are no sessions, so nothing counts as a dead token
+ * either.
  */
 export async function resolveViewer(req: Request): Promise<ViewerLookup> {
   if (!authConfigured()) return { viewer: null, deadBearer: false };
@@ -518,7 +521,7 @@ export async function resolveViewer(req: Request): Promise<ViewerLookup> {
     };
   } catch (e) {
     console.error("[auth] session lookup failed:", e instanceof Error ? e.message : String(e));
-    return { viewer: null, deadBearer: false };
+    return { viewer: null, deadBearer: false, failed: true };
   }
 }
 
