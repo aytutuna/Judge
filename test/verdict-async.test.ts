@@ -68,7 +68,7 @@ const ent = await import("../lib/entitlements");
 const jobs = await import("../lib/verdict-jobs");
 const { removeUserData } = await import("../lib/originals/removal");
 const { getDb } = await import("../lib/db");
-import type { JudgeRunOutput, VerdictResult } from "../lib/types";
+import type { JudgeRunOutput } from "../lib/types";
 import type { VerdictAcceptedResponse } from "../lib/verdict-poll";
 
 afterAll(() => {
