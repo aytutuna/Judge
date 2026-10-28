@@ -537,8 +537,6 @@ class Strings(private val res: Resources) {
     val appSettingsLanguageDevice: String get() = res.getString(R.string.app_settings_language_device)
     val appSettingsAbout: String get() = res.getString(R.string.app_settings_about)
     fun appSettingsVersion(version: String): String = res.getString(R.string.app_settings_version, version)
-    val appLangEn: String get() = res.getString(R.string.app_lang_en)
-    val appLangTr: String get() = res.getString(R.string.app_lang_tr)
     val appSigninRequired: String get() = res.getString(R.string.app_signin_required)
     val appSigninOr: String get() = res.getString(R.string.app_signin_or)
     val appSigninCodeRequest: String get() = res.getString(R.string.app_signin_code_request)
@@ -1063,8 +1061,6 @@ class Strings(private val res: Resources) {
             "app.settings.language" -> R.string.app_settings_language
             "app.settings.languageDevice" -> R.string.app_settings_language_device
             "app.settings.about" -> R.string.app_settings_about
-            "app.lang.en" -> R.string.app_lang_en
-            "app.lang.tr" -> R.string.app_lang_tr
             "app.signin.required" -> R.string.app_signin_required
             "app.signin.or" -> R.string.app_signin_or
             "app.signin.codeRequest" -> R.string.app_signin_code_request

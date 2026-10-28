@@ -496,8 +496,6 @@
     <string name="app_settings_language_device">Same as the phone</string>
     <string name="app_settings_about">About Judge</string>
     <string name="app_settings_version">Version %1$s</string>
-    <string name="app_lang_en">English</string>
-    <string name="app_lang_tr">Türkçe</string>
     <string name="app_signin_required">Sign in to get a verdict.</string>
     <string name="app_signin_or">or</string>
     <string name="app_signin_code_request">Email me a code</string>

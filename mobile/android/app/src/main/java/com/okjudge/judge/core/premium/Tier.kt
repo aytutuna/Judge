@@ -5,7 +5,6 @@ import com.okjudge.judge.i18n.AppLang
 import com.okjudge.judge.i18n.Strings
 import java.text.NumberFormat
 import java.util.Currency
-import java.util.Locale
 
 /** What is left to spend right now: the monthly allowance first, then credits (premiumRemaining). */
 data class PremiumRemaining(val monthly: Boolean, val n: Int)
@@ -28,14 +27,15 @@ object Tiers {
         return if (left.monthly) s.appBalanceMonthly(left.n.toString(), cap.toString()) else s.appBalanceLeft(left.n)
     }
 
-    /** "$7.50" in English, "$7,50" in Turkish (formatPrice). */
+    /** US dollars in the language's number format: "$7.50" in English, "$7,50" in Turkish (formatPrice). */
     fun formatPrice(usd: Double, lang: AppLang, currency: String = "USD"): String {
-        val locale = if (lang == AppLang.TR) Locale.forLanguageTag("tr-TR") else Locale.US
-        val nf = NumberFormat.getCurrencyInstance(locale)
+        val nf = NumberFormat.getCurrencyInstance(lang.locale)
         runCatching { nf.currency = Currency.getInstance(currency) }
         nf.minimumFractionDigits = 2
         nf.maximumFractionDigits = 2
-        return nf.format(usd)
+        // A price ending on a neutral "$" ("7.50 US$") would move to the front
+        // of a right-to-left line; a closing LRM keeps it in place.
+        return if (lang.rtl) nf.format(usd) + "\u200E" else nf.format(usd)
     }
 
     /** Premium's feature list keys, plus the extras this deployment offers (premiumFeatureKeys). */

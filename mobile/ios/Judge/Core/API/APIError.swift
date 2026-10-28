@@ -97,12 +97,12 @@ enum ErrorText {
         return L10n.waitHours(lang, n: Int((seconds / 3600).rounded(.up)))
     }
 
-    /// An ISO timestamp as "November 18" / "18 Kasım"; nil when unusable.
+    /// An ISO timestamp as month and day in the language's own order
+    /// ("November 18", "18 Kasım"); nil when unusable.
     static func formatDate(_ iso: String?, lang: AppLang, timeZone: TimeZone = .current) -> String? {
         guard let iso, !iso.isEmpty, let date = parseISO(iso) else { return nil }
-        let locale = Locale(identifier: lang == .tr ? "tr_TR" : "en_US")
         let formatter = DateFormatter()
-        formatter.locale = locale
+        formatter.locale = lang.locale
         formatter.timeZone = timeZone
         formatter.setLocalizedDateFormatFromTemplate("MMMMd")
         return formatter.string(from: date)

@@ -13,6 +13,7 @@ import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonObject
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotEquals
 import org.junit.Assert.assertNull
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -47,6 +48,35 @@ class TextVectorsTest {
             assertEquals(where, v.str("label"), VerdictDisplay.verdictLabel(outcome.result.result, parties, s(lang)))
             assertEquals(where, v.str("confidence"), VerdictDisplay.confidenceLabel(outcome.result.result, s(lang)))
         }
+    }
+
+    @Test
+    fun pluralWaits_takeEachLanguagesForms() {
+        val waits = Fixtures.list("pluralWaits")
+        assertEquals(80, waits.size)
+        for (w in waits) {
+            assertEquals("${w["seconds"]}/${w.str("lang")}", w.str("text"), Errors.formatWait(s(w.str("lang")!!), w.num("seconds")))
+        }
+    }
+
+    @Test
+    fun everyEnabledLanguage_findsItsOwnResources() {
+        // Hebrew and Indonesian live under Android's old codes, Chinese by script.
+        assertEquals("צד A", s("he").partyA)
+        assertEquals("Pihak A", s("id").partyA)
+        assertEquals("當事人A", s("zh-Hant").partyA)
+        assertEquals("当事人A", s("zh-Hans").partyA)
+        assertEquals("Parte A", s("pt-PT").partyA)
+        assertEquals("Partei A", s("de").partyA)
+        for (lang in AppLang.enabled) {
+            if (lang != AppLang.EN) assertNotEquals(lang.tag, s("en").getVerdict, strings.of(lang).getVerdict)
+        }
+        assertEquals("1 вердикт", s("ru").pricingPack(1))
+        assertEquals("3 вердикта", s("ru").pricingPack(3))
+        assertEquals("5 вердиктов", s("ru").pricingPack(5))
+        assertEquals("21 вердикт", s("ru").pricingPack(21))
+        assertEquals("1 verdict left", s("en").appBalanceLeft(1))
+        assertEquals("2 verdicts left", s("en").appBalanceLeft(2))
     }
 
     @Test

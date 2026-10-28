@@ -1,5 +1,6 @@
 package com.okjudge.judge.ui
 
+import androidx.compose.ui.test.assertTextContains
 import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onAllNodesWithTag
@@ -12,9 +13,11 @@ import androidx.compose.ui.semantics.SemanticsProperties
 import com.okjudge.judge.MainActivity
 import com.okjudge.judge.core.display.Examples
 import com.okjudge.judge.i18n.AppLang
+import com.okjudge.judge.i18n.LangPref
 import com.okjudge.judge.ui.components.TopBarTags
 import com.okjudge.judge.ui.history.HistoryTags
 import com.okjudge.judge.ui.home.HomeTags
+import com.okjudge.judge.ui.settings.SettingsTags
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
@@ -44,9 +47,10 @@ class AppShellTest {
         compose.onNodeWithTag(HistoryTags.EMPTY).assertExists()
 
         compose.onNodeWithText(en.appTabSettings).performClick()
-        compose.onNodeWithText(en.appSettingsLanguageDevice).assertExists()
-        compose.onNodeWithText(tr.appLangTr).performClick()
+        compose.onNodeWithTag(SettingsTags.LANGUAGE).assertTextContains(en.appSettingsLanguageDevice).performClick()
+        compose.onNodeWithTag(SettingsTags.langOption(LangPref(AppLang.TR))).performClick()
         awaitText(tr.appTabSettings)
+        compose.onNodeWithTag(SettingsTags.LANGUAGE).assertTextContains("Türkçe")
 
         compose.onNodeWithText(tr.appTabNew).performClick()
         awaitText(tr.appHomeExample)

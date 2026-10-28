@@ -65,6 +65,18 @@ final class DisplayVectorTests: XCTestCase {
         }
     }
 
+    /// Counts in languages with more plural forms than English, through the
+    /// catalog's plural variations.
+    func testPluralWaitVectors() throws {
+        let vectors = try Fixtures.list("pluralWaits", in: Fixtures.vectors())
+        XCTAssertEqual(vectors.count, 80)
+        for vector in vectors {
+            let lang = try Fixtures.lang(vector["lang"])
+            let seconds = (vector["seconds"] as? NSNumber)?.doubleValue
+            XCTAssertEqual(ErrorText.formatWait(seconds, lang: lang), vector["text"] as? String, "\(String(describing: seconds))/\(lang)")
+        }
+    }
+
     func testErrorVectors() throws {
         for vector in try Fixtures.list("errors", in: Fixtures.vectors()) {
             let lang = try Fixtures.lang(vector["lang"])

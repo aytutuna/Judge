@@ -44,7 +44,12 @@ enum TranslationStatus: Sendable, Equatable {
         switch self {
         case .original: return nil
         case .loading: return L10n.translateLoading(lang)
-        case .translated(let source): return source == .tr ? L10n.translateFromTr(lang) : L10n.translateFromEn(lang)
+        case .translated(let source):
+            switch source {
+            case .en: return L10n.translateFromEn(lang)
+            case .tr: return L10n.translateFromTr(lang)
+            default: return "\(source.name(in: lang)) \(lang.isRTL ? "←" : "→") \(lang.name(in: lang))"
+            }
         case .failed: return L10n.translateFailed(lang)
         case .offline: return L10n.appTranslateOffline(lang)
         }

@@ -52,8 +52,6 @@ export const APP_EN = {
   "app.settings.languageDevice": "Same as the phone",
   "app.settings.about": "About Judge",
   "app.settings.version": "Version {version}",
-  "app.lang.en": "English",
-  "app.lang.tr": "Türkçe",
   // Sign-in. Email in the apps is a 6-digit code, not a link.
   "app.signin.required": "Sign in to get a verdict.",
   "app.signin.or": "or",

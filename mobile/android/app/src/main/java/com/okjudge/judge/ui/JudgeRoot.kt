@@ -47,7 +47,7 @@ import com.okjudge.judge.i18n.LangPref
 import com.okjudge.judge.i18n.LocalLang
 import com.okjudge.judge.i18n.LocalStrings
 import com.okjudge.judge.i18n.Strings
-import com.okjudge.judge.i18n.deviceLanguageTag
+import com.okjudge.judge.i18n.deviceLanguageTags
 import com.okjudge.judge.ui.components.JudgeIcons
 import com.okjudge.judge.ui.history.HistoryScreen
 import com.okjudge.judge.ui.history.HistoryViewModel
@@ -108,8 +108,9 @@ private enum class Tab { NEW, HISTORY, SETTINGS }
 fun JudgeRoot(container: AppContainer, links: StateFlow<Uri?> = MutableStateFlow(null), onLinkHandled: () -> Unit = {}) {
     val langPref by container.settings.langPref.collectAsStateWithLifecycle(initialValue = LangPref.SYSTEM)
     val configuration = LocalConfiguration.current
-    val deviceTag = remember(configuration) { deviceLanguageTag() }
-    val lang = langPref.resolve(deviceTag)
+    val appContext = LocalContext.current
+    val deviceTags = remember(configuration) { deviceLanguageTags(appContext) }
+    val lang = langPref.resolve(deviceTags)
     val strings = remember(lang) { container.strings.of(lang) }
     val scope = rememberCoroutineScope()
 

@@ -42,8 +42,6 @@ const tr: AppLocale = {
     "app.settings.languageDevice": "Telefonla aynı",
     "app.settings.about": "Judge hakkında",
     "app.settings.version": "Sürüm {version}",
-    "app.lang.en": "English",
-    "app.lang.tr": "Türkçe",
     "app.signin.required": "Karar almak için giriş yap.",
     "app.signin.or": "ya da",
     "app.signin.codeRequest": "Bana kod gönder",

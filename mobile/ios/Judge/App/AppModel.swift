@@ -3,16 +3,33 @@ import Observation
 import SwiftData
 
 /// The language setting: follow the phone, or a fixed language.
-enum LangPreference: String, CaseIterable, Sendable {
-    case system, en, tr
+enum LangPreference: Hashable, Sendable {
+    case system
+    case fixed(AppLang)
 
-    /// System resolves to Turkish when the phone's first preferred language
-    /// is Turkish (the website's rule in lib/lang.ts), English otherwise.
+    /// "system" or a language code, as stored. Anything else, a language no
+    /// longer offered included, follows the phone.
+    init(stored: String?) {
+        if let stored, let lang = AppLang(rawValue: stored), AppLang.enabled.contains(lang) {
+            self = .fixed(lang)
+        } else {
+            self = .system
+        }
+    }
+
+    var stored: String {
+        switch self {
+        case .system: return "system"
+        case .fixed(let lang): return lang.rawValue
+        }
+    }
+
+    /// System takes the first of the phone's preferred languages the app
+    /// speaks (the website's rule in lib/langs.ts), English otherwise.
     func resolved(preferredLanguages: [String]) -> AppLang {
         switch self {
-        case .en: return .en
-        case .tr: return .tr
-        case .system: return preferredLanguages.first?.lowercased().hasPrefix("tr") == true ? .tr : .en
+        case .system: return AppLang.match(preferredLanguages)
+        case .fixed(let lang): return lang
         }
     }
 }
@@ -76,7 +93,7 @@ final class AppModel {
         self.defaults = defaults
         self.caseNames = caseNames ?? KeychainCaseNamesStore()
         caseList = CaseListModel()
-        langPreference = defaults.string(forKey: Self.langKey).flatMap(LangPreference.init(rawValue:)) ?? .system
+        langPreference = LangPreference(stored: defaults.string(forKey: Self.langKey))
         self.api = api ?? JudgeAPI(baseURL: config.apiBaseURL, userAgent: config.userAgent, tokenStore: tokenStore)
         history = HistoryStore(context: container.mainContext)
         home = HomeModel()
@@ -111,7 +128,7 @@ final class AppModel {
 
     func setLangPreference(_ preference: LangPreference) {
         langPreference = preference
-        defaults.set(preference.rawValue, forKey: Self.langKey)
+        defaults.set(preference.stored, forKey: Self.langKey)
     }
 
     /// Screenshot evidence on Home: uploading needs an account.

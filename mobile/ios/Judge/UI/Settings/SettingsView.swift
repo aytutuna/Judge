@@ -29,9 +29,13 @@ struct SettingsView: View {
                 .listRowBackground(Brand.paper)
 
                 Section {
-                    languageRow(.system, title: L10n.appSettingsLanguageDevice(lang))
-                    languageRow(.en, title: L10n.appLangEn(lang))
-                    languageRow(.tr, title: L10n.appLangTr(lang))
+                    NavigationLink {
+                        LanguageList()
+                    } label: {
+                        Text(languageChoice(lang))
+                            .brandText(.body)
+                            .foregroundStyle(Brand.ink)
+                    }
                 } header: {
                     Kicker(text: L10n.appSettingsLanguage(lang))
                 }
@@ -88,25 +92,11 @@ struct SettingsView: View {
         }
     }
 
-    private func languageRow(_ preference: LangPreference, title: String) -> some View {
-        Button {
-            app.setLangPreference(preference)
-        } label: {
-            HStack {
-                Text(title)
-                    .brandText(.body)
-                    .foregroundStyle(Brand.ink)
-                Spacer()
-                if app.langPreference == preference {
-                    Image(systemName: "checkmark")
-                        .foregroundStyle(Brand.terraInk)
-                        .accessibilityHidden(true)
-                }
-            }
-            .contentShape(Rectangle())
+    private func languageChoice(_ lang: AppLang) -> String {
+        switch app.langPreference {
+        case .system: return L10n.appSettingsLanguageDevice(lang)
+        case .fixed(let fixed): return fixed.nativeName
         }
-        .buttonStyle(.plain)
-        .accessibilityAddTraits(app.langPreference == preference ? .isSelected : [])
     }
 
     private func linkRow(_ title: String, path: String) -> some View {
@@ -134,5 +124,64 @@ struct SettingsView: View {
         components?.path = "/about"
         components?.fragment = String(path.dropFirst())
         return components?.url ?? app.config.shareBaseURL
+    }
+}
+
+/// Every language the app speaks, each in its own words, below "Same as the
+/// phone". A row also names the language in the current one when that reads
+/// differently.
+private struct LanguageList: View {
+    @Environment(AppModel.self) private var app
+
+    var body: some View {
+        let lang = app.lang
+        List {
+            Section {
+                row(.system, title: L10n.appSettingsLanguageDevice(lang), subtitle: nil)
+            }
+            .listRowBackground(Brand.paper)
+            Section {
+                ForEach(AppLang.enabled, id: \.self) { option in
+                    let name = option.name(in: lang)
+                    row(.fixed(option), title: option.nativeName, subtitle: name == option.nativeName ? nil : name)
+                        .environment(\.locale, option.locale)
+                }
+            }
+            .listRowBackground(Brand.paper)
+        }
+        .scrollContentBackground(.hidden)
+        .background(Brand.ivory.ignoresSafeArea())
+        .navigationTitle(L10n.appSettingsLanguage(lang))
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbarBackground(Brand.ivory, for: .navigationBar)
+    }
+
+    private func row(_ preference: LangPreference, title: String, subtitle: String?) -> some View {
+        let selected = app.langPreference == preference
+        return Button {
+            app.setLangPreference(preference)
+        } label: {
+            HStack {
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(title)
+                        .brandText(.body)
+                        .foregroundStyle(Brand.ink)
+                    if let subtitle {
+                        Text(subtitle)
+                            .brandText(.footnote)
+                            .foregroundStyle(Brand.muted)
+                    }
+                }
+                Spacer()
+                if selected {
+                    Image(systemName: "checkmark")
+                        .foregroundStyle(Brand.terraInk)
+                        .accessibilityHidden(true)
+                }
+            }
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .accessibilityAddTraits(selected ? .isSelected : [])
     }
 }

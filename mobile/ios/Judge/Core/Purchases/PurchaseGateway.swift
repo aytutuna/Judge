@@ -43,7 +43,7 @@ extension StoreOffer {
         guard let amount, let currencyCode, !currencyCode.isEmpty, credits > 0 else { return nil }
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency
-        formatter.locale = Locale(identifier: lang == .tr ? "tr_TR" : "en_US")
+        formatter.locale = lang.locale
         formatter.currencyCode = currencyCode
         return formatter.string(from: (amount / Decimal(credits)) as NSDecimalNumber)
     }

@@ -600,8 +600,6 @@ enum L10n {
     static func appSettingsLanguageDevice(_ lang: AppLang) -> String { string("app.settings.languageDevice", lang) }
     static func appSettingsAbout(_ lang: AppLang) -> String { string("app.settings.about", lang) }
     static func appSettingsVersion(_ lang: AppLang, version: String) -> String { format("app.settings.version", lang, version) }
-    static func appLangEn(_ lang: AppLang) -> String { string("app.lang.en", lang) }
-    static func appLangTr(_ lang: AppLang) -> String { string("app.lang.tr", lang) }
     static func appSigninRequired(_ lang: AppLang) -> String { string("app.signin.required", lang) }
     static func appSigninOr(_ lang: AppLang) -> String { string("app.signin.or", lang) }
     static func appSigninCodeRequest(_ lang: AppLang) -> String { string("app.signin.codeRequest", lang) }
@@ -1127,8 +1125,6 @@ enum L10n {
         "app.settings.language",
         "app.settings.languageDevice",
         "app.settings.about",
-        "app.lang.en",
-        "app.lang.tr",
         "app.signin.required",
         "app.signin.or",
         "app.signin.codeRequest",

@@ -496,8 +496,6 @@
     <string name="app_settings_language_device">Telefonla aynı</string>
     <string name="app_settings_about">Judge hakkında</string>
     <string name="app_settings_version">Sürüm %1$s</string>
-    <string name="app_lang_en">English</string>
-    <string name="app_lang_tr">Türkçe</string>
     <string name="app_signin_required">Karar almak için giriş yap.</string>
     <string name="app_signin_or">ya da</string>
     <string name="app_signin_code_request">Bana kod gönder</string>

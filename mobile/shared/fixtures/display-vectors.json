@@ -1966,6 +1966,408 @@
       "text": "24 saat"
     }
   ],
+  "pluralWaits": [
+    {
+      "seconds": 61,
+      "lang": "ar",
+      "text": "2 دقيقة"
+    },
+    {
+      "seconds": 180,
+      "lang": "ar",
+      "text": "3 دقائق"
+    },
+    {
+      "seconds": 600,
+      "lang": "ar",
+      "text": "10 دقائق"
+    },
+    {
+      "seconds": 1260,
+      "lang": "ar",
+      "text": "21 دقيقة"
+    },
+    {
+      "seconds": 1320,
+      "lang": "ar",
+      "text": "22 دقيقة"
+    },
+    {
+      "seconds": 5340,
+      "lang": "ar",
+      "text": "89 دقيقة"
+    },
+    {
+      "seconds": 7200,
+      "lang": "ar",
+      "text": "2 ساعة"
+    },
+    {
+      "seconds": 18000,
+      "lang": "ar",
+      "text": "5 ساعات"
+    },
+    {
+      "seconds": 39600,
+      "lang": "ar",
+      "text": "11 ساعة"
+    },
+    {
+      "seconds": 86400,
+      "lang": "ar",
+      "text": "24 ساعة"
+    },
+    {
+      "seconds": 61,
+      "lang": "he",
+      "text": "2 דקות"
+    },
+    {
+      "seconds": 180,
+      "lang": "he",
+      "text": "3 דקות"
+    },
+    {
+      "seconds": 600,
+      "lang": "he",
+      "text": "10 דקות"
+    },
+    {
+      "seconds": 1260,
+      "lang": "he",
+      "text": "21 דקות"
+    },
+    {
+      "seconds": 1320,
+      "lang": "he",
+      "text": "22 דקות"
+    },
+    {
+      "seconds": 5340,
+      "lang": "he",
+      "text": "89 דקות"
+    },
+    {
+      "seconds": 7200,
+      "lang": "he",
+      "text": "2 שעות"
+    },
+    {
+      "seconds": 18000,
+      "lang": "he",
+      "text": "5 שעות"
+    },
+    {
+      "seconds": 39600,
+      "lang": "he",
+      "text": "11 שעות"
+    },
+    {
+      "seconds": 86400,
+      "lang": "he",
+      "text": "24 שעות"
+    },
+    {
+      "seconds": 61,
+      "lang": "ru",
+      "text": "2 минуты"
+    },
+    {
+      "seconds": 180,
+      "lang": "ru",
+      "text": "3 минуты"
+    },
+    {
+      "seconds": 600,
+      "lang": "ru",
+      "text": "10 минут"
+    },
+    {
+      "seconds": 1260,
+      "lang": "ru",
+      "text": "21 минуту"
+    },
+    {
+      "seconds": 1320,
+      "lang": "ru",
+      "text": "22 минуты"
+    },
+    {
+      "seconds": 5340,
+      "lang": "ru",
+      "text": "89 минут"
+    },
+    {
+      "seconds": 7200,
+      "lang": "ru",
+      "text": "2 часа"
+    },
+    {
+      "seconds": 18000,
+      "lang": "ru",
+      "text": "5 часов"
+    },
+    {
+      "seconds": 39600,
+      "lang": "ru",
+      "text": "11 часов"
+    },
+    {
+      "seconds": 86400,
+      "lang": "ru",
+      "text": "24 часа"
+    },
+    {
+      "seconds": 61,
+      "lang": "pl",
+      "text": "2 minuty"
+    },
+    {
+      "seconds": 180,
+      "lang": "pl",
+      "text": "3 minuty"
+    },
+    {
+      "seconds": 600,
+      "lang": "pl",
+      "text": "10 minut"
+    },
+    {
+      "seconds": 1260,
+      "lang": "pl",
+      "text": "21 minut"
+    },
+    {
+      "seconds": 1320,
+      "lang": "pl",
+      "text": "22 minuty"
+    },
+    {
+      "seconds": 5340,
+      "lang": "pl",
+      "text": "89 minut"
+    },
+    {
+      "seconds": 7200,
+      "lang": "pl",
+      "text": "2 godziny"
+    },
+    {
+      "seconds": 18000,
+      "lang": "pl",
+      "text": "5 godzin"
+    },
+    {
+      "seconds": 39600,
+      "lang": "pl",
+      "text": "11 godzin"
+    },
+    {
+      "seconds": 86400,
+      "lang": "pl",
+      "text": "24 godziny"
+    },
+    {
+      "seconds": 61,
+      "lang": "cs",
+      "text": "2 minuty"
+    },
+    {
+      "seconds": 180,
+      "lang": "cs",
+      "text": "3 minuty"
+    },
+    {
+      "seconds": 600,
+      "lang": "cs",
+      "text": "10 minut"
+    },
+    {
+      "seconds": 1260,
+      "lang": "cs",
+      "text": "21 minut"
+    },
+    {
+      "seconds": 1320,
+      "lang": "cs",
+      "text": "22 minut"
+    },
+    {
+      "seconds": 5340,
+      "lang": "cs",
+      "text": "89 minut"
+    },
+    {
+      "seconds": 7200,
+      "lang": "cs",
+      "text": "2 hodiny"
+    },
+    {
+      "seconds": 18000,
+      "lang": "cs",
+      "text": "5 hodin"
+    },
+    {
+      "seconds": 39600,
+      "lang": "cs",
+      "text": "11 hodin"
+    },
+    {
+      "seconds": 86400,
+      "lang": "cs",
+      "text": "24 hodin"
+    },
+    {
+      "seconds": 61,
+      "lang": "uk",
+      "text": "2 хвилини"
+    },
+    {
+      "seconds": 180,
+      "lang": "uk",
+      "text": "3 хвилини"
+    },
+    {
+      "seconds": 600,
+      "lang": "uk",
+      "text": "10 хвилин"
+    },
+    {
+      "seconds": 1260,
+      "lang": "uk",
+      "text": "21 хвилину"
+    },
+    {
+      "seconds": 1320,
+      "lang": "uk",
+      "text": "22 хвилини"
+    },
+    {
+      "seconds": 5340,
+      "lang": "uk",
+      "text": "89 хвилин"
+    },
+    {
+      "seconds": 7200,
+      "lang": "uk",
+      "text": "2 години"
+    },
+    {
+      "seconds": 18000,
+      "lang": "uk",
+      "text": "5 годин"
+    },
+    {
+      "seconds": 39600,
+      "lang": "uk",
+      "text": "11 годин"
+    },
+    {
+      "seconds": 86400,
+      "lang": "uk",
+      "text": "24 години"
+    },
+    {
+      "seconds": 61,
+      "lang": "ja",
+      "text": "2分"
+    },
+    {
+      "seconds": 180,
+      "lang": "ja",
+      "text": "3分"
+    },
+    {
+      "seconds": 600,
+      "lang": "ja",
+      "text": "10分"
+    },
+    {
+      "seconds": 1260,
+      "lang": "ja",
+      "text": "21分"
+    },
+    {
+      "seconds": 1320,
+      "lang": "ja",
+      "text": "22分"
+    },
+    {
+      "seconds": 5340,
+      "lang": "ja",
+      "text": "89分"
+    },
+    {
+      "seconds": 7200,
+      "lang": "ja",
+      "text": "2時間"
+    },
+    {
+      "seconds": 18000,
+      "lang": "ja",
+      "text": "5時間"
+    },
+    {
+      "seconds": 39600,
+      "lang": "ja",
+      "text": "11時間"
+    },
+    {
+      "seconds": 86400,
+      "lang": "ja",
+      "text": "24時間"
+    },
+    {
+      "seconds": 61,
+      "lang": "fr",
+      "text": "2 minutes"
+    },
+    {
+      "seconds": 180,
+      "lang": "fr",
+      "text": "3 minutes"
+    },
+    {
+      "seconds": 600,
+      "lang": "fr",
+      "text": "10 minutes"
+    },
+    {
+      "seconds": 1260,
+      "lang": "fr",
+      "text": "21 minutes"
+    },
+    {
+      "seconds": 1320,
+      "lang": "fr",
+      "text": "22 minutes"
+    },
+    {
+      "seconds": 5340,
+      "lang": "fr",
+      "text": "89 minutes"
+    },
+    {
+      "seconds": 7200,
+      "lang": "fr",
+      "text": "2 heures"
+    },
+    {
+      "seconds": 18000,
+      "lang": "fr",
+      "text": "5 heures"
+    },
+    {
+      "seconds": 39600,
+      "lang": "fr",
+      "text": "11 heures"
+    },
+    {
+      "seconds": 86400,
+      "lang": "fr",
+      "text": "24 heures"
+    }
+  ],
   "errors": [
     {
       "body": {

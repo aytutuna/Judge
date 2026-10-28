@@ -4,7 +4,8 @@
  * against the real thing rather than a re-reading of it:
  *
  *   mobile/shared/fixtures/verdicts.json         sample API bodies (validated with lib/types.ts)
- *   mobile/shared/fixtures/display-vectors.json  expected labels, tug, tilt, waits, errors,
+ *   mobile/shared/fixtures/display-vectors.json  expected labels, tug, tilt, waits (pluralWaits
+ *                                                in languages with more plural forms), errors,
  *                                                restored names
  *
  * verdicts.json also carries the Premium and account bodies the apps build and
@@ -379,6 +380,11 @@ const RESTORE_CASES: { text: string; nameMap: NameMapping[]; selfLang: Lang; tex
 ];
 
 const WAIT_SECONDS = [null, 0, -5, 1, 59, 60, 61, 600, 5340, 5400, 5401, 7200, 86400];
+
+/** Languages whose count strings take more forms than English ("2 минуты",
+ * "5 минут", "21 минуту"), with waits that land in each form. */
+const PLURAL_LANGS: readonly Lang[] = ["ar", "he", "ru", "pl", "cs", "uk", "ja", "fr"];
+const PLURAL_SECONDS = [61, 180, 600, 1260, 1320, 5340, 7200, 18000, 39600, 86400];
 
 const ERROR_BODIES: { body: unknown; status?: number }[] = [
   { body: { error: "x", code: "too_short" }, status: 400 },
@@ -883,6 +889,7 @@ function displayVectors() {
     LANGS.map((lang) => ({ case: name, lang, selfLang: c.selfLang, nameMap: c.nameMap, ...partyNames(c.nameMap, lang, c.selfLang) })),
   );
   const waits = WAIT_SECONDS.flatMap((s) => LANGS.map((lang) => ({ seconds: s, lang, text: formatWait(lang, s) })));
+  const pluralWaits = PLURAL_LANGS.flatMap((lang) => PLURAL_SECONDS.map((s) => ({ seconds: s, lang, text: formatWait(lang, s) })));
   const errors = ERROR_BODIES.flatMap((e) =>
     LANGS.map((lang) => ({ ...e, lang, message: apiErrorMessage(lang, e.body, e.status) })),
   );
@@ -916,6 +923,7 @@ function displayVectors() {
     restore,
     personalizedTranslations,
     waits,
+    pluralWaits,
     errors,
     palette: PALETTE,
     paletteAlpha: PALETTE_ALPHA,

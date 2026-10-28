@@ -297,8 +297,8 @@ final class TextHelperTests: XCTestCase {
         XCTAssertEqual(LangPreference.system.resolved(preferredLanguages: ["tr-TR", "en-US"]), .tr)
         XCTAssertEqual(LangPreference.system.resolved(preferredLanguages: ["en-TR", "tr"]), .en)
         XCTAssertEqual(LangPreference.system.resolved(preferredLanguages: []), .en)
-        XCTAssertEqual(LangPreference.tr.resolved(preferredLanguages: ["en"]), .tr)
-        XCTAssertEqual(LangPreference.en.resolved(preferredLanguages: ["tr"]), .en)
+        XCTAssertEqual(LangPreference.fixed(.tr).resolved(preferredLanguages: ["en"]), .tr)
+        XCTAssertEqual(LangPreference.fixed(.en).resolved(preferredLanguages: ["tr"]), .en)
     }
 
     func testConfigParsing() {

@@ -112,13 +112,17 @@ struct PricingInfo: Decodable, Sendable, Equatable {
         monthly: PricingPlan(id: "monthly", priceUsd: 15, fairUseCap: 35, periodDays: 30)
     )
 
-    /// "$7.50" in English, "$7,50" in Turkish (formatPrice in lib/pricing.ts).
+    /// US dollars in the language's number format: "$7.50" in English,
+    /// "$7,50" in Turkish (formatPrice in lib/pricing.ts).
     static func format(_ usd: Double, lang: AppLang) -> String {
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency
-        formatter.locale = Locale(identifier: lang == .tr ? "tr_TR" : "en_US")
+        formatter.locale = lang.locale
         formatter.currencyCode = "USD"
-        return formatter.string(from: NSNumber(value: usd)) ?? String(format: "$%.2f", usd)
+        let price = formatter.string(from: NSNumber(value: usd)) ?? String(format: "$%.2f", usd)
+        // A price ending on a neutral "$" ("7.50 US$") would move to the
+        // front of a right-to-left line; a closing LRM keeps it in place.
+        return lang.isRTL ? price + "\u{200E}" : price
     }
 }
 

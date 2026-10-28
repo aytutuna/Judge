@@ -77,6 +77,7 @@ import com.okjudge.judge.core.model.VerdictResult
 import com.okjudge.judge.i18n.AppLang
 import com.okjudge.judge.i18n.LocalLang
 import com.okjudge.judge.i18n.LocalStrings
+import com.okjudge.judge.i18n.languageName
 import com.okjudge.judge.i18n.Strings
 import com.okjudge.judge.ui.components.JudgeIcons
 import com.okjudge.judge.ui.components.SceneView
@@ -255,9 +256,14 @@ private fun OutcomeBanner(appeal: AppealInfo, parties: PartyLabels) {
 @Composable
 private fun TranslationLine(view: TranslationView) {
     val s = LocalStrings.current
+    val lang = LocalLang.current
     val note = when (view.status) {
         TranslationStatus.LOADING -> s.translateLoading
-        TranslationStatus.TRANSLATED -> if (view.source == AppLang.TR) s.translateFromTr else s.translateFromEn
+        TranslationStatus.TRANSLATED -> when (view.source) {
+            AppLang.EN -> s.translateFromEn
+            AppLang.TR -> s.translateFromTr
+            else -> "${languageName(view.source, lang, s)} ${if (lang.rtl) "←" else "→"} ${languageName(lang, lang, s)}"
+        }
         TranslationStatus.ERROR -> s.translateFailed
         TranslationStatus.OFFLINE -> s.appTranslateOffline
         TranslationStatus.ORIGINAL -> null

@@ -147,7 +147,7 @@ struct ScreenshotState {
         app.account.usesNetwork = false
         app.usesNetwork = false
         app.caseList.usesNetwork = false
-        app.setLangPreference(lang == .tr ? .tr : .en)
+        app.setLangPreference(.fixed(lang))
         apply(to: app)
         return app
     }

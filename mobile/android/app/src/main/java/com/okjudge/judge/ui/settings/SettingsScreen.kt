@@ -37,6 +37,7 @@ import androidx.compose.ui.unit.dp
 import com.okjudge.judge.core.auth.Account
 import com.okjudge.judge.core.display.Errors
 import com.okjudge.judge.core.purchases.PurchaseController
+import com.okjudge.judge.i18n.AppLang
 import com.okjudge.judge.i18n.LangPref
 import com.okjudge.judge.i18n.LocalLang
 import com.okjudge.judge.i18n.LocalStrings
@@ -53,6 +54,10 @@ object SettingsTags {
     const val PRICING = "settings.pricing"
     const val RESTORE = "settings.restore"
     const val RESTORE_NOTE = "settings.restoreNote"
+    const val LANGUAGE = "settings.language"
+
+    /** A row of the language list: "settings.lang.system", "settings.lang.de". */
+    fun langOption(pref: LangPref): String = "settings.lang.${pref.stored}"
 }
 
 /** "Restore purchases" in the account group; shown while the store is ready for this account. */
@@ -79,6 +84,10 @@ fun SettingsScreen(
 ) {
     val s = LocalStrings.current
     val base = siteBaseUrl.trimEnd('/')
+    var pickingLang by rememberSaveable { mutableStateOf(false) }
+    if (pickingLang) {
+        LanguageDialog(langPref, onPick = { pickingLang = false; onLangPref(it) }, onDismiss = { pickingLang = false })
+    }
     Column(modifier.fillMaxSize()) {
         TopBar(onBack = null, onNew = onNew)
         Column(
@@ -90,23 +99,11 @@ fun SettingsScreen(
             AccountGroup(account, accountBusy, onSignIn, onSignOut, onDeleteAccount, restore, onRestore)
 
             Group(s.appSettingsLanguage) {
-                listOf(
-                    LangPref.SYSTEM to s.appSettingsLanguageDevice,
-                    LangPref.EN to s.appLangEn,
-                    LangPref.TR to s.appLangTr,
-                ).forEachIndexed { i, (pref, label) ->
-                    if (i > 0) HorizontalDivider(color = Palette.line)
-                    Row(
-                        Modifier
-                            .fillMaxWidth()
-                            .selectable(selected = pref == langPref, role = Role.RadioButton) { onLangPref(pref) }
-                            .padding(horizontal = 16.dp, vertical = 14.dp),
-                        verticalAlignment = Alignment.CenterVertically,
-                    ) {
-                        Text(label, style = JudgeType.body, modifier = Modifier.weight(1f))
-                        Radio(pref == langPref)
-                    }
-                }
+                ActionRow(
+                    langPref.fixed?.nativeName ?: s.appSettingsLanguageDevice,
+                    Modifier.testTag(SettingsTags.LANGUAGE),
+                    trailing = "›",
+                ) { pickingLang = true }
             }
 
             if (onOpenPricing != null) {
@@ -315,6 +312,36 @@ private fun LinkRow(label: String, onClick: () -> Unit) {
         Text(label, style = JudgeType.body, modifier = Modifier.weight(1f))
         Text("↗", style = JudgeType.body.copy(color = Palette.muted))
     }
+}
+
+/** "Same as the phone" and every language the app speaks, each in its own words. */
+@Composable
+private fun LanguageDialog(current: LangPref, onPick: (LangPref) -> Unit, onDismiss: () -> Unit) {
+    val s = LocalStrings.current
+    val options = listOf(LangPref.SYSTEM) + AppLang.enabled.map { LangPref(it) }
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text(s.appSettingsLanguage, style = JudgeType.sectionTitle) },
+        text = {
+            Column(Modifier.verticalScroll(rememberScrollState())) {
+                options.forEach { pref ->
+                    Row(
+                        Modifier
+                            .fillMaxWidth()
+                            .testTag(SettingsTags.langOption(pref))
+                            .selectable(selected = pref == current, role = Role.RadioButton) { onPick(pref) }
+                            .padding(vertical = 12.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Text(pref.fixed?.nativeName ?: s.appSettingsLanguageDevice, style = JudgeType.body, modifier = Modifier.weight(1f))
+                        Radio(pref == current)
+                    }
+                }
+            }
+        },
+        confirmButton = { TextButton(onClick = onDismiss) { Text(s.appCancel, color = Palette.ink) } },
+        containerColor = Palette.paper,
+    )
 }
 
 @Composable
