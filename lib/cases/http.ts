@@ -91,9 +91,9 @@ const UNAVAILABLE_MESSAGE = "Cases are unavailable right now — try again in a 
 const MESSAGES: Partial<Record<ApiErrorCode, string>> = {
   invalid: "Invalid request",
   signin_required: "Sign in first.",
-  premium_required: "Premium verdicts need credits or a monthly plan.",
-  no_credits: "You have no premium credits left.",
-  fair_use: "You have used this month's premium verdicts.",
+  premium_required: "Verdicts need credits or a monthly plan.",
+  no_credits: "You have no verdicts left.",
+  fair_use: "You have used this month's verdicts.",
   bad_origin: "This request came from another site.",
   not_found: "No case with that id.",
   not_configured: "Two-sided cases are not available on this server right now.",
@@ -158,7 +158,7 @@ export function invalidBody(issue: { message?: string; path: PropertyKey[]; code
 function limitRefusal(decision: Exclude<LimitDecision, { ok: true }>): NextResponse {
   if (decision.code === "unavailable") return fail("unavailable");
   return decision.code === "daily_cap"
-    ? fail("daily_cap", "Premium has used today's capacity — try again tomorrow.", { retryAfterSec: decision.retryAfterSec })
+    ? fail("daily_cap", "Judging has reached today's capacity — try again tomorrow.", { retryAfterSec: decision.retryAfterSec })
     : fail("rate_limited", "Too many requests — take a breather and try again later.", {
         retryAfterSec: decision.retryAfterSec,
       });
@@ -176,7 +176,7 @@ export async function limitGate(userId: string, bucket: UserBucket, siteCap: boo
   return siteCap ? premiumGate(userId) : null;
 }
 
-const PREMIUM_OFF = "Premium is not available on this server right now.";
+const PREMIUM_OFF = "Verdicts are not available on this server right now.";
 
 /** What a premium run needs on top of the per-user limit: Premium switched
  * on, and the site-wide cap. */
