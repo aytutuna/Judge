@@ -109,6 +109,7 @@ object CaseTags {
     const val REMOVE = "case.remove"
     const val CONFIRM = "case.confirm"
     const val ERROR = "case.error"
+    const val PRICING = "case.pricing"
     const val BANNER = "case.banner"
     const val APPEAL_TEXT = "case.appealText"
     const val APPEAL_SUBMIT = "case.appealSubmit"
@@ -416,7 +417,7 @@ private fun Note(text: String, modifier: Modifier = Modifier, color: Color = Pal
 }
 
 @Composable
-private fun ErrorLine(error: UiError?) {
+private fun ErrorLine(error: UiError?, onPricing: () -> Unit) {
     if (error == null) return
     val s = LocalStrings.current
     val lang = LocalLang.current
@@ -425,6 +426,9 @@ private fun ErrorLine(error: UiError?) {
         style = JudgeType.body.copy(fontSize = 15.sp, color = Palette.danger),
         modifier = Modifier.semantics { liveRegion = LiveRegionMode.Assertive }.testTag(CaseTags.ERROR),
     )
+    if (Errors.opens(error) == Errors.Opens.PRICING) {
+        GhostButton(s.tierGetPremium, null, onPricing, Modifier.testTag(CaseTags.PRICING))
+    }
 }
 
 @Composable
@@ -463,7 +467,7 @@ private fun Body(
                 }
             }
             WaitingSteps(waitingFor, view.canJudgeNow)
-            ErrorLine(state.actionError)
+            ErrorLine(state.actionError, actions.onPricing)
             if (view.canJudgeNow) {
                 Box(
                     Modifier
@@ -510,12 +514,12 @@ private fun Body(
                     else -> s.caseFailedBodyFree
                 },
             )
-            ErrorLine(state.actionError)
+            ErrorLine(state.actionError, actions.onPricing)
             PrimaryButton(s.caseRetry, !state.busy, actions.onRetry, Modifier.fillMaxWidth().testTag(CaseTags.RETRY))
         }
         CaseStatus.EXPIRED -> {
             Banner(if (view.premium) s.caseExpiredBody else s.caseExpiredBodyFree)
-            ErrorLine(state.actionError)
+            ErrorLine(state.actionError, actions.onPricing)
             Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                 if (view.canJudgeNow) {
                     PrimaryButton(s.caseJudgeNow, !state.busy, { ask(Confirm.JUDGE_NOW) }, Modifier.testTag(CaseTags.JUDGE_NOW))
@@ -869,7 +873,7 @@ fun AppealPanel(
                     TintedIcon(remember { JudgeIcons.spark(Palette.terra) }, 14)
                     Text(cost, style = AppealText.copy(fontSize = 13.sp, lineHeight = (13 * 1.4).sp, color = Palette.ink2))
                 }
-                ErrorLine(draft.error)
+                ErrorLine(draft.error, actions.onPricing)
                 PrimaryButton(
                     if (draft.sending) s.appealSending else s.appAppealSubmit,
                     draft.canSubmit,

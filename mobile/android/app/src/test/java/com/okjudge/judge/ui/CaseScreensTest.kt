@@ -17,6 +17,7 @@ import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollTo
 import com.okjudge.judge.Fixtures
 import com.okjudge.judge.core.display.Errors
+import com.okjudge.judge.core.display.UiError
 import com.okjudge.judge.core.model.AppealGate
 import com.okjudge.judge.core.model.CaseListResponse
 import com.okjudge.judge.core.model.CaseView
@@ -260,6 +261,21 @@ class CaseScreensTest {
         compose.onNodeWithTag(CaseTags.JUDGE_NOW).performClick()
         compose.onNodeWithText(en.caseJudgeExpiredConfirm).assertExists()
         compose.onNodeWithTag(CaseTags.CONFIRM).assertTextContains(en.caseJudgeExpiredYes)
+    }
+
+    @Test
+    fun expired_judgeNowWithNothingLeft_offersPricing() {
+        var pricing = 0
+        val expired = stateOf("expired").let { it.copy(view = it.view!!.copy(canJudgeNow = true)) }
+        var state by mutableStateOf(expired.copy(actionError = UiError.Api("no_credits", 402)))
+        compose.setContent { Themed(AppLang.EN) { CaseScreen(state, true, CaseActions(onPricing = { pricing++ }), true) } }
+        compose.onNodeWithTag(CaseTags.ERROR).assertTextContains(en.errorNoCredits)
+        compose.onNodeWithTag(CaseTags.PRICING).performClick()
+        assertEquals(1, pricing)
+
+        state = expired.copy(actionError = UiError.Api("unavailable", 503))
+        compose.onNodeWithTag(CaseTags.ERROR).assertExists()
+        compose.onAllNodesWithTag(CaseTags.PRICING).assertCountEquals(0)
     }
 
     @Test
