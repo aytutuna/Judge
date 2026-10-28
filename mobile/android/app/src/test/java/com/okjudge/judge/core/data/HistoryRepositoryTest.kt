@@ -36,13 +36,12 @@ class HistoryRepositoryTest {
 
     @Test
     fun save_listsNewestFirst_andKeepsEverythingForOffline() = runBlocking {
-        repo.save(Fixtures.sample("win_a_self"), "balanced")
+        repo.save(Fixtures.sample("win_a_self"))
         now = 2_000L
-        repo.save(Fixtures.sample("lean_tie").copy(id = "tie1"), "fairness")
+        repo.save(Fixtures.sample("lean_tie").copy(id = "tie1"))
         val all = repo.observeAll().first()
         assertEquals(listOf("tie1", "abc123DEF0"), all.map { it.id })
         val tie = all.first()
-        assertEquals("fairness", tie.preset)
         assertEquals(LeanState.Tie, tie.original.result.leanState)
         val win = all.last()
         assertEquals(Fixtures.sample("win_a_self").nameMap, win.nameMap)
@@ -51,15 +50,38 @@ class HistoryRepositoryTest {
         assertEquals("side_a", row.verdict)
         assertEquals(4, row.confidence)
         assertEquals("free", row.tier)
+        assertEquals("balanced", row.preset)
         assertEquals(WireJson.json.parseToJsonElement(Fixtures.sample("win_a_self").result.rawJson), WireJson.json.parseToJsonElement(row.resultJson))
+    }
+
+    @Test
+    fun aRowSavedWithAnotherJudgingStyle_stillLoads() = runBlocking {
+        val sample = Fixtures.sample("win_a_self")
+        db.history().upsert(
+            SavedVerdictRow(
+                id = sample.id,
+                createdAt = 500L,
+                headline = sample.result.result.headline,
+                verdict = sample.result.result.verdict,
+                lang = "en",
+                confidence = sample.result.result.confidence,
+                preset = "loyalty",
+                tier = "free",
+                resultJson = sample.result.rawJson,
+                nameMapJson = WireJson.encodeNameMap(sample.nameMap),
+            ),
+        )
+        val saved = repo.observe(sample.id).first()!!
+        assertEquals(sample.result.result.headline, saved.original.result.headline)
+        assertEquals(sample.nameMap, saved.nameMap)
     }
 
     @Test
     fun replayWithEmptyNameMap_keepsTheStoredNames_andCreatedAt() = runBlocking {
         val first = Fixtures.sample("win_b_named")
-        repo.save(first, "balanced")
+        repo.save(first)
         now = 9_999L
-        repo.save(first.copy(nameMap = emptyList(), replayed = true), "balanced")
+        repo.save(first.copy(nameMap = emptyList(), replayed = true))
         val saved = repo.observe(first.id).first()!!
         assertEquals(first.nameMap, saved.nameMap)
         assertEquals(1_000L, saved.createdAt)
@@ -68,7 +90,7 @@ class HistoryRepositoryTest {
     @Test
     fun aLaterRuling_replacesWhatTheEntryShows_butKeepsItsIdDateAndNames() = runBlocking {
         val first = Fixtures.sample("win_b_named")
-        repo.save(first, "balanced")
+        repo.save(first)
         repo.cacheTranslation(first.id, AppLang.TR, Fixtures.sample("lean_tie").result)
         now = 5_000L
         val later = Fixtures.sample("win_a_self")
@@ -76,7 +98,6 @@ class HistoryRepositoryTest {
         val saved = repo.observe(first.id).first()!!
         assertEquals("r1", saved.rulingId)
         assertEquals(1_000L, saved.createdAt)
-        assertEquals("balanced", saved.preset)
         assertEquals(later.result.result.headline, saved.original.result.headline)
         assertEquals("the earlier ruling's translations are dropped", emptyMap<AppLang, Any>(), saved.translations)
         assertEquals(first.nameMap + NameMapping("Kim", "Person C"), saved.nameMap)
@@ -90,28 +111,28 @@ class HistoryRepositoryTest {
     @Test
     fun aFreshEntry_isItsOwnRuling() = runBlocking {
         val outcome = Fixtures.sample("win_a_self")
-        repo.save(outcome, "balanced")
+        repo.save(outcome)
         assertEquals(outcome.id, repo.observe(outcome.id).first()!!.rulingId)
     }
 
     @Test
     fun translations_areCachedPerLanguage() = runBlocking {
         val outcome = Fixtures.sample("win_a_self")
-        repo.save(outcome, "balanced")
+        repo.save(outcome)
         val tr = WireJson.decodeTranslateResponse(Fixtures.verdicts["translateResponse"].toString()).result
         repo.cacheTranslation(outcome.id, AppLang.TR, tr)
         val saved = repo.observe(outcome.id).first()!!
         assertEquals(setOf(AppLang.TR), saved.translations.keys)
         assertEquals(tr.result.headline, saved.translations[AppLang.TR]!!.result.headline)
         // Saving the same id again (replay) keeps the cache.
-        repo.save(outcome, "balanced")
+        repo.save(outcome)
         assertTrue(repo.observe(outcome.id).first()!!.translations.containsKey(AppLang.TR))
     }
 
     @Test
     fun delete_andDeleteAll() = runBlocking {
-        repo.save(Fixtures.sample("split"), "balanced")
-        repo.save(Fixtures.sample("conditional"), "balanced")
+        repo.save(Fixtures.sample("split"))
+        repo.save(Fixtures.sample("conditional"))
         val ids = repo.observeAll().first().map { it.id }
         repo.delete(ids.first())
         assertEquals(1, repo.observeAll().first().size)

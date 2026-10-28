@@ -8,7 +8,6 @@ import com.okjudge.judge.core.auth.Routes
 import com.okjudge.judge.core.cases.AppealArea
 import com.okjudge.judge.core.cases.CaseLogic
 import com.okjudge.judge.core.cases.MemoryCaseNames
-import com.okjudge.judge.core.display.Preset
 import com.okjudge.judge.core.display.UiError
 import com.okjudge.judge.core.evidence.ImageSource
 import com.okjudge.judge.core.evidence.Prepared
@@ -171,7 +170,7 @@ class CaseFlowTest {
             newKey = { "ck-${++keys}" },
             caseNames = names,
         )
-        assertTrue(flow.createCase("  Sam says a hot dog is a sandwich and I say it is not.  ", Preset.FAIRNESS, AppLang.TR, listOf("e1"), " Ayşe "))
+        assertTrue(flow.createCase("  Sam says a hot dog is a sandwich and I say it is not.  ", AppLang.TR, listOf("e1"), " Ayşe "))
         assertEquals(VerdictFlow.Nav.Case(ID), withTimeout(5_000) { flow.navigation.first() })
         assertTrue("the form holds until the case screen takes over", flow.creating.value)
         assertFalse(flow.canStart())
@@ -181,7 +180,7 @@ class CaseFlowTest {
         assertEquals("ck-1", req.headers["Idempotency-Key"])
         val body = bodyOf(CREATE)
         assertEquals("Sam says a hot dog is a sandwich and I say it is not.", body["text"]!!.jsonPrimitive.content)
-        assertEquals("fairness", body["framework"]!!.jsonObject["preset"]!!.jsonPrimitive.content)
+        assertTrue("framework" !in body)
         assertEquals("tr", body["lang"]!!.jsonPrimitive.content)
         assertEquals("premium", body["tier"]!!.jsonPrimitive.content)
         assertEquals(listOf("e1"), body["evidence"]!!.jsonArray.map { it.jsonPrimitive.content })
@@ -194,7 +193,7 @@ class CaseFlowTest {
     fun create_keepsWhoItWaitsFor_andLeavesOutNoEvidence() = runBlocking {
         routes.on(CREATE, Routes.json(201, cases["createResponse"].toString()))
         val flow = VerdictFlow(api(), FakeHistory(), scope, caseNames = names)
-        assertTrue(flow.createCase("Sam says a hot dog is a sandwich and I say it is not.", Preset.BALANCED, AppLang.EN, emptyList(), "Alex", " Sam "))
+        assertTrue(flow.createCase("Sam says a hot dog is a sandwich and I say it is not.", AppLang.EN, emptyList(), "Alex", " Sam "))
         assertEquals("the case screen is told who it waits for", VerdictFlow.Nav.Case(ID, "Sam"), withTimeout(5_000) { flow.navigation.first() })
         assertEquals("and keeps it for later visits", "Sam", names.otherName(ID))
         val body = bodyOf(CREATE)
@@ -217,7 +216,7 @@ class CaseFlowTest {
         val e = Fixtures.verdicts["asyncErrors"]!!.jsonObject["fair_use"]!!.jsonObject
         routes.on(CREATE, Routes.json(402, e["body"].toString()))
         val flow = VerdictFlow(api(), FakeHistory(), scope, refreshAccount = { refreshes += Unit }, caseNames = names)
-        flow.createCase("Sam says a hot dog is a sandwich and I say it is not.", Preset.BALANCED, AppLang.EN, emptyList(), "")
+        flow.createCase("Sam says a hot dog is a sandwich and I say it is not.", AppLang.EN, emptyList(), "")
         assertEquals(VerdictFlow.Nav.Pricing, withTimeout(5_000) { flow.navigation.first() })
         assertNull(flow.lastError.value)
         assertFalse(flow.creating.value)

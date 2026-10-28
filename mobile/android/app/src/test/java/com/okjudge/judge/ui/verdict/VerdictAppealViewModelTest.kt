@@ -59,7 +59,7 @@ class VerdictAppealViewModelTest {
         server = MockWebServer()
         server.dispatcher = routes
         server.start()
-        runBlocking { history.save(outcome, "balanced") }
+        runBlocking { history.save(outcome) }
     }
 
     @After

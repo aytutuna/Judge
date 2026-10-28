@@ -7,7 +7,6 @@ import com.okjudge.judge.core.api.awaitVerdict
 import com.okjudge.judge.core.display.ContentLang
 import com.okjudge.judge.core.display.UiError
 import com.okjudge.judge.core.display.VerdictDisplay
-import com.okjudge.judge.core.model.FrameworkChoice
 import com.okjudge.judge.core.model.VerdictOutcome
 import com.okjudge.judge.core.model.VerdictRequest
 import com.okjudge.judge.core.model.VerdictSubmission
@@ -33,7 +32,6 @@ class LiveApiCheck {
         val request = VerdictRequest(
             argument = "My friend Sam says a hot dog is a sandwich because it is meat in a split roll. " +
                 "I say it is not, because nobody orders a sandwich and expects a hot dog.",
-            framework = FrameworkChoice("balanced"),
             lang = "en",
         )
         val started = System.currentTimeMillis()

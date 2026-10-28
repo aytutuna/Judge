@@ -205,7 +205,6 @@ struct CaseView: Sendable, Equatable {
     /// Only a premium case holds a unit and takes evidence.
     var tier: Tier
     var lang: AppLang?
-    var preset: String
     var createdAt: String
     var expiresAt: String
     var judgedAt: String?
@@ -281,7 +280,6 @@ private struct CaseViewWire: Decodable {
     var mode: CaseMode?
     var tier: Tier
     var lang: AppLang?
-    var preset: String
     var createdAt: String
     var expiresAt: String
     var judgedAt: String?
@@ -298,12 +296,8 @@ private struct CaseViewWire: Decodable {
     var removed: CaseRemoval?
     var yourOriginal: String
 
-    private struct Framework: Decodable {
-        var preset: String?
-    }
-
     private enum CodingKeys: String, CodingKey {
-        case id, role, yourParty, status, mode, tier, lang, framework, createdAt, expiresAt, judgedAt, respondentAnswered
+        case id, role, yourParty, status, mode, tier, lang, createdAt, expiresAt, judgedAt, respondentAnswered
         case inviteUrl, sides, appeals, canJudgeNow, appeal, lastError, pollAfterMs, names, display, removed, yourOriginal
     }
 
@@ -318,8 +312,6 @@ private struct CaseViewWire: Decodable {
         tier = tierRaw.flatMap(Tier.init(rawValue:)) ?? .premium
         let langRaw: String? = try? c.decodeIfPresent(String.self, forKey: .lang)
         lang = langRaw.flatMap(AppLang.init(rawValue:))
-        let framework: Framework? = try? c.decodeIfPresent(Framework.self, forKey: .framework)
-        preset = framework?.preset ?? Preset.defaultID
         createdAt = (try? c.decodeIfPresent(String.self, forKey: .createdAt)) ?? ""
         expiresAt = (try? c.decodeIfPresent(String.self, forKey: .expiresAt)) ?? ""
         judgedAt = try? c.decodeIfPresent(String.self, forKey: .judgedAt)
@@ -364,7 +356,6 @@ enum CaseDecoding {
             mode: wire.mode,
             tier: wire.tier,
             lang: wire.lang,
-            preset: wire.preset,
             createdAt: wire.createdAt,
             expiresAt: wire.expiresAt,
             judgedAt: wire.judgedAt,

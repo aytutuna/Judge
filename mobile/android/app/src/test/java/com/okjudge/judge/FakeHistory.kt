@@ -19,9 +19,9 @@ class FakeHistory(private var clock: Long = 1_000L) : HistoryRepository {
 
     override fun observe(id: String): Flow<SavedVerdict?> = rows.map { list -> list.firstOrNull { it.id == id } }
 
-    override suspend fun save(outcome: VerdictOutcome, preset: String) {
+    override suspend fun save(outcome: VerdictOutcome) {
         clock += 1
-        val row = SavedVerdict(outcome.id, clock, outcome.result, outcome.nameMap, preset, emptyMap())
+        val row = SavedVerdict(outcome.id, clock, outcome.result, outcome.nameMap, emptyMap())
         rows.update { list -> list.filterNot { it.id == outcome.id } + row }
     }
 

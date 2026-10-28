@@ -2195,28 +2195,6 @@
       "message": "Bir şey ters gitti. Bir daha dener misin?"
     }
   ],
-  "presets": [
-    {
-      "id": "balanced",
-      "emoji": "⚖️"
-    },
-    {
-      "id": "outcomes",
-      "emoji": "🎯"
-    },
-    {
-      "id": "principles",
-      "emoji": "📜"
-    },
-    {
-      "id": "fairness",
-      "emoji": "🤝"
-    },
-    {
-      "id": "loyalty",
-      "emoji": "❤️"
-    }
-  ],
   "palette": {
     "ivory": "#F6F1E9",
     "ivory2": "#EEE6D9",

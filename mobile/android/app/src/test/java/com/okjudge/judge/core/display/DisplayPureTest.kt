@@ -64,13 +64,6 @@ class DisplayPureTest {
     }
 
     @Test
-    fun presetEmoji_matchLibFrameworks() {
-        val presets = Fixtures.list("presets")
-        assertEquals(presets.map { it.str("id") }, Preset.entries.map { it.id })
-        for (p in presets) assertEquals(p.str("id"), p.str("emoji"), Preset.of(p.str("id")).emoji)
-    }
-
-    @Test
     fun palette_matchesLibPalette() {
         val palette = Fixtures.vectors["palette"]!!.jsonObject
         assertEquals(palette.keys, Palette.byKey.keys)

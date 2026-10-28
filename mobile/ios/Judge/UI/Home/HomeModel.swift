@@ -15,7 +15,7 @@ enum HomeMode: String, Sendable {
     case now, both
 }
 
-/// The Home flow: argument, preset, the pending request and its outcome.
+/// The Home flow: argument, the pending request and its outcome.
 /// Owned by `AppModel` so a verdict in progress survives tab switches.
 ///
 /// Every verdict is premium and follows the website (app/page.tsx): POST
@@ -40,7 +40,6 @@ final class HomeModel {
     var otherSide = ""
     /// The other side's name over their card; nil until typed.
     var otherName: String?
-    var preset: String
     var path: [HomeRoute] = []
 
     /// Step 1: asking whether key facts are missing.
@@ -109,7 +108,6 @@ final class HomeModel {
     /// What was asked: "Try again" with the same request resumes its verdict.
     private struct RequestKey: Equatable {
         let text: String
-        let preset: String
         let lang: AppLang
         /// The evidence tokens.
         var extra = ""
@@ -117,12 +115,11 @@ final class HomeModel {
 
     private struct PremiumInput: Equatable {
         let argument: String
-        let preset: String
         let lang: AppLang
         let evidence: [String]
 
         var requestKey: RequestKey {
-            RequestKey(text: argument, preset: preset, lang: lang, extra: "premium:" + evidence.joined(separator: ","))
+            RequestKey(text: argument, lang: lang, extra: "premium:" + evidence.joined(separator: ","))
         }
     }
 
@@ -142,8 +139,7 @@ final class HomeModel {
     /// for; the server settles every verdict within about 10 minutes.
     static let resumeWindow: TimeInterval = 15 * 60
 
-    init(preset: String) {
-        self.preset = Preset.find(preset).id
+    init() {
         evidence = EvidenceModel(max: Self.maxEvidence)
     }
 
@@ -282,20 +278,19 @@ final class HomeModel {
         error = nil
         isCreatingCase = true
         let text = argument
-        let preset = preset
         let lang = app.lang
         let tokens = app.evidenceOn ? evidence.tokens : []
         let name = shownCaseName(app).trimmingCharacters(in: .whitespacesAndNewlines)
         let displayName: String? = name.isEmpty ? nil : name
         let other = otherName?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
-        let body = JudgeAPI.createCaseBody(text: text, preset: preset, lang: lang, evidence: tokens, displayName: displayName)
+        let body = JudgeAPI.createCaseBody(text: text, lang: lang, evidence: tokens, displayName: displayName)
         let token = keys.key(for: JudgeAPI.canonical(body))
         let api = app.api
         let names = app.caseNames
         request = Task { [weak self, weak app] in
             do {
                 let created = try await api.createCase(
-                    text: text, preset: preset, lang: lang, evidence: tokens, displayName: displayName, idempotencyKey: token
+                    text: text, lang: lang, evidence: tokens, displayName: displayName, idempotencyKey: token
                 )
                 guard let self, !Task.isCancelled else { return }
                 self.keys.clear(token)
@@ -342,7 +337,6 @@ final class HomeModel {
         clarify = nil
         let input = PremiumInput(
             argument: outgoing(app),
-            preset: preset,
             lang: app.lang,
             evidence: app.evidenceOn ? evidence.tokens : []
         )
@@ -354,7 +348,7 @@ final class HomeModel {
         if let held = pending, held.key == key, Date.now.timeIntervalSince(held.since) < Self.resumeWindow {
             isJudging = true
             request = Task { [weak self] in
-                await self?.judge(.resume(held.accepted, idempotencyKey: held.idempotencyKey), requestKey: key, api: api, history: history, preset: input.preset)
+                await self?.judge(.resume(held.accepted, idempotencyKey: held.idempotencyKey), requestKey: key, api: api, history: history)
             }
             return
         }
@@ -429,7 +423,6 @@ final class HomeModel {
         isJudging = true
         let body = VerdictRequest(
             argument: input.argument,
-            framework: .init(preset: input.preset),
             lang: input.lang,
             tier: Tier.premium.rawValue,
             clarifications: clarifications,
@@ -438,7 +431,7 @@ final class HomeModel {
         let token = keys.key(for: IdempotencyKeys.canonical(body))
         let key = input.requestKey
         request = Task { [weak self] in
-            await self?.judge(.post(body, idempotencyKey: token), requestKey: key, api: api, history: history, preset: input.preset)
+            await self?.judge(.post(body, idempotencyKey: token), requestKey: key, api: api, history: history)
         }
     }
 
@@ -481,8 +474,7 @@ final class HomeModel {
         _ start: Start,
         requestKey: RequestKey,
         api: JudgeAPI,
-        history: HistoryStore,
-        preset: String
+        history: HistoryStore
     ) async {
         // A verdict can take minutes: ask for background time so a short
         // app switch does not suspend the app and drop the connection.
@@ -508,7 +500,7 @@ final class HomeModel {
                     if payload.replayed { named = await withNames(payload, api: api) }
                     guard !Task.isCancelled else { return }
                     keys.clear(token)
-                    deliver(named, history: history, preset: preset)
+                    deliver(named, history: history)
                     return
                 case .accepted(let fresh):
                     if let entitlement = fresh.entitlement { account?.applyEntitlement(entitlement) }
@@ -525,7 +517,7 @@ final class HomeModel {
             guard !Task.isCancelled else { return }
             if pending?.accepted.id == accepted.id { pending = nil }
             if let idempotencyKey { keys.clear(idempotencyKey) }
-            deliver(payload, history: history, preset: preset)
+            deliver(payload, history: history)
         } catch let failure as VerdictPollError {
             if !failure.resumable, let acceptedID, pending?.accepted.id == acceptedID { pending = nil }
             guard !Task.isCancelled else { return }
@@ -541,10 +533,10 @@ final class HomeModel {
         }
     }
 
-    private func deliver(_ payload: VerdictPayload, history: HistoryStore, preset: String) {
+    private func deliver(_ payload: VerdictPayload, history: HistoryStore) {
         let session = VerdictSession(id: payload.id, original: payload.result, nameMap: payload.nameMap, translations: [:])
         sessions[session.id] = session
-        try? history.save(session, preset: preset)
+        try? history.save(session)
         arrivedID = session.id
         arrived = payload.result.result
     }
@@ -663,7 +655,7 @@ extension HomeModel {
     /// Screenshot fixtures: the clarifying step without a request.
     func showForScreenshot(questions: [ClarifyQuestion], answers: [String: String] = [:]) {
         clarify = ClarifyState(questions: questions, answers: answers)
-        premiumInput = PremiumInput(argument: argument, preset: preset, lang: .en, evidence: [])
+        premiumInput = PremiumInput(argument: argument, lang: .en, evidence: [])
     }
 }
 #endif

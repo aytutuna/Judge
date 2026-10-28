@@ -18,7 +18,6 @@ data class SavedVerdict(
     val createdAt: Long,
     val original: ParsedResult,
     val nameMap: List<NameMapping>,
-    val preset: String,
     val translations: Map<AppLang, ParsedResult>,
     /** Whose verdict [original] is: [id], or the round of added context that ruled last. */
     val rulingId: String = id,
@@ -30,7 +29,7 @@ data class SavedVerdict(
 interface HistoryRepository {
     fun observeAll(): Flow<List<SavedVerdict>>
     fun observe(id: String): Flow<SavedVerdict?>
-    suspend fun save(outcome: VerdictOutcome, preset: String)
+    suspend fun save(outcome: VerdictOutcome)
 
     /** A later ruling on saved verdict [id] (added context): the entry keeps its id and date and shows [ruling]. */
     suspend fun saveRuling(id: String, ruling: VerdictOutcome)
@@ -48,7 +47,7 @@ class RoomHistoryRepository(
 
     override fun observe(id: String): Flow<SavedVerdict?> = dao.observe(id).map { row -> row?.let(::decode) }
 
-    override suspend fun save(outcome: VerdictOutcome, preset: String) {
+    override suspend fun save(outcome: VerdictOutcome) {
         val result = outcome.result.result
         val existing = dao.get(outcome.id)
         // An idempotent replay returns an empty name map: keep the one we have.
@@ -62,7 +61,6 @@ class RoomHistoryRepository(
                 verdict = result.verdict,
                 lang = ContentLang.verdictLang(result).tag,
                 confidence = result.confidence,
-                preset = preset,
                 tier = result.tier ?: "free",
                 resultJson = outcome.result.rawJson,
                 nameMapJson = nameMap,
@@ -123,7 +121,6 @@ class RoomHistoryRepository(
             createdAt = row.createdAt,
             original = WireJson.decodeResult(row.resultJson),
             nameMap = WireJson.decodeNameMap(row.nameMapJson),
-            preset = row.preset,
             translations = translations,
             rulingId = row.rulingId ?: row.id,
         )

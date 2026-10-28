@@ -80,9 +80,9 @@ class WireJsonTest {
     fun request_encodesTheWireShape() {
         val json = WireJson.json.encodeToString(
             VerdictRequest.serializer(),
-            VerdictRequest(argument = "abc", framework = FrameworkChoice("fairness"), lang = "tr"),
+            VerdictRequest(argument = "abc", lang = "tr"),
         )
-        assertEquals("""{"argument":"abc","framework":{"preset":"fairness"},"lang":"tr","tier":"premium"}""", json)
+        assertEquals("""{"argument":"abc","lang":"tr","tier":"premium"}""", json)
     }
 
     @Test

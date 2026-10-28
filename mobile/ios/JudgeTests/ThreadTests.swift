@@ -189,7 +189,7 @@ final class ThreadLabelTests: XCTestCase {
 final class NewArgumentTests: XCTestCase {
     @MainActor
     func testTheEmptyHomeHasNothingToClear() {
-        let home = HomeModel(preset: Preset.defaultID)
+        let home = HomeModel()
         XCTAssertTrue(home.isBlank)
         home.argument = "My friend Sam says"
         XCTAssertFalse(home.isBlank)

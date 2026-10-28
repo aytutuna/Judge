@@ -118,12 +118,11 @@ final class DecodingTests: XCTestCase {
     }
 
     func testRequestEncodingOmitsUnsetFields() throws {
-        let request = VerdictRequest(argument: "My friend Sam says a hot dog is a sandwich.", framework: .init(preset: "balanced"), lang: .tr)
+        let request = VerdictRequest(argument: "My friend Sam says a hot dog is a sandwich.", lang: .tr)
         let object = try XCTUnwrap(JSONSerialization.jsonObject(with: JSONEncoder().encode(request)) as? [String: Any])
         XCTAssertEqual(object["lang"] as? String, "tr")
         XCTAssertEqual(object["tier"] as? String, "free")
-        XCTAssertEqual((object["framework"] as? [String: Any])?["preset"] as? String, "balanced")
-        XCTAssertNil((object["framework"] as? [String: Any])?["sliders"])
+        XCTAssertNil(object["framework"])
         XCTAssertNil(object["clarifications"])
     }
 

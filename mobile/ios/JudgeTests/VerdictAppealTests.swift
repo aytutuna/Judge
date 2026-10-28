@@ -46,7 +46,7 @@ final class VerdictAppealTests: XCTestCase {
     private func model(_ app: AppModel) throws -> (VerdictAppealModel, Shown) {
         let payload = try Fixtures.sample("win_a_self")
         let session = VerdictSession(id: payload.id, original: payload.result, nameMap: payload.nameMap, translations: [:])
-        try app.history.save(session, preset: "balanced")
+        try app.history.save(session)
         let shown = Shown(session)
         let history = app.history
         let model = VerdictAppealModel(id: Self.id, api: api(), account: app.account, shown: { shown.session }) { next in

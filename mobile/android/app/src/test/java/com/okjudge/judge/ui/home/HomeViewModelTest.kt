@@ -4,9 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import com.okjudge.judge.FakeHistory
 import com.okjudge.judge.core.api.JudgeApi
 import com.okjudge.judge.core.auth.Account
-import com.okjudge.judge.core.data.SettingsStore
 import com.okjudge.judge.core.display.Examples
-import com.okjudge.judge.core.display.Preset
 import com.okjudge.judge.core.model.Entitlement
 import com.okjudge.judge.core.model.Features
 import com.okjudge.judge.core.model.MeResponse
@@ -14,14 +12,12 @@ import com.okjudge.judge.core.model.ServerConfig
 import com.okjudge.judge.core.model.Viewer
 import com.okjudge.judge.core.session.VerdictFlow
 import com.okjudge.judge.i18n.AppLang
-import com.okjudge.judge.i18n.LangPref
 import com.okjudge.judge.ui.UiTestSupport
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
@@ -43,13 +39,6 @@ import kotlin.random.Random
 class HomeViewModelTest {
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Unconfined)
 
-    private class FakeSettings : SettingsStore {
-        override val langPref = MutableStateFlow(LangPref.SYSTEM)
-        override val lastPreset = MutableStateFlow(Preset.DEFAULT)
-        override suspend fun setLangPref(pref: LangPref) { langPref.value = pref }
-        override suspend fun setLastPreset(preset: Preset) { lastPreset.value = preset }
-    }
-
     @Before
     fun setUp() {
         Dispatchers.setMain(Dispatchers.Unconfined)
@@ -65,7 +54,7 @@ class HomeViewModelTest {
 
     private fun vm(random: Random = Random(7), account: Account.State = Account.State.SignedOut): HomeViewModel {
         val ready = Account.Providers.Ready(ServerConfig(features = Features(cases = true)))
-        return HomeViewModel(SavedStateHandle(), FakeSettings(), flow, flowOf(account), flowOf(ready), random = random)
+        return HomeViewModel(SavedStateHandle(), flow, flowOf(account), flowOf(ready), random = random)
     }
 
     private fun signedIn(e: Entitlement?) = Account.State.SignedIn(MeResponse(Viewer("u1", "ada@example.com"), e))

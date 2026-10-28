@@ -89,7 +89,7 @@ fun TextAction(text: String, onClick: () -> Unit, modifier: Modifier = Modifier,
     }
 }
 
-/** A selectable pill chip (presets, examples, language). */
+/** A selectable pill chip (examples, language). */
 @Composable
 fun Chip(
     text: String,

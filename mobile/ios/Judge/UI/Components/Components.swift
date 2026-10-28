@@ -86,7 +86,7 @@ struct LinkButtonStyle: ButtonStyle {
     }
 }
 
-/// A selectable chip (examples and presets).
+/// A selectable chip (examples).
 struct ChipButtonStyle: ButtonStyle {
     var selected = false
 

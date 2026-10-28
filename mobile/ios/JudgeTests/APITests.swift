@@ -78,7 +78,7 @@ final class JudgeAPITests: XCTestCase {
     }
 
     private func request() -> VerdictRequest {
-        VerdictRequest(argument: "My friend Sam says a hot dog is a sandwich.", framework: .init(preset: "fairness"), lang: .en)
+        VerdictRequest(argument: "My friend Sam says a hot dog is a sandwich.", lang: .en)
     }
 
     private func reply(_ status: Int, json: Any?, headers: [String: String] = [:]) throws -> StubURLProtocol.Reply {

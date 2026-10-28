@@ -231,7 +231,6 @@ fun JudgeRoot(container: AppContainer, links: StateFlow<Uri?> = MutableStateFlow
                             val vm = viewModel {
                                 HomeViewModel(
                                     createSavedStateHandle(),
-                                    container.settings,
                                     container.verdictFlow,
                                     accountState = account.state,
                                     providers = account.providers,
@@ -256,7 +255,6 @@ fun JudgeRoot(container: AppContainer, links: StateFlow<Uri?> = MutableStateFlow
                                 onArgumentChange = vm::onArgumentChange,
                                 onOtherSideChange = vm::onOtherSideChange,
                                 onOtherName = vm::onOtherName,
-                                onPreset = vm::onPreset,
                                 onSubmit = {
                                     when (vm.submit(lang, strings)) {
                                         // Every verdict needs an account: sign in first, then go on.

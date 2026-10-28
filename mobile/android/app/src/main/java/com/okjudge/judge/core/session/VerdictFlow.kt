@@ -5,7 +5,6 @@ import com.okjudge.judge.core.api.JudgeApi
 import com.okjudge.judge.core.api.PollOutcome
 import com.okjudge.judge.core.data.HistoryRepository
 import com.okjudge.judge.core.display.Errors
-import com.okjudge.judge.core.display.Preset
 import com.okjudge.judge.core.display.UiError
 import com.okjudge.judge.core.cases.CaseNamesStore
 import com.okjudge.judge.core.cases.MemoryCaseNames
@@ -13,7 +12,6 @@ import com.okjudge.judge.core.model.Clarification
 import com.okjudge.judge.core.model.CreateCaseRequest
 import com.okjudge.judge.core.model.ClarifyQuestion
 import com.okjudge.judge.core.model.Entitlement
-import com.okjudge.judge.core.model.FrameworkChoice
 import com.okjudge.judge.core.model.WireJson
 import com.okjudge.judge.core.model.VerdictOutcome
 import com.okjudge.judge.core.model.VerdictRequest
@@ -104,7 +102,7 @@ class VerdictFlow(
     val navigation: Flow<Nav> = _navigation.receiveAsFlow()
 
     /** What a premium request judges, fixed when it is submitted. */
-    private data class PremiumInput(val text: String, val preset: Preset, val lang: AppLang, val evidence: List<String>, val sides: List<Side>)
+    private data class PremiumInput(val text: String, val lang: AppLang, val evidence: List<String>, val sides: List<Side>)
 
     @Volatile private var premiumInput: PremiumInput? = null
 
@@ -126,8 +124,8 @@ class VerdictFlow(
         if (heldKey?.second == key) heldKey = null
     }
 
-    private suspend fun succeed(outcome: VerdictOutcome, preset: Preset) {
-        history.save(outcome, preset.id)
+    private suspend fun succeed(outcome: VerdictOutcome) {
+        history.save(outcome)
         val running = _state.value as? State.Running
         _state.value = State.Succeeded(outcome, running?.argument.orEmpty(), running?.sides.orEmpty())
     }
@@ -165,10 +163,10 @@ class VerdictFlow(
      * verdict: it goes ahead without questions. Account problems (401, 402),
      * a refusal (403) and bad input (400) stop on Home with the error.
      */
-    fun startPremium(argument: String, preset: Preset, lang: AppLang, evidence: List<String>, sides: List<Side> = emptyList()): Boolean {
+    fun startPremium(argument: String, lang: AppLang, evidence: List<String>, sides: List<Side> = emptyList()): Boolean {
         if (!canStart()) return false
         _lastError.value = null
-        val input = PremiumInput(argument.trim(), preset, lang, evidence.toList(), sides)
+        val input = PremiumInput(argument.trim(), lang, evidence.toList(), sides)
         premiumInput = input
         _premiumStep.value = PremiumStep.Checking
         job = scope.launch {
@@ -208,7 +206,6 @@ class VerdictFlow(
      */
     fun createCase(
         argument: String,
-        preset: Preset,
         lang: AppLang,
         evidence: List<String>,
         displayName: String?,
@@ -219,7 +216,6 @@ class VerdictFlow(
         _creating.value = true
         val request = CreateCaseRequest(
             text = argument.trim(),
-            framework = FrameworkChoice(preset = preset.id),
             lang = lang.tag,
             evidence = evidence.takeIf { it.isNotEmpty() },
             displayName = displayName?.trim()?.takeIf { it.isNotEmpty() },
@@ -264,7 +260,6 @@ class VerdictFlow(
         _navigation.trySend(Nav.Judging)
         val request = VerdictRequest(
             argument = input.text,
-            framework = FrameworkChoice(preset = input.preset.id),
             lang = input.lang.tag,
             tier = "premium",
             clarifications = clarifications,
@@ -289,7 +284,7 @@ class VerdictFlow(
                         is VerdictSubmission.Done -> {
                             clearKey(key)
                             submission.outcome.entitlement?.let(onEntitlement)
-                            succeed(submission.outcome, input.preset)
+                            succeed(submission.outcome)
                             scope.launch { refreshAccount() }
                             return@launch
                         }
@@ -308,7 +303,7 @@ class VerdictFlow(
                                     } else {
                                         end.outcome
                                     }
-                                    succeed(outcome, input.preset)
+                                    succeed(outcome)
                                 }
                                 is PollOutcome.Ended -> fail(end.error)
                             }

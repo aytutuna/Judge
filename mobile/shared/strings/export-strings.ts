@@ -251,7 +251,7 @@ function kotlin(items: Item[]): string {
     ...members,
     "",
     "    /** A placeholder-free string by its lib/i18n.ts key, for keys built at",
-    "     * runtime (\"badge.$type\", \"preset.$id.label\"). Null when unknown. */",
+    "     * runtime (\"badge.$type\", \"kind.$kind\"). Null when unknown. */",
     "    fun text(key: String): String? = idOf(key)?.let { res.getString(it) }",
     "",
     "    companion object {",

@@ -75,16 +75,6 @@ final class DisplayVectorTests: XCTestCase {
         }
     }
 
-    func testPresetEmojiMatchesWeb() throws {
-        let presets = try Fixtures.list("presets", in: Fixtures.vectors())
-        XCTAssertEqual(presets.compactMap { $0["id"] as? String }, Preset.all.map(\.id))
-        XCTAssertEqual(presets.compactMap { $0["emoji"] as? String }, Preset.all.map(\.emoji))
-        for preset in Preset.all {
-            XCTAssertNotEqual(preset.label(.en), preset.id, "missing preset label for \(preset.id)")
-            XCTAssertNotEqual(preset.label(.tr), preset.id, "missing Turkish preset label for \(preset.id)")
-        }
-    }
-
     func testPaletteMatchesWeb() throws {
         let palette = try XCTUnwrap(Fixtures.vectors()["palette"] as? [String: String])
         XCTAssertEqual(Set(palette.keys), Set(PaletteHex.all.keys))

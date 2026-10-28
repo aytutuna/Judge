@@ -73,7 +73,6 @@ final class CaseTests: XCTestCase {
         XCTAssertTrue(waiting.canJudgeNow)
         XCTAssertNil(waiting.mode)
         XCTAssertEqual(waiting.names, [NameMapping(original: "I", replacement: "Party A"), NameMapping(original: "Sam", replacement: "Party B")])
-        XCTAssertEqual(waiting.preset, "balanced")
         XCTAssertNil(waiting.pollAfterMs)
 
         let judging = try view("judging")
@@ -542,7 +541,7 @@ final class CaseTests: XCTestCase {
         XCTAssertFalse((headers["Idempotency-Key"] ?? "").isEmpty)
         let body = try PremiumFixtures.body(router.sentBodies("POST", "/api/v1/cases").first)
         XCTAssertEqual(body["text"] as? String, "My friend Sam says a hot dog is a sandwich. I say it is not.")
-        XCTAssertEqual((body["framework"] as? [String: Any])?["preset"] as? String, home.preset)
+        XCTAssertNil(body["framework"])
         XCTAssertEqual(body["lang"] as? String, app.lang.rawValue)
         XCTAssertEqual(body["displayName"] as? String, "Alex")
         XCTAssertEqual(body["tier"] as? String, "premium")
@@ -604,10 +603,10 @@ final class CaseTests: XCTestCase {
     }
 
     func testCaseBodyIsPremium() {
-        let body = JudgeAPI.createCaseBody(text: "t", preset: "balanced", lang: .en, evidence: ["ev1"], displayName: nil)
+        let body = JudgeAPI.createCaseBody(text: "t", lang: .en, evidence: ["ev1"], displayName: nil)
         XCTAssertEqual(body["tier"] as? String, "premium")
         XCTAssertEqual(body["evidence"] as? [String], ["ev1"])
-        XCTAssertNil(JudgeAPI.createCaseBody(text: "t", preset: "balanced", lang: .en, evidence: [], displayName: nil)["evidence"])
+        XCTAssertNil(JudgeAPI.createCaseBody(text: "t", lang: .en, evidence: [], displayName: nil)["evidence"])
     }
 
     @MainActor

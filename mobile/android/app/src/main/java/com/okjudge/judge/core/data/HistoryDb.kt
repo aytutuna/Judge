@@ -25,7 +25,8 @@ data class SavedVerdictRow(
     val verdict: String,
     val lang: String,
     val confidence: Int,
-    val preset: String,
+    /** The judging style there used to be a choice of. Kept so old databases open without a migration. */
+    val preset: String = "balanced",
     val tier: String,
     @ColumnInfo(name = "result_json") val resultJson: String,
     @ColumnInfo(name = "name_map_json") val nameMapJson: String,

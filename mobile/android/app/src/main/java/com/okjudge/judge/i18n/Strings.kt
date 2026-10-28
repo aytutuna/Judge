@@ -16,28 +16,6 @@ class Strings(private val res: Resources) {
     val inputLabel: String get() = res.getString(R.string.input_label)
     val placeholder: String get() = res.getString(R.string.placeholder)
     val getVerdict: String get() = res.getString(R.string.get_verdict)
-    val privacyNote: String get() = res.getString(R.string.privacy_note)
-    val judgeBy: String get() = res.getString(R.string.judge_by)
-    val fineTune: String get() = res.getString(R.string.fine_tune)
-    val hideFineTune: String get() = res.getString(R.string.hide_fine_tune)
-    val sliderNote: String get() = res.getString(R.string.slider_note)
-    val presetBalancedLabel: String get() = res.getString(R.string.preset_balanced_label)
-    val presetBalancedBlurb: String get() = res.getString(R.string.preset_balanced_blurb)
-    val presetOutcomesLabel: String get() = res.getString(R.string.preset_outcomes_label)
-    val presetOutcomesBlurb: String get() = res.getString(R.string.preset_outcomes_blurb)
-    val presetPrinciplesLabel: String get() = res.getString(R.string.preset_principles_label)
-    val presetPrinciplesBlurb: String get() = res.getString(R.string.preset_principles_blurb)
-    val presetFairnessLabel: String get() = res.getString(R.string.preset_fairness_label)
-    val presetFairnessBlurb: String get() = res.getString(R.string.preset_fairness_blurb)
-    val presetLoyaltyLabel: String get() = res.getString(R.string.preset_loyalty_label)
-    val presetLoyaltyBlurb: String get() = res.getString(R.string.preset_loyalty_blurb)
-    val sliderFreedomSafetyLeft: String get() = res.getString(R.string.slider_freedom_safety_left)
-    val sliderFreedomSafetyRight: String get() = res.getString(R.string.slider_freedom_safety_right)
-    val sliderIndividualGroupLeft: String get() = res.getString(R.string.slider_individual_group_left)
-    val sliderIndividualGroupRight: String get() = res.getString(R.string.slider_individual_group_right)
-    val sliderHeadHeartLeft: String get() = res.getString(R.string.slider_head_heart_left)
-    val sliderHeadHeartRight: String get() = res.getString(R.string.slider_head_heart_right)
-    fun sliderAria(left: String, right: String): String = res.getString(R.string.slider_aria, left, right)
     val thinkingEyebrow: String get() = res.getString(R.string.thinking_eyebrow)
     val thinkingRead: String get() = res.getString(R.string.thinking_read)
     val thinkingLabel: String get() = res.getString(R.string.thinking_label)
@@ -74,6 +52,8 @@ class Strings(private val res: Resources) {
     val kindDefinition: String get() = res.getString(R.string.kind_definition)
     val kindLogic: String get() = res.getString(R.string.kind_logic)
     val bedrock: String get() = res.getString(R.string.bedrock)
+    val privacyNote: String get() = res.getString(R.string.privacy_note)
+    val privacyLink: String get() = res.getString(R.string.privacy_link)
     val cruxShort: String get() = res.getString(R.string.crux_short)
     val cruxTitle: String get() = res.getString(R.string.crux_title)
     val mapTitle: String get() = res.getString(R.string.map_title)
@@ -134,10 +114,7 @@ class Strings(private val res: Resources) {
     val exampleKnucklesText: String get() = res.getString(R.string.example_knuckles_text)
     val examplePineappleLabel: String get() = res.getString(R.string.example_pineapple_label)
     val examplePineappleText: String get() = res.getString(R.string.example_pineapple_text)
-    val advancedSummary: String get() = res.getString(R.string.advanced_summary)
-    fun advancedCurrent(label: String): String = res.getString(R.string.advanced_current, label)
     val turnstileLabel: String get() = res.getString(R.string.turnstile_label)
-    val privacyLink: String get() = res.getString(R.string.privacy_link)
     val howTitle: String get() = res.getString(R.string.how_title)
     val footerAbout: String get() = res.getString(R.string.footer_about)
     val footerPrivacy: String get() = res.getString(R.string.footer_privacy)
@@ -316,7 +293,6 @@ class Strings(private val res: Resources) {
     val respondTitle: String get() = res.getString(R.string.respond_title)
     val respondIntro: String get() = res.getString(R.string.respond_intro)
     val respondPrivacy: String get() = res.getString(R.string.respond_privacy)
-    fun respondFramework(preset: String): String = res.getString(R.string.respond_framework, preset)
     fun respondLang(language: String): String = res.getString(R.string.respond_lang, language)
     val respondLangEn: String get() = res.getString(R.string.respond_lang_en)
     val respondLangTr: String get() = res.getString(R.string.respond_lang_tr)
@@ -434,8 +410,7 @@ class Strings(private val res: Resources) {
     val threadJudges: String get() = res.getString(R.string.thread_judges)
     val threadPlaceholder: String get() = res.getString(R.string.thread_placeholder)
     val threadPlaceholderTwoSided: String get() = res.getString(R.string.thread_placeholder_two_sided)
-    val threadSample: String get() = res.getString(R.string.thread_sample)
-    val threadLens: String get() = res.getString(R.string.thread_lens)
+    val threadOptions: String get() = res.getString(R.string.thread_options)
     fun threadJudgesAgree(n: String, total: String): String = res.getString(R.string.thread_judges_agree, n, total)
     val threadJudgesSplit: String get() = res.getString(R.string.thread_judges_split)
     val homeKicker: String get() = res.getString(R.string.home_kicker)
@@ -592,7 +567,7 @@ class Strings(private val res: Resources) {
     val appAppealLimit: String get() = res.getString(R.string.app_appeal_limit)
 
     /** A placeholder-free string by its lib/i18n.ts key, for keys built at
-     * runtime ("badge.$type", "preset.$id.label"). Null when unknown. */
+     * runtime ("badge.$type", "kind.$kind"). Null when unknown. */
     fun text(key: String): String? = idOf(key)?.let { res.getString(it) }
 
     companion object {
@@ -604,27 +579,6 @@ class Strings(private val res: Resources) {
             "input.label" -> R.string.input_label
             "placeholder" -> R.string.placeholder
             "getVerdict" -> R.string.get_verdict
-            "privacyNote" -> R.string.privacy_note
-            "judgeBy" -> R.string.judge_by
-            "fineTune" -> R.string.fine_tune
-            "hideFineTune" -> R.string.hide_fine_tune
-            "sliderNote" -> R.string.slider_note
-            "preset.balanced.label" -> R.string.preset_balanced_label
-            "preset.balanced.blurb" -> R.string.preset_balanced_blurb
-            "preset.outcomes.label" -> R.string.preset_outcomes_label
-            "preset.outcomes.blurb" -> R.string.preset_outcomes_blurb
-            "preset.principles.label" -> R.string.preset_principles_label
-            "preset.principles.blurb" -> R.string.preset_principles_blurb
-            "preset.fairness.label" -> R.string.preset_fairness_label
-            "preset.fairness.blurb" -> R.string.preset_fairness_blurb
-            "preset.loyalty.label" -> R.string.preset_loyalty_label
-            "preset.loyalty.blurb" -> R.string.preset_loyalty_blurb
-            "slider.freedom_safety.left" -> R.string.slider_freedom_safety_left
-            "slider.freedom_safety.right" -> R.string.slider_freedom_safety_right
-            "slider.individual_group.left" -> R.string.slider_individual_group_left
-            "slider.individual_group.right" -> R.string.slider_individual_group_right
-            "slider.head_heart.left" -> R.string.slider_head_heart_left
-            "slider.head_heart.right" -> R.string.slider_head_heart_right
             "thinking.eyebrow" -> R.string.thinking_eyebrow
             "thinking.read" -> R.string.thinking_read
             "thinking.label" -> R.string.thinking_label
@@ -657,6 +611,8 @@ class Strings(private val res: Resources) {
             "kind.definition" -> R.string.kind_definition
             "kind.logic" -> R.string.kind_logic
             "bedrock" -> R.string.bedrock
+            "privacyNote" -> R.string.privacy_note
+            "privacyLink" -> R.string.privacy_link
             "cruxShort" -> R.string.crux_short
             "cruxTitle" -> R.string.crux_title
             "mapTitle" -> R.string.map_title
@@ -710,9 +666,7 @@ class Strings(private val res: Resources) {
             "example.knuckles.text" -> R.string.example_knuckles_text
             "example.pineapple.label" -> R.string.example_pineapple_label
             "example.pineapple.text" -> R.string.example_pineapple_text
-            "advanced.summary" -> R.string.advanced_summary
             "turnstile.label" -> R.string.turnstile_label
-            "privacyLink" -> R.string.privacy_link
             "how.title" -> R.string.how_title
             "footer.about" -> R.string.footer_about
             "footer.privacy" -> R.string.footer_privacy
@@ -979,8 +933,7 @@ class Strings(private val res: Resources) {
             "thread.judges" -> R.string.thread_judges
             "thread.placeholder" -> R.string.thread_placeholder
             "thread.placeholderTwoSided" -> R.string.thread_placeholder_two_sided
-            "thread.sample" -> R.string.thread_sample
-            "thread.lens" -> R.string.thread_lens
+            "thread.options" -> R.string.thread_options
             "thread.judgesSplit" -> R.string.thread_judges_split
             "home.kicker" -> R.string.home_kicker
             "home.title" -> R.string.home_title

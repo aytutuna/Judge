@@ -60,7 +60,6 @@ final class AppModel {
 
     private let defaults: UserDefaults
     private static let langKey = "settings.lang"
-    static let presetKey = "settings.lastPreset"
 
     init(
         config: AppConfig,
@@ -80,7 +79,7 @@ final class AppModel {
         langPreference = defaults.string(forKey: Self.langKey).flatMap(LangPreference.init(rawValue:)) ?? .system
         self.api = api ?? JudgeAPI(baseURL: config.apiBaseURL, userAgent: config.userAgent, tokenStore: tokenStore)
         history = HistoryStore(context: container.mainContext)
-        home = HomeModel(preset: defaults.string(forKey: Self.presetKey) ?? Preset.defaultID)
+        home = HomeModel()
         account = AccountModel(api: self.api)
         let gateway: (any PurchaseGateway)?
         if let purchaseGateway {
@@ -113,10 +112,6 @@ final class AppModel {
     func setLangPreference(_ preference: LangPreference) {
         langPreference = preference
         defaults.set(preference.rawValue, forKey: Self.langKey)
-    }
-
-    func rememberPreset(_ id: String) {
-        defaults.set(id, forKey: Self.presetKey)
     }
 
     /// Screenshot evidence on Home: uploading needs an account.

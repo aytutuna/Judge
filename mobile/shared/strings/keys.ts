@@ -21,15 +21,6 @@ export const WEB_KEYS: readonly string[] = [
   "thread.*",
   "shell.today",
   "shell.new",
-  // Value framework picker
-  "judgeBy",
-  "fineTune",
-  "hideFineTune",
-  "sliderNote",
-  "preset.*",
-  "slider.*",
-  "advanced.summary",
-  "advanced.current",
   // Judging state
   "thinking.*",
   // Verdict card

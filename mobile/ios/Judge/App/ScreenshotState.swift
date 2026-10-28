@@ -172,7 +172,7 @@ struct ScreenshotState {
         case .verdict(let sample):
             // Opened as a saved verdict: the card at the top, no thread above it.
             guard let session = ScreenshotFixtures.session(sample) else { return }
-            try? app.history.save(session, preset: Preset.defaultID, now: Self.newest)
+            try? app.history.save(session, now: Self.newest)
             app.home.path = [.saved(id: session.id)]
         case .verdictThread:
             guard let session = ScreenshotFixtures.session("win_a_self") else { return }
@@ -181,7 +181,7 @@ struct ScreenshotState {
             // A free account sees the Premium lock.
             premium(app, me: blockedBy == "premium_required" ? "free" : "credits7")
             guard let session = ScreenshotFixtures.session("win_a_self") else { return }
-            try? app.history.save(session, preset: Preset.defaultID, now: Self.newest)
+            try? app.history.save(session, now: Self.newest)
             app.appealSeed = (CaseAppealGate(allowed: blockedBy == nil, blockedBy: blockedBy), blockedBy == nil ? Self.context(lang) : "")
             app.home.path = [.saved(id: session.id)]
         case .signIn:
@@ -267,7 +267,7 @@ struct ScreenshotState {
         let samples = ["win_a_self", "overturned_tr", "win_b_named", "lean_b_majority_escalated", "split", "conditional"]
         for (offset, name) in samples.enumerated() {
             guard let session = ScreenshotFixtures.session(name) else { continue }
-            try? app.history.save(session, preset: Preset.defaultID, now: Self.newest.addingTimeInterval(Double(-offset) * 3600))
+            try? app.history.save(session, now: Self.newest.addingTimeInterval(Double(-offset) * 3600))
         }
     }
 

@@ -34,7 +34,7 @@ class VerdictViewModelTest {
         Dispatchers.setMain(Dispatchers.Unconfined)
         server = MockWebServer()
         server.start()
-        runBlocking { history.save(outcome, "balanced") }
+        runBlocking { history.save(outcome) }
     }
 
     @After

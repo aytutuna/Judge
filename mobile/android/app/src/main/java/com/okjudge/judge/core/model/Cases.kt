@@ -84,7 +84,6 @@ data class CaseView(
     /** free | premium: only a premium case holds a unit and takes evidence. */
     val tier: String = "premium",
     val lang: String = "en",
-    val framework: FrameworkChoice = FrameworkChoice(),
     val createdAt: String = "",
     val expiresAt: String = "",
     val judgedAt: String? = null,
@@ -155,7 +154,6 @@ data class CaseRemovalResponse(val removed: Boolean = false, val removedAt: Stri
 @Serializable
 data class CreateCaseRequest(
     val text: String,
-    val framework: FrameworkChoice = FrameworkChoice(),
     val lang: String = "en",
     val tier: String = "premium",
     val evidence: List<String>? = null,

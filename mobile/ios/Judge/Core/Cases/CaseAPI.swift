@@ -34,10 +34,9 @@ extension JudgeAPI {
     }
 
     /// The JSON body of POST /api/v1/cases, also the Idempotency-Key's input.
-    static func createCaseBody(text: String, preset: String, lang: AppLang, evidence: [String], displayName: String?) -> [String: Any] {
+    static func createCaseBody(text: String, lang: AppLang, evidence: [String], displayName: String?) -> [String: Any] {
         var body: [String: Any] = [
             "text": text,
-            "framework": ["preset": preset],
             "lang": lang.rawValue,
             "tier": Tier.premium.rawValue,
         ]
@@ -53,8 +52,8 @@ extension JudgeAPI {
     }
 
     /// POST /api/v1/cases: the owner's side; the case holds one verdict's unit.
-    func createCase(text: String, preset: String, lang: AppLang, evidence: [String], displayName: String?, idempotencyKey: String) async throws -> CaseSubmission {
-        let body = Self.createCaseBody(text: text, preset: preset, lang: lang, evidence: evidence, displayName: displayName)
+    func createCase(text: String, lang: AppLang, evidence: [String], displayName: String?, idempotencyKey: String) async throws -> CaseSubmission {
+        let body = Self.createCaseBody(text: text, lang: lang, evidence: evidence, displayName: displayName)
         let request = try jsonRequest(endpoint("cases"), method: "POST", timeout: CaseTimeout.create, body: body, idempotencyKey: idempotencyKey)
         let data = try await send(request)
         do {

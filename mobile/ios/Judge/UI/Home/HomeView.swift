@@ -1,7 +1,7 @@
 import SwiftUI
 
-/// Home: your side and theirs in two cards, the lens and the send button
-/// with what is left to spend, then the privacy note.
+/// Home: your side and theirs in two cards and the send button with what
+/// is left to spend, then the privacy note.
 struct HomeView: View {
     @Environment(AppModel.self) private var app
     @SceneStorage("home.draft") private var draft = ""
@@ -92,7 +92,6 @@ struct HomeView: View {
                 home.mode = .now
             }
         }
-        .onChange(of: home.preset) { _, value in app.rememberPreset(value) }
         .fullScreenCover(isPresented: $home.isJudging) {
             JudgingCover(home: home, lang: lang)
                 .environment(\.sceneLive, sceneLive)
@@ -120,7 +119,7 @@ struct HomeView: View {
         .accessibilityElement(children: .contain)
     }
 
-    /// Both sides and the lens: your side in terracotta, theirs in sage.
+    /// Both sides: your side in terracotta, theirs in sage.
     /// Written together they go to the judges as one text; "Or send them a
     /// link" makes a two-sided case instead.
     private func form(_ lang: AppLang, home: HomeModel) -> some View {
@@ -132,7 +131,6 @@ struct HomeView: View {
             sideCard(lang, home: home, mine: true)
             sideCard(lang, home: home, mine: false)
             counter(lang, home: home)
-            presets(lang, home: home)
             if let error = home.error {
                 errorBanner(error, lang: lang)
                     .id(Self.errorID)
@@ -264,23 +262,6 @@ struct HomeView: View {
             .padding(.vertical, -4)
     }
 
-    private func presets(_ lang: AppLang, home: HomeModel) -> some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: 6) {
-                ForEach(Preset.all) { preset in
-                    let selected = preset.id == home.preset
-                    Button(preset.label(lang)) { home.preset = preset.id }
-                        .buttonStyle(LensChipStyle(selected: selected))
-                        .disabled(home.isBusy)
-                        .accessibilityAddTraits(selected ? .isSelected : [])
-                        .accessibilityHint(preset.blurb(lang))
-                }
-            }
-        }
-        .accessibilityElement(children: .contain)
-        .accessibilityLabel(L10n.threadLens(lang))
-    }
-
     private func errorBanner(_ error: APIError, lang: AppLang) -> some View {
         let retry: (() -> Void)? = error.offersRetry ? { submit() } : nil
         return ErrorBanner(
@@ -358,24 +339,6 @@ struct HomeView: View {
     private func submit() {
         focused = nil
         app.home.submit(app: app)
-    }
-}
-
-/// A lens under the cards: ink once picked, outlined otherwise.
-private struct LensChipStyle: ButtonStyle {
-    var selected = false
-
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .brandText(TypeStyle(face: .inter, weight: 600, size: 13, lineHeight: 1.2, textStyle: .footnote, maxScale: 1.8))
-            .foregroundStyle(selected ? Brand.paper : Brand.ink2)
-            .lineLimit(1)
-            .padding(.horizontal, 16)
-            .frame(minHeight: 38)
-            .background(Capsule().fill(selected ? Brand.ink : Color.clear))
-            .overlay(Capsule().strokeBorder(selected ? Color.clear : Brand.line2, lineWidth: 1))
-            .contentShape(Capsule())
-            .opacity(configuration.isPressed ? 0.7 : 1)
     }
 }
 

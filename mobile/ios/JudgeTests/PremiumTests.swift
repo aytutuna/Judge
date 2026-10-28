@@ -591,7 +591,7 @@ final class PremiumFlowTests: XCTestCase {
         XCTAssertEqual(body["tier"] as? String, "premium")
         XCTAssertNil(body["clarifications"])
         XCTAssertNil(body["evidence"])
-        XCTAssertEqual((body["framework"] as? [String: Any])?["preset"] as? String, home.preset)
+        XCTAssertNil(body["framework"])
 
         // The 202's entitlement first, then /me after the outcome.
         try await PremiumFixtures.waitUntil("the account refresh") { router.count("GET", Self.mePath) >= 1 }

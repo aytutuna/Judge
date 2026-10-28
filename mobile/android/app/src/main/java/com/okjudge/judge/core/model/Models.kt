@@ -197,9 +197,6 @@ enum class TrialOutcome(val raw: String) {
 // --- Requests -----------------------------------------------------------------
 
 @Serializable
-data class FrameworkChoice(val preset: String = "balanced", val sliders: Map<String, Int>? = null)
-
-@Serializable
 data class Clarification(val question: String, val answer: String)
 
 /**
@@ -210,7 +207,6 @@ data class Clarification(val question: String, val answer: String)
 @Serializable
 data class VerdictRequest(
     val argument: String,
-    val framework: FrameworkChoice = FrameworkChoice(),
     val lang: String = "en",
     val tier: String = "premium",
     val clarifications: List<Clarification>? = null,

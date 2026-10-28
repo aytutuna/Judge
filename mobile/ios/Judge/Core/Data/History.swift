@@ -15,6 +15,8 @@ final class SavedVerdict {
     /// Content language of the original (verdictLang).
     var lang: String
     var confidence: Int
+    /// The judging style there used to be a choice of. Kept so existing
+    /// stores open without a migration; new rows write "balanced".
     var preset: String
     var tier: String
     /// The full original `result` JSON as received.
@@ -33,7 +35,6 @@ final class SavedVerdict {
         verdict: String,
         lang: String,
         confidence: Int,
-        preset: String,
         tier: String,
         resultJSON: String,
         nameMapJSON: String,
@@ -46,7 +47,7 @@ final class SavedVerdict {
         self.verdict = verdict
         self.lang = lang
         self.confidence = confidence
-        self.preset = preset
+        preset = "balanced"
         self.tier = tier
         self.resultJSON = resultJSON
         self.nameMapJSON = nameMapJSON
@@ -84,7 +85,7 @@ final class HistoryStore {
     }
 
     /// Saves (or replaces) a verdict right after it arrives.
-    func save(_ session: VerdictSession, preset: String, now: Date = .now) throws {
+    func save(_ session: VerdictSession, now: Date = .now) throws {
         let result = session.original.result
         let translations = session.translations.mapValues(\.json)
         if let existing = try find(id: session.id) {
@@ -103,7 +104,6 @@ final class HistoryStore {
                 verdict: result.verdict.rawValue,
                 lang: session.sourceLang.rawValue,
                 confidence: result.confidence,
-                preset: preset,
                 tier: result.tier ?? "free",
                 resultJSON: session.original.json,
                 nameMapJSON: WireDecoding.json(of: session.nameMap),
@@ -114,7 +114,7 @@ final class HistoryStore {
     }
 
     /// A later ruling on a saved verdict (context added): the entry keeps
-    /// its id, date and preset and shows `session`'s verdict. Translations
+    /// its id and date and shows `session`'s verdict. Translations
     /// of the earlier ruling no longer apply.
     func saveRuling(_ session: VerdictSession) throws {
         guard let row = try find(id: session.id) else { return }

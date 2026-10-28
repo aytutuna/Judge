@@ -2,7 +2,6 @@ package com.okjudge.judge.core.api
 
 import com.okjudge.judge.Fixtures
 import com.okjudge.judge.core.display.UiError
-import com.okjudge.judge.core.model.FrameworkChoice
 import com.okjudge.judge.core.model.VerdictRequest
 import com.okjudge.judge.i18n.AppLang
 import kotlinx.coroutines.asCoroutineDispatcher
@@ -30,7 +29,7 @@ import java.util.concurrent.TimeUnit
 
 class JudgeApiTest {
     private lateinit var server: MockWebServer
-    private val request = VerdictRequest(argument = "My friend says a hot dog is a sandwich.", framework = FrameworkChoice("balanced"), lang = "en")
+    private val request = VerdictRequest(argument = "My friend says a hot dog is a sandwich.", lang = "en")
 
     @Before
     fun setUp() {
@@ -65,8 +64,8 @@ class JudgeApiTest {
         assertNull(recorded.headers["Cookie"])
         val body = Json.parseToJsonElement(recorded.body!!.utf8()).jsonObject
         assertEquals("premium", body["tier"]!!.jsonPrimitive.content)
-        assertEquals("balanced", body["framework"]!!.jsonObject["preset"]!!.jsonPrimitive.content)
         assertTrue("no null fields on the wire", "clarifications" !in body && "evidence" !in body)
+        assertTrue("framework" !in body)
     }
 
     @Test

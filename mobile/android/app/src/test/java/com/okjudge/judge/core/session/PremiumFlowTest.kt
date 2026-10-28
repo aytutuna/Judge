@@ -5,7 +5,6 @@ import com.okjudge.judge.Fixtures
 import com.okjudge.judge.core.api.JudgeApi
 import com.okjudge.judge.core.api.PollPolicy
 import com.okjudge.judge.core.auth.Routes
-import com.okjudge.judge.core.display.Preset
 import com.okjudge.judge.core.display.UiError
 import com.okjudge.judge.core.model.Entitlement
 import com.okjudge.judge.i18n.AppLang
@@ -115,7 +114,7 @@ class PremiumFlowTest {
             routes.on(CLARIFY, Routes.json(status, json))
             val f = flow()
             val before = refreshes.get()
-            assertTrue(f.startPremium(argument, Preset.BALANCED, AppLang.EN, emptyList()))
+            assertTrue(f.startPremium(argument, AppLang.EN, emptyList()))
             f.stepIs { it == VerdictFlow.PremiumStep.None }
             assertEquals(code, nav, withTimeout(10_000) { f.navigation.first() })
             assertNull("the screen answers it, not a banner", f.lastError.value)
@@ -124,7 +123,7 @@ class PremiumFlowTest {
         }
         routes.on(CLARIFY, Routes.json(400, """{"error":"Too short","code":"too_short"}"""))
         val f = flow()
-        f.startPremium(argument, Preset.BALANCED, AppLang.EN, emptyList())
+        f.startPremium(argument, AppLang.EN, emptyList())
         waitFor { f.lastError.value != null }
         assertEquals("too_short", (f.lastError.value as UiError.Api).code)
         assertTrue("no verdict was asked for", routes.requestsTo(VERDICT).isEmpty())
@@ -142,7 +141,7 @@ class PremiumFlowTest {
             routes.on(CLARIFY, trouble)
             routes.on(VERDICT, Routes.json(200, premium["response"].toString()))
             val f = flow()
-            assertTrue(f.startPremium(argument, Preset.BALANCED, AppLang.EN, emptyList()))
+            assertTrue(f.startPremium(argument, AppLang.EN, emptyList()))
             assertTrue(f.settled() is VerdictFlow.State.Succeeded)
             val sent = body(VERDICT, i)
             assertEquals("premium", sent["tier"]!!.jsonPrimitive.content)
@@ -156,7 +155,7 @@ class PremiumFlowTest {
         routes.on(CLARIFY, Routes.json(200, clarify("two_questions")))
         routes.on(VERDICT, Routes.json(200, premium["response"].toString()))
         val f = flow()
-        f.startPremium(argument, Preset.FAIRNESS, AppLang.TR, emptyList())
+        f.startPremium(argument, AppLang.TR, emptyList())
         val step = f.stepIs { it is VerdictFlow.PremiumStep.Clarify } as VerdictFlow.PremiumStep.Clarify
         assertEquals(listOf("q1", "q2"), step.questions.map { it.id })
         assertEquals(VerdictFlow.Nav.Clarify, f.navigation.first())
@@ -168,7 +167,7 @@ class PremiumFlowTest {
         val clarifyBody = body(CLARIFY)
         assertEquals("tr", clarifyBody["lang"]!!.jsonPrimitive.content)
         val sent = body(VERDICT)
-        assertEquals("fairness", sent["framework"]!!.jsonObject["preset"]!!.jsonPrimitive.content)
+        assertTrue("framework" !in sent)
         val clarifications = sent["clarifications"]!!.jsonArray.map { it.jsonObject }
         assertEquals(2, clarifications.size)
         assertEquals("Never, we just argue.", clarifications[0]["answer"]!!.jsonPrimitive.content)
@@ -180,7 +179,7 @@ class PremiumFlowTest {
         routes.on(CLARIFY, Routes.json(200, clarify("two_questions")))
         routes.on(VERDICT, Routes.json(200, premium["response"].toString()))
         val f = flow()
-        f.startPremium(argument, Preset.BALANCED, AppLang.EN, emptyList())
+        f.startPremium(argument, AppLang.EN, emptyList())
         f.stepIs { it is VerdictFlow.PremiumStep.Clarify }
         f.finishClarify(mapOf("q1" to "typed but skipped"), skip = true)
         f.settled()
@@ -196,7 +195,7 @@ class PremiumFlowTest {
     fun clarify_back_returnsToTheFormWithoutAVerdict() = runBlocking {
         routes.on(CLARIFY, Routes.json(200, clarify("two_questions")))
         val f = flow()
-        f.startPremium(argument, Preset.BALANCED, AppLang.EN, emptyList())
+        f.startPremium(argument, AppLang.EN, emptyList())
         f.stepIs { it is VerdictFlow.PremiumStep.Clarify }
         f.leaveClarify()
         assertEquals(VerdictFlow.PremiumStep.None, f.premiumStep.value)
@@ -214,7 +213,7 @@ class PremiumFlowTest {
         routes.on(POLL, Routes.json(200, poll("judging")))
         routes.on(POLL, Routes.json(200, poll("ready")))
         val f = flow()
-        f.startPremium(argument, Preset.BALANCED, AppLang.EN, listOf("tok-b", "tok-a"))
+        f.startPremium(argument, AppLang.EN, listOf("tok-b", "tok-a"))
         val done = f.settled() as VerdictFlow.State.Succeeded
         assertEquals("premium001", done.outcome.id)
         assertTrue(done.outcome.result.result.premium)
@@ -235,7 +234,7 @@ class PremiumFlowTest {
         routes.on(CLARIFY, Routes.json(200, clarify("none")))
         routes.on(VERDICT, Routes.json(200, premium["response"].toString()))
         f.acknowledge()
-        assertTrue(f.startPremium(argument, Preset.BALANCED, AppLang.EN, listOf("tok-b", "tok-a")))
+        assertTrue(f.startPremium(argument, AppLang.EN, listOf("tok-b", "tok-a")))
         f.settled()
         waitFor { routes.requestsTo(VERDICT).size == 4 }
         assertEquals("key-2", routes.requestsTo(VERDICT)[3].headers["Idempotency-Key"])
@@ -247,7 +246,7 @@ class PremiumFlowTest {
         routes.on(CLARIFY, Routes.json(200, clarify("none")))
         routes.always(VERDICT, Routes.json(status, json))
         val f = flow()
-        f.startPremium(argument, Preset.BALANCED, AppLang.EN, emptyList())
+        f.startPremium(argument, AppLang.EN, emptyList())
         val failed = f.settled() as VerdictFlow.State.Failed
         assertEquals("in_progress", (failed.error as UiError.Api).code)
         assertEquals(VerdictFlow.IN_PROGRESS_WAIT_MS / VerdictFlow.IN_PROGRESS_POLL_MS, synchronized(sleeps) { sleeps.size }.toLong())
@@ -259,7 +258,7 @@ class PremiumFlowTest {
         routes.on(VERDICT, Routes.json(202, accepted))
         routes.on(POLL, Routes.json(200, poll("failed_quota")))
         val f = flow()
-        f.startPremium(argument, Preset.BALANCED, AppLang.EN, emptyList())
+        f.startPremium(argument, AppLang.EN, emptyList())
         val failed = f.settled() as VerdictFlow.State.Failed
         assertEquals("quota", (failed.error as UiError.Api).code)
         assertEquals(failed.error, f.lastError.value)
@@ -268,7 +267,7 @@ class PremiumFlowTest {
         routes.on(CLARIFY, Routes.json(200, clarify("none")))
         routes.on(VERDICT, Routes.json(200, premium["response"].toString()))
         f.acknowledge()
-        f.startPremium(argument, Preset.BALANCED, AppLang.EN, emptyList())
+        f.startPremium(argument, AppLang.EN, emptyList())
         assertTrue(f.settled() is VerdictFlow.State.Succeeded)
         assertEquals(listOf("key-1", "key-1"), routes.requestsTo(VERDICT).map { it.headers["Idempotency-Key"] })
     }
@@ -279,7 +278,7 @@ class PremiumFlowTest {
         routes.on(CLARIFY, Routes.json(200, clarify("none")))
         routes.on(VERDICT, Routes.json(status, json))
         val f = flow()
-        f.startPremium(argument, Preset.BALANCED, AppLang.EN, emptyList())
+        f.startPremium(argument, AppLang.EN, emptyList())
         val failed = f.settled() as VerdictFlow.State.Failed
         assertEquals("no_credits", (failed.error as UiError.Api).code)
         waitFor { refreshes.get() >= 1 }
@@ -292,7 +291,7 @@ class PremiumFlowTest {
         routes.on(CLARIFY, Routes.json(200, clarify("none")))
         routes.on(VERDICT, Routes.json(200, premium["response"].toString()))
         val f = flow()
-        f.startPremium(argument, Preset.BALANCED, AppLang.EN, emptyList())
+        f.startPremium(argument, AppLang.EN, emptyList())
         assertTrue(f.settled() is VerdictFlow.State.Succeeded)
         assertEquals(13, synchronized(applied) { applied.single() }.subscription!!.used)
         assertEquals("key-1", routes.requestsTo(VERDICT).single().headers["Idempotency-Key"])
@@ -309,7 +308,7 @@ class PremiumFlowTest {
             Routes.json(200, """{"id":"premium001","nameMap":[{"original":"I","replacement":"Party A"},{"original":"Sam","replacement":"Party B"}]}"""),
         )
         val f = flow()
-        f.startPremium(argument, Preset.BALANCED, AppLang.EN, emptyList())
+        f.startPremium(argument, AppLang.EN, emptyList())
         val done = f.settled() as VerdictFlow.State.Succeeded
         assertEquals(listOf("I", "Sam"), done.outcome.nameMap.map { it.original })
         assertEquals(listOf("I", "Sam"), history.rows.value.single().nameMap.map { it.original })

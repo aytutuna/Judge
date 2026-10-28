@@ -6,10 +6,8 @@ import androidx.lifecycle.viewModelScope
 import com.okjudge.judge.core.api.ApiResult
 import com.okjudge.judge.core.auth.Account
 import com.okjudge.judge.core.cases.CaseLogic
-import com.okjudge.judge.core.data.SettingsStore
 import com.okjudge.judge.core.display.ArgumentRules
 import com.okjudge.judge.core.display.Examples
-import com.okjudge.judge.core.display.Preset
 import com.okjudge.judge.core.display.UiError
 import com.okjudge.judge.core.display.jsTrim
 import com.okjudge.judge.core.evidence.EvidenceController
@@ -29,7 +27,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.launch
 import kotlin.random.Random
 
 /** Max screenshots on one side (MAX_EVIDENCE_PER_SIDE). */
@@ -38,7 +35,6 @@ const val MAX_EVIDENCE_PER_SIDE = 3
 data class HomeUiState(
     /** Your side. */
     val argument: String = "",
-    val preset: Preset = Preset.DEFAULT,
     val error: UiError? = null,
     val blockedUntil: Long? = null,
     val entitlement: Entitlement? = null,
@@ -120,7 +116,6 @@ enum class Submitted { NOTHING, CHECKING, CREATING, SIGN_IN, PRICING }
  */
 class HomeViewModel(
     private val saved: SavedStateHandle,
-    private val settings: SettingsStore,
     private val flow: VerdictFlow,
     accountState: Flow<Account.State> = flowOf(Account.State.SignedOut),
     providers: Flow<Account.Providers> = flowOf(Account.Providers.Loading),
@@ -138,11 +133,10 @@ class HomeViewModel(
 
     private val form = combine(
         written,
-        settings.lastPreset,
         flow.lastError,
         flow.blockedUntil,
-    ) { (argument, other, otherName), preset, error, blocked ->
-        HomeUiState(argument, preset, error, blocked, otherSide = other, otherName = otherName)
+    ) { (argument, other, otherName), error, blocked ->
+        HomeUiState(argument, error, blocked, otherSide = other, otherName = otherName)
     }
 
     private val premium = combine(accountState, providers, flow.premiumStep, evidence.state) { account, prov, step, ev ->
@@ -208,10 +202,6 @@ class HomeViewModel(
         saved[KEY_OTHER_NAME] = name.take(CaseLogic.MAX_DISPLAY_NAME)
     }
 
-    fun onPreset(preset: Preset) {
-        viewModelScope.launch { settings.setLastPreset(preset) }
-    }
-
     fun onDisplayName(name: String) {
         saved[KEY_NAME] = name.take(CaseLogic.MAX_DISPLAY_NAME)
         saved[KEY_EXAMPLE_NAME] = false
@@ -246,7 +236,7 @@ class HomeViewModel(
         if (!s.signedIn) return Submitted.SIGN_IN
         if (s.outOfUnits) return Submitted.PRICING
         val tokens = if (s.evidenceOn) s.evidence.tokens else emptyList()
-        return if (flow.startPremium(s.outgoing(strings), s.preset, lang, tokens, s.sides)) Submitted.CHECKING else Submitted.NOTHING
+        return if (flow.startPremium(s.outgoing(strings), lang, tokens, s.sides)) Submitted.CHECKING else Submitted.NOTHING
     }
 
     /** "Or send them a link to write it": a two-sided case with your side; the other person writes theirs. */
@@ -255,7 +245,7 @@ class HomeViewModel(
         if (!s.canSendLink || (s.blockedUntil ?: 0) > now) return Submitted.NOTHING
         if (s.outOfUnits) return Submitted.PRICING
         val tokens = if (s.evidenceOn) s.evidence.tokens else emptyList()
-        val started = flow.createCase(s.argument, s.preset, lang, tokens, s.shownName, s.otherName)
+        val started = flow.createCase(s.argument, lang, tokens, s.shownName, s.otherName)
         return if (started) Submitted.CREATING else Submitted.NOTHING
     }
 

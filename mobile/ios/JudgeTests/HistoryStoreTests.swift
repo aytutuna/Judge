@@ -21,7 +21,7 @@ final class HistoryStoreTests: XCTestCase {
     func testSaveAndRead() throws {
         try withStore { store in
             let saved = try session("win_a_self")
-            try store.save(saved, preset: "fairness", now: Date(timeIntervalSince1970: 100))
+            try store.save(saved, now: Date(timeIntervalSince1970: 100))
 
             let row = try XCTUnwrap(try store.find(id: "abc123DEF0"))
             XCTAssertEqual(row.headline, saved.original.result.headline)
@@ -29,7 +29,7 @@ final class HistoryStoreTests: XCTestCase {
             XCTAssertEqual(row.finalVerdict, .sideA)
             XCTAssertEqual(row.lang, "en")
             XCTAssertEqual(row.confidence, 4)
-            XCTAssertEqual(row.preset, "fairness")
+            XCTAssertEqual(row.preset, "balanced")
             XCTAssertEqual(row.tier, "free")
             XCTAssertEqual(row.createdAt, Date(timeIntervalSince1970: 100))
             XCTAssertEqual(row.nameMap, saved.nameMap, "names stay on the device for the labels")
@@ -44,9 +44,9 @@ final class HistoryStoreTests: XCTestCase {
     @MainActor
     func testSavingAgainReplacesAndListIsNewestFirst() throws {
         try withStore { store in
-            try store.save(try session("win_a_self"), preset: "balanced", now: Date(timeIntervalSince1970: 100))
-            try store.save(try session("win_b_named"), preset: "balanced", now: Date(timeIntervalSince1970: 200))
-            try store.save(try session("win_a_self"), preset: "balanced", now: Date(timeIntervalSince1970: 300))
+            try store.save(try session("win_a_self"), now: Date(timeIntervalSince1970: 100))
+            try store.save(try session("win_b_named"), now: Date(timeIntervalSince1970: 200))
+            try store.save(try session("win_a_self"), now: Date(timeIntervalSince1970: 300))
 
             let all = try store.all()
             XCTAssertEqual(all.map(\.id), ["winB000001", "abc123DEF0"], "no duplicate; the first save keeps its date")
@@ -56,7 +56,7 @@ final class HistoryStoreTests: XCTestCase {
     @MainActor
     func testTranslationCacheSurvivesForOfflineUse() throws {
         try withStore { store in
-            try store.save(try session("win_a_self"), preset: "balanced")
+            try store.save(try session("win_a_self"))
             let body = try XCTUnwrap(Fixtures.verdicts()["translateResponse"])
             let translated = try WireDecoding.translatePayload(from: JSONSerialization.data(withJSONObject: body))
             try store.cacheTranslation(id: "abc123DEF0", lang: .tr, json: translated.result.json)
@@ -73,9 +73,9 @@ final class HistoryStoreTests: XCTestCase {
     @MainActor
     func testDeleteOneAndAll() throws {
         try withStore { store in
-            try store.save(try session("win_a_self"), preset: "balanced")
-            try store.save(try session("split"), preset: "balanced")
-            try store.save(try session("refused"), preset: "balanced")
+            try store.save(try session("win_a_self"))
+            try store.save(try session("split"))
+            try store.save(try session("refused"))
 
             try store.delete(id: "abc123DEF0")
             XCTAssertNil(try store.find(id: "abc123DEF0"))
@@ -90,7 +90,7 @@ final class HistoryStoreTests: XCTestCase {
     func testALaterRulingReplacesWhatTheEntryShows() throws {
         try withStore { store in
             let first = try session("win_b_named")
-            try store.save(first, preset: "balanced", now: Date(timeIntervalSince1970: 100))
+            try store.save(first, now: Date(timeIntervalSince1970: 100))
             try store.cacheTranslation(id: first.id, lang: .tr, json: first.original.json)
             XCTAssertNil(try store.find(id: first.id)?.rulingID, "a fresh entry is its own ruling")
 

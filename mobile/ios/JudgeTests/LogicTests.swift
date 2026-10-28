@@ -349,7 +349,7 @@ final class TextHelperTests: XCTestCase {
                 XCTAssertFalse(parts.contains(""), "\(example.id) in \(lang.rawValue)")
             }
         }
-        let home = HomeModel(preset: Preset.defaultID)
+        let home = HomeModel()
         home.argument = "Something already typed in the box."
         home.otherName = "Someone"
         var shown: [String] = []
@@ -367,7 +367,7 @@ final class TextHelperTests: XCTestCase {
 
     @MainActor
     func testNewCaseDropsTheExampleNameButKeepsOneTheUserTyped() {
-        let home = HomeModel(preset: Preset.defaultID)
+        let home = HomeModel()
         home.fillExample(lang: .en)
         home.judgeAnother()
         XCTAssertNil(home.caseName, "the account's first name comes back")

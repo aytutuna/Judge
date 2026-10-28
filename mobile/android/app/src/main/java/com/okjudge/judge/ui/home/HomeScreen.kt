@@ -1,9 +1,7 @@
 package com.okjudge.judge.ui.home
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,8 +16,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.selection.selectable
-import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
@@ -58,7 +54,6 @@ import androidx.compose.ui.unit.sp
 import com.okjudge.judge.core.cases.CaseLogic
 import com.okjudge.judge.core.display.ArgumentRules
 import com.okjudge.judge.core.display.Errors
-import com.okjudge.judge.core.display.Preset
 import com.okjudge.judge.core.display.UiError
 import com.okjudge.judge.core.evidence.ImageSource
 import com.okjudge.judge.core.premium.Tiers
@@ -92,7 +87,6 @@ object HomeTags {
     const val EXAMPLE = "home.example"
     const val BALANCE = "home.balance"
     const val CASE_COST = "home.caseCost"
-    fun preset(id: String) = "home.preset.$id"
 }
 
 /** Your side and theirs, each on its own card, in these colours. */
@@ -103,14 +97,13 @@ private val Theirs = SideColors(Palette.sageInk, Palette.sageInk)
 
 /**
  * Home: a card for your side and one for theirs (or a link for them to
- * write it), the lens, the send button with what is left to spend, then the
+ * write it), the send button with what is left to spend, then the
  * privacy note.
  */
 @Composable
 fun HomeScreen(
     state: HomeUiState,
     onArgumentChange: (String) -> Unit,
-    onPreset: (Preset) -> Unit,
     onSubmit: () -> Unit,
     onDismissError: () -> Unit,
     onNew: (() -> Unit)?,
@@ -215,7 +208,6 @@ fun HomeScreen(
                         Text(s.appBalanceCaseCost, style = JudgeType.slotText.copy(color = Palette.ink2), modifier = Modifier.testTag(HomeTags.CASE_COST))
                     }
                 }
-                Presets(state.preset, enabled = !state.holding, onPreset = onPreset)
                 if (!state.blank) Counter(length, lang, Modifier.align(Alignment.End))
                 SubmitButton(
                     text = s.getVerdict,
@@ -361,37 +353,6 @@ private fun SendLink(enabled: Boolean, onClick: () -> Unit) {
     ) {
         TintedIcon(remember { JudgeIcons.link(Palette.sageInk) }, 14)
         Text(s.appHomeSendLink, style = JudgeType.small.copy(color = Palette.sageInk))
-    }
-}
-
-/** The lens presets as one row of pills, scrolling sideways when they don't fit. */
-@Composable
-private fun Presets(selected: Preset, enabled: Boolean, onPreset: (Preset) -> Unit) {
-    val s = LocalStrings.current
-    Row(
-        Modifier
-            .fillMaxWidth()
-            .horizontalScroll(rememberScrollState())
-            .selectableGroup()
-            .semantics { contentDescription = s.judgeBy },
-        horizontalArrangement = Arrangement.spacedBy(6.dp),
-    ) {
-        Preset.entries.forEach { p ->
-            val on = p == selected
-            Text(
-                s.text(p.labelKey) ?: p.id,
-                style = JudgeType.small.copy(color = if (on) Palette.paper else Palette.ink2),
-                maxLines = 1,
-                modifier = Modifier
-                    .defaultMinSize(minHeight = 38.dp)
-                    .clip(JudgeShapes.chip)
-                    .background(if (on) Palette.ink else Color.Transparent)
-                    .then(if (on) Modifier else Modifier.border(1.dp, Palette.line2, JudgeShapes.chip))
-                    .selectable(selected = on, enabled = enabled, role = Role.RadioButton) { onPreset(p) }
-                    .testTag(HomeTags.preset(p.id))
-                    .padding(horizontal = 16.dp, vertical = 10.dp),
-            )
-        }
     }
 }
 

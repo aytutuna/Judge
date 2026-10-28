@@ -43,7 +43,6 @@ import { verdictLang } from "../../../lib/content-lang";
 import { apiErrorMessage, formatWait, t, type Lang } from "../../../lib/i18n";
 import { partyNames, personalizeResult, resolveParties, restoreNames } from "../../../lib/names";
 import { svgRotateDeg } from "../../../lib/balance";
-import { PRESETS } from "../../../lib/frameworks";
 import { PALETTE, PALETTE_ALPHA } from "../../../lib/palette";
 import { FINISH_CAPTION, FINISH_STEPS, MAX_FINISH_MS, READY, STILL_JUDGING, THINKING_STEPS } from "../../../lib/thinking";
 import { KEY_BY_CAPTION } from "../../../lib/thinking-keys";
@@ -606,7 +605,6 @@ const caseView = (over: Partial<CaseView> = {}): CaseView => ({
   mode: null,
   tier: "premium",
   lang: "en",
-  framework: { preset: "balanced" },
   createdAt: T0,
   expiresAt: "2026-10-27T09:00:00.000Z",
   judgedAt: null,
@@ -877,7 +875,6 @@ function displayVectors() {
     LANGS.map((lang) => ({ ...e, lang, message: apiErrorMessage(lang, e.body, e.status) })),
   );
   // Constants the apps copy by hand, pinned here so a web change fails their tests.
-  const presets = PRESETS.map(({ id, emoji }) => ({ id, emoji }));
   const thinking = {
     steps: THINKING_STEPS.map((s) => ({ ms: s.ms, key: KEY_BY_CAPTION[s.caption] })),
     finishSteps: FINISH_STEPS,
@@ -908,7 +905,6 @@ function displayVectors() {
     personalizedTranslations,
     waits,
     errors,
-    presets,
     palette: PALETTE,
     paletteAlpha: PALETTE_ALPHA,
     thinking,

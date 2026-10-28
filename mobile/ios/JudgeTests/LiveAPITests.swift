@@ -15,7 +15,7 @@ final class LiveAPITests: XCTestCase {
         let api = JudgeAPI(baseURL: base, userAgent: "Judge-iOS/live-test")
         let argument = "My friend Sam says a hot dog is a sandwich because it is a filling in a split roll. "
             + "I say it is its own thing: no menu lists it under sandwiches and nobody orders a sandwich expecting one."
-        let body = VerdictRequest(argument: argument, framework: .init(preset: Preset.defaultID), lang: .en)
+        let body = VerdictRequest(argument: argument, lang: .en)
         do {
             let payload = try await api.verdict(body)
             let result = payload.result.result

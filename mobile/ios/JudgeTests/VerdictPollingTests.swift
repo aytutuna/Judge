@@ -66,7 +66,7 @@ final class VerdictPollingTests: XCTestCase {
     }
 
     private func request() -> VerdictRequest {
-        VerdictRequest(argument: "Alex says Jordan should pay for the broken lamp.", framework: .init(preset: "fairness"), lang: .en)
+        VerdictRequest(argument: "Alex says Jordan should pay for the broken lamp.", lang: .en)
     }
 
     private func fixture(_ name: String) throws -> [String: Any] {

@@ -265,8 +265,8 @@ available. It covers:
 
 - the display ports against `mobile/shared/fixtures/display-vectors.json`
   (party names, verdict labels, tug and tilt, crux style, lean tally, share
-  URL, waits, error messages, confidence text, preset emoji, palette, judging
-  timeline), computed by the website's own code;
+  URL, waits, error messages, confidence text, palette, judging timeline),
+  computed by the website's own code;
 - decoding of every sample body, absent vs `null` lean, unknown enum values;
 - the judging state machine, the progress bar and the balance motion;
 - error mapping, and `JudgeAPI` against a stub `URLProtocol` (headers,

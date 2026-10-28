@@ -265,28 +265,6 @@ enum ConditionalClause {
     }
 }
 
-/// The value-framework presets (lib/frameworks.ts). The emoji table is
-/// hand-copied and pinned by a test against display-vectors.json.
-struct Preset: Sendable, Identifiable, Equatable {
-    let id: String
-    let emoji: String
-
-    func label(_ lang: AppLang) -> String { L10n.text("preset.\(id).label", lang) ?? id }
-    func blurb(_ lang: AppLang) -> String { L10n.text("preset.\(id).blurb", lang) ?? "" }
-
-    static let all: [Preset] = [
-        Preset(id: "balanced", emoji: "⚖️"),
-        Preset(id: "outcomes", emoji: "🎯"),
-        Preset(id: "principles", emoji: "📜"),
-        Preset(id: "fairness", emoji: "🤝"),
-        Preset(id: "loyalty", emoji: "❤️"),
-    ]
-
-    static let defaultID = "balanced"
-
-    static func find(_ id: String) -> Preset { all.first { $0.id == id } ?? all[0] }
-}
-
 /// Example chips on Home: the label is shown, the text fills the box.
 struct ExampleArgument: Sendable, Identifiable {
     let id: String

@@ -22,28 +22,6 @@ enum L10n {
     static func inputLabel(_ lang: AppLang) -> String { string("input.label", lang) }
     static func placeholder(_ lang: AppLang) -> String { string("placeholder", lang) }
     static func getVerdict(_ lang: AppLang) -> String { string("getVerdict", lang) }
-    static func privacyNote(_ lang: AppLang) -> String { string("privacyNote", lang) }
-    static func judgeBy(_ lang: AppLang) -> String { string("judgeBy", lang) }
-    static func fineTune(_ lang: AppLang) -> String { string("fineTune", lang) }
-    static func hideFineTune(_ lang: AppLang) -> String { string("hideFineTune", lang) }
-    static func sliderNote(_ lang: AppLang) -> String { string("sliderNote", lang) }
-    static func presetBalancedLabel(_ lang: AppLang) -> String { string("preset.balanced.label", lang) }
-    static func presetBalancedBlurb(_ lang: AppLang) -> String { string("preset.balanced.blurb", lang) }
-    static func presetOutcomesLabel(_ lang: AppLang) -> String { string("preset.outcomes.label", lang) }
-    static func presetOutcomesBlurb(_ lang: AppLang) -> String { string("preset.outcomes.blurb", lang) }
-    static func presetPrinciplesLabel(_ lang: AppLang) -> String { string("preset.principles.label", lang) }
-    static func presetPrinciplesBlurb(_ lang: AppLang) -> String { string("preset.principles.blurb", lang) }
-    static func presetFairnessLabel(_ lang: AppLang) -> String { string("preset.fairness.label", lang) }
-    static func presetFairnessBlurb(_ lang: AppLang) -> String { string("preset.fairness.blurb", lang) }
-    static func presetLoyaltyLabel(_ lang: AppLang) -> String { string("preset.loyalty.label", lang) }
-    static func presetLoyaltyBlurb(_ lang: AppLang) -> String { string("preset.loyalty.blurb", lang) }
-    static func sliderFreedomSafetyLeft(_ lang: AppLang) -> String { string("slider.freedom_safety.left", lang) }
-    static func sliderFreedomSafetyRight(_ lang: AppLang) -> String { string("slider.freedom_safety.right", lang) }
-    static func sliderIndividualGroupLeft(_ lang: AppLang) -> String { string("slider.individual_group.left", lang) }
-    static func sliderIndividualGroupRight(_ lang: AppLang) -> String { string("slider.individual_group.right", lang) }
-    static func sliderHeadHeartLeft(_ lang: AppLang) -> String { string("slider.head_heart.left", lang) }
-    static func sliderHeadHeartRight(_ lang: AppLang) -> String { string("slider.head_heart.right", lang) }
-    static func sliderAria(_ lang: AppLang, left: String, right: String) -> String { format("slider.aria", lang, left, right) }
     static func thinkingEyebrow(_ lang: AppLang) -> String { string("thinking.eyebrow", lang) }
     static func thinkingRead(_ lang: AppLang) -> String { string("thinking.read", lang) }
     static func thinkingLabel(_ lang: AppLang) -> String { string("thinking.label", lang) }
@@ -80,6 +58,8 @@ enum L10n {
     static func kindDefinition(_ lang: AppLang) -> String { string("kind.definition", lang) }
     static func kindLogic(_ lang: AppLang) -> String { string("kind.logic", lang) }
     static func bedrock(_ lang: AppLang) -> String { string("bedrock", lang) }
+    static func privacyNote(_ lang: AppLang) -> String { string("privacyNote", lang) }
+    static func privacyLink(_ lang: AppLang) -> String { string("privacyLink", lang) }
     static func cruxShort(_ lang: AppLang) -> String { string("cruxShort", lang) }
     static func cruxTitle(_ lang: AppLang) -> String { string("cruxTitle", lang) }
     static func mapTitle(_ lang: AppLang) -> String { string("mapTitle", lang) }
@@ -140,10 +120,7 @@ enum L10n {
     static func exampleKnucklesText(_ lang: AppLang) -> String { string("example.knuckles.text", lang) }
     static func examplePineappleLabel(_ lang: AppLang) -> String { string("example.pineapple.label", lang) }
     static func examplePineappleText(_ lang: AppLang) -> String { string("example.pineapple.text", lang) }
-    static func advancedSummary(_ lang: AppLang) -> String { string("advanced.summary", lang) }
-    static func advancedCurrent(_ lang: AppLang, label: String) -> String { format("advanced.current", lang, label) }
     static func turnstileLabel(_ lang: AppLang) -> String { string("turnstile.label", lang) }
-    static func privacyLink(_ lang: AppLang) -> String { string("privacyLink", lang) }
     static func howTitle(_ lang: AppLang) -> String { string("how.title", lang) }
     static func footerAbout(_ lang: AppLang) -> String { string("footer.about", lang) }
     static func footerPrivacy(_ lang: AppLang) -> String { string("footer.privacy", lang) }
@@ -322,7 +299,6 @@ enum L10n {
     static func respondTitle(_ lang: AppLang) -> String { string("respond.title", lang) }
     static func respondIntro(_ lang: AppLang) -> String { string("respond.intro", lang) }
     static func respondPrivacy(_ lang: AppLang) -> String { string("respond.privacy", lang) }
-    static func respondFramework(_ lang: AppLang, preset: String) -> String { format("respond.framework", lang, preset) }
     static func respondLang(_ lang: AppLang, language: String) -> String { format("respond.lang", lang, language) }
     static func respondLangEn(_ lang: AppLang) -> String { string("respond.lang.en", lang) }
     static func respondLangTr(_ lang: AppLang) -> String { string("respond.lang.tr", lang) }
@@ -440,8 +416,7 @@ enum L10n {
     static func threadJudges(_ lang: AppLang) -> String { string("thread.judges", lang) }
     static func threadPlaceholder(_ lang: AppLang) -> String { string("thread.placeholder", lang) }
     static func threadPlaceholderTwoSided(_ lang: AppLang) -> String { string("thread.placeholderTwoSided", lang) }
-    static func threadSample(_ lang: AppLang) -> String { string("thread.sample", lang) }
-    static func threadLens(_ lang: AppLang) -> String { string("thread.lens", lang) }
+    static func threadOptions(_ lang: AppLang) -> String { string("thread.options", lang) }
     static func threadJudgesAgree(_ lang: AppLang, n: String, total: String) -> String { format("thread.judgesAgree", lang, n, total) }
     static func threadJudgesSplit(_ lang: AppLang) -> String { string("thread.judgesSplit", lang) }
     static func homeKicker(_ lang: AppLang) -> String { string("home.kicker", lang) }
@@ -611,27 +586,6 @@ enum L10n {
         "input.label",
         "placeholder",
         "getVerdict",
-        "privacyNote",
-        "judgeBy",
-        "fineTune",
-        "hideFineTune",
-        "sliderNote",
-        "preset.balanced.label",
-        "preset.balanced.blurb",
-        "preset.outcomes.label",
-        "preset.outcomes.blurb",
-        "preset.principles.label",
-        "preset.principles.blurb",
-        "preset.fairness.label",
-        "preset.fairness.blurb",
-        "preset.loyalty.label",
-        "preset.loyalty.blurb",
-        "slider.freedom_safety.left",
-        "slider.freedom_safety.right",
-        "slider.individual_group.left",
-        "slider.individual_group.right",
-        "slider.head_heart.left",
-        "slider.head_heart.right",
         "thinking.eyebrow",
         "thinking.read",
         "thinking.label",
@@ -664,6 +618,8 @@ enum L10n {
         "kind.definition",
         "kind.logic",
         "bedrock",
+        "privacyNote",
+        "privacyLink",
         "cruxShort",
         "cruxTitle",
         "mapTitle",
@@ -717,9 +673,7 @@ enum L10n {
         "example.knuckles.text",
         "example.pineapple.label",
         "example.pineapple.text",
-        "advanced.summary",
         "turnstile.label",
-        "privacyLink",
         "how.title",
         "footer.about",
         "footer.privacy",
@@ -986,8 +940,7 @@ enum L10n {
         "thread.judges",
         "thread.placeholder",
         "thread.placeholderTwoSided",
-        "thread.sample",
-        "thread.lens",
+        "thread.options",
         "thread.judgesSplit",
         "home.kicker",
         "home.title",

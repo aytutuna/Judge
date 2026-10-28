@@ -234,21 +234,15 @@ struct ApiErrorBody: Decodable, Sendable, Equatable {
     }
 }
 
-/// POST /api/v1/verdict body. Optional fields (`sliders`, premium's
-/// `clarifications` and `evidence`) are omitted from the JSON while nil.
+/// POST /api/v1/verdict body. Premium's optional `clarifications` and
+/// `evidence` are omitted from the JSON while nil.
 struct VerdictRequest: Encodable, Sendable, Equatable {
-    struct Framework: Encodable, Sendable, Equatable {
-        var preset: String
-        var sliders: [String: Int]?
-    }
-
     struct Clarification: Encodable, Sendable, Equatable {
         var question: String
         var answer: String
     }
 
     var argument: String
-    var framework: Framework
     var lang: AppLang
     var tier: String = "free"
     var clarifications: [Clarification]?

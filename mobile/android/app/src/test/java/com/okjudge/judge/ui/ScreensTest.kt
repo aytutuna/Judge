@@ -11,8 +11,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.test.assertContentDescriptionEquals
 import androidx.compose.ui.test.assertIsEnabled
 import androidx.compose.ui.test.assertIsNotEnabled
-import androidx.compose.ui.test.assertIsNotSelected
-import androidx.compose.ui.test.assertIsSelected
 import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onAllNodesWithText
@@ -27,7 +25,6 @@ import com.okjudge.judge.str
 import com.okjudge.judge.core.data.SavedVerdict
 import com.okjudge.judge.core.display.ContentLang
 import com.okjudge.judge.core.display.PartyNames
-import com.okjudge.judge.core.display.Preset
 import com.okjudge.judge.core.display.UiError
 import com.okjudge.judge.core.display.VerdictDisplay
 import com.okjudge.judge.core.model.FactCheck
@@ -74,7 +71,6 @@ class ScreensTest {
                 HomeScreen(
                     state = state,
                     onArgumentChange = { state = state.copy(argument = it) },
-                    onPreset = { state = state.copy(preset = it) },
                     onSubmit = {},
                     onDismissError = { state = state.copy(error = null) },
                     onNew = {},
@@ -125,14 +121,6 @@ class ScreensTest {
     }
 
     @Test
-    fun home_presetsAreOneRowOfChoices() {
-        home(AppLang.EN)
-        compose.onNodeWithTag(HomeTags.preset(Preset.BALANCED.id)).assertIsSelected()
-        compose.onNodeWithTag(HomeTags.preset(Preset.OUTCOMES.id)).performClick().assertIsSelected()
-        compose.onNodeWithTag(HomeTags.preset(Preset.BALANCED.id)).assertIsNotSelected()
-    }
-
-    @Test
     fun home_sendLink_onlyWhileTheirSideIsEmpty() {
         var sent = 0
         home(AppLang.EN, HomeUiState(signedIn = true, features = Features(cases = true)), onSendLink = { sent++ })
@@ -153,7 +141,6 @@ class ScreensTest {
                 HomeScreen(
                     state = state,
                     onArgumentChange = { state = state.copy(argument = it) },
-                    onPreset = {},
                     onSubmit = {},
                     onDismissError = {},
                     onNew = { state = HomeUiState() },
@@ -406,7 +393,7 @@ class ScreensTest {
         compose.onNodeWithTag(HistoryTags.EMPTY).assertExists()
         items = listOf("win_a_self", "lean_tie").mapIndexed { i, n ->
             val o = sample(n)
-            SavedVerdict(o.id, 1_760_000_000_000L + i, o.result, o.nameMap, Preset.BALANCED.id, emptyMap())
+            SavedVerdict(o.id, 1_760_000_000_000L + i, o.result, o.nameMap, emptyMap())
         }
         compose.waitForIdle()
         compose.onNodeWithTag(HistoryTags.row("abc123DEF0")).assertExists()
