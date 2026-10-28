@@ -236,8 +236,8 @@ struct VerdictNotes: View {
 }
 
 /// Share (filled) and "Add context & appeal" (outlined) under the ruling.
-/// Without the second, copy link takes its slot; with it, copy shrinks to
-/// its icon.
+/// Without the second, copy link takes its slot; with it, copying is left
+/// to the share sheet so both labels fit.
 struct VerdictActions: View {
     /// Nil hides share and copy (a removed case: its links are closed).
     let shareURL: URL?
@@ -265,17 +265,13 @@ struct VerdictActions: View {
                     }
                     .buttonStyle(CardActionStyle(filled: false))
                 }
-                if let shareURL {
+                if let shareURL, onAddContext == nil {
                     Button {
                         UIPasteboard.general.url = shareURL
                         copied = true
                     } label: {
-                        let copy = Label(copied ? L10n.copied(lang) : L10n.copyLink(lang), systemImage: copied ? "checkmark" : "link")
-                        if onAddContext == nil {
-                            copy.frame(maxWidth: .infinity)
-                        } else {
-                            copy.labelStyle(.iconOnly)
-                        }
+                        Label(copied ? L10n.copied(lang) : L10n.copyLink(lang), systemImage: copied ? "checkmark" : "link")
+                            .frame(maxWidth: .infinity)
                     }
                     .buttonStyle(CardActionStyle(filled: false))
                     .task(id: copied) {
@@ -349,7 +345,7 @@ private struct CardActionStyle: ButtonStyle {
             .foregroundStyle(filled ? Brand.ivory : Brand.ink)
             .lineLimit(1)
             .minimumScaleFactor(0.8)
-            .padding(.horizontal, 18)
+            .padding(.horizontal, 12)
             .frame(minHeight: 52)
             .background(RoundedRectangle(cornerRadius: Radius.field, style: .continuous).fill(filled ? Brand.ink : (configuration.isPressed ? Brand.ivory : Brand.paper)))
             .overlay(RoundedRectangle(cornerRadius: Radius.field, style: .continuous).strokeBorder(filled ? Color.clear : Brand.line2, lineWidth: 1))
