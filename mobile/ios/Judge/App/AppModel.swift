@@ -56,9 +56,7 @@ final class AppModel {
     let caseNames: any CaseNamesStore
     /// The selected tab (links and "Start a new case" switch it).
     var tab: RootTab = .new
-    /// Which list the History tab shows.
-    var historySegment: HistorySegment = .verdicts
-    /// "Your cases" in the History tab.
+    /// The account's cases, listed with the verdicts.
     let caseList: CaseListModel
     /// Off for screenshot states: case pages neither load nor poll.
     @ObservationIgnored var usesNetwork = true
