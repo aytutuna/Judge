@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { verdictLang } from "@/lib/content-lang";
 import { loadedDict, loadLocales, t, type Lang } from "@/lib/i18n";
+import { acceptLanguageTags, matchLang } from "@/lib/langs";
 import { resolveParties, restoreNames } from "@/lib/names";
 import { getPublicVerdict } from "@/lib/originals/display";
 import { publicNameMap } from "@/lib/originals-types";
@@ -32,12 +33,13 @@ const laterRounds = cache(async (id: string): Promise<{ id: string; result: Verd
   }
 });
 
-/** Chrome language follows the viewer's browser (only a LEADING "tr"
- * counts — q-value parsing is deliberately out of scope), its strings loaded. */
+/** Chrome language follows the viewer's browser: the first Accept-Language
+ * entry that is an enabled language (in the order sent; q-values are not
+ * re-sorted), its strings loaded. */
 async function viewerLang(): Promise<Lang> {
   const acceptLanguage = (await headers()).get("accept-language") ?? "";
   await loadLocales();
-  return acceptLanguage.toLowerCase().startsWith("tr") ? "tr" : "en";
+  return matchLang(acceptLanguageTags(acceptLanguage));
 }
 
 export async function generateMetadata({
@@ -82,7 +84,7 @@ export default async function SharedVerdictPage({ params }: PageProps<"/v/[id]">
   if (!found) notFound();
 
   // The verdict starts in the viewer's language too (translated on the
-  // client when it was judged in the other one) and has its own TR | EN switch.
+  // client when it was judged in another one) and has its own language picker.
   const lang = await viewerLang();
 
   if (found.removed) {

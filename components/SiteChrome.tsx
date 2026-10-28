@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 import { t, type Lang } from "@/lib/i18n";
 import { AccountMenu } from "./AccountMenu";
 import { BrandMark } from "./BrandMark";
-import { LangToggle } from "./LangToggle";
+import { LangPicker } from "./LangPicker";
 import styles from "./SiteChrome.module.css";
 
 /** Shared page chrome. No hooks: usable from server pages (share page, which
@@ -32,7 +32,7 @@ export function SiteHeader({ lang, toggle = false, children }: { lang: Lang; tog
             Judge
           </Link>
           <div className={styles.navRight}>
-            {toggle ? <LangToggle lang={lang} /> : null}
+            {toggle ? <LangPicker lang={lang} /> : null}
             {children}
             <span className={styles.account}>
               <AccountMenu lang={lang} />
@@ -73,7 +73,7 @@ export function SiteFooter({ lang, toggle = false }: { lang: Lang; toggle?: bool
               </li>
             </ul>
           </nav>
-          {toggle ? <LangToggle lang={lang} /> : null}
+          {toggle ? <LangPicker lang={lang} /> : null}
         </div>
       </div>
     </footer>

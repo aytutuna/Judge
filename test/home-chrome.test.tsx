@@ -1,7 +1,7 @@
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import { Faq, FAQ_ITEMS } from "../components/home/Faq";
-import { LangToggle } from "../components/LangToggle";
+import { LangPicker } from "../components/LangPicker";
 import { SiteFooter, SiteHeader } from "../components/SiteChrome";
 import { HOW_STEPS, stepNumeral } from "../lib/how-steps";
 import { t, type Lang } from "../lib/i18n";
@@ -54,12 +54,17 @@ describe("SiteChrome", () => {
   });
 });
 
-describe("LangToggle", () => {
-  it("is a labelled group of two pressed-state buttons", () => {
-    const html = renderToStaticMarkup(<LangToggle lang="tr" label="Display language" />);
-    expect(html).toContain('role="group"');
+describe("LangPicker", () => {
+  it("lists the enabled languages by their own names, the current one selected", () => {
+    const html = renderToStaticMarkup(<LangPicker lang="tr" label="Display language" />);
     expect(html).toContain('aria-label="Display language"');
-    expect(html).toMatch(/lang="tr" aria-pressed="true"/);
-    expect(html).toMatch(/lang="en" aria-pressed="false"/);
+    expect(html).toMatch(/<option value="en" lang="en">English<\/option>/);
+    expect(html).toMatch(/<option value="tr" lang="tr" selected="">Türkçe<\/option>/);
+    expect(html.match(/<option/g)).toHaveLength(2);
+  });
+
+  it("labels itself in the page language by default", () => {
+    const html = renderToStaticMarkup(<LangPicker lang="tr" />);
+    expect(html).toContain(`aria-label="${t("tr", "footer.language")}"`);
   });
 });

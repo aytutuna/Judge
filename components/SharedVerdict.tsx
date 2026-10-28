@@ -8,7 +8,7 @@ import type { DisplayState } from "@/lib/originals-types";
 import { useOwnerToken } from "@/lib/owner-store";
 import type { NameMapping, VerdictResult } from "@/lib/types";
 import { useViewer } from "@/lib/use-viewer";
-import { LangToggle } from "./LangToggle";
+import { LangPicker } from "./LangPicker";
 import { OwnerPanel, useMine } from "./OwnerTools";
 import { RemovedVerdict } from "./RemovedVerdict";
 import { buildOwnerShare } from "./ShareDialog";
@@ -125,7 +125,7 @@ export function SharedVerdict({
       <span className={styles.langLabel} aria-hidden>
         {label}
       </span>
-      <LangToggle lang={picked} onSelect={setPicked} label={label} />
+      <LangPicker lang={picked} onSelect={setPicked} label={label} />
     </div>
   );
 

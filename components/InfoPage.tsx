@@ -13,8 +13,8 @@ import styles from "./InfoPage.module.css";
 import { SceneStage } from "./scene/SceneStage";
 import { AppShell } from "./shell/AppShell";
 
-/** Prose pages (/about, /privacy). Client-rendered chrome so the TR|EN
- * toggle works the same as on the homepage. */
+/** Prose pages (/about, /privacy). Client-rendered chrome so the language
+ * picker works the same as on the homepage. */
 
 function Section({ title, children }: { title: string; children: ReactNode }) {
   return (
