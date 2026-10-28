@@ -13,7 +13,7 @@ const hi: AppLocale = {
     "app.history.delete": "हटाएँ",
     "app.history.select": "चुनें",
     "app.history.selectAll": "सभी चुनें",
-    "app.history.deselectAll": "चयन रद्द करें",
+    "app.history.deselectAll": "चयन हटाएँ",
     "app.history.selected": "{n} चुने गए",
     "app.history.deleteCount": "हटाएँ ({count})",
     "app.history.deleteConfirm": "इस फ़ोन से {n} फ़ैसले हटाएँ? उनके शेयर लिंक काम करते रहेंगे।",

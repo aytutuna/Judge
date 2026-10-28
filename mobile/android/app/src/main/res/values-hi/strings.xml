@@ -480,7 +480,7 @@
     <string name="app_history_delete">हटाएँ</string>
     <string name="app_history_select">चुनें</string>
     <string name="app_history_select_all">सभी चुनें</string>
-    <string name="app_history_deselect_all">चयन रद्द करें</string>
+    <string name="app_history_deselect_all">चयन हटाएँ</string>
     <plurals name="app_history_selected">
         <item quantity="one">%1$s चुना गया</item>
         <item quantity="other">%1$s चुने गए</item>
