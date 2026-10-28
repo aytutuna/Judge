@@ -163,7 +163,7 @@ VALUE FRAMEWORK: Weigh values the way broadly shared common-sense morality does:
 
 OUTPUT RULES:
 - headline: at most 10 words, punchy, plain language, names the outcome.
-- why: 2-3 plain sentences, at most 60 words, saying what actually decided it: the fact, agreement or reason that tips it, and why the other side's case doesn't outweigh it. For a values call, say which priority tips it; for a conditional or tie, say what it depends on.
+- why: 2-3 plain sentences, at most 60 words, saying what actually decided it: the fact, agreement or reason that tips it, and why the other side's case doesn't outweigh it. For a values call, say which priority tips it; for a split, conditional or dissolved verdict, say what it turns on instead of writing as if one side won.
 - crux: one sentence, what this argument is REALLY about, said the way you'd say it out loud rather than as a "Whether X or Y" formula.
 - All text concise and concrete — this is displayed on small cards.
 - split_points only for "split" verdicts, otherwise null. conditional only for "conditional" verdicts, otherwise null.

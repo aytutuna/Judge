@@ -90,7 +90,7 @@ describe("free judge requests stay byte-identical", () => {
   // SHA-256 of the six claudeJson call objects below, taken from the code
   // before the premium options existed. A change here means the FREE judge
   // request changed: only update it for an intentional free-prompt change.
-  const FREE_REQUESTS_SHA256 = "abc0a431cd71d7790fa631bd82c9cb6738b041895930540cf3b6471cd5287d7d";
+  const FREE_REQUESTS_SHA256 = "595f22003a2c3c48452771062866f3f50ae10ac703edad48a75045f08078d8a4";
 
   it("sends exactly the pre-premium requests (no model, effort, context or note)", async () => {
     vi.stubEnv("JUDGE_RUNS", "");

@@ -141,8 +141,6 @@ const en = {
   "example.pineapple.label": "🍍 Pineapple on pizza?",
   "example.pineapple.text":
     "Riley says pineapple on pizza is a crime against Italian cooking. I say pizza is whatever tastes good, and tradition alone is not an argument.",
-  "advanced.summary": "Advanced: value settings",
-  "advanced.current": "Now: {label}",
   "turnstile.label": "Quick check that you're human",
   "turnstile.error": "The human check couldn't load. Refresh the page and try again.",
   "how.title": "How it works",
@@ -792,8 +790,6 @@ const tr = {
   "example.pineapple.label": "🍍 Pizzaya ananas olur mu?",
   "example.pineapple.text":
     "Selin pizzaya ananas koymanın İtalyan mutfağına hakaret olduğunu söylüyor. Bence pizza neyle lezzetliyse odur, gelenek tek başına bir argüman değil.",
-  "advanced.summary": "Gelişmiş: değer ayarları",
-  "advanced.current": "Şu an: {label}",
   "turnstile.label": "Hızlı bir kontrol: insan mısın?",
   "turnstile.error": "İnsan doğrulaması yüklenemedi. Sayfayı yenileyip tekrar dene.",
   "how.title": "Nasıl çalışır",
