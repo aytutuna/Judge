@@ -33,8 +33,10 @@ struct CaseNameField: View {
                 if capped != (name ?? fallback) { name = capped }
             }
             .onChange(of: name) { _, value in
-                // A created case or the "+" clears the name: show the default again.
-                if value == nil { text = fallback }
+                // A created case or the "+" clears the name, an example writes
+                // one: show what the model holds.
+                let shown = value ?? fallback
+                if shown != text { text = shown }
             }
             .onChange(of: fallback) { _, value in
                 if name == nil { text = value }
