@@ -86,7 +86,6 @@ final class HistoryStoreTests: XCTestCase {
         }
     }
 
-    /// The account's cases from the fixture, as GET /api/v1/cases answers.
     @MainActor
     func testSelectionTogglesAndPicksAll() {
         var selection = HistorySelection()

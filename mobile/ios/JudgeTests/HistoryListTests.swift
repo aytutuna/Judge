@@ -215,16 +215,19 @@ final class HistoryListTests: XCTestCase {
         let url = FileManager.default.temporaryDirectory.appending(path: "History-\(UUID().uuidString).store")
         defer { try? FileManager.default.removeItem(at: url) }
         do {
-            let old = try ModelContainer(for: SavedVerdict.self, configurations: ModelConfiguration(url: url))
-            let store = HistoryStore(context: old.mainContext)
-            try store.save(try session("win_a_self"), now: Date(timeIntervalSince1970: 100))
-            try store.save(try session("split"), now: Date(timeIntervalSince1970: 200))
+            let old = try ModelContainer(for: OldStore.SavedVerdict.self, configurations: ModelConfiguration(url: url))
+            for (n, name) in ["win_a_self", "split"].enumerated() {
+                let sample = try Fixtures.sample(name)
+                old.mainContext.insert(OldStore.SavedVerdict(id: sample.id, createdAt: Date(timeIntervalSince1970: Double(n + 1) * 100), result: sample.result))
+            }
+            try old.mainContext.save()
         }
         let current = try ModelContainer(for: SavedVerdict.self, HistoryCacheRow.self, configurations: ModelConfiguration(url: url))
         let store = HistoryStore(context: current.mainContext)
         let rows = try store.all()
         XCTAssertEqual(rows.count, 2)
         XCTAssertTrue(rows.allSatisfy { $0.ownerUserID == nil })
+        XCTAssertNotNil(rows[0].session(), "an old row still opens")
         try store.apply(page(item(rows[1].id, "2026-10-05T00:00:00.000Z"), next: nil), user: "u1", above: nil)
         XCTAssertEqual(try store.cached(user: "u1").count, 1)
     }
@@ -446,5 +449,40 @@ final class HistoryListTests: XCTestCase {
         XCTAssertTrue(again)
         XCTAssertEqual(router.count("GET", "/api/v1/verdicts/\(sample.id)/mine"), 1, "kept on the phone now")
         withExtendedLifetime(container) {}
+    }
+}
+
+/// SavedVerdict as the build before the account's list stored it: no
+/// owner, and no list cache beside it.
+enum OldStore {
+    @Model
+    final class SavedVerdict {
+        @Attribute(.unique) var id: String
+        var createdAt: Date
+        var headline: String
+        var verdict: String
+        var lang: String
+        var confidence: Int
+        var preset: String
+        var tier: String
+        var resultJSON: String
+        var nameMapJSON: String
+        var translationsJSON: String?
+        var rulingID: String?
+
+        init(id: String, createdAt: Date, result: RawResult) {
+            self.id = id
+            self.createdAt = createdAt
+            headline = result.result.headline
+            verdict = result.result.verdict.rawValue
+            lang = "en"
+            confidence = result.result.confidence
+            preset = "balanced"
+            tier = "free"
+            resultJSON = result.json
+            nameMapJSON = "[]"
+            translationsJSON = nil
+            rulingID = nil
+        }
     }
 }
