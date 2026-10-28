@@ -1,5 +1,6 @@
 package com.okjudge.judge.ui
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -324,6 +325,51 @@ class ScreensTest {
         }
         compose.onNodeWithTag(VerdictTags.LEAN).assertDoesNotExist()
         compose.onNodeWithTag(VerdictTags.CRUX_ROW).assertDoesNotExist()
+    }
+
+    private fun assertWhyUnderTheHeadline(lang: AppLang, summary: Boolean) {
+        val outcome = sample("win_a_self")
+        val shown = sampleView(outcome, lang).personalized(outcome.nameMap, ContentLang.verdictLang(outcome.result.result)).result
+        compose.setContent {
+            Themed(lang) { SampleVerdict(outcome, lang, Modifier.verticalScroll(rememberScrollState()), summary = summary) }
+        }
+        val why = compose.onNodeWithTag(VerdictTags.WHY)
+        why.assertExists()
+        compose.onNodeWithText(UiTestSupport.s(lang).why).assertExists()
+        compose.onNodeWithText(shown.why!!).assertExists()
+        val headline = compose.onNodeWithText(shown.headline).fetchSemanticsNode().boundsInRoot
+        assertTrue(why.fetchSemanticsNode().boundsInRoot.top >= headline.bottom)
+    }
+
+    @Test
+    fun rulingSummary_showsWhyUnderTheHeadline() = assertWhyUnderTheHeadline(AppLang.EN, summary = true)
+
+    @Test
+    fun rulingSummary_showsWhyInTurkish() = assertWhyUnderTheHeadline(AppLang.TR, summary = true)
+
+    @Test
+    fun verdictDetails_showWhyUnderTheHeadline() = assertWhyUnderTheHeadline(AppLang.EN, summary = false)
+
+    @Test
+    fun verdictCard_hidesWhyOnOlderVerdictsAndRefusals() {
+        val outcome = sample("win_a_self")
+        val r = outcome.result.result.copy(modelRefused = true)
+        compose.setContent {
+            Themed(AppLang.EN) {
+                Column {
+                    SampleVerdict(sample("win_b_named"), AppLang.EN, summary = true)
+                    RulingSummary(
+                        view = TranslationView(r, TranslationStatus.ORIGINAL, AppLang.EN),
+                        parties = PartyNames.partyNames(outcome.nameMap, AppLang.EN, UiTestSupport.s(AppLang.EN)),
+                        actions = CardActions(onShare = {}, onCopy = {}, copied = false),
+                        onDetails = {},
+                        reducedMotion = true,
+                    )
+                }
+            }
+        }
+        compose.onNodeWithTag(VerdictTags.WHY).assertDoesNotExist()
+        compose.onNodeWithText(UiTestSupport.s(AppLang.EN).why).assertDoesNotExist()
     }
 
     @Test

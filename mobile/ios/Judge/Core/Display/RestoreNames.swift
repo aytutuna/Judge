@@ -439,6 +439,7 @@ extension Names {
         func r(_ s: String) -> String { restoreNames(s, parties: parties, textLang: lang) }
         var out = result
         out.headline = r(result.headline)
+        out.why = result.why.map(r)
         out.crux = r(result.crux)
         out.losingSideBestPoint = r(result.losingSideBestPoint)
         out.splitPoints = result.splitPoints?.map { point in

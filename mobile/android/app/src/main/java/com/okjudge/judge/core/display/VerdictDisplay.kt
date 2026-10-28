@@ -55,6 +55,9 @@ object VerdictDisplay {
         return if (a + b == 0) 0.5f else a.toFloat() / (a + b)
     }
 
+    /** The "Why" text under the headline; null on a refusal and on verdicts stored before the judges wrote one. */
+    fun why(result: VerdictResult): String? = result.why?.takeIf { !result.refused && it.isNotBlank() }
+
     data class Agreement(val n: Int, val total: Int)
 
     /** How many runs reached the final verdict; null for too close or no runs (agreement). */

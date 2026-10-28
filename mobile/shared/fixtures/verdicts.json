@@ -37,6 +37,7 @@
         ],
         "demo": false,
         "lang": "en",
+        "why": "Party B's case rests on shape alone. A word means what people use it for, and a sandwich order at any deli never comes back as a hot dog, so Party A's menu test settles it.",
         "crux_trial": {
           "attack": "Dictionaries disagree.",
           "outcome": "survived",
@@ -340,6 +341,7 @@
         ],
         "demo": false,
         "lang": "tr",
+        "why": "Parmak çıtlatanlarla çıtlatmayanları karşılaştıran çalışmalar artrit açısından bir fark bulmuyor. Taraf B'nin endişesi anlaşılır ama kanıt Taraf A'dan yana.",
         "crux_trial": {
           "attack": "Uzun vadeli çalışma az.",
           "outcome": "overturned",
@@ -466,6 +468,7 @@
       "verdict": "side_a",
       "dispute_type": "definitional",
       "headline": "Taraf B kelimenin anlamını zorluyor, Taraf A'nın menü testi kazanıyor",
+      "why": "Taraf B'nin dayanağı sadece şekil. Bir kelimenin anlamını insanların onu nasıl kullandığı belirler, büfede sandviç isteyene de sosisli gelmez; bu yüzden Taraf A'nın menü testi meseleyi çözüyor.",
       "crux": "Taraf B için ölçüt biçim; Taraf A için ise insanların kelimeyi nasıl kullandığı.",
       "split_points": null,
       "conditional": null,
@@ -1322,7 +1325,8 @@
               "evidence_used": {
                 "a": 0,
                 "b": 1
-              }
+              },
+              "why": "Both agree menus list hot dogs apart from sandwiches, and the dictionary Party B points to assumes sliced bread. Everyday use settles a word like this, so Party A's menu test stands."
             },
             "appealId": null,
             "createdAt": "2026-10-20T11:05:00.000Z"
@@ -1538,7 +1542,8 @@
               "evidence_used": {
                 "a": 0,
                 "b": 0
-              }
+              },
+              "why": "İkisi de menülerin sosisliyi sandviçlerden ayrı listelediğini kabul ediyor, Taraf B'nin dayandığı sözlük tanımı ise dilimlenmiş ekmeği esas alıyor. Böyle bir kelimede günlük kullanım belirleyici, bu yüzden Taraf A'nın menü testi geçerli."
             },
             "appealId": null,
             "createdAt": "2026-10-20T11:05:00.000Z"
@@ -1671,7 +1676,8 @@
               "evidence_used": {
                 "a": 0,
                 "b": 1
-              }
+              },
+              "why": "Both agree menus list hot dogs apart from sandwiches, and the dictionary Party B points to assumes sliced bread. Everyday use settles a word like this, so Party A's menu test stands."
             },
             "appealId": null,
             "createdAt": "2026-10-20T11:05:00.000Z"
@@ -1816,7 +1822,8 @@
               "evidence_used": {
                 "a": 0,
                 "b": 1
-              }
+              },
+              "why": "Both agree menus list hot dogs apart from sandwiches, and the dictionary Party B points to assumes sliced bread. Everyday use settles a word like this, so Party A's menu test stands."
             },
             "appealId": null,
             "createdAt": "2026-10-20T11:05:00.000Z"
@@ -2041,7 +2048,8 @@
               "evidence_used": {
                 "a": 0,
                 "b": 1
-              }
+              },
+              "why": "Both agree menus list hot dogs apart from sandwiches, and the dictionary Party B points to assumes sliced bread. Everyday use settles a word like this, so Party A's menu test stands."
             },
             "appealId": null,
             "createdAt": "2026-10-20T11:05:00.000Z"
@@ -2113,6 +2121,7 @@
                 "a": 0,
                 "b": 1
               },
+              "why": "The dictionary entry Party B added names hot dogs as sandwiches outright. That is the fact the first ruling was missing, and the menus Party A cites only show how shops group food, not what the word covers.",
               "appeal": {
                 "by": "b",
                 "outcome": "overturned",
@@ -2266,7 +2275,8 @@
               "evidence_used": {
                 "a": 0,
                 "b": 1
-              }
+              },
+              "why": "Both agree menus list hot dogs apart from sandwiches, and the dictionary Party B points to assumes sliced bread. Everyday use settles a word like this, so Party A's menu test stands."
             },
             "appealId": null,
             "createdAt": "2026-10-20T11:05:00.000Z"
@@ -2599,7 +2609,8 @@
               "evidence_used": {
                 "a": 0,
                 "b": 1
-              }
+              },
+              "why": "Both agree menus list hot dogs apart from sandwiches, and the dictionary Party B points to assumes sliced bread. Everyday use settles a word like this, so Party A's menu test stands."
             },
             "appealId": null,
             "createdAt": "2026-10-20T11:05:00.000Z"
@@ -3023,7 +3034,8 @@
               "evidence_used": {
                 "a": 0,
                 "b": 1
-              }
+              },
+              "why": "Both agree menus list hot dogs apart from sandwiches, and the dictionary Party B points to assumes sliced bread. Everyday use settles a word like this, so Party A's menu test stands."
             },
             "appealId": null,
             "createdAt": "2026-10-20T11:05:00.000Z"

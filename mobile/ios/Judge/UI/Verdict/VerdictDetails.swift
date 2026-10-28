@@ -48,9 +48,9 @@ struct VerdictReasons: View {
 }
 
 /// Every part of a ruling on its own screen, pushed from the card: the
-/// appeal outcome, the summary with any branches, the crux, what each side
-/// stands on and how they got there, the losing side's best point, the
-/// facts relied on, the two-sided facts, the web check, what would change
+/// appeal outcome, the summary with why and any branches, the crux, what
+/// each side stands on and how they got there, the losing side's best point,
+/// the facts relied on, the two-sided facts, the web check, what would change
 /// it and the votes. Sections without data are left out.
 struct VerdictDetails<Appeal: View>: View {
     @Environment(AppModel.self) private var app
@@ -143,6 +143,7 @@ struct VerdictDetails<Appeal: View>: View {
                 .foregroundStyle(Brand.ink)
                 .fixedSize(horizontal: false, vertical: true)
                 .accessibilityAddTraits(.isHeader)
+            WhyBlock(result: result, lang: lang)
             badges(result)
             VerdictNotes(result: result, parties: parties, lang: lang)
             VerdictBranches(result: result, parties: parties, restoredNames: restoredNames, lang: lang)

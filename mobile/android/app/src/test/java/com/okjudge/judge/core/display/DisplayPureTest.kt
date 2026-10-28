@@ -57,6 +57,14 @@ class DisplayPureTest {
     }
 
     @Test
+    fun why_hidesOnRefusalsBlankAndOlderVerdicts() {
+        assertEquals("Menus list them apart.", VerdictDisplay.why(VerdictResult(verdict = "side_a", why = "Menus list them apart.")))
+        assertNull(VerdictDisplay.why(VerdictResult(verdict = "side_a")))
+        assertNull(VerdictDisplay.why(VerdictResult(verdict = "side_a", why = " \n")))
+        assertNull(VerdictDisplay.why(VerdictResult(verdict = "side_a", why = "Menus list them apart.", modelRefused = true)))
+    }
+
+    @Test
     fun unknownVerdict_isNeutral() {
         val r = VerdictResult(verdict = "brand_new", lean = null)
         assertEquals(50, VerdictDisplay.tugFinal(r))

@@ -114,6 +114,8 @@ data class VerdictResult(
     val verdict: String = "",
     @SerialName("dispute_type") val disputeType: String = "",
     val headline: String = "",
+    /** What decided it; null on rows stored before it existed. */
+    val why: String? = null,
     val crux: String = "",
     @SerialName("split_points") val splitPoints: List<SplitPoint>? = null,
     val conditional: List<ConditionalBranch>? = null,

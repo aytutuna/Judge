@@ -44,6 +44,7 @@
     <string name="kind_definition">definition</string>
     <string name="kind_logic">logic</string>
     <string name="bedrock">Bedrock</string>
+    <string name="why">Why</string>
     <string name="crux_short">The crux</string>
     <string name="crux_title">The crux: what this is really about</string>
     <string name="map_title">The argument, down to bedrock</string>

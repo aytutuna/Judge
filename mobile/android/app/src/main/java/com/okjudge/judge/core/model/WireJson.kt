@@ -184,6 +184,7 @@ object VerdictShape {
             o.str("headline") != null &&
             o.str("crux") != null &&
             o.str("losing_side_best_point") != null &&
+            (o["why"] == null || o.str("why") != null) &&
             confidenceInt != null && confidenceInt in 1..5 &&
             (o["runs"] as? JsonArray)?.all { (it as? JsonPrimitive)?.takeIf { p -> p.isString }?.content in JUDGE } == true &&
             (o["facts_relied_on"] as? JsonArray)?.all { (it as? JsonPrimitive)?.isString == true } == true &&

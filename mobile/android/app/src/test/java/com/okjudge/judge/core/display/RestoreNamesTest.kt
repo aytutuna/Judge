@@ -18,7 +18,7 @@ import org.junit.Test
 /** restoreNames and personalizeResult against the strings the web code produced. */
 class RestoreNamesTest {
     private val fields = listOf(
-        "headline", "crux", "losing_side_best_point", "side_a", "side_b", "bedrock_a", "bedrock_b",
+        "headline", "why", "crux", "losing_side_best_point", "side_a", "side_b", "bedrock_a", "bedrock_b",
         "facts_relied_on", "split_points", "conditional_if_value", "conditional_then", "lean_reason",
         "crux_trial_attack", "crux_trial_reasoning", "fact_check_claims", "fact_check_summaries",
     )
@@ -26,6 +26,7 @@ class RestoreNamesTest {
     /** The flat field set of export-fixtures.ts `personalizedFields`. */
     private fun flat(p: VerdictResult): Map<String, Any?> = mapOf(
         "headline" to p.headline,
+        "why" to p.why,
         "crux" to p.crux,
         "losing_side_best_point" to p.losingSideBestPoint,
         "side_a" to p.argumentMap.sideA.map { it.claim },

@@ -111,6 +111,7 @@ object VerdictTags {
     const val ADD_CONTEXT = "verdict.addContext"
     const val RULING = "verdict.ruling"
     const val LEAN = "verdict.lean"
+    const val WHY = "verdict.why"
     const val CRUX_ROW = "verdict.row.crux"
     const val SIDES_ROW = "verdict.row.sides"
     const val BEST_ROW = "verdict.row.best"
@@ -118,9 +119,9 @@ object VerdictTags {
 
 /**
  * The ruling at a glance: a short settled scene, the two sides and which
- * way the panel leaned, who is right and how sure, the headline and, for a
- * split or conditional ruling, who won what; then rows into the details
- * ([onDetails]) and the actions. [scene] is off for earlier rulings of a case.
+ * way the panel leaned, who is right and how sure, the headline, why it went
+ * that way and, for a split or conditional ruling, who won what; then rows
+ * into the details ([onDetails]) and the actions. [scene] is off for earlier rulings of a case.
  */
 @Composable
 fun RulingSummary(
@@ -159,6 +160,7 @@ fun RulingSummary(
                     style = JudgeType.ruling.copy(fontSize = 30.sp, lineHeight = (30 * 1.06).sp).cappedScale(),
                     modifier = Modifier.semantics { heading() },
                 )
+                Why(result)
                 Branches(result, parties, restoredNames)
                 if (result.refused) SlotText(s.refusedNote)
             }
@@ -187,8 +189,8 @@ fun RulingSummary(
 
 /**
  * Everything the judges wrote, a section per part that has something in
- * it: the ruling, the crux, what each side stands on and how it got there,
- * the losing side's best point, the facts, the web check, what would
+ * it: the ruling and why, the crux, what each side stands on and how it got
+ * there, the losing side's best point, the facts, the web check, what would
  * change it and the votes.
  */
 @Composable
@@ -214,6 +216,7 @@ fun VerdictDetails(
                 style = JudgeType.ruling.copy(fontSize = 24.sp, lineHeight = (24 * 1.1).sp).cappedScale(),
                 modifier = Modifier.semantics { heading() },
             )
+            Why(result)
             if (result.leanState != LeanState.None || result.cruxTrial != null || result.refused || result.demo) Slots(result, parties)
             Branches(result, parties, restoredNames)
         }
@@ -498,6 +501,16 @@ private fun DetailSection(title: String, content: @Composable ColumnScope.() -> 
             Text(title, style = JudgeType.serifLabel.copy(fontSize = 17.sp), modifier = Modifier.weight(1f).semantics { heading() })
         }
         content()
+    }
+}
+
+/** What decided the ruling, right under the headline. */
+@Composable
+private fun Why(result: VerdictResult) {
+    val why = VerdictDisplay.why(result) ?: return
+    Column(Modifier.fillMaxWidth().testTag(VerdictTags.WHY), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+        Text(LocalStrings.current.why, style = JudgeType.serifLabel.copy(fontSize = 17.sp), modifier = Modifier.semantics { heading() })
+        Text(why, style = SectionText)
     }
 }
 

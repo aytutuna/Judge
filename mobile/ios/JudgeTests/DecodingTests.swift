@@ -30,6 +30,29 @@ final class DecodingTests: XCTestCase {
         ])
     }
 
+    func testWhyIsOptional() throws {
+        let withWhy = try Fixtures.sample("win_a_self").result.result
+        XCTAssertEqual(withWhy.why?.hasPrefix("Party B's case rests on shape alone."), true)
+        XCTAssertEqual(VerdictDisplay.why(withWhy), withWhy.why)
+
+        let older = try Fixtures.sample("win_b_named").result.result
+        XCTAssertNil(older.why)
+        XCTAssertNil(VerdictDisplay.why(older))
+
+        let translated = try XCTUnwrap(Fixtures.verdicts()["translateResponse"])
+        let tr = try WireDecoding.translatePayload(from: JSONSerialization.data(withJSONObject: translated)).result.result
+        XCTAssertEqual(tr.why?.hasPrefix("Taraf B'nin dayanağı sadece şekil."), true)
+    }
+
+    func testWhyIsHiddenOnRefusalsAndBlankText() throws {
+        var result = try Fixtures.sample("win_a_self").result.result
+        result.why = "  "
+        XCTAssertNil(VerdictDisplay.why(result))
+        result.why = "Menus list them apart."
+        result.modelRefused = true
+        XCTAssertNil(VerdictDisplay.why(result))
+    }
+
     func testLeanAbsentNullAndObjectStayDistinct() throws {
         XCTAssertEqual(try Fixtures.sample("lean_tie").result.result.lean, .tie)
         let escalated = try Fixtures.sample("lean_b_majority_escalated").result.result
@@ -107,6 +130,14 @@ final class DecodingTests: XCTestCase {
         var boolAsNumber = good
         boolAsNumber["demo"] = 0
         XCTAssertFalse(VerdictShape.looksLikeVerdict(boolAsNumber))
+
+        var noWhy = good
+        noWhy.removeValue(forKey: "why")
+        XCTAssertTrue(VerdictShape.looksLikeVerdict(noWhy), "older verdicts have no why")
+
+        var whyNotText = good
+        whyNotText["why"] = 3
+        XCTAssertFalse(VerdictShape.looksLikeVerdict(whyNotText))
 
         var emptyClaims = good
         let emptyMap: [String: Any] = ["side_a": [Any](), "side_b": [Any](), "bedrock_a": "", "bedrock_b": ""]

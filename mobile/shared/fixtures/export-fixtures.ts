@@ -117,7 +117,7 @@ const NARRATOR_EN: NameMapping[] = [
 /** Sample bodies, one per rendering branch of the verdict card. */
 const SAMPLES: Record<string, { response: VerdictResponse }> = {
   win_a_self: {
-    response: { id: "abc123DEF0", result: base({ headline: "Party B is stretching the word, and Party A's menu test wins", crux: "Party B goes by shape; Party A goes by how people use the word.", losing_side_best_point: "Party B is right that Party A would struggle to define a sandwich without including it.", crux_trial: { attack: "Dictionaries disagree.", outcome: "survived", reasoning: "Usage wins here." } }), name_map: NARRATOR_EN },
+    response: { id: "abc123DEF0", result: base({ headline: "Party B is stretching the word, and Party A's menu test wins", why: "Party B's case rests on shape alone. A word means what people use it for, and a sandwich order at any deli never comes back as a hot dog, so Party A's menu test settles it.", crux: "Party B goes by shape; Party A goes by how people use the word.", losing_side_best_point: "Party B is right that Party A would struggle to define a sandwich without including it.", crux_trial: { attack: "Dictionaries disagree.", outcome: "survived", reasoning: "Usage wins here." } }), name_map: NARRATOR_EN },
   },
   win_b_named: {
     response: {
@@ -184,6 +184,7 @@ const SAMPLES: Record<string, { response: VerdictResponse }> = {
         lang: "tr",
         dispute_type: "factual",
         headline: "Parmak çıtlatmak artrite yol açmıyor",
+        why: "Parmak çıtlatanlarla çıtlatmayanları karşılaştıran çalışmalar artrit açısından bir fark bulmuyor. Taraf B'nin endişesi anlaşılır ama kanıt Taraf A'dan yana.",
         crux: "Taraf B'nin korkusu kanıta dayanıyor mu, yoksa Taraf A haklı mı?",
         losing_side_best_point: "Bazı küçük çalışmalar şişlik bildiriyor.",
         crux_trial: { attack: "Uzun vadeli çalışma az.", outcome: "overturned", reasoning: "İtiraz yerinde." },
@@ -241,13 +242,14 @@ const NAME_CASES: Record<string, { nameMap: NameMapping[]; selfLang: Lang }> = {
 
 /**
  * Turkish text for win_a_self, one string per segment the server sends
- * (lib/translate.ts planSegments order: headline, crux, side_a, side_b,
+ * (lib/translate.ts planSegments order: headline, why, crux, side_a, side_b,
  * bedrock_a, bedrock_b, facts_relied_on, losing_side_best_point,
  * crux_trial attack and reasoning), written the way the translator is told
  * to: faithful, natural, labels as "Taraf A/B" with their suffixes.
  */
 const WIN_A_SELF_TR = [
   "Taraf B kelimenin anlamını zorluyor, Taraf A'nın menü testi kazanıyor",
+  "Taraf B'nin dayanağı sadece şekil. Bir kelimenin anlamını insanların onu nasıl kullandığı belirler, büfede sandviç isteyene de sosisli gelmez; bu yüzden Taraf A'nın menü testi meseleyi çözüyor.",
   "Taraf B için ölçüt biçim; Taraf A için ise insanların kelimeyi nasıl kullandığı.",
   "Menüler sosisliyi asla sandviç olarak listelemez",
   "Ortadan kesilmiş ekmeğin arasına konan her şey sandviçtir",
@@ -275,6 +277,7 @@ const TRANSLATED_WIN_A_SELF = serverTranslation(SAMPLES.win_a_self.response.resu
 /**
  * Every free-text field personalizeResult rewrites, flattened:
  *   headline, crux, losing_side_best_point, bedrock_a, bedrock_b: string
+ *   why: string | null
  *   side_a, side_b, facts_relied_on: string[] (claim texts, in order)
  *   split_points: string[] | null (the points)
  *   conditional_if_value, conditional_then: string[] | null (same length)
@@ -285,6 +288,7 @@ function personalizedFields(r: VerdictResult, nameMap: NameMapping[], selfLang: 
   const p = personalizeResult(r, nameMap, selfLang);
   return {
     headline: p.headline,
+    why: p.why ?? null,
     crux: p.crux,
     losing_side_best_point: p.losing_side_best_point,
     side_a: p.argument_map.side_a.map((c) => c.claim),
@@ -582,7 +586,13 @@ const caseVerdict = (seq: number, id: string, result: VerdictResult, appealId: s
   appealId,
   createdAt: seq === 1 ? JUDGED_AT : "2026-10-20T14:00:00.000Z",
 });
-const FIRST_VERDICT = caseVerdict(1, "caseverd01", twoSided());
+const FIRST_VERDICT = caseVerdict(
+  1,
+  "caseverd01",
+  twoSided({
+    why: "Both agree menus list hot dogs apart from sandwiches, and the dictionary Party B points to assumes sliced bread. Everyday use settles a word like this, so Party A's menu test stands.",
+  }),
+);
 
 const appealRow = (over: Partial<CaseAppealView> = {}): CaseAppealView => ({
   id: "appeal00001",
@@ -679,6 +689,7 @@ const CASE_VIEWS: Record<string, CaseView> = {
         twoSided({
           lang: "tr",
           headline: "Taraf A'nın menü testi meseleyi çözüyor",
+          why: "İkisi de menülerin sosisliyi sandviçlerden ayrı listelediğini kabul ediyor, Taraf B'nin dayandığı sözlük tanımı ise dilimlenmiş ekmeği esas alıyor. Böyle bir kelimede günlük kullanım belirleyici, bu yüzden Taraf A'nın menü testi geçerli.",
           crux: "'Sandviç' kelimesi biçimi mi yoksa günlük kullanımı mı izler?",
           agreed_facts: ["İkisi de sosislinin bölünmüş ekmekte et olduğunu kabul ediyor."],
           disputed_facts: [{ fact: "Sözlük tanımının sosisliyi kapsayıp kapsamadığı", party_a: "Hayır.", party_b: "Evet.", finding: "a", decisive: true }],
@@ -701,6 +712,7 @@ const CASE_VIEWS: Record<string, CaseView> = {
       runs: ["side_b", "side_b", "side_a"],
       confidence: 3,
       headline: "On appeal, Party B's dictionary wins",
+      why: "The dictionary entry Party B added names hot dogs as sandwiches outright. That is the fact the first ruling was missing, and the menus Party A cites only show how shops group food, not what the word covers.",
       appeal: appealInfo("overturned", -1, "The dictionary evidence shows hot dogs fit the definition, so the ruling flips to Party B."),
     }),
   ),

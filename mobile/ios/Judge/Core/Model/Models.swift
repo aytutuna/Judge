@@ -174,6 +174,8 @@ struct VerdictResult: Sendable, Equatable {
     var verdict: FinalVerdict
     var disputeType: DisputeType
     var headline: String
+    /// What decided it; nil on rows stored before it existed.
+    var why: String? = nil
     var crux: String
     var splitPoints: [SplitPoint]?
     var conditional: [ConditionalBranch]?
@@ -407,7 +409,7 @@ extension AppealInfo: Decodable {
 
 extension VerdictResult: Decodable {
     private enum CodingKeys: String, CodingKey {
-        case verdict, headline, crux, conditional, confidence, runs, demo, lean, escalated, lang, tier, panel, appeal
+        case verdict, headline, why, crux, conditional, confidence, runs, demo, lean, escalated, lang, tier, panel, appeal
         case twoSided = "two_sided"
         case agreedFacts = "agreed_facts"
         case disputedFacts = "disputed_facts"
@@ -428,6 +430,7 @@ extension VerdictResult: Decodable {
         verdict = (try? c.decodeIfPresent(FinalVerdict.self, forKey: .verdict)) ?? .unknown
         disputeType = (try? c.decodeIfPresent(DisputeType.self, forKey: .disputeType)) ?? .unknown
         headline = try c.decodeIfPresent(String.self, forKey: .headline) ?? ""
+        why = try? c.decodeIfPresent(String.self, forKey: .why)
         crux = try c.decodeIfPresent(String.self, forKey: .crux) ?? ""
         splitPoints = try? c.decodeIfPresent([SplitPoint].self, forKey: .splitPoints)
         conditional = try? c.decodeIfPresent([ConditionalBranch].self, forKey: .conditional)

@@ -435,6 +435,7 @@ object RestoreNames {
         val map = result.argumentMap
         return result.copy(
             headline = r(result.headline),
+            why = result.why?.let(r),
             crux = r(result.crux),
             losingSideBestPoint = r(result.losingSideBestPoint),
             splitPoints = result.splitPoints?.map { it.copy(point = r(it.point)) },

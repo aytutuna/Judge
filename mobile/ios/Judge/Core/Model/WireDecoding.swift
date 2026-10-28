@@ -252,6 +252,7 @@ enum VerdictShape {
         guard let verdict = x["verdict"] as? String, finalVerdicts.contains(verdict),
               let dispute = x["dispute_type"] as? String, disputeTypes.contains(dispute),
               x["headline"] is String, x["crux"] is String, x["losing_side_best_point"] is String,
+              x["why"] == nil || x["why"] is String,
               let confidence = integer(x["confidence"]), (1...5).contains(confidence),
               let runs = x["runs"] as? [Any], runs.allSatisfy({ run in
                   guard let text = run as? String else { return false }

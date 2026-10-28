@@ -95,4 +95,17 @@ class WireJsonTest {
         assertFalse(VerdictShape.looksLikeVerdict(JsonObject(good + ("confidence" to JsonPrimitive(6)))))
         assertFalse(VerdictShape.looksLikeVerdict(JsonObject(good + ("confidence" to JsonPrimitive(2.5)))))
     }
+
+    @Test
+    fun why_isOptional() {
+        val withWhy = Fixtures.sample("win_a_self").result.result
+        assertTrue(withWhy.why!!.startsWith("Party B's case rests on shape alone."))
+        assertEquals(null, Fixtures.sample("win_b_named").result.result.why)
+        val t = WireJson.decodeTranslateResponse(Fixtures.verdicts["translateResponse"].toString())
+        assertTrue(t.result.result.why!!.startsWith("Taraf B'nin dayanağı sadece şekil."))
+
+        val raw = Fixtures.verdicts["verdictResponses"]!!.jsonObject["win_a_self"]!!.jsonObject["result"]!!.jsonObject
+        assertTrue(VerdictShape.looksLikeVerdict(JsonObject(raw - "why")))
+        assertFalse(VerdictShape.looksLikeVerdict(JsonObject(raw + ("why" to JsonPrimitive(3)))))
+    }
 }

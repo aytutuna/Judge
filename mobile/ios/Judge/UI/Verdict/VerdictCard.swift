@@ -3,7 +3,8 @@ import SwiftUI
 import UIKit
 
 /// The ruling at the top of a verdict: the settled balance, both names,
-/// which way the panel leaned, the ruling with its votes and the headline.
+/// which way the panel leaned, the ruling with its votes, the headline and
+/// why it went that way.
 /// A split or conditional ruling keeps its branches here too, since the
 /// headline alone does not say who won what; everything else is on the
 /// details screen.
@@ -46,6 +47,7 @@ struct VerdictCard: View {
             }
             RulingLine(result: result, parties: parties, lang: lang)
             headline
+            WhyBlock(result: result, lang: lang)
             VerdictBranches(result: result, parties: parties, restoredNames: restoredNames, lang: lang)
             if result.modelRefused {
                 SlotText(L10n.refusedNote(lang))
@@ -114,6 +116,25 @@ struct VerdictCard: View {
             .foregroundStyle(Brand.ink)
             .fixedSize(horizontal: false, vertical: true)
             .accessibilityAddTraits(.isHeader)
+    }
+}
+
+/// What decided the ruling, right under the headline.
+struct WhyBlock: View {
+    let result: VerdictResult
+    let lang: AppLang
+
+    var body: some View {
+        if let why = VerdictDisplay.why(result) {
+            VStack(alignment: .leading, spacing: 6) {
+                SectionTitle(text: L10n.why(lang))
+                Text(why)
+                    .brandText(TypeStyle(face: .inter, weight: 400, size: 15, lineHeight: 1.5))
+                    .foregroundStyle(Brand.ink)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+        }
     }
 }
 

@@ -5,7 +5,7 @@ import XCTest
 /// website's own lib/names.ts (display-vectors.json).
 final class RestoreNamesTests: XCTestCase {
     private static let personalizedKeys: Set<String> = [
-        "headline", "crux", "losing_side_best_point", "side_a", "side_b", "bedrock_a", "bedrock_b",
+        "headline", "why", "crux", "losing_side_best_point", "side_a", "side_b", "bedrock_a", "bedrock_b",
         "facts_relied_on", "split_points", "conditional_if_value", "conditional_then", "lean_reason",
         "crux_trial_attack", "crux_trial_reasoning", "fact_check_claims", "fact_check_summaries",
     ]
@@ -88,6 +88,7 @@ final class RestoreNamesTests: XCTestCase {
         let fields = Set(expected.keys).subtracting(["sample", "lang", "selfLang"])
         XCTAssertEqual(fields, Self.personalizedKeys, "personalized fields differ in \(context)")
         XCTAssertEqual(r.headline, expected["headline"] as? String, context)
+        XCTAssertEqual(r.why, expected["why"] as? String, context)
         XCTAssertEqual(r.crux, expected["crux"] as? String, context)
         XCTAssertEqual(r.losingSideBestPoint, expected["losing_side_best_point"] as? String, context)
         XCTAssertEqual(r.argumentMap.sideA.map(\.claim), expected["side_a"] as? [String], context)

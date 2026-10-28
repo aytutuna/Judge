@@ -39,6 +39,14 @@ enum VerdictDisplay {
         }
     }
 
+    /// The "Why" text under the headline; nil on a refusal and on verdicts
+    /// stored before the judges wrote one.
+    static func why(_ result: VerdictResult) -> String? {
+        guard !result.modelRefused, let why = result.why,
+              !why.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else { return nil }
+        return why
+    }
+
     struct Agreement: Sendable, Equatable {
         let n: Int
         let total: Int

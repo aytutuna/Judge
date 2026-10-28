@@ -32,6 +32,7 @@ export const WEB_KEYS: readonly string[] = [
   "bedrock",
   "cruxShort",
   "cruxTitle",
+  "why",
   "mapTitle",
   "factsTitle",
   "bestPointTitle",
