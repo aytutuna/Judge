@@ -1,4 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server";
+import { loadLocale, t } from "@/lib/i18n";
+import { acceptLanguageTags, langDir, matchLang } from "@/lib/langs";
 
 /**
  * Removed verdicts answer their share page with HTTP 410 and a small "this
@@ -12,21 +14,20 @@ export const config = { matcher: ["/v/:id"] };
 
 const ID = /^[A-Za-z0-9_-]{1,64}$/;
 
-const COPY = {
-  en: { title: "This verdict was removed", body: "Its share link no longer works.", cta: "Settle your own argument" },
-  tr: { title: "Bu karar kaldırıldı", body: "Paylaşım bağlantısı artık çalışmıyor.", cta: "Sen de kendi tartışmanı çözdür" },
-} as const;
+const escapeHtml = (s: string) =>
+  s.replace(/[&<>"]/g, (ch) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[ch] ?? ch);
 
-const UNAVAILABLE = {
-  en: { title: "This verdict can't be shown right now", body: "Try again in a minute.", cta: "Go to Judge" },
-  tr: { title: "Bu karar şu an gösterilemiyor", body: "Bir dakika sonra tekrar dene.", cta: "Judge'a git" },
-} as const;
-
-function removedHtml(req: NextRequest, state: "removed" | "unavailable" = "removed"): Response {
-  const lang = (req.headers.get("accept-language") ?? "").toLowerCase().startsWith("tr") ? "tr" : "en";
-  const c = state === "removed" ? COPY[lang] : UNAVAILABLE[lang];
+/** In the visitor's language, picked the way the share page picks it. */
+async function removedHtml(req: NextRequest, state: "removed" | "unavailable" = "removed"): Promise<Response> {
+  const lang = matchLang(acceptLanguageTags(req.headers.get("accept-language") ?? ""));
+  await loadLocale(lang);
+  const c = {
+    title: escapeHtml(t(lang, `${state}.title`)),
+    body: escapeHtml(t(lang, `${state}.body`)),
+    cta: escapeHtml(t(lang, `${state}.cta`)),
+  };
   const html = `<!doctype html>
-<html lang="${lang}">
+<html lang="${lang}" dir="${langDir(lang)}">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
