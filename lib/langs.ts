@@ -71,6 +71,21 @@ const LOCALES: Partial<Record<Lang, () => Promise<{ default: Locale }>>> = {
   tr: () => import("./locales/tr"),
 };
 
+/**
+ * The party labels of every language whose labels are not the English ones,
+ * exactly as its party.a and party.b strings (the locale check holds them
+ * equal): one word and the Latin letters A and B. Kept here rather than in
+ * the lazily loaded locale files because names are put back into a verdict
+ * in the verdict's own language, which the browser may not have loaded, and
+ * the server render and the browser must agree.
+ */
+export const PARTY_LABELS: Partial<Record<Lang, readonly [a: string, b: string]>> & {
+  en: readonly [string, string];
+} = {
+  en: ["Party A", "Party B"],
+  tr: ["Taraf A", "Taraf B"],
+};
+
 /** Enabled languages, in registry order (English first). */
 export const ENABLED: readonly Lang[] = LANG_CODES.filter((l) => l === "en" || l in LOCALES);
 

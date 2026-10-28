@@ -1,6 +1,6 @@
 import { EMAIL_EN } from "../email";
 import { COUNT_KEYS, COUNTS_FROM_ONE, EN, type CountKey, type Key, type Locale } from "../i18n";
-import { langTag, type Lang } from "../langs";
+import { langTag, PARTY_LABELS, type Lang } from "../langs";
 
 const placeholders = (s: string) => [...new Set(s.match(/\{[A-Za-z]+\}/g) ?? [])].sort().join(" ");
 
@@ -30,8 +30,9 @@ export function requiredPluralForms(lang: Lang, key?: CountKey): Intl.LDMLPlural
  * Everything wrong with a locale file, one line each; empty when it is fine.
  * Same keys as English (the privacy page's all or none), the same {slots}
  * in every string and plural form, nothing empty, plural forms only in
- * categories the language has and every one it needs, a voice note that
- * names the party labels, and complete email copy.
+ * categories the language has and every one it needs, party labels that are
+ * listed in PARTY_LABELS and named in the voice note, and complete email
+ * copy.
  */
 export function checkLocale(lang: Lang, locale: Locale): string[] {
   const problems: string[] = [];
@@ -91,6 +92,19 @@ export function checkLocale(lang: Lang, locale: Locale): string[] {
     const label = strings[key];
     if (voice && typeof label === "string" && !voice.includes(`"${label}"`)) {
       problems.push(`voice: should name the party label "${label}" (${key}) in quotes`);
+    }
+  }
+  const [a, b] = [strings["party.a"], strings["party.b"]];
+  if (typeof a === "string" && typeof b === "string") {
+    const listed = PARTY_LABELS[lang] ?? PARTY_LABELS.en;
+    if (!/^.+A$/u.test(a) || b !== a.slice(0, -1) + "B") {
+      problems.push(`party.a, party.b: should be one word with the Latin letters A and B, like "Partei A" and "Partei B"`);
+    } else if (a !== listed[0] || b !== listed[1]) {
+      problems.push(
+        PARTY_LABELS[lang]
+          ? `party.a, party.b: should match PARTY_LABELS["${lang}"] in lib/langs.ts`
+          : `party.a, party.b: add "${lang}": ["${a}", "${b}"] to PARTY_LABELS in lib/langs.ts`,
+      );
     }
   }
   if (locale.legalNotice !== undefined && !locale.legalNotice.trim()) problems.push("legalNotice: empty");

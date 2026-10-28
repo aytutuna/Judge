@@ -1,5 +1,6 @@
 import { t, type Lang } from "./i18n";
 import { verdictLang } from "./content-lang";
+import { PARTY_LABELS } from "./langs";
 import type { NameMapping, VerdictResult } from "./types";
 
 /**
@@ -259,10 +260,37 @@ export function trSuffix(name: string, c: TrCase): string | null {
 
 // --- Restoring names in verdict text ---------------------------------------------
 
+const escapeRe = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+/** What comes before the letter in each language's party labels ("Party ",
+ * "Taraf "), longest first. */
+const PARTY_WORDS = [...new Set(Object.values(PARTY_LABELS).map(([a]) => a.slice(0, -1)))].sort(
+  (x, y) => y.length - x.length,
+);
+/** The same for other people. Every language but Turkish keeps "Person C". */
+const PERSON_WORDS = ["Person ", "Kişi "];
+
+/** Label words as a pattern. A word in a script with case must start a word;
+ * one in a script written without spaces cannot be required to. The letter
+ * must not run on into a word, but may be followed by unspaced text. */
+function wordsRe(words: readonly string[]): string {
+  return words.map((w) => (/^[\p{Lu}\p{Ll}]/u.test(w) ? String.raw`(?<![\p{L}\p{N}])` : "") + escapeRe(w)).join("|");
+}
+const LABEL_END = String.raw`(?![\p{Lu}\p{Ll}\p{N}])`;
+
 /** A label in running text, with an optional suffix after an apostrophe.
- * Both languages' labels are recognised in both languages: judges and
- * translations occasionally leave the other language's label behind. */
-const LABEL_IN_TEXT = /(?<![\p{L}\p{N}])(Party|Taraf|Person|Kişi) ([A-Z])(?:(['’])(\p{Ll}+))?(?![\p{L}\p{N}])/gu;
+ * Every language's labels are recognised in every language: judges and
+ * translations occasionally leave another language's label behind. */
+const LABEL_IN_TEXT = new RegExp(
+  String.raw`(${wordsRe([...PARTY_WORDS, ...PERSON_WORDS])})([A-Z])(?:(['’])(\p{Ll}+))?${LABEL_END}`,
+  "gu",
+);
+
+/** Whether a label's word and letter go together: A and B are parties,
+ * C to Z other people. */
+function labelFits(word: string, letter: string): boolean {
+  return (letter === "A" || letter === "B") === PARTY_WORDS.includes(word);
+}
 
 /** Whether the text before a position ends a sentence (or is empty). */
 function atSentenceStart(before: string): boolean {
@@ -542,6 +570,13 @@ function renderEn(party: Party, suffix: string | undefined, apos: string, before
   return atSentenceStart(before) ? { ...r, text: capitalize(r.text, "en") } : r;
 }
 
+/** Any other language: the name as written where the bare label stood. The
+ * narrator, and a label with a suffix, stay as written: there is no grammar
+ * here to make "you" or an inflected name right. */
+function renderPlain(party: Party, suffix: string | undefined): Rendered {
+  return party.self || suffix !== undefined ? null : { text: party.name, consumed: 0 };
+}
+
 function renderTr(party: Party, suffix: string | undefined, apos: string, before: string, after: string): Rendered {
   const trCase: TrCase | "nom" | null =
     suffix === undefined ? "nom" : suffix === "s" ? "gen" : classifyTr(suffix);
@@ -572,8 +607,7 @@ export function restoreNames(text: string, parties: Parties, textLang: Lang): st
   let m: RegExpExecArray | null;
   while ((m = re.exec(text))) {
     const [whole, word, letter, apos = "", suffix] = m;
-    const isParty = word === "Party" || word === "Taraf";
-    if (isParty !== (letter === "A" || letter === "B")) continue;
+    if (!labelFits(word, letter)) continue;
     const party = parties.get(letter);
     if (!party) continue;
     const before = text.slice(0, m.index);
@@ -581,7 +615,9 @@ export function restoreNames(text: string, parties: Parties, textLang: Lang): st
     const r =
       textLang === "tr"
         ? renderTr(party, suffix, apos, before, after)
-        : renderEn(party, suffix, apos, before, after);
+        : textLang === "en"
+          ? renderEn(party, suffix, apos, before, after)
+          : renderPlain(party, suffix);
     if (!r) continue;
     out += text.slice(pos, m.index) + r.text;
     pos = m.index + whole.length + r.consumed;
@@ -663,20 +699,29 @@ export function personalizeResult(
 
 // --- Labels in anonymized text, by the text's language ----------------------------
 
-/** A label in running text, either language, suffix kept. */
-const ANY_LABEL = /(?<![\p{L}\p{N}])(Party|Taraf|Person|Kişi) ([A-Z])(?![\p{L}\p{N}])/gu;
+/** A label in running text, any language, suffix kept. */
+const ANY_LABEL = new RegExp(String.raw`(${wordsRe([...PARTY_WORDS, ...PERSON_WORDS])})([A-Z])${LABEL_END}`, "gu");
+
+/** The languages besides English and Turkish that can be told by their own
+ * party labels. */
+const OWN_LABELS = (Object.entries(PARTY_LABELS) as [Lang, readonly [string, string]][])
+  .filter(([l, [a]]) => l !== "en" && l !== "tr" && a !== PARTY_LABELS.en[0])
+  .map(([l, [a]]) => [l, new RegExp(`(?:${wordsRe([a.slice(0, -1)])})[AB]${LABEL_END}`, "u")] as const);
 
 /** Common Turkish function words for telling a text's language when it has
  * no Turkish-only letter. */
 const TR_WORDS = /(?<![\p{L}])(?:ve|bir|bu|ama|için|çok|değil|gibi|ile|diye|sonra|çünkü|hiç|daha|kadar|ediyor|dedi|oldu)(?![\p{L}])/giu;
 const EN_WORDS = /(?<![\p{L}])(?:the|and|is|was|that|with|for|said|says|this|they|because|would|have)(?![\p{L}])/giu;
 
-/** The language an anonymized text is written in: the Turkish labels, else
- * whichever language's function words are more frequent; a Turkish-only
- * letter (ğ, ı, İ, ş) decides only a tie, so an English sentence that keeps
- * a Turkish place name ("moved to Beşiktaş") stays English. */
+/** The language an anonymized text is written in: the Turkish labels or
+ * another language's own party labels, else whichever of English and
+ * Turkish has the more frequent function words; a Turkish-only letter (ğ,
+ * ı, İ, ş) decides only a tie, so an English sentence that keeps a Turkish
+ * place name ("moved to Beşiktaş") stays English. */
 export function textLang(text: string): Lang {
   if (/(?<![\p{L}])(?:Taraf [AB]|Kişi [C-Z])(?![\p{L}])/u.test(text)) return "tr";
+  const own = OWN_LABELS.find(([, re]) => re.test(text));
+  if (own) return own[0];
   const tr = text.match(TR_WORDS)?.length ?? 0;
   const en = text.match(EN_WORDS)?.length ?? 0;
   if (tr !== en) return tr > en ? "tr" : "en";
@@ -684,20 +729,19 @@ export function textLang(text: string): Lang {
 }
 
 /**
- * The anonymized labels in the words of `lang`: "Party A" <-> "Taraf A",
- * "Person C" <-> "Kişi C". A suffix after the apostrophe is kept as written
- * (it already agrees with the letter, which reads the same in both). Stored
- * and judged text keeps the English labels; this is for display only, with
- * `lang` the language of the text itself (textLang), not of the interface.
- * Pure.
+ * The anonymized labels in the words of `lang`: "Party A" <-> "Taraf A" <->
+ * "Partei A", "Person C" <-> "Kişi C" (other languages keep "Person C"). A
+ * suffix after the apostrophe is kept as written (it already agrees with
+ * the letter, which reads the same in both). Stored and judged text keeps
+ * the English labels; this is for display only, with `lang` the language of
+ * the text itself (textLang), not of the interface. Pure.
  */
 export function localizeLabels(text: string, lang: Lang): string {
   if (!text) return text;
   return text.replace(ANY_LABEL, (whole: string, word: string, letter: string) => {
-    const party = word === "Party" || word === "Taraf";
-    if (party !== (letter === "A" || letter === "B")) return whole;
-    if (lang === "tr") return `${party ? "Taraf" : "Kişi"} ${letter}`;
-    return `${party ? "Party" : "Person"} ${letter}`;
+    if (!labelFits(word, letter)) return whole;
+    if (letter !== "A" && letter !== "B") return `${lang === "tr" ? "Kişi" : "Person"} ${letter}`;
+    return (PARTY_LABELS[lang] ?? PARTY_LABELS.en)[0].slice(0, -1) + letter;
   });
 }
 
@@ -756,10 +800,7 @@ export function consistentSelfMap(
   if (!self?.self) return { nameMap, selfDropped: false };
   const only = new Map([[selfParty, self]]);
   const lang = verdictLang(result);
-  const label = new RegExp(
-    String.raw`(?<![\p{L}\p{N}])(?:Party|Taraf) ${selfParty}(?:['’]\p{Ll}+)?(?![\p{L}\p{N}])`,
-    "u",
-  );
+  const label = new RegExp(String.raw`(?:${wordsRe(PARTY_WORDS)})${selfParty}(?:['’]\p{Ll}+)?${LABEL_END}`, "u");
   const keepsLabel = resultTexts(result).some((s) => label.test(restoreNames(s, only, lang)));
   if (!keepsLabel) return { nameMap, selfDropped: false };
   return {
