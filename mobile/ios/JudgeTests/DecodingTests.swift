@@ -74,7 +74,7 @@ final class DecodingTests: XCTestCase {
         "split_points":null,"conditional":null,
         "argument_map":{"side_a":[{"claim":"a","kind":"vibe"}],"side_b":[],"bedrock_a":"","bedrock_b":""},
         "facts_relied_on":[],"losing_side_best_point":"","confidence":4,"runs":["side_a","abstain"],"demo":false,
-        "lang":"de","future_field":{"nested":true}}}
+        "lang":"xx","future_field":{"nested":true}}}
         """
         let payload = try WireDecoding.verdictPayload(from: Data(json.utf8))
         let result = payload.result.result
