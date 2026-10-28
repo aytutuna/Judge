@@ -226,13 +226,10 @@ struct HistoryView: View {
                         }
                     case .caseSummary(let summary):
                         if selection.isActive {
-                            HStack(spacing: 12) {
-                                SelectCircle(selected: false)
-                                CaseRow(summary: summary, lang: lang)
-                            }
-                            .opacity(0.4)
-                            .disabled(true)
-                            .listRowBackground(Brand.paper)
+                            CaseRow(summary: summary, lang: lang)
+                                .opacity(0.4)
+                                .disabled(true)
+                                .listRowBackground(Brand.paper)
                         } else {
                             NavigationLink(value: HistoryRoute.caseDetail(id: summary.id)) {
                                 CaseRow(summary: summary, lang: lang)
@@ -288,7 +285,7 @@ private struct PickableRow: View {
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
-        .accessibilityAddTraits(selected ? .isSelected : [])
+        .accessibilityValue(selected ? L10n.appHistoryRowSelected(lang) : L10n.appHistoryRowNotSelected(lang))
     }
 }
 
