@@ -23,7 +23,6 @@ import androidx.compose.ui.test.performTextInput
 import androidx.compose.ui.unit.dp
 import com.okjudge.judge.Fixtures
 import com.okjudge.judge.str
-import com.okjudge.judge.core.data.SavedVerdict
 import com.okjudge.judge.core.display.ContentLang
 import com.okjudge.judge.core.display.PartyNames
 import com.okjudge.judge.core.display.UiError
@@ -36,6 +35,7 @@ import com.okjudge.judge.core.session.VerdictFlow
 import com.okjudge.judge.core.model.VerdictOutcome
 import com.okjudge.judge.i18n.AppLang
 import com.okjudge.judge.ui.components.TopBarTags
+import com.okjudge.judge.ui.history.HistoryEntry
 import com.okjudge.judge.ui.history.HistoryScreen
 import com.okjudge.judge.ui.history.HistoryTags
 import com.okjudge.judge.ui.home.HomeScreen
@@ -429,24 +429,21 @@ class ScreensTest {
 
     @Test
     fun history_listsAndEmptyState() {
-        var items by mutableStateOf<List<SavedVerdict>?>(emptyList())
+        var entries by mutableStateOf<List<HistoryEntry>?>(emptyList())
         compose.setContent {
             Themed(AppLang.EN) {
-                HistoryScreen(items = items, onOpen = {}, onDelete = {}, onNew = {})
+                HistoryScreen(entries = entries, onOpen = {}, onRemove = { _, _ -> }, onNew = {})
             }
         }
         compose.onNodeWithTag(HistoryTags.EMPTY).assertExists()
-        items = listOf("win_a_self", "lean_tie").mapIndexed { i, n ->
-            val o = sample(n)
-            SavedVerdict(o.id, 1_760_000_000_000L + i, o.result, o.nameMap, emptyMap())
-        }
+        entries = phoneRows("win_a_self", "lean_tie")
         compose.waitForIdle()
-        compose.onNodeWithTag(HistoryTags.row("abc123DEF0")).assertExists()
+        compose.onNodeWithTag(HistoryTags.row("v:abc123DEF0")).assertExists()
         compose.onNodeWithText("You're right").assertExists()
         // Row headlines carry the real names (display only).
         compose.onNodeWithText(personalized("win_a_self").str("headline")!!).assertExists()
         compose.onNodeWithText(personalized("lean_tie").str("headline")!!).assertExists()
-        compose.onNodeWithText(UiTestSupport.s(AppLang.EN).appHistoryDeviceOnly).assertExists()
+        compose.onNodeWithText(UiTestSupport.s(AppLang.EN).appHistoryPhoneOnlyNote).assertExists()
     }
 
     /** The web's personalized fields for a sample in its own language. */

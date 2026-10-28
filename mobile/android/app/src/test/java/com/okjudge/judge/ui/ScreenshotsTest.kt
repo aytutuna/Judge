@@ -19,7 +19,6 @@ import com.github.takahirom.roborazzi.captureRoboImage
 import com.okjudge.judge.Fixtures
 import com.okjudge.judge.core.auth.Account
 import com.okjudge.judge.core.auth.SignInError
-import com.okjudge.judge.core.data.SavedVerdict
 import com.okjudge.judge.core.display.UiError
 import com.okjudge.judge.core.model.Entitlement
 import com.okjudge.judge.core.model.MeResponse
@@ -30,7 +29,9 @@ import com.okjudge.judge.core.model.Viewer
 import com.okjudge.judge.i18n.AppLang
 import com.okjudge.judge.i18n.LangPref
 import com.okjudge.judge.ui.components.TopBar
+import com.okjudge.judge.ui.history.HistoryPaging
 import com.okjudge.judge.ui.history.HistoryScreen
+import com.okjudge.judge.ui.history.mergeHistory
 import com.okjudge.judge.ui.history.HistoryTags
 import com.okjudge.judge.ui.home.HomeScreen
 import com.okjudge.judge.ui.home.HomeUiState
@@ -196,11 +197,8 @@ class ScreenshotsTest {
 
     @Test
     fun history_en() = capture("history_en") {
-        val items = listOf("win_a_self", "win_b_named", "lean_tie", "overturned_tr", "conditional").mapIndexed { i, n ->
-            val o = sample(n)
-            SavedVerdict(o.id, 1_760_900_000_000L - i * 86_400_000L, o.result, o.nameMap, emptyMap())
-        }
-        Themed(AppLang.EN) { HistoryScreen(items, {}, {}, {}) }
+        val items = phoneRows("win_a_self", "win_b_named", "lean_tie", "overturned_tr", "conditional")
+        Themed(AppLang.EN) { HistoryScreen(items, {}, { _, _ -> }, {}) }
     }
 
     @Test
@@ -496,40 +494,29 @@ class ScreenshotsTest {
         }
     }
 
+    /**
+     * The account's list from the viewer's side: waiting for them, judges
+     * thinking, your turn, ready either way, a case you answered, removed by
+     * the other side, and a verdict kept only on this phone.
+     */
     @Test
     fun history_cases_en() = capture("history_cases_en") {
-        val list = WireJson.json.decodeFromString(
-            com.okjudge.judge.core.model.CaseListResponse.serializer(),
-            Fixtures.verdicts["cases"]!!.jsonObject["list"].toString(),
-        )
-        val items = listOf("win_a_self", "win_b_named", "lean_tie").mapIndexed { i, n ->
-            val o = sample(n)
-            SavedVerdict(o.id, 1_761_000_000_000L - i * 2 * 86_400_000L, o.result, o.nameMap, emptyMap())
-        }
-        Themed(AppLang.EN) {
-            HistoryScreen(items, {}, {}, {}, cases = com.okjudge.judge.ui.cases.CaseListState.Ready(list.cases))
-        }
+        val page = historyPage()
+        val entries = mergeHistory(page.items, listOf(savedSample("win_b_named", 1_760_700_000_000L)), user = "u1")
+        Themed(AppLang.EN) { HistoryScreen(entries, {}, { _, _ -> }, {}, paging = HistoryPaging(next = page.next, loadedAt = 1L)) }
     }
 
-    /** Select mode with two verdicts picked; the cases stay dimmed. */
+    /** Select mode with two rows picked; rows that can't be removed stay dimmed. */
     @Test
     fun history_select_en() {
-        val list = WireJson.json.decodeFromString(
-            com.okjudge.judge.core.model.CaseListResponse.serializer(),
-            Fixtures.verdicts["cases"]!!.jsonObject["list"].toString(),
-        )
-        val items = listOf("win_a_self", "win_b_named", "lean_tie").mapIndexed { i, n ->
-            val o = sample(n)
-            SavedVerdict(o.id, 1_761_000_000_000L - i * 2 * 86_400_000L, o.result, o.nameMap, emptyMap())
-        }
+        val page = historyPage()
+        val entries = mergeHistory(page.items, listOf(savedSample("win_b_named", 1_760_700_000_000L)), user = "u1")
         compose.setContent {
-            Themed(AppLang.EN) {
-                HistoryScreen(items, {}, {}, {}, cases = com.okjudge.judge.ui.cases.CaseListState.Ready(list.cases))
-            }
+            Themed(AppLang.EN) { HistoryScreen(entries, {}, { _, _ -> }, {}) }
         }
         compose.onNodeWithTag(HistoryTags.SELECT).performClick()
-        compose.onNodeWithTag(HistoryTags.row(items[0].id)).performClick()
-        compose.onNodeWithTag(HistoryTags.row(items[2].id)).performClick()
+        compose.onNodeWithTag(HistoryTags.row("c:case0000010")).performClick()
+        compose.onNodeWithTag(HistoryTags.row("v:verdict0021")).performClick()
         compose.mainClock.advanceTimeBy(5_000)
         compose.onRoot().captureRoboImage(UiTestSupport.shot("history_select_en"))
     }

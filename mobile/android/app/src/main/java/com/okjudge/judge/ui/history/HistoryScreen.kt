@@ -19,9 +19,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.SwipeToDismissBox
 import androidx.compose.material3.SwipeToDismissBoxValue
 import androidx.compose.material3.Text
@@ -29,6 +31,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -39,6 +42,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.CustomAccessibilityAction
 import androidx.compose.ui.semantics.LiveRegionMode
@@ -53,21 +57,18 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.okjudge.judge.core.data.HistoryRepository
 import com.okjudge.judge.core.data.SavedVerdict
-import com.okjudge.judge.core.model.CaseSummary
+import com.okjudge.judge.core.data.parseIso
 import com.okjudge.judge.core.display.PartyNames
 import com.okjudge.judge.core.display.RestoreNames
 import com.okjudge.judge.core.display.SealSide
 import com.okjudge.judge.core.display.VerdictDisplay
+import com.okjudge.judge.core.model.HistoryItem
 import com.okjudge.judge.i18n.AppLang
-import com.okjudge.judge.ui.cases.CaseListFailed
-import com.okjudge.judge.ui.cases.CaseListState
-import com.okjudge.judge.ui.cases.CaseRow
 import com.okjudge.judge.i18n.LocalLang
 import com.okjudge.judge.i18n.LocalStrings
+import com.okjudge.judge.i18n.Strings
+import com.okjudge.judge.ui.components.GhostButton
 import com.okjudge.judge.ui.components.JudgeIcons
 import com.okjudge.judge.ui.components.TextAction
 import com.okjudge.judge.ui.components.TintedIcon
@@ -76,43 +77,27 @@ import com.okjudge.judge.ui.theme.JudgeShapes
 import com.okjudge.judge.ui.theme.JudgeType
 import com.okjudge.judge.ui.theme.LocalSides
 import com.okjudge.judge.ui.theme.Palette
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.launch
 import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
-import java.time.format.DateTimeParseException
 import java.time.format.FormatStyle
-
-class HistoryViewModel(private val history: HistoryRepository) : ViewModel() {
-    /** Null until the first read from the database. */
-    val items: StateFlow<List<SavedVerdict>?> = history.observeAll()
-        .map<List<SavedVerdict>, List<SavedVerdict>?> { it }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), null)
-
-    fun delete(id: String) {
-        viewModelScope.launch { history.delete(id) }
-    }
-}
 
 object HistoryTags {
     const val LIST = "history.list"
     const val EMPTY = "history.empty"
+    const val ERROR = "history.error"
+    const val NOTICE = "history.notice"
     const val SELECT = "history.select"
     const val CANCEL = "history.cancel"
     const val SELECT_ALL = "history.selectAll"
     const val DELETE = "history.delete"
     const val CONFIRM_DELETE = "history.confirmDelete"
-    fun row(id: String) = "history.row.$id"
+    const val MORE = "history.more"
+    const val PHONE_NOTE = "history.phoneNote"
+    fun row(key: String) = "history.row.$key"
 }
 
-/**
- * The rows picked in select mode. Only verdicts saved on this phone can be
- * picked: a case has no delete in the app.
- */
+/** The rows picked in select mode, by entry key. */
 data class HistorySelection(val ids: Set<String> = emptySet()) {
     fun toggle(id: String) = HistorySelection(if (id in ids) ids - id else ids + id)
 
@@ -121,7 +106,8 @@ data class HistorySelection(val ids: Set<String> = emptySet()) {
     fun toggleAll(selectable: List<String>) = HistorySelection(if (allOf(selectable)) emptySet() else selectable.toSet())
 
     companion object {
-        fun selectable(entries: List<HistoryEntry>): List<String> = entries.mapNotNull { (it as? HistoryEntry.Saved)?.verdict?.id }
+        /** Phone rows, and account rows whose own page offers Remove (the website's case tools). */
+        fun selectable(entries: List<HistoryEntry>): List<String> = entries.filter { it.selectable }.map { it.key }
 
         /** Null (not selecting) is not saved, so it restores as null too. */
         val Saver = Saver<HistorySelection?, ArrayList<String>>(
@@ -131,57 +117,45 @@ data class HistorySelection(val ids: Set<String> = emptySet()) {
     }
 }
 
-/** A row of the Verdicts list: a verdict saved on this phone or one of the account's cases. */
-sealed interface HistoryEntry {
-    val key: String
-    val at: Long
-
-    data class Saved(val verdict: SavedVerdict) : HistoryEntry {
-        override val key: String get() = "v:${verdict.id}"
-        override val at: Long get() = verdict.createdAt
-    }
-
-    data class Case(val summary: CaseSummary) : HistoryEntry {
-        override val key: String get() = "c:${summary.id}"
-        override val at: Long = try {
-            Instant.parse(summary.createdAt).toEpochMilli()
-        } catch (_: DateTimeParseException) {
-            0L
-        }
-    }
-}
-
-/** Both kinds in one list, newest first (mergeHistory in components/shell/useHistory.ts). */
-fun mergeHistory(saved: List<SavedVerdict>, cases: List<CaseSummary>): List<HistoryEntry> =
-    (saved.map { HistoryEntry.Saved(it) } + cases.map { HistoryEntry.Case(it) }).sortedByDescending { it.at }
-
 /**
- * "Verdicts": the ones saved on this phone and, signed in with cases on, the
- * account's two-sided cases with their state, newest first. Swipe or
- * long-press a verdict to delete it from the phone, or pick several in
- * select mode.
+ * "Verdicts": the account's verdicts and cases (started or answered) with
+ * where each one stands, and verdicts kept only on this phone, newest
+ * first. More load near the end, or with Show more. Swipe or long-press a
+ * row to remove it, or pick several in select mode.
  */
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HistoryScreen(
-    items: List<SavedVerdict>?,
-    onOpen: (String) -> Unit,
-    onDelete: (String) -> Unit,
+    entries: List<HistoryEntry>?,
+    onOpen: (HistoryEntry) -> Unit,
+    /** Removes the picked rows and reports the keys that failed (they stay picked). */
+    onRemove: (List<HistoryEntry>, (Set<String>) -> Unit) -> Unit,
     onNew: (() -> Unit)?,
     modifier: Modifier = Modifier,
-    /** The account's two-sided cases; null leaves them out (cases off, signed out). */
-    cases: CaseListState? = null,
-    onOpenCase: (String) -> Unit = {},
-    onRetryCases: () -> Unit = {},
+    paging: HistoryPaging = HistoryPaging(),
+    notice: HistoryNotice? = null,
+    onLoadMore: () -> Unit = {},
+    onRetry: () -> Unit = {},
+    /** For invites whose time ran out since the list was loaded. */
+    now: Long = System.currentTimeMillis(),
 ) {
     val s = LocalStrings.current
     var confirmOne by rememberSaveable { mutableStateOf<String?>(null) }
     var selection by rememberSaveable(stateSaver = HistorySelection.Saver) { mutableStateOf<HistorySelection?>(null) }
     var confirmSelected by rememberSaveable { mutableStateOf(false) }
-    val caseList = (cases as? CaseListState.Ready)?.cases.orEmpty()
-    val entries = remember(items, caseList) { mergeHistory(items.orEmpty(), caseList) }
-    val selectable = remember(entries) { HistorySelection.selectable(entries) }
+    val list = entries.orEmpty()
+    val selectable = remember(list) { HistorySelection.selectable(list) }
     val picked = selection
+    val listState = rememberLazyListState()
+    val nearEnd by remember {
+        derivedStateOf {
+            val info = listState.layoutInfo
+            val last = info.visibleItemsInfo.lastOrNull()?.index ?: return@derivedStateOf false
+            last >= info.totalItemsCount - 3
+        }
+    }
+    LaunchedEffect(nearEnd, paging.next) {
+        if (nearEnd && paging.next != null) onLoadMore()
+    }
 
     BackHandler(enabled = picked != null) { selection = null }
 
@@ -206,44 +180,71 @@ fun HistoryScreen(
                 TextAction(s.appHistorySelect, { selection = HistorySelection() }, Modifier.testTag(HistoryTags.SELECT))
             }
         }
+        if (notice != null) {
+            Text(
+                noticeText(notice, s),
+                style = JudgeType.body.copy(color = Palette.danger, fontSize = 15.sp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 20.dp, vertical = 6.dp)
+                    .testTag(HistoryTags.NOTICE)
+                    .semantics { liveRegion = LiveRegionMode.Polite },
+            )
+        }
         when {
-            items == null -> Unit
-            entries.isEmpty() && cases == CaseListState.Loading -> Box(Modifier.fillMaxSize().padding(32.dp), contentAlignment = Alignment.TopCenter) {
+            entries == null -> Unit
+            list.isEmpty() && paging.loading -> Box(Modifier.fillMaxSize().padding(32.dp), contentAlignment = Alignment.TopCenter) {
                 Text(s.caseLoading, style = JudgeType.body.copy(color = Palette.muted))
             }
-            entries.isEmpty() && cases != CaseListState.Error -> Box(Modifier.fillMaxSize().padding(32.dp), contentAlignment = Alignment.Center) {
+            list.isEmpty() && paging.failed -> Box(Modifier.fillMaxSize().padding(32.dp), contentAlignment = Alignment.TopCenter) {
+                LoadFailed(onRetry)
+            }
+            list.isEmpty() -> Box(Modifier.fillMaxSize().padding(32.dp), contentAlignment = Alignment.Center) {
                 Text(s.appHistoryEmpty, style = JudgeType.lead, textAlign = TextAlign.Center, modifier = Modifier.testTag(HistoryTags.EMPTY))
             }
             else -> LazyColumn(
                 Modifier.fillMaxSize().testTag(HistoryTags.LIST),
+                state = listState,
                 contentPadding = PaddingValues(horizontal = 16.dp, vertical = 12.dp),
                 verticalArrangement = Arrangement.spacedBy(10.dp),
             ) {
-                if (cases == CaseListState.Error) item { CaseListFailed(onRetryCases) }
-                items(entries, key = { it.key }) { e ->
-                    when (e) {
-                        is HistoryEntry.Saved -> {
-                            val item = e.verdict
-                            if (picked != null) {
-                                SelectableRow(item, item.id in picked.ids) { selection = picked.toggle(item.id) }
-                            } else {
-                                SwipeRow(item, onOpen = { onOpen(item.id) }, onDelete = { onDelete(item.id) }, onLongPress = { confirmOne = item.id })
-                            }
+                if (paging.failed) item { LoadFailed(onRetry) }
+                items(list, key = { it.key }) { e ->
+                    when {
+                        picked != null && e.selectable -> {
+                            val on = e.key in picked.ids
+                            EntryRow(
+                                e,
+                                now,
+                                Modifier
+                                    .toggleable(value = on, role = Role.Checkbox, onValueChange = { selection = picked.toggle(e.key) })
+                                    .semantics { stateDescription = if (on) s.appHistoryRowSelected else s.appHistoryRowNotSelected },
+                                selected = on,
+                            )
                         }
-                        is HistoryEntry.Case -> if (picked != null) {
-                            Box(Modifier.alpha(0.4f)) { CaseRow(e.summary, onOpenCase, enabled = false) }
-                        } else {
-                            CaseRow(e.summary, onOpenCase)
+                        picked != null -> Box(Modifier.alpha(0.4f)) { EntryRow(e, now, Modifier) }
+                        e.selectable -> SwipeRow(e, now, onOpen = { onOpen(e) }, onAskRemove = { confirmOne = e.key })
+                        else -> EntryRow(e, now, if (opens(e)) Modifier.clickable(role = Role.Button) { onOpen(e) } else Modifier)
+                    }
+                }
+                if (paging.next != null) {
+                    item {
+                        Box(Modifier.fillMaxWidth().padding(vertical = 8.dp), contentAlignment = Alignment.Center) {
+                            if (paging.loadingMore) {
+                                CircularProgressIndicator(Modifier.size(22.dp), color = Palette.muted, strokeWidth = 2.dp)
+                            } else {
+                                GhostButton(s.shellLoadMore, null, onLoadMore, Modifier.testTag(HistoryTags.MORE))
+                            }
                         }
                     }
                 }
-                if (items.isNotEmpty()) {
+                if (list.any { it is HistoryEntry.Phone }) {
                     item {
                         Text(
-                            s.appHistoryDeviceOnly,
+                            s.appHistoryPhoneOnlyNote,
                             style = JudgeType.footnote,
                             textAlign = TextAlign.Center,
-                            modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp, horizontal = 12.dp),
+                            modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp, horizontal = 12.dp).testTag(HistoryTags.PHONE_NOTE),
                         )
                     }
                 }
@@ -252,47 +253,77 @@ fun HistoryScreen(
     }
 
     if (confirmSelected && picked != null) {
-        AlertDialog(
-            onDismissRequest = { confirmSelected = false },
-            text = { Text(s.appHistoryDeleteConfirm(picked.ids.size), style = JudgeType.body) },
-            confirmButton = {
-                TextButton(
-                    onClick = {
-                        confirmSelected = false
-                        picked.ids.forEach(onDelete)
-                        selection = null
-                    },
-                    modifier = Modifier.testTag(HistoryTags.CONFIRM_DELETE),
-                ) { Text(s.appHistoryDelete, color = Palette.danger) }
+        RemoveDialog(
+            text = HistoryLabels.removeConfirm(list.filter { it.key in picked.ids }, s),
+            onDismiss = { confirmSelected = false },
+            onConfirm = {
+                confirmSelected = false
+                onRemove(list.filter { it.key in picked.ids }) { failed -> selection = if (failed.isEmpty()) null else HistorySelection(failed) }
             },
-            dismissButton = { TextButton(onClick = { confirmSelected = false }) { Text(s.appCancel, color = Palette.ink) } },
-            containerColor = Palette.paper,
         )
     }
-    confirmOne?.let { id ->
-        AlertDialog(
-            onDismissRequest = { confirmOne = null },
-            text = { Text(items?.firstOrNull { it.id == id }?.let { restoredHeadline(it, LocalLang.current) } ?: "", style = JudgeType.body) },
-            confirmButton = {
-                TextButton(onClick = { confirmOne = null; onDelete(id) }) { Text(s.appHistoryDelete, color = Palette.danger) }
+    confirmOne?.let { key ->
+        RemoveDialog(
+            text = HistoryLabels.removeConfirm(list.filter { it.key == key }, s),
+            onDismiss = { confirmOne = null },
+            onConfirm = {
+                confirmOne = null
+                onRemove(list.filter { it.key == key }) {}
             },
-            dismissButton = { TextButton(onClick = { confirmOne = null }) { Text(s.appCancel, color = Palette.ink) } },
-            containerColor = Palette.paper,
         )
     }
 }
 
-/** The headline the row shows, with real names restored (display only), for the delete prompt. */
-private fun restoredHeadline(item: SavedVerdict, lang: AppLang): String =
-    RestoreNames.headline(item.translations[lang]?.result ?: item.original.result, item.nameMap, item.lang)
+private fun opens(e: HistoryEntry) = when (e) {
+    is HistoryEntry.Account -> HistoryLabels.openable(e.item)
+    is HistoryEntry.Phone -> true
+}
+
+private fun noticeText(notice: HistoryNotice, s: Strings) = when (notice) {
+    HistoryNotice.Offline -> s.appHistoryOfflineRemove
+    is HistoryNotice.RemoveFailed -> s.appHistoryRemoveFailed(notice.count)
+    HistoryNotice.OpenFailed -> s.errorFallback
+}
+
+@Composable
+private fun RemoveDialog(text: String, onDismiss: () -> Unit, onConfirm: () -> Unit) {
+    val s = LocalStrings.current
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        text = { Text(text, style = JudgeType.body) },
+        confirmButton = {
+            TextButton(onClick = onConfirm, modifier = Modifier.testTag(HistoryTags.CONFIRM_DELETE)) { Text(s.appHistoryDelete, color = Palette.danger) }
+        },
+        dismissButton = { TextButton(onClick = onDismiss) { Text(s.appCancel, color = Palette.ink) } },
+        containerColor = Palette.paper,
+    )
+}
+
+/** The list could not be loaded: said above whatever the phone has. */
+@Composable
+private fun LoadFailed(onRetry: () -> Unit) {
+    val s = LocalStrings.current
+    Column(
+        Modifier.fillMaxWidth().padding(vertical = 8.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(12.dp),
+    ) {
+        Text(s.shellLoadFailed, style = JudgeType.body.copy(color = Palette.danger), modifier = Modifier.testTag(HistoryTags.ERROR))
+        GhostButton(s.appRetry, null, onRetry)
+    }
+}
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun SwipeRow(item: SavedVerdict, onOpen: () -> Unit, onDelete: () -> Unit, onLongPress: () -> Unit) {
+private fun SwipeRow(entry: HistoryEntry, now: Long, onOpen: () -> Unit, onAskRemove: () -> Unit) {
     val s = LocalStrings.current
     val state = rememberSwipeToDismissBoxState()
-    if (state.currentValue == SwipeToDismissBoxValue.EndToStart) {
-        LaunchedEffect(item.id) { onDelete() }
+    // A swipe asks first: removing from the account can't be undone.
+    LaunchedEffect(state.currentValue) {
+        if (state.currentValue == SwipeToDismissBoxValue.EndToStart) {
+            onAskRemove()
+            state.reset()
+        }
     }
     SwipeToDismissBox(
         state = state,
@@ -309,31 +340,102 @@ private fun SwipeRow(item: SavedVerdict, onOpen: () -> Unit, onDelete: () -> Uni
             }
         },
     ) {
-        HistoryRow(
-            item,
+        EntryRow(
+            entry,
+            now,
             Modifier
-                .combinedClickable(onClick = onOpen, onLongClick = onLongPress)
-                .semantics { customActions = listOf(CustomAccessibilityAction(s.appHistoryDelete) { onDelete(); true }) },
+                .combinedClickable(enabled = opens(entry), onClick = onOpen, onLongClick = onAskRemove)
+                .semantics { customActions = listOf(CustomAccessibilityAction(s.appHistoryDelete) { onAskRemove(); true }) },
         )
     }
 }
 
-/** A verdict in select mode: a tap picks it instead of opening it. */
+/** [selected] is null outside select mode, where the row has no check circle. */
 @Composable
-private fun SelectableRow(item: SavedVerdict, selected: Boolean, onToggle: () -> Unit) {
-    val s = LocalStrings.current
-    HistoryRow(
-        item,
+private fun EntryRow(entry: HistoryEntry, now: Long, interaction: Modifier, selected: Boolean? = null) {
+    when (entry) {
+        is HistoryEntry.Account -> AccountRow(entry.item, now, interaction, selected)
+        is HistoryEntry.Phone -> PhoneRow(entry.verdict, interaction, selected)
+    }
+}
+
+@Composable
+private fun RowFrame(
+    key: String,
+    interaction: Modifier,
+    selected: Boolean?,
+    dot: Color,
+    muted: Boolean = false,
+    content: @Composable () -> Unit,
+) {
+    Row(
         Modifier
-            .toggleable(value = selected, role = Role.Checkbox, onValueChange = { onToggle() })
-            .semantics { stateDescription = if (selected) s.appHistoryRowSelected else s.appHistoryRowNotSelected },
-        selected = selected,
+            .fillMaxWidth()
+            .clip(JudgeShapes.card)
+            .background(if (selected == true) Palette.terraTint else if (muted) Palette.ivory2 else Palette.paper)
+            .border(1.dp, if (selected == true) Palette.terra else Palette.line, JudgeShapes.card)
+            .then(interaction)
+            .testTag(HistoryTags.row(key))
+            .padding(16.dp),
+        horizontalArrangement = Arrangement.spacedBy(14.dp),
+    ) {
+        if (selected != null) SelectCircle(selected, Modifier.align(Alignment.CenterVertically))
+        Box(Modifier.padding(top = 4.dp).size(14.dp).clip(CircleShape).background(dot))
+        Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) { content() }
+    }
+}
+
+@Composable
+private fun AccountRow(item: HistoryItem, now: Long, interaction: Modifier, selected: Boolean?) {
+    val s = LocalStrings.current
+    val lang = LocalLang.current
+    val sides = LocalSides.current
+    val title = remember(item, lang) { HistoryLabels.title(item, s, lang) }
+    val status = HistoryLabels.status(item, s, now)
+    val muted = HistoryLabels.muted(item, now)
+    val dot = when (HistoryLabels.tone(item, now)) {
+        HistoryLabels.Tone.YOURS -> sides.mine.ink
+        HistoryLabels.Tone.THEIRS -> sides.theirs.ink
+        HistoryLabels.Tone.NEUTRAL -> Palette.ink
+        HistoryLabels.Tone.THINKING -> Palette.stone
+        HistoryLabels.Tone.WAITING -> Palette.terra
+        HistoryLabels.Tone.ATTENTION -> Palette.danger
+        HistoryLabels.Tone.MUTED -> Palette.muted
+    }
+    val meta = (listOfNotNull(parseIso(item.at)?.let { formatDate(it, lang) }) + HistoryLabels.tags(item, s)).joinToString(" · ")
+    RowFrame(item.key, interaction, selected, dot, muted) {
+        if (status != null || item.yourMove) {
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                if (status != null) {
+                    Text(
+                        status,
+                        style = JudgeType.slotTitle.copy(fontSize = JudgeType.slotTitle.fontSize * 1.1f, color = if (muted) Palette.muted else Palette.ink),
+                        modifier = Modifier.weight(1f, fill = false),
+                    )
+                }
+                if (item.yourMove) YourMove(s.historyYourMove)
+            }
+        }
+        Text(title, style = JudgeType.headline.copy(color = if (muted) Palette.muted else Palette.ink2), maxLines = 2, overflow = TextOverflow.Ellipsis)
+        if (meta.isNotEmpty()) Text(meta, style = JudgeType.footnote)
+    }
+}
+
+/** "Your turn": something waits on the viewer. */
+@Composable
+private fun YourMove(text: String) {
+    Text(
+        text,
+        style = JudgeType.small.copy(fontSize = 12.sp, color = Palette.terraInk),
+        modifier = Modifier
+            .clip(JudgeShapes.chip)
+            .background(Palette.terraTint)
+            .padding(horizontal = 9.dp, vertical = 3.dp),
     )
 }
 
-/** [selected] is null outside select mode, where the row has no check circle. */
 @Composable
-private fun HistoryRow(item: SavedVerdict, interaction: Modifier, selected: Boolean? = null) {
+private fun PhoneRow(item: SavedVerdict, interaction: Modifier, selected: Boolean?) {
     val s = LocalStrings.current
     val lang = LocalLang.current
     val result = item.original.result
@@ -341,35 +443,22 @@ private fun HistoryRow(item: SavedVerdict, interaction: Modifier, selected: Bool
     val label = VerdictDisplay.verdictLabel(result, parties, s)
     val shown = item.translations[lang]?.result ?: result
     val headline = remember(shown, item.nameMap, item.lang) { RestoreNames.headline(shown, item.nameMap, item.lang) }
-    val date = remember(item.createdAt, lang) {
-        DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM).withLocale(lang.locale)
-            .format(Instant.ofEpochMilli(item.createdAt).atZone(ZoneId.systemDefault()))
-    }
-    val sealColor = when (VerdictDisplay.sealOf(result)) {
+    val date = remember(item.createdAt, lang) { formatDate(item.createdAt, lang) }
+    val dot = when (VerdictDisplay.sealOf(result)) {
         SealSide.A -> LocalSides.current.a.ink
         SealSide.B -> LocalSides.current.b.ink
         SealSide.NONE -> Palette.ink
     }
-    Row(
-        Modifier
-            .fillMaxWidth()
-            .clip(JudgeShapes.card)
-            .background(if (selected == true) Palette.terraTint else Palette.paper)
-            .border(1.dp, if (selected == true) Palette.terra else Palette.line, JudgeShapes.card)
-            .then(interaction)
-            .testTag(HistoryTags.row(item.id))
-            .padding(16.dp),
-        horizontalArrangement = Arrangement.spacedBy(14.dp),
-    ) {
-        if (selected != null) SelectCircle(selected, Modifier.align(Alignment.CenterVertically))
-        Box(Modifier.padding(top = 4.dp).size(14.dp).clip(CircleShape).background(sealColor))
-        Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
-            Text(label, style = JudgeType.slotTitle.copy(fontSize = JudgeType.slotTitle.fontSize * 1.1f))
-            Text(headline, style = JudgeType.headline, maxLines = 2, overflow = TextOverflow.Ellipsis)
-            Text(date, style = JudgeType.footnote)
-        }
+    RowFrame("v:${item.id}", interaction, selected, dot) {
+        Text(label, style = JudgeType.slotTitle.copy(fontSize = JudgeType.slotTitle.fontSize * 1.1f))
+        Text(headline, style = JudgeType.headline, maxLines = 2, overflow = TextOverflow.Ellipsis)
+        Text("$date · ${s.appHistoryPhoneOnly}", style = JudgeType.footnote)
     }
 }
+
+private fun formatDate(epochMs: Long, lang: AppLang): String =
+    DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM).withLocale(lang.locale)
+        .format(Instant.ofEpochMilli(epochMs).atZone(ZoneId.systemDefault()))
 
 @Composable
 private fun SelectCircle(selected: Boolean, modifier: Modifier = Modifier) {
@@ -384,7 +473,7 @@ private fun SelectCircle(selected: Boolean, modifier: Modifier = Modifier) {
     }
 }
 
-/** Select mode's top bar: leave it, the count, pick or drop every verdict, delete. */
+/** Select mode's top bar: leave it, the count, pick or drop every row, delete. */
 @Composable
 private fun SelectBar(count: Int, allSelected: Boolean, onCancel: () -> Unit, onToggleAll: () -> Unit, onDelete: () -> Unit) {
     val s = LocalStrings.current

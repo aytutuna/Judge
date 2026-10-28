@@ -60,16 +60,19 @@ object PartyNames {
 
     private fun startsUpper(s: String): Boolean = STARTS_UPPER.matcher(s).find()
 
-    /** Label letter ("A", "B", "C"...) -> who it stands for (resolveParties). */
-    fun resolveParties(nameMap: List<NameMapping>?, selfLang: AppLang): Map<String, Party> {
+    /**
+     * Label letter ("A", "B", "C"...) -> who it stands for (resolveParties).
+     * [selfParty] is the narrator's slot: "B" for the side that answered a case.
+     */
+    fun resolveParties(nameMap: List<NameMapping>?, selfLang: AppLang, selfParty: String = "A"): Map<String, Party> {
         val parties = LinkedHashMap<String, Party>()
         for (m in nameMap.orEmpty()) {
             val letter = labelLetter(m.replacement) ?: continue
             val name = bareName(m.original)
             if (name.isEmpty()) continue
             val current = parties[letter]
-            if (letter == "A" && isSelfOriginal(name, selfLang)) {
-                parties["A"] = Party(name, self = true)
+            if (letter == selfParty && isSelfOriginal(name, selfLang)) {
+                parties[letter] = Party(name, self = true)
             } else if (current == null || (!current.self && !startsUpper(current.name) && startsUpper(name))) {
                 parties[letter] = Party(name, self = false)
             }

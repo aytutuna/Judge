@@ -28,7 +28,10 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
 import androidx.lifecycle.createSavedStateHandle
@@ -48,13 +51,13 @@ import com.okjudge.judge.i18n.ProvideLang
 import com.okjudge.judge.i18n.Strings
 import com.okjudge.judge.i18n.deviceLanguageTags
 import com.okjudge.judge.ui.components.JudgeIcons
+import com.okjudge.judge.ui.history.HistoryEntry
 import com.okjudge.judge.ui.history.HistoryScreen
 import com.okjudge.judge.ui.history.HistoryViewModel
 import com.okjudge.judge.ui.home.HomeScreen
 import com.okjudge.judge.ui.home.HomeViewModel
 import com.okjudge.judge.ui.home.Submitted
 import com.okjudge.judge.ui.cases.CaseActions
-import com.okjudge.judge.ui.cases.CaseListViewModel
 import com.okjudge.judge.ui.cases.CaseLoadStatus
 import com.okjudge.judge.ui.cases.CaseScreen
 import com.okjudge.judge.ui.cases.CaseViewModel
@@ -63,6 +66,7 @@ import com.okjudge.judge.ui.verdict.shareUrl
 import com.okjudge.judge.ui.verdict.shareVerdict
 import android.content.Intent
 import android.net.Uri
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import com.okjudge.judge.ui.premium.ClarifyScreen
@@ -367,27 +371,52 @@ fun JudgeRoot(container: AppContainer, links: StateFlow<Uri?> = MutableStateFlow
                             )
                         }
                         entry<HistoryKey> {
-                            val vm = viewModel { HistoryViewModel(container.history) }
-                            val items by vm.items.collectAsStateWithLifecycle()
-                            val accountState by account.state.collectAsStateWithLifecycle()
                             val providers by account.providers.collectAsStateWithLifecycle()
-                            val config = (providers as? Account.Providers.Ready)?.config
-                            val casesOn = accountState is Account.State.SignedIn && config?.features?.cases == true
-                            val cases = if (casesOn) {
-                                val listVm = viewModel { CaseListViewModel(container.api) }
-                                LaunchedEffect(Unit) { listVm.reload() }
-                                listVm.state.collectAsStateWithLifecycle().value to listVm
-                            } else {
-                                null
+                            val historyOn = (providers as? Account.Providers.Ready)?.config?.features?.history == true
+                            val vm = viewModel {
+                                HistoryViewModel(
+                                    container.history, container.api, container.historyUser,
+                                    syncOn = { (account.providers.value as? Account.Providers.Ready)?.config?.features?.history == true },
+                                )
+                            }
+                            val entries by vm.entries.collectAsStateWithLifecycle()
+                            val paging by vm.paging.collectAsStateWithLifecycle()
+                            val notice by vm.notice.collectAsStateWithLifecycle()
+                            val thinking = entries.orEmpty().any { (it as? HistoryEntry.Account)?.item?.historyState?.thinking == true }
+                            val lifecycle = LocalLifecycleOwner.current.lifecycle
+                            LaunchedEffect(historyOn) { vm.refresh() }
+                            // While the judges work on a row, the list is read again now and then.
+                            LaunchedEffect(thinking, historyOn) {
+                                if (!thinking || !historyOn) return@LaunchedEffect
+                                lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                                    while (true) {
+                                        delay(HistoryViewModel.POLL_MS)
+                                        vm.refresh(force = true)
+                                    }
+                                }
                             }
                             HistoryScreen(
-                                items = items,
-                                onOpen = { id -> backStack.add(VerdictKey(id, fresh = false)) },
-                                onDelete = vm::delete,
+                                entries = entries,
+                                onOpen = { e ->
+                                    when (e) {
+                                        is HistoryEntry.Phone -> backStack.add(VerdictKey(e.verdict.id, fresh = false))
+                                        is HistoryEntry.Account -> {
+                                            val item = e.item
+                                            when {
+                                                !item.isCase -> vm.openVerdict(item) { id -> backStack.add(VerdictKey(id, fresh = false)) }
+                                                // Answering is done on the website: the case opens there too.
+                                                item.isRespondent -> item.inviteToken?.let { openLink(context, "${container.config.shareBaseUrl.trimEnd('/')}/r/$it") }
+                                                else -> backStack.add(CaseKey(item.id))
+                                            }
+                                        }
+                                    }
+                                },
+                                onRemove = vm::remove,
                                 onNew = onNew,
-                                cases = cases?.first,
-                                onOpenCase = { id -> backStack.add(CaseKey(id)) },
-                                onRetryCases = { cases?.second?.reload() },
+                                paging = paging,
+                                notice = notice,
+                                onLoadMore = vm::loadMore,
+                                onRetry = { vm.refresh(force = true) },
                             )
                         }
                         entry<CaseKey> { key ->
