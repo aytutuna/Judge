@@ -4,9 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.SemanticsActions
@@ -50,8 +48,6 @@ import com.okjudge.judge.core.model.Features
 import com.okjudge.judge.core.model.PricingInfo
 import com.okjudge.judge.core.model.VerdictOutcome
 import com.okjudge.judge.core.model.WireJson
-import com.okjudge.judge.core.premium.Tier
-import com.okjudge.judge.core.premium.TierAvailability
 import com.okjudge.judge.ui.premium.ClarifyScreen
 import com.okjudge.judge.ui.premium.PricingScreen
 import com.okjudge.judge.ui.premium.StoreUi
@@ -264,25 +260,23 @@ class ScreenshotsTest {
     private fun me(name: String): MeResponse =
         WireJson.json.decodeFromString(MeResponse.serializer(), Fixtures.verdicts["me"]!!.jsonObject[name].toString())
 
-    private fun premiumHome(lang: AppLang, meName: String, availability: TierAvailability, evidence: EvidenceState = EvidenceState(max = 3)) =
+    private fun premiumHome(lang: AppLang, meName: String, evidence: EvidenceState = EvidenceState(max = 3)) =
         homeState(lang).copy(
-            tierChoice = Tier.PREMIUM,
-            availability = availability,
-            signedIn = availability != TierAvailability.SIGNED_OUT,
+            signedIn = true,
             entitlement = me(meName).entitlement,
             features = Features(cases = true, evidence = true),
             evidence = evidence,
         )
 
     @Test
-    fun tier_lockedFairUse_en() = capture("tier_locked_fair_use_en", tall = true) {
-        Themed(AppLang.EN) { HomeScreen(premiumHome(AppLang.EN, "fair_use", TierAvailability.LOCKED), {}, {}, {}, {}, {}, {}) }
+    fun home_noVerdictsLeft_en() = capture("home_balance_none_en", tall = true) {
+        Themed(AppLang.EN) { HomeScreen(premiumHome(AppLang.EN, "fair_use"), {}, {}, {}, {}, {}, {}) }
     }
 
     @Test
-    fun tier_availablePremium_en() = capture("tier_available_premium_en", tall = true) {
+    fun home_monthlyLeft_en() = capture("home_balance_monthly_en", tall = true) {
         Themed(AppLang.EN) {
-            HomeScreen(premiumHome(AppLang.EN, "subscriber", TierAvailability.AVAILABLE).copy(features = Features()), {}, {}, {}, {}, {}, {})
+            HomeScreen(premiumHome(AppLang.EN, "subscriber").copy(features = Features()), {}, {}, {}, {}, {}, {})
         }
     }
 
@@ -297,7 +291,7 @@ class ScreenshotsTest {
             EvidenceItem("ev3", 3, EvidenceStatus.UNREADABLE),
         )
         Themed(AppLang.EN) {
-            HomeScreen(premiumHome(AppLang.EN, "credits7", TierAvailability.AVAILABLE, EvidenceState(items, max = 3)), {}, {}, {}, {}, {}, {})
+            HomeScreen(premiumHome(AppLang.EN, "credits7", EvidenceState(items, max = 3)), {}, {}, {}, {}, {}, {})
         }
     }
 
@@ -315,14 +309,14 @@ class ScreenshotsTest {
     @Test
     fun pricing_en() = capture("pricing_en", tall = true) {
         Themed(AppLang.EN) {
-            PricingScreen(PricingInfo(), true, Features(true, true), true, true, me("credits7").entitlement, {}, {}, {})
+            PricingScreen(PricingInfo(), Features(true, true), true, true, me("credits7").entitlement, {}, {}, {})
         }
     }
 
     @Test
     fun pricing_tr() = capture("pricing_tr", tall = true) {
         Themed(AppLang.TR) {
-            PricingScreen(PricingInfo(), true, Features(true, true), false, true, null, null, {}, {})
+            PricingScreen(PricingInfo(), Features(true, true), false, true, null, null, {}, {})
         }
     }
 
@@ -342,7 +336,7 @@ class ScreenshotsTest {
     fun pricing_store_tr() = capture("pricing_store_tr", tall = true) {
         Themed(AppLang.TR) {
             PricingScreen(
-                PricingInfo(purchasesEnabled = true), true, Features(true, true), true, true, me("credits7").entitlement, {}, {}, {},
+                PricingInfo(purchasesEnabled = true), Features(true, true), true, true, me("credits7").entitlement, {}, {}, {},
                 store = storeUi(notice = PurchaseController.Notice.ARRIVING, buying = null),
             )
         }
@@ -352,7 +346,7 @@ class ScreenshotsTest {
     fun pricing_store_buying_en() = capture("pricing_store_buying_en", tall = true) {
         Themed(AppLang.EN) {
             PricingScreen(
-                PricingInfo(purchasesEnabled = true), true, Features(true, true), true, true, me("credits7").entitlement, {}, {}, {},
+                PricingInfo(purchasesEnabled = true), Features(true, true), true, true, me("credits7").entitlement, {}, {}, {},
                 store = storeUi(notice = null, buying = "pack_10"),
             )
         }
@@ -525,7 +519,7 @@ class ScreenshotsTest {
     fun home_twoSides_en() = capture("home_two_sides_en", tall = true) {
         Themed(AppLang.EN) {
             HomeScreen(
-                premiumHome(AppLang.EN, "credits7", TierAvailability.AVAILABLE).copy(
+                premiumHome(AppLang.EN, "credits7").copy(
                     argument = "A hot dog is its own thing. Nobody orders a sandwich and expects one, and no menu lists it under sandwiches.",
                     otherSide = "It's a filling inside sliced bread. That's a sandwich, end of story.",
                     suggestedName = "Alex",
@@ -533,13 +527,6 @@ class ScreenshotsTest {
                 ),
                 {}, {}, {}, {}, {}, {},
             )
-        }
-    }
-
-    @Test
-    fun brandMark_icon() = capture("brand_mark") {
-        Themed(AppLang.EN) {
-            Box(Modifier.width(240.dp).fillMaxWidth()) { com.okjudge.judge.ui.components.BrandMark(200.dp, Modifier.padding(20.dp)) }
         }
     }
 }

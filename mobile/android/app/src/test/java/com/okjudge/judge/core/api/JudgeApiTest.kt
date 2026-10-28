@@ -64,9 +64,9 @@ class JudgeApiTest {
         assertNull(recorded.headers["Authorization"])
         assertNull(recorded.headers["Cookie"])
         val body = Json.parseToJsonElement(recorded.body!!.utf8()).jsonObject
-        assertEquals("free", body["tier"]!!.jsonPrimitive.content)
+        assertEquals("premium", body["tier"]!!.jsonPrimitive.content)
         assertEquals("balanced", body["framework"]!!.jsonObject["preset"]!!.jsonPrimitive.content)
-        assertTrue("no null fields on the wire", "turnstileToken" !in body && "clarifications" !in body)
+        assertTrue("no null fields on the wire", "clarifications" !in body && "evidence" !in body)
     }
 
     @Test

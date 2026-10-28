@@ -1,7 +1,6 @@
 package com.okjudge.judge.ui.components
 
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -16,20 +15,6 @@ import androidx.compose.ui.graphics.drawscope.translate
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.okjudge.judge.ui.theme.Palette
-
-/** The Judge mark (components/BrandMark.tsx): 28:20, tipped toward the terracotta sphere. */
-@Composable
-fun BrandMark(width: Dp, modifier: Modifier = Modifier) {
-    Canvas(modifier.size(width, width * 20f / 28f)) {
-        val k = size.width / 28f
-        scale(k, k, pivot = Offset.Zero) {
-            drawLine(Palette.ink, Offset(2.5f, 12.6f), Offset(25.5f, 9.4f), strokeWidth = 2f, cap = StrokeCap.Round)
-            drawCircle(Palette.terra, radius = 3.9f, center = Offset(6.4f, 8.1f))
-            drawCircle(Palette.sage, radius = 3.9f, center = Offset(21.6f, 6f))
-            drawPath(triangle(14f, 11.4f, 10.6f, 18.6f, 17.4f, 18.6f), Palette.ink)
-        }
-    }
-}
 
 /**
  * The judging balance: the mark redrawn as a level beam on the ink pivot,

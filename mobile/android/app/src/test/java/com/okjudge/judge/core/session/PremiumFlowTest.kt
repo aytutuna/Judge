@@ -3,7 +3,6 @@ package com.okjudge.judge.core.session
 import com.okjudge.judge.FakeHistory
 import com.okjudge.judge.Fixtures
 import com.okjudge.judge.core.api.JudgeApi
-import com.okjudge.judge.core.api.NoBotCheck
 import com.okjudge.judge.core.api.PollPolicy
 import com.okjudge.judge.core.auth.Routes
 import com.okjudge.judge.core.display.Preset
@@ -27,7 +26,6 @@ import mockwebserver3.MockWebServer
 import okhttp3.OkHttpClient
 import org.junit.After
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Before
@@ -63,7 +61,7 @@ class PremiumFlowTest {
 
     private fun flow() = VerdictFlow(
         JudgeApi(server.url("/").toString(), OkHttpClient(), "ua", pollPolicy = fastPolls),
-        NoBotCheck, history, scope,
+        history, scope,
         clock = { now },
         onEntitlement = { synchronized(applied) { applied += it } },
         refreshAccount = { refreshes.incrementAndGet() },
@@ -107,15 +105,20 @@ class PremiumFlowTest {
 
     @Test
     fun clarify_accountAndInputErrors_stopOnTheForm_andRefreshTheAccount() = runBlocking {
-        for (code in listOf("no_credits", "signin_required", "fair_use")) {
+        val opens = mapOf(
+            "no_credits" to VerdictFlow.Nav.Pricing,
+            "fair_use" to VerdictFlow.Nav.Pricing,
+            "signin_required" to VerdictFlow.Nav.SignIn,
+        )
+        for ((code, nav) in opens) {
             val (status, json) = asyncError(code)
             routes.on(CLARIFY, Routes.json(status, json))
             val f = flow()
             val before = refreshes.get()
             assertTrue(f.startPremium(argument, Preset.BALANCED, AppLang.EN, emptyList()))
             f.stepIs { it == VerdictFlow.PremiumStep.None }
-            waitFor { f.lastError.value != null }
-            assertEquals(code, (f.lastError.value as UiError.Api).code)
+            assertEquals(code, nav, withTimeout(10_000) { f.navigation.first() })
+            assertNull("the screen answers it, not a banner", f.lastError.value)
             assertEquals(VerdictFlow.State.Idle, f.state.value)
             waitFor { refreshes.get() > before }
         }
@@ -144,7 +147,6 @@ class PremiumFlowTest {
             val sent = body(VERDICT, i)
             assertEquals("premium", sent["tier"]!!.jsonPrimitive.content)
             assertNull("no clarifications without questions", sent["clarifications"])
-            assertNull("premium skips the bot check", sent["turnstileToken"])
             assertNull(f.lastError.value)
         }
     }
@@ -272,7 +274,7 @@ class PremiumFlowTest {
     }
 
     @Test
-    fun verdict_402_stopsWithTheErrorAndRefreshesTheAccount() = runBlocking {
+    fun verdict_402_opensPricingAndRefreshesTheAccount() = runBlocking {
         val (status, json) = asyncError("no_credits")
         routes.on(CLARIFY, Routes.json(200, clarify("none")))
         routes.on(VERDICT, Routes.json(status, json))
@@ -281,7 +283,8 @@ class PremiumFlowTest {
         val failed = f.settled() as VerdictFlow.State.Failed
         assertEquals("no_credits", (failed.error as UiError.Api).code)
         waitFor { refreshes.get() >= 1 }
-        assertNotNull(f.lastError.value)
+        withTimeout(10_000) { f.navigation.first { it == VerdictFlow.Nav.Pricing } }
+        assertNull(f.lastError.value)
     }
 
     @Test

@@ -21,5 +21,6 @@ Drafts for the App Store and Google Play listings of Judge (okjudge.com).
 - Never name the AI vendor or model: say "AI judges" or "an outside AI service".
 - The app requires sign-in (Apple, Google or an emailed code).
 - No prices in the copy: the stores show them. The monthly plan's cap is stated as "35 verdicts a month" (the number from `lib/pricing.ts`).
+- There is no free tier: a new account's first verdict is free, then credit packs or the monthly plan. Give the reviewer account credits before submitting.
 - No legal advice claims.
 - Source of facts: `lib/i18n.ts`, `lib/pricing.ts` and the privacy page in the web repo. Update these files when that copy changes.

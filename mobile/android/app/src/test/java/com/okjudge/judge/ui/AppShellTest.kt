@@ -2,16 +2,20 @@ package com.okjudge.judge.ui
 
 import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import androidx.compose.ui.test.onAllNodesWithTag
 import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
+import androidx.compose.ui.semantics.SemanticsProperties
 import com.okjudge.judge.MainActivity
+import com.okjudge.judge.core.display.Examples
 import com.okjudge.judge.i18n.AppLang
 import com.okjudge.judge.ui.components.TopBarTags
 import com.okjudge.judge.ui.history.HistoryTags
 import com.okjudge.judge.ui.home.HomeTags
+import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -32,7 +36,7 @@ class AppShellTest {
     fun tabs_andLanguageToggle() {
         val en = UiTestSupport.s(AppLang.EN)
         val tr = UiTestSupport.s(AppLang.TR)
-        awaitText(en.appHomeTitle)
+        awaitText(en.appHomeExample)
         compose.onNodeWithTag(HomeTags.SUBMIT).assertExists()
 
         compose.onNodeWithText(en.appTabHistory).performClick()
@@ -45,13 +49,13 @@ class AppShellTest {
         awaitText(tr.appTabSettings)
 
         compose.onNodeWithText(tr.appTabNew).performClick()
-        awaitText(tr.appHomeTitle)
+        awaitText(tr.appHomeExample)
     }
 
     @Test
     fun newButton_clearsTheDraft_andComesBackFromOtherTabs() {
         val en = UiTestSupport.s(AppLang.EN)
-        awaitText(en.appHomeTitle)
+        awaitText(en.appHomeExample)
         compose.onNodeWithTag(TopBarTags.NEW).assertDoesNotExist()
         compose.onNodeWithTag(HomeTags.INPUT).performTextInput("My roommate never does the dishes")
         compose.onNodeWithTag(TopBarTags.NEW).performClick()
@@ -62,7 +66,29 @@ class AppShellTest {
         compose.onNodeWithText(en.appTabHistory).performClick()
         awaitText(en.appHistoryEmpty)
         compose.onNodeWithTag(TopBarTags.NEW).performClick()
-        awaitText(en.appHomeTitle)
+        awaitText(en.appHomeExample)
         compose.onNodeWithTag(HistoryTags.EMPTY).assertDoesNotExist()
+    }
+
+    private fun typed(tag: String) = compose.onNodeWithTag(tag).fetchSemanticsNode().config[SemanticsProperties.EditableText].text
+
+    @Test
+    fun example_fillsBothSides_andTheNewButtonClearsIt() {
+        compose.waitUntil(5_000) { compose.onAllNodesWithTag(HomeTags.EXAMPLE).fetchSemanticsNodes().isNotEmpty() }
+        compose.onNodeWithTag(HomeTags.INPUT).performTextInput("My roommate never does the dishes")
+        compose.onNodeWithTag(HomeTags.EXAMPLE).performClick()
+        compose.waitForIdle()
+        // The language another test picked may still be set.
+        val all = AppLang.entries.flatMap { lang -> Examples.ids.map { Examples.of(it, UiTestSupport.s(lang)) } }
+        val example = all.single { it.mine == typed(HomeTags.INPUT) }
+        assertEquals(example.theirs, typed(HomeTags.OTHER))
+        assertEquals(example.theirName, typed(HomeTags.OTHER_NAME))
+        assertEquals(example.myName, typed(HomeTags.NAME))
+
+        compose.onNodeWithTag(TopBarTags.NEW).performClick()
+        compose.waitForIdle()
+        assertEquals("", typed(HomeTags.INPUT))
+        assertEquals("", typed(HomeTags.OTHER))
+        assertEquals("", typed(HomeTags.NAME))
     }
 }

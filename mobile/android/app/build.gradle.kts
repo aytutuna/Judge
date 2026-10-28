@@ -78,7 +78,6 @@ android {
             resValue("string", "launcher_name", "Judge (debug)")
             buildConfigField("String", "API_BASE_URL", judgeProp("apiBaseUrl", productionApi))
             buildConfigField("String", "SHARE_BASE_URL", judgeProp("shareBaseUrl"))
-            buildConfigField("String", "TURNSTILE_SITE_KEY", judgeProp("turnstileSiteKey"))
         }
         release {
             if (canSignRelease) signingConfig = signingConfigs.getByName("release")
@@ -88,7 +87,6 @@ android {
             resValue("string", "launcher_name", "Judge")
             buildConfigField("String", "API_BASE_URL", "\"$productionApi\"")
             buildConfigField("String", "SHARE_BASE_URL", "\"$productionApi\"")
-            buildConfigField("String", "TURNSTILE_SITE_KEY", judgeProp("turnstileSiteKey"))
         }
     }
 

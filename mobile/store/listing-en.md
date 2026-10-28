@@ -61,7 +61,7 @@ Every verdict gets the full treatment:
 - Up to two quick questions when a key fact is missing
 - Screenshot evidence, such as a chat or a receipt, read and then thrown away
 - Add context after a verdict and have it re-judged
-Your first verdict is free with a new account. After that, get verdicts in packs, or with the monthly plan, which includes 35 verdicts a month.
+Your first verdict is free with a new account. After that, get verdicts in packs, or with the monthly plan, which includes 35 verdicts a month. Two-sided cases use one verdict too.
 
 YOUR PRIVACY
 - Sign in with Apple, Google or an emailed code.

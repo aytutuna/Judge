@@ -82,7 +82,7 @@ class WireJsonTest {
             VerdictRequest.serializer(),
             VerdictRequest(argument = "abc", framework = FrameworkChoice("fairness"), lang = "tr"),
         )
-        assertEquals("""{"argument":"abc","framework":{"preset":"fairness"},"lang":"tr","tier":"free"}""", json)
+        assertEquals("""{"argument":"abc","framework":{"preset":"fairness"},"lang":"tr","tier":"premium"}""", json)
     }
 
     @Test

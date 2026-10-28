@@ -212,10 +212,9 @@ data class VerdictRequest(
     val argument: String,
     val framework: FrameworkChoice = FrameworkChoice(),
     val lang: String = "en",
-    val tier: String = "free",
+    val tier: String = "premium",
     val clarifications: List<Clarification>? = null,
     val evidence: List<String>? = null,
-    val turnstileToken: String? = null,
 )
 
 /** POST /api/v1/clarify. */

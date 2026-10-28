@@ -2,10 +2,12 @@ package com.okjudge.judge.core.premium
 
 import com.okjudge.judge.Fixtures
 import com.okjudge.judge.core.display.Errors
+import com.okjudge.judge.core.display.UiError
 import com.okjudge.judge.core.model.Entitlement
 import com.okjudge.judge.core.model.MeResponse
 import com.okjudge.judge.core.model.PricingInfo
 import com.okjudge.judge.core.model.ServerConfig
+import com.okjudge.judge.core.model.SubscriptionView
 import com.okjudge.judge.core.model.WireJson
 import com.okjudge.judge.i18n.AppLang
 import com.okjudge.judge.ui.UiTestSupport
@@ -17,10 +19,8 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
-import java.time.ZoneOffset
-import java.util.TimeZone
 
-/** lib/tier.ts, the tier note, prices and the new error codes, against the fixtures. */
+/** lib/tier.ts, the balance line, prices and the new error codes, against the fixtures. */
 @RunWith(RobolectricTestRunner::class)
 @Config(sdk = [36])
 class TierTest {
@@ -33,23 +33,10 @@ class TierTest {
     private fun me(name: String): MeResponse =
         WireJson.json.decodeFromString(MeResponse.serializer(), Fixtures.verdicts["me"]!!.jsonObject[name].toString())
 
-    private fun availability(config: ServerConfig?, me: MeResponse) =
-        Tiers.availability(config, signedIn = me.user != null, entitlement = me.entitlement)
-
     @Test
-    fun availability_followsConfigAndEntitlement() {
+    fun config_carriesPricingAndFeatures() {
         val full = config("full")
-        assertEquals(TierAvailability.HIDDEN, availability(null, me("credits7")))
-        assertEquals(TierAvailability.HIDDEN, availability(config("minimal"), me("credits7")))
-        assertEquals(TierAvailability.SIGNED_OUT, availability(full, me("signed_out")))
-        assertEquals(TierAvailability.LOCKED, availability(full, me("free")))
-        assertEquals(TierAvailability.LOCKED, availability(full, me("fair_use")))
-        assertEquals(TierAvailability.LOCKED, availability(full, me("no_credits")))
-        assertEquals(TierAvailability.AVAILABLE, availability(full, me("credits7")))
-        assertEquals(TierAvailability.AVAILABLE, availability(full, me("subscriber")))
-        val noSignIn = full.copy(signIn = full.signIn.copy(google = false, emailCode = false, email = false))
-        assertEquals(TierAvailability.HIDDEN, availability(noSignIn, me("signed_out")))
-        assertEquals("full config carries pricing and features", true, full.features.cases && full.features.evidence)
+        assertEquals(true, full.features.cases && full.features.evidence)
         assertEquals(listOf("pack_1", "pack_10"), full.pricing.packs.map { it.id })
         assertEquals(listOf(1.0, 7.5), full.pricing.packs.map { it.priceUsd })
         assertEquals(35, full.pricing.monthly.fairUseCap)
@@ -57,38 +44,28 @@ class TierTest {
     }
 
     @Test
-    fun effectiveTier_isPremiumOnlyWhenAvailableAndChosen() {
-        assertEquals(Tier.PREMIUM, Tiers.effective(TierAvailability.AVAILABLE, Tier.PREMIUM))
-        assertEquals(Tier.FREE, Tiers.effective(TierAvailability.AVAILABLE, Tier.FREE))
-        for (a in listOf(TierAvailability.HIDDEN, TierAvailability.SIGNED_OUT, TierAvailability.LOCKED)) {
-            assertEquals(Tier.FREE, Tiers.effective(a, Tier.PREMIUM))
-        }
+    fun balance_monthlyFirst_thenCredits_thenNone() {
+        val sub = me("subscriber").entitlement!!.subscription!!
+        assertEquals(en.appBalanceMonthly("23", sub.cap.toString()), Tiers.balance(en, me("subscriber").entitlement))
+        assertEquals("7 verdicts left", Tiers.balance(en, me("credits7").entitlement))
+        assertEquals("1 verdict left", Tiers.balance(en, Entitlement(canUsePremium = true, credits = 1)))
+        assertEquals("12 of 35 left this month", Tiers.balance(en, Entitlement(subscription = SubscriptionView(used = 23, cap = 35))))
+        assertEquals(en.appBalanceNone, Tiers.balance(en, me("fair_use").entitlement))
+        assertEquals(en.appBalanceNone, Tiers.balance(en, me("no_credits").entitlement))
+        assertNull("still loading: no line", Tiers.balance(en, null))
+        assertEquals(tr.appBalanceLeft(3), Tiers.balance(tr, Entitlement(credits = 3)))
     }
 
     @Test
-    fun notes_matchTheWeb() {
-        val tz = TimeZone.getDefault()
-        TimeZone.setDefault(TimeZone.getTimeZone(ZoneOffset.UTC))
-        try {
-            fun note(a: TierAvailability, v: Tier, m: String, nudged: Boolean = false) =
-                Tiers.note(en, AppLang.EN, a, v, me(m).entitlement, nudged)
-
-            assertNull(note(TierAvailability.SIGNED_OUT, Tier.FREE, "signed_out"))
-            assertEquals(TierNote("", NoteLink.SIGN_IN, en.tierSignInToUse), note(TierAvailability.SIGNED_OUT, Tier.FREE, "signed_out", nudged = true))
-            assertEquals(TierNote(en.tierFairUse("October 31"), NoteLink.PRICING, en.tierGetPremium), note(TierAvailability.LOCKED, Tier.FREE, "fair_use"))
-            assertEquals(TierNote(en.tierOutOfCredits, NoteLink.PRICING, en.tierGetPremium), note(TierAvailability.LOCKED, Tier.FREE, "no_credits"))
-            assertEquals(TierNote(en.tierInvite, NoteLink.PRICING, en.tierGetPremium), note(TierAvailability.LOCKED, Tier.FREE, "free"))
-            assertEquals(TierNote(en.tierFreeHint), note(TierAvailability.AVAILABLE, Tier.FREE, "credits7"))
-            assertEquals(TierNote("${en.tierPremiumHint} ${en.tierCreditsLeft(7)}"), note(TierAvailability.AVAILABLE, Tier.PREMIUM, "credits7"))
-            assertEquals(TierNote("${en.tierPremiumHint} ${en.tierMonthlyLeft("23")}"), note(TierAvailability.AVAILABLE, Tier.PREMIUM, "subscriber"))
-
-            val noDate = Entitlement(canUsePremium = false, blockedReason = "fair_use", resetsAt = null)
-            assertEquals(en.tierFairUseSoon, Tiers.note(en, AppLang.EN, TierAvailability.LOCKED, Tier.FREE, noDate, false)!!.text)
-            assertEquals(tr.tierFairUse("31 Ekim"), Tiers.note(tr, AppLang.TR, TierAvailability.LOCKED, Tier.FREE, me("fair_use").entitlement, false)!!.text)
-            assertNull("still loading: no line", Tiers.note(en, AppLang.EN, TierAvailability.LOCKED, Tier.FREE, null, false))
-        } finally {
-            TimeZone.setDefault(tz)
+    fun outOfUnits_andSignedOut_openAScreen() {
+        for (code in listOf("no_credits", "fair_use", "premium_required")) {
+            assertEquals(code, Errors.Opens.PRICING, Errors.opens(UiError.Api(code, 402)))
         }
+        assertEquals(Errors.Opens.SIGN_IN, Errors.opens(UiError.Api("sign_in_required", 401)))
+        assertEquals(Errors.Opens.SIGN_IN, Errors.opens(UiError.Api("signin_required", 401)))
+        assertNull(Errors.opens(UiError.Api("rate_limited", 429)))
+        assertNull(Errors.opens(UiError.Offline))
+        assertEquals(en.errorSigninRequired, Errors.apiErrorMessage(en, AppLang.EN, "sign_in_required", 401, null, null, "x"))
     }
 
     @Test
@@ -116,9 +93,7 @@ class TierTest {
             Tiers.premiumFeatureKeys(cases = true, evidence = true),
         )
         assertEquals(listOf("pricing.premium.f1", "pricing.premium.f2", "pricing.premium.f3", "pricing.premium.f5"), Tiers.premiumFeatureKeys(cases = false, evidence = true))
-        assertEquals(listOf("pricing.free.f1", "pricing.free.f2", "app.pricing.free.account"), Tiers.freeFeatureKeys(cases = false))
-        assertEquals("pricing.free.f4", Tiers.freeFeatureKeys(cases = true).last())
-        for (k in Tiers.premiumFeatureKeys(cases = true, evidence = true) + Tiers.freeFeatureKeys(cases = true)) {
+        for (k in Tiers.premiumFeatureKeys(cases = true, evidence = true)) {
             assert(en.text(k) != null) { "missing $k" }
         }
     }

@@ -121,7 +121,7 @@ class ScreensTest {
         home(AppLang.TR)
         // "Senin tarafın" must become "SENİN TARAFIN", not "SENIN TARAFIN".
         compose.onNodeWithText("SENİN TARAFIN").assertExists()
-        compose.onNodeWithText(UiTestSupport.s(AppLang.TR).appHomeTitle).assertExists()
+        compose.onNodeWithText(UiTestSupport.s(AppLang.TR).appHomeExample).assertExists()
     }
 
     @Test

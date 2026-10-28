@@ -4,7 +4,6 @@ import com.okjudge.judge.FakeHistory
 import com.okjudge.judge.Fixtures
 import com.okjudge.judge.core.api.ApiResult
 import com.okjudge.judge.core.api.JudgeApi
-import com.okjudge.judge.core.api.NoBotCheck
 import com.okjudge.judge.core.auth.Routes
 import com.okjudge.judge.core.cases.AppealArea
 import com.okjudge.judge.core.cases.CaseLogic
@@ -20,8 +19,6 @@ import com.okjudge.judge.core.model.Entitlement
 import com.okjudge.judge.core.model.Features
 import com.okjudge.judge.core.model.NameMapping
 import com.okjudge.judge.core.model.WireJson
-import com.okjudge.judge.core.premium.Tier
-import com.okjudge.judge.core.premium.TierAvailability
 import com.okjudge.judge.core.session.VerdictFlow
 import com.okjudge.judge.i18n.AppLang
 import com.okjudge.judge.ui.DeepLinks
@@ -168,13 +165,13 @@ class CaseFlowTest {
     fun create_postsTheOwnerSideWithAKey_keepsTheNames_andOpensTheCase() = runBlocking {
         routes.on(CREATE, Routes.json(201, cases["createResponse"].toString()))
         val flow = VerdictFlow(
-            api(), NoBotCheck, FakeHistory(), scope,
+            api(), FakeHistory(), scope,
             onEntitlement = { applied += it },
             refreshAccount = { refreshes += Unit },
             newKey = { "ck-${++keys}" },
             caseNames = names,
         )
-        assertTrue(flow.createCase("  Sam says a hot dog is a sandwich and I say it is not.  ", Preset.FAIRNESS, AppLang.TR, Tier.PREMIUM, listOf("e1"), " Ayşe "))
+        assertTrue(flow.createCase("  Sam says a hot dog is a sandwich and I say it is not.  ", Preset.FAIRNESS, AppLang.TR, listOf("e1"), " Ayşe "))
         assertEquals(VerdictFlow.Nav.Case(ID), withTimeout(5_000) { flow.navigation.first() })
         assertTrue("the form holds until the case screen takes over", flow.creating.value)
         assertFalse(flow.canStart())
@@ -194,39 +191,35 @@ class CaseFlowTest {
     }
 
     @Test
-    fun create_free_sendsTheFreeTier_andNoEvidence() = runBlocking {
+    fun create_keepsWhoItWaitsFor_andLeavesOutNoEvidence() = runBlocking {
         routes.on(CREATE, Routes.json(201, cases["createResponse"].toString()))
-        val flow = VerdictFlow(api(), NoBotCheck, FakeHistory(), scope, caseNames = names)
-        assertTrue(flow.createCase("Sam says a hot dog is a sandwich and I say it is not.", Preset.BALANCED, AppLang.EN, Tier.FREE, listOf("e1"), "Alex", " Sam "))
+        val flow = VerdictFlow(api(), FakeHistory(), scope, caseNames = names)
+        assertTrue(flow.createCase("Sam says a hot dog is a sandwich and I say it is not.", Preset.BALANCED, AppLang.EN, emptyList(), "Alex", " Sam "))
         assertEquals("the case screen is told who it waits for", VerdictFlow.Nav.Case(ID, "Sam"), withTimeout(5_000) { flow.navigation.first() })
         assertEquals("and keeps it for later visits", "Sam", names.otherName(ID))
         val body = bodyOf(CREATE)
-        assertEquals("free", body["tier"]!!.jsonPrimitive.content)
-        assertNull("evidence is Premium", body["evidence"])
+        assertEquals("premium", body["tier"]!!.jsonPrimitive.content)
+        assertNull(body["evidence"])
     }
 
     @Test
-    fun sendLink_needsASignInAndCases_notPremium_andAnEmptyOtherSide() {
-        val free = HomeUiState(argument = "Sam says a hot dog is a sandwich and I say it is not.", signedIn = true, features = Features(cases = true))
-        assertEquals(Tier.FREE, free.tier)
-        assertTrue(free.canSendLink)
-        assertFalse(free.copy(signedIn = false).canSendLink)
-        assertFalse(free.copy(features = Features()).canSendLink)
-        assertFalse("their side is already written here", free.copy(otherSide = "It is a sandwich.").canSendLink)
-        assertFalse("your side alone must be long enough", free.copy(argument = "Too short").canSendLink)
-        val premium = free.copy(tierChoice = Tier.PREMIUM, availability = TierAvailability.AVAILABLE)
-        assertEquals(Tier.PREMIUM, premium.tier)
-        assertTrue(premium.canSendLink)
+    fun sendLink_needsASignInAndCases_andAnEmptyOtherSide() {
+        val home = HomeUiState(argument = "Sam says a hot dog is a sandwich and I say it is not.", signedIn = true, features = Features(cases = true))
+        assertTrue(home.canSendLink)
+        assertFalse(home.copy(signedIn = false).canSendLink)
+        assertFalse(home.copy(features = Features()).canSendLink)
+        assertFalse("their side is already written here", home.copy(otherSide = "It is a sandwich.").canSendLink)
+        assertFalse("your side alone must be long enough", home.copy(argument = "Too short").canSendLink)
     }
 
     @Test
-    fun create_failure_staysOnHome_andAnAccountErrorRefreshes() = runBlocking {
+    fun create_outOfUnits_opensPricing_andRefreshesTheAccount() = runBlocking {
         val e = Fixtures.verdicts["asyncErrors"]!!.jsonObject["fair_use"]!!.jsonObject
         routes.on(CREATE, Routes.json(402, e["body"].toString()))
-        val flow = VerdictFlow(api(), NoBotCheck, FakeHistory(), scope, refreshAccount = { refreshes += Unit }, caseNames = names)
-        flow.createCase("Sam says a hot dog is a sandwich and I say it is not.", Preset.BALANCED, AppLang.EN, Tier.PREMIUM, emptyList(), "")
-        withTimeout(5_000) { flow.lastError.first { it != null } }
-        assertEquals("fair_use", (flow.lastError.value as UiError.Api).code)
+        val flow = VerdictFlow(api(), FakeHistory(), scope, refreshAccount = { refreshes += Unit }, caseNames = names)
+        flow.createCase("Sam says a hot dog is a sandwich and I say it is not.", Preset.BALANCED, AppLang.EN, emptyList(), "")
+        assertEquals(VerdictFlow.Nav.Pricing, withTimeout(5_000) { flow.navigation.first() })
+        assertNull(flow.lastError.value)
         assertFalse(flow.creating.value)
         withTimeout(5_000) { while (refreshes.isEmpty()) kotlinx.coroutines.delay(5) }
         assertNull("an empty name is left out", bodyOf(CREATE)["displayName"])

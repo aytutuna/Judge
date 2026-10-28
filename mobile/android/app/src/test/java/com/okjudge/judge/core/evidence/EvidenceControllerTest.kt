@@ -7,8 +7,6 @@ import com.okjudge.judge.core.model.EvidenceItemResult
 import com.okjudge.judge.core.model.EvidenceUploadResponse
 import com.okjudge.judge.core.model.Features
 import com.okjudge.judge.core.model.WireJson
-import com.okjudge.judge.core.premium.Tier
-import com.okjudge.judge.core.premium.TierAvailability
 import com.okjudge.judge.ui.home.HomeUiState
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.CoroutineScope
@@ -74,14 +72,13 @@ class EvidenceControllerTest {
         assertTrue(reading.busy)
         val home = HomeUiState(
             argument = "An argument that is clearly long enough to judge.",
-            tierChoice = Tier.PREMIUM,
-            availability = TierAvailability.AVAILABLE,
+            signedIn = true,
             features = Features(cases = true, evidence = true),
             evidence = reading,
         )
         assertTrue(home.evidenceOn)
         assertFalse("a screenshot still reading holds the button", home.canSubmit)
-        assertTrue("free ignores the picker", home.copy(tierChoice = Tier.FREE).canSubmit)
+        assertTrue("signed out there is no picker to wait for", home.copy(signedIn = false).canSubmit)
         gate.complete(ApiResult.Ok(okFor("t1")))
         val done = c.settled()
         assertTrue(home.copy(evidence = done).canSubmit)

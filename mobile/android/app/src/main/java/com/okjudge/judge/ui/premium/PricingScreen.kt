@@ -76,17 +76,16 @@ data class StoreUi(
 )
 
 /**
- * Free and Premium (components/account/PricingView.tsx): prices from
- * /api/v1/config (lib/pricing.ts until it answers), the signed-in plan, and
- * the buy buttons. With purchases on and the store ready ([store]) a button
- * shows the store's own price and buys that product; otherwise it stays
- * disabled ("Coming soon" while purchases are off). [premiumEnabled] is null
- * while /config is loading.
+ * The packs and the monthly plan (components/account/PricingView.tsx):
+ * prices from /api/v1/config (lib/pricing.ts until it answers), what the
+ * signed-in account has left, and the buy buttons. With purchases on and the
+ * store ready ([store]) a button shows the store's own price and buys that
+ * product; otherwise it stays disabled ("Coming soon" while purchases are off).
+ * [features] is null while /config is loading.
  */
 @Composable
 fun PricingScreen(
     pricing: PricingInfo,
-    premiumEnabled: Boolean?,
     features: Features?,
     signedIn: Boolean,
     signInOffered: Boolean,
@@ -117,11 +116,11 @@ fun PricingScreen(
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     Kicker(s.navPricing)
                     Text(
-                        s.pricingTitle,
+                        s.appPricingHeadline,
                         style = JudgeType.sectionTitle.copy(fontSize = JudgeType.sectionTitle.fontSize * 1.3f),
                         modifier = Modifier.semantics { heading() },
                     )
-                    Text(s.pricingLead, style = JudgeType.lead)
+                    Text(s.appPricingSub, style = JudgeType.lead)
                 }
 
                 if (signedIn && entitlement != null) {
@@ -136,12 +135,12 @@ fun PricingScreen(
                             .padding(horizontal = 16.dp, vertical = 12.dp),
                         verticalArrangement = Arrangement.spacedBy(2.dp),
                     ) {
-                        Text(
-                            "${s.accountPlan}: ${if (entitlement.isPremium) s.accountPlanPremium else s.accountPlanFree}",
-                            style = JudgeType.bodyStrong,
-                        )
-                        Text("${s.accountCredits}: ${entitlement.credits}", style = JudgeType.body.copy(color = Palette.ink2))
+                        Tiers.balance(s, entitlement)?.let { Text(it, style = JudgeType.bodyStrong) }
                         if (sub != null) {
+                            // The line above counts the plan first, so credits kept beside it need their own line.
+                            if (entitlement.credits > 0) {
+                                Text("${s.accountCredits}: ${entitlement.credits}", style = JudgeType.body.copy(color = Palette.ink2))
+                            }
                             val date = Errors.formatDate(lang, sub.periodEnd) ?: sub.periodEnd
                             Text(
                                 if (sub.willRenew) s.accountSubscriptionRenews(date) else s.accountSubscriptionUntil(date),
@@ -151,19 +150,12 @@ fun PricingScreen(
                     }
                 }
 
-                PlanCard(highlight = false) {
-                    Text(s.pricingFreeTitle, style = JudgeType.sectionTitle, modifier = Modifier.semantics { heading() })
-                    Text(s.pricingFreePrice, style = JudgeType.lead.copy(color = Palette.ink))
-                    FeatureList(Tiers.freeFeatureKeys(cases = features?.cases == true))
-                }
-
-                PlanCard(highlight = true) {
+                PlanCard {
                     Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                         TintedIcon(remember { JudgeIcons.spark(Palette.terra) }, 14)
                         Text(s.pricingPremiumTitle, style = JudgeType.sectionTitle, modifier = Modifier.semantics { heading() })
                     }
-                    val shown = if (premiumEnabled == true) features else null
-                    FeatureList(Tiers.premiumFeatureKeys(cases = shown?.cases == true, evidence = shown?.evidence == true))
+                    FeatureList(Tiers.premiumFeatureKeys(cases = features?.cases == true, evidence = features?.evidence == true))
 
                     Text(s.pricingPacksTitle, style = JudgeType.slotTitle.copy(color = Palette.ink), modifier = Modifier.padding(top = 8.dp))
                     Text(s.pricingPacksLead, style = JudgeType.slotText)
@@ -217,7 +209,7 @@ fun PricingScreen(
                         )
                     }
 
-                    if (premiumEnabled == true && !signedIn && signInOffered) {
+                    if (!signedIn && signInOffered) {
                         PrimaryButton(
                             text = s.navSignIn,
                             enabled = true,
@@ -238,13 +230,13 @@ fun PricingScreen(
 }
 
 @Composable
-private fun PlanCard(highlight: Boolean, content: @Composable () -> Unit) {
+private fun PlanCard(content: @Composable () -> Unit) {
     Column(
         Modifier
             .fillMaxWidth()
             .clip(JudgeShapes.block)
-            .background(if (highlight) Palette.paper else Palette.ivory)
-            .border(if (highlight) 1.5.dp else 1.dp, if (highlight) Palette.terra.copy(alpha = 0.55f) else Palette.line2, JudgeShapes.block)
+            .background(Palette.paper)
+            .border(1.5.dp, Palette.terra.copy(alpha = 0.55f), JudgeShapes.block)
             .padding(18.dp),
         verticalArrangement = Arrangement.spacedBy(10.dp),
     ) { content() }
