@@ -74,7 +74,11 @@ describe("locale check", () => {
 
   it("accepts a locale that leaves the privacy page to English", () => {
     const strings = Object.fromEntries(Object.entries(EN).filter(([k]) => !k.startsWith("privacy.")));
-    const locale = { voice: 'Refer to the parties as "Party A" and "Party B".', strings, email: EMAIL_EN } as unknown as Locale;
+    const locale = {
+      voice: 'Refer to the parties as "当事者A" and "当事者B".',
+      strings: { ...strings, "party.a": "当事者A", "party.b": "当事者B" },
+      email: EMAIL_EN,
+    } as unknown as Locale;
     expect(checkLocale("ja", locale)).toEqual([]);
   });
 });

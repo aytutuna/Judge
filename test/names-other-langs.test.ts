@@ -1,13 +1,14 @@
 import { describe, expect, it, vi } from "vitest";
 import type { NameMapping, VerdictResult } from "../lib/types";
 
-// Two languages as translators would list them: one spaced, one written
-// without spaces.
+// Two languages as translators would list them, one spaced and one written
+// without spaces, and Korean taken out to stand for one not listed yet.
 vi.mock("../lib/langs", async (importOriginal) => {
   const actual = await importOriginal<typeof import("../lib/langs")>();
+  const listed = Object.fromEntries(Object.entries(actual.PARTY_LABELS).filter(([l]) => l !== "ko"));
   return {
     ...actual,
-    PARTY_LABELS: { ...actual.PARTY_LABELS, de: ["Partei A", "Partei B"], ja: ["当事者A", "当事者B"] },
+    PARTY_LABELS: { ...listed, de: ["Partei A", "Partei B"], ja: ["当事者A", "当事者B"] },
   };
 });
 

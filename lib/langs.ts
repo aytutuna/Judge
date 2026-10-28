@@ -71,6 +71,8 @@ const LOCALES: Partial<Record<Lang, () => Promise<{ default: Locale }>>> = {
   tr: () => import("./locales/tr"),
   bn: () => import("./locales/bn"),
   ca: () => import("./locales/ca"),
+  "zh-Hans": () => import("./locales/zh-Hans"),
+  "zh-Hant": () => import("./locales/zh-Hant"),
   hr: () => import("./locales/hr"),
   cs: () => import("./locales/cs"),
   da: () => import("./locales/da"),
@@ -82,8 +84,12 @@ const LOCALES: Partial<Record<Lang, () => Promise<{ default: Locale }>>> = {
   gu: () => import("./locales/gu"),
   hi: () => import("./locales/hi"),
   hu: () => import("./locales/hu"),
+  id: () => import("./locales/id"),
   it: () => import("./locales/it"),
+  ja: () => import("./locales/ja"),
   kn: () => import("./locales/kn"),
+  ko: () => import("./locales/ko"),
+  ms: () => import("./locales/ms"),
   ml: () => import("./locales/ml"),
   mr: () => import("./locales/mr"),
   nb: () => import("./locales/nb"),
@@ -100,7 +106,9 @@ const LOCALES: Partial<Record<Lang, () => Promise<{ default: Locale }>>> = {
   sv: () => import("./locales/sv"),
   ta: () => import("./locales/ta"),
   te: () => import("./locales/te"),
+  th: () => import("./locales/th"),
   uk: () => import("./locales/uk"),
+  vi: () => import("./locales/vi"),
 };
 
 /**
@@ -118,6 +126,8 @@ export const PARTY_LABELS: Partial<Record<Lang, readonly [a: string, b: string]>
   tr: ["Taraf A", "Taraf B"],
   bn: ["পক্ষ A", "পক্ষ B"],
   ca: ["Part A", "Part B"],
+  "zh-Hans": ["当事人A", "当事人B"],
+  "zh-Hant": ["當事人A", "當事人B"],
   hr: ["Strana A", "Strana B"],
   cs: ["Strana A", "Strana B"],
   da: ["Part A", "Part B"],
@@ -129,8 +139,12 @@ export const PARTY_LABELS: Partial<Record<Lang, readonly [a: string, b: string]>
   gu: ["પક્ષ A", "પક્ષ B"],
   hi: ["पक्ष A", "पक्ष B"],
   hu: ["Fél A", "Fél B"],
+  id: ["Pihak A", "Pihak B"],
   it: ["Parte A", "Parte B"],
+  ja: ["当事者A", "当事者B"],
   kn: ["ಪಕ್ಷ A", "ಪಕ್ಷ B"],
+  ko: ["당사자 A", "당사자 B"],
+  ms: ["Pihak A", "Pihak B"],
   ml: ["കക്ഷി A", "കക്ഷി B"],
   mr: ["पक्ष A", "पक्ष B"],
   nb: ["Part A", "Part B"],
@@ -147,7 +161,9 @@ export const PARTY_LABELS: Partial<Record<Lang, readonly [a: string, b: string]>
   sv: ["Part A", "Part B"],
   ta: ["தரப்பு A", "தரப்பு B"],
   te: ["పక్షం A", "పక్షం B"],
+  th: ["ฝ่าย A", "ฝ่าย B"],
   uk: ["Сторона A", "Сторона B"],
+  vi: ["Bên A", "Bên B"],
 };
 
 /** Enabled languages, in registry order (English first). */
