@@ -305,10 +305,6 @@
     <string name="case_expired_body_free">Nessuno ha risposto in 7 giorni. Puoi comunque avere un verdetto solo sulla tua versione.</string>
     <string name="case_one_sided">Giudicato solo sulla tua versione.</string>
     <string name="case_start_over">Apri un nuovo caso</string>
-    <string name="case_list_title">I tuoi casi</string>
-    <string name="case_list_empty">Ancora nessun caso.</string>
-    <string name="case_list_load_failed">Al momento non riusciamo a caricare i tuoi casi.</string>
-    <string name="case_list_started">Iniziato: %1$s</string>
     <string name="case_list_untitled">Caso · %1$s</string>
     <string name="case_list_untitled_soon">Caso</string>
     <string name="respond_kicker">La tua versione</string>
@@ -426,12 +422,10 @@
     <string name="names_saved">Nomi salvati.</string>
     <string name="names_failed">Non siamo riusciti a salvare i nomi. Riprova.</string>
     <string name="names_invalid">Usa da 1 a 40 caratteri, e non un\'etichetta come Parte A.</string>
-    <string name="account_verdicts_title">I tuoi verdetti</string>
-    <string name="account_verdicts_empty">Ancora nessun verdetto.</string>
-    <string name="account_verdicts_load_failed">Non siamo riusciti a caricare i tuoi verdetti.</string>
     <string name="account_verdicts_removed">Rimosso</string>
     <string name="shell_new">Nuova discussione</string>
     <string name="shell_today">Oggi</string>
+    <string name="shell_load_failed">Non siamo riusciti a caricare la cronologia.</string>
     <string name="thread_label">Questa discussione</string>
     <string name="thread_you">Hai scritto</string>
     <string name="thread_judges">I giudici</string>
@@ -472,10 +466,8 @@
     <string name="best_point_self">Il tuo argomento migliore</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">Nuova</string>
-    <string name="app_tab_history">I miei verdetti</string>
     <string name="app_tab_settings">Impostazioni</string>
     <string name="app_input_counter">%1$s / %2$s</string>
-    <string name="app_history_title">I miei verdetti</string>
     <string name="app_history_empty">Ancora nessun verdetto. Risolvi la tua prima discussione e lo troverai qui.</string>
     <string name="app_history_device_only">Salvati solo su questo telefono. Se ne elimini uno qui, il suo link di condivisione continua a funzionare.</string>
     <string name="app_history_delete">Elimina</string>

@@ -305,10 +305,6 @@
     <string name="case_expired_body_free">Ningú no ha respost en 7 dies. Encara pots obtenir un veredicte només amb la teva versió.</string>
     <string name="case_one_sided">Jutjat només amb la teva versió.</string>
     <string name="case_start_over">Comença un cas nou</string>
-    <string name="case_list_title">Els teus casos</string>
-    <string name="case_list_empty">Encara no tens cap cas.</string>
-    <string name="case_list_load_failed">Ara mateix no hem pogut carregar els teus casos.</string>
-    <string name="case_list_started">Començat el dia %1$s</string>
     <string name="case_list_untitled">Cas del dia %1$s</string>
     <string name="case_list_untitled_soon">Cas</string>
     <string name="respond_kicker">La teva versió</string>
@@ -426,12 +422,10 @@
     <string name="names_saved">Noms desats.</string>
     <string name="names_failed">No hem pogut desar els noms. Torna-ho a provar.</string>
     <string name="names_invalid">Fes servir d\'1 a 40 caràcters, i no una etiqueta com Part A.</string>
-    <string name="account_verdicts_title">Els teus veredictes</string>
-    <string name="account_verdicts_empty">Encara no tens cap veredicte.</string>
-    <string name="account_verdicts_load_failed">No hem pogut carregar els teus veredictes.</string>
     <string name="account_verdicts_removed">Eliminat</string>
     <string name="shell_new">Nova discussió</string>
     <string name="shell_today">Avui</string>
+    <string name="shell_load_failed">No hem pogut carregar l\'historial.</string>
     <string name="thread_label">Aquesta discussió</string>
     <string name="thread_you">Has escrit</string>
     <string name="thread_judges">Els jutges</string>
@@ -472,10 +466,8 @@
     <string name="best_point_self">El teu millor argument</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">Nou</string>
-    <string name="app_tab_history">Veredictes</string>
     <string name="app_tab_settings">Configuració</string>
     <string name="app_input_counter">%1$s / %2$s</string>
-    <string name="app_history_title">Els meus veredictes</string>
     <string name="app_history_empty">Encara no tens cap veredicte. Resol la teva primera discussió i apareixerà aquí.</string>
     <string name="app_history_device_only">Només es desen en aquest telèfon. Si n\'elimines un aquí, el seu enllaç per compartir continuarà funcionant.</string>
     <string name="app_history_delete">Elimina</string>

@@ -298,10 +298,6 @@
     <string name="case_expired_body_free">7 ଦିନରେ କେହି ଉତ୍ତର ଦେଲେ ନାହିଁ। ତଥାପି କେବଳ ଆପଣଙ୍କ କଥା ଆଧାରରେ ରାୟ ନେଇପାରିବେ।</string>
     <string name="case_one_sided">କେବଳ ଆପଣଙ୍କ କଥା ଆଧାରରେ ବିଚାର ହେଲା।</string>
     <string name="case_start_over">ନୂଆ ମାମଲା ଆରମ୍ଭ କରନ୍ତୁ</string>
-    <string name="case_list_title">ଆପଣଙ୍କ ମାମଲା</string>
-    <string name="case_list_empty">ଏଯାଏଁ କୌଣସି ମାମଲା ନାହିଁ।</string>
-    <string name="case_list_load_failed">ଏବେ ଆପଣଙ୍କ ମାମଲା ଲୋଡ୍ କରିପାରିଲୁ ନାହିଁ।</string>
-    <string name="case_list_started">ଆରମ୍ଭ: %1$s</string>
     <string name="case_list_untitled">ମାମଲା, %1$s</string>
     <string name="case_list_untitled_soon">ମାମଲା</string>
     <string name="respond_kicker">ଆପଣଙ୍କ କଥା</string>
@@ -418,12 +414,10 @@
     <string name="names_saved">ନାମ ସେଭ୍ ହେଲା।</string>
     <string name="names_failed">ନାମ ସେଭ୍ କରିପାରିଲୁ ନାହିଁ। ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ।</string>
     <string name="names_invalid">1ରୁ 40 ଅକ୍ଷର ଭିତରେ ଲେଖନ୍ତୁ, ଆଉ ପକ୍ଷ A ଭଳି ଲେବଲ୍ ନୁହେଁ।</string>
-    <string name="account_verdicts_title">ଆପଣଙ୍କ ରାୟ</string>
-    <string name="account_verdicts_empty">ଏଯାଏଁ କୌଣସି ରାୟ ନାହିଁ।</string>
-    <string name="account_verdicts_load_failed">ଆପଣଙ୍କ ରାୟ ଲୋଡ୍ କରିପାରିଲୁ ନାହିଁ।</string>
     <string name="account_verdicts_removed">ହଟାଯାଇଛି</string>
     <string name="shell_new">ନୂଆ ବିବାଦ</string>
     <string name="shell_today">ଆଜି</string>
+    <string name="shell_load_failed">ଆପଣଙ୍କ ଇତିହାସ ଲୋଡ୍ କରିପାରିଲୁ ନାହିଁ।</string>
     <string name="thread_label">ଏହି ବିବାଦ</string>
     <string name="thread_you">ଆପଣ ଲେଖିଲେ</string>
     <string name="thread_judges">ବିଚାରକମାନେ</string>
@@ -461,10 +455,8 @@
     <string name="best_point_self">ଆପଣଙ୍କ ସବୁଠୁ ଜୋରଦାର କଥା</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">ନୂଆ</string>
-    <string name="app_tab_history">ମୋ ରାୟ</string>
     <string name="app_tab_settings">ସେଟିଂସ୍</string>
     <string name="app_input_counter">%1$s / %2$s</string>
-    <string name="app_history_title">ମୋ ରାୟ</string>
     <string name="app_history_empty">ଏଯାଏଁ କୌଣସି ରାୟ ନାହିଁ। ଆପଣଙ୍କ ପ୍ରଥମ ଝଗଡ଼ା ମେଣ୍ଟାନ୍ତୁ, ତା\'ର ରାୟ ଏଠାରେ ଦେଖାଯିବ।</string>
     <string name="app_history_device_only">କେବଳ ଏହି ଫୋନ୍‌ରେ ସେଭ୍ ହୋଇଛି। ଏଠାରୁ କୌଣସି ରାୟ ଡିଲିଟ୍ କଲେ ବି ତା\'ର ସେୟାର୍ ଲିଙ୍କ୍ ବନ୍ଦ ହୁଏ ନାହିଁ।</string>
     <string name="app_history_delete">ଡିଲିଟ୍</string>

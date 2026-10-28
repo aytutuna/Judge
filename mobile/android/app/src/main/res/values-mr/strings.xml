@@ -298,10 +298,6 @@
     <string name="case_expired_body_free">7 दिवसांत कोणी उत्तर दिले नाही. तरीही फक्त तुमच्या बाजूवर निकाल घेऊ शकता.</string>
     <string name="case_one_sided">फक्त तुमच्या बाजूवर निकाल दिला.</string>
     <string name="case_start_over">नवीन प्रकरण सुरू करा</string>
-    <string name="case_list_title">तुमची प्रकरणे</string>
-    <string name="case_list_empty">अजून एकही प्रकरण नाही.</string>
-    <string name="case_list_load_failed">आत्ता तुमची प्रकरणे लोड करता आली नाहीत.</string>
-    <string name="case_list_started">%1$s रोजी सुरू</string>
     <string name="case_list_untitled">%1$s चे प्रकरण</string>
     <string name="case_list_untitled_soon">प्रकरण</string>
     <string name="respond_kicker">तुमची बाजू</string>
@@ -418,12 +414,10 @@
     <string name="names_saved">नावे सेव्ह झाली.</string>
     <string name="names_failed">नावे सेव्ह करता आली नाहीत. पुन्हा प्रयत्न करा.</string>
     <string name="names_invalid">1 ते 40 अक्षरे वापरा, आणि पक्ष A सारखे लेबल नको.</string>
-    <string name="account_verdicts_title">तुमचे निकाल</string>
-    <string name="account_verdicts_empty">अजून एकही निकाल नाही.</string>
-    <string name="account_verdicts_load_failed">तुमचे निकाल लोड करता आले नाहीत.</string>
     <string name="account_verdicts_removed">काढून टाकला</string>
     <string name="shell_new">नवा वाद</string>
     <string name="shell_today">आज</string>
+    <string name="shell_load_failed">तुमचा इतिहास लोड करता आला नाही.</string>
     <string name="thread_label">हा वाद</string>
     <string name="thread_you">तुम्ही लिहिले</string>
     <string name="thread_judges">परीक्षक</string>
@@ -461,10 +455,8 @@
     <string name="best_point_self">तुमचा सर्वात भक्कम मुद्दा</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">नवा</string>
-    <string name="app_tab_history">माझे निकाल</string>
     <string name="app_tab_settings">सेटिंग्ज</string>
     <string name="app_input_counter">%1$s / %2$s</string>
-    <string name="app_history_title">माझे निकाल</string>
     <string name="app_history_empty">अजून एकही निकाल नाही. तुमचा पहिला वाद सोडवा, त्याचा निकाल इथे दिसेल.</string>
     <string name="app_history_device_only">हे निकाल फक्त या फोनवर सेव्ह होतात. इथून एखादा निकाल डिलीट केला तरी त्याची शेअर लिंक चालू राहते.</string>
     <string name="app_history_delete">डिलीट करा</string>

@@ -6,10 +6,8 @@ const el: AppLocale = {
   strings: {
     "app.name": "Judge",
     "app.tab.new": "Νέα διαφωνία",
-    "app.tab.history": "Αποφάσεις",
     "app.tab.settings": "Ρυθμίσεις",
     "app.input.counter": "{count} / {max}",
-    "app.history.title": "Οι αποφάσεις μου",
     "app.history.empty": "Δεν έχεις αποφάσεις ακόμα. Λύσε την πρώτη σου διαφωνία και η απόφαση θα εμφανιστεί εδώ.",
     "app.history.deviceOnly":
       "Αποθηκεύονται μόνο σε αυτό το τηλέφωνο. Αν διαγράψεις μια απόφαση από εδώ, ο σύνδεσμος κοινοποίησής της θα συνεχίσει να λειτουργεί.",

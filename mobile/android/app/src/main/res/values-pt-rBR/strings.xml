@@ -305,10 +305,6 @@
     <string name="case_expired_body_free">Ninguém respondeu em 7 dias. Você ainda pode receber um veredito só com o seu lado.</string>
     <string name="case_one_sided">Julgado só com o seu lado.</string>
     <string name="case_start_over">Começar um novo caso</string>
-    <string name="case_list_title">Seus casos</string>
-    <string name="case_list_empty">Nenhum caso ainda.</string>
-    <string name="case_list_load_failed">Não conseguimos carregar seus casos agora.</string>
-    <string name="case_list_started">Iniciado em %1$s</string>
     <string name="case_list_untitled">Caso de %1$s</string>
     <string name="case_list_untitled_soon">Caso</string>
     <string name="respond_kicker">Seu lado</string>
@@ -426,12 +422,10 @@
     <string name="names_saved">Nomes salvos.</string>
     <string name="names_failed">Não conseguimos salvar os nomes. Tente de novo.</string>
     <string name="names_invalid">Use de 1 a 40 caracteres, e nada de rótulos como Parte A.</string>
-    <string name="account_verdicts_title">Seus vereditos</string>
-    <string name="account_verdicts_empty">Nenhum veredito ainda.</string>
-    <string name="account_verdicts_load_failed">Não conseguimos carregar seus vereditos.</string>
     <string name="account_verdicts_removed">Removido</string>
     <string name="shell_new">Nova discussão</string>
     <string name="shell_today">Hoje</string>
+    <string name="shell_load_failed">Não conseguimos carregar seu histórico.</string>
     <string name="thread_label">Esta discussão</string>
     <string name="thread_you">Você escreveu</string>
     <string name="thread_judges">Os juízes</string>
@@ -472,10 +466,8 @@
     <string name="best_point_self">Seu melhor argumento</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">Novo</string>
-    <string name="app_tab_history">Meus vereditos</string>
     <string name="app_tab_settings">Ajustes</string>
     <string name="app_input_counter">%1$s / %2$s</string>
-    <string name="app_history_title">Meus vereditos</string>
     <string name="app_history_empty">Nenhum veredito ainda. Resolva sua primeira discussão e o veredito aparece aqui.</string>
     <string name="app_history_device_only">Ficam salvos só neste celular. Excluir um aqui não tira do ar o link de compartilhamento dele.</string>
     <string name="app_history_delete">Excluir</string>

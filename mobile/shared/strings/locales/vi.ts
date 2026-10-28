@@ -5,10 +5,8 @@ const vi: AppLocale = {
   strings: {
     "app.name": "Judge",
     "app.tab.new": "Mới",
-    "app.tab.history": "Phán quyết",
     "app.tab.settings": "Cài đặt",
     "app.input.counter": "{count} / {max}",
-    "app.history.title": "Phán quyết của bạn",
     "app.history.empty": "Chưa có phán quyết nào. Phân xử cuộc tranh cãi đầu tiên của bạn, kết quả sẽ hiện ở đây.",
     "app.history.deviceOnly": "Chỉ lưu trên điện thoại này. Xóa một phán quyết ở đây thì liên kết chia sẻ của nó vẫn hoạt động.",
     "app.history.delete": "Xóa",

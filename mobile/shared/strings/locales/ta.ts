@@ -5,10 +5,8 @@ const ta: AppLocale = {
   strings: {
     "app.name": "Judge",
     "app.tab.new": "புதியது",
-    "app.tab.history": "என் தீர்ப்புகள்",
     "app.tab.settings": "அமைப்புகள்",
     "app.input.counter": "{count} / {max}",
-    "app.history.title": "என் தீர்ப்புகள்",
     "app.history.empty": "இன்னும் தீர்ப்புகள் இல்லை. உங்கள் முதல் வாக்குவாதத்தைத் தீர்த்ததும் அது இங்கே தெரியும்.",
     "app.history.deviceOnly":
       "இவை இந்தப் போனில் மட்டுமே சேமிக்கப்பட்டுள்ளன. இங்கே ஒன்றை நீக்கினாலும், அதன் பகிர்வு லிங்க் தொடர்ந்து வேலை செய்யும்.",

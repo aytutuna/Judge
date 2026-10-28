@@ -5,10 +5,8 @@ const nb: AppLocale = {
   strings: {
     "app.name": "Judge",
     "app.tab.new": "Ny",
-    "app.tab.history": "Mine dommer",
     "app.tab.settings": "Innstillinger",
     "app.input.counter": "{count} / {max}",
-    "app.history.title": "Mine dommer",
     "app.history.empty":
       "Ingen dommer ennå. Få avgjort den første diskusjonen din, så dukker den opp her.",
     "app.history.deviceOnly":

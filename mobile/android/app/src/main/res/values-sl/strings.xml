@@ -312,10 +312,6 @@
     <string name="case_expired_body_free">V 7 dneh ni nihče odgovoril. Še vedno lahko dobiš razsodbo samo na podlagi svoje plati.</string>
     <string name="case_one_sided">Razsojeno samo na podlagi tvoje plati.</string>
     <string name="case_start_over">Začni nov spor</string>
-    <string name="case_list_title">Tvoji spori</string>
-    <string name="case_list_empty">Sporov še ni.</string>
-    <string name="case_list_load_failed">Tvojih sporov trenutno nismo mogli naložiti.</string>
-    <string name="case_list_started">Začeto: %1$s</string>
     <string name="case_list_untitled">Spor, %1$s</string>
     <string name="case_list_untitled_soon">Spor</string>
     <string name="respond_kicker">Tvoja plat</string>
@@ -434,12 +430,10 @@
     <string name="names_saved">Imena so shranjena.</string>
     <string name="names_failed">Imen nismo mogli shraniti. Poskusi znova.</string>
     <string name="names_invalid">Uporabi od 1 do 40 znakov, ne pa oznake, kot je Stranka A.</string>
-    <string name="account_verdicts_title">Tvoje razsodbe</string>
-    <string name="account_verdicts_empty">Razsodb še ni.</string>
-    <string name="account_verdicts_load_failed">Tvojih razsodb nismo mogli naložiti.</string>
     <string name="account_verdicts_removed">Odstranjeno</string>
     <string name="shell_new">Nov prepir</string>
     <string name="shell_today">Danes</string>
+    <string name="shell_load_failed">Zgodovine nismo mogli naložiti.</string>
     <string name="thread_label">Ta prepir</string>
     <string name="thread_you">Tvoje besedilo</string>
     <string name="thread_judges">Sodniki</string>
@@ -483,10 +477,8 @@
     <string name="best_point_self">Tvoj najboljši argument</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">Novo</string>
-    <string name="app_tab_history">Moje razsodbe</string>
     <string name="app_tab_settings">Nastavitve</string>
     <string name="app_input_counter">%1$s / %2$s</string>
-    <string name="app_history_title">Moje razsodbe</string>
     <string name="app_history_empty">Razsodb še ni. Ko razčistiš prvi prepir, se razsodba prikaže tukaj.</string>
     <string name="app_history_device_only">Shranjeno samo na tem telefonu. Če razsodbo izbrišeš tukaj, njena povezava za deljenje še vedno deluje.</string>
     <string name="app_history_delete">Izbriši</string>

@@ -6,10 +6,8 @@ const ar: AppLocale = {
   strings: {
     "app.name": "Judge",
     "app.tab.new": "جديد",
-    "app.tab.history": "أحكامي",
     "app.tab.settings": "الإعدادات",
     "app.input.counter": "{count} / {max}",
-    "app.history.title": "أحكامي",
     "app.history.empty": "لا أحكام بعد. احسم أول خلاف لك وسيظهر حكمه هنا.",
     "app.history.deviceOnly":
       "الأحكام محفوظة على هذا الهاتف فقط. حذف حكم من هنا لا يوقف رابط مشاركته.",

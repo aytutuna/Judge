@@ -291,10 +291,6 @@
     <string name="case_expired_body_free">Tiada jawapan dalam 7 hari. Anda masih boleh dapatkan keputusan berdasarkan versi anda sahaja.</string>
     <string name="case_one_sided">Dinilai berdasarkan versi anda sahaja.</string>
     <string name="case_start_over">Mulakan kes baharu</string>
-    <string name="case_list_title">Kes anda</string>
-    <string name="case_list_empty">Belum ada kes.</string>
-    <string name="case_list_load_failed">Kami tidak dapat memuatkan kes anda sekarang.</string>
-    <string name="case_list_started">Dimulakan %1$s</string>
     <string name="case_list_untitled">Kes pada %1$s</string>
     <string name="case_list_untitled_soon">Kes</string>
     <string name="respond_kicker">Versi anda</string>
@@ -410,12 +406,10 @@
     <string name="names_saved">Nama disimpan.</string>
     <string name="names_failed">Kami tidak dapat menyimpan nama. Cuba lagi.</string>
     <string name="names_invalid">Guna 1 hingga 40 aksara, dan bukan label seperti Pihak A.</string>
-    <string name="account_verdicts_title">Keputusan anda</string>
-    <string name="account_verdicts_empty">Belum ada keputusan.</string>
-    <string name="account_verdicts_load_failed">Kami tidak dapat memuatkan keputusan anda.</string>
     <string name="account_verdicts_removed">Dibuang</string>
     <string name="shell_new">Pertikaian baharu</string>
     <string name="shell_today">Hari ini</string>
+    <string name="shell_load_failed">Kami tidak dapat memuatkan sejarah anda.</string>
     <string name="thread_label">Pertikaian ini</string>
     <string name="thread_you">Anda tulis</string>
     <string name="thread_judges">Hakim</string>
@@ -450,10 +444,8 @@
     <string name="best_point_self">Hujah terbaik anda</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">Baharu</string>
-    <string name="app_tab_history">Keputusan saya</string>
     <string name="app_tab_settings">Tetapan</string>
     <string name="app_input_counter">%1$s / %2$s</string>
-    <string name="app_history_title">Keputusan saya</string>
     <string name="app_history_empty">Belum ada keputusan. Selesaikan pertikaian pertama anda dan ia akan muncul di sini.</string>
     <string name="app_history_device_only">Disimpan dalam telefon ini sahaja. Memadam satu keputusan di sini tidak mematikan pautan kongsinya.</string>
     <string name="app_history_delete">Padam</string>

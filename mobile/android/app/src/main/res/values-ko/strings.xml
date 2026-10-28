@@ -291,10 +291,6 @@
     <string name="case_expired_body_free">7일 동안 아무도 답하지 않았어요. 그래도 내 입장만으로 판결을 받을 수 있어요.</string>
     <string name="case_one_sided">내 입장만으로 내린 판결이에요.</string>
     <string name="case_start_over">새 사건 시작</string>
-    <string name="case_list_title">내 사건</string>
-    <string name="case_list_empty">아직 사건이 없어요.</string>
-    <string name="case_list_load_failed">지금은 사건 목록을 불러오지 못했어요.</string>
-    <string name="case_list_started">%1$s 시작</string>
     <string name="case_list_untitled">%1$s 사건</string>
     <string name="case_list_untitled_soon">사건</string>
     <string name="respond_kicker">내 입장</string>
@@ -410,12 +406,10 @@
     <string name="names_saved">이름을 저장했어요.</string>
     <string name="names_failed">이름을 저장하지 못했어요. 다시 시도해 주세요.</string>
     <string name="names_invalid">1~40자로 써 주세요. 당사자 A 같은 라벨은 쓸 수 없어요.</string>
-    <string name="account_verdicts_title">내 판결</string>
-    <string name="account_verdicts_empty">아직 판결이 없어요.</string>
-    <string name="account_verdicts_load_failed">판결 목록을 불러오지 못했어요.</string>
     <string name="account_verdicts_removed">삭제됨</string>
     <string name="shell_new">새 논쟁</string>
     <string name="shell_today">오늘</string>
+    <string name="shell_load_failed">기록을 불러오지 못했어요.</string>
     <string name="thread_label">이 논쟁</string>
     <string name="thread_you">내가 쓴 글</string>
     <string name="thread_judges">판사들</string>
@@ -450,10 +444,8 @@
     <string name="best_point_self">내 가장 강한 논거</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">새 논쟁</string>
-    <string name="app_tab_history">내 판결</string>
     <string name="app_tab_settings">설정</string>
     <string name="app_input_counter">%1$s / %2$s</string>
-    <string name="app_history_title">내 판결</string>
     <string name="app_history_empty">아직 판결이 없어요. 첫 논쟁을 판결 받으면 여기에 나와요.</string>
     <string name="app_history_device_only">이 휴대폰에만 저장돼요. 여기서 지워도 공유 링크는 계속 열려요.</string>
     <string name="app_history_delete">삭제</string>

@@ -6,10 +6,8 @@ const he: AppLocale = {
   strings: {
     "app.name": "Judge",
     "app.tab.new": "חדש",
-    "app.tab.history": "פסקי הדין שלי",
     "app.tab.settings": "הגדרות",
     "app.input.counter": "{count} / {max}",
-    "app.history.title": "פסקי הדין שלי",
     "app.history.empty": "עוד אין פסקי דין. כשהוויכוח הראשון שלך יוכרע, פסק הדין יופיע כאן.",
     "app.history.deviceOnly": "פסקי הדין שמורים רק בטלפון הזה. מחיקה של פסק דין כאן לא מבטלת את קישור השיתוף שלו.",
     "app.history.delete": "מחיקה",

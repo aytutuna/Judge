@@ -312,10 +312,6 @@
     <string name="case_expired_body_free">Nikto neodpovedal do 7 dní. Stále môžeš získať verdikt len podľa svojej verzie.</string>
     <string name="case_one_sided">Posúdené len podľa tvojej verzie.</string>
     <string name="case_start_over">Začať nový prípad</string>
-    <string name="case_list_title">Tvoje prípady</string>
-    <string name="case_list_empty">Zatiaľ žiadne prípady.</string>
-    <string name="case_list_load_failed">Tvoje prípady sa teraz nepodarilo načítať.</string>
-    <string name="case_list_started">Začatý %1$s</string>
     <string name="case_list_untitled">Prípad z %1$s</string>
     <string name="case_list_untitled_soon">Prípad</string>
     <string name="respond_kicker">Tvoja verzia</string>
@@ -434,12 +430,10 @@
     <string name="names_saved">Mená sú uložené.</string>
     <string name="names_failed">Mená sa nepodarilo uložiť. Skús to znova.</string>
     <string name="names_invalid">Meno musí mať 1 až 40 znakov a nesmie to byť označenie ako Strana A.</string>
-    <string name="account_verdicts_title">Tvoje verdikty</string>
-    <string name="account_verdicts_empty">Zatiaľ žiadne verdikty.</string>
-    <string name="account_verdicts_load_failed">Tvoje verdikty sa nepodarilo načítať.</string>
     <string name="account_verdicts_removed">Odstránený</string>
     <string name="shell_new">Nový spor</string>
     <string name="shell_today">Dnes</string>
+    <string name="shell_load_failed">Históriu sa nepodarilo načítať.</string>
     <string name="thread_label">Tento spor</string>
     <string name="thread_you">Tvoj text</string>
     <string name="thread_judges">Sudcovia</string>
@@ -483,10 +477,8 @@
     <string name="best_point_self">Tvoj najsilnejší argument</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">Nový spor</string>
-    <string name="app_tab_history">Moje verdikty</string>
     <string name="app_tab_settings">Nastavenia</string>
     <string name="app_input_counter">%1$s / %2$s</string>
-    <string name="app_history_title">Moje verdikty</string>
     <string name="app_history_empty">Zatiaľ tu nie sú žiadne verdikty. Nechaj rozsúdiť svoj prvý spor a verdikt nájdeš tu.</string>
     <string name="app_history_device_only">Uložené len v tomto telefóne. Keď tu verdikt vymažeš, jeho odkaz na zdieľanie bude fungovať ďalej.</string>
     <string name="app_history_delete">Vymazať</string>

@@ -5,10 +5,8 @@ const ca: AppLocale = {
   strings: {
     "app.name": "Judge",
     "app.tab.new": "Nou",
-    "app.tab.history": "Veredictes",
     "app.tab.settings": "Configuració",
     "app.input.counter": "{count} / {max}",
-    "app.history.title": "Els meus veredictes",
     "app.history.empty": "Encara no tens cap veredicte. Resol la teva primera discussió i apareixerà aquí.",
     "app.history.deviceOnly":
       "Només es desen en aquest telèfon. Si n'elimines un aquí, el seu enllaç per compartir continuarà funcionant.",

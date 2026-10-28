@@ -13,10 +13,8 @@ import type { PluralForms } from "../../../lib/i18n";
 export const APP_EN = {
   "app.name": "Judge",
   "app.tab.new": "New",
-  "app.tab.history": "My verdicts",
   "app.tab.settings": "Settings",
   "app.input.counter": "{count} / {max}",
-  "app.history.title": "My verdicts",
   "app.history.empty": "No verdicts yet. Settle your first argument and it shows up here.",
   "app.history.deviceOnly": "Saved on this phone only. Deleting one here doesn't take down its share link.",
   "app.history.delete": "Delete",

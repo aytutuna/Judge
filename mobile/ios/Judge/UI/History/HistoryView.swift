@@ -50,7 +50,7 @@ struct HistoryView: View {
             if entries.isEmpty, casesShown, list.state == .idle || list.state == .loading {
                 message(L10n.caseLoading(lang)) { ProgressView().tint(Brand.muted) }
             } else if entries.isEmpty, casesShown, list.state == .failed {
-                message(L10n.caseListLoadFailed(lang)) { retry(lang) }
+                message(L10n.shellLoadFailed(lang)) { retry(lang) }
             } else if entries.isEmpty {
                 message(L10n.appHistoryEmpty(lang)) { EmptyView() }
             } else {
@@ -102,7 +102,7 @@ struct HistoryView: View {
             if casesFailed {
                 Section {
                     VStack(spacing: 10) {
-                        Text(L10n.caseListLoadFailed(lang))
+                        Text(L10n.shellLoadFailed(lang))
                             .brandText(.body)
                             .foregroundStyle(Brand.danger)
                             .multilineTextAlignment(.center)

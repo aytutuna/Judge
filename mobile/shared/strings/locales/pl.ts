@@ -6,10 +6,8 @@ const pl: AppLocale = {
   strings: {
     "app.name": "Judge",
     "app.tab.new": "Nowy",
-    "app.tab.history": "Moje werdykty",
     "app.tab.settings": "Ustawienia",
     "app.input.counter": "{count} / {max}",
-    "app.history.title": "Moje werdykty",
     "app.history.empty": "Nie masz jeszcze werdyktów. Rozstrzygnij pierwszy spór, a werdykt pojawi się tutaj.",
     "app.history.deviceOnly":
       "Zapisane tylko na tym telefonie. Usunięcie werdyktu tutaj nie wyłącza linku do udostępniania.",

@@ -5,10 +5,8 @@ const ro: AppLocale = {
   strings: {
     "app.name": "Judge",
     "app.tab.new": "Nou",
-    "app.tab.history": "Verdictele mele",
     "app.tab.settings": "Setări",
     "app.input.counter": "{count} / {max}",
-    "app.history.title": "Verdictele mele",
     "app.history.empty": "Încă nu ai verdicte. Lămurește-ți prima dispută și verdictul apare aici.",
     "app.history.deviceOnly":
       "Salvate doar pe acest telefon. Dacă ștergi unul de aici, linkul lui de distribuire rămâne activ.",

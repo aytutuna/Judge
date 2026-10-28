@@ -5,10 +5,8 @@ const ja: AppLocale = {
   strings: {
     "app.name": "Judge",
     "app.tab.new": "新規",
-    "app.tab.history": "マイ判定",
     "app.tab.settings": "設定",
     "app.input.counter": "{count} / {max}",
-    "app.history.title": "マイ判定",
     "app.history.empty": "まだ判定はありません。最初の揉めごとに白黒つけると、ここに表示されます。",
     "app.history.deviceOnly": "この端末にだけ保存されています。ここで削除しても、シェア用リンクはそのまま使えます。",
     "app.history.delete": "削除",

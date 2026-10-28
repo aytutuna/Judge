@@ -5,10 +5,8 @@ const es: AppLocale = {
   strings: {
     "app.name": "Judge",
     "app.tab.new": "Nueva",
-    "app.tab.history": "Mis veredictos",
     "app.tab.settings": "Ajustes",
     "app.input.counter": "{count} / {max}",
-    "app.history.title": "Mis veredictos",
     "app.history.empty": "Aún no tienes veredictos. Resuelve tu primera discusión y aparecerá aquí.",
     "app.history.deviceOnly":
       "Solo se guardan en este teléfono. Eliminar uno aquí no desactiva su enlace para compartir.",

@@ -5,10 +5,8 @@ const sv: AppLocale = {
   strings: {
     "app.name": "Judge",
     "app.tab.new": "Nytt",
-    "app.tab.history": "Mina domar",
     "app.tab.settings": "Inställningar",
     "app.input.counter": "{count} / {max}",
-    "app.history.title": "Mina domar",
     "app.history.empty": "Inga domar än. Avgör ditt första bråk så dyker domen upp här.",
     "app.history.deviceOnly":
       "Sparas bara på den här telefonen. Tar du bort en dom här fortsätter delningslänken att fungera.",

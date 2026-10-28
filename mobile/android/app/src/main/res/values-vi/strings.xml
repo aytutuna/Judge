@@ -291,10 +291,6 @@
     <string name="case_expired_body_free">Không ai trả lời trong 7 ngày. Bạn vẫn có thể nhận phán quyết chỉ dựa trên lời kể của bạn.</string>
     <string name="case_one_sided">Chỉ phân xử dựa trên lời kể của bạn.</string>
     <string name="case_start_over">Bắt đầu vụ mới</string>
-    <string name="case_list_title">Các vụ của bạn</string>
-    <string name="case_list_empty">Chưa có vụ nào.</string>
-    <string name="case_list_load_failed">Chưa tải được các vụ của bạn.</string>
-    <string name="case_list_started">Bắt đầu %1$s</string>
     <string name="case_list_untitled">Vụ ngày %1$s</string>
     <string name="case_list_untitled_soon">Vụ</string>
     <string name="respond_kicker">Phía bạn</string>
@@ -410,12 +406,10 @@
     <string name="names_saved">Đã lưu tên.</string>
     <string name="names_failed">Chưa lưu được tên. Thử lại nhé.</string>
     <string name="names_invalid">Dùng từ 1 đến 40 ký tự, và đừng dùng nhãn như Bên A.</string>
-    <string name="account_verdicts_title">Phán quyết của bạn</string>
-    <string name="account_verdicts_empty">Chưa có phán quyết nào.</string>
-    <string name="account_verdicts_load_failed">Không tải được phán quyết của bạn.</string>
     <string name="account_verdicts_removed">Đã gỡ</string>
     <string name="shell_new">Tranh cãi mới</string>
     <string name="shell_today">Hôm nay</string>
+    <string name="shell_load_failed">Không tải được lịch sử.</string>
     <string name="thread_label">Cuộc tranh cãi này</string>
     <string name="thread_you">Bạn đã viết</string>
     <string name="thread_judges">Ban giám khảo</string>
@@ -450,10 +444,8 @@
     <string name="best_point_self">Điểm mạnh nhất của bạn</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">Mới</string>
-    <string name="app_tab_history">Phán quyết</string>
     <string name="app_tab_settings">Cài đặt</string>
     <string name="app_input_counter">%1$s / %2$s</string>
-    <string name="app_history_title">Phán quyết của bạn</string>
     <string name="app_history_empty">Chưa có phán quyết nào. Phân xử cuộc tranh cãi đầu tiên của bạn, kết quả sẽ hiện ở đây.</string>
     <string name="app_history_device_only">Chỉ lưu trên điện thoại này. Xóa một phán quyết ở đây thì liên kết chia sẻ của nó vẫn hoạt động.</string>
     <string name="app_history_delete">Xóa</string>

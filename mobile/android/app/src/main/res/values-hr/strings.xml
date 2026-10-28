@@ -305,10 +305,6 @@
     <string name="case_expired_body_free">Nitko nije odgovorio u roku od 7 dana. I dalje možeš dobiti presudu samo na temelju svoje strane.</string>
     <string name="case_one_sided">Presuđeno samo na temelju tvoje strane.</string>
     <string name="case_start_over">Pokreni novi slučaj</string>
-    <string name="case_list_title">Tvoji slučajevi</string>
-    <string name="case_list_empty">Još nemaš slučajeva.</string>
-    <string name="case_list_load_failed">Trenutačno ne možemo učitati tvoje slučajeve.</string>
-    <string name="case_list_started">Pokrenut %1$s</string>
     <string name="case_list_untitled">Slučaj od %1$s</string>
     <string name="case_list_untitled_soon">Slučaj</string>
     <string name="respond_kicker">Tvoja strana</string>
@@ -426,12 +422,10 @@
     <string name="names_saved">Imena su spremljena.</string>
     <string name="names_failed">Nismo uspjeli spremiti imena. Pokušaj ponovno.</string>
     <string name="names_invalid">Upiši od 1 do 40 znakova. Oznake poput „Strana A“ nisu dopuštene.</string>
-    <string name="account_verdicts_title">Tvoje presude</string>
-    <string name="account_verdicts_empty">Još nemaš presuda.</string>
-    <string name="account_verdicts_load_failed">Nismo uspjeli učitati tvoje presude.</string>
     <string name="account_verdicts_removed">Uklonjeno</string>
     <string name="shell_new">Nova rasprava</string>
     <string name="shell_today">Danas</string>
+    <string name="shell_load_failed">Nismo uspjeli učitati tvoju povijest.</string>
     <string name="thread_label">Ova rasprava</string>
     <string name="thread_you">Tvoj tekst</string>
     <string name="thread_judges">Suci</string>
@@ -472,10 +466,8 @@
     <string name="best_point_self">Tvoj najjači argument</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">Novo</string>
-    <string name="app_tab_history">Moje presude</string>
     <string name="app_tab_settings">Postavke</string>
     <string name="app_input_counter">%1$s / %2$s</string>
-    <string name="app_history_title">Moje presude</string>
     <string name="app_history_empty">Još nemaš presuda. Riješi prvu raspravu i presuda će se pojaviti ovdje.</string>
     <string name="app_history_device_only">Spremljeno samo na ovom telefonu. Ako presudu izbrišeš ovdje, njezina poveznica za dijeljenje i dalje radi.</string>
     <string name="app_history_delete">Izbriši</string>

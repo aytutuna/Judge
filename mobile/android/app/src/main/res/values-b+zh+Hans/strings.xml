@@ -291,10 +291,6 @@
     <string name="case_expired_body_free">7 天内没人回复。你仍然可以只凭自己的说法获取裁决。</string>
     <string name="case_one_sided">仅根据你一方的说法裁决。</string>
     <string name="case_start_over">开个新案子</string>
-    <string name="case_list_title">你的案子</string>
-    <string name="case_list_empty">还没有案子。</string>
-    <string name="case_list_load_failed">暂时没能加载你的案子。</string>
-    <string name="case_list_started">%1$s 发起</string>
     <string name="case_list_untitled">%1$s 的案子</string>
     <string name="case_list_untitled_soon">案子</string>
     <string name="respond_kicker">你的说法</string>
@@ -410,12 +406,10 @@
     <string name="names_saved">名字已保存。</string>
     <string name="names_failed">没能保存名字，请重试。</string>
     <string name="names_invalid">请输入 1 到 40 个字符，且不能是当事人A这类标签。</string>
-    <string name="account_verdicts_title">你的裁决</string>
-    <string name="account_verdicts_empty">还没有裁决。</string>
-    <string name="account_verdicts_load_failed">没能加载你的裁决。</string>
     <string name="account_verdicts_removed">已删除</string>
     <string name="shell_new">新的争论</string>
     <string name="shell_today">今天</string>
+    <string name="shell_load_failed">没能加载历史记录。</string>
     <string name="thread_label">这场争论</string>
     <string name="thread_you">你写的</string>
     <string name="thread_judges">评委</string>
@@ -450,10 +444,8 @@
     <string name="best_point_self">你最有力的一点</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">新建</string>
-    <string name="app_tab_history">我的裁决</string>
     <string name="app_tab_settings">设置</string>
     <string name="app_input_counter">%1$s / %2$s</string>
-    <string name="app_history_title">我的裁决</string>
     <string name="app_history_empty">还没有裁决。第一场争论评出结果后，裁决会出现在这里。</string>
     <string name="app_history_device_only">只保存在这台手机上。在这里删掉一条裁决，它的分享链接仍然有效。</string>
     <string name="app_history_delete">删除</string>

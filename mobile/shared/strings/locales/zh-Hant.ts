@@ -5,10 +5,8 @@ const zhHant: AppLocale = {
   strings: {
     "app.name": "Judge",
     "app.tab.new": "新增",
-    "app.tab.history": "我的判決",
     "app.tab.settings": "設定",
     "app.input.counter": "{count} / {max}",
-    "app.history.title": "我的判決",
     "app.history.empty": "還沒有判決。第一場爭論有了判決，就會出現在這裡。",
     "app.history.deviceOnly": "只保存在這支手機上。在這裡刪除，分享連結不會跟著失效。",
     "app.history.delete": "刪除",

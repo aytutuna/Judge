@@ -5,10 +5,8 @@ const id: AppLocale = {
   strings: {
     "app.name": "Judge",
     "app.tab.new": "Baru",
-    "app.tab.history": "Putusanku",
     "app.tab.settings": "Pengaturan",
     "app.input.counter": "{count} / {max}",
-    "app.history.title": "Putusanku",
     "app.history.empty": "Belum ada putusan. Tuntaskan perdebatan pertamamu, nanti putusannya muncul di sini.",
     "app.history.deviceOnly":
       "Hanya tersimpan di ponsel ini. Menghapus putusan di sini tidak mematikan tautan berbaginya.",

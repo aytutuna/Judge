@@ -298,10 +298,6 @@
     <string name="case_expired_body_free">7 દિવસમાં કોઈએ જવાબ ન આપ્યો. છતાં તમે ફક્ત તમારી બાજુ પરથી ચુકાદો લઈ શકો છો.</string>
     <string name="case_one_sided">ફક્ત તમારી બાજુ પરથી ચુકાદો અપાયો.</string>
     <string name="case_start_over">નવો કેસ શરૂ કરો</string>
-    <string name="case_list_title">તમારા કેસ</string>
-    <string name="case_list_empty">હજી કોઈ કેસ નથી.</string>
-    <string name="case_list_load_failed">અત્યારે તમારા કેસ લોડ ન થઈ શક્યા.</string>
-    <string name="case_list_started">શરૂઆત: %1$s</string>
     <string name="case_list_untitled">%1$s નો કેસ</string>
     <string name="case_list_untitled_soon">કેસ</string>
     <string name="respond_kicker">તમારી વાત</string>
@@ -418,12 +414,10 @@
     <string name="names_saved">નામ સેવ થયાં.</string>
     <string name="names_failed">નામ સેવ ન થઈ શક્યાં. ફરી પ્રયાસ કરો.</string>
     <string name="names_invalid">1થી 40 અક્ષર વાપરો, અને પક્ષ A જેવું લેબલ નહીં.</string>
-    <string name="account_verdicts_title">તમારા ચુકાદા</string>
-    <string name="account_verdicts_empty">હજી કોઈ ચુકાદો નથી.</string>
-    <string name="account_verdicts_load_failed">તમારા ચુકાદા લોડ ન થઈ શક્યા.</string>
     <string name="account_verdicts_removed">દૂર કરાયો</string>
     <string name="shell_new">નવો વિવાદ</string>
     <string name="shell_today">આજે</string>
+    <string name="shell_load_failed">તમારો ઇતિહાસ લોડ ન થઈ શક્યો.</string>
     <string name="thread_label">આ વિવાદ</string>
     <string name="thread_you">તમે લખ્યું</string>
     <string name="thread_judges">જજ</string>
@@ -461,10 +455,8 @@
     <string name="best_point_self">તમારો સૌથી મજબૂત મુદ્દો</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">નવું</string>
-    <string name="app_tab_history">મારા ચુકાદા</string>
     <string name="app_tab_settings">સેટિંગ્સ</string>
     <string name="app_input_counter">%1$s / %2$s</string>
-    <string name="app_history_title">મારા ચુકાદા</string>
     <string name="app_history_empty">હજી કોઈ ચુકાદો નથી. તમારા પહેલા વિવાદનો ફેંસલો કરાવો, એ અહીં દેખાશે.</string>
     <string name="app_history_device_only">ફક્ત આ ફોનમાં સેવ થયેલા છે. અહીંથી કોઈ ચુકાદો ડિલીટ કરવાથી એની શેર લિંક બંધ થતી નથી.</string>
     <string name="app_history_delete">ડિલીટ કરો</string>

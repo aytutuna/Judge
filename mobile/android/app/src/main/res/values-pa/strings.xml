@@ -298,10 +298,6 @@
     <string name="case_expired_body_free">7 ਦਿਨਾਂ ਵਿੱਚ ਕੋਈ ਜਵਾਬ ਨਹੀਂ ਆਇਆ। ਤੁਸੀਂ ਹਾਲੇ ਵੀ ਸਿਰਫ਼ ਆਪਣੇ ਪੱਖ ’ਤੇ ਫ਼ੈਸਲਾ ਲੈ ਸਕਦੇ ਹੋ।</string>
     <string name="case_one_sided">ਸਿਰਫ਼ ਤੁਹਾਡੇ ਪੱਖ ’ਤੇ ਫ਼ੈਸਲਾ ਹੋਇਆ।</string>
     <string name="case_start_over">ਨਵਾਂ ਕੇਸ ਸ਼ੁਰੂ ਕਰੋ</string>
-    <string name="case_list_title">ਤੁਹਾਡੇ ਕੇਸ</string>
-    <string name="case_list_empty">ਹਾਲੇ ਕੋਈ ਕੇਸ ਨਹੀਂ।</string>
-    <string name="case_list_load_failed">ਇਸ ਵੇਲੇ ਤੁਹਾਡੇ ਕੇਸ ਲੋਡ ਨਹੀਂ ਹੋ ਸਕੇ।</string>
-    <string name="case_list_started">%1$s ਨੂੰ ਸ਼ੁਰੂ ਹੋਇਆ</string>
     <string name="case_list_untitled">%1$s ਦਾ ਕੇਸ</string>
     <string name="case_list_untitled_soon">ਕੇਸ</string>
     <string name="respond_kicker">ਤੁਹਾਡਾ ਪੱਖ</string>
@@ -418,12 +414,10 @@
     <string name="names_saved">ਨਾਂ ਸੇਵ ਹੋ ਗਏ।</string>
     <string name="names_failed">ਨਾਂ ਸੇਵ ਨਹੀਂ ਹੋ ਸਕੇ। ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।</string>
     <string name="names_invalid">1 ਤੋਂ 40 ਅੱਖਰ ਵਰਤੋ, ਅਤੇ ਧਿਰ A ਵਰਗਾ ਕੋਈ ਲੇਬਲ ਨਹੀਂ।</string>
-    <string name="account_verdicts_title">ਤੁਹਾਡੇ ਫ਼ੈਸਲੇ</string>
-    <string name="account_verdicts_empty">ਹਾਲੇ ਕੋਈ ਫ਼ੈਸਲਾ ਨਹੀਂ।</string>
-    <string name="account_verdicts_load_failed">ਤੁਹਾਡੇ ਫ਼ੈਸਲੇ ਲੋਡ ਨਹੀਂ ਹੋ ਸਕੇ।</string>
     <string name="account_verdicts_removed">ਹਟਾਇਆ ਗਿਆ</string>
     <string name="shell_new">ਨਵੀਂ ਬਹਿਸ</string>
     <string name="shell_today">ਅੱਜ</string>
+    <string name="shell_load_failed">ਤੁਹਾਡਾ ਇਤਿਹਾਸ ਲੋਡ ਨਹੀਂ ਹੋ ਸਕਿਆ।</string>
     <string name="thread_label">ਇਹ ਬਹਿਸ</string>
     <string name="thread_you">ਤੁਸੀਂ ਲਿਖਿਆ</string>
     <string name="thread_judges">ਜੱਜ</string>
@@ -461,10 +455,8 @@
     <string name="best_point_self">ਤੁਹਾਡੀ ਸਭ ਤੋਂ ਵਧੀਆ ਦਲੀਲ</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">ਨਵਾਂ</string>
-    <string name="app_tab_history">ਮੇਰੇ ਫ਼ੈਸਲੇ</string>
     <string name="app_tab_settings">ਸੈਟਿੰਗਾਂ</string>
     <string name="app_input_counter">%1$s / %2$s</string>
-    <string name="app_history_title">ਮੇਰੇ ਫ਼ੈਸਲੇ</string>
     <string name="app_history_empty">ਹਾਲੇ ਕੋਈ ਫ਼ੈਸਲਾ ਨਹੀਂ। ਆਪਣੀ ਪਹਿਲੀ ਬਹਿਸ ਦਾ ਨਿਬੇੜਾ ਕਰਾਓ, ਫ਼ੈਸਲਾ ਇੱਥੇ ਦਿਖੇਗਾ।</string>
     <string name="app_history_device_only">ਇਹ ਸਿਰਫ਼ ਇਸ ਫ਼ੋਨ ’ਤੇ ਸੇਵ ਹਨ। ਇੱਥੋਂ ਕੋਈ ਫ਼ੈਸਲਾ ਮਿਟਾਉਣ ਨਾਲ ਉਸ ਦਾ ਸਾਂਝਾ ਲਿੰਕ ਬੰਦ ਨਹੀਂ ਹੁੰਦਾ।</string>
     <string name="app_history_delete">ਮਿਟਾਓ</string>

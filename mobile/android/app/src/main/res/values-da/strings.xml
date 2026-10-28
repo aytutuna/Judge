@@ -298,10 +298,6 @@
     <string name="case_expired_body_free">Ingen svarede inden for 7 dage. Du kan stadig få en dom på din side alene.</string>
     <string name="case_one_sided">Dømt kun på din side.</string>
     <string name="case_start_over">Start en ny sag</string>
-    <string name="case_list_title">Dine sager</string>
-    <string name="case_list_empty">Ingen sager endnu.</string>
-    <string name="case_list_load_failed">Vi kunne ikke hente dine sager lige nu.</string>
-    <string name="case_list_started">Startet %1$s</string>
     <string name="case_list_untitled">Sag fra %1$s</string>
     <string name="case_list_untitled_soon">Sag</string>
     <string name="respond_kicker">Din side</string>
@@ -418,12 +414,10 @@
     <string name="names_saved">Navnene er gemt.</string>
     <string name="names_failed">Vi kunne ikke gemme navnene. Prøv igen.</string>
     <string name="names_invalid">Brug 1 til 40 tegn, og ikke en betegnelse som Part A.</string>
-    <string name="account_verdicts_title">Dine domme</string>
-    <string name="account_verdicts_empty">Ingen domme endnu.</string>
-    <string name="account_verdicts_load_failed">Vi kunne ikke hente dine domme.</string>
     <string name="account_verdicts_removed">Fjernet</string>
     <string name="shell_new">Ny diskussion</string>
     <string name="shell_today">I dag</string>
+    <string name="shell_load_failed">Vi kunne ikke hente din historik.</string>
     <string name="thread_label">Denne diskussion</string>
     <string name="thread_you">Du skrev</string>
     <string name="thread_judges">Dommerne</string>
@@ -461,10 +455,8 @@
     <string name="best_point_self">Din bedste pointe</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">Ny</string>
-    <string name="app_tab_history">Mine domme</string>
     <string name="app_tab_settings">Indstillinger</string>
     <string name="app_input_counter">%1$s / %2$s</string>
-    <string name="app_history_title">Mine domme</string>
     <string name="app_history_empty">Ingen domme endnu. Få afgjort din første diskussion, så dukker den op her.</string>
     <string name="app_history_device_only">Kun gemt på denne telefon. Sletter du en her, virker dens delingslink stadig.</string>
     <string name="app_history_delete">Slet</string>

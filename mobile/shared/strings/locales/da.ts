@@ -5,10 +5,8 @@ const da: AppLocale = {
   strings: {
     "app.name": "Judge",
     "app.tab.new": "Ny",
-    "app.tab.history": "Mine domme",
     "app.tab.settings": "Indstillinger",
     "app.input.counter": "{count} / {max}",
-    "app.history.title": "Mine domme",
     "app.history.empty": "Ingen domme endnu. Få afgjort din første diskussion, så dukker den op her.",
     "app.history.deviceOnly": "Kun gemt på denne telefon. Sletter du en her, virker dens delingslink stadig.",
     "app.history.delete": "Slet",

@@ -312,10 +312,6 @@
     <string name="case_expired_body_free">Za 7 dní nikdo neodpověděl. Pořád můžeš dostat verdikt jen podle svého pohledu.</string>
     <string name="case_one_sided">Souzeno jen podle tvého pohledu.</string>
     <string name="case_start_over">Založit nový případ</string>
-    <string name="case_list_title">Tvoje případy</string>
-    <string name="case_list_empty">Zatím žádné případy.</string>
-    <string name="case_list_load_failed">Případy se teď nepodařilo načíst.</string>
-    <string name="case_list_started">Založeno %1$s</string>
     <string name="case_list_untitled">Případ z %1$s</string>
     <string name="case_list_untitled_soon">Případ</string>
     <string name="respond_kicker">Tvůj pohled</string>
@@ -434,12 +430,10 @@
     <string name="names_saved">Jména jsou uložená.</string>
     <string name="names_failed">Jména se nepodařilo uložit. Zkus to znovu.</string>
     <string name="names_invalid">Použij 1 až 40 znaků a žádné označení jako Strana A.</string>
-    <string name="account_verdicts_title">Tvoje verdikty</string>
-    <string name="account_verdicts_empty">Zatím žádné verdikty.</string>
-    <string name="account_verdicts_load_failed">Verdikty se nepodařilo načíst.</string>
     <string name="account_verdicts_removed">Odstraněno</string>
     <string name="shell_new">Nový spor</string>
     <string name="shell_today">Dnes</string>
+    <string name="shell_load_failed">Historii se nepodařilo načíst.</string>
     <string name="thread_label">Tenhle spor</string>
     <string name="thread_you">Tvůj text</string>
     <string name="thread_judges">Soudci</string>
@@ -483,10 +477,8 @@
     <string name="best_point_self">Tvůj nejsilnější argument</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">Nový</string>
-    <string name="app_tab_history">Moje verdikty</string>
     <string name="app_tab_settings">Nastavení</string>
     <string name="app_input_counter">%1$s / %2$s</string>
-    <string name="app_history_title">Moje verdikty</string>
     <string name="app_history_empty">Zatím žádné verdikty. Nech rozsoudit svůj první spor a verdikt najdeš tady.</string>
     <string name="app_history_device_only">Uloženo jen v tomhle telefonu. Když tu verdikt smažeš, jeho sdílený odkaz bude fungovat dál.</string>
     <string name="app_history_delete">Smazat</string>

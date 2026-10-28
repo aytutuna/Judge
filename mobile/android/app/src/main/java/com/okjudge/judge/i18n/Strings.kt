@@ -354,10 +354,6 @@ class Strings(private val res: Resources) {
     val caseExpiredBodyFree: String get() = res.getString(R.string.case_expired_body_free)
     val caseOneSided: String get() = res.getString(R.string.case_one_sided)
     val caseStartOver: String get() = res.getString(R.string.case_start_over)
-    val caseListTitle: String get() = res.getString(R.string.case_list_title)
-    val caseListEmpty: String get() = res.getString(R.string.case_list_empty)
-    val caseListLoadFailed: String get() = res.getString(R.string.case_list_load_failed)
-    fun caseListStarted(date: String): String = res.getString(R.string.case_list_started, date)
     fun caseListUntitled(date: String): String = res.getString(R.string.case_list_untitled, date)
     val caseListUntitledSoon: String get() = res.getString(R.string.case_list_untitled_soon)
     val respondKicker: String get() = res.getString(R.string.respond_kicker)
@@ -471,12 +467,10 @@ class Strings(private val res: Resources) {
     val namesSaved: String get() = res.getString(R.string.names_saved)
     val namesFailed: String get() = res.getString(R.string.names_failed)
     val namesInvalid: String get() = res.getString(R.string.names_invalid)
-    val accountVerdictsTitle: String get() = res.getString(R.string.account_verdicts_title)
-    val accountVerdictsEmpty: String get() = res.getString(R.string.account_verdicts_empty)
-    val accountVerdictsLoadFailed: String get() = res.getString(R.string.account_verdicts_load_failed)
     val accountVerdictsRemoved: String get() = res.getString(R.string.account_verdicts_removed)
     val shellNew: String get() = res.getString(R.string.shell_new)
     val shellToday: String get() = res.getString(R.string.shell_today)
+    val shellLoadFailed: String get() = res.getString(R.string.shell_load_failed)
     val threadLabel: String get() = res.getString(R.string.thread_label)
     val threadYou: String get() = res.getString(R.string.thread_you)
     val threadJudges: String get() = res.getString(R.string.thread_judges)
@@ -505,10 +499,8 @@ class Strings(private val res: Resources) {
     val bestPointSelf: String get() = res.getString(R.string.best_point_self)
     val appName: String get() = res.getString(R.string.app_name)
     val appTabNew: String get() = res.getString(R.string.app_tab_new)
-    val appTabHistory: String get() = res.getString(R.string.app_tab_history)
     val appTabSettings: String get() = res.getString(R.string.app_tab_settings)
     fun appInputCounter(count: String, max: String): String = res.getString(R.string.app_input_counter, count, max)
-    val appHistoryTitle: String get() = res.getString(R.string.app_history_title)
     val appHistoryEmpty: String get() = res.getString(R.string.app_history_empty)
     val appHistoryDeviceOnly: String get() = res.getString(R.string.app_history_device_only)
     val appHistoryDelete: String get() = res.getString(R.string.app_history_delete)
@@ -899,9 +891,6 @@ class Strings(private val res: Resources) {
             "case.expiredBodyFree" -> R.string.case_expired_body_free
             "case.oneSided" -> R.string.case_one_sided
             "case.startOver" -> R.string.case_start_over
-            "case.list.title" -> R.string.case_list_title
-            "case.list.empty" -> R.string.case_list_empty
-            "case.list.loadFailed" -> R.string.case_list_load_failed
             "case.list.untitledSoon" -> R.string.case_list_untitled_soon
             "respond.kicker" -> R.string.respond_kicker
             "respond.title" -> R.string.respond_title
@@ -1005,12 +994,10 @@ class Strings(private val res: Resources) {
             "names.saved" -> R.string.names_saved
             "names.failed" -> R.string.names_failed
             "names.invalid" -> R.string.names_invalid
-            "account.verdicts.title" -> R.string.account_verdicts_title
-            "account.verdicts.empty" -> R.string.account_verdicts_empty
-            "account.verdicts.loadFailed" -> R.string.account_verdicts_load_failed
             "account.verdicts.removed" -> R.string.account_verdicts_removed
             "shell.new" -> R.string.shell_new
             "shell.today" -> R.string.shell_today
+            "shell.loadFailed" -> R.string.shell_load_failed
             "thread.label" -> R.string.thread_label
             "thread.you" -> R.string.thread_you
             "thread.judges" -> R.string.thread_judges
@@ -1035,9 +1022,7 @@ class Strings(private val res: Resources) {
             "bestPoint.self" -> R.string.best_point_self
             "app.name" -> R.string.app_name
             "app.tab.new" -> R.string.app_tab_new
-            "app.tab.history" -> R.string.app_tab_history
             "app.tab.settings" -> R.string.app_tab_settings
-            "app.history.title" -> R.string.app_history_title
             "app.history.empty" -> R.string.app_history_empty
             "app.history.deviceOnly" -> R.string.app_history_device_only
             "app.history.delete" -> R.string.app_history_delete

@@ -5,10 +5,8 @@ const ml: AppLocale = {
   strings: {
     "app.name": "Judge",
     "app.tab.new": "പുതിയത്",
-    "app.tab.history": "എന്റെ വിധികൾ",
     "app.tab.settings": "ക്രമീകരണം",
     "app.input.counter": "{count} / {max}",
-    "app.history.title": "എന്റെ വിധികൾ",
     "app.history.empty": "ഇതുവരെ വിധികളൊന്നുമില്ല. ആദ്യത്തെ തർക്കം തീർക്കൂ, അത് ഇവിടെ കാണാം.",
     "app.history.deviceOnly":
       "ഈ ഫോണിൽ മാത്രമാണ് സേവ് ചെയ്തിരിക്കുന്നത്. ഇവിടെനിന്ന് ഒരു വിധി ഡിലീറ്റ് ചെയ്താലും അതിന്റെ ഷെയർ ലിങ്ക് തുടർന്നും പ്രവർത്തിക്കും.",

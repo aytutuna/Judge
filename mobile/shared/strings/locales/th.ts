@@ -6,10 +6,8 @@ const th: AppLocale = {
   strings: {
     "app.name": "Judge",
     "app.tab.new": "ใหม่",
-    "app.tab.history": "คำตัดสินของฉัน",
     "app.tab.settings": "ตั้งค่า",
     "app.input.counter": "{count} / {max}",
-    "app.history.title": "คำตัดสินของฉัน",
     "app.history.empty": "ยังไม่มีคำตัดสิน ลองเคลียร์เรื่องที่เถียงกันเรื่องแรกดู แล้วคำตัดสินจะขึ้นที่นี่",
     "app.history.deviceOnly": "บันทึกไว้ในโทรศัพท์เครื่องนี้เท่านั้น ถึงจะลบออกจากที่นี่ ลิงก์แชร์ก็ยังใช้ได้อยู่",
     "app.history.delete": "ลบ",

@@ -6,10 +6,8 @@ const te: AppLocale = {
   strings: {
     "app.name": "Judge",
     "app.tab.new": "కొత్తది",
-    "app.tab.history": "నా తీర్పులు",
     "app.tab.settings": "సెట్టింగ్‌లు",
     "app.input.counter": "{count} / {max}",
-    "app.history.title": "నా తీర్పులు",
     "app.history.empty": "ఇంకా తీర్పులేవీ లేవు. మీ మొదటి గొడవ తేల్చుకోండి, దాని తీర్పు ఇక్కడ కనిపిస్తుంది.",
     "app.history.deviceOnly": "ఇవి ఈ ఫోన్‌లో మాత్రమే సేవ్ అయ్యాయి. ఇక్కడ ఒకదాన్ని డిలీట్ చేసినా దాని షేర్ లింక్ ఆగిపోదు.",
     "app.history.delete": "డిలీట్",

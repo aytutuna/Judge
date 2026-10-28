@@ -5,10 +5,8 @@ const zhHans: AppLocale = {
   strings: {
     "app.name": "Judge",
     "app.tab.new": "新建",
-    "app.tab.history": "我的裁决",
     "app.tab.settings": "设置",
     "app.input.counter": "{count} / {max}",
-    "app.history.title": "我的裁决",
     "app.history.empty": "还没有裁决。第一场争论评出结果后，裁决会出现在这里。",
     "app.history.deviceOnly": "只保存在这台手机上。在这里删掉一条裁决，它的分享链接仍然有效。",
     "app.history.delete": "删除",

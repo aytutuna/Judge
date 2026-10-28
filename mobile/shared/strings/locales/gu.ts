@@ -6,10 +6,8 @@ const gu: AppLocale = {
   strings: {
     "app.name": "Judge",
     "app.tab.new": "નવું",
-    "app.tab.history": "મારા ચુકાદા",
     "app.tab.settings": "સેટિંગ્સ",
     "app.input.counter": "{count} / {max}",
-    "app.history.title": "મારા ચુકાદા",
     "app.history.empty":
       "હજી કોઈ ચુકાદો નથી. તમારા પહેલા વિવાદનો ફેંસલો કરાવો, એ અહીં દેખાશે.",
     "app.history.deviceOnly":

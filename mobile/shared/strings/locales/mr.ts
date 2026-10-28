@@ -6,10 +6,8 @@ const mr: AppLocale = {
   strings: {
     "app.name": "Judge",
     "app.tab.new": "नवा",
-    "app.tab.history": "माझे निकाल",
     "app.tab.settings": "सेटिंग्ज",
     "app.input.counter": "{count} / {max}",
-    "app.history.title": "माझे निकाल",
     "app.history.empty": "अजून एकही निकाल नाही. तुमचा पहिला वाद सोडवा, त्याचा निकाल इथे दिसेल.",
     "app.history.deviceOnly": "हे निकाल फक्त या फोनवर सेव्ह होतात. इथून एखादा निकाल डिलीट केला तरी त्याची शेअर लिंक चालू राहते.",
     "app.history.delete": "डिलीट करा",

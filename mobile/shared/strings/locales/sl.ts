@@ -5,10 +5,8 @@ const sl: AppLocale = {
   strings: {
     "app.name": "Judge",
     "app.tab.new": "Novo",
-    "app.tab.history": "Moje razsodbe",
     "app.tab.settings": "Nastavitve",
     "app.input.counter": "{count} / {max}",
-    "app.history.title": "Moje razsodbe",
     "app.history.empty":
       "Razsodb še ni. Ko razčistiš prvi prepir, se razsodba prikaže tukaj.",
     "app.history.deviceOnly":

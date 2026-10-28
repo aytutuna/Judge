@@ -5,10 +5,8 @@ const nl: AppLocale = {
   strings: {
     "app.name": "Judge",
     "app.tab.new": "Nieuw",
-    "app.tab.history": "Mijn uitspraken",
     "app.tab.settings": "Instellingen",
     "app.input.counter": "{count} / {max}",
-    "app.history.title": "Mijn uitspraken",
     "app.history.empty": "Nog geen uitspraken. Leg je eerste discussie voor, dan verschijnt de uitspraak hier.",
     "app.history.deviceOnly":
       "Alleen op deze telefoon bewaard. Verwijder je hier een uitspraak, dan blijft de deellink gewoon werken.",

@@ -5,10 +5,8 @@ const fr: AppLocale = {
   strings: {
     "app.name": "Judge",
     "app.tab.new": "Nouveau",
-    "app.tab.history": "Mes verdicts",
     "app.tab.settings": "Réglages",
     "app.input.counter": "{count} / {max}",
-    "app.history.title": "Mes verdicts",
     "app.history.empty": "Aucun verdict pour l’instant. Fais trancher ton premier débat et il apparaîtra ici.",
     "app.history.deviceOnly":
       "Enregistrés uniquement sur ce téléphone. En supprimer un ici ne désactive pas son lien de partage.",

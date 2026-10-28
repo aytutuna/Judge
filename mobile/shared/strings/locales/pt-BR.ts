@@ -5,10 +5,8 @@ const ptBR: AppLocale = {
   strings: {
     "app.name": "Judge",
     "app.tab.new": "Novo",
-    "app.tab.history": "Meus vereditos",
     "app.tab.settings": "Ajustes",
     "app.input.counter": "{count} / {max}",
-    "app.history.title": "Meus vereditos",
     "app.history.empty": "Nenhum veredito ainda. Resolva sua primeira discussão e o veredito aparece aqui.",
     "app.history.deviceOnly":
       "Ficam salvos só neste celular. Excluir um aqui não tira do ar o link de compartilhamento dele.",

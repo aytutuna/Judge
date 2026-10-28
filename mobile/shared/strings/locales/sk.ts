@@ -5,10 +5,8 @@ const sk: AppLocale = {
   strings: {
     "app.name": "Judge",
     "app.tab.new": "Nový spor",
-    "app.tab.history": "Moje verdikty",
     "app.tab.settings": "Nastavenia",
     "app.input.counter": "{count} / {max}",
-    "app.history.title": "Moje verdikty",
     "app.history.empty": "Zatiaľ tu nie sú žiadne verdikty. Nechaj rozsúdiť svoj prvý spor a verdikt nájdeš tu.",
     "app.history.deviceOnly":
       "Uložené len v tomto telefóne. Keď tu verdikt vymažeš, jeho odkaz na zdieľanie bude fungovať ďalej.",

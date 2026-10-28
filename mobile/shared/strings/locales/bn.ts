@@ -6,10 +6,8 @@ const bn: AppLocale = {
   strings: {
     "app.name": "Judge",
     "app.tab.new": "নতুন",
-    "app.tab.history": "আমার রায়",
     "app.tab.settings": "সেটিংস",
     "app.input.counter": "{count} / {max}",
-    "app.history.title": "আমার রায়",
     "app.history.empty": "এখনও কোনো রায় নেই। প্রথম তর্কের ফয়সালা করলে সেটা এখানে দেখা যাবে।",
     "app.history.deviceOnly": "শুধু এই ফোনে সেভ করা আছে। এখান থেকে কোনো রায় মুছলেও তার শেয়ার লিংক বন্ধ হয় না।",
     "app.history.delete": "মুছুন",

@@ -298,10 +298,6 @@
     <string name="case_expired_body_free">7 দিনে কেউ উত্তর দেননি। তবু শুধু আপনার বক্তব্যের ভিত্তিতে রায় নিতে পারেন।</string>
     <string name="case_one_sided">শুধু আপনার বক্তব্যের ভিত্তিতে রায় দেওয়া হয়েছে।</string>
     <string name="case_start_over">নতুন মামলা শুরু করুন</string>
-    <string name="case_list_title">আপনার মামলা</string>
-    <string name="case_list_empty">এখনও কোনো মামলা নেই।</string>
-    <string name="case_list_load_failed">এই মুহূর্তে আপনার মামলাগুলো লোড করা গেল না।</string>
-    <string name="case_list_started">শুরু: %1$s</string>
     <string name="case_list_untitled">%1$s তারিখের মামলা</string>
     <string name="case_list_untitled_soon">মামলা</string>
     <string name="respond_kicker">আপনার বক্তব্য</string>
@@ -418,12 +414,10 @@
     <string name="names_saved">নাম সেভ হয়েছে।</string>
     <string name="names_failed">নাম সেভ করা গেল না। আবার চেষ্টা করুন।</string>
     <string name="names_invalid">1 থেকে 40 অক্ষরের মধ্যে লিখুন, আর পক্ষ A-এর মতো কোনো তকমা নয়।</string>
-    <string name="account_verdicts_title">আপনার রায়</string>
-    <string name="account_verdicts_empty">এখনও কোনো রায় নেই।</string>
-    <string name="account_verdicts_load_failed">আপনার রায়গুলো লোড করা গেল না।</string>
     <string name="account_verdicts_removed">সরানো হয়েছে</string>
     <string name="shell_new">নতুন তর্ক</string>
     <string name="shell_today">আজ</string>
+    <string name="shell_load_failed">আপনার ইতিহাস লোড করা গেল না।</string>
     <string name="thread_label">এই তর্ক</string>
     <string name="thread_you">আপনি লিখেছেন</string>
     <string name="thread_judges">বিচারকেরা</string>
@@ -461,10 +455,8 @@
     <string name="best_point_self">আপনার সবচেয়ে জোরালো যুক্তি</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">নতুন</string>
-    <string name="app_tab_history">আমার রায়</string>
     <string name="app_tab_settings">সেটিংস</string>
     <string name="app_input_counter">%1$s / %2$s</string>
-    <string name="app_history_title">আমার রায়</string>
     <string name="app_history_empty">এখনও কোনো রায় নেই। প্রথম তর্কের ফয়সালা করলে সেটা এখানে দেখা যাবে।</string>
     <string name="app_history_device_only">শুধু এই ফোনে সেভ করা আছে। এখান থেকে কোনো রায় মুছলেও তার শেয়ার লিংক বন্ধ হয় না।</string>
     <string name="app_history_delete">মুছুন</string>

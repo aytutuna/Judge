@@ -5,10 +5,8 @@ const hu: AppLocale = {
   strings: {
     "app.name": "Judge",
     "app.tab.new": "Új",
-    "app.tab.history": "Ítéleteim",
     "app.tab.settings": "Beállítások",
     "app.input.counter": "{count} / {max}",
-    "app.history.title": "Ítéleteim",
     "app.history.empty": "Még nincs ítéleted. Amint eldől az első vitád, itt megjelenik.",
     "app.history.deviceOnly": "Csak ezen a telefonon vannak elmentve. Ha innen törölsz egyet, a megosztási linkje attól még működik.",
     "app.history.delete": "Törlés",

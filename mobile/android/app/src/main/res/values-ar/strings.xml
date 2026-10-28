@@ -326,10 +326,6 @@
     <string name="case_expired_body_free">لم يردّ أحد خلال 7 أيام. وما زال بإمكانك الحصول على حكم على روايتك وحدها.</string>
     <string name="case_one_sided">صدر الحكم بناءً على روايتك فقط.</string>
     <string name="case_start_over">بدء قضية جديدة</string>
-    <string name="case_list_title">قضاياك</string>
-    <string name="case_list_empty">لا قضايا بعد.</string>
-    <string name="case_list_load_failed">تعذّر تحميل قضاياك الآن.</string>
-    <string name="case_list_started">بدأت في %1$s</string>
     <string name="case_list_untitled">قضية بتاريخ %1$s</string>
     <string name="case_list_untitled_soon">قضية</string>
     <string name="respond_kicker">روايتك</string>
@@ -450,12 +446,10 @@
     <string name="names_saved">تم حفظ الأسماء.</string>
     <string name="names_failed">تعذّر حفظ الأسماء. حاول مجددًا.</string>
     <string name="names_invalid">استخدم من 1 إلى 40 حرفًا، ولا تكتب تسمية مثل الطرف A.</string>
-    <string name="account_verdicts_title">أحكامك</string>
-    <string name="account_verdicts_empty">لا أحكام بعد.</string>
-    <string name="account_verdicts_load_failed">تعذّر تحميل أحكامك.</string>
     <string name="account_verdicts_removed">محذوف</string>
     <string name="shell_new">خلاف جديد</string>
     <string name="shell_today">اليوم</string>
+    <string name="shell_load_failed">تعذّر تحميل سجلك.</string>
     <string name="thread_label">هذا الخلاف</string>
     <string name="thread_you">ما كتبته</string>
     <string name="thread_judges">القضاة</string>
@@ -505,10 +499,8 @@
     <string name="best_point_self">أقوى نقطة لديك</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">جديد</string>
-    <string name="app_tab_history">أحكامي</string>
     <string name="app_tab_settings">الإعدادات</string>
     <string name="app_input_counter">%1$s / %2$s</string>
-    <string name="app_history_title">أحكامي</string>
     <string name="app_history_empty">لا أحكام بعد. احسم أول خلاف لك وسيظهر حكمه هنا.</string>
     <string name="app_history_device_only">الأحكام محفوظة على هذا الهاتف فقط. حذف حكم من هنا لا يوقف رابط مشاركته.</string>
     <string name="app_history_delete">حذف</string>

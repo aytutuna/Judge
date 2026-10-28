@@ -6,10 +6,8 @@ const ur: AppLocale = {
   strings: {
     "app.name": "Judge",
     "app.tab.new": "نیا",
-    "app.tab.history": "میرے فیصلے",
     "app.tab.settings": "سیٹنگز",
     "app.input.counter": "{count} / {max}",
-    "app.history.title": "میرے فیصلے",
     "app.history.empty": "ابھی کوئی فیصلہ نہیں۔ اپنی پہلی بحث کا فیصلہ کروائیں تو وہ یہاں نظر آئے گا۔",
     "app.history.deviceOnly":
       "یہ فیصلے صرف اسی فون پر محفوظ ہیں۔ یہاں سے کوئی فیصلہ حذف کرنے سے اس کا شیئر لنک بند نہیں ہوتا۔",

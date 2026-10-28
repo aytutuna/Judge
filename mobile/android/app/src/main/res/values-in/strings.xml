@@ -291,10 +291,6 @@
     <string name="case_expired_body_free">Tidak ada yang menjawab dalam 7 hari. Kamu tetap bisa minta putusan dari versimu saja.</string>
     <string name="case_one_sided">Diputuskan dari versimu saja.</string>
     <string name="case_start_over">Mulai kasus baru</string>
-    <string name="case_list_title">Kasusmu</string>
-    <string name="case_list_empty">Belum ada kasus.</string>
-    <string name="case_list_load_failed">Kasusmu belum bisa dimuat sekarang.</string>
-    <string name="case_list_started">Dimulai %1$s</string>
     <string name="case_list_untitled">Kasus %1$s</string>
     <string name="case_list_untitled_soon">Kasus</string>
     <string name="respond_kicker">Versimu</string>
@@ -410,12 +406,10 @@
     <string name="names_saved">Nama tersimpan.</string>
     <string name="names_failed">Nama gagal disimpan. Coba lagi.</string>
     <string name="names_invalid">Gunakan 1 sampai 40 karakter, dan jangan pakai label seperti Pihak A.</string>
-    <string name="account_verdicts_title">Putusanmu</string>
-    <string name="account_verdicts_empty">Belum ada putusan.</string>
-    <string name="account_verdicts_load_failed">Putusanmu gagal dimuat.</string>
     <string name="account_verdicts_removed">Dihapus</string>
     <string name="shell_new">Perdebatan baru</string>
     <string name="shell_today">Hari ini</string>
+    <string name="shell_load_failed">Riwayatmu gagal dimuat.</string>
     <string name="thread_label">Perdebatan ini</string>
     <string name="thread_you">Tulisanmu</string>
     <string name="thread_judges">Para hakim</string>
@@ -450,10 +444,8 @@
     <string name="best_point_self">Poin terkuatmu</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">Baru</string>
-    <string name="app_tab_history">Putusanku</string>
     <string name="app_tab_settings">Pengaturan</string>
     <string name="app_input_counter">%1$s / %2$s</string>
-    <string name="app_history_title">Putusanku</string>
     <string name="app_history_empty">Belum ada putusan. Tuntaskan perdebatan pertamamu, nanti putusannya muncul di sini.</string>
     <string name="app_history_device_only">Hanya tersimpan di ponsel ini. Menghapus putusan di sini tidak mematikan tautan berbaginya.</string>
     <string name="app_history_delete">Hapus</string>

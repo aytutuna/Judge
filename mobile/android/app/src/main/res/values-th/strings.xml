@@ -291,10 +291,6 @@
     <string name="case_expired_body_free">ไม่มีใครตอบภายใน 7 วัน แต่คุณยังขอคำตัดสินจากฝั่งของคุณอย่างเดียวได้</string>
     <string name="case_one_sided">ตัดสินจากฝั่งของคุณเท่านั้น</string>
     <string name="case_start_over">เริ่มเคสใหม่</string>
-    <string name="case_list_title">เคสของคุณ</string>
-    <string name="case_list_empty">ยังไม่มีเคส</string>
-    <string name="case_list_load_failed">ตอนนี้โหลดเคสของคุณไม่ได้</string>
-    <string name="case_list_started">เริ่มวันที่ %1$s</string>
     <string name="case_list_untitled">เคสวันที่ %1$s</string>
     <string name="case_list_untitled_soon">เคส</string>
     <string name="respond_kicker">ฝั่งของคุณ</string>
@@ -410,12 +406,10 @@
     <string name="names_saved">บันทึกชื่อแล้ว</string>
     <string name="names_failed">บันทึกชื่อไม่ได้ ลองอีกครั้ง</string>
     <string name="names_invalid">ใช้ได้ 1 ถึง 40 ตัวอักษร และต้องไม่ใช่ป้ายอย่าง “ฝ่าย A”</string>
-    <string name="account_verdicts_title">คำตัดสินของคุณ</string>
-    <string name="account_verdicts_empty">ยังไม่มีคำตัดสิน</string>
-    <string name="account_verdicts_load_failed">โหลดคำตัดสินของคุณไม่ได้</string>
     <string name="account_verdicts_removed">ลบแล้ว</string>
     <string name="shell_new">เรื่องใหม่</string>
     <string name="shell_today">วันนี้</string>
+    <string name="shell_load_failed">โหลดประวัติไม่ได้</string>
     <string name="thread_label">เรื่องนี้</string>
     <string name="thread_you">คุณเขียน</string>
     <string name="thread_judges">กรรมการ</string>
@@ -450,10 +444,8 @@
     <string name="best_point_self">เหตุผลที่ดีที่สุดของคุณ</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">ใหม่</string>
-    <string name="app_tab_history">คำตัดสินของฉัน</string>
     <string name="app_tab_settings">ตั้งค่า</string>
     <string name="app_input_counter">%1$s / %2$s</string>
-    <string name="app_history_title">คำตัดสินของฉัน</string>
     <string name="app_history_empty">ยังไม่มีคำตัดสิน ลองเคลียร์เรื่องที่เถียงกันเรื่องแรกดู แล้วคำตัดสินจะขึ้นที่นี่</string>
     <string name="app_history_device_only">บันทึกไว้ในโทรศัพท์เครื่องนี้เท่านั้น ถึงจะลบออกจากที่นี่ ลิงก์แชร์ก็ยังใช้ได้อยู่</string>
     <string name="app_history_delete">ลบ</string>

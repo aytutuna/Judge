@@ -298,10 +298,6 @@
     <string name="case_expired_body_free">7 napig senki sem válaszolt. Ítéletet a saját verziód alapján továbbra is kérhetsz.</string>
     <string name="case_one_sided">Csak a te verziód alapján ítélve.</string>
     <string name="case_start_over">Új ügy indítása</string>
-    <string name="case_list_title">Az ügyeid</string>
-    <string name="case_list_empty">Még nincs ügyed.</string>
-    <string name="case_list_load_failed">Most nem sikerült betölteni az ügyeidet.</string>
-    <string name="case_list_started">Indítva: %1$s</string>
     <string name="case_list_untitled">Ügy · %1$s</string>
     <string name="case_list_untitled_soon">Ügy</string>
     <string name="respond_kicker">A te verziód</string>
@@ -418,12 +414,10 @@
     <string name="names_saved">Nevek elmentve.</string>
     <string name="names_failed">Nem sikerült menteni a neveket. Próbáld újra.</string>
     <string name="names_invalid">1–40 karakter legyen, és ne egy címke, például Fél A.</string>
-    <string name="account_verdicts_title">Az ítéleteid</string>
-    <string name="account_verdicts_empty">Még nincs ítéleted.</string>
-    <string name="account_verdicts_load_failed">Nem sikerült betölteni az ítéleteidet.</string>
     <string name="account_verdicts_removed">Eltávolítva</string>
     <string name="shell_new">Új vita</string>
     <string name="shell_today">Ma</string>
+    <string name="shell_load_failed">Nem sikerült betölteni az előzményeidet.</string>
     <string name="thread_label">Ez a vita</string>
     <string name="thread_you">Ezt írtad</string>
     <string name="thread_judges">A bírák</string>
@@ -461,10 +455,8 @@
     <string name="best_point_self">A te legjobb érved</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">Új</string>
-    <string name="app_tab_history">Ítéleteim</string>
     <string name="app_tab_settings">Beállítások</string>
     <string name="app_input_counter">%1$s / %2$s</string>
-    <string name="app_history_title">Ítéleteim</string>
     <string name="app_history_empty">Még nincs ítéleted. Amint eldől az első vitád, itt megjelenik.</string>
     <string name="app_history_device_only">Csak ezen a telefonon vannak elmentve. Ha innen törölsz egyet, a megosztási linkje attól még működik.</string>
     <string name="app_history_delete">Törlés</string>

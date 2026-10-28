@@ -6,10 +6,8 @@ const kn: AppLocale = {
   strings: {
     "app.name": "Judge",
     "app.tab.new": "ಹೊಸದು",
-    "app.tab.history": "ನನ್ನ ತೀರ್ಪುಗಳು",
     "app.tab.settings": "ಸೆಟ್ಟಿಂಗ್‌ಗಳು",
     "app.input.counter": "{count} / {max}",
-    "app.history.title": "ನನ್ನ ತೀರ್ಪುಗಳು",
     "app.history.empty": "ಇನ್ನೂ ಯಾವ ತೀರ್ಪೂ ಇಲ್ಲ. ನಿಮ್ಮ ಮೊದಲ ವಾದವನ್ನು ಬಗೆಹರಿಸಿ, ಅದು ಇಲ್ಲಿ ಕಾಣುತ್ತದೆ.",
     "app.history.deviceOnly":
       "ಈ ಫೋನ್‌ನಲ್ಲಿ ಮಾತ್ರ ಉಳಿಸಲಾಗಿದೆ. ಒಂದು ತೀರ್ಪನ್ನು ಇಲ್ಲಿಂದ ಅಳಿಸಿದರೂ ಅದರ ಹಂಚಿಕೆ ಲಿಂಕ್ ಕೆಲಸ ಮಾಡುತ್ತಲೇ ಇರುತ್ತದೆ.",

@@ -291,10 +291,6 @@
     <string name="case_expired_body_free">7 天內沒人回覆。你還是可以只用你的說法取得判決。</string>
     <string name="case_one_sided">只根據你的說法判決。</string>
     <string name="case_start_over">開新案子</string>
-    <string name="case_list_title">你的案子</string>
-    <string name="case_list_empty">還沒有案子。</string>
-    <string name="case_list_load_failed">暫時無法載入你的案子。</string>
-    <string name="case_list_started">%1$s 開始</string>
     <string name="case_list_untitled">%1$s 的案子</string>
     <string name="case_list_untitled_soon">案子</string>
     <string name="respond_kicker">你的說法</string>
@@ -410,12 +406,10 @@
     <string name="names_saved">名字已儲存。</string>
     <string name="names_failed">無法儲存名字，請再試一次。</string>
     <string name="names_invalid">請輸入 1 到 40 個字元，而且不能是當事人A這類標籤。</string>
-    <string name="account_verdicts_title">你的判決</string>
-    <string name="account_verdicts_empty">還沒有判決。</string>
-    <string name="account_verdicts_load_failed">無法載入你的判決。</string>
     <string name="account_verdicts_removed">已移除</string>
     <string name="shell_new">新爭論</string>
     <string name="shell_today">今天</string>
+    <string name="shell_load_failed">無法載入你的紀錄。</string>
     <string name="thread_label">這場爭論</string>
     <string name="thread_you">你寫的</string>
     <string name="thread_judges">評審</string>
@@ -450,10 +444,8 @@
     <string name="best_point_self">你最有力的一點</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">新增</string>
-    <string name="app_tab_history">我的判決</string>
     <string name="app_tab_settings">設定</string>
     <string name="app_input_counter">%1$s / %2$s</string>
-    <string name="app_history_title">我的判決</string>
     <string name="app_history_empty">還沒有判決。第一場爭論有了判決，就會出現在這裡。</string>
     <string name="app_history_device_only">只保存在這支手機上。在這裡刪除，分享連結不會跟著失效。</string>
     <string name="app_history_delete">刪除</string>

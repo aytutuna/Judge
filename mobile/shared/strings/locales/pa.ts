@@ -5,10 +5,8 @@ const pa: AppLocale = {
   strings: {
     "app.name": "Judge",
     "app.tab.new": "ਨਵਾਂ",
-    "app.tab.history": "ਮੇਰੇ ਫ਼ੈਸਲੇ",
     "app.tab.settings": "ਸੈਟਿੰਗਾਂ",
     "app.input.counter": "{count} / {max}",
-    "app.history.title": "ਮੇਰੇ ਫ਼ੈਸਲੇ",
     "app.history.empty": "ਹਾਲੇ ਕੋਈ ਫ਼ੈਸਲਾ ਨਹੀਂ। ਆਪਣੀ ਪਹਿਲੀ ਬਹਿਸ ਦਾ ਨਿਬੇੜਾ ਕਰਾਓ, ਫ਼ੈਸਲਾ ਇੱਥੇ ਦਿਖੇਗਾ।",
     "app.history.deviceOnly": "ਇਹ ਸਿਰਫ਼ ਇਸ ਫ਼ੋਨ ’ਤੇ ਸੇਵ ਹਨ। ਇੱਥੋਂ ਕੋਈ ਫ਼ੈਸਲਾ ਮਿਟਾਉਣ ਨਾਲ ਉਸ ਦਾ ਸਾਂਝਾ ਲਿੰਕ ਬੰਦ ਨਹੀਂ ਹੁੰਦਾ।",
     "app.history.delete": "ਮਿਟਾਓ",

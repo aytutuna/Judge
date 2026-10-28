@@ -19,6 +19,7 @@ export const WEB_KEYS: readonly string[] = [
   "thread.*",
   "shell.today",
   "shell.new",
+  "shell.loadFailed",
   // Judging state
   "thinking.*",
   // Verdict card

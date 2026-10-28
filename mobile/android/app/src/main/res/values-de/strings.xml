@@ -298,10 +298,6 @@
     <string name="case_expired_body_free">In 7 Tagen hat niemand geantwortet. Du kannst trotzdem ein Urteil nur über deine Seite bekommen.</string>
     <string name="case_one_sided">Nur auf Basis deiner Seite beurteilt.</string>
     <string name="case_start_over">Neuen Fall starten</string>
-    <string name="case_list_title">Deine Fälle</string>
-    <string name="case_list_empty">Noch keine Fälle.</string>
-    <string name="case_list_load_failed">Wir konnten deine Fälle gerade nicht laden.</string>
-    <string name="case_list_started">Gestartet am %1$s</string>
     <string name="case_list_untitled">Fall vom %1$s</string>
     <string name="case_list_untitled_soon">Fall</string>
     <string name="respond_kicker">Deine Seite</string>
@@ -418,12 +414,10 @@
     <string name="names_saved">Namen gespeichert.</string>
     <string name="names_failed">Wir konnten die Namen nicht speichern. Versuch es noch mal.</string>
     <string name="names_invalid">Verwende 1 bis 40 Zeichen und keine Bezeichnung wie „Partei A“.</string>
-    <string name="account_verdicts_title">Deine Urteile</string>
-    <string name="account_verdicts_empty">Noch keine Urteile.</string>
-    <string name="account_verdicts_load_failed">Wir konnten deine Urteile nicht laden.</string>
     <string name="account_verdicts_removed">Entfernt</string>
     <string name="shell_new">Neuer Streit</string>
     <string name="shell_today">Heute</string>
+    <string name="shell_load_failed">Wir konnten deinen Verlauf nicht laden.</string>
     <string name="thread_label">Dieser Streit</string>
     <string name="thread_you">Du hast geschrieben</string>
     <string name="thread_judges">Die Richter</string>
@@ -461,10 +455,8 @@
     <string name="best_point_self">Dein stärkstes Argument</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">Neu</string>
-    <string name="app_tab_history">Meine Urteile</string>
     <string name="app_tab_settings">Einstellungen</string>
     <string name="app_input_counter">%1$s / %2$s</string>
-    <string name="app_history_title">Meine Urteile</string>
     <string name="app_history_empty">Noch keine Urteile. Kläre deinen ersten Streit, dann erscheint das Urteil hier.</string>
     <string name="app_history_device_only">Nur auf diesem Handy gespeichert. Wenn du hier ein Urteil löschst, funktioniert der geteilte Link weiter.</string>
     <string name="app_history_delete">Löschen</string>

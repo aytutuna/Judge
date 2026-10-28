@@ -6,10 +6,8 @@ const or: AppLocale = {
   strings: {
     "app.name": "Judge",
     "app.tab.new": "ନୂଆ",
-    "app.tab.history": "ମୋ ରାୟ",
     "app.tab.settings": "ସେଟିଂସ୍",
     "app.input.counter": "{count} / {max}",
-    "app.history.title": "ମୋ ରାୟ",
     "app.history.empty": "ଏଯାଏଁ କୌଣସି ରାୟ ନାହିଁ। ଆପଣଙ୍କ ପ୍ରଥମ ଝଗଡ଼ା ମେଣ୍ଟାନ୍ତୁ, ତା'ର ରାୟ ଏଠାରେ ଦେଖାଯିବ।",
     "app.history.deviceOnly": "କେବଳ ଏହି ଫୋନ୍‌ରେ ସେଭ୍ ହୋଇଛି। ଏଠାରୁ କୌଣସି ରାୟ ଡିଲିଟ୍ କଲେ ବି ତା'ର ସେୟାର୍ ଲିଙ୍କ୍ ବନ୍ଦ ହୁଏ ନାହିଁ।",
     "app.history.delete": "ଡିଲିଟ୍",

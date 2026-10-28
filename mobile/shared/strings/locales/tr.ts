@@ -5,10 +5,8 @@ const tr: AppLocale = {
   strings: {
     "app.name": "Judge",
     "app.tab.new": "Yeni",
-    "app.tab.history": "Kararlarım",
     "app.tab.settings": "Ayarlar",
     "app.input.counter": "{count} / {max}",
-    "app.history.title": "Kararlarım",
     "app.history.empty": "Henüz kararın yok. İlk tartışmanı çözdüğünde burada görünür.",
     "app.history.deviceOnly": "Sadece bu telefonda saklanır. Buradan silmek paylaşım linkini kaldırmaz.",
     "app.history.delete": "Sil",

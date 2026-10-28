@@ -61,7 +61,7 @@ struct CaseRow: View {
                 .foregroundStyle(Brand.ink)
                 .lineLimit(2)
             if let date = ErrorText.formatDate(summary.createdAt, lang: lang) {
-                Text(L10n.caseListStarted(lang, date: date))
+                Text(date)
                     .brandText(.footnote)
                     .foregroundStyle(Brand.muted)
             }

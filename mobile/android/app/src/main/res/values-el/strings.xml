@@ -298,10 +298,6 @@
     <string name="case_expired_body_free">Κανείς δεν απάντησε σε 7 μέρες. Μπορείς ακόμα να ζητήσεις απόφαση μόνο με τη δική σου πλευρά.</string>
     <string name="case_one_sided">Κρίθηκε μόνο με τη δική σου πλευρά.</string>
     <string name="case_start_over">Νέα υπόθεση</string>
-    <string name="case_list_title">Οι υποθέσεις σου</string>
-    <string name="case_list_empty">Δεν έχεις υποθέσεις ακόμα.</string>
-    <string name="case_list_load_failed">Δεν μπορέσαμε να φορτώσουμε τις υποθέσεις σου τώρα.</string>
-    <string name="case_list_started">Ξεκίνησε στις %1$s</string>
     <string name="case_list_untitled">Υπόθεση · %1$s</string>
     <string name="case_list_untitled_soon">Υπόθεση</string>
     <string name="respond_kicker">Η πλευρά σου</string>
@@ -418,12 +414,10 @@
     <string name="names_saved">Τα ονόματα αποθηκεύτηκαν.</string>
     <string name="names_failed">Δεν μπορέσαμε να αποθηκεύσουμε τα ονόματα. Δοκίμασε ξανά.</string>
     <string name="names_invalid">Γράψε από 1 έως 40 χαρακτήρες, και όχι ετικέτα όπως «Πλευρά A».</string>
-    <string name="account_verdicts_title">Οι αποφάσεις σου</string>
-    <string name="account_verdicts_empty">Καμία απόφαση ακόμα.</string>
-    <string name="account_verdicts_load_failed">Δεν μπορέσαμε να φορτώσουμε τις αποφάσεις σου.</string>
     <string name="account_verdicts_removed">Αφαιρέθηκε</string>
     <string name="shell_new">Νέα διαφωνία</string>
     <string name="shell_today">Σήμερα</string>
+    <string name="shell_load_failed">Δεν μπορέσαμε να φορτώσουμε το ιστορικό σου.</string>
     <string name="thread_label">Αυτή η διαφωνία</string>
     <string name="thread_you">Έγραψες</string>
     <string name="thread_judges">Οι κριτές</string>
@@ -461,10 +455,8 @@
     <string name="best_point_self">Το δικό σου δυνατό χαρτί</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">Νέα διαφωνία</string>
-    <string name="app_tab_history">Αποφάσεις</string>
     <string name="app_tab_settings">Ρυθμίσεις</string>
     <string name="app_input_counter">%1$s / %2$s</string>
-    <string name="app_history_title">Οι αποφάσεις μου</string>
     <string name="app_history_empty">Δεν έχεις αποφάσεις ακόμα. Λύσε την πρώτη σου διαφωνία και η απόφαση θα εμφανιστεί εδώ.</string>
     <string name="app_history_device_only">Αποθηκεύονται μόνο σε αυτό το τηλέφωνο. Αν διαγράψεις μια απόφαση από εδώ, ο σύνδεσμος κοινοποίησής της θα συνεχίσει να λειτουργεί.</string>
     <string name="app_history_delete">Διαγραφή</string>

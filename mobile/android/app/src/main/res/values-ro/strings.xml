@@ -305,10 +305,6 @@
     <string name="case_expired_body_free">N-a răspuns nimeni în 7 zile. Poți primi totuși un verdict doar pe partea ta.</string>
     <string name="case_one_sided">Judecat doar pe partea ta.</string>
     <string name="case_start_over">Începe un caz nou</string>
-    <string name="case_list_title">Cazurile tale</string>
-    <string name="case_list_empty">Încă nu ai cazuri.</string>
-    <string name="case_list_load_failed">N-am putut încărca acum cazurile tale.</string>
-    <string name="case_list_started">Început pe %1$s</string>
     <string name="case_list_untitled">Caz din %1$s</string>
     <string name="case_list_untitled_soon">Caz</string>
     <string name="respond_kicker">Partea ta</string>
@@ -426,12 +422,10 @@
     <string name="names_saved">Numele au fost salvate.</string>
     <string name="names_failed">N-am putut salva numele. Încearcă din nou.</string>
     <string name="names_invalid">Folosește între 1 și 40 de caractere, dar nu o etichetă precum Partea A.</string>
-    <string name="account_verdicts_title">Verdictele tale</string>
-    <string name="account_verdicts_empty">Încă nu ai verdicte.</string>
-    <string name="account_verdicts_load_failed">N-am putut încărca verdictele tale.</string>
     <string name="account_verdicts_removed">Eliminat</string>
     <string name="shell_new">Dispută nouă</string>
     <string name="shell_today">Azi</string>
+    <string name="shell_load_failed">N-am putut încărca istoricul.</string>
     <string name="thread_label">Disputa asta</string>
     <string name="thread_you">Ai scris</string>
     <string name="thread_judges">Judecătorii</string>
@@ -472,10 +466,8 @@
     <string name="best_point_self">Cel mai bun argument al tău</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">Nou</string>
-    <string name="app_tab_history">Verdictele mele</string>
     <string name="app_tab_settings">Setări</string>
     <string name="app_input_counter">%1$s / %2$s</string>
-    <string name="app_history_title">Verdictele mele</string>
     <string name="app_history_empty">Încă nu ai verdicte. Lămurește-ți prima dispută și verdictul apare aici.</string>
     <string name="app_history_device_only">Salvate doar pe acest telefon. Dacă ștergi unul de aici, linkul lui de distribuire rămâne activ.</string>
     <string name="app_history_delete">Șterge</string>

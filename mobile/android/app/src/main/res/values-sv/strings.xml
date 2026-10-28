@@ -298,10 +298,6 @@
     <string name="case_expired_body_free">Ingen svarade inom 7 dagar. Du kan ändå få en dom på bara din sida.</string>
     <string name="case_one_sided">Dömt utifrån bara din sida.</string>
     <string name="case_start_over">Starta ett nytt fall</string>
-    <string name="case_list_title">Dina fall</string>
-    <string name="case_list_empty">Inga fall än.</string>
-    <string name="case_list_load_failed">Vi kunde inte ladda dina fall just nu.</string>
-    <string name="case_list_started">Startat %1$s</string>
     <string name="case_list_untitled">Fall från %1$s</string>
     <string name="case_list_untitled_soon">Fall</string>
     <string name="respond_kicker">Din sida</string>
@@ -418,12 +414,10 @@
     <string name="names_saved">Namnen är sparade.</string>
     <string name="names_failed">Vi kunde inte spara namnen. Försök igen.</string>
     <string name="names_invalid">Använd 1–40 tecken, och inte en etikett som Part A.</string>
-    <string name="account_verdicts_title">Dina domar</string>
-    <string name="account_verdicts_empty">Inga domar än.</string>
-    <string name="account_verdicts_load_failed">Vi kunde inte ladda dina domar.</string>
     <string name="account_verdicts_removed">Borttagen</string>
     <string name="shell_new">Nytt bråk</string>
     <string name="shell_today">I dag</string>
+    <string name="shell_load_failed">Vi kunde inte ladda din historik.</string>
     <string name="thread_label">Det här bråket</string>
     <string name="thread_you">Du skrev</string>
     <string name="thread_judges">Domarna</string>
@@ -461,10 +455,8 @@
     <string name="best_point_self">Ditt bästa argument</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">Nytt</string>
-    <string name="app_tab_history">Mina domar</string>
     <string name="app_tab_settings">Inställningar</string>
     <string name="app_input_counter">%1$s / %2$s</string>
-    <string name="app_history_title">Mina domar</string>
     <string name="app_history_empty">Inga domar än. Avgör ditt första bråk så dyker domen upp här.</string>
     <string name="app_history_device_only">Sparas bara på den här telefonen. Tar du bort en dom här fortsätter delningslänken att fungera.</string>
     <string name="app_history_delete">Ta bort</string>

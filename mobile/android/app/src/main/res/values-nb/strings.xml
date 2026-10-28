@@ -298,10 +298,6 @@
     <string name="case_expired_body_free">Ingen svarte på 7 dager. Du kan fortsatt få en dom bare på din side.</string>
     <string name="case_one_sided">Dømt bare på din side.</string>
     <string name="case_start_over">Start en ny sak</string>
-    <string name="case_list_title">Sakene dine</string>
-    <string name="case_list_empty">Ingen saker ennå.</string>
-    <string name="case_list_load_failed">Vi fikk ikke lastet sakene dine akkurat nå.</string>
-    <string name="case_list_started">Startet %1$s</string>
     <string name="case_list_untitled">Sak fra %1$s</string>
     <string name="case_list_untitled_soon">Sak</string>
     <string name="respond_kicker">Din side</string>
@@ -418,12 +414,10 @@
     <string name="names_saved">Navnene er lagret.</string>
     <string name="names_failed">Vi fikk ikke lagret navnene. Prøv igjen.</string>
     <string name="names_invalid">Bruk 1 til 40 tegn, og ikke en merkelapp som Part A.</string>
-    <string name="account_verdicts_title">Dommene dine</string>
-    <string name="account_verdicts_empty">Ingen dommer ennå.</string>
-    <string name="account_verdicts_load_failed">Vi fikk ikke lastet dommene dine.</string>
     <string name="account_verdicts_removed">Fjernet</string>
     <string name="shell_new">Ny diskusjon</string>
     <string name="shell_today">I dag</string>
+    <string name="shell_load_failed">Vi fikk ikke lastet historikken din.</string>
     <string name="thread_label">Denne diskusjonen</string>
     <string name="thread_you">Du skrev</string>
     <string name="thread_judges">Dommerne</string>
@@ -461,10 +455,8 @@
     <string name="best_point_self">Ditt beste poeng</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">Ny</string>
-    <string name="app_tab_history">Mine dommer</string>
     <string name="app_tab_settings">Innstillinger</string>
     <string name="app_input_counter">%1$s / %2$s</string>
-    <string name="app_history_title">Mine dommer</string>
     <string name="app_history_empty">Ingen dommer ennå. Få avgjort den første diskusjonen din, så dukker den opp her.</string>
     <string name="app_history_device_only">Lagres bare på denne telefonen. Sletter du en dom her, fjernes ikke delingslenken.</string>
     <string name="app_history_delete">Slett</string>

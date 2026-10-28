@@ -6,10 +6,8 @@ const fi: AppLocale = {
   strings: {
     "app.name": "Judge",
     "app.tab.new": "Uusi",
-    "app.tab.history": "Tuomioni",
     "app.tab.settings": "Asetukset",
     "app.input.counter": "{count} / {max}",
-    "app.history.title": "Tuomioni",
     "app.history.empty": "Ei vielä tuomioita. Ratkaise ensimmäinen kiistasi, niin tuomio näkyy täällä.",
     "app.history.deviceOnly": "Tallennettu vain tähän puhelimeen. Jos poistat tuomion täältä, sen jakolinkki toimii edelleen.",
     "app.history.delete": "Poista",

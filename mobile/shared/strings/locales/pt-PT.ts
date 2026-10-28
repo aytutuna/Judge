@@ -5,10 +5,8 @@ const ptPT: AppLocale = {
   strings: {
     "app.name": "Judge",
     "app.tab.new": "Novo",
-    "app.tab.history": "Veredictos",
     "app.tab.settings": "Definições",
     "app.input.counter": "{count} / {max}",
-    "app.history.title": "Os meus veredictos",
     "app.history.empty": "Ainda não há veredictos. Tira a tua primeira teima e o veredicto aparece aqui.",
     "app.history.deviceOnly": "Ficam guardados só neste telemóvel. Se apagares um aqui, o link de partilha continua ativo.",
     "app.history.delete": "Apagar",

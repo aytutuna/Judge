@@ -95,7 +95,7 @@ fun CaseRow(c: CaseSummary, onOpen: (String) -> Unit) {
         verticalArrangement = Arrangement.spacedBy(6.dp),
     ) {
         Text(title, style = JudgeType.headline.copy(color = Palette.ink), maxLines = 2, overflow = TextOverflow.Ellipsis)
-        if (date != null) Text(s.caseListStarted(date), style = JudgeType.footnote)
+        if (date != null) Text(date, style = JudgeType.footnote)
         if (c.removed) {
             Text(
                 s.accountVerdictsRemoved,
@@ -120,7 +120,7 @@ fun CaseListFailed(onRetry: () -> Unit) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
-        Text(s.caseListLoadFailed, style = JudgeType.body.copy(color = Palette.danger), modifier = Modifier.testTag(CaseListTags.ERROR))
+        Text(s.shellLoadFailed, style = JudgeType.body.copy(color = Palette.danger), modifier = Modifier.testTag(CaseListTags.ERROR))
         GhostButton(s.appRetry, null, onRetry)
     }
 }

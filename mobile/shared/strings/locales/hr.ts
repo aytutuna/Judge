@@ -6,10 +6,8 @@ const hr: AppLocale = {
   strings: {
     "app.name": "Judge",
     "app.tab.new": "Novo",
-    "app.tab.history": "Moje presude",
     "app.tab.settings": "Postavke",
     "app.input.counter": "{count} / {max}",
-    "app.history.title": "Moje presude",
     "app.history.empty": "Još nemaš presuda. Riješi prvu raspravu i presuda će se pojaviti ovdje.",
     "app.history.deviceOnly":
       "Spremljeno samo na ovom telefonu. Ako presudu izbrišeš ovdje, njezina poveznica za dijeljenje i dalje radi.",

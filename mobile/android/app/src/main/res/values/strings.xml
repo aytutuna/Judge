@@ -298,10 +298,6 @@
     <string name="case_expired_body_free">Nobody answered in 7 days. You can still get a verdict on your side alone.</string>
     <string name="case_one_sided">Judged on your side only.</string>
     <string name="case_start_over">Start a new case</string>
-    <string name="case_list_title">Your cases</string>
-    <string name="case_list_empty">No cases yet.</string>
-    <string name="case_list_load_failed">We couldn\'t load your cases just now.</string>
-    <string name="case_list_started">Started %1$s</string>
     <string name="case_list_untitled">Case from %1$s</string>
     <string name="case_list_untitled_soon">Case</string>
     <string name="respond_kicker">Your side</string>
@@ -418,12 +414,10 @@
     <string name="names_saved">Names saved.</string>
     <string name="names_failed">We couldn\'t save the names. Try again.</string>
     <string name="names_invalid">Use 1 to 40 characters, and not a label such as Party A.</string>
-    <string name="account_verdicts_title">Your verdicts</string>
-    <string name="account_verdicts_empty">No verdicts yet.</string>
-    <string name="account_verdicts_load_failed">We couldn\'t load your verdicts.</string>
     <string name="account_verdicts_removed">Removed</string>
     <string name="shell_new">New argument</string>
     <string name="shell_today">Today</string>
+    <string name="shell_load_failed">We couldn\'t load your history.</string>
     <string name="thread_label">This argument</string>
     <string name="thread_you">You wrote</string>
     <string name="thread_judges">The judges</string>
@@ -461,10 +455,8 @@
     <string name="best_point_self">Your best point</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">New</string>
-    <string name="app_tab_history">My verdicts</string>
     <string name="app_tab_settings">Settings</string>
     <string name="app_input_counter">%1$s / %2$s</string>
-    <string name="app_history_title">My verdicts</string>
     <string name="app_history_empty">No verdicts yet. Settle your first argument and it shows up here.</string>
     <string name="app_history_device_only">Saved on this phone only. Deleting one here doesn\'t take down its share link.</string>
     <string name="app_history_delete">Delete</string>

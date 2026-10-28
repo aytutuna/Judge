@@ -312,10 +312,6 @@
     <string name="case_expired_body_free">Nikt nie odpowiedział przez 7 dni. Nadal możesz dostać werdykt tylko na podstawie swojej wersji.</string>
     <string name="case_one_sided">Oceniono tylko na podstawie twojej wersji.</string>
     <string name="case_start_over">Zacznij nową sprawę</string>
-    <string name="case_list_title">Twoje sprawy</string>
-    <string name="case_list_empty">Na razie brak spraw.</string>
-    <string name="case_list_load_failed">Nie udało się teraz wczytać spraw.</string>
-    <string name="case_list_started">Rozpoczęto %1$s</string>
     <string name="case_list_untitled">Sprawa z %1$s</string>
     <string name="case_list_untitled_soon">Sprawa</string>
     <string name="respond_kicker">Twoja wersja</string>
@@ -434,12 +430,10 @@
     <string name="names_saved">Imiona zapisane.</string>
     <string name="names_failed">Nie udało się zapisać imion. Spróbuj ponownie.</string>
     <string name="names_invalid">Wpisz od 1 do 40 znaków. Etykiety w stylu „Strona A” są niedozwolone.</string>
-    <string name="account_verdicts_title">Twoje werdykty</string>
-    <string name="account_verdicts_empty">Na razie brak werdyktów.</string>
-    <string name="account_verdicts_load_failed">Nie udało się wczytać werdyktów.</string>
     <string name="account_verdicts_removed">Usunięty</string>
     <string name="shell_new">Nowy spór</string>
     <string name="shell_today">Dzisiaj</string>
+    <string name="shell_load_failed">Nie udało się wczytać historii.</string>
     <string name="thread_label">Ten spór</string>
     <string name="thread_you">Twój opis</string>
     <string name="thread_judges">Sędziowie</string>
@@ -483,10 +477,8 @@
     <string name="best_point_self">Twój najmocniejszy argument</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">Nowy</string>
-    <string name="app_tab_history">Moje werdykty</string>
     <string name="app_tab_settings">Ustawienia</string>
     <string name="app_input_counter">%1$s / %2$s</string>
-    <string name="app_history_title">Moje werdykty</string>
     <string name="app_history_empty">Nie masz jeszcze werdyktów. Rozstrzygnij pierwszy spór, a werdykt pojawi się tutaj.</string>
     <string name="app_history_device_only">Zapisane tylko na tym telefonie. Usunięcie werdyktu tutaj nie wyłącza linku do udostępniania.</string>
     <string name="app_history_delete">Usuń</string>

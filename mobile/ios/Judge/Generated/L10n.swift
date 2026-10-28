@@ -421,10 +421,6 @@ enum L10n {
     static func caseExpiredBodyFree(_ lang: AppLang) -> String { string("case.expiredBodyFree", lang) }
     static func caseOneSided(_ lang: AppLang) -> String { string("case.oneSided", lang) }
     static func caseStartOver(_ lang: AppLang) -> String { string("case.startOver", lang) }
-    static func caseListTitle(_ lang: AppLang) -> String { string("case.list.title", lang) }
-    static func caseListEmpty(_ lang: AppLang) -> String { string("case.list.empty", lang) }
-    static func caseListLoadFailed(_ lang: AppLang) -> String { string("case.list.loadFailed", lang) }
-    static func caseListStarted(_ lang: AppLang, date: String) -> String { format("case.list.started", lang, date) }
     static func caseListUntitled(_ lang: AppLang, date: String) -> String { format("case.list.untitled", lang, date) }
     static func caseListUntitledSoon(_ lang: AppLang) -> String { string("case.list.untitledSoon", lang) }
     static func respondKicker(_ lang: AppLang) -> String { string("respond.kicker", lang) }
@@ -538,12 +534,10 @@ enum L10n {
     static func namesSaved(_ lang: AppLang) -> String { string("names.saved", lang) }
     static func namesFailed(_ lang: AppLang) -> String { string("names.failed", lang) }
     static func namesInvalid(_ lang: AppLang) -> String { string("names.invalid", lang) }
-    static func accountVerdictsTitle(_ lang: AppLang) -> String { string("account.verdicts.title", lang) }
-    static func accountVerdictsEmpty(_ lang: AppLang) -> String { string("account.verdicts.empty", lang) }
-    static func accountVerdictsLoadFailed(_ lang: AppLang) -> String { string("account.verdicts.loadFailed", lang) }
     static func accountVerdictsRemoved(_ lang: AppLang) -> String { string("account.verdicts.removed", lang) }
     static func shellNew(_ lang: AppLang) -> String { string("shell.new", lang) }
     static func shellToday(_ lang: AppLang) -> String { string("shell.today", lang) }
+    static func shellLoadFailed(_ lang: AppLang) -> String { string("shell.loadFailed", lang) }
     static func threadLabel(_ lang: AppLang) -> String { string("thread.label", lang) }
     static func threadYou(_ lang: AppLang) -> String { string("thread.you", lang) }
     static func threadJudges(_ lang: AppLang) -> String { string("thread.judges", lang) }
@@ -572,10 +566,8 @@ enum L10n {
     static func bestPointSelf(_ lang: AppLang) -> String { string("bestPoint.self", lang) }
     static func appName(_ lang: AppLang) -> String { string("app.name", lang) }
     static func appTabNew(_ lang: AppLang) -> String { string("app.tab.new", lang) }
-    static func appTabHistory(_ lang: AppLang) -> String { string("app.tab.history", lang) }
     static func appTabSettings(_ lang: AppLang) -> String { string("app.tab.settings", lang) }
     static func appInputCounter(_ lang: AppLang, count: String, max: String) -> String { format("app.input.counter", lang, count, max) }
-    static func appHistoryTitle(_ lang: AppLang) -> String { string("app.history.title", lang) }
     static func appHistoryEmpty(_ lang: AppLang) -> String { string("app.history.empty", lang) }
     static func appHistoryDeviceOnly(_ lang: AppLang) -> String { string("app.history.deviceOnly", lang) }
     static func appHistoryDelete(_ lang: AppLang) -> String { string("app.history.delete", lang) }
@@ -967,9 +959,6 @@ enum L10n {
         "case.expiredBodyFree",
         "case.oneSided",
         "case.startOver",
-        "case.list.title",
-        "case.list.empty",
-        "case.list.loadFailed",
         "case.list.untitledSoon",
         "respond.kicker",
         "respond.title",
@@ -1073,12 +1062,10 @@ enum L10n {
         "names.saved",
         "names.failed",
         "names.invalid",
-        "account.verdicts.title",
-        "account.verdicts.empty",
-        "account.verdicts.loadFailed",
         "account.verdicts.removed",
         "shell.new",
         "shell.today",
+        "shell.loadFailed",
         "thread.label",
         "thread.you",
         "thread.judges",
@@ -1103,9 +1090,7 @@ enum L10n {
         "bestPoint.self",
         "app.name",
         "app.tab.new",
-        "app.tab.history",
         "app.tab.settings",
-        "app.history.title",
         "app.history.empty",
         "app.history.deviceOnly",
         "app.history.delete",

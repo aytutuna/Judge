@@ -298,10 +298,6 @@
     <string name="case_expired_body_free">7 ദിവസത്തിനുള്ളിൽ ആരും മറുപടി നൽകിയില്ല. നിങ്ങളുടെ ഭാഗം മാത്രം വെച്ച് ഇപ്പോഴും വിധി നേടാം.</string>
     <string name="case_one_sided">നിങ്ങളുടെ ഭാഗം മാത്രം കേട്ടുള്ള വിധി.</string>
     <string name="case_start_over">പുതിയ കേസ് തുടങ്ങൂ</string>
-    <string name="case_list_title">നിങ്ങളുടെ കേസുകൾ</string>
-    <string name="case_list_empty">ഇതുവരെ കേസുകളൊന്നുമില്ല.</string>
-    <string name="case_list_load_failed">ഇപ്പോൾ നിങ്ങളുടെ കേസുകൾ ലോഡ് ചെയ്യാനായില്ല.</string>
-    <string name="case_list_started">തുടങ്ങിയത്: %1$s</string>
     <string name="case_list_untitled">കേസ് · %1$s</string>
     <string name="case_list_untitled_soon">കേസ്</string>
     <string name="respond_kicker">നിങ്ങളുടെ ഭാഗം</string>
@@ -418,12 +414,10 @@
     <string name="names_saved">പേരുകൾ സേവ് ചെയ്തു.</string>
     <string name="names_failed">പേരുകൾ സേവ് ചെയ്യാനായില്ല. വീണ്ടും ശ്രമിക്കൂ.</string>
     <string name="names_invalid">1 മുതൽ 40 വരെ അക്ഷരങ്ങൾ ഉപയോഗിക്കൂ; കക്ഷി A പോലുള്ള ലേബൽ പാടില്ല.</string>
-    <string name="account_verdicts_title">നിങ്ങളുടെ വിധികൾ</string>
-    <string name="account_verdicts_empty">ഇതുവരെ വിധികളൊന്നുമില്ല.</string>
-    <string name="account_verdicts_load_failed">നിങ്ങളുടെ വിധികൾ ലോഡ് ചെയ്യാനായില്ല.</string>
     <string name="account_verdicts_removed">നീക്കം ചെയ്തത്</string>
     <string name="shell_new">പുതിയ തർക്കം</string>
     <string name="shell_today">ഇന്ന്</string>
+    <string name="shell_load_failed">ചരിത്രം ലോഡ് ചെയ്യാനായില്ല.</string>
     <string name="thread_label">ഈ തർക്കം</string>
     <string name="thread_you">നിങ്ങൾ എഴുതിയത്</string>
     <string name="thread_judges">ജഡ്ജിമാർ</string>
@@ -461,10 +455,8 @@
     <string name="best_point_self">നിങ്ങളുടെ ഏറ്റവും നല്ല പോയിന്റ്</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">പുതിയത്</string>
-    <string name="app_tab_history">എന്റെ വിധികൾ</string>
     <string name="app_tab_settings">ക്രമീകരണം</string>
     <string name="app_input_counter">%1$s / %2$s</string>
-    <string name="app_history_title">എന്റെ വിധികൾ</string>
     <string name="app_history_empty">ഇതുവരെ വിധികളൊന്നുമില്ല. ആദ്യത്തെ തർക്കം തീർക്കൂ, അത് ഇവിടെ കാണാം.</string>
     <string name="app_history_device_only">ഈ ഫോണിൽ മാത്രമാണ് സേവ് ചെയ്തിരിക്കുന്നത്. ഇവിടെനിന്ന് ഒരു വിധി ഡിലീറ്റ് ചെയ്താലും അതിന്റെ ഷെയർ ലിങ്ക് തുടർന്നും പ്രവർത്തിക്കും.</string>
     <string name="app_history_delete">ഡിലീറ്റ്</string>

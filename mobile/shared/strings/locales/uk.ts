@@ -6,10 +6,8 @@ const uk: AppLocale = {
   strings: {
     "app.name": "Judge",
     "app.tab.new": "Нова справа",
-    "app.tab.history": "Мої вердикти",
     "app.tab.settings": "Налаштування",
     "app.input.counter": "{count} / {max}",
-    "app.history.title": "Мої вердикти",
     "app.history.empty": "Вердиктів поки немає. Розсуди першу суперечку, і вердикт з’явиться тут.",
     "app.history.deviceOnly":
       "Вердикти зберігаються лише на цьому телефоні. Якщо видалити вердикт тут, посилання на нього й далі працюватиме.",

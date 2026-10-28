@@ -298,10 +298,6 @@
     <string name="case_expired_body_free">7 दिन में किसी ने जवाब नहीं दिया। आप अब भी सिर्फ़ अपनी बात पर फ़ैसला करवा सकते हैं।</string>
     <string name="case_one_sided">सिर्फ़ आपकी बात के आधार पर फ़ैसला हुआ।</string>
     <string name="case_start_over">नया केस शुरू करें</string>
-    <string name="case_list_title">आपके केस</string>
-    <string name="case_list_empty">अभी कोई केस नहीं।</string>
-    <string name="case_list_load_failed">अभी आपके केस लोड नहीं हो पाए।</string>
-    <string name="case_list_started">%1$s को शुरू हुआ</string>
     <string name="case_list_untitled">%1$s का केस</string>
     <string name="case_list_untitled_soon">केस</string>
     <string name="respond_kicker">आपकी बात</string>
@@ -418,12 +414,10 @@
     <string name="names_saved">नाम सेव हो गए।</string>
     <string name="names_failed">नाम सेव नहीं हो पाए। फिर कोशिश करें।</string>
     <string name="names_invalid">1 से 40 अक्षरों का नाम लिखें, और पक्ष A जैसा कोई लेबल नहीं।</string>
-    <string name="account_verdicts_title">आपके फ़ैसले</string>
-    <string name="account_verdicts_empty">अभी कोई फ़ैसला नहीं।</string>
-    <string name="account_verdicts_load_failed">आपके फ़ैसले लोड नहीं हो पाए।</string>
     <string name="account_verdicts_removed">हटाया गया</string>
     <string name="shell_new">नई बहस</string>
     <string name="shell_today">आज</string>
+    <string name="shell_load_failed">आपका इतिहास लोड नहीं हो पाया।</string>
     <string name="thread_label">यह बहस</string>
     <string name="thread_you">आपने लिखा</string>
     <string name="thread_judges">जज</string>
@@ -461,10 +455,8 @@
     <string name="best_point_self">आपकी सबसे मज़बूत बात</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">नया</string>
-    <string name="app_tab_history">मेरे फ़ैसले</string>
     <string name="app_tab_settings">सेटिंग्स</string>
     <string name="app_input_counter">%1$s / %2$s</string>
-    <string name="app_history_title">मेरे फ़ैसले</string>
     <string name="app_history_empty">अभी तक कोई फ़ैसला नहीं। अपनी पहली बहस सुलझाएँ, उसका फ़ैसला यहीं दिखेगा।</string>
     <string name="app_history_device_only">ये सिर्फ़ इसी फ़ोन में सेव हैं। यहाँ से कोई फ़ैसला हटाने पर भी उसका शेयर लिंक बंद नहीं होता।</string>
     <string name="app_history_delete">हटाएँ</string>

@@ -5,10 +5,8 @@ const ko: AppLocale = {
   strings: {
     "app.name": "Judge",
     "app.tab.new": "새 논쟁",
-    "app.tab.history": "내 판결",
     "app.tab.settings": "설정",
     "app.input.counter": "{count} / {max}",
-    "app.history.title": "내 판결",
     "app.history.empty": "아직 판결이 없어요. 첫 논쟁을 판결 받으면 여기에 나와요.",
     "app.history.deviceOnly": "이 휴대폰에만 저장돼요. 여기서 지워도 공유 링크는 계속 열려요.",
     "app.history.delete": "삭제",

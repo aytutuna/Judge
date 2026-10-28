@@ -305,10 +305,6 @@
     <string name="case_expired_body_free">אף אחד לא ענה תוך 7 ימים. עדיין אפשר לקבל פסק דין רק לפי הצד שלך.</string>
     <string name="case_one_sided">נשפט רק לפי הצד שלך.</string>
     <string name="case_start_over">לפתוח תיק חדש</string>
-    <string name="case_list_title">התיקים שלך</string>
-    <string name="case_list_empty">עוד אין תיקים.</string>
-    <string name="case_list_load_failed">לא הצלחנו לטעון את התיקים כרגע.</string>
-    <string name="case_list_started">נפתח ב-%1$s</string>
     <string name="case_list_untitled">תיק מ-%1$s</string>
     <string name="case_list_untitled_soon">תיק</string>
     <string name="respond_kicker">הצד שלך</string>
@@ -426,12 +422,10 @@
     <string name="names_saved">השמות נשמרו.</string>
     <string name="names_failed">לא הצלחנו לשמור את השמות. אפשר לנסות שוב.</string>
     <string name="names_invalid">בין 1 ל-40 תווים, ולא תווית כמו צד A.</string>
-    <string name="account_verdicts_title">פסקי הדין שלך</string>
-    <string name="account_verdicts_empty">עוד אין פסקי דין.</string>
-    <string name="account_verdicts_load_failed">לא הצלחנו לטעון את פסקי הדין שלך.</string>
     <string name="account_verdicts_removed">הוסר</string>
     <string name="shell_new">ויכוח חדש</string>
     <string name="shell_today">היום</string>
+    <string name="shell_load_failed">לא הצלחנו לטעון את ההיסטוריה.</string>
     <string name="thread_label">הוויכוח הזה</string>
     <string name="thread_you">כתבת</string>
     <string name="thread_judges">השופטים</string>
@@ -472,10 +466,8 @@
     <string name="best_point_self">הטיעון הכי חזק שלך</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">חדש</string>
-    <string name="app_tab_history">פסקי הדין שלי</string>
     <string name="app_tab_settings">הגדרות</string>
     <string name="app_input_counter">%1$s / %2$s</string>
-    <string name="app_history_title">פסקי הדין שלי</string>
     <string name="app_history_empty">עוד אין פסקי דין. כשהוויכוח הראשון שלך יוכרע, פסק הדין יופיע כאן.</string>
     <string name="app_history_device_only">פסקי הדין שמורים רק בטלפון הזה. מחיקה של פסק דין כאן לא מבטלת את קישור השיתוף שלו.</string>
     <string name="app_history_delete">מחיקה</string>

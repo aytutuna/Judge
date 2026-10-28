@@ -312,10 +312,6 @@
     <string name="case_expired_body_free">За 7 днів ніхто не відповів. Ти все ще можеш отримати вердикт лише за своєю версією.</string>
     <string name="case_one_sided">Вердикт лише за твоєю версією.</string>
     <string name="case_start_over">Нова справа</string>
-    <string name="case_list_title">Твої справи</string>
-    <string name="case_list_empty">Справ поки немає.</string>
-    <string name="case_list_load_failed">Зараз не вдалося завантажити твої справи.</string>
-    <string name="case_list_started">Розпочато %1$s</string>
     <string name="case_list_untitled">Справа від %1$s</string>
     <string name="case_list_untitled_soon">Справа</string>
     <string name="respond_kicker">Твоя версія</string>
@@ -434,12 +430,10 @@
     <string name="names_saved">Імена збережено.</string>
     <string name="names_failed">Не вдалося зберегти імена. Спробуй ще раз.</string>
     <string name="names_invalid">Від 1 до 40 символів, і не мітка на кшталт «Сторона A».</string>
-    <string name="account_verdicts_title">Твої вердикти</string>
-    <string name="account_verdicts_empty">Вердиктів поки немає.</string>
-    <string name="account_verdicts_load_failed">Не вдалося завантажити твої вердикти.</string>
     <string name="account_verdicts_removed">Видалено</string>
     <string name="shell_new">Нова суперечка</string>
     <string name="shell_today">Сьогодні</string>
+    <string name="shell_load_failed">Не вдалося завантажити історію.</string>
     <string name="thread_label">Ця суперечка</string>
     <string name="thread_you">Твій текст</string>
     <string name="thread_judges">Судді</string>
@@ -483,10 +477,8 @@
     <string name="best_point_self">Твій найсильніший аргумент</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">Нова справа</string>
-    <string name="app_tab_history">Мої вердикти</string>
     <string name="app_tab_settings">Налаштування</string>
     <string name="app_input_counter">%1$s / %2$s</string>
-    <string name="app_history_title">Мої вердикти</string>
     <string name="app_history_empty">Вердиктів поки немає. Розсуди першу суперечку, і вердикт з’явиться тут.</string>
     <string name="app_history_device_only">Вердикти зберігаються лише на цьому телефоні. Якщо видалити вердикт тут, посилання на нього й далі працюватиме.</string>
     <string name="app_history_delete">Видалити</string>

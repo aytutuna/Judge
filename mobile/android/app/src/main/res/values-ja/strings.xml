@@ -291,10 +291,6 @@
     <string name="case_expired_body_free">7日間返事がありませんでした。あなたの言い分だけで判定を受けることもできます。</string>
     <string name="case_one_sided">あなたの言い分だけで判定しました。</string>
     <string name="case_start_over">新しいケースを始める</string>
-    <string name="case_list_title">あなたのケース</string>
-    <string name="case_list_empty">まだケースはありません。</string>
-    <string name="case_list_load_failed">いまはケースを読み込めませんでした。</string>
-    <string name="case_list_started">%1$s開始</string>
     <string name="case_list_untitled">%1$sのケース</string>
     <string name="case_list_untitled_soon">ケース</string>
     <string name="respond_kicker">あなたの言い分</string>
@@ -410,12 +406,10 @@
     <string name="names_saved">名前を保存しました。</string>
     <string name="names_failed">名前を保存できませんでした。もう一度お試しください。</string>
     <string name="names_invalid">1〜40文字で入力してください。「当事者A」のようなラベルは使えません。</string>
-    <string name="account_verdicts_title">あなたの判定</string>
-    <string name="account_verdicts_empty">まだ判定はありません。</string>
-    <string name="account_verdicts_load_failed">判定を読み込めませんでした。</string>
     <string name="account_verdicts_removed">削除済み</string>
     <string name="shell_new">新しい揉めごと</string>
     <string name="shell_today">今日</string>
+    <string name="shell_load_failed">履歴を読み込めませんでした。</string>
     <string name="thread_label">この揉めごと</string>
     <string name="thread_you">あなたの投稿</string>
     <string name="thread_judges">審査員</string>
@@ -450,10 +444,8 @@
     <string name="best_point_self">あなたのいちばん強い主張</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">新規</string>
-    <string name="app_tab_history">マイ判定</string>
     <string name="app_tab_settings">設定</string>
     <string name="app_input_counter">%1$s / %2$s</string>
-    <string name="app_history_title">マイ判定</string>
     <string name="app_history_empty">まだ判定はありません。最初の揉めごとに白黒つけると、ここに表示されます。</string>
     <string name="app_history_device_only">この端末にだけ保存されています。ここで削除しても、シェア用リンクはそのまま使えます。</string>
     <string name="app_history_delete">削除</string>

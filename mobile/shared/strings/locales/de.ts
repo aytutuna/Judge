@@ -5,10 +5,8 @@ const de: AppLocale = {
   strings: {
     "app.name": "Judge",
     "app.tab.new": "Neu",
-    "app.tab.history": "Meine Urteile",
     "app.tab.settings": "Einstellungen",
     "app.input.counter": "{count} / {max}",
-    "app.history.title": "Meine Urteile",
     "app.history.empty": "Noch keine Urteile. Kläre deinen ersten Streit, dann erscheint das Urteil hier.",
     "app.history.deviceOnly":
       "Nur auf diesem Handy gespeichert. Wenn du hier ein Urteil löschst, funktioniert der geteilte Link weiter.",
