@@ -1,14 +1,19 @@
 import { useSyncExternalStore } from "react";
+import { INVITE_TOKEN_PATTERN } from "./case-types";
+import { compareHistory, type HistoryRow } from "./history-types";
 
 /**
  * This browser's own list of the verdicts it wrote signed out, newest first,
  * under `judge.history`. The verdicts themselves live on the server; this is
  * only an index so the Verdicts page can list them without an account. The
  * headline is kept with the writer's names put back, as they saw it.
+ * Cases it answered signed out are kept apart, under `judge.history.cases`,
+ * so neither list pushes the other out.
  * Website-only (localStorage).
  */
 
 export const HISTORY_KEY = "judge.history";
+export const ANSWERED_KEY = "judge.history.cases";
 export const HISTORY_MAX = 50;
 /** Verdicts written before the index existed, still to be looked up. */
 export const SEED_KEY = "judge.history.seed";
@@ -50,35 +55,59 @@ export function parseHistory(raw: string | null): HistoryEntry[] {
   }
 }
 
-let cache: { raw: string | null; value: HistoryEntry[] } | null = null;
-const listeners = new Set<() => void>();
+type Stored<T> = { load: () => T[]; save: (entries: T[]) => void; subscribe: (onChange: () => void) => () => void };
+
+function storedList<T>(key: string, parse: (raw: string | null) => T[]): Stored<T> {
+  const none: T[] = [];
+  let cache: { raw: string | null; value: T[] } | null = null;
+  const listeners = new Set<() => void>();
+  return {
+    load() {
+      let raw: string | null;
+      try {
+        raw = localStorage.getItem(key);
+      } catch {
+        return cache?.value ?? none;
+      }
+      if (cache?.raw === raw) return cache.value;
+      const value = parse(raw);
+      cache = { raw, value };
+      return value;
+    },
+    save(entries) {
+      let raw: string | null = JSON.stringify(entries);
+      try {
+        localStorage.setItem(key, raw);
+      } catch {
+        // Not written (storage full or blocked): the list lasts for this page
+        // view only. The cache stays keyed to what storage still holds, so
+        // load keeps returning the new list instead of re-reading the old.
+        raw = cache?.raw ?? null;
+      }
+      cache = { raw, value: entries };
+      for (const fn of listeners) fn();
+    },
+    subscribe(onChange) {
+      listeners.add(onChange);
+      const onStorage = (e: StorageEvent) => {
+        if (e.key === null || e.key === key) onChange();
+      };
+      window.addEventListener("storage", onStorage);
+      return () => {
+        listeners.delete(onChange);
+        window.removeEventListener("storage", onStorage);
+      };
+    },
+  };
+}
+
+const verdicts = storedList(HISTORY_KEY, parseHistory);
 
 export function loadHistory(): HistoryEntry[] {
-  let raw: string | null;
-  try {
-    raw = localStorage.getItem(HISTORY_KEY);
-  } catch {
-    return cache?.value ?? EMPTY;
-  }
-  if (cache?.raw === raw) return cache.value;
-  const value = parseHistory(raw);
-  cache = { raw, value };
-  return value;
+  return verdicts.load();
 }
 
-function save(entries: HistoryEntry[]): void {
-  let raw: string | null = JSON.stringify(entries);
-  try {
-    localStorage.setItem(HISTORY_KEY, raw);
-  } catch {
-    // Not written (storage full or blocked): the list lasts for this page
-    // view only. The cache stays keyed to what storage still holds, so
-    // loadHistory keeps returning the new list instead of re-reading the old.
-    raw = cache?.raw ?? null;
-  }
-  cache = { raw, value: entries };
-  for (const fn of listeners) fn();
-}
+const save = verdicts.save;
 
 /** Lists a verdict by its date, replacing an entry with the same id. */
 export function addHistory(entry: HistoryEntry): void {
@@ -144,20 +173,57 @@ export function markHistoryRemoved(id: string): void {
   save(entries.map((e) => (e.id === id ? { ...e, headline: null, removed: true as const } : e)));
 }
 
-function subscribe(onChange: () => void): () => void {
-  listeners.add(onChange);
-  const onStorage = (e: StorageEvent) => {
-    if (e.key === null || e.key === HISTORY_KEY) onChange();
-  };
-  window.addEventListener("storage", onStorage);
-  return () => {
-    listeners.delete(onChange);
-    window.removeEventListener("storage", onStorage);
-  };
-}
-
 /** The index: empty while server rendering and on the first client render
  * (so hydration matches), then this browser's entries. */
 export function useLocalHistory(): HistoryEntry[] {
-  return useSyncExternalStore(subscribe, loadHistory, () => EMPTY);
+  return useSyncExternalStore(verdicts.subscribe, verdicts.load, () => EMPTY);
+}
+
+// --- cases answered signed out -------------------------------------------------
+
+const EMPTY_ROWS: HistoryRow[] = [];
+
+/** One stored row: what the case's page last showed, the respondent's own
+ * names included. */
+function isAnswered(v: unknown): v is HistoryRow {
+  if (typeof v !== "object" || v === null) return false;
+  const r = v as Record<string, unknown>;
+  return (
+    r.kind === "case" &&
+    r.role === "respondent" &&
+    typeof r.id === "string" &&
+    r.id.length > 0 &&
+    typeof r.at === "string" &&
+    !Number.isNaN(Date.parse(r.at)) &&
+    typeof r.state === "string" &&
+    typeof r.inviteToken === "string" &&
+    INVITE_TOKEN_PATTERN.test(r.inviteToken) &&
+    Array.isArray(r.nameMap)
+  );
+}
+
+export function parseAnswered(raw: string | null): HistoryRow[] {
+  if (!raw) return EMPTY_ROWS;
+  try {
+    const v: unknown = JSON.parse(raw);
+    return Array.isArray(v) ? v.filter(isAnswered).slice(0, HISTORY_MAX) : EMPTY_ROWS;
+  } catch {
+    return EMPTY_ROWS;
+  }
+}
+
+const answered = storedList(ANSWERED_KEY, parseAnswered);
+
+export function loadAnswered(): HistoryRow[] {
+  return answered.load();
+}
+
+/** Lists (or updates) a case this browser answered signed out. */
+export function addAnswered(row: HistoryRow): void {
+  const rows = [row, ...answered.load().filter((r) => r.id !== row.id)].sort(compareHistory);
+  answered.save(rows.slice(0, HISTORY_MAX));
+}
+
+export function useLocalAnswered(): HistoryRow[] {
+  return useSyncExternalStore(answered.subscribe, answered.load, () => EMPTY_ROWS);
 }

@@ -20,6 +20,7 @@ import type { NameMapping } from "@/lib/types";
 import { keyHolder, useCase } from "@/lib/use-case";
 import { useViewer } from "@/lib/use-viewer";
 import { JudgingOverlay } from "../JudgingOverlay";
+import { refreshHistory, rememberAnswered, updateHistoryCase } from "../shell/useHistory";
 import { Turnstile, TURNSTILE_SITE_KEY } from "../Turnstile";
 import { VerdictView } from "../VerdictView";
 import account from "../account/AccountPages.module.css";
@@ -450,7 +451,12 @@ export function RespondScreen({ token }: { token: string }) {
   const originals = useCaseOriginals(base, claimHeaders, view?.yourOriginal === "stored");
   const [removedNow, setRemovedNow] = useState(false);
   const [removeError, setRemoveError] = useState<string | null>(null);
+  const [kept, setKept] = useState(false);
+  const [keepError, setKeepError] = useState<string | null>(null);
   const canProve = Boolean(claim) || Boolean(viewer.me?.user);
+  // Answered signed out, now signed in: the case can join the account.
+  const canKeep =
+    Boolean(viewer.me?.user) && Boolean(claim) && view?.inAccount === false && view.respondentAnswered && !view.removed;
   const { overlay, fresh, finish } = useJudgingOverlay(view?.status ?? null);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const form = useRespondForm(
@@ -485,6 +491,35 @@ export function RespondScreen({ token }: { token: string }) {
       setRemoveError(t(lang, "errorFallback"));
     }
   }
+  async function keep() {
+    if (!caseId || !claim || !view) return;
+    setKeepError(null);
+    try {
+      const res = await fetch(`/api/v1/cases/${encodeURIComponent(caseId)}/claim`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ claim }),
+      });
+      if (!res.ok) {
+        setKeepError(apiErrorMessage(lang, await res.json().catch(() => null), res.status));
+        return;
+      }
+      setView({ ...view, inAccount: true });
+      setKept(true);
+      void refreshHistory();
+    } catch {
+      setKeepError(t(lang, "errorFallback"));
+    }
+  }
+
+  // The Verdicts list follows this page; a case answered signed out is
+  // listed in this browser.
+  useEffect(() => {
+    if (!view) return;
+    updateHistoryCase(view);
+    if (claim) rememberAnswered(view, token, names);
+  }, [view, claim, token, names]);
+
   const appeal = useAppealDraft<AppealResponse>({
     endpoint: `/api/v1/respond/${encodeURIComponent(token)}/appeals`,
     lang,
@@ -557,6 +592,21 @@ export function RespondScreen({ token }: { token: string }) {
             {removeError ? (
               <p className={styles.error} role="alert">
                 {removeError}
+              </p>
+            ) : null}
+            {canKeep ? (
+              <button type="button" className={`${account.btn} ${account.secondary}`} onClick={() => void keep()}>
+                {t(lang, "respond.keep")}
+              </button>
+            ) : null}
+            {kept ? (
+              <p className={styles.note} role="status">
+                {t(lang, "respond.kept")}
+              </p>
+            ) : null}
+            {keepError ? (
+              <p className={styles.error} role="alert">
+                {keepError}
               </p>
             ) : null}
             <CaseOriginals lang={lang} data={view.removed ? null : originals} />

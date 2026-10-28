@@ -169,6 +169,25 @@ a.row:hover .title {
   font-size: 13px;
   text-align: end;
 }
+.state[data-tone="yours"] {
+  color: var(--sage-ink);
+}
+.state[data-tone="theirs"] {
+  color: var(--terra-ink);
+}
+
+.tags {
+  display: block;
+  margin-top: 2px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.move {
+  display: block;
+  color: var(--ink);
+  font-weight: 600;
+}
 
 .note {
   margin: 8px 0;
