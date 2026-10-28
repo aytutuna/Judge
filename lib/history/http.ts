@@ -24,10 +24,7 @@ import { checkUserLimits } from "@/lib/ratelimit";
 import type { NameMapping } from "@/lib/types";
 import { maybeSweepVerdictJobs } from "@/lib/verdict-jobs";
 import {
-  historyAnsweredCases,
-  historyJobs,
-  historyOwnerCases,
-  historyVerdicts,
+  historySources,
   type Cursor,
   type HistoryCaseRow,
   type HistoryJobRow,
@@ -187,12 +184,12 @@ export function historyHandler(req: Request): Promise<NextResponse> {
     const now = new Date();
     const take = limit + 1;
     const failedSince = new Date(now.getTime() - FAILED_JOB_MS).toISOString();
-    const [verdicts, jobs, started, answered] = await Promise.all([
-      historyVerdicts(userId, take, cursor),
-      historyJobs(userId, failedSince, take, cursor),
-      cases ? historyOwnerCases(userId, take, cursor) : [],
-      cases ? historyAnsweredCases(userId, take, cursor) : [],
-    ]);
+    const { verdicts, jobs, started, answered } = await historySources(userId, {
+      failedSince,
+      limit: take,
+      cursor,
+      cases,
+    });
     // Each source holds its own newest limit+1, so the newest limit of the
     // union are all here.
     const merged = [
