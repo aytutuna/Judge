@@ -4,7 +4,8 @@
  *   npm run check:app-locales            every enabled language
  *   npm run check:app-locales -- de fr   just these
  *
- * Exits 1 when a language has a problem or no file yet.
+ * Exits 1 when a language has a problem. A language without a file yet
+ * shows English in the apps; that fails only when it was asked for by name.
  */
 import { ENABLED, isLang, LANGS } from "../../../lib/langs";
 import { checkAppLocale, loadAppLocale } from "./app-locales";
@@ -29,7 +30,7 @@ async function main(): Promise<number> {
     }
     if (!locale) {
       console.log(`${code} (${LANGS[code].name}): no mobile/shared/strings/locales/${code}.ts yet, the apps show English there`);
-      failed++;
+      if (asked.length) failed++;
       continue;
     }
     const problems = checkAppLocale(code, locale);

@@ -223,7 +223,5 @@ jobs:
       - name: Scene bundle is current
         run: npx tsx mobile/shared/scene/build-scene.ts --check
 
-      # Last, so a language still waiting for its app strings does not hide
-      # a stale file above.
       - name: App strings of every language
         run: npm run check:app-locales
