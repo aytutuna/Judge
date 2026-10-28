@@ -167,7 +167,11 @@ export function VerdictReveal({
 
   return (
     <>
-      <span className={styles.stamp} aria-hidden>
+      <span
+        className={styles.stamp}
+        data-party={result.verdict === "side_a" ? "a" : result.verdict === "side_b" ? "b" : undefined}
+        aria-hidden
+      >
         <span className={styles.stampText}>{stampLabel(result, nameA, nameB, aIsSelf, bIsSelf, lang)}</span>
       </span>
 

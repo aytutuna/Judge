@@ -172,8 +172,8 @@ export function getSceneYou(): Party | null {
 /** The viewer's party: their sphere and votes are drawn green, the other
  * side's red (sideColors in lib/palette.ts). null, the default, draws Party
  * A green: the writer of a one-person verdict, or nobody known. Whoever
- * shows the scene sets it (the apps through window.judgeScene); resetScene
- * leaves it alone. Mode subscribers hear the change. */
+ * shows the scene sets it and clears it when done; resetScene leaves it
+ * alone. Mode subscribers hear the change. */
 export function setSceneYou(p: Party | null): void {
   if (p === you) return;
   you = p;

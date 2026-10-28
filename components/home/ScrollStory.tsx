@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { HOW_STEPS, stepNumeral } from "@/lib/how-steps";
 import { KIND_KEY, t, type Lang } from "@/lib/i18n";
-import { setStoryProgress } from "@/lib/scene-bridge";
+import { setSceneYou, setStoryProgress } from "@/lib/scene-bridge";
 import { ss } from "@/lib/scene-poses";
 import { hyphenRuns, noOrphan } from "@/lib/text";
 import type { ClaimKind } from "@/lib/types";
@@ -45,6 +45,8 @@ export function ScrollStory({ lang }: { lang: Lang }) {
     const track = trackRef.current;
     if (!section || !track) return;
     section.dataset.ready = "";
+    // The story is the sample's case, where the reader is Party B ("You").
+    setSceneYou("b");
     let last = -1;
     let ticking = false;
     const update = () => {
@@ -75,6 +77,7 @@ export function ScrollStory({ lang }: { lang: Lang }) {
       window.removeEventListener("resize", onScroll);
       delete section.dataset.ready;
       setStoryProgress(-3);
+      setSceneYou(null);
     };
   }, []);
 

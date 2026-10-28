@@ -311,6 +311,15 @@ describe("side colours", () => {
     expect(sides(html(<SampleVerdict lang="en" />))).toEqual(["b"]);
   });
 
+  it("the stamp takes the winner's side colour, ink when nobody wins", () => {
+    expect(html(<VerdictView result={base} lang="en" />)).toMatch(/data-party="b" aria-hidden="true"><span[^>]*>Party B is right</);
+    const close = html(<VerdictView result={{ ...base, verdict: "too_close" }} lang="en" />);
+    expect(close).not.toMatch(/data-party="[ab]" aria-hidden="true"><span/);
+    const css = readFileSync(join(__dirname, "..", "components", "verdict", "verdict.module.css"), "utf8");
+    expect(css).toContain('.stamp[data-party="a"] { color: var(--party-a-ink); }');
+    expect(css).toContain('.stamp[data-party="b"] { color: var(--party-b-ink); }');
+  });
+
   it("party marks on the card use the side tokens, never a fixed colour", () => {
     const css = readFileSync(join(__dirname, "..", "components", "verdict", "verdict.module.css"), "utf8");
     for (const sel of [".dotA", ".dotB", ".tugA", ".sealA", ".sealB", ".branchA", ".branchB", ".colHeadA", ".partyChipB", ".claimA"]) {

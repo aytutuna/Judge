@@ -386,9 +386,9 @@
   inset-inline-end: 18px;
   max-width: 46%;
   padding: 5px 10px;
-  border: 2px solid var(--terra);
+  border: 2px solid currentColor;
   border-radius: 8px;
-  color: var(--terra);
+  color: var(--ink);
   font-family: var(--font-display);
   font-size: 13px;
   font-weight: 800;
@@ -400,6 +400,8 @@
   transform: rotate(8deg);
   pointer-events: none;
 }
+.stamp[data-party="a"] { color: var(--party-a-ink); }
+.stamp[data-party="b"] { color: var(--party-b-ink); }
 /* Clamped on an inner span: clamping the bordered box itself lets the third
    line show through its bottom padding. A long winner name would otherwise
    run the stamp down over the headline. */
