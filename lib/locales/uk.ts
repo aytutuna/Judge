@@ -2,7 +2,7 @@ import type { Locale } from "../i18n";
 
 const uk: Locale = {
   voice:
-    'Write natural, modern Ukrainian with no Russian calques. Address the reader with informal "ти", never "ви", and avoid gendered past-tense forms for the reader (prefer present or future tense, or impersonal phrasing such as "додано", "можна"). Refer to the parties as "Сторона A" and "Сторона B" in prose (Cyrillic word, Latin capital A and B), like names, and always write them exactly so: never inflect the label (no "Сторони A", "Стороні A", "Сторону A"); build each sentence so the label is the subject, follows a colon or stands in a nominative phrase (e.g. "аргумент, який має Сторона A"). Use present-tense verbs with a label, never past tense, because a real name of either gender may replace it later and the Ukrainian past tense shows gender. "Person C", "Person D" stay exactly as written, also uninflected. The card prints "Якщо" before each conditional if_value, so write the if_value as a bare condition clause in the present tense that reads on from "Якщо" and starts in lowercase unless it starts with a party label or a name (e.g. "для тебе чесність важливіша за тактовність"), never starting with "Якщо" or "Коли". Use Ukrainian quotation marks «…», a spaced em dash, the apostrophe ’ in words like "ім’я", a decimal comma and a space as the thousands separator.',
+    'Write natural, modern, conversational Ukrainian with no Russian calques (e.g. "є", not "являється"; "брати участь", not "приймати участь"). Address the reader with informal "ти", never "ви", and avoid gendered past-tense forms for the reader (prefer present or future tense, or impersonal phrasing such as "додано", "можна"). Refer to the parties as "Сторона A" and "Сторона B" in prose (Cyrillic word, Latin capital A and B), like names, and always write them exactly so: never inflect the label (no "Сторони A", "Стороні A", "Сторону A"). Make the label the subject of its own short clause or put it after a colon (e.g. "Сторона A слушно зауважує, що…", "Тут має рацію Сторона B", "Головний аргумент: Сторона A вважає, що…"); if a sentence would need another case, rephrase it rather than fall back on a stiff construction like "аргумент, який має Сторона A". Use present-tense verbs with a label, never past tense, because a real name of either gender may replace it later and the Ukrainian past tense shows gender. "Person C", "Person D" stay exactly as written, also uninflected. The card prints "Якщо" before each conditional if_value, so write the if_value as a bare condition clause in the present tense that reads on from "Якщо" and starts in lowercase unless it starts with a party label or a name (e.g. "для тебе чесність важливіша за тактовність"), never starting with "Якщо" or "Коли". Use Ukrainian quotation marks «…», a spaced em dash, the apostrophe ’ in words like "ім’я", a decimal comma and a space as the thousands separator.',
   email: {
     signIn: {
       subject: "Твоє посилання для входу в Judge",
@@ -30,7 +30,7 @@ const uk: Locale = {
     "hero.titleLine2": "Зараз розберемося.",
     "hero.eyebrow": "Три незалежні судді · Судді не бачать імен",
     "hero.lead":
-      "Розкажи, через що сварка. Три ШІ-судді ухвалюють рішення кожен окремо, а показник упевненості показує, наскільки вони згодні.",
+      "Розкажи, через що сварка. Три ШІ-судді ухвалюють рішення кожен окремо, а за показником упевненості видно, наскільки вони згодні.",
     "input.label": "Суперечка",
     "input.labelTwoSided": "Твоя версія",
     placeholderTwoSided: "Як усе було з твого боку? Інша сторона розкаже свою версію.",
@@ -86,8 +86,8 @@ const uk: Locale = {
     shareText: "Нас розсудили судді. Глянь, хто переміг.",
     copyPrompt: "Скопіюй це посилання:",
     judgeAnother: "Розсудити ще одну",
-    "judgesVoted.one": "Голос 1 незалежного ШІ-судді:",
-    "judgesVoted.other": "Голоси {n} незалежних ШІ-суддів:",
+    "judgesVoted.one": "Проголосував 1 незалежний ШІ-суддя:",
+    "judgesVoted.other": "Проголосували {n} незалежних ШІ-суддів:",
     escalated: "Голоси розділилися майже порівну, тож ми покликали ще суддів.",
     "translate.loading": "Перекладаємо…",
     "translate.from.en": "Перекладено з англійської",
@@ -193,7 +193,7 @@ const uk: Locale = {
       "Ми дуже стараємося. Імена замінюються на Сторону A і Сторону B, тож судді не знають, хто є хто. Обидві позиції подаються в найсильнішій формі, а три судді вирішують окремо. Якщо вони не згодні, показник упевненості падає й прямо про це каже. Коли голоси майже рівні, спершу підключаються ще судді. Помилитися все одно можна, тож перевір факти, які наведено у вердикті.",
     "faq.private.q": "Мій текст залишиться приватним?",
     "faq.private.a":
-      "Щоб отримати вердикт, потрібен акаунт. Твій текст надсилається сторонньому ШІ-сервісу, щоб замінити імена на Сторону A і Сторону B, і судять лише цю версію. Написане тобою, разом з іменами, ми зберігаємо в зашифрованому вигляді, щоб до нього можна було повернутися; ти будь-коли можеш попросити його видалити. Посилання для поширення показують імена, які ти обереш, або взагалі без імен.",
+      "Щоб отримати вердикт, потрібен акаунт. Твій текст надсилається сторонньому ШІ-сервісу, щоб замінити імена на Сторону A і Сторону B, і судять лише цю версію. Написане тобою, разом з іменами, ми зберігаємо в зашифрованому вигляді, щоб до нього можна було повернутися; ти будь-коли можеш попросити його видалити. За посиланням для поширення видно лише ті імена, які ти обереш, або жодних.",
     "faq.powers.q": "На чому це працює?",
     "faq.powers.a":
       "На ШІ-моделі від стороннього постачальника. Три судді працюють паралельно за чіткою інструкцією для суддівства, а коли голоси майже рівні, долучаються ще. Переможні вердикти щодо фактів проходять окремий перехресний допит. Упевненість рахує звичайний код: він просто дивиться, як часто судді згодні між собою.",
@@ -263,7 +263,7 @@ const uk: Locale = {
     "nav.pricing": "Ціни",
     "nav.accountMenu": "Меню акаунта",
     "nav.signOut": "Вийти",
-    "nav.new": "Нове",
+    "nav.new": "Нова справа",
     "nav.verdicts": "Мої вердикти",
     "nav.tabs": "Розділи",
     "footer.pricing": "Ціни",
@@ -288,12 +288,12 @@ const uk: Locale = {
     "factcheck.title": "Перевірено в інтернеті",
     "factcheck.lead": "Судді бачили ці результати пошуку перед вердиктом. Це докази, а не сам вердикт.",
     "factcheck.status.supported": "Підтверджується",
-    "factcheck.status.refuted": "Не підтверджується",
+    "factcheck.status.refuted": "Спростовується",
     "factcheck.status.mixed": "Частково правда",
     "factcheck.status.unverified": "Не вдалося перевірити",
     "factcheck.sources": "Джерела",
     "factcheck.sourceAria": "{title}, відкривається в новій вкладці",
-    "factcheck.none": "В інтернеті нічого перевіряти: тут усе залежить від цінностей чи значень слів, а не від фактів.",
+    "factcheck.none": "Перевіряти в інтернеті нічого: тут усе залежить від цінностей чи значень слів, а не від фактів.",
     "factcheck.noneFactual":
       "Тут нічого не перевіриш в інтернеті: факти в цій історії відомі лише її учасникам.",
     "factcheck.unavailable": "Цього разу перевірка в інтернеті не завершилася, тож судді вирішували без неї.",
@@ -366,7 +366,7 @@ const uk: Locale = {
     "error.fair_use": "Вердикти на цей місяць вичерпано. Нові будуть {date}.",
     "error.fair_useSoon": "Вердикти на цей місяць вичерпано. Нові будуть незабаром.",
     "error.in_progress": "Над цим вердиктом ще працюють. Зачекай трохи.",
-    "error.bad_origin": "Цей запит надійшов звідкись, чого ми не знаємо. Онови сторінку й спробуй ще раз.",
+    "error.bad_origin": "Цей запит надійшов із незнайомого нам джерела. Онови сторінку й спробуй ще раз.",
     "error.not_found": "Не вдалося це знайти.",
     "error.case_closed": "Ця справа вже цього не приймає.",
     "error.case_expired": "Термін дії цього запрошення минув.",
@@ -377,7 +377,7 @@ const uk: Locale = {
     "error.too_large": "Завеликий файл. Спробуй менше зображення.",
     "error.unsupported_media": "Ми читаємо лише зображення PNG, JPEG, WebP або GIF.",
     "error.too_many_files": "Тут не можна додати стільки зображень.",
-    "error.evidence_invalid": "Одне із зображень більше не дійсне або його не вдалося перевірити. Видали його й додай знову.",
+    "error.evidence_invalid": "Одне із зображень застаріло або не пройшло перевірку. Видали його й додай знову.",
     "error.anonymize_failed": "Не вдалося прибрати імена з тексту. Спробуй ще раз або напиши ініціали замість повних імен.",
     "mode.label": "Як судимо?",
     "mode.now": "Лише я (одразу)",
@@ -468,7 +468,7 @@ const uk: Locale = {
     "respond.failed": "Судді не змогли завершити цю справу. Людина, яка тебе запросила, може спробувати ще раз.",
     "respond.notFound": "Це посилання-запрошення не працює. Можливо, його вимкнули або частина посилання загубилася.",
     "respond.loading": "Відкриваємо запрошення…",
-    "respond.inviteTitle": "Це запрошення",
+    "respond.inviteTitle": "Запрошення",
     "respond.startOwn": "Маєш власну суперечку, яку треба розсудити?",
     "respond.startOwnCta": "Почати",
     "respond.pendingMissing": "Щоб продовжити, знову відкрий посилання-запрошення.",
@@ -674,9 +674,9 @@ const uk: Locale = {
   },
   plurals: {
     "judgesVoted.other": {
-      one: "Голоси {n} незалежного ШІ-судді:",
-      few: "Голоси {n} незалежних ШІ-суддів:",
-      many: "Голоси {n} незалежних ШІ-суддів:",
+      one: "Проголосував {n} незалежний ШІ-суддя:",
+      few: "Проголосували {n} незалежні ШІ-судді:",
+      many: "Проголосували {n} незалежних ШІ-суддів:",
     },
     "wait.minutes": { one: "{n} хвилину", few: "{n} хвилини", many: "{n} хвилин" },
     "wait.hours": { one: "{n} годину", few: "{n} години", many: "{n} годин" },

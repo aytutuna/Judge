@@ -2,7 +2,7 @@ import type { Locale } from "../i18n";
 
 const ml: Locale = {
   voice:
-    'Write natural, everyday Malayalam in Malayalam script and address the reader as "നിങ്ങൾ", the register Malayalam apps use, never the formal "താങ്കൾ" or the intimate "നീ"; use the polite imperative in -ഊ (e.g. "പരിശോധിക്കൂ"). Common English loanwords (ലിങ്ക്, ആപ്പ്, ചാറ്റ്) are fine; avoid stiff, Sanskrit-heavy or legal Malayalam. Refer to the parties as "കക്ഷി A" and "കക്ഷി B" in prose, like names, always with the Latin capital letters A and B and never with a case ending or suffix attached (no "കക്ഷി A-യുടെ", "കക്ഷി A-ക്ക്", "കക്ഷി A-യെ"): build the sentence so the label is the subject, stands before a separate word (e.g. "കക്ഷി A പറയുന്നത്", "കക്ഷി A നൽകിയ തെളിവ്"), or comes after a colon; where a case ending seems unavoidable, rephrase (e.g. "കക്ഷി A പറഞ്ഞതാണ് ശരി" rather than a possessive or dative). Real names are put back in place of the labels later, so do not refer to a party with gendered pronouns such as "അവൻ" or "അവൾ"; repeat the label instead. Other people stay "Person C", "Person D" exactly as written, uninflected too. The card prints "അഥവാ" and then each conditional if_value, so write if_value as a Malayalam conditional clause ending in -എങ്കിൽ or -ആൽ (e.g. "നിങ്ങൾക്ക് സത്യസന്ധതയാണ് കൂടുതൽ പ്രധാനമെങ്കിൽ"), with no "അഥവാ" or other "if" word at its start. Use Western digits, a decimal point, curly double quotation marks “…” and modern Malayalam spelling with chillu letters.',
+    'Write natural, everyday Malayalam in Malayalam script and address the reader as "നിങ്ങൾ", the register Malayalam apps use, never the formal "താങ്കൾ" or the intimate "നീ"; use the polite imperative in -ഊ (e.g. "പരിശോധിക്കൂ"). Common English loanwords (ലിങ്ക്, ആപ്പ്, ചാറ്റ്) are fine; avoid stiff, Sanskrit-heavy or legal Malayalam. Refer to the parties as "കക്ഷി A" and "കക്ഷി B" in prose, like names, always with the Latin capital letters A and B and never with a case ending or suffix attached (no "കക്ഷി A-യുടെ", "കക്ഷി A-ക്ക്", "കക്ഷി A-യെ"): build the sentence so the label is the subject, stands before a separate word (e.g. "കക്ഷി A പറയുന്നത്", "കക്ഷി A നൽകിയ തെളിവ്"), or comes after a colon; where a case ending seems unavoidable, rephrase (e.g. "കക്ഷി A പറഞ്ഞതാണ് ശരി" rather than a possessive or dative). A possessive becomes a relative clause ("കക്ഷി A ഉന്നയിച്ച വാദം", not "കക്ഷി A-യുടെ വാദം"); for feelings and knowledge, which Malayalam usually puts in the dative (ഇഷ്ടമാണ്, അറിയാം, തോന്നി, വേണം), use a verb that takes a plain subject instead ("കക്ഷി A ഇഷ്ടപ്പെടുന്നു", "കക്ഷി A അറിഞ്ഞിരുന്നു", "കക്ഷി A കരുതുന്നു", "കക്ഷി A ആഗ്രഹിക്കുന്നു"); for "A and B" write "കക്ഷി A, കക്ഷി B എന്നിവർ" or "രണ്ടുപേരും". Keep sentences short and conversational, the way a sensible friend would explain it, not the way a court order reads. Real names are put back in place of the labels later, so do not refer to a party with gendered pronouns such as "അവൻ" or "അവൾ"; repeat the label instead. Other people stay "Person C", "Person D" exactly as written, uninflected too. The card prints "അഥവാ" and then each conditional if_value, so write if_value as a Malayalam conditional clause ending in -എങ്കിൽ or -ആൽ (e.g. "നിങ്ങൾക്ക് സത്യസന്ധതയാണ് കൂടുതൽ പ്രധാനമെങ്കിൽ"), with no "അഥവാ" or other "if" word at its start. Use Western digits, a decimal point, curly double quotation marks “…” and modern Malayalam spelling with chillu letters.',
   email: {
     signIn: {
       subject: "നിങ്ങളുടെ Judge സൈൻ-ഇൻ ലിങ്ക്",
@@ -80,13 +80,13 @@ const ml: Locale = {
     mapTitle: "തർക്കം, അടിത്തറ വരെ",
     factsTitle: "ഈ വിധി ആശ്രയിക്കുന്ന വസ്തുതകൾ (ഒന്ന് പരിശോധിച്ചോളൂ)",
     bestPointTitle: "🤍 മറുഭാഗത്തിന്റെ ഏറ്റവും നല്ല പോയിന്റ്",
-    share: "📤 പങ്കിടുക",
+    share: "📤 പങ്കിടൂ",
     copyLink: "🔗 ലിങ്ക് കോപ്പി ചെയ്യൂ",
     copied: "✓ ലിങ്ക് കോപ്പി ചെയ്തു",
-    shareText: "ഞങ്ങളുടെ തർക്കം ജഡ്ജിമാരെക്കൊണ്ട് തീർപ്പാക്കി. ആരാണ് ജയിച്ചതെന്ന് നോക്കൂ.",
+    shareText: "ഞങ്ങളുടെ തർക്കം ജഡ്ജിമാർക്ക് വിട്ടു. ആരാണ് ജയിച്ചതെന്ന് നോക്കൂ.",
     copyPrompt: "ഈ ലിങ്ക് കോപ്പി ചെയ്യൂ:",
     judgeAnother: "അടുത്തത് തീർക്കാം",
-    "judgesVoted.one": "1 സ്വതന്ത്ര എഐ ജഡ്ജി വോട്ട് ചെയ്തു:",
+    "judgesVoted.one": "ഒരു സ്വതന്ത്ര എഐ ജഡ്ജി വോട്ട് ചെയ്തു:",
     "judgesVoted.other": "{n} സ്വതന്ത്ര എഐ ജഡ്ജിമാർ വോട്ട് ചെയ്തു:",
     escalated: "ഒപ്പത്തിനൊപ്പമായിരുന്നു, അതുകൊണ്ട് കൂടുതൽ ജഡ്ജിമാരെ വിളിച്ചു.",
     "translate.loading": "വിവർത്തനം ചെയ്യുന്നു…",
@@ -115,7 +115,7 @@ const ml: Locale = {
     "shared.cta": "നിങ്ങളുടെ തർക്കവും തീർക്കൂ →",
     errorFallback: "എന്തോ പിശക് പറ്റി. ഒന്നുകൂടി ശ്രമിക്കാമോ?",
     "error.not_configured":
-      "ജഡ്ജി ഇതുവരെ സെറ്റ് ചെയ്തിട്ടില്ല. പിന്നീട് ശ്രമിക്കൂ.",
+      "ജഡ്ജിയെ ഇതുവരെ സെറ്റ് ചെയ്തിട്ടില്ല. പിന്നീട് ശ്രമിക്കൂ.",
     "error.quota": "ജഡ്ജിമാരുടെ എഐ ക്വോട്ട ഇപ്പോൾ തീർന്നു. കുറച്ച് മിനിറ്റ് കഴിഞ്ഞ് വീണ്ടും ശ്രമിക്കൂ.",
     "error.unavailable": "ഇപ്പോൾ ജഡ്ജിമാരെ കിട്ടുന്നില്ല. ഒരു മിനിറ്റ് കഴിഞ്ഞ് വീണ്ടും ശ്രമിക്കൂ.",
     "error.too_short": "ഇത് കുറച്ച് ചുരുങ്ങിപ്പോയി. തർക്കത്തെക്കുറിച്ച് കുറച്ചുകൂടി പറയൂ.",
@@ -284,8 +284,8 @@ const ml: Locale = {
       "വസ്തുതകൾ വെബിൽ പരിശോധിക്കാൻ അൽപം കൂടുതൽ സമയമെടുക്കും. ഒന്നോ രണ്ടോ മിനിറ്റ് തരൂ.",
     "panel.premium": "വെബിലെ വസ്തുതാ പരിശോധനയോടെയുള്ള വിധി.",
     "panel.models": "ജഡ്ജിമാർ: {list}",
-    "panel.strong": "{n} ശക്തമായവ",
-    "panel.quick": "{n} വേഗമേറിയവ",
+    "panel.strong": "ശക്തമായ {n}",
+    "panel.quick": "വേഗമേറിയ {n}",
     "factcheck.title": "വെബിൽ പരിശോധിച്ചത്",
     "factcheck.lead": "വിധി പറയും മുമ്പ് ജഡ്ജിമാർ ഈ സെർച്ച് ഫലങ്ങൾ കണ്ടിരുന്നു. ഇവ തെളിവുകളാണ്, വിധിയല്ല.",
     "factcheck.status.supported": "ശരിയാണ്",
@@ -383,7 +383,7 @@ const ml: Locale = {
     "mode.label": "എങ്ങനെ വിധിക്കണം?",
     "mode.now": "ഞാൻ മാത്രം (ഉടനടി)",
     "mode.both": "രണ്ടു ഭാഗവും (ലിങ്ക് അയയ്ക്കാം)",
-    "mode.nowHint": "നിങ്ങൾ പറയുന്നു, ജഡ്ജിമാർ ഉടൻ വിധി പറയുന്നു.",
+    "mode.nowHint": "നിങ്ങൾ പറയൂ, ജഡ്ജിമാർ ഉടൻ വിധി പറയും.",
     "mode.bothHint":
       "നിങ്ങൾക്ക് ഒരു സ്വകാര്യ ലിങ്ക് തരും. അവർ അവരുടെ ഭാഗം പറയും; വിധി വരെ നിങ്ങളിൽ ആരും മറ്റേയാളുടേത് കാണില്ല.",
     "mode.signIn": "ലിങ്ക് അയയ്ക്കാൻ സൈൻ ഇൻ ചെയ്യൂ",
@@ -404,8 +404,8 @@ const ml: Locale = {
     "case.invite.label": "ഈ ലിങ്ക് മറ്റേയാൾക്ക് അയയ്ക്കൂ",
     "case.invite.copy": "ലിങ്ക് കോപ്പി ചെയ്യൂ",
     "case.invite.copied": "കോപ്പി ചെയ്തു",
-    "case.invite.share": "പങ്കിടുക",
-    "case.invite.shareText": "നമ്മുടെ തർക്കം തീർക്കാൻ ഞാൻ Judge-നോട് ചോദിച്ചിട്ടുണ്ട്. നിങ്ങളുടെ ഭാഗം ഇവിടെ പറയൂ. വിധി വരുന്നതുവരെ ഞാൻ അത് കാണില്ല.",
+    "case.invite.share": "പങ്കിടൂ",
+    "case.invite.shareText": "നമ്മുടെ തർക്കം തീർക്കാൻ ഞാൻ Judge-നെ ഏൽപ്പിച്ചു. നിങ്ങളുടെ ഭാഗം ഇവിടെ പറയൂ. വിധി വരുന്നതുവരെ ഞാൻ അത് കാണില്ല.",
     "case.invite.reset": "പുതിയ ലിങ്ക് ഉണ്ടാക്കൂ",
     "case.invite.resetConfirm": "നിങ്ങൾ നേരത്തേ അയച്ച ലിങ്ക് പ്രവർത്തിക്കാതാകും. പുതിയൊരെണ്ണം ഉണ്ടാക്കണോ?",
     "case.invite.resetYes": "അതെ, പുതിയ ലിങ്ക് ഉണ്ടാക്കൂ",
@@ -585,9 +585,9 @@ const ml: Locale = {
     "respond.remove": "എന്റെ ഭാഗം നീക്കം ചെയ്യൂ",
     "respond.remove.confirm":
       "നിങ്ങളുടെ ഒറിജിനൽ ടെക്സ്റ്റും ഷെയർ പേജിൽ കാണിക്കുന്ന നിങ്ങളുടെ പേരും നീക്കം ചെയ്യണോ? കേസിന്റെ ഷെയർ ലിങ്കുകൾ പ്രവർത്തിക്കാതാകും (ചാറ്റുകളിൽ നേരത്തേ പോസ്റ്റ് ചെയ്ത പ്രിവ്യൂകൾ ആ ആപ്പുകൾ പുതുക്കുന്നതുവരെ കണ്ടേക്കാം). ഇത് തിരിച്ചെടുക്കാനാകില്ല.",
-    "names.title": "പങ്കിട്ട പേജിലെ പേരുകൾ",
+    "names.title": "ഷെയർ പേജിലെ പേരുകൾ",
     "names.you": "നിങ്ങളുടെ പേര്",
-    "names.show": "പങ്കിട്ട പേജിൽ പേരുകൾ കാണിക്കുക",
+    "names.show": "ഷെയർ പേജിൽ പേരുകൾ കാണിക്കുക",
     "names.save": "സേവ് ചെയ്യൂ",
     "names.saveShare": "സേവ് ചെയ്ത് പങ്കിടൂ",
     "names.edit": "പേരുകൾ തിരുത്തൂ",
@@ -671,10 +671,10 @@ const ml: Locale = {
       "Judge പ്രവർത്തിപ്പിക്കുന്നത് കാനഡയിൽ നിന്നാണ്; കാനഡയുടെ ഫെഡറൽ സ്വകാര്യതാ നിയമം (PIPEDA) അനുസരിച്ചാണ് വ്യക്തിഗത വിവരങ്ങൾ കൈകാര്യം ചെയ്യുന്നത്: സേവനത്തിന് ആവശ്യമുള്ളത് മാത്രം ഞങ്ങൾ ശേഖരിക്കുന്നു, അതിന് മാത്രം ഉപയോഗിക്കുന്നു, അത് സംരക്ഷിക്കുന്നു; നിങ്ങളെക്കുറിച്ച് ഞങ്ങളുടെ കൈവശമുള്ളത് കാണാനോ തിരുത്താനോ നീക്കം ചെയ്യാനോ നിങ്ങൾക്ക് ആവശ്യപ്പെടാം. 30 ദിവസത്തിനകം ഞങ്ങൾ മറുപടി നൽകും.",
   },
   plurals: {
-    "panel.strong": { one: "{n} ശക്തമായത്" },
-    "panel.quick": { one: "{n} വേഗമേറിയത്" },
-    "home.monthLeft": { one: "ഈ മാസം {cap}-ൽ {n} ബാക്കി" },
-    "thread.judgesAgree": { one: "ജഡ്ജിമാർ · {total}-ൽ {n} പേർ യോജിക്കുന്നു" },
+    "panel.strong": { one: "ശക്തമായ {n}" },
+    "panel.quick": { one: "വേഗമേറിയ {n}" },
+    "home.monthLeft": { one: "ഈ മാസം {cap}-ൽ ഒന്ന് ബാക്കി" },
+    "thread.judgesAgree": { one: "ജഡ്ജിമാർ · {total}-ൽ ഒരാൾ യോജിക്കുന്നു" },
   },
   legalNotice: "ഈ പേജിന്റെ ഇംഗ്ലീഷ് പതിപ്പും മലയാളം പതിപ്പും തമ്മിൽ വ്യത്യാസമുണ്ടെങ്കിൽ ഇംഗ്ലീഷ് പതിപ്പാണ് ബാധകം.",
 };
