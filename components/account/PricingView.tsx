@@ -10,19 +10,13 @@ import { PremiumSpark } from "../PremiumBadge";
 import styles from "./AccountPages.module.css";
 import { PageShell } from "./PageShell";
 
-const FREE_FEATURES: Key[] = ["pricing.free.f1", "pricing.free.f2", "pricing.free.f3"];
-const PREMIUM_FEATURES: Key[] = ["pricing.premium.f1", "pricing.premium.f2", "pricing.premium.f3"];
+const FEATURES: Key[] = ["pricing.premium.f1", "pricing.premium.f2", "pricing.premium.f3", "pricing.premium.f4"];
 
-/** Free's feature list, plus two-sided cases when this deployment offers them. */
-export function freeFeatureKeys(features?: { cases: boolean; evidence: boolean } | null): Key[] {
-  return features?.cases ? [...FREE_FEATURES, "pricing.free.f4"] : FREE_FEATURES;
-}
-
-/** Premium's feature list, plus the extras this deployment offers. */
-export function premiumFeatureKeys(features?: { cases: boolean; evidence: boolean } | null): Key[] {
-  const keys = [...PREMIUM_FEATURES];
+/** What every verdict gets, plus the extras this deployment offers. */
+export function featureKeys(features?: { cases: boolean; evidence: boolean } | null): Key[] {
+  const keys = [...FEATURES];
   if (features?.evidence) keys.push("pricing.premium.f5");
-  if (features?.cases) keys.push("pricing.premium.f6");
+  if (features?.cases) keys.push("pricing.premium.f7", "pricing.premium.f6");
   return keys;
 }
 
@@ -66,8 +60,9 @@ export type PricingTableProps = {
   features?: { cases: boolean; evidence: boolean } | null;
 };
 
-/** Free and Premium side by side. Buy buttons stay disabled ("Coming soon")
- * until a payment provider exists. Stateless for tests. */
+/** What a verdict includes beside the packs and the monthly plan. Buy
+ * buttons stay disabled ("Coming soon") until a payment provider exists.
+ * Stateless for tests. */
 export function PricingTable({
   lang,
   pricing,
@@ -84,18 +79,14 @@ export function PricingTable({
   );
 
   const sub = entitlement?.subscription ?? null;
-  const premiumPlan = Boolean(sub) || (entitlement?.credits ?? 0) > 0;
 
   return (
     <>
       {signedIn && entitlement ? (
         <p className={styles.status} data-testid="pricing-status">
           <strong>
-            {t(lang, "account.plan")}: {t(lang, premiumPlan ? "account.plan.premium" : "account.plan.free")}
-          </strong>
-          <span>
             {t(lang, "account.credits")}: {entitlement.credits}
-          </span>
+          </strong>
           {sub ? (
             <span>
               {tWithDate(lang, sub.willRenew ? "account.subscriptionRenews" : "account.subscriptionUntil", sub.periodEnd)}
@@ -105,23 +96,23 @@ export function PricingTable({
       ) : null}
       {premiumEnabled === false ? <p className={styles.notice}>{t(lang, "pricing.preview")}</p> : null}
       <div className={styles.plans}>
-        <section className={styles.plan} aria-labelledby="plan-free">
-          <h2 id="plan-free" className={styles.planTitle}>
-            {t(lang, "pricing.free.title")}
+        <section className={styles.plan} aria-labelledby="plan-included">
+          <h2 id="plan-included" className={styles.planTitle}>
+            <PremiumSpark />
+            {t(lang, "pricing.included.title")}
           </h2>
-          <p className={styles.planPrice}>{t(lang, "pricing.free.price")}</p>
-          <Features lang={lang} keys={freeFeatureKeys(features)} />
-          <Link href="/" className={`${styles.btn} ${styles.secondary}`}>
-            {t(lang, "footer.home")}
-          </Link>
+          <Features lang={lang} keys={featureKeys(premiumEnabled ? features : null)} />
+          {premiumEnabled && !signedIn && signInOffered ? (
+            <Link href="/signin?next=%2Fpricing" className={`${styles.btn} ${styles.primary}`}>
+              {t(lang, "pricing.signIn")}
+            </Link>
+          ) : null}
         </section>
 
-        <section className={`${styles.plan} ${styles.planHighlight}`} aria-labelledby="plan-premium">
-          <h2 id="plan-premium" className={styles.planTitle}>
-            <PremiumSpark />
-            {t(lang, "pricing.premium.title")}
+        <section className={`${styles.plan} ${styles.planHighlight}`} aria-labelledby="plan-buy">
+          <h2 id="plan-buy" className={styles.planTitle}>
+            {t(lang, "pricing.buy.title")}
           </h2>
-          <Features lang={lang} keys={premiumFeatureKeys(premiumEnabled ? features : null)} />
 
           <h3 className={styles.groupTitle}>{t(lang, "pricing.packsTitle")}</h3>
           <p className={styles.small}>{t(lang, "pricing.packsLead")}</p>
@@ -149,12 +140,6 @@ export function PricingTable({
               {buy(formatPrice(pricing.monthly.priceUsd, lang))}
             </li>
           </ul>
-
-          {premiumEnabled && !signedIn && signInOffered ? (
-            <Link href="/signin?next=%2Fpricing" className={`${styles.btn} ${styles.primary}`}>
-              {t(lang, "pricing.signIn")}
-            </Link>
-          ) : null}
         </section>
       </div>
       <p className={styles.small}>{t(lang, "pricing.note")}</p>

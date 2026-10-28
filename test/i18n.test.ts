@@ -30,7 +30,6 @@ const IDENTICAL_ALLOWLIST = new Set<Key>([
   "tier.premium",
   "premium.badge",
   "account.plan.premium",
-  "pricing.premium.title",
 ]);
 
 describe("STRINGS table", () => {
