@@ -88,6 +88,11 @@ struct HomeView: View {
             let capped = HomeModel.capped(value)
             if capped != value { home.otherSide = capped }
             if app.persistsDraft { draftOther = capped }
+            // A failed "send them a link" leaves the case mode on, and "Try
+            // again" would then open a case without the side just written.
+            if home.mode == .both, !capped.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                home.mode = .now
+            }
         }
         .onChange(of: home.preset) { _, value in app.rememberPreset(value) }
         .fullScreenCover(isPresented: $home.isJudging) {
