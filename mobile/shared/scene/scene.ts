@@ -1,11 +1,14 @@
 import { createBalanceEngine, type BalanceEngine } from "@/components/scene/engine";
 import { watchActivity } from "@/components/scene/engine/loop";
+import { sideColors, type Party } from "@/lib/palette";
 import {
   getSceneMode,
+  getSceneYou,
   resetScene,
   sceneInput,
   setPointer,
   setSceneMode,
+  setSceneYou,
   subscribeScene,
   type JudgingBeat,
   type SceneMode,
@@ -25,6 +28,7 @@ declare global {
   interface Window {
     judgeScene: {
       setMode(mode: SceneMode | string): void;
+      setYou(party: Party | null): void;
       setReduced(on: boolean): void;
       setPointer(x: number, y: number): void;
       reset(): void;
@@ -66,6 +70,9 @@ function setStatus(status: "ready" | "fallback") {
 function tiltFallback() {
   const mode = getSceneMode();
   beam?.setAttribute("transform", tiltTransform(tiltDeg(mode.kind === "verdict" ? mode.verdict.tugA : undefined)));
+  const sides = sideColors(getSceneYou());
+  document.getElementById("sphereA")?.setAttribute("fill", sides.a.fill);
+  document.getElementById("sphereB")?.setAttribute("fill", sides.b.fill);
 }
 
 subscribeScene(tiltFallback);
@@ -105,6 +112,7 @@ if (engine) {
 
 window.judgeScene = {
   setMode: (mode) => setSceneMode(parseMode(mode)),
+  setYou: (party) => setSceneYou(party === "a" || party === "b" ? party : null),
   setReduced(on) {
     body.dataset.reduced = String(on);
     engine?.setReduced(on);

@@ -130,6 +130,7 @@
     <string name="nav_account">Cuenta</string>
     <string name="nav_pricing">Precios</string>
     <string name="nav_sign_out">Cerrar sesión</string>
+    <string name="nav_verdicts">Veredictos</string>
     <string name="tier_locked_sign_in">(bloqueado: inicia sesión para usarlo)</string>
     <string name="tier_get_premium">Consigue más veredictos</string>
     <string name="tier_checking">Comprobando si falta algo…</string>

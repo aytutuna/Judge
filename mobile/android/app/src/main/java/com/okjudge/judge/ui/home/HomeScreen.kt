@@ -33,7 +33,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.LiveRegionMode
@@ -69,7 +68,9 @@ import com.okjudge.judge.ui.premium.EvidencePicker
 import com.okjudge.judge.ui.premium.rememberEvidencePicker
 import com.okjudge.judge.ui.theme.JudgeShapes
 import com.okjudge.judge.ui.theme.JudgeType
+import com.okjudge.judge.ui.theme.LocalSides
 import com.okjudge.judge.ui.theme.Palette
+import com.okjudge.judge.ui.theme.SideColors
 import com.okjudge.judge.ui.theme.forScript
 import kotlinx.coroutines.delay
 import java.text.NumberFormat
@@ -88,12 +89,6 @@ object HomeTags {
     const val BALANCE = "home.balance"
     const val CASE_COST = "home.caseCost"
 }
-
-/** Your side and theirs, each on its own card, in these colours. */
-private data class SideColors(val avatar: Color, val ink: Color)
-
-private val Mine = SideColors(Palette.terra, Palette.terraInk)
-private val Theirs = SideColors(Palette.sageInk, Palette.sageInk)
 
 /**
  * Home: a card for your side and one for theirs (or a link for them to
@@ -159,7 +154,7 @@ fun HomeScreen(
                 }
                 state.error?.let { ErrorBanner(it, onDismissError) }
                 SideCard(
-                    colors = Mine,
+                    colors = LocalSides.current.mine,
                     letter = "A",
                     label = s.appHomeYourSide,
                     name = state.shownName,
@@ -185,7 +180,7 @@ fun HomeScreen(
                     }
                 }
                 SideCard(
-                    colors = Theirs,
+                    colors = LocalSides.current.theirs,
                     letter = "B",
                     label = s.appHomeTheirSide,
                     name = state.otherName,
@@ -267,7 +262,7 @@ private fun SideCard(
     ) {
         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             Box(
-                Modifier.size(24.dp).clip(CircleShape).background(colors.avatar).clearAndSetSemantics { },
+                Modifier.size(24.dp).clip(CircleShape).background(colors.ink).clearAndSetSemantics { },
                 contentAlignment = Alignment.Center,
             ) {
                 Text(letter, style = JudgeType.micro.copy(color = Palette.paper, letterSpacing = 0.sp))

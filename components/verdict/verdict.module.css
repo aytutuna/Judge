@@ -124,12 +124,12 @@
   border-radius: 50%;
 }
 .dotA {
-  background: var(--terra);
-  box-shadow: inset 0 0 0 1px rgba(169, 68, 47, 0.55);
+  background: var(--party-a-strong);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--party-a-ink) 60%, transparent);
 }
 .dotB {
-  background: var(--sage-strong);
-  box-shadow: inset 0 0 0 1px rgba(79, 111, 96, 0.6);
+  background: var(--party-b-strong);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--party-b-ink) 60%, transparent);
 }
 .dotOther {
   background: transparent;
@@ -181,13 +181,13 @@
   position: relative;
   height: 10px;
   border-radius: var(--radius-chip);
-  background: var(--sage-strong);
+  background: var(--party-b-strong);
 }
 .tugA {
   position: absolute;
   inset: 0 auto 0 0;
   width: var(--a, 50%);
-  background: var(--terra);
+  background: var(--party-a-strong);
   border-radius: 999px 0 0 999px;
 }
 .tugKnot {
@@ -276,8 +276,8 @@
   width: 17px;
   height: 17px;
 }
-.sealA { background: var(--terra-ink); }
-.sealB { background: var(--sage-ink); }
+.sealA { background: var(--party-a-ink); }
+.sealB { background: var(--party-b-ink); }
 .sealNone { background: var(--ink); }
 .headline {
   margin: 0;
@@ -386,9 +386,9 @@
   inset-inline-end: 18px;
   max-width: 46%;
   padding: 5px 10px;
-  border: 2px solid var(--terra);
+  border: 2px solid currentColor;
   border-radius: 8px;
-  color: var(--terra);
+  color: var(--ink);
   font-family: var(--font-display);
   font-size: 13px;
   font-weight: 800;
@@ -400,6 +400,8 @@
   transform: rotate(8deg);
   pointer-events: none;
 }
+.stamp[data-party="a"] { color: var(--party-a-ink); }
+.stamp[data-party="b"] { color: var(--party-b-ink); }
 /* Clamped on an inner span: clamping the bordered box itself lets the third
    line show through its bottom padding. A long winner name would otherwise
    run the stamp down over the headline. */
@@ -524,10 +526,10 @@
   white-space: nowrap;
 }
 .tileName[data-party="a"] {
-  color: var(--terra-ink);
+  color: var(--party-a-ink);
 }
 .tileName[data-party="b"] {
-  color: var(--sage-ink);
+  color: var(--party-b-ink);
 }
 
 /* ---------- Split / conditional branches ---------- */
@@ -543,12 +545,12 @@
   color: var(--ink);
 }
 .branchA {
-  background: var(--terra-tint);
-  border-inline-start: 3px solid var(--terra);
+  background: var(--party-a-tint);
+  border-inline-start: 3px solid var(--party-a-strong);
 }
 .branchB {
-  background: var(--sage-tint);
-  border-inline-start: 3px solid var(--sage-strong);
+  background: var(--party-b-tint);
+  border-inline-start: 3px solid var(--party-b-strong);
 }
 .branchIf {
   background: var(--paper);
@@ -614,7 +616,10 @@
   border-radius: 18px;
   background: #fbf6ef;
   border: 1px solid var(--line);
-  border-inline-start: 4px solid var(--terra);
+  border-inline-start: 4px solid var(--party-a-strong);
+}
+.best[data-party="b"] {
+  border-inline-start-color: var(--party-b-strong);
 }
 .best p {
   margin: 0;
@@ -774,8 +779,8 @@
   border-radius: var(--radius-chip);
   min-width: 0;
 }
-.colHeadA { background: var(--terra-tint); }
-.colHeadB { background: var(--sage-tint); }
+.colHeadA { background: var(--party-a-tint); }
+.colHeadB { background: var(--party-b-tint); }
 .partyChip {
   display: grid;
   place-items: center;
@@ -787,8 +792,8 @@
   font-weight: 700;
   color: #fff;
 }
-.partyChipA { background: var(--terra-ink); }
-.partyChipB { background: var(--sage-ink); }
+.partyChipA { background: var(--party-a-ink); }
+.partyChipB { background: var(--party-b-ink); }
 .colName {
   font-size: 14px;
   font-weight: 600;
@@ -807,8 +812,8 @@
   border: 1px solid var(--line);
   min-width: 0;
 }
-.claimA { border-inline-start: 3px solid var(--terra); }
-.claimB { border-inline-start: 3px solid var(--sage-strong); }
+.claimA { border-inline-start: 3px solid var(--party-a-strong); }
+.claimB { border-inline-start: 3px solid var(--party-b-strong); }
 .claimText {
   font-size: 14px;
   line-height: 1.45;

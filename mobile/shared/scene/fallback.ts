@@ -1,5 +1,5 @@
 import { svgRotateDeg } from "@/lib/balance";
-import { PALETTE } from "@/lib/palette";
+import { PALETTE, sideColors } from "@/lib/palette";
 
 // The SVG from components/scene/BalanceFallback.tsx as markup, so the page
 // paints it before the script has even been parsed.
@@ -18,7 +18,10 @@ export function tiltTransform(deg: number): string {
   return `rotate(${deg.toFixed(2)} ${PIVOT_X} ${PIVOT_Y})`;
 }
 
+/** Drawn for Party A as the viewer; scene.ts recolours the spheres when told
+ * otherwise. */
 export function balanceSvg(): string {
+  const sides = sideColors(null);
   const cup = (s: number) =>
     `<path d="M${PIVOT_X + s * CUP_X - 17} ${PIVOT_Y - 12}h34l-5 6h-24z" fill="${PALETTE.ivory2}"/>`;
   return [
@@ -31,8 +34,8 @@ export function balanceSvg(): string {
     `<rect x="${PIVOT_X - HALF}" y="${PIVOT_Y - 6}" width="${HALF * 2}" height="9" rx="4.5" fill="${PALETTE.ink}"/>`,
     cup(-1),
     cup(1),
-    `<circle cx="${PIVOT_X - CUP_X}" cy="${PIVOT_Y - 48}" r="36" fill="${PALETTE.terra}"/>`,
-    `<circle cx="${PIVOT_X + CUP_X}" cy="${PIVOT_Y - 48}" r="36" fill="${PALETTE.sage}"/>`,
+    `<circle id="sphereA" cx="${PIVOT_X - CUP_X}" cy="${PIVOT_Y - 48}" r="36" fill="${sides.a.fill}"/>`,
+    `<circle id="sphereB" cx="${PIVOT_X + CUP_X}" cy="${PIVOT_Y - 48}" r="36" fill="${sides.b.fill}"/>`,
     `</g>`,
     `<circle cx="${PIVOT_X}" cy="${PIVOT_Y}" r="6" fill="${PALETTE.ivory2}"/>`,
     `</svg>`,

@@ -3,7 +3,7 @@ import { useSyncExternalStore } from "react";
 /**
  * This browser's own list of the verdicts it wrote signed out, newest first,
  * under `judge.history`. The verdicts themselves live on the server; this is
- * only an index so My verdicts can list them without an account. The
+ * only an index so the Verdicts page can list them without an account. The
  * headline is kept with the writer's names put back, as they saw it.
  * Website-only (localStorage).
  */

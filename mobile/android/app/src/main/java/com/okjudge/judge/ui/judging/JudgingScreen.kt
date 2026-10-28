@@ -69,6 +69,7 @@ import com.okjudge.judge.ui.components.uppercaseForUi
 import com.okjudge.judge.ui.components.warmShadow
 import com.okjudge.judge.ui.theme.JudgeShapes
 import com.okjudge.judge.ui.theme.JudgeType
+import com.okjudge.judge.ui.theme.LocalSides
 import com.okjudge.judge.ui.theme.Palette
 import com.okjudge.judge.ui.theme.forScript
 import com.okjudge.judge.ui.verdict.VoteDot
@@ -211,9 +212,10 @@ fun JudgingScreen(
 @Composable
 private fun SideTiles(sides: List<VerdictFlow.Side>) {
     val s = LocalStrings.current
+    val colors = LocalSides.current
     Row(Modifier.fillMaxWidth().height(IntrinsicSize.Min), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
         sides.forEach { side ->
-            val (ink, tint) = if (side.mine) Palette.terraInk to Palette.terraTint else Palette.sageInk to Palette.sageTint
+            val (ink, tint) = (if (side.mine) colors.mine else colors.theirs).let { it.ink to it.tint }
             Column(
                 Modifier
                     .weight(1f)

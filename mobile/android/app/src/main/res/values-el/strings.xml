@@ -127,6 +127,7 @@
     <string name="nav_account">Λογαριασμός</string>
     <string name="nav_pricing">Τιμές</string>
     <string name="nav_sign_out">Αποσύνδεση</string>
+    <string name="nav_verdicts">Αποφάσεις</string>
     <string name="tier_locked_sign_in">(κλειδωμένο: συνδέσου για να το χρησιμοποιήσεις)</string>
     <string name="tier_get_premium">Περισσότερες αποφάσεις</string>
     <string name="tier_checking">Ελέγχουμε αν λείπει κάτι…</string>

@@ -127,6 +127,7 @@
     <string name="nav_account">অ্যাকাউন্ট</string>
     <string name="nav_pricing">দাম</string>
     <string name="nav_sign_out">সাইন আউট</string>
+    <string name="nav_verdicts">রায়</string>
     <string name="tier_locked_sign_in">(লক করা: ব্যবহার করতে সাইন ইন করুন)</string>
     <string name="tier_get_premium">আরও রায় নিন</string>
     <string name="tier_checking">কিছু বাদ পড়েছে কি না দেখছি…</string>

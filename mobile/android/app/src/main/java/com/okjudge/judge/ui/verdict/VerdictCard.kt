@@ -91,6 +91,7 @@ import com.okjudge.judge.ui.openLink
 import com.okjudge.judge.ui.theme.BrandFonts
 import com.okjudge.judge.ui.theme.JudgeShapes
 import com.okjudge.judge.ui.theme.JudgeType
+import com.okjudge.judge.ui.theme.LocalSides
 import com.okjudge.judge.ui.theme.Palette
 import com.okjudge.judge.ui.theme.cappedScale
 import com.okjudge.judge.ui.theme.forScript
@@ -307,9 +308,10 @@ private fun PartySides(content: @Composable (direction: LayoutDirection) -> Unit
 @Composable
 private fun Contenders(parties: PartyLabels) {
     val s = LocalStrings.current
+    val sides = LocalSides.current
     Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
         Row(Modifier.weight(1f), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            Avatar("A", Palette.terra)
+            Avatar("A", sides.a.ink)
             Text(parties.nameA, style = JudgeType.bodyStrong.copy(fontSize = 15.sp, fontWeight = FontWeight.Bold), maxLines = 1, overflow = TextOverflow.Ellipsis)
         }
         Text(s.appVerdictVs, style = JudgeType.footnote.copy(fontSize = 12.sp), modifier = Modifier.padding(horizontal = 8.dp))
@@ -325,7 +327,7 @@ private fun Contenders(parties: PartyLabels) {
                 overflow = TextOverflow.Ellipsis,
                 modifier = Modifier.weight(1f, fill = false),
             )
-            Avatar("B", Palette.sageInk)
+            Avatar("B", sides.b.ink)
         }
     }
 }
@@ -341,6 +343,7 @@ private fun Avatar(letter: String, color: Color) {
 @Composable
 private fun LeanBar(share: Float, parties: PartyLabels) {
     val s = LocalStrings.current
+    val sides = LocalSides.current
     val said = when {
         share > 0.5f -> s.appVerdictLeanTo(parties.nameA)
         share < 0.5f -> s.appVerdictLeanTo(parties.nameB)
@@ -351,11 +354,11 @@ private fun LeanBar(share: Float, parties: PartyLabels) {
             .fillMaxWidth()
             .height(12.dp)
             .clip(JudgeShapes.chip)
-            .background(Palette.sageTint)
+            .background(sides.b.tint)
             .semantics { contentDescription = said }
             .testTag(VerdictTags.LEAN),
     ) {
-        if (share > 0f) Box(Modifier.fillMaxWidth(share).fillMaxHeight().clip(JudgeShapes.chip).background(Palette.terra))
+        if (share > 0f) Box(Modifier.fillMaxWidth(share).fillMaxHeight().clip(JudgeShapes.chip).background(sides.a.ink))
     }
 }
 
@@ -364,8 +367,8 @@ private fun LeanBar(share: Float, parties: PartyLabels) {
 private fun LabelRow(result: VerdictResult, parties: PartyLabels, dots: Boolean) {
     val s = LocalStrings.current
     val color = when (result.finalVerdict) {
-        FinalVerdict.SIDE_A -> Palette.terraInk
-        FinalVerdict.SIDE_B -> Palette.sageInk
+        FinalVerdict.SIDE_A -> LocalSides.current.a.ink
+        FinalVerdict.SIDE_B -> LocalSides.current.b.ink
         else -> Palette.ink2
     }
     Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
@@ -418,10 +421,11 @@ fun VoteDots(votes: List<Vote>, modifier: Modifier = Modifier) {
 
 @Composable
 fun VoteDot(vote: Vote?, sizeDp: Int) {
+    val sides = LocalSides.current
     Canvas(Modifier.size(sizeDp.dp)) {
         when (vote) {
-            Vote.A -> drawCircle(Palette.terra)
-            Vote.B -> drawCircle(Palette.sageStrong)
+            Vote.A -> drawCircle(sides.a.strong)
+            Vote.B -> drawCircle(sides.b.strong)
             Vote.OTHER -> drawCircle(Palette.ink, radius = size.minDimension / 2 - 0.75.dp.toPx(), style = Stroke(1.5.dp.toPx()))
             null -> drawCircle(Palette.ink.copy(alpha = 0.18f))
         }
@@ -568,7 +572,7 @@ private fun Slots(result: VerdictResult, parties: PartyLabels) {
                 val self = if (isA) parties.aIsSelf else parties.bIsSelf
                 val name = if (isA) parties.nameA else parties.nameB
                 Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(7.dp)) {
-                    Dot(if (isA) Palette.terra else Palette.sageStrong, 9)
+                    Dot(LocalSides.current.of(l.party).strong, 9)
                     Text(if (self) s.leanTitleSelf else s.leanTitle(name), style = JudgeType.slotTitle)
                 }
                 SlotText(l.reason)
@@ -642,7 +646,8 @@ private fun Branches(result: VerdictResult, parties: PartyLabels, restoredNames:
                 val isA = p.party == "a"
                 val self = if (isA) parties.aIsSelf else parties.bIsSelf
                 val name = if (isA) parties.nameA else parties.nameB
-                Branch(if (isA) Palette.terraTint else Palette.sageTint, if (isA) Palette.terra else Palette.sageStrong) {
+                val side = LocalSides.current.of(p.party)
+                Branch(side.tint, side.strong) {
                     BranchText(if (self) s.splitWinSelf else s.splitWin(name), p.point, null)
                 }
             }
@@ -719,17 +724,18 @@ private fun BedrockTile(name: String, text: String, isA: Boolean, direction: Lay
 
 @Composable
 private fun BedrockTileBody(name: String, text: String, isA: Boolean, modifier: Modifier) {
+    val side = LocalSides.current.of(if (isA) "a" else "b")
     Column(
         modifier
             .fillMaxHeight()
             .clip(JudgeShapes.branch)
-            .background(if (isA) Palette.terraTint else Palette.sageTint)
+            .background(side.tint)
             .padding(12.dp),
         verticalArrangement = Arrangement.spacedBy(4.dp),
     ) {
         Text(
             name.uppercaseForUi(),
-            style = JudgeType.micro.copy(color = if (isA) Palette.terraInk else Palette.sageInk, letterSpacing = 0.08.em).forScript(),
+            style = JudgeType.micro.copy(color = side.ink, letterSpacing = 0.08.em).forScript(),
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
         )
@@ -742,15 +748,16 @@ private fun BedrockTileBody(name: String, text: String, isA: Boolean, modifier: 
 private fun ClaimLine(isA: Boolean, claim: Claim, s: Strings) {
     val kind = s.text("kind.${claim.claimKind.raw}")
     val tag = if (kind != null) "${if (isA) "A" else "B"} · $kind" else if (isA) "A" else "B"
+    val side = LocalSides.current.of(if (isA) "a" else "b")
     Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.Top) {
         Text(
             tag,
-            style = JudgeType.small.copy(fontSize = 11.sp, fontWeight = FontWeight.Bold, color = if (isA) Palette.terraInk else Palette.sageInk),
+            style = JudgeType.small.copy(fontSize = 11.sp, fontWeight = FontWeight.Bold, color = side.ink),
             maxLines = 1,
             modifier = Modifier
                 .padding(top = 2.dp)
                 .clip(JudgeShapes.chip)
-                .background(if (isA) Palette.terraTint else Palette.sageTint)
+                .background(side.tint)
                 .padding(horizontal = 7.dp, vertical = 2.dp),
         )
         Text(claim.claim, style = JudgeType.body.copy(fontSize = 14.sp, lineHeight = (14 * 1.4).sp))
@@ -926,6 +933,7 @@ private fun WouldChange(items: List<String>) {
 @Composable
 private fun TwoSidedFacts(result: VerdictResult, parties: PartyLabels) {
     val s = LocalStrings.current
+    val sides = LocalSides.current
     val agreed = result.agreedFacts.orEmpty().filter { it.isNotBlank() }.take(MAX_AGREED)
     val disputed = result.disputedFacts.orEmpty().take(MAX_DISPUTED)
     // At most one decisive marker, as the server promises.
@@ -935,8 +943,8 @@ private fun TwoSidedFacts(result: VerdictResult, parties: PartyLabels) {
             agreed.forEach { fact ->
                 Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                     Row(Modifier.padding(top = 6.dp).clearAndSetSemantics { }, horizontalArrangement = Arrangement.spacedBy((-3).dp)) {
-                        Dot(Palette.terra, 10)
-                        Dot(Palette.sageStrong, 10)
+                        Dot(sides.a.strong, 10)
+                        Dot(sides.b.strong, 10)
                     }
                     Text(fact, style = JudgeType.body.copy(fontSize = 14.sp, lineHeight = (14 * 1.45).sp))
                 }
@@ -970,8 +978,8 @@ private fun TwoSidedFacts(result: VerdictResult, parties: PartyLabels) {
                         FindingChip(findingText(d.finding, parties, s), d.finding)
                     }
                     Text(d.fact, style = JudgeType.slotTitle)
-                    PartyClaim(parties.nameA, d.partyA, Palette.terra)
-                    PartyClaim(parties.nameB, d.partyB, Palette.sageStrong)
+                    PartyClaim(parties.nameA, d.partyA, sides.a.strong)
+                    PartyClaim(parties.nameB, d.partyB, sides.b.strong)
                 }
             }
         }
@@ -986,9 +994,10 @@ private fun findingText(finding: String, p: PartyLabels, s: Strings): String = w
 
 @Composable
 private fun FindingChip(text: String, finding: String) {
+    val sides = LocalSides.current
     val (fg, bg) = when (finding) {
-        "a" -> Palette.terraInk to Palette.terraTint
-        "b" -> Palette.sageInk to Palette.sageTint
+        "a" -> sides.a.ink to sides.a.tint
+        "b" -> sides.b.ink to sides.b.tint
         else -> Palette.ink2 to Palette.ivory2
     }
     Text(

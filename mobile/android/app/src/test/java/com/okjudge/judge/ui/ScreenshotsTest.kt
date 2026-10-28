@@ -499,8 +499,25 @@ class ScreenshotsTest {
             com.okjudge.judge.core.model.CaseListResponse.serializer(),
             Fixtures.verdicts["cases"]!!.jsonObject["list"].toString(),
         )
+        val items = listOf("win_a_self", "win_b_named", "lean_tie").mapIndexed { i, n ->
+            val o = sample(n)
+            SavedVerdict(o.id, 1_761_000_000_000L - i * 2 * 86_400_000L, o.result, o.nameMap, emptyMap())
+        }
         Themed(AppLang.EN) {
-            HistoryScreen(emptyList(), {}, {}, {}, {}, cases = com.okjudge.judge.ui.cases.CaseListState.Ready(list.cases), initiallyCases = true)
+            HistoryScreen(items, {}, {}, {}, {}, cases = com.okjudge.judge.ui.cases.CaseListState.Ready(list.cases))
+        }
+    }
+
+    @Test
+    fun case_judged_respondent_en() = capture("case_judged_respondent_en", tall = true) {
+        val view = caseState("judged").view!!.copy(role = "respondent", yourParty = "b")
+        Themed(AppLang.EN) {
+            com.okjudge.judge.ui.cases.CaseScreen(
+                com.okjudge.judge.ui.cases.CaseViewModel.preview(view),
+                evidenceOn = true,
+                actions = com.okjudge.judge.ui.cases.CaseActions(onBack = {}),
+                reducedMotion = true,
+            )
         }
     }
 

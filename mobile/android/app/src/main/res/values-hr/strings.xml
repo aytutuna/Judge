@@ -130,6 +130,7 @@
     <string name="nav_account">Račun</string>
     <string name="nav_pricing">Cijene</string>
     <string name="nav_sign_out">Odjava</string>
+    <string name="nav_verdicts">Presude</string>
     <string name="tier_locked_sign_in">(zaključano: prijavi se za korištenje)</string>
     <string name="tier_get_premium">Nabavi još presuda</string>
     <string name="tier_checking">Provjeravamo nedostaje li nešto…</string>

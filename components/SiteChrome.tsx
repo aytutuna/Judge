@@ -21,7 +21,7 @@ export function SkipLink({ lang }: { lang: Lang }) {
 
 /** Fixed, blurred 56px nav, with a spacer of the same height so the page
  * starts below it. `children` go before the account entry (the app shell's
- * "My verdicts" link). */
+ * "Verdicts" link). */
 export function SiteHeader({ lang, toggle = false, children }: { lang: Lang; toggle?: boolean; children?: ReactNode }) {
   return (
     <>

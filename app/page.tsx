@@ -170,7 +170,7 @@ export default function Home() {
   }, []);
 
   // The index has to exist before the first addHistory, or the verdicts
-  // this browser wrote before it would never be queued for My verdicts.
+  // this browser wrote before it would never be queued for the Verdicts list.
   useEffect(() => startHistory(ownerTokenIds()), []);
 
   // What a sign-in link saves: only an unsent argument.
@@ -250,7 +250,7 @@ export default function Home() {
    * animation running. Offline spells and server hiccups just keep polling
    * (lib/verdict-poll.ts backs off); a failed verdict shows the usual
    * localized error and returns to the form. The poll is not aborted with
-   * the thread: My verdicts still needs the outcome.
+   * the thread: the Verdicts list still needs the outcome.
    */
   async function awaitVerdict(
     accepted: VerdictAcceptedResponse,

@@ -127,6 +127,7 @@
     <string name="nav_account">ಖಾತೆ</string>
     <string name="nav_pricing">ಬೆಲೆಗಳು</string>
     <string name="nav_sign_out">ಸೈನ್ ಔಟ್</string>
+    <string name="nav_verdicts">ತೀರ್ಪುಗಳು</string>
     <string name="tier_locked_sign_in">(ಲಾಕ್ ಆಗಿದೆ: ಬಳಸಲು ಸೈನ್ ಇನ್ ಮಾಡಿ)</string>
     <string name="tier_get_premium">ಇನ್ನಷ್ಟು ತೀರ್ಪುಗಳನ್ನು ಪಡೆಯಿರಿ</string>
     <string name="tier_checking">ಏನಾದರೂ ಬಿಟ್ಟುಹೋಗಿದೆಯೇ ಎಂದು ನೋಡುತ್ತಿದ್ದೇವೆ…</string>

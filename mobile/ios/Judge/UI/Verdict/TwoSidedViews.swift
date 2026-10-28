@@ -90,6 +90,8 @@ struct TwoSidedFactsView: View {
     let parties: PartyNames
     let lang: AppLang
 
+    @Environment(\.sides) private var sides
+
     var body: some View {
         let agreed = TwoSidedDisplay.agreed(result)
         let disputed = TwoSidedDisplay.disputed(result)
@@ -103,8 +105,8 @@ struct TwoSidedFactsView: View {
                         ForEach(Array(agreed.enumerated()), id: \.offset) { _, fact in
                             HStack(alignment: .firstTextBaseline, spacing: 10) {
                                 HStack(spacing: -3) {
-                                    Circle().fill(Brand.terra).frame(width: 9, height: 9)
-                                    Circle().fill(Brand.sageStrong).frame(width: 9, height: 9)
+                                    Circle().fill(sides.a.strong).frame(width: 9, height: 9)
+                                    Circle().fill(sides.b.strong).frame(width: 9, height: 9)
                                 }
                                 .accessibilityHidden(true)
                                 Text(fact)
@@ -154,8 +156,8 @@ struct TwoSidedFactsView: View {
                 .brandText(.claim)
                 .foregroundStyle(Brand.ink)
                 .fixedSize(horizontal: false, vertical: true)
-            claim(parties.nameA, text: fact.partyA, rule: Brand.terra)
-            claim(parties.nameB, text: fact.partyB, rule: Brand.sageStrong)
+            claim(parties.nameA, text: fact.partyA, rule: sides.a.strong)
+            claim(parties.nameB, text: fact.partyB, rule: sides.b.strong)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(14)
@@ -188,8 +190,8 @@ struct TwoSidedFactsView: View {
 
     private func findingColor(_ finding: DisputeFinding) -> Color {
         switch finding {
-        case .a: return Brand.terraInk
-        case .b: return Brand.sageInk
+        case .a: return sides.a.ink
+        case .b: return sides.b.ink
         case .unsettled, .unknown: return Brand.ink2
         }
     }

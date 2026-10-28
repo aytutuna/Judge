@@ -1,5 +1,5 @@
 import { ImageResponse } from "next/og";
-import { ACCENT_A, ACCENT_B, OG_SIZE, OgCard, ogCanDraw, ogFonts } from "@/components/OgCard";
+import { OG_SIDES, OG_SIZE, OgCard, ogCanDraw, ogFonts } from "@/components/OgCard";
 import { verdictLang } from "@/lib/content-lang";
 import { confidenceLabel, tugFinal, verdictLabel } from "@/lib/verdict-display";
 import { loadLocales, t } from "@/lib/i18n";
@@ -86,7 +86,7 @@ export default async function Image({ params }: { params: Promise<{ id: string }
     ? t(lang, "lean.title", { name: lean.party === "a" ? nameA : nameB })
     : undefined;
   const accent =
-    r.verdict === "side_a" ? ACCENT_A : r.verdict === "side_b" ? ACCENT_B : undefined;
+    r.verdict === "side_a" ? OG_SIDES.a.ink : r.verdict === "side_b" ? OG_SIDES.b.ink : undefined;
   const cta = t(lang, "shared.cta").replace(/\s*[→←]$/, "");
   const confidence = confidenceLabel(lang, r);
   const eyebrow = leanLine ?? t(lang, `badge.${r.dispute_type}`);

@@ -124,6 +124,7 @@
     <string name="nav_account">Tài khoản</string>
     <string name="nav_pricing">Bảng giá</string>
     <string name="nav_sign_out">Đăng xuất</string>
+    <string name="nav_verdicts">Phán quyết</string>
     <string name="tier_locked_sign_in">(đã khóa: đăng nhập để dùng)</string>
     <string name="tier_get_premium">Thêm lượt phán quyết</string>
     <string name="tier_checking">Đang xem có thiếu gì không…</string>

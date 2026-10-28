@@ -56,6 +56,7 @@ struct VerdictDetails<Appeal: View>: View {
     @Environment(AppModel.self) private var app
     @Environment(\.dismiss) private var dismiss
     @Environment(\.layoutDirection) private var layoutDirection
+    @Environment(\.sides) private var sides
     let model: VerdictModel
     let lang: AppLang
     let shareURL: URL?
@@ -196,9 +197,9 @@ struct VerdictDetails<Appeal: View>: View {
                     // A's tile left and B's right in every language; the text
                     // in each runs in the language's direction.
                     HStack(spacing: 8) {
-                        BedrockTile(name: parties.nameA, text: map.bedrockA, color: Brand.terraInk, tint: Brand.terraTint)
+                        BedrockTile(name: parties.nameA, text: map.bedrockA, color: sides.a.ink, tint: sides.a.tint)
                             .environment(\.layoutDirection, layoutDirection)
-                        BedrockTile(name: parties.nameB, text: map.bedrockB, color: Brand.sageInk, tint: Brand.sageTint)
+                        BedrockTile(name: parties.nameB, text: map.bedrockB, color: sides.b.ink, tint: sides.b.tint)
                             .environment(\.layoutDirection, layoutDirection)
                     }
                     .environment(\.layoutDirection, .leftToRight)
@@ -250,16 +251,16 @@ struct VerdictDetails<Appeal: View>: View {
                 .brandText(TypeStyle(face: .inter, weight: 600, size: 12, lineHeight: 1.3, textStyle: .footnote))
                 .foregroundStyle(Brand.muted)
             ForEach(Array(rows.enumerated()), id: \.offset) { _, row in
-                let isA = row.party == .a
-                let letter = isA ? "A" : "B"
+                let letter = row.party == .a ? "A" : "B"
+                let side = sides.of(row.party)
                 HStack(alignment: .firstTextBaseline, spacing: 8) {
                     Text(VerdictDisplay.kind(row.claim.kind, lang: lang).map { letter + " · " + $0 } ?? letter)
                         .brandText(TypeStyle(face: .inter, weight: 700, size: 11, lineHeight: 1.2, textStyle: .caption2, maxScale: 1.6))
-                        .foregroundStyle(isA ? Brand.terraInk : Brand.sageInk)
+                        .foregroundStyle(side.ink)
                         .lineLimit(1)
                         .padding(.horizontal, 7)
                         .padding(.vertical, 2)
-                        .background(Capsule().fill(isA ? Brand.terraTint : Brand.sageTint))
+                        .background(Capsule().fill(side.tint))
                     Text(row.claim.claim)
                         .brandText(.claim)
                         .foregroundStyle(Brand.ink)

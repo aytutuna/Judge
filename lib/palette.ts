@@ -22,7 +22,7 @@ export const PALETTE = {
   terraTint: "#F3DDD5",
   sage: "#8AA899",
   sageStrong: "#6E8F80",
-  sageInk: "#4F6F60",
+  sageInk: "#4C6B5D",
   sageTint: "#DDE7E0",
   stone: "#D6C7B0",
   strata: "#E6DCCB",
@@ -44,6 +44,32 @@ export type PaletteAlphaKey = keyof typeof PALETTE_ALPHA;
 export const PALETTE_NUM = Object.fromEntries(
   Object.entries(PALETTE).map(([k, v]) => [k, Number.parseInt(v.slice(1), 16)]),
 ) as { readonly [K in PaletteKey]: number };
+
+export type Party = "a" | "b";
+
+/** One side's colours: `fill` for large areas, `strong` for thin marks that
+ * need 3:1, `ink` for text, `tint` behind text. Terracotta is its own mark
+ * colour. */
+export type SideColors = { fill: string; strong: string; ink: string; tint: string };
+
+const GREEN: SideColors = { fill: PALETTE.sage, strong: PALETTE.sageStrong, ink: PALETTE.sageInk, tint: PALETTE.sageTint };
+const RED: SideColors = { fill: PALETTE.terra, strong: PALETTE.terra, ink: PALETTE.terraInk, tint: PALETTE.terraTint };
+
+/**
+ * The viewer's own side is green (sage), the other side red (terracotta).
+ * `you` is the party the viewer is; only "b" (the other side of a two-sided
+ * case) changes anything. Everyone else sees Party A in green: the writer
+ * of a one-person verdict wrote Party A as themselves, and when the viewer
+ * is unknown (share images, samples, a stranger on a share link) Party A is
+ * whoever started it. app/globals.css mirrors this with --party-* tokens.
+ */
+export function greenParty(you?: Party | null): Party {
+  return you === "b" ? "b" : "a";
+}
+
+export function sideColors(you?: Party | null): Record<Party, SideColors> {
+  return greenParty(you) === "a" ? { a: GREEN, b: RED } : { a: RED, b: GREEN };
+}
 
 /** CSS custom property name for a palette key: `sageInk` → `--sage-ink`. */
 export function cssVarName(key: PaletteKey | PaletteAlphaKey): string {

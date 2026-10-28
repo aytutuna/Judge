@@ -133,6 +133,7 @@
     <string name="nav_account">Účet</string>
     <string name="nav_pricing">Cenník</string>
     <string name="nav_sign_out">Odhlásiť sa</string>
+    <string name="nav_verdicts">Verdikty</string>
     <string name="tier_locked_sign_in">(zamknuté: najprv sa prihlás)</string>
     <string name="tier_get_premium">Získať viac verdiktov</string>
     <string name="tier_checking">Kontrolujem, či niečo nechýba…</string>

@@ -127,6 +127,7 @@
     <string name="nav_account">Account</string>
     <string name="nav_pricing">Prijzen</string>
     <string name="nav_sign_out">Uitloggen</string>
+    <string name="nav_verdicts">Uitspraken</string>
     <string name="tier_locked_sign_in">(op slot: log in om het te gebruiken)</string>
     <string name="tier_get_premium">Meer uitspraken</string>
     <string name="tier_checking">Even kijken of er iets ontbreekt…</string>

@@ -127,6 +127,7 @@
     <string name="nav_account">Tili</string>
     <string name="nav_pricing">Hinnat</string>
     <string name="nav_sign_out">Kirjaudu ulos</string>
+    <string name="nav_verdicts">Tuomiot</string>
     <string name="tier_locked_sign_in">(lukittu: vaatii kirjautumisen)</string>
     <string name="tier_get_premium">Hanki lisää tuomioita</string>
     <string name="tier_checking">Tarkistetaan, puuttuuko jotain…</string>

@@ -1,7 +1,7 @@
 import Observation
 import SwiftUI
 
-/// "Your cases" (components/case/CaseList.tsx): GET /api/v1/cases?limit=20,
+/// The account's cases for the Verdicts list: GET /api/v1/cases?limit=20,
 /// newest first.
 @MainActor
 @Observable
@@ -48,69 +48,9 @@ final class CaseListModel {
     #endif
 }
 
-struct CaseListView: View {
-    @Environment(AppModel.self) private var app
-
-    var body: some View {
-        let lang = app.lang
-        let list = app.caseList
-        Group {
-            if !app.account.isSignedIn {
-                message(L10n.caseSignIn(lang)) {
-                    Button(L10n.navSignIn(lang)) { app.account.presentSignIn() }
-                        .buttonStyle(PrimaryButtonStyle())
-                        .frame(maxWidth: 280)
-                }
-            } else {
-                switch list.state {
-                case .idle, .loading:
-                    message(L10n.caseLoading(lang)) { ProgressView().tint(Brand.muted) }
-                case .failed:
-                    message(L10n.caseListLoadFailed(lang)) {
-                        Button(L10n.caseRetry(lang)) { Task { await list.load(api: app.api, account: app.account) } }
-                            .buttonStyle(GhostButtonStyle())
-                    }
-                case .ready(let cases):
-                    if cases.isEmpty {
-                        message(L10n.caseListEmpty(lang)) { EmptyView() }
-                    } else {
-                        List {
-                            ForEach(cases) { summary in
-                                NavigationLink(value: HistoryRoute.caseDetail(id: summary.id)) {
-                                    CaseRow(summary: summary, lang: lang)
-                                }
-                                .listRowBackground(Brand.paper)
-                            }
-                        }
-                        .scrollContentBackground(.hidden)
-                        .refreshable { await list.load(api: app.api, account: app.account) }
-                    }
-                }
-            }
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        // Each appearance refreshes (the list may have changed meanwhile);
-        // signing in loads it. A load already running is not repeated.
-        .onAppear { Task { await list.load(api: app.api, account: app.account) } }
-        .onChange(of: app.account.isSignedIn) { _, signedIn in
-            if signedIn { Task { await list.load(api: app.api, account: app.account) } } else { list.reset() }
-        }
-    }
-
-    private func message<Extra: View>(_ text: String, @ViewBuilder extra: () -> Extra) -> some View {
-        VStack(spacing: 14) {
-            Text(text)
-                .brandText(.body)
-                .foregroundStyle(Brand.ink2)
-                .multilineTextAlignment(.center)
-            extra()
-        }
-        .padding(32)
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-    }
-}
-
-private struct CaseRow: View {
+/// A case in the Verdicts list: its title, start date and state, or the
+/// removed mark.
+struct CaseRow: View {
     let summary: CaseSummary
     let lang: AppLang
 

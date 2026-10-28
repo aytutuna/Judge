@@ -9,6 +9,7 @@ import type {
   CaseStatus,
   CaseView,
   InviteResponse,
+  PartyLetter,
 } from "@/lib/case-types";
 import { forgetCaseNames, saveCaseNames, useCaseNames } from "@/lib/case-names-store";
 import { apiErrorMessage, t, tWithDate, type Key, type Lang } from "@/lib/i18n";
@@ -60,13 +61,15 @@ export function StatusChip({ lang, status }: { lang: Lang; status: CaseStatus })
 
 /** Chrome shared by the owner's and the respondent's case pages. The
  * owner's page sits in the app shell; the respondent's (`bare`) keeps the
- * plain header and footer: it is someone else's case. */
+ * plain header and footer: it is someone else's case. `you` (the viewer's
+ * party) puts their side in green on everything inside. */
 export function CaseShell({
   lang,
   kicker,
   title,
   lead,
   status,
+  you,
   bare = false,
   children,
   headingRef,
@@ -76,12 +79,13 @@ export function CaseShell({
   title: string;
   lead?: string | null;
   status?: CaseStatus | null;
+  you?: PartyLetter;
   bare?: boolean;
   children: ReactNode;
   headingRef?: React.Ref<HTMLHeadingElement>;
 }) {
   const main = (
-    <main id="main" tabIndex={-1} className={styles.main}>
+    <main id="main" tabIndex={-1} className={styles.main} data-you={you}>
       <div className={`wrap ${styles.column}`}>
         <header className={styles.intro}>
           <p className="kicker">{kicker}</p>
@@ -522,7 +526,7 @@ export function CaseScreen({ id }: { id: string }) {
   });
   const appealFinished = useAppealFinished(view);
 
-  // My verdicts shows this case's status and headline: judging, a reply
+  // The Verdicts list shows this case's status and headline: judging, a reply
   // or a removal seen here updates its row.
   useEffect(() => {
     if (view) updateHistoryCase(view);
@@ -607,7 +611,7 @@ export function CaseScreen({ id }: { id: string }) {
   }
 
   return (
-    <CaseShell lang={lang} kicker={kicker} title={title} status={view.status}>
+    <CaseShell lang={lang} kicker={kicker} title={title} status={view.status} you={view.yourParty}>
       <CasePanel
         lang={lang}
         view={view}

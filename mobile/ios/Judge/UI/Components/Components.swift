@@ -2,12 +2,16 @@ import SafariServices
 import SwiftUI
 
 /// The judging balance: the brand mark redrawn with a level beam that
-/// rotates about the pivot tip. `angle` is clockwise-positive degrees, so a
-/// negative angle lowers Party A's (left, terracotta) end.
+/// rotates about the pivot tip, the spheres in the side colours. `angle` is
+/// clockwise-positive degrees, so a negative angle lowers Party A's (left)
+/// end.
 struct BalanceCanvas: View {
     var angle: Double
 
+    @Environment(\.sides) private var sides
+
     var body: some View {
+        let colors = sides
         Canvas { context, size in
             let s = min(size.width / 28, size.height / 22)
             let origin = CGPoint(x: (size.width - 28 * s) / 2, y: (size.height - 22 * s) / 2)
@@ -23,8 +27,8 @@ struct BalanceCanvas: View {
             beam.addLine(to: p(25.5, 11))
             beamContext.stroke(beam, with: .color(Brand.ink), style: StrokeStyle(lineWidth: 2 * s, lineCap: .round))
             let r: CGFloat = 3.9
-            beamContext.fill(Path(ellipseIn: CGRect(origin: p(5.6 - r, 7.1 - r), size: CGSize(width: 2 * r * s, height: 2 * r * s))), with: .color(Brand.terra))
-            beamContext.fill(Path(ellipseIn: CGRect(origin: p(22.4 - r, 7.1 - r), size: CGSize(width: 2 * r * s, height: 2 * r * s))), with: .color(Brand.sage))
+            beamContext.fill(Path(ellipseIn: CGRect(origin: p(5.6 - r, 7.1 - r), size: CGSize(width: 2 * r * s, height: 2 * r * s))), with: .color(colors.a.fill))
+            beamContext.fill(Path(ellipseIn: CGRect(origin: p(22.4 - r, 7.1 - r), size: CGSize(width: 2 * r * s, height: 2 * r * s))), with: .color(colors.b.fill))
 
             var pivot = Path()
             pivot.move(to: p(14, 11.4))
@@ -114,17 +118,19 @@ struct Kicker: View {
     }
 }
 
-/// A side's letter disc: terracotta for A (the writer), sage for B.
+/// A side's letter disc in that side's colour.
 struct PartyAvatar: View {
     let party: Party
     var size: CGFloat = 24
+
+    @Environment(\.sides) private var sides
 
     var body: some View {
         Text(verbatim: party == .b ? "B" : "A")
             .brandText(TypeStyle(face: .inter, weight: 700, size: (size * 0.45).rounded(), lineHeight: 1, textStyle: .caption2, maxScale: 1.2))
             .foregroundStyle(Brand.paper)
             .frame(width: size, height: size)
-            .background(Circle().fill(party == .b ? Brand.sageInk : Brand.terra))
+            .background(Circle().fill(sides.of(party).ink))
             .accessibilityHidden(true)
     }
 }

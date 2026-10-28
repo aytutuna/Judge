@@ -15,7 +15,7 @@ enum PaletteHex {
     static let terraTint: UInt32 = 0xF3DDD5
     static let sage: UInt32 = 0x8AA899
     static let sageStrong: UInt32 = 0x6E8F80
-    static let sageInk: UInt32 = 0x4F6F60
+    static let sageInk: UInt32 = 0x4C6B5D
     static let sageTint: UInt32 = 0xDDE7E0
     static let stone: UInt32 = 0xD6C7B0
     static let strata: UInt32 = 0xE6DCCB

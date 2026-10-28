@@ -133,6 +133,7 @@
     <string name="nav_account">Аккаунт</string>
     <string name="nav_pricing">Цены</string>
     <string name="nav_sign_out">Выйти</string>
+    <string name="nav_verdicts">Вердикты</string>
     <string name="tier_locked_sign_in">(недоступно: войдите, чтобы пользоваться)</string>
     <string name="tier_get_premium">Больше вердиктов</string>
     <string name="tier_checking">Проверяем, всего ли хватает…</string>

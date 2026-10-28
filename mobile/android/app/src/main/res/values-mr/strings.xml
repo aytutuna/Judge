@@ -127,6 +127,7 @@
     <string name="nav_account">खाते</string>
     <string name="nav_pricing">किंमत</string>
     <string name="nav_sign_out">साइन आउट</string>
+    <string name="nav_verdicts">निकाल</string>
     <string name="tier_locked_sign_in">(लॉक आहे: वापरण्यासाठी साइन इन करा)</string>
     <string name="tier_get_premium">आणखी निकाल घ्या</string>
     <string name="tier_checking">काही राहिले आहे का ते पाहत आहोत…</string>

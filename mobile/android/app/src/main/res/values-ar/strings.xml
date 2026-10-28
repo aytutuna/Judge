@@ -139,6 +139,7 @@
     <string name="nav_account">الحساب</string>
     <string name="nav_pricing">الأسعار</string>
     <string name="nav_sign_out">تسجيل الخروج</string>
+    <string name="nav_verdicts">الأحكام</string>
     <string name="tier_locked_sign_in">(مقفل: سجّل الدخول لاستخدامه)</string>
     <string name="tier_get_premium">المزيد من الأحكام</string>
     <string name="tier_checking">نتحقق إن كان ينقص شيء…</string>

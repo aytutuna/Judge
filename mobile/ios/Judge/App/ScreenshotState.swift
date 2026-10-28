@@ -19,7 +19,7 @@ import SwiftData
 /// the buy buttons), `pricing-buy` (the same, scrolled to the packs and the
 /// monthly plan), `clarify` (the questions), `evidence` (picked
 /// screenshots in mixed states), `mode-both` (a case being sent),
-/// `history-cases` ("Your cases") or `case/<state>`: the owner's
+/// `history-cases` (the Verdicts list with cases in it) or `case/<state>`: the owner's
 /// case page for a key of `cases.views` or one of the short names `awaiting`,
 /// `judging`, `judged`, `one-sided`, `appeal`, `appeal-judging`, `failed`,
 /// `expired`, `removed` (Turkish takes the `_tr` view when there is one);
@@ -245,7 +245,7 @@ struct ScreenshotState {
             app.home.argument = ExampleArgument.all[0].text(lang)
         case .historyCases:
             premium(app, me: "credits7")
-            app.historySegment = .cases
+            saveSamples(app)
             app.caseList.showForScreenshot(ScreenshotFixtures.caseList())
         case .caseDetail(let name):
             premium(app, me: "credits7")

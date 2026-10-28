@@ -130,6 +130,7 @@
     <string name="nav_account">Compte</string>
     <string name="nav_pricing">Tarifs</string>
     <string name="nav_sign_out">Se déconnecter</string>
+    <string name="nav_verdicts">Verdicts</string>
     <string name="tier_locked_sign_in">(verrouillé : connecte-toi pour l’utiliser)</string>
     <string name="tier_get_premium">Obtenir plus de verdicts</string>
     <string name="tier_checking">On vérifie s’il manque quelque chose…</string>

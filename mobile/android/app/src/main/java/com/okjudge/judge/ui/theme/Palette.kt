@@ -19,7 +19,7 @@ object Palette {
     val terraTint = Color(0xFFF3DDD5)
     val sage = Color(0xFF8AA899)
     val sageStrong = Color(0xFF6E8F80)
-    val sageInk = Color(0xFF4F6F60)
+    val sageInk = Color(0xFF4C6B5D)
     val sageTint = Color(0xFFDDE7E0)
     val stone = Color(0xFFD6C7B0)
     val strata = Color(0xFFE6DCCB)

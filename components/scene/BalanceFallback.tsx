@@ -1,5 +1,5 @@
 import { svgRotateDeg } from "@/lib/balance";
-import { PALETTE } from "@/lib/palette";
+import { PALETTE, sideColors, type Party } from "@/lib/palette";
 
 /**
  * Static SVG balance: the first-paint illustration under the 3D canvas, the
@@ -11,6 +11,7 @@ import { PALETTE } from "@/lib/palette";
  * - `tugA`: Party A's tug share (tugFinal). Tilts the beam exactly like the
  *   3D scene (svgRotateDeg). Omitted = the idle pose, a slight lean.
  * - `empty`: no spheres and the beam tipped over (the 404 page).
+ * - `you`: the viewer's party, drawn green (sideColors). Omitted = Party A.
  */
 
 const PIVOT_X = 210;
@@ -23,13 +24,16 @@ export function BalanceFallback({
   tugA,
   className,
   empty = false,
+  you = null,
 }: {
   tugA?: number;
   className?: string;
   empty?: boolean;
+  you?: Party | null;
 }) {
   const deg = empty ? EMPTY_DEG : tugA === undefined ? IDLE_DEG : svgRotateDeg(tugA);
   const cupX = HALF - 14;
+  const sides = sideColors(you);
   return (
     <svg
       className={className}
@@ -64,8 +68,8 @@ export function BalanceFallback({
         ))}
         {empty ? null : (
           <>
-            <circle cx={PIVOT_X - cupX} cy={PIVOT_Y - 48} r={36} fill={PALETTE.terra} />
-            <circle cx={PIVOT_X + cupX} cy={PIVOT_Y - 48} r={36} fill={PALETTE.sage} />
+            <circle cx={PIVOT_X - cupX} cy={PIVOT_Y - 48} r={36} fill={sides.a.fill} />
+            <circle cx={PIVOT_X + cupX} cy={PIVOT_Y - 48} r={36} fill={sides.b.fill} />
           </>
         )}
       </g>

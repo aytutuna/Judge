@@ -9,6 +9,7 @@ struct HomeView: View {
     @FocusState private var focused: Field?
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.sceneLive) private var sceneLive
+    @Environment(\.sides) private var sides
 
     private enum Field: Hashable {
         case mine, theirs
@@ -114,7 +115,7 @@ struct HomeView: View {
         .accessibilityElement(children: .contain)
     }
 
-    /// Both sides: your side in terracotta, theirs in sage.
+    /// Both sides: yours in green, theirs in red.
     /// Written together they go to the judges as one text; "Or send them a
     /// link" makes a two-sided case instead.
     private func form(_ lang: AppLang, home: HomeModel) -> some View {
@@ -157,7 +158,7 @@ struct HomeView: View {
     private func sideCard(_ lang: AppLang, home: HomeModel, mine: Bool) -> some View {
         @Bindable var home = home
         let field: Field = mine ? .mine : .theirs
-        let ink = mine ? Brand.terraInk : Brand.sageInk
+        let ink = mine ? sides.mine.ink : sides.theirs.ink
         return VStack(alignment: .leading, spacing: 8) {
             HStack(spacing: 8) {
                 PartyAvatar(party: mine ? .a : .b)

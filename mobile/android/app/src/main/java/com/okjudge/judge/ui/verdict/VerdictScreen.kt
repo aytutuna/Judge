@@ -103,7 +103,7 @@ fun VerdictRoute(
         if (details) {
             TopBar(onBack = { showDetails(false) }, onNew = onNew, backLabel = s.appVerdictBack, backText = s.appVerdictBack)
         } else {
-            TopBar(onBack = onBack, onNew = onNew, backLabel = s.appHistoryTitle)
+            TopBar(onBack = onBack, onNew = onNew, backLabel = s.navVerdicts)
         }
         val saved = state.saved
         val view = state.view

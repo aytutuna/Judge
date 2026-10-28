@@ -260,7 +260,6 @@ final class ScreenshotStateTests: XCTestCase {
             XCTAssertEqual(tr.makeCaseModel(id: "case0000001").view?.lang, .tr, "Turkish takes the Turkish view")
 
             let list = try XCTUnwrap(ScreenshotState.parse("history-cases:en")).makeModel(container: container)
-            XCTAssertEqual(list.historySegment, .cases)
             XCTAssertTrue(list.caseListOffered)
             if case .ready(let cases) = list.caseList.state {
                 XCTAssertEqual(cases.count, 3)

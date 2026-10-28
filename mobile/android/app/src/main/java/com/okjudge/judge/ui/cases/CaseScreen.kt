@@ -35,6 +35,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -89,7 +90,9 @@ import com.okjudge.judge.ui.premium.EvidencePicker
 import com.okjudge.judge.ui.premium.rememberEvidencePicker
 import com.okjudge.judge.ui.theme.JudgeShapes
 import com.okjudge.judge.ui.theme.JudgeType
+import com.okjudge.judge.ui.theme.LocalSides
 import com.okjudge.judge.ui.theme.Palette
+import com.okjudge.judge.ui.theme.Sides
 import com.okjudge.judge.ui.verdict.CardActions
 import com.okjudge.judge.ui.verdict.RulingSummary
 import com.okjudge.judge.ui.verdict.TranslationStatus
@@ -159,7 +162,8 @@ private enum class Confirm { JUDGE_NOW, RESET, REMOVE }
  * judging, the ruling with appeals and history, failed, expired), with
  * the removed banner, the owner's names, the accounts as the judges read
  * them and removal below. The ruling's details replace the page while open.
- * [otherName] is who the case waits for, as typed on Home.
+ * [otherName] is who the case waits for, as typed on Home. The viewer's
+ * party is drawn green throughout.
  */
 @Composable
 fun CaseScreen(
@@ -169,6 +173,20 @@ fun CaseScreen(
     reducedMotion: Boolean,
     modifier: Modifier = Modifier,
     otherName: String? = null,
+) {
+    CompositionLocalProvider(LocalSides provides Sides.forViewer(state.view?.yourParty)) {
+        CaseScreenBody(state, evidenceOn, actions, reducedMotion, modifier, otherName)
+    }
+}
+
+@Composable
+private fun CaseScreenBody(
+    state: CaseUiState,
+    evidenceOn: Boolean,
+    actions: CaseActions,
+    reducedMotion: Boolean,
+    modifier: Modifier,
+    otherName: String?,
 ) {
     val s = LocalStrings.current
     val view = state.view
@@ -206,7 +224,7 @@ fun CaseScreen(
             }
             return@Column
         }
-        TopBar(onBack = actions.onBack, onNew = actions.onNew, backLabel = s.appHistoryTitle)
+        TopBar(onBack = actions.onBack, onNew = actions.onNew, backLabel = s.navVerdicts)
         if (view == null) {
             Column(Modifier.fillMaxSize().padding(horizontal = 20.dp), verticalArrangement = Arrangement.spacedBy(14.dp)) {
                 Header(kicker, null)
@@ -986,16 +1004,17 @@ private fun AccountsRead(title: String, sides: List<CaseSideView>, appeals: List
 
 @Composable
 private fun Account(head: String, isA: Boolean, text: String?, evidence: List<CaseEvidenceView>, s: Strings) {
+    val side = LocalSides.current.of(if (isA) "a" else "b")
     Column(
         Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(16.dp))
-            .background(if (isA) Palette.terraTint.copy(alpha = 0.45f) else Palette.sageTint.copy(alpha = 0.55f))
+            .background(side.tint.copy(alpha = 0.5f))
             .border(1.dp, Palette.line, RoundedCornerShape(16.dp))
             .padding(14.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        Text(head, style = JudgeType.micro.copy(color = if (isA) Palette.terraInk else Palette.sageInk))
+        Text(head, style = JudgeType.micro.copy(color = side.ink))
         if (text == null) {
             Note(s.caseSideRemoved, color = Palette.muted)
         } else {

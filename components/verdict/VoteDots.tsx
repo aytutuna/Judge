@@ -13,8 +13,8 @@ const DOT_CLASS: Record<Vote, string> = {
 };
 
 /**
- * One dot per judge run (more than three after an escalation): terracotta
- * for A, strong sage for B, a hollow ink ring for anything else. Colour is
+ * One dot per judge run (more than three after an escalation) in its
+ * side's colour, a hollow ink ring for anything else. Colour is
  * never the only carrier: with `srText` the visible label is hidden from
  * screen readers in favour of that full sentence; without it the whole
  * cluster is decorative and the caller must say the votes in text elsewhere.

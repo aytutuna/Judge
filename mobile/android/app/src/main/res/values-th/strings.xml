@@ -124,6 +124,7 @@
     <string name="nav_account">บัญชี</string>
     <string name="nav_pricing">ราคา</string>
     <string name="nav_sign_out">ออกจากระบบ</string>
+    <string name="nav_verdicts">คำตัดสิน</string>
     <string name="tier_locked_sign_in">(ล็อกอยู่: เข้าสู่ระบบเพื่อใช้)</string>
     <string name="tier_get_premium">เติมคำตัดสิน</string>
     <string name="tier_checking">กำลังเช็กว่าขาดข้อมูลอะไรไหม…</string>

@@ -262,6 +262,7 @@ enum L10n {
     static func navAccount(_ lang: AppLang) -> String { string("nav.account", lang) }
     static func navPricing(_ lang: AppLang) -> String { string("nav.pricing", lang) }
     static func navSignOut(_ lang: AppLang) -> String { string("nav.signOut", lang) }
+    static func navVerdicts(_ lang: AppLang) -> String { string("nav.verdicts", lang) }
     static func tierLockedSignIn(_ lang: AppLang) -> String { string("tier.lockedSignIn", lang) }
     static func tierGetPremium(_ lang: AppLang) -> String { string("tier.getPremium", lang) }
     static func tierChecking(_ lang: AppLang) -> String { string("tier.checking", lang) }
@@ -825,6 +826,7 @@ enum L10n {
         "nav.account",
         "nav.pricing",
         "nav.signOut",
+        "nav.verdicts",
         "tier.lockedSignIn",
         "tier.getPremium",
         "tier.checking",

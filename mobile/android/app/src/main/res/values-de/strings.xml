@@ -127,6 +127,7 @@
     <string name="nav_account">Konto</string>
     <string name="nav_pricing">Preise</string>
     <string name="nav_sign_out">Abmelden</string>
+    <string name="nav_verdicts">Urteile</string>
     <string name="tier_locked_sign_in">(gesperrt: zum Nutzen anmelden)</string>
     <string name="tier_get_premium">Mehr Urteile holen</string>
     <string name="tier_checking">Wir prüfen, ob etwas fehlt…</string>

@@ -97,7 +97,8 @@ function TranslationNote({ view, lang }: { view: TranslationView; lang: Lang }) 
  * anything that leaves the page use the anonymized text. `owner` (the
  * writer's views) adds the names dialog to the share buttons.
  * `selfParty` says whose narrator the map describes: "B" on the respondent's
- * own view of a two-sided case. `viewerIsSelfParty` (case pages only, where
+ * own view of a two-sided case. It is also the side drawn in green, the
+ * other one in red. `viewerIsSelfParty` (case pages only, where
  * the server says which party is looking) labels that party "Party A (you)"
  * when this browser has no names for it. The viewer is named one way per
  * verdict (consistentSelfMap): when any of their labels cannot be turned
@@ -185,7 +186,7 @@ export function VerdictView({
   );
 
   return (
-    <div className="flex flex-col gap-7 min-w-0">
+    <div className="flex flex-col gap-7 min-w-0" data-you={selfParty === "B" ? "b" : "a"}>
       {result.appeal ? (
         <AppealOutcomeBanner
           appeal={result.appeal}

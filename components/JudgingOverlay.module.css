@@ -107,7 +107,7 @@
   display: block;
   height: 100%;
   border-radius: 3px;
-  background: linear-gradient(90deg, var(--terra), var(--sage-strong));
+  background: linear-gradient(90deg, var(--party-a-strong), var(--party-b-strong));
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 0.3s linear;
@@ -134,14 +134,14 @@
 }
 
 .dot[data-vote="a"] {
-  background: var(--terra);
-  border-color: var(--terra-ink);
+  background: var(--party-a-strong);
+  border-color: var(--party-a-ink);
   transform: scale(1.08);
 }
 
 .dot[data-vote="b"] {
-  background: var(--sage-strong);
-  border-color: var(--sage-ink);
+  background: var(--party-b-strong);
+  border-color: var(--party-b-ink);
   transform: scale(1.08);
 }
 

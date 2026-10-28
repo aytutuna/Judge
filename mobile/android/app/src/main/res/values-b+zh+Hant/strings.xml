@@ -124,6 +124,7 @@
     <string name="nav_account">帳號</string>
     <string name="nav_pricing">價格</string>
     <string name="nav_sign_out">登出</string>
+    <string name="nav_verdicts">判決</string>
     <string name="tier_locked_sign_in">（已鎖定：登入後即可使用）</string>
     <string name="tier_get_premium">取得更多判決</string>
     <string name="tier_checking">檢查有沒有漏掉什麼…</string>

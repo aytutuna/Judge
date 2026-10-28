@@ -90,20 +90,20 @@ export function createMaterials(bin: Bin) {
     new MeshStandardMaterial({ color: PALETTE_NUM.ivory2, roughness: 0.92, map: shadeTexture(bin) }),
   );
 
-  const sphere = (color: number, sheen: string) =>
+  // Party colours are painted by the balance (paintSides) once the viewer's
+  // side is known.
+  const sphere = () =>
     bin.add(
       new MeshPhysicalMaterial({
-        color,
         roughness: 0.58,
         clearcoat: 0.45,
         clearcoatRoughness: 0.28,
         sheen: 0.5,
-        sheenColor: new Color(sheen),
         sheenRoughness: 0.7,
       }),
     );
-  const partyA = sphere(PALETTE_NUM.terra, PALETTE.terraTint);
-  const partyB = sphere(PALETTE_NUM.sage, PALETTE.sageTint);
+  const partyA = sphere();
+  const partyB = sphere();
 
   const stone = bin.add(
     new MeshStandardMaterial({ color: PALETTE_NUM.stone, roughness: 0.95, transparent: true, opacity: 0 }),

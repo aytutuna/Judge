@@ -56,7 +56,7 @@ struct RootView: View {
                 .tabItem { Label(L10n.appTabNew(lang), systemImage: "square.and.pencil") }
                 .tag(RootTab.new)
             HistoryTab()
-                .tabItem { Label(L10n.appTabHistory(lang), systemImage: "clock.arrow.circlepath") }
+                .tabItem { Label(L10n.navVerdicts(lang), systemImage: "clock.arrow.circlepath") }
                 .tag(RootTab.history)
             SettingsView()
                 .tabItem { Label(L10n.appTabSettings(lang), systemImage: "gearshape") }

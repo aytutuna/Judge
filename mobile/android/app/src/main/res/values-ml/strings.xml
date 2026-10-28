@@ -127,6 +127,7 @@
     <string name="nav_account">അക്കൗണ്ട്</string>
     <string name="nav_pricing">നിരക്കുകൾ</string>
     <string name="nav_sign_out">സൈൻ ഔട്ട്</string>
+    <string name="nav_verdicts">വിധികൾ</string>
     <string name="tier_locked_sign_in">(ലോക്ക് ചെയ്തിരിക്കുന്നു: ഉപയോഗിക്കാൻ സൈൻ ഇൻ ചെയ്യൂ)</string>
     <string name="tier_get_premium">കൂടുതൽ വിധികൾ നേടൂ</string>
     <string name="tier_checking">എന്തെങ്കിലും വിട്ടുപോയോ എന്ന് നോക്കുന്നു…</string>

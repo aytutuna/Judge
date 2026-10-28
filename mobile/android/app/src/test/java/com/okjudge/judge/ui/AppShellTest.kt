@@ -42,7 +42,7 @@ class AppShellTest {
         awaitText(en.appHomeExample)
         compose.onNodeWithTag(HomeTags.SUBMIT).assertExists()
 
-        compose.onNodeWithText(en.appTabHistory).performClick()
+        compose.onNodeWithText(en.navVerdicts).performClick()
         awaitText(en.appHistoryEmpty)
         compose.onNodeWithTag(HistoryTags.EMPTY).assertExists()
 
@@ -67,7 +67,7 @@ class AppShellTest {
         compose.onNodeWithTag(HomeTags.COUNTER).assertDoesNotExist()
         compose.onNodeWithTag(TopBarTags.NEW).assertDoesNotExist()
 
-        compose.onNodeWithText(en.appTabHistory).performClick()
+        compose.onNodeWithText(en.navVerdicts).performClick()
         awaitText(en.appHistoryEmpty)
         compose.onNodeWithTag(TopBarTags.NEW).performClick()
         awaitText(en.appHomeExample)

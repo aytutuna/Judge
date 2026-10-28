@@ -2,6 +2,7 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import {
   getSceneMode,
   getSceneStatus,
+  getSceneYou,
   getStoryStep,
   nudgeScene,
   resetScene,
@@ -9,6 +10,7 @@ import {
   setPointer,
   setSceneMode,
   setSceneStatus,
+  setSceneYou,
   setStoryProgress,
   storyStepOf,
   subscribeScene,
@@ -24,6 +26,31 @@ afterEach(() => {
   setStoryProgress(-3);
   setSceneStatus("loading");
   vi.restoreAllMocks();
+});
+
+describe("viewer side", () => {
+  afterEach(() => setSceneYou(null));
+
+  it("starts with nobody known, so Party A is drawn as the viewer's", () => {
+    expect(getSceneYou()).toBeNull();
+  });
+
+  it("tells mode subscribers when the viewer is the other side, once per change", () => {
+    const fn = vi.fn();
+    const off = subscribeScene(fn);
+    setSceneYou("b");
+    setSceneYou("b");
+    expect(fn).toHaveBeenCalledTimes(1);
+    expect(getSceneYou()).toBe("b");
+    off();
+  });
+
+  it("survives a scene reset: whoever shows the scene owns it", () => {
+    setSceneYou("b");
+    setSceneMode({ kind: "judging", beat: "lift" });
+    resetScene();
+    expect(getSceneYou()).toBe("b");
+  });
 });
 
 describe("scene mode", () => {

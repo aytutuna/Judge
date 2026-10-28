@@ -3,7 +3,8 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import { HistoryList, groupHistory } from "../components/shell/HistoryList";
 import { TabBar } from "../components/shell/TabBar";
-import type { HistoryItem } from "../components/shell/useHistory";
+import { mergeHistory, type HistoryItem } from "../components/shell/useHistory";
+import type { CaseSummary } from "../lib/case-types";
 import { t } from "../lib/i18n";
 
 const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/'/g, "&#x27;");
@@ -79,6 +80,45 @@ describe("HistoryList", () => {
     // An untitled case falls back to its date.
     expect(html).toContain(esc(t("en", "case.list.untitled", { date: "October 17" })));
     expect(html).not.toContain("aria-current");
+  });
+
+  it("holds every case of the account in one list with the verdicts, each with its state", () => {
+    const kase = (id: string, createdAt: string, over: Partial<CaseSummary>): CaseSummary => ({
+      id,
+      status: "awaiting_respondent",
+      mode: null,
+      createdAt,
+      expiresAt: "2026-11-30T09:00:00.000Z",
+      respondentAnswered: false,
+      verdict: null,
+      headline: null,
+      excerpt: null,
+      removed: false,
+      ...over,
+    });
+    const cases = [
+      kase("judged", at(0, 10), { status: "judged", headline: "Party B paid", verdict: "side_b" }),
+      kase("waiting", at(1), { excerpt: "Party A says the bike was theirs for March" }),
+      kase("judging", at(2), { status: "judging", respondentAnswered: true }),
+      kase("failed", at(3), { status: "failed" }),
+      kase("expired", at(9), { status: "expired" }),
+      kase("closed", at(10), { status: "judged", removed: true }),
+    ];
+    const verdicts = [
+      { id: "mine", kind: "free" as const, createdAt: at(0, 12), verdict: "side_a" as const, headline: "Party A is right", nameMap: [], removed: false },
+    ];
+    const items = mergeHistory({ verdicts, cases, nextVerdicts: null, nextCases: null }, []);
+    expect(items.map((i) => i.id)).toEqual(["mine", "judged", "waiting", "judging", "failed", "expired", "closed"]);
+    const html = list({ history: { items, status: "ready", more: false, loadingMore: false } });
+    expect(html).toContain('href="/v/mine"');
+    for (const c of cases) expect(html).toContain(`href="/c/${c.id}"`);
+    for (const k of ["waiting", "judging", "judged", "failed", "expired"] as const) {
+      expect(html).toContain(esc(t("en", `shell.case.${k}`)));
+    }
+    expect(html).toContain("Party B paid");
+    expect(html).toContain("Party A says the bike was theirs for March");
+    expect(html).toContain(esc(t("en", "case.list.untitled", { date: "October 21" })));
+    expect(html).toContain(t("en", "account.verdicts.removed"));
   });
 
   it("lists a verdict still being judged without linking its 404ing share page", () => {

@@ -1,3 +1,5 @@
+import type { Party } from "./palette";
+
 /**
  * The one channel between the page and the 3D balance. Pure TS (no three):
  * the page, the hero, the story and the judging overlay write here, the
@@ -24,6 +26,7 @@ export type SceneStatus = "loading" | "ready" | "fallback";
 const IDLE: SceneMode = { kind: "idle" };
 
 let mode: SceneMode = IDLE;
+let you: Party | null = null;
 let status: SceneStatus = "loading";
 let storyStep = -1;
 
@@ -159,6 +162,21 @@ export function subscribeScene(fn: () => void): () => void {
   return () => {
     modeListeners.delete(fn);
   };
+}
+
+export function getSceneYou(): Party | null {
+  return you;
+}
+
+/** The viewer's party: their sphere and votes are drawn green, the other
+ * side's red (sideColors in lib/palette.ts). null, the default, draws Party
+ * A green: the writer of a one-person verdict, or nobody known. Whoever
+ * shows the scene sets it and clears it when done; resetScene leaves it
+ * alone. Mode subscribers hear the change. */
+export function setSceneYou(p: Party | null): void {
+  if (p === you) return;
+  you = p;
+  emit(modeListeners);
 }
 
 export function getSceneStatus(): SceneStatus {

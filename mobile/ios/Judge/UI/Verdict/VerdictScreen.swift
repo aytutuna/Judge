@@ -158,6 +158,7 @@ struct VerdictSections<Appeal: View>: View {
     /// details screen's while that one is pushed.
     @State private var appealShown = false
     @State private var detailsAppealShown = false
+    @Environment(\.sides) private var sides
     @State private var openedAtStart = false
 
     var body: some View {
@@ -207,6 +208,7 @@ struct VerdictSections<Appeal: View>: View {
                 appealShown: $detailsAppealShown,
                 appeal: appeal
             )
+            .environment(\.sides, sides)
         }
         .onChange(of: appealArea) { old, new in
             if !new.inSheet {

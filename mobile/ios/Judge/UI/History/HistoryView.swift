@@ -6,13 +6,36 @@ enum HistoryRoute: Hashable {
     case caseDetail(id: String)
 }
 
-/// The two lists of the History tab.
-enum HistorySegment: Hashable, Sendable {
-    case verdicts, cases
+/// A row of the Verdicts list: a verdict saved on this phone or one of the
+/// account's cases.
+enum HistoryEntry: Identifiable {
+    case savedVerdict(SavedVerdict)
+    case caseSummary(CaseSummary)
+
+    var id: String {
+        switch self {
+        case .savedVerdict(let row): return "v:" + row.id
+        case .caseSummary(let summary): return "c:" + summary.id
+        }
+    }
+
+    var date: Date {
+        switch self {
+        case .savedVerdict(let row): return row.createdAt
+        case .caseSummary(let summary): return ErrorText.parseISO(summary.createdAt) ?? .distantPast
+        }
+    }
+
+    /// Both kinds in one list, newest first (mergeHistory on the web).
+    static func merge(saved: [SavedVerdict], cases: [CaseSummary]) -> [HistoryEntry] {
+        // date parses the case's ISO string, so do it once per entry, not per comparison
+        let entries = saved.map(HistoryEntry.savedVerdict) + cases.map(HistoryEntry.caseSummary)
+        return entries.map { ($0, $0.date) }.sorted { $0.1 > $1.1 }.map(\.0)
+    }
 }
 
-/// "My verdicts": everything judged on this phone, newest first; and, when
-/// the server offers cases, "Your cases" from the account.
+/// "Verdicts": everything judged on this phone and, signed in where the
+/// server offers cases, the account's cases with their state, newest first.
 struct HistoryView: View {
     @Environment(AppModel.self) private var app
     @Query(sort: \SavedVerdict.createdAt, order: .reverse) private var saved: [SavedVerdict]
@@ -20,30 +43,27 @@ struct HistoryView: View {
 
     var body: some View {
         let lang = app.lang
-        @Bindable var model = app
-        let showCases = app.caseListOffered && app.historySegment == .cases
-        VStack(spacing: 0) {
-            if app.caseListOffered {
-                Picker(L10n.appTabHistory(lang), selection: $model.historySegment) {
-                    Text(L10n.appHistoryTitle(lang)).tag(HistorySegment.verdicts)
-                    Text(L10n.caseListTitle(lang)).tag(HistorySegment.cases)
-                }
-                .pickerStyle(.segmented)
-                .padding(.horizontal, 16)
-                .padding(.vertical, 8)
-            }
-            if showCases {
-                CaseListView()
+        let list = app.caseList
+        let casesShown = app.caseListOffered && app.account.isSignedIn
+        let entries = HistoryEntry.merge(saved: saved, cases: casesShown ? readyCases : [])
+        Group {
+            if entries.isEmpty, casesShown, list.state == .idle || list.state == .loading {
+                message(L10n.caseLoading(lang)) { ProgressView().tint(Brand.muted) }
+            } else if entries.isEmpty, casesShown, list.state == .failed {
+                message(L10n.caseListLoadFailed(lang)) { retry(lang) }
+            } else if entries.isEmpty {
+                message(L10n.appHistoryEmpty(lang)) { EmptyView() }
             } else {
-                verdicts(lang)
+                rows(entries, lang: lang, casesFailed: casesShown && list.state == .failed)
             }
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Brand.ivory.ignoresSafeArea())
-        .navigationTitle(showCases ? L10n.caseListTitle(lang) : L10n.appHistoryTitle(lang))
+        .navigationTitle(L10n.navVerdicts(lang))
         .navigationBarTitleDisplayMode(.inline)
         .toolbarBackground(Brand.ivory, for: .navigationBar)
         .toolbar {
-            if !saved.isEmpty, !showCases {
+            if !saved.isEmpty {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button(L10n.appHistoryClearAll(lang), role: .destructive) { confirmClear = true }
                         .tint(Brand.danger)
@@ -58,51 +78,96 @@ struct HistoryView: View {
             Button(L10n.appHistoryClearYes(lang), role: .destructive) { try? app.history.deleteAll() }
             Button(L10n.appCancel(lang), role: .cancel) {}
         }
+        // Each appearance refreshes the cases (they may have changed
+        // meanwhile); signing in loads them. A load already running is not
+        // repeated.
+        .onAppear { loadCases() }
+        .onChange(of: app.account.isSignedIn) { _, signedIn in
+            if signedIn { loadCases() } else { list.reset() }
+        }
     }
 
-    @ViewBuilder
-    private func verdicts(_ lang: AppLang) -> some View {
-        Group {
-            if saved.isEmpty {
-                Text(L10n.appHistoryEmpty(lang))
-                    .brandText(.body)
-                    .foregroundStyle(Brand.ink2)
-                    .multilineTextAlignment(.center)
-                    .padding(32)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-            } else {
-                List {
-                    Section {
-                        ForEach(saved) { row in
-                            NavigationLink(value: HistoryRoute.detail(id: row.id)) {
-                                HistoryRow(row: row, lang: lang)
-                            }
-                            .listRowBackground(Brand.paper)
-                            .swipeActions(edge: .trailing, allowsFullSwipe: true) {
-                                Button(role: .destructive) {
-                                    try? app.history.delete(id: row.id)
-                                } label: {
-                                    Label(L10n.appHistoryDelete(lang), systemImage: "trash")
-                                }
-                            }
-                            .contextMenu {
-                                Button(role: .destructive) {
-                                    try? app.history.delete(id: row.id)
-                                } label: {
-                                    Label(L10n.appHistoryDelete(lang), systemImage: "trash")
-                                }
+    private var readyCases: [CaseSummary] {
+        if case .ready(let cases) = app.caseList.state { return cases }
+        return []
+    }
+
+    private func loadCases() {
+        guard app.caseListOffered else { return }
+        Task { await app.caseList.load(api: app.api, account: app.account) }
+    }
+
+    private func rows(_ entries: [HistoryEntry], lang: AppLang, casesFailed: Bool) -> some View {
+        List {
+            if casesFailed {
+                Section {
+                    VStack(spacing: 10) {
+                        Text(L10n.caseListLoadFailed(lang))
+                            .brandText(.body)
+                            .foregroundStyle(Brand.danger)
+                            .multilineTextAlignment(.center)
+                        retry(lang)
+                    }
+                    .frame(maxWidth: .infinity)
+                    .listRowBackground(Color.clear)
+                }
+            }
+            Section {
+                ForEach(entries) { entry in
+                    switch entry {
+                    case .savedVerdict(let row):
+                        NavigationLink(value: HistoryRoute.detail(id: row.id)) {
+                            HistoryRow(row: row, lang: lang)
+                        }
+                        .listRowBackground(Brand.paper)
+                        .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                            Button(role: .destructive) {
+                                try? app.history.delete(id: row.id)
+                            } label: {
+                                Label(L10n.appHistoryDelete(lang), systemImage: "trash")
                             }
                         }
-                    } footer: {
-                        Text(L10n.appHistoryDeviceOnly(lang))
-                            .brandText(.footnote)
-                            .foregroundStyle(Brand.muted)
-                            .padding(.top, 8)
+                        .contextMenu {
+                            Button(role: .destructive) {
+                                try? app.history.delete(id: row.id)
+                            } label: {
+                                Label(L10n.appHistoryDelete(lang), systemImage: "trash")
+                            }
+                        }
+                    case .caseSummary(let summary):
+                        NavigationLink(value: HistoryRoute.caseDetail(id: summary.id)) {
+                            CaseRow(summary: summary, lang: lang)
+                        }
+                        .listRowBackground(Brand.paper)
                     }
                 }
-                .scrollContentBackground(.hidden)
+            } footer: {
+                if !saved.isEmpty {
+                    Text(L10n.appHistoryDeviceOnly(lang))
+                        .brandText(.footnote)
+                        .foregroundStyle(Brand.muted)
+                        .padding(.top, 8)
+                }
             }
         }
+        .scrollContentBackground(.hidden)
+        .refreshable { await app.caseList.load(api: app.api, account: app.account) }
+    }
+
+    private func retry(_ lang: AppLang) -> some View {
+        Button(L10n.caseRetry(lang)) { loadCases() }
+            .buttonStyle(GhostButtonStyle())
+    }
+
+    private func message<Extra: View>(_ text: String, @ViewBuilder extra: () -> Extra) -> some View {
+        VStack(spacing: 14) {
+            Text(text)
+                .brandText(.body)
+                .foregroundStyle(Brand.ink2)
+                .multilineTextAlignment(.center)
+            extra()
+        }
+        .padding(32)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }
@@ -110,6 +175,8 @@ struct HistoryView: View {
 private struct HistoryRow: View {
     let row: SavedVerdict
     let lang: AppLang
+
+    @Environment(\.sides) private var sides
 
     var body: some View {
         let nameMap = row.nameMap
@@ -144,8 +211,8 @@ private struct HistoryRow: View {
 
     private func sealColor(_ seal: VerdictDisplay.Seal) -> Color {
         switch seal {
-        case .a: return Brand.terraInk
-        case .b: return Brand.sageInk
+        case .a: return sides.a.ink
+        case .b: return sides.b.ink
         case .none: return Brand.ink
         }
     }

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { VerdictsView } from "@/components/shell/VerdictsView";
 
 export const metadata: Metadata = {
-  title: "My verdicts",
+  title: "Verdicts",
   description: "The verdicts and cases you started on Judge.",
   robots: { index: false, follow: false },
 };

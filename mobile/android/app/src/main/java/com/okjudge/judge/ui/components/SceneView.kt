@@ -35,6 +35,7 @@ import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.okjudge.judge.core.display.SceneMode
 import com.okjudge.judge.core.display.VerdictDisplay
+import com.okjudge.judge.ui.theme.LocalSides
 import com.okjudge.judge.ui.theme.Palette
 
 /** False where a WebView draws nothing (Robolectric tests): the flat balance stands in. */
@@ -48,6 +49,7 @@ private const val SCENE_URL = "file:///android_asset/scene/index.html"
  * The web's three.js balance (assets/scene, built by mobile/shared/scene) in
  * a web view, driven through `window.judgeScene`. Decorative: the captions
  * around it carry the meaning. Touches go past it to the scrolling page.
+ * The viewer's side is drawn green ([LocalSides]).
  */
 @Composable
 fun SceneView(mode: SceneMode, reducedMotion: Boolean, modifier: Modifier = Modifier) {
@@ -108,9 +110,11 @@ private fun SceneWebView(mode: SceneMode, reducedMotion: Boolean, onGone: () -> 
         }
     }
 
-    LaunchedEffect(loaded, mode, reducedMotion) {
+    val you = LocalSides.current.you
+    LaunchedEffect(loaded, mode, reducedMotion, you) {
         if (!loaded) return@LaunchedEffect
         if (reducedMotion) web.evaluateJavascript("window.judgeScene.setReduced(true)", null)
+        web.evaluateJavascript("window.judgeScene.setYou(\"$you\")", null)
         web.evaluateJavascript("window.judgeScene.setMode(${mode.json()})", null)
     }
 
