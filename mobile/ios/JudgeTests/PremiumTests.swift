@@ -179,7 +179,7 @@ final class PremiumDecodingTests: XCTestCase {
     func testConfigCarriesPricingAndFeatures() throws {
         let full = try PremiumFixtures.config("full")
         XCTAssertTrue(full.premiumEnabled)
-        XCTAssertEqual(full.features, PremiumFeatures(cases: true, evidence: true))
+        XCTAssertEqual(full.features, PremiumFeatures(cases: true, evidence: true, history: true))
         let pricing = try XCTUnwrap(full.pricing)
         XCTAssertFalse(pricing.purchasesEnabled)
         XCTAssertEqual(pricing.packs.map(\.id), ["pack_1", "pack_10"])

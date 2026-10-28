@@ -62,21 +62,25 @@ struct ServerConfig: Decodable, Sendable, Equatable {
 }
 
 /// `features` of GET /api/v1/config. A missing flag reads as off.
+/// `history`: the account's Verdicts list (GET /api/v1/me/history).
 struct PremiumFeatures: Decodable, Sendable, Equatable {
     var cases = false
     var evidence = false
+    var history = false
 
-    init(cases: Bool = false, evidence: Bool = false) {
+    init(cases: Bool = false, evidence: Bool = false, history: Bool = false) {
         self.cases = cases
         self.evidence = evidence
+        self.history = history
     }
 
-    private enum CodingKeys: String, CodingKey { case cases, evidence }
+    private enum CodingKeys: String, CodingKey { case cases, evidence, history }
 
     init(from decoder: any Decoder) throws {
         let c = try decoder.container(keyedBy: CodingKeys.self)
         cases = (try? c.decodeIfPresent(Bool.self, forKey: .cases)) == true
         evidence = (try? c.decodeIfPresent(Bool.self, forKey: .evidence)) == true
+        history = (try? c.decodeIfPresent(Bool.self, forKey: .history)) == true
     }
 }
 
