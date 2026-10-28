@@ -2,7 +2,7 @@
 
 ## App name (max 30)
 
-Judge - Kim haklı, kim haksız?
+Judge - Kim haklı?
 
 ## Subtitle (App Store, max 30)
 
