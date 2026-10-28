@@ -67,14 +67,11 @@ fun TopBar(onBack: (() -> Unit)?, onNew: (() -> Unit)?, modifier: Modifier = Mod
             }
         } else {
             Spacer(Modifier.width(8.dp))
-            Row(
-                Modifier.clearAndSetSemantics { },
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-            ) {
-                BrandMark(26.dp)
-                Text(s.appName, style = JudgeType.button.copy(color = Palette.ink, fontSize = 18.sp))
-            }
+            Text(
+                s.appName,
+                style = JudgeType.button.copy(color = Palette.ink, fontSize = 18.sp),
+                modifier = Modifier.clearAndSetSemantics { },
+            )
         }
         Spacer(Modifier.weight(1f))
         if (onNew != null) {

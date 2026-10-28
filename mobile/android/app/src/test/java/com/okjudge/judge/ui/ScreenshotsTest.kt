@@ -4,9 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.SemanticsActions
@@ -533,13 +531,6 @@ class ScreenshotsTest {
                 ),
                 {}, {}, {}, {}, {}, {},
             )
-        }
-    }
-
-    @Test
-    fun brandMark_icon() = capture("brand_mark") {
-        Themed(AppLang.EN) {
-            Box(Modifier.width(240.dp).fillMaxWidth()) { com.okjudge.judge.ui.components.BrandMark(200.dp, Modifier.padding(20.dp)) }
         }
     }
 }
