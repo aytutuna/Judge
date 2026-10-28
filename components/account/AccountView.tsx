@@ -6,7 +6,6 @@ import { useEffect, useRef, useState } from "react";
 import { t, tWithDate, type Lang } from "@/lib/i18n";
 import { useLang } from "@/lib/lang";
 import { markSignedOut, useViewer, type ViewerState } from "@/lib/use-viewer";
-import { CaseList, useCaseList, type CaseListState } from "../case/CaseList";
 import styles from "./AccountPages.module.css";
 import { PageShell } from "./PageShell";
 import { VerdictList, useVerdictList, type VerdictListState } from "./VerdictList";
@@ -34,8 +33,6 @@ export type AccountPanelProps = {
   deleteError: string | null;
   onSignOut: () => void;
   onDelete: () => void;
-  /** "Your cases", when this deployment offers two-sided cases. */
-  cases?: CaseListState | null;
   /** "Your verdicts" (signed in). */
   verdicts?: VerdictListState | null;
 };
@@ -50,7 +47,6 @@ export function AccountPanel({
   deleteError,
   onSignOut,
   onDelete,
-  cases = null,
   verdicts = null,
 }: AccountPanelProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
@@ -150,8 +146,6 @@ export function AccountPanel({
 
       {verdicts ? <VerdictList lang={lang} state={verdicts} /> : null}
 
-      {cases ? <CaseList lang={lang} state={cases} /> : null}
-
       <section className={styles.card}>
         {deleteError ? (
           <p className={styles.error} role="alert">
@@ -207,8 +201,6 @@ export function AccountView() {
   const [deleting, setDeleting] = useState(false);
   const [deleted, setDeleted] = useState(false);
   const [deleteError, setDeleteError] = useState<string | null>(null);
-  const casesOn = Boolean(viewer.config?.features?.cases && viewer.me?.user);
-  const cases = useCaseList(casesOn);
   const signedIn = Boolean(viewer.me?.user);
   const verdicts = useVerdictList(signedIn);
 
@@ -253,7 +245,6 @@ export function AccountView() {
         deleteError={deleteError}
         onSignOut={() => void signOut()}
         onDelete={() => void remove()}
-        cases={casesOn ? cases : null}
         verdicts={signedIn ? verdicts : null}
       />
     </PageShell>

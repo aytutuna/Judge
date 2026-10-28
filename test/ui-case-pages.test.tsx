@@ -2,7 +2,6 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import { AccountsRead } from "../components/case/AccountsRead";
 import { AppealSection, appealArea, type AppealDraft } from "../components/case/AppealForm";
-import { CaseList } from "../components/case/CaseList";
 import { CaseModeSwitch } from "../components/case/CaseModeSwitch";
 import { CasePanel, type CasePanelProps } from "../components/case/CaseScreen";
 import type { EvidenceController } from "../components/case/EvidencePicker";
@@ -424,68 +423,5 @@ describe("small case components", () => {
       />,
     );
     expect(html).toMatch(/<section[^>]*tabindex="-1"/i);
-  });
-
-  it("CaseList: loading, empty, error and a list of links", () => {
-    expect(renderToStaticMarkup(<CaseList lang="en" state={{ status: "loading" }} />)).toContain(t("en", "case.loading"));
-    expect(renderToStaticMarkup(<CaseList lang="en" state={{ status: "ready", cases: [] }} />)).toContain(
-      t("en", "case.list.empty"),
-    );
-    expect(renderToStaticMarkup(<CaseList lang="en" state={{ status: "error" }} />)).toContain(
-      esc(t("en", "case.list.loadFailed")),
-    );
-    const html = renderToStaticMarkup(
-      <CaseList
-        lang="en"
-        state={{
-          status: "ready",
-          cases: [
-            {
-              id: "c1",
-              status: "judged",
-              mode: "two_sided",
-              createdAt: "2026-10-20T09:00:00.000Z",
-              expiresAt: "2026-10-27T09:00:00.000Z",
-              respondentAnswered: true,
-              verdict: "side_b",
-              headline: "Party B paid",
-              excerpt: "Party A paid the April bill",
-              removed: false,
-            },
-            {
-              id: "c2",
-              status: "awaiting_respondent",
-              mode: null,
-              createdAt: "2026-10-19T09:00:00.000Z",
-              expiresAt: "2026-10-26T09:00:00.000Z",
-              respondentAnswered: false,
-              verdict: null,
-              headline: null,
-              excerpt: "Party A says the bike was theirs for March",
-              removed: false,
-            },
-            {
-              id: "c3",
-              status: "expired",
-              mode: null,
-              createdAt: "2026-10-18T09:00:00.000Z",
-              expiresAt: "2026-10-25T09:00:00.000Z",
-              respondentAnswered: false,
-              verdict: null,
-              headline: null,
-              excerpt: null,
-              removed: false,
-            },
-          ],
-        }}
-      />,
-    );
-    expect(html).toContain('href="/c/c1"');
-    expect(html).toContain("Party B paid");
-    expect(html).toContain("Started October 20");
-    // Unjudged cases are told apart by the start of the owner's side, else the date.
-    expect(html).toContain("Party A says the bike was theirs for March");
-    expect(html).toContain("Case from October 18");
-    expect(html).not.toContain(`>${t("en", "case.title")}<`);
   });
 });
