@@ -732,8 +732,8 @@ fun AppealNote(area: AppealArea, modifier: Modifier = Modifier) {
         AppealArea.Busy, AppealArea.Used, AppealArea.Limit -> Note(
             when (area) {
                 AppealArea.Busy -> s.appealBusy
-                AppealArea.Limit -> s.appealLimit
-                else -> s.appealUsed
+                AppealArea.Limit -> s.appAppealLimit
+                else -> s.appAppealUsed
             },
             modifier.testTag(CaseTags.APPEAL_NOTE),
         )
@@ -807,7 +807,7 @@ fun AppealPanel(
         when (area) {
             is AppealArea.Upsell, is AppealArea.Blocked -> {
                 val text = when (area) {
-                    is AppealArea.Upsell -> s.appealUpsell
+                    is AppealArea.Upsell -> s.appAppealUpsell
                     is AppealArea.Blocked -> when (area.reason) {
                         // The web reads fair use without a date here (tWithDate with null).
                         "fair_use" -> s.errorFairUseSoon
@@ -818,7 +818,7 @@ fun AppealPanel(
                 }
                 Note(text, Modifier.testTag(CaseTags.APPEAL_NOTE))
                 if (area is AppealArea.Upsell && area.signIn) {
-                    PrimaryButton(s.appealSignIn, true, actions.onSignIn, Modifier.fillMaxWidth().testTag(CaseTags.APPEAL_SIGN_IN))
+                    PrimaryButton(s.appAppealSignIn, true, actions.onSignIn, Modifier.fillMaxWidth().testTag(CaseTags.APPEAL_SIGN_IN))
                 } else {
                     PrimaryButton(s.tierGetPremium, true, actions.onPricing, Modifier.fillMaxWidth().testTag(CaseTags.APPEAL_PRICING))
                 }
