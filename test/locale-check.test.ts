@@ -72,6 +72,16 @@ describe("locale check", () => {
     expect(problems.some((p) => p.startsWith("privacy page is partly translated"))).toBe(true);
   });
 
+  it("lets a form that means one number leave out {n}", () => {
+    const base = { voice: "x", strings: { ...EN }, email: EMAIL_EN };
+    const plural = (lang: "ar" | "ru", forms: Record<string, string>) =>
+      checkLocale(lang, { ...base, plurals: { "wait.minutes": forms } } as unknown as Locale).filter((p) => p.startsWith("plurals.wait.minutes"));
+    expect(plural("ar", { two: "دقيقتان", few: "{n} دقائق", many: "{n} دقيقة" })).toEqual([]);
+    expect(plural("ru", { one: "минута", few: "{n} минуты", many: "{n} минут" })).toEqual([
+      "plurals.wait.minutes.one: slots (none) but English has {n}",
+    ]);
+  });
+
   it("accepts a locale that leaves the privacy page to English", () => {
     const strings = Object.fromEntries(Object.entries(EN).filter(([k]) => !k.startsWith("privacy.")));
     const locale = {

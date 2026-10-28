@@ -26,10 +26,19 @@ export function requiredPluralForms(lang: Lang, key?: CountKey): Intl.LDMLPlural
   return [...seen];
 }
 
+/** A category that stands for one number only (Arabic "two", English "one"),
+ * where the form may spell the number out instead of using {n}. */
+function isExact(lang: Lang, category: string): boolean {
+  const rules = new Intl.PluralRules(langTag(lang));
+  let hits = 0;
+  for (let n = 0; n <= 1000; n++) if (rules.select(n) === category) hits++;
+  return hits === 1;
+}
+
 /**
  * Everything wrong with a locale file, one line each; empty when it is fine.
  * Same keys as English (the privacy page's all or none), the same {slots}
- * in every string and plural form, nothing empty, plural forms only in
+ * in every string and plural form (an exact-number form may drop {n}), nothing empty, plural forms only in
  * categories the language has and every one it needs, party labels that are
  * listed in PARTY_LABELS and named in the voice note, and complete email
  * copy.
@@ -75,7 +84,10 @@ export function checkLocale(lang: Lang, locale: Locale): string[] {
         problems.push(`plurals.${key}.${category}: ${lang} has no such form (its forms: ${categories.filter((c) => c !== "other").join(", ") || "none"})`);
       } else if (typeof form !== "string" || !form.trim()) {
         problems.push(`plurals.${key}.${category}: empty`);
-      } else if (placeholders(form) !== placeholders(EN[key as CountKey])) {
+      } else if (
+        placeholders(form) !== placeholders(EN[key as CountKey]) &&
+        !(isExact(lang, category) && placeholders(form) === placeholders(EN[key as CountKey].split("{n}").join("")))
+      ) {
         problems.push(`plurals.${key}.${category}: slots ${placeholders(form) || "(none)"} but English has ${placeholders(EN[key as CountKey])}`);
       }
     }
