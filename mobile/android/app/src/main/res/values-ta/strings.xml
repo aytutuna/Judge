@@ -127,6 +127,7 @@
     <string name="nav_account">கணக்கு</string>
     <string name="nav_pricing">விலை</string>
     <string name="nav_sign_out">வெளியேறு</string>
+    <string name="nav_verdicts">தீர்ப்புகள்</string>
     <string name="tier_locked_sign_in">(பூட்டப்பட்டது: பயன்படுத்த உள்நுழையுங்கள்)</string>
     <string name="tier_get_premium">இன்னும் தீர்ப்புகள் பெறுக</string>
     <string name="tier_checking">ஏதாவது விடுபட்டிருக்கிறதா என்று பார்க்கிறோம்…</string>

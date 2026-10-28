@@ -130,6 +130,7 @@
     <string name="nav_account">חשבון</string>
     <string name="nav_pricing">מחירים</string>
     <string name="nav_sign_out">התנתקות</string>
+    <string name="nav_verdicts">פסקי דין</string>
     <string name="tier_locked_sign_in">(נעול: צריך להתחבר כדי להשתמש)</string>
     <string name="tier_get_premium">עוד פסקי דין</string>
     <string name="tier_checking">בודקים אם חסר משהו…</string>

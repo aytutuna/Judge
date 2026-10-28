@@ -195,6 +195,7 @@ class Strings(private val res: Resources) {
     val navAccount: String get() = res.getString(R.string.nav_account)
     val navPricing: String get() = res.getString(R.string.nav_pricing)
     val navSignOut: String get() = res.getString(R.string.nav_sign_out)
+    val navVerdicts: String get() = res.getString(R.string.nav_verdicts)
     val tierLockedSignIn: String get() = res.getString(R.string.tier_locked_sign_in)
     val tierGetPremium: String get() = res.getString(R.string.tier_get_premium)
     val tierChecking: String get() = res.getString(R.string.tier_checking)
@@ -757,6 +758,7 @@ class Strings(private val res: Resources) {
             "nav.account" -> R.string.nav_account
             "nav.pricing" -> R.string.nav_pricing
             "nav.signOut" -> R.string.nav_sign_out
+            "nav.verdicts" -> R.string.nav_verdicts
             "tier.lockedSignIn" -> R.string.tier_locked_sign_in
             "tier.getPremium" -> R.string.tier_get_premium
             "tier.checking" -> R.string.tier_checking

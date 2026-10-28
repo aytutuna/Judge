@@ -124,6 +124,7 @@
     <string name="nav_account">계정</string>
     <string name="nav_pricing">요금</string>
     <string name="nav_sign_out">로그아웃</string>
+    <string name="nav_verdicts">판결</string>
     <string name="tier_locked_sign_in">(잠김: 로그인하면 쓸 수 있어요)</string>
     <string name="tier_get_premium">판결 더 받기</string>
     <string name="tier_checking">빠진 내용이 있는지 확인하는 중…</string>

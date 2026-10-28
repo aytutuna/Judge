@@ -127,6 +127,7 @@
     <string name="nav_account">اکاؤنٹ</string>
     <string name="nav_pricing">قیمتیں</string>
     <string name="nav_sign_out">سائن آؤٹ</string>
+    <string name="nav_verdicts">فیصلے</string>
     <string name="tier_locked_sign_in">(بند ہے: استعمال کے لیے سائن ان کریں)</string>
     <string name="tier_get_premium">مزید فیصلے لیں</string>
     <string name="tier_checking">دیکھ رہے ہیں کہ کچھ رہ تو نہیں گیا…</string>

@@ -127,6 +127,7 @@
     <string name="nav_account">એકાઉન્ટ</string>
     <string name="nav_pricing">કિંમત</string>
     <string name="nav_sign_out">સાઇન આઉટ</string>
+    <string name="nav_verdicts">ચુકાદા</string>
     <string name="tier_locked_sign_in">(લૉક છે: વાપરવા માટે સાઇન ઇન કરો)</string>
     <string name="tier_get_premium">વધુ ચુકાદા લો</string>
     <string name="tier_checking">કંઈ ખૂટે છે કે નહીં, એ જોઈએ છીએ…</string>

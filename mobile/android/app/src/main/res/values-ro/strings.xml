@@ -130,6 +130,7 @@
     <string name="nav_account">Cont</string>
     <string name="nav_pricing">Prețuri</string>
     <string name="nav_sign_out">Deconectează-te</string>
+    <string name="nav_verdicts">Verdicte</string>
     <string name="tier_locked_sign_in">(blocat: conectează-te ca să-l folosești)</string>
     <string name="tier_get_premium">Ia mai multe verdicte</string>
     <string name="tier_checking">Verificăm dacă lipsește ceva…</string>

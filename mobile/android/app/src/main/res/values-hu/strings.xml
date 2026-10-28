@@ -127,6 +127,7 @@
     <string name="nav_account">Fiók</string>
     <string name="nav_pricing">Árak</string>
     <string name="nav_sign_out">Kilépés</string>
+    <string name="nav_verdicts">Ítéletek</string>
     <string name="tier_locked_sign_in">(zárolva: a használatához lépj be)</string>
     <string name="tier_get_premium">További ítéletek</string>
     <string name="tier_checking">Megnézzük, hiányzik-e valami…</string>

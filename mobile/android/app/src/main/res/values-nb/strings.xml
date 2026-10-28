@@ -127,6 +127,7 @@
     <string name="nav_account">Konto</string>
     <string name="nav_pricing">Priser</string>
     <string name="nav_sign_out">Logg ut</string>
+    <string name="nav_verdicts">Dommene</string>
     <string name="tier_locked_sign_in">(låst: logg inn for å bruke den)</string>
     <string name="tier_get_premium">Få flere dommer</string>
     <string name="tier_checking">Sjekker om noe mangler…</string>

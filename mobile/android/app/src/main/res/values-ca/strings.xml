@@ -130,6 +130,7 @@
     <string name="nav_account">Compte</string>
     <string name="nav_pricing">Preus</string>
     <string name="nav_sign_out">Tanca la sessió</string>
+    <string name="nav_verdicts">Veredictes</string>
     <string name="tier_locked_sign_in">(bloquejat: inicia sessió per fer-lo servir)</string>
     <string name="tier_get_premium">Aconsegueix més veredictes</string>
     <string name="tier_checking">Comprovant si hi falta alguna cosa…</string>

@@ -124,6 +124,7 @@
     <string name="nav_account">Akaun</string>
     <string name="nav_pricing">Harga</string>
     <string name="nav_sign_out">Log keluar</string>
+    <string name="nav_verdicts">Keputusan</string>
     <string name="tier_locked_sign_in">(dikunci: log masuk untuk menggunakannya)</string>
     <string name="tier_get_premium">Dapatkan lebih banyak keputusan</string>
     <string name="tier_checking">Menyemak kalau ada yang tertinggal…</string>

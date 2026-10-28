@@ -127,6 +127,7 @@
     <string name="nav_account">ਖਾਤਾ</string>
     <string name="nav_pricing">ਕੀਮਤਾਂ</string>
     <string name="nav_sign_out">ਸਾਈਨ ਆਊਟ</string>
+    <string name="nav_verdicts">ਫ਼ੈਸਲੇ</string>
     <string name="tier_locked_sign_in">(ਬੰਦ: ਵਰਤਣ ਲਈ ਸਾਈਨ ਇਨ ਕਰੋ)</string>
     <string name="tier_get_premium">ਹੋਰ ਫ਼ੈਸਲੇ ਲਓ</string>
     <string name="tier_checking">ਦੇਖ ਰਹੇ ਹਾਂ ਕਿ ਕੁਝ ਰਹਿ ਤਾਂ ਨਹੀਂ ਗਿਆ…</string>

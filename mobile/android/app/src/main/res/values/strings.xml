@@ -127,6 +127,7 @@
     <string name="nav_account">Account</string>
     <string name="nav_pricing">Pricing</string>
     <string name="nav_sign_out">Sign out</string>
+    <string name="nav_verdicts">Verdicts</string>
     <string name="tier_locked_sign_in">(locked: sign in to use it)</string>
     <string name="tier_get_premium">Get more verdicts</string>
     <string name="tier_checking">Checking if anything\'s missing…</string>
