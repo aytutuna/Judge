@@ -38,7 +38,6 @@ data class Features(val cases: Boolean = false, val evidence: Boolean = false)
 @Serializable
 data class ServerConfig(
     val signIn: SignInProviders = SignInProviders(),
-    val premiumEnabled: Boolean = false,
     val pricing: PricingInfo = PricingInfo(),
     val features: Features = Features(),
 ) {

@@ -309,14 +309,14 @@ class ScreenshotsTest {
     @Test
     fun pricing_en() = capture("pricing_en", tall = true) {
         Themed(AppLang.EN) {
-            PricingScreen(PricingInfo(), true, Features(true, true), true, true, me("credits7").entitlement, {}, {}, {})
+            PricingScreen(PricingInfo(), Features(true, true), true, true, me("credits7").entitlement, {}, {}, {})
         }
     }
 
     @Test
     fun pricing_tr() = capture("pricing_tr", tall = true) {
         Themed(AppLang.TR) {
-            PricingScreen(PricingInfo(), true, Features(true, true), false, true, null, null, {}, {})
+            PricingScreen(PricingInfo(), Features(true, true), false, true, null, null, {}, {})
         }
     }
 
@@ -336,7 +336,7 @@ class ScreenshotsTest {
     fun pricing_store_tr() = capture("pricing_store_tr", tall = true) {
         Themed(AppLang.TR) {
             PricingScreen(
-                PricingInfo(purchasesEnabled = true), true, Features(true, true), true, true, me("credits7").entitlement, {}, {}, {},
+                PricingInfo(purchasesEnabled = true), Features(true, true), true, true, me("credits7").entitlement, {}, {}, {},
                 store = storeUi(notice = PurchaseController.Notice.ARRIVING, buying = null),
             )
         }
@@ -346,7 +346,7 @@ class ScreenshotsTest {
     fun pricing_store_buying_en() = capture("pricing_store_buying_en", tall = true) {
         Themed(AppLang.EN) {
             PricingScreen(
-                PricingInfo(purchasesEnabled = true), true, Features(true, true), true, true, me("credits7").entitlement, {}, {}, {},
+                PricingInfo(purchasesEnabled = true), Features(true, true), true, true, me("credits7").entitlement, {}, {}, {},
                 store = storeUi(notice = null, buying = "pack_10"),
             )
         }

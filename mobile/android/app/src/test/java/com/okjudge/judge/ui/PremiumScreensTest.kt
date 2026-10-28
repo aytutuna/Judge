@@ -168,16 +168,19 @@ class PremiumScreensTest {
     }
 
     @Test
-    fun pricing_buyButtonsSayComingSoon_andThePlanShows() {
+    fun pricing_noFreePlan_buyButtonsSayComingSoon_andWhatIsLeftShows() {
         compose.setContent {
             Themed(AppLang.EN) {
-                PricingScreen(PricingInfo(), true, Features(true, true), signedIn = true, signInOffered = true, entitlement = me("subscriber").entitlement, onBack = {}, onSignIn = {}, onNew = {})
+                PricingScreen(PricingInfo(), Features(true, true), signedIn = true, signInOffered = true, entitlement = me("subscriber").entitlement, onBack = {}, onSignIn = {}, onNew = {})
             }
         }
         compose.onAllNodesWithTag(PricingTags.BUY).assertCountEquals(3)
         compose.onAllNodesWithText(en.pricingComingSoon).assertCountEquals(3)
         compose.onNodeWithTag(PricingTags.STATUS).assertExists()
-        compose.onNodeWithText("${en.accountPlan}: ${en.accountPlanPremium}").assertExists()
+        compose.onNodeWithText(en.appPricingHeadline).assertExists()
+        compose.onNodeWithText(en.appPricingSub).assertExists()
+        compose.onAllNodesWithText(en.pricingFreeTitle).assertCountEquals(0)
+        compose.onNodeWithText(en.appBalanceMonthly("23", me("subscriber").entitlement!!.subscription!!.cap.toString())).assertExists()
         compose.onNodeWithText(en.pricingPremiumF6).assertExists()
         compose.onNodeWithText("$7.50").assertExists()
         compose.onNodeWithText("1 premium verdict").assertExists()
@@ -186,17 +189,18 @@ class PremiumScreensTest {
     }
 
     @Test
-    fun pricing_signedOut_offersSignIn_andHidesExtrasWhenPremiumIsOff() {
+    fun pricing_signedOut_offersSignIn_andTheExtrasOnOffer() {
         compose.setContent {
             Themed(AppLang.EN) {
                 androidx.compose.foundation.layout.Column {
-                    PricingScreen(PricingInfo(purchasesEnabled = true), false, Features(true, true), false, true, null, null, {}, {}, store = StoreUi(available = true))
+                    PricingScreen(PricingInfo(purchasesEnabled = true), Features(true, true), false, true, null, null, {}, {}, store = StoreUi(available = true))
                 }
             }
         }
-        compose.onAllNodesWithTag(PricingTags.SIGN_IN).assertCountEquals(0)
-        compose.onAllNodesWithText(en.pricingPremiumF6).assertCountEquals(0)
-        compose.onNodeWithText(en.pricingFreeF4).assertExists()
+        compose.onNodeWithTag(PricingTags.SIGN_IN).assertExists()
+        compose.onAllNodesWithTag(PricingTags.STATUS).assertCountEquals(0)
+        compose.onNodeWithText(en.pricingPremiumF6).assertExists()
+        compose.onAllNodesWithText(en.pricingFreeF4).assertCountEquals(0)
         compose.onAllNodesWithTag(PricingTags.BUY).assertCountEquals(3)
         compose.onAllNodesWithText(en.pricingComingSoon).assertCountEquals(0)
     }
@@ -214,7 +218,7 @@ class PremiumScreensTest {
         compose.setContent {
             Themed(AppLang.EN) {
                 PricingScreen(
-                    PricingInfo(purchasesEnabled = true), true, Features(true, true), true, true, me("credits7").entitlement, null, {}, {},
+                    PricingInfo(purchasesEnabled = true), Features(true, true), true, true, me("credits7").entitlement, null, {}, {},
                     store = StoreUi(available = false, offers = storeOffers),
                 )
             }
@@ -230,7 +234,7 @@ class PremiumScreensTest {
         compose.setContent {
             Themed(AppLang.EN) {
                 PricingScreen(
-                    PricingInfo(purchasesEnabled = true), true, Features(true, true), true, true, me("credits7").entitlement, null, {}, {},
+                    PricingInfo(purchasesEnabled = true), Features(true, true), true, true, me("credits7").entitlement, null, {}, {},
                     store = StoreUi(available = true, offers = storeOffers),
                     onBuy = { bought += it },
                 )
@@ -254,7 +258,7 @@ class PremiumScreensTest {
         compose.setContent {
             Themed(AppLang.EN) {
                 PricingScreen(
-                    PricingInfo(purchasesEnabled = true), true, Features(true, true), false, true, null, null, {}, {},
+                    PricingInfo(purchasesEnabled = true), Features(true, true), false, true, null, null, {}, {},
                     store = StoreUi(available = true, offers = storeOffers),
                 )
             }
@@ -268,7 +272,7 @@ class PremiumScreensTest {
         compose.setContent {
             Themed(AppLang.EN) {
                 PricingScreen(
-                    PricingInfo(purchasesEnabled = true), true, Features(true, true), true, true, me("credits7").entitlement, null, {}, {},
+                    PricingInfo(purchasesEnabled = true), Features(true, true), true, true, me("credits7").entitlement, null, {}, {},
                     store = StoreUi(available = true, offers = storeOffers, buying = "pack_10"),
                 )
             }
@@ -284,7 +288,7 @@ class PremiumScreensTest {
         compose.setContent {
             Themed(AppLang.EN) {
                 PricingScreen(
-                    PricingInfo(purchasesEnabled = true), true, Features(true, true), true, true, me("credits7").entitlement, null, {}, {},
+                    PricingInfo(purchasesEnabled = true), Features(true, true), true, true, me("credits7").entitlement, null, {}, {},
                     store = store,
                 )
             }

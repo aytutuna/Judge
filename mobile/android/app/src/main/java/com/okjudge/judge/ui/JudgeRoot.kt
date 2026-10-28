@@ -325,11 +325,6 @@ fun JudgeRoot(container: AppContainer, links: StateFlow<Uri?> = MutableStateFlow
                             }
                             PricingScreen(
                                 pricing = config?.pricing ?: PricingInfo(),
-                                premiumEnabled = when (providers) {
-                                    is Account.Providers.Ready -> config?.premiumEnabled == true
-                                    Account.Providers.Failed -> false
-                                    Account.Providers.Loading -> null
-                                },
                                 features = config?.features,
                                 signedIn = signedIn != null,
                                 signInOffered = config?.signInOffered == true,

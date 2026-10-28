@@ -46,12 +46,4 @@ object Tiers {
         if (evidence) add("pricing.premium.f5")
         if (cases) add("pricing.premium.f6")
     }
-
-    /** Free's feature list keys, plus two-sided cases when this deployment offers them (freeFeatureKeys). */
-    fun freeFeatureKeys(cases: Boolean): List<String> = buildList {
-        add("pricing.free.f1")
-        add("pricing.free.f2")
-        add("app.pricing.free.account")
-        if (cases) add("pricing.free.f4")
-    }
 }
