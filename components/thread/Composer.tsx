@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import { useId, useLayoutEffect, useRef, useSyncExternalStore, type ReactNode } from "react";
+import type { Entitlement } from "@/lib/account-types";
+import { saveDraftForSignIn } from "@/lib/draft";
 import { getPreset } from "@/lib/frameworks";
 import { formatDate, t, type Key, type Lang } from "@/lib/i18n";
 import type { FrameworkChoice } from "@/lib/types";
@@ -51,6 +53,8 @@ export type ComposerProps = {
   card?: boolean;
   /** Offers the link that switches between one side and both sides. */
   onSwitchSides?: () => void;
+  /** A short line at the bottom, e.g. what the writer has left. */
+  note?: ReactNode;
 };
 
 /** "New case", today's date, the heading and the steps. The date is the
@@ -109,6 +113,7 @@ export function Composer({
   onExample,
   card = false,
   onSwitchSides,
+  note,
 }: ComposerProps) {
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const panelId = useId();
@@ -234,9 +239,25 @@ export function Composer({
               {t(lang, twoSided ? "home.oneSide" : "home.invite")}
             </button>
           ) : null}
+          {note ? <p className={styles.note}>{note}</p> : null}
         </fieldset>
       </form>
     </div>
+  );
+}
+
+/** What the signed-in writer has left, for the composer's note. */
+export function Balance({ lang, entitlement: e }: { lang: Lang; entitlement: Entitlement }) {
+  const sub = e.subscription;
+  if (sub && sub.used < sub.cap) return t(lang, "home.monthLeft", { n: sub.cap - sub.used, cap: sub.cap });
+  if (e.credits > 0) return t(lang, e.credits === 1 ? "home.left.one" : "home.left.other", { n: e.credits });
+  return (
+    <>
+      {t(lang, "home.out")}{" "}
+      <Link href="/pricing" onClick={saveDraftForSignIn}>
+        {t(lang, "home.pricing")}
+      </Link>
+    </>
   );
 }
 

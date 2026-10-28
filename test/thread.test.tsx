@@ -2,7 +2,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import { CasePanel, ownSideText } from "../components/case/CaseScreen";
 import type { AppealDraft } from "../components/case/AppealForm";
-import { Composer, EXAMPLES, MAX_ARGUMENT, NextSteps, type ComposerProps } from "../components/thread/Composer";
+import { Balance, Composer, EXAMPLES, MAX_ARGUMENT, NextSteps, type ComposerProps } from "../components/thread/Composer";
 import { Recent, recentCards } from "../components/home/Recent";
 import type { HistoryItem } from "../components/shell/useHistory";
 import { Thread } from "../components/thread/Thread";
@@ -214,6 +214,28 @@ describe("NextSteps", () => {
     expect(reset).toContain('<button type="button">');
     expect(reset).toContain(t("tr", "shell.new"));
     expect(renderToStaticMarkup(<NextSteps lang="en" />)).toContain('href="/"');
+  });
+});
+
+describe("Balance", () => {
+  const base = { canUsePremium: true, blockedReason: null, credits: 0, subscription: null, resetsAt: null };
+  const sub = { source: "app_store" as const, productId: "monthly", periodStart: "", periodEnd: "", willRenew: true };
+  const html = (e: typeof base | Record<string, unknown>) =>
+    renderToStaticMarkup(<Balance lang="en" entitlement={{ ...base, ...e }} />);
+
+  it("counts credits, or what is left of the month first", () => {
+    expect(html({ credits: 1 })).toBe("1 verdict left");
+    expect(html({ credits: 4 })).toBe("4 verdicts left");
+    expect(html({ credits: 4, subscription: { ...sub, used: 5, cap: 35 } })).toBe("30 of 35 left this month");
+  });
+
+  it("links to pricing with nothing left", () => {
+    const out = html({ canUsePremium: false, blockedReason: "no_credits" });
+    expect(out).toContain(t("en", "home.out"));
+    expect(out).toContain('href="/pricing"');
+    expect(html({ canUsePremium: false, blockedReason: "fair_use", subscription: { ...sub, used: 35, cap: 35 } })).toContain(
+      'href="/pricing"',
+    );
   });
 });
 

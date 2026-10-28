@@ -2,9 +2,10 @@ import type { FrameworkChoice } from "./types";
 
 /**
  * The homepage form's unsent argument, kept for the round trip through
- * /signin. The home page registers where the draft comes from; sending the
- * form signed out and the header's "Sign in" save it on click, and the home
- * page takes it back once when it mounts. So an Apple or Google redirect,
+ * /signin or /pricing. The home page registers where the draft comes from;
+ * sending the form signed out or with nothing left to spend, and the
+ * header's "Sign in", save it on click, and the home page takes it back once
+ * when it mounts. So an Apple or Google redirect,
  * the Back button, or an email link opened in a new tab brings the visitor
  * back to the text they typed. It sits in localStorage, which every tab of
  * the browser shares, and is only given back within 30 minutes of saving.

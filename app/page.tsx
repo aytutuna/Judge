@@ -11,7 +11,7 @@ import { Recent } from "@/components/home/Recent";
 import JudgingScene from "@/components/scene/JudgingScene";
 import { AppShell } from "@/components/shell/AppShell";
 import { refreshHistory, useHistory } from "@/components/shell/useHistory";
-import { Composer, NextSteps } from "@/components/thread/Composer";
+import { Balance, Composer, NextSteps } from "@/components/thread/Composer";
 import { Thread } from "@/components/thread/Thread";
 import styles from "@/components/thread/thread.module.css";
 import { VerdictView } from "@/components/VerdictView";
@@ -136,6 +136,7 @@ export default function Home() {
   // Signed out, the form still takes the text: sending it goes to sign-in
   // first and the draft comes back afterwards. Uploads need the account.
   const signedIn = Boolean(viewer.me?.user);
+  const entitlement = signedIn ? (viewer.me?.entitlement ?? null) : null;
   const evidenceOn = signedIn && features?.evidence === true;
   const casesOn = signedIn && features?.cases === true;
   const casesLocked = !signedIn && features?.cases === true && signInOffered(viewer.config);
@@ -221,6 +222,12 @@ export default function Home() {
   function signInFirst() {
     saveDraftForSignIn();
     router.push("/signin?next=%2F");
+  }
+
+  /** Nothing left to spend: pricing, with the text kept for afterwards. */
+  function pricingFirst() {
+    saveDraftForSignIn();
+    router.push("/pricing");
   }
 
   /** The composer's text becomes the thread's first turn. */
@@ -599,9 +606,11 @@ export default function Home() {
               lang={lang}
               value={argument}
               onChange={setArgument}
-              onSubmit={() =>
-                viewer.status === "ready" && !signedIn ? signInFirst() : void (twoSided ? createCase() : submitPremium())
-              }
+              onSubmit={() => {
+                if (viewer.status === "ready" && !signedIn) signInFirst();
+                else if (entitlement?.canUsePremium === false) pricingFirst();
+                else void (twoSided ? createCase() : submitPremium());
+              }}
               canSubmit={canSubmit}
               disabled={!empty}
               error={error}
@@ -652,6 +661,7 @@ export default function Home() {
               onSwitchSides={
                 empty && casesOn ? () => setCaseMode(twoSided ? "now" : "both") : undefined
               }
+              note={entitlement ? <Balance lang={lang} entitlement={entitlement} /> : null}
             />
           )}
           {empty ? (
