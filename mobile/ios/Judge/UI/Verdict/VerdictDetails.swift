@@ -48,10 +48,10 @@ struct VerdictReasons: View {
 }
 
 /// Every part of a ruling on its own screen, pushed from the card: the
-/// summary, the crux, what each side stands on and how they got there, the
-/// losing side's best point, the facts relied on, the two-sided facts, the
-/// web check, what would change it and the votes. Sections without data
-/// are left out.
+/// appeal outcome, the summary with any branches, the crux, what each side
+/// stands on and how they got there, the losing side's best point, the
+/// facts relied on, the two-sided facts, the web check, what would change
+/// it and the votes. Sections without data are left out.
 struct VerdictDetails<Appeal: View>: View {
     @Environment(AppModel.self) private var app
     @Environment(\.dismiss) private var dismiss
@@ -72,7 +72,15 @@ struct VerdictDetails<Appeal: View>: View {
         let result = Names.personalizeResult(view.result, nameMap: session.nameMap, selfLang: selfLang)
         ScrollView {
             VStack(alignment: .leading, spacing: 12) {
-                summary(result, parties: parties)
+                if let outcome = result.appeal {
+                    AppealOutcomeBanner(
+                        appeal: outcome,
+                        lang: lang,
+                        byName: parties.name(outcome.by),
+                        bySelf: outcome.by != .unknown && parties.isSelf(outcome.by)
+                    )
+                }
+                summary(result, parties: parties, restoredNames: Names.restoredNames(session.nameMap, selfLang: selfLang))
                 if !result.modelRefused {
                     sections(result, parties: parties)
                 }
@@ -124,7 +132,7 @@ struct VerdictDetails<Appeal: View>: View {
         }
     }
 
-    private func summary(_ result: VerdictResult, parties: PartyNames) -> some View {
+    private func summary(_ result: VerdictResult, parties: PartyNames, restoredNames: [String]) -> some View {
         let label = VerdictDisplay.label(result.verdict, parties: parties, lang: lang)
         var style = TypeStyle.ruling
         style.size = 24
@@ -137,6 +145,7 @@ struct VerdictDetails<Appeal: View>: View {
                 .accessibilityAddTraits(.isHeader)
             badges(result)
             VerdictNotes(result: result, parties: parties, lang: lang)
+            VerdictBranches(result: result, parties: parties, restoredNames: restoredNames, lang: lang)
         }
     }
 

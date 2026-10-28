@@ -4,7 +4,7 @@ import UIKit
 
 /// The ruling at the top of a verdict: the settled balance, both names,
 /// which way the panel leaned, the ruling with its votes and the headline.
-/// A split or conditional ruling keeps its branches here, since the
+/// A split or conditional ruling keeps its branches here too, since the
 /// headline alone does not say who won what; everything else is on the
 /// details screen.
 struct VerdictCard: View {
@@ -46,7 +46,7 @@ struct VerdictCard: View {
             }
             RulingLine(result: result, parties: parties, lang: lang)
             headline
-            branches
+            VerdictBranches(result: result, parties: parties, restoredNames: restoredNames, lang: lang)
             if result.modelRefused {
                 SlotText(L10n.refusedNote(lang))
             }
@@ -115,9 +115,17 @@ struct VerdictCard: View {
             .fixedSize(horizontal: false, vertical: true)
             .accessibilityAddTraits(.isHeader)
     }
+}
 
-    @ViewBuilder
-    private var branches: some View {
+/// Who won which point of a split ruling, or the if/then lines of a
+/// conditional one.
+struct VerdictBranches: View {
+    let result: VerdictResult
+    let parties: PartyNames
+    var restoredNames: [String] = []
+    let lang: AppLang
+
+    var body: some View {
         if result.verdict == .split, let points = result.splitPoints, !points.isEmpty {
             VStack(spacing: 8) {
                 ForEach(Array(points.enumerated()), id: \.offset) { _, point in
