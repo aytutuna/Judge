@@ -11,11 +11,11 @@ const he: AppLocale = {
     "app.input.counter": "{count} / {max}",
     "app.history.title": "פסקי הדין שלי",
     "app.history.empty": "עוד אין פסקי דין. כשהוויכוח הראשון שלך יוכרע, פסק הדין יופיע כאן.",
-    "app.history.deviceOnly": "פסקי הדין שמורים רק בטלפון הזה. מחיקה כאן לא מבטלת את קישור השיתוף.",
+    "app.history.deviceOnly": "פסקי הדין שמורים רק בטלפון הזה. מחיקה של פסק דין כאן לא מבטלת את קישור השיתוף שלו.",
     "app.history.delete": "מחיקה",
     "app.history.clearAll": "מחיקת הכול",
     "app.history.clearConfirm": "למחוק מהטלפון הזה את כל פסקי הדין השמורים? קישורי השיתוף ימשיכו לעבוד.",
-    "app.history.clearYes": "כן, למחוק",
+    "app.history.clearYes": "כן, למחוק הכול",
     "app.pricing.free.account": "התחברות עם Apple, Google או אימייל",
     "app.pricing.headline": "פסק הדין הראשון עלינו.",
     "app.pricing.sub":
@@ -31,7 +31,7 @@ const he: AppLocale = {
     "app.error.offline": "נראה שאין חיבור לאינטרנט. כדאי לבדוק את החיבור ולנסות שוב.",
     "app.error.timeout": "לשופטים לקח יותר מדי זמן לענות. אפשר לנסות שוב בעוד דקה.",
     "app.error.interrupted":
-      "החיבור נקטע בזמן ש-Judge היה ברקע. אפשר לנסות שוב, והפעם להשאיר את האפליקציה פתוחה עד שפסק הדין יגיע.",
+      "החיבור נקטע בזמן ש-Judge היה ברקע. אפשר לנסות שוב ולהשאיר את האפליקציה פתוחה עד שפסק הדין יגיע.",
     "app.turnstile.error": "האימות האנושי לא נטען. כדאי לבדוק את החיבור ולנסות שוב.",
     "app.factcheck.sourceAria": "{title}, פותח את דף האינטרנט",
     "app.error.badOrigin":
@@ -46,7 +46,7 @@ const he: AppLocale = {
     "app.signin.or": "או",
     "app.signin.codeRequest": "לשלוח לי קוד באימייל",
     "app.signin.codeSent": "שלחנו קוד אל {email}. הוא תקף ל-10 דקות.",
-    "app.signin.codeLabel": "קוד בן 6 ספרות",
+    "app.signin.codeLabel": "מזינים את הקוד בן 6 הספרות",
     "app.signin.codeSubmit": "התחברות",
     "app.signin.codeInvalid": "הקוד לא נכון. כדאי לבדוק את האימייל ולנסות שוב.",
     "app.signin.codeExpired": "תוקף הקוד פג. אפשר לבקש קוד חדש.",
@@ -95,24 +95,24 @@ const he: AppLocale = {
     "app.example.thermostat.a": "יש פה 19 מעלות וקר לי אפילו עם קפוצ'ון. להעלות את המזגן ל-22 זה לא מוגזם.",
     "app.example.thermostat.bName": "אורי",
     "app.example.thermostat.b":
-      "ב-22 מעלות אי אפשר לישון, חם מדי. את יכולה לשים עוד שכבה, לי כבר אין מה להוריד.",
+      "ב-22 מעלות אי אפשר לישון, חם מדי. את יכולה ללבוש עוד שכבה, לי כבר אין מה להוריד.",
     "app.example.roadTrip.aName": "תמר",
     "app.example.roadTrip.a": "נהגתי את כל שש השעות בדרך לשם. הכי הוגן שבחזרה אתה תנהג.",
     "app.example.roadTrip.bName": "עידו",
     "app.example.roadTrip.b":
       "אמרתי עוד לפני שיצאנו שאני שונא לנהוג בלילה, ואנחנו יוצאים בשבע בערב. בטיול הבא אני אנהג בבקרים.",
     "app.example.seat.aName": "ליאת",
-    "app.example.seat.a": "המושב שלי נשען אחורה, אז אני מורידה אותו. זו טיסת לילה וכולם מנסים לישון.",
+    "app.example.seat.a": "המושב שלי יורד אחורה, אז אני מורידה אותו. זו טיסת לילה וכולם מנסים לישון.",
     "app.example.seat.bName": "גיא",
     "app.example.seat.b":
-      "אני מטר תשעים, והברכיים שלי כבר נלחצות לגב המושב שלך. יכולת לפחות לשאול לפני שהורדת אותו עד הסוף.",
+      "אני מטר תשעים, והברכיים שלי כבר תקועות בגב המושב שלך. יכולת לפחות לשאול לפני שהורדת אותו עד הסוף.",
     "app.example.spoiler.aName": "הילה",
     "app.example.spoiler.a": "סיפרת לי מי הרוצח עוד לפני שהתחלתי את הפרק האחרון. חיכיתי לו כל השבוע.",
     "app.example.spoiler.bName": "אלון",
     "app.example.spoiler.b":
-      "זה יצא לפני שלושה שבועות, ואמרת שסיימת. אני לא יכול לזכור איפה כל אחד עומד.",
+      "זה יצא לפני שלושה שבועות, ואמרת שסיימת. אני לא יכול לזכור מי הגיע לאיזה פרק.",
     "app.example.jacket.aName": "יעל",
-    "app.example.jacket.a": "לקחת את ז'קט הג'ינס שלי להופעה בלי לשאול. הוא חזר עם ריח של סיגריות.",
+    "app.example.jacket.a": "לבשת את ז'קט הג'ינס שלי להופעה בלי לשאול. הוא חזר עם ריח של עשן.",
     "app.example.jacket.bName": "רועי",
     "app.example.jacket.b":
       "הוא היה תלוי ליד הדלת, ואת אף פעם לא לובשת אותו. הייתי שואל, אבל ישנת, וכבר איחרתי.",
@@ -130,9 +130,9 @@ const he: AppLocale = {
     "app.case.sendTo": "לשלוח את הקישור הזה אל {name}",
     "app.case.stepYou": "כתבת את הצד שלך",
     "app.case.stepYouNote": "חסוי עד פסק הדין",
-    "app.case.stepThem": "עכשיו הצד של {name}",
+    "app.case.stepThem": "עכשיו התור של {name}",
     "app.case.stepThemAnon": "הצד השני כותב את שלו",
-    "app.case.stepThemNote": "הדף יתעדכן ברגע שהוא יגיע",
+    "app.case.stepThemNote": "הדף יתעדכן כשהתשובה תגיע",
     "app.case.stepJudges": "שלושה שופטים מכריעים",
     "app.case.stepJudgesNote": "או להכריע עכשיו רק לפי הצד שלך",
     "app.case.judgeNowWithout": "להכריע עכשיו בלי {name}",
@@ -164,7 +164,7 @@ const he: AppLocale = {
     "app.purchase.restoreNone": "אין רכישות לשחזור.",
   },
   plurals: {
-    "app.balance.left": { one: "נשאר פסק דין אחד", two: "נשארו {n} פסקי דין" },
+    "app.balance.left": { one: "נשאר פסק דין אחד", two: "נשארו שני פסקי דין" },
   },
 };
 
