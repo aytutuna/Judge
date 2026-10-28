@@ -230,35 +230,49 @@ afterEach(() => {
   vi.unstubAllEnvs();
 });
 
-describe("free requests stay on the free path", () => {
-  it("never touches entitlements, user limits or the premium pipeline; the session only names the writer", async () => {
+async function expectError(res: Response, status: number, code: string) {
+  expect(res.status).toBe(status);
+  const body = await res.json();
+  expect(body.code).toBe(code);
+  expect(typeof body.error).toBe("string");
+  return body;
+}
+
+describe("every verdict is premium", () => {
+  it("a request without a tier, or with tier free (older app builds), runs the premium pipeline and is charged", async () => {
     for (const body of [{ argument: ARGUMENT }, { argument: ARGUMENT, tier: "free" }]) {
       m.calls.length = 0;
-      const res = await POST(request({ ...body, clarifications: [{ question: "Q?", answer: "Bob" }] }));
+      m.saveVerdict.mockClear();
+      m.consumePremiumVerdict.mockClear();
+      const res = await POST_V1(request(body, {}, "http://localhost/api/v1/verdict"));
       expect(res.status).toBe(200);
-      expect(m.calls).toEqual(["turnstile", "limits", "key", "anonymize", "judge", "viewer", "save"]);
+      expect(steps()).toEqual(["viewer", "userLimits", "siteCap", "reserve", "anonymize", "factcheck", "panel", "save", "consume"]);
+      const saved = m.saveVerdict.mock.calls[0][0];
+      expect(m.consumePremiumVerdict).toHaveBeenCalledWith("r1", saved.id);
+      const json = await res.json();
+      expect(json.result.tier).toBe("premium");
+      expect(json.entitlement).toEqual(ENTITLEMENT);
     }
-    for (const fn of [
-      m.reservePremiumVerdict,
-      m.checkUserLimits,
-      m.checkPremiumSiteCap,
-      m.runFactCheck,
-      m.judgePremiumPanel,
-    ]) {
-      expect(fn).not.toHaveBeenCalled();
-    }
-    // Clarifications are ignored on free: the argument is anonymized as sent.
-    expect(m.anonymize).toHaveBeenCalledWith(ARGUMENT);
+    expect(m.judgeSelfConsistent).not.toHaveBeenCalled();
+    expect(m.verifyTurnstile).not.toHaveBeenCalled();
+    expect(m.checkVerdictLimits).not.toHaveBeenCalled();
   });
 
-  it("free results carry no tier, fact_check or panel and the response has no entitlement", async () => {
-    const res = await POST(request({ argument: ARGUMENT }));
-    const body = await res.json();
-    // Signed in (bearer): owned by the account, so no owner token.
-    expect(Object.keys(body).sort()).toEqual(["display", "id", "name_map", "originals_stored", "result", "suggested_display_a"]);
-    expect(m.saved[0].ownerUserId).toBe("u1");
-    for (const key of ["tier", "fact_check", "panel"]) expect(body.result).not.toHaveProperty(key);
-    expect(m.saveVerdict.mock.calls[0][0].result).not.toHaveProperty("tier");
+  it("tier free signed out is 401 signin_required, never an anonymous verdict", async () => {
+    m.getViewer.mockResolvedValue(null);
+    await expectError(await POST(request({ argument: ARGUMENT, tier: "free" })), 401, "signin_required");
+    expect(m.calls).toEqual(["viewer"]);
+  });
+
+  it("tier free without units gets the usual no_credits and fair_use errors", async () => {
+    m.reservePremiumVerdict.mockResolvedValueOnce({ ok: false, code: "no_credits" });
+    await expectError(await POST(request({ argument: ARGUMENT, tier: "free" })), 402, "no_credits");
+    const resetsAt = "2026-11-01T00:00:00.000Z";
+    m.reservePremiumVerdict.mockResolvedValueOnce({ ok: false, code: "fair_use", resetsAt });
+    const capped = await POST(request({ argument: ARGUMENT, tier: "free" }));
+    expect(capped.status).toBe(402);
+    expect(await capped.json()).toMatchObject({ code: "fair_use", resetsAt });
+    expect(m.anonymize).not.toHaveBeenCalled();
   });
 
   it("an unknown tier is a 400 before anything else", async () => {
@@ -360,20 +374,13 @@ describe("premium verdict: success", () => {
 });
 
 describe("premium verdict: gates and error codes", () => {
-  async function expectError(res: Response, status: number, code: string) {
-    expect(res.status).toBe(status);
-    const body = await res.json();
-    expect(body.code).toBe(code);
-    expect(typeof body.error).toBe("string");
-    return body;
-  }
 
   it("400 invalid for a malformed Idempotency-Key, before the session lookup", async () => {
     await expectError(await POST(request(premium(), { "idempotency-key": "bad key!" })), 400, "invalid");
     expect(m.calls).toEqual([]);
   });
 
-  it("400 too_short / too_long like the free path", async () => {
+  it("400 too_short / too_long", async () => {
     await expectError(await POST(request({ argument: "short", tier: "premium" })), 400, "too_short");
     await expectError(await POST(request({ argument: "x".repeat(6001), tier: "premium" })), 400, "too_long");
     expect(m.calls).toEqual([]);

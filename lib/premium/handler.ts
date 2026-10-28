@@ -1,6 +1,6 @@
 /**
- * HTTP handlers for premium: POST /api/v1/verdict with tier "premium" (the
- * verdict route hands those requests here) and POST /api/v1/clarify.
+ * HTTP handlers for premium: POST /api/v1/verdict (the verdict route hands
+ * every request here; there is no other tier) and POST /api/v1/clarify.
  *
  * Premium gate order: Idempotency-Key format, session, same-origin (cookie
  * sessions only; bearer requests cannot be forged cross-site), configured,
@@ -35,7 +35,7 @@ import { firstNameOf } from "@/lib/originals-types";
 import { saveVerdictWithOriginals } from "@/lib/originals/save";
 import { checkPremiumSiteCap, checkUserLimits, type UserBucket } from "@/lib/ratelimit";
 import { ClarifyRequest, type VerdictApiResponse, type VerdictRequest } from "@/lib/types";
-import { POLL_AFTER_MS, wantsAsync, type VerdictAcceptedResponse } from "@/lib/verdict-poll";
+import { acceptedHeaders, POLL_AFTER_MS, pollPath, wantsAsync, type VerdictAcceptedResponse } from "@/lib/verdict-poll";
 import { clarifyQuestions } from "./clarify";
 import { idempotencyKey } from "./context";
 import { premiumLogLine, runPremiumPipeline, type PremiumRun } from "./run";
@@ -71,7 +71,7 @@ type Gate = { userId: string; name: string } | { response: NextResponse };
 /** Session, origin and configuration checks shared by both handlers. */
 async function signedInGate(req: Request): Promise<Gate> {
   const viewer = await getViewer(req);
-  if (!viewer) return { response: fail("signin_required", "Sign in to use Premium.") };
+  if (!viewer) return { response: fail("signin_required", "Sign in to get a verdict.") };
   if (viewer.via === "cookie" && !isSameOrigin(req)) {
     return { response: fail("bad_origin", "This request came from another site.") };
   }
@@ -198,7 +198,7 @@ function reserveRefusal(res: Exclude<ReserveResult, { ok: true }>): NextResponse
   }
 }
 
-/** POST /api/v1/verdict with tier "premium". `data` is the parsed body;
+/** POST /api/v1/verdict. `data` is the parsed body;
  * `rawBody` the body as sent (the original is stored exactly as written). */
 export async function premiumVerdict(req: Request, data: VerdictRequest, rawBody?: unknown): Promise<NextResponse> {
   const startedAt = Date.now();
@@ -365,7 +365,6 @@ async function joinJudging(userId: string, key: string): Promise<NextResponse | 
     const { judgingJobForKey } = await import("@/lib/verdict-jobs");
     const job = await judgingJobForKey(userId, key);
     if (!job) return null;
-    const { acceptedHeaders, pollPath } = await import("@/lib/free-async");
     const entitlement = await entitlementOrNull(userId);
     const body: VerdictAcceptedResponse = {
       id: job.id,
@@ -434,11 +433,7 @@ async function startPremiumJob(p: {
     return unavailable();
   }
 
-  const [{ runInBackground }, { runPremiumJob }, { acceptedHeaders, pollPath }] = await Promise.all([
-    import("@/lib/background"),
-    import("./async"),
-    import("@/lib/free-async"),
-  ]);
+  const [{ runInBackground }, { runPremiumJob }] = await Promise.all([import("@/lib/background"), import("./async")]);
   runInBackground("premium", () =>
     runPremiumJob({
       id,

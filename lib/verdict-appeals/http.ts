@@ -22,11 +22,10 @@ import {
   signedIn,
   verifyEvidence,
 } from "@/lib/cases/http";
-import { acceptedHeaders, pollPath } from "@/lib/free-async";
 import { getVerdictMeta, type VerdictMeta } from "@/lib/originals/db";
 import { idempotencyKey } from "@/lib/premium/context";
 import type { VerdictAppealView } from "@/lib/types";
-import { POLL_AFTER_MS, type VerdictAppealResponse } from "@/lib/verdict-poll";
+import { acceptedHeaders, POLL_AFTER_MS, pollPath, type VerdictAppealResponse } from "@/lib/verdict-poll";
 import { appealRootOf, appealView, listVerdictAppeals, roundsBlock, submitVerdictAppeal } from "./service";
 
 const ID_PATTERN = /^[A-Za-z0-9_-]{1,64}$/;

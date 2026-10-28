@@ -8,7 +8,7 @@
  * magic link (website) or one-time email code (apps), both through Resend,
  * and a dev-only test login. A method without credentials is simply not
  * offered (authProviders). Without BETTER_AUTH_SECRET in production, auth is
- * off and the free site runs as before.
+ * off, and with it judging: every verdict needs an account.
  */
 
 import { createHash, createHmac } from "node:crypto";
