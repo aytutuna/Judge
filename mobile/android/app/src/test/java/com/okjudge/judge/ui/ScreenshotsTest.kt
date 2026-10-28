@@ -92,13 +92,13 @@ class ScreenshotsTest {
 
     @Test
     fun home_en() = capture("home_en") {
-        Themed(AppLang.EN) { HomeScreen(HomeUiState(), {}, {}, {}, {}, {}) }
+        Themed(AppLang.EN) { HomeScreen(HomeUiState(), {}, {}, {}, {}) }
     }
 
     @Test
     fun home_tr_filled_withError() = capture("home_tr_error", tall = true) {
         Themed(AppLang.TR) {
-            HomeScreen(homeState(AppLang.TR).copy(error = UiError.Api("rate_limited", 429, 420.0)), {}, {}, {}, {}, {})
+            HomeScreen(homeState(AppLang.TR).copy(error = UiError.Api("rate_limited", 429, 420.0)), {}, {}, {}, {})
         }
     }
 
@@ -259,13 +259,13 @@ class ScreenshotsTest {
 
     @Test
     fun home_noVerdictsLeft_en() = capture("home_balance_none_en", tall = true) {
-        Themed(AppLang.EN) { HomeScreen(premiumHome(AppLang.EN, "fair_use"), {}, {}, {}, {}, {}) }
+        Themed(AppLang.EN) { HomeScreen(premiumHome(AppLang.EN, "fair_use"), {}, {}, {}, {}) }
     }
 
     @Test
     fun home_monthlyLeft_en() = capture("home_balance_monthly_en", tall = true) {
         Themed(AppLang.EN) {
-            HomeScreen(premiumHome(AppLang.EN, "subscriber").copy(features = Features()), {}, {}, {}, {}, {})
+            HomeScreen(premiumHome(AppLang.EN, "subscriber").copy(features = Features()), {}, {}, {}, {})
         }
     }
 
@@ -280,7 +280,7 @@ class ScreenshotsTest {
             EvidenceItem("ev3", 3, EvidenceStatus.UNREADABLE),
         )
         Themed(AppLang.EN) {
-            HomeScreen(premiumHome(AppLang.EN, "credits7", EvidenceState(items, max = 3)), {}, {}, {}, {}, {})
+            HomeScreen(premiumHome(AppLang.EN, "credits7", EvidenceState(items, max = 3)), {}, {}, {}, {})
         }
     }
 
@@ -514,7 +514,7 @@ class ScreenshotsTest {
                     suggestedName = "Alex",
                     otherName = "Sam",
                 ),
-                {}, {}, {}, {}, {},
+                {}, {}, {}, {},
             )
         }
     }

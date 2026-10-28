@@ -44,8 +44,6 @@
     <string name="kind_definition">definition</string>
     <string name="kind_logic">logic</string>
     <string name="bedrock">Bedrock</string>
-    <string name="privacy_note">We swap names for Party A and Party B before judging, so the judges never know who\'s who.</string>
-    <string name="privacy_link">What happens to your text</string>
     <string name="crux_short">The crux</string>
     <string name="crux_title">The crux: what this is really about</string>
     <string name="map_title">The argument, down to bedrock</string>

@@ -1,12 +1,11 @@
 import SwiftUI
 
 /// Home: your side and theirs in two cards and the send button with what
-/// is left to spend, then the privacy note.
+/// is left to spend.
 struct HomeView: View {
     @Environment(AppModel.self) private var app
     @SceneStorage("home.draft") private var draft = ""
     @SceneStorage("home.draftOther") private var draftOther = ""
-    @State private var webLink: WebLink?
     @FocusState private var focused: Field?
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.sceneLive) private var sceneLive
@@ -33,7 +32,6 @@ struct HomeView: View {
                     } else {
                         form(lang, home: home)
                     }
-                    footer(lang)
                 }
                 .padding(.horizontal, 16)
                 .padding(.bottom, 32)
@@ -95,9 +93,6 @@ struct HomeView: View {
         .fullScreenCover(isPresented: $home.isJudging) {
             JudgingCover(home: home, lang: lang)
                 .environment(\.sceneLive, sceneLive)
-        }
-        .sheet(item: $webLink) { link in
-            SafariView(url: link.url).ignoresSafeArea()
         }
     }
 
@@ -313,26 +308,6 @@ struct HomeView: View {
                     .foregroundStyle(Brand.muted)
             }
         }
-    }
-
-    private func footer(_ lang: AppLang) -> some View {
-        VStack(spacing: 10) {
-            VStack(spacing: 2) {
-                Text(L10n.privacyNote(lang))
-                    .brandText(.footnote)
-                    .foregroundStyle(Brand.muted)
-                Button(L10n.privacyLink(lang)) {
-                    webLink = WebLink(url: app.config.siteURL("privacy"))
-                }
-                .buttonStyle(LinkButtonStyle())
-            }
-            Text(L10n.footerNote(lang))
-                .brandText(.footnote)
-                .foregroundStyle(Brand.muted)
-        }
-        .multilineTextAlignment(.center)
-        .frame(maxWidth: .infinity)
-        .padding(.horizontal, 8)
     }
 
     /// Also "Try again", which repeats whatever was sent last (a verdict or a case).

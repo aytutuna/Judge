@@ -52,8 +52,6 @@ class Strings(private val res: Resources) {
     val kindDefinition: String get() = res.getString(R.string.kind_definition)
     val kindLogic: String get() = res.getString(R.string.kind_logic)
     val bedrock: String get() = res.getString(R.string.bedrock)
-    val privacyNote: String get() = res.getString(R.string.privacy_note)
-    val privacyLink: String get() = res.getString(R.string.privacy_link)
     val cruxShort: String get() = res.getString(R.string.crux_short)
     val cruxTitle: String get() = res.getString(R.string.crux_title)
     val mapTitle: String get() = res.getString(R.string.map_title)
@@ -611,8 +609,6 @@ class Strings(private val res: Resources) {
             "kind.definition" -> R.string.kind_definition
             "kind.logic" -> R.string.kind_logic
             "bedrock" -> R.string.bedrock
-            "privacyNote" -> R.string.privacy_note
-            "privacyLink" -> R.string.privacy_link
             "cruxShort" -> R.string.crux_short
             "cruxTitle" -> R.string.crux_title
             "mapTitle" -> R.string.map_title

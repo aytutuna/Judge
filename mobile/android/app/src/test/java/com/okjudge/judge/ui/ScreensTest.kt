@@ -74,7 +74,6 @@ class ScreensTest {
                     onSubmit = {},
                     onDismissError = { state = state.copy(error = null) },
                     onNew = {},
-                    onOpenPrivacy = {},
                     onOtherSideChange = { state = state.copy(otherSide = it) },
                     onOtherName = { state = state.copy(otherName = it) },
                     onDisplayName = { state = state.copy(typedName = it) },
@@ -144,7 +143,6 @@ class ScreensTest {
                     onSubmit = {},
                     onDismissError = {},
                     onNew = { state = HomeUiState() },
-                    onOpenPrivacy = {},
                     onOtherSideChange = { state = state.copy(otherSide = it) },
                 )
             }

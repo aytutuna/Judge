@@ -44,8 +44,6 @@
     <string name="kind_definition">tanım</string>
     <string name="kind_logic">mantık</string>
     <string name="bedrock">Temel taşı</string>
-    <string name="privacy_note">Yargılamadan önce isimleri Taraf A ve Taraf B yapıyoruz, yani yargıçlar kimin kim olduğunu hiç bilmez.</string>
-    <string name="privacy_link">Yazdıklarına ne oluyor?</string>
     <string name="crux_short">Düğüm noktası</string>
     <string name="crux_title">Düğüm noktası: kavga aslında ne üstüne</string>
     <string name="map_title">Tartışma, temel taşlarına kadar</string>

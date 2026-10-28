@@ -58,8 +58,6 @@ enum L10n {
     static func kindDefinition(_ lang: AppLang) -> String { string("kind.definition", lang) }
     static func kindLogic(_ lang: AppLang) -> String { string("kind.logic", lang) }
     static func bedrock(_ lang: AppLang) -> String { string("bedrock", lang) }
-    static func privacyNote(_ lang: AppLang) -> String { string("privacyNote", lang) }
-    static func privacyLink(_ lang: AppLang) -> String { string("privacyLink", lang) }
     static func cruxShort(_ lang: AppLang) -> String { string("cruxShort", lang) }
     static func cruxTitle(_ lang: AppLang) -> String { string("cruxTitle", lang) }
     static func mapTitle(_ lang: AppLang) -> String { string("mapTitle", lang) }
@@ -618,8 +616,6 @@ enum L10n {
         "kind.definition",
         "kind.logic",
         "bedrock",
-        "privacyNote",
-        "privacyLink",
         "cruxShort",
         "cruxTitle",
         "mapTitle",

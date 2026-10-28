@@ -13,8 +13,6 @@ export const WEB_KEYS: readonly string[] = [
   "input.label",
   "placeholder",
   "getVerdict",
-  "privacyNote",
-  "privacyLink",
   "examples.label",
   "example.*",
   "home.*",

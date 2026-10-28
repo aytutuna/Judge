@@ -46,7 +46,6 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
@@ -97,8 +96,7 @@ private val Theirs = SideColors(Palette.sageInk, Palette.sageInk)
 
 /**
  * Home: a card for your side and one for theirs (or a link for them to
- * write it), the send button with what is left to spend, then the
- * privacy note.
+ * write it), then the send button with what is left to spend.
  */
 @Composable
 fun HomeScreen(
@@ -107,7 +105,6 @@ fun HomeScreen(
     onSubmit: () -> Unit,
     onDismissError: () -> Unit,
     onNew: (() -> Unit)?,
-    onOpenPrivacy: () -> Unit,
     modifier: Modifier = Modifier,
     onOtherSideChange: (String) -> Unit = {},
     onOtherName: (String) -> Unit = {},
@@ -234,21 +231,6 @@ fun HomeScreen(
                         Text(if (state.creating) s.caseCreating else s.tierChecking, style = JudgeType.slotText.copy(color = Palette.ink2))
                     }
                 }
-            }
-            Column(
-                Modifier.widthIn(max = 520.dp).padding(horizontal = 24.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-            ) {
-                Text(s.privacyNote, style = JudgeType.footnote.copy(color = Palette.placeholder), textAlign = TextAlign.Center)
-                Text(
-                    s.privacyLink,
-                    style = JudgeType.footnote.copy(color = Palette.terraInk, textDecoration = TextDecoration.Underline),
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier
-                        .clip(JudgeShapes.chip)
-                        .clickable(onClick = onOpenPrivacy)
-                        .padding(8.dp),
-                )
             }
         }
     }
