@@ -28,7 +28,9 @@ enum HistoryEntry: Identifiable {
 
     /// Both kinds in one list, newest first (mergeHistory on the web).
     static func merge(saved: [SavedVerdict], cases: [CaseSummary]) -> [HistoryEntry] {
-        (saved.map(HistoryEntry.savedVerdict) + cases.map(HistoryEntry.caseSummary)).sorted { $0.date > $1.date }
+        // date parses the case's ISO string, so do it once per entry, not per comparison
+        let entries = saved.map(HistoryEntry.savedVerdict) + cases.map(HistoryEntry.caseSummary)
+        return entries.map { ($0, $0.date) }.sorted { $0.1 > $1.1 }.map(\.0)
     }
 }
 
