@@ -17,14 +17,15 @@
   --muted: #6B6258;
   --placeholder: #776D61;
 
-  /* Party A: terracotta. --terra is for fills and display text >= 24px;
-     --terra-ink for small text, links and the focus ring. */
+  /* Terracotta: the accent, and the other side. --terra is for fills and
+     display text >= 24px; --terra-ink for small text, links and the focus
+     ring. */
   --terra: #C8553D;
   --terra-ink: #A9442F;
   --terra-tint: #F3DDD5;
 
-  /* Party B: sage. --sage is for large fills only, never text;
-     --sage-strong for thin marks that need 3:1; --sage-ink for text. */
+  /* Sage: the viewer's own side. --sage is for large fills only, never
+     text; --sage-strong for thin marks that need 3:1; --sage-ink for text. */
   --sage: #8AA899;
   --sage-strong: #6E8F80;
   --sage-ink: #4C6B5D;
@@ -39,6 +40,33 @@
   --line: rgba(28, 25, 22, 0.09);
   --line-2: rgba(28, 25, 22, 0.14);
   --glass: rgba(255, 252, 247, 0.68);
+}
+
+/* Sides. The viewer's own party is sage and the other one terracotta
+   (sideColors in lib/palette.ts): Party A is green unless a container says
+   the viewer is Party B with data-you="b"; data-you="a" sets it back inside
+   one. Same roles as above: base for large fills, -strong for thin marks,
+   -ink for text, -tint behind it. */
+:root,
+[data-you="a"] {
+  --party-a: var(--sage);
+  --party-a-strong: var(--sage-strong);
+  --party-a-ink: var(--sage-ink);
+  --party-a-tint: var(--sage-tint);
+  --party-b: var(--terra);
+  --party-b-strong: var(--terra);
+  --party-b-ink: var(--terra-ink);
+  --party-b-tint: var(--terra-tint);
+}
+[data-you="b"] {
+  --party-a: var(--terra);
+  --party-a-strong: var(--terra);
+  --party-a-ink: var(--terra-ink);
+  --party-a-tint: var(--terra-tint);
+  --party-b: var(--sage);
+  --party-b-strong: var(--sage-strong);
+  --party-b-ink: var(--sage-ink);
+  --party-b-tint: var(--sage-tint);
 }
 
 :root {

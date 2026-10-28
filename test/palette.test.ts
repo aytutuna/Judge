@@ -7,8 +7,12 @@ import {
   PALETTE_NUM,
   contrast,
   cssVarName,
+  greenParty,
+  sideColors,
   type PaletteAlphaKey,
   type PaletteKey,
+  type Party,
+  type SideColors,
 } from "../lib/palette";
 
 const css = readFileSync(join(__dirname, "..", "app", "globals.css"), "utf8");
@@ -75,6 +79,66 @@ describe("palette", () => {
   it("is light only: no dark-mode media query", () => {
     expect(css).not.toMatch(/prefers-color-scheme\s*:\s*dark/);
     expect(css).toMatch(/color-scheme:\s*light;/);
+  });
+});
+
+/** The --party-* declarations of the block opened by `selector`, as hexes. */
+function sideBlock(selector: string): Record<Party, SideColors> {
+  const start = css.indexOf(`${selector} {`);
+  expect(start, selector).toBeGreaterThanOrEqual(0);
+  const body = css.slice(start, css.indexOf("}", start));
+  const hex = new Map(
+    (Object.keys(PALETTE) as PaletteKey[]).map((k) => [cssVarName(k), PALETTE[k] as string]),
+  );
+  const get = (name: string) => {
+    const m = body.match(new RegExp(`${name}:\\s*var\\((--[a-z0-9-]+)\\);`));
+    expect(m, name).not.toBeNull();
+    return hex.get(m![1])!;
+  };
+  const side = (p: Party): SideColors => ({
+    fill: get(`--party-${p}`),
+    strong: get(`--party-${p}-strong`),
+    ink: get(`--party-${p}-ink`),
+    tint: get(`--party-${p}-tint`),
+  });
+  return { a: side("a"), b: side("b") };
+}
+
+describe("side colours", () => {
+  const green = { fill: PALETTE.sage, strong: PALETTE.sageStrong, ink: PALETTE.sageInk, tint: PALETTE.sageTint };
+  const red = { fill: PALETTE.terra, strong: PALETTE.terra, ink: PALETTE.terraInk, tint: PALETTE.terraTint };
+
+  it("the writer of a one-person verdict or a case's creator: Party A is green", () => {
+    expect(greenParty("a")).toBe("a");
+    expect(sideColors("a")).toEqual({ a: green, b: red });
+  });
+
+  it("the other side of a case: Party B is green, Party A red", () => {
+    expect(greenParty("b")).toBe("b");
+    expect(sideColors("b")).toEqual({ a: red, b: green });
+  });
+
+  it("a stranger or nobody known (share images, samples): Party A is green", () => {
+    expect(greenParty(null)).toBe("a");
+    expect(greenParty()).toBe("a");
+    expect(sideColors(null)).toEqual({ a: green, b: red });
+    expect(sideColors()).toEqual(sideColors("a"));
+  });
+
+  it("globals.css declares the same sides, swapped under data-you=\"b\"", () => {
+    expect(css).toMatch(/:root,\s*\[data-you="a"\] \{/);
+    expect(sideBlock('[data-you="a"]')).toEqual(sideColors("a"));
+    expect(sideBlock('[data-you="b"]')).toEqual(sideColors("b"));
+  });
+
+  it("either side's text reaches 4.5:1 on its tint and the page, white on its ink too", () => {
+    for (const s of [green, red]) {
+      for (const bg of [s.tint, PALETTE.paper, PALETTE.ivory, PALETTE.ivory2]) {
+        expect(contrast(s.ink, bg), `${s.ink} on ${bg}`).toBeGreaterThanOrEqual(4.5);
+      }
+      expect(contrast("#FFFFFF", s.ink), `white on ${s.ink}`).toBeGreaterThanOrEqual(4.5);
+      expect(contrast(s.strong, PALETTE.paper), `${s.strong} mark`).toBeGreaterThanOrEqual(3);
+    }
   });
 });
 
