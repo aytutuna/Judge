@@ -39,7 +39,6 @@ function row(over: Partial<CaseRow> = {}): CaseRow {
     status: "awaiting_respondent",
     mode: null,
     tier: "premium",
-    framework: { preset: "balanced" },
     lang: "en",
     inviteNonce: "n",
     inviteHash: "h",

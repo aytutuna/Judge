@@ -11,7 +11,7 @@ const url = `file:${file}`;
 
 // lib/db reads DATABASE_URL when first used, so set it before importing.
 process.env.DATABASE_URL = url;
-const { getVerdict, saveVerdict } = await import("../lib/db");
+const { getDb, getVerdict, saveVerdict } = await import("../lib/db");
 
 const RESULT: VerdictResult = {
   verdict: "side_a",
@@ -34,7 +34,8 @@ const RESULT: VerdictResult = {
 };
 
 beforeAll(() => {
-  // A row as the previous storage layer wrote it (no optional fields).
+  // A row as the previous storage layer wrote it (no optional fields), with
+  // a judging style the app no longer offers.
   const legacy = createClient({ url });
   return legacy
     .execute(`CREATE TABLE IF NOT EXISTS verdicts (
@@ -47,7 +48,7 @@ beforeAll(() => {
     .then(() =>
       legacy.execute({
         sql: "INSERT INTO verdicts (id, input, framework, result, created_at) VALUES (?, ?, ?, ?, ?)",
-        args: ["legacy0001", "old text", '{"preset":"balanced"}', JSON.stringify(RESULT), "2026-01-01 10:00:00"],
+        args: ["legacy0001", "old text", '{"preset":"loyalty","sliders":{"head_heart":80}}', JSON.stringify(RESULT), "2026-01-01 10:00:00"],
       }),
     )
     .finally(() => legacy.close());
@@ -69,13 +70,13 @@ describe("db (libSQL)", () => {
     await saveVerdict({
       id: "abc123defg",
       input: "Party A says...",
-      framework: { preset: "balanced", sliders: { care: 70 } },
       result: { ...RESULT, lean: null },
     });
+    const raw = await (await getDb()).execute("SELECT framework FROM verdicts WHERE id = 'abc123defg'");
+    expect(raw.rows[0].framework).toBe('{"preset":"balanced"}');
     const stored = await getVerdict("abc123defg");
     expect(stored).not.toBeNull();
     expect(stored!.input).toBe("Party A says...");
-    expect(stored!.framework).toEqual({ preset: "balanced", sliders: { care: 70 } });
     expect(stored!.result).toEqual({ ...RESULT, lean: null });
     expect(stored!.createdAt).toMatch(/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/);
   });
@@ -85,7 +86,6 @@ describe("db (libSQL)", () => {
     expect(stored).toMatchObject({
       id: "legacy0001",
       input: "old text",
-      framework: { preset: "balanced" },
       createdAt: "2026-01-01 10:00:00",
     });
     expect(stored!.result.headline).toBe("Party A is right");

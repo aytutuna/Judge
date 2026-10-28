@@ -1,6 +1,6 @@
 import { createClient, type Client } from "@libsql/client";
 import type { Lang } from "./i18n";
-import { VerdictResult, type FrameworkChoice } from "./types";
+import { VerdictResult } from "./types";
 
 /** DATABASE_URL: `file:./dev.db` locally (relative to the working directory),
  * `libsql://<db>.turso.io` + DATABASE_AUTH_TOKEN in production. A bare path
@@ -62,10 +62,14 @@ export async function getDb(): Promise<Client> {
   return db();
 }
 
+/** What new verdict and case rows store in their NOT NULL framework column.
+ * Every verdict is judged with this standard now; older rows may hold other
+ * presets, which nothing reads any more. */
+export const STORED_FRAMEWORK = '{"preset":"balanced"}';
+
 export type StoredVerdict = {
   id: string;
   input: string;
-  framework: FrameworkChoice;
   result: VerdictResult;
   createdAt: string;
 };
@@ -73,7 +77,6 @@ export type StoredVerdict = {
 export async function saveVerdict(entry: {
   id: string;
   input: string;
-  framework: FrameworkChoice;
   result: VerdictResult;
 }): Promise<void> {
   const client = await db();
@@ -82,7 +85,7 @@ export async function saveVerdict(entry: {
     args: [
       entry.id,
       entry.input,
-      JSON.stringify(entry.framework),
+      STORED_FRAMEWORK,
       JSON.stringify(entry.result),
     ],
   });
@@ -91,7 +94,7 @@ export async function saveVerdict(entry: {
 export async function getVerdict(id: string): Promise<StoredVerdict | null> {
   const client = await db();
   const rs = await client.execute({
-    sql: "SELECT id, input, framework, result, created_at FROM verdicts WHERE id = ?",
+    sql: "SELECT id, input, result, created_at FROM verdicts WHERE id = ?",
     args: [id],
   });
   const row = rs.rows[0];
@@ -101,7 +104,6 @@ export async function getVerdict(id: string): Promise<StoredVerdict | null> {
   return {
     id: String(row.id),
     input: String(row.input),
-    framework: JSON.parse(String(row.framework)) as FrameworkChoice,
     result: parsed.data,
     createdAt: String(row.created_at),
   };

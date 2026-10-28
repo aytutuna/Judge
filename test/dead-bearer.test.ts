@@ -251,7 +251,6 @@ describe("other routes with a dead bearer token", () => {
     const saved = await saveVerdictWithOriginals({
       id,
       input: "Party A says it; Party B says it is not.",
-      framework: { preset: "balanced" },
       result,
       kind: "free",
       ownerUserId: null,

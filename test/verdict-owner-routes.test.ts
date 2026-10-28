@@ -80,7 +80,6 @@ async function save(ownerUserId: string | null, id = vid()) {
   const out = await saveVerdictWithOriginals({
     id,
     input: "Party B says Party A owes him...",
-    framework: { preset: "balanced" },
     result: RESULT,
     kind: ownerUserId ? "premium" : "free",
     ownerUserId,

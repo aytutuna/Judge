@@ -24,7 +24,7 @@ async function main() {
   const misses: string[] = [];
 
   for (const c of selected) {
-    const run = await judgeOnce(c.argument, { preset: "balanced" });
+    const run = await judgeOnce(c.argument);
     if (!run.ok) {
       failures++;
       console.log(`✗ ${c.id}: RUN FAILED (${run.error})`);

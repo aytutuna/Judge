@@ -137,7 +137,7 @@ describe("premium verdict with evidence", () => {
 
     // The fact-check sees the account only; the judges see the evidence.
     expect(m.runFactCheck).toHaveBeenCalledWith(ANON_TEXT, "en");
-    const [text, , , context, , opts] = m.judgePremiumPanel.mock.calls[0];
+    const [text, , context, , opts] = m.judgePremiumPanel.mock.calls[0];
     expect(text).toBe(ANON_TEXT);
     expect(context).toContain("EVIDENCE (machine transcripts of images the person asking attached;");
     expect(context).toContain('[E1 · Chat screenshot · "Party B"]');
@@ -188,6 +188,6 @@ describe("premium verdict with evidence", () => {
     expect(res.status).toBe(200);
     expect((await res.json()).result.evidence_used).toBeUndefined();
     expect(m.claudeJson.mock.calls[0][0].user).toBe(ARGUMENT);
-    expect(m.judgePremiumPanel.mock.calls[0]).toHaveLength(4);
+    expect(m.judgePremiumPanel.mock.calls[0]).toHaveLength(3);
   });
 });

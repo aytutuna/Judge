@@ -18,7 +18,6 @@ import { applyCruxTrial, runCruxTrial, shouldTryCrux } from "../trial";
 import type {
   Clarification,
   FactCheck,
-  FrameworkChoice,
   JudgeRunOutput,
   NameMapping,
   VerdictResult,
@@ -53,7 +52,6 @@ export const SEAT_RETRY_CUTOFF_MS = 280_000 - SEAT_RETRY_TIMEOUT_MS;
 export type PremiumInput = {
   argument: string;
   clarifications?: Clarification[];
-  framework: FrameworkChoice;
   lang: Lang;
   /** Verified evidence transcripts (raw). Absent or empty: today's path. */
   evidence?: VerifiedEvidence[];
@@ -66,7 +64,6 @@ export type JudgeInput = {
   /** Extra judge context placed before the FACT-CHECK block (the EVIDENCE
    * block). The fact-check itself sees `text` only. */
   context: string | null;
-  framework: FrameworkChoice;
   lang: Lang;
   twoSided?: boolean;
   evidence?: boolean;
@@ -209,13 +206,13 @@ export async function preparePremium(
  * trial). Sees only the prepared, anonymized text. */
 async function judgePrepared(
   { anonymized, nameMap, evidenceText, evidenceCount }: PreparedPremium,
-  { framework, lang }: Pick<PremiumInput, "framework" | "lang">,
+  { lang }: Pick<PremiumInput, "lang">,
   startedAt: number,
   now: () => number,
   stats: PremiumStats,
 ): Promise<PremiumOutcome> {
   const judged = await judgeAnonymized(
-    { text: anonymized, context: evidenceText, framework, lang, ...(evidenceText ? { evidence: true } : {}) },
+    { text: anonymized, context: evidenceText, lang, ...(evidenceText ? { evidence: true } : {}) },
     { startedAt, now, stats },
   );
   if (judged.status !== "ok") return judged;
@@ -238,7 +235,7 @@ ${evidenceText}`,
  */
 export async function runPreparedPipeline(
   prepared: PreparedPremium,
-  input: Pick<PremiumInput, "framework" | "lang">,
+  input: Pick<PremiumInput, "lang">,
   opts: { startedAt: number; now?: () => number; anonymizeUsage?: UsageTotals },
 ): Promise<PremiumRun> {
   const now = opts.now ?? Date.now;
@@ -279,7 +276,7 @@ export async function judgeAnonymized(
   input: JudgeInput,
   opts: { startedAt?: number; now?: () => number; stats?: PremiumStats } = {},
 ): Promise<JudgedOutcome> {
-  const { text, framework, lang } = input;
+  const { text, lang } = input;
   const now = opts.now ?? Date.now;
   const startedAt = opts.startedAt ?? now();
   const stats = opts.stats ?? { factCheck: "unavailable", claims: 0, escalated: false, trial: false, ms: 0 };
@@ -302,10 +299,10 @@ export async function judgeAnonymized(
   // The rerun gate only rides along with case options: a plain premium run
   // (anonymize 60s) always fits and keeps exactly its old call.
   const panel = hasCaseOpts
-    ? await judgePremiumPanel(text, framework, lang, context, premiumPanel(), caseOpts, {
+    ? await judgePremiumPanel(text, lang, context, premiumPanel(), caseOpts, {
         allowRetry: () => now() - startedAt < SEAT_RETRY_CUTOFF_MS,
       })
-    : await judgePremiumPanel(text, framework, lang, context);
+    : await judgePremiumPanel(text, lang, context);
   const ok = panel.runs.filter((r) => r.ok).map((r) => r.data as JudgeRunOutput);
   const premiumFields = { tier: "premium" as const, fact_check: factCheck, lang };
 
@@ -340,7 +337,7 @@ export async function judgeAnonymized(
       ...(context ? { context } : {}),
       ...caseOpts,
     };
-    const more = await judgeExtra(extra, text, framework, lang, extraOpts).catch((): JudgeRun[] => []);
+    const more = await judgeExtra(extra, text, lang, extraOpts).catch((): JudgeRun[] => []);
     const moreOk = more.filter((r) => r.ok).map((r) => r.data as JudgeRunOutput);
     if (moreOk.length > 0) {
       result = { ...aggregate([...ok, ...moreOk]), escalated: true };

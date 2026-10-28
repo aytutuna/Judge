@@ -76,12 +76,11 @@ vi.mock("@/lib/originals/save", () => ({
   saveVerdictWithOriginals: async (v: {
     id: string;
     input: string;
-    framework: unknown;
     result: unknown;
     ownerUserId: string | null;
     original: unknown;
   }) => {
-    await track("save", m.saveVerdict)({ id: v.id, input: v.input, framework: v.framework, result: v.result });
+    await track("save", m.saveVerdict)({ id: v.id, input: v.input, result: v.result });
     m.saved.push(v);
     return {
       ownerToken: v.ownerUserId ? null : "o".repeat(43),
@@ -322,11 +321,10 @@ describe("premium verdict: success", () => {
   });
 
   it("passes the fact-check block to the panel and the anonymized text to the fact-check", async () => {
-    await POST(request(premium({ lang: "tr", framework: { preset: "balanced" } })));
+    await POST(request(premium({ lang: "tr" })));
     expect(m.runFactCheck).toHaveBeenCalledWith(ANON, "tr");
-    const [text, framework, lang, context] = m.judgePremiumPanel.mock.calls[0];
+    const [text, lang, context] = m.judgePremiumPanel.mock.calls[0];
     expect(text).toBe(ANON);
-    expect(framework).toEqual({ preset: "balanced" });
     expect(lang).toBe("tr");
     expect(context).toMatch(/^FACT-CHECK \(web search run before judging; evidence, not a ruling\):\n1\. \[refuted\]/);
     expect(context).toContain("(sources: nasa.gov)");
@@ -335,7 +333,7 @@ describe("premium verdict: success", () => {
   it("gives the panel no context when nothing was checked", async () => {
     m.runFactCheck.mockResolvedValue({ status: "none", claims: [] });
     const result: VerdictResult = (await (await POST(request(premium()))).json()).result;
-    expect(m.judgePremiumPanel.mock.calls[0][3]).toBeNull();
+    expect(m.judgePremiumPanel.mock.calls[0][2]).toBeNull();
     expect(result.fact_check).toEqual({ status: "none", claims: [] });
   });
 
@@ -472,7 +470,7 @@ describe("premium verdict: gates and error codes", () => {
   it("replays a finished verdict for the same Idempotency-Key without charging", async () => {
     const stored: VerdictResult = { ...RUN, verdict: "side_b", confidence: 5, runs: ["side_b"], demo: false, tier: "premium" };
     m.reservePremiumVerdict.mockResolvedValue({ ok: false, code: "replay", verdictId: "v123" });
-    m.getVerdict.mockResolvedValue({ id: "v123", input: ANON, framework: { preset: "balanced" }, result: stored, createdAt: "x" });
+    m.getVerdict.mockResolvedValue({ id: "v123", input: ANON, result: stored, createdAt: "x" });
     const res = await POST(request(premium(), { "idempotency-key": "k1" }));
     expect(res.status).toBe(200);
     const body = await res.json();
@@ -625,7 +623,7 @@ describe("premium verdict: escalation, trial and deadlines", () => {
     m.judgePremiumPanel.mockResolvedValue({ runs: LOW, models: PANEL_MODELS });
     m.judgeExtra.mockResolvedValue([ok(vote("side_b")), FAILED]);
     const result: VerdictResult = (await (await POST(request(premium()))).json()).result;
-    const [n, text, , lang, extra] = m.judgeExtra.mock.calls[0];
+    const [n, text, lang, extra] = m.judgeExtra.mock.calls[0];
     expect(n).toBe(2);
     expect(text).toBe(ANON);
     expect(lang).toBe("en");
@@ -726,7 +724,7 @@ describe("premium verdict with evidence", () => {
     expect(m.anonymizeSubmission.mock.calls[0][0]).toMatchObject({ narrator: "Party A", text: ARGUMENT, lang: "en" });
     // The fact-check sees the account only; the judges get evidence then fact-check.
     expect(m.runFactCheck).toHaveBeenCalledWith(ANON, "en");
-    const [text, , , context, , opts] = m.judgePremiumPanel.mock.calls[0];
+    const [text, , context, , opts] = m.judgePremiumPanel.mock.calls[0];
     expect(text).toBe(ANON);
     expect(context).toMatch(/^EVIDENCE \(machine transcripts[\s\S]*\n\nFACT-CHECK/);
     expect(opts).toEqual({ evidence: true });
@@ -751,9 +749,9 @@ describe("premium verdict with evidence", () => {
     expect(m.reservePremiumVerdict).not.toHaveBeenCalled();
   });
 
-  it("without evidence the panel gets exactly the four arguments it always did", async () => {
+  it("without evidence the panel gets exactly the three arguments it always did", async () => {
     await POST(request(premium()));
-    expect(m.judgePremiumPanel.mock.calls[0]).toHaveLength(4);
+    expect(m.judgePremiumPanel.mock.calls[0]).toHaveLength(3);
     expect(m.verifyEvidenceTokens).not.toHaveBeenCalled();
     expect(m.anonymizeSubmission).not.toHaveBeenCalled();
     expect(m.saveVerdict.mock.calls[0][0].result).not.toHaveProperty("evidence_used");

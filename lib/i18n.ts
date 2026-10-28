@@ -463,7 +463,6 @@ const en = {
     "Someone asked Judge to settle an argument with you. Tell your side; they won't see it until the verdict.",
   "respond.privacy":
     "Names are swapped for Party A and Party B before the judges read anything. You don't need an account.",
-  "respond.framework": "They asked the judges to weigh it by: {preset}",
   "respond.lang": "The verdict will be written in {lang}.",
   "respond.lang.en": "English",
   "respond.lang.tr": "Turkish",
@@ -1138,7 +1137,6 @@ const tr = {
   "respond.intro":
     "Biri, seninle arasındaki bir tartışmayı Judge'a sordu. Kendi tarafını anlat; karar çıkana kadar o göremeyecek.",
   "respond.privacy": "Yargıçlar bir şey okumadan önce isimler Taraf A ve Taraf B olur. Hesap açman gerekmiyor.",
-  "respond.framework": "Yargıçlardan şuna göre tartmalarını istedi: {preset}",
   "respond.lang": "Karar {lang} yazılacak.",
   "respond.lang.en": "İngilizce",
   "respond.lang.tr": "Türkçe",

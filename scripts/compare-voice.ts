@@ -60,7 +60,7 @@ async function run(outPath: string, judgePath?: string) {
     jobs.map(async ({ id, lang }): Promise<Sample | null> => {
       const c = cases.find((x) => x.id === id);
       if (!c) throw new Error(`unknown case ${id}`);
-      const res = await mod.judgeOnce(c.argument, { preset: "balanced" }, { lang });
+      const res = await mod.judgeOnce(c.argument, { lang });
       if (!res.ok) {
         console.warn(`${id}/${lang}: run failed (${res.error})`);
         return null;

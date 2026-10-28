@@ -15,7 +15,7 @@ async function main() {
   console.log("=== ANONYMIZED ===\n" + anon.text);
   console.log("nameMap:", JSON.stringify(anon.nameMap));
 
-  const runs = await judgeSelfConsistent(anon.text, { preset: "balanced" });
+  const runs = await judgeSelfConsistent(anon.text);
   for (const r of runs) {
     console.log(
       r.ok

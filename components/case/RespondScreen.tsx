@@ -7,7 +7,6 @@ import type { AppealResponse, CaseRemovalResponse, CaseView, RespondResponse } f
 import { MAX_EVIDENCE_PER_SIDE } from "@/lib/case-types";
 import { forgetCaseNames, saveCaseNames, useCaseNames } from "@/lib/case-names-store";
 import { firstNameOf } from "@/lib/originals-types";
-import { getPreset } from "@/lib/frameworks";
 import { apiErrorMessage, t, type Lang } from "@/lib/i18n";
 import { useLang } from "@/lib/lang";
 import {
@@ -206,7 +205,6 @@ export function RespondPanel({
   const stage = respondStage(view);
   const current = view.verdicts.at(-1) ?? null;
   const ownSide = view.sides.filter((s) => s.party === view.yourParty);
-  const preset = getPreset(view.framework.preset);
 
   if (stage === "own_invite") {
     return <p className={styles.banner}>{t(lang, "respond.ownInvite")}</p>;
@@ -235,7 +233,6 @@ export function RespondPanel({
     return (
       <>
         <ul className={styles.facts}>
-          <li>{t(lang, "respond.framework", { preset: `${preset.emoji} ${t(lang, `preset.${preset.id}.label`)}` })}</li>
           <li>{t(lang, "respond.lang", { lang: t(lang, view.lang === "tr" ? "respond.lang.tr" : "respond.lang.en") })}</li>
         </ul>
         <form

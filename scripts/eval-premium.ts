@@ -46,7 +46,7 @@ function arg(name: string): string | undefined {
 /** The free route's pipeline without HTTP, limits or storage. */
 async function freeVerdict(argument: string): Promise<VerdictResult | { error: string }> {
   const { text } = await anonymize(argument);
-  const runs = await judgeSelfConsistent(text, { preset: "balanced" }, "en");
+  const runs = await judgeSelfConsistent(text, "en");
   const ok = runs.filter((r) => r.ok).map((r) => r.data as JudgeRunOutput);
   if (ok.length === 0) {
     const first = runs.find((r) => !r.ok);
@@ -55,7 +55,7 @@ async function freeVerdict(argument: string): Promise<VerdictResult | { error: s
   let result = aggregate(ok);
   const extra = 2;
   if (result.confidence <= 2) {
-    const more = await judgeExtra(extra, text, { preset: "balanced" }, "en").catch((): JudgeRun[] => []);
+    const more = await judgeExtra(extra, text, "en").catch((): JudgeRun[] => []);
     const moreOk = more.filter((r) => r.ok).map((r) => r.data as JudgeRunOutput);
     if (moreOk.length > 0) result = { ...aggregate([...ok, ...moreOk]), escalated: true };
   }
@@ -98,7 +98,7 @@ async function main() {
     const free = await withUsageMeter(() => freeVerdict(c.argument).catch((e: unknown) => ({ error: String(e) })));
     const freeMs = Date.now() - t0;
     const t1 = Date.now();
-    const premium = await runPremiumPipeline({ argument: c.argument, framework: { preset: "balanced" }, lang: "en" });
+    const premium = await runPremiumPipeline({ argument: c.argument, lang: "en" });
     const premiumMs = Date.now() - t1;
 
     const freeResult = "error" in free.value ? null : free.value;

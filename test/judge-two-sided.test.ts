@@ -82,8 +82,8 @@ describe("TWO_SIDED_JUDGE_SCHEMA", () => {
 describe("judgeOnce options", () => {
   it("a premium run without case options sends exactly the old prompt, heading and schema", async () => {
     mockClaude.mockResolvedValue({ ok: true, data: RUN });
-    await judgeOnce("Party A says x.", { preset: "balanced" }, { premium: true, context: "FACT-CHECK x" });
-    await judgeOnce("Party A says x.", { preset: "balanced" }, {});
+    await judgeOnce("Party A says x.", { premium: true, context: "FACT-CHECK x" });
+    await judgeOnce("Party A says x.", {});
     const premium = call(0);
     const plain = call(1);
     expect(premium.system).toBe(`${plain.system}\n\n${PREMIUM_JUDGE_NOTE}`);
@@ -97,7 +97,7 @@ describe("judgeOnce options", () => {
 
   it("two-sided: the note, THE CASE heading, the two-sided schema, and the arrays survive parsing", async () => {
     mockClaude.mockResolvedValue({ ok: true, data: TWO });
-    const run = await judgeOnce("PARTY A'S ACCOUNT ...", { preset: "balanced" }, {
+    const run = await judgeOnce("PARTY A'S ACCOUNT ...", {
       premium: true,
       twoSided: true,
       evidence: true,
@@ -113,13 +113,13 @@ describe("judgeOnce options", () => {
 
   it("a two-sided run missing the arrays is a schema mismatch", async () => {
     mockClaude.mockResolvedValue({ ok: true, data: RUN });
-    const run = await judgeOnce("x", { preset: "balanced" }, { twoSided: true });
+    const run = await judgeOnce("x", { twoSided: true });
     expect(run.ok).toBe(false);
   });
 
   it("judgeExtra passes the case options to every run", async () => {
     mockClaude.mockResolvedValue({ ok: true, data: TWO });
-    await judgeExtra(2, "doc", { preset: "balanced" }, "en", { premium: true, twoSided: true, evidence: true });
+    await judgeExtra(2, "doc", "en", { premium: true, twoSided: true, evidence: true });
     expect(mockClaude).toHaveBeenCalledTimes(2);
     for (let i = 0; i < 2; i++) {
       expect(call(i).schema).toBe(TWO_SIDED_JUDGE_SCHEMA);

@@ -77,7 +77,6 @@ describe("GET /api/v1/verdicts/{id}", () => {
     getVerdict.mockResolvedValue({
       id: "abc123",
       input: "Party A says secret things",
-      framework: { preset: "balanced" },
       result: RESULT,
       createdAt: "2026-10-19 12:00:00",
     });
@@ -163,7 +162,7 @@ describe("GET /api/v1/verdicts/{id} for async verdicts", () => {
 
   it("a ready job reads the stored verdict like any other", async () => {
     jobs.getVerdictJob.mockResolvedValue(job({ status: "ready" }));
-    getVerdict.mockResolvedValue({ id: "job1234567", input: "x", framework: {}, result: RESULT, createdAt: "t" });
+    getVerdict.mockResolvedValue({ id: "job1234567", input: "x", result: RESULT, createdAt: "t" });
     const res = await get("job1234567");
     expect(res.status).toBe(200);
     expect(await res.json()).toMatchObject({ id: "job1234567", status: "ready", result: RESULT });

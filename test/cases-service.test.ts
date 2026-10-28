@@ -48,7 +48,6 @@ describe("case service on a fresh database", () => {
     const created = await svc.createCase({
       ownerId: "o1",
       text: "I think the bill was mine to pay in April and I paid it.",
-      framework: { preset: "balanced" },
       lang: "en",
       evidence: [],
     });

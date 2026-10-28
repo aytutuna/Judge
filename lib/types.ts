@@ -264,7 +264,7 @@ export type Clarification = z.infer<typeof Clarification>;
 
 export const VerdictRequest = z.object({
   argument: ArgumentText,
-  framework: FrameworkChoice.default({ preset: "balanced" }),
+  /** Older app builds still send a `framework`; unknown keys are stripped. */
   /** UI + judge output language. Stored as the result's `lang`. */
   lang: z.enum(["en", "tr"]).default("en"),
   /** Ignored: every verdict is premium. Older app builds still send it. */

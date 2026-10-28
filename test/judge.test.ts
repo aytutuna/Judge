@@ -49,7 +49,7 @@ describe("judgeExtra", () => {
           release.push(() => resolve({ ok: true, data: RUN }));
         }),
     );
-    const pending = judgeExtra(4, "Party A says x; Party B says y.", { preset: "balanced" }, "tr");
+    const pending = judgeExtra(4, "Party A says x; Party B says y.", "tr");
     // All four calls are in flight while none has resolved yet.
     await vi.waitFor(() => expect(mockClaude).toHaveBeenCalledTimes(4));
     release.forEach((r) => r());
@@ -69,13 +69,13 @@ describe("judgeExtra", () => {
     mockClaude
       .mockResolvedValueOnce({ ok: false, blocked: false, error: "Claude HTTP 529" })
       .mockResolvedValueOnce({ ok: true, data: RUN });
-    const runs = await judgeExtra(2, "text", { preset: "balanced" });
+    const runs = await judgeExtra(2, "text");
     expect(runs[0]).toEqual({ ok: false, blocked: false, error: "Claude HTTP 529" });
     expect(runs[1].ok).toBe(true);
   });
 
   it("makes no calls for n = 0", async () => {
-    expect(await judgeExtra(0, "text", { preset: "balanced" })).toEqual([]);
+    expect(await judgeExtra(0, "text")).toEqual([]);
     expect(mockClaude).not.toHaveBeenCalled();
   });
 
@@ -89,20 +89,23 @@ describe("free judge requests stay byte-identical", () => {
   // SHA-256 of the six claudeJson call objects below, taken from the code
   // before the premium options existed. A change here means the FREE judge
   // request changed: only update it for an intentional free-prompt change.
-  const FREE_REQUESTS_SHA256 = "c0115cb802f0666e6b6a1ff56f52a97d03688adf12e975990c2cb3fa3745d284";
+  const FREE_REQUESTS_SHA256 = "1f932e442dea1927bd255fead6b3edd8510751bb97481e7465e9fe5a83f6939a";
 
   it("sends exactly the pre-premium requests (no model, effort, context or note)", async () => {
     vi.stubEnv("JUDGE_RUNS", "");
     mockClaude.mockResolvedValue({ ok: false, blocked: false, error: "x" });
-    await judgeSelfConsistent("Party A says x; Party B says y.", { preset: "balanced" }, "en");
-    await judgeExtra(2, "Party A says x; Party B says y.", { preset: "balanced", sliders: { a: 10 } }, "tr");
-    await judgeOnce("text", { preset: "balanced" });
+    await judgeSelfConsistent("Party A says x; Party B says y.", "en");
+    await judgeExtra(2, "Party A says x; Party B says y.", "tr");
+    await judgeOnce("text");
     const calls = mockClaude.mock.calls.map(([c]) => c as ClaudeJsonCall);
     expect(calls).toHaveLength(6);
     for (const c of calls) {
       expect(Object.keys(c)).toEqual(["system", "user", "schema", "timeoutMs"]);
       expect(c.system).not.toContain(PREMIUM_JUDGE_NOTE);
       expect(c.user).not.toContain("FACT-CHECK");
+      expect(c.system).toContain(
+        "VALUE FRAMEWORK: Weigh values the way broadly shared common-sense morality does: outcomes, fairness, rights, and relationships all count, none automatically dominates.",
+      );
     }
     expect(createHash("sha256").update(JSON.stringify(calls)).digest("hex")).toBe(FREE_REQUESTS_SHA256);
     vi.unstubAllEnvs();
@@ -112,7 +115,7 @@ describe("free judge requests stay byte-identical", () => {
 describe("judgeOnce premium options", () => {
   it("adds model, effort, the context after the argument and the premium note", async () => {
     mockClaude.mockResolvedValue({ ok: true, data: RUN });
-    const run = await judgeOnce("Party A says x.", { preset: "balanced" }, {
+    const run = await judgeOnce("Party A says x.", {
       model: "claude-sonnet-5-5",
       effort: "medium",
       context: "FACT-CHECK (...):\n1. [supported] x - y (sources: a.org)",
@@ -130,7 +133,7 @@ describe("judgeOnce premium options", () => {
 
   it("judgeExtra passes premium context and note to every extra run", async () => {
     mockClaude.mockResolvedValue({ ok: true, data: RUN });
-    await judgeExtra(2, "text", { preset: "balanced" }, "en", { context: "FACT-CHECK x", premium: true });
+    await judgeExtra(2, "text", "en", { context: "FACT-CHECK x", premium: true });
     for (const [c] of mockClaude.mock.calls) {
       const call = c as ClaudeJsonCall;
       expect(call.user).toBe("THE ARGUMENT:\n\ntext\n\nFACT-CHECK x");

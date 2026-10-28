@@ -1,8 +1,7 @@
-import { frameworkInstruction } from "./frameworks";
 import { claudeJson, type Effort } from "./claude";
 import { humanStyle } from "./style";
 import type { Lang } from "./i18n";
-import { JudgeRunOutput, TwoSidedJudgeRunOutput, type FrameworkChoice } from "./types";
+import { JudgeRunOutput, TwoSidedJudgeRunOutput } from "./types";
 
 /** Output schema mirroring lib/types.ts JudgeOutput (compact form,
  * converted by toClaudeSchema in lib/claude.ts). */
@@ -136,7 +135,7 @@ const TR_LANGUAGE_BLOCK = `
 
 LANGUAGE: Write every free-text output field (headline, crux, claims, bedrock premises, split points, conditional branches, facts_relied_on, losing_side_best_point, leaning_reason) in Turkish, following the VOICE rules below. Address the reader with informal "sen", never "siz". Refer to the parties as "Taraf A" and "Taraf B" in prose. Write each conditional if_value as a bare conditional clause ending in -sa/-se (e.g. "dürüstlüğe en çok değer veriyorsan"), with no leading "Eğer". Keep all JSON enum values exactly as specified in the schema (English identifiers). headline stays at most 10 words.`;
 
-function systemPrompt(framework: FrameworkChoice, analyzeBFirst: boolean, lang: Lang): string {
+function systemPrompt(analyzeBFirst: boolean, lang: Lang): string {
   return `You are Verdict, an impartial adjudicator of arguments between two parties.
 
 METHOD — follow these steps in order:
@@ -158,7 +157,7 @@ METHOD — follow these steps in order:
    leaning_reason: ONE concrete sentence, at most ~25 words, giving the real reason that side edges it in everyday words, not the name of the standard ("Boiling the water is only the first step of making tea, and Party A stopped there.", "One late night doesn't outweigh three years of showing up.").
 6. HONESTY RULES: never manufacture certainty — but a close call is still a call; uncertainty belongs in the reasoning, not in refusing to rule. Never rule against a side just because it was described less sympathetically. The narrator (usually Party A) gets no home advantage.
 
-VALUE FRAMEWORK (set by the user): ${frameworkInstruction(framework)}
+VALUE FRAMEWORK: Weigh values the way broadly shared common-sense morality does: outcomes, fairness, rights, and relationships all count, none automatically dominates.
 
 OUTPUT RULES:
 - headline: at most 10 words, punchy, plain language, names the outcome.
@@ -238,13 +237,12 @@ function extraNotes(opts: JudgeOptions): string {
 
 export async function judgeOnce(
   anonymizedArgument: string,
-  framework: FrameworkChoice,
   opts: JudgeOptions = {},
 ): Promise<JudgeRun> {
   // Effort defaults to JUDGE_EFFORT (else "medium") inside claudeJson. The
   // premium options only add keys when set, so a call without them sends
   // exactly the request it always has.
-  const system = systemPrompt(framework, opts.analyzeBFirst ?? false, opts.lang ?? "en");
+  const system = systemPrompt(opts.analyzeBFirst ?? false, opts.lang ?? "en");
   const notes = extraNotes(opts);
   const heading = opts.twoSided ? "THE CASE" : "THE ARGUMENT";
   const res = await claudeJson<unknown>({
@@ -282,7 +280,6 @@ export async function judgeOnce(
  */
 export async function judgeSelfConsistent(
   anonymizedArgument: string,
-  framework: FrameworkChoice,
   lang: Lang = "en",
   /** A free two-sided case: the same notes, schema and context as judgeOnce. */
   extra: Pick<JudgeOptions, "context" | "twoSided"> = {},
@@ -292,7 +289,7 @@ export async function judgeSelfConsistent(
   const n = Math.min(3, Math.max(1, Number(process.env.JUDGE_RUNS) || 3));
   const configs = [{}, { analyzeBFirst: true }, {}].slice(0, n);
   return Promise.all(
-    configs.map((config) => judgeOnce(anonymizedArgument, framework, { ...config, lang, ...extra })),
+    configs.map((config) => judgeOnce(anonymizedArgument, { ...config, lang, ...extra })),
   );
 }
 
@@ -312,7 +309,6 @@ export const EXTRA_RUN_TIMEOUT_MS = 45_000;
 export async function judgeExtra(
   n: number,
   anonymizedArgument: string,
-  framework: FrameworkChoice,
   lang: Lang = "en",
   /** The same context, notes and schema as the first round (premium panel or free case). */
   extra: Pick<JudgeOptions, "context" | "premium" | "twoSided" | "evidence" | "appeal"> = {},
@@ -322,7 +318,7 @@ export async function judgeExtra(
   }));
   return Promise.all(
     configs.map((config) =>
-      judgeOnce(anonymizedArgument, framework, {
+      judgeOnce(anonymizedArgument, {
         ...config,
         lang,
         timeoutMs: EXTRA_RUN_TIMEOUT_MS,

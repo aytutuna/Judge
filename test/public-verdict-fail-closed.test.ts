@@ -11,7 +11,6 @@ vi.mock("@/lib/db", () => ({
   getVerdict: async (id: string) => ({
     id,
     input: "x",
-    framework: { preset: "balanced" },
     createdAt: "2026-10-20T00:00:00.000Z",
     result: {
       verdict: "side_b",

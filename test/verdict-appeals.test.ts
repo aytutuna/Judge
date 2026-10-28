@@ -181,7 +181,6 @@ async function verdict(ownerUserId: string | null, input = ACCOUNT, stored = res
   const saved = await saveVerdictWithOriginals({
     id,
     input,
-    framework: { preset: "balanced" },
     result: stored,
     kind: "free",
     ownerUserId,
@@ -523,7 +522,7 @@ describe("rounds and removal", () => {
     const db = await getDb();
     await db.batch(
       [
-        plainVerdictStatement({ id: round, input: "doc", framework: { preset: "balanced" }, result: result() }),
+        plainVerdictStatement({ id: round, input: "doc", result: result() }),
         {
           sql: `INSERT INTO verdict_appeals (id, verdict_id, text, evidence, base_id, outcome, created_at, updated_at)
                 VALUES (?, ?, 'ctx', '[]', ?, 'upheld', ?, ?)`,
