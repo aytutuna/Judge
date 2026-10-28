@@ -13,6 +13,7 @@ import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
 import { PALETTE_NUM } from "@/lib/palette";
 import {
   getSceneMode,
+  getSceneYou,
   sceneInput,
   sceneOutput,
   subscribeScene,
@@ -406,7 +407,16 @@ export function createBalanceEngine(canvas: HTMLCanvasElement, opts: EngineOptio
     opts.onFrame?.();
   }
 
+  let you = getSceneYou();
+  balance.paintSides(you);
+  judges.paintSides(you);
+
   const unsubMode = subscribeScene(() => {
+    if (getSceneYou() !== you) {
+      you = getSceneYou();
+      balance.paintSides(you);
+      judges.paintSides(you);
+    }
     dirty = true;
     if (reduced) renderOnce();
     else wake();

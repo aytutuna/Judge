@@ -4,7 +4,7 @@ import dynamic from "next/dynamic";
 import { useEffect, useRef, type ReactNode } from "react";
 import { tiltFromTug } from "@/lib/balance";
 import type { Lang } from "@/lib/i18n";
-import { resetScene, setPointer, useSceneMode, useSceneStatus } from "@/lib/scene-bridge";
+import { resetScene, setPointer, useSceneMode, useSceneStatus, useSceneYou } from "@/lib/scene-bridge";
 import { avoidOpacityIn, watchAvoidLayout } from "./avoid";
 import { BalanceFallback } from "./BalanceFallback";
 import { useSceneGate } from "./gate";
@@ -34,6 +34,7 @@ export function SceneStage({ lang, children }: { lang: Lang; children: ReactNode
   const stageRef = useRef<HTMLDivElement>(null);
   const mode = useSceneMode();
   const status = useSceneStatus();
+  const you = useSceneYou();
   const reduced = useReducedMotion();
   const go = useSceneGate(stageRef);
 
@@ -104,7 +105,7 @@ export function SceneStage({ lang, children }: { lang: Lang; children: ReactNode
       data-lang={lang}
     >
       <div ref={stageRef} className={styles.stage} aria-hidden="true">
-        <BalanceFallback tugA={tugA} className={styles.fallback} />
+        <BalanceFallback tugA={tugA} you={you} className={styles.fallback} />
         {go && status !== "fallback" ? <BalanceScene reduced={reduced} className={styles.canvas} /> : null}
       </div>
       {children}

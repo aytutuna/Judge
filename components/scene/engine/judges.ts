@@ -10,7 +10,7 @@ import {
   type Quaternion,
   type Scene,
 } from "three";
-import { PALETTE } from "@/lib/palette";
+import { PALETTE, greenParty, type Party } from "@/lib/palette";
 import type { Vote } from "@/lib/scene-bridge";
 import {
   MAX_ORBS,
@@ -32,9 +32,9 @@ import type { Bin, Materials } from "./materials";
 /**
  * The judge orbs. They fan out of the crux point into an arc behind and
  * above the pivot. Neutral orbs are ivory with a thin ink ring; a vote turns
- * an orb saturated terra (Party A) or sage-ink (Party B) with a soft halo, so
- * a vote reads at a glance and "sage = a vote" is never confused with "sage =
- * Party B's sphere". "Other" votes (split, conditional, dissolved) keep the
+ * an orb its side's colour with a soft halo: saturated terra for the red
+ * side, sage-ink for the green one, so a vote reads at a glance and is never
+ * confused with the green side's lighter sphere. "Other" votes (split, conditional, dissolved) keep the
  * hollow ink ring. On the verdict, voting orbs fly into their cup and other
  * votes sink into the pivot.
  *
@@ -66,8 +66,14 @@ export function createJudges(scene: Scene, mats: Materials, bin: Bin, opts: { sh
   const geo = bin.add(new SphereGeometry(1, 40, 28));
   const ringGeo = bin.add(new TorusGeometry(1.14, 0.07, 10, 64));
   const neutral = new Color(PALETTE.paper);
-  const terra = new Color(PALETTE.terra);
-  const sage = new Color(PALETTE.sageInk);
+  const voteA = new Color();
+  const voteB = new Color();
+  const paintSides = (you: Party | null) => {
+    const green = greenParty(you);
+    voteA.set(green === "a" ? PALETTE.sageInk : PALETTE.terra);
+    voteB.set(green === "b" ? PALETTE.sageInk : PALETTE.terra);
+  };
+  paintSides(null);
   const black = new Color(0x000000);
   const warm = new Color(PALETTE.terraTint);
 
@@ -132,6 +138,7 @@ export function createJudges(scene: Scene, mats: Materials, bin: Bin, opts: { sh
   }
 
   return {
+    paintSides,
     /** Returns how many votes each sphere has absorbed (for a weight bump). */
     update(
       hero: OrbSource,
@@ -211,14 +218,14 @@ export function createJudges(scene: Scene, mats: Materials, bin: Bin, opts: { sh
         // ever brightening in step.
         const beat = orbit * (1 - voted) * (0.5 + 0.5 * Math.sin(time * (1.1 + 0.37 * i) + i * i * 2.4));
         col.copy(neutral).multiplyScalar((1 - voted) * (0.9 + 0.1 * beat));
-        col.add(emi.copy(terra).multiplyScalar(wa));
-        col.add(emi.copy(sage).multiplyScalar(wb));
+        col.add(emi.copy(voteA).multiplyScalar(wa));
+        col.add(emi.copy(voteB).multiplyScalar(wb));
         o.mat.color.copy(col);
-        emi.copy(black).add(col.copy(terra).multiplyScalar(wa)).add(col.copy(sage).multiplyScalar(wb));
+        emi.copy(black).add(col.copy(voteA).multiplyScalar(wa)).add(col.copy(voteB).multiplyScalar(wb));
         emi.add(col.copy(warm).multiplyScalar(0.5 * beat));
         o.mat.emissive.copy(emi);
         o.ringMat.opacity = 0.85 * (1 - voted);
-        o.haloMat.color.copy(wa >= wb ? terra : sage);
+        o.haloMat.color.copy(wa >= wb ? voteA : voteB);
         o.haloMat.opacity = 0.42 * voted;
       });
       return { absorbA, absorbB };

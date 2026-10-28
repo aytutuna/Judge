@@ -6,9 +6,11 @@ import type { VerdictResult } from "../lib/types";
 import { VerdictView } from "../components/VerdictView";
 import { ArgumentMap } from "../components/ArgumentMap";
 import { CaseShell } from "../components/case/CaseScreen";
+import { BalanceFallback } from "../components/scene/BalanceFallback";
 import { SampleVerdict, SAMPLE_TUG_A } from "../components/home/SampleVerdict";
 import { VoteDots, voteOf } from "../components/verdict/VoteDots";
 import { t } from "../lib/i18n";
+import { PALETTE } from "../lib/palette";
 import { stripLeadingEmoji } from "../lib/text";
 import { tugFinal } from "../lib/verdict-display";
 
@@ -315,5 +317,16 @@ describe("side colours", () => {
       expect(rule, sel).toMatch(/var\(--party-[ab]/);
       expect(rule, sel).not.toMatch(/--terra|--sage|rgba/);
     }
+  });
+});
+
+describe("BalanceFallback sides", () => {
+  const fills = (out: string) => [...out.matchAll(/<circle [^>]*r="36" fill="(#[0-9A-F]{6})"/g)].map((m) => m[1]);
+
+  it("draws Party A green unless the viewer is Party B", () => {
+    expect(fills(html(<BalanceFallback tugA={30} />))).toEqual([PALETTE.sage, PALETTE.terra]);
+    expect(fills(html(<BalanceFallback tugA={30} you="a" />))).toEqual([PALETTE.sage, PALETTE.terra]);
+    expect(fills(html(<BalanceFallback tugA={30} you="b" />))).toEqual([PALETTE.terra, PALETTE.sage]);
+    expect(fills(html(<BalanceFallback empty />))).toEqual([]);
   });
 });

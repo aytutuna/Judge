@@ -1,4 +1,5 @@
 import { useSyncExternalStore } from "react";
+import type { Party } from "./palette";
 
 /**
  * The one channel between the page and the 3D balance. Pure TS (no three):
@@ -26,6 +27,7 @@ export type SceneStatus = "loading" | "ready" | "fallback";
 const IDLE: SceneMode = { kind: "idle" };
 
 let mode: SceneMode = IDLE;
+let you: Party | null = null;
 let status: SceneStatus = "loading";
 let storyStep = -1;
 
@@ -163,6 +165,21 @@ export function subscribeScene(fn: () => void): () => void {
   };
 }
 
+export function getSceneYou(): Party | null {
+  return you;
+}
+
+/** The viewer's party: their sphere and votes are drawn green, the other
+ * side's red (sideColors in lib/palette.ts). null, the default, draws Party
+ * A green: the writer of a one-person verdict, or nobody known. Whoever
+ * shows the scene sets it (the apps through window.judgeScene); resetScene
+ * leaves it alone. Mode subscribers hear the change. */
+export function setSceneYou(p: Party | null): void {
+  if (p === you) return;
+  you = p;
+  emit(modeListeners);
+}
+
 export function getSceneStatus(): SceneStatus {
   return status;
 }
@@ -190,9 +207,14 @@ export function resetScene(): void {
 const serverMode = (): SceneMode => IDLE;
 const serverStatus = (): SceneStatus => "loading";
 const serverStep = (): number => -1;
+const serverYou = (): Party | null => null;
 
 export function useSceneMode(): SceneMode {
   return useSyncExternalStore(subscribeScene, getSceneMode, serverMode);
+}
+
+export function useSceneYou(): Party | null {
+  return useSyncExternalStore(subscribeScene, getSceneYou, serverYou);
 }
 
 export function useSceneStatus(): SceneStatus {
