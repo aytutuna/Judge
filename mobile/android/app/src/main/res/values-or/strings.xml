@@ -460,6 +460,20 @@
     <string name="app_history_empty">ଏଯାଏଁ କୌଣସି ରାୟ ନାହିଁ। ଆପଣଙ୍କ ପ୍ରଥମ ଝଗଡ଼ା ମେଣ୍ଟାନ୍ତୁ, ତା\'ର ରାୟ ଏଠାରେ ଦେଖାଯିବ।</string>
     <string name="app_history_device_only">କେବଳ ଏହି ଫୋନ୍‌ରେ ସେଭ୍ ହୋଇଛି। ଏଠାରୁ କୌଣସି ରାୟ ଡିଲିଟ୍ କଲେ ବି ତା\'ର ସେୟାର୍ ଲିଙ୍କ୍ ବନ୍ଦ ହୁଏ ନାହିଁ।</string>
     <string name="app_history_delete">ଡିଲିଟ୍</string>
+    <string name="app_history_select">Select</string>
+    <string name="app_history_select_all">Select all</string>
+    <string name="app_history_deselect_all">Deselect all</string>
+    <plurals name="app_history_selected">
+        <item quantity="one">%1$s selected</item>
+        <item quantity="other">%1$s selected</item>
+    </plurals>
+    <string name="app_history_delete_count">Delete (%1$s)</string>
+    <plurals name="app_history_delete_confirm">
+        <item quantity="one">Delete this verdict from this phone? Its share link keeps working.</item>
+        <item quantity="other">Delete %1$s verdicts from this phone? Their share links keep working.</item>
+    </plurals>
+    <string name="app_history_row_selected">Selected</string>
+    <string name="app_history_row_not_selected">Not selected</string>
     <string name="app_history_clear_all">ସବୁ ଡିଲିଟ୍ କରନ୍ତୁ</string>
     <string name="app_history_clear_confirm">ଏହି ଫୋନ୍‌ରେ ସେଭ୍ ହୋଇଥିବା ସବୁ ରାୟ ଡିଲିଟ୍ କରିବେ? ସେୟାର୍ ଲିଙ୍କ୍‌ଗୁଡ଼ିକ କାମ କରୁଥିବ।</string>
     <string name="app_history_clear_yes">ହଁ, ସବୁ ଡିଲିଟ୍ କରନ୍ତୁ</string>

@@ -460,6 +460,20 @@
     <string name="app_history_empty">હજી કોઈ ચુકાદો નથી. તમારા પહેલા વિવાદનો ફેંસલો કરાવો, એ અહીં દેખાશે.</string>
     <string name="app_history_device_only">ફક્ત આ ફોનમાં સેવ થયેલા છે. અહીંથી કોઈ ચુકાદો ડિલીટ કરવાથી એની શેર લિંક બંધ થતી નથી.</string>
     <string name="app_history_delete">ડિલીટ કરો</string>
+    <string name="app_history_select">Select</string>
+    <string name="app_history_select_all">Select all</string>
+    <string name="app_history_deselect_all">Deselect all</string>
+    <plurals name="app_history_selected">
+        <item quantity="one">%1$s selected</item>
+        <item quantity="other">%1$s selected</item>
+    </plurals>
+    <string name="app_history_delete_count">Delete (%1$s)</string>
+    <plurals name="app_history_delete_confirm">
+        <item quantity="one">Delete this verdict from this phone? Its share link keeps working.</item>
+        <item quantity="other">Delete %1$s verdicts from this phone? Their share links keep working.</item>
+    </plurals>
+    <string name="app_history_row_selected">Selected</string>
+    <string name="app_history_row_not_selected">Not selected</string>
     <string name="app_history_clear_all">બધું ડિલીટ કરો</string>
     <string name="app_history_clear_confirm">આ ફોનમાં સેવ થયેલા બધા ચુકાદા ડિલીટ કરવા છે? શેર લિંક ચાલુ રહેશે.</string>
     <string name="app_history_clear_yes">હા, ડિલીટ કરો</string>

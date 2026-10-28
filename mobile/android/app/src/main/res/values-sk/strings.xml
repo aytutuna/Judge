@@ -482,6 +482,24 @@
     <string name="app_history_empty">Zatiaľ tu nie sú žiadne verdikty. Nechaj rozsúdiť svoj prvý spor a verdikt nájdeš tu.</string>
     <string name="app_history_device_only">Uložené len v tomto telefóne. Keď tu verdikt vymažeš, jeho odkaz na zdieľanie bude fungovať ďalej.</string>
     <string name="app_history_delete">Vymazať</string>
+    <string name="app_history_select">Select</string>
+    <string name="app_history_select_all">Select all</string>
+    <string name="app_history_deselect_all">Deselect all</string>
+    <plurals name="app_history_selected">
+        <item quantity="one">%1$s selected</item>
+        <item quantity="few">%1$s selected</item>
+        <item quantity="many">%1$s selected</item>
+        <item quantity="other">%1$s selected</item>
+    </plurals>
+    <string name="app_history_delete_count">Delete (%1$s)</string>
+    <plurals name="app_history_delete_confirm">
+        <item quantity="one">Delete this verdict from this phone? Its share link keeps working.</item>
+        <item quantity="few">Delete %1$s verdicts from this phone? Their share links keep working.</item>
+        <item quantity="many">Delete %1$s verdicts from this phone? Their share links keep working.</item>
+        <item quantity="other">Delete %1$s verdicts from this phone? Their share links keep working.</item>
+    </plurals>
+    <string name="app_history_row_selected">Selected</string>
+    <string name="app_history_row_not_selected">Not selected</string>
     <string name="app_history_clear_all">Vymazať všetko</string>
     <string name="app_history_clear_confirm">Vymazať z tohto telefónu všetky uložené verdikty? Odkazy na zdieľanie budú fungovať ďalej.</string>
     <string name="app_history_clear_yes">Áno, vymazať</string>

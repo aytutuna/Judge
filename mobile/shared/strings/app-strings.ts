@@ -18,6 +18,15 @@ export const APP_EN = {
   "app.history.empty": "No verdicts yet. Settle your first argument and it shows up here.",
   "app.history.deviceOnly": "Saved on this phone only. Deleting one here doesn't take down its share link.",
   "app.history.delete": "Delete",
+  // Select mode, which deletes picked verdicts from the phone.
+  "app.history.select": "Select",
+  "app.history.selectAll": "Select all",
+  "app.history.deselectAll": "Deselect all",
+  "app.history.selected": "{n} selected",
+  "app.history.deleteCount": "Delete ({count})",
+  "app.history.deleteConfirm": "Delete {n} verdicts from this phone? Their share links keep working.",
+  "app.history.rowSelected": "Selected",
+  "app.history.rowNotSelected": "Not selected",
   "app.history.clearAll": "Delete all",
   "app.history.clearConfirm": "Delete every saved verdict from this phone? Share links keep working.",
   "app.history.clearYes": "Yes, delete them",
@@ -195,12 +204,17 @@ export type AppKey = keyof typeof APP_EN;
  * other forms it has by Intl.PluralRules category (Russian one/few/many), as
  * COUNT_KEYS does on the web.
  */
-export const APP_COUNT_KEYS = ["app.balance.left"] as const satisfies readonly AppKey[];
+export const APP_COUNT_KEYS = [
+  "app.balance.left",
+  "app.history.selected",
+  "app.history.deleteConfirm",
+] as const satisfies readonly AppKey[];
 
 export type AppCountKey = (typeof APP_COUNT_KEYS)[number];
 
 export const APP_PLURALS_EN: Partial<Record<AppCountKey, PluralForms>> = {
   "app.balance.left": { one: "{n} verdict left" },
+  "app.history.deleteConfirm": { one: "Delete this verdict from this phone? Its share link keeps working." },
 };
 
 /** The app strings in one language other than English, ./locales/<code>.ts. */

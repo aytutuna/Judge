@@ -460,6 +460,20 @@
     <string name="app_history_empty">Henüz kararın yok. İlk tartışmanı çözdüğünde burada görünür.</string>
     <string name="app_history_device_only">Sadece bu telefonda saklanır. Buradan silmek paylaşım linkini kaldırmaz.</string>
     <string name="app_history_delete">Sil</string>
+    <string name="app_history_select">Seç</string>
+    <string name="app_history_select_all">Tümünü seç</string>
+    <string name="app_history_deselect_all">Seçimi kaldır</string>
+    <plurals name="app_history_selected">
+        <item quantity="one">%1$s seçildi</item>
+        <item quantity="other">%1$s seçildi</item>
+    </plurals>
+    <string name="app_history_delete_count">Sil (%1$s)</string>
+    <plurals name="app_history_delete_confirm">
+        <item quantity="one">Bu karar bu telefondan silinsin mi? Paylaşım linki çalışmaya devam eder.</item>
+        <item quantity="other">Bu telefondan %1$s karar silinsin mi? Paylaşım linkleri çalışmaya devam eder.</item>
+    </plurals>
+    <string name="app_history_row_selected">Seçili</string>
+    <string name="app_history_row_not_selected">Seçili değil</string>
     <string name="app_history_clear_all">Hepsini sil</string>
     <string name="app_history_clear_confirm">Bu telefondaki bütün kayıtlı kararlar silinsin mi? Paylaşım linkleri çalışmaya devam eder.</string>
     <string name="app_history_clear_yes">Evet, sil</string>

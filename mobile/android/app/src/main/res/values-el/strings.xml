@@ -460,6 +460,20 @@
     <string name="app_history_empty">Δεν έχεις αποφάσεις ακόμα. Λύσε την πρώτη σου διαφωνία και η απόφαση θα εμφανιστεί εδώ.</string>
     <string name="app_history_device_only">Αποθηκεύονται μόνο σε αυτό το τηλέφωνο. Αν διαγράψεις μια απόφαση από εδώ, ο σύνδεσμος κοινοποίησής της θα συνεχίσει να λειτουργεί.</string>
     <string name="app_history_delete">Διαγραφή</string>
+    <string name="app_history_select">Select</string>
+    <string name="app_history_select_all">Select all</string>
+    <string name="app_history_deselect_all">Deselect all</string>
+    <plurals name="app_history_selected">
+        <item quantity="one">%1$s selected</item>
+        <item quantity="other">%1$s selected</item>
+    </plurals>
+    <string name="app_history_delete_count">Delete (%1$s)</string>
+    <plurals name="app_history_delete_confirm">
+        <item quantity="one">Delete this verdict from this phone? Its share link keeps working.</item>
+        <item quantity="other">Delete %1$s verdicts from this phone? Their share links keep working.</item>
+    </plurals>
+    <string name="app_history_row_selected">Selected</string>
+    <string name="app_history_row_not_selected">Not selected</string>
     <string name="app_history_clear_all">Διαγραφή όλων</string>
     <string name="app_history_clear_confirm">Να διαγραφούν όλες οι αποθηκευμένες αποφάσεις από αυτό το τηλέφωνο; Οι σύνδεσμοι κοινοποίησης θα συνεχίσουν να λειτουργούν.</string>
     <string name="app_history_clear_yes">Ναι, διάγραψέ τις</string>

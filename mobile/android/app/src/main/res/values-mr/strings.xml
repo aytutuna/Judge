@@ -460,6 +460,20 @@
     <string name="app_history_empty">अजून एकही निकाल नाही. तुमचा पहिला वाद सोडवा, त्याचा निकाल इथे दिसेल.</string>
     <string name="app_history_device_only">हे निकाल फक्त या फोनवर सेव्ह होतात. इथून एखादा निकाल डिलीट केला तरी त्याची शेअर लिंक चालू राहते.</string>
     <string name="app_history_delete">डिलीट करा</string>
+    <string name="app_history_select">Select</string>
+    <string name="app_history_select_all">Select all</string>
+    <string name="app_history_deselect_all">Deselect all</string>
+    <plurals name="app_history_selected">
+        <item quantity="one">%1$s selected</item>
+        <item quantity="other">%1$s selected</item>
+    </plurals>
+    <string name="app_history_delete_count">Delete (%1$s)</string>
+    <plurals name="app_history_delete_confirm">
+        <item quantity="one">Delete this verdict from this phone? Its share link keeps working.</item>
+        <item quantity="other">Delete %1$s verdicts from this phone? Their share links keep working.</item>
+    </plurals>
+    <string name="app_history_row_selected">Selected</string>
+    <string name="app_history_row_not_selected">Not selected</string>
     <string name="app_history_clear_all">सगळे डिलीट करा</string>
     <string name="app_history_clear_confirm">या फोनवरचे सगळे सेव्ह केलेले निकाल डिलीट करायचे? शेअर लिंक चालू राहतील.</string>
     <string name="app_history_clear_yes">हो, डिलीट करा</string>

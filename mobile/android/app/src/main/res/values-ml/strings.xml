@@ -460,6 +460,20 @@
     <string name="app_history_empty">ഇതുവരെ വിധികളൊന്നുമില്ല. ആദ്യത്തെ തർക്കം തീർക്കൂ, അത് ഇവിടെ കാണാം.</string>
     <string name="app_history_device_only">ഈ ഫോണിൽ മാത്രമാണ് സേവ് ചെയ്തിരിക്കുന്നത്. ഇവിടെനിന്ന് ഒരു വിധി ഡിലീറ്റ് ചെയ്താലും അതിന്റെ ഷെയർ ലിങ്ക് തുടർന്നും പ്രവർത്തിക്കും.</string>
     <string name="app_history_delete">ഡിലീറ്റ്</string>
+    <string name="app_history_select">Select</string>
+    <string name="app_history_select_all">Select all</string>
+    <string name="app_history_deselect_all">Deselect all</string>
+    <plurals name="app_history_selected">
+        <item quantity="one">%1$s selected</item>
+        <item quantity="other">%1$s selected</item>
+    </plurals>
+    <string name="app_history_delete_count">Delete (%1$s)</string>
+    <plurals name="app_history_delete_confirm">
+        <item quantity="one">Delete this verdict from this phone? Its share link keeps working.</item>
+        <item quantity="other">Delete %1$s verdicts from this phone? Their share links keep working.</item>
+    </plurals>
+    <string name="app_history_row_selected">Selected</string>
+    <string name="app_history_row_not_selected">Not selected</string>
     <string name="app_history_clear_all">എല്ലാം ഡിലീറ്റ് ചെയ്യൂ</string>
     <string name="app_history_clear_confirm">സേവ് ചെയ്ത എല്ലാ വിധികളും ഈ ഫോണിൽ നിന്ന് ഡിലീറ്റ് ചെയ്യണോ? ഷെയർ ലിങ്കുകൾ തുടർന്നും പ്രവർത്തിക്കും.</string>
     <string name="app_history_clear_yes">അതെ, ഡിലീറ്റ് ചെയ്യൂ</string>

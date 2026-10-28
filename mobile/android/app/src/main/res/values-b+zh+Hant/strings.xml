@@ -449,6 +449,18 @@
     <string name="app_history_empty">還沒有判決。第一場爭論有了判決，就會出現在這裡。</string>
     <string name="app_history_device_only">只保存在這支手機上。在這裡刪除，分享連結不會跟著失效。</string>
     <string name="app_history_delete">刪除</string>
+    <string name="app_history_select">Select</string>
+    <string name="app_history_select_all">Select all</string>
+    <string name="app_history_deselect_all">Deselect all</string>
+    <plurals name="app_history_selected">
+        <item quantity="other">%1$s selected</item>
+    </plurals>
+    <string name="app_history_delete_count">Delete (%1$s)</string>
+    <plurals name="app_history_delete_confirm">
+        <item quantity="other">Delete %1$s verdicts from this phone? Their share links keep working.</item>
+    </plurals>
+    <string name="app_history_row_selected">Selected</string>
+    <string name="app_history_row_not_selected">Not selected</string>
     <string name="app_history_clear_all">全部刪除</string>
     <string name="app_history_clear_confirm">要刪除這支手機上保存的所有判決嗎？分享連結還是可以用。</string>
     <string name="app_history_clear_yes">是，全部刪除</string>

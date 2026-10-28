@@ -460,6 +460,20 @@
     <string name="app_history_empty">ਹਾਲੇ ਕੋਈ ਫ਼ੈਸਲਾ ਨਹੀਂ। ਆਪਣੀ ਪਹਿਲੀ ਬਹਿਸ ਦਾ ਨਿਬੇੜਾ ਕਰਾਓ, ਫ਼ੈਸਲਾ ਇੱਥੇ ਦਿਖੇਗਾ।</string>
     <string name="app_history_device_only">ਇਹ ਸਿਰਫ਼ ਇਸ ਫ਼ੋਨ ’ਤੇ ਸੇਵ ਹਨ। ਇੱਥੋਂ ਕੋਈ ਫ਼ੈਸਲਾ ਮਿਟਾਉਣ ਨਾਲ ਉਸ ਦਾ ਸਾਂਝਾ ਲਿੰਕ ਬੰਦ ਨਹੀਂ ਹੁੰਦਾ।</string>
     <string name="app_history_delete">ਮਿਟਾਓ</string>
+    <string name="app_history_select">Select</string>
+    <string name="app_history_select_all">Select all</string>
+    <string name="app_history_deselect_all">Deselect all</string>
+    <plurals name="app_history_selected">
+        <item quantity="one">%1$s selected</item>
+        <item quantity="other">%1$s selected</item>
+    </plurals>
+    <string name="app_history_delete_count">Delete (%1$s)</string>
+    <plurals name="app_history_delete_confirm">
+        <item quantity="one">Delete this verdict from this phone? Its share link keeps working.</item>
+        <item quantity="other">Delete %1$s verdicts from this phone? Their share links keep working.</item>
+    </plurals>
+    <string name="app_history_row_selected">Selected</string>
+    <string name="app_history_row_not_selected">Not selected</string>
     <string name="app_history_clear_all">ਸਾਰੇ ਮਿਟਾਓ</string>
     <string name="app_history_clear_confirm">ਇਸ ਫ਼ੋਨ ਤੋਂ ਸਾਰੇ ਸੇਵ ਕੀਤੇ ਫ਼ੈਸਲੇ ਮਿਟਾਉਣੇ ਹਨ? ਸਾਂਝੇ ਲਿੰਕ ਚੱਲਦੇ ਰਹਿਣਗੇ।</string>
     <string name="app_history_clear_yes">ਹਾਂ, ਮਿਟਾ ਦਿਓ</string>

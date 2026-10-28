@@ -471,6 +471,22 @@
     <string name="app_history_empty">Nenhum veredito ainda. Resolva sua primeira discussão e o veredito aparece aqui.</string>
     <string name="app_history_device_only">Ficam salvos só neste celular. Excluir um aqui não tira do ar o link de compartilhamento dele.</string>
     <string name="app_history_delete">Excluir</string>
+    <string name="app_history_select">Select</string>
+    <string name="app_history_select_all">Select all</string>
+    <string name="app_history_deselect_all">Deselect all</string>
+    <plurals name="app_history_selected">
+        <item quantity="one">%1$s selected</item>
+        <item quantity="many">%1$s selected</item>
+        <item quantity="other">%1$s selected</item>
+    </plurals>
+    <string name="app_history_delete_count">Delete (%1$s)</string>
+    <plurals name="app_history_delete_confirm">
+        <item quantity="one">Delete this verdict from this phone? Its share link keeps working.</item>
+        <item quantity="many">Delete %1$s verdicts from this phone? Their share links keep working.</item>
+        <item quantity="other">Delete %1$s verdicts from this phone? Their share links keep working.</item>
+    </plurals>
+    <string name="app_history_row_selected">Selected</string>
+    <string name="app_history_row_not_selected">Not selected</string>
     <string name="app_history_clear_all">Excluir todos</string>
     <string name="app_history_clear_confirm">Excluir todos os vereditos salvos neste celular? Os links de compartilhamento continuam funcionando.</string>
     <string name="app_history_clear_yes">Sim, excluir</string>

@@ -571,6 +571,14 @@ enum L10n {
     static func appHistoryEmpty(_ lang: AppLang) -> String { string("app.history.empty", lang) }
     static func appHistoryDeviceOnly(_ lang: AppLang) -> String { string("app.history.deviceOnly", lang) }
     static func appHistoryDelete(_ lang: AppLang) -> String { string("app.history.delete", lang) }
+    static func appHistorySelect(_ lang: AppLang) -> String { string("app.history.select", lang) }
+    static func appHistorySelectAll(_ lang: AppLang) -> String { string("app.history.selectAll", lang) }
+    static func appHistoryDeselectAll(_ lang: AppLang) -> String { string("app.history.deselectAll", lang) }
+    static func appHistorySelected(_ lang: AppLang, n: Int) -> String { plural("app.history.selected", lang, n) }
+    static func appHistoryDeleteCount(_ lang: AppLang, count: String) -> String { format("app.history.deleteCount", lang, count) }
+    static func appHistoryDeleteConfirm(_ lang: AppLang, n: Int) -> String { plural("app.history.deleteConfirm", lang, n) }
+    static func appHistoryRowSelected(_ lang: AppLang) -> String { string("app.history.rowSelected", lang) }
+    static func appHistoryRowNotSelected(_ lang: AppLang) -> String { string("app.history.rowNotSelected", lang) }
     static func appHistoryClearAll(_ lang: AppLang) -> String { string("app.history.clearAll", lang) }
     static func appHistoryClearConfirm(_ lang: AppLang) -> String { string("app.history.clearConfirm", lang) }
     static func appHistoryClearYes(_ lang: AppLang) -> String { string("app.history.clearYes", lang) }
@@ -1094,6 +1102,11 @@ enum L10n {
         "app.history.empty",
         "app.history.deviceOnly",
         "app.history.delete",
+        "app.history.select",
+        "app.history.selectAll",
+        "app.history.deselectAll",
+        "app.history.rowSelected",
+        "app.history.rowNotSelected",
         "app.history.clearAll",
         "app.history.clearConfirm",
         "app.history.clearYes",

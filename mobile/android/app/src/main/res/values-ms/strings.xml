@@ -449,6 +449,18 @@
     <string name="app_history_empty">Belum ada keputusan. Selesaikan pertikaian pertama anda dan ia akan muncul di sini.</string>
     <string name="app_history_device_only">Disimpan dalam telefon ini sahaja. Memadam satu keputusan di sini tidak mematikan pautan kongsinya.</string>
     <string name="app_history_delete">Padam</string>
+    <string name="app_history_select">Select</string>
+    <string name="app_history_select_all">Select all</string>
+    <string name="app_history_deselect_all">Deselect all</string>
+    <plurals name="app_history_selected">
+        <item quantity="other">%1$s selected</item>
+    </plurals>
+    <string name="app_history_delete_count">Delete (%1$s)</string>
+    <plurals name="app_history_delete_confirm">
+        <item quantity="other">Delete %1$s verdicts from this phone? Their share links keep working.</item>
+    </plurals>
+    <string name="app_history_row_selected">Selected</string>
+    <string name="app_history_row_not_selected">Not selected</string>
     <string name="app_history_clear_all">Padam semua</string>
     <string name="app_history_clear_confirm">Padam semua keputusan yang disimpan dalam telefon ini? Pautan kongsi akan terus berfungsi.</string>
     <string name="app_history_clear_yes">Ya, padam semua</string>

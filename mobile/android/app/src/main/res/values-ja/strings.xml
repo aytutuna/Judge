@@ -449,6 +449,18 @@
     <string name="app_history_empty">まだ判定はありません。最初の揉めごとに白黒つけると、ここに表示されます。</string>
     <string name="app_history_device_only">この端末にだけ保存されています。ここで削除しても、シェア用リンクはそのまま使えます。</string>
     <string name="app_history_delete">削除</string>
+    <string name="app_history_select">Select</string>
+    <string name="app_history_select_all">Select all</string>
+    <string name="app_history_deselect_all">Deselect all</string>
+    <plurals name="app_history_selected">
+        <item quantity="other">%1$s selected</item>
+    </plurals>
+    <string name="app_history_delete_count">Delete (%1$s)</string>
+    <plurals name="app_history_delete_confirm">
+        <item quantity="other">Delete %1$s verdicts from this phone? Their share links keep working.</item>
+    </plurals>
+    <string name="app_history_row_selected">Selected</string>
+    <string name="app_history_row_not_selected">Not selected</string>
     <string name="app_history_clear_all">すべて削除</string>
     <string name="app_history_clear_confirm">この端末に保存した判定をすべて削除しますか？　シェア用リンクはそのまま使えます。</string>
     <string name="app_history_clear_yes">すべて削除する</string>

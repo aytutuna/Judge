@@ -471,6 +471,22 @@
     <string name="app_history_empty">Još nemaš presuda. Riješi prvu raspravu i presuda će se pojaviti ovdje.</string>
     <string name="app_history_device_only">Spremljeno samo na ovom telefonu. Ako presudu izbrišeš ovdje, njezina poveznica za dijeljenje i dalje radi.</string>
     <string name="app_history_delete">Izbriši</string>
+    <string name="app_history_select">Select</string>
+    <string name="app_history_select_all">Select all</string>
+    <string name="app_history_deselect_all">Deselect all</string>
+    <plurals name="app_history_selected">
+        <item quantity="one">%1$s selected</item>
+        <item quantity="few">%1$s selected</item>
+        <item quantity="other">%1$s selected</item>
+    </plurals>
+    <string name="app_history_delete_count">Delete (%1$s)</string>
+    <plurals name="app_history_delete_confirm">
+        <item quantity="one">Delete this verdict from this phone? Its share link keeps working.</item>
+        <item quantity="few">Delete %1$s verdicts from this phone? Their share links keep working.</item>
+        <item quantity="other">Delete %1$s verdicts from this phone? Their share links keep working.</item>
+    </plurals>
+    <string name="app_history_row_selected">Selected</string>
+    <string name="app_history_row_not_selected">Not selected</string>
     <string name="app_history_clear_all">Izbriši sve</string>
     <string name="app_history_clear_confirm">Izbrisati sve spremljene presude s ovog telefona? Poveznice za dijeljenje i dalje rade.</string>
     <string name="app_history_clear_yes">Da, izbriši sve</string>

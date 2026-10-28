@@ -482,6 +482,24 @@
     <string name="app_history_empty">Вердиктів поки немає. Розсуди першу суперечку, і вердикт з’явиться тут.</string>
     <string name="app_history_device_only">Вердикти зберігаються лише на цьому телефоні. Якщо видалити вердикт тут, посилання на нього й далі працюватиме.</string>
     <string name="app_history_delete">Видалити</string>
+    <string name="app_history_select">Select</string>
+    <string name="app_history_select_all">Select all</string>
+    <string name="app_history_deselect_all">Deselect all</string>
+    <plurals name="app_history_selected">
+        <item quantity="one">%1$s selected</item>
+        <item quantity="few">%1$s selected</item>
+        <item quantity="many">%1$s selected</item>
+        <item quantity="other">%1$s selected</item>
+    </plurals>
+    <string name="app_history_delete_count">Delete (%1$s)</string>
+    <plurals name="app_history_delete_confirm">
+        <item quantity="one">Delete this verdict from this phone? Its share link keeps working.</item>
+        <item quantity="few">Delete %1$s verdicts from this phone? Their share links keep working.</item>
+        <item quantity="many">Delete %1$s verdicts from this phone? Their share links keep working.</item>
+        <item quantity="other">Delete %1$s verdicts from this phone? Their share links keep working.</item>
+    </plurals>
+    <string name="app_history_row_selected">Selected</string>
+    <string name="app_history_row_not_selected">Not selected</string>
     <string name="app_history_clear_all">Видалити всі</string>
     <string name="app_history_clear_confirm">Видалити всі збережені вердикти з цього телефона? Посилання для поширення працюватимуть і далі.</string>
     <string name="app_history_clear_yes">Так, видалити</string>

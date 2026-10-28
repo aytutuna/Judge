@@ -10,6 +10,14 @@ const tr: AppLocale = {
     "app.history.empty": "Henüz kararın yok. İlk tartışmanı çözdüğünde burada görünür.",
     "app.history.deviceOnly": "Sadece bu telefonda saklanır. Buradan silmek paylaşım linkini kaldırmaz.",
     "app.history.delete": "Sil",
+    "app.history.select": "Seç",
+    "app.history.selectAll": "Tümünü seç",
+    "app.history.deselectAll": "Seçimi kaldır",
+    "app.history.selected": "{n} seçildi",
+    "app.history.deleteCount": "Sil ({count})",
+    "app.history.deleteConfirm": "Bu telefondan {n} karar silinsin mi? Paylaşım linkleri çalışmaya devam eder.",
+    "app.history.rowSelected": "Seçili",
+    "app.history.rowNotSelected": "Seçili değil",
     "app.history.clearAll": "Hepsini sil",
     "app.history.clearConfirm":
       "Bu telefondaki bütün kayıtlı kararlar silinsin mi? Paylaşım linkleri çalışmaya devam eder.",
@@ -161,6 +169,8 @@ const tr: AppLocale = {
   },
   plurals: {
     "app.balance.left": { one: "{n} karar hakkın kaldı" },
+    "app.history.selected": { one: "{n} seçildi" },
+    "app.history.deleteConfirm": { one: "Bu karar bu telefondan silinsin mi? Paylaşım linki çalışmaya devam eder." },
   },
 };
 

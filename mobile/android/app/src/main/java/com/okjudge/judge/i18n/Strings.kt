@@ -504,6 +504,14 @@ class Strings(private val res: Resources) {
     val appHistoryEmpty: String get() = res.getString(R.string.app_history_empty)
     val appHistoryDeviceOnly: String get() = res.getString(R.string.app_history_device_only)
     val appHistoryDelete: String get() = res.getString(R.string.app_history_delete)
+    val appHistorySelect: String get() = res.getString(R.string.app_history_select)
+    val appHistorySelectAll: String get() = res.getString(R.string.app_history_select_all)
+    val appHistoryDeselectAll: String get() = res.getString(R.string.app_history_deselect_all)
+    fun appHistorySelected(n: Int): String = res.getQuantityString(R.plurals.app_history_selected, n, n.toString())
+    fun appHistoryDeleteCount(count: String): String = res.getString(R.string.app_history_delete_count, count)
+    fun appHistoryDeleteConfirm(n: Int): String = res.getQuantityString(R.plurals.app_history_delete_confirm, n, n.toString())
+    val appHistoryRowSelected: String get() = res.getString(R.string.app_history_row_selected)
+    val appHistoryRowNotSelected: String get() = res.getString(R.string.app_history_row_not_selected)
     val appHistoryClearAll: String get() = res.getString(R.string.app_history_clear_all)
     val appHistoryClearConfirm: String get() = res.getString(R.string.app_history_clear_confirm)
     val appHistoryClearYes: String get() = res.getString(R.string.app_history_clear_yes)
@@ -1026,6 +1034,11 @@ class Strings(private val res: Resources) {
             "app.history.empty" -> R.string.app_history_empty
             "app.history.deviceOnly" -> R.string.app_history_device_only
             "app.history.delete" -> R.string.app_history_delete
+            "app.history.select" -> R.string.app_history_select
+            "app.history.selectAll" -> R.string.app_history_select_all
+            "app.history.deselectAll" -> R.string.app_history_deselect_all
+            "app.history.rowSelected" -> R.string.app_history_row_selected
+            "app.history.rowNotSelected" -> R.string.app_history_row_not_selected
             "app.history.clearAll" -> R.string.app_history_clear_all
             "app.history.clearConfirm" -> R.string.app_history_clear_confirm
             "app.history.clearYes" -> R.string.app_history_clear_yes

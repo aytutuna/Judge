@@ -449,6 +449,18 @@
     <string name="app_history_empty">还没有裁决。第一场争论评出结果后，裁决会出现在这里。</string>
     <string name="app_history_device_only">只保存在这台手机上。在这里删掉一条裁决，它的分享链接仍然有效。</string>
     <string name="app_history_delete">删除</string>
+    <string name="app_history_select">Select</string>
+    <string name="app_history_select_all">Select all</string>
+    <string name="app_history_deselect_all">Deselect all</string>
+    <plurals name="app_history_selected">
+        <item quantity="other">%1$s selected</item>
+    </plurals>
+    <string name="app_history_delete_count">Delete (%1$s)</string>
+    <plurals name="app_history_delete_confirm">
+        <item quantity="other">Delete %1$s verdicts from this phone? Their share links keep working.</item>
+    </plurals>
+    <string name="app_history_row_selected">Selected</string>
+    <string name="app_history_row_not_selected">Not selected</string>
     <string name="app_history_clear_all">全部删除</string>
     <string name="app_history_clear_confirm">要从这台手机上删除所有已保存的裁决吗？分享链接仍然有效。</string>
     <string name="app_history_clear_yes">是的，全部删除</string>

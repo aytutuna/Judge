@@ -504,6 +504,28 @@
     <string name="app_history_empty">لا أحكام بعد. احسم أول خلاف لك وسيظهر حكمه هنا.</string>
     <string name="app_history_device_only">الأحكام محفوظة على هذا الهاتف فقط. حذف حكم من هنا لا يوقف رابط مشاركته.</string>
     <string name="app_history_delete">حذف</string>
+    <string name="app_history_select">Select</string>
+    <string name="app_history_select_all">Select all</string>
+    <string name="app_history_deselect_all">Deselect all</string>
+    <plurals name="app_history_selected">
+        <item quantity="zero">%1$s selected</item>
+        <item quantity="one">%1$s selected</item>
+        <item quantity="two">%1$s selected</item>
+        <item quantity="few">%1$s selected</item>
+        <item quantity="many">%1$s selected</item>
+        <item quantity="other">%1$s selected</item>
+    </plurals>
+    <string name="app_history_delete_count">Delete (%1$s)</string>
+    <plurals name="app_history_delete_confirm">
+        <item quantity="zero">Delete %1$s verdicts from this phone? Their share links keep working.</item>
+        <item quantity="one">Delete this verdict from this phone? Its share link keeps working.</item>
+        <item quantity="two">Delete %1$s verdicts from this phone? Their share links keep working.</item>
+        <item quantity="few">Delete %1$s verdicts from this phone? Their share links keep working.</item>
+        <item quantity="many">Delete %1$s verdicts from this phone? Their share links keep working.</item>
+        <item quantity="other">Delete %1$s verdicts from this phone? Their share links keep working.</item>
+    </plurals>
+    <string name="app_history_row_selected">Selected</string>
+    <string name="app_history_row_not_selected">Not selected</string>
     <string name="app_history_clear_all">حذف الكل</string>
     <string name="app_history_clear_confirm">هل تريد حذف كل الأحكام المحفوظة من هذا الهاتف؟ ستظل روابط المشاركة تعمل.</string>
     <string name="app_history_clear_yes">نعم، احذفها</string>

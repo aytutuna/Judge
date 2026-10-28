@@ -471,6 +471,22 @@
     <string name="app_history_empty">Ancora nessun verdetto. Risolvi la tua prima discussione e lo troverai qui.</string>
     <string name="app_history_device_only">Salvati solo su questo telefono. Se ne elimini uno qui, il suo link di condivisione continua a funzionare.</string>
     <string name="app_history_delete">Elimina</string>
+    <string name="app_history_select">Select</string>
+    <string name="app_history_select_all">Select all</string>
+    <string name="app_history_deselect_all">Deselect all</string>
+    <plurals name="app_history_selected">
+        <item quantity="one">%1$s selected</item>
+        <item quantity="many">%1$s selected</item>
+        <item quantity="other">%1$s selected</item>
+    </plurals>
+    <string name="app_history_delete_count">Delete (%1$s)</string>
+    <plurals name="app_history_delete_confirm">
+        <item quantity="one">Delete this verdict from this phone? Its share link keeps working.</item>
+        <item quantity="many">Delete %1$s verdicts from this phone? Their share links keep working.</item>
+        <item quantity="other">Delete %1$s verdicts from this phone? Their share links keep working.</item>
+    </plurals>
+    <string name="app_history_row_selected">Selected</string>
+    <string name="app_history_row_not_selected">Not selected</string>
     <string name="app_history_clear_all">Elimina tutti</string>
     <string name="app_history_clear_confirm">Vuoi eliminare tutti i verdetti salvati su questo telefono? I link di condivisione continuano a funzionare.</string>
     <string name="app_history_clear_yes">Sì, eliminali</string>

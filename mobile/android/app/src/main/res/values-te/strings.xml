@@ -460,6 +460,20 @@
     <string name="app_history_empty">ఇంకా తీర్పులేవీ లేవు. మీ మొదటి గొడవ తేల్చుకోండి, దాని తీర్పు ఇక్కడ కనిపిస్తుంది.</string>
     <string name="app_history_device_only">ఇవి ఈ ఫోన్‌లో మాత్రమే సేవ్ అయ్యాయి. ఇక్కడ ఒకదాన్ని డిలీట్ చేసినా దాని షేర్ లింక్ ఆగిపోదు.</string>
     <string name="app_history_delete">డిలీట్</string>
+    <string name="app_history_select">Select</string>
+    <string name="app_history_select_all">Select all</string>
+    <string name="app_history_deselect_all">Deselect all</string>
+    <plurals name="app_history_selected">
+        <item quantity="one">%1$s selected</item>
+        <item quantity="other">%1$s selected</item>
+    </plurals>
+    <string name="app_history_delete_count">Delete (%1$s)</string>
+    <plurals name="app_history_delete_confirm">
+        <item quantity="one">Delete this verdict from this phone? Its share link keeps working.</item>
+        <item quantity="other">Delete %1$s verdicts from this phone? Their share links keep working.</item>
+    </plurals>
+    <string name="app_history_row_selected">Selected</string>
+    <string name="app_history_row_not_selected">Not selected</string>
     <string name="app_history_clear_all">అన్నీ డిలీట్ చేయండి</string>
     <string name="app_history_clear_confirm">ఈ ఫోన్‌లో సేవ్ అయిన తీర్పులన్నీ డిలీట్ చేయాలా? షేర్ లింక్‌లు పనిచేస్తూనే ఉంటాయి.</string>
     <string name="app_history_clear_yes">అవును, డిలీట్ చేయండి</string>
