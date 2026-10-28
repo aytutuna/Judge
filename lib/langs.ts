@@ -69,6 +69,7 @@ export const LANG_CODES = Object.keys(LANGS) as [Lang, ...Lang[]];
  */
 const LOCALES: Partial<Record<Lang, () => Promise<{ default: Locale }>>> = {
   tr: () => import("./locales/tr"),
+  ar: () => import("./locales/ar"),
   bn: () => import("./locales/bn"),
   ca: () => import("./locales/ca"),
   "zh-Hans": () => import("./locales/zh-Hans"),
@@ -82,6 +83,7 @@ const LOCALES: Partial<Record<Lang, () => Promise<{ default: Locale }>>> = {
   de: () => import("./locales/de"),
   el: () => import("./locales/el"),
   gu: () => import("./locales/gu"),
+  he: () => import("./locales/he"),
   hi: () => import("./locales/hi"),
   hu: () => import("./locales/hu"),
   id: () => import("./locales/id"),
@@ -108,6 +110,7 @@ const LOCALES: Partial<Record<Lang, () => Promise<{ default: Locale }>>> = {
   te: () => import("./locales/te"),
   th: () => import("./locales/th"),
   uk: () => import("./locales/uk"),
+  ur: () => import("./locales/ur"),
   vi: () => import("./locales/vi"),
 };
 
@@ -124,6 +127,7 @@ export const PARTY_LABELS: Partial<Record<Lang, readonly [a: string, b: string]>
 } = {
   en: ["Party A", "Party B"],
   tr: ["Taraf A", "Taraf B"],
+  ar: ["الطرف A", "الطرف B"],
   bn: ["পক্ষ A", "পক্ষ B"],
   ca: ["Part A", "Part B"],
   "zh-Hans": ["当事人A", "当事人B"],
@@ -137,6 +141,7 @@ export const PARTY_LABELS: Partial<Record<Lang, readonly [a: string, b: string]>
   de: ["Partei A", "Partei B"],
   el: ["Πλευρά A", "Πλευρά B"],
   gu: ["પક્ષ A", "પક્ષ B"],
+  he: ["צד A", "צד B"],
   hi: ["पक्ष A", "पक्ष B"],
   hu: ["Fél A", "Fél B"],
   id: ["Pihak A", "Pihak B"],
@@ -163,6 +168,7 @@ export const PARTY_LABELS: Partial<Record<Lang, readonly [a: string, b: string]>
   te: ["పక్షం A", "పక్షం B"],
   th: ["ฝ่าย A", "ฝ่าย B"],
   uk: ["Сторона A", "Сторона B"],
+  ur: ["فریق A", "فریق B"],
   vi: ["Bên A", "Bên B"],
 };
 
