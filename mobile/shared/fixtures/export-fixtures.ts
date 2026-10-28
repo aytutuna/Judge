@@ -817,8 +817,8 @@ function validateCases(): void {
 const ASYNC_ERRORS = Object.fromEntries(
   (
     [
-      ["signin_required", "Sign in to use Premium."],
-      ["premium_required", "This needs Premium."],
+      ["signin_required", "Sign in to get a verdict."],
+      ["premium_required", "This needs credits or the monthly plan."],
       ["no_credits", "You are out of credits."],
       ["fair_use", "You have used this period's fair-use allowance.", { resetsAt: PERIOD_END }],
       ["in_progress", "A verdict with this key is already being judged."],

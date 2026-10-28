@@ -587,10 +587,10 @@
     <string name="app_appeal_intro">Yargıçların kaçırdığı bir şey mi var? Ekle, yeniden karar versinler. İlk karar kayıtta kalır.</string>
     <string name="app_appeal_ask">Neyi bilmeleri gerekiyor?</string>
     <string name="app_appeal_placeholder">Bir olgu, bir mesaj ya da aslında neyde anlaştığınız.</string>
-    <string name="app_appeal_cost">1 premium karar hakkı kullanır. Bunu bir karar için iki kez yapabilirsin; %1$s hakkın kaldı.</string>
-    <string name="app_appeal_cost_case">1 premium karar hakkı kullanır. Bunu bir dava için bir kez yapabilirsin.</string>
+    <string name="app_appeal_cost">1 karar hakkı kullanır. Bunu bir karar için iki kez yapabilirsin; %1$s hakkın kaldı.</string>
+    <string name="app_appeal_cost_case">1 karar hakkı kullanır. Bunu bir dava için bir kez yapabilirsin.</string>
     <string name="app_appeal_submit">Yeniden yargılat</string>
-    <string name="app_appeal_upsell">Eksik bir şey mi var? Bağlam ekle, yeniden yargılansın. Bu bir Premium özelliği.</string>
+    <string name="app_appeal_upsell">Eksik bir şey mi var? Bağlam ekle, 1 karar hakkıyla yeniden yargılansın.</string>
     <string name="app_appeal_sign_in">Bağlam ekleyip itiraz etmek için giriş yap</string>
     <string name="app_appeal_used">Bu davaya zaten bağlam ekledin.</string>
     <string name="app_appeal_limit">İki kez bağlam ekledin. Bir karar için sınır bu.</string>

@@ -602,13 +602,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Uses 1 premium verdict. You can do this twice per ruling; %1$@ left."
+            "value" : "Uses 1 verdict. You can do this twice per ruling; %1$@ left."
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "1 premium karar hakkı kullanır. Bunu bir karar için iki kez yapabilirsin; %1$@ hakkın kaldı."
+            "value" : "1 karar hakkı kullanır. Bunu bir karar için iki kez yapabilirsin; %1$@ hakkın kaldı."
           }
         }
       }
@@ -620,13 +620,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Uses 1 premium verdict. You can do this once per case."
+            "value" : "Uses 1 verdict. You can do this once per case."
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "1 premium karar hakkı kullanır. Bunu bir dava için bir kez yapabilirsin."
+            "value" : "1 karar hakkı kullanır. Bunu bir dava için bir kez yapabilirsin."
           }
         }
       }
@@ -746,13 +746,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Something missing? Add context and have it re-judged. That's a Premium feature."
+            "value" : "Something missing? Add context and have it re-judged for 1 verdict."
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Eksik bir şey mi var? Bağlam ekle, yeniden yargılansın. Bu bir Premium özelliği."
+            "value" : "Eksik bir şey mi var? Bağlam ekle, 1 karar hakkıyla yeniden yargılansın."
           }
         }
       }

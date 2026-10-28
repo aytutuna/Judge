@@ -3141,14 +3141,14 @@
     "signin_required": {
       "status": 401,
       "body": {
-        "error": "Sign in to use Premium.",
+        "error": "Sign in to get a verdict.",
         "code": "signin_required"
       }
     },
     "premium_required": {
       "status": 402,
       "body": {
-        "error": "This needs Premium.",
+        "error": "This needs credits or the monthly plan.",
         "code": "premium_required"
       }
     },

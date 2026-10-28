@@ -587,10 +587,10 @@
     <string name="app_appeal_intro">Something the judges missed? Add it and they rule again. The first ruling stays on record.</string>
     <string name="app_appeal_ask">What should they know?</string>
     <string name="app_appeal_placeholder">A fact, a message, or what was actually agreed.</string>
-    <string name="app_appeal_cost">Uses 1 premium verdict. You can do this twice per ruling; %1$s left.</string>
-    <string name="app_appeal_cost_case">Uses 1 premium verdict. You can do this once per case.</string>
+    <string name="app_appeal_cost">Uses 1 verdict. You can do this twice per ruling; %1$s left.</string>
+    <string name="app_appeal_cost_case">Uses 1 verdict. You can do this once per case.</string>
     <string name="app_appeal_submit">Rule again</string>
-    <string name="app_appeal_upsell">Something missing? Add context and have it re-judged. That\'s a Premium feature.</string>
+    <string name="app_appeal_upsell">Something missing? Add context and have it re-judged for 1 verdict.</string>
     <string name="app_appeal_sign_in">Sign in to add context &amp; appeal</string>
     <string name="app_appeal_used">You\'ve already added context to this case.</string>
     <string name="app_appeal_limit">You\'ve added context twice. That\'s the limit for one verdict.</string>
