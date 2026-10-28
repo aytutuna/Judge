@@ -64,7 +64,6 @@ struct RootView: View {
         }
         .toolbarBackground(Brand.ivory, for: .tabBar)
         .toolbarBackground(.visible, for: .tabBar)
-        .environment(\.locale, lang.locale)
         .sheet(isPresented: $account.isSignInPresented, onDismiss: { app.account.signInDismissed() }) {
             SignInView()
                 .environment(app)
@@ -78,7 +77,8 @@ struct RootView: View {
         .sheet(item: $webLink) { link in
             SafariView(url: link.url).ignoresSafeArea()
         }
-        // Outside the sheets, so they turn with the rest of the app.
+        // Outside the sheets, so they follow the app's language too.
+        .environment(\.locale, lang.locale)
         .environment(\.layoutDirection, lang.isRTL ? .rightToLeft : .leftToRight)
         .overlay {
             // The first frame repeats the launch screen, then fades into Home.
