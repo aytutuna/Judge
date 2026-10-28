@@ -213,7 +213,10 @@ export default function Home() {
   const shown = appeal.verdicts.at(-1) ?? null;
   const roundNames = withRoundNames(response?.name_map, appeal.names);
 
-  const canSubmit = argument.trim().length >= 20 && !holding && !(evidenceOn && evidence.busy);
+  // Until /me answers, a click could send a signed-in writer to sign in.
+  // If it failed, the server decides (401 when signed out).
+  const viewerKnown = viewer.status === "ready" || viewer.status === "error";
+  const canSubmit = argument.trim().length >= 20 && viewerKnown && !holding && !(evidenceOn && evidence.busy);
 
   function signInFirst() {
     saveDraftForSignIn();
@@ -596,7 +599,9 @@ export default function Home() {
               lang={lang}
               value={argument}
               onChange={setArgument}
-              onSubmit={() => (signedIn ? void (twoSided ? createCase() : submitPremium()) : signInFirst())}
+              onSubmit={() =>
+                viewer.status === "ready" && !signedIn ? signInFirst() : void (twoSided ? createCase() : submitPremium())
+              }
               canSubmit={canSubmit}
               disabled={!empty}
               error={error}
