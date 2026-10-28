@@ -37,7 +37,7 @@ describe("loading languages on demand", () => {
   it("hands the browser only what it needs, never for English", () => {
     expect(loadedDict("en")).toBeNull();
     expect(loadedDict("de")).toBeNull();
-    expect(loadedDict("tr")).toEqual({ strings: tr.strings });
+    expect(loadedDict("tr")).toEqual({ strings: tr.strings, plurals: tr.plurals });
   });
 
   it("registers server-rendered strings before the page renders with them", () => {
