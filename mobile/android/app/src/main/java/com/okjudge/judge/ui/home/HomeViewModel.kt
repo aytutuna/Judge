@@ -9,6 +9,7 @@ import com.okjudge.judge.core.cases.CaseLogic
 import com.okjudge.judge.core.data.SavedVerdict
 import com.okjudge.judge.core.data.SettingsStore
 import com.okjudge.judge.core.display.ArgumentRules
+import com.okjudge.judge.core.display.Examples
 import com.okjudge.judge.core.display.Preset
 import com.okjudge.judge.core.display.UiError
 import com.okjudge.judge.core.display.jsTrim
@@ -32,6 +33,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import kotlin.random.Random
 
 /** Max screenshots on one side (MAX_EVIDENCE_PER_SIDE). */
 const val MAX_EVIDENCE_PER_SIDE = 3
@@ -133,6 +135,7 @@ class HomeViewModel(
     providers: Flow<Account.Providers> = flowOf(Account.Providers.Loading),
     uploadEvidence: suspend (List<PreparedImage>) -> ApiResult<EvidenceUploadResponse> = { ApiResult.Err(UiError.Unknown) },
     recent: Flow<List<SavedVerdict>> = flowOf(emptyList()),
+    private val random: Random = Random.Default,
 ) : ViewModel() {
 
     val evidence = EvidenceController(viewModelScope, MAX_EVIDENCE_PER_SIDE, uploadEvidence)
@@ -236,6 +239,20 @@ class HomeViewModel(
 
     fun onDisplayName(name: String) {
         saved[KEY_NAME] = name.take(CaseLogic.MAX_DISPLAY_NAME)
+        saved[KEY_EXAMPLE_NAME] = false
+    }
+
+    /** "Try an example": both names and both sides, in the words of [strings], over whatever was typed. */
+    fun fillExample(strings: Strings) {
+        if (state.value.holding) return
+        val id = Examples.pick(saved[KEY_EXAMPLE], random)
+        val example = Examples.of(id, strings)
+        saved[KEY_EXAMPLE] = id
+        saved[KEY_NAME] = example.myName
+        saved[KEY_EXAMPLE_NAME] = true
+        saved[KEY_ARGUMENT] = example.mine
+        saved[KEY_OTHER_NAME] = example.theirName
+        saved[KEY_OTHER] = example.theirs
     }
 
     fun onAddEvidence(sources: List<ImageSource>) = evidence.add(sources)
@@ -275,6 +292,11 @@ class HomeViewModel(
         saved[KEY_ARGUMENT] = ""
         saved[KEY_OTHER] = ""
         saved[KEY_OTHER_NAME] = ""
+        // A name the example wrote is not the user's: the account's first name comes back.
+        if (saved.get<Boolean>(KEY_EXAMPLE_NAME) == true) {
+            saved[KEY_NAME] = null
+            saved[KEY_EXAMPLE_NAME] = false
+        }
         evidence.clear()
         flow.dismissError()
     }
@@ -284,5 +306,7 @@ class HomeViewModel(
         const val KEY_OTHER = "other_side"
         const val KEY_OTHER_NAME = "other_name"
         const val KEY_NAME = "case_name"
+        const val KEY_EXAMPLE = "example"
+        const val KEY_EXAMPLE_NAME = "example_name"
     }
 }

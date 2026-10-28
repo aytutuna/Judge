@@ -267,6 +267,7 @@ fun JudgeRoot(container: AppContainer, links: StateFlow<Uri?> = MutableStateFlow
                                     }
                                 },
                                 onSendLink = { vm.sendLink(lang) },
+                                onExample = { vm.fillExample(strings) },
                                 onDismissError = vm::dismissError,
                                 onNew = newArgument,
                                 onOpenPrivacy = { openLink(context, "${container.config.shareBaseUrl.trimEnd('/')}/privacy") },

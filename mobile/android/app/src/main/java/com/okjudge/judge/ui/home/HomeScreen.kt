@@ -74,6 +74,7 @@ import com.okjudge.judge.core.premium.Tier
 import com.okjudge.judge.i18n.AppLang
 import com.okjudge.judge.i18n.LocalLang
 import com.okjudge.judge.i18n.LocalStrings
+import com.okjudge.judge.ui.components.GhostButton
 import com.okjudge.judge.ui.components.JudgeIcons
 import com.okjudge.judge.ui.components.Kicker
 import com.okjudge.judge.ui.components.TintedIcon
@@ -86,7 +87,6 @@ import com.okjudge.judge.ui.premium.rememberEvidencePicker
 import com.okjudge.judge.ui.theme.JudgeShapes
 import com.okjudge.judge.ui.theme.JudgeType
 import com.okjudge.judge.ui.theme.Palette
-import com.okjudge.judge.ui.theme.cappedScale
 import kotlinx.coroutines.delay
 import java.text.NumberFormat
 import java.time.Instant
@@ -104,6 +104,7 @@ object HomeTags {
     const val NAME = "home.name"
     const val OTHER_NAME = "home.otherName"
     const val SEND_LINK = "home.sendLink"
+    const val EXAMPLE = "home.example"
     const val RECENT = "home.recent"
     fun preset(id: String) = "home.preset.$id"
     fun recent(id: String) = "home.recent.$id"
@@ -136,6 +137,7 @@ fun HomeScreen(
     onOtherSideChange: (String) -> Unit = {},
     onOtherName: (String) -> Unit = {},
     onSendLink: () -> Unit = {},
+    onExample: () -> Unit = {},
     onTier: (Tier) -> Unit = {},
     onPremiumIntent: () -> Unit = {},
     onSignIn: () -> Unit = {},
@@ -177,11 +179,12 @@ fun HomeScreen(
                 Modifier.widthIn(max = 640.dp).fillMaxWidth().padding(horizontal = 20.dp),
                 verticalArrangement = Arrangement.spacedBy(12.dp),
             ) {
-                Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                    Text(
-                        s.appHomeTitle,
-                        style = JudgeType.caseTitle.copy(fontSize = if (state.blank) 36.sp else 30.sp, lineHeight = 1.04.em).cappedScale(),
-                        modifier = Modifier.semantics { heading() },
+                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    GhostButton(
+                        s.appHomeExample,
+                        remember { JudgeIcons.spark(Palette.terra) },
+                        onClick = onExample,
+                        modifier = Modifier.testTag(HomeTags.EXAMPLE),
                     )
                     if (state.blank) {
                         Text(if (state.casesOn) s.appHomeLead else s.appHomeLeadSolo, style = JudgeType.body.copy(fontSize = 14.sp, color = Palette.ink2))
