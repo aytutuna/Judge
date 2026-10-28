@@ -28,7 +28,6 @@ private enum CaseConfirm: Identifiable {
 private struct CaseScreenContent: View {
     let app: AppModel
     @State private var model: CaseModel
-    @State private var webLink: WebLink?
     @State private var confirm: CaseConfirm?
     @State private var showConfirm = false
     @State private var showPricing = false
@@ -74,9 +73,6 @@ private struct CaseScreenContent: View {
         .refreshable { await model.refresh() }
         .onChange(of: app.account.isSignedIn) { _, signedIn in
             if signedIn, model.load == .signIn { Task { await model.refresh() } }
-        }
-        .sheet(item: $webLink) { link in
-            SafariView(url: link.url).ignoresSafeArea()
         }
         .sheet(isPresented: $showPricing) {
             NavigationStack { PricingView() }
@@ -208,9 +204,7 @@ private struct CaseScreenContent: View {
                     names: model.names,
                     shareable: view.removed == nil,
                     appeal: (draft: model, area: area, evidenceOn: evidenceOn)
-                ) { url in
-                    webLink = WebLink(url: url)
-                }
+                )
                 .id("\(current.id)-\(model.names.count)")
                 // The judging, busy and used lines; the form is in the sheet.
                 if !area.inSheet {
@@ -218,9 +212,7 @@ private struct CaseScreenContent: View {
                         showPricing = true
                     }
                 }
-                VerdictHistory(app: app, view: view, names: model.names, lang: lang) { url in
-                    webLink = WebLink(url: url)
-                }
+                VerdictHistory(app: app, view: view, names: model.names, lang: lang)
             }
         case .failed:
             banner(CaseLogic.failedBody(view, lang: lang))
@@ -448,7 +440,6 @@ private struct CaseVerdictBlock: View {
     let app: AppModel
     let shareable: Bool
     let appeal: (draft: CaseModel, area: CaseLogic.AppealArea, evidenceOn: Bool)?
-    let openURL: (URL) -> Void
     @State private var model: VerdictModel
 
     @MainActor
@@ -457,13 +448,11 @@ private struct CaseVerdictBlock: View {
         verdict: CaseVerdict,
         names: [NameMapping],
         shareable: Bool,
-        appeal: (draft: CaseModel, area: CaseLogic.AppealArea, evidenceOn: Bool)? = nil,
-        openURL: @escaping (URL) -> Void
+        appeal: (draft: CaseModel, area: CaseLogic.AppealArea, evidenceOn: Bool)? = nil
     ) {
         self.app = app
         self.shareable = shareable
         self.appeal = appeal
-        self.openURL = openURL
         let session = VerdictSession(id: verdict.id, original: verdict.result, nameMap: names, translations: [:])
         _model = State(initialValue: VerdictModel(session: session, api: app.api) { _, _, _ in })
     }
@@ -474,7 +463,6 @@ private struct CaseVerdictBlock: View {
             model: model,
             lang: lang,
             shareURL: shareable ? app.config.shareURL(id: model.session.id) : nil,
-            openURL: openURL,
             appealArea: appeal?.area ?? CaseLogic.AppealArea.none
         ) {
             if let appeal {
@@ -491,7 +479,6 @@ private struct VerdictHistory: View {
     let view: CaseView
     let names: [NameMapping]
     let lang: AppLang
-    let openURL: (URL) -> Void
 
     var body: some View {
         let earlier = Array(view.verdicts.dropLast().reversed())
@@ -501,7 +488,7 @@ private struct VerdictHistory: View {
                     .accessibilityAddTraits(.isHeader)
                 ForEach(earlier, id: \.id) { verdict in
                     DisclosureGroup {
-                        CaseVerdictBlock(app: app, verdict: verdict, names: names, shareable: view.removed == nil, openURL: openURL)
+                        CaseVerdictBlock(app: app, verdict: verdict, names: names, shareable: view.removed == nil)
                             .padding(.top, 10)
                     } label: {
                         HStack {

@@ -57,11 +57,11 @@ struct VerdictDetails<Appeal: View>: View {
     let model: VerdictModel
     let lang: AppLang
     let shareURL: URL?
-    let openURL: (URL) -> Void
     var onAddContext: (() -> Void)?
     /// The "Add context & appeal" sheet over this screen.
     @Binding var appealShown: Bool
     @ViewBuilder var appeal: () -> Appeal
+    @State private var webLink: WebLink?
 
     var body: some View {
         let session = model.session
@@ -117,6 +117,9 @@ struct VerdictDetails<Appeal: View>: View {
             }
         }
         .sheet(isPresented: $appealShown, content: appeal)
+        .sheet(item: $webLink) { link in
+            SafariView(url: link.url).ignoresSafeArea()
+        }
     }
 
     private func summary(_ result: VerdictResult, parties: PartyNames) -> some View {
@@ -213,7 +216,7 @@ struct VerdictDetails<Appeal: View>: View {
         }
         if let factCheck = result.factCheck {
             card {
-                FactCheckView(factCheck: factCheck, disputeType: result.disputeType, lang: lang, openURL: openURL)
+                FactCheckView(factCheck: factCheck, disputeType: result.disputeType, lang: lang) { url in webLink = WebLink(url: url) }
             }
         }
         let changes = (result.wouldChange ?? []).filter { !$0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }

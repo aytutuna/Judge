@@ -23,7 +23,6 @@ private struct VerdictScreenContent: View {
     @State private var model: VerdictModel
     /// The writer's "Add context & appeal" (nothing shows for anyone else).
     @State private var appeal: VerdictAppealModel
-    @State private var webLink: WebLink?
     @State private var showPricing = false
     @Environment(\.dismiss) private var dismiss
 
@@ -65,7 +64,6 @@ private struct VerdictScreenContent: View {
                         model: model,
                         lang: lang,
                         shareURL: app.config.shareURL(id: model.session.id),
-                        openURL: { url in webLink = WebLink(url: url) },
                         appealArea: signedIn ? appeal.area : CaseLogic.AppealArea.none,
                         appealStartsOpen: appeal.open,
                         onAppealOpen: { appeal.openForm() }
@@ -133,9 +131,6 @@ private struct VerdictScreenContent: View {
                 .disabled(app.home.isBusy)
             }
         }
-        .sheet(item: $webLink) { link in
-            SafariView(url: link.url).ignoresSafeArea()
-        }
     }
 }
 
@@ -149,7 +144,6 @@ struct VerdictSections<Appeal: View>: View {
     let lang: AppLang
     /// Nil hides the share buttons.
     let shareURL: URL?
-    let openURL: (URL) -> Void
     /// Where the writer's "Add context & appeal" stands: the button shows
     /// while the sheet has something to offer.
     var appealArea: CaseLogic.AppealArea = .none
@@ -209,7 +203,6 @@ struct VerdictSections<Appeal: View>: View {
                 model: model,
                 lang: lang,
                 shareURL: shareURL,
-                openURL: openURL,
                 onAddContext: offered ? { openAppeal() } : nil,
                 appealShown: $detailsAppealShown,
                 appeal: appeal
