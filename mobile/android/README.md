@@ -17,7 +17,9 @@ out and goes on to the verdict afterwards. Methods follow `GET /api/v1/config`
 - The session token is sent as `Authorization: Bearer` and stored AES-GCM
   encrypted with an Android Keystore key (`core/auth/KeystoreTokenStore.kt`).
   A 401 `signin_required`, or `/api/v1/me` answering without a user, ends the
-  session. Sign-out and account deletion never touch the history on the phone.
+  session. Sign-out and account deletion take the account's verdicts off the
+  phone (they come back from the account on sign-in); verdicts no account has
+  stay. The Verdicts tab reads `GET /api/v1/me/history`, cached in Room.
 
 ## Build
 
