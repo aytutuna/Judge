@@ -11,7 +11,7 @@ const fi: AppLocale = {
     "app.input.counter": "{count} / {max}",
     "app.history.title": "Tuomioni",
     "app.history.empty": "Ei vielä tuomioita. Ratkaise ensimmäinen kiistasi, niin tuomio näkyy täällä.",
-    "app.history.deviceOnly": "Tallennettu vain tähän puhelimeen. Tuomion poistaminen täältä ei poista sen jakolinkkiä käytöstä.",
+    "app.history.deviceOnly": "Tallennettu vain tähän puhelimeen. Jos poistat tuomion täältä, sen jakolinkki toimii edelleen.",
     "app.history.delete": "Poista",
     "app.history.clearAll": "Poista kaikki",
     "app.history.clearConfirm": "Poistetaanko kaikki tallennetut tuomiot tästä puhelimesta? Jakolinkit toimivat edelleen.",
@@ -29,13 +29,13 @@ const fi: AppLocale = {
     "app.cancel": "Peruuta",
     "app.retry": "Yritä uudelleen",
     "app.error.offline": "Verkkoyhteys näyttää puuttuvan. Tarkista yhteys ja yritä uudelleen.",
-    "app.error.timeout": "Tuomareilla kesti liian kauan. Yritä uudelleen minuutin päästä.",
+    "app.error.timeout": "Tuomareilla kesti liian kauan vastata. Yritä uudelleen minuutin päästä.",
     "app.error.interrupted":
       "Yhteys katkesi, kun Judge oli taustalla. Yritä uudelleen ja pidä sovellus auki, kunnes tuomio tulee.",
     "app.turnstile.error": "Ihmistarkistus ei latautunut. Tarkista yhteys ja yritä uudelleen.",
-    "app.factcheck.sourceAria": "{title}, avautuu selaimeen",
+    "app.factcheck.sourceAria": "{title}, avaa verkkosivun",
     "app.error.badOrigin":
-      "Pyyntö tuli paikasta, jota emme tunnista. Varmista, että sovellus on ajan tasalla, ja yritä uudelleen.",
+      "Emme tunnista, mistä pyyntö tuli. Varmista, että sovellus on ajan tasalla, ja yritä uudelleen.",
     "app.translate.offline": "Kääntäminen ei onnistu ilman verkkoyhteyttä, joten tässä alkuperäinen.",
     "app.share.title": "Jaa tuomio",
     "app.settings.language": "Kieli",
@@ -46,9 +46,9 @@ const fi: AppLocale = {
     "app.signin.or": "tai",
     "app.signin.codeRequest": "Lähetä koodi sähköpostiin",
     "app.signin.codeSent": "Lähetimme koodin osoitteeseen {email}. Se toimii 10 minuuttia.",
-    "app.signin.codeLabel": "Syötä 6-numeroinen koodi",
+    "app.signin.codeLabel": "Syötä kuusinumeroinen koodi",
     "app.signin.codeSubmit": "Kirjaudu",
-    "app.signin.codeInvalid": "Koodi ei ole oikein. Tarkista sähköpostisi ja yritä uudelleen.",
+    "app.signin.codeInvalid": "Koodi on väärä. Tarkista se sähköpostista ja yritä uudelleen.",
     "app.signin.codeExpired": "Koodi on vanhentunut. Pyydä uusi.",
     "app.signin.codeTooMany": "Liian monta väärää yritystä tällä koodilla. Pyydä uusi.",
     "app.signin.codeResend": "Lähetä uusi koodi",
@@ -57,7 +57,7 @@ const fi: AppLocale = {
     "app.signin.unavailable": "Kirjautuminen ei ole juuri nyt käytettävissä. Yritä myöhemmin uudelleen.",
     "app.account.deleteTitle": "Poistetaanko tilisi?",
     "app.account.deleteBody":
-      "Kirjautumistietosi, tuomiosaldosi, tilauksesi ja henkilötietosi poistetaan, ja jakolinkkisi lakkaavat toimimasta. Tuomioiden teksti säilytetään ilman nimeäsi, kuten tietosuojakäytännössä kerrotaan.",
+      "Kirjautumistietosi, tuomiosaldosi, tilauksesi ja henkilötietosi poistetaan, ja jakolinkkisi lakkaavat toimimasta. Tuomioiden teksti säilyy tallessa ilman nimeäsi, kuten tietosuojakäytännössä kerrotaan.",
     "app.account.deleteConfirm": "Poista tili",
     "app.account.deleted": "Tilisi on poistettu.",
     "app.account.signOutConfirm": "Kirjaudutaanko ulos Judgesta tässä puhelimessa?",
@@ -81,16 +81,16 @@ const fi: AppLocale = {
     "app.home.example": "Kokeile esimerkkiä",
     "app.example.dishwasher.aName": "Laura",
     "app.example.dishwasher.a":
-      "Laitoit kulhot taas ylätelineeseen. Ne eivät ikinä puhdistu siellä, alateline on niitä varten.",
+      "Laitoit kulhot taas yläkoriin. Ne eivät ikinä puhdistu siellä, alakori on niitä varten.",
     "app.example.dishwasher.bName": "Mikko",
     "app.example.dishwasher.b":
-      "Ne mahtuvat sinne ihan hyvin, ja alas jää tilaa kattiloille. Olen täyttänyt koneen näin vuosia, eikä mikään ole tullut likaisena ulos.",
+      "Ne mahtuvat sinne ihan hyvin, ja alas jää tilaa kattiloille. Olen täyttänyt koneen näin jo vuosia, eikä mikään ole jäänyt likaiseksi.",
     "app.example.bill.aName": "Anna",
     "app.example.bill.a":
-      "En juonut mitään, joten minun ei pitäisi maksaa neljäsosaa viineistä. Ruoan voi minun puolestani jakaa tasan.",
+      "En juonut mitään, joten minun ei pitäisi maksaa neljäsosaa viinistä. Ruoan voi minun puolestani jakaa tasan.",
     "app.example.bill.bName": "Jussi",
     "app.example.bill.b":
-      "Jaamme laskun aina neljään osaan. On rasittavaa laskea joka kerta, kuka söi ja joi mitäkin, eikä ero ole edes iso.",
+      "Jaamme laskun aina neljään osaan. On rasittavaa selvittää joka kerta, kuka söi ja joi mitäkin, eikä ero ole edes iso.",
     "app.example.thermostat.aName": "Sanna",
     "app.example.thermostat.a":
       "Täällä on 19 astetta, ja minulla on kylmä hupparissakin. Ei ole mitenkään hullua nostaa lämpöä 22 asteeseen.",
@@ -106,7 +106,7 @@ const fi: AppLocale = {
     "app.example.seat.a": "Selkänojani kallistuu, joten kallistan sitä. On yölento, ja kaikki yrittävät nukkua.",
     "app.example.seat.bName": "Petri",
     "app.example.seat.b":
-      "Olen 190-senttinen, ja polveni painavat jo valmiiksi penkkiäsi. Olisit voinut edes kysyä ennen kuin laskit selkänojan ihan pohjaan.",
+      "Olen 190-senttinen, ja polveni painavat jo valmiiksi penkkiäsi. Olisit voinut edes kysyä, ennen kuin laskit selkänojan ihan pohjaan.",
     "app.example.spoiler.aName": "Emilia",
     "app.example.spoiler.a":
       "Kerroit, kuka murhaaja oli, ennen kuin olin edes aloittanut viimeistä jaksoa. Olin odottanut sitä koko viikon.",
@@ -114,7 +114,7 @@ const fi: AppLocale = {
     "app.example.spoiler.b":
       "Se ilmestyi kolme viikkoa sitten, ja sanoit katsoneesi sen loppuun. En pysty pitämään kirjaa siitä, missä kohtaa kukin menee.",
     "app.example.jacket.aName": "Veera",
-    "app.example.jacket.a": "Pidit farkkutakkiani keikalla kysymättä lupaa. Kun sain sen takaisin, se haisi tupakalta.",
+    "app.example.jacket.a": "Pidit farkkutakkiani keikalla kysymättä. Kun sain sen takaisin, se haisi tupakalta.",
     "app.example.jacket.bName": "Joonas",
     "app.example.jacket.b":
       "Se roikkui oven vieressä, etkä ikinä käytä sitä. Olisin kysynyt, mutta nukuit, ja olin jo valmiiksi myöhässä.",
@@ -155,7 +155,7 @@ const fi: AppLocale = {
     "app.appeal.upsell": "Puuttuuko jotain? Lisää tietoa, niin asia ratkaistaan uudelleen 1 tuomion hinnalla.",
     "app.appeal.signIn": "Kirjaudu, niin voit lisätä tietoa ja pyytää uuden tuomion",
     "app.appeal.used": "Olet jo lisännyt tietoa tähän juttuun.",
-    "app.appeal.limit": "Olet lisännyt tietoa jo kahdesti, eikä yhteen tuomioon voi lisätä enempää.",
+    "app.appeal.limit": "Olet lisännyt tietoa jo kahdesti, eikä samaan tuomioon voi lisätä enempää.",
     "app.purchase.buying": "Ostetaan…",
     "app.purchase.success": "Kiitos! Ostos onnistui.",
     "app.purchase.pending": "Ostostasi käsitellään. Voi kestää hetken, ennen kuin se näkyy.",

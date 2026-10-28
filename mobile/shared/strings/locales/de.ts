@@ -32,11 +32,11 @@ const de: AppLocale = {
     "app.error.timeout": "Die Richter haben zu lange für eine Antwort gebraucht. Versuch es in einer Minute noch mal.",
     "app.error.interrupted":
       "Die Verbindung ist abgebrochen, während Judge im Hintergrund lief. Versuch es noch mal und lass die App offen, bis das Urteil da ist.",
-    "app.turnstile.error": "Der Menschen-Check konnte nicht laden. Prüf deine Verbindung und versuch es noch mal.",
+    "app.turnstile.error": "Der Bot-Check ließ sich nicht laden. Prüf deine Verbindung und versuch es noch mal.",
     "app.factcheck.sourceAria": "{title}, öffnet die Webseite",
     "app.error.badOrigin":
       "Diese Anfrage kam von einer Quelle, die wir nicht kennen. Prüf, ob die App aktuell ist, und versuch es noch mal.",
-    "app.translate.offline": "Offline können wir nicht übersetzen, deshalb hier das Original.",
+    "app.translate.offline": "Offline können wir nicht übersetzen, deshalb siehst du das Original.",
     "app.share.title": "Urteil teilen",
     "app.settings.language": "Sprache",
     "app.settings.languageDevice": "Wie auf dem Handy",
@@ -93,7 +93,7 @@ const de: AppLocale = {
       "Wir teilen doch immer einfach durch vier. Jedes Mal auszurechnen, wer was hatte, nervt, und so groß ist der Unterschied auch nicht.",
     "app.example.thermostat.aName": "Laura",
     "app.example.thermostat.a":
-      "Hier drin sind 19 Grad, und mir ist sogar im Hoodie kalt. Die Heizung auf 22 zu drehen, ist doch nicht übertrieben.",
+      "Hier drin sind 19 Grad, und mir ist sogar im Hoodie kalt. Die Heizung auf 22 zu drehen ist doch nicht übertrieben.",
     "app.example.thermostat.bName": "Jan",
     "app.example.thermostat.b":
       "Bei 22 Grad kann man nicht schlafen, viel zu warm. Du kannst dir noch was anziehen, ich kann nichts mehr ausziehen.",
@@ -119,7 +119,7 @@ const de: AppLocale = {
       "Du hast meine Jeansjacke ungefragt zum Konzert angezogen. Sie kam total verraucht zurück.",
     "app.example.jacket.bName": "Hannah",
     "app.example.jacket.b":
-      "Sie hing an der Tür, und du trägst sie nie. Ich hätte ja gefragt, aber du hast geschlafen, und ich war eh schon spät dran.",
+      "Sie hing an der Garderobe, und du trägst sie nie. Ich hätte ja gefragt, aber du hast geschlafen, und ich war eh schon spät dran.",
     "app.example.lastSlice.aName": "Niklas",
     "app.example.lastSlice.a":
       "Ich hab schon vor dem Film gesagt: „Das letzte Stück Pizza ist meins!“ Alle haben es gehört.",
@@ -137,7 +137,7 @@ const de: AppLocale = {
     "app.case.stepYouNote": "Versiegelt bis zum Urteil",
     "app.case.stepThem": "{name} schreibt die eigene Seite",
     "app.case.stepThemAnon": "Die andere Person schreibt ihre Seite",
-    "app.case.stepThemNote": "Hier aktualisiert sich alles, sobald die Antwort da ist",
+    "app.case.stepThemNote": "Diese Ansicht aktualisiert sich, sobald die Antwort da ist",
     "app.case.stepJudges": "Drei Richter urteilen",
     "app.case.stepJudgesNote": "Oder jetzt nur deine Seite beurteilen lassen",
     "app.case.judgeNowWithout": "Jetzt ohne {name} urteilen lassen",
@@ -149,13 +149,13 @@ const de: AppLocale = {
     "app.verdict.back": "Urteil",
     "app.appeal.title": "Einspruch mit neuem Kontext",
     "app.appeal.intro":
-      "Haben die Richter etwas übersehen? Ergänze es, und sie urteilen neu. Das erste Urteil bleibt sichtbar.",
+      "Haben die Richter etwas übersehen? Ergänze es, und sie urteilen neu. Das erste Urteil bleibt erhalten.",
     "app.appeal.ask": "Was sollten sie wissen?",
     "app.appeal.placeholder": "Ein Fakt, eine Nachricht oder was wirklich abgemacht war.",
     "app.appeal.cost": "Kostet 1 Urteil. Das geht zweimal pro Urteil, noch {left} übrig.",
     "app.appeal.costCase": "Kostet 1 Urteil. Das geht einmal pro Fall.",
-    "app.appeal.submit": "Neu urteilen lassen",
-    "app.appeal.upsell": "Fehlt etwas? Ergänze Kontext und lass für 1 Urteil neu urteilen.",
+    "app.appeal.submit": "Neu beurteilen lassen",
+    "app.appeal.upsell": "Fehlt etwas? Ergänze Kontext und lass den Fall für 1 Urteil neu beurteilen.",
     "app.appeal.signIn": "Melde dich an, um Kontext zu ergänzen",
     "app.appeal.used": "Du hast diesem Fall schon Kontext hinzugefügt.",
     "app.appeal.limit": "Du hast schon zweimal Kontext ergänzt. Mehr geht pro Urteil nicht.",

@@ -34,7 +34,7 @@ const es: AppLocale = {
     "app.error.interrupted":
       "La conexión se cortó mientras Judge estaba en segundo plano. Vuelve a intentarlo y deja la app abierta hasta que llegue el veredicto.",
     "app.turnstile.error": "No se pudo cargar la verificación antibots. Revisa tu conexión y vuelve a intentarlo.",
-    "app.factcheck.sourceAria": "{title}, se abre la página web",
+    "app.factcheck.sourceAria": "{title}, abre la página web",
     "app.error.badOrigin":
       "Esa solicitud llegó desde un sitio que no reconocemos. Asegúrate de tener la app actualizada y vuelve a intentarlo.",
     "app.translate.offline": "No se puede traducir sin conexión, así que aquí tienes el original.",
@@ -61,7 +61,7 @@ const es: AppLocale = {
       "Se eliminarán tus datos de inicio de sesión, tus créditos, tu plan y tu información personal, y tus enlaces para compartir dejarán de funcionar. El texto de los veredictos se seguirá guardando sin tu nombre, como se explica en la Política de privacidad.",
     "app.account.deleteConfirm": "Eliminar cuenta",
     "app.account.deleted": "Tu cuenta se ha eliminado.",
-    "app.account.signOutConfirm": "¿Cerrar sesión de Judge en este teléfono?",
+    "app.account.signOutConfirm": "¿Cerrar la sesión de Judge en este teléfono?",
     "app.account.signedOut": "Has cerrado sesión.",
     "app.account.sessionExpired": "Se cerró tu sesión. Vuelve a iniciar sesión para continuar.",
     "app.close": "Cerrar",
@@ -70,7 +70,7 @@ const es: AppLocale = {
     "app.home.yourSide": "Tu versión",
     "app.home.theirSide": "La otra versión",
     "app.home.yourName": "Tu nombre",
-    "app.home.theirName": "Su nombre",
+    "app.home.theirName": "Nombre de la otra persona",
     "app.home.yourPlaceholder": "¿Qué pasó, según tú?",
     "app.home.theirPlaceholder": "¿Qué dice la otra persona? Escríbelo como lo contaría ella.",
     "app.home.yourSideLabel": "Tu versión de la discusión",
@@ -116,7 +116,7 @@ const es: AppLocale = {
     "app.example.spoiler.b":
       "Salió hace tres semanas y dijiste que ya habías terminado la serie. No puedo estar pendiente de por dónde va cada uno.",
     "app.example.jacket.aName": "Marta",
-    "app.example.jacket.a": "Te llevaste mi chaqueta al concierto sin preguntarme. Volvió oliendo a humo.",
+    "app.example.jacket.a": "Te llevaste mi chaqueta vaquera al concierto sin preguntarme. Volvió oliendo a humo.",
     "app.example.jacket.bName": "Sergio",
     "app.example.jacket.b":
       "Estaba colgada junto a la puerta y nunca te la pones. Te habría preguntado, pero estabas dormida y yo ya llegaba tarde.",
@@ -129,9 +129,9 @@ const es: AppLocale = {
     "app.case.waitingKicker": "Caso · en espera",
     "app.case.waitingFor": "Esperando a {name}",
     "app.case.waitingLead":
-      "{name} escribe su versión sin crear una cuenta. Ninguno de los dos ve lo que escribió el otro hasta el veredicto.",
+      "{name} escribe su versión sin crear una cuenta. Ninguno de los dos ve la versión del otro hasta el veredicto.",
     "app.case.waitingLeadAnon":
-      "La otra persona escribe su versión sin crear una cuenta. Ninguno de los dos ve lo que escribió el otro hasta el veredicto.",
+      "La otra persona escribe su versión sin crear una cuenta. Ninguno de los dos ve la versión del otro hasta el veredicto.",
     "app.case.sendTo": "Envía este enlace a {name}",
     "app.case.stepYou": "Escribiste tu versión",
     "app.case.stepYouNote": "Oculta hasta el veredicto",
@@ -152,7 +152,7 @@ const es: AppLocale = {
       "¿Se les pasó algo a los jueces? Añádelo y volverán a decidir. La primera decisión queda registrada.",
     "app.appeal.ask": "¿Qué deberían saber?",
     "app.appeal.placeholder": "Un dato, un mensaje o lo que de verdad se acordó.",
-    "app.appeal.cost": "Usa 1 veredicto. Puedes hacerlo dos veces por decisión. Disponibles: {left}.",
+    "app.appeal.cost": "Usa 1 veredicto. Puedes hacerlo dos veces por decisión. Apelaciones restantes: {left}.",
     "app.appeal.costCase": "Usa 1 veredicto. Puedes hacerlo una vez por caso.",
     "app.appeal.submit": "Volver a juzgar",
     "app.appeal.upsell": "¿Falta algo? Añade contexto y que lo vuelvan a juzgar por 1 veredicto.",
@@ -170,7 +170,7 @@ const es: AppLocale = {
     "app.purchase.restoreNone": "No hay compras para restaurar.",
   },
   plurals: {
-    "app.balance.left": { one: "Te queda 1 veredicto" },
+    "app.balance.left": { one: "Te queda {n} veredicto" },
   },
 };
 

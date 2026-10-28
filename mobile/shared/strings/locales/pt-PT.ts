@@ -64,8 +64,8 @@ const ptPT: AppLocale = {
     "app.account.signedOut": "Terminaste a sessão.",
     "app.account.sessionExpired": "A tua sessão terminou. Entra outra vez para continuar.",
     "app.close": "Fechar",
-    "app.home.lead": "Escreve os dois lados, ou envia à outra pessoa um link para ela escrever o dela.",
-    "app.home.leadSolo": "Escreve o teu lado, e o da outra pessoa se o souberes.",
+    "app.home.lead": "Escreve os dois lados ou envia à outra pessoa um link para ela escrever o dela.",
+    "app.home.leadSolo": "Escreve o teu lado e, se o souberes, o da outra pessoa.",
     "app.home.yourSide": "O teu lado",
     "app.home.theirSide": "O outro lado",
     "app.home.yourName": "O teu nome",
@@ -74,29 +74,29 @@ const ptPT: AppLocale = {
     "app.home.theirPlaceholder": "O que diz a outra pessoa? Escreve como ela o diria.",
     "app.home.yourSideLabel": "O teu lado da discussão",
     "app.home.theirSideLabel": "O outro lado da discussão",
-    "app.home.sendLink": "Ou envia-lhe um link para o escrever",
+    "app.home.sendLink": "Ou envia-lhe um link para ela o escrever",
     "app.home.says": "{name} diz:",
     "app.home.mySide": "O meu lado:",
     "app.home.otherSide": "O outro lado:",
     "app.home.example": "Experimenta um exemplo",
     "app.example.dishwasher.aName": "Rita",
     "app.example.dishwasher.a":
-      "Voltaste a pôr as taças no cesto de cima. Lá em cima nunca ficam bem lavadas, é para isso que serve o de baixo.",
+      "Voltaste a pôr as tigelas no cesto de cima. Lá em cima nunca ficam bem lavadas, o de baixo é que serve para isso.",
     "app.example.dishwasher.bName": "Miguel",
     "app.example.dishwasher.b":
-      "Cabem lá perfeitamente e deixam o de baixo livre para as panelas. Arrumo a máquina assim há anos e nunca saiu nada sujo.",
+      "Cabem lá perfeitamente e deixam o de baixo livre para as panelas. Ponho a loiça assim há anos e nunca saiu nada sujo.",
     "app.example.bill.aName": "Sofia",
     "app.example.bill.a":
       "Não bebi nada, por isso não devia pagar um quarto do vinho. Dividir a comida em partes iguais, por mim, tudo bem.",
     "app.example.bill.bName": "Diogo",
     "app.example.bill.b":
-      "Dividimos sempre por quatro. Andar a fazer contas a quem comeu o quê de cada vez é uma seca, e a diferença nem é assim tanta.",
+      "Dividimos sempre por quatro. Andar sempre a fazer contas a quem comeu o quê é uma seca, e a diferença nem é assim tanta.",
     "app.example.thermostat.aName": "Mariana",
     "app.example.thermostat.a":
       "Estão 19 graus cá dentro e tenho frio mesmo de camisola com capuz. Pôr o aquecimento nos 22 não é nenhum exagero.",
     "app.example.thermostat.bName": "João",
     "app.example.thermostat.b":
-      "Com 22 graus não se consegue dormir, é calor a mais. Tu podes vestir mais qualquer coisa, eu já não tenho mais nada para tirar.",
+      "Com 22 graus não se consegue dormir, é calor a mais. Tu podes vestir mais qualquer coisa, eu já não posso tirar mais nada.",
     "app.example.roadTrip.aName": "Catarina",
     "app.example.roadTrip.a": "Fui eu a conduzir as seis horas da ida. O justo é seres tu a conduzir no regresso.",
     "app.example.roadTrip.bName": "Pedro",
@@ -110,7 +110,7 @@ const ptPT: AppLocale = {
       "Tenho 1,90 m e já tenho os joelhos encostados ao teu assento. Podias ao menos perguntar antes de o reclinares todo para trás.",
     "app.example.spoiler.aName": "Leonor",
     "app.example.spoiler.a":
-      "Disseste-me quem era o assassino antes de eu sequer começar o último episódio. Estive a semana inteira à espera dele.",
+      "Disseste-me quem era o assassino antes de eu sequer ter começado o último episódio. Estive a semana inteira à espera dele.",
     "app.example.spoiler.bName": "Tomás",
     "app.example.spoiler.b":
       "Saiu há três semanas e tu disseste que já tinhas acabado. Não consigo saber em que episódio anda cada um.",
@@ -118,7 +118,7 @@ const ptPT: AppLocale = {
     "app.example.jacket.a": "Levaste o meu casaco de ganga ao concerto sem perguntar. Veio a cheirar a fumo.",
     "app.example.jacket.bName": "Ana",
     "app.example.jacket.b":
-      "Estava pendurado ao pé da porta e tu nunca o usas. Tinha-te perguntado, mas estavas a dormir e eu já ia atrasada.",
+      "Estava pendurado ao pé da porta e tu nunca o usas. Ia perguntar-te, mas estavas a dormir e eu já ia atrasada.",
     "app.example.lastSlice.aName": "Rodrigo",
     "app.example.lastSlice.a": "Disse «a última fatia é minha» antes de o filme começar. Toda a gente ouviu.",
     "app.example.lastSlice.bName": "Carolina",
@@ -127,9 +127,9 @@ const ptPT: AppLocale = {
     "app.case.waitingKicker": "Caso · à espera",
     "app.case.waitingFor": "À espera de {name}",
     "app.case.waitingLead":
-      "{name} escreve o seu lado sem precisar de conta. Nenhum de vocês vê o texto do outro até ao veredicto.",
+      "{name} escreve o seu lado sem precisar de conta. Nenhum de vocês vê o que o outro escreveu até ao veredicto.",
     "app.case.waitingLeadAnon":
-      "A outra pessoa escreve o seu lado sem precisar de conta. Nenhum de vocês vê o texto do outro até ao veredicto.",
+      "A outra pessoa escreve o seu lado sem precisar de conta. Nenhum de vocês vê o que o outro escreveu até ao veredicto.",
     "app.case.sendTo": "Envia este link a {name}",
     "app.case.stepYou": "Escreveste o teu lado",
     "app.case.stepYouNote": "Selado até ao veredicto",

@@ -9,8 +9,8 @@ const hu: AppLocale = {
     "app.tab.settings": "Beállítások",
     "app.input.counter": "{count} / {max}",
     "app.history.title": "Ítéleteim",
-    "app.history.empty": "Még nincs ítéleted. Dönts el egy vitát, és itt megjelenik.",
-    "app.history.deviceOnly": "Csak ezen a telefonon van elmentve. Ha innen törölsz egyet, a megosztási linkje attól még működik.",
+    "app.history.empty": "Még nincs ítéleted. Amint eldől az első vitád, itt megjelenik.",
+    "app.history.deviceOnly": "Csak ezen a telefonon vannak elmentve. Ha innen törölsz egyet, a megosztási linkje attól még működik.",
     "app.history.delete": "Törlés",
     "app.history.clearAll": "Összes törlése",
     "app.history.clearConfirm":
@@ -28,14 +28,14 @@ const hu: AppLocale = {
     "app.balance.caseCost": "A link elküldése 1 ítéletbe kerül",
     "app.cancel": "Mégse",
     "app.retry": "Újrapróbálás",
-    "app.error.offline": "Úgy tűnik, nem vagy online. Ellenőrizd az internetkapcsolatot, és próbáld újra.",
+    "app.error.offline": "Úgy tűnik, nincs internetkapcsolatod. Ellenőrizd, és próbáld újra.",
     "app.error.timeout": "A bírák túl lassan válaszoltak. Próbáld újra egy perc múlva.",
     "app.error.interrupted":
       "Megszakadt a kapcsolat, amíg a Judge a háttérben futott. Próbáld újra, és hagyd nyitva az appot, amíg megérkezik az ítélet.",
     "app.turnstile.error": "Nem töltött be az emberellenőrzés. Ellenőrizd az internetkapcsolatot, és próbáld újra.",
-    "app.factcheck.sourceAria": "{title}, megnyitja a weboldalt",
+    "app.factcheck.sourceAria": "{title}, weboldal megnyitása",
     "app.error.badOrigin":
-      "Ez a kérés számunkra ismeretlen helyről jött. Nézd meg, hogy naprakész-e az app, és próbáld újra.",
+      "Ez a kérés számunkra ismeretlen helyről érkezett. Nézd meg, hogy naprakész-e az app, és próbáld újra.",
     "app.translate.offline": "Internet nélkül nem tudunk fordítani, ezért az eredetit mutatjuk.",
     "app.share.title": "Ítélet megosztása",
     "app.settings.language": "Nyelv",
@@ -54,7 +54,7 @@ const hu: AppLocale = {
     "app.signin.codeResend": "Új kód küldése",
     "app.signin.changeEmail": "Másik e-mail-cím használata",
     "app.signin.rateLimited": "Túl sok próbálkozás. Várj egy percet, és próbáld újra.",
-    "app.signin.unavailable": "A belépés most nem elérhető. Próbáld újra később.",
+    "app.signin.unavailable": "A belépés most nem érhető el. Próbáld újra később.",
     "app.account.deleteTitle": "Törlöd a fiókodat?",
     "app.account.deleteBody":
       "A belépési adataid, a kreditjeid, az előfizetésed és a személyes adataid törlődnek, a megosztási linkjeid pedig megszűnnek működni. Az ítéletek szövegét a neved nélkül megőrizzük, ahogy az Adatvédelmi tájékoztató leírja.",
@@ -65,7 +65,7 @@ const hu: AppLocale = {
     "app.account.sessionExpired": "Lejárt a belépésed. A folytatáshoz lépj be újra.",
     "app.close": "Bezárás",
     "app.home.lead": "Írd le mindkét fél verzióját, vagy küldj egy linket a másiknak, hogy ő írja meg a sajátját.",
-    "app.home.leadSolo": "Írd le a te verziódat, és az övét is, ha tudod.",
+    "app.home.leadSolo": "Írd le a te verziódat, és az övét is, ha ismered.",
     "app.home.yourSide": "A te verziód",
     "app.home.theirSide": "Az ő verziója",
     "app.home.yourName": "A neved",
@@ -84,7 +84,7 @@ const hu: AppLocale = {
       "Már megint a felső kosárba raktad a tálakat. Ott sosem lesznek tiszták, arra való az alsó.",
     "app.example.dishwasher.bName": "Ádám",
     "app.example.dishwasher.b":
-      "Simán elférnek fent, és így az alsó kosár szabad marad a lábasoknak. Évek óta így pakolom, és még semmi nem jött ki koszosan.",
+      "Simán elférnek fent, és így az alsó kosár szabad marad a lábasoknak. Évek óta így pakolom, és még soha semmi nem jött ki koszosan.",
     "app.example.bill.aName": "Eszter",
     "app.example.bill.a":
       "Én nem ittam semmit, úgyhogy nem kéne kifizetnem a bor negyedét. Az ételt nyugodtan osszuk el egyenlően.",
@@ -114,7 +114,7 @@ const hu: AppLocale = {
     "app.example.spoiler.b":
       "Három hete jött ki, és azt mondtad, már a végére értél. Nem tudom fejben tartani, ki hol tart.",
     "app.example.jacket.aName": "Dani",
-    "app.example.jacket.a": "Kérdezés nélkül vitted el a farmerdzsekimet a koncertre. Füstszagúan kaptam vissza.",
+    "app.example.jacket.a": "Meg sem kérdeztél, csak felvetted a farmerdzsekimet a koncertre. Füstszagúan kaptam vissza.",
     "app.example.jacket.bName": "Lili",
     "app.example.jacket.b":
       "Az ajtó mellett lógott, és sosem hordod. Megkérdeztelek volna, de aludtál, én meg már késésben voltam.",
@@ -146,8 +146,8 @@ const hu: AppLocale = {
     "app.verdict.back": "Ítélet",
     "app.appeal.title": "Kiegészítés és fellebbezés",
     "app.appeal.intro": "Valami elkerülte a bírák figyelmét? Add hozzá, és újra döntenek. Az első ítélet is megmarad.",
-    "app.appeal.ask": "Mit kell tudniuk?",
-    "app.appeal.placeholder": "Egy tény, egy üzenet vagy az, hogy valójában miben egyeztetek meg.",
+    "app.appeal.ask": "Mit kellene tudniuk?",
+    "app.appeal.placeholder": "Egy tény, egy üzenet vagy az, hogy miben állapodtatok meg valójában.",
     "app.appeal.cost": "1 ítéletbe kerül. Ítéletenként kétszer teheted meg, ebből még {left} maradt.",
     "app.appeal.costCase": "1 ítéletbe kerül. Ügyenként egyszer teheted meg.",
     "app.appeal.submit": "Újraítélés",

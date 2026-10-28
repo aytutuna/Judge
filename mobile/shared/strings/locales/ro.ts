@@ -59,7 +59,7 @@ const ro: AppLocale = {
     "app.signin.unavailable": "Conectarea nu e disponibilă acum. Încearcă mai târziu.",
     "app.account.deleteTitle": "Îți ștergi contul?",
     "app.account.deleteBody":
-      "Se șterg informațiile de conectare, creditele, planul și datele tale personale, iar linkurile tale de distribuire nu vor mai funcționa. Textul verdictelor rămâne stocat fără numele tău, așa cum explică Politica de confidențialitate.",
+      "Se șterg datele de conectare, creditele, planul și informațiile tale personale, iar linkurile tale de distribuire nu vor mai funcționa. Textul verdictelor rămâne stocat fără numele tău, așa cum se explică în Politica de confidențialitate.",
     "app.account.deleteConfirm": "Șterge contul",
     "app.account.deleted": "Contul tău a fost șters.",
     "app.account.signOutConfirm": "Te deconectezi de la Judge pe acest telefon?",
@@ -92,7 +92,7 @@ const ro: AppLocale = {
       "N-am băut nimic, deci n-ar trebui să plătesc un sfert din vin. Mâncarea s-o împărțim egal, cu asta n-am nicio problemă.",
     "app.example.bill.bName": "Vlad",
     "app.example.bill.b":
-      "Mereu împărțim nota la patru și gata. E o bătaie de cap să socotim de fiecare dată cine ce a luat, și oricum nu e mare diferență.",
+      "Mereu împărțim nota la patru și gata. E o bătaie de cap să socotim de fiecare dată cine ce a luat, iar diferența oricum nu e mare.",
     "app.example.thermostat.aName": "Irina",
     "app.example.thermostat.a":
       "Sunt 19 grade aici și mi-e frig și cu hanoracul pe mine. Nu e o nebunie să dăm căldura la 22.",
@@ -103,7 +103,7 @@ const ro: AppLocale = {
     "app.example.roadTrip.a": "Eu am condus toate cele șase ore la dus. E corect să conduci tu la întoarcere.",
     "app.example.roadTrip.bName": "Bogdan",
     "app.example.roadTrip.b":
-      "Ți-am zis înainte de plecare că urăsc să conduc noaptea, și plecăm la 7 seara. Data viitoare conduc eu dimineața.",
+      "Ți-am zis înainte de plecare că urăsc să conduc noaptea, iar noi plecăm la 7 seara. Data viitoare conduc eu dimineața.",
     "app.example.seat.aName": "Diana",
     "app.example.seat.a": "Scaunul meu se lasă pe spate, așa că îl las. E zbor de noapte și toată lumea încearcă să doarmă.",
     "app.example.seat.bName": "Sorin",

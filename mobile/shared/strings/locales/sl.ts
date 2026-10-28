@@ -16,7 +16,7 @@ const sl: AppLocale = {
     "app.history.delete": "Izbriši",
     "app.history.clearAll": "Izbriši vse",
     "app.history.clearConfirm":
-      "Želiš s tega telefona izbrisati vse shranjene razsodbe? Povezave za deljenje bodo še delovale.",
+      "Želiš s tega telefona izbrisati vse shranjene razsodbe? Povezave za deljenje bodo še naprej delovale.",
     "app.history.clearYes": "Da, izbriši vse",
     "app.pricing.free.account": "Prijavi se z Apple, Googlom ali e-pošto",
     "app.pricing.headline": "Prva razsodba gre na naš račun.",
@@ -25,8 +25,8 @@ const sl: AppLocale = {
     "app.pricing.headlineMember": "Več razsodb.",
     "app.pricing.subMember":
       "Izberi paket ali mesečno naročnino. Pri vsaki razsodbi sodelujejo vsi sodniki.",
-    "app.balance.left": "Še {n} razsodb",
-    "app.balance.monthly": "Ta mesec še {left} od {cap}",
+    "app.balance.left": "Na voljo še {n} razsodb",
+    "app.balance.monthly": "Ta mesec na voljo še {left} od {cap}",
     "app.balance.none": "Nimaš več razsodb",
     "app.balance.caseCost": "Pošiljanje povezave porabi 1 razsodbo",
     "app.cancel": "Prekliči",
@@ -51,7 +51,7 @@ const sl: AppLocale = {
     "app.settings.version": "Različica {version}",
     "app.signin.required": "Prijavi se in dobi razsodbo.",
     "app.signin.or": "ali",
-    "app.signin.codeRequest": "Pošlji mi kodo",
+    "app.signin.codeRequest": "Pošlji mi kodo po e-pošti",
     "app.signin.codeSent": "Na {email} smo poslali kodo. Velja 10 minut.",
     "app.signin.codeLabel": "Vpiši 6-mestno kodo",
     "app.signin.codeSubmit": "Prijavi se",
@@ -67,10 +67,10 @@ const sl: AppLocale = {
     "app.signin.unavailable": "Prijava trenutno ni na voljo. Poskusi pozneje.",
     "app.account.deleteTitle": "Želiš izbrisati račun?",
     "app.account.deleteBody":
-      "Podatki za prijavo, krediti, naročnina in tvoji osebni podatki se izbrišejo, povezave za deljenje pa prenehajo delovati. Besedilo razsodb ostane shranjeno brez tvojega imena, kot pojasnjuje politika zasebnosti.",
+      "Izbrišejo se tvoji podatki za prijavo, krediti, naročnina in osebni podatki, povezave za deljenje pa prenehajo delovati. Besedilo razsodb ostane shranjeno brez tvojega imena, kot je pojasnjeno v politiki zasebnosti.",
     "app.account.deleteConfirm": "Izbriši račun",
     "app.account.deleted": "Tvoj račun je izbrisan.",
-    "app.account.signOutConfirm": "Se želiš na tem telefonu odjaviti iz Judge?",
+    "app.account.signOutConfirm": "Se želiš na tem telefonu odjaviti iz aplikacije Judge?",
     "app.account.signedOut": "Odjava je uspela.",
     "app.account.sessionExpired":
       "Seja je potekla. Za nadaljevanje se znova prijavi.",
@@ -88,7 +88,7 @@ const sl: AppLocale = {
       "Kaj pravi druga oseba? Napiši tako, kot bi povedala sama.",
     "app.home.yourSideLabel": "Tvoja plat v prepiru",
     "app.home.theirSideLabel": "Plat druge osebe v prepiru",
-    "app.home.sendLink": "Ali pa drugi osebi pošlji povezavo",
+    "app.home.sendLink": "Ali pa drugi osebi pošlji povezavo, da svojo plat napiše sama",
     "app.home.says": "{name} pravi:",
     "app.home.mySide": "Moja plat:",
     "app.home.otherSide": "Plat druge osebe:",
@@ -107,7 +107,7 @@ const sl: AppLocale = {
       "Vedno vse razdelimo na štiri. Vsakič računati, kdo je kaj imel, je muka, razlika pa tako ali tako ni velika.",
     "app.example.thermostat.aName": "Nina",
     "app.example.thermostat.a":
-      "Tukaj je 19 stopinj in me zebe celo v puloverju s kapuco. 22 stopinj res ni pretirano.",
+      "Tukaj je 19 stopinj in me zebe celo v puloverju s kapuco. Gretje naviti na 22 res ni nič pretiranega.",
     "app.example.thermostat.bName": "Gašper",
     "app.example.thermostat.b":
       "Pri 22 stopinjah se ne da spati, prevroče je. Ti lahko oblečeš še eno plast, jaz pa ne morem sleči ničesar več.",
@@ -131,7 +131,7 @@ const sl: AppLocale = {
       "Serija je izšla pred tremi tedni, ti pa si rekla, da si jo že pogledala do konca. Ne morem si zapomniti, do kod je kdo prišel.",
     "app.example.jacket.aName": "Matej",
     "app.example.jacket.a":
-      "Mojo jeans jakno si brez vprašanja oblekla na koncert. Vrnila si mi jo vso prepojeno z dimom.",
+      "Mojo jeans jakno si oblekla na koncert, ne da bi me vprašala. Vrnila si jo vso smrdečo po dimu.",
     "app.example.jacket.bName": "Eva",
     "app.example.jacket.b":
       "Visela je pri vratih, ti pa je nikoli ne nosiš. Vprašala bi te, ampak si spal, jaz pa sem že tako zamujala.",
@@ -167,7 +167,7 @@ const sl: AppLocale = {
       "So sodniki kaj spregledali? Dodaj to in znova bodo razsodili. Prva razsodba ostane zabeležena.",
     "app.appeal.ask": "Kaj bi morali vedeti?",
     "app.appeal.placeholder":
-      "Dejstvo, sporočilo ali to, kar ste se v resnici dogovorili.",
+      "Dejstvo, sporočilo ali to, kar je bilo v resnici dogovorjeno.",
     "app.appeal.cost":
       "Porabi 1 razsodbo. Pri eni razsodbi lahko to narediš dvakrat – še na voljo: {left}.",
     "app.appeal.costCase":
@@ -192,9 +192,9 @@ const sl: AppLocale = {
   },
   plurals: {
     "app.balance.left": {
-      one: "Še {n} razsodba",
-      two: "Še {n} razsodbi",
-      few: "Še {n} razsodbe",
+      one: "Na voljo še {n} razsodba",
+      two: "Na voljo še {n} razsodbi",
+      few: "Na voljo še {n} razsodbe",
     },
   },
 };

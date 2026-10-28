@@ -11,7 +11,7 @@ const nl: AppLocale = {
     "app.history.title": "Mijn uitspraken",
     "app.history.empty": "Nog geen uitspraken. Leg je eerste discussie voor, dan verschijnt de uitspraak hier.",
     "app.history.deviceOnly":
-      "Alleen op deze telefoon bewaard. Verwijder je er hier een, dan blijft de deellink gewoon werken.",
+      "Alleen op deze telefoon bewaard. Verwijder je hier een uitspraak, dan blijft de deellink gewoon werken.",
     "app.history.delete": "Verwijderen",
     "app.history.clearAll": "Alles verwijderen",
     "app.history.clearConfirm": "Alle bewaarde uitspraken van deze telefoon verwijderen? Deellinks blijven werken.",
@@ -44,7 +44,7 @@ const nl: AppLocale = {
     "app.settings.version": "Versie {version}",
     "app.signin.required": "Log in voor een uitspraak.",
     "app.signin.or": "of",
-    "app.signin.codeRequest": "Stuur me een code",
+    "app.signin.codeRequest": "Mail me een code",
     "app.signin.codeSent": "We hebben een code gemaild naar {email}. Die werkt 10 minuten.",
     "app.signin.codeLabel": "Vul de 6-cijferige code in",
     "app.signin.codeSubmit": "Inloggen",
@@ -57,7 +57,7 @@ const nl: AppLocale = {
     "app.signin.unavailable": "Inloggen lukt nu even niet. Probeer het later opnieuw.",
     "app.account.deleteTitle": "Je account verwijderen?",
     "app.account.deleteBody":
-      "Je inloggegevens, credits, abonnement en persoonsgegevens worden gewist, en je deellinks werken niet meer. De tekst van uitspraken blijft zonder je naam bewaard, zoals uitgelegd in het privacybeleid.",
+      "Je inloggegevens, credits, abonnement en persoonsgegevens worden gewist, en je deellinks werken niet meer. De tekst van uitspraken blijft zonder je naam bewaard, zoals beschreven in het privacybeleid.",
     "app.account.deleteConfirm": "Account verwijderen",
     "app.account.deleted": "Je account is verwijderd.",
     "app.account.signOutConfirm": "Uitloggen bij Judge op deze telefoon?",
@@ -130,9 +130,9 @@ const nl: AppLocale = {
     "app.case.waitingKicker": "Zaak · wacht op antwoord",
     "app.case.waitingFor": "Wachten op {name}",
     "app.case.waitingLead":
-      "{name} schrijft een eigen kant, zonder account. Jullie zien elkaars tekst pas bij de uitspraak.",
+      "{name} schrijft zijn of haar kant, zonder account. Jullie zien elkaars tekst pas bij de uitspraak.",
     "app.case.waitingLeadAnon":
-      "De ander schrijft een eigen kant, zonder account. Jullie zien elkaars tekst pas bij de uitspraak.",
+      "De ander schrijft zijn of haar kant, zonder account. Jullie zien elkaars tekst pas bij de uitspraak.",
     "app.case.sendTo": "Stuur deze link naar {name}",
     "app.case.stepYou": "Jij hebt je kant geschreven",
     "app.case.stepYouNote": "Verzegeld tot de uitspraak",
@@ -145,7 +145,7 @@ const nl: AppLocale = {
     "app.verdict.vs": "tegen",
     "app.verdict.leanTo": "De rechters neigden naar {name}",
     "app.verdict.leanNone": "De rechters neigden geen kant op",
-    "app.verdict.sides": "Waar elke kant op steunt",
+    "app.verdict.sides": "Waar elke kant zich op baseert",
     "app.verdict.claims": "Hoe elke kant tot zijn standpunt kwam",
     "app.verdict.back": "Uitspraak",
     "app.appeal.title": "Iets aanvullen",

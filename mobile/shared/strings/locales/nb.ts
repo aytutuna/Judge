@@ -102,13 +102,13 @@ const nb: AppLocale = {
       "De får fint plass der oppe, og da er underkurven ledig til kjelene. Jeg har fylt maskinen sånn i årevis, og ingenting har kommet ut skittent.",
     "app.example.bill.aName": "Nora",
     "app.example.bill.a":
-      "Jeg drakk ingenting, så jeg burde ikke betale en fjerdedel av vinen. Å dele maten likt har jeg ikke noe imot.",
+      "Jeg drakk ingenting, så jeg burde ikke betale for en fjerdedel av vinen. Å dele maten likt har jeg ikke noe imot.",
     "app.example.bill.bName": "Magnus",
     "app.example.bill.b":
-      "Vi deler jo alltid på fire. Å regne ut hvem som hadde hva hver gang er et ork, og det er uansett ikke stor forskjell.",
+      "Vi deler jo alltid på fire. Å regne ut hvem som hadde hva hver gang, er et ork, og det er uansett ikke stor forskjell.",
     "app.example.thermostat.aName": "Sofie",
     "app.example.thermostat.a":
-      "Det er 19 grader her inne, og jeg fryser selv med hettegenser. Å skru opp til 22 er ikke galskap.",
+      "Det er 19 grader her inne, og jeg fryser selv i hettegenser. Å skru opp til 22 er ikke galskap.",
     "app.example.thermostat.bName": "Jonas",
     "app.example.thermostat.b":
       "22 grader er altfor varmt å sove i. Du kan ta på deg et lag til, jeg kan ikke ta av meg noe mer.",
@@ -117,10 +117,10 @@ const nb: AppLocale = {
       "Jeg kjørte alle de seks timene dit. Det er bare rettferdig at du kjører oss hjem.",
     "app.example.roadTrip.bName": "Lars",
     "app.example.roadTrip.b":
-      "Jeg sa før vi dro at jeg hater å kjøre i mørket, og vi drar klokka sju. På neste tur tar jeg morgenetappene.",
+      "Jeg sa før vi dro, at jeg hater å kjøre i mørket, og vi drar klokka sju. På neste tur tar jeg morgenetappene.",
     "app.example.seat.aName": "Ida",
     "app.example.seat.a":
-      "Setet mitt kan lenes bakover, så det gjør jeg. Det er nattfly, og alle prøver å sove.",
+      "Setet mitt kan lenes bakover, så det gjør jeg. Det er et nattfly, og alle prøver å sove.",
     "app.example.seat.bName": "Martin",
     "app.example.seat.b":
       "Jeg er 191 cm, og knærne mine presser allerede mot setet ditt. Du kunne i det minste spurt før du la det helt bakover.",
@@ -138,10 +138,10 @@ const nb: AppLocale = {
       "Den hang ved døra, og du bruker den aldri. Jeg ville spurt, men du sov, og jeg var allerede sent ute.",
     "app.example.lastSlice.aName": "Emil",
     "app.example.lastSlice.a":
-      "Jeg ropte «siste pizzabit er min» før filmen begynte. Alle hørte det.",
+      "Jeg tinget det siste pizzastykket før filmen begynte. Alle hørte det.",
     "app.example.lastSlice.bName": "Hanna",
     "app.example.lastSlice.b":
-      "Du kan ikke rope «min» og så la den ligge urørt i to timer. Den lå der og ble kald, så jeg spiste den.",
+      "Du kan ikke tinge noe og så la det ligge urørt i to timer. Det lå bare der og ble kaldt, så jeg spiste det.",
     "app.case.waitingKicker": "Sak · venter",
     "app.case.waitingFor": "Venter på {name}",
     "app.case.waitingLead":
@@ -159,8 +159,8 @@ const nb: AppLocale = {
     "app.case.judgeNowWithout": "Døm nå uten {name}",
     "app.verdict.vs": "mot",
     "app.verdict.leanTo": "Dommerne heller mot {name}",
-    "app.verdict.leanNone": "Dommerne tar ikke side",
-    "app.verdict.sides": "Det hver side står på",
+    "app.verdict.leanNone": "Dommerne heller ikke mot noen av sidene",
+    "app.verdict.sides": "Hva hver side bygger på",
     "app.verdict.claims": "Hvordan hver side kom fram til det",
     "app.verdict.back": "Dom",
     "app.appeal.title": "Legg til kontekst og anke",

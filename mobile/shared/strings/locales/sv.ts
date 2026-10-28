@@ -32,7 +32,7 @@ const sv: AppLocale = {
     "app.error.offline": "Du verkar vara offline. Kolla din uppkoppling och försök igen.",
     "app.error.timeout": "Domarna tog för lång tid på sig att svara. Försök igen om en minut.",
     "app.error.interrupted":
-      "Uppkopplingen bröts medan Judge låg i bakgrunden. Försök igen och ha appen öppen tills domen är klar.",
+      "Uppkopplingen bröts medan Judge låg i bakgrunden. Försök igen och låt appen vara öppen tills domen har kommit.",
     "app.turnstile.error": "Människokontrollen kunde inte laddas. Kolla din uppkoppling och försök igen.",
     "app.factcheck.sourceAria": "{title}, öppnas i webbläsaren",
     "app.error.badOrigin":
@@ -46,7 +46,7 @@ const sv: AppLocale = {
     "app.signin.required": "Logga in för att få en dom.",
     "app.signin.or": "eller",
     "app.signin.codeRequest": "Mejla mig en kod",
-    "app.signin.codeSent": "Vi har mejlat en kod till {email}. Den fungerar i 10 minuter.",
+    "app.signin.codeSent": "Vi har mejlat en kod till {email}. Den gäller i 10 minuter.",
     "app.signin.codeLabel": "Skriv in den sexsiffriga koden",
     "app.signin.codeSubmit": "Logga in",
     "app.signin.codeInvalid": "Koden stämmer inte. Kolla mejlet och försök igen.",
@@ -58,7 +58,7 @@ const sv: AppLocale = {
     "app.signin.unavailable": "Det går inte att logga in just nu. Försök igen senare.",
     "app.account.deleteTitle": "Radera ditt konto?",
     "app.account.deleteBody":
-      "Dina inloggningsuppgifter, krediter, ditt abonnemang och dina personuppgifter raderas, och dina delningslänkar slutar fungera. Texten i dina domar sparas kvar utan ditt namn, som beskrivs i integritetspolicyn.",
+      "Dina inloggningsuppgifter, dina krediter, ditt abonnemang och dina personuppgifter raderas, och dina delningslänkar slutar fungera. Texten i dina domar sparas kvar utan ditt namn, som beskrivs i integritetspolicyn.",
     "app.account.deleteConfirm": "Radera konto",
     "app.account.deleted": "Ditt konto är raderat.",
     "app.account.signOutConfirm": "Logga ut från Judge på den här telefonen?",
@@ -66,7 +66,7 @@ const sv: AppLocale = {
     "app.account.sessionExpired": "Du har loggats ut. Logga in igen för att fortsätta.",
     "app.close": "Stäng",
     "app.home.lead": "Skriv båda sidorna, eller skicka en länk så att den andra kan skriva sin.",
-    "app.home.leadSolo": "Skriv din sida, och den andras om du vet den.",
+    "app.home.leadSolo": "Skriv din sida, och den andras om du känner till den.",
     "app.home.yourSide": "Din sida",
     "app.home.theirSide": "Den andras sida",
     "app.home.yourName": "Ditt namn",
@@ -102,18 +102,18 @@ const sv: AppLocale = {
     "app.example.roadTrip.a": "Jag körde hela vägen dit, sex timmar. Det är bara rättvist att du kör hem.",
     "app.example.roadTrip.bName": "Viktor",
     "app.example.roadTrip.b":
-      "Jag sa innan vi åkte att jag hatar att köra i mörker, och vi åker inte förrän sju i kväll. Nästa gång kör jag på morgnarna.",
+      "Jag sa innan vi åkte att jag hatar att köra i mörker, och vi åker sju i kväll. Nästa gång kör jag på morgnarna.",
     "app.example.seat.aName": "Klara",
     "app.example.seat.a": "Mitt säte går att fälla bakåt, så jag fäller det. Det är ett nattflyg och alla försöker sova.",
     "app.example.seat.bName": "Filip",
     "app.example.seat.b":
-      "Jag är 191 cm lång och knäna trycker redan mot ditt säte. Du kunde åtminstone fråga innan du fäller det hela vägen bak.",
+      "Jag är 191 cm lång och knäna trycker redan mot ditt säte. Du kunde åtminstone fråga innan du fäller det ända bak.",
     "app.example.spoiler.aName": "Wilma",
     "app.example.spoiler.a":
       "Du berättade vem mördaren var innan jag ens hade börjat på sista avsnittet. Jag hade väntat på det hela veckan.",
     "app.example.spoiler.bName": "Axel",
     "app.example.spoiler.b":
-      "Det kom ut för tre veckor sedan och du sa att du hade sett klart. Jag kan inte hålla koll på var alla är.",
+      "Det kom ut för tre veckor sedan och du sa att du hade sett klart. Jag kan inte hålla koll på hur långt alla har kommit.",
     "app.example.jacket.aName": "Albin",
     "app.example.jacket.a": "Du hade på dig min jeansjacka på konserten utan att fråga. Den luktade rök när jag fick tillbaka den.",
     "app.example.jacket.bName": "Ebba",
@@ -137,7 +137,7 @@ const sv: AppLocale = {
     "app.case.stepThemAnon": "Den andra skriver sin",
     "app.case.stepThemNote": "Sidan uppdateras när svaret har kommit in",
     "app.case.stepJudges": "Tre domare dömer",
-    "app.case.stepJudgesNote": "Eller döm nu med bara din sida",
+    "app.case.stepJudgesNote": "Eller döm nu på bara din sida",
     "app.case.judgeNowWithout": "Döm nu utan {name}",
     "app.verdict.vs": "mot",
     "app.verdict.leanTo": "Panelen lutade åt {name}",
