@@ -205,6 +205,7 @@
     font-size: 16px;
     line-height: 1.5;
     text-rendering: optimizeLegibility;
+    overflow-wrap: break-word;
     overflow-x: hidden;
   }
   @supports (overflow: clip) {
@@ -214,6 +215,9 @@
   h1, h2, h3 {
     font-family: var(--font-display);
     text-wrap: balance;
+    /* Malayalam and Tamil words can be wider than a phone at display size,
+       and must not widen the grid a heading sits in. */
+    overflow-wrap: anywhere;
   }
 
   p, li, dd, blockquote {
