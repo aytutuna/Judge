@@ -106,7 +106,9 @@ export function fromRow(row: HistoryRow): HistoryItem {
     state: row.state,
     verdict: row.verdict,
     other: named(own === "A" ? "B" : "A"),
-    self: named(own),
+    // In a case the viewer is known to be their party: "You're right" even
+    // when they named themselves.
+    self: row.kind === "verdict" ? named(own) : null,
     yourMove: row.yourMove,
     contextAdded: row.contextAdded,
     removed: row.removed,
@@ -387,8 +389,9 @@ function subscribe(onChange: () => void): () => void {
 }
 
 /** The Verdicts list for this viewer: this browser's entries at once, and the
- * account's list once it loads. */
-export function useHistory(viewer: ViewerState): HistoryView & { loadMore: () => void } {
+ * account's list once it loads. `poll`: while it is on screen, reload the
+ * first page now and then while the judges work on a row. */
+export function useHistory(viewer: ViewerState, poll = false): HistoryView & { loadMore: () => void } {
   const local = useLocalHistory();
   const answered = useLocalAnswered();
   const server = useSyncExternalStore(
@@ -416,7 +419,7 @@ export function useHistory(viewer: ViewerState): HistoryView & { loadMore: () =>
   }, [user]);
 
   const mine = server && server.user === user ? server : null;
-  const thinking = Boolean(mine?.data?.rows.some((r) => THINKING.has(r.state)));
+  const thinking = poll && Boolean(mine?.data?.rows.some((r) => THINKING.has(r.state)));
   useEffect(() => {
     if (!thinking) return;
     const timer = setInterval(() => {

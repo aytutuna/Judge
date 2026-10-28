@@ -14,7 +14,7 @@ import { useHistory } from "./useHistory";
 export function VerdictsView() {
   const lang = useLang();
   const viewer = useViewer();
-  const history = useHistory(viewer);
+  const history = useHistory(viewer, true);
   const [now] = useState(Date.now);
   return (
     <PageShell lang={lang} kicker={t(lang, "shell.history")} title={t(lang, "nav.verdicts")}>
