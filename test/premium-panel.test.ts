@@ -19,6 +19,7 @@ const RUN: JudgeRunOutput = {
   verdict: "side_a",
   dispute_type: "factual",
   headline: "h",
+  why: "w",
   crux: "c",
   split_points: null,
   conditional: null,

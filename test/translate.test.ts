@@ -18,7 +18,7 @@ import {
   translateUserMessage,
   unflattenText,
 } from "../lib/translate";
-import type { VerdictResult } from "../lib/types";
+import { VerdictResult } from "../lib/types";
 import { EN_REPLY, EN_TEXT, TR_ECHO_REPLY, TR_RESULT } from "./translate-fixtures";
 
 beforeEach(() => {
@@ -63,6 +63,16 @@ describe("extractText / applyText", () => {
     expect(TR_RESULT.headline).toBe("İkisi de kısmen haklı");
   });
 
+  it("translates why when the verdict has it and adds none when it doesn't", () => {
+    expect(applyText(TR_RESULT, EN_TEXT, "en").why).toBe(EN_TEXT.why);
+    const { why: _why, ...old } = TR_RESULT;
+    void _why;
+    expect(extractText(old)).not.toHaveProperty("why");
+    const out = applyText(old, extractText(old), "en");
+    expect(out).not.toHaveProperty("why");
+    expect(VerdictResult.safeParse(out).success).toBe(true);
+  });
+
   it("keeps a null lean null and an absent lean absent", () => {
     const tie = applyText({ ...TR_RESULT, lean: null }, { ...EN_TEXT, lean_reason: null }, "en");
     expect(tie.lean).toBeNull();
@@ -78,6 +88,7 @@ describe("segments", () => {
     const flat = flattenText(source).map((s) => s.text);
     expect(unflattenText(source, flat)).toEqual(source);
     const bare = { ...source, split_points: null, conditional: null, lean_reason: null, crux_trial: null };
+    delete bare.why;
     expect(unflattenText(bare, flattenText(bare).map((s) => s.text))).toEqual(bare);
   });
 
@@ -98,6 +109,14 @@ describe("segments", () => {
     const tr = planSegments(EN_TEXT, "tr").segments.find((s) => s.text === EN_TEXT.conditional![0].if_value);
     expect(tr?.note).toContain("-sa/-se");
     expect(en.find((s) => s.text === source.crux)?.note).toBeUndefined();
+  });
+
+  it("sends why right after the headline, as plain text", () => {
+    const en = planSegments(source, "en").segments;
+    expect(en[1]).toEqual({ i: 1, text: source.why });
+    const { why: _why, ...old } = source;
+    void _why;
+    expect(planSegments(old, "en").segments[1].text).toBe(source.crux);
   });
 
   it("reassembles a reply by i, whatever order it comes in", () => {

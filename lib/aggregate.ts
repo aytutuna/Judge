@@ -90,9 +90,12 @@ export function aggregate(runs: JudgeRunOutput[]): VerdictResult {
       return { ...winnerCore, confidence: 2, runs: votes, demo: false };
     }
     // Scattered disagreement: honest "too close to call", but still show the
-    // richest analysis we have so the user sees the map and crux.
+    // richest analysis we have so the user sees the map and crux. The run's
+    // `why` argues for its own verdict, so it goes with the headline.
+    const { why: _why, ...analysis } = core;
+    void _why;
     return {
-      ...core,
+      ...analysis,
       verdict: "too_close",
       confidence: 1,
       headline: "Too close to call",

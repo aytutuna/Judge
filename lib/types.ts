@@ -53,6 +53,8 @@ export const JudgeOutput = z.object({
   verdict: JudgeVerdict,
   dispute_type: DisputeType,
   headline: z.string(),
+  /** What decided it, in a few plain sentences. */
+  why: z.string(),
   crux: z.string(),
   split_points: z
     .array(z.object({ party: z.enum(["a", "b"]), point: z.string() }))
@@ -193,6 +195,9 @@ export type TwoSidedJudgeRunOutput = z.infer<typeof TwoSidedJudgeRunOutput>;
  * from self-consistency (how often the judges agreed), never model-claimed. */
 export const VerdictResult = JudgeOutput.extend({
   verdict: FinalVerdict,
+  /** Optional so rows stored before it existed keep parsing. Also absent on
+   * refusals and "too_close" verdicts. */
+  why: z.string().optional(),
   confidence: z.number().int().min(1).max(5),
   /** Which verdict each self-consistency run reached, for transparency. */
   runs: z.array(JudgeVerdict),

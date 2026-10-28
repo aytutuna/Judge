@@ -90,6 +90,7 @@ const RUN: JudgeRunOutput = {
   verdict: "side_b",
   dispute_type: "factual",
   headline: "Party B is right",
+  why: "Photos from orbit show nothing at that scale. The wall is too narrow to see.",
   crux: "Whether it is visible",
   split_points: null,
   conditional: null,

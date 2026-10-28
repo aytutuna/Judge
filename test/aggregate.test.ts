@@ -17,6 +17,7 @@ function run(
     verdict,
     dispute_type,
     headline: "h",
+    why: "w",
     crux: "c",
     split_points: null,
     conditional: null,
@@ -403,5 +404,34 @@ describe("aggregate with escalated panels (4-7 runs)", () => {
       expect(parsed.data.escalated).toBe(true);
       expect(parsed.data.lean?.tally).toEqual({ for: 3, against: 2 });
     }
+  });
+});
+
+describe("why", () => {
+  it("comes from the representative run", () => {
+    const winner = { ...run("side_a"), why: "Party A's receipt settles it." };
+    const r = aggregate([winner, run("side_a"), run("dissolved")]);
+    expect(r.why).toBe("Party A's receipt settles it.");
+  });
+
+  it("follows the winner run on a low-confidence win", () => {
+    const winner = { ...run("side_a", "factual", "side_a"), why: "winner-w" };
+    const r = aggregate([run("split", "mixed", "side_a"), winner, run("conditional", "values", "side_a")]);
+    expect(r.verdict).toBe("side_a");
+    expect(r.why).toBe("winner-w");
+  });
+
+  it("is dropped with the headline on too_close", () => {
+    const r = aggregate([run("side_a"), run("side_b", "factual", "side_b"), run("dissolved")]);
+    expect(r.verdict).toBe("too_close");
+    expect(r).not.toHaveProperty("why");
+    expect(VerdictResult.safeParse(r).success).toBe(true);
+  });
+
+  it("is optional on stored rows", () => {
+    const { why: _why, ...old } = aggregate([run("side_a")]);
+    void _why;
+    expect(VerdictResult.safeParse(old).success).toBe(true);
+    expect(VerdictResult.parse({ ...old, why: "w" }).why).toBe("w");
   });
 });

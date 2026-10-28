@@ -75,6 +75,7 @@ function summary(r: VerdictResult) {
     escalated: r.escalated ?? false,
     crux_trial: r.crux_trial?.outcome ?? null,
     headline: r.headline,
+    why: r.why ?? null,
     crux: r.crux,
     facts_relied_on: r.facts_relied_on,
     lean: r.lean ?? null,

@@ -13,7 +13,7 @@ import {
   TWO_SIDED_JUDGE_NOTE,
   TWO_SIDED_JUDGE_SCHEMA,
 } from "../lib/judge";
-import { TwoSidedJudgeRunOutput, type JudgeRunOutput } from "../lib/types";
+import { JudgeRunOutput, TwoSidedJudgeRunOutput } from "../lib/types";
 
 const mockClaude = vi.mocked(claudeJson);
 
@@ -21,6 +21,7 @@ const RUN: JudgeRunOutput = {
   verdict: "side_a",
   dispute_type: "factual",
   headline: "h",
+  why: "w",
   crux: "c",
   split_points: null,
   conditional: null,
@@ -71,6 +72,19 @@ describe("TWO_SIDED_JUDGE_SCHEMA", () => {
     expect(TWO_SIDED_JUDGE_SCHEMA.properties.disputed_facts.items.properties.finding.enum).toEqual(["a", "b", "unsettled"]);
   });
 
+  it("asks for why right after the headline in both schemas, and a run needs it", () => {
+    for (const schema of [JUDGE_SCHEMA, TWO_SIDED_JUDGE_SCHEMA]) {
+      expect(schema.properties.why).toEqual({ type: "string" });
+      expect(Object.keys(schema.properties).slice(2, 5)).toEqual(["headline", "why", "crux"]);
+      expect(schema.required).toContain("why");
+    }
+    const { why: _why, ...noWhy } = TWO;
+    void _why;
+    expect(JudgeRunOutput.safeParse(noWhy).success).toBe(false);
+    expect(TwoSidedJudgeRunOutput.safeParse(noWhy).success).toBe(false);
+    expect(TwoSidedJudgeRunOutput.safeParse(TWO).success).toBe(true);
+  });
+
   it("TwoSidedJudgeRunOutput parses a run and rejects a bad finding", () => {
     expect(TwoSidedJudgeRunOutput.parse(TWO).disputed_facts[0].decisive).toBe(true);
     const bad = { ...TWO, disputed_facts: [{ ...TWO.disputed_facts[0], finding: "maybe" }] };
@@ -109,6 +123,14 @@ describe("judgeOnce options", () => {
     expect(c.user).toBe("THE CASE:\n\nPARTY A'S ACCOUNT ...\n\nEVIDENCE ...");
     expect(c.schema).toBe(TWO_SIDED_JUDGE_SCHEMA);
     expect(run.ok && (run.data as typeof TWO).agreed_facts).toEqual(["There was a bill"]);
+  });
+
+  it("a run without why is a schema mismatch", async () => {
+    const { why: _why, ...noWhy } = RUN;
+    void _why;
+    mockClaude.mockResolvedValue({ ok: true, data: noWhy });
+    const run = await judgeOnce("x", {});
+    expect(run.ok).toBe(false);
   });
 
   it("a two-sided run missing the arrays is a schema mismatch", async () => {

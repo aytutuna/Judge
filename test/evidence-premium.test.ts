@@ -60,6 +60,7 @@ const RUN: JudgeRunOutput = {
   verdict: "side_a",
   dispute_type: "factual",
   headline: "Party A paid",
+  why: "The chat shows Party B asking about the bill after it was paid.",
   crux: "Who paid in April",
   split_points: null,
   conditional: null,

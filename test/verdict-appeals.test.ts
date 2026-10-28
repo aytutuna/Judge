@@ -286,6 +286,19 @@ describe("POST /api/v1/verdicts/{id}/appeals", () => {
     expect((await post(body.appeal.id, { user: o })).status).toBe(404);
   });
 
+  it("keeps why on the new verdict and shows it to the summary, where the older verdict has none", async () => {
+    const o = await owner(2);
+    const { id } = await verdict(o);
+    const why = "The receipt shows the payment going out in April.";
+    m.judgeAnonymized.mockResolvedValue(okOutcome(result({ verdict: "side_a", confidence: 4, tier: "premium", why })));
+    const body = (await (await post(id, { user: o })).json()) as VerdictAppealResponse;
+    await drain();
+    const user = String(m.claudeJson.mock.calls.at(-1)![0].user);
+    expect(user).toContain(`NEW VERDICT: side_a\nHeadline: Party B has the stronger case\nWhy: ${why}\nCrux:`);
+    expect(user.split("Why:")).toHaveLength(2);
+    expect((await get(body.appeal.id)).body.result.why).toBe(why);
+  });
+
   it("needs a session, from this site", async () => {
     const o = await owner(2);
     const { id } = await verdict(o);

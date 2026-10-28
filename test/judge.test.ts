@@ -19,6 +19,7 @@ const RUN: JudgeRunOutput = {
   verdict: "side_a",
   dispute_type: "factual",
   headline: "h",
+  why: "w",
   crux: "c",
   split_points: null,
   conditional: null,
@@ -89,7 +90,7 @@ describe("free judge requests stay byte-identical", () => {
   // SHA-256 of the six claudeJson call objects below, taken from the code
   // before the premium options existed. A change here means the FREE judge
   // request changed: only update it for an intentional free-prompt change.
-  const FREE_REQUESTS_SHA256 = "1f932e442dea1927bd255fead6b3edd8510751bb97481e7465e9fe5a83f6939a";
+  const FREE_REQUESTS_SHA256 = "abc0a431cd71d7790fa631bd82c9cb6738b041895930540cf3b6471cd5287d7d";
 
   it("sends exactly the pre-premium requests (no model, effort, context or note)", async () => {
     vi.stubEnv("JUDGE_RUNS", "");
@@ -106,6 +107,7 @@ describe("free judge requests stay byte-identical", () => {
       expect(c.system).toContain(
         "VALUE FRAMEWORK: Weigh values the way broadly shared common-sense morality does: outcomes, fairness, rights, and relationships all count, none automatically dominates.",
       );
+      expect(c.system).toContain("- why: 2-3 plain sentences, at most 60 words, saying what actually decided it");
     }
     expect(createHash("sha256").update(JSON.stringify(calls)).digest("hex")).toBe(FREE_REQUESTS_SHA256);
     vi.unstubAllEnvs();

@@ -26,6 +26,7 @@ export const JUDGE_SCHEMA = {
       enum: ["factual", "logical", "definitional", "values", "mixed"],
     },
     headline: { type: "string" },
+    why: { type: "string" },
     crux: { type: "string" },
     split_points: {
       type: "array",
@@ -78,6 +79,7 @@ export const JUDGE_SCHEMA = {
     "verdict",
     "dispute_type",
     "headline",
+    "why",
     "crux",
     "split_points",
     "conditional",
@@ -133,7 +135,7 @@ export const TWO_SIDED_JUDGE_SCHEMA = twoSidedSchema();
  * can never drop it. */
 const TR_LANGUAGE_BLOCK = `
 
-LANGUAGE: Write every free-text output field (headline, crux, claims, bedrock premises, split points, conditional branches, facts_relied_on, losing_side_best_point, leaning_reason) in Turkish, following the VOICE rules below. Address the reader with informal "sen", never "siz". Refer to the parties as "Taraf A" and "Taraf B" in prose. Write each conditional if_value as a bare conditional clause ending in -sa/-se (e.g. "dürüstlüğe en çok değer veriyorsan"), with no leading "Eğer". Keep all JSON enum values exactly as specified in the schema (English identifiers). headline stays at most 10 words.`;
+LANGUAGE: Write every free-text output field (headline, why, crux, claims, bedrock premises, split points, conditional branches, facts_relied_on, losing_side_best_point, leaning_reason) in Turkish, following the VOICE rules below. Address the reader with informal "sen", never "siz". Refer to the parties as "Taraf A" and "Taraf B" in prose. Write each conditional if_value as a bare conditional clause ending in -sa/-se (e.g. "dürüstlüğe en çok değer veriyorsan"), with no leading "Eğer". Keep all JSON enum values exactly as specified in the schema (English identifiers). headline stays at most 10 words.`;
 
 function systemPrompt(analyzeBFirst: boolean, lang: Lang): string {
   return `You are Verdict, an impartial adjudicator of arguments between two parties.
@@ -161,6 +163,7 @@ VALUE FRAMEWORK: Weigh values the way broadly shared common-sense morality does:
 
 OUTPUT RULES:
 - headline: at most 10 words, punchy, plain language, names the outcome.
+- why: 2-3 plain sentences, at most 60 words, saying what actually decided it: the fact, agreement or reason that tips it, and why the other side's case doesn't outweigh it. For a values call, say which priority tips it; for a conditional or tie, say what it depends on.
 - crux: one sentence, what this argument is REALLY about, said the way you'd say it out loud rather than as a "Whether X or Y" formula.
 - All text concise and concrete — this is displayed on small cards.
 - split_points only for "split" verdicts, otherwise null. conditional only for "conditional" verdicts, otherwise null.

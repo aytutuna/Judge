@@ -1124,6 +1124,8 @@ input ──▶ anonymize (names → Party A/B) ──▶ judge ×N (structured 
 - One well-crafted structured-output prompt does parse → steelman → classify
   claims (fact / value / definition / logic) → bedrock → crux → verdict
   (`lib/judge.ts`), forced through a JSON schema (structured outputs) so it always parses.
+- Each run also writes `why`, two or three sentences on what decided it. Rows
+  stored before it existed have none, and a "too close" verdict drops it.
 - Every verdict uses the same common-sense value framework, written into the
   prompt; it only matters when the crux is a values clash. A `framework` sent
   by older app builds is ignored.

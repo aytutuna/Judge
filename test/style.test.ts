@@ -79,6 +79,7 @@ describe("judge prompt voice", () => {
     expect(block).toContain('informal "sen", never "siz"');
     expect(block).toContain("-sa/-se");
     expect(block).toContain("headline stays at most 10 words");
+    expect(block).toContain("(headline, why, crux,");
     expect(system).not.toContain(HUMAN_STYLE_EN);
   });
 });
