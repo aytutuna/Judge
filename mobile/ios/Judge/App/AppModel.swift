@@ -65,6 +65,9 @@ final class AppModel {
     @ObservationIgnored var appealSeed: (gate: CaseAppealGate, text: String)?
     /// Screenshot states: the Pricing anchor the screen scrolls to; nil = the top.
     @ObservationIgnored var pricingScroll: String?
+    /// Screenshot states: verdicts the Verdicts list opens with picked, in
+    /// select mode.
+    @ObservationIgnored var historySelectionSeed: Set<String>?
     /// Case views created on this phone, so their page opens at once.
     @ObservationIgnored private var caseSeeds: [String: CaseView] = [:]
     /// The other side's name typed on Home, for the waiting page. Only for

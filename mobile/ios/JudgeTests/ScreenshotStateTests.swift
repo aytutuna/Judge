@@ -241,6 +241,8 @@ final class ScreenshotStateTests: XCTestCase {
         XCTAssertEqual(ScreenshotState.parse("case/judged:en")?.screen, .caseDetail(view: "judged"))
         XCTAssertEqual(ScreenshotState.parse("case/judged:en")?.tab, .new)
         XCTAssertEqual(ScreenshotState.parse("history-cases:en")?.tab, .history)
+        XCTAssertEqual(ScreenshotState.parse("history-select:tr")?.screen, .historySelect)
+        XCTAssertEqual(ScreenshotState.parse("history-select:tr")?.tab, .history)
         XCTAssertEqual(ScreenshotState.parse("mode-both:en")?.screen, .modeBoth)
         XCTAssertNil(ScreenshotState.parse("case/:en"))
     }
@@ -266,6 +268,11 @@ final class ScreenshotStateTests: XCTestCase {
             } else {
                 XCTFail("the fixture list is shown")
             }
+
+            let select = try XCTUnwrap(ScreenshotState.parse("history-select:en")).makeModel(container: container)
+            XCTAssertEqual(select.historySelectionSeed, ["abc123DEF0", "winB000001"])
+            XCTAssertNotNil(try select.history.find(id: "winB000001"), "the picked verdicts are in the list")
+            XCTAssertTrue(select.caseListOffered)
 
             let both = try XCTUnwrap(ScreenshotState.parse("mode-both:en")).makeModel(container: container)
             XCTAssertTrue(both.home.isTwoSided(both))

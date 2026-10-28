@@ -86,6 +86,67 @@ final class HistoryStoreTests: XCTestCase {
         }
     }
 
+    /// The account's cases from the fixture, as GET /api/v1/cases answers.
+    private func fixtureCases() throws -> [CaseSummary] {
+        let list = try XCTUnwrap((try Fixtures.verdicts()["cases"] as? [String: Any])?["list"])
+        return try CaseDecoding.list(try JSONSerialization.data(withJSONObject: list))
+    }
+
+    @MainActor
+    func testSelectModePicksSavedVerdictsOnly() throws {
+        try withStore { store in
+            try store.save(try session("win_a_self"), now: Date(timeIntervalSince1970: 300))
+            try store.save(try session("split"), now: Date(timeIntervalSince1970: 200))
+            let cases = try fixtureCases()
+            XCTAssertFalse(cases.isEmpty)
+            let entries = HistoryEntry.merge(saved: try store.all(), cases: cases)
+            let selectable = HistorySelection.selectable(entries)
+            let split = try session("split").id
+            XCTAssertEqual(entries.count, 2 + cases.count)
+            XCTAssertEqual(Set(selectable), ["abc123DEF0", split], "cases are not selectable")
+
+            var selection = HistorySelection()
+            selection.start()
+            XCTAssertTrue(selection.isActive)
+            selection.toggle("abc123DEF0")
+            XCTAssertEqual(selection.ids, ["abc123DEF0"])
+            selection.toggle("abc123DEF0")
+            XCTAssertTrue(selection.ids.isEmpty)
+
+            selection.toggle("abc123DEF0")
+            XCTAssertFalse(selection.allOf(selectable))
+            selection.toggleAll(selectable)
+            XCTAssertEqual(selection.ids, Set(selectable))
+            XCTAssertTrue(selection.allOf(selectable))
+            selection.toggleAll(selectable)
+            XCTAssertTrue(selection.ids.isEmpty, "Deselect all once everything is picked")
+            XCTAssertFalse(HistorySelection().allOf([]), "nothing to pick is never all picked")
+        }
+    }
+
+    @MainActor
+    func testDeletingTheSelectionRemovesThoseRowsAndLeavesSelectMode() throws {
+        try withStore { store in
+            try store.save(try session("win_a_self"))
+            try store.save(try session("split"))
+            try store.save(try session("refused"))
+            let split = try session("split").id
+
+            var selection = HistorySelection()
+            selection.start()
+            selection.toggle("abc123DEF0")
+            selection.toggle(split)
+            XCTAssertEqual(selection.ids.count, 2)
+            selection.deleteSelected(from: store)
+
+            XCTAssertNil(try store.find(id: "abc123DEF0"))
+            XCTAssertNil(try store.find(id: split))
+            XCTAssertEqual(try store.all().count, 1)
+            XCTAssertFalse(selection.isActive)
+            XCTAssertTrue(selection.ids.isEmpty)
+        }
+    }
+
     @MainActor
     func testALaterRulingReplacesWhatTheEntryShows() throws {
         try withStore { store in

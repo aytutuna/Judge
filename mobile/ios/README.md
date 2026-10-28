@@ -90,7 +90,8 @@ account states `balance/welcome` (a new account's free verdict),
 (store prices on the buy buttons, from a fake store), `pricing-buy` (the
 same, scrolled to the packs and the monthly plan), `clarify` and
 `evidence` (picked screenshots in mixed states), and the case states
-`mode-both`, `history-cases` and `case/<state>` (a key of `cases.views` or
+`mode-both`, `history-cases`, `history-select` (select mode, two verdicts
+picked) and `case/<state>` (a key of `cases.views` or
 `awaiting`, `judging`, `judged`, `one-sided`, `appeal`, `appeal-judging`,
 `failed`, `expired`, `removed`; Turkish takes the `_tr` view if there is one).
 Languages: `en`, `tr`. These states draw the flat balance in place of the

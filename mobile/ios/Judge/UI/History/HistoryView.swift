@@ -34,18 +34,64 @@ enum HistoryEntry: Identifiable {
     }
 }
 
+/// Select mode of the Verdicts list. Only verdicts saved on this phone can
+/// be picked: a case has no delete in the app.
+struct HistorySelection: Equatable {
+    var isActive = false
+    var ids: Set<String> = []
+
+    static func selectable(_ entries: [HistoryEntry]) -> [String] {
+        entries.compactMap { entry in
+            if case .savedVerdict(let row) = entry { return row.id }
+            return nil
+        }
+    }
+
+    mutating func start() {
+        isActive = true
+        ids = []
+    }
+
+    mutating func end() {
+        isActive = false
+        ids = []
+    }
+
+    mutating func toggle(_ id: String) {
+        if ids.contains(id) { ids.remove(id) } else { ids.insert(id) }
+    }
+
+    func allOf(_ selectable: [String]) -> Bool {
+        !selectable.isEmpty && ids.isSuperset(of: selectable)
+    }
+
+    mutating func toggleAll(_ selectable: [String]) {
+        ids = allOf(selectable) ? [] : Set(selectable)
+    }
+
+    /// Deletes each picked verdict as its row's own Delete does, then leaves
+    /// select mode.
+    @MainActor
+    mutating func deleteSelected(from history: HistoryStore) {
+        for id in ids { try? history.delete(id: id) }
+        end()
+    }
+}
+
 /// "Verdicts": everything judged on this phone and, signed in where the
 /// server offers cases, the account's cases with their state, newest first.
 struct HistoryView: View {
     @Environment(AppModel.self) private var app
     @Query(sort: \SavedVerdict.createdAt, order: .reverse) private var saved: [SavedVerdict]
-    @State private var confirmClear = false
+    @State private var selection = HistorySelection()
+    @State private var confirmDelete = false
 
     var body: some View {
         let lang = app.lang
         let list = app.caseList
         let casesShown = app.caseListOffered && app.account.isSignedIn
         let entries = HistoryEntry.merge(saved: saved, cases: casesShown ? readyCases : [])
+        let selectable = HistorySelection.selectable(entries)
         Group {
             if entries.isEmpty, casesShown, list.state == .idle || list.state == .loading {
                 message(L10n.caseLoading(lang)) { ProgressView().tint(Brand.muted) }
@@ -59,31 +105,68 @@ struct HistoryView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Brand.ivory.ignoresSafeArea())
-        .navigationTitle(L10n.navVerdicts(lang))
+        .navigationTitle(selection.isActive ? L10n.appHistorySelected(lang, n: selection.ids.count) : L10n.navVerdicts(lang))
         .navigationBarTitleDisplayMode(.inline)
-        .toolbarBackground(Brand.ivory, for: .navigationBar)
-        .toolbar {
-            if !saved.isEmpty {
+        .toolbarBackground(Brand.ivory, for: .navigationBar, .bottomBar)
+        // As in Photos, the delete bar takes the tab bar's place while selecting.
+        .toolbar(selection.isActive ? .hidden : .visible, for: .tabBar)
+        .toolbar { toolbarItems(lang, selectable: selectable) }
+        .confirmationDialog(
+            L10n.appHistoryDeleteConfirm(lang, n: selection.ids.count),
+            isPresented: $confirmDelete,
+            titleVisibility: .visible
+        ) {
+            Button(L10n.appHistoryDelete(lang), role: .destructive) { selection.deleteSelected(from: app.history) }
+            Button(L10n.appCancel(lang), role: .cancel) {}
+        }
+        .onChange(of: app.tab) { _, tab in
+            if tab != .history { selection.end() }
+        }
+        // Each appearance refreshes the cases (they may have changed
+        // meanwhile); signing in loads them. A load already running is not
+        // repeated.
+        .onAppear {
+            if let seed = app.historySelectionSeed {
+                selection.start()
+                selection.ids = seed
+                app.historySelectionSeed = nil
+            }
+            loadCases()
+        }
+        .onChange(of: app.account.isSignedIn) { _, signedIn in
+            if signedIn { loadCases() } else { list.reset() }
+        }
+    }
+
+    @ToolbarContentBuilder
+    private func toolbarItems(_ lang: AppLang, selectable: [String]) -> some ToolbarContent {
+        if selection.isActive {
+            ToolbarItem(placement: .topBarLeading) {
+                Button(selection.allOf(selectable) ? L10n.appHistoryDeselectAll(lang) : L10n.appHistorySelectAll(lang)) {
+                    selection.toggleAll(selectable)
+                }
+            }
+            ToolbarItem(placement: .topBarTrailing) {
+                Button(L10n.appCancel(lang)) { selection.end() }
+                    .fontWeight(.semibold)
+            }
+            ToolbarItem(placement: .bottomBar) {
+                Button(L10n.appHistoryDeleteCount(lang, count: String(selection.ids.count)), role: .destructive) {
+                    confirmDelete = true
+                }
+                .tint(Brand.danger)
+                .disabled(selection.ids.isEmpty)
+            }
+        } else {
+            if !selectable.isEmpty {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button(L10n.appHistoryClearAll(lang), role: .destructive) { confirmClear = true }
-                        .tint(Brand.danger)
+                    Button(L10n.appHistorySelect(lang)) { selection.start() }
                 }
             }
             ToolbarItem(placement: .topBarTrailing) {
                 NewArgumentButton(lang: lang) { app.newArgument() }
                     .disabled(app.home.isBusy)
             }
-        }
-        .confirmationDialog(L10n.appHistoryClearConfirm(lang), isPresented: $confirmClear, titleVisibility: .visible) {
-            Button(L10n.appHistoryClearYes(lang), role: .destructive) { try? app.history.deleteAll() }
-            Button(L10n.appCancel(lang), role: .cancel) {}
-        }
-        // Each appearance refreshes the cases (they may have changed
-        // meanwhile); signing in loads them. A load already running is not
-        // repeated.
-        .onAppear { loadCases() }
-        .onChange(of: app.account.isSignedIn) { _, signedIn in
-            if signedIn { loadCases() } else { list.reset() }
         }
     }
 
@@ -116,29 +199,46 @@ struct HistoryView: View {
                 ForEach(entries) { entry in
                     switch entry {
                     case .savedVerdict(let row):
-                        NavigationLink(value: HistoryRoute.detail(id: row.id)) {
-                            HistoryRow(row: row, lang: lang)
-                        }
-                        .listRowBackground(Brand.paper)
-                        .swipeActions(edge: .trailing, allowsFullSwipe: true) {
-                            Button(role: .destructive) {
-                                try? app.history.delete(id: row.id)
-                            } label: {
-                                Label(L10n.appHistoryDelete(lang), systemImage: "trash")
+                        if selection.isActive {
+                            PickableRow(row: row, lang: lang, selected: selection.ids.contains(row.id)) {
+                                selection.toggle(row.id)
                             }
-                        }
-                        .contextMenu {
-                            Button(role: .destructive) {
-                                try? app.history.delete(id: row.id)
-                            } label: {
-                                Label(L10n.appHistoryDelete(lang), systemImage: "trash")
+                            .listRowBackground(selection.ids.contains(row.id) ? Brand.terraTint : Brand.paper)
+                        } else {
+                            NavigationLink(value: HistoryRoute.detail(id: row.id)) {
+                                HistoryRow(row: row, lang: lang)
+                            }
+                            .listRowBackground(Brand.paper)
+                            .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                                Button(role: .destructive) {
+                                    try? app.history.delete(id: row.id)
+                                } label: {
+                                    Label(L10n.appHistoryDelete(lang), systemImage: "trash")
+                                }
+                            }
+                            .contextMenu {
+                                Button(role: .destructive) {
+                                    try? app.history.delete(id: row.id)
+                                } label: {
+                                    Label(L10n.appHistoryDelete(lang), systemImage: "trash")
+                                }
                             }
                         }
                     case .caseSummary(let summary):
-                        NavigationLink(value: HistoryRoute.caseDetail(id: summary.id)) {
-                            CaseRow(summary: summary, lang: lang)
+                        if selection.isActive {
+                            HStack(spacing: 12) {
+                                SelectCircle(selected: false)
+                                CaseRow(summary: summary, lang: lang)
+                            }
+                            .opacity(0.4)
+                            .disabled(true)
+                            .listRowBackground(Brand.paper)
+                        } else {
+                            NavigationLink(value: HistoryRoute.caseDetail(id: summary.id)) {
+                                CaseRow(summary: summary, lang: lang)
+                            }
+                            .listRowBackground(Brand.paper)
                         }
-                        .listRowBackground(Brand.paper)
                     }
                 }
             } footer: {
@@ -169,6 +269,37 @@ struct HistoryView: View {
         }
         .padding(32)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+}
+
+/// A saved verdict in select mode: a tap picks it instead of opening it.
+private struct PickableRow: View {
+    let row: SavedVerdict
+    let lang: AppLang
+    let selected: Bool
+    let toggle: () -> Void
+
+    var body: some View {
+        Button(action: toggle) {
+            HStack(spacing: 12) {
+                SelectCircle(selected: selected)
+                HistoryRow(row: row, lang: lang)
+            }
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .accessibilityAddTraits(selected ? .isSelected : [])
+    }
+}
+
+private struct SelectCircle: View {
+    let selected: Bool
+
+    var body: some View {
+        Image(systemName: selected ? "checkmark.circle.fill" : "circle")
+            .font(.system(size: 22))
+            .foregroundStyle(selected ? Brand.terraInk : Brand.muted)
+            .accessibilityHidden(true)
     }
 }
 

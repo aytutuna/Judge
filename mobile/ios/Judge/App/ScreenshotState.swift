@@ -19,7 +19,8 @@ import SwiftData
 /// the buy buttons), `pricing-buy` (the same, scrolled to the packs and the
 /// monthly plan), `clarify` (the questions), `evidence` (picked
 /// screenshots in mixed states), `mode-both` (a case being sent),
-/// `history-cases` (the Verdicts list with cases in it) or `case/<state>`: the owner's
+/// `history-cases` (the Verdicts list with cases in it), `history-select` (the
+/// same list in select mode, two verdicts picked) or `case/<state>`: the owner's
 /// case page for a key of `cases.views` or one of the short names `awaiting`,
 /// `judging`, `judged`, `one-sided`, `appeal`, `appeal-judging`, `failed`,
 /// `expired`, `removed` (Turkish takes the `_tr` view when there is one);
@@ -53,6 +54,7 @@ struct ScreenshotState {
         case evidence
         case modeBoth
         case historyCases
+        case historySelect
         case caseDetail(view: String)
     }
 
@@ -66,7 +68,7 @@ struct ScreenshotState {
         case .home, .homeExample, .homeError, .judging, .verdict, .verdictThread, .verdictContext, .signIn, .signInCode,
              .balanceWelcome, .balanceNone, .pricing, .pricingStore, .pricingBuy, .clarify, .evidence, .modeBoth, .caseDetail:
             return .new
-        case .history, .historyCases: return .history
+        case .history, .historyCases, .historySelect: return .history
         case .settings, .account: return .settings
         }
     }
@@ -104,6 +106,7 @@ struct ScreenshotState {
         case "evidence": screen = .evidence
         case "mode-both": screen = .modeBoth
         case "history-cases": screen = .historyCases
+        case "history-select": screen = .historySelect
         default:
             if name.hasPrefix("case/") {
                 let view = String(name.dropFirst("case/".count))
@@ -247,6 +250,11 @@ struct ScreenshotState {
             premium(app, me: "credits7")
             saveSamples(app)
             app.caseList.showForScreenshot(ScreenshotFixtures.caseList())
+        case .historySelect:
+            premium(app, me: "credits7")
+            saveSamples(app)
+            app.caseList.showForScreenshot(ScreenshotFixtures.caseList())
+            app.historySelectionSeed = Set(["win_a_self", "win_b_named"].compactMap { ScreenshotFixtures.session($0)?.id })
         case .caseDetail(let name):
             premium(app, me: "credits7")
             let localized = lang == .tr ? ScreenshotFixtures.caseView(name + "_tr") : nil

@@ -91,7 +91,7 @@ jobs:
           xcrun simctl install "$UDID" "$APP"
           samples=$(python3 -c 'import json; print(" ".join(json.load(open("../shared/fixtures/verdicts.json"))["verdictResponses"]))')
           premium="balance/welcome balance/none pricing pricing-store pricing-buy clarify evidence"
-          cases="mode-both history-cases case/awaiting case/judging case/judged case/one-sided case/appeal case/failed case/expired case/removed"
+          cases="mode-both history-cases history-select case/awaiting case/judging case/judged case/one-sided case/appeal case/failed case/expired case/removed"
           for lang in en tr; do
             for state in home home-example home-error judging verdict-thread history settings signin signin-code account $premium $cases $(for s in $samples; do echo "verdict/$s"; done); do
               xcrun simctl terminate "$UDID" com.okjudge.judge 2>/dev/null || true
