@@ -261,6 +261,11 @@ private struct CaseScreenContent: View {
     private func actionError(_ lang: AppLang) -> some View {
         if let error = model.actionError {
             ErrorBanner(message: ErrorText.message(error, lang: lang))
+            let code = error.code
+            if code == "premium_required" || code == "no_credits" || code == "fair_use" {
+                Button(L10n.tierGetPremium(lang)) { showPricing = true }
+                    .buttonStyle(GhostButtonStyle())
+            }
         }
     }
 
