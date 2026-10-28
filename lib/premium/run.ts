@@ -12,7 +12,7 @@
 import { aggregate } from "../aggregate";
 import { anonymize } from "../anonymize";
 import { withUsageMeter, type UsageTotals } from "../claude";
-import { t, type Lang } from "../i18n";
+import { loadLocales, t, type Lang } from "../i18n";
 import { judgeExtra, type JudgeOptions, type JudgeRun } from "../judge";
 import { applyCruxTrial, runCruxTrial, shouldTryCrux } from "../trial";
 import type {
@@ -277,6 +277,7 @@ export async function judgeAnonymized(
   opts: { startedAt?: number; now?: () => number; stats?: PremiumStats } = {},
 ): Promise<JudgedOutcome> {
   const { text, lang } = input;
+  await loadLocales();
   const now = opts.now ?? Date.now;
   const startedAt = opts.startedAt ?? now();
   const stats = opts.stats ?? { factCheck: "unavailable", claims: 0, escalated: false, trial: false, ms: 0 };

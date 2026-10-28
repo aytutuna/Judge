@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { STRINGS } from "../lib/i18n";
+import { STRINGS } from "./strings";
 import { hyphenRuns, noOrphan, separatorPhrases, stripLeadingEmoji } from "../lib/text";
 
 const NBSP = " ";

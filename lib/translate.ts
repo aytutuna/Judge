@@ -18,7 +18,7 @@
 import { claudeJson, LITE_MODEL, type ClaudeJsonResult, type Effort } from "./claude";
 import { verdictLang } from "./content-lang";
 import { getTranslation, getVerdict, saveTranslation } from "./db";
-import { contentLang, t, type Lang } from "./i18n";
+import { contentLang, loadLocales, t, type Lang } from "./i18n";
 import { LANGS } from "./langs";
 import { z } from "zod";
 import type { VerdictResult } from "./types";
@@ -522,6 +522,7 @@ export async function translateResult(
 ): Promise<{ ok: true; result: VerdictResult } | { ok: false; error: string }> {
   const source = verdictLang(result);
   if (source === target) return { ok: true, result };
+  await loadLocales();
   if (result.model_refused) return { ok: true, result: refusedCopy(result, target) };
 
   const text = extractText(result);

@@ -4,7 +4,7 @@ import { headers } from "next/headers";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { verdictLang } from "@/lib/content-lang";
-import { t, type Lang } from "@/lib/i18n";
+import { loadedDict, loadLocales, t, type Lang } from "@/lib/i18n";
 import { resolveParties, restoreNames } from "@/lib/names";
 import { getPublicVerdict } from "@/lib/originals/display";
 import { publicNameMap } from "@/lib/originals-types";
@@ -14,6 +14,7 @@ import { AppShell } from "@/components/shell/AppShell";
 import { RemovedVerdict } from "@/components/RemovedVerdict";
 import { SharedVerdict } from "@/components/SharedVerdict";
 import { BalanceFallback } from "@/components/scene/BalanceFallback";
+import { LocaleStrings } from "@/components/LocaleStrings";
 import { SITE_NAME } from "@/app/site";
 import styles from "./page.module.css";
 
@@ -32,9 +33,10 @@ const laterRounds = cache(async (id: string): Promise<{ id: string; result: Verd
 });
 
 /** Chrome language follows the viewer's browser (only a LEADING "tr"
- * counts — q-value parsing is deliberately out of scope). */
+ * counts — q-value parsing is deliberately out of scope), its strings loaded. */
 async function viewerLang(): Promise<Lang> {
   const acceptLanguage = (await headers()).get("accept-language") ?? "";
+  await loadLocales();
   return acceptLanguage.toLowerCase().startsWith("tr") ? "tr" : "en";
 }
 
@@ -86,15 +88,17 @@ export default async function SharedVerdictPage({ params }: PageProps<"/v/[id]">
   if (found.removed) {
     // Normally answered by proxy.ts with a 410; this is the fallback.
     return (
-      <AppShell lang={lang}>
-        <main id="main" tabIndex={-1} className={styles.main}>
-          <div className={`wrap ${styles.inner}`}>
-            <div className={styles.card}>
-              <RemovedVerdict lang={lang} headingLevel={1} />
+      <LocaleStrings lang={lang} dict={loadedDict(lang)}>
+        <AppShell lang={lang}>
+          <main id="main" tabIndex={-1} className={styles.main}>
+            <div className={`wrap ${styles.inner}`}>
+              <div className={styles.card}>
+                <RemovedVerdict lang={lang} headingLevel={1} />
+              </div>
             </div>
-          </div>
-        </main>
-      </AppShell>
+          </main>
+        </AppShell>
+      </LocaleStrings>
     );
   }
 
@@ -105,34 +109,36 @@ export default async function SharedVerdictPage({ params }: PageProps<"/v/[id]">
   const current = rounds.at(-1)?.result ?? stored.result;
 
   return (
-    <AppShell lang={lang}>
-      <main id="main" tabIndex={-1} className={styles.main}>
-        <div className={`wrap ${styles.inner}`}>
-          {/* SharedVerdict renders the h1 kicker and the CTA: once the writer
-              is recognized the page becomes their thread instead. */}
-          <SharedVerdict
-            id={id}
-            result={stored.result}
-            createdAt={stored.createdAt}
-            rounds={rounds}
-            initialLang={lang}
-            publicNames={names}
-            kickerClassName={`kicker ${styles.kicker}`}
-            cardClassName={styles.card}
-            balance={<BalanceFallback tugA={tugFinal(current)} className={styles.balance} />}
-            cta={
-              <section aria-labelledby="cta-title" className={styles.cta}>
-                <h2 id="cta-title" className={styles.ctaTitle}>
-                  {t(lang, "shared.ctaLead")}
-                </h2>
-                <Link href="/" className={styles.ctaLink}>
-                  {t(lang, "shared.cta")}
-                </Link>
-              </section>
-            }
-          />
-        </div>
-      </main>
-    </AppShell>
+    <LocaleStrings lang={lang} dict={loadedDict(lang)}>
+      <AppShell lang={lang}>
+        <main id="main" tabIndex={-1} className={styles.main}>
+          <div className={`wrap ${styles.inner}`}>
+            {/* SharedVerdict renders the h1 kicker and the CTA: once the writer
+                is recognized the page becomes their thread instead. */}
+            <SharedVerdict
+              id={id}
+              result={stored.result}
+              createdAt={stored.createdAt}
+              rounds={rounds}
+              initialLang={lang}
+              publicNames={names}
+              kickerClassName={`kicker ${styles.kicker}`}
+              cardClassName={styles.card}
+              balance={<BalanceFallback tugA={tugFinal(current)} className={styles.balance} />}
+              cta={
+                <section aria-labelledby="cta-title" className={styles.cta}>
+                  <h2 id="cta-title" className={styles.ctaTitle}>
+                    {t(lang, "shared.ctaLead")}
+                  </h2>
+                  <Link href="/" className={styles.ctaLink}>
+                    {t(lang, "shared.cta")}
+                  </Link>
+                </section>
+              }
+            />
+          </div>
+        </main>
+      </AppShell>
+    </LocaleStrings>
   );
 }

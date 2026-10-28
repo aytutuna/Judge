@@ -4,7 +4,6 @@ import { leanTally } from "../components/VerdictReveal";
 import { API_ERROR_STATUS, type ApiErrorCode } from "../lib/api-errors";
 import {
   ERROR_KEY_BY_CODE,
-  STRINGS,
   apiErrorMessage,
   contentLang,
   formatDate,
@@ -14,6 +13,7 @@ import {
   type Key,
 } from "../lib/i18n";
 import { partyNames } from "../lib/names";
+import { STRINGS } from "./strings";
 import { FINISH_CAPTION, READY, STILL_JUDGING, THINKING_STEPS } from "../lib/thinking";
 import { VerdictRequest, type Lean } from "../lib/types";
 

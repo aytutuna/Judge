@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { CRUX_SERIF_MAX, cruxStyle } from "../lib/crux-style";
-import { STRINGS } from "../lib/i18n";
+import { STRINGS } from "./strings";
 
 describe("cruxStyle", () => {
   it("sets short cruxes in the display serif", () => {

@@ -3,6 +3,7 @@
 import { useEffect, useId, useMemo, useState, type ReactNode } from "react";
 import { verdictLang } from "@/lib/content-lang";
 import { t, type Lang } from "@/lib/i18n";
+import { useLocaleLang } from "@/lib/lang";
 import type { DisplayState } from "@/lib/originals-types";
 import { useOwnerToken } from "@/lib/owner-store";
 import type { NameMapping, VerdictResult } from "@/lib/types";
@@ -59,7 +60,8 @@ export function SharedVerdict({
   balance?: ReactNode;
   cta?: ReactNode;
 }) {
-  const [lang, setLang] = useState<Lang>(initialLang);
+  const [picked, setPicked] = useState<Lang>(initialLang);
+  const lang = useLocaleLang(picked);
   const token = useOwnerToken(id);
   const viewer = useViewer();
   const signedIn = viewer.status === "ready" || viewer.status === "error" ? Boolean(viewer.me?.user) : null;
@@ -123,7 +125,7 @@ export function SharedVerdict({
       <span className={styles.langLabel} aria-hidden>
         {label}
       </span>
-      <LangToggle lang={lang} onSelect={setLang} label={label} />
+      <LangToggle lang={picked} onSelect={setPicked} label={label} />
     </div>
   );
 

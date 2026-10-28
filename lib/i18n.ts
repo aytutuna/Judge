@@ -1,5 +1,4 @@
-import { langTag, type Lang } from "./langs";
-import tr from "./locales/tr";
+import { ENABLED, importLocale, langTag, type Lang } from "./langs";
 import type { ClaimKind } from "./types";
 
 /**
@@ -8,6 +7,9 @@ import type { ClaimKind } from "./types";
  * templates only interpolate names/numbers into slots the string was
  * designed around (predicate-final in Turkish, so no suffix ever attaches
  * to an inserted name).
+ *
+ * English is built in; every other language lives in lib/locales and is
+ * loaded on demand (loadLocale), reading English until it arrives.
  *
  * Pure module (no "use client") — safe to import from server code.
  */
@@ -669,14 +671,72 @@ export type Locale = {
   strings: Record<Key, string>;
 };
 
-export const STRINGS = { en, tr: tr.strings } as const;
+/** The English table, the source every locale is checked against. */
+export const EN: Record<Key, string> = en;
 
-const TABLES: Partial<Record<Lang, Record<Key, string>>> = STRINGS;
+/** The part of a locale the browser needs. */
+export type Dict = Pick<Locale, "strings">;
+
+const loaded: Partial<Record<Lang, Dict>> = {};
+const pending = new Map<Lang, Promise<void>>();
+const listeners = new Set<() => void>();
+
+/** Makes a language's strings readable by t(). The first one registered stays. */
+export function registerLocale(lang: Lang, dict: Dict): void {
+  if (lang === "en" || loaded[lang]) return;
+  loaded[lang] = dict;
+  for (const fn of listeners) fn();
+}
+
+export function hasStrings(lang: Lang): boolean {
+  return lang === "en" || loaded[lang] !== undefined;
+}
+
+/** The loaded strings of a language, for a server page to hand to the
+ * browser (see LocaleStrings); null for English or when not loaded. */
+export function loadedDict(lang: Lang): Dict | null {
+  const dict = lang === "en" ? undefined : loaded[lang];
+  return dict ? { strings: dict.strings } : null;
+}
+
+/** Fetches an enabled language's strings once. Never rejects: a language
+ * that is not enabled, or a failed download (retried on the next call),
+ * just leaves t() reading English. */
+export function loadLocale(lang: Lang): Promise<void> {
+  if (hasStrings(lang)) return Promise.resolve();
+  let p = pending.get(lang);
+  if (!p) {
+    const mod = importLocale(lang);
+    if (!mod) return Promise.resolve();
+    p = mod.then(
+      (m) => registerLocale(lang, m.default),
+      () => {
+        pending.delete(lang);
+      },
+    );
+    pending.set(lang, p);
+  }
+  return p;
+}
+
+/** Every enabled language. Server code awaits this before writing text in
+ * a language other than English. */
+export async function loadLocales(): Promise<void> {
+  await Promise.all(ENABLED.map(loadLocale));
+}
+
+/** Called whenever a language's strings arrive. */
+export function subscribeLocales(fn: () => void): () => void {
+  listeners.add(fn);
+  return () => {
+    listeners.delete(fn);
+  };
+}
 
 /** Look up a string and interpolate `{var}` slots. Unknown braces are left
- * alone. A language without strings reads English. */
+ * alone. A language whose strings are not loaded reads English. */
 export function t(lang: Lang, key: Key, vars?: Record<string, string | number>): string {
-  let s: string = (TABLES[lang] ?? en)[key];
+  let s: string = (loaded[lang]?.strings ?? en)[key];
   if (vars) {
     for (const [k, v] of Object.entries(vars)) {
       s = s.split(`{${k}}`).join(String(v));

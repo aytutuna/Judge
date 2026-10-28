@@ -4,7 +4,8 @@ import { Faq, FAQ_ITEMS } from "../components/home/Faq";
 import { LangToggle } from "../components/LangToggle";
 import { SiteFooter, SiteHeader } from "../components/SiteChrome";
 import { HOW_STEPS, stepNumeral } from "../lib/how-steps";
-import { STRINGS, t, type Lang } from "../lib/i18n";
+import { t, type Lang } from "../lib/i18n";
+import { STRINGS } from "./strings";
 
 const count = (html: string, needle: string) => html.split(needle).length - 1;
 

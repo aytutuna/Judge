@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 import { ACCENT_A, ACCENT_B, OG_SIZE, OgCard, ogFonts } from "@/components/OgCard";
 import { confidenceLabel, tugFinal, verdictLabel } from "@/lib/verdict-display";
-import { contentLang, t } from "@/lib/i18n";
+import { contentLang, loadLocales, t } from "@/lib/i18n";
 import { resolveParties, restoreNames } from "@/lib/names";
 import { getPublicVerdict } from "@/lib/originals/display";
 import { publicNameMap } from "@/lib/originals-types";
@@ -43,6 +43,7 @@ export default async function Image({ params }: { params: Promise<{ id: string }
     return new Response(null, { status: 503, headers: { "Cache-Control": "no-store" } });
   }
   const fonts = await ogFonts();
+  await loadLocales();
 
   if (found?.removed) {
     const lang = contentLang(`${found.stored.result.headline} ${found.stored.result.crux}`);
