@@ -215,8 +215,11 @@
   h1, h2, h3 {
     font-family: var(--font-display);
     text-wrap: balance;
-    /* Malayalam and Tamil words can be wider than a phone at display size,
-       and must not widen the grid a heading sits in. */
+  }
+
+  /* Malayalam and Tamil words can be wider than a phone at display size,
+     and must not widen the grid a heading sits in. */
+  :is(h1, h2, h3):is(:lang(ml), :lang(ta)) {
     overflow-wrap: anywhere;
   }
 
