@@ -696,9 +696,10 @@ export type Strings = Record<Exclude<Key, LegalKey>, string> & Partial<Record<Le
  * Strings whose {n} counts the thing they name. A language whose nouns take
  * more than a singular and a plural (Russian "2 минуты" but "5 минут") gives
  * them extra forms by Intl.PluralRules category; the base string is the
- * "other" form and stands in for any form left out. The callers already pick
- * a separate singular key for 1, so English and other one/other languages
- * need none.
+ * "other" form and stands in for any form left out. Most callers pick a
+ * separate singular key for 1; the ones in COUNTS_FROM_ONE are handed 1
+ * itself ("2 strong + 1 quick"), so those need a "one" form wherever the
+ * language has one.
  */
 export const COUNT_KEYS = [
   "judgesVoted.other",
@@ -715,6 +716,13 @@ export const COUNT_KEYS = [
 ] as const satisfies readonly Key[];
 
 export type CountKey = (typeof COUNT_KEYS)[number];
+
+export const COUNTS_FROM_ONE = [
+  "panel.strong",
+  "panel.quick",
+  "home.monthLeft",
+  "thread.judgesAgree",
+] as const satisfies readonly CountKey[];
 
 export type PluralForms = Partial<Record<Exclude<Intl.LDMLPluralRule, "other">, string>>;
 

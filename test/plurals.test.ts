@@ -38,6 +38,7 @@ describe("plural forms", () => {
   it("leaves English and Turkish as they were", () => {
     expect(t("en", "wait.minutes", { n: 21 })).toBe("21 minutes");
     expect(t("tr", "wait.minutes", { n: 21 })).not.toMatch(/\{n\}/);
+    expect(t("tr", "panel.quick", { n: 1 })).toBe(t("tr", "panel.quick", { n: 2 }).replace("2", "1"));
   });
 
   it("hands the forms to the browser with the strings", () => {

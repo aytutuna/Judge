@@ -1,5 +1,5 @@
 import { EMAIL_EN } from "../email";
-import { COUNT_KEYS, EN, type CountKey, type Key, type Locale } from "../i18n";
+import { COUNT_KEYS, COUNTS_FROM_ONE, EN, type CountKey, type Key, type Locale } from "../i18n";
 import { langTag, type Lang } from "../langs";
 
 const placeholders = (s: string) => [...new Set(s.match(/\{[A-Za-z]+\}/g) ?? [])].sort().join(" ");
@@ -15,11 +15,13 @@ function sameSlots(key: Key, translated: string): boolean {
 }
 
 /** The plural categories a count string needs besides "other": the ones the
- * language uses for 2 to 1000 (callers already handle 1 with its own key). */
-export function requiredPluralForms(lang: Lang): Intl.LDMLPluralRule[] {
+ * language uses up to 1000, from 2 for a key whose caller handles 1 with a
+ * key of its own, from 1 for the rest (COUNTS_FROM_ONE). */
+export function requiredPluralForms(lang: Lang, key?: CountKey): Intl.LDMLPluralRule[] {
   const rules = new Intl.PluralRules(langTag(lang));
   const seen = new Set<Intl.LDMLPluralRule>();
-  for (let n = 2; n <= 1000; n++) seen.add(rules.select(n));
+  const from = key && (COUNTS_FROM_ONE as readonly CountKey[]).includes(key) ? 1 : 2;
+  for (let n = from; n <= 1000; n++) seen.add(rules.select(n));
   seen.delete("other");
   return [...seen];
 }
@@ -61,7 +63,6 @@ export function checkLocale(lang: Lang, locale: Locale): string[] {
   }
 
   const categories = new Intl.PluralRules(langTag(lang)).resolvedOptions().pluralCategories;
-  const required = requiredPluralForms(lang);
   const plurals = (locale.plurals ?? {}) as Partial<Record<string, Partial<Record<string, unknown>>>>;
   for (const [key, forms] of Object.entries(plurals)) {
     if (!(COUNT_KEYS as readonly string[]).includes(key)) {
@@ -79,7 +80,7 @@ export function checkLocale(lang: Lang, locale: Locale): string[] {
     }
   }
   for (const key of COUNT_KEYS) {
-    for (const category of required) {
+    for (const category of requiredPluralForms(lang, key)) {
       if (plurals[key]?.[category] === undefined) problems.push(`plurals.${key}.${category}: missing`);
     }
   }

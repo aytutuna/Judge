@@ -20,6 +20,20 @@ describe("locale check", () => {
     expect(requiredPluralForms("ar").sort()).toEqual(["few", "many", "two"]);
   });
 
+  it("asks for the form of 1 where the caller can pass 1", () => {
+    expect(requiredPluralForms("de", "wait.minutes")).toEqual([]);
+    expect(requiredPluralForms("de", "panel.quick")).toEqual(["one"]);
+    expect(requiredPluralForms("ja", "panel.quick")).toEqual([]);
+    expect(requiredPluralForms("pl", "home.monthLeft").sort()).toEqual(["few", "many", "one"]);
+    const locale = { voice: 'Refer to the parties as "Party A" and "Party B".', strings: EN, email: EMAIL_EN } as unknown as Locale;
+    expect(checkLocale("es", locale)).toEqual([
+      "plurals.panel.strong.one: missing",
+      "plurals.panel.quick.one: missing",
+      "plurals.home.monthLeft.one: missing",
+      "plurals.thread.judgesAgree.one: missing",
+    ]);
+  });
+
   it("reports what a translator got wrong", () => {
     const strings: Partial<typeof EN> = { ...EN };
     delete strings["nav.skip"];
@@ -57,6 +71,6 @@ describe("locale check", () => {
   it("accepts a locale that leaves the privacy page to English", () => {
     const strings = Object.fromEntries(Object.entries(EN).filter(([k]) => !k.startsWith("privacy.")));
     const locale = { voice: 'Refer to the parties as "Party A" and "Party B".', strings, email: EMAIL_EN } as unknown as Locale;
-    expect(checkLocale("de", locale)).toEqual([]);
+    expect(checkLocale("ja", locale)).toEqual([]);
   });
 });

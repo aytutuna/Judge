@@ -672,6 +672,14 @@ const tr: Locale = {
     "privacy.rights":
       "Judge, Kanada'dan işletilir ve kişisel bilgileri Kanada'nın federal gizlilik yasasına (PIPEDA) göre işler: yalnızca hizmet için gerekeni toplarız, yalnızca bunun için kullanırız ve koruruz; hakkında tuttuklarımızı görmeyi, düzeltmeyi ya da kaldırmayı isteyebilirsin. 30 gün içinde yanıt veririz.",
   },
+  // Turkish says 1 like any other number; these keys can be handed 1, so the
+  // check wants the form spelled out.
+  plurals: {
+    "panel.strong": { one: "{n} güçlü" },
+    "panel.quick": { one: "{n} hızlı" },
+    "home.monthLeft": { one: "Bu ay {cap} kararın {n} tanesi kaldı" },
+    "thread.judgesAgree": { one: "Yargıçlar · {n}/{total} aynı fikirde" },
+  },
 };
 
 export default tr;
