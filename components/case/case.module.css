@@ -308,10 +308,10 @@
   background: var(--paper);
 }
 .accountA {
-  border-inline-start: 4px solid var(--terra);
+  border-inline-start: 4px solid var(--party-a-strong);
 }
 .accountB {
-  border-inline-start: 4px solid var(--sage-strong);
+  border-inline-start: 4px solid var(--party-b-strong);
 }
 .accountHead {
   display: flex;
@@ -717,11 +717,11 @@
   border-radius: 50%;
 }
 .both i:first-child {
-  background: var(--terra);
+  background: var(--party-a-strong);
 }
 .both i:last-child {
   margin-inline-start: -3px;
-  background: var(--sage-strong);
+  background: var(--party-b-strong);
   box-shadow: 0 0 0 1.5px var(--paper);
 }
 .disputes {
@@ -779,16 +779,16 @@
   color: var(--ink);
 }
 .claimA {
-  background: var(--terra-tint);
+  background: var(--party-a-tint);
 }
 .claimA dt {
-  color: var(--terra-ink);
+  color: var(--party-a-ink);
 }
 .claimB {
-  background: var(--sage-tint);
+  background: var(--party-b-tint);
 }
 .claimB dt {
-  color: var(--sage-ink);
+  color: var(--party-b-ink);
 }
 @media (min-width: 560px) {
   .claims {
@@ -806,12 +806,12 @@
   font-weight: 700;
 }
 .finding[data-finding="a"] {
-  background: var(--terra-tint);
-  color: var(--terra-ink);
+  background: var(--party-a-tint);
+  color: var(--party-a-ink);
 }
 .finding[data-finding="b"] {
-  background: var(--sage-tint);
-  color: var(--sage-ink);
+  background: var(--party-b-tint);
+  color: var(--party-b-ink);
 }
 .finding[data-finding="unsettled"] {
   border: 1px solid var(--line-2);

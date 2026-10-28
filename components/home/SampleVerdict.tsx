@@ -15,7 +15,8 @@ import type { Vote } from "../verdict/VoteDots";
 import styles from "./SampleVerdict.module.css";
 
 /** The hot dog case: Party B ("You") wins 3–0, confidence 3 of 3. The 3D
- * story's verdict step uses the same tugA, so the scene and the card agree. */
+ * story's verdict step uses the same tugA, so the scene and the card agree.
+ * "You" is the reader, so the card draws Party B as their own side. */
 export const SAMPLE_TUG_A = 20;
 const SAMPLE_VOTES: readonly Vote[] = ["b", "b", "b"];
 
@@ -78,7 +79,7 @@ export function SampleVerdict({ lang }: { lang: Lang }) {
           <p className={styles.lead}>{t(lang, "sample.lead")}</p>
         </div>
 
-        <div className={styles.cardWrap}>
+        <div className={styles.cardWrap} data-you="b">
           <VerdictCardShell
             ref={cardRef}
             top={
@@ -110,6 +111,7 @@ export function SampleVerdict({ lang }: { lang: Lang }) {
             <BestPointBlock
               title={stripLeadingEmoji(t(lang, "bestPointTitle"))}
               text={t(lang, "sample.bestPoint")}
+              party="a"
             />
             <CardActions again={{ label: t(lang, "footer.home"), href: "/" }} />
           </VerdictCardShell>

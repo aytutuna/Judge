@@ -1,8 +1,11 @@
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import { renderToStaticMarkup } from "react-dom/server";
 import type { VerdictResult } from "../lib/types";
 import { VerdictView } from "../components/VerdictView";
 import { ArgumentMap } from "../components/ArgumentMap";
+import { CaseShell } from "../components/case/CaseScreen";
 import { SampleVerdict, SAMPLE_TUG_A } from "../components/home/SampleVerdict";
 import { VoteDots, voteOf } from "../components/verdict/VoteDots";
 import { t } from "../lib/i18n";
@@ -273,5 +276,44 @@ describe("VoteDots", () => {
 
   it("renders nothing for no votes and no label", () => {
     expect(html(<VoteDots votes={[]} />)).toBe("");
+  });
+});
+
+describe("side colours", () => {
+  const sides = (out: string) => [...out.matchAll(/data-you="([ab])"/g)].map((m) => m[1]);
+
+  it("the writer's own verdict draws Party A as theirs", () => {
+    expect(sides(html(<VerdictView result={base} lang="en" />))).toEqual(["a"]);
+  });
+
+  it("the other side of a case gets Party B in green", () => {
+    expect(sides(html(<VerdictView result={base} lang="en" selfParty="B" viewerIsSelfParty />))).toEqual(["b"]);
+    const shell = html(
+      <CaseShell lang="en" kicker="Case" title="Who pays" you="b" bare>
+        <p>side</p>
+      </CaseShell>,
+    );
+    expect(shell).toMatch(/<main [^>]*data-you="b"/);
+  });
+
+  it("a stranger on a share link sees Party A in green", () => {
+    const out = html(
+      <VerdictView result={base} lang="en" shareId="abc123" nameMap={[{ original: "Sam", replacement: "Party A" }]} publicNames />,
+    );
+    expect(sides(out)).toEqual(["a"]);
+  });
+
+  it("the home sample is the reader's own case: its \"You\" side is green", () => {
+    expect(t("en", "sample.nameB")).toBe("You");
+    expect(sides(html(<SampleVerdict lang="en" />))).toEqual(["b"]);
+  });
+
+  it("party marks on the card use the side tokens, never a fixed colour", () => {
+    const css = readFileSync(join(__dirname, "..", "components", "verdict", "verdict.module.css"), "utf8");
+    for (const sel of [".dotA", ".dotB", ".tugA", ".sealA", ".sealB", ".branchA", ".branchB", ".colHeadA", ".partyChipB", ".claimA"]) {
+      const rule = css.slice(css.indexOf(`${sel} {`), css.indexOf("}", css.indexOf(`${sel} {`)));
+      expect(rule, sel).toMatch(/var\(--party-[ab]/);
+      expect(rule, sel).not.toMatch(/--terra|--sage|rgba/);
+    }
   });
 });

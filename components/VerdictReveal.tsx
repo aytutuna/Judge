@@ -207,7 +207,7 @@ export function VerdictReveal({
               <i
                 aria-hidden
                 className={styles.nameDot}
-                style={{ background: lean.party === "a" ? "var(--terra)" : "var(--sage-strong)" }}
+                style={{ background: `var(--party-${lean.party}-strong)` }}
               />
               {leanIsSelf ? t(lang, "lean.titleSelf") : t(lang, "lean.title", { name: leanName })}
             </p>
