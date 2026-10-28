@@ -121,8 +121,10 @@ final class AppModel {
         let list = historyList
         let store = history
         let purchases = self.purchases
-        account.onSessionEnded = { [weak self, weak purchases] byUser in
-            list.reset()
+        // Weak: the list holds the account, and a strong capture would keep
+        // both alive after the app model is gone.
+        account.onSessionEnded = { [weak self, weak purchases, weak list] byUser in
+            list?.reset()
             self?.historyUser = nil
             self?.historyPath = []
             self?.caseModels = [:]
