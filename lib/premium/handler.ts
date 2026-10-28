@@ -47,9 +47,9 @@ const UNAVAILABLE_MESSAGE = "The judge is unavailable right now — try again in
 const IMPLIED_KEY_WINDOW_MS = 10 * 60_000;
 
 const BLOCK_MESSAGES = {
-  premium_required: "Premium verdicts need credits or a monthly plan.",
-  no_credits: "You have no premium credits left.",
-  fair_use: "You have used this month's premium verdicts.",
+  premium_required: "Verdicts need credits or a monthly plan.",
+  no_credits: "You have no verdicts left.",
+  fair_use: "You have used this month's verdicts.",
 } as const;
 
 function fail(
@@ -83,7 +83,7 @@ async function signedInGate(req: Request): Promise<Gate> {
     return { response: fail("bad_origin", "This request came from another site.") };
   }
   if (!premiumEnabled()) {
-    return { response: fail("not_configured", "Premium is not available on this server right now.") };
+    return { response: fail("not_configured", "Verdicts are not available on this server right now.") };
   }
   return { userId: viewer.user.id, name: viewer.user.name };
 }
@@ -96,7 +96,7 @@ async function limitGate(userId: string, bucket: UserBucket): Promise<NextRespon
     if (!user.ok) {
       if (user.code === "unavailable") return unavailable();
       return user.code === "daily_cap"
-        ? fail("daily_cap", "Premium has used today's capacity — try again tomorrow.", { retryAfterSec: user.retryAfterSec })
+        ? fail("daily_cap", "Judging has reached today's capacity — try again tomorrow.", { retryAfterSec: user.retryAfterSec })
         : fail("rate_limited", "Too many requests from your account — take a breather and try again later.", {
             retryAfterSec: user.retryAfterSec,
           });
@@ -105,7 +105,7 @@ async function limitGate(userId: string, bucket: UserBucket): Promise<NextRespon
     const site = await checkPremiumSiteCap(userId);
     if (!site.ok) {
       if (site.code === "unavailable") return unavailable();
-      return fail("daily_cap", "Premium has used today's capacity — try again tomorrow.", {
+      return fail("daily_cap", "Judging has reached today's capacity — try again tomorrow.", {
         retryAfterSec: site.retryAfterSec,
       });
     }

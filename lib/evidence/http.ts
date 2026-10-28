@@ -13,9 +13,9 @@ import { checkUserLimits } from "@/lib/ratelimit";
 import { handleEvidenceUpload } from "./upload";
 
 const BLOCK_MESSAGES = {
-  premium_required: "Evidence needs Premium credits or a monthly plan.",
-  no_credits: "You have no premium credits left.",
-  fair_use: "You have used this month's premium verdicts.",
+  premium_required: "Evidence needs credits or a monthly plan.",
+  no_credits: "You have no verdicts left.",
+  fair_use: "You have used this month's verdicts.",
 } as const;
 
 function fail(code: ApiErrorCode, error: string, extra: Omit<ApiErrorBody, "code" | "error"> = {}): NextResponse {
