@@ -17,6 +17,8 @@ struct HistoryView: View {
     @State private var selection = HistorySelection()
     @State private var confirming: [String]?
     @State private var webLink: WebLink?
+    /// Rows near the end that are on screen.
+    @State private var tailShown: Set<String> = []
 
     var body: some View {
         let lang = app.lang
@@ -206,9 +208,14 @@ struct HistoryView: View {
                 ForEach(Array(entries.enumerated()), id: \.element.id) { index, entry in
                     row(entry, lang: lang, now: now)
                         .onAppear {
-                            if index >= entries.count - 3, list.next != nil {
+                            guard index >= entries.count - 3 else { return }
+                            tailShown.insert(entry.id)
+                            if list.next != nil {
                                 Task { await list.loadMore(user: app.historyUser) }
                             }
+                        }
+                        .onDisappear {
+                            if tailShown.contains(entry.id) { tailShown.remove(entry.id) }
                         }
                 }
                 if list.next != nil {
@@ -236,6 +243,12 @@ struct HistoryView: View {
             }
         }
         .scrollContentBackground(.hidden)
+        // A page of rows the phone already had doesn't grow the list, so no
+        // new row appears: keep going while the end is on screen.
+        .onChange(of: list.next) { _, next in
+            guard next != nil, !tailShown.isDisjoint(with: entries.suffix(3).map(\.id)) else { return }
+            Task { await list.loadMore(user: app.historyUser) }
+        }
         .refreshable { await list.refresh(user: app.historyUser, enabled: app.account.features.history, force: true) }
     }
 
