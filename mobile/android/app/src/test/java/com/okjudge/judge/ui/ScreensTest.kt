@@ -432,7 +432,7 @@ class ScreensTest {
         var items by mutableStateOf<List<SavedVerdict>?>(emptyList())
         compose.setContent {
             Themed(AppLang.EN) {
-                HistoryScreen(items = items, onOpen = {}, onDelete = {}, onDeleteAll = {}, onNew = {})
+                HistoryScreen(items = items, onOpen = {}, onDelete = {}, onNew = {})
             }
         }
         compose.onNodeWithTag(HistoryTags.EMPTY).assertExists()

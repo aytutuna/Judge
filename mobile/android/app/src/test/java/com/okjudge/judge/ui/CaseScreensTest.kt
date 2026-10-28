@@ -3,6 +3,9 @@ package com.okjudge.judge.ui
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.semantics.SemanticsProperties
+import androidx.compose.ui.test.SemanticsMatcher
+import androidx.compose.ui.test.assert
 import androidx.compose.ui.test.assertContentDescriptionEquals
 import androidx.compose.ui.test.assertIsEnabled
 import androidx.compose.ui.test.assertIsNotEnabled
@@ -304,7 +307,7 @@ class CaseScreensTest {
         val opened = mutableListOf<String>()
         compose.setContent {
             Themed(AppLang.EN) {
-                HistoryScreen(listOf(saved), {}, {}, {}, {}, cases = CaseListState.Ready(list.cases), onOpenCase = { opened += it })
+                HistoryScreen(listOf(saved), {}, {}, {}, cases = CaseListState.Ready(list.cases), onOpenCase = { opened += it })
             }
         }
         compose.onNodeWithText(en.navVerdicts).assertExists()
@@ -328,7 +331,7 @@ class CaseScreensTest {
         compose.setContent {
             Themed(AppLang.EN) {
                 HistoryScreen(
-                    listOf(SavedVerdict(o.id, 1_760_900_000_000L, o.result, o.nameMap, emptyMap())), {}, {}, {}, {},
+                    listOf(SavedVerdict(o.id, 1_760_900_000_000L, o.result, o.nameMap, emptyMap())), {}, {}, {},
                     cases = CaseListState.Error,
                     onRetryCases = { retried++ },
                 )
@@ -338,5 +341,86 @@ class CaseScreensTest {
         compose.onNodeWithTag(HistoryTags.row(o.id)).assertExists()
         compose.onNodeWithText(en.appRetry).performClick()
         assertEquals(1, retried)
+    }
+
+    private fun savedRows(vararg names: String) = names.mapIndexed { i, n ->
+        val o = sample(n)
+        SavedVerdict(o.id, 1_760_900_000_000L - i * 86_400_000L, o.result, o.nameMap, emptyMap())
+    }
+
+    private val cases get() =
+        WireJson.json.decodeFromString(CaseListResponse.serializer(), Fixtures.verdicts["cases"]!!.jsonObject["list"].toString()).cases
+
+    @Test
+    fun history_selectMode_picksVerdicts_notCases() {
+        val saved = savedRows("win_a_self", "win_b_named", "lean_tie")
+        val opened = mutableListOf<String>()
+        compose.setContent {
+            Themed(AppLang.EN) {
+                HistoryScreen(saved, { opened += it }, {}, {}, cases = CaseListState.Ready(cases), onOpenCase = { opened += it })
+            }
+        }
+        compose.onNodeWithTag(HistoryTags.SELECT).performClick()
+        compose.onNodeWithText(en.appHistorySelected(0)).assertExists()
+        compose.onNodeWithTag(HistoryTags.DELETE).assertIsNotEnabled()
+        compose.onNodeWithTag(HistoryTags.SELECT).assertDoesNotExist()
+
+        compose.onNodeWithTag(HistoryTags.row(saved[0].id)).performClick()
+        compose.onNodeWithTag(HistoryTags.row(saved[1].id)).performClick()
+        compose.onNodeWithTag(HistoryTags.row(saved[1].id)).performClick()
+        compose.onNodeWithTag(HistoryTags.row(saved[1].id)).performClick()
+        compose.onNodeWithTag(CaseListTags.row("case0000002")).assertIsNotEnabled().performClick()
+        assertEquals("a tap picks instead of opening", emptyList<String>(), opened)
+        compose.onNodeWithText(en.appHistorySelected(2)).assertExists()
+        compose.onNodeWithText(en.appHistoryDeleteCount("2")).assertIsEnabled()
+        compose.onNodeWithTag(HistoryTags.row(saved[0].id))
+            .assert(SemanticsMatcher.expectValue(SemanticsProperties.StateDescription, en.appHistoryRowSelected))
+        compose.onNodeWithTag(HistoryTags.row(saved[2].id))
+            .assert(SemanticsMatcher.expectValue(SemanticsProperties.StateDescription, en.appHistoryRowNotSelected))
+
+        // Select all takes the three verdicts and none of the cases.
+        compose.onNodeWithText(en.appHistorySelectAll).performClick()
+        compose.onNodeWithText(en.appHistorySelected(3)).assertExists()
+        compose.onNodeWithText(en.appHistoryDeselectAll).performClick()
+        compose.onNodeWithText(en.appHistorySelected(0)).assertExists()
+        compose.onNodeWithText(en.appHistorySelectAll).assertExists()
+
+        compose.onNodeWithTag(HistoryTags.CANCEL).performClick()
+        compose.onNodeWithTag(HistoryTags.SELECT).assertExists()
+        compose.onNodeWithTag(HistoryTags.row(saved[0].id)).performClick()
+        assertEquals(listOf(saved[0].id), opened)
+    }
+
+    @Test
+    fun history_selectMode_deletesThePickedVerdicts_afterAsking_thenLeaves() {
+        val saved = savedRows("win_a_self", "win_b_named", "lean_tie")
+        val deleted = mutableListOf<String>()
+        compose.setContent {
+            Themed(AppLang.EN) { HistoryScreen(saved, {}, { deleted += it }, {}, cases = CaseListState.Ready(cases)) }
+        }
+        compose.onNodeWithTag(HistoryTags.SELECT).performClick()
+        compose.onNodeWithTag(HistoryTags.row(saved[0].id)).performClick()
+        compose.onNodeWithTag(HistoryTags.DELETE).performClick()
+        compose.onNodeWithText("Delete this verdict from this phone? Its share link keeps working.").assertExists()
+        compose.onNodeWithText(en.appCancel).performClick()
+        assertEquals(emptyList<String>(), deleted)
+
+        compose.onNodeWithTag(HistoryTags.row(saved[2].id)).performClick()
+        compose.onNodeWithTag(HistoryTags.DELETE).performClick()
+        compose.onNodeWithText("Delete 2 verdicts from this phone? Their share links keep working.").assertExists()
+        compose.onNodeWithTag(HistoryTags.CONFIRM_DELETE).performClick()
+        assertEquals(setOf(saved[0].id, saved[2].id), deleted.toSet())
+        assertEquals(2, deleted.size)
+        compose.onNodeWithTag(HistoryTags.SELECT).assertExists()
+        compose.onNodeWithTag(HistoryTags.CANCEL).assertDoesNotExist()
+    }
+
+    @Test
+    fun history_hidesSelect_whenOnlyCasesAreListed() {
+        compose.setContent {
+            Themed(AppLang.EN) { HistoryScreen(emptyList(), {}, {}, {}, cases = CaseListState.Ready(cases)) }
+        }
+        compose.onNodeWithTag(CaseListTags.row("case0000001")).assertExists()
+        compose.onNodeWithTag(HistoryTags.SELECT).assertDoesNotExist()
     }
 }

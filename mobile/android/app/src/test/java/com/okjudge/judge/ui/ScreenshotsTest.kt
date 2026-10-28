@@ -9,7 +9,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.onRoot
 import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.unit.dp
@@ -29,6 +31,7 @@ import com.okjudge.judge.i18n.AppLang
 import com.okjudge.judge.i18n.LangPref
 import com.okjudge.judge.ui.components.TopBar
 import com.okjudge.judge.ui.history.HistoryScreen
+import com.okjudge.judge.ui.history.HistoryTags
 import com.okjudge.judge.ui.home.HomeScreen
 import com.okjudge.judge.ui.home.HomeUiState
 import com.okjudge.judge.ui.judging.JudgingScreen
@@ -197,7 +200,7 @@ class ScreenshotsTest {
             val o = sample(n)
             SavedVerdict(o.id, 1_760_900_000_000L - i * 86_400_000L, o.result, o.nameMap, emptyMap())
         }
-        Themed(AppLang.EN) { HistoryScreen(items, {}, {}, {}, {}) }
+        Themed(AppLang.EN) { HistoryScreen(items, {}, {}, {}) }
     }
 
     @Test
@@ -504,8 +507,31 @@ class ScreenshotsTest {
             SavedVerdict(o.id, 1_761_000_000_000L - i * 2 * 86_400_000L, o.result, o.nameMap, emptyMap())
         }
         Themed(AppLang.EN) {
-            HistoryScreen(items, {}, {}, {}, {}, cases = com.okjudge.judge.ui.cases.CaseListState.Ready(list.cases))
+            HistoryScreen(items, {}, {}, {}, cases = com.okjudge.judge.ui.cases.CaseListState.Ready(list.cases))
         }
+    }
+
+    /** Select mode with two verdicts picked; the cases stay dimmed. */
+    @Test
+    fun history_select_en() {
+        val list = WireJson.json.decodeFromString(
+            com.okjudge.judge.core.model.CaseListResponse.serializer(),
+            Fixtures.verdicts["cases"]!!.jsonObject["list"].toString(),
+        )
+        val items = listOf("win_a_self", "win_b_named", "lean_tie").mapIndexed { i, n ->
+            val o = sample(n)
+            SavedVerdict(o.id, 1_761_000_000_000L - i * 2 * 86_400_000L, o.result, o.nameMap, emptyMap())
+        }
+        compose.setContent {
+            Themed(AppLang.EN) {
+                HistoryScreen(items, {}, {}, {}, cases = com.okjudge.judge.ui.cases.CaseListState.Ready(list.cases))
+            }
+        }
+        compose.onNodeWithTag(HistoryTags.SELECT).performClick()
+        compose.onNodeWithTag(HistoryTags.row(items[0].id)).performClick()
+        compose.onNodeWithTag(HistoryTags.row(items[2].id)).performClick()
+        compose.mainClock.advanceTimeBy(5_000)
+        compose.onRoot().captureRoboImage(UiTestSupport.shot("history_select_en"))
     }
 
     @Test

@@ -76,7 +76,7 @@ object CaseListTags {
  * or the removed mark.
  */
 @Composable
-fun CaseRow(c: CaseSummary, onOpen: (String) -> Unit) {
+fun CaseRow(c: CaseSummary, onOpen: (String) -> Unit, enabled: Boolean = true) {
     val s = LocalStrings.current
     val lang = LocalLang.current
     val date = Errors.formatDate(lang, c.createdAt)
@@ -89,7 +89,7 @@ fun CaseRow(c: CaseSummary, onOpen: (String) -> Unit) {
             .clip(JudgeShapes.card)
             .background(Palette.paper)
             .border(1.dp, Palette.line, JudgeShapes.card)
-            .clickable(role = Role.Button) { onOpen(c.id) }
+            .clickable(enabled = enabled, role = Role.Button) { onOpen(c.id) }
             .testTag(CaseListTags.row(c.id))
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(6.dp),

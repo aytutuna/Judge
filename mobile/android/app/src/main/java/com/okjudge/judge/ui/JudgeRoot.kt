@@ -384,7 +384,6 @@ fun JudgeRoot(container: AppContainer, links: StateFlow<Uri?> = MutableStateFlow
                                 items = items,
                                 onOpen = { id -> backStack.add(VerdictKey(id, fresh = false)) },
                                 onDelete = vm::delete,
-                                onDeleteAll = vm::deleteAll,
                                 onNew = onNew,
                                 cases = cases?.first,
                                 onOpenCase = { id -> backStack.add(CaseKey(id)) },

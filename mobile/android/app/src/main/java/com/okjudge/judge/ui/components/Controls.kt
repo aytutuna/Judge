@@ -75,17 +75,17 @@ fun GhostButton(text: String, icon: ImageVector?, onClick: () -> Unit, modifier:
 
 /** A terracotta text action ("Judge another"). */
 @Composable
-fun TextAction(text: String, onClick: () -> Unit, modifier: Modifier = Modifier, color: Color = Palette.terraInk) {
+fun TextAction(text: String, onClick: () -> Unit, modifier: Modifier = Modifier, color: Color = Palette.terraInk, enabled: Boolean = true) {
     Box(
         modifier
             .defaultMinSize(minHeight = 40.dp)
             .clip(JudgeShapes.chip)
             .semantics { role = Role.Button }
-            .clickable(onClick = onClick)
+            .clickable(enabled = enabled, onClick = onClick)
             .padding(horizontal = 10.dp, vertical = 9.dp),
         contentAlignment = Alignment.Center,
     ) {
-        Text(text, style = JudgeType.small.copy(color = color))
+        Text(text, style = JudgeType.small.copy(color = if (enabled) color else color.copy(alpha = 0.4f)))
     }
 }
 
