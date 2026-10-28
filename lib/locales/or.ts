@@ -2,7 +2,7 @@ import type { Locale } from "../i18n";
 
 const or: Locale = {
   voice:
-    'Address the reader as "ଆପଣ" with honorific verb forms ("ଆପଣ ଠିକ୍", "ଯାଞ୍ଚ କରନ୍ତୁ"), never "ତୁମେ" or "ତୁ"; write everyday conversational Odia, not Sanskritized or legal Odia, and common English loanwords (ଲିଙ୍କ୍, ଆପ୍, ମେସେଜ୍) are fine. Refer to the parties as "ପକ୍ଷ A" and "ପକ୍ଷ B" in prose, like names, always with the Latin letters A and B, with nothing in front of them and the label itself never changed; attach case endings straight to the label as to a person\'s name ("ପକ୍ଷ Aଙ୍କ କଥା", "ପକ୍ଷ Bଙ୍କୁ") and use honorific verb forms for them ("ପକ୍ଷ A କହନ୍ତି"). Other people stay "Person C", "Person D" exactly as written. Each conditional if_value is printed after "ଯଦି" and followed by an arrow and the outcome, so write it as a bare conditional clause ending in a finite verb (e.g. "ଆପଣ ସଚ୍ଚୋଟତାକୁ ସବୁଠୁ ବେଶି ଗୁରୁତ୍ୱ ଦିଅନ୍ତି"), with no leading "ଯଦି", no trailing "ତେବେ" and no closing danda. End sentences with the danda "।", use Western digits (1, 2, 3) and curly quotes “ ”.',
+    'Address the reader as "ଆପଣ" with honorific verb forms ("ଆପଣ ଠିକ୍", "ଯାଞ୍ଚ କରନ୍ତୁ"), never "ତୁମେ" or "ତୁ"; write everyday conversational Odia, short, warm and plain, not Sanskritized, bookish or legal Odia, and common English loanwords (ଲିଙ୍କ୍, ଆପ୍, ମେସେଜ୍) are fine. Use the app\'s own words: "ରାୟ" for the verdict, "ଅସଲ କଥା" for the crux, "ମୂଳଦୁଆ" for bedrock, "ଝଗଡ଼ା" or "ବିବାଦ" for the argument. Refer to the parties as "ପକ୍ଷ A" and "ପକ୍ଷ B" in prose, like names, always with the Latin letters A and B, with nothing in front of them and the label itself never changed; attach case endings straight to the label as to a person\'s name ("ପକ୍ଷ Aଙ୍କ କଥା", "ପକ୍ଷ Bଙ୍କୁ") and use honorific verb forms for them ("ପକ୍ଷ A କହନ୍ତି"), repeating the label instead of "ସେ" or "ତାଙ୍କ" whenever it could be unclear who is meant. Other people stay "Person C", "Person D" exactly as written. Each conditional if_value is printed after "ଯଦି" and followed by an arrow and the outcome, so write it as a bare conditional clause ending in a finite verb (e.g. "ଆପଣ ସଚ୍ଚୋଟତାକୁ ସବୁଠୁ ବେଶି ଗୁରୁତ୍ୱ ଦିଅନ୍ତି"), with no leading "ଯଦି", no trailing "ତେବେ" and no closing danda. End sentences with the danda "।", use Western digits (1, 2, 3) and curly quotes “ ”.',
   email: {
     signIn: {
       subject: "ଆପଣଙ୍କ Judge ସାଇନ୍ ଇନ୍ ଲିଙ୍କ୍",
@@ -39,7 +39,7 @@ const or: Locale = {
     getVerdict: "ରାୟ ଜାଣନ୍ତୁ",
     "thinking.eyebrow": "ବିଚାରକମାନେ କ'ଣ କରୁଛନ୍ତି",
     "thinking.read": "ଦୁଇ ପକ୍ଷ ପଢ଼ି ପ୍ରତ୍ୟେକକୁ ପୂରା ସୁଯୋଗ ଦେଉଛୁ…",
-    "thinking.label": "ପ୍ରତ୍ୟେକ ଦାବିକୁ ତଥ୍ୟ, ମୂଲ୍ୟବୋଧ, ସଂଜ୍ଞା ବା ତର୍କ ଭାବେ ବାଛୁଛୁ…",
+    "thinking.label": "ପ୍ରତ୍ୟେକ ଦାବିକୁ ତଥ୍ୟ, ମୂଲ୍ୟବୋଧ, ସଂଜ୍ଞା ବା ତର୍କ ଭାଗରେ ରଖୁଛୁ…",
     "thinking.dig": "ମୂଳଦୁଆ ଯାଏଁ ଖୋଳୁଛୁ…",
     "thinking.reach": "ପ୍ରତ୍ୟେକ ପକ୍ଷ ଅସଲରେ କେଉଁଥି ଉପରେ ଠିଆ, ଖୋଜୁଛୁ…",
     "thinking.crux": "ଅସଲ କଥାଟି ଖୋଜୁଛୁ…",
@@ -58,8 +58,8 @@ const or: Locale = {
     "verdict.tooClose": "ଏତେ ପାଖାପାଖି, କହିହେବ ନାହିଁ",
     "lean.title": "ବାଛିବାକୁ ପଡ଼ିଲେ: {name} ଅଧିକ ଠିକ୍",
     "lean.titleSelf": "ବାଛିବାକୁ ପଡ଼ିଲେ: ଆପଣ ଅଧିକ ଠିକ୍",
-    "lean.unanimous": "ସବୁ ବିଚାରକ ଏହି ପକ୍ଷକୁ ଝୁଙ୍କିଲେ।",
-    "lean.majority": "ବିଚାରକମାନେ {for}–{against} ଭୋଟ୍‌ରେ ଏହି ପକ୍ଷକୁ ଝୁଙ୍କିଲେ।",
+    "lean.unanimous": "ସବୁ ବିଚାରକ ଏହି ପକ୍ଷ ଆଡ଼କୁ ଝୁଙ୍କିଲେ।",
+    "lean.majority": "ବିଚାରକମାନେ {for}–{against} ଭୋଟ୍‌ରେ ଏହି ପକ୍ଷ ଆଡ଼କୁ ଝୁଙ୍କିଲେ।",
     "lean.tie": "ବାଛିବାକୁ ବାଧ୍ୟ କଲେ ବି ବିଚାରକମାନେ ଠିକ୍ ଅଧାଅଧି ବଣ୍ଟି ହୋଇଗଲେ।",
     splitWin: "{name} ଏଥିରେ ଠିକ୍:",
     splitWinSelf: "ଆପଣ ଏଥିରେ ଠିକ୍:",
@@ -159,7 +159,7 @@ const or: Locale = {
     "how.lead": "ଟସ୍ ନାହିଁ। ପ୍ରତ୍ୟେକ ବିବାଦ ସେଇ ସମାନ ପାଞ୍ଚ ପାହାଚ ଦେଇ ଯାଏ।",
     "how.step1.title": "ଦୁଇ ପକ୍ଷକୁ ପୂରା ସୁଯୋଗ",
     "how.step1.body": "ପ୍ରତ୍ୟେକ ପକ୍ଷକୁ ତା'ର ସବୁଠୁ ମଜବୁତ ରୂପରେ ରଖାଯାଏ, ଯାହାକୁ ଆପଣ ଭୁଲ ଭାବୁଛନ୍ତି ତାକୁ ବି।",
-    "how.step2.title": "ଦାବିଗୁଡ଼ିକୁ ବାଛିବା",
+    "how.step2.title": "ଦାବିଗୁଡ଼ିକୁ ଭାଗ କରିବା",
     "how.step2.body":
       "ପ୍ରତ୍ୟେକ ଦାବିକୁ ତଥ୍ୟ, ମୂଲ୍ୟବୋଧ, ସଂଜ୍ଞା ବା ତର୍କ ବୋଲି ଚିହ୍ନିତ କରାଯାଏ, କାରଣ ପ୍ରତ୍ୟେକ ପ୍ରକାରର ସମାଧାନ ଅଲଗା ଢଙ୍ଗରେ ହୁଏ।",
     "how.step3.title": "ଅସଲ କଥା ଖୋଜିବା",
@@ -167,14 +167,14 @@ const or: Locale = {
       "ଏହା ପ୍ରତ୍ୟେକ ପକ୍ଷର ତଳକୁ ମୂଳଦୁଆ ଯାଏଁ ଖୋଳେ, ଆଉ ପୂରା ଝଗଡ଼ା ଯେଉଁ ଗୋଟିଏ କଥାରେ ଅଟକିଛି ତାହା ଖୋଜି ବାହାର କରେ।",
     "how.step4.title": "ତିନି ଜଣ ସ୍ୱାଧୀନ ବିଚାରକ",
     "how.step4.body":
-      "ତିନି ଜଣ ବିଚାରକ ଅଲଗା ଅଲଗା ରାୟ ଦିଅନ୍ତି, ଭୋଟ୍ ପାଖାପାଖି ହେଲେ ଆହୁରି ଆସନ୍ତି। ଭରସା ସ୍କୋର୍ ସେମାନେ କେତେ ଏକମତ ସେଥିରୁ ଆସେ, ସେମାନେ କେତେ ନିଶ୍ଚିତ ଶୁଣାଯାଆନ୍ତି ସେଥିରୁ ନୁହେଁ।",
+      "ତିନି ଜଣ ବିଚାରକ ଅଲଗା ଅଲଗା ରାୟ ଦିଅନ୍ତି, ଭୋଟ୍ ପାଖାପାଖି ହେଲେ ଆହୁରି ଆସନ୍ତି। ଭରସା ସ୍କୋର୍ ସେମାନେ କେତେ ଏକମତ ସେଥିରୁ ଆସେ, ସେମାନେ କେତେ ନିଶ୍ଚିତ ଲାଗନ୍ତି ସେଥିରୁ ନୁହେଁ।",
     "how.step5.title": "ପ୍ରଥମେ ରାୟ, ତା'ପରେ ଜେରା",
     "how.step5.body":
       "ଆପଣ ରାୟ ଓ ଭରସା ସ୍କୋର୍ ପାଆନ୍ତି, ସାଙ୍ଗରେ ଅନ୍ୟ ପକ୍ଷର ସବୁଠୁ ଜୋରଦାର କଥା। ତଥ୍ୟ ଆଧାରରେ ମିଳିଥିବା ଜିତ୍‌କୁ ଅଲଗା ଜେରା କରାଯାଏ, ଆଉ ତାହା ଟଳମଳ ହେଲେ ଆପଣ ଚେତାବନୀ ପାଆନ୍ତି।",
     "sample.title": "ଗୋଟିଏ ରାୟ କେମିତି ଦେଖାଯାଏ",
     "sample.kicker": "ଫଳାଫଳ",
     "sample.lead":
-      "ଏହା ହେଉଛି ସିଙ୍ଗଡ଼ା ମାମଲା।ଆପଣଙ୍କ ରାୟରେ ପ୍ରତ୍ୟେକ ଦାବି ମୂଳଦୁଆ ଯାଏଁ ଖୋଲି ଦେଖାଯିବ, ଆଉ ଯେଉଁ ତଥ୍ୟ ଉପରେ ଭରସା କରାଯାଇଛି ତାହାର ତାଲିକା ବି ରହିବ।",
+      "ଏହା ହେଉଛି ସିଙ୍ଗଡ଼ା ମାମଲା। ଆପଣଙ୍କ ରାୟରେ ବି ପ୍ରତ୍ୟେକ ଦାବିକୁ ମୂଳଦୁଆ ଯାଏଁ ଖୋଳି ଦେଖାଯିବ, ଆଉ ରାୟ ଯେଉଁ ତଥ୍ୟ ଉପରେ ଭରସା କରେ ତାହାର ତାଲିକା ବି ରହିବ।",
     "sample.badge": "ନମୁନା",
     "sample.nameA": "ସୁବ୍ରତ",
     "sample.nameB": "ଆପଣ",
@@ -185,7 +185,7 @@ const or: Locale = {
     "sample.why":
       "ସୁବ୍ରତଙ୍କ ଯୁକ୍ତି କେବଳ ଗଢ଼ଣ ଉପରେ ଠିଆ। ଶବ୍ଦର ଅର୍ଥ ଲୋକେ ତାକୁ କେମିତି ବ୍ୟବହାର କରନ୍ତି ସେଥିରୁ ଆସେ, ଆଉ ରଜରେ ପିଠା ମାଗିଲେ କେହି ସିଙ୍ଗଡ଼ା ଆଣି ଦିଏ ନାହିଁ।",
     "sample.bestPoint":
-      "ଖୋଳ ଭିତରେ ପୁର ଭରା ଜିନିଷ, ଆଉ ମଣ୍ଡା, କାକରା ଭଳି ଅନେକ ପିଠାର ଗଢ଼ଣ ଠିକ୍ ଏମିତି।",
+      "ସିଙ୍ଗଡ଼ା ବି ଖୋଳ ଭିତରେ ପୁର ଭରା ଜିନିଷ, ଆଉ ମଣ୍ଡା, କାକରା ଭଳି ଅନେକ ପିଠାର ଗଢ଼ଣ ଠିକ୍ ଏମିତି।",
     "faq.title": "ଲୋକେ ପଚାରୁଥିବା କଥା",
     "faq.kicker": "ପ୍ରଶ୍ନୋତ୍ତର",
     "faq.fair.q": "ଏହା ନିରପେକ୍ଷ କି?",
@@ -196,7 +196,7 @@ const or: Locale = {
       "ରାୟ ପାଇବାକୁ ଆକାଉଣ୍ଟ ଦରକାର। ନାମ ବଦଳରେ ପକ୍ଷ A ଓ ପକ୍ଷ B ବସାଇବା ପାଇଁ ଆପଣଙ୍କ ଲେଖା ଏକ ବାହାର AI ସେବାକୁ ଯାଏ, ଆଉ କେବଳ ସେହି ରୂପର ବିଚାର ହୁଏ। ଆପଣ ଯାହା ଲେଖିଛନ୍ତି, ନାମ ସମେତ, ଆମେ ଏନକ୍ରିପ୍ଟ କରି ରଖୁ, ଯାହାଫଳରେ ଆପଣ ପୁଣି ଦେଖିପାରିବେ; ଯେକୌଣସି ସମୟରେ ଏହାକୁ ହଟାଇବାକୁ କହିପାରିବେ। ସେୟାର୍ ଲିଙ୍କ୍‌ରେ ଆପଣ ବାଛିଥିବା ନାମ ଦେଖାଯାଏ, ନହେଲେ କୌଣସି ନାମ ନାହିଁ।",
     "faq.powers.q": "ଏହା ପଛରେ କ'ଣ ଅଛି?",
     "faq.powers.a":
-      "ଏକ ବାହାର ପ୍ରଦାତାଙ୍କ AI ମଡେଲ୍। ତିନି ଜଣ ବିଚାରକ ଗୋଟିଏ ସୁଗଠିତ ବିଚାର-ନିର୍ଦ୍ଦେଶ ଉପରେ ଏକାସାଙ୍ଗରେ ଚାଲନ୍ତି, ଭୋଟ୍ ପାଖାପାଖି ହେଲେ ଆହୁରି ଯୋଗ ଦିଅନ୍ତି। ଜିତିଥିବା ତଥ୍ୟଭିତ୍ତିକ ରାୟକୁ ଅଲଗା ଜେରା କରାଯାଏ। ଭରସା ସ୍କୋର୍‌ର ହିସାବ ସାଧା କୋଡ୍, ଯାହା ଗଣେ ବିଚାରକମାନେ କେତେ ଥର ଏକମତ ହୁଅନ୍ତି।",
+      "ଏକ ବାହାର ପ୍ରଦାତାଙ୍କ AI ମଡେଲ୍। ତିନି ଜଣ ବିଚାରକ ଏକାସାଙ୍ଗରେ ଗୋଟିଏ ବନ୍ଧା ବିଚାର-ନିର୍ଦ୍ଦେଶ ମାନି କାମ କରନ୍ତି, ଭୋଟ୍ ପାଖାପାଖି ହେଲେ ଆହୁରି ଯୋଗ ଦିଅନ୍ତି। ଜିତିଥିବା ତଥ୍ୟଭିତ୍ତିକ ରାୟକୁ ଅଲଗା ଜେରା କରାଯାଏ। ଭରସା ସ୍କୋର୍‌ର ହିସାବ ସାଧା କୋଡ୍, ଯାହା ଗଣେ ବିଚାରକମାନେ କେତେ ଥର ଏକମତ ହୁଅନ୍ତି।",
     "faq.taste.q": "ଯଦି ଏହା କେବଳ ରୁଚିର କଥା?",
     "faq.taste.a":
       "ତେବେ ଏହା ସେଇଆ କହିବ: “ଆପଣଙ୍କ ମୂଲ୍ୟବୋଧ ଉପରେ ନିର୍ଭର କରେ” ବା “ଶବ୍ଦ ସମାନ, ଅର୍ଥ ଅଲଗା”। ତଥାପି ବିଚାରକମାନେ କେଉଁ ଆଡ଼କୁ ଝୁଙ୍କୁଛନ୍ତି ତାହା ଦେଖିବେ, “ବାଛିବାକୁ ପଡ଼ିଲେ” ବୋଲି ସ୍ପଷ୍ଟ ଲେଖା ସହିତ।",
@@ -215,7 +215,7 @@ const or: Locale = {
     "about.title": "Judge ବିଷୟରେ",
     "about.kicker": "ଆମେ କେମିତି ବିଚାର କରୁ",
     "about.lead":
-      "Judge ହେଉଛି ଦୈନନ୍ଦିନ ଝଗଡ଼ା ପାଇଁ ଗୋଟିଏ ଛୋଟ, ମୁହଁ ଉପରେ କହିଦେଉଥିବା ରେଫରି। କେଉଁ କଥାକୁ ନେଇ ଝଗଡ଼ା ହେଉଛି କୁହନ୍ତୁ, ଆଉ ଏହା କହିବ କିଏ ଠିକ୍। ନହେଲେ, ଯାହା ସମାନ କାମର, କାହିଁକି କେହି ବି ଠିକ୍ ନୁହଁନ୍ତି।",
+      "Judge ହେଉଛି ଦୈନନ୍ଦିନ ଝଗଡ଼ା ପାଇଁ ଗୋଟିଏ ଛୋଟ, ମୁହଁ ଉପରେ କହିଦେଉଥିବା ରେଫରି। କେଉଁ କଥାକୁ ନେଇ ଝଗଡ଼ା ହେଉଛି କୁହନ୍ତୁ, ଆଉ ଏହା କହିବ କିଏ ଠିକ୍। ନହେଲେ କାହିଁକି କେହି ଠିକ୍ ନୁହଁନ୍ତି, ଯାହା ଜାଣିବା ବି ସେତିକି କାମର।",
     "about.honestTitle": "ସଚ୍ଚୋଟ ଲେବଲ୍",
     "about.honest":
       "ପ୍ରତ୍ୟେକ ଝଗଡ଼ାରେ ଜଣେ ଜିତେ ନାହିଁ। ରାୟ ସ୍ପଷ୍ଟ ଜିତ୍, ବିଭକ୍ତ ରାୟ, “ଆପଣଙ୍କ ମୂଲ୍ୟବୋଧ ଉପରେ ନିର୍ଭର କରେ” ବା “ଶବ୍ଦ ସମାନ, ଅର୍ଥ ଅଲଗା” ହୋଇପାରେ। ତଥାପି ଜଣେ ବିଜେତା ଚାହିଁଲେ, “ବାଛିବାକୁ ପଡ଼ିଲେ” ବୋଲି ସ୍ପଷ୍ଟ ଲେଖାଥିବା ଏକ ରାୟ ପାଇବେ।",
@@ -368,7 +368,7 @@ const or: Locale = {
     "error.in_progress": "ସେହି ରାୟ ଉପରେ ଏବେ ବି କାମ ଚାଲିଛି। ଟିକେ ଅପେକ୍ଷା କରନ୍ତୁ।",
     "error.bad_origin": "ଏହି ଅନୁରୋଧ ଆମେ ଚିହ୍ନୁନଥିବା ଜାଗାରୁ ଆସିଲା। ପୃଷ୍ଠାଟି ରିଲୋଡ୍ କରି ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ।",
     "error.not_found": "ତାହା ମିଳିଲା ନାହିଁ।",
-    "error.case_closed": "ଏହି ମାମଲା ଆଉ ଏହା ନେଉନାହିଁ।",
+    "error.case_closed": "ଏହି ମାମଲାରେ ଏହା ଆଉ କରିହେବ ନାହିଁ।",
     "error.case_expired": "ଏହି ନିମନ୍ତ୍ରଣର ମିଆଦ ସରିଗଲା।",
     "error.appeal_used": "ଆପଣ ଏହି ମାମଲାରେ ଆଗରୁ ବିବରଣୀ ଯୋଡ଼ିସାରିଛନ୍ତି।",
     "error.appeal_limit": "ଆପଣ ଏହି ରାୟରେ ଦୁଇ ଥର ବିବରଣୀ ଯୋଡ଼ିସାରିଲେଣି। ଗୋଟିଏ ରାୟରେ ଏତିକି ହିଁ ଯୋଡ଼ିହୁଏ।",
@@ -395,7 +395,7 @@ const or: Locale = {
     "case.loadFailed": "ଏହି ମାମଲା ଲୋଡ୍ କରିପାରିଲୁ ନାହିଁ। ଟିକେ ପରେ ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ।",
     "case.notFound": "ଏହି ମାମଲା ମିଳିଲା ନାହିଁ। ହୁଏତ ଡିଲିଟ୍ ହୋଇଯାଇଛି, ନହେଲେ ଅନ୍ୟ ଆକାଉଣ୍ଟର।",
     "case.signIn": "ଆପଣଙ୍କ ମାମଲା ଦେଖିବାକୁ ସାଇନ୍ ଇନ୍ କରନ୍ତୁ।",
-    "case.status.awaiting": "ଅନ୍ୟ ପକ୍ଷକୁ ଅପେକ୍ଷା",
+    "case.status.awaiting": "ଅନ୍ୟ ପକ୍ଷର ଅପେକ୍ଷାରେ",
     "case.status.judging": "ବିଚାରକମାନେ କାମରେ ଲାଗିଛନ୍ତି",
     "case.status.judged": "ରାୟ",
     "case.status.failed": "ବିଚାରକମାନେ ଶେଷ କରିପାରିଲେ ନାହିଁ",
@@ -493,9 +493,9 @@ const or: Locale = {
     "twoSided.badge": "ଦୁଇ ପକ୍ଷର କଥା ଶୁଣାଗଲା",
     "twoSided.agreed": "ଦୁହେଁ ଯେଉଁଥିରେ ସହମତ",
     "twoSided.disputed": "ଯେଉଁଥିରେ ମତଭେଦ",
-    "twoSided.finding.a": "ଝୁଙ୍କ {name} ଆଡ଼କୁ",
-    "twoSided.finding.b": "ଝୁଙ୍କ {name} ଆଡ଼କୁ",
-    "twoSided.finding.self": "ଝୁଙ୍କ ଆପଣଙ୍କ ଆଡ଼କୁ",
+    "twoSided.finding.a": "{name}ଙ୍କ ଆଡ଼କୁ ଝୁଙ୍କ",
+    "twoSided.finding.b": "{name}ଙ୍କ ଆଡ଼କୁ ଝୁଙ୍କ",
+    "twoSided.finding.self": "ଆପଣଙ୍କ ଆଡ଼କୁ ଝୁଙ୍କ",
     "twoSided.finding.unsettled": "ଅନିଶ୍ଚିତ",
     "twoSided.decisive": "ରାୟ ଏଥି ଉପରେ ନିର୍ଭର କରେ",
     "twoSided.wouldChange": "କ'ଣ ଏହି ରାୟ ବଦଳାଇପାରନ୍ତା",
@@ -604,9 +604,9 @@ const or: Locale = {
     "owner.unreadable": "ଆପଣ ଯାହା ଲେଖିଥିଲେ ତାହା ଏବେ ଦେଖାଯାଇପାରୁନାହିଁ।",
     "owner.claim": "ଏହି ରାୟ ଆପଣଙ୍କ ଆକାଉଣ୍ଟରେ ରଖନ୍ତୁ",
     "owner.claimed": "ଏହି ରାୟ ଏବେ ଆପଣଙ୍କ ଆକାଉଣ୍ଟରେ ଅଛି।",
-    "owner.case": "ଏହି ରାୟ ଏକ ମାମଲାର ଅଂଶ।ଏହାର ନାମ ବଦଳାଇବା ବା ଏହାକୁ ହଟାଇବା ପାଇଁ ମାମଲା ପୃଷ୍ଠାକୁ ଯାଆନ୍ତୁ।",
+    "owner.case": "ଏହି ରାୟ ଏକ ମାମଲାର ଅଂଶ। ଏହାର ନାମ ବଦଳାଇବାକୁ ବା ଏହାକୁ ହଟାଇବାକୁ ମାମଲା ପୃଷ୍ଠାକୁ ଯାଆନ୍ତୁ।",
     "owner.caseRespondent":
-      "ଏହି ରାୟ ଆପଣ ଉତ୍ତର ଦେଇଥିବା ଏକ ମାମଲାର ଅଂଶ।ନିଜ ନାମ ବଦଳାଇବା ବା ନିଜ କଥା ହଟାଇବା ପାଇଁ, ଯେଉଁ ନିମନ୍ତ୍ରଣ ଲିଙ୍କ୍‌ରୁ ଉତ୍ତର ଦେଇଥିଲେ ତାହା ଖୋଲନ୍ତୁ।",
+      "ଏହି ରାୟ ଆପଣ ଉତ୍ତର ଦେଇଥିବା ଏକ ମାମଲାର ଅଂଶ। ନିଜ ନାମ ବଦଳାଇବାକୁ ବା ନିଜ କଥା ହଟାଇବାକୁ, ଯେଉଁ ନିମନ୍ତ୍ରଣ ଲିଙ୍କ୍‌ରୁ ଉତ୍ତର ଦେଇଥିଲେ ତାହା ଖୋଲନ୍ତୁ।",
     "owner.caseLink": "ମାମଲା ଖୋଲନ୍ତୁ",
     "account.verdicts.title": "ଆପଣଙ୍କ ରାୟ",
     "account.verdicts.empty": "ଏଯାଏଁ କୌଣସି ରାୟ ନାହିଁ।",
@@ -653,7 +653,7 @@ const or: Locale = {
     "stamp.conditional": "ସର୍ତ୍ତସାପେକ୍ଷ",
     "stamp.tooClose": "ବହୁତ ପାଖାପାଖି",
     "stamp.dissolved": "ଅର୍ଥଭେଦ",
-    "bestPoint.of": "{name} ପାଇଁ ସବୁଠୁ ଜୋରଦାର କଥା",
+    "bestPoint.of": "{name}ଙ୍କ ସବୁଠୁ ଜୋରଦାର କଥା",
     "bestPoint.self": "ଆପଣଙ୍କ ସବୁଠୁ ଜୋରଦାର କଥା",
     "privacy.accessTitle": "କିଏ କ'ଣ ଦେଖିପାରେ",
     "privacy.access":
