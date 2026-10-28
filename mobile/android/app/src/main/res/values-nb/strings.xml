@@ -403,6 +403,8 @@
     <string name="case_appeal_original">Konteksten du la til, slik du skrev den</string>
     <string name="case_display_name">Navnet ditt på den delte dommen</string>
     <string name="case_display_save">Lagre navn</string>
+    <string name="respond_keep">Keep this case in your account</string>
+    <string name="respond_kept">This case is in your account now. It shows on your Verdicts page on every device.</string>
     <string name="respond_remove">Fjern min side</string>
     <string name="respond_remove_confirm">Vil du fjerne originalteksten og visningsnavnet ditt? Delingslenkene til saken slutter å virke (forhåndsvisninger som allerede er lagt ut i chatter, kan fortsatt vises til appene oppdaterer dem). Dette kan ikke angres.</string>
     <string name="names_title">Navn på den delte siden</string>
@@ -418,6 +420,22 @@
     <string name="shell_new">Ny diskusjon</string>
     <string name="shell_today">I dag</string>
     <string name="shell_load_failed">Vi fikk ikke lastet historikken din.</string>
+    <string name="shell_load_more">Vis flere</string>
+    <string name="shell_untitled">Dom uten tittel</string>
+    <string name="history_state_judging">Judges thinking</string>
+    <string name="history_state_rejudging">Judges thinking again</string>
+    <string name="history_state_failed">Didn\'t finish</string>
+    <string name="history_state_rejudge_failed">New context didn\'t go through</string>
+    <string name="history_state_waiting">Waiting for %1$s to answer</string>
+    <string name="history_state_waiting_other">Waiting for the other side to answer</string>
+    <string name="history_state_expired">Link expired</string>
+    <string name="history_state_removed">Removed</string>
+    <string name="history_state_removed_by">Removed by %1$s</string>
+    <string name="history_state_removed_by_other">Removed by the other side</string>
+    <string name="history_state_ready">Verdict ready</string>
+    <string name="history_context_added">After new context</string>
+    <string name="history_your_move">Your turn</string>
+    <string name="history_answered">You answered</string>
     <string name="thread_label">Denne diskusjonen</string>
     <string name="thread_you">Du skrev</string>
     <string name="thread_judges">Dommerne</string>
@@ -474,6 +492,21 @@
     </plurals>
     <string name="app_history_row_selected">Valgt</string>
     <string name="app_history_row_not_selected">Ikke valgt</string>
+    <string name="app_history_phone_only">Only on this phone</string>
+    <string name="app_history_phone_only_note">Not in your account: these are saved on this phone only. Deleting one here doesn\'t take down its share link.</string>
+    <plurals name="app_history_remove_confirm">
+        <item quantity="one">Remove this verdict from your account? What you wrote and the names are erased and its share link stops working, on every device. This can\'t be undone.</item>
+        <item quantity="other">Remove %1$s verdicts from your account? What you wrote and the names are erased and their share links stop working, on every device. This can\'t be undone.</item>
+    </plurals>
+    <plurals name="app_history_phone_only_also">
+        <item quantity="one">1 saved only on this phone is deleted from it; its share link keeps working.</item>
+        <item quantity="other">%1$s saved only on this phone are deleted from it; their share links keep working.</item>
+    </plurals>
+    <plurals name="app_history_remove_failed">
+        <item quantity="one">Couldn\'t remove it. Check your connection and try again.</item>
+        <item quantity="other">Couldn\'t remove %1$s of them. Check your connection and try again.</item>
+    </plurals>
+    <string name="app_history_offline_remove">You\'re offline. Removing needs a connection.</string>
     <string name="app_pricing_free_account">Logg inn med Apple, Google eller e-post</string>
     <string name="app_pricing_headline">Den første dommen spanderer vi.</string>
     <string name="app_pricing_sub">Opprett en konto, så er den første dommen gratis, med alle funksjoner. Etter det velger du en pakke eller går over til månedsabonnement.</string>

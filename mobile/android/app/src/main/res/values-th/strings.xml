@@ -395,6 +395,8 @@
     <string name="case_appeal_original">บริบทที่คุณเพิ่มตามที่คุณเขียน</string>
     <string name="case_display_name">ชื่อของคุณในคำตัดสินที่แชร์</string>
     <string name="case_display_save">บันทึกชื่อ</string>
+    <string name="respond_keep">Keep this case in your account</string>
+    <string name="respond_kept">This case is in your account now. It shows on your Verdicts page on every device.</string>
     <string name="respond_remove">ลบฝั่งของฉัน</string>
     <string name="respond_remove_confirm">ลบข้อความต้นฉบับและชื่อที่แสดงของคุณไหม? ลิงก์แชร์ของเคสจะใช้ไม่ได้ (ภาพตัวอย่างที่โพสต์ในแชตไปแล้วอาจยังแสดงอยู่จนกว่าแอปเหล่านั้นจะรีเฟรช) ย้อนกลับไม่ได้</string>
     <string name="names_title">ชื่อในหน้าที่แชร์</string>
@@ -410,6 +412,22 @@
     <string name="shell_new">เรื่องใหม่</string>
     <string name="shell_today">วันนี้</string>
     <string name="shell_load_failed">โหลดประวัติไม่ได้</string>
+    <string name="shell_load_more">ดูเพิ่ม</string>
+    <string name="shell_untitled">คำตัดสินไม่มีชื่อ</string>
+    <string name="history_state_judging">Judges thinking</string>
+    <string name="history_state_rejudging">Judges thinking again</string>
+    <string name="history_state_failed">Didn\'t finish</string>
+    <string name="history_state_rejudge_failed">New context didn\'t go through</string>
+    <string name="history_state_waiting">Waiting for %1$s to answer</string>
+    <string name="history_state_waiting_other">Waiting for the other side to answer</string>
+    <string name="history_state_expired">Link expired</string>
+    <string name="history_state_removed">Removed</string>
+    <string name="history_state_removed_by">Removed by %1$s</string>
+    <string name="history_state_removed_by_other">Removed by the other side</string>
+    <string name="history_state_ready">Verdict ready</string>
+    <string name="history_context_added">After new context</string>
+    <string name="history_your_move">Your turn</string>
+    <string name="history_answered">You answered</string>
     <string name="thread_label">เรื่องนี้</string>
     <string name="thread_you">คุณเขียน</string>
     <string name="thread_judges">กรรมการ</string>
@@ -461,6 +479,18 @@
     </plurals>
     <string name="app_history_row_selected">เลือกแล้ว</string>
     <string name="app_history_row_not_selected">ไม่ได้เลือก</string>
+    <string name="app_history_phone_only">Only on this phone</string>
+    <string name="app_history_phone_only_note">Not in your account: these are saved on this phone only. Deleting one here doesn\'t take down its share link.</string>
+    <plurals name="app_history_remove_confirm">
+        <item quantity="other">Remove %1$s verdicts from your account? What you wrote and the names are erased and their share links stop working, on every device. This can\'t be undone.</item>
+    </plurals>
+    <plurals name="app_history_phone_only_also">
+        <item quantity="other">%1$s saved only on this phone are deleted from it; their share links keep working.</item>
+    </plurals>
+    <plurals name="app_history_remove_failed">
+        <item quantity="other">Couldn\'t remove %1$s of them. Check your connection and try again.</item>
+    </plurals>
+    <string name="app_history_offline_remove">You\'re offline. Removing needs a connection.</string>
     <string name="app_pricing_free_account">เข้าสู่ระบบด้วย Apple, Google หรืออีเมล</string>
     <string name="app_pricing_headline">คำตัดสินแรก เราเลี้ยงเอง</string>
     <string name="app_pricing_sub">สร้างบัญชีแล้วรับคำตัดสินแรกฟรี ใช้ได้ทุกฟีเจอร์ หลังจากนั้นเลือกแพ็กเครดิตหรือสมัครรายเดือน</string>

@@ -403,6 +403,8 @@
     <string name="case_appeal_original">మీరు జోడించిన వివరాలు, మీరు రాసినట్టు</string>
     <string name="case_display_name">షేర్ చేసిన తీర్పులో మీ పేరు</string>
     <string name="case_display_save">పేరు సేవ్ చేయండి</string>
+    <string name="respond_keep">Keep this case in your account</string>
+    <string name="respond_kept">This case is in your account now. It shows on your Verdicts page on every device.</string>
     <string name="respond_remove">నా వైపు కథ తీసేయండి</string>
     <string name="respond_remove_confirm">మీ అసలు టెక్స్ట్, మీ డిస్‌ప్లే పేరు తీసేయాలా? కేసు షేర్ లింక్‌లు పనిచేయడం ఆగిపోతాయి (చాట్‌లలో ఇప్పటికే పోస్ట్ అయిన ప్రివ్యూలు ఆ యాప్‌లు రిఫ్రెష్ చేసేవరకు కనిపించొచ్చు). దీన్ని వెనక్కి తీసుకోలేరు.</string>
     <string name="names_title">షేర్ పేజీలో పేర్లు</string>
@@ -418,6 +420,22 @@
     <string name="shell_new">కొత్త వాదన</string>
     <string name="shell_today">ఈరోజు</string>
     <string name="shell_load_failed">మీ చరిత్ర లోడ్ కాలేదు.</string>
+    <string name="shell_load_more">ఇంకా చూపించండి</string>
+    <string name="shell_untitled">పేరు లేని తీర్పు</string>
+    <string name="history_state_judging">Judges thinking</string>
+    <string name="history_state_rejudging">Judges thinking again</string>
+    <string name="history_state_failed">Didn\'t finish</string>
+    <string name="history_state_rejudge_failed">New context didn\'t go through</string>
+    <string name="history_state_waiting">Waiting for %1$s to answer</string>
+    <string name="history_state_waiting_other">Waiting for the other side to answer</string>
+    <string name="history_state_expired">Link expired</string>
+    <string name="history_state_removed">Removed</string>
+    <string name="history_state_removed_by">Removed by %1$s</string>
+    <string name="history_state_removed_by_other">Removed by the other side</string>
+    <string name="history_state_ready">Verdict ready</string>
+    <string name="history_context_added">After new context</string>
+    <string name="history_your_move">Your turn</string>
+    <string name="history_answered">You answered</string>
     <string name="thread_label">ఈ వాదన</string>
     <string name="thread_you">మీరు రాసింది</string>
     <string name="thread_judges">జడ్జీలు</string>
@@ -474,6 +492,21 @@
     </plurals>
     <string name="app_history_row_selected">ఎంచుకోబడింది</string>
     <string name="app_history_row_not_selected">ఎంచుకోబడలేదు</string>
+    <string name="app_history_phone_only">Only on this phone</string>
+    <string name="app_history_phone_only_note">Not in your account: these are saved on this phone only. Deleting one here doesn\'t take down its share link.</string>
+    <plurals name="app_history_remove_confirm">
+        <item quantity="one">Remove this verdict from your account? What you wrote and the names are erased and its share link stops working, on every device. This can\'t be undone.</item>
+        <item quantity="other">Remove %1$s verdicts from your account? What you wrote and the names are erased and their share links stop working, on every device. This can\'t be undone.</item>
+    </plurals>
+    <plurals name="app_history_phone_only_also">
+        <item quantity="one">1 saved only on this phone is deleted from it; its share link keeps working.</item>
+        <item quantity="other">%1$s saved only on this phone are deleted from it; their share links keep working.</item>
+    </plurals>
+    <plurals name="app_history_remove_failed">
+        <item quantity="one">Couldn\'t remove it. Check your connection and try again.</item>
+        <item quantity="other">Couldn\'t remove %1$s of them. Check your connection and try again.</item>
+    </plurals>
+    <string name="app_history_offline_remove">You\'re offline. Removing needs a connection.</string>
     <string name="app_pricing_free_account">Apple, Google లేదా ఈమెయిల్‌తో సైన్ ఇన్ చేయండి</string>
     <string name="app_pricing_headline">మీ మొదటి తీర్పు మా ఖాతాలో.</string>
     <string name="app_pricing_sub">అకౌంట్ తెరవండి, మీ మొదటి తీర్పు ఉచితం, అన్ని ఫీచర్లతో. ఆ తర్వాత ఒక ప్యాక్ ఎంచుకోండి, లేదా నెలవారీ ప్లాన్ తీసుకోండి.</string>

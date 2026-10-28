@@ -20,6 +20,10 @@ export const WEB_KEYS: readonly string[] = [
   "shell.today",
   "shell.new",
   "shell.loadFailed",
+  "shell.loadMore",
+  "shell.untitled",
+  // Verdicts list
+  "history.*",
   // Judging state
   "thinking.*",
   // Verdict card

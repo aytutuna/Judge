@@ -403,6 +403,8 @@
     <string name="case_appeal_original">आपकी जोड़ी गई जानकारी, जैसे आपने लिखी</string>
     <string name="case_display_name">शेयर किए गए फ़ैसले पर आपका नाम</string>
     <string name="case_display_save">नाम सेव करें</string>
+    <string name="respond_keep">Keep this case in your account</string>
+    <string name="respond_kept">This case is in your account now. It shows on your Verdicts page on every device.</string>
     <string name="respond_remove">मेरी बात हटाएँ</string>
     <string name="respond_remove_confirm">आपका मूल टेक्स्ट और आपका दिखने वाला नाम हटा दें? केस के शेयर लिंक काम करना बंद कर देंगे (चैट में पहले से भेजे गए प्रीव्यू तब तक दिख सकते हैं जब तक वे ऐप उन्हें रीफ़्रेश न करें)। इसे पहले जैसा नहीं किया जा सकता।</string>
     <string name="names_title">शेयर पेज पर नाम</string>
@@ -418,6 +420,22 @@
     <string name="shell_new">नई बहस</string>
     <string name="shell_today">आज</string>
     <string name="shell_load_failed">आपका इतिहास लोड नहीं हो पाया।</string>
+    <string name="shell_load_more">और दिखाएँ</string>
+    <string name="shell_untitled">बिना शीर्षक का फ़ैसला</string>
+    <string name="history_state_judging">Judges thinking</string>
+    <string name="history_state_rejudging">Judges thinking again</string>
+    <string name="history_state_failed">Didn\'t finish</string>
+    <string name="history_state_rejudge_failed">New context didn\'t go through</string>
+    <string name="history_state_waiting">Waiting for %1$s to answer</string>
+    <string name="history_state_waiting_other">Waiting for the other side to answer</string>
+    <string name="history_state_expired">Link expired</string>
+    <string name="history_state_removed">Removed</string>
+    <string name="history_state_removed_by">Removed by %1$s</string>
+    <string name="history_state_removed_by_other">Removed by the other side</string>
+    <string name="history_state_ready">Verdict ready</string>
+    <string name="history_context_added">After new context</string>
+    <string name="history_your_move">Your turn</string>
+    <string name="history_answered">You answered</string>
     <string name="thread_label">यह बहस</string>
     <string name="thread_you">आपने लिखा</string>
     <string name="thread_judges">जज</string>
@@ -474,6 +492,21 @@
     </plurals>
     <string name="app_history_row_selected">चुना गया</string>
     <string name="app_history_row_not_selected">नहीं चुना गया</string>
+    <string name="app_history_phone_only">Only on this phone</string>
+    <string name="app_history_phone_only_note">Not in your account: these are saved on this phone only. Deleting one here doesn\'t take down its share link.</string>
+    <plurals name="app_history_remove_confirm">
+        <item quantity="one">Remove this verdict from your account? What you wrote and the names are erased and its share link stops working, on every device. This can\'t be undone.</item>
+        <item quantity="other">Remove %1$s verdicts from your account? What you wrote and the names are erased and their share links stop working, on every device. This can\'t be undone.</item>
+    </plurals>
+    <plurals name="app_history_phone_only_also">
+        <item quantity="one">1 saved only on this phone is deleted from it; its share link keeps working.</item>
+        <item quantity="other">%1$s saved only on this phone are deleted from it; their share links keep working.</item>
+    </plurals>
+    <plurals name="app_history_remove_failed">
+        <item quantity="one">Couldn\'t remove it. Check your connection and try again.</item>
+        <item quantity="other">Couldn\'t remove %1$s of them. Check your connection and try again.</item>
+    </plurals>
+    <string name="app_history_offline_remove">You\'re offline. Removing needs a connection.</string>
     <string name="app_pricing_free_account">Apple, Google या ईमेल से साइन इन करें</string>
     <string name="app_pricing_headline">पहला फ़ैसला हमारी तरफ़ से।</string>
     <string name="app_pricing_sub">अकाउंट बनाइए और पहला फ़ैसला मुफ़्त पाइए, सारी सुविधाओं के साथ। उसके बाद कोई पैक चुनें या मासिक प्लान लें।</string>

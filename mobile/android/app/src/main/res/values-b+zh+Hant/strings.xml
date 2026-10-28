@@ -395,6 +395,8 @@
     <string name="case_appeal_original">你的補充（你寫的原文）</string>
     <string name="case_display_name">你在分享判決上的名字</string>
     <string name="case_display_save">儲存名字</string>
+    <string name="respond_keep">Keep this case in your account</string>
+    <string name="respond_kept">This case is in your account now. It shows on your Verdicts page on every device.</string>
     <string name="respond_remove">移除我的說法</string>
     <string name="respond_remove_confirm">要移除你的原文和顯示名稱嗎？這個案子的分享連結會失效（已經貼在聊天裡的預覽，可能要等那些 App 更新後才會消失）。這個動作無法復原。</string>
     <string name="names_title">分享頁面上的名字</string>
@@ -410,6 +412,22 @@
     <string name="shell_new">新爭論</string>
     <string name="shell_today">今天</string>
     <string name="shell_load_failed">無法載入你的紀錄。</string>
+    <string name="shell_load_more">顯示更多</string>
+    <string name="shell_untitled">未命名的判決</string>
+    <string name="history_state_judging">Judges thinking</string>
+    <string name="history_state_rejudging">Judges thinking again</string>
+    <string name="history_state_failed">Didn\'t finish</string>
+    <string name="history_state_rejudge_failed">New context didn\'t go through</string>
+    <string name="history_state_waiting">Waiting for %1$s to answer</string>
+    <string name="history_state_waiting_other">Waiting for the other side to answer</string>
+    <string name="history_state_expired">Link expired</string>
+    <string name="history_state_removed">Removed</string>
+    <string name="history_state_removed_by">Removed by %1$s</string>
+    <string name="history_state_removed_by_other">Removed by the other side</string>
+    <string name="history_state_ready">Verdict ready</string>
+    <string name="history_context_added">After new context</string>
+    <string name="history_your_move">Your turn</string>
+    <string name="history_answered">You answered</string>
     <string name="thread_label">這場爭論</string>
     <string name="thread_you">你寫的</string>
     <string name="thread_judges">評審</string>
@@ -461,6 +479,18 @@
     </plurals>
     <string name="app_history_row_selected">已選取</string>
     <string name="app_history_row_not_selected">未選取</string>
+    <string name="app_history_phone_only">Only on this phone</string>
+    <string name="app_history_phone_only_note">Not in your account: these are saved on this phone only. Deleting one here doesn\'t take down its share link.</string>
+    <plurals name="app_history_remove_confirm">
+        <item quantity="other">Remove %1$s verdicts from your account? What you wrote and the names are erased and their share links stop working, on every device. This can\'t be undone.</item>
+    </plurals>
+    <plurals name="app_history_phone_only_also">
+        <item quantity="other">%1$s saved only on this phone are deleted from it; their share links keep working.</item>
+    </plurals>
+    <plurals name="app_history_remove_failed">
+        <item quantity="other">Couldn\'t remove %1$s of them. Check your connection and try again.</item>
+    </plurals>
+    <string name="app_history_offline_remove">You\'re offline. Removing needs a connection.</string>
     <string name="app_pricing_free_account">用 Apple、Google 或電子郵件登入</string>
     <string name="app_pricing_headline">第一次判決，我們請客。</string>
     <string name="app_pricing_sub">建立帳號，第一次判決免費，所有功能都能用。之後可以買額度包，或改用月費方案。</string>

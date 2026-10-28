@@ -18,6 +18,14 @@ const tr: AppLocale = {
     "app.history.deleteConfirm": "Bu telefondan {n} karar silinsin mi? Paylaşım linkleri çalışmaya devam eder.",
     "app.history.rowSelected": "Seçili",
     "app.history.rowNotSelected": "Seçili değil",
+    "app.history.phoneOnly": "Sadece bu telefonda",
+    "app.history.phoneOnlyNote":
+      "Hesabında değil: bunlar sadece bu telefonda saklanıyor. Buradan silmek paylaşım linkini kaldırmaz.",
+    "app.history.removeConfirm":
+      "{n} karar hesabından kaldırılsın mı? Yazdıkların ve isimler silinir, paylaşım linkleri her cihazda çalışmayı bırakır. Bu geri alınamaz.",
+    "app.history.phoneOnlyAlso": "Sadece bu telefonda saklanan {n} karar buradan silinir; paylaşım linkleri çalışmaya devam eder.",
+    "app.history.removeFailed": "{n} karar kaldırılamadı. Bağlantını kontrol edip tekrar dene.",
+    "app.history.offlineRemove": "Çevrimdışısın. Kaldırmak için bağlantı gerekir.",
     "app.pricing.free.account": "Apple, Google ya da e-postayla giriş yap",
     "app.pricing.headline": "İlk karar bizden.",
     "app.pricing.sub":
@@ -167,6 +175,11 @@ const tr: AppLocale = {
     "app.balance.left": { one: "{n} karar hakkın kaldı" },
     "app.history.selected": { one: "{n} seçildi" },
     "app.history.deleteConfirm": { one: "Bu karar bu telefondan silinsin mi? Paylaşım linki çalışmaya devam eder." },
+    "app.history.removeConfirm": {
+      one: "Bu karar hesabından kaldırılsın mı? Yazdıkların ve isimler silinir, paylaşım linki her cihazda çalışmayı bırakır. Bu geri alınamaz.",
+    },
+    "app.history.phoneOnlyAlso": { one: "Sadece bu telefonda saklanan 1 karar buradan silinir; paylaşım linki çalışmaya devam eder." },
+    "app.history.removeFailed": { one: "Kaldırılamadı. Bağlantını kontrol edip tekrar dene." },
   },
 };
 

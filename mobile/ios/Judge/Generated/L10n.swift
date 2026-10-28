@@ -523,6 +523,8 @@ enum L10n {
     static func caseAppealOriginal(_ lang: AppLang) -> String { string("case.appealOriginal", lang) }
     static func caseDisplayName(_ lang: AppLang) -> String { string("case.displayName", lang) }
     static func caseDisplaySave(_ lang: AppLang) -> String { string("case.displaySave", lang) }
+    static func respondKeep(_ lang: AppLang) -> String { string("respond.keep", lang) }
+    static func respondKept(_ lang: AppLang) -> String { string("respond.kept", lang) }
     static func respondRemove(_ lang: AppLang) -> String { string("respond.remove", lang) }
     static func respondRemoveConfirm(_ lang: AppLang) -> String { string("respond.remove.confirm", lang) }
     static func namesTitle(_ lang: AppLang) -> String { string("names.title", lang) }
@@ -538,6 +540,22 @@ enum L10n {
     static func shellNew(_ lang: AppLang) -> String { string("shell.new", lang) }
     static func shellToday(_ lang: AppLang) -> String { string("shell.today", lang) }
     static func shellLoadFailed(_ lang: AppLang) -> String { string("shell.loadFailed", lang) }
+    static func shellLoadMore(_ lang: AppLang) -> String { string("shell.loadMore", lang) }
+    static func shellUntitled(_ lang: AppLang) -> String { string("shell.untitled", lang) }
+    static func historyStateJudging(_ lang: AppLang) -> String { string("history.state.judging", lang) }
+    static func historyStateRejudging(_ lang: AppLang) -> String { string("history.state.rejudging", lang) }
+    static func historyStateFailed(_ lang: AppLang) -> String { string("history.state.failed", lang) }
+    static func historyStateRejudgeFailed(_ lang: AppLang) -> String { string("history.state.rejudgeFailed", lang) }
+    static func historyStateWaiting(_ lang: AppLang, name: String) -> String { format("history.state.waiting", lang, name) }
+    static func historyStateWaitingOther(_ lang: AppLang) -> String { string("history.state.waitingOther", lang) }
+    static func historyStateExpired(_ lang: AppLang) -> String { string("history.state.expired", lang) }
+    static func historyStateRemoved(_ lang: AppLang) -> String { string("history.state.removed", lang) }
+    static func historyStateRemovedBy(_ lang: AppLang, name: String) -> String { format("history.state.removedBy", lang, name) }
+    static func historyStateRemovedByOther(_ lang: AppLang) -> String { string("history.state.removedByOther", lang) }
+    static func historyStateReady(_ lang: AppLang) -> String { string("history.state.ready", lang) }
+    static func historyContextAdded(_ lang: AppLang) -> String { string("history.contextAdded", lang) }
+    static func historyYourMove(_ lang: AppLang) -> String { string("history.yourMove", lang) }
+    static func historyAnswered(_ lang: AppLang) -> String { string("history.answered", lang) }
     static func threadLabel(_ lang: AppLang) -> String { string("thread.label", lang) }
     static func threadYou(_ lang: AppLang) -> String { string("thread.you", lang) }
     static func threadJudges(_ lang: AppLang) -> String { string("thread.judges", lang) }
@@ -579,6 +597,12 @@ enum L10n {
     static func appHistoryDeleteConfirm(_ lang: AppLang, n: Int) -> String { plural("app.history.deleteConfirm", lang, n) }
     static func appHistoryRowSelected(_ lang: AppLang) -> String { string("app.history.rowSelected", lang) }
     static func appHistoryRowNotSelected(_ lang: AppLang) -> String { string("app.history.rowNotSelected", lang) }
+    static func appHistoryPhoneOnly(_ lang: AppLang) -> String { string("app.history.phoneOnly", lang) }
+    static func appHistoryPhoneOnlyNote(_ lang: AppLang) -> String { string("app.history.phoneOnlyNote", lang) }
+    static func appHistoryRemoveConfirm(_ lang: AppLang, n: Int) -> String { plural("app.history.removeConfirm", lang, n) }
+    static func appHistoryPhoneOnlyAlso(_ lang: AppLang, n: Int) -> String { plural("app.history.phoneOnlyAlso", lang, n) }
+    static func appHistoryRemoveFailed(_ lang: AppLang, n: Int) -> String { plural("app.history.removeFailed", lang, n) }
+    static func appHistoryOfflineRemove(_ lang: AppLang) -> String { string("app.history.offlineRemove", lang) }
     static func appPricingFreeAccount(_ lang: AppLang) -> String { string("app.pricing.free.account", lang) }
     static func appPricingHeadline(_ lang: AppLang) -> String { string("app.pricing.headline", lang) }
     static func appPricingSub(_ lang: AppLang) -> String { string("app.pricing.sub", lang) }
@@ -1056,6 +1080,8 @@ enum L10n {
         "case.appealOriginal",
         "case.displayName",
         "case.displaySave",
+        "respond.keep",
+        "respond.kept",
         "respond.remove",
         "respond.remove.confirm",
         "names.title",
@@ -1071,6 +1097,20 @@ enum L10n {
         "shell.new",
         "shell.today",
         "shell.loadFailed",
+        "shell.loadMore",
+        "shell.untitled",
+        "history.state.judging",
+        "history.state.rejudging",
+        "history.state.failed",
+        "history.state.rejudgeFailed",
+        "history.state.waitingOther",
+        "history.state.expired",
+        "history.state.removed",
+        "history.state.removedByOther",
+        "history.state.ready",
+        "history.contextAdded",
+        "history.yourMove",
+        "history.answered",
         "thread.label",
         "thread.you",
         "thread.judges",
@@ -1104,6 +1144,9 @@ enum L10n {
         "app.history.deselectAll",
         "app.history.rowSelected",
         "app.history.rowNotSelected",
+        "app.history.phoneOnly",
+        "app.history.phoneOnlyNote",
+        "app.history.offlineRemove",
         "app.pricing.free.account",
         "app.pricing.headline",
         "app.pricing.sub",

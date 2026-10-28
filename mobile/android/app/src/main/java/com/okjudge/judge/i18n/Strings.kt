@@ -456,6 +456,8 @@ class Strings(private val res: Resources) {
     val caseAppealOriginal: String get() = res.getString(R.string.case_appeal_original)
     val caseDisplayName: String get() = res.getString(R.string.case_display_name)
     val caseDisplaySave: String get() = res.getString(R.string.case_display_save)
+    val respondKeep: String get() = res.getString(R.string.respond_keep)
+    val respondKept: String get() = res.getString(R.string.respond_kept)
     val respondRemove: String get() = res.getString(R.string.respond_remove)
     val respondRemoveConfirm: String get() = res.getString(R.string.respond_remove_confirm)
     val namesTitle: String get() = res.getString(R.string.names_title)
@@ -471,6 +473,22 @@ class Strings(private val res: Resources) {
     val shellNew: String get() = res.getString(R.string.shell_new)
     val shellToday: String get() = res.getString(R.string.shell_today)
     val shellLoadFailed: String get() = res.getString(R.string.shell_load_failed)
+    val shellLoadMore: String get() = res.getString(R.string.shell_load_more)
+    val shellUntitled: String get() = res.getString(R.string.shell_untitled)
+    val historyStateJudging: String get() = res.getString(R.string.history_state_judging)
+    val historyStateRejudging: String get() = res.getString(R.string.history_state_rejudging)
+    val historyStateFailed: String get() = res.getString(R.string.history_state_failed)
+    val historyStateRejudgeFailed: String get() = res.getString(R.string.history_state_rejudge_failed)
+    fun historyStateWaiting(name: String): String = res.getString(R.string.history_state_waiting, name)
+    val historyStateWaitingOther: String get() = res.getString(R.string.history_state_waiting_other)
+    val historyStateExpired: String get() = res.getString(R.string.history_state_expired)
+    val historyStateRemoved: String get() = res.getString(R.string.history_state_removed)
+    fun historyStateRemovedBy(name: String): String = res.getString(R.string.history_state_removed_by, name)
+    val historyStateRemovedByOther: String get() = res.getString(R.string.history_state_removed_by_other)
+    val historyStateReady: String get() = res.getString(R.string.history_state_ready)
+    val historyContextAdded: String get() = res.getString(R.string.history_context_added)
+    val historyYourMove: String get() = res.getString(R.string.history_your_move)
+    val historyAnswered: String get() = res.getString(R.string.history_answered)
     val threadLabel: String get() = res.getString(R.string.thread_label)
     val threadYou: String get() = res.getString(R.string.thread_you)
     val threadJudges: String get() = res.getString(R.string.thread_judges)
@@ -512,6 +530,12 @@ class Strings(private val res: Resources) {
     fun appHistoryDeleteConfirm(n: Int): String = res.getQuantityString(R.plurals.app_history_delete_confirm, n, n.toString())
     val appHistoryRowSelected: String get() = res.getString(R.string.app_history_row_selected)
     val appHistoryRowNotSelected: String get() = res.getString(R.string.app_history_row_not_selected)
+    val appHistoryPhoneOnly: String get() = res.getString(R.string.app_history_phone_only)
+    val appHistoryPhoneOnlyNote: String get() = res.getString(R.string.app_history_phone_only_note)
+    fun appHistoryRemoveConfirm(n: Int): String = res.getQuantityString(R.plurals.app_history_remove_confirm, n, n.toString())
+    fun appHistoryPhoneOnlyAlso(n: Int): String = res.getQuantityString(R.plurals.app_history_phone_only_also, n, n.toString())
+    fun appHistoryRemoveFailed(n: Int): String = res.getQuantityString(R.plurals.app_history_remove_failed, n, n.toString())
+    val appHistoryOfflineRemove: String get() = res.getString(R.string.app_history_offline_remove)
     val appPricingFreeAccount: String get() = res.getString(R.string.app_pricing_free_account)
     val appPricingHeadline: String get() = res.getString(R.string.app_pricing_headline)
     val appPricingSub: String get() = res.getString(R.string.app_pricing_sub)
@@ -988,6 +1012,8 @@ class Strings(private val res: Resources) {
             "case.appealOriginal" -> R.string.case_appeal_original
             "case.displayName" -> R.string.case_display_name
             "case.displaySave" -> R.string.case_display_save
+            "respond.keep" -> R.string.respond_keep
+            "respond.kept" -> R.string.respond_kept
             "respond.remove" -> R.string.respond_remove
             "respond.remove.confirm" -> R.string.respond_remove_confirm
             "names.title" -> R.string.names_title
@@ -1003,6 +1029,20 @@ class Strings(private val res: Resources) {
             "shell.new" -> R.string.shell_new
             "shell.today" -> R.string.shell_today
             "shell.loadFailed" -> R.string.shell_load_failed
+            "shell.loadMore" -> R.string.shell_load_more
+            "shell.untitled" -> R.string.shell_untitled
+            "history.state.judging" -> R.string.history_state_judging
+            "history.state.rejudging" -> R.string.history_state_rejudging
+            "history.state.failed" -> R.string.history_state_failed
+            "history.state.rejudgeFailed" -> R.string.history_state_rejudge_failed
+            "history.state.waitingOther" -> R.string.history_state_waiting_other
+            "history.state.expired" -> R.string.history_state_expired
+            "history.state.removed" -> R.string.history_state_removed
+            "history.state.removedByOther" -> R.string.history_state_removed_by_other
+            "history.state.ready" -> R.string.history_state_ready
+            "history.contextAdded" -> R.string.history_context_added
+            "history.yourMove" -> R.string.history_your_move
+            "history.answered" -> R.string.history_answered
             "thread.label" -> R.string.thread_label
             "thread.you" -> R.string.thread_you
             "thread.judges" -> R.string.thread_judges
@@ -1036,6 +1076,9 @@ class Strings(private val res: Resources) {
             "app.history.deselectAll" -> R.string.app_history_deselect_all
             "app.history.rowSelected" -> R.string.app_history_row_selected
             "app.history.rowNotSelected" -> R.string.app_history_row_not_selected
+            "app.history.phoneOnly" -> R.string.app_history_phone_only
+            "app.history.phoneOnlyNote" -> R.string.app_history_phone_only_note
+            "app.history.offlineRemove" -> R.string.app_history_offline_remove
             "app.pricing.free.account" -> R.string.app_pricing_free_account
             "app.pricing.headline" -> R.string.app_pricing_headline
             "app.pricing.sub" -> R.string.app_pricing_sub

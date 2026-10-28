@@ -411,6 +411,8 @@
     <string name="case_appeal_original">Contextul adăugat de tine, așa cum l-ai scris</string>
     <string name="case_display_name">Numele tău pe verdictul distribuit</string>
     <string name="case_display_save">Salvează numele</string>
+    <string name="respond_keep">Keep this case in your account</string>
+    <string name="respond_kept">This case is in your account now. It shows on your Verdicts page on every device.</string>
     <string name="respond_remove">Elimină partea mea</string>
     <string name="respond_remove_confirm">Elimini textul tău original și numele tău afișat? Linkurile de distribuire ale cazului nu mai funcționează (previzualizările deja postate în conversații pot apărea în continuare până când acele aplicații le reîmprospătează). Acțiunea nu poate fi anulată.</string>
     <string name="names_title">Numele de pe pagina distribuită</string>
@@ -426,6 +428,22 @@
     <string name="shell_new">Dispută nouă</string>
     <string name="shell_today">Azi</string>
     <string name="shell_load_failed">N-am putut încărca istoricul.</string>
+    <string name="shell_load_more">Arată mai multe</string>
+    <string name="shell_untitled">Verdict fără titlu</string>
+    <string name="history_state_judging">Judges thinking</string>
+    <string name="history_state_rejudging">Judges thinking again</string>
+    <string name="history_state_failed">Didn\'t finish</string>
+    <string name="history_state_rejudge_failed">New context didn\'t go through</string>
+    <string name="history_state_waiting">Waiting for %1$s to answer</string>
+    <string name="history_state_waiting_other">Waiting for the other side to answer</string>
+    <string name="history_state_expired">Link expired</string>
+    <string name="history_state_removed">Removed</string>
+    <string name="history_state_removed_by">Removed by %1$s</string>
+    <string name="history_state_removed_by_other">Removed by the other side</string>
+    <string name="history_state_ready">Verdict ready</string>
+    <string name="history_context_added">After new context</string>
+    <string name="history_your_move">Your turn</string>
+    <string name="history_answered">You answered</string>
     <string name="thread_label">Disputa asta</string>
     <string name="thread_you">Ai scris</string>
     <string name="thread_judges">Judecătorii</string>
@@ -487,6 +505,24 @@
     </plurals>
     <string name="app_history_row_selected">Selectat</string>
     <string name="app_history_row_not_selected">Neselectat</string>
+    <string name="app_history_phone_only">Only on this phone</string>
+    <string name="app_history_phone_only_note">Not in your account: these are saved on this phone only. Deleting one here doesn\'t take down its share link.</string>
+    <plurals name="app_history_remove_confirm">
+        <item quantity="one">Remove this verdict from your account? What you wrote and the names are erased and its share link stops working, on every device. This can\'t be undone.</item>
+        <item quantity="few">Remove %1$s verdicts from your account? What you wrote and the names are erased and their share links stop working, on every device. This can\'t be undone.</item>
+        <item quantity="other">Remove %1$s verdicts from your account? What you wrote and the names are erased and their share links stop working, on every device. This can\'t be undone.</item>
+    </plurals>
+    <plurals name="app_history_phone_only_also">
+        <item quantity="one">1 saved only on this phone is deleted from it; its share link keeps working.</item>
+        <item quantity="few">%1$s saved only on this phone are deleted from it; their share links keep working.</item>
+        <item quantity="other">%1$s saved only on this phone are deleted from it; their share links keep working.</item>
+    </plurals>
+    <plurals name="app_history_remove_failed">
+        <item quantity="one">Couldn\'t remove it. Check your connection and try again.</item>
+        <item quantity="few">Couldn\'t remove %1$s of them. Check your connection and try again.</item>
+        <item quantity="other">Couldn\'t remove %1$s of them. Check your connection and try again.</item>
+    </plurals>
+    <string name="app_history_offline_remove">You\'re offline. Removing needs a connection.</string>
     <string name="app_pricing_free_account">Conectează-te cu Apple, Google sau prin e-mail</string>
     <string name="app_pricing_headline">Primul verdict e din partea casei.</string>
     <string name="app_pricing_sub">Fă-ți un cont și primul verdict e gratuit, cu toate funcțiile. După aceea, alege un pachet sau treci pe planul lunar.</string>

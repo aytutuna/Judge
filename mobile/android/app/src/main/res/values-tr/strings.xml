@@ -403,6 +403,8 @@
     <string name="case_appeal_original">Eklediğin bilgi, senin yazdığın hâliyle</string>
     <string name="case_display_name">Paylaşılan kararda görünecek adın</string>
     <string name="case_display_save">Adı kaydet</string>
+    <string name="respond_keep">Bu davayı hesabında tut</string>
+    <string name="respond_kept">Bu dava artık hesabında. Her cihazda Kararlar sayfanda görünür.</string>
     <string name="respond_remove">Tarafımı kaldır</string>
     <string name="respond_remove_confirm">Yazdığın asıl metin ve görünen adın kaldırılsın mı? Davanın paylaşım bağlantıları çalışmaz olur (sohbetlerde önceden paylaşılmış önizlemeler, o uygulamalar yenileyene kadar görünmeye devam edebilir). Bu geri alınamaz.</string>
     <string name="names_title">Paylaşılan sayfadaki isimler</string>
@@ -418,6 +420,22 @@
     <string name="shell_new">Yeni tartışma</string>
     <string name="shell_today">Bugün</string>
     <string name="shell_load_failed">Geçmişini yükleyemedik.</string>
+    <string name="shell_load_more">Daha fazla göster</string>
+    <string name="shell_untitled">Başlıksız karar</string>
+    <string name="history_state_judging">Yargıçlar düşünüyor</string>
+    <string name="history_state_rejudging">Yargıçlar yeniden düşünüyor</string>
+    <string name="history_state_failed">Tamamlanamadı</string>
+    <string name="history_state_rejudge_failed">Yeni bilgi iletilemedi</string>
+    <string name="history_state_waiting">%1$s henüz cevap vermedi</string>
+    <string name="history_state_waiting_other">Karşı taraf henüz cevap vermedi</string>
+    <string name="history_state_expired">Bağlantının süresi doldu</string>
+    <string name="history_state_removed">Kaldırıldı</string>
+    <string name="history_state_removed_by">%1$s kaldırdı</string>
+    <string name="history_state_removed_by_other">Karşı taraf kaldırdı</string>
+    <string name="history_state_ready">Karar hazır</string>
+    <string name="history_context_added">Yeni bilgiden sonra</string>
+    <string name="history_your_move">Sıra sende</string>
+    <string name="history_answered">Sen cevapladın</string>
     <string name="thread_label">Bu tartışma</string>
     <string name="thread_you">Senin yazdığın</string>
     <string name="thread_judges">Yargıçlar</string>
@@ -474,6 +492,21 @@
     </plurals>
     <string name="app_history_row_selected">Seçili</string>
     <string name="app_history_row_not_selected">Seçili değil</string>
+    <string name="app_history_phone_only">Sadece bu telefonda</string>
+    <string name="app_history_phone_only_note">Hesabında değil: bunlar sadece bu telefonda saklanıyor. Buradan silmek paylaşım linkini kaldırmaz.</string>
+    <plurals name="app_history_remove_confirm">
+        <item quantity="one">Bu karar hesabından kaldırılsın mı? Yazdıkların ve isimler silinir, paylaşım linki her cihazda çalışmayı bırakır. Bu geri alınamaz.</item>
+        <item quantity="other">%1$s karar hesabından kaldırılsın mı? Yazdıkların ve isimler silinir, paylaşım linkleri her cihazda çalışmayı bırakır. Bu geri alınamaz.</item>
+    </plurals>
+    <plurals name="app_history_phone_only_also">
+        <item quantity="one">Sadece bu telefonda saklanan 1 karar buradan silinir; paylaşım linki çalışmaya devam eder.</item>
+        <item quantity="other">Sadece bu telefonda saklanan %1$s karar buradan silinir; paylaşım linkleri çalışmaya devam eder.</item>
+    </plurals>
+    <plurals name="app_history_remove_failed">
+        <item quantity="one">Kaldırılamadı. Bağlantını kontrol edip tekrar dene.</item>
+        <item quantity="other">%1$s karar kaldırılamadı. Bağlantını kontrol edip tekrar dene.</item>
+    </plurals>
+    <string name="app_history_offline_remove">Çevrimdışısın. Kaldırmak için bağlantı gerekir.</string>
     <string name="app_pricing_free_account">Apple, Google ya da e-postayla giriş yap</string>
     <string name="app_pricing_headline">İlk karar bizden.</string>
     <string name="app_pricing_sub">Hesap açtığında ilk kararın bütün özellikleriyle ücretsiz. Sonrasında bir paket seç ya da aylık plana geç.</string>
