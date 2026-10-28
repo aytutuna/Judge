@@ -293,13 +293,6 @@
   font-weight: 500;
 }
 
-.planPremium {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  color: var(--terra-ink);
-}
-
 .row {
   display: flex;
   flex-wrap: wrap;

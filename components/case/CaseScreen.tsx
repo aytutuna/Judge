@@ -242,8 +242,8 @@ export function CasePanel({
   const canRemove = view.status !== "judging" && !appealJudging && !view.removed;
   const ownSide = view.sides.filter((s) => s.party === view.yourParty);
   const bothRead = view.sides.length > 1;
-  // Only a premium case holds a unit: free cases never mention credits.
-  const premium = view.tier === "premium";
+  // Cases from before every verdict was premium hold no unit.
+  const held = view.tier === "premium";
 
   const error = actionError ? (
     <p className={styles.error} role="alert">
@@ -272,7 +272,7 @@ export function CasePanel({
               resetDone={resetDone}
             />
           ) : null}
-          {premium ? <p className={styles.note}>{tWithDate(lang, "case.held", view.expiresAt)}</p> : null}
+          {held ? <p className={styles.note}>{tWithDate(lang, "case.held", view.expiresAt)}</p> : null}
         </section>
         {error}
         {view.canJudgeNow ? (
@@ -291,7 +291,7 @@ export function CasePanel({
     notice = (
       <>
         <p className={styles.banner} role="status">
-          {view.lastError === "quota" ? t(lang, "error.quota") : t(lang, premium ? "case.failedBody" : "case.failedBodyFree")}
+          {view.lastError === "quota" ? t(lang, "error.quota") : t(lang, held ? "case.failedBody" : "case.failedBodyFree")}
         </p>
         {error}
         <button type="button" className={`${account.btn} ${account.primary}`} disabled={busy} onClick={onRetry}>
@@ -302,7 +302,7 @@ export function CasePanel({
   } else if (!overlay && view.status === "expired") {
     notice = (
       <>
-        <p className={styles.banner}>{t(lang, premium ? "case.expiredBody" : "case.expiredBodyFree")}</p>
+        <p className={styles.banner}>{t(lang, held ? "case.expiredBody" : "case.expiredBodyFree")}</p>
         {error}
         <div className={styles.row}>
           {view.canJudgeNow ? (
@@ -346,7 +346,7 @@ export function CasePanel({
               done={overlay.done}
               result={overlay.done ? (current?.result ?? null) : null}
               onFinished={onOverlayFinished}
-              premium={premium}
+              premium
             />
           ) : null
         }
@@ -384,7 +384,7 @@ export function CasePanel({
                 view={view}
                 signInHref={`/signin?next=${encodeURIComponent(`/c/${view.id}`)}`}
                 draft={appeal}
-                evidence={evidenceOn && premium}
+                evidence={evidenceOn}
               />
               <VerdictHistory
                 lang={lang}
@@ -417,22 +417,14 @@ export function CasePanel({
       ) : null}
       {(view.status === "awaiting_respondent" || view.status === "expired") && view.canJudgeNow ? (
         // Waiting: the held unit pays and the invite closes. Expired: the
-        // held unit went back, so a premium case spends a new one; the
-        // dialog says so. A free case spends nothing either way.
+        // held unit went back, so a new one is spent; the dialog says so.
         <Confirm
           id="judge-now-title"
           dialogRef={judgeRef}
           cancelRef={judgeCancelRef}
           title={t(lang, "case.judgeNow")}
-          text={t(
-            lang,
-            view.status !== "expired"
-              ? "case.judgeNow.confirm"
-              : premium
-                ? "case.judgeExpired.confirm"
-                : "case.judgeExpired.confirmFree",
-          )}
-          yes={t(lang, view.status === "expired" && premium ? "case.judgeExpired.yes" : "case.judgeNow.yes")}
+          text={t(lang, view.status === "expired" ? "case.judgeExpired.confirm" : "case.judgeNow.confirm")}
+          yes={t(lang, view.status === "expired" ? "case.judgeExpired.yes" : "case.judgeNow.yes")}
           lang={lang}
           onYes={onJudgeNow}
         />

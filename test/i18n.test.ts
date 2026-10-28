@@ -29,7 +29,6 @@ const IDENTICAL_ALLOWLIST = new Set<Key>([
   "langToggle.toEn",
   "tier.premium",
   "premium.badge",
-  "account.plan.premium",
 ]);
 
 describe("STRINGS table", () => {
@@ -236,11 +235,9 @@ describe("formatDate / tWithDate", () => {
   });
 
   it("fills {date}, or falls back to the dateless sentence", () => {
-    expect(tWithDate("en", "tier.fairUse", iso)).toBe(
-      "You've used this month's premium verdicts. More on November 18.",
-    );
-    expect(tWithDate("tr", "tier.fairUse", iso)).toContain("18 Kasım tarihinde");
-    expect(tWithDate("en", "tier.fairUse", null)).toBe(STRINGS.en["tier.fairUseSoon"]);
+    expect(tWithDate("en", "error.fair_use", iso)).toBe("You've used this month's verdicts. More on November 18.");
+    expect(tWithDate("tr", "error.fair_use", iso)).toContain("18 Kasım tarihinde");
+    expect(tWithDate("en", "error.fair_use", null)).toBe(STRINGS.en["error.fair_useSoon"]);
     for (const lang of ["en", "tr"] as const) {
       expect(tWithDate(lang, "account.subscriptionRenews", iso)).not.toContain("{date}");
     }
@@ -307,7 +304,7 @@ describe("apiErrorMessage", () => {
     expect(apiErrorMessage("en", { code: "signin_required" }, 401)).toBe("Sign in to continue.");
     expect(
       apiErrorMessage("en", { code: "fair_use", resetsAt: "2026-11-18T12:00:00.000Z" }, 402),
-    ).toBe("You've used this month's premium verdicts. More on November 18.");
+    ).toBe("You've used this month's verdicts. More on November 18.");
     const noDate = apiErrorMessage("tr", { code: "fair_use" }, 402);
     expect(noDate).toBe(STRINGS.tr["error.fair_useSoon"]);
     expect(noDate).not.toContain("{");

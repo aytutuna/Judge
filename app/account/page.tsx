@@ -3,7 +3,7 @@ import { AccountView } from "@/components/account/AccountView";
 
 export const metadata: Metadata = {
   title: "Account",
-  description: "Your Judge plan, premium credits and monthly allowance.",
+  description: "Your Judge credits and monthly allowance.",
   robots: { index: false, follow: false },
 };
 

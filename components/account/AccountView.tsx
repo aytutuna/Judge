@@ -3,24 +3,16 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import type { Entitlement } from "@/lib/account-types";
 import { t, tWithDate, type Lang } from "@/lib/i18n";
 import { useLang } from "@/lib/lang";
 import { markSignedOut, useViewer, type ViewerState } from "@/lib/use-viewer";
 import { CaseList, useCaseList, type CaseListState } from "../case/CaseList";
-import { PremiumSpark } from "../PremiumBadge";
 import styles from "./AccountPages.module.css";
 import { PageShell } from "./PageShell";
 import { VerdictList, useVerdictList, type VerdictListState } from "./VerdictList";
 
 /** How long the "account deleted" note stays before going home. */
 const DELETED_HOLD_MS = 1800;
-
-/** Premium while anything premium is held: credits or a live subscription
- * (even one at its fair-use cap). */
-export function planOf(e: Entitlement | null | undefined): "free" | "premium" {
-  return e && (e.credits > 0 || e.subscription !== null) ? "premium" : "free";
-}
 
 /** Opens the delete confirmation with focus on the safe choice. showModal()
  * would otherwise focus the first button, "Yes, delete it", and `autoFocus`
@@ -107,7 +99,6 @@ export function AccountPanel({
   }
 
   const e = viewer.me.entitlement;
-  const plan = planOf(e);
   const sub = e?.subscription ?? null;
 
   return (
@@ -118,19 +109,6 @@ export function AccountPanel({
           {t(lang, "account.plan")}
         </h2>
         <dl className={styles.facts}>
-          <div className={styles.fact}>
-            <dt>{t(lang, "account.plan")}</dt>
-            <dd>
-              {plan === "premium" ? (
-                <span className={styles.planPremium}>
-                  <PremiumSpark />
-                  {t(lang, "account.plan.premium")}
-                </span>
-              ) : (
-                t(lang, "account.plan.free")
-              )}
-            </dd>
-          </div>
           <div className={styles.fact}>
             <dt>{t(lang, "account.credits")}</dt>
             <dd>{e?.credits ?? 0}</dd>
@@ -158,11 +136,11 @@ export function AccountPanel({
           </div>
         </dl>
         {e?.blockedReason === "fair_use" ? (
-          <p className={styles.small}>{tWithDate(lang, "tier.fairUse", e.resetsAt)}</p>
+          <p className={styles.small}>{tWithDate(lang, "error.fair_use", e.resetsAt)}</p>
         ) : null}
         <div className={styles.row}>
           <Link href="/pricing" className={`${styles.btn} ${styles.primary}`}>
-            {t(lang, plan === "premium" ? "nav.pricing" : "account.getPremium")}
+            {t(lang, e?.canUsePremium ? "nav.pricing" : "account.getPremium")}
           </Link>
           <button type="button" className={`${styles.btn} ${styles.secondary}`} onClick={onSignOut}>
             {t(lang, "account.signOut")}

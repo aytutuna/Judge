@@ -97,7 +97,7 @@ describe("owner case page", () => {
     expect(html).toContain(OWNER.awaiting.inviteUrl as string);
     expect(html).toContain(t("en", "case.invite.copy"));
     expect(html).toContain("The link works until October 27.");
-    expect(html).toContain("1 premium verdict is held for this case. You get it back if nobody answers by October 27.");
+    expect(html).toContain("1 verdict is held for this case. You get it back if nobody answers by October 27.");
     expect(html).toContain(t("en", "case.judgeNow"));
     expect(html).toContain(esc(t("en", "case.judgeNow.confirm")));
     expect(html).toContain(esc(t("en", "case.yourSide")));
@@ -167,17 +167,17 @@ describe("owner case page", () => {
     expect(html).not.toContain(esc(t("en", "case.judgeNow.confirm")));
   });
 
-  it("a free case never mentions a held or returned credit", () => {
+  it("an old free case mentions no held or returned credit, but judging it alone costs one", () => {
     const free = (v: CaseView) => caseView({ ...v, tier: "free" });
     const awaiting = owner(free(OWNER.awaiting));
     expect(awaiting).toContain(OWNER.awaiting.inviteUrl as string);
-    expect(awaiting).not.toContain("premium verdict is held");
+    expect(awaiting).not.toContain("verdict is held");
     expect(owner(free(OWNER.failed))).toContain(t("en", "case.failedBodyFree"));
     const expired = owner(free(OWNER.expired));
     expect(expired).toContain(t("en", "case.expiredBodyFree"));
-    expect(expired).toContain(t("en", "case.judgeExpired.confirmFree"));
-    expect(expired).not.toContain(t("en", "case.judgeExpired.yes"));
-    for (const html of [awaiting, owner(free(OWNER.failed)), expired]) expect(html).not.toMatch(/credit|premium verdict/i);
+    expect(expired).toContain(t("en", "case.judgeExpired.confirm"));
+    expect(expired).toContain(t("en", "case.judgeExpired.yes"));
+    for (const html of [awaiting, owner(free(OWNER.failed))]) expect(html).not.toMatch(/credit|1 verdict/i);
   });
 
   it("names the viewer's party when this browser has no names for the case", () => {
@@ -228,10 +228,10 @@ describe("respondent page", () => {
     expect(html).not.toContain(esc(t("en", "case.accountA")));
   });
 
-  it("form on a free case: no screenshots (evidence is Premium)", () => {
+  it("form on an old free case: screenshots like any case", () => {
     const html = respondent(caseView({ ...RESPONDENT.form, tier: "free" }));
     expect(html).toContain(t("en", "respond.submit"));
-    expect(html).not.toContain(esc(t("en", "evidence.add")));
+    expect(html).toContain(esc(t("en", "evidence.add")));
   });
 
   it("own invite: tells the owner to send it on, no form", () => {
@@ -284,13 +284,13 @@ describe("respondent page", () => {
     expect(owner(OWNER.judged)).toContain('type="file"');
   });
 
-  it("appeals on a free case offer no screenshots", () => {
+  it("appeals on an old free case offer screenshots too", () => {
     const ownerAppeal = owner(caseView({ ...OWNER.judged, tier: "free" }));
     expect(ownerAppeal).toContain(t("en", "appeal.submit"));
-    expect(ownerAppeal).not.toContain('type="file"');
+    expect(ownerAppeal).toContain('type="file"');
     const appeal = respondent(caseView({ ...RESPONDENT.judgedPremium, tier: "free" }));
     expect(appeal).toContain(t("en", "appeal.submit"));
-    expect(appeal).not.toContain('type="file"');
+    expect(appeal).toContain('type="file"');
   });
 
   it("settled without them, or expired: says so calmly, with a next step, no verdict", () => {
