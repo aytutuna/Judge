@@ -542,7 +542,7 @@ const sv: Locale = {
       "Ett tvåsidigt fall kostar 1 dom. Den reserveras när du skickar länken och kommer tillbaka om ingen svarar inom 7 dagar.",
     "privacy.casesTitle": "Tvåsidiga fall och kompletteringar",
     "privacy.cases":
-      "I ett tvåsidigt fall anonymiseras varje sida när den skickas, på samma sätt som vid en dom. Den anonymiserade texten är det domarna läser; varje persons sida som den skrevs, med sin namnlista, sparas krypterad, och bara den personen kan se den. Var och en skriver in namnet som ska visas på delningssidan när hen skickar sin sida; lämnas fältet tomt blir det Part A eller Part B. Den andra personen behöver inget konto; hens svar begränsas med en hash av hens IP-adress med hemlig nyckel. Inbjudningslänken sparas bara som en hash. Om den andra personen svarar inloggad kopplas hens konto till hens sida, så att bara hen kan komplettera senare eller se sitt original; svarar hen utloggad gör en privat kod i hens webbläsare samma sak. För att samma person ska få samma etikett i båda berättelserna sparar servern kodade fingeravtryck av namn inom varje fall (hashar med hemlig nyckel, inte själva namnen). Fram till domen kan ingen av sidorna läsa den andras text; efter en tvåsidig dom kan båda läsa de två anonymiserade berättelserna. Tillägg efter en dom (en komplettering) hanteras på samma sätt. När den andra personen svarar kan vi mejla dig en kort notis utan någon text från fallet, om e-postutskick är aktiverat. Var och en kan ta bort sin egen sida: originalet och visningsnamnet raderas, och fallets delningslänkar slutar fungera för alla. Raderar du ditt konto händer detta för alla fall du har startat eller svarat på.",
+      "I ett tvåsidigt fall anonymiseras varje sida när den skickas, på samma sätt som vid en dom. Den anonymiserade texten är det domarna läser; varje persons sida som den skrevs, med sin namnlista, sparas krypterad, och bara den personen kan se den. Var och en skriver in namnet som ska visas på delningssidan när hen skickar sin sida; lämnas fältet tomt blir det Part A eller Part B. Den andra personen behöver inget konto; hens svar begränsas med en hash av hens IP-adress med hemlig nyckel. Inbjudningslänken sparas bara som en hash. Om den andra personen svarar inloggad kopplas hens konto till hens sida, så att bara hen kan komplettera senare eller se sitt original; svarar hen utloggad gör en privat kod i hens webbläsare samma sak, och loggar hen in senare i den webbläsaren kan hen spara fallet i sitt konto. För att samma person ska få samma etikett i båda berättelserna sparar servern kodade fingeravtryck av namn inom varje fall (hashar med hemlig nyckel, inte själva namnen). Fram till domen kan ingen av sidorna läsa den andras text; efter en tvåsidig dom kan båda läsa de två anonymiserade berättelserna. Tillägg efter en dom (en komplettering) hanteras på samma sätt. När den andra personen svarar kan vi mejla dig en kort notis utan någon text från fallet, om e-postutskick är aktiverat. Var och en kan ta bort sin egen sida: originalet och visningsnamnet raderas, och fallets delningslänkar slutar fungera för alla. Raderar du ditt konto händer detta för alla fall du har startat eller svarat på.",
     "privacy.evidenceTitle": "Skärmdumpar",
     "privacy.evidence":
       "Din webbläsare förminskar stora bilder innan de laddas upp. Varje bild skickas sedan en gång till en extern AI-tjänst så att den synliga texten kan läsas; vi sparar aldrig bilden. Den råa transkriberingen, som fortfarande kan innehålla namn, kommer tillbaka till dig i en signerad token som din webbläsare håller i upp till 6 timmar. När du skickar din sida anonymiseras transkriberingen tillsammans med din text: den anonymiserade transkriberingen visas för domarna och sparas med fallet, och den råa sparas krypterad med ditt original, där bara du kan se den. Telefonnummer, e-postadresser, användarnamn i sociala medier och kontonummer i den byts också ut mot platshållare för domarna.",
@@ -578,6 +578,8 @@ const sv: Locale = {
     "case.appealOriginal": "Din komplettering som du skrev den",
     "case.displayName": "Ditt namn på den delade domen",
     "case.displaySave": "Spara namn",
+    "respond.keep": "Spara fallet i ditt konto",
+    "respond.kept": "Fallet finns nu i ditt konto. Det syns på sidan Domar på alla enheter.",
     "respond.remove": "Ta bort min sida",
     "respond.remove.confirm":
       "Ta bort din originaltext och ditt visningsnamn? Fallets delningslänkar slutar fungera (förhandsvisningar som redan delats i chattar kan synas tills apparna uppdaterar dem). Det går inte att ångra.",
@@ -621,6 +623,20 @@ const sv: Locale = {
     "shell.case.judged": "Avgjort",
     "shell.case.failed": "Blev inte klart",
     "shell.case.expired": "Har gått ut",
+    "history.state.judging": "Domarna tänker",
+    "history.state.rejudging": "Domarna omprövar",
+    "history.state.failed": "Blev inte klart",
+    "history.state.rejudgeFailed": "Kompletteringen gick inte igenom",
+    "history.state.waiting": "Väntar på svar från {name}",
+    "history.state.waitingOther": "Väntar på svar från den andra sidan",
+    "history.state.expired": "Länken har gått ut",
+    "history.state.removed": "Togs bort",
+    "history.state.removedBy": "Togs bort av {name}",
+    "history.state.removedByOther": "Togs bort av den andra sidan",
+    "history.state.ready": "Domen är klar",
+    "history.contextAdded": "Efter komplettering",
+    "history.yourMove": "Din tur",
+    "history.answered": "Du svarade",
     "thread.label": "Det här bråket",
     "thread.you": "Du skrev",
     "thread.judges": "Domarna",
@@ -649,7 +665,7 @@ const sv: Locale = {
     "bestPoint.self": "Ditt bästa argument",
     "privacy.accessTitle": "Vem som kan se vad",
     "privacy.access":
-      "Du: din originaltext och namnen, på alla enheter när du är inloggad, eller på enheten du använde genom en privat kod som sparats i webbläsaren eller appen (vi sparar bara en förvrängd form av koden). Domar som togs fram när du var utloggad, innan ett konto krävdes, ligger kvar i listan i den webbläsaren med sina rubriker och dina namn som du skrev dem, så att sidan Domar kan visa dem: alla som använder samma webbläsare ser listan. På en delad dator: logga in eller använd ett privat fönster; rensar du webbplatsens data i webbläsaren försvinner listan. I ett tvåsidigt fall ser var och en bara sitt eget original; efter domen ser båda de två anonymiserade berättelserna, som domarna läste dem. Domarna (AI-modeller som körs av vår AI-leverantör): bara den anonymiserade versionen. Alla med delningslänken: domen med visningsnamn. Som standard är det namnet du väljer för dig själv och de andras förnamn som du skrev dem; du kan ändra dem eller stänga av namnen när som helst, och då visar sidan Part A och Part B. Vi: vi kan dekryptera original med nyckeln och gör det bara för att svara på dina förfrågningar, åtgärda problem eller när lagen kräver det.",
+      "Du: din originaltext och namnen, på alla enheter när du är inloggad, eller på enheten du använde genom en privat kod som sparats i webbläsaren eller appen (vi sparar bara en förvrängd form av koden). Domar som togs fram när du var utloggad, innan ett konto krävdes, och fall som du svarade på utloggad ligger kvar i listan i den webbläsaren med sina rubriker och dina namn som du skrev dem, så att sidan Domar kan visa dem: alla som använder samma webbläsare ser listan. På en delad dator: logga in eller använd ett privat fönster; rensar du webbplatsens data i webbläsaren försvinner listan. I ett tvåsidigt fall ser var och en bara sitt eget original; efter domen ser båda de två anonymiserade berättelserna, som domarna läste dem. Domarna (AI-modeller som körs av vår AI-leverantör): bara den anonymiserade versionen. Alla med delningslänken: domen med visningsnamn. Som standard är det namnet du väljer för dig själv och de andras förnamn som du skrev dem; du kan ändra dem eller stänga av namnen när som helst, och då visar sidan Part A och Part B. Vi: vi kan dekryptera original med nyckeln och gör det bara för att svara på dina förfrågningar, åtgärda problem eller när lagen kräver det.",
     "privacy.removalTitle": "Borttagning",
     "privacy.removal":
       "Be om borttagning på domens sida (inloggad kan du öppna den från sidan Domar), på fallets sida för ett tvåsidigt fall, genom att radera ditt konto eller via mejl. Borttagning raderar din originaltext, namnlistan och visningsnamnen (i ett tvåsidigt fall din sidas original och ditt visningsnamn), och delningslänken och dess förhandsbild laddas inte längre för någon. Förhandsvisningar som redan delats i chattappar sparas av de apparna och kan fortsätta synas tills de uppdateras. Vi behåller den anonymiserade texten och domen, utan namn, i vårt register; de går inte längre att öppna via länken. Raderar du ditt konto händer detta för alla dina domar och dina sidor i tvåsidiga fall, och dina inloggningsuppgifter, krediter och ditt abonnemang raderas. Borttagen data ligger kvar i våra säkerhetskopior tills de löper ut (högst 14 dagar, se nedan); om vi någon gång återställer en säkerhetskopia gör vi om varje borttagning (för det sparar vi en lista över vad som togs bort och när, utan text eller namn).",

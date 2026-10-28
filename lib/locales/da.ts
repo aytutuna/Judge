@@ -542,7 +542,7 @@ const da: Locale = {
       "En tosidet sag bruger 1 dom. Den bliver reserveret, når du sender linket, og du får den tilbage, hvis ingen svarer inden for 7 dage.",
     "privacy.casesTitle": "Tosidede sager og tilføjet kontekst",
     "privacy.cases":
-      "I en tosidet sag bliver hver side anonymiseret, når den sendes, på samme måde som ved en dom. Den anonymiserede tekst er det, dommerne læser; hver persons side, som den blev skrevet, gemmes krypteret med sin navneliste, og kun den person kan se den. Når en person sender sin side, skriver vedkommende det navn, der skal vises på delingssiden; står feltet tomt, er det Part A eller Part B. Den anden person behøver ingen konto; svarene derfra begrænses med en nøglebaseret hash af vedkommendes IP-adresse. Invitationslinket gemmes kun som en hash. Svarer den anden person, mens vedkommende er logget ind, bliver kontoen knyttet til den side, så kun vedkommende senere kan tilføje kontekst eller se sin original; svarer vedkommende uden at være logget ind, gør en privat kode i browseren det samme. For at give den samme person den samme betegnelse i begge versioner gemmer serveren kodede fingeraftryk af navnene inden for hver sag (nøglebaserede hashes, ikke selve navnene). Indtil dommen kan ingen af siderne læse den andens tekst; efter en tosidet dom kan begge personer læse begge anonymiserede versioner. Kontekst, der tilføjes efter en dom, håndteres på samme måde. Når den anden person svarer, sender vi dig måske en kort e-mail uden tekst fra sagen, hvis e-mail er sat op. Begge personer kan fjerne deres egen side: originalen og det viste navn slettes, og sagens delingslinks holder op med at virke for alle. Når du sletter din konto, sker det for alle sager, du har startet eller svaret på.",
+      "I en tosidet sag bliver hver side anonymiseret, når den sendes, på samme måde som ved en dom. Den anonymiserede tekst er det, dommerne læser; hver persons side, som den blev skrevet, gemmes krypteret med sin navneliste, og kun den person kan se den. Når en person sender sin side, skriver vedkommende det navn, der skal vises på delingssiden; står feltet tomt, er det Part A eller Part B. Den anden person behøver ingen konto; svarene derfra begrænses med en nøglebaseret hash af vedkommendes IP-adresse. Invitationslinket gemmes kun som en hash. Svarer den anden person, mens vedkommende er logget ind, bliver kontoen knyttet til den side, så kun vedkommende senere kan tilføje kontekst eller se sin original; svarer vedkommende uden at være logget ind, gør en privat kode i browseren det samme, og logger vedkommende senere ind i den browser, kan vedkommende gemme sagen på sin konto. For at give den samme person den samme betegnelse i begge versioner gemmer serveren kodede fingeraftryk af navnene inden for hver sag (nøglebaserede hashes, ikke selve navnene). Indtil dommen kan ingen af siderne læse den andens tekst; efter en tosidet dom kan begge personer læse begge anonymiserede versioner. Kontekst, der tilføjes efter en dom, håndteres på samme måde. Når den anden person svarer, sender vi dig måske en kort e-mail uden tekst fra sagen, hvis e-mail er sat op. Begge personer kan fjerne deres egen side: originalen og det viste navn slettes, og sagens delingslinks holder op med at virke for alle. Når du sletter din konto, sker det for alle sager, du har startet eller svaret på.",
     "privacy.evidenceTitle": "Skærmbilleder",
     "privacy.evidence":
       "Din browser gør store billeder mindre, før de uploades. Hvert billede sendes derefter én gang til en ekstern AI-tjeneste, så den synlige tekst kan læses; vi gemmer aldrig billedet. Den rå udskrift, som stadig kan indeholde navne, kommer tilbage til dig i et signeret token, som din browser opbevarer i op til 6 timer. Når du sender din side, bliver udskriften anonymiseret sammen med din tekst: den anonymiserede udskrift vises for dommerne og gemmes med sagen, og den rå udskrift gemmes krypteret sammen med din original, hvor kun du kan se den. Telefonnumre, e-mailadresser, brugernavne på sociale medier og kontonumre i den bliver også erstattet med pladsholdere for dommerne.",
@@ -578,6 +578,8 @@ const da: Locale = {
     "case.appealOriginal": "Din tilføjede kontekst, som du skrev den",
     "case.displayName": "Dit navn på den delte dom",
     "case.displaySave": "Gem navn",
+    "respond.keep": "Gem sagen på din konto",
+    "respond.kept": "Sagen ligger nu på din konto. Den vises på siden Domme på alle dine enheder.",
     "respond.remove": "Fjern min side",
     "respond.remove.confirm":
       "Vil du fjerne din originale tekst og dit viste navn? Sagens delingslinks holder op med at virke (forhåndsvisninger, der allerede er sendt i chats, kan stadig blive vist, indtil de apps opdaterer dem). Det kan ikke fortrydes.",
@@ -621,6 +623,20 @@ const da: Locale = {
     "shell.case.judged": "Dømt",
     "shell.case.failed": "Blev ikke færdig",
     "shell.case.expired": "Udløbet",
+    "history.state.judging": "Dommerne tænker",
+    "history.state.rejudging": "Dommerne tænker igen",
+    "history.state.failed": "Blev ikke færdig",
+    "history.state.rejudgeFailed": "Den nye kontekst gik ikke igennem",
+    "history.state.waiting": "Venter på svar fra {name}",
+    "history.state.waitingOther": "Venter på svar fra den anden side",
+    "history.state.expired": "Linket er udløbet",
+    "history.state.removed": "Fjernet",
+    "history.state.removedBy": "Fjernet af {name}",
+    "history.state.removedByOther": "Fjernet af den anden side",
+    "history.state.ready": "Dommen er klar",
+    "history.contextAdded": "Efter ny kontekst",
+    "history.yourMove": "Din tur",
+    "history.answered": "Du har svaret",
     "thread.label": "Denne diskussion",
     "thread.you": "Du skrev",
     "thread.judges": "Dommerne",
@@ -649,7 +665,7 @@ const da: Locale = {
     "bestPoint.self": "Din bedste pointe",
     "privacy.accessTitle": "Hvem kan se hvad",
     "privacy.access":
-      "Du: din originale tekst og navnene, på alle enheder, når du er logget ind, eller på den enhed, du brugte, via en privat kode, der er gemt i din browser eller appen (vi gemmer kun en forvrænget udgave af koden). Domme, der blev skrevet uden login, før det krævede en konto, bliver stående på listen i den browser med deres overskrifter og dine navne, som du skrev dem, så siden Domme kan vise dem: alle, der bruger den samme browser, kan se listen. På en delt computer bør du logge ind eller bruge et privat vindue; sletter du sidens data i browseren, forsvinder listen. I en tosidet sag ser hver person kun sin egen original; efter dommen ser begge begge anonymiserede versioner, som dommerne læste dem. Dommerne (AI-modeller, som vores AI-udbyder kører): kun den anonymiserede version. Alle med delingslinket: dommen med de viste navne. Som standard er det det navn, du vælger til dig selv, og fornavnene på de andre, som du skrev dem; du kan til enhver tid ændre dem eller slå navne fra, og så viser siden Part A og Part B. Os: vi kan dekryptere originaler med nøglen og gør det kun for at besvare dine anmodninger, rette fejl, eller når loven kræver det.",
+      "Du: din originale tekst og navnene, på alle enheder, når du er logget ind, eller på den enhed, du brugte, via en privat kode, der er gemt i din browser eller appen (vi gemmer kun en forvrænget udgave af koden). Domme, der blev skrevet uden login, før det krævede en konto, og sager, du svarede på uden login, bliver stående på listen i den browser med deres overskrifter og dine navne, som du skrev dem, så siden Domme kan vise dem: alle, der bruger den samme browser, kan se listen. På en delt computer bør du logge ind eller bruge et privat vindue; sletter du sidens data i browseren, forsvinder listen. I en tosidet sag ser hver person kun sin egen original; efter dommen ser begge begge anonymiserede versioner, som dommerne læste dem. Dommerne (AI-modeller, som vores AI-udbyder kører): kun den anonymiserede version. Alle med delingslinket: dommen med de viste navne. Som standard er det det navn, du vælger til dig selv, og fornavnene på de andre, som du skrev dem; du kan til enhver tid ændre dem eller slå navne fra, og så viser siden Part A og Part B. Os: vi kan dekryptere originaler med nøglen og gør det kun for at besvare dine anmodninger, rette fejl, eller når loven kræver det.",
     "privacy.removalTitle": "Fjernelse",
     "privacy.removal":
       "Du kan bede om fjernelse på dommens side (når du er logget ind, kan du åbne den fra siden Domme), på sagens side for en tosidet sag, ved at slette din konto eller via e-mail. Fjernelse sletter din originale tekst, navnelisten og de viste navne (i en tosidet sag din sides original og dit viste navn), og delingslinket og dets forhåndsvisningsbillede holder op med at virke for alle. Forhåndsvisninger, der allerede er sendt i chatapps, opbevares af de apps og kan blive ved med at blive vist, indtil de opdaterer dem. Vi beholder den anonymiserede tekst og dommen, uden navne, i vores registre; de kan ikke længere åbnes via linket. Sletter du din konto, sker det for alle dine domme og dine sider i sager, og dine loginoplysninger, kreditter og din plan bliver slettet. Fjernede data ligger i vores sikkerhedskopier, indtil de udløber (højst 14 dage, se nedenfor); hvis vi nogensinde gendanner en sikkerhedskopi, gennemfører vi alle fjernelser igen (til det gemmer vi en liste over, hvad der blev fjernet og hvornår, uden tekst eller navne).",

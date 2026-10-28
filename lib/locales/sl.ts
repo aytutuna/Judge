@@ -544,7 +544,7 @@ const sl: Locale = {
       "Dvostranski spor porabi 1 razsodbo. Rezervirana je, ko pošlješ povezavo, in se vrne, če v 7 dneh nihče ne odgovori.",
     "privacy.casesTitle": "Dvostranski spori in ponovne presoje",
     "privacy.cases":
-      "V dvostranskem sporu se vsaka plat anonimizira ob pošiljanju, enako kot pri razsodbi. Sodniki berejo anonimizirano besedilo; plat vsake osebe v izvirni obliki, s seznamom imen, je shranjena šifrirano in jo lahko vidi samo ta oseba. Vsaka oseba ob pošiljanju svoje plati vpiše ime, ki naj bo prikazano na strani za deljenje; če polje pusti prazno, se prikaže Stranka A ali Stranka B. Druga oseba ne potrebuje računa; število njenih odgovorov omejujemo prek zgoščene vrednosti (s ključem) njenega naslova IP. Povezava za povabilo je shranjena samo kot zgoščena vrednost. Če druga oseba odgovori prijavljena, se njen račun poveže z njeno platjo, tako da lahko samo ona pozneje doda kontekst ali vidi svoj izvirnik; če odgovori neprijavljena, enako nalogo opravlja zasebna koda, shranjena v njenem brskalniku. Da ista oseba v obeh pripovedih dobi isto oznako, strežnik v vsakem sporu hrani kodirane prstne odtise imen (zgoščene vrednosti s ključem, ne samih imen). Do razsodbe nobena plat ne more prebrati besedila druge; po dvostranski razsodbi lahko obe osebi prebereta obe anonimizirani pripovedi. Kontekst, dodan po razsodbi (ponovna presoja), se obdeluje enako. Ko druga oseba odgovori, ti lahko, če je e-pošta nastavljena, pošljemo kratko obvestilo brez besedila spora. Vsaka oseba lahko odstrani svojo plat: njen izvirnik in prikazno ime se izbrišeta, povezave za deljenje tega spora pa prenehajo delovati za vse. Izbris računa to naredi za vse spore, ki jih začneš ali na katere odgovoriš.",
+      "V dvostranskem sporu se vsaka plat anonimizira ob pošiljanju, enako kot pri razsodbi. Sodniki berejo anonimizirano besedilo; plat vsake osebe v izvirni obliki, s seznamom imen, je shranjena šifrirano in jo lahko vidi samo ta oseba. Vsaka oseba ob pošiljanju svoje plati vpiše ime, ki naj bo prikazano na strani za deljenje; če polje pusti prazno, se prikaže Stranka A ali Stranka B. Druga oseba ne potrebuje računa; število njenih odgovorov omejujemo prek zgoščene vrednosti (s ključem) njenega naslova IP. Povezava za povabilo je shranjena samo kot zgoščena vrednost. Če druga oseba odgovori prijavljena, se njen račun poveže z njeno platjo, tako da lahko samo ona pozneje doda kontekst ali vidi svoj izvirnik; če odgovori neprijavljena, enako nalogo opravlja zasebna koda, shranjena v njenem brskalniku, in če se pozneje v tem brskalniku prijavi, lahko spor shrani v svoj račun. Da ista oseba v obeh pripovedih dobi isto oznako, strežnik v vsakem sporu hrani kodirane prstne odtise imen (zgoščene vrednosti s ključem, ne samih imen). Do razsodbe nobena plat ne more prebrati besedila druge; po dvostranski razsodbi lahko obe osebi prebereta obe anonimizirani pripovedi. Kontekst, dodan po razsodbi (ponovna presoja), se obdeluje enako. Ko druga oseba odgovori, ti lahko, če je e-pošta nastavljena, pošljemo kratko obvestilo brez besedila spora. Vsaka oseba lahko odstrani svojo plat: njen izvirnik in prikazno ime se izbrišeta, povezave za deljenje tega spora pa prenehajo delovati za vse. Izbris računa to naredi za vse spore, ki jih začneš ali na katere odgovoriš.",
     "privacy.evidenceTitle": "Posnetki zaslona",
     "privacy.evidence":
       "Tvoj brskalnik velike slike pred nalaganjem pomanjša. Nato gre vsaka slika enkrat k zunanji storitvi UI, da se prebere vidno besedilo; slike nikoli ne shranimo. Surovi prepis, ki lahko še vsebuje imena, se ti vrne v podpisanem žetonu, ki ga brskalnik hrani do 6 ur. Ko pošlješ svojo plat, se prepis anonimizira skupaj s tvojim besedilom: anonimizirani prepis vidijo sodniki in je shranjen s sporom, surovi prepis pa je shranjen šifrirano skupaj s tvojim izvirnikom, kjer ga vidiš samo ti. Telefonske številke, e-poštni naslovi, uporabniška imena na družbenih omrežjih in številke računov v njem so za sodnike prav tako zamenjani z nadomestnimi oznakami.",
@@ -580,6 +580,8 @@ const sl: Locale = {
     "case.appealOriginal": "Tvoj dodani kontekst v izvirni obliki",
     "case.displayName": "Tvoje ime v deljeni razsodbi",
     "case.displaySave": "Shrani ime",
+    "respond.keep": "Shrani ta spor v svoj račun",
+    "respond.kept": "Ta spor je zdaj v tvojem računu. Prikazan je na strani Razsodbe na vseh napravah.",
     "respond.remove": "Odstrani mojo plat",
     "respond.remove.confirm":
       "Želiš odstraniti svoje izvirno besedilo in prikazno ime? Povezave za deljenje tega spora prenehajo delovati (predogledi, ki so že objavljeni v klepetih, so lahko še vidni, dokler jih te aplikacije ne osvežijo). Tega ni mogoče razveljaviti.",
@@ -623,6 +625,20 @@ const sl: Locale = {
     "shell.case.judged": "Razsojeno",
     "shell.case.failed": "Ni dokončano",
     "shell.case.expired": "Poteklo",
+    "history.state.judging": "Sodniki razmišljajo",
+    "history.state.rejudging": "Sodniki znova razmišljajo",
+    "history.state.failed": "Ni dokončano",
+    "history.state.rejudgeFailed": "Ponovna presoja ni uspela",
+    "history.state.waiting": "Čakamo, da odgovori {name}",
+    "history.state.waitingOther": "Čakamo, da odgovori druga oseba",
+    "history.state.expired": "Povezava je potekla",
+    "history.state.removed": "Odstranjeno",
+    "history.state.removedBy": "Odstranjeno ({name})",
+    "history.state.removedByOther": "Odstranila je druga oseba",
+    "history.state.ready": "Razsodba je pripravljena",
+    "history.contextAdded": "Po novem kontekstu",
+    "history.yourMove": "Na vrsti si",
+    "history.answered": "Odgovor na povabilo",
     "thread.label": "Ta prepir",
     "thread.you": "Tvoje besedilo",
     "thread.judges": "Sodniki",
@@ -651,7 +667,7 @@ const sl: Locale = {
     "bestPoint.self": "Tvoj najboljši argument",
     "privacy.accessTitle": "Kdo vidi kaj",
     "privacy.access":
-      "Ti: svoje izvirno besedilo in imena, na kateri koli napravi, ko se prijaviš, ali na napravi, s katere je bilo besedilo poslano, prek zasebne kode, shranjene v brskalniku ali aplikaciji (mi hranimo samo zakodirano obliko te kode). Razsodbe, napisane brez prijave, preden je bil račun obvezen, ostanejo na seznamu v tem brskalniku z naslovi in imeni, kot so bili napisani, da jih lahko prikaže stran Razsodbe: vsak, ki uporablja isti brskalnik, vidi ta seznam. Na skupnem računalniku se prijavi ali uporabi zasebno okno; brisanje podatkov spletnega mesta v brskalniku odstrani seznam. V dvostranskem sporu vsaka oseba vidi samo svoj izvirnik; po razsodbi obe vidita obe anonimizirani pripovedi, tako kot so ju prebrali sodniki. Sodniki (modeli UI, ki jih poganja naš ponudnik UI): samo anonimizirano različico. Vsak s povezavo za deljenje: razsodbo s prikaznimi imeni. Privzeto je to ime, ki ga izbereš zase, in imena (brez priimkov) drugih oseb, kot so zapisana v tvojem besedilu; kadar koli jih lahko spremeniš ali imena izklopiš, takrat stran pokaže oznaki Stranka A in Stranka B. Mi: izvirnike lahko dešifriramo s ključem in to storimo samo, da odgovorimo na tvoje zahteve, odpravimo težave ali kadar to zahteva zakon.",
+      "Ti: svoje izvirno besedilo in imena, na kateri koli napravi, ko se prijaviš, ali na napravi, s katere je bilo besedilo poslano, prek zasebne kode, shranjene v brskalniku ali aplikaciji (mi hranimo samo zakodirano obliko te kode). Razsodbe, napisane brez prijave, preden je bil račun obvezen, in spori, na katere odgovoriš brez prijave, ostanejo na seznamu v tem brskalniku z naslovi in imeni, kot so bili napisani, da jih lahko prikaže stran Razsodbe: vsak, ki uporablja isti brskalnik, vidi ta seznam. Na skupnem računalniku se prijavi ali uporabi zasebno okno; brisanje podatkov spletnega mesta v brskalniku odstrani seznam. V dvostranskem sporu vsaka oseba vidi samo svoj izvirnik; po razsodbi obe vidita obe anonimizirani pripovedi, tako kot so ju prebrali sodniki. Sodniki (modeli UI, ki jih poganja naš ponudnik UI): samo anonimizirano različico. Vsak s povezavo za deljenje: razsodbo s prikaznimi imeni. Privzeto je to ime, ki ga izbereš zase, in imena (brez priimkov) drugih oseb, kot so zapisana v tvojem besedilu; kadar koli jih lahko spremeniš ali imena izklopiš, takrat stran pokaže oznaki Stranka A in Stranka B. Mi: izvirnike lahko dešifriramo s ključem in to storimo samo, da odgovorimo na tvoje zahteve, odpravimo težave ali kadar to zahteva zakon.",
     "privacy.removalTitle": "Odstranitev",
     "privacy.removal":
       "Odstranitev lahko zahtevaš na strani razsodbe (po prijavi jo odpreš s strani Razsodbe), pri dvostranskem sporu na strani spora, z izbrisom računa ali po e-pošti. Odstranitev izbriše tvoje izvirno besedilo, seznam imen in prikazna imena (v dvostranskem sporu izvirnik tvoje plati in tvoje prikazno ime), povezava za deljenje in njena slika za predogled pa se nehata nalagati za vse. Predoglede, ki so že objavljeni v aplikacijah za klepet, hranijo te aplikacije in so lahko še vidni, dokler jih ne osvežijo. Anonimizirano besedilo in razsodbo brez imen obdržimo v svojih evidencah; prek povezave ju ni več mogoče odpreti. Izbris računa to naredi za vse tvoje razsodbe in tvoje plati v sporih ter izbriše tvoje podatke za prijavo, kredite in naročnino. Odstranjeni podatki ostanejo v varnostnih kopijah, dokler te ne potečejo (največ 14 dni, glej spodaj); če kdaj obnovimo varnostno kopijo, znova izvedemo vse odstranitve (za to hranimo seznam, kaj je bilo odstranjeno in kdaj, brez besedila ali imen).",

@@ -541,7 +541,7 @@ const sk: Locale = {
       "Obojstranný prípad stojí 1 verdikt. Rezervuje sa, keď pošleš odkaz, a vráti sa, ak nikto neodpovie do 7 dní.",
     "privacy.casesTitle": "Obojstranné prípady a odvolania",
     "privacy.cases":
-      "V obojstrannom prípade sa každá verzia pri odoslaní anonymizuje rovnako ako pri verdikte. Sudcovia čítajú anonymizovaný text; verzia každého človeka v pôvodnom znení spolu so zoznamom mien je uložená zašifrovaná a vidí ju len tento človek. Každý pri odoslaní svojej verzie napíše meno, ktoré sa má zobraziť na stránke na zdieľanie; ak ho nechá prázdne, zobrazí sa Strana A alebo Strana B. Druhá strana nepotrebuje účet; jej odpovede obmedzujeme pomocou kľúčovaného hashu jej IP adresy. Odkaz s pozvánkou sa uchováva len ako hash. Ak druhá strana odpovie prihlásená, jej účet sa prepojí s jej verziou, takže len ona môže neskôr doplniť kontext alebo vidieť svoj originál; ak odpovie neprihlásená, rovnakú úlohu plní súkromný kód uložený v jej prehliadači. Aby mal ten istý človek v oboch verziách rovnaké označenie, server v rámci každého prípadu uchováva zakódované odtlačky mien (kľúčované hashe, nie samotné mená). Až do verdiktu nemôže žiadna strana čítať text tej druhej; po obojstrannom verdikte si obaja môžu prečítať obe anonymizované verzie. Kontext doplnený po verdikte (odvolanie) sa spracúva rovnako. Keď druhá strana odpovie, môžeme ti poslať krátky e-mail bez akéhokoľvek textu z prípadu, ak je e-mail nastavený. Každý môže odstrániť svoju vlastnú verziu: jeho originál a zobrazované meno sa vymažú a odkazy na zdieľanie prípadu prestanú fungovať pre všetkých. Zrušenie účtu to urobí vo všetkých prípadoch, v ktorých vystupuješ ako jedna zo strán.",
+      "V obojstrannom prípade sa každá verzia pri odoslaní anonymizuje rovnako ako pri verdikte. Sudcovia čítajú anonymizovaný text; verzia každého človeka v pôvodnom znení spolu so zoznamom mien je uložená zašifrovaná a vidí ju len tento človek. Každý pri odoslaní svojej verzie napíše meno, ktoré sa má zobraziť na stránke na zdieľanie; ak ho nechá prázdne, zobrazí sa Strana A alebo Strana B. Druhá strana nepotrebuje účet; jej odpovede obmedzujeme pomocou kľúčovaného hashu jej IP adresy. Odkaz s pozvánkou sa uchováva len ako hash. Ak druhá strana odpovie prihlásená, jej účet sa prepojí s jej verziou, takže len ona môže neskôr doplniť kontext alebo vidieť svoj originál; ak odpovie neprihlásená, rovnakú úlohu plní súkromný kód uložený v jej prehliadači, a keď sa v tom prehliadači neskôr prihlási, môže si prípad uložiť do svojho účtu. Aby mal ten istý človek v oboch verziách rovnaké označenie, server v rámci každého prípadu uchováva zakódované odtlačky mien (kľúčované hashe, nie samotné mená). Až do verdiktu nemôže žiadna strana čítať text tej druhej; po obojstrannom verdikte si obaja môžu prečítať obe anonymizované verzie. Kontext doplnený po verdikte (odvolanie) sa spracúva rovnako. Keď druhá strana odpovie, môžeme ti poslať krátky e-mail bez akéhokoľvek textu z prípadu, ak je e-mail nastavený. Každý môže odstrániť svoju vlastnú verziu: jeho originál a zobrazované meno sa vymažú a odkazy na zdieľanie prípadu prestanú fungovať pre všetkých. Zrušenie účtu to urobí vo všetkých prípadoch, v ktorých vystupuješ ako jedna zo strán.",
     "privacy.evidenceTitle": "Snímky obrazovky",
     "privacy.evidence":
       "Tvoj prehliadač pred nahraním zmenší veľké obrázky. Každý obrázok potom ide raz do externej AI služby, aby sa prečítal viditeľný text; samotný obrázok nikdy neukladáme. Surový prepis, ktorý môže stále obsahovať mená, sa ti vráti v podpísanom tokene, ktorý tvoj prehliadač drží najviac 6 hodín. Keď odošleš svoju verziu, prepis sa anonymizuje spolu s tvojím textom: anonymizovaný prepis sa zobrazí sudcom a uloží sa s prípadom a surový prepis sa uchová zašifrovaný s tvojím originálom, kde ho vidíš len ty. Telefónne čísla, e-mailové adresy, používateľské mená na sociálnych sieťach a čísla účtov v ňom sa pre sudcov tiež nahradia zástupnými označeniami.",
@@ -577,6 +577,8 @@ const sk: Locale = {
     "case.appealOriginal": "Tvoj doplnený kontext v pôvodnom znení",
     "case.displayName": "Tvoje meno na zdieľanom verdikte",
     "case.displaySave": "Uložiť meno",
+    "respond.keep": "Uložiť prípad do môjho účtu",
+    "respond.kept": "Tento prípad je teraz v tvojom účte. Uvidíš ho na stránke Verdikty na každom zariadení.",
     "respond.remove": "Odstrániť moju verziu",
     "respond.remove.confirm":
       "Odstrániť svoj pôvodný text a zobrazované meno? Odkazy na zdieľanie prípadu prestanú fungovať (náhľady, ktoré už boli poslané v chatoch, sa môžu zobrazovať, kým ich tieto aplikácie neobnovia). Nedá sa to vrátiť späť.",
@@ -620,6 +622,20 @@ const sk: Locale = {
     "shell.case.judged": "Rozsúdené",
     "shell.case.failed": "Nedokončené",
     "shell.case.expired": "Vypršalo",
+    "history.state.judging": "Sudcovia rozhodujú",
+    "history.state.rejudging": "Sudcovia rozhodujú znova",
+    "history.state.failed": "Nedokončené",
+    "history.state.rejudgeFailed": "Nový kontext sa nepodarilo spracovať",
+    "history.state.waiting": "Čaká sa na odpoveď: {name}",
+    "history.state.waitingOther": "Čaká sa na odpoveď druhej strany",
+    "history.state.expired": "Platnosť odkazu vypršala",
+    "history.state.removed": "Odstránené",
+    "history.state.removedBy": "Odstránené na žiadosť: {name}",
+    "history.state.removedByOther": "Odstránené na žiadosť druhej strany",
+    "history.state.ready": "Verdikt je hotový",
+    "history.contextAdded": "Po doplnení kontextu",
+    "history.yourMove": "Si na rade",
+    "history.answered": "Tvoja odpoveď",
     "thread.label": "Tento spor",
     "thread.you": "Tvoj text",
     "thread.judges": "Sudcovia",
@@ -648,7 +664,7 @@ const sk: Locale = {
     "bestPoint.self": "Tvoj najsilnejší argument",
     "privacy.accessTitle": "Kto čo vidí",
     "privacy.access":
-      "Ty: svoj pôvodný text a mená, po prihlásení na akomkoľvek zariadení, alebo na zariadení, kde text vznikol, cez súkromný kód uložený v prehliadači alebo v aplikácii (uchovávame len zakódovanú podobu tohto kódu). Verdikty napísané bez prihlásenia, ešte predtým, ako bol potrebný účet, zostávajú v zozname v tom prehliadači s nadpismi a tvojimi menami v pôvodnom znení, aby ich mohla ukázať stránka Verdikty: tento zoznam vidí každý, kto používa ten istý prehliadač. Na zdieľanom počítači sa prihlás alebo použi súkromné okno; vymazaním údajov stránky v prehliadači sa zoznam odstráni. V obojstrannom prípade vidí každý len svoj vlastný originál; po verdikte obaja vidia obe anonymizované verzie tak, ako ich čítali sudcovia. Sudcovia (AI modely, ktoré prevádzkuje náš poskytovateľ AI): len anonymizovanú verziu. Ktokoľvek s odkazom na zdieľanie: verdikt so zobrazovanými menami. Predvolene je to meno, ktoré si zvolíš pre seba, a krstné mená ostatných tak, ako sú v tvojom texte; kedykoľvek ich môžeš zmeniť alebo mená vypnúť a potom stránka ukazuje Strana A a Strana B. My: originály vieme pomocou kľúča dešifrovať a robíme to len pri vybavovaní tvojich žiadostí, pri riešení problémov alebo keď to vyžaduje zákon.",
+      "Ty: svoj pôvodný text a mená, po prihlásení na akomkoľvek zariadení, alebo na zariadení, kde text vznikol, cez súkromný kód uložený v prehliadači alebo v aplikácii (uchovávame len zakódovanú podobu tohto kódu). Verdikty napísané bez prihlásenia, ešte predtým, ako bol potrebný účet, a prípady s tvojou odpoveďou odoslanou bez prihlásenia zostávajú v zozname v tom prehliadači s nadpismi a tvojimi menami v pôvodnom znení, aby ich mohla ukázať stránka Verdikty: tento zoznam vidí každý, kto používa ten istý prehliadač. Na zdieľanom počítači sa prihlás alebo použi súkromné okno; vymazaním údajov stránky v prehliadači sa zoznam odstráni. V obojstrannom prípade vidí každý len svoj vlastný originál; po verdikte obaja vidia obe anonymizované verzie tak, ako ich čítali sudcovia. Sudcovia (AI modely, ktoré prevádzkuje náš poskytovateľ AI): len anonymizovanú verziu. Ktokoľvek s odkazom na zdieľanie: verdikt so zobrazovanými menami. Predvolene je to meno, ktoré si zvolíš pre seba, a krstné mená ostatných tak, ako sú v tvojom texte; kedykoľvek ich môžeš zmeniť alebo mená vypnúť a potom stránka ukazuje Strana A a Strana B. My: originály vieme pomocou kľúča dešifrovať a robíme to len pri vybavovaní tvojich žiadostí, pri riešení problémov alebo keď to vyžaduje zákon.",
     "privacy.removalTitle": "Odstránenie",
     "privacy.removal":
       "O odstránenie môžeš požiadať na stránke verdiktu (po prihlásení ju otvoríš zo stránky Verdikty), pri obojstrannom prípade na stránke prípadu, zrušením účtu alebo e-mailom. Odstránenie vymaže tvoj pôvodný text, zoznam mien a zobrazované mená (v obojstrannom prípade originál tvojej verzie a tvoje zobrazované meno) a odkaz na zdieľanie a jeho náhľadový obrázok sa prestanú načítavať pre všetkých. Náhľady, ktoré už boli poslané v chatovacích aplikáciách, si tieto aplikácie uchovávajú a môžu sa zobrazovať, kým ich neobnovia. Anonymizovaný text a verdikt bez mien si ponechávame v našich záznamoch; cez odkaz sa už nedajú otvoriť. Zrušenie účtu to urobí pre všetky tvoje verdikty a tvoje verzie v prípadoch a vymaže tvoje prihlasovacie údaje, kredity a plán. Odstránené údaje zostávajú v našich zálohách, kým zálohy nevypršia (najviac 14 dní, pozri nižšie); ak by sme niekedy obnovovali zálohu, všetky odstránenia uplatníme znova (na to uchovávame zoznam toho, čo a kedy bolo odstránené, bez textu a mien).",
