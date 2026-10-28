@@ -26873,37 +26873,37 @@
               "few" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete %lld verdicts from this phone? Their share links keep working."
+                  "value" : "هل تريد حذف %lld أحكام من هذا الهاتف؟ ستبقى روابط مشاركتها تعمل."
                 }
               },
               "many" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete %lld verdicts from this phone? Their share links keep working."
+                  "value" : "هل تريد حذف %lld حكمًا من هذا الهاتف؟ ستبقى روابط مشاركتها تعمل."
                 }
               },
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete this verdict from this phone? Its share link keeps working."
+                  "value" : "هل تريد حذف هذا الحكم من هذا الهاتف؟ سيبقى رابط مشاركته يعمل."
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete %lld verdicts from this phone? Their share links keep working."
+                  "value" : "هل تريد حذف %lld حكم من هذا الهاتف؟ ستبقى روابط مشاركتها تعمل."
                 }
               },
               "two" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete %lld verdicts from this phone? Their share links keep working."
+                  "value" : "هل تريد حذف حكمين من هذا الهاتف؟ سيبقى رابطا مشاركتهما يعملان."
                 }
               },
               "zero" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete %lld verdicts from this phone? Their share links keep working."
+                  "value" : "لا أحكام محددة للحذف."
                 }
               }
             }
@@ -26915,13 +26915,13 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete this verdict from this phone? Its share link keeps working."
+                  "value" : "এই ফোন থেকে %lldটি রায় মুছবেন? সেটির শেয়ার লিংক চালু থাকবে।"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete %lld verdicts from this phone? Their share links keep working."
+                  "value" : "এই ফোন থেকে %lldটি রায় মুছবেন? সেগুলোর শেয়ার লিংক চালু থাকবে।"
                 }
               }
             }
@@ -26933,19 +26933,19 @@
               "many" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete %lld verdicts from this phone? Their share links keep working."
+                  "value" : "Vols eliminar %lld veredictes del telèfon? Els seus enllaços per compartir continuaran funcionant."
                 }
               },
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete this verdict from this phone? Its share link keeps working."
+                  "value" : "Vols eliminar aquest veredicte del telèfon? El seu enllaç per compartir continuarà funcionant."
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete %lld verdicts from this phone? Their share links keep working."
+                  "value" : "Vols eliminar %lld veredictes del telèfon? Els seus enllaços per compartir continuaran funcionant."
                 }
               }
             }
@@ -26957,25 +26957,25 @@
               "few" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete %lld verdicts from this phone? Their share links keep working."
+                  "value" : "Smazat %lld verdikty z tohohle telefonu? Jejich sdílené odkazy budou fungovat dál."
                 }
               },
               "many" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete %lld verdicts from this phone? Their share links keep working."
+                  "value" : "Smazat %lld verdiktů z tohohle telefonu? Jejich sdílené odkazy budou fungovat dál."
                 }
               },
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete this verdict from this phone? Its share link keeps working."
+                  "value" : "Smazat tenhle verdikt z tohohle telefonu? Jeho sdílený odkaz bude fungovat dál."
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete %lld verdicts from this phone? Their share links keep working."
+                  "value" : "Smazat %lld verdiktů z tohohle telefonu? Jejich sdílené odkazy budou fungovat dál."
                 }
               }
             }
@@ -26987,13 +26987,13 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete this verdict from this phone? Its share link keeps working."
+                  "value" : "Vil du slette dommen fra denne telefon? Delingslinket virker stadig."
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete %lld verdicts from this phone? Their share links keep working."
+                  "value" : "Vil du slette %lld domme fra denne telefon? Delingslinkene virker stadig."
                 }
               }
             }
@@ -27005,13 +27005,13 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete this verdict from this phone? Its share link keeps working."
+                  "value" : "Dieses Urteil von diesem Handy löschen? Der geteilte Link funktioniert weiter."
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete %lld verdicts from this phone? Their share links keep working."
+                  "value" : "%lld Urteile von diesem Handy löschen? Die geteilten Links funktionieren weiter."
                 }
               }
             }
@@ -27023,13 +27023,13 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete this verdict from this phone? Its share link keeps working."
+                  "value" : "Να διαγραφεί η απόφαση από αυτό το τηλέφωνο; Ο σύνδεσμος κοινοποίησής της θα συνεχίσει να λειτουργεί."
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete %lld verdicts from this phone? Their share links keep working."
+                  "value" : "Να διαγραφούν %lld αποφάσεις από αυτό το τηλέφωνο; Οι σύνδεσμοι κοινοποίησής τους θα συνεχίσουν να λειτουργούν."
                 }
               }
             }
@@ -27059,19 +27059,19 @@
               "many" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete %lld verdicts from this phone? Their share links keep working."
+                  "value" : "¿Eliminar %lld veredictos de este teléfono? Sus enlaces para compartir seguirán funcionando."
                 }
               },
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete this verdict from this phone? Its share link keeps working."
+                  "value" : "¿Eliminar este veredicto del teléfono? Su enlace para compartir seguirá funcionando."
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete %lld verdicts from this phone? Their share links keep working."
+                  "value" : "¿Eliminar %lld veredictos de este teléfono? Sus enlaces para compartir seguirán funcionando."
                 }
               }
             }
@@ -27083,13 +27083,13 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete this verdict from this phone? Its share link keeps working."
+                  "value" : "Poistetaanko tämä tuomio tästä puhelimesta? Sen jakolinkki toimii edelleen."
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete %lld verdicts from this phone? Their share links keep working."
+                  "value" : "Poistetaanko %lld tuomiota tästä puhelimesta? Niiden jakolinkit toimivat edelleen."
                 }
               }
             }
@@ -27101,19 +27101,19 @@
               "many" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete %lld verdicts from this phone? Their share links keep working."
+                  "value" : "Supprimer %lld verdicts de ce téléphone ? Leurs liens de partage continueront de fonctionner."
                 }
               },
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete this verdict from this phone? Its share link keeps working."
+                  "value" : "Supprimer %lld verdict de ce téléphone ? Son lien de partage continuera de fonctionner."
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete %lld verdicts from this phone? Their share links keep working."
+                  "value" : "Supprimer %lld verdicts de ce téléphone ? Leurs liens de partage continueront de fonctionner."
                 }
               }
             }
@@ -27125,13 +27125,13 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete this verdict from this phone? Its share link keeps working."
+                  "value" : "આ ફોનમાંથી %lld ચુકાદો ડિલીટ કરવો છે? એની શેર લિંક કામ કરતી રહેશે."
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete %lld verdicts from this phone? Their share links keep working."
+                  "value" : "આ ફોનમાંથી %lld ચુકાદા ડિલીટ કરવા છે? એમની શેર લિંક કામ કરતી રહેશે."
                 }
               }
             }
@@ -27143,19 +27143,19 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete this verdict from this phone? Its share link keeps working."
+                  "value" : "למחוק את פסק הדין מהטלפון הזה? קישור השיתוף שלו ימשיך לעבוד."
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete %lld verdicts from this phone? Their share links keep working."
+                  "value" : "למחוק %lld פסקי דין מהטלפון הזה? קישורי השיתוף שלהם ימשיכו לעבוד."
                 }
               },
               "two" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete %lld verdicts from this phone? Their share links keep working."
+                  "value" : "למחוק את שני פסקי הדין מהטלפון הזה? קישורי השיתוף שלהם ימשיכו לעבוד."
                 }
               }
             }
@@ -27167,13 +27167,13 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete this verdict from this phone? Its share link keeps working."
+                  "value" : "इस फ़ोन से %lld फ़ैसला हटाएँ? उसका शेयर लिंक काम करता रहेगा।"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete %lld verdicts from this phone? Their share links keep working."
+                  "value" : "इस फ़ोन से %lld फ़ैसले हटाएँ? उनके शेयर लिंक काम करते रहेंगे।"
                 }
               }
             }
@@ -27185,19 +27185,19 @@
               "few" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete %lld verdicts from this phone? Their share links keep working."
+                  "value" : "Izbrisati %lld presude s ovog telefona? Poveznice za dijeljenje i dalje rade."
                 }
               },
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete this verdict from this phone? Its share link keeps working."
+                  "value" : "Izbrisati %lld presudu s ovog telefona? Poveznice za dijeljenje i dalje rade."
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete %lld verdicts from this phone? Their share links keep working."
+                  "value" : "Izbrisati %lld presuda s ovog telefona? Poveznice za dijeljenje i dalje rade."
                 }
               }
             }
@@ -27209,13 +27209,13 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete this verdict from this phone? Its share link keeps working."
+                  "value" : "Törlöd ezt az ítéletet erről a telefonról? A megosztási linkje továbbra is működik."
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete %lld verdicts from this phone? Their share links keep working."
+                  "value" : "Törlöd a kijelölt %lld ítéletet erről a telefonról? A megosztási linkjeik továbbra is működnek."
                 }
               }
             }
@@ -27227,7 +27227,7 @@
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete %lld verdicts from this phone? Their share links keep working."
+                  "value" : "Hapus %lld putusan dari ponsel ini? Tautan berbaginya tetap berfungsi."
                 }
               }
             }
@@ -27239,19 +27239,19 @@
               "many" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete %lld verdicts from this phone? Their share links keep working."
+                  "value" : "Eliminare %lld verdetti da questo telefono? I loro link di condivisione continuano a funzionare."
                 }
               },
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete this verdict from this phone? Its share link keeps working."
+                  "value" : "Eliminare questo verdetto da questo telefono? Il suo link di condivisione continua a funzionare."
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete %lld verdicts from this phone? Their share links keep working."
+                  "value" : "Eliminare %lld verdetti da questo telefono? I loro link di condivisione continuano a funzionare."
                 }
               }
             }
@@ -27263,7 +27263,7 @@
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete %lld verdicts from this phone? Their share links keep working."
+                  "value" : "この端末から%lld件の判定を削除しますか？シェア用リンクはそのまま使えます。"
                 }
               }
             }
@@ -27275,13 +27275,13 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete this verdict from this phone? Its share link keeps working."
+                  "value" : "ಈ ಫೋನ್‌ನಿಂದ %lld ತೀರ್ಪನ್ನು ಅಳಿಸಬೇಕೇ? ಅದರ ಹಂಚಿಕೆ ಲಿಂಕ್ ಕೆಲಸ ಮಾಡುತ್ತಲೇ ಇರುತ್ತದೆ."
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete %lld verdicts from this phone? Their share links keep working."
+                  "value" : "ಈ ಫೋನ್‌ನಿಂದ %lld ತೀರ್ಪುಗಳನ್ನು ಅಳಿಸಬೇಕೇ? ಅವುಗಳ ಹಂಚಿಕೆ ಲಿಂಕ್‌ಗಳು ಕೆಲಸ ಮಾಡುತ್ತಲೇ ಇರುತ್ತವೆ."
                 }
               }
             }
@@ -27293,7 +27293,7 @@
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete %lld verdicts from this phone? Their share links keep working."
+                  "value" : "이 휴대폰에서 판결 %lld건을 삭제할까요? 공유 링크는 계속 열려요."
                 }
               }
             }
@@ -27305,13 +27305,13 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete this verdict from this phone? Its share link keeps working."
+                  "value" : "ഈ വിധി ഈ ഫോണിൽനിന്ന് ഡിലീറ്റ് ചെയ്യണോ? അതിന്റെ ഷെയർ ലിങ്ക് തുടർന്നും പ്രവർത്തിക്കും."
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete %lld verdicts from this phone? Their share links keep working."
+                  "value" : "ഈ ഫോണിൽനിന്ന് %lld വിധികൾ ഡിലീറ്റ് ചെയ്യണോ? അവയുടെ ഷെയർ ലിങ്കുകൾ തുടർന്നും പ്രവർത്തിക്കും."
                 }
               }
             }
@@ -27323,13 +27323,13 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete this verdict from this phone? Its share link keeps working."
+                  "value" : "हा निकाल या फोनवरून डिलीट करायचा? त्याची शेअर लिंक चालू राहील."
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete %lld verdicts from this phone? Their share links keep working."
+                  "value" : "या फोनवरून %lld निकाल डिलीट करायचे? त्यांच्या शेअर लिंक चालू राहतील."
                 }
               }
             }
@@ -27341,7 +27341,7 @@
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete %lld verdicts from this phone? Their share links keep working."
+                  "value" : "Padam %lld keputusan daripada telefon ini? Pautan kongsinya akan terus berfungsi."
                 }
               }
             }
@@ -27353,13 +27353,13 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete this verdict from this phone? Its share link keeps working."
+                  "value" : "Vil du slette dommen fra denne telefonen? Delingslenken virker fortsatt."
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete %lld verdicts from this phone? Their share links keep working."
+                  "value" : "Vil du slette %lld dommer fra denne telefonen? Delingslenkene virker fortsatt."
                 }
               }
             }
@@ -27371,13 +27371,13 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete this verdict from this phone? Its share link keeps working."
+                  "value" : "Uitspraak van deze telefoon verwijderen? De deellink blijft gewoon werken."
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete %lld verdicts from this phone? Their share links keep working."
+                  "value" : "%lld uitspraken van deze telefoon verwijderen? De deellinks blijven gewoon werken."
                 }
               }
             }
@@ -27389,13 +27389,13 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete this verdict from this phone? Its share link keeps working."
+                  "value" : "ଏହି ଫୋନ୍‌ରୁ ରାୟଟି ଡିଲିଟ୍ କରିବେ? ଏହାର ସେୟାର୍ ଲିଙ୍କ୍ ଚାଲୁ ରହିବ।"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete %lld verdicts from this phone? Their share links keep working."
+                  "value" : "ଏହି ଫୋନ୍‌ରୁ %lldଟି ରାୟ ଡିଲିଟ୍ କରିବେ? ସେଗୁଡ଼ିକର ସେୟାର୍ ଲିଙ୍କ୍ ଚାଲୁ ରହିବ।"
                 }
               }
             }
@@ -27407,13 +27407,13 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete this verdict from this phone? Its share link keeps working."
+                  "value" : "ਇਸ ਫ਼ੋਨ ਤੋਂ %lld ਫ਼ੈਸਲਾ ਮਿਟਾਉਣਾ ਹੈ? ਉਸ ਦਾ ਸਾਂਝਾ ਲਿੰਕ ਕੰਮ ਕਰਦਾ ਰਹੇਗਾ।"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete %lld verdicts from this phone? Their share links keep working."
+                  "value" : "ਇਸ ਫ਼ੋਨ ਤੋਂ %lld ਫ਼ੈਸਲੇ ਮਿਟਾਉਣੇ ਹਨ? ਉਨ੍ਹਾਂ ਦੇ ਸਾਂਝੇ ਲਿੰਕ ਕੰਮ ਕਰਦੇ ਰਹਿਣਗੇ।"
                 }
               }
             }
@@ -27425,25 +27425,25 @@
               "few" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete %lld verdicts from this phone? Their share links keep working."
+                  "value" : "Usunąć %lld werdykty z tego telefonu? Ich linki do udostępniania nadal będą działać."
                 }
               },
               "many" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete %lld verdicts from this phone? Their share links keep working."
+                  "value" : "Usunąć %lld werdyktów z tego telefonu? Ich linki do udostępniania nadal będą działać."
                 }
               },
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete this verdict from this phone? Its share link keeps working."
+                  "value" : "Usunąć ten werdykt z tego telefonu? Jego link do udostępniania nadal będzie działać."
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete %lld verdicts from this phone? Their share links keep working."
+                  "value" : "Usunąć %lld werdyktów z tego telefonu? Ich linki do udostępniania nadal będą działać."
                 }
               }
             }
@@ -27455,19 +27455,19 @@
               "many" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete %lld verdicts from this phone? Their share links keep working."
+                  "value" : "Excluir %lld vereditos deste celular? Os links de compartilhamento deles continuam funcionando."
                 }
               },
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete this verdict from this phone? Its share link keeps working."
+                  "value" : "Excluir %lld veredito deste celular? O link de compartilhamento dele continua funcionando."
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete %lld verdicts from this phone? Their share links keep working."
+                  "value" : "Excluir %lld vereditos deste celular? Os links de compartilhamento deles continuam funcionando."
                 }
               }
             }
@@ -27479,19 +27479,19 @@
               "many" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete %lld verdicts from this phone? Their share links keep working."
+                  "value" : "Apagar %lld veredictos deste telemóvel? Os links de partilha continuam ativos."
                 }
               },
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete this verdict from this phone? Its share link keeps working."
+                  "value" : "Apagar este veredicto do telemóvel? O link de partilha continua ativo."
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete %lld verdicts from this phone? Their share links keep working."
+                  "value" : "Apagar %lld veredictos deste telemóvel? Os links de partilha continuam ativos."
                 }
               }
             }
@@ -27503,19 +27503,19 @@
               "few" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete %lld verdicts from this phone? Their share links keep working."
+                  "value" : "Ștergi %lld verdicte de pe acest telefon? Linkurile lor de distribuire rămân active."
                 }
               },
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete this verdict from this phone? Its share link keeps working."
+                  "value" : "Ștergi verdictul de pe acest telefon? Linkul lui de distribuire rămâne activ."
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete %lld verdicts from this phone? Their share links keep working."
+                  "value" : "Ștergi %lld de verdicte de pe acest telefon? Linkurile lor de distribuire rămân active."
                 }
               }
             }
@@ -27527,25 +27527,25 @@
               "few" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete %lld verdicts from this phone? Their share links keep working."
+                  "value" : "Удалить %lld вердикта с этого телефона? Ссылки на них продолжат работать."
                 }
               },
               "many" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete %lld verdicts from this phone? Their share links keep working."
+                  "value" : "Удалить %lld вердиктов с этого телефона? Ссылки на них продолжат работать."
                 }
               },
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete this verdict from this phone? Its share link keeps working."
+                  "value" : "Удалить %lld вердикт с этого телефона? Ссылка на него продолжит работать."
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete %lld verdicts from this phone? Their share links keep working."
+                  "value" : "Удалить %lld вердиктов с этого телефона? Ссылки на них продолжат работать."
                 }
               }
             }
@@ -27557,25 +27557,25 @@
               "few" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete %lld verdicts from this phone? Their share links keep working."
+                  "value" : "Vymazať %lld verdikty z tohto telefónu? Ich odkazy na zdieľanie budú fungovať ďalej."
                 }
               },
               "many" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete %lld verdicts from this phone? Their share links keep working."
+                  "value" : "Vymazať %lld verdiktov z tohto telefónu? Ich odkazy na zdieľanie budú fungovať ďalej."
                 }
               },
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete this verdict from this phone? Its share link keeps working."
+                  "value" : "Vymazať tento verdikt z tohto telefónu? Jeho odkaz na zdieľanie bude fungovať ďalej."
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete %lld verdicts from this phone? Their share links keep working."
+                  "value" : "Vymazať %lld verdiktov z tohto telefónu? Ich odkazy na zdieľanie budú fungovať ďalej."
                 }
               }
             }
@@ -27587,25 +27587,25 @@
               "few" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete %lld verdicts from this phone? Their share links keep working."
+                  "value" : "Želiš s tega telefona izbrisati %lld razsodbe? Njihove povezave za deljenje še vedno delujejo."
                 }
               },
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete this verdict from this phone? Its share link keeps working."
+                  "value" : "Želiš s tega telefona izbrisati %lld razsodbo? Njena povezava za deljenje še vedno deluje."
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete %lld verdicts from this phone? Their share links keep working."
+                  "value" : "Želiš s tega telefona izbrisati %lld razsodb? Njihove povezave za deljenje še vedno delujejo."
                 }
               },
               "two" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete %lld verdicts from this phone? Their share links keep working."
+                  "value" : "Želiš s tega telefona izbrisati %lld razsodbi? Njuni povezavi za deljenje še vedno delujeta."
                 }
               }
             }
@@ -27617,13 +27617,13 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete this verdict from this phone? Its share link keeps working."
+                  "value" : "Ta bort domen från den här telefonen? Delningslänken fortsätter att fungera."
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete %lld verdicts from this phone? Their share links keep working."
+                  "value" : "Ta bort %lld domar från den här telefonen? Delningslänkarna fortsätter att fungera."
                 }
               }
             }
@@ -27635,13 +27635,13 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete this verdict from this phone? Its share link keeps working."
+                  "value" : "இந்தத் தீர்ப்பை இந்தப் போனிலிருந்து நீக்கவா? அதன் பகிர்வு லிங்க் தொடர்ந்து வேலை செய்யும்."
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete %lld verdicts from this phone? Their share links keep working."
+                  "value" : "இந்தப் போனிலிருந்து %lld தீர்ப்புகளை நீக்கவா? அவற்றின் பகிர்வு லிங்க்குகள் தொடர்ந்து வேலை செய்யும்."
                 }
               }
             }
@@ -27653,13 +27653,13 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete this verdict from this phone? Its share link keeps working."
+                  "value" : "ఈ తీర్పును ఈ ఫోన్ నుంచి డిలీట్ చేయాలా? దాని షేర్ లింక్ పని చేస్తూనే ఉంటుంది."
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete %lld verdicts from this phone? Their share links keep working."
+                  "value" : "ఈ ఫోన్ నుంచి %lld తీర్పులను డిలీట్ చేయాలా? వాటి షేర్ లింక్‌లు పని చేస్తూనే ఉంటాయి."
                 }
               }
             }
@@ -27671,7 +27671,7 @@
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete %lld verdicts from this phone? Their share links keep working."
+                  "value" : "ลบคำตัดสิน %lld รายการออกจากโทรศัพท์เครื่องนี้ไหม? ลิงก์แชร์จะยังใช้ได้อยู่"
                 }
               }
             }
@@ -27701,25 +27701,25 @@
               "few" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete %lld verdicts from this phone? Their share links keep working."
+                  "value" : "Видалити %lld вердикти з цього телефону? Посилання на них і далі працюватимуть."
                 }
               },
               "many" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete %lld verdicts from this phone? Their share links keep working."
+                  "value" : "Видалити %lld вердиктів із цього телефону? Посилання на них і далі працюватимуть."
                 }
               },
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete this verdict from this phone? Its share link keeps working."
+                  "value" : "Видалити %lld вердикт із цього телефону? Відкрити за посиланням можна буде й далі."
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete %lld verdicts from this phone? Their share links keep working."
+                  "value" : "Видалити %lld вердиктів із цього телефону? Посилання на них і далі працюватимуть."
                 }
               }
             }
@@ -27731,13 +27731,13 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete this verdict from this phone? Its share link keeps working."
+                  "value" : "یہ فیصلہ اس فون سے حذف کریں؟ اس کا شیئر لنک کام کرتا رہے گا۔"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete %lld verdicts from this phone? Their share links keep working."
+                  "value" : "اس فون سے %lld فیصلے حذف کریں؟ ان کے شیئر لنکس کام کرتے رہیں گے۔"
                 }
               }
             }
@@ -27749,7 +27749,7 @@
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete %lld verdicts from this phone? Their share links keep working."
+                  "value" : "Xóa %lld phán quyết khỏi điện thoại này? Liên kết chia sẻ vẫn hoạt động."
                 }
               }
             }
@@ -27761,7 +27761,7 @@
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete %lld verdicts from this phone? Their share links keep working."
+                  "value" : "要从这台手机上删除 %lld 条裁决吗？分享链接仍然有效。"
                 }
               }
             }
@@ -27773,7 +27773,7 @@
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Delete %lld verdicts from this phone? Their share links keep working."
+                  "value" : "要從這支手機刪除 %lld 個判決嗎？分享連結不會跟著失效。"
                 }
               }
             }
@@ -27788,43 +27788,43 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Delete (%1$@)"
+            "value" : "حذف (%1$@)"
           }
         },
         "bn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Delete (%1$@)"
+            "value" : "মুছুন (%1$@)"
           }
         },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Delete (%1$@)"
+            "value" : "Elimina (%1$@)"
           }
         },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Delete (%1$@)"
+            "value" : "Smazat (%1$@)"
           }
         },
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Delete (%1$@)"
+            "value" : "Slet (%1$@)"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Delete (%1$@)"
+            "value" : "Löschen (%1$@)"
           }
         },
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Delete (%1$@)"
+            "value" : "Διαγραφή (%1$@)"
           }
         },
         "en" : {
@@ -27836,187 +27836,187 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Delete (%1$@)"
+            "value" : "Eliminar (%1$@)"
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Delete (%1$@)"
+            "value" : "Poista (%1$@)"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Delete (%1$@)"
+            "value" : "Supprimer (%1$@)"
           }
         },
         "gu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Delete (%1$@)"
+            "value" : "ડિલીટ કરો (%1$@)"
           }
         },
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Delete (%1$@)"
+            "value" : "מחיקה (%1$@)"
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Delete (%1$@)"
+            "value" : "हटाएँ (%1$@)"
           }
         },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Delete (%1$@)"
+            "value" : "Izbriši (%1$@)"
           }
         },
         "hu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Delete (%1$@)"
+            "value" : "Törlés (%1$@)"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Delete (%1$@)"
+            "value" : "Hapus (%1$@)"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Delete (%1$@)"
+            "value" : "Elimina (%1$@)"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Delete (%1$@)"
+            "value" : "削除（%1$@）"
           }
         },
         "kn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Delete (%1$@)"
+            "value" : "ಅಳಿಸಿ (%1$@)"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Delete (%1$@)"
+            "value" : "삭제(%1$@)"
           }
         },
         "ml" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Delete (%1$@)"
+            "value" : "ഡിലീറ്റ് (%1$@)"
           }
         },
         "mr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Delete (%1$@)"
+            "value" : "डिलीट करा (%1$@)"
           }
         },
         "ms" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Delete (%1$@)"
+            "value" : "Padam (%1$@)"
           }
         },
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Delete (%1$@)"
+            "value" : "Slett (%1$@)"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Delete (%1$@)"
+            "value" : "Verwijderen (%1$@)"
           }
         },
         "or" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Delete (%1$@)"
+            "value" : "ଡିଲିଟ୍ (%1$@)"
           }
         },
         "pa" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Delete (%1$@)"
+            "value" : "ਮਿਟਾਓ (%1$@)"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Delete (%1$@)"
+            "value" : "Usuń (%1$@)"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Delete (%1$@)"
+            "value" : "Excluir (%1$@)"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Delete (%1$@)"
+            "value" : "Apagar (%1$@)"
           }
         },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Delete (%1$@)"
+            "value" : "Șterge (%1$@)"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Delete (%1$@)"
+            "value" : "Удалить (%1$@)"
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Delete (%1$@)"
+            "value" : "Vymazať (%1$@)"
           }
         },
         "sl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Delete (%1$@)"
+            "value" : "Izbriši (%1$@)"
           }
         },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Delete (%1$@)"
+            "value" : "Ta bort (%1$@)"
           }
         },
         "ta" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Delete (%1$@)"
+            "value" : "நீக்கு (%1$@)"
           }
         },
         "te" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Delete (%1$@)"
+            "value" : "డిలీట్ (%1$@)"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Delete (%1$@)"
+            "value" : "ลบ (%1$@)"
           }
         },
         "tr" : {
@@ -28028,31 +28028,31 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Delete (%1$@)"
+            "value" : "Видалити (%1$@)"
           }
         },
         "ur" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Delete (%1$@)"
+            "value" : "حذف کریں (%1$@)"
           }
         },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Delete (%1$@)"
+            "value" : "Xóa (%1$@)"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Delete (%1$@)"
+            "value" : "删除（%1$@）"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Delete (%1$@)"
+            "value" : "刪除（%1$@）"
           }
         }
       }
@@ -28064,43 +28064,43 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Deselect all"
+            "value" : "إلغاء تحديد الكل"
           }
         },
         "bn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Deselect all"
+            "value" : "বাছাই বাতিল করুন"
           }
         },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Deselect all"
+            "value" : "Desselecciona-ho tot"
           }
         },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Deselect all"
+            "value" : "Zrušit výběr"
           }
         },
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Deselect all"
+            "value" : "Fravælg alle"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Deselect all"
+            "value" : "Auswahl aufheben"
           }
         },
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Deselect all"
+            "value" : "Αποεπιλογή όλων"
           }
         },
         "en" : {
@@ -28112,187 +28112,187 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Deselect all"
+            "value" : "Deseleccionar todo"
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Deselect all"
+            "value" : "Poista valinnat"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Deselect all"
+            "value" : "Tout désélectionner"
           }
         },
         "gu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Deselect all"
+            "value" : "પસંદગી હટાવો"
           }
         },
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Deselect all"
+            "value" : "ביטול הבחירה"
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Deselect all"
+            "value" : "चयन हटाएँ"
           }
         },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Deselect all"
+            "value" : "Poništi odabir"
           }
         },
         "hu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Deselect all"
+            "value" : "Kijelölés megszüntetése"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Deselect all"
+            "value" : "Batal pilih semua"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Deselect all"
+            "value" : "Deseleziona tutto"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Deselect all"
+            "value" : "すべての選択を解除"
           }
         },
         "kn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Deselect all"
+            "value" : "ಎಲ್ಲವನ್ನೂ ಆಯ್ಕೆ ರದ್ದುಮಾಡಿ"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Deselect all"
+            "value" : "모두 선택 해제"
           }
         },
         "ml" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Deselect all"
+            "value" : "എല്ലാം തിരഞ്ഞെടുത്തത് മാറ്റൂ"
           }
         },
         "mr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Deselect all"
+            "value" : "सर्व निवड रद्द करा"
           }
         },
         "ms" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Deselect all"
+            "value" : "Nyahpilih semua"
           }
         },
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Deselect all"
+            "value" : "Fjern alle valg"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Deselect all"
+            "value" : "Alles deselecteren"
           }
         },
         "or" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Deselect all"
+            "value" : "ସବୁ ଚୟନ ହଟାନ୍ତୁ"
           }
         },
         "pa" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Deselect all"
+            "value" : "ਚੋਣ ਹਟਾਓ"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Deselect all"
+            "value" : "Odznacz wszystko"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Deselect all"
+            "value" : "Desmarcar tudo"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Deselect all"
+            "value" : "Desmarcar tudo"
           }
         },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Deselect all"
+            "value" : "Deselectează tot"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Deselect all"
+            "value" : "Отменить выбор"
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Deselect all"
+            "value" : "Zrušiť výber"
           }
         },
         "sl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Deselect all"
+            "value" : "Odznači vse"
           }
         },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Deselect all"
+            "value" : "Avmarkera alla"
           }
         },
         "ta" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Deselect all"
+            "value" : "அனைத்தையும் தேர்வுநீக்கு"
           }
         },
         "te" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Deselect all"
+            "value" : "ఎంపికలన్నీ తీసివేయండి"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Deselect all"
+            "value" : "ยกเลิกการเลือกทั้งหมด"
           }
         },
         "tr" : {
@@ -28304,31 +28304,31 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Deselect all"
+            "value" : "Зняти вибір"
           }
         },
         "ur" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Deselect all"
+            "value" : "سب غیر منتخب کریں"
           }
         },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Deselect all"
+            "value" : "Bỏ chọn tất cả"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Deselect all"
+            "value" : "取消全选"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Deselect all"
+            "value" : "取消全選"
           }
         }
       }
@@ -28892,43 +28892,43 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Not selected"
+            "value" : "غير محدد"
           }
         },
         "bn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Not selected"
+            "value" : "নির্বাচিত নয়"
           }
         },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Not selected"
+            "value" : "No seleccionat"
           }
         },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Not selected"
+            "value" : "Nevybráno"
           }
         },
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Not selected"
+            "value" : "Ikke valgt"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Not selected"
+            "value" : "Nicht ausgewählt"
           }
         },
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Not selected"
+            "value" : "Μη επιλεγμένη"
           }
         },
         "en" : {
@@ -28940,187 +28940,187 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Not selected"
+            "value" : "No seleccionado"
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Not selected"
+            "value" : "Ei valittu"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Not selected"
+            "value" : "Non sélectionné"
           }
         },
         "gu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Not selected"
+            "value" : "પસંદ કરેલ નથી"
           }
         },
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Not selected"
+            "value" : "לא נבחר"
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Not selected"
+            "value" : "नहीं चुना गया"
           }
         },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Not selected"
+            "value" : "Nije odabrano"
           }
         },
         "hu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Not selected"
+            "value" : "Nincs kijelölve"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Not selected"
+            "value" : "Tidak dipilih"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Not selected"
+            "value" : "Non selezionato"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Not selected"
+            "value" : "未選択"
           }
         },
         "kn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Not selected"
+            "value" : "ಆಯ್ಕೆಮಾಡಲಾಗಿಲ್ಲ"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Not selected"
+            "value" : "선택 안 됨"
           }
         },
         "ml" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Not selected"
+            "value" : "തിരഞ്ഞെടുത്തിട്ടില്ല"
           }
         },
         "mr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Not selected"
+            "value" : "निवडले नाही"
           }
         },
         "ms" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Not selected"
+            "value" : "Tidak dipilih"
           }
         },
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Not selected"
+            "value" : "Ikke valgt"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Not selected"
+            "value" : "Niet geselecteerd"
           }
         },
         "or" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Not selected"
+            "value" : "ଚୟନ କରାଯାଇନାହିଁ"
           }
         },
         "pa" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Not selected"
+            "value" : "ਚੁਣਿਆ ਨਹੀਂ ਗਿਆ"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Not selected"
+            "value" : "Niezaznaczone"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Not selected"
+            "value" : "Não selecionado"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Not selected"
+            "value" : "Não selecionado"
           }
         },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Not selected"
+            "value" : "Neselectat"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Not selected"
+            "value" : "Не выбрано"
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Not selected"
+            "value" : "Nevybrané"
           }
         },
         "sl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Not selected"
+            "value" : "Ni izbrano"
           }
         },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Not selected"
+            "value" : "Inte markerad"
           }
         },
         "ta" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Not selected"
+            "value" : "தேர்ந்தெடுக்கப்படவில்லை"
           }
         },
         "te" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Not selected"
+            "value" : "ఎంచుకోబడలేదు"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Not selected"
+            "value" : "ไม่ได้เลือก"
           }
         },
         "tr" : {
@@ -29132,31 +29132,31 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Not selected"
+            "value" : "Не вибрано"
           }
         },
         "ur" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Not selected"
+            "value" : "غیر منتخب"
           }
         },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Not selected"
+            "value" : "Chưa chọn"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Not selected"
+            "value" : "未选中"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Not selected"
+            "value" : "未選取"
           }
         }
       }
@@ -29168,43 +29168,43 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Selected"
+            "value" : "محدد"
           }
         },
         "bn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Selected"
+            "value" : "নির্বাচিত"
           }
         },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Selected"
+            "value" : "Seleccionat"
           }
         },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Selected"
+            "value" : "Vybráno"
           }
         },
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Selected"
+            "value" : "Valgt"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Selected"
+            "value" : "Ausgewählt"
           }
         },
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Selected"
+            "value" : "Επιλεγμένη"
           }
         },
         "en" : {
@@ -29216,187 +29216,187 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Selected"
+            "value" : "Seleccionado"
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Selected"
+            "value" : "Valittu"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Selected"
+            "value" : "Sélectionné"
           }
         },
         "gu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Selected"
+            "value" : "પસંદ કરેલ"
           }
         },
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Selected"
+            "value" : "נבחר"
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Selected"
+            "value" : "चुना गया"
           }
         },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Selected"
+            "value" : "Odabrano"
           }
         },
         "hu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Selected"
+            "value" : "Kijelölve"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Selected"
+            "value" : "Dipilih"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Selected"
+            "value" : "Selezionato"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Selected"
+            "value" : "選択済み"
           }
         },
         "kn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Selected"
+            "value" : "ಆಯ್ಕೆಮಾಡಲಾಗಿದೆ"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Selected"
+            "value" : "선택됨"
           }
         },
         "ml" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Selected"
+            "value" : "തിരഞ്ഞെടുത്തു"
           }
         },
         "mr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Selected"
+            "value" : "निवडले"
           }
         },
         "ms" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Selected"
+            "value" : "Dipilih"
           }
         },
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Selected"
+            "value" : "Valgt"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Selected"
+            "value" : "Geselecteerd"
           }
         },
         "or" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Selected"
+            "value" : "ଚୟନ କରାଯାଇଛି"
           }
         },
         "pa" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Selected"
+            "value" : "ਚੁਣਿਆ ਗਿਆ"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Selected"
+            "value" : "Zaznaczone"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Selected"
+            "value" : "Selecionado"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Selected"
+            "value" : "Selecionado"
           }
         },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Selected"
+            "value" : "Selectat"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Selected"
+            "value" : "Выбрано"
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Selected"
+            "value" : "Vybrané"
           }
         },
         "sl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Selected"
+            "value" : "Izbrano"
           }
         },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Selected"
+            "value" : "Markerad"
           }
         },
         "ta" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Selected"
+            "value" : "தேர்ந்தெடுக்கப்பட்டது"
           }
         },
         "te" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Selected"
+            "value" : "ఎంచుకోబడింది"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Selected"
+            "value" : "เลือกแล้ว"
           }
         },
         "tr" : {
@@ -29408,31 +29408,31 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Selected"
+            "value" : "Вибрано"
           }
         },
         "ur" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Selected"
+            "value" : "منتخب"
           }
         },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Selected"
+            "value" : "Đã chọn"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Selected"
+            "value" : "已选中"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Selected"
+            "value" : "已選取"
           }
         }
       }
@@ -29444,43 +29444,43 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select"
+            "value" : "تحديد"
           }
         },
         "bn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select"
+            "value" : "বেছে নিন"
           }
         },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select"
+            "value" : "Selecciona"
           }
         },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select"
+            "value" : "Vybrat"
           }
         },
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select"
+            "value" : "Vælg"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select"
+            "value" : "Auswählen"
           }
         },
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select"
+            "value" : "Επιλογή"
           }
         },
         "en" : {
@@ -29492,187 +29492,187 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select"
+            "value" : "Seleccionar"
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select"
+            "value" : "Valitse"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select"
+            "value" : "Sélectionner"
           }
         },
         "gu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select"
+            "value" : "પસંદ કરો"
           }
         },
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select"
+            "value" : "בחירה"
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select"
+            "value" : "चुनें"
           }
         },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select"
+            "value" : "Odaberi"
           }
         },
         "hu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select"
+            "value" : "Kijelölés"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select"
+            "value" : "Pilih"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select"
+            "value" : "Seleziona"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select"
+            "value" : "選択"
           }
         },
         "kn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select"
+            "value" : "ಆಯ್ಕೆಮಾಡಿ"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select"
+            "value" : "선택"
           }
         },
         "ml" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select"
+            "value" : "തിരഞ്ഞെടുക്കൂ"
           }
         },
         "mr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select"
+            "value" : "निवडा"
           }
         },
         "ms" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select"
+            "value" : "Pilih"
           }
         },
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select"
+            "value" : "Velg"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select"
+            "value" : "Selecteren"
           }
         },
         "or" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select"
+            "value" : "ଚୟନ କରନ୍ତୁ"
           }
         },
         "pa" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select"
+            "value" : "ਚੁਣੋ"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select"
+            "value" : "Wybierz"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select"
+            "value" : "Selecionar"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select"
+            "value" : "Selecionar"
           }
         },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select"
+            "value" : "Selectează"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select"
+            "value" : "Выбрать"
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select"
+            "value" : "Vybrať"
           }
         },
         "sl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select"
+            "value" : "Izberi"
           }
         },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select"
+            "value" : "Välj"
           }
         },
         "ta" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select"
+            "value" : "தேர்ந்தெடு"
           }
         },
         "te" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select"
+            "value" : "ఎంచుకోండి"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select"
+            "value" : "เลือก"
           }
         },
         "tr" : {
@@ -29684,31 +29684,31 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select"
+            "value" : "Вибрати"
           }
         },
         "ur" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select"
+            "value" : "منتخب کریں"
           }
         },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select"
+            "value" : "Chọn"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select"
+            "value" : "选择"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select"
+            "value" : "選取"
           }
         }
       }
@@ -29720,43 +29720,43 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select all"
+            "value" : "تحديد الكل"
           }
         },
         "bn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select all"
+            "value" : "সব বেছে নিন"
           }
         },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select all"
+            "value" : "Selecciona-ho tot"
           }
         },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select all"
+            "value" : "Vybrat vše"
           }
         },
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select all"
+            "value" : "Vælg alle"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select all"
+            "value" : "Alle auswählen"
           }
         },
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select all"
+            "value" : "Επιλογή όλων"
           }
         },
         "en" : {
@@ -29768,187 +29768,187 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select all"
+            "value" : "Seleccionar todo"
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select all"
+            "value" : "Valitse kaikki"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select all"
+            "value" : "Tout sélectionner"
           }
         },
         "gu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select all"
+            "value" : "બધા પસંદ કરો"
           }
         },
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select all"
+            "value" : "בחירת הכול"
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select all"
+            "value" : "सभी चुनें"
           }
         },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select all"
+            "value" : "Odaberi sve"
           }
         },
         "hu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select all"
+            "value" : "Összes kijelölése"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select all"
+            "value" : "Pilih semua"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select all"
+            "value" : "Seleziona tutto"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select all"
+            "value" : "すべて選択"
           }
         },
         "kn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select all"
+            "value" : "ಎಲ್ಲವನ್ನೂ ಆಯ್ಕೆಮಾಡಿ"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select all"
+            "value" : "모두 선택"
           }
         },
         "ml" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select all"
+            "value" : "എല്ലാം തിരഞ്ഞെടുക്കൂ"
           }
         },
         "mr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select all"
+            "value" : "सर्व निवडा"
           }
         },
         "ms" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select all"
+            "value" : "Pilih semua"
           }
         },
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select all"
+            "value" : "Velg alle"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select all"
+            "value" : "Alles selecteren"
           }
         },
         "or" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select all"
+            "value" : "ସବୁ ଚୟନ କରନ୍ତୁ"
           }
         },
         "pa" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select all"
+            "value" : "ਸਭ ਚੁਣੋ"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select all"
+            "value" : "Zaznacz wszystko"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select all"
+            "value" : "Selecionar tudo"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select all"
+            "value" : "Selecionar tudo"
           }
         },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select all"
+            "value" : "Selectează tot"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select all"
+            "value" : "Выбрать все"
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select all"
+            "value" : "Vybrať všetko"
           }
         },
         "sl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select all"
+            "value" : "Izberi vse"
           }
         },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select all"
+            "value" : "Markera alla"
           }
         },
         "ta" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select all"
+            "value" : "அனைத்தையும் தேர்ந்தெடு"
           }
         },
         "te" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select all"
+            "value" : "అన్నీ ఎంచుకోండి"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select all"
+            "value" : "เลือกทั้งหมด"
           }
         },
         "tr" : {
@@ -29960,31 +29960,31 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select all"
+            "value" : "Вибрати все"
           }
         },
         "ur" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select all"
+            "value" : "سب منتخب کریں"
           }
         },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select all"
+            "value" : "Chọn tất cả"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select all"
+            "value" : "全选"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select all"
+            "value" : "全選"
           }
         }
       }
@@ -29999,37 +29999,37 @@
               "few" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "تم تحديد %lld أحكام"
                 }
               },
               "many" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "تم تحديد %lld حكمًا"
                 }
               },
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "تم تحديد حكم واحد"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "تم تحديد %lld حكم"
                 }
               },
               "two" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "تم تحديد حكمين"
                 }
               },
               "zero" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "لم يُحدَّد أي حكم"
                 }
               }
             }
@@ -30041,13 +30041,13 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "%lldটি নির্বাচিত"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "%lldটি নির্বাচিত"
                 }
               }
             }
@@ -30059,19 +30059,19 @@
               "many" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "%lld seleccionats"
                 }
               },
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "%lld seleccionat"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "%lld seleccionats"
                 }
               }
             }
@@ -30083,25 +30083,25 @@
               "few" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "Vybráno: %lld"
                 }
               },
               "many" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "Vybráno: %lld"
                 }
               },
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "Vybráno: %lld"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "Vybráno: %lld"
                 }
               }
             }
@@ -30113,13 +30113,13 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "%lld valgt"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "%lld valgt"
                 }
               }
             }
@@ -30131,13 +30131,13 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "%lld ausgewählt"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "%lld ausgewählt"
                 }
               }
             }
@@ -30149,13 +30149,13 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "Επιλέχθηκε %lld"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "Επιλέχθηκαν %lld"
                 }
               }
             }
@@ -30185,19 +30185,19 @@
               "many" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "%lld seleccionados"
                 }
               },
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "%lld seleccionado"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "%lld seleccionados"
                 }
               }
             }
@@ -30209,13 +30209,13 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "%lld valittu"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "%lld valittua"
                 }
               }
             }
@@ -30227,19 +30227,19 @@
               "many" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "%lld sélectionnés"
                 }
               },
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "%lld sélectionné"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "%lld sélectionnés"
                 }
               }
             }
@@ -30251,13 +30251,13 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "%lld પસંદ કર્યો"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "%lld પસંદ કર્યા"
                 }
               }
             }
@@ -30269,19 +30269,19 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "%lld נבחר"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "%lld נבחרו"
                 }
               },
               "two" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "%lld נבחרו"
                 }
               }
             }
@@ -30293,13 +30293,13 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "%lld चुना गया"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "%lld चुने गए"
                 }
               }
             }
@@ -30311,19 +30311,19 @@
               "few" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "Odabrano: %lld"
                 }
               },
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "Odabrano: %lld"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "Odabrano: %lld"
                 }
               }
             }
@@ -30335,13 +30335,13 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "%lld kijelölve"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "%lld kijelölve"
                 }
               }
             }
@@ -30353,7 +30353,7 @@
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "%lld dipilih"
                 }
               }
             }
@@ -30365,19 +30365,19 @@
               "many" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "%lld selezionati"
                 }
               },
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "%lld selezionato"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "%lld selezionati"
                 }
               }
             }
@@ -30389,7 +30389,7 @@
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "%lld件を選択中"
                 }
               }
             }
@@ -30401,13 +30401,13 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "%lld ಆಯ್ಕೆಮಾಡಲಾಗಿದೆ"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "%lld ಆಯ್ಕೆಮಾಡಲಾಗಿದೆ"
                 }
               }
             }
@@ -30419,7 +30419,7 @@
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "%lld개 선택됨"
                 }
               }
             }
@@ -30431,13 +30431,13 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "%lld എണ്ണം തിരഞ്ഞെടുത്തു"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "%lld എണ്ണം തിരഞ്ഞെടുത്തു"
                 }
               }
             }
@@ -30449,13 +30449,13 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "%lld निवडला"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "%lld निवडले"
                 }
               }
             }
@@ -30467,7 +30467,7 @@
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "%lld dipilih"
                 }
               }
             }
@@ -30479,13 +30479,13 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "%lld valgt"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "%lld valgt"
                 }
               }
             }
@@ -30497,13 +30497,13 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "%lld geselecteerd"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "%lld geselecteerd"
                 }
               }
             }
@@ -30515,13 +30515,13 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "%lldଟି ଚୟନ କରାଯାଇଛି"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "%lldଟି ଚୟନ କରାଯାଇଛି"
                 }
               }
             }
@@ -30533,13 +30533,13 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "%lld ਚੁਣਿਆ ਗਿਆ"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "%lld ਚੁਣੇ ਗਏ"
                 }
               }
             }
@@ -30551,25 +30551,25 @@
               "few" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "Wybrano: %lld"
                 }
               },
               "many" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "Wybrano: %lld"
                 }
               },
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "Wybrano: %lld"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "Wybrano: %lld"
                 }
               }
             }
@@ -30581,19 +30581,19 @@
               "many" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "Selecionados: %lld"
                 }
               },
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "Selecionados: %lld"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "Selecionados: %lld"
                 }
               }
             }
@@ -30605,19 +30605,19 @@
               "many" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "%lld selecionados"
                 }
               },
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "%lld selecionado"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "%lld selecionados"
                 }
               }
             }
@@ -30629,19 +30629,19 @@
               "few" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "%lld selectate"
                 }
               },
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "1 selectat"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "%lld selectate"
                 }
               }
             }
@@ -30653,25 +30653,25 @@
               "few" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "Выбрано: %lld"
                 }
               },
               "many" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "Выбрано: %lld"
                 }
               },
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "Выбрано: %lld"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "Выбрано: %lld"
                 }
               }
             }
@@ -30683,25 +30683,25 @@
               "few" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "%lld vybrané"
                 }
               },
               "many" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "%lld vybraných"
                 }
               },
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "%lld vybraný"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "%lld vybraných"
                 }
               }
             }
@@ -30713,25 +30713,25 @@
               "few" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "%lld izbrane"
                 }
               },
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "%lld izbrana"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "%lld izbranih"
                 }
               },
               "two" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "%lld izbrani"
                 }
               }
             }
@@ -30743,13 +30743,13 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "%lld markerad"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "%lld markerade"
                 }
               }
             }
@@ -30761,13 +30761,13 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "%lld தேர்ந்தெடுக்கப்பட்டது"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "%lld தேர்ந்தெடுக்கப்பட்டன"
                 }
               }
             }
@@ -30779,13 +30779,13 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "%lld ఎంచుకోబడింది"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "%lld ఎంచుకోబడ్డాయి"
                 }
               }
             }
@@ -30797,7 +30797,7 @@
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "เลือกแล้ว %lld รายการ"
                 }
               }
             }
@@ -30827,25 +30827,25 @@
               "few" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "Вибрано: %lld"
                 }
               },
               "many" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "Вибрано: %lld"
                 }
               },
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "Вибрано: %lld"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "Вибрано: %lld"
                 }
               }
             }
@@ -30857,13 +30857,13 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "%lld فیصلہ منتخب"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "%lld فیصلے منتخب"
                 }
               }
             }
@@ -30875,7 +30875,7 @@
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "Đã chọn %lld"
                 }
               }
             }
@@ -30887,7 +30887,7 @@
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "已选择 %lld 项"
                 }
               }
             }
@@ -30899,7 +30899,7 @@
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "已選取 %lld 項"
                 }
               }
             }

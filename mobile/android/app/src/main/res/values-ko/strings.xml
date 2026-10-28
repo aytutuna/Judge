@@ -449,18 +449,18 @@
     <string name="app_history_empty">아직 판결이 없어요. 첫 논쟁을 판결 받으면 여기에 나와요.</string>
     <string name="app_history_device_only">이 휴대폰에만 저장돼요. 여기서 지워도 공유 링크는 계속 열려요.</string>
     <string name="app_history_delete">삭제</string>
-    <string name="app_history_select">Select</string>
-    <string name="app_history_select_all">Select all</string>
-    <string name="app_history_deselect_all">Deselect all</string>
+    <string name="app_history_select">선택</string>
+    <string name="app_history_select_all">모두 선택</string>
+    <string name="app_history_deselect_all">모두 선택 해제</string>
     <plurals name="app_history_selected">
-        <item quantity="other">%1$s selected</item>
+        <item quantity="other">%1$s개 선택됨</item>
     </plurals>
-    <string name="app_history_delete_count">Delete (%1$s)</string>
+    <string name="app_history_delete_count">삭제(%1$s)</string>
     <plurals name="app_history_delete_confirm">
-        <item quantity="other">Delete %1$s verdicts from this phone? Their share links keep working.</item>
+        <item quantity="other">이 휴대폰에서 판결 %1$s건을 삭제할까요? 공유 링크는 계속 열려요.</item>
     </plurals>
-    <string name="app_history_row_selected">Selected</string>
-    <string name="app_history_row_not_selected">Not selected</string>
+    <string name="app_history_row_selected">선택됨</string>
+    <string name="app_history_row_not_selected">선택 안 됨</string>
     <string name="app_pricing_free_account">Apple, Google 또는 이메일로 로그인</string>
     <string name="app_pricing_headline">첫 판결은 저희가 쏠게요.</string>
     <string name="app_pricing_sub">계정을 만들면 첫 판결을 모든 기능 그대로 무료로 받을 수 있어요. 그다음엔 팩을 고르거나 월간 요금제를 이용해 보세요.</string>

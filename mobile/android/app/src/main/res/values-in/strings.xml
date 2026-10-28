@@ -449,18 +449,18 @@
     <string name="app_history_empty">Belum ada putusan. Tuntaskan perdebatan pertamamu, nanti putusannya muncul di sini.</string>
     <string name="app_history_device_only">Hanya tersimpan di ponsel ini. Menghapus putusan di sini tidak mematikan tautan berbaginya.</string>
     <string name="app_history_delete">Hapus</string>
-    <string name="app_history_select">Select</string>
-    <string name="app_history_select_all">Select all</string>
-    <string name="app_history_deselect_all">Deselect all</string>
+    <string name="app_history_select">Pilih</string>
+    <string name="app_history_select_all">Pilih semua</string>
+    <string name="app_history_deselect_all">Batal pilih semua</string>
     <plurals name="app_history_selected">
-        <item quantity="other">%1$s selected</item>
+        <item quantity="other">%1$s dipilih</item>
     </plurals>
-    <string name="app_history_delete_count">Delete (%1$s)</string>
+    <string name="app_history_delete_count">Hapus (%1$s)</string>
     <plurals name="app_history_delete_confirm">
-        <item quantity="other">Delete %1$s verdicts from this phone? Their share links keep working.</item>
+        <item quantity="other">Hapus %1$s putusan dari ponsel ini? Tautan berbaginya tetap berfungsi.</item>
     </plurals>
-    <string name="app_history_row_selected">Selected</string>
-    <string name="app_history_row_not_selected">Not selected</string>
+    <string name="app_history_row_selected">Dipilih</string>
+    <string name="app_history_row_not_selected">Tidak dipilih</string>
     <string name="app_pricing_free_account">Masuk dengan Apple, Google, atau email</string>
     <string name="app_pricing_headline">Putusan pertamamu kami traktir.</string>
     <string name="app_pricing_sub">Buat akun dan putusan pertamamu gratis, lengkap dengan semua fitur. Setelah itu, pilih paket atau berlangganan bulanan.</string>

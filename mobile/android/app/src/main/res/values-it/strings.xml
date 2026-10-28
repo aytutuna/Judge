@@ -471,22 +471,22 @@
     <string name="app_history_empty">Ancora nessun verdetto. Risolvi la tua prima discussione e lo troverai qui.</string>
     <string name="app_history_device_only">Salvati solo su questo telefono. Se ne elimini uno qui, il suo link di condivisione continua a funzionare.</string>
     <string name="app_history_delete">Elimina</string>
-    <string name="app_history_select">Select</string>
-    <string name="app_history_select_all">Select all</string>
-    <string name="app_history_deselect_all">Deselect all</string>
+    <string name="app_history_select">Seleziona</string>
+    <string name="app_history_select_all">Seleziona tutto</string>
+    <string name="app_history_deselect_all">Deseleziona tutto</string>
     <plurals name="app_history_selected">
-        <item quantity="one">%1$s selected</item>
-        <item quantity="many">%1$s selected</item>
-        <item quantity="other">%1$s selected</item>
+        <item quantity="one">%1$s selezionato</item>
+        <item quantity="many">%1$s selezionati</item>
+        <item quantity="other">%1$s selezionati</item>
     </plurals>
-    <string name="app_history_delete_count">Delete (%1$s)</string>
+    <string name="app_history_delete_count">Elimina (%1$s)</string>
     <plurals name="app_history_delete_confirm">
-        <item quantity="one">Delete this verdict from this phone? Its share link keeps working.</item>
-        <item quantity="many">Delete %1$s verdicts from this phone? Their share links keep working.</item>
-        <item quantity="other">Delete %1$s verdicts from this phone? Their share links keep working.</item>
+        <item quantity="one">Eliminare questo verdetto da questo telefono? Il suo link di condivisione continua a funzionare.</item>
+        <item quantity="many">Eliminare %1$s verdetti da questo telefono? I loro link di condivisione continuano a funzionare.</item>
+        <item quantity="other">Eliminare %1$s verdetti da questo telefono? I loro link di condivisione continuano a funzionare.</item>
     </plurals>
-    <string name="app_history_row_selected">Selected</string>
-    <string name="app_history_row_not_selected">Not selected</string>
+    <string name="app_history_row_selected">Selezionato</string>
+    <string name="app_history_row_not_selected">Non selezionato</string>
     <string name="app_pricing_free_account">Accedi con Apple, Google o email</string>
     <string name="app_pricing_headline">Il primo verdetto lo offriamo noi.</string>
     <string name="app_pricing_sub">Crea un account e il primo verdetto è gratis, con tutte le funzioni. Poi scegli un pacchetto o passa al piano mensile.</string>

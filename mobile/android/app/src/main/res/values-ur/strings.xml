@@ -460,20 +460,20 @@
     <string name="app_history_empty">ابھی کوئی فیصلہ نہیں۔ اپنی پہلی بحث کا فیصلہ کروائیں تو وہ یہاں نظر آئے گا۔</string>
     <string name="app_history_device_only">یہ فیصلے صرف اسی فون پر محفوظ ہیں۔ یہاں سے کوئی فیصلہ حذف کرنے سے اس کا شیئر لنک بند نہیں ہوتا۔</string>
     <string name="app_history_delete">حذف کریں</string>
-    <string name="app_history_select">Select</string>
-    <string name="app_history_select_all">Select all</string>
-    <string name="app_history_deselect_all">Deselect all</string>
+    <string name="app_history_select">منتخب کریں</string>
+    <string name="app_history_select_all">سب منتخب کریں</string>
+    <string name="app_history_deselect_all">سب غیر منتخب کریں</string>
     <plurals name="app_history_selected">
-        <item quantity="one">%1$s selected</item>
-        <item quantity="other">%1$s selected</item>
+        <item quantity="one">%1$s فیصلہ منتخب</item>
+        <item quantity="other">%1$s فیصلے منتخب</item>
     </plurals>
-    <string name="app_history_delete_count">Delete (%1$s)</string>
+    <string name="app_history_delete_count">حذف کریں (%1$s)</string>
     <plurals name="app_history_delete_confirm">
-        <item quantity="one">Delete this verdict from this phone? Its share link keeps working.</item>
-        <item quantity="other">Delete %1$s verdicts from this phone? Their share links keep working.</item>
+        <item quantity="one">یہ فیصلہ اس فون سے حذف کریں؟ اس کا شیئر لنک کام کرتا رہے گا۔</item>
+        <item quantity="other">اس فون سے %1$s فیصلے حذف کریں؟ ان کے شیئر لنکس کام کرتے رہیں گے۔</item>
     </plurals>
-    <string name="app_history_row_selected">Selected</string>
-    <string name="app_history_row_not_selected">Not selected</string>
+    <string name="app_history_row_selected">منتخب</string>
+    <string name="app_history_row_not_selected">غیر منتخب</string>
     <string name="app_pricing_free_account">Apple، Google یا ای میل سے سائن ان کریں</string>
     <string name="app_pricing_headline">پہلا فیصلہ ہماری طرف سے۔</string>
     <string name="app_pricing_sub">اکاؤنٹ بنائیں اور پہلا فیصلہ مفت پائیں، تمام فیچرز کے ساتھ۔ اس کے بعد کوئی پیک لیں یا ماہانہ پلان۔</string>

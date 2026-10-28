@@ -449,18 +449,18 @@
     <string name="app_history_empty">ยังไม่มีคำตัดสิน ลองเคลียร์เรื่องที่เถียงกันเรื่องแรกดู แล้วคำตัดสินจะขึ้นที่นี่</string>
     <string name="app_history_device_only">บันทึกไว้ในโทรศัพท์เครื่องนี้เท่านั้น ถึงจะลบออกจากที่นี่ ลิงก์แชร์ก็ยังใช้ได้อยู่</string>
     <string name="app_history_delete">ลบ</string>
-    <string name="app_history_select">Select</string>
-    <string name="app_history_select_all">Select all</string>
-    <string name="app_history_deselect_all">Deselect all</string>
+    <string name="app_history_select">เลือก</string>
+    <string name="app_history_select_all">เลือกทั้งหมด</string>
+    <string name="app_history_deselect_all">ยกเลิกการเลือกทั้งหมด</string>
     <plurals name="app_history_selected">
-        <item quantity="other">%1$s selected</item>
+        <item quantity="other">เลือกแล้ว %1$s รายการ</item>
     </plurals>
-    <string name="app_history_delete_count">Delete (%1$s)</string>
+    <string name="app_history_delete_count">ลบ (%1$s)</string>
     <plurals name="app_history_delete_confirm">
-        <item quantity="other">Delete %1$s verdicts from this phone? Their share links keep working.</item>
+        <item quantity="other">ลบคำตัดสิน %1$s รายการออกจากโทรศัพท์เครื่องนี้ไหม? ลิงก์แชร์จะยังใช้ได้อยู่</item>
     </plurals>
-    <string name="app_history_row_selected">Selected</string>
-    <string name="app_history_row_not_selected">Not selected</string>
+    <string name="app_history_row_selected">เลือกแล้ว</string>
+    <string name="app_history_row_not_selected">ไม่ได้เลือก</string>
     <string name="app_pricing_free_account">เข้าสู่ระบบด้วย Apple, Google หรืออีเมล</string>
     <string name="app_pricing_headline">คำตัดสินแรก เราเลี้ยงเอง</string>
     <string name="app_pricing_sub">สร้างบัญชีแล้วรับคำตัดสินแรกฟรี ใช้ได้ทุกฟีเจอร์ หลังจากนั้นเลือกแพ็กเครดิตหรือสมัครรายเดือน</string>

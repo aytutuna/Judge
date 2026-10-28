@@ -460,20 +460,20 @@
     <string name="app_history_empty">ਹਾਲੇ ਕੋਈ ਫ਼ੈਸਲਾ ਨਹੀਂ। ਆਪਣੀ ਪਹਿਲੀ ਬਹਿਸ ਦਾ ਨਿਬੇੜਾ ਕਰਾਓ, ਫ਼ੈਸਲਾ ਇੱਥੇ ਦਿਖੇਗਾ।</string>
     <string name="app_history_device_only">ਇਹ ਸਿਰਫ਼ ਇਸ ਫ਼ੋਨ ’ਤੇ ਸੇਵ ਹਨ। ਇੱਥੋਂ ਕੋਈ ਫ਼ੈਸਲਾ ਮਿਟਾਉਣ ਨਾਲ ਉਸ ਦਾ ਸਾਂਝਾ ਲਿੰਕ ਬੰਦ ਨਹੀਂ ਹੁੰਦਾ।</string>
     <string name="app_history_delete">ਮਿਟਾਓ</string>
-    <string name="app_history_select">Select</string>
-    <string name="app_history_select_all">Select all</string>
-    <string name="app_history_deselect_all">Deselect all</string>
+    <string name="app_history_select">ਚੁਣੋ</string>
+    <string name="app_history_select_all">ਸਭ ਚੁਣੋ</string>
+    <string name="app_history_deselect_all">ਚੋਣ ਹਟਾਓ</string>
     <plurals name="app_history_selected">
-        <item quantity="one">%1$s selected</item>
-        <item quantity="other">%1$s selected</item>
+        <item quantity="one">%1$s ਚੁਣਿਆ ਗਿਆ</item>
+        <item quantity="other">%1$s ਚੁਣੇ ਗਏ</item>
     </plurals>
-    <string name="app_history_delete_count">Delete (%1$s)</string>
+    <string name="app_history_delete_count">ਮਿਟਾਓ (%1$s)</string>
     <plurals name="app_history_delete_confirm">
-        <item quantity="one">Delete this verdict from this phone? Its share link keeps working.</item>
-        <item quantity="other">Delete %1$s verdicts from this phone? Their share links keep working.</item>
+        <item quantity="one">ਇਸ ਫ਼ੋਨ ਤੋਂ %1$s ਫ਼ੈਸਲਾ ਮਿਟਾਉਣਾ ਹੈ? ਉਸ ਦਾ ਸਾਂਝਾ ਲਿੰਕ ਕੰਮ ਕਰਦਾ ਰਹੇਗਾ।</item>
+        <item quantity="other">ਇਸ ਫ਼ੋਨ ਤੋਂ %1$s ਫ਼ੈਸਲੇ ਮਿਟਾਉਣੇ ਹਨ? ਉਨ੍ਹਾਂ ਦੇ ਸਾਂਝੇ ਲਿੰਕ ਕੰਮ ਕਰਦੇ ਰਹਿਣਗੇ।</item>
     </plurals>
-    <string name="app_history_row_selected">Selected</string>
-    <string name="app_history_row_not_selected">Not selected</string>
+    <string name="app_history_row_selected">ਚੁਣਿਆ ਗਿਆ</string>
+    <string name="app_history_row_not_selected">ਚੁਣਿਆ ਨਹੀਂ ਗਿਆ</string>
     <string name="app_pricing_free_account">Apple, Google ਜਾਂ ਈਮੇਲ ਨਾਲ ਸਾਈਨ ਇਨ ਕਰੋ</string>
     <string name="app_pricing_headline">ਪਹਿਲਾ ਫ਼ੈਸਲਾ ਸਾਡੇ ਵੱਲੋਂ।</string>
     <string name="app_pricing_sub">ਖਾਤਾ ਬਣਾਓ ਅਤੇ ਪਹਿਲਾ ਫ਼ੈਸਲਾ ਮੁਫ਼ਤ ਪਾਓ, ਸਾਰੀਆਂ ਸਹੂਲਤਾਂ ਸਮੇਤ। ਉਸ ਤੋਂ ਬਾਅਦ ਕੋਈ ਪੈਕ ਚੁਣੋ ਜਾਂ ਮਹੀਨਾਵਾਰ ਪਲਾਨ ਲਓ।</string>

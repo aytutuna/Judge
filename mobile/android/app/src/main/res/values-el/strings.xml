@@ -460,20 +460,20 @@
     <string name="app_history_empty">Δεν έχεις αποφάσεις ακόμα. Λύσε την πρώτη σου διαφωνία και η απόφαση θα εμφανιστεί εδώ.</string>
     <string name="app_history_device_only">Αποθηκεύονται μόνο σε αυτό το τηλέφωνο. Αν διαγράψεις μια απόφαση από εδώ, ο σύνδεσμος κοινοποίησής της θα συνεχίσει να λειτουργεί.</string>
     <string name="app_history_delete">Διαγραφή</string>
-    <string name="app_history_select">Select</string>
-    <string name="app_history_select_all">Select all</string>
-    <string name="app_history_deselect_all">Deselect all</string>
+    <string name="app_history_select">Επιλογή</string>
+    <string name="app_history_select_all">Επιλογή όλων</string>
+    <string name="app_history_deselect_all">Αποεπιλογή όλων</string>
     <plurals name="app_history_selected">
-        <item quantity="one">%1$s selected</item>
-        <item quantity="other">%1$s selected</item>
+        <item quantity="one">Επιλέχθηκε %1$s</item>
+        <item quantity="other">Επιλέχθηκαν %1$s</item>
     </plurals>
-    <string name="app_history_delete_count">Delete (%1$s)</string>
+    <string name="app_history_delete_count">Διαγραφή (%1$s)</string>
     <plurals name="app_history_delete_confirm">
-        <item quantity="one">Delete this verdict from this phone? Its share link keeps working.</item>
-        <item quantity="other">Delete %1$s verdicts from this phone? Their share links keep working.</item>
+        <item quantity="one">Να διαγραφεί η απόφαση από αυτό το τηλέφωνο; Ο σύνδεσμος κοινοποίησής της θα συνεχίσει να λειτουργεί.</item>
+        <item quantity="other">Να διαγραφούν %1$s αποφάσεις από αυτό το τηλέφωνο; Οι σύνδεσμοι κοινοποίησής τους θα συνεχίσουν να λειτουργούν.</item>
     </plurals>
-    <string name="app_history_row_selected">Selected</string>
-    <string name="app_history_row_not_selected">Not selected</string>
+    <string name="app_history_row_selected">Επιλεγμένη</string>
+    <string name="app_history_row_not_selected">Μη επιλεγμένη</string>
     <string name="app_pricing_free_account">Σύνδεση με Apple, Google ή email</string>
     <string name="app_pricing_headline">Την πρώτη απόφαση την κερνάμε εμείς.</string>
     <string name="app_pricing_sub">Φτιάξε λογαριασμό και η πρώτη σου απόφαση είναι δωρεάν, με όλες τις λειτουργίες. Μετά διαλέγεις πακέτο ή μηνιαίο πρόγραμμα.</string>

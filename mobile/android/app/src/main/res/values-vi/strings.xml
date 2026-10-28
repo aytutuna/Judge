@@ -449,18 +449,18 @@
     <string name="app_history_empty">Chưa có phán quyết nào. Phân xử cuộc tranh cãi đầu tiên của bạn, kết quả sẽ hiện ở đây.</string>
     <string name="app_history_device_only">Chỉ lưu trên điện thoại này. Xóa một phán quyết ở đây thì liên kết chia sẻ của nó vẫn hoạt động.</string>
     <string name="app_history_delete">Xóa</string>
-    <string name="app_history_select">Select</string>
-    <string name="app_history_select_all">Select all</string>
-    <string name="app_history_deselect_all">Deselect all</string>
+    <string name="app_history_select">Chọn</string>
+    <string name="app_history_select_all">Chọn tất cả</string>
+    <string name="app_history_deselect_all">Bỏ chọn tất cả</string>
     <plurals name="app_history_selected">
-        <item quantity="other">%1$s selected</item>
+        <item quantity="other">Đã chọn %1$s</item>
     </plurals>
-    <string name="app_history_delete_count">Delete (%1$s)</string>
+    <string name="app_history_delete_count">Xóa (%1$s)</string>
     <plurals name="app_history_delete_confirm">
-        <item quantity="other">Delete %1$s verdicts from this phone? Their share links keep working.</item>
+        <item quantity="other">Xóa %1$s phán quyết khỏi điện thoại này? Liên kết chia sẻ vẫn hoạt động.</item>
     </plurals>
-    <string name="app_history_row_selected">Selected</string>
-    <string name="app_history_row_not_selected">Not selected</string>
+    <string name="app_history_row_selected">Đã chọn</string>
+    <string name="app_history_row_not_selected">Chưa chọn</string>
     <string name="app_pricing_free_account">Đăng nhập bằng Apple, Google hoặc email</string>
     <string name="app_pricing_headline">Phán quyết đầu tiên, chúng tôi mời.</string>
     <string name="app_pricing_sub">Tạo tài khoản là có ngay phán quyết đầu tiên miễn phí, đủ mọi tính năng. Sau đó, chọn một gói lượt hoặc dùng gói tháng.</string>

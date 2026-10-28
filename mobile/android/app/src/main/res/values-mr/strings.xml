@@ -460,20 +460,20 @@
     <string name="app_history_empty">अजून एकही निकाल नाही. तुमचा पहिला वाद सोडवा, त्याचा निकाल इथे दिसेल.</string>
     <string name="app_history_device_only">हे निकाल फक्त या फोनवर सेव्ह होतात. इथून एखादा निकाल डिलीट केला तरी त्याची शेअर लिंक चालू राहते.</string>
     <string name="app_history_delete">डिलीट करा</string>
-    <string name="app_history_select">Select</string>
-    <string name="app_history_select_all">Select all</string>
-    <string name="app_history_deselect_all">Deselect all</string>
+    <string name="app_history_select">निवडा</string>
+    <string name="app_history_select_all">सर्व निवडा</string>
+    <string name="app_history_deselect_all">सर्व निवड रद्द करा</string>
     <plurals name="app_history_selected">
-        <item quantity="one">%1$s selected</item>
-        <item quantity="other">%1$s selected</item>
+        <item quantity="one">%1$s निवडला</item>
+        <item quantity="other">%1$s निवडले</item>
     </plurals>
-    <string name="app_history_delete_count">Delete (%1$s)</string>
+    <string name="app_history_delete_count">डिलीट करा (%1$s)</string>
     <plurals name="app_history_delete_confirm">
-        <item quantity="one">Delete this verdict from this phone? Its share link keeps working.</item>
-        <item quantity="other">Delete %1$s verdicts from this phone? Their share links keep working.</item>
+        <item quantity="one">हा निकाल या फोनवरून डिलीट करायचा? त्याची शेअर लिंक चालू राहील.</item>
+        <item quantity="other">या फोनवरून %1$s निकाल डिलीट करायचे? त्यांच्या शेअर लिंक चालू राहतील.</item>
     </plurals>
-    <string name="app_history_row_selected">Selected</string>
-    <string name="app_history_row_not_selected">Not selected</string>
+    <string name="app_history_row_selected">निवडले</string>
+    <string name="app_history_row_not_selected">निवडले नाही</string>
     <string name="app_pricing_free_account">Apple, Google किंवा ईमेलने साइन इन करा</string>
     <string name="app_pricing_headline">पहिला निकाल आमच्याकडून.</string>
     <string name="app_pricing_sub">खाते उघडा, तुमचा पहिला निकाल सगळ्या सुविधांसह मोफत. त्यानंतर एखादा पॅक निवडा किंवा मासिक प्लॅन घ्या.</string>

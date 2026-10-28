@@ -460,20 +460,20 @@
     <string name="app_history_empty">Noch keine Urteile. Kläre deinen ersten Streit, dann erscheint das Urteil hier.</string>
     <string name="app_history_device_only">Nur auf diesem Handy gespeichert. Wenn du hier ein Urteil löschst, funktioniert der geteilte Link weiter.</string>
     <string name="app_history_delete">Löschen</string>
-    <string name="app_history_select">Select</string>
-    <string name="app_history_select_all">Select all</string>
-    <string name="app_history_deselect_all">Deselect all</string>
+    <string name="app_history_select">Auswählen</string>
+    <string name="app_history_select_all">Alle auswählen</string>
+    <string name="app_history_deselect_all">Auswahl aufheben</string>
     <plurals name="app_history_selected">
-        <item quantity="one">%1$s selected</item>
-        <item quantity="other">%1$s selected</item>
+        <item quantity="one">%1$s ausgewählt</item>
+        <item quantity="other">%1$s ausgewählt</item>
     </plurals>
-    <string name="app_history_delete_count">Delete (%1$s)</string>
+    <string name="app_history_delete_count">Löschen (%1$s)</string>
     <plurals name="app_history_delete_confirm">
-        <item quantity="one">Delete this verdict from this phone? Its share link keeps working.</item>
-        <item quantity="other">Delete %1$s verdicts from this phone? Their share links keep working.</item>
+        <item quantity="one">Dieses Urteil von diesem Handy löschen? Der geteilte Link funktioniert weiter.</item>
+        <item quantity="other">%1$s Urteile von diesem Handy löschen? Die geteilten Links funktionieren weiter.</item>
     </plurals>
-    <string name="app_history_row_selected">Selected</string>
-    <string name="app_history_row_not_selected">Not selected</string>
+    <string name="app_history_row_selected">Ausgewählt</string>
+    <string name="app_history_row_not_selected">Nicht ausgewählt</string>
     <string name="app_pricing_free_account">Mit Apple, Google oder E-Mail anmelden</string>
     <string name="app_pricing_headline">Dein erstes Urteil geht auf uns.</string>
     <string name="app_pricing_sub">Erstell ein Konto, und dein erstes Urteil ist gratis, mit allen Funktionen. Danach wählst du ein Paket oder das Monatsabo.</string>

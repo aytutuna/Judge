@@ -460,20 +460,20 @@
     <string name="app_history_empty">Ingen dommer ennå. Få avgjort den første diskusjonen din, så dukker den opp her.</string>
     <string name="app_history_device_only">Lagres bare på denne telefonen. Sletter du en dom her, fjernes ikke delingslenken.</string>
     <string name="app_history_delete">Slett</string>
-    <string name="app_history_select">Select</string>
-    <string name="app_history_select_all">Select all</string>
-    <string name="app_history_deselect_all">Deselect all</string>
+    <string name="app_history_select">Velg</string>
+    <string name="app_history_select_all">Velg alle</string>
+    <string name="app_history_deselect_all">Fjern alle valg</string>
     <plurals name="app_history_selected">
-        <item quantity="one">%1$s selected</item>
-        <item quantity="other">%1$s selected</item>
+        <item quantity="one">%1$s valgt</item>
+        <item quantity="other">%1$s valgt</item>
     </plurals>
-    <string name="app_history_delete_count">Delete (%1$s)</string>
+    <string name="app_history_delete_count">Slett (%1$s)</string>
     <plurals name="app_history_delete_confirm">
-        <item quantity="one">Delete this verdict from this phone? Its share link keeps working.</item>
-        <item quantity="other">Delete %1$s verdicts from this phone? Their share links keep working.</item>
+        <item quantity="one">Vil du slette dommen fra denne telefonen? Delingslenken virker fortsatt.</item>
+        <item quantity="other">Vil du slette %1$s dommer fra denne telefonen? Delingslenkene virker fortsatt.</item>
     </plurals>
-    <string name="app_history_row_selected">Selected</string>
-    <string name="app_history_row_not_selected">Not selected</string>
+    <string name="app_history_row_selected">Valgt</string>
+    <string name="app_history_row_not_selected">Ikke valgt</string>
     <string name="app_pricing_free_account">Logg inn med Apple, Google eller e-post</string>
     <string name="app_pricing_headline">Den første dommen spanderer vi.</string>
     <string name="app_pricing_sub">Opprett en konto, så er den første dommen gratis, med alle funksjoner. Etter det velger du en pakke eller går over til månedsabonnement.</string>

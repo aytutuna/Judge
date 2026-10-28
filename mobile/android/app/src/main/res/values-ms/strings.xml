@@ -449,18 +449,18 @@
     <string name="app_history_empty">Belum ada keputusan. Selesaikan pertikaian pertama anda dan ia akan muncul di sini.</string>
     <string name="app_history_device_only">Disimpan dalam telefon ini sahaja. Memadam satu keputusan di sini tidak mematikan pautan kongsinya.</string>
     <string name="app_history_delete">Padam</string>
-    <string name="app_history_select">Select</string>
-    <string name="app_history_select_all">Select all</string>
-    <string name="app_history_deselect_all">Deselect all</string>
+    <string name="app_history_select">Pilih</string>
+    <string name="app_history_select_all">Pilih semua</string>
+    <string name="app_history_deselect_all">Nyahpilih semua</string>
     <plurals name="app_history_selected">
-        <item quantity="other">%1$s selected</item>
+        <item quantity="other">%1$s dipilih</item>
     </plurals>
-    <string name="app_history_delete_count">Delete (%1$s)</string>
+    <string name="app_history_delete_count">Padam (%1$s)</string>
     <plurals name="app_history_delete_confirm">
-        <item quantity="other">Delete %1$s verdicts from this phone? Their share links keep working.</item>
+        <item quantity="other">Padam %1$s keputusan daripada telefon ini? Pautan kongsinya akan terus berfungsi.</item>
     </plurals>
-    <string name="app_history_row_selected">Selected</string>
-    <string name="app_history_row_not_selected">Not selected</string>
+    <string name="app_history_row_selected">Dipilih</string>
+    <string name="app_history_row_not_selected">Tidak dipilih</string>
     <string name="app_pricing_free_account">Log masuk dengan Apple, Google atau e-mel</string>
     <string name="app_pricing_headline">Keputusan pertama anda, kami belanja.</string>
     <string name="app_pricing_sub">Buat akaun dan keputusan pertama anda percuma, lengkap dengan semua ciri. Selepas itu, pilih pek atau langgan bulanan.</string>

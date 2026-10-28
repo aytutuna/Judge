@@ -460,20 +460,20 @@
     <string name="app_history_empty">ଏଯାଏଁ କୌଣସି ରାୟ ନାହିଁ। ଆପଣଙ୍କ ପ୍ରଥମ ଝଗଡ଼ା ମେଣ୍ଟାନ୍ତୁ, ତା\'ର ରାୟ ଏଠାରେ ଦେଖାଯିବ।</string>
     <string name="app_history_device_only">କେବଳ ଏହି ଫୋନ୍‌ରେ ସେଭ୍ ହୋଇଛି। ଏଠାରୁ କୌଣସି ରାୟ ଡିଲିଟ୍ କଲେ ବି ତା\'ର ସେୟାର୍ ଲିଙ୍କ୍ ବନ୍ଦ ହୁଏ ନାହିଁ।</string>
     <string name="app_history_delete">ଡିଲିଟ୍</string>
-    <string name="app_history_select">Select</string>
-    <string name="app_history_select_all">Select all</string>
-    <string name="app_history_deselect_all">Deselect all</string>
+    <string name="app_history_select">ଚୟନ କରନ୍ତୁ</string>
+    <string name="app_history_select_all">ସବୁ ଚୟନ କରନ୍ତୁ</string>
+    <string name="app_history_deselect_all">ସବୁ ଚୟନ ହଟାନ୍ତୁ</string>
     <plurals name="app_history_selected">
-        <item quantity="one">%1$s selected</item>
-        <item quantity="other">%1$s selected</item>
+        <item quantity="one">%1$sଟି ଚୟନ କରାଯାଇଛି</item>
+        <item quantity="other">%1$sଟି ଚୟନ କରାଯାଇଛି</item>
     </plurals>
-    <string name="app_history_delete_count">Delete (%1$s)</string>
+    <string name="app_history_delete_count">ଡିଲିଟ୍ (%1$s)</string>
     <plurals name="app_history_delete_confirm">
-        <item quantity="one">Delete this verdict from this phone? Its share link keeps working.</item>
-        <item quantity="other">Delete %1$s verdicts from this phone? Their share links keep working.</item>
+        <item quantity="one">ଏହି ଫୋନ୍‌ରୁ ରାୟଟି ଡିଲିଟ୍ କରିବେ? ଏହାର ସେୟାର୍ ଲିଙ୍କ୍ ଚାଲୁ ରହିବ।</item>
+        <item quantity="other">ଏହି ଫୋନ୍‌ରୁ %1$sଟି ରାୟ ଡିଲିଟ୍ କରିବେ? ସେଗୁଡ଼ିକର ସେୟାର୍ ଲିଙ୍କ୍ ଚାଲୁ ରହିବ।</item>
     </plurals>
-    <string name="app_history_row_selected">Selected</string>
-    <string name="app_history_row_not_selected">Not selected</string>
+    <string name="app_history_row_selected">ଚୟନ କରାଯାଇଛି</string>
+    <string name="app_history_row_not_selected">ଚୟନ କରାଯାଇନାହିଁ</string>
     <string name="app_pricing_free_account">Apple, Google ବା ଇମେଲ୍ ସହ ସାଇନ୍ ଇନ୍ କରନ୍ତୁ</string>
     <string name="app_pricing_headline">ପ୍ରଥମ ରାୟ ଆମ ତରଫରୁ।</string>
     <string name="app_pricing_sub">ଆକାଉଣ୍ଟ ଖୋଲନ୍ତୁ, ପ୍ରଥମ ରାୟ ସବୁ ସୁବିଧା ସହ ମାଗଣା। ତା\'ପରେ ଗୋଟେ ପ୍ୟାକ୍ ବାଛନ୍ତୁ ବା ମାସିକ ପ୍ଲାନ୍ ନିଅନ୍ତୁ।</string>

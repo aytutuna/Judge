@@ -460,20 +460,20 @@
     <string name="app_history_empty">ഇതുവരെ വിധികളൊന്നുമില്ല. ആദ്യത്തെ തർക്കം തീർക്കൂ, അത് ഇവിടെ കാണാം.</string>
     <string name="app_history_device_only">ഈ ഫോണിൽ മാത്രമാണ് സേവ് ചെയ്തിരിക്കുന്നത്. ഇവിടെനിന്ന് ഒരു വിധി ഡിലീറ്റ് ചെയ്താലും അതിന്റെ ഷെയർ ലിങ്ക് തുടർന്നും പ്രവർത്തിക്കും.</string>
     <string name="app_history_delete">ഡിലീറ്റ്</string>
-    <string name="app_history_select">Select</string>
-    <string name="app_history_select_all">Select all</string>
-    <string name="app_history_deselect_all">Deselect all</string>
+    <string name="app_history_select">തിരഞ്ഞെടുക്കൂ</string>
+    <string name="app_history_select_all">എല്ലാം തിരഞ്ഞെടുക്കൂ</string>
+    <string name="app_history_deselect_all">എല്ലാം തിരഞ്ഞെടുത്തത് മാറ്റൂ</string>
     <plurals name="app_history_selected">
-        <item quantity="one">%1$s selected</item>
-        <item quantity="other">%1$s selected</item>
+        <item quantity="one">%1$s എണ്ണം തിരഞ്ഞെടുത്തു</item>
+        <item quantity="other">%1$s എണ്ണം തിരഞ്ഞെടുത്തു</item>
     </plurals>
-    <string name="app_history_delete_count">Delete (%1$s)</string>
+    <string name="app_history_delete_count">ഡിലീറ്റ് (%1$s)</string>
     <plurals name="app_history_delete_confirm">
-        <item quantity="one">Delete this verdict from this phone? Its share link keeps working.</item>
-        <item quantity="other">Delete %1$s verdicts from this phone? Their share links keep working.</item>
+        <item quantity="one">ഈ വിധി ഈ ഫോണിൽനിന്ന് ഡിലീറ്റ് ചെയ്യണോ? അതിന്റെ ഷെയർ ലിങ്ക് തുടർന്നും പ്രവർത്തിക്കും.</item>
+        <item quantity="other">ഈ ഫോണിൽനിന്ന് %1$s വിധികൾ ഡിലീറ്റ് ചെയ്യണോ? അവയുടെ ഷെയർ ലിങ്കുകൾ തുടർന്നും പ്രവർത്തിക്കും.</item>
     </plurals>
-    <string name="app_history_row_selected">Selected</string>
-    <string name="app_history_row_not_selected">Not selected</string>
+    <string name="app_history_row_selected">തിരഞ്ഞെടുത്തു</string>
+    <string name="app_history_row_not_selected">തിരഞ്ഞെടുത്തിട്ടില്ല</string>
     <string name="app_pricing_free_account">Apple, Google അല്ലെങ്കിൽ ഇമെയിൽ വഴി സൈൻ ഇൻ ചെയ്യൂ</string>
     <string name="app_pricing_headline">ആദ്യ വിധി ഞങ്ങളുടെ വക.</string>
     <string name="app_pricing_sub">അക്കൗണ്ട് തുടങ്ങൂ, എല്ലാ ഫീച്ചറുകളോടും കൂടിയ ആദ്യ വിധി സൗജന്യം. അതിനുശേഷം ഒരു പായ്ക്ക് എടുക്കൂ, അല്ലെങ്കിൽ പ്രതിമാസ പ്ലാനിലേക്ക് മാറൂ.</string>

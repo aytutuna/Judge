@@ -460,20 +460,20 @@
     <string name="app_history_empty">இன்னும் தீர்ப்புகள் இல்லை. உங்கள் முதல் வாக்குவாதத்தைத் தீர்த்ததும் அது இங்கே தெரியும்.</string>
     <string name="app_history_device_only">இவை இந்தப் போனில் மட்டுமே சேமிக்கப்பட்டுள்ளன. இங்கே ஒன்றை நீக்கினாலும், அதன் பகிர்வு லிங்க் தொடர்ந்து வேலை செய்யும்.</string>
     <string name="app_history_delete">நீக்கு</string>
-    <string name="app_history_select">Select</string>
-    <string name="app_history_select_all">Select all</string>
-    <string name="app_history_deselect_all">Deselect all</string>
+    <string name="app_history_select">தேர்ந்தெடு</string>
+    <string name="app_history_select_all">அனைத்தையும் தேர்ந்தெடு</string>
+    <string name="app_history_deselect_all">அனைத்தையும் தேர்வுநீக்கு</string>
     <plurals name="app_history_selected">
-        <item quantity="one">%1$s selected</item>
-        <item quantity="other">%1$s selected</item>
+        <item quantity="one">%1$s தேர்ந்தெடுக்கப்பட்டது</item>
+        <item quantity="other">%1$s தேர்ந்தெடுக்கப்பட்டன</item>
     </plurals>
-    <string name="app_history_delete_count">Delete (%1$s)</string>
+    <string name="app_history_delete_count">நீக்கு (%1$s)</string>
     <plurals name="app_history_delete_confirm">
-        <item quantity="one">Delete this verdict from this phone? Its share link keeps working.</item>
-        <item quantity="other">Delete %1$s verdicts from this phone? Their share links keep working.</item>
+        <item quantity="one">இந்தத் தீர்ப்பை இந்தப் போனிலிருந்து நீக்கவா? அதன் பகிர்வு லிங்க் தொடர்ந்து வேலை செய்யும்.</item>
+        <item quantity="other">இந்தப் போனிலிருந்து %1$s தீர்ப்புகளை நீக்கவா? அவற்றின் பகிர்வு லிங்க்குகள் தொடர்ந்து வேலை செய்யும்.</item>
     </plurals>
-    <string name="app_history_row_selected">Selected</string>
-    <string name="app_history_row_not_selected">Not selected</string>
+    <string name="app_history_row_selected">தேர்ந்தெடுக்கப்பட்டது</string>
+    <string name="app_history_row_not_selected">தேர்ந்தெடுக்கப்படவில்லை</string>
     <string name="app_pricing_free_account">Apple, Google அல்லது ஈமெயில் மூலம் உள்நுழையுங்கள்</string>
     <string name="app_pricing_headline">முதல் தீர்ப்பு எங்கள் செலவில்.</string>
     <string name="app_pricing_sub">கணக்கைத் தொடங்குங்கள், முதல் தீர்ப்பு எல்லா அம்சங்களுடனும் இலவசம். அதன் பிறகு ஒரு பேக்கைத் தேர்ந்தெடுங்கள் அல்லது மாதாந்திர பிளானுக்கு மாறுங்கள்.</string>

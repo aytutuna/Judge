@@ -449,18 +449,18 @@
     <string name="app_history_empty">まだ判定はありません。最初の揉めごとに白黒つけると、ここに表示されます。</string>
     <string name="app_history_device_only">この端末にだけ保存されています。ここで削除しても、シェア用リンクはそのまま使えます。</string>
     <string name="app_history_delete">削除</string>
-    <string name="app_history_select">Select</string>
-    <string name="app_history_select_all">Select all</string>
-    <string name="app_history_deselect_all">Deselect all</string>
+    <string name="app_history_select">選択</string>
+    <string name="app_history_select_all">すべて選択</string>
+    <string name="app_history_deselect_all">すべての選択を解除</string>
     <plurals name="app_history_selected">
-        <item quantity="other">%1$s selected</item>
+        <item quantity="other">%1$s件を選択中</item>
     </plurals>
-    <string name="app_history_delete_count">Delete (%1$s)</string>
+    <string name="app_history_delete_count">削除（%1$s）</string>
     <plurals name="app_history_delete_confirm">
-        <item quantity="other">Delete %1$s verdicts from this phone? Their share links keep working.</item>
+        <item quantity="other">この端末から%1$s件の判定を削除しますか？シェア用リンクはそのまま使えます。</item>
     </plurals>
-    <string name="app_history_row_selected">Selected</string>
-    <string name="app_history_row_not_selected">Not selected</string>
+    <string name="app_history_row_selected">選択済み</string>
+    <string name="app_history_row_not_selected">未選択</string>
     <string name="app_pricing_free_account">Apple、Google、またはメールアドレスでログイン</string>
     <string name="app_pricing_headline">最初の判定は無料です。</string>
     <string name="app_pricing_sub">アカウントを作成すると、最初の判定はすべての機能つきで無料。その後はパックか月額プランを選べます。</string>

@@ -460,20 +460,20 @@
     <string name="app_history_empty">Ei vielä tuomioita. Ratkaise ensimmäinen kiistasi, niin tuomio näkyy täällä.</string>
     <string name="app_history_device_only">Tallennettu vain tähän puhelimeen. Jos poistat tuomion täältä, sen jakolinkki toimii edelleen.</string>
     <string name="app_history_delete">Poista</string>
-    <string name="app_history_select">Select</string>
-    <string name="app_history_select_all">Select all</string>
-    <string name="app_history_deselect_all">Deselect all</string>
+    <string name="app_history_select">Valitse</string>
+    <string name="app_history_select_all">Valitse kaikki</string>
+    <string name="app_history_deselect_all">Poista valinnat</string>
     <plurals name="app_history_selected">
-        <item quantity="one">%1$s selected</item>
-        <item quantity="other">%1$s selected</item>
+        <item quantity="one">%1$s valittu</item>
+        <item quantity="other">%1$s valittua</item>
     </plurals>
-    <string name="app_history_delete_count">Delete (%1$s)</string>
+    <string name="app_history_delete_count">Poista (%1$s)</string>
     <plurals name="app_history_delete_confirm">
-        <item quantity="one">Delete this verdict from this phone? Its share link keeps working.</item>
-        <item quantity="other">Delete %1$s verdicts from this phone? Their share links keep working.</item>
+        <item quantity="one">Poistetaanko tämä tuomio tästä puhelimesta? Sen jakolinkki toimii edelleen.</item>
+        <item quantity="other">Poistetaanko %1$s tuomiota tästä puhelimesta? Niiden jakolinkit toimivat edelleen.</item>
     </plurals>
-    <string name="app_history_row_selected">Selected</string>
-    <string name="app_history_row_not_selected">Not selected</string>
+    <string name="app_history_row_selected">Valittu</string>
+    <string name="app_history_row_not_selected">Ei valittu</string>
     <string name="app_pricing_free_account">Kirjaudu Applella, Googlella tai sähköpostilla</string>
     <string name="app_pricing_headline">Ensimmäinen tuomio on meiltä.</string>
     <string name="app_pricing_sub">Luo tili, niin ensimmäinen tuomiosi on ilmainen kaikkine ominaisuuksineen. Sen jälkeen voit valita paketin tai kuukausitilauksen.</string>

@@ -471,22 +471,22 @@
     <string name="app_history_empty">Još nemaš presuda. Riješi prvu raspravu i presuda će se pojaviti ovdje.</string>
     <string name="app_history_device_only">Spremljeno samo na ovom telefonu. Ako presudu izbrišeš ovdje, njezina poveznica za dijeljenje i dalje radi.</string>
     <string name="app_history_delete">Izbriši</string>
-    <string name="app_history_select">Select</string>
-    <string name="app_history_select_all">Select all</string>
-    <string name="app_history_deselect_all">Deselect all</string>
+    <string name="app_history_select">Odaberi</string>
+    <string name="app_history_select_all">Odaberi sve</string>
+    <string name="app_history_deselect_all">Poništi odabir</string>
     <plurals name="app_history_selected">
-        <item quantity="one">%1$s selected</item>
-        <item quantity="few">%1$s selected</item>
-        <item quantity="other">%1$s selected</item>
+        <item quantity="one">Odabrano: %1$s</item>
+        <item quantity="few">Odabrano: %1$s</item>
+        <item quantity="other">Odabrano: %1$s</item>
     </plurals>
-    <string name="app_history_delete_count">Delete (%1$s)</string>
+    <string name="app_history_delete_count">Izbriši (%1$s)</string>
     <plurals name="app_history_delete_confirm">
-        <item quantity="one">Delete this verdict from this phone? Its share link keeps working.</item>
-        <item quantity="few">Delete %1$s verdicts from this phone? Their share links keep working.</item>
-        <item quantity="other">Delete %1$s verdicts from this phone? Their share links keep working.</item>
+        <item quantity="one">Izbrisati %1$s presudu s ovog telefona? Poveznice za dijeljenje i dalje rade.</item>
+        <item quantity="few">Izbrisati %1$s presude s ovog telefona? Poveznice za dijeljenje i dalje rade.</item>
+        <item quantity="other">Izbrisati %1$s presuda s ovog telefona? Poveznice za dijeljenje i dalje rade.</item>
     </plurals>
-    <string name="app_history_row_selected">Selected</string>
-    <string name="app_history_row_not_selected">Not selected</string>
+    <string name="app_history_row_selected">Odabrano</string>
+    <string name="app_history_row_not_selected">Nije odabrano</string>
     <string name="app_pricing_free_account">Prijavi se s Appleom, Googleom ili e-poštom</string>
     <string name="app_pricing_headline">Prvu presudu častimo.</string>
     <string name="app_pricing_sub">Otvori račun i prva presuda je besplatna, sa svim mogućnostima. Nakon toga odaberi paket ili prijeđi na mjesečni plan.</string>

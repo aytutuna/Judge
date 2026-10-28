@@ -460,20 +460,20 @@
     <string name="app_history_empty">अभी तक कोई फ़ैसला नहीं। अपनी पहली बहस सुलझाएँ, उसका फ़ैसला यहीं दिखेगा।</string>
     <string name="app_history_device_only">ये सिर्फ़ इसी फ़ोन में सेव हैं। यहाँ से कोई फ़ैसला हटाने पर भी उसका शेयर लिंक बंद नहीं होता।</string>
     <string name="app_history_delete">हटाएँ</string>
-    <string name="app_history_select">Select</string>
-    <string name="app_history_select_all">Select all</string>
-    <string name="app_history_deselect_all">Deselect all</string>
+    <string name="app_history_select">चुनें</string>
+    <string name="app_history_select_all">सभी चुनें</string>
+    <string name="app_history_deselect_all">चयन हटाएँ</string>
     <plurals name="app_history_selected">
-        <item quantity="one">%1$s selected</item>
-        <item quantity="other">%1$s selected</item>
+        <item quantity="one">%1$s चुना गया</item>
+        <item quantity="other">%1$s चुने गए</item>
     </plurals>
-    <string name="app_history_delete_count">Delete (%1$s)</string>
+    <string name="app_history_delete_count">हटाएँ (%1$s)</string>
     <plurals name="app_history_delete_confirm">
-        <item quantity="one">Delete this verdict from this phone? Its share link keeps working.</item>
-        <item quantity="other">Delete %1$s verdicts from this phone? Their share links keep working.</item>
+        <item quantity="one">इस फ़ोन से %1$s फ़ैसला हटाएँ? उसका शेयर लिंक काम करता रहेगा।</item>
+        <item quantity="other">इस फ़ोन से %1$s फ़ैसले हटाएँ? उनके शेयर लिंक काम करते रहेंगे।</item>
     </plurals>
-    <string name="app_history_row_selected">Selected</string>
-    <string name="app_history_row_not_selected">Not selected</string>
+    <string name="app_history_row_selected">चुना गया</string>
+    <string name="app_history_row_not_selected">नहीं चुना गया</string>
     <string name="app_pricing_free_account">Apple, Google या ईमेल से साइन इन करें</string>
     <string name="app_pricing_headline">पहला फ़ैसला हमारी तरफ़ से।</string>
     <string name="app_pricing_sub">अकाउंट बनाइए और पहला फ़ैसला मुफ़्त पाइए, सारी सुविधाओं के साथ। उसके बाद कोई पैक चुनें या मासिक प्लान लें।</string>

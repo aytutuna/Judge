@@ -460,20 +460,20 @@
     <string name="app_history_empty">Még nincs ítéleted. Amint eldől az első vitád, itt megjelenik.</string>
     <string name="app_history_device_only">Csak ezen a telefonon vannak elmentve. Ha innen törölsz egyet, a megosztási linkje attól még működik.</string>
     <string name="app_history_delete">Törlés</string>
-    <string name="app_history_select">Select</string>
-    <string name="app_history_select_all">Select all</string>
-    <string name="app_history_deselect_all">Deselect all</string>
+    <string name="app_history_select">Kijelölés</string>
+    <string name="app_history_select_all">Összes kijelölése</string>
+    <string name="app_history_deselect_all">Kijelölés megszüntetése</string>
     <plurals name="app_history_selected">
-        <item quantity="one">%1$s selected</item>
-        <item quantity="other">%1$s selected</item>
+        <item quantity="one">%1$s kijelölve</item>
+        <item quantity="other">%1$s kijelölve</item>
     </plurals>
-    <string name="app_history_delete_count">Delete (%1$s)</string>
+    <string name="app_history_delete_count">Törlés (%1$s)</string>
     <plurals name="app_history_delete_confirm">
-        <item quantity="one">Delete this verdict from this phone? Its share link keeps working.</item>
-        <item quantity="other">Delete %1$s verdicts from this phone? Their share links keep working.</item>
+        <item quantity="one">Törlöd ezt az ítéletet erről a telefonról? A megosztási linkje továbbra is működik.</item>
+        <item quantity="other">Törlöd a kijelölt %1$s ítéletet erről a telefonról? A megosztási linkjeik továbbra is működnek.</item>
     </plurals>
-    <string name="app_history_row_selected">Selected</string>
-    <string name="app_history_row_not_selected">Not selected</string>
+    <string name="app_history_row_selected">Kijelölve</string>
+    <string name="app_history_row_not_selected">Nincs kijelölve</string>
     <string name="app_pricing_free_account">Belépés Apple-lel, Google-lal vagy e-maillel</string>
     <string name="app_pricing_headline">Az első ítélet ajándék.</string>
     <string name="app_pricing_sub">Hozz létre egy fiókot, és az első ítéleted ingyenes, minden funkcióval. Utána válassz csomagot, vagy fizess elő havonta.</string>

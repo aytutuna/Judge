@@ -460,20 +460,20 @@
     <string name="app_history_empty">Ingen domme endnu. Få afgjort din første diskussion, så dukker den op her.</string>
     <string name="app_history_device_only">Kun gemt på denne telefon. Sletter du en her, virker dens delingslink stadig.</string>
     <string name="app_history_delete">Slet</string>
-    <string name="app_history_select">Select</string>
-    <string name="app_history_select_all">Select all</string>
-    <string name="app_history_deselect_all">Deselect all</string>
+    <string name="app_history_select">Vælg</string>
+    <string name="app_history_select_all">Vælg alle</string>
+    <string name="app_history_deselect_all">Fravælg alle</string>
     <plurals name="app_history_selected">
-        <item quantity="one">%1$s selected</item>
-        <item quantity="other">%1$s selected</item>
+        <item quantity="one">%1$s valgt</item>
+        <item quantity="other">%1$s valgt</item>
     </plurals>
-    <string name="app_history_delete_count">Delete (%1$s)</string>
+    <string name="app_history_delete_count">Slet (%1$s)</string>
     <plurals name="app_history_delete_confirm">
-        <item quantity="one">Delete this verdict from this phone? Its share link keeps working.</item>
-        <item quantity="other">Delete %1$s verdicts from this phone? Their share links keep working.</item>
+        <item quantity="one">Vil du slette dommen fra denne telefon? Delingslinket virker stadig.</item>
+        <item quantity="other">Vil du slette %1$s domme fra denne telefon? Delingslinkene virker stadig.</item>
     </plurals>
-    <string name="app_history_row_selected">Selected</string>
-    <string name="app_history_row_not_selected">Not selected</string>
+    <string name="app_history_row_selected">Valgt</string>
+    <string name="app_history_row_not_selected">Ikke valgt</string>
     <string name="app_pricing_free_account">Log ind med Apple, Google eller e-mail</string>
     <string name="app_pricing_headline">Din første dom er på husets regning.</string>
     <string name="app_pricing_sub">Opret en konto, så er din første dom gratis, med alle funktioner. Derefter vælger du en pakke eller et månedsabonnement.</string>

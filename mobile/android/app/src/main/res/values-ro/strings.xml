@@ -471,22 +471,22 @@
     <string name="app_history_empty">Încă nu ai verdicte. Lămurește-ți prima dispută și verdictul apare aici.</string>
     <string name="app_history_device_only">Salvate doar pe acest telefon. Dacă ștergi unul de aici, linkul lui de distribuire rămâne activ.</string>
     <string name="app_history_delete">Șterge</string>
-    <string name="app_history_select">Select</string>
-    <string name="app_history_select_all">Select all</string>
-    <string name="app_history_deselect_all">Deselect all</string>
+    <string name="app_history_select">Selectează</string>
+    <string name="app_history_select_all">Selectează tot</string>
+    <string name="app_history_deselect_all">Deselectează tot</string>
     <plurals name="app_history_selected">
-        <item quantity="one">%1$s selected</item>
-        <item quantity="few">%1$s selected</item>
-        <item quantity="other">%1$s selected</item>
+        <item quantity="one">1 selectat</item>
+        <item quantity="few">%1$s selectate</item>
+        <item quantity="other">%1$s selectate</item>
     </plurals>
-    <string name="app_history_delete_count">Delete (%1$s)</string>
+    <string name="app_history_delete_count">Șterge (%1$s)</string>
     <plurals name="app_history_delete_confirm">
-        <item quantity="one">Delete this verdict from this phone? Its share link keeps working.</item>
-        <item quantity="few">Delete %1$s verdicts from this phone? Their share links keep working.</item>
-        <item quantity="other">Delete %1$s verdicts from this phone? Their share links keep working.</item>
+        <item quantity="one">Ștergi verdictul de pe acest telefon? Linkul lui de distribuire rămâne activ.</item>
+        <item quantity="few">Ștergi %1$s verdicte de pe acest telefon? Linkurile lor de distribuire rămân active.</item>
+        <item quantity="other">Ștergi %1$s de verdicte de pe acest telefon? Linkurile lor de distribuire rămân active.</item>
     </plurals>
-    <string name="app_history_row_selected">Selected</string>
-    <string name="app_history_row_not_selected">Not selected</string>
+    <string name="app_history_row_selected">Selectat</string>
+    <string name="app_history_row_not_selected">Neselectat</string>
     <string name="app_pricing_free_account">Conectează-te cu Apple, Google sau prin e-mail</string>
     <string name="app_pricing_headline">Primul verdict e din partea casei.</string>
     <string name="app_pricing_sub">Fă-ți un cont și primul verdict e gratuit, cu toate funcțiile. După aceea, alege un pachet sau treci pe planul lunar.</string>

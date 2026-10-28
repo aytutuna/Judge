@@ -460,20 +460,20 @@
     <string name="app_history_empty">এখনও কোনো রায় নেই। প্রথম তর্কের ফয়সালা করলে সেটা এখানে দেখা যাবে।</string>
     <string name="app_history_device_only">শুধু এই ফোনে সেভ করা আছে। এখান থেকে কোনো রায় মুছলেও তার শেয়ার লিংক বন্ধ হয় না।</string>
     <string name="app_history_delete">মুছুন</string>
-    <string name="app_history_select">Select</string>
-    <string name="app_history_select_all">Select all</string>
-    <string name="app_history_deselect_all">Deselect all</string>
+    <string name="app_history_select">বেছে নিন</string>
+    <string name="app_history_select_all">সব বেছে নিন</string>
+    <string name="app_history_deselect_all">বাছাই বাতিল করুন</string>
     <plurals name="app_history_selected">
-        <item quantity="one">%1$s selected</item>
-        <item quantity="other">%1$s selected</item>
+        <item quantity="one">%1$sটি নির্বাচিত</item>
+        <item quantity="other">%1$sটি নির্বাচিত</item>
     </plurals>
-    <string name="app_history_delete_count">Delete (%1$s)</string>
+    <string name="app_history_delete_count">মুছুন (%1$s)</string>
     <plurals name="app_history_delete_confirm">
-        <item quantity="one">Delete this verdict from this phone? Its share link keeps working.</item>
-        <item quantity="other">Delete %1$s verdicts from this phone? Their share links keep working.</item>
+        <item quantity="one">এই ফোন থেকে %1$sটি রায় মুছবেন? সেটির শেয়ার লিংক চালু থাকবে।</item>
+        <item quantity="other">এই ফোন থেকে %1$sটি রায় মুছবেন? সেগুলোর শেয়ার লিংক চালু থাকবে।</item>
     </plurals>
-    <string name="app_history_row_selected">Selected</string>
-    <string name="app_history_row_not_selected">Not selected</string>
+    <string name="app_history_row_selected">নির্বাচিত</string>
+    <string name="app_history_row_not_selected">নির্বাচিত নয়</string>
     <string name="app_pricing_free_account">Apple, Google বা ইমেইল দিয়ে সাইন ইন করুন</string>
     <string name="app_pricing_headline">প্রথম রায়টা আমাদের তরফ থেকে।</string>
     <string name="app_pricing_sub">অ্যাকাউন্ট খুললেই প্রথম রায় ফ্রি, সব ফিচারসহ। এরপর একটা প্যাক বেছে নিন বা মাসিক প্ল্যান নিন।</string>

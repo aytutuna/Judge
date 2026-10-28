@@ -460,20 +460,20 @@
     <string name="app_history_empty">Nog geen uitspraken. Leg je eerste discussie voor, dan verschijnt de uitspraak hier.</string>
     <string name="app_history_device_only">Alleen op deze telefoon bewaard. Verwijder je hier een uitspraak, dan blijft de deellink gewoon werken.</string>
     <string name="app_history_delete">Verwijderen</string>
-    <string name="app_history_select">Select</string>
-    <string name="app_history_select_all">Select all</string>
-    <string name="app_history_deselect_all">Deselect all</string>
+    <string name="app_history_select">Selecteren</string>
+    <string name="app_history_select_all">Alles selecteren</string>
+    <string name="app_history_deselect_all">Alles deselecteren</string>
     <plurals name="app_history_selected">
-        <item quantity="one">%1$s selected</item>
-        <item quantity="other">%1$s selected</item>
+        <item quantity="one">%1$s geselecteerd</item>
+        <item quantity="other">%1$s geselecteerd</item>
     </plurals>
-    <string name="app_history_delete_count">Delete (%1$s)</string>
+    <string name="app_history_delete_count">Verwijderen (%1$s)</string>
     <plurals name="app_history_delete_confirm">
-        <item quantity="one">Delete this verdict from this phone? Its share link keeps working.</item>
-        <item quantity="other">Delete %1$s verdicts from this phone? Their share links keep working.</item>
+        <item quantity="one">Uitspraak van deze telefoon verwijderen? De deellink blijft gewoon werken.</item>
+        <item quantity="other">%1$s uitspraken van deze telefoon verwijderen? De deellinks blijven gewoon werken.</item>
     </plurals>
-    <string name="app_history_row_selected">Selected</string>
-    <string name="app_history_row_not_selected">Not selected</string>
+    <string name="app_history_row_selected">Geselecteerd</string>
+    <string name="app_history_row_not_selected">Niet geselecteerd</string>
     <string name="app_pricing_free_account">Log in met Apple, Google of e-mail</string>
     <string name="app_pricing_headline">Je eerste uitspraak is van het huis.</string>
     <string name="app_pricing_sub">Maak een account aan en je eerste uitspraak is gratis, met alles erop en eraan. Daarna kies je een bundel of neem je een maandabonnement.</string>
