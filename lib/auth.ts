@@ -28,7 +28,7 @@ import {
   sendSignInCodeEmail,
   sendSignInEmail,
 } from "./email";
-import { ensureEntitlementTables, grantWelcomeCredit } from "./entitlements";
+import { ensureEntitlementTables, grantMissedWelcomeCredit, grantWelcomeCredit } from "./entitlements";
 import { captureAppleRefreshToken, deleteSignInTokens, keepCapturedAppleRefreshToken } from "./signin-tokens";
 
 type Env = Record<string, string | undefined>;
@@ -654,6 +654,14 @@ export async function deleteAuthUser(userId: string): Promise<void> {
   await ctx.internalAdapter.deleteUserSessions(userId);
   await ctx.internalAdapter.deleteAccounts(userId);
   await ctx.internalAdapter.deleteUser(userId);
+}
+
+/** grantMissedWelcomeCredit for this account; true when it was given now. */
+export async function retryWelcomeCredit(userId: string): Promise<boolean> {
+  const ctx = await (await getAuth()).$context;
+  const user = await ctx.internalAdapter.findUserById(userId);
+  const claim = user && welcomeClaim(user.email);
+  return claim ? (await grantMissedWelcomeCredit(userId, claim, new Date(user.createdAt))).applied : false;
 }
 
 /** The first of these ids that is an existing account, else null (store

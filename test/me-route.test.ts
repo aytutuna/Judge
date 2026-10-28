@@ -8,7 +8,7 @@ process.env.DATABASE_URL = `file:${path.join(dir, "test.db").replace(/\\/g, "/")
 process.env.BETTER_AUTH_SECRET = "test-secret-".padEnd(48, "x");
 process.env.BETTER_AUTH_URL = "http://localhost:3600";
 
-const { createDevSession, sessionCookieHeader } = await import("../lib/auth");
+const { createDevSession, sessionCookieHeader, welcomeClaim } = await import("../lib/auth");
 const ent = await import("../lib/entitlements");
 const { getDb } = await import("../lib/db");
 const { GET, DELETE } = await import("../app/api/v1/me/route");
@@ -56,6 +56,21 @@ describe("GET /api/v1/me", () => {
       // 5 granted plus the welcome credit.
       entitlement: { canUsePremium: true, blockedReason: null, credits: 6, subscription: null, resetsAt: null },
     });
+  });
+
+  it("gives a welcome credit lost at sign-up", async () => {
+    const { token, user } = await createDevSession("me-lost@verdict.local");
+    const db = await getDb();
+    await db.batch(
+      [
+        { sql: "DELETE FROM welcome_claims WHERE claim = ?", args: [welcomeClaim(user.email)!] },
+        { sql: "DELETE FROM entitlement_grants WHERE user_id = ?", args: [user.id] },
+        { sql: "DELETE FROM entitlement_accounts WHERE user_id = ?", args: [user.id] },
+      ],
+      "write",
+    );
+    const res = await get({ authorization: `Bearer ${token}` });
+    expect((await res.json()).entitlement).toMatchObject({ canUsePremium: true, credits: 1 });
   });
 
   it("503 unavailable when the entitlement lookup fails", async () => {

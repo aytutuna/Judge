@@ -7,7 +7,8 @@ const dir = mkdtempSync(path.join(tmpdir(), "verdict-welcome-"));
 process.env.DATABASE_URL = `file:${path.join(dir, "test.db").replace(/\\/g, "/")}`;
 process.env.BETTER_AUTH_SECRET = "test-secret-".padEnd(48, "x");
 
-const { createDevSession, deleteAuthUser, findOrCreateUserByEmail, welcomeClaim } = await import("../lib/auth");
+const { createDevSession, deleteAuthUser, findOrCreateUserByEmail, retryWelcomeCredit, welcomeClaim } =
+  await import("../lib/auth");
 const ent = await import("../lib/entitlements");
 const { getDb } = await import("../lib/db");
 
@@ -28,6 +29,19 @@ async function welcomeGrants(userId: string): Promise<number> {
     args: [userId, `welcome:${userId}`],
   });
   return Number(rs.rows[0].n);
+}
+
+/** As if the grant at sign-up had never been written. */
+async function forgetWelcome(userId: string, email: string): Promise<void> {
+  const db = await getDb();
+  await db.batch(
+    [
+      { sql: "DELETE FROM welcome_claims WHERE claim = ?", args: [welcomeClaim(email)!] },
+      { sql: "DELETE FROM entitlement_grants WHERE user_id = ?", args: [userId] },
+      { sql: "DELETE FROM entitlement_accounts WHERE user_id = ?", args: [userId] },
+    ],
+    "write",
+  );
 }
 
 describe("welcome credit", () => {
@@ -62,6 +76,23 @@ describe("welcome credit", () => {
     expect(user.id).not.toBe(first.user.id);
     expect(await ent.getEntitlement(user.id)).toMatchObject({ canUsePremium: false, credits: 0 });
     expect(await welcomeGrants(user.id)).toBe(0);
+  });
+
+  it("a grant lost at sign-up is given on a later look, once", async () => {
+    const { user } = await createDevSession("welcome7@verdict.local");
+    await forgetWelcome(user.id, user.email);
+    expect(await retryWelcomeCredit(user.id)).toBe(true);
+    expect(await retryWelcomeCredit(user.id)).toBe(false);
+    expect((await ent.getEntitlement(user.id)).credits).toBe(1);
+  });
+
+  it("the retry gives nothing to an account from before the welcome credit", async () => {
+    const { user } = await createDevSession("welcome8@verdict.local");
+    await forgetWelcome(user.id, user.email);
+    const db = await getDb();
+    await db.execute({ sql: 'UPDATE "user" SET createdAt = ? WHERE id = ?', args: ["2020-01-01T00:00:00.000Z", user.id] });
+    expect(await retryWelcomeCredit(user.id)).toBe(false);
+    expect((await ent.getEntitlement(user.id)).credits).toBe(0);
   });
 
   it("accounts made by the admin script get it too", async () => {

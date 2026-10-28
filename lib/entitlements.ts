@@ -586,6 +586,24 @@ export async function grantWelcomeCredit(userId: string, claim: string): Promise
   return { applied: results[1].rowsAffected === 1 };
 }
 
+/** The welcome credit of an account whose grant at sign-up never landed (a
+ * failed write, or a restart right after the user row). Only for accounts
+ * made since the first welcome credit went out, so older ones still get
+ * nothing, and only while the email has no claim. */
+export async function grantMissedWelcomeCredit(userId: string, claim: string, createdAt: Date): Promise<GrantResult> {
+  const db = await client();
+  const rs = await db.execute({
+    sql: `SELECT (SELECT min(created_at) FROM welcome_claims) AS since,
+                 EXISTS (SELECT 1 FROM welcome_claims WHERE claim = ?) AS claimed`,
+    args: [claim],
+  });
+  const row = rs.rows[0];
+  if (row?.since == null || Number(row.claimed) === 1 || iso(createdAt) < String(row.since)) {
+    return { applied: false };
+  }
+  return grantWelcomeCredit(userId, claim);
+}
+
 /**
  * Starts or renews a subscription, keyed by (source, originalTransactionId).
  * A new periodStart resets the period's usage. An event for an older period

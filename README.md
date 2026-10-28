@@ -154,7 +154,9 @@ of the monthly plan's 35 verdicts a month, bought in the apps through
 RevenueCat (see *Purchases* below). Every new account gets one credit when it
 is created (a `promo` grant keyed `welcome:<user id>`), once per email
 address: a keyed hash of the address goes into `welcome_claims`, which
-account deletion leaves alone. Accounts from before this got nothing. A `tier` sent by older app builds is
+account deletion leaves alone. A grant lost at sign-up (a failed write or a
+restart) is given on the account's next `GET /api/v1/me`. Accounts from
+before this got nothing. A `tier` sent by older app builds is
 ignored. `GET /api/v1/config` reports `freeTier: false` and
 `welcomeCredits: 1`. Prices live in `lib/pricing.ts`; until
 `PURCHASES_ENABLED=1` the buy buttons read "Coming soon". Testers get premium
