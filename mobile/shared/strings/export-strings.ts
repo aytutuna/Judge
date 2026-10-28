@@ -18,9 +18,10 @@
  * so a translation may use them in any order. Count strings (COUNT_KEYS on
  * the web, APP_COUNT_KEYS here) become plurals with every category the
  * language has; the count is `{n}`, written in ASCII digits as on the web.
- * A language without its app-only file yet reads English for those keys
- * (npm run check:app-locales lists them). Only Node built-ins are used; the
- * generated files are committed so the native builds never need Node.
+ * A language without its app-only file yet reads English for those keys, and
+ * so does one whose file lacks a newer key (npm run check:app-locales lists
+ * both). Only Node built-ins are used; the generated files are committed so
+ * the native builds never need Node.
  */
 import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
@@ -28,7 +29,7 @@ import { COUNT_KEYS, EN, loadedDict, loadLocales, type Key, type PluralForms } f
 import { ENABLED, LANG_CODES, LANGS, langTag, type Lang } from "../../../lib/langs";
 import { stripLeadingEmoji } from "../../../lib/text";
 import { checkAppLocale, loadAppLocale } from "./app-locales";
-import { APP_COUNT_KEYS, APP_EN, APP_PLURALS_EN } from "./app-strings";
+import { APP_COUNT_KEYS, APP_EN, APP_PLURALS_EN, type AppCountKey, type AppKey } from "./app-strings";
 import { EXCLUDE_KEYS, REQUIRED_KEYS, SINGULAR_KEYS, STRIP_EMOJI, WEB_KEYS } from "./keys";
 
 type Category = Intl.LDMLPluralRule;
@@ -73,12 +74,14 @@ function categories(lang: Lang): Category[] {
   return CATEGORY_ORDER.filter((c) => have.includes(c));
 }
 
-/** Each enabled language's copy. English fills in only the app-only keys of
- * a language that has no file for them yet. */
-async function loadCopies(): Promise<{ copies: Map<Lang, Copy>; missing: Lang[] }> {
+/** Each enabled language's copy. English fills in the app-only keys of a
+ * language that has no file for them yet, and the keys added to English
+ * since its file was last translated. */
+async function loadCopies(): Promise<{ copies: Map<Lang, Copy>; missing: Lang[]; partial: Lang[] }> {
   await loadLocales();
   const copies = new Map<Lang, Copy>();
   const missing: Lang[] = [];
+  const partial: Lang[] = [];
   for (const lang of ENABLED) {
     if (lang === "en") {
       copies.set(lang, { strings: { ...EN, ...APP_EN }, plurals: { ...APP_PLURALS_EN } });
@@ -87,18 +90,24 @@ async function loadCopies(): Promise<{ copies: Map<Lang, Copy>; missing: Lang[] 
     const web = loadedDict(lang);
     if (!web) throw new Error(`lib/locales/${lang}.ts did not load`);
     const app = await loadAppLocale(lang);
-    if (app) {
-      const problems = checkAppLocale(lang, app);
-      if (problems.length) throw new Error(`mobile/shared/strings/locales/${lang}.ts:\n  ${problems.join("\n  ")}`);
-    } else {
+    if (!app) {
       missing.push(lang);
+      copies.set(lang, { strings: { ...EN, ...web.strings, ...APP_EN }, plurals: { ...web.plurals, ...APP_PLURALS_EN } });
+      continue;
     }
+    const untranslated = (Object.keys(APP_EN) as AppKey[]).filter((k) => !(k in app.strings));
+    const problems = checkAppLocale(lang, app).filter(
+      (p) => !untranslated.some((k) => p.startsWith(`${k}: `) || p.startsWith(`plurals.${k}.`)),
+    );
+    if (problems.length) throw new Error(`mobile/shared/strings/locales/${lang}.ts:\n  ${problems.join("\n  ")}`);
+    if (untranslated.length) partial.push(lang);
+    const englishPlurals = untranslated.filter((k) => k in APP_PLURALS_EN).map((k) => [k, APP_PLURALS_EN[k as AppCountKey]]);
     copies.set(lang, {
-      strings: { ...EN, ...web.strings, ...(app?.strings ?? APP_EN) },
-      plurals: { ...web.plurals, ...(app ? app.plurals : APP_PLURALS_EN) },
+      strings: { ...EN, ...web.strings, ...APP_EN, ...app.strings },
+      plurals: { ...web.plurals, ...Object.fromEntries(englishPlurals), ...app.plurals },
     });
   }
-  return { copies, missing };
+  return { copies, missing, partial };
 }
 
 function placeholders(s: string): string[] {
@@ -563,7 +572,7 @@ function staleValues(expected: Set<string>): string[] {
 
 async function main(): Promise<void> {
   const check = process.argv.includes("--check");
-  const { copies, missing } = await loadCopies();
+  const { copies, missing, partial } = await loadCopies();
   const items = buildItems(copies);
   checkUnique(items);
   const read = (path: string) => (existsSync(path) ? readFileSync(path, "utf8") : "");
@@ -603,6 +612,7 @@ async function main(): Promise<void> {
   const plurals = items.filter((i) => i.kind === "plural").length;
   console.log(`${items.length} entries (${plurals} plurals) in ${ENABLED.length} languages`);
   if (missing.length) console.log(`English stands in for the app-only strings in: ${missing.join(", ")}`);
+  if (partial.length) console.log(`English stands in for some app-only strings in: ${partial.join(", ")}`);
   if (stale) {
     console.error("Run: npx tsx mobile/shared/strings/export-strings.ts");
     process.exit(1);

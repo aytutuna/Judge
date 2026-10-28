@@ -24,7 +24,8 @@ Both exports accept `--check`, which exits non-zero when a committed file is
 stale. The generated files are committed so neither native build needs Node.
 
 - Every enabled language of `lib/langs.ts` is exported. One without its
-  `shared/strings/locales/<code>.ts` yet reads English for the app-only keys.
+  `shared/strings/locales/<code>.ts` yet reads English for the app-only keys,
+  and so does one whose file lacks a key added since.
 - `{name}` slots become positional arguments numbered by their order in the
   English string (`%1$s` on Android, `%1$@` on iOS).
 - Count strings (`COUNT_KEYS` on the web, `APP_COUNT_KEYS` here) become one
