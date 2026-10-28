@@ -50,8 +50,7 @@ struct PricingView: View {
             .padding(.bottom, 32)
         }
         .task {
-            // Screenshot states open on the buy options; the end of the list
-            // stops the scroll, so the monthly row stays clear of the tab bar.
+            // Screenshot states can open scrolled down to the buy options.
             guard let target = app.pricingScroll else { return }
             try? await Task.sleep(for: .milliseconds(300))
             proxy.scrollTo(target, anchor: .top)
