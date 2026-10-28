@@ -192,7 +192,7 @@ final class ScreenshotStateTests: XCTestCase {
             XCTAssertTrue(app.purchases.isConfigured)
             XCTAssertTrue(app.purchases.canPurchase(pricing))
             let pack = app.purchases.labels(planId: "pack_10", usd: 7.5, credits: 10, pricing: pricing, lang: .en)
-            XCTAssertEqual(pack.button, "$7.50")
+            XCTAssertEqual(pack.button, "$7.49")
             XCTAssertTrue(pack.purchasable)
             XCTAssertNil(app.api.tokenStore.token(), "screenshots never hold a real token")
 

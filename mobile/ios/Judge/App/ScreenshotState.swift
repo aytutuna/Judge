@@ -306,7 +306,7 @@ struct ScreenshotState {
         }
         return [
             StoreOffer(planId: "pack_1", productId: "pack_1", price: "$1.00", amount: Decimal(100) / 100, currencyCode: "USD"),
-            StoreOffer(planId: "pack_10", productId: "pack_10", price: "$7.50", amount: Decimal(750) / 100, currencyCode: "USD"),
+            StoreOffer(planId: "pack_10", productId: "pack_10", price: "$7.49", amount: Decimal(749) / 100, currencyCode: "USD"),
             StoreOffer(planId: "monthly", productId: "monthly", price: "$15.00", amount: Decimal(1500) / 100, currencyCode: "USD"),
         ]
     }
