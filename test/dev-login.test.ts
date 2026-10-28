@@ -163,7 +163,7 @@ describe("POST /api/v1/auth/dev-login", () => {
     );
     expect(await viaBearer.json()).toMatchObject({
       user: { email: "test@verdict.local" },
-      entitlement: { canUsePremium: false, blockedReason: "premium_required" },
+      entitlement: { canUsePremium: true, blockedReason: null, credits: 1 },
     });
     const viaCookie = await me.GET(
       new Request("http://localhost:3600/api/v1/me", { headers: { cookie: cookie.split(";")[0] } }),

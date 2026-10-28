@@ -34,7 +34,6 @@ vi.mock("@/lib/entitlements", () => ({
   getEntitlement: m.getEntitlement,
 }));
 vi.mock("@/lib/ratelimit", () => ({
-  checkVerdictLimits: async () => ({ ok: true }),
   checkUserLimits: async () => ({ ok: true }),
   checkPremiumSiteCap: async () => ({ ok: true }),
 }));

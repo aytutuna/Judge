@@ -267,10 +267,11 @@ export const VerdictRequest = z.object({
   framework: FrameworkChoice.default({ preset: "balanced" }),
   /** UI + judge output language. Stored as the result's `lang`. */
   lang: z.enum(["en", "tr"]).default("en"),
-  tier: Tier.default("free"),
-  /** Premium only: answers to the clarifying questions. Ignored on free. */
+  /** Ignored: every verdict is premium. Older app builds still send it. */
+  tier: Tier.optional(),
+  /** Answers to the clarifying questions. */
   clarifications: z.array(Clarification).max(2).optional(),
-  /** Premium only: signed evidence tokens from POST /api/v1/evidence. Ignored on free. */
+  /** Signed evidence tokens from POST /api/v1/evidence. */
   evidence: z.array(z.string().min(1).max(16_000)).max(3).optional(),
 });
 export type VerdictRequest = z.infer<typeof VerdictRequest>;

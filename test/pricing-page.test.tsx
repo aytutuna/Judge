@@ -1,6 +1,6 @@
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
-import { PricingTable, type PricingTableProps } from "../components/account/PricingView";
+import { PricingTable, PricingView, type PricingTableProps } from "../components/account/PricingView";
 import type { PricingInfo } from "../lib/account-types";
 import { t } from "../lib/i18n";
 import { PRICING, formatPrice } from "../lib/pricing";
@@ -18,16 +18,25 @@ function render(over: Partial<PricingTableProps> = {}): string {
 }
 
 describe("PricingTable", () => {
-  it("lists Free and Premium with every pack and the monthly plan", () => {
+  it("leads with the free first verdict and has no Free plan", () => {
+    const html = renderToStaticMarkup(<PricingView />);
+    expect(html).toContain("Your first verdict is");
+    expect(html).toContain("Create an account and your first verdict is free");
+    expect(t("en", "pricing.title")).toBe("Your first verdict is on us.");
+    expect(t("tr", "pricing.title")).toBe("İlk kararın bizden.");
+    expect(render()).not.toContain('id="plan-free"');
+  });
+
+  it("lists what every verdict gets, every pack and the monthly plan", () => {
     const html = render();
-    expect(html).toContain('id="plan-free"');
-    expect(html).toContain('id="plan-premium"');
+    expect(html).toContain('id="plan-included"');
+    expect(html).toContain('id="plan-buy"');
     for (const p of pricing.packs) {
-      expect(html).toContain(p.credits === 1 ? "1 premium verdict" : `${p.credits} premium verdicts`);
+      expect(html).toContain(p.credits === 1 ? "1 verdict" : `${p.credits} verdicts`);
       expect(html).toContain(formatPrice(p.priceUsd, "en"));
       expect(html).toContain(`${formatPrice(p.priceUsd / p.credits, "en")} per verdict`);
     }
-    expect(html).toContain(`${pricing.monthly.fairUseCap} premium verdicts a month`);
+    expect(html).toContain(`${pricing.monthly.fairUseCap} verdicts a month`);
     expect(html).toContain("Renews every month");
     expect(html).toContain(formatPrice(pricing.monthly.priceUsd, "en"));
   });
@@ -50,11 +59,12 @@ describe("PricingTable", () => {
     const html = render({ lang: "tr" });
     expect(html).toContain(formatPrice(7.5, "tr"));
     expect(html).toContain("Yakında");
-    expect(html).toContain(`Ayda ${pricing.monthly.fairUseCap} premium karar`);
+    expect(html).toContain(`Ayda ${pricing.monthly.fairUseCap} karar`);
   });
 
   it("signed out with premium on: a sign-in call to action back to pricing", () => {
     expect(render()).toContain('href="/signin?next=%2Fpricing"');
+    expect(render()).toContain(t("en", "pricing.signIn"));
     expect(render({ signedIn: true })).not.toContain("/signin");
   });
 

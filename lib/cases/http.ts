@@ -6,10 +6,8 @@
  * body -> session -> origin (cookie sessions) -> per-user limit -> Premium
  * switch and site cap where a unit is reserved (judge: after the lookup, for
  * premium cases only) -> case lookup (404 for missing or not yours) -> state
- * -> reserve. Free cases hold no unit and take no evidence (402
- * premium_required); the request that starts a free case's judging (the
- * answer, or judge-now) counts as one free verdict against the caller's IP
- * and DAILY_VERDICT_CAP. The respondent needs no account: the invite token is the
+ * -> reserve. Every case holds one premium unit from its creation. The
+ * respondent needs no account: the invite token is the
  * credential, checked by format before any database read; submits pass
  * Turnstile (when configured; skipped for bearer sessions) and per-IP limits.
  * Side B is bound to its author when it is submitted: the signed-in account,
@@ -68,7 +66,6 @@ import {
   checkIpLimits,
   checkPremiumSiteCap,
   checkUserLimits,
-  checkVerdictLimits,
   type LimitDecision,
   type UserBucket,
 } from "@/lib/ratelimit";
@@ -193,19 +190,6 @@ async function premiumGate(): Promise<NextResponse | null> {
     return fail("unavailable");
   }
 }
-
-/** A free case's judging run counts as one free verdict for whoever starts it:
- * the same per-IP windows and DAILY_VERDICT_CAP as POST /api/v1/verdict. */
-async function freeVerdictGate(req: Request): Promise<NextResponse | null> {
-  const limit = await checkVerdictLimits(clientIp(req.headers));
-  if (limit.ok) return null;
-  if (limit.code === "daily_cap") {
-    return fail("daily_cap", "Judge has used today's capacity — try again tomorrow.", { retryAfterSec: limit.retryAfterSec });
-  }
-  return limitRefusal(limit);
-}
-
-const EVIDENCE_NEEDS_PREMIUM = "Screenshot evidence needs a Premium case.";
 
 type Signed = { viewer: ViewerSession } | { response: NextResponse };
 
@@ -364,9 +348,7 @@ export function createCaseHandler(req: Request): Promise<NextResponse> {
     const gate = await signedIn(req);
     if ("response" in gate) return gate.response;
     const userId = gate.viewer.user.id;
-    const { tier } = parsed.data;
-    if (tier === "free" && parsed.data.evidence?.length) return fail("premium_required", EVIDENCE_NEEDS_PREMIUM);
-    const limited = await limitGate(userId, "case_create", tier === "premium");
+    const limited = await limitGate(userId, "case_create", true);
     if (limited) return limited;
     await maybeSweepCases();
 
@@ -380,7 +362,6 @@ export function createCaseHandler(req: Request): Promise<NextResponse> {
       displayName: parsed.data.displayName || null,
       framework: parsed.data.framework,
       lang: parsed.data.lang,
-      tier,
       evidence: ev.items,
       ...(key ? { idempotencyKey: key } : {}),
     });
@@ -470,19 +451,11 @@ export function judgeCaseHandler(req: Request, id: string): Promise<NextResponse
     const gate = await signedIn(req);
     if ("response" in gate) return gate.response;
     const userId = gate.viewer.user.id;
-    const limited = await limitGate(userId, "premium_verdict", false);
+    const limited = await limitGate(userId, "premium_verdict", true);
     if (limited) return limited;
     await maybeSweepCases();
     const row = await ownedCase(id, userId);
     if (!row) return fail("not_found");
-    const status = effectiveStatus(row, new Date());
-    if (row.tier === "premium") {
-      const capped = await premiumGate();
-      if (capped) return capped;
-    } else if (status !== "judging" && status !== "judged") {
-      const capped = await freeVerdictGate(req);
-      if (capped) return capped;
-    }
     const res = await judgeNow({ row, mode: parsed.data.mode, origin: publicOrigin(req) });
     if (!res.ok) {
       if (res.code === "invalid") return fail("invalid", 'Send { "mode": "only_mine" } to judge without the other side.');
@@ -535,7 +508,6 @@ async function appealCommon(
   if ("response" in loaded) return loaded.response;
   const { row } = loaded;
 
-  if (row.tier === "free" && parsed.data.evidence?.length) return fail("premium_required", EVIDENCE_NEEDS_PREMIUM);
   const ev = verifyEvidence(parsed.data.evidence, audiences(userId, row), MAX_EVIDENCE_PER_APPEAL);
   if ("response" in ev) return ev.response;
   const res = await submitAppeal({
@@ -617,8 +589,6 @@ export function respondPostHandler(req: Request, token: string): Promise<NextRes
     const row = await caseByToken(token);
     if (!row) return fail("not_found", "No invite with that link.");
     if (row.removedAt) return fail("removed");
-    // A premium case is judged by the premium panel as soon as side B lands.
-    if (row.tier === "premium" && !premiumEnabled()) return fail("not_configured", PREMIUM_OFF);
 
     const { viewer, deadBearer } = await resolveViewer(req);
     if (deadBearer) return deadBearerResponse();
@@ -657,13 +627,8 @@ export function respondPostHandler(req: Request, token: string): Promise<NextRes
       return fail("case_closed");
     }
 
-    if (row.tier === "free" && parsed.data.evidence?.length) return fail("premium_required", EVIDENCE_NEEDS_PREMIUM);
     const ev = verifyEvidence(parsed.data.evidence, [{ type: "respondent", caseId: row.id }], MAX_EVIDENCE_PER_SIDE);
     if ("response" in ev) return ev.response;
-    if (row.tier === "free") {
-      const capped = await freeVerdictGate(req);
-      if (capped) return capped;
-    }
 
     const res = await respondToCase({
       row,
@@ -722,7 +687,6 @@ export function respondEvidenceHandler(req: Request, token: string): Promise<Nex
     const status = effectiveStatus(row, new Date());
     if (status === "expired") return fail("case_expired");
     if (status !== "awaiting_respondent") return fail("case_closed");
-    if (row.tier === "free") return fail("premium_required", EVIDENCE_NEEDS_PREMIUM);
     const ip = clientIp(req.headers);
     try {
       const byIp = await checkIpLimits(ip, "respond_evidence");

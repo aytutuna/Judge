@@ -464,37 +464,6 @@
   font-weight: 600;
 }
 
-/* TierSwitch, made compact for the toolbar. Its root is display: contents,
-   so the fieldset and the note land in the toolbar row. A note with a link
-   (sign in, get Premium) takes a line under the row; plain hints stay for
-   screen readers only, so the idle box keeps its two rows. */
-.tier {
-  display: contents;
-}
-.tier fieldset {
-  flex: none;
-  padding: 2px;
-}
-.tier label > span {
-  min-height: 30px;
-  padding: 0 12px;
-  font-size: 13px;
-}
-.tier p {
-  order: 1;
-  flex-basis: 100%;
-  margin: 0 4px;
-  font-size: 12.5px;
-}
-.tier p:not(:has(a)) {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip-path: inset(50%);
-  white-space: nowrap;
-}
-
 .count {
   margin-left: auto;
   color: var(--muted);
@@ -584,11 +553,6 @@
 .sides:hover {
   text-decoration: underline;
   text-underline-offset: 3px;
-}
-
-.turnstile {
-  display: flex;
-  justify-content: center;
 }
 
 .field {

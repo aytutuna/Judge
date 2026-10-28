@@ -40,11 +40,8 @@ export type ComposerProps = {
   /** The options panel (framework, mode, name, screenshots) is open. */
   expanded: boolean;
   onExpandedChange: (expanded: boolean) => void;
-  /** In the toolbar beside the options button. */
-  tierSwitch?: ReactNode;
   /** In the options panel, after the framework. */
   extras?: ReactNode;
-  turnstile?: ReactNode;
   twoSided?: boolean;
   submitLabel: string;
   /** Offers the example chips under the textarea. */
@@ -87,7 +84,7 @@ function CaseHead({ lang }: { lang: Lang }) {
 
 /**
  * The argument box: an auto-growing textarea over one toolbar row (the
- * lens button, Free / Premium, send). Everything else sits in the options
+ * lens button and send). Everything else sits in the options
  * panel under that row (after the button in tab order), so the docked box
  * stays two rows tall. As the empty page's `card` it also holds the
  * heading and sends from a full-width button under the toolbar.
@@ -106,9 +103,7 @@ export function Composer({
   onFrameworkChange,
   expanded,
   onExpandedChange,
-  tierSwitch,
   extras,
-  turnstile,
   twoSided = false,
   submitLabel,
   onExample,
@@ -207,7 +202,6 @@ export function Composer({
               </svg>
             </button>
             {twoSided ? <span className={styles.mode}>{t(lang, "case.kicker")}</span> : null}
-            {tierSwitch ? <div className={styles.tier}>{tierSwitch}</div> : null}
             {value.length > MAX_ARGUMENT - 500 ? (
               <span className={styles.count} aria-hidden>
                 {value.length} / {MAX_ARGUMENT}
@@ -242,7 +236,6 @@ export function Composer({
           ) : null}
         </fieldset>
       </form>
-      {turnstile ? <div className={styles.turnstile}>{turnstile}</div> : null}
     </div>
   );
 }

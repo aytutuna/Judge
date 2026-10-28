@@ -50,7 +50,6 @@ describe("case service on a fresh database", () => {
       text: "I think the bill was mine to pay in April and I paid it.",
       framework: { preset: "balanced" },
       lang: "en",
-      tier: "premium",
       evidence: [],
     });
     expect(created.ok).toBe(true);
@@ -66,26 +65,5 @@ describe("case service on a fresh database", () => {
     });
     expect(answered.ok && answered.row.status).toBe("judging");
     expect(await removeCaseSide(created.row, "a", "party_a")).toEqual({ ok: false, code: "in_progress" });
-  });
-
-  it("a free case needs no credits and holds nothing, through the answer and judge-now", async () => {
-    const created = await svc.createCase({
-      ownerId: "o2",
-      text: "I think the bill was mine to pay in April and I paid it.",
-      framework: { preset: "balanced" },
-      lang: "en",
-      tier: "free",
-      evidence: [],
-    });
-    expect(created.ok).toBe(true);
-    if (!created.ok) return;
-    expect(created.row.tier).toBe("free");
-    expect(created.row.reservationId).toBeNull();
-    const judged = await svc.judgeNow({ row: created.row, mode: "only_mine", origin: "http://localhost" });
-    expect(judged.ok && judged.started).toBe(true);
-    const { getDb } = await import("../lib/db");
-    const db = await getDb();
-    const rs = await db.execute({ sql: "SELECT count(*) AS n FROM premium_usage WHERE user_id = ?", args: ["o2"] });
-    expect(Number(rs.rows[0].n)).toBe(0);
   });
 });

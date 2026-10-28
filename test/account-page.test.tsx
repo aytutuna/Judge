@@ -1,7 +1,7 @@
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import { AccountMenu, accountEntry, initialOf } from "../components/AccountMenu";
-import { AccountPanel, openConfirm, planOf, type AccountPanelProps } from "../components/account/AccountView";
+import { AccountPanel, openConfirm, type AccountPanelProps } from "../components/account/AccountView";
 import { SignInPanel, safeNext, withLang, type SignInPanelProps } from "../components/account/SignInView";
 import { SiteFooter } from "../components/SiteChrome";
 import type { AppConfig, AuthProviders, Entitlement, MeResponse } from "../lib/account-types";
@@ -48,15 +48,6 @@ function panel(over: Partial<AccountPanelProps>): string {
   );
 }
 
-describe("planOf", () => {
-  it("is premium while credits or a subscription are held", () => {
-    expect(planOf(ent())).toBe("free");
-    expect(planOf(null)).toBe("free");
-    expect(planOf(ent({ credits: 1 }))).toBe("premium");
-    expect(planOf(ent({ subscription: sub(false, 200, 200) }))).toBe("premium");
-  });
-});
-
 describe("AccountPanel", () => {
   it("loading and error states", () => {
     expect(panel({ viewer: { status: "loading", me: null, config: null } })).toContain(
@@ -74,11 +65,12 @@ describe("AccountPanel", () => {
     expect(html).not.toContain("<dialog");
   });
 
-  it("free account: email, Free plan, zero credits, no monthly plan", () => {
+  it("account with nothing left: email, zero credits, no monthly plan, a link to get more", () => {
     const html = panel({});
     expect(html).toContain("Signed in as ada@example.org");
-    expect(html).toContain(">Free<");
+    expect(html).not.toContain(">Free<");
     expect(html).toContain("<dd>0</dd>");
+    expect(html).toContain(t("en", "account.getPremium"));
     expect(html).toContain(t("en", "account.subscriptionNone"));
     expect(html).toContain('href="/pricing"');
     expect(html).toContain(t("en", "account.signOut"));
@@ -88,16 +80,15 @@ describe("AccountPanel", () => {
     const html = panel({
       viewer: ready({ user, entitlement: ent({ canUsePremium: true, blockedReason: null, credits: 8, subscription: sub(true) }) }),
     });
-    expect(html).toContain("Premium");
     expect(html).toContain("<dd>8</dd>");
     expect(html).toContain("Renews on November 18");
-    expect(html).toContain("12 of 200 premium verdicts used this month");
+    expect(html).toContain("12 of 200 verdicts used this month");
     const until = panel({
       lang: "tr",
       viewer: ready({ user, entitlement: ent({ canUsePremium: true, blockedReason: null, subscription: sub(false) }) }),
     });
     expect(until).toContain("18 Kasım tarihine kadar geçerli");
-    expect(until).toContain("Bu ay 200 premium karardan 12 tanesini kullandın");
+    expect(until).toContain("Bu ay 200 karardan 12 tanesini kullandın");
   });
 
   it("fair use: says when the allowance comes back", () => {

@@ -6,34 +6,43 @@ import { afterAll, afterEach, beforeEach, describe, expect, it, vi } from "vites
 /**
  * A bearer token that matches no live session (unknown, expired, signed out)
  * gets 401 signin_required instead of being served as signed out. Real auth
- * and database; only the bot check, limits and model calls are mocked.
+ * and database; only the limits and model calls are mocked.
  */
 
 const m = vi.hoisted(() => ({
-  checkVerdictLimits: vi.fn(),
   anonymize: vi.fn(),
-  judgeSelfConsistent: vi.fn(),
+  judgePremiumPanel: vi.fn(),
 }));
 
-vi.mock("@/lib/turnstile", () => ({ verifyTurnstile: async () => "ok" }));
 vi.mock("@/lib/ratelimit", () => ({
-  checkVerdictLimits: m.checkVerdictLimits,
   checkIpLimits: async () => ({ ok: true }),
   checkUserLimits: async () => ({ ok: true }),
+  checkPremiumSiteCap: async () => ({ ok: true }),
   checkTranslateLimits: async () => ({ ok: true }),
 }));
-vi.mock("@/lib/claude", () => ({ hasApiKey: () => true }));
 vi.mock("@/lib/anonymize", () => ({ anonymize: m.anonymize }));
-vi.mock("@/lib/judge", () => ({ judgeSelfConsistent: m.judgeSelfConsistent, judgeExtra: async () => [] }));
+vi.mock("@/lib/judge", async (importOriginal) => ({
+  ...(await importOriginal<typeof import("@/lib/judge")>()),
+  judgeExtra: async () => [],
+}));
 vi.mock("@/lib/trial", async (importOriginal) => ({
   ...(await importOriginal<typeof import("@/lib/trial")>()),
   runCruxTrial: async () => null,
+}));
+vi.mock("@/lib/premium/factcheck", async (importOriginal) => ({
+  ...(await importOriginal<typeof import("@/lib/premium/factcheck")>()),
+  runFactCheck: async () => ({ status: "none", claims: [] }),
+}));
+vi.mock("@/lib/premium/panel", async (importOriginal) => ({
+  ...(await importOriginal<typeof import("@/lib/premium/panel")>()),
+  judgePremiumPanel: m.judgePremiumPanel,
 }));
 
 const dir = mkdtempSync(path.join(tmpdir(), "verdict-dead-bearer-"));
 process.env.DATABASE_URL = `file:${path.join(dir, "test.db").replace(/\\/g, "/")}`;
 process.env.BETTER_AUTH_SECRET = "test-secret-".padEnd(48, "x");
 process.env.BETTER_AUTH_URL = "http://localhost:3600";
+process.env.ANTHROPIC_API_KEY = "test-key";
 
 const auth = await import("../lib/auth");
 const { getDb } = await import("../lib/db");
@@ -41,7 +50,9 @@ const { POST: postVerdict } = await import("../app/api/v1/verdict/route");
 const { GET: getVerdict } = await import("../app/api/v1/verdicts/[id]/route");
 const { GET: getMe, DELETE: deleteMe } = await import("../app/api/v1/me/route");
 const { mineHandler } = await import("../lib/originals/http");
-import type { JudgeRunOutput } from "../lib/types";
+const { saveVerdictWithOriginals } = await import("../lib/originals/save");
+const { grantCredits } = await import("../lib/entitlements");
+import type { JudgeRunOutput, VerdictResult } from "../lib/types";
 
 afterAll(() => {
   const g = globalThis as unknown as { __verdictLibsql?: { close(): void } };
@@ -76,12 +87,14 @@ const RUN: JudgeRunOutput = {
 const SIGN_IN_FIRST = { error: "Sign in first.", code: "signin_required" };
 
 beforeEach(() => {
-  m.checkVerdictLimits.mockResolvedValue({ ok: true });
   m.anonymize.mockResolvedValue({
     text: "Party A says the Great Wall is visible from space with the naked eye; Party B says it is not.",
     nameMap: [{ original: "Mark", replacement: "Party A" }],
   });
-  m.judgeSelfConsistent.mockResolvedValue([RUN, RUN, RUN].map((data) => ({ ok: true, data })));
+  m.judgePremiumPanel.mockResolvedValue({
+    runs: [RUN, RUN, RUN].map((data) => ({ ok: true, data })),
+    models: ["claude-sonnet-5-5", "claude-sonnet-5-5", "claude-haiku-5-5"],
+  });
   vi.spyOn(console, "info").mockImplementation(() => {});
 });
 
@@ -129,7 +142,7 @@ async function expectSignInFirst(res: Response) {
 }
 
 describe("POST /api/v1/verdict with a bearer token", () => {
-  it("an unknown, expired or signed-out token gets 401 before any limit or model work (free and premium)", async () => {
+  it("an unknown, expired or signed-out token gets 401 before any limit or model work", async () => {
     const dead = [
       "not-a-session",
       "not-a-session.bad-signature",
@@ -139,12 +152,11 @@ describe("POST /api/v1/verdict with a bearer token", () => {
     for (const token of dead) {
       await expectSignInFirst(await postVerdict(verdictRequest(bearer(token))));
     }
-    await expectSignInFirst(await postVerdict(verdictRequest(bearer("nope"), { argument: ARGUMENT, tier: "premium" })));
+    await expectSignInFirst(await postVerdict(verdictRequest(bearer("nope"), { argument: ARGUMENT, tier: "free" })));
     // Even with an invalid body: the token is the first thing checked.
     await expectSignInFirst(await postVerdict(verdictRequest(bearer("nope"), { argument: "" })));
-    expect(m.checkVerdictLimits).not.toHaveBeenCalled();
     expect(m.anonymize).not.toHaveBeenCalled();
-    expect(m.judgeSelfConsistent).not.toHaveBeenCalled();
+    expect(m.judgePremiumPanel).not.toHaveBeenCalled();
   });
 
   it("a dead token next to a valid cookie is still refused", async () => {
@@ -154,7 +166,9 @@ describe("POST /api/v1/verdict with a bearer token", () => {
   });
 
   it("a valid token is judged and owns the verdict (raw or signed form)", async () => {
-    const { token } = await auth.createDevSession("app@verdict.local");
+    const { token, user } = await auth.createDevSession("app@verdict.local");
+    // The welcome credit pays for the first one.
+    await grantCredits({ userId: user.id, credits: 1, source: "admin", externalId: `more:${user.id}` });
     const res = await postVerdict(verdictRequest(bearer(token)));
     expect(res.status).toBe(200);
     const body = await res.json();
@@ -168,11 +182,15 @@ describe("POST /api/v1/verdict with a bearer token", () => {
   });
 });
 
-describe("POST /api/v1/verdict without a bearer token (website unchanged)", () => {
-  it("no Authorization header: judged anonymously with an owner token", async () => {
-    const res = await postVerdict(verdictRequest());
-    expect(res.status).toBe(200);
-    expect((await res.json()).owner_token).toMatch(/^[A-Za-z0-9_-]{43}$/);
+describe("POST /api/v1/verdict without a bearer token (the website)", () => {
+  async function expectSignInRequired(res: Response) {
+    expect(res.status).toBe(401);
+    expect((await res.json()).code).toBe("signin_required");
+  }
+
+  it("no Authorization header and no session: 401, no anonymous verdict", async () => {
+    await expectSignInRequired(await postVerdict(verdictRequest()));
+    expect(m.anonymize).not.toHaveBeenCalled();
   });
 
   it("a same-origin session cookie owns the verdict", async () => {
@@ -182,24 +200,22 @@ describe("POST /api/v1/verdict without a bearer token (website unchanged)", () =
     expect((await res.json()).owner_token).toBeUndefined();
   });
 
-  it("an expired or garbage cookie counts as signed out, as before (no 401)", async () => {
+  it("an expired or garbage cookie counts as signed out", async () => {
     const expired = await expiredToken("oldweb@verdict.local");
     for (const cookie of [await cookieFor(expired), "verdict.session_token=garbage"]) {
-      const res = await postVerdict(verdictRequest({ cookie, origin: ORIGIN }));
-      expect(res.status).toBe(200);
-      expect((await res.json()).owner_token).toMatch(/^[A-Za-z0-9_-]{43}$/);
+      await expectSignInRequired(await postVerdict(verdictRequest({ cookie, origin: ORIGIN })));
     }
   });
 
   it("a non-Bearer Authorization header is ignored", async () => {
-    const res = await postVerdict(verdictRequest({ authorization: "Basic dXNlcjpwYXNz" }));
-    expect(res.status).toBe(200);
+    await expectSignInRequired(await postVerdict(verdictRequest({ authorization: "Basic dXNlcjpwYXNz" })));
   });
 });
 
 describe("other routes with a dead bearer token", () => {
   it("GET /api/v1/verdicts/{id}: 401 for a dead token; share viewers without a header still read it", async () => {
-    const res = await postVerdict(verdictRequest());
+    const writer = await auth.createDevSession("writer@verdict.local");
+    const res = await postVerdict(verdictRequest(bearer(writer.token)));
     const { id } = (await res.json()) as { id: string };
     const read = (headers: Record<string, string> = {}) =>
       getVerdict(new Request(`${ORIGIN}/api/v1/verdicts/${id}`, { headers }), { params: Promise.resolve({ id }) });
@@ -229,8 +245,19 @@ describe("other routes with a dead bearer token", () => {
   });
 
   it("writer routes (owner token or session): a dead token is 401 even next to a valid owner token", async () => {
-    const res = await postVerdict(verdictRequest());
-    const { id, owner_token: ownerToken } = (await res.json()) as { id: string; owner_token: string };
+    // Owner tokens come from verdicts written signed out, before sign-in was required.
+    const id = "anonverdict";
+    const result = { ...RUN, confidence: 5, runs: ["side_b", "side_b", "side_b"], demo: false } as unknown as VerdictResult;
+    const saved = await saveVerdictWithOriginals({
+      id,
+      input: "Party A says it; Party B says it is not.",
+      framework: { preset: "balanced" },
+      result,
+      kind: "free",
+      ownerUserId: null,
+      original: { v: 1, text: ARGUMENT, nameMap: [] },
+    });
+    const ownerToken = saved.ownerToken!;
     const mine = (headers: Record<string, string>) =>
       mineHandler(new Request(`${ORIGIN}/api/v1/verdicts/${id}/mine`, { headers }), id);
     expect((await mine({ "x-owner-token": ownerToken })).status).toBe(200);

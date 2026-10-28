@@ -145,7 +145,6 @@ function composer(over: Partial<ComposerProps> = {}): string {
     expanded: false,
     onExpandedChange: noop,
     submitLabel: t("en", "getVerdict"),
-    tierSwitch: <div data-testid="tier" />,
     extras: <div data-testid="extras" />,
     ...over,
   };
@@ -159,7 +158,6 @@ describe("Composer", () => {
     expect(html).toContain('rows="2"');
     expect(html).toContain(`placeholder="${esc(t("en", "thread.placeholder"))}"`);
     expect(html).toContain('aria-expanded="false"');
-    expect(html).toContain('data-testid="tier"');
     expect(html).not.toContain('data-testid="extras"');
     expect(html).not.toContain("aria-pressed");
     expect(html).toMatch(/type="submit"[^>]*disabled/);
@@ -187,11 +185,10 @@ describe("Composer", () => {
     expect(html).toMatch(/type="submit"[^>]*disabled/);
   });
 
-  it("ties the error to the box and shows Turnstile and the examples when given", () => {
-    const html = composer({ error: "Slow down", turnstile: <div data-testid="turnstile" />, onExample: noop });
+  it("ties the error to the box and shows the examples when given", () => {
+    const html = composer({ error: "Slow down", onExample: noop });
     expect(html).toContain('role="alert"');
     expect(html).toContain('aria-describedby="composer-error"');
-    expect(html).toContain('data-testid="turnstile"');
     expect(html).toContain(esc(t("en", "examples.label")));
   });
 

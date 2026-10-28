@@ -1,6 +1,6 @@
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
-import { PricingTable, freeFeatureKeys, premiumFeatureKeys } from "../components/account/PricingView";
+import { PricingTable, featureKeys } from "../components/account/PricingView";
 import { Faq, FAQ_ITEMS, faqItems } from "../components/home/Faq";
 import { caseAboutKeys, premiumAboutKeys } from "../components/InfoPage";
 import { VerdictView } from "../components/VerdictView";
@@ -150,22 +150,11 @@ describe("VerdictView: finding chips read naturally", () => {
 });
 
 describe("copy only claims what the deployment offers", () => {
-  it("pricing lists the extras only when switched on; both sides is on the free plan", () => {
-    expect(premiumFeatureKeys(null)).toEqual(["pricing.premium.f1", "pricing.premium.f2", "pricing.premium.f3"]);
-    expect(premiumFeatureKeys({ cases: true, evidence: false })).toEqual([
-      "pricing.premium.f1",
-      "pricing.premium.f2",
-      "pricing.premium.f3",
-      "pricing.premium.f6",
-    ]);
-    expect(premiumFeatureKeys({ cases: false, evidence: true })).toEqual([
-      "pricing.premium.f1",
-      "pricing.premium.f2",
-      "pricing.premium.f3",
-      "pricing.premium.f5",
-    ]);
-    expect(freeFeatureKeys(null)).not.toContain("pricing.free.f4");
-    expect(freeFeatureKeys({ cases: true, evidence: false })).toContain("pricing.free.f4");
+  it("pricing lists the extras only when switched on", () => {
+    const base = ["pricing.premium.f1", "pricing.premium.f2", "pricing.premium.f3", "pricing.premium.f4"];
+    expect(featureKeys(null)).toEqual(base);
+    expect(featureKeys({ cases: true, evidence: false })).toEqual([...base, "pricing.premium.f7", "pricing.premium.f6"]);
+    expect(featureKeys({ cases: false, evidence: true })).toEqual([...base, "pricing.premium.f5"]);
     const on = html(
       <PricingTable
         lang="en"
@@ -176,13 +165,13 @@ describe("copy only claims what the deployment offers", () => {
         features={{ cases: true, evidence: true }}
       />,
     );
-    expect(on).toContain(esc(t("en", "pricing.free.f4")));
+    expect(on).toContain(esc(t("en", "pricing.premium.f7")));
     expect(on).toContain(esc(t("en", "pricing.premium.f6")));
-    // Premium off: cases stay on the free plan, the Premium extras go.
+    // Verdicts off: the extras go with them.
     const off = html(
       <PricingTable lang="en" pricing={PRICING} premiumEnabled={false} signedIn={false} signInOffered features={{ cases: true, evidence: false }} />,
     );
-    expect(off).toContain(esc(t("en", "pricing.free.f4")));
+    expect(off).not.toContain(esc(t("en", "pricing.premium.f7")));
     expect(off).not.toContain(esc(t("en", "pricing.premium.f6")));
   });
 

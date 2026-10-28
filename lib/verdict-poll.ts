@@ -90,6 +90,20 @@ export function wantsAsync(headers: HeaderBag, body: unknown): boolean {
   return typeof body === "object" && body !== null && (body as { async?: unknown }).async === true;
 }
 
+export function pollPath(id: string): string {
+  return `/api/v1/verdicts/${id}`;
+}
+
+/** The 202 headers every accepted verdict carries. */
+export function acceptedHeaders(id: string): Record<string, string> {
+  return {
+    "Cache-Control": "no-store",
+    "Retry-After": String(Math.ceil(POLL_AFTER_MS / 1000)),
+    Location: pollPath(id),
+    "Preference-Applied": RESPOND_ASYNC,
+  };
+}
+
 /** Client backoff: start at the server's pollAfterMs, grow 1.5x per poll up
  * to 5 s while the server answers; after errors (offline, 5xx) double up to
  * 15 s. A larger server hint (pollAfterMs, Retry-After) always wins. */

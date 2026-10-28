@@ -5,14 +5,13 @@ import { afterAll, afterEach, beforeEach, describe, expect, it, vi } from "vites
 
 /**
  * Async verdicts end to end against a real (temporary) database, the real
- * entitlements, originals and job table, with the model calls, sessions and
- * Turnstile mocked. Background work is captured and run with drain().
+ * entitlements, originals and job table, with the model calls and sessions
+ * mocked. Background work is captured and run with drain().
  */
 
 const m = vi.hoisted(() => ({
   getViewer: vi.fn(),
   anonymize: vi.fn(),
-  judgeSelfConsistent: vi.fn(),
   judgeExtra: vi.fn(),
   runCruxTrial: vi.fn(),
   runFactCheck: vi.fn(),
@@ -28,10 +27,8 @@ vi.mock("@/lib/auth", () => ({
   authConfigured: () => true,
   premiumEnabled: () => true,
 }));
-vi.mock("@/lib/turnstile", () => ({ verifyTurnstile: async () => "ok" }));
 vi.mock("@/lib/ratelimit", async (importOriginal) => ({
   ...(await importOriginal<typeof import("@/lib/ratelimit")>()),
-  checkVerdictLimits: async () => ({ ok: true }),
   checkUserLimits: async () => ({ ok: true }),
   checkPremiumSiteCap: async () => ({ ok: true }),
 }));
@@ -42,7 +39,6 @@ vi.mock("@/lib/claude", async (importOriginal) => ({
 vi.mock("@/lib/anonymize", () => ({ anonymize: m.anonymize }));
 vi.mock("@/lib/judge", async (importOriginal) => ({
   ...(await importOriginal<typeof import("@/lib/judge")>()),
-  judgeSelfConsistent: m.judgeSelfConsistent,
   judgeExtra: m.judgeExtra,
 }));
 vi.mock("@/lib/trial", async (importOriginal) => ({
@@ -72,7 +68,7 @@ const ent = await import("../lib/entitlements");
 const jobs = await import("../lib/verdict-jobs");
 const { removeUserData } = await import("../lib/originals/removal");
 const { getDb } = await import("../lib/db");
-import type { JudgeRunOutput, VerdictResult } from "../lib/types";
+import type { JudgeRunOutput } from "../lib/types";
 import type { VerdictAcceptedResponse } from "../lib/verdict-poll";
 
 afterAll(() => {
@@ -153,7 +149,6 @@ beforeEach(() => {
   logged = [];
   m.getViewer.mockResolvedValue(null);
   m.anonymize.mockResolvedValue({ text: ANON, nameMap: [{ original: NAME, replacement: "Party A" }] });
-  m.judgeSelfConsistent.mockResolvedValue([ok(RUN), ok(RUN), ok(RUN)]);
   m.judgeExtra.mockResolvedValue([]);
   m.runCruxTrial.mockResolvedValue(null);
   m.runFactCheck.mockResolvedValue({ status: "none", claims: [] });
@@ -166,6 +161,7 @@ beforeEach(() => {
 });
 
 afterEach(() => {
+  vi.clearAllMocks();
   vi.restoreAllMocks();
 });
 
@@ -176,60 +172,37 @@ async function expectNoNames(id: string): Promise<void> {
   expect(JSON.stringify(job)).not.toContain(NAME);
 }
 
-describe("free async verdicts", () => {
-  it("202 with Prefer: respond-async; judging until the background run ends; then ready", async () => {
+describe("async verdicts", () => {
+  async function user(): Promise<string> {
+    const id = uid();
+    await ent.grantCredits({ userId: id, credits: 3, source: "admin", externalId: `g:${id}` });
+    signedIn(id);
+    return id;
+  }
+
+  it("202 with Prefer: respond-async and the poll headers; judging until the background run ends", async () => {
+    await user();
     const res = await post({}, { prefer: "respond-async, wait=5" });
     expect(res.status).toBe(202);
     const body = (await res.json()) as VerdictAcceptedResponse;
-    expect(body).toMatchObject({ status: "judging", pollAfterMs: 2000, name_map: [{ original: NAME, replacement: "Party A" }] });
+    expect(body).toMatchObject({ status: "judging", pollAfterMs: 2000 });
     expect(body.poll).toBe(`/api/v1/verdicts/${body.id}`);
-    expect(body.owner_token).toMatch(/^[A-Za-z0-9_-]{43}$/);
     expect(res.headers.get("location")).toBe(body.poll);
     expect(res.headers.get("retry-after")).toBe("2");
     expect(res.headers.get("preference-applied")).toBe("respond-async");
-    // Anonymized in the request; judged only in the background.
-    expect(m.anonymize).toHaveBeenCalledTimes(1);
-    expect(m.judgeSelfConsistent).not.toHaveBeenCalled();
-    expect(m.scheduled).toHaveLength(1);
 
     const judging = await get(body.id);
-    expect(judging.status).toBe(200);
     expect(await judging.json()).toEqual({ id: body.id, status: "judging", pollAfterMs: 2000 });
     expect(await row("SELECT id FROM verdicts WHERE id = ?", [body.id])).toBeUndefined();
 
     await drain();
-    // The judges saw only the anonymized text.
-    expect(m.judgeSelfConsistent).toHaveBeenCalledWith(ANON, expect.anything(), "en", {});
-
-    const ready = await get(body.id);
-    expect(ready.status).toBe(200);
-    const readyBody = await ready.json();
-    expect(readyBody).toMatchObject({ id: body.id, status: "ready", result: { verdict: "side_b", lang: "en" } });
-    expect(readyBody.owner).toBeUndefined();
-    expect(JSON.stringify(readyBody)).not.toContain(NAME);
-
-    // The writer (owner token) also gets the share-page state; adding
-    // context needs them signed in.
-    const mine = await (await get(body.id, { "x-owner-token": body.owner_token! })).json();
-    expect(mine.owner).toEqual({
-      originals_stored: true,
-      display: expect.objectContaining({ namesVisible: true }),
-      appeal: { allowed: false, blockedBy: "signin_required" },
-    });
-    expect(mine.appeals).toEqual([]);
-    const wrong = await (await get(body.id, { "x-owner-token": "x".repeat(43) })).json();
-    expect(wrong.owner).toBeUndefined();
-
-    const stored = await row<{ input: string }>("SELECT input FROM verdicts WHERE id = ?", [body.id]);
-    expect(stored?.input).toBe(ANON);
-    expect(await row("SELECT status, error_code FROM verdict_jobs WHERE id = ?", [body.id])).toMatchObject({
-      status: "ready",
-      error_code: null,
-    });
-    await expectNoNames(body.id);
+    const ready = await (await get(body.id)).json();
+    expect(ready).toMatchObject({ id: body.id, status: "ready", result: { verdict: "side_b", tier: "premium" } });
+    expect(JSON.stringify(ready)).not.toContain(NAME);
   });
 
   it('`"async": true` in the body opts in too; without either the route answers 200 synchronously', async () => {
+    await user();
     const viaBody = await post({ async: true });
     expect(viaBody.status).toBe(202);
     m.scheduled.length = 0;
@@ -243,41 +216,16 @@ describe("free async verdicts", () => {
     expect(await row("SELECT id FROM verdict_jobs WHERE id = ?", [body.id])).toBeUndefined();
   });
 
-  it("anonymization failures still answer at once (fail closed): 503, no job", async () => {
-    m.anonymize.mockRejectedValue(new Error("names left"));
+  it("signed out: 401 signin_required and no job", async () => {
     const res = await post({}, { prefer: "respond-async" });
-    expect(res.status).toBe(503);
-    expect((await res.json()).code).toBe("unavailable");
+    expect(res.status).toBe(401);
+    expect((await res.json()).code).toBe("signin_required");
+    expect(m.anonymize).not.toHaveBeenCalled();
     expect(m.scheduled).toHaveLength(0);
   });
 
-  it("a quota failure in the background marks the job failed with code quota; nothing is stored", async () => {
-    m.judgeSelfConsistent.mockResolvedValue([QUOTA, QUOTA, QUOTA]);
-    const { id } = (await (await post({}, { prefer: "respond-async" })).json()) as VerdictAcceptedResponse;
-    await drain();
-    const body = await (await get(id)).json();
-    expect(body).toMatchObject({ id, status: "failed", code: "quota" });
-    expect(await row("SELECT id FROM verdicts WHERE id = ?", [id])).toBeUndefined();
-    await expectNoNames(id);
-  });
-
-  it("an unexpected throw in the background marks the job failed (unavailable)", async () => {
-    m.judgeSelfConsistent.mockRejectedValue(new Error("boom"));
-    const { id } = (await (await post({}, { prefer: "respond-async" })).json()) as VerdictAcceptedResponse;
-    await drain();
-    expect(await (await get(id)).json()).toMatchObject({ status: "failed", code: "unavailable" });
-  });
-
-  it("a refusal by every judge is still a ready verdict (model_refused), as before", async () => {
-    m.judgeSelfConsistent.mockResolvedValue([BLOCKED, BLOCKED, BLOCKED]);
-    const { id } = (await (await post({}, { prefer: "respond-async" })).json()) as VerdictAcceptedResponse;
-    await drain();
-    const body = await (await get(id)).json();
-    expect(body.status).toBe("ready");
-    expect((body.result as VerdictResult).model_refused).toBe(true);
-  });
-
   it("a removed verdict answers 410; an unknown id 404", async () => {
+    await user();
     const { id } = (await (await post({}, { prefer: "respond-async" })).json()) as VerdictAcceptedResponse;
     await drain();
     const db = await getDb();
@@ -417,6 +365,9 @@ describe("sweeper", () => {
   });
 
   it("a poll of a stale job fails it on the spot (crash before the sweep ran)", async () => {
+    const user = uid();
+    await ent.grantCredits({ userId: user, credits: 1, source: "admin", externalId: `g:${user}` });
+    signedIn(user);
     const { id } = (await (await post({}, { prefer: "respond-async" })).json()) as VerdictAcceptedResponse;
     m.scheduled.length = 0; // the process died: the run never happens
     await age(id, 12);

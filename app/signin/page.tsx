@@ -3,7 +3,7 @@ import { SignInView } from "@/components/account/SignInView";
 
 export const metadata: Metadata = {
   title: "Sign in",
-  description: "Sign in to Judge with Apple, Google or an email link to use Premium.",
+  description: "Sign in to Judge with Apple, Google or an email link to get a verdict.",
   robots: { index: false, follow: false },
 };
 

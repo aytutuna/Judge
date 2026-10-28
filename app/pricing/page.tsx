@@ -4,7 +4,7 @@ import { SITE_NAME, SITE_OG_IMAGE } from "../site";
 
 const title = "Judge pricing";
 const description =
-  "Judge is free. Premium adds facts checked on the web with sources, a stronger judge panel and clarifying questions, as credit packs or a monthly plan.";
+  "Your first Judge verdict is free. After that, credit packs or a monthly plan, every verdict with facts checked on the web and clarifying questions.";
 
 export const metadata: Metadata = {
   title: "Pricing",

@@ -84,9 +84,13 @@ function rc(over: Body): { api_version: string; event: Body } {
   };
 }
 
+/** A fresh account with its welcome credit taken back, so the balances
+ * below count purchases only. */
 async function newUser() {
   const n = uid().replace(/[^0-9]/g, "");
-  return createDevSession(`rc${n}@verdict.local`);
+  const session = await createDevSession(`rc${n}@verdict.local`);
+  await ent.revokeAll(session.user.id, { externalId: `reset:${session.user.id}` });
+  return session;
 }
 
 const userFields = (id: string) => ({ app_user_id: id, original_app_user_id: id });

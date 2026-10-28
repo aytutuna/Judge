@@ -53,7 +53,8 @@ describe("GET /api/v1/me", () => {
     const res = await get({ authorization: `Bearer ${token}` });
     expect(await res.json()).toEqual({
       user: { id: user.id, email: "me1@verdict.local", name: "Test user", image: null },
-      entitlement: { canUsePremium: true, blockedReason: null, credits: 5, subscription: null, resetsAt: null },
+      // 5 granted plus the welcome credit.
+      entitlement: { canUsePremium: true, blockedReason: null, credits: 6, subscription: null, resetsAt: null },
     });
   });
 

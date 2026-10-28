@@ -7,7 +7,6 @@ import { CaseModeSwitch, type CaseMode } from "@/components/case/CaseModeSwitch"
 import { EvidencePicker, useEvidence } from "@/components/case/EvidencePicker";
 import { ClarifyStep, buildClarifications, type ClarifyQuestion } from "@/components/ClarifyStep";
 import { JudgingOverlay } from "@/components/JudgingOverlay";
-import { restoredHeadline } from "@/components/account/VerdictList";
 import { Recent } from "@/components/home/Recent";
 import JudgingScene from "@/components/scene/JudgingScene";
 import { AppShell } from "@/components/shell/AppShell";
@@ -15,8 +14,6 @@ import { refreshHistory, useHistory } from "@/components/shell/useHistory";
 import { Composer, NextSteps } from "@/components/thread/Composer";
 import { Thread } from "@/components/thread/Thread";
 import styles from "@/components/thread/thread.module.css";
-import { TierSwitch } from "@/components/TierSwitch";
-import { Turnstile, TURNSTILE_SITE_KEY } from "@/components/Turnstile";
 import { VerdictView } from "@/components/VerdictView";
 import { useVerdictAppeal, withRoundNames } from "@/components/VerdictAppeal";
 import { VerdictHistory } from "@/components/case/VerdictHistory";
@@ -24,17 +21,16 @@ import { MAX_EVIDENCE_PER_SIDE, type CreateCaseResponse } from "@/lib/case-types
 import { saveCaseNames } from "@/lib/case-names-store";
 import { verdictLang } from "@/lib/content-lang";
 import { firstNameOf, type DisplayState, type MineResponse } from "@/lib/originals-types";
-import { ownerTokenIds, saveOwnerToken } from "@/lib/owner-store";
+import { ownerTokenIds } from "@/lib/owner-store";
 import { buildOwnerShare } from "@/components/ShareDialog";
-import { clearDraft, registerDraftSource, takeDraft } from "@/lib/draft";
+import { clearDraft, registerDraftSource, saveDraftForSignIn, takeDraft } from "@/lib/draft";
 import { DEFAULT_FRAMEWORK } from "@/lib/frameworks";
-import { addHistory, dropHistory, startHistory } from "@/lib/history-store";
+import { startHistory } from "@/lib/history-store";
 import { apiErrorMessage, t, type Key } from "@/lib/i18n";
 import { useLang } from "@/lib/lang";
 import { resetScene } from "@/lib/scene-bridge";
 import { MAX_FINISH_MS } from "@/lib/thinking";
 import { judgesLabel } from "@/lib/verdict-display";
-import { effectiveTier, setTierChoice, signInOffered, tierAvailability, useTierChoice } from "@/lib/tier";
 import type {
   Clarification,
   ClarifyResponse,
@@ -42,7 +38,7 @@ import type {
   VerdictApiResponse,
   VerdictResponse,
 } from "@/lib/types";
-import { applyEntitlement, refreshViewer, useViewer } from "@/lib/use-viewer";
+import { applyEntitlement, refreshViewer, signInOffered, useViewer } from "@/lib/use-viewer";
 import { pollVerdict, RESPOND_ASYNC, type VerdictAcceptedResponse } from "@/lib/verdict-poll";
 
 /** A new Idempotency-Key. randomUUID needs a secure context; plain-http
@@ -87,14 +83,14 @@ function wakefulSleep(ms: number): Promise<void> {
   });
 }
 
-/** What a premium request judges, fixed when it is submitted. `evidence`
- * holds signed screenshot tokens; empty keeps the request exactly as before. */
+/** What a verdict request judges, fixed when it is submitted. `evidence`
+ * holds signed screenshot tokens. */
 type PremiumInput = { argument: string; framework: FrameworkChoice; evidence: string[] };
 
 /** Signed-in screenshot uploads (the respondent's page uses its own). */
 const EVIDENCE_ENDPOINT = "/api/v1/evidence";
 
-/** "clarify": premium only, the thread holds the clarifying questions. */
+/** "clarify": the thread holds the clarifying questions. */
 type Phase = "intake" | "clarify" | "judging" | "verdict";
 
 export default function Home() {
@@ -113,23 +109,19 @@ export default function Home() {
   // Two-sided: the owner's name on the case's share pages (prefilled from
   // the account's first name until they type).
   const [caseName, setCaseName] = useState<string | null>(null);
-  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
-  // Premium only.
   const viewer = useViewer();
   const history = useHistory(viewer);
   const [now] = useState(Date.now);
-  const tierChoice = useTierChoice();
   const [checking, setChecking] = useState(false);
   const [questions, setQuestions] = useState<ClarifyQuestion[]>([]);
   const [answers, setAnswers] = useState<Record<string, string>>({});
-  const [judgingPremium, setJudgingPremium] = useState(false);
   const premiumInput = useRef<PremiumInput | null>(null);
   // One key per exact premium request (input, language, answers): a retry
   // of the same request reuses it, so the server replays or waits instead
   // of charging again. A success or a different request gets a new key.
   const premiumKey = useRef<{ request: string; key: string } | null>(null);
-  // Screenshot evidence (Premium) and two-sided cases (any account), each
-  // only when this deployment offers it (GET /api/v1/config `features`).
+  // Screenshot evidence and two-sided cases, each only when this deployment
+  // offers it (GET /api/v1/config `features`).
   const router = useRouter();
   const [caseMode, setCaseMode] = useState<CaseMode>("now");
   const [creating, setCreating] = useState(false);
@@ -140,14 +132,11 @@ export default function Home() {
   // without touching the screen any more.
   const thread = useRef<AbortController | null>(null);
 
-  const availability = tierAvailability(viewer.config, viewer.me);
-  const tier = effectiveTier(availability, tierChoice);
-  const premium = tier === "premium";
   const features = viewer.config?.features;
-  const evidenceOn = premium && features?.evidence === true;
-  // Two-sided cases need an account, not Premium. Signed out, the switch is
-  // shown locked behind sign-in.
+  // Signed out, the form still takes the text: sending it goes to sign-in
+  // first and the draft comes back afterwards. Uploads need the account.
   const signedIn = Boolean(viewer.me?.user);
+  const evidenceOn = signedIn && features?.evidence === true;
   const casesOn = signedIn && features?.cases === true;
   const casesLocked = !signedIn && features?.cases === true && signInOffered(viewer.config);
   const twoSided = casesOn && caseMode === "both";
@@ -224,64 +213,14 @@ export default function Home() {
   const shown = appeal.verdicts.at(-1) ?? null;
   const roundNames = withRoundNames(response?.name_map, appeal.names);
 
-  // Premium and cases skip the human check: the signed-in account is the gate.
-  const needsToken = TURNSTILE_SITE_KEY !== "" && !premium && !twoSided;
-  const canSubmit =
-    argument.trim().length >= 20 &&
-    !holding &&
-    !(evidenceOn && evidence.busy) &&
-    (!needsToken || turnstileToken !== null);
+  // Until /me answers, a click could send a signed-in writer to sign in.
+  // If it failed, the server decides (401 when signed out).
+  const viewerKnown = viewer.status === "ready" || viewer.status === "error";
+  const canSubmit = argument.trim().length >= 20 && viewerKnown && !holding && !(evidenceOn && evidence.busy);
 
-  async function submit() {
-    // Turnstile tokens are single-use: take it now, and the widget remounts
-    // with a fresh one whenever the form comes back.
-    const token = turnstileToken;
-    const text = argument;
-    const signal = threadSignal();
-    setTurnstileToken(null);
-    clearDraft();
-    setJudgingPremium(false);
-    setError(null);
-    setResponse(null);
-    send(text);
-    setPhase("judging");
-    try {
-      const res = await fetch("/api/verdict", {
-        method: "POST",
-        headers: { "Content-Type": "application/json", ...ASYNC_HEADERS },
-        // lang MUST be sent: the zod default("en") makes forgetting it
-        // silent — the toggle would flip the UI while verdicts stay English.
-        body: JSON.stringify({
-          argument: text,
-          framework,
-          lang,
-          ...(token ? { turnstileToken: token } : {}),
-        }),
-      });
-      const json: unknown = await res.json().catch(() => null);
-      if (!res.ok || json === null) {
-        if (signal.aborted) return;
-        restore(text, apiErrorMessage(lang, json, res.status));
-        return;
-      }
-      if (res.status === 202) {
-        const accepted = json as VerdictAcceptedResponse;
-        saveOwnerToken(accepted.id, accepted.owner_token);
-        // Indexed now, not when it finishes, so a closed tab still lists it
-        // (My verdicts looks it up again on a later visit).
-        if (!signedIn) addHistory({ id: accepted.id, createdAt: new Date().toISOString(), headline: null, pending: true });
-        const verdict = await awaitVerdict(accepted, text, signal);
-        if (verdict && !signal.aborted) show(verdict);
-        return;
-      }
-      const verdict = json as VerdictResponse;
-      saveOwnerToken(verdict.id, verdict.owner_token);
-      remember(verdict, new Date().toISOString());
-      if (!signal.aborted) show(verdict);
-    } catch {
-      if (signal.aborted) return;
-      restore(text, t(lang, "errorFallback"));
-    }
+  function signInFirst() {
+    saveDraftForSignIn();
+    router.push("/signin?next=%2F");
   }
 
   /** The composer's text becomes the thread's first turn. */
@@ -304,20 +243,6 @@ export default function Home() {
     setResponse(verdict);
   }
 
-  /** A finished verdict goes into My verdicts: the account's list when
-   * signed in, else this browser's own index. */
-  function remember(verdict: VerdictResponse, createdAt: string) {
-    if (signedIn) {
-      void refreshHistory();
-      return;
-    }
-    addHistory({
-      id: verdict.id,
-      createdAt,
-      headline: restoredHeadline({ headline: verdict.result.headline, nameMap: verdict.name_map }),
-    });
-  }
-
   /**
    * An accepted (202) verdict: poll until it is ready, keeping the judging
    * animation running. Offline spells and server hiccups just keep polling
@@ -337,7 +262,7 @@ export default function Home() {
       firstDelayMs: accepted.pollAfterMs,
     });
     if (outcome.kind === "ready") {
-      const { result, owner, createdAt } = outcome.body;
+      const { result, owner } = outcome.body;
       // A retry that joined a running verdict got no name map: the
       // writer's view has it.
       const mine = accepted.replayed && !signal.aborted ? await readMine(accepted.id, signal) : null;
@@ -349,10 +274,9 @@ export default function Home() {
         ...(owner ? { originals_stored: owner.originals_stored, display: owner.display } : {}),
         suggested_display_a: mine?.suggested.a ?? accepted.suggested_display_a ?? null,
       };
-      remember(verdict, createdAt);
+      void refreshHistory();
       return verdict;
     }
-    if (outcome.kind === "failed") dropHistory(accepted.id);
     if (signal.aborted) return null;
     restore(
       text,
@@ -377,7 +301,7 @@ export default function Home() {
     }
   }
 
-  /** Premium step 1: ask whether key facts are missing. Network trouble or
+  /** Step 1: ask whether key facts are missing. Network trouble or
    * a server error never blocks the verdict: it just goes ahead without
    * questions. Account problems (401/402) and bad input stop on the form. */
   async function submitPremium() {
@@ -429,18 +353,16 @@ export default function Home() {
     return key;
   }
 
-  /** Premium step 2: the verdict itself. */
+  /** Step 2: the verdict itself. */
   async function judgePremium(input: PremiumInput, clarifications: Clarification[] | undefined) {
     const signal = threadSignal();
     setError(null);
     setResponse(null);
-    setJudgingPremium(true);
     setPhase("judging");
     const body = JSON.stringify({
       argument: input.argument,
       framework: input.framework,
       lang,
-      tier: "premium",
       ...(clarifications ? { clarifications } : {}),
       ...(input.evidence.length ? { evidence: input.evidence } : {}),
     });
@@ -480,7 +402,7 @@ export default function Home() {
         if (premiumKey.current?.key === key) premiumKey.current = null;
         const verdict = json as VerdictApiResponse;
         if (verdict.entitlement) applyEntitlement(verdict.entitlement);
-        remember(verdict, new Date().toISOString());
+        void refreshHistory();
         if (!signal.aborted) show(verdict);
         return;
       }
@@ -490,8 +412,8 @@ export default function Home() {
     }
   }
 
-  /** Both sides: create the case with the owner's side (a premium case holds
-   * one premium verdict), keep the returned names in this browser and open
+  /** Both sides: create the case with the owner's side (it holds one
+   * premium verdict), keep the returned names in this browser and open
    * the case page with the invite link. No clarifying step: the other side's
    * account fills the gaps. */
   async function createCase() {
@@ -507,7 +429,6 @@ export default function Home() {
       text,
       framework,
       lang,
-      tier,
       ...(tokens.length ? { evidence: tokens } : {}),
       ...(name ? { displayName: name } : {}),
     });
@@ -562,7 +483,6 @@ export default function Home() {
     setCreating(false);
     setQuestions([]);
     setAnswers({});
-    setJudgingPremium(false);
     evidence.clear();
     setPhase("intake");
     window.scrollTo({ top: 0 });
@@ -634,7 +554,7 @@ export default function Home() {
                           done={response !== null}
                           result={response?.result ?? null}
                           onFinished={() => setPhase("verdict")}
-                          premium={judgingPremium}
+                          premium
                         />
                       ) : null}
                     </>
@@ -679,7 +599,9 @@ export default function Home() {
               lang={lang}
               value={argument}
               onChange={setArgument}
-              onSubmit={() => void (twoSided ? createCase() : premium ? submitPremium() : submit())}
+              onSubmit={() =>
+                viewer.status === "ready" && !signedIn ? signInFirst() : void (twoSided ? createCase() : submitPremium())
+              }
               canSubmit={canSubmit}
               disabled={!empty}
               error={error}
@@ -687,18 +609,6 @@ export default function Home() {
               onFrameworkChange={setFramework}
               expanded={options}
               onExpandedChange={setOptions}
-              tierSwitch={
-                availability === "hidden" ? undefined : (
-                  <TierSwitch
-                    lang={lang}
-                    availability={availability}
-                    value={tier}
-                    onChange={setTierChoice}
-                    entitlement={viewer.me?.entitlement ?? null}
-                    onPremiumIntent={() => setTierChoice("premium")}
-                  />
-                )
-              }
               extras={
                 <>
                   {casesOn || casesLocked ? (
@@ -734,11 +644,6 @@ export default function Home() {
                     />
                   ) : null}
                 </>
-              }
-              turnstile={
-                needsToken && empty ? (
-                  <Turnstile siteKey={TURNSTILE_SITE_KEY} lang={lang} onToken={setTurnstileToken} />
-                ) : null
               }
               twoSided={twoSided}
               submitLabel={t(lang, twoSided ? "case.create" : "getVerdict")}

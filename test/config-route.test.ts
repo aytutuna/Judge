@@ -57,6 +57,8 @@ describe("GET /api/v1/config", () => {
         monthly: { id: "monthly", priceUsd: 15, fairUseCap: 35, periodDays: 30 },
       },
       features: { cases: false, evidence: false },
+      freeTier: false,
+      welcomeCredits: 1,
     });
     expect(body.pricing).toEqual(PRICING);
   });
@@ -87,7 +89,7 @@ describe("GET /api/v1/config", () => {
     expect((await call()).body.premiumEnabled).toBe(false);
   });
 
-  it("features follow the CASES_ENABLED / EVIDENCE_ENABLED switches; only evidence needs Premium", async () => {
+  it("features follow the CASES_ENABLED / EVIDENCE_ENABLED switches, both only with Premium", async () => {
     clearAuthEnv();
     vi.stubEnv("NODE_ENV", "production");
     vi.stubEnv("BETTER_AUTH_SECRET", "s".repeat(40));
@@ -102,7 +104,7 @@ describe("GET /api/v1/config", () => {
     vi.stubEnv("CASES_ENABLED", "1");
     vi.stubEnv("EVIDENCE_ENABLED", "1");
     vi.stubEnv("PREMIUM_ENABLED", "0");
-    expect((await call()).body.features).toEqual({ cases: true, evidence: false });
+    expect((await call()).body.features).toEqual({ cases: false, evidence: false });
     vi.stubEnv("ANTHROPIC_API_KEY", "");
     expect((await call()).body.features).toEqual({ cases: false, evidence: false });
     vi.stubEnv("ANTHROPIC_API_KEY", "k");
