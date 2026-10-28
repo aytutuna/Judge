@@ -10,6 +10,7 @@ export default defineConfig({
     // Only this repo's tests: not dependency tests or local tool worktrees,
     // which hold stale copies of test/.
     include: ["test/**/*.test.{ts,tsx}"],
+    setupFiles: ["test/setup.ts"],
     exclude: [...configDefaults.exclude, "node_modules/**", ".paperclip/**"],
   },
 });

@@ -1,0 +1,230 @@
+import type { Locale } from "./i18n";
+
+/**
+ * Every interface language the apps can ship, App Store locales with the
+ * regional English, Spanish and French merged. `name` is the English name
+ * (used in prompts), `native` what the language picker shows, `tag` the
+ * BCP-47 tag for Intl and `script` the writing system the translation check
+ * expects. Pure: safe on the server and in the browser.
+ */
+export const LANGS = {
+  en: { name: "English", native: "English", tag: "en-US", script: "Latin" },
+  tr: { name: "Turkish", native: "Türkçe", tag: "tr-TR", script: "Latin" },
+  ar: { name: "Arabic", native: "العربية", tag: "ar", script: "Arabic", rtl: true },
+  bn: { name: "Bengali", native: "বাংলা", tag: "bn", script: "Bengali" },
+  ca: { name: "Catalan", native: "Català", tag: "ca", script: "Latin" },
+  "zh-Hans": { name: "Simplified Chinese", native: "简体中文", tag: "zh-Hans", script: "Han" },
+  "zh-Hant": { name: "Traditional Chinese", native: "繁體中文", tag: "zh-Hant", script: "Han" },
+  hr: { name: "Croatian", native: "Hrvatski", tag: "hr", script: "Latin" },
+  cs: { name: "Czech", native: "Čeština", tag: "cs", script: "Latin" },
+  da: { name: "Danish", native: "Dansk", tag: "da", script: "Latin" },
+  nl: { name: "Dutch", native: "Nederlands", tag: "nl", script: "Latin" },
+  fi: { name: "Finnish", native: "Suomi", tag: "fi", script: "Latin" },
+  fr: { name: "French", native: "Français", tag: "fr", script: "Latin" },
+  de: { name: "German", native: "Deutsch", tag: "de", script: "Latin" },
+  el: { name: "Greek", native: "Ελληνικά", tag: "el", script: "Greek" },
+  gu: { name: "Gujarati", native: "ગુજરાતી", tag: "gu", script: "Gujarati" },
+  he: { name: "Hebrew", native: "עברית", tag: "he", script: "Hebrew", rtl: true },
+  hi: { name: "Hindi", native: "हिन्दी", tag: "hi", script: "Devanagari" },
+  hu: { name: "Hungarian", native: "Magyar", tag: "hu", script: "Latin" },
+  id: { name: "Indonesian", native: "Bahasa Indonesia", tag: "id", script: "Latin" },
+  it: { name: "Italian", native: "Italiano", tag: "it", script: "Latin" },
+  ja: { name: "Japanese", native: "日本語", tag: "ja", script: "Japanese" },
+  kn: { name: "Kannada", native: "ಕನ್ನಡ", tag: "kn", script: "Kannada" },
+  ko: { name: "Korean", native: "한국어", tag: "ko", script: "Hangul" },
+  ms: { name: "Malay", native: "Bahasa Melayu", tag: "ms", script: "Latin" },
+  ml: { name: "Malayalam", native: "മലയാളം", tag: "ml", script: "Malayalam" },
+  mr: { name: "Marathi", native: "मराठी", tag: "mr", script: "Devanagari" },
+  nb: { name: "Norwegian Bokmål", native: "Norsk bokmål", tag: "nb", script: "Latin" },
+  or: { name: "Odia", native: "ଓଡ଼ିଆ", tag: "or", script: "Oriya" },
+  pl: { name: "Polish", native: "Polski", tag: "pl", script: "Latin" },
+  "pt-BR": { name: "Brazilian Portuguese", native: "Português (Brasil)", tag: "pt-BR", script: "Latin" },
+  "pt-PT": { name: "European Portuguese", native: "Português (Portugal)", tag: "pt-PT", script: "Latin" },
+  pa: { name: "Punjabi", native: "ਪੰਜਾਬੀ", tag: "pa", script: "Gurmukhi" },
+  ro: { name: "Romanian", native: "Română", tag: "ro", script: "Latin" },
+  ru: { name: "Russian", native: "Русский", tag: "ru", script: "Cyrillic" },
+  sk: { name: "Slovak", native: "Slovenčina", tag: "sk", script: "Latin" },
+  sl: { name: "Slovenian", native: "Slovenščina", tag: "sl", script: "Latin" },
+  es: { name: "Spanish", native: "Español", tag: "es", script: "Latin" },
+  sv: { name: "Swedish", native: "Svenska", tag: "sv", script: "Latin" },
+  ta: { name: "Tamil", native: "தமிழ்", tag: "ta", script: "Tamil" },
+  te: { name: "Telugu", native: "తెలుగు", tag: "te", script: "Telugu" },
+  th: { name: "Thai", native: "ไทย", tag: "th", script: "Thai" },
+  uk: { name: "Ukrainian", native: "Українська", tag: "uk", script: "Cyrillic" },
+  ur: { name: "Urdu", native: "اردو", tag: "ur", script: "Arabic", rtl: true },
+  vi: { name: "Vietnamese", native: "Tiếng Việt", tag: "vi", script: "Latin" },
+} as const satisfies Record<
+  string,
+  { name: string; native: string; tag: string; script: string; rtl?: true }
+>;
+
+export type Lang = keyof typeof LANGS;
+
+export const LANG_CODES = Object.keys(LANGS) as [Lang, ...Lang[]];
+
+/**
+ * The languages that have strings, besides English (the source, always on).
+ * Enabling a language is one line here once lib/locales/<code>.ts exists.
+ * Each one is its own chunk: the browser only downloads the one in use.
+ */
+const LOCALES: Partial<Record<Lang, () => Promise<{ default: Locale }>>> = {
+  tr: () => import("./locales/tr"),
+  ar: () => import("./locales/ar"),
+  bn: () => import("./locales/bn"),
+  ca: () => import("./locales/ca"),
+  "zh-Hans": () => import("./locales/zh-Hans"),
+  "zh-Hant": () => import("./locales/zh-Hant"),
+  hr: () => import("./locales/hr"),
+  cs: () => import("./locales/cs"),
+  da: () => import("./locales/da"),
+  nl: () => import("./locales/nl"),
+  fi: () => import("./locales/fi"),
+  fr: () => import("./locales/fr"),
+  de: () => import("./locales/de"),
+  el: () => import("./locales/el"),
+  gu: () => import("./locales/gu"),
+  he: () => import("./locales/he"),
+  hi: () => import("./locales/hi"),
+  hu: () => import("./locales/hu"),
+  id: () => import("./locales/id"),
+  it: () => import("./locales/it"),
+  ja: () => import("./locales/ja"),
+  kn: () => import("./locales/kn"),
+  ko: () => import("./locales/ko"),
+  ms: () => import("./locales/ms"),
+  ml: () => import("./locales/ml"),
+  mr: () => import("./locales/mr"),
+  nb: () => import("./locales/nb"),
+  or: () => import("./locales/or"),
+  pl: () => import("./locales/pl"),
+  "pt-BR": () => import("./locales/pt-BR"),
+  "pt-PT": () => import("./locales/pt-PT"),
+  pa: () => import("./locales/pa"),
+  ro: () => import("./locales/ro"),
+  ru: () => import("./locales/ru"),
+  sk: () => import("./locales/sk"),
+  sl: () => import("./locales/sl"),
+  es: () => import("./locales/es"),
+  sv: () => import("./locales/sv"),
+  ta: () => import("./locales/ta"),
+  te: () => import("./locales/te"),
+  th: () => import("./locales/th"),
+  uk: () => import("./locales/uk"),
+  ur: () => import("./locales/ur"),
+  vi: () => import("./locales/vi"),
+};
+
+/**
+ * The party labels of every language whose labels are not the English ones,
+ * exactly as its party.a and party.b strings (the locale check holds them
+ * equal): one word and the Latin letters A and B. Kept here rather than in
+ * the lazily loaded locale files because names are put back into a verdict
+ * in the verdict's own language, which the browser may not have loaded, and
+ * the server render and the browser must agree.
+ */
+export const PARTY_LABELS: Partial<Record<Lang, readonly [a: string, b: string]>> & {
+  en: readonly [string, string];
+} = {
+  en: ["Party A", "Party B"],
+  tr: ["Taraf A", "Taraf B"],
+  ar: ["الطرف A", "الطرف B"],
+  bn: ["পক্ষ A", "পক্ষ B"],
+  ca: ["Part A", "Part B"],
+  "zh-Hans": ["当事人A", "当事人B"],
+  "zh-Hant": ["當事人A", "當事人B"],
+  hr: ["Strana A", "Strana B"],
+  cs: ["Strana A", "Strana B"],
+  da: ["Part A", "Part B"],
+  nl: ["Partij A", "Partij B"],
+  fi: ["Osapuoli A", "Osapuoli B"],
+  fr: ["Partie A", "Partie B"],
+  de: ["Partei A", "Partei B"],
+  el: ["Πλευρά A", "Πλευρά B"],
+  gu: ["પક્ષ A", "પક્ષ B"],
+  he: ["צד A", "צד B"],
+  hi: ["पक्ष A", "पक्ष B"],
+  hu: ["Fél A", "Fél B"],
+  id: ["Pihak A", "Pihak B"],
+  it: ["Parte A", "Parte B"],
+  ja: ["当事者A", "当事者B"],
+  kn: ["ಪಕ್ಷ A", "ಪಕ್ಷ B"],
+  ko: ["당사자 A", "당사자 B"],
+  ms: ["Pihak A", "Pihak B"],
+  ml: ["കക്ഷി A", "കക്ഷി B"],
+  mr: ["पक्ष A", "पक्ष B"],
+  nb: ["Part A", "Part B"],
+  or: ["ପକ୍ଷ A", "ପକ୍ଷ B"],
+  pl: ["Strona A", "Strona B"],
+  "pt-BR": ["Parte A", "Parte B"],
+  "pt-PT": ["Parte A", "Parte B"],
+  pa: ["ਧਿਰ A", "ਧਿਰ B"],
+  ro: ["Partea A", "Partea B"],
+  ru: ["Сторона A", "Сторона B"],
+  sk: ["Strana A", "Strana B"],
+  sl: ["Stranka A", "Stranka B"],
+  es: ["Parte A", "Parte B"],
+  sv: ["Part A", "Part B"],
+  ta: ["தரப்பு A", "தரப்பு B"],
+  te: ["పక్షం A", "పక్షం B"],
+  th: ["ฝ่าย A", "ฝ่าย B"],
+  uk: ["Сторона A", "Сторона B"],
+  ur: ["فریق A", "فریق B"],
+  vi: ["Bên A", "Bên B"],
+};
+
+/** Enabled languages, in registry order (English first). */
+export const ENABLED: readonly Lang[] = LANG_CODES.filter((l) => l === "en" || l in LOCALES);
+
+export function isLang(v: unknown): v is Lang {
+  return typeof v === "string" && Object.hasOwn(LANGS, v);
+}
+
+export function isEnabled(v: unknown): v is Lang {
+  return isLang(v) && ENABLED.includes(v);
+}
+
+/** The locale module of an enabled language; null for English and for
+ * languages that are not enabled. */
+export function importLocale(lang: Lang): Promise<{ default: Locale }> | null {
+  return LOCALES[lang]?.() ?? null;
+}
+
+export function langDir(lang: Lang): "ltr" | "rtl" {
+  return "rtl" in LANGS[lang] ? "rtl" : "ltr";
+}
+
+export function langTag(lang: Lang): string {
+  return LANGS[lang].tag;
+}
+
+/** The registry language a BCP-47 tag means, or null. Chinese goes by script,
+ * then region; Portuguese is Brazilian unless another region is given; the
+ * Norwegian tags all mean Bokmål. */
+export function langOfTag(tag: string): Lang | null {
+  const [base, ...rest] = tag.trim().toLowerCase().split(/[-_]/);
+  if (base === "zh") {
+    if (rest.includes("hans")) return "zh-Hans";
+    if (rest.includes("hant") || rest.some((p) => p === "tw" || p === "hk" || p === "mo")) return "zh-Hant";
+    return "zh-Hans";
+  }
+  if (base === "pt") return rest.length === 0 || rest.includes("br") ? "pt-BR" : "pt-PT";
+  if (base === "no" || base === "nn" || base === "nb") return "nb";
+  return isLang(base) ? base : null;
+}
+
+/** The first preference (browser order) that names an enabled language, else English. */
+export function matchLang(prefs: readonly string[], enabled: readonly Lang[] = ENABLED): Lang {
+  for (const p of prefs) {
+    const l = langOfTag(p);
+    if (l && enabled.includes(l)) return l;
+  }
+  return "en";
+}
+
+/** The tags of an Accept-Language header, in the order sent. */
+export function acceptLanguageTags(header: string): string[] {
+  return header
+    .split(",")
+    .map((part) => part.split(";")[0].trim())
+    .filter((tag) => tag && tag !== "*");
+}

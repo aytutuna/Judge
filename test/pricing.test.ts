@@ -39,7 +39,7 @@ describe("pricing config", () => {
   it("is a pure module the mobile app can reuse (no Next, React, DOM or Node imports)", () => {
     const src = readFileSync(path.join(__dirname, "..", "lib", "pricing.ts"), "utf8");
     const imports = [...src.matchAll(/^import\s.*?from\s+"([^"]+)"/gm)].map((m) => m[1]);
-    for (const spec of imports) expect(spec, spec).toMatch(/^\.\/(account-types|i18n)$/);
+    for (const spec of imports) expect(spec, spec).toMatch(/^\.\/(account-types|i18n|langs)$/);
     expect(src).not.toMatch(/\b(window|document|localStorage|process)\b/);
   });
 });

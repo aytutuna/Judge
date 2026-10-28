@@ -20,6 +20,7 @@ import { getDb } from "@/lib/db";
 import { ensureEntitlementTables } from "@/lib/entitlements";
 import type { KnownPerson } from "@/lib/evidence";
 import type { Lang } from "@/lib/i18n";
+import { isLang } from "@/lib/langs";
 import { VerdictResult, type AppealOutcome, type EvidenceKind, type Tier } from "@/lib/types";
 
 const SCHEMA = [
@@ -30,7 +31,7 @@ const SCHEMA = [
                           ('awaiting_respondent','judging','judged','failed','expired')),
     mode                TEXT CHECK (mode IN ('two_sided','one_sided')),
     framework           TEXT NOT NULL,
-    lang                TEXT NOT NULL CHECK (lang IN ('en','tr')),
+    lang                TEXT NOT NULL,
     invite_nonce        TEXT NOT NULL,
     invite_hash         TEXT NOT NULL UNIQUE,
     idempotency_key     TEXT,
@@ -123,6 +124,7 @@ export async function ensureCaseTables(): Promise<void> {
     .batch(SCHEMA, "write")
     .then(() => addClaimColumn(client))
     .then(() => addCaseColumns(client))
+    .then(() => dropLangCheck(client))
     .then(
       () => undefined,
       (e: unknown) => {
@@ -173,6 +175,30 @@ async function addCaseColumns(db: Client): Promise<void> {
       if (!/duplicate column name/i.test(message)) throw e;
     }
   }
+}
+
+/** Tables created before the other interface languages allowed only en and
+ * tr in cases.lang. SQLite cannot drop a CHECK, so the table is rebuilt once
+ * from its own definition minus that CHECK, every row copied as is, and its
+ * indexes recreated. The language is validated before it is stored. */
+async function dropLangCheck(db: Client): Promise<void> {
+  const table = await db.execute("SELECT sql FROM sqlite_master WHERE type = 'table' AND name = 'cases'");
+  const sql = String(table.rows[0]?.sql ?? "");
+  const check = /\s*CHECK\s*\(\s*lang\s+IN\s*\(\s*'en'\s*,\s*'tr'\s*\)\s*\)/i;
+  if (!check.test(sql)) return;
+  const indexes = await db.execute(
+    "SELECT sql FROM sqlite_master WHERE type = 'index' AND tbl_name = 'cases' AND sql IS NOT NULL",
+  );
+  await db.batch(
+    [
+      sql.replace(check, "").replace(/^CREATE TABLE\s+(IF NOT EXISTS\s+)?"?cases"?/i, "CREATE TABLE cases_rebuild"),
+      "INSERT INTO cases_rebuild SELECT * FROM cases",
+      "DROP TABLE cases",
+      "ALTER TABLE cases_rebuild RENAME TO cases",
+      ...indexes.rows.map((r) => String(r.sql)),
+    ],
+    "write",
+  );
 }
 
 /** The migrated client, for reads. */
@@ -285,7 +311,7 @@ export function mapCase(r: Row): CaseRow {
     status: str(r.status) as CaseStatus,
     mode: strOrNull(r.mode) as CaseMode | null,
     tier: str(r.tier) === "free" ? "free" : "premium",
-    lang: str(r.lang) === "tr" ? "tr" : "en",
+    lang: isLang(r.lang) ? r.lang : "en",
     inviteNonce: str(r.invite_nonce),
     inviteHash: str(r.invite_hash),
     idempotencyKey: strOrNull(r.idempotency_key),

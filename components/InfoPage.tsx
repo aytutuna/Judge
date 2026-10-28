@@ -2,8 +2,9 @@
 
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { t, type Key, type Lang } from "@/lib/i18n";
+import { legalLang, legalNotice, t, type Key, type Lang } from "@/lib/i18n";
 import { useLang } from "@/lib/lang";
+import { langDir } from "@/lib/langs";
 import { noOrphan } from "@/lib/text";
 import { useViewer } from "@/lib/use-viewer";
 import { Faq } from "./home/Faq";
@@ -13,8 +14,8 @@ import styles from "./InfoPage.module.css";
 import { SceneStage } from "./scene/SceneStage";
 import { AppShell } from "./shell/AppShell";
 
-/** Prose pages (/about, /privacy). Client-rendered chrome so the TR|EN
- * toggle works the same as on the homepage. */
+/** Prose pages (/about, /privacy). Client-rendered chrome so the language
+ * picker works the same as on the homepage. */
 
 function Section({ title, children }: { title: string; children: ReactNode }) {
   return (
@@ -141,24 +142,32 @@ export function InfoPage({
   const lang = useLang();
   const { config } = useViewer();
   const about = page === "about";
+  // A language without its own privacy page shows the English one, marked as such.
+  const prose = about ? lang : legalLang(lang);
+  const notice = about ? null : legalNotice(lang);
   const cta = (
-    <Link href="/" className={styles.cta}>
+    <Link href="/" className={styles.cta} lang={prose === lang ? undefined : lang}>
       {t(lang, "shared.cta")}
     </Link>
   );
   return (
     <AppShell lang={lang} toggle>
       <main id="main" tabIndex={-1} className={styles.main}>
-        <div className={`wrap ${styles.column}`}>
+        <div
+          className={`wrap ${styles.column}`}
+          lang={prose === lang ? undefined : prose}
+          dir={prose === lang ? undefined : langDir(prose)}
+        >
           <header className={styles.intro}>
-            <p className="kicker">{t(lang, about ? "about.kicker" : "privacy.kicker")}</p>
-            <h1 className={styles.h1}>{noOrphan(t(lang, about ? "about.title" : "privacy.title"))}</h1>
-            <p className={styles.lead}>{t(lang, about ? "about.lead" : "privacy.lead")}</p>
+            <p className="kicker">{t(prose, about ? "about.kicker" : "privacy.kicker")}</p>
+            <h1 className={styles.h1}>{noOrphan(t(prose, about ? "about.title" : "privacy.title"))}</h1>
+            <p className={styles.lead}>{t(prose, about ? "about.lead" : "privacy.lead")}</p>
+            {notice ? <p className={styles.notice}>{notice}</p> : null}
           </header>
           {about ? null : (
             <>
               <div className={styles.prose}>
-                <Privacy lang={lang} contactEmail={contactEmail} />
+                <Privacy lang={prose} contactEmail={contactEmail} />
               </div>
               {cta}
             </>

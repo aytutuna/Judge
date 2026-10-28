@@ -9,6 +9,7 @@
 
 import type { PricingInfo, PricingPack } from "./account-types";
 import type { Lang } from "./i18n";
+import { langDir, langTag } from "./langs";
 
 export const PRICING: PricingInfo & { packs: readonly PricingPack[] } = {
   currency: "USD",
@@ -39,10 +40,14 @@ export function packById(id: string): PricingPack | undefined {
   return PRICING.packs.find((p) => p.id === id);
 }
 
-/** "$7.50" in English, "$7,50" in Turkish. */
+/** US dollars in the language's number format: "$7.50" in English, "$7,50"
+ * in Turkish. */
 export function formatPrice(usd: number, lang: Lang): string {
-  return new Intl.NumberFormat(lang === "tr" ? "tr-TR" : "en-US", {
+  const s = new Intl.NumberFormat(langTag(lang), {
     style: "currency",
     currency: PRICING.currency,
   }).format(usd);
+  // Arabic's "7.50 US$" ends on a neutral "$" that a right-to-left line
+  // moves in front of "US"; a closing LRM keeps it in place.
+  return langDir(lang) === "rtl" ? s + "\u200E" : s;
 }

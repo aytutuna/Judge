@@ -115,7 +115,7 @@
   color: var(--muted);
 }
 .votesText {
-  margin-right: 3px;
+  margin-inline-end: 3px;
 }
 .dot {
   width: 10px;
@@ -137,6 +137,18 @@
 }
 
 /* ---------- Tug bar ---------- */
+/* Party A is on the left and Party B on the right in every language, as in
+   the scene; only the names inside run in the page's direction. */
+.tugNames,
+.tugBar,
+.mapCols,
+.mapJoin {
+  direction: ltr;
+}
+.nameText:dir(rtl),
+.col:dir(rtl) {
+  direction: rtl;
+}
 .tugNames {
   display: flex;
   justify-content: space-between;
@@ -304,7 +316,7 @@
   display: inline-block;
   width: 14px;
   height: 14px;
-  margin-right: 2px;
+  margin-inline-end: 2px;
   vertical-align: -2px;
 }
 .danger {
@@ -312,7 +324,7 @@
 }
 .details {
   align-self: stretch;
-  text-align: left;
+  text-align: start;
   font-size: 13px;
   color: var(--muted);
 }
@@ -371,7 +383,7 @@
 .stamp {
   position: absolute;
   top: 22px;
-  right: 18px;
+  inset-inline-end: 18px;
   max-width: 46%;
   padding: 5px 10px;
   border: 2px solid var(--terra);
@@ -399,7 +411,7 @@
 }
 .shell:has(.stamp) .top {
   min-height: 44px;
-  padding-right: 50%;
+  padding-inline-end: 50%;
 }
 .lead {
   display: flex;
@@ -461,7 +473,7 @@
   max-width: none;
 }
 .notes .details summary {
-  text-align: left;
+  text-align: start;
 }
 
 .section {
@@ -532,11 +544,11 @@
 }
 .branchA {
   background: var(--terra-tint);
-  border-left: 3px solid var(--terra);
+  border-inline-start: 3px solid var(--terra);
 }
 .branchB {
   background: var(--sage-tint);
-  border-left: 3px solid var(--sage-strong);
+  border-inline-start: 3px solid var(--sage-strong);
 }
 .branchIf {
   background: var(--paper);
@@ -595,14 +607,14 @@
   line-height: 1.5;
   font-weight: 500;
   max-width: 46ch;
-  text-align: left;
+  text-align: start;
 }
 .best {
   padding: 14px 16px;
   border-radius: 18px;
   background: #fbf6ef;
   border: 1px solid var(--line);
-  border-left: 4px solid var(--terra);
+  border-inline-start: 4px solid var(--terra);
 }
 .best p {
   margin: 0;
@@ -795,8 +807,8 @@
   border: 1px solid var(--line);
   min-width: 0;
 }
-.claimA { border-left: 3px solid var(--terra); }
-.claimB { border-left: 3px solid var(--sage-strong); }
+.claimA { border-inline-start: 3px solid var(--terra); }
+.claimB { border-inline-start: 3px solid var(--sage-strong); }
 .claimText {
   font-size: 14px;
   line-height: 1.45;

@@ -3,11 +3,13 @@
 import { useEffect, useId, useMemo, useState, type ReactNode } from "react";
 import { verdictLang } from "@/lib/content-lang";
 import { t, type Lang } from "@/lib/i18n";
+import { langDir } from "@/lib/langs";
+import { useLocaleLang } from "@/lib/lang";
 import type { DisplayState } from "@/lib/originals-types";
 import { useOwnerToken } from "@/lib/owner-store";
 import type { NameMapping, VerdictResult } from "@/lib/types";
 import { useViewer } from "@/lib/use-viewer";
-import { LangToggle } from "./LangToggle";
+import { LangPicker } from "./LangPicker";
 import { OwnerPanel, useMine } from "./OwnerTools";
 import { RemovedVerdict } from "./RemovedVerdict";
 import { buildOwnerShare } from "./ShareDialog";
@@ -59,7 +61,8 @@ export function SharedVerdict({
   balance?: ReactNode;
   cta?: ReactNode;
 }) {
-  const [lang, setLang] = useState<Lang>(initialLang);
+  const [picked, setPicked] = useState<Lang>(initialLang);
+  const lang = useLocaleLang(picked);
   const token = useOwnerToken(id);
   const viewer = useViewer();
   const signedIn = viewer.status === "ready" || viewer.status === "error" ? Boolean(viewer.me?.user) : null;
@@ -123,7 +126,7 @@ export function SharedVerdict({
       <span className={styles.langLabel} aria-hidden>
         {label}
       </span>
-      <LangToggle lang={lang} onSelect={setLang} label={label} />
+      <LangPicker lang={picked} onSelect={setPicked} label={label} />
     </div>
   );
 
@@ -136,7 +139,7 @@ export function SharedVerdict({
           argument={ownView.originalStatus === "stored" ? (ownView.original?.text ?? null) : null}
           missing={ownView.originalStatus === "unreadable" ? "owner.unreadable" : "owner.notStored"}
           verdict={
-            <div lang={lang} className="flex flex-col gap-4 min-w-0">
+            <div lang={lang} dir={langDir(lang)} className="flex flex-col gap-4 min-w-0">
               {langRow}
               <VerdictView
                 result={current.result}
@@ -154,7 +157,7 @@ export function SharedVerdict({
             </div>
           }
           followUp={
-            <div lang={lang} className="flex flex-col gap-6 min-w-0">
+            <div lang={lang} dir={langDir(lang)} className="flex flex-col gap-6 min-w-0">
               {appeal.panel}
               <VerdictHistory
                 lang={lang}
@@ -187,7 +190,7 @@ export function SharedVerdict({
       </h1>
       {balance}
       <div className={cardClassName}>
-        <div lang={lang} className="flex flex-col gap-4 min-w-0">
+        <div lang={lang} dir={langDir(lang)} className="flex flex-col gap-4 min-w-0">
           {langRow}
           <VerdictView
             result={current.result}

@@ -4,13 +4,14 @@ import Link from "next/link";
 import { BalanceFallback } from "@/components/scene/BalanceFallback";
 import { SiteFooter, SiteHeader, SkipLink } from "@/components/SiteChrome";
 import { t } from "@/lib/i18n";
+import { langDir } from "@/lib/langs";
 import { useLang } from "@/lib/lang";
 import styles from "./not-found.module.css";
 
 export default function NotFound() {
   const lang = useLang();
   return (
-    <div lang={lang} className="contents">
+    <div lang={lang} dir={langDir(lang)} className="contents">
       <SkipLink lang={lang} />
       <SiteHeader lang={lang} toggle />
       <main id="main" tabIndex={-1} className={styles.main}>

@@ -109,7 +109,7 @@ describe("POST /api/v1/clarify", () => {
     await expectError(await POST(request("{nope")), 400, "invalid");
     await expectError(await POST(request({ argument: "short" })), 400, "too_short");
     await expectError(await POST(request({ argument: "x".repeat(6001) })), 400, "too_long");
-    await expectError(await POST(request({ argument: ARGUMENT, lang: "de" })), 400, "invalid");
+    await expectError(await POST(request({ argument: ARGUMENT, lang: "xx" })), 400, "invalid");
     expect(m.calls).toEqual([]);
   });
 

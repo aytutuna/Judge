@@ -1,5 +1,5 @@
 /**
- * Translation of a stored verdict's free text into the other UI language.
+ * Translation of a stored verdict's free text into another UI language.
  *
  * Content keeps the language it was judged in; this produces a copy in the
  * viewer's language. Only the text travels: every non-empty text field is
@@ -18,7 +18,8 @@
 import { claudeJson, LITE_MODEL, type ClaudeJsonResult, type Effort } from "./claude";
 import { verdictLang } from "./content-lang";
 import { getTranslation, getVerdict, saveTranslation } from "./db";
-import { contentLang, t, type Lang } from "./i18n";
+import { contentLang, loadLocales, t, voiceNote, type Lang } from "./i18n";
+import { LANGS } from "./langs";
 import { z } from "zod";
 import type { VerdictResult } from "./types";
 
@@ -201,7 +202,7 @@ export type Segment = { i: number; text: string; note?: string };
  * Strings with no letters (empty, a dash) are not sent and stay as they are. */
 export type SegmentPlan = { slots: Slot[]; segments: Segment[]; slotOf: number[] };
 
-const NOTES: Record<Lang, Partial<Record<Field, string>>> = {
+const NOTES: Partial<Record<Lang, Partial<Record<Field, string>>>> = {
   en: {
     headline: "headline, at most 10 words",
     if_value: 'condition clause printed after "If": no leading "If"',
@@ -212,13 +213,25 @@ const NOTES: Record<Lang, Partial<Record<Field, string>>> = {
   },
 };
 
+/** The segment notes for `target`: the English ones around the language's own "If". */
+function notesFor(target: Lang): Partial<Record<Field, string>> {
+  const ifWord = t(target, "ifPrefix");
+  return (
+    NOTES[target] ?? {
+      headline: "headline, at most 10 words",
+      if_value: `condition clause printed after "${ifWord}": no leading "${ifWord}"`,
+    }
+  );
+}
+
 export function planSegments(text: TranslatableText, target: Lang): SegmentPlan {
+  const notes = notesFor(target);
   const slots = flattenText(text);
   const segments: Segment[] = [];
   const slotOf: number[] = [];
   slots.forEach((slot, k) => {
     if (!/\p{L}/u.test(slot.text)) return;
-    const note = NOTES[target][slot.field];
+    const note = notes[slot.field];
     segments.push({ i: segments.length, text: slot.text, ...(note ? { note } : {}) });
     slotOf.push(k);
   });
@@ -232,7 +245,7 @@ export function reassemble(plan: SegmentPlan, translated: readonly string[]): st
   return flat;
 }
 
-const LABELS: Record<Lang, { a: string; b: string }> = {
+const LABELS: Record<"en" | "tr", { a: string; b: string }> = {
   en: { a: "Party A", b: "Party B" },
   tr: { a: "Taraf A", b: "Taraf B" },
 };
@@ -267,6 +280,8 @@ function placeholderGenitive(x: string): string {
  * Name placeholders ("Person C") keep their English form in both languages,
  * as the anonymizer writes them, and get the same suffix handling. */
 export function mapPartyLabels(text: string, target: Lang): string {
+  // Other languages have no suffix rules here; the prompt carries their labels.
+  if (target !== "en" && target !== "tr") return text;
   if (target === "tr") {
     return text
       .replace(/\b(?:Party|Taraf) ([AB])['’]s(?!\p{L})/gu, (_, x: "A" | "B") => `Taraf ${x}'${TR_GENITIVE[x]}`)
@@ -307,22 +322,36 @@ function plainProse(text: string): string {
     .replace(/(?<!\p{L})\p{Lu}[\p{L}\p{M}'’]*/gu, " ");
 }
 
+/** Least share of a translation's letters in the target language's script,
+ * for languages beyond English and Turkish (names and quotes may be Latin). */
+const MIN_SCRIPT_SHARE = 0.5;
+
+function scriptLetters(lang: Lang): RegExp {
+  const script = LANGS[lang].script;
+  const cls =
+    script === "Japanese" ? "\\p{Script=Han}\\p{Script=Hiragana}\\p{Script=Katakana}" : `\\p{Script=${script}}`;
+  return new RegExp(`[${cls}]`, "gu");
+}
+
 /** Whether translated text reads as the target language, so a reply that
  * echoes the source back is rejected instead of cached for good. Turkish
  * needs a Turkish-only letter or a Turkish party label somewhere; English
- * prose may hold at most a trace of Turkish-only letters. */
+ * prose may hold at most a trace of Turkish-only letters; any other language
+ * must be mostly in its own script (a Latin-script language cannot be told
+ * apart from English this way, so the per-segment echo check covers it). */
 export function inTargetLanguage(texts: readonly string[], target: Lang): boolean {
   const joined = texts.join("\n");
   const prose = plainProse(joined);
   const letters = prose.match(/\p{L}/gu)?.length ?? 0;
   if (letters < MIN_LETTERS_TO_JUDGE) return true;
   if (target === "tr") return contentLang(joined) === "tr";
+  if (target !== "en") return (prose.match(scriptLetters(target))?.length ?? 0) / letters >= MIN_SCRIPT_SHARE;
   const turkish = prose.match(/[ğıİşĞŞ]/g)?.length ?? 0;
   return turkish / letters <= MAX_TR_LETTER_SHARE_IN_EN;
 }
 
 /** A source segment this long cannot come back unchanged from a real
- * translation between English and Turkish. */
+ * translation. */
 function mustChange(text: string): boolean {
   // Quoted spans and capitalised words (titles, product names) may stay as they are.
   const prose = plainProse(text);
@@ -358,7 +387,7 @@ export function checkSegments(segments: readonly Segment[], payload: unknown, ta
     .filter((s, i) => mustChange(s.text) && normalized(s.text, target) === normalized(texts[i], target))
     .map((s) => s.i);
   if (echoed.length) return { ok: false, error: `segments ${list(echoed)} came back untranslated` };
-  if (!inTargetLanguage(texts, target)) return { ok: false, error: `translation is not in ${LANG_NAME[target]}` };
+  if (!inTargetLanguage(texts, target)) return { ok: false, error: `translation is not in ${LANGS[target].name}` };
   return { ok: true, texts };
 }
 
@@ -428,33 +457,65 @@ export function applyText(r: VerdictResult, text: TranslatableText, target: Lang
   };
 }
 
-const LANG_NAME: Record<Lang, string> = { en: "English", tr: "Turkish" };
-
 /** One line on wording. Faithfulness stays first: the judges' full voice
  * rules (no named frameworks, say it bluntly) would rewrite what a ruling
  * says, so they are not part of this prompt. */
-const NATURAL: Record<Lang, string> = {
+const NATURAL: Partial<Record<Lang, string>> = {
   en: "Natural wording: write the everyday English a native speaker would use, not word-for-word translationese. Natural wording never overrides rule 1.",
   tr: 'Natural wording: write the everyday Turkish a native speaker would say, not word-for-word translationese or officialese. Use informal "sen", never "siz", wherever the text speaks to a reader. Natural wording never overrides rule 1.',
 };
 
+/** Other languages: the same line, with the register and labels from the
+ * target's voice note. */
+function natural(target: Lang): string {
+  const fixed = NATURAL[target];
+  if (fixed) return fixed;
+  const voice = voiceNote(target);
+  return `Natural wording: write the everyday ${LANGS[target].name} a native speaker would use, not word-for-word translationese.${voice ? ` ${voice}` : ""} Natural wording never overrides rule 1.`;
+}
+
+/** Translations between English and Turkish keep their hand-written label
+ * rules (Turkish suffixes); any other pair maps the two languages' labels. */
+function enTrPair(source: Lang, target: Lang): boolean {
+  return (source === "en" && target === "tr") || (source === "tr" && target === "en");
+}
+
+function partyLabels(lang: Lang): { a: string; b: string } {
+  return { a: t(lang, "party.a"), b: t(lang, "party.b") };
+}
+
+function labelMapRule(source: Lang, target: Lang): string {
+  if (enTrPair(source, target)) return `Party labels map exactly: "Party A" <-> "Taraf A", "Party B" <-> "Taraf B".`;
+  const from = partyLabels(source);
+  const to = partyLabels(target);
+  return `Party labels map exactly: "${from.a}" -> "${to.a}", "${from.b}" -> "${to.b}".`;
+}
+
 export function translateSystemPrompt(source: Lang, target: Lang): string {
-  const from = LANG_NAME[source];
-  const to = LANG_NAME[target];
+  const from = LANGS[source].name;
+  const to = LANGS[target].name;
   return `You are a careful translator for an argument-settling app. You translate the text of one written ruling from ${from} into ${to}, segment by segment.
 
 RULES, in priority order:
 1. Faithful meaning. Never add, drop, soften or strengthen anything. Keep every claim, number, unit, name, quote, hedge and degree of certainty exactly as strong as in the source. Don't correct, summarise or comment on the content.
 2. Complete. Every input segment gets exactly one output segment with the same i, fully translated into ${to}. Never return a segment in ${from}.
-3. Party labels map exactly: "Party A" <-> "Taraf A", "Party B" <-> "Taraf B". "Person C", "Person D" and so on stand in for other people's names and stay exactly as written in both languages. Never swap a label for a name or a pronoun.
-4. ${NATURAL[target]}`;
+3. ${labelMapRule(source, target)} "Person C", "Person D" and so on stand in for other people's names and stay exactly as written in both languages. Never swap a label for a name or a pronoun.
+4. ${natural(target)}`;
 }
 
 /** The label rule for one direction, with the suffix handling spelled out. */
-const PARTY_RULE: Record<Lang, string> = {
+const PARTY_RULE: Partial<Record<Lang, string>> = {
   en: `Party labels: "Taraf A" is "Party A" and "Taraf B" is "Party B". Turn a Turkish case suffix on a label into English grammar and drop it from the label: "Taraf A'nın" -> "Party A's", "Taraf B'nin" -> "Party B's", "Taraf B'ye" -> "to Party B", "Taraf A'dan" -> "from Party A". Never leave a Turkish suffix on "Party A" or "Party B". "Person C", "Person D" and so on are name placeholders: keep them as written, with English grammar ("Person C'nin" -> "Person C's").`,
   tr: `Party labels: "Party A" is "Taraf A" and "Party B" is "Taraf B". Give the label the Turkish suffix the sentence needs, after an apostrophe and in harmony with how the letter is read (A is "a", B is "be"): "Party A's" -> "Taraf A'nın", "Party B's" -> "Taraf B'nin", "to Party A" -> "Taraf A'ya", "to Party B" -> "Taraf B'ye", "from Party B" -> "Taraf B'den". Never leave "'s" on "Taraf A" or "Taraf B". "Person C", "Person D" and so on are name placeholders: keep them in English, untranslated, with any Turkish suffix after an apostrophe ("Person C's" -> "Person C'nin").`,
 };
+
+function partyRule(source: Lang, target: Lang): string {
+  const fixed = enTrPair(source, target) ? PARTY_RULE[target] : undefined;
+  if (fixed) return fixed;
+  const from = partyLabels(source);
+  const to = partyLabels(target);
+  return `Party labels: "${from.a}" is "${to.a}" and "${from.b}" is "${to.b}". Give the label whatever grammar the ${LANGS[target].name} sentence needs. "Person C", "Person D" and so on are name placeholders: keep them as written.`;
+}
 
 /** The user message: the instruction, the label rule, the numbered
  * segments, and a closing line. `rejected` (the reason the previous reply
@@ -465,12 +526,12 @@ export function translateUserMessage(
   segments: readonly Segment[],
   rejected?: string,
 ): string {
-  const from = LANG_NAME[source];
-  const to = LANG_NAME[target];
+  const from = LANGS[source].name;
+  const to = LANGS[target].name;
   const last = segments.length - 1;
   const parts = [
     `Translate every segment from ${from} to ${to}. Return the same i values: {"segments": [{"i": 0, "text": "<${to} translation of segment 0>"}, ...]}, exactly one item per input segment. Translate every segment, short ones too. Don't merge, split, skip or add segments, and leave no ${from} text behind.`,
-    PARTY_RULE[target],
+    partyRule(source, target),
   ];
   if (segments.some((s) => s.note)) parts.push(`A segment's "note" is context for you. Don't translate it or return it.`);
   if (rejected) {
@@ -523,6 +584,7 @@ export async function translateResult(
 ): Promise<{ ok: true; result: VerdictResult } | { ok: false; error: string }> {
   const source = verdictLang(result);
   if (source === target) return { ok: true, result };
+  await loadLocales();
   if (result.model_refused) return { ok: true, result: refusedCopy(result, target) };
 
   const text = extractText(result);

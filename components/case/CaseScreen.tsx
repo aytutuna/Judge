@@ -12,6 +12,7 @@ import type {
 } from "@/lib/case-types";
 import { forgetCaseNames, saveCaseNames, useCaseNames } from "@/lib/case-names-store";
 import { apiErrorMessage, t, tWithDate, type Key, type Lang } from "@/lib/i18n";
+import { langDir } from "@/lib/langs";
 import { useLang } from "@/lib/lang";
 import { localizeLabels, resolveParties, restoreNames, textLang } from "@/lib/names";
 import type { NameMapping } from "@/lib/types";
@@ -102,7 +103,7 @@ export function CaseShell({
     );
   }
   return (
-    <div lang={lang} className="contents">
+    <div lang={lang} dir={langDir(lang)} className="contents">
       <SkipLink lang={lang} />
       <SiteHeader lang={lang} toggle />
       {main}

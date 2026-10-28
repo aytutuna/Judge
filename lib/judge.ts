@@ -1,6 +1,7 @@
 import { claudeJson, type Effort } from "./claude";
 import { humanStyle } from "./style";
-import type { Lang } from "./i18n";
+import { loadLocales, voiceNote, type Lang } from "./i18n";
+import { LANGS } from "./langs";
 import { JudgeRunOutput, TwoSidedJudgeRunOutput } from "./types";
 
 /** Output schema mirroring lib/types.ts JudgeOutput (compact form,
@@ -126,16 +127,18 @@ function twoSidedSchema() {
 
 export const TWO_SIDED_JUDGE_SCHEMA = twoSidedSchema();
 
-/** Appended when the request asks for Turkish output, ahead of the Turkish
- * voice block (lib/style.ts). The register and if_value-shape sentences are
- * load-bearing: without them the model defaults to formal "siz" (clashing
- * with the all-"sen" UI on the same card) and emits indicative or
- * self-prefixed conditionals that break the "Eğer … → …" card. The register
- * is repeated in the voice block; it stays here so editing the shared voice
+/** Appended for any language but English, ahead of the voice block
+ * (lib/style.ts), with the language's own voice note from its locale file
+ * (register, party labels, the if_value clause shape). Turkish repeats its
+ * register in the voice block too; it stays here so editing the shared voice
  * can never drop it. */
-const TR_LANGUAGE_BLOCK = `
+function languageBlock(lang: Lang): string {
+  if (lang === "en") return "";
+  const voice = voiceNote(lang);
+  return `
 
-LANGUAGE: Write every free-text output field (headline, why, crux, claims, bedrock premises, split points, conditional branches, facts_relied_on, losing_side_best_point, leaning_reason) in Turkish, following the VOICE rules below. Address the reader with informal "sen", never "siz". Refer to the parties as "Taraf A" and "Taraf B" in prose. Write each conditional if_value as a bare conditional clause ending in -sa/-se (e.g. "dürüstlüğe en çok değer veriyorsan"), with no leading "Eğer". Keep all JSON enum values exactly as specified in the schema (English identifiers). headline stays at most 10 words.`;
+LANGUAGE: Write every free-text output field (headline, why, crux, claims, bedrock premises, split points, conditional branches, facts_relied_on, losing_side_best_point, leaning_reason) in ${LANGS[lang].name}, following the VOICE rules below.${voice ? ` ${voice}` : ""} Keep all JSON enum values exactly as specified in the schema (English identifiers). headline stays at most 10 words.`;
+}
 
 function systemPrompt(analyzeBFirst: boolean, lang: Lang): string {
   return `You are Verdict, an impartial adjudicator of arguments between two parties.
@@ -169,7 +172,7 @@ OUTPUT RULES:
 - split_points only for "split" verdicts, otherwise null. conditional only for "conditional" verdicts, otherwise null.
 - losing_side_best_point: the single strongest point of whichever side fares worse (for "conditional"/"dissolved", the best point that survives on the less-favored framing).
 - facts_relied_on: empty array if the verdict rests on no contested facts.
-${analyzeBFirst ? "\nPROCESS NOTE: analyze Party B's case fully before Party A's, to guard against order bias." : ""}${lang === "tr" ? TR_LANGUAGE_BLOCK : ""}
+${analyzeBFirst ? "\nPROCESS NOTE: analyze Party B's case fully before Party A's, to guard against order bias." : ""}${languageBlock(lang)}
 
 ${humanStyle(lang)}`;
 }
@@ -245,6 +248,7 @@ export async function judgeOnce(
   // Effort defaults to JUDGE_EFFORT (else "medium") inside claudeJson. The
   // premium options only add keys when set, so a call without them sends
   // exactly the request it always has.
+  await loadLocales();
   const system = systemPrompt(opts.analyzeBFirst ?? false, opts.lang ?? "en");
   const notes = extraNotes(opts);
   const heading = opts.twoSided ? "THE CASE" : "THE ARGUMENT";

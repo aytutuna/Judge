@@ -8,7 +8,8 @@
  */
 
 import { claudeJson, LITE_MODEL } from "../claude";
-import type { Lang } from "../i18n";
+import { loadLocales, voiceNote, type Lang } from "../i18n";
+import { LANGS } from "../langs";
 import type { ClarifyResponse } from "../types";
 
 export const CLARIFY_TIMEOUT_MS = 20_000;
@@ -21,7 +22,7 @@ Ask ONLY about missing facts that would change who wins and that the text does n
 
 If nothing decisive is missing, return an empty questions array. Most well-described arguments need no questions.`;
 
-const LANGUAGE_LINE: Record<Lang, string> = {
+const LANGUAGE_LINE: Partial<Record<Lang, string>> = {
   en: "\n\nLANGUAGE: write the questions in English.",
   tr: '\n\nLANGUAGE: write the questions in Turkish, in everyday words, addressing the person with informal "sen", never "siz".',
 };
@@ -56,12 +57,20 @@ export function toClarifyResponse(raw: unknown): ClarifyResponse {
   return { questions: texts.map((text, i) => ({ id: `q${i + 1}`, text })) };
 }
 
+function languageLine(lang: Lang): string {
+  const line = LANGUAGE_LINE[lang];
+  if (line) return line;
+  const voice = voiceNote(lang);
+  return `\n\nLANGUAGE: write the questions in ${LANGS[lang].name}, in everyday words.${voice ? ` ${voice}` : ""}`;
+}
+
 /** Up to two clarifying questions for `argument`. Never throws; [] on any
  * failure, refusal or timeout. */
 export async function clarifyQuestions(argument: string, lang: Lang): Promise<ClarifyResponse> {
   try {
+    await loadLocales();
     const res = await claudeJson<unknown>({
-      system: `${CLARIFY_SYSTEM}${LANGUAGE_LINE[lang]}`,
+      system: `${CLARIFY_SYSTEM}${languageLine(lang)}`,
       user: `THE ARGUMENT:\n\n${argument}`,
       schema: SCHEMA,
       model: LITE_MODEL,

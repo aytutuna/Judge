@@ -59,6 +59,15 @@ export function ogFonts(): Promise<OgFont[]> {
   return fontsPromise;
 }
 
+// What Inter and Inter Tight can draw. Anything else would come out as empty
+// boxes, and Satori does not lay out right-to-left text either.
+const DRAWABLE = /^[\p{Script=Latin}\p{Script=Greek}\p{Script=Cyrillic}\p{Script=Common}\p{Script=Inherited}]*$/u;
+
+/** Whether the card's faces can draw every one of these texts. */
+export function ogCanDraw(...texts: (string | undefined)[]): boolean {
+  return texts.every((s) => !s || DRAWABLE.test(s));
+}
+
 function truncate(s: string, max: number): string {
   const clean = s.replace(/\s+/g, " ").trim();
   return clean.length <= max ? clean : `${clean.slice(0, max - 1).trimEnd()}…`;

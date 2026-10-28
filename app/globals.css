@@ -205,6 +205,7 @@
     font-size: 16px;
     line-height: 1.5;
     text-rendering: optimizeLegibility;
+    overflow-wrap: break-word;
     overflow-x: hidden;
   }
   @supports (overflow: clip) {
@@ -214,6 +215,12 @@
   h1, h2, h3 {
     font-family: var(--font-display);
     text-wrap: balance;
+  }
+
+  /* Malayalam and Tamil words can be wider than a phone at display size,
+     and must not widen the grid a heading sits in. */
+  :is(h1, h2, h3):is(:lang(ml), :lang(ta)) {
+    overflow-wrap: anywhere;
   }
 
   p, li, dd, blockquote {
@@ -254,6 +261,12 @@
   text-transform: uppercase;
 }
 
+/* Tracking is for Latin, Greek and Cyrillic. It breaks the headline bar of
+   the Indic scripts, the joins of Arabic and the stacked marks of Thai. */
+:is(:lang(ar), :lang(ur), :lang(bn), :lang(gu), :lang(hi), :lang(kn), :lang(ml), :lang(mr), :lang(or), :lang(pa), :lang(ta), :lang(te), :lang(th)) {
+  letter-spacing: normal !important;
+}
+
 /* Shared layout classes. In the components layer so Tailwind utilities
    and CSS modules can still override them. */
 @layer components {
@@ -278,7 +291,7 @@
 
 .skip-link {
   position: fixed;
-  left: 12px;
+  inset-inline-start: 12px;
   top: -60px;
   z-index: 100;
   padding: 10px 16px;

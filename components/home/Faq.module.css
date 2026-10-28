@@ -140,12 +140,12 @@
   .head {
     position: sticky;
     top: 110px;
-    text-align: left;
+    text-align: start;
   }
   .title {
     max-inline-size: 14ch;
   }
   .answer p {
-    padding-right: 48px;
+    padding-inline-end: 48px;
   }
 }

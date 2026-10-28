@@ -7,7 +7,7 @@ import type { AppealResponse, CaseRemovalResponse, CaseView, RespondResponse } f
 import { MAX_EVIDENCE_PER_SIDE } from "@/lib/case-types";
 import { forgetCaseNames, saveCaseNames, useCaseNames } from "@/lib/case-names-store";
 import { firstNameOf } from "@/lib/originals-types";
-import { apiErrorMessage, t, type Lang } from "@/lib/i18n";
+import { apiErrorMessage, languageName, t, type Lang } from "@/lib/i18n";
 import { useLang } from "@/lib/lang";
 import {
   clearPendingInvite,
@@ -233,7 +233,7 @@ export function RespondPanel({
     return (
       <>
         <ul className={styles.facts}>
-          <li>{t(lang, "respond.lang", { lang: t(lang, view.lang === "tr" ? "respond.lang.tr" : "respond.lang.en") })}</li>
+          <li>{t(lang, "respond.lang", { lang: languageName(lang, view.lang) })}</li>
         </ul>
         <form
           className={`${account.card} ${styles.stack}`}

@@ -58,8 +58,11 @@ describe("proxy.ts", () => {
     expect(res.headers.get("x-robots-tag")).toBe("noindex");
     expect(res.headers.get("cache-control")).toBe("no-store");
     const html = await res.text();
-    expect(html).toContain('lang="tr"');
+    expect(html).toContain('lang="tr" dir="ltr"');
     expect(html).toContain("Bu karar kaldırıldı");
+    // Same pick as the share page: the first enabled language in the header.
+    const second = await proxy(new NextRequest("http://localhost/v/gone123", { headers: { "accept-language": "xx-YY,tr;q=0.8" } }));
+    expect(await second.text()).toContain("Sen de kendi tartışmanı çözdür");
     const live = await proxy(new NextRequest("http://localhost/v/live123"));
     expect(live.status).toBe(200);
     expect(live.headers.get("x-middleware-next")).toBe("1");

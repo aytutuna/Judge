@@ -5,7 +5,8 @@ import { AccountPanel, openConfirm, type AccountPanelProps } from "../components
 import { SignInPanel, safeNext, withLang, type SignInPanelProps } from "../components/account/SignInView";
 import { SiteFooter } from "../components/SiteChrome";
 import type { AppConfig, AuthProviders, Entitlement, MeResponse } from "../lib/account-types";
-import { STRINGS, t } from "../lib/i18n";
+import { t } from "../lib/i18n";
+import { STRINGS } from "./strings";
 import { PRICING } from "../lib/pricing";
 import type { ViewerState } from "../lib/use-viewer";
 

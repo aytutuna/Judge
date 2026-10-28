@@ -11,6 +11,7 @@
     "typecheck": "next typegen && tsc --noEmit",
     "test": "vitest run",
     "eval": "tsx --env-file=.env scripts/eval.ts",
+    "check:locales": "tsx scripts/check-locales.ts",
     "scene:build": "tsx mobile/shared/scene/build-scene.ts"
   },
   "dependencies": {

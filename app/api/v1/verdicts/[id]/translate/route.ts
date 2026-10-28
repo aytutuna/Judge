@@ -1,4 +1,4 @@
-/** POST /api/v1/verdicts/{id}/translate?lang=en|tr: the same handler as
+/** POST /api/v1/verdicts/{id}/translate?lang=<an enabled language>: the same handler as
  * /api/verdict/{id}/translate. */
 export { POST } from "@/app/api/verdict/[id]/translate/route";
 

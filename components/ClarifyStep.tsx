@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { t, type Lang } from "@/lib/i18n";
+import { langDir } from "@/lib/langs";
 import type { Clarification, ClarifyResponse } from "@/lib/types";
 import styles from "./ClarifyStep.module.css";
 
@@ -50,6 +51,7 @@ export function ClarifyStep({
   onBack: () => void;
 }) {
   const headingRef = useRef<HTMLHeadingElement>(null);
+  const rtl = langDir(lang) === "rtl";
   useEffect(() => {
     headingRef.current?.focus({ preventScroll: true });
   }, []);
@@ -97,14 +99,14 @@ export function ClarifyStep({
       <div className={styles.actions}>
         <button type="submit" className={styles.primary}>
           {t(lang, "clarify.submit")}
-          <span aria-hidden>→</span>
+          <span aria-hidden>{rtl ? "←" : "→"}</span>
         </button>
         <button type="button" className={styles.secondary} onClick={onSkip}>
           {t(lang, "clarify.skip")}
         </button>
       </div>
       <button type="button" className={styles.back} onClick={onBack}>
-        <span aria-hidden>←</span> {t(lang, "clarify.back")}
+        <span aria-hidden>{rtl ? "→" : "←"}</span> {t(lang, "clarify.back")}
       </button>
     </form>
   );

@@ -12,7 +12,9 @@ process.env.BETTER_AUTH_URL = "http://localhost:3600";
 const auth = await import("../lib/auth");
 const { appleClientSecret, appleEnv } = await import("../lib/apple-secret");
 const { getDb } = await import("../lib/db");
-const { SIGNIN_EMAIL, langFromMagicLink, sendSignInEmail, signInEmailContent } = await import("../lib/email");
+const { EMAIL_EN, langFromMagicLink, sendSignInEmail, signInEmailContent } = await import("../lib/email");
+const { default: tr } = await import("../lib/locales/tr");
+const SIGNIN_EMAIL = { en: EMAIL_EN.signIn, tr: tr.email.signIn };
 
 afterEach(() => {
   vi.unstubAllEnvs();

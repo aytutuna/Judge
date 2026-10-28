@@ -1,5 +1,6 @@
 import type { CruxTrial, VerdictResult } from "@/lib/types";
 import { t, type Key, type Lang } from "@/lib/i18n";
+import { langDir } from "@/lib/langs";
 import { hyphenRuns, stripLeadingEmoji } from "@/lib/text";
 import { confidenceLabel, leanTally, stampLabel, tugFinal, verdictLabel } from "@/lib/verdict-display";
 import { MainSlot } from "./verdict/VerdictMain";
@@ -20,6 +21,10 @@ const BADGE_KEY = {
   mixed: "badge.mixed",
 } as const satisfies Record<VerdictResult["dispute_type"], Key>;
 
+/** Languages written without spaces between words: the "If" prefix runs
+ * straight into the clause. */
+const UNSPACED: readonly Lang[] = ["ja", "zh-Hans", "zh-Hant", "th"];
+
 /** Normalize a conditional branch clause for display after the "If"/"Eğer"
  * prefix. BOTH markers are stripped in BOTH branches: share pages can pair
  * tr chrome with English content (and vice versa), and stripping only the
@@ -29,8 +34,13 @@ const BADGE_KEY = {
  * default-locale, which turns "İ" into "i̇" — and keeps the capital when the
  * clause starts with the party label "Taraf" or a restored real name
  * (`keep`). */
-function conditionalClause(raw: string, lang: Lang, keep: readonly string[] = []): string {
-  const s = raw.replace(/^(eğer|if)\s+/i, "");
+export function conditionalClause(raw: string, lang: Lang, keep: readonly string[] = []): string {
+  let s = raw.replace(/^(eğer|if)\s+/i, "");
+  if (lang !== "en" && lang !== "tr") {
+    const own = t(lang, "ifPrefix").replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const end = UNSPACED.includes(lang) ? "" : String.raw`(?![\p{L}\p{N}])`;
+    s = s.replace(new RegExp(`^${own}${end}\\s*`, "iu"), "");
+  }
   if (lang === "tr") {
     if (s.startsWith("Taraf") || keep.some((name) => name && s.startsWith(name))) return s;
     return s.charAt(0).toLocaleLowerCase("tr") + s.slice(1);
@@ -255,9 +265,11 @@ export function VerdictReveal({
           {result.conditional.map((c, i) => (
             <div key={i} className={`${styles.branch} ${styles.branchIf}`}>
               <span className={styles.branchLead}>
-                {t(lang, "ifPrefix")} {conditionalClause(c.if_value, lang, keepCase)}
+                {t(lang, "ifPrefix")}
+                {UNSPACED.includes(lang) ? "" : " "}
+                {conditionalClause(c.if_value, lang, keepCase)}
               </span>
-              <span aria-hidden> → </span>
+              <span aria-hidden> {langDir(lang) === "rtl" ? "←" : "→"} </span>
               {c.then}
             </div>
           ))}

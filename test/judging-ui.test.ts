@@ -10,7 +10,7 @@ import {
   judgingBeatFor,
   progressAt,
 } from "../lib/judging-ui";
-import { STRINGS } from "../lib/i18n";
+import { STRINGS } from "./strings";
 import { FINISH_STEPS, MAX_FINISH_MS, THINKING_STEPS, type DigState } from "../lib/thinking";
 import type { VerdictResult } from "../lib/types";
 

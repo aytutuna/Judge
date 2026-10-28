@@ -1,5 +1,5 @@
-import { readFileSync } from "node:fs";
-import { join } from "node:path";
+import { readdirSync, readFileSync } from "node:fs";
+import { join, posix } from "node:path";
 import { describe, expect, it } from "vitest";
 
 /**
@@ -20,6 +20,10 @@ const PURE = [
   "pricing",
   "case-types",
   "originals-types",
+  "langs",
+  ...readdirSync(join(__dirname, "..", "lib", "locales"))
+    .filter((f) => f !== "check.ts")
+    .map((f) => `locales/${f.replace(/\.ts$/, "")}`),
 ] as const;
 
 const ALLOWED_PACKAGES = new Set(["zod"]);
@@ -53,8 +57,9 @@ describe("pure shared modules", () => {
   for (const name of PURE) {
     it(`lib/${name}.ts imports only pure modules and zod`, () => {
       for (const spec of importSpecifiers(source(name))) {
-        if (spec.startsWith("./")) {
-          expect(PURE as readonly string[], `lib/${name}.ts imports ${spec}`).toContain(spec.slice(2).replace(/\.ts$/, ""));
+        if (spec.startsWith(".")) {
+          const target = posix.join(posix.dirname(name), spec).replace(/\.ts$/, "");
+          expect(PURE as readonly string[], `lib/${name}.ts imports ${spec}`).toContain(target);
         } else {
           expect(ALLOWED_PACKAGES.has(spec), `lib/${name}.ts imports ${spec}`).toBe(true);
         }

@@ -276,7 +276,7 @@
 }
 .fact dd {
   display: flex;
-  margin-left: auto;
+  margin-inline-start: auto;
   flex-direction: column;
   align-items: flex-end;
   gap: 2px;
@@ -285,7 +285,7 @@
   color: var(--ink);
   font-size: 16px;
   font-weight: 600;
-  text-align: right;
+  text-align: end;
 }
 .factSub {
   color: var(--muted);
@@ -452,7 +452,7 @@
   font-size: 22px;
   font-weight: 700;
   letter-spacing: -0.02em;
-  text-align: right;
+  text-align: end;
 }
 .offer .btn {
   grid-column: 1 / -1;
