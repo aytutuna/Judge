@@ -423,12 +423,14 @@ private fun ActionsRow(actions: CardActions) {
     val s = LocalStrings.current
     val second = actions.onAddContext ?: actions.onCopy
     if (actions.onShare == null && second == null) return
-    Row(Modifier.fillMaxWidth().padding(top = 4.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+    // Same height for both when a long label wraps.
+    Row(Modifier.fillMaxWidth().height(IntrinsicSize.Min).padding(top = 4.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
         actions.onShare?.let { share ->
             Row(
                 Modifier
                     .weight(1f)
-                    .height(52.dp)
+                    .heightIn(min = 52.dp)
+                    .fillMaxHeight()
                     .clip(JudgeShapes.field)
                     .background(Palette.ink)
                     .clickable(role = Role.Button, onClick = share)
@@ -460,18 +462,26 @@ private fun ActionsRow(actions: CardActions) {
 private fun OutlinedAction(text: String, onClick: () -> Unit, modifier: Modifier, icon: (@Composable () -> Unit)? = null) {
     Row(
         modifier
-            .height(52.dp)
+            .heightIn(min = 52.dp)
+            .fillMaxHeight()
             .clip(JudgeShapes.field)
             .background(Palette.paper)
             .border(1.dp, Palette.line2, JudgeShapes.field)
             .semantics(mergeDescendants = true) {}
             .clickable(role = Role.Button, onClick = onClick)
-            .padding(horizontal = 12.dp),
+            .padding(horizontal = 12.dp, vertical = 6.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         icon?.invoke()
-        Text(text, style = JudgeType.button.copy(fontSize = 15.sp, color = Palette.ink), maxLines = 1, overflow = TextOverflow.Ellipsis)
+        // "Bağlam ekle ve itiraz et" does not fit half a 360dp screen on one line.
+        Text(
+            text,
+            style = JudgeType.button.copy(fontSize = 15.sp, color = Palette.ink),
+            textAlign = TextAlign.Center,
+            maxLines = 2,
+            overflow = TextOverflow.Ellipsis,
+        )
     }
 }
 

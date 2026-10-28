@@ -9,8 +9,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.onRoot
+import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.unit.dp
 import com.github.takahirom.roborazzi.captureRoboImage
 import com.okjudge.judge.Fixtures
@@ -58,6 +61,7 @@ import com.okjudge.judge.core.session.VerdictFlow
 import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
+import org.junit.Assert.assertFalse
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -426,6 +430,29 @@ class ScreenshotsTest {
         com.okjudge.judge.core.cases.AppealArea.Form(null),
         "Sam paid me back the next week, so the money part is settled.",
     )
+
+    @Test
+    fun verdict_addContext_tr_narrowPhone() {
+        RuntimeEnvironment.setQualifiers("+w360dp")
+        val outcome = sample("win_a_self")
+        val tr = UiTestSupport.s(AppLang.TR)
+        capture("verdict_add_context_tr_360") {
+            Themed(AppLang.TR) {
+                com.okjudge.judge.ui.verdict.RulingSummary(
+                    view = sampleView(outcome, AppLang.TR).personalized(outcome.nameMap, AppLang.EN),
+                    parties = com.okjudge.judge.core.display.PartyNames.partyNames(outcome.nameMap, AppLang.EN, tr),
+                    actions = com.okjudge.judge.ui.verdict.CardActions(onShare = {}, onCopy = {}, copied = false, onAddContext = {}),
+                    onDetails = {},
+                    reducedMotion = true,
+                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
+                )
+            }
+        }
+        val layouts = mutableListOf<TextLayoutResult>()
+        val label = compose.onNodeWithText(tr.appAppealTitle, useUnmergedTree = true).fetchSemanticsNode()
+        label.config[SemanticsActions.GetTextLayoutResult].action!!(layouts)
+        assertFalse("the label wraps instead of being cut", layouts.single().hasVisualOverflow)
+    }
 
     @Test
     fun verdict_addContext_locked_en() =
