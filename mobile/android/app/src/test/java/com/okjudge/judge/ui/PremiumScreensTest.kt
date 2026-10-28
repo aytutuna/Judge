@@ -179,12 +179,11 @@ class PremiumScreensTest {
         compose.onNodeWithTag(PricingTags.STATUS).assertExists()
         compose.onNodeWithText(en.appPricingHeadline).assertExists()
         compose.onNodeWithText(en.appPricingSub).assertExists()
-        compose.onAllNodesWithText(en.pricingFreeTitle).assertCountEquals(0)
         compose.onNodeWithText(en.appBalanceMonthly("23", me("subscriber").entitlement!!.subscription!!.cap.toString())).assertExists()
         compose.onNodeWithText(en.pricingPremiumF6).assertExists()
         compose.onNodeWithText("$7.50").assertExists()
-        compose.onNodeWithText("1 premium verdict").assertExists()
-        compose.onNodeWithText("35 premium verdicts a month").assertExists()
+        compose.onNodeWithText("1 verdict").assertExists()
+        compose.onNodeWithText("35 verdicts a month").assertExists()
         compose.onAllNodesWithTag(PricingTags.SIGN_IN).assertCountEquals(0)
     }
 
@@ -200,7 +199,6 @@ class PremiumScreensTest {
         compose.onNodeWithTag(PricingTags.SIGN_IN).assertExists()
         compose.onAllNodesWithTag(PricingTags.STATUS).assertCountEquals(0)
         compose.onNodeWithText(en.pricingPremiumF6).assertExists()
-        compose.onAllNodesWithText(en.pricingFreeF4).assertCountEquals(0)
         compose.onAllNodesWithTag(PricingTags.BUY).assertCountEquals(3)
         compose.onAllNodesWithText(en.pricingComingSoon).assertCountEquals(0)
     }

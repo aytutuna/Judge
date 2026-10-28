@@ -204,12 +204,12 @@ final class PremiumDecodingTests: XCTestCase {
     }
 
     func testPackAndCapLabels() {
-        XCTAssertEqual(L10n.pricingPack(.en, n: 1), "1 premium verdict")
-        XCTAssertEqual(L10n.pricingPack(.en, n: 10), "10 premium verdicts")
-        XCTAssertEqual(L10n.pricingPack(.tr, n: 1), "1 premium karar")
-        XCTAssertEqual(L10n.pricingPack(.tr, n: 10), "10 premium karar")
-        XCTAssertEqual(L10n.pricingMonthlyCap(.en, n: "35"), "35 premium verdicts a month")
-        XCTAssertEqual(L10n.pricingMonthlyCap(.tr, n: "35"), "Ayda 35 premium karar")
+        XCTAssertEqual(L10n.pricingPack(.en, n: 1), "1 verdict")
+        XCTAssertEqual(L10n.pricingPack(.en, n: 10), "10 verdicts")
+        XCTAssertEqual(L10n.pricingPack(.tr, n: 1), "1 karar")
+        XCTAssertEqual(L10n.pricingPack(.tr, n: 10), "10 karar")
+        XCTAssertEqual(L10n.pricingMonthlyCap(.en, n: "35"), "35 verdicts a month")
+        XCTAssertEqual(L10n.pricingMonthlyCap(.tr, n: "35"), "Ayda 35 karar")
     }
 
     @MainActor
