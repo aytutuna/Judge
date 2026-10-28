@@ -59,7 +59,7 @@ describe("language registry", () => {
     expect(formatDate("tr", "2026-11-18T12:00:00Z")).toBe("18 Kasım");
   });
 
-  it("formats dates and prices for a language without strings", () => {
+  it("formats dates and prices in other languages", () => {
     expect(formatDate("de", "2026-11-18T12:00:00Z")).toBe("18. November");
     expect(formatPrice(7.5, "de")).toMatch(/7,50/);
     expect(formatPrice(7.5, "ar")).toMatch(/US\$\u200E$/);
