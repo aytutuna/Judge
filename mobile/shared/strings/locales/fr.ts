@@ -32,7 +32,7 @@ const fr: AppLocale = {
     "app.error.offline": "On dirait que tu es hors ligne. Vérifie ta connexion et réessaie.",
     "app.error.timeout": "Les juges ont mis trop de temps à répondre. Réessaie dans une minute.",
     "app.error.interrupted":
-      "La connexion a été coupée pendant que Judge était en arrière-plan. Garde l’appli ouverte jusqu’à l’arrivée du verdict, puis réessaie.",
+      "La connexion a été coupée pendant que Judge était en arrière-plan. Réessaie et garde l’appli ouverte jusqu’à l’arrivée du verdict.",
     "app.turnstile.error": "La vérification anti-robot n’a pas pu se charger. Vérifie ta connexion et réessaie.",
     "app.factcheck.sourceAria": "{title}, ouvre la page web",
     "app.error.badOrigin":

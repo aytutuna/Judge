@@ -36,7 +36,7 @@ const sl: AppLocale = {
     "app.error.timeout":
       "Sodniki so za odgovor potrebovali preveč časa. Poskusi znova čez minuto.",
     "app.error.interrupted":
-      "Povezava se je prekinila, ko je bil Judge v ozadju. Pusti aplikacijo odprto, dokler ne prispe razsodba, nato poskusi znova.",
+      "Povezava se je prekinila, ko je bil Judge v ozadju. Poskusi znova in pusti aplikacijo odprto, dokler ne prispe razsodba.",
     "app.turnstile.error":
       "Preverjanja, da si človek, ni bilo mogoče naložiti. Preveri povezavo in poskusi znova.",
     "app.factcheck.sourceAria": "{title}, odpre spletno stran",

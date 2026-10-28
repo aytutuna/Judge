@@ -486,7 +486,7 @@
     <string name="app_retry">ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ</string>
     <string name="app_error_offline">ਲੱਗਦਾ ਹੈ ਤੁਸੀਂ ਆਫ਼ਲਾਈਨ ਹੋ। ਆਪਣਾ ਕਨੈਕਸ਼ਨ ਦੇਖ ਕੇ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।</string>
     <string name="app_error_timeout">ਜੱਜਾਂ ਨੇ ਜਵਾਬ ਦੇਣ ਵਿੱਚ ਬਹੁਤ ਦੇਰ ਲਾ ਦਿੱਤੀ। ਇੱਕ ਮਿੰਟ ਬਾਅਦ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।</string>
-    <string name="app_error_interrupted">ਜਦੋਂ Judge ਬੈਕਗ੍ਰਾਊਂਡ ਵਿੱਚ ਸੀ, ਕਨੈਕਸ਼ਨ ਟੁੱਟ ਗਿਆ। ਫ਼ੈਸਲਾ ਆਉਣ ਤੱਕ ਐਪ ਖੁੱਲ੍ਹੀ ਰੱਖੋ, ਫਿਰ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।</string>
+    <string name="app_error_interrupted">ਜਦੋਂ Judge ਬੈਕਗ੍ਰਾਊਂਡ ਵਿੱਚ ਸੀ, ਕਨੈਕਸ਼ਨ ਟੁੱਟ ਗਿਆ। ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ ਅਤੇ ਫ਼ੈਸਲਾ ਆਉਣ ਤੱਕ ਐਪ ਖੁੱਲ੍ਹੀ ਰੱਖੋ।</string>
     <string name="app_turnstile_error">ਇਨਸਾਨ ਹੋਣ ਦੀ ਜਾਂਚ ਲੋਡ ਨਹੀਂ ਹੋ ਸਕੀ। ਆਪਣਾ ਕਨੈਕਸ਼ਨ ਦੇਖ ਕੇ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।</string>
     <string name="app_factcheck_source_aria">%1$s, ਵੈੱਬ ਪੇਜ ਖੁੱਲ੍ਹੇਗਾ</string>
     <string name="app_error_bad_origin">ਇਹ ਬੇਨਤੀ ਕਿਸੇ ਅਣਜਾਣ ਥਾਂ ਤੋਂ ਆਈ ਹੈ। ਪੱਕਾ ਕਰੋ ਕਿ ਐਪ ਦਾ ਨਵਾਂ ਵਰਜ਼ਨ ਹੈ, ਫਿਰ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।</string>

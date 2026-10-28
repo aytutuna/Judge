@@ -486,7 +486,7 @@
     <string name="app_retry">Tekrar dene</string>
     <string name="app_error_offline">İnternete bağlı değilsin gibi. Bağlantını kontrol edip tekrar dene.</string>
     <string name="app_error_timeout">Yargıçlar cevap vermekte çok gecikti. Bir dakika sonra tekrar dene.</string>
-    <string name="app_error_interrupted">Judge arka plandayken bağlantı koptu. Karar gelene kadar uygulamayı açık tut, sonra tekrar dene.</string>
+    <string name="app_error_interrupted">Judge arka plandayken bağlantı koptu. Tekrar dene ve karar gelene kadar uygulamayı açık tut.</string>
     <string name="app_turnstile_error">İnsan doğrulaması yüklenemedi. Bağlantını kontrol edip tekrar dene.</string>
     <string name="app_factcheck_source_aria">%1$s, web sayfasını açar</string>
     <string name="app_error_bad_origin">Bu istek tanımadığımız bir yerden geldi. Uygulamanın güncel olduğundan emin olup tekrar dene.</string>

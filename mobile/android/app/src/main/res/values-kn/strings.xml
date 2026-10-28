@@ -486,7 +486,7 @@
     <string name="app_retry">ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ</string>
     <string name="app_error_offline">ನೀವು ಆಫ್‌ಲೈನ್ ಇರುವಂತಿದೆ. ಇಂಟರ್ನೆಟ್ ಸಂಪರ್ಕ ಪರಿಶೀಲಿಸಿ ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.</string>
     <string name="app_error_timeout">ತೀರ್ಪುಗಾರರು ಉತ್ತರಿಸಲು ತುಂಬಾ ಹೊತ್ತು ತೆಗೆದುಕೊಂಡರು. ಒಂದು ನಿಮಿಷ ಬಿಟ್ಟು ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.</string>
-    <string name="app_error_interrupted">Judge ಹಿನ್ನೆಲೆಯಲ್ಲಿದ್ದಾಗ ಸಂಪರ್ಕ ಕಡಿತಗೊಂಡಿತು. ತೀರ್ಪು ಬರುವವರೆಗೂ ಆ್ಯಪ್ ತೆರೆದೇ ಇಡಿ, ನಂತರ ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.</string>
+    <string name="app_error_interrupted">Judge ಹಿನ್ನೆಲೆಯಲ್ಲಿದ್ದಾಗ ಸಂಪರ್ಕ ಕಡಿತಗೊಂಡಿತು. ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ, ತೀರ್ಪು ಬರುವವರೆಗೂ ಆ್ಯಪ್ ತೆರೆದೇ ಇಡಿ.</string>
     <string name="app_turnstile_error">ಮಾನವ ಪರಿಶೀಲನೆ ಲೋಡ್ ಆಗಲಿಲ್ಲ. ಇಂಟರ್ನೆಟ್ ಸಂಪರ್ಕ ಪರಿಶೀಲಿಸಿ ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.</string>
     <string name="app_factcheck_source_aria">%1$s, ವೆಬ್ ಪುಟವನ್ನು ತೆರೆಯುತ್ತದೆ</string>
     <string name="app_error_bad_origin">ಈ ವಿನಂತಿ ನಮಗೆ ಗೊತ್ತಿಲ್ಲದ ಕಡೆಯಿಂದ ಬಂದಿದೆ. ಆ್ಯಪ್ ಅಪ್‌ಡೇಟ್ ಆಗಿದೆಯೇ ಎಂದು ನೋಡಿ ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.</string>

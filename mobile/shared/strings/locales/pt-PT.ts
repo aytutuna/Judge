@@ -31,7 +31,7 @@ const ptPT: AppLocale = {
     "app.error.offline": "Parece que estás sem internet. Verifica a ligação e tenta outra vez.",
     "app.error.timeout": "Os juízes demoraram demasiado a responder. Tenta outra vez daqui a um minuto.",
     "app.error.interrupted":
-      "A ligação caiu enquanto o Judge estava em segundo plano. Mantém a app aberta até chegar o veredicto e depois tenta outra vez.",
+      "A ligação caiu enquanto o Judge estava em segundo plano. Tenta outra vez e mantém a app aberta até chegar o veredicto.",
     "app.turnstile.error": "Não foi possível carregar a verificação. Confirma a ligação e tenta outra vez.",
     "app.factcheck.sourceAria": "{title}, abre a página web",
     "app.error.badOrigin":

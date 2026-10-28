@@ -31,7 +31,7 @@ const nl: AppLocale = {
     "app.error.offline": "Je lijkt offline te zijn. Check je verbinding en probeer het opnieuw.",
     "app.error.timeout": "De rechters deden er te lang over. Probeer het over een minuutje opnieuw.",
     "app.error.interrupted":
-      "De verbinding viel weg terwijl Judge op de achtergrond stond. Houd de app open tot de uitspraak binnen is en probeer het dan opnieuw.",
+      "De verbinding viel weg terwijl Judge op de achtergrond stond. Probeer het opnieuw en houd de app open tot de uitspraak binnen is.",
     "app.turnstile.error": "De menscheck kon niet laden. Check je verbinding en probeer het opnieuw.",
     "app.factcheck.sourceAria": "{title}, opent de webpagina",
     "app.error.badOrigin":

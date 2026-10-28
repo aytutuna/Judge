@@ -17486,7 +17486,7 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "انقطع الاتصال بينما كان Judge يعمل في الخلفية. أبقِ التطبيق مفتوحًا حتى يصل الحكم، ثم حاول مجددًا."
+            "value" : "انقطع الاتصال بينما كان Judge يعمل في الخلفية. حاول مجددًا وأبقِ التطبيق مفتوحًا حتى يصل الحكم."
           }
         },
         "bn" : {
@@ -17528,7 +17528,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The connection dropped while Judge was in the background. Keep the app open until the verdict arrives, then try again."
+            "value" : "The connection dropped while Judge was in the background. Try again, and keep the app open until the verdict arrives."
           }
         },
         "es" : {
@@ -17546,13 +17546,13 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "La connexion a été coupée pendant que Judge était en arrière-plan. Garde l’appli ouverte jusqu’à l’arrivée du verdict, puis réessaie."
+            "value" : "La connexion a été coupée pendant que Judge était en arrière-plan. Réessaie et garde l’appli ouverte jusqu’à l’arrivée du verdict."
           }
         },
         "gu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Judge બૅકગ્રાઉન્ડમાં હતું ત્યારે કનેક્શન તૂટી ગયું. ચુકાદો આવે ત્યાં સુધી ઍપ ખુલ્લી રાખો, પછી ફરી પ્રયાસ કરો."
+            "value" : "Judge બૅકગ્રાઉન્ડમાં હતું ત્યારે કનેક્શન તૂટી ગયું. ફરી પ્રયાસ કરો અને ચુકાદો આવે ત્યાં સુધી ઍપ ખુલ્લી રાખો."
           }
         },
         "he" : {
@@ -17600,7 +17600,7 @@
         "kn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Judge ಹಿನ್ನೆಲೆಯಲ್ಲಿದ್ದಾಗ ಸಂಪರ್ಕ ಕಡಿತಗೊಂಡಿತು. ತೀರ್ಪು ಬರುವವರೆಗೂ ಆ್ಯಪ್ ತೆರೆದೇ ಇಡಿ, ನಂತರ ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ."
+            "value" : "Judge ಹಿನ್ನೆಲೆಯಲ್ಲಿದ್ದಾಗ ಸಂಪರ್ಕ ಕಡಿತಗೊಂಡಿತು. ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ, ತೀರ್ಪು ಬರುವವರೆಗೂ ಆ್ಯಪ್ ತೆರೆದೇ ಇಡಿ."
           }
         },
         "ko" : {
@@ -17624,7 +17624,7 @@
         "ms" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sambungan terputus semasa Judge berada di latar belakang. Biarkan aplikasi terbuka sehingga keputusan tiba, kemudian cuba lagi."
+            "value" : "Sambungan terputus semasa Judge berada di latar belakang. Cuba lagi dan biarkan aplikasi terbuka sehingga keputusan tiba."
           }
         },
         "nb" : {
@@ -17636,19 +17636,19 @@
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "De verbinding viel weg terwijl Judge op de achtergrond stond. Houd de app open tot de uitspraak binnen is en probeer het dan opnieuw."
+            "value" : "De verbinding viel weg terwijl Judge op de achtergrond stond. Probeer het opnieuw en houd de app open tot de uitspraak binnen is."
           }
         },
         "or" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Judge ବ୍ୟାକଗ୍ରାଉଣ୍ଡରେ ଥିବା ବେଳେ ସଂଯୋଗ କଟିଗଲା। ରାୟ ଆସିବା ଯାଏଁ ଆପ୍ ଖୋଲା ରଖନ୍ତୁ, ତା'ପରେ ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ।"
+            "value" : "Judge ବ୍ୟାକଗ୍ରାଉଣ୍ଡରେ ଥିବା ବେଳେ ସଂଯୋଗ କଟିଗଲା। ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ ଏବଂ ରାୟ ଆସିବା ଯାଏଁ ଆପ୍ ଖୋଲା ରଖନ୍ତୁ।"
           }
         },
         "pa" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ਜਦੋਂ Judge ਬੈਕਗ੍ਰਾਊਂਡ ਵਿੱਚ ਸੀ, ਕਨੈਕਸ਼ਨ ਟੁੱਟ ਗਿਆ। ਫ਼ੈਸਲਾ ਆਉਣ ਤੱਕ ਐਪ ਖੁੱਲ੍ਹੀ ਰੱਖੋ, ਫਿਰ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।"
+            "value" : "ਜਦੋਂ Judge ਬੈਕਗ੍ਰਾਊਂਡ ਵਿੱਚ ਸੀ, ਕਨੈਕਸ਼ਨ ਟੁੱਟ ਗਿਆ। ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ ਅਤੇ ਫ਼ੈਸਲਾ ਆਉਣ ਤੱਕ ਐਪ ਖੁੱਲ੍ਹੀ ਰੱਖੋ।"
           }
         },
         "pl" : {
@@ -17666,7 +17666,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "A ligação caiu enquanto o Judge estava em segundo plano. Mantém a app aberta até chegar o veredicto e depois tenta outra vez."
+            "value" : "A ligação caiu enquanto o Judge estava em segundo plano. Tenta outra vez e mantém a app aberta até chegar o veredicto."
           }
         },
         "ro" : {
@@ -17690,7 +17690,7 @@
         "sl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Povezava se je prekinila, ko je bil Judge v ozadju. Pusti aplikacijo odprto, dokler ne prispe razsodba, nato poskusi znova."
+            "value" : "Povezava se je prekinila, ko je bil Judge v ozadju. Poskusi znova in pusti aplikacijo odprto, dokler ne prispe razsodba."
           }
         },
         "sv" : {
@@ -17702,13 +17702,13 @@
         "ta" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Judge பின்னணியில் இருந்தபோது இணைப்பு துண்டிக்கப்பட்டது. தீர்ப்பு வரும் வரை ஆப்பைத் திறந்தே வையுங்கள், பிறகு மீண்டும் முயலுங்கள்."
+            "value" : "Judge பின்னணியில் இருந்தபோது இணைப்பு துண்டிக்கப்பட்டது. மீண்டும் முயலுங்கள், தீர்ப்பு வரும் வரை ஆப்பைத் திறந்தே வையுங்கள்."
           }
         },
         "te" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Judge బ్యాక్‌గ్రౌండ్‌లో ఉన్నప్పుడు కనెక్షన్ తెగిపోయింది. తీర్పు వచ్చేవరకు యాప్‌ను తెరిచే ఉంచండి, తర్వాత మళ్లీ ప్రయత్నించండి."
+            "value" : "Judge బ్యాక్‌గ్రౌండ్‌లో ఉన్నప్పుడు కనెక్షన్ తెగిపోయింది. మళ్లీ ప్రయత్నించండి, తీర్పు వచ్చేవరకు యాప్‌ను తెరిచే ఉంచండి."
           }
         },
         "th" : {
@@ -17720,7 +17720,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Judge arka plandayken bağlantı koptu. Karar gelene kadar uygulamayı açık tut, sonra tekrar dene."
+            "value" : "Judge arka plandayken bağlantı koptu. Tekrar dene ve karar gelene kadar uygulamayı açık tut."
           }
         },
         "uk" : {

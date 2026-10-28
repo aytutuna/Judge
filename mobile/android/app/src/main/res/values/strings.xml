@@ -486,7 +486,7 @@
     <string name="app_retry">Try again</string>
     <string name="app_error_offline">You seem to be offline. Check your connection and try again.</string>
     <string name="app_error_timeout">The judges took too long to answer. Try again in a minute.</string>
-    <string name="app_error_interrupted">The connection dropped while Judge was in the background. Keep the app open until the verdict arrives, then try again.</string>
+    <string name="app_error_interrupted">The connection dropped while Judge was in the background. Try again, and keep the app open until the verdict arrives.</string>
     <string name="app_turnstile_error">The human check couldn\'t load. Check your connection and try again.</string>
     <string name="app_factcheck_source_aria">%1$s, opens the web page</string>
     <string name="app_error_bad_origin">That request came from somewhere we don\'t recognize. Make sure the app is up to date and try again.</string>

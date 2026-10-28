@@ -474,7 +474,7 @@
     <string name="app_retry">Cuba lagi</string>
     <string name="app_error_offline">Nampaknya anda di luar talian. Semak sambungan anda dan cuba lagi.</string>
     <string name="app_error_timeout">Hakim terlalu lama menjawab. Tunggu seminit dan cuba lagi.</string>
-    <string name="app_error_interrupted">Sambungan terputus semasa Judge berada di latar belakang. Biarkan aplikasi terbuka sehingga keputusan tiba, kemudian cuba lagi.</string>
+    <string name="app_error_interrupted">Sambungan terputus semasa Judge berada di latar belakang. Cuba lagi dan biarkan aplikasi terbuka sehingga keputusan tiba.</string>
     <string name="app_turnstile_error">Semakan manusia tidak dapat dimuatkan. Semak sambungan anda dan cuba lagi.</string>
     <string name="app_factcheck_source_aria">%1$s, membuka halaman web</string>
     <string name="app_error_bad_origin">Permintaan itu datang dari tempat yang kami tidak kenali. Pastikan aplikasi anda sudah dikemas kini, kemudian cuba lagi.</string>

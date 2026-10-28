@@ -510,7 +510,7 @@
     <string name="app_retry">Poskusi znova</string>
     <string name="app_error_offline">Kaže, da ni povezave s spletom. Preveri povezavo in poskusi znova.</string>
     <string name="app_error_timeout">Sodniki so za odgovor potrebovali preveč časa. Poskusi znova čez minuto.</string>
-    <string name="app_error_interrupted">Povezava se je prekinila, ko je bil Judge v ozadju. Pusti aplikacijo odprto, dokler ne prispe razsodba, nato poskusi znova.</string>
+    <string name="app_error_interrupted">Povezava se je prekinila, ko je bil Judge v ozadju. Poskusi znova in pusti aplikacijo odprto, dokler ne prispe razsodba.</string>
     <string name="app_turnstile_error">Preverjanja, da si človek, ni bilo mogoče naložiti. Preveri povezavo in poskusi znova.</string>
     <string name="app_factcheck_source_aria">%1$s, odpre spletno stran</string>
     <string name="app_error_bad_origin">Ta zahteva je prišla iz neznanega vira. Preveri, ali je aplikacija posodobljena, in poskusi znova.</string>

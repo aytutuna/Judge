@@ -534,7 +534,7 @@
     <string name="app_retry">إعادة المحاولة</string>
     <string name="app_error_offline">يبدو أنك غير متصل بالإنترنت. تحقّق من اتصالك وحاول مجددًا.</string>
     <string name="app_error_timeout">تأخّر القضاة كثيرًا في الرد. حاول مجددًا بعد دقيقة.</string>
-    <string name="app_error_interrupted">انقطع الاتصال بينما كان Judge يعمل في الخلفية. أبقِ التطبيق مفتوحًا حتى يصل الحكم، ثم حاول مجددًا.</string>
+    <string name="app_error_interrupted">انقطع الاتصال بينما كان Judge يعمل في الخلفية. حاول مجددًا وأبقِ التطبيق مفتوحًا حتى يصل الحكم.</string>
     <string name="app_turnstile_error">تعذّر تحميل التحقق البشري. تحقّق من اتصالك وحاول مجددًا.</string>
     <string name="app_factcheck_source_aria">%1$s، يفتح صفحة الويب</string>
     <string name="app_error_bad_origin">جاء هذا الطلب من مصدر لا نعرفه. تأكّد من أن التطبيق محدَّث وحاول مجددًا.</string>

@@ -486,7 +486,7 @@
     <string name="app_retry">ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ</string>
     <string name="app_error_offline">ଆପଣ ଅଫଲାଇନ୍ ଥିବା ପରି ଲାଗୁଛି। ଇଣ୍ଟରନେଟ୍ ସଂଯୋଗ ଯାଞ୍ଚ କରି ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ।</string>
     <string name="app_error_timeout">ବିଚାରକମାନେ ଉତ୍ତର ଦେବାରେ ବହୁତ ଡେରି କଲେ। ମିନିଟିଏ ପରେ ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ।</string>
-    <string name="app_error_interrupted">Judge ବ୍ୟାକଗ୍ରାଉଣ୍ଡରେ ଥିବା ବେଳେ ସଂଯୋଗ କଟିଗଲା। ରାୟ ଆସିବା ଯାଏଁ ଆପ୍ ଖୋଲା ରଖନ୍ତୁ, ତା\'ପରେ ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ।</string>
+    <string name="app_error_interrupted">Judge ବ୍ୟାକଗ୍ରାଉଣ୍ଡରେ ଥିବା ବେଳେ ସଂଯୋଗ କଟିଗଲା। ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ ଏବଂ ରାୟ ଆସିବା ଯାଏଁ ଆପ୍ ଖୋଲା ରଖନ୍ତୁ।</string>
     <string name="app_turnstile_error">ମଣିଷ ଯାଞ୍ଚ ଲୋଡ୍ ହେଲା ନାହିଁ। ସଂଯୋଗ ଯାଞ୍ଚ କରି ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ।</string>
     <string name="app_factcheck_source_aria">%1$s, ୱେବ୍ ପୃଷ୍ଠା ଖୋଲେ</string>
     <string name="app_error_bad_origin">ଏହି ଅନୁରୋଧ ଆମେ ଚିହ୍ନୁନଥିବା ଜାଗାରୁ ଆସିଲା। ଆପ୍‌ଟି ଅପଡେଟ୍ ହୋଇଛି କି ନାହିଁ ଦେଖି ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ।</string>

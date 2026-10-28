@@ -498,7 +498,7 @@
     <string name="app_retry">Réessayer</string>
     <string name="app_error_offline">On dirait que tu es hors ligne. Vérifie ta connexion et réessaie.</string>
     <string name="app_error_timeout">Les juges ont mis trop de temps à répondre. Réessaie dans une minute.</string>
-    <string name="app_error_interrupted">La connexion a été coupée pendant que Judge était en arrière-plan. Garde l’appli ouverte jusqu’à l’arrivée du verdict, puis réessaie.</string>
+    <string name="app_error_interrupted">La connexion a été coupée pendant que Judge était en arrière-plan. Réessaie et garde l’appli ouverte jusqu’à l’arrivée du verdict.</string>
     <string name="app_turnstile_error">La vérification anti-robot n’a pas pu se charger. Vérifie ta connexion et réessaie.</string>
     <string name="app_factcheck_source_aria">%1$s, ouvre la page web</string>
     <string name="app_error_bad_origin">Cette demande vient d’un endroit qu’on ne reconnaît pas. Vérifie que l’appli est à jour et réessaie.</string>

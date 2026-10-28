@@ -31,7 +31,7 @@ const tr: AppLocale = {
     "app.error.offline": "İnternete bağlı değilsin gibi. Bağlantını kontrol edip tekrar dene.",
     "app.error.timeout": "Yargıçlar cevap vermekte çok gecikti. Bir dakika sonra tekrar dene.",
     "app.error.interrupted":
-      "Judge arka plandayken bağlantı koptu. Karar gelene kadar uygulamayı açık tut, sonra tekrar dene.",
+      "Judge arka plandayken bağlantı koptu. Tekrar dene ve karar gelene kadar uygulamayı açık tut.",
     "app.turnstile.error": "İnsan doğrulaması yüklenemedi. Bağlantını kontrol edip tekrar dene.",
     "app.factcheck.sourceAria": "{title}, web sayfasını açar",
     "app.error.badOrigin":

@@ -33,7 +33,7 @@ const ms: AppLocale = {
     "app.error.offline": "Nampaknya anda di luar talian. Semak sambungan anda dan cuba lagi.",
     "app.error.timeout": "Hakim terlalu lama menjawab. Tunggu seminit dan cuba lagi.",
     "app.error.interrupted":
-      "Sambungan terputus semasa Judge berada di latar belakang. Biarkan aplikasi terbuka sehingga keputusan tiba, kemudian cuba lagi.",
+      "Sambungan terputus semasa Judge berada di latar belakang. Cuba lagi dan biarkan aplikasi terbuka sehingga keputusan tiba.",
     "app.turnstile.error": "Semakan manusia tidak dapat dimuatkan. Semak sambungan anda dan cuba lagi.",
     "app.factcheck.sourceAria": "{title}, membuka halaman web",
     "app.error.badOrigin":

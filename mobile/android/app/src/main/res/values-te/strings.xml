@@ -486,7 +486,7 @@
     <string name="app_retry">మళ్లీ ప్రయత్నించండి</string>
     <string name="app_error_offline">మీరు ఆఫ్‌లైన్‌లో ఉన్నట్టున్నారు. కనెక్షన్ చెక్ చేసి మళ్లీ ప్రయత్నించండి.</string>
     <string name="app_error_timeout">జడ్జీలు జవాబివ్వడానికి చాలా టైమ్ తీసుకున్నారు. ఒక నిమిషం ఆగి మళ్లీ ప్రయత్నించండి.</string>
-    <string name="app_error_interrupted">Judge బ్యాక్‌గ్రౌండ్‌లో ఉన్నప్పుడు కనెక్షన్ తెగిపోయింది. తీర్పు వచ్చేవరకు యాప్‌ను తెరిచే ఉంచండి, తర్వాత మళ్లీ ప్రయత్నించండి.</string>
+    <string name="app_error_interrupted">Judge బ్యాక్‌గ్రౌండ్‌లో ఉన్నప్పుడు కనెక్షన్ తెగిపోయింది. మళ్లీ ప్రయత్నించండి, తీర్పు వచ్చేవరకు యాప్‌ను తెరిచే ఉంచండి.</string>
     <string name="app_turnstile_error">మనిషి చెక్ లోడ్ కాలేదు. కనెక్షన్ చెక్ చేసి మళ్లీ ప్రయత్నించండి.</string>
     <string name="app_factcheck_source_aria">%1$s, వెబ్ పేజీ తెరుచుకుంటుంది</string>
     <string name="app_error_bad_origin">ఈ రిక్వెస్ట్ మాకు తెలియని చోటు నుంచి వచ్చింది. యాప్ అప్‌డేట్ అయి ఉందో లేదో చూసి మళ్లీ ప్రయత్నించండి.</string>

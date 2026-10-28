@@ -39,7 +39,7 @@ export const APP_EN = {
   "app.error.offline": "You seem to be offline. Check your connection and try again.",
   "app.error.timeout": "The judges took too long to answer. Try again in a minute.",
   "app.error.interrupted":
-    "The connection dropped while Judge was in the background. Keep the app open until the verdict arrives, then try again.",
+    "The connection dropped while Judge was in the background. Try again, and keep the app open until the verdict arrives.",
   // App versions of web copy that talks about pages, tabs and reloading
   // (turnstile.error, factcheck.sourceAria, error.bad_origin; see EXCLUDE_KEYS).
   "app.turnstile.error": "The human check couldn't load. Check your connection and try again.",

@@ -486,7 +486,7 @@
     <string name="app_retry">ફરી પ્રયાસ કરો</string>
     <string name="app_error_offline">લાગે છે કે તમે ઑફલાઇન છો. કનેક્શન તપાસીને ફરી પ્રયાસ કરો.</string>
     <string name="app_error_timeout">જજોએ જવાબ આપવામાં બહુ વાર લગાડી. એકાદ મિનિટ પછી ફરી પ્રયાસ કરો.</string>
-    <string name="app_error_interrupted">Judge બૅકગ્રાઉન્ડમાં હતું ત્યારે કનેક્શન તૂટી ગયું. ચુકાદો આવે ત્યાં સુધી ઍપ ખુલ્લી રાખો, પછી ફરી પ્રયાસ કરો.</string>
+    <string name="app_error_interrupted">Judge બૅકગ્રાઉન્ડમાં હતું ત્યારે કનેક્શન તૂટી ગયું. ફરી પ્રયાસ કરો અને ચુકાદો આવે ત્યાં સુધી ઍપ ખુલ્લી રાખો.</string>
     <string name="app_turnstile_error">માણસ હોવાની ચકાસણી લોડ ન થઈ. કનેક્શન તપાસીને ફરી પ્રયાસ કરો.</string>
     <string name="app_factcheck_source_aria">%1$s, વેબ પેજ ખૂલે છે</string>
     <string name="app_error_bad_origin">આ વિનંતી કોઈ અજાણી જગ્યાએથી આવી. ઍપ અપડેટ કરેલી છે એની ખાતરી કરીને ફરી પ્રયાસ કરો.</string>

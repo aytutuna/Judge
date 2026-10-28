@@ -486,7 +486,7 @@
     <string name="app_retry">Opnieuw proberen</string>
     <string name="app_error_offline">Je lijkt offline te zijn. Check je verbinding en probeer het opnieuw.</string>
     <string name="app_error_timeout">De rechters deden er te lang over. Probeer het over een minuutje opnieuw.</string>
-    <string name="app_error_interrupted">De verbinding viel weg terwijl Judge op de achtergrond stond. Houd de app open tot de uitspraak binnen is en probeer het dan opnieuw.</string>
+    <string name="app_error_interrupted">De verbinding viel weg terwijl Judge op de achtergrond stond. Probeer het opnieuw en houd de app open tot de uitspraak binnen is.</string>
     <string name="app_turnstile_error">De menscheck kon niet laden. Check je verbinding en probeer het opnieuw.</string>
     <string name="app_factcheck_source_aria">%1$s, opent de webpagina</string>
     <string name="app_error_bad_origin">Dat verzoek kwam van een plek die we niet kennen. Zorg dat de app is bijgewerkt en probeer het opnieuw.</string>

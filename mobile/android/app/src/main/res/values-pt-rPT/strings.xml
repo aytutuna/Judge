@@ -498,7 +498,7 @@
     <string name="app_retry">Tentar outra vez</string>
     <string name="app_error_offline">Parece que estás sem internet. Verifica a ligação e tenta outra vez.</string>
     <string name="app_error_timeout">Os juízes demoraram demasiado a responder. Tenta outra vez daqui a um minuto.</string>
-    <string name="app_error_interrupted">A ligação caiu enquanto o Judge estava em segundo plano. Mantém a app aberta até chegar o veredicto e depois tenta outra vez.</string>
+    <string name="app_error_interrupted">A ligação caiu enquanto o Judge estava em segundo plano. Tenta outra vez e mantém a app aberta até chegar o veredicto.</string>
     <string name="app_turnstile_error">Não foi possível carregar a verificação. Confirma a ligação e tenta outra vez.</string>
     <string name="app_factcheck_source_aria">%1$s, abre a página web</string>
     <string name="app_error_bad_origin">Esse pedido veio de um sítio que não reconhecemos. Confirma que a app está atualizada e tenta outra vez.</string>
