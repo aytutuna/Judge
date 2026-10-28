@@ -56,6 +56,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardCapitalization
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -562,21 +563,22 @@ private fun InviteLink(url: String, expiresAt: String, name: String?, state: Cas
         Row(
             Modifier
                 .weight(1f)
-                .height(46.dp)
+                .heightIn(min = 46.dp)
                 .clip(RoundedCornerShape(14.dp))
                 .background(Palette.ink)
                 .clickable(role = Role.Button) { actions.onShareInvite(url) }
+                .padding(horizontal = 10.dp, vertical = 6.dp)
                 .testTag(CaseTags.SHARE),
             horizontalArrangement = Arrangement.spacedBy(6.dp, Alignment.CenterHorizontally),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             TintedIcon(remember { JudgeIcons.share(Palette.paper) }, 15)
-            Text(s.caseInviteShare, style = JudgeType.slotTitle.copy(color = Palette.paper))
+            Text(s.caseInviteShare, style = JudgeType.slotTitle.copy(color = Palette.paper), textAlign = TextAlign.Center)
         }
         Row(
             Modifier
                 .weight(1f)
-                .height(46.dp)
+                .heightIn(min = 46.dp)
                 .clip(RoundedCornerShape(14.dp))
                 .border(1.dp, Palette.line2, RoundedCornerShape(14.dp))
                 .clickable(role = Role.Button) {
@@ -584,12 +586,13 @@ private fun InviteLink(url: String, expiresAt: String, name: String?, state: Cas
                     copied = true
                 }
                 .semantics(mergeDescendants = true) { liveRegion = LiveRegionMode.Polite }
+                .padding(horizontal = 10.dp, vertical = 6.dp)
                 .testTag(CaseTags.COPY),
             horizontalArrangement = Arrangement.spacedBy(6.dp, Alignment.CenterHorizontally),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             if (copied) TintedIcon(remember { JudgeIcons.check(Palette.sageInk, 2f) }, 15)
-            Text(if (copied) s.caseInviteCopied else s.caseInviteCopy, style = JudgeType.slotTitle)
+            Text(if (copied) s.caseInviteCopied else s.caseInviteCopy, style = JudgeType.slotTitle, textAlign = TextAlign.Center)
         }
     }
     Errors.formatDate(lang, expiresAt)?.let { Note(s.caseInviteExpires(it), color = Palette.muted) }

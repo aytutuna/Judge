@@ -77,7 +77,10 @@ private struct InviteButtonStyle: ButtonStyle {
         configuration.label
             .brandText(TypeStyle(face: .inter, weight: 600, size: 14, lineHeight: 1.2, textStyle: .subheadline, maxScale: 1.6))
             .foregroundStyle(filled ? Brand.paper : Brand.ink)
-            .lineLimit(1)
+            .lineLimit(2)
+            .multilineTextAlignment(.center)
+            .padding(.horizontal, 10)
+            .padding(.vertical, 6)
             .frame(maxWidth: .infinity, minHeight: 46)
             .background(RoundedRectangle(cornerRadius: 14, style: .continuous).fill(filled ? Brand.ink : Color.clear))
             .overlay(RoundedRectangle(cornerRadius: 14, style: .continuous).strokeBorder(filled ? Color.clear : Brand.line2, lineWidth: 1))
