@@ -5,6 +5,11 @@
  */
 export async function register(): Promise<void> {
   if (process.env.NEXT_RUNTIME === "nodejs" && process.env.NEXT_PHASE !== "phase-production-build") {
+    // systemd sets JOURNAL_STREAM when stderr goes to the journal.
+    if (process.env.JOURNAL_STREAM) {
+      const { tagJournalLevels } = await import("./lib/journal");
+      tagJournalLevels();
+    }
     const { startVerdictJobSweeper } = await import("./lib/verdict-jobs");
     startVerdictJobSweeper();
   }
