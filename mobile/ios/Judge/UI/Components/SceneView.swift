@@ -19,7 +19,8 @@ private struct SceneLiveKey: EnvironmentKey {
 /// in a web view, driven through `window.judgeScene`. Decorative: the
 /// captions around it carry the meaning, and touches go to the page.
 /// `fallback` is drawn instead when the page reports it cannot render. The
-/// viewer's side is drawn green (`\.sides`).
+/// viewer's side is drawn green (`\.sides`), and the page takes the light or
+/// dark look from the colour scheme.
 struct SceneView<Fallback: View>: View {
     let mode: SceneMode
     @ViewBuilder var fallback: Fallback
@@ -27,6 +28,7 @@ struct SceneView<Fallback: View>: View {
     @Environment(\.sceneLive) private var live
     @Environment(\.scenePhase) private var scenePhase
     @Environment(\.sides) private var sides
+    @Environment(\.colorScheme) private var colorScheme
     @State private var visible = false
     @State private var failed = false
 
@@ -34,7 +36,9 @@ struct SceneView<Fallback: View>: View {
         ZStack {
             Brand.paper
             if live && !failed {
-                SceneWebView(mode: mode, you: sides.you, active: visible && scenePhase == .active) { failed = true }
+                SceneWebView(mode: mode, you: sides.you, dark: colorScheme == .dark, active: visible && scenePhase == .active) {
+                    failed = true
+                }
             } else {
                 fallback
                     .padding(.horizontal, 32)
@@ -59,6 +63,7 @@ extension SceneView where Fallback == BalanceCanvas {
 private struct SceneWebView: UIViewRepresentable {
     let mode: SceneMode
     let you: Party
+    let dark: Bool
     /// On screen with the app in front.
     let active: Bool
     let onFallback: () -> Void
@@ -71,9 +76,11 @@ private struct SceneWebView: UIViewRepresentable {
         // The page posts "ready", "fallback" and "lost" from its first script.
         configuration.userContentController.add(bridge, name: SceneBridge.name)
         let view = WKWebView(frame: .zero, configuration: configuration)
+        // Clear, so the paper behind shows until the page paints, in either
+        // appearance.
         view.isOpaque = false
-        view.backgroundColor = UIColor(Brand.paper)
-        view.scrollView.backgroundColor = UIColor(Brand.paper)
+        view.backgroundColor = .clear
+        view.scrollView.backgroundColor = .clear
         view.scrollView.isScrollEnabled = false
         view.scrollView.bounces = false
         view.scrollView.minimumZoomScale = 1
@@ -82,14 +89,14 @@ private struct SceneWebView: UIViewRepresentable {
         view.allowsLinkPreview = false
         view.accessibilityElementsHidden = true
         view.navigationDelegate = bridge
-        bridge.attach(view, mode: mode, you: you, onFallback: onFallback)
+        bridge.attach(view, mode: mode, you: you, dark: dark, onFallback: onFallback)
         return view
     }
 
     func updateUIView(_ view: WKWebView, context: Context) {
         let bridge = context.coordinator
         bridge.onFallback = onFallback
-        bridge.show(mode, you: you)
+        bridge.show(mode, you: you, dark: dark)
         bridge.setActive(active)
     }
 
@@ -100,8 +107,8 @@ private struct SceneWebView: UIViewRepresentable {
     }
 }
 
-/// Loads the page, sends it the mode once it has finished loading (again
-/// after every reload) and hears its events. WebKit declares both
+/// Loads the page, sends it the theme and mode once it has finished loading
+/// (again after every reload) and hears its events. WebKit declares both
 /// protocols main-actor isolated.
 @MainActor
 final class SceneBridge: NSObject, WKScriptMessageHandler, WKNavigationDelegate {
@@ -123,23 +130,26 @@ final class SceneBridge: NSObject, WKScriptMessageHandler, WKNavigationDelegate 
     private weak var webView: WKWebView?
     private var mode: SceneMode?
     private var you = Party.a
+    private var dark = false
     private var page = Page.idle
     private var active = false
     /// WebGL dropped its context (usually in the background): the page shows
     /// its flat drawing until it is loaded again.
     private var lost = false
 
-    func attach(_ view: WKWebView, mode: SceneMode, you: Party, onFallback: @escaping () -> Void) {
+    func attach(_ view: WKWebView, mode: SceneMode, you: Party, dark: Bool, onFallback: @escaping () -> Void) {
         webView = view
         self.mode = mode
         self.you = you
+        self.dark = dark
         self.onFallback = onFallback
     }
 
-    func show(_ mode: SceneMode, you: Party) {
-        guard mode != self.mode || you != self.you else { return }
+    func show(_ mode: SceneMode, you: Party, dark: Bool) {
+        guard mode != self.mode || you != self.you || dark != self.dark else { return }
         self.mode = mode
         self.you = you
+        self.dark = dark
         send()
     }
 
@@ -170,6 +180,8 @@ final class SceneBridge: NSObject, WKScriptMessageHandler, WKNavigationDelegate 
 
     private func send() {
         guard page == .ready, let mode, let webView else { return }
+        let theme = dark ? "dark" : "light"
+        webView.evaluateJavaScript("window.judgeScene.setTheme(\"\(theme)\")", completionHandler: nil)
         webView.evaluateJavaScript("window.judgeScene.setYou(\"\(you.rawValue)\")", completionHandler: nil)
         webView.evaluateJavaScript("window.judgeScene.setMode(\(mode.json))", completionHandler: nil)
     }
