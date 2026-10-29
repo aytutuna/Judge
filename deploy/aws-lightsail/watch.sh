@@ -21,7 +21,9 @@
 # last day's numbers; if that stops arriving, this watcher is broken.
 #
 # Signal limits come from /etc/verdict/verdict.env as ALERT_SIGNAL_<NAME>=n,
-# e.g. ALERT_SIGNAL_RATE_LIMITED=100 (defaults in SIGNAL_LIMITS below).
+# e.g. ALERT_SIGNAL_RATE_LIMITED=100 (defaults in SIGNAL_LIMITS below). The
+# signals in EMAIL_ONLY_SIGNALS are not pushed to the phone unless
+# ALERT_SIGNALS_PUSH=1.
 #
 #   watch.sh               run every check
 #   watch.sh --rebaseline  take the current ports and files as the expected
@@ -46,9 +48,12 @@ CERT_MIN_DAYS=10
 
 declare -A SIGNAL_LIMITS=(
   [rate_limited]=50 [turnstile_fail]=30 [bad_origin]=10 [bearer_401]=30
-  [webhook_bad_secret]=3 [webhook_apply_failed]=1 [entitlement_refused]=3
+  [webhook_bad_secret]=10 [webhook_apply_failed]=1 [entitlement_refused]=3
   [provider_rate]=10 [provider_down]=5 [ban]=20
 )
+# Strangers on the internet can set these off at will, and they are rarely
+# urgent.
+EMAIL_ONLY_SIGNALS=" rate_limited bad_origin bearer_401 webhook_bad_secret "
 
 now=$(date +%s)
 
@@ -277,7 +282,7 @@ signal_meaning() {
 }
 
 check_signals() {
-  local counts n name limit var since=$((now - WINDOW_SEC))
+  local counts n name limit var topic since=$((now - WINDOW_SEC))
   counts=$(
     {
       journalctl -q --no-pager -o cat -u verdict --since "@$since" | sed -n 's/^\[signal:\([a-z0-9_]*\)\].*/\1/p'
@@ -290,7 +295,9 @@ check_signals() {
     limit=${!var:-${SIGNAL_LIMITS[$name]-}}
     [[ $limit =~ ^[0-9]+$ ]] || limit=${SIGNAL_LIMITS[$name]-}
     if [[ -z $limit ]] || ((n < limit)); then continue; fi
-    notify "signal-$name" "Judge: $name x$n in 5 minutes" "$name $n times in the last 5 minutes (limit $limit, $var in the env file).
+    topic=${NTFY_TOPIC-}
+    if [[ $EMAIL_ONLY_SIGNALS == *" $name "* && ${ALERT_SIGNALS_PUSH-} != 1 ]]; then topic=""; fi
+    NTFY_TOPIC=$topic notify "signal-$name" "Judge: $name x$n in 5 minutes" "$name $n times in the last 5 minutes (limit $limit, $var in the env file).
 $(signal_meaning "$name")" || true
   done <<<"$counts"
 }

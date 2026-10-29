@@ -163,6 +163,9 @@ NTFY_TOPIC=
 # The watcher alerts when one kind of [signal:...] line reaches its limit in
 # 5 minutes. Override a limit as ALERT_SIGNAL_<NAME>=n, e.g.
 # ALERT_SIGNAL_RATE_LIMITED=100
+# rate_limited, bad_origin, bearer_401 and webhook_bad_secret come by email
+# only; ALERT_SIGNALS_PUSH=1 sends them to the phone too.
+# ALERT_SIGNALS_PUSH=
 EOF
 }
 

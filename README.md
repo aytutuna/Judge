@@ -1000,7 +1000,7 @@ limit within 5 minutes:
 | `turnstile_fail` | 30 | a visitor fails the Turnstile bot check |
 | `bad_origin` | 10 | a signed-in write from another site is refused |
 | `bearer_401` | 30 | a request comes with a sign-in token that no longer works |
-| `webhook_bad_secret` | 3 | a purchase webhook has the wrong secret |
+| `webhook_bad_secret` | 10 | a purchase webhook has the wrong secret |
 | `webhook_apply_failed` | 1 | a purchase webhook could not be applied |
 | `entitlement_refused` | 3 | a finished verdict's save and credit settlement was refused because the job was no longer judging |
 | `provider_rate` | 10 | the AI service answers 429 |
@@ -1010,6 +1010,11 @@ limit within 5 minutes:
 Change a limit with `ALERT_SIGNAL_<NAME>=n` in the env file, e.g.
 `ALERT_SIGNAL_RATE_LIMITED=100`. To see the lines:
 `journalctl -u verdict --since -1h | grep 'signal:'`.
+
+Signal alerts are not critical. The ones strangers can set off at will
+(`rate_limited`, `bad_origin`, `bearer_401` and `webhook_bad_secret`) come by
+email only; set `ALERT_SIGNALS_PUSH=1` in the env file to get them on the phone
+too. Without `ALERT_EMAIL` they are only logged.
 
 fail2ban is installed by `setup.sh` with its standard SSH jail (an address
 that fails 5 logins in 10 minutes is blocked for 10 minutes) and logs to the
