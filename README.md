@@ -871,7 +871,8 @@ All commands run in the browser SSH window (**Connect using SSH**).
   like the backups, deleted after 14 days). The restore re-applies every
   removal made since the backup from `/var/lib/verdict/removals.log` (see
   *Stored originals, names and removal*). These copies live on the same
-  disk, so also turn on off-server backups: on your instance's **Snapshots**
+  disk, so also send them to object storage (see *Monitoring* below) or
+  turn on snapshots: on your instance's **Snapshots**
   tab, switch on **Automatic snapshots** (Lightsail keeps the last seven
   daily snapshots; they are billed per GB stored). The privacy page promises
   removed data is gone from backups within 14 days: keep backup and
@@ -893,6 +894,100 @@ settings in `/etc/verdict/verdict.env`, the database in
 `/var/lib/verdict/verdict.db`, and the scripts in `deploy/aws-lightsail/`.
 The app listens only on `127.0.0.1:3000`; Caddy is the only way in, and it
 replaces any `X-Forwarded-For` header a visitor sends with their real address.
+
+### Monitoring
+
+Three pieces watch the site. The two on the server send nothing until their
+settings are in `/etc/verdict/verdict.env`, and a change there needs no
+restart: their timers read the file every time they run.
+
+**Down alert.** `.github/workflows/uptime.yml` fetches `https://okjudge.com/`
+and `/api/v1/config` from GitHub every 5 minutes (two retries, 15 seconds
+each). If either fails it opens an issue titled *okjudge.com is down*, comments
+on it at most once an hour while the site stays down, and closes it once both
+answer again. GitHub emails you about the issue, so keep **Watching** the repo
+(the default for its owner) with email notifications on. It runs only from
+`main`, and GitHub pauses scheduled workflows after 60 days without a commit;
+re-enable it on the **Actions** tab if that happens. Run it by hand there with
+**Run workflow**.
+
+**Error spikes.** `verdict-errors.timer` runs `errors.sh` every 5 minutes. It
+counts the last 5 minutes' 5xx responses in Caddy's access log
+(`/var/log/caddy/access.log`, which keeps only status codes and timings, no
+addresses or paths) and the app's error lines (`journalctl -u verdict -p err`).
+When either reaches its limit it sends one email through Resend, then waits
+an hour before the next one. Spikes in that hour are still counted, and the
+next day brings a one-line digest of the day's spikes (no digest after a quiet
+day). Settings:
+
+```bash
+ALERT_EMAIL=you@yourdomain.org   # where alerts go; empty = no alerts
+ALERT_5XX_THRESHOLD=10           # 5xx responses in 5 minutes (default 10)
+ALERT_ERROR_THRESHOLD=20         # app error lines in 5 minutes (default 20)
+```
+
+It sends with `RESEND_API_KEY` and `EMAIL_FROM`, the same as sign-in emails.
+Check it with `sudo systemctl start verdict-errors` and
+`journalctl -u verdict-errors -n 20` (silent unless there is a spike);
+`systemctl list-timers 'verdict-*'` shows when each job runs next.
+
+**Off-server backups.** After each nightly backup, `verdict-backup-upload`
+encrypts the newest copy (and the removal log) with `BACKUP_PASSPHRASE` and
+uploads it with rclone to an S3-compatible bucket. It checks the size the
+bucket reports and deletes copies there older than `BACKUP_KEEP_DAYS` (14 by
+default; the privacy page promises at most 14 days). If the backup failed, the
+newest one is over a day old, or the upload fails, it emails `ALERT_EMAIL`.
+With Cloudflare R2 (10 GB free):
+
+1. In the Cloudflare dashboard open **R2 Object Storage** (R2 asks for a
+   payment method once, even on the free tier) and **Create bucket**, e.g.
+   `judge-backups`, location *Automatic*.
+2. On the R2 overview page, **Manage API tokens** > **Create Account API
+   token** (or *User API token*). Permission **Object Read & Write**, applied
+   to that bucket only, no expiry. Create it and copy the **Access Key ID**,
+   the **Secret Access Key** (shown once) and the endpoint,
+   `https://<account id>.r2.cloudflarestorage.com`.
+3. Make a passphrase with `openssl rand -base64 32` and save it in your
+   password manager next to `ORIGINALS_KEY`. Without it the copies cannot be
+   read, and if the server is lost, so is the copy in the env file.
+4. Add the settings and run the job once:
+
+   ```bash
+   BACKUP_S3_ENDPOINT=https://<account id>.r2.cloudflarestorage.com
+   BACKUP_S3_BUCKET=judge-backups
+   BACKUP_S3_ACCESS_KEY=<access key id>
+   BACKUP_S3_SECRET_KEY=<secret access key>
+   BACKUP_PASSPHRASE=<the passphrase>
+   ```
+
+   ```bash
+   sudo systemctl start verdict-backup && journalctl -u verdict-backup-upload -n 20
+   ```
+
+   It should end with *Done: verdict-....db.gz.gpg is in judge-backups*.
+
+Any other S3 service works the same way with its own endpoint and keys
+(`BACKUP_S3_BUCKET` may include a folder, e.g. `my-bucket/judge`).
+
+To restore from the bucket (when the server's own copies are gone), download
+the newest `verdict-<time>.db.gz.gpg` and `removals.log.gpg` (in R2: the
+bucket's **Objects** tab, then **Download**), copy them to the server, and
+run:
+
+```bash
+gpg --pinentry-mode loopback -d verdict-<time>.db.gz.gpg > verdict-<time>.db.gz   # asks for BACKUP_PASSPHRASE
+sudo install -o verdict -g verdict -m 600 verdict-<time>.db.gz /var/lib/verdict/backups/
+sudo verdict-restore verdict-<time>.db.gz
+```
+
+On a new server, first set the old `ORIGINALS_KEY` in the env file and put
+the old removal log in place, so the restore re-applies the removals made
+after that backup:
+
+```bash
+gpg --pinentry-mode loopback -d removals.log.gpg > removals.log
+sudo install -o verdict -g verdict -m 600 removals.log /var/lib/verdict/removals.log
+```
 
 ### Custom domain behind Cloudflare
 
@@ -1053,6 +1148,7 @@ switch the records to *DNS only* (grey cloud), empty `CLOUDFLARE_PROXY=` and
 | Lightsail $5 plan (static IP and 1 TB transfer included) | $5 |
 | Model usage | about $30–50 per 1,000 verdicts (see *Cost per premium verdict*) |
 | Automatic snapshots (optional) | a little per GB stored |
+| Off-server backups on Cloudflare R2 (optional) | free up to 10 GB |
 
 Every verdict is paid for with a credit or the monthly plan, and
 `PREMIUM_DAILY_CAP` (500 by default, counted from the database) bounds a
