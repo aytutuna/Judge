@@ -1,12 +1,13 @@
 #!/usr/bin/env bash
 # Error spike check, every 5 minutes via verdict-errors.timer. Counts the
 # last 5 minutes' 5xx responses in Caddy's access log and error lines in the
-# app's journal, and when either reaches its limit emails ALERT_EMAIL (see
-# alert.sh). After an alert it stays quiet for an hour; spikes in that hour
+# app's journal, and when either reaches its limit sends an alert (email and
+# phone push, see alert.sh). After an alert it stays quiet for an hour; spikes in that hour
 # are only counted, and the next day brings a one-line digest of the day's
 # spikes (none if there were none). Settings in /etc/verdict/verdict.env:
 #
-#   ALERT_EMAIL            where alerts go (no alerts while empty)
+#   ALERT_EMAIL            where alert emails go
+#   NTFY_TOPIC             where phone pushes go (no alerts while both are empty)
 #   ALERT_5XX_THRESHOLD    5xx responses in 5 minutes (default 10)
 #   ALERT_ERROR_THRESHOLD  app error lines in 5 minutes (default 20)
 #
@@ -65,16 +66,17 @@ main() {
   today=$(date -u +%F)
   local max5=${ALERT_5XX_THRESHOLD:-10} maxe=${ALERT_ERROR_THRESHOLD:-20}
 
-  # Without ALERT_EMAIL spikes are only logged: keeping them for a digest
-  # nobody gets would just pile up files.
-  if [[ -n ${ALERT_EMAIL-} ]]; then send_digests "$today"; fi
+  # Without anywhere to send alerts spikes are only logged: keeping them for
+  # a digest nobody gets would just pile up files.
+  local channel=${ALERT_EMAIL-}${NTFY_TOPIC-}
+  if [[ -n $channel ]]; then send_digests "$today"; fi
 
   n5=$(count_5xx "$since")
   ne=$(app_errors "$since" | wc -l)
   ((n5 >= max5 || ne >= maxe)) || exit 0
 
   echo "Error spike: $n5 5xx responses (limit $max5), $ne app errors (limit $maxe) in 5 minutes"
-  [[ -n ${ALERT_EMAIL-} ]] || exit 0
+  [[ -n $channel ]] || exit 0
   printf '%s %s %s\n' "$(date -u +%H:%M)" "$n5" "$ne" >>"$STATE_DIR/spikes-$today"
 
   local last=0

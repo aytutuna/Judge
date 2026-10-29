@@ -14,8 +14,8 @@
 #   BACKUP_PASSPHRASE     encrypts the copies; keep it in a password manager
 #
 # Without the BACKUP_S3_* settings it only checks that the backup worked. If
-# the backup failed or is over a day old, or the upload fails, it emails
-# ALERT_EMAIL (see alert.sh). Run it now:
+# the backup failed or is over a day old, or the upload fails, it sends an
+# alert (see alert.sh). Run it now:
 #
 #   sudo systemctl start verdict-backup-upload && journalctl -u verdict-backup-upload -n 20
 set -euo pipefail
