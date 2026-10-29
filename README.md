@@ -897,9 +897,42 @@ replaces any `X-Forwarded-For` header a visitor sends with their real address.
 
 ### Monitoring
 
-Three pieces watch the site. The two on the server send nothing until their
-settings are in `/etc/verdict/verdict.env`, and a change there needs no
-restart: their timers read the file every time they run.
+GitHub checks from outside that the site answers; on the server, timers
+check for error spikes, watch for trouble every minute, and test the backups.
+The server's alerts go nowhere until `ALERT_EMAIL` or `NTFY_TOPIC` is set in
+`/etc/verdict/verdict.env`, and a change there needs no restart: the timers
+read the file every time they run.
+
+**Where alerts go.** Each alert is an email to `ALERT_EMAIL` (sent through
+Resend with `RESEND_API_KEY` and `EMAIL_FROM`, the same as sign-in emails) and
+a push to the ntfy app on your phone, so it reaches you within a minute. To
+get the pushes:
+
+1. Install **ntfy** from the App Store or Google Play and allow its
+   notifications. On Android, also exempt it from battery optimization, or
+   pushes can arrive late.
+2. Make up a topic name nobody can guess, e.g. `judge-` followed by the output
+   of `openssl rand -hex 12`. On the public ntfy.sh server anyone who knows
+   the name can read the alerts (they hold no secrets or user text, but they
+   do describe the server).
+3. In the app tap **+**, enter the topic name and keep the server `ntfy.sh`.
+4. Add it to the env file:
+
+   ```bash
+   NTFY_TOPIC=judge-<your random part>
+   # NTFY_URL=https://ntfy.example.org   only with your own ntfy server
+   # NTFY_TOKEN=tk_...                    only if the server or topic needs one
+   ```
+
+5. Send a test:
+
+   ```bash
+   sudo systemd-run --wait --pipe -p EnvironmentFile=/etc/verdict/verdict.env \
+     /usr/bin/bash /opt/verdict/repo/deploy/aws-lightsail/alert.sh --critical "Judge test" "It works."
+   ```
+
+Critical alerts (marked below) go out at ntfy's highest priority (on Android
+a long vibration and a pop-over); the rest at normal priority.
 
 **Down alert.** `.github/workflows/uptime.yml` fetches `https://okjudge.com/`
 and `/api/v1/config` from GitHub every 5 minutes (two retries, 15 seconds
@@ -919,28 +952,100 @@ blocking GitHub's runners.
 counts the last 5 minutes' 5xx responses in Caddy's access log
 (`/var/log/caddy/access.log`, which keeps only status codes and timings, no
 addresses or paths) and the app's error lines (`journalctl -u verdict -p err`).
-When either reaches its limit it sends one email through Resend, then waits
-an hour before the next one. Spikes in that hour are still counted, and the
+When either reaches its limit it sends one alert, then waits an hour before
+the next one. Spikes in that hour are still counted, and the
 next day brings a one-line digest of the day's spikes (no digest after a quiet
 day). Settings:
 
 ```bash
-ALERT_EMAIL=you@yourdomain.org   # where alerts go; empty = no alerts
+ALERT_EMAIL=you@yourdomain.org   # where alert emails go
 ALERT_5XX_THRESHOLD=10           # 5xx responses in 5 minutes (default 10)
 ALERT_ERROR_THRESHOLD=20         # app error lines in 5 minutes (default 20)
 ```
 
-It sends with `RESEND_API_KEY` and `EMAIL_FROM`, the same as sign-in emails.
 Check it with `sudo systemctl start verdict-errors` and
 `journalctl -u verdict-errors -n 20` (silent unless there is a spike);
 `systemctl list-timers 'verdict-*'` shows when each job runs next.
+
+**The watcher.** `verdict-watch.timer` runs `watch.sh` every minute, as root.
+Each check remembers what it has seen in `/var/lib/verdict-alerts`, and each
+kind of alert then waits an hour before it repeats (another SSH user or
+address, or another program run with sudo, counts as another kind). What the
+alerts mean:
+
+| Alert | Means | Do |
+|---|---|---|
+| *the AI service is out of credit* (critical) | Model calls fail with a billing error, a credit message or the spend limit. Users see the "quota" message and are not charged. | Add credit, or raise the spend limit, in the Anthropic Console. |
+| *the AI service refused the API key* (critical) | Model calls fail with 401 or 403. Every verdict fails. | Put a working `ANTHROPIC_API_KEY` in the env file, then `sudo systemctl restart verdict`. |
+| *SSH login as ... from ...* (critical) | Someone logged in over SSH. Only the first half of the address is shown. | Nothing if it was you. If not, stop the instance from the provider's console, then replace the SSH keys and every secret in the env file. |
+| *... ran sudo ...* (critical) | A sudo command other than `verdict-update`, `verdict-restore` or `systemctl start verdict-backup`. Only the program is shown, not its arguments. | As for a login you did not make. |
+| *server files changed outside a deploy* (critical) | The env file, a `verdict*` unit, the Caddyfile, a `/usr/local/sbin/verdict-*` command or the live release changed, and the last `setup.sh` or `update.sh` started more than 30 minutes ago. The alert names the files. | Nothing if you edited them yourself (e.g. the env file). If not, treat it as a break-in. |
+| *a new port is listening* (critical) | A TCP port, or a UDP port under 32768, that was not listening before. A successful deploy takes the current set as the new normal. | `sudo ss -ltnup` names the program behind it. |
+| *NAME xN in 5 minutes* | The app logged a `[signal:NAME]` line N times in 5 minutes (see below). | The alert says what it means and where to look. |
+| *the app restarted on its own* | The app crashed and systemd started it again. | `journalctl -u verdict -n 100` |
+| *a service failed* | A unit is in the failed state, e.g. a backup that did not finish. | `systemctl --failed`, then `journalctl -u <unit> -n 50` |
+| *a process was killed for lack of memory* | The kernel's out-of-memory killer struck, most likely the app at its 400 MB cap. | `journalctl -k --since -1h`; if it keeps happening, find what grows. |
+| *the disk at ... is N% full* | `/` or `/var/lib/verdict` is at 90% or more. A full disk stops the database and the backups. | `sudo du -xh --max-depth=2 / \| sort -h \| tail` |
+| *the certificate for ... expires in N days* | Fewer than 10 days left (checked hourly). Caddy renews 30 days ahead, so renewal has been failing. | `journalctl -u caddy -n 200`; often DNS or a firewall blocking port 80/443. |
+
+The app writes one `[signal:NAME]` warning line per event, never with what
+anyone wrote or their address. The watcher alerts when one kind reaches its
+limit within 5 minutes:
+
+| Signal | Default limit | Logged when |
+|---|---|---|
+| `rate_limited` | 50 | a request is refused by a rate limit (the line names the bucket) |
+| `turnstile_fail` | 30 | a visitor fails the Turnstile bot check |
+| `bad_origin` | 10 | a signed-in write from another site is refused |
+| `bearer_401` | 30 | a request comes with a sign-in token that no longer works |
+| `webhook_bad_secret` | 3 | a purchase webhook has the wrong secret |
+| `webhook_apply_failed` | 1 | a purchase webhook could not be applied |
+| `entitlement_refused` | 3 | a finished verdict's save and credit settlement was refused because the job was no longer judging |
+| `provider_rate` | 10 | the AI service answers 429 |
+| `provider_down` | 5 | the AI service answers 5xx, cannot be reached or times out |
+| `ban` | 20 | fail2ban bans an address (from fail2ban's journal) |
+
+Change a limit with `ALERT_SIGNAL_<NAME>=n` in the env file, e.g.
+`ALERT_SIGNAL_RATE_LIMITED=100`. To see the lines:
+`journalctl -u verdict --since -1h | grep 'signal:'`.
+
+fail2ban is installed by `setup.sh` with its standard SSH jail (an address
+that fails 5 logins in 10 minutes is blocked for 10 minutes) and logs to the
+journal. `sudo fail2ban-client status sshd` lists who is blocked.
+
+**Heartbeat.** Every morning after 09:00 server time (UTC unless you changed
+it) the watcher sends *Judge is fine* with the last 24 hours: verdicts judged
+and failed, tokens in and out, 5xx responses, addresses banned, crash
+restarts, the last backup upload, the last restore drill and disk use. It is
+the alarm for the alarms: if a morning passes without it, something in the
+chain is broken (the server, the watcher, or the alert settings and keys).
+Check the down alert first, then `systemctl status verdict-watch.timer
+verdict-watch` and `journalctl -u verdict-watch -n 50`. When one of the
+watcher's checks itself fails, the heartbeat's subject names it.
+
+**Restore drill.** On the 1st of every month `verdict-restore-drill` unpacks
+the newest backup into a temporary file, runs SQLite's integrity check,
+counts the verdicts and cases in it and deletes the copy; the live database
+is not touched. A failure sends an alert; a pass is one journal line that the
+heartbeat repeats. Run it now with
+`sudo systemctl start verdict-restore-drill && journalctl -u verdict-restore-drill -n 5`.
+
+**Turning it on for a server set up before the watcher.** Pull and run
+`sudo bash /opt/verdict/repo/deploy/aws-lightsail/setup.sh` once. It keeps the
+settings, installs fail2ban, adds an empty `NTFY_TOPIC=` to the env file and
+deploys with `--force`, which installs the new timers. (A plain
+`sudo verdict-update` runs the copy of `update.sh` from before the pull, so it
+would only install them on the next deploy.) The watcher's first run only
+notes the current state: the journal position, the files and the open ports.
+Expect alerts for your own SSH logins and sudo commands from then on, and one
+for your own edits to the env file.
 
 **Off-server backups.** After each nightly backup, `verdict-backup-upload`
 encrypts the newest copy (and the removal log) with `BACKUP_PASSPHRASE` and
 uploads it with rclone to an S3-compatible bucket. It checks the size the
 bucket reports and deletes copies there older than `BACKUP_KEEP_DAYS` (14 by
 default; the privacy page promises at most 14 days). If the backup failed, the
-newest one is over a day old, or the upload fails, it emails `ALERT_EMAIL`.
+newest one is over a day old, or the upload fails, it sends an alert.
 With Cloudflare R2 (10 GB free):
 
 1. In the Cloudflare dashboard open **R2 Object Storage** (R2 asks for a
