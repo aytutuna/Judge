@@ -36,13 +36,10 @@ export default function BalanceScene({
   const engineRef = useRef<BalanceEngine | null>(null);
 
   // Before the engine effect, so the first frame is already in the right
-  // theme. The site has no switch: dark follows the system unless <html>
-  // pins one with data-theme (app/globals.css).
+  // theme. The site has no switch: dark follows the system.
   useEffect(() => {
     const dark = window.matchMedia("(prefers-color-scheme: dark)");
-    const pinned = document.documentElement.dataset.theme;
-    const apply = () =>
-      setSceneTheme(pinned === "light" || pinned === "dark" ? pinned : dark.matches ? "dark" : "light");
+    const apply = () => setSceneTheme(dark.matches ? "dark" : "light");
     apply();
     dark.addEventListener("change", apply);
     return () => dark.removeEventListener("change", apply);
