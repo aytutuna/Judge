@@ -945,7 +945,10 @@ With Cloudflare R2 (10 GB free):
 
 1. In the Cloudflare dashboard open **R2 Object Storage** (R2 asks for a
    payment method once, even on the free tier) and **Create bucket**, e.g.
-   `judge-backups`, location *Automatic*.
+   `judge-backups`, location *Automatic*. In the bucket's **Settings**, add
+   an **Object lifecycle rule** that deletes objects 14 days after upload.
+   The job prunes the bucket itself, but only while it runs with these
+   settings and the backup works; the rule keeps the 14 days when it doesn't.
 2. On the R2 overview page, **Manage API tokens** > **Create Account API
    token** (or *User API token*). Permission **Object Read & Write**, applied
    to that bucket only, no expiry. Create it and copy the **Access Key ID**,
@@ -971,7 +974,9 @@ With Cloudflare R2 (10 GB free):
    It should end with *Done: verdict-....db.gz.gpg is in judge-backups*.
 
 Any other S3 service works the same way with its own endpoint and keys
-(`BACKUP_S3_BUCKET` may include a folder, e.g. `my-bucket/judge`).
+(`BACKUP_S3_BUCKET` may include a folder, e.g. `my-bucket/judge`). Without a
+lifecycle rule, removing the `BACKUP_S3_*` settings leaves the copies already
+in the bucket there for good: delete them by hand.
 
 To restore from the bucket (when the server's own copies are gone), download
 the newest `verdict-<time>.db.gz.gpg` and `removals.log.gpg` (in R2: the
@@ -980,8 +985,8 @@ run:
 
 ```bash
 gpg --pinentry-mode loopback -d verdict-<time>.db.gz.gpg > verdict-<time>.db.gz   # asks for BACKUP_PASSPHRASE
-sudo install -o verdict -g verdict -m 600 verdict-<time>.db.gz /var/lib/verdict/backups/
-sudo verdict-restore verdict-<time>.db.gz
+sudo verdict-restore ./verdict-<time>.db.gz
+rm verdict-<time>.db.gz verdict-<time>.db.gz.gpg
 ```
 
 On a new server, first set the old `ORIGINALS_KEY` in the env file and put
@@ -991,6 +996,7 @@ after that backup:
 ```bash
 gpg --pinentry-mode loopback -d removals.log.gpg > removals.log
 sudo install -o verdict -g verdict -m 600 removals.log /var/lib/verdict/removals.log
+rm removals.log removals.log.gpg
 ```
 
 ### Custom domain behind Cloudflare
