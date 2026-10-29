@@ -1,8 +1,8 @@
 /**
  * Ivory & Terracotta palette: the single source of truth for every colour
- * that lives outside CSS (OG images, inline SVG, three.js materials).
- * `app/globals.css` declares the same values as CSS custom properties, and
- * test/palette.test.ts fails if the two drift apart.
+ * that lives outside CSS (OG images, inline SVG, three.js materials), light
+ * and dark. `app/globals.css` declares the same values as CSS custom
+ * properties, and test/palette.test.ts fails if the two drift apart.
  *
  * Pure module, no "use client": safe in server code, Satori and the browser.
  */
@@ -39,6 +39,36 @@ export const PALETTE_ALPHA = {
 } as const;
 
 export type PaletteAlphaKey = keyof typeof PALETTE_ALPHA;
+
+/** Dark mode, same roles: the page and cards are warm near-blacks with cards
+ * a step lighter, text is ivory, and the accents are lifted to keep their
+ * contrast. Tints are the accent washed over paper at about 20%, written
+ * opaque so contrast checks, three.js and the apps can use them as is. */
+export const PALETTE_DARK = {
+  ivory: "#15120F",
+  ivory2: "#27231F",
+  paper: "#1D1A17",
+  ink: "#F1EBE1",
+  ink2: "#CFC6BA",
+  muted: "#A89E92",
+  placeholder: "#9A9084",
+  terra: "#D9694F",
+  terraInk: "#EE8C74",
+  terraTint: "#432A22",
+  sage: "#7F9C8E",
+  sageStrong: "#8FB0A0",
+  sageInk: "#A3C2B3",
+  sageTint: "#2F3A34",
+  stone: "#4F463C",
+  strata: "#3A342E",
+  danger: "#F27D72",
+} as const satisfies Record<PaletteKey, string>;
+
+export const PALETTE_ALPHA_DARK = {
+  line: "rgba(241, 235, 225, 0.1)",
+  line2: "rgba(241, 235, 225, 0.16)",
+  glass: "rgba(29, 26, 23, 0.72)",
+} as const satisfies Record<PaletteAlphaKey, string>;
 
 /** The same opaque colours as numbers (`0xRRGGBB`) for three.js. */
 export const PALETTE_NUM = Object.fromEntries(

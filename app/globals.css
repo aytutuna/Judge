@@ -1,9 +1,11 @@
 @import "tailwindcss";
 
 /* ==========================================================================
-   Design tokens (Ivory & Terracotta, light only).
+   Design tokens (Ivory & Terracotta, light and dark).
    Colour values must match lib/palette.ts: test/palette.test.ts compares
-   this first :root block against it.
+   this first :root block against PALETTE and both dark blocks below it
+   against PALETTE_DARK. Dark follows the system unless <html> carries
+   data-theme="light" or "dark".
    ========================================================================== */
 :root {
   /* surfaces */
@@ -42,6 +44,60 @@
   --glass: rgba(255, 252, 247, 0.68);
 }
 
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --ivory: #15120F;
+    --ivory-2: #27231F;
+    --paper: #1D1A17;
+    --ink: #F1EBE1;
+    --ink-2: #CFC6BA;
+    --muted: #A89E92;
+    --placeholder: #9A9084;
+    --terra: #D9694F;
+    --terra-ink: #EE8C74;
+    --terra-tint: #432A22;
+    --sage: #7F9C8E;
+    --sage-strong: #8FB0A0;
+    --sage-ink: #A3C2B3;
+    --sage-tint: #2F3A34;
+    --stone: #4F463C;
+    --strata: #3A342E;
+    --danger: #F27D72;
+    --line: rgba(241, 235, 225, 0.1);
+    --line-2: rgba(241, 235, 225, 0.16);
+    --glass: rgba(29, 26, 23, 0.72);
+  }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --ivory: #15120F;
+  --ivory-2: #27231F;
+  --paper: #1D1A17;
+  --ink: #F1EBE1;
+  --ink-2: #CFC6BA;
+  --muted: #A89E92;
+  --placeholder: #9A9084;
+  --terra: #D9694F;
+  --terra-ink: #EE8C74;
+  --terra-tint: #432A22;
+  --sage: #7F9C8E;
+  --sage-strong: #8FB0A0;
+  --sage-ink: #A3C2B3;
+  --sage-tint: #2F3A34;
+  --stone: #4F463C;
+  --strata: #3A342E;
+  --danger: #F27D72;
+  --line: rgba(241, 235, 225, 0.1);
+  --line-2: rgba(241, 235, 225, 0.16);
+  --glass: rgba(29, 26, 23, 0.72);
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+}
+
 /* Sides. The viewer's own party is sage and the other one terracotta
    (sideColors in lib/palette.ts): Party A is green unless a container says
    the viewer is Party B with data-you="b"; data-you="a" sets it back inside
@@ -70,7 +126,7 @@
 }
 
 :root {
-  color-scheme: light;
+  color-scheme: light dark;
 
   /* type families (next/font sets the --font-inter* variables on <html>) */
   --font-sans: var(--font-inter), ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -137,9 +193,12 @@
   }
 }
 
-/* Glass needs a backdrop blur to stay legible; without one, use paper. */
+/* Glass needs a backdrop blur to stay legible; without one, use paper. The
+   dark selectors are repeated so this outranks the dark blocks above. */
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-  :root {
+  :root,
+  :root:not([data-theme="light"]),
+  :root[data-theme="dark"] {
     --glass: var(--paper);
   }
 }
@@ -217,7 +276,6 @@
    ========================================================================== */
 @layer base {
   html {
-    color-scheme: light;
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
     /* anchors (#how, #faq, #main) land below the fixed nav */
@@ -345,7 +403,9 @@
 }
 
 @media (forced-colors: active) {
-  :root {
+  :root,
+  :root:not([data-theme="light"]),
+  :root[data-theme="dark"] {
     --glass: Canvas;
     --line: CanvasText;
     --line-2: CanvasText;
