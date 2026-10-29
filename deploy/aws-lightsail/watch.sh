@@ -108,10 +108,11 @@ in_deploy_window() {
 }
 
 check_app_alerts() {
-  local line key subject todo
+  local line key subject todo crit
   while IFS= read -r line; do
     [[ $line =~ ^\[alert:([a-z_]+)\] ]] || continue
     key=${BASH_REMATCH[1]}
+    crit=--critical
     case $key in
       provider_credit)
         subject="Judge: the AI service is out of credit"
@@ -131,11 +132,15 @@ check_app_alerts() {
         todo="Verdicts fail until the model name is right: check CLAUDE_MODEL and CLAUDE_MODEL_LITE in /etc/verdict/verdict.env (a retired or mistyped model), then sudo systemctl restart verdict."
         ;;
       *)
-        subject="Judge alert: $key"
+        # A kind this watcher does not know: all of them share one quiet,
+        # non-critical alert.
+        subject="Judge: the app logged [alert:$key]"
         todo=""
+        key=other
+        crit=""
         ;;
     esac
-    notify "alert-$key" --critical "$subject" "The app logged:
+    notify "alert-$key" ${crit:+"$crit"} "$subject" "The app logged:
 $(clip <<<"$line")
 
 $todo
