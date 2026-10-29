@@ -12,9 +12,9 @@
 #
 # Safe to run again: finished steps are skipped and existing settings kept.
 # If it stops with an error, fix the cause (if any) and run the same command.
-# It installs a swap file, Node.js 24, Caddy and automatic security updates,
-# creates the "verdict" user, clones the code to /opt/verdict/repo (owned by
-# root, so the app user cannot change what root runs), writes
+# It installs a swap file, Node.js 24, Caddy, fail2ban and automatic security
+# updates, creates the "verdict" user, clones the code to /opt/verdict/repo
+# (owned by root, so the app user cannot change what root runs), writes
 # /etc/verdict/verdict.env, then builds and starts the site with update.sh.
 set -euo pipefail
 
@@ -144,6 +144,26 @@ add_missing_settings() {
     printf '\n%s\n' "$(cloudflare_settings_block)" >>"$ENV_FILE"
     info "Added the (empty) custom domain and Cloudflare settings."
   fi
+  if ! grep -qE '^[#[:space:]]*NTFY_TOPIC=' "$ENV_FILE"; then
+    printf '\n%s\n' "$(phone_alerts_block)" >>"$ENV_FILE"
+    info "Added the (empty) phone alert settings."
+  fi
+}
+
+# The env file section for alerts on the phone (alert.sh, watch.sh).
+phone_alerts_block() {
+  cat <<'EOF'
+# --- Phone alerts, optional -------------------------------------------------
+# Every alert also goes to the ntfy app (see "Monitoring" in the README).
+# Anyone who knows the topic name can read it: make it long and random, e.g.
+# judge- followed by the output of: openssl rand -hex 12
+NTFY_TOPIC=
+# NTFY_URL=https://ntfy.sh
+# NTFY_TOKEN=   (only for a server or topic that needs a token)
+# The watcher alerts when one kind of [signal:...] line reaches its limit in
+# 5 minutes. Override a limit as ALERT_SIGNAL_<NAME>=n, e.g.
+# ALERT_SIGNAL_RATE_LIMITED=100
+EOF
 }
 
 # The env file section for the web server settings update.sh reads. Empty
@@ -242,6 +262,17 @@ install_caddy() {
   apt_get update -q
   apt_install caddy
   info "Installed $(caddy version | cut -d' ' -f1)"
+}
+
+setup_fail2ban() {
+  log "fail2ban (blocks addresses that keep failing SSH logins)"
+  apt_install fail2ban python3-systemd
+  # The watcher counts the bans in the journal.
+  printf '[Definition]\nlogtarget = SYSTEMD-JOURNAL\n' >/etc/fail2ban/fail2ban.d/verdict.local
+  printf '[sshd]\nenabled = true\n' >/etc/fail2ban/jail.d/verdict.local
+  systemctl enable --quiet fail2ban
+  systemctl restart fail2ban
+  info "Enabled for SSH."
 }
 
 enable_auto_updates() {
@@ -475,11 +506,14 @@ TURNSTILE_SECRET_KEY=
 # ALERT_EMAIL=
 # ALERT_5XX_THRESHOLD=10
 # ALERT_ERROR_THRESHOLD=20
+# (phone alerts: NTFY_TOPIC below)
 # BACKUP_S3_ENDPOINT=   (e.g. https://<account id>.r2.cloudflarestorage.com)
 # BACKUP_S3_BUCKET=
 # BACKUP_S3_ACCESS_KEY=
 # BACKUP_S3_SECRET_KEY=
 # BACKUP_PASSPHRASE=    (openssl rand -base64 32; keep a copy in a password manager)
+
+$(phone_alerts_block)
 
 $(cloudflare_settings_block)
 EOF
@@ -558,6 +592,9 @@ main() {
   done
 
   [[ $EUID -eq 0 ]] || die "Run with sudo: sudo bash setup.sh"
+  # What this run changes is the setup's, not an intruder's (see watch.sh).
+  install -d -m 700 /var/lib/verdict-alerts
+  touch /var/lib/verdict-alerts/deploy-at
   if ! grep -qx 'VERSION_ID="24.04"' /etc/os-release; then
     warn "This script is written for Ubuntu 24.04 LTS; continuing anyway."
   fi
@@ -567,6 +604,7 @@ main() {
   install_packages
   install_node
   install_caddy
+  setup_fail2ban
   enable_auto_updates
   create_user_and_dirs
   clone_repo "$repo_url" "$branch"
