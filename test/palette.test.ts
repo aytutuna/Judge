@@ -183,8 +183,11 @@ describe("palette contrast (WCAG 2.x)", () => {
       ["sageInk", "paper"],
       ["sageInk", "sageTint"],
       ["terraInk", "terraTint"],
+      ["muted", "sageTint"],
+      ["muted", "terraTint"],
       ["danger", "paper"],
       ["danger", "ivory"],
+      ["danger", "terraTint"],
     ];
     for (const [fg, bg] of pairs) {
       expect(contrast(P[fg], P[bg]), `${fg} on ${bg}`).toBeGreaterThanOrEqual(AA_TEXT);
@@ -222,9 +225,12 @@ describe("palette contrast (WCAG 2.x)", () => {
       ["sageInk", "ivory2"],
       ["sageInk", "paper"],
       ["sageInk", "sageTint"],
+      ["muted", "sageTint"],
+      ["muted", "terraTint"],
       ["paper", "ink"],
       ["danger", "paper"],
       ["danger", "ivory"],
+      ["danger", "terraTint"],
     ];
     for (const [fg, bg] of text) {
       expect(contrast(D[fg], D[bg]), `${fg} on ${bg}`).toBeGreaterThanOrEqual(AA_TEXT);

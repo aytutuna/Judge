@@ -42,8 +42,9 @@ export type PaletteAlphaKey = keyof typeof PALETTE_ALPHA;
 
 /** Dark mode, same roles: the page and cards are warm near-blacks with cards
  * a step lighter, text is ivory, and the accents are lifted to keep their
- * contrast. Tints are the accent washed over paper at about 20%, written
- * opaque so contrast checks, three.js and the apps can use them as is. */
+ * contrast. Tints are roughly the accent washed over paper (sage's is
+ * pushed greener so it still reads as green); copy the hexes, don't
+ * re-derive them. */
 export const PALETTE_DARK = {
   ivory: "#15120F",
   ivory2: "#27231F",
@@ -58,10 +59,10 @@ export const PALETTE_DARK = {
   sage: "#7F9C8E",
   sageStrong: "#8FB0A0",
   sageInk: "#A3C2B3",
-  sageTint: "#2F3A34",
+  sageTint: "#2D3832",
   stone: "#4F463C",
   strata: "#3A342E",
-  danger: "#F27D72",
+  danger: "#F5727E",
 } as const satisfies Record<PaletteKey, string>;
 
 export const PALETTE_ALPHA_DARK = {
