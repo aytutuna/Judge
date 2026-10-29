@@ -17,6 +17,8 @@ StateDirectoryMode=0700
 Nice=10
 
 NoNewPrivileges=true
+# Root only needs to read files it does not own, such as Caddy's log.
+CapabilityBoundingSet=CAP_DAC_READ_SEARCH
 ProtectSystem=strict
 ProtectHome=true
 PrivateTmp=true
