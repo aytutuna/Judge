@@ -216,7 +216,8 @@ check_integrity() {
   fi
   changed=$(comm -3 <(sort "$file") <(sort <<<"$current") | awk '{ print $2 }' | sort -u)
   [[ -n $changed ]] || return 0
-  if notify integrity --critical "Judge: server files changed outside a deploy" "Changed, added or removed since the last check:
+  # Keyed by the list, so that other files changing within the hour still alert.
+  if notify "integrity-$(sha256sum <<<"$changed" | cut -c1-12)" --critical "Judge: server files changed outside a deploy" "Changed, added or removed since the last check:
 $changed
 
 If you did not change them (by hand, or with setup.sh or update.sh), find out who did before anything else.
@@ -310,15 +311,18 @@ On the server: journalctl -u verdict -n 100" || true
 }
 
 check_failed_units() {
-  local file=$STATE_DIR/failed-units current new
-  current=$(systemctl list-units --failed --plain --no-legend --no-pager 2>/dev/null | awk '{ print $1 }' | sort)
-  new=$(comm -13 <(cat "$file" 2>/dev/null) <(printf '%s\n' "$current") | sed '/^$/d')
-  if [[ -z $new ]] || notify failed-units "Judge: a service failed" "Failed:
-$new
+  local file=$STATE_DIR/failed-units unit reported=""
+  # One alert per unit when it fails. The file lists the failed units already
+  # reported; one whose alert did not go out is tried again next run.
+  while read -r unit; do
+    [[ -n $unit ]] || continue
+    if grep -qxF -- "$unit" "$file" 2>/dev/null || notify "failed-$unit" "Judge: $unit failed" "$unit is in the failed state.
 
-On the server: systemctl --failed, then journalctl -u <unit> -n 50"; then
-    printf '%s\n' "$current" >"$file"
-  fi
+On the server: systemctl status $unit; journalctl -u $unit -n 50"; then
+      reported+=$unit$'\n'
+    fi
+  done < <(systemctl list-units --failed --plain --no-legend --no-pager 2>/dev/null | awk '{ print $1 }')
+  printf '%s' "$reported" >"$file"
 }
 
 check_oom() {

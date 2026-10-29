@@ -970,8 +970,8 @@ Check it with `sudo systemctl start verdict-errors` and
 **The watcher.** `verdict-watch.timer` runs `watch.sh` every minute, as root.
 Each check remembers what it has seen in `/var/lib/verdict-alerts`, and each
 kind of alert then waits an hour before it repeats (another SSH user or
-address, or another program run with sudo, counts as another kind). What the
-alerts mean:
+address, another program run with sudo, another failed unit or another set of
+changed files counts as another kind). What the alerts mean:
 
 | Alert | Means | Do |
 |---|---|---|
@@ -985,7 +985,7 @@ alerts mean:
 | *a new port is listening* (critical) | A TCP port, or a UDP port under 32768, that was not listening before. A successful deploy takes the current set as the new normal. | `sudo ss -ltnup` names the program behind it. |
 | *NAME xN in 5 minutes* | The app logged a `[signal:NAME]` line N times in 5 minutes (see below). | The alert says what it means and where to look. |
 | *the app restarted on its own* | The app crashed and systemd started it again. | `journalctl -u verdict -n 100` |
-| *a service failed* | A unit is in the failed state, e.g. a backup that did not finish. | `systemctl --failed`, then `journalctl -u <unit> -n 50` |
+| *UNIT failed* | A unit is in the failed state, e.g. a backup that did not finish. Each unit alerts on its own. | `systemctl status <unit>`, then `journalctl -u <unit> -n 50` |
 | *a process was killed for lack of memory* | The kernel's out-of-memory killer struck, most likely the app at its 400 MB cap. | `journalctl -k --since -1h`; if it keeps happening, find what grows. |
 | *the disk at ... is N% full* | `/` or `/var/lib/verdict` is at 90% or more. A full disk stops the database and the backups. | `sudo du -xh --max-depth=2 / \| sort -h \| tail` |
 | *the certificate for ... expires in N days* | Fewer than 10 days left (checked hourly). Caddy renews 30 days ahead, so renewal has been failing. | `journalctl -u caddy -n 200`; often DNS or a firewall blocking port 80/443. |
