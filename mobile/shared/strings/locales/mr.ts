@@ -52,7 +52,7 @@ const mr: AppLocale = {
     "app.settings.languageDevice": "फोनची भाषा",
     "app.settings.appearance": "थीम",
     "app.settings.appearanceSystem": "फोनप्रमाणे",
-    "app.settings.appearanceLight": "फिकट",
+    "app.settings.appearanceLight": "लाइट",
     "app.settings.appearanceDark": "गडद",
     "app.settings.about": "Judge बद्दल",
     "app.settings.version": "आवृत्ती {version}",

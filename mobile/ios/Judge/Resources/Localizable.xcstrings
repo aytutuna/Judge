@@ -43568,7 +43568,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Вигляд"
+            "value" : "Оформлення"
           }
         },
         "ur" : {
@@ -43640,7 +43640,7 @@
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Σκούρη"
+            "value" : "Σκούρα"
           }
         },
         "en" : {
@@ -43844,7 +43844,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Темний"
+            "value" : "Темне"
           }
         },
         "ur" : {
@@ -44012,7 +44012,7 @@
         "mr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "फिकट"
+            "value" : "लाइट"
           }
         },
         "ms" : {
@@ -44036,7 +44036,7 @@
         "or" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ଉଜ୍ଜ୍ୱଳ"
+            "value" : "ହାଲୁକା"
           }
         },
         "pa" : {
@@ -44120,7 +44120,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Світлий"
+            "value" : "Світле"
           }
         },
         "ur" : {
@@ -44312,7 +44312,7 @@
         "or" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ଫୋନ୍ ପରି"
+            "value" : "ଫୋନ୍ ଅନୁସାରେ"
           }
         },
         "pa" : {

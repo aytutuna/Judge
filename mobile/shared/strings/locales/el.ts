@@ -56,7 +56,7 @@ const el: AppLocale = {
     "app.settings.appearance": "Εμφάνιση",
     "app.settings.appearanceSystem": "Ίδια με του τηλεφώνου",
     "app.settings.appearanceLight": "Ανοιχτή",
-    "app.settings.appearanceDark": "Σκούρη",
+    "app.settings.appearanceDark": "Σκούρα",
     "app.settings.about": "Σχετικά με το Judge",
     "app.settings.version": "Έκδοση {version}",
     "app.signin.required": "Συνδέσου για να ζητήσεις απόφαση.",
