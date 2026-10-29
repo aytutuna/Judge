@@ -901,7 +901,8 @@ GitHub checks from outside that the site answers; on the server, timers
 check for error spikes, watch for trouble every minute, and test the backups.
 The server's alerts go nowhere until `ALERT_EMAIL` or `NTFY_TOPIC` is set in
 `/etc/verdict/verdict.env`, and a change there needs no restart: the timers
-read the file every time they run.
+read the file every time they run. With Grafana Cloud set up (see below),
+Grafana takes over part of the alerting.
 
 **Where alerts go.** Each alert is an email to `ALERT_EMAIL` (sent through
 Resend with `RESEND_API_KEY` and `EMAIL_FROM`, the same as sign-in emails) and
@@ -1052,6 +1053,90 @@ would only install them on the next deploy.) The watcher's first run only
 notes the current state: the journal position, the files and the open ports.
 Expect alerts for your own SSH logins and sudo commands from then on, and one
 for your own edits to the env file.
+
+**Grafana Cloud.** On Grafana Cloud's free tier, Grafana keeps the server's
+metrics and logs, alerts on them, and fetches the site from two probes every
+minute. Grafana Alloy on the server (`deploy/aws-lightsail/alloy/config.alloy`,
+installed as `/etc/alloy/verdict.alloy`) sends CPU, memory, disk, network and
+the state of the `verdict*`, `caddy`, `ssh`, `fail2ban` and `alloy` units to
+Grafana's Prometheus every 60 seconds, and to its Loki the journal of those
+units and the kernel's, plus Caddy's access log (with the status class, e.g.
+`5xx`, as a label; nothing beyond what the log already keeps). The rules are
+in `deploy/grafana/alerts.json`: critical ones go to Pushover at emergency
+priority (repeating until you acknowledge it) and by email, warnings by email
+only. While `GRAFANA_TOKEN` is set, the watcher leaves `[alert:...]` lines,
+failed units, out-of-memory kills and full disks to Grafana and only logs
+them, and `errors.sh` no longer alerts on 5xx responses alone. Everything else
+it does stays: logins, sudo, changed files, new ports, signals, crash
+restarts, Caddy's own certificate (behind Cloudflare the probes only see
+Cloudflare's), backups, the restore drill and the heartbeat. To set it up:
+
+1. Sign up at grafana.com. The free account comes with a stack, e.g.
+   `https://<name>.grafana.net`; put it in a European region, near the server.
+2. In the Grafana Cloud portal (grafana.com, **My Account**), open
+   **Access Policies** and create two policies for the stack, each with a
+   token without expiry: *judge-server* with the scopes `metrics:write` and
+   `logs:write` (the token is `GRAFANA_TOKEN`), and *judge-synthetics* with
+   `stacks:read`, `metrics:write`, `logs:write` and `traces:write`
+   (`GRAFANA_CLOUD_TOKEN`, used only by `provision.sh`; Synthetic Monitoring
+   keeps it to publish its results, so never delete it).
+3. On the stack's page in the portal, **Prometheus** > **Details** shows the
+   remote write endpoint and the user, **Loki** > **Details** the URL (add
+   `/loki/api/v1/push` to it) and the user. Add them to the env file:
+
+   ```bash
+   GRAFANA_PROM_URL=https://prometheus-prod-<nn>-<region>.grafana.net/api/prom/push
+   GRAFANA_PROM_USER=<Prometheus user, a number>
+   GRAFANA_LOKI_URL=https://logs-prod-<nnn>.grafana.net/loki/api/v1/push
+   GRAFANA_LOKI_USER=<Loki user, a number>
+   GRAFANA_TOKEN=glc_...
+   ```
+
+   Then run `sudo bash /opt/verdict/repo/deploy/aws-lightsail/setup.sh` once:
+   it installs Alloy from Grafana's apt repository and starts it (without
+   `GRAFANA_TOKEN` it skips Alloy). Deploys keep its config current. After
+   changing these settings later, `sudo systemctl restart alloy`. Within a
+   couple of minutes **Explore** in Grafana shows `up{app="judge"}` and the
+   logs `{app="judge"}`; if not, `journalctl -u alloy -n 50`.
+4. In Pushover (the app, then pushover.net) copy your **user key** and
+   **Create an Application** named Judge for its **API token**.
+5. In the stack, **Administration** > **Users and access** > **Service
+   accounts**: add one with the Admin role and give it a token.
+6. On your own machine (Linux, macOS or WSL, with curl and jq), keep the
+   values in a file outside the repo and run `provision.sh`:
+
+   ```bash
+   # ~/judge-grafana.env
+   GRAFANA_URL=https://<name>.grafana.net
+   GRAFANA_SA_TOKEN=glsa_...
+   GRAFANA_CLOUD_TOKEN=glc_...
+   ALERT_EMAIL=you@yourdomain.org
+   GRAFANA_PUSHOVER_USER=<user key>
+   GRAFANA_PUSHOVER_TOKEN=<application token>
+   # NTFY_TOPIC=judge-...   critical alerts to ntfy as well
+   ```
+
+   ```bash
+   (set -a; . ~/judge-grafana.env; bash deploy/grafana/provision.sh)
+   ```
+
+   It creates the folder *judge*, the contact points, the notification
+   policy, the rules and two synthetic checks (`https://okjudge.com/` and
+   `/api/health` from Frankfurt and London), and updates them in place when
+   run again. Run it after every change to `deploy/grafana/`; edits made in
+   the Grafana UI stay possible but the next run puts the files' version back.
+
+When an alert fires, its summary says what happened and its description where
+to look on the server, the same hints as in the watcher's table above. In
+Grafana, **Alerting** > **Alert rules** (folder *judge*) shows each rule's
+state and history, **Explore** with Loki and `{app="judge", unit="verdict.service"}`
+the app's log around that time, and **Testing & synthetics** > **Synthetics**
+the probes' results. If Grafana stops getting metrics for 3 minutes, *No
+metrics from the server* fires: the server is down or Alloy stopped. The
+rules' limits are fixed in `alerts.json`; `ALERT_SIGNAL_<NAME>` only changes
+the watcher's. Signals, SSH logins and bans still alert from the watcher too,
+so for now those come twice. The GitHub down alert stays until the synthetic
+checks have proven themselves.
 
 **Off-server backups.** After each nightly backup, `verdict-backup-upload`
 encrypts the newest copy (and the removal log) with `BACKUP_PASSPHRASE` and
