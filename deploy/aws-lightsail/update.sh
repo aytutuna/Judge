@@ -44,7 +44,11 @@ DEPLOY_SRC=$REPO_DIR/deploy/aws-lightsail
 BUILD_HOME=/var/cache/verdict-build
 CADDYFILE=/etc/caddy/Caddyfile
 ACCESS_LOG=/var/log/caddy/access.log
-UNITS=(verdict.service verdict-backup.service verdict-backup.timer verdict-backup-upload.service verdict-errors.service verdict-errors.timer)
+# The watcher (watch.sh) takes changes to units, the Caddyfile and the live
+# release as a deploy's while deploy-at in here is under 30 minutes old.
+ALERT_DIR=/var/lib/verdict-alerts
+UNITS=(verdict.service verdict-backup.service verdict-backup.timer verdict-backup-upload.service verdict-errors.service verdict-errors.timer
+  verdict-watch.service verdict-watch.timer verdict-restore-drill.service verdict-restore-drill.timer)
 # Installed only while CLOUDFLARE_PROXY=1.
 CF_UNITS=(verdict-cloudflare-ips.service verdict-cloudflare-ips.timer)
 CF_SNIPPET=/etc/caddy/cloudflare-ips.caddy
@@ -226,6 +230,8 @@ install_units() {
   systemctl enable --quiet verdict.service
   systemctl enable --now --quiet verdict-backup.timer
   systemctl enable --now --quiet verdict-errors.timer
+  systemctl enable --now --quiet verdict-watch.timer
+  systemctl enable --now --quiet verdict-restore-drill.timer
   if ((proxy)); then systemctl enable --now --quiet verdict-cloudflare-ips.timer; fi
 }
 
@@ -377,6 +383,8 @@ main() {
   # One deploy at a time.
   exec 9>/run/lock/verdict-update.lock
   flock -n 9 || die "Another update is already running."
+  install -d -m 700 "$ALERT_DIR"
+  touch "$ALERT_DIR/deploy-at"
 
   local free_mb
   free_mb=$(df --output=avail -m "$APP_DIR" | tail -n 1 | tr -d ' ')
@@ -474,6 +482,7 @@ main() {
   if health_check; then
     CONFIG_SAVED=0
     prune_releases
+    bash "$DEPLOY_SRC/watch.sh" --rebaseline >/dev/null || info "Could not update the watcher's baseline."
     log "Success: commit $short is live at $(env_value NEXT_PUBLIC_SITE_URL)"
     exit 0
   fi
