@@ -44,7 +44,7 @@ DEPLOY_SRC=$REPO_DIR/deploy/aws-lightsail
 BUILD_HOME=/var/cache/verdict-build
 CADDYFILE=/etc/caddy/Caddyfile
 ACCESS_LOG=/var/log/caddy/access.log
-UNITS=(verdict.service verdict-backup.service verdict-backup.timer)
+UNITS=(verdict.service verdict-backup.service verdict-backup.timer verdict-errors.service verdict-errors.timer)
 # Installed only while CLOUDFLARE_PROXY=1.
 CF_UNITS=(verdict-cloudflare-ips.service verdict-cloudflare-ips.timer)
 CF_SNIPPET=/etc/caddy/cloudflare-ips.caddy
@@ -225,6 +225,7 @@ install_units() {
   if ((changed)); then systemctl daemon-reload; fi
   systemctl enable --quiet verdict.service
   systemctl enable --now --quiet verdict-backup.timer
+  systemctl enable --now --quiet verdict-errors.timer
   if ((proxy)); then systemctl enable --now --quiet verdict-cloudflare-ips.timer; fi
 }
 

@@ -1,0 +1,12 @@
+# Runs verdict-errors.service every 5 minutes.
+# Installed to /etc/systemd/system/ by update.sh; edits there are overwritten.
+
+[Unit]
+Description=Judge error spike check every 5 minutes
+
+[Timer]
+OnCalendar=*:0/5
+AccuracySec=30s
+
+[Install]
+WantedBy=timers.target
