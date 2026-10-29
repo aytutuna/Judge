@@ -95,8 +95,10 @@ a verdict kept only on the phone), `history-select` (select mode, two rows
 picked) and `case/<state>` (a key of `cases.views` or
 `awaiting`, `judging`, `judged`, `one-sided`, `appeal`, `appeal-judging`,
 `failed`, `expired`, `removed`; Turkish takes the `_tr` view if there is one).
-Languages: `en`, `tr`. These states draw the flat balance in place of the
-bundled 3D scene, so the shots match from run to run.
+Languages: `en`, `tr`. Add `:dark` (`home:en:dark`) for the dark appearance;
+without it a state is light whatever the simulator uses. These states draw
+the flat balance in place of the bundled 3D scene, so the shots match from
+run to run.
 
 ```sh
 APP=build/DerivedData/Build/Products/Debug-iphonesimulator/Judge.app
