@@ -331,12 +331,14 @@ describe("side colours", () => {
 });
 
 describe("BalanceFallback sides", () => {
-  const fills = (out: string) => [...out.matchAll(/<circle [^>]*r="36" fill="(#[0-9A-F]{6})"/g)].map((m) => m[1]);
+  const fills = (out: string) => [...out.matchAll(/<circle [^>]*r="36" fill="([^"]+)"/g)].map((m) => m[1]);
+  const you = (out: string) => out.match(/<svg [^>]*data-you="([ab])"/)?.[1];
 
   it("draws Party A green unless the viewer is Party B", () => {
-    expect(fills(html(<BalanceFallback tugA={30} />))).toEqual([PALETTE.sage, PALETTE.terra]);
-    expect(fills(html(<BalanceFallback tugA={30} you="a" />))).toEqual([PALETTE.sage, PALETTE.terra]);
-    expect(fills(html(<BalanceFallback tugA={30} you="b" />))).toEqual([PALETTE.terra, PALETTE.sage]);
+    expect(fills(html(<BalanceFallback tugA={30} />))).toEqual(["var(--party-a)", "var(--party-b)"]);
+    expect(you(html(<BalanceFallback tugA={30} />))).toBe("a");
+    expect(you(html(<BalanceFallback tugA={30} you="a" />))).toBe("a");
+    expect(you(html(<BalanceFallback tugA={30} you="b" />))).toBe("b");
     expect(fills(html(<BalanceFallback empty />))).toEqual([]);
   });
 });
