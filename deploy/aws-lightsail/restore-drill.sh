@@ -36,10 +36,21 @@ main() {
     sort -n | tail -n 1 | cut -d' ' -f2-)
   [[ -n $newest ]] || fail "There is no backup in $BACKUP_DIR."
 
-  local work db check verdicts cases
+  local work db check verdicts cases size free
   work=$(mktemp -d)
   # shellcheck disable=SC2064 # expand the path now
   trap "rm -rf -- '$work'" EXIT
+  # Unpacking into a nearly full disk would fill it for the live site too.
+  size=$(gzip -l "$newest" | awk 'NR == 2 { print $2 }') || fail "$(basename "$newest") does not unpack."
+  free=$(($(df --output=avail -k "$work" | tail -n 1) * 1024))
+  if ((free < 2 * size)); then
+    size="$(((size + 1048575) >> 20)) MB" free="$((free >> 20)) MB"
+    echo "Restore drill skipped on $(date -u +%F): $(basename "$newest") unpacks to $size, only $free free"
+    bash "$HERE/alert.sh" "Judge restore drill skipped: low disk" "$(basename "$newest") unpacks to $size, but only $free is free for the copy, so the drill did not run.
+
+Free up space, then run it again. On the server: sudo du -xh --max-depth=2 / | sort -h | tail -n 15; sudo systemctl start verdict-restore-drill" || true
+    return 0
+  fi
   db=$work/drill.db
   gzip -dc "$newest" >"$db" || fail "$(basename "$newest") does not unpack."
   check=$(sqlite3 "$db" "PRAGMA integrity_check;" 2>&1) || true

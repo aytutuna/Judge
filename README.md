@@ -1028,8 +1028,10 @@ watcher's checks itself fails, the heartbeat's subject names it.
 **Restore drill.** On the 1st of every month `verdict-restore-drill` unpacks
 the newest backup into a temporary file, runs SQLite's integrity check,
 counts the verdicts and cases in it and deletes the copy; the live database
-is not touched. A failure sends an alert; a pass is one journal line that the
-heartbeat repeats. Run it now with
+is not touched. When the disk has less than twice the unpacked size free, it
+skips the copy and sends *restore drill skipped: low disk* instead. A failure
+sends an alert; a pass is one journal line that the heartbeat
+repeats. Run it now with
 `sudo systemctl start verdict-restore-drill && journalctl -u verdict-restore-drill -n 5`.
 
 **Turning it on for a server set up before the watcher.** Pull and run
