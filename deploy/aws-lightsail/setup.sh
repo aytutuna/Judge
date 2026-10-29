@@ -12,8 +12,9 @@
 #
 # Safe to run again: finished steps are skipped and existing settings kept.
 # If it stops with an error, fix the cause (if any) and run the same command.
-# It installs a swap file, Node.js 24, Caddy, fail2ban and automatic security
-# updates, creates the "verdict" user, clones the code to /opt/verdict/repo
+# It installs a swap file, Node.js 24, Caddy, fail2ban, automatic security
+# updates and, once GRAFANA_TOKEN is set, Grafana Alloy, creates the "verdict"
+# user, clones the code to /opt/verdict/repo
 # (owned by root, so the app user cannot change what root runs), writes
 # /etc/verdict/verdict.env, then builds and starts the site with update.sh.
 set -euo pipefail
@@ -148,6 +149,10 @@ add_missing_settings() {
     printf '\n%s\n' "$(phone_alerts_block)" >>"$ENV_FILE"
     info "Added the (empty) phone alert settings."
   fi
+  if ! grep -qE '^[#[:space:]]*GRAFANA_TOKEN=' "$ENV_FILE"; then
+    printf '\n%s\n' "$(grafana_settings_block)" >>"$ENV_FILE"
+    info "Added the (empty) Grafana Cloud settings."
+  fi
 }
 
 # The env file section for alerts on the phone (alert.sh, watch.sh).
@@ -166,6 +171,22 @@ NTFY_TOPIC=
 # rate_limited, bad_origin, bearer_401 and webhook_bad_secret come by email
 # only; ALERT_SIGNALS_PUSH=1 sends them to the phone too.
 # ALERT_SIGNALS_PUSH=
+EOF
+}
+
+# The env file section for Grafana Alloy (alloy/config.alloy).
+grafana_settings_block() {
+  cat <<'EOF'
+# --- Grafana Cloud, optional ------------------------------------------------
+# Metrics and logs go to Grafana Cloud while GRAFANA_TOKEN is set, and the
+# watcher leaves the alerts Grafana sends to Grafana (see "Grafana Cloud" in
+# the README). After setting them the first time, run setup.sh again; after a
+# change, sudo systemctl restart alloy
+GRAFANA_PROM_URL=
+GRAFANA_PROM_USER=
+GRAFANA_LOKI_URL=
+GRAFANA_LOKI_USER=
+GRAFANA_TOKEN=
 EOF
 }
 
@@ -281,6 +302,27 @@ setup_fail2ban() {
   else
     warn "fail2ban did not start; carrying on without it. See journalctl -u fail2ban -n 50"
   fi
+}
+
+# update.sh installs the config and the unit drop-in from alloy/ and starts it.
+install_alloy() {
+  log "Grafana Alloy (sends metrics and logs to Grafana Cloud)"
+  if [[ -z $(get_env GRAFANA_TOKEN) ]]; then
+    info "Skipped: GRAFANA_TOKEN is not set in $ENV_FILE."
+    return
+  fi
+  if dpkg -s alloy >/dev/null 2>&1; then
+    info "Already installed: $(alloy --version | head -n 1)"
+    return
+  fi
+  install -d -m 755 /etc/apt/keyrings
+  curl -fsSL https://apt.grafana.com/gpg-full.key -o /etc/apt/keyrings/grafana.asc
+  echo "deb [signed-by=/etc/apt/keyrings/grafana.asc] https://apt.grafana.com stable main" \
+    >/etc/apt/sources.list.d/grafana.list
+  chmod 644 /etc/apt/keyrings/grafana.asc /etc/apt/sources.list.d/grafana.list
+  apt_get update -q
+  apt_install alloy
+  info "Installed $(alloy --version | head -n 1)"
 }
 
 enable_auto_updates() {
@@ -523,6 +565,8 @@ TURNSTILE_SECRET_KEY=
 
 $(phone_alerts_block)
 
+$(grafana_settings_block)
+
 $(cloudflare_settings_block)
 EOF
     chmod 600 "$tmp"
@@ -617,6 +661,7 @@ main() {
   create_user_and_dirs
   clone_repo "$repo_url" "$branch"
   write_env_file "$reconfigure"
+  install_alloy
   install_shortcuts
 
   log "First build and start (update.sh)"
