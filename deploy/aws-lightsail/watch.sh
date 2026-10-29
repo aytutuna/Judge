@@ -5,7 +5,8 @@
 #   - the app logs an [alert:...] line (the AI service is out of credit,
 #     refuses or does not permit the API key, or does not know CLAUDE_MODEL)
 #   - someone logs in over SSH, or runs sudo for anything but the
-#     verdict-update and verdict-restore commands or a backup
+#     verdict-update and verdict-restore commands, a backup or a read-only
+#     look around (journalctl, systemctl status, ss, du, df, fail2ban-client)
 #   - the env file, a verdict unit, the Caddyfile, a verdict-* command or the
 #     live release changes outside a deploy
 #   - a new port is listening
@@ -162,6 +163,21 @@ On the server: journalctl -t sshd --since -1h" || true
   done < <(journal_new ssh SYSLOG_IDENTIFIER=sshd SYSLOG_IDENTIFIER=sshd-session)
 }
 
+# The look-around commands the alerts suggest, so that following their advice
+# does not raise more. Arguments that change or write something (cleaning the
+# journal, killing sockets, unbanning) do not count.
+read_only() {
+  local prog=${1%% *} args=${1#"${1%% *}"}
+  case $prog in
+    /usr/bin/du | /usr/bin/df) return 0 ;;
+    /usr/bin/journalctl) [[ ! $args =~ \ --(vacuum|rotate|flush|relinquish|smart-relinquish|setup-keys|sync|update-catalog|cursor-file) ]] ;;
+    /usr/bin/ss) [[ ! $args =~ \ (-[A-Za-z]*[KD]|--kill|--diag) ]] ;;
+    /usr/bin/fail2ban-client) [[ $args =~ ^\ (status|banned|get|ping)(\ |$) ]] ;;
+    /usr/bin/systemctl) [[ $args =~ ^\ (status|show|list-units|list-timers|--failed)(\ |$) ]] ;;
+    *) return 1 ;;
+  esac
+}
+
 check_sudo() {
   local line user cmd prog
   while IFS= read -r line; do
@@ -169,7 +185,7 @@ check_sudo() {
     user=${BASH_REMATCH[1]//[^A-Za-z0-9._-]/?}
     cmd=${BASH_REMATCH[2]}
     if [[ $cmd =~ ^/usr/local/sbin/verdict-(update|restore)(\ |$) ||
-      $cmd =~ ^/usr/bin/systemctl\ start\ verdict-backup(\.service)?$ ]]; then
+      $cmd =~ ^/usr/bin/systemctl\ start\ verdict-backup(\.service)?$ ]] || read_only "$cmd"; then
       continue
     fi
     # Only the program: the arguments could hold a secret.
