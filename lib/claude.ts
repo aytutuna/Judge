@@ -155,7 +155,8 @@ function client(): Anthropic {
   return sharedClient;
 }
 
-/** The HTTP status stays in the text: providerFailure reads it back. */
+/** The HTTP status and the API's error type stay in the text:
+ * providerFailure reads them back. */
 function describeError(e: unknown, timeoutMs: number): string {
   // Checked first: APIUserAbortError is an APIError subclass. Only our
   // deadline signal aborts these calls.
@@ -166,30 +167,54 @@ function describeError(e: unknown, timeoutMs: number): string {
     return `Claude network error: ${e.message}`;
   }
   if (e instanceof Anthropic.APIError) {
-    return `Claude HTTP ${e.status ?? "?"}: ${e.message.slice(0, 300)}`;
+    const type: unknown = e.type ?? (e.error as { error?: { type?: unknown } } | undefined)?.error?.type;
+    const tag = typeof type === "string" && /^[a-z_]+$/.test(type) ? ` ${type}` : "";
+    return `Claude HTTP ${e.status ?? "?"}${tag}: ${e.message.slice(0, 300)}`;
   }
   return `Claude request failed: ${e instanceof Error ? e.message : String(e)}`;
 }
 
-export type ProviderFailure = "provider_credit" | "provider_auth" | "provider_rate" | "provider_down";
+export type ProviderFailure =
+  | "provider_credit"
+  | "provider_auth"
+  | "provider_config"
+  | "provider_rate"
+  | "provider_down";
 
-// Running out of credit has come back as a 400 with only the message to go
-// on, and so does the spend limit set in the console ("API usage limits").
-const CREDIT_TEXT = /credit|billing|insufficient|quota|balance|usage limit/i;
+const BY_TYPE = new Map<string, ProviderFailure>([
+  ["billing_error", "provider_credit"],
+  ["authentication_error", "provider_auth"],
+  ["permission_error", "provider_auth"],
+  ["not_found_error", "provider_config"],
+  ["rate_limit_error", "provider_rate"],
+  ["overloaded_error", "provider_down"],
+  ["api_error", "provider_down"],
+]);
+
+// Running out of credit has come back as a 400 invalid_request_error with
+// only the message to go on, and so does the spend limit set in the console
+// ("API usage limits").
+const CREDIT_TEXT = /credit|billing|insufficient|quota|usage limit/i;
 const AUTH_TEXT = /invalid.{0,20}api.?key|authentication|permission/i;
 
 /** What a failed call's error text (from describeError) says about the
- * provider: out of credit, a key it no longer accepts, rate limited, or down.
- * Null for anything else, such as a request it rejected. */
+ * provider: out of credit, a key it does not accept or permit, a model it
+ * does not know (CLAUDE_MODEL), rate limited, or down. Null for anything
+ * else, such as a request it rejected. */
 export function providerFailure(error: string): ProviderFailure | null {
   if (/^Claude (network error|request timed out)/.test(error)) return "provider_down";
-  const m = /^Claude HTTP (\d+|\?): ([\s\S]*)$/.exec(error);
+  const m = /^Claude HTTP (\d+|\?)(?: ([a-z_]+))?: ([\s\S]*)$/.exec(error);
   if (!m) return null;
+  const byType = m[2] ? BY_TYPE.get(m[2]) : undefined;
+  if (byType) return byType;
   const status = Number(m[1]);
   if (status >= 500) return "provider_down";
   if (status === 429) return "provider_rate";
-  if (status === 402 || CREDIT_TEXT.test(m[2])) return "provider_credit";
-  if (status === 401 || status === 403 || AUTH_TEXT.test(m[2])) return "provider_auth";
+  if (status === 402) return "provider_credit";
+  if (status === 401 || status === 403) return "provider_auth";
+  if (status === 404) return "provider_config";
+  if (status === 400 && CREDIT_TEXT.test(m[3])) return "provider_credit";
+  if (status === 400 && AUTH_TEXT.test(m[3])) return "provider_auth";
   return null;
 }
 
@@ -197,18 +222,19 @@ const ALERT_EVERY_MS = 10 * 60_000;
 const lastAlert = new Map<ProviderFailure, number>();
 
 /** Logs a provider failure for the server's watcher (deploy/aws-lightsail/
- * watch.sh): credit and key problems as an `[alert:...]` error line, at most
- * one per kind every 10 minutes, the rest as one `[signal:...]` line each. */
+ * watch.sh): credit, key and model problems as an `[alert:...]` error line,
+ * at most one per kind every 10 minutes, the rest as one `[signal:...]` line
+ * each. */
 function reportFailure(error: string): string {
   const kind = providerFailure(error);
-  if (kind === "provider_credit" || kind === "provider_auth") {
+  if (kind === "provider_rate" || kind === "provider_down") {
+    signal(kind, error);
+  } else if (kind) {
     const now = Date.now();
     if (now - (lastAlert.get(kind) ?? -Infinity) >= ALERT_EVERY_MS) {
       lastAlert.set(kind, now);
       console.error(`[alert:${kind}] ${error}`);
     }
-  } else if (kind) {
-    signal(kind, error);
   }
   return error;
 }

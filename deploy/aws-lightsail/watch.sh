@@ -2,8 +2,8 @@
 # The server's watcher, every minute via verdict-watch.timer. It sends an
 # alert (email and phone push, see alert.sh) when:
 #
-#   - the app logs an [alert:...] line (the AI service is out of credit or
-#     refuses the API key)
+#   - the app logs an [alert:...] line (the AI service is out of credit,
+#     refuses or does not permit the API key, or does not know CLAUDE_MODEL)
 #   - someone logs in over SSH, or runs sudo for anything but the
 #     verdict-update and verdict-restore commands or a backup
 #   - the env file, a verdict unit, the Caddyfile, a verdict-* command or the
@@ -118,8 +118,17 @@ check_app_alerts() {
         todo="Verdicts fail until it has credit again: top up the account or raise its spend limit in the provider's console."
         ;;
       provider_auth)
-        subject="Judge: the AI service refused the API key"
-        todo="Verdicts fail until the key works: put a valid ANTHROPIC_API_KEY in /etc/verdict/verdict.env, then sudo systemctl restart verdict."
+        if [[ $line == *"HTTP 403"* || $line == *permission_error* ]]; then
+          subject="Judge: the AI service says the API key is not permitted"
+          todo="Verdicts fail until the key is allowed to use the model: check the key's workspace and permissions in the provider's console, or put another ANTHROPIC_API_KEY in /etc/verdict/verdict.env, then sudo systemctl restart verdict."
+        else
+          subject="Judge: the AI service refused the API key"
+          todo="Verdicts fail until the key works: put a valid ANTHROPIC_API_KEY in /etc/verdict/verdict.env, then sudo systemctl restart verdict."
+        fi
+        ;;
+      provider_config)
+        subject="Judge: the AI service does not know the model, check CLAUDE_MODEL"
+        todo="Verdicts fail until the model name is right: check CLAUDE_MODEL and CLAUDE_MODEL_LITE in /etc/verdict/verdict.env (a retired or mistyped model), then sudo systemctl restart verdict."
         ;;
       *)
         subject="Judge alert: $key"

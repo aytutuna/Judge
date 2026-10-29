@@ -976,7 +976,9 @@ alerts mean:
 | Alert | Means | Do |
 |---|---|---|
 | *the AI service is out of credit* (critical) | Model calls fail with a billing error, a credit message or the spend limit. Users see the "quota" message and are not charged. | Add credit, or raise the spend limit, in the Anthropic Console. |
-| *the AI service refused the API key* (critical) | Model calls fail with 401 or 403. Every verdict fails. | Put a working `ANTHROPIC_API_KEY` in the env file, then `sudo systemctl restart verdict`. |
+| *the AI service refused the API key* (critical) | Model calls fail with 401. Every verdict fails. | Put a working `ANTHROPIC_API_KEY` in the env file, then `sudo systemctl restart verdict`. |
+| *the AI service says the API key is not permitted* (critical) | Model calls fail with 403: the key works but may not use the model or the workspace. | Check the key's workspace and permissions in the Anthropic Console, or put another key in the env file and restart. |
+| *the AI service does not know the model, check CLAUDE_MODEL* (critical) | Model calls fail with 404: `CLAUDE_MODEL` or `CLAUDE_MODEL_LITE` names a retired or mistyped model. | Fix the name in the env file, then `sudo systemctl restart verdict`. |
 | *SSH login as ... from ...* (critical) | Someone logged in over SSH. Only the first half of the address is shown. | Nothing if it was you. If not, stop the instance from the provider's console, then replace the SSH keys and every secret in the env file. |
 | *... ran sudo ...* (critical) | A sudo command other than `verdict-update`, `verdict-restore` or `systemctl start verdict-backup`. Only the program is shown, not its arguments. | As for a login you did not make. |
 | *server files changed outside a deploy* (critical) | The env file, a `verdict*` unit, the Caddyfile, a `/usr/local/sbin/verdict-*` command or the live release changed, and the last `setup.sh` or `update.sh` started more than 30 minutes ago. The alert names the files. | Nothing if you edited them yourself (e.g. the env file). If not, treat it as a break-in. |
