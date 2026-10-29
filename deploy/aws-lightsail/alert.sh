@@ -10,19 +10,18 @@
 #   NTFY_URL     ntfy server (default https://ntfy.sh)
 #   NTFY_TOKEN   access token, for a server or topic that needs one
 #
-# --critical sends the push at the highest priority, which rings through
-# do-not-disturb on most phones. Exits non-zero only if neither the email nor
-# the push went out.
+# --critical sends the push at ntfy's highest priority. Exits non-zero only if
+# neither the email nor the push went out.
 set -euo pipefail
 
 json_string() {
   local s
   s=$(printf '%s' "$1" | tr -d '\000-\010\013\014\016-\037')
-  s=${s//\/\\}
+  s=${s//\\/\\\\}
   s=${s//\"/\\\"}
-  s=${s//$'\t'/\t}
+  s=${s//$'\t'/\\t}
   s=${s//$'\r'/}
-  s=${s//$'\n'/\n}
+  s=${s//$'\n'/\\n}
   printf '"%s"' "$s"
 }
 
