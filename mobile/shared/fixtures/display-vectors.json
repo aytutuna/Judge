@@ -2617,9 +2617,9 @@
     }
   ],
   "palette": {
-    "ivory": "#F6F1E9",
-    "ivory2": "#EEE6D9",
-    "paper": "#FFFCF7",
+    "ivory": "#FFFFFF",
+    "ivory2": "#F2F0EC",
+    "paper": "#FFFFFF",
     "ink": "#1C1916",
     "ink2": "#4A433C",
     "muted": "#6B6258",
@@ -2631,14 +2631,14 @@
     "sageStrong": "#6E8F80",
     "sageInk": "#4C6B5D",
     "sageTint": "#DDE7E0",
-    "stone": "#D6C7B0",
-    "strata": "#E6DCCB",
+    "stone": "#DAD6CF",
+    "strata": "#E9E6E1",
     "danger": "#B3261E"
   },
   "paletteAlpha": {
-    "line": "rgba(28, 25, 22, 0.09)",
+    "line": "rgba(28, 25, 22, 0.1)",
     "line2": "rgba(28, 25, 22, 0.14)",
-    "glass": "rgba(255, 252, 247, 0.68)"
+    "glass": "rgba(255, 255, 255, 0.68)"
   },
   "thinking": {
     "steps": [
