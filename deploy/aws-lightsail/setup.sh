@@ -251,7 +251,7 @@ setup_swap() {
 install_packages() {
   log "System packages"
   apt_get update -q
-  apt_install ca-certificates curl gnupg git openssl sqlite3 rclone unattended-upgrades \
+  apt_install ca-certificates curl gnupg git openssl sqlite3 jq rclone unattended-upgrades \
     debian-keyring debian-archive-keyring apt-transport-https
 }
 
