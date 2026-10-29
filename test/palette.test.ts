@@ -76,7 +76,7 @@ describe("palette", () => {
       expect(PALETTE[key], key).toMatch(/^#[0-9A-F]{6}$/);
       expect(PALETTE_NUM[key], key).toBe(Number.parseInt(PALETTE[key].slice(1), 16));
     }
-    expect(PALETTE_NUM.ivory).toBe(0xf6f1e9);
+    expect(PALETTE_NUM.ivory).toBe(0xffffff);
     expect(PALETTE_NUM.terra).toBe(0xc8553d);
   });
 

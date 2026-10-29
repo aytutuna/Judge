@@ -8,9 +8,9 @@
    ========================================================================== */
 :root {
   /* surfaces */
-  --ivory: #F6F1E9;
-  --ivory-2: #EEE6D9;
-  --paper: #FFFCF7;
+  --ivory: #FFFFFF;
+  --ivory-2: #F2F0EC;
+  --paper: #FFFFFF;
 
   /* ink */
   --ink: #1C1916;
@@ -33,14 +33,14 @@
   --sage-tint: #DDE7E0;
 
   /* bedrock (3D scene, argument map) */
-  --stone: #D6C7B0;
-  --strata: #E6DCCB;
+  --stone: #DAD6CF;
+  --strata: #E9E6E1;
 
   --danger: #B3261E;
 
-  --line: rgba(28, 25, 22, 0.09);
+  --line: rgba(28, 25, 22, 0.1);
   --line-2: rgba(28, 25, 22, 0.14);
-  --glass: rgba(255, 252, 247, 0.68);
+  --glass: rgba(255, 255, 255, 0.68);
 }
 
 @media (prefers-color-scheme: dark) {
