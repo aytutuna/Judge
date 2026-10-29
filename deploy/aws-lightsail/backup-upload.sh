@@ -22,7 +22,7 @@ set -euo pipefail
 
 HERE=$(dirname -- "$(readlink -f -- "${BASH_SOURCE[0]}")")
 BACKUP_DIR=${BACKUP_DIR:-/var/lib/verdict/backups}
-REMOVALS_LOG=/var/lib/verdict/removals.log
+REMOVALS_LOG=${REMOVAL_LOG:-/var/lib/verdict/removals.log}
 KEEP_DAYS=${BACKUP_KEEP_DAYS:-14}
 MAX_AGE_SEC=$((26 * 3600))
 
