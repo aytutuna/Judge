@@ -14,6 +14,7 @@ final class ThemeTests: XCTestCase {
             (Brand.ink, PaletteHex.ink, PaletteHex.Dark.ink),
             (Brand.terraInk, PaletteHex.terraInk, PaletteHex.Dark.terraInk),
             (Brand.sageTint, PaletteHex.sageTint, PaletteHex.Dark.sageTint),
+            (Brand.well, PaletteHex.ivory2, PaletteHex.Dark.ivory),
         ]
         for (color, light, dark) in pairs {
             assertResolves(color, in: .light, to: light)

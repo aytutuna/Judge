@@ -29,7 +29,7 @@ struct InviteLinkView: View {
                 .textSelection(.enabled)
                 .frame(maxWidth: .infinity, minHeight: 46, alignment: .leading)
                 .padding(.horizontal, 14)
-                .background(RoundedRectangle(cornerRadius: 14, style: .continuous).fill(Brand.ivory))
+                .background(RoundedRectangle(cornerRadius: 14, style: .continuous).fill(Brand.well))
             HStack(spacing: 8) {
                 if let link = URL(string: url) {
                     ShareLink(item: link, message: Text(L10n.caseInviteShareText(lang))) {

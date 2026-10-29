@@ -117,7 +117,7 @@ struct TwoSidedFactsView: View {
                             }
                             .padding(.vertical, 11)
                             .padding(.horizontal, 14)
-                            .paperSurface(radius: 14, fill: Brand.ivory)
+                            .paperSurface(radius: 14, fill: Brand.well)
                         }
                     }
                 }

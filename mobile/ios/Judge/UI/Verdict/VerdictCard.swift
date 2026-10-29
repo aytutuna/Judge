@@ -333,7 +333,7 @@ private struct TranslationNote: View {
         }
         .padding(.horizontal, 11)
         .padding(.vertical, 5)
-        .background(Capsule().fill(Brand.ivory))
+        .background(Capsule().fill(Brand.well))
         .overlay(Capsule().strokeBorder(Brand.line2, lineWidth: 1))
         .accessibilityAddTraits(.updatesFrequently)
     }
@@ -379,7 +379,7 @@ private struct CardActionStyle: ButtonStyle {
             .minimumScaleFactor(0.8)
             .padding(.horizontal, 12)
             .frame(minHeight: 52)
-            .background(RoundedRectangle(cornerRadius: Radius.field, style: .continuous).fill(filled ? Brand.ink : (configuration.isPressed ? Brand.ivory : Brand.paper)))
+            .background(RoundedRectangle(cornerRadius: Radius.field, style: .continuous).fill(filled ? Brand.ink : (configuration.isPressed ? Brand.well : Brand.paper)))
             .overlay(RoundedRectangle(cornerRadius: Radius.field, style: .continuous).strokeBorder(filled ? Color.clear : Brand.line2, lineWidth: 1))
             .scaleEffect(configuration.isPressed ? 0.98 : 1)
     }

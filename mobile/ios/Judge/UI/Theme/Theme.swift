@@ -99,6 +99,9 @@ enum Brand {
     static let dash = ink.opacity(0.28)
     /// `--paper-hi`: a pressed paper button, white in light, a step up in dark.
     static let paperHi = Color(light: 0xFFFFFF, dark: PaletteHex.Dark.ivory2)
+    /// `--well`: a fill sunk into a paper card. Page and paper are both white
+    /// in light, so it can't be the page colour there.
+    static let well = Color(light: PaletteHex.ivory2, dark: PaletteHex.Dark.ivory)
 
     /// Warm brown shadows, rgba(60, 40, 20, a), vanish on dark, so there they
     /// go black and deeper (`--shadow-*` in globals.css).

@@ -241,7 +241,7 @@ struct PricingView: View {
         }
         .padding(14)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .paperSurface(radius: 18, fill: Brand.ivory)
+        .paperSurface(radius: 18, fill: Brand.well)
     }
 
     /// Buying needs an account: signed out, sign-in comes first.
