@@ -574,7 +574,7 @@ private fun InviteLink(url: String, expiresAt: String, name: String?, state: Cas
             modifier = Modifier
                 .fillMaxWidth()
                 .clip(RoundedCornerShape(14.dp))
-                .background(Palette.ivory)
+                .background(Palette.well)
                 .semantics { contentDescription = url }
                 .testTag(CaseTags.INVITE_URL)
                 .padding(horizontal = 14.dp, vertical = 12.dp),

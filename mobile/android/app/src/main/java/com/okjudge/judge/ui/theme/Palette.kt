@@ -33,7 +33,10 @@ class JudgePalette(
     val line: Color,
     val line2: Color,
     val glass: Color,
-    // verdict.module.css: paper mixed into ivory, and ivory.
+    // --well: a fill sunk into a paper card. Page and paper are both white in
+    // light, so it can't be the page colour there.
+    val well: Color,
+    // verdict.module.css: paper mixed into the well, and the well.
     val bestPointBg: Color,
     val mainTop: Color,
     val mainBottom: Color,
@@ -74,9 +77,10 @@ val LightPalette = JudgePalette(
     line = Color(28, 25, 22).copy(alpha = 0.1f),
     line2 = Color(28, 25, 22).copy(alpha = 0.14f),
     glass = Color(255, 255, 255).copy(alpha = 0.68f),
-    bestPointBg = Color(0xFFFBF6EF),
-    mainTop = Color(0xFFFBF7F0),
-    mainBottom = Color(0xFFF7F1E7),
+    well = Color(0xFFF2F0EC),
+    bestPointBg = Color(0xFFF9F8F6),
+    mainTop = Color(0xFFF9F8F6),
+    mainBottom = Color(0xFFF2F0EC),
     warmShadow = Color(0xFF3C2814),
 )
 
@@ -103,6 +107,7 @@ val DarkPalette = JudgePalette(
     line = Color(241, 235, 225).copy(alpha = 0.1f),
     line2 = Color(241, 235, 225).copy(alpha = 0.16f),
     glass = Color(29, 26, 23).copy(alpha = 0.72f),
+    well = Color(0xFF15120F),
     bestPointBg = Color(0xFF191613),
     mainTop = Color(0xFF191613),
     mainBottom = Color(0xFF15120F),

@@ -283,7 +283,7 @@ private fun TranslationNote(text: String, loading: Boolean) {
     Row(
         Modifier
             .clip(JudgeShapes.chip)
-            .background(Palette.ivory)
+            .background(Palette.well)
             .border(1.dp, Palette.line2, JudgeShapes.chip)
             .padding(horizontal = 11.dp, vertical = 5.dp)
             .semantics { liveRegion = LiveRegionMode.Polite },
@@ -972,7 +972,7 @@ private fun TwoSidedFacts(result: VerdictResult, parties: PartyLabels) {
                     Modifier
                         .fillMaxWidth()
                         .clip(JudgeShapes.branch)
-                        .background(Palette.ivory)
+                        .background(Palette.well)
                         .then(if (decisive) Modifier.dashedBorder(Palette.ink.copy(alpha = 0.4f)) else Modifier)
                         .padding(horizontal = 12.dp, vertical = 10.dp),
                     verticalArrangement = Arrangement.spacedBy(8.dp),

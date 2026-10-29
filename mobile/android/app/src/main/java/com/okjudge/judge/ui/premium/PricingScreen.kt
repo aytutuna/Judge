@@ -294,7 +294,7 @@ private fun Offer(
         Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(16.dp))
-            .background(Palette.ivory)
+            .background(Palette.well)
             .border(1.dp, Palette.line, RoundedCornerShape(16.dp))
             .padding(horizontal = 14.dp, vertical = 12.dp),
         verticalAlignment = Alignment.CenterVertically,

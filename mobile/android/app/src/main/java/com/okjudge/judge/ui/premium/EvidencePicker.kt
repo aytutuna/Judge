@@ -204,7 +204,7 @@ private fun ItemRow(item: EvidenceItem, disabled: Boolean, onRemove: (String) ->
                 Text(
                     preview,
                     style = JudgeType.slotText.copy(color = Palette.ink, fontFamily = FontFamily.Monospace, fontSize = 12.sp),
-                    modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(10.dp)).background(Palette.ivory).padding(10.dp),
+                    modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(10.dp)).background(Palette.well).padding(10.dp),
                 )
             }
         }
