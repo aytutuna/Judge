@@ -55,6 +55,7 @@ CF_SNIPPET=/etc/caddy/cloudflare-ips.caddy
 # Grafana Alloy, installed by setup.sh once GRAFANA_TOKEN is set.
 ALLOY_CONFIG=/etc/alloy/verdict.alloy
 ALLOY_DROPIN=/etc/systemd/system/alloy.service.d/verdict.conf
+ALLOY_ENV=/etc/alloy/grafana.env
 HEALTH_URL=http://127.0.0.1:3000/api/health
 HEALTH_TIMEOUT_SEC=120
 KEEP_RELEASES=3
@@ -238,27 +239,54 @@ install_units() {
   if ((proxy)); then systemctl enable --now --quiet verdict-cloudflare-ips.timer; fi
 }
 
-# Copies Alloy's config and unit drop-in from the checkout if they changed,
-# and restarts it then. A broken config only stops the monitoring, so it does
-# not fail the deploy.
+# Copies Alloy's config, unit drop-in and GRAFANA_* settings into place if
+# they changed, and restarts it then; without GRAFANA_TOKEN it is stopped.
+# The caller carries on if this fails: a broken Alloy only stops the
+# monitoring, never the deploy.
 install_alloy() {
-  local changed=0
-  dpkg -s alloy >/dev/null 2>&1 || return 0
+  local changed=0 settings
+  if ! dpkg-query -W -f='${db:Status-Status}' alloy 2>/dev/null | grep -qx installed; then
+    if [[ -n $(env_value GRAFANA_TOKEN) ]]; then
+      info "GRAFANA_TOKEN is set but Alloy is not installed; run setup.sh again."
+    fi
+    return 0
+  fi
+  if [[ -z $(env_value GRAFANA_TOKEN) ]]; then
+    if systemctl is-enabled --quiet alloy || systemctl is-active --quiet alloy; then
+      systemctl disable --now --quiet alloy || return 1
+      info "Stopped Alloy (GRAFANA_TOKEN is not set)"
+    fi
+    return 0
+  fi
+  settings=$(env_lines | grep -E '^GRAFANA_(PROM_URL|PROM_USER|LOKI_URL|LOKI_USER|TOKEN)=') || true
+  if [[ $settings != "$(cat -- "$ALLOY_ENV" 2>/dev/null)" ]]; then
+    install -m 640 -o root -g alloy /dev/null "$ALLOY_ENV" || return 1
+    printf '%s\n' "$settings" >"$ALLOY_ENV" || return 1
+    info "Wrote $ALLOY_ENV"
+    changed=1
+  fi
   if ! cmp -s "$DEPLOY_SRC/alloy/config.alloy" "$ALLOY_CONFIG"; then
-    install -m 640 -o root -g alloy "$DEPLOY_SRC/alloy/config.alloy" "$ALLOY_CONFIG"
+    install -m 640 -o root -g alloy "$DEPLOY_SRC/alloy/config.alloy" "$ALLOY_CONFIG" || return 1
     info "Installed $ALLOY_CONFIG"
     changed=1
   fi
   if ! cmp -s "$DEPLOY_SRC/alloy/verdict.conf" "$ALLOY_DROPIN"; then
-    install -d -m 755 "$(dirname "$ALLOY_DROPIN")"
-    install -m 644 -o root -g root "$DEPLOY_SRC/alloy/verdict.conf" "$ALLOY_DROPIN"
+    install -d -m 755 "$(dirname "$ALLOY_DROPIN")" || return 1
+    install -m 644 -o root -g root "$DEPLOY_SRC/alloy/verdict.conf" "$ALLOY_DROPIN" || return 1
     info "Installed $ALLOY_DROPIN"
-    systemctl daemon-reload
+    systemctl daemon-reload || return 1
     changed=1
   fi
-  systemctl enable --quiet alloy
+  systemctl enable --quiet alloy || true
   if ((changed)) || ! systemctl is-active --quiet alloy; then
-    systemctl restart alloy || info "Alloy did not start; see journalctl -u alloy -n 50"
+    # A config that does not parse would only make systemd restart it in a loop.
+    if ! alloy fmt "$ALLOY_CONFIG" >/dev/null; then
+      info "$ALLOY_CONFIG does not parse (see above); Alloy was not restarted."
+      return 0
+    fi
+    systemctl restart alloy || true
+    sleep 3
+    systemctl is-active --quiet alloy || info "Alloy is not running; see journalctl -u alloy -n 50"
   fi
 }
 
@@ -501,7 +529,7 @@ main() {
   CONFIG_SAVED=1
   install_units
   install_caddyfile "$workdir/Caddyfile.new"
-  install_alloy
+  install_alloy || info "Could not update Alloy (see above); the deploy goes on without it."
 
   log "Switching to the new release and restarting"
   switch_to "$release"

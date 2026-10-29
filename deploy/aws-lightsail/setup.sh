@@ -181,7 +181,7 @@ grafana_settings_block() {
 # Metrics and logs go to Grafana Cloud while GRAFANA_TOKEN is set, and the
 # watcher leaves the alerts Grafana sends to Grafana (see "Grafana Cloud" in
 # the README). After setting them the first time, run setup.sh again; after a
-# change, sudo systemctl restart alloy
+# change, sudo verdict-update --force
 GRAFANA_PROM_URL=
 GRAFANA_PROM_USER=
 GRAFANA_LOKI_URL=
@@ -304,14 +304,15 @@ setup_fail2ban() {
   fi
 }
 
-# update.sh installs the config and the unit drop-in from alloy/ and starts it.
+# update.sh installs the config, the unit drop-in and the settings, and starts
+# it (or stops it again once GRAFANA_TOKEN is empty).
 install_alloy() {
   log "Grafana Alloy (sends metrics and logs to Grafana Cloud)"
   if [[ -z $(get_env GRAFANA_TOKEN) ]]; then
     info "Skipped: GRAFANA_TOKEN is not set in $ENV_FILE."
     return
   fi
-  if dpkg -s alloy >/dev/null 2>&1; then
+  if dpkg-query -W -f='${db:Status-Status}' alloy 2>/dev/null | grep -qx installed; then
     info "Already installed: $(alloy --version | head -n 1)"
     return
   fi

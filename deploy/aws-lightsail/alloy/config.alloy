@@ -1,14 +1,13 @@
 // Grafana Alloy config for the Judge server: host metrics and logs to Grafana
 // Cloud. update.sh installs it to /etc/alloy/verdict.alloy; edits there are
-// overwritten. The credentials come from /etc/verdict/verdict.env (see
-// verdict.conf next to this file).
+// overwritten. The credentials come from /etc/alloy/grafana.env, which
+// update.sh writes with the GRAFANA_* lines of /etc/verdict/verdict.env.
 
 prometheus.exporter.unix "host" {
   set_collectors = ["cpu", "meminfo", "loadavg", "diskstats", "filesystem", "netdev", "systemd"]
 
-  // node_systemd_units still counts the failed units among all of them.
   systemd {
-    unit_include = "(verdict.*|caddy|ssh|fail2ban|alloy)\.(service|timer)"
+    unit_include = `(verdict.*|caddy|ssh|fail2ban|alloy)\.(service|timer)`
   }
 }
 
@@ -49,7 +48,7 @@ loki.relabel "journal" {
 
   rule {
     source_labels = ["unit"]
-    regex         = "verdict.*\.service|caddy\.service|ssh\.service|fail2ban\.service|alloy\.service|kernel"
+    regex         = `verdict.*\.service|caddy\.service|ssh\.service|fail2ban\.service|alloy\.service|kernel`
     action        = "keep"
   }
 }
