@@ -18,7 +18,7 @@
  * client polls a stale job.
  */
 
-import type { Client, InStatement, Row } from "@libsql/client";
+import type { Client, InStatement, ResultSet, Row } from "@libsql/client";
 import { getDb } from "@/lib/db";
 import {
   consumeStatement,
@@ -35,6 +35,7 @@ import {
   type SaveVerdictInput,
   type SaveVerdictOutcome,
 } from "@/lib/originals/save";
+import { signal } from "@/lib/signals";
 import type { VerdictJobErrorCode, VerdictJobStatus } from "@/lib/verdict-poll";
 
 /** A job still judging after this long is failed and refunded. The
@@ -205,6 +206,14 @@ export async function failVerdictJob(
 
 export type JobSettlement = "consume" | "refund" | "none";
 
+/** Whether the batch's last statement (judging -> ready) went through. When
+ * it did not, the guard refused the whole batch, credit settlement included. */
+function storedFor(rs: ResultSet[]): boolean {
+  const stored = rs[rs.length - 1].rowsAffected === 1;
+  if (!stored) signal("entitlement_refused");
+  return stored;
+}
+
 /**
  * Stores a judged verdict for its job: the full save (verdict, ownership,
  * sealed original), the settlement of its reservation (consumed, or
@@ -236,12 +245,12 @@ export async function completeVerdictJob(
   try {
     const { stmts, outcome } = verdictWriteStatements(v, { ownerToken: opts.ownerToken, guard });
     const rs = await entitlementWriteBatch([...stmts, ...(opts.extra ?? []), ...settle, ready]);
-    return { stored: rs[rs.length - 1].rowsAffected === 1, outcome };
+    return { stored: storedFor(rs), outcome };
   } catch (e) {
     console.error("[verdict-jobs] meta write failed:", e instanceof Error ? e.message : String(e));
   }
   const rs = await entitlementWriteBatch([plainVerdictStatement(v, guard), ...(opts.extra ?? []), ...settle, ready]);
-  return { stored: rs[rs.length - 1].rowsAffected === 1, outcome: { ...PLAIN_SAVE_OUTCOME } };
+  return { stored: storedFor(rs), outcome: { ...PLAIN_SAVE_OUTCOME } };
 }
 
 /** Fails (and refunds) every job judging for over STALE_JOB_MS. Returns how

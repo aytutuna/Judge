@@ -104,11 +104,13 @@ describe("POST /api/v1/webhooks/revenuecat: configuration and auth", () => {
   });
 
   it("401 without or with a wrong Authorization header", async () => {
+    const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
     for (const auth of [null, "", "Bearer", `Bearer ${SECRET}x`, `Basic ${SECRET}`, "Bearer wrong"]) {
       const { status, json } = await send(rc({ type: "TEST" }), { auth });
       expect(status, String(auth)).toBe(401);
       expect(json).toMatchObject({ code: "signin_required" });
     }
+    expect(warn.mock.calls).toEqual(Array(6).fill(["[signal:webhook_bad_secret]"]));
   });
 
   it("accepts `Bearer <secret>` (any case) or the bare secret", async () => {

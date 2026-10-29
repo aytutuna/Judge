@@ -4,6 +4,7 @@ import { authConfigured, findExistingUserId } from "@/lib/auth";
 import { clientIp } from "@/lib/client-ip";
 import { applyStoreEvent, type StoreEvent } from "@/lib/entitlements";
 import { checkIpLimits } from "@/lib/ratelimit";
+import { signal } from "@/lib/signals";
 import {
   mapRevenueCatEvent,
   revenueCatAuthorized,
@@ -71,6 +72,7 @@ export async function POST(req: Request): Promise<NextResponse> {
   }
 
   if (!revenueCatAuthorized(req.headers.get("authorization"), secret)) {
+    signal("webhook_bad_secret");
     return fail("signin_required", "Unauthorized.", 401);
   }
 
@@ -123,6 +125,7 @@ export async function POST(req: Request): Promise<NextResponse> {
       `[revenuecat] applying type=${type} id=${id} failed:`,
       e instanceof Error ? e.message.slice(0, 200) : String(e),
     );
+    signal("webhook_apply_failed");
     return fail("unavailable", "Could not apply the event right now.", 503);
   }
 }
