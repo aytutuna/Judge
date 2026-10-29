@@ -65,18 +65,21 @@ main() {
   today=$(date -u +%F)
   local max5=${ALERT_5XX_THRESHOLD:-10} maxe=${ALERT_ERROR_THRESHOLD:-20}
 
-  send_digests "$today"
+  # Without ALERT_EMAIL spikes are only logged: keeping them for a digest
+  # nobody gets would just pile up files.
+  if [[ -n ${ALERT_EMAIL-} ]]; then send_digests "$today"; fi
 
   n5=$(count_5xx "$since")
   ne=$(app_errors "$since" | wc -l)
   ((n5 >= max5 || ne >= maxe)) || exit 0
 
   echo "Error spike: $n5 5xx responses (limit $max5), $ne app errors (limit $maxe) in 5 minutes"
+  [[ -n ${ALERT_EMAIL-} ]] || exit 0
   printf '%s %s %s\n' "$(date -u +%H:%M)" "$n5" "$ne" >>"$STATE_DIR/spikes-$today"
 
   local last=0
   if [[ -f $STATE_DIR/last-alert ]]; then last=$(<"$STATE_DIR/last-alert"); fi
-  if ((now - last < QUIET_SEC)); then
+  if ((now - ${last:-0} < QUIET_SEC)); then
     echo "An alert went out less than an hour ago; not sending another."
     exit 0
   fi
