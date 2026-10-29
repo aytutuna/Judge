@@ -19,6 +19,7 @@ import com.github.takahirom.roborazzi.captureRoboImage
 import com.okjudge.judge.Fixtures
 import com.okjudge.judge.core.auth.Account
 import com.okjudge.judge.core.auth.SignInError
+import com.okjudge.judge.core.data.Appearance
 import com.okjudge.judge.core.display.UiError
 import com.okjudge.judge.core.model.Entitlement
 import com.okjudge.judge.core.model.MeResponse
@@ -101,6 +102,11 @@ class ScreenshotsTest {
     }
 
     @Test
+    fun home_en_dark() = capture("home_en_dark") {
+        Themed(AppLang.EN, dark = true) { HomeScreen(HomeUiState(), {}, {}, {}, {}) }
+    }
+
+    @Test
     fun home_tr_filled_withError() = capture("home_tr_error", tall = true) {
         Themed(AppLang.TR) {
             HomeScreen(homeState(AppLang.TR).copy(error = UiError.Api("rate_limited", 429, 420.0)), {}, {}, {}, {})
@@ -135,6 +141,16 @@ class ScreenshotsTest {
     @Test
     fun verdict_ruling_en() = capture("verdict_ruling_win_b_en") {
         Themed(AppLang.EN) {
+            Column(Modifier.fillMaxSize()) {
+                TopBar(onBack = null, onNew = {})
+                SampleVerdict(sample("win_b_named"), AppLang.EN, Modifier.padding(horizontal = 16.dp, vertical = 4.dp), summary = true)
+            }
+        }
+    }
+
+    @Test
+    fun verdict_ruling_en_dark() = capture("verdict_ruling_win_b_en_dark") {
+        Themed(AppLang.EN, dark = true) {
             Column(Modifier.fillMaxSize()) {
                 TopBar(onBack = null, onNew = {})
                 SampleVerdict(sample("win_b_named"), AppLang.EN, Modifier.padding(horizontal = 16.dp, vertical = 4.dp), summary = true)
@@ -205,6 +221,13 @@ class ScreenshotsTest {
     @Test
     fun settings_tr() = capture("settings_tr") {
         Themed(AppLang.TR) { SettingsScreen(LangPref.SYSTEM, "0.1.0", {}, {}, {}, "https://okjudge.com") }
+    }
+
+    @Test
+    fun settings_en_dark() = capture("settings_en_dark") {
+        Themed(AppLang.EN, dark = true) {
+            SettingsScreen(LangPref.SYSTEM, "0.1.0", {}, {}, {}, "https://okjudge.com", appearance = Appearance.DARK)
+        }
     }
 
     @Test
