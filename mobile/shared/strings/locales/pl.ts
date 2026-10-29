@@ -53,6 +53,7 @@ const pl: AppLocale = {
     "app.settings.language": "Język",
     "app.settings.languageDevice": "Jak w telefonie",
     "app.settings.appearance": "Wygląd",
+    "app.settings.appearanceSystem": "Jak w telefonie",
     "app.settings.appearanceLight": "Jasny",
     "app.settings.appearanceDark": "Ciemny",
     "app.settings.about": "O Judge",

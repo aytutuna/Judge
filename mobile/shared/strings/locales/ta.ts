@@ -54,6 +54,7 @@ const ta: AppLocale = {
     "app.settings.language": "மொழி",
     "app.settings.languageDevice": "போனில் உள்ளபடியே",
     "app.settings.appearance": "தோற்றம்",
+    "app.settings.appearanceSystem": "போனில் உள்ளபடியே",
     "app.settings.appearanceLight": "வெளிர்",
     "app.settings.appearanceDark": "இருண்ட",
     "app.settings.about": "Judge பற்றி",

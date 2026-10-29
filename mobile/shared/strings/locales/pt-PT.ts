@@ -51,6 +51,7 @@ const ptPT: AppLocale = {
     "app.settings.language": "Idioma",
     "app.settings.languageDevice": "Idioma do telemóvel",
     "app.settings.appearance": "Aspeto",
+    "app.settings.appearanceSystem": "Igual ao telemóvel",
     "app.settings.appearanceLight": "Claro",
     "app.settings.appearanceDark": "Escuro",
     "app.settings.about": "Sobre o Judge",

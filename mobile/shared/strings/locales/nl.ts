@@ -51,6 +51,7 @@ const nl: AppLocale = {
     "app.settings.language": "Taal",
     "app.settings.languageDevice": "Taal van je telefoon",
     "app.settings.appearance": "Weergave",
+    "app.settings.appearanceSystem": "Zoals je telefoon",
     "app.settings.appearanceLight": "Licht",
     "app.settings.appearanceDark": "Donker",
     "app.settings.about": "Over Judge",

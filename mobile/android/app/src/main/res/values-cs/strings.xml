@@ -565,6 +565,7 @@
     <string name="app_settings_language">Jazyk</string>
     <string name="app_settings_language_device">Podle telefonu</string>
     <string name="app_settings_appearance">Vzhled</string>
+    <string name="app_settings_appearance_system">Podle telefonu</string>
     <string name="app_settings_appearance_light">Světlý</string>
     <string name="app_settings_appearance_dark">Tmavý</string>
     <string name="app_settings_about">O aplikaci Judge</string>

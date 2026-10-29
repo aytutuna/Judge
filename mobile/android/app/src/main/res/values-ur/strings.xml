@@ -531,6 +531,7 @@
     <string name="app_settings_language">زبان</string>
     <string name="app_settings_language_device">فون کے مطابق</string>
     <string name="app_settings_appearance">ظاہری شکل</string>
+    <string name="app_settings_appearance_system">فون کے مطابق</string>
     <string name="app_settings_appearance_light">ہلکا</string>
     <string name="app_settings_appearance_dark">گہرا</string>
     <string name="app_settings_about">Judge کا تعارف</string>

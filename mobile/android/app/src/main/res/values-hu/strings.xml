@@ -531,6 +531,7 @@
     <string name="app_settings_language">Nyelv</string>
     <string name="app_settings_language_device">A telefon nyelve</string>
     <string name="app_settings_appearance">Megjelenés</string>
+    <string name="app_settings_appearance_system">A telefon szerint</string>
     <string name="app_settings_appearance_light">Világos</string>
     <string name="app_settings_appearance_dark">Sötét</string>
     <string name="app_settings_about">A Judge-ról</string>

@@ -50,6 +50,7 @@ const da: AppLocale = {
     "app.settings.language": "Sprog",
     "app.settings.languageDevice": "Samme som telefonen",
     "app.settings.appearance": "Udseende",
+    "app.settings.appearanceSystem": "Samme som telefonen",
     "app.settings.appearanceLight": "Lys",
     "app.settings.appearanceDark": "Mørk",
     "app.settings.about": "Om Judge",

@@ -53,6 +53,7 @@ const ca: AppLocale = {
     "app.settings.language": "Idioma",
     "app.settings.languageDevice": "El mateix que el telèfon",
     "app.settings.appearance": "Aparença",
+    "app.settings.appearanceSystem": "El mateix que el telèfon",
     "app.settings.appearanceLight": "Clar",
     "app.settings.appearanceDark": "Fosc",
     "app.settings.about": "Quant a Judge",

@@ -514,6 +514,7 @@
     <string name="app_settings_language">Bahasa</string>
     <string name="app_settings_language_device">Sama seperti telefon</string>
     <string name="app_settings_appearance">Penampilan</string>
+    <string name="app_settings_appearance_system">Sama seperti telefon</string>
     <string name="app_settings_appearance_light">Cerah</string>
     <string name="app_settings_appearance_dark">Gelap</string>
     <string name="app_settings_about">Tentang Judge</string>

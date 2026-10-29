@@ -531,6 +531,7 @@
     <string name="app_settings_language">Γλώσσα</string>
     <string name="app_settings_language_device">Ίδια με του τηλεφώνου</string>
     <string name="app_settings_appearance">Εμφάνιση</string>
+    <string name="app_settings_appearance_system">Ίδια με του τηλεφώνου</string>
     <string name="app_settings_appearance_light">Ανοιχτή</string>
     <string name="app_settings_appearance_dark">Σκούρη</string>
     <string name="app_settings_about">Σχετικά με το Judge</string>

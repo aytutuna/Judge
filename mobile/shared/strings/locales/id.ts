@@ -52,6 +52,7 @@ const id: AppLocale = {
     "app.settings.language": "Bahasa",
     "app.settings.languageDevice": "Ikuti ponsel",
     "app.settings.appearance": "Tampilan",
+    "app.settings.appearanceSystem": "Ikuti ponsel",
     "app.settings.appearanceLight": "Terang",
     "app.settings.appearanceDark": "Gelap",
     "app.settings.about": "Tentang Judge",

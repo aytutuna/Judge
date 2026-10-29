@@ -46,6 +46,7 @@ const zhHans: AppLocale = {
     "app.settings.language": "语言",
     "app.settings.languageDevice": "跟随系统",
     "app.settings.appearance": "外观",
+    "app.settings.appearanceSystem": "跟随系统",
     "app.settings.appearanceLight": "浅色",
     "app.settings.appearanceDark": "深色",
     "app.settings.about": "关于 Judge",

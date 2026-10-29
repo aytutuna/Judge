@@ -53,6 +53,7 @@ const uk: AppLocale = {
     "app.settings.language": "Мова",
     "app.settings.languageDevice": "Як на телефоні",
     "app.settings.appearance": "Вигляд",
+    "app.settings.appearanceSystem": "Як на телефоні",
     "app.settings.appearanceLight": "Світлий",
     "app.settings.appearanceDark": "Темний",
     "app.settings.about": "Про Judge",

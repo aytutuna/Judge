@@ -565,6 +565,7 @@
     <string name="app_settings_language">Jezik</string>
     <string name="app_settings_language_device">Jezik telefona</string>
     <string name="app_settings_appearance">Videz</string>
+    <string name="app_settings_appearance_system">Kot v telefonu</string>
     <string name="app_settings_appearance_light">Svetlo</string>
     <string name="app_settings_appearance_dark">Temno</string>
     <string name="app_settings_about">O aplikaciji Judge</string>

@@ -531,6 +531,7 @@
     <string name="app_settings_language">ഭാഷ</string>
     <string name="app_settings_language_device">ഫോണിലെ ഭാഷ തന്നെ</string>
     <string name="app_settings_appearance">തീം</string>
+    <string name="app_settings_appearance_system">ഫോണിലേതു പോലെ</string>
     <string name="app_settings_appearance_light">ലൈറ്റ്</string>
     <string name="app_settings_appearance_dark">ഡാർക്ക്</string>
     <string name="app_settings_about">Judge-നെക്കുറിച്ച്</string>

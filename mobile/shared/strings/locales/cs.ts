@@ -53,6 +53,7 @@ const cs: AppLocale = {
     "app.settings.language": "Jazyk",
     "app.settings.languageDevice": "Podle telefonu",
     "app.settings.appearance": "Vzhled",
+    "app.settings.appearanceSystem": "Podle telefonu",
     "app.settings.appearanceLight": "Světlý",
     "app.settings.appearanceDark": "Tmavý",
     "app.settings.about": "O aplikaci Judge",

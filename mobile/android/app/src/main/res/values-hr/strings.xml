@@ -548,6 +548,7 @@
     <string name="app_settings_language">Jezik</string>
     <string name="app_settings_language_device">Kao na telefonu</string>
     <string name="app_settings_appearance">Izgled</string>
+    <string name="app_settings_appearance_system">Kao na telefonu</string>
     <string name="app_settings_appearance_light">Svijetli</string>
     <string name="app_settings_appearance_dark">Tamni</string>
     <string name="app_settings_about">O aplikaciji Judge</string>

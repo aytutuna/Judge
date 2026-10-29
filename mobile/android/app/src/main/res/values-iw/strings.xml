@@ -548,6 +548,7 @@
     <string name="app_settings_language">שפה</string>
     <string name="app_settings_language_device">כמו בטלפון</string>
     <string name="app_settings_appearance">מראה</string>
+    <string name="app_settings_appearance_system">כמו בטלפון</string>
     <string name="app_settings_appearance_light">בהיר</string>
     <string name="app_settings_appearance_dark">כהה</string>
     <string name="app_settings_about">על Judge</string>

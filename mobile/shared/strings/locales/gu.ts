@@ -60,6 +60,7 @@ const gu: AppLocale = {
     "app.settings.language": "ભાષા",
     "app.settings.languageDevice": "ફોનની ભાષા",
     "app.settings.appearance": "દેખાવ",
+    "app.settings.appearanceSystem": "ફોન પ્રમાણે",
     "app.settings.appearanceLight": "લાઇટ",
     "app.settings.appearanceDark": "ડાર્ક",
     "app.settings.about": "Judge વિશે",

@@ -51,6 +51,7 @@ const or: AppLocale = {
     "app.settings.language": "ଭାଷା",
     "app.settings.languageDevice": "ଫୋନ୍‌ର ଭାଷା",
     "app.settings.appearance": "ଥିମ୍",
+    "app.settings.appearanceSystem": "ଫୋନ୍ ପରି",
     "app.settings.appearanceLight": "ଉଜ୍ଜ୍ୱଳ",
     "app.settings.appearanceDark": "ଗାଢ଼",
     "app.settings.about": "Judge ବିଷୟରେ",

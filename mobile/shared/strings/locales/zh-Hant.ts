@@ -45,6 +45,7 @@ const zhHant: AppLocale = {
     "app.settings.language": "語言",
     "app.settings.languageDevice": "跟手機設定一樣",
     "app.settings.appearance": "外觀",
+    "app.settings.appearanceSystem": "跟手機設定一樣",
     "app.settings.appearanceLight": "淺色",
     "app.settings.appearanceDark": "深色",
     "app.settings.about": "關於 Judge",

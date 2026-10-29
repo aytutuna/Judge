@@ -51,6 +51,7 @@ const he: AppLocale = {
     "app.settings.language": "שפה",
     "app.settings.languageDevice": "כמו בטלפון",
     "app.settings.appearance": "מראה",
+    "app.settings.appearanceSystem": "כמו בטלפון",
     "app.settings.appearanceLight": "בהיר",
     "app.settings.appearanceDark": "כהה",
     "app.settings.about": "על Judge",

@@ -531,6 +531,7 @@
     <string name="app_settings_language">ভাষা</string>
     <string name="app_settings_language_device">ফোনের ভাষা</string>
     <string name="app_settings_appearance">থিম</string>
+    <string name="app_settings_appearance_system">ফোনের মতো</string>
     <string name="app_settings_appearance_light">হালকা</string>
     <string name="app_settings_appearance_dark">গাঢ়</string>
     <string name="app_settings_about">Judge সম্পর্কে</string>

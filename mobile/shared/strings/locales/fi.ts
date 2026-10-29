@@ -51,6 +51,7 @@ const fi: AppLocale = {
     "app.settings.language": "Kieli",
     "app.settings.languageDevice": "Sama kuin puhelimessa",
     "app.settings.appearance": "Ulkoasu",
+    "app.settings.appearanceSystem": "Sama kuin puhelimessa",
     "app.settings.appearanceLight": "Vaalea",
     "app.settings.appearanceDark": "Tumma",
     "app.settings.about": "Tietoa Judgesta",

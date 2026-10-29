@@ -548,6 +548,7 @@
     <string name="app_settings_language">Limbă</string>
     <string name="app_settings_language_device">Limba telefonului</string>
     <string name="app_settings_appearance">Aspect</string>
+    <string name="app_settings_appearance_system">Ca pe telefon</string>
     <string name="app_settings_appearance_light">Luminos</string>
     <string name="app_settings_appearance_dark">Întunecat</string>
     <string name="app_settings_about">Despre Judge</string>

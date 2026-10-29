@@ -53,6 +53,7 @@ const ru: AppLocale = {
     "app.settings.language": "Язык",
     "app.settings.languageDevice": "Как на телефоне",
     "app.settings.appearance": "Оформление",
+    "app.settings.appearanceSystem": "Как на телефоне",
     "app.settings.appearanceLight": "Светлое",
     "app.settings.appearanceDark": "Тёмное",
     "app.settings.about": "О Judge",

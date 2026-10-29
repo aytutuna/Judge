@@ -531,6 +531,7 @@
     <string name="app_settings_language">భాష</string>
     <string name="app_settings_language_device">ఫోన్ భాషే</string>
     <string name="app_settings_appearance">థీమ్</string>
+    <string name="app_settings_appearance_system">ఫోన్ ప్రకారం</string>
     <string name="app_settings_appearance_light">లైట్</string>
     <string name="app_settings_appearance_dark">డార్క్</string>
     <string name="app_settings_about">Judge గురించి</string>

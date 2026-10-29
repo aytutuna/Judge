@@ -531,6 +531,7 @@
     <string name="app_settings_language">ભાષા</string>
     <string name="app_settings_language_device">ફોનની ભાષા</string>
     <string name="app_settings_appearance">દેખાવ</string>
+    <string name="app_settings_appearance_system">ફોન પ્રમાણે</string>
     <string name="app_settings_appearance_light">લાઇટ</string>
     <string name="app_settings_appearance_dark">ડાર્ક</string>
     <string name="app_settings_about">Judge વિશે</string>

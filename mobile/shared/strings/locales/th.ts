@@ -51,6 +51,7 @@ const th: AppLocale = {
     "app.settings.language": "ภาษา",
     "app.settings.languageDevice": "ตามภาษาของโทรศัพท์",
     "app.settings.appearance": "ธีม",
+    "app.settings.appearanceSystem": "ตามโทรศัพท์",
     "app.settings.appearanceLight": "สว่าง",
     "app.settings.appearanceDark": "มืด",
     "app.settings.about": "เกี่ยวกับ Judge",

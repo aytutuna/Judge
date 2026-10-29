@@ -565,6 +565,7 @@
     <string name="app_settings_language">Język</string>
     <string name="app_settings_language_device">Jak w telefonie</string>
     <string name="app_settings_appearance">Wygląd</string>
+    <string name="app_settings_appearance_system">Jak w telefonie</string>
     <string name="app_settings_appearance_light">Jasny</string>
     <string name="app_settings_appearance_dark">Ciemny</string>
     <string name="app_settings_about">O Judge</string>

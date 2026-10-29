@@ -531,6 +531,7 @@
     <string name="app_settings_language">भाषा</string>
     <string name="app_settings_language_device">फोनची भाषा</string>
     <string name="app_settings_appearance">थीम</string>
+    <string name="app_settings_appearance_system">फोनप्रमाणे</string>
     <string name="app_settings_appearance_light">फिकट</string>
     <string name="app_settings_appearance_dark">गडद</string>
     <string name="app_settings_about">Judge बद्दल</string>

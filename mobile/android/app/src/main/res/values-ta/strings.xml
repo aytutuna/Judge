@@ -531,6 +531,7 @@
     <string name="app_settings_language">மொழி</string>
     <string name="app_settings_language_device">போனில் உள்ளபடியே</string>
     <string name="app_settings_appearance">தோற்றம்</string>
+    <string name="app_settings_appearance_system">போனில் உள்ளபடியே</string>
     <string name="app_settings_appearance_light">வெளிர்</string>
     <string name="app_settings_appearance_dark">இருண்ட</string>
     <string name="app_settings_about">Judge பற்றி</string>

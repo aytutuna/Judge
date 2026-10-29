@@ -50,6 +50,7 @@ const ja: AppLocale = {
     "app.settings.language": "言語",
     "app.settings.languageDevice": "端末の設定に合わせる",
     "app.settings.appearance": "外観モード",
+    "app.settings.appearanceSystem": "端末の設定に合わせる",
     "app.settings.appearanceLight": "ライト",
     "app.settings.appearanceDark": "ダーク",
     "app.settings.about": "Judgeについて",

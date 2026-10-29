@@ -50,6 +50,7 @@ const pa: AppLocale = {
     "app.settings.language": "ਭਾਸ਼ਾ",
     "app.settings.languageDevice": "ਫ਼ੋਨ ਵਾਲੀ ਭਾਸ਼ਾ",
     "app.settings.appearance": "ਦਿੱਖ",
+    "app.settings.appearanceSystem": "ਫ਼ੋਨ ਵਾਂਗ",
     "app.settings.appearanceLight": "ਹਲਕੀ",
     "app.settings.appearanceDark": "ਗੂੜ੍ਹੀ",
     "app.settings.about": "Judge ਬਾਰੇ",

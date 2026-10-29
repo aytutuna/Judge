@@ -51,6 +51,7 @@ const te: AppLocale = {
     "app.settings.language": "భాష",
     "app.settings.languageDevice": "ఫోన్ భాషే",
     "app.settings.appearance": "థీమ్",
+    "app.settings.appearanceSystem": "ఫోన్ ప్రకారం",
     "app.settings.appearanceLight": "లైట్",
     "app.settings.appearanceDark": "డార్క్",
     "app.settings.about": "Judge గురించి",

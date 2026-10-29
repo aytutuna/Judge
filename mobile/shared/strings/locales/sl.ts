@@ -59,6 +59,7 @@ const sl: AppLocale = {
     "app.settings.language": "Jezik",
     "app.settings.languageDevice": "Jezik telefona",
     "app.settings.appearance": "Videz",
+    "app.settings.appearanceSystem": "Kot v telefonu",
     "app.settings.appearanceLight": "Svetlo",
     "app.settings.appearanceDark": "Temno",
     "app.settings.about": "O aplikaciji Judge",

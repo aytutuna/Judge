@@ -55,6 +55,7 @@ const hr: AppLocale = {
     "app.settings.language": "Jezik",
     "app.settings.languageDevice": "Kao na telefonu",
     "app.settings.appearance": "Izgled",
+    "app.settings.appearanceSystem": "Kao na telefonu",
     "app.settings.appearanceLight": "Svijetli",
     "app.settings.appearanceDark": "Tamni",
     "app.settings.about": "O aplikaciji Judge",

@@ -65,6 +65,7 @@ export const APP_EN = {
   "app.settings.language": "Language",
   "app.settings.languageDevice": "Same as the phone",
   "app.settings.appearance": "Appearance",
+  "app.settings.appearanceSystem": "Same as the phone",
   "app.settings.appearanceLight": "Light",
   "app.settings.appearanceDark": "Dark",
   "app.settings.about": "About Judge",

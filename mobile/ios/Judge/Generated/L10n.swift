@@ -624,6 +624,7 @@ enum L10n {
     static func appSettingsLanguage(_ lang: AppLang) -> String { string("app.settings.language", lang) }
     static func appSettingsLanguageDevice(_ lang: AppLang) -> String { string("app.settings.languageDevice", lang) }
     static func appSettingsAppearance(_ lang: AppLang) -> String { string("app.settings.appearance", lang) }
+    static func appSettingsAppearanceSystem(_ lang: AppLang) -> String { string("app.settings.appearanceSystem", lang) }
     static func appSettingsAppearanceLight(_ lang: AppLang) -> String { string("app.settings.appearanceLight", lang) }
     static func appSettingsAppearanceDark(_ lang: AppLang) -> String { string("app.settings.appearanceDark", lang) }
     static func appSettingsAbout(_ lang: AppLang) -> String { string("app.settings.about", lang) }
@@ -1167,6 +1168,7 @@ enum L10n {
         "app.settings.language",
         "app.settings.languageDevice",
         "app.settings.appearance",
+        "app.settings.appearanceSystem",
         "app.settings.appearanceLight",
         "app.settings.appearanceDark",
         "app.settings.about",

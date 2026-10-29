@@ -59,6 +59,7 @@ const ar: AppLocale = {
     "app.settings.language": "اللغة",
     "app.settings.languageDevice": "لغة الهاتف",
     "app.settings.appearance": "المظهر",
+    "app.settings.appearanceSystem": "مثل الهاتف",
     "app.settings.appearanceLight": "فاتح",
     "app.settings.appearanceDark": "داكن",
     "app.settings.about": "عن Judge",

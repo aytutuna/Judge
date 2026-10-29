@@ -514,6 +514,7 @@
     <string name="app_settings_language">ภาษา</string>
     <string name="app_settings_language_device">ตามภาษาของโทรศัพท์</string>
     <string name="app_settings_appearance">ธีม</string>
+    <string name="app_settings_appearance_system">ตามโทรศัพท์</string>
     <string name="app_settings_appearance_light">สว่าง</string>
     <string name="app_settings_appearance_dark">มืด</string>
     <string name="app_settings_about">เกี่ยวกับ Judge</string>

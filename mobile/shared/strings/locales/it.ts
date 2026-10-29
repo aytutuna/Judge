@@ -54,6 +54,7 @@ const it: AppLocale = {
     "app.settings.language": "Lingua",
     "app.settings.languageDevice": "Lingua del telefono",
     "app.settings.appearance": "Aspetto",
+    "app.settings.appearanceSystem": "Come il telefono",
     "app.settings.appearanceLight": "Chiaro",
     "app.settings.appearanceDark": "Scuro",
     "app.settings.about": "Info su Judge",

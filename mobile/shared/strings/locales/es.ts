@@ -53,6 +53,7 @@ const es: AppLocale = {
     "app.settings.language": "Idioma",
     "app.settings.languageDevice": "Igual que el teléfono",
     "app.settings.appearance": "Apariencia",
+    "app.settings.appearanceSystem": "Igual que el teléfono",
     "app.settings.appearanceLight": "Claro",
     "app.settings.appearanceDark": "Oscuro",
     "app.settings.about": "Acerca de Judge",

@@ -48,6 +48,7 @@ const ko: AppLocale = {
     "app.settings.language": "언어",
     "app.settings.languageDevice": "휴대폰 설정 따르기",
     "app.settings.appearance": "화면 모드",
+    "app.settings.appearanceSystem": "휴대폰 설정 따르기",
     "app.settings.appearanceLight": "라이트",
     "app.settings.appearanceDark": "다크",
     "app.settings.about": "Judge 소개",

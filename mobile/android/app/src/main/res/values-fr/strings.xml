@@ -548,6 +548,7 @@
     <string name="app_settings_language">Langue</string>
     <string name="app_settings_language_device">Langue du téléphone</string>
     <string name="app_settings_appearance">Apparence</string>
+    <string name="app_settings_appearance_system">Comme le téléphone</string>
     <string name="app_settings_appearance_light">Clair</string>
     <string name="app_settings_appearance_dark">Sombre</string>
     <string name="app_settings_about">À propos de Judge</string>

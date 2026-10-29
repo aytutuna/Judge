@@ -50,6 +50,7 @@ const tr: AppLocale = {
     "app.settings.language": "Dil",
     "app.settings.languageDevice": "Telefonla aynı",
     "app.settings.appearance": "Görünüm",
+    "app.settings.appearanceSystem": "Telefonla aynı",
     "app.settings.appearanceLight": "Açık",
     "app.settings.appearanceDark": "Koyu",
     "app.settings.about": "Judge hakkında",

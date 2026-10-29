@@ -53,6 +53,7 @@ const ml: AppLocale = {
     "app.settings.language": "ഭാഷ",
     "app.settings.languageDevice": "ഫോണിലെ ഭാഷ തന്നെ",
     "app.settings.appearance": "തീം",
+    "app.settings.appearanceSystem": "ഫോണിലേതു പോലെ",
     "app.settings.appearanceLight": "ലൈറ്റ്",
     "app.settings.appearanceDark": "ഡാർക്ക്",
     "app.settings.about": "Judge-നെക്കുറിച്ച്",

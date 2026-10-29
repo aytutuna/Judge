@@ -514,6 +514,7 @@
     <string name="app_settings_language">语言</string>
     <string name="app_settings_language_device">跟随系统</string>
     <string name="app_settings_appearance">外观</string>
+    <string name="app_settings_appearance_system">跟随系统</string>
     <string name="app_settings_appearance_light">浅色</string>
     <string name="app_settings_appearance_dark">深色</string>
     <string name="app_settings_about">关于 Judge</string>

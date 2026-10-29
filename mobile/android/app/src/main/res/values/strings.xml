@@ -531,6 +531,7 @@
     <string name="app_settings_language">Language</string>
     <string name="app_settings_language_device">Same as the phone</string>
     <string name="app_settings_appearance">Appearance</string>
+    <string name="app_settings_appearance_system">Same as the phone</string>
     <string name="app_settings_appearance_light">Light</string>
     <string name="app_settings_appearance_dark">Dark</string>
     <string name="app_settings_about">About Judge</string>

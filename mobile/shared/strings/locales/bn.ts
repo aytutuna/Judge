@@ -51,6 +51,7 @@ const bn: AppLocale = {
     "app.settings.language": "ভাষা",
     "app.settings.languageDevice": "ফোনের ভাষা",
     "app.settings.appearance": "থিম",
+    "app.settings.appearanceSystem": "ফোনের মতো",
     "app.settings.appearanceLight": "হালকা",
     "app.settings.appearanceDark": "গাঢ়",
     "app.settings.about": "Judge সম্পর্কে",

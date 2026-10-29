@@ -59,6 +59,7 @@ const nb: AppLocale = {
     "app.settings.language": "Språk",
     "app.settings.languageDevice": "Samme som telefonen",
     "app.settings.appearance": "Utseende",
+    "app.settings.appearanceSystem": "Samme som telefonen",
     "app.settings.appearanceLight": "Lyst",
     "app.settings.appearanceDark": "Mørkt",
     "app.settings.about": "Om Judge",

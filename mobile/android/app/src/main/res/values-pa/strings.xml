@@ -531,6 +531,7 @@
     <string name="app_settings_language">ਭਾਸ਼ਾ</string>
     <string name="app_settings_language_device">ਫ਼ੋਨ ਵਾਲੀ ਭਾਸ਼ਾ</string>
     <string name="app_settings_appearance">ਦਿੱਖ</string>
+    <string name="app_settings_appearance_system">ਫ਼ੋਨ ਵਾਂਗ</string>
     <string name="app_settings_appearance_light">ਹਲਕੀ</string>
     <string name="app_settings_appearance_dark">ਗੂੜ੍ਹੀ</string>
     <string name="app_settings_about">Judge ਬਾਰੇ</string>

@@ -531,6 +531,7 @@
     <string name="app_settings_language">Taal</string>
     <string name="app_settings_language_device">Taal van je telefoon</string>
     <string name="app_settings_appearance">Weergave</string>
+    <string name="app_settings_appearance_system">Zoals je telefoon</string>
     <string name="app_settings_appearance_light">Licht</string>
     <string name="app_settings_appearance_dark">Donker</string>
     <string name="app_settings_about">Over Judge</string>

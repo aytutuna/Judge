@@ -51,6 +51,7 @@ const de: AppLocale = {
     "app.settings.language": "Sprache",
     "app.settings.languageDevice": "Wie auf dem Handy",
     "app.settings.appearance": "Erscheinungsbild",
+    "app.settings.appearanceSystem": "Wie auf dem Handy",
     "app.settings.appearanceLight": "Hell",
     "app.settings.appearanceDark": "Dunkel",
     "app.settings.about": "Über Judge",

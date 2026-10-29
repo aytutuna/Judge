@@ -531,6 +531,7 @@
     <string name="app_settings_language">Dil</string>
     <string name="app_settings_language_device">Telefonla aynı</string>
     <string name="app_settings_appearance">Görünüm</string>
+    <string name="app_settings_appearance_system">Telefonla aynı</string>
     <string name="app_settings_appearance_light">Açık</string>
     <string name="app_settings_appearance_dark">Koyu</string>
     <string name="app_settings_about">Judge hakkında</string>

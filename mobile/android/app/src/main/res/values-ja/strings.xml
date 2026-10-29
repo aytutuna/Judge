@@ -514,6 +514,7 @@
     <string name="app_settings_language">言語</string>
     <string name="app_settings_language_device">端末の設定に合わせる</string>
     <string name="app_settings_appearance">外観モード</string>
+    <string name="app_settings_appearance_system">端末の設定に合わせる</string>
     <string name="app_settings_appearance_light">ライト</string>
     <string name="app_settings_appearance_dark">ダーク</string>
     <string name="app_settings_about">Judgeについて</string>

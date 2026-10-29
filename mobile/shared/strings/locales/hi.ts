@@ -50,6 +50,7 @@ const hi: AppLocale = {
     "app.settings.language": "भाषा",
     "app.settings.languageDevice": "फ़ोन की भाषा",
     "app.settings.appearance": "थीम",
+    "app.settings.appearanceSystem": "फ़ोन के अनुसार",
     "app.settings.appearanceLight": "लाइट",
     "app.settings.appearanceDark": "डार्क",
     "app.settings.about": "Judge के बारे में",

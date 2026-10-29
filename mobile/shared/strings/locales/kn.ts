@@ -54,6 +54,7 @@ const kn: AppLocale = {
     "app.settings.language": "ಭಾಷೆ",
     "app.settings.languageDevice": "ಫೋನ್‌ನಲ್ಲಿರುವಂತೆಯೇ",
     "app.settings.appearance": "ಥೀಮ್",
+    "app.settings.appearanceSystem": "ಫೋನ್‌ನಲ್ಲಿರುವಂತೆಯೇ",
     "app.settings.appearanceLight": "ತಿಳಿ",
     "app.settings.appearanceDark": "ಗಾಢ",
     "app.settings.about": "Judge ಬಗ್ಗೆ",

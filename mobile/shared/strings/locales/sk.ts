@@ -52,6 +52,7 @@ const sk: AppLocale = {
     "app.settings.language": "Jazyk",
     "app.settings.languageDevice": "Podľa telefónu",
     "app.settings.appearance": "Vzhľad",
+    "app.settings.appearanceSystem": "Podľa telefónu",
     "app.settings.appearanceLight": "Svetlý",
     "app.settings.appearanceDark": "Tmavý",
     "app.settings.about": "O aplikácii Judge",

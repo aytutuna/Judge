@@ -531,6 +531,7 @@
     <string name="app_settings_language">Sprog</string>
     <string name="app_settings_language_device">Samme som telefonen</string>
     <string name="app_settings_appearance">Udseende</string>
+    <string name="app_settings_appearance_system">Samme som telefonen</string>
     <string name="app_settings_appearance_light">Lys</string>
     <string name="app_settings_appearance_dark">Mørk</string>
     <string name="app_settings_about">Om Judge</string>

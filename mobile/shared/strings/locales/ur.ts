@@ -51,6 +51,7 @@ const ur: AppLocale = {
     "app.settings.language": "زبان",
     "app.settings.languageDevice": "فون کے مطابق",
     "app.settings.appearance": "ظاہری شکل",
+    "app.settings.appearanceSystem": "فون کے مطابق",
     "app.settings.appearanceLight": "ہلکا",
     "app.settings.appearanceDark": "گہرا",
     "app.settings.about": "Judge کا تعارف",

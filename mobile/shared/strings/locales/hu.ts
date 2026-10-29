@@ -50,6 +50,7 @@ const hu: AppLocale = {
     "app.settings.language": "Nyelv",
     "app.settings.languageDevice": "A telefon nyelve",
     "app.settings.appearance": "Megjelenés",
+    "app.settings.appearanceSystem": "A telefon szerint",
     "app.settings.appearanceLight": "Világos",
     "app.settings.appearanceDark": "Sötét",
     "app.settings.about": "A Judge-ról",

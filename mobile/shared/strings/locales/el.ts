@@ -54,6 +54,7 @@ const el: AppLocale = {
     "app.settings.language": "Γλώσσα",
     "app.settings.languageDevice": "Ίδια με του τηλεφώνου",
     "app.settings.appearance": "Εμφάνιση",
+    "app.settings.appearanceSystem": "Ίδια με του τηλεφώνου",
     "app.settings.appearanceLight": "Ανοιχτή",
     "app.settings.appearanceDark": "Σκούρη",
     "app.settings.about": "Σχετικά με το Judge",

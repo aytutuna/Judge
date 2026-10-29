@@ -53,6 +53,7 @@ const ptBR: AppLocale = {
     "app.settings.language": "Idioma",
     "app.settings.languageDevice": "Igual ao do celular",
     "app.settings.appearance": "Aparência",
+    "app.settings.appearanceSystem": "Igual ao do celular",
     "app.settings.appearanceLight": "Claro",
     "app.settings.appearanceDark": "Escuro",
     "app.settings.about": "Sobre o Judge",

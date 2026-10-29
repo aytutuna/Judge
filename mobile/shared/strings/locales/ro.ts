@@ -54,6 +54,7 @@ const ro: AppLocale = {
     "app.settings.language": "Limbă",
     "app.settings.languageDevice": "Limba telefonului",
     "app.settings.appearance": "Aspect",
+    "app.settings.appearanceSystem": "Ca pe telefon",
     "app.settings.appearanceLight": "Luminos",
     "app.settings.appearanceDark": "Întunecat",
     "app.settings.about": "Despre Judge",

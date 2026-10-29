@@ -565,6 +565,7 @@
     <string name="app_settings_language">Язык</string>
     <string name="app_settings_language_device">Как на телефоне</string>
     <string name="app_settings_appearance">Оформление</string>
+    <string name="app_settings_appearance_system">Как на телефоне</string>
     <string name="app_settings_appearance_light">Светлое</string>
     <string name="app_settings_appearance_dark">Тёмное</string>
     <string name="app_settings_about">О Judge</string>

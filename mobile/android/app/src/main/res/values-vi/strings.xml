@@ -514,6 +514,7 @@
     <string name="app_settings_language">Ngôn ngữ</string>
     <string name="app_settings_language_device">Theo điện thoại</string>
     <string name="app_settings_appearance">Giao diện</string>
+    <string name="app_settings_appearance_system">Theo điện thoại</string>
     <string name="app_settings_appearance_light">Sáng</string>
     <string name="app_settings_appearance_dark">Tối</string>
     <string name="app_settings_about">Về Judge</string>

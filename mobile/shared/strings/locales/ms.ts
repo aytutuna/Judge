@@ -53,6 +53,7 @@ const ms: AppLocale = {
     "app.settings.language": "Bahasa",
     "app.settings.languageDevice": "Sama seperti telefon",
     "app.settings.appearance": "Penampilan",
+    "app.settings.appearanceSystem": "Sama seperti telefon",
     "app.settings.appearanceLight": "Cerah",
     "app.settings.appearanceDark": "Gelap",
     "app.settings.about": "Tentang Judge",

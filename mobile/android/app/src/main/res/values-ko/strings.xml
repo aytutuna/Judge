@@ -514,6 +514,7 @@
     <string name="app_settings_language">언어</string>
     <string name="app_settings_language_device">휴대폰 설정 따르기</string>
     <string name="app_settings_appearance">화면 모드</string>
+    <string name="app_settings_appearance_system">휴대폰 설정 따르기</string>
     <string name="app_settings_appearance_light">라이트</string>
     <string name="app_settings_appearance_dark">다크</string>
     <string name="app_settings_about">Judge 소개</string>

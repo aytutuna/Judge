@@ -557,6 +557,7 @@ class Strings(private val res: Resources) {
     val appSettingsLanguage: String get() = res.getString(R.string.app_settings_language)
     val appSettingsLanguageDevice: String get() = res.getString(R.string.app_settings_language_device)
     val appSettingsAppearance: String get() = res.getString(R.string.app_settings_appearance)
+    val appSettingsAppearanceSystem: String get() = res.getString(R.string.app_settings_appearance_system)
     val appSettingsAppearanceLight: String get() = res.getString(R.string.app_settings_appearance_light)
     val appSettingsAppearanceDark: String get() = res.getString(R.string.app_settings_appearance_dark)
     val appSettingsAbout: String get() = res.getString(R.string.app_settings_about)
@@ -1099,6 +1100,7 @@ class Strings(private val res: Resources) {
             "app.settings.language" -> R.string.app_settings_language
             "app.settings.languageDevice" -> R.string.app_settings_language_device
             "app.settings.appearance" -> R.string.app_settings_appearance
+            "app.settings.appearanceSystem" -> R.string.app_settings_appearance_system
             "app.settings.appearanceLight" -> R.string.app_settings_appearance_light
             "app.settings.appearanceDark" -> R.string.app_settings_appearance_dark
             "app.settings.about" -> R.string.app_settings_about

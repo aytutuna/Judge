@@ -531,6 +531,7 @@
     <string name="app_settings_language">Kieli</string>
     <string name="app_settings_language_device">Sama kuin puhelimessa</string>
     <string name="app_settings_appearance">Ulkoasu</string>
+    <string name="app_settings_appearance_system">Sama kuin puhelimessa</string>
     <string name="app_settings_appearance_light">Vaalea</string>
     <string name="app_settings_appearance_dark">Tumma</string>
     <string name="app_settings_about">Tietoa Judgesta</string>

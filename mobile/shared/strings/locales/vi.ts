@@ -50,6 +50,7 @@ const vi: AppLocale = {
     "app.settings.language": "Ngôn ngữ",
     "app.settings.languageDevice": "Theo điện thoại",
     "app.settings.appearance": "Giao diện",
+    "app.settings.appearanceSystem": "Theo điện thoại",
     "app.settings.appearanceLight": "Sáng",
     "app.settings.appearanceDark": "Tối",
     "app.settings.about": "Về Judge",
