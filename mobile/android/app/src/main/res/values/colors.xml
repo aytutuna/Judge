@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- lib/palette.ts (the Compose theme reads ui/theme/Palette.kt; these
-         are only for XML: launcher icon, splash and window). -->
+         are only for XML: launcher icon, splash and window), with the dark
+         set in values-night. -->
     <color name="ivory">#FFF6F1E9</color>
     <color name="ink">#FF1C1916</color>
     <color name="terra">#FFC8553D</color>
     <color name="sage">#FF8AA899</color>
+
+    <!-- The launcher icon keeps the light colours in dark mode. -->
+    <color name="icon_ivory">#FFF6F1E9</color>
+    <color name="icon_ink">#FF1C1916</color>
+    <color name="icon_terra">#FFC8553D</color>
+    <color name="icon_sage">#FF8AA899</color>
 </resources>
