@@ -1,0 +1,34 @@
+[
+  {
+    "uid": "judge-pushover-critical",
+    "name": "pushover-critical",
+    "type": "pushover",
+    "settings": {
+      "userKey": "${GRAFANA_PUSHOVER_USER}",
+      "apiToken": "${GRAFANA_PUSHOVER_TOKEN}",
+      "priority": 2,
+      "retry": 60,
+      "expire": 3600
+    },
+    "disableResolveMessage": false
+  },
+  {
+    "uid": "judge-email",
+    "name": "email",
+    "type": "email",
+    "settings": {
+      "addresses": "${ALERT_EMAIL}"
+    },
+    "disableResolveMessage": false
+  },
+  {
+    "uid": "judge-ntfy",
+    "name": "ntfy",
+    "type": "webhook",
+    "settings": {
+      "url": "${NTFY_URL}/${NTFY_TOPIC}?tpl=yes&t=%7B%7B.title%7D%7D&m=%7B%7B.message%7D%7D&p=5",
+      "httpMethod": "POST"
+    },
+    "disableResolveMessage": false
+  }
+]

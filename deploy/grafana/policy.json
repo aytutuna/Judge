@@ -1,0 +1,24 @@
+{
+  "receiver": "email",
+  "group_by": ["alertname"],
+  "repeat_interval": "24h",
+  "routes": [
+    {
+      "receiver": "pushover-critical",
+      "object_matchers": [["severity", "=", "critical"]],
+      "repeat_interval": "1h",
+      "continue": true
+    },
+    {
+      "receiver": "ntfy",
+      "object_matchers": [["severity", "=", "critical"]],
+      "repeat_interval": "1h",
+      "continue": true
+    },
+    {
+      "receiver": "email",
+      "object_matchers": [["severity", "=", "critical"]],
+      "repeat_interval": "1h"
+    }
+  ]
+}

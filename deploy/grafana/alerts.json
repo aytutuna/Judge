@@ -1,0 +1,1219 @@
+{
+  "folder": {
+    "uid": "judge",
+    "title": "judge"
+  },
+  "groups": [
+    {
+      "title": "critical",
+      "folderUid": "judge",
+      "interval": 60,
+      "rules": [
+        {
+          "uid": "judge-no-metrics",
+          "title": "No metrics from the server",
+          "folderUID": "judge",
+          "ruleGroup": "critical",
+          "condition": "C",
+          "data": [
+            {
+              "refId": "A",
+              "relativeTimeRange": {
+                "from": 600,
+                "to": 0
+              },
+              "datasourceUid": "${PROM_UID}",
+              "model": {
+                "refId": "A",
+                "expr": "absent_over_time(up{app=\"judge\"}[3m])",
+                "instant": true,
+                "range": false
+              }
+            },
+            {
+              "refId": "C",
+              "datasourceUid": "__expr__",
+              "model": {
+                "refId": "C",
+                "type": "threshold",
+                "expression": "A",
+                "datasource": {
+                  "type": "__expr__",
+                  "uid": "__expr__"
+                },
+                "conditions": [
+                  {
+                    "evaluator": {
+                      "type": "gt",
+                      "params": [
+                        0
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "for": "0s",
+          "noDataState": "OK",
+          "execErrState": "Error",
+          "labels": {
+            "severity": "critical"
+          },
+          "annotations": {
+            "summary": "No metrics from the Judge server for 3 minutes: it is down, or Alloy stopped.",
+            "description": "If the site still answers, on the server: systemctl status alloy; journalctl -u alloy -n 50. If not, restart the server from the provider's console."
+          },
+          "isPaused": false
+        },
+        {
+          "uid": "judge-site-down",
+          "title": "Site down",
+          "folderUID": "judge",
+          "ruleGroup": "critical",
+          "condition": "C",
+          "data": [
+            {
+              "refId": "A",
+              "relativeTimeRange": {
+                "from": 600,
+                "to": 0
+              },
+              "datasourceUid": "${PROM_UID}",
+              "model": {
+                "refId": "A",
+                "expr": "count by (job, instance) (probe_success{job=~\"judge-site|judge-health\"} == 0)",
+                "instant": true,
+                "range": false
+              }
+            },
+            {
+              "refId": "C",
+              "datasourceUid": "__expr__",
+              "model": {
+                "refId": "C",
+                "type": "threshold",
+                "expression": "A",
+                "datasource": {
+                  "type": "__expr__",
+                  "uid": "__expr__"
+                },
+                "conditions": [
+                  {
+                    "evaluator": {
+                      "type": "gte",
+                      "params": [
+                        2
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "for": "3m",
+          "noDataState": "OK",
+          "execErrState": "Error",
+          "labels": {
+            "severity": "critical"
+          },
+          "annotations": {
+            "summary": "{{ $labels.instance }} fails from {{ $values.A.Value }} probes.",
+            "description": "On the server: systemctl status verdict caddy; journalctl -u verdict -n 100; journalctl -u caddy -n 50. HTTP 403 while the site works means Cloudflare (Bot Fight Mode or a challenge rule) blocks the probes."
+          },
+          "isPaused": false
+        },
+        {
+          "uid": "judge-app-alert",
+          "title": "App alert",
+          "folderUID": "judge",
+          "ruleGroup": "critical",
+          "condition": "C",
+          "data": [
+            {
+              "refId": "A",
+              "queryType": "instant",
+              "relativeTimeRange": {
+                "from": 120,
+                "to": 0
+              },
+              "datasourceUid": "${LOKI_UID}",
+              "model": {
+                "refId": "A",
+                "expr": "sum by (kind) (count_over_time({app=\"judge\", unit=\"verdict.service\"} |= \"[alert:\" | regexp `^\\[alert:(?P<kind>[a-z_]+)\\]` [2m]))",
+                "queryType": "instant"
+              }
+            },
+            {
+              "refId": "C",
+              "datasourceUid": "__expr__",
+              "model": {
+                "refId": "C",
+                "type": "threshold",
+                "expression": "A",
+                "datasource": {
+                  "type": "__expr__",
+                  "uid": "__expr__"
+                },
+                "conditions": [
+                  {
+                    "evaluator": {
+                      "type": "gt",
+                      "params": [
+                        0
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "for": "0s",
+          "noDataState": "OK",
+          "execErrState": "Error",
+          "labels": {
+            "severity": "critical"
+          },
+          "annotations": {
+            "summary": "The app logged [alert:{{ $labels.kind }}].",
+            "description": "provider_credit: add credit or raise the spend limit in the provider's console. provider_auth: put a working ANTHROPIC_API_KEY in /etc/verdict/verdict.env (on HTTP 403, check the key's workspace and permissions), then sudo systemctl restart verdict. provider_config: fix CLAUDE_MODEL or CLAUDE_MODEL_LITE there and restart. On the server: journalctl -u verdict -p err --since -1h"
+          },
+          "isPaused": false
+        },
+        {
+          "uid": "judge-app-inactive",
+          "title": "App not running",
+          "folderUID": "judge",
+          "ruleGroup": "critical",
+          "condition": "C",
+          "data": [
+            {
+              "refId": "A",
+              "relativeTimeRange": {
+                "from": 600,
+                "to": 0
+              },
+              "datasourceUid": "${PROM_UID}",
+              "model": {
+                "refId": "A",
+                "expr": "node_systemd_unit_state{app=\"judge\", name=\"verdict.service\", state=\"active\"}",
+                "instant": true,
+                "range": false
+              }
+            },
+            {
+              "refId": "C",
+              "datasourceUid": "__expr__",
+              "model": {
+                "refId": "C",
+                "type": "threshold",
+                "expression": "A",
+                "datasource": {
+                  "type": "__expr__",
+                  "uid": "__expr__"
+                },
+                "conditions": [
+                  {
+                    "evaluator": {
+                      "type": "lt",
+                      "params": [
+                        1
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "for": "6m",
+          "noDataState": "OK",
+          "execErrState": "Error",
+          "labels": {
+            "severity": "critical"
+          },
+          "annotations": {
+            "summary": "verdict.service has not been active for 6 minutes.",
+            "description": "On the server: systemctl status verdict; journalctl -u verdict -n 100. A deploy that fails its health check rolls back on its own; run sudo verdict-update to see why."
+          },
+          "isPaused": false
+        },
+        {
+          "uid": "judge-disk-full",
+          "title": "Disk full",
+          "folderUID": "judge",
+          "ruleGroup": "critical",
+          "condition": "C",
+          "data": [
+            {
+              "refId": "A",
+              "relativeTimeRange": {
+                "from": 600,
+                "to": 0
+              },
+              "datasourceUid": "${PROM_UID}",
+              "model": {
+                "refId": "A",
+                "expr": "100 * (1 - node_filesystem_avail_bytes{app=\"judge\", fstype=~\"ext4|xfs|btrfs\"} / node_filesystem_size_bytes{app=\"judge\", fstype=~\"ext4|xfs|btrfs\"})",
+                "instant": true,
+                "range": false
+              }
+            },
+            {
+              "refId": "C",
+              "datasourceUid": "__expr__",
+              "model": {
+                "refId": "C",
+                "type": "threshold",
+                "expression": "A",
+                "datasource": {
+                  "type": "__expr__",
+                  "uid": "__expr__"
+                },
+                "conditions": [
+                  {
+                    "evaluator": {
+                      "type": "gte",
+                      "params": [
+                        90
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "for": "5m",
+          "noDataState": "OK",
+          "execErrState": "Error",
+          "labels": {
+            "severity": "critical"
+          },
+          "annotations": {
+            "summary": "The disk at {{ $labels.mountpoint }} is {{ humanize $values.A.Value }}% full.",
+            "description": "Once it is full, the database and the backups stop working. On the server: sudo du -xh --max-depth=2 / | sort -h | tail -n 15"
+          },
+          "isPaused": false
+        },
+        {
+          "uid": "judge-cert-expiry",
+          "title": "Certificate expiring",
+          "folderUID": "judge",
+          "ruleGroup": "critical",
+          "condition": "C",
+          "data": [
+            {
+              "refId": "A",
+              "relativeTimeRange": {
+                "from": 600,
+                "to": 0
+              },
+              "datasourceUid": "${PROM_UID}",
+              "model": {
+                "refId": "A",
+                "expr": "min by (instance) (probe_ssl_earliest_cert_expiry{job=\"judge-site\"} - time()) / 86400",
+                "instant": true,
+                "range": false
+              }
+            },
+            {
+              "refId": "C",
+              "datasourceUid": "__expr__",
+              "model": {
+                "refId": "C",
+                "type": "threshold",
+                "expression": "A",
+                "datasource": {
+                  "type": "__expr__",
+                  "uid": "__expr__"
+                },
+                "conditions": [
+                  {
+                    "evaluator": {
+                      "type": "lt",
+                      "params": [
+                        10
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "for": "10m",
+          "noDataState": "OK",
+          "execErrState": "Error",
+          "labels": {
+            "severity": "critical"
+          },
+          "annotations": {
+            "summary": "The certificate for {{ $labels.instance }} expires in {{ humanize $values.A.Value }} days.",
+            "description": "Caddy renews about 30 days ahead, so renewal has been failing: journalctl -u caddy -n 200 | grep -i -e acme -e certificate; often DNS or a firewall blocking port 80/443. Behind Cloudflare this is Cloudflare's certificate; the watcher still checks Caddy's own."
+          },
+          "isPaused": false
+        }
+      ]
+    },
+    {
+      "title": "warning",
+      "folderUid": "judge",
+      "interval": 60,
+      "rules": [
+        {
+          "uid": "judge-5xx",
+          "title": "5xx responses",
+          "folderUID": "judge",
+          "ruleGroup": "warning",
+          "condition": "C",
+          "data": [
+            {
+              "refId": "A",
+              "queryType": "instant",
+              "relativeTimeRange": {
+                "from": 300,
+                "to": 0
+              },
+              "datasourceUid": "${LOKI_UID}",
+              "model": {
+                "refId": "A",
+                "expr": "sum(count_over_time({app=\"judge\", filename=\"/var/log/caddy/access.log\", status_class=\"5xx\"} [5m]))",
+                "queryType": "instant"
+              }
+            },
+            {
+              "refId": "C",
+              "datasourceUid": "__expr__",
+              "model": {
+                "refId": "C",
+                "type": "threshold",
+                "expression": "A",
+                "datasource": {
+                  "type": "__expr__",
+                  "uid": "__expr__"
+                },
+                "conditions": [
+                  {
+                    "evaluator": {
+                      "type": "gte",
+                      "params": [
+                        10
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "for": "0s",
+          "noDataState": "OK",
+          "execErrState": "Error",
+          "labels": {
+            "severity": "warning"
+          },
+          "annotations": {
+            "summary": "{{ $values.A.Value }} responses with a 5xx status in 5 minutes.",
+            "description": "On the server: journalctl -u verdict -p err --since -1h"
+          },
+          "isPaused": false
+        },
+        {
+          "uid": "judge-signal-rate-limited",
+          "title": "Signal rate_limited",
+          "folderUID": "judge",
+          "ruleGroup": "warning",
+          "condition": "C",
+          "data": [
+            {
+              "refId": "A",
+              "queryType": "instant",
+              "relativeTimeRange": {
+                "from": 300,
+                "to": 0
+              },
+              "datasourceUid": "${LOKI_UID}",
+              "model": {
+                "refId": "A",
+                "expr": "sum(count_over_time({app=\"judge\", unit=\"verdict.service\"} |= \"[signal:rate_limited]\" [5m]))",
+                "queryType": "instant"
+              }
+            },
+            {
+              "refId": "C",
+              "datasourceUid": "__expr__",
+              "model": {
+                "refId": "C",
+                "type": "threshold",
+                "expression": "A",
+                "datasource": {
+                  "type": "__expr__",
+                  "uid": "__expr__"
+                },
+                "conditions": [
+                  {
+                    "evaluator": {
+                      "type": "gte",
+                      "params": [
+                        50
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "for": "0s",
+          "noDataState": "OK",
+          "execErrState": "Error",
+          "labels": {
+            "severity": "warning"
+          },
+          "annotations": {
+            "summary": "rate_limited x{{ $values.A.Value }} in 5 minutes (limit 50).",
+            "description": "Requests were refused by the rate limits: someone may be hammering the site. On the server: journalctl -u verdict --since -15min | grep 'signal:rate_limited'"
+          },
+          "isPaused": false
+        },
+        {
+          "uid": "judge-signal-turnstile-fail",
+          "title": "Signal turnstile_fail",
+          "folderUID": "judge",
+          "ruleGroup": "warning",
+          "condition": "C",
+          "data": [
+            {
+              "refId": "A",
+              "queryType": "instant",
+              "relativeTimeRange": {
+                "from": 300,
+                "to": 0
+              },
+              "datasourceUid": "${LOKI_UID}",
+              "model": {
+                "refId": "A",
+                "expr": "sum(count_over_time({app=\"judge\", unit=\"verdict.service\"} |= \"[signal:turnstile_fail]\" [5m]))",
+                "queryType": "instant"
+              }
+            },
+            {
+              "refId": "C",
+              "datasourceUid": "__expr__",
+              "model": {
+                "refId": "C",
+                "type": "threshold",
+                "expression": "A",
+                "datasource": {
+                  "type": "__expr__",
+                  "uid": "__expr__"
+                },
+                "conditions": [
+                  {
+                    "evaluator": {
+                      "type": "gte",
+                      "params": [
+                        30
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "for": "0s",
+          "noDataState": "OK",
+          "execErrState": "Error",
+          "labels": {
+            "severity": "warning"
+          },
+          "annotations": {
+            "summary": "turnstile_fail x{{ $values.A.Value }} in 5 minutes (limit 30).",
+            "description": "Visitors failed the bot check: a bot is probably trying to submit. On the server: journalctl -u verdict --since -15min | grep 'signal:turnstile_fail'"
+          },
+          "isPaused": false
+        },
+        {
+          "uid": "judge-signal-bad-origin",
+          "title": "Signal bad_origin",
+          "folderUID": "judge",
+          "ruleGroup": "warning",
+          "condition": "C",
+          "data": [
+            {
+              "refId": "A",
+              "queryType": "instant",
+              "relativeTimeRange": {
+                "from": 300,
+                "to": 0
+              },
+              "datasourceUid": "${LOKI_UID}",
+              "model": {
+                "refId": "A",
+                "expr": "sum(count_over_time({app=\"judge\", unit=\"verdict.service\"} |= \"[signal:bad_origin]\" [5m]))",
+                "queryType": "instant"
+              }
+            },
+            {
+              "refId": "C",
+              "datasourceUid": "__expr__",
+              "model": {
+                "refId": "C",
+                "type": "threshold",
+                "expression": "A",
+                "datasource": {
+                  "type": "__expr__",
+                  "uid": "__expr__"
+                },
+                "conditions": [
+                  {
+                    "evaluator": {
+                      "type": "gte",
+                      "params": [
+                        10
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "for": "0s",
+          "noDataState": "OK",
+          "execErrState": "Error",
+          "labels": {
+            "severity": "warning"
+          },
+          "annotations": {
+            "summary": "bad_origin x{{ $values.A.Value }} in 5 minutes (limit 10).",
+            "description": "Signed-in writes from other sites were refused: possibly a cross-site attack. On the server: journalctl -u verdict --since -15min | grep 'signal:bad_origin'"
+          },
+          "isPaused": false
+        },
+        {
+          "uid": "judge-signal-bearer-401",
+          "title": "Signal bearer_401",
+          "folderUID": "judge",
+          "ruleGroup": "warning",
+          "condition": "C",
+          "data": [
+            {
+              "refId": "A",
+              "queryType": "instant",
+              "relativeTimeRange": {
+                "from": 300,
+                "to": 0
+              },
+              "datasourceUid": "${LOKI_UID}",
+              "model": {
+                "refId": "A",
+                "expr": "sum(count_over_time({app=\"judge\", unit=\"verdict.service\"} |= \"[signal:bearer_401]\" [5m]))",
+                "queryType": "instant"
+              }
+            },
+            {
+              "refId": "C",
+              "datasourceUid": "__expr__",
+              "model": {
+                "refId": "C",
+                "type": "threshold",
+                "expression": "A",
+                "datasource": {
+                  "type": "__expr__",
+                  "uid": "__expr__"
+                },
+                "conditions": [
+                  {
+                    "evaluator": {
+                      "type": "gte",
+                      "params": [
+                        30
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "for": "0s",
+          "noDataState": "OK",
+          "execErrState": "Error",
+          "labels": {
+            "severity": "warning"
+          },
+          "annotations": {
+            "summary": "bearer_401 x{{ $values.A.Value }} in 5 minutes (limit 30).",
+            "description": "Requests came with dead sign-in tokens: an app bug, or someone guessing tokens. On the server: journalctl -u verdict --since -15min | grep 'signal:bearer_401'"
+          },
+          "isPaused": false
+        },
+        {
+          "uid": "judge-signal-webhook-bad-secret",
+          "title": "Signal webhook_bad_secret",
+          "folderUID": "judge",
+          "ruleGroup": "warning",
+          "condition": "C",
+          "data": [
+            {
+              "refId": "A",
+              "queryType": "instant",
+              "relativeTimeRange": {
+                "from": 300,
+                "to": 0
+              },
+              "datasourceUid": "${LOKI_UID}",
+              "model": {
+                "refId": "A",
+                "expr": "sum(count_over_time({app=\"judge\", unit=\"verdict.service\"} |= \"[signal:webhook_bad_secret]\" [5m]))",
+                "queryType": "instant"
+              }
+            },
+            {
+              "refId": "C",
+              "datasourceUid": "__expr__",
+              "model": {
+                "refId": "C",
+                "type": "threshold",
+                "expression": "A",
+                "datasource": {
+                  "type": "__expr__",
+                  "uid": "__expr__"
+                },
+                "conditions": [
+                  {
+                    "evaluator": {
+                      "type": "gte",
+                      "params": [
+                        10
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "for": "0s",
+          "noDataState": "OK",
+          "execErrState": "Error",
+          "labels": {
+            "severity": "warning"
+          },
+          "annotations": {
+            "summary": "webhook_bad_secret x{{ $values.A.Value }} in 5 minutes (limit 10).",
+            "description": "Purchase webhooks came with a wrong secret: someone may be forging purchases, or the secret in RevenueCat changed. On the server: journalctl -u verdict --since -15min | grep 'signal:webhook_bad_secret'"
+          },
+          "isPaused": false
+        },
+        {
+          "uid": "judge-signal-webhook-apply-failed",
+          "title": "Signal webhook_apply_failed",
+          "folderUID": "judge",
+          "ruleGroup": "warning",
+          "condition": "C",
+          "data": [
+            {
+              "refId": "A",
+              "queryType": "instant",
+              "relativeTimeRange": {
+                "from": 300,
+                "to": 0
+              },
+              "datasourceUid": "${LOKI_UID}",
+              "model": {
+                "refId": "A",
+                "expr": "sum(count_over_time({app=\"judge\", unit=\"verdict.service\"} |= \"[signal:webhook_apply_failed]\" [5m]))",
+                "queryType": "instant"
+              }
+            },
+            {
+              "refId": "C",
+              "datasourceUid": "__expr__",
+              "model": {
+                "refId": "C",
+                "type": "threshold",
+                "expression": "A",
+                "datasource": {
+                  "type": "__expr__",
+                  "uid": "__expr__"
+                },
+                "conditions": [
+                  {
+                    "evaluator": {
+                      "type": "gte",
+                      "params": [
+                        1
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "for": "0s",
+          "noDataState": "OK",
+          "execErrState": "Error",
+          "labels": {
+            "severity": "warning"
+          },
+          "annotations": {
+            "summary": "webhook_apply_failed x{{ $values.A.Value }} in 5 minutes (limit 1).",
+            "description": "A purchase could not be applied. RevenueCat retries, but check the database. On the server: journalctl -u verdict --since -15min | grep 'signal:webhook_apply_failed'"
+          },
+          "isPaused": false
+        },
+        {
+          "uid": "judge-signal-entitlement-refused",
+          "title": "Signal entitlement_refused",
+          "folderUID": "judge",
+          "ruleGroup": "warning",
+          "condition": "C",
+          "data": [
+            {
+              "refId": "A",
+              "queryType": "instant",
+              "relativeTimeRange": {
+                "from": 300,
+                "to": 0
+              },
+              "datasourceUid": "${LOKI_UID}",
+              "model": {
+                "refId": "A",
+                "expr": "sum(count_over_time({app=\"judge\", unit=\"verdict.service\"} |= \"[signal:entitlement_refused]\" [5m]))",
+                "queryType": "instant"
+              }
+            },
+            {
+              "refId": "C",
+              "datasourceUid": "__expr__",
+              "model": {
+                "refId": "C",
+                "type": "threshold",
+                "expression": "A",
+                "datasource": {
+                  "type": "__expr__",
+                  "uid": "__expr__"
+                },
+                "conditions": [
+                  {
+                    "evaluator": {
+                      "type": "gte",
+                      "params": [
+                        3
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "for": "0s",
+          "noDataState": "OK",
+          "execErrState": "Error",
+          "labels": {
+            "severity": "warning"
+          },
+          "annotations": {
+            "summary": "entitlement_refused x{{ $values.A.Value }} in 5 minutes (limit 3).",
+            "description": "Finished verdicts were refused their credit settlement: a double-spend attempt, or a race with the sweep. On the server: journalctl -u verdict --since -15min | grep 'signal:entitlement_refused'"
+          },
+          "isPaused": false
+        },
+        {
+          "uid": "judge-signal-provider-rate",
+          "title": "Signal provider_rate",
+          "folderUID": "judge",
+          "ruleGroup": "warning",
+          "condition": "C",
+          "data": [
+            {
+              "refId": "A",
+              "queryType": "instant",
+              "relativeTimeRange": {
+                "from": 300,
+                "to": 0
+              },
+              "datasourceUid": "${LOKI_UID}",
+              "model": {
+                "refId": "A",
+                "expr": "sum(count_over_time({app=\"judge\", unit=\"verdict.service\"} |= \"[signal:provider_rate]\" [5m]))",
+                "queryType": "instant"
+              }
+            },
+            {
+              "refId": "C",
+              "datasourceUid": "__expr__",
+              "model": {
+                "refId": "C",
+                "type": "threshold",
+                "expression": "A",
+                "datasource": {
+                  "type": "__expr__",
+                  "uid": "__expr__"
+                },
+                "conditions": [
+                  {
+                    "evaluator": {
+                      "type": "gte",
+                      "params": [
+                        10
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "for": "0s",
+          "noDataState": "OK",
+          "execErrState": "Error",
+          "labels": {
+            "severity": "warning"
+          },
+          "annotations": {
+            "summary": "provider_rate x{{ $values.A.Value }} in 5 minutes (limit 10).",
+            "description": "The AI service is rate limiting the app; users get the quota message. On the server: journalctl -u verdict --since -15min | grep 'signal:provider_rate'"
+          },
+          "isPaused": false
+        },
+        {
+          "uid": "judge-signal-provider-down",
+          "title": "Signal provider_down",
+          "folderUID": "judge",
+          "ruleGroup": "warning",
+          "condition": "C",
+          "data": [
+            {
+              "refId": "A",
+              "queryType": "instant",
+              "relativeTimeRange": {
+                "from": 300,
+                "to": 0
+              },
+              "datasourceUid": "${LOKI_UID}",
+              "model": {
+                "refId": "A",
+                "expr": "sum(count_over_time({app=\"judge\", unit=\"verdict.service\"} |= \"[signal:provider_down]\" [5m]))",
+                "queryType": "instant"
+              }
+            },
+            {
+              "refId": "C",
+              "datasourceUid": "__expr__",
+              "model": {
+                "refId": "C",
+                "type": "threshold",
+                "expression": "A",
+                "datasource": {
+                  "type": "__expr__",
+                  "uid": "__expr__"
+                },
+                "conditions": [
+                  {
+                    "evaluator": {
+                      "type": "gte",
+                      "params": [
+                        5
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "for": "0s",
+          "noDataState": "OK",
+          "execErrState": "Error",
+          "labels": {
+            "severity": "warning"
+          },
+          "annotations": {
+            "summary": "provider_down x{{ $values.A.Value }} in 5 minutes (limit 5).",
+            "description": "Calls to the AI service fail or time out; verdicts fail meanwhile. On the server: journalctl -u verdict --since -15min | grep 'signal:provider_down'"
+          },
+          "isPaused": false
+        },
+        {
+          "uid": "judge-ssh-login",
+          "title": "SSH login",
+          "folderUID": "judge",
+          "ruleGroup": "warning",
+          "condition": "C",
+          "data": [
+            {
+              "refId": "A",
+              "queryType": "instant",
+              "relativeTimeRange": {
+                "from": 120,
+                "to": 0
+              },
+              "datasourceUid": "${LOKI_UID}",
+              "model": {
+                "refId": "A",
+                "expr": "sum by (user) (count_over_time({app=\"judge\", unit=\"ssh.service\"} |= \"Accepted \" | regexp `^Accepted \\S+ for (?P<user>\\S+) from` [2m]))",
+                "queryType": "instant"
+              }
+            },
+            {
+              "refId": "C",
+              "datasourceUid": "__expr__",
+              "model": {
+                "refId": "C",
+                "type": "threshold",
+                "expression": "A",
+                "datasource": {
+                  "type": "__expr__",
+                  "uid": "__expr__"
+                },
+                "conditions": [
+                  {
+                    "evaluator": {
+                      "type": "gt",
+                      "params": [
+                        0
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "for": "0s",
+          "noDataState": "OK",
+          "execErrState": "Error",
+          "labels": {
+            "severity": "warning"
+          },
+          "annotations": {
+            "summary": "SSH login as {{ $labels.user }}.",
+            "description": "If it was not you, the server is compromised: stop it in the provider's console, then rotate every key in /etc/verdict/verdict.env. On the server: journalctl -t sshd --since -1h"
+          },
+          "isPaused": false
+        },
+        {
+          "uid": "judge-fail2ban-bans",
+          "title": "fail2ban bans",
+          "folderUID": "judge",
+          "ruleGroup": "warning",
+          "condition": "C",
+          "data": [
+            {
+              "refId": "A",
+              "queryType": "instant",
+              "relativeTimeRange": {
+                "from": 3600,
+                "to": 0
+              },
+              "datasourceUid": "${LOKI_UID}",
+              "model": {
+                "refId": "A",
+                "expr": "sum(count_over_time({app=\"judge\", unit=\"fail2ban.service\"} |= \"] Ban \" [1h]))",
+                "queryType": "instant"
+              }
+            },
+            {
+              "refId": "C",
+              "datasourceUid": "__expr__",
+              "model": {
+                "refId": "C",
+                "type": "threshold",
+                "expression": "A",
+                "datasource": {
+                  "type": "__expr__",
+                  "uid": "__expr__"
+                },
+                "conditions": [
+                  {
+                    "evaluator": {
+                      "type": "gt",
+                      "params": [
+                        20
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "for": "0s",
+          "noDataState": "OK",
+          "execErrState": "Error",
+          "labels": {
+            "severity": "warning"
+          },
+          "annotations": {
+            "summary": "fail2ban banned {{ $values.A.Value }} addresses in the last hour.",
+            "description": "Someone is trying SSH logins at scale. On the server: sudo fail2ban-client status sshd"
+          },
+          "isPaused": false
+        },
+        {
+          "uid": "judge-unit-failed",
+          "title": "Unit failed",
+          "folderUID": "judge",
+          "ruleGroup": "warning",
+          "condition": "C",
+          "data": [
+            {
+              "refId": "A",
+              "relativeTimeRange": {
+                "from": 600,
+                "to": 0
+              },
+              "datasourceUid": "${PROM_UID}",
+              "model": {
+                "refId": "A",
+                "expr": "node_systemd_units{app=\"judge\", state=\"failed\"}",
+                "instant": true,
+                "range": false
+              }
+            },
+            {
+              "refId": "C",
+              "datasourceUid": "__expr__",
+              "model": {
+                "refId": "C",
+                "type": "threshold",
+                "expression": "A",
+                "datasource": {
+                  "type": "__expr__",
+                  "uid": "__expr__"
+                },
+                "conditions": [
+                  {
+                    "evaluator": {
+                      "type": "gt",
+                      "params": [
+                        0
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "for": "1m",
+          "noDataState": "OK",
+          "execErrState": "Error",
+          "labels": {
+            "severity": "warning"
+          },
+          "annotations": {
+            "summary": "{{ $values.A.Value }} systemd unit(s) in the failed state.",
+            "description": "On the server: systemctl --failed, then systemctl status <unit>; journalctl -u <unit> -n 50"
+          },
+          "isPaused": false
+        },
+        {
+          "uid": "judge-memory",
+          "title": "Memory low",
+          "folderUID": "judge",
+          "ruleGroup": "warning",
+          "condition": "C",
+          "data": [
+            {
+              "refId": "A",
+              "relativeTimeRange": {
+                "from": 600,
+                "to": 0
+              },
+              "datasourceUid": "${PROM_UID}",
+              "model": {
+                "refId": "A",
+                "expr": "100 * (1 - node_memory_MemAvailable_bytes{app=\"judge\"} / node_memory_MemTotal_bytes{app=\"judge\"})",
+                "instant": true,
+                "range": false
+              }
+            },
+            {
+              "refId": "C",
+              "datasourceUid": "__expr__",
+              "model": {
+                "refId": "C",
+                "type": "threshold",
+                "expression": "A",
+                "datasource": {
+                  "type": "__expr__",
+                  "uid": "__expr__"
+                },
+                "conditions": [
+                  {
+                    "evaluator": {
+                      "type": "gt",
+                      "params": [
+                        90
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "for": "10m",
+          "noDataState": "OK",
+          "execErrState": "Error",
+          "labels": {
+            "severity": "warning"
+          },
+          "annotations": {
+            "summary": "{{ humanize $values.A.Value }}% of the memory has been in use for 10 minutes.",
+            "description": "On the server: systemctl status verdict; ps aux --sort=-rss | head; journalctl -k --since -1h"
+          },
+          "isPaused": false
+        },
+        {
+          "uid": "judge-oom",
+          "title": "Out of memory kill",
+          "folderUID": "judge",
+          "ruleGroup": "warning",
+          "condition": "C",
+          "data": [
+            {
+              "refId": "A",
+              "queryType": "instant",
+              "relativeTimeRange": {
+                "from": 120,
+                "to": 0
+              },
+              "datasourceUid": "${LOKI_UID}",
+              "model": {
+                "refId": "A",
+                "expr": "sum(count_over_time({app=\"judge\", unit=\"kernel\"} |= \"Killed process\" [2m]))",
+                "queryType": "instant"
+              }
+            },
+            {
+              "refId": "C",
+              "datasourceUid": "__expr__",
+              "model": {
+                "refId": "C",
+                "type": "threshold",
+                "expression": "A",
+                "datasource": {
+                  "type": "__expr__",
+                  "uid": "__expr__"
+                },
+                "conditions": [
+                  {
+                    "evaluator": {
+                      "type": "gt",
+                      "params": [
+                        0
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "for": "0s",
+          "noDataState": "OK",
+          "execErrState": "Error",
+          "labels": {
+            "severity": "warning"
+          },
+          "annotations": {
+            "summary": "The kernel killed a process for lack of memory.",
+            "description": "Most likely the app at its 400 MB cap. On the server: journalctl -k --since -1h; systemctl status verdict. If it keeps happening, find what grows."
+          },
+          "isPaused": false
+        }
+      ]
+    }
+  ]
+}
