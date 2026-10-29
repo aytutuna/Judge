@@ -24,6 +24,7 @@ import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
@@ -81,8 +82,11 @@ import com.okjudge.judge.ui.settings.SettingsScreen
 import com.okjudge.judge.ui.signin.SignInActions
 import com.okjudge.judge.ui.signin.SignInScreen
 import com.okjudge.judge.ui.signin.SignInViewModel
+import com.okjudge.judge.ui.theme.DarkPalette
+import com.okjudge.judge.ui.theme.JudgePalette
 import com.okjudge.judge.ui.theme.JudgeTheme
 import com.okjudge.judge.ui.theme.JudgeType
+import com.okjudge.judge.ui.theme.LightPalette
 import com.okjudge.judge.ui.theme.Palette
 import com.okjudge.judge.ui.verdict.VerdictAppealViewModel
 import com.okjudge.judge.ui.verdict.VerdictRoute
@@ -638,9 +642,14 @@ private fun NavBackStack<NavKey>.resetTo(keys: List<NavKey>) {
 }
 
 fun openLink(context: Context, url: String) {
-    val params = CustomTabColorSchemeParams.Builder().setToolbarColor(android.graphics.Color.rgb(0xF6, 0xF1, 0xE9)).build()
+    fun toolbar(p: JudgePalette) = CustomTabColorSchemeParams.Builder().setToolbarColor(p.ivory.toArgb()).build()
     runCatching {
-        CustomTabsIntent.Builder().setDefaultColorSchemeParams(params).build().launchUrl(context, url.toUri())
+        // The site follows the phone's theme, so the toolbar does too.
+        CustomTabsIntent.Builder()
+            .setDefaultColorSchemeParams(toolbar(LightPalette))
+            .setColorSchemeParams(CustomTabsIntent.COLOR_SCHEME_DARK, toolbar(DarkPalette))
+            .build()
+            .launchUrl(context, url.toUri())
     }
 }
 
