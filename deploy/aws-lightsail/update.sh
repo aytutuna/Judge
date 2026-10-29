@@ -43,6 +43,7 @@ DEPLOY_SRC=$REPO_DIR/deploy/aws-lightsail
 # HOME and npm cache for the build user (/opt/verdict itself is root-owned).
 BUILD_HOME=/var/cache/verdict-build
 CADDYFILE=/etc/caddy/Caddyfile
+ACCESS_LOG=/var/log/caddy/access.log
 UNITS=(verdict.service verdict-backup.service verdict-backup.timer)
 # Installed only while CLOUDFLARE_PROXY=1.
 CF_UNITS=(verdict-cloudflare-ips.service verdict-cloudflare-ips.timer)
@@ -257,6 +258,12 @@ caddyfile_text() {
 # is installed.
 render_caddyfile() {
   local out=$1
+  # caddy validate runs as root and opens the access log; a file it created
+  # would be root's, and Caddy itself could then not write to it.
+  if [[ ! -e $ACCESS_LOG ]]; then
+    install -d -m 755 -o caddy -g caddy "$(dirname "$ACCESS_LOG")"
+    install -m 640 -o caddy -g caddy /dev/null "$ACCESS_LOG"
+  fi
   caddyfile_text >"$out"
   if ! caddy validate --adapter caddyfile --config "$out" >/dev/null 2>&1; then
     caddy validate --adapter caddyfile --config "$out" || true
