@@ -49,7 +49,8 @@ private const val SCENE_URL = "file:///android_asset/scene/index.html"
  * The web's three.js balance (assets/scene, built by mobile/shared/scene) in
  * a web view, driven through `window.judgeScene`. Decorative: the captions
  * around it carry the meaning. Touches go past it to the scrolling page.
- * The viewer's side is drawn green ([LocalSides]).
+ * The viewer's side is drawn green ([LocalSides]), and the page is told the
+ * theme. The web view is clear, so the paper behind it shows until it paints.
  */
 @Composable
 fun SceneView(mode: SceneMode, reducedMotion: Boolean, modifier: Modifier = Modifier) {
@@ -111,9 +112,11 @@ private fun SceneWebView(mode: SceneMode, reducedMotion: Boolean, onGone: () -> 
     }
 
     val you = LocalSides.current.you
-    LaunchedEffect(loaded, mode, reducedMotion, you) {
+    val theme = if (Palette.dark) "dark" else "light"
+    LaunchedEffect(loaded, mode, reducedMotion, you, theme) {
         if (!loaded) return@LaunchedEffect
         if (reducedMotion) web.evaluateJavascript("window.judgeScene.setReduced(true)", null)
+        web.evaluateJavascript("window.judgeScene.setTheme(\"$theme\")", null)
         web.evaluateJavascript("window.judgeScene.setYou(\"$you\")", null)
         web.evaluateJavascript("window.judgeScene.setMode(${mode.json()})", null)
     }
