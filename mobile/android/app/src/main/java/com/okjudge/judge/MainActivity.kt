@@ -32,18 +32,19 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         val container = (application as JudgeApp).container
 
-        // Hold the splash until the language setting is read, so the first
-        // frame is already in the right language.
+        // Hold the splash until the language and appearance settings are
+        // read, so the first frame is already in the right language and theme.
         var ready = false
         splash.setKeepOnScreenCondition { !ready }
         lifecycleScope.launch {
             container.settings.langPref.first()
+            container.settings.appearance.first()
             ready = true
         }
 
         systemBars((resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES)
         if (savedInstanceState == null) links.value = intent?.data
-        setContent { JudgeRoot(container, links, onLinkHandled = { links.value = null }) }
+        setContent { JudgeRoot(container, links, onLinkHandled = { links.value = null }, onDark = ::systemBars) }
     }
 
     private fun systemBars(dark: Boolean) {

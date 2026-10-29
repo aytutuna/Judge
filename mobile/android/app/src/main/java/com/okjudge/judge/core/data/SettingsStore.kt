@@ -10,10 +10,30 @@ import com.okjudge.judge.i18n.LangPref
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-/** App settings: the language choice. */
+/** Light, dark, or whatever the phone is set to. */
+enum class Appearance(val stored: String) {
+    SYSTEM("system"),
+    LIGHT("light"),
+    DARK("dark");
+
+    fun isDark(systemDark: Boolean): Boolean = when (this) {
+        SYSTEM -> systemDark
+        LIGHT -> false
+        DARK -> true
+    }
+
+    companion object {
+        fun fromStored(value: String?): Appearance = entries.firstOrNull { it.stored == value } ?: SYSTEM
+    }
+}
+
+/** App settings: the language choice and the appearance. */
 interface SettingsStore {
     val langPref: Flow<LangPref>
     suspend fun setLangPref(pref: LangPref)
+
+    val appearance: Flow<Appearance>
+    suspend fun setAppearance(appearance: Appearance)
 }
 
 private val Context.settingsDataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
@@ -27,7 +47,14 @@ class DataStoreSettings(context: Context) : SettingsStore {
         store.edit { it[LANG] = pref.stored }
     }
 
+    override val appearance: Flow<Appearance> = store.data.map { Appearance.fromStored(it[APPEARANCE]) }
+
+    override suspend fun setAppearance(appearance: Appearance) {
+        store.edit { it[APPEARANCE] = appearance.stored }
+    }
+
     private companion object {
         val LANG = stringPreferencesKey("lang")
+        val APPEARANCE = stringPreferencesKey("appearance")
     }
 }

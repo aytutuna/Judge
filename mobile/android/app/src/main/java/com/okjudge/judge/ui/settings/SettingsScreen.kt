@@ -35,6 +35,7 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.okjudge.judge.core.auth.Account
+import com.okjudge.judge.core.data.Appearance
 import com.okjudge.judge.core.display.Errors
 import com.okjudge.judge.core.purchases.PurchaseController
 import com.okjudge.judge.i18n.AppLang
@@ -56,6 +57,9 @@ object SettingsTags {
     const val RESTORE_NOTE = "settings.restoreNote"
     const val LANGUAGE = "settings.language"
 
+    /** A row of the appearance group: "settings.appearance.dark". */
+    fun appearanceOption(a: Appearance): String = "settings.appearance.${a.stored}"
+
     /** A row of the language list: "settings.lang.system", "settings.lang.de". */
     fun langOption(pref: LangPref): String = "settings.lang.${pref.stored}"
 }
@@ -63,7 +67,7 @@ object SettingsTags {
 /** "Restore purchases" in the account group; shown while the store is ready for this account. */
 data class RestoreUi(val working: Boolean = false, val notice: PurchaseController.RestoreNotice? = null)
 
-/** The account, language choice, links out to the website, and the footer note. */
+/** The account, language and appearance choices, links out to the website, and the footer note. */
 @Composable
 fun SettingsScreen(
     langPref: LangPref,
@@ -81,6 +85,8 @@ fun SettingsScreen(
     onOpenPricing: (() -> Unit)? = null,
     restore: RestoreUi? = null,
     onRestore: () -> Unit = {},
+    appearance: Appearance = Appearance.SYSTEM,
+    onAppearance: (Appearance) -> Unit = {},
 ) {
     val s = LocalStrings.current
     val base = siteBaseUrl.trimEnd('/')
@@ -104,6 +110,13 @@ fun SettingsScreen(
                     Modifier.testTag(SettingsTags.LANGUAGE),
                     trailing = "›",
                 ) { pickingLang = true }
+            }
+
+            Group(s.appSettingsAppearance) {
+                Appearance.entries.forEachIndexed { i, option ->
+                    if (i > 0) HorizontalDivider(color = Palette.line)
+                    AppearanceRow(option, selected = option == appearance) { onAppearance(option) }
+                }
             }
 
             if (onOpenPricing != null) {
@@ -311,6 +324,28 @@ private fun LinkRow(label: String, onClick: () -> Unit) {
     ) {
         Text(label, style = JudgeType.body, modifier = Modifier.weight(1f))
         Text("↗", style = JudgeType.body.copy(color = Palette.muted))
+    }
+}
+
+@Composable
+private fun AppearanceRow(option: Appearance, selected: Boolean, onClick: () -> Unit) {
+    val s = LocalStrings.current
+    val label = when (option) {
+        // The language list's wording, kept identical.
+        Appearance.SYSTEM -> s.appSettingsLanguageDevice
+        Appearance.LIGHT -> s.appSettingsAppearanceLight
+        Appearance.DARK -> s.appSettingsAppearanceDark
+    }
+    Row(
+        Modifier
+            .fillMaxWidth()
+            .testTag(SettingsTags.appearanceOption(option))
+            .selectable(selected = selected, role = Role.RadioButton, onClick = onClick)
+            .padding(horizontal = 16.dp, vertical = 14.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Text(label, style = JudgeType.body, modifier = Modifier.weight(1f))
+        Radio(selected)
     }
 }
 

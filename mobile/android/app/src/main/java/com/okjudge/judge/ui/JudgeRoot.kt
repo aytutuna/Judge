@@ -3,6 +3,7 @@ package com.okjudge.judge.ui
 import android.content.Context
 import androidx.browser.customtabs.CustomTabColorSchemeParams
 import androidx.browser.customtabs.CustomTabsIntent
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
@@ -45,6 +46,7 @@ import androidx.navigation3.ui.NavDisplay
 import com.okjudge.judge.AppContainer
 import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import com.okjudge.judge.core.auth.Account
+import com.okjudge.judge.core.data.Appearance
 import com.okjudge.judge.core.session.VerdictFlow
 import com.okjudge.judge.i18n.LangPref
 import com.okjudge.judge.i18n.LocalStrings
@@ -110,10 +112,19 @@ import kotlinx.serialization.Serializable
 
 private enum class Tab { NEW, HISTORY, SETTINGS }
 
-/** App shell: language, theme, the back stack, the bottom bar and the sign-in gate. */
+/** App shell: language, theme, the back stack, the bottom bar and the sign-in gate. [onDark] hears the theme in use. */
 @Composable
-fun JudgeRoot(container: AppContainer, links: StateFlow<Uri?> = MutableStateFlow(null), onLinkHandled: () -> Unit = {}) {
+fun JudgeRoot(
+    container: AppContainer,
+    links: StateFlow<Uri?> = MutableStateFlow(null),
+    onLinkHandled: () -> Unit = {},
+    onDark: (Boolean) -> Unit = {},
+) {
     val langPref by container.settings.langPref.collectAsStateWithLifecycle(initialValue = LangPref.SYSTEM)
+    val appearance by container.settings.appearance.collectAsStateWithLifecycle(initialValue = Appearance.SYSTEM)
+    val dark = appearance.isDark(isSystemInDarkTheme())
+    val darkChanged by rememberUpdatedState(onDark)
+    LaunchedEffect(dark) { darkChanged(dark) }
     val configuration = LocalConfiguration.current
     val appContext = LocalContext.current
     val deviceTags = remember(configuration) { deviceLanguageTags(appContext) }
@@ -122,7 +133,7 @@ fun JudgeRoot(container: AppContainer, links: StateFlow<Uri?> = MutableStateFlow
     val scope = rememberCoroutineScope()
 
     ProvideLang(lang, strings) {
-        JudgeTheme {
+        JudgeTheme(dark = dark) {
             val backStack = rememberNavBackStack(HomeKey)
             var clearDraft by rememberSaveable { mutableStateOf(false) }
             var submitAfterSignIn by rememberSaveable { mutableStateOf(false) }
@@ -491,6 +502,8 @@ fun JudgeRoot(container: AppContainer, links: StateFlow<Uri?> = MutableStateFlow
                                 langPref = langPref,
                                 versionName = container.config.versionName,
                                 onLangPref = { pref -> scope.launch { container.settings.setLangPref(pref) } },
+                                appearance = appearance,
+                                onAppearance = { a -> scope.launch { container.settings.setAppearance(a) } },
                                 onNew = onNew,
                                 onOpenLink = { openLink(context, it) },
                                 siteBaseUrl = container.config.shareBaseUrl,

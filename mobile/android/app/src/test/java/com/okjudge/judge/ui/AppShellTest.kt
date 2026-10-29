@@ -1,5 +1,6 @@
 package com.okjudge.judge.ui
 
+import androidx.compose.ui.test.assertIsSelected
 import androidx.compose.ui.test.assertTextContains
 import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
@@ -10,7 +11,10 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
 import androidx.compose.ui.semantics.SemanticsProperties
+import androidx.core.view.WindowCompat
+import com.okjudge.judge.JudgeApp
 import com.okjudge.judge.MainActivity
+import com.okjudge.judge.core.data.Appearance
 import com.okjudge.judge.core.display.Examples
 import com.okjudge.judge.i18n.AppLang
 import com.okjudge.judge.i18n.LangPref
@@ -18,14 +22,18 @@ import com.okjudge.judge.ui.components.TopBarTags
 import com.okjudge.judge.ui.history.HistoryTags
 import com.okjudge.judge.ui.home.HomeTags
 import com.okjudge.judge.ui.settings.SettingsTags
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 
-/** The real activity: splash, theme, Navigation 3 back stack, tabs, the "+" and the language setting. */
+/** The real activity: splash, theme, Navigation 3 back stack, tabs, the "+" and the language and appearance settings. */
 @RunWith(RobolectricTestRunner::class)
 @Config(sdk = [36], qualifiers = "en-rUS-w393dp-h852dp")
 class AppShellTest {
@@ -94,5 +102,27 @@ class AppShellTest {
         assertEquals("", typed(HomeTags.INPUT))
         assertEquals("", typed(HomeTags.OTHER))
         assertEquals("", typed(HomeTags.NAME))
+    }
+
+    @Test
+    fun appearance_isStored_andSetsTheSystemBars() {
+        val settings = (compose.activity.application as JudgeApp).container.settings
+        runBlocking { settings.setLangPref(LangPref.SYSTEM) }
+        val en = UiTestSupport.s(AppLang.EN)
+        awaitText(en.appHomeExample)
+        compose.onNodeWithText(en.appTabSettings).performClick()
+        compose.onNodeWithTag(SettingsTags.appearanceOption(Appearance.SYSTEM)).assertIsSelected()
+        val window = compose.activity.window
+        val bars = WindowCompat.getInsetsController(window, window.decorView)
+        assertTrue(bars.isAppearanceLightStatusBars)
+        try {
+            compose.onNodeWithTag(SettingsTags.appearanceOption(Appearance.DARK)).performClick()
+            compose.waitUntil(5_000) { runBlocking { settings.appearance.first() } == Appearance.DARK }
+            compose.waitForIdle()
+            compose.onNodeWithTag(SettingsTags.appearanceOption(Appearance.DARK)).assertIsSelected()
+            assertFalse(bars.isAppearanceLightStatusBars)
+        } finally {
+            runBlocking { settings.setAppearance(Appearance.SYSTEM) }
+        }
     }
 }
