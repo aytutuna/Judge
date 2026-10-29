@@ -623,6 +623,9 @@ enum L10n {
     static func appShareTitle(_ lang: AppLang) -> String { string("app.share.title", lang) }
     static func appSettingsLanguage(_ lang: AppLang) -> String { string("app.settings.language", lang) }
     static func appSettingsLanguageDevice(_ lang: AppLang) -> String { string("app.settings.languageDevice", lang) }
+    static func appSettingsAppearance(_ lang: AppLang) -> String { string("app.settings.appearance", lang) }
+    static func appSettingsAppearanceLight(_ lang: AppLang) -> String { string("app.settings.appearanceLight", lang) }
+    static func appSettingsAppearanceDark(_ lang: AppLang) -> String { string("app.settings.appearanceDark", lang) }
     static func appSettingsAbout(_ lang: AppLang) -> String { string("app.settings.about", lang) }
     static func appSettingsVersion(_ lang: AppLang, version: String) -> String { format("app.settings.version", lang, version) }
     static func appSigninRequired(_ lang: AppLang) -> String { string("app.signin.required", lang) }
@@ -1163,6 +1166,9 @@ enum L10n {
         "app.share.title",
         "app.settings.language",
         "app.settings.languageDevice",
+        "app.settings.appearance",
+        "app.settings.appearanceLight",
+        "app.settings.appearanceDark",
         "app.settings.about",
         "app.signin.required",
         "app.signin.or",

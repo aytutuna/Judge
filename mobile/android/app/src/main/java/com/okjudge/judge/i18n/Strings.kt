@@ -556,6 +556,9 @@ class Strings(private val res: Resources) {
     val appShareTitle: String get() = res.getString(R.string.app_share_title)
     val appSettingsLanguage: String get() = res.getString(R.string.app_settings_language)
     val appSettingsLanguageDevice: String get() = res.getString(R.string.app_settings_language_device)
+    val appSettingsAppearance: String get() = res.getString(R.string.app_settings_appearance)
+    val appSettingsAppearanceLight: String get() = res.getString(R.string.app_settings_appearance_light)
+    val appSettingsAppearanceDark: String get() = res.getString(R.string.app_settings_appearance_dark)
     val appSettingsAbout: String get() = res.getString(R.string.app_settings_about)
     fun appSettingsVersion(version: String): String = res.getString(R.string.app_settings_version, version)
     val appSigninRequired: String get() = res.getString(R.string.app_signin_required)
@@ -1095,6 +1098,9 @@ class Strings(private val res: Resources) {
             "app.share.title" -> R.string.app_share_title
             "app.settings.language" -> R.string.app_settings_language
             "app.settings.languageDevice" -> R.string.app_settings_language_device
+            "app.settings.appearance" -> R.string.app_settings_appearance
+            "app.settings.appearanceLight" -> R.string.app_settings_appearance_light
+            "app.settings.appearanceDark" -> R.string.app_settings_appearance_dark
             "app.settings.about" -> R.string.app_settings_about
             "app.signin.required" -> R.string.app_signin_required
             "app.signin.or" -> R.string.app_signin_or

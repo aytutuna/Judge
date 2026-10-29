@@ -64,6 +64,9 @@ export const APP_EN = {
   "app.share.title": "Share the verdict",
   "app.settings.language": "Language",
   "app.settings.languageDevice": "Same as the phone",
+  "app.settings.appearance": "Appearance",
+  "app.settings.appearanceLight": "Light",
+  "app.settings.appearanceDark": "Dark",
   "app.settings.about": "About Judge",
   "app.settings.version": "Version {version}",
   // Sign-in. Email in the apps is a 6-digit code, not a link.

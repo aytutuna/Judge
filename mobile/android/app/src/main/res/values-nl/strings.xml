@@ -530,6 +530,9 @@
     <string name="app_share_title">Uitspraak delen</string>
     <string name="app_settings_language">Taal</string>
     <string name="app_settings_language_device">Taal van je telefoon</string>
+    <string name="app_settings_appearance">Appearance</string>
+    <string name="app_settings_appearance_light">Light</string>
+    <string name="app_settings_appearance_dark">Dark</string>
     <string name="app_settings_about">Over Judge</string>
     <string name="app_settings_version">Versie %1$s</string>
     <string name="app_signin_required">Log in voor een uitspraak.</string>

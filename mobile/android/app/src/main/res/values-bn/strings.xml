@@ -530,6 +530,9 @@
     <string name="app_share_title">রায় শেয়ার করুন</string>
     <string name="app_settings_language">ভাষা</string>
     <string name="app_settings_language_device">ফোনের ভাষা</string>
+    <string name="app_settings_appearance">Appearance</string>
+    <string name="app_settings_appearance_light">Light</string>
+    <string name="app_settings_appearance_dark">Dark</string>
     <string name="app_settings_about">Judge সম্পর্কে</string>
     <string name="app_settings_version">সংস্করণ %1$s</string>
     <string name="app_signin_required">রায় পেতে সাইন ইন করুন।</string>

@@ -530,6 +530,9 @@
     <string name="app_share_title">Jaa tuomio</string>
     <string name="app_settings_language">Kieli</string>
     <string name="app_settings_language_device">Sama kuin puhelimessa</string>
+    <string name="app_settings_appearance">Appearance</string>
+    <string name="app_settings_appearance_light">Light</string>
+    <string name="app_settings_appearance_dark">Dark</string>
     <string name="app_settings_about">Tietoa Judgesta</string>
     <string name="app_settings_version">Versio %1$s</string>
     <string name="app_signin_required">Kirjaudu, niin saat tuomion.</string>

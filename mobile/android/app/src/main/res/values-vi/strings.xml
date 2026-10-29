@@ -513,6 +513,9 @@
     <string name="app_share_title">Chia sẻ phán quyết</string>
     <string name="app_settings_language">Ngôn ngữ</string>
     <string name="app_settings_language_device">Theo điện thoại</string>
+    <string name="app_settings_appearance">Appearance</string>
+    <string name="app_settings_appearance_light">Light</string>
+    <string name="app_settings_appearance_dark">Dark</string>
     <string name="app_settings_about">Về Judge</string>
     <string name="app_settings_version">Phiên bản %1$s</string>
     <string name="app_signin_required">Đăng nhập để nhận phán quyết.</string>

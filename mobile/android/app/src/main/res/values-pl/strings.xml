@@ -564,6 +564,9 @@
     <string name="app_share_title">Udostępnij werdykt</string>
     <string name="app_settings_language">Język</string>
     <string name="app_settings_language_device">Jak w telefonie</string>
+    <string name="app_settings_appearance">Appearance</string>
+    <string name="app_settings_appearance_light">Light</string>
+    <string name="app_settings_appearance_dark">Dark</string>
     <string name="app_settings_about">O Judge</string>
     <string name="app_settings_version">Wersja %1$s</string>
     <string name="app_signin_required">Zaloguj się, żeby dostać werdykt.</string>

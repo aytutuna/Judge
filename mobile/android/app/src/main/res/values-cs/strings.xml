@@ -564,6 +564,9 @@
     <string name="app_share_title">Sdílet verdikt</string>
     <string name="app_settings_language">Jazyk</string>
     <string name="app_settings_language_device">Podle telefonu</string>
+    <string name="app_settings_appearance">Appearance</string>
+    <string name="app_settings_appearance_light">Light</string>
+    <string name="app_settings_appearance_dark">Dark</string>
     <string name="app_settings_about">O aplikaci Judge</string>
     <string name="app_settings_version">Verze %1$s</string>
     <string name="app_signin_required">Pro verdikt se přihlas.</string>

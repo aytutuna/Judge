@@ -530,6 +530,9 @@
     <string name="app_share_title">निकाल शेअर करा</string>
     <string name="app_settings_language">भाषा</string>
     <string name="app_settings_language_device">फोनची भाषा</string>
+    <string name="app_settings_appearance">Appearance</string>
+    <string name="app_settings_appearance_light">Light</string>
+    <string name="app_settings_appearance_dark">Dark</string>
     <string name="app_settings_about">Judge बद्दल</string>
     <string name="app_settings_version">आवृत्ती %1$s</string>
     <string name="app_signin_required">निकाल मिळवण्यासाठी साइन इन करा.</string>

@@ -547,6 +547,9 @@
     <string name="app_share_title">Compartir el veredicto</string>
     <string name="app_settings_language">Idioma</string>
     <string name="app_settings_language_device">Igual que el teléfono</string>
+    <string name="app_settings_appearance">Appearance</string>
+    <string name="app_settings_appearance_light">Light</string>
+    <string name="app_settings_appearance_dark">Dark</string>
     <string name="app_settings_about">Acerca de Judge</string>
     <string name="app_settings_version">Versión %1$s</string>
     <string name="app_signin_required">Inicia sesión para obtener un veredicto.</string>

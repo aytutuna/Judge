@@ -530,6 +530,9 @@
     <string name="app_share_title">తీర్పును షేర్ చేయండి</string>
     <string name="app_settings_language">భాష</string>
     <string name="app_settings_language_device">ఫోన్ భాషే</string>
+    <string name="app_settings_appearance">Appearance</string>
+    <string name="app_settings_appearance_light">Light</string>
+    <string name="app_settings_appearance_dark">Dark</string>
     <string name="app_settings_about">Judge గురించి</string>
     <string name="app_settings_version">వెర్షన్ %1$s</string>
     <string name="app_signin_required">తీర్పు కోసం సైన్ ఇన్ చేయండి.</string>

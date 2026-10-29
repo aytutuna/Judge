@@ -530,6 +530,9 @@
     <string name="app_share_title">വിധി പങ്കിടൂ</string>
     <string name="app_settings_language">ഭാഷ</string>
     <string name="app_settings_language_device">ഫോണിലെ ഭാഷ തന്നെ</string>
+    <string name="app_settings_appearance">Appearance</string>
+    <string name="app_settings_appearance_light">Light</string>
+    <string name="app_settings_appearance_dark">Dark</string>
     <string name="app_settings_about">Judge-നെക്കുറിച്ച്</string>
     <string name="app_settings_version">പതിപ്പ് %1$s</string>
     <string name="app_signin_required">വിധി കിട്ടാൻ സൈൻ ഇൻ ചെയ്യൂ.</string>

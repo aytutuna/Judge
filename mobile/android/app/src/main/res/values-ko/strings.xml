@@ -513,6 +513,9 @@
     <string name="app_share_title">판결 공유</string>
     <string name="app_settings_language">언어</string>
     <string name="app_settings_language_device">휴대폰 설정 따르기</string>
+    <string name="app_settings_appearance">Appearance</string>
+    <string name="app_settings_appearance_light">Light</string>
+    <string name="app_settings_appearance_dark">Dark</string>
     <string name="app_settings_about">Judge 소개</string>
     <string name="app_settings_version">버전 %1$s</string>
     <string name="app_signin_required">판결을 받으려면 로그인해 주세요.</string>

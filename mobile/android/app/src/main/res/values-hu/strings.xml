@@ -530,6 +530,9 @@
     <string name="app_share_title">Ítélet megosztása</string>
     <string name="app_settings_language">Nyelv</string>
     <string name="app_settings_language_device">A telefon nyelve</string>
+    <string name="app_settings_appearance">Appearance</string>
+    <string name="app_settings_appearance_light">Light</string>
+    <string name="app_settings_appearance_dark">Dark</string>
     <string name="app_settings_about">A Judge-ról</string>
     <string name="app_settings_version">Verzió: %1$s</string>
     <string name="app_signin_required">Lépj be, hogy ítéletet kérhess.</string>

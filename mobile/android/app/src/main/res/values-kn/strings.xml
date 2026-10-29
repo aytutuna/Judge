@@ -530,6 +530,9 @@
     <string name="app_share_title">ತೀರ್ಪನ್ನು ಹಂಚಿಕೊಳ್ಳಿ</string>
     <string name="app_settings_language">ಭಾಷೆ</string>
     <string name="app_settings_language_device">ಫೋನ್‌ನಲ್ಲಿರುವಂತೆಯೇ</string>
+    <string name="app_settings_appearance">Appearance</string>
+    <string name="app_settings_appearance_light">Light</string>
+    <string name="app_settings_appearance_dark">Dark</string>
     <string name="app_settings_about">Judge ಬಗ್ಗೆ</string>
     <string name="app_settings_version">ಆವೃತ್ತಿ %1$s</string>
     <string name="app_signin_required">ತೀರ್ಪು ಪಡೆಯಲು ಸೈನ್ ಇನ್ ಮಾಡಿ.</string>
