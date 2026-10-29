@@ -1,0 +1,53 @@
+# Checks okjudge.com from outside every 5 minutes. When it does not answer,
+# opens an issue (GitHub emails the repo owner), adds a comment at most once
+# an hour while it stays down, and closes the issue once it is back.
+# Scheduled runs only happen on the default branch, and GitHub pauses them
+# after 60 days without activity in the repo.
+name: uptime
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
+
+permissions:
+  issues: write
+
+concurrency:
+  group: uptime
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      TITLE: okjudge.com is down
+    steps:
+      - name: Check the site
+        run: |
+          down=""
+          for url in https://okjudge.com/ https://okjudge.com/api/v1/config; do
+            code=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 15 --retry 2 --retry-delay 10 --retry-all-errors -f \
+              -A "okjudge-uptime (github.com/$GH_REPO)" "$url" 2>/tmp/err) || true
+            if [[ $code != 200 ]]; then
+              down+="- $url: HTTP ${code:-none} $(tail -n 1 /tmp/err)"$'\n'
+            fi
+          done
+          now=$(date -u '+%Y-%m-%d %H:%M UTC')
+          issue=$(gh issue list --state open --limit 100 --json number,title,updatedAt \
+            --jq ".[] | select(.title == \"$TITLE\") | \"\(.number) \(.updatedAt)\"" | head -n 1)
+          if [[ -n $down ]]; then
+            printf 'Down at %s:\n%s' "$now" "$down"
+            if [[ -z $issue ]]; then
+              gh issue create --title "$TITLE" --body "Down at $now:"$'\n\n'"$down"
+            elif (( $(date +%s) - $(date -d "${issue#* }" +%s) >= 3600 )); then
+              gh issue comment "${issue%% *}" --body "Still down at $now:"$'\n\n'"$down"
+            fi
+            # The run itself stays green: a failed run would send an email on every check.
+            exit 0
+          fi
+          if [[ -n $issue ]]; then
+            gh issue close "${issue%% *}" --comment "Back up at $now."
+          fi
