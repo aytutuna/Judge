@@ -63,6 +63,9 @@ main() {
     RCLONE_S3_ACCESS_KEY_ID=$BACKUP_S3_ACCESS_KEY RCLONE_S3_SECRET_ACCESS_KEY=$BACKUP_S3_SECRET_KEY \
     RCLONE_S3_NO_CHECK_BUCKET=true RCLONE_CONFIG=/dev/null
   local remote=:s3:${BACKUP_S3_BUCKET%/}
+  # Prune first, so old copies still go when the upload below fails.
+  rclone delete -v --min-age "${KEEP_DAYS}d" --include 'verdict-*.db.gz.gpg' "$remote" ||
+    fail "Deleting old copies from $BACKUP_S3_BUCKET failed."
   local work name size remote_size
   work=$(mktemp -d)
   # shellcheck disable=SC2064 # expand the path now
@@ -87,8 +90,6 @@ main() {
       fail "Uploading the removal log to $BACKUP_S3_BUCKET failed."
   fi
 
-  rclone delete -v --min-age "${KEEP_DAYS}d" --include 'verdict-*.db.gz.gpg' "$remote" ||
-    fail "Deleting old copies from $BACKUP_S3_BUCKET failed."
   echo "Done: $name is in $BACKUP_S3_BUCKET"
 }
 
