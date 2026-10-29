@@ -14,6 +14,7 @@ import { createHmac } from "node:crypto";
 import { Ratelimit } from "@upstash/ratelimit";
 import { Redis } from "@upstash/redis";
 import { rateLimitSubject } from "./client-ip";
+import { signal } from "./signals";
 
 const MINUTE_MS = 60_000;
 const DAY_MS = 24 * 60 * MINUTE_MS;
@@ -55,6 +56,12 @@ function withTimeout<T>(work: Promise<T>, ms: number): Promise<T> {
     timer = setTimeout(() => reject(new Error(`rate limit check exceeded ${ms}ms`)), ms);
   });
   return Promise.race([work, deadline]).finally(() => clearTimeout(timer));
+}
+
+/** A refusal for going over the limit also goes to the log, for the watcher. */
+function noteLimited(bucket: string, decision: LimitDecision): LimitDecision {
+  if (!decision.ok && decision.code === "rate_limited") signal("rate_limited", `bucket=${bucket}`);
+  return decision;
 }
 
 /** New translations per visitor IP per 10 minutes. Separate from the verdict
@@ -111,7 +118,7 @@ export async function checkTranslateLimits(ip: string): Promise<LimitDecision> {
       TRANSLATE_LIMIT,
       TRANSLATE_WINDOW_MS,
     );
-    return globalForTranslateLimits.__verdictTranslateLimiter.check(visitor);
+    return noteLimited("translate", globalForTranslateLimits.__verdictTranslateLimiter.check(visitor));
   }
   try {
     globalForTranslateLimits.__verdictTranslateRedis ??= new Ratelimit({
@@ -130,7 +137,11 @@ export async function checkTranslateLimits(ip: string): Promise<LimitDecision> {
     const res = await withTimeout(limiter.limit(visitor), REDIS_TOTAL_TIMEOUT_MS);
     if (res.reason === "timeout") throw new Error("rate limit check timed out");
     if (!res.success) {
-      return { ok: false, code: "rate_limited", retryAfterSec: retryAfterSec(res.reset, Date.now()) };
+      return noteLimited("translate", {
+        ok: false,
+        code: "rate_limited",
+        retryAfterSec: retryAfterSec(res.reset, Date.now()),
+      });
     }
     return { ok: true };
   } catch (e) {
@@ -324,13 +335,13 @@ async function checkWindows(
 
 /** Counts one use of `bucket` for this account, or says why it is refused. */
 export async function checkUserLimits(userId: string, bucket: UserBucket): Promise<LimitDecision> {
-  return checkWindows(`u:${bucket}`, userId, USER_LIMITS[bucket]);
+  return noteLimited(`u:${bucket}`, await checkWindows(`u:${bucket}`, userId, USER_LIMITS[bucket]));
 }
 
 /** Counts one use of `bucket` for this visitor IP (keyed hash), or says why
  * it is refused. Same stores and fail-closed behavior as checkUserLimits. */
 export async function checkIpLimits(ip: string, bucket: IpBucket): Promise<LimitDecision> {
-  return checkWindows(`ip:${bucket}`, visitorKey(ip), IP_LIMITS[bucket]);
+  return noteLimited(`ip:${bucket}`, await checkWindows(`ip:${bucket}`, visitorKey(ip), IP_LIMITS[bucket]));
 }
 
 const DEFAULT_PREMIUM_DAILY_CAP = 500;

@@ -3,6 +3,8 @@
  * single-use token; only this check (with the secret key) proves it is real.
  */
 
+import { signal } from "./signals";
+
 const SITEVERIFY_URL = "https://challenges.cloudflare.com/turnstile/v0/siteverify";
 /** Cloudflare's documented maximum token length. */
 const MAX_TOKEN_LENGTH = 2048;
@@ -24,7 +26,10 @@ export async function verifyTurnstile(
 ): Promise<TurnstileResult> {
   const secret = process.env.TURNSTILE_SECRET_KEY;
   if (!secret) return "ok";
-  if (!token || token.length > MAX_TOKEN_LENGTH) return "invalid";
+  if (!token || token.length > MAX_TOKEN_LENGTH) {
+    signal("turnstile_fail");
+    return "invalid";
+  }
 
   const form = new URLSearchParams({ secret, response: token });
   if (ip !== "unknown") form.set("remoteip", ip);
@@ -48,6 +53,7 @@ export async function verifyTurnstile(
       console.error("[turnstile] secret key rejected:", codes.join(", "));
       return "error";
     }
+    signal("turnstile_fail");
     return "invalid";
   } catch (e) {
     console.error("[turnstile] siteverify failed:", e instanceof Error ? e.message : String(e));

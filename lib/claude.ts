@@ -6,6 +6,7 @@
 
 import { AsyncLocalStorage } from "node:async_hooks";
 import Anthropic from "@anthropic-ai/sdk";
+import { signal } from "./signals";
 
 export const JUDGE_MODEL = process.env.CLAUDE_MODEL ?? "claude-haiku-5-5";
 /** Model for anonymization. Same model by default — the call is cheap
@@ -207,7 +208,7 @@ function reportFailure(error: string): string {
       console.error(`[alert:${kind}] ${error}`);
     }
   } else if (kind) {
-    console.warn(`[signal:${kind}] ${error}`);
+    signal(kind, error);
   }
   return error;
 }

@@ -160,12 +160,15 @@ describe("isSameOrigin", () => {
     expect(auth.isSameOrigin(req({ referer: "http://localhost:3600/account", host: "localhost:3600" }))).toBe(true);
   });
 
-  it("refuses foreign, missing and opaque origins", () => {
+  it("refuses foreign, missing and opaque origins, logging each refusal", () => {
+    const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
     expect(auth.isSameOrigin(req({ origin: "https://evil.example", host: "localhost:3600" }))).toBe(false);
     expect(auth.isSameOrigin(req({ host: "localhost:3600" }))).toBe(false);
     expect(auth.isSameOrigin(req({ origin: "null", host: "localhost:3600" }))).toBe(false);
     expect(auth.isSameOrigin(req({ referer: "https://evil.example/x", host: "localhost:3600" }))).toBe(false);
     expect(auth.isSameOrigin(req({ origin: "http://localhost:3600.evil.example", host: "localhost:3600" }))).toBe(false);
+    expect(warn.mock.calls).toEqual(Array(5).fill(["[signal:bad_origin]"]));
+    warn.mockRestore();
   });
 });
 

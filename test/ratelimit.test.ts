@@ -1,6 +1,6 @@
 import { createHash } from "node:crypto";
-import { describe, expect, it } from "vitest";
-import { visitorKey } from "../lib/ratelimit";
+import { afterEach, describe, expect, it, vi } from "vitest";
+import { checkUserLimits, visitorKey } from "../lib/ratelimit";
 
 describe("visitorKey", () => {
   it("is a keyed hash: same input and secret match, another secret does not", () => {
@@ -26,5 +26,21 @@ describe("visitorKey", () => {
     const env = { RATE_LIMIT_SALT: "s" };
     expect(visitorKey("2001:db8:1:2::1", env)).toBe(visitorKey("2001:db8:1:2:dead:beef::7", env));
     expect(visitorKey("2001:db8:1:2::1", env)).not.toBe(visitorKey("2001:db8:1:3::1", env));
+  });
+});
+
+describe("checkUserLimits", () => {
+  afterEach(() => {
+    vi.unstubAllEnvs();
+    vi.restoreAllMocks();
+  });
+
+  it("logs each refusal with the bucket name only", async () => {
+    vi.stubEnv("UPSTASH_REDIS_REST_URL", "");
+    const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
+    for (let i = 0; i < 5; i++) expect((await checkUserLimits("user-signal", "welcome_clarify")).ok).toBe(true);
+    expect(warn).not.toHaveBeenCalled();
+    expect(await checkUserLimits("user-signal", "welcome_clarify")).toMatchObject({ ok: false, code: "rate_limited" });
+    expect(warn.mock.calls).toEqual([["[signal:rate_limited] bucket=u:welcome_clarify"]]);
   });
 });

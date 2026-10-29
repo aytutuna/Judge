@@ -10,6 +10,7 @@ function reply(body: unknown, status = 200): Response {
 beforeEach(() => {
   vi.stubGlobal("fetch", fetchMock);
   vi.spyOn(console, "error").mockImplementation(() => {});
+  vi.spyOn(console, "warn").mockImplementation(() => {});
 });
 
 afterEach(() => {
@@ -36,6 +37,8 @@ describe("verifyTurnstile", () => {
       expect(await verifyTurnstile("", "203.0.113.5")).toBe("invalid");
       expect(await verifyTurnstile("x".repeat(2049), "203.0.113.5")).toBe("invalid");
       expect(fetchMock).not.toHaveBeenCalled();
+      expect(console.warn).toHaveBeenCalledTimes(3);
+      expect(console.warn).toHaveBeenCalledWith("[signal:turnstile_fail]");
     });
 
     it("posts secret, token, and IP to siteverify and accepts success", async () => {
@@ -61,6 +64,7 @@ describe("verifyTurnstile", () => {
         reply({ success: false, "error-codes": ["timeout-or-duplicate"] }),
       );
       expect(await verifyTurnstile("tok", "203.0.113.5")).toBe("invalid");
+      expect(console.warn).toHaveBeenCalledWith("[signal:turnstile_fail]");
     });
 
     it("reports a rejected secret, HTTP error, or network failure as an error", async () => {
