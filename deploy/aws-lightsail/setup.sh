@@ -266,13 +266,18 @@ install_caddy() {
 
 setup_fail2ban() {
   log "fail2ban (blocks addresses that keep failing SSH logins)"
-  apt_install fail2ban python3-systemd
+  # Ubuntu's fail2ban bans through nftables, which is only a recommended
+  # package.
+  apt_install fail2ban python3-systemd nftables
   # The watcher counts the bans in the journal.
   printf '[Definition]\nlogtarget = SYSTEMD-JOURNAL\n' >/etc/fail2ban/fail2ban.d/verdict.local
-  printf '[sshd]\nenabled = true\n' >/etc/fail2ban/jail.d/verdict.local
+  printf '[sshd]\nenabled = true\nbackend = systemd\n' >/etc/fail2ban/jail.d/verdict.local
   systemctl enable --quiet fail2ban
-  systemctl restart fail2ban
-  info "Enabled for SSH."
+  if systemctl restart fail2ban; then
+    info "Enabled for SSH."
+  else
+    warn "fail2ban did not start; carrying on without it. See journalctl -u fail2ban -n 50"
+  fi
 }
 
 enable_auto_updates() {
