@@ -4,9 +4,9 @@ import UIKit
 /// Ivory & Terracotta palette (lib/palette.ts). Opaque colours as 0xRRGGBB;
 /// a unit test pins every value against display-vectors.json.
 enum PaletteHex {
-    static let ivory: UInt32 = 0xF6F1E9
-    static let ivory2: UInt32 = 0xEEE6D9
-    static let paper: UInt32 = 0xFFFCF7
+    static let ivory: UInt32 = 0xFFFFFF
+    static let ivory2: UInt32 = 0xF2F0EC
+    static let paper: UInt32 = 0xFFFFFF
     static let ink: UInt32 = 0x1C1916
     static let ink2: UInt32 = 0x4A433C
     static let muted: UInt32 = 0x6B6258
@@ -18,8 +18,8 @@ enum PaletteHex {
     static let sageStrong: UInt32 = 0x6E8F80
     static let sageInk: UInt32 = 0x4C6B5D
     static let sageTint: UInt32 = 0xDDE7E0
-    static let stone: UInt32 = 0xD6C7B0
-    static let strata: UInt32 = 0xE6DCCB
+    static let stone: UInt32 = 0xDAD6CF
+    static let strata: UInt32 = 0xE9E6E1
     static let danger: UInt32 = 0xB3261E
 
     static let all: [String: UInt32] = [
@@ -30,7 +30,7 @@ enum PaletteHex {
     ]
 
     /// Translucent ink lines as (alpha) over rgb(28, 25, 22), as in globals.css.
-    static let lineAlpha = 0.09
+    static let lineAlpha = 0.1
     static let line2Alpha = 0.14
 
     /// PALETTE_DARK: the same roles, copied as they are (the tints are not a
