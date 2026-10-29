@@ -904,12 +904,16 @@ restart: their timers read the file every time they run.
 **Down alert.** `.github/workflows/uptime.yml` fetches `https://okjudge.com/`
 and `/api/v1/config` from GitHub every 5 minutes (two retries, 15 seconds
 each). If either fails it opens an issue titled *okjudge.com is down*, comments
-on it at most once an hour while the site stays down, and closes it once both
-answer again. GitHub emails you about the issue, so keep **Watching** the repo
+on it at most once an hour while the site stays down, and closes it after two
+good checks in a row (a *recovering* label marks the first), so a site that
+keeps dropping out stays on one issue. Only issues the workflow opened itself
+count. GitHub emails you about the issue, so keep **Watching** the repo
 (the default for its owner) with email notifications on. It runs only from
 `main`, and GitHub pauses scheduled workflows after 60 days without a commit;
 re-enable it on the **Actions** tab if that happens. Run it by hand there with
-**Run workflow**.
+**Run workflow** once it is on `main`: if it opens an issue reporting HTTP 403
+while the site is fine, Cloudflare (Bot Fight Mode or a challenge rule) is
+blocking GitHub's runners.
 
 **Error spikes.** `verdict-errors.timer` runs `errors.sh` every 5 minutes. It
 counts the last 5 minutes' 5xx responses in Caddy's access log

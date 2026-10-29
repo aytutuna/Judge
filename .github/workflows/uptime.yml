@@ -1,6 +1,7 @@
 # Checks okjudge.com from outside every 5 minutes. When it does not answer,
 # opens an issue (GitHub emails the repo owner), adds a comment at most once
-# an hour while it stays down, and closes the issue once it is back.
+# an hour while it stays down, and closes the issue after two good checks in
+# a row.
 # Scheduled runs only happen on the default branch, and GitHub pauses them
 # after 60 days without activity in the repo.
 name: uptime
@@ -36,18 +37,37 @@ jobs:
             fi
           done
           now=$(date -u '+%Y-%m-%d %H:%M UTC')
-          issue=$(gh issue list --state open --limit 100 --json number,title,updatedAt \
-            --jq ".[] | select(.title == \"$TITLE\") | \"\(.number) \(.updatedAt)\"" | head -n 1)
+          # Only an issue this workflow opened counts, since anyone can open one
+          # with the same title, and the hourly comment goes by the last "Still
+          # down" comment rather than any activity. If the list fails, skip
+          # this check instead of opening a second issue.
+          issue=$(gh issue list --state open --limit 100 --json number,title,author,createdAt,labels,comments --jq '
+            [.[] | select(.title == env.TITLE and .author.login == "app/github-actions")] | first // empty
+            | "\(.number) \([.createdAt, (.comments[] | select(.body | startswith("Still down")) | .createdAt)] | max) \(any(.labels[]; .name == "recovering"))"') || {
+            echo "Could not list issues; skipping this check."
+            exit 0
+          }
+          read -r number since recovering <<<"$issue" || true
           if [[ -n $down ]]; then
             printf 'Down at %s:\n%s' "$now" "$down"
-            if [[ -z $issue ]]; then
+            if [[ -z $number ]]; then
               gh issue create --title "$TITLE" --body "Down at $now:"$'\n\n'"$down"
-            elif (( $(date +%s) - $(date -d "${issue#* }" +%s) >= 3600 )); then
-              gh issue comment "${issue%% *}" --body "Still down at $now:"$'\n\n'"$down"
+            else
+              if [[ $recovering == true ]]; then gh issue edit "$number" --remove-label recovering; fi
+              if (( $(date +%s) - $(date -d "$since" +%s) >= 3600 )); then
+                gh issue comment "$number" --body "Still down at $now:"$'\n\n'"$down"
+              fi
             fi
             # The run itself stays green: a failed run would send an email on every check.
             exit 0
           fi
-          if [[ -n $issue ]]; then
-            gh issue close "${issue%% *}" --comment "Back up at $now."
+          [[ -n $number ]] || exit 0
+          # Close only after two good checks in a row, so a site that keeps
+          # dropping out does not open and close an issue every few minutes.
+          # The label marks the first good one; labels send no email.
+          if [[ $recovering == true ]]; then
+            gh issue close "$number" --comment "Back up at $now."
+          else
+            gh label create recovering --force --color 0e8a16 --description "Site answered once; closes after the next good check"
+            gh issue edit "$number" --add-label recovering
           fi
