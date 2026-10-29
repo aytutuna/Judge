@@ -1018,7 +1018,10 @@ too. Without `ALERT_EMAIL` they are only logged.
 
 fail2ban is installed by `setup.sh` with its standard SSH jail (an address
 that fails 5 logins in 10 minutes is blocked for 10 minutes) and logs to the
-journal. `sudo fail2ban-client status sshd` lists who is blocked.
+journal. It reads the SSH logins from the journal too (`backend = systemd` in
+`/etc/fail2ban/jail.d/verdict.local`) and blocks through nftables, which
+`setup.sh` installs with it. If fail2ban does not start, `setup.sh` warns and
+carries on. `sudo fail2ban-client status sshd` lists who is blocked.
 
 **Heartbeat.** Every morning after 09:00 server time (UTC unless you changed
 it) the watcher sends *Judge is fine* with the last 24 hours: verdicts judged
@@ -1027,8 +1030,9 @@ restarts, the last backup upload, the last restore drill and disk use. It is
 the alarm for the alarms: if a morning passes without it, something in the
 chain is broken (the server, the watcher, or the alert settings and keys).
 Check the down alert first, then `systemctl status verdict-watch.timer
-verdict-watch` and `journalctl -u verdict-watch -n 50`. When one of the
-watcher's checks itself fails, the heartbeat's subject names it.
+verdict-watch` and `journalctl -u verdict-watch -n 50`. If one of the
+watcher's checks failed in the run that sends the heartbeat, its subject names
+the check; a check that fails at other times only shows in that journal.
 
 **Restore drill.** On the 1st of every month `verdict-restore-drill` unpacks
 the newest backup into a temporary file, runs SQLite's integrity check,
