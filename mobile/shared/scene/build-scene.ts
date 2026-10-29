@@ -14,7 +14,7 @@
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
 import { build } from "esbuild";
-import { PALETTE } from "../../../lib/palette";
+import { PALETTE, PALETTE_DARK } from "../../../lib/palette";
 import { balanceSvg } from "./fallback";
 
 const MOBILE_DIR = resolve(__dirname, "../..");
@@ -24,9 +24,19 @@ const OUTPUTS = [
   join(MOBILE_DIR, "ios/Judge/Resources/Scene/index.html"),
 ];
 
+// The --scene-* and --party-* tokens from app/globals.css. Dark follows the
+// system until native code pins a theme with setTheme (data-theme on <html>).
+const LIGHT = `--ivory-2:${PALETTE.ivory2};--paper:${PALETTE.paper};--sage:${PALETTE.sage};--terra:${PALETTE.terra};--scene-beam:${PALETTE.ink};--scene-plaster:${PALETTE.ivory2};--scene-shadow:${PALETTE.ink2};--scene-shadow-opacity:.12`;
+const DARK = `--ivory-2:${PALETTE_DARK.ivory2};--paper:${PALETTE_DARK.paper};--sage:${PALETTE_DARK.sage};--terra:${PALETTE_DARK.terra};--scene-beam:${PALETTE_DARK.ink2};--scene-plaster:${PALETTE_DARK.muted};--scene-shadow:#000;--scene-shadow-opacity:.4`;
+
 // Same look as components/scene/JudgingScene.module.css.
-const CSS = `html,body{margin:0;height:100%;overflow:hidden}
-body{background:radial-gradient(closest-side at 50% 54%,${PALETTE.ivory2},${PALETTE.paper}) ${PALETTE.paper};-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+const CSS = `:root{${LIGHT}}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){${DARK}}}
+:root[data-theme=dark]{${DARK}}
+[data-you=a]{--party-a:var(--sage);--party-b:var(--terra)}
+[data-you=b]{--party-a:var(--terra);--party-b:var(--sage)}
+html,body{margin:0;height:100%;overflow:hidden}
+body{background:radial-gradient(closest-side at 50% 54%,var(--ivory-2),var(--paper)) var(--paper);-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 canvas{position:absolute;inset:0;display:block;width:100%;height:100%;opacity:0;transition:opacity .4s linear}
 #fallback{position:absolute;left:50%;top:56%;height:56%;width:auto;max-width:84%;overflow:visible;transform:translate(-50%,-50%);transition:opacity .4s linear}
 body[data-status=ready] canvas{opacity:1;transition-delay:.1s}

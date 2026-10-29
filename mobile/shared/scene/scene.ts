@@ -1,6 +1,6 @@
 import { createBalanceEngine, type BalanceEngine } from "@/components/scene/engine";
 import { watchActivity } from "@/components/scene/engine/loop";
-import { sideColors, type Party } from "@/lib/palette";
+import { greenParty, type Party } from "@/lib/palette";
 import {
   getSceneMode,
   getSceneYou,
@@ -8,10 +8,12 @@ import {
   sceneInput,
   setPointer,
   setSceneMode,
+  setSceneTheme,
   setSceneYou,
   subscribeScene,
   type JudgingBeat,
   type SceneMode,
+  type SceneTheme,
   type Vote,
 } from "@/lib/scene-bridge";
 import { tiltDeg, tiltTransform } from "./fallback";
@@ -29,6 +31,7 @@ declare global {
     judgeScene: {
       setMode(mode: SceneMode | string): void;
       setYou(party: Party | null): void;
+      setTheme(theme: SceneTheme): void;
       setReduced(on: boolean): void;
       setPointer(x: number, y: number): void;
       reset(): void;
@@ -58,6 +61,7 @@ function parseMode(input: SceneMode | string): SceneMode {
 }
 
 const body = document.body;
+const fallback = document.getElementById("fallback");
 const beam = document.getElementById("beam");
 const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
 let engine: BalanceEngine | null = null;
@@ -70,12 +74,12 @@ function setStatus(status: "ready" | "fallback") {
 function tiltFallback() {
   const mode = getSceneMode();
   beam?.setAttribute("transform", tiltTransform(tiltDeg(mode.kind === "verdict" ? mode.verdict.tugA : undefined)));
-  const sides = sideColors(getSceneYou());
-  document.getElementById("sphereA")?.setAttribute("fill", sides.a.fill);
-  document.getElementById("sphereB")?.setAttribute("fill", sides.b.fill);
+  if (fallback) fallback.dataset.you = greenParty(getSceneYou());
 }
 
 subscribeScene(tiltFallback);
+// The system's choice until native code says which theme the app is in.
+setSceneTheme(matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
 body.dataset.reduced = String(reduced);
 
 const canvas = document.createElement("canvas");
@@ -113,6 +117,11 @@ if (engine) {
 window.judgeScene = {
   setMode: (mode) => setSceneMode(parseMode(mode)),
   setYou: (party) => setSceneYou(party === "a" || party === "b" ? party : null),
+  setTheme(theme) {
+    const t = theme === "dark" ? "dark" : "light";
+    document.documentElement.dataset.theme = t;
+    setSceneTheme(t);
+  },
   setReduced(on) {
     body.dataset.reduced = String(on);
     engine?.setReduced(on);
