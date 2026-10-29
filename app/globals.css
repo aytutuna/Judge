@@ -139,6 +139,9 @@
      step below ivory for a lone card to sit on */
   --paper-hi: #FFFFFF;
   --page-deep: var(--ivory-2);
+  /* a fill sunk into a paper card (tiles, hover rows, code). Page and paper
+     are both white in light, so it can't be the page colour there. */
+  --well: var(--ivory-2);
 
   /* motion */
   --ease: cubic-bezier(0.2, 0.7, 0.1, 1);
@@ -171,6 +174,7 @@
     --shadow-cta: 0 10px 24px -8px rgba(0, 0, 0, 0.55);
     --paper-hi: var(--ivory-2);
     --page-deep: #0E0C0A;
+    --well: var(--ivory);
     --scene-beam: var(--ink-2);
     --scene-plaster: var(--muted);
     --scene-shadow: #000000;

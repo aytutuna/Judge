@@ -431,7 +431,7 @@
   padding: 14px 16px;
   border: 1px solid var(--line-2);
   border-radius: 18px;
-  background: var(--ivory);
+  background: var(--well);
 }
 .offerName {
   margin: 0;
