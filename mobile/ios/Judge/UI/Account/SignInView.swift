@@ -114,7 +114,7 @@ struct SignInView: View {
             Button {
                 Task { await app.account.signInWithApple() }
             } label: {
-                ProviderLabel(title: L10n.signinApple(lang), busy: account.busy == .apple, tint: .white) {
+                ProviderLabel(title: L10n.signinApple(lang), busy: account.busy == .apple, tint: AppleButtonStyle.label) {
                     Image(systemName: "apple.logo")
                         .font(.system(size: 18, weight: .medium))
                 }
@@ -276,17 +276,21 @@ private struct ProviderLabel<Icon: View>: View {
     }
 }
 
-/// Sign in with Apple: black pill, white text, the system's Apple logo.
+/// Sign in with Apple: black pill, white text, the system's Apple logo;
+/// white on black in dark, as Apple's own button does.
 struct AppleButtonStyle: ButtonStyle {
+    static let label = Color(light: .white, dark: .black)
+    private static let fill = Color(light: .black, dark: .white)
+
     @Environment(\.isEnabled) private var isEnabled
 
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .brandText(.button)
-            .foregroundStyle(Color.white)
+            .foregroundStyle(Self.label)
             .frame(maxWidth: .infinity, minHeight: 54)
             .padding(.horizontal, 20)
-            .background(Capsule().fill(Color.black.opacity(isEnabled ? 1 : 0.55)))
+            .background(Capsule().fill(Self.fill.opacity(isEnabled ? 1 : 0.55)))
             .scaleEffect(configuration.isPressed ? 0.98 : 1)
             .animation(.easeOut(duration: 0.15), value: configuration.isPressed)
     }
@@ -302,7 +306,7 @@ struct OutlineButtonStyle: ButtonStyle {
             .foregroundStyle(Brand.ink.opacity(isEnabled ? 1 : 0.45))
             .frame(maxWidth: .infinity, minHeight: 54)
             .padding(.horizontal, 20)
-            .background(Capsule().fill(configuration.isPressed ? Color.white : Brand.paper))
+            .background(Capsule().fill(configuration.isPressed ? Brand.paperHi : Brand.paper))
             .overlay(Capsule().strokeBorder(Brand.line2, lineWidth: 1))
             .scaleEffect(configuration.isPressed ? 0.98 : 1)
             .animation(.easeOut(duration: 0.15), value: configuration.isPressed)

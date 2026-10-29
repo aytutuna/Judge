@@ -27,7 +27,7 @@ struct FactsView: View {
                     HStack(alignment: .firstTextBaseline, spacing: 10) {
                         Image(systemName: "checkmark")
                             .font(.system(size: 9, weight: .bold))
-                            .foregroundStyle(.white)
+                            .foregroundStyle(Brand.paper)
                             .frame(width: 18, height: 18)
                             .background(Circle().fill(Brand.sageInk))
                             .accessibilityHidden(true)

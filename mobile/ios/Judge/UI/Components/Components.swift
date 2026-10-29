@@ -25,7 +25,7 @@ struct BalanceCanvas: View {
             var beam = Path()
             beam.move(to: p(2.5, 11))
             beam.addLine(to: p(25.5, 11))
-            beamContext.stroke(beam, with: .color(Brand.ink), style: StrokeStyle(lineWidth: 2 * s, lineCap: .round))
+            beamContext.stroke(beam, with: .color(Self.beamColor), style: StrokeStyle(lineWidth: 2 * s, lineCap: .round))
             let r: CGFloat = 3.9
             beamContext.fill(Path(ellipseIn: CGRect(origin: p(5.6 - r, 7.1 - r), size: CGSize(width: 2 * r * s, height: 2 * r * s))), with: .color(colors.a.fill))
             beamContext.fill(Path(ellipseIn: CGRect(origin: p(22.4 - r, 7.1 - r), size: CGSize(width: 2 * r * s, height: 2 * r * s))), with: .color(colors.b.fill))
@@ -35,14 +35,18 @@ struct BalanceCanvas: View {
             pivot.addLine(to: p(10.4, 19.2))
             pivot.addLine(to: p(17.6, 19.2))
             pivot.closeSubpath()
-            context.fill(pivot, with: .color(Brand.ink))
+            context.fill(pivot, with: .color(Self.beamColor))
             var base = Path()
             base.move(to: p(8.5, 20.4))
             base.addLine(to: p(19.5, 20.4))
-            context.stroke(base, with: .color(Brand.ink.opacity(0.18)), style: StrokeStyle(lineWidth: 1.2 * s, lineCap: .round))
+            context.stroke(base, with: .color(Self.beamColor.opacity(0.18)), style: StrokeStyle(lineWidth: 1.2 * s, lineCap: .round))
         }
         .accessibilityHidden(true)
     }
+
+    /// `--scene-beam`: with no rim light to pick it out, a dark beam would
+    /// sink into the dark card, so it turns light there.
+    private static let beamColor = Color(light: PaletteHex.ink, dark: PaletteHex.Dark.ink2)
 }
 
 /// Ink pill call to action (`--shadow-cta`).
@@ -56,10 +60,16 @@ struct PrimaryButtonStyle: ButtonStyle {
             .frame(maxWidth: .infinity, minHeight: 54)
             .padding(.horizontal, 20)
             .background(Capsule().fill(Brand.ink.opacity(isEnabled ? 1 : 0.35)))
-            .shadow(color: Brand.ink.opacity(isEnabled ? 0.3 : 0), radius: 12, y: 8)
+            .shadow(color: Self.glow.opacity(isEnabled ? 1 : 0), radius: 12, y: 8)
             .scaleEffect(configuration.isPressed ? 0.98 : 1)
             .animation(.easeOut(duration: 0.15), value: configuration.isPressed)
     }
+
+    /// An ink glow would light up the dark page, so dark takes a black one.
+    private static let glow = Color(
+        light: UIColor(hex: PaletteHex.ink, alpha: 0.3),
+        dark: UIColor(white: 0, alpha: 0.55)
+    )
 }
 
 /// Paper pill with a hairline border (`.btnGhost`).
@@ -72,7 +82,7 @@ struct GhostButtonStyle: ButtonStyle {
             .foregroundStyle(Brand.ink)
             .padding(.horizontal, 16)
             .frame(minHeight: 40)
-            .background(Capsule().fill(configuration.isPressed ? Color.white : Brand.paper))
+            .background(Capsule().fill(configuration.isPressed ? Brand.paperHi : Brand.paper))
             .overlay(Capsule().strokeBorder(Brand.line2, lineWidth: 1))
             .scaleEffect(configuration.isPressed ? 0.98 : 1)
             .opacity(isEnabled ? 1 : 0.4)
