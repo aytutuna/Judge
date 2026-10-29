@@ -1,0 +1,30 @@
+# Off-server copy of the newest backup (backup-upload.sh); started by
+# verdict-backup.service when it finishes, whether it worked or not.
+# Installed to /etc/systemd/system/ by update.sh; edits there are overwritten.
+
+[Unit]
+Description=Copy the newest Judge backup off the server
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+User=verdict
+Group=verdict
+EnvironmentFile=/etc/verdict/verdict.env
+ExecStart=/usr/bin/bash /opt/verdict/current/deploy/aws-lightsail/backup-upload.sh
+TimeoutStartSec=30min
+Nice=10
+IOSchedulingClass=idle
+
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+CapabilityBoundingSet=
+UMask=0077

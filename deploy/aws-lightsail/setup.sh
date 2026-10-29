@@ -207,7 +207,7 @@ setup_swap() {
 install_packages() {
   log "System packages"
   apt_get update -q
-  apt_install ca-certificates curl gnupg git openssl sqlite3 unattended-upgrades \
+  apt_install ca-certificates curl gnupg git openssl sqlite3 rclone unattended-upgrades \
     debian-keyring debian-archive-keyring apt-transport-https
 }
 
@@ -468,6 +468,18 @@ TURNSTILE_SECRET_KEY=
 # EMAIL_FROM=Judge <signin@okjudge.com>
 # REVIEW_ACCOUNT_EMAIL=   (store reviewers' test account; with REVIEW_ACCOUNT_CODE, a 6-digit code)
 # REVIEW_ACCOUNT_CODE=
+
+# --- Alerts and off-server backups, optional ----------------------------------
+# See "Monitoring" in the README. Alerts are sent through Resend, so they also
+# need RESEND_API_KEY and EMAIL_FROM above.
+# ALERT_EMAIL=
+# ALERT_5XX_THRESHOLD=10
+# ALERT_ERROR_THRESHOLD=20
+# BACKUP_S3_ENDPOINT=   (e.g. https://<account id>.r2.cloudflarestorage.com)
+# BACKUP_S3_BUCKET=
+# BACKUP_S3_ACCESS_KEY=
+# BACKUP_S3_SECRET_KEY=
+# BACKUP_PASSPHRASE=    (openssl rand -base64 32; keep a copy in a password manager)
 
 $(cloudflare_settings_block)
 EOF

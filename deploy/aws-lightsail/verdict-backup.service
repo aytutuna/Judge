@@ -4,6 +4,10 @@
 [Unit]
 Description=Back up the Judge database
 After=verdict.service
+# The copy has no network here (PrivateNetwork), so the off-server upload and
+# the failure email run in their own unit.
+OnSuccess=verdict-backup-upload.service
+OnFailure=verdict-backup-upload.service
 
 [Service]
 Type=oneshot
