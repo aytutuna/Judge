@@ -130,10 +130,9 @@ struct SettingsView: View {
         .accessibilityAddTraits(selected ? .isSelected : [])
     }
 
-    /// "Same as the phone" is the language list's wording, kept identical.
     private func appearanceName(_ option: Appearance, lang: AppLang) -> String {
         switch option {
-        case .system: return L10n.appSettingsLanguageDevice(lang)
+        case .system: return L10n.appSettingsAppearanceSystem(lang)
         case .light: return L10n.appSettingsAppearanceLight(lang)
         case .dark: return L10n.appSettingsAppearanceDark(lang)
         }

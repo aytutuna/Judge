@@ -331,8 +331,7 @@ private fun LinkRow(label: String, onClick: () -> Unit) {
 private fun AppearanceRow(option: Appearance, selected: Boolean, onClick: () -> Unit) {
     val s = LocalStrings.current
     val label = when (option) {
-        // The language list's wording, kept identical.
-        Appearance.SYSTEM -> s.appSettingsLanguageDevice
+        Appearance.SYSTEM -> s.appSettingsAppearanceSystem
         Appearance.LIGHT -> s.appSettingsAppearanceLight
         Appearance.DARK -> s.appSettingsAppearanceDark
     }
