@@ -28,6 +28,7 @@ import {
   type Vec3,
 } from "@/lib/scene-poses";
 import type { Bin, Materials } from "./materials";
+import { LOOKS, type SceneLook } from "./theme";
 
 /**
  * The judge orbs. They fan out of the crux point into an arc behind and
@@ -68,12 +69,7 @@ export function createJudges(scene: Scene, mats: Materials, bin: Bin, opts: { sh
   const neutral = new Color(PALETTE.paper);
   const voteA = new Color();
   const voteB = new Color();
-  const paintSides = (you: Party | null) => {
-    const green = greenParty(you);
-    voteA.set(green === "a" ? PALETTE.sageInk : PALETTE.terra);
-    voteB.set(green === "b" ? PALETTE.sageInk : PALETTE.terra);
-  };
-  paintSides(null);
+  const outline = new Color(PALETTE.ink);
   const black = new Color(0x000000);
   const warm = new Color(PALETTE.terraTint);
 
@@ -92,7 +88,7 @@ export function createJudges(scene: Scene, mats: Materials, bin: Bin, opts: { sh
     mesh.castShadow = opts.shadows;
     scene.add(mesh);
     const ringMat = bin.add(
-      new MeshBasicMaterial({ color: PALETTE.ink, transparent: true, opacity: 0.85, depthWrite: false }),
+      new MeshBasicMaterial({ color: outline, transparent: true, opacity: 0.85, depthWrite: false }),
     );
     const ring = new Mesh(ringGeo, ringMat);
     scene.add(ring);
@@ -137,8 +133,20 @@ export function createJudges(scene: Scene, mats: Materials, bin: Bin, opts: { sh
     return out;
   }
 
+  /** Vote colours for the viewer's side and the theme; the orbs' outline
+   * follows the beam. */
+  function paint(you: Party | null, look: SceneLook) {
+    const green = greenParty(you);
+    voteA.set(green === "a" ? look.voteGreen : look.voteRed);
+    voteB.set(green === "b" ? look.voteGreen : look.voteRed);
+    outline.set(look.beam);
+    for (const o of orbs) o.ringMat.color.copy(outline);
+  }
+
+  paint(null, LOOKS.light);
+
   return {
-    paintSides,
+    paint,
     /** Returns how many votes each sphere has absorbed (for a weight bump). */
     update(
       hero: OrbSource,

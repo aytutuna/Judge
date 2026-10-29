@@ -83,8 +83,12 @@ export type Party = "a" | "b";
  * colour. */
 export type SideColors = { fill: string; strong: string; ink: string; tint: string };
 
-const GREEN: SideColors = { fill: PALETTE.sage, strong: PALETTE.sageStrong, ink: PALETTE.sageInk, tint: PALETTE.sageTint };
-const RED: SideColors = { fill: PALETTE.terra, strong: PALETTE.terra, ink: PALETTE.terraInk, tint: PALETTE.terraTint };
+const sides = (p: Record<PaletteKey, string>): { green: SideColors; red: SideColors } => ({
+  green: { fill: p.sage, strong: p.sageStrong, ink: p.sageInk, tint: p.sageTint },
+  red: { fill: p.terra, strong: p.terra, ink: p.terraInk, tint: p.terraTint },
+});
+const LIGHT_SIDES = sides(PALETTE);
+const DARK_SIDES = sides(PALETTE_DARK);
 
 /**
  * The viewer's own side is green (sage), the other side red (terracotta).
@@ -98,8 +102,10 @@ export function greenParty(you?: Party | null): Party {
   return you === "b" ? "b" : "a";
 }
 
-export function sideColors(you?: Party | null): Record<Party, SideColors> {
-  return greenParty(you) === "a" ? { a: GREEN, b: RED } : { a: RED, b: GREEN };
+/** `dark` picks the dark palette's sides (the 3D scene under a dark theme). */
+export function sideColors(you?: Party | null, dark = false): Record<Party, SideColors> {
+  const { green, red } = dark ? DARK_SIDES : LIGHT_SIDES;
+  return greenParty(you) === "a" ? { a: green, b: red } : { a: red, b: green };
 }
 
 /** CSS custom property name for a palette key: `sageInk` → `--sage-ink`. */

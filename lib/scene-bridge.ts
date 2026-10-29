@@ -23,11 +23,13 @@ export type SceneMode =
   | { kind: "judging"; beat: JudgingBeat }
   | { kind: "verdict"; verdict: SceneVerdict };
 export type SceneStatus = "loading" | "ready" | "fallback";
+export type SceneTheme = "light" | "dark";
 
 const IDLE: SceneMode = { kind: "idle" };
 
 let mode: SceneMode = IDLE;
 let you: Party | null = null;
+let theme: SceneTheme = "light";
 let status: SceneStatus = "loading";
 let storyStep = -1;
 
@@ -177,6 +179,19 @@ export function getSceneYou(): Party | null {
 export function setSceneYou(p: Party | null): void {
   if (p === you) return;
   you = p;
+  emit(modeListeners);
+}
+
+export function getSceneTheme(): SceneTheme {
+  return theme;
+}
+
+/** Light or dark materials and lighting. The page follows the system theme;
+ * the apps' web view is told by native code. Mode subscribers hear the
+ * change, like setSceneYou. */
+export function setSceneTheme(t: SceneTheme): void {
+  if (t === theme) return;
+  theme = t;
   emit(modeListeners);
 }
 

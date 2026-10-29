@@ -13,6 +13,7 @@ import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
 import { PALETTE_NUM } from "@/lib/palette";
 import {
   getSceneMode,
+  getSceneTheme,
   getSceneYou,
   sceneInput,
   sceneOutput,
@@ -52,6 +53,7 @@ import { createFragments } from "./fragments";
 import { createJudges } from "./judges";
 import { createDprGovernor, createLoop } from "./loop";
 import { createBin, createMaterials } from "./materials";
+import { LOOKS } from "./theme";
 
 export type EngineOptions = {
   /** Small or coarse-pointer screen: fewer segments and pieces, DPR cap 1.5. */
@@ -117,8 +119,10 @@ export function createBalanceEngine(canvas: HTMLCanvasElement, opts: EngineOptio
 
   // Warm key from the upper left, steep enough that shadows stay under
   // their objects; a cool sage fill from the right; a rim from behind for
-  // edges against the ivory page.
-  scene.add(new HemisphereLight(0xfffaf3, 0xd9cfc2, 0.5));
+  // edges against the page. Intensities and the bounce colour follow the
+  // theme (paint below).
+  const hemi = new HemisphereLight(0xfffaf3, 0xd9cfc2, 0.5);
+  scene.add(hemi);
   const key = new DirectionalLight(0xfff0dc, 2.6);
   key.position.set(-1.2, 10, 2.2);
   key.castShadow = opts.shadows;
@@ -408,14 +412,24 @@ export function createBalanceEngine(canvas: HTMLCanvasElement, opts: EngineOptio
   }
 
   let you = getSceneYou();
-  balance.paintSides(you);
-  judges.paintSides(you);
+  let theme = getSceneTheme();
+  function paint() {
+    const look = LOOKS[theme];
+    mats.paint(look);
+    balance.paint(you, look);
+    judges.paint(you, look);
+    hemi.groundColor.set(look.bounce);
+    key.intensity = look.key;
+    rim.intensity = look.rim;
+    renderer.toneMappingExposure = look.exposure;
+  }
+  paint();
 
   const unsubMode = subscribeScene(() => {
-    if (getSceneYou() !== you) {
+    if (getSceneYou() !== you || getSceneTheme() !== theme) {
       you = getSceneYou();
-      balance.paintSides(you);
-      judges.paintSides(you);
+      theme = getSceneTheme();
+      paint();
     }
     dirty = true;
     if (reduced) renderOnce();
