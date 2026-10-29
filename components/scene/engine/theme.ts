@@ -37,7 +37,7 @@ export const LOOKS: Record<SceneTheme, SceneLook> = {
     shade: 1,
     key: 2.6,
     rim: 1.4,
-    bounce: 0xd9cfc2,
+    bounce: 0xdcd9d4,
     exposure: 1,
     voteGreen: PALETTE.sageInk,
     voteRed: PALETTE.terra,

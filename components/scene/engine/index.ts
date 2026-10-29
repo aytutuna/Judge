@@ -121,7 +121,7 @@ export function createBalanceEngine(canvas: HTMLCanvasElement, opts: EngineOptio
   // their objects; a cool sage fill from the right; a rim from behind for
   // edges against the page. Intensities and the bounce colour follow the
   // theme (paint below).
-  const hemi = new HemisphereLight(0xfffaf3, 0xd9cfc2, 0.5);
+  const hemi = new HemisphereLight(0xfffaf3, 0xdcd9d4, 0.5);
   scene.add(hemi);
   const key = new DirectionalLight(0xfff0dc, 2.6);
   key.position.set(-1.2, 10, 2.2);

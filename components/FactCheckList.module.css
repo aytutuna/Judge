@@ -123,7 +123,7 @@
   padding: 4px 10px;
   border: 1px solid var(--line-2);
   border-radius: var(--radius-chip);
-  background: var(--ivory);
+  background: var(--well);
   color: var(--terra-ink);
   font-size: 13px;
   font-weight: 600;

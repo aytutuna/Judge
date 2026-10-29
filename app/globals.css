@@ -8,9 +8,9 @@
    ========================================================================== */
 :root {
   /* surfaces */
-  --ivory: #F6F1E9;
-  --ivory-2: #EEE6D9;
-  --paper: #FFFCF7;
+  --ivory: #FFFFFF;
+  --ivory-2: #F2F0EC;
+  --paper: #FFFFFF;
 
   /* ink */
   --ink: #1C1916;
@@ -33,14 +33,14 @@
   --sage-tint: #DDE7E0;
 
   /* bedrock (3D scene, argument map) */
-  --stone: #D6C7B0;
-  --strata: #E6DCCB;
+  --stone: #DAD6CF;
+  --strata: #E9E6E1;
 
   --danger: #B3261E;
 
-  --line: rgba(28, 25, 22, 0.09);
+  --line: rgba(28, 25, 22, 0.1);
   --line-2: rgba(28, 25, 22, 0.14);
-  --glass: rgba(255, 252, 247, 0.68);
+  --glass: rgba(255, 255, 255, 0.68);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -135,10 +135,13 @@
   --shadow-card: 0 2px 4px rgba(60, 40, 20, 0.04), 0 40px 80px -30px rgba(60, 40, 20, 0.28);
   --shadow-cta: 0 1px 0 rgba(255, 255, 255, 0.15) inset, 0 10px 24px -8px rgba(28, 25, 22, 0.45);
 
-  /* a surface a step above paper (hover on a paper button), and a page a
-     step below ivory for a lone card to sit on */
+  /* a surface a step above paper (hover on a paper button), and the page a
+     lone card sits on: plain white in light, a step below ivory in dark */
   --paper-hi: #FFFFFF;
-  --page-deep: var(--ivory-2);
+  --page-deep: var(--ivory);
+  /* a fill sunk into a paper card (tiles, hover rows, code). Page and paper
+     are both white in light, so it can't be the page colour there. */
+  --well: var(--ivory-2);
 
   /* motion */
   --ease: cubic-bezier(0.2, 0.7, 0.1, 1);
@@ -171,6 +174,7 @@
     --shadow-cta: 0 10px 24px -8px rgba(0, 0, 0, 0.55);
     --paper-hi: var(--ivory-2);
     --page-deep: #0E0C0A;
+    --well: var(--ivory);
     --scene-beam: var(--ink-2);
     --scene-plaster: var(--muted);
     --scene-shadow: #000000;

@@ -104,7 +104,7 @@
   cursor: pointer;
 }
 .item:hover {
-  background: var(--ivory);
+  background: var(--well);
 }
 
 @media (forced-colors: active) {
