@@ -60,7 +60,7 @@
   padding: 11px 14px;
   border: 1px solid var(--line-2);
   border-radius: 14px;
-  background: rgba(255, 253, 249, 0.92);
+  background: color-mix(in srgb, var(--paper) 92%, transparent);
   color: var(--ink);
   font-size: 16px;
   line-height: 1.45;
@@ -72,7 +72,7 @@
 .answer:focus {
   outline: none;
   border-color: var(--terra-ink);
-  box-shadow: 0 0 0 4px rgba(200, 85, 61, 0.14);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--terra) 14%, transparent);
 }
 .answer:focus-visible {
   outline: 3px solid var(--terra-ink);
@@ -123,7 +123,7 @@
 
 .secondary {
   border: 1px solid var(--line-2);
-  background: rgba(255, 253, 249, 0.8);
+  background: color-mix(in srgb, var(--paper) 80%, transparent);
   color: var(--ink);
 }
 .secondary:hover {

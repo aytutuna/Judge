@@ -242,7 +242,7 @@
   padding: 14px 16px;
   border: 1px solid var(--line-2);
   border-radius: var(--radius-field);
-  background: rgba(255, 253, 249, 0.92);
+  background: color-mix(in srgb, var(--paper) 92%, transparent);
   color: var(--ink);
   font-size: 16px;
   line-height: 1.5;
@@ -251,7 +251,7 @@
 .textarea:focus {
   outline: none;
   border-color: var(--terra-ink);
-  box-shadow: 0 0 0 4px rgba(200, 85, 61, 0.14);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--terra) 14%, transparent);
 }
 .textarea:focus-visible {
   outline: 3px solid var(--terra-ink);
@@ -395,7 +395,7 @@
   padding: 6px 6px 6px 8px;
   border: 1px solid var(--line-2);
   border-radius: 16px;
-  background: rgba(255, 253, 249, 0.9);
+  background: color-mix(in srgb, var(--paper) 90%, transparent);
 }
 .evItem[data-status="reading"] {
   border-style: dashed;
@@ -503,9 +503,9 @@
   gap: 8px;
   min-height: 44px;
   padding: 8px 16px;
-  border: 1px dashed rgba(28, 25, 22, 0.3);
+  border: 1px dashed color-mix(in srgb, var(--ink) 30%, transparent);
   border-radius: var(--radius-chip);
-  background: rgba(255, 253, 249, 0.7);
+  background: color-mix(in srgb, var(--paper) 70%, transparent);
   color: var(--ink);
   font-size: 14px;
   font-weight: 600;
@@ -596,7 +596,7 @@
   padding: 10px 14px;
   border: 1px solid var(--line-2);
   border-radius: 16px;
-  background: rgba(255, 253, 249, 0.7);
+  background: color-mix(in srgb, var(--paper) 70%, transparent);
   color: var(--ink-2);
   font-size: 14.5px;
   font-weight: 600;
@@ -742,7 +742,7 @@
   background: var(--paper);
 }
 .dispute[data-decisive] {
-  border: 1.5px dashed rgba(28, 25, 22, 0.4);
+  border: 1.5px dashed color-mix(in srgb, var(--ink) 40%, transparent);
 }
 .disputeTop {
   display: flex;
@@ -838,7 +838,7 @@
   border-radius: 18px;
   border: 1px solid var(--line);
   border-inline-start: 4px solid var(--ink);
-  background: #fbf6ef;
+  background: color-mix(in srgb, var(--paper), var(--ivory));
 }
 .wouldChange ul {
   display: flex;
@@ -935,7 +935,7 @@
 .previous {
   border: 1px solid var(--line-2);
   border-radius: 20px;
-  background: rgba(255, 252, 247, 0.6);
+  background: color-mix(in srgb, var(--paper) 60%, transparent);
 }
 .previous > summary {
   display: flex;

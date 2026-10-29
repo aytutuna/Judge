@@ -109,7 +109,7 @@ export function OgCard({
     >
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-          <BrandMark size={62} />
+          <BrandMark size={62} light />
           <div
             style={{
               display: "flex",

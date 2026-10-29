@@ -59,7 +59,7 @@
   width: 30px;
   height: 30px;
   border-radius: 50%;
-  background: rgba(28, 25, 22, 0.06);
+  background: color-mix(in srgb, var(--ink) 6%, transparent);
   transition:
     background-color var(--dur-1),
     transform var(--dur-2) var(--ease);
@@ -80,7 +80,7 @@
   transform: rotate(90deg);
 }
 .summary:hover .pm {
-  background: rgba(28, 25, 22, 0.1);
+  background: color-mix(in srgb, var(--ink) 10%, transparent);
 }
 .item[open] .pm {
   transform: rotate(45deg);

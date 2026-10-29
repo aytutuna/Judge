@@ -1,6 +1,5 @@
 import type { ArgumentMap as ArgumentMapData, ClaimKind } from "@/lib/types";
 import { KIND_KEY, t, type Lang } from "@/lib/i18n";
-import { PALETTE } from "@/lib/palette";
 import { stripLeadingEmoji } from "@/lib/text";
 import { CruxBlock } from "./verdict/CruxBlock";
 import styles from "./verdict/verdict.module.css";
@@ -9,7 +8,7 @@ import styles from "./verdict/verdict.module.css";
  * cube = fact, circle = value, triangle = definition, diamond = logic.
  * Shape plus the written kind, so nothing is coded by colour alone. */
 function KindGlyph({ kind }: { kind: ClaimKind }) {
-  const ink = PALETTE.ink;
+  const ink = "var(--ink)";
   switch (kind) {
     case "fact":
       return (
@@ -18,7 +17,7 @@ function KindGlyph({ kind }: { kind: ClaimKind }) {
           <path
             d="M6 6v5.2M6 6 1 3.6M6 6l5-2.4"
             fill="none"
-            stroke={PALETTE.paper}
+            stroke="var(--paper)"
             strokeWidth={0.9}
             strokeLinejoin="round"
           />

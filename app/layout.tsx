@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Inter_Tight, Instrument_Serif } from "next/font/google";
-import { PALETTE } from "@/lib/palette";
+import { PALETTE, PALETTE_DARK } from "@/lib/palette";
 import { SITE_DESCRIPTION, SITE_NAME, SITE_TITLE, siteUrl } from "./site";
 import "./globals.css";
 
@@ -45,8 +45,11 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: PALETTE.ivory,
-  colorScheme: "light",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: PALETTE.ivory },
+    { media: "(prefers-color-scheme: dark)", color: PALETTE_DARK.ivory },
+  ],
+  colorScheme: "light dark",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

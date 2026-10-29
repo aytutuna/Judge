@@ -12,6 +12,7 @@ import { RoundedBoxGeometry } from "three/addons/geometries/RoundedBoxGeometry.j
 import { PALETTE, sideColors, type Party } from "@/lib/palette";
 import { BEAM_LEN, END, PIVOT_Y, PLINTH, SPHERE_R, bump, clamp01, lerp, ss, type Vec3 } from "@/lib/scene-poses";
 import type { Bin, Materials } from "./materials";
+import { LOOKS, type SceneLook } from "./theme";
 
 /** Verdict emphasis: the winning side (-1 = Party A, 1 = Party B), 0 for a
  * result too close to call, null while there is no settled verdict. */
@@ -23,7 +24,7 @@ export type Winner = -1 | 0 | 1 | null;
  * its cups, the two party spheres and the baked contact shadows. Once a
  * verdict settles, the winner flashes and a soft ring marks the plinth under
  * its cup. The spheres and the ring take the side colours: the viewer's own
- * side green, the other red (paintSides).
+ * side green, the other red, in the theme's colours (paint).
  */
 export function createBalance(
   scene: Scene,
@@ -115,8 +116,11 @@ export function createBalance(
   const ringB = new Color();
   mats.partyA.emissiveIntensity = mats.partyB.emissiveIntensity = 0;
 
-  function paintSides(you: Party | null) {
-    const c = sideColors(you);
+  let shade = 1;
+
+  function paint(you: Party | null, look: SceneLook) {
+    shade = look.shade;
+    const c = sideColors(you, look.dark);
     for (const [mat, side, ringColor] of [
       [mats.partyA, c.a, ringA],
       [mats.partyB, c.b, ringB],
@@ -127,7 +131,7 @@ export function createBalance(
       ringColor.set(side.strong);
     }
   }
-  paintSides(null);
+  paint(null, LOOKS.light);
   let ringSide = 0;
 
   const blobMat = (m: Mesh) => m.material as { opacity: number };
@@ -136,7 +140,7 @@ export function createBalance(
     beam,
     sphereA,
     sphereB,
-    paintSides,
+    paint,
     /** `rise` lifts the beam, axle and cups (the entrance, the breathing
      * bob); the sphere centres already include it. */
     update(
@@ -161,9 +165,9 @@ export function createBalance(
       sphereA.rotation.y += spinDt * 0.3;
       sphereB.rotation.y -= spinDt * 0.3;
 
-      blobMat(plinthBlob).opacity = 0.42 * (1 - camDown * 0.6);
-      blobMat(plinthContact).opacity = 0.38 * (1 - camDown * 0.6);
-      (mats.ground as { opacity: number }).opacity = 0.16 * (1 - camDown * 0.7);
+      blobMat(plinthBlob).opacity = Math.min(1, 0.42 * shade) * (1 - camDown * 0.6);
+      blobMat(plinthContact).opacity = Math.min(1, 0.38 * shade) * (1 - camDown * 0.6);
+      (mats.ground as { opacity: number }).opacity = 0.16 * shade * (1 - camDown * 0.7);
       sphereBlobs.forEach((m, i) => {
         const p = i === 0 ? a : b;
         const s = i === 0 ? scaleA : scaleB;

@@ -26,7 +26,7 @@
     color var(--dur-1);
 }
 .headerLink:hover {
-  background: rgba(28, 25, 22, 0.06);
+  background: color-mix(in srgb, var(--ink) 6%, transparent);
   color: var(--ink);
 }
 .headerLink[aria-current="page"] {
@@ -38,7 +38,7 @@
   inset: auto 0 0 0;
   z-index: 40;
   padding-bottom: env(safe-area-inset-bottom);
-  background: rgba(246, 241, 233, 0.86);
+  background: color-mix(in srgb, var(--ivory) 86%, transparent);
   -webkit-backdrop-filter: saturate(180%) blur(20px);
   backdrop-filter: saturate(180%) blur(20px);
   border-top: 1px solid var(--line);
@@ -210,7 +210,7 @@ a.row:hover .title {
   cursor: pointer;
 }
 .more:hover {
-  border-color: rgba(28, 25, 22, 0.24);
+  border-color: color-mix(in srgb, var(--ink) 24%, transparent);
 }
 .more:disabled {
   color: var(--muted);

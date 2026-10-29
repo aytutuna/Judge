@@ -27,15 +27,15 @@ function SealIcon({ side }: { side: SealSide }) {
       {side === "none" ? (
         // a level beam on a pivot: no outright winner
         <svg viewBox="0 0 16 16">
-          <path d="M2.5 6.5h11" fill="none" stroke="#fff" strokeWidth={2} strokeLinecap="round" />
-          <path d="M8 6.5 5.6 12.5h4.8z" fill="#fff" />
+          <path d="M2.5 6.5h11" fill="none" stroke="var(--paper)" strokeWidth={2} strokeLinecap="round" />
+          <path d="M8 6.5 5.6 12.5h4.8z" fill="var(--paper)" />
         </svg>
       ) : (
         <svg viewBox="0 0 16 16">
           <path
             d="M3.5 8.4 6.6 11.4 12.6 4.9"
             fill="none"
-            stroke="#fff"
+            stroke="var(--paper)"
             strokeWidth={2.2}
             strokeLinecap="round"
             strokeLinejoin="round"

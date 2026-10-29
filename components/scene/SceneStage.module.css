@@ -32,7 +32,7 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(closest-side, rgba(255, 252, 246, 0.95), rgba(255, 252, 246, 0))
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--scene-pool) 95%, transparent), transparent)
     var(--halo-x) var(--halo-y) / min(120vw, 760px) min(120vw, 760px) no-repeat;
 }
 

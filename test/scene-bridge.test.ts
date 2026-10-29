@@ -2,6 +2,7 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import {
   getSceneMode,
   getSceneStatus,
+  getSceneTheme,
   getSceneYou,
   getStoryStep,
   nudgeScene,
@@ -10,6 +11,7 @@ import {
   setPointer,
   setSceneMode,
   setSceneStatus,
+  setSceneTheme,
   setSceneYou,
   setStoryProgress,
   storyStepOf,
@@ -50,6 +52,23 @@ describe("viewer side", () => {
     setSceneMode({ kind: "judging", beat: "lift" });
     resetScene();
     expect(getSceneYou()).toBe("b");
+  });
+});
+
+describe("theme", () => {
+  afterEach(() => setSceneTheme("light"));
+
+  it("starts light and tells mode subscribers once per change", () => {
+    expect(getSceneTheme()).toBe("light");
+    const fn = vi.fn();
+    const off = subscribeScene(fn);
+    setSceneTheme("dark");
+    setSceneTheme("dark");
+    expect(fn).toHaveBeenCalledTimes(1);
+    expect(getSceneTheme()).toBe("dark");
+    resetScene();
+    expect(getSceneTheme()).toBe("dark");
+    off();
   });
 });
 

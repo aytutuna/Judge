@@ -1,8 +1,8 @@
 /**
  * Ivory & Terracotta palette: the single source of truth for every colour
- * that lives outside CSS (OG images, inline SVG, three.js materials).
- * `app/globals.css` declares the same values as CSS custom properties, and
- * test/palette.test.ts fails if the two drift apart.
+ * that lives outside CSS (OG images, inline SVG, three.js materials), light
+ * and dark. `app/globals.css` declares the same values as CSS custom
+ * properties, and test/palette.test.ts fails if the two drift apart.
  *
  * Pure module, no "use client": safe in server code, Satori and the browser.
  */
@@ -40,6 +40,37 @@ export const PALETTE_ALPHA = {
 
 export type PaletteAlphaKey = keyof typeof PALETTE_ALPHA;
 
+/** Dark mode, same roles: the page and cards are warm near-blacks with cards
+ * a step lighter, text is ivory, and the accents are lifted to keep their
+ * contrast. Tints are roughly the accent washed over paper (sage's is
+ * pushed greener so it still reads as green); copy the hexes, don't
+ * re-derive them. */
+export const PALETTE_DARK = {
+  ivory: "#15120F",
+  ivory2: "#27231F",
+  paper: "#1D1A17",
+  ink: "#F1EBE1",
+  ink2: "#CFC6BA",
+  muted: "#A89E92",
+  placeholder: "#9A9084",
+  terra: "#D9694F",
+  terraInk: "#EE8C74",
+  terraTint: "#432A22",
+  sage: "#7F9C8E",
+  sageStrong: "#8FB0A0",
+  sageInk: "#A3C2B3",
+  sageTint: "#2D3832",
+  stone: "#4F463C",
+  strata: "#3A342E",
+  danger: "#F5727E",
+} as const satisfies Record<PaletteKey, string>;
+
+export const PALETTE_ALPHA_DARK = {
+  line: "rgba(241, 235, 225, 0.1)",
+  line2: "rgba(241, 235, 225, 0.16)",
+  glass: "rgba(29, 26, 23, 0.72)",
+} as const satisfies Record<PaletteAlphaKey, string>;
+
 /** The same opaque colours as numbers (`0xRRGGBB`) for three.js. */
 export const PALETTE_NUM = Object.fromEntries(
   Object.entries(PALETTE).map(([k, v]) => [k, Number.parseInt(v.slice(1), 16)]),
@@ -52,8 +83,12 @@ export type Party = "a" | "b";
  * colour. */
 export type SideColors = { fill: string; strong: string; ink: string; tint: string };
 
-const GREEN: SideColors = { fill: PALETTE.sage, strong: PALETTE.sageStrong, ink: PALETTE.sageInk, tint: PALETTE.sageTint };
-const RED: SideColors = { fill: PALETTE.terra, strong: PALETTE.terra, ink: PALETTE.terraInk, tint: PALETTE.terraTint };
+const sides = (p: Record<PaletteKey, string>): { green: SideColors; red: SideColors } => ({
+  green: { fill: p.sage, strong: p.sageStrong, ink: p.sageInk, tint: p.sageTint },
+  red: { fill: p.terra, strong: p.terra, ink: p.terraInk, tint: p.terraTint },
+});
+const LIGHT_SIDES = sides(PALETTE);
+const DARK_SIDES = sides(PALETTE_DARK);
 
 /**
  * The viewer's own side is green (sage), the other side red (terracotta).
@@ -67,8 +102,10 @@ export function greenParty(you?: Party | null): Party {
   return you === "b" ? "b" : "a";
 }
 
-export function sideColors(you?: Party | null): Record<Party, SideColors> {
-  return greenParty(you) === "a" ? { a: GREEN, b: RED } : { a: RED, b: GREEN };
+/** `dark` picks the dark palette's sides (the 3D scene under a dark theme). */
+export function sideColors(you?: Party | null, dark = false): Record<Party, SideColors> {
+  const { green, red } = dark ? DARK_SIDES : LIGHT_SIDES;
+  return greenParty(you) === "a" ? { a: green, b: red } : { a: red, b: green };
 }
 
 /** CSS custom property name for a palette key: `sageInk` → `--sage-ink`. */

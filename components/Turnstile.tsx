@@ -79,7 +79,7 @@ export function Turnstile({
         setFailed(false);
         widgetId = api.render(ref.current, {
           sitekey: siteKey,
-          theme: "light",
+          theme: "auto",
           size: "flexible",
           language: lang,
           callback: (token) => emit(token),

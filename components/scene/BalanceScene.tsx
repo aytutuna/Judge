@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { getSceneMode, getSceneStatus, sceneOutput, setSceneStatus } from "@/lib/scene-bridge";
+import { getSceneMode, getSceneStatus, sceneOutput, setSceneStatus, setSceneTheme } from "@/lib/scene-bridge";
 import { avoidOpacityIn, watchAvoidLayout } from "./avoid";
 import { createBalanceEngine, type BalanceEngine } from "./engine";
 import { watchActivity } from "./engine/loop";
@@ -34,6 +34,19 @@ export default function BalanceScene({
 }) {
   const hostRef = useRef<HTMLSpanElement>(null);
   const engineRef = useRef<BalanceEngine | null>(null);
+
+  // Before the engine effect, so the first frame is already in the right
+  // theme. The site has no switch: dark follows the system unless <html>
+  // pins one with data-theme (app/globals.css).
+  useEffect(() => {
+    const dark = window.matchMedia("(prefers-color-scheme: dark)");
+    const pinned = document.documentElement.dataset.theme;
+    const apply = () =>
+      setSceneTheme(pinned === "light" || pinned === "dark" ? pinned : dark.matches ? "dark" : "light");
+    apply();
+    dark.addEventListener("change", apply);
+    return () => dark.removeEventListener("change", apply);
+  }, []);
 
   useEffect(() => {
     const stage = hostRef.current?.parentElement;

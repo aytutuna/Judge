@@ -5,7 +5,7 @@
   padding: 0 14px;
   border: 1px solid var(--line-2);
   border-radius: var(--radius-chip);
-  background: rgba(255, 252, 247, 0.7);
+  background: color-mix(in srgb, var(--paper) 70%, transparent);
   color: var(--ink);
   font-size: 14px;
   font-weight: 600;
@@ -16,7 +16,7 @@
     border-color var(--dur-1);
 }
 .signIn:hover {
-  border-color: rgba(28, 25, 22, 0.24);
+  border-color: color-mix(in srgb, var(--ink) 24%, transparent);
   background: var(--paper);
 }
 

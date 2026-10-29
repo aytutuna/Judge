@@ -4,6 +4,8 @@ import { describe, expect, it } from "vitest";
 import {
   PALETTE,
   PALETTE_ALPHA,
+  PALETTE_ALPHA_DARK,
+  PALETTE_DARK,
   PALETTE_NUM,
   contrast,
   cssVarName,
@@ -17,12 +19,14 @@ import {
 
 const css = readFileSync(join(__dirname, "..", "app", "globals.css"), "utf8");
 
-/** Declarations of the first `:root { ... }` block: the token block. */
-function tokenBlock(source: string): Map<string, string> {
-  const start = source.indexOf(":root {");
-  expect(start, "globals.css has a :root block").toBeGreaterThanOrEqual(0);
+/** Custom properties of the first block opened by `selector`; plain
+ * `:root` is the light token block. */
+function tokenBlock(source: string, selector = ":root"): Map<string, string> {
+  const open = `${selector} {`;
+  const start = source.indexOf(open);
+  expect(start, `globals.css has a ${selector} block`).toBeGreaterThanOrEqual(0);
   const end = source.indexOf("}", start);
-  const body = source.slice(start + ":root {".length, end).replace(/\/\*[\s\S]*?\*\//g, "");
+  const body = source.slice(start + open.length, end).replace(/\/\*[\s\S]*?\*\//g, "");
   const decls = new Map<string, string>();
   for (const m of body.matchAll(/(--[a-z0-9-]+)\s*:\s*([^;]+);/g)) {
     decls.set(m[1], m[2].trim());
@@ -76,9 +80,24 @@ describe("palette", () => {
     expect(PALETTE_NUM.terra).toBe(0xc8553d);
   });
 
-  it("is light only: no dark-mode media query", () => {
-    expect(css).not.toMatch(/prefers-color-scheme\s*:\s*dark/);
-    expect(css).toMatch(/color-scheme:\s*light;/);
+  it("dark follows the system unless data-theme says otherwise, and can be forced", () => {
+    expect(css).toMatch(/@media \(prefers-color-scheme: dark\) \{\s*:root:not\(\[data-theme="light"\]\) \{/);
+    expect(css).toMatch(/color-scheme:\s*light dark;/);
+    const dark = { ...PALETTE_DARK, ...PALETTE_ALPHA_DARK };
+    const keys = Object.keys(dark) as (PaletteKey | PaletteAlphaKey)[];
+    for (const selector of [':root:not([data-theme="light"])', ':root[data-theme="dark"]']) {
+      const block = tokenBlock(css, selector);
+      expect([...block.keys()].sort(), selector).toEqual(keys.map(cssVarName).sort());
+      for (const key of keys) {
+        expect(squash(block.get(cssVarName(key))!), `${selector} ${key}`).toBe(squash(dark[key]));
+      }
+    }
+  });
+
+  it("dark hexes are well formed", () => {
+    for (const key of Object.keys(PALETTE_DARK) as PaletteKey[]) {
+      expect(PALETTE_DARK[key], key).toMatch(/^#[0-9A-F]{6}$/);
+    }
   });
 });
 
@@ -164,8 +183,11 @@ describe("palette contrast (WCAG 2.x)", () => {
       ["sageInk", "paper"],
       ["sageInk", "sageTint"],
       ["terraInk", "terraTint"],
+      ["muted", "sageTint"],
+      ["muted", "terraTint"],
       ["danger", "paper"],
       ["danger", "ivory"],
+      ["danger", "terraTint"],
     ];
     for (const [fg, bg] of pairs) {
       expect(contrast(P[fg], P[bg]), `${fg} on ${bg}`).toBeGreaterThanOrEqual(AA_TEXT);
@@ -181,6 +203,51 @@ describe("palette contrast (WCAG 2.x)", () => {
   it("the white check on a winner's seal reaches 3:1", () => {
     expect(contrast("#FFFFFF", P.terraInk)).toBeGreaterThanOrEqual(AA_UI);
     expect(contrast("#FFFFFF", P.sageInk)).toBeGreaterThanOrEqual(AA_UI);
+  });
+
+  it("dark keeps the same pairs at 4.5:1 for text and 3:1 for marks", () => {
+    const D = PALETTE_DARK;
+    const text: [PaletteKey, PaletteKey][] = [
+      ["ink", "paper"],
+      ["ink", "ivory"],
+      ["ink", "ivory2"],
+      ["ink2", "ivory"],
+      ["ink2", "ivory2"],
+      ["muted", "ivory"],
+      ["muted", "ivory2"],
+      ["muted", "paper"],
+      ["placeholder", "paper"],
+      ["terraInk", "ivory"],
+      ["terraInk", "ivory2"],
+      ["terraInk", "paper"],
+      ["terraInk", "terraTint"],
+      ["sageInk", "ivory"],
+      ["sageInk", "ivory2"],
+      ["sageInk", "paper"],
+      ["sageInk", "sageTint"],
+      ["muted", "sageTint"],
+      ["muted", "terraTint"],
+      ["paper", "ink"],
+      ["danger", "paper"],
+      ["danger", "ivory"],
+      ["danger", "terraTint"],
+    ];
+    for (const [fg, bg] of text) {
+      expect(contrast(D[fg], D[bg]), `${fg} on ${bg}`).toBeGreaterThanOrEqual(AA_TEXT);
+    }
+    const ui: [PaletteKey, PaletteKey][] = [
+      ["sageStrong", "ivory"],
+      ["sageStrong", "paper"],
+      ["terra", "ivory"],
+      ["terra", "paper"],
+      ["paper", "terra"],
+      // the seal's check is drawn in paper on dark: white on a lifted ink fails
+      ["paper", "terraInk"],
+      ["paper", "sageInk"],
+    ];
+    for (const [fg, bg] of ui) {
+      expect(contrast(D[fg], D[bg]), `${fg} on ${bg}`).toBeGreaterThanOrEqual(AA_UI);
+    }
   });
 
   it("plain sage stays a fill: too light for text", () => {
