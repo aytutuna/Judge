@@ -52,7 +52,7 @@
   height: 18px;
   flex: none;
   border-radius: 50%;
-  border: 1.5px solid rgba(28, 25, 22, 0.2);
+  border: 1.5px solid color-mix(in srgb, var(--ink) 20%, transparent);
   transition:
     border-color 0.3s,
     background 0.3s;
@@ -64,7 +64,7 @@
 }
 
 .row[data-status="active"] .icon {
-  border-color: rgba(28, 25, 22, 0.15);
+  border-color: color-mix(in srgb, var(--ink) 15%, transparent);
   border-top-color: var(--ink);
   animation: spin 0.8s linear infinite;
 }
@@ -85,7 +85,7 @@
   top: 2.5px;
   width: 4px;
   height: 8px;
-  border: solid #fff;
+  border: solid var(--paper);
   border-width: 0 2px 2px 0;
   transform: rotate(45deg);
 }
@@ -99,7 +99,7 @@
 .bar {
   height: 3px;
   border-radius: 3px;
-  background: rgba(28, 25, 22, 0.08);
+  background: color-mix(in srgb, var(--ink) 8%, transparent);
   overflow: hidden;
 }
 
@@ -125,7 +125,7 @@
   height: 22px;
   flex: none;
   border-radius: 50%;
-  background: rgba(28, 25, 22, 0.07);
+  background: color-mix(in srgb, var(--ink) 7%, transparent);
   border: 1px solid var(--line-2);
   transition:
     background 0.4s var(--ease),

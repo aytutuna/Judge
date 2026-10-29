@@ -165,6 +165,11 @@
   --shadow-card: 0 2px 4px rgba(60, 40, 20, 0.04), 0 40px 80px -30px rgba(60, 40, 20, 0.28);
   --shadow-cta: 0 1px 0 rgba(255, 255, 255, 0.15) inset, 0 10px 24px -8px rgba(28, 25, 22, 0.45);
 
+  /* a surface a step above paper (hover on a paper button), and a page a
+     step below ivory for a lone card to sit on */
+  --paper-hi: #FFFFFF;
+  --page-deep: var(--ivory-2);
+
   /* motion */
   --ease: cubic-bezier(0.2, 0.7, 0.1, 1);
   --ease-spring: cubic-bezier(0.34, 1.4, 0.64, 1);
@@ -174,6 +179,48 @@
 
   --background: var(--ivory);
   --foreground: var(--ink);
+
+  /* The flat balance drawing and the light pool behind it (BalanceFallback,
+     SceneStage). The 3D engine has its own set in
+     components/scene/engine/theme.ts. */
+  --scene-beam: var(--ink);
+  --scene-plaster: var(--ivory-2);
+  --scene-shadow: var(--ink-2);
+  --scene-shadow-opacity: 0.12;
+  --scene-pool: var(--paper);
+}
+
+/* Derived values that are not palette colours. On dark, warm brown shadows
+   vanish, so they go black and deeper. The flat balance has no rim light to
+   pick out a dark beam, so it turns light on the dark page. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.24);
+    --shadow-2: 0 1px 2px rgba(0, 0, 0, 0.3), 0 24px 60px -12px rgba(0, 0, 0, 0.5);
+    --shadow-card: 0 2px 4px rgba(0, 0, 0, 0.2), 0 40px 80px -30px rgba(0, 0, 0, 0.6);
+    --shadow-cta: 0 10px 24px -8px rgba(0, 0, 0, 0.55);
+    --paper-hi: var(--ivory-2);
+    --page-deep: #0E0C0A;
+    --scene-beam: var(--ink-2);
+    --scene-plaster: var(--muted);
+    --scene-shadow: #000000;
+    --scene-shadow-opacity: 0.4;
+    --scene-pool: var(--ivory-2);
+  }
+}
+
+:root[data-theme="dark"] {
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.24);
+  --shadow-2: 0 1px 2px rgba(0, 0, 0, 0.3), 0 24px 60px -12px rgba(0, 0, 0, 0.5);
+  --shadow-card: 0 2px 4px rgba(0, 0, 0, 0.2), 0 40px 80px -30px rgba(0, 0, 0, 0.6);
+  --shadow-cta: 0 10px 24px -8px rgba(0, 0, 0, 0.55);
+  --paper-hi: var(--ivory-2);
+  --page-deep: #0E0C0A;
+  --scene-beam: var(--ink-2);
+  --scene-plaster: var(--muted);
+  --scene-shadow: #000000;
+  --scene-shadow-opacity: 0.4;
+  --scene-pool: var(--ivory-2);
 }
 
 @media (min-width: 960px) {

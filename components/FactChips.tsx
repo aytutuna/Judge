@@ -17,7 +17,7 @@ export function FactChips({ facts, lang = "en" }: { facts: string[]; lang?: Lang
                 <path
                   d="M2 5.3 4.1 7.3 8 2.9"
                   fill="none"
-                  stroke="#fff"
+                  stroke="var(--paper)"
                   strokeWidth={1.6}
                   strokeLinecap="round"
                   strokeLinejoin="round"
