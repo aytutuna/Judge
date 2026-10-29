@@ -31,7 +31,6 @@ struct JudgeApp: App {
                 .environment(app)
                 .environment(\.sceneLive, sceneLive)
                 .modelContainer(container)
-                .preferredColorScheme(.light)
                 .tint(Brand.terraInk)
         }
     }
@@ -80,6 +79,7 @@ struct RootView: View {
         // Outside the sheets, so they follow the app's language too.
         .environment(\.locale, lang.locale)
         .environment(\.layoutDirection, lang.isRTL ? .rightToLeft : .leftToRight)
+        .preferredColorScheme(app.appearance.colorScheme)
         .overlay {
             // The first frame repeats the launch screen, then fades into Home.
             if showLaunchMark {

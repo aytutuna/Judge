@@ -42,6 +42,8 @@ enum LangPreference: Hashable, Sendable {
 @Observable
 final class AppModel {
     private(set) var langPreference: LangPreference
+    /// Light, dark or the phone's, per device like the language.
+    private(set) var appearance: Appearance
 
     let config: AppConfig
     let api: JudgeAPI
@@ -85,6 +87,7 @@ final class AppModel {
 
     private let defaults: UserDefaults
     private static let langKey = "settings.lang"
+    private static let appearanceKey = "settings.appearance"
     private static let userKey = "session.user"
     private static let userSessionKey = "session.userToken"
 
@@ -103,6 +106,7 @@ final class AppModel {
         self.defaults = defaults
         self.caseNames = caseNames ?? KeychainCaseNamesStore()
         langPreference = LangPreference(stored: defaults.string(forKey: Self.langKey))
+        appearance = Appearance(stored: defaults.string(forKey: Self.appearanceKey))
         self.api = api ?? JudgeAPI(baseURL: config.apiBaseURL, userAgent: config.userAgent, tokenStore: tokenStore)
         history = HistoryStore(container: container)
         home = HomeModel()
@@ -183,6 +187,11 @@ final class AppModel {
     func setLangPreference(_ preference: LangPreference) {
         langPreference = preference
         defaults.set(preference.stored, forKey: Self.langKey)
+    }
+
+    func setAppearance(_ value: Appearance) {
+        appearance = value
+        defaults.set(value.rawValue, forKey: Self.appearanceKey)
     }
 
     /// Screenshot evidence on Home: uploading needs an account.

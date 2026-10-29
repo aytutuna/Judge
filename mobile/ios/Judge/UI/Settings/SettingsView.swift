@@ -42,6 +42,15 @@ struct SettingsView: View {
                 .listRowBackground(Brand.paper)
 
                 Section {
+                    ForEach(Appearance.allCases, id: \.self) { option in
+                        appearanceRow(option, lang: lang)
+                    }
+                } header: {
+                    Kicker(text: L10n.appSettingsAppearance(lang))
+                }
+                .listRowBackground(Brand.paper)
+
+                Section {
                     linkRow(L10n.appSettingsAbout(lang), path: "about")
                     linkRow(L10n.howTitle(lang), path: "#how")
                     linkRow(L10n.footerPrivacy(lang), path: "privacy")
@@ -96,6 +105,37 @@ struct SettingsView: View {
         switch app.langPreference {
         case .system: return L10n.appSettingsLanguageDevice(lang)
         case .fixed(let fixed): return fixed.nativeName
+        }
+    }
+
+    private func appearanceRow(_ option: Appearance, lang: AppLang) -> some View {
+        let selected = app.appearance == option
+        return Button {
+            app.setAppearance(option)
+        } label: {
+            HStack {
+                Text(appearanceName(option, lang: lang))
+                    .brandText(.body)
+                    .foregroundStyle(Brand.ink)
+                Spacer()
+                if selected {
+                    Image(systemName: "checkmark")
+                        .foregroundStyle(Brand.terraInk)
+                        .accessibilityHidden(true)
+                }
+            }
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .accessibilityAddTraits(selected ? .isSelected : [])
+    }
+
+    /// "Same as the phone" is the language list's wording, kept identical.
+    private func appearanceName(_ option: Appearance, lang: AppLang) -> String {
+        switch option {
+        case .system: return L10n.appSettingsLanguageDevice(lang)
+        case .light: return L10n.appSettingsAppearanceLight(lang)
+        case .dark: return L10n.appSettingsAppearanceDark(lang)
         }
     }
 

@@ -21,6 +21,29 @@ final class ThemeTests: XCTestCase {
         }
     }
 
+    func testStoredAppearanceFallsBackToThePhone() {
+        XCTAssertEqual(Appearance(stored: "dark"), .dark)
+        XCTAssertEqual(Appearance(stored: "light"), .light)
+        XCTAssertEqual(Appearance(stored: "system"), .system)
+        XCTAssertEqual(Appearance(stored: nil), .system)
+        XCTAssertEqual(Appearance(stored: "sepia"), .system)
+        XCTAssertNil(Appearance.system.colorScheme)
+        XCTAssertEqual(Appearance.dark.colorScheme, .dark)
+    }
+
+    @MainActor
+    func testTheAppearanceIsSavedAndReadBack() throws {
+        let config = AppConfig(apiBaseURL: AppConfig.production, shareBaseURL: AppConfig.production, version: "1", build: "1")
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: "judge.tests.\(UUID().uuidString)"))
+        defaults.set("dark", forKey: "settings.appearance")
+        let app = AppModel(config: config, container: HistoryContainer.inMemory(), defaults: defaults, tokenStore: MemoryTokenStore(), persistsDraft: false, caseNames: MemoryCaseNamesStore())
+        XCTAssertEqual(app.appearance, .dark)
+        app.setAppearance(.light)
+        XCTAssertEqual(defaults.string(forKey: "settings.appearance"), "light")
+        app.setAppearance(.system)
+        XCTAssertEqual(defaults.string(forKey: "settings.appearance"), "system")
+    }
+
     private func assertResolves(_ color: Color, in scheme: ColorScheme, to hex: UInt32, line: UInt = #line) {
         var environment = EnvironmentValues()
         environment.colorScheme = scheme
