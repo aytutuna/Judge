@@ -21,8 +21,22 @@ final class ScreenshotStateTests: XCTestCase {
     }
 
     func testRejectsMalformedValues() {
-        for raw in ["", "home", "home:xx", "verdict/:en", "verdict:en", "nope:en", "home:en:extra"] {
+        for raw in ["", "home", "home:xx", "verdict/:en", "verdict:en", "nope:en", "home:en:extra", "home:en:dark:dark"] {
             XCTAssertNil(ScreenshotState.parse(raw), raw)
+        }
+    }
+
+    @MainActor
+    func testDarkStatesOpenInTheDarkAppearance() throws {
+        let dark = try XCTUnwrap(ScreenshotState.parse("verdict-thread:en:dark"))
+        XCTAssertEqual(dark.screen, .verdictThread)
+        XCTAssertTrue(dark.dark)
+        XCTAssertFalse(try XCTUnwrap(ScreenshotState.parse("verdict-thread:en")).dark)
+        let container = HistoryContainer.inMemory()
+        try withExtendedLifetime(container) {
+            XCTAssertEqual(dark.makeModel(container: container).appearance, .dark)
+            let light = try XCTUnwrap(ScreenshotState.parse("home:en"))
+            XCTAssertEqual(light.makeModel(container: container).appearance, .light)
         }
     }
 

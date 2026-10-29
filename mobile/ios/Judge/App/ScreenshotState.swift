@@ -25,8 +25,10 @@ import SwiftData
 /// case page for a key of `cases.views` or one of the short names `awaiting`,
 /// `judging`, `judged`, `one-sided`, `appeal`, `appeal-judging`, `failed`,
 /// `expired`, `removed` (Turkish takes the `_tr` view when there is one);
-/// lang is `en` or `tr`.
-/// Examples: `home:tr`, `verdict/win_a_self:tr`, `balance/none:en`, `case/judged:en`.
+/// lang is `en` or `tr`. A trailing `:dark` draws the state in the dark
+/// appearance.
+/// Examples: `home:tr`, `verdict/win_a_self:tr`, `balance/none:en`, `case/judged:en`,
+/// `verdict-thread:en:dark`.
 ///
 /// The state runs on an in-memory history store and a separate defaults
 /// suite, so it never touches the real data, and the API points at a closed
@@ -63,6 +65,7 @@ struct ScreenshotState {
 
     let screen: Screen
     let lang: AppLang
+    var dark = false
 
     var tab: RootTab {
         switch screen {
@@ -81,7 +84,8 @@ struct ScreenshotState {
 
     static func parse(_ raw: String) -> ScreenshotState? {
         let parts = raw.split(separator: ":").map(String.init)
-        guard parts.count == 2, let lang = AppLang(rawValue: parts[1]) else { return nil }
+        guard parts.count == 2 || (parts.count == 3 && parts[2] == "dark"),
+              let lang = AppLang(rawValue: parts[1]) else { return nil }
         let name = parts[0]
         let screen: Screen
         switch name {
@@ -120,7 +124,7 @@ struct ScreenshotState {
                 screen = .verdict(sample: sample)
             }
         }
-        return ScreenshotState(screen: screen, lang: lang)
+        return ScreenshotState(screen: screen, lang: lang, dark: parts.count == 3)
     }
 
     /// An app model holding this state.
@@ -152,6 +156,7 @@ struct ScreenshotState {
         app.usesNetwork = false
         app.historyList.usesNetwork = false
         app.setLangPreference(.fixed(lang))
+        app.setAppearance(dark ? .dark : .light)
         apply(to: app)
         return app
     }
