@@ -20,6 +20,10 @@
 # an hour. Once a day after 09:00 (server time) it sends a heartbeat with the
 # last day's numbers; if that stops arriving, this watcher is broken.
 #
+# While GRAFANA_TOKEN is set, Grafana Cloud sends the [alert:...], failed
+# service, out-of-memory and disk alerts (deploy/grafana/alerts.json), and this
+# watcher only logs them.
+#
 # Signal limits come from /etc/verdict/verdict.env as ALERT_SIGNAL_<NAME>=n,
 # e.g. ALERT_SIGNAL_RATE_LIMITED=100 (defaults in SIGNAL_LIMITS below). The
 # signals in EMAIL_ONLY_SIGNALS are not pushed to the phone unless
@@ -76,8 +80,9 @@ mask_ip() {
 }
 
 # notify KEY [--critical] SUBJECT TEXT: sends the alert unless KEY alerted in
-# the last hour. True if it went out, or if there is nowhere to send it (then
-# it is only logged); false while quiet or when sending failed.
+# the last hour. True if it went out, or if there is nowhere to send it or
+# Grafana sends it (then it is only logged); false while quiet or when sending
+# failed.
 notify() {
   local key=${1//[^A-Za-z0-9._-]/_} critical="" file last=0
   shift
@@ -87,6 +92,7 @@ notify() {
   fi
   file=$STATE_DIR/quiet-$key
   log "$1"
+  if [[ -n ${GRAFANA_TOKEN-} && $key =~ ^(alert-|failed-|disk-|oom$) ]]; then return 0; fi
   if [[ -z ${ALERT_EMAIL-}${NTFY_TOPIC-} ]]; then return 0; fi
   if [[ -f $file ]]; then last=$(<"$file"); fi
   if ((now - ${last:-0} < QUIET_SEC)); then

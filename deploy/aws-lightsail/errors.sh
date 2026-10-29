@@ -11,6 +11,9 @@
 #   ALERT_5XX_THRESHOLD    5xx responses in 5 minutes (default 10)
 #   ALERT_ERROR_THRESHOLD  app error lines in 5 minutes (default 20)
 #
+# While GRAFANA_TOKEN is set, Grafana Cloud alerts on the 5xx responses
+# (deploy/grafana/alerts.json), so only the app errors set this one off.
+#
 # Runs as root from the root-owned checkout; its state is in
 # /var/lib/verdict-alerts. Run it now: sudo systemctl start verdict-errors
 set -euo pipefail
@@ -64,7 +67,8 @@ main() {
   now=$(date +%s)
   since=$((now - WINDOW_SEC))
   today=$(date -u +%F)
-  local max5=${ALERT_5XX_THRESHOLD:-10} maxe=${ALERT_ERROR_THRESHOLD:-20}
+  local max5=${ALERT_5XX_THRESHOLD:-10} maxe=${ALERT_ERROR_THRESHOLD:-20} grafana=0
+  if [[ -n ${GRAFANA_TOKEN-} ]]; then grafana=1; fi
 
   # Without anywhere to send alerts spikes are only logged: keeping them for
   # a digest nobody gets would just pile up files.
@@ -73,7 +77,7 @@ main() {
 
   n5=$(count_5xx "$since")
   ne=$(app_errors "$since" | wc -l)
-  ((n5 >= max5 || ne >= maxe)) || exit 0
+  (((n5 >= max5 && !grafana) || ne >= maxe)) || exit 0
 
   echo "Error spike: $n5 5xx responses (limit $max5), $ne app errors (limit $maxe) in 5 minutes"
   [[ -n $channel ]] || exit 0
