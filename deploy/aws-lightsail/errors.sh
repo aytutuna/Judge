@@ -35,6 +35,13 @@ app_errors() {
   journalctl -u verdict -p err --since "@$1" -o cat -q --no-pager || true
 }
 
+# The first 300 characters of each line. cut -c counts bytes, so it could
+# split a multibyte character and break the email's JSON.
+clip() {
+  local LC_ALL=C.UTF-8 line
+  while IFS= read -r line; do printf '%s\n' "${line:0:300}"; done
+}
+
 alert() { bash "$HERE/alert.sh" "$@"; }
 
 # Sends the digest for each earlier day that had spikes, then forgets it.
@@ -78,7 +85,7 @@ main() {
   text="In the last 5 minutes $site answered $n5 requests with a 5xx status (limit $max5) and the app logged $ne errors (limit $maxe).
 
 Latest app errors:
-$(app_errors "$since" | tail -n 5 | cut -c 1-300)
+$(app_errors "$since" | tail -n 5 | clip)
 
 On the server: journalctl -u verdict -p err --since -1h
 No further alert for an hour; tomorrow's digest counts any more spikes today."
