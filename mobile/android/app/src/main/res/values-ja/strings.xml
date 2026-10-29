@@ -513,9 +513,9 @@
     <string name="app_share_title">判定をシェア</string>
     <string name="app_settings_language">言語</string>
     <string name="app_settings_language_device">端末の設定に合わせる</string>
-    <string name="app_settings_appearance">Appearance</string>
-    <string name="app_settings_appearance_light">Light</string>
-    <string name="app_settings_appearance_dark">Dark</string>
+    <string name="app_settings_appearance">外観モード</string>
+    <string name="app_settings_appearance_light">ライト</string>
+    <string name="app_settings_appearance_dark">ダーク</string>
     <string name="app_settings_about">Judgeについて</string>
     <string name="app_settings_version">バージョン%1$s</string>
     <string name="app_signin_required">判定を受けるにはログインしてください。</string>

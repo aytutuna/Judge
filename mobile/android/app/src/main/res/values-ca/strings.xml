@@ -547,9 +547,9 @@
     <string name="app_share_title">Comparteix el veredicte</string>
     <string name="app_settings_language">Idioma</string>
     <string name="app_settings_language_device">El mateix que el telèfon</string>
-    <string name="app_settings_appearance">Appearance</string>
-    <string name="app_settings_appearance_light">Light</string>
-    <string name="app_settings_appearance_dark">Dark</string>
+    <string name="app_settings_appearance">Aparença</string>
+    <string name="app_settings_appearance_light">Clar</string>
+    <string name="app_settings_appearance_dark">Fosc</string>
     <string name="app_settings_about">Quant a Judge</string>
     <string name="app_settings_version">Versió %1$s</string>
     <string name="app_signin_required">Inicia sessió per obtenir un veredicte.</string>

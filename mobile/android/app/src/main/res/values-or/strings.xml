@@ -530,9 +530,9 @@
     <string name="app_share_title">ରାୟ ସେୟାର୍ କରନ୍ତୁ</string>
     <string name="app_settings_language">ଭାଷା</string>
     <string name="app_settings_language_device">ଫୋନ୍‌ର ଭାଷା</string>
-    <string name="app_settings_appearance">Appearance</string>
-    <string name="app_settings_appearance_light">Light</string>
-    <string name="app_settings_appearance_dark">Dark</string>
+    <string name="app_settings_appearance">ଥିମ୍</string>
+    <string name="app_settings_appearance_light">ଉଜ୍ଜ୍ୱଳ</string>
+    <string name="app_settings_appearance_dark">ଗାଢ଼</string>
     <string name="app_settings_about">Judge ବିଷୟରେ</string>
     <string name="app_settings_version">ସଂସ୍କରଣ %1$s</string>
     <string name="app_signin_required">ରାୟ ପାଇବାକୁ ସାଇନ୍ ଇନ୍ କରନ୍ତୁ।</string>

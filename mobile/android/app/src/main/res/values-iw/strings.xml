@@ -547,9 +547,9 @@
     <string name="app_share_title">שיתוף פסק הדין</string>
     <string name="app_settings_language">שפה</string>
     <string name="app_settings_language_device">כמו בטלפון</string>
-    <string name="app_settings_appearance">Appearance</string>
-    <string name="app_settings_appearance_light">Light</string>
-    <string name="app_settings_appearance_dark">Dark</string>
+    <string name="app_settings_appearance">מראה</string>
+    <string name="app_settings_appearance_light">בהיר</string>
+    <string name="app_settings_appearance_dark">כהה</string>
     <string name="app_settings_about">על Judge</string>
     <string name="app_settings_version">גרסה %1$s</string>
     <string name="app_signin_required">צריך להתחבר כדי לקבל פסק דין.</string>

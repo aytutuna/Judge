@@ -530,9 +530,9 @@
     <string name="app_share_title">Del dommen</string>
     <string name="app_settings_language">Språk</string>
     <string name="app_settings_language_device">Samme som telefonen</string>
-    <string name="app_settings_appearance">Appearance</string>
-    <string name="app_settings_appearance_light">Light</string>
-    <string name="app_settings_appearance_dark">Dark</string>
+    <string name="app_settings_appearance">Utseende</string>
+    <string name="app_settings_appearance_light">Lyst</string>
+    <string name="app_settings_appearance_dark">Mørkt</string>
     <string name="app_settings_about">Om Judge</string>
     <string name="app_settings_version">Versjon %1$s</string>
     <string name="app_signin_required">Logg inn for å få en dom.</string>

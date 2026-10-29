@@ -564,9 +564,9 @@
     <string name="app_share_title">Deli razsodbo</string>
     <string name="app_settings_language">Jezik</string>
     <string name="app_settings_language_device">Jezik telefona</string>
-    <string name="app_settings_appearance">Appearance</string>
-    <string name="app_settings_appearance_light">Light</string>
-    <string name="app_settings_appearance_dark">Dark</string>
+    <string name="app_settings_appearance">Videz</string>
+    <string name="app_settings_appearance_light">Svetlo</string>
+    <string name="app_settings_appearance_dark">Temno</string>
     <string name="app_settings_about">O aplikaciji Judge</string>
     <string name="app_settings_version">Različica %1$s</string>
     <string name="app_signin_required">Prijavi se in dobi razsodbo.</string>

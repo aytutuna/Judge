@@ -513,9 +513,9 @@
     <string name="app_share_title">分享裁决</string>
     <string name="app_settings_language">语言</string>
     <string name="app_settings_language_device">跟随系统</string>
-    <string name="app_settings_appearance">Appearance</string>
-    <string name="app_settings_appearance_light">Light</string>
-    <string name="app_settings_appearance_dark">Dark</string>
+    <string name="app_settings_appearance">外观</string>
+    <string name="app_settings_appearance_light">浅色</string>
+    <string name="app_settings_appearance_dark">深色</string>
     <string name="app_settings_about">关于 Judge</string>
     <string name="app_settings_version">版本 %1$s</string>
     <string name="app_signin_required">登录后即可获取裁决。</string>

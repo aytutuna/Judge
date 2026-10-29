@@ -564,9 +564,9 @@
     <string name="app_share_title">Поделиться вердиктом</string>
     <string name="app_settings_language">Язык</string>
     <string name="app_settings_language_device">Как на телефоне</string>
-    <string name="app_settings_appearance">Appearance</string>
-    <string name="app_settings_appearance_light">Light</string>
-    <string name="app_settings_appearance_dark">Dark</string>
+    <string name="app_settings_appearance">Оформление</string>
+    <string name="app_settings_appearance_light">Светлое</string>
+    <string name="app_settings_appearance_dark">Тёмное</string>
     <string name="app_settings_about">О Judge</string>
     <string name="app_settings_version">Версия %1$s</string>
     <string name="app_signin_required">Войдите, чтобы получить вердикт.</string>

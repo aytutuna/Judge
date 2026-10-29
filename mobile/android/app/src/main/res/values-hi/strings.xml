@@ -530,9 +530,9 @@
     <string name="app_share_title">फ़ैसला शेयर करें</string>
     <string name="app_settings_language">भाषा</string>
     <string name="app_settings_language_device">फ़ोन की भाषा</string>
-    <string name="app_settings_appearance">Appearance</string>
-    <string name="app_settings_appearance_light">Light</string>
-    <string name="app_settings_appearance_dark">Dark</string>
+    <string name="app_settings_appearance">थीम</string>
+    <string name="app_settings_appearance_light">लाइट</string>
+    <string name="app_settings_appearance_dark">डार्क</string>
     <string name="app_settings_about">Judge के बारे में</string>
     <string name="app_settings_version">वर्शन %1$s</string>
     <string name="app_signin_required">फ़ैसला पाने के लिए साइन इन करें।</string>

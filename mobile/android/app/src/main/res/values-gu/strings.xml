@@ -530,9 +530,9 @@
     <string name="app_share_title">ચુકાદો શેર કરો</string>
     <string name="app_settings_language">ભાષા</string>
     <string name="app_settings_language_device">ફોનની ભાષા</string>
-    <string name="app_settings_appearance">Appearance</string>
-    <string name="app_settings_appearance_light">Light</string>
-    <string name="app_settings_appearance_dark">Dark</string>
+    <string name="app_settings_appearance">દેખાવ</string>
+    <string name="app_settings_appearance_light">લાઇટ</string>
+    <string name="app_settings_appearance_dark">ડાર્ક</string>
     <string name="app_settings_about">Judge વિશે</string>
     <string name="app_settings_version">વર્ઝન %1$s</string>
     <string name="app_signin_required">ચુકાદો મેળવવા સાઇન ઇન કરો.</string>

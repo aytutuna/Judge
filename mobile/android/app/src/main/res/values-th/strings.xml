@@ -513,9 +513,9 @@
     <string name="app_share_title">แชร์คำตัดสิน</string>
     <string name="app_settings_language">ภาษา</string>
     <string name="app_settings_language_device">ตามภาษาของโทรศัพท์</string>
-    <string name="app_settings_appearance">Appearance</string>
-    <string name="app_settings_appearance_light">Light</string>
-    <string name="app_settings_appearance_dark">Dark</string>
+    <string name="app_settings_appearance">ธีม</string>
+    <string name="app_settings_appearance_light">สว่าง</string>
+    <string name="app_settings_appearance_dark">มืด</string>
     <string name="app_settings_about">เกี่ยวกับ Judge</string>
     <string name="app_settings_version">เวอร์ชัน %1$s</string>
     <string name="app_signin_required">เข้าสู่ระบบเพื่อขอคำตัดสิน</string>
