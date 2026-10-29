@@ -467,6 +467,8 @@ main() {
     [[ $previous == "$RELEASES_DIR"/* && -d $previous ]] || previous=""
   fi
 
+  # Again: a slow build can use up most of the watcher's 30 minutes.
+  touch "$ALERT_DIR/deploy-at"
   log "Installing service and web server config"
   save_config "$workdir"
   CONFIG_SAVED=1
