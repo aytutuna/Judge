@@ -27,6 +27,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -80,11 +81,12 @@ import com.okjudge.judge.core.model.VerdictResult
 import com.okjudge.judge.i18n.AppLang
 import com.okjudge.judge.i18n.LocalLang
 import com.okjudge.judge.i18n.LocalStrings
-import com.okjudge.judge.i18n.languageName
 import com.okjudge.judge.i18n.Strings
+import com.okjudge.judge.i18n.languageName
 import com.okjudge.judge.ui.components.JudgeIcons
 import com.okjudge.judge.ui.components.SceneView
 import com.okjudge.judge.ui.components.TintedIcon
+import com.okjudge.judge.ui.components.rememberIcon
 import com.okjudge.judge.ui.components.uppercaseForUi
 import com.okjudge.judge.ui.components.warmShadow
 import com.okjudge.judge.ui.openLink
@@ -408,7 +410,7 @@ private fun DetailRow(label: String, onClick: () -> Unit, modifier: Modifier = M
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(label, style = JudgeType.bodyStrong.copy(fontSize = 15.sp), modifier = Modifier.weight(1f))
-        TintedIcon(remember { JudgeIcons.chevron(Palette.muted) }, 16)
+        TintedIcon(rememberIcon(Palette.muted) { JudgeIcons.chevron(it) }, 16)
     }
 }
 
@@ -422,12 +424,13 @@ fun VoteDots(votes: List<Vote>, modifier: Modifier = Modifier) {
 @Composable
 fun VoteDot(vote: Vote?, sizeDp: Int) {
     val sides = LocalSides.current
+    val ink = Palette.ink
     Canvas(Modifier.size(sizeDp.dp)) {
         when (vote) {
             Vote.A -> drawCircle(sides.a.strong)
             Vote.B -> drawCircle(sides.b.strong)
-            Vote.OTHER -> drawCircle(Palette.ink, radius = size.minDimension / 2 - 0.75.dp.toPx(), style = Stroke(1.5.dp.toPx()))
-            null -> drawCircle(Palette.ink.copy(alpha = 0.18f))
+            Vote.OTHER -> drawCircle(ink, radius = size.minDimension / 2 - 0.75.dp.toPx(), style = Stroke(1.5.dp.toPx()))
+            null -> drawCircle(ink.copy(alpha = 0.18f))
         }
     }
 }
@@ -456,7 +459,7 @@ private fun ActionsRow(actions: CardActions) {
                 horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                TintedIcon(remember { JudgeIcons.share(Palette.ivory) }, 15)
+                TintedIcon(rememberIcon(Palette.ivory) { JudgeIcons.share(it) }, 15)
                 Text(s.share, style = JudgeType.button.copy(fontSize = 15.sp, color = Palette.paper), maxLines = 1)
             }
         }
@@ -469,7 +472,14 @@ private fun ActionsRow(actions: CardActions) {
                     if (actions.copied) s.copied else s.copyLink,
                     copy,
                     Modifier.weight(1f).semantics { liveRegion = LiveRegionMode.Polite },
-                    icon = { TintedIcon(remember(actions.copied) { if (actions.copied) JudgeIcons.check(Palette.sageInk, 2f) else JudgeIcons.link(Palette.ink) }, 15) },
+                    icon = {
+                        val icon = if (actions.copied) {
+                            rememberIcon(Palette.sageInk) { JudgeIcons.check(it, 2f) }
+                        } else {
+                            rememberIcon(Palette.ink) { JudgeIcons.link(it) }
+                        }
+                        TintedIcon(icon, 15)
+                    },
                 )
             }
         }
@@ -539,12 +549,15 @@ private fun Why(result: VerdictResult) {
     }
 }
 
-private val SectionText = TextStyle(
-    fontFamily = BrandFonts.inter(400, 15f),
-    fontSize = 15.sp,
-    lineHeight = (15 * 1.5).sp,
-    color = Palette.ink,
-)
+private val SectionText: TextStyle
+    @Composable
+    @ReadOnlyComposable
+    get() = TextStyle(
+        fontFamily = BrandFonts.inter(400, 15f),
+        fontSize = 15.sp,
+        lineHeight = (15 * 1.5).sp,
+        color = Palette.ink,
+    )
 
 @Composable
 private fun SlotText(text: String, color: Color = Palette.muted) {
@@ -602,7 +615,7 @@ private fun CruxTrialNote(trial: CruxTrial) {
         var open by rememberSaveable { mutableStateOf(false) }
         Slot {
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(4.dp)) {
-                TintedIcon(remember { JudgeIcons.shield(Palette.ink2) }, 14)
+                TintedIcon(rememberIcon(Palette.ink2) { JudgeIcons.shield(it) }, 14)
                 Text(s.trialSurvived, style = JudgeType.slotText.copy(color = Palette.ink2))
             }
             if (trial.attack.isNotBlank()) {
@@ -827,7 +840,7 @@ private fun FactsSection(facts: List<String>) {
                 Box(
                     Modifier.padding(top = 2.dp).size(18.dp).clip(CircleShape).background(Palette.sageInk),
                     contentAlignment = Alignment.Center,
-                ) { TintedIcon(JudgeIcons.factCheck, 10) }
+                ) { TintedIcon(rememberIcon(Palette.paper) { JudgeIcons.factCheck(it) }, 10) }
                 Text(f, style = JudgeType.body.copy(fontSize = 14.sp, lineHeight = (14 * 1.45).sp))
             }
         }
@@ -971,7 +984,7 @@ private fun TwoSidedFacts(result: VerdictResult, parties: PartyLabels) {
                                 verticalAlignment = Alignment.CenterVertically,
                                 horizontalArrangement = Arrangement.spacedBy(4.dp),
                             ) {
-                                TintedIcon(remember { JudgeIcons.bolt(Palette.ivory) }, 11)
+                                TintedIcon(rememberIcon(Palette.ivory) { JudgeIcons.bolt(it) }, 11)
                                 Text(s.twoSidedDecisive.uppercaseForUi(), style = JudgeType.micro.copy(color = Palette.ivory))
                             }
                         }

@@ -25,6 +25,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.remember
@@ -42,6 +43,7 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.style.TextAlign
@@ -62,6 +64,7 @@ import com.okjudge.judge.ui.components.GhostButton
 import com.okjudge.judge.ui.components.JudgeIcons
 import com.okjudge.judge.ui.components.TintedIcon
 import com.okjudge.judge.ui.components.TopBar
+import com.okjudge.judge.ui.components.rememberIcon
 import com.okjudge.judge.ui.components.uppercaseForUi
 import com.okjudge.judge.ui.components.warmShadow
 import com.okjudge.judge.ui.premium.EvidencePicker
@@ -72,8 +75,8 @@ import com.okjudge.judge.ui.theme.LocalSides
 import com.okjudge.judge.ui.theme.Palette
 import com.okjudge.judge.ui.theme.SideColors
 import com.okjudge.judge.ui.theme.forScript
-import kotlinx.coroutines.delay
 import java.text.NumberFormat
+import kotlinx.coroutines.delay
 
 object HomeTags {
     const val INPUT = "home.input"
@@ -143,7 +146,7 @@ fun HomeScreen(
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     GhostButton(
                         s.appHomeExample,
-                        remember { JudgeIcons.spark(Palette.terra) },
+                        rememberIcon(Palette.terra) { JudgeIcons.spark(it) },
                         onClick = onExample,
                         modifier = Modifier.testTag(HomeTags.EXAMPLE),
                     )
@@ -311,7 +314,10 @@ private fun SideCard(
     }
 }
 
-private val SideText = JudgeType.body.copy(fontSize = 15.sp, lineHeight = (15 * 1.5).sp)
+private val SideText: TextStyle
+    @Composable
+    @ReadOnlyComposable
+    get() = JudgeType.body.copy(fontSize = 15.sp, lineHeight = (15 * 1.5).sp)
 
 @Composable
 private fun SendLink(enabled: Boolean, onClick: () -> Unit) {
@@ -327,7 +333,7 @@ private fun SendLink(enabled: Boolean, onClick: () -> Unit) {
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(6.dp),
     ) {
-        TintedIcon(remember { JudgeIcons.link(Palette.sageInk) }, 14)
+        TintedIcon(rememberIcon(Palette.sageInk) { JudgeIcons.link(it) }, 14)
         Text(s.appHomeSendLink, style = JudgeType.small.copy(color = Palette.sageInk))
     }
 }
@@ -396,6 +402,6 @@ private fun ErrorBanner(error: UiError, onDismiss: () -> Unit) {
                 .semantics { contentDescription = s.appCancel }
                 .clickable(onClick = onDismiss)
                 .padding(8.dp),
-        ) { TintedIcon(remember { JudgeIcons.close(Palette.ink2) }, 16) }
+        ) { TintedIcon(rememberIcon(Palette.ink2) { JudgeIcons.close(it) }, 16) }
     }
 }

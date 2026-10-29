@@ -72,6 +72,7 @@ import com.okjudge.judge.ui.components.GhostButton
 import com.okjudge.judge.ui.components.JudgeIcons
 import com.okjudge.judge.ui.components.TextAction
 import com.okjudge.judge.ui.components.TintedIcon
+import com.okjudge.judge.ui.components.rememberIcon
 import com.okjudge.judge.ui.components.TopBar
 import com.okjudge.judge.ui.theme.JudgeShapes
 import com.okjudge.judge.ui.theme.JudgeType
@@ -335,7 +336,7 @@ private fun SwipeRow(entry: HistoryEntry, now: Long, onOpen: () -> Unit, onAskRe
                 horizontalArrangement = Arrangement.End,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                TintedIcon(remember { JudgeIcons.trash(Palette.danger) }, 18)
+                TintedIcon(rememberIcon(Palette.danger) { JudgeIcons.trash(it) }, 18)
                 Spacer(Modifier.size(8.dp))
                 Text(s.appHistoryDelete, style = JudgeType.small.copy(color = Palette.danger))
             }
@@ -470,7 +471,7 @@ private fun SelectCircle(selected: Boolean, modifier: Modifier = Modifier) {
             .then(if (selected) Modifier.background(Palette.terraInk) else Modifier.border(1.5.dp, Palette.line2, CircleShape)),
         contentAlignment = Alignment.Center,
     ) {
-        if (selected) TintedIcon(remember { JudgeIcons.check() }, 14)
+        if (selected) TintedIcon(rememberIcon(Palette.paper) { JudgeIcons.check(it) }, 14)
     }
 }
 
@@ -494,7 +495,7 @@ private fun SelectBar(count: Int, allSelected: Boolean, onCancel: () -> Unit, on
                 .testTag(HistoryTags.CANCEL),
             contentAlignment = Alignment.Center,
         ) {
-            TintedIcon(remember { JudgeIcons.close(Palette.ink) }, 18)
+            TintedIcon(rememberIcon(Palette.ink) { JudgeIcons.close(it) }, 18)
         }
         Text(
             s.appHistorySelected(count),

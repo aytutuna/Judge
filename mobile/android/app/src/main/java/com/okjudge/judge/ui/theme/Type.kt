@@ -3,6 +3,7 @@ package com.okjudge.judge.ui.theme
 import androidx.compose.material3.Typography
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ReadOnlyComposable
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.ExperimentalTextApi
 import androidx.compose.ui.text.TextStyle
@@ -58,9 +59,9 @@ object BrandFonts {
     }
 }
 
-/** The type scale of the design doc (8.2). */
-object JudgeType {
-    private fun inter(size: Float, weight: Int, lineHeight: Float, color: androidx.compose.ui.graphics.Color = Palette.ink) =
+/** The type scale of the design doc (8.2), in the colours of [p]. */
+class JudgeTypeScale(private val p: JudgePalette) {
+    private fun inter(size: Float, weight: Int, lineHeight: Float, color: Color = p.ink) =
         TextStyle(
             fontFamily = BrandFonts.inter(weight, size),
             fontWeight = FontWeight(weight),
@@ -75,7 +76,7 @@ object JudgeType {
         fontSize = 44.sp,
         lineHeight = (44 * 0.98).sp,
         letterSpacing = (-0.04).em,
-        color = Palette.ink,
+        color = p.ink,
     )
 
     /** The case card's "State your case." (thread.module.css .title). */
@@ -85,7 +86,7 @@ object JudgeType {
         fontSize = 36.sp,
         lineHeight = (36 * 1.05).sp,
         letterSpacing = (-0.01).em,
-        color = Palette.ink,
+        color = p.ink,
     )
 
     /** The verdict headline (verdict.module.css .ruling); the card picks 30..34 sp by width. */
@@ -98,26 +99,26 @@ object JudgeType {
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp,
         lineHeight = 20.sp,
-        color = Palette.muted,
+        color = p.muted,
     )
 
-    val headline = inter(15.5f, 400, 1.45f, Palette.ink2)
-    val lead = inter(17f, 400, 1.5f, Palette.ink2)
+    val headline = inter(15.5f, 400, 1.45f, p.ink2)
+    val lead = inter(17f, 400, 1.5f, p.ink2)
     val body = inter(16f, 400, 1.5f)
     val bodyStrong = inter(16f, 600, 1.5f)
     val slotTitle = inter(14f, 600, 1.4f)
-    val slotText = inter(13f, 400, 1.45f, Palette.muted)
-    val footnote = inter(12.5f, 400, 1.5f, Palette.muted)
+    val slotText = inter(13f, 400, 1.45f, p.muted)
+    val footnote = inter(12.5f, 400, 1.5f, p.muted)
     val branch = inter(14.5f, 400, 1.5f)
     val branchLead = inter(14.5f, 600, 1.5f)
-    val small = inter(13f, 600, 1.35f, Palette.ink2)
+    val small = inter(13f, 600, 1.35f, p.ink2)
     private val SectionTitle = TextStyle(
         fontFamily = BrandFonts.interTight(700),
         fontWeight = FontWeight.Bold,
         fontSize = 20.sp,
         lineHeight = 24.sp,
         letterSpacing = (-0.02).em,
-        color = Palette.ink,
+        color = p.ink,
     )
 
     private val Micro = TextStyle(
@@ -126,7 +127,7 @@ object JudgeType {
         fontSize = 11.sp,
         lineHeight = (11 * 1.3).sp,
         letterSpacing = 0.12.em,
-        color = Palette.muted,
+        color = p.muted,
     )
 
     val button = TextStyle(
@@ -134,7 +135,7 @@ object JudgeType {
         fontWeight = FontWeight.SemiBold,
         fontSize = 16.sp,
         lineHeight = 20.sp,
-        color = Palette.ivory,
+        color = p.ivory,
     )
 
     private val BrandTag = TextStyle(
@@ -143,7 +144,7 @@ object JudgeType {
         fontSize = 13.sp,
         lineHeight = 13.sp,
         letterSpacing = (-0.01).em,
-        color = Palette.muted,
+        color = p.muted,
     )
 
     // Tracked styles: no letter-spacing in the scripts it breaks.
@@ -162,11 +163,19 @@ object JudgeType {
         bodyLarge = body,
         bodyMedium = inter(14f, 400, 1.45f),
         bodySmall = slotText,
-        labelLarge = button.copy(color = Palette.ink),
+        labelLarge = button.copy(color = p.ink),
         labelMedium = inter(12f, 600, 1.3f),
         labelSmall = Micro,
     )
 }
+
+private val LightType = JudgeTypeScale(LightPalette)
+private val DarkType = JudgeTypeScale(DarkPalette)
+
+val JudgeType: JudgeTypeScale
+    @Composable
+    @ReadOnlyComposable
+    get() = if (Palette.dark) DarkType else LightType
 
 /**
  * Letter-spacing is for Latin, Greek and Cyrillic. It breaks the joins of

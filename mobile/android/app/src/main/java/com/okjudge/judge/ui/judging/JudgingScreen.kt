@@ -64,6 +64,7 @@ import com.okjudge.judge.ui.components.Kicker
 import com.okjudge.judge.ui.components.SceneView
 import com.okjudge.judge.ui.components.TextAction
 import com.okjudge.judge.ui.components.TintedIcon
+import com.okjudge.judge.ui.components.rememberIcon
 import com.okjudge.judge.ui.components.TopBar
 import com.okjudge.judge.ui.components.uppercaseForUi
 import com.okjudge.judge.ui.components.warmShadow
@@ -258,7 +259,7 @@ private fun FactCheckRow(done: Boolean) {
     ) {
         if (done) {
             Box(Modifier.size(16.dp).clip(RoundedCornerShape(8.dp)).background(Palette.sageInk), contentAlignment = Alignment.Center) {
-                TintedIcon(JudgeIcons.factCheck, 10)
+                TintedIcon(rememberIcon(Palette.paper) { JudgeIcons.factCheck(it) }, 10)
             }
         } else {
             CircularProgressIndicator(Modifier.size(14.dp), color = Palette.ink2, strokeWidth = 1.5.dp)

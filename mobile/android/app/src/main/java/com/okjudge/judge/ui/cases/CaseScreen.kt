@@ -37,6 +37,7 @@ import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -54,6 +55,7 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardCapitalization
@@ -85,6 +87,7 @@ import com.okjudge.judge.ui.components.PrimaryButton
 import com.okjudge.judge.ui.components.TextAction
 import com.okjudge.judge.ui.components.TintedIcon
 import com.okjudge.judge.ui.components.TopBar
+import com.okjudge.judge.ui.components.rememberIcon
 import com.okjudge.judge.ui.judging.JudgingScreen
 import com.okjudge.judge.ui.premium.EvidencePicker
 import com.okjudge.judge.ui.premium.rememberEvidencePicker
@@ -174,7 +177,7 @@ fun CaseScreen(
     modifier: Modifier = Modifier,
     otherName: String? = null,
 ) {
-    CompositionLocalProvider(LocalSides provides Sides.forViewer(state.view?.yourParty)) {
+    CompositionLocalProvider(LocalSides provides Sides.forViewer(state.view?.yourParty, Palette)) {
         CaseScreenBody(state, evidenceOn, actions, reducedMotion, modifier, otherName)
     }
 }
@@ -590,7 +593,7 @@ private fun InviteLink(url: String, expiresAt: String, name: String?, state: Cas
             horizontalArrangement = Arrangement.spacedBy(6.dp, Alignment.CenterHorizontally),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            TintedIcon(remember { JudgeIcons.share(Palette.paper) }, 15)
+            TintedIcon(rememberIcon(Palette.paper) { JudgeIcons.share(it) }, 15)
             Text(s.caseInviteShare, style = JudgeType.slotTitle.copy(color = Palette.paper), textAlign = TextAlign.Center)
         }
         Row(
@@ -609,7 +612,7 @@ private fun InviteLink(url: String, expiresAt: String, name: String?, state: Cas
             horizontalArrangement = Arrangement.spacedBy(6.dp, Alignment.CenterHorizontally),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            if (copied) TintedIcon(remember { JudgeIcons.check(Palette.sageInk, 2f) }, 15)
+            if (copied) TintedIcon(rememberIcon(Palette.sageInk) { JudgeIcons.check(it, 2f) }, 15)
             Text(if (copied) s.caseInviteCopied else s.caseInviteCopy, style = JudgeType.slotTitle, textAlign = TextAlign.Center)
         }
     }
@@ -640,7 +643,7 @@ private fun Step(state: StepState, title: String, note: String?, last: Boolean) 
             val dot = Modifier.size(24.dp).clip(CircleShape)
             when (state) {
                 StepState.DONE -> Box(dot.background(Palette.terra), contentAlignment = Alignment.Center) {
-                    TintedIcon(remember { JudgeIcons.check(Palette.paper, 2.4f) }, 12)
+                    TintedIcon(rememberIcon(Palette.paper) { JudgeIcons.check(it, 2.4f) }, 12)
                 }
                 StepState.NOW -> Box(dot.background(Palette.sageTint).border(2.dp, Palette.sageInk, CircleShape))
                 StepState.LATER -> Box(dot.border(2.dp, Palette.stone, CircleShape))
@@ -823,7 +826,7 @@ fun AppealPanel(
                     .semantics { contentDescription = s.appClose }
                     .clickable(role = Role.Button, onClick = onClose),
                 contentAlignment = Alignment.Center,
-            ) { TintedIcon(remember { JudgeIcons.close(Palette.ink2) }, 18) }
+            ) { TintedIcon(rememberIcon(Palette.ink2) { JudgeIcons.close(it) }, 18) }
         }
         when (area) {
             is AppealArea.Upsell, is AppealArea.Blocked -> {
@@ -891,7 +894,7 @@ fun AppealPanel(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(10.dp),
                 ) {
-                    TintedIcon(remember { JudgeIcons.spark(Palette.terra) }, 14)
+                    TintedIcon(rememberIcon(Palette.terra) { JudgeIcons.spark(it) }, 14)
                     Text(cost, style = AppealText.copy(fontSize = 13.sp, lineHeight = (13 * 1.4).sp, color = Palette.ink2))
                 }
                 ErrorLine(draft.error, actions.onPricing)
@@ -907,7 +910,10 @@ fun AppealPanel(
     }
 }
 
-private val AppealText = JudgeType.body.copy(fontSize = 15.sp, lineHeight = (15 * 1.5).sp)
+private val AppealText: TextStyle
+    @Composable
+    @ReadOnlyComposable
+    get() = JudgeType.body.copy(fontSize = 15.sp, lineHeight = (15 * 1.5).sp)
 
 /** The owner's name on the share pages and the names switch (CaseNames). */
 @Composable

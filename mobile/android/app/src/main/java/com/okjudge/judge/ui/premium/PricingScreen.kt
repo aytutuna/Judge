@@ -20,7 +20,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -46,6 +45,7 @@ import com.okjudge.judge.ui.components.JudgeIcons
 import com.okjudge.judge.ui.components.Kicker
 import com.okjudge.judge.ui.components.PrimaryButton
 import com.okjudge.judge.ui.components.TintedIcon
+import com.okjudge.judge.ui.components.rememberIcon
 import com.okjudge.judge.ui.components.TopBar
 import com.okjudge.judge.ui.theme.JudgeShapes
 import com.okjudge.judge.ui.theme.JudgeType
@@ -215,7 +215,7 @@ fun PricingScreen(
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.spacedBy(8.dp),
                     ) {
-                        TintedIcon(remember { JudgeIcons.spark(Palette.terra) }, 14)
+                        TintedIcon(rememberIcon(Palette.terra) { JudgeIcons.spark(it) }, 14)
                         Text(s.pricingIncludedTitle, style = JudgeType.sectionTitle, modifier = Modifier.semantics { heading() })
                     }
                     FeatureList(Tiers.premiumFeatureKeys(cases = features?.cases == true, evidence = features?.evidence == true))
@@ -254,7 +254,7 @@ private fun FeatureList(keys: List<String>) {
                 Box(
                     Modifier.padding(top = 3.dp).size(18.dp).clip(CircleShape).background(Palette.sageInk),
                     contentAlignment = Alignment.Center,
-                ) { TintedIcon(JudgeIcons.factCheck, 10) }
+                ) { TintedIcon(rememberIcon(Palette.paper) { JudgeIcons.factCheck(it) }, 10) }
                 Text(text, style = JudgeType.body.copy(color = Palette.ink2))
             }
         }

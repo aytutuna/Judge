@@ -53,6 +53,7 @@ import com.okjudge.judge.i18n.LocalLang
 import com.okjudge.judge.i18n.LocalStrings
 import com.okjudge.judge.ui.components.JudgeIcons
 import com.okjudge.judge.ui.components.TintedIcon
+import com.okjudge.judge.ui.components.rememberIcon
 import com.okjudge.judge.ui.theme.JudgeShapes
 import com.okjudge.judge.ui.theme.JudgeType
 import com.okjudge.judge.ui.theme.Palette
@@ -124,11 +125,11 @@ fun EvidencePicker(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-            TintedIcon(remember { JudgeIcons.plus(Palette.ink) }, 14)
+            TintedIcon(rememberIcon(Palette.ink) { JudgeIcons.plus(it) }, 14)
             Text(if (single) s.evidenceAddOne else s.evidenceAdd, style = JudgeType.small.copy(color = Palette.ink))
         }
         Row(verticalAlignment = Alignment.Top, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-            TintedIcon(remember { JudgeIcons.lock(Palette.muted) }, 12, Modifier.padding(top = 2.dp))
+            TintedIcon(rememberIcon(Palette.muted) { JudgeIcons.lock(it) }, 12, Modifier.padding(top = 2.dp))
             Text(if (single) s.evidenceHintOne else s.evidenceHint(state.max), style = JudgeType.slotText)
         }
         if (state.overLimit) Text(s.evidenceLimit, style = JudgeType.slotText.copy(color = Palette.ink2))
@@ -171,7 +172,7 @@ private fun ItemRow(item: EvidenceItem, disabled: Boolean, onRemove: (String) ->
                         modifier = Modifier.size(48.dp),
                     )
                 } else {
-                    TintedIcon(remember { JudgeIcons.image(Palette.muted) }, 20)
+                    TintedIcon(rememberIcon(Palette.muted) { JudgeIcons.image(it) }, 20)
                 }
             }
             Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(3.dp)) {
@@ -189,7 +190,7 @@ private fun ItemRow(item: EvidenceItem, disabled: Boolean, onRemove: (String) ->
                     .clickable(enabled = !disabled) { onRemove(item.id) }
                     .testTag(EvidenceTags.remove(item.n)),
                 contentAlignment = Alignment.Center,
-            ) { TintedIcon(remember { JudgeIcons.close(Palette.ink2) }, 14) }
+            ) { TintedIcon(rememberIcon(Palette.ink2) { JudgeIcons.close(it) }, 14) }
         }
         val preview = item.preview
         if (item.status == EvidenceStatus.OK && preview != null) {

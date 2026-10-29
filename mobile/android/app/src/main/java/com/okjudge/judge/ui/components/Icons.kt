@@ -1,5 +1,7 @@
 package com.okjudge.judge.ui.components
 
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.StrokeCap
@@ -7,7 +9,6 @@ import androidx.compose.ui.graphics.StrokeJoin
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.addPathNodes
 import androidx.compose.ui.unit.dp
-import com.okjudge.judge.ui.theme.Palette
 
 /**
  * The web card's inline SVG icons, built from the same path data. Stroke
@@ -30,7 +31,7 @@ object JudgeIcons {
             }
         }.build()
 
-    fun check(color: Color = Color.White, width: Float = 2.2f) =
+    fun check(color: Color, width: Float = 2.2f) =
         icon("check", 16f, P("M3.5 8.4 6.6 11.4 12.6 4.9", stroke = color, width = width))
 
     fun levelBeam(color: Color = Color.White) = icon(
@@ -65,18 +66,7 @@ object JudgeIcons {
         ),
     )
 
-    val diamond = icon("diamond", 12f, P("M6 0.8 11.2 6 6 11.2 0.8 6z", fill = Palette.ink))
-
-    val kindFact = icon(
-        "fact", 12f,
-        P("M6 .8 11 3.6v4.8L6 11.2 1 8.4V3.6z", fill = Palette.ink),
-        P("M6 6v5.2M6 6 1 3.6M6 6l5-2.4", stroke = Palette.paper, width = 0.9f),
-    )
-    val kindValue = icon("value", 12f, P("M1 6a5 5 0 1 0 10 0a5 5 0 1 0 -10 0", fill = Palette.ink))
-    val kindDefinition = icon("definition", 12f, P("M6 1.2 11.2 10.6H.8z", fill = Palette.ink))
-    val kindLogic = icon("logic", 12f, P("M6 .8 11.2 6 6 11.2.8 6z", fill = Palette.ink))
-
-    val factCheck = icon("factCheck", 10f, P("M2 5.3 4.1 7.3 8 2.9", stroke = Color.White, width = 1.6f))
+    fun factCheck(color: Color) = icon("factCheck", 10f, P("M2 5.3 4.1 7.3 8 2.9", stroke = color, width = 1.6f))
 
     fun close(color: Color) = icon("close", 16f, P("M4 4l8 8M12 4l-8 8", stroke = color, width = 1.6f))
 
@@ -145,3 +135,7 @@ object JudgeIcons {
 
     fun external(color: Color) = icon("external", 10f, P("M4 2h4v4M8 2 3 7", stroke = color, width = 1.4f))
 }
+
+/** An icon built once per colour, so a theme change rebuilds it. */
+@Composable
+fun rememberIcon(color: Color, build: (Color) -> ImageVector): ImageVector = remember(color) { build(color) }

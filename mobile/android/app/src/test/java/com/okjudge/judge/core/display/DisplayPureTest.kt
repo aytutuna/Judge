@@ -6,7 +6,7 @@ import com.okjudge.judge.i18n.AppLang
 import com.okjudge.judge.isNull
 import com.okjudge.judge.num
 import com.okjudge.judge.str
-import com.okjudge.judge.ui.theme.Palette
+import com.okjudge.judge.ui.theme.LightPalette
 import com.okjudge.judge.ui.verdict.shareUrl
 import kotlinx.serialization.json.jsonObject
 import org.junit.Assert.assertEquals
@@ -74,19 +74,19 @@ class DisplayPureTest {
     @Test
     fun palette_matchesLibPalette() {
         val palette = Fixtures.vectors["palette"]!!.jsonObject
-        assertEquals(palette.keys, Palette.byKey.keys)
+        assertEquals(palette.keys, LightPalette.byKey.keys)
         for ((key, value) in palette) {
             val hex = value.toString().trim('"')
-            val c = Palette.byKey.getValue(key)
+            val c = LightPalette.byKey.getValue(key)
             val actual = "#%02X%02X%02X".format((c.red * 255).toInt(), (c.green * 255).toInt(), (c.blue * 255).toInt())
             assertEquals(key, hex.uppercase(), actual)
         }
         val alpha = Fixtures.vectors["paletteAlpha"]!!.jsonObject
-        assertEquals(alpha.keys, Palette.alphaByKey.keys)
+        assertEquals(alpha.keys, LightPalette.alphaByKey.keys)
         val rgba = Regex("""rgba\((\d+), (\d+), (\d+), ([\d.]+)\)""")
         for ((key, value) in alpha) {
             val m = rgba.matchEntire(value.toString().trim('"'))!!
-            val c = Palette.alphaByKey.getValue(key)
+            val c = LightPalette.alphaByKey.getValue(key)
             assertEquals(key, m.groupValues[1].toInt(), Math.round(c.red * 255))
             assertEquals(key, m.groupValues[2].toInt(), Math.round(c.green * 255))
             assertEquals(key, m.groupValues[3].toInt(), Math.round(c.blue * 255))

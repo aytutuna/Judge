@@ -15,7 +15,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -58,12 +57,12 @@ fun TopBar(onBack: (() -> Unit)?, onNew: (() -> Unit)?, modifier: Modifier = Mod
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(4.dp),
             ) {
-                TintedIcon(remember { JudgeIcons.back(Palette.ink) }, 18)
+                TintedIcon(rememberIcon(Palette.ink) { JudgeIcons.back(it) }, 18)
                 Text(backText, style = JudgeType.slotTitle.copy(fontSize = 15.sp))
             }
         } else if (onBack != null) {
             RoundButton(backLabel ?: s.appCancel, onBack) {
-                TintedIcon(remember { JudgeIcons.back(Palette.ink) }, 20)
+                TintedIcon(rememberIcon(Palette.ink) { JudgeIcons.back(it) }, 20)
             }
         } else {
             Spacer(Modifier.width(8.dp))
@@ -76,7 +75,7 @@ fun TopBar(onBack: (() -> Unit)?, onNew: (() -> Unit)?, modifier: Modifier = Mod
         Spacer(Modifier.weight(1f))
         if (onNew != null) {
             RoundButton(s.shellNew, onNew, Modifier.testTag(TopBarTags.NEW), outlined = true) {
-                TintedIcon(remember { JudgeIcons.plus(Palette.ink) }, 18)
+                TintedIcon(rememberIcon(Palette.ink) { JudgeIcons.plus(it) }, 18)
             }
         }
     }

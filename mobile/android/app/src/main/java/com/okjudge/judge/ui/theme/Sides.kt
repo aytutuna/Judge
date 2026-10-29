@@ -6,7 +6,7 @@ import androidx.compose.ui.graphics.Color
 
 /**
  * One side's colours: [fill] for large areas, [strong] for thin marks that
- * need 3:1, [ink] for text and behind a white letter, [tint] behind text.
+ * need 3:1, [ink] for text and behind a paper letter, [tint] behind text.
  */
 @Immutable
 data class SideColors(val fill: Color, val strong: Color, val ink: Color, val tint: Color)
@@ -25,15 +25,13 @@ class Sides private constructor(val you: String, val a: SideColors, val b: SideC
     val theirs: SideColors get() = if (you == "b") a else b
 
     companion object {
-        private val GREEN = SideColors(Palette.sage, Palette.sageStrong, Palette.sageInk, Palette.sageTint)
-        private val RED = SideColors(Palette.terra, Palette.terra, Palette.terraInk, Palette.terraTint)
-
-        val A = Sides("a", GREEN, RED)
-        val B = Sides("b", RED, GREEN)
-
-        fun forViewer(you: String?): Sides = if (you == "b") B else A
+        fun forViewer(you: String?, palette: JudgePalette): Sides {
+            val green = SideColors(palette.sage, palette.sageStrong, palette.sageInk, palette.sageTint)
+            val red = SideColors(palette.terra, palette.terra, palette.terraInk, palette.terraTint)
+            return if (you == "b") Sides("b", red, green) else Sides("a", green, red)
+        }
     }
 }
 
-/** Set by the case screens for the respondent; everything else draws Party A green. */
-val LocalSides = staticCompositionLocalOf { Sides.A }
+/** Set by [JudgeTheme] and, for the respondent, by the case screens; everything else draws Party A green. */
+val LocalSides = staticCompositionLocalOf { Sides.forViewer(null, LightPalette) }

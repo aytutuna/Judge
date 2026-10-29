@@ -43,10 +43,10 @@ object UiTestSupport {
 
 /** Theme + language locals, on the ivory background, with the flat balance for the scene. */
 @Composable
-fun Themed(lang: AppLang, content: @Composable () -> Unit) {
+fun Themed(lang: AppLang, dark: Boolean = false, content: @Composable () -> Unit) {
     CompositionLocalProvider(LocalSceneLive provides false) {
         ProvideLang(lang, UiTestSupport.s(lang)) {
-            JudgeTheme {
+            JudgeTheme(dark = dark) {
                 Box(Modifier.background(Palette.ivory)) { content() }
             }
         }
