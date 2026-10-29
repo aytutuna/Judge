@@ -19,8 +19,8 @@ import {
 
 const css = readFileSync(join(__dirname, "..", "app", "globals.css"), "utf8");
 
-/** Custom properties of the first block opened by `selector`; plain
- * `:root` is the light token block. */
+/** Custom properties of the first block opened by `selector` in `source`;
+ * plain `:root` in the whole file is the light token block. */
 function tokenBlock(source: string, selector = ":root"): Map<string, string> {
   const open = `${selector} {`;
   const start = source.indexOf(open);
@@ -80,17 +80,17 @@ describe("palette", () => {
     expect(PALETTE_NUM.terra).toBe(0xc8553d);
   });
 
-  it("dark follows the system unless data-theme says otherwise, and can be forced", () => {
-    expect(css).toMatch(/@media \(prefers-color-scheme: dark\) \{\s*:root:not\(\[data-theme="light"\]\) \{/);
+  it("dark follows the system", () => {
+    const at = css.indexOf("@media (prefers-color-scheme: dark) {");
+    expect(at).toBeGreaterThan(css.indexOf(":root {"));
+    expect(css).toMatch(/@media \(prefers-color-scheme: dark\) \{\s*:root \{/);
     expect(css).toMatch(/color-scheme:\s*light dark;/);
     const dark = { ...PALETTE_DARK, ...PALETTE_ALPHA_DARK };
     const keys = Object.keys(dark) as (PaletteKey | PaletteAlphaKey)[];
-    for (const selector of [':root:not([data-theme="light"])', ':root[data-theme="dark"]']) {
-      const block = tokenBlock(css, selector);
-      expect([...block.keys()].sort(), selector).toEqual(keys.map(cssVarName).sort());
-      for (const key of keys) {
-        expect(squash(block.get(cssVarName(key))!), `${selector} ${key}`).toBe(squash(dark[key]));
-      }
+    const block = tokenBlock(css.slice(at));
+    expect([...block.keys()].sort()).toEqual(keys.map(cssVarName).sort());
+    for (const key of keys) {
+      expect(squash(block.get(cssVarName(key))!), key).toBe(squash(dark[key]));
     }
   });
 
