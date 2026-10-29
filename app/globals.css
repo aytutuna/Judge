@@ -135,10 +135,10 @@
   --shadow-card: 0 2px 4px rgba(60, 40, 20, 0.04), 0 40px 80px -30px rgba(60, 40, 20, 0.28);
   --shadow-cta: 0 1px 0 rgba(255, 255, 255, 0.15) inset, 0 10px 24px -8px rgba(28, 25, 22, 0.45);
 
-  /* a surface a step above paper (hover on a paper button), and a page a
-     step below ivory for a lone card to sit on */
+  /* a surface a step above paper (hover on a paper button), and the page a
+     lone card sits on: plain white in light, a step below ivory in dark */
   --paper-hi: #FFFFFF;
-  --page-deep: var(--ivory-2);
+  --page-deep: var(--ivory);
   /* a fill sunk into a paper card (tiles, hover rows, code). Page and paper
      are both white in light, so it can't be the page colour there. */
   --well: var(--ivory-2);
