@@ -20,9 +20,10 @@
 # an hour. Once a day after 09:00 (server time) it sends a heartbeat with the
 # last day's numbers; if that stops arriving, this watcher is broken.
 #
-# While GRAFANA_TOKEN is set, Grafana Cloud sends the [alert:...], failed
-# service, out-of-memory and disk alerts (deploy/grafana/alerts.json), and this
-# watcher only logs them.
+# While GRAFANA_TOKEN is set, Grafana Cloud sends the [alert:...],
+# out-of-memory and disk alerts, and those for failed verdict*, caddy, ssh,
+# fail2ban and alloy units (deploy/grafana/alerts.json); this watcher only
+# logs them.
 #
 # Signal limits come from /etc/verdict/verdict.env as ALERT_SIGNAL_<NAME>=n,
 # e.g. ALERT_SIGNAL_RATE_LIMITED=100 (defaults in SIGNAL_LIMITS below). The
@@ -92,7 +93,9 @@ notify() {
   fi
   file=$STATE_DIR/quiet-$key
   log "$1"
-  if [[ -n ${GRAFANA_TOKEN-} && $key =~ ^(alert-|failed-|disk-|oom$) ]]; then return 0; fi
+  if [[ -n ${GRAFANA_TOKEN-} && $key =~ ^(alert-.*|failed-(verdict.*|caddy|ssh|fail2ban|alloy)\.(service|timer)|disk-.*|oom)$ ]]; then
+    return 0
+  fi
   if [[ -z ${ALERT_EMAIL-}${NTFY_TOPIC-} ]]; then return 0; fi
   if [[ -f $file ]]; then last=$(<"$file"); fi
   if ((now - ${last:-0} < QUIET_SEC)); then

@@ -4,6 +4,11 @@
   "repeat_interval": "24h",
   "routes": [
     {
+      "receiver": "email",
+      "object_matchers": [["alertname", "=~", "DatasourceError|DatasourceNoData"]],
+      "repeat_interval": "4h"
+    },
+    {
       "receiver": "pushover-critical",
       "object_matchers": [["severity", "=", "critical"]],
       "repeat_interval": "1h",

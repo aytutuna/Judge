@@ -293,63 +293,6 @@
             "description": "Once it is full, the database and the backups stop working. On the server: sudo du -xh --max-depth=2 / | sort -h | tail -n 15"
           },
           "isPaused": false
-        },
-        {
-          "uid": "judge-cert-expiry",
-          "title": "Certificate expiring",
-          "folderUID": "judge",
-          "ruleGroup": "critical",
-          "condition": "C",
-          "data": [
-            {
-              "refId": "A",
-              "relativeTimeRange": {
-                "from": 600,
-                "to": 0
-              },
-              "datasourceUid": "${PROM_UID}",
-              "model": {
-                "refId": "A",
-                "expr": "min by (instance) (probe_ssl_earliest_cert_expiry{job=\"judge-site\"} - time()) / 86400",
-                "instant": true,
-                "range": false
-              }
-            },
-            {
-              "refId": "C",
-              "datasourceUid": "__expr__",
-              "model": {
-                "refId": "C",
-                "type": "threshold",
-                "expression": "A",
-                "datasource": {
-                  "type": "__expr__",
-                  "uid": "__expr__"
-                },
-                "conditions": [
-                  {
-                    "evaluator": {
-                      "type": "lt",
-                      "params": [
-                        10
-                      ]
-                    }
-                  }
-                ]
-              }
-            }
-          ],
-          "for": "10m",
-          "noDataState": "OK",
-          "execErrState": "Error",
-          "labels": {
-            "severity": "critical"
-          },
-          "annotations": {
-            "summary": "The certificate for {{ $labels.instance }} expires in {{ humanize $values.A.Value }} days.",
-            "description": "Caddy renews about 30 days ahead, so renewal has been failing: journalctl -u caddy -n 200 | grep -i -e acme -e certificate; often DNS or a firewall blocking port 80/443. Behind Cloudflare this is Cloudflare's certificate; the watcher still checks Caddy's own."
-          },
-          "isPaused": false
         }
       ]
     },
@@ -996,13 +939,13 @@
               "refId": "A",
               "queryType": "instant",
               "relativeTimeRange": {
-                "from": 3600,
+                "from": 300,
                 "to": 0
               },
               "datasourceUid": "${LOKI_UID}",
               "model": {
                 "refId": "A",
-                "expr": "sum(count_over_time({app=\"judge\", unit=\"fail2ban.service\"} |= \"] Ban \" [1h]))",
+                "expr": "sum(count_over_time({app=\"judge\", unit=\"fail2ban.service\"} |= \"] Ban \" [5m]))",
                 "queryType": "instant"
               }
             },
@@ -1020,7 +963,7 @@
                 "conditions": [
                   {
                     "evaluator": {
-                      "type": "gt",
+                      "type": "gte",
                       "params": [
                         20
                       ]
@@ -1037,7 +980,7 @@
             "severity": "warning"
           },
           "annotations": {
-            "summary": "fail2ban banned {{ $values.A.Value }} addresses in the last hour.",
+            "summary": "fail2ban banned {{ $values.A.Value }} addresses in 5 minutes.",
             "description": "Someone is trying SSH logins at scale. On the server: sudo fail2ban-client status sshd"
           },
           "isPaused": false
@@ -1058,7 +1001,7 @@
               "datasourceUid": "${PROM_UID}",
               "model": {
                 "refId": "A",
-                "expr": "node_systemd_units{app=\"judge\", state=\"failed\"}",
+                "expr": "node_systemd_unit_state{app=\"judge\", state=\"failed\"} == 1",
                 "instant": true,
                 "range": false
               }
@@ -1094,8 +1037,8 @@
             "severity": "warning"
           },
           "annotations": {
-            "summary": "{{ $values.A.Value }} systemd unit(s) in the failed state.",
-            "description": "On the server: systemctl --failed, then systemctl status <unit>; journalctl -u <unit> -n 50"
+            "summary": "{{ $labels.name }} is in the failed state.",
+            "description": "On the server: systemctl status {{ $labels.name }}; journalctl -u {{ $labels.name }} -n 50"
           },
           "isPaused": false
         },
@@ -1210,6 +1153,177 @@
           "annotations": {
             "summary": "The kernel killed a process for lack of memory.",
             "description": "Most likely the app at its 400 MB cap. On the server: journalctl -k --since -1h; systemctl status verdict. If it keeps happening, find what grows."
+          },
+          "isPaused": false
+        },
+        {
+          "uid": "judge-cert-expiry",
+          "title": "Certificate expiring",
+          "folderUID": "judge",
+          "ruleGroup": "warning",
+          "condition": "C",
+          "data": [
+            {
+              "refId": "A",
+              "relativeTimeRange": {
+                "from": 600,
+                "to": 0
+              },
+              "datasourceUid": "${PROM_UID}",
+              "model": {
+                "refId": "A",
+                "expr": "min by (instance) (probe_ssl_earliest_cert_expiry{job=\"judge-health\"} - time()) / 86400",
+                "instant": true,
+                "range": false
+              }
+            },
+            {
+              "refId": "C",
+              "datasourceUid": "__expr__",
+              "model": {
+                "refId": "C",
+                "type": "threshold",
+                "expression": "A",
+                "datasource": {
+                  "type": "__expr__",
+                  "uid": "__expr__"
+                },
+                "conditions": [
+                  {
+                    "evaluator": {
+                      "type": "lt",
+                      "params": [
+                        10
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "for": "10m",
+          "noDataState": "OK",
+          "execErrState": "Error",
+          "labels": {
+            "severity": "warning"
+          },
+          "annotations": {
+            "summary": "The certificate for {{ $labels.instance }} expires in {{ humanize $values.A.Value }} days.",
+            "description": "Caddy renews about 30 days ahead, so renewal has been failing: journalctl -u caddy -n 200 | grep -i -e acme -e certificate; often DNS or a firewall blocking port 80/443. Behind Cloudflare this is Cloudflare's certificate; the watcher still checks Caddy's own."
+          },
+          "isPaused": false
+        },
+        {
+          "uid": "judge-no-access-log",
+          "title": "No access log data",
+          "folderUID": "judge",
+          "ruleGroup": "warning",
+          "condition": "C",
+          "data": [
+            {
+              "refId": "A",
+              "queryType": "instant",
+              "relativeTimeRange": {
+                "from": 900,
+                "to": 0
+              },
+              "datasourceUid": "${LOKI_UID}",
+              "model": {
+                "refId": "A",
+                "expr": "absent_over_time({app=\"judge\", filename=\"/var/log/caddy/access.log\"}[15m])",
+                "queryType": "instant"
+              }
+            },
+            {
+              "refId": "C",
+              "datasourceUid": "__expr__",
+              "model": {
+                "refId": "C",
+                "type": "threshold",
+                "expression": "A",
+                "datasource": {
+                  "type": "__expr__",
+                  "uid": "__expr__"
+                },
+                "conditions": [
+                  {
+                    "evaluator": {
+                      "type": "gt",
+                      "params": [
+                        0
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "for": "0s",
+          "noDataState": "OK",
+          "execErrState": "Error",
+          "labels": {
+            "severity": "warning"
+          },
+          "annotations": {
+            "summary": "No lines from Caddy's access log for 15 minutes, though a probe calls the site every minute.",
+            "description": "Alloy cannot read the log, or Caddy stopped writing it. On the server: ls -l /var/log/caddy; journalctl -u alloy -n 50; systemctl status caddy"
+          },
+          "isPaused": false
+        },
+        {
+          "uid": "judge-no-probe-data",
+          "title": "No probe data",
+          "folderUID": "judge",
+          "ruleGroup": "warning",
+          "condition": "C",
+          "data": [
+            {
+              "refId": "A",
+              "relativeTimeRange": {
+                "from": 600,
+                "to": 0
+              },
+              "datasourceUid": "${PROM_UID}",
+              "model": {
+                "refId": "A",
+                "expr": "absent_over_time(probe_success{job=\"judge-health\"}[10m])",
+                "instant": true,
+                "range": false
+              }
+            },
+            {
+              "refId": "C",
+              "datasourceUid": "__expr__",
+              "model": {
+                "refId": "C",
+                "type": "threshold",
+                "expression": "A",
+                "datasource": {
+                  "type": "__expr__",
+                  "uid": "__expr__"
+                },
+                "conditions": [
+                  {
+                    "evaluator": {
+                      "type": "gt",
+                      "params": [
+                        0
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "for": "0s",
+          "noDataState": "OK",
+          "execErrState": "Error",
+          "labels": {
+            "severity": "warning"
+          },
+          "annotations": {
+            "summary": "No results from the synthetic check on /api/health for 10 minutes.",
+            "description": "The check is off or gone: see Testing & synthetics > Synthetics, or run deploy/grafana/provision.sh again."
           },
           "isPaused": false
         }
