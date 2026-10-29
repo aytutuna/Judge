@@ -19,11 +19,16 @@
 #   GRAFANA_CLOUD_TOKEN     optional: an access policy token for this stack
 #                           with the scopes stacks:read, metrics:write,
 #                           logs:write and traces:write. It registers Synthetic
-#                           Monitoring (POST /api/v1/register/install on the
-#                           stack region's Synthetic Monitoring API), which
+#                           Monitoring (POST /api/v1/register/install), which
 #                           keeps the token to publish the probes' results: give
-#                           it no expiry and do not delete it. Without it the
-#                           synthetic checks are skipped.
+#                           it no expiry and do not delete it.
+#   SM_TOKEN                optional: a Synthetic Monitoring access token
+#                           (Testing & synthetics > Synthetics > Config >
+#                           Access tokens) instead of registering again.
+#
+# Without GRAFANA_CLOUD_TOKEN or SM_TOKEN the synthetic checks are skipped. The
+# Synthetic Monitoring API's address comes from the stack's plugin settings,
+# or from its region while Synthetic Monitoring was never opened there.
 #
 # Safe to run again: everything is created, or updated in place by its uid or
 # name, so a run puts back what these files say. The rules, contact points and
@@ -34,7 +39,9 @@ set -euo pipefail
 
 HERE=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
 SITE=https://okjudge.com
-CHECKS=("judge-site $SITE/" "judge-health $SITE/api/health")
+# Job, target and how often in ms. Every 15 minutes for the home page keeps
+# both checks from two probes under the free tier's 100k runs a month.
+CHECKS=("judge-site $SITE/ 900000" "judge-health $SITE/api/health 60000")
 # The site-down alert fires when both fail.
 PROBES=(Frankfurt London)
 
@@ -46,12 +53,17 @@ die() {
 }
 
 # call TOKEN CURL_ARGS...: a JSON request with "Authorization: Bearer TOKEN".
-# The token goes in through a file descriptor, so it never shows in ps.
+# The token goes in through a file descriptor, so it never shows in ps. On an
+# error status the response (Grafana's reason) goes to stderr.
 call() {
-  local token=$1
+  local token=$1 out
   shift
-  curl -sS --fail-with-body -H @<(printf 'Authorization: Bearer %s\n' "$token") \
-    -H 'Content-Type: application/json' "$@"
+  if ! out=$(curl -sS --fail-with-body -H @<(printf 'Authorization: Bearer %s\n' "$token") \
+    -H 'Content-Type: application/json' "$@"); then
+    printf '%s\n' "$out" >&2
+    return 1
+  fi
+  printf '%s\n' "$out"
 }
 
 grafana() { call "$GRAFANA_SA_TOKEN" -H 'X-Disable-Provenance: true' "$@"; }
@@ -89,7 +101,8 @@ make_folder() {
 contact_points() {
   local existing points point uid name
   log "Contact points"
-  existing=$(grafana "$GRAFANA_URL/api/v1/provisioning/contact-points" | jq -r '.[].uid')
+  existing=$(grafana "$GRAFANA_URL/api/v1/provisioning/contact-points")
+  existing=$(jq -r '.[].uid' <<<"$existing")
   points=$(fill "$HERE/contact-points.json" | jq -c '.[]')
   while IFS= read -r point; do
     uid=$(jq -r .uid <<<"$point")
@@ -113,7 +126,7 @@ notification_policy() {
     policy=$(jq 'del(.routes[] | select(.receiver == "ntfy"))' <<<"$policy")
   fi
   grafana -X PUT --data-binary @- "$GRAFANA_URL/api/v1/provisioning/policies" <<<"$policy" >/dev/null
-  info "Critical alerts: $(jq -r '[.routes[].receiver] | join(", ")' <<<"$policy"); the rest: email."
+  info "Critical alerts: $(jq -r '[.routes[] | select(.object_matchers[0][0] == "severity") | .receiver] | join(", ")' <<<"$policy"); the rest: email."
 }
 
 # A rule group's PUT creates, updates and removes its rules to match the body.
@@ -130,27 +143,41 @@ alert_rules() {
 }
 
 synthetic_checks() {
-  local slug stack region sm token probes name id ids="" existing entry job target check old
+  local settings sm slug stack region resp token probes name id ids="" existing entry job target freq check old
   log "Synthetic checks"
-  slug=${GRAFANA_URL#https://}
-  slug=${slug%%.*}
-  stack=$(call "$GRAFANA_CLOUD_TOKEN" "https://grafana.com/api/instances/$slug")
-  region=$(jq -r .regionSlug <<<"$stack")
-  # The same mapping as Grafana's Terraform provider.
-  case $region in
-    us) sm=https://synthetic-monitoring-api.grafana.net ;;
-    eu) sm=https://synthetic-monitoring-api-eu-west.grafana.net ;;
-    au) sm=https://synthetic-monitoring-api-au-southeast.grafana.net ;;
-    prod-gb-south-0) sm=https://synthetic-monitoring-api-gb-south.grafana.net ;;
-    us-azure) sm=https://synthetic-monitoring-api-us-central-7.grafana.net ;;
-    *) sm=https://synthetic-monitoring-api-${region#prod-}.grafana.net ;;
-  esac
-  # Sets up Synthetic Monitoring for the stack, or finds the existing setup,
-  # and returns a token for its API.
-  token=$(jq '{stackId: .id, metricsInstanceId: .hmInstancePromId, logsInstanceId: .hlInstanceId}' <<<"$stack" |
-    call "$GRAFANA_CLOUD_TOKEN" -X POST --data-binary @- "$sm/api/v1/register/install" | jq -r '.accessToken // empty')
-  [[ -n $token ]] || die "Synthetic Monitoring at $sm returned no access token."
-  info "Registered with $sm"
+  # Set once Synthetic Monitoring has been opened in the stack.
+  settings=$(grafana "$GRAFANA_URL/api/plugins/grafana-synthetic-monitoring-app/settings") || settings={}
+  sm=$(jq -r '.jsonData.apiHost // empty' <<<"$settings")
+  if [[ -n $sm && $sm != *://* ]]; then sm=https://$sm; fi
+  sm=${sm%/}
+
+  if [[ -n ${SM_TOKEN-} ]]; then
+    [[ -n $sm ]] || die "SM_TOKEN is set, but the stack does not name its Synthetic Monitoring API yet. Open Testing & synthetics > Synthetics once, or use GRAFANA_CLOUD_TOKEN."
+    token=$SM_TOKEN
+  else
+    slug=${GRAFANA_URL#https://}
+    slug=${slug%%.*}
+    stack=$(call "$GRAFANA_CLOUD_TOKEN" "https://grafana.com/api/instances/$slug")
+    if [[ -z $sm ]]; then
+      region=$(jq -r .regionSlug <<<"$stack")
+      # The same mapping as Grafana's Terraform provider.
+      case $region in
+        us) sm=https://synthetic-monitoring-api.grafana.net ;;
+        eu) sm=https://synthetic-monitoring-api-eu-west.grafana.net ;;
+        au) sm=https://synthetic-monitoring-api-au-southeast.grafana.net ;;
+        prod-gb-south-0) sm=https://synthetic-monitoring-api-gb-south.grafana.net ;;
+        us-azure) sm=https://synthetic-monitoring-api-us-central-7.grafana.net ;;
+        *) sm=https://synthetic-monitoring-api-${region#prod-}.grafana.net ;;
+      esac
+    fi
+    # Sets up Synthetic Monitoring for the stack, or finds the existing setup,
+    # and returns a token for its API.
+    resp=$(jq '{stackId: .id, metricsInstanceId: .hmInstancePromId, logsInstanceId: .hlInstanceId}' <<<"$stack" |
+      call "$GRAFANA_CLOUD_TOKEN" -X POST --data-binary @- "$sm/api/v1/register/install")
+    token=$(jq -r '.accessToken // empty' <<<"$resp")
+    [[ -n $token ]] || die "Synthetic Monitoring at $sm returned no access token: $resp"
+    info "Registered with $sm"
+  fi
 
   probes=$(call "$token" "$sm/api/v1/probe/list")
   for name in "${PROBES[@]}"; do
@@ -161,9 +188,9 @@ synthetic_checks() {
 
   existing=$(call "$token" "$sm/api/v1/check/list")
   for entry in "${CHECKS[@]}"; do
-    read -r job target <<<"$entry"
-    check=$(jq -n --arg job "$job" --arg target "$target" --argjson probes "[$ids]" '{
-      job: $job, target: $target, enabled: true, frequency: 60000, timeout: 10000,
+    read -r job target freq <<<"$entry"
+    check=$(jq -n --arg job "$job" --arg target "$target" --argjson freq "$freq" --argjson probes "[$ids]" '{
+      job: $job, target: $target, enabled: true, frequency: $freq, timeout: 10000,
       probes: $probes, labels: [], basicMetricsOnly: false, alertSensitivity: "none",
       settings: {http: {method: "GET", ipVersion: "V4", failIfNotSSL: true, noFollowRedirects: false}}
     }')
@@ -171,10 +198,10 @@ synthetic_checks() {
     if [[ -n $old ]]; then
       jq --argjson old "$old" '. + {id: $old.id, tenantId: $old.tenantId}' <<<"$check" |
         call "$token" -X POST --data-binary @- "$sm/api/v1/check/update" >/dev/null
-      info "Updated $job: $target from ${PROBES[*]}"
+      info "Updated $job: $target every $((freq / 1000))s from ${PROBES[*]}"
     else
       call "$token" -X POST --data-binary @- "$sm/api/v1/check/add" <<<"$check" >/dev/null
-      info "Added $job: $target from ${PROBES[*]}"
+      info "Added $job: $target every $((freq / 1000))s from ${PROBES[*]}"
     fi
   done
 }
@@ -194,11 +221,11 @@ main() {
   contact_points
   notification_policy
   alert_rules
-  if [[ -n ${GRAFANA_CLOUD_TOKEN-} ]]; then
+  if [[ -n ${GRAFANA_CLOUD_TOKEN-}${SM_TOKEN-} ]]; then
     synthetic_checks
   else
     log "Synthetic checks"
-    info "Skipped: GRAFANA_CLOUD_TOKEN is not set."
+    info "Skipped: neither GRAFANA_CLOUD_TOKEN nor SM_TOKEN is set."
   fi
   log "Done. See them under Alerting > Alert rules in $GRAFANA_URL"
 }
