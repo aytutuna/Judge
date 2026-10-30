@@ -20,6 +20,7 @@ import { saveCaseNames } from "@/lib/case-names-store";
 import { verdictLang } from "@/lib/content-lang";
 import { firstNameOf, type DisplayState, type MineResponse } from "@/lib/originals-types";
 import { ownerTokenIds } from "@/lib/owner-store";
+import { track, trackApiError } from "@/lib/analytics/client";
 import { buildOwnerShare } from "@/components/ShareDialog";
 import { clearDraft, registerDraftSource, saveDraftForSignIn, takeDraft } from "@/lib/draft";
 import { startHistory } from "@/lib/history-store";
@@ -280,6 +281,7 @@ export default function Home() {
       return verdict;
     }
     if (signal.aborted) return null;
+    if (outcome.kind === "failed") trackApiError({ code: outcome.code }, outcome.status);
     restore(
       text,
       outcome.kind === "failed"
@@ -307,6 +309,7 @@ export default function Home() {
    * a server error never blocks the verdict: it just goes ahead without
    * questions. Account problems (401/402) and bad input stop on the form. */
   async function submitPremium() {
+    track("case_submitted");
     // Judged as submitted: later edits never mix into this request.
     const input: PremiumInput = { argument, evidence: evidenceOn ? evidence.tokens : [] };
     const signal = threadSignal();
@@ -328,6 +331,7 @@ export default function Home() {
       if (res.ok) {
         found = ((json as ClarifyResponse | null)?.questions ?? []).slice(0, 2);
       } else if (ACCOUNT_STATUSES.has(res.status) || res.status === 400 || res.status === 403) {
+        trackApiError(json, res.status);
         restore(input.argument, apiErrorMessage(lang, json, res.status));
         setChecking(false);
         if (ACCOUNT_STATUSES.has(res.status)) void refreshViewer();
@@ -386,6 +390,7 @@ export default function Home() {
         if (!res.ok || json === null) {
           if (ACCOUNT_STATUSES.has(res.status)) void refreshViewer();
           if (signal.aborted) return;
+          trackApiError(json, res.status);
           restore(input.argument, apiErrorMessage(lang, json, res.status));
           return;
         }
@@ -418,6 +423,7 @@ export default function Home() {
    * the case page with the invite link. No clarifying step: the other side's
    * account fills the gaps. */
   async function createCase() {
+    track("case_submitted");
     const tokens = evidenceOn ? evidence.tokens : [];
     const text = argument;
     const signal = threadSignal();
@@ -444,6 +450,7 @@ export default function Home() {
       if (!res.ok || !created?.case) {
         if (ACCOUNT_STATUSES.has(res.status)) void refreshViewer();
         if (signal.aborted) return;
+        trackApiError(json, res.status);
         restore(text, apiErrorMessage(lang, json, res.status));
         setCreating(false);
         return;
@@ -466,6 +473,7 @@ export default function Home() {
   function finishClarify(skip: boolean) {
     const input = premiumInput.current;
     if (!input) return;
+    if (!skip) for (const q of questions) if (answers[q.id]?.trim()) track("question_answered");
     void judgePremium(input, buildClarifications(questions, answers, skip));
   }
 
@@ -598,7 +606,10 @@ export default function Home() {
             <Composer
               lang={lang}
               value={argument}
-              onChange={setArgument}
+              onChange={(v) => {
+                if (!argument && v) track("case_started");
+                setArgument(v);
+              }}
               onSubmit={() => {
                 if (viewer.status === "ready" && !signedIn) signInFirst();
                 else if (entitlement?.canUsePremium === false) pricingFirst();

@@ -1,6 +1,7 @@
 "use client";
 
-import { useId, useMemo } from "react";
+import { useEffect, useId, useMemo } from "react";
+import { track } from "@/lib/analytics/client";
 import type { NameMapping, VerdictResult } from "@/lib/types";
 import { languageName, t, type Key, type Lang } from "@/lib/i18n";
 import { langDir } from "@/lib/langs";
@@ -23,6 +24,9 @@ import { AppealOutcomeBanner } from "./case/AppealOutcome";
 import { TwoSidedFacts, WouldChangeBlock, evidenceNote } from "./case/TwoSidedBlocks";
 import caseStyles from "./case/case.module.css";
 import styles from "./verdict/verdict.module.css";
+
+/** Verdicts already counted as viewed, so a remount does not count again. */
+const viewed = new Set<string>();
 
 /** Non-side votes rendered whole from the dictionary — never
  * `r.replace("_", " ")`, which would splice raw English enum words into a
@@ -144,6 +148,11 @@ export function VerdictView({
   const storeLang = useLang();
   const opts = useMemo(() => ({ noSelf: publicNames }), [publicNames]);
   const lang = langProp ?? storeLang;
+  useEffect(() => {
+    if (!shareId || viewed.has(shareId)) return;
+    viewed.add(shareId);
+    track("verdict_viewed");
+  }, [shareId]);
   // Narrator detection follows the language the argument was judged in;
   // only the labels follow the display language.
   const selfLang = verdictLang(original);

@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useId, useRef, useState } from "react";
+import { track } from "@/lib/analytics/client";
 import type { EvidenceStatus, EvidenceUploadResponse } from "@/lib/case-types";
 import { ACCEPTED_IMAGE_TYPES } from "@/lib/case-types";
 import { apiErrorMessage, t, type Key, type Lang } from "@/lib/i18n";
@@ -157,6 +158,7 @@ export function useEvidence(endpoint: string, max: number): EvidenceController {
           const json: unknown = await res.json().catch(() => null);
           if (res.ok && json && Array.isArray((json as EvidenceUploadResponse).items)) {
             response = json as EvidenceUploadResponse;
+            track("evidence_added");
           } else {
             setFailure({ body: json, status: res.status });
           }

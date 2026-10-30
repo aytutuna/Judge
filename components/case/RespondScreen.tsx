@@ -7,6 +7,7 @@ import type { AppealResponse, CaseRemovalResponse, CaseView, RespondResponse } f
 import { MAX_EVIDENCE_PER_SIDE } from "@/lib/case-types";
 import { forgetCaseNames, saveCaseNames, useCaseNames } from "@/lib/case-names-store";
 import { firstNameOf } from "@/lib/originals-types";
+import { trackApiError } from "@/lib/analytics/client";
 import { apiErrorMessage, languageName, t, type Lang } from "@/lib/i18n";
 import { useLang } from "@/lib/lang";
 import {
@@ -130,6 +131,7 @@ function useRespondForm(
       const json: unknown = await res.json().catch(() => null);
       const ok = json as RespondResponse | null;
       if (!res.ok || !ok?.case) {
+        trackApiError(json, res.status);
         setError(apiErrorMessage(lang, json, res.status));
         setTurnstileKey((k) => k + 1);
         return;

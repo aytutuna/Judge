@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useId, useState } from "react";
+import { signInStarted, trackError } from "@/lib/analytics/client";
 import type { AuthProviders } from "@/lib/account-types";
 import { t, type Lang } from "@/lib/i18n";
 import { useLang } from "@/lib/lang";
@@ -260,10 +261,12 @@ export function SignInView({ next: rawNext }: { next?: string | string[] }) {
   async function provider(p: "apple" | "google") {
     setPending(true);
     setError(null);
+    signInStarted(p);
     const { signInWithProvider } = await import("@/lib/auth-client");
     const res = await signInWithProvider(p, next);
     // Success leaves the page for Apple or Google; only failure lands here.
     if (!res.ok) {
+      trackError(res.code);
       setError(t(lang, "signin.failed"));
       setPending(false);
     }
@@ -277,21 +280,27 @@ export function SignInView({ next: rawNext }: { next?: string | string[] }) {
     }
     setPending(true);
     setError(null);
+    signInStarted("email");
     const token = captchaToken ?? undefined;
     setCaptchaToken(null);
     const { sendMagicLink } = await import("@/lib/auth-client");
     const res = await sendMagicLink(to, withLang(next, lang), token);
     setPending(false);
     if (res.ok) setSentTo(to);
-    else setError(t(lang, "signin.failed"));
+    else {
+      trackError(res.code);
+      setError(t(lang, "signin.failed"));
+    }
   }
 
   async function dev() {
     setPending(true);
     setError(null);
+    signInStarted("dev");
     const { devLogin } = await import("@/lib/auth-client");
     const res = await devLogin();
     if (!res.ok) {
+      trackError("dev_login_failed");
       setError(t(lang, "signin.failed"));
       setPending(false);
       return;

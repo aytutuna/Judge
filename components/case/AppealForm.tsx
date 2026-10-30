@@ -5,6 +5,7 @@ import { useId, useMemo, useState } from "react";
 import type { Entitlement } from "@/lib/account-types";
 import type { CaseAppealView, CaseView } from "@/lib/case-types";
 import { MAX_APPEAL_CHARS, MAX_EVIDENCE_PER_APPEAL, MIN_APPEAL_CHARS } from "@/lib/case-types";
+import { trackApiError } from "@/lib/analytics/client";
 import { apiErrorMessage, t, tWithDate, type Key, type Lang } from "@/lib/i18n";
 import { keyHolder } from "@/lib/use-case";
 import { applyEntitlement, refreshViewer } from "@/lib/use-viewer";
@@ -99,6 +100,7 @@ export function useAppealDraft<R extends { entitlement?: Entitlement }>({
       });
       const json: unknown = await res.json().catch(() => null);
       if (!res.ok || typeof json !== "object" || json === null) {
+        trackApiError(json, res.status);
         setError(apiErrorMessage(lang, json, res.status));
         if (res.status === 401 || res.status === 402) void refreshViewer();
         return;

@@ -1,5 +1,6 @@
 "use client";
 
+import { track } from "@/lib/analytics/client";
 import { t, type Lang } from "@/lib/i18n";
 import { setLang } from "@/lib/lang";
 import { ENABLED, LANGS } from "@/lib/langs";
@@ -24,7 +25,10 @@ export function LangPicker({
       <select
         value={lang}
         aria-label={label ?? t(lang, "footer.language")}
-        onChange={(e) => onSelect(e.target.value as Lang)}
+        onChange={(e) => {
+          track("settings_changed", { key: "language" });
+          onSelect(e.target.value as Lang);
+        }}
         className={styles.select}
       >
         {ENABLED.map((l) => (

@@ -12,6 +12,7 @@ import type {
   PartyLetter,
 } from "@/lib/case-types";
 import { forgetCaseNames, saveCaseNames, useCaseNames } from "@/lib/case-names-store";
+import { trackApiError } from "@/lib/analytics/client";
 import { apiErrorMessage, t, tWithDate, type Key, type Lang } from "@/lib/i18n";
 import { langDir } from "@/lib/langs";
 import { useLang } from "@/lib/lang";
@@ -539,6 +540,7 @@ export function CaseScreen({ id }: { id: string }) {
       const res = await fetch(`${base}${path}`, init);
       const json: unknown = await res.json().catch(() => null);
       if (!res.ok) {
+        trackApiError(json, res.status);
         setActionError(apiErrorMessage(lang, json, res.status));
         if (res.status === 401 || res.status === 402) void refreshViewer();
         return null;

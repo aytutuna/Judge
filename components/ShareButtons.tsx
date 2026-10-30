@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState, useSyncExternalStore } from "react";
+import { track } from "@/lib/analytics/client";
 import { t, type Lang } from "@/lib/i18n";
 import { stripLeadingEmoji } from "@/lib/text";
 import { ShareDialog, type OwnerShare } from "./ShareDialog";
@@ -59,6 +60,7 @@ export function ShareButtons({
   const url = () => `${window.location.origin}/v/${shareId}`;
 
   async function copyLink() {
+    track("share_tapped");
     const link = url();
     try {
       await navigator.clipboard.writeText(link);
@@ -70,6 +72,7 @@ export function ShareButtons({
   }
 
   async function share() {
+    track("share_tapped");
     try {
       await navigator.share({ title, text: t(lang, "shareText"), url: url() });
     } catch {

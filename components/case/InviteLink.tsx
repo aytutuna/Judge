@@ -1,6 +1,7 @@
 "use client";
 
 import { useId, useState, useSyncExternalStore } from "react";
+import { track } from "@/lib/analytics/client";
 import { t, tWithDate, type Lang } from "@/lib/i18n";
 import account from "../account/AccountPages.module.css";
 import styles from "./case.module.css";
@@ -43,6 +44,7 @@ export function InviteLink({
   const expiryId = useId();
 
   async function copy() {
+    track("share_tapped");
     try {
       await navigator.clipboard.writeText(url);
       setCopied(true);
@@ -53,6 +55,7 @@ export function InviteLink({
   }
 
   async function share() {
+    track("share_tapped");
     try {
       await navigator.share({ text: t(lang, "case.invite.shareText"), url });
     } catch {
