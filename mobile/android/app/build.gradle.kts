@@ -207,6 +207,7 @@ dependencies {
     implementation(libs.googleid)
     implementation(libs.revenuecat.purchases)
     implementation(libs.sentry.android)
+    implementation(libs.age.signals)
 
     implementation(libs.room.runtime)
     implementation(libs.room.ktx)

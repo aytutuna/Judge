@@ -64,13 +64,34 @@ class SignInViewModelTest {
         Dispatchers.resetMain()
     }
 
-    private fun vm(): SignInViewModel {
+    /** The 18+ box is ticked unless a test is about it. */
+    private fun vm(ticked: Boolean = true): SignInViewModel {
         val api = JudgeApi(server.url("/").toString(), OkHttpClient(), "ua", tokens)
-        return SignInViewModel(Account(api, tokens, google, scope))
+        return SignInViewModel(Account(api, tokens, google, scope)).also { it.onAgeTicked(ticked) }
     }
 
     private suspend fun SignInViewModel.await(predicate: (SignInUiState) -> Boolean): SignInUiState =
         withTimeout(10_000) { state.first(predicate) }
+
+    @Test
+    fun signInWaitsForThe18PlusBox() = runBlocking {
+        val vm = vm(ticked = false)
+        vm.await { it.providers is Account.Providers.Ready }
+        vm.onEmailChange("ada@example.com")
+        val unticked = vm.state.value
+        assertTrue(unticked.ageNeeded)
+        assertFalse(unticked.canGoogle)
+        assertFalse(unticked.canRequestCode)
+        vm.google(ApplicationProvider.getApplicationContext())
+        vm.requestCode(AppLang.EN)
+        assertEquals(0, google.calls)
+        assertTrue(routes.requestsTo(SEND_CODE).isEmpty())
+
+        vm.onAgeTicked(true)
+        val ticked = vm.await { it.ageTicked }
+        assertTrue(ticked.canGoogle)
+        assertTrue(ticked.canRequestCode)
+    }
 
     @Test
     fun loadsTheProviders() = runBlocking {

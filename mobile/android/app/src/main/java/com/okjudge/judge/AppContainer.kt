@@ -10,6 +10,7 @@ import com.okjudge.judge.core.cases.CaseNamesStore
 import com.okjudge.judge.core.cases.PrefsCaseNames
 import com.okjudge.judge.core.auth.CredentialManagerGoogle
 import com.okjudge.judge.core.auth.KeystoreTokenStore
+import com.okjudge.judge.core.auth.PlayAgeSignals
 import com.okjudge.judge.core.data.DataStoreSettings
 import com.okjudge.judge.core.data.HistoryDb
 import com.okjudge.judge.core.data.HistoryRepository
@@ -84,6 +85,7 @@ class AppContainer(context: Context, val config: AppConfig = AppConfig.fromBuild
             tokenStore = tokenStore,
             onSignedOut = { account.onSessionExpired() },
             deviceId = deviceId,
+            onAgeGate = { account.onAgeGate(it) },
         )
     }
 
@@ -98,7 +100,7 @@ class AppContainer(context: Context, val config: AppConfig = AppConfig.fromBuild
     }
 
     val account: Account by lazy {
-        Account(api, tokenStore, CredentialManagerGoogle(config.googleServerClientId), appScope)
+        Account(api, tokenStore, CredentialManagerGoogle(config.googleServerClientId), appScope, ageSignals = PlayAgeSignals(appContext))
     }
 
     private val db: HistoryDb by lazy { HistoryDb.create(appContext) }
@@ -126,6 +128,7 @@ class AppContainer(context: Context, val config: AppConfig = AppConfig.fromBuild
         PurchaseController(
             purchaseGateway, account.state, refreshAccount = { account.refresh() }, scope = appScope,
             onBought = { analytics.track("purchase_completed") },
+            ageRefusal = { account.ageRefusal() },
         )
     }
 

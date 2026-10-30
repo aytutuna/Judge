@@ -1,10 +1,14 @@
 package com.okjudge.judge.ui
 
+import android.app.Activity
 import android.content.Context
 import androidx.browser.customtabs.CustomTabColorSchemeParams
 import androidx.browser.customtabs.CustomTabsIntent
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.consumeWindowInsets
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
@@ -28,6 +32,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
 import androidx.lifecycle.Lifecycle
@@ -46,9 +51,15 @@ import androidx.navigation3.ui.NavDisplay
 import com.okjudge.judge.AppContainer
 import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import com.okjudge.judge.core.auth.Account
+import com.okjudge.judge.core.auth.AgeCheck
+import com.okjudge.judge.core.auth.AgeGate
+import com.okjudge.judge.core.display.Errors
+import com.okjudge.judge.ui.age.AgeBlockedScreen
+import com.okjudge.judge.ui.age.AgeConfirmScreen
 import com.okjudge.judge.core.data.Appearance
 import com.okjudge.judge.core.session.VerdictFlow
 import com.okjudge.judge.i18n.LangPref
+import com.okjudge.judge.i18n.LocalLang
 import com.okjudge.judge.i18n.LocalStrings
 import com.okjudge.judge.i18n.ProvideLang
 import com.okjudge.judge.i18n.Strings
@@ -204,6 +215,8 @@ fun JudgeRoot(
                         val onTop = backStack.lastOrNull()
                         if (onTop !is SignInKey && onTop !is JudgingKey) backStack.add(SignInKey(thenVerdict = false))
                     }
+                    // Under the age cover the cover itself says it.
+                    if (notice == Account.Notice.DELETE_FAILED && account.ageGate.value != AgeGate.NONE) return@collect
                     launch { snackbar.showSnackbar(noticeText(currentStrings, notice)) }
                 }
             }
@@ -213,13 +226,26 @@ fun JudgeRoot(
                 if (!clarifyOpen) container.verdictFlow.leaveClarify()
             }
             val top = backStack.lastOrNull()
+            val site = container.config.shareBaseUrl.trimEnd('/')
+            val ageGate by account.ageGate.collectAsStateWithLifecycle()
+            val accountNow by account.state.collectAsStateWithLifecycle()
+            val phoneAge by account.platformAge.collectAsStateWithLifecycle()
+            val agePosting by account.agePosting.collectAsStateWithLifecycle()
+            val onSignInScreen = top is SignInKey
+            LaunchedEffect(onSignInScreen, accountNow) {
+                // The phone is asked when sign-in opens, or for a signed-in account that still has to confirm.
+                if (account.needsPlatformAge(onSignInScreen)) account.checkPlatformAge(context)
+            }
             val tab = when {
                 backStack.any { it is HistoryKey } -> Tab.HISTORY
                 backStack.any { it is SettingsKey } -> Tab.SETTINGS
                 else -> Tab.NEW
             }
 
+            Box(Modifier.fillMaxSize()) {
             Scaffold(
+                // Nothing under the age cover is read out or reachable.
+                modifier = if (ageGate == AgeGate.NONE) Modifier else Modifier.clearAndSetSemantics {},
                 containerColor = Palette.ivory,
                 snackbarHost = {
                     SnackbarHost(snackbar) { data ->
@@ -273,8 +299,12 @@ fun JudgeRoot(
                                     clearDraft = false
                                 }
                             }
-                            LaunchedEffect(submitAfterSignIn) {
-                                if (submitAfterSignIn) {
+                            LaunchedEffect(submitAfterSignIn, accountNow, ageGate, phoneAge, agePosting) {
+                                if (!submitAfterSignIn) return@LaunchedEffect
+                                if (accountNow is Account.State.SignedOut) {
+                                    submitAfterSignIn = false
+                                } else if (account.ageRefusal() == null) {
+                                    // Waits for the age to be on record (the sheet, if it failed).
                                     submitAfterSignIn = false
                                     if (counted(vm.submit(lang, strings)) == Submitted.PRICING) openPricing()
                                 }
@@ -287,7 +317,9 @@ fun JudgeRoot(
                                 },
                                 onOtherSideChange = vm::onOtherSideChange,
                                 onOtherName = vm::onOtherName,
-                                onSubmit = {
+                                onSubmit = submit@{
+                                    // The phone's check or an age report is still running.
+                                    if (account.ageRefusal() != null) return@submit
                                     when (counted(vm.submit(lang, strings))) {
                                         // Every verdict needs an account: sign in first, then go on.
                                         Submitted.SIGN_IN -> if (backStack.lastOrNull() !is SignInKey) backStack.add(SignInKey(thenVerdict = true))
@@ -295,7 +327,9 @@ fun JudgeRoot(
                                         else -> Unit
                                     }
                                 },
-                                onSendLink = { if (counted(vm.sendLink(lang)) == Submitted.PRICING) openPricing() },
+                                onSendLink = {
+                                    if (account.ageRefusal() == null && counted(vm.sendLink(lang)) == Submitted.PRICING) openPricing()
+                                },
                                 onExample = {
                                     if (state.argument.isEmpty()) analytics.track("case_started")
                                     vm.fillExample(strings)
@@ -379,6 +413,8 @@ fun JudgeRoot(
                                     container.analytics.track("buy_tapped", mapOf("product" to productId))
                                     purchases.buy(context, productId)
                                 },
+                                onOpenTerms = { openLink(context, "$site/terms") },
+                                onOpenPrivacy = { openLink(context, "$site/privacy") },
                             )
                         }
                         entry<VerdictKey> { key ->
@@ -601,14 +637,75 @@ fun JudgeRoot(
                                     onResend = { vm.resend(lang) },
                                     onChangeEmail = vm::changeEmail,
                                     onRetryProviders = vm::retryProviders,
-                                    onOpenPrivacy = { openLink(context, "${container.config.shareBaseUrl.trimEnd('/')}/privacy") },
+                                    onAgeTicked = vm::onAgeTicked,
+                                    onOpenTerms = { openLink(context, "$site/terms") },
+                                    onOpenPrivacy = { openLink(context, "$site/privacy") },
                                 ),
                             )
                         }
                     },
                 )
             }
+            AgeOverlay(
+                gate = ageGate,
+                account = account,
+                signedIn = accountNow is Account.State.SignedIn,
+                onSignOut = { container.appScope.launch { account.signOut() } },
+                onDelete = { container.appScope.launch { account.deleteAccount() } },
+                onConfirm = { container.appScope.launch { account.confirmAge() } },
+                onContact = { sendEmail(context, AgeCheck.SUPPORT_EMAIL) },
+            )
+            }
         }
+    }
+}
+
+/** The age check over the whole app: the confirmation sheet or the adults-only screen. Back leaves the app. */
+@Composable
+private fun AgeOverlay(
+    gate: AgeGate,
+    account: Account,
+    signedIn: Boolean,
+    onSignOut: () -> Unit,
+    onDelete: () -> Unit,
+    onConfirm: () -> Unit,
+    onContact: () -> Unit,
+) {
+    if (gate == AgeGate.NONE) return
+    val context = LocalContext.current
+    BackHandler { (context as? Activity)?.moveTaskToBack(true) }
+    val busy by account.working.collectAsStateWithLifecycle()
+    val deleteFailed by account.deleteFailed.collectAsStateWithLifecycle()
+    when (gate) {
+        AgeGate.CONFIRM -> {
+            val s = LocalStrings.current
+            val lang = LocalLang.current
+            val ticked by account.ageTicked.collectAsStateWithLifecycle()
+            val posting by account.agePosting.collectAsStateWithLifecycle()
+            val error by account.ageError.collectAsStateWithLifecycle()
+            val phone by account.platformAge.collectAsStateWithLifecycle()
+            AgeConfirmScreen(
+                ticked = ticked,
+                // The phone already said 18+ and only its report failed: no box to tick.
+                needsCheckbox = AgeCheck.needsCheckbox(phone),
+                busy = busy || posting,
+                error = error?.let { Errors.message(it, s, lang) },
+                onTicked = account::setAgeTicked,
+                onContinue = onConfirm,
+                onSignOut = onSignOut,
+                onDelete = onDelete,
+                deleteFailed = deleteFailed,
+            )
+        }
+        AgeGate.BLOCKED -> AgeBlockedScreen(
+            signedIn = signedIn,
+            busy = busy,
+            onSignOut = onSignOut,
+            onDelete = onDelete,
+            deleteFailed = deleteFailed,
+            onContact = onContact,
+        )
+        AgeGate.NONE -> Unit
     }
 }
 
@@ -734,6 +831,10 @@ private fun NavBackStack<NavKey>.resetTo(keys: List<NavKey>) {
     if (toList() == keys) return
     clear()
     addAll(keys)
+}
+
+private fun sendEmail(context: Context, address: String) {
+    runCatching { context.startActivity(Intent(Intent.ACTION_SENDTO, "mailto:$address".toUri())) }
 }
 
 fun openLink(context: Context, url: String) {

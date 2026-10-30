@@ -1,8 +1,10 @@
 package com.okjudge.judge.core.api
 
 import com.okjudge.judge.core.analytics.Delivery
+import com.okjudge.judge.core.auth.AgeCheck
 import com.okjudge.judge.core.display.UiError
 import com.okjudge.judge.core.evidence.PreparedImage
+import com.okjudge.judge.core.model.AgeStatus
 import com.okjudge.judge.core.model.CaseListResponse
 import com.okjudge.judge.core.model.CaseRemovalResponse
 import com.okjudge.judge.core.model.CaseResponse
@@ -74,7 +76,8 @@ sealed interface ApiResult<out T> {
  *
  * Every call carries `Authorization: Bearer` while [tokenStore] holds a
  * session; a 401 `signin_required` to such a call clears it and calls
- * [onSignedOut]. Sign-in requests also carry [deviceId] as `Device-Id`.
+ * [onSignedOut]. A 403 `age_blocked` or `age_unconfirmed` to any call is
+ * passed to [onAgeGate]. Sign-in requests also carry [deviceId] as `Device-Id`.
  *
  * Main-safe: the call, the body read and the JSON decode all run on [io], so
  * callers on Dispatchers.Main never touch the socket.
@@ -89,6 +92,7 @@ class JudgeApi(
     private val io: CoroutineDispatcher = Dispatchers.IO,
     private val pollPolicy: PollPolicy = PollPolicy(),
     private val deviceId: String? = null,
+    private val onAgeGate: (code: String) -> Unit = {},
 ) {
     data class Timeouts(
         val verdictSec: Long = 310,
@@ -376,6 +380,20 @@ class JudgeApi(
         return execute(getClient, req) { _, text -> WireJson.json.decodeFromString(MeResponse.serializer(), text) }
     }
 
+    /** POST /api/v1/me/age: the account is 18+ ([adult]) or not, by the checkbox or the platform's signal. */
+    suspend fun reportAge(adult: Boolean, source: String): ApiResult<AgeStatus> {
+        val body = buildJsonObject {
+            put("adult", adult)
+            put("source", source)
+        }.toString()
+        val req = request(url("api", "v1", "me", "age")).post(body.toRequestBody(JSON)).build()
+        return execute(accountClient, req) { _, text ->
+            // The age object itself, or wrapped as on /me.
+            val obj = WireJson.json.parseToJsonElement(text) as? JsonObject ?: throw SerializationException("not an object")
+            WireJson.json.decodeFromJsonElement(AgeStatus.serializer(), obj["age"] as? JsonObject ?: obj)
+        }
+    }
+
     /** POST /api/auth/sign-in/social with a Google ID token obtained on the device. */
     suspend fun signInWithGoogle(idToken: String): ApiResult<SessionGrant> = postAuth(
         url("api", "auth", "sign-in", "social"),
@@ -486,6 +504,8 @@ class JudgeApi(
             tokenStore.clear()
             onSignedOut()
         }
+        val ageCode = error?.takeIf { it.status == 403 }?.code?.takeIf { it == AgeCheck.BLOCKED || it == AgeCheck.UNCONFIRMED }
+        if (stillCurrent && ageCode != null) onAgeGate(ageCode)
         return result
     }
 
@@ -521,7 +541,7 @@ class JudgeApi(
             val parsed = WireJson.decodeErrorBody(body)
             if (parsed != null) {
                 return UiError.Api(
-                    code = parsed.code,
+                    code = AgeCheck.errorCode(status, parsed.code, parsed.error) ?: parsed.code,
                     status = status,
                     retryAfterSec = parsed.retryAfterSec ?: header,
                     resetsAt = parsed.resetsAt,

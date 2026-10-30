@@ -56,6 +56,7 @@ import com.okjudge.judge.core.auth.Account
 import com.okjudge.judge.core.auth.SignInError
 import com.okjudge.judge.i18n.LocalStrings
 import com.okjudge.judge.i18n.Strings
+import com.okjudge.judge.ui.age.AgeCheckbox
 import com.okjudge.judge.ui.components.PrimaryButton
 import com.okjudge.judge.ui.components.TextAction
 import com.okjudge.judge.ui.components.TopBar
@@ -84,12 +85,15 @@ data class SignInActions(
     val onResend: () -> Unit = {},
     val onChangeEmail: () -> Unit = {},
     val onRetryProviders: () -> Unit = {},
+    val onAgeTicked: (Boolean) -> Unit = {},
+    val onOpenTerms: () -> Unit = {},
     val onOpenPrivacy: () -> Unit = {},
 )
 
 /**
- * Sign-in: Google and/or an emailed code, whichever the server offers, and
- * the consent line for the outside AI at the bottom.
+ * Sign-in: Google and/or an emailed code, whichever the server offers, the
+ * 18+ checkbox above them unless the phone already said 18+, and the consent
+ * line for the outside AI at the bottom.
  */
 @Composable
 fun SignInScreen(
@@ -120,8 +124,11 @@ fun SignInScreen(
                     is Account.Providers.Ready -> if (state.noneAvailable) {
                         Unavailable(s, onRetry = actions.onRetryProviders)
                     } else {
+                        if (state.ageNeeded && state.step == SignInStep.EMAIL) {
+                            AgeCheckbox(state.ageTicked, actions.onAgeTicked, Modifier.padding(bottom = 14.dp), enabled = state.busy == null)
+                        }
                         if (state.showGoogle) {
-                            GoogleButton(s.signinGoogle, enabled = state.busy == null, onClick = actions.onGoogle)
+                            GoogleButton(s.signinGoogle, enabled = state.canGoogle, onClick = actions.onGoogle)
                         }
                         if (state.showGoogle && state.showEmail) OrDivider(s.appSigninOr)
                         if (state.showEmail) {
@@ -135,7 +142,7 @@ fun SignInScreen(
 
                 state.error?.let { ErrorNote(errorText(s, it)) }
 
-                LegalLine(s, actions.onOpenPrivacy, Modifier.padding(top = 32.dp))
+                LegalLine(s, actions.onOpenTerms, actions.onOpenPrivacy, Modifier.padding(top = 32.dp))
             }
         }
     }
@@ -301,17 +308,20 @@ private fun ErrorNote(text: String) {
     )
 }
 
-/** "An outside AI reads your arguments. By continuing you agree to the Privacy Policy." with the link tappable. */
+/** "An outside AI reads your arguments. By continuing you agree to the Terms and Privacy Policy." with both links tappable. */
 @Composable
-private fun LegalLine(s: Strings, onOpenPrivacy: () -> Unit, modifier: Modifier = Modifier) {
+private fun LegalLine(s: Strings, onOpenTerms: () -> Unit, onOpenPrivacy: () -> Unit, modifier: Modifier = Modifier) {
     val linkStyle = TextLinkStyles(SpanStyle(color = Palette.terraInk, textDecoration = TextDecoration.Underline))
     val text = buildAnnotatedString {
-        append(s.signinLegal)
-        append(" ")
-        withLink(LinkAnnotation.Clickable(tag = "privacy", styles = linkStyle) { onOpenPrivacy() }) {
-            append(s.signinLegalLink)
+        append(s.appSigninLegal)
+        withLink(LinkAnnotation.Clickable(tag = "terms", styles = linkStyle) { onOpenTerms() }) {
+            append(s.appSigninLegalTerms)
         }
-        append(s.signinLegalAfter)
+        append(s.appSigninLegalAnd)
+        withLink(LinkAnnotation.Clickable(tag = "privacy", styles = linkStyle) { onOpenPrivacy() }) {
+            append(s.appSigninLegalPrivacy)
+        }
+        append(s.appSigninLegalAfter)
     }
     Text(
         text,

@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.okjudge.judge.core.auth.Account
+import com.okjudge.judge.core.auth.AgeCheck
 import com.okjudge.judge.core.auth.SignInError
 import com.okjudge.judge.core.auth.SignInResult
 import com.okjudge.judge.i18n.AppLang
@@ -26,6 +27,9 @@ data class SignInUiState(
     val error: SignInError? = null,
     /** Signed in: the screen hands over to where the user was going. */
     val done: Boolean = false,
+    /** The "I'm 18 or older" box, required unless the phone already said 18+. */
+    val ageNeeded: Boolean = true,
+    val ageTicked: Boolean = false,
 ) {
     private val providerFlags get() = (providers as? Account.Providers.Ready)?.config?.signIn
 
@@ -34,7 +38,9 @@ data class SignInUiState(
     val showEmail: Boolean get() = providerFlags?.emailCode == true
     val noneAvailable: Boolean get() = providers is Account.Providers.Ready && !showGoogle && !showEmail
 
-    val canRequestCode: Boolean get() = busy == null && email.isNotBlank()
+    val ageOk: Boolean get() = !ageNeeded || ageTicked
+    val canGoogle: Boolean get() = busy == null && ageOk
+    val canRequestCode: Boolean get() = busy == null && ageOk && email.isNotBlank()
     val canSubmitCode: Boolean get() = busy == null && code.length == CODE_LENGTH
 
     companion object {
@@ -49,6 +55,8 @@ class SignInViewModel(private val account: Account) : ViewModel() {
 
     init {
         viewModelScope.launch { account.providers.collect { p -> _state.update { it.copy(providers = p) } } }
+        viewModelScope.launch { account.platformAge.collect { p -> _state.update { it.copy(ageNeeded = AgeCheck.needsCheckbox(p)) } } }
+        viewModelScope.launch { account.ageTicked.collect { t -> _state.update { it.copy(ageTicked = t) } } }
         account.loadProviders()
     }
 
@@ -57,6 +65,8 @@ class SignInViewModel(private val account: Account) : ViewModel() {
     fun onEmailChange(text: String) {
         _state.update { it.copy(email = text.take(MAX_EMAIL), error = null) }
     }
+
+    fun onAgeTicked(ticked: Boolean) = account.setAgeTicked(ticked)
 
     fun onCodeChange(text: String) {
         val digits = text.filter { it in '0'..'9' }.take(SignInUiState.CODE_LENGTH)
@@ -104,7 +114,7 @@ class SignInViewModel(private val account: Account) : ViewModel() {
 
     /** [host] is the Activity the account picker attaches to. */
     fun google(host: Context) {
-        if (_state.value.busy != null) return
+        if (!_state.value.canGoogle) return
         _state.update { it.copy(busy = SignInBusy.GOOGLE, error = null) }
         viewModelScope.launch { finish(account.signInWithGoogle(host)) }
     }

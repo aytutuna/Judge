@@ -3,6 +3,7 @@ package com.okjudge.judge.core.purchases
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
 import com.okjudge.judge.core.auth.Account
+import com.okjudge.judge.core.auth.AgeCheck
 import com.okjudge.judge.core.model.Entitlement
 import com.okjudge.judge.core.model.MeResponse
 import com.okjudge.judge.core.model.SubscriptionView
@@ -79,6 +80,7 @@ class PurchaseControllerTest {
     private val gateway = FakeGateway()
     private val account = MutableStateFlow<Account.State>(Account.State.SignedIn())
     private var refreshes = 0
+    private var ageRefusal: String? = null
 
     /** What the next /me reads return, by call number (1-based); unchanged otherwise. */
     private var onRefresh: (Int) -> Unit = {}
@@ -103,6 +105,7 @@ class PurchaseControllerTest {
                 onRefresh(refreshes)
             },
             scope = backgroundScope,
+            ageRefusal = { ageRefusal },
         )
 
     /** Started and logged in as u1, with the offers loaded. */
@@ -114,6 +117,22 @@ class PurchaseControllerTest {
         assertTrue(c.isReady())
         gateway.calls.clear()
         return c
+    }
+
+    @Test
+    fun buying_waitsForTheAgeCheck() = runTest {
+        val c = ready()
+        ageRefusal = AgeCheck.UNCONFIRMED
+        assertNull(c.buy(context, "pack_10"))
+        assertEquals(Notice.AGE_UNCONFIRMED, c.state.value.notice)
+        ageRefusal = AgeCheck.BLOCKED
+        assertNull(c.buy(context, "pack_10"))
+        assertEquals(Notice.AGE_BLOCKED, c.state.value.notice)
+        assertTrue(gateway.calls.none { it.startsWith("purchase") })
+        ageRefusal = null
+        assertNotNull(c.buy(context, "pack_10"))
+        settle()
+        assertTrue("purchase:pack_10" in gateway.calls)
     }
 
     @Test

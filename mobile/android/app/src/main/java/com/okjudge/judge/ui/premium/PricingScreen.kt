@@ -44,6 +44,7 @@ import com.okjudge.judge.i18n.LocalStrings
 import com.okjudge.judge.ui.components.JudgeIcons
 import com.okjudge.judge.ui.components.Kicker
 import com.okjudge.judge.ui.components.PrimaryButton
+import com.okjudge.judge.ui.components.TextAction
 import com.okjudge.judge.ui.components.TintedIcon
 import com.okjudge.judge.ui.components.rememberIcon
 import com.okjudge.judge.ui.components.TopBar
@@ -56,6 +57,8 @@ object PricingTags {
     const val BUY = "pricing.buy"
     const val SIGN_IN = "pricing.signIn"
     const val NOTICE = "pricing.notice"
+    const val TERMS = "pricing.terms"
+    const val PRIVACY = "pricing.privacy"
 }
 
 /**
@@ -95,6 +98,8 @@ fun PricingScreen(
     modifier: Modifier = Modifier,
     store: StoreUi = StoreUi(),
     onBuy: (productId: String) -> Unit = {},
+    onOpenTerms: () -> Unit = {},
+    onOpenPrivacy: () -> Unit = {},
 ) {
     val s = LocalStrings.current
     val lang = LocalLang.current
@@ -191,13 +196,17 @@ fun PricingScreen(
                         PurchaseController.Notice.ARRIVED -> s.appPurchaseSuccess
                         PurchaseController.Notice.SLOW -> "${s.appPurchaseSuccess} ${s.appPurchaseSlow}"
                         PurchaseController.Notice.FAILED -> s.appPurchaseFailed
+                        PurchaseController.Notice.AGE_UNCONFIRMED -> s.appAgeRequired
+                        PurchaseController.Notice.AGE_BLOCKED -> s.appAgeBlockedTitle
                         null -> if (store.subscriptionPending && signedIn) s.appPurchasePending else null
                     }
                     if (notice != null) {
                         PurchaseNotice(
                             text = notice,
                             working = store.notice == PurchaseController.Notice.ARRIVING,
-                            failed = store.notice == PurchaseController.Notice.FAILED,
+                            failed = store.notice == PurchaseController.Notice.FAILED ||
+                                store.notice == PurchaseController.Notice.AGE_UNCONFIRMED ||
+                                store.notice == PurchaseController.Notice.AGE_BLOCKED,
                         )
                     }
 
@@ -225,6 +234,14 @@ fun PricingScreen(
                 val storeSelling = storeOn && signedIn && store.offers.isNotEmpty()
                 if (!storeSelling) {
                     Text(s.pricingNote, style = JudgeType.footnote, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth())
+                }
+                Text(s.appPricingAutoRenew, style = JudgeType.footnote, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth())
+                Row(
+                    Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(20.dp, Alignment.CenterHorizontally),
+                ) {
+                    TextAction(s.appLegalTerms, onClick = onOpenTerms, modifier = Modifier.testTag(PricingTags.TERMS))
+                    TextAction(s.appLegalPrivacy, onClick = onOpenPrivacy, modifier = Modifier.testTag(PricingTags.PRIVACY))
                 }
             }
         }

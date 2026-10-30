@@ -5,6 +5,7 @@ import com.okjudge.judge.core.api.ApiResult
 import com.okjudge.judge.core.api.JudgeApi
 import com.okjudge.judge.core.api.TokenStore
 import com.okjudge.judge.core.display.UiError
+import com.okjudge.judge.core.model.AgeStatus
 import com.okjudge.judge.core.model.Entitlement
 import com.okjudge.judge.core.model.MeResponse
 import com.okjudge.judge.core.model.ServerConfig
@@ -17,11 +18,15 @@ import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlinx.coroutines.withTimeoutOrNull
 
 /** Why a sign-in step failed, resolved to copy on the sign-in screen. */
 enum class SignInError {
@@ -51,6 +56,10 @@ sealed interface SignInResult {
  *
  * The token lives in [tokens]; [JudgeApi] reads it for every call. Local
  * verdict history is never touched here.
+ *
+ * It also runs the 18+ check: the phone's age signal ([ageSignals]) when
+ * there is one, else the checkbox, reported to the server once the account
+ * is known. [ageGate] is what the app shows for it.
  */
 class Account(
     private val api: JudgeApi,
@@ -58,6 +67,9 @@ class Account(
     private val google: GoogleIdTokenSource,
     private val scope: CoroutineScope,
     private val io: CoroutineDispatcher = Dispatchers.IO,
+    private val ageSignals: AgeSignalSource = AgeSignalSource.None,
+    /** A phone that hasn't answered by then counts as unknown, so the checkbox can take over. */
+    private val platformTimeoutMs: Long = 10_000,
 ) {
     sealed interface State {
         data object SignedOut : State
@@ -96,6 +108,33 @@ class Account(
     private val _working = MutableStateFlow(false)
     val working: StateFlow<Boolean> = _working.asStateFlow()
 
+    /** The last deletion failed; the age cover shows it, since the snackbar sits under it. */
+    private val _deleteFailed = MutableStateFlow(false)
+    val deleteFailed: StateFlow<Boolean> = _deleteFailed.asStateFlow()
+
+    /** The phone's answer, asked at most once per run; null until it answered. */
+    private val _platformAge = MutableStateFlow<PlatformAge?>(null)
+    val platformAge: StateFlow<PlatformAge?> = _platformAge.asStateFlow()
+    private var askingPlatform = false
+
+    /** The "I'm 18 or older" checkbox, on the sign-in screen and the sheet alike. */
+    private val _ageTicked = MutableStateFlow(false)
+    val ageTicked: StateFlow<Boolean> = _ageTicked.asStateFlow()
+
+    /** A POST /api/v1/me/age is in flight. */
+    private val _agePosting = MutableStateFlow(false)
+    /** A report came up while another was in flight: settle again once it is done. */
+    private var ageResettle = false
+    val agePosting: StateFlow<Boolean> = _agePosting.asStateFlow()
+
+    /** Why the last report failed; the sheet shows it. */
+    private val _ageError = MutableStateFlow<UiError?>(null)
+    val ageError: StateFlow<UiError?> = _ageError.asStateFlow()
+
+    val ageGate: StateFlow<AgeGate> = combine(_state, _platformAge, _agePosting) { state, platform, posting ->
+        AgeCheck.gate(platform, state is State.SignedIn, (state as? State.SignedIn)?.me?.age, posting)
+    }.stateIn(scope, SharingStarted.Eagerly, AgeGate.NONE)
+
     /** Loads /api/v1/config unless it is already known (or [force]). */
     fun loadProviders(force: Boolean = false) {
         if (!force && _providers.value is Providers.Ready) return
@@ -121,7 +160,10 @@ class Account(
                 expire()
             } else {
                 tokens.setUser(res.value.user.id)
-                if (_state.value is State.SignedIn) _state.value = State.SignedIn(res.value)
+                if (_state.value is State.SignedIn) {
+                    _state.value = State.SignedIn(res.value)
+                    settleAge()
+                }
             }
             is ApiResult.Err -> {
                 val current = _state.value as? State.SignedIn ?: return
@@ -140,6 +182,104 @@ class Account(
         val me = current.me ?: return
         if (me.user == null) return
         _state.value = current.copy(me = me.copy(entitlement = entitlement))
+    }
+
+    fun setAgeTicked(ticked: Boolean) {
+        _ageTicked.value = ticked
+        _ageError.value = null
+    }
+
+    /**
+     * Whether the phone should be asked now: not asked yet, and either the
+     * sign-in screen is up ([onSignIn]) or the signed-in account still has
+     * to confirm. A confirmed account is not asked again.
+     */
+    fun needsPlatformAge(onSignIn: Boolean): Boolean {
+        if (_platformAge.value != null || askingPlatform) return false
+        return when (val state = _state.value) {
+            State.SignedOut -> onSignIn
+            is State.SignedIn -> state.me?.age?.let { !it.confirmed && !it.blocked } == true
+        }
+    }
+
+    /** Asks the phone's age signal; [host] is the Activity its prompt may attach to. */
+    fun checkPlatformAge(host: Context) {
+        if (_platformAge.value != null || askingPlatform) return
+        askingPlatform = true
+        scope.launch {
+            val answer = try {
+                withTimeoutOrNull(platformTimeoutMs) { ageSignals.check(host) } ?: PlatformAge.UNKNOWN
+            } finally {
+                askingPlatform = false
+            }
+            _platformAge.value = answer
+            settleAge()
+        }
+    }
+
+    /**
+     * Why a verdict or a purchase has to wait, or null when nothing about age
+     * stands in the way: [AgeCheck.BLOCKED] for under 18 or a blocked account,
+     * [AgeCheck.UNCONFIRMED] while unconfirmed or while the phone's check or
+     * a report is still running. A server without the age check sends no age.
+     */
+    fun ageRefusal(): String? {
+        val age = (_state.value as? State.SignedIn)?.me?.age
+        return when {
+            _platformAge.value == PlatformAge.MINOR || age?.blocked == true -> AgeCheck.BLOCKED
+            age == null -> null
+            askingPlatform || _agePosting.value || !age.confirmed -> AgeCheck.UNCONFIRMED
+            else -> null
+        }
+    }
+
+    /** The sheet's "Continue": confirms 18+ for the signed-in account. */
+    suspend fun confirmAge() {
+        if (!_ageTicked.value && _platformAge.value != PlatformAge.ADULT) return
+        postAge(AgeCheck.confirmation(_platformAge.value))
+    }
+
+    /** JudgeApi saw a 403 age error: the account on screen is behind, so show what the server asks for. */
+    fun onAgeGate(code: String) {
+        val current = _state.value as? State.SignedIn ?: return
+        val me = current.me ?: return
+        val age = me.age ?: AgeStatus()
+        val updated = if (code == AgeCheck.BLOCKED) age.copy(blocked = true) else age.copy(confirmed = false)
+        _state.value = current.copy(me = me.copy(age = updated))
+        scope.launch { settleAge() }
+    }
+
+    /** Tells the server what is known: the phone's answer, or the box ticked before signing in. */
+    private suspend fun settleAge() {
+        val me = (_state.value as? State.SignedIn)?.me ?: return
+        val report = AgeCheck.report(_platformAge.value, me.age, _ageTicked.value) ?: return
+        postAge(report)
+    }
+
+    private suspend fun postAge(report: AgeCheck.Report) {
+        if (!_agePosting.compareAndSet(expect = false, update = true)) {
+            ageResettle = true
+            return
+        }
+        val asked = tokens.get()
+        try {
+            _ageError.value = null
+            val res = api.reportAge(report.adult, report.source)
+            if (tokens.get() != asked) return
+            val current = _state.value as? State.SignedIn ?: return
+            val me = current.me ?: return
+            when (res) {
+                is ApiResult.Ok -> _state.value = current.copy(me = me.copy(age = res.value))
+                // A 403 age error already updated the account through onAgeGate.
+                is ApiResult.Err -> if (!AgeCheck.isAgeError(res.error)) _ageError.value = res.error
+            }
+        } finally {
+            _agePosting.value = false
+        }
+        if (ageResettle) {
+            ageResettle = false
+            settleAge()
+        }
     }
 
     suspend fun signInWithGoogle(host: Context): SignInResult =
@@ -167,13 +307,17 @@ class Account(
         }
 
     private suspend fun complete(grant: SessionGrant): SignInResult {
+        // The verdict waiting behind sign-in needs the age on record first, so
+        // the box ticked (or the phone's 18+) is reported before "signed in".
+        val reportsAge = _ageTicked.value || _platformAge.value == PlatformAge.ADULT
         // Stored token and state change together, even if the screen goes away now.
         withContext(NonCancellable) {
             withContext(io) { tokens.set(grant.token) }
             _state.value = State.SignedIn()
+            if (reportsAge) refresh()
             onSignedIn()
         }
-        refreshInBackground()
+        if (!reportsAge) refreshInBackground()
         return SignInResult.Success
     }
 
@@ -191,6 +335,7 @@ class Account(
     /** Deletes the account; true when the server confirmed. */
     suspend fun deleteAccount(): Boolean {
         if (!_working.compareAndSet(expect = false, update = true)) return false
+        _deleteFailed.value = false
         try {
             val res = api.deleteAccount()
             val deleted = when {
@@ -207,7 +352,10 @@ class Account(
             }
             // An expired session was already handled (and announced) by onSessionExpired.
             val error = (res as? ApiResult.Err)?.error
-            if (error == null || !error.isSigninRequired()) _notices.trySend(Notice.DELETE_FAILED)
+            if (error == null || !error.isSigninRequired()) {
+                _deleteFailed.value = true
+                _notices.trySend(Notice.DELETE_FAILED)
+            }
             return false
         } finally {
             _working.value = false
@@ -220,15 +368,23 @@ class Account(
     private fun expire() {
         val wasSignedIn = _state.value is State.SignedIn
         tokens.clear()
+        forgetAgeAnswers()
         _state.value = State.SignedOut
         if (wasSignedIn) _notices.trySend(Notice.SESSION_EXPIRED)
     }
 
     private suspend fun endLocally(notice: Notice) {
         withContext(io) { tokens.clear() }
+        forgetAgeAnswers()
         _state.value = State.SignedOut
         onEndedByUser()
         _notices.trySend(notice)
+    }
+
+    /** The next person to sign in on this phone ticks the box for themselves; the phone's own answer stays. */
+    private fun forgetAgeAnswers() {
+        _ageTicked.value = false
+        _ageError.value = null
     }
 
     companion object {

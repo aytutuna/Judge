@@ -2,6 +2,7 @@ package com.okjudge.judge.core.purchases
 
 import android.content.Context
 import com.okjudge.judge.core.auth.Account
+import com.okjudge.judge.core.auth.AgeCheck
 import com.okjudge.judge.core.model.Entitlement
 import com.okjudge.judge.core.model.SubscriptionView
 import kotlinx.coroutines.CoroutineScope
@@ -34,6 +35,8 @@ class PurchaseController(
     private val pollDelaysMs: List<Long> = POLL_DELAYS_MS,
     /** Told when the store reports a completed purchase (not a pending one). */
     private val onBought: () -> Unit = {},
+    /** Why the age check holds purchases back (Account.ageRefusal), or null. */
+    private val ageRefusal: () -> String? = { null },
 ) {
     /** The purchase message on the pricing screen. */
     enum class Notice {
@@ -44,6 +47,10 @@ class PurchaseController(
         /** Bought, but /me did not show it within the polling window. */
         SLOW,
         FAILED,
+        /** Refused before the store: the account hasn't confirmed 18+ yet. */
+        AGE_UNCONFIRMED,
+        /** Refused before the store: under 18, or the account is blocked. */
+        AGE_BLOCKED,
     }
 
     enum class RestoreNotice { DONE, NONE, FAILED }
@@ -148,6 +155,15 @@ class PurchaseController(
         val gateway = gateway ?: return null
         val current = _state.value
         if (current.buying != null || !isReady(current) || productId !in current.offers) return null
+        val refused = when (ageRefusal()) {
+            AgeCheck.BLOCKED -> Notice.AGE_BLOCKED
+            AgeCheck.UNCONFIRMED -> Notice.AGE_UNCONFIRMED
+            else -> null
+        }
+        if (refused != null) {
+            _state.update { it.copy(notice = refused) }
+            return null
+        }
         _state.update { it.copy(buying = productId, notice = null) }
         val before = grantOf(accountState.value)
         return scope.launch {

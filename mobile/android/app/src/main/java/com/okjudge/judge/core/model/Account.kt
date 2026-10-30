@@ -84,11 +84,16 @@ data class Entitlement(
     val isPremium: Boolean get() = subscription != null || credits > 0
 }
 
-/** GET /api/v1/me. Both null when the request carried no valid session. */
+/** `age` of GET /api/v1/me and the answer of POST /api/v1/me/age. A block never lifts. */
+@Serializable
+data class AgeStatus(val confirmed: Boolean = false, val blocked: Boolean = false)
+
+/** GET /api/v1/me. Both null when the request carried no valid session; [age] null from a server without the age check. */
 @Serializable
 data class MeResponse(
     val user: Viewer? = null,
     val entitlement: Entitlement? = null,
+    val age: AgeStatus? = null,
 )
 
 /** The `{token, user}` body of a successful Better Auth sign-in. */

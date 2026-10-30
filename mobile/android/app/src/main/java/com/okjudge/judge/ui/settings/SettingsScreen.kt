@@ -158,6 +158,8 @@ fun SettingsScreen(
                 LinkRow(s.howTitle) { onOpenLink("$base/about#how") }
                 HorizontalDivider(color = Palette.line)
                 LinkRow(s.footerPrivacy) { onOpenLink("$base/privacy") }
+                HorizontalDivider(color = Palette.line)
+                LinkRow(s.appLegalTerms) { onOpenLink("$base/terms") }
             }
 
             Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxWidth().padding(bottom = 24.dp)) {
