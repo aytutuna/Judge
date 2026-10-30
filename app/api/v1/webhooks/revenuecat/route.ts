@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { track } from "@/lib/analytics/track";
 import { apiErrorBody, type ApiErrorCode } from "@/lib/api-errors";
 import { authConfigured, findExistingUserId } from "@/lib/auth";
 import { clientIp } from "@/lib/client-ip";
@@ -118,6 +119,9 @@ export async function POST(req: Request): Promise<NextResponse> {
       event = outcome.event;
     }
     const { applied } = await applyStoreEvent(event);
+    if (applied && "productId" in event) {
+      void track("purchase_granted", { userId: event.userId, props: { product: event.productId, source: event.source } });
+    }
     console.info(`[revenuecat] type=${type} id=${id} action=${event.type} source=${event.source} applied=${applied}`);
     return NextResponse.json({ ok: true, applied, action: event.type }, { headers: NO_STORE });
   } catch (e) {

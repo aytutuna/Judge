@@ -30,6 +30,7 @@ import {
 import { ensureOriginalsTables } from "@/lib/originals/db";
 import { caseOriginalStatement, sealCaseDisplay } from "@/lib/originals/save";
 import type { OriginalPayload } from "@/lib/originals-types";
+import { track } from "@/lib/analytics/track";
 import { AnonymizeError } from "@/lib/anonymize";
 import {
   anonymizeSubmission,
@@ -278,6 +279,7 @@ export async function createCase(input: CreateCaseInput): Promise<CreateCaseResu
   }
   const row = await getCase(caseId);
   if (!row) return { ok: false, code: "unavailable" };
+  void track("case_created", { userId: input.ownerId, props: { mode: row.mode ?? "two_sided" } });
   return { ok: true, row, nameMap: sub.nameMap, replayed: false };
 }
 

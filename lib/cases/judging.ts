@@ -14,6 +14,7 @@
  */
 
 import { nanoid } from "nanoid";
+import { track } from "@/lib/analytics/track";
 import type { CaseMode } from "@/lib/case-types";
 import { claudeJson, LITE_MODEL, withUsageMeter, type UsageTotals } from "@/lib/claude";
 import type { InStatement } from "@libsql/client";
@@ -305,6 +306,7 @@ export async function runCaseJudging(
     const code = outcome?.status === "failed" ? outcome.code : "unavailable";
     console.error("[cases] judging failed:", outcome?.status === "failed" ? outcome.error : run.error);
     run.log(null, code);
+    void track("verdict_failed", { userId: row.ownerId, props: { kind: "case", mode, code } });
     return fail(code);
   }
 
@@ -362,6 +364,7 @@ export async function runCaseJudging(
     return;
   }
   run.log(verdictId, outcome.refused ? "refused" : outcome.degraded ? "degraded" : "ok");
+  void track("verdict_ready", { userId: row.ownerId, props: { kind: "case", mode } });
   if (twoSided) await notifyOwnerCaseReady(row, origin);
 }
 
