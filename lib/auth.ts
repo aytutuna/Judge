@@ -363,6 +363,10 @@ function buildOptions(env: Env, secret: string, client: Awaited<ReturnType<typeo
       session: {
         create: {
           before: async (session) => ({ data: { ...session, ipAddress: null, userAgent: null } }),
+          after: async (session, context) => {
+            const { noteSignIn } = await import("./analytics/devices");
+            await noteSignIn(session.userId, context?.headers ?? context?.request?.headers);
+          },
         },
       },
       // Provider access/refresh/ID tokens are never written to the account

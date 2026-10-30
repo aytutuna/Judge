@@ -609,6 +609,10 @@ taken out of the text; the same request can be retried, e.g. with initials), plu
 - Both answer `200 { "redirect": false, "token": "<session token>", "user": { … } }`
   (also in the `set-auth-token` header); keep the token in the device's secure
   storage. An invalid ID token answers `401 { "code": "INVALID_TOKEN" }`.
+- **Device:** send `Device-Id` (the app's install id, 8 to 64 letters, digits,
+  `-` or `_`) and `Device-Platform` (`ios` or `android`) on every sign-in
+  request. The server notes which devices each account uses, to spot one
+  device behind many accounts; it never refuses a sign-in for it.
 - **Session:** `GET /api/v1/me`. **Sign out:** `POST /api/auth/sign-out` with
   the bearer token. Sessions last 30 days and slide forward with use.
 - **Dead tokens:** a bearer token that matches no live session (unknown,
@@ -1000,6 +1004,7 @@ limit within 5 minutes:
 | `entitlement_refused` | 3 | a finished verdict's save and credit settlement was refused because the job was no longer judging |
 | `provider_rate` | 10 | the AI service answers 429 |
 | `provider_down` | 5 | the AI service answers 5xx, cannot be reached or times out |
+| `many_accounts_per_device` | 1 | a device (the app's `Device-Id` header at sign-in) signs in to its third or later account; sign-in goes ahead |
 | `ban` | 20 | fail2ban bans an address (from fail2ban's journal) |
 
 Change a limit with `ALERT_SIGNAL_<NAME>=n` in the env file, e.g.
@@ -1007,9 +1012,10 @@ Change a limit with `ALERT_SIGNAL_<NAME>=n` in the env file, e.g.
 `journalctl -u verdict --since -1h | grep 'signal:'`.
 
 Signal alerts are not critical. The ones strangers can set off at will
-(`rate_limited`, `bad_origin`, `bearer_401` and `webhook_bad_secret`) come by
-email only; set `ALERT_SIGNALS_PUSH=1` in the env file to get them on the phone
-too. Without `ALERT_EMAIL` they are only logged.
+(`rate_limited`, `bad_origin`, `bearer_401`, `webhook_bad_secret` and
+`many_accounts_per_device`) come by email only; set `ALERT_SIGNALS_PUSH=1` in
+the env file to get them on the phone too. Without `ALERT_EMAIL` they are only
+logged.
 
 fail2ban is installed by `setup.sh` with its standard SSH jail (an address
 that fails 5 logins in 10 minutes is blocked for 10 minutes) and logs to the

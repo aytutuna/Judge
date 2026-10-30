@@ -36,6 +36,9 @@ const LOCALE = /^[A-Za-z]{2,3}([_-][0-9A-Za-z]{2,8}){0,3}$/;
 export const PLATFORMS = ["ios", "android", "web"] as const;
 export type ClientPlatform = (typeof PLATFORMS)[number];
 
+export const isDeviceId = (id: string) => DEVICE_ID.test(id);
+export const isClientPlatform = (p: string): p is ClientPlatform => (PLATFORMS as readonly string[]).includes(p);
+
 export type Props = Record<string, string | number | boolean>;
 
 /** Why these props cannot be stored, or null when they can. */

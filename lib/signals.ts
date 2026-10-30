@@ -13,7 +13,8 @@ export type Signal =
   | "webhook_apply_failed"
   | "entitlement_refused"
   | "provider_rate"
-  | "provider_down";
+  | "provider_down"
+  | "many_accounts_per_device";
 
 export function signal(name: Signal, detail?: string): void {
   console.warn(detail ? `[signal:${name}] ${detail}` : `[signal:${name}]`);

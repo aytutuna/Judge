@@ -1,6 +1,6 @@
 /**
- * Product analytics: usage events from the apps, the website and the server.
- * Server only.
+ * Product analytics: usage events from the apps, the website and the server,
+ * and which devices each account signs in from. Server only.
  *
  * Events never hold user text, names, emails, IP addresses or user agents:
  * names and props are checked in ./validate before anything is written, and
@@ -36,6 +36,16 @@ const SCHEMA = [
   )`,
   "CREATE INDEX IF NOT EXISTS events_at ON events (at)",
   "CREATE INDEX IF NOT EXISTS events_user ON events (user_id, at) WHERE user_id IS NOT NULL",
+  `CREATE TABLE IF NOT EXISTS account_devices (
+    user_id     TEXT NOT NULL,
+    device_id   TEXT NOT NULL,
+    platform    TEXT NOT NULL CHECK (platform IN ('ios','android','web')),
+    country     TEXT,
+    first_seen  INTEGER NOT NULL,
+    last_seen   INTEGER NOT NULL,
+    PRIMARY KEY (user_id, device_id)
+  )`,
+  "CREATE INDEX IF NOT EXISTS account_devices_device ON account_devices (device_id)",
 ];
 
 const globalForAnalytics = globalThis as unknown as {
