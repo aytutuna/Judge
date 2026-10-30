@@ -129,7 +129,9 @@ final class Analytics {
     func setServerOn(_ on: Bool) {
         serverOn = on
         if on {
-            Task { await flush() }
+            // Only with something waiting: an idle flush task can otherwise run
+            // later and send a batch smaller than the one being built.
+            if !queue.isEmpty { Task { await flush() } }
         } else {
             clear()
         }
@@ -247,6 +249,7 @@ final class Analytics {
             nextSeq = queue.count + 1
         }
         save()
+        if serverOn == true, !queue.isEmpty { Task { await flush() } }
     }
 
     private func save() {

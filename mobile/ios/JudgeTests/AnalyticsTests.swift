@@ -115,8 +115,8 @@ final class AnalyticsTests: XCTestCase {
     func testTwentyQueuedEventsSendThemselves() async {
         let transport = StubTransport()
         let analytics = make(transport)
+        // With nothing queued this starts no flush, so none is left to send the first 19.
         analytics.setServerOn(true)
-        await analytics.flush()
         for _ in 0..<19 { analytics.track("question_answered") }
         await Task.yield()
         XCTAssertTrue(transport.batches.isEmpty)
