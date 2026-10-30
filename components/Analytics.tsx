@@ -1,14 +1,15 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { useEffect } from "react";
-import { setAnalytics, signInCompleted, track } from "@/lib/analytics/client";
+import { useEffect, useRef } from "react";
+import { isTracking, setAnalytics, signInCompleted, track } from "@/lib/analytics/client";
 import { useViewer } from "@/lib/use-viewer";
 
 const SCREENS: [RegExp, string][] = [
   [/^\/$/, "home"],
   [/^\/(c|r)(\/|$)/, "case_detail"],
   [/^\/verdicts$/, "verdicts"],
+  [/^\/v\//, "verdict"],
   [/^\/account$/, "settings"],
   [/^\/pricing$/, "pricing"],
   [/^\/signin$/, "sign_in"],
@@ -22,16 +23,19 @@ export function Analytics() {
   const { status, config, me } = useViewer();
   const signedIn = Boolean(me?.user);
   const on = config?.features?.analytics === true;
+  const known = status === "ready" || status === "error";
+  const lastPath = useRef<string | null>(null);
 
   useEffect(() => {
-    if (status === "ready" || status === "error") setAnalytics(on);
-  }, [status, on]);
+    if (known) setAnalytics(on);
+  }, [known, on]);
 
   useEffect(() => {
     if (signedIn) signInCompleted();
   }, [signedIn]);
 
   useEffect(() => {
+    if (!known || !isTracking()) return;
     // One flag per tab session, not an identifier.
     try {
       if (sessionStorage.getItem("app_open")) return;
@@ -40,9 +44,11 @@ export function Analytics() {
       return;
     }
     track("app_open");
-  }, []);
+  }, [known]);
 
   useEffect(() => {
+    if (lastPath.current === pathname) return;
+    lastPath.current = pathname;
     const screen = SCREENS.find(([re]) => re.test(pathname))?.[1];
     if (screen) track("screen_view", { screen });
   }, [pathname]);

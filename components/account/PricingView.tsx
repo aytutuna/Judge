@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { track } from "@/lib/analytics/client";
 import type { Entitlement, PricingInfo } from "@/lib/account-types";
 import { t, tWithDate, type Key, type Lang } from "@/lib/i18n";
 import { useLang } from "@/lib/lang";
@@ -73,13 +72,9 @@ export function PricingTable({
   entitlement,
   features = null,
 }: PricingTableProps) {
-  const buy = (label: string, product: string) => (
-    <button
-      type="button"
-      className={`${styles.btn} ${styles.secondary}`}
-      disabled
-      onClick={() => track("buy_tapped", { product })}
-    >
+  const buy = (label: string) => (
+    // TODO: wire buy_tapped when purchases open.
+    <button type="button" className={`${styles.btn} ${styles.secondary}`} disabled>
       {pricing.purchasesEnabled ? label : t(lang, "pricing.comingSoon")}
     </button>
   );
@@ -117,7 +112,7 @@ export function PricingTable({
                   {t(lang, "pricing.perVerdict", { price: formatPrice(p.priceUsd / p.credits, lang) })}
                 </p>
                 <span className={styles.offerPrice}>{formatPrice(p.priceUsd, lang)}</span>
-                {buy(formatPrice(p.priceUsd, lang), `pack_${p.credits}`)}
+                {buy(formatPrice(p.priceUsd, lang))}
               </li>
             ))}
           </ul>
@@ -130,7 +125,7 @@ export function PricingTable({
               </p>
               <p className={styles.offerMeta}>{t(lang, "pricing.monthly.renews")}</p>
               <span className={styles.offerPrice}>{formatPrice(pricing.monthly.priceUsd, lang)}</span>
-              {buy(formatPrice(pricing.monthly.priceUsd, lang), "monthly")}
+              {buy(formatPrice(pricing.monthly.priceUsd, lang))}
             </li>
           </ul>
           {premiumEnabled && !signedIn && signInOffered ? (

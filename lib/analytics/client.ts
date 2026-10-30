@@ -2,7 +2,8 @@
  * Browser side of the usage events (POST /api/v1/events, see ./track.ts).
  * The website keeps no identifier: no anon_id, no device_id, nothing in
  * storage. Events are linked to an account only through the session cookie
- * the browser sends anyway.
+ * the browser sends anyway. The only thing kept in sessionStorage is a
+ * couple of per-tab flags.
  */
 
 // Set from package.json in next.config.ts.
@@ -73,16 +74,33 @@ export function setAnalytics(on: boolean): void {
   if (queue.length >= FLUSH_AT) flush();
 }
 
+/** False once analytics is known to be off or the visitor opted out. */
+export function isTracking(): boolean {
+  return enabled !== false && !optedOut();
+}
+
 export function track(name: string, props?: EventProps): void {
-  if (enabled === false || optedOut() || !EVENTS.has(name)) return;
-  if (props && !propsOk(name, props)) return;
-  if (queue.length >= MAX_QUEUE) queue.shift();
-  queue.push({ name, at: Date.now(), ...(props ? { props } : {}) });
-  start();
-  if (enabled && queue.length >= FLUSH_AT) flush();
+  try {
+    if (!isTracking() || !EVENTS.has(name)) return;
+    if (props && !propsOk(name, props)) return;
+    if (queue.length >= MAX_QUEUE) queue.shift();
+    queue.push({ name, at: Date.now(), ...(props ? { props } : {}) });
+    start();
+    if (enabled && queue.length >= FLUSH_AT) flush();
+  } catch {
+    // Usage events never break the page.
+  }
 }
 
 export function flush(): void {
+  try {
+    sendQueued();
+  } catch {
+    // Same: a failed send is lost, not thrown.
+  }
+}
+
+function sendQueued(): void {
   if (!enabled || queue.length === 0) return;
   const locale = document.documentElement.lang;
   while (queue.length > 0) {
@@ -96,8 +114,12 @@ export function flush(): void {
 }
 
 function send(body: string): void {
-  const blob = new Blob([body], { type: "application/json" });
-  if (typeof navigator.sendBeacon === "function" && navigator.sendBeacon(ENDPOINT, blob)) return;
+  try {
+    const blob = new Blob([body], { type: "application/json" });
+    if (typeof navigator.sendBeacon === "function" && navigator.sendBeacon(ENDPOINT, blob)) return;
+  } catch {
+    // Fall through to fetch.
+  }
   void fetch(ENDPOINT, {
     method: "POST",
     headers: { "content-type": "application/json" },
@@ -148,6 +170,7 @@ const SIGN_IN_FLAG = "sign_in_started";
 
 export function signInStarted(provider: string): void {
   track("sign_in_started", { provider });
+  if (!isTracking()) return;
   try {
     sessionStorage.setItem(SIGN_IN_FLAG, "1");
   } catch {
