@@ -13,6 +13,7 @@ const ent = await import("../lib/entitlements");
 const { POST } = await import("../app/api/v1/webhooks/revenuecat/route");
 const { GET: getMe } = await import("../app/api/v1/me/route");
 const { mapRevenueCatEvent, revenueCatAuthorized } = await import("../lib/revenuecat");
+const { analyticsDb } = await import("../lib/analytics/db");
 
 afterAll(() => {
   const g = globalThis as unknown as { __verdictLibsql?: { close(): void } };
@@ -290,6 +291,16 @@ describe("POST /api/v1/webhooks/revenuecat: monthly plan", () => {
     e = await ent.getEntitlement(user.id);
     expect(e.subscription).toBeNull();
     expect(e.canUsePremium).toBe(false);
+
+    // Only the first purchase is a purchase_granted event, not the renewal or the un-cancellation.
+    const db = await analyticsDb();
+    await vi.waitFor(async () => {
+      const rs = await db.execute({
+        sql: "SELECT props FROM events WHERE user_id = ? AND name = 'purchase_granted'",
+        args: [user.id],
+      });
+      expect(rs.rows.map((row) => String(row.props))).toEqual(['{"product":"monthly","source":"play_store"}']);
+    });
   });
 
   it("PRODUCT_CHANGE to another base plan keeps the plan; a refund ends the plan at once", async () => {

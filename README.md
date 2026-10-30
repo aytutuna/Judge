@@ -1066,10 +1066,10 @@ Prometheus every 60 seconds, and to its Loki the journal of those units and
 the kernel's, plus Caddy's access log (with the status class, e.g. `5xx`, as a
 label; nothing beyond what the log already keeps). It also scrapes the app's
 usage counts every 60 seconds from `http://127.0.0.1:3000/api/internal/metrics`
-(job `judge-app`): `judge_events_total{name,platform}` over the last 24 hours,
-`judge_active_users_24h`, `judge_active_users_7d` and `judge_funnel{step}` for
-app_open, case_started, case_submitted, verdict_ready and purchase_granted over
-7 days. The app answers that path only to a direct request from the server
+(job `judge-app`): `judge_events_24h{name,platform}`, `judge_active_users_24h`,
+`judge_active_users_7d` and `judge_funnel{step}` for app_open, case_created,
+verdict_ready and purchase_granted (first purchases only, no renewals) over 7
+days. The app answers that path only to a direct request from the server
 itself, and Caddy answers 404 for `/api/internal/*`. Usage events are kept 90
 days, sign-in device links 180 days after their last use. Alloy sees only the
 `GRAFANA_*` settings, which deploys copy to `/etc/alloy/grafana.env`. The

@@ -4,11 +4,15 @@
  */
 
 import { analyticsDb } from "./db";
+import { CLIENT_EVENTS, SERVER_EVENTS } from "./validate";
 
 const DAY_MS = 24 * 60 * 60_000;
 const CACHE_MS = 60_000;
 
-export const FUNNEL = ["app_open", "case_started", "case_submitted", "verdict_ready", "purchase_granted"] as const;
+/** One client step to count everyone who opens the app, website included,
+ * then server steps only, which no client can skip or fake. */
+export const FUNNEL = ["app_open", "case_created", "verdict_ready", "purchase_granted"] as const;
+const KNOWN = [...CLIENT_EVENTS, ...SERVER_EVENTS];
 
 const LOOPBACK = new Set(["127.0.0.1", "::1", "::ffff:127.0.0.1"]);
 const LOOPBACK_HOST = /^(127\.0\.0\.1|localhost|\[::1\])(:\d{1,5})?$/i;
@@ -34,8 +38,10 @@ export async function metricsText(now: number = Date.now()): Promise<string> {
   const week = now - 7 * DAY_MS;
   const [counts, active, funnel] = await Promise.all([
     db.execute({
-      sql: "SELECT name, platform, COUNT(*) AS n FROM events WHERE at >= ? GROUP BY name, platform ORDER BY name, platform",
-      args: [day],
+      sql: `SELECT name, platform, COUNT(*) AS n FROM events
+            WHERE at >= ? AND name IN (${KNOWN.map(() => "?").join(", ")})
+            GROUP BY name, platform ORDER BY name, platform`,
+      args: [day, ...KNOWN],
     }),
     // The server's own events (a renewal, a sign-in elsewhere) do not make anyone active.
     db.execute({
@@ -52,9 +58,9 @@ export async function metricsText(now: number = Date.now()): Promise<string> {
   ]);
   const steps = new Map(funnel.rows.map((r) => [String(r.name), Number(r.n)]));
   return [
-    "# HELP judge_events_total Usage events in the last 24 hours.",
-    "# TYPE judge_events_total gauge",
-    ...counts.rows.map((r) => `judge_events_total{name="${r.name}",platform="${r.platform}"} ${Number(r.n)}`),
+    "# HELP judge_events_24h Usage events in the last 24 hours.",
+    "# TYPE judge_events_24h gauge",
+    ...counts.rows.map((r) => `judge_events_24h{name="${r.name}",platform="${r.platform}"} ${Number(r.n)}`),
     "# HELP judge_active_users_24h People (accounts or signed-out installs) who sent events in the last 24 hours.",
     "# TYPE judge_active_users_24h gauge",
     `judge_active_users_24h ${Number(active.rows[0]?.day ?? 0)}`,
@@ -68,13 +74,13 @@ export async function metricsText(now: number = Date.now()): Promise<string> {
   ].join("\n");
 }
 
-const globalForMetrics = globalThis as unknown as { __verdictMetrics?: { at: number; text: string } };
+const globalForMetrics = globalThis as unknown as { __judgeMetrics?: { at: number; text: string } };
 
 /** metricsText, computed at most once a minute. */
 export async function cachedMetricsText(now: number = Date.now()): Promise<string> {
-  const cached = globalForMetrics.__verdictMetrics;
+  const cached = globalForMetrics.__judgeMetrics;
   if (cached && now - cached.at < CACHE_MS) return cached.text;
   const text = await metricsText(now);
-  globalForMetrics.__verdictMetrics = { at: now, text };
+  globalForMetrics.__judgeMetrics = { at: now, text };
   return text;
 }

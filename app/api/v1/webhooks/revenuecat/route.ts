@@ -119,7 +119,8 @@ export async function POST(req: Request): Promise<NextResponse> {
       event = outcome.event;
     }
     const { applied } = await applyStoreEvent(event);
-    if (applied && "productId" in event) {
+    // Renewals and plan changes are not new buyers for the funnel.
+    if (applied && "productId" in event && (type === "INITIAL_PURCHASE" || type === "NON_RENEWING_PURCHASE")) {
       void track("purchase_granted", { userId: event.userId, props: { product: event.productId, source: event.source } });
     }
     console.info(`[revenuecat] type=${type} id=${id} action=${event.type} source=${event.source} applied=${applied}`);

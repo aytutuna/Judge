@@ -73,8 +73,11 @@ describe("GET /api/internal/metrics", () => {
       { anon: "a1", name: "app_open", platform: "android" },
       { anon: "a2", name: "app_open", platform: "web", at: NOW - 3 * DAY },
       { user: "u1", name: "case_started" },
-      { user: "u1", name: "case_submitted" },
+      { anon: "a1", name: "case_started", platform: "android" },
+      { user: "u1", name: "case_created", platform: "server" },
       { user: "u1", name: "verdict_ready", platform: "server" },
+      // A name from before the lists, or written by hand: no series for it.
+      { user: "u1", name: "made_up" },
       { user: "u2", name: "purchase_granted", platform: "server" },
       // Outside every window.
       { user: "u9", name: "app_open", at: NOW - 8 * DAY },
@@ -85,14 +88,15 @@ describe("GET /api/internal/metrics", () => {
     const text = await res.text();
     expect(text).toBe(await metricsText());
     expect(text.split("\n")).toEqual([
-      "# HELP judge_events_total Usage events in the last 24 hours.",
-      "# TYPE judge_events_total gauge",
-      'judge_events_total{name="app_open",platform="android"} 1',
-      'judge_events_total{name="app_open",platform="ios"} 2',
-      'judge_events_total{name="case_started",platform="ios"} 1',
-      'judge_events_total{name="case_submitted",platform="ios"} 1',
-      'judge_events_total{name="purchase_granted",platform="server"} 1',
-      'judge_events_total{name="verdict_ready",platform="server"} 1',
+      "# HELP judge_events_24h Usage events in the last 24 hours.",
+      "# TYPE judge_events_24h gauge",
+      'judge_events_24h{name="app_open",platform="android"} 1',
+      'judge_events_24h{name="app_open",platform="ios"} 2',
+      'judge_events_24h{name="case_created",platform="server"} 1',
+      'judge_events_24h{name="case_started",platform="android"} 1',
+      'judge_events_24h{name="case_started",platform="ios"} 1',
+      'judge_events_24h{name="purchase_granted",platform="server"} 1',
+      'judge_events_24h{name="verdict_ready",platform="server"} 1',
       "# HELP judge_active_users_24h People (accounts or signed-out installs) who sent events in the last 24 hours.",
       "# TYPE judge_active_users_24h gauge",
       "judge_active_users_24h 2",
@@ -102,8 +106,7 @@ describe("GET /api/internal/metrics", () => {
       "# HELP judge_funnel People who reached each step in the last 7 days.",
       "# TYPE judge_funnel gauge",
       'judge_funnel{step="app_open"} 3',
-      'judge_funnel{step="case_started"} 1',
-      'judge_funnel{step="case_submitted"} 1',
+      'judge_funnel{step="case_created"} 1',
       'judge_funnel{step="verdict_ready"} 1',
       'judge_funnel{step="purchase_granted"} 1',
       "",
@@ -114,6 +117,6 @@ describe("GET /api/internal/metrics", () => {
     const first = await cachedMetricsText(NOW);
     await seed([{ user: "u3", name: "share_tapped" }]);
     expect(await cachedMetricsText(NOW + 30_000)).toBe(first);
-    expect(await cachedMetricsText(NOW + 61_000)).toContain('judge_events_total{name="share_tapped",platform="ios"} 1');
+    expect(await cachedMetricsText(NOW + 61_000)).toContain('judge_events_24h{name="share_tapped",platform="ios"} 1');
   });
 });
