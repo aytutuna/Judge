@@ -9,27 +9,27 @@ private final class StubTransport: AnalyticsTransport, @unchecked Sendable {
     var onSend: (@Sendable () -> Void)?
 
     func sendEvents(_ body: Data) async -> AnalyticsDelivery {
-        lock.lock()
-        defer { lock.unlock() }
-        bodies.append(body)
-        onSend?()
-        return answer
+        lock.withLock {
+            bodies.append(body)
+            onSend?()
+            return answer
+        }
     }
 
     /// The events of every batch sent, in order.
     var batches: [[[String: Any]]] {
-        lock.lock()
-        defer { lock.unlock() }
-        return bodies.map { body in
-            let object = (try? JSONSerialization.jsonObject(with: body)) as? [String: Any]
-            return object?["events"] as? [[String: Any]] ?? []
+        lock.withLock {
+            bodies.map { body in
+                let object = (try? JSONSerialization.jsonObject(with: body)) as? [String: Any]
+                return object?["events"] as? [[String: Any]] ?? []
+            }
         }
     }
 
     var first: [String: Any]? {
-        lock.lock()
-        defer { lock.unlock() }
-        return bodies.first.flatMap { (try? JSONSerialization.jsonObject(with: $0)) as? [String: Any] }
+        lock.withLock {
+            bodies.first.flatMap { (try? JSONSerialization.jsonObject(with: $0)) as? [String: Any] }
+        }
     }
 }
 
