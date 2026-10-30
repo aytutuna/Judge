@@ -56,7 +56,7 @@ describe("GET /api/v1/config", () => {
         ],
         monthly: { id: "monthly", priceUsd: 15, fairUseCap: 35, periodDays: 30 },
       },
-      features: { cases: false, evidence: false, history: true },
+      features: { cases: false, evidence: false, history: true, analytics: true },
       freeTier: false,
       welcomeCredits: 1,
     });
@@ -96,20 +96,27 @@ describe("GET /api/v1/config", () => {
     vi.stubEnv("ANTHROPIC_API_KEY", "k");
     vi.stubEnv("CASES_ENABLED", "");
     vi.stubEnv("EVIDENCE_ENABLED", "");
-    expect((await call()).body.features).toEqual({ cases: true, evidence: true, history: true });
+    expect((await call()).body.features).toEqual({ cases: true, evidence: true, history: true, analytics: true });
     vi.stubEnv("CASES_ENABLED", "0");
-    expect((await call()).body.features).toEqual({ cases: false, evidence: true, history: true });
+    expect((await call()).body.features).toEqual({ cases: false, evidence: true, history: true, analytics: true });
     vi.stubEnv("EVIDENCE_ENABLED", "0");
-    expect((await call()).body.features).toEqual({ cases: false, evidence: false, history: true });
+    expect((await call()).body.features).toEqual({ cases: false, evidence: false, history: true, analytics: true });
     vi.stubEnv("CASES_ENABLED", "1");
     vi.stubEnv("EVIDENCE_ENABLED", "1");
     vi.stubEnv("PREMIUM_ENABLED", "0");
-    expect((await call()).body.features).toEqual({ cases: false, evidence: false, history: true });
+    expect((await call()).body.features).toEqual({ cases: false, evidence: false, history: true, analytics: true });
     vi.stubEnv("ANTHROPIC_API_KEY", "");
-    expect((await call()).body.features).toEqual({ cases: false, evidence: false, history: true });
+    expect((await call()).body.features).toEqual({ cases: false, evidence: false, history: true, analytics: true });
     vi.stubEnv("ANTHROPIC_API_KEY", "k");
     vi.stubEnv("BETTER_AUTH_SECRET", "");
-    expect((await call()).body.features).toEqual({ cases: false, evidence: false, history: true });
+    expect((await call()).body.features).toEqual({ cases: false, evidence: false, history: true, analytics: true });
+  });
+
+  it("features.analytics follows ANALYTICS_ENABLED", async () => {
+    vi.stubEnv("ANALYTICS_ENABLED", "");
+    expect((await call()).body.features?.analytics).toBe(true);
+    vi.stubEnv("ANALYTICS_ENABLED", "0");
+    expect((await call()).body.features?.analytics).toBe(false);
   });
 
   it("development: the test login shows only with DEV_LOGIN=1 on localhost", async () => {

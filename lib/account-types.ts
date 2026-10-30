@@ -79,6 +79,8 @@ export type AppConfig = {
     evidence: boolean;
     /** GET /api/v1/me/history is served. Absent on older servers. */
     history?: boolean;
+    /** Send usage events to POST /api/v1/events. Absent on older servers: don't send. */
+    analytics?: boolean;
   };
   /** Always false: every verdict is premium. Absent on older servers, which had a free tier. */
   freeTier?: boolean;

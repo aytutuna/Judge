@@ -17,3 +17,9 @@ export function evidenceEnabled(env: Env = process.env): boolean {
 export function purchasesEnabled(env: Env = process.env): boolean {
   return env.PURCHASES_ENABLED?.trim() === "1";
 }
+
+/** Usage events: on unless ANALYTICS_ENABLED=0. Reported as
+ * `features.analytics` so the apps stop sending; the server stops storing. */
+export function analyticsEnabled(env: Env = process.env): boolean {
+  return env.ANALYTICS_ENABLED?.trim() !== "0";
+}

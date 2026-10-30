@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import type { AppConfig } from "@/lib/account-types";
 import { authProviders, premiumEnabled } from "@/lib/auth";
 import { WELCOME_CREDITS } from "@/lib/entitlements";
-import { casesEnabled, evidenceEnabled, purchasesEnabled } from "@/lib/features";
+import { analyticsEnabled, casesEnabled, evidenceEnabled, purchasesEnabled } from "@/lib/features";
 import { PRICING } from "@/lib/pricing";
 
 export const runtime = "nodejs";
@@ -20,7 +20,7 @@ export function GET(req: Request): NextResponse<AppConfig> {
       packs: PRICING.packs.map((p) => ({ ...p })),
       monthly: { ...PRICING.monthly },
     },
-    features: { cases: casesEnabled(), evidence: evidenceEnabled(), history: true },
+    features: { cases: casesEnabled(), evidence: evidenceEnabled(), history: true, analytics: analyticsEnabled() },
     freeTier: false,
     welcomeCredits: WELCOME_CREDITS,
   };
