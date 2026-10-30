@@ -500,7 +500,7 @@ describe("premium verdict: refunds", () => {
     expect(m.consumePremiumVerdict).not.toHaveBeenCalled();
   });
 
-  it("refunds when every run failed (502 unavailable, or quota on HTTP 429)", async () => {
+  it("refunds when every run failed (502 unavailable, or quota on HTTP 429 or no credit)", async () => {
     m.judgePremiumPanel.mockResolvedValue({ runs: [FAILED, FAILED, FAILED], models: [] });
     let res = await POST(request(premium()));
     expect(res.status).toBe(502);
@@ -512,7 +512,13 @@ describe("premium verdict: refunds", () => {
     res = await POST(request(premium()));
     expect(res.status).toBe(502);
     expect((await res.json()).code).toBe("quota");
-    expect(m.refundPremiumVerdict).toHaveBeenCalledTimes(2);
+    m.judgePremiumPanel.mockResolvedValue({
+      runs: [{ ok: false, blocked: false, error: "Claude HTTP 402: billing_error" }, FAILED, FAILED],
+      models: [],
+    });
+    res = await POST(request(premium()));
+    expect((await res.json()).code).toBe("quota");
+    expect(m.refundPremiumVerdict).toHaveBeenCalledTimes(3);
     expect(m.saveVerdict).not.toHaveBeenCalled();
   });
 

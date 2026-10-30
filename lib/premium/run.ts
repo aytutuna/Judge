@@ -11,7 +11,7 @@
 
 import { aggregate } from "../aggregate";
 import { anonymize } from "../anonymize";
-import { withUsageMeter, type UsageTotals } from "../claude";
+import { providerFailure, withUsageMeter, type UsageTotals } from "../claude";
 import { loadLocales, t, type Lang } from "../i18n";
 import { judgeExtra, type JudgeOptions, type JudgeRun } from "../judge";
 import { applyCruxTrial, runCruxTrial, shouldTryCrux } from "../trial";
@@ -319,7 +319,9 @@ export async function judgeAnonymized(
     }
     const firstError = panel.runs.find((r) => !r.ok);
     const detail = firstError && !firstError.ok ? firstError.error : "?";
-    return { status: "failed", code: /HTTP 429/.test(detail) ? "quota" : "unavailable", error: detail };
+    const failure = providerFailure(detail);
+    const quota = failure === "provider_rate" || failure === "provider_credit";
+    return { status: "failed", code: quota ? "quota" : "unavailable", error: detail };
   }
 
   // Read before escalation, which only ever adds Haiku runs.

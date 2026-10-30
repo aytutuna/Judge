@@ -39,6 +39,32 @@ __SITE_ADDRESS__ {
 		-Server
 	}
 
+	# Status codes for the error spike check (errors.sh). The request itself
+	# (address, path, headers) is dropped, so nothing about visitors is kept.
+	# update.sh creates the file as Caddy's before validating this config.
+	# Mode 0640 lets Alloy read it through the caddy group.
+	log {
+		output file /var/log/caddy/access.log {
+			roll_size 10mb
+			roll_keep 3
+			mode 0640
+		}
+		format filter {
+			wrap json
+			fields {
+				request delete
+				resp_headers delete
+				user_id delete
+			}
+		}
+	}
+
+	# The app's usage metrics are for Alloy on this server, which fetches
+	# them from 127.0.0.1:3000 directly; never from the internet.
+	handle /api/internal/* {
+		respond 404
+	}
+
 	reverse_proxy 127.0.0.1:3000 {
 		# The app rate-limits by the first X-Forwarded-For entry. Replace
 		# whatever the visitor sent with the address Caddy actually sees, so

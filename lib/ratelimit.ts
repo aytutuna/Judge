@@ -14,6 +14,7 @@ import { createHmac } from "node:crypto";
 import { Ratelimit } from "@upstash/ratelimit";
 import { Redis } from "@upstash/redis";
 import { rateLimitSubject } from "./client-ip";
+import { signal } from "./signals";
 
 const MINUTE_MS = 60_000;
 const DAY_MS = 24 * 60 * MINUTE_MS;
@@ -55,6 +56,12 @@ function withTimeout<T>(work: Promise<T>, ms: number): Promise<T> {
     timer = setTimeout(() => reject(new Error(`rate limit check exceeded ${ms}ms`)), ms);
   });
   return Promise.race([work, deadline]).finally(() => clearTimeout(timer));
+}
+
+/** A refusal for going over the limit also goes to the log, for the watcher. */
+function noteLimited(bucket: string, decision: LimitDecision): LimitDecision {
+  if (!decision.ok && decision.code === "rate_limited") signal("rate_limited", `bucket=${bucket}`);
+  return decision;
 }
 
 /** New translations per visitor IP per 10 minutes. Separate from the verdict
@@ -111,7 +118,7 @@ export async function checkTranslateLimits(ip: string): Promise<LimitDecision> {
       TRANSLATE_LIMIT,
       TRANSLATE_WINDOW_MS,
     );
-    return globalForTranslateLimits.__verdictTranslateLimiter.check(visitor);
+    return noteLimited("translate", globalForTranslateLimits.__verdictTranslateLimiter.check(visitor));
   }
   try {
     globalForTranslateLimits.__verdictTranslateRedis ??= new Ratelimit({
@@ -130,7 +137,11 @@ export async function checkTranslateLimits(ip: string): Promise<LimitDecision> {
     const res = await withTimeout(limiter.limit(visitor), REDIS_TOTAL_TIMEOUT_MS);
     if (res.reason === "timeout") throw new Error("rate limit check timed out");
     if (!res.success) {
-      return { ok: false, code: "rate_limited", retryAfterSec: retryAfterSec(res.reset, Date.now()) };
+      return noteLimited("translate", {
+        ok: false,
+        code: "rate_limited",
+        retryAfterSec: retryAfterSec(res.reset, Date.now()),
+      });
     }
     return { ok: true };
   } catch (e) {
@@ -158,7 +169,8 @@ export type UserBucket =
   | "case_evidence"
   | "verdict_owner"
   | "history_list"
-  | "apple_code";
+  | "apple_code"
+  | "events";
 
 type UserWindow = { limit: number; windowMs: number; redisWindow: `${number} ${"m" | "h" | "d"}`; prefix: string };
 
@@ -198,6 +210,8 @@ export const USER_LIMITS: Record<UserBucket, readonly UserWindow[]> = {
     { limit: 10, windowMs: 10 * MINUTE_MS, redisWindow: "10 m", prefix: "verdict:u:ac10m" },
     { limit: 30, windowMs: DAY_MS, redisWindow: "1 d", prefix: "verdict:u:acday" },
   ],
+  /** Usage event batches (POST /api/v1/events). */
+  events: [{ limit: 300, windowMs: 60 * MINUTE_MS, redisWindow: "1 h", prefix: "verdict:u:evt1h" }],
 };
 
 /** Per-IP buckets for the no-account endpoints (keyed by visitorKey):
@@ -205,7 +219,13 @@ export const USER_LIMITS: Record<UserBucket, readonly UserWindow[]> = {
  * polls of verdicts still judging (a poll every 2 to 5 s for a few minutes
  * is about 100; the windows leave room for several verdicts and a shared
  * address). */
-export type IpBucket = "respond_submit" | "respond_evidence" | "verdict_owner" | "verdict_poll" | "revenuecat_webhook";
+export type IpBucket =
+  | "respond_submit"
+  | "respond_evidence"
+  | "verdict_owner"
+  | "verdict_poll"
+  | "revenuecat_webhook"
+  | "events";
 
 export const IP_LIMITS: Record<IpBucket, readonly UserWindow[]> = {
   respond_submit: [
@@ -226,6 +246,11 @@ export const IP_LIMITS: Record<IpBucket, readonly UserWindow[]> = {
   ],
   /** RevenueCat's servers posting purchase events (counted after the secret checks out). */
   revenuecat_webhook: [{ limit: 600, windowMs: 10 * MINUTE_MS, redisWindow: "10 m", prefix: "verdict:ip:rc10m" }],
+  /** Signed-out usage event batches. */
+  events: [
+    { limit: 10, windowMs: 10 * MINUTE_MS, redisWindow: "10 m", prefix: "verdict:ip:evt10m" },
+    { limit: 60, windowMs: 60 * MINUTE_MS, redisWindow: "1 h", prefix: "verdict:ip:evt1h" },
+  ],
 };
 
 /** Several sliding windows per key, in memory. Checks every window before
@@ -324,13 +349,13 @@ async function checkWindows(
 
 /** Counts one use of `bucket` for this account, or says why it is refused. */
 export async function checkUserLimits(userId: string, bucket: UserBucket): Promise<LimitDecision> {
-  return checkWindows(`u:${bucket}`, userId, USER_LIMITS[bucket]);
+  return noteLimited(`u:${bucket}`, await checkWindows(`u:${bucket}`, userId, USER_LIMITS[bucket]));
 }
 
 /** Counts one use of `bucket` for this visitor IP (keyed hash), or says why
  * it is refused. Same stores and fail-closed behavior as checkUserLimits. */
 export async function checkIpLimits(ip: string, bucket: IpBucket): Promise<LimitDecision> {
-  return checkWindows(`ip:${bucket}`, visitorKey(ip), IP_LIMITS[bucket]);
+  return noteLimited(`ip:${bucket}`, await checkWindows(`ip:${bucket}`, visitorKey(ip), IP_LIMITS[bucket]));
 }
 
 const DEFAULT_PREMIUM_DAILY_CAP = 500;

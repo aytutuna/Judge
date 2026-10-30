@@ -15,7 +15,7 @@ vi.mock("@anthropic-ai/sdk", async (importOriginal) => {
 });
 
 import Anthropic from "@anthropic-ai/sdk";
-import { claudeJson, claudeSearchJson, toClaudeSchema, withUsageMeter } from "../lib/claude";
+import { claudeJson, claudeSearchJson, providerFailure, toClaudeSchema, withUsageMeter } from "../lib/claude";
 import { JUDGE_SCHEMA } from "../lib/judge";
 
 type Schema = Record<string, unknown>;
@@ -379,5 +379,131 @@ describe("withUsageMeter", () => {
         "claude-haiku-5-5": { calls: 2, input: 1010, output: 120, searches: 2 },
       },
     });
+  });
+});
+
+describe("providerFailure", () => {
+  it.each([
+    ["Claude HTTP 402: billing_error", "provider_credit"],
+    ["Claude HTTP 400: 400 Your credit balance is too low to access the API.", "provider_credit"],
+    ["Claude HTTP 400: You have reached your specified API usage limits.", "provider_credit"],
+    ["Claude HTTP 401: invalid x-api-key", "provider_auth"],
+    ["Claude HTTP 403: permission_error", "provider_auth"],
+    ["Claude HTTP 403 permission_error: 403 {}", "provider_auth"],
+    ["Claude HTTP 401 authentication_error: 401 {}", "provider_auth"],
+    ["Claude HTTP 400 billing_error: 400 {}", "provider_credit"],
+    ["Claude HTTP 400 invalid_request_error: 400 Your credit balance is too low", "provider_credit"],
+    ["Claude HTTP 400 invalid_request_error: max_tokens: too large", null],
+    ["Claude HTTP 400: account balance", null],
+    ["Claude HTTP 413 request_too_large: no credit for that", null],
+    ["Claude HTTP 400 constructor: x", null],
+    ["Claude HTTP 404 not_found_error: 404 {}", "provider_config"],
+    ["Claude HTTP 404: model: claude-nope", "provider_config"],
+    ["Claude HTTP 429 rate_limit_error: 429 {}", "provider_rate"],
+    ["Claude HTTP 529 overloaded_error: 529 {}", "provider_down"],
+    ["Claude HTTP 500 api_error: 500 {}", "provider_down"],
+    ["Claude HTTP 429: rate limited", "provider_rate"],
+    ["Claude HTTP 529: overloaded", "provider_down"],
+    ["Claude HTTP 500: Internal server error", "provider_down"],
+    ["Claude network error: socket hang up", "provider_down"],
+    ["Claude request timed out after 120s", "provider_down"],
+    ["Claude HTTP 400: max_tokens: too large", null],
+    ["Claude request failed: boom", null],
+    ["response was not valid JSON", null],
+  ])("%s -> %s", (error, kind) => {
+    expect(providerFailure(error)).toBe(kind);
+  });
+});
+
+describe("provider failure log lines", () => {
+  beforeEach(() => {
+    vi.useFakeTimers({ toFake: ["Date"] });
+    vi.spyOn(console, "error").mockImplementation(() => {});
+    vi.spyOn(console, "warn").mockImplementation(() => {});
+  });
+
+  afterEach(() => {
+    vi.useRealTimers();
+    vi.restoreAllMocks();
+  });
+
+  const credit = () => new Anthropic.APIError(402, undefined, "credit balance too low", new Headers());
+
+  it("logs an alert line for running out of credit, at most once in 10 minutes", async () => {
+    vi.setSystemTime(new Date("2030-01-01T00:00:00Z"));
+    create.mockRejectedValueOnce(credit());
+    const res = await claudeJson(CALL);
+    expect(res).toMatchObject({ ok: false, blocked: false });
+    expect(console.error).toHaveBeenCalledTimes(1);
+    expect(vi.mocked(console.error).mock.calls[0][0]).toMatch(/^\[alert:provider_credit\] Claude HTTP 402: /);
+
+    vi.setSystemTime(new Date("2030-01-01T00:09:00Z"));
+    create.mockRejectedValueOnce(credit());
+    await claudeSearchJson({ ...CALL, maxSearches: 1 });
+    expect(console.error).toHaveBeenCalledTimes(1);
+
+    vi.setSystemTime(new Date("2030-01-01T00:10:00Z"));
+    create.mockRejectedValueOnce(credit());
+    await claudeJson(CALL);
+    expect(console.error).toHaveBeenCalledTimes(2);
+  });
+
+  it("logs a rejected key as its own alert", async () => {
+    vi.setSystemTime(new Date("2030-02-01T00:00:00Z"));
+    create.mockRejectedValueOnce(new Anthropic.AuthenticationError(401, undefined, "invalid x-api-key", new Headers()));
+    await claudeJson(CALL);
+    expect(vi.mocked(console.error).mock.calls[0][0]).toMatch(/^\[alert:provider_auth\] Claude HTTP 401: /);
+  });
+
+  it("logs an unknown model as a config alert, at most once in 10 minutes", async () => {
+    vi.setSystemTime(new Date("2030-03-01T00:00:00Z"));
+    const notFound = () =>
+      Anthropic.APIError.generate(
+        404,
+        { type: "error", error: { type: "not_found_error", message: "model: claude-nope" } },
+        undefined,
+        new Headers(),
+      );
+    create.mockRejectedValueOnce(notFound());
+    const res = await claudeJson(CALL);
+    expect(res).toMatchObject({ ok: false, blocked: false });
+    expect(console.error).toHaveBeenCalledTimes(1);
+    expect(vi.mocked(console.error).mock.calls[0][0]).toMatch(
+      /^\[alert:provider_config\] Claude HTTP 404 not_found_error: /,
+    );
+
+    vi.setSystemTime(new Date("2030-03-01T00:05:00Z"));
+    create.mockRejectedValueOnce(notFound());
+    await claudeSearchJson({ ...CALL, maxSearches: 1 });
+    expect(console.error).toHaveBeenCalledTimes(1);
+    expect(console.warn).not.toHaveBeenCalled();
+  });
+
+  it("reads the error type from the response body before the status", async () => {
+    vi.setSystemTime(new Date("2030-04-01T00:00:00Z"));
+    create.mockRejectedValueOnce(
+      Anthropic.APIError.generate(
+        400,
+        { type: "error", error: { type: "billing_error", message: "payment required" } },
+        undefined,
+        new Headers(),
+      ),
+    );
+    await claudeJson(CALL);
+    expect(vi.mocked(console.error).mock.calls[0][0]).toMatch(
+      /^\[alert:provider_credit\] Claude HTTP 400 billing_error: /,
+    );
+  });
+
+  it("logs a signal line for every rate limit and outage", async () => {
+    create.mockRejectedValueOnce(new Anthropic.RateLimitError(429, undefined, "rate limited", new Headers()));
+    create.mockRejectedValueOnce(new Anthropic.APIConnectionError({ message: "socket hang up" }));
+    create.mockRejectedValueOnce(new Anthropic.RateLimitError(429, undefined, "rate limited", new Headers()));
+    await claudeJson(CALL);
+    await claudeJson(CALL);
+    await claudeSearchJson({ ...CALL, maxSearches: 1 });
+    const lines = vi.mocked(console.warn).mock.calls.map((c) => String(c[0]).split(" ")[0]);
+    expect(lines).toEqual(["[signal:provider_rate]", "[signal:provider_down]", "[signal:provider_rate]"]);
+    expect(console.error).not.toHaveBeenCalled();
   });
 });

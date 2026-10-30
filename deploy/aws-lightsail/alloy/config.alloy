@@ -1,0 +1,113 @@
+// Grafana Alloy config for the Judge server: host and app metrics and logs to
+// Grafana Cloud. update.sh installs it to /etc/alloy/verdict.alloy; edits there are
+// overwritten. The credentials come from /etc/alloy/grafana.env, which
+// update.sh writes with the GRAFANA_* lines of /etc/verdict/verdict.env.
+
+prometheus.exporter.unix "host" {
+  set_collectors = ["cpu", "meminfo", "loadavg", "diskstats", "filesystem", "netdev", "systemd"]
+
+  systemd {
+    unit_include = `(verdict.*|caddy|ssh|fail2ban|alloy)\.(service|timer)`
+  }
+}
+
+prometheus.scrape "host" {
+  targets         = prometheus.exporter.unix.host.targets
+  scrape_interval = "60s"
+  forward_to      = [prometheus.remote_write.cloud.receiver]
+}
+
+// Usage aggregates from the app's events table (lib/analytics/metrics.ts).
+// Only answered on loopback; Caddy refuses the path from outside.
+prometheus.scrape "app" {
+  targets         = [{__address__ = "127.0.0.1:3000"}]
+  job_name        = "judge-app"
+  metrics_path    = "/api/internal/metrics"
+  scrape_interval = "60s"
+  forward_to      = [prometheus.remote_write.cloud.receiver]
+}
+
+prometheus.remote_write "cloud" {
+  external_labels = {app = "judge", host = "verdict"}
+
+  endpoint {
+    url = sys.env("GRAFANA_PROM_URL")
+
+    basic_auth {
+      username = sys.env("GRAFANA_PROM_USER")
+      password = sys.env("GRAFANA_TOKEN")
+    }
+  }
+}
+
+loki.relabel "journal" {
+  forward_to = []
+
+  rule {
+    source_labels = ["__journal__systemd_unit"]
+    target_label  = "unit"
+  }
+
+  // Kernel lines (the OOM killer) have no unit.
+  rule {
+    source_labels = ["__journal__transport"]
+    regex         = "kernel"
+    target_label  = "unit"
+    replacement   = "kernel"
+  }
+
+  rule {
+    source_labels = ["unit"]
+    regex         = `verdict.*\.service|caddy\.service|ssh\.service|fail2ban\.service|alloy\.service|kernel`
+    action        = "keep"
+  }
+}
+
+loki.source.journal "system" {
+  relabel_rules = loki.relabel.journal.rules
+  forward_to    = [loki.write.cloud.receiver]
+}
+
+// Caddy keeps only status codes and timings in this log (see the Caddyfile).
+loki.source.file "caddy" {
+  targets       = [{__path__ = "/var/log/caddy/access.log"}]
+  tail_from_end = true
+  forward_to    = [loki.process.caddy.receiver]
+}
+
+loki.process "caddy" {
+  forward_to = [loki.write.cloud.receiver]
+
+  stage.json {
+    expressions = {ts = "", status = ""}
+  }
+
+  stage.timestamp {
+    source = "ts"
+    format = "Unix"
+  }
+
+  // Only the class as a label: one per status code would multiply the
+  // streams. The code and the duration stay in the line.
+  stage.template {
+    source   = "status_class"
+    template = "{{ if .status }}{{ substr 0 1 .status }}xx{{ end }}"
+  }
+
+  stage.labels {
+    values = {status_class = ""}
+  }
+}
+
+loki.write "cloud" {
+  external_labels = {app = "judge", host = "verdict"}
+
+  endpoint {
+    url = sys.env("GRAFANA_LOKI_URL")
+
+    basic_auth {
+      username = sys.env("GRAFANA_LOKI_USER")
+      password = sys.env("GRAFANA_TOKEN")
+    }
+  }
+}

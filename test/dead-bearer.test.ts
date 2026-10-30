@@ -97,6 +97,7 @@ beforeEach(() => {
     models: ["claude-sonnet-5-5", "claude-sonnet-5-5", "claude-haiku-5-5"],
   });
   vi.spyOn(console, "info").mockImplementation(() => {});
+  vi.spyOn(console, "warn").mockImplementation(() => {});
 });
 
 afterEach(() => {
@@ -158,6 +159,7 @@ describe("POST /api/v1/verdict with a bearer token", () => {
     await expectSignInFirst(await postVerdict(verdictRequest(bearer("nope"), { argument: "" })));
     expect(m.anonymize).not.toHaveBeenCalled();
     expect(m.judgePremiumPanel).not.toHaveBeenCalled();
+    expect(console.warn).toHaveBeenCalledWith("[signal:bearer_401]");
   });
 
   it("a dead token next to a valid cookie is still refused", async () => {

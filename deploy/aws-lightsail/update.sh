@@ -43,10 +43,19 @@ DEPLOY_SRC=$REPO_DIR/deploy/aws-lightsail
 # HOME and npm cache for the build user (/opt/verdict itself is root-owned).
 BUILD_HOME=/var/cache/verdict-build
 CADDYFILE=/etc/caddy/Caddyfile
-UNITS=(verdict.service verdict-backup.service verdict-backup.timer)
+ACCESS_LOG=/var/log/caddy/access.log
+# The watcher (watch.sh) takes changes to units, the Caddyfile and the live
+# release as a deploy's while deploy-at in here is under 30 minutes old.
+ALERT_DIR=/var/lib/verdict-alerts
+UNITS=(verdict.service verdict-backup.service verdict-backup.timer verdict-backup-upload.service verdict-errors.service verdict-errors.timer
+  verdict-watch.service verdict-watch.timer verdict-restore-drill.service verdict-restore-drill.timer)
 # Installed only while CLOUDFLARE_PROXY=1.
 CF_UNITS=(verdict-cloudflare-ips.service verdict-cloudflare-ips.timer)
 CF_SNIPPET=/etc/caddy/cloudflare-ips.caddy
+# Grafana Alloy, installed by setup.sh once GRAFANA_TOKEN is set.
+ALLOY_CONFIG=/etc/alloy/verdict.alloy
+ALLOY_DROPIN=/etc/systemd/system/alloy.service.d/verdict.conf
+ALLOY_ENV=/etc/alloy/grafana.env
 HEALTH_URL=http://127.0.0.1:3000/api/health
 HEALTH_TIMEOUT_SEC=120
 KEEP_RELEASES=3
@@ -224,7 +233,61 @@ install_units() {
   if ((changed)); then systemctl daemon-reload; fi
   systemctl enable --quiet verdict.service
   systemctl enable --now --quiet verdict-backup.timer
+  systemctl enable --now --quiet verdict-errors.timer
+  systemctl enable --now --quiet verdict-watch.timer
+  systemctl enable --now --quiet verdict-restore-drill.timer
   if ((proxy)); then systemctl enable --now --quiet verdict-cloudflare-ips.timer; fi
+}
+
+# Copies Alloy's config, unit drop-in and GRAFANA_* settings into place if
+# they changed, and restarts it then; without GRAFANA_TOKEN it is stopped.
+# The caller carries on if this fails: a broken Alloy only stops the
+# monitoring, never the deploy.
+install_alloy() {
+  local changed=0 settings
+  if ! dpkg-query -W -f='${db:Status-Status}' alloy 2>/dev/null | grep -qx installed; then
+    if [[ -n $(env_value GRAFANA_TOKEN) ]]; then
+      info "GRAFANA_TOKEN is set but Alloy is not installed; run setup.sh again."
+    fi
+    return 0
+  fi
+  if [[ -z $(env_value GRAFANA_TOKEN) ]]; then
+    if systemctl is-enabled --quiet alloy || systemctl is-active --quiet alloy; then
+      systemctl disable --now --quiet alloy || return 1
+      info "Stopped Alloy (GRAFANA_TOKEN is not set)"
+    fi
+    return 0
+  fi
+  settings=$(env_lines | grep -E '^GRAFANA_(PROM_URL|PROM_USER|LOKI_URL|LOKI_USER|TOKEN)=') || true
+  if [[ $settings != "$(cat -- "$ALLOY_ENV" 2>/dev/null)" ]]; then
+    install -m 640 -o root -g alloy /dev/null "$ALLOY_ENV" || return 1
+    printf '%s\n' "$settings" >"$ALLOY_ENV" || return 1
+    info "Wrote $ALLOY_ENV"
+    changed=1
+  fi
+  if ! cmp -s "$DEPLOY_SRC/alloy/config.alloy" "$ALLOY_CONFIG"; then
+    install -m 640 -o root -g alloy "$DEPLOY_SRC/alloy/config.alloy" "$ALLOY_CONFIG" || return 1
+    info "Installed $ALLOY_CONFIG"
+    changed=1
+  fi
+  if ! cmp -s "$DEPLOY_SRC/alloy/verdict.conf" "$ALLOY_DROPIN"; then
+    install -d -m 755 "$(dirname "$ALLOY_DROPIN")" || return 1
+    install -m 644 -o root -g root "$DEPLOY_SRC/alloy/verdict.conf" "$ALLOY_DROPIN" || return 1
+    info "Installed $ALLOY_DROPIN"
+    systemctl daemon-reload || return 1
+    changed=1
+  fi
+  systemctl enable --quiet alloy || true
+  if ((changed)) || ! systemctl is-active --quiet alloy; then
+    # A config that does not parse would only make systemd restart it in a loop.
+    if ! alloy fmt "$ALLOY_CONFIG" >/dev/null; then
+      info "$ALLOY_CONFIG does not parse (see above); Alloy was not restarted."
+      return 0
+    fi
+    systemctl restart alloy || true
+    sleep 3
+    systemctl is-active --quiet alloy || info "Alloy is not running; see journalctl -u alloy -n 50"
+  fi
 }
 
 # Prints the Caddyfile for this site: the template with its #?proxy or
@@ -257,11 +320,20 @@ caddyfile_text() {
 # is installed.
 render_caddyfile() {
   local out=$1
+  # caddy validate runs as root and opens the access log; a file it created
+  # would be root's, and Caddy itself could then not write to it.
+  if [[ ! -e $ACCESS_LOG ]]; then
+    install -d -m 755 -o caddy -g caddy "$(dirname "$ACCESS_LOG")"
+    install -m 640 -o caddy -g caddy /dev/null "$ACCESS_LOG"
+  fi
   caddyfile_text >"$out"
   if ! caddy validate --adapter caddyfile --config "$out" >/dev/null 2>&1; then
     caddy validate --adapter caddyfile --config "$out" || true
     die "The rendered Caddyfile is invalid (see above). Nothing was changed."
   fi
+  # validate opens the log as root; whatever it left behind, Caddy must own it
+  chown caddy:caddy "$ACCESS_LOG"
+  chmod 640 "$ACCESS_LOG"
 }
 
 reload_caddy() {
@@ -369,6 +441,8 @@ main() {
   # One deploy at a time.
   exec 9>/run/lock/verdict-update.lock
   flock -n 9 || die "Another update is already running."
+  install -d -m 700 "$ALERT_DIR"
+  touch "$ALERT_DIR/deploy-at"
 
   local free_mb
   free_mb=$(df --output=avail -m "$APP_DIR" | tail -n 1 | tr -d ' ')
@@ -451,11 +525,14 @@ main() {
     [[ $previous == "$RELEASES_DIR"/* && -d $previous ]] || previous=""
   fi
 
+  # Again: a slow build can use up most of the watcher's 30 minutes.
+  touch "$ALERT_DIR/deploy-at"
   log "Installing service and web server config"
   save_config "$workdir"
   CONFIG_SAVED=1
   install_units
   install_caddyfile "$workdir/Caddyfile.new"
+  install_alloy || info "Could not update Alloy (see above); the deploy goes on without it."
 
   log "Switching to the new release and restarting"
   switch_to "$release"
@@ -466,6 +543,7 @@ main() {
   if health_check; then
     CONFIG_SAVED=0
     prune_releases
+    bash "$DEPLOY_SRC/watch.sh" --rebaseline >/dev/null || info "Could not update the watcher's baseline."
     log "Success: commit $short is live at $(env_value NEXT_PUBLIC_SITE_URL)"
     exit 0
   fi

@@ -8,8 +8,10 @@
 import { NextResponse } from "next/server";
 import { apiErrorBody } from "@/lib/api-errors";
 import { hasDeadBearer } from "@/lib/auth";
+import { signal } from "@/lib/signals";
 
 export function deadBearerResponse(): NextResponse {
+  signal("bearer_401");
   return NextResponse.json(apiErrorBody("signin_required", "Sign in first."), {
     status: 401,
     headers: { "Cache-Control": "no-store" },

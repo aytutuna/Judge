@@ -25,6 +25,7 @@
 
 import { NextResponse } from "next/server";
 import type { Entitlement, PremiumBlock } from "@/lib/account-types";
+import { track } from "@/lib/analytics/track";
 import { API_ERROR_STATUS, apiErrorBody, type ApiErrorBody, type ApiErrorCode } from "@/lib/api-errors";
 import { getViewer, isSameOrigin, premiumEnabled, resolveViewer, type ViewerSession } from "@/lib/auth";
 import { deadBearerResponse } from "@/lib/bearer-guard";
@@ -915,6 +916,7 @@ export function respondentClaimHandler(req: Request, id: string): Promise<NextRe
       if (fresh?.removedBAt) return fail("removed");
       return fresh?.respondentUserId === userId ? json(claimed) : fail("not_found");
     }
+    void track("case_claimed", { userId });
     return json(claimed);
   });
 }

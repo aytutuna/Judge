@@ -1,0 +1,31 @@
+# Monthly restore drill on the newest backup (restore-drill.sh); started by
+# verdict-restore-drill.timer. Installed to /etc/systemd/system/ by
+# update.sh; edits there are overwritten.
+
+[Unit]
+Description=Check that the newest Judge backup restores
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+User=verdict
+Group=verdict
+EnvironmentFile=/etc/verdict/verdict.env
+ExecStart=/usr/bin/bash /opt/verdict/current/deploy/aws-lightsail/restore-drill.sh
+Nice=10
+IOSchedulingClass=idle
+
+# The unpacked copy goes to the private /tmp and is deleted at the end. The
+# network stays for the failure alert.
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+CapabilityBoundingSet=
+UMask=0077

@@ -12,9 +12,10 @@
 #
 # Safe to run again: finished steps are skipped and existing settings kept.
 # If it stops with an error, fix the cause (if any) and run the same command.
-# It installs a swap file, Node.js 24, Caddy and automatic security updates,
-# creates the "verdict" user, clones the code to /opt/verdict/repo (owned by
-# root, so the app user cannot change what root runs), writes
+# It installs a swap file, Node.js 24, Caddy, fail2ban, automatic security
+# updates and, once GRAFANA_TOKEN is set, Grafana Alloy, creates the "verdict"
+# user, clones the code to /opt/verdict/repo
+# (owned by root, so the app user cannot change what root runs), writes
 # /etc/verdict/verdict.env, then builds and starts the site with update.sh.
 set -euo pipefail
 
@@ -144,6 +145,49 @@ add_missing_settings() {
     printf '\n%s\n' "$(cloudflare_settings_block)" >>"$ENV_FILE"
     info "Added the (empty) custom domain and Cloudflare settings."
   fi
+  if ! grep -qE '^[#[:space:]]*NTFY_TOPIC=' "$ENV_FILE"; then
+    printf '\n%s\n' "$(phone_alerts_block)" >>"$ENV_FILE"
+    info "Added the (empty) phone alert settings."
+  fi
+  if ! grep -qE '^[#[:space:]]*GRAFANA_TOKEN=' "$ENV_FILE"; then
+    printf '\n%s\n' "$(grafana_settings_block)" >>"$ENV_FILE"
+    info "Added the (empty) Grafana Cloud settings."
+  fi
+}
+
+# The env file section for alerts on the phone (alert.sh, watch.sh).
+phone_alerts_block() {
+  cat <<'EOF'
+# --- Phone alerts, optional -------------------------------------------------
+# Every alert also goes to the ntfy app (see "Monitoring" in the README).
+# Anyone who knows the topic name can read it: make it long and random, e.g.
+# judge- followed by the output of: openssl rand -hex 12
+NTFY_TOPIC=
+# NTFY_URL=https://ntfy.sh
+# NTFY_TOKEN=   (only for a server or topic that needs a token)
+# The watcher alerts when one kind of [signal:...] line reaches its limit in
+# 5 minutes. Override a limit as ALERT_SIGNAL_<NAME>=n, e.g.
+# ALERT_SIGNAL_RATE_LIMITED=100
+# rate_limited, bad_origin, bearer_401 and webhook_bad_secret come by email
+# only; ALERT_SIGNALS_PUSH=1 sends them to the phone too.
+# ALERT_SIGNALS_PUSH=
+EOF
+}
+
+# The env file section for Grafana Alloy (alloy/config.alloy).
+grafana_settings_block() {
+  cat <<'EOF'
+# --- Grafana Cloud, optional ------------------------------------------------
+# Metrics and logs go to Grafana Cloud while GRAFANA_TOKEN is set, and the
+# watcher leaves the alerts Grafana sends to Grafana (see "Grafana Cloud" in
+# the README). After setting them the first time, run setup.sh again; after a
+# change, sudo verdict-update --force
+GRAFANA_PROM_URL=
+GRAFANA_PROM_USER=
+GRAFANA_LOKI_URL=
+GRAFANA_LOKI_USER=
+GRAFANA_TOKEN=
+EOF
 }
 
 # The env file section for the web server settings update.sh reads. Empty
@@ -207,7 +251,7 @@ setup_swap() {
 install_packages() {
   log "System packages"
   apt_get update -q
-  apt_install ca-certificates curl gnupg git openssl sqlite3 unattended-upgrades \
+  apt_install ca-certificates curl gnupg git openssl sqlite3 jq rclone unattended-upgrades \
     debian-keyring debian-archive-keyring apt-transport-https
 }
 
@@ -242,6 +286,44 @@ install_caddy() {
   apt_get update -q
   apt_install caddy
   info "Installed $(caddy version | cut -d' ' -f1)"
+}
+
+setup_fail2ban() {
+  log "fail2ban (blocks addresses that keep failing SSH logins)"
+  # Ubuntu's fail2ban bans through nftables, which is only a recommended
+  # package.
+  apt_install fail2ban python3-systemd nftables
+  # The watcher counts the bans in the journal.
+  printf '[Definition]\nlogtarget = SYSTEMD-JOURNAL\n' >/etc/fail2ban/fail2ban.d/verdict.local
+  printf '[sshd]\nenabled = true\nbackend = systemd\n' >/etc/fail2ban/jail.d/verdict.local
+  systemctl enable --quiet fail2ban
+  if systemctl restart fail2ban; then
+    info "Enabled for SSH."
+  else
+    warn "fail2ban did not start; carrying on without it. See journalctl -u fail2ban -n 50"
+  fi
+}
+
+# update.sh installs the config, the unit drop-in and the settings, and starts
+# it (or stops it again once GRAFANA_TOKEN is empty).
+install_alloy() {
+  log "Grafana Alloy (sends metrics and logs to Grafana Cloud)"
+  if [[ -z $(get_env GRAFANA_TOKEN) ]]; then
+    info "Skipped: GRAFANA_TOKEN is not set in $ENV_FILE."
+    return
+  fi
+  if dpkg-query -W -f='${db:Status-Status}' alloy 2>/dev/null | grep -qx installed; then
+    info "Already installed: $(alloy --version | head -n 1)"
+    return
+  fi
+  install -d -m 755 /etc/apt/keyrings
+  curl -fsSL https://apt.grafana.com/gpg-full.key -o /etc/apt/keyrings/grafana.asc
+  echo "deb [signed-by=/etc/apt/keyrings/grafana.asc] https://apt.grafana.com stable main" \
+    >/etc/apt/sources.list.d/grafana.list
+  chmod 644 /etc/apt/keyrings/grafana.asc /etc/apt/sources.list.d/grafana.list
+  apt_get update -q
+  apt_install alloy
+  info "Installed $(alloy --version | head -n 1)"
 }
 
 enable_auto_updates() {
@@ -469,6 +551,23 @@ TURNSTILE_SECRET_KEY=
 # REVIEW_ACCOUNT_EMAIL=   (store reviewers' test account; with REVIEW_ACCOUNT_CODE, a 6-digit code)
 # REVIEW_ACCOUNT_CODE=
 
+# --- Alerts and off-server backups, optional ----------------------------------
+# See "Monitoring" in the README. Alerts are sent through Resend, so they also
+# need RESEND_API_KEY and EMAIL_FROM above.
+# ALERT_EMAIL=
+# ALERT_5XX_THRESHOLD=10
+# ALERT_ERROR_THRESHOLD=20
+# (phone alerts: NTFY_TOPIC below)
+# BACKUP_S3_ENDPOINT=   (e.g. https://<account id>.r2.cloudflarestorage.com)
+# BACKUP_S3_BUCKET=
+# BACKUP_S3_ACCESS_KEY=
+# BACKUP_S3_SECRET_KEY=
+# BACKUP_PASSPHRASE=    (openssl rand -base64 32; keep a copy in a password manager)
+
+$(phone_alerts_block)
+
+$(grafana_settings_block)
+
 $(cloudflare_settings_block)
 EOF
     chmod 600 "$tmp"
@@ -546,6 +645,9 @@ main() {
   done
 
   [[ $EUID -eq 0 ]] || die "Run with sudo: sudo bash setup.sh"
+  # What this run changes is the setup's, not an intruder's (see watch.sh).
+  install -d -m 700 /var/lib/verdict-alerts
+  touch /var/lib/verdict-alerts/deploy-at
   if ! grep -qx 'VERSION_ID="24.04"' /etc/os-release; then
     warn "This script is written for Ubuntu 24.04 LTS; continuing anyway."
   fi
@@ -555,10 +657,12 @@ main() {
   install_packages
   install_node
   install_caddy
+  setup_fail2ban
   enable_auto_updates
   create_user_and_dirs
   clone_repo "$repo_url" "$branch"
   write_env_file "$reconfigure"
+  install_alloy
   install_shortcuts
 
   log "First build and start (update.sh)"

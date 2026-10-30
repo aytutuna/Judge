@@ -19,6 +19,7 @@ import { createHash } from "node:crypto";
 import { NextResponse } from "next/server";
 import { nanoid } from "nanoid";
 import type { Entitlement } from "@/lib/account-types";
+import { track } from "@/lib/analytics/track";
 import { API_ERROR_STATUS, apiErrorBody, type ApiErrorBody, type ApiErrorCode } from "@/lib/api-errors";
 import { isSameOrigin, premiumEnabled, resolveViewer } from "@/lib/auth";
 import { getVerdict } from "@/lib/db";
@@ -308,6 +309,7 @@ export async function premiumVerdict(req: Request, data: VerdictRequest, rawBody
       await refund();
       console.error("[premium] all judge runs failed:", outcome.error);
       console.info(premiumLogLine(null, outcome.code, run));
+      void track("verdict_failed", { userId, props: { kind: "verdict", code: outcome.code } });
       return outcome.code === "quota"
         ? fail("quota", "The judge hit its AI quota for now — try again in a few minutes.", { status: 502 })
         : unavailable(502);
@@ -354,6 +356,7 @@ export async function premiumVerdict(req: Request, data: VerdictRequest, rawBody
 
     const entitlement = await entitlementOrNull(userId);
     console.info(premiumLogLine(id, outcome.refused ? "refused" : outcome.degraded ? "degraded" : "ok", run));
+    void track("verdict_ready", { userId, props: { kind: "verdict" } });
     const body: VerdictApiResponse = {
       id,
       result: outcome.result,

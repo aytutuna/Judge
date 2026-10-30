@@ -30,6 +30,7 @@ import {
 } from "./email";
 import { ensureEntitlementTables, grantMissedWelcomeCredit, grantWelcomeCredit } from "./entitlements";
 import { captureAppleRefreshToken, deleteSignInTokens, keepCapturedAppleRefreshToken } from "./signin-tokens";
+import { signal } from "./signals";
 
 type Env = Record<string, string | undefined>;
 type AuthInstance = Auth<BetterAuthOptions>;
@@ -362,6 +363,10 @@ function buildOptions(env: Env, secret: string, client: Awaited<ReturnType<typeo
       session: {
         create: {
           before: async (session) => ({ data: { ...session, ipAddress: null, userAgent: null } }),
+          after: async (session, context) => {
+            const { noteSignIn } = await import("./analytics/devices");
+            await noteSignIn(session.userId, context?.headers ?? context?.request?.headers);
+          },
         },
       },
       // Provider access/refresh/ID tokens are never written to the account
@@ -548,8 +553,15 @@ export async function hasDeadBearer(req: Request): Promise<boolean> {
 }
 
 /** CSRF check for cookie-authenticated writes: the Origin (else Referer)
- * must be the configured public origin or this request's own host. */
+ * must be the configured public origin or this request's own host. Every
+ * caller refuses the request when it fails, so the refusal is logged here. */
 export function isSameOrigin(req: Request): boolean {
+  if (originMatches(req)) return true;
+  signal("bad_origin");
+  return false;
+}
+
+function originMatches(req: Request): boolean {
   let origin = req.headers.get("origin");
   if (!origin || origin === "null") {
     const referer = req.headers.get("referer");

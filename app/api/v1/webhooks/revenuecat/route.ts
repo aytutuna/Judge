@@ -1,9 +1,11 @@
 import { NextResponse } from "next/server";
+import { track } from "@/lib/analytics/track";
 import { apiErrorBody, type ApiErrorCode } from "@/lib/api-errors";
 import { authConfigured, findExistingUserId } from "@/lib/auth";
 import { clientIp } from "@/lib/client-ip";
 import { applyStoreEvent, type StoreEvent } from "@/lib/entitlements";
 import { checkIpLimits } from "@/lib/ratelimit";
+import { signal } from "@/lib/signals";
 import {
   mapRevenueCatEvent,
   revenueCatAuthorized,
@@ -71,6 +73,7 @@ export async function POST(req: Request): Promise<NextResponse> {
   }
 
   if (!revenueCatAuthorized(req.headers.get("authorization"), secret)) {
+    signal("webhook_bad_secret");
     return fail("signin_required", "Unauthorized.", 401);
   }
 
@@ -116,6 +119,10 @@ export async function POST(req: Request): Promise<NextResponse> {
       event = outcome.event;
     }
     const { applied } = await applyStoreEvent(event);
+    // Renewals and plan changes are not new buyers for the funnel.
+    if (applied && "productId" in event && (type === "INITIAL_PURCHASE" || type === "NON_RENEWING_PURCHASE")) {
+      void track("purchase_granted", { userId: event.userId, props: { product: event.productId, source: event.source } });
+    }
     console.info(`[revenuecat] type=${type} id=${id} action=${event.type} source=${event.source} applied=${applied}`);
     return NextResponse.json({ ok: true, applied, action: event.type }, { headers: NO_STORE });
   } catch (e) {
@@ -123,6 +130,7 @@ export async function POST(req: Request): Promise<NextResponse> {
       `[revenuecat] applying type=${type} id=${id} failed:`,
       e instanceof Error ? e.message.slice(0, 200) : String(e),
     );
+    signal("webhook_apply_failed");
     return fail("unavailable", "Could not apply the event right now.", 503);
   }
 }

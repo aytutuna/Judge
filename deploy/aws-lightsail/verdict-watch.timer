@@ -1,0 +1,12 @@
+# Runs verdict-watch.service every minute.
+# Installed to /etc/systemd/system/ by update.sh; edits there are overwritten.
+
+[Unit]
+Description=Judge server watch every minute
+
+[Timer]
+OnCalendar=minutely
+AccuracySec=5s
+
+[Install]
+WantedBy=timers.target

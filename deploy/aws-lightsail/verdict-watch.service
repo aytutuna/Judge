@@ -1,0 +1,33 @@
+# The server's watcher (watch.sh); started every minute by
+# verdict-watch.timer. Installed to /etc/systemd/system/ by update.sh; edits
+# there are overwritten.
+#
+# Runs as root from the root-owned checkout (never from /opt/verdict/current,
+# which the app user can write): it reads the journal, the env file and the
+# units it watches, and lists listening sockets.
+
+[Unit]
+Description=Watch the Judge server
+
+[Service]
+Type=oneshot
+EnvironmentFile=/etc/verdict/verdict.env
+ExecStart=/usr/bin/bash /opt/verdict/repo/deploy/aws-lightsail/watch.sh
+# Shared with verdict-errors; update.sh writes deploy-at in it.
+StateDirectory=verdict-alerts
+StateDirectoryMode=0700
+TimeoutStartSec=5min
+Nice=10
+
+NoNewPrivileges=true
+# Root only needs to read files it does not own, such as Caddy's log.
+CapabilityBoundingSet=CAP_DAC_READ_SEARCH
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+UMask=0077

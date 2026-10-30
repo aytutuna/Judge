@@ -193,6 +193,7 @@ after sign-in.
 | `EVIDENCE_MODEL` | `claude-haiku-5-5` | Vision model that transcribes evidence images |
 | `PURCHASES_ENABLED` | *(empty)* | `1` = `GET /api/v1/config` reports `pricing.purchasesEnabled: true`, so the apps offer their in-app purchases. Anything else = false ("Coming soon") |
 | `REVENUECAT_WEBHOOK_SECRET` | *(empty)* | Shared secret for `POST /api/v1/webhooks/revenuecat`; set RevenueCat's webhook Authorization header to `Bearer <secret>`. Unset = the webhook answers `503 not_configured` |
+| `ANALYTICS_ENABLED` | `1` | `0` = `GET /api/v1/config` reports `features.analytics: false`, so the apps stop sending usage events, and `POST /api/v1/events` stores nothing. The sign-in device check (`many_accounts_per_device`) is a separate anti-abuse feature and keeps running with the switch off |
 | `ALLOW_SANDBOX_PURCHASES` | *(empty)* | `1` = also apply RevenueCat events with `environment: SANDBOX` (TestFlight, Play test tracks). Leave unset on the live server: sandbox purchases are free |
 
 Sign-in providers without credentials are reported as unavailable by
@@ -411,7 +412,7 @@ The website and the future iOS/Android app share one JSON API. Base URL
 |---|---|
 | `GET /api/v1/config` | Startup: which sign-in methods work, whether Premium is on, prices, `freeTier: false` and `welcomeCredits` (`AppConfig`) |
 | `GET /api/v1/me` | The account and its entitlement (`MeResponse`); signed out = `{ "user": null, "entitlement": null }`; a dead bearer token = `401 signin_required` |
-| `DELETE /api/v1/me` `{ "confirm": "delete" }` | Removes every verdict the account owns and its side of every case (originals and names blanked, links closed; no verdict row is deleted), then deletes the account, sessions, sign-ins and entitlements (both stores require in-app deletion). Stored Sign in with Apple tokens are revoked at Apple first; an Apple failure is logged and does not stop the deletion |
+| `DELETE /api/v1/me` `{ "confirm": "delete" }` | Removes every verdict the account owns and its side of every case (originals and names blanked, links closed; no verdict row is deleted), then deletes the account, sessions, sign-ins, entitlements and usage events, and unlinks its devices (both stores require in-app deletion). Stored Sign in with Apple tokens are revoked at Apple first; an Apple failure is logged and does not stop the deletion |
 | `POST /api/v1/auth/apple/code` `{ "code": "<authorizationCode>" }` | iOS, right after a native Sign in with Apple: lets the server keep the Apple refresh token so account deletion can revoke it. `200 { "stored": true }` |
 | `GET /api/v1/me/verdicts` | Your one-sided verdicts, newest first (`?limit=1-50&before=<createdAt>`), each with its anonymized `headline` and your `nameMap` to restore names |
 | `POST /api/v1/clarify` | Premium: up to 2 clarifying questions |
@@ -436,6 +437,7 @@ The website and the future iOS/Android app share one JSON API. Base URL
 | `GET /api/v1/respond/{token}` / `POST` | The invite as the other person sees it / their side (no account) |
 | `POST /api/v1/respond/{token}/evidence` | The other person's evidence images |
 | `POST /api/v1/respond/{token}/appeals` | The other person adds context (signed in, Premium) |
+| `POST /api/v1/events` | Usage events, `{ "context": { "platform", "app_version", "anon_id"?, "device_id"?, "os_version"?, "device_model"?, "locale"? }, "events": [{ "name", "at"?, "props"? }] }`, up to 50 per batch as `application/json` (at most 32 KB); signed in or with `anon_id`. Only the event names and props listed in `lib/analytics/track.ts` are accepted; prop values are short tokens without spaces, integers or booleans, so no text anyone wrote fits. Anything else refuses the batch with `400 invalid`. Limits: 300 batches an hour per account, signed out 10 per 10 minutes and 60 an hour per address, and 200,000 events a day in all (`503` past that). `204` |
 | `POST /api/v1/webhooks/revenuecat` | RevenueCat only (`Authorization: Bearer ${REVENUECAT_WEBHOOK_SECRET}`): applies a purchase event once; see *Purchases* |
 | `GET /api/v1/respond/{token}/originals` / `PATCH .../display` / `POST .../removal` | Party B (bound account or `Respondent-Claim` / `claim`): their original, their display name, removing their side |
 
@@ -607,6 +609,10 @@ taken out of the text; the same request can be retried, e.g. with initials), plu
 - Both answer `200 { "redirect": false, "token": "<session token>", "user": { … } }`
   (also in the `set-auth-token` header); keep the token in the device's secure
   storage. An invalid ID token answers `401 { "code": "INVALID_TOKEN" }`.
+- **Device:** send `Device-Id` (the app's install id, 8 to 64 letters, digits,
+  `-` or `_`) and `Device-Platform` (`ios` or `android`) on every sign-in
+  request. The server notes which devices each account uses, to spot one
+  device behind many accounts; it never refuses a sign-in for it.
 - **Session:** `GET /api/v1/me`. **Sign out:** `POST /api/auth/sign-out` with
   the bearer token. Sessions last 30 days and slide forward with use.
 - **Dead tokens:** a bearer token that matches no live session (unknown,
@@ -871,7 +877,8 @@ All commands run in the browser SSH window (**Connect using SSH**).
   like the backups, deleted after 14 days). The restore re-applies every
   removal made since the backup from `/var/lib/verdict/removals.log` (see
   *Stored originals, names and removal*). These copies live on the same
-  disk, so also turn on off-server backups: on your instance's **Snapshots**
+  disk, so also send them to object storage (see *Monitoring* below) or
+  turn on snapshots: on your instance's **Snapshots**
   tab, switch on **Automatic snapshots** (Lightsail keeps the last seven
   daily snapshots; they are billed per GB stored). The privacy page promises
   removed data is gone from backups within 14 days: keep backup and
@@ -893,6 +900,330 @@ settings in `/etc/verdict/verdict.env`, the database in
 `/var/lib/verdict/verdict.db`, and the scripts in `deploy/aws-lightsail/`.
 The app listens only on `127.0.0.1:3000`; Caddy is the only way in, and it
 replaces any `X-Forwarded-For` header a visitor sends with their real address.
+
+### Monitoring
+
+GitHub checks from outside that the site answers; on the server, timers
+check for error spikes, watch for trouble every minute, and test the backups.
+The server's alerts go nowhere until `ALERT_EMAIL` or `NTFY_TOPIC` is set in
+`/etc/verdict/verdict.env`, and a change there needs no restart: the timers
+read the file every time they run. With Grafana Cloud set up (see below),
+Grafana takes over part of the alerting.
+
+**Where alerts go.** Each alert is an email to `ALERT_EMAIL` (sent through
+Resend with `RESEND_API_KEY` and `EMAIL_FROM`, the same as sign-in emails) and
+a push to the ntfy app on your phone, so it reaches you within a minute. To
+get the pushes:
+
+1. Install **ntfy** from the App Store or Google Play and allow its
+   notifications. On Android, also exempt it from battery optimization, or
+   pushes can arrive late.
+2. Make up a topic name nobody can guess, e.g. `judge-` followed by the output
+   of `openssl rand -hex 12`. On the public ntfy.sh server anyone who knows
+   the name can read the alerts (they hold no secrets or user text, but they
+   do describe the server).
+3. In the app tap **+**, enter the topic name and keep the server `ntfy.sh`.
+4. Add it to the env file:
+
+   ```bash
+   NTFY_TOPIC=judge-<your random part>
+   # NTFY_URL=https://ntfy.example.org   only with your own ntfy server
+   # NTFY_TOKEN=tk_...                    only if the server or topic needs one
+   ```
+
+5. Send a test:
+
+   ```bash
+   sudo systemd-run --wait --pipe -p EnvironmentFile=/etc/verdict/verdict.env \
+     /usr/bin/bash /opt/verdict/repo/deploy/aws-lightsail/alert.sh --critical "Judge test" "It works."
+   ```
+
+Critical alerts (marked below) go out at ntfy's highest priority (on Android
+a long vibration and a pop-over); the rest at normal priority.
+
+**Down alert.** Grafana Cloud's synthetic checks (set up by
+`deploy/grafana/provision.sh`, see below) fetch `/api/health` every minute and
+the home page every 15 minutes from Frankfurt and London. The *Site down* rule
+fires when a check fails from both probes for 3 minutes; *No probe data* warns
+when the probes stop reporting at all.
+
+**Error spikes.** `verdict-errors.timer` runs `errors.sh` every 5 minutes. It
+counts the last 5 minutes' 5xx responses in Caddy's access log
+(`/var/log/caddy/access.log`, which keeps only status codes and timings, no
+addresses or paths) and the app's error lines (`journalctl -u verdict -p err`).
+When either reaches its limit it sends one alert, then waits an hour before
+the next one. Spikes in that hour are still counted, and the
+next day brings a one-line digest of the day's spikes (no digest after a quiet
+day). Settings:
+
+```bash
+ALERT_EMAIL=you@yourdomain.org   # where alert emails go
+ALERT_5XX_THRESHOLD=10           # 5xx responses in 5 minutes (default 10)
+ALERT_ERROR_THRESHOLD=20         # app error lines in 5 minutes (default 20)
+```
+
+Check it with `sudo systemctl start verdict-errors` and
+`journalctl -u verdict-errors -n 20` (silent unless there is a spike);
+`systemctl list-timers 'verdict-*'` shows when each job runs next.
+
+**The watcher.** `verdict-watch.timer` runs `watch.sh` every minute, as root.
+Each check remembers what it has seen in `/var/lib/verdict-alerts`, and each
+kind of alert then waits an hour before it repeats (another SSH user or
+address, another program run with sudo, another failed unit or another set of
+changed files counts as another kind). What the alerts mean:
+
+| Alert | Means | Do |
+|---|---|---|
+| *the AI service is out of credit* (critical) | Model calls fail with a billing error, a credit message or the spend limit. Users see the "quota" message and are not charged. | Add credit, or raise the spend limit, in the Anthropic Console. |
+| *the AI service refused the API key* (critical) | Model calls fail with 401. Every verdict fails. | Put a working `ANTHROPIC_API_KEY` in the env file, then `sudo systemctl restart verdict`. |
+| *the AI service says the API key is not permitted* (critical) | Model calls fail with 403: the key works but may not use the model or the workspace. | Check the key's workspace and permissions in the Anthropic Console, or put another key in the env file and restart. |
+| *the AI service does not know the model, check CLAUDE_MODEL* (critical) | Model calls fail with 404: `CLAUDE_MODEL` or `CLAUDE_MODEL_LITE` names a retired or mistyped model. | Fix the name in the env file, then `sudo systemctl restart verdict`. |
+| *SSH login as ... from ...* (critical) | Someone logged in over SSH. Only the first half of the address is shown. | Nothing if it was you. If not, stop the instance from the provider's console, then replace the SSH keys and every secret in the env file. |
+| *... ran sudo ...* (critical) | A sudo command other than `verdict-update`, `verdict-restore`, `systemctl start verdict-backup` and the read-only ones the alerts suggest (`journalctl`, `systemctl status`, `show`, `list-units`, `list-timers` or `--failed`, `ss`, `du`, `df`, `fail2ban-client status`). Only the program is shown, not its arguments. | As for a login you did not make. |
+| *server files changed outside a deploy* (critical) | The env file, a `verdict*` unit, the Caddyfile, a `/usr/local/sbin/verdict-*` command or the live release changed, and the last `setup.sh` or `update.sh` started more than 30 minutes ago. The alert names the files. | Nothing if you edited them yourself (e.g. the env file). If not, treat it as a break-in. |
+| *a new port is listening* (critical) | A TCP port, or a UDP port under 32768, that was not listening before. A successful deploy takes the current set as the new normal. | `sudo ss -ltnup` names the program behind it. |
+| *NAME xN in 5 minutes* | The app logged a `[signal:NAME]` line N times in 5 minutes (see below). | The alert says what it means and where to look. |
+| *the app restarted on its own* | The app crashed and systemd started it again. | `journalctl -u verdict -n 100` |
+| *UNIT failed* | A unit is in the failed state, e.g. a backup that did not finish. Each unit alerts on its own. | `systemctl status <unit>`, then `journalctl -u <unit> -n 50` |
+| *a process was killed for lack of memory* | The kernel's out-of-memory killer struck, most likely the app at its 400 MB cap. | `journalctl -k --since -1h`; if it keeps happening, find what grows. |
+| *the disk at ... is N% full* | `/` or `/var/lib/verdict` is at 90% or more. A full disk stops the database and the backups. | `sudo du -xh --max-depth=2 / \| sort -h \| tail` |
+| *the certificate for ... expires in N days* | Fewer than 10 days left (checked hourly). Caddy renews 30 days ahead, so renewal has been failing. | `journalctl -u caddy -n 200`; often DNS or a firewall blocking port 80/443. |
+
+The app writes one `[signal:NAME]` warning line per event, never with what
+anyone wrote or their address. The watcher alerts when one kind reaches its
+limit within 5 minutes:
+
+| Signal | Default limit | Logged when |
+|---|---|---|
+| `rate_limited` | 50 | a request is refused by a rate limit (the line names the bucket) |
+| `turnstile_fail` | 30 | a visitor fails the Turnstile bot check |
+| `bad_origin` | 10 | a signed-in write from another site is refused |
+| `bearer_401` | 30 | a request comes with a sign-in token that no longer works |
+| `webhook_bad_secret` | 10 | a purchase webhook has the wrong secret |
+| `webhook_apply_failed` | 1 | a purchase webhook could not be applied |
+| `entitlement_refused` | 3 | a finished verdict's save and credit settlement was refused because the job was no longer judging |
+| `provider_rate` | 10 | the AI service answers 429 |
+| `provider_down` | 5 | the AI service answers 5xx, cannot be reached or times out |
+| `many_accounts_per_device` | 1 | a device (the app's `Device-Id` header at sign-in) signs in to its third or later account; sign-in goes ahead |
+| `events_cap` | 1 | a batch of usage events is refused because 200,000 were stored in the last 24 hours |
+| `ban` | 20 | fail2ban bans an address (from fail2ban's journal) |
+
+Change a limit with `ALERT_SIGNAL_<NAME>=n` in the env file, e.g.
+`ALERT_SIGNAL_RATE_LIMITED=100`. To see the lines:
+`journalctl -u verdict --since -1h | grep 'signal:'`.
+
+Signal alerts are not critical. The ones strangers can set off at will
+(`rate_limited`, `bad_origin`, `bearer_401`, `webhook_bad_secret`,
+`many_accounts_per_device` and `events_cap`) come by email only; set
+`ALERT_SIGNALS_PUSH=1` in the env file to get them on the phone too. Without
+`ALERT_EMAIL` they are only logged.
+
+fail2ban is installed by `setup.sh` with its standard SSH jail (an address
+that fails 5 logins in 10 minutes is blocked for 10 minutes) and logs to the
+journal. It reads the SSH logins from the journal too (`backend = systemd` in
+`/etc/fail2ban/jail.d/verdict.local`) and blocks through nftables, which
+`setup.sh` installs with it. If fail2ban does not start, `setup.sh` warns and
+carries on. `sudo fail2ban-client status sshd` lists who is blocked.
+
+**Heartbeat.** Every morning after 09:00 server time (UTC unless you changed
+it) the watcher sends *Judge is fine* with the last 24 hours: verdicts judged
+and failed, tokens in and out, 5xx responses, addresses banned, crash
+restarts, the last backup upload, the last restore drill and disk use. It is
+the alarm for the alarms: if a morning passes without it, something in the
+chain is broken (the server, the watcher, or the alert settings and keys).
+Check the down alert first, then `systemctl status verdict-watch.timer
+verdict-watch` and `journalctl -u verdict-watch -n 50`. If one of the
+watcher's checks failed in the run that sends the heartbeat, its subject names
+the check; a check that fails at other times only shows in that journal.
+
+**Restore drill.** On the 1st of every month `verdict-restore-drill` unpacks
+the newest backup into a temporary file, runs SQLite's integrity check,
+counts the verdicts and cases in it and deletes the copy; the live database
+is not touched. When the disk has less than twice the unpacked size free, it
+skips the copy and sends *restore drill skipped: low disk* instead. A failure
+sends an alert; a pass is one journal line that the heartbeat
+repeats. Run it now with
+`sudo systemctl start verdict-restore-drill && journalctl -u verdict-restore-drill -n 5`.
+
+**Turning it on for a server set up before the watcher.** Pull and run
+`sudo bash /opt/verdict/repo/deploy/aws-lightsail/setup.sh` once. It keeps the
+settings, installs fail2ban, adds an empty `NTFY_TOPIC=` to the env file and
+deploys with `--force`, which installs the new timers. (A plain
+`sudo verdict-update` runs the copy of `update.sh` from before the pull, so it
+would only install them on the next deploy.) The watcher's first run only
+notes the current state: the journal position, the files and the open ports.
+Expect alerts for your own SSH logins and sudo commands from then on, and one
+for your own edits to the env file.
+
+**Grafana Cloud.** On Grafana Cloud's free tier, Grafana keeps the server's
+metrics and logs, alerts on them, and fetches the site from two probes:
+`/api/health` every minute and the home page every 15 minutes (about 92,000
+runs a month; the free tier allows 100,000). Grafana Alloy on the server
+(`deploy/aws-lightsail/alloy/config.alloy`, installed as
+`/etc/alloy/verdict.alloy`) sends CPU, memory, disk, network and the state of
+the `verdict*`, `caddy`, `ssh`, `fail2ban` and `alloy` units to Grafana's
+Prometheus every 60 seconds, and to its Loki the journal of those units and
+the kernel's, plus Caddy's access log (with the status class, e.g. `5xx`, as a
+label; nothing beyond what the log already keeps). It also scrapes the app's
+usage counts every 60 seconds from `http://127.0.0.1:3000/api/internal/metrics`
+(job `judge-app`): `judge_events_24h{name,platform}`, `judge_active_users_24h`,
+`judge_active_users_7d` and `judge_funnel{step}` for app_open, case_created,
+verdict_ready and purchase_granted (first purchases only, no renewals) over 7
+days. The app answers that path only to a direct request from the server
+itself, and Caddy answers 404 for `/api/internal/*`. Usage events are kept 90
+days, sign-in device links 180 days after their last use. Alloy sees only the
+`GRAFANA_*` settings, which deploys copy to `/etc/alloy/grafana.env`. The
+rules are in `deploy/grafana/alerts.json`: critical ones go to Pushover at
+emergency priority (repeating until you acknowledge it) and by email, warnings
+by email only. While `GRAFANA_TOKEN` is set, the watcher leaves `[alert:...]`
+lines, out-of-memory kills, full disks and failed `verdict*`, `caddy`, `ssh`,
+`fail2ban` and `alloy` units to Grafana and only logs them, and `errors.sh` no
+longer alerts on 5xx responses alone. Everything else it does stays: logins,
+sudo, changed files, new ports, signals, crash restarts, other failed units,
+Caddy's own certificate (behind Cloudflare the probes only see Cloudflare's),
+backups, the restore drill and the heartbeat.
+
+Set up Grafana first and the server last: the watcher goes quiet on those
+alerts as soon as `GRAFANA_TOKEN` is in the env file, so Grafana's rules must
+already be there.
+
+1. Sign up at grafana.com. The free account comes with a stack, e.g.
+   `https://<name>.grafana.net`; put it in a European region, near the server.
+2. In the Grafana Cloud portal (grafana.com, **My Account**), open
+   **Access Policies** and create two policies for the stack, each with a
+   token without expiry: *judge-server* with the scopes `metrics:write` and
+   `logs:write` (the token is `GRAFANA_TOKEN`), and *judge-synthetics* with
+   `stacks:read`, `metrics:write`, `logs:write` and `traces:write`
+   (`GRAFANA_CLOUD_TOKEN`, used only by `provision.sh`; Synthetic Monitoring
+   keeps it to publish its results, so never delete it).
+3. Optional: in Pushover (the app, then pushover.net) copy your **user key**
+   and **Create an Application** named Judge for its **API token**. Without
+   them critical alerts go by email (and ntfy, if a topic is set) only.
+4. In the stack, **Administration** > **Users and access** > **Service
+   accounts**: add one with the Admin role and give it a token.
+5. On your own machine (Linux, macOS or WSL, with curl and jq), keep the
+   values in a file outside the repo and run `provision.sh`:
+
+   ```bash
+   # ~/judge-grafana.env
+   GRAFANA_URL=https://<name>.grafana.net
+   GRAFANA_SA_TOKEN=glsa_...
+   GRAFANA_CLOUD_TOKEN=glc_...
+   ALERT_EMAIL=you@yourdomain.org
+   GRAFANA_PUSHOVER_USER=<user key>
+   GRAFANA_PUSHOVER_TOKEN=<application token>
+   # NTFY_TOPIC=judge-...   critical alerts to ntfy as well
+   # SM_TOKEN=...           a Synthetic Monitoring access token, instead of
+   #                        registering it again with GRAFANA_CLOUD_TOKEN
+   ```
+
+   ```bash
+   (set -a; . ~/judge-grafana.env; bash deploy/grafana/provision.sh)
+   ```
+
+   It creates the folder *judge*, the contact points, the notification
+   policy, the rules and the two synthetic checks from Frankfurt and London,
+   and updates them in place when run again. Run it after every change to
+   `deploy/grafana/`; edits made in the Grafana UI stay possible but the next
+   run puts the files' version back. Until the next step is done, *No
+   metrics from the server* fires (and pages), and *No access log data*
+   follows.
+6. On the stack's page in the portal, **Prometheus** > **Details** shows the
+   remote write endpoint and the user, **Loki** > **Details** the URL (add
+   `/loki/api/v1/push` to it) and the user. Add them to the env file:
+
+   ```bash
+   GRAFANA_PROM_URL=https://prometheus-prod-<nn>-<region>.grafana.net/api/prom/push
+   GRAFANA_PROM_USER=<Prometheus user, a number>
+   GRAFANA_LOKI_URL=https://logs-prod-<nnn>.grafana.net/loki/api/v1/push
+   GRAFANA_LOKI_USER=<Loki user, a number>
+   GRAFANA_TOKEN=glc_...
+   ```
+
+   Then run `sudo bash /opt/verdict/repo/deploy/aws-lightsail/setup.sh` once:
+   it installs Alloy from Grafana's apt repository and starts it (without
+   `GRAFANA_TOKEN` it skips Alloy, and a deploy stops an installed one).
+   Deploys keep its config current; after changing these settings later, run
+   `sudo verdict-update --force`. Within a couple of minutes **Explore** in
+   Grafana shows `up{app="judge"}` and the logs `{app="judge"}`; if not,
+   `journalctl -u alloy -n 50`.
+
+When an alert fires, its summary says what happened and its description where
+to look on the server, the same hints as in the watcher's table above. In
+Grafana, **Alerting** > **Alert rules** (folder *judge*) shows each rule's
+state and history, **Explore** with Loki and `{app="judge", unit="verdict.service"}`
+the app's log around that time, and **Testing & synthetics** > **Synthetics**
+the probes' results. If Grafana stops getting metrics for 3 minutes, *No
+metrics from the server* fires: the server is down or Alloy stopped. When
+Grafana cannot query its own data (*DatasourceError*, *DatasourceNoData*), that
+comes by email only, at most every 4 hours. The rules' limits are fixed in `alerts.json`; `ALERT_SIGNAL_<NAME>` only changes
+the watcher's. Signals, SSH logins and bans still alert from the watcher too,
+so for now those come twice. The GitHub down alert stays until the synthetic
+checks have proven themselves.
+
+**Off-server backups.** After each nightly backup, `verdict-backup-upload`
+encrypts the newest copy (and the removal log) with `BACKUP_PASSPHRASE` and
+uploads it with rclone to an S3-compatible bucket. It checks the size the
+bucket reports and deletes copies there older than `BACKUP_KEEP_DAYS` (14 by
+default; the privacy page promises at most 14 days). If the backup failed, the
+newest one is over a day old, or the upload fails, it sends an alert.
+With Cloudflare R2 (10 GB free):
+
+1. In the Cloudflare dashboard open **R2 Object Storage** (R2 asks for a
+   payment method once, even on the free tier) and **Create bucket**, e.g.
+   `judge-backups`, location *Automatic*. In the bucket's **Settings**, add
+   an **Object lifecycle rule** that deletes objects 14 days after upload.
+   The job prunes the bucket itself, but only while it runs with these
+   settings and the backup works; the rule keeps the 14 days when it doesn't.
+2. On the R2 overview page, **Manage API tokens** > **Create Account API
+   token** (or *User API token*). Permission **Object Read & Write**, applied
+   to that bucket only, no expiry. Create it and copy the **Access Key ID**,
+   the **Secret Access Key** (shown once) and the endpoint,
+   `https://<account id>.r2.cloudflarestorage.com`.
+3. Make a passphrase with `openssl rand -base64 32` and save it in your
+   password manager next to `ORIGINALS_KEY`. Without it the copies cannot be
+   read, and if the server is lost, so is the copy in the env file.
+4. Add the settings and run the job once:
+
+   ```bash
+   BACKUP_S3_ENDPOINT=https://<account id>.r2.cloudflarestorage.com
+   BACKUP_S3_BUCKET=judge-backups
+   BACKUP_S3_ACCESS_KEY=<access key id>
+   BACKUP_S3_SECRET_KEY=<secret access key>
+   BACKUP_PASSPHRASE=<the passphrase>
+   ```
+
+   ```bash
+   sudo systemctl start verdict-backup && journalctl -u verdict-backup-upload -n 20
+   ```
+
+   It should end with *Done: verdict-....db.gz.gpg is in judge-backups*.
+
+Any other S3 service works the same way with its own endpoint and keys
+(`BACKUP_S3_BUCKET` may include a folder, e.g. `my-bucket/judge`). Without a
+lifecycle rule, removing the `BACKUP_S3_*` settings leaves the copies already
+in the bucket there for good: delete them by hand.
+
+To restore from the bucket (when the server's own copies are gone), download
+the newest `verdict-<time>.db.gz.gpg` and `removals.log.gpg` (in R2: the
+bucket's **Objects** tab, then **Download**), copy them to the server, and
+run:
+
+```bash
+gpg --pinentry-mode loopback -d verdict-<time>.db.gz.gpg > verdict-<time>.db.gz   # asks for BACKUP_PASSPHRASE
+sudo verdict-restore ./verdict-<time>.db.gz
+rm verdict-<time>.db.gz verdict-<time>.db.gz.gpg
+```
+
+On a new server, first set the old `ORIGINALS_KEY` in the env file and put
+the old removal log in place, so the restore re-applies the removals made
+after that backup:
+
+```bash
+gpg --pinentry-mode loopback -d removals.log.gpg > removals.log
+sudo install -o verdict -g verdict -m 600 removals.log /var/lib/verdict/removals.log
+rm removals.log removals.log.gpg
+```
 
 ### Custom domain behind Cloudflare
 
@@ -1053,6 +1384,7 @@ switch the records to *DNS only* (grey cloud), empty `CLOUDFLARE_PROXY=` and
 | Lightsail $5 plan (static IP and 1 TB transfer included) | $5 |
 | Model usage | about $30–50 per 1,000 verdicts (see *Cost per premium verdict*) |
 | Automatic snapshots (optional) | a little per GB stored |
+| Off-server backups on Cloudflare R2 (optional) | free up to 10 GB |
 
 Every verdict is paid for with a credit or the monthly plan, and
 `PREMIUM_DAILY_CAP` (500 by default, counted from the database) bounds a
