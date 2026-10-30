@@ -238,8 +238,8 @@ subscriptions on the server; the app only shows what `/me` says.
 `Analytics` (Core/Analytics) queues the events listed in
 `lib/analytics/track.ts` and posts them to `POST /api/v1/events`, with the
 bearer token when signed in and `anon_id` always. The queue lives in memory
-and in `Application Support/analytics-queue.json` (500 at most) and goes out
-in batches of up to 50: once 20 are waiting, every 30 s while the app is
+and in `Application Support/analytics-queue.json` (500 at most, written off
+the main actor and kept out of backups) and goes out in batches of up to 50: once 20 are waiting, every 30 s while the app is
 active and when it goes to the background. A failed send waits at least a
 minute, doubling up to 15; a `400` drops the batch. Nothing is queued while
 `features.analytics` in `/api/v1/config` is false or the "Usage statistics"
@@ -247,7 +247,8 @@ setting is off (turning it off clears the queue); until the config has
 answered, events wait. Each event takes at most one prop (`screen_view`
 `screen`, `buy_tapped` `product`, `sign_in_started` `provider`,
 `settings_changed` `key`, `error_shown` `code`), a short token; anything else
-is refused before it is queued and fails an assertion in Debug.
+is refused before it is queued and fails an assertion in Debug. Hosted unit
+tests launch the app with usage events off.
 
 The device id is `identifierForVendor` (a UUID kept in UserDefaults when iOS
 has none yet). It goes in the events' context and, as `Device-Id` with

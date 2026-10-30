@@ -6,11 +6,13 @@ private final class StubTransport: AnalyticsTransport, @unchecked Sendable {
     private let lock = NSLock()
     private var bodies: [Data] = []
     var answer: AnalyticsDelivery = .sent
+    var onSend: (@Sendable () -> Void)?
 
     func sendEvents(_ body: Data) async -> AnalyticsDelivery {
         lock.lock()
         defer { lock.unlock() }
         bodies.append(body)
+        onSend?()
         return answer
     }
 
@@ -110,7 +112,7 @@ final class AnalyticsTests: XCTestCase {
     }
 
     @MainActor
-    func testTwentyQueuedEventsSendThemselves() async throws {
+    func testTwentyQueuedEventsSendThemselves() async {
         let transport = StubTransport()
         let analytics = make(transport)
         analytics.setServerOn(true)
@@ -118,8 +120,10 @@ final class AnalyticsTests: XCTestCase {
         for _ in 0..<19 { analytics.track("question_answered") }
         await Task.yield()
         XCTAssertTrue(transport.batches.isEmpty)
+        let sent = expectation(description: "the batch went out")
+        transport.onSend = { sent.fulfill() }
         analytics.track("question_answered")
-        for _ in 0..<100 where !analytics.queue.isEmpty { try await Task.sleep(for: .milliseconds(10)) }
+        await fulfillment(of: [sent], timeout: 5)
         XCTAssertEqual(transport.batches.map(\.count), [20])
     }
 
@@ -176,17 +180,23 @@ final class AnalyticsTests: XCTestCase {
     }
 
     @MainActor
-    func testTheQueueSurvivesARestart() {
-        let file = tempFile()
+    func testTheQueueSurvivesARestart() async throws {
+        var file = tempFile()
         defer { try? FileManager.default.removeItem(at: file) }
         let first = make(StubTransport(), file: file)
+        await first.settled()
         first.track("app_open")
         first.track("screen_view", ["screen": "settings"])
+        await first.settled()
+        file.removeAllCachedResourceValues()
+        XCTAssertEqual(try file.resourceValues(forKeys: [.isExcludedFromBackupKey]).isExcludedFromBackup, true)
 
         let again = make(StubTransport(), file: file)
-        XCTAssertEqual(again.queue.map(\.name), ["app_open", "screen_view"])
+        // Tracked before the saved queue is back: it goes after the saved ones.
         again.track("case_started")
-        XCTAssertEqual(Set(again.queue.map(\.seq)).count, 3)
+        await again.settled()
+        XCTAssertEqual(again.queue.map(\.name), ["app_open", "screen_view", "case_started"])
+        XCTAssertEqual(again.queue.map(\.seq), [1, 2, 3])
     }
 
     @MainActor
@@ -195,11 +205,14 @@ final class AnalyticsTests: XCTestCase {
         defer { try? FileManager.default.removeItem(at: file) }
         let transport = StubTransport()
         let analytics = make(transport, file: file)
+        await analytics.settled()
         analytics.track("app_open")
+        await analytics.settled()
         XCTAssertTrue(FileManager.default.fileExists(atPath: file.path()))
 
         analytics.allowed = false
         XCTAssertTrue(analytics.queue.isEmpty)
+        await analytics.settled()
         XCTAssertFalse(FileManager.default.fileExists(atPath: file.path()))
         analytics.track("app_open")
         analytics.setServerOn(true)

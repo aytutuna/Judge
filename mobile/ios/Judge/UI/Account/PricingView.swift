@@ -71,9 +71,6 @@ struct PricingView: View {
         }
         .task { await account.refresh() }
         .onAppear { app.analytics.track("screen_view", ["screen": "pricing"]) }
-        .onChange(of: app.purchases.message) { _, message in
-            if message == .success { app.analytics.track("purchase_completed") }
-        }
         .task(id: pricing.purchasesEnabled) { await app.purchases.loadOffers(pricing: app.account.pricing) }
         .onDisappear { app.purchases.clearMessage() }
     }

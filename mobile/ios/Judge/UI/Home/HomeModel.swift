@@ -245,7 +245,6 @@ final class HomeModel {
             }
             return
         }
-        app.analytics.track("case_submitted")
         if isTwoSided(app) {
             createCase(app: app)
         } else {
@@ -276,6 +275,7 @@ final class HomeModel {
     /// account fills the gaps.
     private func createCase(app: AppModel) {
         if openPricingIfOut(app) { return }
+        app.analytics.track("case_submitted")
         error = nil
         isCreatingCase = true
         let text = argument
@@ -347,6 +347,7 @@ final class HomeModel {
         let history = app.history
         let key = input.requestKey
         if let held = pending, held.key == key, Date.now.timeIntervalSince(held.since) < Self.resumeWindow {
+            app.analytics.track("case_submitted")
             isJudging = true
             request = Task { [weak self] in
                 await self?.judge(.resume(held.accepted, idempotencyKey: held.idempotencyKey), requestKey: key, api: api, history: history)
@@ -354,6 +355,7 @@ final class HomeModel {
             return
         }
         if openPricingIfOut(app) { return }
+        app.analytics.track("case_submitted")
         isCheckingQuestions = true
         request = Task { [weak self] in
             let asked = await Self.askQuestions(api: api, argument: input.argument, lang: input.lang)

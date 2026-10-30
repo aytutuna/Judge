@@ -81,6 +81,12 @@ final class Analytics {
     private var ticker: Task<Void, Never>?
     private var opened = false
     private var leftAt: Date?
+    /// File reads and writes, one after another, off the main actor.
+    private var io: Task<Void, Never>?
+    /// The saved queue being read back at launch; flushes wait for it.
+    private var restoring: Task<Void, Never>?
+    /// False until the saved queue is back: writing earlier would overwrite it.
+    private var restored = true
 
     private static let log = Logger(subsystem: "com.okjudge.judge", category: "analytics")
 
@@ -91,12 +97,26 @@ final class Analytics {
         self.file = file
         self.allowed = allowed
         self.now = now
-        if allowed, let file, let data = try? Data(contentsOf: file),
-           let saved = try? JSONDecoder().decode([AnalyticsEvent].self, from: data) {
-            queue = Array(saved.suffix(Self.cap))
-            nextSeq = (queue.map(\.seq).max() ?? 0) + 1
-        } else if !allowed, let file {
-            try? FileManager.default.removeItem(at: file)
+        guard let file else { return }
+        if allowed {
+            restored = false
+            let read = Task.detached(priority: .utility) { QueueFile.read(file) }
+            io = Task { _ = await read.value }
+            restoring = Task { [weak self] in
+                let saved = await read.value
+                self?.restore(saved)
+            }
+        } else {
+            io = Task.detached(priority: .utility) { QueueFile.write(nil, to: file) }
+        }
+    }
+
+    /// Returns once the saved queue is back and the file holds the latest queue.
+    func settled() async {
+        await restoring?.value
+        while let pending = io {
+            await pending.value
+            if io == pending { return }
         }
     }
 
@@ -132,6 +152,7 @@ final class Analytics {
     /// Sends what is queued, a batch at a time, unless a failed send is
     /// still waiting out its backoff.
     func flush() async {
+        await restoring?.value
         guard allowed, serverOn == true, !sending else { return }
         if let retryAt, now() < retryAt { return }
         sending = true
@@ -185,6 +206,7 @@ final class Analytics {
         let background = BackgroundActivity(name: "analytics")
         Task {
             await flush()
+            await settled()
             background.end()
         }
     }
@@ -216,12 +238,24 @@ final class Analytics {
         save()
     }
 
+    /// Events from the last run go in front of any tracked since launch.
+    private func restore(_ saved: [AnalyticsEvent]) {
+        restored = true
+        if allowed, serverOn != false {
+            queue = Array((saved + queue).suffix(Self.cap))
+            for i in queue.indices { queue[i].seq = i + 1 }
+            nextSeq = queue.count + 1
+        }
+        save()
+    }
+
     private func save() {
-        guard let file else { return }
-        if queue.isEmpty {
-            try? FileManager.default.removeItem(at: file)
-        } else if let data = try? JSONEncoder().encode(queue) {
-            try? data.write(to: file, options: .atomic)
+        guard let file, restored else { return }
+        let data: Data? = queue.isEmpty ? nil : (try? JSONEncoder().encode(queue))
+        let previous = io
+        io = Task.detached(priority: .utility) {
+            await previous?.value
+            QueueFile.write(data, to: file)
         }
     }
 
@@ -253,5 +287,26 @@ final class Analytics {
 
     private static func matches(_ text: String, _ pattern: String) -> Bool {
         !text.contains("\n") && text.range(of: pattern, options: .regularExpression) != nil
+    }
+}
+
+/// The queue's file, read and written off the main actor.
+private enum QueueFile {
+    static func read(_ url: URL) -> [AnalyticsEvent] {
+        guard let data = try? Data(contentsOf: url) else { return [] }
+        return (try? JSONDecoder().decode([AnalyticsEvent].self, from: data)) ?? []
+    }
+
+    /// Nil removes the file. It is only a send queue, so it stays out of backups.
+    static func write(_ data: Data?, to url: URL) {
+        guard let data else {
+            try? FileManager.default.removeItem(at: url)
+            return
+        }
+        guard (try? data.write(to: url, options: .atomic)) != nil else { return }
+        var url = url
+        var values = URLResourceValues()
+        values.isExcludedFromBackup = true
+        try? url.setResourceValues(values)
     }
 }

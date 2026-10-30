@@ -52,6 +52,8 @@ final class PurchaseModel {
     @ObservationIgnored private var storeQueue: Task<Void, Never>?
     /// Bumped by every purchase and sign-out, so an older /me poll stops.
     @ObservationIgnored private var generation = 0
+    /// Told when the store reports a completed purchase (not a pending one).
+    @ObservationIgnored var onPurchased: (@MainActor () -> Void)?
 
     init(gateway: (any PurchaseGateway)?, account: AccountModel) {
         self.gateway = gateway
@@ -179,6 +181,7 @@ final class PurchaseModel {
         case .pending:
             message = .pending
         case .purchased:
+            onPurchased?()
             message = .success
             await waitForGrant(since: before, generation: mine)
         }

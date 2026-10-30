@@ -90,6 +90,8 @@ final class AppModel {
     @ObservationIgnored private var caseModels: [String: CaseModel] = [:]
 
     private let defaults: UserDefaults
+    /// Off in hosted unit tests: the setting then never turns events on.
+    private let sendsUsageEvents: Bool
     private static let langKey = "settings.lang"
     private static let appearanceKey = "settings.appearance"
     private static let usageStatsKey = "settings.usageStats"
@@ -105,22 +107,26 @@ final class AppModel {
         api: JudgeAPI? = nil,
         caseNames: (any CaseNamesStore)? = nil,
         purchaseGateway: (any PurchaseGateway)? = nil,
-        analyticsFile: URL? = nil
+        analyticsFile: URL? = nil,
+        sendsUsageEvents: Bool = true
     ) {
         self.config = config
         self.persistsDraft = persistsDraft
         self.defaults = defaults
+        self.sendsUsageEvents = sendsUsageEvents
         self.caseNames = caseNames ?? KeychainCaseNamesStore()
         langPreference = LangPreference(stored: defaults.string(forKey: Self.langKey))
         appearance = Appearance(stored: defaults.string(forKey: Self.appearanceKey))
-        usageStats = defaults.object(forKey: Self.usageStatsKey) as? Bool ?? true
+        let usageStats = defaults.object(forKey: Self.usageStatsKey) as? Bool ?? true
+        self.usageStats = usageStats
         let deviceID = DeviceIdentity.deviceID(defaults)
-        self.api = api ?? JudgeAPI(baseURL: config.apiBaseURL, userAgent: config.userAgent, tokenStore: tokenStore, deviceID: deviceID)
+        let judgeAPI = api ?? JudgeAPI(baseURL: config.apiBaseURL, userAgent: config.userAgent, tokenStore: tokenStore, deviceID: deviceID)
+        self.api = judgeAPI
         analytics = Analytics(
-            transport: self.api,
+            transport: judgeAPI,
             context: DeviceIdentity.context(config: config, defaults: defaults, deviceID: deviceID),
-            file: analyticsFile,
-            allowed: usageStats
+            file: sendsUsageEvents ? analyticsFile : nil,
+            allowed: usageStats && sendsUsageEvents
         )
         history = HistoryStore(container: container)
         home = HomeModel()
@@ -142,6 +148,9 @@ final class AppModel {
         let analytics = self.analytics
         account.onConfig = { [weak analytics] config in
             analytics?.setServerOn(config.features.analytics)
+        }
+        purchases.onPurchased = { [weak analytics] in
+            analytics?.track("purchase_completed")
         }
         // Weak: the list holds the account, and a strong capture would keep
         // both alive after the app model is gone.
@@ -216,7 +225,7 @@ final class AppModel {
     func setUsageStats(_ on: Bool) {
         usageStats = on
         defaults.set(on, forKey: Self.usageStatsKey)
-        analytics.allowed = on
+        analytics.allowed = on && sendsUsageEvents
     }
 
     /// Screenshot evidence on Home: uploading needs an account.

@@ -21,7 +21,9 @@ struct JudgeApp: App {
         #endif
         let container = HistoryContainer.make()
         self.container = container
-        _app = State(initialValue: AppModel(config: .load(), container: container, analyticsFile: Analytics.defaultFile))
+        // Hosted unit tests launch the app too; their runs stay out of the counts.
+        let testing = ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil
+        _app = State(initialValue: AppModel(config: .load(), container: container, analyticsFile: Analytics.defaultFile, sendsUsageEvents: !testing))
         sceneLive = true
     }
 
