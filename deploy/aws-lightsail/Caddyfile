@@ -65,6 +65,13 @@ __SITE_ADDRESS__ {
 		respond 404
 	}
 
+	# No request body the app takes is larger than an evidence upload
+	# (MAX_UPLOAD_BYTES in lib/case-types.ts, 16 MB); anything bigger gets
+	# 413 here instead of reaching Node.
+	request_body /api/* {
+		max_size 17MB
+	}
+
 	reverse_proxy 127.0.0.1:3000 {
 		# The app rate-limits by the first X-Forwarded-For entry. Replace
 		# whatever the visitor sent with the address Caddy actually sees, so
