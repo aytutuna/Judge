@@ -534,6 +534,8 @@
     <string name="app_settings_appearance_system">Wie auf dem Handy</string>
     <string name="app_settings_appearance_light">Hell</string>
     <string name="app_settings_appearance_dark">Dunkel</string>
+    <string name="app_settings_usage_stats">Nutzungsstatistik</string>
+    <string name="app_settings_usage_stats_hint">Anonyme Zählungen, welche Bildschirme und Funktionen genutzt werden. Text aus Fällen wird nie gesendet.</string>
     <string name="app_settings_about">Über Judge</string>
     <string name="app_settings_version">Version %1$s</string>
     <string name="app_signin_required">Melde dich an, um ein Urteil zu bekommen.</string>

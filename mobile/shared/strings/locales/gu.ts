@@ -63,6 +63,9 @@ const gu: AppLocale = {
     "app.settings.appearanceSystem": "ફોન પ્રમાણે",
     "app.settings.appearanceLight": "લાઇટ",
     "app.settings.appearanceDark": "ડાર્ક",
+    "app.settings.usageStats": "વપરાશના આંકડા",
+    "app.settings.usageStatsHint":
+      "કઈ સ્ક્રીન અને સુવિધાઓ વપરાય છે તેની અનામી ગણતરી. કેસનું કોઈ લખાણ ક્યારેય મોકલાતું નથી.",
     "app.settings.about": "Judge વિશે",
     "app.settings.version": "વર્ઝન {version}",
     "app.signin.required": "ચુકાદો મેળવવા સાઇન ઇન કરો.",

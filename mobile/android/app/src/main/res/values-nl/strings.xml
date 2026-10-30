@@ -534,6 +534,8 @@
     <string name="app_settings_appearance_system">Zoals je telefoon</string>
     <string name="app_settings_appearance_light">Licht</string>
     <string name="app_settings_appearance_dark">Donker</string>
+    <string name="app_settings_usage_stats">Gebruiksstatistieken</string>
+    <string name="app_settings_usage_stats_hint">Anonieme tellingen van welke schermen en functies worden gebruikt. Tekst uit zaken wordt nooit verstuurd.</string>
     <string name="app_settings_about">Over Judge</string>
     <string name="app_settings_version">Versie %1$s</string>
     <string name="app_signin_required">Log in voor een uitspraak.</string>

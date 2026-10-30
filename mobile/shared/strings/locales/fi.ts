@@ -54,6 +54,9 @@ const fi: AppLocale = {
     "app.settings.appearanceSystem": "Sama kuin puhelimessa",
     "app.settings.appearanceLight": "Vaalea",
     "app.settings.appearanceDark": "Tumma",
+    "app.settings.usageStats": "Käyttötilastot",
+    "app.settings.usageStatsHint":
+      "Nimettömiä määriä siitä, mitä näkymiä ja toimintoja käytetään. Juttujen tekstiä ei lähetetä koskaan.",
     "app.settings.about": "Tietoa Judgesta",
     "app.settings.version": "Versio {version}",
     "app.signin.required": "Kirjaudu, niin saat tuomion.",

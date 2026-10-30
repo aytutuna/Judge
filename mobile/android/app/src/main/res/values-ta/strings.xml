@@ -534,6 +534,8 @@
     <string name="app_settings_appearance_system">போனில் உள்ளபடியே</string>
     <string name="app_settings_appearance_light">வெளிர்</string>
     <string name="app_settings_appearance_dark">இருண்ட</string>
+    <string name="app_settings_usage_stats">பயன்பாட்டுப் புள்ளிவிவரம்</string>
+    <string name="app_settings_usage_stats_hint">எந்தத் திரைகளும் அம்சங்களும் பயன்படுத்தப்படுகின்றன என்பதன் அநாமதேய எண்ணிக்கை. வழக்கின் எந்த உரையும் ஒருபோதும் அனுப்பப்படாது.</string>
     <string name="app_settings_about">Judge பற்றி</string>
     <string name="app_settings_version">பதிப்பு %1$s</string>
     <string name="app_signin_required">தீர்ப்பு பெற உள்நுழையுங்கள்.</string>

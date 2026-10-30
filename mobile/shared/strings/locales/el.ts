@@ -57,6 +57,9 @@ const el: AppLocale = {
     "app.settings.appearanceSystem": "Ίδια με του τηλεφώνου",
     "app.settings.appearanceLight": "Ανοιχτή",
     "app.settings.appearanceDark": "Σκούρα",
+    "app.settings.usageStats": "Στατιστικά χρήσης",
+    "app.settings.usageStatsHint":
+      "Ανώνυμες μετρήσεις για το ποιες οθόνες και λειτουργίες χρησιμοποιούνται. Κείμενο από υποθέσεις δεν στέλνεται ποτέ.",
     "app.settings.about": "Σχετικά με το Judge",
     "app.settings.version": "Έκδοση {version}",
     "app.signin.required": "Συνδέσου για να ζητήσεις απόφαση.",

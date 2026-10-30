@@ -534,6 +534,8 @@
     <string name="app_settings_appearance_system">Ίδια με του τηλεφώνου</string>
     <string name="app_settings_appearance_light">Ανοιχτή</string>
     <string name="app_settings_appearance_dark">Σκούρα</string>
+    <string name="app_settings_usage_stats">Στατιστικά χρήσης</string>
+    <string name="app_settings_usage_stats_hint">Ανώνυμες μετρήσεις για το ποιες οθόνες και λειτουργίες χρησιμοποιούνται. Κείμενο από υποθέσεις δεν στέλνεται ποτέ.</string>
     <string name="app_settings_about">Σχετικά με το Judge</string>
     <string name="app_settings_version">Έκδοση %1$s</string>
     <string name="app_signin_required">Συνδέσου για να ζητήσεις απόφαση.</string>

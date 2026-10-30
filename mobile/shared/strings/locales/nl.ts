@@ -54,6 +54,9 @@ const nl: AppLocale = {
     "app.settings.appearanceSystem": "Zoals je telefoon",
     "app.settings.appearanceLight": "Licht",
     "app.settings.appearanceDark": "Donker",
+    "app.settings.usageStats": "Gebruiksstatistieken",
+    "app.settings.usageStatsHint":
+      "Anonieme tellingen van welke schermen en functies worden gebruikt. Tekst uit zaken wordt nooit verstuurd.",
     "app.settings.about": "Over Judge",
     "app.settings.version": "Versie {version}",
     "app.signin.required": "Log in voor een uitspraak.",

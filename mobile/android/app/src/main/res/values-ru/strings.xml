@@ -568,6 +568,8 @@
     <string name="app_settings_appearance_system">Как на телефоне</string>
     <string name="app_settings_appearance_light">Светлое</string>
     <string name="app_settings_appearance_dark">Тёмное</string>
+    <string name="app_settings_usage_stats">Статистика использования</string>
+    <string name="app_settings_usage_stats_hint">Анонимный подсчёт того, какие экраны и функции используются. Текст дел никогда не отправляется.</string>
     <string name="app_settings_about">О Judge</string>
     <string name="app_settings_version">Версия %1$s</string>
     <string name="app_signin_required">Войдите, чтобы получить вердикт.</string>

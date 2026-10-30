@@ -534,6 +534,8 @@
     <string name="app_settings_appearance_system">A telefon szerint</string>
     <string name="app_settings_appearance_light">Világos</string>
     <string name="app_settings_appearance_dark">Sötét</string>
+    <string name="app_settings_usage_stats">Használati statisztika</string>
+    <string name="app_settings_usage_stats_hint">Névtelen számlálás arról, mely képernyőket és funkciókat használják. Az ügyek szövege soha nem kerül elküldésre.</string>
     <string name="app_settings_about">A Judge-ról</string>
     <string name="app_settings_version">Verzió: %1$s</string>
     <string name="app_signin_required">Lépj be, hogy ítéletet kérhess.</string>

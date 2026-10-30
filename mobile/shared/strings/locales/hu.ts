@@ -53,6 +53,9 @@ const hu: AppLocale = {
     "app.settings.appearanceSystem": "A telefon szerint",
     "app.settings.appearanceLight": "Világos",
     "app.settings.appearanceDark": "Sötét",
+    "app.settings.usageStats": "Használati statisztika",
+    "app.settings.usageStatsHint":
+      "Névtelen számlálás arról, mely képernyőket és funkciókat használják. Az ügyek szövege soha nem kerül elküldésre.",
     "app.settings.about": "A Judge-ról",
     "app.settings.version": "Verzió: {version}",
     "app.signin.required": "Lépj be, hogy ítéletet kérhess.",

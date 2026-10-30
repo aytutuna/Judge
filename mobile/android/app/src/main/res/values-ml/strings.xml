@@ -534,6 +534,8 @@
     <string name="app_settings_appearance_system">ഫോണിലേതു പോലെ</string>
     <string name="app_settings_appearance_light">ലൈറ്റ്</string>
     <string name="app_settings_appearance_dark">ഡാർക്ക്</string>
+    <string name="app_settings_usage_stats">ഉപയോഗ സ്ഥിതിവിവരക്കണക്കുകൾ</string>
+    <string name="app_settings_usage_stats_hint">ഏതൊക്കെ സ്ക്രീനുകളും ഫീച്ചറുകളും ഉപയോഗിക്കുന്നു എന്നതിന്റെ അജ്ഞാത എണ്ണം. കേസിലെ ഒരു വാചകവും ഒരിക്കലും അയയ്ക്കില്ല.</string>
     <string name="app_settings_about">Judge-നെക്കുറിച്ച്</string>
     <string name="app_settings_version">പതിപ്പ് %1$s</string>
     <string name="app_signin_required">വിധി കിട്ടാൻ സൈൻ ഇൻ ചെയ്യൂ.</string>

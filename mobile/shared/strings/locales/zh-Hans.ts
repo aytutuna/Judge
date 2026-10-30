@@ -49,6 +49,8 @@ const zhHans: AppLocale = {
     "app.settings.appearanceSystem": "跟随系统",
     "app.settings.appearanceLight": "浅色",
     "app.settings.appearanceDark": "深色",
+    "app.settings.usageStats": "使用情况统计",
+    "app.settings.usageStatsHint": "匿名统计哪些页面和功能被使用。案子的文字内容绝不会发送。",
     "app.settings.about": "关于 Judge",
     "app.settings.version": "版本 {version}",
     "app.signin.required": "登录后即可获取裁决。",

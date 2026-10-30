@@ -54,6 +54,9 @@ const ptPT: AppLocale = {
     "app.settings.appearanceSystem": "Igual ao telemóvel",
     "app.settings.appearanceLight": "Claro",
     "app.settings.appearanceDark": "Escuro",
+    "app.settings.usageStats": "Estatísticas de utilização",
+    "app.settings.usageStatsHint":
+      "Contagens anónimas dos ecrãs e funcionalidades utilizados. O texto dos casos nunca é enviado.",
     "app.settings.about": "Sobre o Judge",
     "app.settings.version": "Versão {version}",
     "app.signin.required": "Entra para obter um veredicto.",

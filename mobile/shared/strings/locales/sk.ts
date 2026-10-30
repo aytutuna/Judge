@@ -55,6 +55,9 @@ const sk: AppLocale = {
     "app.settings.appearanceSystem": "Podľa telefónu",
     "app.settings.appearanceLight": "Svetlý",
     "app.settings.appearanceDark": "Tmavý",
+    "app.settings.usageStats": "Štatistiky používania",
+    "app.settings.usageStatsHint":
+      "Anonymné počty toho, ktoré obrazovky a funkcie sa používajú. Text prípadov sa nikdy neodosiela.",
     "app.settings.about": "O aplikácii Judge",
     "app.settings.version": "Verzia {version}",
     "app.signin.required": "Prihlás sa a získaj verdikt.",

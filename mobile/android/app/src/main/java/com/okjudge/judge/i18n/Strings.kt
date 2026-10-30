@@ -560,6 +560,8 @@ class Strings(private val res: Resources) {
     val appSettingsAppearanceSystem: String get() = res.getString(R.string.app_settings_appearance_system)
     val appSettingsAppearanceLight: String get() = res.getString(R.string.app_settings_appearance_light)
     val appSettingsAppearanceDark: String get() = res.getString(R.string.app_settings_appearance_dark)
+    val appSettingsUsageStats: String get() = res.getString(R.string.app_settings_usage_stats)
+    val appSettingsUsageStatsHint: String get() = res.getString(R.string.app_settings_usage_stats_hint)
     val appSettingsAbout: String get() = res.getString(R.string.app_settings_about)
     fun appSettingsVersion(version: String): String = res.getString(R.string.app_settings_version, version)
     val appSigninRequired: String get() = res.getString(R.string.app_signin_required)
@@ -1103,6 +1105,8 @@ class Strings(private val res: Resources) {
             "app.settings.appearanceSystem" -> R.string.app_settings_appearance_system
             "app.settings.appearanceLight" -> R.string.app_settings_appearance_light
             "app.settings.appearanceDark" -> R.string.app_settings_appearance_dark
+            "app.settings.usageStats" -> R.string.app_settings_usage_stats
+            "app.settings.usageStatsHint" -> R.string.app_settings_usage_stats_hint
             "app.settings.about" -> R.string.app_settings_about
             "app.signin.required" -> R.string.app_signin_required
             "app.signin.or" -> R.string.app_signin_or

@@ -51,6 +51,8 @@ const ko: AppLocale = {
     "app.settings.appearanceSystem": "휴대폰 설정 따르기",
     "app.settings.appearanceLight": "라이트",
     "app.settings.appearanceDark": "다크",
+    "app.settings.usageStats": "사용 통계",
+    "app.settings.usageStatsHint": "어떤 화면과 기능이 쓰이는지 익명으로 집계해요. 사건 내용은 절대 전송되지 않아요.",
     "app.settings.about": "Judge 소개",
     "app.settings.version": "버전 {version}",
     "app.signin.required": "판결을 받으려면 로그인해 주세요.",

@@ -54,6 +54,9 @@ const th: AppLocale = {
     "app.settings.appearanceSystem": "ตามโทรศัพท์",
     "app.settings.appearanceLight": "สว่าง",
     "app.settings.appearanceDark": "มืด",
+    "app.settings.usageStats": "สถิติการใช้งาน",
+    "app.settings.usageStatsHint":
+      "นับแบบไม่ระบุตัวตนว่าใช้หน้าจอและฟีเจอร์ใดบ้าง จะไม่มีการส่งข้อความในเคสใดๆ ออกไปเลย",
     "app.settings.about": "เกี่ยวกับ Judge",
     "app.settings.version": "เวอร์ชัน {version}",
     "app.signin.required": "เข้าสู่ระบบเพื่อขอคำตัดสิน",

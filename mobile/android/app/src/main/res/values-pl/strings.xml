@@ -568,6 +568,8 @@
     <string name="app_settings_appearance_system">Jak w telefonie</string>
     <string name="app_settings_appearance_light">Jasny</string>
     <string name="app_settings_appearance_dark">Ciemny</string>
+    <string name="app_settings_usage_stats">Statystyki użycia</string>
+    <string name="app_settings_usage_stats_hint">Anonimowe liczniki tego, które ekrany i funkcje są używane. Tekst spraw nigdy nie jest wysyłany.</string>
     <string name="app_settings_about">O Judge</string>
     <string name="app_settings_version">Wersja %1$s</string>
     <string name="app_signin_required">Zaloguj się, żeby dostać werdykt.</string>

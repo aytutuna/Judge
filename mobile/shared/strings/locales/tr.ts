@@ -53,6 +53,9 @@ const tr: AppLocale = {
     "app.settings.appearanceSystem": "Telefonla aynı",
     "app.settings.appearanceLight": "Açık",
     "app.settings.appearanceDark": "Koyu",
+    "app.settings.usageStats": "Kullanım istatistikleri",
+    "app.settings.usageStatsHint":
+      "Hangi ekranların ve özelliklerin kullanıldığına dair anonim sayımlar. Davaların metni asla gönderilmez.",
     "app.settings.about": "Judge hakkında",
     "app.settings.version": "Sürüm {version}",
     "app.signin.required": "Karar almak için giriş yap.",

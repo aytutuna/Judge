@@ -54,6 +54,9 @@ const bn: AppLocale = {
     "app.settings.appearanceSystem": "ফোনের মতো",
     "app.settings.appearanceLight": "হালকা",
     "app.settings.appearanceDark": "গাঢ়",
+    "app.settings.usageStats": "ব্যবহারের পরিসংখ্যান",
+    "app.settings.usageStatsHint":
+      "কোন স্ক্রিন আর ফিচার ব্যবহার হয়, তার বেনামি গণনা। মামলার কোনো লেখা কখনও পাঠানো হয় না।",
     "app.settings.about": "Judge সম্পর্কে",
     "app.settings.version": "সংস্করণ {version}",
     "app.signin.required": "রায় পেতে সাইন ইন করুন।",

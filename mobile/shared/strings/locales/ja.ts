@@ -53,6 +53,8 @@ const ja: AppLocale = {
     "app.settings.appearanceSystem": "端末の設定に合わせる",
     "app.settings.appearanceLight": "ライト",
     "app.settings.appearanceDark": "ダーク",
+    "app.settings.usageStats": "利用状況の統計",
+    "app.settings.usageStatsHint": "どの画面や機能が使われたかを匿名で集計します。ケースの文章が送信されることはありません。",
     "app.settings.about": "Judgeについて",
     "app.settings.version": "バージョン{version}",
     "app.signin.required": "判定を受けるにはログインしてください。",

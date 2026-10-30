@@ -517,6 +517,8 @@
     <string name="app_settings_appearance_system">휴대폰 설정 따르기</string>
     <string name="app_settings_appearance_light">라이트</string>
     <string name="app_settings_appearance_dark">다크</string>
+    <string name="app_settings_usage_stats">사용 통계</string>
+    <string name="app_settings_usage_stats_hint">어떤 화면과 기능이 쓰이는지 익명으로 집계해요. 사건 내용은 절대 전송되지 않아요.</string>
     <string name="app_settings_about">Judge 소개</string>
     <string name="app_settings_version">버전 %1$s</string>
     <string name="app_signin_required">판결을 받으려면 로그인해 주세요.</string>

@@ -62,6 +62,9 @@ const nb: AppLocale = {
     "app.settings.appearanceSystem": "Samme som telefonen",
     "app.settings.appearanceLight": "Lyst",
     "app.settings.appearanceDark": "Mørkt",
+    "app.settings.usageStats": "Bruksstatistikk",
+    "app.settings.usageStatsHint":
+      "Anonyme tellinger av hvilke skjermer og funksjoner som brukes. Tekst fra saker sendes aldri.",
     "app.settings.about": "Om Judge",
     "app.settings.version": "Versjon {version}",
     "app.signin.required": "Logg inn for å få en dom.",

@@ -56,6 +56,9 @@ const pl: AppLocale = {
     "app.settings.appearanceSystem": "Jak w telefonie",
     "app.settings.appearanceLight": "Jasny",
     "app.settings.appearanceDark": "Ciemny",
+    "app.settings.usageStats": "Statystyki użycia",
+    "app.settings.usageStatsHint":
+      "Anonimowe liczniki tego, które ekrany i funkcje są używane. Tekst spraw nigdy nie jest wysyłany.",
     "app.settings.about": "O Judge",
     "app.settings.version": "Wersja {version}",
     "app.signin.required": "Zaloguj się, żeby dostać werdykt.",

@@ -517,6 +517,8 @@
     <string name="app_settings_appearance_system">Ikuti ponsel</string>
     <string name="app_settings_appearance_light">Terang</string>
     <string name="app_settings_appearance_dark">Gelap</string>
+    <string name="app_settings_usage_stats">Statistik penggunaan</string>
+    <string name="app_settings_usage_stats_hint">Hitungan anonim layar dan fitur yang dipakai. Teks kasus tidak pernah dikirim.</string>
     <string name="app_settings_about">Tentang Judge</string>
     <string name="app_settings_version">Versi %1$s</string>
     <string name="app_signin_required">Masuk untuk mendapat putusan.</string>

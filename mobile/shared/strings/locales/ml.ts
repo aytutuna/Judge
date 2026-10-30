@@ -56,6 +56,9 @@ const ml: AppLocale = {
     "app.settings.appearanceSystem": "ഫോണിലേതു പോലെ",
     "app.settings.appearanceLight": "ലൈറ്റ്",
     "app.settings.appearanceDark": "ഡാർക്ക്",
+    "app.settings.usageStats": "ഉപയോഗ സ്ഥിതിവിവരക്കണക്കുകൾ",
+    "app.settings.usageStatsHint":
+      "ഏതൊക്കെ സ്ക്രീനുകളും ഫീച്ചറുകളും ഉപയോഗിക്കുന്നു എന്നതിന്റെ അജ്ഞാത എണ്ണം. കേസിലെ ഒരു വാചകവും ഒരിക്കലും അയയ്ക്കില്ല.",
     "app.settings.about": "Judge-നെക്കുറിച്ച്",
     "app.settings.version": "പതിപ്പ് {version}",
     "app.signin.required": "വിധി കിട്ടാൻ സൈൻ ഇൻ ചെയ്യൂ.",

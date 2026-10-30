@@ -57,6 +57,9 @@ const ta: AppLocale = {
     "app.settings.appearanceSystem": "போனில் உள்ளபடியே",
     "app.settings.appearanceLight": "வெளிர்",
     "app.settings.appearanceDark": "இருண்ட",
+    "app.settings.usageStats": "பயன்பாட்டுப் புள்ளிவிவரம்",
+    "app.settings.usageStatsHint":
+      "எந்தத் திரைகளும் அம்சங்களும் பயன்படுத்தப்படுகின்றன என்பதன் அநாமதேய எண்ணிக்கை. வழக்கின் எந்த உரையும் ஒருபோதும் அனுப்பப்படாது.",
     "app.settings.about": "Judge பற்றி",
     "app.settings.version": "பதிப்பு {version}",
     "app.signin.required": "தீர்ப்பு பெற உள்நுழையுங்கள்.",

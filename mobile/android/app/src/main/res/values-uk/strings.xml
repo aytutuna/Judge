@@ -568,6 +568,8 @@
     <string name="app_settings_appearance_system">Як на телефоні</string>
     <string name="app_settings_appearance_light">Світле</string>
     <string name="app_settings_appearance_dark">Темне</string>
+    <string name="app_settings_usage_stats">Статистика використання</string>
+    <string name="app_settings_usage_stats_hint">Анонімний підрахунок того, які екрани й функції використовуються. Текст справ ніколи не надсилається.</string>
     <string name="app_settings_about">Про Judge</string>
     <string name="app_settings_version">Версія %1$s</string>
     <string name="app_signin_required">Увійди, щоб отримати вердикт.</string>

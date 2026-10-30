@@ -517,6 +517,8 @@
     <string name="app_settings_appearance_system">Sama seperti telefon</string>
     <string name="app_settings_appearance_light">Cerah</string>
     <string name="app_settings_appearance_dark">Gelap</string>
+    <string name="app_settings_usage_stats">Statistik penggunaan</string>
+    <string name="app_settings_usage_stats_hint">Kiraan tanpa nama bagi skrin dan ciri yang digunakan. Teks kes tidak pernah dihantar.</string>
     <string name="app_settings_about">Tentang Judge</string>
     <string name="app_settings_version">Versi %1$s</string>
     <string name="app_signin_required">Log masuk untuk mendapatkan keputusan.</string>

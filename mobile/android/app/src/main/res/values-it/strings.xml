@@ -551,6 +551,8 @@
     <string name="app_settings_appearance_system">Come il telefono</string>
     <string name="app_settings_appearance_light">Chiaro</string>
     <string name="app_settings_appearance_dark">Scuro</string>
+    <string name="app_settings_usage_stats">Statistiche di utilizzo</string>
+    <string name="app_settings_usage_stats_hint">Conteggi anonimi delle schermate e delle funzioni usate. Il testo dei casi non viene mai inviato.</string>
     <string name="app_settings_about">Info su Judge</string>
     <string name="app_settings_version">Versione %1$s</string>
     <string name="app_signin_required">Accedi per avere un verdetto.</string>

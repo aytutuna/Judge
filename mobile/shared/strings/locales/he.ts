@@ -54,6 +54,8 @@ const he: AppLocale = {
     "app.settings.appearanceSystem": "כמו בטלפון",
     "app.settings.appearanceLight": "בהיר",
     "app.settings.appearanceDark": "כהה",
+    "app.settings.usageStats": "סטטיסטיקות שימוש",
+    "app.settings.usageStatsHint": "ספירות אנונימיות של המסכים והתכונות שבשימוש. טקסט מתיקים לא נשלח אף פעם.",
     "app.settings.about": "על Judge",
     "app.settings.version": "גרסה {version}",
     "app.signin.required": "צריך להתחבר כדי לקבל פסק דין.",

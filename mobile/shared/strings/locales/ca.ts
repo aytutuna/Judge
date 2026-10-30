@@ -56,6 +56,9 @@ const ca: AppLocale = {
     "app.settings.appearanceSystem": "El mateix que el telèfon",
     "app.settings.appearanceLight": "Clar",
     "app.settings.appearanceDark": "Fosc",
+    "app.settings.usageStats": "Estadístiques d’ús",
+    "app.settings.usageStatsHint":
+      "Recomptes anònims de les pantalles i funcions que es fan servir. No s’envia mai cap text dels casos.",
     "app.settings.about": "Quant a Judge",
     "app.settings.version": "Versió {version}",
     "app.signin.required": "Inicia sessió per obtenir un veredicte.",

@@ -53,6 +53,9 @@ const da: AppLocale = {
     "app.settings.appearanceSystem": "Samme som telefonen",
     "app.settings.appearanceLight": "Lys",
     "app.settings.appearanceDark": "Mørk",
+    "app.settings.usageStats": "Brugsstatistik",
+    "app.settings.usageStatsHint":
+      "Anonyme optællinger af, hvilke skærme og funktioner der bruges. Tekst fra sager sendes aldrig.",
     "app.settings.about": "Om Judge",
     "app.settings.version": "Version {version}",
     "app.signin.required": "Log ind for at få en dom.",

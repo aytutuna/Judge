@@ -534,6 +534,8 @@
     <string name="app_settings_appearance_system">Samme som telefonen</string>
     <string name="app_settings_appearance_light">Lyst</string>
     <string name="app_settings_appearance_dark">Mørkt</string>
+    <string name="app_settings_usage_stats">Bruksstatistikk</string>
+    <string name="app_settings_usage_stats_hint">Anonyme tellinger av hvilke skjermer og funksjoner som brukes. Tekst fra saker sendes aldri.</string>
     <string name="app_settings_about">Om Judge</string>
     <string name="app_settings_version">Versjon %1$s</string>
     <string name="app_signin_required">Logg inn for å få en dom.</string>

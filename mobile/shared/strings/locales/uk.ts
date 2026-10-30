@@ -56,6 +56,9 @@ const uk: AppLocale = {
     "app.settings.appearanceSystem": "Як на телефоні",
     "app.settings.appearanceLight": "Світле",
     "app.settings.appearanceDark": "Темне",
+    "app.settings.usageStats": "Статистика використання",
+    "app.settings.usageStatsHint":
+      "Анонімний підрахунок того, які екрани й функції використовуються. Текст справ ніколи не надсилається.",
     "app.settings.about": "Про Judge",
     "app.settings.version": "Версія {version}",
     "app.signin.required": "Увійди, щоб отримати вердикт.",

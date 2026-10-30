@@ -551,6 +551,8 @@
     <string name="app_settings_appearance_system">Ca pe telefon</string>
     <string name="app_settings_appearance_light">Luminos</string>
     <string name="app_settings_appearance_dark">Întunecat</string>
+    <string name="app_settings_usage_stats">Statistici de utilizare</string>
+    <string name="app_settings_usage_stats_hint">Numărători anonime ale ecranelor și funcțiilor folosite. Textul cazurilor nu este trimis niciodată.</string>
     <string name="app_settings_about">Despre Judge</string>
     <string name="app_settings_version">Versiunea %1$s</string>
     <string name="app_signin_required">Conectează-te ca să primești un verdict.</string>

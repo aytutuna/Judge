@@ -534,6 +534,8 @@
     <string name="app_settings_appearance_system">ଫୋନ୍ ଅନୁସାରେ</string>
     <string name="app_settings_appearance_light">ହାଲୁକା</string>
     <string name="app_settings_appearance_dark">ଗାଢ଼</string>
+    <string name="app_settings_usage_stats">ବ୍ୟବହାର ପରିସଂଖ୍ୟାନ</string>
+    <string name="app_settings_usage_stats_hint">କେଉଁ ସ୍କ୍ରିନ ଓ ସୁବିଧା ବ୍ୟବହାର ହୁଏ, ତା\'ର ଅଜ୍ଞାତ ଗଣନା। ମାମଲାର କୌଣସି ଲେଖା କେବେ ପଠାଯାଏ ନାହିଁ।</string>
     <string name="app_settings_about">Judge ବିଷୟରେ</string>
     <string name="app_settings_version">ସଂସ୍କରଣ %1$s</string>
     <string name="app_signin_required">ରାୟ ପାଇବାକୁ ସାଇନ୍ ଇନ୍ କରନ୍ତୁ।</string>

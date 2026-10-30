@@ -517,6 +517,8 @@
     <string name="app_settings_appearance_system">Theo điện thoại</string>
     <string name="app_settings_appearance_light">Sáng</string>
     <string name="app_settings_appearance_dark">Tối</string>
+    <string name="app_settings_usage_stats">Thống kê sử dụng</string>
+    <string name="app_settings_usage_stats_hint">Đếm ẩn danh những màn hình và tính năng được dùng. Nội dung các vụ không bao giờ được gửi đi.</string>
     <string name="app_settings_about">Về Judge</string>
     <string name="app_settings_version">Phiên bản %1$s</string>
     <string name="app_signin_required">Đăng nhập để nhận phán quyết.</string>

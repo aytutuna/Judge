@@ -56,6 +56,9 @@ const es: AppLocale = {
     "app.settings.appearanceSystem": "Igual que el teléfono",
     "app.settings.appearanceLight": "Claro",
     "app.settings.appearanceDark": "Oscuro",
+    "app.settings.usageStats": "Estadísticas de uso",
+    "app.settings.usageStatsHint":
+      "Recuentos anónimos de las pantallas y funciones que se usan. Nunca se envía el texto de ningún caso.",
     "app.settings.about": "Acerca de Judge",
     "app.settings.version": "Versión {version}",
     "app.signin.required": "Inicia sesión para obtener un veredicto.",

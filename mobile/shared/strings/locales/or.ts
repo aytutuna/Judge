@@ -54,6 +54,9 @@ const or: AppLocale = {
     "app.settings.appearanceSystem": "ଫୋନ୍ ଅନୁସାରେ",
     "app.settings.appearanceLight": "ହାଲୁକା",
     "app.settings.appearanceDark": "ଗାଢ଼",
+    "app.settings.usageStats": "ବ୍ୟବହାର ପରିସଂଖ୍ୟାନ",
+    "app.settings.usageStatsHint":
+      "କେଉଁ ସ୍କ୍ରିନ ଓ ସୁବିଧା ବ୍ୟବହାର ହୁଏ, ତା'ର ଅଜ୍ଞାତ ଗଣନା। ମାମଲାର କୌଣସି ଲେଖା କେବେ ପଠାଯାଏ ନାହିଁ।",
     "app.settings.about": "Judge ବିଷୟରେ",
     "app.settings.version": "ସଂସ୍କରଣ {version}",
     "app.signin.required": "ରାୟ ପାଇବାକୁ ସାଇନ୍ ଇନ୍ କରନ୍ତୁ।",

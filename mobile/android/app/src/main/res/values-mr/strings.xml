@@ -534,6 +534,8 @@
     <string name="app_settings_appearance_system">फोनप्रमाणे</string>
     <string name="app_settings_appearance_light">लाइट</string>
     <string name="app_settings_appearance_dark">गडद</string>
+    <string name="app_settings_usage_stats">वापराची आकडेवारी</string>
+    <string name="app_settings_usage_stats_hint">कोणत्या स्क्रीन आणि सुविधा वापरल्या जातात याची निनावी मोजणी. प्रकरणातील कोणताही मजकूर कधीही पाठवला जात नाही.</string>
     <string name="app_settings_about">Judge बद्दल</string>
     <string name="app_settings_version">आवृत्ती %1$s</string>
     <string name="app_signin_required">निकाल मिळवण्यासाठी साइन इन करा.</string>

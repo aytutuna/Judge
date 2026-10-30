@@ -54,6 +54,9 @@ const de: AppLocale = {
     "app.settings.appearanceSystem": "Wie auf dem Handy",
     "app.settings.appearanceLight": "Hell",
     "app.settings.appearanceDark": "Dunkel",
+    "app.settings.usageStats": "Nutzungsstatistik",
+    "app.settings.usageStatsHint":
+      "Anonyme Zählungen, welche Bildschirme und Funktionen genutzt werden. Text aus Fällen wird nie gesendet.",
     "app.settings.about": "Über Judge",
     "app.settings.version": "Version {version}",
     "app.signin.required": "Melde dich an, um ein Urteil zu bekommen.",

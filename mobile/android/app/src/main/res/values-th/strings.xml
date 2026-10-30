@@ -517,6 +517,8 @@
     <string name="app_settings_appearance_system">ตามโทรศัพท์</string>
     <string name="app_settings_appearance_light">สว่าง</string>
     <string name="app_settings_appearance_dark">มืด</string>
+    <string name="app_settings_usage_stats">สถิติการใช้งาน</string>
+    <string name="app_settings_usage_stats_hint">นับแบบไม่ระบุตัวตนว่าใช้หน้าจอและฟีเจอร์ใดบ้าง จะไม่มีการส่งข้อความในเคสใดๆ ออกไปเลย</string>
     <string name="app_settings_about">เกี่ยวกับ Judge</string>
     <string name="app_settings_version">เวอร์ชัน %1$s</string>
     <string name="app_signin_required">เข้าสู่ระบบเพื่อขอคำตัดสิน</string>

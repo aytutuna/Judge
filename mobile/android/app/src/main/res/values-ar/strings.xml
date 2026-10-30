@@ -602,6 +602,8 @@
     <string name="app_settings_appearance_system">مثل الهاتف</string>
     <string name="app_settings_appearance_light">فاتح</string>
     <string name="app_settings_appearance_dark">داكن</string>
+    <string name="app_settings_usage_stats">إحصاءات الاستخدام</string>
+    <string name="app_settings_usage_stats_hint">أعداد مجهولة الهوية للشاشات والميزات المستخدمة. لا يُرسَل أي نص من القضايا أبدًا.</string>
     <string name="app_settings_about">عن Judge</string>
     <string name="app_settings_version">الإصدار %1$s</string>
     <string name="app_signin_required">سجّل الدخول لتحصل على حكم.</string>

@@ -54,6 +54,9 @@ const te: AppLocale = {
     "app.settings.appearanceSystem": "ఫోన్ ప్రకారం",
     "app.settings.appearanceLight": "లైట్",
     "app.settings.appearanceDark": "డార్క్",
+    "app.settings.usageStats": "వినియోగ గణాంకాలు",
+    "app.settings.usageStatsHint":
+      "ఏ స్క్రీన్‌లు, ఫీచర్‌లు వాడుతున్నారో అనామక లెక్కలు. కేసులోని ఏ పాఠ్యమూ ఎప్పుడూ పంపబడదు.",
     "app.settings.about": "Judge గురించి",
     "app.settings.version": "వెర్షన్ {version}",
     "app.signin.required": "తీర్పు కోసం సైన్ ఇన్ చేయండి.",

@@ -517,6 +517,8 @@
     <string name="app_settings_appearance_system">跟手機設定一樣</string>
     <string name="app_settings_appearance_light">淺色</string>
     <string name="app_settings_appearance_dark">深色</string>
+    <string name="app_settings_usage_stats">使用情況統計</string>
+    <string name="app_settings_usage_stats_hint">匿名統計哪些頁面和功能被使用。案子的文字內容絕不會傳送。</string>
     <string name="app_settings_about">關於 Judge</string>
     <string name="app_settings_version">版本 %1$s</string>
     <string name="app_signin_required">登入即可取得判決。</string>

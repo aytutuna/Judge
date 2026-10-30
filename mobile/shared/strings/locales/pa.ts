@@ -53,6 +53,9 @@ const pa: AppLocale = {
     "app.settings.appearanceSystem": "ਫ਼ੋਨ ਵਾਂਗ",
     "app.settings.appearanceLight": "ਹਲਕੀ",
     "app.settings.appearanceDark": "ਗੂੜ੍ਹੀ",
+    "app.settings.usageStats": "ਵਰਤੋਂ ਦੇ ਅੰਕੜੇ",
+    "app.settings.usageStatsHint":
+      "ਕਿਹੜੀਆਂ ਸਕ੍ਰੀਨਾਂ ਅਤੇ ਸਹੂਲਤਾਂ ਵਰਤੀਆਂ ਜਾਂਦੀਆਂ ਹਨ, ਇਸਦੀ ਗੁਮਨਾਮ ਗਿਣਤੀ। ਕੇਸ ਦੀ ਕੋਈ ਵੀ ਲਿਖਤ ਕਦੇ ਨਹੀਂ ਭੇਜੀ ਜਾਂਦੀ।",
     "app.settings.about": "Judge ਬਾਰੇ",
     "app.settings.version": "ਵਰਜ਼ਨ {version}",
     "app.signin.required": "ਫ਼ੈਸਲਾ ਲੈਣ ਲਈ ਸਾਈਨ ਇਨ ਕਰੋ।",

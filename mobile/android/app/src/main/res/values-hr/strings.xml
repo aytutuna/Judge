@@ -551,6 +551,8 @@
     <string name="app_settings_appearance_system">Kao na telefonu</string>
     <string name="app_settings_appearance_light">Svijetli</string>
     <string name="app_settings_appearance_dark">Tamni</string>
+    <string name="app_settings_usage_stats">Statistika korištenja</string>
+    <string name="app_settings_usage_stats_hint">Anonimni brojevi o tome koji se zasloni i značajke koriste. Tekst slučajeva nikad se ne šalje.</string>
     <string name="app_settings_about">O aplikaciji Judge</string>
     <string name="app_settings_version">Verzija %1$s</string>
     <string name="app_signin_required">Prijavi se da dobiješ presudu.</string>

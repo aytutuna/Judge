@@ -62,6 +62,8 @@ const ar: AppLocale = {
     "app.settings.appearanceSystem": "مثل الهاتف",
     "app.settings.appearanceLight": "فاتح",
     "app.settings.appearanceDark": "داكن",
+    "app.settings.usageStats": "إحصاءات الاستخدام",
+    "app.settings.usageStatsHint": "أعداد مجهولة الهوية للشاشات والميزات المستخدمة. لا يُرسَل أي نص من القضايا أبدًا.",
     "app.settings.about": "عن Judge",
     "app.settings.version": "الإصدار {version}",
     "app.signin.required": "سجّل الدخول لتحصل على حكم.",

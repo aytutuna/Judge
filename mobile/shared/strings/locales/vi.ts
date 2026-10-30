@@ -53,6 +53,9 @@ const vi: AppLocale = {
     "app.settings.appearanceSystem": "Theo điện thoại",
     "app.settings.appearanceLight": "Sáng",
     "app.settings.appearanceDark": "Tối",
+    "app.settings.usageStats": "Thống kê sử dụng",
+    "app.settings.usageStatsHint":
+      "Đếm ẩn danh những màn hình và tính năng được dùng. Nội dung các vụ không bao giờ được gửi đi.",
     "app.settings.about": "Về Judge",
     "app.settings.version": "Phiên bản {version}",
     "app.signin.required": "Đăng nhập để nhận phán quyết.",

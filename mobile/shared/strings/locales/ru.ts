@@ -56,6 +56,9 @@ const ru: AppLocale = {
     "app.settings.appearanceSystem": "Как на телефоне",
     "app.settings.appearanceLight": "Светлое",
     "app.settings.appearanceDark": "Тёмное",
+    "app.settings.usageStats": "Статистика использования",
+    "app.settings.usageStatsHint":
+      "Анонимный подсчёт того, какие экраны и функции используются. Текст дел никогда не отправляется.",
     "app.settings.about": "О Judge",
     "app.settings.version": "Версия {version}",
     "app.signin.required": "Войдите, чтобы получить вердикт.",

@@ -62,6 +62,9 @@ const sl: AppLocale = {
     "app.settings.appearanceSystem": "Kot v telefonu",
     "app.settings.appearanceLight": "Svetlo",
     "app.settings.appearanceDark": "Temno",
+    "app.settings.usageStats": "Statistika uporabe",
+    "app.settings.usageStatsHint":
+      "Anonimno štetje, kateri zasloni in funkcije se uporabljajo. Besedilo sporov se nikoli ne pošlje.",
     "app.settings.about": "O aplikaciji Judge",
     "app.settings.version": "Različica {version}",
     "app.signin.required": "Prijavi se in dobi razsodbo.",

@@ -57,6 +57,9 @@ const kn: AppLocale = {
     "app.settings.appearanceSystem": "ಫೋನ್‌ನಲ್ಲಿರುವಂತೆಯೇ",
     "app.settings.appearanceLight": "ತಿಳಿ",
     "app.settings.appearanceDark": "ಗಾಢ",
+    "app.settings.usageStats": "ಬಳಕೆಯ ಅಂಕಿಅಂಶಗಳು",
+    "app.settings.usageStatsHint":
+      "ಯಾವ ಪರದೆಗಳು ಮತ್ತು ವೈಶಿಷ್ಟ್ಯಗಳು ಬಳಕೆಯಾಗುತ್ತವೆ ಎಂಬುದರ ಅನಾಮಧೇಯ ಎಣಿಕೆ. ಕೇಸ್‌ನ ಯಾವ ಪಠ್ಯವನ್ನೂ ಎಂದಿಗೂ ಕಳುಹಿಸುವುದಿಲ್ಲ.",
     "app.settings.about": "Judge ಬಗ್ಗೆ",
     "app.settings.version": "ಆವೃತ್ತಿ {version}",
     "app.signin.required": "ತೀರ್ಪು ಪಡೆಯಲು ಸೈನ್ ಇನ್ ಮಾಡಿ.",
