@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.room)
     alias(libs.plugins.roborazzi)
+    alias(libs.plugins.sentry)
 }
 
 /** A `judge.*` Gradle property as a Java string literal for BuildConfig. */
@@ -78,6 +79,8 @@ android {
             resValue("string", "launcher_name", "Judge (debug)")
             buildConfigField("String", "API_BASE_URL", judgeProp("apiBaseUrl", productionApi))
             buildConfigField("String", "SHARE_BASE_URL", judgeProp("shareBaseUrl"))
+            // Crash reports come from release builds only.
+            buildConfigField("String", "SENTRY_DSN", "\"\"")
         }
         release {
             if (canSignRelease) signingConfig = signingConfigs.getByName("release")
@@ -87,6 +90,8 @@ android {
             resValue("string", "launcher_name", "Judge")
             buildConfigField("String", "API_BASE_URL", "\"$productionApi\"")
             buildConfigField("String", "SHARE_BASE_URL", "\"$productionApi\"")
+            // Public Sentry DSN for crash reports. Empty: Sentry never starts.
+            buildConfigField("String", "SENTRY_DSN", judgeProp("sentryDsn"))
         }
     }
 
@@ -155,6 +160,27 @@ room {
     schemaDirectory("$projectDir/schemas")
 }
 
+// The plugin is only here to upload the R8 mapping of release builds, and only
+// when CI provides the token, org and project. The SDK comes from the version catalog.
+val sentryUpload = listOf("SENTRY_AUTH_TOKEN", "SENTRY_ORG", "SENTRY_PROJECT")
+    .all { !providers.environmentVariable(it).orNull.isNullOrBlank() }
+
+sentry {
+    org = providers.environmentVariable("SENTRY_ORG")
+    projectName = providers.environmentVariable("SENTRY_PROJECT")
+    authToken = providers.environmentVariable("SENTRY_AUTH_TOKEN")
+    includeProguardMapping = sentryUpload
+    includeDependenciesReport = false
+    ignoredBuildTypes = setOf("debug")
+    telemetry = false
+    autoInstallation { enabled = false }
+    runtimeOptimizations { enabled = false }
+    tracingInstrumentation {
+        enabled = false
+        logcat { enabled = false }
+    }
+}
+
 dependencies {
     implementation(platform(libs.compose.bom))
     implementation(libs.compose.ui)
@@ -180,6 +206,7 @@ dependencies {
     implementation(libs.credentials.play.services)
     implementation(libs.googleid)
     implementation(libs.revenuecat.purchases)
+    implementation(libs.sentry.android)
 
     implementation(libs.room.runtime)
     implementation(libs.room.ktx)

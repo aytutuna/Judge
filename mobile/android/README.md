@@ -62,6 +62,7 @@ Toolchain: Gradle 9.8.2, AGP 9.4.1 (built-in Kotlin), Kotlin 2.4.21, KSP
 | `judge.shareBaseUrl` | API base | `/v/<id>` share links |
 | `judge.googleServerClientId` | Judge's web client id | OAuth client id Google issues ID tokens for (public) |
 | `judge.revenuecatApiKey` | empty | Public RevenueCat SDK key for Google Play (`goog_...`); empty keeps purchases off ("Coming soon") |
+| `judge.sentryDsn` | Judge's public DSN | Sentry DSN for crash reports, used by release builds only (debug builds never report); empty means Sentry never starts |
 
 ## Purchases (RevenueCat)
 

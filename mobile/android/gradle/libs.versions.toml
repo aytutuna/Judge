@@ -24,6 +24,8 @@ roborazzi = "1.76.0"
 credentials = "1.6.0"
 googleId = "1.2.1"
 revenuecat = "10.28.1"
+sentry = "8.58.0"
+sentryGradle = "6.25.0"
 
 [libraries]
 compose-bom = { module = "androidx.compose:compose-bom", version.ref = "composeBom" }
@@ -54,6 +56,7 @@ credentials = { module = "androidx.credentials:credentials", version.ref = "cred
 credentials-play-services = { module = "androidx.credentials:credentials-play-services-auth", version.ref = "credentials" }
 googleid = { module = "com.google.android.libraries.identity.googleid:googleid", version.ref = "googleId" }
 revenuecat-purchases = { module = "com.revenuecat.purchases:purchases", version.ref = "revenuecat" }
+sentry-android = { module = "io.sentry:sentry-android-core", version.ref = "sentry" }
 okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
 okhttp-coroutines = { module = "com.squareup.okhttp3:okhttp-coroutines", version.ref = "okhttp" }
 mockwebserver = { module = "com.squareup.okhttp3:mockwebserver3", version.ref = "okhttp" }
@@ -76,3 +79,4 @@ kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", versi
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 room = { id = "androidx.room", version.ref = "room" }
 roborazzi = { id = "io.github.takahirom.roborazzi", version.ref = "roborazzi" }
+sentry = { id = "io.sentry.android.gradle", version.ref = "sentryGradle" }

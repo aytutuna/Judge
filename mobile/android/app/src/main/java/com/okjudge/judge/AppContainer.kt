@@ -37,6 +37,8 @@ data class AppConfig(
     val googleServerClientId: String,
     /** Public RevenueCat SDK key; empty turns store purchases off. */
     val revenueCatApiKey: String = "",
+    /** Sentry DSN for crash reports; empty means Sentry never starts. */
+    val sentryDsn: String = "",
     val versionName: String,
     val versionCode: Int,
 ) {
@@ -48,6 +50,7 @@ data class AppConfig(
             shareBaseUrl = BuildConfig.SHARE_BASE_URL.ifBlank { BuildConfig.API_BASE_URL },
             googleServerClientId = BuildConfig.GOOGLE_SERVER_CLIENT_ID,
             revenueCatApiKey = BuildConfig.REVENUECAT_API_KEY,
+            sentryDsn = BuildConfig.SENTRY_DSN,
             versionName = BuildConfig.VERSION_NAME,
             versionCode = BuildConfig.VERSION_CODE,
         )

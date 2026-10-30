@@ -20,6 +20,9 @@
         android:theme="@style/Theme.Judge"
         tools:targetApi="36">
 
+        <!-- Sentry starts from JudgeApp, and only when a DSN is configured. -->
+        <meta-data android:name="io.sentry.auto-init" android:value="false" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
