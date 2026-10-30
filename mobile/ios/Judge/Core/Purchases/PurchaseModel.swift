@@ -18,6 +18,10 @@ final class PurchaseModel {
         /// waiting on Ask to Buy).
         case pending
         case failed
+        /// Refused before the store: the account hasn't confirmed 18+ yet.
+        case ageRequired
+        /// Refused before the store: under 18, or the account is blocked.
+        case ageBlocked
     }
 
     enum RestoreResult: Equatable {
@@ -154,6 +158,10 @@ final class PurchaseModel {
     /// asked again until the grant shows. Cancelling says nothing.
     func buy(_ planId: String) async {
         guard let gateway, buying == nil, account.isSignedIn else { return }
+        if let refusal = account.ageRefusal {
+            message = refusal == AgeCheck.blockedCode ? .ageBlocked : .ageRequired
+            return
+        }
         generation += 1
         let mine = generation
         buying = planId
@@ -166,6 +174,13 @@ final class PurchaseModel {
             // A real balance to compare the grant against.
             if account.entitlement == nil { await account.refresh() }
             before = account.entitlement
+            // Only now is /me known: an account it couldn't load, or one
+            // that hasn't confirmed 18+, never reaches the store.
+            if before == nil || account.ageRefusal != nil {
+                buying = nil
+                if mine == generation { message = Self.refusal(account.ageRefusal) }
+                return
+            }
             try checkStoreUser(generation: mine)
             outcome = try await gateway.purchase(planId: planId)
         } catch {
@@ -302,6 +317,12 @@ final class PurchaseModel {
 
     /// Purchases always go to the signed-in account: the store logs in as
     /// it first (a no-op when it already is).
+    private static func refusal(_ age: String?) -> Message {
+        if age == AgeCheck.blockedCode { return .ageBlocked }
+        if age == AgeCheck.unconfirmedCode { return .ageRequired }
+        return .failed
+    }
+
     private func logInCurrentUser(generation mine: Int) async throws {
         if account.user == nil { await account.refresh() }
         guard mine == generation, let id = account.user?.id else { throw PurchaseGatewayError.signedOut }

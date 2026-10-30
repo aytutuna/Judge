@@ -204,22 +204,46 @@ struct Entitlement: Decodable, Sendable, Equatable {
     var isPremium: Bool { credits > 0 || subscription != nil }
 }
 
-/// GET /api/v1/me. Signed out (or an unknown token): both nil.
+/// `age` of GET /api/v1/me and the answer of POST /api/v1/me/age. A block
+/// never lifts.
+struct AgeStatus: Decodable, Sendable, Equatable {
+    var confirmed = false
+    var blocked = false
+
+    init(confirmed: Bool = false, blocked: Bool = false) {
+        self.confirmed = confirmed
+        self.blocked = blocked
+    }
+
+    private enum CodingKeys: String, CodingKey { case confirmed, blocked }
+
+    init(from decoder: any Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        confirmed = (try? c.decodeIfPresent(Bool.self, forKey: .confirmed)) == true
+        blocked = (try? c.decodeIfPresent(Bool.self, forKey: .blocked)) == true
+    }
+}
+
+/// GET /api/v1/me. Signed out (or an unknown token): both nil. `age` is nil
+/// from a server without the age check.
 struct AccountInfo: Decodable, Sendable, Equatable {
     var user: Viewer?
     var entitlement: Entitlement?
+    var age: AgeStatus?
 
-    init(user: Viewer?, entitlement: Entitlement?) {
+    init(user: Viewer?, entitlement: Entitlement?, age: AgeStatus? = nil) {
         self.user = user
         self.entitlement = entitlement
+        self.age = age
     }
 
-    private enum CodingKeys: String, CodingKey { case user, entitlement }
+    private enum CodingKeys: String, CodingKey { case user, entitlement, age }
 
     init(from decoder: any Decoder) throws {
         let c = try decoder.container(keyedBy: CodingKeys.self)
         user = try c.decodeIfPresent(Viewer.self, forKey: .user)
         entitlement = try? c.decodeIfPresent(Entitlement.self, forKey: .entitlement)
+        age = try? c.decodeIfPresent(AgeStatus.self, forKey: .age)
     }
 }
 

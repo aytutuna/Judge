@@ -49,6 +49,7 @@ struct RootView: View {
     @Environment(AppModel.self) private var app
     @State private var showLaunchMark = true
     @State private var webLink: WebLink?
+    @State private var ageWindow = AgeGateWindow()
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.scenePhase) private var scenePhase
 
@@ -69,6 +70,7 @@ struct RootView: View {
         }
         .toolbarBackground(Brand.ivory, for: .tabBar)
         .toolbarBackground(.visible, for: .tabBar)
+        .accessibilityHidden(ageCovered)
         .sheet(isPresented: $account.isSignInPresented, onDismiss: { app.account.signInDismissed() }) {
             SignInView()
                 .environment(app)
@@ -93,6 +95,13 @@ struct RootView: View {
         .environment(\.locale, lang.locale)
         .environment(\.layoutDirection, lang.isRTL ? .rightToLeft : .leftToRight)
         .preferredColorScheme(app.appearance.colorScheme)
+        .onChange(of: ageCovered, initial: true) { _, covered in
+            ageWindow.show(covered, app: app)
+        }
+        .onChange(of: app.account.needsPlatformAge(onSignIn: false), initial: true) { _, needed in
+            // A signed-in account that still has to confirm asks the phone first.
+            if needed { Task { await app.account.checkPlatformAge() } }
+        }
         .overlay {
             // The first frame repeats the launch screen, then fades into Home.
             if showLaunchMark {
@@ -107,6 +116,12 @@ struct RootView: View {
                 }
             }
         }
+    }
+
+    /// The age gate is up, unless the phone's own prompt may still be on
+    /// screen (the gate would cover it).
+    private var ageCovered: Bool {
+        app.account.ageGate != .none && !app.account.platformPrompting
     }
 
     /// An okjudge.com link: an invite opens in Safari (answering happens on

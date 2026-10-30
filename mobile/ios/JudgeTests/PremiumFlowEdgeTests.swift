@@ -52,6 +52,7 @@ final class PremiumFlowEdgeTests: XCTestCase {
     @MainActor
     private func signIn(_ app: AppModel) async {
         app.account.email = "alex@example.com"
+        app.account.setAgeTicked(true)
         await app.account.sendCode(lang: .en)
         app.account.code = "123456"
         await app.account.verifyCode()

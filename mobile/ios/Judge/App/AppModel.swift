@@ -120,7 +120,10 @@ final class AppModel {
         let usageStats = defaults.object(forKey: Self.usageStatsKey) as? Bool ?? true
         self.usageStats = usageStats
         let deviceID = DeviceIdentity.deviceID(defaults)
-        let judgeAPI = api ?? JudgeAPI(baseURL: config.apiBaseURL, userAgent: config.userAgent, tokenStore: tokenStore, deviceID: deviceID)
+        let (ageGates, ageGateSink) = AsyncStream.makeStream(of: String.self)
+        let judgeAPI = api ?? JudgeAPI(
+            baseURL: config.apiBaseURL, userAgent: config.userAgent, tokenStore: tokenStore, deviceID: deviceID, ageGate: ageGateSink
+        )
         self.api = judgeAPI
         analytics = Analytics(
             transport: judgeAPI,
@@ -130,7 +133,7 @@ final class AppModel {
         )
         history = HistoryStore(container: container)
         home = HomeModel()
-        account = AccountModel(api: self.api)
+        account = AccountModel(api: self.api, ageRange: DeclaredAgeRangeAsker())
         historyList = HistoryListModel(api: self.api, store: history, account: account)
         let gateway: (any PurchaseGateway)?
         if let purchaseGateway {
@@ -146,6 +149,7 @@ final class AppModel {
         let store = history
         let purchases = self.purchases
         let analytics = self.analytics
+        account.listen(toAgeGates: ageGates)
         account.onConfig = { [weak analytics] config in
             analytics?.setServerOn(config.features.analytics)
         }

@@ -68,6 +68,7 @@ struct SettingsView: View {
                     linkRow(L10n.appSettingsAbout(lang), path: "about")
                     linkRow(L10n.howTitle(lang), path: "#how")
                     linkRow(L10n.footerPrivacy(lang), path: "privacy")
+                    linkRow(L10n.appLegalTerms(lang), path: "terms")
                 }
                 .listRowBackground(Brand.paper)
 

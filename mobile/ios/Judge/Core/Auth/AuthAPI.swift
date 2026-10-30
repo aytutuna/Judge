@@ -35,6 +35,22 @@ extension JudgeAPI {
         }
     }
 
+    /// POST /api/v1/me/age: the account is 18+ (`adult`) or not, by the
+    /// checkbox or the platform's signal. The answer is the age object,
+    /// bare or wrapped as on /me.
+    func reportAge(adult: Bool, source: String) async throws -> AgeStatus {
+        var request = makeRequest(url: endpoint("me/age"), method: "POST", timeout: AuthTimeout.call)
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = try JSONSerialization.data(withJSONObject: ["adult": adult, "source": source])
+        let data = try await send(request)
+        struct Wrapped: Decodable { var age: AgeStatus }
+        if let wrapped = try? JSONDecoder().decode(Wrapped.self, from: data) { return wrapped.age }
+        guard (try? JSONSerialization.jsonObject(with: data)) is [String: Any],
+              let age = try? JSONDecoder().decode(AgeStatus.self, from: data)
+        else { throw APIError.malformed }
+        return age
+    }
+
     /// POST /api/auth/sign-in/social with a provider ID token (native flow).
     func signInWithIDToken(provider: SocialProvider, idToken: String, nonce: String? = nil, apple: AppleIdentity? = nil) async throws -> AuthSession {
         var token: [String: Any] = ["token": idToken]

@@ -76,4 +76,7 @@ struct AppConfig: Sendable, Equatable {
     }
 
     var userAgent: String { "Judge-iOS/\(version) (\(build))" }
+
+    var termsURL: URL { siteURL("terms") }
+    var privacyURL: URL { siteURL("privacy") }
 }

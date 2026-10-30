@@ -92,7 +92,10 @@ final class AccountTests: XCTestCase {
         apple: Result<AppleIdentity, any Error> = .failure(IdentityProviderError.cancelled),
         google: Result<GoogleIdentity, any Error> = .failure(IdentityProviderError.cancelled)
     ) -> AccountModel {
-        AccountModel(api: api(store), apple: FakeApple(apple), google: FakeGoogle(google))
+        let account = AccountModel(api: api(store), apple: FakeApple(apple), google: FakeGoogle(google))
+        // The 18+ box is ticked unless a test is about it (AgeCheckTests).
+        account.setAgeTicked(true)
+        return account
     }
 
     private func body(_ request: URLRequest?) throws -> [String: Any] {

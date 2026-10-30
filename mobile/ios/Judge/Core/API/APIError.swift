@@ -57,6 +57,7 @@ enum APIError: Error, Sendable, Equatable {
         guard var body = WireDecoding.errorBody(from: data) else {
             return status >= 500 ? .server(status: status, body: ApiErrorBody(code: "unavailable")) : .server(status: status, body: nil)
         }
+        if let age = AgeCheck.errorCode(status: status, body: body) { body.code = age }
         if body.retryAfterSec == nil, let header = retryAfterHeader.flatMap({ Double($0.trimmingCharacters(in: .whitespaces)) }), header > 0 {
             body.retryAfterSec = header
         }
@@ -137,6 +138,9 @@ enum ErrorText {
         let code = body?.code ?? (status == 429 ? "rate_limited" : nil)
         // An async verdict that failed with `refused` reads like a refused verdict.
         if code == "refused" { return L10n.refusedNote(lang) }
+        // The age gate opens over the screen; the box under it says why.
+        if code == AgeCheck.blockedCode { return L10n.appAgeBlockedTitle(lang) }
+        if code == AgeCheck.unconfirmedCode { return L10n.appAgeRequired(lang) }
         if let code, knownCodes.contains(code) {
             switch code {
             case "fair_use":

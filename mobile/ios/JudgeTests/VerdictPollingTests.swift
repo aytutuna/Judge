@@ -576,6 +576,7 @@ final class HomeResumeTests: XCTestCase {
         home.submit(app: app)
         XCTAssertTrue(app.account.isSignInPresented)
         app.account.email = "sam@example.com"
+        app.account.setAgeTicked(true)
         await app.account.sendCode(lang: .en)
         app.account.code = "123456"
         await app.account.verifyCode()

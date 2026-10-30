@@ -35,6 +35,9 @@ struct JudgeAPI: Sendable {
     let pollPolicy: PollPolicy
     /// Sent as `Device-Id` on sign-in requests.
     let deviceID: String?
+    /// Hears every 403 `age_blocked` / `age_unconfirmed` to the current
+    /// session (AccountModel shows the gate it calls for).
+    let ageGate: AsyncStream<String>.Continuation?
 
     init(
         baseURL: URL,
@@ -42,7 +45,8 @@ struct JudgeAPI: Sendable {
         tokenStore: any TokenStore = NoTokenStore(),
         session: URLSession = JudgeAPI.makeSession(),
         pollPolicy: PollPolicy = .standard,
-        deviceID: String? = nil
+        deviceID: String? = nil,
+        ageGate: AsyncStream<String>.Continuation? = nil
     ) {
         self.baseURL = baseURL
         self.userAgent = userAgent
@@ -50,6 +54,7 @@ struct JudgeAPI: Sendable {
         self.session = session
         self.pollPolicy = pollPolicy
         self.deviceID = deviceID
+        self.ageGate = ageGate
     }
 
     /// No cookies, no cache; the long verdict timeout as the session default
@@ -176,6 +181,11 @@ struct JudgeAPI: Sendable {
                 // The session expired; AccountModel signs out on this code.
                 // A token that replaced the one sent (a new sign-in) stays.
                 tokenStore.clear()
+            }
+            if http.statusCode == 403, let code = failure.code, code == AgeCheck.blockedCode || code == AgeCheck.unconfirmedCode,
+               let sent = request.value(forHTTPHeaderField: "Authorization"),
+               let current = tokenStore.token(), sent == "Bearer \(current)" {
+                ageGate?.yield(code)
             }
             throw failure
         }

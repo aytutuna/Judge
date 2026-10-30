@@ -21,6 +21,23 @@ SENTRY_DSN = https:/$()/0fb27e7566896b59be0b9db3c3276143@o4512342896345088.inges
 
 APP_DISPLAY_NAME = Judge
 
+// Declared Age Range (the phone's 18+ signal, iOS 26) needs its capability
+// on the App ID and in the provisioning profile, or signing fails. NO signs
+// with Judge/JudgeBase.entitlements, never imports or links the framework,
+// and the app relies on the 18+ checkbox; set YES once the profile includes
+// com.apple.developer.declared-age-range.
+DECLARED_AGE_RANGE = NO
+JUDGE_ENTITLEMENTS_NO = Judge/JudgeBase.entitlements
+JUDGE_ENTITLEMENTS_YES = Judge/Judge.entitlements
+JUDGE_ENTITLEMENTS = $(JUDGE_ENTITLEMENTS_$(DECLARED_AGE_RANGE))
+// Weak: the framework only exists from iOS 26 and older systems must still launch.
+AGE_RANGE_LDFLAGS_NO =
+AGE_RANGE_LDFLAGS_YES = -weak_framework DeclaredAgeRange
+OTHER_LDFLAGS = $(inherited) $(AGE_RANGE_LDFLAGS_$(DECLARED_AGE_RANGE))
+AGE_RANGE_CONDITION_NO =
+AGE_RANGE_CONDITION_YES = DECLARED_AGE_RANGE
+SWIFT_ACTIVE_COMPILATION_CONDITIONS = $(inherited) $(AGE_RANGE_CONDITION_$(DECLARED_AGE_RANGE))
+
 // Signing: put `DEVELOPMENT_TEAM = <your team id>` in Config/Signing.xcconfig
 // (gitignored). Simulator builds and tests need no signing.
 #include? "Signing.xcconfig"

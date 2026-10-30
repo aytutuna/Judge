@@ -1,8 +1,9 @@
 import SwiftUI
 
-/// The sign-in sheet: Apple first, then Google, then an emailed six-digit
-/// code, with the outside-AI consent line at the bottom. Only methods the
-/// server reports as available are shown.
+/// The sign-in sheet: the 18+ checkbox (unless the phone already said 18+),
+/// Apple, then Google, then an emailed six-digit code, with the outside-AI
+/// consent line at the bottom. Only methods the server reports as available
+/// are shown.
 struct SignInView: View {
     @Environment(AppModel.self) private var app
     @State private var webLink: WebLink?
@@ -46,7 +47,11 @@ struct SignInView: View {
         }
         .environment(\.locale, lang.locale)
         .onAppear { app.analytics.track("screen_view", ["screen": "sign_in"]) }
+        .task {
+            if app.account.needsPlatformAge(onSignIn: true) { await app.account.checkPlatformAge() }
+        }
     }
+
 
     private func topBar(_ lang: AppLang) -> some View {
         HStack {
@@ -111,6 +116,10 @@ struct SignInView: View {
 
     @ViewBuilder
     private func chooser(_ lang: AppLang, providers: SignInProviders, account: AccountModel) -> some View {
+        if account.needsAgeCheckbox {
+            AgeCheckbox(lang: lang, ticked: account.ageTicked) { account.setAgeTicked($0) }
+                .disabled(account.busy != nil)
+        }
         if providers.apple {
             Button {
                 app.analytics.track("sign_in_started", ["provider": "apple"])
@@ -122,7 +131,7 @@ struct SignInView: View {
                 }
             }
             .buttonStyle(AppleButtonStyle())
-            .disabled(account.busy != nil)
+            .disabled(account.busy != nil || !account.ageAllowsSignIn)
         }
         if providers.google {
             Button {
@@ -134,7 +143,7 @@ struct SignInView: View {
                 }
             }
             .buttonStyle(OutlineButtonStyle())
-            .disabled(account.busy != nil)
+            .disabled(account.busy != nil || !account.ageAllowsSignIn)
         }
         if providers.emailCode {
             if providers.apple || providers.google {
@@ -231,15 +240,21 @@ struct SignInView: View {
         }
     }
 
-    /// The consent line as one sentence with the policy as a tappable link.
+    /// The consent line as one sentence with the Terms and the Privacy
+    /// Policy as tappable links.
     private func legal(_ lang: AppLang) -> some View {
-        var sentence = AttributedString(L10n.signinLegal(lang) + " ")
-        var link = AttributedString(L10n.signinLegalLink(lang))
-        link.link = app.config.siteURL("privacy")
-        link.foregroundColor = Brand.terraInk
-        link.underlineStyle = Text.LineStyle(pattern: .solid)
-        sentence += link
-        sentence += AttributedString(L10n.signinLegalAfter(lang))
+        func link(_ text: String, _ url: URL) -> AttributedString {
+            var part = AttributedString(text)
+            part.link = url
+            part.foregroundColor = Brand.terraInk
+            part.underlineStyle = Text.LineStyle(pattern: .solid)
+            return part
+        }
+        var sentence = AttributedString(L10n.appSigninLegal(lang))
+        sentence += link(L10n.appSigninLegalTerms(lang), app.config.termsURL)
+        sentence += AttributedString(L10n.appSigninLegalAnd(lang))
+        sentence += link(L10n.appSigninLegalPrivacy(lang), app.config.privacyURL)
+        sentence += AttributedString(L10n.appSigninLegalAfter(lang))
         return Text(sentence)
             .brandText(.footnote)
             .foregroundStyle(Brand.muted)

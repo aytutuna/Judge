@@ -8,6 +8,7 @@ import SwiftUI
 struct PricingView: View {
     @Environment(AppModel.self) private var app
     @Environment(\.dismiss) private var dismiss
+    @State private var webLink: WebLink?
 
     private static let title = TypeStyle(face: .interTight, weight: 700, size: 30, lineHeight: 1.05, tracking: -0.03, textStyle: .title1, maxScale: 1.4)
     private static let planTitle = TypeStyle(face: .interTight, weight: 700, size: 20, lineHeight: 1.2, tracking: -0.01, textStyle: .title3, maxScale: 1.5)
@@ -44,6 +45,7 @@ struct PricingView: View {
                         .foregroundStyle(Brand.muted)
                         .fixedSize(horizontal: false, vertical: true)
                 }
+                terms(lang)
             }
             .padding(.horizontal, 20)
             .padding(.top, 8)
@@ -69,10 +71,29 @@ struct PricingView: View {
                 .disabled(app.home.isBusy)
             }
         }
+        .sheet(item: $webLink) { link in
+            SafariView(url: link.url).ignoresSafeArea()
+        }
         .task { await account.refresh() }
         .onAppear { app.analytics.track("screen_view", ["screen": "pricing"]) }
         .task(id: pricing.purchasesEnabled) { await app.purchases.loadOffers(pricing: app.account.pricing) }
         .onDisappear { app.purchases.clearMessage() }
+    }
+
+    /// How the monthly plan renews, and the Terms of Use and Privacy Policy
+    /// the store requires next to a subscription.
+    private func terms(_ lang: AppLang) -> some View {
+        VStack(alignment: .leading, spacing: 2) {
+            Text(L10n.appPricingAutoRenew(lang))
+                .brandText(.footnote)
+                .foregroundStyle(Brand.muted)
+                .fixedSize(horizontal: false, vertical: true)
+            HStack(spacing: 20) {
+                Button(L10n.appLegalTerms(lang)) { webLink = WebLink(url: app.config.termsURL) }
+                Button(L10n.appLegalPrivacy(lang)) { webLink = WebLink(url: app.config.privacyURL) }
+            }
+            .buttonStyle(LinkButtonStyle())
+        }
     }
 
     private func planStatus(_ entitlement: Entitlement, lang: AppLang) -> some View {
@@ -144,7 +165,7 @@ struct PricingView: View {
             if let message = app.purchases.message {
                 Text(message.text(lang))
                     .brandText(.slotText)
-                    .foregroundStyle(message == .failed ? Brand.danger : Brand.ink2)
+                    .foregroundStyle(message.isProblem ? Brand.danger : Brand.ink2)
                     .fixedSize(horizontal: false, vertical: true)
             }
 

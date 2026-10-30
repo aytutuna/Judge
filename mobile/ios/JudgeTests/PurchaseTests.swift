@@ -139,6 +139,52 @@ final class PurchaseTests: XCTestCase {
         return (purchases, account)
     }
 
+    @MainActor
+    func testBuyingWaitsForTheAgeCheck() async {
+        let gateway = FakePurchaseGateway()
+        gateway.offerList = Self.offers
+        let (purchases, account) = model(gateway)
+        var info = Self.info(credits: 0)
+        info.age = AgeStatus(confirmed: false, blocked: false)
+        account.preload(config: ServerConfig(signIn: SignInProviders(apple: true), premiumEnabled: true, pricing: Self.pricing(enabled: true)), info: info)
+        await purchases.buy("pack_10")
+        XCTAssertEqual(purchases.message, .ageRequired)
+        info.age = AgeStatus(confirmed: false, blocked: true)
+        account.preload(config: nil, info: info)
+        await purchases.buy("pack_10")
+        XCTAssertEqual(purchases.message, .ageBlocked)
+        XCTAssertTrue(gateway.bought.isEmpty)
+    }
+
+    @MainActor
+    func testBuyingChecksTheAgeAgainOnceMeHasLoaded() async throws {
+        let gateway = FakePurchaseGateway()
+        gateway.offerList = Self.offers
+        let (purchases, _) = model(gateway, balanceKnown: false)
+        await purchases.loadOffers(pricing: Self.pricing(enabled: true))
+        let me = try PremiumFixtures.json(200, [
+            "user": ["id": "u1", "email": "ann@example.com", "name": "Ann", "image": NSNull()] as [String: Any],
+            "entitlement": ["canUsePremium": false, "credits": 0] as [String: Any],
+            "age": ["confirmed": false, "blocked": false],
+        ])
+        StubURLProtocol.handler = { _ in me }
+        await purchases.buy("pack_10")
+        XCTAssertEqual(purchases.message, .ageRequired)
+        XCTAssertTrue(gateway.bought.isEmpty)
+    }
+
+    @MainActor
+    func testBuyingStopsWhenMeCannotBeLoaded() async {
+        let gateway = FakePurchaseGateway()
+        gateway.offerList = Self.offers
+        let (purchases, _) = model(gateway, balanceKnown: false)
+        await purchases.loadOffers(pricing: Self.pricing(enabled: true))
+        StubURLProtocol.handler = { _ in StubURLProtocol.Reply(error: URLError(.notConnectedToInternet)) }
+        await purchases.buy("pack_10")
+        XCTAssertEqual(purchases.message, .failed)
+        XCTAssertTrue(gateway.bought.isEmpty)
+    }
+
     private var meRequests: Int {
         StubURLProtocol.requests.filter { $0.url?.path == "/api/v1/me" }.count
     }
