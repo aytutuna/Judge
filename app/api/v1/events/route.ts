@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { apiErrorBody, type ApiErrorCode } from "@/lib/api-errors";
 import { isSameOrigin, resolveViewer } from "@/lib/auth";
 import { deadBearerResponse } from "@/lib/bearer-guard";
-import { insertEvents } from "@/lib/analytics/db";
+import { EventsCapError, insertEvents } from "@/lib/analytics/db";
 import { countryOf, EventBatch } from "@/lib/analytics/validate";
 import { clientIp } from "@/lib/client-ip";
 import { analyticsEnabled } from "@/lib/features";
@@ -12,9 +12,10 @@ export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 const NO_STORE = { "Cache-Control": "no-store" } as const;
-const MAX_BODY_BYTES = 128 * 1024;
-/** Event times further off than this are replaced by the time received. */
-const MAX_AGE_MS = 7 * 24 * 60 * 60_000;
+const MAX_BODY_BYTES = 32 * 1024;
+/** Event times further off than this are replaced by the time received. The
+ * daily cap counts by event time, so a client may not date events far back. */
+const MAX_AGE_MS = 60 * 60_000;
 const MAX_AHEAD_MS = 10 * 60_000;
 
 function fail(code: ApiErrorCode, error: string, status: number): NextResponse {
@@ -27,9 +28,10 @@ function fail(code: ApiErrorCode, error: string, status: number): NextResponse {
  * anon_id?, device_id?, os_version?, device_model?, locale? }; each event is
  * { name, at?, props? } (lib/analytics/validate.ts). Signed in (bearer or
  * cookie), events belong to the account; signed out, `anon_id` is required.
- * Unknown fields, forbidden prop keys and oversize props refuse the whole
- * batch with 400. No IP address or user agent is kept. 204 when stored, and
- * at once while analytics is switched off (ANALYTICS_ENABLED=0).
+ * Unknown names, fields or prop keys refuse the whole batch with 400; a body
+ * that is not application/json, 415. No IP address or user agent is kept.
+ * 204 when stored, and at once while analytics is switched off
+ * (ANALYTICS_ENABLED=0). 503 once DAILY_EVENT_CAP is reached.
  */
 export async function POST(req: Request): Promise<NextResponse> {
   if (!analyticsEnabled()) return new NextResponse(null, { status: 204, headers: NO_STORE });
@@ -37,6 +39,8 @@ export async function POST(req: Request): Promise<NextResponse> {
   if (deadBearer) return deadBearerResponse();
   if (viewer?.via === "cookie" && !isSameOrigin(req)) return fail("bad_origin", "Cross-site request refused.", 403);
 
+  const type = req.headers.get("content-type")?.split(";")[0].trim().toLowerCase();
+  if (type !== "application/json") return fail("unsupported_media", "Send the events as application/json.", 415);
   const declared = Number(req.headers.get("content-length"));
   if (Number.isFinite(declared) && declared > MAX_BODY_BYTES) return fail("too_large", "Body too large.", 413);
   let raw: string;
@@ -90,8 +94,10 @@ export async function POST(req: Request): Promise<NextResponse> {
       })),
     );
   } catch (e) {
-    console.error("[events] storing events failed:", e instanceof Error ? e.message : String(e));
-    return fail("unavailable", "Try again in a minute.", 503);
+    if (!(e instanceof EventsCapError)) {
+      console.error("[events] storing events failed:", e instanceof Error ? e.message : String(e));
+    }
+    return fail("unavailable", "Try again later.", 503);
   }
   return new NextResponse(null, { status: 204, headers: NO_STORE });
 }

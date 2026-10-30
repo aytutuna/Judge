@@ -5,16 +5,20 @@
  * Events never hold user text, names, emails, IP addresses or user agents:
  * names and props are checked in ./validate before anything is written, and
  * the country is the two-letter code Cloudflare derives, nothing finer.
- * Events older than RETENTION_MS are deleted (pruneEvents, daily).
+ * Events older than RETENTION_MS are deleted (pruneEvents, daily). At most
+ * DAILY_EVENT_CAP events are stored per rolling 24 hours, so a flood of fake
+ * installs cannot fill the disk.
  *
  * Times are Unix milliseconds.
  */
 
 import type { Client } from "@libsql/client";
 import { getDb } from "@/lib/db";
+import { signal } from "@/lib/signals";
 
-export const RETENTION_MS = 90 * 24 * 60 * 60_000;
-const PRUNE_INTERVAL_MS = 24 * 60 * 60_000;
+const DAY_MS = 24 * 60 * 60_000;
+export const RETENTION_MS = 90 * DAY_MS;
+export const DAILY_EVENT_CAP = 200_000;
 
 export type Platform = "ios" | "android" | "web" | "server";
 
@@ -88,9 +92,18 @@ export type EventRow = {
   props: string | null;
 };
 
+export class EventsCapError extends Error {}
+
+/** Stores the rows, or throws EventsCapError when they would take the last
+ * 24 hours past DAILY_EVENT_CAP. */
 export async function insertEvents(rows: EventRow[]): Promise<void> {
   if (!rows.length) return;
   const db = await analyticsDb();
+  const recent = await db.execute({ sql: "SELECT COUNT(*) AS n FROM events WHERE at >= ?", args: [Date.now() - DAY_MS] });
+  if (Number(recent.rows[0].n) + rows.length > DAILY_EVENT_CAP) {
+    signal("events_cap");
+    throw new EventsCapError("the daily event cap is reached");
+  }
   await db.batch(
     rows.map((r) => ({
       sql: `INSERT INTO events (at, user_id, anon_id, device_id, platform, app_version, os_version,
@@ -136,6 +149,6 @@ export function startEventPruner(): void {
   if (globalForAnalytics.__verdictEventsPruner) return;
   globalForAnalytics.__verdictEventsPruner = true;
   void pruneQuietly();
-  const timer = setInterval(() => void pruneQuietly(), PRUNE_INTERVAL_MS);
+  const timer = setInterval(() => void pruneQuietly(), DAY_MS);
   timer.unref?.();
 }

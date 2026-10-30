@@ -211,7 +211,7 @@ export const USER_LIMITS: Record<UserBucket, readonly UserWindow[]> = {
     { limit: 30, windowMs: DAY_MS, redisWindow: "1 d", prefix: "verdict:u:acday" },
   ],
   /** Usage event batches (POST /api/v1/events). */
-  events: [{ limit: 600, windowMs: 60 * MINUTE_MS, redisWindow: "1 h", prefix: "verdict:u:evt1h" }],
+  events: [{ limit: 300, windowMs: 60 * MINUTE_MS, redisWindow: "1 h", prefix: "verdict:u:evt1h" }],
 };
 
 /** Per-IP buckets for the no-account endpoints (keyed by visitorKey):
@@ -247,7 +247,10 @@ export const IP_LIMITS: Record<IpBucket, readonly UserWindow[]> = {
   /** RevenueCat's servers posting purchase events (counted after the secret checks out). */
   revenuecat_webhook: [{ limit: 600, windowMs: 10 * MINUTE_MS, redisWindow: "10 m", prefix: "verdict:ip:rc10m" }],
   /** Signed-out usage event batches. */
-  events: [{ limit: 600, windowMs: 60 * MINUTE_MS, redisWindow: "1 h", prefix: "verdict:ip:evt1h" }],
+  events: [
+    { limit: 10, windowMs: 10 * MINUTE_MS, redisWindow: "10 m", prefix: "verdict:ip:evt10m" },
+    { limit: 60, windowMs: 60 * MINUTE_MS, redisWindow: "1 h", prefix: "verdict:ip:evt1h" },
+  ],
 };
 
 /** Several sliding windows per key, in memory. Checks every window before

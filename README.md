@@ -437,7 +437,7 @@ The website and the future iOS/Android app share one JSON API. Base URL
 | `GET /api/v1/respond/{token}` / `POST` | The invite as the other person sees it / their side (no account) |
 | `POST /api/v1/respond/{token}/evidence` | The other person's evidence images |
 | `POST /api/v1/respond/{token}/appeals` | The other person adds context (signed in, Premium) |
-| `POST /api/v1/events` | Usage events, `{ "context": { "platform", "app_version", "anon_id"?, "device_id"?, "os_version"?, "device_model"?, "locale"? }, "events": [{ "name", "at"?, "props"? }] }`, up to 50 per batch; signed in or with `anon_id`. The event names are listed in `lib/analytics/track.ts`. Props are flat (strings, numbers, booleans), at most 2 KB, and never hold text anyone wrote: keys such as `text`, `message`, `email` or `name` are refused with `400 invalid`. `204` |
+| `POST /api/v1/events` | Usage events, `{ "context": { "platform", "app_version", "anon_id"?, "device_id"?, "os_version"?, "device_model"?, "locale"? }, "events": [{ "name", "at"?, "props"? }] }`, up to 50 per batch as `application/json` (at most 32 KB); signed in or with `anon_id`. Only the event names and props listed in `lib/analytics/track.ts` are accepted; prop values are short tokens without spaces, integers or booleans, so no text anyone wrote fits. Anything else refuses the batch with `400 invalid`. Limits: 300 batches an hour per account, signed out 10 per 10 minutes and 60 an hour per address, and 200,000 events a day in all (`503` past that). `204` |
 | `POST /api/v1/webhooks/revenuecat` | RevenueCat only (`Authorization: Bearer ${REVENUECAT_WEBHOOK_SECRET}`): applies a purchase event once; see *Purchases* |
 | `GET /api/v1/respond/{token}/originals` / `PATCH .../display` / `POST .../removal` | Party B (bound account or `Respondent-Claim` / `claim`): their original, their display name, removing their side |
 
@@ -1005,6 +1005,7 @@ limit within 5 minutes:
 | `provider_rate` | 10 | the AI service answers 429 |
 | `provider_down` | 5 | the AI service answers 5xx, cannot be reached or times out |
 | `many_accounts_per_device` | 1 | a device (the app's `Device-Id` header at sign-in) signs in to its third or later account; sign-in goes ahead |
+| `events_cap` | 1 | a batch of usage events is refused because 200,000 were stored in the last 24 hours |
 | `ban` | 20 | fail2ban bans an address (from fail2ban's journal) |
 
 Change a limit with `ALERT_SIGNAL_<NAME>=n` in the env file, e.g.
@@ -1012,10 +1013,10 @@ Change a limit with `ALERT_SIGNAL_<NAME>=n` in the env file, e.g.
 `journalctl -u verdict --since -1h | grep 'signal:'`.
 
 Signal alerts are not critical. The ones strangers can set off at will
-(`rate_limited`, `bad_origin`, `bearer_401`, `webhook_bad_secret` and
-`many_accounts_per_device`) come by email only; set `ALERT_SIGNALS_PUSH=1` in
-the env file to get them on the phone too. Without `ALERT_EMAIL` they are only
-logged.
+(`rate_limited`, `bad_origin`, `bearer_401`, `webhook_bad_secret`,
+`many_accounts_per_device` and `events_cap`) come by email only; set
+`ALERT_SIGNALS_PUSH=1` in the env file to get them on the phone too. Without
+`ALERT_EMAIL` they are only logged.
 
 fail2ban is installed by `setup.sh` with its standard SSH jail (an address
 that fails 5 logins in 10 minutes is blocked for 10 minutes) and logs to the

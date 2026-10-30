@@ -19,9 +19,14 @@
  *   settings_changed    props: key
  *   error_shown         props: code
  *
- * The server records its own with track(): case_created, verdict_ready,
- * verdict_failed, case_claimed, purchase_granted and sign_in. Clients cannot
- * send those names.
+ * Events without props listed take none. Prop values are tokens such as
+ * "home" or "pack_10" (letters, digits and _ . : / -, no spaces, at most 64),
+ * integers up to a million either way, or booleans.
+ *
+ * The server records its own with track(): case_created (mode),
+ * verdict_ready (kind, mode), verdict_failed (kind, mode, code),
+ * case_claimed, purchase_granted (product, source) and sign_in. Clients
+ * cannot send those names.
  */
 
 import { analyticsEnabled } from "@/lib/features";
@@ -41,7 +46,7 @@ type TrackOptions = {
 export async function track(name: ServerEvent, opts: TrackOptions): Promise<void> {
   if (!analyticsEnabled()) return;
   try {
-    const problem = opts.props ? propsProblem(opts.props) : null;
+    const problem = opts.props ? propsProblem(name, opts.props) : null;
     if (problem) throw new Error(problem);
     await insertEvents([
       {

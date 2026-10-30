@@ -12,7 +12,10 @@ describe("EventBatch", () => {
         batch([
           { name: "app_open" },
           { name: "screen_view", at: Date.now(), props: { screen: "home" } },
-          { name: "buy_tapped", props: { product: "pack_10", price_shown: 4.99, first_time: true } },
+          { name: "buy_tapped", props: { product: "com.okjudge.pack_10" } },
+          { name: "settings_changed", props: { key: "lang" } },
+          { name: "error_shown", props: { code: 429 } },
+          { name: "sign_in_started", props: { provider: "apple" } },
         ]),
       ),
     ).toBe(true);
@@ -22,7 +25,7 @@ describe("EventBatch", () => {
           ...context,
           device_id: "A1B2C3D4-0000-1111-2222-333344445555",
           os_version: "18.1",
-          device_model: "iPhone15,2",
+          device_model: "iPhone15.2",
           locale: "tr-TR",
         }),
       ),
@@ -38,34 +41,43 @@ describe("EventBatch", () => {
     expect(ok(batch([{ name: "app_open", user_id: "u1" }]))).toBe(false);
   });
 
-  it("rejects forbidden prop keys, also inside snake_case keys", () => {
-    for (const key of ["text", "body", "content", "message", "email", "name", "user_email", "first_name", "error_message"]) {
-      expect(ok(batch([{ name: "error_shown", props: { [key]: "x" } }])), key).toBe(false);
-    }
-    expect(ok(batch([{ name: "error_shown", props: { code: "E42", names_visible: true } }]))).toBe(true);
-  });
-
-  it("rejects email-like and long strings, nested values and bad keys", () => {
-    expect(ok(batch([{ name: "settings_changed", props: { key: "a@example.com" } }]))).toBe(false);
-    expect(ok(batch([{ name: "settings_changed", props: { key: "x".repeat(101) } }]))).toBe(false);
-    expect(ok(batch([{ name: "settings_changed", props: { key: { nested: 1 } } }]))).toBe(false);
-    expect(ok(batch([{ name: "settings_changed", props: { key: ["a"] } }]))).toBe(false);
-    expect(ok(batch([{ name: "settings_changed", props: { Key: "a" } }]))).toBe(false);
-    expect(ok(batch([{ name: "settings_changed", props: { key: null } }]))).toBe(false);
-  });
-
-  it("rejects props over 2 KB", () => {
-    const props = Object.fromEntries(Array.from({ length: 30 }, (_, i) => [`k${i}`, "v".repeat(90)]));
-    expect(propsProblem(props)).toBe("props too large");
-    expect(ok(batch([{ name: "screen_view", props }]))).toBe(false);
-  });
-
-  it("rejects bad names, server-only names and batch sizes", () => {
+  it("accepts only the listed event names", () => {
+    expect(ok(batch([{ name: "made_up_event" }]))).toBe(false);
     expect(ok(batch([{ name: "AppOpen" }]))).toBe(false);
-    expect(ok(batch([{ name: "app open" }]))).toBe(false);
-    expect(ok(batch([{ name: "a".repeat(65) }]))).toBe(false);
     expect(ok(batch([{ name: "purchase_granted" }]))).toBe(false);
     expect(ok(batch([{ name: "verdict_ready" }]))).toBe(false);
+    expect(ok(batch([{ name: "sign_in" }]))).toBe(false);
+  });
+
+  it("accepts only the prop keys listed for the event", () => {
+    expect(ok(batch([{ name: "app_open", props: { screen: "home" } }]))).toBe(false);
+    expect(ok(batch([{ name: "screen_view", props: { product: "pack_10" } }]))).toBe(false);
+    expect(ok(batch([{ name: "screen_view", props: { screen: "home", extra: 1 } }]))).toBe(false);
+    expect(ok(batch([{ name: "app_open", props: {} }]))).toBe(true);
+    for (const key of ["text", "body", "content", "message", "email", "name", "user_email", "error_message"]) {
+      expect(ok(batch([{ name: "error_shown", props: { [key]: "x" } }])), key).toBe(false);
+    }
+  });
+
+  it("accepts only tokens, bounded integers and booleans as values", () => {
+    const shown = (code: unknown) => ok(batch([{ name: "error_shown", props: { code } }]));
+    expect(shown("net/timeout:E42")).toBe(true);
+    expect(shown(true)).toBe(true);
+    expect(shown(-1_000_000)).toBe(true);
+    expect(shown("two words")).toBe(false);
+    expect(shown("a@example.com")).toBe(false);
+    expect(shown("x".repeat(65))).toBe(false);
+    expect(shown("")).toBe(false);
+    expect(shown(1.5)).toBe(false);
+    expect(shown(1_000_001)).toBe(false);
+    expect(shown({ nested: 1 })).toBe(false);
+    expect(shown(["a"])).toBe(false);
+    expect(shown(null)).toBe(false);
+  });
+
+  it("checks the size of props and the batch", () => {
+    expect(propsProblem("error_shown", { code: "x".repeat(64) })).toBeNull();
+    expect(propsProblem("verdict_failed", { kind: "x".repeat(64), mode: "y".repeat(64), code: "z".repeat(64) })).toBeNull();
     expect(ok(batch([]))).toBe(false);
     expect(ok(batch(Array.from({ length: MAX_BATCH }, () => ({ name: "app_open" }))))).toBe(true);
     expect(ok(batch(Array.from({ length: MAX_BATCH + 1 }, () => ({ name: "app_open" }))))).toBe(false);
@@ -76,6 +88,8 @@ describe("EventBatch", () => {
     expect(ok(batch([{ name: "app_open" }], { platform: "ios" }))).toBe(false);
     expect(ok(batch([{ name: "app_open" }], { ...context, anon_id: "not-a-uuid" }))).toBe(false);
     expect(ok(batch([{ name: "app_open" }], { ...context, device_id: "short" }))).toBe(false);
+    expect(ok(batch([{ name: "app_open" }], { ...context, device_model: "Pixel 8" }))).toBe(false);
+    expect(ok(batch([{ name: "app_open" }], { ...context, device_model: "Pixel_8" }))).toBe(true);
     expect(ok(batch([{ name: "app_open" }], { ...context, locale: "Turkish please" }))).toBe(false);
   });
 });

@@ -54,11 +54,12 @@ CERT_MIN_DAYS=10
 declare -A SIGNAL_LIMITS=(
   [rate_limited]=50 [turnstile_fail]=30 [bad_origin]=10 [bearer_401]=30
   [webhook_bad_secret]=10 [webhook_apply_failed]=1 [entitlement_refused]=3
-  [provider_rate]=10 [provider_down]=5 [many_accounts_per_device]=1 [ban]=20
+  [provider_rate]=10 [provider_down]=5 [many_accounts_per_device]=1 [events_cap]=1
+  [ban]=20
 )
 # Strangers on the internet can set these off at will, and they are rarely
 # urgent.
-EMAIL_ONLY_SIGNALS=" rate_limited bad_origin bearer_401 webhook_bad_secret many_accounts_per_device "
+EMAIL_ONLY_SIGNALS=" rate_limited bad_origin bearer_401 webhook_bad_secret many_accounts_per_device events_cap "
 
 now=$(date +%s)
 
@@ -280,6 +281,7 @@ signal_meaning() {
     provider_rate) echo "The AI service is rate limiting the app; users get the quota message." ;;
     provider_down) echo "Calls to the AI service fail or time out; verdicts fail meanwhile." ;;
     many_accounts_per_device) echo "A device signed in to a third (or later) account: possibly someone collecting welcome credits. Sign-in was not refused." ;;
+    events_cap) echo "Usage events hit the cap of 200,000 a day and new ones are refused: fake installs flooding POST /api/v1/events, or a client bug." ;;
     ban)
       echo "fail2ban banned that many addresses: someone is trying SSH logins at scale."
       echo
