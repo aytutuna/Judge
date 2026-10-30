@@ -77,10 +77,18 @@ describe("POST /api/v1/events", () => {
     expect(stored).not.toContain("JudgeApp");
   });
 
-  it("signed out without anon_id: 400", async () => {
-    const res = await post({ context: { platform: "web", app_version: "web" }, events: [{ name: "app_open" }] });
+  it("signed out without anon_id: 400 for the apps", async () => {
+    const res = await post({ context: { platform: "ios", app_version: "2.0.0" }, events: [{ name: "app_open" }] });
     expect(res.status).toBe(400);
     expect((await res.json()).code).toBe("invalid");
+  });
+
+  it("the website may send without any identifier", async () => {
+    const res = await post({ context: { platform: "web", app_version: "web-nid" }, events: [{ name: "app_open" }] });
+    expect(res.status).toBe(204);
+    const rows = await rowsFor("app_version = ?", ["web-nid"]);
+    expect(rows).toHaveLength(1);
+    expect(rows[0]).toMatchObject({ platform: "web", user_id: null, anon_id: null, device_id: null });
   });
 
   it("signed in by bearer: the events belong to the account", async () => {

@@ -27,7 +27,8 @@ function fail(code: ApiErrorCode, error: string, status: number): NextResponse {
  * from the app or the website. `context` is { platform, app_version,
  * anon_id?, device_id?, os_version?, device_model?, locale? }; each event is
  * { name, at?, props? } (lib/analytics/validate.ts). Signed in (bearer or
- * cookie), events belong to the account; signed out, `anon_id` is required.
+ * cookie), events belong to the account; signed out, `anon_id` is required
+ * except from the website, which keeps no identifier and sends none.
  * Unknown names, fields or prop keys refuse the whole batch with 400; a body
  * that is not application/json, 415. No IP address or user agent is kept.
  * 204 when stored, and at once while analytics is switched off
@@ -63,7 +64,7 @@ export async function POST(req: Request): Promise<NextResponse> {
   }
   const { context, events } = parsed.data;
   const userId = viewer?.user.id ?? null;
-  if (!userId && !context.anon_id) return fail("invalid", "Send context.anon_id when signed out.", 400);
+  if (!userId && !context.anon_id && context.platform !== "web") return fail("invalid", "Send context.anon_id when signed out.", 400);
 
   const limit = userId ? await checkUserLimits(userId, "events") : await checkIpLimits(clientIp(req.headers), "events");
   if (!limit.ok) {
