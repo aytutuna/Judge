@@ -58,7 +58,7 @@ const ms: AppLocale = {
     "app.settings.appearanceDark": "Gelap",
     "app.settings.usageStats": "Statistik penggunaan",
     "app.settings.usageStatsHint":
-      "Kiraan tanpa nama bagi skrin dan ciri yang digunakan. Teks kes tidak pernah dihantar.",
+      "Kiraan skrin dan ciri yang digunakan, dipautkan kepada akaun anda semasa log masuk. Teks kes tidak pernah dihantar.",
     "app.settings.about": "Tentang Judge",
     "app.settings.version": "Versi {version}",
     "app.signin.required": "Log masuk untuk mendapatkan keputusan.",

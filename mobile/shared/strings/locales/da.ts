@@ -55,7 +55,7 @@ const da: AppLocale = {
     "app.settings.appearanceDark": "Mørk",
     "app.settings.usageStats": "Brugsstatistik",
     "app.settings.usageStatsHint":
-      "Anonyme optællinger af, hvilke skærme og funktioner der bruges. Tekst fra sager sendes aldrig.",
+      "Optællinger af, hvilke skærme og funktioner der bruges, knyttet til din konto, når du er logget ind. Tekst fra sager sendes aldrig.",
     "app.settings.about": "Om Judge",
     "app.settings.version": "Version {version}",
     "app.signin.required": "Log ind for at få en dom.",

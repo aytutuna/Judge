@@ -535,7 +535,7 @@
     <string name="app_settings_appearance_light">ہلکا</string>
     <string name="app_settings_appearance_dark">گہرا</string>
     <string name="app_settings_usage_stats">استعمال کے اعداد و شمار</string>
-    <string name="app_settings_usage_stats_hint">کون سی اسکرینیں اور فیچرز استعمال ہوتے ہیں، اس کی گمنام گنتی۔ کیس کا کوئی متن کبھی نہیں بھیجا جاتا۔</string>
+    <string name="app_settings_usage_stats_hint">کون سی اسکرینیں اور فیچرز استعمال ہوتے ہیں، اس کی گنتی، سائن ان ہونے پر آپ کے اکاؤنٹ سے منسلک۔ کیس کا کوئی متن کبھی نہیں بھیجا جاتا۔</string>
     <string name="app_settings_about">Judge کا تعارف</string>
     <string name="app_settings_version">ورژن %1$s</string>
     <string name="app_signin_required">فیصلہ لینے کے لیے سائن ان کریں۔</string>

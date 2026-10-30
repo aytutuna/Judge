@@ -552,7 +552,7 @@
     <string name="app_settings_appearance_light">Clar</string>
     <string name="app_settings_appearance_dark">Fosc</string>
     <string name="app_settings_usage_stats">Estadístiques d’ús</string>
-    <string name="app_settings_usage_stats_hint">Recomptes anònims de les pantalles i funcions que es fan servir. No s’envia mai cap text dels casos.</string>
+    <string name="app_settings_usage_stats_hint">Recomptes de les pantalles i funcions que es fan servir, vinculats al teu compte si has iniciat la sessió. No s’envia mai cap text dels casos.</string>
     <string name="app_settings_about">Quant a Judge</string>
     <string name="app_settings_version">Versió %1$s</string>
     <string name="app_signin_required">Inicia sessió per obtenir un veredicte.</string>

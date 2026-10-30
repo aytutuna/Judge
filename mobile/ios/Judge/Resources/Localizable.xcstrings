@@ -45260,271 +45260,271 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "أعداد مجهولة الهوية للشاشات والميزات المستخدمة. لا يُرسَل أي نص من القضايا أبدًا."
+            "value" : "أعداد للشاشات والميزات المستخدمة، مرتبطة بحسابك عند تسجيل الدخول. لا يُرسَل أي نص من القضايا أبدًا."
           }
         },
         "bn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "কোন স্ক্রিন আর ফিচার ব্যবহার হয়, তার বেনামি গণনা। মামলার কোনো লেখা কখনও পাঠানো হয় না।"
+            "value" : "কোন স্ক্রিন আর ফিচার ব্যবহার হয় তার গণনা, সাইন ইন থাকলে আপনার অ্যাকাউন্টের সঙ্গে যুক্ত। মামলার কোনো লেখা কখনও পাঠানো হয় না।"
           }
         },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Recomptes anònims de les pantalles i funcions que es fan servir. No s’envia mai cap text dels casos."
+            "value" : "Recomptes de les pantalles i funcions que es fan servir, vinculats al teu compte si has iniciat la sessió. No s’envia mai cap text dels casos."
           }
         },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Anonymní počty toho, které obrazovky a funkce se používají. Text případů se nikdy neodesílá."
+            "value" : "Počty toho, které obrazovky a funkce se používají, po přihlášení spojené s tvým účtem. Text případů se nikdy neodesílá."
           }
         },
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Anonyme optællinger af, hvilke skærme og funktioner der bruges. Tekst fra sager sendes aldrig."
+            "value" : "Optællinger af, hvilke skærme og funktioner der bruges, knyttet til din konto, når du er logget ind. Tekst fra sager sendes aldrig."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Anonyme Zählungen, welche Bildschirme und Funktionen genutzt werden. Text aus Fällen wird nie gesendet."
+            "value" : "Zählungen, welche Bildschirme und Funktionen genutzt werden, mit deinem Konto verknüpft, wenn du angemeldet bist. Text aus Fällen wird nie gesendet."
           }
         },
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ανώνυμες μετρήσεις για το ποιες οθόνες και λειτουργίες χρησιμοποιούνται. Κείμενο από υποθέσεις δεν στέλνεται ποτέ."
+            "value" : "Μετρήσεις για το ποιες οθόνες και λειτουργίες χρησιμοποιούνται, συνδεδεμένες με τον λογαριασμό σου όταν έχεις συνδεθεί. Κείμενο από υποθέσεις δεν στέλνεται ποτέ."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Anonymous counts of which screens and features are used. No case text is ever sent."
+            "value" : "Counts of which screens and features are used, tied to your account when signed in. No case text is ever sent."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Recuentos anónimos de las pantallas y funciones que se usan. Nunca se envía el texto de ningún caso."
+            "value" : "Recuentos de las pantallas y funciones que se usan, vinculados a tu cuenta si has iniciado sesión. Nunca se envía el texto de ningún caso."
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nimettömiä määriä siitä, mitä näkymiä ja toimintoja käytetään. Juttujen tekstiä ei lähetetä koskaan."
+            "value" : "Määriä siitä, mitä näkymiä ja toimintoja käytetään, kirjautuneena tiliisi liitettyinä. Juttujen tekstiä ei lähetetä koskaan."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Des comptages anonymes des écrans et fonctions utilisés. Le texte des dossiers n’est jamais envoyé."
+            "value" : "Des comptages des écrans et fonctions utilisés, liés à ton compte si tu es connecté. Le texte des dossiers n’est jamais envoyé."
           }
         },
         "gu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "કઈ સ્ક્રીન અને સુવિધાઓ વપરાય છે તેની અનામી ગણતરી. કેસનું કોઈ લખાણ ક્યારેય મોકલાતું નથી."
+            "value" : "કઈ સ્ક્રીન અને સુવિધાઓ વપરાય છે તેની ગણતરી, સાઇન ઇન હો ત્યારે તમારા એકાઉન્ટ સાથે જોડાયેલી. કેસનું કોઈ લખાણ ક્યારેય મોકલાતું નથી."
           }
         },
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ספירות אנונימיות של המסכים והתכונות שבשימוש. טקסט מתיקים לא נשלח אף פעם."
+            "value" : "ספירות של המסכים והתכונות שבשימוש, מקושרות לחשבון שלך כשנכנסת אליו. טקסט מתיקים לא נשלח אף פעם."
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "कौन-सी स्क्रीन और सुविधाएँ इस्तेमाल होती हैं, इसकी गुमनाम गिनती। केस का कोई भी टेक्स्ट कभी नहीं भेजा जाता।"
+            "value" : "कौन-सी स्क्रीन और सुविधाएँ इस्तेमाल होती हैं, इसकी गिनती, साइन इन होने पर आपके खाते से जुड़ी। केस का कोई भी टेक्स्ट कभी नहीं भेजा जाता।"
           }
         },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Anonimni brojevi o tome koji se zasloni i značajke koriste. Tekst slučajeva nikad se ne šalje."
+            "value" : "Brojevi o tome koji se zasloni i značajke koriste, povezani s tvojim računom kad si prijavljen. Tekst slučajeva nikad se ne šalje."
           }
         },
         "hu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Névtelen számlálás arról, mely képernyőket és funkciókat használják. Az ügyek szövege soha nem kerül elküldésre."
+            "value" : "Számlálás arról, mely képernyőket és funkciókat használják, bejelentkezve a fiókodhoz kötve. Az ügyek szövege soha nem kerül elküldésre."
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Hitungan anonim layar dan fitur yang dipakai. Teks kasus tidak pernah dikirim."
+            "value" : "Hitungan layar dan fitur yang dipakai, terhubung ke akunmu saat kamu masuk. Teks kasus tidak pernah dikirim."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Conteggi anonimi delle schermate e delle funzioni usate. Il testo dei casi non viene mai inviato."
+            "value" : "Conteggi delle schermate e delle funzioni usate, collegati al tuo account quando hai effettuato l’accesso. Il testo dei casi non viene mai inviato."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "どの画面や機能が使われたかを匿名で集計します。ケースの文章が送信されることはありません。"
+            "value" : "どの画面や機能が使われたかを集計します。ログイン中はアカウントにひも付きます。ケースの文章が送信されることはありません。"
           }
         },
         "kn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ಯಾವ ಪರದೆಗಳು ಮತ್ತು ವೈಶಿಷ್ಟ್ಯಗಳು ಬಳಕೆಯಾಗುತ್ತವೆ ಎಂಬುದರ ಅನಾಮಧೇಯ ಎಣಿಕೆ. ಕೇಸ್‌ನ ಯಾವ ಪಠ್ಯವನ್ನೂ ಎಂದಿಗೂ ಕಳುಹಿಸುವುದಿಲ್ಲ."
+            "value" : "ಯಾವ ಪರದೆಗಳು ಮತ್ತು ವೈಶಿಷ್ಟ್ಯಗಳು ಬಳಕೆಯಾಗುತ್ತವೆ ಎಂಬುದರ ಎಣಿಕೆ, ಸೈನ್ ಇನ್ ಆಗಿದ್ದಾಗ ನಿಮ್ಮ ಖಾತೆಗೆ ಜೋಡಿಸಲಾಗುತ್ತದೆ. ಕೇಸ್‌ನ ಯಾವ ಪಠ್ಯವನ್ನೂ ಎಂದಿಗೂ ಕಳುಹಿಸುವುದಿಲ್ಲ."
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "어떤 화면과 기능이 쓰이는지 익명으로 집계해요. 사건 내용은 절대 전송되지 않아요."
+            "value" : "어떤 화면과 기능이 쓰이는지 집계해요. 로그인하면 계정과 연결돼요. 사건 내용은 절대 전송되지 않아요."
           }
         },
         "ml" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ഏതൊക്കെ സ്ക്രീനുകളും ഫീച്ചറുകളും ഉപയോഗിക്കുന്നു എന്നതിന്റെ അജ്ഞാത എണ്ണം. കേസിലെ ഒരു വാചകവും ഒരിക്കലും അയയ്ക്കില്ല."
+            "value" : "ഏതൊക്കെ സ്ക്രീനുകളും ഫീച്ചറുകളും ഉപയോഗിക്കുന്നു എന്നതിന്റെ എണ്ണം, സൈൻ ഇൻ ചെയ്തിരിക്കുമ്പോൾ നിങ്ങളുടെ അക്കൗണ്ടുമായി ബന്ധിപ്പിക്കും. കേസിലെ ഒരു വാചകവും ഒരിക്കലും അയയ്ക്കില്ല."
           }
         },
         "mr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "कोणत्या स्क्रीन आणि सुविधा वापरल्या जातात याची निनावी मोजणी. प्रकरणातील कोणताही मजकूर कधीही पाठवला जात नाही."
+            "value" : "कोणत्या स्क्रीन आणि सुविधा वापरल्या जातात याची मोजणी, साइन इन असताना तुमच्या खात्याशी जोडलेली. प्रकरणातील कोणताही मजकूर कधीही पाठवला जात नाही."
           }
         },
         "ms" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kiraan tanpa nama bagi skrin dan ciri yang digunakan. Teks kes tidak pernah dihantar."
+            "value" : "Kiraan skrin dan ciri yang digunakan, dipautkan kepada akaun anda semasa log masuk. Teks kes tidak pernah dihantar."
           }
         },
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Anonyme tellinger av hvilke skjermer og funksjoner som brukes. Tekst fra saker sendes aldri."
+            "value" : "Tellinger av hvilke skjermer og funksjoner som brukes, knyttet til kontoen din når du er logget inn. Tekst fra saker sendes aldri."
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Anonieme tellingen van welke schermen en functies worden gebruikt. Tekst uit zaken wordt nooit verstuurd."
+            "value" : "Tellingen van welke schermen en functies worden gebruikt, gekoppeld aan je account als je bent ingelogd. Tekst uit zaken wordt nooit verstuurd."
           }
         },
         "or" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "କେଉଁ ସ୍କ୍ରିନ ଓ ସୁବିଧା ବ୍ୟବହାର ହୁଏ, ତା'ର ଅଜ୍ଞାତ ଗଣନା। ମାମଲାର କୌଣସି ଲେଖା କେବେ ପଠାଯାଏ ନାହିଁ।"
+            "value" : "କେଉଁ ସ୍କ୍ରିନ ଓ ସୁବିଧା ବ୍ୟବହାର ହୁଏ, ତା'ର ଗଣନା, ସାଇନ୍ ଇନ୍ ଥିଲେ ଆପଣଙ୍କ ଆକାଉଣ୍ଟ ସହ ଯୋଡ଼ା। ମାମଲାର କୌଣସି ଲେଖା କେବେ ପଠାଯାଏ ନାହିଁ।"
           }
         },
         "pa" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ਕਿਹੜੀਆਂ ਸਕ੍ਰੀਨਾਂ ਅਤੇ ਸਹੂਲਤਾਂ ਵਰਤੀਆਂ ਜਾਂਦੀਆਂ ਹਨ, ਇਸਦੀ ਗੁਮਨਾਮ ਗਿਣਤੀ। ਕੇਸ ਦੀ ਕੋਈ ਵੀ ਲਿਖਤ ਕਦੇ ਨਹੀਂ ਭੇਜੀ ਜਾਂਦੀ।"
+            "value" : "ਕਿਹੜੀਆਂ ਸਕ੍ਰੀਨਾਂ ਅਤੇ ਸਹੂਲਤਾਂ ਵਰਤੀਆਂ ਜਾਂਦੀਆਂ ਹਨ, ਇਸਦੀ ਗਿਣਤੀ, ਸਾਈਨ ਇਨ ਹੋਣ 'ਤੇ ਤੁਹਾਡੇ ਖਾਤੇ ਨਾਲ ਜੁੜੀ। ਕੇਸ ਦੀ ਕੋਈ ਵੀ ਲਿਖਤ ਕਦੇ ਨਹੀਂ ਭੇਜੀ ਜਾਂਦੀ।"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Anonimowe liczniki tego, które ekrany i funkcje są używane. Tekst spraw nigdy nie jest wysyłany."
+            "value" : "Liczniki tego, które ekrany i funkcje są używane, po zalogowaniu powiązane z twoim kontem. Tekst spraw nigdy nie jest wysyłany."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Contagens anônimas de quais telas e recursos são usados. O texto dos casos nunca é enviado."
+            "value" : "Contagens de quais telas e recursos são usados, ligadas à sua conta quando você está conectado. O texto dos casos nunca é enviado."
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Contagens anónimas dos ecrãs e funcionalidades utilizados. O texto dos casos nunca é enviado."
+            "value" : "Contagens dos ecrãs e funcionalidades utilizados, associadas à tua conta quando tens sessão iniciada. O texto dos casos nunca é enviado."
           }
         },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Numărători anonime ale ecranelor și funcțiilor folosite. Textul cazurilor nu este trimis niciodată."
+            "value" : "Numărători ale ecranelor și funcțiilor folosite, legate de contul tău când ești conectat. Textul cazurilor nu este trimis niciodată."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Анонимный подсчёт того, какие экраны и функции используются. Текст дел никогда не отправляется."
+            "value" : "Подсчёт того, какие экраны и функции используются, — после входа он привязан к вашему аккаунту. Текст дел никогда не отправляется."
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Anonymné počty toho, ktoré obrazovky a funkcie sa používajú. Text prípadov sa nikdy neodosiela."
+            "value" : "Počty toho, ktoré obrazovky a funkcie sa používajú, po prihlásení spojené s tvojím účtom. Text prípadov sa nikdy neodosiela."
           }
         },
         "sl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Anonimno štetje, kateri zasloni in funkcije se uporabljajo. Besedilo sporov se nikoli ne pošlje."
+            "value" : "Štetje, kateri zasloni in funkcije se uporabljajo, povezano s tvojim računom, ko si prijavljen. Besedilo sporov se nikoli ne pošlje."
           }
         },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Anonyma räkningar av vilka skärmar och funktioner som används. Text från fall skickas aldrig."
+            "value" : "Räkningar av vilka skärmar och funktioner som används, kopplade till ditt konto när du är inloggad. Text från fall skickas aldrig."
           }
         },
         "ta" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "எந்தத் திரைகளும் அம்சங்களும் பயன்படுத்தப்படுகின்றன என்பதன் அநாமதேய எண்ணிக்கை. வழக்கின் எந்த உரையும் ஒருபோதும் அனுப்பப்படாது."
+            "value" : "எந்தத் திரைகளும் அம்சங்களும் பயன்படுத்தப்படுகின்றன என்பதன் எண்ணிக்கை, உள்நுழைந்திருக்கும்போது உங்கள் கணக்குடன் இணைக்கப்படும். வழக்கின் எந்த உரையும் ஒருபோதும் அனுப்பப்படாது."
           }
         },
         "te" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ఏ స్క్రీన్‌లు, ఫీచర్‌లు వాడుతున్నారో అనామక లెక్కలు. కేసులోని ఏ పాఠ్యమూ ఎప్పుడూ పంపబడదు."
+            "value" : "ఏ స్క్రీన్‌లు, ఫీచర్‌లు వాడుతున్నారో లెక్కలు, సైన్ ఇన్ అయి ఉన్నప్పుడు మీ ఖాతాకు జోడించబడతాయి. కేసులోని ఏ పాఠ్యమూ ఎప్పుడూ పంపబడదు."
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "นับแบบไม่ระบุตัวตนว่าใช้หน้าจอและฟีเจอร์ใดบ้าง จะไม่มีการส่งข้อความในเคสใดๆ ออกไปเลย"
+            "value" : "นับว่าใช้หน้าจอและฟีเจอร์ใดบ้าง โดยผูกกับบัญชีของคุณเมื่อลงชื่อเข้าใช้ จะไม่มีการส่งข้อความในเคสใดๆ ออกไปเลย"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Hangi ekranların ve özelliklerin kullanıldığına dair anonim sayımlar. Davaların metni asla gönderilmez."
+            "value" : "Hangi ekranların ve özelliklerin kullanıldığına dair sayımlar; giriş yaptıysan hesabına bağlı. Davaların metni asla gönderilmez."
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Анонімний підрахунок того, які екрани й функції використовуються. Текст справ ніколи не надсилається."
+            "value" : "Підрахунок того, які екрани й функції використовуються, — після входу він пов’язаний з твоїм акаунтом. Текст справ ніколи не надсилається."
           }
         },
         "ur" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "کون سی اسکرینیں اور فیچرز استعمال ہوتے ہیں، اس کی گمنام گنتی۔ کیس کا کوئی متن کبھی نہیں بھیجا جاتا۔"
+            "value" : "کون سی اسکرینیں اور فیچرز استعمال ہوتے ہیں، اس کی گنتی، سائن ان ہونے پر آپ کے اکاؤنٹ سے منسلک۔ کیس کا کوئی متن کبھی نہیں بھیجا جاتا۔"
           }
         },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Đếm ẩn danh những màn hình và tính năng được dùng. Nội dung các vụ không bao giờ được gửi đi."
+            "value" : "Đếm những màn hình và tính năng được dùng, gắn với tài khoản của bạn khi đã đăng nhập. Nội dung các vụ không bao giờ được gửi đi."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "匿名统计哪些页面和功能被使用。案子的文字内容绝不会发送。"
+            "value" : "统计哪些页面和功能被使用，登录后与你的账号关联。案子的文字内容绝不会发送。"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "匿名統計哪些頁面和功能被使用。案子的文字內容絕不會傳送。"
+            "value" : "統計哪些頁面和功能被使用，登入後與你的帳號連結。案子的文字內容絕不會傳送。"
           }
         }
       }

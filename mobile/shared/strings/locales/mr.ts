@@ -56,7 +56,7 @@ const mr: AppLocale = {
     "app.settings.appearanceDark": "गडद",
     "app.settings.usageStats": "वापराची आकडेवारी",
     "app.settings.usageStatsHint":
-      "कोणत्या स्क्रीन आणि सुविधा वापरल्या जातात याची निनावी मोजणी. प्रकरणातील कोणताही मजकूर कधीही पाठवला जात नाही.",
+      "कोणत्या स्क्रीन आणि सुविधा वापरल्या जातात याची मोजणी, साइन इन असताना तुमच्या खात्याशी जोडलेली. प्रकरणातील कोणताही मजकूर कधीही पाठवला जात नाही.",
     "app.settings.about": "Judge बद्दल",
     "app.settings.version": "आवृत्ती {version}",
     "app.signin.required": "निकाल मिळवण्यासाठी साइन इन करा.",

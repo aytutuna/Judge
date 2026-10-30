@@ -56,7 +56,8 @@ const id: AppLocale = {
     "app.settings.appearanceLight": "Terang",
     "app.settings.appearanceDark": "Gelap",
     "app.settings.usageStats": "Statistik penggunaan",
-    "app.settings.usageStatsHint": "Hitungan anonim layar dan fitur yang dipakai. Teks kasus tidak pernah dikirim.",
+    "app.settings.usageStatsHint":
+      "Hitungan layar dan fitur yang dipakai, terhubung ke akunmu saat kamu masuk. Teks kasus tidak pernah dikirim.",
     "app.settings.about": "Tentang Judge",
     "app.settings.version": "Versi {version}",
     "app.signin.required": "Masuk untuk mendapat putusan.",

@@ -56,7 +56,7 @@ const nl: AppLocale = {
     "app.settings.appearanceDark": "Donker",
     "app.settings.usageStats": "Gebruiksstatistieken",
     "app.settings.usageStatsHint":
-      "Anonieme tellingen van welke schermen en functies worden gebruikt. Tekst uit zaken wordt nooit verstuurd.",
+      "Tellingen van welke schermen en functies worden gebruikt, gekoppeld aan je account als je bent ingelogd. Tekst uit zaken wordt nooit verstuurd.",
     "app.settings.about": "Over Judge",
     "app.settings.version": "Versie {version}",
     "app.signin.required": "Log in voor een uitspraak.",

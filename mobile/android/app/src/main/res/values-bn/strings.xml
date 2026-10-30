@@ -535,7 +535,7 @@
     <string name="app_settings_appearance_light">হালকা</string>
     <string name="app_settings_appearance_dark">গাঢ়</string>
     <string name="app_settings_usage_stats">ব্যবহারের পরিসংখ্যান</string>
-    <string name="app_settings_usage_stats_hint">কোন স্ক্রিন আর ফিচার ব্যবহার হয়, তার বেনামি গণনা। মামলার কোনো লেখা কখনও পাঠানো হয় না।</string>
+    <string name="app_settings_usage_stats_hint">কোন স্ক্রিন আর ফিচার ব্যবহার হয় তার গণনা, সাইন ইন থাকলে আপনার অ্যাকাউন্টের সঙ্গে যুক্ত। মামলার কোনো লেখা কখনও পাঠানো হয় না।</string>
     <string name="app_settings_about">Judge সম্পর্কে</string>
     <string name="app_settings_version">সংস্করণ %1$s</string>
     <string name="app_signin_required">রায় পেতে সাইন ইন করুন।</string>

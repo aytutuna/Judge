@@ -535,7 +535,7 @@
     <string name="app_settings_appearance_light">Light</string>
     <string name="app_settings_appearance_dark">Dark</string>
     <string name="app_settings_usage_stats">Usage statistics</string>
-    <string name="app_settings_usage_stats_hint">Anonymous counts of which screens and features are used. No case text is ever sent.</string>
+    <string name="app_settings_usage_stats_hint">Counts of which screens and features are used, tied to your account when signed in. No case text is ever sent.</string>
     <string name="app_settings_about">About Judge</string>
     <string name="app_settings_version">Version %1$s</string>
     <string name="app_signin_required">Sign in to get a verdict.</string>

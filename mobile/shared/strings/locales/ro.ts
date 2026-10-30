@@ -59,7 +59,7 @@ const ro: AppLocale = {
     "app.settings.appearanceDark": "Întunecat",
     "app.settings.usageStats": "Statistici de utilizare",
     "app.settings.usageStatsHint":
-      "Numărători anonime ale ecranelor și funcțiilor folosite. Textul cazurilor nu este trimis niciodată.",
+      "Numărători ale ecranelor și funcțiilor folosite, legate de contul tău când ești conectat. Textul cazurilor nu este trimis niciodată.",
     "app.settings.about": "Despre Judge",
     "app.settings.version": "Versiunea {version}",
     "app.signin.required": "Conectează-te ca să primești un verdict.",

@@ -55,7 +55,7 @@ const tr: AppLocale = {
     "app.settings.appearanceDark": "Koyu",
     "app.settings.usageStats": "Kullanım istatistikleri",
     "app.settings.usageStatsHint":
-      "Hangi ekranların ve özelliklerin kullanıldığına dair anonim sayımlar. Davaların metni asla gönderilmez.",
+      "Hangi ekranların ve özelliklerin kullanıldığına dair sayımlar; giriş yaptıysan hesabına bağlı. Davaların metni asla gönderilmez.",
     "app.settings.about": "Judge hakkında",
     "app.settings.version": "Sürüm {version}",
     "app.signin.required": "Karar almak için giriş yap.",

@@ -55,7 +55,7 @@ const hi: AppLocale = {
     "app.settings.appearanceDark": "डार्क",
     "app.settings.usageStats": "इस्तेमाल के आँकड़े",
     "app.settings.usageStatsHint":
-      "कौन-सी स्क्रीन और सुविधाएँ इस्तेमाल होती हैं, इसकी गुमनाम गिनती। केस का कोई भी टेक्स्ट कभी नहीं भेजा जाता।",
+      "कौन-सी स्क्रीन और सुविधाएँ इस्तेमाल होती हैं, इसकी गिनती, साइन इन होने पर आपके खाते से जुड़ी। केस का कोई भी टेक्स्ट कभी नहीं भेजा जाता।",
     "app.settings.about": "Judge के बारे में",
     "app.settings.version": "वर्शन {version}",
     "app.signin.required": "फ़ैसला पाने के लिए साइन इन करें।",

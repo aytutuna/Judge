@@ -58,7 +58,7 @@ const fr: AppLocale = {
     "app.settings.appearanceDark": "Sombre",
     "app.settings.usageStats": "Statistiques d’utilisation",
     "app.settings.usageStatsHint":
-      "Des comptages anonymes des écrans et fonctions utilisés. Le texte des dossiers n’est jamais envoyé.",
+      "Des comptages des écrans et fonctions utilisés, liés à ton compte si tu es connecté. Le texte des dossiers n’est jamais envoyé.",
     "app.settings.about": "À propos de Judge",
     "app.settings.version": "Version {version}",
     "app.signin.required": "Connecte-toi pour obtenir un verdict.",

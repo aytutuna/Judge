@@ -535,7 +535,7 @@
     <string name="app_settings_appearance_light">Vaalea</string>
     <string name="app_settings_appearance_dark">Tumma</string>
     <string name="app_settings_usage_stats">Käyttötilastot</string>
-    <string name="app_settings_usage_stats_hint">Nimettömiä määriä siitä, mitä näkymiä ja toimintoja käytetään. Juttujen tekstiä ei lähetetä koskaan.</string>
+    <string name="app_settings_usage_stats_hint">Määriä siitä, mitä näkymiä ja toimintoja käytetään, kirjautuneena tiliisi liitettyinä. Juttujen tekstiä ei lähetetä koskaan.</string>
     <string name="app_settings_about">Tietoa Judgesta</string>
     <string name="app_settings_version">Versio %1$s</string>
     <string name="app_signin_required">Kirjaudu, niin saat tuomion.</string>

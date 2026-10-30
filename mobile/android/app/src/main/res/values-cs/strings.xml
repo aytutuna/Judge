@@ -569,7 +569,7 @@
     <string name="app_settings_appearance_light">Světlý</string>
     <string name="app_settings_appearance_dark">Tmavý</string>
     <string name="app_settings_usage_stats">Statistiky používání</string>
-    <string name="app_settings_usage_stats_hint">Anonymní počty toho, které obrazovky a funkce se používají. Text případů se nikdy neodesílá.</string>
+    <string name="app_settings_usage_stats_hint">Počty toho, které obrazovky a funkce se používají, po přihlášení spojené s tvým účtem. Text případů se nikdy neodesílá.</string>
     <string name="app_settings_about">O aplikaci Judge</string>
     <string name="app_settings_version">Verze %1$s</string>
     <string name="app_signin_required">Pro verdikt se přihlas.</string>

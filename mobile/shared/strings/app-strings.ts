@@ -69,7 +69,8 @@ export const APP_EN = {
   "app.settings.appearanceLight": "Light",
   "app.settings.appearanceDark": "Dark",
   "app.settings.usageStats": "Usage statistics",
-  "app.settings.usageStatsHint": "Anonymous counts of which screens and features are used. No case text is ever sent.",
+  "app.settings.usageStatsHint":
+    "Counts of which screens and features are used, tied to your account when signed in. No case text is ever sent.",
   "app.settings.about": "About Judge",
   "app.settings.version": "Version {version}",
   // Sign-in. Email in the apps is a 6-digit code, not a link.

@@ -56,7 +56,7 @@ const ur: AppLocale = {
     "app.settings.appearanceDark": "گہرا",
     "app.settings.usageStats": "استعمال کے اعداد و شمار",
     "app.settings.usageStatsHint":
-      "کون سی اسکرینیں اور فیچرز استعمال ہوتے ہیں، اس کی گمنام گنتی۔ کیس کا کوئی متن کبھی نہیں بھیجا جاتا۔",
+      "کون سی اسکرینیں اور فیچرز استعمال ہوتے ہیں، اس کی گنتی، سائن ان ہونے پر آپ کے اکاؤنٹ سے منسلک۔ کیس کا کوئی متن کبھی نہیں بھیجا جاتا۔",
     "app.settings.about": "Judge کا تعارف",
     "app.settings.version": "ورژن {version}",
     "app.signin.required": "فیصلہ لینے کے لیے سائن ان کریں۔",

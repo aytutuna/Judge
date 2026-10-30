@@ -535,7 +535,7 @@
     <string name="app_settings_appearance_light">లైట్</string>
     <string name="app_settings_appearance_dark">డార్క్</string>
     <string name="app_settings_usage_stats">వినియోగ గణాంకాలు</string>
-    <string name="app_settings_usage_stats_hint">ఏ స్క్రీన్‌లు, ఫీచర్‌లు వాడుతున్నారో అనామక లెక్కలు. కేసులోని ఏ పాఠ్యమూ ఎప్పుడూ పంపబడదు.</string>
+    <string name="app_settings_usage_stats_hint">ఏ స్క్రీన్‌లు, ఫీచర్‌లు వాడుతున్నారో లెక్కలు, సైన్ ఇన్ అయి ఉన్నప్పుడు మీ ఖాతాకు జోడించబడతాయి. కేసులోని ఏ పాఠ్యమూ ఎప్పుడూ పంపబడదు.</string>
     <string name="app_settings_about">Judge గురించి</string>
     <string name="app_settings_version">వెర్షన్ %1$s</string>
     <string name="app_signin_required">తీర్పు కోసం సైన్ ఇన్ చేయండి.</string>

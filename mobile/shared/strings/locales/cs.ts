@@ -58,7 +58,7 @@ const cs: AppLocale = {
     "app.settings.appearanceDark": "Tmavý",
     "app.settings.usageStats": "Statistiky používání",
     "app.settings.usageStatsHint":
-      "Anonymní počty toho, které obrazovky a funkce se používají. Text případů se nikdy neodesílá.",
+      "Počty toho, které obrazovky a funkce se používají, po přihlášení spojené s tvým účtem. Text případů se nikdy neodesílá.",
     "app.settings.about": "O aplikaci Judge",
     "app.settings.version": "Verze {version}",
     "app.signin.required": "Pro verdikt se přihlas.",

@@ -60,7 +60,7 @@ const hr: AppLocale = {
     "app.settings.appearanceDark": "Tamni",
     "app.settings.usageStats": "Statistika korištenja",
     "app.settings.usageStatsHint":
-      "Anonimni brojevi o tome koji se zasloni i značajke koriste. Tekst slučajeva nikad se ne šalje.",
+      "Brojevi o tome koji se zasloni i značajke koriste, povezani s tvojim računom kad si prijavljen. Tekst slučajeva nikad se ne šalje.",
     "app.settings.about": "O aplikaciji Judge",
     "app.settings.version": "Verzija {version}",
     "app.signin.required": "Prijavi se da dobiješ presudu.",

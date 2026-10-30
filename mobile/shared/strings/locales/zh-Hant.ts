@@ -49,7 +49,7 @@ const zhHant: AppLocale = {
     "app.settings.appearanceLight": "淺色",
     "app.settings.appearanceDark": "深色",
     "app.settings.usageStats": "使用情況統計",
-    "app.settings.usageStatsHint": "匿名統計哪些頁面和功能被使用。案子的文字內容絕不會傳送。",
+    "app.settings.usageStatsHint": "統計哪些頁面和功能被使用，登入後與你的帳號連結。案子的文字內容絕不會傳送。",
     "app.settings.about": "關於 Judge",
     "app.settings.version": "版本 {version}",
     "app.signin.required": "登入即可取得判決。",

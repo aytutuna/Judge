@@ -535,7 +535,7 @@
     <string name="app_settings_appearance_light">Lys</string>
     <string name="app_settings_appearance_dark">Mørk</string>
     <string name="app_settings_usage_stats">Brugsstatistik</string>
-    <string name="app_settings_usage_stats_hint">Anonyme optællinger af, hvilke skærme og funktioner der bruges. Tekst fra sager sendes aldrig.</string>
+    <string name="app_settings_usage_stats_hint">Optællinger af, hvilke skærme og funktioner der bruges, knyttet til din konto, når du er logget ind. Tekst fra sager sendes aldrig.</string>
     <string name="app_settings_about">Om Judge</string>
     <string name="app_settings_version">Version %1$s</string>
     <string name="app_signin_required">Log ind for at få en dom.</string>

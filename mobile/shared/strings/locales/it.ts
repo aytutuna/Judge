@@ -59,7 +59,7 @@ const it: AppLocale = {
     "app.settings.appearanceDark": "Scuro",
     "app.settings.usageStats": "Statistiche di utilizzo",
     "app.settings.usageStatsHint":
-      "Conteggi anonimi delle schermate e delle funzioni usate. Il testo dei casi non viene mai inviato.",
+      "Conteggi delle schermate e delle funzioni usate, collegati al tuo account quando hai effettuato l’accesso. Il testo dei casi non viene mai inviato.",
     "app.settings.about": "Info su Judge",
     "app.settings.version": "Versione {version}",
     "app.signin.required": "Accedi per avere un verdetto.",

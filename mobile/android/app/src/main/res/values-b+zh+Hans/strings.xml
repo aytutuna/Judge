@@ -518,7 +518,7 @@
     <string name="app_settings_appearance_light">浅色</string>
     <string name="app_settings_appearance_dark">深色</string>
     <string name="app_settings_usage_stats">使用情况统计</string>
-    <string name="app_settings_usage_stats_hint">匿名统计哪些页面和功能被使用。案子的文字内容绝不会发送。</string>
+    <string name="app_settings_usage_stats_hint">统计哪些页面和功能被使用，登录后与你的账号关联。案子的文字内容绝不会发送。</string>
     <string name="app_settings_about">关于 Judge</string>
     <string name="app_settings_version">版本 %1$s</string>
     <string name="app_signin_required">登录后即可获取裁决。</string>

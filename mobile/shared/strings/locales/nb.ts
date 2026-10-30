@@ -64,7 +64,7 @@ const nb: AppLocale = {
     "app.settings.appearanceDark": "Mørkt",
     "app.settings.usageStats": "Bruksstatistikk",
     "app.settings.usageStatsHint":
-      "Anonyme tellinger av hvilke skjermer og funksjoner som brukes. Tekst fra saker sendes aldri.",
+      "Tellinger av hvilke skjermer og funksjoner som brukes, knyttet til kontoen din når du er logget inn. Tekst fra saker sendes aldri.",
     "app.settings.about": "Om Judge",
     "app.settings.version": "Versjon {version}",
     "app.signin.required": "Logg inn for å få en dom.",

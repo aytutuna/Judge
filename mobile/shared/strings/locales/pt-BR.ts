@@ -58,7 +58,7 @@ const ptBR: AppLocale = {
     "app.settings.appearanceDark": "Escuro",
     "app.settings.usageStats": "Estatísticas de uso",
     "app.settings.usageStatsHint":
-      "Contagens anônimas de quais telas e recursos são usados. O texto dos casos nunca é enviado.",
+      "Contagens de quais telas e recursos são usados, ligadas à sua conta quando você está conectado. O texto dos casos nunca é enviado.",
     "app.settings.about": "Sobre o Judge",
     "app.settings.version": "Versão {version}",
     "app.signin.required": "Entre para receber um veredito.",

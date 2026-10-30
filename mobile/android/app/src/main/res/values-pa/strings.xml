@@ -535,7 +535,7 @@
     <string name="app_settings_appearance_light">ਹਲਕੀ</string>
     <string name="app_settings_appearance_dark">ਗੂੜ੍ਹੀ</string>
     <string name="app_settings_usage_stats">ਵਰਤੋਂ ਦੇ ਅੰਕੜੇ</string>
-    <string name="app_settings_usage_stats_hint">ਕਿਹੜੀਆਂ ਸਕ੍ਰੀਨਾਂ ਅਤੇ ਸਹੂਲਤਾਂ ਵਰਤੀਆਂ ਜਾਂਦੀਆਂ ਹਨ, ਇਸਦੀ ਗੁਮਨਾਮ ਗਿਣਤੀ। ਕੇਸ ਦੀ ਕੋਈ ਵੀ ਲਿਖਤ ਕਦੇ ਨਹੀਂ ਭੇਜੀ ਜਾਂਦੀ।</string>
+    <string name="app_settings_usage_stats_hint">ਕਿਹੜੀਆਂ ਸਕ੍ਰੀਨਾਂ ਅਤੇ ਸਹੂਲਤਾਂ ਵਰਤੀਆਂ ਜਾਂਦੀਆਂ ਹਨ, ਇਸਦੀ ਗਿਣਤੀ, ਸਾਈਨ ਇਨ ਹੋਣ \'ਤੇ ਤੁਹਾਡੇ ਖਾਤੇ ਨਾਲ ਜੁੜੀ। ਕੇਸ ਦੀ ਕੋਈ ਵੀ ਲਿਖਤ ਕਦੇ ਨਹੀਂ ਭੇਜੀ ਜਾਂਦੀ।</string>
     <string name="app_settings_about">Judge ਬਾਰੇ</string>
     <string name="app_settings_version">ਵਰਜ਼ਨ %1$s</string>
     <string name="app_signin_required">ਫ਼ੈਸਲਾ ਲੈਣ ਲਈ ਸਾਈਨ ਇਨ ਕਰੋ।</string>

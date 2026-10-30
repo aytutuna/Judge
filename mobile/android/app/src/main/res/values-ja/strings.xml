@@ -518,7 +518,7 @@
     <string name="app_settings_appearance_light">ライト</string>
     <string name="app_settings_appearance_dark">ダーク</string>
     <string name="app_settings_usage_stats">利用状況の統計</string>
-    <string name="app_settings_usage_stats_hint">どの画面や機能が使われたかを匿名で集計します。ケースの文章が送信されることはありません。</string>
+    <string name="app_settings_usage_stats_hint">どの画面や機能が使われたかを集計します。ログイン中はアカウントにひも付きます。ケースの文章が送信されることはありません。</string>
     <string name="app_settings_about">Judgeについて</string>
     <string name="app_settings_version">バージョン%1$s</string>
     <string name="app_signin_required">判定を受けるにはログインしてください。</string>

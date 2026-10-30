@@ -58,7 +58,7 @@ const sv: AppLocale = {
     "app.settings.appearanceDark": "Mörkt",
     "app.settings.usageStats": "Användningsstatistik",
     "app.settings.usageStatsHint":
-      "Anonyma räkningar av vilka skärmar och funktioner som används. Text från fall skickas aldrig.",
+      "Räkningar av vilka skärmar och funktioner som används, kopplade till ditt konto när du är inloggad. Text från fall skickas aldrig.",
     "app.settings.about": "Om Judge",
     "app.settings.version": "Version {version}",
     "app.signin.required": "Logga in för att få en dom.",

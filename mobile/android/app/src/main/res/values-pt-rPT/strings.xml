@@ -552,7 +552,7 @@
     <string name="app_settings_appearance_light">Claro</string>
     <string name="app_settings_appearance_dark">Escuro</string>
     <string name="app_settings_usage_stats">Estatísticas de utilização</string>
-    <string name="app_settings_usage_stats_hint">Contagens anónimas dos ecrãs e funcionalidades utilizados. O texto dos casos nunca é enviado.</string>
+    <string name="app_settings_usage_stats_hint">Contagens dos ecrãs e funcionalidades utilizados, associadas à tua conta quando tens sessão iniciada. O texto dos casos nunca é enviado.</string>
     <string name="app_settings_about">Sobre o Judge</string>
     <string name="app_settings_version">Versão %1$s</string>
     <string name="app_signin_required">Entra para obter um veredicto.</string>
