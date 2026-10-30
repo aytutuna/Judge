@@ -161,6 +161,10 @@ jobs:
           JUDGE_UPLOAD_KEYSTORE_PASSWORD: ${{ secrets.JUDGE_UPLOAD_KEYSTORE_PASSWORD }}
           JUDGE_UPLOAD_KEY_ALIAS: ${{ secrets.JUDGE_UPLOAD_KEY_ALIAS }}
           JUDGE_UPLOAD_KEY_PASSWORD: ${{ secrets.JUDGE_UPLOAD_KEY_PASSWORD }}
+          # Without the token the R8 mapping is not uploaded.
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_ORG: ${{ vars.SENTRY_ORG }}
+          SENTRY_PROJECT: ${{ vars.SENTRY_PROJECT_ANDROID }}
         run: ./gradlew --no-daemon bundleRelease assembleRelease
 
       - uses: actions/upload-artifact@v7

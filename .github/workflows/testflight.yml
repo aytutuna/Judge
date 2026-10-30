@@ -88,6 +88,23 @@ jobs:
             -authenticationKeyID "${{ vars.ASC_KEY_ID }}" \
             -authenticationKeyIssuerID "${{ vars.ASC_ISSUER_ID }}"
 
+      - name: Upload dSYMs to Sentry
+        # The build is already on TestFlight; missing symbols shouldn't fail the run.
+        continue-on-error: true
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_ORG: ${{ vars.SENTRY_ORG }}
+          SENTRY_PROJECT: ${{ vars.SENTRY_PROJECT_IOS }}
+        run: |
+          if [ -z "$SENTRY_AUTH_TOKEN" ]; then
+            echo "SENTRY_AUTH_TOKEN is not set, skipping"
+            exit 0
+          fi
+          curl -sSfL -o "$RUNNER_TEMP/sentry-cli" https://github.com/getsentry/sentry-cli/releases/download/3.8.2/sentry-cli-Darwin-universal
+          echo "2d1b118fa46960ba5e8e0cca9a6e197366905776a0ddc5a89c7d05a3908b77db  $RUNNER_TEMP/sentry-cli" | shasum -a 256 -c
+          chmod +x "$RUNNER_TEMP/sentry-cli"
+          "$RUNNER_TEMP/sentry-cli" debug-files upload "$RUNNER_TEMP/Judge.xcarchive/dSYMs"
+
       - uses: actions/upload-artifact@v7
         if: failure()
         with:
