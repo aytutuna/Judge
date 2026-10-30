@@ -19,11 +19,14 @@ struct JudgeApp: App {
             return
         }
         #endif
+        let config = AppConfig.load()
+        // Hosted unit tests launch the app too; their runs stay out of the counts
+        // and out of the crash reports.
+        let testing = ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil
+        if !testing { CrashReporting.start(config) }
         let container = HistoryContainer.make()
         self.container = container
-        // Hosted unit tests launch the app too; their runs stay out of the counts.
-        let testing = ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil
-        _app = State(initialValue: AppModel(config: .load(), container: container, analyticsFile: Analytics.defaultFile, sendsUsageEvents: !testing))
+        _app = State(initialValue: AppModel(config: config, container: container, analyticsFile: Analytics.defaultFile, sendsUsageEvents: !testing))
         sceneLive = true
     }
 

@@ -11,6 +11,8 @@ struct AppConfig: Sendable, Equatable {
     let build: String
     /// Public RevenueCat SDK key. Empty means no in-app purchases.
     var revenueCatAPIKey: String = ""
+    /// Sentry DSN for crash reports. Empty means the SDK is never started.
+    var sentryDSN: String = ""
 
     /// TestFlight and sandbox builds (and Debug), never the App Store.
     static var isTestFlight: Bool {
@@ -38,7 +40,8 @@ struct AppConfig: Sendable, Equatable {
             shareBaseURL: share,
             version: value("CFBundleShortVersionString").isEmpty ? "0" : value("CFBundleShortVersionString"),
             build: value("CFBundleVersion").isEmpty ? "0" : value("CFBundleVersion"),
-            revenueCatAPIKey: publicKey(value("JudgeRevenueCatAPIKey"))
+            revenueCatAPIKey: publicKey(value("JudgeRevenueCatAPIKey")),
+            sentryDSN: publicKey(value("JudgeSentryDSN"))
         )
     }
 

@@ -91,6 +91,8 @@
 	<string>$(SHARE_BASE_URL)</string>
 	<key>JudgeRevenueCatAPIKey</key>
 	<string>$(REVENUECAT_API_KEY)</string>
+	<key>JudgeSentryDSN</key>
+	<string>$(SENTRY_DSN)</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsLocalNetworking</key>

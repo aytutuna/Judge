@@ -1,6 +1,7 @@
 // Settings shared by Debug and Release. Values reach the app through
-// Judge/Info.plist (JudgeAPIBaseURL, JudgeShareBaseURL, JudgeRevenueCatAPIKey)
-// and are read once into AppConfig. "$()" keeps "//" from starting a comment.
+// Judge/Info.plist (JudgeAPIBaseURL, JudgeShareBaseURL, JudgeRevenueCatAPIKey,
+// JudgeSentryDSN) and are read once into AppConfig. "$()" keeps "//" from
+// starting a comment.
 
 MARKETING_VERSION = 0.1.0
 CURRENT_PROJECT_VERSION = 1
@@ -12,6 +13,11 @@ SHARE_BASE_URL = $(API_BASE_URL)
 // ship inside the app. Empty = no in-app purchases: the pricing screen keeps
 // "Coming soon" and Settings shows no "Restore purchases".
 REVENUECAT_API_KEY = appl_VUbtBonfsoyNjRLvdblOqVYWWrT
+
+// Sentry DSN for crash reports, public like the key above. Write it as
+// https:/$()/<key>@<host>/<project>. Empty = the SDK is never started.
+// Debug.xcconfig clears it, so only Release builds report.
+SENTRY_DSN = https:/$()/0fb27e7566896b59be0b9db3c3276143@o4512342896345088.ingest.de.sentry.io/4512346486276176
 
 APP_DISPLAY_NAME = Judge
 

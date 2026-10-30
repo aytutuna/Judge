@@ -1,16 +1,17 @@
 # Judge for iOS
 
 SwiftUI app for okjudge.com. Swift 6 language mode, iOS 17+, Observation,
-URLSession, Codable and SwiftData. One Swift package: RevenueCat
-(github.com/RevenueCat/purchases-ios-spm, pinned to an exact version in the
-project) for in-app purchases; Xcode and `xcodebuild` fetch it on the first
-build. `Judge.xcodeproj` is committed and needs no generator.
+URLSession, Codable and SwiftData. Two Swift packages, each pinned to an
+exact version in the project: RevenueCat (github.com/RevenueCat/purchases-ios-spm)
+for in-app purchases and Sentry (github.com/getsentry/sentry-cocoa) for crash
+reports; Xcode and `xcodebuild` fetch them on the first build.
+`Judge.xcodeproj` is committed and needs no generator.
 
 ## Build on a Mac
 
 Requirements: Xcode 16 or newer (Swift 6 compiler and the synchronized-folder
 project format; Xcode 26 recommended). Nothing else to install; the first
-build needs network access to fetch the RevenueCat package.
+build needs network access to fetch the packages.
 
 ```sh
 open mobile/ios/Judge.xcodeproj
@@ -114,7 +115,7 @@ configuration).
 
 ## Configuration
 
-`Config/Shared.xcconfig`, `Debug.xcconfig` and `Release.xcconfig` fill three
+`Config/Shared.xcconfig`, `Debug.xcconfig` and `Release.xcconfig` fill four
 Info.plist keys that `AppConfig` reads at launch:
 
 | Setting | Info.plist key | Default |
@@ -122,6 +123,7 @@ Info.plist keys that `AppConfig` reads at launch:
 | `API_BASE_URL` | `JudgeAPIBaseURL` | `https://okjudge.com` |
 | `SHARE_BASE_URL` | `JudgeShareBaseURL` | the API base |
 | `REVENUECAT_API_KEY` | `JudgeRevenueCatAPIKey` | empty (no in-app purchases) |
+| `SENTRY_DSN` | `JudgeSentryDSN` | Judge's public DSN for Release builds; `Debug.xcconfig` clears it, so Debug builds send no crash reports |
 
 To point a Debug build at another server, create `Config/Local.xcconfig`
 (gitignored; only Debug includes it):

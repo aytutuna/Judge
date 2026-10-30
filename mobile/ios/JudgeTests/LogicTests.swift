@@ -330,6 +330,8 @@ final class TextHelperTests: XCTestCase {
         XCTAssertEqual(config.shareURL(id: "abc123DEF0").absoluteString, "https://okjudge.com/v/abc123DEF0")
         XCTAssertEqual(config.siteURL("privacy").absoluteString, "https://okjudge.com/privacy")
         XCTAssertEqual(config.userAgent, "Judge-iOS/1.0.0 (7)")
+        XCTAssertEqual(config.sentryDSN, "", "no crash reporting unless a DSN is set")
+        XCTAssertEqual(AppConfig.publicKey("$(SENTRY_DSN)"), "")
     }
 
     @MainActor
