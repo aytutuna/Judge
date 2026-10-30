@@ -1,24 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Themed icon (Android 13+): the mark in one colour; the system tints it. -->
+<!-- Themed icon (Android 13+): the mark in one colour; the system tints it.
+     Same geometry as the foreground: the 1024 iOS tile on the inner 72dp. -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="108dp"
     android:height="108dp"
-    android:viewportWidth="108"
-    android:viewportHeight="108">
-    <group android:translateX="26" android:translateY="34" android:scaleX="2" android:scaleY="2">
-        <path
-            android:pathData="M2.5,12.6 L25.5,9.4"
-            android:strokeColor="#FF000000"
-            android:strokeWidth="2.4"
-            android:strokeLineCap="round" />
-        <path
-            android:fillColor="#FF000000"
-            android:pathData="M2.5,8.1 a3.9,3.9 0 1,0 7.8,0 a3.9,3.9 0 1,0 -7.8,0 Z" />
+    android:viewportWidth="1536"
+    android:viewportHeight="1536">
+    <group
+        android:pivotX="512"
+        android:pivotY="512"
+        android:scaleX="1.1"
+        android:scaleY="1.1"
+        android:translateX="256"
+        android:translateY="256">
         <path
             android:fillColor="#FF000000"
-            android:pathData="M17.7,6 a3.9,3.9 0 1,0 7.8,0 a3.9,3.9 0 1,0 -7.8,0 Z" />
+            android:pathData="M323.55,457.71A134.16,134.16 0,1 1,457.01 337.59A261.61,261.61 0,0 0,463.48 428.62A23.4,23.4 0,0 1,440.79 457.71Z" />
         <path
             android:fillColor="#FF000000"
-            android:pathData="M14,11.4 L10.6,18.6 L17.4,18.6 Z" />
+            android:pathData="M700.45,566.29A134.16,134.16 0,1 1,566.99 686.41A261.61,261.61 0,0 0,560.52 595.38A23.4,23.4 0,0 1,583.21 566.29Z" />
+        <path
+            android:fillColor="#FF000000"
+            android:pathData="M468.32,512A43.68,43.68 0,1 0,555.68 512A43.68,43.68 0,1 0,468.32 512Z" />
     </group>
 </vector>

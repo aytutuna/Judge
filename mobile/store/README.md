@@ -4,6 +4,7 @@ Drafts for the App Store and Google Play listings of Judge (okjudge.com).
 
 - `listing-en.md`: name, subtitle, short description, promotional text, full description, keywords and what's new in 1.0, then the English-only parts: URLs, categories, age rating answers and App Privacy / Data safety answers.
 - The other `listing-*.md` files: the same seven fields in every other app language, plus the English, Spanish and French store variants. Headings stay in English. See the locale table below.
+- `ic_launcher-playstore.png`: the 512x512 Google Play icon (the light tile; Play rounds the corners itself).
 - `review-notes.md`: notes for App Review. Fill in `<REVIEW_EMAIL>` and `<REVIEW_CODE>` with the reviewer test account before submitting: the values of `REVIEW_ACCOUNT_EMAIL` and `REVIEW_ACCOUNT_CODE` on the server, which make that address always accept that code (see the web repo README).
 
 Before every submission give that account credits on the server, since every verdict, case and appeal costs one and the account only got the single welcome credit (or none, if it is older than the welcome credit). From the app directory: `sudo -u verdict npx tsx --env-file=/etc/verdict/verdict.env scripts/grant.ts <REVIEW_EMAIL> --credits 20 --create`, then `--show` to check the balance. Sandbox purchases don't add anything on the live server (`ALLOW_SANDBOX_PURCHASES` stays unset), so the notes don't promise that they do.

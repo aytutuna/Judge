@@ -8,9 +8,7 @@
     <color name="terra">#FFC8553D</color>
     <color name="sage">#FF8AA899</color>
 
-    <!-- The launcher icon keeps the light colours in dark mode. -->
-    <color name="icon_ivory">#FFFFFFFF</color>
-    <color name="icon_ink">#FF1C1916</color>
-    <color name="icon_terra">#FFC8553D</color>
-    <color name="icon_sage">#FF8AA899</color>
+    <!-- Launcher icon field, the mean of the iOS tile's near-flat gradient.
+         Not overridden in values-night: the icon stays light. -->
+    <color name="icon_background">#FFF7F7F7</color>
 </resources>
