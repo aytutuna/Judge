@@ -1,6 +1,8 @@
 package com.okjudge.judge
 
 import android.content.Context
+import com.okjudge.judge.core.analytics.Analytics
+import com.okjudge.judge.core.analytics.DeviceIdentity
 import com.okjudge.judge.core.api.JudgeApi
 import com.okjudge.judge.core.api.TokenStore
 import com.okjudge.judge.core.auth.Account
@@ -26,6 +28,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
+import java.io.File
 
 /** Build-time configuration (BuildConfig, set from `judge.*` Gradle properties). */
 data class AppConfig(
@@ -66,6 +69,10 @@ class AppContainer(context: Context, val config: AppConfig = AppConfig.fromBuild
 
     val okHttp: OkHttpClient by lazy { OkHttpClient.Builder().build() }
 
+    private val identity by lazy { DeviceIdentity.prefs(appContext) }
+
+    private val deviceId: String by lazy { DeviceIdentity.deviceId(appContext, identity) }
+
     val api: JudgeApi by lazy {
         JudgeApi(
             baseUrl = config.apiBaseUrl,
@@ -73,6 +80,17 @@ class AppContainer(context: Context, val config: AppConfig = AppConfig.fromBuild
             userAgent = config.userAgent,
             tokenStore = tokenStore,
             onSignedOut = { account.onSessionExpired() },
+            deviceId = deviceId,
+        )
+    }
+
+    /** Usage events for POST /api/v1/events; [start] feeds it the setting and the server's switch. */
+    val analytics: Analytics by lazy {
+        Analytics(
+            transport = api::sendEvents,
+            context = DeviceIdentity.context(config, identity, deviceId),
+            file = File(appContext.filesDir, "analytics-queue.json"),
+            scope = appScope,
         )
     }
 
@@ -102,12 +120,20 @@ class AppContainer(context: Context, val config: AppConfig = AppConfig.fromBuild
     val purchaseGateway: PurchaseGateway? by lazy { RevenueCatGateway.createOrNull(appContext, config.revenueCatApiKey) }
 
     val purchases: PurchaseController by lazy {
-        PurchaseController(purchaseGateway, account.state, refreshAccount = { account.refresh() }, scope = appScope)
+        PurchaseController(
+            purchaseGateway, account.state, refreshAccount = { account.refresh() }, scope = appScope,
+            onBought = { analytics.track("purchase_completed") },
+        )
     }
 
     /** Keeps the Verdicts cache with the session: signing out (or deleting the account) takes the account's rows off the phone. */
     fun start() {
         account.onEndedByUser = { history.forgetAccounts() }
+        account.onSignedIn = { analytics.track("sign_in_completed") }
+        appScope.launch { settings.usageStats.collect { analytics.allowed = it } }
+        appScope.launch {
+            account.providers.collect { (it as? Account.Providers.Ready)?.let { ready -> analytics.setServerOn(ready.config.features.analytics) } }
+        }
         appScope.launch {
             var launching = true
             account.state.collect { state ->

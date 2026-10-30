@@ -89,6 +89,9 @@ class Account(
     /** Runs when the user signed out or deleted the account (not when the session expired). */
     var onEndedByUser: suspend () -> Unit = {}
 
+    /** Runs after each successful sign-in. */
+    var onSignedIn: () -> Unit = {}
+
     /** A sign-out or deletion is in flight: the account actions wait for it. */
     private val _working = MutableStateFlow(false)
     val working: StateFlow<Boolean> = _working.asStateFlow()
@@ -169,6 +172,7 @@ class Account(
             withContext(io) { tokens.set(grant.token) }
             _state.value = State.SignedIn()
         }
+        onSignedIn()
         refreshInBackground()
         return SignInResult.Success
     }

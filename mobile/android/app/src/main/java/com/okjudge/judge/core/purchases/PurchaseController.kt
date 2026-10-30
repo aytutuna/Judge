@@ -32,6 +32,8 @@ class PurchaseController(
     private val refreshAccount: suspend () -> Unit,
     private val scope: CoroutineScope,
     private val pollDelaysMs: List<Long> = POLL_DELAYS_MS,
+    /** Told when the store reports a completed purchase (not a pending one). */
+    private val onBought: () -> Unit = {},
 ) {
     /** The purchase message on the pricing screen. */
     enum class Notice {
@@ -158,6 +160,7 @@ class PurchaseController(
                 PurchaseOutcome.Cancelled -> Unit
                 PurchaseOutcome.Failed -> _state.update { it.copy(notice = Notice.FAILED) }
                 is PurchaseOutcome.Bought, PurchaseOutcome.Pending -> {
+                    if (outcome is PurchaseOutcome.Bought) onBought()
                     val inStore = (outcome as? PurchaseOutcome.Bought)?.customer?.subscriptionActive == true
                     _state.update { it.copy(notice = Notice.ARRIVING, subscriptionInStore = it.subscriptionInStore || inStore) }
                     val arrived = pollUntil { grantOf(accountState.value) != before }

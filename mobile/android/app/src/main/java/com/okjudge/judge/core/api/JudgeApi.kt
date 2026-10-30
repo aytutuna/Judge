@@ -1,5 +1,6 @@
 package com.okjudge.judge.core.api
 
+import com.okjudge.judge.core.analytics.Delivery
 import com.okjudge.judge.core.display.UiError
 import com.okjudge.judge.core.evidence.PreparedImage
 import com.okjudge.judge.core.model.CaseListResponse
@@ -73,7 +74,7 @@ sealed interface ApiResult<out T> {
  *
  * Every call carries `Authorization: Bearer` while [tokenStore] holds a
  * session; a 401 `signin_required` to such a call clears it and calls
- * [onSignedOut].
+ * [onSignedOut]. Sign-in requests also carry [deviceId] as `Device-Id`.
  *
  * Main-safe: the call, the body read and the JSON decode all run on [io], so
  * callers on Dispatchers.Main never touch the socket.
@@ -87,6 +88,7 @@ class JudgeApi(
     timeouts: Timeouts = Timeouts(),
     private val io: CoroutineDispatcher = Dispatchers.IO,
     private val pollPolicy: PollPolicy = PollPolicy(),
+    private val deviceId: String? = null,
 ) {
     data class Timeouts(
         val verdictSec: Long = 310,
@@ -381,6 +383,7 @@ class JudgeApi(
             put("provider", "google")
             put("idToken", buildJsonObject { put("token", idToken) })
         },
+        signIn = true,
     ) { _, text -> decodeGrant(text) }
 
     /** POST /api/auth/email-otp/send-verification-otp: emails a sign-in code in [lang]. */
@@ -391,7 +394,7 @@ class JudgeApi(
         return postAuth(url, buildJsonObject {
             put("email", email)
             put("type", "sign-in")
-        }) { _, _ -> }
+        }, signIn = true) { _, _ -> }
     }
 
     /** POST /api/auth/sign-in/email-otp: trades the emailed code for a session. */
@@ -401,6 +404,7 @@ class JudgeApi(
             put("email", email)
             put("otp", otp)
         },
+        signIn = true,
     ) { _, text -> decodeGrant(text) }
 
     /** POST /api/auth/sign-out: ends the session on the server. */
@@ -413,9 +417,37 @@ class JudgeApi(
         return execute(deleteClient, req) { _, _ -> }
     }
 
-    private suspend fun <T> postAuth(url: HttpUrl, body: JsonObject, decode: (status: Int, body: String) -> T): ApiResult<T> {
-        val req = request(url).post(body.toString().toRequestBody(JSON)).build()
-        return execute(accountClient, req, decode)
+    /**
+     * POST /api/v1/events with a ready `{ context, events }` body. Its own
+     * call, not [execute]: a dead token here is left for the account's calls
+     * to notice instead of signing out from a background flush.
+     */
+    suspend fun sendEvents(body: String): Delivery {
+        val req = request(url("api", "v1", "events")).post(body.toByteArray().toRequestBody(EVENTS_JSON)).build()
+        val status = try {
+            withContext(io) { getClient.newCall(req).executeAsync().use { it.code } }
+        } catch (e: CancellationException) {
+            throw e
+        } catch (_: IOException) {
+            return Delivery.FAILED
+        }
+        return when (status) {
+            in 200..299 -> Delivery.SENT
+            400, 413 -> Delivery.REJECTED
+            else -> Delivery.FAILED
+        }
+    }
+
+    /** [signIn]: the server notes the device an account signs in from. */
+    private suspend fun <T> postAuth(
+        url: HttpUrl,
+        body: JsonObject,
+        signIn: Boolean = false,
+        decode: (status: Int, body: String) -> T,
+    ): ApiResult<T> {
+        val builder = request(url)
+        if (signIn && deviceId != null) builder.header("Device-Id", deviceId).header("Device-Platform", "android")
+        return execute(accountClient, builder.post(body.toString().toRequestBody(JSON)).build(), decode)
     }
 
     private fun decodeGrant(text: String): SessionGrant {
@@ -479,6 +511,7 @@ class JudgeApi(
         const val RESPOND_ASYNC = "respond-async"
 
         private val JSON = "application/json; charset=utf-8".toMediaType()
+        private val EVENTS_JSON = "application/json".toMediaType()
         private val EMPTY: RequestBody = ByteArray(0).toRequestBody(null)
 
         /** HTTP failure -> UiError (see the error table in the design doc, 4.5). */

@@ -3,6 +3,7 @@ package com.okjudge.judge.core.data
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
@@ -27,13 +28,17 @@ enum class Appearance(val stored: String) {
     }
 }
 
-/** App settings: the language choice and the appearance. */
+/** App settings: the language choice, the appearance and whether usage statistics are sent. */
 interface SettingsStore {
     val langPref: Flow<LangPref>
     suspend fun setLangPref(pref: LangPref)
 
     val appearance: Flow<Appearance>
     suspend fun setAppearance(appearance: Appearance)
+
+    /** On unless the user turned it off. */
+    val usageStats: Flow<Boolean>
+    suspend fun setUsageStats(on: Boolean)
 }
 
 private val Context.settingsDataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
@@ -53,8 +58,15 @@ class DataStoreSettings(context: Context) : SettingsStore {
         store.edit { it[APPEARANCE] = appearance.stored }
     }
 
+    override val usageStats: Flow<Boolean> = store.data.map { it[USAGE_STATS] ?: true }
+
+    override suspend fun setUsageStats(on: Boolean) {
+        store.edit { it[USAGE_STATS] = on }
+    }
+
     private companion object {
         val LANG = stringPreferencesKey("lang")
         val APPEARANCE = stringPreferencesKey("appearance")
+        val USAGE_STATS = booleanPreferencesKey("usage_stats")
     }
 }

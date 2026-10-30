@@ -47,6 +47,16 @@ class MainActivity : ComponentActivity() {
         setContent { JudgeRoot(container, links, onLinkHandled = { links.value = null }, onDark = ::systemBars) }
     }
 
+    override fun onStart() {
+        super.onStart()
+        (application as JudgeApp).container.analytics.becameActive()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        (application as JudgeApp).container.analytics.enteredBackground()
+    }
+
     private fun systemBars(dark: Boolean) {
         val style = if (dark) {
             SystemBarStyle.dark(DarkPalette.ivory.toArgb())

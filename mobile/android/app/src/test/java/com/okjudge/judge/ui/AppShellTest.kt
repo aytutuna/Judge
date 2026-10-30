@@ -12,6 +12,7 @@ import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
 import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.core.view.WindowCompat
+import androidx.test.core.app.ApplicationProvider
 import com.okjudge.judge.JudgeApp
 import com.okjudge.judge.MainActivity
 import com.okjudge.judge.core.data.Appearance
@@ -29,6 +30,7 @@ import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
+import org.junit.rules.ExternalResource
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
@@ -37,7 +39,13 @@ import org.robolectric.annotation.Config
 @RunWith(RobolectricTestRunner::class)
 @Config(sdk = [36], qualifiers = "en-rUS-w393dp-h852dp")
 class AppShellTest {
-    @get:Rule
+    /** The activity talks to the configured server: keep usage events from tests out of its counts. */
+    @get:Rule(order = 0)
+    val noUsageStats = object : ExternalResource() {
+        override fun before() = runBlocking { ApplicationProvider.getApplicationContext<JudgeApp>().container.settings.setUsageStats(false) }
+    }
+
+    @get:Rule(order = 1)
     val compose = createAndroidComposeRule<MainActivity>()
 
     private fun awaitText(text: String) =
