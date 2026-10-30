@@ -13,11 +13,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.selectable
+import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Switch
+import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -56,6 +59,7 @@ object SettingsTags {
     const val RESTORE = "settings.restore"
     const val RESTORE_NOTE = "settings.restoreNote"
     const val LANGUAGE = "settings.language"
+    const val USAGE_STATS = "settings.usageStats"
 
     /** A row of the appearance group: "settings.appearance.dark". */
     fun appearanceOption(a: Appearance): String = "settings.appearance.${a.stored}"
@@ -87,6 +91,8 @@ fun SettingsScreen(
     onRestore: () -> Unit = {},
     appearance: Appearance = Appearance.SYSTEM,
     onAppearance: (Appearance) -> Unit = {},
+    usageStats: Boolean = true,
+    onUsageStats: (Boolean) -> Unit = {},
 ) {
     val s = LocalStrings.current
     val base = siteBaseUrl.trimEnd('/')
@@ -117,6 +123,27 @@ fun SettingsScreen(
                     if (i > 0) HorizontalDivider(color = Palette.line)
                     AppearanceRow(option, selected = option == appearance) { onAppearance(option) }
                 }
+            }
+
+            Column {
+                Group(null) {
+                    Row(
+                        Modifier
+                            .fillMaxWidth()
+                            .testTag(SettingsTags.USAGE_STATS)
+                            .toggleable(value = usageStats, role = Role.Switch, onValueChange = onUsageStats)
+                            .padding(horizontal = 16.dp, vertical = 10.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Text(s.appSettingsUsageStats, style = JudgeType.body, modifier = Modifier.weight(1f))
+                        Switch(
+                            checked = usageStats,
+                            onCheckedChange = null,
+                            colors = SwitchDefaults.colors(checkedTrackColor = Palette.terraInk, checkedThumbColor = Palette.paper),
+                        )
+                    }
+                }
+                Text(s.appSettingsUsageStatsHint, style = JudgeType.footnote, modifier = Modifier.padding(start = 4.dp, top = 8.dp, end = 4.dp))
             }
 
             if (onOpenPricing != null) {

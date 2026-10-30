@@ -35,6 +35,15 @@ sealed interface UiError {
     data object Unknown : UiError
 }
 
+/** What error_shown reports: the server's code, else the kind of failure. */
+val UiError.eventCode: String
+    get() = when (this) {
+        is UiError.Api -> code?.ifEmpty { null } ?: "http_$status"
+        UiError.Offline -> "offline"
+        UiError.Timeout -> "timeout"
+        UiError.Unknown -> "malformed"
+    }
+
 /** Ports of `formatWait`, `formatDate`, `tWithDate` and `apiErrorMessage` (lib/i18n.ts). */
 object Errors {
     /** Stable API codes the dictionary has a message for (ERROR_KEY_BY_CODE). */

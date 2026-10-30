@@ -93,6 +93,8 @@ import com.okjudge.judge.ui.theme.Palette
 import com.okjudge.judge.ui.verdict.VerdictAppealViewModel
 import com.okjudge.judge.ui.verdict.VerdictRoute
 import com.okjudge.judge.ui.verdict.VerdictViewModel
+import com.okjudge.judge.core.analytics.Analytics
+import com.okjudge.judge.core.display.eventCode
 import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
 
@@ -257,6 +259,13 @@ fun JudgeRoot(
                                 )
                             }
                             val state by vm.state.collectAsStateWithLifecycle()
+                            val analytics = container.analytics
+                            ScreenView(analytics, "home")
+                            LaunchedEffect(state.error) { state.error?.let { analytics.track("error_shown", mapOf("code" to it.eventCode)) } }
+                            val counted: (Submitted) -> Submitted = {
+                                if (it == Submitted.CHECKING || it == Submitted.CREATING) analytics.track("case_submitted")
+                                it
+                            }
                             LaunchedEffect(clearDraft) {
                                 if (clearDraft) {
                                     vm.clear()
@@ -266,27 +275,36 @@ fun JudgeRoot(
                             LaunchedEffect(submitAfterSignIn) {
                                 if (submitAfterSignIn) {
                                     submitAfterSignIn = false
-                                    if (vm.submit(lang, strings) == Submitted.PRICING) openPricing()
+                                    if (counted(vm.submit(lang, strings)) == Submitted.PRICING) openPricing()
                                 }
                             }
                             HomeScreen(
                                 state = state,
-                                onArgumentChange = vm::onArgumentChange,
+                                onArgumentChange = { text ->
+                                    if (state.argument.isEmpty() && text.isNotEmpty()) analytics.track("case_started")
+                                    vm.onArgumentChange(text)
+                                },
                                 onOtherSideChange = vm::onOtherSideChange,
                                 onOtherName = vm::onOtherName,
                                 onSubmit = {
-                                    when (vm.submit(lang, strings)) {
+                                    when (counted(vm.submit(lang, strings))) {
                                         // Every verdict needs an account: sign in first, then go on.
                                         Submitted.SIGN_IN -> if (backStack.lastOrNull() !is SignInKey) backStack.add(SignInKey(thenVerdict = true))
                                         Submitted.PRICING -> openPricing()
                                         else -> Unit
                                     }
                                 },
-                                onSendLink = { if (vm.sendLink(lang) == Submitted.PRICING) openPricing() },
-                                onExample = { vm.fillExample(strings) },
+                                onSendLink = { if (counted(vm.sendLink(lang)) == Submitted.PRICING) openPricing() },
+                                onExample = {
+                                    if (state.argument.isEmpty()) analytics.track("case_started")
+                                    vm.fillExample(strings)
+                                },
                                 onDismissError = vm::dismissError,
                                 onNew = newArgument,
-                                onAddEvidence = vm::onAddEvidence,
+                                onAddEvidence = {
+                                    analytics.track("evidence_added")
+                                    vm.onAddEvidence(it)
+                                },
                                 onRemoveEvidence = vm::onRemoveEvidence,
                                 onDisplayName = vm::onDisplayName,
                             )
@@ -315,7 +333,10 @@ fun JudgeRoot(
                                     questions = clarify.questions,
                                     answers = answers,
                                     onAnswer = { id, value -> answers = answers + (id to value) },
-                                    onSubmit = { container.verdictFlow.finishClarify(answers, skip = false) },
+                                    onSubmit = {
+                                        container.analytics.track("question_answered")
+                                        container.verdictFlow.finishClarify(answers, skip = false)
+                                    },
                                     onSkip = { container.verdictFlow.finishClarify(answers, skip = true) },
                                     onBack = {
                                         container.verdictFlow.leaveClarify()
@@ -336,6 +357,7 @@ fun JudgeRoot(
                                 purchases.refresh()
                                 account.refresh()
                             }
+                            ScreenView(container.analytics, "pricing")
                             PricingScreen(
                                 pricing = config?.pricing ?: PricingInfo(),
                                 features = config?.features,
@@ -352,7 +374,10 @@ fun JudgeRoot(
                                     notice = store.notice,
                                     subscriptionPending = PurchaseController.subscriptionPending(store, signedIn?.me?.entitlement),
                                 ),
-                                onBuy = { productId -> purchases.buy(context, productId) },
+                                onBuy = { productId ->
+                                    container.analytics.track("buy_tapped", mapOf("product" to productId))
+                                    purchases.buy(context, productId)
+                                },
                             )
                         }
                         entry<VerdictKey> { key ->
@@ -361,6 +386,12 @@ fun JudgeRoot(
                             }
                             val accountState by account.state.collectAsStateWithLifecycle()
                             val providers by account.providers.collectAsStateWithLifecycle()
+                            // Once per verdict, not again on the way back from a screen above it.
+                            var viewed by rememberSaveable { mutableStateOf(false) }
+                            LaunchedEffect(Unit) {
+                                if (!viewed) container.analytics.track("verdict_viewed")
+                                viewed = true
+                            }
                             // Only the signed-in writer is told they may add context.
                             val appeal = if (accountState is Account.State.SignedIn) {
                                 viewModel(key = "verdict-appeal-${key.id}") {
@@ -383,11 +414,13 @@ fun JudgeRoot(
                                 evidenceOn = (providers as? Account.Providers.Ready)?.config?.features?.evidence == true,
                                 onSignIn = { if (backStack.lastOrNull() !is SignInKey) backStack.add(SignInKey(thenVerdict = false)) },
                                 onPricing = { if (backStack.lastOrNull() !is PricingKey) backStack.add(PricingKey) },
+                                onShared = { container.analytics.track("share_tapped") },
                             )
                         }
                         entry<HistoryKey> {
                             val providers by account.providers.collectAsStateWithLifecycle()
                             val historyOn = (providers as? Account.Providers.Ready)?.config?.features?.history == true
+                            ScreenView(container.analytics, "verdicts")
                             val vm = viewModel {
                                 HistoryViewModel(
                                     container.history, container.api, container.historyUser,
@@ -446,6 +479,9 @@ fun JudgeRoot(
                             val accountState by account.state.collectAsStateWithLifecycle()
                             val providers by account.providers.collectAsStateWithLifecycle()
                             val signedIn = accountState is Account.State.SignedIn
+                            val analytics = container.analytics
+                            ScreenView(analytics, "case_detail")
+                            LaunchedEffect(state.actionError) { state.actionError?.let { analytics.track("error_shown", mapOf("code" to it.eventCode)) } }
                             LaunchedEffect(signedIn) {
                                 // Signed in from the case screen: read it again.
                                 if (signedIn && state.status == CaseLoadStatus.SIGNIN) vm.reload()
@@ -471,16 +507,23 @@ fun JudgeRoot(
                                     onResetInvite = vm::resetInvite,
                                     onRemove = vm::remove,
                                     onCopyInvite = { copyLink(context, it) },
-                                    onShareInvite = { shareInvite(context, currentStrings.appShareTitle, currentStrings.caseInviteShareText, it) },
+                                    onShareInvite = {
+                                        analytics.track("share_tapped")
+                                        shareInvite(context, currentStrings.appShareTitle, currentStrings.caseInviteShareText, it)
+                                    },
                                     onOverlayFinished = vm::finishOverlay,
                                     onAppealText = vm::onAppealText,
-                                    onAddAppealEvidence = vm::onAddAppealEvidence,
+                                    onAddAppealEvidence = {
+                                        analytics.track("evidence_added")
+                                        vm.onAddAppealEvidence(it)
+                                    },
                                     onRemoveAppealEvidence = vm::onRemoveAppealEvidence,
                                     onSubmitAppeal = vm::submitAppeal,
                                     onTypedName = vm::onTypedName,
                                     onSaveName = vm::saveDisplayName,
                                     onNamesVisible = vm::setNamesVisible,
                                     onShareVerdict = { id, headline ->
+                                        analytics.track("share_tapped")
                                         shareVerdict(context, currentStrings.appShareTitle, headline, currentStrings.shareText, shareUrl(shareBase, id))
                                     },
                                     onCopyVerdict = { id -> copyLink(context, shareUrl(shareBase, id)) },
@@ -494,16 +537,26 @@ fun JudgeRoot(
                             val purchases = container.purchases
                             val store by purchases.state.collectAsStateWithLifecycle()
                             val purchasesOn = (providers as? Account.Providers.Ready)?.config?.pricing?.purchasesEnabled == true
+                            val usageStats by container.settings.usageStats.collectAsStateWithLifecycle(initialValue = true)
                             LaunchedEffect(Unit) {
                                 purchases.refresh()
                                 account.refresh()
                             }
+                            ScreenView(container.analytics, "settings")
                             SettingsScreen(
                                 langPref = langPref,
                                 versionName = container.config.versionName,
-                                onLangPref = { pref -> scope.launch { container.settings.setLangPref(pref) } },
+                                onLangPref = { pref ->
+                                    container.analytics.track("settings_changed", mapOf("key" to "language"))
+                                    scope.launch { container.settings.setLangPref(pref) }
+                                },
                                 appearance = appearance,
-                                onAppearance = { a -> scope.launch { container.settings.setAppearance(a) } },
+                                onAppearance = { a ->
+                                    container.analytics.track("settings_changed", mapOf("key" to "appearance"))
+                                    scope.launch { container.settings.setAppearance(a) }
+                                },
+                                usageStats = usageStats,
+                                onUsageStats = { on -> scope.launch { container.settings.setUsageStats(on) } },
                                 onNew = onNew,
                                 onOpenLink = { openLink(context, it) },
                                 siteBaseUrl = container.config.shareBaseUrl,
@@ -521,6 +574,7 @@ fun JudgeRoot(
                         entry<SignInKey> { key ->
                             val vm = viewModel { SignInViewModel(account) }
                             val state by vm.state.collectAsStateWithLifecycle()
+                            ScreenView(container.analytics, "sign_in")
                             LaunchedEffect(state.done) {
                                 if (state.done) {
                                     backStack.removeAll { it is SignInKey }
@@ -532,9 +586,15 @@ fun JudgeRoot(
                                 onBack = { backStack.removeAll { it is SignInKey } },
                                 onNew = onNew,
                                 actions = SignInActions(
-                                    onGoogle = { vm.google(context) },
+                                    onGoogle = {
+                                        container.analytics.track("sign_in_started", mapOf("provider" to "google"))
+                                        vm.google(context)
+                                    },
                                     onEmailChange = vm::onEmailChange,
-                                    onRequestCode = { vm.requestCode(lang) },
+                                    onRequestCode = {
+                                        container.analytics.track("sign_in_started", mapOf("provider" to "email"))
+                                        vm.requestCode(lang)
+                                    },
                                     onCodeChange = vm::onCodeChange,
                                     onSubmitCode = vm::submitCode,
                                     onResend = { vm.resend(lang) },
@@ -605,6 +665,12 @@ private fun JudgingEntry(flow: VerdictFlow, onDone: (String) -> Unit, onLeave: (
         },
         onNew = onNew,
     )
+}
+
+/** screen_view each time [screen] comes on top. */
+@Composable
+private fun ScreenView(analytics: Analytics, screen: String) {
+    LaunchedEffect(Unit) { analytics.track("screen_view", mapOf("screen" to screen)) }
 }
 
 /** The tab bar stays off judging and the fresh verdict, sign-in and the questions. */

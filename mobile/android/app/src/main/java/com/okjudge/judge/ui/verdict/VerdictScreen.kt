@@ -66,6 +66,7 @@ fun VerdictRoute(
     evidenceOn: Boolean = false,
     onSignIn: () -> Unit = {},
     onPricing: () -> Unit = {},
+    onShared: () -> Unit = {},
 ) {
     val lang = LocalLang.current
     LaunchedEffect(lang) { viewModel.onLang(lang) }
@@ -122,7 +123,10 @@ fun VerdictRoute(
         val shown = remember(view, saved.nameMap, selfLang) { view.personalized(saved.nameMap, selfLang) }
         val area = appealState?.area ?: AppealArea.None
         val actions = CardActions(
-            onShare = { shareVerdict(context, s.appShareTitle, view.result.headline, s.shareText, url) },
+            onShare = {
+                onShared()
+                shareVerdict(context, s.appShareTitle, view.result.headline, s.shareText, url)
+            },
             onCopy = {
                 copyLink(context, url)
                 copied = true
