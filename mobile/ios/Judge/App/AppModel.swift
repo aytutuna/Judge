@@ -44,6 +44,8 @@ final class AppModel {
     private(set) var langPreference: LangPreference
     /// Light, dark or the phone's, per device like the language.
     private(set) var appearance: Appearance
+    /// The "Usage statistics" setting, on unless turned off.
+    private(set) var usageStats: Bool
 
     let config: AppConfig
     let api: JudgeAPI
@@ -52,6 +54,8 @@ final class AppModel {
     let account: AccountModel
     /// In-app purchases (off without a RevenueCat key).
     let purchases: PurchaseModel
+    /// Usage events for POST /api/v1/events.
+    let analytics: Analytics
     /// Whether Home saves the unsent draft and brings it back next session
     /// (off for screenshot states, so they neither read nor overwrite it).
     let persistsDraft: Bool
@@ -88,6 +92,7 @@ final class AppModel {
     private let defaults: UserDefaults
     private static let langKey = "settings.lang"
     private static let appearanceKey = "settings.appearance"
+    private static let usageStatsKey = "settings.usageStats"
     private static let userKey = "session.user"
     private static let userSessionKey = "session.userToken"
 
@@ -99,7 +104,8 @@ final class AppModel {
         persistsDraft: Bool = true,
         api: JudgeAPI? = nil,
         caseNames: (any CaseNamesStore)? = nil,
-        purchaseGateway: (any PurchaseGateway)? = nil
+        purchaseGateway: (any PurchaseGateway)? = nil,
+        analyticsFile: URL? = nil
     ) {
         self.config = config
         self.persistsDraft = persistsDraft
@@ -107,7 +113,15 @@ final class AppModel {
         self.caseNames = caseNames ?? KeychainCaseNamesStore()
         langPreference = LangPreference(stored: defaults.string(forKey: Self.langKey))
         appearance = Appearance(stored: defaults.string(forKey: Self.appearanceKey))
-        self.api = api ?? JudgeAPI(baseURL: config.apiBaseURL, userAgent: config.userAgent, tokenStore: tokenStore)
+        usageStats = defaults.object(forKey: Self.usageStatsKey) as? Bool ?? true
+        let deviceID = DeviceIdentity.deviceID(defaults)
+        self.api = api ?? JudgeAPI(baseURL: config.apiBaseURL, userAgent: config.userAgent, tokenStore: tokenStore, deviceID: deviceID)
+        analytics = Analytics(
+            transport: self.api,
+            context: DeviceIdentity.context(config: config, defaults: defaults, deviceID: deviceID),
+            file: analyticsFile,
+            allowed: usageStats
+        )
         history = HistoryStore(container: container)
         home = HomeModel()
         account = AccountModel(api: self.api)
@@ -125,6 +139,10 @@ final class AppModel {
         let list = historyList
         let store = history
         let purchases = self.purchases
+        let analytics = self.analytics
+        account.onConfig = { [weak analytics] config in
+            analytics?.setServerOn(config.features.analytics)
+        }
         // Weak: the list holds the account, and a strong capture would keep
         // both alive after the app model is gone.
         account.onSessionEnded = { [weak self, weak purchases, weak list] byUser in
@@ -192,6 +210,13 @@ final class AppModel {
     func setAppearance(_ value: Appearance) {
         appearance = value
         defaults.set(value.rawValue, forKey: Self.appearanceKey)
+    }
+
+    /// Off drops the queued events and sends no more.
+    func setUsageStats(_ on: Bool) {
+        usageStats = on
+        defaults.set(on, forKey: Self.usageStatsKey)
+        analytics.allowed = on
     }
 
     /// Screenshot evidence on Home: uploading needs an account.

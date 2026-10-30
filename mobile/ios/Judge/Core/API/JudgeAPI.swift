@@ -33,19 +33,23 @@ struct JudgeAPI: Sendable {
     let tokenStore: any TokenStore
     let userAgent: String
     let pollPolicy: PollPolicy
+    /// Sent as `Device-Id` on sign-in requests.
+    let deviceID: String?
 
     init(
         baseURL: URL,
         userAgent: String,
         tokenStore: any TokenStore = NoTokenStore(),
         session: URLSession = JudgeAPI.makeSession(),
-        pollPolicy: PollPolicy = .standard
+        pollPolicy: PollPolicy = .standard,
+        deviceID: String? = nil
     ) {
         self.baseURL = baseURL
         self.userAgent = userAgent
         self.tokenStore = tokenStore
         self.session = session
         self.pollPolicy = pollPolicy
+        self.deviceID = deviceID
     }
 
     /// No cookies, no cache; the long verdict timeout as the session default

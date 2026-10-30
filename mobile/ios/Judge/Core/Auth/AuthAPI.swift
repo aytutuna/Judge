@@ -58,6 +58,7 @@ extension JudgeAPI {
         var request = makeRequest(url: endpoint("auth/apple/code"), method: "POST", timeout: AuthTimeout.call)
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        addDevice(&request)
         request.httpBody = try JSONSerialization.data(withJSONObject: ["code": code])
         _ = try await session.data(for: request)
     }
@@ -69,6 +70,7 @@ extension JudgeAPI {
             .appending(queryItems: [URLQueryItem(name: "lang", value: lang.rawValue)])
         var request = makeRequest(url: url, method: "POST", timeout: AuthTimeout.call)
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        addDevice(&request)
         request.httpBody = try JSONSerialization.data(withJSONObject: ["email": email, "type": "sign-in"])
         _ = try await send(request)
     }
@@ -101,9 +103,17 @@ extension JudgeAPI {
     private func authPost(_ path: String, body: [String: Any]) async throws -> AuthSession {
         var request = makeRequest(url: authEndpoint(path), method: "POST", timeout: AuthTimeout.call)
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        addDevice(&request)
         request.httpBody = try JSONSerialization.data(withJSONObject: body)
         let (data, response) = try await exchange(request)
         return try Self.session(from: data, header: response.value(forHTTPHeaderField: "set-auth-token"))
+    }
+
+    /// The server notes which devices an account signs in from.
+    func addDevice(_ request: inout URLRequest) {
+        guard let deviceID else { return }
+        request.setValue(deviceID, forHTTPHeaderField: "Device-Id")
+        request.setValue("ios", forHTTPHeaderField: "Device-Platform")
     }
 
     static func session(from data: Data, header: String?) throws -> AuthSession {

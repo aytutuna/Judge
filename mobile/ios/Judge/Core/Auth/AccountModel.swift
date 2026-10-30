@@ -104,6 +104,9 @@ final class AccountModel {
     /// (the store logs in with it).
     @ObservationIgnored var onUserKnown: (@MainActor (_ userId: String) -> Void)?
 
+    /// Told each time GET /api/v1/config answers (usage events follow its switch).
+    @ObservationIgnored var onConfig: (@MainActor (ServerConfig) -> Void)?
+
     /// Refetches /me in the background (after a premium outcome or a 402).
     func refreshSoon() {
         guard isSignedIn, usesNetwork else { return }
@@ -126,6 +129,7 @@ final class AccountModel {
             let config = try await api.serverConfig()
             serverConfig = config
             providers = .loaded(config.signIn)
+            onConfig?(config)
         } catch {
             if signInProviders == nil { providers = .failed }
         }

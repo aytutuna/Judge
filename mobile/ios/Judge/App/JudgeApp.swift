@@ -21,7 +21,7 @@ struct JudgeApp: App {
         #endif
         let container = HistoryContainer.make()
         self.container = container
-        _app = State(initialValue: AppModel(config: .load(), container: container))
+        _app = State(initialValue: AppModel(config: .load(), container: container, analyticsFile: Analytics.defaultFile))
         sceneLive = true
     }
 
@@ -45,6 +45,7 @@ struct RootView: View {
     @State private var showLaunchMark = true
     @State private var webLink: WebLink?
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.scenePhase) private var scenePhase
 
     var body: some View {
         let lang = app.lang
@@ -69,6 +70,13 @@ struct RootView: View {
                 .presentationDragIndicator(.visible)
         }
         .task { await app.account.start() }
+        .onChange(of: scenePhase, initial: true) { _, phase in
+            if phase == .active { app.analytics.becameActive() }
+            if phase == .background { app.analytics.enteredBackground() }
+        }
+        .onChange(of: app.account.isSignedIn) { _, signedIn in
+            if signedIn { app.analytics.track("sign_in_completed") }
+        }
         .onOpenURL { url in open(url) }
         .onContinueUserActivity(NSUserActivityTypeBrowsingWeb) { activity in
             if let url = activity.webpageURL { open(url) }
