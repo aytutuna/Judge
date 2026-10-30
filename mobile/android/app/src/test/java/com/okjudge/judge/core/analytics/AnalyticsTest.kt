@@ -201,6 +201,19 @@ class AnalyticsTest {
     }
 
     @Test
+    fun serverOff_beforeTheSettingIsRead_dropsTheSavedQueue() = runTest {
+        val file = File(tmp.root, "queue.json")
+        analytics(Stub(), file).track("app_open")
+        assertTrue(file.exists())
+
+        val again = analytics(Stub(), file, allowed = null)
+        again.setServerOn(false)
+        again.allowed = true
+        assertTrue(again.queue.isEmpty())
+        assertFalse(file.exists())
+    }
+
+    @Test
     fun settingOff_clearsTheQueueAndTheFile() = runTest {
         val file = File(tmp.root, "queue.json")
         val stub = Stub()

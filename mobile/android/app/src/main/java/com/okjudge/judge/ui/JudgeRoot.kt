@@ -94,6 +94,7 @@ import com.okjudge.judge.ui.verdict.VerdictAppealViewModel
 import com.okjudge.judge.ui.verdict.VerdictRoute
 import com.okjudge.judge.ui.verdict.VerdictViewModel
 import com.okjudge.judge.core.analytics.Analytics
+import com.okjudge.judge.core.display.UiError
 import com.okjudge.judge.core.display.eventCode
 import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
@@ -261,7 +262,7 @@ fun JudgeRoot(
                             val state by vm.state.collectAsStateWithLifecycle()
                             val analytics = container.analytics
                             ScreenView(analytics, "home")
-                            LaunchedEffect(state.error) { state.error?.let { analytics.track("error_shown", mapOf("code" to it.eventCode)) } }
+                            ErrorShown(analytics, state.error)
                             val counted: (Submitted) -> Submitted = {
                                 if (it == Submitted.CHECKING || it == Submitted.CREATING) analytics.track("case_submitted")
                                 it
@@ -481,7 +482,7 @@ fun JudgeRoot(
                             val signedIn = accountState is Account.State.SignedIn
                             val analytics = container.analytics
                             ScreenView(analytics, "case_detail")
-                            LaunchedEffect(state.actionError) { state.actionError?.let { analytics.track("error_shown", mapOf("code" to it.eventCode)) } }
+                            ErrorShown(analytics, state.actionError)
                             LaunchedEffect(signedIn) {
                                 // Signed in from the case screen: read it again.
                                 if (signedIn && state.status == CaseLoadStatus.SIGNIN) vm.reload()
@@ -667,10 +668,25 @@ private fun JudgingEntry(flow: VerdictFlow, onDone: (String) -> Unit, onLeave: (
     )
 }
 
-/** screen_view each time [screen] comes on top. */
+/** screen_view once per back stack entry: saved with it, so a rotation does not count again. */
 @Composable
 private fun ScreenView(analytics: Analytics, screen: String) {
-    LaunchedEffect(Unit) { analytics.track("screen_view", mapOf("screen" to screen)) }
+    var sent by rememberSaveable { mutableStateOf(false) }
+    LaunchedEffect(Unit) {
+        if (!sent) analytics.track("screen_view", mapOf("screen" to screen))
+        sent = true
+    }
+}
+
+/** error_shown once for each error that comes up, not again when a rotation recreates the screen. */
+@Composable
+private fun ErrorShown(analytics: Analytics, error: UiError?) {
+    var shown by rememberSaveable { mutableStateOf<String?>(null) }
+    LaunchedEffect(error) {
+        val code = error?.eventCode
+        if (code != null && code != shown) analytics.track("error_shown", mapOf("code" to code))
+        shown = code
+    }
 }
 
 /** The tab bar stays off judging and the fresh verdict, sign-in and the questions. */

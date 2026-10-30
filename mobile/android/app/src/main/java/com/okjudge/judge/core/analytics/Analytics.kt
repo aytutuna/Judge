@@ -90,7 +90,7 @@ class Analytics(
         set(value) {
             val first = field == null
             field = value
-            if (value == false) {
+            if (value == false || (value == true && first && serverOn == false)) {
                 clear()
             } else if (value == true && first) {
                 val saved = read()

@@ -171,8 +171,8 @@ class Account(
         withContext(NonCancellable) {
             withContext(io) { tokens.set(grant.token) }
             _state.value = State.SignedIn()
+            onSignedIn()
         }
-        onSignedIn()
         refreshInBackground()
         return SignInResult.Success
     }
