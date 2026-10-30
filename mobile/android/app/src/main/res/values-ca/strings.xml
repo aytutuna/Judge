@@ -662,4 +662,19 @@
     <string name="app_purchase_restore">Restaura les compres</string>
     <string name="app_purchase_restore_done">S\'han restaurat les compres.</string>
     <string name="app_purchase_restore_none">No hi ha cap compra per restaurar.</string>
+    <string name="app_signin_legal">Una IA externa llegeix les teves discussions. Si continues, acceptes les\u0020</string>
+    <string name="app_signin_legal_terms">Condicions d’ús</string>
+    <string name="app_signin_legal_and">\u0020i la\u0020</string>
+    <string name="app_signin_legal_privacy">Política de privadesa</string>
+    <string name="app_signin_legal_after">.</string>
+    <string name="app_legal_terms">Condicions d’ús</string>
+    <string name="app_legal_privacy">Política de privadesa</string>
+    <string name="app_pricing_auto_renew">El pla mensual es renova automàticament cada mes fins que el cancel·lis als ajustos de subscripcions del telèfon.</string>
+    <string name="app_age_checkbox">Tinc 18 anys o més</string>
+    <string name="app_age_title">Confirma la teva edat</string>
+    <string name="app_age_lead">Judge és per a adults. Confirma que tens 18 anys o més per continuar-lo fent servir.</string>
+    <string name="app_age_continue">Continua</string>
+    <string name="app_age_required">Confirma que tens 18 anys o més per continuar.</string>
+    <string name="app_age_blocked_title">Judge és només per a adults</string>
+    <string name="app_age_blocked_body">Has de tenir 18 anys o més per fer servir Judge. Si creus que és un error, escriu-nos a %1$s.</string>
 </resources>

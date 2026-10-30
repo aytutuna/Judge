@@ -205,6 +205,22 @@ const ar: AppLocale = {
     "app.purchase.restore": "استعادة المشتريات",
     "app.purchase.restoreDone": "تمت استعادة مشترياتك.",
     "app.purchase.restoreNone": "لا توجد مشتريات لاستعادتها.",
+    "app.signin.legal": "يقرأ ذكاء اصطناعي خارجي ما تكتبه من خلافات. بالمتابعة، أنت توافق على ",
+    "app.signin.legalTerms": "شروط الاستخدام",
+    "app.signin.legalAnd": " و",
+    "app.signin.legalPrivacy": "سياسة الخصوصية",
+    "app.signin.legalAfter": ".",
+    "app.legal.terms": "شروط الاستخدام",
+    "app.legal.privacy": "سياسة الخصوصية",
+    "app.pricing.autoRenew": "تتجدد الخطة الشهرية تلقائيًا كل شهر إلى أن تلغيها من إعدادات الاشتراكات في هاتفك.",
+    "app.age.checkbox": "عمري 18 عامًا أو أكثر",
+    "app.age.title": "أكّد عمرك",
+    "app.age.lead": "Judge للبالغين فقط. أكّد أن عمرك 18 عامًا أو أكثر لتواصل استخدامه.",
+    "app.age.continue": "متابعة",
+    "app.age.required": "أكّد أن عمرك 18 عامًا أو أكثر للمتابعة.",
+    "app.age.blockedTitle": "Judge للبالغين فقط",
+    "app.age.blockedBody":
+      "يجب أن يكون عمرك 18 عامًا أو أكثر لاستخدام Judge. إذا كنت تعتقد أن هذا خطأ، راسلنا على {email}.",
   },
   plurals: {
     "app.balance.left": {

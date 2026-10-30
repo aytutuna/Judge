@@ -186,6 +186,23 @@ const nl: AppLocale = {
     "app.purchase.restore": "Aankopen herstellen",
     "app.purchase.restoreDone": "Je aankopen zijn hersteld.",
     "app.purchase.restoreNone": "Geen aankopen om te herstellen.",
+    "app.signin.legal": "Een externe AI leest je discussies. Door verder te gaan, ga je akkoord met de ",
+    "app.signin.legalTerms": "gebruiksvoorwaarden",
+    "app.signin.legalAnd": " en het ",
+    "app.signin.legalPrivacy": "privacybeleid",
+    "app.signin.legalAfter": ".",
+    "app.legal.terms": "Gebruiksvoorwaarden",
+    "app.legal.privacy": "Privacybeleid",
+    "app.pricing.autoRenew":
+      "Het maandabonnement wordt elke maand automatisch verlengd tot je het opzegt in de abonnementsinstellingen van je telefoon.",
+    "app.age.checkbox": "Ik ben 18 of ouder",
+    "app.age.title": "Bevestig je leeftijd",
+    "app.age.lead": "Judge is voor volwassenen. Bevestig dat je 18 of ouder bent om het te blijven gebruiken.",
+    "app.age.continue": "Doorgaan",
+    "app.age.required": "Bevestig dat je 18 of ouder bent om door te gaan.",
+    "app.age.blockedTitle": "Judge is alleen voor volwassenen",
+    "app.age.blockedBody":
+      "Je moet 18 of ouder zijn om Judge te gebruiken. Denk je dat dit een vergissing is? Mail ons dan op {email}.",
   },
   plurals: {
     "app.balance.left": { one: "Nog {n} uitspraak over" },

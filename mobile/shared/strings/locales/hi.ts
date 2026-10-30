@@ -180,6 +180,24 @@ const hi: AppLocale = {
     "app.purchase.restore": "ख़रीदारी रीस्टोर करें",
     "app.purchase.restoreDone": "आपकी ख़रीदारी रीस्टोर हो गई।",
     "app.purchase.restoreNone": "रीस्टोर करने के लिए कोई ख़रीदारी नहीं मिली।",
+    "app.signin.legal": "आपकी बहसें एक बाहरी AI पढ़ता है। आगे बढ़ने का मतलब है कि आप हमारी ",
+    "app.signin.legalTerms": "उपयोग की शर्तों",
+    "app.signin.legalAnd": " और ",
+    "app.signin.legalPrivacy": "प्राइवेसी पॉलिसी",
+    "app.signin.legalAfter": " से सहमत हैं।",
+    "app.legal.terms": "उपयोग की शर्तें",
+    "app.legal.privacy": "प्राइवेसी पॉलिसी",
+    "app.pricing.autoRenew":
+      "मासिक प्लान हर महीने अपने आप रिन्यू होता है, जब तक आप उसे अपने फ़ोन की सब्सक्रिप्शन सेटिंग में रद्द नहीं कर देते।",
+    "app.age.checkbox": "मेरी उम्र 18 साल या उससे ज़्यादा है",
+    "app.age.title": "अपनी उम्र की पुष्टि करें",
+    "app.age.lead":
+      "Judge वयस्कों के लिए है। इसे इस्तेमाल करते रहने के लिए पुष्टि करें कि आपकी उम्र 18 साल या उससे ज़्यादा है।",
+    "app.age.continue": "जारी रखें",
+    "app.age.required": "जारी रखने के लिए पुष्टि करें कि आपकी उम्र 18 साल या उससे ज़्यादा है।",
+    "app.age.blockedTitle": "Judge सिर्फ़ वयस्कों के लिए है",
+    "app.age.blockedBody":
+      "Judge इस्तेमाल करने के लिए आपकी उम्र 18 साल या उससे ज़्यादा होनी चाहिए। अगर आपको लगता है कि यह गलती है, तो हमें {email} पर लिखें।",
   },
   plurals: {
     "app.balance.left": { one: "{n} फ़ैसला बाकी" },

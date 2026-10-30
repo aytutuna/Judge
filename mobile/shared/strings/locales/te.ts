@@ -180,6 +180,23 @@ const te: AppLocale = {
     "app.purchase.restore": "కొనుగోళ్లను రీస్టోర్ చేయండి",
     "app.purchase.restoreDone": "మీ కొనుగోళ్లు రీస్టోర్ అయ్యాయి.",
     "app.purchase.restoreNone": "రీస్టోర్ చేయడానికి కొనుగోళ్లేవీ లేవు.",
+    "app.signin.legal": "మీ వాదనలను బయటి AI సేవ ఒకటి చదువుతుంది. కొనసాగితే మీరు మా ",
+    "app.signin.legalTerms": "వినియోగ నిబంధనలు",
+    "app.signin.legalAnd": " మరియు ",
+    "app.signin.legalPrivacy": "గోప్యతా విధానానికి",
+    "app.signin.legalAfter": " అంగీకరించినట్టే.",
+    "app.legal.terms": "వినియోగ నిబంధనలు",
+    "app.legal.privacy": "గోప్యతా విధానం",
+    "app.pricing.autoRenew":
+      "నెలవారీ ప్లాన్ ప్రతి నెలా తనంతట తానే రెన్యూ అవుతుంది, మీరు మీ ఫోన్ సబ్స్క్రిప్షన్ సెట్టింగులలో రద్దు చేసే వరకు.",
+    "app.age.checkbox": "నాకు 18 ఏళ్లు లేదా అంతకంటే ఎక్కువ",
+    "app.age.title": "మీ వయసును నిర్ధారించండి",
+    "app.age.lead": "Judge పెద్దల కోసం. దీన్ని వాడుతూ ఉండటానికి మీకు 18 ఏళ్లు లేదా అంతకంటే ఎక్కువ అని నిర్ధారించండి.",
+    "app.age.continue": "కొనసాగించండి",
+    "app.age.required": "కొనసాగడానికి మీకు 18 ఏళ్లు లేదా అంతకంటే ఎక్కువ అని నిర్ధారించండి.",
+    "app.age.blockedTitle": "Judge పెద్దలకు మాత్రమే",
+    "app.age.blockedBody":
+      "Judge వాడటానికి మీకు 18 ఏళ్లు లేదా అంతకంటే ఎక్కువ ఉండాలి. ఇది పొరపాటు అనిపిస్తే {email}కు మాకు రాయండి.",
   },
   plurals: {
     "app.balance.left": { one: "1 తీర్పు మిగిలింది" },

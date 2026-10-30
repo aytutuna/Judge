@@ -183,6 +183,23 @@ const sv: AppLocale = {
     "app.purchase.restore": "Återställ köp",
     "app.purchase.restoreDone": "Dina köp har återställts.",
     "app.purchase.restoreNone": "Det finns inga köp att återställa.",
+    "app.signin.legal": "En extern AI läser dina argument. Genom att fortsätta godkänner du våra ",
+    "app.signin.legalTerms": "användarvillkor",
+    "app.signin.legalAnd": " och vår ",
+    "app.signin.legalPrivacy": "integritetspolicy",
+    "app.signin.legalAfter": ".",
+    "app.legal.terms": "Användarvillkor",
+    "app.legal.privacy": "Integritetspolicy",
+    "app.pricing.autoRenew":
+      "Månadsabonnemanget förnyas automatiskt varje månad tills du säger upp det i prenumerationsinställningarna på din telefon.",
+    "app.age.checkbox": "Jag är 18 år eller äldre",
+    "app.age.title": "Bekräfta din ålder",
+    "app.age.lead": "Judge är för vuxna. Bekräfta att du är 18 år eller äldre för att fortsätta använda appen.",
+    "app.age.continue": "Fortsätt",
+    "app.age.required": "Bekräfta att du är 18 år eller äldre för att fortsätta.",
+    "app.age.blockedTitle": "Judge är bara för vuxna",
+    "app.age.blockedBody":
+      "Du måste vara 18 år eller äldre för att använda Judge. Om du tror att det är ett misstag, skriv till oss på {email}.",
   },
   plurals: {
     "app.balance.left": { one: "{n} dom kvar" },

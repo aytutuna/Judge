@@ -645,4 +645,19 @@
     <string name="app_purchase_restore">ಖರೀದಿಗಳನ್ನು ಮರುಸ್ಥಾಪಿಸಿ</string>
     <string name="app_purchase_restore_done">ನಿಮ್ಮ ಖರೀದಿಗಳನ್ನು ಮರುಸ್ಥಾಪಿಸಲಾಗಿದೆ.</string>
     <string name="app_purchase_restore_none">ಮರುಸ್ಥಾಪಿಸಲು ಯಾವ ಖರೀದಿಯೂ ಇಲ್ಲ.</string>
+    <string name="app_signin_legal">ನಿಮ್ಮ ವಾದಗಳನ್ನು ಹೊರಗಿನ AI ಓದುತ್ತದೆ. ಮುಂದುವರಿಯುವ ಮೂಲಕ ನೀವು ನಮ್ಮ\u0020</string>
+    <string name="app_signin_legal_terms">ಬಳಕೆಯ ನಿಯಮಗಳು</string>
+    <string name="app_signin_legal_and">\u0020ಮತ್ತು\u0020</string>
+    <string name="app_signin_legal_privacy">ಗೌಪ್ಯತಾ ನೀತಿ</string>
+    <string name="app_signin_legal_after">ಗೆ ಒಪ್ಪುತ್ತೀರಿ.</string>
+    <string name="app_legal_terms">ಬಳಕೆಯ ನಿಯಮಗಳು</string>
+    <string name="app_legal_privacy">ಗೌಪ್ಯತಾ ನೀತಿ</string>
+    <string name="app_pricing_auto_renew">ಮಾಸಿಕ ಪ್ಲಾನ್ ಪ್ರತಿ ತಿಂಗಳು ತಾನಾಗಿಯೇ ನವೀಕರಣಗೊಳ್ಳುತ್ತದೆ, ನೀವು ನಿಮ್ಮ ಫೋನಿನ ಚಂದಾದಾರಿಕೆ ಸೆಟ್ಟಿಂಗ್ ಪುಟದಲ್ಲಿ ರದ್ದುಗೊಳಿಸುವವರೆಗೆ.</string>
+    <string name="app_age_checkbox">ನನಗೆ 18 ವರ್ಷ ಅಥವಾ ಹೆಚ್ಚು ವಯಸ್ಸು</string>
+    <string name="app_age_title">ನಿಮ್ಮ ವಯಸ್ಸನ್ನು ದೃಢೀಕರಿಸಿ</string>
+    <string name="app_age_lead">Judge ವಯಸ್ಕರಿಗಾಗಿ. ಬಳಸುವುದನ್ನು ಮುಂದುವರಿಸಲು ನಿಮಗೆ 18 ವರ್ಷ ಅಥವಾ ಹೆಚ್ಚು ವಯಸ್ಸು ಎಂದು ದೃಢೀಕರಿಸಿ.</string>
+    <string name="app_age_continue">ಮುಂದುವರಿಸಿ</string>
+    <string name="app_age_required">ಮುಂದುವರಿಸಲು ನಿಮಗೆ 18 ವರ್ಷ ಅಥವಾ ಹೆಚ್ಚು ವಯಸ್ಸು ಎಂದು ದೃಢೀಕರಿಸಿ.</string>
+    <string name="app_age_blocked_title">Judge ವಯಸ್ಕರಿಗೆ ಮಾತ್ರ</string>
+    <string name="app_age_blocked_body">Judge ಬಳಸಲು ನಿಮಗೆ 18 ವರ್ಷ ಅಥವಾ ಹೆಚ್ಚು ವಯಸ್ಸಾಗಿರಬೇಕು. ಇದು ತಪ್ಪು ಎಂದು ಅನಿಸಿದರೆ %1$s ವಿಳಾಸಕ್ಕೆ ನಮಗೆ ಬರೆಯಿರಿ.</string>
 </resources>

@@ -185,6 +185,23 @@ const de: AppLocale = {
     "app.purchase.restore": "Käufe wiederherstellen",
     "app.purchase.restoreDone": "Deine Käufe wurden wiederhergestellt.",
     "app.purchase.restoreNone": "Keine Käufe zum Wiederherstellen gefunden.",
+    "app.signin.legal": "Eine externe KI liest deine Streitfälle. Wenn du fortfährst, stimmst du der ",
+    "app.signin.legalTerms": "Nutzungsbedingungen",
+    "app.signin.legalAnd": " und der ",
+    "app.signin.legalPrivacy": "Datenschutzerklärung",
+    "app.signin.legalAfter": " zu.",
+    "app.legal.terms": "Nutzungsbedingungen",
+    "app.legal.privacy": "Datenschutzerklärung",
+    "app.pricing.autoRenew":
+      "Das Monatsabo verlängert sich jeden Monat automatisch, bis du es in den Abo-Einstellungen deines Handys kündigst.",
+    "app.age.checkbox": "Ich bin 18 oder älter",
+    "app.age.title": "Bestätige dein Alter",
+    "app.age.lead": "Judge ist für Erwachsene. Bestätige, dass du 18 oder älter bist, um es weiter zu nutzen.",
+    "app.age.continue": "Weiter",
+    "app.age.required": "Bestätige, dass du 18 oder älter bist, um fortzufahren.",
+    "app.age.blockedTitle": "Judge ist nur für Erwachsene",
+    "app.age.blockedBody":
+      "Du musst 18 oder älter sein, um Judge zu nutzen. Wenn du denkst, dass das ein Irrtum ist, schreib uns an {email}.",
   },
   plurals: {
     "app.balance.left": { one: "1 Urteil übrig" },

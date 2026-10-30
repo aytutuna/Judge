@@ -628,4 +628,19 @@
     <string name="app_purchase_restore">恢复购买</string>
     <string name="app_purchase_restore_done">已恢复你的购买。</string>
     <string name="app_purchase_restore_none">没有可恢复的购买。</string>
+    <string name="app_signin_legal">外部 AI 会读取你的争论内容。继续即表示你同意</string>
+    <string name="app_signin_legal_terms">《使用条款》</string>
+    <string name="app_signin_legal_and">和</string>
+    <string name="app_signin_legal_privacy">《隐私政策》</string>
+    <string name="app_signin_legal_after">。</string>
+    <string name="app_legal_terms">使用条款</string>
+    <string name="app_legal_privacy">隐私政策</string>
+    <string name="app_pricing_auto_renew">月度套餐会每月自动续订，直到你在手机的订阅设置中取消。</string>
+    <string name="app_age_checkbox">我已年满 18 岁</string>
+    <string name="app_age_title">确认你的年龄</string>
+    <string name="app_age_lead">Judge 仅供成年人使用。请确认你已年满 18 岁，以便继续使用。</string>
+    <string name="app_age_continue">继续</string>
+    <string name="app_age_required">请确认你已年满 18 岁，以便继续。</string>
+    <string name="app_age_blocked_title">Judge 仅限成年人使用</string>
+    <string name="app_age_blocked_body">你需要年满 18 岁才能使用 Judge。如果你认为这是个错误，请通过 %1$s 联系我们。</string>
 </resources>

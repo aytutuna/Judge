@@ -645,4 +645,19 @@
     <string name="app_purchase_restore">വാങ്ങലുകൾ പുനഃസ്ഥാപിക്കൂ</string>
     <string name="app_purchase_restore_done">നിങ്ങളുടെ വാങ്ങലുകൾ പുനഃസ്ഥാപിച്ചു.</string>
     <string name="app_purchase_restore_none">പുനഃസ്ഥാപിക്കാൻ വാങ്ങലുകളൊന്നുമില്ല.</string>
+    <string name="app_signin_legal">പുറത്തുള്ള ഒരു എഐ നിങ്ങളുടെ തർക്കങ്ങൾ വായിക്കും. തുടരുന്നതിലൂടെ നിങ്ങൾ ഞങ്ങളുടെ\u0020</string>
+    <string name="app_signin_legal_terms">ഉപയോഗ നിബന്ധനകൾ</string>
+    <string name="app_signin_legal_and">,\u0020</string>
+    <string name="app_signin_legal_privacy">സ്വകാര്യതാ നയം</string>
+    <string name="app_signin_legal_after">\u0020എന്നിവ അംഗീകരിക്കുന്നു.</string>
+    <string name="app_legal_terms">ഉപയോഗ നിബന്ധനകൾ</string>
+    <string name="app_legal_privacy">സ്വകാര്യതാ നയം</string>
+    <string name="app_pricing_auto_renew">പ്രതിമാസ പ്ലാൻ, നിങ്ങൾ ഫോണിലെ സബ്സ്ക്രിപ്ഷൻ ക്രമീകരണത്തിൽ റദ്ദാക്കുന്നതുവരെ എല്ലാ മാസവും സ്വയം പുതുക്കും.</string>
+    <string name="app_age_checkbox">എനിക്ക് 18 വയസ്സോ അതിൽ കൂടുതലോ ഉണ്ട്</string>
+    <string name="app_age_title">നിങ്ങളുടെ പ്രായം സ്ഥിരീകരിക്കുക</string>
+    <string name="app_age_lead">Judge മുതിർന്നവർക്കുള്ളതാണ്. തുടർന്നും ഉപയോഗിക്കാൻ നിങ്ങൾക്ക് 18 വയസ്സോ അതിൽ കൂടുതലോ ഉണ്ടെന്ന് സ്ഥിരീകരിക്കുക.</string>
+    <string name="app_age_continue">തുടരുക</string>
+    <string name="app_age_required">തുടരാൻ നിങ്ങൾക്ക് 18 വയസ്സോ അതിൽ കൂടുതലോ ഉണ്ടെന്ന് സ്ഥിരീകരിക്കുക.</string>
+    <string name="app_age_blocked_title">Judge മുതിർന്നവർക്ക് മാത്രം</string>
+    <string name="app_age_blocked_body">Judge ഉപയോഗിക്കാൻ നിങ്ങൾക്ക് 18 വയസ്സോ അതിൽ കൂടുതലോ ഉണ്ടായിരിക്കണം. ഇത് തെറ്റാണെന്ന് തോന്നുന്നെങ്കിൽ %1$s എന്ന വിലാസത്തിൽ ഞങ്ങൾക്ക് എഴുതുക.</string>
 </resources>

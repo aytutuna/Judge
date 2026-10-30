@@ -181,6 +181,23 @@ const da: AppLocale = {
     "app.purchase.restore": "Gendan køb",
     "app.purchase.restoreDone": "Dine køb er gendannet.",
     "app.purchase.restoreNone": "Der er ingen køb at gendanne.",
+    "app.signin.legal": "En ekstern AI læser dine diskussioner. Ved at fortsætte accepterer du ",
+    "app.signin.legalTerms": "vilkårene",
+    "app.signin.legalAnd": " og ",
+    "app.signin.legalPrivacy": "privatlivspolitikken",
+    "app.signin.legalAfter": ".",
+    "app.legal.terms": "Brugsvilkår",
+    "app.legal.privacy": "Privatlivspolitik",
+    "app.pricing.autoRenew":
+      "Månedsabonnementet fornyes automatisk hver måned, indtil du opsiger det i din telefons abonnementsindstillinger.",
+    "app.age.checkbox": "Jeg er 18 år eller ældre",
+    "app.age.title": "Bekræft din alder",
+    "app.age.lead": "Judge er kun for voksne. Bekræft, at du er mindst 18 år, for at fortsætte.",
+    "app.age.continue": "Fortsæt",
+    "app.age.required": "Bekræft, at du er mindst 18 år, for at fortsætte.",
+    "app.age.blockedTitle": "Judge er kun for voksne",
+    "app.age.blockedBody":
+      "Du skal være mindst 18 år for at bruge Judge. Hvis du mener, det er en fejl, så skriv til os på {email}.",
   },
   plurals: {
     "app.balance.left": { one: "{n} dom tilbage" },

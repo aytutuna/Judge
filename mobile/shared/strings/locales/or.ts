@@ -182,6 +182,24 @@ const or: AppLocale = {
     "app.purchase.restore": "ପୂର୍ବ କିଣା ପୁନଃସ୍ଥାପନ କରନ୍ତୁ",
     "app.purchase.restoreDone": "ଆପଣଙ୍କ ପୂର୍ବ କିଣା ପୁନଃସ୍ଥାପିତ ହେଲା।",
     "app.purchase.restoreNone": "ପୁନଃସ୍ଥାପନ କରିବାକୁ କୌଣସି ପୂର୍ବ କିଣା ନାହିଁ।",
+    "app.signin.legal": "ଏକ ବାହାର AI ଆପଣଙ୍କ ବିବାଦ ପଢ଼େ। ଆଗକୁ ବଢ଼ିଲେ ଆପଣ ଆମ ",
+    "app.signin.legalTerms": "ବ୍ୟବହାର ଶର୍ତ୍ତାବଳୀ",
+    "app.signin.legalAnd": " ଓ ",
+    "app.signin.legalPrivacy": "ଗୋପନୀୟତା ନୀତି",
+    "app.signin.legalAfter": " ସହ ସହମତ ହେଉଛନ୍ତି।",
+    "app.legal.terms": "ବ୍ୟବହାର ଶର୍ତ୍ତାବଳୀ",
+    "app.legal.privacy": "ଗୋପନୀୟତା ନୀତି",
+    "app.pricing.autoRenew":
+      "ମାସିକ ପ୍ଲାନ୍ ପ୍ରତି ମାସ ନିଜେ ନିଜେ ନବୀକରଣ ହୁଏ, ଯେପର୍ଯ୍ୟନ୍ତ ଆପଣ ଫୋନ୍ ସେଟିଂର ସବ୍ସ୍କ୍ରିପସନ୍ ବିଭାଗରେ ଏହାକୁ ବାତିଲ୍ ନକରନ୍ତି।",
+    "app.age.checkbox": "ମୋର ବୟସ 18 କିମ୍ବା ତାଠାରୁ ଅଧିକ",
+    "app.age.title": "ଆପଣଙ୍କ ବୟସ ନିଶ୍ଚିତ କରନ୍ତୁ",
+    "app.age.lead":
+      "Judge କେବଳ ବୟସ୍କମାନଙ୍କ ପାଇଁ। ଏହାକୁ ବ୍ୟବହାର ଜାରି ରଖିବାକୁ ଆପଣଙ୍କ ବୟସ 18 କିମ୍ବା ତାଠାରୁ ଅଧିକ ବୋଲି ନିଶ୍ଚିତ କରନ୍ତୁ।",
+    "app.age.continue": "ଜାରି ରଖନ୍ତୁ",
+    "app.age.required": "ଜାରି ରଖିବାକୁ ଆପଣଙ୍କ ବୟସ 18 କିମ୍ବା ତାଠାରୁ ଅଧିକ ବୋଲି ନିଶ୍ଚିତ କରନ୍ତୁ।",
+    "app.age.blockedTitle": "Judge କେବଳ ବୟସ୍କମାନଙ୍କ ପାଇଁ",
+    "app.age.blockedBody":
+      "Judge ବ୍ୟବହାର କରିବାକୁ ଆପଣଙ୍କ ବୟସ 18 କିମ୍ବା ତାଠାରୁ ଅଧିକ ହେବା ଆବଶ୍ୟକ। ଏହା ଭୁଲ ବୋଲି ଭାବୁଥିଲେ ଆମକୁ {email} ଠିକଣାରେ ଲେଖନ୍ତୁ।",
   },
   plurals: {
     "app.balance.left": { one: "{n}ଟି ରାୟ ବାକି" },

@@ -188,6 +188,24 @@ const el: AppLocale = {
     "app.purchase.restore": "Επαναφορά αγορών",
     "app.purchase.restoreDone": "Οι αγορές σου επαναφέρθηκαν.",
     "app.purchase.restoreNone": "Δεν βρέθηκαν αγορές για επαναφορά.",
+    "app.signin.legal": "Τις διαφωνίες σου τις διαβάζει ένα εξωτερικό AI. Αν συνεχίσεις, αποδέχεσαι τους ",
+    "app.signin.legalTerms": "Όρους Χρήσης",
+    "app.signin.legalAnd": " και την ",
+    "app.signin.legalPrivacy": "Πολιτική Απορρήτου",
+    "app.signin.legalAfter": ".",
+    "app.legal.terms": "Όροι Χρήσης",
+    "app.legal.privacy": "Πολιτική Απορρήτου",
+    "app.pricing.autoRenew":
+      "Το μηνιαίο πρόγραμμα ανανεώνεται αυτόματα κάθε μήνα, μέχρι να το ακυρώσεις από τις ρυθμίσεις συνδρομών του τηλεφώνου σου.",
+    "app.age.checkbox": "Είμαι 18 ετών ή άνω",
+    "app.age.title": "Επιβεβαίωσε την ηλικία σου",
+    "app.age.lead":
+      "Το Judge είναι για ενήλικες. Επιβεβαίωσε ότι είσαι 18 ετών ή άνω για να συνεχίσεις να το χρησιμοποιείς.",
+    "app.age.continue": "Συνέχεια",
+    "app.age.required": "Επιβεβαίωσε ότι είσαι 18 ετών ή άνω για να συνεχίσεις.",
+    "app.age.blockedTitle": "Το Judge είναι μόνο για ενήλικες",
+    "app.age.blockedBody":
+      "Πρέπει να είσαι 18 ετών ή άνω για να χρησιμοποιείς το Judge. Αν νομίζεις ότι είναι λάθος, γράψε μας στο {email}.",
   },
   plurals: {
     "app.balance.left": { one: "Σου έμεινε {n} απόφαση" },

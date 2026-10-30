@@ -186,6 +186,24 @@ const id: AppLocale = {
     "app.purchase.restore": "Pulihkan pembelian",
     "app.purchase.restoreDone": "Pembelianmu sudah dipulihkan.",
     "app.purchase.restoreNone": "Tidak ada pembelian untuk dipulihkan.",
+    "app.signin.legal": "AI pihak luar membaca argumenmu. Dengan melanjutkan, kamu menyetujui ",
+    "app.signin.legalTerms": "Ketentuan Layanan",
+    "app.signin.legalAnd": " dan ",
+    "app.signin.legalPrivacy": "Kebijakan Privasi",
+    "app.signin.legalAfter": ".",
+    "app.legal.terms": "Ketentuan Layanan",
+    "app.legal.privacy": "Kebijakan Privasi",
+    "app.pricing.autoRenew":
+      "Langganan bulanan diperpanjang otomatis setiap bulan sampai kamu membatalkannya di pengaturan langganan ponselmu.",
+    "app.age.checkbox": "Usiaku 18 tahun atau lebih",
+    "app.age.title": "Konfirmasi usiamu",
+    "app.age.lead":
+      "Judge khusus untuk orang dewasa. Konfirmasi bahwa usiamu 18 tahun atau lebih untuk terus memakainya.",
+    "app.age.continue": "Lanjut",
+    "app.age.required": "Konfirmasi bahwa usiamu 18 tahun atau lebih untuk melanjutkan.",
+    "app.age.blockedTitle": "Judge khusus untuk orang dewasa",
+    "app.age.blockedBody":
+      "Kamu harus berusia 18 tahun atau lebih untuk memakai Judge. Kalau menurutmu ini keliru, tulis ke kami di {email}.",
   },
 };
 

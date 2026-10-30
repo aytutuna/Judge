@@ -628,4 +628,19 @@
     <string name="app_purchase_restore">구매 복원</string>
     <string name="app_purchase_restore_done">구매 내역을 복원했어요.</string>
     <string name="app_purchase_restore_none">복원할 구매 내역이 없어요.</string>
+    <string name="app_signin_legal">논쟁 내용은 외부 AI가 읽어요. 계속하면\u0020</string>
+    <string name="app_signin_legal_terms">이용약관</string>
+    <string name="app_signin_legal_and">\u0020및\u0020</string>
+    <string name="app_signin_legal_privacy">개인정보 처리방침</string>
+    <string name="app_signin_legal_after">에 동의하는 것으로 봐요.</string>
+    <string name="app_legal_terms">이용약관</string>
+    <string name="app_legal_privacy">개인정보 처리방침</string>
+    <string name="app_pricing_auto_renew">월간 요금제는 휴대폰의 구독 설정에서 해지하기 전까지 매달 자동으로 갱신돼요.</string>
+    <string name="app_age_checkbox">만 18세 이상이에요</string>
+    <string name="app_age_title">나이 확인</string>
+    <string name="app_age_lead">Judge는 성인을 위한 앱이에요. 계속 사용하려면 만 18세 이상인지 확인해 주세요.</string>
+    <string name="app_age_continue">계속</string>
+    <string name="app_age_required">계속하려면 만 18세 이상인지 확인해 주세요.</string>
+    <string name="app_age_blocked_title">Judge는 성인 전용이에요</string>
+    <string name="app_age_blocked_body">Judge를 사용하려면 만 18세 이상이어야 해요. 잘못된 것 같다면 %1$s 주소로 문의해 주세요.</string>
 </resources>

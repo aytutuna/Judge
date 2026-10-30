@@ -182,6 +182,23 @@ const th: AppLocale = {
     "app.purchase.restore": "กู้คืนการซื้อ",
     "app.purchase.restoreDone": "กู้คืนการซื้อแล้ว",
     "app.purchase.restoreNone": "ไม่พบรายการซื้อที่จะกู้คืน",
+    "app.signin.legal": "AI ภายนอกจะอ่านเรื่องที่คุณเล่า การดำเนินการต่อถือว่าคุณยอมรับ",
+    "app.signin.legalTerms": "ข้อกำหนดการใช้งาน",
+    "app.signin.legalAnd": " และ ",
+    "app.signin.legalPrivacy": "นโยบายความเป็นส่วนตัว",
+    "app.signin.legalAfter": "ของเรา",
+    "app.legal.terms": "ข้อกำหนดการใช้งาน",
+    "app.legal.privacy": "นโยบายความเป็นส่วนตัว",
+    "app.pricing.autoRenew":
+      "แพ็กเกจรายเดือนจะต่ออายุอัตโนมัติทุกเดือนจนกว่าคุณจะยกเลิกในการตั้งค่าการสมัครสมาชิกของโทรศัพท์",
+    "app.age.checkbox": "ฉันอายุ 18 ปีขึ้นไป",
+    "app.age.title": "ยืนยันอายุของคุณ",
+    "app.age.lead": "Judge สำหรับผู้ใหญ่ ยืนยันว่าคุณอายุ 18 ปีขึ้นไปเพื่อใช้งานต่อ",
+    "app.age.continue": "ดำเนินการต่อ",
+    "app.age.required": "ยืนยันว่าคุณอายุ 18 ปีขึ้นไปเพื่อดำเนินการต่อ",
+    "app.age.blockedTitle": "Judge สำหรับผู้ใหญ่เท่านั้น",
+    "app.age.blockedBody":
+      "คุณต้องอายุ 18 ปีขึ้นไปจึงจะใช้ Judge ได้ หากคิดว่าเกิดความผิดพลาด ส่งข้อความหาเราได้ที่ {email}",
   },
 };
 

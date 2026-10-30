@@ -183,6 +183,24 @@ const ur: AppLocale = {
     "app.purchase.restore": "خریداریاں بحال کریں",
     "app.purchase.restoreDone": "آپ کی خریداریاں بحال ہو گئیں۔",
     "app.purchase.restoreNone": "بحال کرنے کے لیے کوئی خریداری نہیں ملی۔",
+    "app.signin.legal": "آپ کی بحثیں ایک بیرونی اے آئی پڑھتا ہے۔ جاری رکھنے کا مطلب ہے کہ آپ ہماری ",
+    "app.signin.legalTerms": "استعمال کی شرائط",
+    "app.signin.legalAnd": " اور ",
+    "app.signin.legalPrivacy": "رازداری کی پالیسی",
+    "app.signin.legalAfter": " سے متفق ہیں۔",
+    "app.legal.terms": "استعمال کی شرائط",
+    "app.legal.privacy": "رازداری کی پالیسی",
+    "app.pricing.autoRenew":
+      "ماہانہ پلان ہر مہینے خود بخود تجدید ہو جاتا ہے، جب تک آپ اپنے فون کی سبسکرپشن سیٹنگز میں اسے منسوخ نہ کر دیں۔",
+    "app.age.checkbox": "میری عمر 18 سال یا اس سے زیادہ ہے",
+    "app.age.title": "اپنی عمر کی تصدیق کریں",
+    "app.age.lead":
+      "Judge بالغ افراد کے لیے ہے۔ اسے استعمال کرتے رہنے کے لیے تصدیق کریں کہ آپ کی عمر 18 سال یا اس سے زیادہ ہے۔",
+    "app.age.continue": "جاری رکھیں",
+    "app.age.required": "جاری رکھنے کے لیے تصدیق کریں کہ آپ کی عمر 18 سال یا اس سے زیادہ ہے۔",
+    "app.age.blockedTitle": "Judge صرف بالغ افراد کے لیے ہے",
+    "app.age.blockedBody":
+      "Judge استعمال کرنے کے لیے آپ کی عمر 18 سال یا اس سے زیادہ ہونی چاہیے۔ اگر آپ کو لگتا ہے کہ یہ غلطی ہے تو ہمیں {email} پر لکھیں۔",
   },
   plurals: {
     "app.balance.left": { one: "{n} فیصلہ باقی" },

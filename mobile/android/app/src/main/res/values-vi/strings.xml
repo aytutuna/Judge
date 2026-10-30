@@ -628,4 +628,19 @@
     <string name="app_purchase_restore">Khôi phục giao dịch mua</string>
     <string name="app_purchase_restore_done">Đã khôi phục các giao dịch mua của bạn.</string>
     <string name="app_purchase_restore_none">Không có giao dịch mua nào để khôi phục.</string>
+    <string name="app_signin_legal">Một dịch vụ AI bên ngoài sẽ đọc các cuộc tranh cãi của bạn. Tiếp tục nghĩa là bạn đồng ý với\u0020</string>
+    <string name="app_signin_legal_terms">Điều khoản sử dụng</string>
+    <string name="app_signin_legal_and">\u0020và\u0020</string>
+    <string name="app_signin_legal_privacy">Chính sách quyền riêng tư</string>
+    <string name="app_signin_legal_after">.</string>
+    <string name="app_legal_terms">Điều khoản sử dụng</string>
+    <string name="app_legal_privacy">Chính sách quyền riêng tư</string>
+    <string name="app_pricing_auto_renew">Gói tháng tự động gia hạn mỗi tháng cho đến khi bạn hủy trong phần cài đặt gói đăng ký trên điện thoại.</string>
+    <string name="app_age_checkbox">Tôi đủ 18 tuổi trở lên</string>
+    <string name="app_age_title">Xác nhận độ tuổi của bạn</string>
+    <string name="app_age_lead">Judge dành cho người lớn. Hãy xác nhận bạn từ 18 tuổi trở lên để tiếp tục sử dụng.</string>
+    <string name="app_age_continue">Tiếp tục</string>
+    <string name="app_age_required">Hãy xác nhận bạn từ 18 tuổi trở lên để tiếp tục.</string>
+    <string name="app_age_blocked_title">Judge chỉ dành cho người lớn</string>
+    <string name="app_age_blocked_body">Bạn cần từ 18 tuổi trở lên để dùng Judge. Nếu bạn nghĩ đây là nhầm lẫn, hãy viết cho chúng tôi tại %1$s.</string>
 </resources>

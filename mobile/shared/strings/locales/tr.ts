@@ -176,6 +176,24 @@ const tr: AppLocale = {
     "app.purchase.restore": "Satın alımları geri yükle",
     "app.purchase.restoreDone": "Satın alımların geri yüklendi.",
     "app.purchase.restoreNone": "Geri yüklenecek bir satın alım bulunamadı.",
+    "app.signin.legal": "Tartışmalarını harici bir yapay zekâ okur. Devam ederek ",
+    "app.signin.legalTerms": "Kullanım Koşulları'nı",
+    "app.signin.legalAnd": " ve ",
+    "app.signin.legalPrivacy": "Gizlilik Politikası'nı",
+    "app.signin.legalAfter": " kabul etmiş olursun.",
+    "app.legal.terms": "Kullanım Koşulları",
+    "app.legal.privacy": "Gizlilik Politikası",
+    "app.pricing.autoRenew":
+      "Aylık plan, telefonunun abonelik ayarlarından iptal edene kadar her ay otomatik olarak yenilenir.",
+    "app.age.checkbox": "18 yaşında veya daha büyüğüm",
+    "app.age.title": "Yaşını doğrula",
+    "app.age.lead":
+      "Judge yetişkinler içindir. Kullanmaya devam etmek için 18 yaşında veya daha büyük olduğunu doğrula.",
+    "app.age.continue": "Devam",
+    "app.age.required": "Devam etmek için 18 yaşında veya daha büyük olduğunu doğrula.",
+    "app.age.blockedTitle": "Judge yalnızca yetişkinler içindir",
+    "app.age.blockedBody":
+      "Judge uygulamasını kullanmak için 18 yaşında veya daha büyük olmalısın. Bir hata olduğunu düşünüyorsan bize {email} adresinden yaz.",
   },
   plurals: {
     "app.balance.left": { one: "{n} karar hakkın kaldı" },

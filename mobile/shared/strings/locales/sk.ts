@@ -182,6 +182,23 @@ const sk: AppLocale = {
     "app.purchase.restore": "Obnoviť nákupy",
     "app.purchase.restoreDone": "Nákupy sú obnovené.",
     "app.purchase.restoreNone": "Nenašli sa žiadne nákupy na obnovenie.",
+    "app.signin.legal": "Tvoje spory číta externá AI. Pokračovaním súhlasíš s ",
+    "app.signin.legalTerms": "podmienkami používania",
+    "app.signin.legalAnd": " a ",
+    "app.signin.legalPrivacy": "zásadami ochrany súkromia",
+    "app.signin.legalAfter": ".",
+    "app.legal.terms": "Podmienky používania",
+    "app.legal.privacy": "Zásady ochrany súkromia",
+    "app.pricing.autoRenew":
+      "Mesačné predplatné sa každý mesiac automaticky obnovuje, kým ho nezrušíš v nastaveniach predplatných v telefóne.",
+    "app.age.checkbox": "Mám aspoň 18 rokov",
+    "app.age.title": "Potvrď svoj vek",
+    "app.age.lead": "Judge je pre dospelých. Ak ho chceš ďalej používať, potvrď, že máš aspoň 18 rokov.",
+    "app.age.continue": "Pokračovať",
+    "app.age.required": "Ak chceš pokračovať, potvrď, že máš aspoň 18 rokov.",
+    "app.age.blockedTitle": "Judge je len pre dospelých",
+    "app.age.blockedBody":
+      "Na používanie Judge musíš mať aspoň 18 rokov. Ak si myslíš, že ide o chybu, napíš nám na {email}.",
   },
   plurals: {
     "app.balance.left": { one: "Zostáva 1 verdikt", few: "Zostávajú {n} verdikty" },

@@ -645,4 +645,19 @@
     <string name="app_purchase_restore">Satın alımları geri yükle</string>
     <string name="app_purchase_restore_done">Satın alımların geri yüklendi.</string>
     <string name="app_purchase_restore_none">Geri yüklenecek bir satın alım bulunamadı.</string>
+    <string name="app_signin_legal">Tartışmalarını harici bir yapay zekâ okur. Devam ederek\u0020</string>
+    <string name="app_signin_legal_terms">Kullanım Koşulları\'nı</string>
+    <string name="app_signin_legal_and">\u0020ve\u0020</string>
+    <string name="app_signin_legal_privacy">Gizlilik Politikası\'nı</string>
+    <string name="app_signin_legal_after">\u0020kabul etmiş olursun.</string>
+    <string name="app_legal_terms">Kullanım Koşulları</string>
+    <string name="app_legal_privacy">Gizlilik Politikası</string>
+    <string name="app_pricing_auto_renew">Aylık plan, telefonunun abonelik ayarlarından iptal edene kadar her ay otomatik olarak yenilenir.</string>
+    <string name="app_age_checkbox">18 yaşında veya daha büyüğüm</string>
+    <string name="app_age_title">Yaşını doğrula</string>
+    <string name="app_age_lead">Judge yetişkinler içindir. Kullanmaya devam etmek için 18 yaşında veya daha büyük olduğunu doğrula.</string>
+    <string name="app_age_continue">Devam</string>
+    <string name="app_age_required">Devam etmek için 18 yaşında veya daha büyük olduğunu doğrula.</string>
+    <string name="app_age_blocked_title">Judge yalnızca yetişkinler içindir</string>
+    <string name="app_age_blocked_body">Judge uygulamasını kullanmak için 18 yaşında veya daha büyük olmalısın. Bir hata olduğunu düşünüyorsan bize %1$s adresinden yaz.</string>
 </resources>

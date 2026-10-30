@@ -188,6 +188,23 @@ const kn: AppLocale = {
     "app.purchase.restore": "ಖರೀದಿಗಳನ್ನು ಮರುಸ್ಥಾಪಿಸಿ",
     "app.purchase.restoreDone": "ನಿಮ್ಮ ಖರೀದಿಗಳನ್ನು ಮರುಸ್ಥಾಪಿಸಲಾಗಿದೆ.",
     "app.purchase.restoreNone": "ಮರುಸ್ಥಾಪಿಸಲು ಯಾವ ಖರೀದಿಯೂ ಇಲ್ಲ.",
+    "app.signin.legal": "ನಿಮ್ಮ ವಾದಗಳನ್ನು ಹೊರಗಿನ AI ಓದುತ್ತದೆ. ಮುಂದುವರಿಯುವ ಮೂಲಕ ನೀವು ನಮ್ಮ ",
+    "app.signin.legalTerms": "ಬಳಕೆಯ ನಿಯಮಗಳು",
+    "app.signin.legalAnd": " ಮತ್ತು ",
+    "app.signin.legalPrivacy": "ಗೌಪ್ಯತಾ ನೀತಿ",
+    "app.signin.legalAfter": "ಗೆ ಒಪ್ಪುತ್ತೀರಿ.",
+    "app.legal.terms": "ಬಳಕೆಯ ನಿಯಮಗಳು",
+    "app.legal.privacy": "ಗೌಪ್ಯತಾ ನೀತಿ",
+    "app.pricing.autoRenew":
+      "ಮಾಸಿಕ ಪ್ಲಾನ್ ಪ್ರತಿ ತಿಂಗಳು ತಾನಾಗಿಯೇ ನವೀಕರಣಗೊಳ್ಳುತ್ತದೆ, ನೀವು ನಿಮ್ಮ ಫೋನಿನ ಚಂದಾದಾರಿಕೆ ಸೆಟ್ಟಿಂಗ್ ಪುಟದಲ್ಲಿ ರದ್ದುಗೊಳಿಸುವವರೆಗೆ.",
+    "app.age.checkbox": "ನನಗೆ 18 ವರ್ಷ ಅಥವಾ ಹೆಚ್ಚು ವಯಸ್ಸು",
+    "app.age.title": "ನಿಮ್ಮ ವಯಸ್ಸನ್ನು ದೃಢೀಕರಿಸಿ",
+    "app.age.lead": "Judge ವಯಸ್ಕರಿಗಾಗಿ. ಬಳಸುವುದನ್ನು ಮುಂದುವರಿಸಲು ನಿಮಗೆ 18 ವರ್ಷ ಅಥವಾ ಹೆಚ್ಚು ವಯಸ್ಸು ಎಂದು ದೃಢೀಕರಿಸಿ.",
+    "app.age.continue": "ಮುಂದುವರಿಸಿ",
+    "app.age.required": "ಮುಂದುವರಿಸಲು ನಿಮಗೆ 18 ವರ್ಷ ಅಥವಾ ಹೆಚ್ಚು ವಯಸ್ಸು ಎಂದು ದೃಢೀಕರಿಸಿ.",
+    "app.age.blockedTitle": "Judge ವಯಸ್ಕರಿಗೆ ಮಾತ್ರ",
+    "app.age.blockedBody":
+      "Judge ಬಳಸಲು ನಿಮಗೆ 18 ವರ್ಷ ಅಥವಾ ಹೆಚ್ಚು ವಯಸ್ಸಾಗಿರಬೇಕು. ಇದು ತಪ್ಪು ಎಂದು ಅನಿಸಿದರೆ {email} ವಿಳಾಸಕ್ಕೆ ನಮಗೆ ಬರೆಯಿರಿ.",
   },
   plurals: {
     "app.balance.left": { one: "{n} ತೀರ್ಪು ಉಳಿದಿದೆ" },

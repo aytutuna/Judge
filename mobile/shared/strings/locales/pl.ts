@@ -186,6 +186,23 @@ const pl: AppLocale = {
     "app.purchase.restore": "Przywróć zakupy",
     "app.purchase.restoreDone": "Zakupy zostały przywrócone.",
     "app.purchase.restoreNone": "Brak zakupów do przywrócenia.",
+    "app.signin.legal": "Twoje spory czyta zewnętrzna usługa AI. Kontynuując, akceptujesz ",
+    "app.signin.legalTerms": "Regulamin",
+    "app.signin.legalAnd": " i ",
+    "app.signin.legalPrivacy": "Politykę prywatności",
+    "app.signin.legalAfter": ".",
+    "app.legal.terms": "Regulamin",
+    "app.legal.privacy": "Polityka prywatności",
+    "app.pricing.autoRenew":
+      "Plan miesięczny odnawia się automatycznie co miesiąc, dopóki go nie anulujesz w ustawieniach subskrypcji w telefonie.",
+    "app.age.checkbox": "Mam co najmniej 18 lat",
+    "app.age.title": "Potwierdź swój wiek",
+    "app.age.lead": "Judge jest dla dorosłych. Potwierdź, że masz co najmniej 18 lat, aby dalej z niego korzystać.",
+    "app.age.continue": "Dalej",
+    "app.age.required": "Potwierdź, że masz co najmniej 18 lat, aby kontynuować.",
+    "app.age.blockedTitle": "Judge jest tylko dla dorosłych",
+    "app.age.blockedBody":
+      "Aby korzystać z aplikacji Judge, musisz mieć co najmniej 18 lat. Jeśli uważasz, że to pomyłka, napisz do nas na {email}.",
   },
   plurals: {
     "app.balance.left": {

@@ -645,4 +645,19 @@
     <string name="app_purchase_restore">ପୂର୍ବ କିଣା ପୁନଃସ୍ଥାପନ କରନ୍ତୁ</string>
     <string name="app_purchase_restore_done">ଆପଣଙ୍କ ପୂର୍ବ କିଣା ପୁନଃସ୍ଥାପିତ ହେଲା।</string>
     <string name="app_purchase_restore_none">ପୁନଃସ୍ଥାପନ କରିବାକୁ କୌଣସି ପୂର୍ବ କିଣା ନାହିଁ।</string>
+    <string name="app_signin_legal">ଏକ ବାହାର AI ଆପଣଙ୍କ ବିବାଦ ପଢ଼େ। ଆଗକୁ ବଢ଼ିଲେ ଆପଣ ଆମ\u0020</string>
+    <string name="app_signin_legal_terms">ବ୍ୟବହାର ଶର୍ତ୍ତାବଳୀ</string>
+    <string name="app_signin_legal_and">\u0020ଓ\u0020</string>
+    <string name="app_signin_legal_privacy">ଗୋପନୀୟତା ନୀତି</string>
+    <string name="app_signin_legal_after">\u0020ସହ ସହମତ ହେଉଛନ୍ତି।</string>
+    <string name="app_legal_terms">ବ୍ୟବହାର ଶର୍ତ୍ତାବଳୀ</string>
+    <string name="app_legal_privacy">ଗୋପନୀୟତା ନୀତି</string>
+    <string name="app_pricing_auto_renew">ମାସିକ ପ୍ଲାନ୍ ପ୍ରତି ମାସ ନିଜେ ନିଜେ ନବୀକରଣ ହୁଏ, ଯେପର୍ଯ୍ୟନ୍ତ ଆପଣ ଫୋନ୍ ସେଟିଂର ସବ୍ସ୍କ୍ରିପସନ୍ ବିଭାଗରେ ଏହାକୁ ବାତିଲ୍ ନକରନ୍ତି।</string>
+    <string name="app_age_checkbox">ମୋର ବୟସ 18 କିମ୍ବା ତାଠାରୁ ଅଧିକ</string>
+    <string name="app_age_title">ଆପଣଙ୍କ ବୟସ ନିଶ୍ଚିତ କରନ୍ତୁ</string>
+    <string name="app_age_lead">Judge କେବଳ ବୟସ୍କମାନଙ୍କ ପାଇଁ। ଏହାକୁ ବ୍ୟବହାର ଜାରି ରଖିବାକୁ ଆପଣଙ୍କ ବୟସ 18 କିମ୍ବା ତାଠାରୁ ଅଧିକ ବୋଲି ନିଶ୍ଚିତ କରନ୍ତୁ।</string>
+    <string name="app_age_continue">ଜାରି ରଖନ୍ତୁ</string>
+    <string name="app_age_required">ଜାରି ରଖିବାକୁ ଆପଣଙ୍କ ବୟସ 18 କିମ୍ବା ତାଠାରୁ ଅଧିକ ବୋଲି ନିଶ୍ଚିତ କରନ୍ତୁ।</string>
+    <string name="app_age_blocked_title">Judge କେବଳ ବୟସ୍କମାନଙ୍କ ପାଇଁ</string>
+    <string name="app_age_blocked_body">Judge ବ୍ୟବହାର କରିବାକୁ ଆପଣଙ୍କ ବୟସ 18 କିମ୍ବା ତାଠାରୁ ଅଧିକ ହେବା ଆବଶ୍ୟକ। ଏହା ଭୁଲ ବୋଲି ଭାବୁଥିଲେ ଆମକୁ %1$s ଠିକଣାରେ ଲେଖନ୍ତୁ।</string>
 </resources>

@@ -645,4 +645,19 @@
     <string name="app_purchase_restore">Vásárlások visszaállítása</string>
     <string name="app_purchase_restore_done">Visszaállítottuk a vásárlásaidat.</string>
     <string name="app_purchase_restore_none">Nincs visszaállítható vásárlás.</string>
+    <string name="app_signin_legal">A vitáidat egy külső MI olvassa. A folytatással elfogadod a\u0020</string>
+    <string name="app_signin_legal_terms">Felhasználási feltételeket</string>
+    <string name="app_signin_legal_and">\u0020és az\u0020</string>
+    <string name="app_signin_legal_privacy">Adatvédelmi tájékoztatót</string>
+    <string name="app_signin_legal_after">.</string>
+    <string name="app_legal_terms">Felhasználási feltételek</string>
+    <string name="app_legal_privacy">Adatvédelmi tájékoztató</string>
+    <string name="app_pricing_auto_renew">A havi előfizetés minden hónapban automatikusan megújul, amíg le nem mondod a telefonod előfizetési beállításaiban.</string>
+    <string name="app_age_checkbox">Elmúltam 18 éves</string>
+    <string name="app_age_title">Erősítsd meg a korodat</string>
+    <string name="app_age_lead">A Judge felnőtteknek szól. Erősítsd meg, hogy elmúltál 18 éves, hogy tovább használhasd.</string>
+    <string name="app_age_continue">Tovább</string>
+    <string name="app_age_required">A folytatáshoz erősítsd meg, hogy elmúltál 18 éves.</string>
+    <string name="app_age_blocked_title">A Judge csak felnőtteknek szól</string>
+    <string name="app_age_blocked_body">A Judge használatához elmúlt 18 évesnek kell lenned. Ha szerinted ez tévedés, írj nekünk ide: %1$s.</string>
 </resources>

@@ -645,4 +645,19 @@
     <string name="app_purchase_restore">Återställ köp</string>
     <string name="app_purchase_restore_done">Dina köp har återställts.</string>
     <string name="app_purchase_restore_none">Det finns inga köp att återställa.</string>
+    <string name="app_signin_legal">En extern AI läser dina argument. Genom att fortsätta godkänner du våra\u0020</string>
+    <string name="app_signin_legal_terms">användarvillkor</string>
+    <string name="app_signin_legal_and">\u0020och vår\u0020</string>
+    <string name="app_signin_legal_privacy">integritetspolicy</string>
+    <string name="app_signin_legal_after">.</string>
+    <string name="app_legal_terms">Användarvillkor</string>
+    <string name="app_legal_privacy">Integritetspolicy</string>
+    <string name="app_pricing_auto_renew">Månadsabonnemanget förnyas automatiskt varje månad tills du säger upp det i prenumerationsinställningarna på din telefon.</string>
+    <string name="app_age_checkbox">Jag är 18 år eller äldre</string>
+    <string name="app_age_title">Bekräfta din ålder</string>
+    <string name="app_age_lead">Judge är för vuxna. Bekräfta att du är 18 år eller äldre för att fortsätta använda appen.</string>
+    <string name="app_age_continue">Fortsätt</string>
+    <string name="app_age_required">Bekräfta att du är 18 år eller äldre för att fortsätta.</string>
+    <string name="app_age_blocked_title">Judge är bara för vuxna</string>
+    <string name="app_age_blocked_body">Du måste vara 18 år eller äldre för att använda Judge. Om du tror att det är ett misstag, skriv till oss på %1$s.</string>
 </resources>

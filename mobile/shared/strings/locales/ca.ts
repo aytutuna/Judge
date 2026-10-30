@@ -186,6 +186,23 @@ const ca: AppLocale = {
     "app.purchase.restore": "Restaura les compres",
     "app.purchase.restoreDone": "S'han restaurat les compres.",
     "app.purchase.restoreNone": "No hi ha cap compra per restaurar.",
+    "app.signin.legal": "Una IA externa llegeix les teves discussions. Si continues, acceptes les ",
+    "app.signin.legalTerms": "Condicions d’ús",
+    "app.signin.legalAnd": " i la ",
+    "app.signin.legalPrivacy": "Política de privadesa",
+    "app.signin.legalAfter": ".",
+    "app.legal.terms": "Condicions d’ús",
+    "app.legal.privacy": "Política de privadesa",
+    "app.pricing.autoRenew":
+      "El pla mensual es renova automàticament cada mes fins que el cancel·lis als ajustos de subscripcions del telèfon.",
+    "app.age.checkbox": "Tinc 18 anys o més",
+    "app.age.title": "Confirma la teva edat",
+    "app.age.lead": "Judge és per a adults. Confirma que tens 18 anys o més per continuar-lo fent servir.",
+    "app.age.continue": "Continua",
+    "app.age.required": "Confirma que tens 18 anys o més per continuar.",
+    "app.age.blockedTitle": "Judge és només per a adults",
+    "app.age.blockedBody":
+      "Has de tenir 18 anys o més per fer servir Judge. Si creus que és un error, escriu-nos a {email}.",
   },
   plurals: {
     "app.balance.left": { one: "Et queda {n} veredicte" },

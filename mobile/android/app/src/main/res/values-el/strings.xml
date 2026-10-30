@@ -645,4 +645,19 @@
     <string name="app_purchase_restore">Επαναφορά αγορών</string>
     <string name="app_purchase_restore_done">Οι αγορές σου επαναφέρθηκαν.</string>
     <string name="app_purchase_restore_none">Δεν βρέθηκαν αγορές για επαναφορά.</string>
+    <string name="app_signin_legal">Τις διαφωνίες σου τις διαβάζει ένα εξωτερικό AI. Αν συνεχίσεις, αποδέχεσαι τους\u0020</string>
+    <string name="app_signin_legal_terms">Όρους Χρήσης</string>
+    <string name="app_signin_legal_and">\u0020και την\u0020</string>
+    <string name="app_signin_legal_privacy">Πολιτική Απορρήτου</string>
+    <string name="app_signin_legal_after">.</string>
+    <string name="app_legal_terms">Όροι Χρήσης</string>
+    <string name="app_legal_privacy">Πολιτική Απορρήτου</string>
+    <string name="app_pricing_auto_renew">Το μηνιαίο πρόγραμμα ανανεώνεται αυτόματα κάθε μήνα, μέχρι να το ακυρώσεις από τις ρυθμίσεις συνδρομών του τηλεφώνου σου.</string>
+    <string name="app_age_checkbox">Είμαι 18 ετών ή άνω</string>
+    <string name="app_age_title">Επιβεβαίωσε την ηλικία σου</string>
+    <string name="app_age_lead">Το Judge είναι για ενήλικες. Επιβεβαίωσε ότι είσαι 18 ετών ή άνω για να συνεχίσεις να το χρησιμοποιείς.</string>
+    <string name="app_age_continue">Συνέχεια</string>
+    <string name="app_age_required">Επιβεβαίωσε ότι είσαι 18 ετών ή άνω για να συνεχίσεις.</string>
+    <string name="app_age_blocked_title">Το Judge είναι μόνο για ενήλικες</string>
+    <string name="app_age_blocked_body">Πρέπει να είσαι 18 ετών ή άνω για να χρησιμοποιείς το Judge. Αν νομίζεις ότι είναι λάθος, γράψε μας στο %1$s.</string>
 </resources>

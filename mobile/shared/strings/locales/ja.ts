@@ -175,6 +175,23 @@ const ja: AppLocale = {
     "app.purchase.restore": "購入を復元",
     "app.purchase.restoreDone": "購入を復元しました。",
     "app.purchase.restoreNone": "復元できる購入はありません。",
+    "app.signin.legal": "書いた内容は外部のAIが読み取ります。",
+    "app.signin.legalTerms": "利用規約",
+    "app.signin.legalAnd": "と",
+    "app.signin.legalPrivacy": "プライバシーポリシー",
+    "app.signin.legalAfter": "には、続行した時点で同意したものとみなされます。",
+    "app.legal.terms": "利用規約",
+    "app.legal.privacy": "プライバシーポリシー",
+    "app.pricing.autoRenew":
+      "月額プランは、お使いの端末のサブスクリプション設定で解約するまで、毎月自動的に更新されます。",
+    "app.age.checkbox": "18歳以上です",
+    "app.age.title": "年齢の確認",
+    "app.age.lead": "Judgeは大人向けのアプリです。引き続き使うには、18歳以上であることを確認してください。",
+    "app.age.continue": "続ける",
+    "app.age.required": "続けるには、18歳以上であることを確認してください。",
+    "app.age.blockedTitle": "Judgeは成人専用です",
+    "app.age.blockedBody":
+      "Judgeのご利用には18歳以上である必要があります。誤りだと思われる場合は、{email}までご連絡ください。",
   },
 };
 

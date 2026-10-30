@@ -645,4 +645,19 @@
     <string name="app_purchase_restore">ખરીદી રિસ્ટોર કરો</string>
     <string name="app_purchase_restore_done">તમારી ખરીદી રિસ્ટોર થઈ ગઈ.</string>
     <string name="app_purchase_restore_none">રિસ્ટોર કરવા જેવી કોઈ ખરીદી નથી.</string>
+    <string name="app_signin_legal">તમારી દલીલો એક બહારની AI સેવા વાંચે છે. આગળ વધીને તમે અમારી\u0020</string>
+    <string name="app_signin_legal_terms">ઉપયોગની શરતો</string>
+    <string name="app_signin_legal_and">\u0020અને\u0020</string>
+    <string name="app_signin_legal_privacy">ગોપનીયતા નીતિ</string>
+    <string name="app_signin_legal_after">\u0020સાથે સંમત થાઓ છો.</string>
+    <string name="app_legal_terms">ઉપયોગની શરતો</string>
+    <string name="app_legal_privacy">ગોપનીયતા નીતિ</string>
+    <string name="app_pricing_auto_renew">માસિક પ્લાન દર મહિને આપમેળે રિન્યૂ થાય છે, જ્યાં સુધી તમે તેને તમારા ફોનના સબ્સ્ક્રિપ્શન સેટિંગ્સમાંથી રદ ન કરો.</string>
+    <string name="app_age_checkbox">મારી ઉંમર 18 કે તેથી વધુ છે</string>
+    <string name="app_age_title">તમારી ઉંમરની પુષ્ટિ કરો</string>
+    <string name="app_age_lead">Judge ફક્ત પુખ્ત વયના લોકો માટે છે. તેનો ઉપયોગ ચાલુ રાખવા પુષ્ટિ કરો કે તમારી ઉંમર 18 કે તેથી વધુ છે.</string>
+    <string name="app_age_continue">ચાલુ રાખો</string>
+    <string name="app_age_required">ચાલુ રાખવા પુષ્ટિ કરો કે તમારી ઉંમર 18 કે તેથી વધુ છે.</string>
+    <string name="app_age_blocked_title">Judge ફક્ત પુખ્ત વયના લોકો માટે છે</string>
+    <string name="app_age_blocked_body">Judge વાપરવા માટે તમારી ઉંમર 18 કે તેથી વધુ હોવી જોઈએ. જો તમને લાગે કે આ ભૂલ છે, તો અમને %1$s પર લખો.</string>
 </resources>

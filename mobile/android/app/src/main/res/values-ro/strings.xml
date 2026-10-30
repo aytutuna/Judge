@@ -662,4 +662,19 @@
     <string name="app_purchase_restore">Restaurează achizițiile</string>
     <string name="app_purchase_restore_done">Achizițiile tale au fost restaurate.</string>
     <string name="app_purchase_restore_none">Nu ai achiziții de restaurat.</string>
+    <string name="app_signin_legal">Disputele tale sunt citite de un AI extern. Dacă continui, ești de acord cu\u0020</string>
+    <string name="app_signin_legal_terms">Termenii de utilizare</string>
+    <string name="app_signin_legal_and">\u0020și\u0020</string>
+    <string name="app_signin_legal_privacy">Politica de confidențialitate</string>
+    <string name="app_signin_legal_after">.</string>
+    <string name="app_legal_terms">Termeni de utilizare</string>
+    <string name="app_legal_privacy">Politica de confidențialitate</string>
+    <string name="app_pricing_auto_renew">Planul lunar se reînnoiește automat în fiecare lună, până îl anulezi din setările de abonamente ale telefonului.</string>
+    <string name="app_age_checkbox">Am 18 ani sau mai mult</string>
+    <string name="app_age_title">Confirmă-ți vârsta</string>
+    <string name="app_age_lead">Judge este pentru adulți. Confirmă că ai 18 ani sau mai mult ca să-l folosești în continuare.</string>
+    <string name="app_age_continue">Continuă</string>
+    <string name="app_age_required">Confirmă că ai 18 ani sau mai mult ca să continui.</string>
+    <string name="app_age_blocked_title">Judge este doar pentru adulți</string>
+    <string name="app_age_blocked_body">Trebuie să ai 18 ani sau mai mult ca să folosești Judge. Dacă crezi că e o greșeală, scrie-ne la %1$s.</string>
 </resources>

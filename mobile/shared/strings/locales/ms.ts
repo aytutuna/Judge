@@ -187,6 +187,23 @@ const ms: AppLocale = {
     "app.purchase.restore": "Pulihkan pembelian",
     "app.purchase.restoreDone": "Pembelian anda sudah dipulihkan.",
     "app.purchase.restoreNone": "Tiada pembelian untuk dipulihkan.",
+    "app.signin.legal": "AI luar membaca pertikaian anda. Dengan meneruskan, anda bersetuju dengan ",
+    "app.signin.legalTerms": "Syarat Penggunaan",
+    "app.signin.legalAnd": " dan ",
+    "app.signin.legalPrivacy": "Dasar Privasi",
+    "app.signin.legalAfter": ".",
+    "app.legal.terms": "Syarat Penggunaan",
+    "app.legal.privacy": "Dasar Privasi",
+    "app.pricing.autoRenew":
+      "Pelan bulanan diperbaharui secara automatik setiap bulan sehingga anda membatalkannya dalam tetapan langganan telefon anda.",
+    "app.age.checkbox": "Saya berumur 18 tahun atau lebih",
+    "app.age.title": "Sahkan umur anda",
+    "app.age.lead": "Judge untuk orang dewasa. Sahkan anda berumur 18 tahun atau lebih untuk terus menggunakannya.",
+    "app.age.continue": "Teruskan",
+    "app.age.required": "Sahkan anda berumur 18 tahun atau lebih untuk meneruskan.",
+    "app.age.blockedTitle": "Judge hanya untuk orang dewasa",
+    "app.age.blockedBody":
+      "Anda mesti berumur 18 tahun atau lebih untuk menggunakan Judge. Jika anda rasa ini satu kesilapan, hubungi kami di {email}.",
   },
 };
 

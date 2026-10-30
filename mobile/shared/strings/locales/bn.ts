@@ -181,6 +181,23 @@ const bn: AppLocale = {
     "app.purchase.restore": "কেনাকাটা ফিরিয়ে আনুন",
     "app.purchase.restoreDone": "আপনার কেনাকাটা ফিরিয়ে আনা হয়েছে।",
     "app.purchase.restoreNone": "ফিরিয়ে আনার মতো কোনো কেনাকাটা নেই।",
+    "app.signin.legal": "আপনার তর্কগুলো একটি বাইরের এআই পড়ে। চালিয়ে গেলে আপনি আমাদের ",
+    "app.signin.legalTerms": "ব্যবহারের শর্তাবলী",
+    "app.signin.legalAnd": " ও ",
+    "app.signin.legalPrivacy": "গোপনীয়তা নীতি",
+    "app.signin.legalAfter": " মেনে নিচ্ছেন।",
+    "app.legal.terms": "ব্যবহারের শর্তাবলী",
+    "app.legal.privacy": "গোপনীয়তা নীতি",
+    "app.pricing.autoRenew":
+      "মাসিক প্ল্যান প্রতি মাসে নিজে থেকেই নবায়ন হয়, যতক্ষণ না আপনি ফোনের সাবস্ক্রিপশন সেটিংসে গিয়ে বাতিল করেন।",
+    "app.age.checkbox": "আমার বয়স 18 বা তার বেশি",
+    "app.age.title": "আপনার বয়স নিশ্চিত করুন",
+    "app.age.lead": "Judge শুধু প্রাপ্তবয়স্কদের জন্য। ব্যবহার চালিয়ে যেতে নিশ্চিত করুন যে আপনার বয়স 18 বা তার বেশি।",
+    "app.age.continue": "চালিয়ে যান",
+    "app.age.required": "চালিয়ে যেতে নিশ্চিত করুন যে আপনার বয়স 18 বা তার বেশি।",
+    "app.age.blockedTitle": "Judge শুধু প্রাপ্তবয়স্কদের জন্য",
+    "app.age.blockedBody":
+      "Judge ব্যবহার করতে আপনার বয়স 18 বা তার বেশি হতে হবে। আপনি যদি মনে করেন এটা ভুল, তাহলে {email} ঠিকানায় আমাদের লিখুন।",
   },
   plurals: {
     "app.balance.left": { one: "আর {n}টি রায় বাকি" },

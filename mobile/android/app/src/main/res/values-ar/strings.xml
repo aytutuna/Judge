@@ -713,4 +713,19 @@
     <string name="app_purchase_restore">استعادة المشتريات</string>
     <string name="app_purchase_restore_done">تمت استعادة مشترياتك.</string>
     <string name="app_purchase_restore_none">لا توجد مشتريات لاستعادتها.</string>
+    <string name="app_signin_legal">يقرأ ذكاء اصطناعي خارجي ما تكتبه من خلافات. بالمتابعة، أنت توافق على\u0020</string>
+    <string name="app_signin_legal_terms">شروط الاستخدام</string>
+    <string name="app_signin_legal_and">\u0020و</string>
+    <string name="app_signin_legal_privacy">سياسة الخصوصية</string>
+    <string name="app_signin_legal_after">.</string>
+    <string name="app_legal_terms">شروط الاستخدام</string>
+    <string name="app_legal_privacy">سياسة الخصوصية</string>
+    <string name="app_pricing_auto_renew">تتجدد الخطة الشهرية تلقائيًا كل شهر إلى أن تلغيها من إعدادات الاشتراكات في هاتفك.</string>
+    <string name="app_age_checkbox">عمري 18 عامًا أو أكثر</string>
+    <string name="app_age_title">أكّد عمرك</string>
+    <string name="app_age_lead">Judge للبالغين فقط. أكّد أن عمرك 18 عامًا أو أكثر لتواصل استخدامه.</string>
+    <string name="app_age_continue">متابعة</string>
+    <string name="app_age_required">أكّد أن عمرك 18 عامًا أو أكثر للمتابعة.</string>
+    <string name="app_age_blocked_title">Judge للبالغين فقط</string>
+    <string name="app_age_blocked_body">يجب أن يكون عمرك 18 عامًا أو أكثر لاستخدام Judge. إذا كنت تعتقد أن هذا خطأ، راسلنا على %1$s.</string>
 </resources>

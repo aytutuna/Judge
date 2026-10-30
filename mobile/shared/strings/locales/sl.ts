@@ -207,6 +207,23 @@ const sl: AppLocale = {
     "app.purchase.restore": "Obnovi nakupe",
     "app.purchase.restoreDone": "Nakupi so obnovljeni.",
     "app.purchase.restoreNone": "Ni nakupov za obnovitev.",
+    "app.signin.legal": "Tvoje prepire bere zunanja storitev UI. Z nadaljevanjem se strinjaš s ",
+    "app.signin.legalTerms": "pogoji uporabe",
+    "app.signin.legalAnd": " in ",
+    "app.signin.legalPrivacy": "politiko zasebnosti",
+    "app.signin.legalAfter": ".",
+    "app.legal.terms": "Pogoji uporabe",
+    "app.legal.privacy": "Politika zasebnosti",
+    "app.pricing.autoRenew":
+      "Mesečna naročnina se vsak mesec samodejno podaljša, dokler je ne odpoveš v nastavitvah naročnin na telefonu.",
+    "app.age.checkbox": "Imam 18 let ali več",
+    "app.age.title": "Potrdi svojo starost",
+    "app.age.lead": "Judge je za odrasle. Potrdi, da imaš 18 let ali več, da ga lahko še naprej uporabljaš.",
+    "app.age.continue": "Nadaljuj",
+    "app.age.required": "Potrdi, da imaš 18 let ali več, da lahko nadaljuješ.",
+    "app.age.blockedTitle": "Judge je samo za odrasle",
+    "app.age.blockedBody":
+      "Za uporabo aplikacije Judge moraš imeti 18 let ali več. Če meniš, da gre za napako, nam piši na {email}.",
   },
   plurals: {
     "app.balance.left": {

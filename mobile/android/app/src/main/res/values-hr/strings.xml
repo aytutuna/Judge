@@ -662,4 +662,19 @@
     <string name="app_purchase_restore">Vrati kupnje</string>
     <string name="app_purchase_restore_done">Kupnje su vraćene.</string>
     <string name="app_purchase_restore_none">Nema kupnji za vraćanje.</string>
+    <string name="app_signin_legal">Tvoje rasprave čita vanjska AI usluga. Nastavkom prihvaćaš\u0020</string>
+    <string name="app_signin_legal_terms">Uvjete korištenja</string>
+    <string name="app_signin_legal_and">\u0020i\u0020</string>
+    <string name="app_signin_legal_privacy">Pravila privatnosti</string>
+    <string name="app_signin_legal_after">.</string>
+    <string name="app_legal_terms">Uvjeti korištenja</string>
+    <string name="app_legal_privacy">Pravila privatnosti</string>
+    <string name="app_pricing_auto_renew">Mjesečni plan automatski se obnavlja svaki mjesec dok ga ne otkažeš u postavkama pretplata na svom telefonu.</string>
+    <string name="app_age_checkbox">Imam najmanje 18 godina</string>
+    <string name="app_age_title">Potvrdi svoju dob</string>
+    <string name="app_age_lead">Judge je samo za odrasle. Za nastavak potvrdi da imaš najmanje 18 godina.</string>
+    <string name="app_age_continue">Nastavi</string>
+    <string name="app_age_required">Za nastavak potvrdi da imaš najmanje 18 godina.</string>
+    <string name="app_age_blocked_title">Judge je samo za odrasle</string>
+    <string name="app_age_blocked_body">Za korištenje aplikacije Judge moraš imati najmanje 18 godina. Ako misliš da je to pogreška, piši nam na %1$s.</string>
 </resources>

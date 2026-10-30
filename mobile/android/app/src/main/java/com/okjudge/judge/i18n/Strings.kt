@@ -671,6 +671,21 @@ class Strings(private val res: Resources) {
     val appPurchaseRestore: String get() = res.getString(R.string.app_purchase_restore)
     val appPurchaseRestoreDone: String get() = res.getString(R.string.app_purchase_restore_done)
     val appPurchaseRestoreNone: String get() = res.getString(R.string.app_purchase_restore_none)
+    val appSigninLegal: String get() = res.getString(R.string.app_signin_legal)
+    val appSigninLegalTerms: String get() = res.getString(R.string.app_signin_legal_terms)
+    val appSigninLegalAnd: String get() = res.getString(R.string.app_signin_legal_and)
+    val appSigninLegalPrivacy: String get() = res.getString(R.string.app_signin_legal_privacy)
+    val appSigninLegalAfter: String get() = res.getString(R.string.app_signin_legal_after)
+    val appLegalTerms: String get() = res.getString(R.string.app_legal_terms)
+    val appLegalPrivacy: String get() = res.getString(R.string.app_legal_privacy)
+    val appPricingAutoRenew: String get() = res.getString(R.string.app_pricing_auto_renew)
+    val appAgeCheckbox: String get() = res.getString(R.string.app_age_checkbox)
+    val appAgeTitle: String get() = res.getString(R.string.app_age_title)
+    val appAgeLead: String get() = res.getString(R.string.app_age_lead)
+    val appAgeContinue: String get() = res.getString(R.string.app_age_continue)
+    val appAgeRequired: String get() = res.getString(R.string.app_age_required)
+    val appAgeBlockedTitle: String get() = res.getString(R.string.app_age_blocked_title)
+    fun appAgeBlockedBody(email: String): String = res.getString(R.string.app_age_blocked_body, email)
 
     /** A placeholder-free string by its lib/i18n.ts key, for keys built at
      * runtime ("badge.$type", "kind.$kind"). Null when unknown. */
@@ -1206,6 +1221,20 @@ class Strings(private val res: Resources) {
             "app.purchase.restore" -> R.string.app_purchase_restore
             "app.purchase.restoreDone" -> R.string.app_purchase_restore_done
             "app.purchase.restoreNone" -> R.string.app_purchase_restore_none
+            "app.signin.legal" -> R.string.app_signin_legal
+            "app.signin.legalTerms" -> R.string.app_signin_legal_terms
+            "app.signin.legalAnd" -> R.string.app_signin_legal_and
+            "app.signin.legalPrivacy" -> R.string.app_signin_legal_privacy
+            "app.signin.legalAfter" -> R.string.app_signin_legal_after
+            "app.legal.terms" -> R.string.app_legal_terms
+            "app.legal.privacy" -> R.string.app_legal_privacy
+            "app.pricing.autoRenew" -> R.string.app_pricing_auto_renew
+            "app.age.checkbox" -> R.string.app_age_checkbox
+            "app.age.title" -> R.string.app_age_title
+            "app.age.lead" -> R.string.app_age_lead
+            "app.age.continue" -> R.string.app_age_continue
+            "app.age.required" -> R.string.app_age_required
+            "app.age.blockedTitle" -> R.string.app_age_blocked_title
             else -> null
         }
     }

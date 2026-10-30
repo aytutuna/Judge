@@ -645,4 +645,19 @@
     <string name="app_purchase_restore">खरेदी रिस्टोअर करा</string>
     <string name="app_purchase_restore_done">तुमच्या खरेदी रिस्टोअर झाल्या.</string>
     <string name="app_purchase_restore_none">रिस्टोअर करण्यासारखी कोणतीही खरेदी नाही.</string>
+    <string name="app_signin_legal">तुमचे वाद बाहेरची एक AI सेवा वाचते. पुढे गेल्यास तुम्ही\u0020</string>
+    <string name="app_signin_legal_terms">वापराच्या अटी</string>
+    <string name="app_signin_legal_and">\u0020आणि\u0020</string>
+    <string name="app_signin_legal_privacy">गोपनीयता धोरण</string>
+    <string name="app_signin_legal_after">\u0020मान्य करता.</string>
+    <string name="app_legal_terms">वापराच्या अटी</string>
+    <string name="app_legal_privacy">गोपनीयता धोरण</string>
+    <string name="app_pricing_auto_renew">मासिक प्लॅन दर महिन्याला आपोआप रिन्यू होतो, जोपर्यंत तुम्ही तो फोनच्या सबस्क्रिप्शन सेटिंग्जमध्ये रद्द करत नाही.</string>
+    <string name="app_age_checkbox">माझे वय 18 किंवा त्याहून जास्त आहे</string>
+    <string name="app_age_title">तुमच्या वयाची खात्री करा</string>
+    <string name="app_age_lead">Judge प्रौढांसाठी आहे. वापर सुरू ठेवण्यासाठी तुमचे वय 18 किंवा त्याहून जास्त असल्याची खात्री करा.</string>
+    <string name="app_age_continue">सुरू ठेवा</string>
+    <string name="app_age_required">पुढे जाण्यासाठी तुमचे वय 18 किंवा त्याहून जास्त असल्याची खात्री करा.</string>
+    <string name="app_age_blocked_title">Judge फक्त प्रौढांसाठी आहे</string>
+    <string name="app_age_blocked_body">Judge वापरण्यासाठी तुमचे वय 18 किंवा त्याहून जास्त असणे आवश्यक आहे. हे चुकीचे वाटत असल्यास आम्हाला %1$s वर लिहा.</string>
 </resources>

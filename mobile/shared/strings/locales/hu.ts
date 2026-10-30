@@ -180,6 +180,23 @@ const hu: AppLocale = {
     "app.purchase.restore": "Vásárlások visszaállítása",
     "app.purchase.restoreDone": "Visszaállítottuk a vásárlásaidat.",
     "app.purchase.restoreNone": "Nincs visszaállítható vásárlás.",
+    "app.signin.legal": "A vitáidat egy külső MI olvassa. A folytatással elfogadod a ",
+    "app.signin.legalTerms": "Felhasználási feltételeket",
+    "app.signin.legalAnd": " és az ",
+    "app.signin.legalPrivacy": "Adatvédelmi tájékoztatót",
+    "app.signin.legalAfter": ".",
+    "app.legal.terms": "Felhasználási feltételek",
+    "app.legal.privacy": "Adatvédelmi tájékoztató",
+    "app.pricing.autoRenew":
+      "A havi előfizetés minden hónapban automatikusan megújul, amíg le nem mondod a telefonod előfizetési beállításaiban.",
+    "app.age.checkbox": "Elmúltam 18 éves",
+    "app.age.title": "Erősítsd meg a korodat",
+    "app.age.lead": "A Judge felnőtteknek szól. Erősítsd meg, hogy elmúltál 18 éves, hogy tovább használhasd.",
+    "app.age.continue": "Tovább",
+    "app.age.required": "A folytatáshoz erősítsd meg, hogy elmúltál 18 éves.",
+    "app.age.blockedTitle": "A Judge csak felnőtteknek szól",
+    "app.age.blockedBody":
+      "A Judge használatához elmúlt 18 évesnek kell lenned. Ha szerinted ez tévedés, írj nekünk ide: {email}.",
   },
   plurals: {
     "app.balance.left": { one: "Még {n} ítéleted maradt" },

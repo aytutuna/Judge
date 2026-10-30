@@ -183,6 +183,23 @@ const ptPT: AppLocale = {
     "app.purchase.restore": "Restaurar compras",
     "app.purchase.restoreDone": "As tuas compras foram restauradas.",
     "app.purchase.restoreNone": "Não há compras para restaurar.",
+    "app.signin.legal": "Uma IA externa lê as tuas discussões. Ao continuar, aceitas os ",
+    "app.signin.legalTerms": "Termos de Utilização",
+    "app.signin.legalAnd": " e a ",
+    "app.signin.legalPrivacy": "Política de Privacidade",
+    "app.signin.legalAfter": ".",
+    "app.legal.terms": "Termos de Utilização",
+    "app.legal.privacy": "Política de Privacidade",
+    "app.pricing.autoRenew":
+      "O plano mensal renova-se automaticamente todos os meses até o cancelares nas definições de subscrições do teu telemóvel.",
+    "app.age.checkbox": "Tenho 18 anos ou mais",
+    "app.age.title": "Confirma a tua idade",
+    "app.age.lead": "Judge é para adultos. Confirma que tens 18 anos ou mais para continuares a usá-lo.",
+    "app.age.continue": "Continuar",
+    "app.age.required": "Confirma que tens 18 anos ou mais para continuar.",
+    "app.age.blockedTitle": "Judge é só para adultos",
+    "app.age.blockedBody":
+      "Tens de ter 18 anos ou mais para usar o Judge. Se achas que é um engano, escreve-nos para {email}.",
   },
   plurals: {
     "app.balance.left": { one: "Resta {n} veredicto" },

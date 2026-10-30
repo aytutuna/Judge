@@ -645,4 +645,19 @@
     <string name="app_purchase_restore">ਖ਼ਰੀਦਾਂ ਰੀਸਟੋਰ ਕਰੋ</string>
     <string name="app_purchase_restore_done">ਤੁਹਾਡੀਆਂ ਖ਼ਰੀਦਾਂ ਰੀਸਟੋਰ ਹੋ ਗਈਆਂ।</string>
     <string name="app_purchase_restore_none">ਰੀਸਟੋਰ ਕਰਨ ਲਈ ਕੋਈ ਖ਼ਰੀਦ ਨਹੀਂ ਮਿਲੀ।</string>
+    <string name="app_signin_legal">ਤੁਹਾਡੀਆਂ ਬਹਿਸਾਂ ਇੱਕ ਬਾਹਰੀ AI ਸੇਵਾ ਪੜ੍ਹਦੀ ਹੈ। ਜਾਰੀ ਰੱਖ ਕੇ ਤੁਸੀਂ ਸਾਡੀਆਂ\u0020</string>
+    <string name="app_signin_legal_terms">ਵਰਤੋਂ ਦੀਆਂ ਸ਼ਰਤਾਂ</string>
+    <string name="app_signin_legal_and">\u0020ਅਤੇ\u0020</string>
+    <string name="app_signin_legal_privacy">ਪਰਦੇਦਾਰੀ ਨੀਤੀ</string>
+    <string name="app_signin_legal_after">\u0020ਨਾਲ ਸਹਿਮਤ ਹੁੰਦੇ ਹੋ।</string>
+    <string name="app_legal_terms">ਵਰਤੋਂ ਦੀਆਂ ਸ਼ਰਤਾਂ</string>
+    <string name="app_legal_privacy">ਪਰਦੇਦਾਰੀ ਨੀਤੀ</string>
+    <string name="app_pricing_auto_renew">ਮਹੀਨਾਵਾਰ ਪਲਾਨ ਹਰ ਮਹੀਨੇ ਆਪਣੇ-ਆਪ ਰੀਨਿਊ ਹੁੰਦਾ ਹੈ, ਜਦੋਂ ਤੱਕ ਤੁਸੀਂ ਇਸਨੂੰ ਆਪਣੇ ਫ਼ੋਨ ਦੀਆਂ ਸਬਸਕ੍ਰਿਪਸ਼ਨ ਸੈਟਿੰਗਾਂ ਵਿੱਚ ਰੱਦ ਨਹੀਂ ਕਰਦੇ।</string>
+    <string name="app_age_checkbox">ਮੇਰੀ ਉਮਰ 18 ਸਾਲ ਜਾਂ ਵੱਧ ਹੈ</string>
+    <string name="app_age_title">ਆਪਣੀ ਉਮਰ ਦੀ ਪੁਸ਼ਟੀ ਕਰੋ</string>
+    <string name="app_age_lead">Judge ਸਿਰਫ਼ ਬਾਲਗਾਂ ਲਈ ਹੈ। ਇਸਨੂੰ ਵਰਤਦੇ ਰਹਿਣ ਲਈ ਪੁਸ਼ਟੀ ਕਰੋ ਕਿ ਤੁਹਾਡੀ ਉਮਰ 18 ਸਾਲ ਜਾਂ ਵੱਧ ਹੈ।</string>
+    <string name="app_age_continue">ਜਾਰੀ ਰੱਖੋ</string>
+    <string name="app_age_required">ਜਾਰੀ ਰੱਖਣ ਲਈ ਪੁਸ਼ਟੀ ਕਰੋ ਕਿ ਤੁਹਾਡੀ ਉਮਰ 18 ਸਾਲ ਜਾਂ ਵੱਧ ਹੈ।</string>
+    <string name="app_age_blocked_title">Judge ਸਿਰਫ਼ ਬਾਲਗਾਂ ਲਈ ਹੈ</string>
+    <string name="app_age_blocked_body">Judge ਵਰਤਣ ਲਈ ਤੁਹਾਡੀ ਉਮਰ 18 ਸਾਲ ਜਾਂ ਵੱਧ ਹੋਣੀ ਚਾਹੀਦੀ ਹੈ। ਜੇ ਤੁਹਾਨੂੰ ਲੱਗਦਾ ਹੈ ਕਿ ਇਹ ਗਲਤੀ ਹੈ, ਤਾਂ ਸਾਨੂੰ %1$s ’ਤੇ ਲਿਖੋ।</string>
 </resources>

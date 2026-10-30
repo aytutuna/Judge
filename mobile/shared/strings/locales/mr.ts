@@ -181,6 +181,23 @@ const mr: AppLocale = {
     "app.purchase.restore": "खरेदी रिस्टोअर करा",
     "app.purchase.restoreDone": "तुमच्या खरेदी रिस्टोअर झाल्या.",
     "app.purchase.restoreNone": "रिस्टोअर करण्यासारखी कोणतीही खरेदी नाही.",
+    "app.signin.legal": "तुमचे वाद बाहेरची एक AI सेवा वाचते. पुढे गेल्यास तुम्ही ",
+    "app.signin.legalTerms": "वापराच्या अटी",
+    "app.signin.legalAnd": " आणि ",
+    "app.signin.legalPrivacy": "गोपनीयता धोरण",
+    "app.signin.legalAfter": " मान्य करता.",
+    "app.legal.terms": "वापराच्या अटी",
+    "app.legal.privacy": "गोपनीयता धोरण",
+    "app.pricing.autoRenew":
+      "मासिक प्लॅन दर महिन्याला आपोआप रिन्यू होतो, जोपर्यंत तुम्ही तो फोनच्या सबस्क्रिप्शन सेटिंग्जमध्ये रद्द करत नाही.",
+    "app.age.checkbox": "माझे वय 18 किंवा त्याहून जास्त आहे",
+    "app.age.title": "तुमच्या वयाची खात्री करा",
+    "app.age.lead": "Judge प्रौढांसाठी आहे. वापर सुरू ठेवण्यासाठी तुमचे वय 18 किंवा त्याहून जास्त असल्याची खात्री करा.",
+    "app.age.continue": "सुरू ठेवा",
+    "app.age.required": "पुढे जाण्यासाठी तुमचे वय 18 किंवा त्याहून जास्त असल्याची खात्री करा.",
+    "app.age.blockedTitle": "Judge फक्त प्रौढांसाठी आहे",
+    "app.age.blockedBody":
+      "Judge वापरण्यासाठी तुमचे वय 18 किंवा त्याहून जास्त असणे आवश्यक आहे. हे चुकीचे वाटत असल्यास आम्हाला {email} वर लिहा.",
   },
   plurals: {
     "app.balance.left": { one: "{n} निकाल शिल्लक" },

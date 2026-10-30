@@ -645,4 +645,19 @@
     <string name="app_purchase_restore">வாங்கியவற்றை மீட்டெடு</string>
     <string name="app_purchase_restore_done">நீங்கள் வாங்கியவை மீட்டெடுக்கப்பட்டன.</string>
     <string name="app_purchase_restore_none">மீட்டெடுக்க எதுவும் இல்லை.</string>
+    <string name="app_signin_legal">ஒரு வெளி AI உங்கள் வாக்குவாதங்களைப் படிக்கிறது. தொடர்வதன் மூலம்\u0020</string>
+    <string name="app_signin_legal_terms">பயன்பாட்டு விதிமுறைகள்</string>
+    <string name="app_signin_legal_and">\u0020மற்றும்\u0020</string>
+    <string name="app_signin_legal_privacy">தனியுரிமைக் கொள்கையை</string>
+    <string name="app_signin_legal_after">\u0020ஏற்கிறீர்கள்.</string>
+    <string name="app_legal_terms">பயன்பாட்டு விதிமுறைகள்</string>
+    <string name="app_legal_privacy">தனியுரிமைக் கொள்கை</string>
+    <string name="app_pricing_auto_renew">மாதாந்திர பிளான் ஒவ்வொரு மாதமும் தானாகப் புதுப்பிக்கப்படும்; நீங்கள் உங்கள் ஃபோனின் சந்தா அமைப்புகளில் ரத்து செய்யும் வரை.</string>
+    <string name="app_age_checkbox">எனக்கு 18 வயது அல்லது அதற்கு மேல்</string>
+    <string name="app_age_title">உங்கள் வயதை உறுதிப்படுத்துங்கள்</string>
+    <string name="app_age_lead">Judge பெரியவர்களுக்கானது. தொடர்ந்து பயன்படுத்த, உங்களுக்கு 18 வயது அல்லது அதற்கு மேல் என்று உறுதிப்படுத்துங்கள்.</string>
+    <string name="app_age_continue">தொடரவும்</string>
+    <string name="app_age_required">தொடர, உங்களுக்கு 18 வயது அல்லது அதற்கு மேல் என்று உறுதிப்படுத்துங்கள்.</string>
+    <string name="app_age_blocked_title">Judge பெரியவர்களுக்கு மட்டும்</string>
+    <string name="app_age_blocked_body">Judge பயன்படுத்த உங்களுக்கு 18 வயது அல்லது அதற்கு மேல் இருக்க வேண்டும். இது தவறு என்று நினைத்தால், %1$s முகவரிக்கு எங்களுக்கு எழுதுங்கள்.</string>
 </resources>

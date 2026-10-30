@@ -679,4 +679,19 @@
     <string name="app_purchase_restore">Відновити покупки</string>
     <string name="app_purchase_restore_done">Покупки відновлено.</string>
     <string name="app_purchase_restore_none">Покупок для відновлення немає.</string>
+    <string name="app_signin_legal">Твої суперечки читає сторонній ШІ. Продовжуючи, ти погоджуєшся з\u0020</string>
+    <string name="app_signin_legal_terms">Умовами використання</string>
+    <string name="app_signin_legal_and">\u0020і\u0020</string>
+    <string name="app_signin_legal_privacy">Політикою конфіденційності</string>
+    <string name="app_signin_legal_after">.</string>
+    <string name="app_legal_terms">Умови використання</string>
+    <string name="app_legal_privacy">Політика конфіденційності</string>
+    <string name="app_pricing_auto_renew">Місячна підписка поновлюється автоматично щомісяця, доки ти не скасуєш її в налаштуваннях підписок на телефоні.</string>
+    <string name="app_age_checkbox">Мені 18 років або більше</string>
+    <string name="app_age_title">Підтвердь свій вік</string>
+    <string name="app_age_lead">Judge призначений для дорослих. Підтвердь, що тобі 18 років або більше, щоб користуватися ним далі.</string>
+    <string name="app_age_continue">Продовжити</string>
+    <string name="app_age_required">Підтвердь, що тобі 18 років або більше, щоб продовжити.</string>
+    <string name="app_age_blocked_title">Judge лише для дорослих</string>
+    <string name="app_age_blocked_body">Щоб користуватися Judge, тобі має бути 18 років або більше. Якщо ти вважаєш, що це помилка, напиши нам на %1$s.</string>
 </resources>

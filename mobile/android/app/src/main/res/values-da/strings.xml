@@ -645,4 +645,19 @@
     <string name="app_purchase_restore">Gendan køb</string>
     <string name="app_purchase_restore_done">Dine køb er gendannet.</string>
     <string name="app_purchase_restore_none">Der er ingen køb at gendanne.</string>
+    <string name="app_signin_legal">En ekstern AI læser dine diskussioner. Ved at fortsætte accepterer du\u0020</string>
+    <string name="app_signin_legal_terms">vilkårene</string>
+    <string name="app_signin_legal_and">\u0020og\u0020</string>
+    <string name="app_signin_legal_privacy">privatlivspolitikken</string>
+    <string name="app_signin_legal_after">.</string>
+    <string name="app_legal_terms">Brugsvilkår</string>
+    <string name="app_legal_privacy">Privatlivspolitik</string>
+    <string name="app_pricing_auto_renew">Månedsabonnementet fornyes automatisk hver måned, indtil du opsiger det i din telefons abonnementsindstillinger.</string>
+    <string name="app_age_checkbox">Jeg er 18 år eller ældre</string>
+    <string name="app_age_title">Bekræft din alder</string>
+    <string name="app_age_lead">Judge er kun for voksne. Bekræft, at du er mindst 18 år, for at fortsætte.</string>
+    <string name="app_age_continue">Fortsæt</string>
+    <string name="app_age_required">Bekræft, at du er mindst 18 år, for at fortsætte.</string>
+    <string name="app_age_blocked_title">Judge er kun for voksne</string>
+    <string name="app_age_blocked_body">Du skal være mindst 18 år for at bruge Judge. Hvis du mener, det er en fejl, så skriv til os på %1$s.</string>
 </resources>

@@ -738,6 +738,21 @@ enum L10n {
     static func appPurchaseRestore(_ lang: AppLang) -> String { string("app.purchase.restore", lang) }
     static func appPurchaseRestoreDone(_ lang: AppLang) -> String { string("app.purchase.restoreDone", lang) }
     static func appPurchaseRestoreNone(_ lang: AppLang) -> String { string("app.purchase.restoreNone", lang) }
+    static func appSigninLegal(_ lang: AppLang) -> String { string("app.signin.legal", lang) }
+    static func appSigninLegalTerms(_ lang: AppLang) -> String { string("app.signin.legalTerms", lang) }
+    static func appSigninLegalAnd(_ lang: AppLang) -> String { string("app.signin.legalAnd", lang) }
+    static func appSigninLegalPrivacy(_ lang: AppLang) -> String { string("app.signin.legalPrivacy", lang) }
+    static func appSigninLegalAfter(_ lang: AppLang) -> String { string("app.signin.legalAfter", lang) }
+    static func appLegalTerms(_ lang: AppLang) -> String { string("app.legal.terms", lang) }
+    static func appLegalPrivacy(_ lang: AppLang) -> String { string("app.legal.privacy", lang) }
+    static func appPricingAutoRenew(_ lang: AppLang) -> String { string("app.pricing.autoRenew", lang) }
+    static func appAgeCheckbox(_ lang: AppLang) -> String { string("app.age.checkbox", lang) }
+    static func appAgeTitle(_ lang: AppLang) -> String { string("app.age.title", lang) }
+    static func appAgeLead(_ lang: AppLang) -> String { string("app.age.lead", lang) }
+    static func appAgeContinue(_ lang: AppLang) -> String { string("app.age.continue", lang) }
+    static func appAgeRequired(_ lang: AppLang) -> String { string("app.age.required", lang) }
+    static func appAgeBlockedTitle(_ lang: AppLang) -> String { string("app.age.blockedTitle", lang) }
+    static func appAgeBlockedBody(_ lang: AppLang, email: String) -> String { format("app.age.blockedBody", lang, email) }
 
     /// A placeholder-free string by its lib/i18n.ts key, for keys built at
     /// runtime ("badge.\(type)"). Nil when unknown.
@@ -1274,6 +1289,20 @@ enum L10n {
         "app.purchase.restore",
         "app.purchase.restoreDone",
         "app.purchase.restoreNone",
+        "app.signin.legal",
+        "app.signin.legalTerms",
+        "app.signin.legalAnd",
+        "app.signin.legalPrivacy",
+        "app.signin.legalAfter",
+        "app.legal.terms",
+        "app.legal.privacy",
+        "app.pricing.autoRenew",
+        "app.age.checkbox",
+        "app.age.title",
+        "app.age.lead",
+        "app.age.continue",
+        "app.age.required",
+        "app.age.blockedTitle",
     ]
 
     private static func string(_ key: String, _ lang: AppLang) -> String {

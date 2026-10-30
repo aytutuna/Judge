@@ -645,4 +645,19 @@
     <string name="app_purchase_restore">Aankopen herstellen</string>
     <string name="app_purchase_restore_done">Je aankopen zijn hersteld.</string>
     <string name="app_purchase_restore_none">Geen aankopen om te herstellen.</string>
+    <string name="app_signin_legal">Een externe AI leest je discussies. Door verder te gaan, ga je akkoord met de\u0020</string>
+    <string name="app_signin_legal_terms">gebruiksvoorwaarden</string>
+    <string name="app_signin_legal_and">\u0020en het\u0020</string>
+    <string name="app_signin_legal_privacy">privacybeleid</string>
+    <string name="app_signin_legal_after">.</string>
+    <string name="app_legal_terms">Gebruiksvoorwaarden</string>
+    <string name="app_legal_privacy">Privacybeleid</string>
+    <string name="app_pricing_auto_renew">Het maandabonnement wordt elke maand automatisch verlengd tot je het opzegt in de abonnementsinstellingen van je telefoon.</string>
+    <string name="app_age_checkbox">Ik ben 18 of ouder</string>
+    <string name="app_age_title">Bevestig je leeftijd</string>
+    <string name="app_age_lead">Judge is voor volwassenen. Bevestig dat je 18 of ouder bent om het te blijven gebruiken.</string>
+    <string name="app_age_continue">Doorgaan</string>
+    <string name="app_age_required">Bevestig dat je 18 of ouder bent om door te gaan.</string>
+    <string name="app_age_blocked_title">Judge is alleen voor volwassenen</string>
+    <string name="app_age_blocked_body">Je moet 18 of ouder zijn om Judge te gebruiken. Denk je dat dit een vergissing is? Mail ons dan op %1$s.</string>
 </resources>

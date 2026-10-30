@@ -186,6 +186,23 @@ const ro: AppLocale = {
     "app.purchase.restore": "Restaurează achizițiile",
     "app.purchase.restoreDone": "Achizițiile tale au fost restaurate.",
     "app.purchase.restoreNone": "Nu ai achiziții de restaurat.",
+    "app.signin.legal": "Disputele tale sunt citite de un AI extern. Dacă continui, ești de acord cu ",
+    "app.signin.legalTerms": "Termenii de utilizare",
+    "app.signin.legalAnd": " și ",
+    "app.signin.legalPrivacy": "Politica de confidențialitate",
+    "app.signin.legalAfter": ".",
+    "app.legal.terms": "Termeni de utilizare",
+    "app.legal.privacy": "Politica de confidențialitate",
+    "app.pricing.autoRenew":
+      "Planul lunar se reînnoiește automat în fiecare lună, până îl anulezi din setările de abonamente ale telefonului.",
+    "app.age.checkbox": "Am 18 ani sau mai mult",
+    "app.age.title": "Confirmă-ți vârsta",
+    "app.age.lead": "Judge este pentru adulți. Confirmă că ai 18 ani sau mai mult ca să-l folosești în continuare.",
+    "app.age.continue": "Continuă",
+    "app.age.required": "Confirmă că ai 18 ani sau mai mult ca să continui.",
+    "app.age.blockedTitle": "Judge este doar pentru adulți",
+    "app.age.blockedBody":
+      "Trebuie să ai 18 ani sau mai mult ca să folosești Judge. Dacă crezi că e o greșeală, scrie-ne la {email}.",
   },
   // As on the web, the base string carries "de" (20 and up) and "few" drops it.
   plurals: {

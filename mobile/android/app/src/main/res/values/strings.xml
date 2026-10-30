@@ -645,4 +645,19 @@
     <string name="app_purchase_restore">Restore purchases</string>
     <string name="app_purchase_restore_done">Your purchases were restored.</string>
     <string name="app_purchase_restore_none">No purchases to restore.</string>
+    <string name="app_signin_legal">An outside AI reads your arguments. By continuing you agree to the\u0020</string>
+    <string name="app_signin_legal_terms">Terms</string>
+    <string name="app_signin_legal_and">\u0020and\u0020</string>
+    <string name="app_signin_legal_privacy">Privacy Policy</string>
+    <string name="app_signin_legal_after">.</string>
+    <string name="app_legal_terms">Terms of Use</string>
+    <string name="app_legal_privacy">Privacy Policy</string>
+    <string name="app_pricing_auto_renew">The monthly plan renews automatically every month until you cancel it in your phone\'s subscription settings.</string>
+    <string name="app_age_checkbox">I\'m 18 or older</string>
+    <string name="app_age_title">Confirm your age</string>
+    <string name="app_age_lead">Judge is for adults. Confirm you\'re 18 or older to keep using it.</string>
+    <string name="app_age_continue">Continue</string>
+    <string name="app_age_required">Confirm you\'re 18 or older to continue.</string>
+    <string name="app_age_blocked_title">Judge is for adults only</string>
+    <string name="app_age_blocked_body">You need to be 18 or older to use Judge. If you think this is a mistake, write to us at %1$s.</string>
 </resources>

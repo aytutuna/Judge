@@ -182,6 +182,23 @@ const vi: AppLocale = {
     "app.purchase.restore": "Khôi phục giao dịch mua",
     "app.purchase.restoreDone": "Đã khôi phục các giao dịch mua của bạn.",
     "app.purchase.restoreNone": "Không có giao dịch mua nào để khôi phục.",
+    "app.signin.legal": "Một dịch vụ AI bên ngoài sẽ đọc các cuộc tranh cãi của bạn. Tiếp tục nghĩa là bạn đồng ý với ",
+    "app.signin.legalTerms": "Điều khoản sử dụng",
+    "app.signin.legalAnd": " và ",
+    "app.signin.legalPrivacy": "Chính sách quyền riêng tư",
+    "app.signin.legalAfter": ".",
+    "app.legal.terms": "Điều khoản sử dụng",
+    "app.legal.privacy": "Chính sách quyền riêng tư",
+    "app.pricing.autoRenew":
+      "Gói tháng tự động gia hạn mỗi tháng cho đến khi bạn hủy trong phần cài đặt gói đăng ký trên điện thoại.",
+    "app.age.checkbox": "Tôi đủ 18 tuổi trở lên",
+    "app.age.title": "Xác nhận độ tuổi của bạn",
+    "app.age.lead": "Judge dành cho người lớn. Hãy xác nhận bạn từ 18 tuổi trở lên để tiếp tục sử dụng.",
+    "app.age.continue": "Tiếp tục",
+    "app.age.required": "Hãy xác nhận bạn từ 18 tuổi trở lên để tiếp tục.",
+    "app.age.blockedTitle": "Judge chỉ dành cho người lớn",
+    "app.age.blockedBody":
+      "Bạn cần từ 18 tuổi trở lên để dùng Judge. Nếu bạn nghĩ đây là nhầm lẫn, hãy viết cho chúng tôi tại {email}.",
   },
 };
 

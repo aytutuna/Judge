@@ -628,4 +628,19 @@
     <string name="app_purchase_restore">購入を復元</string>
     <string name="app_purchase_restore_done">購入を復元しました。</string>
     <string name="app_purchase_restore_none">復元できる購入はありません。</string>
+    <string name="app_signin_legal">書いた内容は外部のAIが読み取ります。</string>
+    <string name="app_signin_legal_terms">利用規約</string>
+    <string name="app_signin_legal_and">と</string>
+    <string name="app_signin_legal_privacy">プライバシーポリシー</string>
+    <string name="app_signin_legal_after">には、続行した時点で同意したものとみなされます。</string>
+    <string name="app_legal_terms">利用規約</string>
+    <string name="app_legal_privacy">プライバシーポリシー</string>
+    <string name="app_pricing_auto_renew">月額プランは、お使いの端末のサブスクリプション設定で解約するまで、毎月自動的に更新されます。</string>
+    <string name="app_age_checkbox">18歳以上です</string>
+    <string name="app_age_title">年齢の確認</string>
+    <string name="app_age_lead">Judgeは大人向けのアプリです。引き続き使うには、18歳以上であることを確認してください。</string>
+    <string name="app_age_continue">続ける</string>
+    <string name="app_age_required">続けるには、18歳以上であることを確認してください。</string>
+    <string name="app_age_blocked_title">Judgeは成人専用です</string>
+    <string name="app_age_blocked_body">Judgeのご利用には18歳以上である必要があります。誤りだと思われる場合は、%1$sまでご連絡ください。</string>
 </resources>

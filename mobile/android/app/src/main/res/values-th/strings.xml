@@ -628,4 +628,19 @@
     <string name="app_purchase_restore">กู้คืนการซื้อ</string>
     <string name="app_purchase_restore_done">กู้คืนการซื้อแล้ว</string>
     <string name="app_purchase_restore_none">ไม่พบรายการซื้อที่จะกู้คืน</string>
+    <string name="app_signin_legal">AI ภายนอกจะอ่านเรื่องที่คุณเล่า การดำเนินการต่อถือว่าคุณยอมรับ</string>
+    <string name="app_signin_legal_terms">ข้อกำหนดการใช้งาน</string>
+    <string name="app_signin_legal_and">\u0020และ\u0020</string>
+    <string name="app_signin_legal_privacy">นโยบายความเป็นส่วนตัว</string>
+    <string name="app_signin_legal_after">ของเรา</string>
+    <string name="app_legal_terms">ข้อกำหนดการใช้งาน</string>
+    <string name="app_legal_privacy">นโยบายความเป็นส่วนตัว</string>
+    <string name="app_pricing_auto_renew">แพ็กเกจรายเดือนจะต่ออายุอัตโนมัติทุกเดือนจนกว่าคุณจะยกเลิกในการตั้งค่าการสมัครสมาชิกของโทรศัพท์</string>
+    <string name="app_age_checkbox">ฉันอายุ 18 ปีขึ้นไป</string>
+    <string name="app_age_title">ยืนยันอายุของคุณ</string>
+    <string name="app_age_lead">Judge สำหรับผู้ใหญ่ ยืนยันว่าคุณอายุ 18 ปีขึ้นไปเพื่อใช้งานต่อ</string>
+    <string name="app_age_continue">ดำเนินการต่อ</string>
+    <string name="app_age_required">ยืนยันว่าคุณอายุ 18 ปีขึ้นไปเพื่อดำเนินการต่อ</string>
+    <string name="app_age_blocked_title">Judge สำหรับผู้ใหญ่เท่านั้น</string>
+    <string name="app_age_blocked_body">คุณต้องอายุ 18 ปีขึ้นไปจึงจะใช้ Judge ได้ หากคิดว่าเกิดความผิดพลาด ส่งข้อความหาเราได้ที่ %1$s</string>
 </resources>

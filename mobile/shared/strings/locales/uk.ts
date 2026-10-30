@@ -185,6 +185,24 @@ const uk: AppLocale = {
     "app.purchase.restore": "Відновити покупки",
     "app.purchase.restoreDone": "Покупки відновлено.",
     "app.purchase.restoreNone": "Покупок для відновлення немає.",
+    "app.signin.legal": "Твої суперечки читає сторонній ШІ. Продовжуючи, ти погоджуєшся з ",
+    "app.signin.legalTerms": "Умовами використання",
+    "app.signin.legalAnd": " і ",
+    "app.signin.legalPrivacy": "Політикою конфіденційності",
+    "app.signin.legalAfter": ".",
+    "app.legal.terms": "Умови використання",
+    "app.legal.privacy": "Політика конфіденційності",
+    "app.pricing.autoRenew":
+      "Місячна підписка поновлюється автоматично щомісяця, доки ти не скасуєш її в налаштуваннях підписок на телефоні.",
+    "app.age.checkbox": "Мені 18 років або більше",
+    "app.age.title": "Підтвердь свій вік",
+    "app.age.lead":
+      "Judge призначений для дорослих. Підтвердь, що тобі 18 років або більше, щоб користуватися ним далі.",
+    "app.age.continue": "Продовжити",
+    "app.age.required": "Підтвердь, що тобі 18 років або більше, щоб продовжити.",
+    "app.age.blockedTitle": "Judge лише для дорослих",
+    "app.age.blockedBody":
+      "Щоб користуватися Judge, тобі має бути 18 років або більше. Якщо ти вважаєш, що це помилка, напиши нам на {email}.",
   },
   plurals: {
     "app.balance.left": {

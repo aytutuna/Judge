@@ -628,4 +628,19 @@
     <string name="app_purchase_restore">Pulihkan pembelian</string>
     <string name="app_purchase_restore_done">Pembelian anda sudah dipulihkan.</string>
     <string name="app_purchase_restore_none">Tiada pembelian untuk dipulihkan.</string>
+    <string name="app_signin_legal">AI luar membaca pertikaian anda. Dengan meneruskan, anda bersetuju dengan\u0020</string>
+    <string name="app_signin_legal_terms">Syarat Penggunaan</string>
+    <string name="app_signin_legal_and">\u0020dan\u0020</string>
+    <string name="app_signin_legal_privacy">Dasar Privasi</string>
+    <string name="app_signin_legal_after">.</string>
+    <string name="app_legal_terms">Syarat Penggunaan</string>
+    <string name="app_legal_privacy">Dasar Privasi</string>
+    <string name="app_pricing_auto_renew">Pelan bulanan diperbaharui secara automatik setiap bulan sehingga anda membatalkannya dalam tetapan langganan telefon anda.</string>
+    <string name="app_age_checkbox">Saya berumur 18 tahun atau lebih</string>
+    <string name="app_age_title">Sahkan umur anda</string>
+    <string name="app_age_lead">Judge untuk orang dewasa. Sahkan anda berumur 18 tahun atau lebih untuk terus menggunakannya.</string>
+    <string name="app_age_continue">Teruskan</string>
+    <string name="app_age_required">Sahkan anda berumur 18 tahun atau lebih untuk meneruskan.</string>
+    <string name="app_age_blocked_title">Judge hanya untuk orang dewasa</string>
+    <string name="app_age_blocked_body">Anda mesti berumur 18 tahun atau lebih untuk menggunakan Judge. Jika anda rasa ini satu kesilapan, hubungi kami di %1$s.</string>
 </resources>

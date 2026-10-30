@@ -662,4 +662,19 @@
     <string name="app_purchase_restore">שחזור רכישות</string>
     <string name="app_purchase_restore_done">הרכישות שלך שוחזרו.</string>
     <string name="app_purchase_restore_none">אין רכישות לשחזור.</string>
+    <string name="app_signin_legal">שירות AI חיצוני קורא את הוויכוחים שלך. המשך השימוש מהווה הסכמה\u0020</string>
+    <string name="app_signin_legal_terms">לתנאי השימוש</string>
+    <string name="app_signin_legal_and">\u0020ו</string>
+    <string name="app_signin_legal_privacy">למדיניות הפרטיות</string>
+    <string name="app_signin_legal_after">.</string>
+    <string name="app_legal_terms">תנאי שימוש</string>
+    <string name="app_legal_privacy">מדיניות הפרטיות</string>
+    <string name="app_pricing_auto_renew">התוכנית החודשית מתחדשת אוטומטית בכל חודש עד שמבטלים אותה בהגדרות המנויים בטלפון.</string>
+    <string name="app_age_checkbox">אני בגיל 18 ומעלה</string>
+    <string name="app_age_title">אישור גיל</string>
+    <string name="app_age_lead">Judge מיועד למבוגרים. כדי להמשיך להשתמש בו, צריך לאשר שהגיל הוא 18 ומעלה.</string>
+    <string name="app_age_continue">המשך</string>
+    <string name="app_age_required">כדי להמשיך, צריך לאשר שהגיל הוא 18 ומעלה.</string>
+    <string name="app_age_blocked_title">Judge מיועד למבוגרים בלבד</string>
+    <string name="app_age_blocked_body">כדי להשתמש ב-Judge צריך להיות בגיל 18 ומעלה. אם נראה לך שזו טעות, אפשר לכתוב לנו בכתובת %1$s.</string>
 </resources>

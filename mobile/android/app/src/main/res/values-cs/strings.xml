@@ -679,4 +679,19 @@
     <string name="app_purchase_restore">Obnovit nákupy</string>
     <string name="app_purchase_restore_done">Nákupy jsou obnovené.</string>
     <string name="app_purchase_restore_none">Nenašli jsme žádné nákupy k obnovení.</string>
+    <string name="app_signin_legal">Tvoje spory čte externí AI. Pokračováním souhlasíš se\u0020</string>
+    <string name="app_signin_legal_terms">podmínkami použití</string>
+    <string name="app_signin_legal_and">\u0020a\u0020</string>
+    <string name="app_signin_legal_privacy">zásadami ochrany soukromí</string>
+    <string name="app_signin_legal_after">.</string>
+    <string name="app_legal_terms">Podmínky použití</string>
+    <string name="app_legal_privacy">Zásady ochrany soukromí</string>
+    <string name="app_pricing_auto_renew">Měsíční plán se každý měsíc automaticky obnovuje, dokud ho nezrušíš v nastavení předplatných ve svém telefonu.</string>
+    <string name="app_age_checkbox">Je mi alespoň 18 let</string>
+    <string name="app_age_title">Potvrď svůj věk</string>
+    <string name="app_age_lead">Judge je jen pro dospělé. Pro další používání potvrď, že ti je alespoň 18 let.</string>
+    <string name="app_age_continue">Pokračovat</string>
+    <string name="app_age_required">Pro pokračování potvrď, že ti je alespoň 18 let.</string>
+    <string name="app_age_blocked_title">Judge je jen pro dospělé</string>
+    <string name="app_age_blocked_body">Judge můžeš používat, jen když ti je alespoň 18 let. Pokud si myslíš, že jde o omyl, napiš nám na %1$s.</string>
 </resources>

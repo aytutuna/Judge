@@ -208,6 +208,29 @@ export const APP_EN = {
   "app.purchase.restore": "Restore purchases",
   "app.purchase.restoreDone": "Your purchases were restored.",
   "app.purchase.restoreNone": "No purchases to restore.",
+  // The sign-in consent line in pieces, so each language can put both links
+  // where its grammar wants them: legal + [legalTerms] + legalAnd +
+  // [legalPrivacy] + legalAfter. Every piece carries its own spaces, so
+  // languages written without them (ja, zh, th) join up.
+  "app.signin.legal": "An outside AI reads your arguments. By continuing you agree to the ",
+  "app.signin.legalTerms": "Terms",
+  "app.signin.legalAnd": " and ",
+  "app.signin.legalPrivacy": "Privacy Policy",
+  "app.signin.legalAfter": ".",
+  // Links under the plans (the stores want both next to a subscription) and in Settings.
+  "app.legal.terms": "Terms of Use",
+  "app.legal.privacy": "Privacy Policy",
+  "app.pricing.autoRenew":
+    "The monthly plan renews automatically every month until you cancel it in your phone's subscription settings.",
+  // Judge is for adults: a checkbox on sign-in, a sheet for accounts that
+  // haven't confirmed yet, and a screen when the phone says the user is under 18.
+  "app.age.checkbox": "I'm 18 or older",
+  "app.age.title": "Confirm your age",
+  "app.age.lead": "Judge is for adults. Confirm you're 18 or older to keep using it.",
+  "app.age.continue": "Continue",
+  "app.age.required": "Confirm you're 18 or older to continue.",
+  "app.age.blockedTitle": "Judge is for adults only",
+  "app.age.blockedBody": "You need to be 18 or older to use Judge. If you think this is a mistake, write to us at {email}.",
 } as const;
 
 export type AppKey = keyof typeof APP_EN;

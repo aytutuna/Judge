@@ -182,6 +182,23 @@ const fi: AppLocale = {
     "app.purchase.restore": "Palauta ostokset",
     "app.purchase.restoreDone": "Ostoksesi on palautettu.",
     "app.purchase.restoreNone": "Palautettavia ostoksia ei ole.",
+    "app.signin.legal": "Ulkopuolinen tekoäly lukee kiistasi. Jatkamalla hyväksyt ",
+    "app.signin.legalTerms": "käyttöehdot",
+    "app.signin.legalAnd": " ja ",
+    "app.signin.legalPrivacy": "tietosuojakäytännön",
+    "app.signin.legalAfter": ".",
+    "app.legal.terms": "Käyttöehdot",
+    "app.legal.privacy": "Tietosuojakäytäntö",
+    "app.pricing.autoRenew":
+      "Kuukausitilaus uusiutuu automaattisesti joka kuukausi, kunnes peruutat sen puhelimesi tilausasetuksista.",
+    "app.age.checkbox": "Olen vähintään 18-vuotias",
+    "app.age.title": "Vahvista ikäsi",
+    "app.age.lead": "Judge on aikuisille. Vahvista, että olet vähintään 18-vuotias, niin voit jatkaa sen käyttöä.",
+    "app.age.continue": "Jatka",
+    "app.age.required": "Vahvista, että olet vähintään 18-vuotias, niin voit jatkaa.",
+    "app.age.blockedTitle": "Judge on vain aikuisille",
+    "app.age.blockedBody":
+      "Käyttääksesi Judge-sovellusta sinun on oltava vähintään 18-vuotias. Jos tämä on mielestäsi virhe, kirjoita meille osoitteeseen {email}.",
   },
   plurals: {
     "app.balance.left": { one: "{n} tuomio jäljellä" },

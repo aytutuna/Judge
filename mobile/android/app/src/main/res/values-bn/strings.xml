@@ -645,4 +645,19 @@
     <string name="app_purchase_restore">কেনাকাটা ফিরিয়ে আনুন</string>
     <string name="app_purchase_restore_done">আপনার কেনাকাটা ফিরিয়ে আনা হয়েছে।</string>
     <string name="app_purchase_restore_none">ফিরিয়ে আনার মতো কোনো কেনাকাটা নেই।</string>
+    <string name="app_signin_legal">আপনার তর্কগুলো একটি বাইরের এআই পড়ে। চালিয়ে গেলে আপনি আমাদের\u0020</string>
+    <string name="app_signin_legal_terms">ব্যবহারের শর্তাবলী</string>
+    <string name="app_signin_legal_and">\u0020ও\u0020</string>
+    <string name="app_signin_legal_privacy">গোপনীয়তা নীতি</string>
+    <string name="app_signin_legal_after">\u0020মেনে নিচ্ছেন।</string>
+    <string name="app_legal_terms">ব্যবহারের শর্তাবলী</string>
+    <string name="app_legal_privacy">গোপনীয়তা নীতি</string>
+    <string name="app_pricing_auto_renew">মাসিক প্ল্যান প্রতি মাসে নিজে থেকেই নবায়ন হয়, যতক্ষণ না আপনি ফোনের সাবস্ক্রিপশন সেটিংসে গিয়ে বাতিল করেন।</string>
+    <string name="app_age_checkbox">আমার বয়স 18 বা তার বেশি</string>
+    <string name="app_age_title">আপনার বয়স নিশ্চিত করুন</string>
+    <string name="app_age_lead">Judge শুধু প্রাপ্তবয়স্কদের জন্য। ব্যবহার চালিয়ে যেতে নিশ্চিত করুন যে আপনার বয়স 18 বা তার বেশি।</string>
+    <string name="app_age_continue">চালিয়ে যান</string>
+    <string name="app_age_required">চালিয়ে যেতে নিশ্চিত করুন যে আপনার বয়স 18 বা তার বেশি।</string>
+    <string name="app_age_blocked_title">Judge শুধু প্রাপ্তবয়স্কদের জন্য</string>
+    <string name="app_age_blocked_body">Judge ব্যবহার করতে আপনার বয়স 18 বা তার বেশি হতে হবে। আপনি যদি মনে করেন এটা ভুল, তাহলে %1$s ঠিকানায় আমাদের লিখুন।</string>
 </resources>

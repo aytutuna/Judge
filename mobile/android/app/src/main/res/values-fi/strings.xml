@@ -645,4 +645,19 @@
     <string name="app_purchase_restore">Palauta ostokset</string>
     <string name="app_purchase_restore_done">Ostoksesi on palautettu.</string>
     <string name="app_purchase_restore_none">Palautettavia ostoksia ei ole.</string>
+    <string name="app_signin_legal">Ulkopuolinen tekoäly lukee kiistasi. Jatkamalla hyväksyt\u0020</string>
+    <string name="app_signin_legal_terms">käyttöehdot</string>
+    <string name="app_signin_legal_and">\u0020ja\u0020</string>
+    <string name="app_signin_legal_privacy">tietosuojakäytännön</string>
+    <string name="app_signin_legal_after">.</string>
+    <string name="app_legal_terms">Käyttöehdot</string>
+    <string name="app_legal_privacy">Tietosuojakäytäntö</string>
+    <string name="app_pricing_auto_renew">Kuukausitilaus uusiutuu automaattisesti joka kuukausi, kunnes peruutat sen puhelimesi tilausasetuksista.</string>
+    <string name="app_age_checkbox">Olen vähintään 18-vuotias</string>
+    <string name="app_age_title">Vahvista ikäsi</string>
+    <string name="app_age_lead">Judge on aikuisille. Vahvista, että olet vähintään 18-vuotias, niin voit jatkaa sen käyttöä.</string>
+    <string name="app_age_continue">Jatka</string>
+    <string name="app_age_required">Vahvista, että olet vähintään 18-vuotias, niin voit jatkaa.</string>
+    <string name="app_age_blocked_title">Judge on vain aikuisille</string>
+    <string name="app_age_blocked_body">Käyttääksesi Judge-sovellusta sinun on oltava vähintään 18-vuotias. Jos tämä on mielestäsi virhe, kirjoita meille osoitteeseen %1$s.</string>
 </resources>

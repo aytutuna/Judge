@@ -645,4 +645,19 @@
     <string name="app_purchase_restore">خریداریاں بحال کریں</string>
     <string name="app_purchase_restore_done">آپ کی خریداریاں بحال ہو گئیں۔</string>
     <string name="app_purchase_restore_none">بحال کرنے کے لیے کوئی خریداری نہیں ملی۔</string>
+    <string name="app_signin_legal">آپ کی بحثیں ایک بیرونی اے آئی پڑھتا ہے۔ جاری رکھنے کا مطلب ہے کہ آپ ہماری\u0020</string>
+    <string name="app_signin_legal_terms">استعمال کی شرائط</string>
+    <string name="app_signin_legal_and">\u0020اور\u0020</string>
+    <string name="app_signin_legal_privacy">رازداری کی پالیسی</string>
+    <string name="app_signin_legal_after">\u0020سے متفق ہیں۔</string>
+    <string name="app_legal_terms">استعمال کی شرائط</string>
+    <string name="app_legal_privacy">رازداری کی پالیسی</string>
+    <string name="app_pricing_auto_renew">ماہانہ پلان ہر مہینے خود بخود تجدید ہو جاتا ہے، جب تک آپ اپنے فون کی سبسکرپشن سیٹنگز میں اسے منسوخ نہ کر دیں۔</string>
+    <string name="app_age_checkbox">میری عمر 18 سال یا اس سے زیادہ ہے</string>
+    <string name="app_age_title">اپنی عمر کی تصدیق کریں</string>
+    <string name="app_age_lead">Judge بالغ افراد کے لیے ہے۔ اسے استعمال کرتے رہنے کے لیے تصدیق کریں کہ آپ کی عمر 18 سال یا اس سے زیادہ ہے۔</string>
+    <string name="app_age_continue">جاری رکھیں</string>
+    <string name="app_age_required">جاری رکھنے کے لیے تصدیق کریں کہ آپ کی عمر 18 سال یا اس سے زیادہ ہے۔</string>
+    <string name="app_age_blocked_title">Judge صرف بالغ افراد کے لیے ہے</string>
+    <string name="app_age_blocked_body">Judge استعمال کرنے کے لیے آپ کی عمر 18 سال یا اس سے زیادہ ہونی چاہیے۔ اگر آپ کو لگتا ہے کہ یہ غلطی ہے تو ہمیں %1$s پر لکھیں۔</string>
 </resources>

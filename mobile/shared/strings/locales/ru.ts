@@ -183,6 +183,24 @@ const ru: AppLocale = {
     "app.purchase.restore": "Восстановить покупки",
     "app.purchase.restoreDone": "Покупки восстановлены.",
     "app.purchase.restoreNone": "Покупок для восстановления нет.",
+    "app.signin.legal": "Ваши споры читает внешний ИИ. Продолжая, вы принимаете ",
+    "app.signin.legalTerms": "Условия использования",
+    "app.signin.legalAnd": " и ",
+    "app.signin.legalPrivacy": "Политику конфиденциальности",
+    "app.signin.legalAfter": ".",
+    "app.legal.terms": "Условия использования",
+    "app.legal.privacy": "Политика конфиденциальности",
+    "app.pricing.autoRenew":
+      "Месячная подписка продлевается автоматически каждый месяц, пока вы не отмените её в настройках подписок на телефоне.",
+    "app.age.checkbox": "Мне 18 лет или больше",
+    "app.age.title": "Подтвердите возраст",
+    "app.age.lead":
+      "Judge предназначен для взрослых. Подтвердите, что вам 18 лет или больше, чтобы продолжить им пользоваться.",
+    "app.age.continue": "Продолжить",
+    "app.age.required": "Подтвердите, что вам 18 лет или больше, чтобы продолжить.",
+    "app.age.blockedTitle": "Judge только для взрослых",
+    "app.age.blockedBody":
+      "Чтобы пользоваться Judge, вам должно быть 18 лет или больше. Если вы считаете, что это ошибка, напишите нам на {email}.",
   },
   plurals: {
     "app.balance.left": {
