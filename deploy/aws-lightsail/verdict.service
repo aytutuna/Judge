@@ -18,6 +18,9 @@ Group=verdict
 # each time the service starts, so a restart picks up a new release.
 WorkingDirectory=/opt/verdict/current
 EnvironmentFile=/etc/verdict/verdict.env
+# Only the build needs it (update.sh reads it from the file); unsetting is
+# applied after EnvironmentFile=.
+UnsetEnvironment=SENTRY_AUTH_TOKEN
 # V8 heap cap, well under MemoryMax so Node collects garbage before the
 # kernel steps in.
 Environment=NODE_OPTIONS=--max-old-space-size=256

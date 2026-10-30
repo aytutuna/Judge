@@ -154,11 +154,24 @@ redirect_block() {
   printf '%s {\n\tredir https://%s{uri} permanent\n}\n' "$1" "$2"
 }
 
-# The env file values the build may see: the ones baked into the pages.
+# The env file values the build may see: the ones baked into the pages, and
+# the Sentry org and project for the source map upload.
 # Secrets (ANTHROPIC_API_KEY, RATE_LIMIT_SALT, TURNSTILE_SECRET_KEY, ...) are
-# only read at run time, by systemd, and never reach npm or its packages.
+# only read at run time, by systemd, and never reach npm or its packages. The
+# one exception is SENTRY_AUTH_TOKEN, see sentry_token_file.
 build_env_lines() {
-  env_lines | grep -E '^(NEXT_PUBLIC_[A-Za-z0-9_]*|CONTACT_EMAIL)=' || true
+  env_lines | grep -E '^(NEXT_PUBLIC_[A-Za-z0-9_]*|CONTACT_EMAIL|SENTRY_ORG|SENTRY_PROJECT)=' || true
+}
+
+# Writes SENTRY_AUTH_TOKEN, if set, to $1/.env.production.local, which next
+# build loads. A file only the app user can read keeps the token off the
+# command line, where build_step's arguments are visible to every user.
+sentry_token_file() {
+  local file=$1/.env.production.local token
+  token=$(env_value SENTRY_AUTH_TOKEN)
+  [[ -n $token ]] || return 0
+  as_app install -m 600 /dev/null "$file"
+  printf 'SENTRY_AUTH_TOKEN=%s\n' "$token" | as_app tee "$file" >/dev/null
 }
 
 # Runs a build step as the app user in a clean environment. With
@@ -178,9 +191,10 @@ build_step() {
     "npm_config_cache=$BUILD_HOME/npm"
     "NODE_OPTIONS=--max-old-space-size=$BUILD_HEAP_MB"
     "NEXT_TELEMETRY_DISABLED=1"
+    "SENTRY_CLI_NO_TELEMETRY=1"
   )
   if ((with_env)); then
-    vars+=("NODE_ENV=production")
+    vars+=("NODE_ENV=production" "SENTRY_RELEASE=$(<"$release/.verdict-commit")")
     while IFS= read -r kv; do vars+=("$kv"); done < <(build_env_lines)
   fi
   (cd "$release" && runuser -u "$APP_USER" -- env -i "${vars[@]}" "$@")
@@ -512,7 +526,10 @@ main() {
   # --include=dev because the build needs the devDependencies.
   build_step "$release" npm ci --include=dev --no-audit --no-fund
   log "Building the app (npm run build)"
+  sentry_token_file "$release"
   build_step "$release" --with-build-env npm run build
+  # The release is what runs; the token must not stay in it.
+  rm -f -- "$release/.env.production.local"
   [[ -f $release/.next/BUILD_ID ]] || die "The build produced no .next/BUILD_ID."
   # From here on, an unexpected stop puts the saved units and Caddyfile back.
   # shellcheck disable=SC2064 # expand $workdir now; CONFIG_SAVED when it fires
