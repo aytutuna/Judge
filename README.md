@@ -437,6 +437,7 @@ The website and the future iOS/Android app share one JSON API. Base URL
 | `GET /api/v1/respond/{token}` / `POST` | The invite as the other person sees it / their side (no account) |
 | `POST /api/v1/respond/{token}/evidence` | The other person's evidence images |
 | `POST /api/v1/respond/{token}/appeals` | The other person adds context (signed in, Premium) |
+| `POST /api/v1/events` | Usage events, `{ "context": { "platform", "app_version", "anon_id"?, "device_id"?, "os_version"?, "device_model"?, "locale"? }, "events": [{ "name", "at"?, "props"? }] }`, up to 50 per batch; signed in or with `anon_id`. The event names are listed in `lib/analytics/track.ts`. Props are flat (strings, numbers, booleans), at most 2 KB, and never hold text anyone wrote: keys such as `text`, `message`, `email` or `name` are refused with `400 invalid`. `204` |
 | `POST /api/v1/webhooks/revenuecat` | RevenueCat only (`Authorization: Bearer ${REVENUECAT_WEBHOOK_SECRET}`): applies a purchase event once; see *Purchases* |
 | `GET /api/v1/respond/{token}/originals` / `PATCH .../display` / `POST .../removal` | Party B (bound account or `Respondent-Claim` / `claim`): their original, their display name, removing their side |
 

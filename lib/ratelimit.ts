@@ -169,7 +169,8 @@ export type UserBucket =
   | "case_evidence"
   | "verdict_owner"
   | "history_list"
-  | "apple_code";
+  | "apple_code"
+  | "events";
 
 type UserWindow = { limit: number; windowMs: number; redisWindow: `${number} ${"m" | "h" | "d"}`; prefix: string };
 
@@ -209,6 +210,8 @@ export const USER_LIMITS: Record<UserBucket, readonly UserWindow[]> = {
     { limit: 10, windowMs: 10 * MINUTE_MS, redisWindow: "10 m", prefix: "verdict:u:ac10m" },
     { limit: 30, windowMs: DAY_MS, redisWindow: "1 d", prefix: "verdict:u:acday" },
   ],
+  /** Usage event batches (POST /api/v1/events). */
+  events: [{ limit: 600, windowMs: 60 * MINUTE_MS, redisWindow: "1 h", prefix: "verdict:u:evt1h" }],
 };
 
 /** Per-IP buckets for the no-account endpoints (keyed by visitorKey):
@@ -216,7 +219,13 @@ export const USER_LIMITS: Record<UserBucket, readonly UserWindow[]> = {
  * polls of verdicts still judging (a poll every 2 to 5 s for a few minutes
  * is about 100; the windows leave room for several verdicts and a shared
  * address). */
-export type IpBucket = "respond_submit" | "respond_evidence" | "verdict_owner" | "verdict_poll" | "revenuecat_webhook";
+export type IpBucket =
+  | "respond_submit"
+  | "respond_evidence"
+  | "verdict_owner"
+  | "verdict_poll"
+  | "revenuecat_webhook"
+  | "events";
 
 export const IP_LIMITS: Record<IpBucket, readonly UserWindow[]> = {
   respond_submit: [
@@ -237,6 +246,8 @@ export const IP_LIMITS: Record<IpBucket, readonly UserWindow[]> = {
   ],
   /** RevenueCat's servers posting purchase events (counted after the secret checks out). */
   revenuecat_webhook: [{ limit: 600, windowMs: 10 * MINUTE_MS, redisWindow: "10 m", prefix: "verdict:ip:rc10m" }],
+  /** Signed-out usage event batches. */
+  events: [{ limit: 600, windowMs: 60 * MINUTE_MS, redisWindow: "1 h", prefix: "verdict:ip:evt1h" }],
 };
 
 /** Several sliding windows per key, in memory. Checks every window before
