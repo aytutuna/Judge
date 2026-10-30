@@ -59,6 +59,12 @@ __SITE_ADDRESS__ {
 		}
 	}
 
+	# The app's usage metrics are for Alloy on this server, which fetches
+	# them from 127.0.0.1:3000 directly; never from the internet.
+	handle /api/internal/* {
+		respond 404
+	}
+
 	reverse_proxy 127.0.0.1:3000 {
 		# The app rate-limits by the first X-Forwarded-For entry. Replace
 		# whatever the visitor sent with the address Caddy actually sees, so

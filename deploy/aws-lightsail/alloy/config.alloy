@@ -1,5 +1,5 @@
-// Grafana Alloy config for the Judge server: host metrics and logs to Grafana
-// Cloud. update.sh installs it to /etc/alloy/verdict.alloy; edits there are
+// Grafana Alloy config for the Judge server: host and app metrics and logs to
+// Grafana Cloud. update.sh installs it to /etc/alloy/verdict.alloy; edits there are
 // overwritten. The credentials come from /etc/alloy/grafana.env, which
 // update.sh writes with the GRAFANA_* lines of /etc/verdict/verdict.env.
 
@@ -13,6 +13,16 @@ prometheus.exporter.unix "host" {
 
 prometheus.scrape "host" {
   targets         = prometheus.exporter.unix.host.targets
+  scrape_interval = "60s"
+  forward_to      = [prometheus.remote_write.cloud.receiver]
+}
+
+// Usage aggregates from the app's events table (lib/analytics/metrics.ts).
+// Only answered on loopback; Caddy refuses the path from outside.
+prometheus.scrape "app" {
+  targets         = [{__address__ = "127.0.0.1:3000"}]
+  job_name        = "judge-app"
+  metrics_path    = "/api/internal/metrics"
   scrape_interval = "60s"
   forward_to      = [prometheus.remote_write.cloud.receiver]
 }

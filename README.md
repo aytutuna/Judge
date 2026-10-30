@@ -1063,7 +1063,14 @@ runs a month; the free tier allows 100,000). Grafana Alloy on the server
 the `verdict*`, `caddy`, `ssh`, `fail2ban` and `alloy` units to Grafana's
 Prometheus every 60 seconds, and to its Loki the journal of those units and
 the kernel's, plus Caddy's access log (with the status class, e.g. `5xx`, as a
-label; nothing beyond what the log already keeps). Alloy sees only the
+label; nothing beyond what the log already keeps). It also scrapes the app's
+usage counts every 60 seconds from `http://127.0.0.1:3000/api/internal/metrics`
+(job `judge-app`): `judge_events_total{name,platform}` over the last 24 hours,
+`judge_active_users_24h`, `judge_active_users_7d` and `judge_funnel{step}` for
+app_open, case_started, case_submitted, verdict_ready and purchase_granted over
+7 days. The app answers that path only to a direct request from the server
+itself, and Caddy answers 404 for `/api/internal/*`. Usage events are kept 90
+days. Alloy sees only the
 `GRAFANA_*` settings, which deploys copy to `/etc/alloy/grafana.env`. The
 rules are in `deploy/grafana/alerts.json`: critical ones go to Pushover at
 emergency priority (repeating until you acknowledge it) and by email, warnings
