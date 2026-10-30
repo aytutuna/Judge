@@ -331,6 +331,9 @@ render_caddyfile() {
     caddy validate --adapter caddyfile --config "$out" || true
     die "The rendered Caddyfile is invalid (see above). Nothing was changed."
   fi
+  # validate opens the log as root; whatever it left behind, Caddy must own it
+  chown caddy:caddy "$ACCESS_LOG"
+  chmod 640 "$ACCESS_LOG"
 }
 
 reload_caddy() {
