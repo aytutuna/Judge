@@ -21,6 +21,24 @@ out and goes on to the verdict afterwards. Methods follow `GET /api/v1/config`
   phone (they come back from the account on sign-in); verdicts no account has
   stay. The Verdicts tab reads `GET /api/v1/me/history`, cached in Room.
 
+## Usage events
+
+`core/analytics/Analytics.kt` queues the events listed in
+`lib/analytics/track.ts` and posts them to `POST /api/v1/events` (bearer token
+when signed in, `anon_id` always). The queue is kept in memory and in
+`files/analytics-queue.json` (500 at most) and goes out in batches of up to
+50: once 20 are waiting, every 30 s while the activity is started and when it
+stops. A failed send waits at least a minute, doubling up to 15; a `400` drops
+the batch. Nothing is queued while `features.analytics` in `/api/v1/config` is
+false or the "Usage statistics" setting is off (turning it off clears the
+queue); until the setting has been read events stay in memory, and until the
+config has answered they wait. Each event takes at most one prop, a short
+token (see `Analytics.ALLOWED_PROPS`); anything else throws in debug builds.
+
+The device id is `Settings.Secure.ANDROID_ID` (a UUID kept in the `identity`
+preferences when there is none). It goes in the events' context and, as
+`Device-Id` with `Device-Platform: android`, on the sign-in requests.
+
 ## Build
 
 Needs the Android SDK (`local.properties` with `sdk.dir`, not committed) and a
