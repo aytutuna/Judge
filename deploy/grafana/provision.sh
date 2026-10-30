@@ -12,8 +12,8 @@
 #   GRAFANA_SA_TOKEN        token of a service account with the Admin role
 #                           (Administration > Users and access > Service accounts)
 #   ALERT_EMAIL             where every alert is emailed
-#   GRAFANA_PUSHOVER_USER   Pushover user key and application token: critical
-#   GRAFANA_PUSHOVER_TOKEN  alerts go out at emergency priority
+#   GRAFANA_PUSHOVER_USER   optional: Pushover user key and application token;
+#   GRAFANA_PUSHOVER_TOKEN  critical alerts then also go out at emergency priority
 #   NTFY_TOPIC              optional: critical alerts to this ntfy topic too
 #   NTFY_URL                ntfy server (default https://ntfy.sh)
 #   GRAFANA_CLOUD_TOKEN     optional: an access policy token for this stack
@@ -108,6 +108,7 @@ contact_points() {
     uid=$(jq -r .uid <<<"$point")
     name=$(jq -r .name <<<"$point")
     if [[ $name == ntfy && -z ${NTFY_TOPIC-} ]]; then continue; fi
+    if [[ $name == pushover-critical && -z ${GRAFANA_PUSHOVER_USER-} ]]; then continue; fi
     if grep -qxF -- "$uid" <<<"$existing"; then
       grafana -X PUT --data-binary @- "$GRAFANA_URL/api/v1/provisioning/contact-points/$uid" <<<"$point" >/dev/null
       info "Updated $name"
@@ -124,6 +125,9 @@ notification_policy() {
   policy=$(jq . "$HERE/policy.json")
   if [[ -z ${NTFY_TOPIC-} ]]; then
     policy=$(jq 'del(.routes[] | select(.receiver == "ntfy"))' <<<"$policy")
+  fi
+  if [[ -z ${GRAFANA_PUSHOVER_USER-} ]]; then
+    policy=$(jq 'del(.routes[] | select(.receiver == "pushover-critical"))' <<<"$policy")
   fi
   grafana -X PUT --data-binary @- "$GRAFANA_URL/api/v1/provisioning/policies" <<<"$policy" >/dev/null
   info "Critical alerts: $(jq -r '[.routes[] | select(.object_matchers[0][0] == "severity") | .receiver] | join(", ")' <<<"$policy"); the rest: email."
@@ -208,9 +212,12 @@ synthetic_checks() {
 
 main() {
   local var
-  for var in GRAFANA_URL GRAFANA_SA_TOKEN ALERT_EMAIL GRAFANA_PUSHOVER_USER GRAFANA_PUSHOVER_TOKEN; do
+  for var in GRAFANA_URL GRAFANA_SA_TOKEN ALERT_EMAIL; do
     [[ -n ${!var-} ]] || die "$var is not set (see the top of $0)."
   done
+  if [[ -n ${GRAFANA_PUSHOVER_USER-}${GRAFANA_PUSHOVER_TOKEN-} && ( -z ${GRAFANA_PUSHOVER_USER-} || -z ${GRAFANA_PUSHOVER_TOKEN-} ) ]]; then
+    die "Set both GRAFANA_PUSHOVER_USER and GRAFANA_PUSHOVER_TOKEN, or neither."
+  fi
   command -v jq >/dev/null || die "This needs jq."
   GRAFANA_URL=${GRAFANA_URL%/}
   NTFY_URL=${NTFY_URL:-https://ntfy.sh}

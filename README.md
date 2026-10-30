@@ -1088,8 +1088,9 @@ already be there.
    `stacks:read`, `metrics:write`, `logs:write` and `traces:write`
    (`GRAFANA_CLOUD_TOKEN`, used only by `provision.sh`; Synthetic Monitoring
    keeps it to publish its results, so never delete it).
-3. In Pushover (the app, then pushover.net) copy your **user key** and
-   **Create an Application** named Judge for its **API token**.
+3. Optional: in Pushover (the app, then pushover.net) copy your **user key**
+   and **Create an Application** named Judge for its **API token**. Without
+   them critical alerts go by email (and ntfy, if a topic is set) only.
 4. In the stack, **Administration** > **Users and access** > **Service
    accounts**: add one with the Admin role and give it a token.
 5. On your own machine (Linux, macOS or WSL, with curl and jq), keep the
