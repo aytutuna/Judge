@@ -41,15 +41,17 @@ object DeviceIdentity {
     fun context(config: AppConfig, prefs: SharedPreferences, deviceId: String): AnalyticsContext {
         val locale = Locale.getDefault().toLanguageTag()
         return AnalyticsContext(
-            appVersion = token("${config.versionName}+${config.versionCode}", Regex("[^0-9A-Za-z.+_-]"), 32) ?: "0",
+            appVersion = token("${config.versionName}_${config.versionCode}", 32) ?: "0",
             anonId = anonId(prefs),
             deviceId = deviceId,
-            osVersion = token(Build.VERSION.RELEASE.orEmpty(), Regex("[^0-9A-Za-z.+_-]"), 32),
-            deviceModel = token(Build.MODEL.orEmpty().replace(' ', '_'), Regex("[^0-9A-Za-z,._+()-]"), 64),
+            osVersion = token(Build.VERSION.RELEASE.orEmpty(), 32),
+            deviceModel = token(Build.MODEL.orEmpty(), 64),
             locale = locale.takeIf { LOCALE.matches(it) },
         )
     }
 
-    /** [text] without the characters [drop] matches, cut to [max]; null when nothing is left. */
-    private fun token(text: String, drop: Regex, max: Int): String? = text.replace(drop, "").take(max).ifEmpty { null }
+    private val OUTSIDE_TOKEN = Regex("[^A-Za-z0-9_.:/-]")
+
+    /** [text] in the server's token set: anything outside it becomes "_" ("Pixel 8" is sent as Pixel_8), cut to [max]; null when empty. */
+    fun token(text: String, max: Int): String? = text.replace(OUTSIDE_TOKEN, "_").take(max).ifEmpty { null }
 }

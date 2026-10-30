@@ -37,11 +37,11 @@ private final class Clock {
 
 final class AnalyticsTests: XCTestCase {
     private let context = AnalyticsContext(
-        appVersion: "1.2.0+7",
+        appVersion: "1.2.0_7",
         anonID: "0b0e4a8e-4d55-4c6a-9e3a-2f6f0a1c9d11",
         deviceID: "F2D4C1B0-1111-4222-8333-944455556666",
         osVersion: "18.1",
-        deviceModel: "iPhone15,2",
+        deviceModel: "iPhone15_2",
         locale: "en-US"
     )
 
@@ -84,8 +84,8 @@ final class AnalyticsTests: XCTestCase {
         XCTAssertEqual(Set(body.keys), ["context", "events"])
         let sentContext = try XCTUnwrap(body["context"] as? [String: String])
         XCTAssertEqual(sentContext, [
-            "platform": "ios", "app_version": "1.2.0+7", "anon_id": "0b0e4a8e-4d55-4c6a-9e3a-2f6f0a1c9d11",
-            "device_id": "F2D4C1B0-1111-4222-8333-944455556666", "os_version": "18.1", "device_model": "iPhone15,2",
+            "platform": "ios", "app_version": "1.2.0_7", "anon_id": "0b0e4a8e-4d55-4c6a-9e3a-2f6f0a1c9d11",
+            "device_id": "F2D4C1B0-1111-4222-8333-944455556666", "os_version": "18.1", "device_model": "iPhone15_2",
             "locale": "en-US",
         ])
         let events = try XCTUnwrap(body["events"] as? [[String: Any]])
@@ -248,6 +248,23 @@ final class AnalyticsTests: XCTestCase {
         XCTAssertNotNil(Analytics.problem(name: "screen_view", props: ["screen": String(repeating: "a", count: 65)]))
         XCTAssertNotNil(Analytics.problem(name: "sign_in", props: [:]))
         XCTAssertNotNil(Analytics.problem(name: "Screen View", props: [:]))
+    }
+
+    @MainActor
+    func testTheContextIsMadeOfServerTokens() throws {
+        let config = AppConfig(apiBaseURL: AppConfig.production, shareBaseURL: AppConfig.production, version: "1.4.0", build: "212")
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: "judge.tests.\(UUID().uuidString)"))
+        let built = DeviceIdentity.context(config: config, defaults: defaults, deviceID: DeviceIdentity.deviceID(defaults))
+        let token = #"^[A-Za-z0-9_.:/-]{1,64}$"#
+        for value in [built.deviceModel, built.osVersion, built.appVersion, built.locale] {
+            let text = try XCTUnwrap(value)
+            XCTAssertNotNil(text.range(of: token, options: .regularExpression), text)
+        }
+        XCTAssertEqual(built.appVersion, "1.4.0_212")
+        XCTAssertEqual(DeviceIdentity.token("iPhone15,2", max: 64), "iPhone15_2")
+        XCTAssertEqual(DeviceIdentity.token("moto g(7) power", max: 64), "moto_g_7__power")
+        XCTAssertEqual(DeviceIdentity.token(String(repeating: "x", count: 80), max: 64)?.count, 64)
+        XCTAssertNil(DeviceIdentity.token("", max: 64))
     }
 
     @MainActor

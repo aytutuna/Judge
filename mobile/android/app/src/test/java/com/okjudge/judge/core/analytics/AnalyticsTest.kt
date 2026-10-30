@@ -27,7 +27,7 @@ class AnalyticsTest {
     val tmp = TemporaryFolder()
 
     private val context = AnalyticsContext(
-        appVersion = "0.1.0+1",
+        appVersion = "0.1.0_1",
         anonId = "0b0e4a8e-4d55-4c6a-9e3a-2f6f0a1c9d11",
         deviceId = "3f2a9c1d0e4b5a68",
         osVersion = "15",
@@ -81,7 +81,7 @@ class AnalyticsTest {
         val ctx = body["context"]!!.jsonObject.mapValues { it.value.jsonPrimitive.content }
         assertEquals(
             mapOf(
-                "platform" to "android", "app_version" to "0.1.0+1", "anon_id" to "0b0e4a8e-4d55-4c6a-9e3a-2f6f0a1c9d11",
+                "platform" to "android", "app_version" to "0.1.0_1", "anon_id" to "0b0e4a8e-4d55-4c6a-9e3a-2f6f0a1c9d11",
                 "device_id" to "3f2a9c1d0e4b5a68", "os_version" to "15", "device_model" to "Pixel_8", "locale" to "en-US",
             ),
             ctx,

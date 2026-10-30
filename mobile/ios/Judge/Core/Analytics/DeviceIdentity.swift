@@ -39,19 +39,19 @@ enum DeviceIdentity {
     static func context(config: AppConfig, defaults: UserDefaults, deviceID: String) -> AnalyticsContext {
         let locale = Locale.current.identifier(.bcp47)
         return AnalyticsContext(
-            appVersion: token("\(config.version)+\(config.build)", allowed: "0-9A-Za-z.+_-", max: 32) ?? "0",
+            appVersion: token("\(config.version)_\(config.build)", max: 32) ?? "0",
             anonID: anonID(defaults),
             deviceID: deviceID,
-            osVersion: token(UIDevice.current.systemVersion, allowed: "0-9A-Za-z.+_-", max: 32),
-            deviceModel: token(model.replacingOccurrences(of: " ", with: "_"), allowed: "0-9A-Za-z,._+()-", max: 64),
+            osVersion: token(UIDevice.current.systemVersion, max: 32),
+            deviceModel: token(model, max: 64),
             locale: locale.range(of: #"^[A-Za-z]{2,3}([_-][0-9A-Za-z]{2,8}){0,3}$"#, options: .regularExpression) != nil ? locale : nil
         )
     }
 
-    /// `text` without characters outside `allowed` (a regex class body), cut
-    /// to `max`; nil when nothing is left.
-    private static func token(_ text: String, allowed: String, max: Int) -> String? {
-        let kept = String(text.replacingOccurrences(of: "[^\(allowed)]", with: "", options: .regularExpression).prefix(max))
+    /// `text` in the server's token set: anything outside it becomes "_"
+    /// (iPhone15,2 is sent as iPhone15_2), cut to `max`; nil when empty.
+    static func token(_ text: String, max: Int) -> String? {
+        let kept = String(text.replacingOccurrences(of: "[^A-Za-z0-9_.:/-]", with: "_", options: .regularExpression).prefix(max))
         return kept.isEmpty ? nil : kept
     }
 }
