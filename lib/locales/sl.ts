@@ -254,7 +254,7 @@ const sl: Locale = {
       "Imaš vprašanje ali želiš videti, popraviti ali odstraniti svoje podatke? Piši na {email} in priloži povezavo do razsodbe ali spora.",
     "privacy.accountsTitle": "Računi",
     "privacy.accounts":
-      "Za razsodbo potrebuješ račun; druga stran v dvostranskem sporu lahko odgovori tudi brez njega. Če se prijaviš z računom Apple ali Google, hranimo e-poštni naslov, ime in povezavo do profilne slike, ki nam jih posredujeta, ter način prijave, ki ga uporabiš, Apple oziroma Google pa lahko vidi, da se prijavljaš v Judge. Če se prijaviš s povezavo po e-pošti, to sporočilo pošljemo prek storitve Resend in za preverjanje povezave za kratek čas hranimo zapis s tvojim e-poštnim naslovom: povezava preneha delovati po 10 minutah, zapis pa izbrišemo, ko je uporabljen, ali kmalu po izteku. Hranimo tudi zapise tvojih sej (naključni žeton in čas poteka, brez naslova IP ali podatkov o brskalniku, aplikacije pa ob prijavi zabeležijo tudi identifikator naprave), tvoje kredite, naročnino in njeno zgodovino ter to, katere razsodbe so porabile kredit (samo ID razsodbe). Hranimo tudi, katere razsodbe in spori so tvoji, da jih najdeš na kateri koli napravi. Ko izbrišeš račun na strani računa, se izbrišejo tvoj račun, seje, dogodki uporabe in povezava med računom in napravami, tvoje razsodbe in tvoje plati v sporih pa se odstranijo, kot je opisano v razdelku Odstranitev. Obdržimo samo zakodirano obliko tvojega e-poštnega naslova, da nov račun z istim naslovom ne dobi še ene brezplačne razsodbe.",
+      "Judge je samo za osebe, starejše od 18 let, računi, za katere ugotovimo, da pripadajo osebi, mlajši od 18 let, pa se zaprejo. Za razsodbo potrebuješ račun; druga stran v dvostranskem sporu lahko odgovori tudi brez njega. Če se prijaviš z računom Apple ali Google, hranimo e-poštni naslov, ime in povezavo do profilne slike, ki nam jih posredujeta, ter način prijave, ki ga uporabiš, Apple oziroma Google pa lahko vidi, da se prijavljaš v Judge. Če se prijaviš s povezavo po e-pošti, to sporočilo pošljemo prek storitve Resend in za preverjanje povezave za kratek čas hranimo zapis s tvojim e-poštnim naslovom: povezava preneha delovati po 10 minutah, zapis pa izbrišemo, ko je uporabljen, ali kmalu po izteku. Hranimo tudi zapise tvojih sej (naključni žeton in čas poteka, brez naslova IP ali podatkov o brskalniku, aplikacije pa ob prijavi zabeležijo tudi identifikator naprave), tvoje kredite, naročnino in njeno zgodovino ter to, katere razsodbe so porabile kredit (samo ID razsodbe). Hranimo tudi, katere razsodbe in spori so tvoji, da jih najdeš na kateri koli napravi. Ko izbrišeš račun na strani računa, se izbrišejo tvoj račun, seje, dogodki uporabe in povezava med računom in napravami, tvoje razsodbe in tvoje plati v sporih pa se odstranijo, kot je opisano v razdelku Odstranitev. Obdržimo samo zakodirano obliko tvojega e-poštnega naslova, da nov račun z istim naslovom ne dobi še ene brezplačne razsodbe in ostane zaprt, če je bil tvoj račun zaprt, ker si mlajši od 18 let.",
     "privacy.webSearchTitle": "Spletno iskanje in vprašanja",
     "privacy.webSearch":
       "Vsaka razsodba pošlje anonimiziran prepir našemu ponudniku UI z vklopljenim spletnim iskanjem. Iskalne poizvedbe model napiše iz tega anonimiziranega besedila, rezultati pa prihajajo od iskalnega partnerja ponudnika. Uporabljeni viri so prikazani v razsodbi. Sodniki ti lahko najprej zastavijo največ dve vprašanji: da jih pripravijo, gre tvoje besedilo v izvirni obliki, skupaj z imeni, še enkrat k ponudniku UI. Tvoji odgovori so pred razsojanjem anonimizirani skupaj s prepirom; vprašanja in tvoji odgovori v izvirni obliki se hranijo skupaj s tvojim šifriranim izvirnikom.",
@@ -312,9 +312,8 @@ const sl: Locale = {
     "signin.unavailable": "Prijava na tej strani še ni nastavljena.",
     "signin.providerUnavailable": "Še ni na voljo",
     "signin.failed": "Prijava ni uspela. Poskusiš znova?",
-    "signin.legal": "Tvoje prepire bere zunanja storitev UI. Z nadaljevanjem se strinjaš s",
+    "signin.legal": "Tvoje prepire bere zunanja storitev UI. Z nadaljevanjem se strinjaš s {terms} in {privacy}.",
     "signin.legalLink": "politiko zasebnosti",
-    "signin.legalAfter": ".",
     "signin.loading": "Nalagamo možnosti prijave…",
     "account.title": "Tvoj račun",
     "account.signedInAs": "Prijavljen račun: {email}",
@@ -680,6 +679,46 @@ const sl: Locale = {
     "privacy.rightsTitle": "Tvoje pravice (Kanada)",
     "privacy.rights":
       "Judge upravljamo iz Kanade in osebne podatke obdelujemo v skladu s kanadskim zveznim zakonom o varstvu zasebnosti (PIPEDA): zbiramo samo to, kar storitev potrebuje, uporabljamo samo za ta namen in to varujemo, ti pa lahko zahtevaš vpogled, popravek ali odstranitev podatkov, ki jih hranimo o tebi. Odgovorimo v 30 dneh.",
+    "footer.terms": "Pogoji",
+    "signin.legalTerms": "pogoji uporabe",
+    "age.confirm": "Star sem 18 let ali več",
+    "age.title": "Judge je za odrasle",
+    "age.lead": "Judge je samo za osebe, starejše od 18 let. Potrdi svojo starost in nadaljuj.",
+    "age.continue": "Naprej",
+    "age.failed": "Tega nam ni uspelo shraniti. Poskusiš znova?",
+    "age.blockedTitle": "Judge je samo za odrasle",
+    "age.blocked": "S tem računom ne moreš uporabljati Judgea, ker je Judge samo za osebe, starejše od 18 let.",
+    "age.blockedContact": "Misliš, da gre za napako? Piši na {email}.",
+    "error.age_blocked": "Judge je samo za osebe, starejše od 18 let.",
+    "error.age_unconfirmed": "Za nadaljevanje potrdi, da si star 18 let ali več.",
+    "terms.title": "Pogoji uporabe",
+    "terms.kicker": "Pravila",
+    "terms.lead":
+      "Na kratko: Judge je za odrasle, za zabavo in jasnejše razmišljanje, UI pa se lahko moti. Bodi pošten do ljudi, o katerih pišeš.",
+    "terms.updated": "Nazadnje posodobljeno {date}",
+    "terms.whoTitle": "Kdo lahko uporablja Judge",
+    "terms.who":
+      "Judge je samo za osebe, starejše od 18 let. Z uporabo potrjuješ, da to si. Če izvemo, da račun pripada osebi, mlajši od 18 let, ga zapremo.",
+    "terms.whatTitle": "Kaj je Judge",
+    "terms.what":
+      "Judge daje razsodbe UI o vsakdanjih prepirih, za zabavo in za malo bolj jasno razmišljanje. Ni pravni, zdravstveni ali finančni nasvet. Razsodbe pridejo od zunanje storitve UI in so lahko napačne, zato se nanje ne zanašaj pri pomembnih odločitvah.",
+    "terms.contentTitle": "Tvoja vsebina",
+    "terms.content":
+      "Kar napišeš, ostane tvoje. Dovoliš nam, da to uporabimo, kolikor je treba za delovanje storitve: da shranimo, odstranimo imena, damo oceniti in prikažemo tam, kjer deliš. Ne pošiljaj zasebnih podatkov drugih, ki jih nimaš pravice deliti, in ničesar nezakonitega, grozilnega ali žaljivega.",
+    "terms.purchasesTitle": "Nakupi",
+    "terms.purchases":
+      "Pakete kreditov in mesečno naročnino kupiš prek trgovine App Store ali Google Play. Mesečna naročnina se vsak mesec samodejno podaljša, dokler je ne odpoveš v nastavitvah naročnin v trgovini, vsaj 24 ur pred podaljšanjem. Povračila gredo prek Appla ali Googla. Krediti nimajo denarne vrednosti.",
+    "terms.fairUseTitle": "Pošteno ravnanje",
+    "terms.fairUse":
+      "Mesečna naročnina vključuje do {cap} razsodb na mesec. Račune, ki storitev zlorabljajo, na primer z izogibanjem omejitvam ali z nadlegovanjem koga, lahko začasno blokiramo.",
+    "terms.asIsTitle": "Brez jamstev",
+    "terms.asIs":
+      "Judge je na voljo takšen, kot je: ne obljubljamo, da bo vedno dostopen, brez napak ali pravilen. V okviru zakona ne odgovarjamo za posledice zanašanja na razsodbo.",
+    "terms.changesTitle": "Spremembe",
+    "terms.changes":
+      "Te pogoje lahko posodobimo. Datum na vrhu pove, kdaj so se nazadnje spremenili; če po spremembi še naprej uporabljaš Judge, veljajo novi pogoji.",
+    "terms.contactTitle": "Stik",
+    "terms.contact": "Vprašanja o teh pogojih? Piši na {email}.",
   },
   plurals: {
     "judgesVoted.other": {

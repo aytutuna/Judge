@@ -254,7 +254,7 @@ const it: Locale = {
       "Hai domande, o vuoi vedere, correggere o rimuovere i tuoi dati? Scrivi a {email} con il link al verdetto o al caso.",
     "privacy.accountsTitle": "Account",
     "privacy.accounts":
-      "Per avere un verdetto ti serve un account; l'altra parte di un caso a due parti può rispondere anche senza. Se accedi con Apple o Google, conserviamo l'indirizzo email, il nome e il link all'immagine del profilo che ci condividono, più il metodo di accesso che hai usato, e Apple o Google possono vedere che hai effettuato l'accesso a Judge. Se accedi con un link via email, quell'email parte tramite Resend e conserviamo per poco tempo un record con il tuo indirizzo email per verificare il link: il link smette di funzionare dopo 10 minuti e il record viene cancellato appena usato o poco dopo la scadenza. Conserviamo anche i dati delle tue sessioni (un token casuale e la sua scadenza, senza indirizzo IP né dettagli del browser, anche se le app registrano un identificatore del dispositivo quando accedi), i tuoi crediti, il tuo piano e il suo storico, e quali verdetti hanno usato un credito (solo l'ID del verdetto). Teniamo anche traccia di quali verdetti e casi sono tuoi, così puoi ritrovarli su qualsiasi dispositivo. Se elimini l'account dalla pagina dell'account, cancelli il tuo account, le sessioni, gli eventi di utilizzo e il collegamento tra il tuo account e i tuoi dispositivi, e i tuoi verdetti e le tue versioni nei casi vengono rimossi come descritto in Rimozione. Conserviamo solo una forma offuscata del tuo indirizzo email, così un nuovo account con lo stesso indirizzo non riceve un secondo verdetto gratuito.",
+      "Judge è solo per chi ha almeno 18 anni, e gli account che scopriamo appartenere a una persona sotto i 18 anni vengono chiusi. Per avere un verdetto ti serve un account; l'altra parte di un caso a due parti può rispondere anche senza. Se accedi con Apple o Google, conserviamo l'indirizzo email, il nome e il link all'immagine del profilo che ci condividono, più il metodo di accesso che hai usato, e Apple o Google possono vedere che hai effettuato l'accesso a Judge. Se accedi con un link via email, quell'email parte tramite Resend e conserviamo per poco tempo un record con il tuo indirizzo email per verificare il link: il link smette di funzionare dopo 10 minuti e il record viene cancellato appena usato o poco dopo la scadenza. Conserviamo anche i dati delle tue sessioni (un token casuale e la sua scadenza, senza indirizzo IP né dettagli del browser, anche se le app registrano un identificatore del dispositivo quando accedi), i tuoi crediti, il tuo piano e il suo storico, e quali verdetti hanno usato un credito (solo l'ID del verdetto). Teniamo anche traccia di quali verdetti e casi sono tuoi, così puoi ritrovarli su qualsiasi dispositivo. Se elimini l'account dalla pagina dell'account, cancelli il tuo account, le sessioni, gli eventi di utilizzo e il collegamento tra il tuo account e i tuoi dispositivi, e i tuoi verdetti e le tue versioni nei casi vengono rimossi come descritto in Rimozione. Conserviamo solo una forma offuscata del tuo indirizzo email, così un nuovo account con lo stesso indirizzo non riceve un secondo verdetto gratuito e resta chiuso se il tuo account è stato chiuso perché hai meno di 18 anni.",
     "privacy.webSearchTitle": "Ricerca web e domande",
     "privacy.webSearch":
       "Ogni verdetto invia la discussione anonimizzata al nostro fornitore di IA con la ricerca web attiva. Il modello scrive le query di ricerca a partire da quel testo anonimizzato, e i risultati arrivano dal partner di ricerca del fornitore. Le fonti usate sono mostrate nel verdetto. Prima i giudici possono farti fino a due domande: per formularle, il tuo testo così come l'hai scritto, nomi compresi, va un'altra volta al fornitore di IA. Le tue risposte vengono anonimizzate insieme alla discussione prima del giudizio; le domande e le tue risposte, così come le hai scritte, sono conservate con il tuo originale crittografato.",
@@ -312,9 +312,9 @@ const it: Locale = {
     "signin.unavailable": "L'accesso non è ancora configurato su questo sito.",
     "signin.providerUnavailable": "Non ancora disponibile",
     "signin.failed": "Non siamo riusciti a farti accedere. Riprovi?",
-    "signin.legal": "Le tue discussioni vengono lette da un'IA esterna. Continuando accetti la nostra",
+    "signin.legal":
+      "Le tue discussioni vengono lette da un'IA esterna. Continuando accetti i nostri {terms} e la nostra {privacy}.",
     "signin.legalLink": "Informativa sulla privacy",
-    "signin.legalAfter": ".",
     "signin.loading": "Caricamento delle opzioni di accesso…",
     "account.title": "Il tuo account",
     "account.signedInAs": "Accesso effettuato come {email}",
@@ -680,6 +680,46 @@ const it: Locale = {
     "privacy.rightsTitle": "I tuoi diritti (Canada)",
     "privacy.rights":
       "Judge è gestito dal Canada e tratta i dati personali in base alla legge federale canadese sulla privacy (PIPEDA): raccogliamo solo ciò che serve al servizio, lo usiamo solo per questo, lo proteggiamo, e puoi chiedere di vedere, correggere o rimuovere ciò che conserviamo su di te. Rispondiamo entro 30 giorni.",
+    "footer.terms": "Termini",
+    "signin.legalTerms": "Termini di utilizzo",
+    "age.confirm": "Ho 18 anni o più",
+    "age.title": "Judge è per gli adulti",
+    "age.lead": "Judge è solo per chi ha almeno 18 anni. Conferma la tua età per andare avanti.",
+    "age.continue": "Continua",
+    "age.failed": "Non siamo riusciti a salvarlo. Riprovi?",
+    "age.blockedTitle": "Judge è solo per adulti",
+    "age.blocked": "Questo account non può usare Judge, perché Judge è solo per chi ha almeno 18 anni.",
+    "age.blockedContact": "Pensi sia un errore? Scrivi a {email}.",
+    "error.age_blocked": "Judge è solo per chi ha almeno 18 anni.",
+    "error.age_unconfirmed": "Conferma di avere almeno 18 anni per continuare.",
+    "terms.title": "Termini di utilizzo",
+    "terms.kicker": "Le regole",
+    "terms.lead":
+      "In breve: Judge è per gli adulti, serve per divertirsi e ragionare con più chiarezza, e l'IA può sbagliare. Tratta con correttezza le persone di cui scrivi.",
+    "terms.updated": "Ultimo aggiornamento: {date}",
+    "terms.whoTitle": "Chi può usare Judge",
+    "terms.who":
+      "Judge è solo per chi ha almeno 18 anni. Usandolo confermi di averli. Se scopriamo che un account appartiene a una persona sotto i 18 anni, lo chiudiamo.",
+    "terms.whatTitle": "Cos'è Judge",
+    "terms.what":
+      "Judge dà verdetti dell'IA su discussioni di tutti i giorni, per divertirsi e ragionare un po' più chiaramente. Non è una consulenza legale, medica o finanziaria. I verdetti arrivano da un servizio di IA esterno e possono essere sbagliati, quindi non farci affidamento per decisioni importanti.",
+    "terms.contentTitle": "I tuoi contenuti",
+    "terms.content":
+      "Quello che scrivi resta tuo. Ci permetti di usarlo per quanto serve a far funzionare il servizio: conservarlo, togliere i nomi, farlo giudicare e mostrarlo dove lo condividi. Non inviare informazioni private di altre persone che non hai il diritto di condividere, né niente di illegale, minaccioso o offensivo.",
+    "terms.purchasesTitle": "Acquisti",
+    "terms.purchases":
+      "I pacchetti di crediti e il piano mensile si comprano tramite App Store o Google Play. Il piano mensile si rinnova automaticamente ogni mese finché non lo annulli nelle impostazioni degli abbonamenti dello store, almeno 24 ore prima del rinnovo. I rimborsi passano da Apple o Google. I crediti non hanno valore in denaro.",
+    "terms.fairUseTitle": "Uso corretto",
+    "terms.fairUse":
+      "Il piano mensile include fino a {cap} verdetti al mese. Possiamo sospendere gli account che abusano del servizio, per esempio aggirandone i limiti o usandolo per molestare qualcuno.",
+    "terms.asIsTitle": "Nessuna garanzia",
+    "terms.asIs":
+      "Judge è fornito così com'è: non possiamo promettere che sia sempre disponibile, privo di errori o giusto. Nei limiti consentiti dalla legge, non siamo responsabili di ciò che deriva dall'affidarsi a un verdetto.",
+    "terms.changesTitle": "Modifiche",
+    "terms.changes":
+      "Possiamo aggiornare questi termini. La data in alto mostra quando sono cambiati l'ultima volta e, se continui a usare Judge dopo una modifica, si applicano i nuovi termini.",
+    "terms.contactTitle": "Contatti",
+    "terms.contact": "Domande su questi termini? Scrivi a {email}.",
   },
   plurals: {
     "panel.strong": { one: "{n} forte" },

@@ -8,6 +8,8 @@ const nextConfig: NextConfig = {
     // Always inlined, even when unset, so the build drops the browser SDK
     // when there is no DSN.
     NEXT_PUBLIC_SENTRY_DSN: process.env.NEXT_PUBLIC_SENTRY_DSN ?? "",
+    // For the footer and the adults-only notice, which render in the browser.
+    CONTACT_EMAIL: process.env.CONTACT_EMAIL ?? "",
   },
 };
 

@@ -254,7 +254,7 @@ const fi: Locale = {
       "Kysyttävää, tai haluatko nähdä, korjata tai poistaa tietosi? Lähetä sähköpostia osoitteeseen {email} ja liitä mukaan tuomion tai jutun linkki.",
     "privacy.accountsTitle": "Tilit",
     "privacy.accounts":
-      "Tuomion saamiseen tarvitset tilin; kaksipuolisen jutun toinen osapuoli voi vastata ilman tiliä. Jos kirjaudut Applella tai Googlella, säilytämme sähköpostiosoitteen, nimen ja profiilikuvan linkin, jotka ne jakavat kanssamme, sekä tiedon siitä, millä tavalla kirjauduit, ja Apple tai Google voi nähdä, että kirjauduit Judgeen. Jos kirjaudut sähköpostilinkillä, viesti lähetetään Resendin kautta, ja säilytämme lyhyen aikaa sähköpostiosoitteesi sisältävää tietuetta linkin tarkistamista varten: linkki lakkaa toimimasta 10 minuutin kuluttua, ja tietue poistetaan, kun linkkiä on käytetty, tai pian sen vanhennuttua. Säilytämme myös istuntotietosi (satunnainen tunniste ja sen vanhenemisaika, ilman IP-osoitetta tai selaimen tietoja, mutta sovellukset tallentavat kirjautuessa myös laitetunnisteen), tuomiosaldosi, tilauksesi ja sen historian sekä tiedon siitä, mihin tuomioihin saldoa on käytetty (vain tuomion tunniste). Lisäksi säilytämme tiedon siitä, mitkä tuomiot ja jutut ovat sinun, jotta löydät ne millä tahansa laitteella. Kun poistat tilisi tilisivulta, poistetaan tilisi, istuntosi, käyttötapahtumat ja tilisi ja laitteidesi välinen linkki, ja tuomiosi ja osuutesi jutuista poistetaan kohdassa Poistaminen kuvatulla tavalla. Sähköpostiosoitteestasi säilytämme vain sekoitetun muodon, jotta samalla osoitteella luotu uusi tili ei saa toista ilmaista tuomiota.",
+      "Judge on tarkoitettu vain 18 vuotta täyttäneille, ja tilit, joiden saamme tietää kuuluvan alle 18-vuotiaalle, suljetaan. Tuomion saamiseen tarvitset tilin; kaksipuolisen jutun toinen osapuoli voi vastata ilman tiliä. Jos kirjaudut Applella tai Googlella, säilytämme sähköpostiosoitteen, nimen ja profiilikuvan linkin, jotka ne jakavat kanssamme, sekä tiedon siitä, millä tavalla kirjauduit, ja Apple tai Google voi nähdä, että kirjauduit Judgeen. Jos kirjaudut sähköpostilinkillä, viesti lähetetään Resendin kautta, ja säilytämme lyhyen aikaa sähköpostiosoitteesi sisältävää tietuetta linkin tarkistamista varten: linkki lakkaa toimimasta 10 minuutin kuluttua, ja tietue poistetaan, kun linkkiä on käytetty, tai pian sen vanhennuttua. Säilytämme myös istuntotietosi (satunnainen tunniste ja sen vanhenemisaika, ilman IP-osoitetta tai selaimen tietoja, mutta sovellukset tallentavat kirjautuessa myös laitetunnisteen), tuomiosaldosi, tilauksesi ja sen historian sekä tiedon siitä, mihin tuomioihin saldoa on käytetty (vain tuomion tunniste). Lisäksi säilytämme tiedon siitä, mitkä tuomiot ja jutut ovat sinun, jotta löydät ne millä tahansa laitteella. Kun poistat tilisi tilisivulta, poistetaan tilisi, istuntosi, käyttötapahtumat ja tilisi ja laitteidesi välinen linkki, ja tuomiosi ja osuutesi jutuista poistetaan kohdassa Poistaminen kuvatulla tavalla. Sähköpostiosoitteestasi säilytämme vain sekoitetun muodon, jotta samalla osoitteella luotu uusi tili ei saa toista ilmaista tuomiota ja pysyy suljettuna, jos tilisi suljettiin, koska olet alle 18-vuotias.",
     "privacy.webSearchTitle": "Verkkohaku ja kysymykset",
     "privacy.webSearch":
       "Jokainen tuomio lähettää anonymisoidun kiistan tekoälypalveluntarjoajallemme verkkohaku käytössä. Malli kirjoittaa hakulausekkeet tästä anonymisoidusta tekstistä, ja tulokset tulevat palveluntarjoajan hakukumppanilta. Käytetyt lähteet näytetään tuomiossa. Tuomarit voivat ensin kysyä sinulta enintään kaksi kysymystä: niiden laatimista varten tekstisi sellaisena kuin kirjoitit sen, nimet mukaan lukien, lähetetään tekoälypalveluntarjoajalle vielä kerran. Vastauksesi anonymisoidaan yhdessä kiistan kanssa ennen ratkaisua; kysymykset ja vastauksesi sellaisina kuin kirjoitit ne säilytetään salatun alkuperäisen tekstisi kanssa.",
@@ -312,9 +312,8 @@ const fi: Locale = {
     "signin.unavailable": "Kirjautumista ei ole vielä otettu käyttöön tällä sivustolla.",
     "signin.providerUnavailable": "Ei vielä käytettävissä",
     "signin.failed": "Kirjautuminen ei onnistunut. Yritä uudelleen.",
-    "signin.legal": "Ulkopuolinen tekoäly lukee kiistasi. Jatkamalla hyväksyt",
+    "signin.legal": "Ulkopuolinen tekoäly lukee kiistasi. Jatkamalla hyväksyt {terms} ja {privacy}.",
     "signin.legalLink": "tietosuojakäytännön",
-    "signin.legalAfter": ".",
     "signin.loading": "Ladataan kirjautumisvaihtoehtoja…",
     "account.title": "Tilisi",
     "account.signedInAs": "Kirjautuneena: {email}",
@@ -677,6 +676,46 @@ const fi: Locale = {
     "privacy.rightsTitle": "Oikeutesi (Kanada)",
     "privacy.rights":
       "Judgea ylläpidetään Kanadasta, ja se käsittelee henkilötietoja Kanadan liittovaltion tietosuojalain (PIPEDA) mukaisesti: keräämme vain sen, mitä palvelu tarvitsee, käytämme sitä vain siihen ja suojaamme sen, ja voit pyytää nähdä, korjata tai poistaa sinusta säilyttämämme tiedot. Vastaamme 30 päivän kuluessa.",
+    "footer.terms": "Ehdot",
+    "signin.legalTerms": "käyttöehdot",
+    "age.confirm": "Olen 18-vuotias tai vanhempi",
+    "age.title": "Judge on aikuisille",
+    "age.lead": "Judge on tarkoitettu vain 18 vuotta täyttäneille. Vahvista ikäsi jatkaaksesi.",
+    "age.continue": "Jatka",
+    "age.failed": "Tallennus ei onnistunut. Yritätkö uudelleen?",
+    "age.blockedTitle": "Judge on vain aikuisille",
+    "age.blocked": "Tämä tili ei voi käyttää Judgea, koska Judge on tarkoitettu vain 18 vuotta täyttäneille.",
+    "age.blockedContact": "Onko tämä mielestäsi virhe? Kirjoita osoitteeseen {email}.",
+    "error.age_blocked": "Judge on tarkoitettu vain 18 vuotta täyttäneille.",
+    "error.age_unconfirmed": "Vahvista, että olet 18-vuotias tai vanhempi, jatkaaksesi.",
+    "terms.title": "Käyttöehdot",
+    "terms.kicker": "Säännöt",
+    "terms.lead":
+      "Lyhyesti: Judge on aikuisille, se on hauskanpitoon ja selkeämpään ajatteluun, ja tekoäly voi erehtyä. Ole reilu niille, joista kirjoitat.",
+    "terms.updated": "Päivitetty viimeksi {date}",
+    "terms.whoTitle": "Kuka saa käyttää Judgea",
+    "terms.who":
+      "Judge on tarkoitettu vain 18 vuotta täyttäneille. Käyttämällä sitä vahvistat olevasi sellainen. Jos saamme tietää, että tili kuuluu alle 18-vuotiaalle, suljemme sen.",
+    "terms.whatTitle": "Mikä Judge on",
+    "terms.what":
+      "Judge antaa tekoälytuomioita arjen kiistoihin, hauskanpitoon ja siihen, että voi ajatella vähän selkeämmin. Se ei ole oikeudellista, lääketieteellistä eikä taloudellista neuvontaa. Tuomiot tulevat ulkopuoliselta tekoälypalvelulta ja voivat olla vääriä, joten älä luota niihin tärkeissä päätöksissä.",
+    "terms.contentTitle": "Sisältösi",
+    "terms.content":
+      "Se, mitä kirjoitat, pysyy sinun. Annat meille luvan käyttää sitä sen verran kuin palvelun pyörittämiseen tarvitaan: tallentaa se, poistaa siitä nimet, antaa se tuomittavaksi ja näyttää se siellä, minne sen jaat. Älä lähetä muiden yksityisiä tietoja, joita sinulla ei ole oikeutta jakaa, äläkä mitään laitonta, uhkaavaa tai loukkaavaa.",
+    "terms.purchasesTitle": "Ostokset",
+    "terms.purchases":
+      "Tuomiopaketit ja kuukausitilaus ostetaan App Storen tai Google Playn kautta. Kuukausitilaus uusiutuu automaattisesti joka kuukausi, kunnes peruutat sen kaupan tilausasetuksista vähintään 24 tuntia ennen uusiutumista. Hyvitykset hoidetaan Applen tai Googlen kautta. Tuomioilla ei ole rahallista arvoa.",
+    "terms.fairUseTitle": "Kohtuullinen käyttö",
+    "terms.fairUse":
+      "Kuukausitilaukseen kuuluu enintään {cap} tuomiota kuukaudessa. Voimme jäädyttää tilit, jotka käyttävät palvelua väärin, esimerkiksi kiertämällä sen rajoituksia tai häiritsemällä sillä jotakuta.",
+    "terms.asIsTitle": "Ei takuita",
+    "terms.asIs":
+      "Judge tarjotaan sellaisenaan: emme voi luvata, että se on aina käytettävissä, virheetön tai oikeassa. Lain sallimissa rajoissa emme vastaa siitä, mitä tuomioon luottamisesta seuraa.",
+    "terms.changesTitle": "Muutokset",
+    "terms.changes":
+      "Voimme päivittää näitä ehtoja. Ylhäällä oleva päivämäärä näyttää, milloin ne viimeksi muuttuivat, ja jos jatkat Judgen käyttöä muutoksen jälkeen, uudet ehdot ovat voimassa.",
+    "terms.contactTitle": "Yhteystiedot",
+    "terms.contact": "Kysyttävää näistä ehdoista? Kirjoita osoitteeseen {email}.",
   },
   plurals: {
     "panel.strong": { one: "{n} vahva" },

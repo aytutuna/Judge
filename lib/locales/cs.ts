@@ -252,7 +252,7 @@ const cs: Locale = {
       "Máš dotaz nebo chceš vidět, opravit či odstranit svá data? Napiš na {email} a přilož odkaz na verdikt nebo případ.",
     "privacy.accountsTitle": "Účty",
     "privacy.accounts":
-      "Pro verdikt potřebuješ účet; druhá strana oboustranného případu může odpovědět i bez něj. Když se přihlásíš přes Apple nebo Google, uložíme e-mailovou adresu, jméno a odkaz na profilový obrázek, které nám předají, a také způsob přihlášení; Apple nebo Google se přitom dozví, že se přihlašuješ do Judge. Když se přihlásíš odkazem v e-mailu, ten e-mail odchází přes Resend a krátce uchováváme záznam s tvou e-mailovou adresou, abychom odkaz ověřili: odkaz přestane fungovat po 10 minutách a záznam se smaže po použití nebo krátce po vypršení. Dále ukládáme záznamy o přihlášení (náhodný token a dobu jeho platnosti, bez IP adresy a údajů o prohlížeči, aplikace ale při přihlášení zaznamenají i identifikátor zařízení), tvoje kredity, tvůj plán a jeho historii a to, které verdikty spotřebovaly kredit (jen identifikátor verdiktu). Ukládáme také, které verdikty a případy patří tobě, takže je najdeš na jakémkoli zařízení. Smazáním účtu na stránce účtu se odstraní tvůj účet, přihlášení, události o používání a vazba mezi účtem a zařízeními; tvoje verdikty a tvoje pohledy v případech se odstraní tak, jak popisuje část Odstranění. Uchováváme jen zakódovanou podobu tvé e-mailové adresy, aby nový účet se stejnou adresou nedostal druhý verdikt zdarma.",
+      "Judge je jen pro lidi od 18 let a účty, o kterých zjistíme, že patří někomu mladšímu 18 let, zavíráme. Pro verdikt potřebuješ účet; druhá strana oboustranného případu může odpovědět i bez něj. Když se přihlásíš přes Apple nebo Google, uložíme e-mailovou adresu, jméno a odkaz na profilový obrázek, které nám předají, a také způsob přihlášení; Apple nebo Google se přitom dozví, že se přihlašuješ do Judge. Když se přihlásíš odkazem v e-mailu, ten e-mail odchází přes Resend a krátce uchováváme záznam s tvou e-mailovou adresou, abychom odkaz ověřili: odkaz přestane fungovat po 10 minutách a záznam se smaže po použití nebo krátce po vypršení. Dále ukládáme záznamy o přihlášení (náhodný token a dobu jeho platnosti, bez IP adresy a údajů o prohlížeči, aplikace ale při přihlášení zaznamenají i identifikátor zařízení), tvoje kredity, tvůj plán a jeho historii a to, které verdikty spotřebovaly kredit (jen identifikátor verdiktu). Ukládáme také, které verdikty a případy patří tobě, takže je najdeš na jakémkoli zařízení. Smazáním účtu na stránce účtu se odstraní tvůj účet, přihlášení, události o používání a vazba mezi účtem a zařízeními; tvoje verdikty a tvoje pohledy v případech se odstraní tak, jak popisuje část Odstranění. Uchováváme jen zakódovanou podobu tvé e-mailové adresy, aby nový účet se stejnou adresou nedostal druhý verdikt zdarma a zůstal zavřený, pokud byl tvůj účet zavřen proto, že je ti méně než 18 let.",
     "privacy.webSearchTitle": "Vyhledávání na webu a otázky",
     "privacy.webSearch":
       "Každý verdikt posílá anonymizovaný spor našemu poskytovateli AI se zapnutým vyhledáváním na webu. Vyhledávací dotazy píše model z tohoto anonymizovaného textu a výsledky pocházejí od vyhledávacího partnera poskytovatele. Použité zdroje se zobrazí u verdiktu. Soudci ti můžou nejdřív položit až dvě otázky: aby je vymysleli, jde tvůj text v původním znění, včetně jmen, k poskytovateli AI ještě jednou. Tvoje odpovědi se před souzením anonymizují spolu se sporem; otázky a tvoje odpovědi v původním znění se ukládají s tvým šifrovaným originálem.",
@@ -309,9 +309,8 @@ const cs: Locale = {
     "signin.unavailable": "Přihlášení tu zatím není nastavené.",
     "signin.providerUnavailable": "Zatím nedostupné",
     "signin.failed": "Přihlášení se nepovedlo. Zkusíš to znovu?",
-    "signin.legal": "Tvoje spory čte externí AI. Pokračováním souhlasíš se",
+    "signin.legal": "Tvoje spory čte externí AI. Pokračováním souhlasíš s {terms} a se {privacy}.",
     "signin.legalLink": "zásadami ochrany soukromí",
-    "signin.legalAfter": ".",
     "signin.loading": "Načítáme možnosti přihlášení…",
     "account.title": "Tvůj účet",
     "account.signedInAs": "Přihlášeno jako {email}",
@@ -675,6 +674,46 @@ const cs: Locale = {
     "privacy.rightsTitle": "Tvoje práva (Kanada)",
     "privacy.rights":
       "Judge provozujeme z Kanady a s osobními údaji zacházíme podle kanadského federálního zákona o ochraně soukromí (PIPEDA): shromažďujeme jen to, co služba potřebuje, používáme to jen k tomu, chráníme to a ty můžeš požádat o nahlédnutí, opravu nebo odstranění údajů, které o tobě máme. Odpovídáme do 30 dní.",
+    "footer.terms": "Podmínky",
+    "signin.legalTerms": "podmínkami použití",
+    "age.confirm": "Je mi 18 let nebo víc",
+    "age.title": "Judge je pro dospělé",
+    "age.lead": "Judge je jen pro lidi od 18 let. Potvrď svůj věk a můžeš pokračovat.",
+    "age.continue": "Pokračovat",
+    "age.failed": "Nepodařilo se to uložit. Zkusíš to znovu?",
+    "age.blockedTitle": "Judge je jen pro dospělé",
+    "age.blocked": "Tento účet nemůže Judge používat, protože Judge je jen pro lidi od 18 let.",
+    "age.blockedContact": "Myslíš, že je to chyba? Napiš na {email}.",
+    "error.age_blocked": "Judge je jen pro lidi od 18 let.",
+    "error.age_unconfirmed": "Pro pokračování potvrď, že je ti 18 let nebo víc.",
+    "terms.title": "Podmínky použití",
+    "terms.kicker": "Pravidla",
+    "terms.lead":
+      "Stručně: Judge je pro dospělé, je pro zábavu a jasnější myšlení a AI se může mýlit. Buď spravedlivý k lidem, o kterých píšeš.",
+    "terms.updated": "Poslední aktualizace {date}",
+    "terms.whoTitle": "Kdo může Judge používat",
+    "terms.who":
+      "Judge je jen pro lidi od 18 let. Používáním potvrzuješ, že ti je 18 nebo víc. Pokud zjistíme, že účet patří někomu mladšímu 18 let, zavřeme ho.",
+    "terms.whatTitle": "Co je Judge",
+    "terms.what":
+      "Judge vydává AI verdikty k všedním hádkám, pro zábavu a pro trochu jasnější myšlení. Není to právní, zdravotní ani finanční poradenství. Verdikty pocházejí z externí AI služby a můžou být chybné, tak se na ně u důležitých rozhodnutí nespoléhej.",
+    "terms.contentTitle": "Tvůj obsah",
+    "terms.content":
+      "Co napíšeš, zůstává tvoje. Dovoluješ nám to použít, jen pokud je to potřeba k provozu služby: uložit to, odstranit jména, nechat to posoudit a zobrazit tam, kde to sdílíš. Neposílej soukromé informace jiných lidí, které nemáš právo sdílet, ani nic nezákonného, výhružného nebo urážlivého.",
+    "terms.purchasesTitle": "Nákupy",
+    "terms.purchases":
+      "Balíčky kreditů a měsíční plán se kupují přes App Store nebo Google Play. Měsíční plán se každý měsíc automaticky obnovuje, dokud ho nezrušíš v nastavení předplatného v obchodě, nejméně 24 hodin před obnovením. Vrácení peněz vyřizuje Apple nebo Google. Kredity nemají žádnou hotovostní hodnotu.",
+    "terms.fairUseTitle": "Férové využití",
+    "terms.fairUse":
+      "Měsíční plán zahrnuje až {cap} verdiktů měsíčně. Účty, které službu zneužívají, například obcházejí její limity nebo ji používají k obtěžování někoho, můžeme pozastavit.",
+    "terms.asIsTitle": "Bez záruk",
+    "terms.asIs":
+      "Judge se poskytuje tak, jak je: nemůžeme slíbit, že bude vždy dostupný, bez chyb nebo správný. V rozsahu, který zákon dovoluje, neneseme odpovědnost za to, co vyplyne ze spoléhání na verdikt.",
+    "terms.changesTitle": "Změny",
+    "terms.changes":
+      "Tyto podmínky můžeme změnit. Datum nahoře ukazuje, kdy se naposledy změnily, a pokud po změně Judge dál používáš, platí nové podmínky.",
+    "terms.contactTitle": "Kontakt",
+    "terms.contact": "Máš k těmto podmínkám otázky? Napiš na {email}.",
   },
   plurals: {
     "judgesVoted.other": { few: "Hlasovali {n} nezávislí AI soudci:" },

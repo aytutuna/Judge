@@ -144,6 +144,15 @@ export function PricingTable({
         </section>
       </div>
       <p className={styles.small}>{t(lang, "pricing.note")}</p>
+      <p className={styles.small}>
+        <Link href="/terms" className={styles.link}>
+          {t(lang, "footer.terms")}
+        </Link>
+        {" · "}
+        <Link href="/privacy" className={styles.link}>
+          {t(lang, "footer.privacy")}
+        </Link>
+      </p>
     </>
   );
 }

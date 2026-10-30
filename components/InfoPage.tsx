@@ -4,7 +4,8 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import { legalLang, legalNotice, t, type Key, type Lang } from "@/lib/i18n";
 import { useLang } from "@/lib/lang";
-import { langDir } from "@/lib/langs";
+import { langDir, langTag } from "@/lib/langs";
+import { PRICING } from "@/lib/pricing";
 import { noOrphan } from "@/lib/text";
 import { useViewer } from "@/lib/use-viewer";
 import { Faq } from "./home/Faq";
@@ -14,8 +15,10 @@ import styles from "./InfoPage.module.css";
 import { SceneStage } from "./scene/SceneStage";
 import { AppShell } from "./shell/AppShell";
 
-/** Prose pages (/about, /privacy). Client-rendered chrome so the language
- * picker works the same as on the homepage. */
+/** Prose pages (/about, /privacy, /terms). Client-rendered chrome so the
+ * language picker works the same as on the homepage. */
+
+export const TERMS_UPDATED = "2026-10-30";
 
 function Section({ title, children }: { title: string; children: ReactNode }) {
   return (
@@ -86,6 +89,20 @@ function About({ lang, features, premiumOn }: { lang: Lang; features: InfoFeatur
   );
 }
 
+/** A sentence with an {email} slot, the address as a real link. */
+function ContactLine({ text, email }: { text: string; email: string }) {
+  const [before, after = ""] = text.split("{email}");
+  return (
+    <p>
+      {before}
+      <a href={`mailto:${email}`} className={styles.link}>
+        {email}
+      </a>
+      {after}
+    </p>
+  );
+}
+
 function Privacy({ lang, contactEmail }: { lang: Lang; contactEmail: string | null }) {
   const sections: [Key, Key][] = [
     ["privacy.storedTitle", "privacy.stored"],
@@ -105,9 +122,6 @@ function Privacy({ lang, contactEmail }: { lang: Lang; contactEmail: string | nu
     ["privacy.shareTitle", "privacy.share"],
     ["privacy.rightsTitle", "privacy.rights"],
   ];
-  // Split around the {email} slot so the address can be a real link while
-  // the sentence stays one whole dictionary string.
-  const [before, after = ""] = t(lang, "privacy.contact").split("{email}");
   return (
     <>
       {sections.map(([title, body]) => (
@@ -117,34 +131,59 @@ function Privacy({ lang, contactEmail }: { lang: Lang; contactEmail: string | nu
       ))}
       {contactEmail ? (
         <Section title={t(lang, "privacy.contactTitle")}>
-          <p>
-            {before}
-            <a href={`mailto:${contactEmail}`} className={styles.link}>
-              {contactEmail}
-            </a>
-            {after}
-          </p>
+          <ContactLine text={t(lang, "privacy.contact")} email={contactEmail} />
         </Section>
       ) : null}
     </>
   );
 }
 
+function Terms({ lang, contactEmail, cap }: { lang: Lang; contactEmail: string | null; cap: number }) {
+  const sections: [Key, string][] = [
+    ["terms.whoTitle", t(lang, "terms.who")],
+    ["terms.whatTitle", t(lang, "terms.what")],
+    ["terms.contentTitle", t(lang, "terms.content")],
+    ["terms.purchasesTitle", t(lang, "terms.purchases")],
+    ["terms.fairUseTitle", t(lang, "terms.fairUse", { cap })],
+    ["terms.asIsTitle", t(lang, "terms.asIs")],
+    ["terms.changesTitle", t(lang, "terms.changes")],
+  ];
+  return (
+    <>
+      {sections.map(([title, body]) => (
+        <Section key={title} title={t(lang, title)}>
+          <p>{body}</p>
+        </Section>
+      ))}
+      {contactEmail ? (
+        <Section title={t(lang, "terms.contactTitle")}>
+          <ContactLine text={t(lang, "terms.contact")} email={contactEmail} />
+        </Section>
+      ) : null}
+    </>
+  );
+}
+
+function termsDate(lang: Lang): string {
+  const date = new Intl.DateTimeFormat(langTag(lang), { year: "numeric", month: "long", day: "numeric", timeZone: "UTC" });
+  return t(lang, "terms.updated", { date: date.format(new Date(`${TERMS_UPDATED}T00:00:00Z`)) });
+}
+
 /** `contactEmail` is null when no real address is configured; the privacy
- * page then omits its contact section. */
+ * and terms pages then omit their contact section. */
 export function InfoPage({
   page,
   contactEmail = null,
 }: {
-  page: "about" | "privacy";
+  page: "about" | "privacy" | "terms";
   contactEmail?: string | null;
 }) {
   const lang = useLang();
   const { config } = useViewer();
   const about = page === "about";
-  // A language without its own privacy page shows the English one, marked as such.
-  const prose = about ? lang : legalLang(lang);
-  const notice = about ? null : legalNotice(lang);
+  // A language without its own legal page shows the English one, marked as such.
+  const prose = about ? lang : legalLang(lang, page);
+  const notice = about ? null : legalNotice(lang, page);
   const cta = (
     <Link href="/" className={styles.cta} lang={prose === lang ? undefined : lang}>
       {t(lang, "shared.cta")}
@@ -159,15 +198,24 @@ export function InfoPage({
           dir={prose === lang ? undefined : langDir(prose)}
         >
           <header className={styles.intro}>
-            <p className="kicker">{t(prose, about ? "about.kicker" : "privacy.kicker")}</p>
-            <h1 className={styles.h1}>{noOrphan(t(prose, about ? "about.title" : "privacy.title"))}</h1>
-            <p className={styles.lead}>{t(prose, about ? "about.lead" : "privacy.lead")}</p>
+            <p className="kicker">{t(prose, `${page}.kicker`)}</p>
+            <h1 className={styles.h1}>{noOrphan(t(prose, `${page}.title`))}</h1>
+            <p className={styles.lead}>{t(prose, `${page}.lead`)}</p>
+            {page === "terms" ? <p className={styles.notice}>{termsDate(prose)}</p> : null}
             {notice ? <p className={styles.notice}>{notice}</p> : null}
           </header>
           {about ? null : (
             <>
               <div className={styles.prose}>
-                <Privacy lang={prose} contactEmail={contactEmail} />
+                {page === "terms" ? (
+                  <Terms
+                    lang={prose}
+                    contactEmail={contactEmail}
+                    cap={(config?.pricing ?? PRICING).monthly.fairUseCap}
+                  />
+                ) : (
+                  <Privacy lang={prose} contactEmail={contactEmail} />
+                )}
               </div>
               {cta}
             </>

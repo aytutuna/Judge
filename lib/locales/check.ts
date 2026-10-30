@@ -37,7 +37,7 @@ function isExact(lang: Lang, category: string): boolean {
 
 /**
  * Everything wrong with a locale file, one line each; empty when it is fine.
- * Same keys as English (the privacy page's all or none), the same {slots}
+ * Same keys as English (the privacy and terms pages' each all or none), the same {slots}
  * in every string and plural form (an exact-number form may drop {n}), nothing empty, plural forms only in
  * categories the language has and every one it needs, party labels that are
  * listed in PARTY_LABELS and named in the voice note, and complete email
@@ -48,16 +48,21 @@ export function checkLocale(lang: Lang, locale: Locale): string[] {
   const strings = locale.strings as Partial<Record<string, unknown>>;
   const keys = Object.keys(EN) as Key[];
 
-  const legal = keys.filter((k) => k.startsWith("privacy."));
-  const legalCount = legal.filter((k) => strings[k] !== undefined).length;
-  if (legalCount > 0 && legalCount < legal.length) {
-    problems.push(`privacy page is partly translated (${legalCount} of ${legal.length} privacy.* strings): give all or none`);
+  const translated = new Set<string>();
+  for (const page of ["privacy", "terms"]) {
+    const legal = keys.filter((k) => k.startsWith(`${page}.`));
+    const count = legal.filter((k) => strings[k] !== undefined).length;
+    if (count > 0) translated.add(page);
+    if (count > 0 && count < legal.length) {
+      problems.push(`${page} page is partly translated (${count} of ${legal.length} ${page}.* strings): give all or none`);
+    }
   }
 
   for (const key of keys) {
     const value = strings[key];
     if (value === undefined) {
-      if (!key.startsWith("privacy.") || legalCount > 0) problems.push(`${key}: missing`);
+      const page = key.split(".")[0];
+      if ((page !== "privacy" && page !== "terms") || translated.has(page)) problems.push(`${key}: missing`);
       continue;
     }
     if (typeof value !== "string" || !value.trim()) {

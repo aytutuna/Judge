@@ -254,7 +254,7 @@ const de: Locale = {
       "Du hast Fragen oder möchtest deine Daten einsehen, berichtigen oder entfernen lassen? Schreib an {email} und schick den Link zum Urteil oder Fall mit.",
     "privacy.accountsTitle": "Konten",
     "privacy.accounts":
-      "Für ein Urteil brauchst du ein Konto; die Gegenseite in einem zweiseitigen Fall kann ohne Konto antworten. Meldest du dich mit Apple oder Google an, speichern wir die E-Mail-Adresse, den Namen und den Link zum Profilbild, die sie mit uns teilen, sowie die Anmeldemethode, die du genutzt hast, und Apple oder Google können sehen, dass du dich bei Judge angemeldet hast. Meldest du dich mit einem E-Mail-Link an, wird diese E-Mail über Resend verschickt, und wir speichern kurz einen Eintrag mit deiner E-Mail-Adresse, um den Link zu prüfen: Er funktioniert nach 10 Minuten nicht mehr und wird gelöscht, sobald er benutzt wurde oder kurz nachdem er abgelaufen ist. Außerdem speichern wir deine Sitzungsdaten (ein zufälliges Token und wann es abläuft, ohne IP-Adresse oder Browserangaben, wobei die Apps bei der Anmeldung aber auch eine Gerätekennung speichern), deine Credits, deinen Tarif und dessen Verlauf sowie, welche Urteile einen Credit verbraucht haben (nur die ID des Urteils). Wir speichern auch, welche Urteile und Fälle dir gehören, damit du sie auf jedem Gerät findest. Wenn du dein Konto auf der Kontoseite löschst, werden dein Konto, deine Sitzungen, die Nutzungsereignisse und die Verknüpfung zwischen deinem Konto und deinen Geräten entfernt, und deine Urteile und deine Beiträge zu Fällen werden wie unter „Entfernen“ beschrieben entfernt. Wir behalten nur eine unkenntlich gemachte Form deiner E-Mail-Adresse, damit ein neues Konto damit kein zweites Gratisurteil bekommt.",
+      "Judge ist nur für Menschen ab 18, und Konten, von denen wir erfahren, dass sie jemandem unter 18 gehören, werden geschlossen. Für ein Urteil brauchst du ein Konto; die Gegenseite in einem zweiseitigen Fall kann ohne Konto antworten. Meldest du dich mit Apple oder Google an, speichern wir die E-Mail-Adresse, den Namen und den Link zum Profilbild, die sie mit uns teilen, sowie die Anmeldemethode, die du genutzt hast, und Apple oder Google können sehen, dass du dich bei Judge angemeldet hast. Meldest du dich mit einem E-Mail-Link an, wird diese E-Mail über Resend verschickt, und wir speichern kurz einen Eintrag mit deiner E-Mail-Adresse, um den Link zu prüfen: Er funktioniert nach 10 Minuten nicht mehr und wird gelöscht, sobald er benutzt wurde oder kurz nachdem er abgelaufen ist. Außerdem speichern wir deine Sitzungsdaten (ein zufälliges Token und wann es abläuft, ohne IP-Adresse oder Browserangaben, wobei die Apps bei der Anmeldung aber auch eine Gerätekennung speichern), deine Credits, deinen Tarif und dessen Verlauf sowie, welche Urteile einen Credit verbraucht haben (nur die ID des Urteils). Wir speichern auch, welche Urteile und Fälle dir gehören, damit du sie auf jedem Gerät findest. Wenn du dein Konto auf der Kontoseite löschst, werden dein Konto, deine Sitzungen, die Nutzungsereignisse und die Verknüpfung zwischen deinem Konto und deinen Geräten entfernt, und deine Urteile und deine Beiträge zu Fällen werden wie unter „Entfernen“ beschrieben entfernt. Wir behalten nur eine unkenntlich gemachte Form deiner E-Mail-Adresse, damit ein neues Konto damit kein zweites Gratisurteil bekommt und geschlossen bleibt, wenn dein Konto geschlossen wurde, weil du unter 18 bist.",
     "privacy.webSearchTitle": "Websuche und Rückfragen",
     "privacy.webSearch":
       "Jedes Urteil schickt den anonymisierten Streit mit aktivierter Websuche an unseren KI-Anbieter. Das Modell formuliert die Suchanfragen aus diesem anonymisierten Text, die Ergebnisse kommen vom Suchpartner des Anbieters. Die genutzten Quellen werden beim Urteil angezeigt. Die Richter können dir vorher bis zu zwei Fragen stellen: Um sie zu formulieren, geht dein Text so, wie du ihn eingegeben hast, samt Namen noch einmal an den KI-Anbieter. Deine Antworten werden vor der Beurteilung zusammen mit dem Streit anonymisiert; die Fragen und deine Antworten, so wie du sie geschrieben hast, werden mit deinem verschlüsselten Original gespeichert.",
@@ -312,9 +312,9 @@ const de: Locale = {
     "signin.unavailable": "Die Anmeldung ist auf dieser Seite noch nicht eingerichtet.",
     "signin.providerUnavailable": "Noch nicht verfügbar",
     "signin.failed": "Die Anmeldung hat nicht geklappt. Versuchst du es noch mal?",
-    "signin.legal": "Eine externe KI liest deine Streitfälle. Wenn du fortfährst, stimmst du der",
+    "signin.legal":
+      "Eine externe KI liest deine Streitfälle. Wenn du fortfährst, stimmst du den {terms} und der {privacy} zu.",
     "signin.legalLink": "Datenschutzerklärung",
-    "signin.legalAfter": " zu.",
     "signin.loading": "Anmeldeoptionen werden geladen…",
     "account.title": "Dein Konto",
     "account.signedInAs": "Angemeldet als {email}",
@@ -680,6 +680,46 @@ const de: Locale = {
     "privacy.rightsTitle": "Deine Rechte (Kanada)",
     "privacy.rights":
       "Judge wird von Kanada aus betrieben und verarbeitet personenbezogene Daten nach dem kanadischen Bundesdatenschutzgesetz (PIPEDA): Wir erheben nur, was der Dienst braucht, nutzen es nur dafür und schützen es, und du kannst verlangen, die Daten, die wir über dich haben, einzusehen, zu berichtigen oder zu entfernen. Wir antworten innerhalb von 30 Tagen.",
+    "footer.terms": "Bedingungen",
+    "signin.legalTerms": "Nutzungsbedingungen",
+    "age.confirm": "Ich bin 18 oder älter",
+    "age.title": "Judge ist für Erwachsene",
+    "age.lead": "Judge ist nur für Menschen ab 18. Bestätige dein Alter, um weiterzumachen.",
+    "age.continue": "Weiter",
+    "age.failed": "Das konnten wir nicht speichern. Versuchst du es noch mal?",
+    "age.blockedTitle": "Judge ist nur für Erwachsene",
+    "age.blocked": "Dieses Konto kann Judge nicht nutzen, weil Judge nur für Menschen ab 18 ist.",
+    "age.blockedContact": "Du denkst, das ist ein Irrtum? Schreib an {email}.",
+    "error.age_blocked": "Judge ist nur für Menschen ab 18.",
+    "error.age_unconfirmed": "Bestätige, dass du 18 oder älter bist, um fortzufahren.",
+    "terms.title": "Nutzungsbedingungen",
+    "terms.kicker": "Die Regeln",
+    "terms.lead":
+      "Kurz gesagt: Judge ist für Erwachsene, es ist zum Spaß und für klareres Denken da, und die KI kann sich irren. Sei fair zu den Menschen, über die du schreibst.",
+    "terms.updated": "Zuletzt aktualisiert am {date}",
+    "terms.whoTitle": "Wer Judge nutzen darf",
+    "terms.who":
+      "Judge ist nur für Menschen ab 18. Mit der Nutzung bestätigst du, dass du es bist. Wenn wir erfahren, dass ein Konto jemandem unter 18 gehört, schließen wir es.",
+    "terms.whatTitle": "Was Judge ist",
+    "terms.what":
+      "Judge gibt KI-Urteile zu Alltagsstreitereien, zum Spaß und um etwas klarer zu denken. Es ist keine rechtliche, medizinische oder finanzielle Beratung. Die Urteile kommen von einem externen KI-Dienst und können falsch sein, verlass dich bei wichtigen Entscheidungen also nicht darauf.",
+    "terms.contentTitle": "Deine Inhalte",
+    "terms.content":
+      "Was du schreibst, bleibt deins. Du erlaubst uns, es so weit zu nutzen, wie wir es für den Betrieb des Dienstes brauchen: es zu speichern, die Namen zu entfernen, es beurteilen zu lassen und es dort anzuzeigen, wo du es teilst. Schick keine privaten Informationen anderer, die du nicht teilen darfst, und nichts Illegales, Bedrohliches oder Beleidigendes.",
+    "terms.purchasesTitle": "Käufe",
+    "terms.purchases":
+      "Credit-Pakete und das Monatsabo werden über den App Store oder Google Play gekauft. Das Monatsabo verlängert sich jeden Monat automatisch, bis du es in den Abo-Einstellungen des Stores kündigst, spätestens 24 Stunden vor der Verlängerung. Erstattungen laufen über Apple oder Google. Credits haben keinen Barwert.",
+    "terms.fairUseTitle": "Faire Nutzung",
+    "terms.fairUse":
+      "Im Monatsabo sind bis zu {cap} Urteile pro Monat enthalten. Wir können Konten sperren, die den Dienst missbrauchen, zum Beispiel indem sie seine Grenzen umgehen oder ihn nutzen, um jemanden zu belästigen.",
+    "terms.asIsTitle": "Keine Garantien",
+    "terms.asIs":
+      "Judge wird bereitgestellt, wie es ist: Wir können nicht versprechen, dass es immer verfügbar, fehlerfrei oder richtig ist. Soweit das Gesetz es erlaubt, sind wir nicht verantwortlich für das, was daraus folgt, dass man sich auf ein Urteil verlässt.",
+    "terms.changesTitle": "Änderungen",
+    "terms.changes":
+      "Wir können diese Bedingungen ändern. Das Datum oben zeigt, wann sie zuletzt geändert wurden, und wenn du Judge nach einer Änderung weiter nutzt, gelten die neuen Bedingungen.",
+    "terms.contactTitle": "Kontakt",
+    "terms.contact": "Fragen zu diesen Bedingungen? Schreib an {email}.",
   },
   plurals: {
     "panel.strong": { one: "{n} starker" },

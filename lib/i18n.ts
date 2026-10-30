@@ -247,7 +247,7 @@ const en = {
     "Questions, or a request to see, correct or remove your data? Email {email} with the link to the verdict or case.",
   "privacy.accountsTitle": "Accounts",
   "privacy.accounts":
-    "You need an account to get a verdict; the other side of a two-sided case can answer without one. If you sign in with Apple or Google, we keep the email address, name and profile picture link they share with us, plus which sign-in method you used, and Apple or Google can see that you signed in to Judge. If you sign in with an email link, that email goes out through Resend, and we briefly keep a record with your email address to check the link: it stops working after 10 minutes and is deleted once used or soon after it expires. We also keep your session records (a random token and when it expires, with no IP address or browser details, though the apps also record a device identifier when you sign in), your credits, your plan and its history, and which verdicts used a credit (only the verdict's ID). We also keep which verdicts and cases are yours, so you can find them on any device. Deleting your account on the account page removes your account, sessions, usage events and the link between your account and your devices, and removes your verdicts and your sides of cases as described under Removal. We keep only a scrambled form of your email address, so a new account with it doesn't get a second free verdict.",
+    "Judge is only for people 18 and older, and accounts we find belong to someone under 18 are closed. You need an account to get a verdict; the other side of a two-sided case can answer without one. If you sign in with Apple or Google, we keep the email address, name and profile picture link they share with us, plus which sign-in method you used, and Apple or Google can see that you signed in to Judge. If you sign in with an email link, that email goes out through Resend, and we briefly keep a record with your email address to check the link: it stops working after 10 minutes and is deleted once used or soon after it expires. We also keep your session records (a random token and when it expires, with no IP address or browser details, though the apps also record a device identifier when you sign in), your credits, your plan and its history, and which verdicts used a credit (only the verdict's ID). We also keep which verdicts and cases are yours, so you can find them on any device. Deleting your account on the account page removes your account, sessions, usage events and the link between your account and your devices, and removes your verdicts and your sides of cases as described under Removal. We keep only a scrambled form of your email address, so a new account with it doesn't get a second free verdict, and stays closed if your account was closed because you are under 18.",
   "privacy.webSearchTitle": "Web search and questions",
   "privacy.webSearch":
     "Every verdict sends the anonymized argument to our AI provider with web search turned on. The model writes the search queries from that anonymized text, and the results come from the provider's search partner. The sources it used are shown on the verdict. The judges may first ask you up to two questions: to come up with them, your text as you typed it, names included, goes to the AI provider once more. Your answers are anonymized together with the argument before judging; the questions and your answers as you wrote them are kept with your encrypted original.",
@@ -305,9 +305,8 @@ const en = {
   "signin.unavailable": "Sign-in isn't set up on this site yet.",
   "signin.providerUnavailable": "Not available yet",
   "signin.failed": "We couldn't sign you in. Mind trying again?",
-  "signin.legal": "An outside AI reads your arguments. By continuing you agree to the",
+  "signin.legal": "An outside AI reads your arguments. By continuing you agree to the {terms} and the {privacy}.",
   "signin.legalLink": "Privacy Policy",
-  "signin.legalAfter": ".",
   "signin.loading": "Loading sign-in options…",
   "account.title": "Your account",
   "account.signedInAs": "Signed in as {email}",
@@ -674,6 +673,46 @@ const en = {
   "privacy.rightsTitle": "Your rights (Canada)",
   "privacy.rights":
     "Judge is run from Canada and handles personal information under Canada's federal privacy law (PIPEDA): we collect only what the service needs, use it only for that, protect it, and you can ask to see, correct or remove what we hold about you. We answer within 30 days.",
+  "footer.terms": "Terms",
+  "signin.legalTerms": "Terms",
+  "age.confirm": "I'm 18 or older",
+  "age.title": "Judge is for adults",
+  "age.lead": "Judge is only for people 18 and older. Confirm your age to keep going.",
+  "age.continue": "Continue",
+  "age.failed": "We couldn't save that. Mind trying again?",
+  "age.blockedTitle": "Judge is for adults only",
+  "age.blocked": "This account can't use Judge, because Judge is only for people 18 and older.",
+  "age.blockedContact": "Think this is a mistake? Email {email}.",
+  "error.age_blocked": "Judge is only for people 18 and older.",
+  "error.age_unconfirmed": "Confirm that you're 18 or older to continue.",
+  "terms.title": "Terms of Use",
+  "terms.kicker": "The rules",
+  "terms.lead":
+    "Short version: Judge is for adults, it's for fun and clearer thinking, and the AI can be wrong. Be fair to the people you write about.",
+  "terms.updated": "Last updated {date}",
+  "terms.whoTitle": "Who can use Judge",
+  "terms.who":
+    "Judge is only for people 18 and older. By using it you confirm that you are. If we learn that an account belongs to someone under 18, we close it.",
+  "terms.whatTitle": "What Judge is",
+  "terms.what":
+    "Judge gives AI verdicts on everyday arguments, for fun and for thinking a bit more clearly. It is not legal, medical or financial advice. The verdicts come from an outside AI service and can be wrong, so don't rely on them for decisions that matter.",
+  "terms.contentTitle": "Your content",
+  "terms.content":
+    "What you write stays yours. You let us use it as far as we need to run the service: to store it, take the names out, have it judged and show it where you share it. Don't send other people's private information that you have no right to share, and nothing illegal, threatening or abusive.",
+  "terms.purchasesTitle": "Purchases",
+  "terms.purchases":
+    "Credit packs and the monthly plan are bought through the App Store or Google Play. The monthly plan renews automatically every month until you cancel it in the store's subscription settings, at least 24 hours before it renews. Refunds go through Apple or Google. Credits have no cash value.",
+  "terms.fairUseTitle": "Fair use",
+  "terms.fairUse":
+    "The monthly plan includes up to {cap} verdicts a month. We may suspend accounts that abuse the service, for example by getting around its limits or using it to harass someone.",
+  "terms.asIsTitle": "No guarantees",
+  "terms.asIs":
+    "Judge is provided as is: we can't promise it is always available, free of errors or right. As far as the law allows, we are not responsible for what comes of relying on a verdict.",
+  "terms.changesTitle": "Changes",
+  "terms.changes":
+    "We may update these terms. The date at the top shows when they last changed, and if you keep using Judge after a change, the new terms apply.",
+  "terms.contactTitle": "Contact",
+  "terms.contact": "Questions about these terms? Email {email}.",
 } as const;
 
 export type Key = keyof typeof en;
@@ -688,11 +727,12 @@ export type Locale = {
    * paragraph of plain sentences.
    */
   voice: string;
-  /** Every key of the English table, nothing else. The privacy page's
-   * strings may be left out as a whole: that page then shows in English. */
+  /** Every key of the English table, nothing else. The privacy or terms
+   * page's strings may be left out as a whole: that page then shows in
+   * English. */
   strings: Strings;
-  /** On a translated privacy page, one line saying the English version
-   * applies where the two differ. */
+  /** On a translated privacy or terms page, one line saying the English
+   * version applies where the two differ. */
   legalNotice?: string;
   /** Extra forms of the count strings, by plural category (see COUNT_KEYS). */
   plurals?: Partial<Record<CountKey, PluralForms>>;
@@ -700,8 +740,10 @@ export type Locale = {
   email: EmailCopy;
 };
 
-/** The privacy page's strings, which a locale may leave to English. */
-export type LegalKey = Extract<Key, `privacy.${string}`>;
+/** The privacy and terms pages' strings, which a locale may leave to
+ * English, a whole page at a time. */
+export type LegalPage = "privacy" | "terms";
+export type LegalKey = Extract<Key, `${LegalPage}.${string}`>;
 
 export type Strings = Record<Exclude<Key, LegalKey>, string> & Partial<Record<LegalKey, string>>;
 
@@ -855,16 +897,16 @@ export function t(lang: Lang, key: Key, vars?: Record<string, string | number>):
   return s;
 }
 
-/** The language the privacy page shows in: `lang` when its locale has the
+/** The language a legal page shows in: `lang` when its locale has the
  * page, else English. */
-export function legalLang(lang: Lang): Lang {
-  return loaded[lang]?.strings["privacy.title"] !== undefined ? lang : "en";
+export function legalLang(lang: Lang, page: LegalPage = "privacy"): Lang {
+  return loaded[lang]?.strings[`${page}.title`] !== undefined ? lang : "en";
 }
 
-/** The "English version applies" line for a translated privacy page, if the
+/** The "English version applies" line for a translated legal page, if the
  * locale has one. */
-export function legalNotice(lang: Lang): string | null {
-  return (legalLang(lang) === lang && loaded[lang]?.legalNotice) || null;
+export function legalNotice(lang: Lang, page: LegalPage = "privacy"): string | null {
+  return (legalLang(lang, page) === lang && loaded[lang]?.legalNotice) || null;
 }
 
 /** The name of language `of` in the words of `ui` ("Turkish", "İngilizce").
@@ -916,6 +958,8 @@ export const ERROR_KEY_BY_CODE: Partial<Record<string, Key>> = {
   anonymize_failed: "error.anonymize_failed",
   removed: "error.removed",
   names_unavailable: "error.names_unavailable",
+  age_blocked: "error.age_blocked",
+  age_unconfirmed: "error.age_unconfirmed",
 };
 
 /** Keys whose `{date}` slot has a whole-sentence fallback for when the

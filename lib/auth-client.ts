@@ -8,7 +8,7 @@
 import { createAuthClient } from "better-auth/react";
 import { magicLinkClient } from "better-auth/client/plugins";
 import { isApiErrorCode, type ApiErrorCode } from "./api-errors";
-import type { AppConfig, MeResponse } from "./account-types";
+import type { AgeState, AppConfig, MeResponse } from "./account-types";
 
 // No baseURL: the browser's own origin, so one build works on any domain.
 export const authClient = createAuthClient({
@@ -93,6 +93,22 @@ export function fetchMe(): Promise<MeResponse> {
 /** GET /api/v1/config. Throws on network or server errors. */
 export function fetchConfig(): Promise<AppConfig> {
   return getJson<AppConfig>("/api/v1/config");
+}
+
+/** POST /api/v1/me/age after the "I'm 18 or older" box was ticked. Null on
+ * any failure. */
+export async function confirmAdult(): Promise<AgeState | null> {
+  try {
+    const res = await fetch("/api/v1/me/age", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      credentials: "same-origin",
+      body: JSON.stringify({ adult: true, source: "checkbox" }),
+    });
+    return res.ok ? ((await res.json()) as AgeState) : null;
+  } catch {
+    return null;
+  }
 }
 
 /** DELETE /api/v1/me: removes the account, its sign-ins and entitlements. */

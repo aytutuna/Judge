@@ -1,5 +1,5 @@
 import { useSyncExternalStore } from "react";
-import type { AppConfig, Entitlement, MeResponse } from "./account-types";
+import type { AgeState, AppConfig, Entitlement, MeResponse } from "./account-types";
 
 /**
  * Client store for "who is signed in, what can they use, and what does this
@@ -66,6 +66,12 @@ export function refreshViewer(): Promise<void> {
   return inflight;
 }
 
+/** Swap in the age check POST /api/v1/me/age answered with. */
+export function applyAge(age: AgeState): void {
+  if (!state.me?.user) return;
+  emit({ ...state, me: { ...state.me, age } });
+}
+
 /** Swap in the balance a premium verdict response carried, without a refetch. */
 export function applyEntitlement(entitlement: Entitlement): void {
   if (!state.me?.user) return;
@@ -74,7 +80,7 @@ export function applyEntitlement(entitlement: Entitlement): void {
 
 /** After sign-out or account deletion: signed out, config unchanged. */
 export function markSignedOut(): void {
-  emit({ ...state, status: "ready", me: { user: null, entitlement: null } });
+  emit({ ...state, status: "ready", me: { user: null, entitlement: null, age: null } });
 }
 
 function subscribe(onChange: () => void): () => void {

@@ -254,7 +254,7 @@ const ro: Locale = {
       "Ai întrebări sau vrei să vezi, să corectezi ori să elimini datele tale? Scrie la {email} și trimite linkul verdictului sau al cazului.",
     "privacy.accountsTitle": "Conturi",
     "privacy.accounts":
-      "Ai nevoie de un cont ca să primești un verdict; cealaltă parte dintr-un caz cu două părți poate răspunde fără cont. Dacă te conectezi cu Apple sau Google, păstrăm adresa de e-mail, numele și linkul pozei de profil pe care ni le transmit, plus metoda de conectare pe care ai folosit-o, iar Apple sau Google pot vedea că te-ai conectat la Judge. Dacă te conectezi cu un link primit pe e-mail, acel e-mail e trimis prin Resend, iar noi păstrăm pentru scurt timp o înregistrare cu adresa ta de e-mail ca să verificăm linkul: linkul nu mai funcționează după 10 minute, iar înregistrarea e ștearsă după ce e folosită sau la scurt timp după ce expiră. Mai păstrăm înregistrările sesiunilor tale (un token aleatoriu și momentul în care expiră, fără adresă IP sau detalii despre browser, deși aplicațiile înregistrează și un identificator al dispozitivului când te conectezi), creditele tale, planul tău și istoricul lui și ce verdicte au folosit un credit (doar ID-ul verdictului). Mai păstrăm și ce verdicte și cazuri sunt ale tale, ca să le găsești pe orice dispozitiv. Dacă îți ștergi contul din pagina contului, sunt șterse contul tău, sesiunile, evenimentele de utilizare și legătura dintre cont și dispozitivele tale, iar verdictele tale și părțile tale din cazuri sunt eliminate așa cum e descris la Eliminare. Păstrăm doar o formă codificată a adresei tale de e-mail, ca un cont nou cu aceeași adresă să nu primească un al doilea verdict gratuit.",
+      "Judge e doar pentru persoane de 18 ani sau mai mari, iar conturile despre care aflăm că aparțin cuiva sub 18 ani sunt închise. Ai nevoie de un cont ca să primești un verdict; cealaltă parte dintr-un caz cu două părți poate răspunde fără cont. Dacă te conectezi cu Apple sau Google, păstrăm adresa de e-mail, numele și linkul pozei de profil pe care ni le transmit, plus metoda de conectare pe care ai folosit-o, iar Apple sau Google pot vedea că te-ai conectat la Judge. Dacă te conectezi cu un link primit pe e-mail, acel e-mail e trimis prin Resend, iar noi păstrăm pentru scurt timp o înregistrare cu adresa ta de e-mail ca să verificăm linkul: linkul nu mai funcționează după 10 minute, iar înregistrarea e ștearsă după ce e folosită sau la scurt timp după ce expiră. Mai păstrăm înregistrările sesiunilor tale (un token aleatoriu și momentul în care expiră, fără adresă IP sau detalii despre browser, deși aplicațiile înregistrează și un identificator al dispozitivului când te conectezi), creditele tale, planul tău și istoricul lui și ce verdicte au folosit un credit (doar ID-ul verdictului). Mai păstrăm și ce verdicte și cazuri sunt ale tale, ca să le găsești pe orice dispozitiv. Dacă îți ștergi contul din pagina contului, sunt șterse contul tău, sesiunile, evenimentele de utilizare și legătura dintre cont și dispozitivele tale, iar verdictele tale și părțile tale din cazuri sunt eliminate așa cum e descris la Eliminare. Păstrăm doar o formă codificată a adresei tale de e-mail, ca un cont nou cu aceeași adresă să nu primească un al doilea verdict gratuit, și să rămână închis dacă contul tău a fost închis pentru că ai sub 18 ani.",
     "privacy.webSearchTitle": "Căutare pe web și întrebări",
     "privacy.webSearch":
       "Fiecare verdict trimite disputa anonimizată la furnizorul nostru AI, cu căutarea pe web activată. Modelul formulează căutările pe baza acestui text anonimizat, iar rezultatele vin de la partenerul de căutare al furnizorului. Sursele folosite apar în verdict. Judecătorii îți pot pune mai întâi cel mult două întrebări: ca să le formuleze, textul tău așa cum l-ai scris, inclusiv numele, ajunge încă o dată la furnizorul AI. Răspunsurile tale sunt anonimizate împreună cu disputa înainte de judecare; întrebările și răspunsurile tale, așa cum le-ai scris, sunt păstrate cu originalul tău criptat.",
@@ -312,9 +312,9 @@ const ro: Locale = {
     "signin.unavailable": "Conectarea nu e configurată încă pe acest site.",
     "signin.providerUnavailable": "Încă nu e disponibil",
     "signin.failed": "N-am reușit să te conectăm. Mai încerci o dată?",
-    "signin.legal": "Disputele tale sunt citite de un AI extern. Dacă continui, ești de acord cu",
+    "signin.legal":
+      "Disputele tale sunt citite de un AI extern. Dacă continui, ești de acord cu {terms} și cu {privacy}.",
     "signin.legalLink": "Politica de confidențialitate",
-    "signin.legalAfter": ".",
     "signin.loading": "Se încarcă opțiunile de conectare…",
     "account.title": "Contul tău",
     "account.signedInAs": "Te-ai conectat cu {email}",
@@ -679,6 +679,46 @@ const ro: Locale = {
     "privacy.rightsTitle": "Drepturile tale (Canada)",
     "privacy.rights":
       "Judge este operat din Canada și tratează informațiile personale conform legii federale canadiene privind confidențialitatea (PIPEDA): colectăm doar ce îi trebuie serviciului, le folosim doar pentru asta, le protejăm, iar tu poți cere să vezi, să corectezi sau să elimini ce deținem despre tine. Răspundem în termen de 30 de zile.",
+    "footer.terms": "Termeni",
+    "signin.legalTerms": "Termenii de utilizare",
+    "age.confirm": "Am 18 ani sau mai mult",
+    "age.title": "Judge e pentru adulți",
+    "age.lead": "Judge e doar pentru persoane de 18 ani sau mai mari. Confirmă-ți vârsta ca să continui.",
+    "age.continue": "Continuă",
+    "age.failed": "Nu am putut salva asta. Mai încerci o dată?",
+    "age.blockedTitle": "Judge e doar pentru adulți",
+    "age.blocked": "Acest cont nu poate folosi Judge, pentru că Judge e doar pentru persoane de 18 ani sau mai mari.",
+    "age.blockedContact": "Crezi că e o greșeală? Scrie-ne la {email}.",
+    "error.age_blocked": "Judge e doar pentru persoane de 18 ani sau mai mari.",
+    "error.age_unconfirmed": "Confirmă că ai 18 ani sau mai mult ca să continui.",
+    "terms.title": "Termeni de utilizare",
+    "terms.kicker": "Regulile",
+    "terms.lead":
+      "Pe scurt: Judge e pentru adulți, e pentru distracție și ca să gândești mai limpede, iar AI-ul poate greși. Poartă-te corect cu oamenii despre care scrii.",
+    "terms.updated": "Ultima actualizare: {date}",
+    "terms.whoTitle": "Cine poate folosi Judge",
+    "terms.who":
+      "Judge e doar pentru persoane de 18 ani sau mai mari. Folosindu-l, confirmi că ai vârsta asta. Dacă aflăm că un cont aparține cuiva sub 18 ani, îl închidem.",
+    "terms.whatTitle": "Ce este Judge",
+    "terms.what":
+      "Judge dă verdicte AI pentru dispute de zi cu zi, pentru distracție și ca să gândești un pic mai limpede. Nu e consultanță juridică, medicală sau financiară. Verdictele vin de la un serviciu AI extern și pot fi greșite, așa că nu te baza pe ele în decizii importante.",
+    "terms.contentTitle": "Conținutul tău",
+    "terms.content":
+      "Ce scrii rămâne al tău. Ne lași să folosim conținutul doar cât avem nevoie ca să ținem serviciul în funcțiune: să-l stocăm, să scoatem numele, să-l dăm spre judecare și să-l afișăm acolo unde îl distribui. Nu trimite informații private ale altora pe care nu ai dreptul să le distribui și nimic ilegal, amenințător sau abuziv.",
+    "terms.purchasesTitle": "Achiziții",
+    "terms.purchases":
+      "Pachetele de credite și planul lunar se cumpără prin App Store sau Google Play. Planul lunar se reînnoiește automat în fiecare lună până îl anulezi din setările de abonament ale magazinului, cu cel puțin 24 de ore înainte de reînnoire. Rambursările trec prin Apple sau Google. Creditele nu au valoare în bani.",
+    "terms.fairUseTitle": "Utilizare rezonabilă",
+    "terms.fairUse":
+      "Planul lunar include până la {cap} verdicte pe lună. Putem suspenda conturile care abuzează de serviciu, de exemplu ocolindu-i limitele sau folosindu-l ca să hărțuiască pe cineva.",
+    "terms.asIsTitle": "Fără garanții",
+    "terms.asIs":
+      "Judge e oferit așa cum este: nu putem promite că e mereu disponibil, fără erori sau corect. În măsura permisă de lege, nu răspundem pentru ce rezultă din a te baza pe un verdict.",
+    "terms.changesTitle": "Modificări",
+    "terms.changes":
+      "Putem actualiza acești termeni. Data de sus arată când s-au schimbat ultima oară, iar dacă folosești Judge în continuare după o modificare, se aplică noii termeni.",
+    "terms.contactTitle": "Contact",
+    "terms.contact": "Întrebări despre acești termeni? Scrie-ne la {email}.",
   },
   // Romanian puts "de" after numbers from 20 up ("20 de minute"), so the base
   // strings carry it and "few" (2–19, 101–119…) drops it.

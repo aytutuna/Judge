@@ -8,6 +8,7 @@ import type { AuthProviders } from "@/lib/account-types";
 import { t, type Lang } from "@/lib/i18n";
 import { useLang } from "@/lib/lang";
 import { refreshViewer, useViewer } from "@/lib/use-viewer";
+import { AdultCheck, forgetAdultTick, rememberAdultTick } from "../AgeGate";
 import { Turnstile, TURNSTILE_SITE_KEY } from "../Turnstile";
 import styles from "./AccountPages.module.css";
 import { PageShell } from "./PageShell";
@@ -92,6 +93,9 @@ export type SignInPanelProps = {
   sentTo: string | null;
   captcha: React.ReactNode;
   canSendEmail: boolean;
+  /** "I'm 18 or older" is ticked: nothing can be used until it is. */
+  adult: boolean;
+  onAdult: (v: boolean) => void;
   onProvider: (p: "apple" | "google") => void;
   onToggleEmail: () => void;
   onEmail: (value: string) => void;
@@ -110,6 +114,8 @@ export function SignInPanel({
   sentTo,
   captcha,
   canSendEmail,
+  adult,
+  onAdult,
   onProvider,
   onToggleEmail,
   onEmail,
@@ -126,7 +132,7 @@ export function SignInPanel({
       <button
         type="button"
         className={`${styles.btn} ${p === "apple" && available ? styles.primary : styles.secondary}`}
-        disabled={!available || pending}
+        disabled={!available || pending || !adult}
         onClick={() => onProvider(p)}
       >
         {p === "apple" ? <AppleLogo /> : <GoogleLogo />}
@@ -152,6 +158,8 @@ export function SignInPanel({
         </p>
       ) : null}
 
+      {none ? null : <AdultCheck lang={lang} checked={adult} onChange={onAdult} />}
+
       {providerButton("apple")}
       {providerButton("google")}
 
@@ -169,6 +177,7 @@ export function SignInPanel({
                 className={styles.textBtn}
                 aria-expanded={emailOpen}
                 aria-controls={emailFormId}
+                disabled={!adult}
                 onClick={onToggleEmail}
               >
                 {t(lang, "signin.emailToggle")}
@@ -179,7 +188,7 @@ export function SignInPanel({
                 className={styles.field}
                 onSubmit={(e) => {
                   e.preventDefault();
-                  if (canSendEmail) onSendEmail();
+                  if (canSendEmail && adult) onSendEmail();
                 }}
               >
                 <label className={styles.label} htmlFor={`${emailFormId}-email`}>
@@ -200,7 +209,7 @@ export function SignInPanel({
                 <button
                   type="submit"
                   className={`${styles.btn} ${styles.secondary}`}
-                  disabled={!canSendEmail || pending}
+                  disabled={!canSendEmail || pending || !adult}
                 >
                   {t(lang, "signin.emailSubmit")}
                 </button>
@@ -215,7 +224,7 @@ export function SignInPanel({
           <button
             type="button"
             className={`${styles.btn} ${styles.secondary}`}
-            disabled={pending}
+            disabled={pending || !adult}
             onClick={onDev}
           >
             {t(lang, "signin.dev")}
@@ -225,11 +234,21 @@ export function SignInPanel({
       ) : null}
 
       <p className={styles.small}>
-        {t(lang, "signin.legal")}{" "}
-        <Link href="/privacy" className={styles.link}>
-          {t(lang, "signin.legalLink")}
-        </Link>
-        {t(lang, "signin.legalAfter")}
+        {t(lang, "signin.legal")
+          .split(/(\{terms\}|\{privacy\})/)
+          .map((part, i) =>
+            part === "{terms}" ? (
+              <Link key={i} href="/terms" className={styles.link}>
+                {t(lang, "signin.legalTerms")}
+              </Link>
+            ) : part === "{privacy}" ? (
+              <Link key={i} href="/privacy" className={styles.link}>
+                {t(lang, "signin.legalLink")}
+              </Link>
+            ) : (
+              part
+            ),
+          )}
       </p>
     </div>
   );
@@ -249,8 +268,12 @@ export function SignInView({ next: rawNext }: { next?: string | string[] }) {
   const [email, setEmail] = useState("");
   const [sentTo, setSentTo] = useState<string | null>(null);
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  const [adult, setAdult] = useState(false);
 
   const signedIn = Boolean(me?.user);
+  // Back here from Apple or Google without signing in, or a fresh visit:
+  // whatever was ticked before no longer counts.
+  useEffect(() => forgetAdultTick(), []);
   useEffect(() => {
     if (signedIn) router.replace(next);
   }, [signedIn, next, router]);
@@ -261,11 +284,13 @@ export function SignInView({ next: rawNext }: { next?: string | string[] }) {
   async function provider(p: "apple" | "google") {
     setPending(true);
     setError(null);
+    rememberAdultTick();
     signInStarted(p);
     const { signInWithProvider } = await import("@/lib/auth-client");
     const res = await signInWithProvider(p, next);
     // Success leaves the page for Apple or Google; only failure lands here.
     if (!res.ok) {
+      forgetAdultTick();
       trackError(res.code);
       setError(t(lang, "signin.failed"));
       setPending(false);
@@ -280,6 +305,7 @@ export function SignInView({ next: rawNext }: { next?: string | string[] }) {
     }
     setPending(true);
     setError(null);
+    rememberAdultTick();
     signInStarted("email");
     const token = captchaToken ?? undefined;
     setCaptchaToken(null);
@@ -288,6 +314,7 @@ export function SignInView({ next: rawNext }: { next?: string | string[] }) {
     setPending(false);
     if (res.ok) setSentTo(to);
     else {
+      forgetAdultTick();
       trackError(res.code);
       setError(t(lang, "signin.failed"));
     }
@@ -296,10 +323,12 @@ export function SignInView({ next: rawNext }: { next?: string | string[] }) {
   async function dev() {
     setPending(true);
     setError(null);
+    rememberAdultTick();
     signInStarted("dev");
     const { devLogin } = await import("@/lib/auth-client");
     const res = await devLogin();
     if (!res.ok) {
+      forgetAdultTick();
       trackError("dev_login_failed");
       setError(t(lang, "signin.failed"));
       setPending(false);
@@ -331,6 +360,8 @@ export function SignInView({ next: rawNext }: { next?: string | string[] }) {
           ) : null
         }
         canSendEmail={canSendEmail}
+        adult={adult}
+        onAdult={setAdult}
         onProvider={(p) => void provider(p)}
         onToggleEmail={() => setEmailOpen((o) => !o)}
         onEmail={setEmail}

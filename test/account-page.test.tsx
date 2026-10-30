@@ -135,6 +135,8 @@ function signin(over: Partial<SignInPanelProps>): string {
       sentTo={null}
       captcha={null}
       canSendEmail={false}
+      adult={true}
+      onAdult={noop}
       onProvider={noop}
       onToggleEmail={noop}
       onEmail={noop}
@@ -182,14 +184,26 @@ describe("SignInPanel", () => {
     expect(sent).not.toContain('type="email"');
   });
 
-  it("consent is one short line with the privacy link, in both languages", () => {
+  it("nothing can be used until the 18+ box is ticked", () => {
+    const html = signin({ adult: false, providers: { apple: true, google: true, email: true, emailCode: true, dev: true } });
+    expect(html).toContain('type="checkbox"');
+    expect(html).toContain(esc(t("en", "age.confirm")));
+    expect(html.indexOf('type="checkbox"')).toBeLessThan(html.indexOf("Continue with Apple"));
+    const buttons = html.match(/<button[^>]*>/g) ?? [];
+    expect(buttons.length).toBeGreaterThanOrEqual(4);
+    for (const b of buttons) expect(b).toContain('disabled=""');
+    const ticked = signin({ adult: true });
+    expect(ticked).toMatch(/<button[^>]*class="[^"]*primary[^"]*"(?![^>]*disabled)[^>]*>/);
+  });
+
+  it("consent is one short line with the terms and privacy links, in both languages", () => {
     const en = signin({});
     expect(en).toMatch(
-      /<p[^>]*>An outside AI reads your arguments\. By continuing you agree to the <a [^>]*href="\/privacy"[^>]*>Privacy Policy<\/a>\.<\/p>/,
+      /<p[^>]*>An outside AI reads your arguments\. By continuing you agree to the <a [^>]*href="\/terms"[^>]*>Terms<\/a> and the <a [^>]*href="\/privacy"[^>]*>Privacy Policy<\/a>\.<\/p>/,
     );
     const tr = signin({ lang: "tr" });
     expect(tr).toMatch(
-      /<p[^>]*>Tartışmalarını harici bir yapay zekâ okur\. Devam ederek <a [^>]*href="\/privacy"[^>]*>Gizlilik Politikası<\/a>&#x27;nı kabul etmiş olursun\.<\/p>/,
+      /<p[^>]*>Tartışmalarını harici bir yapay zekâ okur\. Devam ederek <a [^>]*href="\/terms"[^>]*>Kullanım Koşulları<\/a>&#x27;nı ve <a [^>]*href="\/privacy"[^>]*>Gizlilik Politikası<\/a>&#x27;nı kabul etmiş olursun\.<\/p>/,
     );
     expect(en).not.toContain("Signing in keeps");
   });

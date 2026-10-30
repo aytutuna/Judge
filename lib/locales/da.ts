@@ -255,7 +255,7 @@ const da: Locale = {
       "Har du spørgsmål, eller vil du se, rette eller fjerne dine data? Skriv til {email} med linket til dommen eller sagen.",
     "privacy.accountsTitle": "Konti",
     "privacy.accounts":
-      "Du skal have en konto for at få en dom; den anden side i en tosidet sag kan svare uden. Hvis du logger ind med Apple eller Google, gemmer vi den e-mailadresse, det navn og det link til profilbilledet, de deler med os, og hvilken loginmetode du brugte, og Apple eller Google kan se, at du har logget ind på Judge. Hvis du logger ind med et link på e-mail, sendes den e-mail via Resend, og vi gemmer kortvarigt en registrering med din e-mailadresse for at kunne tjekke linket: det holder op med at virke efter 10 minutter og slettes, så snart det er brugt, eller kort efter udløb. Vi gemmer også dine sessionsoplysninger (et tilfældigt token og hvornår det udløber, uden IP-adresse eller browseroplysninger, men apperne gemmer også et enheds-id, når du logger ind), dine kreditter, din plan og dens historik, og hvilke domme der brugte en kredit (kun dommens id). Vi gemmer også, hvilke domme og sager der er dine, så du kan finde dem på alle enheder. Når du sletter din konto på kontosiden, fjernes din konto, dine sessioner, brugshændelser og forbindelsen mellem din konto og dine enheder, og dine domme og dine sider i sager fjernes som beskrevet under Fjernelse. Vi gemmer kun en forvrænget udgave af din e-mailadresse, så en ny konto med den ikke får endnu en gratis dom.",
+      "Judge er kun for personer på 18 år og derover, og konti, som vi opdager tilhører en person under 18, bliver lukket. Du skal have en konto for at få en dom; den anden side i en tosidet sag kan svare uden. Hvis du logger ind med Apple eller Google, gemmer vi den e-mailadresse, det navn og det link til profilbilledet, de deler med os, og hvilken loginmetode du brugte, og Apple eller Google kan se, at du har logget ind på Judge. Hvis du logger ind med et link på e-mail, sendes den e-mail via Resend, og vi gemmer kortvarigt en registrering med din e-mailadresse for at kunne tjekke linket: det holder op med at virke efter 10 minutter og slettes, så snart det er brugt, eller kort efter udløb. Vi gemmer også dine sessionsoplysninger (et tilfældigt token og hvornår det udløber, uden IP-adresse eller browseroplysninger, men apperne gemmer også et enheds-id, når du logger ind), dine kreditter, din plan og dens historik, og hvilke domme der brugte en kredit (kun dommens id). Vi gemmer også, hvilke domme og sager der er dine, så du kan finde dem på alle enheder. Når du sletter din konto på kontosiden, fjernes din konto, dine sessioner, brugshændelser og forbindelsen mellem din konto og dine enheder, og dine domme og dine sider i sager fjernes som beskrevet under Fjernelse. Vi gemmer kun en forvrænget udgave af din e-mailadresse, så en ny konto med den ikke får endnu en gratis dom, og forbliver lukket, hvis din konto blev lukket, fordi du er under 18.",
     "privacy.webSearchTitle": "Websøgning og spørgsmål",
     "privacy.webSearch":
       "Hver dom sender den anonymiserede diskussion til vores AI-udbyder med websøgning slået til. Modellen skriver søgningerne ud fra den anonymiserede tekst, og resultaterne kommer fra udbyderens søgepartner. De kilder, den brugte, vises på dommen. Dommerne kan først stille dig op til to spørgsmål: for at finde på dem sendes din tekst, som du skrev den, inklusive navne, til AI-udbyderen én gang til. Dine svar bliver anonymiseret sammen med diskussionen, før der dømmes; spørgsmålene og dine svar, som du skrev dem, gemmes sammen med din krypterede original.",
@@ -313,9 +313,8 @@ const da: Locale = {
     "signin.unavailable": "Login er ikke sat op på dette site endnu.",
     "signin.providerUnavailable": "Ikke tilgængeligt endnu",
     "signin.failed": "Vi kunne ikke logge dig ind. Vil du prøve igen?",
-    "signin.legal": "En ekstern AI læser dine diskussioner. Ved at fortsætte accepterer du",
+    "signin.legal": "En ekstern AI læser dine diskussioner. Ved at fortsætte accepterer du {terms} og {privacy}.",
     "signin.legalLink": "privatlivspolitikken",
-    "signin.legalAfter": ".",
     "signin.loading": "Henter loginmuligheder…",
     "account.title": "Din konto",
     "account.signedInAs": "Logget ind som {email}",
@@ -678,6 +677,46 @@ const da: Locale = {
     "privacy.rightsTitle": "Dine rettigheder (Canada)",
     "privacy.rights":
       "Judge drives fra Canada og behandler personoplysninger efter Canadas føderale lov om beskyttelse af personoplysninger (PIPEDA): vi indsamler kun det, tjenesten har brug for, bruger det kun til det og beskytter det, og du kan bede om at se, rette eller fjerne det, vi har om dig. Vi svarer inden for 30 dage.",
+    "footer.terms": "Vilkår",
+    "signin.legalTerms": "brugsvilkårene",
+    "age.confirm": "Jeg er 18 år eller ældre",
+    "age.title": "Judge er for voksne",
+    "age.lead": "Judge er kun for personer på 18 år og derover. Bekræft din alder for at fortsætte.",
+    "age.continue": "Fortsæt",
+    "age.failed": "Vi kunne ikke gemme det. Vil du prøve igen?",
+    "age.blockedTitle": "Judge er kun for voksne",
+    "age.blocked": "Denne konto kan ikke bruge Judge, fordi Judge kun er for personer på 18 år og derover.",
+    "age.blockedContact": "Tror du, det er en fejl? Skriv til {email}.",
+    "error.age_blocked": "Judge er kun for personer på 18 år og derover.",
+    "error.age_unconfirmed": "Bekræft, at du er 18 år eller ældre, for at fortsætte.",
+    "terms.title": "Brugsvilkår",
+    "terms.kicker": "Reglerne",
+    "terms.lead":
+      "Kort sagt: Judge er for voksne, det er til sjov og til at tænke klarere, og AI'en kan tage fejl. Vær fair over for dem, du skriver om.",
+    "terms.updated": "Sidst opdateret {date}",
+    "terms.whoTitle": "Hvem må bruge Judge",
+    "terms.who":
+      "Judge er kun for personer på 18 år og derover. Ved at bruge det bekræfter du, at du er det. Hvis vi opdager, at en konto tilhører en person under 18, lukker vi den.",
+    "terms.whatTitle": "Hvad Judge er",
+    "terms.what":
+      "Judge giver AI-domme over hverdagens diskussioner, for sjov og for at tænke lidt klarere. Det er ikke juridisk, medicinsk eller økonomisk rådgivning. Dommene kommer fra en ekstern AI-tjeneste og kan være forkerte, så lad være med at stole på dem, når det gælder vigtige beslutninger.",
+    "terms.contentTitle": "Dit indhold",
+    "terms.content":
+      "Det, du skriver, er stadig dit. Du giver os lov til at bruge det, så vidt vi har brug for det for at drive tjenesten: gemme det, fjerne navnene, få det dømt og vise det, hvor du deler det. Send ikke andres private oplysninger, som du ikke har ret til at dele, og heller ikke noget ulovligt, truende eller krænkende.",
+    "terms.purchasesTitle": "Køb",
+    "terms.purchases":
+      "Kreditpakker og månedsabonnementet købes via App Store eller Google Play. Månedsabonnementet fornys automatisk hver måned, indtil du opsiger det i butikkens abonnementsindstillinger, mindst 24 timer før det fornys. Refusion går gennem Apple eller Google. Kreditter har ingen kontantværdi.",
+    "terms.fairUseTitle": "Rimelig brug",
+    "terms.fairUse":
+      "Månedsabonnementet indeholder op til {cap} domme om måneden. Vi kan spærre konti, der misbruger tjenesten, for eksempel ved at omgå dens grænser eller bruge den til at chikanere nogen.",
+    "terms.asIsTitle": "Ingen garantier",
+    "terms.asIs":
+      "Judge leveres, som det er: vi kan ikke love, at det altid er tilgængeligt, uden fejl eller rigtigt. Så vidt loven tillader det, er vi ikke ansvarlige for, hvad der kommer ud af at stole på en dom.",
+    "terms.changesTitle": "Ændringer",
+    "terms.changes":
+      "Vi kan opdatere disse vilkår. Datoen øverst viser, hvornår de sidst blev ændret, og hvis du bliver ved med at bruge Judge efter en ændring, gælder de nye vilkår.",
+    "terms.contactTitle": "Kontakt",
+    "terms.contact": "Spørgsmål til disse vilkår? Skriv til {email}.",
   },
   plurals: {
     "panel.strong": { one: "{n} stærk" },

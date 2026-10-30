@@ -254,7 +254,7 @@ const id: Locale = {
       "Ada pertanyaan, atau ingin melihat, memperbaiki, atau menghapus datamu? Kirim email ke {email} beserta tautan ke putusan atau kasusnya.",
     "privacy.accountsTitle": "Akun",
     "privacy.accounts":
-      "Kamu perlu akun untuk mendapat putusan; pihak lain dalam kasus dua pihak bisa menjawab tanpa akun. Jika kamu masuk dengan Apple atau Google, kami menyimpan alamat email, nama, dan tautan foto profil yang mereka bagikan kepada kami, serta metode masuk yang kamu pakai, dan Apple atau Google bisa melihat bahwa kamu masuk ke Judge. Jika kamu masuk dengan tautan email, email itu dikirim lewat Resend, dan kami menyimpan sebentar catatan berisi alamat emailmu untuk memeriksa tautannya: tautan itu tidak berlaku lagi setelah 10 menit, dan catatannya dihapus begitu dipakai atau tidak lama setelah kedaluwarsa. Kami juga menyimpan catatan sesimu (token acak dan waktu kedaluwarsanya, tanpa alamat IP atau detail browser, tetapi aplikasi juga mencatat pengenal perangkat saat kamu masuk), kreditmu, langgananmu beserta riwayatnya, dan putusan mana yang memakai kredit (hanya ID putusannya). Kami juga mencatat putusan dan kasus mana yang milikmu, supaya kamu bisa menemukannya di perangkat mana pun. Menghapus akunmu di halaman akun akan menghapus akun, sesi, peristiwa penggunaan, dan tautan antara akunmu dan perangkatmu, serta menghapus putusanmu dan versimu dalam kasus seperti dijelaskan di bagian Penghapusan. Kami hanya menyimpan bentuk acak dari alamat emailmu, supaya akun baru dengan alamat yang sama tidak mendapat putusan gratis kedua.",
+      "Judge hanya untuk orang berusia 18 tahun ke atas, dan akun yang kami ketahui milik orang di bawah 18 tahun akan ditutup. Kamu perlu akun untuk mendapat putusan; pihak lain dalam kasus dua pihak bisa menjawab tanpa akun. Jika kamu masuk dengan Apple atau Google, kami menyimpan alamat email, nama, dan tautan foto profil yang mereka bagikan kepada kami, serta metode masuk yang kamu pakai, dan Apple atau Google bisa melihat bahwa kamu masuk ke Judge. Jika kamu masuk dengan tautan email, email itu dikirim lewat Resend, dan kami menyimpan sebentar catatan berisi alamat emailmu untuk memeriksa tautannya: tautan itu tidak berlaku lagi setelah 10 menit, dan catatannya dihapus begitu dipakai atau tidak lama setelah kedaluwarsa. Kami juga menyimpan catatan sesimu (token acak dan waktu kedaluwarsanya, tanpa alamat IP atau detail browser, tetapi aplikasi juga mencatat pengenal perangkat saat kamu masuk), kreditmu, langgananmu beserta riwayatnya, dan putusan mana yang memakai kredit (hanya ID putusannya). Kami juga mencatat putusan dan kasus mana yang milikmu, supaya kamu bisa menemukannya di perangkat mana pun. Menghapus akunmu di halaman akun akan menghapus akun, sesi, peristiwa penggunaan, dan tautan antara akunmu dan perangkatmu, serta menghapus putusanmu dan versimu dalam kasus seperti dijelaskan di bagian Penghapusan. Kami hanya menyimpan bentuk acak dari alamat emailmu, supaya akun baru dengan alamat yang sama tidak mendapat putusan gratis kedua dan tetap ditutup jika akunmu ditutup karena kamu berusia di bawah 18 tahun.",
     "privacy.webSearchTitle": "Pencarian web dan pertanyaan",
     "privacy.webSearch":
       "Setiap putusan mengirim argumen yang sudah dianonimkan ke penyedia AI kami dengan pencarian web aktif. Model menulis kueri pencariannya dari teks anonim itu, dan hasilnya berasal dari mitra pencarian milik penyedia tersebut. Sumber yang dipakai ditampilkan di putusan. Para hakim mungkin lebih dulu mengajukan hingga dua pertanyaan kepadamu: untuk menyusunnya, teksmu seperti yang kamu ketik, termasuk nama, dikirim sekali lagi ke penyedia AI. Jawabanmu dianonimkan bersama argumennya sebelum dinilai; pertanyaan dan jawabanmu seperti yang kamu tulis disimpan bersama teks aslimu yang terenkripsi.",
@@ -312,9 +312,8 @@ const id: Locale = {
     "signin.unavailable": "Fitur masuk belum disiapkan di situs ini.",
     "signin.providerUnavailable": "Belum tersedia",
     "signin.failed": "Gagal masuk. Coba lagi, ya?",
-    "signin.legal": "AI pihak luar membaca argumenmu. Dengan melanjutkan, kamu menyetujui",
+    "signin.legal": "AI pihak luar membaca argumenmu. Dengan melanjutkan, kamu menyetujui {terms} dan {privacy}.",
     "signin.legalLink": "Kebijakan Privasi",
-    "signin.legalAfter": ".",
     "signin.loading": "Memuat pilihan masuk…",
     "account.title": "Akunmu",
     "account.signedInAs": "Masuk sebagai {email}",
@@ -677,6 +676,46 @@ const id: Locale = {
     "privacy.rightsTitle": "Hak-hakmu (Kanada)",
     "privacy.rights":
       "Judge dijalankan dari Kanada dan menangani informasi pribadi berdasarkan undang-undang privasi federal Kanada (PIPEDA): kami hanya mengumpulkan yang dibutuhkan layanan, hanya memakainya untuk itu, melindunginya, dan kamu bisa meminta untuk melihat, memperbaiki, atau menghapus data tentangmu yang kami simpan. Kami menjawab dalam 30 hari.",
+    "footer.terms": "Ketentuan",
+    "signin.legalTerms": "Ketentuan Penggunaan",
+    "age.confirm": "Saya berusia 18 tahun atau lebih",
+    "age.title": "Judge untuk orang dewasa",
+    "age.lead": "Judge hanya untuk orang berusia 18 tahun ke atas. Konfirmasi usiamu untuk melanjutkan.",
+    "age.continue": "Lanjut",
+    "age.failed": "Kami tidak bisa menyimpannya. Mau coba lagi?",
+    "age.blockedTitle": "Judge hanya untuk orang dewasa",
+    "age.blocked": "Akun ini tidak bisa memakai Judge, karena Judge hanya untuk orang berusia 18 tahun ke atas.",
+    "age.blockedContact": "Merasa ini keliru? Kirim email ke {email}.",
+    "error.age_blocked": "Judge hanya untuk orang berusia 18 tahun ke atas.",
+    "error.age_unconfirmed": "Konfirmasi bahwa kamu berusia 18 tahun atau lebih untuk melanjutkan.",
+    "terms.title": "Ketentuan Penggunaan",
+    "terms.kicker": "Aturannya",
+    "terms.lead":
+      "Singkatnya: Judge untuk orang dewasa, untuk seru-seruan dan berpikir lebih jernih, dan AI bisa salah. Bersikaplah adil kepada orang yang kamu tulis.",
+    "terms.updated": "Terakhir diperbarui {date}",
+    "terms.whoTitle": "Siapa yang boleh memakai Judge",
+    "terms.who":
+      "Judge hanya untuk orang berusia 18 tahun ke atas. Dengan memakainya, kamu menyatakan bahwa kamu memenuhi syarat itu. Jika kami tahu sebuah akun milik orang di bawah 18 tahun, kami menutupnya.",
+    "terms.whatTitle": "Apa itu Judge",
+    "terms.what":
+      "Judge memberi putusan AI untuk argumen sehari-hari, untuk seru-seruan dan agar bisa berpikir sedikit lebih jernih. Ini bukan nasihat hukum, medis, atau keuangan. Putusannya berasal dari layanan AI pihak luar dan bisa salah, jadi jangan mengandalkannya untuk keputusan penting.",
+    "terms.contentTitle": "Kontenmu",
+    "terms.content":
+      "Apa yang kamu tulis tetap milikmu. Kamu mengizinkan kami memakainya sejauh diperlukan untuk menjalankan layanan: menyimpannya, menghapus nama-nama, memintakan putusannya, dan menampilkannya di tempat kamu membagikannya. Jangan kirim informasi pribadi orang lain yang tidak berhak kamu bagikan, dan jangan kirim apa pun yang melanggar hukum, mengancam, atau kasar.",
+    "terms.purchasesTitle": "Pembelian",
+    "terms.purchases":
+      "Paket kredit dan langganan bulanan dibeli lewat App Store atau Google Play. Langganan bulanan diperpanjang otomatis setiap bulan sampai kamu membatalkannya di pengaturan langganan toko, paling lambat 24 jam sebelum diperpanjang. Pengembalian dana lewat Apple atau Google. Kredit tidak punya nilai tunai.",
+    "terms.fairUseTitle": "Pemakaian wajar",
+    "terms.fairUse":
+      "Langganan bulanan mencakup hingga {cap} putusan sebulan. Kami bisa menangguhkan akun yang menyalahgunakan layanan, misalnya dengan menyiasati batasnya atau memakainya untuk melecehkan seseorang.",
+    "terms.asIsTitle": "Tanpa jaminan",
+    "terms.asIs":
+      "Judge disediakan apa adanya: kami tidak bisa menjanjikan layanan ini selalu tersedia, bebas kesalahan, atau benar. Sejauh yang diizinkan hukum, kami tidak bertanggung jawab atas akibat dari mengandalkan sebuah putusan.",
+    "terms.changesTitle": "Perubahan",
+    "terms.changes":
+      "Kami bisa memperbarui ketentuan ini. Tanggal di bagian atas menunjukkan kapan terakhir diubah, dan jika kamu tetap memakai Judge setelah ada perubahan, ketentuan baru berlaku.",
+    "terms.contactTitle": "Kontak",
+    "terms.contact": "Ada pertanyaan tentang ketentuan ini? Kirim email ke {email}.",
   },
   legalNotice: "Jika versi ini berbeda dengan versi bahasa Inggris, yang berlaku adalah versi bahasa Inggris.",
 };

@@ -255,7 +255,7 @@ const ca: Locale = {
       "Tens preguntes, o vols veure, corregir o eliminar les teves dades? Escriu a {email} amb l'enllaç al veredicte o al cas.",
     "privacy.accountsTitle": "Comptes",
     "privacy.accounts":
-      "Necessites un compte per obtenir un veredicte; l'altra part d'un cas de dues parts pot respondre sense compte. Si inicies sessió amb Apple o Google, guardem l'adreça electrònica, el nom i l'enllaç a la foto de perfil que ens comparteixen, i també quin mètode d'inici de sessió has fet servir; Apple o Google poden veure que has iniciat sessió a Judge. Si inicies sessió amb un enllaç per correu, aquest correu s'envia a través de Resend, i guardem breument un registre amb la teva adreça electrònica per comprovar l'enllaç: deixa de funcionar al cap de 10 minuts i s'esborra quan es fa servir o poc després que caduqui. També guardem els registres de sessió (un testimoni aleatori i quan caduca, sense adreça IP ni dades del navegador, tot i que les aplicacions també registren un identificador del dispositiu quan inicies la sessió), els teus crèdits, el teu pla i el seu historial, i quins veredictes han fet servir un crèdit (només l'identificador del veredicte). També guardem quins veredictes i casos són teus, perquè els puguis trobar des de qualsevol dispositiu. Si elimines el compte a la pàgina del compte, s'esborren el teu compte, les sessions, els esdeveniments d'ús i l'enllaç entre el teu compte i els teus dispositius, i s'eliminen els teus veredictes i les teves versions dels casos tal com s'explica a «Eliminació». Només conservem una forma codificada de la teva adreça electrònica, perquè un compte nou amb la mateixa adreça no obtingui un segon veredicte gratuït.",
+      "Judge és només per a majors de 18 anys, i els comptes que descobrim que són d'una persona menor de 18 anys es tanquen. Necessites un compte per obtenir un veredicte; l'altra part d'un cas de dues parts pot respondre sense compte. Si inicies sessió amb Apple o Google, guardem l'adreça electrònica, el nom i l'enllaç a la foto de perfil que ens comparteixen, i també quin mètode d'inici de sessió has fet servir; Apple o Google poden veure que has iniciat sessió a Judge. Si inicies sessió amb un enllaç per correu, aquest correu s'envia a través de Resend, i guardem breument un registre amb la teva adreça electrònica per comprovar l'enllaç: deixa de funcionar al cap de 10 minuts i s'esborra quan es fa servir o poc després que caduqui. També guardem els registres de sessió (un testimoni aleatori i quan caduca, sense adreça IP ni dades del navegador, tot i que les aplicacions també registren un identificador del dispositiu quan inicies la sessió), els teus crèdits, el teu pla i el seu historial, i quins veredictes han fet servir un crèdit (només l'identificador del veredicte). També guardem quins veredictes i casos són teus, perquè els puguis trobar des de qualsevol dispositiu. Si elimines el compte a la pàgina del compte, s'esborren el teu compte, les sessions, els esdeveniments d'ús i l'enllaç entre el teu compte i els teus dispositius, i s'eliminen els teus veredictes i les teves versions dels casos tal com s'explica a «Eliminació». Només conservem una forma codificada de la teva adreça electrònica, perquè un compte nou amb la mateixa adreça no obtingui un segon veredicte gratuït i es mantingui tancat si el teu compte es va tancar perquè ets menor de 18 anys.",
     "privacy.webSearchTitle": "Cerca a internet i preguntes",
     "privacy.webSearch":
       "Cada veredicte envia la discussió anonimitzada al nostre proveïdor d'IA amb la cerca a internet activada. El model escriu les consultes de cerca a partir d'aquest text anonimitzat, i els resultats provenen del soci de cerca del proveïdor. Les fonts que s'han fet servir es mostren al veredicte. Abans, els jutges et poden fer fins a dues preguntes: per formular-les, el teu text tal com l'has escrit, noms inclosos, va una vegada més al proveïdor d'IA. Les teves respostes s'anonimitzen juntament amb la discussió abans de jutjar; les preguntes i les respostes tal com les vas escriure es guarden amb el teu original xifrat.",
@@ -313,9 +313,8 @@ const ca: Locale = {
     "signin.unavailable": "L'inici de sessió encara no està configurat en aquest lloc.",
     "signin.providerUnavailable": "Encara no disponible",
     "signin.failed": "No hem pogut iniciar la teva sessió. Ho tornes a provar?",
-    "signin.legal": "Una IA externa llegeix les teves discussions. Si continues, acceptes la",
+    "signin.legal": "Una IA externa llegeix les teves discussions. Si continues, acceptes les {terms} i la {privacy}.",
     "signin.legalLink": "Política de privadesa",
-    "signin.legalAfter": ".",
     "signin.loading": "Carregant les opcions d'inici de sessió…",
     "account.title": "El teu compte",
     "account.signedInAs": "Has iniciat sessió com a {email}",
@@ -681,6 +680,46 @@ const ca: Locale = {
     "privacy.rightsTitle": "Els teus drets (Canadà)",
     "privacy.rights":
       "Judge es gestiona des del Canadà i tracta la informació personal d'acord amb la llei federal de privadesa del Canadà (PIPEDA): només recollim el que el servei necessita, ho fem servir només per a això, ho protegim, i pots demanar veure, corregir o eliminar el que tenim sobre tu. Responem en un termini de 30 dies.",
+    "footer.terms": "Condicions",
+    "signin.legalTerms": "Condicions d'ús",
+    "age.confirm": "Tinc 18 anys o més",
+    "age.title": "Judge és per a adults",
+    "age.lead": "Judge és només per a majors de 18 anys. Confirma la teva edat per continuar.",
+    "age.continue": "Continua",
+    "age.failed": "No ho hem pogut desar. Ho tornes a provar?",
+    "age.blockedTitle": "Judge és només per a adults",
+    "age.blocked": "Aquest compte no pot fer servir Judge, perquè Judge és només per a majors de 18 anys.",
+    "age.blockedContact": "Creus que és un error? Escriu a {email}.",
+    "error.age_blocked": "Judge és només per a majors de 18 anys.",
+    "error.age_unconfirmed": "Confirma que tens 18 anys o més per continuar.",
+    "terms.title": "Condicions d'ús",
+    "terms.kicker": "Les normes",
+    "terms.lead":
+      "En resum: Judge és per a adults, és per divertir-se i veure-hi clar, i la IA es pot equivocar. Sigues just amb les persones de qui escrius.",
+    "terms.updated": "Última actualització: {date}",
+    "terms.whoTitle": "Qui pot fer servir Judge",
+    "terms.who":
+      "Judge és només per a majors de 18 anys. En fer-lo servir confirmes que ho ets. Si descobrim que un compte és d'una persona menor de 18 anys, el tanquem.",
+    "terms.whatTitle": "Què és Judge",
+    "terms.what":
+      "Judge dona veredictes d'IA sobre discussions del dia a dia, per divertir-se i per pensar amb una mica més de claredat. No és assessorament legal, mèdic ni financer. Els veredictes vénen d'un servei d'IA extern i es poden equivocar, així que no hi confiïs per a decisions importants.",
+    "terms.contentTitle": "El teu contingut",
+    "terms.content":
+      "El que escrius continua sent teu. Ens deixes fer-lo servir en la mesura que necessitem per fer funcionar el servei: desar-lo, treure'n els noms, fer-lo jutjar i mostrar-lo allà on el comparteixes. No enviïs informació privada d'altres persones que no tinguis dret a compartir, ni res d'il·legal, amenaçador o abusiu.",
+    "terms.purchasesTitle": "Compres",
+    "terms.purchases":
+      "Els paquets de crèdits i el pla mensual es compren a través de l'App Store o Google Play. El pla mensual es renova automàticament cada mes fins que el cancel·lis a la configuració de subscripcions de la botiga, almenys 24 hores abans de la renovació. Els reemborsaments es fan a través d'Apple o Google. Els crèdits no tenen valor en efectiu.",
+    "terms.fairUseTitle": "Ús just",
+    "terms.fairUse":
+      "El pla mensual inclou fins a {cap} veredictes al mes. Podem suspendre els comptes que abusin del servei, per exemple saltant-se'n els límits o fent-lo servir per assetjar algú.",
+    "terms.asIsTitle": "Sense garanties",
+    "terms.asIs":
+      "Judge s'ofereix tal com és: no podem prometre que sempre estigui disponible, que no tingui errors ni que encerti. Tant com permet la llei, no ens fem responsables de les conseqüències de fiar-se d'un veredicte.",
+    "terms.changesTitle": "Canvis",
+    "terms.changes":
+      "Podem actualitzar aquestes condicions. La data de dalt indica quan van canviar per última vegada, i si continues fent servir Judge després d'un canvi, s'apliquen les noves condicions.",
+    "terms.contactTitle": "Contacte",
+    "terms.contact": "Tens preguntes sobre aquestes condicions? Escriu a {email}.",
   },
   plurals: {
     "panel.strong": { one: "{n} potent" },

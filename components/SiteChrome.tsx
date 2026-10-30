@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { CONTACT_EMAIL } from "@/app/site";
 import { t, type Lang } from "@/lib/i18n";
 import { AccountMenu } from "./AccountMenu";
 import { BrandMark } from "./BrandMark";
@@ -71,6 +72,14 @@ export function SiteFooter({ lang, toggle = false }: { lang: Lang; toggle?: bool
               <li>
                 <Link href="/privacy">{t(lang, "footer.privacy")}</Link>
               </li>
+              <li>
+                <Link href="/terms">{t(lang, "footer.terms")}</Link>
+              </li>
+              {CONTACT_EMAIL ? (
+                <li>
+                  <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
+                </li>
+              ) : null}
             </ul>
           </nav>
           {toggle ? <LangPicker lang={lang} /> : null}

@@ -35,6 +35,12 @@ describe("privacy page languages", () => {
     expect(loadedDict("fr")?.legalNotice).toMatch(/version anglaise/);
   });
 
+  it("picks the terms page's language on its own", () => {
+    expect(legalLang("de", "terms")).toBe("de");
+    expect(legalLang("de", "privacy")).toBe("en");
+    expect(legalNotice("fr", "terms")).toMatch(/version anglaise/);
+  });
+
   it("keeps Turkish and English as they were", () => {
     expect(legalLang("tr")).toBe("tr");
     expect(legalNotice("tr")).toBeNull();

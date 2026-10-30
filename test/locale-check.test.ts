@@ -82,6 +82,17 @@ describe("locale check", () => {
     ]);
   });
 
+  it("checks the terms page as a whole, like the privacy page", () => {
+    const strings: Record<string, string | undefined> = { ...EN, "party.a": "当事者A", "party.b": "当事者B" };
+    const base = { voice: 'Refer to the parties as "当事者A" and "当事者B".', email: EMAIL_EN };
+    const without = Object.fromEntries(Object.entries(strings).filter(([k]) => !k.startsWith("terms.")));
+    expect(checkLocale("ja", { ...base, strings: without } as unknown as Locale)).toEqual([]);
+    const partial = { ...strings, "terms.asIs": undefined };
+    expect(checkLocale("ja", { ...base, strings: partial } as unknown as Locale)).toContain(
+      `terms page is partly translated (${Object.keys(EN).filter((k) => k.startsWith("terms.")).length - 1} of ${Object.keys(EN).filter((k) => k.startsWith("terms.")).length} terms.* strings): give all or none`,
+    );
+  });
+
   it("accepts a locale that leaves the privacy page to English", () => {
     const strings = Object.fromEntries(Object.entries(EN).filter(([k]) => !k.startsWith("privacy.")));
     const locale = {

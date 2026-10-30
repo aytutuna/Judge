@@ -254,7 +254,7 @@ const fr: Locale = {
       "Une question, ou une demande pour consulter, corriger ou supprimer tes données ? Écris à {email} avec le lien du verdict ou du dossier.",
     "privacy.accountsTitle": "Comptes",
     "privacy.accounts":
-      "Il faut un compte pour obtenir un verdict ; l’autre personne d’un dossier à deux voix peut répondre sans compte. Si tu te connectes avec Apple ou Google, on conserve l’adresse e-mail, le nom et le lien de la photo de profil qu’ils nous transmettent, ainsi que la méthode de connexion utilisée, et Apple ou Google peuvent voir ta connexion à Judge. Si tu te connectes avec un lien par e-mail, cet e-mail est envoyé via Resend, et on garde brièvement un enregistrement contenant ton adresse e-mail pour vérifier le lien : le lien cesse de fonctionner au bout de 10 minutes, et l’enregistrement est supprimé dès qu’il est utilisé ou peu après son expiration. On conserve aussi tes sessions (un jeton aléatoire et sa date d’expiration, sans adresse IP ni informations sur le navigateur, mais les applis enregistrent aussi un identifiant d’appareil quand tu te connectes), tes crédits, ton offre et son historique, et les verdicts qui ont utilisé un crédit (uniquement l’identifiant du verdict). On garde aussi la trace des verdicts et des dossiers qui t’appartiennent, pour que tu les retrouves sur n’importe quel appareil. Supprimer ton compte depuis la page Compte efface ton compte, tes sessions, les événements d’usage et le lien entre ton compte et tes appareils, et supprime tes verdicts et tes versions dans les dossiers comme décrit dans la section Suppression. On ne garde qu’une forme brouillée de ton adresse e-mail, pour qu’un nouveau compte créé avec elle n’obtienne pas un second verdict gratuit.",
+      "Judge est réservé aux personnes de 18 ans et plus, et les comptes dont on apprend qu’ils appartiennent à une personne de moins de 18 ans sont fermés. Il faut un compte pour obtenir un verdict ; l’autre personne d’un dossier à deux voix peut répondre sans compte. Si tu te connectes avec Apple ou Google, on conserve l’adresse e-mail, le nom et le lien de la photo de profil qu’ils nous transmettent, ainsi que la méthode de connexion utilisée, et Apple ou Google peuvent voir ta connexion à Judge. Si tu te connectes avec un lien par e-mail, cet e-mail est envoyé via Resend, et on garde brièvement un enregistrement contenant ton adresse e-mail pour vérifier le lien : le lien cesse de fonctionner au bout de 10 minutes, et l’enregistrement est supprimé dès qu’il est utilisé ou peu après son expiration. On conserve aussi tes sessions (un jeton aléatoire et sa date d’expiration, sans adresse IP ni informations sur le navigateur, mais les applis enregistrent aussi un identifiant d’appareil quand tu te connectes), tes crédits, ton offre et son historique, et les verdicts qui ont utilisé un crédit (uniquement l’identifiant du verdict). On garde aussi la trace des verdicts et des dossiers qui t’appartiennent, pour que tu les retrouves sur n’importe quel appareil. Supprimer ton compte depuis la page Compte efface ton compte, tes sessions, les événements d’usage et le lien entre ton compte et tes appareils, et supprime tes verdicts et tes versions dans les dossiers comme décrit dans la section Suppression. On ne garde qu’une forme brouillée de ton adresse e-mail, pour qu’un nouveau compte créé avec elle n’obtienne pas un second verdict gratuit et reste fermé si ton compte a été fermé parce que tu as moins de 18 ans.",
     "privacy.webSearchTitle": "Recherche web et questions",
     "privacy.webSearch":
       "Chaque verdict envoie le débat anonymisé à notre fournisseur d’IA avec la recherche web activée. Le modèle rédige les requêtes de recherche à partir de ce texte anonymisé, et les résultats viennent du partenaire de recherche du fournisseur. Les sources utilisées sont affichées dans le verdict. Les juges peuvent d’abord te poser jusqu’à deux questions : pour les formuler, ton texte tel que tu l’as saisi, noms compris, est envoyé une fois de plus au fournisseur d’IA. Tes réponses sont anonymisées avec le débat avant le jugement ; les questions et tes réponses telles que tu les as écrites sont conservées avec ton original chiffré.",
@@ -312,9 +312,8 @@ const fr: Locale = {
     "signin.unavailable": "La connexion n’est pas encore configurée sur ce site.",
     "signin.providerUnavailable": "Pas encore disponible",
     "signin.failed": "Impossible de te connecter. Tu veux bien réessayer ?",
-    "signin.legal": "Une IA externe lit tes débats. En continuant, tu acceptes la",
+    "signin.legal": "Une IA externe lit tes débats. En continuant, tu acceptes les {terms} et la {privacy}.",
     "signin.legalLink": "Politique de confidentialité",
-    "signin.legalAfter": ".",
     "signin.loading": "Chargement des options de connexion…",
     "account.title": "Ton compte",
     "account.signedInAs": "Tu utilises le compte {email}",
@@ -679,6 +678,46 @@ const fr: Locale = {
     "privacy.rightsTitle": "Tes droits (Canada)",
     "privacy.rights":
       "Judge est exploité depuis le Canada et traite les renseignements personnels conformément à la loi fédérale canadienne sur la protection des renseignements personnels (LPRPDE) : on ne collecte que ce dont le service a besoin, on ne l’utilise qu’à cette fin, on le protège, et tu peux demander à consulter, corriger ou supprimer ce qu’on détient à ton sujet. On répond sous 30 jours.",
+    "footer.terms": "Conditions",
+    "signin.legalTerms": "Conditions d’utilisation",
+    "age.confirm": "J’ai 18 ans ou plus",
+    "age.title": "Judge est réservé aux adultes",
+    "age.lead": "Judge est réservé aux personnes de 18 ans et plus. Confirme ton âge pour continuer.",
+    "age.continue": "Continuer",
+    "age.failed": "On n’a pas pu enregistrer ça. Tu veux bien réessayer ?",
+    "age.blockedTitle": "Judge est réservé aux adultes",
+    "age.blocked": "Ce compte ne peut pas utiliser Judge, car Judge est réservé aux personnes de 18 ans et plus.",
+    "age.blockedContact": "Tu penses que c’est une erreur ? Écris à {email}.",
+    "error.age_blocked": "Judge est réservé aux personnes de 18 ans et plus.",
+    "error.age_unconfirmed": "Confirme que tu as 18 ans ou plus pour continuer.",
+    "terms.title": "Conditions d’utilisation",
+    "terms.kicker": "Les règles",
+    "terms.lead":
+      "En bref : Judge est réservé aux adultes, c’est pour s’amuser et y voir plus clair, et l’IA peut se tromper. Sois juste envers les personnes dont tu parles.",
+    "terms.updated": "Dernière mise à jour : {date}",
+    "terms.whoTitle": "Qui peut utiliser Judge",
+    "terms.who":
+      "Judge est réservé aux personnes de 18 ans et plus. En l’utilisant, tu confirmes que c’est ton cas. Si on apprend qu’un compte appartient à une personne de moins de 18 ans, on le ferme.",
+    "terms.whatTitle": "Ce qu’est Judge",
+    "terms.what":
+      "Judge rend des verdicts d’IA sur les petites disputes du quotidien, pour s’amuser et y voir un peu plus clair. Ce n’est pas un conseil juridique, médical ou financier. Les verdicts viennent d’un service d’IA externe et peuvent être faux, donc ne t’y fie pas pour les décisions importantes.",
+    "terms.contentTitle": "Ton contenu",
+    "terms.content":
+      "Ce que tu écris reste à toi. Tu nous laisses l’utiliser dans la mesure où on en a besoin pour faire tourner le service : le stocker, en retirer les noms, le faire juger et l’afficher là où tu le partages. N’envoie pas d’informations privées sur d’autres personnes que tu n’as pas le droit de partager, ni rien d’illégal, de menaçant ou d’abusif.",
+    "terms.purchasesTitle": "Achats",
+    "terms.purchases":
+      "Les packs de crédits et l’abonnement mensuel s’achètent via l’App Store ou Google Play. L’abonnement mensuel se renouvelle automatiquement chaque mois jusqu’à ce que tu le résilies dans les réglages d’abonnement du store, au moins 24 heures avant le renouvellement. Les remboursements passent par Apple ou Google. Les crédits n’ont aucune valeur en argent.",
+    "terms.fairUseTitle": "Usage raisonnable",
+    "terms.fairUse":
+      "L’abonnement mensuel comprend jusqu’à {cap} verdicts par mois. On peut suspendre les comptes qui abusent du service, par exemple en contournant ses limites ou en s’en servant pour harceler quelqu’un.",
+    "terms.asIsTitle": "Aucune garantie",
+    "terms.asIs":
+      "Judge est fourni tel quel : on ne peut pas promettre qu’il soit toujours disponible, sans erreur ou juste. Dans la mesure permise par la loi, on n’est pas responsable de ce qui découle du fait de se fier à un verdict.",
+    "terms.changesTitle": "Modifications",
+    "terms.changes":
+      "On peut mettre à jour ces conditions. La date en haut indique leur dernière modification, et si tu continues d’utiliser Judge après un changement, les nouvelles conditions s’appliquent.",
+    "terms.contactTitle": "Contact",
+    "terms.contact": "Des questions sur ces conditions ? Écris à {email}.",
   },
   plurals: {
     "panel.strong": { one: "{n} puissant" },

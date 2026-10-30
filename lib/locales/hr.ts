@@ -254,7 +254,7 @@ const hr: Locale = {
       "Imaš pitanje ili želiš vidjeti, ispraviti ili ukloniti svoje podatke? Piši na {email} i pošalji poveznicu na presudu ili slučaj.",
     "privacy.accountsTitle": "Računi",
     "privacy.accounts":
-      "Za presudu ti treba račun; druga strana u dvostranom slučaju može odgovoriti i bez njega. Ako se prijaviš putem Applea ili Googlea, čuvamo adresu e-pošte, ime i poveznicu na profilnu sliku koje s nama podijele te podatak o načinu prijave, a Apple ili Google mogu vidjeti da se prijavljuješ u Judge. Ako se prijaviš poveznicom poslanom e-poštom, ta se poruka šalje putem Resenda, a kratko čuvamo zapis s tvojom adresom e-pošte radi provjere poveznice: poveznica prestaje raditi nakon 10 minuta, a zapis se briše kad se iskoristi ili ubrzo nakon isteka. Čuvamo i zapise o tvojim sesijama (nasumični token i vrijeme isteka, bez IP adrese i podataka o pregledniku, ali aplikacije pri prijavi bilježe i identifikator uređaja), tvoje kredite, plan i njegovu povijest te koje su presude potrošile kredit (samo ID presude). Čuvamo i podatak o tome koje su presude i slučajevi tvoji, kako bi ti bili dostupni na svakom uređaju. Brisanjem računa na stranici računa uklanjaju se tvoj račun, sesije, događaji korištenja i veza između tvog računa i uređaja, kao i tvoje presude i tvoje strane u slučajevima, kako je opisano pod Uklanjanje. Zadržavamo samo hashirani oblik tvoje adrese e-pošte, kako novi račun s istom adresom ne bi dobio drugu besplatnu presudu.",
+      "Judge je samo za osobe od 18 godina nadalje, a računi za koje otkrijemo da pripadaju nekome mlađem od 18 godina zatvaraju se. Za presudu ti treba račun; druga strana u dvostranom slučaju može odgovoriti i bez njega. Ako se prijaviš putem Applea ili Googlea, čuvamo adresu e-pošte, ime i poveznicu na profilnu sliku koje s nama podijele te podatak o načinu prijave, a Apple ili Google mogu vidjeti da se prijavljuješ u Judge. Ako se prijaviš poveznicom poslanom e-poštom, ta se poruka šalje putem Resenda, a kratko čuvamo zapis s tvojom adresom e-pošte radi provjere poveznice: poveznica prestaje raditi nakon 10 minuta, a zapis se briše kad se iskoristi ili ubrzo nakon isteka. Čuvamo i zapise o tvojim sesijama (nasumični token i vrijeme isteka, bez IP adrese i podataka o pregledniku, ali aplikacije pri prijavi bilježe i identifikator uređaja), tvoje kredite, plan i njegovu povijest te koje su presude potrošile kredit (samo ID presude). Čuvamo i podatak o tome koje su presude i slučajevi tvoji, kako bi ti bili dostupni na svakom uređaju. Brisanjem računa na stranici računa uklanjaju se tvoj račun, sesije, događaji korištenja i veza između tvog računa i uređaja, kao i tvoje presude i tvoje strane u slučajevima, kako je opisano pod Uklanjanje. Zadržavamo samo hashirani oblik tvoje adrese e-pošte, kako novi račun s istom adresom ne bi dobio drugu besplatnu presudu i ostao zatvoren ako je tvoj račun zatvoren jer imaš manje od 18 godina.",
     "privacy.webSearchTitle": "Pretraživanje interneta i pitanja",
     "privacy.webSearch":
       "Svaka presuda šalje anonimiziranu raspravu našem pružatelju AI usluga s uključenim pretraživanjem interneta. Model upite za pretraživanje sastavlja iz tog anonimiziranog teksta, a rezultati dolaze od partnera za pretraživanje tog pružatelja. Korišteni izvori prikazani su u presudi. Suci ti prije toga mogu postaviti najviše dva pitanja: da bi ih smislili, tvoj tekst u izvornom obliku, zajedno s imenima, još jednom ide pružatelju AI usluga. Tvoji odgovori anonimiziraju se zajedno s raspravom prije presuđivanja; pitanja i tvoji odgovori u izvornom obliku čuvaju se uz tvoj šifrirani izvornik.",
@@ -312,9 +312,8 @@ const hr: Locale = {
     "signin.unavailable": "Prijava na ovoj stranici još nije postavljena.",
     "signin.providerUnavailable": "Još nije dostupno",
     "signin.failed": "Nismo te uspjeli prijaviti. Možeš pokušati ponovno?",
-    "signin.legal": "Tvoje rasprave čita vanjska AI usluga. Nastavkom prihvaćaš",
+    "signin.legal": "Tvoje rasprave čita vanjska AI usluga. Nastavkom prihvaćaš {terms} i {privacy}.",
     "signin.legalLink": "Pravila privatnosti",
-    "signin.legalAfter": ".",
     "signin.loading": "Učitavamo načine prijave…",
     "account.title": "Tvoj račun",
     "account.signedInAs": "Prijavljeni račun: {email}",
@@ -678,6 +677,46 @@ const hr: Locale = {
     "privacy.rightsTitle": "Tvoja prava (Kanada)",
     "privacy.rights":
       "Judge se vodi iz Kanade i s osobnim podacima postupa u skladu s kanadskim saveznim zakonom o privatnosti (PIPEDA): prikupljamo samo ono što je usluzi potrebno, koristimo to samo u tu svrhu i štitimo, a ti možeš zatražiti uvid u podatke koje o tebi imamo, njihov ispravak ili uklanjanje. Odgovaramo u roku od 30 dana.",
+    "footer.terms": "Uvjeti",
+    "signin.legalTerms": "Uvjete korištenja",
+    "age.confirm": "Imam 18 ili više godina",
+    "age.title": "Judge je za odrasle",
+    "age.lead": "Judge je samo za osobe od 18 godina nadalje. Potvrdi svoju dob da nastaviš.",
+    "age.continue": "Nastavi",
+    "age.failed": "Nismo to uspjeli spremiti. Pokušaš li ponovno?",
+    "age.blockedTitle": "Judge je samo za odrasle",
+    "age.blocked": "Ovaj račun ne može koristiti Judge jer je Judge samo za osobe od 18 godina nadalje.",
+    "age.blockedContact": "Misliš da je greška? Pošalji e-poštu na {email}.",
+    "error.age_blocked": "Judge je samo za osobe od 18 godina nadalje.",
+    "error.age_unconfirmed": "Potvrdi da imaš 18 ili više godina da nastaviš.",
+    "terms.title": "Uvjeti korištenja",
+    "terms.kicker": "Pravila",
+    "terms.lead":
+      "Ukratko: Judge je za odrasle, služi za zabavu i jasnije razmišljanje, a AI može pogriješiti. Postupaj pošteno prema ljudima o kojima pišeš.",
+    "terms.updated": "Zadnje ažuriranje: {date}",
+    "terms.whoTitle": "Tko može koristiti Judge",
+    "terms.who":
+      "Judge je samo za osobe od 18 godina nadalje. Korištenjem potvrđuješ da jesi. Ako saznamo da račun pripada nekome mlađem od 18 godina, zatvaramo ga.",
+    "terms.whatTitle": "Što je Judge",
+    "terms.what":
+      "Judge daje AI presude o svakodnevnim raspravama, za zabavu i za malo jasnije razmišljanje. Nije pravni, medicinski ni financijski savjet. Presude dolaze od vanjske AI usluge i mogu biti pogrešne, pa se na njih ne oslanjaj kad odlučuješ o važnim stvarima.",
+    "terms.contentTitle": "Tvoj sadržaj",
+    "terms.content":
+      "Ono što napišeš ostaje tvoje. Dopuštaš nam da to koristimo koliko nam treba za rad usluge: da ga spremimo, uklonimo imena, dobijemo presudu i prikažemo ga tamo gdje ga podijeliš. Ne šalji tuđe privatne podatke koje nemaš pravo dijeliti, niti ništa nezakonito, prijeteće ili uvredljivo.",
+    "terms.purchasesTitle": "Kupnje",
+    "terms.purchases":
+      "Pakete kredita i mjesečni plan kupuješ putem App Storea ili Google Playa. Mjesečni plan obnavlja se automatski svaki mjesec dok ga ne otkažeš u postavkama pretplata u trgovini, najmanje 24 sata prije obnove. Povrati novca idu preko Applea ili Googlea. Krediti nemaju novčanu vrijednost.",
+    "terms.fairUseTitle": "Pošteno korištenje",
+    "terms.fairUse":
+      "Mjesečni plan uključuje do {cap} presuda mjesečno. Možemo suspendirati račune koji zlorabe uslugu, na primjer zaobilaženjem njezinih ograničenja ili korištenjem za uznemiravanje nekoga.",
+    "terms.asIsTitle": "Bez jamstava",
+    "terms.asIs":
+      "Judge se pruža takav kakav jest: ne možemo obećati da je uvijek dostupan, bez pogrešaka ili točan. U mjeri u kojoj zakon dopušta, nismo odgovorni za posljedice oslanjanja na presudu.",
+    "terms.changesTitle": "Izmjene",
+    "terms.changes":
+      "Možemo ažurirati ove uvjete. Datum na vrhu pokazuje kad su zadnji put promijenjeni, a ako nakon promjene nastaviš koristiti Judge, vrijede novi uvjeti.",
+    "terms.contactTitle": "Kontakt",
+    "terms.contact": "Pitanja o ovim uvjetima? Pošalji e-poštu na {email}.",
   },
   plurals: {
     "judgesVoted.other": {

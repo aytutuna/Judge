@@ -254,7 +254,7 @@ const nb: Locale = {
       "Spørsmål, eller vil du se, rette eller fjerne dataene dine? Send en e-post til {email} med lenken til dommen eller saken.",
     "privacy.accountsTitle": "Kontoer",
     "privacy.accounts":
-      "Du trenger en konto for å få en dom; den andre siden i en tosidig sak kan svare uten. Logger du inn med Apple eller Google, lagrer vi e-postadressen, navnet og lenken til profilbildet som de deler med oss, i tillegg til hvilken innloggingsmetode du brukte, og Apple eller Google kan se at du logget inn på Judge. Logger du inn med en e-postlenke, sendes den e-posten via Resend, og vi lagrer en kort stund en oppføring med e-postadressen din for å sjekke lenken: den slutter å virke etter 10 minutter og slettes når den er brukt, eller kort tid etter at den er utløpt. Vi lagrer også øktoppføringene dine (et tilfeldig token og når det utløper, uten IP-adresse eller nettleserdetaljer, men appene lagrer også en enhets-ID når du logger inn), kredittene dine, abonnementet ditt og historikken til det, og hvilke dommer som brukte en kreditt (bare ID-en til dommen). Vi lagrer også hvilke dommer og saker som er dine, så du finner dem på alle enheter. Sletter du kontoen din på kontosiden, fjernes kontoen din, øktene dine, brukshendelsene og koblingen mellom kontoen og enhetene dine, og dommene dine og sidene dine i saker fjernes som beskrevet under Fjerning. Vi beholder bare en forvrengt form av e-postadressen din, så en ny konto med den ikke får enda en gratis dom.",
+      "Judge er bare for folk som er 18 år eller eldre, og kontoer som vi finner ut tilhører noen under 18, blir stengt. Du trenger en konto for å få en dom; den andre siden i en tosidig sak kan svare uten. Logger du inn med Apple eller Google, lagrer vi e-postadressen, navnet og lenken til profilbildet som de deler med oss, i tillegg til hvilken innloggingsmetode du brukte, og Apple eller Google kan se at du logget inn på Judge. Logger du inn med en e-postlenke, sendes den e-posten via Resend, og vi lagrer en kort stund en oppføring med e-postadressen din for å sjekke lenken: den slutter å virke etter 10 minutter og slettes når den er brukt, eller kort tid etter at den er utløpt. Vi lagrer også øktoppføringene dine (et tilfeldig token og når det utløper, uten IP-adresse eller nettleserdetaljer, men appene lagrer også en enhets-ID når du logger inn), kredittene dine, abonnementet ditt og historikken til det, og hvilke dommer som brukte en kreditt (bare ID-en til dommen). Vi lagrer også hvilke dommer og saker som er dine, så du finner dem på alle enheter. Sletter du kontoen din på kontosiden, fjernes kontoen din, øktene dine, brukshendelsene og koblingen mellom kontoen og enhetene dine, og dommene dine og sidene dine i saker fjernes som beskrevet under Fjerning. Vi beholder bare en forvrengt form av e-postadressen din, så en ny konto med den ikke får enda en gratis dom, og forblir stengt hvis kontoen din ble stengt fordi du er under 18.",
     "privacy.webSearchTitle": "Nettsøk og spørsmål",
     "privacy.webSearch":
       "Hver dom sender den anonymiserte diskusjonen til KI-leverandøren vår med nettsøk slått på. Modellen skriver søkene ut fra den anonymiserte teksten, og resultatene kommer fra søkepartneren til leverandøren. Kildene den brukte, vises på dommen. Dommerne kan først stille deg opptil to spørsmål: for å komme fram til dem sendes teksten din slik du skrev den, navn inkludert, til KI-leverandøren én gang til. Svarene dine anonymiseres sammen med diskusjonen før dommen; spørsmålene og svarene dine slik du skrev dem, lagres sammen med den krypterte originalen din.",
@@ -312,9 +312,8 @@ const nb: Locale = {
     "signin.unavailable": "Innlogging er ikke satt opp på denne siden ennå.",
     "signin.providerUnavailable": "Ikke tilgjengelig ennå",
     "signin.failed": "Vi fikk ikke logget deg inn. Vil du prøve igjen?",
-    "signin.legal": "En ekstern KI leser diskusjonene dine. Ved å fortsette godtar du",
+    "signin.legal": "En ekstern KI leser diskusjonene dine. Ved å fortsette godtar du {terms} og {privacy}.",
     "signin.legalLink": "personvernerklæringen",
-    "signin.legalAfter": ".",
     "signin.loading": "Laster innloggingsvalg…",
     "account.title": "Kontoen din",
     "account.signedInAs": "Logget inn som {email}",
@@ -677,6 +676,46 @@ const nb: Locale = {
     "privacy.rightsTitle": "Dine rettigheter (Canada)",
     "privacy.rights":
       "Judge drives fra Canada og behandler personopplysninger etter Canadas føderale personvernlov (PIPEDA): vi samler bare inn det tjenesten trenger, bruker det bare til det, beskytter det, og du kan be om å se, rette eller fjerne det vi har om deg. Vi svarer innen 30 dager.",
+    "footer.terms": "Vilkår",
+    "signin.legalTerms": "vilkårene",
+    "age.confirm": "Jeg er 18 år eller eldre",
+    "age.title": "Judge er for voksne",
+    "age.lead": "Judge er bare for folk som er 18 år eller eldre. Bekreft alderen din for å fortsette.",
+    "age.continue": "Fortsett",
+    "age.failed": "Vi fikk ikke lagret det. Vil du prøve igjen?",
+    "age.blockedTitle": "Judge er bare for voksne",
+    "age.blocked": "Denne kontoen kan ikke bruke Judge, fordi Judge bare er for folk som er 18 år eller eldre.",
+    "age.blockedContact": "Tror du dette er en feil? Send e-post til {email}.",
+    "error.age_blocked": "Judge er bare for folk som er 18 år eller eldre.",
+    "error.age_unconfirmed": "Bekreft at du er 18 år eller eldre for å fortsette.",
+    "terms.title": "Vilkår for bruk",
+    "terms.kicker": "Reglene",
+    "terms.lead":
+      "Kort fortalt: Judge er for voksne, det er for moro og for å tenke klarere, og KI-en kan ta feil. Vær rettferdig mot menneskene du skriver om.",
+    "terms.updated": "Sist oppdatert {date}",
+    "terms.whoTitle": "Hvem kan bruke Judge",
+    "terms.who":
+      "Judge er bare for folk som er 18 år eller eldre. Ved å bruke tjenesten bekrefter du at du er det. Får vi vite at en konto tilhører noen under 18, stenger vi den.",
+    "terms.whatTitle": "Hva Judge er",
+    "terms.what":
+      "Judge gir KI-dommer på hverdagslige diskusjoner, for moro skyld og for å tenke litt klarere. Det er ikke juridisk, medisinsk eller økonomisk rådgivning. Dommene kommer fra en ekstern KI-tjeneste og kan være feil, så ikke stol på dem i avgjørelser som betyr noe.",
+    "terms.contentTitle": "Innholdet ditt",
+    "terms.content":
+      "Det du skriver, er fortsatt ditt. Du lar oss bruke det så langt vi trenger for å drive tjenesten: lagre det, ta ut navnene, få det dømt og vise det der du deler det. Ikke send andres private opplysninger som du ikke har rett til å dele, og ikke noe ulovlig, truende eller krenkende.",
+    "terms.purchasesTitle": "Kjøp",
+    "terms.purchases":
+      "Kredittpakker og månedsabonnementet kjøpes i App Store eller Google Play. Månedsabonnementet fornyes automatisk hver måned til du sier det opp i abonnementsinnstillingene i butikken, minst 24 timer før det fornyes. Refusjoner går via Apple eller Google. Kreditter har ingen kontantverdi.",
+    "terms.fairUseTitle": "Rimelig bruk",
+    "terms.fairUse":
+      "Månedsabonnementet inkluderer opptil {cap} dommer i måneden. Vi kan stenge kontoer som misbruker tjenesten, for eksempel ved å omgå grensene eller bruke den til å trakassere noen.",
+    "terms.asIsTitle": "Ingen garantier",
+    "terms.asIs":
+      "Judge leveres som det er: vi kan ikke love at tjenesten alltid er tilgjengelig, feilfri eller riktig. Så langt loven tillater, er vi ikke ansvarlige for det som kommer av å stole på en dom.",
+    "terms.changesTitle": "Endringer",
+    "terms.changes":
+      "Vi kan oppdatere disse vilkårene. Datoen øverst viser når de sist ble endret, og hvis du fortsetter å bruke Judge etter en endring, gjelder de nye vilkårene.",
+    "terms.contactTitle": "Kontakt",
+    "terms.contact": "Spørsmål om disse vilkårene? Send e-post til {email}.",
   },
   plurals: {
     "panel.strong": { one: "{n} sterk" },

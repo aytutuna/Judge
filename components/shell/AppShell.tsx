@@ -7,6 +7,7 @@ import { t, type Lang } from "@/lib/i18n";
 import { langDir } from "@/lib/langs";
 import { useViewer } from "@/lib/use-viewer";
 import { accountEntry } from "../AccountMenu";
+import { AgeGate } from "../AgeGate";
 import { SiteFooter, SiteHeader, SkipLink } from "../SiteChrome";
 import { TabBar } from "./TabBar";
 import styles from "./shell.module.css";
@@ -53,6 +54,7 @@ export function AppShell({
       {tabs ? (
         <TabBar lang={lang} pathname={pathname} account={accountEntry(config, me)} onHome={onHome} />
       ) : null}
+      <AgeGate lang={lang} />
     </div>
   );
 }

@@ -255,7 +255,7 @@ const vi: Locale = {
       "Có câu hỏi, hoặc muốn xem, sửa hay gỡ bỏ dữ liệu của bạn? Gửi email tới {email} kèm liên kết tới phán quyết hoặc vụ.",
     "privacy.accountsTitle": "Tài khoản",
     "privacy.accounts":
-      "Bạn cần có tài khoản để nhận phán quyết; phía bên kia trong một vụ hai bên có thể trả lời mà không cần tài khoản. Nếu bạn đăng nhập bằng Apple hoặc Google, chúng tôi lưu địa chỉ email, tên và liên kết ảnh đại diện mà họ chia sẻ với chúng tôi, cùng phương thức đăng nhập bạn đã dùng, và Apple hoặc Google có thể biết bạn đã đăng nhập vào Judge. Nếu bạn đăng nhập bằng liên kết qua email, email đó được gửi qua Resend, và chúng tôi lưu tạm một bản ghi có địa chỉ email của bạn để xác minh liên kết: liên kết hết hiệu lực sau 10 phút, và bản ghi bị xóa khi đã được dùng hoặc ít lâu sau khi hết hạn. Chúng tôi cũng lưu các bản ghi phiên đăng nhập (một mã ngẫu nhiên và thời điểm hết hạn, không có địa chỉ IP hay thông tin trình duyệt, nhưng ứng dụng cũng ghi lại mã nhận dạng thiết bị khi bạn đăng nhập), số lượt của bạn, gói của bạn và lịch sử gói, và những phán quyết nào đã dùng một lượt (chỉ mã định danh của phán quyết). Chúng tôi cũng lưu những phán quyết và vụ nào là của bạn, để bạn tìm thấy chúng trên mọi thiết bị. Xóa tài khoản trên trang tài khoản sẽ xóa tài khoản, các phiên đăng nhập, sự kiện sử dụng và liên kết giữa tài khoản với thiết bị của bạn, đồng thời gỡ các phán quyết của bạn và phần của bạn trong các vụ như mô tả ở mục Gỡ bỏ. Chúng tôi chỉ giữ một dạng đã xáo trộn của địa chỉ email, để một tài khoản mới dùng địa chỉ đó không nhận được phán quyết miễn phí lần thứ hai.",
+      "Judge chỉ dành cho người từ 18 tuổi trở lên, và những tài khoản mà chúng tôi phát hiện thuộc về người dưới 18 tuổi sẽ bị đóng. Bạn cần có tài khoản để nhận phán quyết; phía bên kia trong một vụ hai bên có thể trả lời mà không cần tài khoản. Nếu bạn đăng nhập bằng Apple hoặc Google, chúng tôi lưu địa chỉ email, tên và liên kết ảnh đại diện mà họ chia sẻ với chúng tôi, cùng phương thức đăng nhập bạn đã dùng, và Apple hoặc Google có thể biết bạn đã đăng nhập vào Judge. Nếu bạn đăng nhập bằng liên kết qua email, email đó được gửi qua Resend, và chúng tôi lưu tạm một bản ghi có địa chỉ email của bạn để xác minh liên kết: liên kết hết hiệu lực sau 10 phút, và bản ghi bị xóa khi đã được dùng hoặc ít lâu sau khi hết hạn. Chúng tôi cũng lưu các bản ghi phiên đăng nhập (một mã ngẫu nhiên và thời điểm hết hạn, không có địa chỉ IP hay thông tin trình duyệt, nhưng ứng dụng cũng ghi lại mã nhận dạng thiết bị khi bạn đăng nhập), số lượt của bạn, gói của bạn và lịch sử gói, và những phán quyết nào đã dùng một lượt (chỉ mã định danh của phán quyết). Chúng tôi cũng lưu những phán quyết và vụ nào là của bạn, để bạn tìm thấy chúng trên mọi thiết bị. Xóa tài khoản trên trang tài khoản sẽ xóa tài khoản, các phiên đăng nhập, sự kiện sử dụng và liên kết giữa tài khoản với thiết bị của bạn, đồng thời gỡ các phán quyết của bạn và phần của bạn trong các vụ như mô tả ở mục Gỡ bỏ. Chúng tôi chỉ giữ một dạng đã xáo trộn của địa chỉ email, để một tài khoản mới dùng địa chỉ đó không nhận được phán quyết miễn phí lần thứ hai, và vẫn bị đóng nếu tài khoản của bạn đã bị đóng vì bạn dưới 18 tuổi.",
     "privacy.webSearchTitle": "Tìm kiếm trên mạng và câu hỏi",
     "privacy.webSearch":
       "Mỗi phán quyết gửi cuộc tranh cãi đã ẩn danh tới nhà cung cấp AI của chúng tôi với tính năng tìm kiếm trên mạng được bật. Mô hình tự viết truy vấn tìm kiếm từ văn bản ẩn danh đó, và kết quả đến từ đối tác tìm kiếm của nhà cung cấp. Các nguồn được dùng sẽ hiển thị trên phán quyết. Trước đó, giám khảo có thể hỏi bạn tối đa hai câu: để nghĩ ra các câu hỏi này, nội dung bạn đã nhập, kể cả tên, được gửi tới nhà cung cấp AI thêm một lần nữa. Câu trả lời của bạn được ẩn danh cùng với cuộc tranh cãi trước khi phân xử; các câu hỏi và câu trả lời đúng như bạn đã viết được lưu cùng bản gốc đã mã hóa của bạn.",
@@ -313,9 +313,9 @@ const vi: Locale = {
     "signin.unavailable": "Trang này chưa thiết lập đăng nhập.",
     "signin.providerUnavailable": "Chưa khả dụng",
     "signin.failed": "Chưa đăng nhập được. Bạn thử lại nhé?",
-    "signin.legal": "Một dịch vụ AI bên ngoài sẽ đọc các cuộc tranh cãi của bạn. Tiếp tục nghĩa là bạn đồng ý với",
+    "signin.legal":
+      "Một dịch vụ AI bên ngoài sẽ đọc các cuộc tranh cãi của bạn. Tiếp tục nghĩa là bạn đồng ý với {terms} và {privacy}.",
     "signin.legalLink": "Chính sách quyền riêng tư",
-    "signin.legalAfter": ".",
     "signin.loading": "Đang tải các cách đăng nhập…",
     "account.title": "Tài khoản của bạn",
     "account.signedInAs": "Đã đăng nhập: {email}",
@@ -679,6 +679,46 @@ const vi: Locale = {
     "privacy.rightsTitle": "Quyền của bạn (Canada)",
     "privacy.rights":
       "Judge được vận hành từ Canada và xử lý thông tin cá nhân theo luật quyền riêng tư liên bang của Canada (PIPEDA): chúng tôi chỉ thu thập những gì dịch vụ cần, chỉ dùng cho mục đích đó, bảo vệ dữ liệu, và bạn có thể yêu cầu xem, sửa hoặc gỡ bỏ những gì chúng tôi lưu về bạn. Chúng tôi phản hồi trong vòng 30 ngày.",
+    "footer.terms": "Điều khoản",
+    "signin.legalTerms": "Điều khoản sử dụng",
+    "age.confirm": "Tôi từ 18 tuổi trở lên",
+    "age.title": "Judge dành cho người lớn",
+    "age.lead": "Judge chỉ dành cho người từ 18 tuổi trở lên. Hãy xác nhận tuổi của bạn để tiếp tục.",
+    "age.continue": "Tiếp tục",
+    "age.failed": "Chúng tôi không lưu được. Bạn thử lại nhé?",
+    "age.blockedTitle": "Judge chỉ dành cho người lớn",
+    "age.blocked": "Tài khoản này không thể dùng Judge, vì Judge chỉ dành cho người từ 18 tuổi trở lên.",
+    "age.blockedContact": "Nghĩ đây là nhầm lẫn? Hãy gửi email tới {email}.",
+    "error.age_blocked": "Judge chỉ dành cho người từ 18 tuổi trở lên.",
+    "error.age_unconfirmed": "Hãy xác nhận bạn từ 18 tuổi trở lên để tiếp tục.",
+    "terms.title": "Điều khoản sử dụng",
+    "terms.kicker": "Quy tắc",
+    "terms.lead":
+      "Tóm tắt: Judge dành cho người lớn, để giải trí và nghĩ rõ hơn, và AI có thể sai. Hãy công bằng với những người bạn viết về.",
+    "terms.updated": "Cập nhật lần cuối {date}",
+    "terms.whoTitle": "Ai được dùng Judge",
+    "terms.who":
+      "Judge chỉ dành cho người từ 18 tuổi trở lên. Khi dùng, bạn xác nhận mình đủ tuổi. Nếu chúng tôi biết một tài khoản thuộc về người dưới 18 tuổi, chúng tôi sẽ đóng tài khoản đó.",
+    "terms.whatTitle": "Judge là gì",
+    "terms.what":
+      "Judge đưa ra phán quyết của AI cho những cuộc cãi vã thường ngày, để giải trí và nghĩ rõ hơn một chút. Đây không phải lời khuyên về pháp lý, y tế hay tài chính. Phán quyết đến từ một dịch vụ AI bên ngoài và có thể sai, nên đừng dựa vào chúng cho những quyết định quan trọng.",
+    "terms.contentTitle": "Nội dung của bạn",
+    "terms.content":
+      "Những gì bạn viết vẫn là của bạn. Bạn cho phép chúng tôi dùng nó trong phạm vi cần để vận hành dịch vụ: lưu trữ, xóa tên, đưa đi phán quyết và hiển thị ở nơi bạn chia sẻ. Đừng gửi thông tin riêng tư của người khác mà bạn không có quyền chia sẻ, và đừng gửi bất cứ thứ gì bất hợp pháp, đe dọa hay lăng mạ.",
+    "terms.purchasesTitle": "Mua hàng",
+    "terms.purchases":
+      "Gói lượt và gói tháng được mua qua App Store hoặc Google Play. Gói tháng tự động gia hạn mỗi tháng cho đến khi bạn hủy trong phần cài đặt đăng ký của cửa hàng, ít nhất 24 giờ trước khi gia hạn. Việc hoàn tiền do Apple hoặc Google xử lý. Lượt không có giá trị quy đổi thành tiền mặt.",
+    "terms.fairUseTitle": "Sử dụng hợp lý",
+    "terms.fairUse":
+      "Gói tháng gồm tối đa {cap} phán quyết mỗi tháng. Chúng tôi có thể tạm khóa các tài khoản lạm dụng dịch vụ, ví dụ lách giới hạn hoặc dùng nó để quấy rối ai đó.",
+    "terms.asIsTitle": "Không bảo đảm",
+    "terms.asIs":
+      "Judge được cung cấp nguyên trạng: chúng tôi không thể hứa nó luôn hoạt động, không lỗi hay đúng. Trong phạm vi pháp luật cho phép, chúng tôi không chịu trách nhiệm về hậu quả của việc dựa vào một phán quyết.",
+    "terms.changesTitle": "Thay đổi",
+    "terms.changes":
+      "Chúng tôi có thể cập nhật các điều khoản này. Ngày ở đầu trang cho biết lần thay đổi gần nhất, và nếu bạn tiếp tục dùng Judge sau khi có thay đổi thì điều khoản mới sẽ được áp dụng.",
+    "terms.contactTitle": "Liên hệ",
+    "terms.contact": "Có câu hỏi về các điều khoản này? Hãy gửi email tới {email}.",
   },
   legalNotice: "Nếu bản này và bản tiếng Anh có chỗ khác nhau, bản tiếng Anh được áp dụng.",
 };

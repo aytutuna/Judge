@@ -22,10 +22,11 @@ export const SITE_OG_IMAGE = {
 const PLACEHOLDER_DOMAIN = /(^|\.)example(\.(com|org|net))?$/i;
 
 /**
- * Privacy contact shown on /privacy, from CONTACT_EMAIL. Returns null when it
- * is unset, malformed, or still a placeholder (example.com and friends), and
- * the page then leaves the contact section out rather than print a dead
- * address. Read at build time, so a change needs a redeploy.
+ * Contact address shown on /privacy, /terms and in the footer, from
+ * CONTACT_EMAIL. Returns null when it is unset, malformed, or still a
+ * placeholder (example.com and friends), and the pages then leave it out
+ * rather than print a dead address. Read at build time, so a change needs a
+ * redeploy.
  */
 export function contactEmail(env: Record<string, string | undefined> = process.env): string | null {
   const raw = env.CONTACT_EMAIL?.trim() ?? "";
@@ -33,6 +34,10 @@ export function contactEmail(env: Record<string, string | undefined> = process.e
   if (!match || PLACEHOLDER_DOMAIN.test(match[1])) return null;
   return raw;
 }
+
+/** contactEmail() for code that also runs in the browser: next.config.ts
+ * inlines CONTACT_EMAIL at build time. */
+export const CONTACT_EMAIL = contactEmail({ CONTACT_EMAIL: process.env.CONTACT_EMAIL });
 
 /**
  * Absolute origin used as metadataBase and in robots/sitemap. Order:

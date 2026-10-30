@@ -259,7 +259,7 @@ const tr: Locale = {
       "Bir sorun mu var, ya da verilerini görmek, düzeltmek veya kaldırmak mı istiyorsun? Kararın ya da davanın bağlantısıyla {email} adresine yaz.",
     "privacy.accountsTitle": "Hesaplar",
     "privacy.accounts":
-      "Karar almak için hesap gerekir; iki taraflı bir davada karşı taraf hesapsız da cevap verebilir. Apple ya da Google ile giriş yaparsan bizimle paylaştıkları e-posta adresini, adını ve profil fotoğrafı bağlantını, bir de hangi yolla giriş yaptığını saklarız. Apple ya da Google da Judge'a giriş yaptığını görebilir. E-posta bağlantısıyla giriş yaparsan o e-posta Resend üzerinden gönderilir, bağlantıyı doğrulamak için de e-posta adresinle kısa süreli bir kayıt tutarız: bağlantı 10 dakika sonra geçersiz olur, kayıt da kullanılınca ya da süresi dolduktan kısa süre sonra silinir. Ayrıca oturum kayıtlarını (rastgele bir anahtar ve bitiş tarihi; IP adresi ya da tarayıcı bilgisi yok, ama uygulamalar giriş yaptığında bir cihaz tanımlayıcısı da kaydeder), kredilerini, planını ve geçmişini, bir de hangi kararların kredi kullandığını (sadece kararın kimliği) saklarız. Hangi kararların ve davaların senin olduğunu da tutarız, böylece onları her cihazda bulabilirsin. Hesap sayfasından hesabını silersen hesabın, oturumların, kullanım olayların ve hesabınla cihazların arasındaki bağlantı silinir; kararların ve davalardaki tarafların da Kaldırma bölümünde anlatıldığı gibi kaldırılır. Yalnızca e-posta adresinin karıştırılmış bir hâlini tutarız, böylece aynı adresle açılan yeni bir hesap ikinci bir ücretsiz karar almaz.",
+      "Judge yalnızca 18 yaş ve üzeri kişiler içindir ve 18 yaşından küçük birine ait olduğunu öğrendiğimiz hesaplar kapatılır. Karar almak için hesap gerekir; iki taraflı bir davada karşı taraf hesapsız da cevap verebilir. Apple ya da Google ile giriş yaparsan bizimle paylaştıkları e-posta adresini, adını ve profil fotoğrafı bağlantını, bir de hangi yolla giriş yaptığını saklarız. Apple ya da Google da Judge'a giriş yaptığını görebilir. E-posta bağlantısıyla giriş yaparsan o e-posta Resend üzerinden gönderilir, bağlantıyı doğrulamak için de e-posta adresinle kısa süreli bir kayıt tutarız: bağlantı 10 dakika sonra geçersiz olur, kayıt da kullanılınca ya da süresi dolduktan kısa süre sonra silinir. Ayrıca oturum kayıtlarını (rastgele bir anahtar ve bitiş tarihi; IP adresi ya da tarayıcı bilgisi yok, ama uygulamalar giriş yaptığında bir cihaz tanımlayıcısı da kaydeder), kredilerini, planını ve geçmişini, bir de hangi kararların kredi kullandığını (sadece kararın kimliği) saklarız. Hangi kararların ve davaların senin olduğunu da tutarız, böylece onları her cihazda bulabilirsin. Hesap sayfasından hesabını silersen hesabın, oturumların, kullanım olayların ve hesabınla cihazların arasındaki bağlantı silinir; kararların ve davalardaki tarafların da Kaldırma bölümünde anlatıldığı gibi kaldırılır. Yalnızca e-posta adresinin karıştırılmış bir hâlini tutarız, böylece aynı adresle açılan yeni bir hesap ikinci bir ücretsiz karar almaz ve hesabın 18 yaşından küçük olduğun için kapatıldıysa kapalı kalır.",
     "privacy.webSearchTitle": "İnternet araması ve sorular",
     "privacy.webSearch":
       "Her karar, anonim tartışmayı internet araması açık olarak yapay zekâ sağlayıcımıza gönderir. Arama sorgularını model bu anonim metinden yazar, sonuçlar da sağlayıcının arama ortağından gelir. Kullanılan kaynaklar kararda gösterilir. Yargıçlar önce sana en fazla iki soru sorabilir: bu soruları bulmak için yazdığın metin, isimler dahil, bir kez daha yapay zekâ sağlayıcımıza gider. Cevapların yargılamadan önce tartışmayla birlikte anonimleştirilir; sorular ve cevapların, yazdığın hâliyle, şifreli asıl metninle birlikte saklanır.",
@@ -317,9 +317,9 @@ const tr: Locale = {
     "signin.unavailable": "Bu sitede giriş henüz kurulmadı.",
     "signin.providerUnavailable": "Henüz kullanılamıyor",
     "signin.failed": "Giriş yapamadık. Bir daha dener misin?",
-    "signin.legal": "Tartışmalarını harici bir yapay zekâ okur. Devam ederek",
+    "signin.legal":
+      "Tartışmalarını harici bir yapay zekâ okur. Devam ederek {terms}'nı ve {privacy}'nı kabul etmiş olursun.",
     "signin.legalLink": "Gizlilik Politikası",
-    "signin.legalAfter": "'nı kabul etmiş olursun.",
     "signin.loading": "Giriş seçenekleri yükleniyor…",
     "account.title": "Hesabın",
     "account.signedInAs": "{email} olarak giriş yaptın",
@@ -684,6 +684,46 @@ const tr: Locale = {
     "privacy.rightsTitle": "Hakların (Kanada)",
     "privacy.rights":
       "Judge, Kanada'dan işletilir ve kişisel bilgileri Kanada'nın federal gizlilik yasasına (PIPEDA) göre işler: yalnızca hizmet için gerekeni toplarız, yalnızca bunun için kullanırız ve koruruz; hakkında tuttuklarımızı görmeyi, düzeltmeyi ya da kaldırmayı isteyebilirsin. 30 gün içinde yanıt veririz.",
+    "footer.terms": "Koşullar",
+    "signin.legalTerms": "Kullanım Koşulları",
+    "age.confirm": "18 yaşında veya daha büyüğüm",
+    "age.title": "Judge yetişkinler için",
+    "age.lead": "Judge yalnızca 18 yaş ve üzeri kişiler içindir. Devam etmek için yaşını onayla.",
+    "age.continue": "Devam et",
+    "age.failed": "Bunu kaydedemedik. Tekrar dener misin?",
+    "age.blockedTitle": "Judge yalnızca yetişkinler için",
+    "age.blocked": "Bu hesap Judge'ı kullanamaz, çünkü Judge yalnızca 18 yaş ve üzeri kişiler içindir.",
+    "age.blockedContact": "Bunun bir hata olduğunu mu düşünüyorsun? {email} adresine yaz.",
+    "error.age_blocked": "Judge yalnızca 18 yaş ve üzeri kişiler içindir.",
+    "error.age_unconfirmed": "Devam etmek için 18 yaşında veya daha büyük olduğunu onayla.",
+    "terms.title": "Kullanım Koşulları",
+    "terms.kicker": "Kurallar",
+    "terms.lead":
+      "Kısaca: Judge yetişkinler için, eğlence ve daha net düşünmek için var, yapay zekâ da yanılabilir. Hakkında yazdığın kişilere adil davran.",
+    "terms.updated": "Son güncelleme: {date}",
+    "terms.whoTitle": "Judge'ı kim kullanabilir",
+    "terms.who":
+      "Judge yalnızca 18 yaş ve üzeri kişiler içindir. Kullanarak bunu onaylamış olursun. Bir hesabın 18 yaşından küçük birine ait olduğunu öğrenirsek hesabı kapatırız.",
+    "terms.whatTitle": "Judge nedir",
+    "terms.what":
+      "Judge, gündelik tartışmalara yapay zekâ kararları verir; eğlence ve biraz daha net düşünmek içindir. Hukuki, tıbbi ya da mali tavsiye değildir. Kararlar harici bir yapay zekâ hizmetinden gelir ve yanlış olabilir, bu yüzden önemli kararlarda onlara güvenme.",
+    "terms.contentTitle": "İçeriğin",
+    "terms.content":
+      "Yazdıkların senin olarak kalır. Hizmeti çalıştırmak için gereken ölçüde kullanmamıza izin verirsin: saklamak, isimleri çıkarmak, karara bağlatmak ve paylaştığın yerde göstermek. Başkalarının paylaşmaya hakkın olmayan özel bilgilerini ve yasa dışı, tehdit edici ya da hakaret içeren hiçbir şeyi gönderme.",
+    "terms.purchasesTitle": "Satın almalar",
+    "terms.purchases":
+      "Kredi paketleri ve aylık plan App Store veya Google Play üzerinden satın alınır. Aylık plan, mağazanın abonelik ayarlarından yenilenmesine en az 24 saat kalmadan iptal etmediğin sürece her ay otomatik yenilenir. İadeler Apple veya Google üzerinden yapılır. Kredilerin nakit değeri yoktur.",
+    "terms.fairUseTitle": "Adil kullanım",
+    "terms.fairUse":
+      "Aylık plan ayda {cap} karara kadar içerir. Sınırları aşmaya çalışmak ya da hizmeti birini taciz etmek için kullanmak gibi kötüye kullanan hesapları askıya alabiliriz.",
+    "terms.asIsTitle": "Garanti yok",
+    "terms.asIs":
+      "Judge olduğu gibi sunulur: her zaman erişilebilir, hatasız ya da doğru olacağını vaat edemeyiz. Yasaların izin verdiği ölçüde, bir karara güvenmenin sonuçlarından sorumlu değiliz.",
+    "terms.changesTitle": "Değişiklikler",
+    "terms.changes":
+      "Bu koşulları güncelleyebiliriz. En üstteki tarih son değişikliğin ne zaman yapıldığını gösterir; bir değişiklikten sonra Judge'ı kullanmaya devam edersen yeni koşullar geçerli olur.",
+    "terms.contactTitle": "İletişim",
+    "terms.contact": "Bu koşullarla ilgili sorular mı var? {email} adresine yaz.",
   },
   // Turkish says 1 like any other number; these keys can be handed 1, so the
   // check wants the form spelled out.

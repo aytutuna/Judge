@@ -254,7 +254,7 @@ const nl: Locale = {
       "Vragen, of wil je je gegevens inzien, corrigeren of laten verwijderen? Mail naar {email} met de link naar de uitspraak of zaak.",
     "privacy.accountsTitle": "Accounts",
     "privacy.accounts":
-      "Voor een uitspraak heb je een account nodig; de andere kant van een tweezijdige zaak kan zonder account antwoorden. Log je in met Apple of Google, dan bewaren we het e-mailadres, de naam en de link naar de profielfoto die ze met ons delen, plus welke inlogmethode je gebruikte, en Apple of Google kan zien dat je bij Judge bent ingelogd. Log je in met een e-maillink, dan gaat die e-mail via Resend en bewaren we kort een record met je e-mailadres om de link te controleren: die werkt na 10 minuten niet meer en het record wordt verwijderd zodra de link gebruikt is of kort nadat hij verlopen is. We bewaren ook je sessiegegevens (een willekeurig token en wanneer het verloopt, zonder IP-adres of browsergegevens, al leggen de apps bij het inloggen wel een apparaat-ID vast), je credits, je abonnement en de geschiedenis daarvan, en welke uitspraken een credit hebben gebruikt (alleen de ID van de uitspraak). Ook houden we bij welke uitspraken en zaken van jou zijn, zodat je ze op elk apparaat terugvindt. Verwijder je je account op de accountpagina, dan verdwijnen je account, je sessies, de gebruiksgebeurtenissen en de koppeling tussen je account en je apparaten, en worden je uitspraken en jouw kant in zaken verwijderd zoals beschreven onder Verwijderen. We bewaren alleen een gehashte vorm van je e-mailadres, zodat een nieuw account met dat adres geen tweede gratis uitspraak krijgt.",
+      "Judge is alleen voor mensen van 18 jaar en ouder, en accounts waarvan we merken dat ze van iemand onder de 18 zijn, worden gesloten. Voor een uitspraak heb je een account nodig; de andere kant van een tweezijdige zaak kan zonder account antwoorden. Log je in met Apple of Google, dan bewaren we het e-mailadres, de naam en de link naar de profielfoto die ze met ons delen, plus welke inlogmethode je gebruikte, en Apple of Google kan zien dat je bij Judge bent ingelogd. Log je in met een e-maillink, dan gaat die e-mail via Resend en bewaren we kort een record met je e-mailadres om de link te controleren: die werkt na 10 minuten niet meer en het record wordt verwijderd zodra de link gebruikt is of kort nadat hij verlopen is. We bewaren ook je sessiegegevens (een willekeurig token en wanneer het verloopt, zonder IP-adres of browsergegevens, al leggen de apps bij het inloggen wel een apparaat-ID vast), je credits, je abonnement en de geschiedenis daarvan, en welke uitspraken een credit hebben gebruikt (alleen de ID van de uitspraak). Ook houden we bij welke uitspraken en zaken van jou zijn, zodat je ze op elk apparaat terugvindt. Verwijder je je account op de accountpagina, dan verdwijnen je account, je sessies, de gebruiksgebeurtenissen en de koppeling tussen je account en je apparaten, en worden je uitspraken en jouw kant in zaken verwijderd zoals beschreven onder Verwijderen. We bewaren alleen een gehashte vorm van je e-mailadres, zodat een nieuw account met dat adres geen tweede gratis uitspraak krijgt, en blijft gesloten als je account is gesloten omdat je onder de 18 bent.",
     "privacy.webSearchTitle": "Zoeken op het web en vragen",
     "privacy.webSearch":
       "Bij elke uitspraak gaat de geanonimiseerde discussie naar onze AI-aanbieder, met zoeken op het web aan. Het model stelt de zoekopdrachten op uit die geanonimiseerde tekst, en de resultaten komen van de zoekpartner van de aanbieder. De gebruikte bronnen staan bij de uitspraak. De rechters kunnen je eerst maximaal twee vragen stellen: om die te bedenken gaat je tekst zoals je die typte, met namen, nog een keer naar de AI-aanbieder. Je antwoorden worden samen met de discussie geanonimiseerd voordat er geoordeeld wordt; de vragen en je antwoorden zoals je ze schreef, worden bewaard bij je versleutelde origineel.",
@@ -312,9 +312,9 @@ const nl: Locale = {
     "signin.unavailable": "Inloggen is op deze site nog niet ingesteld.",
     "signin.providerUnavailable": "Nog niet beschikbaar",
     "signin.failed": "Inloggen lukte niet. Wil je het nog eens proberen?",
-    "signin.legal": "Een externe AI leest je discussies. Door verder te gaan, ga je akkoord met het",
+    "signin.legal":
+      "Een externe AI leest je discussies. Door verder te gaan, ga je akkoord met de {terms} en het {privacy}.",
     "signin.legalLink": "privacybeleid",
-    "signin.legalAfter": ".",
     "signin.loading": "Inlogopties laden…",
     "account.title": "Je account",
     "account.signedInAs": "Ingelogd als {email}",
@@ -680,6 +680,46 @@ const nl: Locale = {
     "privacy.rightsTitle": "Je rechten (Canada)",
     "privacy.rights":
       "Judge wordt vanuit Canada gerund en verwerkt persoonsgegevens volgens de federale privacywet van Canada (PIPEDA): we verzamelen alleen wat de dienst nodig heeft, gebruiken het alleen daarvoor en beschermen het, en je kunt vragen om in te zien, te corrigeren of te verwijderen wat we over je hebben. We antwoorden binnen 30 dagen.",
+    "footer.terms": "Voorwaarden",
+    "signin.legalTerms": "gebruiksvoorwaarden",
+    "age.confirm": "Ik ben 18 jaar of ouder",
+    "age.title": "Judge is voor volwassenen",
+    "age.lead": "Judge is alleen voor mensen van 18 jaar en ouder. Bevestig je leeftijd om verder te gaan.",
+    "age.continue": "Verder",
+    "age.failed": "Dat is niet gelukt. Wil je het nog eens proberen?",
+    "age.blockedTitle": "Judge is alleen voor volwassenen",
+    "age.blocked": "Dit account kan Judge niet gebruiken, want Judge is alleen voor mensen van 18 jaar en ouder.",
+    "age.blockedContact": "Denk je dat dit een vergissing is? Mail naar {email}.",
+    "error.age_blocked": "Judge is alleen voor mensen van 18 jaar en ouder.",
+    "error.age_unconfirmed": "Bevestig dat je 18 jaar of ouder bent om verder te gaan.",
+    "terms.title": "Gebruiksvoorwaarden",
+    "terms.kicker": "De regels",
+    "terms.lead":
+      "Kort gezegd: Judge is voor volwassenen, voor de lol en om helderder te denken, en de AI kan het mis hebben. Wees eerlijk tegenover de mensen over wie je schrijft.",
+    "terms.updated": "Laatst bijgewerkt op {date}",
+    "terms.whoTitle": "Wie Judge mag gebruiken",
+    "terms.who":
+      "Judge is alleen voor mensen van 18 jaar en ouder. Door Judge te gebruiken bevestig je dat je dat bent. Als we merken dat een account van iemand onder de 18 is, sluiten we het.",
+    "terms.whatTitle": "Wat Judge is",
+    "terms.what":
+      "Judge geeft AI-uitspraken over alledaagse discussies, voor de lol en om wat helderder te denken. Het is geen juridisch, medisch of financieel advies. De uitspraken komen van een externe AI-dienst en kunnen fout zijn, dus vertrouw er niet op bij beslissingen die ertoe doen.",
+    "terms.contentTitle": "Jouw inhoud",
+    "terms.content":
+      "Wat je schrijft blijft van jou. Je geeft ons toestemming het te gebruiken voor zover we dat nodig hebben om de dienst te laten werken: opslaan, de namen eruit halen, laten beoordelen en tonen waar je het deelt. Stuur geen privégegevens van anderen die je niet mag delen, en niets wat illegaal, bedreigend of kwetsend is.",
+    "terms.purchasesTitle": "Aankopen",
+    "terms.purchases":
+      "Bundels en het maandabonnement koop je via de App Store of Google Play. Het maandabonnement wordt elke maand automatisch verlengd totdat je het opzegt in de abonnementsinstellingen van de store, minstens 24 uur voordat het wordt verlengd. Terugbetalingen lopen via Apple of Google. Credits hebben geen geldwaarde.",
+    "terms.fairUseTitle": "Redelijk gebruik",
+    "terms.fairUse":
+      "Het maandabonnement bevat maximaal {cap} uitspraken per maand. We kunnen accounts schorsen die misbruik maken van de dienst, bijvoorbeeld door de limieten te omzeilen of de dienst te gebruiken om iemand lastig te vallen.",
+    "terms.asIsTitle": "Geen garanties",
+    "terms.asIs":
+      "Judge wordt geleverd zoals het is: we kunnen niet beloven dat het altijd beschikbaar, foutloos of juist is. Voor zover de wet het toestaat zijn we niet verantwoordelijk voor wat er gebeurt als je op een uitspraak vertrouwt.",
+    "terms.changesTitle": "Wijzigingen",
+    "terms.changes":
+      "We kunnen deze voorwaarden aanpassen. De datum bovenaan laat zien wanneer ze voor het laatst zijn gewijzigd, en als je Judge na een wijziging blijft gebruiken, gelden de nieuwe voorwaarden.",
+    "terms.contactTitle": "Contact",
+    "terms.contact": "Vragen over deze voorwaarden? Mail naar {email}.",
   },
   plurals: {
     "panel.strong": { one: "{n} sterke" },

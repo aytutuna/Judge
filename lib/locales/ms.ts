@@ -256,7 +256,7 @@ const ms: Locale = {
       "Ada soalan, atau mahu melihat, membetulkan atau membuang data anda? Hantar e-mel ke {email} bersama pautan ke keputusan atau kes tersebut.",
     "privacy.accountsTitle": "Akaun",
     "privacy.accounts":
-      "Anda perlukan akaun untuk mendapatkan keputusan; pihak satu lagi dalam kes dua pihak boleh menjawab tanpa akaun. Jika anda log masuk dengan Apple atau Google, kami simpan alamat e-mel, nama dan pautan gambar profil yang mereka kongsi dengan kami, serta kaedah log masuk yang anda gunakan, dan Apple atau Google boleh nampak bahawa anda log masuk ke Judge. Jika anda log masuk dengan pautan e-mel, e-mel itu dihantar melalui Resend, dan kami menyimpan rekod dengan alamat e-mel anda untuk seketika bagi menyemak pautan itu: pautan berhenti berfungsi selepas 10 minit dan rekod itu dipadam sebaik sahaja digunakan atau tidak lama selepas tamat tempoh. Kami juga menyimpan rekod sesi anda (token rawak dan masa ia tamat, tanpa alamat IP atau butiran pelayar, walaupun aplikasi turut merekodkan pengecam peranti semasa anda log masuk), kredit anda, pelan anda dan sejarahnya, serta keputusan mana yang menggunakan kredit (hanya ID keputusan). Kami juga menyimpan keputusan dan kes mana yang milik anda, supaya anda boleh menemuinya pada mana-mana peranti. Memadam akaun anda di halaman akaun akan membuang akaun, sesi, peristiwa penggunaan dan pautan antara akaun dengan peranti anda, serta membuang keputusan anda dan versi anda dalam kes seperti yang diterangkan di bawah Pembuangan. Kami hanya menyimpan bentuk alamat e-mel anda yang telah dikaburkan, supaya akaun baharu dengan alamat itu tidak mendapat keputusan percuma kali kedua.",
+      "Judge hanya untuk mereka yang berumur 18 tahun ke atas, dan akaun yang kami dapati milik seseorang di bawah 18 tahun akan ditutup. Anda perlukan akaun untuk mendapatkan keputusan; pihak satu lagi dalam kes dua pihak boleh menjawab tanpa akaun. Jika anda log masuk dengan Apple atau Google, kami simpan alamat e-mel, nama dan pautan gambar profil yang mereka kongsi dengan kami, serta kaedah log masuk yang anda gunakan, dan Apple atau Google boleh nampak bahawa anda log masuk ke Judge. Jika anda log masuk dengan pautan e-mel, e-mel itu dihantar melalui Resend, dan kami menyimpan rekod dengan alamat e-mel anda untuk seketika bagi menyemak pautan itu: pautan berhenti berfungsi selepas 10 minit dan rekod itu dipadam sebaik sahaja digunakan atau tidak lama selepas tamat tempoh. Kami juga menyimpan rekod sesi anda (token rawak dan masa ia tamat, tanpa alamat IP atau butiran pelayar, walaupun aplikasi turut merekodkan pengecam peranti semasa anda log masuk), kredit anda, pelan anda dan sejarahnya, serta keputusan mana yang menggunakan kredit (hanya ID keputusan). Kami juga menyimpan keputusan dan kes mana yang milik anda, supaya anda boleh menemuinya pada mana-mana peranti. Memadam akaun anda di halaman akaun akan membuang akaun, sesi, peristiwa penggunaan dan pautan antara akaun dengan peranti anda, serta membuang keputusan anda dan versi anda dalam kes seperti yang diterangkan di bawah Pembuangan. Kami hanya menyimpan bentuk alamat e-mel anda yang telah dikaburkan, supaya akaun baharu dengan alamat itu tidak mendapat keputusan percuma kali kedua, dan kekal ditutup jika akaun anda ditutup kerana anda berumur di bawah 18 tahun.",
     "privacy.webSearchTitle": "Carian web dan soalan",
     "privacy.webSearch":
       "Setiap keputusan menghantar pertikaian tanpa nama kepada penyedia AI kami dengan carian web dihidupkan. Model menulis pertanyaan carian daripada teks tanpa nama itu, dan hasilnya datang daripada rakan carian penyedia tersebut. Sumber yang digunakan ditunjukkan pada keputusan. Hakim mungkin bertanya kepada anda sehingga dua soalan dahulu: untuk menghasilkan soalan itu, teks anda seperti yang ditaip, termasuk nama, dihantar sekali lagi kepada penyedia AI. Jawapan anda dijadikan tanpa nama bersama pertikaian sebelum penilaian; soalan dan jawapan anda seperti yang anda tulis disimpan bersama teks asal anda yang disulitkan.",
@@ -313,9 +313,8 @@ const ms: Locale = {
     "signin.unavailable": "Log masuk belum disediakan di laman ini.",
     "signin.providerUnavailable": "Belum tersedia",
     "signin.failed": "Log masuk tidak berjaya. Boleh cuba lagi?",
-    "signin.legal": "AI luar membaca pertikaian anda. Dengan meneruskan, anda bersetuju dengan",
+    "signin.legal": "AI luar membaca pertikaian anda. Dengan meneruskan, anda bersetuju dengan {terms} dan {privacy}.",
     "signin.legalLink": "Dasar Privasi",
-    "signin.legalAfter": ".",
     "signin.loading": "Memuatkan pilihan log masuk…",
     "account.title": "Akaun anda",
     "account.signedInAs": "Log masuk sebagai {email}",
@@ -682,6 +681,47 @@ const ms: Locale = {
     "privacy.rightsTitle": "Hak anda (Kanada)",
     "privacy.rights":
       "Judge dikendalikan dari Kanada dan mengendalikan maklumat peribadi di bawah undang-undang privasi persekutuan Kanada (PIPEDA): kami hanya mengumpul apa yang diperlukan oleh perkhidmatan, menggunakannya untuk tujuan itu sahaja, melindunginya, dan anda boleh meminta untuk melihat, membetulkan atau membuang apa yang kami simpan tentang anda. Kami menjawab dalam masa 30 hari.",
+    "footer.terms": "Syarat",
+    "signin.legalTerms": "Syarat Penggunaan",
+    "age.confirm": "Saya berumur 18 tahun atau lebih",
+    "age.title": "Judge untuk orang dewasa",
+    "age.lead": "Judge hanya untuk mereka yang berumur 18 tahun ke atas. Sahkan umur anda untuk teruskan.",
+    "age.continue": "Teruskan",
+    "age.failed": "Kami tidak dapat menyimpannya. Boleh cuba lagi?",
+    "age.blockedTitle": "Judge untuk orang dewasa sahaja",
+    "age.blocked":
+      "Akaun ini tidak boleh menggunakan Judge, kerana Judge hanya untuk mereka yang berumur 18 tahun ke atas.",
+    "age.blockedContact": "Rasa ini satu kesilapan? E-mel {email}.",
+    "error.age_blocked": "Judge hanya untuk mereka yang berumur 18 tahun ke atas.",
+    "error.age_unconfirmed": "Sahkan bahawa anda berumur 18 tahun atau lebih untuk meneruskan.",
+    "terms.title": "Syarat Penggunaan",
+    "terms.kicker": "Peraturannya",
+    "terms.lead":
+      "Ringkasnya: Judge untuk orang dewasa, untuk suka-suka dan berfikir lebih jelas, dan AI boleh tersilap. Berlaku adillah kepada orang yang anda tulis tentang mereka.",
+    "terms.updated": "Dikemas kini kali terakhir {date}",
+    "terms.whoTitle": "Siapa boleh guna Judge",
+    "terms.who":
+      "Judge hanya untuk mereka yang berumur 18 tahun ke atas. Dengan menggunakannya, anda mengesahkan bahawa anda berumur sebegitu. Jika kami dapat tahu akaun itu milik seseorang di bawah 18 tahun, kami menutupnya.",
+    "terms.whatTitle": "Apa itu Judge",
+    "terms.what":
+      "Judge memberi keputusan AI untuk pertikaian harian, untuk suka-suka dan untuk berfikir sedikit lebih jelas. Ia bukan nasihat undang-undang, perubatan atau kewangan. Keputusan datang daripada perkhidmatan AI luar dan boleh salah, jadi jangan bergantung padanya untuk perkara yang penting.",
+    "terms.contentTitle": "Kandungan anda",
+    "terms.content":
+      "Apa yang anda tulis kekal milik anda. Anda membenarkan kami menggunakannya setakat yang perlu untuk menjalankan perkhidmatan ini: menyimpannya, membuang nama, meminta ia dinilai dan menunjukkannya di tempat anda kongsi. Jangan hantar maklumat peribadi orang lain yang anda tiada hak untuk berkongsi, dan jangan hantar apa-apa yang menyalahi undang-undang, mengancam atau kasar.",
+    "terms.purchasesTitle": "Pembelian",
+    "terms.purchases":
+      "Pek kredit dan langganan bulanan dibeli melalui App Store atau Google Play. Langganan bulanan diperbaharui secara automatik setiap bulan sehingga anda membatalkannya dalam tetapan langganan kedai itu, sekurang-kurangnya 24 jam sebelum ia diperbaharui. Bayaran balik melalui Apple atau Google. Kredit tiada nilai tunai.",
+    "terms.fairUseTitle": "Penggunaan saksama",
+    "terms.fairUse":
+      "Langganan bulanan termasuk sehingga {cap} keputusan sebulan. Kami boleh menggantung akaun yang menyalahgunakan perkhidmatan ini, contohnya dengan memintas had-hadnya atau menggunakannya untuk mengganggu seseorang.",
+    "terms.asIsTitle": "Tiada jaminan",
+    "terms.asIs":
+      "Judge disediakan seadanya: kami tidak boleh berjanji ia sentiasa tersedia, bebas ralat atau betul. Setakat yang dibenarkan undang-undang, kami tidak bertanggungjawab atas apa-apa akibat bergantung pada sesuatu keputusan.",
+    "terms.changesTitle": "Perubahan",
+    "terms.changes":
+      "Kami mungkin mengemas kini syarat ini. Tarikh di atas menunjukkan bila ia kali terakhir berubah, dan jika anda terus menggunakan Judge selepas perubahan, syarat baharu terpakai.",
+    "terms.contactTitle": "Hubungi kami",
+    "terms.contact": "Ada soalan tentang syarat ini? E-mel {email}.",
   },
   legalNotice: "Jika terdapat perbezaan antara versi ini dengan versi bahasa Inggeris, versi bahasa Inggeris yang terpakai.",
 };

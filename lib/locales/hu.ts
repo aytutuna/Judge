@@ -255,7 +255,7 @@ const hu: Locale = {
       "Kérdésed van, vagy szeretnéd megnézni, kijavíttatni vagy töröltetni az adataidat? Írj nekünk ide: {email}, és küldd el az ítélet vagy az ügy linkjét.",
     "privacy.accountsTitle": "Fiókok",
     "privacy.accounts":
-      "Ítélethez fiók kell; egy kétoldalú ügyben a másik fél fiók nélkül is válaszolhat. Ha Apple- vagy Google-fiókkal lépsz be, tároljuk az általuk velünk megosztott e-mail-címet, nevet és profilkép-linket, valamint azt, hogy melyik belépési módot használtad, az Apple vagy a Google pedig láthatja, hogy beléptél a Judge-ba. Ha e-mailes linkkel lépsz be, azt az e-mailt a Resend küldi ki, a link ellenőrzéséhez pedig rövid ideig tárolunk egy bejegyzést az e-mail-címeddel: a link 10 perc után nem működik, a bejegyzést pedig felhasználáskor vagy nem sokkal a lejárata után töröljük. Tároljuk továbbá a munkameneteid adatait (egy véletlenszerű tokent és a lejárati idejét, IP-cím és böngészőadatok nélkül, bár az alkalmazások bejelentkezéskor eszközazonosítót is rögzítenek), a kreditjeidet, az előfizetésedet és annak előzményeit, valamint azt, hogy mely ítéletek használtak fel kreditet (csak az ítélet azonosítóját). Azt is tároljuk, mely ítéletek és ügyek a tieid, hogy bármelyik eszközön megtaláld őket. Ha a fiókoldalon törlöd a fiókodat, törlődik a fiókod, a munkameneteid, a használati események és a fiókod és az eszközeid közti kapcsolat, az ítéleteidet és az ügyekben beküldött verzióidat pedig az Eltávolítás részben leírtak szerint eltávolítjuk. Az e-mail-címedet csak hash-elt formában őrizzük meg, hogy egy vele létrehozott új fiók ne kapjon második ingyenes ítéletet.",
+      "A Judge csak 18 éves vagy idősebb embereknek szól, és azokat a fiókokat, amelyekről kiderül, hogy 18 év alattié, lezárjuk. Ítélethez fiók kell; egy kétoldalú ügyben a másik fél fiók nélkül is válaszolhat. Ha Apple- vagy Google-fiókkal lépsz be, tároljuk az általuk velünk megosztott e-mail-címet, nevet és profilkép-linket, valamint azt, hogy melyik belépési módot használtad, az Apple vagy a Google pedig láthatja, hogy beléptél a Judge-ba. Ha e-mailes linkkel lépsz be, azt az e-mailt a Resend küldi ki, a link ellenőrzéséhez pedig rövid ideig tárolunk egy bejegyzést az e-mail-címeddel: a link 10 perc után nem működik, a bejegyzést pedig felhasználáskor vagy nem sokkal a lejárata után töröljük. Tároljuk továbbá a munkameneteid adatait (egy véletlenszerű tokent és a lejárati idejét, IP-cím és böngészőadatok nélkül, bár az alkalmazások bejelentkezéskor eszközazonosítót is rögzítenek), a kreditjeidet, az előfizetésedet és annak előzményeit, valamint azt, hogy mely ítéletek használtak fel kreditet (csak az ítélet azonosítóját). Azt is tároljuk, mely ítéletek és ügyek a tieid, hogy bármelyik eszközön megtaláld őket. Ha a fiókoldalon törlöd a fiókodat, törlődik a fiókod, a munkameneteid, a használati események és a fiókod és az eszközeid közti kapcsolat, az ítéleteidet és az ügyekben beküldött verzióidat pedig az Eltávolítás részben leírtak szerint eltávolítjuk. Az e-mail-címedet csak hash-elt formában őrizzük meg, hogy egy vele létrehozott új fiók ne kapjon második ingyenes ítéletet, és zárva maradjon, ha a fiókodat azért zártuk le, mert 18 év alatti vagy.",
     "privacy.webSearchTitle": "Webes keresés és kérdések",
     "privacy.webSearch":
       "Minden ítéletnél elküldjük az anonimizált vitát az MI-szolgáltatónknak, bekapcsolt webes kereséssel. A keresőkifejezéseket a modell ebből az anonimizált szövegből írja meg, a találatok pedig a szolgáltató keresőpartnerétől jönnek. A felhasznált források megjelennek az ítéleten. A bírák előbb feltehetnek neked legfeljebb két kérdést: ezek kitalálásához a szöveged, úgy, ahogy begépelted, a nevekkel együtt még egyszer eljut az MI-szolgáltatóhoz. A válaszaidat az ítélet előtt a vitával együtt anonimizáljuk; a kérdéseket és a válaszaidat, ahogy megírtad őket, a titkosított eredeti szövegeddel együtt őrizzük meg.",
@@ -313,9 +313,8 @@ const hu: Locale = {
     "signin.unavailable": "Ezen az oldalon még nincs beállítva a belépés.",
     "signin.providerUnavailable": "Még nem elérhető",
     "signin.failed": "Nem sikerült a belépés. Megpróbálod újra?",
-    "signin.legal": "A vitáidat egy külső MI olvassa. A folytatással elfogadod az",
+    "signin.legal": "A vitáidat egy külső MI olvassa. A folytatással elfogadod a {terms} és az {privacy}.",
     "signin.legalLink": "Adatvédelmi tájékoztatót",
-    "signin.legalAfter": ".",
     "signin.loading": "Belépési lehetőségek betöltése…",
     "account.title": "A fiókod",
     "account.signedInAs": "Belépve: {email}",
@@ -681,6 +680,46 @@ const hu: Locale = {
     "privacy.rightsTitle": "A jogaid (Kanada)",
     "privacy.rights":
       "A Judge-ot Kanadából üzemeltetjük, és a személyes adatokat a kanadai szövetségi adatvédelmi törvény (PIPEDA) szerint kezeljük: csak azt gyűjtjük, amire a szolgáltatásnak szüksége van, csak erre használjuk, védjük, és kérheted, hogy megnézhesd, kijavítsuk vagy töröljük, amit rólad tárolunk. 30 napon belül válaszolunk.",
+    "footer.terms": "Feltételek",
+    "signin.legalTerms": "Felhasználási feltételeket",
+    "age.confirm": "Legalább 18 éves vagyok",
+    "age.title": "A Judge felnőtteknek szól",
+    "age.lead": "A Judge csak 18 éves vagy idősebb embereknek szól. A folytatáshoz erősítsd meg a korodat.",
+    "age.continue": "Tovább",
+    "age.failed": "Ezt nem sikerült elmenteni. Megpróbálod újra?",
+    "age.blockedTitle": "A Judge csak felnőtteknek szól",
+    "age.blocked": "Ez a fiók nem használhatja a Judge-ot, mert a Judge csak 18 éves vagy idősebb embereknek szól.",
+    "age.blockedContact": "Szerinted tévedés? Írj e-mailt ide: {email}.",
+    "error.age_blocked": "A Judge csak 18 éves vagy idősebb embereknek szól.",
+    "error.age_unconfirmed": "A folytatáshoz erősítsd meg, hogy legalább 18 éves vagy.",
+    "terms.title": "Felhasználási feltételek",
+    "terms.kicker": "A szabályok",
+    "terms.lead":
+      "Röviden: a Judge felnőtteknek szól, szórakozásra és tisztább gondolkodásra való, és az MI tévedhet. Légy tisztességes azokkal, akikről írsz.",
+    "terms.updated": "Utoljára frissítve: {date}",
+    "terms.whoTitle": "Ki használhatja a Judge-ot",
+    "terms.who":
+      "A Judge csak 18 éves vagy idősebb embereknek szól. A használatával megerősíted, hogy az vagy. Ha megtudjuk, hogy egy fiók 18 év alatti személyé, lezárjuk.",
+    "terms.whatTitle": "Mi a Judge",
+    "terms.what":
+      "A Judge MI-ítéleteket ad hétköznapi vitákra, szórakozásra és arra, hogy egy kicsit tisztábban gondolkodj. Nem jogi, egészségügyi vagy pénzügyi tanács. Az ítéletek egy külső MI-szolgáltatástól jönnek, és tévedhetnek, ezért fontos döntéseknél ne támaszkodj rájuk.",
+    "terms.contentTitle": "A tartalmad",
+    "terms.content":
+      "Amit írsz, az a tied marad. Annyiban engeded használni, amennyire a szolgáltatás működtetéséhez szükségünk van: tároljuk, kivesszük belőle a neveket, megítéltetjük, és megmutatjuk ott, ahol megosztod. Ne küldj mások olyan privát adatait, amelyek megosztására nincs jogod, és semmi jogelleneset, fenyegetőt vagy bántalmazót.",
+    "terms.purchasesTitle": "Vásárlások",
+    "terms.purchases":
+      "A kreditcsomagokat és a havi előfizetést az App Store-on vagy a Google Play-en keresztül lehet megvenni. A havi előfizetés minden hónapban automatikusan megújul, amíg le nem mondod az áruház előfizetési beállításaiban, legalább 24 órával a megújulás előtt. A visszatérítést az Apple-nél vagy a Google-nél lehet intézni. A krediteknek nincs készpénzértékük.",
+    "terms.fairUseTitle": "Tisztességes használat",
+    "terms.fairUse":
+      "A havi előfizetés legfeljebb {cap} ítéletet tartalmaz havonta. Felfüggeszthetjük azokat a fiókokat, amelyek visszaélnek a szolgáltatással, például megkerülik a korlátait, vagy valaki zaklatására használják.",
+    "terms.asIsTitle": "Nincs garancia",
+    "terms.asIs":
+      "A Judge úgy érhető el, ahogy van: nem ígérhetjük, hogy mindig elérhető, hibamentes vagy helyes. Amennyire a törvény megengedi, nem vagyunk felelősek azért, ami egy ítéletre való támaszkodásból következik.",
+    "terms.changesTitle": "Változtatások",
+    "terms.changes":
+      "Frissíthetjük ezeket a feltételeket. A fenti dátum mutatja, mikor változtak utoljára, és ha a változás után is használod a Judge-ot, az új feltételek érvényesek.",
+    "terms.contactTitle": "Kapcsolat",
+    "terms.contact": "Kérdésed van a feltételekről? Írj e-mailt ide: {email}.",
   },
   plurals: {
     "panel.strong": { one: "{n} erős" },
