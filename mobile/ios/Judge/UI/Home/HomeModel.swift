@@ -245,6 +245,7 @@ final class HomeModel {
             }
             return
         }
+        app.analytics.track("case_submitted")
         if isTwoSided(app) {
             createCase(app: app)
         } else {
@@ -393,6 +394,7 @@ final class HomeModel {
     func finishClarify(skip: Bool, app: AppModel) {
         guard let state = clarify, let input = premiumInput else { return }
         account = app.account
+        if !skip { app.analytics.track("question_answered") }
         let clarifications = Self.clarifications(state.questions, answers: state.answers, skip: skip)
         judgePremium(input, clarifications: clarifications, api: app.api, history: app.history)
     }

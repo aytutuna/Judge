@@ -71,6 +71,7 @@ struct EvidencePickerView: View {
     private func add(_ picked: [PhotosPickerItem]) {
         let ids = evidence.reserve(picked.count)
         guard !ids.isEmpty else { return }
+        app.analytics.track("evidence_added")
         let fitting = Array(picked.prefix(ids.count))
         let evidence = evidence
         let api = app.api

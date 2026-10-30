@@ -70,6 +70,10 @@ struct PricingView: View {
             }
         }
         .task { await account.refresh() }
+        .onAppear { app.analytics.track("screen_view", ["screen": "pricing"]) }
+        .onChange(of: app.purchases.message) { _, message in
+            if message == .success { app.analytics.track("purchase_completed") }
+        }
         .task(id: pricing.purchasesEnabled) { await app.purchases.loadOffers(pricing: app.account.pricing) }
         .onDisappear { app.purchases.clearMessage() }
     }
@@ -246,6 +250,7 @@ struct PricingView: View {
 
     /// Buying needs an account: signed out, sign-in comes first.
     private func buy(_ planId: String) {
+        app.analytics.track("buy_tapped", ["product": planId])
         let purchases = app.purchases
         app.account.requireSignIn {
             Task { await purchases.buy(planId) }

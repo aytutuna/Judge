@@ -72,6 +72,10 @@ private struct CaseScreenContent: View {
         // Polling restarts whenever a new view arrives (generation).
         .task(id: model.generation) { await model.run() }
         .onAppear { Task { await model.refresh() } }
+        .onAppear { app.analytics.track("screen_view", ["screen": "case_detail"]) }
+        .onChange(of: model.actionError) { _, error in
+            if let error { app.analytics.track("error_shown", ["code": error.eventCode]) }
+        }
         .refreshable { await model.refresh() }
         .onChange(of: app.account.isSignedIn) { _, signedIn in
             if signedIn, model.load == .signIn { Task { await model.refresh() } }

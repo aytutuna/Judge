@@ -6,6 +6,7 @@ import UIKit
 /// link, Share, Copy, the expiry date and "Make a new link". The link opens
 /// the website's answer page; the app never handles it itself.
 struct InviteLinkView: View {
+    @Environment(AppModel.self) private var app
     let url: String
     let expiresAt: String
     /// "Send Sam this link", or the plain label without a name.
@@ -36,6 +37,7 @@ struct InviteLinkView: View {
                         Label(L10n.caseInviteShare(lang), systemImage: "square.and.arrow.up")
                     }
                     .buttonStyle(InviteButtonStyle(filled: true))
+                    .simultaneousGesture(TapGesture().onEnded { app.analytics.track("share_tapped") })
                 }
                 Button {
                     UIPasteboard.general.string = url

@@ -23,6 +23,19 @@ enum APIError: Error, Sendable, Equatable {
         return nil
     }
 
+    /// What error_shown reports: the server's code, else the kind of failure.
+    var eventCode: String {
+        switch self {
+        case .server(let status, _):
+            if let code, !code.isEmpty { return code }
+            return "http_\(status)"
+        case .offline: return "offline"
+        case .timeout: return "timeout"
+        case .malformed: return "malformed"
+        case .interrupted: return "interrupted"
+        }
+    }
+
     var retryAfterSec: Double? {
         if case .server(_, let body) = self { return body?.retryAfterSec }
         return nil

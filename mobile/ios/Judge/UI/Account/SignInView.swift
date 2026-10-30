@@ -45,6 +45,7 @@ struct SignInView: View {
             SafariView(url: link.url).ignoresSafeArea()
         }
         .environment(\.locale, lang.locale)
+        .onAppear { app.analytics.track("screen_view", ["screen": "sign_in"]) }
     }
 
     private func topBar(_ lang: AppLang) -> some View {
@@ -112,6 +113,7 @@ struct SignInView: View {
     private func chooser(_ lang: AppLang, providers: SignInProviders, account: AccountModel) -> some View {
         if providers.apple {
             Button {
+                app.analytics.track("sign_in_started", ["provider": "apple"])
                 Task { await app.account.signInWithApple() }
             } label: {
                 ProviderLabel(title: L10n.signinApple(lang), busy: account.busy == .apple, tint: AppleButtonStyle.label) {
@@ -124,6 +126,7 @@ struct SignInView: View {
         }
         if providers.google {
             Button {
+                app.analytics.track("sign_in_started", ["provider": "google"])
                 Task { await app.account.signInWithGoogle() }
             } label: {
                 ProviderLabel(title: L10n.signinGoogle(lang), busy: account.busy == .google, tint: Brand.ink) {
@@ -250,6 +253,7 @@ struct SignInView: View {
     }
 
     private func sendCode() {
+        app.analytics.track("sign_in_started", ["provider": "email"])
         Task {
             await app.account.sendCode(lang: app.lang)
             if case .code = app.account.step { focus = .code }

@@ -47,7 +47,8 @@ struct HomeView: View {
                 proxy.scrollTo(target, anchor: .top)
             }
             .onChange(of: home.error) { _, error in
-                guard error != nil else { return }
+                guard let error else { return }
+                app.analytics.track("error_shown", ["code": error.eventCode])
                 withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.3)) {
                     proxy.scrollTo(Self.errorID, anchor: .center)
                 }
@@ -71,12 +72,14 @@ struct HomeView: View {
         }
         .background(Brand.ivory.ignoresSafeArea())
         .toolbar(.hidden, for: .navigationBar)
+        .onAppear { app.analytics.track("screen_view", ["screen": "home"]) }
         .onAppear {
             guard app.persistsDraft else { return }
             if home.argument.isEmpty, !draft.isEmpty { home.argument = draft }
             if home.otherSide.isEmpty, !draftOther.isEmpty { home.otherSide = draftOther }
         }
-        .onChange(of: home.argument) { _, value in
+        .onChange(of: home.argument) { old, value in
+            if old.isEmpty, !value.isEmpty { app.analytics.track("case_started") }
             let capped = HomeModel.capped(value)
             if capped != value { home.argument = capped }
             if app.persistsDraft { draft = capped }

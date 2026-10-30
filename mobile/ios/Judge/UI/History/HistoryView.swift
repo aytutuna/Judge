@@ -64,6 +64,7 @@ struct HistoryView: View {
         }
         // Each appearance reads page 1 again (at most once a minute).
         .onAppear {
+            app.analytics.track("screen_view", ["screen": "verdicts"])
             if let seed = app.historySelectionSeed {
                 selection.start()
                 selection.ids = seed

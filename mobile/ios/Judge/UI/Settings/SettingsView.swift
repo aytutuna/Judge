@@ -51,6 +51,20 @@ struct SettingsView: View {
                 .listRowBackground(Brand.paper)
 
                 Section {
+                    Toggle(isOn: Binding(get: { app.usageStats }, set: { app.setUsageStats($0) })) {
+                        Text(L10n.appSettingsUsageStats(lang))
+                            .brandText(.body)
+                            .foregroundStyle(Brand.ink)
+                    }
+                    .tint(Brand.terraInk)
+                } footer: {
+                    Text(L10n.appSettingsUsageStatsHint(lang))
+                        .brandText(.footnote)
+                        .foregroundStyle(Brand.muted)
+                }
+                .listRowBackground(Brand.paper)
+
+                Section {
                     linkRow(L10n.appSettingsAbout(lang), path: "about")
                     linkRow(L10n.howTitle(lang), path: "#how")
                     linkRow(L10n.footerPrivacy(lang), path: "privacy")
@@ -97,6 +111,7 @@ struct SettingsView: View {
                 Text(L10n.appAccountDeleteBody(lang))
             }
             .task { await app.account.refresh() }
+            .onAppear { app.analytics.track("screen_view", ["screen": "settings"]) }
             .onDisappear { app.purchases.clearRestoreResult() }
         }
     }
@@ -112,6 +127,7 @@ struct SettingsView: View {
         let selected = app.appearance == option
         return Button {
             app.setAppearance(option)
+            app.analytics.track("settings_changed", ["key": "appearance"])
         } label: {
             HStack {
                 Text(appearanceName(option, lang: lang))
@@ -199,6 +215,7 @@ private struct LanguageList: View {
         let selected = app.langPreference == preference
         return Button {
             app.setLangPreference(preference)
+            app.analytics.track("settings_changed", ["key": "language"])
         } label: {
             HStack {
                 VStack(alignment: .leading, spacing: 2) {

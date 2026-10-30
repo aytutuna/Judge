@@ -271,6 +271,7 @@ struct VerdictNotes: View {
 /// Without the second, copy link takes its slot; with it, copying is left
 /// to the share sheet so both labels fit.
 struct VerdictActions: View {
+    @Environment(AppModel.self) private var app
     /// Nil hides share and copy (a removed case: its links are closed).
     let shareURL: URL?
     /// The anonymized original headline (anything that leaves the phone
@@ -289,6 +290,7 @@ struct VerdictActions: View {
                             .frame(maxWidth: .infinity)
                     }
                     .buttonStyle(CardActionStyle(filled: true))
+                    .simultaneousGesture(TapGesture().onEnded { app.analytics.track("share_tapped") })
                 }
                 if let onAddContext {
                     Button(action: onAddContext) {

@@ -24,6 +24,7 @@ private struct VerdictScreenContent: View {
     /// The writer's "Add context & appeal" (nothing shows for anyone else).
     @State private var appeal: VerdictAppealModel
     @State private var showPricing = false
+    @State private var viewed = false
     @Environment(\.dismiss) private var dismiss
 
     private static let topID = "verdict.top"
@@ -116,6 +117,12 @@ private struct VerdictScreenContent: View {
         .sheet(isPresented: $showPricing) {
             NavigationStack { PricingView() }
                 .environment(app)
+        }
+        .onAppear {
+            // Once per screen, not again on the way back from the details.
+            guard !viewed else { return }
+            viewed = true
+            app.analytics.track("verdict_viewed")
         }
         .background(Brand.ivory.ignoresSafeArea())
         // The thread has no tab bar: the header's "+" is the way back.
