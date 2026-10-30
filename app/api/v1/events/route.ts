@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { apiErrorBody, type ApiErrorCode } from "@/lib/api-errors";
-import { isSameOrigin, resolveViewer } from "@/lib/auth";
-import { deadBearerResponse } from "@/lib/bearer-guard";
+import { isSameOrigin } from "@/lib/auth";
+import { deadBearerResponse, lookupViewer } from "@/lib/bearer-guard";
 import { EventsCapError, insertEvents } from "@/lib/analytics/db";
 import { countryOf, EventBatch } from "@/lib/analytics/validate";
 import { clientIp } from "@/lib/client-ip";
@@ -36,8 +36,9 @@ function fail(code: ApiErrorCode, error: string, status: number): NextResponse {
  */
 export async function POST(req: Request): Promise<NextResponse> {
   if (!analyticsEnabled()) return new NextResponse(null, { status: 204, headers: NO_STORE });
-  const { viewer, deadBearer } = await resolveViewer(req);
+  const { viewer, deadBearer, refused } = await lookupViewer(req);
   if (deadBearer) return deadBearerResponse();
+  if (refused) return refused;
   if (viewer?.via === "cookie" && !isSameOrigin(req)) return fail("bad_origin", "Cross-site request refused.", 403);
 
   const type = req.headers.get("content-type")?.split(";")[0].trim().toLowerCase();

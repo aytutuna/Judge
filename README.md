@@ -95,7 +95,7 @@ An `ANTHROPIC_API_KEY` is **required** — without one the API refuses to judge
 | `NEXT_PUBLIC_TURNSTILE_SITE_KEY` | *(empty)* | Cloudflare Turnstile site key. Unset = no bot-check widget |
 | `TURNSTILE_SECRET_KEY` | *(empty)* | Turnstile secret for server-side verification. Unset = verification skipped (local dev) |
 | `NEXT_PUBLIC_SITE_URL` | *(Vercel production domain, else `http://localhost:3000`)* | Public origin, e.g. `https://verdict.example.org`, used for canonical links, link previews, `robots.txt` and the sitemap. Set it for a custom domain or a host other than Vercel. Read at build time, so redeploy after changing it |
-| `CONTACT_EMAIL` | *(empty)* | Address shown on `/privacy` for questions and removal requests. Unset or a placeholder (`example.com`) = the contact section is hidden. Read at build time, so redeploy after changing it |
+| `CONTACT_EMAIL` | *(empty)* | Address shown on `/privacy`, `/terms`, in the site footer and to accounts blocked by the age check, for questions and removal requests. Unset or a placeholder (`example.com`) = it is left out. Read at build time, so redeploy after changing it |
 | `CLAUDE_MODEL` | `claude-haiku-5-5` | Judge and crux-trial model |
 | `CLAUDE_MODEL_LITE` | `claude-haiku-5-5` | Anonymizer model (runs at `low` effort; its one retry runs at `medium`) |
 | `JUDGE_EFFORT` | `medium` | Thinking depth for judge and trial calls: `low`, `medium` or `high` |
@@ -411,7 +411,8 @@ The website and the future iOS/Android app share one JSON API. Base URL
 | Call | Purpose |
 |---|---|
 | `GET /api/v1/config` | Startup: which sign-in methods work, whether Premium is on, prices, `freeTier: false` and `welcomeCredits` (`AppConfig`) |
-| `GET /api/v1/me` | The account and its entitlement (`MeResponse`); signed out = `{ "user": null, "entitlement": null }`; a dead bearer token = `401 signin_required` |
+| `GET /api/v1/me` | The account, its entitlement and its age check (`MeResponse`, `"age": { "confirmed": bool, "blocked": bool }`); signed out = `{ "user": null, "entitlement": null, "age": null }`; a dead bearer token = `401 signin_required` |
+| `POST /api/v1/me/age` `{ "adult": true, "source": "checkbox" \| "platform" }` or `{ "adult": false, "source": "platform" }` | Records the 18+ check (see *Age check* below). `200 { "confirmed": bool, "blocked": bool }`; any other body = `400 invalid` |
 | `DELETE /api/v1/me` `{ "confirm": "delete" }` | Removes every verdict the account owns and its side of every case (originals and names blanked, links closed; no verdict row is deleted), then deletes the account, sessions, sign-ins, entitlements and usage events, and unlinks its devices (both stores require in-app deletion). Stored Sign in with Apple tokens are revoked at Apple first; an Apple failure is logged and does not stop the deletion |
 | `POST /api/v1/auth/apple/code` `{ "code": "<authorizationCode>" }` | iOS, right after a native Sign in with Apple: lets the server keep the Apple refresh token so account deletion can revoke it. `200 { "stored": true }` |
 | `GET /api/v1/me/verdicts` | Your one-sided verdicts, newest first (`?limit=1-50&before=<createdAt>`), each with its anonymized `headline` and your `nameMap` to restore names |
@@ -625,6 +626,34 @@ taken out of the text; the same request can be retried, e.g. with initials), plu
   needs an account. Drop the token and sign in again. Requests without an
   `Authorization` header (the website, share viewers) are unaffected; an
   expired cookie still counts as signed out.
+- **Age check:** Judge is for adults only. Until an account confirms it,
+  `GET /api/v1/me` has `"age": { "confirmed": false, "blocked": false }` and
+  every request that starts AI work answers
+  `403 { "error": "age_unconfirmed", "code": "age_unconfirmed" }`:
+  `POST` to `/api/v1/verdict`, `/api/v1/clarify`, `/api/v1/evidence`,
+  `/api/v1/cases`, `/api/v1/cases/{id}/judge`, `/api/v1/cases/{id}/appeals`,
+  `/api/v1/verdicts/{id}/appeals`, `/api/v1/respond/{token}` and its
+  `/appeals` and `/evidence`. Reading history, `/api/v1/me`, sign-out and
+  deletion stay open. Confirm with `POST /api/v1/me/age`
+  `{ "adult": true, "source": "checkbox" }` (the "I'm 18 or older" box) or
+  `"source": "platform"` (the store's age signal says adult). When the
+  store's signal says the user is under 18, send
+  `{ "adult": false, "source": "platform" }`: the account is blocked for
+  good (a later `adult: true` does not lift it; nothing is deleted) and the
+  server logs `[signal:age_blocked]`. A blocked account gets
+  `403 { "error": "age_blocked", "code": "age_blocked" }` from every
+  `/api/v1` route that reads the session, `POST /api/v1/me/age` included,
+  except `GET` and `DELETE /api/v1/me` and `/api/v1/auth/*`;
+  `GET /api/v1/config`, sign-out (`/api/auth/*`) and the purchase webhook
+  never read it. Deleting a blocked
+  account keeps the block with the scrambled email kept for the welcome
+  credit, so a new account with that email starts blocked. To lift a block
+  that was wrong, clear `age_blocked_at` on the `user` row and on that
+  email's `welcome_claims` row. The routes check
+  the session they look up anyway (`lookupViewer` in
+  `lib/bearer-guard.ts`); if that lookup fails on a route that needs a
+  confirmed age, the answer is `503 unavailable`. Signed-out answers to a
+  case are not affected.
 - **Email (apps): a 6-digit code**, offered when `signIn.emailCode` is true
   in `GET /api/v1/config` (false, and both endpoints `404`, without
   `RESEND_API_KEY`/`EMAIL_FROM`):
@@ -1006,6 +1035,7 @@ limit within 5 minutes:
 | `provider_down` | 5 | the AI service answers 5xx, cannot be reached or times out |
 | `many_accounts_per_device` | 1 | a device (the app's `Device-Id` header at sign-in) signs in to its third or later account; sign-in goes ahead |
 | `events_cap` | 1 | a batch of usage events is refused because 200,000 were stored in the last 24 hours |
+| `age_blocked` | 1 | an app reports, from the store's age signal, that an account belongs to someone under 18; the account is blocked (nothing is deleted) |
 | `ban` | 20 | fail2ban bans an address (from fail2ban's journal) |
 
 Change a limit with `ALERT_SIGNAL_<NAME>=n` in the env file, e.g.
@@ -1014,9 +1044,9 @@ Change a limit with `ALERT_SIGNAL_<NAME>=n` in the env file, e.g.
 
 Signal alerts are not critical. The ones strangers can set off at will
 (`rate_limited`, `bad_origin`, `bearer_401`, `webhook_bad_secret`,
-`many_accounts_per_device` and `events_cap`) come by email only; set
-`ALERT_SIGNALS_PUSH=1` in the env file to get them on the phone too. Without
-`ALERT_EMAIL` they are only logged.
+`many_accounts_per_device`, `events_cap` and `age_blocked`) come by email
+only; set `ALERT_SIGNALS_PUSH=1` in the env file to get them on the phone
+too. Without `ALERT_EMAIL` they are only logged.
 
 fail2ban is installed by `setup.sh` with its standard SSH jail (an address
 that fails 5 logins in 10 minutes is blocked for 10 minutes) and logs to the

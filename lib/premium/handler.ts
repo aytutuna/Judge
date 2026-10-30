@@ -21,7 +21,8 @@ import { nanoid } from "nanoid";
 import type { Entitlement } from "@/lib/account-types";
 import { track } from "@/lib/analytics/track";
 import { API_ERROR_STATUS, apiErrorBody, type ApiErrorBody, type ApiErrorCode } from "@/lib/api-errors";
-import { isSameOrigin, premiumEnabled, resolveViewer } from "@/lib/auth";
+import { isSameOrigin, premiumEnabled } from "@/lib/auth";
+import { lookupViewer } from "@/lib/bearer-guard";
 import { getVerdict } from "@/lib/db";
 import {
   consumePremiumVerdict,
@@ -77,7 +78,8 @@ type Gate = { userId: string; name: string } | { response: NextResponse };
  * failed session lookup is a 503, not signin_required: the apps drop their
  * token on that code. */
 async function signedInGate(req: Request): Promise<Gate> {
-  const { viewer, failed } = await resolveViewer(req);
+  const { viewer, failed, refused } = await lookupViewer(req);
+  if (refused) return { response: refused };
   if (failed) return { response: unavailable() };
   if (!viewer) return { response: fail("signin_required", "Sign in to get a verdict.") };
   if (viewer.via === "cookie" && !isSameOrigin(req)) {

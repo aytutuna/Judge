@@ -9,7 +9,7 @@
 
 import { NextResponse } from "next/server";
 import { API_ERROR_STATUS, apiErrorBody, type ApiErrorCode } from "@/lib/api-errors";
-import { getViewer } from "@/lib/auth";
+import { lookupViewer } from "@/lib/bearer-guard";
 import { CASE_EXPIRY_DAYS, type PartyLetter } from "@/lib/case-types";
 import { inviteHash, inviteToken } from "@/lib/cases/invite";
 import { maybeSweepCases } from "@/lib/cases/sweep";
@@ -163,7 +163,8 @@ async function caseRow(r: HistoryCaseRow, party: PartyLetter, now: Date): Promis
 /** GET /api/v1/me/history */
 export function historyHandler(req: Request): Promise<NextResponse> {
   return (async () => {
-    const viewer = await getViewer(req);
+    const { viewer, refused } = await lookupViewer(req);
+    if (refused) return refused;
     if (!viewer) return fail("signin_required", "Sign in first.");
     const params = new URL(req.url).searchParams;
     const rawLimit = params.get("limit");

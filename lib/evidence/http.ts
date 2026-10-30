@@ -6,7 +6,8 @@
 
 import { NextResponse } from "next/server";
 import { API_ERROR_STATUS, apiErrorBody, type ApiErrorBody, type ApiErrorCode } from "@/lib/api-errors";
-import { getViewer, isSameOrigin } from "@/lib/auth";
+import { isSameOrigin } from "@/lib/auth";
+import { lookupViewer } from "@/lib/bearer-guard";
 import { getEntitlement, hasWelcomeCreditOnly } from "@/lib/entitlements";
 import { evidenceEnabled } from "@/lib/features";
 import { checkUserLimits } from "@/lib/ratelimit";
@@ -29,7 +30,8 @@ const unavailable = () => fail("unavailable", "Evidence is unavailable right now
 export async function evidenceUploadRoute(req: Request): Promise<Response> {
   if (!evidenceEnabled()) return fail("not_configured", "Evidence is not available on this server right now.");
 
-  const viewer = await getViewer(req);
+  const { viewer, refused } = await lookupViewer(req);
+  if (refused) return refused;
   if (!viewer) return fail("signin_required", "Sign in to add evidence.");
   if (viewer.via === "cookie" && !isSameOrigin(req)) return fail("bad_origin", "This request came from another site.");
   const userId = viewer.user.id;

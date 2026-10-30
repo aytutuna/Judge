@@ -37,11 +37,17 @@ export type Viewer = {
   image: string | null;
 };
 
-/** GET /api/v1/me. Signed out: { user: null, entitlement: null }. A bearer
- * token with no live session: 401 signin_required instead. */
+/** The account's age check (POST /api/v1/me/age). `blocked` never goes back
+ * to false. */
+export type AgeState = { confirmed: boolean; blocked: boolean };
+
+/** GET /api/v1/me. Signed out: { user: null, entitlement: null, age: null }.
+ * A bearer token with no live session: 401 signin_required instead. */
 export type MeResponse = {
   user: Viewer | null;
   entitlement: Entitlement | null;
+  /** Absent on older servers. */
+  age?: AgeState | null;
 };
 
 /** Which sign-in methods are usable on this deployment right now. */

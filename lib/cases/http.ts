@@ -27,8 +27,8 @@ import { NextResponse } from "next/server";
 import type { Entitlement, PremiumBlock } from "@/lib/account-types";
 import { track } from "@/lib/analytics/track";
 import { API_ERROR_STATUS, apiErrorBody, type ApiErrorBody, type ApiErrorCode } from "@/lib/api-errors";
-import { getViewer, isSameOrigin, premiumEnabled, resolveViewer, type ViewerSession } from "@/lib/auth";
-import { deadBearerResponse } from "@/lib/bearer-guard";
+import { isSameOrigin, premiumEnabled, type ViewerSession } from "@/lib/auth";
+import { deadBearerResponse, lookupViewer } from "@/lib/bearer-guard";
 import {
   AppealRequest,
   CaseClaimRequest,
@@ -197,7 +197,8 @@ async function premiumGate(userId: string): Promise<NextResponse | null> {
 type Signed = { viewer: ViewerSession } | { response: NextResponse };
 
 export async function signedIn(req: Request): Promise<Signed> {
-  const viewer = await getViewer(req);
+  const { viewer, refused } = await lookupViewer(req);
+  if (refused) return { response: refused };
   if (!viewer) return { response: fail("signin_required") };
   if (viewer.via === "cookie" && !isSameOrigin(req)) return { response: fail("bad_origin") };
   return { viewer };
@@ -390,7 +391,8 @@ export function createCaseHandler(req: Request): Promise<NextResponse> {
 export function listCasesHandler(req: Request): Promise<NextResponse> {
   return guarded("list", async () => {
     if (!casesEnabled()) return fail("not_configured");
-    const viewer = await getViewer(req);
+    const { viewer, refused } = await lookupViewer(req);
+    if (refused) return refused;
     if (!viewer) return fail("signin_required");
     const params = new URL(req.url).searchParams;
     const rawLimit = params.get("limit");
@@ -419,7 +421,8 @@ export function listCasesHandler(req: Request): Promise<NextResponse> {
 export function getCaseHandler(req: Request, id: string): Promise<NextResponse> {
   return guarded("get", async () => {
     if (!casesEnabled()) return fail("not_configured");
-    const viewer = await getViewer(req);
+    const { viewer, refused } = await lookupViewer(req);
+    if (refused) return refused;
     if (!viewer) return fail("signin_required");
     await maybeSweepCases();
     const row = await ownedCase(id, viewer.user.id);
@@ -573,8 +576,9 @@ export function respondGetHandler(req: Request, token: string): Promise<NextResp
     await maybeSweepCases();
     const row = await caseByToken(token);
     if (!row) return fail("not_found", "No invite with that link.");
-    const { viewer, deadBearer } = await resolveViewer(req);
+    const { viewer, deadBearer, refused } = await lookupViewer(req);
     if (deadBearer) return deadBearerResponse();
+    if (refused) return refused;
     const body: CaseResponse = { case: await respondentView(row, viewer?.user.id ?? null, claimHeader(req)) };
     return json(body);
   });
@@ -595,8 +599,9 @@ export function respondPostHandler(req: Request, token: string): Promise<NextRes
     if (!row) return fail("not_found", "No invite with that link.");
     if (row.removedAt) return fail("removed");
 
-    const { viewer, deadBearer } = await resolveViewer(req);
+    const { viewer, deadBearer, refused } = await lookupViewer(req);
     if (deadBearer) return deadBearerResponse();
+    if (refused) return refused;
     const ip = clientIp(req.headers);
     if (viewer?.via !== "bearer") {
       const captcha = await verifyTurnstile(parsed.data.turnstileToken, ip);
@@ -689,6 +694,8 @@ export function respondEvidenceHandler(req: Request, token: string): Promise<Nex
     if (!isInviteToken(token)) return fail("not_found", "No invite with that link.");
     const row = await caseByToken(token);
     if (!row) return fail("not_found", "No invite with that link.");
+    const { refused } = await lookupViewer(req);
+    if (refused) return refused;
     const status = effectiveStatus(row, new Date());
     if (status === "expired") return fail("case_expired");
     if (status !== "awaiting_respondent") return fail("case_closed");
@@ -726,7 +733,8 @@ type Party = { row: CaseRow; viewer: ViewerSession | null } | { response: NextRe
 /** The owner of case `id` (session). Writes need the same origin for cookies. */
 async function ownerParty(req: Request, id: string, write: boolean): Promise<Party> {
   if (!casesEnabled()) return { response: fail("not_configured") };
-  const viewer = await getViewer(req);
+  const { viewer, refused } = await lookupViewer(req);
+  if (refused) return { response: refused };
   if (!viewer) return { response: fail("signin_required") };
   if (write && viewer.via === "cookie" && !isSameOrigin(req)) return { response: fail("bad_origin") };
   const limited = await ownerLimit(viewer.user.id, req);
@@ -740,8 +748,9 @@ async function ownerParty(req: Request, id: string, write: boolean): Promise<Par
 async function respondentParty(req: Request, token: string, write: boolean, bodyClaim?: string): Promise<Party> {
   if (!casesEnabled()) return { response: fail("not_configured") };
   if (!isInviteToken(token)) return { response: fail("not_found", "No invite with that link.") };
-  const { viewer, deadBearer } = await resolveViewer(req);
+  const { viewer, deadBearer, refused } = await lookupViewer(req);
   if (deadBearer) return { response: deadBearerResponse() };
+  if (refused) return { response: refused };
   if (write && viewer?.via === "cookie" && !isSameOrigin(req)) return { response: fail("bad_origin") };
   const limited = await ownerLimit(viewer?.user.id ?? null, req);
   if (limited) return { response: limited };

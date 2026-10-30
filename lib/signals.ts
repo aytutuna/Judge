@@ -15,7 +15,8 @@ export type Signal =
   | "provider_rate"
   | "provider_down"
   | "many_accounts_per_device"
-  | "events_cap";
+  | "events_cap"
+  | "age_blocked";
 
 export function signal(name: Signal, detail?: string): void {
   console.warn(detail ? `[signal:${name}] ${detail}` : `[signal:${name}]`);

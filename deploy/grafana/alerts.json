@@ -986,6 +986,63 @@
           "isPaused": false
         },
         {
+          "uid": "judge-signal-age-blocked",
+          "title": "Signal age_blocked",
+          "folderUID": "judge",
+          "ruleGroup": "warning",
+          "condition": "C",
+          "data": [
+            {
+              "refId": "A",
+              "queryType": "instant",
+              "relativeTimeRange": {
+                "from": 300,
+                "to": 0
+              },
+              "datasourceUid": "${LOKI_UID}",
+              "model": {
+                "refId": "A",
+                "expr": "sum(count_over_time({app=\"judge\", unit=\"verdict.service\"} |= \"[signal:age_blocked]\" [5m]))",
+                "queryType": "instant"
+              }
+            },
+            {
+              "refId": "C",
+              "datasourceUid": "__expr__",
+              "model": {
+                "refId": "C",
+                "type": "threshold",
+                "expression": "A",
+                "datasource": {
+                  "type": "__expr__",
+                  "uid": "__expr__"
+                },
+                "conditions": [
+                  {
+                    "evaluator": {
+                      "type": "gte",
+                      "params": [
+                        1
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "for": "0s",
+          "noDataState": "OK",
+          "execErrState": "Error",
+          "labels": {
+            "severity": "warning"
+          },
+          "annotations": {
+            "summary": "age_blocked x{{ $values.A.Value }} in 5 minutes (limit 1).",
+            "description": "The app store's age signal said an account belongs to someone under 18; the account is now blocked. Close it by hand if that is right. On the server: journalctl -u verdict --since -15min | grep 'signal:age_blocked'"
+          },
+          "isPaused": false
+        },
+        {
           "uid": "judge-ssh-login",
           "title": "SSH login",
           "folderUID": "judge",

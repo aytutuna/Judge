@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import type { MeResponse } from "@/lib/account-types";
+import { keepBlock } from "@/lib/age";
 import { forgetUser } from "@/lib/analytics/db";
 import { apiErrorBody } from "@/lib/api-errors";
 import {
@@ -9,6 +10,7 @@ import {
   isSameOrigin,
   resolveViewer,
   retryWelcomeCredit,
+  welcomeClaim,
 } from "@/lib/auth";
 import { deadBearerResponse } from "@/lib/bearer-guard";
 import { deleteUserEntitlements, getEntitlement } from "@/lib/entitlements";
@@ -20,14 +22,14 @@ export const dynamic = "force-dynamic";
 
 const NO_STORE = { "Cache-Control": "no-store" } as const;
 
-/** GET /api/v1/me: the viewer and their entitlement; nulls when signed out
- * (200, so one call drives every UI state). A bearer token that no longer
+/** GET /api/v1/me: the viewer, their entitlement and age check; nulls when
+ * signed out (200, so one call drives every UI state). A bearer token that no longer
  * works answers 401 signin_required. */
 export async function GET(req: Request): Promise<NextResponse> {
   const { viewer, deadBearer } = await resolveViewer(req);
   if (deadBearer) return deadBearerResponse();
   if (!viewer) {
-    const body: MeResponse = { user: null, entitlement: null };
+    const body: MeResponse = { user: null, entitlement: null, age: null };
     return NextResponse.json(body, { headers: NO_STORE });
   }
   try {
@@ -35,7 +37,7 @@ export async function GET(req: Request): Promise<NextResponse> {
     if (entitlement.credits === 0 && !entitlement.subscription && (await missedWelcome(viewer.user.id))) {
       entitlement = await getEntitlement(viewer.user.id);
     }
-    const body: MeResponse = { user: viewer.user, entitlement };
+    const body: MeResponse = { user: viewer.user, entitlement, age: viewer.age };
     return NextResponse.json(body, { headers: NO_STORE });
   } catch (e) {
     console.error("[me] entitlement lookup failed:", e instanceof Error ? e.message : String(e));
@@ -61,7 +63,8 @@ async function missedWelcome(userId: string): Promise<boolean> {
  * its side of every case (originals, name maps and display names blanked,
  * share links closed; no verdict row is deleted), then deletes its
  * entitlements, usage events, sign-ins, stored tokens and sessions and
- * unlinks its devices. */
+ * unlinks its devices. A blocked account's block is kept with the
+ * scrambled email, so signing up again with it starts blocked. */
 export async function DELETE(req: Request): Promise<NextResponse> {
   const viewer = await getViewer(req);
   if (!viewer) {
@@ -86,6 +89,8 @@ export async function DELETE(req: Request): Promise<NextResponse> {
     });
   }
   try {
+    const claim = viewer.age.blocked ? welcomeClaim(viewer.user.email) : null;
+    if (claim) await keepBlock(claim);
     const signInTokens = await revokeSignInTokens(viewer.user.id);
     await removeUserData(viewer.user.id, new Date(), { signInTokens });
     await deleteUserEntitlements(viewer.user.id);

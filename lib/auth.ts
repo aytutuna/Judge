@@ -18,7 +18,8 @@ import { APIError, createAuthMiddleware } from "better-auth/api";
 import { makeSignature } from "better-auth/crypto";
 import { getMigrations } from "better-auth/db/migration";
 import { bearer, captcha, emailOTP, magicLink } from "better-auth/plugins";
-import type { AuthProviders, Viewer } from "./account-types";
+import type { AgeState, AuthProviders, Viewer } from "./account-types";
+import { ageRefusal, keptBlock, needsConfirmed, requestPath, type AgeRefusal } from "./age";
 import { APPLE_SECRET_REFRESH_MS, appleClientSecret, appleEnv } from "./apple-secret";
 import { getDb } from "./db";
 import {
@@ -35,7 +36,7 @@ import { signal } from "./signals";
 type Env = Record<string, string | undefined>;
 type AuthInstance = Auth<BetterAuthOptions>;
 
-export type ViewerSession = { user: Viewer; sessionId: string; via: "cookie" | "bearer" };
+export type ViewerSession = { user: Viewer; sessionId: string; via: "cookie" | "bearer"; age: AgeState };
 
 const SESSION_DAYS = 30;
 /** Email sign-in links and codes live this long. */
@@ -270,7 +271,15 @@ function buildOptions(env: Env, secret: string, client: Awaited<ReturnType<typeo
       : [...(origin ? [origin] : []), "http://localhost:*", "http://127.0.0.1:*", "http://[::1]:*"],
     database: { dialect: new LibsqlDialect({ client }), type: "sqlite" },
     session: { expiresIn: SESSION_DAYS * 24 * 60 * 60, updateAge: 24 * 60 * 60 },
-    user: { deleteUser: { enabled: false } },
+    user: {
+      deleteUser: { enabled: false },
+      // The age check (lib/age.ts). Written only by POST /api/v1/me/age.
+      additionalFields: {
+        ageConfirmedAt: { type: "date", required: false, input: false, fieldName: "age_confirmed_at" },
+        ageSource: { type: "string", required: false, input: false, fieldName: "age_source" },
+        ageBlockedAt: { type: "date", required: false, input: false, fieldName: "age_blocked_at" },
+      },
+    },
     account: {
       // On: a returning website Apple sign-in passes its fresh refresh token
       // through the account update hooks below (the tokens are still stripped
@@ -350,6 +359,11 @@ function buildOptions(env: Env, secret: string, client: Awaited<ReturnType<typeo
       // credit get nothing. A failed grant must not break the sign-in.
       user: {
         create: {
+          before: async (user) => {
+            const claim = welcomeClaim(user.email);
+            const blockedAt = claim && (await keptBlock(claim));
+            return blockedAt ? { data: { ...user, ageBlockedAt: new Date(blockedAt) } } : undefined;
+          },
           after: async (user) => {
             const claim = welcomeClaim(user.email);
             if (!claim) return;
@@ -510,6 +524,10 @@ export type ViewerLookup = {
   deadBearer: boolean;
   /** The lookup itself failed, so the request may well be signed in. */
   failed?: true;
+  /** The age check stops this request (see lib/age.ts ageGateResponse):
+   * "unavailable" when the lookup failed on a route that needs a confirmed
+   * age. */
+  gate?: AgeRefusal | "unavailable";
 };
 
 /**
@@ -519,7 +537,7 @@ export type ViewerLookup = {
  * cookie. Never throws: a lookup failure is logged and treated as signed out
  * with deadBearer false (the token itself may be fine) and `failed` set.
  * With auth off there are no sessions, so nothing counts as a dead token
- * either.
+ * either. `gate` is set when the age check refuses this request.
  */
 export async function resolveViewer(req: Request): Promise<ViewerLookup> {
   if (!authConfigured()) return { viewer: null, deadBearer: false };
@@ -529,13 +547,22 @@ export async function resolveViewer(req: Request): Promise<ViewerLookup> {
     const res = await auth.api.getSession({ headers: req.headers });
     if (bearer !== null && res?.session.token !== bearer) return { viewer: null, deadBearer: true };
     if (!res) return { viewer: null, deadBearer: false };
+    const user = res.user as typeof res.user & { ageConfirmedAt?: unknown; ageBlockedAt?: unknown };
+    const age = { confirmed: user.ageConfirmedAt != null, blocked: user.ageBlockedAt != null };
+    const gate = ageRefusal(req.method, requestPath(req), age);
     return {
-      viewer: { user: toViewer(res.user), sessionId: res.session.id, via: bearer !== null ? "bearer" : "cookie" },
+      viewer: { user: toViewer(res.user), sessionId: res.session.id, via: bearer !== null ? "bearer" : "cookie", age },
       deadBearer: false,
+      ...(gate && { gate }),
     };
   } catch (e) {
     console.error("[auth] session lookup failed:", e instanceof Error ? e.message : String(e));
-    return { viewer: null, deadBearer: false, failed: true };
+    return {
+      viewer: null,
+      deadBearer: false,
+      failed: true,
+      ...(needsConfirmed(req.method, requestPath(req)) && { gate: "unavailable" as const }),
+    };
   }
 }
 

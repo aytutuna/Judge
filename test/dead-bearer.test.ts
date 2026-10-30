@@ -45,6 +45,14 @@ process.env.BETTER_AUTH_URL = "http://localhost:3600";
 process.env.ANTHROPIC_API_KEY = "test-key";
 
 const auth = await import("../lib/auth");
+const { confirmAdult } = await import("../lib/age");
+
+/** A session for an account that has passed the 18+ check. */
+async function adultSession(email: string) {
+  const session = await auth.createDevSession(email);
+  await confirmAdult(session.user.id, "checkbox");
+  return session;
+}
 const { getDb } = await import("../lib/db");
 const { POST: postVerdict } = await import("../app/api/v1/verdict/route");
 const { GET: getVerdict } = await import("../app/api/v1/verdicts/[id]/route");
@@ -169,7 +177,7 @@ describe("POST /api/v1/verdict with a bearer token", () => {
   });
 
   it("a valid token is judged and owns the verdict (raw or signed form)", async () => {
-    const { token, user } = await auth.createDevSession("app@verdict.local");
+    const { token, user } = await adultSession("app@verdict.local");
     // The welcome credit pays for the first one.
     await grantCredits({ userId: user.id, credits: 1, source: "admin", externalId: `more:${user.id}` });
     const res = await postVerdict(verdictRequest(bearer(token)));
@@ -197,7 +205,7 @@ describe("POST /api/v1/verdict without a bearer token (the website)", () => {
   });
 
   it("a same-origin session cookie owns the verdict", async () => {
-    const { token } = await auth.createDevSession("web@verdict.local");
+    const { token } = await adultSession("web@verdict.local");
     const res = await postVerdict(verdictRequest({ cookie: await cookieFor(token), origin: ORIGIN }));
     expect(res.status).toBe(200);
     expect((await res.json()).owner_token).toBeUndefined();
@@ -217,7 +225,7 @@ describe("POST /api/v1/verdict without a bearer token (the website)", () => {
 
 describe("other routes with a dead bearer token", () => {
   it("GET /api/v1/verdicts/{id}: 401 for a dead token; share viewers without a header still read it", async () => {
-    const writer = await auth.createDevSession("writer@verdict.local");
+    const writer = await adultSession("writer@verdict.local");
     const res = await postVerdict(verdictRequest(bearer(writer.token)));
     const { id } = (await res.json()) as { id: string };
     const read = (headers: Record<string, string> = {}) =>
@@ -241,8 +249,8 @@ describe("other routes with a dead bearer token", () => {
     await expectSignInFirst(await me(bearer(await expiredToken("meold@verdict.local"))));
     const anon = await me();
     expect(anon.status).toBe(200);
-    expect(await anon.json()).toEqual({ user: null, entitlement: null });
-    expect(await (await me({ cookie: "verdict.session_token=garbage" })).json()).toEqual({ user: null, entitlement: null });
+    expect(await anon.json()).toEqual({ user: null, entitlement: null, age: null });
+    expect(await (await me({ cookie: "verdict.session_token=garbage" })).json()).toEqual({ user: null, entitlement: null, age: null });
     const { token } = await auth.createDevSession("melive@verdict.local");
     expect((await (await me(bearer(token))).json()).user.email).toBe("melive@verdict.local");
   });

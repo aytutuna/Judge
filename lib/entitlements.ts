@@ -82,9 +82,12 @@ const SCHEMA = [
   "CREATE INDEX IF NOT EXISTS premium_usage_user ON premium_usage (user_id, status, created_at)",
   "CREATE INDEX IF NOT EXISTS premium_usage_created ON premium_usage (created_at)",
   // Kept when an account is deleted: one welcome credit per email, ever.
+  // age_blocked_at: that email's account was blocked by the age check
+  // (lib/age.ts), so a new one starts blocked.
   `CREATE TABLE IF NOT EXISTS welcome_claims (
-    claim       TEXT PRIMARY KEY,
-    created_at  TEXT NOT NULL
+    claim           TEXT PRIMARY KEY,
+    created_at      TEXT NOT NULL,
+    age_blocked_at  TEXT
   )`,
 ];
 
@@ -100,7 +103,10 @@ export async function ensureEntitlementTables(): Promise<void> {
   const cached = globalForEntitlements.__verdictEntitlementsReady;
   if (cached?.client === client) return cached.ready;
   const ready = withBusyRetry(() => client.batch(SCHEMA, "write")).then(
-    () => addHoldColumn(client),
+    async () => {
+      await addColumn(client, "premium_usage", "hold_until");
+      await addColumn(client, "welcome_claims", "age_blocked_at");
+    },
     (e: unknown) => {
       globalForEntitlements.__verdictEntitlementsReady = undefined;
       throw e;
@@ -110,14 +116,15 @@ export async function ensureEntitlementTables(): Promise<void> {
   return ready;
 }
 
-/** Adds premium_usage.hold_until (a reservation held past the usual
- * 10-minute crash window, e.g. a two-sided case waiting for its answer).
+/** Adds a TEXT column a database from before it lacks: premium_usage.hold_until
+ * (a reservation held past the usual 10-minute crash window, e.g. a
+ * two-sided case waiting for its answer) and welcome_claims.age_blocked_at.
  * A concurrent process adding it first is fine. */
-async function addHoldColumn(db: Client): Promise<void> {
-  const info = await db.execute("PRAGMA table_info(premium_usage)");
-  if (info.rows.some((r) => String(r.name) === "hold_until")) return;
+async function addColumn(db: Client, table: string, column: string): Promise<void> {
+  const info = await db.execute(`PRAGMA table_info(${table})`);
+  if (info.rows.some((r) => String(r.name) === column)) return;
   try {
-    await withBusyRetry(() => db.execute("ALTER TABLE premium_usage ADD COLUMN hold_until TEXT"));
+    await withBusyRetry(() => db.execute(`ALTER TABLE ${table} ADD COLUMN ${column} TEXT`));
   } catch (e) {
     const message = e instanceof Error ? e.message : String(e);
     if (!/duplicate column name/i.test(message)) throw e;

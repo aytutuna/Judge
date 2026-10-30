@@ -41,6 +41,10 @@ export const API_ERROR_STATUS = {
   removed: 410,
   /** A display-name write while this server has no originals key. */
   names_unavailable: 503,
+  /** The account belongs to someone under 18 (POST /api/v1/me/age). */
+  age_blocked: 403,
+  /** Starting a verdict or case before confirming the account holder is 18+. */
+  age_unconfirmed: 403,
 } as const;
 
 export type ApiErrorCode = keyof typeof API_ERROR_STATUS;

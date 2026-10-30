@@ -44,7 +44,7 @@ describe("GET /api/v1/me", () => {
     const res = await get();
     expect(res.status).toBe(200);
     expect(res.headers.get("cache-control")).toBe("no-store");
-    expect(await res.json()).toEqual({ user: null, entitlement: null });
+    expect(await res.json()).toEqual({ user: null, entitlement: null, age: null });
   });
 
   it("signed in: viewer plus entitlement", async () => {
@@ -55,6 +55,7 @@ describe("GET /api/v1/me", () => {
       user: { id: user.id, email: "me1@verdict.local", name: "Test user", image: null },
       // 5 granted plus the welcome credit.
       entitlement: { canUsePremium: true, blockedReason: null, credits: 6, subscription: null, resetsAt: null },
+      age: { confirmed: false, blocked: false },
     });
   });
 

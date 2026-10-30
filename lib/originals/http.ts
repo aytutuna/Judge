@@ -17,8 +17,8 @@
 
 import { NextResponse } from "next/server";
 import { API_ERROR_STATUS, apiErrorBody, type ApiErrorCode } from "@/lib/api-errors";
-import { getViewer, isSameOrigin, resolveViewer, type ViewerSession } from "@/lib/auth";
-import { deadBearerResponse } from "@/lib/bearer-guard";
+import { isSameOrigin, type ViewerSession } from "@/lib/auth";
+import { deadBearerResponse, lookupViewer } from "@/lib/bearer-guard";
 import { getCase, type CaseRow } from "@/lib/cases/db";
 import { claimMatches } from "@/lib/cases/invite";
 import { clientIp } from "@/lib/client-ip";
@@ -108,8 +108,9 @@ type Owner =
 async function ownerOf(req: Request, id: string, write: boolean): Promise<Owner> {
   if (!ID_PATTERN.test(id)) return { response: fail("not_found") };
   const token = ownerTokenHeader(req);
-  const { viewer, deadBearer } = await resolveViewer(req);
+  const { viewer, deadBearer, refused } = await lookupViewer(req);
   if (deadBearer) return { response: deadBearerResponse() };
+  if (refused) return { response: refused };
   if (!token && !viewer && !claimHeader(req)) return { response: fail("not_found") };
   try {
     const limit = viewer && !token
@@ -288,7 +289,8 @@ export function removalHandler(req: Request, id: string): Promise<NextResponse> 
  * token keeps the verdict in their account (the token stays valid). */
 export function claimHandler(req: Request, id: string): Promise<NextResponse> {
   return guarded("claim", async () => {
-    const viewer = await getViewer(req);
+    const { viewer, refused } = await lookupViewer(req);
+    if (refused) return refused;
     if (!viewer) return fail("signin_required");
     if (viewer.via === "cookie" && !isSameOrigin(req)) return fail("bad_origin");
     const o = await ownerOf(req, id, true);
@@ -316,7 +318,8 @@ export function claimHandler(req: Request, id: string): Promise<NextResponse> {
 /** GET /api/v1/me/verdicts?limit=20&before=<ISO> */
 export function myVerdictsHandler(req: Request): Promise<NextResponse> {
   return guarded("list", async () => {
-    const viewer = await getViewer(req);
+    const { viewer, refused } = await lookupViewer(req);
+    if (refused) return refused;
     if (!viewer) return fail("signin_required");
     const params = new URL(req.url).searchParams;
     const rawLimit = params.get("limit");
