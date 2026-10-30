@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Inter_Tight, Instrument_Serif } from "next/font/google";
+import { Analytics } from "@/components/Analytics";
 import { PALETTE, PALETTE_DARK } from "@/lib/palette";
 import { SITE_DESCRIPTION, SITE_NAME, SITE_TITLE, siteUrl } from "./site";
 import "./globals.css";
@@ -58,7 +59,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`${inter.variable} ${interTight.variable} ${instrumentSerif.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        {children}
+        <Analytics />
+      </body>
     </html>
   );
 }
