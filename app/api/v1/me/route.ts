@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import type { MeResponse } from "@/lib/account-types";
+import { forgetUser } from "@/lib/analytics/db";
 import { apiErrorBody } from "@/lib/api-errors";
 import {
   clearSessionCookieHeaders,
@@ -59,7 +60,8 @@ async function missedWelcome(userId: string): Promise<boolean> {
  * and does not stop the deletion), removes every verdict the account owns and
  * its side of every case (originals, name maps and display names blanked,
  * share links closed; no verdict row is deleted), then deletes its
- * entitlements, sign-ins, stored tokens and sessions. */
+ * entitlements, usage events, sign-ins, stored tokens and sessions and
+ * unlinks its devices. */
 export async function DELETE(req: Request): Promise<NextResponse> {
   const viewer = await getViewer(req);
   if (!viewer) {
@@ -87,6 +89,7 @@ export async function DELETE(req: Request): Promise<NextResponse> {
     const signInTokens = await revokeSignInTokens(viewer.user.id);
     await removeUserData(viewer.user.id, new Date(), { signInTokens });
     await deleteUserEntitlements(viewer.user.id);
+    await forgetUser(viewer.user.id);
     await deleteAuthUser(viewer.user.id);
   } catch (e) {
     console.error("[me] account deletion failed:", e instanceof Error ? e.message : String(e));

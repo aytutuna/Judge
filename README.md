@@ -193,7 +193,7 @@ after sign-in.
 | `EVIDENCE_MODEL` | `claude-haiku-5-5` | Vision model that transcribes evidence images |
 | `PURCHASES_ENABLED` | *(empty)* | `1` = `GET /api/v1/config` reports `pricing.purchasesEnabled: true`, so the apps offer their in-app purchases. Anything else = false ("Coming soon") |
 | `REVENUECAT_WEBHOOK_SECRET` | *(empty)* | Shared secret for `POST /api/v1/webhooks/revenuecat`; set RevenueCat's webhook Authorization header to `Bearer <secret>`. Unset = the webhook answers `503 not_configured` |
-| `ANALYTICS_ENABLED` | `1` | `0` = `GET /api/v1/config` reports `features.analytics: false`, so the apps stop sending usage events, and `POST /api/v1/events` stores nothing |
+| `ANALYTICS_ENABLED` | `1` | `0` = `GET /api/v1/config` reports `features.analytics: false`, so the apps stop sending usage events, and `POST /api/v1/events` stores nothing. The sign-in device check (`many_accounts_per_device`) is a separate anti-abuse feature and keeps running with the switch off |
 | `ALLOW_SANDBOX_PURCHASES` | *(empty)* | `1` = also apply RevenueCat events with `environment: SANDBOX` (TestFlight, Play test tracks). Leave unset on the live server: sandbox purchases are free |
 
 Sign-in providers without credentials are reported as unavailable by
@@ -412,7 +412,7 @@ The website and the future iOS/Android app share one JSON API. Base URL
 |---|---|
 | `GET /api/v1/config` | Startup: which sign-in methods work, whether Premium is on, prices, `freeTier: false` and `welcomeCredits` (`AppConfig`) |
 | `GET /api/v1/me` | The account and its entitlement (`MeResponse`); signed out = `{ "user": null, "entitlement": null }`; a dead bearer token = `401 signin_required` |
-| `DELETE /api/v1/me` `{ "confirm": "delete" }` | Removes every verdict the account owns and its side of every case (originals and names blanked, links closed; no verdict row is deleted), then deletes the account, sessions, sign-ins and entitlements (both stores require in-app deletion). Stored Sign in with Apple tokens are revoked at Apple first; an Apple failure is logged and does not stop the deletion |
+| `DELETE /api/v1/me` `{ "confirm": "delete" }` | Removes every verdict the account owns and its side of every case (originals and names blanked, links closed; no verdict row is deleted), then deletes the account, sessions, sign-ins, entitlements and usage events, and unlinks its devices (both stores require in-app deletion). Stored Sign in with Apple tokens are revoked at Apple first; an Apple failure is logged and does not stop the deletion |
 | `POST /api/v1/auth/apple/code` `{ "code": "<authorizationCode>" }` | iOS, right after a native Sign in with Apple: lets the server keep the Apple refresh token so account deletion can revoke it. `200 { "stored": true }` |
 | `GET /api/v1/me/verdicts` | Your one-sided verdicts, newest first (`?limit=1-50&before=<createdAt>`), each with its anonymized `headline` and your `nameMap` to restore names |
 | `POST /api/v1/clarify` | Premium: up to 2 clarifying questions |
@@ -1071,7 +1071,7 @@ usage counts every 60 seconds from `http://127.0.0.1:3000/api/internal/metrics`
 app_open, case_started, case_submitted, verdict_ready and purchase_granted over
 7 days. The app answers that path only to a direct request from the server
 itself, and Caddy answers 404 for `/api/internal/*`. Usage events are kept 90
-days. Alloy sees only the
+days, sign-in device links 180 days after their last use. Alloy sees only the
 `GRAFANA_*` settings, which deploys copy to `/etc/alloy/grafana.env`. The
 rules are in `deploy/grafana/alerts.json`: critical ones go to Pushover at
 emergency priority (repeating until you acknowledge it) and by email, warnings

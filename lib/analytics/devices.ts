@@ -10,11 +10,11 @@ import { analyticsDb } from "./db";
 import { track } from "./track";
 import { countryOf, isClientPlatform, isDeviceId } from "./validate";
 
-/** Accounts on one device from which on it is signalled. */
+/** A device signed in to this many accounts or more is signalled. */
 export const MANY_ACCOUNTS = 3;
 
 /** How many distinct accounts have signed in on this device. */
-export async function devicesSharingUser(deviceId: string): Promise<number> {
+export async function accountsOnDevice(deviceId: string): Promise<number> {
   const db = await analyticsDb();
   const rs = await db.execute({
     sql: "SELECT COUNT(DISTINCT user_id) AS n FROM account_devices WHERE device_id = ?",
@@ -40,7 +40,7 @@ export async function noteSignIn(userId: string, headers: Headers | undefined): 
         args: [userId, device.deviceId, device.platform, country, now, now],
       });
       if (inserted.rowsAffected === 1) {
-        const accounts = await devicesSharingUser(device.deviceId);
+        const accounts = await accountsOnDevice(device.deviceId);
         if (accounts >= MANY_ACCOUNTS) {
           signal("many_accounts_per_device", `accounts=${accounts} platform=${device.platform}`);
         }

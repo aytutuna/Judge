@@ -5,7 +5,8 @@
  * Events never hold user text, names, emails, IP addresses or user agents:
  * names and props are checked in ./validate before anything is written, and
  * the country is the two-letter code Cloudflare derives, nothing finer.
- * Events older than RETENTION_MS are deleted (pruneEvents, daily). At most
+ * Events older than RETENTION_MS and device links unused for
+ * DEVICE_RETENTION_MS are deleted (pruneEvents, daily). At most
  * DAILY_EVENT_CAP events are stored per rolling 24 hours, so a flood of fake
  * installs cannot fill the disk.
  *
@@ -18,6 +19,7 @@ import { signal } from "@/lib/signals";
 
 const DAY_MS = 24 * 60 * 60_000;
 export const RETENTION_MS = 90 * DAY_MS;
+export const DEVICE_RETENTION_MS = 180 * DAY_MS;
 export const DAILY_EVENT_CAP = 200_000;
 
 export type Platform = "ios" | "android" | "web" | "server";
@@ -53,22 +55,22 @@ const SCHEMA = [
 ];
 
 const globalForAnalytics = globalThis as unknown as {
-  __verdictAnalyticsReady?: { client: Client; ready: Promise<void> };
-  __verdictEventsPruner?: boolean;
+  __judgeAnalyticsReady?: { client: Client; ready: Promise<void> };
+  __judgeEventsPruner?: boolean;
 };
 
 export async function ensureAnalyticsTables(): Promise<void> {
   const client = await getDb();
-  const cached = globalForAnalytics.__verdictAnalyticsReady;
+  const cached = globalForAnalytics.__judgeAnalyticsReady;
   if (cached?.client === client) return cached.ready;
   const ready = client.batch(SCHEMA, "write").then(
     () => undefined,
     (e: unknown) => {
-      globalForAnalytics.__verdictAnalyticsReady = undefined;
+      globalForAnalytics.__judgeAnalyticsReady = undefined;
       throw e;
     },
   );
-  globalForAnalytics.__verdictAnalyticsReady = { client, ready };
+  globalForAnalytics.__judgeAnalyticsReady = { client, ready };
   return ready;
 }
 
@@ -128,17 +130,44 @@ export async function insertEvents(rows: EventRow[]): Promise<void> {
   );
 }
 
-/** Deletes events older than RETENTION_MS; returns how many. */
-export async function pruneEvents(now: number = Date.now()): Promise<number> {
+/** Deletes events and device links past their retention; returns how many of each. */
+export async function pruneEvents(now: number = Date.now()): Promise<{ events: number; devices: number }> {
   const db = await analyticsDb();
-  const rs = await db.execute({ sql: "DELETE FROM events WHERE at < ?", args: [now - RETENTION_MS] });
-  return rs.rowsAffected;
+  const [events, devices] = await db.batch(
+    [
+      { sql: "DELETE FROM events WHERE at < ?", args: [now - RETENTION_MS] },
+      { sql: "DELETE FROM account_devices WHERE last_seen < ?", args: [now - DEVICE_RETENTION_MS] },
+    ],
+    "write",
+  );
+  return { events: events.rowsAffected, devices: devices.rowsAffected };
+}
+
+/**
+ * On account deletion: its events go, and its device links lose the account
+ * but stay, under a random placeholder per row, so a device still counts the
+ * accounts it was used for when someone deletes one and signs up again.
+ */
+export async function forgetUser(userId: string): Promise<void> {
+  const db = await analyticsDb();
+  await db.batch(
+    [
+      { sql: "DELETE FROM events WHERE user_id = ?", args: [userId] },
+      {
+        sql: "UPDATE account_devices SET user_id = 'deleted:' || lower(hex(randomblob(8))) WHERE user_id = ?",
+        args: [userId],
+      },
+    ],
+    "write",
+  );
 }
 
 async function pruneQuietly(): Promise<void> {
   try {
     const n = await pruneEvents();
-    if (n) console.info(`[analytics] deleted ${n} events past retention`);
+    if (n.events || n.devices) {
+      console.info(`[analytics] deleted ${n.events} events and ${n.devices} device links past retention`);
+    }
   } catch (e) {
     console.error("[analytics] pruning events failed:", e instanceof Error ? e.message : String(e));
   }
@@ -146,8 +175,8 @@ async function pruneQuietly(): Promise<void> {
 
 /** Server startup: prune now, then once a day. Once per process. */
 export function startEventPruner(): void {
-  if (globalForAnalytics.__verdictEventsPruner) return;
-  globalForAnalytics.__verdictEventsPruner = true;
+  if (globalForAnalytics.__judgeEventsPruner) return;
+  globalForAnalytics.__judgeEventsPruner = true;
   void pruneQuietly();
   const timer = setInterval(() => void pruneQuietly(), DAY_MS);
   timer.unref?.();
