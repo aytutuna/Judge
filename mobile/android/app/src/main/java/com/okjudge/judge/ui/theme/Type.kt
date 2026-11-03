@@ -105,13 +105,15 @@ class JudgeTypeScale(private val p: JudgePalette) {
     val headline = inter(15.5f, 400, 1.45f, p.ink2)
     val lead = inter(17f, 400, 1.5f, p.ink2)
     val body = inter(16f, 400, 1.5f)
+    val bodyMedium = inter(15f, 500, 1.5f)
     val bodyStrong = inter(16f, 600, 1.5f)
-    val slotTitle = inter(14f, 600, 1.4f)
+    val slotTitle = inter(14f, 600, 1.35f)
     val slotText = inter(13f, 400, 1.45f, p.muted)
     val footnote = inter(12.5f, 400, 1.5f, p.muted)
     val branch = inter(14.5f, 400, 1.5f)
     val branchLead = inter(14.5f, 600, 1.5f)
     val small = inter(13f, 600, 1.35f, p.ink2)
+    val chip = inter(14f, 600, 1.2f, p.ink2)
     private val SectionTitle = TextStyle(
         fontFamily = BrandFonts.interTight(700),
         fontWeight = FontWeight.Bold,
@@ -134,7 +136,7 @@ class JudgeTypeScale(private val p: JudgePalette) {
         fontFamily = BrandFonts.interTight(600),
         fontWeight = FontWeight.SemiBold,
         fontSize = 16.sp,
-        lineHeight = 20.sp,
+        lineHeight = (16 * 1.2).sp,
         color = p.ivory,
     )
 

@@ -24,6 +24,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.disabled
 import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.semantics.semantics
@@ -46,7 +47,7 @@ fun PrimaryButton(text: String, enabled: Boolean, onClick: () -> Unit, modifier:
             .background(bg)
             .semantics { role = Role.Button }
             .clickable(enabled = enabled, onClick = onClick)
-            .padding(horizontal = 24.dp, vertical = 16.dp),
+            .padding(horizontal = 20.dp, vertical = 16.dp),
         contentAlignment = Alignment.Center,
     ) {
         Text(text, style = JudgeType.button, textAlign = TextAlign.Center)
@@ -55,21 +56,24 @@ fun PrimaryButton(text: String, enabled: Boolean, onClick: () -> Unit, modifier:
 
 /** The small outlined pill buttons of the card (share, copy link). */
 @Composable
-fun GhostButton(text: String, icon: ImageVector?, onClick: () -> Unit, modifier: Modifier = Modifier) {
+fun GhostButton(text: String, icon: ImageVector?, onClick: () -> Unit, modifier: Modifier = Modifier, enabled: Boolean = true) {
     Row(
         modifier
             .defaultMinSize(minHeight = 40.dp)
             .clip(JudgeShapes.chip)
             .border(BorderStroke(1.dp, Palette.line2), JudgeShapes.chip)
             .background(Palette.paper)
-            .semantics { role = Role.Button }
-            .clickable(onClick = onClick)
-            .padding(horizontal = 14.dp, vertical = 9.dp),
+            .semantics {
+                role = Role.Button
+                if (!enabled) disabled()
+            }
+            .clickable(enabled = enabled, onClick = onClick)
+            .padding(horizontal = 16.dp, vertical = 9.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(7.dp),
     ) {
         if (icon != null) Image(icon, contentDescription = null, modifier = Modifier.size(15.dp))
-        Text(text, style = JudgeType.small.copy(color = Palette.ink))
+        Text(text, style = JudgeType.chip.copy(color = if (enabled) Palette.ink else Palette.muted))
     }
 }
 
@@ -85,7 +89,7 @@ fun TextAction(text: String, onClick: () -> Unit, modifier: Modifier = Modifier,
             .padding(horizontal = 10.dp, vertical = 9.dp),
         contentAlignment = Alignment.Center,
     ) {
-        Text(text, style = JudgeType.small.copy(color = if (enabled) color else color.copy(alpha = 0.4f)))
+        Text(text, style = JudgeType.chip.copy(color = if (enabled) color else color.copy(alpha = 0.4f)))
     }
 }
 
@@ -97,25 +101,30 @@ fun Chip(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     leading: String? = null,
+    icon: ImageVector? = null,
 ) {
-    val bg = if (selected) Palette.terraTint else Palette.paper
-    val border = if (selected) Palette.terra else Palette.line2
+    val bg = if (selected) Palette.terraTint else Palette.ivory2
+    val border = if (selected) Palette.terra.copy(alpha = 0.5f) else Palette.line
     Row(
         modifier
-            .defaultMinSize(minHeight = 40.dp)
+            .defaultMinSize(minHeight = 38.dp)
             .clip(JudgeShapes.chip)
-            .border(BorderStroke(if (selected) 1.5.dp else 1.dp, border), JudgeShapes.chip)
+            .border(BorderStroke(1.dp, border), JudgeShapes.chip)
             .background(bg)
             .semantics { this.selected = selected }
             .clickable(onClick = onClick)
             .padding(horizontal = 14.dp, vertical = 9.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
+        if (icon != null) {
+            Image(icon, contentDescription = null, modifier = Modifier.size(15.dp))
+            Spacer(Modifier.width(7.dp))
+        }
         if (leading != null) {
-            Text(leading, style = JudgeType.small)
+            Text(leading, style = JudgeType.chip)
             Spacer(Modifier.width(6.dp))
         }
-        Text(text, style = JudgeType.small.copy(color = Palette.ink))
+        Text(text, style = JudgeType.chip.copy(color = Palette.ink))
     }
 }
 

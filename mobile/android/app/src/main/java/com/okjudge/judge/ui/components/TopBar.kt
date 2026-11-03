@@ -25,6 +25,7 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import com.okjudge.judge.i18n.LocalStrings
 import com.okjudge.judge.ui.theme.JudgeType
@@ -68,14 +69,14 @@ fun TopBar(onBack: (() -> Unit)?, onNew: (() -> Unit)?, modifier: Modifier = Mod
             Spacer(Modifier.width(8.dp))
             Text(
                 s.appName,
-                style = JudgeType.button.copy(color = Palette.ink, fontSize = 18.sp),
+                style = JudgeType.button.copy(color = Palette.ink, fontSize = 17.sp, letterSpacing = (-0.01).em),
                 modifier = Modifier.clearAndSetSemantics { },
             )
         }
         Spacer(Modifier.weight(1f))
         if (onNew != null) {
             RoundButton(s.shellNew, onNew, Modifier.testTag(TopBarTags.NEW), outlined = true) {
-                TintedIcon(rememberIcon(Palette.ink) { JudgeIcons.plus(it) }, 18)
+                TintedIcon(rememberIcon(Palette.ink) { JudgeIcons.plus(it) }, 16)
             }
         }
     }
@@ -93,7 +94,6 @@ private fun RoundButton(
         modifier
             .size(44.dp)
             .clip(CircleShape)
-            .then(if (outlined) Modifier.background(Palette.paper).border(1.dp, Palette.line2, CircleShape) else Modifier)
             .semantics {
                 role = Role.Button
                 contentDescription = label
@@ -101,6 +101,13 @@ private fun RoundButton(
             .clickable(onClick = onClick),
         contentAlignment = Alignment.Center,
     ) {
-        icon()
+        if (outlined) {
+            Box(
+                Modifier.size(36.dp).background(Palette.paper, CircleShape).border(1.dp, Palette.line2, CircleShape),
+                contentAlignment = Alignment.Center,
+            ) { icon() }
+        } else {
+            icon()
+        }
     }
 }

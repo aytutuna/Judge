@@ -29,6 +29,7 @@ import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
@@ -796,11 +797,11 @@ internal fun showsBottomBar(top: NavKey?): Boolean = when (top) {
 @Composable
 private fun BottomBar(selected: Tab, onSelect: (Tab) -> Unit) {
     val s = LocalStrings.current
-    NavigationBar(containerColor = Palette.paper, tonalElevation = 0.dp) {
+    NavigationBar(containerColor = Palette.ivory, tonalElevation = 0.dp) {
         val colors = NavigationBarItemDefaults.colors(
-            selectedIconColor = Palette.ink,
-            selectedTextColor = Palette.ink,
-            indicatorColor = Palette.terraTint,
+            selectedIconColor = Palette.terraInk,
+            selectedTextColor = Palette.terraInk,
+            indicatorColor = Color.Transparent,
             unselectedIconColor = Palette.muted,
             unselectedTextColor = Palette.muted,
         )

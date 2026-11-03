@@ -152,13 +152,14 @@ fun RulingSummary(
                 .warmShadow(10.dp, JudgeShapes.card)
                 .clip(JudgeShapes.card)
                 .background(Palette.paper)
+                .border(1.dp, Palette.line, JudgeShapes.card)
                 .testTag(VerdictTags.RULING)
-                .padding(start = 18.dp, end = 18.dp, top = 18.dp, bottom = 20.dp)
+                .padding(18.dp)
                 .animateContentSize(),
             verticalArrangement = Arrangement.spacedBy(14.dp),
         ) {
-            TranslationLine(view)
             if (scene) SceneView(VerdictDisplay.sceneVerdict(result), reducedMotion, Modifier.fillMaxWidth().height(118.dp))
+            TranslationLine(view)
             Column(Modifier.alpha(if (view.status == TranslationStatus.LOADING) 0.55f else 1f), verticalArrangement = Arrangement.spacedBy(14.dp)) {
                 PartySides { Contenders(parties) }
                 VerdictDisplay.leanShare(result)?.let { share -> PartySides { LeanBar(share, parties) } }
@@ -316,7 +317,7 @@ private fun Contenders(parties: PartyLabels) {
             Avatar("A", sides.a.ink)
             Text(parties.nameA, style = JudgeType.bodyStrong.copy(fontSize = 15.sp, fontWeight = FontWeight.Bold), maxLines = 1, overflow = TextOverflow.Ellipsis)
         }
-        Text(s.appVerdictVs, style = JudgeType.footnote.copy(fontSize = 12.sp), modifier = Modifier.padding(horizontal = 8.dp))
+        Text(s.appVerdictVs, style = JudgeType.footnote, modifier = Modifier.padding(horizontal = 8.dp))
         Row(
             Modifier.weight(1f),
             verticalAlignment = Alignment.CenterVertically,
@@ -723,7 +724,7 @@ private fun SidesSection(result: VerdictResult, parties: PartyLabels) {
         }
         if (claims.isNotEmpty()) {
             Column(Modifier.padding(top = 4.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
-                Text(s.appVerdictClaims, style = JudgeType.footnote.copy(fontSize = 12.sp, fontWeight = FontWeight.SemiBold))
+                Text(s.appVerdictClaims, style = JudgeType.footnote.copy(fontWeight = FontWeight.SemiBold))
                 claims.forEach { (party, claim) -> ClaimLine(party == "a", claim, s) }
             }
         }
