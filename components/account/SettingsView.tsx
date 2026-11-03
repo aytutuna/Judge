@@ -46,7 +46,7 @@ export function SettingsView() {
 
       <div className={styles.group}>
         <p className={styles.groupTitle}>{t(lang, "footer.language")}</p>
-        <section className={styles.card}>
+        <section className={`${styles.card} ${styles.langCard}`}>
           <LangPicker lang={lang} />
         </section>
       </div>
@@ -72,7 +72,7 @@ export function SettingsView() {
                   }}
                 />
                 <span>{t(lang, o.label)}</span>
-                <svg viewBox="0 0 24 24" aria-hidden className={styles.tick}>
+                <svg viewBox="0 0 24 24" aria-hidden className={styles.optionTick}>
                   <path
                     d="m5 12.5 4.5 4.5L19 7.5"
                     fill="none"

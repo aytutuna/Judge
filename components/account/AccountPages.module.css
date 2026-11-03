@@ -591,15 +591,20 @@
   outline-offset: 2px;
 }
 
-.tick {
+.optionTick {
   width: 20px;
   height: 20px;
   color: var(--terra-ink);
   visibility: hidden;
 }
 
-.option:has(input:checked) .tick {
+.option:has(input:checked) .optionTick {
   visibility: visible;
+}
+
+/* The picker shares the header chip; here it fills the row like a field. */
+.langCard select {
+  width: 100%;
 }
 
 .out {
