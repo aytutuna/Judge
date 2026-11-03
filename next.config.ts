@@ -3,6 +3,9 @@ import { PHASE_PRODUCTION_SERVER } from "next/constants";
 import pkg from "./package.json";
 
 const nextConfig: NextConfig = {
+  // The account page now lives in Settings; magic links and the sign-in
+  // fallback still point at /account.
+  redirects: async () => [{ source: "/account", destination: "/settings", permanent: false }],
   env: {
     NEXT_PUBLIC_APP_VERSION: pkg.version,
     // Always inlined, even when unset, so the build drops the browser SDK

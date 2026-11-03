@@ -53,12 +53,19 @@ export const viewport: Viewport = {
   colorScheme: "light dark",
 };
 
+// Sets a stored light/dark choice before first paint; "system" needs no attribute.
+const THEME_INIT = `try{var t=localStorage.getItem("verdict-theme");if(t==="light"||t==="dark"){document.documentElement.dataset.theme=t;document.querySelectorAll('meta[name="theme-color"]').forEach(function(m){m.content=t==="dark"?"${PALETTE_DARK.ivory}":"${PALETTE.ivory}"})}}catch(e){}`;
+
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
+      suppressHydrationWarning
       className={`${inter.variable} ${interTight.variable} ${instrumentSerif.variable} h-full antialiased`}
     >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: THEME_INIT }} />
+      </head>
       <body className="min-h-full flex flex-col">
         {children}
         <Analytics />

@@ -7,7 +7,6 @@ import { t, tWithDate, type Lang } from "@/lib/i18n";
 import { useLang } from "@/lib/lang";
 import { markSignedOut, useViewer, type ViewerState } from "@/lib/use-viewer";
 import styles from "./AccountPages.module.css";
-import { PageShell } from "./PageShell";
 
 /** How long the "account deleted" note stays before going home. */
 const DELETED_HOLD_MS = 1800;
@@ -34,7 +33,7 @@ export type AccountPanelProps = {
   onDelete: () => void;
 };
 
-/** Everything on /account below the title, stateless apart from the
+/** Everything in the Settings account section, stateless apart from the
  * confirm dialog, so tests can render each state from a mocked /me. */
 export function AccountPanel({
   lang,
@@ -187,8 +186,9 @@ export function AccountPanel({
   );
 }
 
-/** /account: plan, credits and monthly allowance, sign out, delete. */
-export function AccountView() {
+/** Plan, credits and monthly allowance, sign out, delete: the Settings
+ * page's account section, with its own state. */
+export function AccountSection() {
   const lang = useLang();
   const router = useRouter();
   const viewer = useViewer();
@@ -228,16 +228,14 @@ export function AccountView() {
   }
 
   return (
-    <PageShell lang={lang} kicker={t(lang, "nav.account")} title={t(lang, "account.title")}>
-      <AccountPanel
-        lang={lang}
-        viewer={viewer}
-        deleting={deleting}
-        deleted={deleted}
-        deleteError={deleteError}
-        onSignOut={() => void signOut()}
-        onDelete={() => void remove()}
-      />
-    </PageShell>
+    <AccountPanel
+      lang={lang}
+      viewer={viewer}
+      deleting={deleting}
+      deleted={deleted}
+      deleteError={deleteError}
+      onSignOut={() => void signOut()}
+      onDelete={() => void remove()}
+    />
   );
 }

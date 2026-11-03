@@ -10,7 +10,7 @@ const SCREENS: [RegExp, string][] = [
   [/^\/(c|r)(\/|$)/, "case_detail"],
   [/^\/verdicts$/, "verdicts"],
   [/^\/v\//, "verdict"],
-  [/^\/account$/, "settings"],
+  [/^\/(account|settings)$/, "settings"],
   [/^\/pricing$/, "pricing"],
   [/^\/signin$/, "sign_in"],
   [/^\/about$/, "about"],

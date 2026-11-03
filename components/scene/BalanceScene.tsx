@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { getSceneMode, getSceneStatus, sceneOutput, setSceneStatus, setSceneTheme } from "@/lib/scene-bridge";
+import { resolvedDark, useTheme } from "@/lib/theme";
 import { avoidOpacityIn, watchAvoidLayout } from "./avoid";
 import { createBalanceEngine, type BalanceEngine } from "./engine";
 import { watchActivity } from "./engine/loop";
@@ -36,14 +37,15 @@ export default function BalanceScene({
   const engineRef = useRef<BalanceEngine | null>(null);
 
   // Before the engine effect, so the first frame is already in the right
-  // theme. The site has no switch: dark follows the system.
+  // theme. System mode follows the OS and tracks its changes.
+  const theme = useTheme();
   useEffect(() => {
     const dark = window.matchMedia("(prefers-color-scheme: dark)");
-    const apply = () => setSceneTheme(dark.matches ? "dark" : "light");
+    const apply = () => setSceneTheme(resolvedDark(theme) ? "dark" : "light");
     apply();
     dark.addEventListener("change", apply);
     return () => dark.removeEventListener("change", apply);
-  }, []);
+  }, [theme]);
 
   useEffect(() => {
     const stage = hostRef.current?.parentElement;

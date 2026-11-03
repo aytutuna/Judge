@@ -113,7 +113,7 @@ export function AccountMenu({ lang }: { lang: Lang }) {
         <p className={styles.who}>{user.email}</p>
         <ul className={styles.items}>
           <li>
-            <Link href="/account" className={styles.item} onClick={() => setOpen(false)}>
+            <Link href="/settings" className={styles.item} onClick={() => setOpen(false)}>
               {t(lang, "nav.account")}
             </Link>
           </li>

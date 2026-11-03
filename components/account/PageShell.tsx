@@ -8,7 +8,7 @@ import { SiteFooter, SiteHeader, SkipLink } from "../SiteChrome";
 import { AppShell } from "../shell/AppShell";
 import styles from "./AccountPages.module.css";
 
-/** Chrome and intro shared by /signin, /account, /pricing and /verdicts:
+/** Chrome and intro shared by /signin, /settings, /pricing and /verdicts:
  * the same type scale as the prose pages, one lang scope. All but sign-in
  * sit in the app shell; sign-in (`bare`) keeps the plain header and footer,
  * as a step on the way somewhere else. */
@@ -22,7 +22,7 @@ export function PageShell({
   children,
 }: {
   lang: Lang;
-  kicker: string;
+  kicker?: string;
   title: string;
   lead?: string;
   wide?: boolean;
@@ -33,7 +33,7 @@ export function PageShell({
     <main id="main" tabIndex={-1} className={styles.main}>
       <div className={`wrap ${wide ? styles.wide : styles.narrow}`}>
         <header className={styles.intro}>
-          <p className="kicker">{kicker}</p>
+          {kicker ? <p className="kicker">{kicker}</p> : null}
           <h1 className={styles.h1}>{noOrphan(title)}</h1>
           {lead ? <p className={styles.lead}>{lead}</p> : null}
         </header>

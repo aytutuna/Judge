@@ -34,6 +34,9 @@ function tokenBlock(source: string, selector = ":root"): Map<string, string> {
   return decls;
 }
 
+const MEDIA_DARK = ':root:not([data-theme="light"])';
+const FORCED_DARK = ':root[data-theme="dark"]';
+
 const tokens = tokenBlock(css);
 const squash = (s: string) => s.replace(/\s+/g, "").toLowerCase();
 
@@ -80,17 +83,33 @@ describe("palette", () => {
     expect(PALETTE_NUM.terra).toBe(0xc8553d);
   });
 
-  it("dark follows the system", () => {
+  it("dark follows the system unless forced light", () => {
     const at = css.indexOf("@media (prefers-color-scheme: dark) {");
     expect(at).toBeGreaterThan(css.indexOf(":root {"));
-    expect(css).toMatch(/@media \(prefers-color-scheme: dark\) \{\s*:root \{/);
+    expect(css).toMatch(/@media \(prefers-color-scheme: dark\) \{\s*:root:not\(\[data-theme="light"\]\) \{/);
     expect(css).toMatch(/color-scheme:\s*light dark;/);
     const dark = { ...PALETTE_DARK, ...PALETTE_ALPHA_DARK };
     const keys = Object.keys(dark) as (PaletteKey | PaletteAlphaKey)[];
-    const block = tokenBlock(css.slice(at));
+    const block = tokenBlock(css.slice(at), MEDIA_DARK);
     expect([...block.keys()].sort()).toEqual(keys.map(cssVarName).sort());
     for (const key of keys) {
       expect(squash(block.get(cssVarName(key))!), key).toBe(squash(dark[key]));
+    }
+  });
+
+  it("a forced dark theme declares the same tokens as the media query", () => {
+    const media = tokenBlock(css.slice(css.indexOf("@media (prefers-color-scheme: dark) {")), MEDIA_DARK);
+    const forced = tokenBlock(css, FORCED_DARK);
+    expect([...forced.entries()]).toEqual([...media.entries()]);
+  });
+
+  it("the derived values exist for the media query and for a forced theme", () => {
+    const mediaAt = css.lastIndexOf("@media (prefers-color-scheme: dark) {");
+    const forcedAt = css.indexOf(FORCED_DARK + " {", mediaAt);
+    expect(mediaAt).toBeGreaterThan(0);
+    expect(forcedAt).toBeGreaterThan(mediaAt);
+    for (const at of [mediaAt, forcedAt]) {
+      expect(tokenBlock(css.slice(at), at === mediaAt ? MEDIA_DARK : FORCED_DARK).has("--shadow-1")).toBe(true);
     }
   });
 

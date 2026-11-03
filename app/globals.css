@@ -4,7 +4,9 @@
    Design tokens (Ivory & Terracotta, light and dark).
    Colour values must match lib/palette.ts: test/palette.test.ts compares
    this first :root block against PALETTE and the dark block below it
-   against PALETTE_DARK. Dark follows the system; there is no switch.
+   against PALETTE_DARK. Dark follows the system unless the visitor picks
+   Light or Dark in Settings (data-theme on <html>); the dark values are
+   written twice, once for each way in.
    ========================================================================== */
 :root {
   /* surfaces */
@@ -44,7 +46,7 @@
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
     --ivory: #15120F;
     --ivory-2: #27231F;
     --paper: #1D1A17;
@@ -66,6 +68,29 @@
     --line-2: rgba(241, 235, 225, 0.16);
     --glass: rgba(29, 26, 23, 0.72);
   }
+}
+
+:root[data-theme="dark"] {
+  --ivory: #15120F;
+  --ivory-2: #27231F;
+  --paper: #1D1A17;
+  --ink: #F1EBE1;
+  --ink-2: #CFC6BA;
+  --muted: #A89E92;
+  --placeholder: #9A9084;
+  --terra: #D9694F;
+  --terra-ink: #EE8C74;
+  --terra-tint: #432A22;
+  --sage: #7F9C8E;
+  --sage-strong: #8FB0A0;
+  --sage-ink: #A3C2B3;
+  --sage-tint: #2D3832;
+  --stone: #4F463C;
+  --strata: #3A342E;
+  --danger: #F5727E;
+  --line: rgba(241, 235, 225, 0.1);
+  --line-2: rgba(241, 235, 225, 0.16);
+  --glass: rgba(29, 26, 23, 0.72);
 }
 
 /* Sides. The viewer's own party is sage and the other one terracotta
@@ -107,10 +132,8 @@
   --text-display-1: clamp(44px, 12.6vw, 64px);
   --text-display-2: clamp(36px, 9.6vw, 48px);
   --text-display-3: 24px;
-  --text-verdict: clamp(36px, 10vw, 48px);
-  --text-crux: clamp(22px, 1.1vw + 17px, 28px);
   --text-lead: 17px;
-  --text-micro: 12px;
+  --text-micro: 11px;
 
   /* layout */
   --gutter: 20px;
@@ -162,12 +185,18 @@
   --scene-shadow-opacity: 0.12;
   --scene-pool: var(--paper);
 }
+:root[data-theme="light"] {
+  color-scheme: light;
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+}
 
 /* Derived values that are not palette colours. On dark, warm brown shadows
    vanish, so they go black and deeper. The flat balance has no rim light to
    pick out a dark beam, so it turns light on the dark page. */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
     --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.24);
     --shadow-2: 0 1px 2px rgba(0, 0, 0, 0.3), 0 24px 60px -12px rgba(0, 0, 0, 0.5);
     --shadow-card: 0 2px 4px rgba(0, 0, 0, 0.2), 0 40px 80px -30px rgba(0, 0, 0, 0.6);
@@ -181,6 +210,21 @@
     --scene-shadow-opacity: 0.4;
     --scene-pool: var(--ivory-2);
   }
+}
+
+:root[data-theme="dark"] {
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.24);
+  --shadow-2: 0 1px 2px rgba(0, 0, 0, 0.3), 0 24px 60px -12px rgba(0, 0, 0, 0.5);
+  --shadow-card: 0 2px 4px rgba(0, 0, 0, 0.2), 0 40px 80px -30px rgba(0, 0, 0, 0.6);
+  --shadow-cta: 0 10px 24px -8px rgba(0, 0, 0, 0.55);
+  --paper-hi: var(--ivory-2);
+  --page-deep: #0E0C0A;
+  --well: var(--ivory);
+  --scene-beam: var(--ink-2);
+  --scene-plaster: var(--muted);
+  --scene-shadow: #000000;
+  --scene-shadow-opacity: 0.4;
+  --scene-pool: var(--ivory-2);
 }
 
 @media (min-width: 960px) {
@@ -202,7 +246,9 @@
 
 /* Glass needs a backdrop blur to stay legible; without one, use paper. */
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-  :root {
+  :root,
+  :root:not([data-theme="light"]),
+  :root[data-theme="dark"] {
     --glass: var(--paper);
   }
 }
@@ -249,10 +295,6 @@
   --text-display-3--line-height: 1.08;
   --text-display-3--letter-spacing: -0.03em;
   --text-display-3--font-weight: 700;
-  --text-verdict: var(--text-verdict);
-  --text-verdict--line-height: 1;
-  --text-verdict--letter-spacing: -0.04em;
-  --text-verdict--font-weight: 800;
   --text-lead: var(--text-lead);
   --text-lead--line-height: 1.5;
   --text-micro: var(--text-micro);

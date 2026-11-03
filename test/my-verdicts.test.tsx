@@ -76,7 +76,7 @@ function list(over: Partial<ComponentProps<typeof HistoryList>> = {}): string {
 }
 
 function tabs(over: Partial<ComponentProps<typeof TabBar>> = {}): string {
-  return renderToStaticMarkup(<TabBar lang="en" pathname="/" account="menu" {...over} />);
+  return renderToStaticMarkup(<TabBar lang="en" pathname="/" {...over} />);
 }
 
 const label = (over: Partial<HistoryRow> & { id: string }) => stateLabel("en", fromRow(row(over)));
@@ -233,30 +233,16 @@ describe("TabBar", () => {
   it("has the native app's three tabs and marks the open one", () => {
     const html = tabs();
     expect(html).toContain(`aria-label="${t("en", "nav.tabs")}"`);
-    for (const href of ["/", "/verdicts", "/account"]) expect(html).toContain(`href="${href}"`);
+    for (const href of ["/", "/verdicts", "/settings"]) expect(html).toContain(`href="${href}"`);
     expect(html.match(/aria-current="page"/g)).toHaveLength(1);
     expect(html).toMatch(/<a aria-current="page" href="\/">/);
     expect(tabs({ pathname: "/verdicts" })).toMatch(/<a aria-current="page" href="\/verdicts">/);
-    expect(tabs({ pathname: "/account" })).toMatch(/<a aria-current="page" href="\/account">/);
+    expect(tabs({ pathname: "/settings" })).toMatch(/<a aria-current="page" href="\/settings">/);
     expect(tabs({ pathname: "/v/abc" })).not.toContain("aria-current");
-  });
-
-  it("signed out: sign in instead of the account, back to this page", () => {
-    const html = tabs({ pathname: "/v/abc", account: "signin" });
-    expect(html).toContain(`href="/signin?next=${encodeURIComponent("/v/abc")}"`);
-    expect(html).toContain(`>${t("en", "nav.signIn")}</a>`);
-    expect(html).not.toContain('href="/account"');
-  });
-
-  it("leaves the account tab out when no sign-in is offered", () => {
-    const html = tabs({ account: "none" });
-    expect(html).toContain('href="/verdicts"');
-    expect(html).not.toContain('href="/account"');
-    expect(html).not.toContain("/signin");
   });
 
   it("speaks Turkish", () => {
     const html = tabs({ lang: "tr" });
-    for (const k of ["nav.new", "nav.verdicts", "nav.account"] as const) expect(html).toContain(`>${t("tr", k)}</a>`);
+    for (const k of ["nav.new", "nav.verdicts", "nav.settings"] as const) expect(html).toContain(`>${t("tr", k)}</a>`);
   });
 });

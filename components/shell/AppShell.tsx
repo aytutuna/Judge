@@ -5,15 +5,13 @@ import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 import { t, type Lang } from "@/lib/i18n";
 import { langDir } from "@/lib/langs";
-import { useViewer } from "@/lib/use-viewer";
-import { accountEntry } from "../AccountMenu";
 import { AgeGate } from "../AgeGate";
 import { SiteFooter, SiteHeader, SkipLink } from "../SiteChrome";
 import { TabBar } from "./TabBar";
 import styles from "./shell.module.css";
 
 /**
- * Page frame for the app's own pages: the header (with "Verdicts" from
+ * Page frame for the app's own pages: the header (with "Verdicts" and "Settings" from
  * the desktop breakpoint), the page, the footer unless `footer` is off,
  * and below 960px the bottom tabs. `toggle` shows the language picker
  * (pages whose chrome reads the client language store). The home page
@@ -36,7 +34,6 @@ export function AppShell({
   children: ReactNode;
 }) {
   const pathname = usePathname();
-  const { config, me } = useViewer();
   return (
     <div lang={lang} dir={langDir(lang)} className={styles.shell} data-tabs={tabs ? "" : undefined}>
       <SkipLink lang={lang} />
@@ -48,12 +45,17 @@ export function AppShell({
         >
           {t(lang, "nav.verdicts")}
         </Link>
+        <Link
+          href="/settings"
+          className={styles.headerLink}
+          aria-current={pathname === "/settings" ? "page" : undefined}
+        >
+          {t(lang, "nav.settings")}
+        </Link>
       </SiteHeader>
       {children}
       {footer ? <SiteFooter lang={lang} toggle={toggle} /> : null}
-      {tabs ? (
-        <TabBar lang={lang} pathname={pathname} account={accountEntry(config, me)} onHome={onHome} />
-      ) : null}
+      {tabs ? <TabBar lang={lang} pathname={pathname} onHome={onHome} /> : null}
       <AgeGate lang={lang} />
     </div>
   );
