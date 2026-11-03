@@ -11,7 +11,9 @@
     "typecheck": "next typegen && tsc --noEmit",
     "test": "vitest run",
     "eval": "tsx --env-file=.env scripts/eval.ts",
-    "check:locales": "tsx scripts/check-locales.ts"
+    "check:locales": "tsx scripts/check-locales.ts",
+    "check:app-locales": "tsx mobile/shared/strings/check-app-locales.ts",
+    "scene:build": "tsx mobile/shared/scene/build-scene.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.135.0",
@@ -34,6 +36,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@types/three": "0.170.0",
+    "esbuild": "0.28.2",
     "eslint": "^9",
     "eslint-config-next": "^16.4.2",
     "playwright-core": "1.64.1",

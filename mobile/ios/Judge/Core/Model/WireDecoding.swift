@@ -1,0 +1,296 @@
+import Foundation
+
+/// A decoded verdict plus the exact JSON it came from.
+struct RawResult: Sendable, Equatable {
+    let result: VerdictResult
+    /// The `result` object as JSON; stored in history so fields added by a
+    /// newer server survive a round trip through the database.
+    let json: String
+}
+
+/// POST /api/v1/verdict success, or a ready poll merged with its 202.
+struct VerdictPayload: Sendable, Equatable {
+    let id: String
+    let result: RawResult
+    var nameMap: [NameMapping]
+    /// Signed-out writers only: proves authorship of the share page.
+    var ownerToken: String? = nil
+    /// Premium: the account's entitlement after this verdict.
+    var entitlement: Entitlement? = nil
+    /// Premium: an Idempotency-Key replay of a finished verdict (no name map).
+    var replayed = false
+}
+
+/// POST /api/v1/verdict answered 202: the verdict is judged in the background
+/// under `id`. `nameMap` and `ownerToken` come only here; the poll answer
+/// does not repeat them.
+struct VerdictAccepted: Sendable, Equatable {
+    let id: String
+    var nameMap: [NameMapping]
+    var ownerToken: String? = nil
+    /// The server's suggested first wait, in milliseconds.
+    var pollAfterMs: Double? = nil
+    /// Premium: the entitlement right after the unit was reserved.
+    var entitlement: Entitlement? = nil
+    /// Premium: an Idempotency-Key retry joined a verdict already being
+    /// judged (the name map is empty then).
+    var replayed = false
+}
+
+/// GET /api/v1/verdicts/{id} answered 200 (lib/verdict-poll.ts).
+enum PollAnswer: Sendable, Equatable {
+    case judging(pollAfterMs: Double?)
+    case failed(code: String, error: String?)
+    case ready(RawResult)
+}
+
+/// POST /api/v1/verdicts/{id}/translate success.
+struct TranslatePayload: Sendable, Equatable {
+    let id: String
+    let lang: AppLang?
+    let source: AppLang?
+    let translated: Bool
+    let result: RawResult
+    /// Light shape check of the raw result (looksLikeVerdict on the web).
+    let looksValid: Bool
+}
+
+/// GET /api/v1/verdicts/{id} success.
+struct StoredPayload: Sendable, Equatable {
+    let id: String
+    let result: RawResult
+    let createdAt: String
+}
+
+enum WireDecodingError: Error, Equatable {
+    case notAnObject
+    case missing(String)
+}
+
+enum WireDecoding {
+    static func verdictPayload(from data: Data) throws -> VerdictPayload {
+        let object = try topLevelObject(data)
+        let id = try string("id", in: object)
+        let result = try rawResult(object["result"])
+        return VerdictPayload(
+            id: id,
+            result: result,
+            nameMap: nameMap(in: object),
+            ownerToken: ownerToken(in: object),
+            entitlement: entitlement(in: object),
+            replayed: (object["replayed"] as? Bool) ?? false
+        )
+    }
+
+    static func acceptedPayload(from data: Data) throws -> VerdictAccepted {
+        let object = try topLevelObject(data)
+        let wait = (object["pollAfterMs"] as? NSNumber)?.doubleValue
+        return VerdictAccepted(
+            id: try string("id", in: object),
+            nameMap: nameMap(in: object),
+            ownerToken: ownerToken(in: object),
+            pollAfterMs: wait.flatMap { $0.isFinite && $0 >= 0 ? $0 : nil },
+            entitlement: entitlement(in: object),
+            replayed: (object["replayed"] as? Bool) ?? false
+        )
+    }
+
+    /// An `entitlement` object inside a response (premium answers), or nil.
+    static func entitlement(in object: [String: Any]) -> Entitlement? {
+        guard let value = object["entitlement"] as? [String: Any],
+              let data = try? JSONSerialization.data(withJSONObject: value)
+        else { return nil }
+        return try? JSONDecoder().decode(Entitlement.self, from: data)
+    }
+
+    /// A `name_map` list inside any response object.
+    static func nameMapList(_ value: Any?) -> [NameMapping] {
+        guard let list = value as? [Any] else { return [] }
+        return list.compactMap { entry in
+            guard let pair = entry as? [String: Any],
+                  let original = pair["original"] as? String,
+                  let replacement = pair["replacement"] as? String
+            else { return nil }
+            return NameMapping(original: original, replacement: replacement)
+        }
+    }
+
+    /// A 200 poll body. A body with a result and an id but no status is a
+    /// ready verdict from a server older than async verdicts.
+    static func pollAnswer(from data: Data) throws -> PollAnswer {
+        let object = try topLevelObject(data)
+        switch object["status"] as? String {
+        case "judging":
+            let wait = (object["pollAfterMs"] as? NSNumber)?.doubleValue
+            return .judging(pollAfterMs: wait.flatMap { $0.isFinite && $0 >= 0 ? $0 : nil })
+        case "failed":
+            let code = (object["code"] as? String).flatMap { $0.isEmpty ? nil : $0 } ?? "unavailable"
+            return .failed(code: code, error: object["error"] as? String)
+        default:
+            _ = try string("id", in: object)
+            return .ready(try rawResult(object["result"]))
+        }
+    }
+
+    static func translatePayload(from data: Data) throws -> TranslatePayload {
+        let object = try topLevelObject(data)
+        let raw = object["result"]
+        return TranslatePayload(
+            id: try string("id", in: object),
+            lang: (object["lang"] as? String).flatMap(AppLang.init(rawValue:)),
+            source: (object["source"] as? String).flatMap(AppLang.init(rawValue:)),
+            translated: (object["translated"] as? Bool) ?? false,
+            result: try rawResult(raw),
+            looksValid: VerdictShape.looksLikeVerdict(raw)
+        )
+    }
+
+    static func storedPayload(from data: Data) throws -> StoredPayload {
+        let object = try topLevelObject(data)
+        return StoredPayload(
+            id: try string("id", in: object),
+            result: try rawResult(object["result"]),
+            createdAt: (object["createdAt"] as? String) ?? ""
+        )
+    }
+
+    static func errorBody(from data: Data) -> ApiErrorBody? {
+        guard let object = try? JSONSerialization.jsonObject(with: data), object is [String: Any] else { return nil }
+        return try? JSONDecoder().decode(ApiErrorBody.self, from: data)
+    }
+
+    /// Decodes a stored `result` JSON string (history rows, cached translations).
+    static func result(fromJSON json: String) throws -> VerdictResult {
+        try JSONDecoder().decode(VerdictResult.self, from: Data(json.utf8))
+    }
+
+    static func nameMap(fromJSON json: String) -> [NameMapping] {
+        (try? JSONDecoder().decode([NameMapping].self, from: Data(json.utf8))) ?? []
+    }
+
+    static func json(of nameMap: [NameMapping]) -> String {
+        guard let data = try? JSONEncoder().encode(nameMap) else { return "[]" }
+        return String(decoding: data, as: UTF8.self)
+    }
+
+    /// `{ "tr": <result>, ... }` as stored in a history row, split per language.
+    static func translations(fromJSON json: String?) -> [AppLang: RawResult] {
+        guard let json, let object = try? JSONSerialization.jsonObject(with: Data(json.utf8)) as? [String: Any] else {
+            return [:]
+        }
+        var out: [AppLang: RawResult] = [:]
+        for (key, value) in object {
+            guard let lang = AppLang(rawValue: key), let raw = try? rawResult(value) else { continue }
+            out[lang] = raw
+        }
+        return out
+    }
+
+    static func json(of translations: [AppLang: String]) -> String? {
+        var object: [String: Any] = [:]
+        for (lang, json) in translations {
+            guard let value = try? JSONSerialization.jsonObject(with: Data(json.utf8)) else { continue }
+            object[lang.rawValue] = value
+        }
+        guard !object.isEmpty, let data = try? JSONSerialization.data(withJSONObject: object, options: [.sortedKeys]) else {
+            return nil
+        }
+        return String(decoding: data, as: UTF8.self)
+    }
+
+    // MARK: - Helpers
+
+    private static func nameMap(in object: [String: Any]) -> [NameMapping] {
+        guard let list = object["name_map"] as? [Any] else { return [] }
+        return list.compactMap { entry in
+            guard let pair = entry as? [String: Any],
+                  let original = pair["original"] as? String,
+                  let replacement = pair["replacement"] as? String
+            else { return nil }
+            return NameMapping(original: original, replacement: replacement)
+        }
+    }
+
+    private static func ownerToken(in object: [String: Any]) -> String? {
+        guard let token = object["owner_token"] as? String, !token.isEmpty else { return nil }
+        return token
+    }
+
+    static func topLevelObject(_ data: Data) throws -> [String: Any] {
+        guard let object = try JSONSerialization.jsonObject(with: data) as? [String: Any] else {
+            throw WireDecodingError.notAnObject
+        }
+        return object
+    }
+
+    static func string(_ key: String, in object: [String: Any]) throws -> String {
+        guard let value = object[key] as? String, !value.isEmpty else { throw WireDecodingError.missing(key) }
+        return value
+    }
+
+    static func rawResult(_ value: Any?) throws -> RawResult {
+        guard let value, let object = value as? [String: Any], JSONSerialization.isValidJSONObject(object) else {
+            throw WireDecodingError.missing("result")
+        }
+        let data = try JSONSerialization.data(withJSONObject: object, options: [.sortedKeys, .withoutEscapingSlashes])
+        let result = try JSONDecoder().decode(VerdictResult.self, from: data)
+        return RawResult(result: result, json: String(decoding: data, as: UTF8.self))
+    }
+}
+
+/// Port of `looksLikeVerdict` (lib/use-translation.ts): the fields the card
+/// renders, with the types it relies on. A translation that fails it is
+/// ignored and the original stays on screen.
+enum VerdictShape {
+    private static let finalVerdicts: Set<String> = ["side_a", "side_b", "split", "conditional", "dissolved", "too_close"]
+    private static let judgeVerdicts: Set<String> = ["side_a", "side_b", "split", "conditional", "dissolved"]
+    private static let disputeTypes: Set<String> = ["factual", "logical", "definitional", "values", "mixed"]
+    private static let claimKinds: Set<String> = ["fact", "value", "definition", "logic"]
+
+    static func looksLikeVerdict(_ value: Any?) -> Bool {
+        guard let x = value as? [String: Any] else { return false }
+        guard let verdict = x["verdict"] as? String, finalVerdicts.contains(verdict),
+              let dispute = x["dispute_type"] as? String, disputeTypes.contains(dispute),
+              x["headline"] is String, x["crux"] is String, x["losing_side_best_point"] is String,
+              x["why"] == nil || x["why"] is String,
+              let confidence = integer(x["confidence"]), (1...5).contains(confidence),
+              let runs = x["runs"] as? [Any], runs.allSatisfy({ run in
+                  guard let text = run as? String else { return false }
+                  return judgeVerdicts.contains(text)
+              }),
+              let facts = x["facts_relied_on"] as? [Any], facts.allSatisfy({ $0 is String }),
+              isNullOrArray(x["split_points"]), isNullOrArray(x["conditional"]),
+              isBool(x["demo"]),
+              let map = x["argument_map"] as? [String: Any],
+              isClaims(map["side_a"]), isClaims(map["side_b"]),
+              map["bedrock_a"] is String, map["bedrock_b"] is String
+        else { return false }
+        return true
+    }
+
+    private static func isClaims(_ value: Any?) -> Bool {
+        guard let list = value as? [Any], !list.isEmpty else { return false }
+        return list.allSatisfy { item in
+            guard let claim = item as? [String: Any], claim["claim"] is String,
+                  let kind = claim["kind"] as? String else { return false }
+            return claimKinds.contains(kind)
+        }
+    }
+
+    /// JSON `null` arrives as NSNull; a missing key fails like `undefined` on the web.
+    private static func isNullOrArray(_ value: Any?) -> Bool {
+        value is NSNull || value is [Any]
+    }
+
+    private static func isBool(_ value: Any?) -> Bool {
+        guard let number = value as? NSNumber else { return false }
+        return CFGetTypeID(number) == CFBooleanGetTypeID()
+    }
+
+    private static func integer(_ value: Any?) -> Int? {
+        guard let number = value as? NSNumber, CFGetTypeID(number) != CFBooleanGetTypeID() else { return nil }
+        let double = number.doubleValue
+        guard double.isFinite, double.rounded() == double else { return nil }
+        return Int(double)
+    }
+}

@@ -1,0 +1,5 @@
+#include "Shared.xcconfig"
+
+// Production values.
+API_BASE_URL = https:/$()/okjudge.com
+SHARE_BASE_URL = https:/$()/okjudge.com

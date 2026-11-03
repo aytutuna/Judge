@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- PALETTE_DARK in lib/palette.ts. -->
+    <color name="ivory">#FF15120F</color>
+    <color name="ink">#FFF1EBE1</color>
+    <color name="terra">#FFD9694F</color>
+    <color name="sage">#FF7F9C8E</color>
+</resources>

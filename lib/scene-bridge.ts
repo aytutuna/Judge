@@ -1,4 +1,3 @@
-import { useSyncExternalStore } from "react";
 import type { Party } from "./palette";
 
 /**
@@ -9,7 +8,7 @@ import type { Party } from "./palette";
  *
  * Two kinds of state:
  * - discrete (mode, status, story step): subscribable, consumed by React
- *   through useSyncExternalStore, like lib/lang.ts;
+ *   through the hooks in lib/scene-bridge-react.ts;
  * - continuous (pointer, scroll progress, impulses): plain mutable objects
  *   the render loop polls every frame, so typing and scrolling cost zero
  *   React renders and zero allocation.
@@ -217,25 +216,4 @@ export function resetScene(): void {
   sceneInput.impulse = 0;
   sceneInput.energy = 0;
   setSceneMode(IDLE);
-}
-
-const serverMode = (): SceneMode => IDLE;
-const serverStatus = (): SceneStatus => "loading";
-const serverStep = (): number => -1;
-const serverYou = (): Party | null => null;
-
-export function useSceneMode(): SceneMode {
-  return useSyncExternalStore(subscribeScene, getSceneMode, serverMode);
-}
-
-export function useSceneYou(): Party | null {
-  return useSyncExternalStore(subscribeScene, getSceneYou, serverYou);
-}
-
-export function useSceneStatus(): SceneStatus {
-  return useSyncExternalStore(subscribeSceneStatus, getSceneStatus, serverStatus);
-}
-
-export function useStoryStep(): number {
-  return useSyncExternalStore(subscribeStoryStep, getStoryStep, serverStep);
 }

@@ -1,0 +1,335 @@
+package com.okjudge.judge.ui.premium
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.semantics.heading
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.em
+import androidx.compose.ui.unit.sp
+import com.okjudge.judge.core.display.Errors
+import com.okjudge.judge.core.model.Entitlement
+import com.okjudge.judge.core.model.Features
+import com.okjudge.judge.core.model.PricingInfo
+import com.okjudge.judge.core.premium.Tiers
+import com.okjudge.judge.core.purchases.PurchaseController
+import com.okjudge.judge.core.purchases.StoreOffer
+import com.okjudge.judge.core.purchases.StoreProducts
+import com.okjudge.judge.i18n.LocalLang
+import com.okjudge.judge.i18n.LocalStrings
+import com.okjudge.judge.ui.components.GhostButton
+import com.okjudge.judge.ui.components.JudgeIcons
+import com.okjudge.judge.ui.components.Kicker
+import com.okjudge.judge.ui.components.PrimaryButton
+import com.okjudge.judge.ui.components.TextAction
+import com.okjudge.judge.ui.components.TintedIcon
+import com.okjudge.judge.ui.components.rememberIcon
+import com.okjudge.judge.ui.components.TopBar
+import com.okjudge.judge.ui.theme.JudgeShapes
+import com.okjudge.judge.ui.theme.JudgeType
+import com.okjudge.judge.ui.theme.Palette
+
+object PricingTags {
+    const val STATUS = "pricing.status"
+    const val BUY = "pricing.buy"
+    const val SIGN_IN = "pricing.signIn"
+    const val NOTICE = "pricing.notice"
+    const val TERMS = "pricing.terms"
+    const val PRIVACY = "pricing.privacy"
+}
+
+/**
+ * The store's side of the pricing screen. The default is a build without a
+ * store (no SDK key): buy buttons say "Coming soon".
+ */
+data class StoreUi(
+    /** This build can sell (it has an SDK key). */
+    val available: Boolean = false,
+    /** What the store sells to the signed-in account, by product id; empty until it is ready. */
+    val offers: Map<String, StoreOffer> = emptyMap(),
+    /** The product being bought. */
+    val buying: String? = null,
+    val notice: PurchaseController.Notice? = null,
+    /** The store has the subscription but /me does not show it yet. */
+    val subscriptionPending: Boolean = false,
+)
+
+/**
+ * The packs and the monthly plan (components/account/PricingView.tsx):
+ * prices from /api/v1/config (lib/pricing.ts until it answers), what the
+ * signed-in account has left, and the buy buttons. With purchases on and the
+ * store ready ([store]) a button shows the store's own price and buys that
+ * product; otherwise it stays disabled ("Coming soon" while purchases are off).
+ * [features] is null while /config is loading.
+ */
+@Composable
+fun PricingScreen(
+    pricing: PricingInfo,
+    features: Features?,
+    signedIn: Boolean,
+    signInOffered: Boolean,
+    entitlement: Entitlement?,
+    onBack: (() -> Unit)?,
+    onSignIn: () -> Unit,
+    onNew: (() -> Unit)?,
+    modifier: Modifier = Modifier,
+    store: StoreUi = StoreUi(),
+    onBuy: (productId: String) -> Unit = {},
+    onOpenTerms: () -> Unit = {},
+    onOpenPrivacy: () -> Unit = {},
+) {
+    val s = LocalStrings.current
+    val lang = LocalLang.current
+    val storeOn = pricing.purchasesEnabled && store.available
+    // The store's offer for a product, when this account can buy it now.
+    fun offerFor(id: String): StoreOffer? = if (storeOn && signedIn) store.offers[id] else null
+    Column(modifier.fillMaxSize()) {
+        TopBar(onBack = onBack, onNew = onNew)
+        Column(
+            Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(horizontal = 20.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            Column(
+                Modifier.widthIn(max = 640.dp).fillMaxWidth().padding(top = 8.dp, bottom = 40.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+            ) {
+                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Kicker(s.navPricing)
+                    Text(
+                        if (signedIn) s.appPricingHeadlineMember else s.appPricingHeadline,
+                        style = JudgeType.sectionTitle.copy(fontSize = 30.sp, lineHeight = 34.sp, letterSpacing = (-0.03).em),
+                        modifier = Modifier.semantics { heading() },
+                    )
+                    Text(if (signedIn) s.appPricingSubMember else s.appPricingSub, style = JudgeType.lead)
+                }
+
+                if (signedIn && entitlement != null) {
+                    val sub = entitlement.subscription
+                    Column(
+                        Modifier
+                            .fillMaxWidth()
+                            .clip(JudgeShapes.field)
+                            .background(Palette.paper)
+                            .border(1.dp, Palette.line, JudgeShapes.field)
+                            .testTag(PricingTags.STATUS)
+                            .padding(horizontal = 16.dp, vertical = 12.dp),
+                        verticalArrangement = Arrangement.spacedBy(2.dp),
+                    ) {
+                        Tiers.balance(s, entitlement)?.let { Text(it, style = JudgeType.bodyStrong) }
+                        if (sub != null) {
+                            // Credits kept beside the plan need their own line; past the cap the line above counts them.
+                            if (Tiers.remaining(entitlement)?.monthly == true && entitlement.credits > 0) {
+                                Text("${s.accountCredits}: ${entitlement.credits}", style = JudgeType.body.copy(color = Palette.ink2))
+                            }
+                            val date = Errors.formatDate(lang, sub.periodEnd) ?: sub.periodEnd
+                            Text(
+                                if (sub.willRenew) s.accountSubscriptionRenews(date) else s.accountSubscriptionUntil(date),
+                                style = JudgeType.body.copy(color = Palette.ink2),
+                            )
+                        }
+                    }
+                }
+
+                PlanCard {
+                    Text(s.pricingPacksTitle, style = JudgeType.slotTitle.copy(color = Palette.ink))
+                    Text(s.pricingPacksLead, style = JudgeType.slotText)
+                    pricing.packs.forEach { pack ->
+                        val offer = offerFor(pack.id)
+                        val price = offer?.price ?: Tiers.formatPrice(pack.priceUsd, lang, pricing.currency)
+                        val each = when {
+                            pack.credits <= 0 -> price
+                            offer != null -> Tiers.formatPrice(offer.amountMicros / 1_000_000.0 / pack.credits, lang, offer.currencyCode)
+                            else -> Tiers.formatPrice(pack.priceUsd / pack.credits, lang, pricing.currency)
+                        }
+                        Offer(
+                            name = s.pricingPack(pack.credits),
+                            meta = s.pricingPerVerdict(each),
+                            price = price,
+                            buyLabel = if (storeOn) price else s.pricingComingSoon,
+                            enabled = offer != null && store.buying == null,
+                            buying = store.buying == pack.id,
+                            buyingLabel = s.appPurchaseBuying,
+                            onBuy = { onBuy(pack.id) },
+                        )
+                    }
+
+                    Text(s.pricingMonthlyTitle, style = JudgeType.slotTitle.copy(color = Palette.ink), modifier = Modifier.padding(top = 8.dp))
+                    val monthlyId = pricing.monthly.id.ifEmpty { StoreProducts.MONTHLY }
+                    val monthlyOffer = offerFor(monthlyId)
+                    val monthly = monthlyOffer?.price ?: Tiers.formatPrice(pricing.monthly.priceUsd, lang, pricing.currency)
+                    Offer(
+                        name = s.pricingMonthlyCap(pricing.monthly.fairUseCap),
+                        meta = s.pricingMonthlyRenews,
+                        price = monthly,
+                        buyLabel = if (storeOn) monthly else s.pricingComingSoon,
+                        enabled = monthlyOffer != null && store.buying == null,
+                        buying = store.buying == monthlyId,
+                        buyingLabel = s.appPurchaseBuying,
+                        onBuy = { onBuy(monthlyId) },
+                    )
+
+                    val notice = when (store.notice) {
+                        PurchaseController.Notice.ARRIVING -> "${s.appPurchaseSuccess} ${s.appPurchaseArriving}"
+                        PurchaseController.Notice.ARRIVED -> s.appPurchaseSuccess
+                        PurchaseController.Notice.SLOW -> "${s.appPurchaseSuccess} ${s.appPurchaseSlow}"
+                        PurchaseController.Notice.FAILED -> s.appPurchaseFailed
+                        PurchaseController.Notice.AGE_UNCONFIRMED -> s.appAgeRequired
+                        PurchaseController.Notice.AGE_BLOCKED -> s.appAgeBlockedTitle
+                        null -> if (store.subscriptionPending && signedIn) s.appPurchasePending else null
+                    }
+                    if (notice != null) {
+                        PurchaseNotice(
+                            text = notice,
+                            working = store.notice == PurchaseController.Notice.ARRIVING,
+                            failed = store.notice == PurchaseController.Notice.FAILED ||
+                                store.notice == PurchaseController.Notice.AGE_UNCONFIRMED ||
+                                store.notice == PurchaseController.Notice.AGE_BLOCKED,
+                        )
+                    }
+
+                    if (!signedIn && signInOffered) {
+                        PrimaryButton(
+                            text = s.navSignIn,
+                            enabled = true,
+                            onClick = onSignIn,
+                            modifier = Modifier.fillMaxWidth().padding(top = 8.dp).testTag(PricingTags.SIGN_IN),
+                        )
+                    }
+
+                    Row(
+                        Modifier.padding(top = 8.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    ) {
+                        TintedIcon(rememberIcon(Palette.terra) { JudgeIcons.spark(it) }, 14)
+                        Text(s.pricingIncludedTitle, style = JudgeType.sectionTitle, modifier = Modifier.semantics { heading() })
+                    }
+                    FeatureList(Tiers.premiumFeatureKeys(cases = features?.cases == true, evidence = features?.evidence == true))
+                }
+
+                // "Prices in USD, payments not open yet" is wrong once the store sells in the buyer's currency.
+                val storeSelling = storeOn && signedIn && store.offers.isNotEmpty()
+                if (!storeSelling) {
+                    Text(s.pricingNote, style = JudgeType.footnote, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth())
+                }
+                Text(s.appPricingAutoRenew, style = JudgeType.footnote, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth())
+                Row(
+                    Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(20.dp, Alignment.CenterHorizontally),
+                ) {
+                    TextAction(s.appLegalTerms, onClick = onOpenTerms, modifier = Modifier.testTag(PricingTags.TERMS))
+                    TextAction(s.appLegalPrivacy, onClick = onOpenPrivacy, modifier = Modifier.testTag(PricingTags.PRIVACY))
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun PlanCard(content: @Composable () -> Unit) {
+    Column(
+        Modifier
+            .fillMaxWidth()
+            .clip(JudgeShapes.card)
+            .background(Palette.paper)
+            .border(1.dp, Palette.terra.copy(alpha = 0.45f), JudgeShapes.card)
+            .padding(20.dp),
+        verticalArrangement = Arrangement.spacedBy(10.dp),
+    ) { content() }
+}
+
+@Composable
+private fun FeatureList(keys: List<String>) {
+    val s = LocalStrings.current
+    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        keys.forEach { key ->
+            val text = s.text(key) ?: return@forEach
+            Row(horizontalArrangement = Arrangement.spacedBy(10.dp), verticalAlignment = Alignment.Top) {
+                Box(
+                    Modifier.padding(top = 3.dp).size(18.dp).clip(CircleShape).background(Palette.sageInk),
+                    contentAlignment = Alignment.Center,
+                ) { TintedIcon(rememberIcon(Palette.paper) { JudgeIcons.factCheck(it) }, 10) }
+                Text(text, style = JudgeType.body.copy(color = Palette.ink2))
+            }
+        }
+    }
+}
+
+@Composable
+private fun PurchaseNotice(text: String, working: Boolean, failed: Boolean) {
+    Row(
+        Modifier
+            .fillMaxWidth()
+            .clip(JudgeShapes.field)
+            .background(Palette.ivory)
+            .border(1.dp, if (failed) Palette.danger.copy(alpha = 0.5f) else Palette.line, JudgeShapes.field)
+            .testTag(PricingTags.NOTICE)
+            .padding(horizontal = 14.dp, vertical = 10.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(10.dp),
+    ) {
+        if (working) CircularProgressIndicator(Modifier.size(14.dp), color = Palette.ink2, strokeWidth = 1.5.dp)
+        Text(text, style = JudgeType.body.copy(color = if (failed) Palette.danger else Palette.ink2))
+    }
+}
+
+@Composable
+private fun Offer(
+    name: String,
+    meta: String,
+    price: String,
+    buyLabel: String,
+    enabled: Boolean,
+    buying: Boolean,
+    buyingLabel: String,
+    onBuy: () -> Unit,
+) {
+    Row(
+        Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(18.dp))
+            .background(Palette.well)
+            .padding(14.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(12.dp),
+    ) {
+        Column(Modifier.weight(1f)) {
+            Text(name, style = JudgeType.slotTitle)
+            Text(meta, style = JudgeType.slotText)
+        }
+        Column(horizontalAlignment = Alignment.End, verticalArrangement = Arrangement.spacedBy(6.dp)) {
+            Text(price, style = JudgeType.bodyStrong)
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                if (buying) CircularProgressIndicator(Modifier.size(14.dp), color = Palette.ink2, strokeWidth = 1.5.dp)
+                GhostButton(
+                    text = if (buying) buyingLabel else buyLabel,
+                    icon = null,
+                    onClick = onBuy,
+                    modifier = Modifier.testTag(PricingTags.BUY),
+                    enabled = enabled,
+                )
+            }
+        }
+    }
+}

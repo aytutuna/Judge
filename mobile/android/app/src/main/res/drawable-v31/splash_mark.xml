@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The beam starts level and settles into the brand tilt toward Party A. -->
+<animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:drawable="@drawable/splash_mark_vector">
+    <target
+        android:name="beam"
+        android:animation="@animator/splash_beam_settle" />
+</animated-vector>

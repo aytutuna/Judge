@@ -1,0 +1,2729 @@
+{
+  "verdicts": [
+    {
+      "sample": "win_a_self",
+      "lang": "en",
+      "selfLang": "en",
+      "nameA": "You",
+      "nameB": "Sam",
+      "aIsSelf": true,
+      "bIsSelf": false,
+      "label": "You're right",
+      "confidence": "Confidence 2 of 3",
+      "tugA": 80,
+      "svgRotateDeg": -10.313,
+      "cruxStyle": "serif",
+      "leanTally": null,
+      "shareUrl": "https://okjudge.com/v/abc123DEF0",
+      "personalized": {
+        "headline": "Sam is stretching the word, and your menu test wins",
+        "why": "Sam's case rests on shape alone. A word means what people use it for, and a sandwich order at any deli never comes back as a hot dog, so your menu test settles it.",
+        "crux": "Sam goes by shape; you go by how people use the word.",
+        "losing_side_best_point": "Sam is right that you would struggle to define a sandwich without including it.",
+        "side_a": [
+          "Menus never list hot dogs as sandwiches"
+        ],
+        "side_b": [
+          "A filling in a split roll is a sandwich"
+        ],
+        "bedrock_a": "Words mean what people use them to mean",
+        "bedrock_b": "Definitions follow form",
+        "facts_relied_on": [
+          "Major menus list hot dogs separately from sandwiches"
+        ],
+        "split_points": null,
+        "conditional_if_value": null,
+        "conditional_then": null,
+        "lean_reason": null,
+        "crux_trial_attack": "Dictionaries disagree.",
+        "crux_trial_reasoning": "Usage wins here.",
+        "fact_check_claims": null,
+        "fact_check_summaries": null
+      }
+    },
+    {
+      "sample": "win_a_self",
+      "lang": "tr",
+      "selfLang": "en",
+      "nameA": "Sen",
+      "nameB": "Sam",
+      "aIsSelf": true,
+      "bIsSelf": false,
+      "label": "Sen haklısın",
+      "confidence": "Güven: 3 üzerinden 2",
+      "tugA": 80,
+      "svgRotateDeg": -10.313,
+      "cruxStyle": "serif",
+      "leanTally": null,
+      "shareUrl": "https://okjudge.com/v/abc123DEF0",
+      "personalized": {
+        "headline": "Sam is stretching the word, and your menu test wins",
+        "why": "Sam's case rests on shape alone. A word means what people use it for, and a sandwich order at any deli never comes back as a hot dog, so your menu test settles it.",
+        "crux": "Sam goes by shape; you go by how people use the word.",
+        "losing_side_best_point": "Sam is right that you would struggle to define a sandwich without including it.",
+        "side_a": [
+          "Menus never list hot dogs as sandwiches"
+        ],
+        "side_b": [
+          "A filling in a split roll is a sandwich"
+        ],
+        "bedrock_a": "Words mean what people use them to mean",
+        "bedrock_b": "Definitions follow form",
+        "facts_relied_on": [
+          "Major menus list hot dogs separately from sandwiches"
+        ],
+        "split_points": null,
+        "conditional_if_value": null,
+        "conditional_then": null,
+        "lean_reason": null,
+        "crux_trial_attack": "Dictionaries disagree.",
+        "crux_trial_reasoning": "Usage wins here.",
+        "fact_check_claims": null,
+        "fact_check_summaries": null
+      }
+    },
+    {
+      "sample": "win_b_named",
+      "lang": "en",
+      "selfLang": "en",
+      "nameA": "Alex",
+      "nameB": "Jordan",
+      "aIsSelf": false,
+      "bIsSelf": false,
+      "label": "Jordan is right",
+      "confidence": "Confidence 3 of 3",
+      "tugA": 20,
+      "svgRotateDeg": 10.313,
+      "cruxStyle": "serif",
+      "leanTally": null,
+      "shareUrl": "https://okjudge.com/v/winB000001",
+      "personalized": {
+        "headline": "Nobody orders a sandwich hoping for a hot dog",
+        "why": null,
+        "crux": "Whether 'sandwich' follows shape or everyday use.",
+        "losing_side_best_point": "A split roll with a filling does fit most dictionary definitions.",
+        "side_a": [
+          "Menus never list hot dogs as sandwiches"
+        ],
+        "side_b": [
+          "A filling in a split roll is a sandwich"
+        ],
+        "bedrock_a": "Words mean what people use them to mean",
+        "bedrock_b": "Definitions follow form",
+        "facts_relied_on": [
+          "Major menus list hot dogs separately from sandwiches"
+        ],
+        "split_points": null,
+        "conditional_if_value": null,
+        "conditional_then": null,
+        "lean_reason": null,
+        "crux_trial_attack": null,
+        "crux_trial_reasoning": null,
+        "fact_check_claims": null,
+        "fact_check_summaries": null
+      }
+    },
+    {
+      "sample": "win_b_named",
+      "lang": "tr",
+      "selfLang": "en",
+      "nameA": "Alex",
+      "nameB": "Jordan",
+      "aIsSelf": false,
+      "bIsSelf": false,
+      "label": "Jordan haklı",
+      "confidence": "Güven: 3 üzerinden 3",
+      "tugA": 20,
+      "svgRotateDeg": 10.313,
+      "cruxStyle": "serif",
+      "leanTally": null,
+      "shareUrl": "https://okjudge.com/v/winB000001",
+      "personalized": {
+        "headline": "Nobody orders a sandwich hoping for a hot dog",
+        "why": null,
+        "crux": "Whether 'sandwich' follows shape or everyday use.",
+        "losing_side_best_point": "A split roll with a filling does fit most dictionary definitions.",
+        "side_a": [
+          "Menus never list hot dogs as sandwiches"
+        ],
+        "side_b": [
+          "A filling in a split roll is a sandwich"
+        ],
+        "bedrock_a": "Words mean what people use them to mean",
+        "bedrock_b": "Definitions follow form",
+        "facts_relied_on": [
+          "Major menus list hot dogs separately from sandwiches"
+        ],
+        "split_points": null,
+        "conditional_if_value": null,
+        "conditional_then": null,
+        "lean_reason": null,
+        "crux_trial_attack": null,
+        "crux_trial_reasoning": null,
+        "fact_check_claims": null,
+        "fact_check_summaries": null
+      }
+    },
+    {
+      "sample": "lean_b_majority_escalated",
+      "lang": "en",
+      "selfLang": "en",
+      "nameA": "Party A",
+      "nameB": "Party B",
+      "aIsSelf": false,
+      "bIsSelf": false,
+      "label": "Too close to call",
+      "confidence": "Judges split",
+      "tugA": 38,
+      "svgRotateDeg": 4.125,
+      "cruxStyle": "serif",
+      "leanTally": {
+        "for": 4,
+        "against": 1
+      },
+      "shareUrl": "https://okjudge.com/v/lean000001",
+      "personalized": {
+        "headline": "Nobody orders a sandwich hoping for a hot dog",
+        "why": null,
+        "crux": "Whether 'sandwich' follows shape or everyday use.",
+        "losing_side_best_point": "A split roll with a filling does fit most dictionary definitions.",
+        "side_a": [
+          "Menus never list hot dogs as sandwiches"
+        ],
+        "side_b": [
+          "A filling in a split roll is a sandwich"
+        ],
+        "bedrock_a": "Words mean what people use them to mean",
+        "bedrock_b": "Definitions follow form",
+        "facts_relied_on": [
+          "Major menus list hot dogs separately from sandwiches"
+        ],
+        "split_points": null,
+        "conditional_if_value": null,
+        "conditional_then": null,
+        "lean_reason": "Party B's reading is closer to common use.",
+        "crux_trial_attack": null,
+        "crux_trial_reasoning": null,
+        "fact_check_claims": null,
+        "fact_check_summaries": null
+      }
+    },
+    {
+      "sample": "lean_b_majority_escalated",
+      "lang": "tr",
+      "selfLang": "en",
+      "nameA": "Taraf A",
+      "nameB": "Taraf B",
+      "aIsSelf": false,
+      "bIsSelf": false,
+      "label": "Başa baş, karar çıkmadı",
+      "confidence": "Yargıçlar bölündü",
+      "tugA": 38,
+      "svgRotateDeg": 4.125,
+      "cruxStyle": "serif",
+      "leanTally": {
+        "for": 4,
+        "against": 1
+      },
+      "shareUrl": "https://okjudge.com/v/lean000001",
+      "personalized": {
+        "headline": "Nobody orders a sandwich hoping for a hot dog",
+        "why": null,
+        "crux": "Whether 'sandwich' follows shape or everyday use.",
+        "losing_side_best_point": "A split roll with a filling does fit most dictionary definitions.",
+        "side_a": [
+          "Menus never list hot dogs as sandwiches"
+        ],
+        "side_b": [
+          "A filling in a split roll is a sandwich"
+        ],
+        "bedrock_a": "Words mean what people use them to mean",
+        "bedrock_b": "Definitions follow form",
+        "facts_relied_on": [
+          "Major menus list hot dogs separately from sandwiches"
+        ],
+        "split_points": null,
+        "conditional_if_value": null,
+        "conditional_then": null,
+        "lean_reason": "Party B's reading is closer to common use.",
+        "crux_trial_attack": null,
+        "crux_trial_reasoning": null,
+        "fact_check_claims": null,
+        "fact_check_summaries": null
+      }
+    },
+    {
+      "sample": "lean_tie",
+      "lang": "en",
+      "selfLang": "en",
+      "nameA": "Party A",
+      "nameB": "Party B",
+      "aIsSelf": false,
+      "bIsSelf": false,
+      "label": "Too close to call",
+      "confidence": "Judges split",
+      "tugA": 50,
+      "svgRotateDeg": 0,
+      "cruxStyle": "serif",
+      "leanTally": null,
+      "shareUrl": "https://okjudge.com/v/tie0000001",
+      "personalized": {
+        "headline": "Nobody orders a sandwich hoping for a hot dog",
+        "why": null,
+        "crux": "Whether 'sandwich' follows shape or everyday use.",
+        "losing_side_best_point": "A split roll with a filling does fit most dictionary definitions.",
+        "side_a": [
+          "Menus never list hot dogs as sandwiches"
+        ],
+        "side_b": [
+          "A filling in a split roll is a sandwich"
+        ],
+        "bedrock_a": "Words mean what people use them to mean",
+        "bedrock_b": "Definitions follow form",
+        "facts_relied_on": [
+          "Major menus list hot dogs separately from sandwiches"
+        ],
+        "split_points": null,
+        "conditional_if_value": null,
+        "conditional_then": null,
+        "lean_reason": null,
+        "crux_trial_attack": null,
+        "crux_trial_reasoning": null,
+        "fact_check_claims": null,
+        "fact_check_summaries": null
+      }
+    },
+    {
+      "sample": "lean_tie",
+      "lang": "tr",
+      "selfLang": "en",
+      "nameA": "Taraf A",
+      "nameB": "Taraf B",
+      "aIsSelf": false,
+      "bIsSelf": false,
+      "label": "Başa baş, karar çıkmadı",
+      "confidence": "Yargıçlar bölündü",
+      "tugA": 50,
+      "svgRotateDeg": 0,
+      "cruxStyle": "serif",
+      "leanTally": null,
+      "shareUrl": "https://okjudge.com/v/tie0000001",
+      "personalized": {
+        "headline": "Nobody orders a sandwich hoping for a hot dog",
+        "why": null,
+        "crux": "Whether 'sandwich' follows shape or everyday use.",
+        "losing_side_best_point": "A split roll with a filling does fit most dictionary definitions.",
+        "side_a": [
+          "Menus never list hot dogs as sandwiches"
+        ],
+        "side_b": [
+          "A filling in a split roll is a sandwich"
+        ],
+        "bedrock_a": "Words mean what people use them to mean",
+        "bedrock_b": "Definitions follow form",
+        "facts_relied_on": [
+          "Major menus list hot dogs separately from sandwiches"
+        ],
+        "split_points": null,
+        "conditional_if_value": null,
+        "conditional_then": null,
+        "lean_reason": null,
+        "crux_trial_attack": null,
+        "crux_trial_reasoning": null,
+        "fact_check_claims": null,
+        "fact_check_summaries": null
+      }
+    },
+    {
+      "sample": "conditional",
+      "lang": "en",
+      "selfLang": "en",
+      "nameA": "Party A",
+      "nameB": "Party B",
+      "aIsSelf": false,
+      "bIsSelf": false,
+      "label": "It depends on your values",
+      "confidence": "Confidence 3 of 3",
+      "tugA": 62,
+      "svgRotateDeg": -4.125,
+      "cruxStyle": "serif",
+      "leanTally": {
+        "for": 2,
+        "against": 1
+      },
+      "shareUrl": "https://okjudge.com/v/cond000001",
+      "personalized": {
+        "headline": "Nobody orders a sandwich hoping for a hot dog",
+        "why": null,
+        "crux": "Whether 'sandwich' follows shape or everyday use.",
+        "losing_side_best_point": "A split roll with a filling does fit most dictionary definitions.",
+        "side_a": [
+          "Menus never list hot dogs as sandwiches"
+        ],
+        "side_b": [
+          "A filling in a split roll is a sandwich"
+        ],
+        "bedrock_a": "Words mean what people use them to mean",
+        "bedrock_b": "Definitions follow form",
+        "facts_relied_on": [
+          "Major menus list hot dogs separately from sandwiches"
+        ],
+        "split_points": null,
+        "conditional_if_value": [
+          "If honesty comes first",
+          "If kindness comes first"
+        ],
+        "conditional_then": [
+          "Party B is right",
+          "Party A is right"
+        ],
+        "lean_reason": "Small kindnesses keep friendships going.",
+        "crux_trial_attack": null,
+        "crux_trial_reasoning": null,
+        "fact_check_claims": null,
+        "fact_check_summaries": null
+      }
+    },
+    {
+      "sample": "conditional",
+      "lang": "tr",
+      "selfLang": "en",
+      "nameA": "Taraf A",
+      "nameB": "Taraf B",
+      "aIsSelf": false,
+      "bIsSelf": false,
+      "label": "Değerlerine bağlı",
+      "confidence": "Güven: 3 üzerinden 3",
+      "tugA": 62,
+      "svgRotateDeg": -4.125,
+      "cruxStyle": "serif",
+      "leanTally": {
+        "for": 2,
+        "against": 1
+      },
+      "shareUrl": "https://okjudge.com/v/cond000001",
+      "personalized": {
+        "headline": "Nobody orders a sandwich hoping for a hot dog",
+        "why": null,
+        "crux": "Whether 'sandwich' follows shape or everyday use.",
+        "losing_side_best_point": "A split roll with a filling does fit most dictionary definitions.",
+        "side_a": [
+          "Menus never list hot dogs as sandwiches"
+        ],
+        "side_b": [
+          "A filling in a split roll is a sandwich"
+        ],
+        "bedrock_a": "Words mean what people use them to mean",
+        "bedrock_b": "Definitions follow form",
+        "facts_relied_on": [
+          "Major menus list hot dogs separately from sandwiches"
+        ],
+        "split_points": null,
+        "conditional_if_value": [
+          "If honesty comes first",
+          "If kindness comes first"
+        ],
+        "conditional_then": [
+          "Party B is right",
+          "Party A is right"
+        ],
+        "lean_reason": "Small kindnesses keep friendships going.",
+        "crux_trial_attack": null,
+        "crux_trial_reasoning": null,
+        "fact_check_claims": null,
+        "fact_check_summaries": null
+      }
+    },
+    {
+      "sample": "split",
+      "lang": "en",
+      "selfLang": "en",
+      "nameA": "Party A",
+      "nameB": "Party B",
+      "aIsSelf": false,
+      "bIsSelf": false,
+      "label": "Split decision",
+      "confidence": "Confidence 2 of 3",
+      "tugA": 62,
+      "svgRotateDeg": -4.125,
+      "cruxStyle": "serif",
+      "leanTally": {
+        "for": 2,
+        "against": 1
+      },
+      "shareUrl": "https://okjudge.com/v/split00001",
+      "personalized": {
+        "headline": "Nobody orders a sandwich hoping for a hot dog",
+        "why": null,
+        "crux": "Whether 'sandwich' follows shape or everyday use.",
+        "losing_side_best_point": "A split roll with a filling does fit most dictionary definitions.",
+        "side_a": [
+          "Menus never list hot dogs as sandwiches"
+        ],
+        "side_b": [
+          "A filling in a split roll is a sandwich"
+        ],
+        "bedrock_a": "Words mean what people use them to mean",
+        "bedrock_b": "Definitions follow form",
+        "facts_relied_on": [
+          "Major menus list hot dogs separately from sandwiches"
+        ],
+        "split_points": [
+          "Botanically it is a fruit.",
+          "In the kitchen it is a vegetable."
+        ],
+        "conditional_if_value": null,
+        "conditional_then": null,
+        "lean_reason": "The question asked was botanical.",
+        "crux_trial_attack": null,
+        "crux_trial_reasoning": null,
+        "fact_check_claims": null,
+        "fact_check_summaries": null
+      }
+    },
+    {
+      "sample": "split",
+      "lang": "tr",
+      "selfLang": "en",
+      "nameA": "Taraf A",
+      "nameB": "Taraf B",
+      "aIsSelf": false,
+      "bIsSelf": false,
+      "label": "Bölünmüş karar",
+      "confidence": "Güven: 3 üzerinden 2",
+      "tugA": 62,
+      "svgRotateDeg": -4.125,
+      "cruxStyle": "serif",
+      "leanTally": {
+        "for": 2,
+        "against": 1
+      },
+      "shareUrl": "https://okjudge.com/v/split00001",
+      "personalized": {
+        "headline": "Nobody orders a sandwich hoping for a hot dog",
+        "why": null,
+        "crux": "Whether 'sandwich' follows shape or everyday use.",
+        "losing_side_best_point": "A split roll with a filling does fit most dictionary definitions.",
+        "side_a": [
+          "Menus never list hot dogs as sandwiches"
+        ],
+        "side_b": [
+          "A filling in a split roll is a sandwich"
+        ],
+        "bedrock_a": "Words mean what people use them to mean",
+        "bedrock_b": "Definitions follow form",
+        "facts_relied_on": [
+          "Major menus list hot dogs separately from sandwiches"
+        ],
+        "split_points": [
+          "Botanically it is a fruit.",
+          "In the kitchen it is a vegetable."
+        ],
+        "conditional_if_value": null,
+        "conditional_then": null,
+        "lean_reason": "The question asked was botanical.",
+        "crux_trial_attack": null,
+        "crux_trial_reasoning": null,
+        "fact_check_claims": null,
+        "fact_check_summaries": null
+      }
+    },
+    {
+      "sample": "overturned_tr",
+      "lang": "en",
+      "selfLang": "tr",
+      "nameA": "You",
+      "nameB": "annem",
+      "aIsSelf": true,
+      "bIsSelf": false,
+      "label": "You're right",
+      "confidence": "Confidence 2 of 3",
+      "tugA": 80,
+      "svgRotateDeg": -10.313,
+      "cruxStyle": "serif",
+      "leanTally": null,
+      "shareUrl": "https://okjudge.com/v/trial0001x",
+      "personalized": {
+        "headline": "Parmak çıtlatmak artrite yol açmıyor",
+        "why": "Parmak çıtlatanlarla çıtlatmayanları karşılaştıran çalışmalar artrit açısından bir fark bulmuyor. annem'in endişesi anlaşılır ama kanıt senden yana.",
+        "crux": "annem'in korkusu kanıta dayanıyor mu, yoksa Taraf A haklı mı?",
+        "losing_side_best_point": "Bazı küçük çalışmalar şişlik bildiriyor.",
+        "side_a": [
+          "Menus never list hot dogs as sandwiches"
+        ],
+        "side_b": [
+          "A filling in a split roll is a sandwich"
+        ],
+        "bedrock_a": "Words mean what people use them to mean",
+        "bedrock_b": "Definitions follow form",
+        "facts_relied_on": [
+          "Major menus list hot dogs separately from sandwiches"
+        ],
+        "split_points": null,
+        "conditional_if_value": null,
+        "conditional_then": null,
+        "lean_reason": null,
+        "crux_trial_attack": "Uzun vadeli çalışma az.",
+        "crux_trial_reasoning": "İtiraz yerinde.",
+        "fact_check_claims": null,
+        "fact_check_summaries": null
+      }
+    },
+    {
+      "sample": "overturned_tr",
+      "lang": "tr",
+      "selfLang": "tr",
+      "nameA": "Sen",
+      "nameB": "annem",
+      "aIsSelf": true,
+      "bIsSelf": false,
+      "label": "Sen haklısın",
+      "confidence": "Güven: 3 üzerinden 2",
+      "tugA": 80,
+      "svgRotateDeg": -10.313,
+      "cruxStyle": "serif",
+      "leanTally": null,
+      "shareUrl": "https://okjudge.com/v/trial0001x",
+      "personalized": {
+        "headline": "Parmak çıtlatmak artrite yol açmıyor",
+        "why": "Parmak çıtlatanlarla çıtlatmayanları karşılaştıran çalışmalar artrit açısından bir fark bulmuyor. annem'in endişesi anlaşılır ama kanıt senden yana.",
+        "crux": "annem'in korkusu kanıta dayanıyor mu, yoksa Taraf A haklı mı?",
+        "losing_side_best_point": "Bazı küçük çalışmalar şişlik bildiriyor.",
+        "side_a": [
+          "Menus never list hot dogs as sandwiches"
+        ],
+        "side_b": [
+          "A filling in a split roll is a sandwich"
+        ],
+        "bedrock_a": "Words mean what people use them to mean",
+        "bedrock_b": "Definitions follow form",
+        "facts_relied_on": [
+          "Major menus list hot dogs separately from sandwiches"
+        ],
+        "split_points": null,
+        "conditional_if_value": null,
+        "conditional_then": null,
+        "lean_reason": null,
+        "crux_trial_attack": "Uzun vadeli çalışma az.",
+        "crux_trial_reasoning": "İtiraz yerinde.",
+        "fact_check_claims": null,
+        "fact_check_summaries": null
+      }
+    },
+    {
+      "sample": "refused",
+      "lang": "en",
+      "selfLang": "en",
+      "nameA": "Party A",
+      "nameB": "Party B",
+      "aIsSelf": false,
+      "bIsSelf": false,
+      "label": "Too close to call",
+      "confidence": null,
+      "tugA": 50,
+      "svgRotateDeg": 0,
+      "cruxStyle": "serif",
+      "leanTally": null,
+      "shareUrl": "https://okjudge.com/v/refused001",
+      "personalized": {
+        "headline": "The AI wouldn't weigh in on this one",
+        "why": null,
+        "crux": "Whether 'sandwich' follows shape or everyday use.",
+        "losing_side_best_point": "A split roll with a filling does fit most dictionary definitions.",
+        "side_a": [
+          "Skipped"
+        ],
+        "side_b": [
+          "Skipped"
+        ],
+        "bedrock_a": "—",
+        "bedrock_b": "—",
+        "facts_relied_on": [],
+        "split_points": null,
+        "conditional_if_value": null,
+        "conditional_then": null,
+        "lean_reason": null,
+        "crux_trial_attack": null,
+        "crux_trial_reasoning": null,
+        "fact_check_claims": null,
+        "fact_check_summaries": null
+      }
+    },
+    {
+      "sample": "refused",
+      "lang": "tr",
+      "selfLang": "en",
+      "nameA": "Taraf A",
+      "nameB": "Taraf B",
+      "aIsSelf": false,
+      "bIsSelf": false,
+      "label": "Başa baş, karar çıkmadı",
+      "confidence": null,
+      "tugA": 50,
+      "svgRotateDeg": 0,
+      "cruxStyle": "serif",
+      "leanTally": null,
+      "shareUrl": "https://okjudge.com/v/refused001",
+      "personalized": {
+        "headline": "The AI wouldn't weigh in on this one",
+        "why": null,
+        "crux": "Whether 'sandwich' follows shape or everyday use.",
+        "losing_side_best_point": "A split roll with a filling does fit most dictionary definitions.",
+        "side_a": [
+          "Skipped"
+        ],
+        "side_b": [
+          "Skipped"
+        ],
+        "bedrock_a": "—",
+        "bedrock_b": "—",
+        "facts_relied_on": [],
+        "split_points": null,
+        "conditional_if_value": null,
+        "conditional_then": null,
+        "lean_reason": null,
+        "crux_trial_attack": null,
+        "crux_trial_reasoning": null,
+        "fact_check_claims": null,
+        "fact_check_summaries": null
+      }
+    },
+    {
+      "sample": "premium_factcheck",
+      "lang": "en",
+      "selfLang": "en",
+      "nameA": "Party A",
+      "nameB": "Party B",
+      "aIsSelf": false,
+      "bIsSelf": false,
+      "label": "Party A is right",
+      "confidence": "Confidence 2 of 3",
+      "tugA": 80,
+      "svgRotateDeg": -10.313,
+      "cruxStyle": "serif",
+      "leanTally": null,
+      "shareUrl": "https://okjudge.com/v/premium001",
+      "personalized": {
+        "headline": "Nobody orders a sandwich hoping for a hot dog",
+        "why": null,
+        "crux": "Whether 'sandwich' follows shape or everyday use.",
+        "losing_side_best_point": "A split roll with a filling does fit most dictionary definitions.",
+        "side_a": [
+          "Menus never list hot dogs as sandwiches"
+        ],
+        "side_b": [
+          "A filling in a split roll is a sandwich"
+        ],
+        "bedrock_a": "Words mean what people use them to mean",
+        "bedrock_b": "Definitions follow form",
+        "facts_relied_on": [
+          "Major menus list hot dogs separately from sandwiches"
+        ],
+        "split_points": null,
+        "conditional_if_value": null,
+        "conditional_then": null,
+        "lean_reason": null,
+        "crux_trial_attack": null,
+        "crux_trial_reasoning": null,
+        "fact_check_claims": [
+          "Menus list hot dogs separately"
+        ],
+        "fact_check_summaries": [
+          "Most do."
+        ]
+      }
+    },
+    {
+      "sample": "premium_factcheck",
+      "lang": "tr",
+      "selfLang": "en",
+      "nameA": "Taraf A",
+      "nameB": "Taraf B",
+      "aIsSelf": false,
+      "bIsSelf": false,
+      "label": "Taraf A haklı",
+      "confidence": "Güven: 3 üzerinden 2",
+      "tugA": 80,
+      "svgRotateDeg": -10.313,
+      "cruxStyle": "serif",
+      "leanTally": null,
+      "shareUrl": "https://okjudge.com/v/premium001",
+      "personalized": {
+        "headline": "Nobody orders a sandwich hoping for a hot dog",
+        "why": null,
+        "crux": "Whether 'sandwich' follows shape or everyday use.",
+        "losing_side_best_point": "A split roll with a filling does fit most dictionary definitions.",
+        "side_a": [
+          "Menus never list hot dogs as sandwiches"
+        ],
+        "side_b": [
+          "A filling in a split roll is a sandwich"
+        ],
+        "bedrock_a": "Words mean what people use them to mean",
+        "bedrock_b": "Definitions follow form",
+        "facts_relied_on": [
+          "Major menus list hot dogs separately from sandwiches"
+        ],
+        "split_points": null,
+        "conditional_if_value": null,
+        "conditional_then": null,
+        "lean_reason": null,
+        "crux_trial_attack": null,
+        "crux_trial_reasoning": null,
+        "fact_check_claims": [
+          "Menus list hot dogs separately"
+        ],
+        "fact_check_summaries": [
+          "Most do."
+        ]
+      }
+    }
+  ],
+  "names": [
+    {
+      "case": "empty",
+      "lang": "en",
+      "selfLang": "en",
+      "nameMap": [],
+      "nameA": "Party A",
+      "nameB": "Party B",
+      "aIsSelf": false,
+      "bIsSelf": false
+    },
+    {
+      "case": "empty",
+      "lang": "tr",
+      "selfLang": "en",
+      "nameMap": [],
+      "nameA": "Taraf A",
+      "nameB": "Taraf B",
+      "aIsSelf": false,
+      "bIsSelf": false
+    },
+    {
+      "case": "narrator_en",
+      "lang": "en",
+      "selfLang": "en",
+      "nameMap": [
+        {
+          "original": "I",
+          "replacement": "Party A"
+        },
+        {
+          "original": "Sam",
+          "replacement": "Party B"
+        }
+      ],
+      "nameA": "You",
+      "nameB": "Sam",
+      "aIsSelf": true,
+      "bIsSelf": false
+    },
+    {
+      "case": "narrator_en",
+      "lang": "tr",
+      "selfLang": "en",
+      "nameMap": [
+        {
+          "original": "I",
+          "replacement": "Party A"
+        },
+        {
+          "original": "Sam",
+          "replacement": "Party B"
+        }
+      ],
+      "nameA": "Sen",
+      "nameB": "Sam",
+      "aIsSelf": true,
+      "bIsSelf": false
+    },
+    {
+      "case": "narrator_my",
+      "lang": "en",
+      "selfLang": "en",
+      "nameMap": [
+        {
+          "original": "my",
+          "replacement": "Party A"
+        },
+        {
+          "original": "Sam",
+          "replacement": "Party B"
+        }
+      ],
+      "nameA": "You",
+      "nameB": "Sam",
+      "aIsSelf": true,
+      "bIsSelf": false
+    },
+    {
+      "case": "narrator_my",
+      "lang": "tr",
+      "selfLang": "en",
+      "nameMap": [
+        {
+          "original": "my",
+          "replacement": "Party A"
+        },
+        {
+          "original": "Sam",
+          "replacement": "Party B"
+        }
+      ],
+      "nameA": "Sen",
+      "nameB": "Sam",
+      "aIsSelf": true,
+      "bIsSelf": false
+    },
+    {
+      "case": "narrator_tr_ben",
+      "lang": "en",
+      "selfLang": "tr",
+      "nameMap": [
+        {
+          "original": "Ben",
+          "replacement": "Taraf A"
+        },
+        {
+          "original": "Deniz'in",
+          "replacement": "Taraf B'nin"
+        }
+      ],
+      "nameA": "You",
+      "nameB": "Deniz",
+      "aIsSelf": true,
+      "bIsSelf": false
+    },
+    {
+      "case": "narrator_tr_ben",
+      "lang": "tr",
+      "selfLang": "tr",
+      "nameMap": [
+        {
+          "original": "Ben",
+          "replacement": "Taraf A"
+        },
+        {
+          "original": "Deniz'in",
+          "replacement": "Taraf B'nin"
+        }
+      ],
+      "nameA": "Sen",
+      "nameB": "Deniz",
+      "aIsSelf": true,
+      "bIsSelf": false
+    },
+    {
+      "case": "ben_is_a_name_in_en",
+      "lang": "en",
+      "selfLang": "en",
+      "nameMap": [
+        {
+          "original": "Ben",
+          "replacement": "Party A"
+        },
+        {
+          "original": "Sam",
+          "replacement": "Party B"
+        }
+      ],
+      "nameA": "Ben",
+      "nameB": "Sam",
+      "aIsSelf": false,
+      "bIsSelf": false
+    },
+    {
+      "case": "ben_is_a_name_in_en",
+      "lang": "tr",
+      "selfLang": "en",
+      "nameMap": [
+        {
+          "original": "Ben",
+          "replacement": "Party A"
+        },
+        {
+          "original": "Sam",
+          "replacement": "Party B"
+        }
+      ],
+      "nameA": "Ben",
+      "nameB": "Sam",
+      "aIsSelf": false,
+      "bIsSelf": false
+    },
+    {
+      "case": "ben_in_slot_b",
+      "lang": "en",
+      "selfLang": "tr",
+      "nameMap": [
+        {
+          "original": "I",
+          "replacement": "Party A"
+        },
+        {
+          "original": "Ben",
+          "replacement": "Party B"
+        }
+      ],
+      "nameA": "You",
+      "nameB": "Ben",
+      "aIsSelf": true,
+      "bIsSelf": false
+    },
+    {
+      "case": "ben_in_slot_b",
+      "lang": "tr",
+      "selfLang": "tr",
+      "nameMap": [
+        {
+          "original": "I",
+          "replacement": "Party A"
+        },
+        {
+          "original": "Ben",
+          "replacement": "Party B"
+        }
+      ],
+      "nameA": "Sen",
+      "nameB": "Ben",
+      "aIsSelf": true,
+      "bIsSelf": false
+    },
+    {
+      "case": "description_then_name",
+      "lang": "en",
+      "selfLang": "en",
+      "nameMap": [
+        {
+          "original": "my roommate",
+          "replacement": "Party B"
+        },
+        {
+          "original": "Chris",
+          "replacement": "Party B"
+        },
+        {
+          "original": "Mark's",
+          "replacement": "Party A"
+        }
+      ],
+      "nameA": "Mark",
+      "nameB": "Chris",
+      "aIsSelf": false,
+      "bIsSelf": false
+    },
+    {
+      "case": "description_then_name",
+      "lang": "tr",
+      "selfLang": "en",
+      "nameMap": [
+        {
+          "original": "my roommate",
+          "replacement": "Party B"
+        },
+        {
+          "original": "Chris",
+          "replacement": "Party B"
+        },
+        {
+          "original": "Mark's",
+          "replacement": "Party A"
+        }
+      ],
+      "nameA": "Mark",
+      "nameB": "Chris",
+      "aIsSelf": false,
+      "bIsSelf": false
+    },
+    {
+      "case": "person_c_ignored",
+      "lang": "en",
+      "selfLang": "tr",
+      "nameMap": [
+        {
+          "original": "Ayşe",
+          "replacement": "Kişi C"
+        }
+      ],
+      "nameA": "Party A",
+      "nameB": "Party B",
+      "aIsSelf": false,
+      "bIsSelf": false
+    },
+    {
+      "case": "person_c_ignored",
+      "lang": "tr",
+      "selfLang": "tr",
+      "nameMap": [
+        {
+          "original": "Ayşe",
+          "replacement": "Kişi C"
+        }
+      ],
+      "nameA": "Taraf A",
+      "nameB": "Taraf B",
+      "aIsSelf": false,
+      "bIsSelf": false
+    }
+  ],
+  "restore": [
+    {
+      "text": "Party A is right about the menus.",
+      "nameMap": [
+        {
+          "original": "I",
+          "replacement": "Party A"
+        },
+        {
+          "original": "Sam",
+          "replacement": "Party B"
+        }
+      ],
+      "selfLang": "en",
+      "textLang": "en",
+      "expected": "You are right about the menus."
+    },
+    {
+      "text": "Party B says Party A was late.",
+      "nameMap": [
+        {
+          "original": "I",
+          "replacement": "Party A"
+        },
+        {
+          "original": "Sam",
+          "replacement": "Party B"
+        }
+      ],
+      "selfLang": "en",
+      "textLang": "en",
+      "expected": "Sam says you were late."
+    },
+    {
+      "text": "Party A has a point, but Party A doesn't see it.",
+      "nameMap": [
+        {
+          "original": "I",
+          "replacement": "Party A"
+        },
+        {
+          "original": "Sam",
+          "replacement": "Party B"
+        }
+      ],
+      "selfLang": "en",
+      "textLang": "en",
+      "expected": "You have a point, but you don't see it."
+    },
+    {
+      "text": "Party A isn't wrong, but Party A didn't ask.",
+      "nameMap": [
+        {
+          "original": "I",
+          "replacement": "Party A"
+        },
+        {
+          "original": "Sam",
+          "replacement": "Party B"
+        }
+      ],
+      "selfLang": "en",
+      "textLang": "en",
+      "expected": "You aren't wrong, but you didn't ask."
+    },
+    {
+      "text": "Party A can't prove it, and Party A should apologize.",
+      "nameMap": [
+        {
+          "original": "I",
+          "replacement": "Party A"
+        },
+        {
+          "original": "Sam",
+          "replacement": "Party B"
+        }
+      ],
+      "selfLang": "en",
+      "textLang": "en",
+      "expected": "You can't prove it, and you should apologize."
+    },
+    {
+      "text": "Party A ignored the menus.",
+      "nameMap": [
+        {
+          "original": "I",
+          "replacement": "Party A"
+        },
+        {
+          "original": "Sam",
+          "replacement": "Party B"
+        }
+      ],
+      "selfLang": "en",
+      "textLang": "en",
+      "expected": "You ignored the menus."
+    },
+    {
+      "text": "Party A wants a sandwich; Party B wants a hot dog.",
+      "nameMap": [
+        {
+          "original": "I",
+          "replacement": "Party A"
+        },
+        {
+          "original": "Sam",
+          "replacement": "Party B"
+        }
+      ],
+      "selfLang": "en",
+      "textLang": "en",
+      "expected": "You want a sandwich; Sam wants a hot dog."
+    },
+    {
+      "text": "This is the thing Party A wants.",
+      "nameMap": [
+        {
+          "original": "I",
+          "replacement": "Party A"
+        },
+        {
+          "original": "Sam",
+          "replacement": "Party B"
+        }
+      ],
+      "selfLang": "en",
+      "textLang": "en",
+      "expected": "This is the thing you want."
+    },
+    {
+      "text": "Party B knows that Party A tries hard.",
+      "nameMap": [
+        {
+          "original": "I",
+          "replacement": "Party A"
+        },
+        {
+          "original": "Sam",
+          "replacement": "Party B"
+        }
+      ],
+      "selfLang": "en",
+      "textLang": "en",
+      "expected": "Sam knows that you try hard."
+    },
+    {
+      "text": "Party B and Party A are both wrong.",
+      "nameMap": [
+        {
+          "original": "I",
+          "replacement": "Party A"
+        },
+        {
+          "original": "Sam",
+          "replacement": "Party B"
+        }
+      ],
+      "selfLang": "en",
+      "textLang": "en",
+      "expected": "Sam and you are both wrong."
+    },
+    {
+      "text": "Party A's menu test wins.",
+      "nameMap": [
+        {
+          "original": "I",
+          "replacement": "Party A"
+        },
+        {
+          "original": "Sam",
+          "replacement": "Party B"
+        }
+      ],
+      "selfLang": "en",
+      "textLang": "en",
+      "expected": "Your menu test wins."
+    },
+    {
+      "text": "Party B owes an apology to Party A.",
+      "nameMap": [
+        {
+          "original": "I",
+          "replacement": "Party A"
+        },
+        {
+          "original": "Sam",
+          "replacement": "Party B"
+        }
+      ],
+      "selfLang": "en",
+      "textLang": "en",
+      "expected": "Sam owes an apology to you."
+    },
+    {
+      "text": "Person C told Party A the truth, and Party B tries harder than Party A.",
+      "nameMap": [
+        {
+          "original": "I",
+          "replacement": "Party A"
+        },
+        {
+          "original": "Sam",
+          "replacement": "Party B"
+        },
+        {
+          "original": "Ayşe",
+          "replacement": "Kişi C"
+        }
+      ],
+      "selfLang": "en",
+      "textLang": "en",
+      "expected": "Ayşe told you the truth, and Sam tries harder than you."
+    },
+    {
+      "text": "\"Party A is late,\" said Party B.",
+      "nameMap": [
+        {
+          "original": "I",
+          "replacement": "Party A"
+        },
+        {
+          "original": "Sam",
+          "replacement": "Party B"
+        }
+      ],
+      "selfLang": "en",
+      "textLang": "en",
+      "expected": "\"You are late,\" said Sam."
+    },
+    {
+      "text": "Party B gives Party A points.",
+      "nameMap": [
+        {
+          "original": "I",
+          "replacement": "Party A"
+        },
+        {
+          "original": "Sam",
+          "replacement": "Party B"
+        }
+      ],
+      "selfLang": "en",
+      "textLang": "en",
+      "expected": "Sam gives Party A points."
+    },
+    {
+      "text": "Party A, frankly, is wrong.",
+      "nameMap": [
+        {
+          "original": "I",
+          "replacement": "Party A"
+        },
+        {
+          "original": "Sam",
+          "replacement": "Party B"
+        }
+      ],
+      "selfLang": "en",
+      "textLang": "en",
+      "expected": "Party A, frankly, is wrong."
+    },
+    {
+      "text": "Party A was and is stubborn.",
+      "nameMap": [
+        {
+          "original": "I",
+          "replacement": "Party A"
+        },
+        {
+          "original": "Sam",
+          "replacement": "Party B"
+        }
+      ],
+      "selfLang": "en",
+      "textLang": "en",
+      "expected": "Party A was and is stubborn."
+    },
+    {
+      "text": "Party A alone decides.",
+      "nameMap": [
+        {
+          "original": "I",
+          "replacement": "Party A"
+        },
+        {
+          "original": "Sam",
+          "replacement": "Party B"
+        }
+      ],
+      "selfLang": "en",
+      "textLang": "en",
+      "expected": "Party A alone decides."
+    },
+    {
+      "text": "Party A's plan beats Party B's, and Party A knows it.",
+      "nameMap": [
+        {
+          "original": "Alex",
+          "replacement": "Party A"
+        },
+        {
+          "original": "Jordan",
+          "replacement": "Party B"
+        }
+      ],
+      "selfLang": "en",
+      "textLang": "en",
+      "expected": "Alex's plan beats Jordan's, and Alex knows it."
+    },
+    {
+      "text": "Party B’s point stands.",
+      "nameMap": [
+        {
+          "original": "I",
+          "replacement": "Party A"
+        },
+        {
+          "original": "Sam",
+          "replacement": "Party B"
+        }
+      ],
+      "selfLang": "en",
+      "textLang": "en",
+      "expected": "Sam’s point stands."
+    },
+    {
+      "text": "Party B'nin point was sent to Party A'ya.",
+      "nameMap": [
+        {
+          "original": "I",
+          "replacement": "Party A"
+        },
+        {
+          "original": "Sam",
+          "replacement": "Party B"
+        }
+      ],
+      "selfLang": "en",
+      "textLang": "en",
+      "expected": "Sam's point was sent to you."
+    },
+    {
+      "text": "Party AB and xParty A are not labels, Party C and Person A neither, but Party B is.",
+      "nameMap": [
+        {
+          "original": "I",
+          "replacement": "Party A"
+        },
+        {
+          "original": "Sam",
+          "replacement": "Party B"
+        }
+      ],
+      "selfLang": "en",
+      "textLang": "en",
+      "expected": "Party AB and xParty A are not labels, Party C and Person A neither, but Sam is."
+    },
+    {
+      "text": "Party A is right and Person C agrees.",
+      "nameMap": [],
+      "selfLang": "en",
+      "textLang": "en",
+      "expected": "Party A is right and Person C agrees."
+    },
+    {
+      "text": "Party A is right and Party B's idea fails.",
+      "nameMap": [
+        {
+          "original": "Ben",
+          "replacement": "Taraf A"
+        },
+        {
+          "original": "Deniz'in",
+          "replacement": "Taraf B'nin"
+        }
+      ],
+      "selfLang": "tr",
+      "textLang": "en",
+      "expected": "You are right and Deniz's idea fails."
+    },
+    {
+      "text": "Taraf A haklı.",
+      "nameMap": [
+        {
+          "original": "Ben",
+          "replacement": "Taraf A"
+        },
+        {
+          "original": "Deniz'in",
+          "replacement": "Taraf B'nin"
+        }
+      ],
+      "selfLang": "tr",
+      "textLang": "tr",
+      "expected": "Sen haklısın."
+    },
+    {
+      "text": "Bu konuda Taraf A kesinlikle haklı, Taraf B ise haksız.",
+      "nameMap": [
+        {
+          "original": "Ben",
+          "replacement": "Taraf A"
+        },
+        {
+          "original": "Deniz'in",
+          "replacement": "Taraf B'nin"
+        }
+      ],
+      "selfLang": "tr",
+      "textLang": "tr",
+      "expected": "Bu konuda sen kesinlikle haklısın, Deniz ise haksız."
+    },
+    {
+      "text": "Taraf A haklıydı. Taraf A haklı bir noktaya değinmedi.",
+      "nameMap": [
+        {
+          "original": "Ben",
+          "replacement": "Taraf A"
+        },
+        {
+          "original": "Deniz'in",
+          "replacement": "Taraf B'nin"
+        }
+      ],
+      "selfLang": "tr",
+      "textLang": "tr",
+      "expected": "Sen haklıydın. Taraf A haklı bir noktaya değinmedi."
+    },
+    {
+      "text": "Taraf B, Taraf A'ya borçlu ve Taraf A'yı suçluyor.",
+      "nameMap": [
+        {
+          "original": "Ben",
+          "replacement": "Taraf A"
+        },
+        {
+          "original": "Deniz'in",
+          "replacement": "Taraf B'nin"
+        }
+      ],
+      "selfLang": "tr",
+      "textLang": "tr",
+      "expected": "Deniz, sana borçlu ve seni suçluyor."
+    },
+    {
+      "text": "Taraf B, Taraf A'dan özür dilemeli; Taraf A'da da haklılık payı var.",
+      "nameMap": [
+        {
+          "original": "Ben",
+          "replacement": "Taraf A"
+        },
+        {
+          "original": "Deniz'in",
+          "replacement": "Taraf B'nin"
+        }
+      ],
+      "selfLang": "tr",
+      "textLang": "tr",
+      "expected": "Deniz, senden özür dilemeli; sende de haklılık payı var."
+    },
+    {
+      "text": "Taraf A'yla konuşmak gerek, Taraf A'daki inat belli.",
+      "nameMap": [
+        {
+          "original": "Ben",
+          "replacement": "Taraf A"
+        },
+        {
+          "original": "Deniz'in",
+          "replacement": "Taraf B'nin"
+        }
+      ],
+      "selfLang": "tr",
+      "textLang": "tr",
+      "expected": "Seninle konuşmak gerek, sendeki inat belli."
+    },
+    {
+      "text": "Bu karar Taraf A için iyi. Taraf A'ya göre menü belirleyici.",
+      "nameMap": [
+        {
+          "original": "Ben",
+          "replacement": "Taraf A"
+        },
+        {
+          "original": "Deniz'in",
+          "replacement": "Taraf B'nin"
+        }
+      ],
+      "selfLang": "tr",
+      "textLang": "tr",
+      "expected": "Bu karar senin için iyi. Sana göre menü belirleyici."
+    },
+    {
+      "text": "Taraf A açısından ölçüt kullanım, Taraf A ile Taraf B ise anlaşamıyor.",
+      "nameMap": [
+        {
+          "original": "Ben",
+          "replacement": "Taraf A"
+        },
+        {
+          "original": "Deniz'in",
+          "replacement": "Taraf B'nin"
+        }
+      ],
+      "selfLang": "tr",
+      "textLang": "tr",
+      "expected": "Senin açından ölçüt kullanım, seninle Deniz ise anlaşamıyor."
+    },
+    {
+      "text": "Taraf A'nın istediği şey açık: Taraf A'nın gelmesi ve Taraf A'nın yapmasına izin verilmesi.",
+      "nameMap": [
+        {
+          "original": "Ben",
+          "replacement": "Taraf A"
+        },
+        {
+          "original": "Deniz'in",
+          "replacement": "Taraf B'nin"
+        }
+      ],
+      "selfLang": "tr",
+      "textLang": "tr",
+      "expected": "Senin istediğin şey açık: senin gelmen ve senin yapmana izin verilmesi."
+    },
+    {
+      "text": "Taraf A'nınki daha mantıklı.",
+      "nameMap": [
+        {
+          "original": "Ben",
+          "replacement": "Taraf A"
+        },
+        {
+          "original": "Deniz'in",
+          "replacement": "Taraf B'nin"
+        }
+      ],
+      "selfLang": "tr",
+      "textLang": "tr",
+      "expected": "Seninki daha mantıklı."
+    },
+    {
+      "text": "Taraf A'nın menü testi kazanıyor, Taraf A'nın çoğu iddiası doğru.",
+      "nameMap": [
+        {
+          "original": "Ben",
+          "replacement": "Taraf A"
+        },
+        {
+          "original": "Deniz'in",
+          "replacement": "Taraf B'nin"
+        }
+      ],
+      "selfLang": "tr",
+      "textLang": "tr",
+      "expected": "Taraf A'nın menü testi kazanıyor, Taraf A'nın çoğu iddiası doğru."
+    },
+    {
+      "text": "Taraf A şunu söylüyor: haklı olan Taraf A'ydı. Yanılan Taraf B'ydi.",
+      "nameMap": [
+        {
+          "original": "Ben",
+          "replacement": "Taraf A"
+        },
+        {
+          "original": "Deniz'in",
+          "replacement": "Taraf B'nin"
+        }
+      ],
+      "selfLang": "tr",
+      "textLang": "tr",
+      "expected": "Taraf A şunu söylüyor: haklı olan Taraf A'ydı. Yanılan Deniz'di."
+    },
+    {
+      "text": "Taraf A büyük ölçüde haklı, Taraf B'nin itirazı zayıf.",
+      "nameMap": [
+        {
+          "original": "I",
+          "replacement": "Party A"
+        },
+        {
+          "original": "Sam",
+          "replacement": "Party B"
+        }
+      ],
+      "selfLang": "en",
+      "textLang": "tr",
+      "expected": "Sen büyük ölçüde haklısın, Sam'ın itirazı zayıf."
+    },
+    {
+      "text": "Person C'ye göre Taraf A haklı; Kişi C'nin annesi de öyle düşünüyor.",
+      "nameMap": [
+        {
+          "original": "Ben",
+          "replacement": "Taraf A"
+        },
+        {
+          "original": "Deniz'in",
+          "replacement": "Taraf B'nin"
+        },
+        {
+          "original": "Ayşe",
+          "replacement": "Kişi C"
+        }
+      ],
+      "selfLang": "tr",
+      "textLang": "tr",
+      "expected": "Ayşe'ye göre sen haklısın; Ayşe'nin annesi de öyle düşünüyor."
+    },
+    {
+      "text": "Taraf A'nın görüşü güçlü, Taraf B'nin değil; söz Taraf A'ya ve Taraf B'ye verildi.",
+      "nameMap": [
+        {
+          "original": "Burak",
+          "replacement": "Taraf A"
+        },
+        {
+          "original": "Ayşe",
+          "replacement": "Taraf B"
+        }
+      ],
+      "selfLang": "tr",
+      "textLang": "tr",
+      "expected": "Burak'ın görüşü güçlü, Ayşe'nin değil; söz Burak'a ve Ayşe'ye verildi."
+    },
+    {
+      "text": "Taraf A'da ve Taraf B'de, Taraf A'dan ve Taraf B'den, Taraf A'yı ve Taraf B'yi.",
+      "nameMap": [
+        {
+          "original": "Burak",
+          "replacement": "Taraf A"
+        },
+        {
+          "original": "Ayşe",
+          "replacement": "Taraf B"
+        }
+      ],
+      "selfLang": "tr",
+      "textLang": "tr",
+      "expected": "Burak'ta ve Ayşe'de, Burak'tan ve Ayşe'den, Burak'ı ve Ayşe'yi."
+    },
+    {
+      "text": "Taraf A'yla Taraf B'yle; Taraf A'dır, Taraf B'dir; Taraf A'yken, Taraf B'ymiş; Taraf A'daki, Taraf B'ninki.",
+      "nameMap": [
+        {
+          "original": "Burak",
+          "replacement": "Taraf A"
+        },
+        {
+          "original": "Ayşe",
+          "replacement": "Taraf B"
+        }
+      ],
+      "selfLang": "tr",
+      "textLang": "tr",
+      "expected": "Burak'la Ayşe'yle; Burak'tır, Ayşe'dir; Burak'ken, Ayşe'ymiş; Burak'taki, Ayşe'ninki."
+    },
+    {
+      "text": "Party B's görüşü zayıf, Taraf B’ye sorulmalı, Taraf A ise haklı.",
+      "nameMap": [
+        {
+          "original": "Burak",
+          "replacement": "Taraf A"
+        },
+        {
+          "original": "Ayşe",
+          "replacement": "Taraf B"
+        }
+      ],
+      "selfLang": "tr",
+      "textLang": "tr",
+      "expected": "Ayşe'nin görüşü zayıf, Ayşe’ye sorulmalı, Burak ise haklı."
+    },
+    {
+      "text": "Taraf A'nın ve Taraf B'nin; Taraf A'da, Taraf B'ye; Taraf A'dan, Taraf B'yi.",
+      "nameMap": [
+        {
+          "original": "Umut",
+          "replacement": "Taraf A"
+        },
+        {
+          "original": "Gül",
+          "replacement": "Taraf B"
+        }
+      ],
+      "selfLang": "tr",
+      "textLang": "tr",
+      "expected": "Umut'un ve Gül'ün; Umut'ta, Gül'e; Umut'tan, Gül'ü."
+    },
+    {
+      "text": "Taraf A'nın ve Taraf B'nin; Taraf A'ya, Taraf B'de; Taraf A'dır, Taraf B'yle.",
+      "nameMap": [
+        {
+          "original": "Kemal",
+          "replacement": "Taraf A"
+        },
+        {
+          "original": "Övünç",
+          "replacement": "Taraf B"
+        }
+      ],
+      "selfLang": "tr",
+      "textLang": "tr",
+      "expected": "Kemal'in ve Övünç'ün; Kemal'e, Övünç'te; Kemal'dir, Övünç'le."
+    },
+    {
+      "text": "Taraf A'nın ve Taraf B'nin; Taraf A'yı, Taraf B'ye; Taraf A'daydı, Taraf B'ydi.",
+      "nameMap": [
+        {
+          "original": "Ömer",
+          "replacement": "Taraf A"
+        },
+        {
+          "original": "Derya",
+          "replacement": "Taraf B"
+        }
+      ],
+      "selfLang": "tr",
+      "textLang": "tr",
+      "expected": "Ömer'in ve Derya'nın; Ömer'i, Derya'ya; Taraf A'daydı, Derya'ydı."
+    },
+    {
+      "text": "Taraf B'nin sözü geçmiyor, Taraf B haklı değil.",
+      "nameMap": [
+        {
+          "original": "Burak",
+          "replacement": "Taraf A"
+        },
+        {
+          "original": "JJ",
+          "replacement": "Taraf B"
+        }
+      ],
+      "selfLang": "tr",
+      "textLang": "tr",
+      "expected": "Taraf B'nin sözü geçmiyor, JJ haklı değil."
+    }
+  ],
+  "personalizedTranslations": [
+    {
+      "sample": "win_a_self",
+      "lang": "tr",
+      "selfLang": "en",
+      "headline": "Sam kelimenin anlamını zorluyor, Taraf A'nın menü testi kazanıyor",
+      "why": "Sam'ın dayanağı sadece şekil. Bir kelimenin anlamını insanların onu nasıl kullandığı belirler, büfede sandviç isteyene de sosisli gelmez; bu yüzden Taraf A'nın menü testi meseleyi çözüyor.",
+      "crux": "Sam için ölçüt biçim; senin için ise insanların kelimeyi nasıl kullandığı.",
+      "losing_side_best_point": "Sam şu konuda haklı: sosisliyi dışarıda bırakan bir sandviç tanımı yapmak senin için zor olurdu.",
+      "side_a": [
+        "Menüler sosisliyi asla sandviç olarak listelemez"
+      ],
+      "side_b": [
+        "Ortadan kesilmiş ekmeğin arasına konan her şey sandviçtir"
+      ],
+      "bedrock_a": "Kelimeler, insanların onlara yüklediği anlama gelir",
+      "bedrock_b": "Tanımlar biçime göre yapılır",
+      "facts_relied_on": [
+        "Büyük zincirlerin menüleri sosisliyi sandviçlerden ayrı listeliyor"
+      ],
+      "split_points": null,
+      "conditional_if_value": null,
+      "conditional_then": null,
+      "lean_reason": null,
+      "crux_trial_attack": "Sözlükler aynı fikirde değil.",
+      "crux_trial_reasoning": "Burada kullanım ağır basıyor.",
+      "fact_check_claims": null,
+      "fact_check_summaries": null
+    }
+  ],
+  "waits": [
+    {
+      "seconds": null,
+      "lang": "en",
+      "text": "a few minutes"
+    },
+    {
+      "seconds": null,
+      "lang": "tr",
+      "text": "birkaç dakika"
+    },
+    {
+      "seconds": 0,
+      "lang": "en",
+      "text": "a few minutes"
+    },
+    {
+      "seconds": 0,
+      "lang": "tr",
+      "text": "birkaç dakika"
+    },
+    {
+      "seconds": -5,
+      "lang": "en",
+      "text": "a few minutes"
+    },
+    {
+      "seconds": -5,
+      "lang": "tr",
+      "text": "birkaç dakika"
+    },
+    {
+      "seconds": 1,
+      "lang": "en",
+      "text": "1 minute"
+    },
+    {
+      "seconds": 1,
+      "lang": "tr",
+      "text": "1 dakika"
+    },
+    {
+      "seconds": 59,
+      "lang": "en",
+      "text": "1 minute"
+    },
+    {
+      "seconds": 59,
+      "lang": "tr",
+      "text": "1 dakika"
+    },
+    {
+      "seconds": 60,
+      "lang": "en",
+      "text": "1 minute"
+    },
+    {
+      "seconds": 60,
+      "lang": "tr",
+      "text": "1 dakika"
+    },
+    {
+      "seconds": 61,
+      "lang": "en",
+      "text": "2 minutes"
+    },
+    {
+      "seconds": 61,
+      "lang": "tr",
+      "text": "2 dakika"
+    },
+    {
+      "seconds": 600,
+      "lang": "en",
+      "text": "10 minutes"
+    },
+    {
+      "seconds": 600,
+      "lang": "tr",
+      "text": "10 dakika"
+    },
+    {
+      "seconds": 5340,
+      "lang": "en",
+      "text": "89 minutes"
+    },
+    {
+      "seconds": 5340,
+      "lang": "tr",
+      "text": "89 dakika"
+    },
+    {
+      "seconds": 5400,
+      "lang": "en",
+      "text": "2 hours"
+    },
+    {
+      "seconds": 5400,
+      "lang": "tr",
+      "text": "2 saat"
+    },
+    {
+      "seconds": 5401,
+      "lang": "en",
+      "text": "2 hours"
+    },
+    {
+      "seconds": 5401,
+      "lang": "tr",
+      "text": "2 saat"
+    },
+    {
+      "seconds": 7200,
+      "lang": "en",
+      "text": "2 hours"
+    },
+    {
+      "seconds": 7200,
+      "lang": "tr",
+      "text": "2 saat"
+    },
+    {
+      "seconds": 86400,
+      "lang": "en",
+      "text": "24 hours"
+    },
+    {
+      "seconds": 86400,
+      "lang": "tr",
+      "text": "24 saat"
+    }
+  ],
+  "pluralWaits": [
+    {
+      "seconds": 61,
+      "lang": "ar",
+      "text": "دقيقتين"
+    },
+    {
+      "seconds": 180,
+      "lang": "ar",
+      "text": "3 دقائق"
+    },
+    {
+      "seconds": 600,
+      "lang": "ar",
+      "text": "10 دقائق"
+    },
+    {
+      "seconds": 1260,
+      "lang": "ar",
+      "text": "21 دقيقة"
+    },
+    {
+      "seconds": 1320,
+      "lang": "ar",
+      "text": "22 دقيقة"
+    },
+    {
+      "seconds": 5340,
+      "lang": "ar",
+      "text": "89 دقيقة"
+    },
+    {
+      "seconds": 7200,
+      "lang": "ar",
+      "text": "ساعتين"
+    },
+    {
+      "seconds": 18000,
+      "lang": "ar",
+      "text": "5 ساعات"
+    },
+    {
+      "seconds": 39600,
+      "lang": "ar",
+      "text": "11 ساعة"
+    },
+    {
+      "seconds": 86400,
+      "lang": "ar",
+      "text": "24 ساعة"
+    },
+    {
+      "seconds": 61,
+      "lang": "he",
+      "text": "שתי דקות"
+    },
+    {
+      "seconds": 180,
+      "lang": "he",
+      "text": "3 דקות"
+    },
+    {
+      "seconds": 600,
+      "lang": "he",
+      "text": "10 דקות"
+    },
+    {
+      "seconds": 1260,
+      "lang": "he",
+      "text": "21 דקות"
+    },
+    {
+      "seconds": 1320,
+      "lang": "he",
+      "text": "22 דקות"
+    },
+    {
+      "seconds": 5340,
+      "lang": "he",
+      "text": "89 דקות"
+    },
+    {
+      "seconds": 7200,
+      "lang": "he",
+      "text": "שעתיים"
+    },
+    {
+      "seconds": 18000,
+      "lang": "he",
+      "text": "5 שעות"
+    },
+    {
+      "seconds": 39600,
+      "lang": "he",
+      "text": "11 שעות"
+    },
+    {
+      "seconds": 86400,
+      "lang": "he",
+      "text": "24 שעות"
+    },
+    {
+      "seconds": 61,
+      "lang": "ru",
+      "text": "2 минуты"
+    },
+    {
+      "seconds": 180,
+      "lang": "ru",
+      "text": "3 минуты"
+    },
+    {
+      "seconds": 600,
+      "lang": "ru",
+      "text": "10 минут"
+    },
+    {
+      "seconds": 1260,
+      "lang": "ru",
+      "text": "21 минуту"
+    },
+    {
+      "seconds": 1320,
+      "lang": "ru",
+      "text": "22 минуты"
+    },
+    {
+      "seconds": 5340,
+      "lang": "ru",
+      "text": "89 минут"
+    },
+    {
+      "seconds": 7200,
+      "lang": "ru",
+      "text": "2 часа"
+    },
+    {
+      "seconds": 18000,
+      "lang": "ru",
+      "text": "5 часов"
+    },
+    {
+      "seconds": 39600,
+      "lang": "ru",
+      "text": "11 часов"
+    },
+    {
+      "seconds": 86400,
+      "lang": "ru",
+      "text": "24 часа"
+    },
+    {
+      "seconds": 61,
+      "lang": "pl",
+      "text": "2 minuty"
+    },
+    {
+      "seconds": 180,
+      "lang": "pl",
+      "text": "3 minuty"
+    },
+    {
+      "seconds": 600,
+      "lang": "pl",
+      "text": "10 minut"
+    },
+    {
+      "seconds": 1260,
+      "lang": "pl",
+      "text": "21 minut"
+    },
+    {
+      "seconds": 1320,
+      "lang": "pl",
+      "text": "22 minuty"
+    },
+    {
+      "seconds": 5340,
+      "lang": "pl",
+      "text": "89 minut"
+    },
+    {
+      "seconds": 7200,
+      "lang": "pl",
+      "text": "2 godziny"
+    },
+    {
+      "seconds": 18000,
+      "lang": "pl",
+      "text": "5 godzin"
+    },
+    {
+      "seconds": 39600,
+      "lang": "pl",
+      "text": "11 godzin"
+    },
+    {
+      "seconds": 86400,
+      "lang": "pl",
+      "text": "24 godziny"
+    },
+    {
+      "seconds": 61,
+      "lang": "cs",
+      "text": "2 minuty"
+    },
+    {
+      "seconds": 180,
+      "lang": "cs",
+      "text": "3 minuty"
+    },
+    {
+      "seconds": 600,
+      "lang": "cs",
+      "text": "10 minut"
+    },
+    {
+      "seconds": 1260,
+      "lang": "cs",
+      "text": "21 minut"
+    },
+    {
+      "seconds": 1320,
+      "lang": "cs",
+      "text": "22 minut"
+    },
+    {
+      "seconds": 5340,
+      "lang": "cs",
+      "text": "89 minut"
+    },
+    {
+      "seconds": 7200,
+      "lang": "cs",
+      "text": "2 hodiny"
+    },
+    {
+      "seconds": 18000,
+      "lang": "cs",
+      "text": "5 hodin"
+    },
+    {
+      "seconds": 39600,
+      "lang": "cs",
+      "text": "11 hodin"
+    },
+    {
+      "seconds": 86400,
+      "lang": "cs",
+      "text": "24 hodin"
+    },
+    {
+      "seconds": 61,
+      "lang": "uk",
+      "text": "2 хвилини"
+    },
+    {
+      "seconds": 180,
+      "lang": "uk",
+      "text": "3 хвилини"
+    },
+    {
+      "seconds": 600,
+      "lang": "uk",
+      "text": "10 хвилин"
+    },
+    {
+      "seconds": 1260,
+      "lang": "uk",
+      "text": "21 хвилину"
+    },
+    {
+      "seconds": 1320,
+      "lang": "uk",
+      "text": "22 хвилини"
+    },
+    {
+      "seconds": 5340,
+      "lang": "uk",
+      "text": "89 хвилин"
+    },
+    {
+      "seconds": 7200,
+      "lang": "uk",
+      "text": "2 години"
+    },
+    {
+      "seconds": 18000,
+      "lang": "uk",
+      "text": "5 годин"
+    },
+    {
+      "seconds": 39600,
+      "lang": "uk",
+      "text": "11 годин"
+    },
+    {
+      "seconds": 86400,
+      "lang": "uk",
+      "text": "24 години"
+    },
+    {
+      "seconds": 61,
+      "lang": "ja",
+      "text": "2分"
+    },
+    {
+      "seconds": 180,
+      "lang": "ja",
+      "text": "3分"
+    },
+    {
+      "seconds": 600,
+      "lang": "ja",
+      "text": "10分"
+    },
+    {
+      "seconds": 1260,
+      "lang": "ja",
+      "text": "21分"
+    },
+    {
+      "seconds": 1320,
+      "lang": "ja",
+      "text": "22分"
+    },
+    {
+      "seconds": 5340,
+      "lang": "ja",
+      "text": "89分"
+    },
+    {
+      "seconds": 7200,
+      "lang": "ja",
+      "text": "2時間"
+    },
+    {
+      "seconds": 18000,
+      "lang": "ja",
+      "text": "5時間"
+    },
+    {
+      "seconds": 39600,
+      "lang": "ja",
+      "text": "11時間"
+    },
+    {
+      "seconds": 86400,
+      "lang": "ja",
+      "text": "24時間"
+    },
+    {
+      "seconds": 61,
+      "lang": "fr",
+      "text": "2 minutes"
+    },
+    {
+      "seconds": 180,
+      "lang": "fr",
+      "text": "3 minutes"
+    },
+    {
+      "seconds": 600,
+      "lang": "fr",
+      "text": "10 minutes"
+    },
+    {
+      "seconds": 1260,
+      "lang": "fr",
+      "text": "21 minutes"
+    },
+    {
+      "seconds": 1320,
+      "lang": "fr",
+      "text": "22 minutes"
+    },
+    {
+      "seconds": 5340,
+      "lang": "fr",
+      "text": "89 minutes"
+    },
+    {
+      "seconds": 7200,
+      "lang": "fr",
+      "text": "2 heures"
+    },
+    {
+      "seconds": 18000,
+      "lang": "fr",
+      "text": "5 heures"
+    },
+    {
+      "seconds": 39600,
+      "lang": "fr",
+      "text": "11 heures"
+    },
+    {
+      "seconds": 86400,
+      "lang": "fr",
+      "text": "24 heures"
+    }
+  ],
+  "errors": [
+    {
+      "body": {
+        "error": "x",
+        "code": "too_short"
+      },
+      "status": 400,
+      "lang": "en",
+      "message": "That's a bit thin. Tell us more about the argument."
+    },
+    {
+      "body": {
+        "error": "x",
+        "code": "too_short"
+      },
+      "status": 400,
+      "lang": "tr",
+      "message": "Biraz kısa kaldı. Tartışmayı biraz daha anlat."
+    },
+    {
+      "body": {
+        "error": "x",
+        "code": "too_long"
+      },
+      "status": 400,
+      "lang": "en",
+      "message": "That's a lot! Keep it under 6000 characters."
+    },
+    {
+      "body": {
+        "error": "x",
+        "code": "too_long"
+      },
+      "status": 400,
+      "lang": "tr",
+      "message": "Epey uzun oldu. 6000 karakterin altında tut."
+    },
+    {
+      "body": {
+        "error": "x",
+        "code": "invalid"
+      },
+      "status": 400,
+      "lang": "en",
+      "message": "That request didn't look right."
+    },
+    {
+      "body": {
+        "error": "x",
+        "code": "invalid"
+      },
+      "status": 400,
+      "lang": "tr",
+      "message": "Bu istekte bir sorun var."
+    },
+    {
+      "body": {
+        "error": "x",
+        "code": "rate_limited",
+        "retryAfterSec": 420
+      },
+      "status": 429,
+      "lang": "en",
+      "message": "Order in the court! You've hit the limit for now. Try again in 7 minutes."
+    },
+    {
+      "body": {
+        "error": "x",
+        "code": "rate_limited",
+        "retryAfterSec": 420
+      },
+      "status": 429,
+      "lang": "tr",
+      "message": "Ağır ol, burası mahkeme! Şimdilik sınıra geldin. 7 dakika sonra tekrar dene."
+    },
+    {
+      "body": {
+        "error": "x",
+        "code": "daily_cap",
+        "retryAfterSec": 30000
+      },
+      "status": 503,
+      "lang": "en",
+      "message": "The court's closed for today. It's heard all the arguments it can take. Back in 9 hours."
+    },
+    {
+      "body": {
+        "error": "x",
+        "code": "daily_cap",
+        "retryAfterSec": 30000
+      },
+      "status": 503,
+      "lang": "tr",
+      "message": "Mahkeme bugünlük kapandı, kaldırabileceği kadar kavga dinledi. 9 saat sonra yine burada."
+    },
+    {
+      "body": {
+        "error": "x",
+        "code": "quota"
+      },
+      "status": 502,
+      "lang": "en",
+      "message": "The judges have used up their AI quota for now. Try again in a few minutes."
+    },
+    {
+      "body": {
+        "error": "x",
+        "code": "quota"
+      },
+      "status": 502,
+      "lang": "tr",
+      "message": "Yargıçların yapay zekâ kotası şimdilik doldu. Birkaç dakika sonra tekrar dene."
+    },
+    {
+      "body": {
+        "error": "x",
+        "code": "unavailable"
+      },
+      "status": 503,
+      "lang": "en",
+      "message": "We can't reach the judges right now. Give it a minute and try again."
+    },
+    {
+      "body": {
+        "error": "x",
+        "code": "unavailable"
+      },
+      "status": 503,
+      "lang": "tr",
+      "message": "Yargıçlara şu an ulaşamıyoruz. Bir dakika sonra tekrar dene."
+    },
+    {
+      "body": {
+        "error": "x",
+        "code": "captcha_failed"
+      },
+      "status": 403,
+      "lang": "en",
+      "message": "We couldn't tell if you're human. Try the check again, then send it."
+    },
+    {
+      "body": {
+        "error": "x",
+        "code": "captcha_failed"
+      },
+      "status": 403,
+      "lang": "tr",
+      "message": "İnsan olduğunu doğrulayamadık. Kontrolü bir daha dene, sonra yeniden gönder."
+    },
+    {
+      "body": {
+        "error": "x",
+        "code": "not_found"
+      },
+      "status": 404,
+      "lang": "en",
+      "message": "We couldn't find that."
+    },
+    {
+      "body": {
+        "error": "x",
+        "code": "not_found"
+      },
+      "status": 404,
+      "lang": "tr",
+      "message": "Bunu bulamadık."
+    },
+    {
+      "body": {
+        "error": "x",
+        "code": "fair_use",
+        "resetsAt": "2026-11-18T10:00:00.000Z"
+      },
+      "status": 402,
+      "lang": "en",
+      "message": "You've used this month's verdicts. More on November 18."
+    },
+    {
+      "body": {
+        "error": "x",
+        "code": "fair_use",
+        "resetsAt": "2026-11-18T10:00:00.000Z"
+      },
+      "status": 402,
+      "lang": "tr",
+      "message": "Bu ayın kararlarını kullandın. Hakların 18 Kasım tarihinde yenilenir."
+    },
+    {
+      "body": {
+        "error": "x",
+        "code": "fair_use"
+      },
+      "status": 402,
+      "lang": "en",
+      "message": "You've used this month's verdicts. More soon."
+    },
+    {
+      "body": {
+        "error": "x",
+        "code": "fair_use"
+      },
+      "status": 402,
+      "lang": "tr",
+      "message": "Bu ayın kararlarını kullandın. Hakların yakında yenilenir."
+    },
+    {
+      "body": null,
+      "status": 429,
+      "lang": "en",
+      "message": "Order in the court! You've hit the limit for now. Try again in a few minutes."
+    },
+    {
+      "body": null,
+      "status": 429,
+      "lang": "tr",
+      "message": "Ağır ol, burası mahkeme! Şimdilik sınıra geldin. birkaç dakika sonra tekrar dene."
+    },
+    {
+      "body": {
+        "error": "Some new server message",
+        "code": "brand_new_code"
+      },
+      "status": 500,
+      "lang": "en",
+      "message": "Some new server message"
+    },
+    {
+      "body": {
+        "error": "Some new server message",
+        "code": "brand_new_code"
+      },
+      "status": 500,
+      "lang": "tr",
+      "message": "Some new server message"
+    },
+    {
+      "body": null,
+      "status": 500,
+      "lang": "en",
+      "message": "Something went wrong. Mind trying again?"
+    },
+    {
+      "body": null,
+      "status": 500,
+      "lang": "tr",
+      "message": "Bir şey ters gitti. Bir daha dener misin?"
+    }
+  ],
+  "palette": {
+    "ivory": "#FFFFFF",
+    "ivory2": "#F2F0EC",
+    "paper": "#FFFFFF",
+    "ink": "#1C1916",
+    "ink2": "#4A433C",
+    "muted": "#6B6258",
+    "placeholder": "#776D61",
+    "terra": "#C8553D",
+    "terraInk": "#A9442F",
+    "terraTint": "#F3DDD5",
+    "sage": "#8AA899",
+    "sageStrong": "#6E8F80",
+    "sageInk": "#4C6B5D",
+    "sageTint": "#DDE7E0",
+    "stone": "#DAD6CF",
+    "strata": "#E9E6E1",
+    "danger": "#B3261E"
+  },
+  "paletteAlpha": {
+    "line": "rgba(28, 25, 22, 0.1)",
+    "line2": "rgba(28, 25, 22, 0.14)",
+    "glass": "rgba(255, 255, 255, 0.68)"
+  },
+  "paletteDark": {
+    "ivory": "#15120F",
+    "ivory2": "#27231F",
+    "paper": "#1D1A17",
+    "ink": "#F1EBE1",
+    "ink2": "#CFC6BA",
+    "muted": "#A89E92",
+    "placeholder": "#9A9084",
+    "terra": "#D9694F",
+    "terraInk": "#EE8C74",
+    "terraTint": "#432A22",
+    "sage": "#7F9C8E",
+    "sageStrong": "#8FB0A0",
+    "sageInk": "#A3C2B3",
+    "sageTint": "#2D3832",
+    "stone": "#4F463C",
+    "strata": "#3A342E",
+    "danger": "#F5727E"
+  },
+  "paletteAlphaDark": {
+    "line": "rgba(241, 235, 225, 0.1)",
+    "line2": "rgba(241, 235, 225, 0.16)",
+    "glass": "rgba(29, 26, 23, 0.72)"
+  },
+  "thinking": {
+    "steps": [
+      {
+        "ms": 2400,
+        "key": "thinking.read"
+      },
+      {
+        "ms": 2400,
+        "key": "thinking.label"
+      },
+      {
+        "ms": 1100,
+        "key": "thinking.dig"
+      },
+      {
+        "ms": 1100,
+        "key": "thinking.dig"
+      },
+      {
+        "ms": 1100,
+        "key": "thinking.dig"
+      },
+      {
+        "ms": 1300,
+        "key": "thinking.reach"
+      },
+      {
+        "ms": 2400,
+        "key": "thinking.crux"
+      },
+      {
+        "ms": 2400,
+        "key": "thinking.judges"
+      },
+      {
+        "ms": 1200,
+        "key": "thinking.votes"
+      }
+    ],
+    "finishSteps": [
+      {
+        "name": "settle",
+        "ms": 600
+      },
+      {
+        "name": "sweep",
+        "ms": 900
+      },
+      {
+        "name": "crux",
+        "ms": 700
+      },
+      {
+        "name": "out",
+        "ms": 250
+      }
+    ],
+    "maxFinishMs": 3000,
+    "finishKey": "thinking.finish",
+    "stillJudgingKey": "thinking.stillJudging",
+    "readyKey": "thinking.ready"
+  }
+}
