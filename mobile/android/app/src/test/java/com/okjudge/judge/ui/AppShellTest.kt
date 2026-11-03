@@ -80,7 +80,7 @@ class AppShellTest {
         compose.onNodeWithTag(HomeTags.INPUT).performTextInput("My roommate never does the dishes")
         compose.onNodeWithTag(TopBarTags.NEW).performClick()
         compose.waitForIdle()
-        compose.onNodeWithTag(HomeTags.COUNTER).assertDoesNotExist()
+        compose.onNodeWithTag(HomeTags.COUNTER).assertTextEquals("0 / 6,000")
         compose.onNodeWithTag(TopBarTags.NEW).assertDoesNotExist()
 
         compose.onNodeWithText(en.navVerdicts).performClick()

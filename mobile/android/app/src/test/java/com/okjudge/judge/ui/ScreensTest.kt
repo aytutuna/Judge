@@ -88,7 +88,7 @@ class ScreensTest {
     fun home_disabledUntil20Chars_andCountsWhatIsSent() {
         home(AppLang.EN)
         val en = UiTestSupport.s(AppLang.EN)
-        compose.onNodeWithTag(HomeTags.COUNTER).assertDoesNotExist()
+        compose.onNodeWithTag(HomeTags.COUNTER).assertTextEquals("0 / 6,000")
         compose.onNodeWithTag(HomeTags.SUBMIT).assertIsNotEnabled()
         compose.onNodeWithTag(HomeTags.INPUT).performTextInput("nineteen characters")
         compose.onNodeWithTag(HomeTags.SUBMIT).assertIsNotEnabled()
@@ -152,7 +152,7 @@ class ScreensTest {
         compose.onNodeWithTag(HomeTags.OTHER).performTextInput("My roommate never does the dishes")
         compose.onNodeWithContentDescription(en.shellNew).assertExists()
         compose.onNodeWithTag(TopBarTags.NEW).performClick()
-        compose.onNodeWithTag(HomeTags.COUNTER).assertDoesNotExist()
+        compose.onNodeWithTag(HomeTags.COUNTER).assertTextEquals("0 / 6,000")
         compose.onNodeWithTag(TopBarTags.NEW).assertDoesNotExist()
     }
 

@@ -110,6 +110,12 @@ fun SettingsScreen(
 
             AccountGroup(account, accountBusy, onSignIn, onSignOut, onDeleteAccount, restore, onRestore)
 
+            if (onOpenPricing != null) {
+                Group(null) {
+                    ActionRow(s.navPricing, Modifier.testTag(SettingsTags.PRICING), trailing = "›", onClick = onOpenPricing)
+                }
+            }
+
             Group(s.appSettingsLanguage) {
                 ActionRow(
                     langPref.fixed?.nativeName ?: s.appSettingsLanguageDevice,
@@ -146,12 +152,6 @@ fun SettingsScreen(
                 Text(s.appSettingsUsageStatsHint, style = JudgeType.footnote, modifier = Modifier.padding(start = 4.dp, top = 8.dp, end = 4.dp))
             }
 
-            if (onOpenPricing != null) {
-                Group(null) {
-                    ActionRow(s.navPricing, Modifier.testTag(SettingsTags.PRICING), trailing = "›", onClick = onOpenPricing)
-                }
-            }
-
             Group(null) {
                 LinkRow(s.appSettingsAbout) { onOpenLink("$base/about") }
                 HorizontalDivider(color = Palette.line)
@@ -162,8 +162,8 @@ fun SettingsScreen(
                 LinkRow(s.appLegalTerms) { onOpenLink("$base/terms") }
             }
 
-            Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxWidth().padding(bottom = 24.dp)) {
-                Text(s.footerNote, style = JudgeType.footnote, textAlign = TextAlign.Center)
+            Column(horizontalAlignment = Alignment.Start, modifier = Modifier.fillMaxWidth().padding(bottom = 24.dp)) {
+                Text(s.footerNote, style = JudgeType.footnote, textAlign = TextAlign.Start)
                 Text(s.appSettingsVersion(versionName), style = JudgeType.footnote, modifier = Modifier.padding(top = 8.dp))
             }
         }
@@ -302,9 +302,9 @@ private fun RestoreRow(restore: RestoreUi, enabled: Boolean, onRestore: () -> Un
 private fun FactRow(label: String, value: String, note: String? = null) {
     Row(Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 14.dp), verticalAlignment = Alignment.Top) {
         // The label keeps its width; a long value wraps instead of the label.
-        Text(label, style = JudgeType.body, modifier = Modifier.padding(end = 12.dp))
+        Text(label, style = JudgeType.body.copy(color = Palette.ink2), modifier = Modifier.padding(end = 12.dp))
         Column(Modifier.weight(1f), horizontalAlignment = Alignment.End) {
-            Text(value, style = JudgeType.bodyStrong, textAlign = TextAlign.End)
+            Text(value, style = JudgeType.bodyMedium.copy(color = Palette.ink), textAlign = TextAlign.End)
             if (note != null) Text(note, style = JudgeType.footnote, textAlign = TextAlign.End)
         }
     }

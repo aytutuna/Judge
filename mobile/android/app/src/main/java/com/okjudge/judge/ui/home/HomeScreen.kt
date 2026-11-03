@@ -1,6 +1,7 @@
 package com.okjudge.judge.ui.home
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -28,12 +29,14 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableLongStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.LiveRegionMode
@@ -60,7 +63,7 @@ import com.okjudge.judge.core.premium.Tiers
 import com.okjudge.judge.i18n.AppLang
 import com.okjudge.judge.i18n.LocalLang
 import com.okjudge.judge.i18n.LocalStrings
-import com.okjudge.judge.ui.components.GhostButton
+import com.okjudge.judge.ui.components.Chip
 import com.okjudge.judge.ui.components.JudgeIcons
 import com.okjudge.judge.ui.components.TintedIcon
 import com.okjudge.judge.ui.components.TopBar
@@ -140,21 +143,21 @@ fun HomeScreen(
             verticalArrangement = Arrangement.spacedBy(24.dp),
         ) {
             Column(
-                Modifier.widthIn(max = 640.dp).fillMaxWidth().padding(horizontal = 20.dp),
+                Modifier.widthIn(max = 640.dp).fillMaxWidth().padding(horizontal = 16.dp),
                 verticalArrangement = Arrangement.spacedBy(12.dp),
             ) {
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                    GhostButton(
+                    Chip(
                         s.appHomeExample,
-                        rememberIcon(Palette.terra) { JudgeIcons.spark(it) },
+                        selected = false,
                         onClick = onExample,
                         modifier = Modifier.testTag(HomeTags.EXAMPLE),
+                        icon = rememberIcon(Palette.ink) { JudgeIcons.spark(it) },
                     )
                     if (state.blank) {
                         Text(if (state.casesOn) s.appHomeLead else s.appHomeLeadSolo, style = JudgeType.body.copy(fontSize = 14.sp, color = Palette.ink2))
                     }
                 }
-                state.error?.let { ErrorBanner(it, onDismissError) }
                 SideCard(
                     colors = LocalSides.current.mine,
                     letter = "A",
@@ -202,7 +205,8 @@ fun HomeScreen(
                         SendLink(enabled = state.canSendLink && !blocked, onClick = onSendLink)
                     }
                 }
-                if (!state.blank) Counter(length, lang, Modifier.align(Alignment.End))
+                Counter(length, lang, Modifier.align(Alignment.End))
+                state.error?.let { ErrorBanner(it, onDismissError) }
                 SubmitButton(
                     text = s.getVerdict,
                     enabled = state.canSubmit && length <= ArgumentRules.MAX && !blocked,
@@ -212,7 +216,7 @@ fun HomeScreen(
                     Tiers.balance(s, state.entitlement)?.let {
                         Text(
                             it,
-                            style = JudgeType.slotText.copy(color = Palette.ink2),
+                            style = JudgeType.slotText,
                             textAlign = TextAlign.Center,
                             modifier = Modifier.fillMaxWidth().testTag(HomeTags.BALANCE),
                         )
@@ -225,7 +229,7 @@ fun HomeScreen(
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         CircularProgressIndicator(Modifier.padding(end = 8.dp).size(14.dp), color = Palette.ink2, strokeWidth = 1.5.dp)
-                        Text(if (state.creating) s.caseCreating else s.tierChecking, style = JudgeType.slotText.copy(color = Palette.ink2))
+                        Text(if (state.creating) s.caseCreating else s.tierChecking, style = JudgeType.slotText)
                     }
                 }
             }
@@ -252,12 +256,15 @@ private fun SideCard(
     enabled: Boolean,
     extra: @Composable () -> Unit,
 ) {
+    var focused by remember { mutableStateOf(false) }
     Column(
         Modifier
             .fillMaxWidth()
             .warmShadow(6.dp, JudgeShapes.block)
             .clip(JudgeShapes.block)
             .background(Palette.paper)
+            .border(1.dp, if (focused) colors.ink.copy(alpha = 0.6f) else Palette.line, JudgeShapes.block)
+            .onFocusChanged { focused = it.hasFocus }
             .padding(horizontal = 16.dp, vertical = 14.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
@@ -346,7 +353,7 @@ private fun Counter(count: Int, lang: AppLang, modifier: Modifier = Modifier) {
     val warn = count > ArgumentRules.WARN_AT
     Text(
         s.appInputCounter(nf.format(count), nf.format(ArgumentRules.MAX)),
-        style = JudgeType.footnote.copy(fontSize = 12.sp, color = if (warn) Palette.terraInk else Palette.muted),
+        style = JudgeType.footnote.copy(color = if (warn) Palette.terraInk else Palette.muted),
         maxLines = 1,
         modifier = modifier.testTag(HomeTags.COUNTER),
     )
@@ -354,14 +361,13 @@ private fun Counter(count: Int, lang: AppLang, modifier: Modifier = Modifier) {
 
 @Composable
 private fun SubmitButton(text: String, enabled: Boolean, onClick: () -> Unit) {
-    val fg = if (enabled) Palette.paper else Palette.ink2
     Row(
         Modifier
             .fillMaxWidth()
             .padding(top = 4.dp)
             .height(54.dp)
             .clip(JudgeShapes.field)
-            .background(if (enabled) Palette.ink else Palette.stone)
+            .background(if (enabled) Palette.ink else Palette.ink.copy(alpha = 0.35f))
             .semantics(mergeDescendants = true) { role = Role.Button }
             .clickable(enabled = enabled, onClick = onClick)
             .testTag(HomeTags.SUBMIT)
@@ -369,12 +375,12 @@ private fun SubmitButton(text: String, enabled: Boolean, onClick: () -> Unit) {
         horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Text(text, style = JudgeType.button.copy(color = fg), maxLines = 1, overflow = TextOverflow.Ellipsis)
-        TintedIcon(remember(fg) { JudgeIcons.arrow(fg) }, 18)
+        Text(text, style = JudgeType.button.copy(color = Palette.paper), maxLines = 1, overflow = TextOverflow.Ellipsis)
+        TintedIcon(rememberIcon(Palette.paper) { JudgeIcons.arrow(it) }, 18)
     }
 }
 
-private val ErrorShape = RoundedCornerShape(14.dp)
+private val ErrorShape = RoundedCornerShape(16.dp)
 
 @Composable
 private fun ErrorBanner(error: UiError, onDismiss: () -> Unit) {
@@ -385,15 +391,17 @@ private fun ErrorBanner(error: UiError, onDismiss: () -> Unit) {
         Modifier
             .fillMaxWidth()
             .clip(ErrorShape)
-            .background(Palette.terraTint)
+            .background(Palette.terraTint.copy(alpha = 0.55f))
+            .border(1.dp, Palette.terra.copy(alpha = 0.35f), ErrorShape)
             .semantics { liveRegion = LiveRegionMode.Polite }
             .testTag(HomeTags.ERROR)
             .padding(start = 14.dp, top = 8.dp, bottom = 8.dp, end = 4.dp),
         verticalAlignment = Alignment.Top,
     ) {
+        TintedIcon(rememberIcon(Palette.danger) { JudgeIcons.alert(it) }, 16, Modifier.padding(top = 6.dp, end = 8.dp))
         Text(
             text,
-            style = JudgeType.body.copy(fontSize = 14.sp, lineHeight = 20.sp, fontWeight = FontWeight.Medium, color = Palette.danger),
+            style = JudgeType.slotText.copy(color = Palette.ink),
             modifier = Modifier.weight(1f).padding(top = 4.dp),
         )
         Box(

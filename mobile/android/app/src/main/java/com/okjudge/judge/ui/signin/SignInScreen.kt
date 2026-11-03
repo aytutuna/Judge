@@ -25,10 +25,15 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.autofill.ContentType
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
@@ -43,13 +48,15 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextLinkStyles
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withLink
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import com.okjudge.judge.R
 import com.okjudge.judge.core.auth.Account
@@ -57,9 +64,11 @@ import com.okjudge.judge.core.auth.SignInError
 import com.okjudge.judge.i18n.LocalStrings
 import com.okjudge.judge.i18n.Strings
 import com.okjudge.judge.ui.age.AgeCheckbox
+import com.okjudge.judge.ui.components.CardElevation
 import com.okjudge.judge.ui.components.PrimaryButton
 import com.okjudge.judge.ui.components.TextAction
 import com.okjudge.judge.ui.components.TopBar
+import com.okjudge.judge.ui.components.warmShadow
 import com.okjudge.judge.ui.theme.JudgeShapes
 import com.okjudge.judge.ui.theme.JudgeType
 import com.okjudge.judge.ui.theme.Palette
@@ -115,32 +124,42 @@ fun SignInScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Column(Modifier.widthIn(max = 480.dp).fillMaxWidth().padding(top = 12.dp, bottom = 32.dp)) {
-                Text(s.signinTitle, style = JudgeType.display1.copy(fontSize = 36.sp, lineHeight = 38.sp).cappedScale())
+                Text(s.signinTitle, style = JudgeType.display1.cappedScale())
                 Text(s.appSigninRequired, style = JudgeType.lead, modifier = Modifier.padding(top = 10.dp, bottom = 28.dp))
 
-                when (state.providers) {
-                    Account.Providers.Loading -> Text(s.signinLoading, style = JudgeType.body.copy(color = Palette.muted))
-                    Account.Providers.Failed -> Unavailable(s, onRetry = actions.onRetryProviders)
-                    is Account.Providers.Ready -> if (state.noneAvailable) {
-                        Unavailable(s, onRetry = actions.onRetryProviders)
-                    } else {
-                        if (state.ageNeeded && state.step == SignInStep.EMAIL) {
-                            AgeCheckbox(state.ageTicked, actions.onAgeTicked, Modifier.padding(bottom = 14.dp), enabled = state.busy == null)
-                        }
-                        if (state.showGoogle) {
-                            GoogleButton(s.signinGoogle, enabled = state.canGoogle, onClick = actions.onGoogle)
-                        }
-                        if (state.showGoogle && state.showEmail) OrDivider(s.appSigninOr)
-                        if (state.showEmail) {
-                            when (state.step) {
-                                SignInStep.EMAIL -> EmailStep(state, actions)
-                                SignInStep.CODE -> CodeStep(state, actions)
+                Column(
+                    Modifier
+                        .fillMaxWidth()
+                        .warmShadow(CardElevation, JudgeShapes.card)
+                        .clip(JudgeShapes.card)
+                        .background(Palette.paper)
+                        .border(1.dp, Palette.line, JudgeShapes.card)
+                        .padding(20.dp),
+                ) {
+                    when (state.providers) {
+                        Account.Providers.Loading -> Text(s.signinLoading, style = JudgeType.body.copy(color = Palette.muted))
+                        Account.Providers.Failed -> Unavailable(s, onRetry = actions.onRetryProviders)
+                        is Account.Providers.Ready -> if (state.noneAvailable) {
+                            Unavailable(s, onRetry = actions.onRetryProviders)
+                        } else {
+                            if (state.ageNeeded && state.step == SignInStep.EMAIL) {
+                                AgeCheckbox(state.ageTicked, actions.onAgeTicked, Modifier.padding(bottom = 14.dp), enabled = state.busy == null)
+                            }
+                            if (state.showGoogle) {
+                                GoogleButton(s.signinGoogle, enabled = state.canGoogle, onClick = actions.onGoogle)
+                            }
+                            if (state.showGoogle && state.showEmail) OrDivider(s.appSigninOr)
+                            if (state.showEmail) {
+                                when (state.step) {
+                                    SignInStep.EMAIL -> EmailStep(state, actions)
+                                    SignInStep.CODE -> CodeStep(state, actions)
+                                }
                             }
                         }
                     }
-                }
 
-                state.error?.let { ErrorNote(errorText(s, it)) }
+                    state.error?.let { ErrorNote(errorText(s, it)) }
+                }
 
                 LegalLine(s, actions.onOpenTerms, actions.onOpenPrivacy, Modifier.padding(top = 32.dp))
             }
@@ -170,8 +189,25 @@ private fun Unavailable(s: Strings, onRetry: () -> Unit) {
 
 @Composable
 private fun GoogleButton(text: String, enabled: Boolean, onClick: () -> Unit) {
+    OutlinePill(
+        text,
+        enabled,
+        onClick,
+        Modifier.testTag(SignInTags.GOOGLE),
+        icon = { Image(painterResource(R.drawable.ic_google_g), contentDescription = null, modifier = Modifier.size(20.dp)) },
+    )
+}
+
+@Composable
+private fun OutlinePill(
+    text: String,
+    enabled: Boolean,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    icon: (@Composable () -> Unit)? = null,
+) {
     Row(
-        Modifier
+        modifier
             .fillMaxWidth()
             .defaultMinSize(minHeight = 54.dp)
             .clip(JudgeShapes.chip)
@@ -179,16 +215,15 @@ private fun GoogleButton(text: String, enabled: Boolean, onClick: () -> Unit) {
             .border(1.dp, Palette.line2, JudgeShapes.chip)
             .semantics { role = Role.Button }
             .clickable(enabled = enabled, onClick = onClick)
-            .testTag(SignInTags.GOOGLE)
             .padding(horizontal = 24.dp, vertical = 15.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center,
     ) {
-        Image(painterResource(R.drawable.ic_google_g), contentDescription = null, modifier = Modifier.size(20.dp))
+        if (icon != null) icon()
         Text(
             text,
             style = JudgeType.button.copy(color = if (enabled) Palette.ink else Palette.muted),
-            modifier = Modifier.padding(start = 12.dp),
+            modifier = Modifier.padding(start = if (icon != null) 12.dp else 0.dp),
         )
     }
 }
@@ -214,11 +249,11 @@ private fun EmailStep(state: SignInUiState, actions: SignInActions) {
         onIme = actions.onRequestCode,
         modifier = Modifier.semantics { contentType = ContentType.EmailAddress }.testTag(SignInTags.EMAIL),
     )
-    PrimaryButton(
+    OutlinePill(
         text = s.appSigninCodeRequest,
         enabled = state.canRequestCode,
         onClick = actions.onRequestCode,
-        modifier = Modifier.fillMaxWidth().padding(top = 16.dp).testTag(SignInTags.REQUEST_CODE),
+        modifier = Modifier.padding(top = 16.dp).testTag(SignInTags.REQUEST_CODE),
     )
 }
 
@@ -238,7 +273,16 @@ private fun CodeStep(state: SignInUiState, actions: SignInActions) {
         placeholder = "000000",
         keyboard = KeyboardOptions(keyboardType = KeyboardType.NumberPassword, imeAction = ImeAction.Done, autoCorrectEnabled = false),
         onIme = actions.onSubmitCode,
-        textStyle = JudgeType.body.copy(fontSize = 24.sp, lineHeight = 30.sp, letterSpacing = 0.3.em),
+        textStyle = JudgeType.body.copy(
+            fontFamily = FontFamily.Monospace,
+            fontWeight = FontWeight.SemiBold,
+            fontSize = 28.sp,
+            lineHeight = 34.sp,
+            letterSpacing = 8.sp,
+            textAlign = TextAlign.Center,
+        ),
+        minHeight = 60.dp,
+        align = Alignment.Center,
         modifier = Modifier.testTag(SignInTags.CODE),
     )
     PrimaryButton(
@@ -265,14 +309,19 @@ private fun Field(
     onIme: () -> Unit,
     modifier: Modifier = Modifier,
     textStyle: TextStyle = JudgeType.body,
+    minHeight: Dp = 52.dp,
+    align: Alignment = Alignment.CenterStart,
 ) {
+    var focused by remember { mutableStateOf(false) }
     Box(
         Modifier
             .fillMaxWidth()
+            .defaultMinSize(minHeight = minHeight)
             .clip(JudgeShapes.field)
             .background(Palette.paper)
-            .border(1.dp, Palette.line2, JudgeShapes.field)
+            .border(1.dp, if (focused) Palette.terraInk else Palette.line2, JudgeShapes.field)
             .padding(horizontal = 16.dp, vertical = 14.dp),
+        contentAlignment = Alignment.CenterStart,
     ) {
         BasicTextField(
             value = value,
@@ -282,10 +331,12 @@ private fun Field(
             cursorBrush = SolidColor(Palette.terraInk),
             keyboardOptions = keyboard,
             keyboardActions = KeyboardActions(onAny = { onIme() }),
-            modifier = modifier.fillMaxWidth(),
+            modifier = modifier.fillMaxWidth().onFocusChanged { focused = it.isFocused },
             decorationBox = { inner ->
-                if (value.isEmpty()) Text(placeholder, style = textStyle.copy(color = Palette.placeholder))
-                inner()
+                Box(Modifier.fillMaxWidth(), contentAlignment = align) {
+                    if (value.isEmpty()) Text(placeholder, style = textStyle.copy(color = Palette.placeholder))
+                    inner()
+                }
             },
         )
     }

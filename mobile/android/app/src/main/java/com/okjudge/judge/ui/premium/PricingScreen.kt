@@ -2,12 +2,10 @@ package com.okjudge.judge.ui.premium
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -24,13 +22,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.semantics.disabled
 import androidx.compose.ui.semantics.heading
-import androidx.compose.ui.semantics.role
-import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.em
+import androidx.compose.ui.unit.sp
 import com.okjudge.judge.core.display.Errors
 import com.okjudge.judge.core.model.Entitlement
 import com.okjudge.judge.core.model.Features
@@ -41,6 +38,7 @@ import com.okjudge.judge.core.purchases.StoreOffer
 import com.okjudge.judge.core.purchases.StoreProducts
 import com.okjudge.judge.i18n.LocalLang
 import com.okjudge.judge.i18n.LocalStrings
+import com.okjudge.judge.ui.components.GhostButton
 import com.okjudge.judge.ui.components.JudgeIcons
 import com.okjudge.judge.ui.components.Kicker
 import com.okjudge.judge.ui.components.PrimaryButton
@@ -120,7 +118,7 @@ fun PricingScreen(
                     Kicker(s.navPricing)
                     Text(
                         if (signedIn) s.appPricingHeadlineMember else s.appPricingHeadline,
-                        style = JudgeType.sectionTitle.copy(fontSize = JudgeType.sectionTitle.fontSize * 1.3f),
+                        style = JudgeType.sectionTitle.copy(fontSize = 30.sp, lineHeight = 34.sp, letterSpacing = (-0.03).em),
                         modifier = Modifier.semantics { heading() },
                     )
                     Text(if (signedIn) s.appPricingSubMember else s.appPricingSub, style = JudgeType.lead)
@@ -253,10 +251,10 @@ private fun PlanCard(content: @Composable () -> Unit) {
     Column(
         Modifier
             .fillMaxWidth()
-            .clip(JudgeShapes.block)
+            .clip(JudgeShapes.card)
             .background(Palette.paper)
-            .border(1.5.dp, Palette.terra.copy(alpha = 0.55f), JudgeShapes.block)
-            .padding(18.dp),
+            .border(1.dp, Palette.terra.copy(alpha = 0.45f), JudgeShapes.card)
+            .padding(20.dp),
         verticalArrangement = Arrangement.spacedBy(10.dp),
     ) { content() }
 }
@@ -310,10 +308,9 @@ private fun Offer(
     Row(
         Modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(16.dp))
+            .clip(RoundedCornerShape(18.dp))
             .background(Palette.well)
-            .border(1.dp, Palette.line, RoundedCornerShape(16.dp))
-            .padding(horizontal = 14.dp, vertical = 12.dp),
+            .padding(14.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(12.dp),
     ) {
@@ -323,32 +320,15 @@ private fun Offer(
         }
         Column(horizontalAlignment = Alignment.End, verticalArrangement = Arrangement.spacedBy(6.dp)) {
             Text(price, style = JudgeType.bodyStrong)
-            Row(
-                Modifier
-                    .defaultMinSize(minHeight = 34.dp)
-                    .clip(JudgeShapes.chip)
-                    .then(if (enabled) Modifier.background(Palette.ink) else Modifier.border(1.dp, Palette.line2, JudgeShapes.chip))
-                    .then(
-                        if (enabled) {
-                            Modifier.clickable(role = Role.Button, onClick = onBuy)
-                        } else {
-                            Modifier.semantics {
-                                role = Role.Button
-                                disabled()
-                            }
-                        },
-                    )
-                    .testTag(PricingTags.BUY)
-                    .padding(horizontal = 12.dp, vertical = 7.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(6.dp),
-            ) {
-                if (buying) {
-                    CircularProgressIndicator(Modifier.size(11.dp), color = Palette.muted, strokeWidth = 1.5.dp)
-                    Text(buyingLabel, style = JudgeType.small.copy(color = Palette.muted))
-                } else {
-                    Text(buyLabel, style = JudgeType.small.copy(color = if (enabled) Palette.ivory else Palette.muted))
-                }
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                if (buying) CircularProgressIndicator(Modifier.size(14.dp), color = Palette.ink2, strokeWidth = 1.5.dp)
+                GhostButton(
+                    text = if (buying) buyingLabel else buyLabel,
+                    icon = null,
+                    onClick = onBuy,
+                    modifier = Modifier.testTag(PricingTags.BUY),
+                    enabled = enabled,
+                )
             }
         }
     }
