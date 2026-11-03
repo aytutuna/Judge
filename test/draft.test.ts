@@ -97,9 +97,17 @@ describe("parseDraft", () => {
       JSON.stringify({ argument: 5 }),
       JSON.stringify({ argument: "" }),
       JSON.stringify({ argument: "x".repeat(6001) }),
+      JSON.stringify({ argument: ARG, otherSide: 7 }),
+      JSON.stringify({ argument: ARG, otherSide: "x".repeat(6001) }),
     ]) {
       expect(parseDraft(raw), raw.slice(0, 60)).toBeNull();
     }
+  });
+
+  it("keeps the other side", () => {
+    const raw = JSON.stringify({ argument: ARG, otherSide: "Ben says they are fruit." });
+    expect(parseDraft(raw)).toEqual({ argument: ARG, otherSide: "Ben says they are fruit." });
+    expect(parseDraft(JSON.stringify({ argument: "", otherSide: ARG }))).toEqual({ argument: "", otherSide: ARG });
   });
 
   it("drops unknown keys", () => {

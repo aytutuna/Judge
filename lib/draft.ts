@@ -10,10 +10,10 @@
  * Nothing is saved on any other path.
  */
 
-export type Draft = { argument: string };
+export type Draft = { argument: string; otherSide?: string };
 
 export const DRAFT_KEY = "verdict-draft";
-/** Same cap as the form (components/thread/Composer MAX_ARGUMENT). */
+/** Same cap as the form (lib/sides MAX_ARGUMENT). */
 const MAX_DRAFT = 6000;
 const DRAFT_TTL_MS = 30 * 60_000;
 
@@ -31,7 +31,7 @@ export function registerDraftSource(fn: () => Draft | null): () => void {
  * nothing typed. */
 export function saveDraftForSignIn(): void {
   const draft = source?.();
-  if (!draft || !draft.argument.trim()) return;
+  if (!draft || (!draft.argument.trim() && !draft.otherSide?.trim())) return;
   try {
     localStorage.setItem(DRAFT_KEY, JSON.stringify({ ...draft, savedAt: Date.now() }));
   } catch {
@@ -71,7 +71,9 @@ export function parseDraft(raw: string): Draft | null {
     return null;
   }
   if (typeof v !== "object" || v === null) return null;
-  const { argument } = v as { argument?: unknown };
-  if (typeof argument !== "string" || !argument.trim() || argument.length > MAX_DRAFT) return null;
-  return { argument };
+  const { argument, otherSide } = v as { argument?: unknown; otherSide?: unknown };
+  if (typeof argument !== "string" || argument.length > MAX_DRAFT) return null;
+  if (otherSide !== undefined && (typeof otherSide !== "string" || otherSide.length > MAX_DRAFT)) return null;
+  if (!argument.trim() && !otherSide?.trim()) return null;
+  return otherSide ? { argument, otherSide } : { argument };
 }

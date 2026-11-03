@@ -2,7 +2,6 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import { AccountsRead } from "../components/case/AccountsRead";
 import { AppealSection, appealArea, type AppealDraft } from "../components/case/AppealForm";
-import { CaseModeSwitch } from "../components/case/CaseModeSwitch";
 import { CasePanel, type CasePanelProps } from "../components/case/CaseScreen";
 import type { EvidenceController } from "../components/case/EvidencePicker";
 import { InviteLink } from "../components/case/InviteLink";
@@ -365,22 +364,6 @@ describe("small case components", () => {
     expect(html).toMatch(/<label for="[^"]+"[^>]*>Send this link to the other person<\/label>/);
     expect(html).toContain('readOnly=""');
     expect(html).toContain(t("en", "case.invite.reset"));
-  });
-
-  it("CaseModeSwitch: two radios with the matching hint", () => {
-    const now = renderToStaticMarkup(<CaseModeSwitch lang="en" value="now" onChange={noop} />);
-    expect(now.match(/type="radio"/g)).toHaveLength(2);
-    expect(now).toContain(t("en", "mode.now"));
-    expect(now).toContain(t("en", "mode.both"));
-    expect(now).toContain(t("en", "mode.nowHint"));
-    const both = renderToStaticMarkup(<CaseModeSwitch lang="tr" value="both" onChange={noop} />);
-    expect(both).toContain(t("tr", "mode.bothHint"));
-  });
-
-  it("CaseModeSwitch locked (signed out): both sides says it needs sign-in, not Premium", () => {
-    const html = renderToStaticMarkup(<CaseModeSwitch lang="en" value="now" onChange={noop} locked />);
-    expect(html).toContain(t("en", "tier.lockedSignIn"));
-    expect(html).not.toMatch(/premium/i);
   });
 
   it("AccountsRead: renders nothing without sides, transcripts as details", () => {

@@ -1,0 +1,18 @@
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 16px 0 6vh;
+  outline: none;
+}
+
+.column {
+  max-width: calc(640px + 2 * var(--gutter));
+}
+
+@media (min-width: 960px) {
+  .main {
+    padding-top: 40px;
+  }
+}

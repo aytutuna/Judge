@@ -3,16 +3,7 @@
 import { useEffect, useEffectEvent, useRef, useState } from "react";
 import { sceneVerdictFrom } from "@/lib/balance";
 import { t, type Lang } from "@/lib/i18n";
-import {
-  CHECKLIST_KEYS,
-  PREMIUM_CHECKLIST_KEYS,
-  REVEAL_HOLD_MS,
-  checklistRowKey,
-  checklistState,
-  judgeDots,
-  judgingBeatFor,
-  progressAt,
-} from "@/lib/judging-ui";
+import { REVEAL_HOLD_MS, judgeDots, judgingBeatFor, progressAt } from "@/lib/judging-ui";
 import { resetScene, setSceneMode } from "@/lib/scene-bridge";
 import { INITIAL_STATE, announcement, plan, type DigState } from "@/lib/thinking";
 import { KEY_BY_CAPTION } from "@/lib/thinking-keys";
@@ -23,19 +14,16 @@ import styles from "./JudgingOverlay.module.css";
 /**
  * Shown while a real verdict request is pending. lib/thinking.ts's plan()
  * drives the timing: the story is told once, later cycles just say the judges are still out, and a response
- * can land at any moment. Then the checklist completes, the judge dots take
- * each run's colour, the 3D balance tips (via the scene bridge), and after
- * a short hold onFinished hands over to the verdict.
+ * can land at any moment. Then the judge dots take each run's colour, the
+ * 3D balance tips (via the scene bridge), and after a short hold onFinished
+ * hands over to the verdict.
  *
  * Accessibility: one polite live region (announcement() semantics, plus
- * the premium web-check line below); the
- * visible checklist and captions are aria-hidden so nothing is read twice.
+ * the premium web-check line below); the visible caption and fact-check row
+ * are aria-hidden so nothing is read twice.
  *
- * `premium` adds the web fact-check row to the checklist, in pipeline order
- * (after the labels, before the judges), and swaps the helper text; without
- * it the markup is unchanged. Its row says "finished" only once `done`;
- * screen readers get the web check from a second polite line, since the
- * checklist itself is aria-hidden.
+ * `premium` adds the web fact-check row and swaps the helper text. The row
+ * says "finished" only once `done`.
  */
 export function JudgingOverlay({
   lang,
@@ -105,37 +93,16 @@ export function JudgingOverlay({
     return () => clearInterval(id);
   }, [done]);
 
-  const list = checklistState(state, done, premium);
-  const keys = premium ? PREMIUM_CHECKLIST_KEYS : CHECKLIST_KEYS;
   const dots = judgeDots(result, done);
+  const caption = t(lang, KEY_BY_CAPTION[announcement(state, done)]);
+  const checkText = t(lang, done ? "thinking.factcheckDone" : "thinking.factcheck");
 
   return (
-    <div className={styles.root} data-ready={list.ready ? "" : undefined}>
+    <div className={styles.root}>
       <p className={styles.eyebrow}>{t(lang, "thinking.eyebrow")}</p>
       <p className="sr-only" role="status" aria-live="polite" aria-atomic="true">
-        {t(lang, KEY_BY_CAPTION[announcement(state, done)])}
+        {caption}
       </p>
-
-      <ol className={styles.steps} aria-hidden="true">
-        {keys.map((key, i) => (
-          <li key={key} className={styles.row} data-status={list.rows[i]}>
-            <span className={styles.icon} />
-            <span>{t(lang, checklistRowKey(key, list.rows[i], list.stillJudging, done))}</span>
-          </li>
-        ))}
-      </ol>
-      {/* The checklist is aria-hidden, so the web check gets its own
-          screen-reader line, mounted from the start: it reads as in
-          progress and is announced as finished only once the verdict is in. */}
-      {premium ? (
-        <p className="sr-only" aria-live="polite" aria-atomic="true">
-          {t(lang, done ? "thinking.factcheckDone" : "thinking.factcheck")}
-        </p>
-      ) : null}
-
-      <div className={styles.bar} aria-hidden="true">
-        <span ref={barRef} />
-      </div>
 
       <div className={styles.judges} aria-hidden="true">
         {dots.map((d, i) => (
@@ -149,9 +116,37 @@ export function JudgingOverlay({
         ))}
       </div>
 
-      <p className={styles.ready} aria-hidden="true">
-        {t(lang, "thinking.ready")}
+      <p className={styles.caption} aria-hidden="true">
+        {caption}
       </p>
+
+      <div className={styles.bar} aria-hidden="true">
+        <span ref={barRef} />
+      </div>
+
+      {/* The row is aria-hidden, so the web check gets its own
+          screen-reader line, mounted from the start: it reads as in
+          progress and is announced as finished only once the verdict is in. */}
+      {premium ? (
+        <>
+          <p className={styles.check} aria-hidden="true">
+            <svg viewBox="0 0 20 20">
+              {done ? (
+                <path d="M4.5 10.5 8.5 14.5 15.5 6" strokeWidth="2" />
+              ) : (
+                <path
+                  d="M10 2.5a7.5 7.5 0 1 0 0 15 7.5 7.5 0 0 0 0-15ZM2.5 10h15M10 2.5c2 2.2 3 4.7 3 7.5s-1 5.3-3 7.5c-2-2.2-3-4.7-3-7.5s1-5.3 3-7.5Z"
+                  strokeWidth="1.5"
+                />
+              )}
+            </svg>
+            {checkText}
+          </p>
+          <p className="sr-only" aria-live="polite" aria-atomic="true">
+            {checkText}
+          </p>
+        </>
+      ) : null}
       <p className={styles.helper}>{t(lang, premium ? "thinking.premiumHelper" : "thinking.helper")}</p>
     </div>
   );

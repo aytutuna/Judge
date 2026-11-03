@@ -1,0 +1,83 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  min-width: 0;
+}
+
+.tiles {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.tile {
+  --side-ink: var(--party-a-ink);
+  --side-tint: var(--party-a-tint);
+  min-width: 0;
+  padding: 12px 14px;
+  border-radius: 18px;
+  background: var(--side-tint);
+}
+.tile[data-side="B"] {
+  --side-ink: var(--party-b-ink);
+  --side-tint: var(--party-b-tint);
+}
+
+.name {
+  margin: 0 0 4px;
+  color: var(--side-ink);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.text {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  margin: 0;
+  overflow: hidden;
+  color: var(--ink);
+  font-size: 14px;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+.card {
+  padding: 22px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  background: var(--paper);
+  box-shadow: var(--shadow-1);
+}
+
+.scene {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: 18px;
+}
+
+.cancel {
+  align-self: center;
+  min-height: 40px;
+  padding: 0 16px;
+  border: 0;
+  border-radius: 8px;
+  background: none;
+  color: var(--terra-ink);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.cancel:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}

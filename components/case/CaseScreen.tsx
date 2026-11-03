@@ -24,7 +24,7 @@ import { JudgingOverlay } from "../JudgingOverlay";
 import { SiteFooter, SiteHeader, SkipLink } from "../SiteChrome";
 import { AppShell } from "../shell/AppShell";
 import { updateHistoryCase } from "../shell/useHistory";
-import { NextSteps } from "../thread/Composer";
+import { NextSteps } from "../shell/NextSteps";
 import { Thread } from "../thread/Thread";
 import { VerdictView } from "../VerdictView";
 import { openConfirm } from "../account/AccountView";

@@ -2,7 +2,8 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import { CasePanel, ownSideText } from "../components/case/CaseScreen";
 import type { AppealDraft } from "../components/case/AppealForm";
-import { Balance, Composer, EXAMPLES, MAX_ARGUMENT, NextSteps, type ComposerProps } from "../components/thread/Composer";
+import { Balance } from "../components/home/Balance";
+import { NextSteps } from "../components/shell/NextSteps";
 import { Thread } from "../components/thread/Thread";
 import { t } from "../lib/i18n";
 import type { VerdictResult } from "../lib/types";
@@ -130,84 +131,6 @@ describe("case page as a thread", () => {
   });
 });
 
-function composer(over: Partial<ComposerProps> = {}): string {
-  const props: ComposerProps = {
-    lang: "en",
-    value: "",
-    onChange: noop,
-    onSubmit: noop,
-    canSubmit: false,
-    expanded: false,
-    onExpandedChange: noop,
-    submitLabel: t("en", "getVerdict"),
-    extras: <div data-testid="extras" />,
-    ...over,
-  };
-  return renderToStaticMarkup(<Composer {...props} />);
-}
-
-describe("Composer", () => {
-  it("idle: the box and one toolbar row, the options folded away", () => {
-    const html = composer();
-    expect(html).toContain('id="argument"');
-    expect(html).toContain('rows="2"');
-    expect(html).toContain(`placeholder="${esc(t("en", "thread.placeholder"))}"`);
-    expect(html).toContain('aria-expanded="false"');
-    expect(html).not.toContain('data-testid="extras"');
-    expect(html).not.toContain("aria-pressed");
-    expect(html).toMatch(/type="submit"[^>]*disabled/);
-    expect(html).toContain(`aria-label="${t("en", "getVerdict")}"`);
-  });
-
-  it("expanded: the extras in a panel the button controls", () => {
-    const html = composer({ expanded: true });
-    expect(html).toContain('aria-expanded="true"');
-    const panel = html.match(/aria-controls="([^"]+)"/)?.[1];
-    expect(panel).toBeTruthy();
-    expect(html).toContain(`id="${panel}"`);
-    expect(html).toContain('data-testid="extras"');
-    expect(html).not.toContain("aria-pressed");
-  });
-
-  it("offers no options button when there are no options", () => {
-    const html = composer({ extras: undefined, expanded: true });
-    expect(html).not.toContain("aria-expanded");
-    expect(html).not.toContain(t("en", "thread.options"));
-  });
-
-  it("sends once submittable", () => {
-    expect(composer({ canSubmit: true })).not.toMatch(/type="submit"[^>]*disabled/);
-  });
-
-  it("is held while judging, even with a sendable text", () => {
-    const html = composer({ canSubmit: true, disabled: true, value: "x".repeat(40) });
-    expect(html).toMatch(/<fieldset[^>]*disabled/);
-    expect(html).toMatch(/type="submit"[^>]*disabled/);
-  });
-
-  it("ties the error to the box and shows the examples when given", () => {
-    const html = composer({ error: "Slow down", onExample: noop });
-    expect(html).toContain('role="alert"');
-    expect(html).toContain('aria-describedby="composer-error"');
-    expect(html).toContain(esc(t("en", "examples.label")));
-  });
-
-  it("flags the example already in the box and shows a literal, aria-hidden count near the cap", () => {
-    const html = composer({ value: t("en", EXAMPLES[1].text), onExample: noop });
-    expect(html.split("data-on").length - 1).toBe(1);
-    expect(composer({ value: "x".repeat(MAX_ARGUMENT - 10) })).toMatch(
-      new RegExp(`aria-hidden="true">${MAX_ARGUMENT - 10} / ${MAX_ARGUMENT}<`),
-    );
-  });
-
-  it("both sides: says so in the toolbar and offers no examples", () => {
-    const html = composer({ twoSided: true, onExample: noop, submitLabel: t("en", "case.create") });
-    expect(html).toContain(t("en", "case.kicker"));
-    expect(html).toContain(esc(t("en", "thread.placeholderTwoSided")));
-    expect(html).not.toContain(esc(t("en", "examples.label")));
-  });
-});
-
 describe("NextSteps", () => {
   it("resets the page in place when it can, else links home", () => {
     const reset = renderToStaticMarkup(<NextSteps lang="tr" onNew={noop} />);
@@ -236,43 +159,6 @@ describe("Balance", () => {
     expect(html({ canUsePremium: false, blockedReason: "fair_use", subscription: { ...sub, used: 35, cap: 35 } })).toContain(
       'href="/pricing"',
     );
-  });
-});
-
-describe("Composer as the empty page's case file", () => {
-  it("holds the page heading, the steps and a full-width send", () => {
-    const html = composer({ card: true, onExample: noop });
-    expect(html.match(/<h1/g)).toHaveLength(1);
-    expect(html).toContain(t("en", "home.title"));
-    expect(html).toContain(t("en", "home.kicker"));
-    for (const key of ["home.step.argument", "home.step.ruling"] as const) {
-      expect(html).toContain(t("en", key));
-    }
-    expect(html.split('aria-current="step"').length - 1).toBe(1);
-    // One send button, labelled by its text and held until there is enough to send.
-    expect(html.split('type="submit"').length - 1).toBe(1);
-    expect(html).toMatch(new RegExp(`type="submit"[^>]*disabled[^>]*>${t("en", "getVerdict")}<svg`));
-    expect(html).not.toContain(`aria-label="${t("en", "getVerdict")}"`);
-    // The chips sit inside the card, under the field.
-    expect(html.indexOf('role="group"')).toBeGreaterThan(html.indexOf('id="argument"'));
-    expect(html.indexOf('role="group"')).toBeLessThan(html.indexOf("</fieldset>"));
-  });
-
-  it("offers both sides from a link, and one side back once switched", () => {
-    expect(composer({ card: true })).not.toContain(esc(t("en", "home.invite")));
-    const one = composer({ card: true, onSwitchSides: noop });
-    expect(one).toMatch(new RegExp(`<button type="button"[^>]*>${esc(t("en", "home.invite"))}</button>`));
-    const both = composer({ card: true, twoSided: true, onSwitchSides: noop, submitLabel: t("en", "case.create") });
-    expect(both).toContain(t("en", "home.oneSide"));
-    expect(both).not.toContain(esc(t("en", "home.invite")));
-    expect(both).toContain(t("en", "case.kicker"));
-    expect(composer({ card: true, onSwitchSides: noop, lang: "tr" })).toContain(t("tr", "home.invite"));
-  });
-
-  it("names the options button plainly, with no judging style", () => {
-    const html = composer({ card: true });
-    expect(html).toContain(`>${t("en", "thread.options")}<`);
-    expect(html).not.toContain("Balanced");
   });
 });
 

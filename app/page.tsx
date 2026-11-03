@@ -1,41 +1,29 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
-import { CaseModeSwitch, type CaseMode } from "@/components/case/CaseModeSwitch";
+import { useEffect, useEffectEvent, useRef, useState } from "react";
 import { EvidencePicker, useEvidence } from "@/components/case/EvidencePicker";
 import { ClarifyStep, buildClarifications, type ClarifyQuestion } from "@/components/ClarifyStep";
-import { JudgingOverlay } from "@/components/JudgingOverlay";
-import JudgingScene from "@/components/scene/JudgingScene";
+import { Balance } from "@/components/home/Balance";
+import { HomeForm } from "@/components/home/HomeForm";
+import { JudgingScreen, type JudgedSide } from "@/components/JudgingScreen";
 import { AppShell } from "@/components/shell/AppShell";
 import { refreshHistory, useHistory } from "@/components/shell/useHistory";
-import { Balance, Composer, NextSteps } from "@/components/thread/Composer";
-import { Thread } from "@/components/thread/Thread";
-import styles from "@/components/thread/thread.module.css";
-import { VerdictView } from "@/components/VerdictView";
-import { useVerdictAppeal, withRoundNames } from "@/components/VerdictAppeal";
-import { VerdictHistory } from "@/components/case/VerdictHistory";
+import styles from "@/components/home/page.module.css";
 import { MAX_EVIDENCE_PER_SIDE, type CreateCaseResponse } from "@/lib/case-types";
 import { saveCaseNames } from "@/lib/case-names-store";
-import { verdictLang } from "@/lib/content-lang";
-import { firstNameOf, type DisplayState, type MineResponse } from "@/lib/originals-types";
+import { firstNameOf } from "@/lib/originals-types";
 import { ownerTokenIds } from "@/lib/owner-store";
 import { track, trackApiError } from "@/lib/analytics/client";
-import { buildOwnerShare } from "@/components/ShareDialog";
 import { clearDraft, registerDraftSource, saveDraftForSignIn, takeDraft } from "@/lib/draft";
 import { startHistory } from "@/lib/history-store";
-import { apiErrorMessage, t, type Key } from "@/lib/i18n";
+import { apiErrorMessage, t } from "@/lib/i18n";
 import { useLang } from "@/lib/lang";
 import { resetScene } from "@/lib/scene-bridge";
+import { EXAMPLES, MAX_ARGUMENT, joinSides } from "@/lib/sides";
 import { MAX_FINISH_MS } from "@/lib/thinking";
-import { judgesLabel } from "@/lib/verdict-display";
-import type {
-  Clarification,
-  ClarifyResponse,
-  VerdictApiResponse,
-  VerdictResponse,
-} from "@/lib/types";
-import { applyEntitlement, refreshViewer, signInOffered, useViewer } from "@/lib/use-viewer";
+import type { Clarification, ClarifyResponse, VerdictApiResponse, VerdictResponse } from "@/lib/types";
+import { applyEntitlement, refreshViewer, useViewer } from "@/lib/use-viewer";
 import { pollVerdict, RESPOND_ASYNC, type VerdictAcceptedResponse } from "@/lib/verdict-poll";
 
 /** A new Idempotency-Key. randomUUID needs a secure context; plain-http
@@ -81,30 +69,33 @@ function wakefulSleep(ms: number): Promise<void> {
 }
 
 /** What a verdict request judges, fixed when it is submitted. `evidence`
- * holds signed screenshot tokens. */
-type PremiumInput = { argument: string; evidence: string[] };
+ * holds signed screenshot tokens; the sides are what the judging screen
+ * shows. */
+type PremiumInput = {
+  argument: string;
+  evidence: string[];
+  mine: JudgedSide | null;
+  theirs: JudgedSide | null;
+};
 
 /** Signed-in screenshot uploads (the respondent's page uses its own). */
 const EVIDENCE_ENDPOINT = "/api/v1/evidence";
 
-/** "clarify": the thread holds the clarifying questions. */
-type Phase = "intake" | "clarify" | "judging" | "verdict";
+/** "clarify": the questions replace the form; "judging": the judging screen. */
+type Phase = "form" | "clarify" | "judging";
 
 export default function Home() {
   const lang = useLang();
-  // The composer's text, and the argument in the thread once it is sent
-  // (null: the empty state). A failed request puts the text back.
+  // Both sides stay in state while a request runs, so a failed one finds
+  // the form as it was.
   const [argument, setArgument] = useState("");
-  const [sent, setSent] = useState<string | null>(null);
-  const [options, setOptions] = useState(false);
-  const [phase, setPhase] = useState<Phase>("intake");
+  const [otherSide, setOtherSide] = useState("");
+  // Null: the account's first name until they type.
+  const [mineName, setMineName] = useState<string | null>(null);
+  const [otherName, setOtherName] = useState("");
+  const [phase, setPhase] = useState<Phase>("form");
   const [error, setError] = useState<string | null>(null);
   const [response, setResponse] = useState<VerdictResponse | null>(null);
-  // The writer's share-page names after they edit them (else the response's).
-  const [ownerDisplay, setOwnerDisplay] = useState<DisplayState | null>(null);
-  // Two-sided: the owner's name on the case's share pages (prefilled from
-  // the account's first name until they type).
-  const [caseName, setCaseName] = useState<string | null>(null);
   const viewer = useViewer();
   // Nothing from it is listed here; the hook still settles entries left
   // judging and warms the Verdicts tab.
@@ -113,14 +104,18 @@ export default function Home() {
   const [questions, setQuestions] = useState<ClarifyQuestion[]>([]);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const premiumInput = useRef<PremiumInput | null>(null);
+  const [judged, setJudged] = useState<PremiumInput | null>(null);
   // One key per exact premium request (input, language, answers): a retry
   // of the same request reuses it, so the server replays or waits instead
   // of charging again. A success or a different request gets a new key.
   const premiumKey = useRef<{ request: string; key: string } | null>(null);
+  // The example that filled the form last, so the next one differs, and the
+  // name it wrote, which "New argument" drops but keeps a typed one.
+  const lastExample = useRef<string | null>(null);
+  const exampleName = useRef<string | null>(null);
   // Screenshot evidence and two-sided cases, each only when this deployment
   // offers it (GET /api/v1/config `features`).
   const router = useRouter();
-  const [caseMode, setCaseMode] = useState<CaseMode>("now");
   const [creating, setCreating] = useState(false);
   const evidence = useEvidence(EVIDENCE_ENDPOINT, MAX_EVIDENCE_PER_SIDE);
   // The current argument. "New argument" or leaving the page aborts it:
@@ -128,6 +123,7 @@ export default function Home() {
   // runs to the end so its owner token and history entry are kept, just
   // without touching the screen any more.
   const thread = useRef<AbortController | null>(null);
+  const opened = useRef(false);
 
   const features = viewer.config?.features;
   // Signed out, the form still takes the text: sending it goes to sign-in
@@ -136,15 +132,14 @@ export default function Home() {
   const entitlement = signedIn ? (viewer.me?.entitlement ?? null) : null;
   const evidenceOn = signedIn && features?.evidence === true;
   const casesOn = signedIn && features?.cases === true;
-  const casesLocked = !signedIn && features?.cases === true && signInOffered(viewer.config);
-  const twoSided = casesOn && caseMode === "both";
   const holding = checking || creating;
+  const open = useEffectEvent(judgingFinished);
 
   // Belt and braces: if the judging animation has not handed off shortly
-  // after the response arrived, show the verdict anyway.
+  // after the response arrived, open the verdict anyway.
   useEffect(() => {
     if (phase !== "judging" || response === null) return;
-    const t = setTimeout(() => setPhase("verdict"), MAX_FINISH_MS + 2000);
+    const t = setTimeout(() => open(), MAX_FINISH_MS + 2000);
     return () => clearTimeout(t);
   }, [phase, response]);
 
@@ -168,6 +163,7 @@ export default function Home() {
     if (!draft) return;
     // eslint-disable-next-line react-hooks/set-state-in-effect -- one-time read of browser storage
     setArgument(draft.argument);
+    setOtherSide(draft.otherSide ?? "");
   }, []);
 
   // The index has to exist before the first addHistory, or the verdicts
@@ -176,44 +172,22 @@ export default function Home() {
 
   // What a sign-in link saves: only an unsent argument.
   useEffect(
-    () =>
-      registerDraftSource(() =>
-        phase === "intake" || phase === "clarify" ? { argument: sent ?? argument } : null,
-      ),
-    [argument, sent, phase],
+    () => registerDraftSource(() => (phase === "judging" ? null : { argument, ...(otherSide ? { otherSide } : {}) })),
+    [argument, otherSide, phase],
   );
 
-  const shownCaseName = caseName ?? firstNameOf(viewer.me?.user?.name) ?? "";
-  const owner =
-    response?.display && response.originals_stored
-      ? buildOwnerShare({
-          verdictId: response.id,
-          token: response.owner_token ?? null,
-          display: ownerDisplay ?? response.display,
-          suggestedA: response.suggested_display_a ?? null,
-          nameMap: response.name_map,
-          lang: verdictLang(response.result),
-          namesConfirmed: ownerDisplay !== null,
-          onSaved: setOwnerDisplay,
-        })
-      : undefined;
-
-  // The writer can add context to the verdict they just got.
-  const appeal = useVerdictAppeal({
-    id: response?.id ?? "",
-    lang,
-    token: response?.owner_token ?? null,
-    enabled: phase === "verdict",
-    initial: response ? [{ id: response.id, result: response.result, createdAt: "" }] : [],
-    evidence: features?.evidence === true,
-  });
-  const shown = appeal.verdicts.at(-1) ?? null;
-  const roundNames = withRoundNames(response?.name_map, appeal.names);
+  const shownMineName = mineName ?? firstNameOf(viewer.me?.user?.name) ?? "";
+  const joined = joinSides(lang, { text: argument, name: shownMineName }, { text: otherSide, name: otherName });
 
   // Until /me answers, a click could send a signed-in writer to sign in.
   // If it failed, the server decides (401 when signed out).
   const viewerKnown = viewer.status === "ready" || viewer.status === "error";
-  const canSubmit = argument.trim().length >= 20 && viewerKnown && !holding && !(evidenceOn && evidence.busy);
+  const canSubmit =
+    argument.trim().length + otherSide.trim().length >= 20 &&
+    joined.length <= MAX_ARGUMENT &&
+    viewerKnown &&
+    !holding &&
+    !(evidenceOn && evidence.busy);
 
   function signInFirst() {
     saveDraftForSignIn();
@@ -226,24 +200,18 @@ export default function Home() {
     router.push("/pricing");
   }
 
-  /** The composer's text becomes the thread's first turn. */
-  function send(text: string) {
-    setSent(text);
-    setArgument("");
-    setOptions(false);
-  }
-
-  /** Back to the composer with the text that was sent, and why if it failed. */
-  function restore(text: string, message: string | null) {
+  /** Back to the form, with why if the request failed. */
+  function fail(message: string | null) {
     setError(message);
-    setArgument(text);
-    setSent(null);
-    setPhase("intake");
+    setPhase("form");
   }
 
-  function show(verdict: VerdictResponse) {
-    setOwnerDisplay(null);
-    setResponse(verdict);
+  /** The verdict has its own page; the account that wrote it sees the
+   * writer's view there. */
+  function judgingFinished() {
+    if (!response || opened.current) return;
+    opened.current = true;
+    router.push(`/v/${encodeURIComponent(response.id)}`);
   }
 
   /**
@@ -253,11 +221,7 @@ export default function Home() {
    * localized error and returns to the form. The poll is not aborted with
    * the thread: the Verdicts list still needs the outcome.
    */
-  async function awaitVerdict(
-    accepted: VerdictAcceptedResponse,
-    text: string,
-    signal: AbortSignal,
-  ): Promise<VerdictResponse | null> {
+  async function awaitVerdict(accepted: VerdictAcceptedResponse, signal: AbortSignal): Promise<VerdictResponse | null> {
     const outcome = await pollVerdict(accepted.id, {
       fetch: (url, init) => fetch(url, init),
       sleep: wakefulSleep,
@@ -266,43 +230,25 @@ export default function Home() {
     });
     if (outcome.kind === "ready") {
       const { result, owner } = outcome.body;
-      // A retry that joined a running verdict got no name map: the
-      // writer's view has it.
-      const mine = accepted.replayed && !signal.aborted ? await readMine(accepted.id, signal) : null;
       const verdict: VerdictResponse = {
         id: accepted.id,
         result,
-        name_map: mine?.nameMap ?? accepted.name_map,
+        name_map: accepted.name_map,
         ...(accepted.owner_token ? { owner_token: accepted.owner_token } : {}),
         ...(owner ? { originals_stored: owner.originals_stored, display: owner.display } : {}),
-        suggested_display_a: mine?.suggested.a ?? accepted.suggested_display_a ?? null,
+        suggested_display_a: accepted.suggested_display_a ?? null,
       };
       void refreshHistory();
       return verdict;
     }
     if (signal.aborted) return null;
     if (outcome.kind === "failed") trackApiError({ code: outcome.code }, outcome.status);
-    restore(
-      text,
+    fail(
       outcome.kind === "failed"
         ? apiErrorMessage(lang, { code: outcome.code }, outcome.status === 200 ? 502 : outcome.status)
         : t(lang, "errorFallback"),
     );
     return null;
-  }
-
-  /** The writer's view of a verdict (its name map), or null on any failure. */
-  async function readMine(id: string, signal: AbortSignal): Promise<MineResponse | null> {
-    try {
-      const res = await fetch(`/api/v1/verdicts/${encodeURIComponent(id)}/mine`, {
-        cache: "no-store",
-        signal:
-          typeof AbortSignal.any === "function" ? AbortSignal.any([signal, AbortSignal.timeout(10_000)]) : signal,
-      });
-      return res.ok ? ((await res.json()) as MineResponse) : null;
-    } catch {
-      return null;
-    }
   }
 
   /** Step 1: ask whether key facts are missing. Network trouble or
@@ -311,13 +257,18 @@ export default function Home() {
   async function submitPremium() {
     track("case_submitted");
     // Judged as submitted: later edits never mix into this request.
-    const input: PremiumInput = { argument, evidence: evidenceOn ? evidence.tokens : [] };
+    const input: PremiumInput = {
+      argument: joined,
+      evidence: evidenceOn ? evidence.tokens : [],
+      mine: argument.trim() ? { name: shownMineName, text: argument.trim() } : null,
+      theirs: otherSide.trim() ? { name: otherName, text: otherSide.trim() } : null,
+    };
     const signal = threadSignal();
     premiumInput.current = input;
+    setJudged(input);
     clearDraft();
     setError(null);
     setChecking(true);
-    send(input.argument);
     let found: ClarifyQuestion[] = [];
     try {
       const res = await fetch("/api/v1/clarify", {
@@ -332,7 +283,7 @@ export default function Home() {
         found = ((json as ClarifyResponse | null)?.questions ?? []).slice(0, 2);
       } else if (ACCOUNT_STATUSES.has(res.status) || res.status === 400 || res.status === 403) {
         trackApiError(json, res.status);
-        restore(input.argument, apiErrorMessage(lang, json, res.status));
+        fail(apiErrorMessage(lang, json, res.status));
         setChecking(false);
         if (ACCOUNT_STATUSES.has(res.status)) void refreshViewer();
         return;
@@ -364,6 +315,7 @@ export default function Home() {
     const signal = threadSignal();
     setError(null);
     setResponse(null);
+    opened.current = false;
     setPhase("judging");
     const body = JSON.stringify({
       argument: input.argument,
@@ -377,7 +329,11 @@ export default function Home() {
       for (;;) {
         const res = await fetch("/api/v1/verdict", {
           method: "POST",
-          headers: { "Content-Type": "application/json", "Idempotency-Key": key, ...ASYNC_HEADERS },
+          headers: {
+            "Content-Type": "application/json",
+            "Idempotency-Key": key,
+            ...ASYNC_HEADERS,
+          },
           body,
         });
         const json: unknown = await res.json().catch(() => null);
@@ -391,34 +347,34 @@ export default function Home() {
           if (ACCOUNT_STATUSES.has(res.status)) void refreshViewer();
           if (signal.aborted) return;
           trackApiError(json, res.status);
-          restore(input.argument, apiErrorMessage(lang, json, res.status));
+          fail(apiErrorMessage(lang, json, res.status));
           return;
         }
         if (res.status === 202) {
           const accepted = json as VerdictAcceptedResponse;
           if (accepted.entitlement) applyEntitlement(accepted.entitlement);
-          const verdict = await awaitVerdict(accepted, input.argument, signal);
+          const verdict = await awaitVerdict(accepted, signal);
           // A refused or degraded verdict, or a failed one, gave the unit back.
           void refreshViewer();
           if (!verdict) return;
           if (premiumKey.current?.key === key) premiumKey.current = null;
-          if (!signal.aborted) show(verdict);
+          if (!signal.aborted) setResponse(verdict);
           return;
         }
         if (premiumKey.current?.key === key) premiumKey.current = null;
         const verdict = json as VerdictApiResponse;
         if (verdict.entitlement) applyEntitlement(verdict.entitlement);
         void refreshHistory();
-        if (!signal.aborted) show(verdict);
+        if (!signal.aborted) setResponse(verdict);
         return;
       }
     } catch {
       if (signal.aborted) return;
-      restore(input.argument, t(lang, "errorFallback"));
+      fail(t(lang, "errorFallback"));
     }
   }
 
-  /** Both sides: create the case with the owner's side (it holds one
+  /** Send a link: create the case with the owner's side (it holds one
    * premium verdict), keep the returned names in this browser and open
    * the case page with the invite link. No clarifying step: the other side's
    * account fills the gaps. */
@@ -430,8 +386,7 @@ export default function Home() {
     clearDraft();
     setError(null);
     setCreating(true);
-    send(text);
-    const name = shownCaseName.trim();
+    const name = shownMineName.trim();
     const body = JSON.stringify({
       text,
       lang,
@@ -451,7 +406,7 @@ export default function Home() {
         if (ACCOUNT_STATUSES.has(res.status)) void refreshViewer();
         if (signal.aborted) return;
         trackApiError(json, res.status);
-        restore(text, apiErrorMessage(lang, json, res.status));
+        fail(apiErrorMessage(lang, json, res.status));
         setCreating(false);
         return;
       }
@@ -461,11 +416,11 @@ export default function Home() {
       void refreshHistory();
       if (signal.aborted) return;
       evidence.clear();
-      // `creating` stays on: the thread holds until the case page takes over.
+      // `creating` stays on: the form holds until the case page takes over.
       router.push(`/c/${encodeURIComponent(created.case.id)}`);
     } catch {
       if (signal.aborted) return;
-      restore(text, t(lang, "errorFallback"));
+      fail(t(lang, "errorFallback"));
       setCreating(false);
     }
   }
@@ -485,187 +440,136 @@ export default function Home() {
     setResponse(null);
     setError(null);
     setArgument("");
-    setSent(null);
-    setOptions(false);
+    setOtherSide("");
+    setOtherName("");
+    if (mineName !== null && mineName === exampleName.current) setMineName(null);
+    exampleName.current = null;
     setChecking(false);
     setCreating(false);
     setQuestions([]);
     setAnswers({});
     evidence.clear();
-    setPhase("intake");
+    setPhase("form");
     window.scrollTo({ top: 0 });
   }
 
-  function fillExample(key: Key) {
-    setArgument(t(lang, key));
+  /** Stops the request and returns to the form with everything kept. */
+  function cancelJudging() {
+    thread.current?.abort();
+    thread.current = null;
+    resetScene();
+    setResponse(null);
+    setChecking(false);
+    setPhase("form");
+  }
+
+  const started = useRef(false);
+  useEffect(() => {
+    if (argument && !started.current) track("case_started");
+    started.current = argument !== "";
+  }, [argument]);
+
+  function fillExample() {
+    const pool = EXAMPLES.filter((id) => id !== lastExample.current);
+    const id = pool[Math.floor(Math.random() * pool.length)];
+    lastExample.current = id;
+    const name = t(lang, `app.example.${id}.aName`);
+    exampleName.current = name;
+    setMineName(name);
+    setArgument(t(lang, `app.example.${id}.a`));
+    setOtherName(t(lang, `app.example.${id}.bName`));
+    setOtherSide(t(lang, `app.example.${id}.b`));
     setError(null);
   }
 
-  const empty = sent === null;
+  function onSubmit() {
+    if (viewer.status === "ready" && !signedIn) signInFirst();
+    else if (entitlement?.canUsePremium === false) pricingFirst();
+    else void submitPremium();
+  }
+
+  function onInvite() {
+    if (viewer.status === "ready" && !signedIn) signInFirst();
+    else if (entitlement?.canUsePremium === false) pricingFirst();
+    else void createCase();
+  }
+
   const progress = checking ? t(lang, "tier.checking") : creating ? t(lang, "case.creating") : null;
 
-  // The composer takes focus whenever the thread gives way to it again
-  // (a new argument, a failed request, back from the questions).
-  const wasEmpty = useRef(true);
+  // The first field takes focus whenever the form comes back (a new
+  // argument, a failed request, back from the questions).
+  const shown = useRef<Phase>("form");
   useEffect(() => {
-    if (empty && !wasEmpty.current) document.getElementById("argument")?.focus({ preventScroll: true });
-    wasEmpty.current = empty;
-  }, [empty]);
+    if (phase === "form" && shown.current !== "form")
+      document.getElementById("argument")?.focus({ preventScroll: true });
+    if (phase !== "form") window.scrollTo({ top: 0 });
+    shown.current = phase;
+  }, [phase]);
 
   return (
-    // The tab bar gives way to the docked composer while an argument runs;
-    // after the verdict it is back under the "New argument" bar.
-    <AppShell
-      lang={lang}
-      toggle
-      footer={false}
-      tabs={empty || phase === "verdict"}
-      onHome={empty ? undefined : reset}
-    >
-      <main id="main" tabIndex={-1} className={styles.main} data-empty={empty ? "" : undefined}>
+    // The tab bar gives way to the judging screen, as the apps' full-screen cover does.
+    <AppShell lang={lang} toggle footer={false} tabs={phase !== "judging"} onHome={phase !== "form" ? reset : undefined}>
+      <main id="main" tabIndex={-1} className={styles.main}>
         <div className={`wrap ${styles.column}`}>
+          <h1 className="sr-only">{t(lang, "hero.title")}</h1>
           <p className="sr-only" role="status" aria-live="polite">
             {progress}
           </p>
-          {empty ? null : (
-            <>
-              <h1 className="sr-only">{t(lang, "hero.title")}</h1>
-              <Thread
-                lang={lang}
-                argument={sent}
-                status={progress}
-                judgesLabel={phase === "verdict" && shown ? judgesLabel(lang, shown.result) : undefined}
-                clarify={
-                  phase === "clarify" ? (
-                    <ClarifyStep
-                      lang={lang}
-                      questions={questions}
-                      answers={answers}
-                      onAnswer={(id, value) => setAnswers((a) => ({ ...a, [id]: value }))}
-                      onSubmit={() => finishClarify(false)}
-                      onSkip={() => finishClarify(true)}
-                      onBack={() => restore(premiumInput.current?.argument ?? "", null)}
-                    />
-                  ) : null
-                }
-                judging={
-                  // The scene stays mounted into the verdict, shrunk to a
-                  // strip: its settled balance is part of the result.
-                  phase === "judging" || (phase === "verdict" && response) ? (
-                    <>
-                      <JudgingScene
-                        className={phase === "verdict" ? `${styles.scene} ${styles.settled}` : styles.scene}
-                      />
-                      {phase === "judging" ? (
-                        <JudgingOverlay
-                          lang={lang}
-                          done={response !== null}
-                          result={response?.result ?? null}
-                          onFinished={() => setPhase("verdict")}
-                          premium
-                        />
-                      ) : null}
-                    </>
-                  ) : null
-                }
-                verdict={
-                  phase === "verdict" && response && shown ? (
-                    <VerdictView
-                      result={shown.result}
-                      nameMap={roundNames}
-                      shareId={response.id}
-                      verdictId={shown.id === response.id ? undefined : shown.id}
-                      fresh
-                      owner={owner}
-                      onAddContext={appeal.onAddContext}
-                      focusAppeal={appeal.finished}
-                    />
-                  ) : null
-                }
-                followUp={
-                  phase === "verdict" && response && (appeal.panel || appeal.verdicts.length > 1) ? (
-                    <div className="flex flex-col gap-6 min-w-0">
-                      {appeal.panel}
-                      <VerdictHistory
-                        lang={lang}
-                        verdicts={appeal.verdicts}
-                        linked={false}
-                        names={roundNames ?? []}
-                        selfParty="A"
-                        viewerIsSelfParty={false}
-                      />
-                    </div>
-                  ) : null
-                }
-              />
-            </>
-          )}
-          {phase === "verdict" ? (
-            <NextSteps lang={lang} onNew={reset} />
-          ) : phase === "judging" ? null : (
-            <Composer
+          {phase === "clarify" ? (
+            <ClarifyStep
               lang={lang}
-              value={argument}
-              onChange={(v) => {
-                if (!argument && v) track("case_started");
-                setArgument(v);
-              }}
-              onSubmit={() => {
-                if (viewer.status === "ready" && !signedIn) signInFirst();
-                else if (entitlement?.canUsePremium === false) pricingFirst();
-                else void (twoSided ? createCase() : submitPremium());
-              }}
+              questions={questions}
+              answers={answers}
+              onAnswer={(id, value) => setAnswers((a) => ({ ...a, [id]: value }))}
+              onSubmit={() => finishClarify(false)}
+              onSkip={() => finishClarify(true)}
+              onBack={() => fail(null)}
+            />
+          ) : phase === "judging" && judged ? (
+            <JudgingScreen
+              lang={lang}
+              mine={judged.mine}
+              theirs={judged.theirs}
+              done={response !== null}
+              result={response?.result ?? null}
+              onFinished={judgingFinished}
+              onCancel={cancelJudging}
+            />
+          ) : (
+            <HomeForm
+              lang={lang}
+              mine={argument}
+              onMine={setArgument}
+              mineName={shownMineName}
+              onMineName={setMineName}
+              theirs={otherSide}
+              onTheirs={setOtherSide}
+              theirName={otherName}
+              onTheirName={setOtherName}
+              length={joined.length}
+              casesOn={casesOn}
+              onNew={argument || otherSide || evidence.items.length > 0 ? reset : undefined}
+              onExample={fillExample}
               canSubmit={canSubmit}
-              disabled={!empty}
+              onSubmit={onSubmit}
+              onInvite={casesOn && !otherSide.trim() ? onInvite : undefined}
+              holding={holding}
               error={error}
-              expanded={options}
-              onExpandedChange={setOptions}
-              extras={
-                casesOn || casesLocked || evidenceOn ? (
-                  <>
-                    {casesOn || casesLocked ? (
-                      <CaseModeSwitch
-                        lang={lang}
-                        value={twoSided ? "both" : "now"}
-                        onChange={setCaseMode}
-                        locked={casesLocked}
-                      />
-                    ) : null}
-                    {twoSided ? (
-                      <label className={styles.field}>
-                        <span className={styles.fieldLabel}>{t(lang, "case.displayName")}</span>
-                        <input
-                          className={styles.fieldInput}
-                          value={shownCaseName}
-                          maxLength={40}
-                          autoComplete="given-name"
-                          onChange={(e) => setCaseName(e.target.value)}
-                        />
-                      </label>
-                    ) : null}
-                    {evidenceOn ? (
-                      <EvidencePicker
-                        lang={lang}
-                        max={MAX_EVIDENCE_PER_SIDE}
-                        items={evidence.items}
-                        full={evidence.full}
-                        failure={evidence.failure}
-                        overLimit={evidence.overLimit}
-                        onAdd={evidence.add}
-                        onRemove={evidence.remove}
-                      />
-                    ) : null}
-                  </>
+              status={progress ?? (entitlement ? <Balance lang={lang} entitlement={entitlement} /> : null)}
+              evidence={
+                evidenceOn ? (
+                  <EvidencePicker
+                    lang={lang}
+                    max={MAX_EVIDENCE_PER_SIDE}
+                    items={evidence.items}
+                    full={evidence.full}
+                    failure={evidence.failure}
+                    overLimit={evidence.overLimit}
+                    onAdd={evidence.add}
+                    onRemove={evidence.remove}
+                  />
                 ) : null
               }
-              twoSided={twoSided}
-              submitLabel={t(lang, twoSided ? "case.create" : "getVerdict")}
-              onExample={empty ? fillExample : undefined}
-              card={empty}
-              onSwitchSides={
-                empty && casesOn ? () => setCaseMode(twoSided ? "now" : "both") : undefined
-              }
-              note={entitlement ? <Balance lang={lang} entitlement={entitlement} /> : null}
             />
           )}
         </div>

@@ -1,0 +1,296 @@
+.wrap {
+  width: 100%;
+  min-width: 0;
+}
+
+.form {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  min-width: 0;
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.example {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 38px;
+  padding: 0 14px;
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-chip);
+  background: var(--ivory-2);
+  color: var(--ink);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color var(--dur-1);
+}
+.example:hover {
+  background: var(--paper);
+}
+.example svg {
+  width: 16px;
+  height: 16px;
+}
+
+.plus {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  margin-inline-start: auto;
+  border: 1px solid var(--line-2);
+  border-radius: 50%;
+  background: var(--paper);
+  color: var(--ink);
+  cursor: pointer;
+}
+.plus svg {
+  width: 16px;
+  height: 16px;
+}
+
+.lead {
+  margin: 0;
+  color: var(--ink-2);
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.card {
+  --side-ink: var(--party-a-ink);
+  --side-tint: var(--party-a-tint);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-block);
+  background: var(--paper);
+  box-shadow: var(--shadow-1);
+  transition: border-color var(--dur-1);
+}
+.card[data-side="B"] {
+  --side-ink: var(--party-b-ink);
+  --side-tint: var(--party-b-tint);
+}
+.card:focus-within {
+  border-color: color-mix(in srgb, var(--side-ink) 60%, transparent);
+}
+
+.cardHead {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--side-ink);
+  color: var(--paper);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.name {
+  flex: 1;
+  min-width: 0;
+  min-height: 32px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--ink);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+}
+.name::placeholder {
+  color: var(--placeholder);
+}
+.name:focus {
+  outline: none;
+}
+.name:focus-visible {
+  outline: 2px solid var(--side-ink);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+.label {
+  flex: none;
+  color: var(--side-ink);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.editor {
+  display: block;
+  width: 100%;
+  min-height: 96px;
+  max-height: 60vh;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--ink);
+  font: inherit;
+  font-size: 15px;
+  line-height: 1.5;
+  resize: none;
+}
+.card[data-side="B"] .editor {
+  min-height: 56px;
+}
+.editor::placeholder {
+  color: var(--placeholder);
+}
+.editor:focus {
+  outline: none;
+}
+
+.invite {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 32px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--sage-ink);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.invite:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.invite:not(:disabled):hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.invite svg {
+  width: 16px;
+  height: 16px;
+}
+
+.count {
+  margin: 0;
+  text-align: end;
+  color: var(--muted);
+  font-size: 12.5px;
+}
+.count[data-warn] {
+  color: var(--terra-ink);
+}
+
+.error {
+  margin: 0;
+  padding: 10px 14px;
+  border-radius: 14px;
+  background: var(--terra-tint);
+  color: var(--danger);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.45;
+}
+
+.send {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.submit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 54px;
+  padding: 0 20px;
+  border: 0;
+  border-radius: var(--radius-field);
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    opacity var(--dur-1),
+    transform var(--dur-1);
+}
+.submit:not(:disabled):active {
+  transform: scale(0.98);
+}
+.submit:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+.submit svg {
+  width: 18px;
+  height: 18px;
+}
+:global([dir="rtl"]) .submit svg {
+  transform: scaleX(-1);
+}
+
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid color-mix(in srgb, var(--paper) 30%, transparent);
+  border-top-color: var(--paper);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.status {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.45;
+  text-align: center;
+}
+.status a {
+  color: var(--terra-ink);
+  font-weight: 600;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spinner {
+    animation-duration: 2.4s;
+  }
+  .submit {
+    transition: none;
+  }
+}
