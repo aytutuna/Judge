@@ -178,9 +178,6 @@
     <string name="signin_email_invalid">כתובת האימייל הזו לא נראית תקינה.</string>
     <string name="signin_provider_unavailable">עוד לא זמין</string>
     <string name="signin_failed">לא הצלחנו לחבר אותך. אפשר לנסות שוב?</string>
-    <string name="signin_legal">שירות AI חיצוני קורא את הוויכוחים שלך. המשך השימוש מהווה הסכמה לתנאי</string>
-    <string name="signin_legal_link">מדיניות הפרטיות</string>
-    <string name="signin_legal_after">.</string>
     <string name="signin_loading">טוענים את אפשרויות ההתחברות…</string>
     <string name="account_title">החשבון שלך</string>
     <string name="account_signed_in_as">התחברת בתור %1$s</string>
@@ -362,6 +359,17 @@
     <string name="two_sided_decisive">פסק הדין תלוי בזה</string>
     <string name="two_sided_would_change">מה היה משנה את פסק הדין</string>
     <string name="appeal_title">הוספת הקשר</string>
+    <string name="home_example">לנסות דוגמה</string>
+    <string name="home_lead">אפשר לכתוב את שני הצדדים, או לשלוח לצד השני קישור כדי שיכתוב את שלו.</string>
+    <string name="home_lead_solo">אפשר לכתוב את הצד שלך, וגם את הצד השני אם הוא ידוע לך.</string>
+    <string name="home_their_side">הצד השני</string>
+    <string name="home_their_name">השם של הצד השני</string>
+    <string name="home_their_placeholder">מה הצד השני אומר? כדאי לכתוב את זה במילים שלו.</string>
+    <string name="home_their_side_label">הצד השני בוויכוח</string>
+    <string name="home_your_side_label">הצד שלך בוויכוח</string>
+    <string name="home_says">לדברי %1$s:</string>
+    <string name="home_my_side">הצד שלי:</string>
+    <string name="home_other_side">הצד השני:</string>
     <string name="appeal_lead">משהו חסר או לא נכון? אפשר להוסיף אותו פעם אחת, והשופטים יבחנו הכול מחדש. זה עולה פסק דין אחד.</string>
     <string name="appeal_label">ההקשר שלך</string>
     <string name="appeal_placeholder">מה השופטים פספסו?</string>
@@ -482,6 +490,8 @@
     <string name="stamp_dissolved">סמנטיקה</string>
     <string name="best_point_of">הטיעון הכי חזק של %1$s</string>
     <string name="best_point_self">הטיעון הכי חזק שלך</string>
+    <string name="error_age_blocked">Judge מיועד לגילאי 18 ומעלה בלבד.</string>
+    <string name="error_age_unconfirmed">כדי להמשיך צריך לאשר שגילך 18 ומעלה.</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">חדש</string>
     <string name="app_tab_settings">הגדרות</string>

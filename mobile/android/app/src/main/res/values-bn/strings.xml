@@ -173,9 +173,6 @@
     <string name="signin_email_invalid">ইমেইল ঠিকানাটা ঠিক মনে হচ্ছে না।</string>
     <string name="signin_provider_unavailable">এখনও পাওয়া যাচ্ছে না</string>
     <string name="signin_failed">সাইন ইন করানো গেল না। আরেকবার চেষ্টা করবেন?</string>
-    <string name="signin_legal">আপনার তর্কগুলো একটি বাইরের এআই পড়ে। চালিয়ে গেলে আপনি আমাদের</string>
-    <string name="signin_legal_link">গোপনীয়তা নীতি</string>
-    <string name="signin_legal_after">\u0020মেনে নিচ্ছেন।</string>
     <string name="signin_loading">সাইন-ইনের অপশন লোড হচ্ছে…</string>
     <string name="account_title">আপনার অ্যাকাউন্ট</string>
     <string name="account_signed_in_as">%1$s হিসেবে সাইন ইন করা আছে</string>
@@ -354,6 +351,17 @@
     <string name="two_sided_decisive">রায় এর ওপরই নির্ভর করছে</string>
     <string name="two_sided_would_change">কী হলে এই রায় বদলাত</string>
     <string name="appeal_title">নতুন তথ্য যোগ করুন</string>
+    <string name="home_example">একটা উদাহরণ দিয়ে দেখুন</string>
+    <string name="home_lead">দুই পক্ষের কথাই লিখুন, নয়তো অন্যজনকে একটা লিংক পাঠান, তিনি নিজের কথা নিজেই লিখবেন।</string>
+    <string name="home_lead_solo">আপনার কথা লিখুন, আর জানা থাকলে অন্যজনেরটাও।</string>
+    <string name="home_their_side">অন্যজনের বক্তব্য</string>
+    <string name="home_their_name">অন্যজনের নাম</string>
+    <string name="home_their_placeholder">অন্যজন কী বলছেন? তিনি যেভাবে বলতেন, ঠিক সেভাবেই লিখুন।</string>
+    <string name="home_their_side_label">তর্কে অন্যজনের বক্তব্য</string>
+    <string name="home_your_side_label">তর্কে আপনার বক্তব্য</string>
+    <string name="home_says">%1$s বলছে:</string>
+    <string name="home_my_side">আমার বক্তব্য:</string>
+    <string name="home_other_side">অন্যজনের বক্তব্য:</string>
     <string name="appeal_lead">কিছু বাদ পড়েছে বা ভুল হয়েছে? একবার যোগ করুন, বিচারকেরা সবকিছু আবার দেখবেন। খরচ 1টি রায়।</string>
     <string name="appeal_label">আপনার নতুন তথ্য</string>
     <string name="appeal_placeholder">বিচারকেরা কী মিস করেছেন?</string>
@@ -471,6 +479,8 @@
     <string name="stamp_dissolved">অর্থের ফারাক</string>
     <string name="best_point_of">সবচেয়ে জোরালো যুক্তি: %1$s</string>
     <string name="best_point_self">আপনার সবচেয়ে জোরালো যুক্তি</string>
+    <string name="error_age_blocked">Judge শুধু ১৮ বছর বা তার বেশি বয়সীদের জন্য।</string>
+    <string name="error_age_unconfirmed">চালিয়ে যেতে নিশ্চিত করুন যে আপনার বয়স ১৮ বা তার বেশি।</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">নতুন</string>
     <string name="app_tab_settings">সেটিংস</string>

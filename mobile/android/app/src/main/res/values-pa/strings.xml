@@ -173,9 +173,6 @@
     <string name="signin_email_invalid">ਇਹ ਈਮੇਲ ਪਤਾ ਠੀਕ ਨਹੀਂ ਲੱਗਦਾ।</string>
     <string name="signin_provider_unavailable">ਹਾਲੇ ਉਪਲਬਧ ਨਹੀਂ</string>
     <string name="signin_failed">ਅਸੀਂ ਤੁਹਾਨੂੰ ਸਾਈਨ ਇਨ ਨਹੀਂ ਕਰ ਸਕੇ। ਇੱਕ ਵਾਰ ਫਿਰ ਕੋਸ਼ਿਸ਼ ਕਰੋਗੇ?</string>
-    <string name="signin_legal">ਤੁਹਾਡੀਆਂ ਬਹਿਸਾਂ ਇੱਕ ਬਾਹਰੀ AI ਸੇਵਾ ਪੜ੍ਹਦੀ ਹੈ। ਜਾਰੀ ਰੱਖ ਕੇ ਤੁਸੀਂ ਸਾਡੀ</string>
-    <string name="signin_legal_link">ਪਰਦੇਦਾਰੀ ਨੀਤੀ</string>
-    <string name="signin_legal_after">\u0020ਨਾਲ ਸਹਿਮਤ ਹੁੰਦੇ ਹੋ।</string>
     <string name="signin_loading">ਸਾਈਨ ਇਨ ਦੇ ਤਰੀਕੇ ਲੋਡ ਹੋ ਰਹੇ ਹਨ…</string>
     <string name="account_title">ਤੁਹਾਡਾ ਖਾਤਾ</string>
     <string name="account_signed_in_as">%1$s ਵਜੋਂ ਸਾਈਨ ਇਨ</string>
@@ -354,6 +351,17 @@
     <string name="two_sided_decisive">ਫ਼ੈਸਲਾ ਇਸੇ ’ਤੇ ਟਿਕਿਆ ਹੈ</string>
     <string name="two_sided_would_change">ਕਿਹੜੀ ਗੱਲ ਇਹ ਫ਼ੈਸਲਾ ਬਦਲ ਸਕਦੀ ਹੈ</string>
     <string name="appeal_title">ਵੇਰਵਾ ਜੋੜੋ</string>
+    <string name="home_example">ਕੋਈ ਉਦਾਹਰਨ ਅਜ਼ਮਾਓ</string>
+    <string name="home_lead">ਦੋਵੇਂ ਪੱਖ ਲਿਖੋ, ਜਾਂ ਦੂਜੀ ਧਿਰ ਨੂੰ ਲਿੰਕ ਭੇਜੋ ਤਾਂ ਜੋ ਉਹ ਆਪਣਾ ਪੱਖ ਆਪ ਲਿਖਣ।</string>
+    <string name="home_lead_solo">ਆਪਣਾ ਪੱਖ ਲਿਖੋ, ਅਤੇ ਜੇ ਪਤਾ ਹੋਵੇ ਤਾਂ ਉਨ੍ਹਾਂ ਦਾ ਵੀ।</string>
+    <string name="home_their_side">ਉਨ੍ਹਾਂ ਦਾ ਪੱਖ</string>
+    <string name="home_their_name">ਉਨ੍ਹਾਂ ਦਾ ਨਾਂ</string>
+    <string name="home_their_placeholder">ਉਹ ਕੀ ਕਹਿੰਦੇ ਹਨ? ਉਵੇਂ ਲਿਖੋ ਜਿਵੇਂ ਉਹ ਆਪ ਕਹਿਣਗੇ।</string>
+    <string name="home_their_side_label">ਬਹਿਸ ਵਿੱਚ ਉਨ੍ਹਾਂ ਦਾ ਪੱਖ</string>
+    <string name="home_your_side_label">ਬਹਿਸ ਵਿੱਚ ਤੁਹਾਡਾ ਪੱਖ</string>
+    <string name="home_says">%1$s ਦਾ ਕਹਿਣਾ ਹੈ:</string>
+    <string name="home_my_side">ਮੇਰਾ ਪੱਖ:</string>
+    <string name="home_other_side">ਉਨ੍ਹਾਂ ਦਾ ਪੱਖ:</string>
     <string name="appeal_lead">ਕੁਝ ਰਹਿ ਗਿਆ ਜਾਂ ਗ਼ਲਤ ਹੈ? ਇੱਕ ਵਾਰ ਜੋੜੋ ਅਤੇ ਜੱਜ ਸਾਰਾ ਕੁਝ ਦੁਬਾਰਾ ਦੇਖਣਗੇ। ਇਸ ’ਤੇ 1 ਫ਼ੈਸਲਾ ਲੱਗਦਾ ਹੈ।</string>
     <string name="appeal_label">ਤੁਹਾਡਾ ਵੇਰਵਾ</string>
     <string name="appeal_placeholder">ਜੱਜਾਂ ਤੋਂ ਕੀ ਰਹਿ ਗਿਆ?</string>
@@ -471,6 +479,8 @@
     <string name="stamp_dissolved">ਸ਼ਬਦਾਂ ਦਾ ਭੁਲੇਖਾ</string>
     <string name="best_point_of">%1$s ਦੀ ਸਭ ਤੋਂ ਵਧੀਆ ਦਲੀਲ</string>
     <string name="best_point_self">ਤੁਹਾਡੀ ਸਭ ਤੋਂ ਵਧੀਆ ਦਲੀਲ</string>
+    <string name="error_age_blocked">Judge ਸਿਰਫ਼ 18 ਸਾਲ ਜਾਂ ਵੱਧ ਉਮਰ ਦੇ ਲੋਕਾਂ ਲਈ ਹੈ।</string>
+    <string name="error_age_unconfirmed">ਅੱਗੇ ਵਧਣ ਲਈ ਪੁਸ਼ਟੀ ਕਰੋ ਕਿ ਤੁਹਾਡੀ ਉਮਰ 18 ਸਾਲ ਜਾਂ ਵੱਧ ਹੈ।</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">ਨਵਾਂ</string>
     <string name="app_tab_settings">ਸੈਟਿੰਗਾਂ</string>

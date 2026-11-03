@@ -173,9 +173,6 @@
     <string name="signin_email_invalid">ఈ ఈమెయిల్ అడ్రస్ సరిగ్గా లేనట్టుంది.</string>
     <string name="signin_provider_unavailable">ఇంకా అందుబాటులో లేదు</string>
     <string name="signin_failed">మిమ్మల్ని సైన్ ఇన్ చేయలేకపోయాం. ఇంకోసారి ప్రయత్నిస్తారా?</string>
-    <string name="signin_legal">మీ వాదనలను బయటి AI సేవ ఒకటి చదువుతుంది. కొనసాగితే మీరు మా</string>
-    <string name="signin_legal_link">గోప్యతా విధానానికి</string>
-    <string name="signin_legal_after">\u0020అంగీకరించినట్టే.</string>
     <string name="signin_loading">సైన్ ఇన్ ఆప్షన్లు లోడ్ అవుతున్నాయి…</string>
     <string name="account_title">మీ అకౌంట్</string>
     <string name="account_signed_in_as">%1$sగా సైన్ ఇన్ అయ్యారు</string>
@@ -354,6 +351,17 @@
     <string name="two_sided_decisive">తీర్పు దీని మీదే ఆధారపడింది</string>
     <string name="two_sided_would_change">ఈ తీర్పును ఏది మార్చగలదు</string>
     <string name="appeal_title">వివరాలు జోడించండి</string>
+    <string name="home_example">ఒక ఉదాహరణ ప్రయత్నించండి</string>
+    <string name="home_lead">రెండు వైపుల కథా మీరే రాయండి, లేదా అవతలి వ్యక్తికి లింక్ పంపి వాళ్ల కథ వాళ్లనే రాయమనండి.</string>
+    <string name="home_lead_solo">మీ వైపు కథ రాయండి, వాళ్ల వైపు తెలిస్తే అది కూడా.</string>
+    <string name="home_their_side">వాళ్ల వైపు కథ</string>
+    <string name="home_their_name">వాళ్ల పేరు</string>
+    <string name="home_their_placeholder">వాళ్లు ఏమంటున్నారు? వాళ్లు ఎలా చెబుతారో అలాగే రాయండి.</string>
+    <string name="home_their_side_label">వాదనలో వాళ్ల వైపు కథ</string>
+    <string name="home_your_side_label">వాదనలో మీ వైపు కథ</string>
+    <string name="home_says">%1$s అంటున్నారు:</string>
+    <string name="home_my_side">నా వైపు కథ:</string>
+    <string name="home_other_side">వాళ్ల వైపు కథ:</string>
     <string name="appeal_lead">ఏదైనా మిస్ అయిందా, లేదా తప్పుగా ఉందా? ఒకసారి జోడించండి, జడ్జీలు అంతా మళ్లీ చూస్తారు. దీనికి 1 తీర్పు ఖర్చవుతుంది.</string>
     <string name="appeal_label">మీ అదనపు వివరాలు</string>
     <string name="appeal_placeholder">జడ్జీలు ఏం మిస్ అయ్యారు?</string>
@@ -471,6 +479,8 @@
     <string name="stamp_dissolved">అర్థభేదం</string>
     <string name="best_point_of">%1$s వాదనలో బలమైన పాయింట్</string>
     <string name="best_point_self">మీ వాదనలో బలమైన పాయింట్</string>
+    <string name="error_age_blocked">Judge 18 ఏళ్లు, అంతకంటే ఎక్కువ వయసు ఉన్నవాళ్లకు మాత్రమే.</string>
+    <string name="error_age_unconfirmed">కొనసాగడానికి మీకు 18 ఏళ్లు లేదా అంతకంటే ఎక్కువ అని నిర్ధారించండి.</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">కొత్తది</string>
     <string name="app_tab_settings">సెట్టింగ్‌లు</string>

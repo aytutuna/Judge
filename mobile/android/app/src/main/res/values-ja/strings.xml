@@ -168,9 +168,6 @@
     <string name="signin_email_invalid">メールアドレスが正しくないようです。</string>
     <string name="signin_provider_unavailable">まだ利用できません</string>
     <string name="signin_failed">ログインできませんでした。もう一度お試しください。</string>
-    <string name="signin_legal">書いた内容は外部のAIが読み取ります。</string>
-    <string name="signin_legal_link">プライバシーポリシー</string>
-    <string name="signin_legal_after">には、続行した時点で同意したものとみなされます。</string>
     <string name="signin_loading">ログイン方法を読み込み中…</string>
     <string name="account_title">アカウント</string>
     <string name="account_signed_in_as">%1$sでログイン中</string>
@@ -346,6 +343,17 @@
     <string name="two_sided_decisive">判定はこの点しだい</string>
     <string name="two_sided_would_change">この判定が変わるとしたら</string>
     <string name="appeal_title">補足する</string>
+    <string name="home_example">例を試す</string>
+    <string name="home_lead">両方の言い分を書くか、相手にリンクを送って言い分を書いてもらいましょう。</string>
+    <string name="home_lead_solo">あなたの言い分を書いてください。わかれば相手の言い分も。</string>
+    <string name="home_their_side">相手の言い分</string>
+    <string name="home_their_name">相手の名前</string>
+    <string name="home_their_placeholder">相手はなんと言っていますか？　相手になったつもりで書いてください。</string>
+    <string name="home_their_side_label">揉めごとについての相手の言い分</string>
+    <string name="home_your_side_label">揉めごとについてのあなたの言い分</string>
+    <string name="home_says">%1$sの言い分：</string>
+    <string name="home_my_side">私の言い分：</string>
+    <string name="home_other_side">相手の言い分：</string>
     <string name="appeal_lead">抜けや間違いがありますか？　一度だけ補足すると、審査員がすべてをもう一度見直します。判定1回分を使います。</string>
     <string name="appeal_label">補足</string>
     <string name="appeal_placeholder">審査員が見落としたことは？</string>
@@ -460,6 +468,8 @@
     <string name="stamp_dissolved">言葉のズレ</string>
     <string name="best_point_of">%1$sのいちばん強い主張</string>
     <string name="best_point_self">あなたのいちばん強い主張</string>
+    <string name="error_age_blocked">Judgeは18歳以上の方のみ利用できます。</string>
+    <string name="error_age_unconfirmed">続けるには、18歳以上であることを確認してください。</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">新規</string>
     <string name="app_tab_settings">設定</string>

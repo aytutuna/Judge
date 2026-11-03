@@ -178,9 +178,6 @@
     <string name="signin_email_invalid">Esse endereço de e-mail não parece certo.</string>
     <string name="signin_provider_unavailable">Ainda não disponível</string>
     <string name="signin_failed">Não conseguimos fazer seu login. Pode tentar de novo?</string>
-    <string name="signin_legal">Uma IA externa lê suas discussões. Ao continuar, você concorda com a</string>
-    <string name="signin_legal_link">Política de Privacidade</string>
-    <string name="signin_legal_after">.</string>
     <string name="signin_loading">Carregando as opções de login…</string>
     <string name="account_title">Sua conta</string>
     <string name="account_signed_in_as">Conectado como %1$s</string>
@@ -362,6 +359,17 @@
     <string name="two_sided_decisive">O veredito depende disto</string>
     <string name="two_sided_would_change">O que mudaria este veredito</string>
     <string name="appeal_title">Adicionar contexto</string>
+    <string name="home_example">Experimente um exemplo</string>
+    <string name="home_lead">Escreva os dois lados ou mande um link para a outra pessoa escrever o dela.</string>
+    <string name="home_lead_solo">Escreva o seu lado e, se souber, o da outra pessoa.</string>
+    <string name="home_their_side">O outro lado</string>
+    <string name="home_their_name">Nome da outra pessoa</string>
+    <string name="home_their_placeholder">O que a outra pessoa diz? Escreva do jeito que ela contaria.</string>
+    <string name="home_their_side_label">O outro lado da discussão</string>
+    <string name="home_your_side_label">Seu lado da discussão</string>
+    <string name="home_says">%1$s diz:</string>
+    <string name="home_my_side">Meu lado:</string>
+    <string name="home_other_side">O lado da outra pessoa:</string>
     <string name="appeal_lead">Faltou algo ou tem algo errado? Adicione uma vez e os juízes olham tudo de novo. Custa 1 veredito.</string>
     <string name="appeal_label">Seu contexto</string>
     <string name="appeal_placeholder">O que os juízes deixaram passar?</string>
@@ -482,6 +490,8 @@
     <string name="stamp_dissolved">Mal-entendido</string>
     <string name="best_point_of">Melhor argumento de %1$s</string>
     <string name="best_point_self">Seu melhor argumento</string>
+    <string name="error_age_blocked">O Judge é só para quem tem 18 anos ou mais.</string>
+    <string name="error_age_unconfirmed">Confirme que você tem 18 anos ou mais para continuar.</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">Novo</string>
     <string name="app_tab_settings">Ajustes</string>

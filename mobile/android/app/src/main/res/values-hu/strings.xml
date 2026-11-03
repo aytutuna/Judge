@@ -173,9 +173,6 @@
     <string name="signin_email_invalid">Ez az e-mail-cím nem tűnik helyesnek.</string>
     <string name="signin_provider_unavailable">Még nem elérhető</string>
     <string name="signin_failed">Nem sikerült a belépés. Megpróbálod újra?</string>
-    <string name="signin_legal">A vitáidat egy külső MI olvassa. A folytatással elfogadod az</string>
-    <string name="signin_legal_link">Adatvédelmi tájékoztatót</string>
-    <string name="signin_legal_after">.</string>
     <string name="signin_loading">Belépési lehetőségek betöltése…</string>
     <string name="account_title">A fiókod</string>
     <string name="account_signed_in_as">Belépve: %1$s</string>
@@ -354,6 +351,17 @@
     <string name="two_sided_decisive">Ezen múlik az ítélet</string>
     <string name="two_sided_would_change">Mi változtatna az ítéleten</string>
     <string name="appeal_title">Kiegészítés</string>
+    <string name="home_example">Próbálj ki egy példát</string>
+    <string name="home_lead">Írd le mindkét fél verzióját, vagy küldj egy linket a másiknak, hogy ő írja meg a sajátját.</string>
+    <string name="home_lead_solo">Írd le a te verziódat, és az övét is, ha ismered.</string>
+    <string name="home_their_side">Az ő verziója</string>
+    <string name="home_their_name">Az ő neve</string>
+    <string name="home_their_placeholder">Mit mond ő? Írd le úgy, ahogy ő mondaná.</string>
+    <string name="home_their_side_label">Az ő verziója a vitáról</string>
+    <string name="home_your_side_label">A te verziód a vitáról</string>
+    <string name="home_says">%1$s szerint:</string>
+    <string name="home_my_side">Az én verzióm:</string>
+    <string name="home_other_side">Az ő verziója:</string>
     <string name="appeal_lead">Hiányzik vagy téves valami? Add hozzá egyszer, és a bírák mindent újra átnéznek. Ez 1 ítéletbe kerül.</string>
     <string name="appeal_label">A kiegészítésed</string>
     <string name="appeal_placeholder">Mi kerülte el a bírák figyelmét?</string>
@@ -471,6 +479,8 @@
     <string name="stamp_dissolved">Félreértés</string>
     <string name="best_point_of">%1$s legjobb érve</string>
     <string name="best_point_self">A te legjobb érved</string>
+    <string name="error_age_blocked">A Judge csak 18 éves vagy idősebb embereknek szól.</string>
+    <string name="error_age_unconfirmed">A folytatáshoz erősítsd meg, hogy legalább 18 éves vagy.</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">Új</string>
     <string name="app_tab_settings">Beállítások</string>

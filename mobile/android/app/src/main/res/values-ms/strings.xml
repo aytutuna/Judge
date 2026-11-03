@@ -168,9 +168,6 @@
     <string name="signin_email_invalid">Alamat e-mel itu nampak tidak betul.</string>
     <string name="signin_provider_unavailable">Belum tersedia</string>
     <string name="signin_failed">Log masuk tidak berjaya. Boleh cuba lagi?</string>
-    <string name="signin_legal">AI luar membaca pertikaian anda. Dengan meneruskan, anda bersetuju dengan</string>
-    <string name="signin_legal_link">Dasar Privasi</string>
-    <string name="signin_legal_after">.</string>
     <string name="signin_loading">Memuatkan pilihan log masuk…</string>
     <string name="account_title">Akaun anda</string>
     <string name="account_signed_in_as">Log masuk sebagai %1$s</string>
@@ -346,6 +343,17 @@
     <string name="two_sided_decisive">Keputusan bergantung pada perkara ini</string>
     <string name="two_sided_would_change">Apa yang boleh mengubah keputusan ini</string>
     <string name="appeal_title">Tambah konteks</string>
+    <string name="home_example">Cuba contoh</string>
+    <string name="home_lead">Tulis kedua-dua versi, atau hantar pautan kepada pihak satu lagi supaya dia menulis versinya sendiri.</string>
+    <string name="home_lead_solo">Tulis versi anda, dan versi dia juga kalau anda tahu.</string>
+    <string name="home_their_side">Versi dia</string>
+    <string name="home_their_name">Nama dia</string>
+    <string name="home_their_placeholder">Apa kata dia? Tulis seperti yang dia sendiri akan katakan.</string>
+    <string name="home_their_side_label">Versi dia tentang pertikaian ini</string>
+    <string name="home_your_side_label">Versi anda tentang pertikaian ini</string>
+    <string name="home_says">%1$s berkata:</string>
+    <string name="home_my_side">Versi saya:</string>
+    <string name="home_other_side">Versi dia:</string>
     <string name="appeal_lead">Ada yang tertinggal atau salah? Anda boleh menambahnya sekali, dan hakim akan meneliti semuanya semula. Kosnya 1 keputusan.</string>
     <string name="appeal_label">Konteks anda</string>
     <string name="appeal_placeholder">Apa yang hakim terlepas pandang?</string>
@@ -460,6 +468,8 @@
     <string name="stamp_dissolved">Salah faham</string>
     <string name="best_point_of">Hujah terbaik %1$s</string>
     <string name="best_point_self">Hujah terbaik anda</string>
+    <string name="error_age_blocked">Judge hanya untuk mereka yang berumur 18 tahun ke atas.</string>
+    <string name="error_age_unconfirmed">Sahkan bahawa anda berumur 18 tahun atau lebih untuk meneruskan.</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">Baharu</string>
     <string name="app_tab_settings">Tetapan</string>

@@ -173,9 +173,6 @@
     <string name="signin_email_invalid">हा ईमेल पत्ता बरोबर वाटत नाही.</string>
     <string name="signin_provider_unavailable">अजून उपलब्ध नाही</string>
     <string name="signin_failed">साइन इन करता आले नाही. पुन्हा प्रयत्न कराल का?</string>
-    <string name="signin_legal">तुमचे वाद बाहेरची एक AI सेवा वाचते. पुढे गेल्यास तुम्ही</string>
-    <string name="signin_legal_link">गोपनीयता धोरण</string>
-    <string name="signin_legal_after">\u0020मान्य करता.</string>
     <string name="signin_loading">साइन-इनचे पर्याय लोड होत आहेत…</string>
     <string name="account_title">तुमचे खाते</string>
     <string name="account_signed_in_as">%1$s म्हणून साइन इन केले आहे</string>
@@ -354,6 +351,17 @@
     <string name="two_sided_decisive">निकाल यावरच अवलंबून आहे</string>
     <string name="two_sided_would_change">हा निकाल कशाने बदलू शकतो</string>
     <string name="appeal_title">माहिती जोडा</string>
+    <string name="home_example">एखादे उदाहरण वापरून पाहा</string>
+    <string name="home_lead">दोन्ही बाजू लिहा, किंवा लिंक पाठवा, म्हणजे समोरची व्यक्ती आपली बाजू स्वतः लिहील.</string>
+    <string name="home_lead_solo">तुमची बाजू लिहा, आणि माहीत असेल तर त्यांचीही.</string>
+    <string name="home_their_side">त्यांची बाजू</string>
+    <string name="home_their_name">त्यांचे नाव</string>
+    <string name="home_their_placeholder">त्यांचे म्हणणे काय आहे? ते मांडतील तसेच लिहा.</string>
+    <string name="home_their_side_label">वादातली त्यांची बाजू</string>
+    <string name="home_your_side_label">वादातली तुमची बाजू</string>
+    <string name="home_says">%1$sचे म्हणणे:</string>
+    <string name="home_my_side">माझी बाजू:</string>
+    <string name="home_other_side">त्यांची बाजू:</string>
     <string name="appeal_lead">काही राहिले किंवा चुकले? एकदा ते जोडा, आणि परीक्षक सगळे पुन्हा पाहतील. यासाठी 1 निकाल लागतो.</string>
     <string name="appeal_label">तुमची माहिती</string>
     <string name="appeal_placeholder">परीक्षकांचे काय सुटले?</string>
@@ -471,6 +479,8 @@
     <string name="stamp_dissolved">अर्थभेद</string>
     <string name="best_point_of">%1$sचा सर्वात भक्कम मुद्दा</string>
     <string name="best_point_self">तुमचा सर्वात भक्कम मुद्दा</string>
+    <string name="error_age_blocked">Judge फक्त 18 वर्षे आणि त्यापेक्षा जास्त वयाच्या लोकांसाठी आहे.</string>
+    <string name="error_age_unconfirmed">पुढे जाण्यासाठी तुमचे वय 18 किंवा जास्त असल्याची खात्री करा.</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">नवा</string>
     <string name="app_tab_settings">सेटिंग्ज</string>

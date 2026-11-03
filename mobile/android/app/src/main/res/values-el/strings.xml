@@ -173,9 +173,6 @@
     <string name="signin_email_invalid">Αυτή η διεύθυνση email δεν φαίνεται σωστή.</string>
     <string name="signin_provider_unavailable">Δεν είναι διαθέσιμο ακόμα</string>
     <string name="signin_failed">Δεν μπορέσαμε να σε συνδέσουμε. Δοκιμάζεις ξανά;</string>
-    <string name="signin_legal">Τις διαφωνίες σου τις διαβάζει ένα εξωτερικό AI. Αν συνεχίσεις, αποδέχεσαι την</string>
-    <string name="signin_legal_link">Πολιτική Απορρήτου</string>
-    <string name="signin_legal_after">.</string>
     <string name="signin_loading">Φόρτωση επιλογών σύνδεσης…</string>
     <string name="account_title">Ο λογαριασμός σου</string>
     <string name="account_signed_in_as">Έχεις συνδεθεί ως %1$s</string>
@@ -354,6 +351,17 @@
     <string name="two_sided_decisive">Από αυτό κρέμεται η απόφαση</string>
     <string name="two_sided_would_change">Τι θα άλλαζε την απόφαση</string>
     <string name="appeal_title">Πρόσθεσε πληροφορίες</string>
+    <string name="home_example">Δοκίμασε ένα παράδειγμα</string>
+    <string name="home_lead">Γράψε και τις δύο πλευρές ή στείλε σύνδεσμο στο άλλο άτομο για να γράψει τη δική του.</string>
+    <string name="home_lead_solo">Γράψε τη δική σου πλευρά, και την άλλη αν την ξέρεις.</string>
+    <string name="home_their_side">Η άλλη πλευρά</string>
+    <string name="home_their_name">Το όνομα της άλλης πλευράς</string>
+    <string name="home_their_placeholder">Τι λέει η άλλη πλευρά; Γράψ\' το όπως θα το έλεγε η ίδια.</string>
+    <string name="home_their_side_label">Η άλλη πλευρά στη διαφωνία</string>
+    <string name="home_your_side_label">Η δική σου πλευρά στη διαφωνία</string>
+    <string name="home_says">%1$s λέει:</string>
+    <string name="home_my_side">Η δική μου πλευρά:</string>
+    <string name="home_other_side">Η άλλη πλευρά:</string>
     <string name="appeal_lead">Λείπει κάτι ή είναι λάθος; Πρόσθεσέ το μία φορά και οι κριτές ξανακοιτάζουν τα πάντα. Κοστίζει 1 απόφαση.</string>
     <string name="appeal_label">Οι πληροφορίες σου</string>
     <string name="appeal_placeholder">Τι τους ξέφυγε;</string>
@@ -471,6 +479,8 @@
     <string name="stamp_dissolved">Θέμα λέξεων</string>
     <string name="best_point_of">Το δυνατό χαρτί (%1$s)</string>
     <string name="best_point_self">Το δικό σου δυνατό χαρτί</string>
+    <string name="error_age_blocked">Το Judge είναι μόνο για άτομα 18 ετών και άνω.</string>
+    <string name="error_age_unconfirmed">Επιβεβαίωσε ότι είσαι 18 ετών ή μεγαλύτερος/η για να συνεχίσεις.</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">Νέα διαφωνία</string>
     <string name="app_tab_settings">Ρυθμίσεις</string>

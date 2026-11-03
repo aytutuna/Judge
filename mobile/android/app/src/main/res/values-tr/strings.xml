@@ -173,9 +173,6 @@
     <string name="signin_email_invalid">Bu e-posta adresi doğru görünmüyor.</string>
     <string name="signin_provider_unavailable">Henüz kullanılamıyor</string>
     <string name="signin_failed">Giriş yapamadık. Bir daha dener misin?</string>
-    <string name="signin_legal">Tartışmalarını harici bir yapay zekâ okur. Devam ederek</string>
-    <string name="signin_legal_link">Gizlilik Politikası</string>
-    <string name="signin_legal_after">\'nı kabul etmiş olursun.</string>
     <string name="signin_loading">Giriş seçenekleri yükleniyor…</string>
     <string name="account_title">Hesabın</string>
     <string name="account_signed_in_as">%1$s olarak giriş yaptın</string>
@@ -354,6 +351,17 @@
     <string name="two_sided_decisive">Karar buna bağlı</string>
     <string name="two_sided_would_change">Bu kararı ne değiştirirdi</string>
     <string name="appeal_title">Bilgi ekle</string>
+    <string name="home_example">Bir örnek dene</string>
+    <string name="home_lead">İki tarafı da yaz ya da karşı tarafa bir bağlantı gönder, kendi tarafını o yazsın.</string>
+    <string name="home_lead_solo">Kendi tarafını yaz, biliyorsan onunkini de.</string>
+    <string name="home_their_side">Karşı taraf</string>
+    <string name="home_their_name">Onun adı</string>
+    <string name="home_their_placeholder">O ne diyor? Onun anlatacağı gibi yaz.</string>
+    <string name="home_their_side_label">Tartışmada karşı tarafın görüşü</string>
+    <string name="home_your_side_label">Tartışmada senin tarafın</string>
+    <string name="home_says">%1$s diyor ki:</string>
+    <string name="home_my_side">Benim tarafım:</string>
+    <string name="home_other_side">Onun tarafı:</string>
     <string name="appeal_lead">Eksik ya da yanlış bir şey mi var? Bir kez ekle, yargıçlar her şeye yeniden baksın. 1 karar hakkı kullanır.</string>
     <string name="appeal_label">Eklemek istediğin bilgi</string>
     <string name="appeal_placeholder">Yargıçlar neyi kaçırdı?</string>
@@ -471,6 +479,8 @@
     <string name="stamp_dissolved">Anlam farkı</string>
     <string name="best_point_of">%1$s adına en güçlü nokta</string>
     <string name="best_point_self">Senin en güçlü noktan</string>
+    <string name="error_age_blocked">Judge yalnızca 18 yaş ve üzeri kişiler içindir.</string>
+    <string name="error_age_unconfirmed">Devam etmek için 18 yaşında veya daha büyük olduğunu onayla.</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">Yeni</string>
     <string name="app_tab_settings">Ayarlar</string>

@@ -178,9 +178,6 @@
     <string name="signin_email_invalid">Ese correo no parece correcto.</string>
     <string name="signin_provider_unavailable">Aún no disponible</string>
     <string name="signin_failed">No pudimos iniciar tu sesión. ¿Lo intentas de nuevo?</string>
-    <string name="signin_legal">Una IA externa lee tus discusiones. Al continuar, aceptas la</string>
-    <string name="signin_legal_link">Política de privacidad</string>
-    <string name="signin_legal_after">.</string>
     <string name="signin_loading">Cargando opciones de inicio de sesión…</string>
     <string name="account_title">Tu cuenta</string>
     <string name="account_signed_in_as">Sesión iniciada como %1$s</string>
@@ -362,6 +359,17 @@
     <string name="two_sided_decisive">El veredicto depende de esto</string>
     <string name="two_sided_would_change">Qué cambiaría este veredicto</string>
     <string name="appeal_title">Añadir contexto</string>
+    <string name="home_example">Probar un ejemplo</string>
+    <string name="home_lead">Escribe las dos versiones o envía un enlace a la otra persona para que escriba la suya.</string>
+    <string name="home_lead_solo">Escribe tu versión y, si la conoces, la de la otra persona.</string>
+    <string name="home_their_side">La otra versión</string>
+    <string name="home_their_name">Nombre de la otra persona</string>
+    <string name="home_their_placeholder">¿Qué dice la otra persona? Escríbelo como lo contaría ella.</string>
+    <string name="home_their_side_label">La versión de la otra persona</string>
+    <string name="home_your_side_label">Tu versión de la discusión</string>
+    <string name="home_says">%1$s dice:</string>
+    <string name="home_my_side">Mi versión:</string>
+    <string name="home_other_side">Versión de la otra persona:</string>
     <string name="appeal_lead">¿Falta algo o hay algo mal? Añádelo una vez y los jueces vuelven a revisarlo todo. Cuesta 1 veredicto.</string>
     <string name="appeal_label">Tu contexto</string>
     <string name="appeal_placeholder">¿Qué se les pasó a los jueces?</string>
@@ -482,6 +490,8 @@
     <string name="stamp_dissolved">Malentendido</string>
     <string name="best_point_of">El mejor argumento de %1$s</string>
     <string name="best_point_self">Tu mejor argumento</string>
+    <string name="error_age_blocked">Judge es solo para personas de 18 años o más.</string>
+    <string name="error_age_unconfirmed">Confirma que tienes 18 años o más para continuar.</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">Nueva</string>
     <string name="app_tab_settings">Ajustes</string>

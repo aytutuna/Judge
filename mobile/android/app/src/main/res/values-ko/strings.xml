@@ -168,9 +168,6 @@
     <string name="signin_email_invalid">이메일 주소가 올바르지 않은 것 같아요.</string>
     <string name="signin_provider_unavailable">아직 이용할 수 없어요</string>
     <string name="signin_failed">로그인하지 못했어요. 다시 한번 해 볼까요?</string>
-    <string name="signin_legal">논쟁 내용은 외부 AI가 읽어요. 계속하면</string>
-    <string name="signin_legal_link">개인정보 처리방침</string>
-    <string name="signin_legal_after">에 동의하는 것으로 봐요.</string>
     <string name="signin_loading">로그인 방법을 불러오는 중…</string>
     <string name="account_title">내 계정</string>
     <string name="account_signed_in_as">%1$s 계정으로 로그인됨</string>
@@ -346,6 +343,17 @@
     <string name="two_sided_decisive">판결은 이 부분에 달렸어요</string>
     <string name="two_sided_would_change">이 판결을 뒤집을 수 있는 것</string>
     <string name="appeal_title">맥락 추가</string>
+    <string name="home_example">예시로 해 보기</string>
+    <string name="home_lead">양쪽 입장을 다 쓰거나, 상대방에게 링크를 보내서 직접 쓰게 해 보세요.</string>
+    <string name="home_lead_solo">내 입장을 쓰고, 상대방 입장도 알면 함께 써 주세요.</string>
+    <string name="home_their_side">상대방 입장</string>
+    <string name="home_their_name">상대방 이름</string>
+    <string name="home_their_placeholder">상대방은 뭐라고 하나요? 상대방이 직접 말하듯이 써 주세요.</string>
+    <string name="home_their_side_label">논쟁에서 상대방 입장</string>
+    <string name="home_your_side_label">논쟁에서 내 입장</string>
+    <string name="home_says">%1$s의 말:</string>
+    <string name="home_my_side">내 입장:</string>
+    <string name="home_other_side">상대방 입장:</string>
     <string name="appeal_lead">빠졌거나 잘못된 내용이 있나요? 한 번 추가할 수 있고, 추가하면 판사들이 전부 다시 살펴봐요. 판결 1회를 사용해요.</string>
     <string name="appeal_label">추가할 맥락</string>
     <string name="appeal_placeholder">판사들이 놓친 게 뭔가요?</string>
@@ -460,6 +468,8 @@
     <string name="stamp_dissolved">말뜻 차이</string>
     <string name="best_point_of">%1$s의 가장 강한 논거</string>
     <string name="best_point_self">내 가장 강한 논거</string>
+    <string name="error_age_blocked">Judge는 18세 이상만 이용할 수 있어요.</string>
+    <string name="error_age_unconfirmed">계속하려면 18세 이상인지 확인해 주세요.</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">새 논쟁</string>
     <string name="app_tab_settings">설정</string>

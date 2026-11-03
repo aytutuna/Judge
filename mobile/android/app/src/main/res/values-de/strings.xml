@@ -173,9 +173,6 @@
     <string name="signin_email_invalid">Diese E-Mail-Adresse sieht nicht richtig aus.</string>
     <string name="signin_provider_unavailable">Noch nicht verfügbar</string>
     <string name="signin_failed">Die Anmeldung hat nicht geklappt. Versuchst du es noch mal?</string>
-    <string name="signin_legal">Eine externe KI liest deine Streitfälle. Wenn du fortfährst, stimmst du der</string>
-    <string name="signin_legal_link">Datenschutzerklärung</string>
-    <string name="signin_legal_after">\u0020zu.</string>
     <string name="signin_loading">Anmeldeoptionen werden geladen…</string>
     <string name="account_title">Dein Konto</string>
     <string name="account_signed_in_as">Angemeldet als %1$s</string>
@@ -354,6 +351,17 @@
     <string name="two_sided_decisive">Daran hängt das Urteil</string>
     <string name="two_sided_would_change">Was dieses Urteil ändern würde</string>
     <string name="appeal_title">Kontext ergänzen</string>
+    <string name="home_example">Beispiel ausprobieren</string>
+    <string name="home_lead">Schreib beide Seiten auf oder schick der anderen Person einen Link für ihre Seite.</string>
+    <string name="home_lead_solo">Schreib deine Seite auf und, wenn du sie kennst, auch die der anderen Person.</string>
+    <string name="home_their_side">Gegenseite</string>
+    <string name="home_their_name">Name der anderen Person</string>
+    <string name="home_their_placeholder">Was sagt die andere Person? Schreib es so, wie sie es sagen würde.</string>
+    <string name="home_their_side_label">Die Seite der anderen Person</string>
+    <string name="home_your_side_label">Deine Seite des Streits</string>
+    <string name="home_says">%1$s sagt:</string>
+    <string name="home_my_side">Meine Seite:</string>
+    <string name="home_other_side">Die andere Seite:</string>
     <string name="appeal_lead">Fehlt etwas oder stimmt etwas nicht? Ergänze es einmal, und die Richter sehen sich alles noch mal an. Kostet 1 Urteil.</string>
     <string name="appeal_label">Dein Kontext</string>
     <string name="appeal_placeholder">Was haben die Richter übersehen?</string>
@@ -471,6 +479,8 @@
     <string name="stamp_dissolved">Missverständnis</string>
     <string name="best_point_of">Stärkstes Argument von %1$s</string>
     <string name="best_point_self">Dein stärkstes Argument</string>
+    <string name="error_age_blocked">Judge ist nur für Menschen ab 18.</string>
+    <string name="error_age_unconfirmed">Bestätige, dass du 18 oder älter bist, um fortzufahren.</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">Neu</string>
     <string name="app_tab_settings">Einstellungen</string>

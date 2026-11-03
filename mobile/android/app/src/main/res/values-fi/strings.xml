@@ -173,9 +173,6 @@
     <string name="signin_email_invalid">Sähköpostiosoite ei näytä oikealta.</string>
     <string name="signin_provider_unavailable">Ei vielä käytettävissä</string>
     <string name="signin_failed">Kirjautuminen ei onnistunut. Yritä uudelleen.</string>
-    <string name="signin_legal">Ulkopuolinen tekoäly lukee kiistasi. Jatkamalla hyväksyt</string>
-    <string name="signin_legal_link">tietosuojakäytännön</string>
-    <string name="signin_legal_after">.</string>
     <string name="signin_loading">Ladataan kirjautumisvaihtoehtoja…</string>
     <string name="account_title">Tilisi</string>
     <string name="account_signed_in_as">Kirjautuneena: %1$s</string>
@@ -354,6 +351,17 @@
     <string name="two_sided_decisive">Tuomio riippuu tästä</string>
     <string name="two_sided_would_change">Mikä muuttaisi tämän tuomion</string>
     <string name="appeal_title">Lisää tietoa</string>
+    <string name="home_example">Kokeile esimerkkiä</string>
+    <string name="home_lead">Kirjoita molemmat puolet tai lähetä toiselle linkki, niin hän kirjoittaa omansa.</string>
+    <string name="home_lead_solo">Kirjoita oma puolesi ja toisen puoli, jos tiedät sen.</string>
+    <string name="home_their_side">Toisen puoli</string>
+    <string name="home_their_name">Toisen nimi</string>
+    <string name="home_their_placeholder">Mitä toinen sanoo? Kirjoita se niin kuin hän itse sen sanoisi.</string>
+    <string name="home_their_side_label">Toisen puoli kiistassa</string>
+    <string name="home_your_side_label">Sinun puolesi kiistassa</string>
+    <string name="home_says">%1$s sanoo:</string>
+    <string name="home_my_side">Minun puoleni:</string>
+    <string name="home_other_side">Toisen puoli:</string>
     <string name="appeal_lead">Puuttuuko jotain, tai onko jotain väärin? Lisää se kerran, niin tuomarit käyvät kaiken läpi uudelleen. Maksaa 1 tuomion.</string>
     <string name="appeal_label">Lisätietosi</string>
     <string name="appeal_placeholder">Mitä tuomarit eivät huomanneet?</string>
@@ -471,6 +479,8 @@
     <string name="stamp_dissolved">Merkitysero</string>
     <string name="best_point_of">%1$s: paras pointti</string>
     <string name="best_point_self">Sinun paras pointtisi</string>
+    <string name="error_age_blocked">Judge on tarkoitettu vain 18 vuotta täyttäneille.</string>
+    <string name="error_age_unconfirmed">Vahvista, että olet 18-vuotias tai vanhempi, jatkaaksesi.</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">Uusi</string>
     <string name="app_tab_settings">Asetukset</string>

@@ -173,9 +173,6 @@
     <string name="signin_email_invalid">ಈ ಇಮೇಲ್ ವಿಳಾಸ ಸರಿಯಾಗಿ ಕಾಣುತ್ತಿಲ್ಲ.</string>
     <string name="signin_provider_unavailable">ಇನ್ನೂ ಲಭ್ಯವಿಲ್ಲ</string>
     <string name="signin_failed">ಸೈನ್ ಇನ್ ಆಗಲಿಲ್ಲ. ಇನ್ನೊಮ್ಮೆ ಪ್ರಯತ್ನಿಸುತ್ತೀರಾ?</string>
-    <string name="signin_legal">ನಿಮ್ಮ ವಾದಗಳನ್ನು ಹೊರಗಿನ AI ಓದುತ್ತದೆ. ಮುಂದುವರಿಯುವ ಮೂಲಕ ನೀವು ನಮ್ಮ</string>
-    <string name="signin_legal_link">ಗೌಪ್ಯತಾ ನೀತಿ</string>
-    <string name="signin_legal_after">ಗೆ ಒಪ್ಪುತ್ತೀರಿ.</string>
     <string name="signin_loading">ಸೈನ್ ಇನ್ ಆಯ್ಕೆಗಳು ಲೋಡ್ ಆಗುತ್ತಿವೆ…</string>
     <string name="account_title">ನಿಮ್ಮ ಖಾತೆ</string>
     <string name="account_signed_in_as">ಸೈನ್ ಇನ್ ಆಗಿರುವುದು: %1$s</string>
@@ -354,6 +351,17 @@
     <string name="two_sided_decisive">ತೀರ್ಪು ಇದರ ಮೇಲೆ ನಿಂತಿದೆ</string>
     <string name="two_sided_would_change">ಈ ತೀರ್ಪನ್ನು ಯಾವುದು ಬದಲಿಸಬಹುದು</string>
     <string name="appeal_title">ಹೆಚ್ಚಿನ ವಿವರ ಸೇರಿಸಿ</string>
+    <string name="home_example">ಒಂದು ಉದಾಹರಣೆ ಪ್ರಯತ್ನಿಸಿ</string>
+    <string name="home_lead">ಎರಡೂ ಕಡೆಯ ಮಾತು ನೀವೇ ಬರೆಯಿರಿ, ಅಥವಾ ಎದುರಿನವರಿಗೆ ಲಿಂಕ್ ಕಳುಹಿಸಿ, ಅವರ ಮಾತು ಅವರೇ ಬರೆಯಲಿ.</string>
+    <string name="home_lead_solo">ನಿಮ್ಮ ಕಡೆಯ ಮಾತು ಬರೆಯಿರಿ, ಗೊತ್ತಿದ್ದರೆ ಅವರದನ್ನೂ.</string>
+    <string name="home_their_side">ಅವರ ಕಡೆ</string>
+    <string name="home_their_name">ಅವರ ಹೆಸರು</string>
+    <string name="home_their_placeholder">ಅವರು ಏನು ಹೇಳುತ್ತಾರೆ? ಅವರು ಹೇಳುವ ಹಾಗೆಯೇ ಬರೆಯಿರಿ.</string>
+    <string name="home_their_side_label">ವಾದದಲ್ಲಿ ಅವರ ಕಡೆಯ ಮಾತು</string>
+    <string name="home_your_side_label">ವಾದದಲ್ಲಿ ನಿಮ್ಮ ಕಡೆಯ ಮಾತು</string>
+    <string name="home_says">%1$s ಹೇಳುವುದು:</string>
+    <string name="home_my_side">ನನ್ನ ಕಡೆಯ ಮಾತು:</string>
+    <string name="home_other_side">ಅವರ ಕಡೆಯ ಮಾತು:</string>
     <string name="appeal_lead">ಏನಾದರೂ ಬಿಟ್ಟುಹೋಗಿದೆಯೇ ಅಥವಾ ತಪ್ಪಾಗಿದೆಯೇ? ಒಮ್ಮೆ ಸೇರಿಸಿ, ತೀರ್ಪುಗಾರರು ಎಲ್ಲವನ್ನೂ ಮತ್ತೆ ನೋಡುತ್ತಾರೆ. ಇದಕ್ಕೆ 1 ತೀರ್ಪು ಖರ್ಚಾಗುತ್ತದೆ.</string>
     <string name="appeal_label">ನಿಮ್ಮ ವಿವರ</string>
     <string name="appeal_placeholder">ತೀರ್ಪುಗಾರರು ಏನನ್ನು ಗಮನಿಸಲಿಲ್ಲ?</string>
@@ -471,6 +479,8 @@
     <string name="stamp_dissolved">ಪದದ ಗೊಂದಲ</string>
     <string name="best_point_of">%1$s ಅವರ ಅತ್ಯುತ್ತಮ ಅಂಶ</string>
     <string name="best_point_self">ನಿಮ್ಮ ಅತ್ಯುತ್ತಮ ಅಂಶ</string>
+    <string name="error_age_blocked">Judge 18 ವರ್ಷ ಮತ್ತು ಮೇಲ್ಪಟ್ಟವರಿಗೆ ಮಾತ್ರ.</string>
+    <string name="error_age_unconfirmed">ಮುಂದುವರಿಯಲು ನಿಮಗೆ 18 ವರ್ಷ ಅಥವಾ ಹೆಚ್ಚು ವಯಸ್ಸಾಗಿದೆ ಎಂದು ದೃಢೀಕರಿಸಿ.</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">ಹೊಸದು</string>
     <string name="app_tab_settings">ಸೆಟ್ಟಿಂಗ್‌ಗಳು</string>

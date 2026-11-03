@@ -178,9 +178,6 @@
     <string name="signin_email_invalid">Adresa de e-mail nu pare corectă.</string>
     <string name="signin_provider_unavailable">Încă nu e disponibil</string>
     <string name="signin_failed">N-am reușit să te conectăm. Mai încerci o dată?</string>
-    <string name="signin_legal">Disputele tale sunt citite de un AI extern. Dacă continui, ești de acord cu</string>
-    <string name="signin_legal_link">Politica de confidențialitate</string>
-    <string name="signin_legal_after">.</string>
     <string name="signin_loading">Se încarcă opțiunile de conectare…</string>
     <string name="account_title">Contul tău</string>
     <string name="account_signed_in_as">Te-ai conectat cu %1$s</string>
@@ -362,6 +359,17 @@
     <string name="two_sided_decisive">De asta depinde verdictul</string>
     <string name="two_sided_would_change">Ce ar schimba verdictul</string>
     <string name="appeal_title">Adaugă context</string>
+    <string name="home_example">Încearcă un exemplu</string>
+    <string name="home_lead">Scrie ambele părți sau trimite-i celeilalte persoane un link ca să-și scrie varianta.</string>
+    <string name="home_lead_solo">Scrie-ți partea și, dacă o știi, varianta celeilalte persoane.</string>
+    <string name="home_their_side">Cealaltă parte</string>
+    <string name="home_their_name">Numele celeilalte părți</string>
+    <string name="home_their_placeholder">Ce zice cealaltă persoană? Scrie așa cum ar spune-o ea.</string>
+    <string name="home_their_side_label">Partea celeilalte persoane din dispută</string>
+    <string name="home_your_side_label">Partea ta din dispută</string>
+    <string name="home_says">%1$s spune:</string>
+    <string name="home_my_side">Partea mea:</string>
+    <string name="home_other_side">Cealaltă parte:</string>
     <string name="appeal_lead">Lipsește ceva sau e greșit? Poți adăuga context o singură dată, iar judecătorii se uită din nou la tot. Costă 1 verdict.</string>
     <string name="appeal_label">Contextul tău</string>
     <string name="appeal_placeholder">Ce le-a scăpat judecătorilor?</string>
@@ -482,6 +490,8 @@
     <string name="stamp_dissolved">Sensuri diferite</string>
     <string name="best_point_of">Cel mai bun argument pentru %1$s</string>
     <string name="best_point_self">Cel mai bun argument al tău</string>
+    <string name="error_age_blocked">Judge e doar pentru persoane de 18 ani sau mai mari.</string>
+    <string name="error_age_unconfirmed">Confirmă că ai 18 ani sau mai mult ca să continui.</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">Nou</string>
     <string name="app_tab_settings">Setări</string>

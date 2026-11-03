@@ -173,9 +173,6 @@
     <string name="signin_email_invalid">Den e-postadressen ser inte rätt ut.</string>
     <string name="signin_provider_unavailable">Inte tillgängligt än</string>
     <string name="signin_failed">Vi kunde inte logga in dig. Vill du försöka igen?</string>
-    <string name="signin_legal">En extern AI läser dina argument. Genom att fortsätta godkänner du vår</string>
-    <string name="signin_legal_link">integritetspolicy</string>
-    <string name="signin_legal_after">.</string>
     <string name="signin_loading">Laddar inloggningsalternativ…</string>
     <string name="account_title">Ditt konto</string>
     <string name="account_signed_in_as">Inloggad som %1$s</string>
@@ -354,6 +351,17 @@
     <string name="two_sided_decisive">Domen hänger på det här</string>
     <string name="two_sided_would_change">Det här skulle kunna ändra domen</string>
     <string name="appeal_title">Komplettera</string>
+    <string name="home_example">Prova ett exempel</string>
+    <string name="home_lead">Skriv båda sidorna, eller skicka en länk så att den andra kan skriva sin.</string>
+    <string name="home_lead_solo">Skriv din sida, och den andras om du känner till den.</string>
+    <string name="home_their_side">Den andras sida</string>
+    <string name="home_their_name">Den andras namn</string>
+    <string name="home_their_placeholder">Vad säger den andra? Skriv det så som hen skulle säga det.</string>
+    <string name="home_their_side_label">Den andras sida av bråket</string>
+    <string name="home_your_side_label">Din sida av bråket</string>
+    <string name="home_says">%1$s säger:</string>
+    <string name="home_my_side">Min sida:</string>
+    <string name="home_other_side">Den andras sida:</string>
     <string name="appeal_lead">Saknas något eller blev något fel? Lägg till det en gång så går domarna igenom allt igen. Kostar 1 dom.</string>
     <string name="appeal_label">Din komplettering</string>
     <string name="appeal_placeholder">Vad missade domarna?</string>
@@ -471,6 +479,8 @@
     <string name="stamp_dissolved">Ordstrid</string>
     <string name="best_point_of">Bästa argumentet från %1$s</string>
     <string name="best_point_self">Ditt bästa argument</string>
+    <string name="error_age_blocked">Judge är bara för personer som är 18 år eller äldre.</string>
+    <string name="error_age_unconfirmed">Bekräfta att du är 18 år eller äldre för att fortsätta.</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">Nytt</string>
     <string name="app_tab_settings">Inställningar</string>

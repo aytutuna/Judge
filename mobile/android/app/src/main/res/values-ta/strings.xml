@@ -173,9 +173,6 @@
     <string name="signin_email_invalid">இந்த ஈமெயில் முகவரி சரியாகத் தெரியவில்லை.</string>
     <string name="signin_provider_unavailable">இன்னும் கிடைக்கவில்லை</string>
     <string name="signin_failed">உள்நுழைய முடியவில்லை. மீண்டும் முயல்கிறீர்களா?</string>
-    <string name="signin_legal">ஒரு வெளி AI உங்கள் வாக்குவாதங்களைப் படிக்கிறது. தொடர்வதன் மூலம்</string>
-    <string name="signin_legal_link">தனியுரிமைக் கொள்கையை</string>
-    <string name="signin_legal_after">\u0020ஏற்கிறீர்கள்.</string>
     <string name="signin_loading">உள்நுழைவு வழிகளை ஏற்றுகிறோம்…</string>
     <string name="account_title">உங்கள் கணக்கு</string>
     <string name="account_signed_in_as">%1$s கணக்கில் உள்நுழைந்துள்ளீர்கள்</string>
@@ -354,6 +351,17 @@
     <string name="two_sided_decisive">தீர்ப்பு இதைப் பொறுத்தே</string>
     <string name="two_sided_would_change">இந்தத் தீர்ப்பை எது மாற்றும்</string>
     <string name="appeal_title">தகவல் சேர்</string>
+    <string name="home_example">உதாரணத்துடன் முயன்று பாருங்கள்</string>
+    <string name="home_lead">இரு தரப்பையும் எழுதுங்கள், அல்லது மற்றவர் தன் தரப்பை எழுத அவருக்கு ஒரு லிங்க் அனுப்புங்கள்.</string>
+    <string name="home_lead_solo">உங்கள் தரப்பை எழுதுங்கள், தெரிந்தால் மறுதரப்பையும்.</string>
+    <string name="home_their_side">மறுதரப்பு</string>
+    <string name="home_their_name">மற்றவர் பெயர்</string>
+    <string name="home_their_placeholder">அவர்கள் என்ன சொல்கிறார்கள்? அவர்கள் சொல்வதுபோலவே எழுதுங்கள்.</string>
+    <string name="home_their_side_label">வாக்குவாதத்தில் மறுதரப்பு</string>
+    <string name="home_your_side_label">வாக்குவாதத்தில் உங்கள் தரப்பு</string>
+    <string name="home_says">%1$s சொல்வது:</string>
+    <string name="home_my_side">என் தரப்பு:</string>
+    <string name="home_other_side">மறுதரப்பு:</string>
     <string name="appeal_lead">ஏதாவது விடுபட்டதா, தவறா? ஒருமுறை சேருங்கள், நடுவர்கள் எல்லாவற்றையும் மீண்டும் பார்ப்பார்கள். 1 தீர்ப்பு செலவாகும்.</string>
     <string name="appeal_label">நீங்கள் சேர்க்கும் தகவல்</string>
     <string name="appeal_placeholder">நடுவர்கள் எதைத் தவறவிட்டார்கள்?</string>
@@ -471,6 +479,8 @@
     <string name="stamp_dissolved">சொல் குழப்பம்</string>
     <string name="best_point_of">%1$s வைத்த வலுவான வாதம்</string>
     <string name="best_point_self">நீங்கள் வைத்த வலுவான வாதம்</string>
+    <string name="error_age_blocked">Judge 18 வயது மற்றும் அதற்கு மேற்பட்டவர்களுக்கு மட்டுமே.</string>
+    <string name="error_age_unconfirmed">தொடர, உங்களுக்கு 18 வயது அல்லது அதற்கு மேல் என்று உறுதிசெய்யுங்கள்.</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">புதியது</string>
     <string name="app_tab_settings">அமைப்புகள்</string>

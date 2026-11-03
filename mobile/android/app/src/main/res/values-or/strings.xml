@@ -173,9 +173,6 @@
     <string name="signin_email_invalid">ଏହି ଇମେଲ୍ ଠିକଣା ଠିକ୍ ଲାଗୁନାହିଁ।</string>
     <string name="signin_provider_unavailable">ଏବେ ଉପଲବ୍ଧ ନାହିଁ</string>
     <string name="signin_failed">ସାଇନ୍ ଇନ୍ କରାଇପାରିଲୁ ନାହିଁ। ପୁଣି ଥରେ ଚେଷ୍ଟା କରିବେ?</string>
-    <string name="signin_legal">ଏକ ବାହାର AI ଆପଣଙ୍କ ବିବାଦ ପଢ଼େ। ଆଗକୁ ବଢ଼ିଲେ ଆପଣ ଆମ</string>
-    <string name="signin_legal_link">ଗୋପନୀୟତା ନୀତି</string>
-    <string name="signin_legal_after">\u0020ସହ ସହମତ ହେଉଛନ୍ତି।</string>
     <string name="signin_loading">ସାଇନ୍ ଇନ୍ ବିକଳ୍ପ ଲୋଡ୍ ହେଉଛି…</string>
     <string name="account_title">ଆପଣଙ୍କ ଆକାଉଣ୍ଟ</string>
     <string name="account_signed_in_as">%1$s ଭାବେ ସାଇନ୍ ଇନ୍ ହୋଇଛି</string>
@@ -354,6 +351,17 @@
     <string name="two_sided_decisive">ରାୟ ଏଥି ଉପରେ ନିର୍ଭର କରେ</string>
     <string name="two_sided_would_change">କ\'ଣ ଏହି ରାୟ ବଦଳାଇପାରନ୍ତା</string>
     <string name="appeal_title">ବିବରଣୀ ଯୋଡ଼ନ୍ତୁ</string>
+    <string name="home_example">ଗୋଟେ ଉଦାହରଣ ନେଇ ଦେଖନ୍ତୁ</string>
+    <string name="home_lead">ଦୁଇ ପକ୍ଷର କଥା ଲେଖନ୍ତୁ, ନହେଲେ ଅନ୍ୟ ଜଣଙ୍କୁ ଲିଙ୍କ୍ ପଠାନ୍ତୁ, ସେ ନିଜ କଥା ନିଜେ ଲେଖିବେ।</string>
+    <string name="home_lead_solo">ନିଜ କଥା ଲେଖନ୍ତୁ, ଜାଣିଥିଲେ ତାଙ୍କ କଥା ବି।</string>
+    <string name="home_their_side">ତାଙ୍କ କଥା</string>
+    <string name="home_their_name">ତାଙ୍କ ନାମ</string>
+    <string name="home_their_placeholder">ସେ କ\'ଣ କହୁଛନ୍ତି? ସେ ଯେମିତି କହନ୍ତେ ସେମିତି ଲେଖନ୍ତୁ।</string>
+    <string name="home_their_side_label">ବିବାଦରେ ତାଙ୍କ କଥା</string>
+    <string name="home_your_side_label">ବିବାଦରେ ଆପଣଙ୍କ କଥା</string>
+    <string name="home_says">%1$s କହନ୍ତି:</string>
+    <string name="home_my_side">ମୋ କଥା:</string>
+    <string name="home_other_side">ତାଙ୍କ କଥା:</string>
     <string name="appeal_lead">କିଛି ବାକି ରହିଲା ବା ଭୁଲ ହେଲା? ଥରେ ଯୋଡ଼ନ୍ତୁ, ବିଚାରକମାନେ ସବୁକିଛି ପୁଣି ଦେଖିବେ। 1ଟି ରାୟ ଖର୍ଚ୍ଚ ହେବ।</string>
     <string name="appeal_label">ଆପଣଙ୍କ ବିବରଣୀ</string>
     <string name="appeal_placeholder">ବିଚାରକମାନେ କ\'ଣ ଛାଡ଼ିଦେଲେ?</string>
@@ -471,6 +479,8 @@
     <string name="stamp_dissolved">ଅର୍ଥଭେଦ</string>
     <string name="best_point_of">%1$sଙ୍କ ସବୁଠୁ ଜୋରଦାର କଥା</string>
     <string name="best_point_self">ଆପଣଙ୍କ ସବୁଠୁ ଜୋରଦାର କଥା</string>
+    <string name="error_age_blocked">Judge କେବଳ 18 ବା ତା\'ଠାରୁ ଅଧିକ ବୟସର ଲୋକଙ୍କ ପାଇଁ।</string>
+    <string name="error_age_unconfirmed">ଆଗକୁ ବଢ଼ିବା ପାଇଁ ନିଶ୍ଚିତ କରନ୍ତୁ ଯେ ଆପଣଙ୍କ ବୟସ 18 ବା ତା\'ଠାରୁ ଅଧିକ।</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">ନୂଆ</string>
     <string name="app_tab_settings">ସେଟିଂସ୍</string>

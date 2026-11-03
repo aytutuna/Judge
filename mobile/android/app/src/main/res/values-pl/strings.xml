@@ -183,9 +183,6 @@
     <string name="signin_email_invalid">Ten adres e-mail wygląda na nieprawidłowy.</string>
     <string name="signin_provider_unavailable">Jeszcze niedostępne</string>
     <string name="signin_failed">Nie udało się zalogować. Spróbujesz jeszcze raz?</string>
-    <string name="signin_legal">Twoje spory czyta zewnętrzna usługa AI. Kontynuując, akceptujesz</string>
-    <string name="signin_legal_link">Politykę prywatności</string>
-    <string name="signin_legal_after">.</string>
     <string name="signin_loading">Wczytywanie opcji logowania…</string>
     <string name="account_title">Twoje konto</string>
     <string name="account_signed_in_as">Zalogowano jako %1$s</string>
@@ -370,6 +367,17 @@
     <string name="two_sided_decisive">Od tego zależy werdykt</string>
     <string name="two_sided_would_change">Co mogłoby zmienić ten werdykt</string>
     <string name="appeal_title">Dodaj kontekst</string>
+    <string name="home_example">Wypróbuj przykład</string>
+    <string name="home_lead">Opisz obie wersje albo wyślij drugiej osobie link, żeby opisała swoją.</string>
+    <string name="home_lead_solo">Opisz swoją wersję, a jeśli ją znasz, także wersję drugiej strony.</string>
+    <string name="home_their_side">Druga strona</string>
+    <string name="home_their_name">Imię drugiej osoby</string>
+    <string name="home_their_placeholder">Co mówi druga strona? Napisz to tak, jak sama by to ujęła.</string>
+    <string name="home_their_side_label">Wersja drugiej strony</string>
+    <string name="home_your_side_label">Twoja wersja sporu</string>
+    <string name="home_says">%1$s mówi:</string>
+    <string name="home_my_side">Moja wersja:</string>
+    <string name="home_other_side">Wersja drugiej strony:</string>
     <string name="appeal_lead">Czegoś brakuje albo coś się nie zgadza? Możesz to raz dopisać, a sędziowie przyjrzą się wszystkiemu od nowa. Kosztuje to 1 werdykt.</string>
     <string name="appeal_label">Twój kontekst</string>
     <string name="appeal_placeholder">Co umknęło sędziom?</string>
@@ -493,6 +501,8 @@
     <string name="stamp_dissolved">Spór o słowa</string>
     <string name="best_point_of">Najmocniejszy argument: %1$s</string>
     <string name="best_point_self">Twój najmocniejszy argument</string>
+    <string name="error_age_blocked">Judge jest tylko dla osób w wieku 18 lat i więcej.</string>
+    <string name="error_age_unconfirmed">Potwierdź, że masz 18 lat lub więcej, żeby przejść dalej.</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">Nowy</string>
     <string name="app_tab_settings">Ustawienia</string>

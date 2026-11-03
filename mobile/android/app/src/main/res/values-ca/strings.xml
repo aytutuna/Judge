@@ -178,9 +178,6 @@
     <string name="signin_email_invalid">Aquesta adreça electrònica no sembla correcta.</string>
     <string name="signin_provider_unavailable">Encara no disponible</string>
     <string name="signin_failed">No hem pogut iniciar la teva sessió. Ho tornes a provar?</string>
-    <string name="signin_legal">Una IA externa llegeix les teves discussions. Si continues, acceptes la</string>
-    <string name="signin_legal_link">Política de privadesa</string>
-    <string name="signin_legal_after">.</string>
     <string name="signin_loading">Carregant les opcions d\'inici de sessió…</string>
     <string name="account_title">El teu compte</string>
     <string name="account_signed_in_as">Has iniciat sessió com a %1$s</string>
@@ -362,6 +359,17 @@
     <string name="two_sided_decisive">D\'això depèn el veredicte</string>
     <string name="two_sided_would_change">Què canviaria aquest veredicte</string>
     <string name="appeal_title">Afegeix context</string>
+    <string name="home_example">Prova un exemple</string>
+    <string name="home_lead">Escriu les dues versions o envia un enllaç a l\'altra persona perquè escrigui la seva.</string>
+    <string name="home_lead_solo">Escriu la teva versió, i la de l\'altra persona si la coneixes.</string>
+    <string name="home_their_side">La seva versió</string>
+    <string name="home_their_name">El seu nom</string>
+    <string name="home_their_placeholder">Què diu l\'altra persona? Escriu-ho tal com ho diria ella.</string>
+    <string name="home_their_side_label">La versió de l\'altra persona</string>
+    <string name="home_your_side_label">La teva versió de la discussió</string>
+    <string name="home_says">%1$s diu:</string>
+    <string name="home_my_side">La meva versió:</string>
+    <string name="home_other_side">La versió de l\'altra persona:</string>
     <string name="appeal_lead">Hi falta alguna cosa o hi ha algun error? Afegeix-ho un cop i els jutges ho tornaran a mirar tot. Costa 1 veredicte.</string>
     <string name="appeal_label">El teu context</string>
     <string name="appeal_placeholder">Què s\'han deixat els jutges?</string>
@@ -482,6 +490,8 @@
     <string name="stamp_dissolved">Malentès</string>
     <string name="best_point_of">El millor argument que té %1$s</string>
     <string name="best_point_self">El teu millor argument</string>
+    <string name="error_age_blocked">Judge és només per a majors de 18 anys.</string>
+    <string name="error_age_unconfirmed">Confirma que tens 18 anys o més per continuar.</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">Nou</string>
     <string name="app_tab_settings">Configuració</string>

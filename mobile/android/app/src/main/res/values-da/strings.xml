@@ -173,9 +173,6 @@
     <string name="signin_email_invalid">Den e-mailadresse ser ikke rigtig ud.</string>
     <string name="signin_provider_unavailable">Ikke tilgængeligt endnu</string>
     <string name="signin_failed">Vi kunne ikke logge dig ind. Vil du prøve igen?</string>
-    <string name="signin_legal">En ekstern AI læser dine diskussioner. Ved at fortsætte accepterer du</string>
-    <string name="signin_legal_link">privatlivspolitikken</string>
-    <string name="signin_legal_after">.</string>
     <string name="signin_loading">Henter loginmuligheder…</string>
     <string name="account_title">Din konto</string>
     <string name="account_signed_in_as">Logget ind som %1$s</string>
@@ -354,6 +351,17 @@
     <string name="two_sided_decisive">Dommen afhænger af det her</string>
     <string name="two_sided_would_change">Det kunne ændre dommen</string>
     <string name="appeal_title">Tilføj kontekst</string>
+    <string name="home_example">Prøv et eksempel</string>
+    <string name="home_lead">Skriv begge sider, eller send den anden et link til at skrive sin egen.</string>
+    <string name="home_lead_solo">Skriv din side og den andens, hvis du kender den.</string>
+    <string name="home_their_side">Den andens side</string>
+    <string name="home_their_name">Den andens navn</string>
+    <string name="home_their_placeholder">Hvad siger den anden? Skriv det, sådan som den anden selv ville sige det.</string>
+    <string name="home_their_side_label">Den andens side af diskussionen</string>
+    <string name="home_your_side_label">Din side af diskussionen</string>
+    <string name="home_says">%1$s siger:</string>
+    <string name="home_my_side">Min side:</string>
+    <string name="home_other_side">Den andens side:</string>
     <string name="appeal_lead">Mangler der noget, eller er noget forkert? Tilføj det én gang, så kigger dommerne på det hele igen. Det koster 1 dom.</string>
     <string name="appeal_label">Din kontekst</string>
     <string name="appeal_placeholder">Hvad overså dommerne?</string>
@@ -471,6 +479,8 @@
     <string name="stamp_dissolved">Ordstrid</string>
     <string name="best_point_of">Bedste pointe fra %1$s</string>
     <string name="best_point_self">Din bedste pointe</string>
+    <string name="error_age_blocked">Judge er kun for personer på 18 år og derover.</string>
+    <string name="error_age_unconfirmed">Bekræft, at du er 18 år eller ældre, for at fortsætte.</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">Ny</string>
     <string name="app_tab_settings">Indstillinger</string>

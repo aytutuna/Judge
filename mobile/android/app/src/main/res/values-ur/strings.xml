@@ -173,9 +173,6 @@
     <string name="signin_email_invalid">یہ ای میل ایڈریس ٹھیک نہیں لگ رہا۔</string>
     <string name="signin_provider_unavailable">ابھی دستیاب نہیں</string>
     <string name="signin_failed">ہم آپ کو سائن ان نہیں کر سکے۔ ذرا دوبارہ کوشش کر کے دیکھیں۔</string>
-    <string name="signin_legal">آپ کی بحثیں ایک بیرونی اے آئی پڑھتا ہے۔ جاری رکھنے کا مطلب ہے کہ آپ ہماری</string>
-    <string name="signin_legal_link">رازداری کی پالیسی</string>
-    <string name="signin_legal_after">\u0020سے متفق ہیں۔</string>
     <string name="signin_loading">سائن ان کے طریقے لوڈ ہو رہے ہیں…</string>
     <string name="account_title">آپ کا اکاؤنٹ</string>
     <string name="account_signed_in_as">%1$s سے سائن ان ہیں</string>
@@ -354,6 +351,17 @@
     <string name="two_sided_decisive">فیصلہ اسی پر ٹکا ہے</string>
     <string name="two_sided_would_change">کیا چیز یہ فیصلہ بدل سکتی ہے</string>
     <string name="appeal_title">مزید تفصیل شامل کریں</string>
+    <string name="home_example">کوئی مثال آزمائیں</string>
+    <string name="home_lead">دونوں طرف کی بات لکھیں، یا دوسرے شخص کو لنک بھیجیں تاکہ وہ اپنی بات خود لکھیں۔</string>
+    <string name="home_lead_solo">اپنی بات لکھیں، اور معلوم ہو تو ان کی بھی۔</string>
+    <string name="home_their_side">ان کی بات</string>
+    <string name="home_their_name">ان کا نام</string>
+    <string name="home_their_placeholder">وہ کیا کہتے ہیں؟ ویسے ہی لکھیں جیسے وہ خود کہتے۔</string>
+    <string name="home_their_side_label">بحث میں ان کی بات</string>
+    <string name="home_your_side_label">بحث میں آپ کی بات</string>
+    <string name="home_says">%1$s کا کہنا ہے:</string>
+    <string name="home_my_side">میری بات:</string>
+    <string name="home_other_side">ان کی بات:</string>
     <string name="appeal_lead">کچھ رہ گیا یا غلط ہے؟ ایک بار شامل کریں اور جج سب کچھ دوبارہ دیکھیں گے۔ قیمت: 1 فیصلہ۔</string>
     <string name="appeal_label">آپ کی تفصیل</string>
     <string name="appeal_placeholder">ججوں سے کیا رہ گیا؟</string>
@@ -471,6 +479,8 @@
     <string name="stamp_dissolved">لفظی فرق</string>
     <string name="best_point_of">%1$s کی سب سے مضبوط دلیل</string>
     <string name="best_point_self">آپ کی سب سے مضبوط دلیل</string>
+    <string name="error_age_blocked">Judge صرف 18 سال یا اس سے زیادہ عمر کے لوگوں کے لیے ہے۔</string>
+    <string name="error_age_unconfirmed">آگے بڑھنے کے لیے تصدیق کریں کہ آپ کی عمر 18 سال یا اس سے زیادہ ہے۔</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">نیا</string>
     <string name="app_tab_settings">سیٹنگز</string>

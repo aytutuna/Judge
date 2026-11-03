@@ -183,9 +183,6 @@
     <string name="signin_email_invalid">Схоже, адреса електронної пошти неправильна.</string>
     <string name="signin_provider_unavailable">Поки недоступно</string>
     <string name="signin_failed">Не вдалося ввійти. Спробуєш ще раз?</string>
-    <string name="signin_legal">Твої суперечки читає сторонній ШІ. Продовжуючи, ти погоджуєшся з</string>
-    <string name="signin_legal_link">Політикою конфіденційності</string>
-    <string name="signin_legal_after">.</string>
     <string name="signin_loading">Завантажуємо способи входу…</string>
     <string name="account_title">Твій акаунт</string>
     <string name="account_signed_in_as">Вхід виконано: %1$s</string>
@@ -370,6 +367,17 @@
     <string name="two_sided_decisive">Від цього залежить вердикт</string>
     <string name="two_sided_would_change">Що могло б змінити цей вердикт</string>
     <string name="appeal_title">Додати контекст</string>
+    <string name="home_example">Спробувати приклад</string>
+    <string name="home_lead">Напиши версії обох сторін або надішли іншій людині посилання, щоб вона написала свою.</string>
+    <string name="home_lead_solo">Напиши свою версію, а якщо знаєш, то й версію іншої сторони.</string>
+    <string name="home_their_side">Інша сторона</string>
+    <string name="home_their_name">Ім’я іншої людини</string>
+    <string name="home_their_placeholder">Що каже інша людина? Опиши так, як розповіла б вона сама.</string>
+    <string name="home_their_side_label">Версія іншої сторони</string>
+    <string name="home_your_side_label">Твоя версія суперечки</string>
+    <string name="home_says">%1$s каже:</string>
+    <string name="home_my_side">Моя версія:</string>
+    <string name="home_other_side">Версія іншої сторони:</string>
     <string name="appeal_lead">Щось пропущено чи неправильно? Додай це один раз, і судді переглянуть усе заново. Коштує 1 вердикт.</string>
     <string name="appeal_label">Твій контекст</string>
     <string name="appeal_placeholder">Що пропустили судді?</string>
@@ -493,6 +501,8 @@
     <string name="stamp_dissolved">Плутанина</string>
     <string name="best_point_of">%1$s: найсильніший аргумент</string>
     <string name="best_point_self">Твій найсильніший аргумент</string>
+    <string name="error_age_blocked">Judge лише для людей від 18 років.</string>
+    <string name="error_age_unconfirmed">Підтверди, що тобі 18 років або більше, щоб продовжити.</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">Нова справа</string>
     <string name="app_tab_settings">Налаштування</string>

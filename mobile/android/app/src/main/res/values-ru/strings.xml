@@ -183,9 +183,6 @@
     <string name="signin_email_invalid">Похоже, в адресе почты ошибка.</string>
     <string name="signin_provider_unavailable">Пока недоступно</string>
     <string name="signin_failed">Не получилось войти. Попробуете ещё раз?</string>
-    <string name="signin_legal">Ваши споры читает внешний ИИ. Продолжая, вы принимаете</string>
-    <string name="signin_legal_link">Политику конфиденциальности</string>
-    <string name="signin_legal_after">.</string>
     <string name="signin_loading">Загружаем варианты входа…</string>
     <string name="account_title">Ваш аккаунт</string>
     <string name="account_signed_in_as">Вы вошли как %1$s</string>
@@ -370,6 +367,17 @@
     <string name="two_sided_decisive">От этого зависит вердикт</string>
     <string name="two_sided_would_change">Что изменило бы вердикт</string>
     <string name="appeal_title">Добавить подробности</string>
+    <string name="home_example">Попробовать на примере</string>
+    <string name="home_lead">Напишите обе версии или отправьте другому человеку ссылку, чтобы он написал свою.</string>
+    <string name="home_lead_solo">Напишите свою версию, а если знаете — и версию другой стороны.</string>
+    <string name="home_their_side">Другая сторона</string>
+    <string name="home_their_name">Имя другой стороны</string>
+    <string name="home_their_placeholder">Что говорит другая сторона? Напишите так, как сказала бы она сама.</string>
+    <string name="home_their_side_label">Версия другой стороны</string>
+    <string name="home_your_side_label">Ваша версия спора</string>
+    <string name="home_says">%1$s говорит:</string>
+    <string name="home_my_side">Моя версия:</string>
+    <string name="home_other_side">Версия другой стороны:</string>
     <string name="appeal_lead">Чего-то не хватает или что-то не так? Добавьте это один раз, и судьи пересмотрят всё заново. Стоит 1 вердикт.</string>
     <string name="appeal_label">Что добавить</string>
     <string name="appeal_placeholder">Что упустили судьи?</string>
@@ -493,6 +501,8 @@
     <string name="stamp_dissolved">Спор о словах</string>
     <string name="best_point_of">Самый сильный довод, который приводит %1$s</string>
     <string name="best_point_self">Ваш самый сильный довод</string>
+    <string name="error_age_blocked">Judge только для людей от 18 лет.</string>
+    <string name="error_age_unconfirmed">Подтвердите, что вам 18 лет или больше, чтобы продолжить.</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">Новый спор</string>
     <string name="app_tab_settings">Настройки</string>

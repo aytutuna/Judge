@@ -302,9 +302,6 @@ enum L10n {
     static func signinEmailInvalid(_ lang: AppLang) -> String { string("signin.emailInvalid", lang) }
     static func signinProviderUnavailable(_ lang: AppLang) -> String { string("signin.providerUnavailable", lang) }
     static func signinFailed(_ lang: AppLang) -> String { string("signin.failed", lang) }
-    static func signinLegal(_ lang: AppLang) -> String { string("signin.legal", lang) }
-    static func signinLegalLink(_ lang: AppLang) -> String { string("signin.legalLink", lang) }
-    static func signinLegalAfter(_ lang: AppLang) -> String { string("signin.legalAfter", lang) }
     static func signinLoading(_ lang: AppLang) -> String { string("signin.loading", lang) }
     static func accountTitle(_ lang: AppLang) -> String { string("account.title", lang) }
     static func accountSignedInAs(_ lang: AppLang, email: String) -> String { format("account.signedInAs", lang, email) }
@@ -474,6 +471,17 @@ enum L10n {
     static func twoSidedDecisive(_ lang: AppLang) -> String { string("twoSided.decisive", lang) }
     static func twoSidedWouldChange(_ lang: AppLang) -> String { string("twoSided.wouldChange", lang) }
     static func appealTitle(_ lang: AppLang) -> String { string("appeal.title", lang) }
+    static func homeExample(_ lang: AppLang) -> String { string("home.example", lang) }
+    static func homeLead(_ lang: AppLang) -> String { string("home.lead", lang) }
+    static func homeLeadSolo(_ lang: AppLang) -> String { string("home.leadSolo", lang) }
+    static func homeTheirSide(_ lang: AppLang) -> String { string("home.theirSide", lang) }
+    static func homeTheirName(_ lang: AppLang) -> String { string("home.theirName", lang) }
+    static func homeTheirPlaceholder(_ lang: AppLang) -> String { string("home.theirPlaceholder", lang) }
+    static func homeTheirSideLabel(_ lang: AppLang) -> String { string("home.theirSideLabel", lang) }
+    static func homeYourSideLabel(_ lang: AppLang) -> String { string("home.yourSideLabel", lang) }
+    static func homeSays(_ lang: AppLang, name: String) -> String { format("home.says", lang, name) }
+    static func homeMySide(_ lang: AppLang) -> String { string("home.mySide", lang) }
+    static func homeOtherSide(_ lang: AppLang) -> String { string("home.otherSide", lang) }
     static func appealLead(_ lang: AppLang) -> String { string("appeal.lead", lang) }
     static func appealLabel(_ lang: AppLang) -> String { string("appeal.label", lang) }
     static func appealPlaceholder(_ lang: AppLang) -> String { string("appeal.placeholder", lang) }
@@ -582,6 +590,8 @@ enum L10n {
     static func stampDissolved(_ lang: AppLang) -> String { string("stamp.dissolved", lang) }
     static func bestPointOf(_ lang: AppLang, name: String) -> String { format("bestPoint.of", lang, name) }
     static func bestPointSelf(_ lang: AppLang) -> String { string("bestPoint.self", lang) }
+    static func errorAgeBlocked(_ lang: AppLang) -> String { string("error.age_blocked", lang) }
+    static func errorAgeUnconfirmed(_ lang: AppLang) -> String { string("error.age_unconfirmed", lang) }
     static func appName(_ lang: AppLang) -> String { string("app.name", lang) }
     static func appTabNew(_ lang: AppLang) -> String { string("app.tab.new", lang) }
     static func appTabSettings(_ lang: AppLang) -> String { string("app.tab.settings", lang) }
@@ -902,9 +912,6 @@ enum L10n {
         "signin.emailInvalid",
         "signin.providerUnavailable",
         "signin.failed",
-        "signin.legal",
-        "signin.legalLink",
-        "signin.legalAfter",
         "signin.loading",
         "account.title",
         "account.plan",
@@ -1052,6 +1059,16 @@ enum L10n {
         "twoSided.decisive",
         "twoSided.wouldChange",
         "appeal.title",
+        "home.example",
+        "home.lead",
+        "home.leadSolo",
+        "home.theirSide",
+        "home.theirName",
+        "home.theirPlaceholder",
+        "home.theirSideLabel",
+        "home.yourSideLabel",
+        "home.mySide",
+        "home.otherSide",
         "appeal.lead",
         "appeal.label",
         "appeal.placeholder",
@@ -1153,6 +1170,8 @@ enum L10n {
         "stamp.tooClose",
         "stamp.dissolved",
         "bestPoint.self",
+        "error.age_blocked",
+        "error.age_unconfirmed",
         "app.name",
         "app.tab.new",
         "app.tab.settings",

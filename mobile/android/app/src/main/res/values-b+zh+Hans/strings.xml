@@ -168,9 +168,6 @@
     <string name="signin_email_invalid">这个邮箱地址好像不对。</string>
     <string name="signin_provider_unavailable">暂未开放</string>
     <string name="signin_failed">登录没成功，再试一次吧？</string>
-    <string name="signin_legal">外部 AI 会读取你的争论内容。继续即表示你同意</string>
-    <string name="signin_legal_link">《隐私政策》</string>
-    <string name="signin_legal_after">。</string>
     <string name="signin_loading">正在加载登录方式……</string>
     <string name="account_title">你的账号</string>
     <string name="account_signed_in_as">已登录：%1$s</string>
@@ -346,6 +343,17 @@
     <string name="two_sided_decisive">裁决的关键就在这里</string>
     <string name="two_sided_would_change">什么能改变这份裁决</string>
     <string name="appeal_title">补充说明</string>
+    <string name="home_example">试试示例</string>
+    <string name="home_lead">把双方的说法都写下来，或者给对方发个链接，让对方自己写。</string>
+    <string name="home_lead_solo">写下你的说法，知道对方怎么说的话也写上。</string>
+    <string name="home_their_side">对方的说法</string>
+    <string name="home_their_name">对方的名字</string>
+    <string name="home_their_placeholder">对方怎么说？照对方的口吻写下来。</string>
+    <string name="home_their_side_label">对方在这场争论中的说法</string>
+    <string name="home_your_side_label">你在这场争论中的说法</string>
+    <string name="home_says">%1$s说：</string>
+    <string name="home_my_side">我的说法：</string>
+    <string name="home_other_side">对方的说法：</string>
     <string name="appeal_lead">有遗漏或说错了？补充一次，评委会把所有内容重新看一遍。消耗 1 次裁决。</string>
     <string name="appeal_label">你的补充</string>
     <string name="appeal_placeholder">评委漏掉了什么？</string>
@@ -460,6 +468,8 @@
     <string name="stamp_dissolved">词义之争</string>
     <string name="best_point_of">%1$s最有力的一点</string>
     <string name="best_point_self">你最有力的一点</string>
+    <string name="error_age_blocked">Judge 仅限 18 岁及以上的人使用。</string>
+    <string name="error_age_unconfirmed">请确认你已满 18 岁后继续。</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">新建</string>
     <string name="app_tab_settings">设置</string>

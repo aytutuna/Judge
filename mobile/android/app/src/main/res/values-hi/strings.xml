@@ -173,9 +173,6 @@
     <string name="signin_email_invalid">यह ईमेल पता सही नहीं लग रहा।</string>
     <string name="signin_provider_unavailable">अभी उपलब्ध नहीं</string>
     <string name="signin_failed">साइन इन नहीं हो पाया। एक बार फिर कोशिश करें?</string>
-    <string name="signin_legal">आपकी बहसें एक बाहरी AI पढ़ता है। आगे बढ़ने का मतलब है कि आप हमारी</string>
-    <string name="signin_legal_link">प्राइवेसी पॉलिसी</string>
-    <string name="signin_legal_after">\u0020से सहमत हैं।</string>
     <string name="signin_loading">साइन इन के विकल्प लोड हो रहे हैं…</string>
     <string name="account_title">आपका अकाउंट</string>
     <string name="account_signed_in_as">%1$s से साइन इन है</string>
@@ -354,6 +351,17 @@
     <string name="two_sided_decisive">फ़ैसला इसी बात पर टिका है</string>
     <string name="two_sided_would_change">किस बात से यह फ़ैसला बदल सकता है</string>
     <string name="appeal_title">जानकारी जोड़ें</string>
+    <string name="home_example">कोई उदाहरण आज़माएँ</string>
+    <string name="home_lead">दोनों पक्षों की बात लिखें, या दूसरे व्यक्ति को लिंक भेजें ताकि वे अपनी बात ख़ुद लिखें।</string>
+    <string name="home_lead_solo">अपनी बात लिखें, और पता हो तो उनकी भी।</string>
+    <string name="home_their_side">उनकी बात</string>
+    <string name="home_their_name">उनका नाम</string>
+    <string name="home_their_placeholder">उनका क्या कहना है? वैसे ही लिखें जैसे वे ख़ुद कहते।</string>
+    <string name="home_their_side_label">बहस में उनकी बात</string>
+    <string name="home_your_side_label">बहस में आपकी बात</string>
+    <string name="home_says">%1$s का कहना है:</string>
+    <string name="home_my_side">मेरी बात:</string>
+    <string name="home_other_side">उनकी बात:</string>
     <string name="appeal_lead">कुछ छूट गया या ग़लत है? एक बार जोड़ें और जज सब कुछ फिर से देखेंगे। इसमें 1 फ़ैसला लगता है।</string>
     <string name="appeal_label">आपकी जानकारी</string>
     <string name="appeal_placeholder">जजों से क्या छूट गया?</string>
@@ -471,6 +479,8 @@
     <string name="stamp_dissolved">शब्दों का फेर</string>
     <string name="best_point_of">%1$s की सबसे मज़बूत बात</string>
     <string name="best_point_self">आपकी सबसे मज़बूत बात</string>
+    <string name="error_age_blocked">Judge सिर्फ़ 18 साल और उससे ज़्यादा उम्र के लोगों के लिए है।</string>
+    <string name="error_age_unconfirmed">आगे बढ़ने के लिए पुष्टि करें कि आपकी उम्र 18 साल या उससे ज़्यादा है।</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">नया</string>
     <string name="app_tab_settings">सेटिंग्स</string>

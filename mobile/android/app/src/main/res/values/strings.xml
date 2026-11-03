@@ -173,9 +173,6 @@
     <string name="signin_email_invalid">That email address doesn\'t look right.</string>
     <string name="signin_provider_unavailable">Not available yet</string>
     <string name="signin_failed">We couldn\'t sign you in. Mind trying again?</string>
-    <string name="signin_legal">An outside AI reads your arguments. By continuing you agree to the</string>
-    <string name="signin_legal_link">Privacy Policy</string>
-    <string name="signin_legal_after">.</string>
     <string name="signin_loading">Loading sign-in options…</string>
     <string name="account_title">Your account</string>
     <string name="account_signed_in_as">Signed in as %1$s</string>
@@ -354,6 +351,17 @@
     <string name="two_sided_decisive">The verdict hinges on this</string>
     <string name="two_sided_would_change">What would change this verdict</string>
     <string name="appeal_title">Add context</string>
+    <string name="home_example">Try an example</string>
+    <string name="home_lead">Write both sides, or send the other person a link to write theirs.</string>
+    <string name="home_lead_solo">Write your side, and theirs if you know it.</string>
+    <string name="home_their_side">Their side</string>
+    <string name="home_their_name">Their name</string>
+    <string name="home_their_placeholder">What do they say? Write it the way they would.</string>
+    <string name="home_their_side_label">Their side of the argument</string>
+    <string name="home_your_side_label">Your side of the argument</string>
+    <string name="home_says">%1$s says:</string>
+    <string name="home_my_side">My side:</string>
+    <string name="home_other_side">Their side:</string>
     <string name="appeal_lead">Something missing or wrong? Add it once and the judges look at everything again. Costs 1 verdict.</string>
     <string name="appeal_label">Your context</string>
     <string name="appeal_placeholder">What did the judges miss?</string>
@@ -471,6 +479,8 @@
     <string name="stamp_dissolved">Dissolved</string>
     <string name="best_point_of">%1$s\'s best point</string>
     <string name="best_point_self">Your best point</string>
+    <string name="error_age_blocked">Judge is only for people 18 and older.</string>
+    <string name="error_age_unconfirmed">Confirm that you\'re 18 or older to continue.</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">New</string>
     <string name="app_tab_settings">Settings</string>

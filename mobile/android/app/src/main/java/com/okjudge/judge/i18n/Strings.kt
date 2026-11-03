@@ -235,9 +235,6 @@ class Strings(private val res: Resources) {
     val signinEmailInvalid: String get() = res.getString(R.string.signin_email_invalid)
     val signinProviderUnavailable: String get() = res.getString(R.string.signin_provider_unavailable)
     val signinFailed: String get() = res.getString(R.string.signin_failed)
-    val signinLegal: String get() = res.getString(R.string.signin_legal)
-    val signinLegalLink: String get() = res.getString(R.string.signin_legal_link)
-    val signinLegalAfter: String get() = res.getString(R.string.signin_legal_after)
     val signinLoading: String get() = res.getString(R.string.signin_loading)
     val accountTitle: String get() = res.getString(R.string.account_title)
     fun accountSignedInAs(email: String): String = res.getString(R.string.account_signed_in_as, email)
@@ -407,6 +404,17 @@ class Strings(private val res: Resources) {
     val twoSidedDecisive: String get() = res.getString(R.string.two_sided_decisive)
     val twoSidedWouldChange: String get() = res.getString(R.string.two_sided_would_change)
     val appealTitle: String get() = res.getString(R.string.appeal_title)
+    val homeExample: String get() = res.getString(R.string.home_example)
+    val homeLead: String get() = res.getString(R.string.home_lead)
+    val homeLeadSolo: String get() = res.getString(R.string.home_lead_solo)
+    val homeTheirSide: String get() = res.getString(R.string.home_their_side)
+    val homeTheirName: String get() = res.getString(R.string.home_their_name)
+    val homeTheirPlaceholder: String get() = res.getString(R.string.home_their_placeholder)
+    val homeTheirSideLabel: String get() = res.getString(R.string.home_their_side_label)
+    val homeYourSideLabel: String get() = res.getString(R.string.home_your_side_label)
+    fun homeSays(name: String): String = res.getString(R.string.home_says, name)
+    val homeMySide: String get() = res.getString(R.string.home_my_side)
+    val homeOtherSide: String get() = res.getString(R.string.home_other_side)
     val appealLead: String get() = res.getString(R.string.appeal_lead)
     val appealLabel: String get() = res.getString(R.string.appeal_label)
     val appealPlaceholder: String get() = res.getString(R.string.appeal_placeholder)
@@ -515,6 +523,8 @@ class Strings(private val res: Resources) {
     val stampDissolved: String get() = res.getString(R.string.stamp_dissolved)
     fun bestPointOf(name: String): String = res.getString(R.string.best_point_of, name)
     val bestPointSelf: String get() = res.getString(R.string.best_point_self)
+    val errorAgeBlocked: String get() = res.getString(R.string.error_age_blocked)
+    val errorAgeUnconfirmed: String get() = res.getString(R.string.error_age_unconfirmed)
     val appName: String get() = res.getString(R.string.app_name)
     val appTabNew: String get() = res.getString(R.string.app_tab_new)
     val appTabSettings: String get() = res.getString(R.string.app_tab_settings)
@@ -834,9 +844,6 @@ class Strings(private val res: Resources) {
             "signin.emailInvalid" -> R.string.signin_email_invalid
             "signin.providerUnavailable" -> R.string.signin_provider_unavailable
             "signin.failed" -> R.string.signin_failed
-            "signin.legal" -> R.string.signin_legal
-            "signin.legalLink" -> R.string.signin_legal_link
-            "signin.legalAfter" -> R.string.signin_legal_after
             "signin.loading" -> R.string.signin_loading
             "account.title" -> R.string.account_title
             "account.plan" -> R.string.account_plan
@@ -984,6 +991,16 @@ class Strings(private val res: Resources) {
             "twoSided.decisive" -> R.string.two_sided_decisive
             "twoSided.wouldChange" -> R.string.two_sided_would_change
             "appeal.title" -> R.string.appeal_title
+            "home.example" -> R.string.home_example
+            "home.lead" -> R.string.home_lead
+            "home.leadSolo" -> R.string.home_lead_solo
+            "home.theirSide" -> R.string.home_their_side
+            "home.theirName" -> R.string.home_their_name
+            "home.theirPlaceholder" -> R.string.home_their_placeholder
+            "home.theirSideLabel" -> R.string.home_their_side_label
+            "home.yourSideLabel" -> R.string.home_your_side_label
+            "home.mySide" -> R.string.home_my_side
+            "home.otherSide" -> R.string.home_other_side
             "appeal.lead" -> R.string.appeal_lead
             "appeal.label" -> R.string.appeal_label
             "appeal.placeholder" -> R.string.appeal_placeholder
@@ -1085,6 +1102,8 @@ class Strings(private val res: Resources) {
             "stamp.tooClose" -> R.string.stamp_too_close
             "stamp.dissolved" -> R.string.stamp_dissolved
             "bestPoint.self" -> R.string.best_point_self
+            "error.age_blocked" -> R.string.error_age_blocked
+            "error.age_unconfirmed" -> R.string.error_age_unconfirmed
             "app.name" -> R.string.app_name
             "app.tab.new" -> R.string.app_tab_new
             "app.tab.settings" -> R.string.app_tab_settings

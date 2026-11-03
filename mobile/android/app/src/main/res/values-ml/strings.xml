@@ -173,9 +173,6 @@
     <string name="signin_email_invalid">ഈ ഇമെയിൽ വിലാസം ശരിയാണെന്ന് തോന്നുന്നില്ല.</string>
     <string name="signin_provider_unavailable">ഇതുവരെ ലഭ്യമല്ല</string>
     <string name="signin_failed">സൈൻ ഇൻ ചെയ്യിക്കാനായില്ല. ഒന്നുകൂടി ശ്രമിക്കാമോ?</string>
-    <string name="signin_legal">പുറത്തുള്ള ഒരു എഐ നിങ്ങളുടെ തർക്കങ്ങൾ വായിക്കും. തുടരുന്നതിലൂടെ നിങ്ങൾ ഞങ്ങളുടെ</string>
-    <string name="signin_legal_link">സ്വകാര്യതാ നയം</string>
-    <string name="signin_legal_after">\u0020അംഗീകരിക്കുന്നു.</string>
     <string name="signin_loading">സൈൻ-ഇൻ ഓപ്ഷനുകൾ ലോഡ് ചെയ്യുന്നു…</string>
     <string name="account_title">നിങ്ങളുടെ അക്കൗണ്ട്</string>
     <string name="account_signed_in_as">%1$s ആയി സൈൻ ഇൻ ചെയ്തിരിക്കുന്നു</string>
@@ -354,6 +351,17 @@
     <string name="two_sided_decisive">വിധി ഇതിനെ ആശ്രയിച്ചാണ്</string>
     <string name="two_sided_would_change">ഈ വിധി മാറാൻ എന്ത് വേണം</string>
     <string name="appeal_title">കൂടുതൽ വിവരം ചേർക്കൂ</string>
+    <string name="home_example">ഒരു ഉദാഹരണം നോക്കൂ</string>
+    <string name="home_lead">രണ്ടു ഭാഗവും എഴുതൂ, അല്ലെങ്കിൽ മറ്റേയാൾക്ക് അവരുടെ ഭാഗം എഴുതാൻ ഒരു ലിങ്ക് അയയ്ക്കൂ.</string>
+    <string name="home_lead_solo">നിങ്ങളുടെ ഭാഗം എഴുതൂ, അറിയാമെങ്കിൽ അവരുടേതും.</string>
+    <string name="home_their_side">അവരുടെ ഭാഗം</string>
+    <string name="home_their_name">അവരുടെ പേര്</string>
+    <string name="home_their_placeholder">അവർ എന്താണ് പറയുന്നത്? അവർ പറയുന്നതുപോലെ തന്നെ എഴുതൂ.</string>
+    <string name="home_their_side_label">തർക്കത്തിൽ അവരുടെ ഭാഗം</string>
+    <string name="home_your_side_label">തർക്കത്തിൽ നിങ്ങളുടെ ഭാഗം</string>
+    <string name="home_says">%1$s പറയുന്നത്:</string>
+    <string name="home_my_side">എന്റെ ഭാഗം:</string>
+    <string name="home_other_side">അവരുടെ ഭാഗം:</string>
     <string name="appeal_lead">എന്തെങ്കിലും വിട്ടുപോയോ, തെറ്റിയോ? ഒരു തവണ അത് ചേർക്കാം, ജഡ്ജിമാർ എല്ലാം വീണ്ടും പരിശോധിക്കും. ചെലവ് 1 വിധി.</string>
     <string name="appeal_label">നിങ്ങൾ ചേർക്കുന്ന വിവരം</string>
     <string name="appeal_placeholder">ജഡ്ജിമാർ എന്താണ് കാണാതെ പോയത്?</string>
@@ -471,6 +479,8 @@
     <string name="stamp_dissolved">അർത്ഥഭേദം</string>
     <string name="best_point_of">ഏറ്റവും നല്ല പോയിന്റ്: %1$s</string>
     <string name="best_point_self">നിങ്ങളുടെ ഏറ്റവും നല്ല പോയിന്റ്</string>
+    <string name="error_age_blocked">Judge 18 വയസും അതിൽ കൂടുതലും ഉള്ളവർക്ക് മാത്രമുള്ളതാണ്.</string>
+    <string name="error_age_unconfirmed">തുടരാൻ നിങ്ങൾക്ക് 18 വയസോ അതിൽ കൂടുതലോ ഉണ്ടെന്ന് സ്ഥിരീകരിക്കൂ.</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">പുതിയത്</string>
     <string name="app_tab_settings">ക്രമീകരണം</string>

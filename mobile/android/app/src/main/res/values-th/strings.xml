@@ -168,9 +168,6 @@
     <string name="signin_email_invalid">อีเมลนี้ดูไม่ถูกต้อง</string>
     <string name="signin_provider_unavailable">ยังไม่พร้อมใช้งาน</string>
     <string name="signin_failed">เข้าสู่ระบบไม่สำเร็จ ลองอีกครั้งนะ</string>
-    <string name="signin_legal">AI ภายนอกจะอ่านเรื่องที่คุณเล่า การดำเนินการต่อถือว่าคุณยอมรับ</string>
-    <string name="signin_legal_link">นโยบายความเป็นส่วนตัว</string>
-    <string name="signin_legal_after">ของเรา</string>
     <string name="signin_loading">กำลังโหลดตัวเลือกการเข้าสู่ระบบ…</string>
     <string name="account_title">บัญชีของคุณ</string>
     <string name="account_signed_in_as">เข้าสู่ระบบด้วย %1$s</string>
@@ -346,6 +343,17 @@
     <string name="two_sided_decisive">คำตัดสินขึ้นอยู่กับข้อนี้</string>
     <string name="two_sided_would_change">อะไรจะเปลี่ยนคำตัดสินนี้ได้</string>
     <string name="appeal_title">เพิ่มบริบท</string>
+    <string name="home_example">ลองดูตัวอย่าง</string>
+    <string name="home_lead">เขียนทั้งสองฝั่งเลย หรือส่งลิงก์ให้อีกฝ่ายมาเขียนฝั่งของเขาเอง</string>
+    <string name="home_lead_solo">เขียนฝั่งของคุณ และฝั่งของเขาด้วยถ้าคุณรู้</string>
+    <string name="home_their_side">ฝั่งของเขา</string>
+    <string name="home_their_name">ชื่อของเขา</string>
+    <string name="home_their_placeholder">เขาว่ายังไง? เขียนแบบที่เขาจะพูดเอง</string>
+    <string name="home_their_side_label">ฝั่งของเขาในเรื่องที่เถียงกัน</string>
+    <string name="home_your_side_label">ฝั่งของคุณในเรื่องที่เถียงกัน</string>
+    <string name="home_says">%1$s บอกว่า:</string>
+    <string name="home_my_side">ฝั่งของฉัน:</string>
+    <string name="home_other_side">ฝั่งของเขา:</string>
     <string name="appeal_lead">มีอะไรขาดหรือผิดไปไหม? เพิ่มได้ 1 ครั้ง แล้วกรรมการจะดูทุกอย่างใหม่อีกรอบ ใช้คำตัดสิน 1 ครั้ง</string>
     <string name="appeal_label">บริบทของคุณ</string>
     <string name="appeal_placeholder">กรรมการพลาดอะไรไป?</string>
@@ -460,6 +468,8 @@
     <string name="stamp_dissolved">คนละความหมาย</string>
     <string name="best_point_of">เหตุผลที่ดีที่สุดของ %1$s</string>
     <string name="best_point_self">เหตุผลที่ดีที่สุดของคุณ</string>
+    <string name="error_age_blocked">Judge ให้บริการเฉพาะผู้ที่อายุ 18 ปีขึ้นไป</string>
+    <string name="error_age_unconfirmed">ยืนยันว่าคุณอายุ 18 ปีขึ้นไปเพื่อไปต่อ</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">ใหม่</string>
     <string name="app_tab_settings">ตั้งค่า</string>

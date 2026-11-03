@@ -178,9 +178,6 @@
     <string name="signin_email_invalid">Cette adresse e-mail n’a pas l’air correcte.</string>
     <string name="signin_provider_unavailable">Pas encore disponible</string>
     <string name="signin_failed">Impossible de te connecter. Tu veux bien réessayer ?</string>
-    <string name="signin_legal">Une IA externe lit tes débats. En continuant, tu acceptes la</string>
-    <string name="signin_legal_link">Politique de confidentialité</string>
-    <string name="signin_legal_after">.</string>
     <string name="signin_loading">Chargement des options de connexion…</string>
     <string name="account_title">Ton compte</string>
     <string name="account_signed_in_as">Tu utilises le compte %1$s</string>
@@ -362,6 +359,17 @@
     <string name="two_sided_decisive">Le verdict se joue là-dessus</string>
     <string name="two_sided_would_change">Ce qui changerait ce verdict</string>
     <string name="appeal_title">Ajouter du contexte</string>
+    <string name="home_example">Essayer un exemple</string>
+    <string name="home_lead">Écris les deux versions, ou envoie un lien à l’autre personne pour qu’elle écrive la sienne.</string>
+    <string name="home_lead_solo">Écris ta version, et celle d’en face si tu la connais.</string>
+    <string name="home_their_side">Sa version</string>
+    <string name="home_their_name">Son nom</string>
+    <string name="home_their_placeholder">Que dit l’autre personne ? Raconte-le avec ses mots.</string>
+    <string name="home_their_side_label">Sa version du débat</string>
+    <string name="home_your_side_label">Ta version du débat</string>
+    <string name="home_says">%1$s dit :</string>
+    <string name="home_my_side">Ma version :</string>
+    <string name="home_other_side">Sa version :</string>
     <string name="appeal_lead">Il manque quelque chose ou il y a une erreur ? Précise-le une fois et les juges réexaminent tout. Ça coûte 1 verdict.</string>
     <string name="appeal_label">Ton contexte</string>
     <string name="appeal_placeholder">Qu’est-ce que les juges ont raté ?</string>
@@ -482,6 +490,8 @@
     <string name="stamp_dissolved">Quiproquo</string>
     <string name="best_point_of">Meilleur argument côté %1$s</string>
     <string name="best_point_self">Ton meilleur argument</string>
+    <string name="error_age_blocked">Judge est réservé aux personnes de 18 ans et plus.</string>
+    <string name="error_age_unconfirmed">Confirme que tu as 18 ans ou plus pour continuer.</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">Nouveau</string>
     <string name="app_tab_settings">Réglages</string>

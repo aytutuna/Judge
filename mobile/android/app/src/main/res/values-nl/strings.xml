@@ -173,9 +173,6 @@
     <string name="signin_email_invalid">Dat e-mailadres lijkt niet te kloppen.</string>
     <string name="signin_provider_unavailable">Nog niet beschikbaar</string>
     <string name="signin_failed">Inloggen lukte niet. Wil je het nog eens proberen?</string>
-    <string name="signin_legal">Een externe AI leest je discussies. Door verder te gaan, ga je akkoord met het</string>
-    <string name="signin_legal_link">privacybeleid</string>
-    <string name="signin_legal_after">.</string>
     <string name="signin_loading">Inlogopties laden…</string>
     <string name="account_title">Je account</string>
     <string name="account_signed_in_as">Ingelogd als %1$s</string>
@@ -354,6 +351,17 @@
     <string name="two_sided_decisive">Hier hangt de uitspraak van af</string>
     <string name="two_sided_would_change">Wat deze uitspraak zou veranderen</string>
     <string name="appeal_title">Iets aanvullen</string>
+    <string name="home_example">Probeer een voorbeeld</string>
+    <string name="home_lead">Schrijf beide kanten op, of stuur de ander een link om het zelf te doen.</string>
+    <string name="home_lead_solo">Schrijf jouw kant op en die van de ander als je die kent.</string>
+    <string name="home_their_side">Kant van de ander</string>
+    <string name="home_their_name">Naam van de ander</string>
+    <string name="home_their_placeholder">Wat zegt de ander? Schrijf het zoals die het zelf zou zeggen.</string>
+    <string name="home_their_side_label">De andere kant van de discussie</string>
+    <string name="home_your_side_label">Jouw kant van de discussie</string>
+    <string name="home_says">%1$s zegt:</string>
+    <string name="home_my_side">Mijn kant:</string>
+    <string name="home_other_side">De andere kant:</string>
     <string name="appeal_lead">Mist er iets of klopt er iets niet? Vul het één keer aan en de rechters kijken opnieuw naar alles. Kost 1 uitspraak.</string>
     <string name="appeal_label">Jouw aanvulling</string>
     <string name="appeal_placeholder">Wat hebben de rechters gemist?</string>
@@ -471,6 +479,8 @@
     <string name="stamp_dissolved">Misverstand</string>
     <string name="best_point_of">Sterkste punt van %1$s</string>
     <string name="best_point_self">Jouw sterkste punt</string>
+    <string name="error_age_blocked">Judge is alleen voor mensen van 18 jaar en ouder.</string>
+    <string name="error_age_unconfirmed">Bevestig dat je 18 jaar of ouder bent om verder te gaan.</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">Nieuw</string>
     <string name="app_tab_settings">Instellingen</string>

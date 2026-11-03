@@ -183,9 +183,6 @@
     <string name="signin_email_invalid">Táto e-mailová adresa nevyzerá správne.</string>
     <string name="signin_provider_unavailable">Zatiaľ nedostupné</string>
     <string name="signin_failed">Nepodarilo sa ťa prihlásiť. Skúsiš to znova?</string>
-    <string name="signin_legal">Tvoje spory číta externá AI. Pokračovaním súhlasíš so</string>
-    <string name="signin_legal_link">zásadami ochrany súkromia</string>
-    <string name="signin_legal_after">.</string>
     <string name="signin_loading">Načítavam možnosti prihlásenia…</string>
     <string name="account_title">Tvoj účet</string>
     <string name="account_signed_in_as">Prihlásený účet: %1$s</string>
@@ -370,6 +367,17 @@
     <string name="two_sided_decisive">Na tomto verdikt stojí</string>
     <string name="two_sided_would_change">Čo by tento verdikt zmenilo</string>
     <string name="appeal_title">Doplniť kontext</string>
+    <string name="home_example">Skúsiť príklad</string>
+    <string name="home_lead">Napíš obe verzie alebo pošli druhej strane odkaz, nech napíše tú svoju.</string>
+    <string name="home_lead_solo">Napíš svoju verziu a aj verziu druhej strany, ak ju poznáš.</string>
+    <string name="home_their_side">Verzia druhej strany</string>
+    <string name="home_their_name">Meno druhej strany</string>
+    <string name="home_their_placeholder">Čo hovorí druhá strana? Napíš to tak, ako by to povedala ona.</string>
+    <string name="home_their_side_label">Ako spor vidí druhá strana</string>
+    <string name="home_your_side_label">Tvoja verzia sporu</string>
+    <string name="home_says">%1$s hovorí:</string>
+    <string name="home_my_side">Moja verzia:</string>
+    <string name="home_other_side">Verzia druhej strany:</string>
     <string name="appeal_lead">Niečo chýba alebo nesedí? Doplň to raz a sudcovia všetko posúdia znova. Stojí to 1 verdikt.</string>
     <string name="appeal_label">Tvoj kontext</string>
     <string name="appeal_placeholder">Čo sudcom ušlo?</string>
@@ -493,6 +501,8 @@
     <string name="stamp_dissolved">Nedorozumenie</string>
     <string name="best_point_of">Najsilnejší argument: %1$s</string>
     <string name="best_point_self">Tvoj najsilnejší argument</string>
+    <string name="error_age_blocked">Judge je len pre ľudí od 18 rokov.</string>
+    <string name="error_age_unconfirmed">Potvrď, že máš 18 rokov alebo viac, a pokračuj.</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">Nový spor</string>
     <string name="app_tab_settings">Nastavenia</string>

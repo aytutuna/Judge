@@ -178,9 +178,6 @@
     <string name="signin_email_invalid">Ta adresa e-pošte ne izgleda ispravno.</string>
     <string name="signin_provider_unavailable">Još nije dostupno</string>
     <string name="signin_failed">Nismo te uspjeli prijaviti. Možeš pokušati ponovno?</string>
-    <string name="signin_legal">Tvoje rasprave čita vanjska AI usluga. Nastavkom prihvaćaš</string>
-    <string name="signin_legal_link">Pravila privatnosti</string>
-    <string name="signin_legal_after">.</string>
     <string name="signin_loading">Učitavamo načine prijave…</string>
     <string name="account_title">Tvoj račun</string>
     <string name="account_signed_in_as">Prijavljeni račun: %1$s</string>
@@ -362,6 +359,17 @@
     <string name="two_sided_decisive">Presuda ovisi o ovome</string>
     <string name="two_sided_would_change">Što bi promijenilo ovu presudu</string>
     <string name="appeal_title">Dodaj kontekst</string>
+    <string name="home_example">Isprobaj primjer</string>
+    <string name="home_lead">Napiši obje strane ili pošalji poveznicu drugoj osobi da napiše svoju.</string>
+    <string name="home_lead_solo">Napiši svoju stranu, a ako je znaš, i drugu.</string>
+    <string name="home_their_side">Druga strana</string>
+    <string name="home_their_name">Ime druge osobe</string>
+    <string name="home_their_placeholder">Što kaže druga osoba? Napiši to onako kako bi ona rekla.</string>
+    <string name="home_their_side_label">Strana druge osobe u raspravi</string>
+    <string name="home_your_side_label">Tvoja strana u raspravi</string>
+    <string name="home_says">%1$s kaže:</string>
+    <string name="home_my_side">Moja strana:</string>
+    <string name="home_other_side">Druga strana:</string>
     <string name="appeal_lead">Nešto nedostaje ili nije točno? Dodaj to jednom i suci će ponovno pogledati sve. Troši 1 presudu.</string>
     <string name="appeal_label">Tvoj kontekst</string>
     <string name="appeal_placeholder">Što su suci propustili?</string>
@@ -482,6 +490,8 @@
     <string name="stamp_dissolved">Nesporazum</string>
     <string name="best_point_of">Najjači argument koji iznosi %1$s</string>
     <string name="best_point_self">Tvoj najjači argument</string>
+    <string name="error_age_blocked">Judge je samo za osobe od 18 godina nadalje.</string>
+    <string name="error_age_unconfirmed">Potvrdi da imaš 18 ili više godina da nastaviš.</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">Novo</string>
     <string name="app_tab_settings">Postavke</string>

@@ -193,9 +193,6 @@
     <string name="signin_email_invalid">عنوان البريد الإلكتروني هذا لا يبدو صحيحًا.</string>
     <string name="signin_provider_unavailable">غير متاح بعد</string>
     <string name="signin_failed">لم نتمكن من تسجيل دخولك. هلّا حاولت مرة أخرى؟</string>
-    <string name="signin_legal">يقرأ ذكاء اصطناعي خارجي ما تكتبه من خلافات. بالمتابعة، أنت توافق على</string>
-    <string name="signin_legal_link">سياسة الخصوصية</string>
-    <string name="signin_legal_after">.</string>
     <string name="signin_loading">جارٍ تحميل خيارات تسجيل الدخول…</string>
     <string name="account_title">حسابك</string>
     <string name="account_signed_in_as">تم تسجيل الدخول بحساب %1$s</string>
@@ -386,6 +383,17 @@
     <string name="two_sided_decisive">الحكم يتوقف على هذا</string>
     <string name="two_sided_would_change">ما الذي قد يغيّر هذا الحكم</string>
     <string name="appeal_title">إضافة توضيح</string>
+    <string name="home_example">جرّب مثالًا</string>
+    <string name="home_lead">اكتب رواية الطرفين، أو أرسل إلى الطرف الآخر رابطًا ليكتب روايته بنفسه.</string>
+    <string name="home_lead_solo">اكتب روايتك، ورواية الطرف الآخر إن كنت تعرفها.</string>
+    <string name="home_their_side">رواية الطرف الآخر</string>
+    <string name="home_their_name">اسم الطرف الآخر</string>
+    <string name="home_their_placeholder">ماذا يقول الطرف الآخر؟ اكتب روايته كما يرويها هو.</string>
+    <string name="home_their_side_label">رواية الطرف الآخر للخلاف</string>
+    <string name="home_your_side_label">روايتك للخلاف</string>
+    <string name="home_says">رواية %1$s:</string>
+    <string name="home_my_side">روايتي:</string>
+    <string name="home_other_side">رواية الطرف الآخر:</string>
     <string name="appeal_lead">هل هناك شيء ناقص أو خاطئ؟ أضفه مرة واحدة، وسيعيد القضاة النظر في كل شيء. يكلّف حكمًا واحدًا.</string>
     <string name="appeal_label">توضيحك</string>
     <string name="appeal_placeholder">ما الذي فات القضاة؟</string>
@@ -515,6 +523,8 @@
     <string name="stamp_dissolved">خلاف لفظي</string>
     <string name="best_point_of">أقوى نقطة لدى %1$s</string>
     <string name="best_point_self">أقوى نقطة لديك</string>
+    <string name="error_age_blocked">Judge مخصص لمن بلغوا 18 عامًا فأكثر فقط.</string>
+    <string name="error_age_unconfirmed">أكّد أن عمرك 18 عامًا أو أكثر للمتابعة.</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">جديد</string>
     <string name="app_tab_settings">الإعدادات</string>
