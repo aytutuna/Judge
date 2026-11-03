@@ -86,7 +86,7 @@ const subject = (appeal: AppealSubject["appeal"], appeals: AppealSubject["appeal
 describe("Add context on a one-sided verdict", () => {
   it("is the card's action for the writer only", () => {
     const own = renderToStaticMarkup(<VerdictView result={first} shareId="first1" lang="en" onAddContext={noop} />);
-    expect(own).toMatch(new RegExp(`<button type="button" class="[^"]+">${t("en", "appeal.title")}</button></div>`));
+    expect(own).toMatch(new RegExp(`<button type="button" class="[^"]+">${t("en", "app.appeal.title").replace("&", "&amp;")}</button></div>`));
     const other = renderToStaticMarkup(<VerdictView result={first} shareId="first1" lang="en" />);
     expect(other).not.toContain(t("en", "appeal.title"));
   });

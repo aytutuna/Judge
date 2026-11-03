@@ -4,7 +4,7 @@ import de from "../lib/locales/de";
 import ja from "../lib/locales/ja";
 import th from "../lib/locales/th";
 import zh from "../lib/locales/zh-Hans";
-import { conditionalClause } from "../components/VerdictReveal";
+import { conditionalClause } from "../components/verdict/VerdictCard";
 
 registerLocale("de", de);
 registerLocale("ja", ja);

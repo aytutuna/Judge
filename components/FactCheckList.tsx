@@ -71,8 +71,7 @@ export function noneKey(disputeType: DisputeType | undefined): Key {
 }
 
 /**
- * The premium web fact-check, below the verdict card and before the facts
- * the verdict leans on. "checked" lists each claim with a status chip and up
+ * The premium web fact-check, a card in the verdict details. "checked" lists each claim with a status chip and up
  * to three source links (domain shown, full title for screen readers);
  * "none" and "unavailable" are one muted line, the "none" line worded for
  * the dispute type. Hook-free (share page SSR).

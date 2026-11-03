@@ -32,7 +32,7 @@ function DecisiveGlyph() {
   );
 }
 
-/** "What would change this verdict": short, inside the card. */
+/** "What would change this verdict": short, a card of its own in the details. */
 export function WouldChangeBlock({ items, lang }: { items: readonly string[]; lang: Lang }) {
   const list = items.filter((s) => s.trim()).slice(0, MAX_WOULD_CHANGE);
   if (list.length === 0) return null;
@@ -48,7 +48,7 @@ export function WouldChangeBlock({ items, lang }: { items: readonly string[]; la
   );
 }
 
-/** Agreed and disputed facts of a two-sided verdict, below the card. Each
+/** Agreed and disputed facts of a two-sided verdict, in the details. Each
  * finding chip says its side in words, never by colour alone; the decisive
  * dispute also gets a dashed frame and its own label. */
 export function TwoSidedFacts({
@@ -66,7 +66,7 @@ export function TwoSidedFacts({
   const decisiveAt = disputed.findIndex((d) => d.decisive);
   if (agreed.length === 0 && disputed.length === 0) return null;
   return (
-    <div className={styles.ts}>
+    <div className={`${styles.ts} ${styles.tsCard}`}>
       {agreed.length > 0 ? (
         <section className={styles.ts} aria-labelledby="ts-agreed">
           <h3 id="ts-agreed" className={styles.tsTitle}>

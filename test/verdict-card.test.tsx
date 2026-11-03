@@ -4,7 +4,6 @@ import { describe, expect, it } from "vitest";
 import { renderToStaticMarkup } from "react-dom/server";
 import type { VerdictResult } from "../lib/types";
 import { VerdictView } from "../components/VerdictView";
-import { ArgumentMap } from "../components/ArgumentMap";
 import { CaseShell } from "../components/case/CaseScreen";
 import { BalanceFallback } from "../components/scene/BalanceFallback";
 import { OG_SIDES, OgCard } from "../components/OgCard";
@@ -13,10 +12,10 @@ import { VoteDots, voteOf } from "../components/verdict/VoteDots";
 import { t } from "../lib/i18n";
 import { PALETTE, sideColors } from "../lib/palette";
 import { stripLeadingEmoji } from "../lib/text";
-import { tugFinal } from "../lib/verdict-display";
+import { leanShare, tugFinal } from "../lib/verdict-display";
 
 /** Server-rendered markup of the verdict card: the accessibility contract
- * (live region, meter, tug label, votes in words) and the new props. */
+ * (live region, lean bar, ruling line, votes in words) and the new props. */
 
 const base: VerdictResult = {
   verdict: "side_b",
@@ -59,16 +58,24 @@ describe("VerdictView", () => {
 
   it("states the verdict, confidence and votes in text", () => {
     const out = html(<VerdictView result={base} lang="en" />);
-    // The stamp is decorative; the heading says the ruling to screen readers.
-    expect(out).toMatch(/aria-hidden="true"><span[^>]*>Party B is right<\/span>/);
+    // The ruling line is decorative; the heading says the ruling to screen readers.
+    expect(out).toMatch(/aria-hidden="true">Party B is right<\/span>/);
     expect(out).toMatch(/<h2[^>]*><span class="sr-only">Party B is right\. <\/span>Nobody orders/);
     // Confidence is the judges' agreement, not the stored 1-5 score; the dots come first.
-    expect(out).toMatch(/<p[^>]*aria-hidden="true">(<i [^>]*><\/i>){3}<\/p><span>Confidence 2 of 3<\/span>/);
+    expect(out).toMatch(/<p[^>]*aria-hidden="true">(<i [^>]*><\/i>){3}<\/p>Confidence 2 of 3</);
     expect(out).not.toContain("of 5");
     expect(out).not.toContain("agree<");
     expect(out).toContain("3 independent AI judges voted: Party B · Party B · Party A");
-    // one decorative dot per run
-    expect(count(out, '<i aria-hidden="true" class="')).toBeGreaterThanOrEqual(3);
+  });
+
+  it("draws the lean bar from the vote ratio, with its label", () => {
+    const out = html(<VerdictView result={base} lang="en" />);
+    expect(out).toMatch(/role="img" aria-label="The panel leaned to Party B"><div [^>]*style="width:33\.3+%"/);
+    const level = html(<VerdictView result={{ ...base, verdict: "too_close", runs: ["side_a", "side_b", "split"] }} lang="en" />);
+    expect(level).toContain('aria-label="The panel didn&#x27;t lean either way"');
+    const refused = html(<VerdictView result={{ ...base, model_refused: true, runs: [] }} lang="en" />);
+    expect(refused).not.toContain("The panel leaned");
+    expect(refused).not.toContain("lean either way");
   });
 
   it("labels the card with the verdict heading", () => {
@@ -78,16 +85,26 @@ describe("VerdictView", () => {
     expect(out).toContain(`<h2 id="${id}"`);
   });
 
-  it("stamps a short ruling, sets the bedrock side by side and names the losing side's best point", () => {
+  it("sets the bedrock side by side and names the losing side's best point", () => {
     const out = html(<VerdictView result={base} lang="en" />);
-    expect(out).toContain(">Bedrock</h3>");
-    expect(out).toMatch(/data-party="a">Party A<\/span><p>Structure defines the category\.<\/p>/);
-    expect(out).toMatch(/data-party="b">Party B<\/span><p>Usage defines the category\.<\/p>/);
+    expect(out).toContain(">What each side stands on</h3>");
+    expect(out).toMatch(/data-party="a"><span[^>]*>Party A<\/span><p>Structure defines the category\.<\/p>/);
+    expect(out).toMatch(/data-party="b"><span[^>]*>Party B<\/span><p>Usage defines the category\.<\/p>/);
     expect(out).toContain("Party A&#x27;s best point");
+    expect(out).toContain(">A · definition</span>");
+    expect(out).toContain(">B · fact</span>");
     const split = html(<VerdictView result={{ ...base, verdict: "too_close", runs: ["side_a", "side_b", "split"] }} lang="tr" />);
-    expect(split).toMatch(new RegExp(`aria-hidden="true"><span[^>]*>${t("tr", "stamp.tooClose")}</span>`));
+    expect(split).toMatch(new RegExp(`aria-hidden="true">${t("tr", "verdict.tooClose")}</span>`));
     expect(split).toContain(`>${t("tr", "verdict.noMajority")}<`);
     expect(split).toContain(esc(stripLeadingEmoji(t("tr", "bestPointTitle"))));
+  });
+
+  it("opens the details from rows that control the panel", () => {
+    const out = html(<VerdictView result={base} lang="en" />);
+    const rows = [...out.matchAll(/<button type="button" class="[^"]*row[^"]*" aria-expanded="false" aria-controls="([^"]+)"/g)];
+    expect(rows).toHaveLength(3);
+    expect(out).toContain(`<div id="${rows[0][1]}" hidden=""`);
+    expect(html(<VerdictView result={{ ...base, model_refused: true, runs: [] }} lang="en" />)).not.toContain("aria-expanded");
   });
 
   it("shows the crux once: on the card, not again in the map", () => {
@@ -149,10 +166,14 @@ describe("VerdictView", () => {
     expect(out).toContain(">Confidence 3 of 5<");
   });
 
-  it("adds Settle another one only with onJudgeAnother", () => {
-    expect(html(<VerdictView result={base} lang="en" />)).not.toContain("Settle another one");
-    const out = html(<VerdictView result={base} lang="en" onJudgeAnother={() => {}} />);
-    expect(out).toMatch(/<button type="button"[^>]*>Settle another one<\/button>/);
+  it("offers Add context & appeal in place of Copy link only with onAddContext", () => {
+    const plain = html(<VerdictView result={base} shareId="abc123" lang="en" />);
+    expect(plain).toContain(">Share<");
+    expect(plain).toContain(">Copy link<");
+    expect(plain).not.toContain("appeal");
+    const writer = html(<VerdictView result={base} shareId="abc123" lang="en" onAddContext={() => {}} />);
+    expect(writer).toContain(">Add context &amp; appeal</button>");
+    expect(writer).not.toContain(">Copy link<");
   });
 
   it("offers copy link without emoji on a shared verdict", () => {
@@ -208,36 +229,15 @@ describe("VerdictView", () => {
   });
 });
 
-describe("ArgumentMap", () => {
-  const props = { map: base.argument_map, crux: base.crux, nameA: "Sam", nameB: "You" };
-
-  it("shows the crux by default and hides it with showCrux={false}", () => {
-    expect(html(<ArgumentMap {...props} />)).toContain(base.crux);
-    expect(html(<ArgumentMap {...props} showCrux={false} />)).not.toContain(base.crux);
-  });
-
-  it("draws one shape glyph per claim next to the written kind", () => {
-    const out = html(<ArgumentMap {...props} />);
-    expect(count(out, "<svg")).toBeGreaterThanOrEqual(3);
-    expect(out).toContain("definition");
-    expect(out).toContain("fact");
-    expect(out).toContain("logic");
-    expect(out).not.toContain("--kind-");
-    expect(out).toContain(">Bedrock<");
-  });
-});
-
 describe("SampleVerdict", () => {
   it("server-renders the final state with the sample anchor", () => {
     const out = html(<SampleVerdict lang="en" />);
     expect(out).toContain('id="sample"');
     expect(out).not.toContain("data-state");
-    expect(out).toContain(`--a:${SAMPLE_TUG_A}%`);
     expect(out).toContain("You&#x27;re right");
-    expect(out).toContain('<span class="sr-only">3 independent AI judges voted: You · You · You</span>');
-    expect(out).toMatch(/<h3[^>]*>/);
-    expect(out).toMatch(/role="meter"[^>]*aria-valuenow="3"[^>]*aria-label="Confidence 3 of 3"/);
-    expect(out).toContain(">Confidence 3 of 3</p>");
+    expect(out).toContain(">Example<");
+    expect(out).toMatch(/<p[^>]*aria-hidden="true">(<i [^>]*><\/i>){3}<\/p>Confidence 3 of 3</);
+    expect(out).toContain('aria-label="The panel leaned to You"');
   });
 
   it("shows why between the headline and the crux in both languages", () => {
@@ -260,6 +260,28 @@ describe("SampleVerdict", () => {
   });
 });
 
+describe("leanShare", () => {
+  const run = (verdict: VerdictResult["verdict"], runs: VerdictResult["runs"], more: Partial<VerdictResult> = {}) =>
+    leanShare({ ...base, verdict, runs, ...more });
+
+  it("is Party A's share of the votes for either side", () => {
+    expect(run("side_a", ["side_a", "side_a", "side_b", "side_a", "dissolved"])).toBe(0.75);
+    expect(run("side_b", ["side_b", "side_b", "side_b"])).toBe(0);
+    expect(run("side_a", ["side_a", "side_a", "side_a"])).toBe(1);
+  });
+
+  it("sits in the middle for too close, split or no counted side votes", () => {
+    expect(run("too_close", ["side_a", "side_b", "side_a"])).toBe(0.5);
+    expect(run("split", ["side_a", "side_a", "split"])).toBe(0.5);
+    expect(run("dissolved", ["dissolved", "conditional", "dissolved"])).toBe(0.5);
+  });
+
+  it("is null for a refusal or no runs", () => {
+    expect(run("side_a", [])).toBeNull();
+    expect(run("side_a", ["side_a"], { model_refused: true })).toBeNull();
+  });
+});
+
 describe("VoteDots", () => {
   it("maps every judge verdict to a vote", () => {
     expect(voteOf("side_a")).toBe("a");
@@ -269,12 +291,8 @@ describe("VoteDots", () => {
     expect(voteOf("dissolved")).toBe("other");
   });
 
-  it("is decorative without srText, and speaks srText instead of the label with it", () => {
+  it("is decorative", () => {
     expect(html(<VoteDots votes={["a", "b"]} />)).toMatch(/^<p[^>]*aria-hidden="true"/);
-    const out = html(<VoteDots votes={["a"]} label="1 judge:" srText="1 judge: Sam" />);
-    expect(out).not.toMatch(/^<p[^>]*aria-hidden/);
-    expect(out).toContain('aria-hidden="true">1 judge:</span>');
-    expect(out).toContain('<span class="sr-only">1 judge: Sam</span>');
   });
 
   it("renders nothing for no votes and no label", () => {
@@ -283,7 +301,7 @@ describe("VoteDots", () => {
 });
 
 describe("side colours", () => {
-  const sides = (out: string) => [...out.matchAll(/data-you="([ab])"/g)].map((m) => m[1]);
+  const sides = (out: string) => [...out.matchAll(/<div [^>]*data-you="([ab])"/g)].map((m) => m[1]);
 
   it("the writer's own verdict draws Party A as theirs", () => {
     expect(sides(html(<VerdictView result={base} lang="en" />))).toEqual(["a"]);
@@ -311,18 +329,18 @@ describe("side colours", () => {
     expect(sides(html(<SampleVerdict lang="en" />))).toEqual(["b"]);
   });
 
-  it("the stamp takes the winner's side colour, ink when nobody wins", () => {
-    expect(html(<VerdictView result={base} lang="en" />)).toMatch(/data-party="b" aria-hidden="true"><span[^>]*>Party B is right</);
+  it("the ruling line takes the winner's side colour, ink when nobody wins", () => {
+    expect(html(<VerdictView result={base} lang="en" />)).toMatch(/data-win="b" aria-hidden="true">Party B is right</);
     const close = html(<VerdictView result={{ ...base, verdict: "too_close" }} lang="en" />);
-    expect(close).not.toMatch(/data-party="[ab]" aria-hidden="true"><span/);
+    expect(close).not.toMatch(/data-win="[ab]"/);
     const css = readFileSync(join(__dirname, "..", "components", "verdict", "verdict.module.css"), "utf8");
-    expect(css).toContain('.stamp[data-party="a"] { color: var(--party-a-ink); }');
-    expect(css).toContain('.stamp[data-party="b"] { color: var(--party-b-ink); }');
+    expect(css).toContain('.ruleLabel[data-win="a"] { color: var(--party-a-ink); }');
+    expect(css).toContain('.ruleLabel[data-win="b"] { color: var(--party-b-ink); }');
   });
 
   it("party marks on the card use the side tokens, never a fixed colour", () => {
     const css = readFileSync(join(__dirname, "..", "components", "verdict", "verdict.module.css"), "utf8");
-    for (const sel of [".dotA", ".dotB", ".tugA", ".sealA", ".sealB", ".branchA", ".branchB", ".colHeadA", ".partyChipB", ".claimA"]) {
+    for (const sel of [".dotA", ".dotB", ".leanFill", ".avatar", ".branchA", ".branchB", ".claimTag", ".claimTagB"]) {
       const rule = css.slice(css.indexOf(`${sel} {`), css.indexOf("}", css.indexOf(`${sel} {`)));
       expect(rule, sel).toMatch(/var\(--party-[ab]/);
       expect(rule, sel).not.toMatch(/--terra|--sage|rgba/);

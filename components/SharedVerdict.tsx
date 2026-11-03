@@ -13,7 +13,7 @@ import { LangPicker } from "./LangPicker";
 import { OwnerPanel, useMine } from "./OwnerTools";
 import { RemovedVerdict } from "./RemovedVerdict";
 import { buildOwnerShare } from "./ShareDialog";
-import { NextSteps } from "./thread/Composer";
+import { NextSteps } from "./shell/NextSteps";
 import { Thread } from "./thread/Thread";
 import { useVerdictAppeal, withRoundNames, type ShownVerdict } from "./VerdictAppeal";
 import { VerdictView } from "./VerdictView";
@@ -29,8 +29,7 @@ import styles from "./verdict/verdict.module.css";
  * their stored map, what they wrote, the names editor and removal.
  * It renders the page's h1 kicker (in the page language, `initialLang`):
  * "Someone shared this ruling" for everyone, "Your verdict" once the writer
- * is recognized. `balance` sits between the kicker and the card, `cta`
- * under it. The writer gets their verdict as a thread instead: what they
+ * is recognized. `cta` sits under the card. The writer gets their verdict as a thread instead: what they
  * wrote, the verdict, their tools, and "New argument". After a removal,
  * only the removed card is left, its heading focused.
  * `rounds`: the verdicts the writer's added context produced, oldest first.
@@ -46,7 +45,6 @@ export function SharedVerdict({
   publicNames = null,
   kickerClassName,
   cardClassName,
-  balance = null,
   cta = null,
 }: {
   id: string;
@@ -58,7 +56,6 @@ export function SharedVerdict({
   publicNames?: NameMapping[] | null;
   kickerClassName?: string;
   cardClassName?: string;
-  balance?: ReactNode;
   cta?: ReactNode;
 }) {
   const [picked, setPicked] = useState<Lang>(initialLang);
@@ -188,7 +185,6 @@ export function SharedVerdict({
       <h1 className={kickerClassName}>
         {t(initialLang, publicNames && publicNames.length > 0 ? "shared.subtitle" : "shared.subtitleHidden")}
       </h1>
-      {balance}
       <div className={cardClassName}>
         <div lang={lang} dir={langDir(lang)} className="flex flex-col gap-4 min-w-0">
           {langRow}

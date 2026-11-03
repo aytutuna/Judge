@@ -10,11 +10,9 @@ import { resolveParties, restoreNames } from "@/lib/names";
 import { getPublicVerdict } from "@/lib/originals/display";
 import { publicNameMap } from "@/lib/originals-types";
 import type { VerdictResult } from "@/lib/types";
-import { tugFinal } from "@/lib/verdict-display";
 import { AppShell } from "@/components/shell/AppShell";
 import { RemovedVerdict } from "@/components/RemovedVerdict";
 import { SharedVerdict } from "@/components/SharedVerdict";
-import { BalanceFallback } from "@/components/scene/BalanceFallback";
 import { LocaleStrings } from "@/components/LocaleStrings";
 import { SITE_NAME } from "@/app/site";
 import styles from "./page.module.css";
@@ -108,7 +106,6 @@ export default async function SharedVerdictPage({ params }: PageProps<"/v/[id]">
   const names = display ? publicNameMap(display) : null;
   const oneSided = found.meta?.kind === "free" || found.meta?.kind === "premium";
   const rounds = oneSided ? await laterRounds(id) : [];
-  const current = rounds.at(-1)?.result ?? stored.result;
 
   return (
     <LocaleStrings lang={lang} dict={loadedDict(lang)}>
@@ -126,7 +123,6 @@ export default async function SharedVerdictPage({ params }: PageProps<"/v/[id]">
               publicNames={names}
               kickerClassName={`kicker ${styles.kicker}`}
               cardClassName={styles.card}
-              balance={<BalanceFallback tugA={tugFinal(current)} className={styles.balance} />}
               cta={
                 <section aria-labelledby="cta-title" className={styles.cta}>
                   <h2 id="cta-title" className={styles.ctaTitle}>

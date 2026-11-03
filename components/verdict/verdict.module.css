@@ -7,14 +7,14 @@
 .shell {
   position: relative;
   width: 100%;
-  padding: 26px 20px 20px;
-  border-radius: var(--radius-verdict);
+  padding: 18px;
+  border-radius: var(--radius-card);
   background: var(--paper);
   border: 1px solid var(--line);
   box-shadow: var(--shadow-card);
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 14px;
   min-width: 0;
 }
 .shell:focus {
@@ -28,7 +28,7 @@
 .body {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 14px;
   min-width: 0;
   transition: opacity var(--dur-2) var(--ease);
 }
@@ -36,16 +36,9 @@
   opacity: 0.55;
 }
 
-/* ---------- Top row: pill + votes ---------- */
-.top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  flex-wrap: wrap;
-  min-height: 22px;
-}
+/* The "Example" pill of the homepage sample. */
 .pill {
+  align-self: flex-start;
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.12em;
@@ -56,30 +49,11 @@
   color: var(--ivory);
   line-height: 1.2;
 }
-/* Premium: the translation note or brand mark plus the Premium badge. */
-.pillGroup {
-  display: inline-flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px;
-  min-width: 0;
-}
-/* Quiet brand mark in the top-left corner when no pill is showing. */
-.brandTag {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  color: var(--muted);
-  font-family: var(--font-display);
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  line-height: 1;
-}
 /* Translation status, restyled as a soft pill (the element stays mounted
    as a polite live region; see VerdictView). */
 .note {
   margin: 0;
+  align-self: flex-start;
   display: inline-flex;
   align-items: center;
   gap: 7px;
@@ -106,16 +80,131 @@
   to { transform: rotate(360deg); }
 }
 
-.votes {
-  margin: 0 0 0 auto;
-  display: inline-flex;
+/* ---------- Scene ---------- */
+.scene {
+  box-sizing: border-box;
+  height: 118px;
+  padding-top: 14px;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 18px;
+  background: var(--paper);
+}
+.scene svg {
+  height: 100%;
+  width: auto;
+}
+
+/* ---------- Names and lean bar ---------- */
+/* Party A is on the left and Party B on the right in every language, as in
+   the scene; only the names inside run in the page's direction. */
+.names,
+.lean {
+  direction: ltr;
+}
+.nameText:dir(rtl) {
+  direction: rtl;
+}
+.names {
+  display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 8px;
+}
+.who {
+  flex: 1 1 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+.whoB {
+  justify-content: flex-end;
+}
+.avatar {
+  width: 28px;
+  height: 28px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--party-a-ink);
+  color: var(--paper);
   font-size: 12px;
+  font-weight: 700;
+}
+.avatarB {
+  background: var(--party-b-ink);
+}
+.nameText {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 15px;
+  line-height: 1.35;
+}
+.nameA {
+  font-weight: 700;
+  color: var(--ink);
+}
+.nameB {
+  font-weight: 600;
+  color: var(--ink-2);
+}
+.vs {
+  flex: none;
+  font-size: 12.5px;
   color: var(--muted);
 }
-.votesText {
-  margin-inline-end: 3px;
+.lean {
+  height: 12px;
+  overflow: hidden;
+  border-radius: var(--radius-chip);
+  background: var(--party-b-tint);
+}
+.leanFill {
+  height: 100%;
+  border-radius: var(--radius-chip);
+  background: var(--party-a-ink);
+}
+
+/* ---------- Ruling line ---------- */
+.ruleLine {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px 10px;
+}
+.ruleLabel {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  line-height: 1.2;
+  text-transform: uppercase;
+  color: var(--ink-2);
+}
+.ruleLabel[data-win="a"] { color: var(--party-a-ink); }
+.ruleLabel[data-win="b"] { color: var(--party-b-ink); }
+.ruleMeta {
+  margin-inline-start: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 600;
+}
+.votes {
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
 }
 .dot {
   width: 10px;
@@ -123,359 +212,26 @@
   flex: none;
   border-radius: 50%;
 }
-.dotA {
-  background: var(--party-a-strong);
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--party-a-ink) 60%, transparent);
-}
-.dotB {
-  background: var(--party-b-strong);
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--party-b-ink) 60%, transparent);
-}
+.dotA { background: var(--party-a-strong); }
+.dotB { background: var(--party-b-strong); }
 .dotOther {
   background: transparent;
   box-shadow: inset 0 0 0 1.5px var(--ink);
 }
 
-/* ---------- Tug bar ---------- */
-/* Party A is on the left and Party B on the right in every language, as in
-   the scene; only the names inside run in the page's direction. */
-.tugNames,
-.tugBar,
-.mapCols,
-.mapJoin {
-  direction: ltr;
-}
-.nameText:dir(rtl),
-.col:dir(rtl) {
-  direction: rtl;
-}
-.tugNames {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--ink-2);
-  margin-bottom: 8px;
-}
-.tugName {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  min-width: 0;
-  max-width: 48%;
-}
-.nameText {
-  min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-.nameDot {
-  width: 9px;
-  height: 9px;
-  flex: none;
-  border-radius: 50%;
-}
-.tugBar {
-  position: relative;
-  height: 10px;
-  border-radius: var(--radius-chip);
-  background: var(--party-b-strong);
-}
-.tugA {
-  position: absolute;
-  inset: 0 auto 0 0;
-  width: var(--a, 50%);
-  background: var(--party-a-strong);
-  border-radius: 999px 0 0 999px;
-}
-.tugKnot {
-  position: absolute;
-  top: 50%;
-  left: var(--a, 50%);
-  width: 18px;
-  height: 18px;
-  margin: -9px 0 0 -9px;
-  border-radius: 50%;
-  background: var(--paper);
-  box-shadow: 0 0 0 2px var(--ink), 0 2px 6px rgba(0, 0, 0, 0.18);
-}
-
-/* ---------- Main block ---------- */
-.main {
-  text-align: center;
-  padding: 22px 16px 20px;
-  border-radius: var(--radius-block);
-  background: linear-gradient(180deg, color-mix(in srgb, var(--paper), var(--well)), var(--well));
-  border: 1px solid var(--line);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  min-width: 0;
-  container-type: inline-size;
-}
-.badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  padding: 5px 11px;
-  border-radius: var(--radius-chip);
-  background: var(--paper);
-  border: 1px solid var(--line-2);
-  color: var(--ink-2);
-}
-.label {
-  margin: 2px 0 0;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  max-width: 100%;
-  font-family: var(--font-display);
-  font-weight: 800;
-  font-size: var(--text-verdict);
-  letter-spacing: -0.04em;
-  line-height: 1;
-  color: var(--ink);
-  text-wrap: balance;
-  overflow-wrap: anywhere;
-}
-/* A label that may wrap stacks its seal above it, so the seal never sits
-   stranded beside a two-line block; wide cards put it back inline. */
-.labelStack {
-  flex-direction: column;
-  gap: 10px;
-}
-@container (min-width: 420px) {
-  .labelStack:not(.labelLong) {
-    flex-direction: row;
-    gap: 12px;
-  }
-}
-.labelLong {
-  font-size: clamp(28px, 7.4vw, 38px);
-  line-height: 1.04;
-  letter-spacing: -0.035em;
-}
-.seal {
-  width: 34px;
-  height: 34px;
-  flex: none;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  box-shadow: inset 0 -3px 6px rgba(0, 0, 0, 0.12), inset 0 2px 3px rgba(255, 255, 255, 0.35);
-}
-.seal svg {
-  width: 17px;
-  height: 17px;
-}
-.sealA { background: var(--party-a-ink); }
-.sealB { background: var(--party-b-ink); }
-.sealNone { background: var(--ink); }
-.headline {
-  margin: 0;
-  color: var(--ink-2);
-  font-size: 15.5px;
-  line-height: 1.45;
-  max-width: 36ch;
-}
-/* A short hyphenated word is held together (lib/text.ts hyphenRuns). */
-.nobreak {
-  white-space: nowrap;
-}
-.slot {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  max-width: 40ch;
-}
-.slotTitle {
-  margin: 0;
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--ink);
-}
-.slotText {
-  margin: 0;
-  font-size: 13px;
-  line-height: 1.45;
-  color: var(--muted);
-}
-.slotIcon {
-  display: inline-block;
-  width: 14px;
-  height: 14px;
-  margin-inline-end: 2px;
-  vertical-align: -2px;
-}
-.danger {
-  color: var(--danger);
-}
-.details {
-  align-self: stretch;
-  text-align: start;
-  font-size: 13px;
-  color: var(--muted);
-}
-.details summary {
-  cursor: pointer;
-  text-align: center;
-  font-weight: 600;
-  color: var(--ink-2);
-  border-radius: 8px;
-}
-.details summary:hover {
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-.details p {
-  margin: 6px 0 0;
-}
-
-/* ---------- Confidence meter ---------- */
-.meter {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  margin-top: 6px;
-}
-.bars {
-  display: flex;
-  gap: 5px;
-}
-.bar {
-  position: relative;
-  width: 30px;
-  height: 7px;
-  border-radius: 7px;
-  background: color-mix(in srgb, var(--ink) 10%, transparent);
-  overflow: hidden;
-}
-.barOn::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: var(--ink);
-  transform-origin: left;
-}
-.meterText {
-  margin: 0;
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--ink-2);
-}
-
-/* The live verdict (VerdictReveal): a stamp in the corner, the headline
-   as the heading, then the votes and the confidence on one line. The top row
-   keeps clear of the stamp. */
-.stamp {
-  position: absolute;
-  top: 22px;
-  inset-inline-end: 18px;
-  max-width: 46%;
-  padding: 5px 10px;
-  border: 2px solid currentColor;
-  border-radius: 8px;
-  color: var(--ink);
-  font-family: var(--font-display);
-  font-size: 13px;
-  font-weight: 800;
-  line-height: 1.15;
-  letter-spacing: 0.12em;
-  text-align: center;
-  text-transform: uppercase;
-  overflow-wrap: anywhere;
-  transform: rotate(8deg);
-  pointer-events: none;
-}
-.stamp[data-party="a"] { color: var(--party-a-ink); }
-.stamp[data-party="b"] { color: var(--party-b-ink); }
-/* Clamped on an inner span: clamping the bordered box itself lets the third
-   line show through its bottom padding. A long winner name would otherwise
-   run the stamp down over the headline. */
-.stampText {
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  overflow: hidden;
-}
-.shell:has(.stamp) .top {
-  min-height: 44px;
-  padding-inline-end: 50%;
-}
-.lead {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  min-width: 0;
-}
-.dispute {
-  margin: 0;
-  color: var(--muted);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
 .ruling {
-  max-width: 24ch;
   margin: 0;
   color: var(--ink);
   font-family: var(--font-serif);
-  font-size: clamp(30px, 8vw, 34px);
+  font-size: 30px;
   font-weight: 400;
   line-height: 1.05;
   text-wrap: balance;
   overflow-wrap: break-word;
 }
-.meta {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 4px 8px;
-  color: var(--ink-2);
-  font-size: 13px;
-  font-weight: 600;
-}
-.meta .votes {
-  margin: 0;
-  color: inherit;
-  font-size: inherit;
-}
-.rule {
-  width: 100%;
-  height: 1px;
-  margin: 2px 0;
-  border: 0;
-  background: var(--ink);
-  opacity: 0.8;
-}
-.notes {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-.notes:empty {
-  display: none;
-}
-.notes .slot {
-  align-items: flex-start;
-  max-width: none;
-}
-.notes .details summary {
-  text-align: start;
+/* A short hyphenated word is held together (lib/text.ts hyphenRuns). */
+.nobreak {
+  white-space: nowrap;
 }
 
 .section {
@@ -485,7 +241,7 @@
   margin: 0 0 6px;
   color: var(--muted);
   font-family: var(--font-serif);
-  font-size: 16px;
+  font-size: 17px;
   font-style: italic;
   font-weight: 400;
 }
@@ -493,43 +249,14 @@
   margin: 0;
   color: var(--ink);
   font-size: 15px;
-  line-height: 1.55;
+  line-height: 1.5;
   text-wrap: pretty;
 }
-.tiles {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px;
-}
-.tile {
-  min-width: 0;
-  padding: 12px 14px;
-  border-radius: 14px;
-  background: var(--well);
-}
-.tile p {
-  margin: 4px 0 0;
-  color: var(--ink);
-  font-size: 14px;
+.refusal {
+  margin: 0;
+  font-size: 13px;
   line-height: 1.45;
-  overflow-wrap: break-word;
-  hyphens: auto;
-}
-.tileName {
-  display: block;
-  overflow: hidden;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-overflow: ellipsis;
-  text-transform: uppercase;
-  white-space: nowrap;
-}
-.tileName[data-party="a"] {
-  color: var(--party-a-ink);
-}
-.tileName[data-party="b"] {
-  color: var(--party-b-ink);
+  color: var(--muted);
 }
 
 /* ---------- Split / conditional branches ---------- */
@@ -563,317 +290,247 @@
   color: var(--ink-2);
 }
 
-/* ---------- Micro label, crux, best point ---------- */
-.k {
-  display: block;
+/* ---------- Detail rows and panel ---------- */
+.rows {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-block);
+  background: var(--paper);
+  overflow: hidden;
+}
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  min-height: 52px;
+  padding: 12px 16px;
+  border: 0;
+  background: none;
+  color: var(--ink);
+  font: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  text-align: start;
+  cursor: pointer;
+}
+.row + .row {
+  border-top: 1px solid var(--line);
+}
+.row:hover {
+  background: var(--paper-hi);
+}
+.chev {
+  width: 13px;
+  height: 13px;
+  flex: none;
+  color: var(--muted);
+  transition: transform var(--dur-1);
+}
+.chev:dir(rtl) {
+  transform: scaleX(-1);
+}
+.row[aria-expanded="true"] .chev {
+  transform: rotate(90deg);
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+.panel[hidden] {
+  display: none;
+}
+.detail {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+  padding: 18px 16px;
+  border-radius: var(--radius-block);
+  background: var(--paper);
+  border: 1px solid var(--line);
+}
+.sectionTitle {
+  margin: 0;
+  color: var(--muted);
+  font-family: var(--font-serif);
+  font-size: 17px;
+  font-style: italic;
+  font-weight: 400;
+}
+
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+.dispute {
+  margin: 0;
+  color: var(--muted);
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--muted);
-  margin: 0 0 6px;
 }
-.crux {
-  padding: 16px 18px;
-  border-radius: 20px;
-  border: 1.5px dashed color-mix(in srgb, var(--ink) 28%, transparent);
-  text-align: center;
-  background: var(--paper);
+.heard {
+  padding: 3px 10px;
+  border-radius: var(--radius-chip);
+  background: var(--sage-tint);
+  color: var(--sage-ink);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  line-height: 1.3;
+  text-transform: uppercase;
 }
-.cruxKicker {
+
+.noteBlock {
   display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.noteTitle {
+  margin: 0;
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
-  gap: 7px;
-}
-.cruxKicker svg {
-  width: 12px;
-  height: 12px;
-  flex: none;
-}
-.cruxText {
-  margin: 0 auto;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
   color: var(--ink);
-  max-width: 34ch;
+}
+.noteText {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--muted);
+}
+.nameDot {
+  width: 9px;
+  height: 9px;
+  flex: none;
+  border-radius: 50%;
+}
+.noteIcon {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  margin-inline-end: 2px;
+  vertical-align: -2px;
+}
+.danger {
+  color: var(--danger);
+}
+.disclosure {
+  font-size: 13px;
+  color: var(--muted);
+}
+.disclosure summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--ink-2);
+  border-radius: 8px;
+}
+.disclosure summary:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.disclosure p {
+  margin: 6px 0 0;
+}
+
+.cruxText {
+  margin: 0;
+  color: var(--ink);
   text-wrap: pretty;
 }
 .cruxSerif {
   font-family: var(--font-serif);
-  font-size: var(--text-crux);
-  line-height: 1.28;
-  letter-spacing: 0.005em;
+  font-size: 21px;
+  line-height: 1.3;
 }
 .cruxSans {
-  font-family: var(--font-sans);
-  font-size: 18px;
+  font-size: 16px;
   line-height: 1.5;
   font-weight: 500;
-  max-width: 46ch;
-  text-align: start;
 }
-.best {
-  padding: 14px 16px;
-  border-radius: 18px;
-  background: color-mix(in srgb, var(--paper), var(--well));
-  border: 1px solid var(--line);
-  border-inline-start: 4px solid var(--party-a-strong);
-}
-.best[data-party="b"] {
-  border-inline-start-color: var(--party-b-strong);
-}
-.best p {
+.bestText {
   margin: 0;
-  font-size: 15px;
-  line-height: 1.5;
-  color: var(--ink-2);
-}
-
-.footnote {
-  margin: 0;
-  text-align: center;
-  font-size: 12.5px;
-  line-height: 1.5;
-  color: var(--muted);
-}
-
-/* ---------- Actions ---------- */
-.actions {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  padding-top: 2px;
-}
-.shareGroup {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-.btnGhost {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  min-height: 40px;
-  border: 1px solid var(--line-2);
-  background: var(--paper);
-  padding: 9px 16px;
-  border-radius: var(--radius-chip);
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--ink);
-  cursor: pointer;
-  transition: background var(--dur-1), transform 0.25s var(--ease), border-color var(--dur-1);
-}
-.btnGhost:hover {
-  background: var(--paper-hi);
-  border-color: color-mix(in srgb, var(--ink) 22%, transparent);
-  transform: translateY(-1px);
-}
-.btnGhost:active {
-  transform: scale(0.98);
-}
-.btnGhost svg {
-  width: 15px;
-  height: 15px;
-  flex: none;
-}
-.btnLink {
-  display: inline-flex;
-  align-items: center;
-  min-height: 40px;
-  padding: 8px 4px;
-  border: 0;
-  background: none;
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--terra-ink);
-  text-decoration: none;
-  cursor: pointer;
-  border-radius: 8px;
-}
-.btnLink:hover {
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
-/* In the card's bottom row: the first share button is the main action,
-   the text action ("Settle another one") sits beside it outlined. */
-.actions .shareGroup {
-  flex: 1 1 auto;
-}
-.actions .btnGhost,
-.actions .btnLink {
-  justify-content: center;
-  min-height: 48px;
-  padding: 0 18px;
-  border: 1px solid var(--line-2);
-  border-radius: var(--radius-chip);
-  background: var(--paper);
   color: var(--ink);
   font-size: 15px;
-}
-.actions .shareGroup > :first-child {
-  flex: 1 1 auto;
-  border-color: var(--ink);
-  background: var(--ink);
-  color: var(--paper);
-}
-.actions .shareGroup > :first-child:hover {
-  background: var(--ink-2);
-}
-.actions .btnLink:hover {
-  border-color: color-mix(in srgb, var(--ink) 22%, transparent);
-  text-decoration: none;
+  line-height: 1.5;
 }
 
-/* ---------- Below the card: argument map and facts ---------- */
-.below {
-  display: flex;
-  flex-direction: column;
-  gap: 28px;
-  min-width: 0;
-  transition: opacity var(--dur-2) var(--ease);
-}
-
-/* Share page: the verdict-language switch above the card. */
-.langRow {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-.langLabel {
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-.sectionTitle {
-  margin: 0 0 12px;
-  font-family: var(--font-sans);
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-.mapCols {
+.tiles {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
 }
-.col {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+.tile {
   min-width: 0;
+  padding: 12px 14px;
+  border-radius: 16px;
+  background: var(--party-a-tint);
 }
-.colHead {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 10px 6px 6px;
-  border-radius: var(--radius-chip);
-  min-width: 0;
+.tile[data-party="b"] {
+  background: var(--party-b-tint);
 }
-.colHeadA { background: var(--party-a-tint); }
-.colHeadB { background: var(--party-b-tint); }
-.partyChip {
-  display: grid;
-  place-items: center;
-  width: 22px;
-  height: 22px;
-  flex: none;
-  border-radius: 50%;
-  font-size: 11px;
-  font-weight: 700;
-  color: var(--paper);
-}
-.partyChipA { background: var(--party-a-ink); }
-.partyChipB { background: var(--party-b-ink); }
-.colName {
-  font-size: 14px;
-  font-weight: 600;
+.tile p {
+  margin: 4px 0 0;
   color: var(--ink);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-.claim {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  padding: 10px 12px;
-  border-radius: 14px;
-  background: var(--paper);
-  border: 1px solid var(--line);
-  min-width: 0;
-}
-.claimA { border-inline-start: 3px solid var(--party-a-strong); }
-.claimB { border-inline-start: 3px solid var(--party-b-strong); }
-.claimText {
   font-size: 14px;
   line-height: 1.45;
-  color: var(--ink);
   overflow-wrap: break-word;
+  hyphens: auto;
 }
-.kind {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
+.tileName {
+  display: block;
+  overflow: hidden;
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.1em;
+  text-overflow: ellipsis;
   text-transform: uppercase;
-  color: var(--ink-2);
+  white-space: nowrap;
+  color: var(--party-a-ink);
 }
-.glyph {
-  width: 11px;
-  height: 11px;
-  flex: none;
+.tile[data-party="b"] .tileName {
+  color: var(--party-b-ink);
 }
-.connector {
-  align-self: center;
-  width: 0;
-  height: 14px;
-  border-left: 1.5px dashed color-mix(in srgb, var(--ink) 28%, transparent);
+.claimList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
-.bedrock {
-  padding: 10px 12px;
-  border-radius: 14px;
-  text-align: center;
-  background: var(--strata);
-  border: 1px solid var(--stone);
-  box-shadow: inset 0 -3px 0 var(--stone);
-  min-width: 0;
-}
-/* --muted is under 4.5:1 on --strata. */
-.bedrock .k {
-  color: var(--ink-2);
-}
-.bedrockText {
+.claim {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
   font-size: 14px;
-  font-weight: 500;
   line-height: 1.45;
   color: var(--ink);
   overflow-wrap: break-word;
 }
-.mapJoin {
-  display: flex;
-  justify-content: center;
-  gap: 64px;
-  margin: 4px 0;
+.claimTag {
+  flex: none;
+  padding: 2px 7px;
+  border-radius: var(--radius-chip);
+  background: var(--party-a-tint);
+  color: var(--party-a-ink);
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.3;
 }
-.mapJoin span {
-  width: 0;
-  height: 18px;
-  border-left: 1.5px dashed color-mix(in srgb, var(--ink) 28%, transparent);
+.claimTagB {
+  background: var(--party-b-tint);
+  color: var(--party-b-ink);
 }
-.mapJoin span:first-child { transform: rotate(-28deg); }
-.mapJoin span:last-child { transform: rotate(28deg); }
 
 .factList {
   list-style: none;
@@ -889,8 +546,7 @@
   gap: 10px;
   padding: 11px 14px;
   border-radius: 14px;
-  background: var(--paper);
-  border: 1px solid var(--line);
+  background: var(--well);
   font-size: 15px;
   line-height: 1.5;
   color: var(--ink-2);
@@ -910,81 +566,93 @@
   height: 10px;
 }
 
+.footnote {
+  margin: 0;
+  text-align: center;
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--muted);
+}
+
+/* ---------- Actions ---------- */
+.actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  padding-top: 4px;
+}
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 52px;
+  padding: 0 14px;
+  border: 1px solid var(--ink);
+  border-radius: var(--radius-field);
+  background: var(--ink);
+  color: var(--ivory);
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.2;
+  cursor: pointer;
+  transition: background var(--dur-1), transform 0.25s var(--ease);
+}
+.btn:hover {
+  background: var(--ink-2);
+}
+.btn:active {
+  transform: scale(0.98);
+}
+.btnOutline {
+  border-color: var(--line-2);
+  background: var(--paper);
+  color: var(--ink);
+}
+.btnOutline:hover {
+  background: var(--paper-hi);
+}
+.btn svg {
+  width: 16px;
+  height: 16px;
+  flex: none;
+}
+
+/* Share page: the verdict-language switch above the card. */
+.langRow {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.langLabel {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
 /* ---------- Live entrance (VerdictView: `animate`) ---------- */
 @keyframes card-in {
   from { opacity: 0; transform: translateY(16px); }
-}
-@keyframes tug-a-in {
-  from { width: 50%; }
-}
-@keyframes tug-knot-in {
-  from { left: 50%; }
-}
-@keyframes dot-pop {
-  from { opacity: 0; transform: scale(0); }
-}
-@keyframes label-in {
-  from { opacity: 0; transform: translateY(14px) scale(0.96); }
-}
-@keyframes bar-fill {
-  from { transform: scaleX(0); }
 }
 @keyframes fresh-ring {
   0%, 70% { box-shadow: 0 0 0 6px color-mix(in srgb, var(--sage) 35%, transparent), var(--shadow-card); }
   100% { box-shadow: var(--shadow-card); }
 }
 
-.animate { animation: card-in 0.5s var(--ease) both; }
+.animate { animation: card-in 0.4s cubic-bezier(0.2, 0.7, 0.1, 1) both; }
 .fresh { animation: fresh-ring 2.6s var(--ease) both; }
 .animate.fresh {
-  animation: card-in 0.5s var(--ease) both, fresh-ring 2.6s var(--ease) both;
-}
-.animate .tugA { animation: tug-a-in 1.4s var(--ease-spring) 0.25s both; }
-.animate .tugKnot { animation: tug-knot-in 1.4s var(--ease-spring) 0.25s both; }
-.animate .dot {
-  animation: dot-pop 0.5s var(--ease-spring) both;
-  animation-delay: calc(0.5s + var(--i, 0) * 0.1s);
-}
-.animate .label { animation: label-in 0.8s var(--ease-spring) 0.35s both; }
-.animate .barOn::after {
-  animation: bar-fill 0.45s var(--ease) both;
-  animation-delay: calc(0.7s + var(--i, 0) * 0.14s);
-}
-.animateBelow { animation: card-in 0.5s var(--ease) 0.45s both; }
-@keyframes stamp-in {
-  from { opacity: 0; transform: rotate(8deg) scale(1.5); }
-}
-.animate .stamp { animation: stamp-in 0.45s var(--ease-spring) 0.4s both; }
-
-/* ---------- Sample play (SampleVerdict sets data-state) ---------- */
-/* "armed" is only ever set by script when motion is allowed; without it
-   (no JS, reduced motion) the card simply shows its final state. */
-.shell[data-state="armed"] .tugA { width: 50%; }
-.shell[data-state="armed"] .tugKnot { left: 50%; }
-.shell[data-state="armed"] .dot { opacity: 0; transform: scale(0); }
-.shell[data-state="armed"] .label { opacity: 0; transform: translateY(14px) scale(0.96); }
-.shell[data-state="armed"] .barOn::after { transform: scaleX(0); }
-
-.shell[data-state="play"] .tugA { transition: width 1.4s var(--ease-spring); }
-.shell[data-state="play"] .tugKnot { transition: left 1.4s var(--ease-spring); }
-.shell[data-state="play"] .dot {
-  transition: transform 0.5s var(--ease-spring), opacity 0.4s;
-  transition-delay: calc(0.1s + var(--i, 0) * 0.1s);
-}
-.shell[data-state="play"] .label {
-  transition: opacity 0.6s var(--ease) 0.35s, transform 0.8s var(--ease-spring) 0.35s;
-}
-.shell[data-state="play"] .barOn::after {
-  transition: transform 0.45s var(--ease);
-  transition-delay: calc(0.7s + var(--i, 0) * 0.14s);
+  animation: card-in 0.4s cubic-bezier(0.2, 0.7, 0.1, 1) both, fresh-ring 2.6s var(--ease) both;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .animate,
-  .animate *,
-  .animate *::after,
-  .fresh,
-  .animateBelow {
+  .fresh {
     animation: none !important;
   }
   .spinner {
@@ -994,20 +662,7 @@
   }
 }
 
-@media (max-width: 439px) {
-  .votesText { display: none; }
-}
-
-/* Two ~130px columns break Turkish claims mid-word: stack them. */
-@media (max-width: 400px) {
-  .mapCols { grid-template-columns: minmax(0, 1fr); gap: 16px; }
-}
-
-@media (min-width: 960px) {
-  .shell { padding: 30px 28px 24px; }
-}
-
 @media (forced-colors: active) {
-  .dotA, .dotB, .tugA, .barOn::after, .seal, .partyChip, .factCheck { forced-color-adjust: none; }
+  .dotA, .dotB, .leanFill, .avatar, .factCheck { forced-color-adjust: none; }
   .dotOther { box-shadow: inset 0 0 0 1.5px CanvasText; }
 }

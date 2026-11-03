@@ -3,51 +3,21 @@
 import { useEffect, useId, useMemo } from "react";
 import { track } from "@/lib/analytics/client";
 import type { NameMapping, VerdictResult } from "@/lib/types";
-import { languageName, t, type Key, type Lang } from "@/lib/i18n";
+import { languageName, t, type Lang } from "@/lib/i18n";
 import { langDir } from "@/lib/langs";
 import { useLang } from "@/lib/lang";
 import { consistentSelfMap, partyNames, personalizeResult, resolveParties, type SelfParty } from "@/lib/names";
 import { verdictLang } from "@/lib/content-lang";
-import { stripLeadingEmoji } from "@/lib/text";
-import { panelSummary } from "@/lib/verdict-display";
 import { useVerdictTranslation, type TranslationView } from "@/lib/use-translation";
-import { VerdictReveal } from "./VerdictReveal";
-import { ArgumentMap } from "./ArgumentMap";
-import { FactChips } from "./FactChips";
-import { FactCheckList } from "./FactCheckList";
 import { ShareButtons } from "./ShareButtons";
 import type { OwnerShare } from "./ShareDialog";
-import { VerdictCardShell } from "./verdict/VerdictCardShell";
-import { CardBrand, CardTopRow } from "./verdict/CardTopRow";
-import { CardActions } from "./verdict/CardActions";
+import { VerdictCard } from "./verdict/VerdictCard";
+import { VerdictDetails } from "./verdict/VerdictDetails";
 import { AppealOutcomeBanner } from "./case/AppealOutcome";
-import { TwoSidedFacts, WouldChangeBlock, evidenceNote } from "./case/TwoSidedBlocks";
-import caseStyles from "./case/case.module.css";
 import styles from "./verdict/verdict.module.css";
 
 /** Verdicts already counted as viewed, so a remount does not count again. */
 const viewed = new Set<string>();
-
-/** Non-side votes rendered whole from the dictionary — never
- * `r.replace("_", " ")`, which would splice raw English enum words into a
- * Turkish sentence. */
-const VOTE_KEY = {
-  split: "vote.split",
-  conditional: "vote.conditional",
-  dissolved: "vote.dissolved",
-} as const satisfies Record<string, Key>;
-
-/** "Deniz's best point" when one side won, the plain title otherwise. */
-function bestPointTitle(
-  lang: Lang,
-  result: VerdictResult,
-  p: { nameA: string; nameB: string; aIsSelf: boolean; bIsSelf: boolean },
-): string {
-  if (result.verdict !== "side_a" && result.verdict !== "side_b") return stripLeadingEmoji(t(lang, "bestPointTitle"));
-  const loserA = result.verdict === "side_b";
-  if (loserA ? p.aIsSelf : p.bIsSelf) return t(lang, "bestPoint.self");
-  return t(lang, "bestPoint.of", { name: loserA ? p.nameA : p.nameB });
-}
 
 /** "Translated from Turkish". A source with no sentence of its own reads
  * "German → English", which needs no grammar in any language. */
@@ -78,22 +48,22 @@ function TranslationNote({ view, lang }: { view: TranslationView; lang: Lang }) 
   );
 }
 
-/** Full verdict display: the card (stamp, headline, confidence and votes,
- * branches, why, crux, bedrock, best point, actions), then the argument map and
- * facts below it.
+/** Full verdict display: the card (balance, names, lean bar, ruling line,
+ * headline, why, branches), the detail rows with their panel (crux, sides,
+ * best point, facts) and the share / appeal actions.
  * `lang` prop: the share page passes its own selected language (the store is
  * the viewer's own preference and never applies there); the main page passes
  * nothing and the store wins. With a `shareId`, the verdict TEXT follows
  * `lang` too: a verdict written in the other language is fetched translated
  * and swapped in, with the original kept for switching back.
- * `onJudgeAnother` adds a "Settle another one" action and `onAddContext` an
- * "Add context" one in its place (the writer's verdict); `fresh` rings the
- * card in sage for a moment when it has just replaced the form.
+ * `onAddContext` puts "Add context & appeal" beside Share (the writer's
+ * verdict); `fresh` rings the card in sage for a moment when it has just
+ * replaced the form.
  * `verdictId` is the shown result's own id when the page is another
  * verdict's (a round of added context shown on its first verdict's page):
  * translation follows it, sharing stays on `shareId`.
  * Premium results (`tier: "premium"`) add a panel line in the footnote and
- * the web fact-check below the card; old free results render as before.
+ * the web fact-check to the details; old free results render as before.
  * With a `nameMap` (the writer's own view) the real names go back into the
  * verdict text as well as the labels. Share pages pass the writer's chosen
  * display names as the map with `publicNames`: nobody is "You" there and a
@@ -118,7 +88,6 @@ export function VerdictView({
   nameMap,
   shareId,
   lang: langProp,
-  onJudgeAnother,
   onAddContext,
   verdictId,
   fresh = false,
@@ -133,7 +102,6 @@ export function VerdictView({
   nameMap?: NameMapping[];
   shareId?: string;
   lang?: Lang;
-  onJudgeAnother?: () => void;
   onAddContext?: () => void;
   verdictId?: string;
   fresh?: boolean;
@@ -182,166 +150,45 @@ export function VerdictView({
   );
   const loading = view.status === "loading";
   const labelId = useId();
-  const refused = Boolean(result.model_refused);
-  const premium = result.tier === "premium";
-  const twoSided = result.two_sided === true;
-  const evidenceLine = evidenceNote(result, lang);
   const parties = { nameA, nameB, aIsSelf, bIsSelf };
-  const pill = (
-    <>
-      {shareId ? <TranslationNote view={view} lang={lang} /> : null}
-      {view.status === "original" ? <CardBrand /> : null}
-    </>
-  );
 
   return (
-    <div className="flex flex-col gap-7 min-w-0" data-you={selfParty === "B" ? "b" : "a"}>
+    <div className="flex flex-col gap-3 min-w-0" data-you={selfParty === "B" ? "b" : "a"}>
       {result.appeal ? (
-        <AppealOutcomeBanner
-          appeal={result.appeal}
-          lang={lang}
-          byName={result.appeal.by === "a" ? nameA : nameB}
-          bySelf={result.appeal.by === "a" ? aIsSelf : bIsSelf}
-          focus={focusAppeal}
-        />
+        <div className="pb-2">
+          <AppealOutcomeBanner
+            appeal={result.appeal}
+            lang={lang}
+            byName={result.appeal.by === "a" ? nameA : nameB}
+            bySelf={result.appeal.by === "a" ? aIsSelf : bIsSelf}
+            focus={focusAppeal}
+          />
+        </div>
       ) : null}
-      <VerdictCardShell
-        labelledBy={labelId}
+      <VerdictCard
+        result={result}
+        nameA={nameA}
+        nameB={nameB}
+        aIsSelf={aIsSelf}
+        bIsSelf={bIsSelf}
+        lang={lang}
+        labelId={labelId}
+        restoredNames={restoredNames}
+        top={shareId ? <TranslationNote view={view} lang={lang} /> : null}
+        you={selfParty === "B" ? "b" : "a"}
         busy={loading}
         highlight={fresh}
         animate
-        top={
-          <CardTopRow
-            pill={
-              twoSided ? (
-                <span className={styles.pillGroup}>
-                  {pill}
-                  <span className={caseStyles.tsBadge}>{t(lang, "twoSided.badge")}</span>
-                </span>
-              ) : (
-                pill
-              )
-            }
-            votes={[]}
-          />
-        }
-      >
-        <VerdictReveal
-          result={result}
-          nameA={nameA}
-          nameB={nameB}
-          aIsSelf={aIsSelf}
-          bIsSelf={bIsSelf}
+      />
+      <VerdictDetails result={result} parties={parties} lang={lang} loading={loading} />
+      {shareId ? (
+        <ShareButtons
+          shareId={shareId}
+          title={view.result.headline}
           lang={lang}
-          labelId={labelId}
-          restoredNames={restoredNames}
+          owner={owner}
+          onAddContext={onAddContext}
         />
-
-        {!refused ? (
-          <section className={styles.section}>
-            <h3 className={styles.sectionLabel}>{stripLeadingEmoji(t(lang, "cruxShort"))}</h3>
-            <p className={styles.sectionText}>{result.crux}</p>
-          </section>
-        ) : null}
-
-        {!refused && (result.argument_map.bedrock_a || result.argument_map.bedrock_b) ? (
-          <section className={styles.section}>
-            <h3 className={styles.sectionLabel}>{stripLeadingEmoji(t(lang, "bedrock"))}</h3>
-            <div className={styles.tiles}>
-              <div className={styles.tile}>
-                <span className={styles.tileName} data-party="a">
-                  {nameA}
-                </span>
-                <p>{result.argument_map.bedrock_a}</p>
-              </div>
-              <div className={styles.tile}>
-                <span className={styles.tileName} data-party="b">
-                  {nameB}
-                </span>
-                <p>{result.argument_map.bedrock_b}</p>
-              </div>
-            </div>
-          </section>
-        ) : null}
-
-        {!refused && result.losing_side_best_point ? (
-          <section className={styles.section}>
-            <h3 className={styles.sectionLabel}>{bestPointTitle(lang, result, parties)}</h3>
-            <p className={styles.sectionText}>{result.losing_side_best_point}</p>
-          </section>
-        ) : null}
-
-        {!refused && result.would_change?.length ? (
-          <WouldChangeBlock items={result.would_change} lang={lang} />
-        ) : null}
-
-        {/* The votes in words (the dots in the top row are decorative), plus
-            the escalation note when extra judges were called in. */}
-        {result.runs.length > 0 ? (
-          <p className={styles.footnote}>
-            {result.escalated ? (
-              <>
-                {t(lang, "escalated")}
-                <br />
-              </>
-            ) : null}
-            {t(lang, result.runs.length === 1 ? "judgesVoted.one" : "judgesVoted.other", {
-              n: result.runs.length,
-            })}{" "}
-            {result.runs
-              .map((r) =>
-                r === "side_a" ? nameA : r === "side_b" ? nameB : t(lang, VOTE_KEY[r]),
-              )
-              .join(" · ")}
-            {premium ? (
-              <>
-                <br />
-                {t(lang, "panel.premium")}
-                {result.panel?.models.length ? ` ${panelSummary(result.panel.models, lang)}` : null}
-              </>
-            ) : null}
-            {evidenceLine ? (
-              <>
-                <br />
-                {evidenceLine}
-              </>
-            ) : null}
-          </p>
-        ) : null}
-
-        <CardActions
-          share={
-            shareId ? <ShareButtons shareId={shareId} title={view.result.headline} lang={lang} owner={owner} /> : null
-          }
-          again={
-            onAddContext
-              ? { label: t(lang, "appeal.title"), onClick: onAddContext }
-              : onJudgeAnother
-                ? { label: t(lang, "judgeAnother"), onClick: onJudgeAnother }
-                : undefined
-          }
-        />
-      </VerdictCardShell>
-
-      {!refused ? (
-        <div
-          className={[styles.below, styles.animateBelow, loading && styles.busy]
-            .filter(Boolean)
-            .join(" ")}
-          aria-busy={loading}
-        >
-          {twoSided ? <TwoSidedFacts result={result} lang={lang} parties={parties} /> : null}
-          <ArgumentMap
-            map={result.argument_map}
-            crux={result.crux}
-            nameA={nameA}
-            nameB={nameB}
-            lang={lang}
-            showCrux={false}
-          />
-          {result.fact_check ? <FactCheckList factCheck={result.fact_check} lang={lang} disputeType={result.dispute_type} /> : null}
-          <FactChips facts={result.facts_relied_on} lang={lang} />
-        </div>
       ) : null}
     </div>
   );

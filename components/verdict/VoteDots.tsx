@@ -1,4 +1,3 @@
-import type { CSSProperties } from "react";
 import { voteOf, type Vote } from "@/lib/balance";
 import styles from "./verdict.module.css";
 
@@ -12,39 +11,16 @@ const DOT_CLASS: Record<Vote, string> = {
   other: styles.dotOther,
 };
 
-/**
- * One dot per judge run (more than three after an escalation) in its
- * side's colour, a hollow ink ring for anything else. Colour is
- * never the only carrier: with `srText` the visible label is hidden from
- * screen readers in favour of that full sentence; without it the whole
- * cluster is decorative and the caller must say the votes in text elsewhere.
- */
-export function VoteDots({
-  votes,
-  label,
-  srText,
-}: {
-  votes: readonly Vote[];
-  label?: string;
-  srText?: string;
-}) {
-  if (!votes.length && !label) return null;
+/** One dot per judge run (more than three after an escalation) in its
+ * side's colour, a hollow ink ring for anything else. Decorative: the votes
+ * are also written out in the details. */
+export function VoteDots({ votes }: { votes: readonly Vote[] }) {
+  if (!votes.length) return null;
   return (
-    <p className={styles.votes} aria-hidden={srText ? undefined : true}>
-      {label ? (
-        <span className={styles.votesText} aria-hidden={srText ? true : undefined}>
-          {label}
-        </span>
-      ) : null}
+    <p className={styles.votes} aria-hidden>
       {votes.map((v, i) => (
-        <i
-          key={i}
-          aria-hidden
-          className={`${styles.dot} ${DOT_CLASS[v]}`}
-          style={{ "--i": i } as CSSProperties}
-        />
+        <i key={i} className={`${styles.dot} ${DOT_CLASS[v]}`} />
       ))}
-      {srText ? <span className="sr-only">{srText}</span> : null}
     </p>
   );
 }

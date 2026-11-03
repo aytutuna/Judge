@@ -26,23 +26,25 @@ export function needsNamesPrompt(owner: OwnerShare | undefined, confirmedHere: b
   return Boolean(owner) && !confirmedHere && !owner?.namesConfirmed && owner?.display.a == null;
 }
 
-/** Copy-link plus native share sheet (where the browser has one). The native
- * button only appears after hydration so server and client markup agree.
- * For the verdict's writer (`owner`), the first share or copy opens the
- * names dialog first (how they appear, the others' names, names on or off),
- * then goes on with the share; public viewers get the buttons alone. */
+/** The card's action row: a filled "Share" (the browser's share sheet, a
+ * plain copy where it has none) and an outlined second button, "Add context
+ * & appeal" for the verdict's writer (`onAddContext`) and "Copy link" for
+ * everyone else. The native share only appears after hydration so server and
+ * client markup agree. For the writer (`owner`), the first share or copy
+ * opens the names dialog first (how they appear, the others' names, names on
+ * or off), then goes on with the share; public viewers get the buttons alone. */
 export function ShareButtons({
   shareId,
   title,
   lang,
-  className,
   owner,
+  onAddContext,
 }: {
   shareId: string;
   title: string;
   lang: Lang;
-  className?: string;
   owner?: OwnerShare;
+  onAddContext?: () => void;
 }) {
   const nativeShare = useSyncExternalStore(subscribeNever, canNativeShare, serverCanShare);
   const [copied, setCopied] = useState(false);
@@ -80,50 +82,69 @@ export function ShareButtons({
     }
   }
 
+  const shareIcon = (
+    <svg viewBox="0 0 16 16" aria-hidden>
+      <path
+        d="M8 10V2.5M5 5.2 8 2.2l3 3M4 8H3.5A1.5 1.5 0 0 0 2 9.5v3A1.5 1.5 0 0 0 3.5 14h9a1.5 1.5 0 0 0 1.5-1.5v-3A1.5 1.5 0 0 0 12.5 8H12"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth={1.5}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+  const checkIcon = (
+    <svg viewBox="0 0 16 16" aria-hidden>
+      <path
+        d="M3.5 8.4 6.6 11.4 12.6 4.9"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth={2}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+  const linkIcon = (
+    <svg viewBox="0 0 16 16" aria-hidden>
+      <path
+        d="M6.5 9.5 9.5 6.5M7 4.5l1.2-1.2a2.5 2.5 0 0 1 3.5 3.5L10.5 8M9 11.5l-1.2 1.2a2.5 2.5 0 0 1-3.5-3.5L5.5 8"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth={1.5}
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+  const sharePastes = !nativeShare;
+
   return (
-    <div className={[styles.shareGroup, className].filter(Boolean).join(" ")}>
-      {nativeShare ? (
-        <button type="button" onClick={() => withNames(() => void share())} className={styles.btnGhost}>
-          <svg viewBox="0 0 16 16" aria-hidden>
-            <path
-              d="M8 10V2.5M5 5.2 8 2.2l3 3M4 8H3.5A1.5 1.5 0 0 0 2 9.5v3A1.5 1.5 0 0 0 3.5 14h9a1.5 1.5 0 0 0 1.5-1.5v-3A1.5 1.5 0 0 0 12.5 8H12"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth={1.5}
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-          {stripLeadingEmoji(t(lang, "share"))}
-        </button>
-      ) : null}
-      <button type="button" onClick={() => withNames(() => void copyLink())} className={styles.btnGhost}>
-        {copied ? (
-          <svg viewBox="0 0 16 16" aria-hidden>
-            <path
-              d="M3.5 8.4 6.6 11.4 12.6 4.9"
-              fill="none"
-              stroke="var(--sage-ink)"
-              strokeWidth={2}
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        ) : (
-          <svg viewBox="0 0 16 16" aria-hidden>
-            <path
-              d="M6.5 9.5 9.5 6.5M7 4.5l1.2-1.2a2.5 2.5 0 0 1 3.5 3.5L10.5 8M9 11.5l-1.2 1.2a2.5 2.5 0 0 1-3.5-3.5L5.5 8"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth={1.5}
-              strokeLinecap="round"
-            />
-          </svg>
-        )}
-        <span aria-live="polite">
-          {stripLeadingEmoji(copied ? t(lang, "copied") : t(lang, "copyLink"))}
+    <div className={styles.actions}>
+      <button
+        type="button"
+        onClick={() => withNames(() => void (nativeShare ? share() : copyLink()))}
+        className={styles.btn}
+      >
+        {copied && sharePastes ? checkIcon : shareIcon}
+        <span aria-live={sharePastes ? "polite" : undefined}>
+          {stripLeadingEmoji(t(lang, copied && sharePastes ? "copied" : "share"))}
         </span>
       </button>
+      {onAddContext ? (
+        <button type="button" onClick={onAddContext} className={`${styles.btn} ${styles.btnOutline}`}>
+          {t(lang, "app.appeal.title")}
+        </button>
+      ) : (
+        <button
+          type="button"
+          onClick={() => withNames(() => void copyLink())}
+          className={`${styles.btn} ${styles.btnOutline}`}
+        >
+          {copied ? checkIcon : linkIcon}
+          <span aria-live="polite">{stripLeadingEmoji(copied ? t(lang, "copied") : t(lang, "copyLink"))}</span>
+        </button>
+      )}
       {owner ? (
         <ShareDialog
           open={dialogOpen}

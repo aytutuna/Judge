@@ -33,31 +33,6 @@ export function verdictLabel(
   }
 }
 
-/** The stamp on the verdict card: the winner as verdictLabel says it,
- * otherwise one short word. */
-export function stampLabel(
-  r: VerdictResult,
-  nameA: string,
-  nameB: string,
-  aIsSelf: boolean,
-  bIsSelf: boolean,
-  lang: Lang,
-): string {
-  switch (r.verdict) {
-    case "side_a":
-    case "side_b":
-      return verdictLabel(r, nameA, nameB, aIsSelf, bIsSelf, lang);
-    case "split":
-      return t(lang, "stamp.split");
-    case "conditional":
-      return t(lang, "stamp.conditional");
-    case "dissolved":
-      return t(lang, "stamp.dissolved");
-    case "too_close":
-      return t(lang, "stamp.tooClose");
-  }
-}
-
 /** How many judge runs reached the final verdict. Null when there is no
  * majority ruling to agree with (too close) or no runs at all. */
 export function agreement(r: VerdictResult): { n: number; total: number } | null {
@@ -98,6 +73,17 @@ export function tugFinal(result: VerdictResult): number {
       if (result.lean) return result.lean.party === "a" ? 62 : 38;
       return 50;
   }
+}
+
+/** Party A's share of the judge votes for either side, 0 to 1, for the lean
+ * bar. Half for a too-close or split ruling or when nobody voted for a side;
+ * null when there is nothing to show (a refusal, no runs). */
+export function leanShare(r: VerdictResult): number | null {
+  if (r.model_refused || !r.runs.length) return null;
+  if (r.verdict === "too_close" || r.verdict === "split") return 0.5;
+  const a = r.runs.filter((v) => v === "side_a").length;
+  const b = r.runs.filter((v) => v === "side_b").length;
+  return a + b ? a / (a + b) : 0.5;
 }
 
 /** Forced-vote split for a non-unanimous lean. aggregate stores the tally

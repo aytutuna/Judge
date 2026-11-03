@@ -109,11 +109,11 @@ describe("VerdictView premium", () => {
     panel: { models: ["claude-sonnet-5-5", "claude-sonnet-5-5", "claude-haiku-5-5"] },
   };
 
-  it("adds the panel line and the fact-check, before the facts", () => {
+  it("adds the panel line and the fact-check, after the facts", () => {
     const out = html(<VerdictView result={premium} lang="en" />);
     expect(out).not.toContain(">Premium<");
     expect(out).toContain("Judged with a web fact-check. Judges: 2 strong + 1 quick");
-    expect(out.indexOf(t("en", "factcheck.title"))).toBeLessThan(out.indexOf("The Wall is a few metres wide."));
+    expect(out.indexOf("The Wall is a few metres wide.")).toBeLessThan(out.indexOf(t("en", "factcheck.title")));
   });
 
   it("leaves free results exactly as they were", () => {

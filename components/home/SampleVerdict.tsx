@@ -1,17 +1,9 @@
-"use client";
-
-import { useEffect, useRef } from "react";
 import { t, type Lang } from "@/lib/i18n";
-import { noOrphan, stripLeadingEmoji } from "@/lib/text";
-import { VerdictCardShell } from "../verdict/VerdictCardShell";
-import { CardTopRow, ExamplePill } from "../verdict/CardTopRow";
-import { TugBar } from "../verdict/TugBar";
-import { VerdictMain } from "../verdict/VerdictMain";
-import { CruxBlock } from "../verdict/CruxBlock";
-import { WhyBlock } from "../verdict/WhyBlock";
-import { BestPointBlock } from "../verdict/BestPointBlock";
-import { CardActions } from "../verdict/CardActions";
-import type { Vote } from "../verdict/VoteDots";
+import type { VerdictResult } from "@/lib/types";
+import { noOrphan } from "@/lib/text";
+import { VerdictCard } from "../verdict/VerdictCard";
+import { VerdictDetails } from "../verdict/VerdictDetails";
+import cardStyles from "../verdict/verdict.module.css";
 import styles from "./SampleVerdict.module.css";
 
 /** The hot dog case: Party B ("You") wins 3–0, confidence 3 of 3. The 3D
@@ -19,55 +11,28 @@ import styles from "./SampleVerdict.module.css";
  * "You" is the reader, so the card and the story both draw Party B as their
  * own side. */
 export const SAMPLE_TUG_A = 20;
-const SAMPLE_VOTES: readonly Vote[] = ["b", "b", "b"];
 
-/** Share of the card that must be on screen before it plays. A card taller
- * than the viewport also plays once it fills half the screen. */
-const PLAY_RATIO = 0.45;
-const THRESHOLDS = Array.from({ length: 21 }, (_, i) => i / 20);
-
-/**
- * "What a verdict looks like": a clearly badged, static example in the same
- * card as the real verdict. It plays once (tug 50 → 20, dots pop, label
- * lifts, meter fills) when it scrolls into view. The server markup is the
- * final state; script only "arms" the start pose when motion is allowed, so
- * no-JS and reduced-motion visitors simply see the finished card.
- */
+/** "What a verdict looks like": a clearly badged, static example in the same
+ * card as the real verdict, with the rows that open its details. */
 export function SampleVerdict({ lang }: { lang: Lang }) {
-  const cardRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const el = cardRef.current;
-    if (!el || typeof IntersectionObserver === "undefined") return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    el.dataset.state = "armed";
-    const io = new IntersectionObserver(
-      (entries) => {
-        const seen = entries.some(
-          (e) =>
-            e.isIntersecting &&
-            (e.intersectionRatio >= PLAY_RATIO ||
-              e.intersectionRect.height >= (e.rootBounds?.height ?? window.innerHeight) * 0.5),
-        );
-        if (!seen) return;
-        io.disconnect();
-        void el.offsetWidth; // commit the armed pose before the transitions start
-        el.dataset.state = "play";
-      },
-      { threshold: THRESHOLDS },
-    );
-    io.observe(el);
-    return () => {
-      io.disconnect();
-      delete el.dataset.state;
-    };
-  }, []);
-
   const nameA = t(lang, "sample.nameA");
   const nameB = t(lang, "sample.nameB");
-  const label = t(lang, "sample.label");
-  const votesLabel = t(lang, "judgesVoted.other", { n: SAMPLE_VOTES.length });
-  const votesSr = `${votesLabel} ${SAMPLE_VOTES.map(() => nameB).join(" · ")}`;
+  const result: VerdictResult = {
+    verdict: "side_b",
+    dispute_type: "definitional",
+    headline: t(lang, "sample.headline"),
+    why: t(lang, "sample.why"),
+    crux: t(lang, "sample.crux"),
+    split_points: null,
+    conditional: null,
+    argument_map: { side_a: [], side_b: [], bedrock_a: "", bedrock_b: "" },
+    facts_relied_on: [],
+    losing_side_best_point: t(lang, "sample.bestPoint"),
+    confidence: 5,
+    runs: ["side_b", "side_b", "side_b"],
+    demo: false,
+    lang,
+  };
 
   return (
     <section id="sample" aria-labelledby="sample-title" className={styles.sample}>
@@ -80,42 +45,23 @@ export function SampleVerdict({ lang }: { lang: Lang }) {
           <p className={styles.lead}>{t(lang, "sample.lead")}</p>
         </div>
 
-        <div className={styles.cardWrap} data-you="b">
-          <VerdictCardShell
-            ref={cardRef}
-            top={
-              <CardTopRow
-                pill={<ExamplePill>{t(lang, "sample.badge")}</ExamplePill>}
-                votes={SAMPLE_VOTES}
-                votesLabel={votesLabel}
-                votesSr={votesSr}
-              />
-            }
-          >
-            <TugBar
-              nameA={nameA}
-              nameB={nameB}
-              tugA={SAMPLE_TUG_A}
-              ariaLabel={t(lang, "verdictAria", { label })}
-            />
-            <VerdictMain
-              badge={t(lang, "badge.definitional")}
-              label={label}
-              labelAs="h3"
-              seal="b"
-              headline={t(lang, "sample.headline")}
-              agreement={{ n: SAMPLE_VOTES.length, total: SAMPLE_VOTES.length }}
-              lang={lang}
-            />
-            <WhyBlock title={t(lang, "why")} text={t(lang, "sample.why")} />
-            <CruxBlock title={stripLeadingEmoji(t(lang, "cruxShort"))} text={t(lang, "sample.crux")} />
-            <BestPointBlock
-              title={stripLeadingEmoji(t(lang, "bestPointTitle"))}
-              text={t(lang, "sample.bestPoint")}
-              party="a"
-            />
-            <CardActions again={{ label: t(lang, "footer.home"), href: "/" }} />
-          </VerdictCardShell>
+        <div className={`${styles.cardWrap} flex flex-col gap-3`} data-you="b">
+          <VerdictCard
+            result={result}
+            nameA={nameA}
+            nameB={nameB}
+            aIsSelf={false}
+            bIsSelf
+            lang={lang}
+            you="b"
+            headingAs="h3"
+            top={<span className={cardStyles.pill}>{t(lang, "sample.badge")}</span>}
+          />
+          <VerdictDetails
+            result={result}
+            parties={{ nameA, nameB, aIsSelf: false, bIsSelf: true }}
+            lang={lang}
+          />
         </div>
       </div>
     </section>
