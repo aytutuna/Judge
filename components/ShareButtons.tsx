@@ -133,7 +133,7 @@ export function ShareButtons({
       </button>
       {onAddContext ? (
         <button type="button" onClick={onAddContext} className={`${styles.btn} ${styles.btnOutline}`}>
-          {t(lang, "app.appeal.title")}
+          {t(lang, "card.appeal")}
         </button>
       ) : (
         <button

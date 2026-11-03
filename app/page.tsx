@@ -473,12 +473,12 @@ export default function Home() {
     const pool = EXAMPLES.filter((id) => id !== lastExample.current);
     const id = pool[Math.floor(Math.random() * pool.length)];
     lastExample.current = id;
-    const name = t(lang, `app.example.${id}.aName`);
+    const name = t(lang, `pairs.${id}.aName`);
     exampleName.current = name;
     setMineName(name);
-    setArgument(t(lang, `app.example.${id}.a`));
-    setOtherName(t(lang, `app.example.${id}.bName`));
-    setOtherSide(t(lang, `app.example.${id}.b`));
+    setArgument(t(lang, `pairs.${id}.a`));
+    setOtherName(t(lang, `pairs.${id}.bName`));
+    setOtherSide(t(lang, `pairs.${id}.b`));
     setError(null);
   }
 

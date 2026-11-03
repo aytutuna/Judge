@@ -499,12 +499,12 @@ const da: Locale = {
     "twoSided.decisive": "Dommen afhænger af det her",
     "twoSided.wouldChange": "Det kunne ændre dommen",
     "appeal.title": "Tilføj kontekst",
-    "app.verdict.vs": "mod",
-    "app.verdict.leanTo": "Dommerne hældede til {name}",
-    "app.verdict.leanNone": "Dommerne hældede ikke til nogen af siderne",
-    "app.verdict.sides": "Hvad hver side bygger på",
-    "app.verdict.claims": "Hvordan hver side kom frem til det",
-    "app.appeal.title": "Tilføj kontekst og ank",
+    "card.vs": "mod",
+    "card.leanTo": "Dommerne hældede til {name}",
+    "card.leanNone": "Dommerne hældede ikke til nogen af siderne",
+    "card.sides": "Hvad hver side bygger på",
+    "card.claims": "Hvordan hver side kom frem til det",
+    "card.appeal": "Tilføj kontekst og ank",
     "home.example": "Prøv et eksempel",
     "home.lead": "Skriv begge sider, eller send den anden et link til at skrive sin egen.",
     "home.leadSolo": "Skriv din side og den andens, hvis du kender den.",
@@ -517,53 +517,53 @@ const da: Locale = {
     "home.says": "{name} siger:",
     "home.mySide": "Min side:",
     "home.otherSide": "Den andens side:",
-    "app.example.dishwasher.aName": "Anne",
-    "app.example.dishwasher.a":
+    "pairs.dishwasher.aName": "Anne",
+    "pairs.dishwasher.a":
       "Du har sat skålene i den øverste kurv igen. De bliver aldrig rene deroppe, det er det, den nederste er til.",
-    "app.example.dishwasher.bName": "Jens",
-    "app.example.dishwasher.b":
+    "pairs.dishwasher.bName": "Jens",
+    "pairs.dishwasher.b":
       "De kan sagtens være deroppe, og så er der plads til gryderne i bunden. Jeg har fyldt den sådan i årevis, og der er aldrig kommet noget beskidt ud.",
-    "app.example.bill.aName": "Camilla",
-    "app.example.bill.a":
+    "pairs.bill.aName": "Camilla",
+    "pairs.bill.a":
       "Jeg drak ikke noget, så jeg skal ikke betale en fjerdedel af vinen. Maden deler vi gerne ligeligt.",
-    "app.example.bill.bName": "Rasmus",
-    "app.example.bill.b":
+    "pairs.bill.bName": "Rasmus",
+    "pairs.bill.b":
       "Vi deler altid bare regningen i fire. Det er bøvlet at regne ud hver gang, hvem der fik hvad, og det gør alligevel ikke den store forskel.",
-    "app.example.thermostat.aName": "Laura",
-    "app.example.thermostat.a":
+    "pairs.thermostat.aName": "Laura",
+    "pairs.thermostat.a":
       "Der er 19 grader herinde, og jeg fryser selv i hættetrøje. Det er da ikke vanvittigt at skrue op på 22.",
-    "app.example.thermostat.bName": "Mikkel",
-    "app.example.thermostat.b":
+    "pairs.thermostat.bName": "Mikkel",
+    "pairs.thermostat.b":
       "22 grader er alt for varmt at sove i. Du kan tage en trøje mere på, jeg kan ikke tage mere af.",
-    "app.example.roadTrip.aName": "Sara",
-    "app.example.roadTrip.a":
+    "pairs.roadTrip.aName": "Sara",
+    "pairs.roadTrip.a":
       "Jeg kørte alle seks timer derhen. Det er kun fair, at du kører os hjem.",
-    "app.example.roadTrip.bName": "Anders",
-    "app.example.roadTrip.b":
+    "pairs.roadTrip.bName": "Anders",
+    "pairs.roadTrip.b":
       "Jeg sagde, inden vi tog af sted, at jeg hader at køre i mørke, og vi kører hjem kl. 19. Næste gang kører jeg om morgenen.",
-    "app.example.seat.aName": "Julie",
-    "app.example.seat.a":
+    "pairs.seat.aName": "Julie",
+    "pairs.seat.a":
       "Mit sæde kan lænes tilbage, så det gør jeg. Det er en natflyvning, og alle prøver at sove.",
-    "app.example.seat.bName": "Kasper",
-    "app.example.seat.b":
+    "pairs.seat.bName": "Kasper",
+    "pairs.seat.b":
       "Jeg er 1,91, og mine knæ trykker allerede mod dit sæde. Du kunne i det mindste have spurgt, før du lænede det helt tilbage.",
-    "app.example.spoiler.aName": "Emma",
-    "app.example.spoiler.a":
+    "pairs.spoiler.aName": "Emma",
+    "pairs.spoiler.a":
       "Du fortalte mig, hvem morderen var, før jeg overhovedet var begyndt på sidste afsnit. Jeg havde glædet mig hele ugen.",
-    "app.example.spoiler.bName": "Oliver",
-    "app.example.spoiler.b":
+    "pairs.spoiler.bName": "Oliver",
+    "pairs.spoiler.b":
       "Den kom for tre uger siden, og du sagde, at du havde set den færdig. Jeg kan ikke holde styr på, hvor langt alle er.",
-    "app.example.jacket.aName": "Mathilde",
-    "app.example.jacket.a":
+    "pairs.jacket.aName": "Mathilde",
+    "pairs.jacket.a":
       "Du havde min cowboyjakke på til koncerten uden at spørge. Da jeg fik den tilbage, lugtede den af røg.",
-    "app.example.jacket.bName": "Frederik",
-    "app.example.jacket.b":
+    "pairs.jacket.bName": "Frederik",
+    "pairs.jacket.b":
       "Den hang ved døren, og du går aldrig med den. Jeg ville have spurgt, men du sov, og jeg var allerede sent på den.",
-    "app.example.lastSlice.aName": "Magnus",
-    "app.example.lastSlice.a":
+    "pairs.lastSlice.aName": "Magnus",
+    "pairs.lastSlice.a":
       "Inden filmen startede, sagde jeg, at det sidste stykke pizza var mit. Alle hørte det.",
-    "app.example.lastSlice.bName": "Ida",
-    "app.example.lastSlice.b":
+    "pairs.lastSlice.bName": "Ida",
+    "pairs.lastSlice.b":
       "Man kan ikke kalde det sit og så lade det ligge i to timer. Det lå bare og blev koldt, så jeg spiste det.",
     "appeal.lead":
       "Mangler der noget, eller er noget forkert? Tilføj det én gang, så kigger dommerne på det hele igen. Det koster 1 dom.",

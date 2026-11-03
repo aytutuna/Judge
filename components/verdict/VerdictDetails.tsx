@@ -169,7 +169,7 @@ export function VerdictDetails({
   const bestTitle = bestPointTitle(lang, result, parties);
   const rows = [
     result.crux ? stripLeadingEmoji(t(lang, "cruxShort")) : null,
-    hasSides ? t(lang, "app.verdict.sides") : null,
+    hasSides ? t(lang, "card.sides") : null,
     result.losing_side_best_point ? bestTitle : null,
   ].filter((r): r is string => r !== null);
   const face = cruxStyle(result.crux) === "serif" ? styles.cruxSerif : styles.cruxSans;
@@ -242,7 +242,7 @@ export function VerdictDetails({
         ) : null}
 
         {hasSides ? (
-          <Detail title={t(lang, "app.verdict.sides")}>
+          <Detail title={t(lang, "card.sides")}>
             {map.bedrock_a || map.bedrock_b ? (
               <div className={styles.tiles}>
                 <div className={styles.tile} data-party="a">
@@ -255,7 +255,7 @@ export function VerdictDetails({
                 </div>
               </div>
             ) : null}
-            <h4 className={styles.sectionTitle}>{t(lang, "app.verdict.claims")}</h4>
+            <h4 className={styles.sectionTitle}>{t(lang, "card.claims")}</h4>
             <ul className={styles.claimList}>
               {(["a", "b"] as const).flatMap((party) =>
                 (party === "a" ? map.side_a : map.side_b).map((c, i) => (

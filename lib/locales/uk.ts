@@ -501,12 +501,12 @@ const uk: Locale = {
     "twoSided.decisive": "Від цього залежить вердикт",
     "twoSided.wouldChange": "Що могло б змінити цей вердикт",
     "appeal.title": "Додати контекст",
-    "app.verdict.vs": "—",
-    "app.verdict.leanTo": "{name} ближче до правди, на думку суддів",
-    "app.verdict.leanNone": "Судді не схилилися ні на чий бік",
-    "app.verdict.sides": "На чому стоїть кожна сторона",
-    "app.verdict.claims": "Як кожна сторона до цього дійшла",
-    "app.appeal.title": "Додати контекст і оскаржити",
+    "card.vs": "—",
+    "card.leanTo": "{name} ближче до правди, на думку суддів",
+    "card.leanNone": "Судді не схилилися ні на чий бік",
+    "card.sides": "На чому стоїть кожна сторона",
+    "card.claims": "Як кожна сторона до цього дійшла",
+    "card.appeal": "Додати контекст і оскаржити",
     "home.example": "Спробувати приклад",
     "home.lead":
       "Напиши версії обох сторін або надішли іншій людині посилання, щоб вона написала свою.",
@@ -519,53 +519,53 @@ const uk: Locale = {
     "home.says": "{name} каже:",
     "home.mySide": "Моя версія:",
     "home.otherSide": "Версія іншої сторони:",
-    "app.example.dishwasher.aName": "Олена",
-    "app.example.dishwasher.a":
+    "pairs.dishwasher.aName": "Олена",
+    "pairs.dishwasher.a":
       "Ти знову поставив миски у верхній кошик. Там вони ніколи не відмиваються — для них є нижній.",
-    "app.example.dishwasher.bName": "Андрій",
-    "app.example.dishwasher.b":
+    "pairs.dishwasher.bName": "Андрій",
+    "pairs.dishwasher.b":
       "Нагорі вони чудово вміщаються, а внизу лишається місце для каструль. Я роками так завантажую посудомийку, і все завжди відмивається.",
-    "app.example.bill.aName": "Наталя",
-    "app.example.bill.a":
+    "pairs.bill.aName": "Наталя",
+    "pairs.bill.a":
       "Я взагалі нічого не пила, тож не маю платити чверть за вино. А їжу поділити порівну — я не проти.",
-    "app.example.bill.bName": "Богдан",
-    "app.example.bill.b":
+    "pairs.bill.bName": "Богдан",
+    "pairs.bill.b":
       "Ми завжди просто ділимо на чотирьох. Щоразу рахувати, хто що замовляв, — морока, та й різниця невелика.",
-    "app.example.thermostat.aName": "Софія",
-    "app.example.thermostat.a":
+    "pairs.thermostat.aName": "Софія",
+    "pairs.thermostat.a":
       "Тут 19 градусів, і мені холодно навіть у худі. Підкрутити до 22 — це ж не якась примха.",
-    "app.example.thermostat.bName": "Дмитро",
-    "app.example.thermostat.b":
+    "pairs.thermostat.bName": "Дмитро",
+    "pairs.thermostat.b":
       "Коли 22 градуси, спати надто жарко. Ти можеш вдягнути ще щось, а мені вже нема чого знімати.",
-    "app.example.roadTrip.aName": "Юлія",
-    "app.example.roadTrip.a":
+    "pairs.roadTrip.aName": "Юлія",
+    "pairs.roadTrip.a":
       "Туди я сиділа за кермом усі шість годин. Чесно буде, якщо назад нас повезеш ти.",
-    "app.example.roadTrip.bName": "Олег",
-    "app.example.roadTrip.b":
+    "pairs.roadTrip.bName": "Олег",
+    "pairs.roadTrip.b":
       "Я ще до від’їзду казав, що ненавиджу їздити вночі, а виїжджаємо ми о сьомій вечора. Наступного разу ранкові переїзди беру на себе.",
-    "app.example.seat.aName": "Ганна",
-    "app.example.seat.a":
+    "pairs.seat.aName": "Ганна",
+    "pairs.seat.a":
       "Моє крісло відкидається, от я його й відкидаю. Це нічний рейс, усі намагаються поспати.",
-    "app.example.seat.bName": "Роман",
-    "app.example.seat.b":
+    "pairs.seat.bName": "Роман",
+    "pairs.seat.b":
       "У мене зріст 191 см, і коліна вже впираються в твоє крісло. Можна було б хоча б спитати, перш ніж відкидати його до кінця.",
-    "app.example.spoiler.aName": "Марта",
-    "app.example.spoiler.a":
+    "pairs.spoiler.aName": "Марта",
+    "pairs.spoiler.a":
       "Ти розповів мені, хто вбивця, ще до того, як я почала останню серію. Я чекала на неї цілий тиждень.",
-    "app.example.spoiler.bName": "Остап",
-    "app.example.spoiler.b":
+    "pairs.spoiler.bName": "Остап",
+    "pairs.spoiler.b":
       "Вона вийшла три тижні тому, і ти казала, що вже додивилася. Я не можу стежити, хто на якій серії.",
-    "app.example.jacket.aName": "Іван",
-    "app.example.jacket.a":
+    "pairs.jacket.aName": "Іван",
+    "pairs.jacket.a":
       "Ти вдягла мою джинсову куртку на концерт і навіть не спитала. Вона повернулася вся просякнута димом.",
-    "app.example.jacket.bName": "Дарина",
-    "app.example.jacket.b":
+    "pairs.jacket.bName": "Дарина",
+    "pairs.jacket.b":
       "Вона висіла біля дверей, а ти її ніколи не носиш. Я б спитала, але ти спав, а я вже запізнювалася.",
-    "app.example.lastSlice.aName": "Назар",
-    "app.example.lastSlice.a":
+    "pairs.lastSlice.aName": "Назар",
+    "pairs.lastSlice.a":
       "Я ще до початку фільму сказав, що останній шматок піци мій. Усі чули.",
-    "app.example.lastSlice.bName": "Христина",
-    "app.example.lastSlice.b":
+    "pairs.lastSlice.bName": "Христина",
+    "pairs.lastSlice.b":
       "Не можна застовпити шматок і дві години його не чіпати. Він просто лежав і холонув, тож я його з’їла.",
     "appeal.lead":
       "Щось пропущено чи неправильно? Додай це один раз, і судді переглянуть усе заново. Коштує 1 вердикт.",

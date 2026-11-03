@@ -491,12 +491,12 @@ const he: Locale = {
     "twoSided.decisive": "פסק הדין תלוי בזה",
     "twoSided.wouldChange": "מה היה משנה את פסק הדין",
     "appeal.title": "הוספת הקשר",
-    "app.verdict.vs": "מול",
-    "app.verdict.leanTo": "ההרכב נטה לטובת {name}",
-    "app.verdict.leanNone": "ההרכב לא נטה לאף צד",
-    "app.verdict.sides": "על מה כל צד נשען",
-    "app.verdict.claims": "איך כל צד הגיע לשם",
-    "app.appeal.title": "הוספת הקשר וערעור",
+    "card.vs": "מול",
+    "card.leanTo": "ההרכב נטה לטובת {name}",
+    "card.leanNone": "ההרכב לא נטה לאף צד",
+    "card.sides": "על מה כל צד נשען",
+    "card.claims": "איך כל צד הגיע לשם",
+    "card.appeal": "הוספת הקשר וערעור",
     "home.example": "לנסות דוגמה",
     "home.lead": "אפשר לכתוב את שני הצדדים, או לשלוח לצד השני קישור כדי שיכתוב את שלו.",
     "home.leadSolo": "אפשר לכתוב את הצד שלך, וגם את הצד השני אם הוא ידוע לך.",
@@ -508,50 +508,50 @@ const he: Locale = {
     "home.says": "לדברי {name}:",
     "home.mySide": "הצד שלי:",
     "home.otherSide": "הצד השני:",
-    "app.example.dishwasher.aName": "נועה",
-    "app.example.dishwasher.a":
+    "pairs.dishwasher.aName": "נועה",
+    "pairs.dishwasher.a":
       "שוב שמת את הקערות במדף העליון. שם הן אף פעם לא יוצאות נקיות, בשביל זה יש את המדף התחתון.",
-    "app.example.dishwasher.bName": "איתי",
-    "app.example.dishwasher.b":
+    "pairs.dishwasher.bName": "איתי",
+    "pairs.dishwasher.b":
       "הן נכנסות שם בלי בעיה, וככה נשאר מקום למטה לסירים. אני מסדר ככה כבר שנים ושום דבר לא יצא מלוכלך.",
-    "app.example.bill.aName": "מיכל",
-    "app.example.bill.a":
+    "pairs.bill.aName": "מיכל",
+    "pairs.bill.a":
       "לא שתיתי כלום, אז אני לא צריכה לשלם רבע מהיין. לחלק את האוכל שווה בשווה זה בסדר מבחינתי.",
-    "app.example.bill.bName": "יונתן",
-    "app.example.bill.b":
+    "pairs.bill.bName": "יונתן",
+    "pairs.bill.b":
       "תמיד פשוט מחלקים לארבעה. לחשב כל פעם מי אכל מה זה כאב ראש, וההבדל ממילא לא גדול.",
-    "app.example.thermostat.aName": "שירה",
-    "app.example.thermostat.a":
+    "pairs.thermostat.aName": "שירה",
+    "pairs.thermostat.a":
       "יש פה 19 מעלות וקר לי אפילו עם קפוצ'ון. להעלות את המזגן ל-22 זה לא מוגזם.",
-    "app.example.thermostat.bName": "אורי",
-    "app.example.thermostat.b":
+    "pairs.thermostat.bName": "אורי",
+    "pairs.thermostat.b":
       "ב-22 מעלות אי אפשר לישון, חם מדי. את יכולה ללבוש עוד שכבה, לי כבר אין מה להוריד.",
-    "app.example.roadTrip.aName": "תמר",
-    "app.example.roadTrip.a": "נהגתי את כל שש השעות בדרך לשם. הכי הוגן שבחזרה אתה תנהג.",
-    "app.example.roadTrip.bName": "עידו",
-    "app.example.roadTrip.b":
+    "pairs.roadTrip.aName": "תמר",
+    "pairs.roadTrip.a": "נהגתי את כל שש השעות בדרך לשם. הכי הוגן שבחזרה אתה תנהג.",
+    "pairs.roadTrip.bName": "עידו",
+    "pairs.roadTrip.b":
       "אמרתי עוד לפני שיצאנו שאני שונא לנהוג בלילה, ואנחנו יוצאים בשבע בערב. בטיול הבא אני אנהג בבקרים.",
-    "app.example.seat.aName": "ליאת",
-    "app.example.seat.a":
+    "pairs.seat.aName": "ליאת",
+    "pairs.seat.a":
       "המושב שלי יורד אחורה, אז אני מורידה אותו. זו טיסת לילה וכולם מנסים לישון.",
-    "app.example.seat.bName": "גיא",
-    "app.example.seat.b":
+    "pairs.seat.bName": "גיא",
+    "pairs.seat.b":
       "אני מטר תשעים, והברכיים שלי כבר תקועות בגב המושב שלך. יכולת לפחות לשאול לפני שהורדת אותו עד הסוף.",
-    "app.example.spoiler.aName": "הילה",
-    "app.example.spoiler.a":
+    "pairs.spoiler.aName": "הילה",
+    "pairs.spoiler.a":
       "סיפרת לי מי הרוצח עוד לפני שהתחלתי את הפרק האחרון. חיכיתי לו כל השבוע.",
-    "app.example.spoiler.bName": "אלון",
-    "app.example.spoiler.b":
+    "pairs.spoiler.bName": "אלון",
+    "pairs.spoiler.b":
       "זה יצא לפני שלושה שבועות, ואמרת שסיימת. אני לא יכול לזכור מי הגיע לאיזה פרק.",
-    "app.example.jacket.aName": "יעל",
-    "app.example.jacket.a": "לבשת את ז'קט הג'ינס שלי להופעה בלי לשאול. הוא חזר עם ריח של עשן.",
-    "app.example.jacket.bName": "רועי",
-    "app.example.jacket.b":
+    "pairs.jacket.aName": "יעל",
+    "pairs.jacket.a": "לבשת את ז'קט הג'ינס שלי להופעה בלי לשאול. הוא חזר עם ריח של עשן.",
+    "pairs.jacket.bName": "רועי",
+    "pairs.jacket.b":
       "הוא היה תלוי ליד הדלת, ואת אף פעם לא לובשת אותו. הייתי שואל, אבל ישנת, וכבר איחרתי.",
-    "app.example.lastSlice.aName": "אביב",
-    "app.example.lastSlice.a": "שריינתי את המשולש האחרון עוד לפני שהסרט התחיל. כולם שמעו.",
-    "app.example.lastSlice.bName": "נטע",
-    "app.example.lastSlice.b":
+    "pairs.lastSlice.aName": "אביב",
+    "pairs.lastSlice.a": "שריינתי את המשולש האחרון עוד לפני שהסרט התחיל. כולם שמעו.",
+    "pairs.lastSlice.bName": "נטע",
+    "pairs.lastSlice.b":
       "אי אפשר לשריין משולש ואז לא לגעת בו שעתיים. הוא סתם עמד שם והתקרר, אז אכלתי אותו.",
     "appeal.lead":
       "משהו חסר או לא נכון? אפשר להוסיף אותו פעם אחת, והשופטים יבחנו הכול מחדש. זה עולה פסק דין אחד.",

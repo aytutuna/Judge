@@ -500,12 +500,12 @@ const ru: Locale = {
     "twoSided.decisive": "От этого зависит вердикт",
     "twoSided.wouldChange": "Что изменило бы вердикт",
     "appeal.title": "Добавить подробности",
-    "app.verdict.vs": "против",
-    "app.verdict.leanTo": "Судьи склонились к одной стороне: {name}",
-    "app.verdict.leanNone": "Судьи не склонились ни к одной из сторон",
-    "app.verdict.sides": "На чём стоит каждая сторона",
-    "app.verdict.claims": "Как каждая сторона пришла к своему выводу",
-    "app.appeal.title": "Добавить подробности",
+    "card.vs": "против",
+    "card.leanTo": "Судьи склонились к одной стороне: {name}",
+    "card.leanNone": "Судьи не склонились ни к одной из сторон",
+    "card.sides": "На чём стоит каждая сторона",
+    "card.claims": "Как каждая сторона пришла к своему выводу",
+    "card.appeal": "Добавить подробности",
     "home.example": "Попробовать на примере",
     "home.lead":
       "Напишите обе версии или отправьте другому человеку ссылку, чтобы он написал свою.",
@@ -518,53 +518,53 @@ const ru: Locale = {
     "home.says": "{name} говорит:",
     "home.mySide": "Моя версия:",
     "home.otherSide": "Версия другой стороны:",
-    "app.example.dishwasher.aName": "Аня",
-    "app.example.dishwasher.a":
+    "pairs.dishwasher.aName": "Аня",
+    "pairs.dishwasher.a":
       "Ты опять поставил миски в верхнюю корзину. Там они никогда не отмываются — для них есть нижняя.",
-    "app.example.dishwasher.bName": "Дима",
-    "app.example.dishwasher.b":
+    "pairs.dishwasher.bName": "Дима",
+    "pairs.dishwasher.b":
       "Наверху они отлично помещаются, а внизу остаётся место для кастрюль. Я так загружаю уже много лет, и ни разу ничего не осталось грязным.",
-    "app.example.bill.aName": "Катя",
-    "app.example.bill.a":
+    "pairs.bill.aName": "Катя",
+    "pairs.bill.a":
       "Я ничего не пила, так что не должна платить четверть за вино. А еду поделить поровну — пожалуйста.",
-    "app.example.bill.bName": "Олег",
-    "app.example.bill.b":
+    "pairs.bill.bName": "Олег",
+    "pairs.bill.b":
       "Мы всегда просто делим счёт на четверых. Каждый раз выяснять, кто что ел, — морока, да и разница небольшая.",
-    "app.example.thermostat.aName": "Лена",
-    "app.example.thermostat.a":
+    "pairs.thermostat.aName": "Лена",
+    "pairs.thermostat.a":
       "Здесь 19 градусов, я мёрзну даже в худи. Поднять до 22 — не такая уж дикость.",
-    "app.example.thermostat.bName": "Игорь",
-    "app.example.thermostat.b":
+    "pairs.thermostat.bName": "Игорь",
+    "pairs.thermostat.b":
       "При 22 спать невозможно, слишком жарко. Ты можешь надеть ещё что-нибудь, а мне снимать уже нечего.",
-    "app.example.roadTrip.aName": "Паша",
-    "app.example.roadTrip.a":
+    "pairs.roadTrip.aName": "Паша",
+    "pairs.roadTrip.a":
       "Туда я был за рулём все шесть часов. Будет честно, если обратно поведёшь ты.",
-    "app.example.roadTrip.bName": "Света",
-    "app.example.roadTrip.b":
+    "pairs.roadTrip.bName": "Света",
+    "pairs.roadTrip.b":
       "Я ещё до поездки говорила, что терпеть не могу водить ночью, а выезжаем мы в семь вечера. В следующей поездке по утрам за рулём буду я.",
-    "app.example.seat.aName": "Оля",
-    "app.example.seat.a":
+    "pairs.seat.aName": "Оля",
+    "pairs.seat.a":
       "Моё кресло откидывается, вот я его и откидываю. Рейс ночной, все пытаются поспать.",
-    "app.example.seat.bName": "Никита",
-    "app.example.seat.b":
+    "pairs.seat.bName": "Никита",
+    "pairs.seat.b":
       "У меня рост 190, колени и так упираются в твоё кресло. Могла бы хоть спросить, прежде чем откидывать его до упора.",
-    "app.example.spoiler.aName": "Маша",
-    "app.example.spoiler.a":
+    "pairs.spoiler.aName": "Маша",
+    "pairs.spoiler.a":
       "Ты рассказал, кто убийца, когда я ещё даже не начала последнюю серию. Я ждала её целую неделю.",
-    "app.example.spoiler.bName": "Артём",
-    "app.example.spoiler.b":
+    "pairs.spoiler.bName": "Артём",
+    "pairs.spoiler.b":
       "Серия вышла три недели назад, и ты говорила, что уже досмотрела. Не могу же я следить, кто на какой серии.",
-    "app.example.jacket.aName": "Костя",
-    "app.example.jacket.a":
+    "pairs.jacket.aName": "Костя",
+    "pairs.jacket.a":
       "Ты без спроса надела мою джинсовку на концерт. Она вернулась вся прокуренная.",
-    "app.example.jacket.bName": "Вика",
-    "app.example.jacket.b":
+    "pairs.jacket.bName": "Вика",
+    "pairs.jacket.b":
       "Она висела у двери, а ты её вообще не носишь. Я бы спросила, но ты спал, а я уже опаздывала.",
-    "app.example.lastSlice.aName": "Ира",
-    "app.example.lastSlice.a":
+    "pairs.lastSlice.aName": "Ира",
+    "pairs.lastSlice.a":
       "Я ещё до начала фильма сказала, что последний кусок мой. Все слышали.",
-    "app.example.lastSlice.bName": "Стас",
-    "app.example.lastSlice.b":
+    "pairs.lastSlice.bName": "Стас",
+    "pairs.lastSlice.b":
       "Нельзя застолбить кусок и два часа к нему не притрагиваться. Он просто лежал и остывал, вот я его и съел.",
     "appeal.lead":
       "Чего-то не хватает или что-то не так? Добавьте это один раз, и судьи пересмотрят всё заново. Стоит 1 вердикт.",

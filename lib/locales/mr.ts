@@ -502,12 +502,12 @@ const mr: Locale = {
     "twoSided.decisive": "निकाल यावरच अवलंबून आहे",
     "twoSided.wouldChange": "हा निकाल कशाने बदलू शकतो",
     "appeal.title": "माहिती जोडा",
-    "app.verdict.vs": "वि.",
-    "app.verdict.leanTo": "परीक्षकांचा कल {name}च्या बाजूने होता",
-    "app.verdict.leanNone": "परीक्षकांचा कल कोणत्याच बाजूला नव्हता",
-    "app.verdict.sides": "प्रत्येक बाजू कशावर उभी आहे",
-    "app.verdict.claims": "प्रत्येक बाजू आपल्या मतापर्यंत कशी पोहोचली",
-    "app.appeal.title": "माहिती जोडून फेरविचार मागा",
+    "card.vs": "वि.",
+    "card.leanTo": "परीक्षकांचा कल {name}च्या बाजूने होता",
+    "card.leanNone": "परीक्षकांचा कल कोणत्याच बाजूला नव्हता",
+    "card.sides": "प्रत्येक बाजू कशावर उभी आहे",
+    "card.claims": "प्रत्येक बाजू आपल्या मतापर्यंत कशी पोहोचली",
+    "card.appeal": "माहिती जोडून फेरविचार मागा",
     "home.example": "एखादे उदाहरण वापरून पाहा",
     "home.lead": "दोन्ही बाजू लिहा, किंवा लिंक पाठवा, म्हणजे समोरची व्यक्ती आपली बाजू स्वतः लिहील.",
     "home.leadSolo": "तुमची बाजू लिहा, आणि माहीत असेल तर त्यांचीही.",
@@ -519,53 +519,53 @@ const mr: Locale = {
     "home.says": "{name}चे म्हणणे:",
     "home.mySide": "माझी बाजू:",
     "home.otherSide": "त्यांची बाजू:",
-    "app.example.dishwasher.aName": "प्रिया",
-    "app.example.dishwasher.a":
+    "pairs.dishwasher.aName": "प्रिया",
+    "pairs.dishwasher.a":
       "तू पुन्हा वाट्या वरच्या रॅकमध्ये ठेवल्या आहेस. तिथे त्या कधीच नीट स्वच्छ होत नाहीत, खालचा रॅक त्यासाठीच तर आहे.",
-    "app.example.dishwasher.bName": "आदित्य",
-    "app.example.dishwasher.b":
+    "pairs.dishwasher.bName": "आदित्य",
+    "pairs.dishwasher.b":
       "त्या वर व्यवस्थित बसतात, आणि खाली पातेल्यांसाठी जागा राहते. मी वर्षानुवर्षे भांडी अशीच लावतो, आणि एकदाही काही खरकटे राहिलेले नाही.",
-    "app.example.bill.aName": "स्नेहा",
-    "app.example.bill.a":
+    "pairs.bill.aName": "स्नेहा",
+    "pairs.bill.a":
       "मी काहीच प्यायले नाही, मग वाइनचा चौथा हिस्सा मी का भरायचा? जेवणाचे बिल सारखे वाटून घ्यायला माझी काही हरकत नाही.",
-    "app.example.bill.bName": "अनिकेत",
-    "app.example.bill.b":
+    "pairs.bill.bName": "अनिकेत",
+    "pairs.bill.b":
       "आपण नेहमी चौघांत सरळ वाटून घेतो. दर वेळी कोणी काय घेतले याचा हिशेब करणे म्हणजे डोकेदुखी, आणि तसाही फारसा फरक पडत नाही.",
-    "app.example.thermostat.aName": "मानसी",
-    "app.example.thermostat.a":
+    "pairs.thermostat.aName": "मानसी",
+    "pairs.thermostat.a":
       "एसी 18 अंशांवर आहे आणि स्वेटर घालूनही मला थंडी वाजतेय. 24 वर ठेवणे काही अवाजवी नाही.",
-    "app.example.thermostat.bName": "सुमित",
-    "app.example.thermostat.b":
+    "pairs.thermostat.bName": "सुमित",
+    "pairs.thermostat.b":
       "24 वर झोपायला खूपच गरम होते. तू आणखी एक पांघरूण घेऊ शकतेस, पण मी अंगावरचे आणखी काही काढू शकत नाही.",
-    "app.example.roadTrip.aName": "अमोल",
-    "app.example.roadTrip.a":
+    "pairs.roadTrip.aName": "अमोल",
+    "pairs.roadTrip.a":
       "जाताना पूर्ण सहा तास गाडी मीच चालवली. आता परतताना गाडी तू चालव, तेच योग्य आहे.",
-    "app.example.roadTrip.bName": "पूजा",
-    "app.example.roadTrip.b":
+    "pairs.roadTrip.bName": "पूजा",
+    "pairs.roadTrip.b":
       "निघण्याआधीच मी सांगितले होते की मला रात्री गाडी चालवायला अजिबात आवडत नाही, आणि आपण संध्याकाळी 7 वाजता निघतोय. पुढच्या ट्रिपला सकाळचे ड्रायव्हिंग मी करेन.",
-    "app.example.seat.aName": "श्रुती",
-    "app.example.seat.a":
+    "pairs.seat.aName": "श्रुती",
+    "pairs.seat.a":
       "माझी सीट मागे जाते, म्हणून मी ती मागे करतेय. रात्रीची फ्लाइट आहे, सगळे झोपायचा प्रयत्न करत आहेत.",
-    "app.example.seat.bName": "केदार",
-    "app.example.seat.b":
+    "pairs.seat.bName": "केदार",
+    "pairs.seat.b":
       "माझी उंची 190 सेंमी आहे आणि माझे गुडघे आधीच तुझ्या सीटला टेकले आहेत. सीट पूर्ण मागे ढकलण्याआधी निदान एकदा विचारायला तरी हवे होते.",
-    "app.example.spoiler.aName": "गौरी",
-    "app.example.spoiler.a":
+    "pairs.spoiler.aName": "गौरी",
+    "pairs.spoiler.a":
       "मी शेवटचा भाग सुरू करण्याआधीच तू खुनी कोण ते सांगून टाकलेस. आठवडाभर मी त्याचीच वाट पाहत होते.",
-    "app.example.spoiler.bName": "सिद्धार्थ",
-    "app.example.spoiler.b":
+    "pairs.spoiler.bName": "सिद्धार्थ",
+    "pairs.spoiler.b":
       "सिरीज तीन आठवड्यांपूर्वीच आली, आणि तू ती संपवली असे म्हणाली होतीस. कोण कुठपर्यंत पोहोचले आहे याचा हिशेब मी नाही ठेवू शकत.",
-    "app.example.jacket.aName": "विशाल",
-    "app.example.jacket.a":
+    "pairs.jacket.aName": "विशाल",
+    "pairs.jacket.a":
       "तू मला न विचारता माझे डेनिम जॅकेट घालून कॉन्सर्टला गेलीस. ते परत आले तेव्हा त्याला धुराचा वास येत होता.",
-    "app.example.jacket.bName": "तन्वी",
-    "app.example.jacket.b":
+    "pairs.jacket.bName": "तन्वी",
+    "pairs.jacket.b":
       "ते दाराजवळ लटकत होते, आणि तू ते कधीच घालत नाहीस. मी विचारले असते, पण तू झोपला होतास आणि मला आधीच उशीर झाला होता.",
-    "app.example.lastSlice.aName": "ओंकार",
-    "app.example.lastSlice.a":
+    "pairs.lastSlice.aName": "ओंकार",
+    "pairs.lastSlice.a":
       "सिनेमा सुरू होण्याआधीच मी “शेवटचा स्लाइस माझा” असे सांगितले होते. सगळ्यांनी ऐकले होते.",
-    "app.example.lastSlice.bName": "ऋतुजा",
-    "app.example.lastSlice.b":
+    "pairs.lastSlice.bName": "ऋतुजा",
+    "pairs.lastSlice.b":
       "“माझा” म्हणायचे आणि मग दोन तास त्याला हातही लावायचा नाही, असे चालत नाही. तो तिथेच पडून थंड होत होता, म्हणून मी खाल्ला.",
     "appeal.lead":
       "काही राहिले किंवा चुकले? एकदा ते जोडा, आणि परीक्षक सगळे पुन्हा पाहतील. यासाठी 1 निकाल लागतो.",

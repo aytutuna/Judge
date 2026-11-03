@@ -501,12 +501,12 @@ const sl: Locale = {
     "twoSided.decisive": "Od tega je odvisna razsodba",
     "twoSided.wouldChange": "Kaj bi spremenilo to razsodbo",
     "appeal.title": "Dodaj kontekst",
-    "app.verdict.vs": "proti",
-    "app.verdict.leanTo": "{name} ima pri sodnikih prednost",
-    "app.verdict.leanNone": "Sodniki se niso nagnili na nobeno stran",
-    "app.verdict.sides": "Na čem stoji vsaka plat",
-    "app.verdict.claims": "Kako je vsaka plat prišla do sklepa",
-    "app.appeal.title": "Dodaj kontekst za ponovno presojo",
+    "card.vs": "proti",
+    "card.leanTo": "{name} ima pri sodnikih prednost",
+    "card.leanNone": "Sodniki se niso nagnili na nobeno stran",
+    "card.sides": "Na čem stoji vsaka plat",
+    "card.claims": "Kako je vsaka plat prišla do sklepa",
+    "card.appeal": "Dodaj kontekst za ponovno presojo",
     "home.example": "Poskusi s primerom",
     "home.lead": "Napiši obe plati ali drugi osebi pošlji povezavo, da napiše svojo.",
     "home.leadSolo": "Napiši svojo plat, pa še plat druge osebe, če jo poznaš.",
@@ -518,51 +518,51 @@ const sl: Locale = {
     "home.says": "{name} pravi:",
     "home.mySide": "Moja plat:",
     "home.otherSide": "Plat druge osebe:",
-    "app.example.dishwasher.aName": "Ana",
-    "app.example.dishwasher.a":
+    "pairs.dishwasher.aName": "Ana",
+    "pairs.dishwasher.a":
       "Sklede si spet zložil v zgornjo košaro. Tam se nikoli ne pomijejo do konca, za to je spodnja.",
-    "app.example.dishwasher.bName": "Matic",
-    "app.example.dishwasher.b":
+    "pairs.dishwasher.bName": "Matic",
+    "pairs.dishwasher.b":
       "Zgoraj čisto lepo gredo, spodaj pa ostane prostor za lonce. Pomivalni stroj tako polnim že leta in še nikoli ni nič ostalo umazano.",
-    "app.example.bill.aName": "Petra",
-    "app.example.bill.a":
+    "pairs.bill.aName": "Petra",
+    "pairs.bill.a":
       "Nisem nič pila, zato ne bi smela plačati četrtine vina. Hrano pa lahko razdelimo na enake dele, s tem se strinjam.",
-    "app.example.bill.bName": "Jure",
-    "app.example.bill.b":
+    "pairs.bill.bName": "Jure",
+    "pairs.bill.b":
       "Vedno vse razdelimo na štiri. Vsakič računati, kdo je kaj imel, je muka, razlika pa tako ali tako ni velika.",
-    "app.example.thermostat.aName": "Nina",
-    "app.example.thermostat.a":
+    "pairs.thermostat.aName": "Nina",
+    "pairs.thermostat.a":
       "Tukaj je 19 stopinj in me zebe celo v puloverju s kapuco. Gretje naviti na 22 res ni nič pretiranega.",
-    "app.example.thermostat.bName": "Gašper",
-    "app.example.thermostat.b":
+    "pairs.thermostat.bName": "Gašper",
+    "pairs.thermostat.b":
       "Pri 22 stopinjah se ne da spati, prevroče je. Ti lahko oblečeš še eno plast, jaz pa ne morem sleči ničesar več.",
-    "app.example.roadTrip.aName": "Tina",
-    "app.example.roadTrip.a": "Celih šest ur tja sem vozila jaz. Pošteno je, da nazaj voziš ti.",
-    "app.example.roadTrip.bName": "Rok",
-    "app.example.roadTrip.b":
+    "pairs.roadTrip.aName": "Tina",
+    "pairs.roadTrip.a": "Celih šest ur tja sem vozila jaz. Pošteno je, da nazaj voziš ti.",
+    "pairs.roadTrip.bName": "Rok",
+    "pairs.roadTrip.b":
       "Že pred odhodom sem rekel, da ponoči ne maram voziti, odhajamo pa ob sedmih zvečer. Na naslednjem izletu bom zjutraj vozil jaz.",
-    "app.example.seat.aName": "Sara",
-    "app.example.seat.a":
+    "pairs.seat.aName": "Sara",
+    "pairs.seat.a":
       "Moj sedež se da nagniti, zato ga nagnem. Nočni let je, vsi poskušajo spati.",
-    "app.example.seat.bName": "Blaž",
-    "app.example.seat.b":
+    "pairs.seat.bName": "Blaž",
+    "pairs.seat.b":
       "Visok sem 1,91 m in s koleni že tako tiščim v tvoj sedež. Lahko bi vsaj vprašala, preden ga spustiš čisto nazaj.",
-    "app.example.spoiler.aName": "Maja",
-    "app.example.spoiler.a":
+    "pairs.spoiler.aName": "Maja",
+    "pairs.spoiler.a":
       "Povedal si mi, kdo je morilec, še preden sem sploh začela zadnjo epizodo. Ves teden sem čakala nanjo.",
-    "app.example.spoiler.bName": "Jan",
-    "app.example.spoiler.b":
+    "pairs.spoiler.bName": "Jan",
+    "pairs.spoiler.b":
       "Serija je izšla pred tremi tedni, ti pa si rekla, da si jo že pogledala do konca. Ne morem si zapomniti, do kod je kdo prišel.",
-    "app.example.jacket.aName": "Matej",
-    "app.example.jacket.a":
+    "pairs.jacket.aName": "Matej",
+    "pairs.jacket.a":
       "Mojo jeans jakno si oblekla na koncert, ne da bi me vprašala. Vrnila si jo vso smrdečo po dimu.",
-    "app.example.jacket.bName": "Eva",
-    "app.example.jacket.b":
+    "pairs.jacket.bName": "Eva",
+    "pairs.jacket.b":
       "Visela je pri vratih, ti pa je nikoli ne nosiš. Vprašala bi te, ampak si spal, jaz pa sem že tako zamujala.",
-    "app.example.lastSlice.aName": "Nejc",
-    "app.example.lastSlice.a": "Še pred filmom sem rekel: „Zadnji kos je moj.“ Vsi so slišali.",
-    "app.example.lastSlice.bName": "Lara",
-    "app.example.lastSlice.b":
+    "pairs.lastSlice.aName": "Nejc",
+    "pairs.lastSlice.a": "Še pred filmom sem rekel: „Zadnji kos je moj.“ Vsi so slišali.",
+    "pairs.lastSlice.bName": "Lara",
+    "pairs.lastSlice.b":
       "Ne moreš si rezervirati kosa in se ga potem dve uri ne dotakniti. Kar ležal je tam in se hladil, zato sem ga pojedla.",
     "appeal.lead":
       "Kaj manjka ali je narobe? Dodaj enkrat in sodniki bodo znova pregledali vse. Stane 1 razsodbo.",

@@ -502,12 +502,12 @@ const it: Locale = {
     "twoSided.decisive": "Il verdetto si gioca qui",
     "twoSided.wouldChange": "Cosa cambierebbe questo verdetto",
     "appeal.title": "Aggiungi contesto",
-    "app.verdict.vs": "contro",
-    "app.verdict.leanTo": "I giudici propendono per {name}",
-    "app.verdict.leanNone": "I giudici non propendono per nessuno dei due",
-    "app.verdict.sides": "Il punto fermo di ciascuna parte",
-    "app.verdict.claims": "Il ragionamento di ciascuna parte",
-    "app.appeal.title": "Aggiungi contesto e fai appello",
+    "card.vs": "contro",
+    "card.leanTo": "I giudici propendono per {name}",
+    "card.leanNone": "I giudici non propendono per nessuno dei due",
+    "card.sides": "Il punto fermo di ciascuna parte",
+    "card.claims": "Il ragionamento di ciascuna parte",
+    "card.appeal": "Aggiungi contesto e fai appello",
     "home.example": "Prova un esempio",
     "home.lead":
       "Scrivi entrambe le versioni, oppure manda un link all'altra persona perché scriva la sua.",
@@ -520,53 +520,53 @@ const it: Locale = {
     "home.says": "{name} dice:",
     "home.mySide": "La mia versione:",
     "home.otherSide": "La versione dell'altra persona:",
-    "app.example.dishwasher.aName": "Sara",
-    "app.example.dishwasher.a":
+    "pairs.dishwasher.aName": "Sara",
+    "pairs.dishwasher.a":
       "Hai messo di nuovo le scodelle nel cestello di sopra. Lì non vengono mai pulite, il cestello di sotto serve apposta.",
-    "app.example.dishwasher.bName": "Matteo",
-    "app.example.dishwasher.b":
+    "pairs.dishwasher.bName": "Matteo",
+    "pairs.dishwasher.b":
       "Ci stanno benissimo, e così sotto resta posto per le pentole. Lo carico così da anni e non è mai uscito niente sporco.",
-    "app.example.bill.aName": "Elena",
-    "app.example.bill.a":
+    "pairs.bill.aName": "Elena",
+    "pairs.bill.a":
       "Io non ho bevuto niente, quindi non devo pagare un quarto del vino. Per il cibo, alla romana mi va benissimo.",
-    "app.example.bill.bName": "Davide",
-    "app.example.bill.b":
+    "pairs.bill.bName": "Davide",
+    "pairs.bill.b":
       "Abbiamo sempre diviso per quattro e basta. Rifare ogni volta il conto di chi ha preso cosa è una seccatura, e tanto la differenza è minima.",
-    "app.example.thermostat.aName": "Martina",
-    "app.example.thermostat.a":
+    "pairs.thermostat.aName": "Martina",
+    "pairs.thermostat.a":
       "Qui dentro ci sono 19 gradi e ho freddo anche con la felpa. Alzare il termostato a 22 non è una follia.",
-    "app.example.thermostat.bName": "Simone",
-    "app.example.thermostat.b":
+    "pairs.thermostat.bName": "Simone",
+    "pairs.thermostat.b":
       "Con 22 gradi non si riesce a dormire, fa troppo caldo. Tu puoi metterti un'altra maglia, io più di così non posso togliermi niente.",
-    "app.example.roadTrip.aName": "Federico",
-    "app.example.roadTrip.a":
+    "pairs.roadTrip.aName": "Federico",
+    "pairs.roadTrip.a":
       "All'andata ho guidato io per tutte e sei le ore. È giusto che al ritorno guidi tu.",
-    "app.example.roadTrip.bName": "Alessia",
-    "app.example.roadTrip.b":
+    "pairs.roadTrip.bName": "Alessia",
+    "pairs.roadTrip.b":
       "Prima di partire ti avevo detto che odio guidare di notte, e ripartiamo alle sette di sera. Al prossimo viaggio guido io la mattina.",
-    "app.example.seat.aName": "Giorgia",
-    "app.example.seat.a":
+    "pairs.seat.aName": "Giorgia",
+    "pairs.seat.a":
       "Il mio sedile si reclina, quindi lo reclino. È un volo notturno e tutti cercano di dormire.",
-    "app.example.seat.bName": "Tommaso",
-    "app.example.seat.b":
+    "pairs.seat.bName": "Tommaso",
+    "pairs.seat.b":
       "Sono alto 1,90 e ho già le ginocchia schiacciate contro il tuo sedile. Potevi almeno chiedere prima di abbassarlo fino in fondo.",
-    "app.example.spoiler.aName": "Anna",
-    "app.example.spoiler.a":
+    "pairs.spoiler.aName": "Anna",
+    "pairs.spoiler.a":
       "Mi hai detto chi era l'assassino prima ancora che iniziassi l'ultima puntata. L'aspettavo da tutta la settimana.",
-    "app.example.spoiler.bName": "Lorenzo",
-    "app.example.spoiler.b":
+    "pairs.spoiler.bName": "Lorenzo",
+    "pairs.spoiler.b":
       "È uscita tre settimane fa e mi avevi detto di averla finita. Non posso sapere a che punto è ognuno.",
-    "app.example.jacket.aName": "Riccardo",
-    "app.example.jacket.a":
+    "pairs.jacket.aName": "Riccardo",
+    "pairs.jacket.a":
       "Hai messo il mio giubbotto di jeans per andare al concerto senza chiedermelo. È tornato che puzzava di fumo.",
-    "app.example.jacket.bName": "Sofia",
-    "app.example.jacket.b":
+    "pairs.jacket.bName": "Sofia",
+    "pairs.jacket.b":
       "Era appeso vicino alla porta e tu non lo metti mai. Te l'avrei chiesto, ma dormivi e io ero già in ritardo.",
-    "app.example.lastSlice.aName": "Pietro",
-    "app.example.lastSlice.a":
+    "pairs.lastSlice.aName": "Pietro",
+    "pairs.lastSlice.a":
       "Prima che iniziasse il film ho detto “l'ultima fetta è mia”. L'hanno sentito tutti.",
-    "app.example.lastSlice.bName": "Francesca",
-    "app.example.lastSlice.b":
+    "pairs.lastSlice.bName": "Francesca",
+    "pairs.lastSlice.b":
       "Non puoi dire “è mia” e poi non toccarla per due ore. Era lì che si raffreddava, quindi l'ho mangiata io.",
     "appeal.lead":
       "Manca qualcosa o c'è un errore? Aggiungilo una volta e i giudici riesaminano tutto. Costa 1 verdetto.",

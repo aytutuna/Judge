@@ -500,12 +500,12 @@ const or: Locale = {
     "twoSided.decisive": "ରାୟ ଏଥି ଉପରେ ନିର୍ଭର କରେ",
     "twoSided.wouldChange": "କ'ଣ ଏହି ରାୟ ବଦଳାଇପାରନ୍ତା",
     "appeal.title": "ବିବରଣୀ ଯୋଡ଼ନ୍ତୁ",
-    "app.verdict.vs": "ବନାମ",
-    "app.verdict.leanTo": "ବିଚାରକମାନେ {name}ଙ୍କ ଆଡ଼କୁ ଝୁଙ୍କିଲେ",
-    "app.verdict.leanNone": "ବିଚାରକମାନେ କୌଣସି ଆଡ଼କୁ ଝୁଙ୍କିଲେ ନାହିଁ",
-    "app.verdict.sides": "ପ୍ରତ୍ୟେକ ପକ୍ଷ କେଉଁଥି ଉପରେ ଠିଆ",
-    "app.verdict.claims": "ପ୍ରତ୍ୟେକ ପକ୍ଷ ନିଜ ମତରେ କେମିତି ପହଞ୍ଚିଲେ",
-    "app.appeal.title": "ବିବରଣୀ ଯୋଡ଼ି ପୁଣି ବିଚାର",
+    "card.vs": "ବନାମ",
+    "card.leanTo": "ବିଚାରକମାନେ {name}ଙ୍କ ଆଡ଼କୁ ଝୁଙ୍କିଲେ",
+    "card.leanNone": "ବିଚାରକମାନେ କୌଣସି ଆଡ଼କୁ ଝୁଙ୍କିଲେ ନାହିଁ",
+    "card.sides": "ପ୍ରତ୍ୟେକ ପକ୍ଷ କେଉଁଥି ଉପରେ ଠିଆ",
+    "card.claims": "ପ୍ରତ୍ୟେକ ପକ୍ଷ ନିଜ ମତରେ କେମିତି ପହଞ୍ଚିଲେ",
+    "card.appeal": "ବିବରଣୀ ଯୋଡ଼ି ପୁଣି ବିଚାର",
     "home.example": "ଗୋଟେ ଉଦାହରଣ ନେଇ ଦେଖନ୍ତୁ",
     "home.lead": "ଦୁଇ ପକ୍ଷର କଥା ଲେଖନ୍ତୁ, ନହେଲେ ଅନ୍ୟ ଜଣଙ୍କୁ ଲିଙ୍କ୍ ପଠାନ୍ତୁ, ସେ ନିଜ କଥା ନିଜେ ଲେଖିବେ।",
     "home.leadSolo": "ନିଜ କଥା ଲେଖନ୍ତୁ, ଜାଣିଥିଲେ ତାଙ୍କ କଥା ବି।",
@@ -517,53 +517,53 @@ const or: Locale = {
     "home.says": "{name} କହନ୍ତି:",
     "home.mySide": "ମୋ କଥା:",
     "home.otherSide": "ତାଙ୍କ କଥା:",
-    "app.example.dishwasher.aName": "ରଶ୍ମି",
-    "app.example.dishwasher.a":
+    "pairs.dishwasher.aName": "ରଶ୍ମି",
+    "pairs.dishwasher.a":
       "ତୁମେ ପୁଣି ବାଟିଗୁଡ଼ାକ ଡିସ୍‌ୱାସରର ଉପର ଥାକରେ ରଖିଛ। ସେଠି ସେଗୁଡ଼ା କେବେ ସଫା ବାହାରେ ନାହିଁ, ସେଥିପାଇଁ ତ ତଳ ଥାକ ଅଛି।",
-    "app.example.dishwasher.bName": "ସୌମ୍ୟ",
-    "app.example.dishwasher.b":
+    "pairs.dishwasher.bName": "ସୌମ୍ୟ",
+    "pairs.dishwasher.b":
       "ଉପରେ ସେଗୁଡ଼ା ଭଲରେ ଧରିଯାଉଛି, ଆଉ ତଳ ଥାକ କଡ଼େଇ-ହାଣ୍ଡି ପାଇଁ ଖାଲି ରହୁଛି। ମୁଁ ବର୍ଷ ବର୍ଷ ଧରି ଏମିତି ରଖୁଛି, କେବେ କିଛି ମଇଳା ବାହାରିନାହିଁ।",
-    "app.example.bill.aName": "ପ୍ରିୟଙ୍କା",
-    "app.example.bill.a":
+    "pairs.bill.aName": "ପ୍ରିୟଙ୍କା",
+    "pairs.bill.a":
       "ମୁଁ ତ କିଛି ପିଇନାହିଁ, ତେଣୁ ୱାଇନ୍‌ର ଚାରି ଭାଗରୁ ଭାଗେ ମୁଁ କାହିଁକି ଦେବି? ଖାଇବା ବିଲ୍ ସମାନ ଭାଗ କଲେ ମୋର କିଛି ଆପତ୍ତି ନାହିଁ।",
-    "app.example.bill.bName": "ଦେବାଶିଷ",
-    "app.example.bill.b":
+    "pairs.bill.bName": "ଦେବାଶିଷ",
+    "pairs.bill.b":
       "ଆମେ ତ ସବୁବେଳେ ଚାରି ଭାଗ କରି ଦେଇଦେଉ। ପ୍ରତି ଥର କିଏ କ'ଣ ଖାଇଲା ହିସାବ କରିବା ଝାମେଲା, ଆଉ ଫରକ ବି ସେତେ ବେଶି ନୁହେଁ।",
-    "app.example.thermostat.aName": "ସୁଚିତ୍ରା",
-    "app.example.thermostat.a":
+    "pairs.thermostat.aName": "ସୁଚିତ୍ରା",
+    "pairs.thermostat.a":
       "AC 19 ଡିଗ୍ରୀରେ ଚାଲିଛି, ଚାଦର ଘୋଡ଼ାଇଲେ ବି ମୋତେ ଥଣ୍ଡା ଲାଗୁଛି। 22 କରିଦେବା କିଛି ଅଜବ କଥା ନୁହେଁ।",
-    "app.example.thermostat.bName": "ଅମିତ୍",
-    "app.example.thermostat.b":
+    "pairs.thermostat.bName": "ଅମିତ୍",
+    "pairs.thermostat.b":
       "22ରେ ଶୋଇବା ପାଇଁ ବହୁତ ଗରମ। ତୁମେ ଆଉ ଗୋଟେ ଚାଦର ଘୋଡ଼ାଇପାରିବ, ମୁଁ ତ ଆଉ କିଛି କାଢ଼ିପାରିବି ନାହିଁ।",
-    "app.example.roadTrip.aName": "ବିଶ୍ୱଜିତ୍",
-    "app.example.roadTrip.a":
+    "pairs.roadTrip.aName": "ବିଶ୍ୱଜିତ୍",
+    "pairs.roadTrip.a":
       "ଯିବା ବେଳେ ପୂରା ଛଅ ଘଣ୍ଟା ମୁଁ ହିଁ ଗାଡ଼ି ଚଳାଇଲି। ଫେରିବା ବେଳେ ତୁମେ ଚଳାଇବା ତ ଉଚିତ୍।",
-    "app.example.roadTrip.bName": "ସଙ୍ଗୀତା",
-    "app.example.roadTrip.b":
+    "pairs.roadTrip.bName": "ସଙ୍ଗୀତା",
+    "pairs.roadTrip.b":
       "ବାହାରିବା ଆଗରୁ ମୁଁ କହିଥିଲି ରାତିରେ ଗାଡ଼ି ଚଳାଇବା ମୋତେ ଜମା ଭଲ ଲାଗେ ନାହିଁ, ଆଉ ଆମେ ସନ୍ଧ୍ୟା 7ଟାରେ ବାହାରୁଛୁ। ଆର ଥର ସକାଳ ବେଳର ଡ୍ରାଇଭ୍ ମୁଁ କରିବି।",
-    "app.example.seat.aName": "ପ୍ରଦୀପ",
-    "app.example.seat.a":
+    "pairs.seat.aName": "ପ୍ରଦୀପ",
+    "pairs.seat.a":
       "ମୋ ସିଟ୍ ପଛକୁ ଢଳେ, ତେଣୁ ମୁଁ ଢଳାଉଛି। ରାତିର ଫ୍ଲାଇଟ୍, ସମସ୍ତେ ଶୋଇବାକୁ ଚେଷ୍ଟା କରୁଛନ୍ତି।",
-    "app.example.seat.bName": "ମମତା",
-    "app.example.seat.b":
+    "pairs.seat.bName": "ମମତା",
+    "pairs.seat.b":
       "ମୁଁ 6 ଫୁଟ 3 ଇଞ୍ଚ ଡେଙ୍ଗା, ମୋ ଆଣ୍ଠୁ ଆଗରୁ ଆପଣଙ୍କ ସିଟ୍‌ରେ ଚିପି ହେଉଛି। ପୂରା ପଛକୁ ଢଳାଇବା ଆଗରୁ ଅନ୍ତତଃ ଥରେ ପଚାରିପାରିଥାନ୍ତେ।",
-    "app.example.spoiler.aName": "ଇପ୍ସିତା",
-    "app.example.spoiler.a":
+    "pairs.spoiler.aName": "ଇପ୍ସିତା",
+    "pairs.spoiler.a":
       "ମୁଁ ଶେଷ ଏପିସୋଡ୍ ଆରମ୍ଭ କରିବା ଆଗରୁ ହିଁ ତୁମେ କହିଦେଲ ଖୁନୀ କିଏ। ମୁଁ ପୂରା ସପ୍ତାହ ସେଥିପାଇଁ ଅପେକ୍ଷା କରିଥିଲି।",
-    "app.example.spoiler.bName": "ଚିନ୍ମୟ",
-    "app.example.spoiler.b":
+    "pairs.spoiler.bName": "ଚିନ୍ମୟ",
+    "pairs.spoiler.b":
       "ସେଇଟା ତିନି ସପ୍ତାହ ଆଗରୁ ବାହାରିଛି, ଆଉ ତୁମେ କହିଥିଲ ଦେଖିସାରିଛ। କିଏ କେଉଁଠି ପହଞ୍ଚିଛି, ସବୁ ହିସାବ ମୁଁ ରଖିପାରିବି ନାହିଁ।",
-    "app.example.jacket.aName": "ଆଶିଷ",
-    "app.example.jacket.a":
+    "pairs.jacket.aName": "ଆଶିଷ",
+    "pairs.jacket.a":
       "ମୋତେ ନ ପଚାରି ତୁମେ ମୋ ଡେନିମ୍ ଜ୍ୟାକେଟ୍ ପିନ୍ଧି କନ୍‌ସର୍ଟ୍‌କୁ ଯାଇଥିଲ। ଫେରିଲା ବେଳକୁ ସେଥିରୁ ସିଗାରେଟ୍ ଗନ୍ଧ ବାହାରୁଥିଲା।",
-    "app.example.jacket.bName": "ସୋନାଲି",
-    "app.example.jacket.b":
+    "pairs.jacket.bName": "ସୋନାଲି",
+    "pairs.jacket.b":
       "ସେଇଟା କବାଟ ପାଖରେ ଝୁଲୁଥିଲା, ଆଉ ତୁମେ ତ ସେଇଟା କେବେ ପିନ୍ଧୁ ନାହଁ। ପଚାରିଥାନ୍ତି, କିନ୍ତୁ ତୁମେ ଶୋଇଥିଲ ଆଉ ମୋର ଆଗରୁ ଡେରି ହୋଇଯାଇଥିଲା।",
-    "app.example.lastSlice.aName": "ସମୀର",
-    "app.example.lastSlice.a":
+    "pairs.lastSlice.aName": "ସମୀର",
+    "pairs.lastSlice.a":
       "ସିନେମା ଆରମ୍ଭ ହେବା ଆଗରୁ ମୁଁ କହିଥିଲି, “ଶେଷ ପିଜ୍ଜା ପିସ୍ ମୋର”। ସମସ୍ତେ ଶୁଣିଥିଲେ।",
-    "app.example.lastSlice.bName": "ଅନିତା",
-    "app.example.lastSlice.b":
+    "pairs.lastSlice.bName": "ଅନିତା",
+    "pairs.lastSlice.b":
       "“ମୋର” କହି ଦୁଇ ଘଣ୍ଟା ଛୁଇଁବ ନାହିଁ, ଏମିତି ଚଳେ ନାହିଁ। ସେଇଟା ସେଠି ପଡ଼ି ପଡ଼ି ଥଣ୍ଡା ହେଉଥିଲା, ତେଣୁ ମୁଁ ଖାଇଦେଲି।",
     "appeal.lead":
       "କିଛି ବାକି ରହିଲା ବା ଭୁଲ ହେଲା? ଥରେ ଯୋଡ଼ନ୍ତୁ, ବିଚାରକମାନେ ସବୁକିଛି ପୁଣି ଦେଖିବେ। 1ଟି ରାୟ ଖର୍ଚ୍ଚ ହେବ।",

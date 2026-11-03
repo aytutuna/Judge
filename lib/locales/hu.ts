@@ -502,12 +502,12 @@ const hu: Locale = {
     "twoSided.decisive": "Ezen múlik az ítélet",
     "twoSided.wouldChange": "Mi változtatna az ítéleten",
     "appeal.title": "Kiegészítés",
-    "app.verdict.vs": "vs.",
-    "app.verdict.leanTo": "A bírák {name} felé hajlottak",
-    "app.verdict.leanNone": "A bírák egyik fél felé sem hajlottak",
-    "app.verdict.sides": "Mire épít a két fél",
-    "app.verdict.claims": "Így érvelt a két fél",
-    "app.appeal.title": "Kiegészítés és fellebbezés",
+    "card.vs": "vs.",
+    "card.leanTo": "A bírák {name} felé hajlottak",
+    "card.leanNone": "A bírák egyik fél felé sem hajlottak",
+    "card.sides": "Mire épít a két fél",
+    "card.claims": "Így érvelt a két fél",
+    "card.appeal": "Kiegészítés és fellebbezés",
     "home.example": "Próbálj ki egy példát",
     "home.lead":
       "Írd le mindkét fél verzióját, vagy küldj egy linket a másiknak, hogy ő írja meg a sajátját.",
@@ -520,53 +520,53 @@ const hu: Locale = {
     "home.says": "{name} szerint:",
     "home.mySide": "Az én verzióm:",
     "home.otherSide": "Az ő verziója:",
-    "app.example.dishwasher.aName": "Kata",
-    "app.example.dishwasher.a":
+    "pairs.dishwasher.aName": "Kata",
+    "pairs.dishwasher.a":
       "Már megint a felső kosárba raktad a tálakat. Ott sosem lesznek tiszták, arra való az alsó.",
-    "app.example.dishwasher.bName": "Ádám",
-    "app.example.dishwasher.b":
+    "pairs.dishwasher.bName": "Ádám",
+    "pairs.dishwasher.b":
       "Simán elférnek fent, és így az alsó kosár szabad marad a lábasoknak. Évek óta így pakolom, és még soha semmi nem jött ki koszosan.",
-    "app.example.bill.aName": "Eszter",
-    "app.example.bill.a":
+    "pairs.bill.aName": "Eszter",
+    "pairs.bill.a":
       "Én nem ittam semmit, úgyhogy nem kéne kifizetnem a bor negyedét. Az ételt nyugodtan osszuk el egyenlően.",
-    "app.example.bill.bName": "Máté",
-    "app.example.bill.b":
+    "pairs.bill.bName": "Máté",
+    "pairs.bill.b":
       "Mindig négyfelé osztjuk, és kész. Minden alkalommal kiszámolni, ki mit evett, macerás, és amúgy sem nagy a különbség.",
-    "app.example.thermostat.aName": "Zsófi",
-    "app.example.thermostat.a":
+    "pairs.thermostat.aName": "Zsófi",
+    "pairs.thermostat.a":
       "19 fok van itt bent, és még kapucnis pulóverben is fázom. Nem őrültség feltekerni 22-re.",
-    "app.example.thermostat.bName": "Péter",
-    "app.example.thermostat.b":
+    "pairs.thermostat.bName": "Péter",
+    "pairs.thermostat.b":
       "22 fokban nem lehet aludni, az már túl meleg. Te fel tudsz venni még egy réteget, én viszont már nem tudok mit levenni.",
-    "app.example.roadTrip.aName": "Dávid",
-    "app.example.roadTrip.a":
+    "pairs.roadTrip.aName": "Dávid",
+    "pairs.roadTrip.a":
       "Odafelé végig én vezettem, mind a hat órát. Az az igazságos, ha visszafelé te vezetsz.",
-    "app.example.roadTrip.bName": "Lilla",
-    "app.example.roadTrip.b":
+    "pairs.roadTrip.bName": "Lilla",
+    "pairs.roadTrip.b":
       "Már indulás előtt mondtam, hogy utálok éjszaka vezetni, és este hétkor indulunk. A következő úton majd én vezetek reggelente.",
-    "app.example.seat.aName": "Nóra",
-    "app.example.seat.a":
+    "pairs.seat.aName": "Nóra",
+    "pairs.seat.a":
       "Az ülésem hátradönthető, úgyhogy hátradöntöm. Éjszakai járaton vagyunk, mindenki aludni próbál.",
-    "app.example.seat.bName": "Bálint",
-    "app.example.seat.b":
+    "pairs.seat.bName": "Bálint",
+    "pairs.seat.b":
       "190 centi vagyok, és a térdem már így is az ülésednek nyomódik. Legalább megkérdezhetnéd, mielőtt teljesen hátradöntöd.",
-    "app.example.spoiler.aName": "Fanni",
-    "app.example.spoiler.a":
+    "pairs.spoiler.aName": "Fanni",
+    "pairs.spoiler.a":
       "Elárultad, ki a gyilkos, mielőtt egyáltalán elkezdtem volna az utolsó részt. Egész héten erre vártam.",
-    "app.example.spoiler.bName": "Levente",
-    "app.example.spoiler.b":
+    "pairs.spoiler.bName": "Levente",
+    "pairs.spoiler.b":
       "Három hete jött ki, és azt mondtad, már a végére értél. Nem tudom fejben tartani, ki hol tart.",
-    "app.example.jacket.aName": "Dani",
-    "app.example.jacket.a":
+    "pairs.jacket.aName": "Dani",
+    "pairs.jacket.a":
       "Meg sem kérdeztél, csak felvetted a farmerdzsekimet a koncertre. Füstszagúan kaptam vissza.",
-    "app.example.jacket.bName": "Lili",
-    "app.example.jacket.b":
+    "pairs.jacket.bName": "Lili",
+    "pairs.jacket.b":
       "Az ajtó mellett lógott, és sosem hordod. Megkérdeztelek volna, de aludtál, én meg már késésben voltam.",
-    "app.example.lastSlice.aName": "Marci",
-    "app.example.lastSlice.a":
+    "pairs.lastSlice.aName": "Marci",
+    "pairs.lastSlice.a":
       "Még a film előtt lestoppoltam az utolsó szeletet. Mindenki hallotta.",
-    "app.example.lastSlice.bName": "Panni",
-    "app.example.lastSlice.b":
+    "pairs.lastSlice.bName": "Panni",
+    "pairs.lastSlice.b":
       "Nem lehet lestoppolni valamit, aztán két órán át hozzá se nyúlni. Csak ott hűlt, úgyhogy megettem.",
     "appeal.lead":
       "Hiányzik vagy téves valami? Add hozzá egyszer, és a bírák mindent újra átnéznek. Ez 1 ítéletbe kerül.",

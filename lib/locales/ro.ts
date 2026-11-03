@@ -501,12 +501,12 @@ const ro: Locale = {
     "twoSided.decisive": "De asta depinde verdictul",
     "twoSided.wouldChange": "Ce ar schimba verdictul",
     "appeal.title": "Adaugă context",
-    "app.verdict.vs": "vs.",
-    "app.verdict.leanTo": "Judecătorii au înclinat spre {name}",
-    "app.verdict.leanNone": "Judecătorii n-au înclinat în nicio parte",
-    "app.verdict.sides": "Pe ce se sprijină fiecare parte",
-    "app.verdict.claims": "Cum a ajuns fiecare parte la poziția ei",
-    "app.appeal.title": "Adaugă context și contestă",
+    "card.vs": "vs.",
+    "card.leanTo": "Judecătorii au înclinat spre {name}",
+    "card.leanNone": "Judecătorii n-au înclinat în nicio parte",
+    "card.sides": "Pe ce se sprijină fiecare parte",
+    "card.claims": "Cum a ajuns fiecare parte la poziția ei",
+    "card.appeal": "Adaugă context și contestă",
     "home.example": "Încearcă un exemplu",
     "home.lead":
       "Scrie ambele părți sau trimite-i celeilalte persoane un link ca să-și scrie varianta.",
@@ -519,53 +519,53 @@ const ro: Locale = {
     "home.says": "{name} spune:",
     "home.mySide": "Partea mea:",
     "home.otherSide": "Cealaltă parte:",
-    "app.example.dishwasher.aName": "Ioana",
-    "app.example.dishwasher.a":
+    "pairs.dishwasher.aName": "Ioana",
+    "pairs.dishwasher.a":
       "Iar ai pus bolurile în coșul de sus. Acolo nu ies niciodată curate, coșul de jos e pentru asta.",
-    "app.example.dishwasher.bName": "Mihai",
-    "app.example.dishwasher.b":
+    "pairs.dishwasher.bName": "Mihai",
+    "pairs.dishwasher.b":
       "Încap foarte bine sus și rămâne loc jos pentru oale. Le pun așa de ani de zile și n-a ieșit nimic murdar.",
-    "app.example.bill.aName": "Elena",
-    "app.example.bill.a":
+    "pairs.bill.aName": "Elena",
+    "pairs.bill.a":
       "N-am băut nimic, deci n-ar trebui să plătesc un sfert din vin. Mâncarea s-o împărțim egal, cu asta n-am nicio problemă.",
-    "app.example.bill.bName": "Vlad",
-    "app.example.bill.b":
+    "pairs.bill.bName": "Vlad",
+    "pairs.bill.b":
       "Mereu împărțim nota la patru și gata. E o bătaie de cap să socotim de fiecare dată cine ce a luat, iar diferența oricum nu e mare.",
-    "app.example.thermostat.aName": "Irina",
-    "app.example.thermostat.a":
+    "pairs.thermostat.aName": "Irina",
+    "pairs.thermostat.a":
       "Sunt 19 grade aici și mi-e frig și cu hanoracul pe mine. Nu e o nebunie să dăm căldura la 22.",
-    "app.example.thermostat.bName": "Radu",
-    "app.example.thermostat.b":
+    "pairs.thermostat.bName": "Radu",
+    "pairs.thermostat.b":
       "La 22 de grade e mult prea cald ca să dormi. Tu poți să mai pui ceva pe tine, eu n-am ce să mai dau jos.",
-    "app.example.roadTrip.aName": "Cristina",
-    "app.example.roadTrip.a":
+    "pairs.roadTrip.aName": "Cristina",
+    "pairs.roadTrip.a":
       "Eu am condus toate cele șase ore la dus. E corect să conduci tu la întoarcere.",
-    "app.example.roadTrip.bName": "Bogdan",
-    "app.example.roadTrip.b":
+    "pairs.roadTrip.bName": "Bogdan",
+    "pairs.roadTrip.b":
       "Ți-am zis înainte de plecare că urăsc să conduc noaptea, iar noi plecăm la 7 seara. Data viitoare conduc eu dimineața.",
-    "app.example.seat.aName": "Diana",
-    "app.example.seat.a":
+    "pairs.seat.aName": "Diana",
+    "pairs.seat.a":
       "Scaunul meu se lasă pe spate, așa că îl las. E zbor de noapte și toată lumea încearcă să doarmă.",
-    "app.example.seat.bName": "Sorin",
-    "app.example.seat.b":
+    "pairs.seat.bName": "Sorin",
+    "pairs.seat.b":
       "Am 1,90 m și am deja genunchii lipiți de scaunul tău. Puteai măcar să întrebi înainte să-l lași complet pe spate.",
-    "app.example.spoiler.aName": "Maria",
-    "app.example.spoiler.a":
+    "pairs.spoiler.aName": "Maria",
+    "pairs.spoiler.a":
       "Mi-ai zis cine e criminalul înainte să încep măcar ultimul episod. L-am așteptat toată săptămâna.",
-    "app.example.spoiler.bName": "Tudor",
-    "app.example.spoiler.b":
+    "pairs.spoiler.bName": "Tudor",
+    "pairs.spoiler.b":
       "A ieșit acum trei săptămâni și mi-ai zis că l-ai terminat. Nu pot să țin minte unde a ajuns fiecare.",
-    "app.example.jacket.aName": "Ștefan",
-    "app.example.jacket.a":
+    "pairs.jacket.aName": "Ștefan",
+    "pairs.jacket.a":
       "Mi-ai luat geaca de blugi la concert fără să mă întrebi. Mi-ai adus-o înapoi mirosind a fum.",
-    "app.example.jacket.bName": "Alina",
-    "app.example.jacket.b":
+    "pairs.jacket.bName": "Alina",
+    "pairs.jacket.b":
       "Era agățată lângă ușă și tu n-o porți niciodată. Te-aș fi întrebat, dar dormeai, iar eu deja întârziam.",
-    "app.example.lastSlice.aName": "Matei",
-    "app.example.lastSlice.a":
+    "pairs.lastSlice.aName": "Matei",
+    "pairs.lastSlice.a":
       "Am zis „ultima felie e a mea” înainte să înceapă filmul. Toată lumea m-a auzit.",
-    "app.example.lastSlice.bName": "Carmen",
-    "app.example.lastSlice.b":
+    "pairs.lastSlice.bName": "Carmen",
+    "pairs.lastSlice.b":
       "Nu poți s-o declari a ta și apoi să n-o atingi două ore. Stătea acolo și se răcea, așa că am mâncat-o eu.",
     "appeal.lead":
       "Lipsește ceva sau e greșit? Poți adăuga context o singură dată, iar judecătorii se uită din nou la tot. Costă 1 verdict.",

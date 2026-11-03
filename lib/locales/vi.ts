@@ -501,12 +501,12 @@ const vi: Locale = {
     "twoSided.decisive": "Phán quyết xoay quanh điểm này",
     "twoSided.wouldChange": "Điều gì có thể thay đổi phán quyết này",
     "appeal.title": "Bổ sung thông tin",
-    "app.verdict.vs": "vs",
-    "app.verdict.leanTo": "Ban giám khảo nghiêng về {name}",
-    "app.verdict.leanNone": "Ban giám khảo không nghiêng về bên nào",
-    "app.verdict.sides": "Mỗi bên dựa vào điều gì",
-    "app.verdict.claims": "Mỗi bên đi đến kết luận thế nào",
-    "app.appeal.title": "Bổ sung thông tin và xét lại",
+    "card.vs": "vs",
+    "card.leanTo": "Ban giám khảo nghiêng về {name}",
+    "card.leanNone": "Ban giám khảo không nghiêng về bên nào",
+    "card.sides": "Mỗi bên dựa vào điều gì",
+    "card.claims": "Mỗi bên đi đến kết luận thế nào",
+    "card.appeal": "Bổ sung thông tin và xét lại",
     "home.example": "Thử một ví dụ",
     "home.lead": "Kể phần của cả hai bên, hoặc gửi liên kết để người kia tự kể phần của họ.",
     "home.leadSolo": "Kể phần của bạn, và cả phần của người kia nếu bạn biết.",
@@ -518,50 +518,50 @@ const vi: Locale = {
     "home.says": "{name} nói:",
     "home.mySide": "Phía tôi:",
     "home.otherSide": "Phía bên kia:",
-    "app.example.dishwasher.aName": "Linh",
-    "app.example.dishwasher.a":
+    "pairs.dishwasher.aName": "Linh",
+    "pairs.dishwasher.a":
       "Bạn lại xếp bát lên ngăn trên rồi. Để trên đó rửa chẳng bao giờ sạch, ngăn dưới là để xếp bát mà.",
-    "app.example.dishwasher.bName": "Tuấn",
-    "app.example.dishwasher.b":
+    "pairs.dishwasher.bName": "Tuấn",
+    "pairs.dishwasher.b":
       "Để trên vừa khít mà, lại chừa ngăn dưới cho xoong nồi. Mình xếp kiểu này mấy năm rồi, có cái nào ra mà còn bẩn đâu.",
-    "app.example.bill.aName": "Mai",
-    "app.example.bill.a":
+    "pairs.bill.aName": "Mai",
+    "pairs.bill.a":
       "Mình có uống giọt nào đâu, sao lại phải trả một phần tư tiền bia. Đồ ăn chia đều thì mình không ý kiến.",
-    "app.example.bill.bName": "Khoa",
-    "app.example.bill.b":
+    "pairs.bill.bName": "Khoa",
+    "pairs.bill.b":
       "Tụi mình lúc nào cũng chia bốn mà. Lần nào cũng ngồi tính ai ăn gì uống gì thì mệt lắm, mà chênh nhau có bao nhiêu đâu.",
-    "app.example.thermostat.aName": "Hà",
-    "app.example.thermostat.a":
+    "pairs.thermostat.aName": "Hà",
+    "pairs.thermostat.a":
       "Phòng đang 29°C, mình nóng toát mồ hôi. Hạ điều hòa xuống 25°C có gì quá đâu.",
-    "app.example.thermostat.bName": "Nam",
-    "app.example.thermostat.b":
+    "pairs.thermostat.bName": "Nam",
+    "pairs.thermostat.b":
       "25°C thì lạnh quá, ngủ không nổi. Bạn nóng thì bật thêm quạt, còn mình đắp chăn rồi mà vẫn lạnh.",
-    "app.example.roadTrip.aName": "Phong",
-    "app.example.roadTrip.a": "Lúc đi mình lái suốt sáu tiếng. Lúc về bạn lái mới công bằng.",
-    "app.example.roadTrip.bName": "Vy",
-    "app.example.roadTrip.b":
+    "pairs.roadTrip.aName": "Phong",
+    "pairs.roadTrip.a": "Lúc đi mình lái suốt sáu tiếng. Lúc về bạn lái mới công bằng.",
+    "pairs.roadTrip.bName": "Vy",
+    "pairs.roadTrip.b":
       "Trước khi đi mình đã nói là rất ghét lái xe ban đêm, mà 7 giờ tối mới lên đường về. Chuyến sau mình sẽ lái mấy chặng buổi sáng.",
-    "app.example.seat.aName": "Thảo",
-    "app.example.seat.a": "Ghế mình ngả được thì mình ngả. Chuyến bay đêm, ai cũng đang cố ngủ.",
-    "app.example.seat.bName": "Dũng",
-    "app.example.seat.b":
+    "pairs.seat.aName": "Thảo",
+    "pairs.seat.a": "Ghế mình ngả được thì mình ngả. Chuyến bay đêm, ai cũng đang cố ngủ.",
+    "pairs.seat.bName": "Dũng",
+    "pairs.seat.b":
       "Mình cao 1m90, đầu gối đã tì sát vào lưng ghế bạn rồi. Ít ra bạn cũng nên hỏi trước khi ngả hết cỡ chứ.",
-    "app.example.spoiler.aName": "Ngọc",
-    "app.example.spoiler.a":
+    "pairs.spoiler.aName": "Ngọc",
+    "pairs.spoiler.a":
       "Mình còn chưa mở tập cuối thì bạn đã nói ai là hung thủ. Mình chờ tập đó cả tuần đấy.",
-    "app.example.spoiler.bName": "Huy",
-    "app.example.spoiler.b":
+    "pairs.spoiler.bName": "Huy",
+    "pairs.spoiler.b":
       "Phim ra ba tuần rồi, bạn còn bảo là xem xong rồi mà. Mình đâu nhớ nổi ai đang xem tới đâu.",
-    "app.example.jacket.aName": "Quân",
-    "app.example.jacket.a":
+    "pairs.jacket.aName": "Quân",
+    "pairs.jacket.a":
       "Bạn mặc áo khoác jean của mình đi xem ca nhạc mà không hỏi. Lúc trả lại thì ám mùi khói thuốc.",
-    "app.example.jacket.bName": "Hương",
-    "app.example.jacket.b":
+    "pairs.jacket.bName": "Hương",
+    "pairs.jacket.b":
       "Nó treo ngay cạnh cửa, mà bạn có bao giờ mặc đâu. Mình cũng định hỏi, nhưng bạn đang ngủ còn mình thì đang trễ giờ.",
-    "app.example.lastSlice.aName": "Bảo",
-    "app.example.lastSlice.a": "Mình xí miếng pizza cuối từ trước khi phim chiếu. Cả đám đều nghe.",
-    "app.example.lastSlice.bName": "My",
-    "app.example.lastSlice.b":
+    "pairs.lastSlice.aName": "Bảo",
+    "pairs.lastSlice.a": "Mình xí miếng pizza cuối từ trước khi phim chiếu. Cả đám đều nghe.",
+    "pairs.lastSlice.bName": "My",
+    "pairs.lastSlice.b":
       "Xí rồi để đó hai tiếng không đụng tới thì không tính. Nó nằm đó nguội ngắt, nên mình ăn luôn.",
     "appeal.lead":
       "Thiếu hoặc sai gì à? Bổ sung một lần và ban giám khảo sẽ xem lại toàn bộ. Tốn 1 lượt.",

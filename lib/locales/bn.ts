@@ -500,12 +500,12 @@ const bn: Locale = {
     "twoSided.decisive": "রায় এর ওপরই নির্ভর করছে",
     "twoSided.wouldChange": "কী হলে এই রায় বদলাত",
     "appeal.title": "নতুন তথ্য যোগ করুন",
-    "app.verdict.vs": "বনাম",
-    "app.verdict.leanTo": "প্যানেলের ঝোঁক: {name}",
-    "app.verdict.leanNone": "প্যানেল কোনো দিকেই ঝোঁকেনি",
-    "app.verdict.sides": "প্রত্যেক পক্ষ কিসের ওপর দাঁড়িয়ে",
-    "app.verdict.claims": "প্রত্যেক পক্ষ কীভাবে সেখানে পৌঁছাল",
-    "app.appeal.title": "নতুন তথ্য যোগ করে আপিল করুন",
+    "card.vs": "বনাম",
+    "card.leanTo": "প্যানেলের ঝোঁক: {name}",
+    "card.leanNone": "প্যানেল কোনো দিকেই ঝোঁকেনি",
+    "card.sides": "প্রত্যেক পক্ষ কিসের ওপর দাঁড়িয়ে",
+    "card.claims": "প্রত্যেক পক্ষ কীভাবে সেখানে পৌঁছাল",
+    "card.appeal": "নতুন তথ্য যোগ করে আপিল করুন",
     "home.example": "একটা উদাহরণ দিয়ে দেখুন",
     "home.lead":
       "দুই পক্ষের কথাই লিখুন, নয়তো অন্যজনকে একটা লিংক পাঠান, তিনি নিজের কথা নিজেই লিখবেন।",
@@ -518,53 +518,53 @@ const bn: Locale = {
     "home.says": "{name} বলছে:",
     "home.mySide": "আমার বক্তব্য:",
     "home.otherSide": "অন্যজনের বক্তব্য:",
-    "app.example.dishwasher.aName": "রুমি",
-    "app.example.dishwasher.a":
+    "pairs.dishwasher.aName": "রুমি",
+    "pairs.dishwasher.a":
       "তুমি আবার ভাতের হাঁড়িটা সারারাত সিঙ্কে ভিজিয়ে রেখেছ। সকালে পুরো রান্নাঘরে গন্ধ, রাতেই ধুয়ে ফেলা উচিত।",
-    "app.example.dishwasher.bName": "সুমন",
-    "app.example.dishwasher.b":
+    "pairs.dishwasher.bName": "সুমন",
+    "pairs.dishwasher.b":
       "ভিজিয়ে রাখলে সকালে এক মিনিটে পরিষ্কার হয়ে যায়। বছরের পর বছর এভাবেই করছি, কোনোদিন কোনো সমস্যা হয়নি।",
-    "app.example.bill.aName": "প্রিয়া",
-    "app.example.bill.a":
+    "pairs.bill.aName": "প্রিয়া",
+    "pairs.bill.a":
       "আমি কোনো ড্রিংক নিইনি, তাই ড্রিংকসের টাকার চার ভাগের এক ভাগ আমি দেব কেন? খাবারের বিল সমান ভাগ করায় আমার আপত্তি নেই।",
-    "app.example.bill.bName": "জয়",
-    "app.example.bill.b":
+    "pairs.bill.bName": "জয়",
+    "pairs.bill.b":
       "আমরা তো সবসময় চার ভাগ করেই দিই। প্রতিবার কে কী খেল তার হিসাব করা ঝামেলা, আর তফাতও খুব বেশি না।",
-    "app.example.thermostat.aName": "তানিয়া",
-    "app.example.thermostat.a":
+    "pairs.thermostat.aName": "তানিয়া",
+    "pairs.thermostat.a":
       "এসি 19 ডিগ্রিতে চলছে, চাদর গায়ে দিয়েও আমার শীত করছে। 22 করে দিলে কী এমন হয়?",
-    "app.example.thermostat.bName": "রাকিব",
-    "app.example.thermostat.b":
+    "pairs.thermostat.bName": "রাকিব",
+    "pairs.thermostat.b":
       "22 ডিগ্রিতে ঘর গুমোট হয়ে যায়, ঘুমানো যায় না। তুমি আরেকটা কাঁথা নিতে পারো, আমি তো গা থেকে আর কিছু খুলতে পারব না।",
-    "app.example.roadTrip.aName": "অনিক",
-    "app.example.roadTrip.a":
+    "pairs.roadTrip.aName": "অনিক",
+    "pairs.roadTrip.a":
       "যাওয়ার সময় পুরো ছয় ঘণ্টা আমিই চালিয়েছি। ফেরার পথে তুমি চালাবে, এটাই তো ন্যায্য।",
-    "app.example.roadTrip.bName": "মিতু",
-    "app.example.roadTrip.b":
+    "pairs.roadTrip.bName": "মিতু",
+    "pairs.roadTrip.b":
       "বেরোনোর আগেই বলেছিলাম রাতে গাড়ি চালাতে আমার একদম ভালো লাগে না, আর আমরা বেরোচ্ছি সন্ধ্যা 7টায়। পরের ট্রিপে সকালের ড্রাইভগুলো আমার।",
-    "app.example.seat.aName": "সায়ন",
-    "app.example.seat.a":
+    "pairs.seat.aName": "সায়ন",
+    "pairs.seat.a":
       "আমার সিট হেলানো যায়, তাই হেলিয়েছি। রাতের ফ্লাইট, সবাই ঘুমানোর চেষ্টা করছে।",
-    "app.example.seat.bName": "নীলা",
-    "app.example.seat.b":
+    "pairs.seat.bName": "নীলা",
+    "pairs.seat.b":
       "আমি 6 ফুট 3 ইঞ্চি লম্বা, হাঁটু এমনিতেই আপনার সিটে ঠেকে আছে। একদম পেছনে নামানোর আগে অন্তত একবার জিজ্ঞেস করতে পারতেন।",
-    "app.example.spoiler.aName": "মায়া",
-    "app.example.spoiler.a":
+    "pairs.spoiler.aName": "মায়া",
+    "pairs.spoiler.a":
       "শেষ পর্বটা শুরু করার আগেই তুমি বলে দিলে খুনি কে। পুরো সপ্তাহ ধরে ওটার জন্য অপেক্ষা করছিলাম।",
-    "app.example.spoiler.bName": "রাহুল",
-    "app.example.spoiler.b":
+    "pairs.spoiler.bName": "রাহুল",
+    "pairs.spoiler.b":
       "ওটা তিন সপ্তাহ আগে বেরিয়েছে, আর তুমিই বলেছিলে দেখা শেষ। কে কোন পর্বে আছে, সবার হিসাব রাখা আমার পক্ষে সম্ভব না।",
-    "app.example.jacket.aName": "নাদিয়া",
-    "app.example.jacket.a":
+    "pairs.jacket.aName": "নাদিয়া",
+    "pairs.jacket.a":
       "আমাকে জিজ্ঞেস না করেই তুমি আমার ডেনিম জ্যাকেটটা পরে কনসার্টে গেছ। ফেরত এল ধোঁয়ার গন্ধ নিয়ে।",
-    "app.example.jacket.bName": "আরিফ",
-    "app.example.jacket.b":
+    "pairs.jacket.bName": "আরিফ",
+    "pairs.jacket.b":
       "ওটা দরজার পাশে ঝুলছিল, আর তুমি তো ওটা পরোই না। জিজ্ঞেস করতাম, কিন্তু তুমি ঘুমাচ্ছিলে আর আমার এমনিতেই দেরি হয়ে গিয়েছিল।",
-    "app.example.lastSlice.aName": "তন্ময়",
-    "app.example.lastSlice.a":
+    "pairs.lastSlice.aName": "তন্ময়",
+    "pairs.lastSlice.a":
       "সিনেমা শুরুর আগেই বলে রেখেছিলাম, পিৎজার শেষ স্লাইসটা আমার। সবাই শুনেছে।",
-    "app.example.lastSlice.bName": "রিয়া",
-    "app.example.lastSlice.b":
+    "pairs.lastSlice.bName": "রিয়া",
+    "pairs.lastSlice.b":
       "“আমার” বলে দুই ঘণ্টা ছুঁয়েও না দেখলে তো হবে না। ওটা পড়ে পড়ে ঠান্ডা হচ্ছিল, তাই খেয়ে ফেলেছি।",
     "appeal.lead":
       "কিছু বাদ পড়েছে বা ভুল হয়েছে? একবার যোগ করুন, বিচারকেরা সবকিছু আবার দেখবেন। খরচ 1টি রায়।",

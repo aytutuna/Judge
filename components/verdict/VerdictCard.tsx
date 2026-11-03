@@ -46,7 +46,7 @@ function Names({ nameA, nameB, lang }: { nameA: string; nameB: string; lang: Lan
         </span>
         <span className={`${styles.nameText} ${styles.nameA}`}>{nameA}</span>
       </div>
-      <span className={styles.vs}>{t(lang, "app.verdict.vs")}</span>
+      <span className={styles.vs}>{t(lang, "card.vs")}</span>
       <div className={`${styles.who} ${styles.whoB}`}>
         <span className={`${styles.nameText} ${styles.nameB}`}>{nameB}</span>
         <span className={`${styles.avatar} ${styles.avatarB}`} aria-hidden>
@@ -60,8 +60,8 @@ function Names({ nameA, nameB, lang }: { nameA: string; nameB: string; lang: Lan
 function LeanBar({ share, nameA, nameB, lang }: { share: number; nameA: string; nameB: string; lang: Lang }) {
   const label =
     share === 0.5
-      ? t(lang, "app.verdict.leanNone")
-      : t(lang, "app.verdict.leanTo", { name: share > 0.5 ? nameA : nameB });
+      ? t(lang, "card.leanNone")
+      : t(lang, "card.leanTo", { name: share > 0.5 ? nameA : nameB });
   return (
     <div className={styles.lean} role="img" aria-label={label}>
       <div className={styles.leanFill} style={{ width: `${share * 100}%` }} />

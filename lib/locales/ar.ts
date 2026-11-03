@@ -498,12 +498,12 @@ const ar: Locale = {
     "twoSided.decisive": "الحكم يتوقف على هذا",
     "twoSided.wouldChange": "ما الذي قد يغيّر هذا الحكم",
     "appeal.title": "إضافة توضيح",
-    "app.verdict.vs": "ضد",
-    "app.verdict.leanTo": "مالت هيئة القضاة إلى {name}",
-    "app.verdict.leanNone": "لم تمل هيئة القضاة إلى أي جانب",
-    "app.verdict.sides": "ما يستند إليه كل طرف",
-    "app.verdict.claims": "كيف وصل كل طرف إلى رأيه",
-    "app.appeal.title": "إضافة توضيح والاعتراض على الحكم",
+    "card.vs": "ضد",
+    "card.leanTo": "مالت هيئة القضاة إلى {name}",
+    "card.leanNone": "لم تمل هيئة القضاة إلى أي جانب",
+    "card.sides": "ما يستند إليه كل طرف",
+    "card.claims": "كيف وصل كل طرف إلى رأيه",
+    "card.appeal": "إضافة توضيح والاعتراض على الحكم",
     "home.example": "جرّب مثالًا",
     "home.lead": "اكتب رواية الطرفين، أو أرسل إلى الطرف الآخر رابطًا ليكتب روايته بنفسه.",
     "home.leadSolo": "اكتب روايتك، ورواية الطرف الآخر إن كنت تعرفها.",
@@ -515,51 +515,51 @@ const ar: Locale = {
     "home.says": "رواية {name}:",
     "home.mySide": "روايتي:",
     "home.otherSide": "رواية الطرف الآخر:",
-    "app.example.dishwasher.aName": "ليلى",
-    "app.example.dishwasher.a":
+    "pairs.dishwasher.aName": "ليلى",
+    "pairs.dishwasher.a":
       "وضعت الأوعية في الرف العلوي مرة أخرى. لا تخرج من هناك نظيفة أبدًا، والرف السفلي موجود لهذا بالذات.",
-    "app.example.dishwasher.bName": "كريم",
-    "app.example.dishwasher.b":
+    "pairs.dishwasher.bName": "كريم",
+    "pairs.dishwasher.b":
       "الرف العلوي يتّسع لها تمامًا، وهكذا يبقى السفلي فارغًا للقدور. أرتّب غسالة الصحون بهذه الطريقة منذ سنوات، ولم يخرج منها شيء متّسخًا.",
-    "app.example.bill.aName": "هند",
-    "app.example.bill.a":
+    "pairs.bill.aName": "هند",
+    "pairs.bill.a":
       "لم أطلب أي مشروب، فلا يصح أن أدفع ربع ثمن المشروبات. أما تقسيم ثمن الطعام بالتساوي فلا مانع عندي.",
-    "app.example.bill.bName": "يوسف",
-    "app.example.bill.b":
+    "pairs.bill.bName": "يوسف",
+    "pairs.bill.b":
       "نحن نقسم الفاتورة على أربعة دائمًا. حساب مَن أخذ ماذا في كل مرة متعب، والفرق ليس كبيرًا أصلًا.",
-    "app.example.thermostat.aName": "سلمى",
-    "app.example.thermostat.a":
+    "pairs.thermostat.aName": "سلمى",
+    "pairs.thermostat.a":
       "الحرارة هنا 19 درجة، وأشعر بالبرد حتى وأنا ألبس كنزة. رفع التدفئة إلى 22 ليس مبالغة.",
-    "app.example.thermostat.bName": "خالد",
-    "app.example.thermostat.b":
+    "pairs.thermostat.bName": "خالد",
+    "pairs.thermostat.b":
       "على 22 درجة لا يمكن النوم من الحر. يمكنك أن ترتدي طبقة إضافية، أما أنا فلم يبقَ عليّ ما أخلعه.",
-    "app.example.roadTrip.aName": "طارق",
-    "app.example.roadTrip.a":
+    "pairs.roadTrip.aName": "طارق",
+    "pairs.roadTrip.a":
       "أنا مَن قاد السيارة طوال الساعات الست في الذهاب. من العدل أن تقودي أنتِ في العودة.",
-    "app.example.roadTrip.bName": "دينا",
-    "app.example.roadTrip.b":
+    "pairs.roadTrip.bName": "دينا",
+    "pairs.roadTrip.b":
       "قلت لك قبل أن ننطلق إنني أكره القيادة ليلًا، ونحن سنغادر في السابعة مساءً. سأتولى القيادة في الصباح في الرحلة القادمة.",
-    "app.example.seat.aName": "رنا",
-    "app.example.seat.a": "مقعدي يميل إلى الخلف، لذلك أُميله. الرحلة ليلية والجميع يحاولون النوم.",
-    "app.example.seat.bName": "فارس",
-    "app.example.seat.b":
+    "pairs.seat.aName": "رنا",
+    "pairs.seat.a": "مقعدي يميل إلى الخلف، لذلك أُميله. الرحلة ليلية والجميع يحاولون النوم.",
+    "pairs.seat.bName": "فارس",
+    "pairs.seat.b":
       "طولي 190 سم، وركبتاي ملتصقتان بمقعدك أصلًا. كان يمكنك على الأقل أن تسألي قبل أن تُميليه إلى آخره.",
-    "app.example.spoiler.aName": "مريم",
-    "app.example.spoiler.a":
+    "pairs.spoiler.aName": "مريم",
+    "pairs.spoiler.a":
       "أخبرتني مَن القاتل قبل أن أبدأ الحلقة الأخيرة أصلًا. كنت أنتظرها طوال الأسبوع.",
-    "app.example.spoiler.bName": "زياد",
-    "app.example.spoiler.b":
+    "pairs.spoiler.bName": "زياد",
+    "pairs.spoiler.b":
       "عُرضت قبل ثلاثة أسابيع، وقلت إنك أنهيتها. لا أستطيع أن أتابع أين وصل كل واحد.",
-    "app.example.jacket.aName": "أحمد",
-    "app.example.jacket.a":
+    "pairs.jacket.aName": "أحمد",
+    "pairs.jacket.a":
       "لبستِ سترتي الجينز إلى الحفل دون أن تستأذنيني، وأعدتِها ورائحة الدخان تفوح منها.",
-    "app.example.jacket.bName": "لينا",
-    "app.example.jacket.b":
+    "pairs.jacket.bName": "لينا",
+    "pairs.jacket.b":
       "كانت معلّقة عند الباب، وأنت لا تلبسها أبدًا. كنت سأستأذنك، لكنك كنت نائمًا وأنا متأخرة أصلًا.",
-    "app.example.lastSlice.aName": "علي",
-    "app.example.lastSlice.a": "قبل أن يبدأ الفيلم قلت: «القطعة الأخيرة لي». الجميع سمعني.",
-    "app.example.lastSlice.bName": "يارا",
-    "app.example.lastSlice.b":
+    "pairs.lastSlice.aName": "علي",
+    "pairs.lastSlice.a": "قبل أن يبدأ الفيلم قلت: «القطعة الأخيرة لي». الجميع سمعني.",
+    "pairs.lastSlice.bName": "يارا",
+    "pairs.lastSlice.b":
       "لا يصح أن تقول «هذه لي» ثم لا تلمسها ساعتين. ظلّت في مكانها تبرد، فأكلتها أنا.",
     "appeal.lead":
       "هل هناك شيء ناقص أو خاطئ؟ أضفه مرة واحدة، وسيعيد القضاة النظر في كل شيء. يكلّف حكمًا واحدًا.",

@@ -499,12 +499,12 @@ const te: Locale = {
     "twoSided.decisive": "తీర్పు దీని మీదే ఆధారపడింది",
     "twoSided.wouldChange": "ఈ తీర్పును ఏది మార్చగలదు",
     "appeal.title": "వివరాలు జోడించండి",
-    "app.verdict.vs": "వర్సెస్",
-    "app.verdict.leanTo": "జడ్జీల బృందం {name} వైపు మొగ్గింది",
-    "app.verdict.leanNone": "జడ్జీల బృందం ఏ వైపూ మొగ్గలేదు",
-    "app.verdict.sides": "ఒక్కో వైపు దేని మీద నిలబడింది",
-    "app.verdict.claims": "ఒక్కో వైపు వాదన ఎలా సాగింది",
-    "app.appeal.title": "వివరాలు జోడించి అప్పీల్ చేయండి",
+    "card.vs": "వర్సెస్",
+    "card.leanTo": "జడ్జీల బృందం {name} వైపు మొగ్గింది",
+    "card.leanNone": "జడ్జీల బృందం ఏ వైపూ మొగ్గలేదు",
+    "card.sides": "ఒక్కో వైపు దేని మీద నిలబడింది",
+    "card.claims": "ఒక్కో వైపు వాదన ఎలా సాగింది",
+    "card.appeal": "వివరాలు జోడించి అప్పీల్ చేయండి",
     "home.example": "ఒక ఉదాహరణ ప్రయత్నించండి",
     "home.lead":
       "రెండు వైపుల కథా మీరే రాయండి, లేదా అవతలి వ్యక్తికి లింక్ పంపి వాళ్ల కథ వాళ్లనే రాయమనండి.",
@@ -517,53 +517,53 @@ const te: Locale = {
     "home.says": "{name} అంటున్నారు:",
     "home.mySide": "నా వైపు కథ:",
     "home.otherSide": "వాళ్ల వైపు కథ:",
-    "app.example.dishwasher.aName": "సాయి",
-    "app.example.dishwasher.a":
+    "pairs.dishwasher.aName": "సాయి",
+    "pairs.dishwasher.a":
       "మీరు మళ్లీ గిన్నెలను పై ర్యాక్‌లో పెట్టారు. అక్కడ అవి ఎప్పుడూ శుభ్రంగా రావు, అందుకే కింది ర్యాక్ ఉంది.",
-    "app.example.dishwasher.bName": "దివ్య",
-    "app.example.dishwasher.b":
+    "pairs.dishwasher.bName": "దివ్య",
+    "pairs.dishwasher.b":
       "అవి పైన చక్కగా సరిపోతాయి, కింద పెనాలకు, బాణళ్లకు చోటు మిగులుతుంది. ఏళ్లుగా ఇలాగే సర్దుతున్నాను, ఒక్కటి కూడా మురికిగా రాలేదు.",
-    "app.example.bill.aName": "అనూష",
-    "app.example.bill.a":
+    "pairs.bill.aName": "అనూష",
+    "pairs.bill.a":
       "నేను డ్రింక్స్ ఏమీ తాగలేదు, అలాంటప్పుడు వాటిలో నాలుగో వంతు నేనెందుకు కట్టాలి? భోజనం బిల్లు సమానంగా పంచుకుంటే నాకు అభ్యంతరం లేదు.",
-    "app.example.bill.bName": "కార్తీక్",
-    "app.example.bill.b":
+    "pairs.bill.bName": "కార్తీక్",
+    "pairs.bill.b":
       "మనం ఎప్పుడూ నలుగురం సమానంగానే పంచుకుంటాం. ప్రతిసారీ ఎవరు ఏం తీసుకున్నారో లెక్కలు వేయడం తలనొప్పి, పైగా తేడా కూడా పెద్దగా ఉండదు.",
-    "app.example.thermostat.aName": "స్వాతి",
-    "app.example.thermostat.a":
+    "pairs.thermostat.aName": "స్వాతి",
+    "pairs.thermostat.a":
       "AC 19 డిగ్రీల మీద ఉంది, దుప్పటి కప్పుకున్నా చలేస్తోంది. 24కి పెంచమనడం ఏమీ అతి కాదు.",
-    "app.example.thermostat.bName": "వంశీ",
-    "app.example.thermostat.b":
+    "pairs.thermostat.bName": "వంశీ",
+    "pairs.thermostat.b":
       "24 మీద నిద్ర పట్టదు, మరీ ఉక్కగా ఉంటుంది. మీరు ఇంకో దుప్పటి కప్పుకోవచ్చు, నేను ఇంకేమీ తీసేయలేను.",
-    "app.example.roadTrip.aName": "రాజేష్",
-    "app.example.roadTrip.a":
+    "pairs.roadTrip.aName": "రాజేష్",
+    "pairs.roadTrip.a":
       "వెళ్లేటప్పుడు ఆరు గంటలూ నేనే డ్రైవ్ చేశాను. తిరుగు ప్రయాణంలో మీరు డ్రైవ్ చేయడమే న్యాయం.",
-    "app.example.roadTrip.bName": "హరిత",
-    "app.example.roadTrip.b":
+    "pairs.roadTrip.bName": "హరిత",
+    "pairs.roadTrip.b":
       "రాత్రిపూట డ్రైవ్ చేయడం నాకు అస్సలు ఇష్టం లేదని ట్రిప్ మొదలవకముందే చెప్పాను, ఇక్కడి నుంచి మనం బయలుదేరేదే సాయంత్రం 7కి. వచ్చే ట్రిప్‌లో పొద్దున్నపూట డ్రైవింగ్ అంతా నాదే.",
-    "app.example.seat.aName": "మౌనిక",
-    "app.example.seat.a":
+    "pairs.seat.aName": "మౌనిక",
+    "pairs.seat.a":
       "నా సీటు వెనక్కి వాలుతుంది, అందుకే వాల్చుకున్నాను. ఇది నైట్ బస్సు, అందరూ నిద్రపోవాలని చూస్తున్నారు.",
-    "app.example.seat.bName": "సందీప్",
-    "app.example.seat.b":
+    "pairs.seat.bName": "సందీప్",
+    "pairs.seat.b":
       "నేను ఆరడుగుల పైనే ఉంటాను, నా మోకాళ్లు ఇప్పటికే మీ సీటుకు ఆనుకుని ఉన్నాయి. పూర్తిగా వెనక్కి వాల్చే ముందు కనీసం ఒక మాట అడగొచ్చు కదా.",
-    "app.example.spoiler.aName": "కావ్య",
-    "app.example.spoiler.a":
+    "pairs.spoiler.aName": "కావ్య",
+    "pairs.spoiler.a":
       "నేను ఆఖరి ఎపిసోడ్ మొదలుపెట్టకముందే మీరు హంతకుడు ఎవరో చెప్పేశారు. వారమంతా దాని కోసమే ఎదురుచూశాను.",
-    "app.example.spoiler.bName": "చైతన్య",
-    "app.example.spoiler.b":
+    "pairs.spoiler.bName": "చైతన్య",
+    "pairs.spoiler.b":
       "అది వచ్చి మూడు వారాలైంది, మీరు చూసేశానని చెప్పారు. ఎవరు ఎక్కడిదాకా చూశారో నేను గుర్తుపెట్టుకోలేను.",
-    "app.example.jacket.aName": "అర్జున్",
-    "app.example.jacket.a":
+    "pairs.jacket.aName": "అర్జున్",
+    "pairs.jacket.a":
       "మీరు నన్ను అడగకుండా నా డెనిమ్ జాకెట్ వేసుకుని కాన్సర్ట్‌కి వెళ్లారు. అది సిగరెట్ వాసనతో తిరిగొచ్చింది.",
-    "app.example.jacket.bName": "శ్రీజ",
-    "app.example.jacket.b":
+    "pairs.jacket.bName": "శ్రీజ",
+    "pairs.jacket.b":
       "అది తలుపు పక్కనే వేలాడుతోంది, మీరు దాన్ని ఎప్పుడూ వేసుకోరు. అడిగేదాన్నే, కానీ మీరు నిద్రపోతున్నారు, నాకు అప్పటికే లేటైంది.",
-    "app.example.lastSlice.aName": "వెంకట్",
-    "app.example.lastSlice.a":
+    "pairs.lastSlice.aName": "వెంకట్",
+    "pairs.lastSlice.a":
       "సినిమా మొదలవకముందే చివరి పిజ్జా ముక్క నాదే అని చెప్పాను. అందరూ విన్నారు.",
-    "app.example.lastSlice.bName": "లావణ్య",
-    "app.example.lastSlice.b":
+    "pairs.lastSlice.bName": "లావణ్య",
+    "pairs.lastSlice.b":
       "“నాది” అని చెప్పి రెండు గంటలు దాన్ని ముట్టుకోకపోతే ఎలా? అది అలాగే పడి చల్లారిపోతుంటే నేను తినేశాను.",
     "appeal.lead":
       "ఏదైనా మిస్ అయిందా, లేదా తప్పుగా ఉందా? ఒకసారి జోడించండి, జడ్జీలు అంతా మళ్లీ చూస్తారు. దీనికి 1 తీర్పు ఖర్చవుతుంది.",
