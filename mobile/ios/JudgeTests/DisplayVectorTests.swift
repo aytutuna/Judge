@@ -100,6 +100,19 @@ final class DisplayVectorTests: XCTestCase {
         XCTAssertEqual(PaletteHex.ink, 0x1C1916, "line colours are ink at an alpha")
     }
 
+    func testDarkPaletteMatchesWeb() throws {
+        let palette = try XCTUnwrap(Fixtures.vectors()["paletteDark"] as? [String: String])
+        XCTAssertEqual(Set(palette.keys), Set(PaletteHex.Dark.all.keys))
+        for (key, hex) in palette {
+            let expected = UInt32(hex.dropFirst(), radix: 16)
+            XCTAssertEqual(PaletteHex.Dark.all[key], expected, key)
+        }
+        let alpha = try XCTUnwrap(Fixtures.vectors()["paletteAlphaDark"] as? [String: String])
+        XCTAssertEqual(alpha["line"], "rgba(241, 235, 225, \(PaletteHex.Dark.lineAlpha))")
+        XCTAssertEqual(alpha["line2"], "rgba(241, 235, 225, \(PaletteHex.Dark.line2Alpha))")
+        XCTAssertEqual(PaletteHex.Dark.ink, 0xF1EBE1, "line colours are ink at an alpha")
+    }
+
     func testThinkingTimelineMatchesWeb() throws {
         let thinking = try XCTUnwrap(Fixtures.vectors()["thinking"] as? [String: Any])
         let steps = try Fixtures.list("steps", in: thinking)

@@ -6,6 +6,7 @@ import com.okjudge.judge.i18n.AppLang
 import com.okjudge.judge.isNull
 import com.okjudge.judge.num
 import com.okjudge.judge.str
+import com.okjudge.judge.ui.theme.DarkPalette
 import com.okjudge.judge.ui.theme.LightPalette
 import com.okjudge.judge.ui.verdict.shareUrl
 import kotlinx.serialization.json.jsonObject
@@ -73,24 +74,30 @@ class DisplayPureTest {
 
     @Test
     fun palette_matchesLibPalette() {
-        val palette = Fixtures.vectors["palette"]!!.jsonObject
-        assertEquals(palette.keys, LightPalette.byKey.keys)
-        for ((key, value) in palette) {
-            val hex = value.toString().trim('"')
-            val c = LightPalette.byKey.getValue(key)
-            val actual = "#%02X%02X%02X".format((c.red * 255).toInt(), (c.green * 255).toInt(), (c.blue * 255).toInt())
-            assertEquals(key, hex.uppercase(), actual)
-        }
-        val alpha = Fixtures.vectors["paletteAlpha"]!!.jsonObject
-        assertEquals(alpha.keys, LightPalette.alphaByKey.keys)
-        val rgba = Regex("""rgba\((\d+), (\d+), (\d+), ([\d.]+)\)""")
-        for ((key, value) in alpha) {
-            val m = rgba.matchEntire(value.toString().trim('"'))!!
-            val c = LightPalette.alphaByKey.getValue(key)
-            assertEquals(key, m.groupValues[1].toInt(), Math.round(c.red * 255))
-            assertEquals(key, m.groupValues[2].toInt(), Math.round(c.green * 255))
-            assertEquals(key, m.groupValues[3].toInt(), Math.round(c.blue * 255))
-            assertEquals(key, m.groupValues[4].toFloat(), c.alpha, 0.003f)
+        val cases = listOf(
+            Triple("palette" to "paletteAlpha", LightPalette, "light"),
+            Triple("paletteDark" to "paletteAlphaDark", DarkPalette, "dark"),
+        )
+        for ((keys, colors, mode) in cases) {
+            val palette = Fixtures.vectors[keys.first]!!.jsonObject
+            assertEquals(palette.keys, colors.byKey.keys)
+            for ((key, value) in palette) {
+                val hex = value.toString().trim('"')
+                val c = colors.byKey.getValue(key)
+                val actual = "#%02X%02X%02X".format((c.red * 255).toInt(), (c.green * 255).toInt(), (c.blue * 255).toInt())
+                assertEquals("$mode $key", hex.uppercase(), actual)
+            }
+            val alpha = Fixtures.vectors[keys.second]!!.jsonObject
+            assertEquals(alpha.keys, colors.alphaByKey.keys)
+            val rgba = Regex("""rgba\((\d+), (\d+), (\d+), ([\d.]+)\)""")
+            for ((key, value) in alpha) {
+                val m = rgba.matchEntire(value.toString().trim('"'))!!
+                val c = colors.alphaByKey.getValue(key)
+                assertEquals("$mode $key", m.groupValues[1].toInt(), Math.round(c.red * 255))
+                assertEquals("$mode $key", m.groupValues[2].toInt(), Math.round(c.green * 255))
+                assertEquals("$mode $key", m.groupValues[3].toInt(), Math.round(c.blue * 255))
+                assertEquals("$mode $key", m.groupValues[4].toFloat(), c.alpha, 0.003f)
+            }
         }
     }
 

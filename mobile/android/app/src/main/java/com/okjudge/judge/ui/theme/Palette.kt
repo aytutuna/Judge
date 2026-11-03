@@ -8,7 +8,7 @@ import androidx.compose.ui.graphics.Color
 
 /**
  * Ivory & Terracotta (lib/palette.ts), light and dark. A test compares the
- * light set with display-vectors.json, which is exported from lib/palette.ts.
+ * light and dark sets with display-vectors.json, which is exported from lib/palette.ts.
  */
 @Immutable
 class JudgePalette(
@@ -84,7 +84,6 @@ val LightPalette = JudgePalette(
     warmShadow = Color(0xFF3C2814),
 )
 
-// TODO: check these against PALETTE_DARK too once export-fixtures writes it.
 val DarkPalette = JudgePalette(
     dark = true,
     ivory = Color(0xFF15120F),

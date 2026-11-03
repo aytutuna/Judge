@@ -47,7 +47,7 @@ import { verdictLang } from "../../../lib/content-lang";
 import { apiErrorMessage, formatWait, loadLocales, t, type Lang } from "../../../lib/i18n";
 import { partyNames, personalizeResult, resolveParties, restoreNames } from "../../../lib/names";
 import { svgRotateDeg } from "../../../lib/balance";
-import { PALETTE, PALETTE_ALPHA } from "../../../lib/palette";
+import { PALETTE, PALETTE_ALPHA, PALETTE_ALPHA_DARK, PALETTE_DARK } from "../../../lib/palette";
 import { FINISH_CAPTION, FINISH_STEPS, MAX_FINISH_MS, READY, STILL_JUDGING, THINKING_STEPS } from "../../../lib/thinking";
 import { KEY_BY_CAPTION } from "../../../lib/thinking-keys";
 import { confidenceLabel, leanTally, tugFinal, verdictLabel } from "../../../lib/verdict-display";
@@ -1033,6 +1033,8 @@ function displayVectors() {
     errors,
     palette: PALETTE,
     paletteAlpha: PALETTE_ALPHA,
+    paletteDark: PALETTE_DARK,
+    paletteAlphaDark: PALETTE_ALPHA_DARK,
     thinking,
   };
 }
