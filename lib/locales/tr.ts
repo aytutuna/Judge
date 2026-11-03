@@ -271,6 +271,11 @@ const tr: Locale = {
     "nav.new": "Yeni",
     "nav.verdicts": "Kararlar",
     "nav.tabs": "Bölümler",
+    "nav.settings": "Ayarlar",
+    "settings.appearance": "Görünüm",
+    "settings.appearanceSystem": "Cihazla aynı",
+    "settings.appearanceLight": "Açık",
+    "settings.appearanceDark": "Koyu",
     "footer.pricing": "Fiyatlar",
     "tier.lockedSignIn": "(kilitli: kullanmak için giriş yap)",
     "tier.getPremium": "Daha fazla karar al",
@@ -501,6 +506,71 @@ const tr: Locale = {
     "twoSided.decisive": "Karar buna bağlı",
     "twoSided.wouldChange": "Bu kararı ne değiştirirdi",
     "appeal.title": "Bilgi ekle",
+    "app.verdict.vs": "–",
+    "app.verdict.leanTo": "Kurul {name} tarafına yattı",
+    "app.verdict.leanNone": "Kurul iki taraftan birine yatmadı",
+    "app.verdict.sides": "Her taraf neye dayanıyor",
+    "app.verdict.claims": "Her taraf görüşüne nasıl vardı",
+    "app.appeal.title": "Bağlam ekle ve itiraz et",
+    "home.example": "Bir örnek dene",
+    "home.lead":
+      "İki tarafı da yaz ya da karşı tarafa bir bağlantı gönder, kendi tarafını o yazsın.",
+    "home.leadSolo": "Kendi tarafını yaz, biliyorsan onunkini de.",
+    "home.theirSide": "Karşı taraf",
+    "home.theirName": "Onun adı",
+    "home.theirPlaceholder": "O ne diyor? Onun anlatacağı gibi yaz.",
+    "home.theirSideLabel": "Tartışmada karşı tarafın görüşü",
+    "home.yourSideLabel": "Tartışmada senin tarafın",
+    "home.says": "{name} diyor ki:",
+    "home.mySide": "Benim tarafım:",
+    "home.otherSide": "Onun tarafı:",
+    "app.example.dishwasher.aName": "Elif",
+    "app.example.dishwasher.a":
+      "Kâseleri yine üst rafa koymuşsun. Orada hiç temiz çıkmıyorlar, alt raf bunun için var.",
+    "app.example.dishwasher.bName": "Can",
+    "app.example.dishwasher.b":
+      "Üstte gayet sığıyorlar, alt raf da tencerelere kalıyor. Yıllardır böyle diziyorum, bir kere bile kirli çıkmadı.",
+    "app.example.bill.aName": "Zeynep",
+    "app.example.bill.a":
+      "Hiç içmedim, şarabın dörtte birini ben ödememeliyim. Yemeği eşit bölelim, ona itirazım yok.",
+    "app.example.bill.bName": "Mert",
+    "app.example.bill.b":
+      "Hep dörde bölüyoruz zaten. Her seferinde kim ne yedi diye hesap yapmak çok uğraştırıyor, fark da o kadar değil.",
+    "app.example.thermostat.aName": "Selin",
+    "app.example.thermostat.a":
+      "İçerisi 19 derece, kapüşonluyla bile üşüyorum. Kombiyi 22'ye almak abartı değil.",
+    "app.example.thermostat.bName": "Emre",
+    "app.example.thermostat.b":
+      "22 derecede uyunmaz, çok sıcak. Sen bir kat daha giyebilirsin ama ben daha fazla bir şey çıkaramam.",
+    "app.example.roadTrip.aName": "Deniz",
+    "app.example.roadTrip.a":
+      "Gidişte altı saat boyunca hep ben sürdüm. Dönüşte senin sürmen adil olur.",
+    "app.example.roadTrip.bName": "Burak",
+    "app.example.roadTrip.b":
+      "Yola çıkmadan gece araba kullanmaktan nefret ettiğimi söyledim, akşam yedide çıkıyoruz. Bir dahaki yolculukta sabahları ben sürerim.",
+    "app.example.seat.aName": "Ece",
+    "app.example.seat.a":
+      "Koltuğum yatıyor, ben de yatırıyorum. Gece uçuşu, herkes uyumaya çalışıyor.",
+    "app.example.seat.bName": "Kaan",
+    "app.example.seat.b":
+      "Boyum 1,90, dizlerim zaten koltuğuna değiyor. Sonuna kadar yatırmadan önce en azından sorabilirdin.",
+    "app.example.spoiler.aName": "Defne",
+    "app.example.spoiler.a":
+      "Son bölümü açmadan katilin kim olduğunu söyledin. Bütün hafta onu bekliyordum.",
+    "app.example.spoiler.bName": "Ozan",
+    "app.example.spoiler.b":
+      "Üç hafta önce çıktı, sen de bitirdim demiştin. Herkesin hangi bölümde olduğunu takip edemem.",
+    "app.example.jacket.aName": "Ayşe",
+    "app.example.jacket.a":
+      "Kot ceketimi bana sormadan konsere giymişsin. Sigara kokarak geri geldi.",
+    "app.example.jacket.bName": "Berk",
+    "app.example.jacket.b":
+      "Kapının yanında asılıydı, sen de hiç giymiyorsun. Sorardım ama uyuyordun, ben de zaten geç kalmıştım.",
+    "app.example.lastSlice.aName": "Cem",
+    "app.example.lastSlice.a": "Film başlamadan \"son dilim benim\" dedim. Herkes duydu.",
+    "app.example.lastSlice.bName": "Naz",
+    "app.example.lastSlice.b":
+      "\"Benim\" deyip iki saat dokunmamak olmaz. Orada soğuyup duruyordu, ben de yedim.",
     "appeal.lead":
       "Eksik ya da yanlış bir şey mi var? Bir kez ekle, yargıçlar her şeye yeniden baksın. 1 karar hakkı kullanır.",
     "appeal.label": "Eklemek istediğin bilgi",

@@ -266,6 +266,11 @@ const nb: Locale = {
     "nav.new": "Ny",
     "nav.verdicts": "Dommene",
     "nav.tabs": "Seksjoner",
+    "nav.settings": "Innstillinger",
+    "settings.appearance": "Utseende",
+    "settings.appearanceSystem": "Samme som telefonen",
+    "settings.appearanceLight": "Lyst",
+    "settings.appearanceDark": "Mørkt",
     "footer.pricing": "Priser",
     "tier.lockedSignIn": "(låst: logg inn for å bruke den)",
     "tier.getPremium": "Få flere dommer",
@@ -493,6 +498,71 @@ const nb: Locale = {
     "twoSided.decisive": "Dommen avhenger av dette",
     "twoSided.wouldChange": "Det som kunne endret dommen",
     "appeal.title": "Legg til kontekst",
+    "app.verdict.vs": "mot",
+    "app.verdict.leanTo": "Dommerne heller mot {name}",
+    "app.verdict.leanNone": "Dommerne heller ikke mot noen av sidene",
+    "app.verdict.sides": "Hva hver side bygger på",
+    "app.verdict.claims": "Hvordan hver side kom fram til det",
+    "app.appeal.title": "Legg til kontekst og anke",
+    "home.example": "Prøv et eksempel",
+    "home.lead": "Skriv begge sider, eller send en lenke så den andre kan skrive sin.",
+    "home.leadSolo": "Skriv din side, og den andres hvis du kjenner den.",
+    "home.theirSide": "Den andres side",
+    "home.theirName": "Den andres navn",
+    "home.theirPlaceholder": "Hva sier den andre? Skriv det med den andres ord.",
+    "home.theirSideLabel": "Den andres side av diskusjonen",
+    "home.yourSideLabel": "Din side av diskusjonen",
+    "home.says": "{name} sier:",
+    "home.mySide": "Min side:",
+    "home.otherSide": "Den andres side:",
+    "app.example.dishwasher.aName": "Ingrid",
+    "app.example.dishwasher.a":
+      "Du satte skålene i overkurven igjen. Der blir de aldri rene, det er det underkurven er til.",
+    "app.example.dishwasher.bName": "Henrik",
+    "app.example.dishwasher.b":
+      "De får fint plass der oppe, og da er underkurven ledig til kjelene. Jeg har fylt maskinen sånn i årevis, og ingenting har kommet ut skittent.",
+    "app.example.bill.aName": "Nora",
+    "app.example.bill.a":
+      "Jeg drakk ingenting, så jeg burde ikke betale for en fjerdedel av vinen. Å dele maten likt har jeg ikke noe imot.",
+    "app.example.bill.bName": "Magnus",
+    "app.example.bill.b":
+      "Vi deler jo alltid på fire. Å regne ut hvem som hadde hva hver gang, er et ork, og det er uansett ikke stor forskjell.",
+    "app.example.thermostat.aName": "Sofie",
+    "app.example.thermostat.a":
+      "Det er 19 grader her inne, og jeg fryser selv i hettegenser. Å skru opp til 22 er ikke galskap.",
+    "app.example.thermostat.bName": "Jonas",
+    "app.example.thermostat.b":
+      "22 grader er altfor varmt å sove i. Du kan ta på deg et lag til, jeg kan ikke ta av meg noe mer.",
+    "app.example.roadTrip.aName": "Emma",
+    "app.example.roadTrip.a":
+      "Jeg kjørte alle de seks timene dit. Det er bare rettferdig at du kjører oss hjem.",
+    "app.example.roadTrip.bName": "Lars",
+    "app.example.roadTrip.b":
+      "Jeg sa før vi dro, at jeg hater å kjøre i mørket, og vi drar klokka sju. På neste tur tar jeg morgenetappene.",
+    "app.example.seat.aName": "Ida",
+    "app.example.seat.a":
+      "Setet mitt kan lenes bakover, så det gjør jeg. Det er et nattfly, og alle prøver å sove.",
+    "app.example.seat.bName": "Martin",
+    "app.example.seat.b":
+      "Jeg er 191 cm, og knærne mine presser allerede mot setet ditt. Du kunne i det minste spurt før du la det helt bakover.",
+    "app.example.spoiler.aName": "Thea",
+    "app.example.spoiler.a":
+      "Du fortalte meg hvem morderen var før jeg i det hele tatt hadde begynt på siste episode. Jeg hadde gledet meg til den hele uka.",
+    "app.example.spoiler.bName": "Sander",
+    "app.example.spoiler.b":
+      "Den kom ut for tre uker siden, og du sa at du var ferdig med den. Jeg kan ikke holde styr på hvor langt alle har kommet.",
+    "app.example.jacket.aName": "Jakob",
+    "app.example.jacket.a":
+      "Du gikk på konsert i dongerijakka mi uten å spørre. Da jeg fikk den tilbake, luktet den røyk.",
+    "app.example.jacket.bName": "Sara",
+    "app.example.jacket.b":
+      "Den hang ved døra, og du bruker den aldri. Jeg ville spurt, men du sov, og jeg var allerede sent ute.",
+    "app.example.lastSlice.aName": "Emil",
+    "app.example.lastSlice.a":
+      "Jeg tinget det siste pizzastykket før filmen begynte. Alle hørte det.",
+    "app.example.lastSlice.bName": "Hanna",
+    "app.example.lastSlice.b":
+      "Du kan ikke tinge noe og så la det ligge urørt i to timer. Det lå bare der og ble kaldt, så jeg spiste det.",
     "appeal.lead":
       "Mangler noe, eller er noe feil? Legg det til én gang, så ser dommerne på alt på nytt. Koster 1 dom.",
     "appeal.label": "Konteksten din",

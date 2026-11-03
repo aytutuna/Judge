@@ -266,6 +266,11 @@ const gu: Locale = {
     "nav.new": "નવું",
     "nav.verdicts": "ચુકાદા",
     "nav.tabs": "વિભાગો",
+    "nav.settings": "સેટિંગ્સ",
+    "settings.appearance": "દેખાવ",
+    "settings.appearanceSystem": "ફોન પ્રમાણે",
+    "settings.appearanceLight": "લાઇટ",
+    "settings.appearanceDark": "ડાર્ક",
     "footer.pricing": "કિંમત",
     "tier.lockedSignIn": "(લૉક છે: વાપરવા માટે સાઇન ઇન કરો)",
     "tier.getPremium": "વધુ ચુકાદા લો",
@@ -494,6 +499,71 @@ const gu: Locale = {
     "twoSided.decisive": "ચુકાદો આના પર ટકેલો છે",
     "twoSided.wouldChange": "આ ચુકાદો શું બદલી શકે",
     "appeal.title": "વિગત ઉમેરો",
+    "app.verdict.vs": "વિ.",
+    "app.verdict.leanTo": "પેનલ {name}ની તરફ ઝૂકી",
+    "app.verdict.leanNone": "પેનલ કોઈ તરફ ન ઝૂકી",
+    "app.verdict.sides": "દરેક બાજુ શાના પર ટકેલી છે",
+    "app.verdict.claims": "દરેક બાજુ આ તારણ પર કેવી રીતે પહોંચી",
+    "app.appeal.title": "વિગત ઉમેરો અને અપીલ કરો",
+    "home.example": "ઉદાહરણ અજમાવો",
+    "home.lead":
+      "બંને બાજુની વાત લખો, અથવા સામેની વ્યક્તિને લિંક મોકલો, જેથી એ પોતાની વાત જાતે લખે.",
+    "home.leadSolo": "તમારી વાત લખો, અને ખબર હોય તો એમની પણ.",
+    "home.theirSide": "એમની વાત",
+    "home.theirName": "એમનું નામ",
+    "home.theirPlaceholder": "એ શું કહે છે? એ જે રીતે કહે એ રીતે લખો.",
+    "home.theirSideLabel": "વિવાદમાં એમની વાત",
+    "home.yourSideLabel": "વિવાદમાં તમારી વાત",
+    "home.says": "{name} કહે છે:",
+    "home.mySide": "મારી વાત:",
+    "home.otherSide": "સામેવાળાની વાત:",
+    "app.example.dishwasher.aName": "ધ્વનિ",
+    "app.example.dishwasher.a":
+      "તેં ફરી વાટકા ઉપરના રૅકમાં મૂક્યા. ત્યાં એ ક્યારેય ચોખ્ખા નથી નીકળતા, નીચેનું રૅક એના માટે જ તો છે.",
+    "app.example.dishwasher.bName": "પાર્થ",
+    "app.example.dishwasher.b":
+      "ઉપર એ આરામથી સમાઈ જાય છે, અને નીચે તપેલાં માટે જગ્યા રહે છે. હું વર્ષોથી આમ જ ગોઠવું છું, ને કદી કંઈ ગંદું નથી નીકળ્યું.",
+    "app.example.bill.aName": "પ્રિયા",
+    "app.example.bill.a":
+      "મેં કંઈ પીધું જ નથી, તો ડ્રિંક્સના બિલનો ચોથો ભાગ હું શું કામ ભરું? જમવાનું સરખે ભાગે વહેંચીએ, એમાં મને વાંધો નથી.",
+    "app.example.bill.bName": "જય",
+    "app.example.bill.b":
+      "આપણે તો હંમેશાં ચાર સરખા ભાગ જ કરીએ છીએ. દર વખતે કોણે શું લીધું એનો હિસાબ કરવો માથાકૂટ છે, અને ફરક પણ કંઈ ખાસ નથી.",
+    "app.example.thermostat.aName": "નેહા",
+    "app.example.thermostat.a":
+      "AC 18 ડિગ્રી પર છે અને હૂડી પહેરીને પણ મને ઠંડી લાગે છે. 24 કરવામાં કંઈ ખોટું નથી.",
+    "app.example.thermostat.bName": "કુણાલ",
+    "app.example.thermostat.b":
+      "24માં તો ગરમીથી ઊંઘ જ ન આવે. તું એક ચાદર વધારે ઓઢી લે, મારી પાસે તો હવે ઉતારવા જેવું કંઈ બચ્યું નથી.",
+    "app.example.roadTrip.aName": "રોહન",
+    "app.example.roadTrip.a": "જતી વખતે આખા છ કલાક મેં ગાડી ચલાવી. વળતાં તું ચલાવે એ જ વાજબી છે.",
+    "app.example.roadTrip.bName": "ચિરાગ",
+    "app.example.roadTrip.b":
+      "નીકળતાં પહેલાં જ મેં કહ્યું હતું કે મને રાતે ગાડી ચલાવવી જરાય નથી ગમતી, અને આપણે સાંજે 7 વાગ્યે નીકળીએ છીએ. આવતી ટ્રિપમાં સવારનું ડ્રાઇવિંગ હું કરીશ.",
+    "app.example.seat.aName": "અમી",
+    "app.example.seat.a":
+      "મારી સીટ પાછળ નમે છે, તો હું નમાવું છું. રાતની ફ્લાઇટ છે અને બધા સૂવાનો પ્રયાસ કરે છે.",
+    "app.example.seat.bName": "હાર્દિક",
+    "app.example.seat.b":
+      "મારી હાઇટ 6 ફૂટ 3 ઇંચ છે, અને મારા ઘૂંટણ પહેલેથી તમારી સીટમાં દબાય છે. છેક પાછળ નમાવતાં પહેલાં ઓછામાં ઓછું પૂછી તો શકો.",
+    "app.example.spoiler.aName": "ખુશી",
+    "app.example.spoiler.a":
+      "મેં છેલ્લો એપિસોડ શરૂ પણ નહોતો કર્યો ને તેં કહી દીધું કે ખૂની કોણ છે. આખું અઠવાડિયું હું એની રાહ જોતી હતી.",
+    "app.example.spoiler.bName": "મીત",
+    "app.example.spoiler.b":
+      "એ સિરીઝ ત્રણ અઠવાડિયાં પહેલાં આવી ગઈ હતી, અને તેં જ કહ્યું હતું કે તેં જોઈ લીધી છે. કોણ કયા એપિસોડ પર છે એનો હિસાબ હું ન રાખી શકું.",
+    "app.example.jacket.aName": "નિધિ",
+    "app.example.jacket.a":
+      "તું મને પૂછ્યા વગર મારું ડેનિમ જૅકેટ પહેરીને કૉન્સર્ટમાં ગયો. પાછું આવ્યું ત્યારે એમાંથી ધુમાડાની વાસ આવતી હતી.",
+    "app.example.jacket.bName": "સાગર",
+    "app.example.jacket.b":
+      "એ દરવાજા પાસે લટકતું હતું, અને તું તો એ ક્યારેય પહેરતી નથી. હું પૂછી લેત, પણ તું સૂતી હતી અને મને પહેલેથી મોડું થઈ ગયું હતું.",
+    "app.example.lastSlice.aName": "યશ",
+    "app.example.lastSlice.a":
+      "ફિલ્મ શરૂ થઈ એ પહેલાં જ મેં કહી દીધું હતું કે પિઝાનો છેલ્લો પીસ મારો. બધાએ સાંભળ્યું હતું.",
+    "app.example.lastSlice.bName": "પૂજા",
+    "app.example.lastSlice.b":
+      "“મારો” કહીને બે કલાક સુધી હાથ પણ ન લગાડાય. એ ત્યાં પડ્યો પડ્યો ઠંડો થતો હતો, એટલે મેં ખાઈ લીધો.",
     "appeal.lead":
       "કંઈ ખૂટે છે કે ખોટું છે? એક વાર ઉમેરો અને જજ બધું ફરી જોશે. 1 ચુકાદો વપરાશે.",
     "appeal.label": "તમારી વિગત",

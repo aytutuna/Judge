@@ -266,6 +266,11 @@ const id: Locale = {
     "nav.new": "Baru",
     "nav.verdicts": "Putusan",
     "nav.tabs": "Bagian",
+    "nav.settings": "Pengaturan",
+    "settings.appearance": "Tampilan",
+    "settings.appearanceSystem": "Ikuti ponsel",
+    "settings.appearanceLight": "Terang",
+    "settings.appearanceDark": "Gelap",
     "footer.pricing": "Harga",
     "tier.lockedSignIn": "(terkunci: masuk dulu untuk memakainya)",
     "tier.getPremium": "Tambah putusan",
@@ -493,6 +498,72 @@ const id: Locale = {
     "twoSided.decisive": "Putusan bergantung pada ini",
     "twoSided.wouldChange": "Yang bisa mengubah putusan ini",
     "appeal.title": "Tambah konteks",
+    "app.verdict.vs": "vs",
+    "app.verdict.leanTo": "Para hakim condong ke {name}",
+    "app.verdict.leanNone": "Para hakim tidak condong ke pihak mana pun",
+    "app.verdict.sides": "Fondasi tiap pihak",
+    "app.verdict.claims": "Alur pikir tiap pihak",
+    "app.appeal.title": "Tambah konteks & banding",
+    "home.example": "Coba contoh",
+    "home.lead":
+      "Tulis versi kedua pihak, atau kirim tautan ke lawan debatmu agar dia menulis versinya sendiri.",
+    "home.leadSolo": "Tulis versimu, dan versi dia juga kalau kamu tahu.",
+    "home.theirSide": "Versi dia",
+    "home.theirName": "Nama dia",
+    "home.theirPlaceholder": "Apa katanya? Tulis seolah dia yang bercerita.",
+    "home.theirSideLabel": "Versi dia dalam perdebatan ini",
+    "home.yourSideLabel": "Versimu dalam perdebatan ini",
+    "home.says": "Kata {name}:",
+    "home.mySide": "Versiku:",
+    "home.otherSide": "Versi dia:",
+    "app.example.dishwasher.aName": "Rina",
+    "app.example.dishwasher.a":
+      "Kamu menumpuk mangkuk basah di rak piring lagi. Kalau ditumpuk begitu, mangkuknya nggak pernah kering. Taruh telungkup satu-satu, dong.",
+    "app.example.dishwasher.bName": "Budi",
+    "app.example.dishwasher.b":
+      "Ditumpuk begitu lebih hemat tempat, jadi sisa raknya bisa buat wajan. Aku sudah bertahun-tahun begini dan nggak pernah ada yang bau.",
+    "app.example.bill.aName": "Dewi",
+    "app.example.bill.a":
+      "Aku cuma minum air putih, jadi kenapa harus ikut bayar seperempat harga kopi kalian? Kalau makanannya dibagi rata, aku nggak keberatan.",
+    "app.example.bill.bName": "Andi",
+    "app.example.bill.b":
+      "Dari dulu kita selalu bagi empat. Menghitung siapa pesan apa tiap kali itu ribet, lagian bedanya juga nggak seberapa.",
+    "app.example.thermostat.aName": "Ayu",
+    "app.example.thermostat.a":
+      "AC-nya disetel 18 derajat dan aku kedinginan padahal sudah pakai hoodie. Menaikkannya ke 24 itu nggak berlebihan.",
+    "app.example.thermostat.bName": "Fajar",
+    "app.example.thermostat.b":
+      "24 derajat terlalu gerah buat tidur. Kamu bisa pakai selimut, tapi aku nggak bisa lepas apa-apa lagi.",
+    "app.example.roadTrip.aName": "Rizky",
+    "app.example.roadTrip.a":
+      "Waktu berangkat, aku yang menyetir enam jam penuh. Adil dong kalau pulangnya kamu yang menyetir.",
+    "app.example.roadTrip.bName": "Intan",
+    "app.example.roadTrip.b":
+      "Sebelum berangkat aku sudah bilang aku benci menyetir malam, dan kita pulang jam 7 malam. Lain kali, biar aku yang menyetir pas pagi.",
+    "app.example.seat.aName": "Nadia",
+    "app.example.seat.a":
+      "Kursiku bisa direbahkan, jadi ya aku rebahkan. Ini penerbangan malam, semua orang juga mau tidur.",
+    "app.example.seat.bName": "Yoga",
+    "app.example.seat.b":
+      "Tinggiku 190 cm dan lututku sudah menempel ke kursimu. Paling nggak tanya dulu sebelum merebahkannya sampai mentok.",
+    "app.example.spoiler.aName": "Wulan",
+    "app.example.spoiler.a":
+      "Kamu kasih tahu siapa pembunuhnya padahal aku belum mulai nonton episode terakhir. Aku sudah menunggunya seminggu penuh.",
+    "app.example.spoiler.bName": "Bima",
+    "app.example.spoiler.b":
+      "Episodenya sudah keluar tiga minggu lalu dan kamu bilang sudah selesai nonton. Aku nggak bisa ingat semua orang sudah nonton sampai mana.",
+    "app.example.jacket.aName": "Tika",
+    "app.example.jacket.a":
+      "Kamu pakai jaket jinku ke konser tanpa izin. Pas dikembalikan, jaketnya bau asap rokok.",
+    "app.example.jacket.bName": "Reza",
+    "app.example.jacket.b":
+      "Jaketnya tergantung dekat pintu dan kamu nggak pernah pakai. Tadinya aku mau minta izin, tapi kamu lagi tidur dan aku sudah telat.",
+    "app.example.lastSlice.aName": "Eko",
+    "app.example.lastSlice.a":
+      "Sebelum filmnya mulai, aku sudah bilang “potongan terakhir punyaku”. Semua orang dengar.",
+    "app.example.lastSlice.bName": "Lia",
+    "app.example.lastSlice.b":
+      "Nggak bisa dong bilang “punyaku” terus dianggurin dua jam. Pizzanya dibiarkan sampai dingin, jadi aku makan saja.",
     "appeal.lead":
       "Ada yang kurang atau salah? Tambahkan sekali, dan hakim akan menilai ulang semuanya. Memakai 1 putusan.",
     "appeal.label": "Konteksmu",

@@ -266,6 +266,11 @@ const th: Locale = {
     "nav.new": "ใหม่",
     "nav.verdicts": "คำตัดสิน",
     "nav.tabs": "ส่วนต่าง ๆ",
+    "nav.settings": "ตั้งค่า",
+    "settings.appearance": "ธีม",
+    "settings.appearanceSystem": "ตามโทรศัพท์",
+    "settings.appearanceLight": "สว่าง",
+    "settings.appearanceDark": "มืด",
     "footer.pricing": "ราคา",
     "tier.lockedSignIn": "(ล็อกอยู่: เข้าสู่ระบบเพื่อใช้)",
     "tier.getPremium": "เติมคำตัดสิน",
@@ -494,6 +499,69 @@ const th: Locale = {
     "twoSided.decisive": "คำตัดสินขึ้นอยู่กับข้อนี้",
     "twoSided.wouldChange": "อะไรจะเปลี่ยนคำตัดสินนี้ได้",
     "appeal.title": "เพิ่มบริบท",
+    "app.verdict.vs": "vs",
+    "app.verdict.leanTo": "กรรมการเอนไปทาง {name}",
+    "app.verdict.leanNone": "กรรมการไม่ได้เอนไปทางไหน",
+    "app.verdict.sides": "แต่ละฝั่งยึดอะไรเป็นหลัก",
+    "app.verdict.claims": "แต่ละฝั่งคิดมาถึงจุดนี้ได้ยังไง",
+    "app.appeal.title": "เพิ่มบริบทและขอตัดสินใหม่",
+    "home.example": "ลองดูตัวอย่าง",
+    "home.lead": "เขียนทั้งสองฝั่งเลย หรือส่งลิงก์ให้อีกฝ่ายมาเขียนฝั่งของเขาเอง",
+    "home.leadSolo": "เขียนฝั่งของคุณ และฝั่งของเขาด้วยถ้าคุณรู้",
+    "home.theirSide": "ฝั่งของเขา",
+    "home.theirName": "ชื่อของเขา",
+    "home.theirPlaceholder": "เขาว่ายังไง? เขียนแบบที่เขาจะพูดเอง",
+    "home.theirSideLabel": "ฝั่งของเขาในเรื่องที่เถียงกัน",
+    "home.yourSideLabel": "ฝั่งของคุณในเรื่องที่เถียงกัน",
+    "home.says": "{name} บอกว่า:",
+    "home.mySide": "ฝั่งของฉัน:",
+    "home.otherSide": "ฝั่งของเขา:",
+    "app.example.dishwasher.aName": "แนน",
+    "app.example.dishwasher.a":
+      "ใส่ชามไว้ชั้นบนอีกแล้ว อยู่ข้างบนทีไรล้างไม่เคยสะอาดเลย ชั้นล่างมีไว้ใส่ชามอยู่แล้ว",
+    "app.example.dishwasher.bName": "บอล",
+    "app.example.dishwasher.b":
+      "ข้างบนก็ใส่ได้พอดี แถมเหลือที่ชั้นล่างไว้ใส่หม้อกับกระทะ เราเรียงแบบนี้มาหลายปีแล้ว ไม่เห็นมีชิ้นไหนออกมาไม่สะอาดเลย",
+    "app.example.bill.aName": "ฝน",
+    "app.example.bill.a":
+      "เราไม่ได้ดื่มอะไรเลย ก็ไม่ควรต้องจ่ายค่าไวน์หนึ่งในสี่ ส่วนค่าอาหารหารเท่ากันได้ ไม่มีปัญหา",
+    "app.example.bill.bName": "โอ๊ต",
+    "app.example.bill.b":
+      "เราหารสี่กันตลอดอยู่แล้ว จะมานั่งคิดทุกครั้งว่าใครกินอะไรไปบ้างมันวุ่นวาย แล้วก็ต่างกันไม่เท่าไรด้วย",
+    "app.example.thermostat.aName": "มิ้นท์",
+    "app.example.thermostat.a":
+      "แอร์ตั้งไว้ 22 องศา ห่มผ้าแล้วยังหนาวอยู่เลย ปรับเป็น 25 ก็ไม่ได้เกินไปหรอก",
+    "app.example.thermostat.bName": "เจมส์",
+    "app.example.thermostat.b":
+      "25 องศามันร้อนจนนอนไม่หลับ หนาวก็ห่มผ้าเพิ่มได้ แต่เราไม่มีอะไรให้ถอดแล้วนะ",
+    "app.example.roadTrip.aName": "พลอย",
+    "app.example.roadTrip.a":
+      "ขาไปเราขับคนเดียวตลอด 6 ชั่วโมง ขากลับก็ต้องเป็นเก่งขับบ้างสิ ถึงจะแฟร์",
+    "app.example.roadTrip.bName": "เก่ง",
+    "app.example.roadTrip.b":
+      "บอกไว้ตั้งแต่ก่อนออกมาแล้วว่าเกลียดขับรถกลางคืน แล้วนี่จะออกกันตอนหนึ่งทุ่ม ทริปหน้าเดี๋ยวเราขับช่วงเช้าให้หมดเลย",
+    "app.example.seat.aName": "ปลา",
+    "app.example.seat.a": "เบาะมันเอนได้ ก็เลยเอน นี่ไฟลต์กลางคืน ทุกคนก็พยายามจะนอนกันทั้งนั้น",
+    "app.example.seat.bName": "ต่อ",
+    "app.example.seat.b":
+      "เราสูงตั้ง 190 เซนติเมตร เข่าก็ดันเบาะข้างหน้าอยู่แล้ว จะเอนสุดก็น่าจะถามกันก่อนสักคำ",
+    "app.example.spoiler.aName": "น้ำ",
+    "app.example.spoiler.a":
+      "ไปบอกว่าใครเป็นฆาตกร ทั้งที่เรายังไม่ได้เปิดดูตอนจบเลย อุตส่าห์รอมาทั้งสัปดาห์",
+    "app.example.spoiler.bName": "กอล์ฟ",
+    "app.example.spoiler.b":
+      "มันออกมาตั้ง 3 อาทิตย์แล้ว แล้วก็บอกเองนี่ว่าดูจบแล้ว จะให้มานั่งจำว่าใครดูถึงตอนไหนก็ไม่ไหวหรอก",
+    "app.example.jacket.aName": "แพร",
+    "app.example.jacket.a":
+      "เอาแจ็กเก็ตยีนส์ของเราไปใส่ดูคอนเสิร์ตโดยไม่ถามสักคำ ได้คืนมาก็เหม็นควันหึ่งเลย",
+    "app.example.jacket.bName": "ปอนด์",
+    "app.example.jacket.b":
+      "มันแขวนอยู่ข้างประตู แล้วก็ไม่เคยเห็นใส่เลย ว่าจะถามก่อนอยู่แล้ว แต่ตอนนั้นยังหลับอยู่ ส่วนเราก็สายแล้วด้วย",
+    "app.example.lastSlice.aName": "ฟ้า",
+    "app.example.lastSlice.a": "เราจองชิ้นสุดท้ายไว้ตั้งแต่ก่อนหนังเริ่ม ทุกคนก็ได้ยิน",
+    "app.example.lastSlice.bName": "เอ็ม",
+    "app.example.lastSlice.b":
+      "จองแล้วปล่อยทิ้งไว้ 2 ชั่วโมงไม่แตะเลยแบบนี้ไม่นับนะ วางอยู่ตรงนั้นจนเย็นชืด เราก็เลยกินซะเลย",
     "appeal.lead":
       "มีอะไรขาดหรือผิดไปไหม? เพิ่มได้ 1 ครั้ง แล้วกรรมการจะดูทุกอย่างใหม่อีกรอบ ใช้คำตัดสิน 1 ครั้ง",
     "appeal.label": "บริบทของคุณ",

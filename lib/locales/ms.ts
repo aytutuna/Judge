@@ -268,6 +268,11 @@ const ms: Locale = {
     "nav.new": "Baharu",
     "nav.verdicts": "Keputusan",
     "nav.tabs": "Bahagian",
+    "nav.settings": "Tetapan",
+    "settings.appearance": "Penampilan",
+    "settings.appearanceSystem": "Sama seperti telefon",
+    "settings.appearanceLight": "Cerah",
+    "settings.appearanceDark": "Gelap",
     "footer.pricing": "Harga",
     "tier.lockedSignIn": "(dikunci: log masuk untuk menggunakannya)",
     "tier.getPremium": "Dapatkan lebih banyak keputusan",
@@ -497,6 +502,72 @@ const ms: Locale = {
     "twoSided.decisive": "Keputusan bergantung pada perkara ini",
     "twoSided.wouldChange": "Apa yang boleh mengubah keputusan ini",
     "appeal.title": "Tambah konteks",
+    "app.verdict.vs": "lwn",
+    "app.verdict.leanTo": "Panel condong kepada {name}",
+    "app.verdict.leanNone": "Panel tidak condong ke mana-mana pihak",
+    "app.verdict.sides": "Pegangan asas setiap pihak",
+    "app.verdict.claims": "Bagaimana setiap pihak sampai ke situ",
+    "app.appeal.title": "Tambah konteks & buat rayuan",
+    "home.example": "Cuba contoh",
+    "home.lead":
+      "Tulis kedua-dua versi, atau hantar pautan kepada pihak satu lagi supaya dia menulis versinya sendiri.",
+    "home.leadSolo": "Tulis versi anda, dan versi dia juga kalau anda tahu.",
+    "home.theirSide": "Versi dia",
+    "home.theirName": "Nama dia",
+    "home.theirPlaceholder": "Apa kata dia? Tulis seperti yang dia sendiri akan katakan.",
+    "home.theirSideLabel": "Versi dia tentang pertikaian ini",
+    "home.yourSideLabel": "Versi anda tentang pertikaian ini",
+    "home.says": "{name} berkata:",
+    "home.mySide": "Versi saya:",
+    "home.otherSide": "Versi dia:",
+    "app.example.dishwasher.aName": "Aisyah",
+    "app.example.dishwasher.a":
+      "Awak letak mangkuk kat rak atas lagi. Kat atas tu mangkuk tak pernah keluar bersih, sebab tu ada rak bawah.",
+    "app.example.dishwasher.bName": "Haziq",
+    "app.example.dishwasher.b":
+      "Muat saja kat atas, jadi rak bawah kosong untuk periuk. Dah bertahun saya susun macam ni, tak ada pun yang keluar kotor.",
+    "app.example.bill.aName": "Priya",
+    "app.example.bill.a":
+      "Saya minum air kosong saja, jadi saya tak patut bayar suku daripada bil minuman. Kalau makanan dibahagi sama rata, saya okey.",
+    "app.example.bill.bName": "Amir",
+    "app.example.bill.b":
+      "Kita selalu bahagi empat saja. Kira siapa makan apa setiap kali tu leceh, lagipun bezanya bukan banyak mana.",
+    "app.example.thermostat.aName": "Nurul",
+    "app.example.thermostat.a":
+      "Aircond ni 19°C, saya pakai hoodie pun masih sejuk. Naikkan ke 24 bukannya melampau pun.",
+    "app.example.thermostat.bName": "Faizal",
+    "app.example.thermostat.b":
+      "24 tu panas sangat untuk tidur. Awak boleh pakai satu lapis lagi, saya dah tak ada apa nak tanggal.",
+    "app.example.roadTrip.aName": "Syafiq",
+    "app.example.roadTrip.a":
+      "Masa pergi, saya memandu enam jam penuh. Adillah kalau awak pula yang bawa balik.",
+    "app.example.roadTrip.bName": "Hana",
+    "app.example.roadTrip.b":
+      "Sebelum bertolak saya dah cakap saya benci memandu waktu malam, dan kita gerak pukul 7 malam. Lain kali, saya yang pandu waktu pagi.",
+    "app.example.seat.aName": "Arif",
+    "app.example.seat.a":
+      "Kerusi saya boleh direbahkan, jadi saya rebahkanlah. Ini penerbangan malam, semua orang nak tidur.",
+    "app.example.seat.bName": "Siti",
+    "app.example.seat.b":
+      "Saya tinggi 190 cm dan lutut saya dah tertekan pada kerusi awak. Sekurang-kurangnya tanyalah dulu sebelum rebahkan sampai habis.",
+    "app.example.spoiler.aName": "Alia",
+    "app.example.spoiler.a":
+      "Awak beritahu saya siapa pembunuhnya sebelum saya sempat mula tengok episod terakhir. Saya dah tunggu seminggu.",
+    "app.example.spoiler.bName": "Irfan",
+    "app.example.spoiler.b":
+      "Episod tu dah keluar tiga minggu lepas, dan awak kata awak dah habis tengok. Saya tak boleh nak ingat semua orang dah tengok sampai mana.",
+    "app.example.jacket.aName": "Sofea",
+    "app.example.jacket.a":
+      "Awak pakai jaket denim saya pergi konsert tanpa tanya dulu. Bila dapat balik, jaket tu bau asap rokok.",
+    "app.example.jacket.bName": "Adam",
+    "app.example.jacket.b":
+      "Jaket tu tergantung tepi pintu dan awak tak pernah pakai pun. Saya memang nak tanya, tapi awak tengah tidur dan saya dah lambat.",
+    "app.example.lastSlice.aName": "Zul",
+    "app.example.lastSlice.a":
+      "Saya dah cop potongan pizza terakhir sebelum filem mula. Semua orang dengar.",
+    "app.example.lastSlice.bName": "Mira",
+    "app.example.lastSlice.b":
+      "Takkanlah cop lepas tu dua jam tak sentuh. Dah sejuk terbiar kat situ, jadi saya makanlah.",
     "appeal.lead":
       "Ada yang tertinggal atau salah? Anda boleh menambahnya sekali, dan hakim akan meneliti semuanya semula. Kosnya 1 keputusan.",
     "appeal.label": "Konteks anda",

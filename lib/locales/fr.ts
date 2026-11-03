@@ -266,6 +266,11 @@ const fr: Locale = {
     "nav.new": "Nouveau",
     "nav.verdicts": "Verdicts",
     "nav.tabs": "Sections",
+    "nav.settings": "Réglages",
+    "settings.appearance": "Apparence",
+    "settings.appearanceSystem": "Comme le téléphone",
+    "settings.appearanceLight": "Clair",
+    "settings.appearanceDark": "Sombre",
     "footer.pricing": "Tarifs",
     "tier.lockedSignIn": "(verrouillé : connecte-toi pour l’utiliser)",
     "tier.getPremium": "Obtenir plus de verdicts",
@@ -495,6 +500,72 @@ const fr: Locale = {
     "twoSided.decisive": "Le verdict se joue là-dessus",
     "twoSided.wouldChange": "Ce qui changerait ce verdict",
     "appeal.title": "Ajouter du contexte",
+    "app.verdict.vs": "contre",
+    "app.verdict.leanTo": "Les juges penchent pour {name}",
+    "app.verdict.leanNone": "Les juges ne penchent d’aucun côté",
+    "app.verdict.sides": "Ce sur quoi chaque camp s’appuie",
+    "app.verdict.claims": "Comment chaque camp en est arrivé là",
+    "app.appeal.title": "Ajouter du contexte et faire appel",
+    "home.example": "Essayer un exemple",
+    "home.lead":
+      "Écris les deux versions, ou envoie un lien à l’autre personne pour qu’elle écrive la sienne.",
+    "home.leadSolo": "Écris ta version, et celle d’en face si tu la connais.",
+    "home.theirSide": "Sa version",
+    "home.theirName": "Son nom",
+    "home.theirPlaceholder": "Que dit l’autre personne ? Raconte-le avec ses mots.",
+    "home.theirSideLabel": "Sa version du débat",
+    "home.yourSideLabel": "Ta version du débat",
+    "home.says": "{name} dit :",
+    "home.mySide": "Ma version :",
+    "home.otherSide": "Sa version :",
+    "app.example.dishwasher.aName": "Julie",
+    "app.example.dishwasher.a":
+      "Tu as encore mis les bols dans le panier du haut. Ils n’en ressortent jamais propres, c’est à ça que sert le panier du bas.",
+    "app.example.dishwasher.bName": "Thomas",
+    "app.example.dishwasher.b":
+      "Ils y rentrent très bien, et ça laisse le bas libre pour les casseroles. Je remplis le lave-vaisselle comme ça depuis des années et rien n’est jamais ressorti sale.",
+    "app.example.bill.aName": "Sarah",
+    "app.example.bill.a":
+      "Je n’ai rien bu, alors je ne vois pas pourquoi je paierais un quart du vin. Partager le repas à parts égales, ça me va.",
+    "app.example.bill.bName": "Antoine",
+    "app.example.bill.b":
+      "On divise toujours en quatre, c’est tout. Calculer à chaque fois qui a pris quoi, c’est pénible, et de toute façon ça ne change pas grand-chose.",
+    "app.example.thermostat.aName": "Manon",
+    "app.example.thermostat.a":
+      "Il fait 19 °C ici et j’ai froid même avec un sweat. Monter le chauffage à 22, ce n’est pas exagéré.",
+    "app.example.thermostat.bName": "Hugo",
+    "app.example.thermostat.b":
+      "22 °C, c’est beaucoup trop chaud pour dormir. Toi, tu peux mettre une couche de plus ; moi, je ne peux rien enlever de plus.",
+    "app.example.roadTrip.aName": "Clara",
+    "app.example.roadTrip.a":
+      "J’ai conduit les six heures de l’aller. Ce serait normal que tu conduises au retour.",
+    "app.example.roadTrip.bName": "Maxime",
+    "app.example.roadTrip.b":
+      "J’ai dit avant de partir que je déteste conduire de nuit, et on part à 19 h. Je prendrai les trajets du matin la prochaine fois.",
+    "app.example.seat.aName": "Emma",
+    "app.example.seat.a":
+      "Mon siège s’incline, donc je l’incline. C’est un vol de nuit et tout le monde essaie de dormir.",
+    "app.example.seat.bName": "Louis",
+    "app.example.seat.b":
+      "Je mesure 1,90 m et mes genoux sont déjà collés à ton siège. Tu aurais au moins pu demander avant de le baisser à fond.",
+    "app.example.spoiler.aName": "Jade",
+    "app.example.spoiler.a":
+      "Tu m’as dit qui était le tueur avant même que je commence le dernier épisode. Ça faisait toute la semaine que je l’attendais.",
+    "app.example.spoiler.bName": "Nathan",
+    "app.example.spoiler.b":
+      "Il est sorti il y a trois semaines et tu m’avais dit que tu l’avais fini. Je ne peux pas savoir où en est tout le monde.",
+    "app.example.jacket.aName": "Lucas",
+    "app.example.jacket.a":
+      "Tu as mis ma veste en jean pour aller au concert sans me demander. Elle m’est revenue avec une odeur de tabac.",
+    "app.example.jacket.bName": "Chloé",
+    "app.example.jacket.b":
+      "Elle était accrochée près de la porte et tu ne la mets jamais. Je t’aurais demandé, mais tu dormais et j’étais déjà en retard.",
+    "app.example.lastSlice.aName": "Paul",
+    "app.example.lastSlice.a":
+      "J’ai dit « la dernière part est pour moi » avant le début du film. Tout le monde m’a entendu.",
+    "app.example.lastSlice.bName": "Zoé",
+    "app.example.lastSlice.b":
+      "Tu ne peux pas réserver une part et ne pas y toucher pendant deux heures. Elle était là à refroidir, alors je l’ai mangée.",
     "appeal.lead":
       "Il manque quelque chose ou il y a une erreur ? Précise-le une fois et les juges réexaminent tout. Ça coûte 1 verdict.",
     "appeal.label": "Ton contexte",

@@ -259,6 +259,11 @@ const en = {
   "nav.new": "New",
   "nav.verdicts": "Verdicts",
   "nav.tabs": "Sections",
+  "nav.settings": "Settings",
+  "settings.appearance": "Appearance",
+  "settings.appearanceSystem": "Same as the device",
+  "settings.appearanceLight": "Light",
+  "settings.appearanceDark": "Dark",
   "footer.pricing": "Pricing",
   "tier.lockedSignIn": "(locked: sign in to use it)",
   "tier.getPremium": "Get more verdicts",
@@ -487,6 +492,71 @@ const en = {
   "twoSided.decisive": "The verdict hinges on this",
   "twoSided.wouldChange": "What would change this verdict",
   "appeal.title": "Add context",
+  "app.verdict.vs": "vs",
+  "app.verdict.leanTo": "The panel leaned to {name}",
+  "app.verdict.leanNone": "The panel didn't lean either way",
+  "app.verdict.sides": "What each side stands on",
+  "app.verdict.claims": "How each side got there",
+  "app.appeal.title": "Add context & appeal",
+  "home.example": "Try an example",
+  "home.lead": "Write both sides, or send the other person a link to write theirs.",
+  "home.leadSolo": "Write your side, and theirs if you know it.",
+  "home.theirSide": "Their side",
+  "home.theirName": "Their name",
+  "home.theirPlaceholder": "What do they say? Write it the way they would.",
+  "home.theirSideLabel": "Their side of the argument",
+  "home.yourSideLabel": "Your side of the argument",
+  "home.says": "{name} says:",
+  "home.mySide": "My side:",
+  "home.otherSide": "Their side:",
+  "app.example.dishwasher.aName": "Alex",
+  "app.example.dishwasher.a":
+    "You put the bowls on the top rack again. They never come out clean up there, that's what the bottom is for.",
+  "app.example.dishwasher.bName": "Sam",
+  "app.example.dishwasher.b":
+    "They fit fine up there and it leaves the bottom free for the pans. I've loaded it like this for years and nothing's come out dirty.",
+  "app.example.bill.aName": "Priya",
+  "app.example.bill.a":
+    "I didn't drink anything, so I shouldn't pay a quarter of the wine. Splitting the food evenly is fine with me.",
+  "app.example.bill.bName": "Jordan",
+  "app.example.bill.b":
+    "We always just split it four ways. Working out who had what every time is a pain, and it's not much of a difference anyway.",
+  "app.example.thermostat.aName": "Taylor",
+  "app.example.thermostat.a":
+    "It's 19 degrees in here and I'm cold even in a hoodie. Turning it up to 22 isn't crazy.",
+  "app.example.thermostat.bName": "Chris",
+  "app.example.thermostat.b":
+    "22 is way too warm to sleep in. You can put on another layer, I can't take anything else off.",
+  "app.example.roadTrip.aName": "Morgan",
+  "app.example.roadTrip.a":
+    "I drove the whole six hours there. It's only fair that you drive us back.",
+  "app.example.roadTrip.bName": "Riley",
+  "app.example.roadTrip.b":
+    "I said before we left that I hate driving at night, and we're leaving at 7. I'll take the morning drives next trip.",
+  "app.example.seat.aName": "Jamie",
+  "app.example.seat.a":
+    "My seat reclines, so I'm reclining it. It's a night flight and everyone's trying to sleep.",
+  "app.example.seat.bName": "Casey",
+  "app.example.seat.b":
+    "I'm 6'3\" and my knees are already pressed into your seat. You could at least ask before dropping it all the way back.",
+  "app.example.spoiler.aName": "Maya",
+  "app.example.spoiler.a":
+    "You told me who the killer was before I'd even started the last episode. I'd been waiting all week for it.",
+  "app.example.spoiler.bName": "Leo",
+  "app.example.spoiler.b":
+    "It came out three weeks ago and you said you'd finished it. I can't keep track of where everyone is.",
+  "app.example.jacket.aName": "Noah",
+  "app.example.jacket.a":
+    "You wore my denim jacket to the concert without asking. It came back smelling like smoke.",
+  "app.example.jacket.bName": "Ava",
+  "app.example.jacket.b":
+    "It was hanging by the door and you never wear it. I would've asked, but you were asleep and I was already late.",
+  "app.example.lastSlice.aName": "Ben",
+  "app.example.lastSlice.a":
+    "I called dibs on the last slice before the movie started. Everyone heard me.",
+  "app.example.lastSlice.bName": "Lily",
+  "app.example.lastSlice.b":
+    "You can't call dibs and then not touch it for two hours. It was just sitting there going cold, so I ate it.",
   "appeal.lead":
     "Something missing or wrong? Add it once and the judges look at everything again. Costs 1 verdict.",
   "appeal.label": "Your context",

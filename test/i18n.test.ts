@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { KEY_BY_CAPTION } from "../lib/thinking-keys";
-import { leanTally } from "../components/VerdictReveal";
+import { leanTally } from "../lib/verdict-display";
 import { API_ERROR_STATUS, type ApiErrorCode } from "../lib/api-errors";
 import {
   ERROR_KEY_BY_CODE,

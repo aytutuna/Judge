@@ -266,6 +266,11 @@ const nl: Locale = {
     "nav.new": "Nieuw",
     "nav.verdicts": "Uitspraken",
     "nav.tabs": "Onderdelen",
+    "nav.settings": "Instellingen",
+    "settings.appearance": "Weergave",
+    "settings.appearanceSystem": "Zoals je telefoon",
+    "settings.appearanceLight": "Licht",
+    "settings.appearanceDark": "Donker",
     "footer.pricing": "Prijzen",
     "tier.lockedSignIn": "(op slot: log in om het te gebruiken)",
     "tier.getPremium": "Meer uitspraken",
@@ -497,6 +502,71 @@ const nl: Locale = {
     "twoSided.decisive": "Hier hangt de uitspraak van af",
     "twoSided.wouldChange": "Wat deze uitspraak zou veranderen",
     "appeal.title": "Iets aanvullen",
+    "app.verdict.vs": "tegen",
+    "app.verdict.leanTo": "De rechters neigden naar {name}",
+    "app.verdict.leanNone": "De rechters neigden geen kant op",
+    "app.verdict.sides": "Waar elke kant zich op baseert",
+    "app.verdict.claims": "Hoe elke kant tot zijn standpunt kwam",
+    "app.appeal.title": "Iets aanvullen",
+    "home.example": "Probeer een voorbeeld",
+    "home.lead": "Schrijf beide kanten op, of stuur de ander een link om het zelf te doen.",
+    "home.leadSolo": "Schrijf jouw kant op en die van de ander als je die kent.",
+    "home.theirSide": "Kant van de ander",
+    "home.theirName": "Naam van de ander",
+    "home.theirPlaceholder": "Wat zegt de ander? Schrijf het zoals die het zelf zou zeggen.",
+    "home.theirSideLabel": "De andere kant van de discussie",
+    "home.yourSideLabel": "Jouw kant van de discussie",
+    "home.says": "{name} zegt:",
+    "home.mySide": "Mijn kant:",
+    "home.otherSide": "De andere kant:",
+    "app.example.dishwasher.aName": "Lotte",
+    "app.example.dishwasher.a":
+      "Je hebt de kommen weer in het bovenste rek gezet. Daar worden ze nooit schoon, daar is het onderste rek voor.",
+    "app.example.dishwasher.bName": "Jeroen",
+    "app.example.dishwasher.b":
+      "Ze passen daar prima, en dan blijft het onderste rek vrij voor de pannen. Ik ruim de vaatwasser al jaren zo in en er is nog nooit iets vies uitgekomen.",
+    "app.example.bill.aName": "Fleur",
+    "app.example.bill.a":
+      "Ik heb niks gedronken, dus ik hoef geen kwart van de wijn te betalen. Het eten gelijk verdelen vind ik prima.",
+    "app.example.bill.bName": "Ruben",
+    "app.example.bill.b":
+      "We delen het altijd gewoon door vieren. Elke keer uitzoeken wie wat had is gedoe, en zoveel scheelt het toch niet.",
+    "app.example.thermostat.aName": "Iris",
+    "app.example.thermostat.a":
+      "Het is hier 19 graden en ik heb het zelfs in een hoodie koud. De thermostaat op 22 zetten is echt niet overdreven.",
+    "app.example.thermostat.bName": "Sem",
+    "app.example.thermostat.b":
+      "Bij 22 graden kun je echt niet slapen, veel te warm. Jij kunt nog een trui aantrekken, ik kan niks meer uittrekken.",
+    "app.example.roadTrip.aName": "Anouk",
+    "app.example.roadTrip.a":
+      "Ik heb de hele heenweg gereden, zes uur lang. Het is niet meer dan eerlijk dat jij terugrijdt.",
+    "app.example.roadTrip.bName": "Joris",
+    "app.example.roadTrip.b":
+      "Ik zei voor we vertrokken al dat ik een hekel heb aan rijden in het donker, en we gaan om zeven uur 's avonds weg. Volgende keer rijd ik 's ochtends.",
+    "app.example.seat.aName": "Eva",
+    "app.example.seat.a":
+      "Mijn stoel kan naar achteren, dus dat doe ik ook. Het is een nachtvlucht en iedereen probeert te slapen.",
+    "app.example.seat.bName": "Bas",
+    "app.example.seat.b":
+      "Ik ben 1,91 m en mijn knieën zitten nu al tegen je stoel. Je kunt op z'n minst even vragen voordat je hem helemaal naar achteren zet.",
+    "app.example.spoiler.aName": "Noor",
+    "app.example.spoiler.a":
+      "Je verklapte wie de moordenaar was voordat ik ook maar aan de laatste aflevering was begonnen. Ik had er de hele week naar uitgekeken.",
+    "app.example.spoiler.bName": "Lucas",
+    "app.example.spoiler.b":
+      "Die aflevering kwam drie weken geleden uit en je zei dat je de serie uit had. Ik kan niet bijhouden hoe ver iedereen is.",
+    "app.example.jacket.aName": "Femke",
+    "app.example.jacket.a":
+      "Je bent zonder te vragen in mijn spijkerjack naar het concert gegaan. Toen ik het terugkreeg, stonk het naar rook.",
+    "app.example.jacket.bName": "Tim",
+    "app.example.jacket.b":
+      "Het hing bij de deur en je draagt het nooit. Ik had het heus gevraagd, maar je sliep en ik was al te laat.",
+    "app.example.lastSlice.aName": "Milan",
+    "app.example.lastSlice.a":
+      "Ik riep al “laatste stuk is voor mij” voordat de film begon. Iedereen heeft het gehoord.",
+    "app.example.lastSlice.bName": "Julia",
+    "app.example.lastSlice.b":
+      "Je kunt niet roepen dat het van jou is en het dan twee uur laten liggen. Het lag daar maar koud te worden, dus ik heb het opgegeten.",
     "appeal.lead":
       "Mist er iets of klopt er iets niet? Vul het één keer aan en de rechters kijken opnieuw naar alles. Kost 1 uitspraak.",
     "appeal.label": "Jouw aanvulling",

@@ -265,6 +265,11 @@ const ur: Locale = {
     "nav.new": "نیا",
     "nav.verdicts": "فیصلے",
     "nav.tabs": "حصے",
+    "nav.settings": "سیٹنگز",
+    "settings.appearance": "ظاہری شکل",
+    "settings.appearanceSystem": "فون کے مطابق",
+    "settings.appearanceLight": "ہلکا",
+    "settings.appearanceDark": "گہرا",
     "footer.pricing": "قیمتیں",
     "tier.lockedSignIn": "(بند ہے: استعمال کے لیے سائن ان کریں)",
     "tier.getPremium": "مزید فیصلے لیں",
@@ -493,6 +498,71 @@ const ur: Locale = {
     "twoSided.decisive": "فیصلہ اسی پر ٹکا ہے",
     "twoSided.wouldChange": "کیا چیز یہ فیصلہ بدل سکتی ہے",
     "appeal.title": "مزید تفصیل شامل کریں",
+    "app.verdict.vs": "بمقابلہ",
+    "app.verdict.leanTo": "پینل کا جھکاؤ {name} کی طرف رہا",
+    "app.verdict.leanNone": "پینل کا جھکاؤ کسی طرف نہیں رہا",
+    "app.verdict.sides": "ہر طرف کی بات کس بنیاد پر ہے",
+    "app.verdict.claims": "ہر طرف اپنے نتیجے تک کیسے پہنچی",
+    "app.appeal.title": "مزید تفصیل اور نظرثانی",
+    "home.example": "کوئی مثال آزمائیں",
+    "home.lead": "دونوں طرف کی بات لکھیں، یا دوسرے شخص کو لنک بھیجیں تاکہ وہ اپنی بات خود لکھیں۔",
+    "home.leadSolo": "اپنی بات لکھیں، اور معلوم ہو تو ان کی بھی۔",
+    "home.theirSide": "ان کی بات",
+    "home.theirName": "ان کا نام",
+    "home.theirPlaceholder": "وہ کیا کہتے ہیں؟ ویسے ہی لکھیں جیسے وہ خود کہتے۔",
+    "home.theirSideLabel": "بحث میں ان کی بات",
+    "home.yourSideLabel": "بحث میں آپ کی بات",
+    "home.says": "{name} کا کہنا ہے:",
+    "home.mySide": "میری بات:",
+    "home.otherSide": "ان کی بات:",
+    "app.example.dishwasher.aName": "عائشہ",
+    "app.example.dishwasher.a":
+      "تم نے پیالے پھر اوپر والے ریک میں رکھ دیے۔ وہاں وہ کبھی صاف نہیں نکلتے، نیچے والا ریک اسی کام کے لیے ہے۔",
+    "app.example.dishwasher.bName": "بلال",
+    "app.example.dishwasher.b":
+      "اوپر آرام سے آ جاتے ہیں، اور نیچے کی جگہ دیگچیوں کے لیے بچ جاتی ہے۔ میں برسوں سے ایسے ہی رکھتا آیا ہوں، اور آج تک ایک برتن بھی گندا نہیں نکلا۔",
+    "app.example.bill.aName": "فاطمہ",
+    "app.example.bill.a":
+      "میں نے کولڈ ڈرنک پی ہی نہیں، تو ڈرنکس کا چوتھا حصہ میں کیوں دوں؟ کھانے کا بل برابر بانٹنے پر مجھے کوئی اعتراض نہیں۔",
+    "app.example.bill.bName": "عمر",
+    "app.example.bill.b":
+      "ہم ہمیشہ بل چار حصوں میں برابر بانٹتے ہیں۔ ہر بار یہ حساب لگانا کہ کس نے کیا کھایا، بڑا جھنجھٹ ہے، اور فرق بھی کون سا زیادہ ہے۔",
+    "app.example.thermostat.aName": "زینب",
+    "app.example.thermostat.a":
+      "AC 18 پر لگا ہے اور مجھے چادر اوڑھ کر بھی ٹھنڈ لگ رہی ہے۔ اسے 24 پر کر دینا کوئی زیادتی نہیں۔",
+    "app.example.thermostat.bName": "حمزہ",
+    "app.example.thermostat.b":
+      "24 پر تو اتنی گرمی ہوتی ہے کہ نیند ہی نہیں آتی۔ تم ایک چادر اور لے سکتی ہو، میں اور کیا اتاروں؟",
+    "app.example.roadTrip.aName": "عثمان",
+    "app.example.roadTrip.a":
+      "جاتے ہوئے پورے چھ گھنٹے میں نے گاڑی چلائی۔ انصاف یہی ہے کہ واپسی پر تم چلاؤ۔",
+    "app.example.roadTrip.bName": "مریم",
+    "app.example.roadTrip.b":
+      "نکلنے سے پہلے ہی میں نے کہہ دیا تھا کہ مجھے رات کو گاڑی چلانا بالکل پسند نہیں، اور ہم شام 7 بجے نکل رہے ہیں۔ اگلے سفر میں صبح کے وقت گاڑی میں چلا لوں گی۔",
+    "app.example.seat.aName": "ثنا",
+    "app.example.seat.a":
+      "سیٹ پیچھے جھکنے کے لیے ہی بنی ہے، تو میں اسے جھکا رہی ہوں۔ رات کی فلائٹ ہے اور سب سونے کی کوشش کر رہے ہیں۔",
+    "app.example.seat.bName": "دانیال",
+    "app.example.seat.b":
+      "میرا قد 6 فٹ 3 انچ ہے اور میرے گھٹنے پہلے ہی آپ کی سیٹ سے لگے ہوئے ہیں۔ سیٹ پوری پیچھے کرنے سے پہلے کم از کم پوچھ تو سکتی تھیں۔",
+    "app.example.spoiler.aName": "مہک",
+    "app.example.spoiler.a":
+      "میں نے آخری قسط ابھی شروع بھی نہیں کی تھی اور تم نے بتا دیا کہ قاتل کون ہے۔ میں پورا ہفتہ اس کا انتظار کر رہی تھی۔",
+    "app.example.spoiler.bName": "فیصل",
+    "app.example.spoiler.b":
+      "سیریز تین ہفتے پہلے آئی تھی اور تم نے کہا تھا کہ تم ختم کر چکی ہو۔ میں ہر ایک کا حساب نہیں رکھ سکتا کہ کون کس قسط تک پہنچا ہے۔",
+    "app.example.jacket.aName": "حارث",
+    "app.example.jacket.a":
+      "تم میری ڈینم جیکٹ بغیر پوچھے کنسرٹ میں پہن گئیں۔ واپس آئی تو اس میں سے دھوئیں کی بو آ رہی تھی۔",
+    "app.example.jacket.bName": "ایمن",
+    "app.example.jacket.b":
+      "دروازے کے پاس ٹنگی تھی اور تم اسے کبھی پہنتے ہی نہیں۔ میں پوچھ لیتی، لیکن تم سو رہے تھے اور مجھے پہلے ہی دیر ہو چکی تھی۔",
+    "app.example.lastSlice.aName": "سعد",
+    "app.example.lastSlice.a":
+      "فلم شروع ہونے سے پہلے ہی میں نے کہہ دیا تھا کہ آخری سلائس میرا ہے۔ سب نے سنا تھا۔",
+    "app.example.lastSlice.bName": "ہانیہ",
+    "app.example.lastSlice.b":
+      "یہ نہیں چلتا کہ “میرا ہے” کہہ کر دو گھنٹے ہاتھ بھی نہ لگاؤ۔ وہ وہیں پڑا ٹھنڈا ہو رہا تھا، تو میں نے کھا لیا۔",
     "appeal.lead":
       "کچھ رہ گیا یا غلط ہے؟ ایک بار شامل کریں اور جج سب کچھ دوبارہ دیکھیں گے۔ قیمت: 1 فیصلہ۔",
     "appeal.label": "آپ کی تفصیل",

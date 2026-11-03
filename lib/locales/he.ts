@@ -262,6 +262,11 @@ const he: Locale = {
     "nav.new": "חדש",
     "nav.verdicts": "פסקי דין",
     "nav.tabs": "אזורים",
+    "nav.settings": "הגדרות",
+    "settings.appearance": "מראה",
+    "settings.appearanceSystem": "כמו בטלפון",
+    "settings.appearanceLight": "בהיר",
+    "settings.appearanceDark": "כהה",
     "footer.pricing": "מחירים",
     "tier.lockedSignIn": "(נעול: צריך להתחבר כדי להשתמש)",
     "tier.getPremium": "עוד פסקי דין",
@@ -486,6 +491,68 @@ const he: Locale = {
     "twoSided.decisive": "פסק הדין תלוי בזה",
     "twoSided.wouldChange": "מה היה משנה את פסק הדין",
     "appeal.title": "הוספת הקשר",
+    "app.verdict.vs": "מול",
+    "app.verdict.leanTo": "ההרכב נטה לטובת {name}",
+    "app.verdict.leanNone": "ההרכב לא נטה לאף צד",
+    "app.verdict.sides": "על מה כל צד נשען",
+    "app.verdict.claims": "איך כל צד הגיע לשם",
+    "app.appeal.title": "הוספת הקשר וערעור",
+    "home.example": "לנסות דוגמה",
+    "home.lead": "אפשר לכתוב את שני הצדדים, או לשלוח לצד השני קישור כדי שיכתוב את שלו.",
+    "home.leadSolo": "אפשר לכתוב את הצד שלך, וגם את הצד השני אם הוא ידוע לך.",
+    "home.theirSide": "הצד השני",
+    "home.theirName": "השם של הצד השני",
+    "home.theirPlaceholder": "מה הצד השני אומר? כדאי לכתוב את זה במילים שלו.",
+    "home.theirSideLabel": "הצד השני בוויכוח",
+    "home.yourSideLabel": "הצד שלך בוויכוח",
+    "home.says": "לדברי {name}:",
+    "home.mySide": "הצד שלי:",
+    "home.otherSide": "הצד השני:",
+    "app.example.dishwasher.aName": "נועה",
+    "app.example.dishwasher.a":
+      "שוב שמת את הקערות במדף העליון. שם הן אף פעם לא יוצאות נקיות, בשביל זה יש את המדף התחתון.",
+    "app.example.dishwasher.bName": "איתי",
+    "app.example.dishwasher.b":
+      "הן נכנסות שם בלי בעיה, וככה נשאר מקום למטה לסירים. אני מסדר ככה כבר שנים ושום דבר לא יצא מלוכלך.",
+    "app.example.bill.aName": "מיכל",
+    "app.example.bill.a":
+      "לא שתיתי כלום, אז אני לא צריכה לשלם רבע מהיין. לחלק את האוכל שווה בשווה זה בסדר מבחינתי.",
+    "app.example.bill.bName": "יונתן",
+    "app.example.bill.b":
+      "תמיד פשוט מחלקים לארבעה. לחשב כל פעם מי אכל מה זה כאב ראש, וההבדל ממילא לא גדול.",
+    "app.example.thermostat.aName": "שירה",
+    "app.example.thermostat.a":
+      "יש פה 19 מעלות וקר לי אפילו עם קפוצ'ון. להעלות את המזגן ל-22 זה לא מוגזם.",
+    "app.example.thermostat.bName": "אורי",
+    "app.example.thermostat.b":
+      "ב-22 מעלות אי אפשר לישון, חם מדי. את יכולה ללבוש עוד שכבה, לי כבר אין מה להוריד.",
+    "app.example.roadTrip.aName": "תמר",
+    "app.example.roadTrip.a": "נהגתי את כל שש השעות בדרך לשם. הכי הוגן שבחזרה אתה תנהג.",
+    "app.example.roadTrip.bName": "עידו",
+    "app.example.roadTrip.b":
+      "אמרתי עוד לפני שיצאנו שאני שונא לנהוג בלילה, ואנחנו יוצאים בשבע בערב. בטיול הבא אני אנהג בבקרים.",
+    "app.example.seat.aName": "ליאת",
+    "app.example.seat.a":
+      "המושב שלי יורד אחורה, אז אני מורידה אותו. זו טיסת לילה וכולם מנסים לישון.",
+    "app.example.seat.bName": "גיא",
+    "app.example.seat.b":
+      "אני מטר תשעים, והברכיים שלי כבר תקועות בגב המושב שלך. יכולת לפחות לשאול לפני שהורדת אותו עד הסוף.",
+    "app.example.spoiler.aName": "הילה",
+    "app.example.spoiler.a":
+      "סיפרת לי מי הרוצח עוד לפני שהתחלתי את הפרק האחרון. חיכיתי לו כל השבוע.",
+    "app.example.spoiler.bName": "אלון",
+    "app.example.spoiler.b":
+      "זה יצא לפני שלושה שבועות, ואמרת שסיימת. אני לא יכול לזכור מי הגיע לאיזה פרק.",
+    "app.example.jacket.aName": "יעל",
+    "app.example.jacket.a": "לבשת את ז'קט הג'ינס שלי להופעה בלי לשאול. הוא חזר עם ריח של עשן.",
+    "app.example.jacket.bName": "רועי",
+    "app.example.jacket.b":
+      "הוא היה תלוי ליד הדלת, ואת אף פעם לא לובשת אותו. הייתי שואל, אבל ישנת, וכבר איחרתי.",
+    "app.example.lastSlice.aName": "אביב",
+    "app.example.lastSlice.a": "שריינתי את המשולש האחרון עוד לפני שהסרט התחיל. כולם שמעו.",
+    "app.example.lastSlice.bName": "נטע",
+    "app.example.lastSlice.b":
+      "אי אפשר לשריין משולש ואז לא לגעת בו שעתיים. הוא סתם עמד שם והתקרר, אז אכלתי אותו.",
     "appeal.lead":
       "משהו חסר או לא נכון? אפשר להוסיף אותו פעם אחת, והשופטים יבחנו הכול מחדש. זה עולה פסק דין אחד.",
     "appeal.label": "ההקשר שלך",

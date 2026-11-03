@@ -266,6 +266,11 @@ const hr: Locale = {
     "nav.new": "Novo",
     "nav.verdicts": "Presude",
     "nav.tabs": "Odjeljci",
+    "nav.settings": "Postavke",
+    "settings.appearance": "Izgled",
+    "settings.appearanceSystem": "Kao na telefonu",
+    "settings.appearanceLight": "Svijetli",
+    "settings.appearanceDark": "Tamni",
     "footer.pricing": "Cijene",
     "tier.lockedSignIn": "(zaključano: prijavi se za korištenje)",
     "tier.getPremium": "Nabavi još presuda",
@@ -494,6 +499,70 @@ const hr: Locale = {
     "twoSided.decisive": "Presuda ovisi o ovome",
     "twoSided.wouldChange": "Što bi promijenilo ovu presudu",
     "appeal.title": "Dodaj kontekst",
+    "app.verdict.vs": "–",
+    "app.verdict.leanTo": "Prednost kod sudaca ima {name}",
+    "app.verdict.leanNone": "Suci ne naginju nijednoj strani",
+    "app.verdict.sides": "Na čemu stoji svaka strana",
+    "app.verdict.claims": "Kako svaka strana dolazi do svog stava",
+    "app.appeal.title": "Dodaj kontekst i uloži žalbu",
+    "home.example": "Isprobaj primjer",
+    "home.lead": "Napiši obje strane ili pošalji poveznicu drugoj osobi da napiše svoju.",
+    "home.leadSolo": "Napiši svoju stranu, a ako je znaš, i drugu.",
+    "home.theirSide": "Druga strana",
+    "home.theirName": "Ime druge osobe",
+    "home.theirPlaceholder": "Što kaže druga osoba? Napiši to onako kako bi ona rekla.",
+    "home.theirSideLabel": "Strana druge osobe u raspravi",
+    "home.yourSideLabel": "Tvoja strana u raspravi",
+    "home.says": "{name} kaže:",
+    "home.mySide": "Moja strana:",
+    "home.otherSide": "Druga strana:",
+    "app.example.dishwasher.aName": "Ana",
+    "app.example.dishwasher.a":
+      "Opet si stavio zdjelice u gornju košaru. Gore se nikad ne operu kako treba, za to služi donja.",
+    "app.example.dishwasher.bName": "Marko",
+    "app.example.dishwasher.b":
+      "Gore sasvim lijepo stanu, a dolje ostaje mjesta za lonce. Godinama ovako punim perilicu i još ništa nije izašlo prljavo.",
+    "app.example.bill.aName": "Petra",
+    "app.example.bill.a":
+      "Nisam ništa pila, pa ne bih trebala platiti četvrtinu vina. Hranu možemo podijeliti na jednake dijelove, to mi je u redu.",
+    "app.example.bill.bName": "Ivan",
+    "app.example.bill.b":
+      "Uvijek samo podijelimo račun na četvero. Svaki put računati tko je što imao prava je gnjavaža, a razlika ionako nije velika.",
+    "app.example.thermostat.aName": "Lucija",
+    "app.example.thermostat.a":
+      "Ovdje je 19 stupnjeva i hladno mi je čak i u dukserici. Pojačati grijanje na 22 nije nikakva ludost.",
+    "app.example.thermostat.bName": "Filip",
+    "app.example.thermostat.b":
+      "Na 22 je prevruće za spavanje. Ti možeš obući još nešto, a ja više nemam što skinuti.",
+    "app.example.roadTrip.aName": "Ema",
+    "app.example.roadTrip.a":
+      "Do tamo sam vozila cijelih šest sati. Pošteno je da ti voziš natrag.",
+    "app.example.roadTrip.bName": "Josip",
+    "app.example.roadTrip.b":
+      "Prije puta sam rekao da mrzim voziti noću, a krećemo u sedam navečer. Idući put ja vozim ujutro.",
+    "app.example.seat.aName": "Mia",
+    "app.example.seat.a":
+      "Naslon se može spustiti, pa ga spuštam. Noćni je let i svi pokušavaju spavati.",
+    "app.example.seat.bName": "Karlo",
+    "app.example.seat.b":
+      "Visok sam 190 cm i koljena mi se već zabijaju u tvoje sjedalo. Mogla si me barem pitati prije nego što ga spustiš do kraja.",
+    "app.example.spoiler.aName": "Nika",
+    "app.example.spoiler.a":
+      "Rekao si mi tko je ubojica prije nego što sam uopće počela gledati zadnju epizodu. Cijeli tjedan sam je čekala.",
+    "app.example.spoiler.bName": "Matej",
+    "app.example.spoiler.b":
+      "Izašla je prije tri tjedna, a rekla si da si je već odgledala. Ne mogu pratiti dokle je tko stigao.",
+    "app.example.jacket.aName": "Luka",
+    "app.example.jacket.a":
+      "Obukla si moju traper jaknu na koncert, a nisi me ni pitala. Vratila si je i sad sva smrdi po dimu.",
+    "app.example.jacket.bName": "Sara",
+    "app.example.jacket.b":
+      "Visjela je kraj vrata, a ti je nikad ne nosiš. Pitala bih te, ali spavao si, a ja sam već kasnila.",
+    "app.example.lastSlice.aName": "David",
+    "app.example.lastSlice.a": "Prije filma sam rekao „zadnji komad je moj“. Svi su me čuli.",
+    "app.example.lastSlice.bName": "Lana",
+    "app.example.lastSlice.b":
+      "Ne možeš reći „moj je“ i onda ga ne taknuti dva sata. Samo je stajao i hladio se, pa sam ga pojela.",
     "appeal.lead":
       "Nešto nedostaje ili nije točno? Dodaj to jednom i suci će ponovno pogledati sve. Troši 1 presudu.",
     "appeal.label": "Tvoj kontekst",

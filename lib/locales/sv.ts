@@ -267,6 +267,11 @@ const sv: Locale = {
     "nav.new": "Nytt",
     "nav.verdicts": "Domar",
     "nav.tabs": "Avsnitt",
+    "nav.settings": "Inställningar",
+    "settings.appearance": "Utseende",
+    "settings.appearanceSystem": "Samma som telefonen",
+    "settings.appearanceLight": "Ljust",
+    "settings.appearanceDark": "Mörkt",
     "footer.pricing": "Priser",
     "tier.lockedSignIn": "(låst: logga in för att använda)",
     "tier.getPremium": "Skaffa fler domar",
@@ -495,6 +500,70 @@ const sv: Locale = {
     "twoSided.decisive": "Domen hänger på det här",
     "twoSided.wouldChange": "Det här skulle kunna ändra domen",
     "appeal.title": "Komplettera",
+    "app.verdict.vs": "mot",
+    "app.verdict.leanTo": "Panelen lutade åt {name}",
+    "app.verdict.leanNone": "Panelen lutade inte åt något håll",
+    "app.verdict.sides": "Vad varje sida bygger på",
+    "app.verdict.claims": "Hur varje sida resonerade",
+    "app.appeal.title": "Komplettera och döm om",
+    "home.example": "Prova ett exempel",
+    "home.lead": "Skriv båda sidorna, eller skicka en länk så att den andra kan skriva sin.",
+    "home.leadSolo": "Skriv din sida, och den andras om du känner till den.",
+    "home.theirSide": "Den andras sida",
+    "home.theirName": "Den andras namn",
+    "home.theirPlaceholder": "Vad säger den andra? Skriv det så som hen skulle säga det.",
+    "home.theirSideLabel": "Den andras sida av bråket",
+    "home.yourSideLabel": "Din sida av bråket",
+    "home.says": "{name} säger:",
+    "home.mySide": "Min sida:",
+    "home.otherSide": "Den andras sida:",
+    "app.example.dishwasher.aName": "Emma",
+    "app.example.dishwasher.a":
+      "Du har ställt skålarna i överkorgen igen. Där uppe blir de aldrig rena – det är ju det underkorgen är till för.",
+    "app.example.dishwasher.bName": "Johan",
+    "app.example.dishwasher.b":
+      "De får plats fint där uppe, och då blir underkorgen ledig för kastrullerna. Jag har plockat in disken så här i flera år och allt har blivit rent.",
+    "app.example.bill.aName": "Sara",
+    "app.example.bill.a":
+      "Jag drack ingenting, så jag borde inte betala en fjärdedel av vinet. Att dela lika på maten går bra för mig.",
+    "app.example.bill.bName": "Erik",
+    "app.example.bill.b":
+      "Vi delar alltid bara på fyra. Att räkna ut vem som tog vad varje gång är jobbigt, och det är ändå ingen stor skillnad.",
+    "app.example.thermostat.aName": "Linnea",
+    "app.example.thermostat.a":
+      "Det är 19 grader här inne och jag fryser fast jag har luvtröja på mig. Att höja till 22 är väl inte orimligt.",
+    "app.example.thermostat.bName": "Anton",
+    "app.example.thermostat.b":
+      "22 grader är alldeles för varmt att sova i. Du kan ta på dig ett lager till, jag kan inte ta av mig mer.",
+    "app.example.roadTrip.aName": "Ida",
+    "app.example.roadTrip.a":
+      "Jag körde hela vägen dit, sex timmar. Det är bara rättvist att du kör hem.",
+    "app.example.roadTrip.bName": "Viktor",
+    "app.example.roadTrip.b":
+      "Jag sa innan vi åkte att jag hatar att köra i mörker, och vi åker sju i kväll. Nästa gång kör jag på morgnarna.",
+    "app.example.seat.aName": "Klara",
+    "app.example.seat.a":
+      "Mitt säte går att fälla bakåt, så jag fäller det. Det är ett nattflyg och alla försöker sova.",
+    "app.example.seat.bName": "Filip",
+    "app.example.seat.b":
+      "Jag är 191 cm lång och knäna trycker redan mot ditt säte. Du kunde åtminstone fråga innan du fäller det ända bak.",
+    "app.example.spoiler.aName": "Wilma",
+    "app.example.spoiler.a":
+      "Du berättade vem mördaren var innan jag ens hade börjat på sista avsnittet. Jag hade väntat på det hela veckan.",
+    "app.example.spoiler.bName": "Axel",
+    "app.example.spoiler.b":
+      "Det kom ut för tre veckor sedan och du sa att du hade sett klart. Jag kan inte hålla koll på hur långt alla har kommit.",
+    "app.example.jacket.aName": "Albin",
+    "app.example.jacket.a":
+      "Du hade på dig min jeansjacka på konserten utan att fråga. Den luktade rök när jag fick tillbaka den.",
+    "app.example.jacket.bName": "Ebba",
+    "app.example.jacket.b":
+      "Den hängde vid dörren och du använder den aldrig. Jag hade frågat, men du sov och jag var redan sen.",
+    "app.example.lastSlice.aName": "Lucas",
+    "app.example.lastSlice.a": "Jag paxade sista pizzabiten innan filmen började. Alla hörde mig.",
+    "app.example.lastSlice.bName": "Alva",
+    "app.example.lastSlice.b":
+      "Man kan inte paxa något och sedan inte röra det på två timmar. Den låg bara där och kallnade, så jag åt upp den.",
     "appeal.lead":
       "Saknas något eller blev något fel? Lägg till det en gång så går domarna igenom allt igen. Kostar 1 dom.",
     "appeal.label": "Din komplettering",

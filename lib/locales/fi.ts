@@ -266,6 +266,11 @@ const fi: Locale = {
     "nav.new": "Uusi",
     "nav.verdicts": "Tuomiot",
     "nav.tabs": "Osiot",
+    "nav.settings": "Asetukset",
+    "settings.appearance": "Ulkoasu",
+    "settings.appearanceSystem": "Sama kuin puhelimessa",
+    "settings.appearanceLight": "Vaalea",
+    "settings.appearanceDark": "Tumma",
     "footer.pricing": "Hinnat",
     "tier.lockedSignIn": "(lukittu: vaatii kirjautumisen)",
     "tier.getPremium": "Hanki lisää tuomioita",
@@ -493,6 +498,71 @@ const fi: Locale = {
     "twoSided.decisive": "Tuomio riippuu tästä",
     "twoSided.wouldChange": "Mikä muuttaisi tämän tuomion",
     "appeal.title": "Lisää tietoa",
+    "app.verdict.vs": "vs.",
+    "app.verdict.leanTo": "Tuomaristo kallistui siihen, että {name} on oikeassa",
+    "app.verdict.leanNone": "Tuomaristo ei kallistunut kummallekaan puolelle",
+    "app.verdict.sides": "Mihin kumpikin puoli nojaa",
+    "app.verdict.claims": "Miten kumpikin puoli päätyi kantaansa",
+    "app.appeal.title": "Lisää tietoa ja pyydä uusi tuomio",
+    "home.example": "Kokeile esimerkkiä",
+    "home.lead": "Kirjoita molemmat puolet tai lähetä toiselle linkki, niin hän kirjoittaa omansa.",
+    "home.leadSolo": "Kirjoita oma puolesi ja toisen puoli, jos tiedät sen.",
+    "home.theirSide": "Toisen puoli",
+    "home.theirName": "Toisen nimi",
+    "home.theirPlaceholder": "Mitä toinen sanoo? Kirjoita se niin kuin hän itse sen sanoisi.",
+    "home.theirSideLabel": "Toisen puoli kiistassa",
+    "home.yourSideLabel": "Sinun puolesi kiistassa",
+    "home.says": "{name} sanoo:",
+    "home.mySide": "Minun puoleni:",
+    "home.otherSide": "Toisen puoli:",
+    "app.example.dishwasher.aName": "Laura",
+    "app.example.dishwasher.a":
+      "Laitoit kulhot taas yläkoriin. Ne eivät ikinä puhdistu siellä, alakori on niitä varten.",
+    "app.example.dishwasher.bName": "Mikko",
+    "app.example.dishwasher.b":
+      "Ne mahtuvat sinne ihan hyvin, ja alas jää tilaa kattiloille. Olen täyttänyt koneen näin jo vuosia, eikä mikään ole jäänyt likaiseksi.",
+    "app.example.bill.aName": "Anna",
+    "app.example.bill.a":
+      "En juonut mitään, joten minun ei pitäisi maksaa neljäsosaa viinistä. Ruoan voi minun puolestani jakaa tasan.",
+    "app.example.bill.bName": "Jussi",
+    "app.example.bill.b":
+      "Jaamme laskun aina neljään osaan. On rasittavaa selvittää joka kerta, kuka söi ja joi mitäkin, eikä ero ole edes iso.",
+    "app.example.thermostat.aName": "Sanna",
+    "app.example.thermostat.a":
+      "Täällä on 19 astetta, ja minulla on kylmä hupparissakin. Ei ole mitenkään hullua nostaa lämpöä 22 asteeseen.",
+    "app.example.thermostat.bName": "Antti",
+    "app.example.thermostat.b":
+      "22 astetta on aivan liian lämmin nukkumiseen. Sinä voit pukea lisää päälle, minä en voi riisua enempää.",
+    "app.example.roadTrip.aName": "Elina",
+    "app.example.roadTrip.a":
+      "Ajoin koko kuuden tunnin matkan sinne. On vain reilua, että sinä ajat takaisin.",
+    "app.example.roadTrip.bName": "Tuomas",
+    "app.example.roadTrip.b":
+      "Sanoin jo ennen lähtöä, että inhoan ajamista pimeällä, ja lähdemme vasta seitsemältä illalla. Seuraavalla reissulla ajan minä aamuisin.",
+    "app.example.seat.aName": "Johanna",
+    "app.example.seat.a":
+      "Selkänojani kallistuu, joten kallistan sitä. On yölento, ja kaikki yrittävät nukkua.",
+    "app.example.seat.bName": "Petri",
+    "app.example.seat.b":
+      "Olen 190-senttinen, ja polveni painavat jo valmiiksi penkkiäsi. Olisit voinut edes kysyä, ennen kuin laskit selkänojan ihan pohjaan.",
+    "app.example.spoiler.aName": "Emilia",
+    "app.example.spoiler.a":
+      "Kerroit, kuka murhaaja oli, ennen kuin olin edes aloittanut viimeistä jaksoa. Olin odottanut sitä koko viikon.",
+    "app.example.spoiler.bName": "Lauri",
+    "app.example.spoiler.b":
+      "Se ilmestyi kolme viikkoa sitten, ja sanoit katsoneesi sen loppuun. En pysty pitämään kirjaa siitä, missä kohtaa kukin menee.",
+    "app.example.jacket.aName": "Veera",
+    "app.example.jacket.a":
+      "Pidit farkkutakkiani keikalla kysymättä. Kun sain sen takaisin, se haisi tupakalta.",
+    "app.example.jacket.bName": "Joonas",
+    "app.example.jacket.b":
+      "Se roikkui oven vieressä, etkä ikinä käytä sitä. Olisin kysynyt, mutta nukuit, ja olin jo valmiiksi myöhässä.",
+    "app.example.lastSlice.aName": "Eetu",
+    "app.example.lastSlice.a":
+      "Varasin viimeisen palan jo ennen kuin leffa alkoi. Kaikki kuulivat sen.",
+    "app.example.lastSlice.bName": "Iida",
+    "app.example.lastSlice.b":
+      "Ei voi varata palaa ja sitten jättää sitä koskematta kahdeksi tunniksi. Se vain jäähtyi siinä, joten söin sen.",
     "appeal.lead":
       "Puuttuuko jotain, tai onko jotain väärin? Lisää se kerran, niin tuomarit käyvät kaiken läpi uudelleen. Maksaa 1 tuomion.",
     "appeal.label": "Lisätietosi",
