@@ -44,10 +44,6 @@ struct AgeGateView: View {
         let account = app.account
         ScrollView {
             VStack(alignment: .leading, spacing: 22) {
-                Text(L10n.appName(lang))
-                    .brandText(.brand)
-                    .foregroundStyle(Brand.ink)
-                    .frame(minHeight: 44)
                 switch gate {
                 case .confirm:
                     confirm(lang, account: account)

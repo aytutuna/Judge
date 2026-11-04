@@ -55,9 +55,6 @@ struct SignInView: View {
 
     private func topBar(_ lang: AppLang) -> some View {
         HStack {
-            Text(L10n.appName(lang))
-                .brandText(.brand)
-                .foregroundStyle(Brand.ink)
             Spacer()
             Button {
                 app.account.isSignInPresented = false

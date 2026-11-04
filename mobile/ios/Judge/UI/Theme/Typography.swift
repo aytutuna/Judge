@@ -72,7 +72,6 @@ struct TypeStyle: Sendable {
     static let micro = TypeStyle(face: .inter, weight: 700, size: 11, lineHeight: 1.3, tracking: 0.12, textStyle: .caption2, maxScale: 1.6, uppercase: true)
     static let button = TypeStyle(face: .interTight, weight: 600, size: 16, lineHeight: 1.2, textStyle: .headline, maxScale: 1.6)
     static let chip = TypeStyle(face: .inter, weight: 600, size: 14, lineHeight: 1.2, textStyle: .subheadline, maxScale: 1.8)
-    static let brand = TypeStyle(face: .interTight, weight: 600, size: 17, lineHeight: 1, tracking: -0.01, textStyle: .headline, maxScale: 1.4)
     static let claim = TypeStyle(face: .inter, weight: 400, size: 14, lineHeight: 1.45, textStyle: .subheadline)
     static let branch = TypeStyle(face: .inter, weight: 400, size: 14.5, lineHeight: 1.5, textStyle: .subheadline)
     /// The verdict headline; the card sets the size between 30 and 34 by width.

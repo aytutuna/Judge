@@ -63,12 +63,6 @@ private struct CaseScreenContent: View {
         .background(Brand.ivory.ignoresSafeArea())
         .navigationBarTitleDisplayMode(.inline)
         .toolbarBackground(Brand.ivory, for: .navigationBar)
-        .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
-                NewArgumentButton(lang: lang, action: startOver)
-                    .disabled(app.home.isBusy)
-            }
-        }
         // Polling restarts whenever a new view arrives (generation).
         .task(id: model.generation) { await model.run() }
         .onAppear { Task { await model.refresh() } }
@@ -81,7 +75,7 @@ private struct CaseScreenContent: View {
             if signedIn, model.load == .signIn { Task { await model.refresh() } }
         }
         .sheet(isPresented: $showPricing) {
-            NavigationStack { PricingView() }
+            NavigationStack { PricingView(inSheet: true) }
                 .environment(app)
         }
         .alert(confirmTitle(lang), isPresented: $showConfirm, presenting: confirm) { item in
@@ -293,7 +287,7 @@ private struct CaseScreenContent: View {
             .accessibilityAddTraits(.updatesFrequently)
     }
 
-    /// "Start a new case" and the header's "+": back to an empty form on Home.
+    /// "Start a new case": back to an empty form on Home.
     private func startOver() {
         app.newArgument()
         dismiss()

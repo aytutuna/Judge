@@ -258,7 +258,14 @@ final class AppModel {
         return model
     }
 
-    /// The header's "+": an empty form on the Home tab.
+    /// A tab was tapped. "New" always lands on the form, also when a verdict
+    /// is still open in that tab.
+    func select(_ target: RootTab) {
+        if target == .new { home.path.removeAll() }
+        tab = target
+    }
+
+    /// "Start a new case": an empty form on the Home tab.
     func newArgument() {
         home.judgeAnother()
         tab = .new

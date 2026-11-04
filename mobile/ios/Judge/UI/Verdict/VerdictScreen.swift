@@ -3,37 +3,31 @@ import SwiftUI
 /// The ruling card, the rows that open its details and the share actions.
 /// The text follows the UI language: a verdict written in the other
 /// language is fetched translated (and cached in history) with the original
-/// kept for switching back. A fresh verdict has no tab bar; the header's
-/// "+" starts the next one. The signed-in writer can add context in a
+/// kept for switching back. The signed-in writer can add context in a
 /// sheet; a round's verdict then takes the card's place.
 struct VerdictScreen: View {
     @Environment(AppModel.self) private var app
     let session: VerdictSession
-    /// A fresh verdict: shows the thread.
-    var thread = false
 
     var body: some View {
-        VerdictScreenContent(app: app, session: session, thread: thread)
+        VerdictScreenContent(app: app, session: session)
     }
 }
 
 private struct VerdictScreenContent: View {
     let app: AppModel
-    let thread: Bool
     @State private var model: VerdictModel
     /// The writer's "Add context & appeal" (nothing shows for anyone else).
     @State private var appeal: VerdictAppealModel
     @State private var showPricing = false
     @State private var viewed = false
-    @Environment(\.dismiss) private var dismiss
 
     private static let topID = "verdict.top"
     private static let appealID = "verdict.appeal"
 
     @MainActor
-    init(app: AppModel, session: VerdictSession, thread: Bool) {
+    init(app: AppModel, session: VerdictSession) {
         self.app = app
-        self.thread = thread
         let history = app.history
         let home = app.home
         let verdict = VerdictModel(session: session, api: app.api) { updated, lang, raw in
@@ -115,7 +109,7 @@ private struct VerdictScreenContent: View {
             if let round = appeal.judgingID { await appeal.follow(round) }
         }
         .sheet(isPresented: $showPricing) {
-            NavigationStack { PricingView() }
+            NavigationStack { PricingView(inSheet: true) }
                 .environment(app)
         }
         .onAppear {
@@ -125,19 +119,8 @@ private struct VerdictScreenContent: View {
             app.analytics.track("verdict_viewed")
         }
         .background(Brand.ivory.ignoresSafeArea())
-        // The thread has no tab bar: the header's "+" is the way back.
-        .toolbar(thread ? .hidden : .automatic, for: .tabBar)
         .navigationBarTitleDisplayMode(.inline)
         .toolbarBackground(Brand.ivory, for: .navigationBar)
-        .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
-                NewArgumentButton(lang: lang) {
-                    app.newArgument()
-                    dismiss()
-                }
-                .disabled(app.home.isBusy)
-            }
-        }
     }
 }
 

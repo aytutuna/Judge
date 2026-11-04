@@ -120,10 +120,6 @@ struct HistoryView: View {
                     Button(L10n.appHistorySelect(lang)) { selection.start() }
                 }
             }
-            ToolbarItem(placement: .topBarTrailing) {
-                NewArgumentButton(lang: lang) { app.newArgument() }
-                    .disabled(app.home.isBusy)
-            }
         }
     }
 

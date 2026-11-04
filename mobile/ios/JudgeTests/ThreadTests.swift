@@ -185,7 +185,7 @@ final class ThreadLabelTests: XCTestCase {
     }
 }
 
-/// The header's "+" in place of the language switch.
+/// Getting back to an empty form.
 final class NewArgumentTests: XCTestCase {
     @MainActor
     func testTheEmptyHomeHasNothingToClear() {
@@ -196,10 +196,13 @@ final class NewArgumentTests: XCTestCase {
         home.argument = ""
         home.evidence.reserve(1)
         XCTAssertFalse(home.isBlank, "a picked screenshot is something to clear")
+        home.evidence.clear()
+        home.addTheirSide()
+        XCTAssertFalse(home.isBlank, "an open second card is something to clear")
     }
 
     @MainActor
-    func testThePlusStartsOverOnHome() throws {
+    func testStartingOverGoesBackToTheForm() throws {
         let container = HistoryContainer.inMemory()
         try withExtendedLifetime(container) {
             let app = try PremiumFixtures.app(container: container)
@@ -209,6 +212,21 @@ final class NewArgumentTests: XCTestCase {
             XCTAssertTrue(app.home.path.isEmpty, "back to the empty case card")
             XCTAssertTrue(app.home.isBlank)
             XCTAssertEqual(app.tab, .new)
+        }
+    }
+
+    @MainActor
+    func testTheNewTabAlwaysLandsOnTheForm() throws {
+        let container = HistoryContainer.inMemory()
+        try withExtendedLifetime(container) {
+            let app = try PremiumFixtures.app(container: container)
+            app.home.path = [.verdict(id: "abc123DEF0")]
+            app.select(.settings)
+            XCTAssertEqual(app.home.path, [.verdict(id: "abc123DEF0")], "other tabs leave it alone")
+            app.select(.new)
+            XCTAssertTrue(app.home.path.isEmpty)
+            XCTAssertEqual(app.tab, .new)
+            XCTAssertFalse(app.home.argument.isEmpty, "only the way there changes, not the draft")
         }
     }
 }

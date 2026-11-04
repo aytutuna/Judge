@@ -12,12 +12,7 @@ struct JudgingCover: View {
             sides: home.judgedSides,
             result: home.arrived,
             onFinished: { home.judgingFinished() },
-            onCancel: { home.cancel() },
-            onNew: {
-                // Leaving this way cancels it, like the close button.
-                home.cancel()
-                home.judgeAnother()
-            }
+            onCancel: { home.cancel() }
         )
     }
 }
@@ -35,8 +30,6 @@ struct JudgingView: View {
     let result: VerdictResult?
     let onFinished: () -> Void
     let onCancel: () -> Void
-    /// The header's "+": a new argument on an empty form.
-    var onNew: (() -> Void)?
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.scenePhase) private var scenePhase
@@ -71,20 +64,6 @@ struct JudgingView: View {
     var body: some View {
         let captionKey = Thinking.announcementKey(state, done: done)
         VStack(spacing: 0) {
-            HStack(spacing: 10) {
-                Text(L10n.appName(lang))
-                    .brandText(.brand)
-                    .foregroundStyle(Brand.ink)
-                Spacer()
-                if let onNew {
-                    NewArgumentButton(lang: lang, action: onNew)
-                }
-            }
-            .frame(minHeight: 44)
-            .padding(.horizontal, 20)
-            .padding(.top, 8)
-            .accessibilityElement(children: .contain)
-
             ScrollView {
                 VStack(alignment: .leading, spacing: 16) {
                     if !sides.isEmpty {

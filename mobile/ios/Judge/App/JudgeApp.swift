@@ -55,9 +55,8 @@ struct RootView: View {
 
     var body: some View {
         let lang = app.lang
-        @Bindable var model = app
         @Bindable var account = app.account
-        TabView(selection: $model.tab) {
+        TabView(selection: Binding(get: { app.tab }, set: { app.select($0) })) {
             HomeTab()
                 .tabItem { Label(L10n.appTabNew(lang), systemImage: "square.and.pencil") }
                 .tag(RootTab.new)
@@ -143,7 +142,7 @@ private struct HomeTab: View {
                     switch route {
                     case .verdict(let id):
                         if let session = home.session(id) {
-                            VerdictScreen(session: session, thread: true)
+                            VerdictScreen(session: session)
                         } else {
                             MissingVerdictView()
                         }

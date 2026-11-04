@@ -319,7 +319,7 @@ struct AppealSheet<Draft: AppealDraft>: View {
             if !inSheet { dismiss() }
         }
         .sheet(isPresented: $showPricing) {
-            NavigationStack { PricingView() }
+            NavigationStack { PricingView(inSheet: true) }
                 .environment(app)
         }
     }

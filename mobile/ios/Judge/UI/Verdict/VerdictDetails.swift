@@ -120,13 +120,6 @@ struct VerdictDetails<Appeal: View>: View {
                     .frame(minHeight: 44)
                 }
             }
-            ToolbarItem(placement: .topBarTrailing) {
-                NewArgumentButton(lang: lang) {
-                    app.newArgument()
-                    dismiss()
-                }
-                .disabled(app.home.isBusy)
-            }
         }
         .sheet(isPresented: $appealShown, content: appeal)
         .sheet(item: $webLink) { link in

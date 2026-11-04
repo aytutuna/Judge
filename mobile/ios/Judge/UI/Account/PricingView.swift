@@ -9,6 +9,12 @@ struct PricingView: View {
     @Environment(AppModel.self) private var app
     @Environment(\.dismiss) private var dismiss
     @State private var webLink: WebLink?
+    /// Shown as a sheet there is no back button, so it brings its own close.
+    private let inSheet: Bool
+
+    init(inSheet: Bool = false) {
+        self.inSheet = inSheet
+    }
 
     private static let title = TypeStyle(face: .interTight, weight: 700, size: 30, lineHeight: 1.05, tracking: -0.03, textStyle: .title1, maxScale: 1.4)
     private static let planTitle = TypeStyle(face: .interTight, weight: 700, size: 20, lineHeight: 1.2, tracking: -0.01, textStyle: .title3, maxScale: 1.5)
@@ -62,13 +68,17 @@ struct PricingView: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbarBackground(Brand.ivory, for: .navigationBar)
         .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
-                // Pushed from Settings or shown as a sheet: either way it goes.
-                NewArgumentButton(lang: lang) {
-                    app.newArgument()
-                    dismiss()
+            if inSheet {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        dismiss()
+                    } label: {
+                        Image(systemName: "xmark")
+                            .font(.system(size: 15, weight: .semibold))
+                            .foregroundStyle(Brand.ink2)
+                    }
+                    .accessibilityLabel(L10n.appCancel(lang))
                 }
-                .disabled(app.home.isBusy)
             }
         }
         .sheet(item: $webLink) { link in

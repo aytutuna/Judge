@@ -100,22 +100,6 @@ struct LinkButtonStyle: ButtonStyle {
     }
 }
 
-/// A selectable chip (examples).
-struct ChipButtonStyle: ButtonStyle {
-    var selected = false
-
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .brandText(.chip)
-            .foregroundStyle(selected ? Brand.terraInk : Brand.ink)
-            .padding(.horizontal, 14)
-            .frame(minHeight: 38)
-            .background(Capsule().fill(selected ? Brand.terraTint : Brand.ivory2))
-            .overlay(Capsule().strokeBorder(selected ? Brand.terra.opacity(0.5) : Brand.line, lineWidth: 1))
-            .opacity(configuration.isPressed ? 0.7 : 1)
-    }
-}
-
 /// Micro caps label (`--text-micro`, `.k`).
 struct Kicker: View {
     let text: String
@@ -195,28 +179,6 @@ struct FlowLayout: Layout {
         }
         if !current.indices.isEmpty { rows.append(current) }
         return rows
-    }
-}
-
-/// The header's "+": a new argument on an empty form. The language
-/// switch lives in Settings.
-struct NewArgumentButton: View {
-    let lang: AppLang
-    let action: () -> Void
-
-    var body: some View {
-        Button(action: action) {
-            Image(systemName: "plus")
-                .font(.system(size: 15, weight: .semibold))
-                .foregroundStyle(Brand.ink)
-                .frame(width: 36, height: 36)
-                .background(Circle().fill(Brand.paper))
-                .overlay(Circle().strokeBorder(Brand.line2, lineWidth: 1))
-                .frame(width: 44, height: 44)
-                .contentShape(Rectangle())
-        }
-        .buttonStyle(.plain)
-        .accessibilityLabel(L10n.shellNew(lang))
     }
 }
 
