@@ -204,6 +204,7 @@ struct HistoryView: View {
             Section {
                 ForEach(Array(entries.enumerated()), id: \.element.id) { index, entry in
                     row(entry, lang: lang, now: now)
+                        .listRowSeparator(index == 0 ? .hidden : .automatic, edges: .top)
                         .listRowSeparator(index == entries.count - 1 ? .hidden : .automatic, edges: .bottom)
                         .onAppear {
                             guard index >= entries.count - 3 else { return }
