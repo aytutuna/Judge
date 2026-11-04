@@ -80,8 +80,6 @@ const da: AppLocale = {
     "app.account.signedOut": "Du er logget ud.",
     "app.account.sessionExpired": "Du er blevet logget ud. Log ind igen for at fortsætte.",
     "app.close": "Luk",
-    "app.home.lead": "Skriv begge sider, eller send den anden et link til at skrive sin egen.",
-    "app.home.leadSolo": "Skriv din side og den andens, hvis du kender den.",
     "app.home.yourSide": "Din side",
     "app.home.theirSide": "Den andens side",
     "app.home.yourName": "Dit navn",
@@ -95,6 +93,9 @@ const da: AppLocale = {
     "app.home.mySide": "Min side:",
     "app.home.otherSide": "Den andens side:",
     "app.home.example": "Prøv et eksempel",
+    "app.home.addTheirSide": "Tilføj den andens side",
+    "app.home.removeTheirSide": "Fjern den andens side",
+    "app.home.clear": "Ryd",
     "app.example.dishwasher.aName": "Anne",
     "app.example.dishwasher.a":
       "Du har sat skålene i den øverste kurv igen. De bliver aldrig rene deroppe, det er det, den nederste er til.",

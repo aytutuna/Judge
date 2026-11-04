@@ -441,7 +441,6 @@
     <string name="names_failed">Nie udało się zapisać imion. Spróbuj ponownie.</string>
     <string name="names_invalid">Wpisz od 1 do 40 znaków. Etykiety w stylu „Strona A” są niedozwolone.</string>
     <string name="account_verdicts_removed">Usunięty</string>
-    <string name="shell_new">Nowy spór</string>
     <string name="shell_today">Dzisiaj</string>
     <string name="shell_load_failed">Nie udało się wczytać historii.</string>
     <string name="shell_load_more">Pokaż więcej</string>
@@ -603,8 +602,6 @@
     <string name="app_account_signed_out">Wylogowano.</string>
     <string name="app_account_session_expired">Wylogowano cię. Zaloguj się ponownie, żeby kontynuować.</string>
     <string name="app_close">Zamknij</string>
-    <string name="app_home_lead">Opisz obie wersje albo wyślij drugiej osobie link, żeby opisała swoją.</string>
-    <string name="app_home_lead_solo">Opisz swoją wersję, a jeśli ją znasz, także wersję drugiej strony.</string>
     <string name="app_home_your_side">Twoja wersja</string>
     <string name="app_home_their_side">Druga strona</string>
     <string name="app_home_your_name">Twoje imię</string>
@@ -618,6 +615,9 @@
     <string name="app_home_my_side">Moja wersja:</string>
     <string name="app_home_other_side">Wersja drugiej strony:</string>
     <string name="app_home_example">Wypróbuj przykład</string>
+    <string name="app_home_add_their_side">Dodaj drugą stronę</string>
+    <string name="app_home_remove_their_side">Usuń drugą stronę</string>
+    <string name="app_home_clear">Wyczyść</string>
     <string name="app_example_dishwasher_a_name">Ania</string>
     <string name="app_example_dishwasher_a">Znowu wstawiłeś miski do górnego kosza. Tam nigdy się nie domywają, od tego jest dolny.</string>
     <string name="app_example_dishwasher_b_name">Michał</string>

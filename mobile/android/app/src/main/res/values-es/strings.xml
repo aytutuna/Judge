@@ -433,7 +433,6 @@
     <string name="names_failed">No pudimos guardar los nombres. Inténtalo de nuevo.</string>
     <string name="names_invalid">Usa de 1 a 40 caracteres, y que no sea una etiqueta como Parte A.</string>
     <string name="account_verdicts_removed">Eliminado</string>
-    <string name="shell_new">Nueva discusión</string>
     <string name="shell_today">Hoy</string>
     <string name="shell_load_failed">No pudimos cargar tu historial.</string>
     <string name="shell_load_more">Mostrar más</string>
@@ -586,8 +585,6 @@
     <string name="app_account_signed_out">Has cerrado sesión.</string>
     <string name="app_account_session_expired">Se cerró tu sesión. Vuelve a iniciar sesión para continuar.</string>
     <string name="app_close">Cerrar</string>
-    <string name="app_home_lead">Escribe las dos versiones o envía un enlace a la otra persona para que escriba la suya.</string>
-    <string name="app_home_lead_solo">Escribe tu versión y, si la conoces, la de la otra persona.</string>
     <string name="app_home_your_side">Tu versión</string>
     <string name="app_home_their_side">La otra versión</string>
     <string name="app_home_your_name">Tu nombre</string>
@@ -601,6 +598,9 @@
     <string name="app_home_my_side">Mi versión:</string>
     <string name="app_home_other_side">Versión de la otra persona:</string>
     <string name="app_home_example">Probar un ejemplo</string>
+    <string name="app_home_add_their_side">Añadir la otra versión</string>
+    <string name="app_home_remove_their_side">Quitar la otra versión</string>
+    <string name="app_home_clear">Borrar</string>
     <string name="app_example_dishwasher_a_name">Carmen</string>
     <string name="app_example_dishwasher_a">Otra vez pusiste los platos hondos en la parte de arriba. Ahí nunca salen limpios; para eso está la de abajo.</string>
     <string name="app_example_dishwasher_b_name">Javier</string>

@@ -425,7 +425,6 @@
     <string name="names_failed">નામ સેવ ન થઈ શક્યાં. ફરી પ્રયાસ કરો.</string>
     <string name="names_invalid">1થી 40 અક્ષર વાપરો, અને પક્ષ A જેવું લેબલ નહીં.</string>
     <string name="account_verdicts_removed">દૂર કરાયો</string>
-    <string name="shell_new">નવો વિવાદ</string>
     <string name="shell_today">આજે</string>
     <string name="shell_load_failed">તમારો ઇતિહાસ લોડ ન થઈ શક્યો.</string>
     <string name="shell_load_more">વધુ બતાવો</string>
@@ -569,8 +568,6 @@
     <string name="app_account_signed_out">તમે સાઇન આઉટ થઈ ગયા.</string>
     <string name="app_account_session_expired">તમે સાઇન આઉટ થઈ ગયા છો. આગળ વધવા ફરી સાઇન ઇન કરો.</string>
     <string name="app_close">બંધ કરો</string>
-    <string name="app_home_lead">બંને બાજુની વાત લખો, અથવા સામેની વ્યક્તિને લિંક મોકલો, જેથી એ પોતાની વાત જાતે લખે.</string>
-    <string name="app_home_lead_solo">તમારી વાત લખો, અને ખબર હોય તો એમની પણ.</string>
     <string name="app_home_your_side">તમારી વાત</string>
     <string name="app_home_their_side">એમની વાત</string>
     <string name="app_home_your_name">તમારું નામ</string>
@@ -584,6 +581,9 @@
     <string name="app_home_my_side">મારી વાત:</string>
     <string name="app_home_other_side">સામેવાળાની વાત:</string>
     <string name="app_home_example">ઉદાહરણ અજમાવો</string>
+    <string name="app_home_add_their_side">એમની વાત ઉમેરો</string>
+    <string name="app_home_remove_their_side">એમની વાત કાઢી નાખો</string>
+    <string name="app_home_clear">સાફ કરો</string>
     <string name="app_example_dishwasher_a_name">ધ્વનિ</string>
     <string name="app_example_dishwasher_a">તેં ફરી વાટકા ઉપરના રૅકમાં મૂક્યા. ત્યાં એ ક્યારેય ચોખ્ખા નથી નીકળતા, નીચેનું રૅક એના માટે જ તો છે.</string>
     <string name="app_example_dishwasher_b_name">પાર્થ</string>

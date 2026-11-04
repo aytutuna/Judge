@@ -441,7 +441,6 @@
     <string name="names_failed">Mená sa nepodarilo uložiť. Skús to znova.</string>
     <string name="names_invalid">Meno musí mať 1 až 40 znakov a nesmie to byť označenie ako Strana A.</string>
     <string name="account_verdicts_removed">Odstránený</string>
-    <string name="shell_new">Nový spor</string>
     <string name="shell_today">Dnes</string>
     <string name="shell_load_failed">Históriu sa nepodarilo načítať.</string>
     <string name="shell_load_more">Zobraziť viac</string>
@@ -603,8 +602,6 @@
     <string name="app_account_signed_out">Odhlásenie prebehlo.</string>
     <string name="app_account_session_expired">Odhlásili sme ťa. Ak chceš pokračovať, prihlás sa znova.</string>
     <string name="app_close">Zavrieť</string>
-    <string name="app_home_lead">Napíš obe verzie alebo pošli druhej strane odkaz, nech napíše tú svoju.</string>
-    <string name="app_home_lead_solo">Napíš svoju verziu a aj verziu druhej strany, ak ju poznáš.</string>
     <string name="app_home_your_side">Tvoja verzia</string>
     <string name="app_home_their_side">Verzia druhej strany</string>
     <string name="app_home_your_name">Tvoje meno</string>
@@ -618,6 +615,9 @@
     <string name="app_home_my_side">Moja verzia:</string>
     <string name="app_home_other_side">Verzia druhej strany:</string>
     <string name="app_home_example">Skúsiť príklad</string>
+    <string name="app_home_add_their_side">Pridať verziu druhej strany</string>
+    <string name="app_home_remove_their_side">Odstrániť verziu druhej strany</string>
+    <string name="app_home_clear">Vymazať</string>
     <string name="app_example_dishwasher_a_name">Lucia</string>
     <string name="app_example_dishwasher_a">Zase si dal misky do horného koša. Tam sa nikdy poriadne neumyjú, na to je predsa dolný kôš.</string>
     <string name="app_example_dishwasher_b_name">Peter</string>

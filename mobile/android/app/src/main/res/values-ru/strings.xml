@@ -441,7 +441,6 @@
     <string name="names_failed">Не удалось сохранить имена. Попробуйте ещё раз.</string>
     <string name="names_invalid">От 1 до 40 символов, и не метка вроде «Сторона A».</string>
     <string name="account_verdicts_removed">Удалён</string>
-    <string name="shell_new">Новый спор</string>
     <string name="shell_today">Сегодня</string>
     <string name="shell_load_failed">Не удалось загрузить историю.</string>
     <string name="shell_load_more">Показать ещё</string>
@@ -603,8 +602,6 @@
     <string name="app_account_signed_out">Вы вышли из аккаунта.</string>
     <string name="app_account_session_expired">Сеанс истёк. Войдите снова, чтобы продолжить.</string>
     <string name="app_close">Закрыть</string>
-    <string name="app_home_lead">Напишите обе версии или отправьте другому человеку ссылку, чтобы он написал свою.</string>
-    <string name="app_home_lead_solo">Напишите свою версию, а если знаете — и версию другой стороны.</string>
     <string name="app_home_your_side">Ваша версия</string>
     <string name="app_home_their_side">Другая сторона</string>
     <string name="app_home_your_name">Ваше имя</string>
@@ -618,6 +615,9 @@
     <string name="app_home_my_side">Моя версия:</string>
     <string name="app_home_other_side">Версия другой стороны:</string>
     <string name="app_home_example">Попробовать на примере</string>
+    <string name="app_home_add_their_side">Добавить другую сторону</string>
+    <string name="app_home_remove_their_side">Убрать другую сторону</string>
+    <string name="app_home_clear">Очистить</string>
     <string name="app_example_dishwasher_a_name">Аня</string>
     <string name="app_example_dishwasher_a">Ты опять поставил миски в верхнюю корзину. Там они никогда не отмываются — для них есть нижняя.</string>
     <string name="app_example_dishwasher_b_name">Дима</string>

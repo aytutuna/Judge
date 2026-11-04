@@ -417,7 +417,6 @@
     <string name="names_failed">Nama gagal disimpan. Coba lagi.</string>
     <string name="names_invalid">Gunakan 1 sampai 40 karakter, dan jangan pakai label seperti Pihak A.</string>
     <string name="account_verdicts_removed">Dihapus</string>
-    <string name="shell_new">Perdebatan baru</string>
     <string name="shell_today">Hari ini</string>
     <string name="shell_load_failed">Riwayatmu gagal dimuat.</string>
     <string name="shell_load_more">Tampilkan lagi</string>
@@ -552,8 +551,6 @@
     <string name="app_account_signed_out">Kamu sudah keluar.</string>
     <string name="app_account_session_expired">Sesimu sudah berakhir. Masuk lagi untuk melanjutkan.</string>
     <string name="app_close">Tutup</string>
-    <string name="app_home_lead">Tulis versi kedua pihak, atau kirim tautan ke lawan debatmu agar dia menulis versinya sendiri.</string>
-    <string name="app_home_lead_solo">Tulis versimu, dan versi dia juga kalau kamu tahu.</string>
     <string name="app_home_your_side">Versimu</string>
     <string name="app_home_their_side">Versi dia</string>
     <string name="app_home_your_name">Namamu</string>
@@ -567,6 +564,9 @@
     <string name="app_home_my_side">Versiku:</string>
     <string name="app_home_other_side">Versi dia:</string>
     <string name="app_home_example">Coba contoh</string>
+    <string name="app_home_add_their_side">Tambah versi dia</string>
+    <string name="app_home_remove_their_side">Hapus versi dia</string>
+    <string name="app_home_clear">Bersihkan</string>
     <string name="app_example_dishwasher_a_name">Rina</string>
     <string name="app_example_dishwasher_a">Kamu menumpuk mangkuk basah di rak piring lagi. Kalau ditumpuk begitu, mangkuknya nggak pernah kering. Taruh telungkup satu-satu, dong.</string>
     <string name="app_example_dishwasher_b_name">Budi</string>

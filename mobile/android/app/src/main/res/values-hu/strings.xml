@@ -425,7 +425,6 @@
     <string name="names_failed">Nem sikerült menteni a neveket. Próbáld újra.</string>
     <string name="names_invalid">1–40 karakter legyen, és ne egy címke, például Fél A.</string>
     <string name="account_verdicts_removed">Eltávolítva</string>
-    <string name="shell_new">Új vita</string>
     <string name="shell_today">Ma</string>
     <string name="shell_load_failed">Nem sikerült betölteni az előzményeidet.</string>
     <string name="shell_load_more">Továbbiak</string>
@@ -569,8 +568,6 @@
     <string name="app_account_signed_out">Kiléptél.</string>
     <string name="app_account_session_expired">Lejárt a belépésed. A folytatáshoz lépj be újra.</string>
     <string name="app_close">Bezárás</string>
-    <string name="app_home_lead">Írd le mindkét fél verzióját, vagy küldj egy linket a másiknak, hogy ő írja meg a sajátját.</string>
-    <string name="app_home_lead_solo">Írd le a te verziódat, és az övét is, ha ismered.</string>
     <string name="app_home_your_side">A te verziód</string>
     <string name="app_home_their_side">Az ő verziója</string>
     <string name="app_home_your_name">A neved</string>
@@ -584,6 +581,9 @@
     <string name="app_home_my_side">Az én verzióm:</string>
     <string name="app_home_other_side">Az ő verziója:</string>
     <string name="app_home_example">Próbálj ki egy példát</string>
+    <string name="app_home_add_their_side">Add hozzá az ő verzióját</string>
+    <string name="app_home_remove_their_side">Vedd ki az ő verzióját</string>
+    <string name="app_home_clear">Törlés</string>
     <string name="app_example_dishwasher_a_name">Kata</string>
     <string name="app_example_dishwasher_a">Már megint a felső kosárba raktad a tálakat. Ott sosem lesznek tiszták, arra való az alsó.</string>
     <string name="app_example_dishwasher_b_name">Ádám</string>

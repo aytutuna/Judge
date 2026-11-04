@@ -433,7 +433,6 @@
     <string name="names_failed">לא הצלחנו לשמור את השמות. אפשר לנסות שוב.</string>
     <string name="names_invalid">בין 1 ל-40 תווים, ולא תווית כמו צד A.</string>
     <string name="account_verdicts_removed">הוסר</string>
-    <string name="shell_new">ויכוח חדש</string>
     <string name="shell_today">היום</string>
     <string name="shell_load_failed">לא הצלחנו לטעון את ההיסטוריה.</string>
     <string name="shell_load_more">להציג עוד</string>
@@ -586,8 +585,6 @@
     <string name="app_account_signed_out">התנתקת.</string>
     <string name="app_account_session_expired">נותקת מהחשבון. צריך להתחבר שוב כדי להמשיך.</string>
     <string name="app_close">סגירה</string>
-    <string name="app_home_lead">אפשר לכתוב את שני הצדדים, או לשלוח לצד השני קישור כדי שיכתוב את שלו.</string>
-    <string name="app_home_lead_solo">אפשר לכתוב את הצד שלך, וגם את הצד השני אם הוא ידוע לך.</string>
     <string name="app_home_your_side">הצד שלך</string>
     <string name="app_home_their_side">הצד השני</string>
     <string name="app_home_your_name">השם שלך</string>
@@ -601,6 +598,9 @@
     <string name="app_home_my_side">הצד שלי:</string>
     <string name="app_home_other_side">הצד השני:</string>
     <string name="app_home_example">לנסות דוגמה</string>
+    <string name="app_home_add_their_side">להוסיף את הצד השני</string>
+    <string name="app_home_remove_their_side">להסיר את הצד השני</string>
+    <string name="app_home_clear">ניקוי</string>
     <string name="app_example_dishwasher_a_name">נועה</string>
     <string name="app_example_dishwasher_a">שוב שמת את הקערות במדף העליון. שם הן אף פעם לא יוצאות נקיות, בשביל זה יש את המדף התחתון.</string>
     <string name="app_example_dishwasher_b_name">איתי</string>

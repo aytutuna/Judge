@@ -81,8 +81,6 @@ const ur: AppLocale = {
     "app.account.signedOut": "سائن آؤٹ ہو گیا۔",
     "app.account.sessionExpired": "آپ کو سائن آؤٹ کر دیا گیا ہے۔ جاری رکھنے کے لیے دوبارہ سائن ان کریں۔",
     "app.close": "بند کریں",
-    "app.home.lead": "دونوں طرف کی بات لکھیں، یا دوسرے شخص کو لنک بھیجیں تاکہ وہ اپنی بات خود لکھیں۔",
-    "app.home.leadSolo": "اپنی بات لکھیں، اور معلوم ہو تو ان کی بھی۔",
     "app.home.yourSide": "آپ کی بات",
     "app.home.theirSide": "ان کی بات",
     "app.home.yourName": "آپ کا نام",
@@ -96,6 +94,9 @@ const ur: AppLocale = {
     "app.home.mySide": "میری بات:",
     "app.home.otherSide": "ان کی بات:",
     "app.home.example": "کوئی مثال آزمائیں",
+    "app.home.addTheirSide": "ان کی بات شامل کریں",
+    "app.home.removeTheirSide": "ان کی بات ہٹائیں",
+    "app.home.clear": "صاف کریں",
     "app.example.dishwasher.aName": "عائشہ",
     "app.example.dishwasher.a":
       "تم نے پیالے پھر اوپر والے ریک میں رکھ دیے۔ وہاں وہ کبھی صاف نہیں نکلتے، نیچے والا ریک اسی کام کے لیے ہے۔",

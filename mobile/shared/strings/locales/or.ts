@@ -81,8 +81,6 @@ const or: AppLocale = {
     "app.account.signedOut": "ଆପଣ ସାଇନ୍ ଆଉଟ୍ ହୋଇଗଲେ।",
     "app.account.sessionExpired": "ଆପଣ ସାଇନ୍ ଆଉଟ୍ ହୋଇଯାଇଛନ୍ତି। ଆଗକୁ ବଢ଼ିବାକୁ ପୁଣି ସାଇନ୍ ଇନ୍ କରନ୍ତୁ।",
     "app.close": "ବନ୍ଦ କରନ୍ତୁ",
-    "app.home.lead": "ଦୁଇ ପକ୍ଷର କଥା ଲେଖନ୍ତୁ, ନହେଲେ ଅନ୍ୟ ଜଣଙ୍କୁ ଲିଙ୍କ୍ ପଠାନ୍ତୁ, ସେ ନିଜ କଥା ନିଜେ ଲେଖିବେ।",
-    "app.home.leadSolo": "ନିଜ କଥା ଲେଖନ୍ତୁ, ଜାଣିଥିଲେ ତାଙ୍କ କଥା ବି।",
     "app.home.yourSide": "ଆପଣଙ୍କ କଥା",
     "app.home.theirSide": "ତାଙ୍କ କଥା",
     "app.home.yourName": "ଆପଣଙ୍କ ନାମ",
@@ -96,6 +94,9 @@ const or: AppLocale = {
     "app.home.mySide": "ମୋ କଥା:",
     "app.home.otherSide": "ତାଙ୍କ କଥା:",
     "app.home.example": "ଗୋଟେ ଉଦାହରଣ ନେଇ ଦେଖନ୍ତୁ",
+    "app.home.addTheirSide": "ତାଙ୍କ କଥା ଯୋଡ଼ନ୍ତୁ",
+    "app.home.removeTheirSide": "ତାଙ୍କ କଥା ହଟାନ୍ତୁ",
+    "app.home.clear": "ସଫା କରନ୍ତୁ",
     "app.example.dishwasher.aName": "ରଶ୍ମି",
     "app.example.dishwasher.a":
       "ତୁମେ ପୁଣି ବାଟିଗୁଡ଼ାକ ଡିସ୍‌ୱାସରର ଉପର ଥାକରେ ରଖିଛ। ସେଠି ସେଗୁଡ଼ା କେବେ ସଫା ବାହାରେ ନାହିଁ, ସେଥିପାଇଁ ତ ତଳ ଥାକ ଅଛି।",

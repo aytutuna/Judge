@@ -80,8 +80,6 @@ const vi: AppLocale = {
     "app.account.signedOut": "Bạn đã đăng xuất.",
     "app.account.sessionExpired": "Bạn đã bị đăng xuất. Đăng nhập lại để tiếp tục.",
     "app.close": "Đóng",
-    "app.home.lead": "Kể phần của cả hai bên, hoặc gửi liên kết để người kia tự kể phần của họ.",
-    "app.home.leadSolo": "Kể phần của bạn, và cả phần của người kia nếu bạn biết.",
     "app.home.yourSide": "Phía bạn",
     "app.home.theirSide": "Phía bên kia",
     "app.home.yourName": "Tên của bạn",
@@ -95,6 +93,9 @@ const vi: AppLocale = {
     "app.home.mySide": "Phía tôi:",
     "app.home.otherSide": "Phía bên kia:",
     "app.home.example": "Thử một ví dụ",
+    "app.home.addTheirSide": "Thêm phía bên kia",
+    "app.home.removeTheirSide": "Bỏ phía bên kia",
+    "app.home.clear": "Xóa",
     "app.example.dishwasher.aName": "Linh",
     "app.example.dishwasher.a":
       "Bạn lại xếp bát lên ngăn trên rồi. Để trên đó rửa chẳng bao giờ sạch, ngăn dưới là để xếp bát mà.",

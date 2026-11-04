@@ -425,7 +425,6 @@
     <string name="names_failed">नाम सेव नहीं हो पाए। फिर कोशिश करें।</string>
     <string name="names_invalid">1 से 40 अक्षरों का नाम लिखें, और पक्ष A जैसा कोई लेबल नहीं।</string>
     <string name="account_verdicts_removed">हटाया गया</string>
-    <string name="shell_new">नई बहस</string>
     <string name="shell_today">आज</string>
     <string name="shell_load_failed">आपका इतिहास लोड नहीं हो पाया।</string>
     <string name="shell_load_more">और दिखाएँ</string>
@@ -569,8 +568,6 @@
     <string name="app_account_signed_out">आपका साइन आउट हो गया है।</string>
     <string name="app_account_session_expired">आपको साइन आउट कर दिया गया है। जारी रखने के लिए फिर से साइन इन करें।</string>
     <string name="app_close">बंद करें</string>
-    <string name="app_home_lead">दोनों पक्षों की बात लिखें, या दूसरे व्यक्ति को लिंक भेजें ताकि वे अपनी बात ख़ुद लिखें।</string>
-    <string name="app_home_lead_solo">अपनी बात लिखें, और पता हो तो उनकी भी।</string>
     <string name="app_home_your_side">आपकी बात</string>
     <string name="app_home_their_side">उनकी बात</string>
     <string name="app_home_your_name">आपका नाम</string>
@@ -584,6 +581,9 @@
     <string name="app_home_my_side">मेरी बात:</string>
     <string name="app_home_other_side">उनकी बात:</string>
     <string name="app_home_example">कोई उदाहरण आज़माएँ</string>
+    <string name="app_home_add_their_side">उनकी बात जोड़ें</string>
+    <string name="app_home_remove_their_side">उनकी बात हटाएँ</string>
+    <string name="app_home_clear">साफ़ करें</string>
     <string name="app_example_dishwasher_a_name">अनन्या</string>
     <string name="app_example_dishwasher_a">तुमने फिर से कटोरियाँ ऊपर वाले रैक में रख दीं। वहाँ वे कभी ठीक से साफ़ नहीं होतीं, नीचे वाला रैक इसी के लिए है।</string>
     <string name="app_example_dishwasher_b_name">रोहित</string>

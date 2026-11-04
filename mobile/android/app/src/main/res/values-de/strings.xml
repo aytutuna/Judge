@@ -425,7 +425,6 @@
     <string name="names_failed">Wir konnten die Namen nicht speichern. Versuch es noch mal.</string>
     <string name="names_invalid">Verwende 1 bis 40 Zeichen und keine Bezeichnung wie „Partei A“.</string>
     <string name="account_verdicts_removed">Entfernt</string>
-    <string name="shell_new">Neuer Streit</string>
     <string name="shell_today">Heute</string>
     <string name="shell_load_failed">Wir konnten deinen Verlauf nicht laden.</string>
     <string name="shell_load_more">Mehr anzeigen</string>
@@ -569,8 +568,6 @@
     <string name="app_account_signed_out">Du bist abgemeldet.</string>
     <string name="app_account_session_expired">Du wurdest abgemeldet. Melde dich wieder an, um weiterzumachen.</string>
     <string name="app_close">Schließen</string>
-    <string name="app_home_lead">Schreib beide Seiten auf oder schick der anderen Person einen Link für ihre Seite.</string>
-    <string name="app_home_lead_solo">Schreib deine Seite auf und, wenn du sie kennst, auch die der anderen Person.</string>
     <string name="app_home_your_side">Deine Seite</string>
     <string name="app_home_their_side">Gegenseite</string>
     <string name="app_home_your_name">Dein Name</string>
@@ -584,6 +581,9 @@
     <string name="app_home_my_side">Meine Seite:</string>
     <string name="app_home_other_side">Die andere Seite:</string>
     <string name="app_home_example">Beispiel ausprobieren</string>
+    <string name="app_home_add_their_side">Gegenseite hinzufügen</string>
+    <string name="app_home_remove_their_side">Gegenseite entfernen</string>
+    <string name="app_home_clear">Leeren</string>
     <string name="app_example_dishwasher_a_name">Julia</string>
     <string name="app_example_dishwasher_a">Du hast die Schüsseln schon wieder oben eingeräumt. Da werden sie nie richtig sauber, dafür ist doch der untere Korb da.</string>
     <string name="app_example_dishwasher_b_name">Felix</string>

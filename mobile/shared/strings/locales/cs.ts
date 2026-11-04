@@ -83,8 +83,6 @@ const cs: AppLocale = {
     "app.account.signedOut": "Odhlášeno.",
     "app.account.sessionExpired": "Přihlášení vypršelo. Pro pokračování se přihlas znovu.",
     "app.close": "Zavřít",
-    "app.home.lead": "Napiš oba pohledy, nebo pošli druhé straně odkaz, ať napíše ten svůj.",
-    "app.home.leadSolo": "Napiš svůj pohled, případně i ten druhý, pokud ho znáš.",
     "app.home.yourSide": "Tvůj pohled",
     "app.home.theirSide": "Pohled druhé strany",
     "app.home.yourName": "Tvoje jméno",
@@ -98,6 +96,9 @@ const cs: AppLocale = {
     "app.home.mySide": "Můj pohled:",
     "app.home.otherSide": "Pohled druhé strany:",
     "app.home.example": "Zkusit příklad",
+    "app.home.addTheirSide": "Přidat pohled druhé strany",
+    "app.home.removeTheirSide": "Odebrat pohled druhé strany",
+    "app.home.clear": "Vymazat",
     "app.example.dishwasher.aName": "Lucie",
     "app.example.dishwasher.a":
       "Zase jsi dal misky do horního koše. Tam se nikdy pořádně neumyjí, od toho je přece dolní koš.",

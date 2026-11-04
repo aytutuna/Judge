@@ -425,7 +425,6 @@
     <string name="names_failed">పేర్లు సేవ్ చేయలేకపోయాం. మళ్లీ ప్రయత్నించండి.</string>
     <string name="names_invalid">1 నుంచి 40 అక్షరాలు వాడండి, పక్షం A లాంటి లేబుల్ వద్దు.</string>
     <string name="account_verdicts_removed">తీసేశారు</string>
-    <string name="shell_new">కొత్త వాదన</string>
     <string name="shell_today">ఈరోజు</string>
     <string name="shell_load_failed">మీ చరిత్ర లోడ్ కాలేదు.</string>
     <string name="shell_load_more">ఇంకా చూపించండి</string>
@@ -569,8 +568,6 @@
     <string name="app_account_signed_out">మీరు సైన్ అవుట్ అయ్యారు.</string>
     <string name="app_account_session_expired">మీరు సైన్ అవుట్ అయ్యారు. కొనసాగడానికి మళ్లీ సైన్ ఇన్ చేయండి.</string>
     <string name="app_close">మూసేయండి</string>
-    <string name="app_home_lead">రెండు వైపుల కథా మీరే రాయండి, లేదా అవతలి వ్యక్తికి లింక్ పంపి వాళ్ల కథ వాళ్లనే రాయమనండి.</string>
-    <string name="app_home_lead_solo">మీ వైపు కథ రాయండి, వాళ్ల వైపు తెలిస్తే అది కూడా.</string>
     <string name="app_home_your_side">మీ వైపు కథ</string>
     <string name="app_home_their_side">వాళ్ల వైపు కథ</string>
     <string name="app_home_your_name">మీ పేరు</string>
@@ -584,6 +581,9 @@
     <string name="app_home_my_side">నా వైపు కథ:</string>
     <string name="app_home_other_side">వాళ్ల వైపు కథ:</string>
     <string name="app_home_example">ఒక ఉదాహరణ ప్రయత్నించండి</string>
+    <string name="app_home_add_their_side">వాళ్ల వైపు కథ జోడించండి</string>
+    <string name="app_home_remove_their_side">వాళ్ల వైపు కథ తీసేయండి</string>
+    <string name="app_home_clear">క్లియర్ చేయండి</string>
     <string name="app_example_dishwasher_a_name">సాయి</string>
     <string name="app_example_dishwasher_a">మీరు మళ్లీ గిన్నెలను పై ర్యాక్‌లో పెట్టారు. అక్కడ అవి ఎప్పుడూ శుభ్రంగా రావు, అందుకే కింది ర్యాక్ ఉంది.</string>
     <string name="app_example_dishwasher_b_name">దివ్య</string>

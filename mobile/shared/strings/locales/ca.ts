@@ -83,8 +83,6 @@ const ca: AppLocale = {
     "app.account.signedOut": "Has tancat la sessió.",
     "app.account.sessionExpired": "S'ha tancat la sessió. Torna a iniciar sessió per continuar.",
     "app.close": "Tanca",
-    "app.home.lead": "Escriu les dues versions o envia un enllaç a l'altra persona perquè escrigui la seva.",
-    "app.home.leadSolo": "Escriu la teva versió, i la de l'altra persona si la coneixes.",
     "app.home.yourSide": "La teva versió",
     "app.home.theirSide": "La seva versió",
     "app.home.yourName": "El teu nom",
@@ -98,6 +96,9 @@ const ca: AppLocale = {
     "app.home.mySide": "La meva versió:",
     "app.home.otherSide": "La versió de l'altra persona:",
     "app.home.example": "Prova un exemple",
+    "app.home.addTheirSide": "Afegeix la seva versió",
+    "app.home.removeTheirSide": "Treu la seva versió",
+    "app.home.clear": "Esborra",
     "app.example.dishwasher.aName": "Jordi",
     "app.example.dishwasher.a":
       "Has tornat a posar els bols a la cistella de dalt del rentaplats. Allà dalt no surten mai nets; per això hi ha la de baix.",

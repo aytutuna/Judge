@@ -425,7 +425,6 @@
     <string name="names_failed">Δεν μπορέσαμε να αποθηκεύσουμε τα ονόματα. Δοκίμασε ξανά.</string>
     <string name="names_invalid">Γράψε από 1 έως 40 χαρακτήρες, και όχι ετικέτα όπως «Πλευρά A».</string>
     <string name="account_verdicts_removed">Αφαιρέθηκε</string>
-    <string name="shell_new">Νέα διαφωνία</string>
     <string name="shell_today">Σήμερα</string>
     <string name="shell_load_failed">Δεν μπορέσαμε να φορτώσουμε το ιστορικό σου.</string>
     <string name="shell_load_more">Περισσότερα</string>
@@ -569,8 +568,6 @@
     <string name="app_account_signed_out">Αποσυνδέθηκες.</string>
     <string name="app_account_session_expired">Αποσυνδέθηκες. Συνδέσου ξανά για να συνεχίσεις.</string>
     <string name="app_close">Κλείσιμο</string>
-    <string name="app_home_lead">Γράψε και τις δύο πλευρές ή στείλε σύνδεσμο στο άλλο άτομο για να γράψει τη δική του.</string>
-    <string name="app_home_lead_solo">Γράψε τη δική σου πλευρά, και την άλλη αν την ξέρεις.</string>
     <string name="app_home_your_side">Η πλευρά σου</string>
     <string name="app_home_their_side">Η άλλη πλευρά</string>
     <string name="app_home_your_name">Το όνομά σου</string>
@@ -584,6 +581,9 @@
     <string name="app_home_my_side">Η δική μου πλευρά:</string>
     <string name="app_home_other_side">Η άλλη πλευρά:</string>
     <string name="app_home_example">Δοκίμασε ένα παράδειγμα</string>
+    <string name="app_home_add_their_side">Πρόσθεσε την άλλη πλευρά</string>
+    <string name="app_home_remove_their_side">Αφαίρεσε την άλλη πλευρά</string>
+    <string name="app_home_clear">Καθαρισμός</string>
     <string name="app_example_dishwasher_a_name">Μαρία</string>
     <string name="app_example_dishwasher_a">Έβαλες πάλι τα μπολ στο πάνω καλάθι. Εκεί δεν βγαίνουν ποτέ καθαρά, γι\' αυτό υπάρχει το κάτω.</string>
     <string name="app_example_dishwasher_b_name">Νίκος</string>

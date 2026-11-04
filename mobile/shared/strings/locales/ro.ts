@@ -84,8 +84,6 @@ const ro: AppLocale = {
     "app.account.signedOut": "Te-ai deconectat.",
     "app.account.sessionExpired": "Sesiunea ta a expirat. Conectează-te din nou ca să continui.",
     "app.close": "Închide",
-    "app.home.lead": "Scrie ambele părți sau trimite-i celeilalte persoane un link ca să-și scrie varianta.",
-    "app.home.leadSolo": "Scrie-ți partea și, dacă o știi, varianta celeilalte persoane.",
     "app.home.yourSide": "Partea ta",
     "app.home.theirSide": "Cealaltă parte",
     "app.home.yourName": "Numele tău",
@@ -99,6 +97,9 @@ const ro: AppLocale = {
     "app.home.mySide": "Partea mea:",
     "app.home.otherSide": "Cealaltă parte:",
     "app.home.example": "Încearcă un exemplu",
+    "app.home.addTheirSide": "Adaugă cealaltă parte",
+    "app.home.removeTheirSide": "Elimină cealaltă parte",
+    "app.home.clear": "Șterge",
     "app.example.dishwasher.aName": "Ioana",
     "app.example.dishwasher.a":
       "Iar ai pus bolurile în coșul de sus. Acolo nu ies niciodată curate, coșul de jos e pentru asta.",

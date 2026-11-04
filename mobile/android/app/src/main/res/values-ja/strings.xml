@@ -417,7 +417,6 @@
     <string name="names_failed">名前を保存できませんでした。もう一度お試しください。</string>
     <string name="names_invalid">1〜40文字で入力してください。「当事者A」のようなラベルは使えません。</string>
     <string name="account_verdicts_removed">削除済み</string>
-    <string name="shell_new">新しい揉めごと</string>
     <string name="shell_today">今日</string>
     <string name="shell_load_failed">履歴を読み込めませんでした。</string>
     <string name="shell_load_more">もっと見る</string>
@@ -552,8 +551,6 @@
     <string name="app_account_signed_out">ログアウトしました。</string>
     <string name="app_account_session_expired">ログアウトされました。続けるには、もう一度ログインしてください。</string>
     <string name="app_close">閉じる</string>
-    <string name="app_home_lead">両方の言い分を書くか、相手にリンクを送って言い分を書いてもらいましょう。</string>
-    <string name="app_home_lead_solo">あなたの言い分を書いてください。わかれば相手の言い分も。</string>
     <string name="app_home_your_side">あなたの言い分</string>
     <string name="app_home_their_side">相手の言い分</string>
     <string name="app_home_your_name">あなたの名前</string>
@@ -567,6 +564,9 @@
     <string name="app_home_my_side">私の言い分：</string>
     <string name="app_home_other_side">相手の言い分：</string>
     <string name="app_home_example">例を試す</string>
+    <string name="app_home_add_their_side">相手の言い分を追加</string>
+    <string name="app_home_remove_their_side">相手の言い分を削除</string>
+    <string name="app_home_clear">クリア</string>
     <string name="app_example_dishwasher_a_name">陽菜</string>
     <string name="app_example_dishwasher_a">またお椀を上の段に入れてる。上だと全然きれいにならないんだよ。そのための下の段でしょ。</string>
     <string name="app_example_dishwasher_b_name">健太</string>

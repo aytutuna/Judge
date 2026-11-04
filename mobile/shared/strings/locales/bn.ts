@@ -81,8 +81,6 @@ const bn: AppLocale = {
     "app.account.signedOut": "আপনি সাইন আউট হয়ে গেছেন।",
     "app.account.sessionExpired": "আপনাকে সাইন আউট করা হয়েছে। চালিয়ে যেতে আবার সাইন ইন করুন।",
     "app.close": "বন্ধ করুন",
-    "app.home.lead": "দুই পক্ষের কথাই লিখুন, নয়তো অন্যজনকে একটা লিংক পাঠান, তিনি নিজের কথা নিজেই লিখবেন।",
-    "app.home.leadSolo": "আপনার কথা লিখুন, আর জানা থাকলে অন্যজনেরটাও।",
     "app.home.yourSide": "আপনার বক্তব্য",
     "app.home.theirSide": "অন্যজনের বক্তব্য",
     "app.home.yourName": "আপনার নাম",
@@ -96,6 +94,9 @@ const bn: AppLocale = {
     "app.home.mySide": "আমার বক্তব্য:",
     "app.home.otherSide": "অন্যজনের বক্তব্য:",
     "app.home.example": "একটা উদাহরণ দিয়ে দেখুন",
+    "app.home.addTheirSide": "অন্যজনের বক্তব্য যোগ করুন",
+    "app.home.removeTheirSide": "অন্যজনের বক্তব্য সরান",
+    "app.home.clear": "মুছুন",
     "app.example.dishwasher.aName": "রুমি",
     "app.example.dishwasher.a":
       "তুমি আবার ভাতের হাঁড়িটা সারারাত সিঙ্কে ভিজিয়ে রেখেছ। সকালে পুরো রান্নাঘরে গন্ধ, রাতেই ধুয়ে ফেলা উচিত।",

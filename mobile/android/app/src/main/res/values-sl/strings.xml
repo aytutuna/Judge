@@ -441,7 +441,6 @@
     <string name="names_failed">Imen nismo mogli shraniti. Poskusi znova.</string>
     <string name="names_invalid">Uporabi od 1 do 40 znakov, ne pa oznake, kot je Stranka A.</string>
     <string name="account_verdicts_removed">Odstranjeno</string>
-    <string name="shell_new">Nov prepir</string>
     <string name="shell_today">Danes</string>
     <string name="shell_load_failed">Zgodovine nismo mogli naložiti.</string>
     <string name="shell_load_more">Pokaži več</string>
@@ -603,8 +602,6 @@
     <string name="app_account_signed_out">Odjava je uspela.</string>
     <string name="app_account_session_expired">Seja je potekla. Za nadaljevanje se znova prijavi.</string>
     <string name="app_close">Zapri</string>
-    <string name="app_home_lead">Napiši obe plati ali drugi osebi pošlji povezavo, da napiše svojo.</string>
-    <string name="app_home_lead_solo">Napiši svojo plat, pa še plat druge osebe, če jo poznaš.</string>
     <string name="app_home_your_side">Tvoja plat</string>
     <string name="app_home_their_side">Druga plat</string>
     <string name="app_home_your_name">Tvoje ime</string>
@@ -618,6 +615,9 @@
     <string name="app_home_my_side">Moja plat:</string>
     <string name="app_home_other_side">Plat druge osebe:</string>
     <string name="app_home_example">Poskusi s primerom</string>
+    <string name="app_home_add_their_side">Dodaj drugo plat</string>
+    <string name="app_home_remove_their_side">Odstrani drugo plat</string>
+    <string name="app_home_clear">Počisti</string>
     <string name="app_example_dishwasher_a_name">Ana</string>
     <string name="app_example_dishwasher_a">Sklede si spet zložil v zgornjo košaro. Tam se nikoli ne pomijejo do konca, za to je spodnja.</string>
     <string name="app_example_dishwasher_b_name">Matic</string>

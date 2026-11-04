@@ -79,8 +79,6 @@ const ja: AppLocale = {
     "app.account.signedOut": "ログアウトしました。",
     "app.account.sessionExpired": "ログアウトされました。続けるには、もう一度ログインしてください。",
     "app.close": "閉じる",
-    "app.home.lead": "両方の言い分を書くか、相手にリンクを送って言い分を書いてもらいましょう。",
-    "app.home.leadSolo": "あなたの言い分を書いてください。わかれば相手の言い分も。",
     "app.home.yourSide": "あなたの言い分",
     "app.home.theirSide": "相手の言い分",
     "app.home.yourName": "あなたの名前",
@@ -94,6 +92,9 @@ const ja: AppLocale = {
     "app.home.mySide": "私の言い分：",
     "app.home.otherSide": "相手の言い分：",
     "app.home.example": "例を試す",
+    "app.home.addTheirSide": "相手の言い分を追加",
+    "app.home.removeTheirSide": "相手の言い分を削除",
+    "app.home.clear": "クリア",
     "app.example.dishwasher.aName": "陽菜",
     "app.example.dishwasher.a":
       "またお椀を上の段に入れてる。上だと全然きれいにならないんだよ。そのための下の段でしょ。",

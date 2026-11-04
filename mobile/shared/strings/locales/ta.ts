@@ -84,8 +84,6 @@ const ta: AppLocale = {
     "app.account.signedOut": "நீங்கள் வெளியேறிவிட்டீர்கள்.",
     "app.account.sessionExpired": "நீங்கள் கணக்கிலிருந்து வெளியேற்றப்பட்டுள்ளீர்கள். தொடர மீண்டும் உள்நுழையுங்கள்.",
     "app.close": "மூடு",
-    "app.home.lead": "இரு தரப்பையும் எழுதுங்கள், அல்லது மற்றவர் தன் தரப்பை எழுத அவருக்கு ஒரு லிங்க் அனுப்புங்கள்.",
-    "app.home.leadSolo": "உங்கள் தரப்பை எழுதுங்கள், தெரிந்தால் மறுதரப்பையும்.",
     "app.home.yourSide": "உங்கள் தரப்பு",
     "app.home.theirSide": "மறுதரப்பு",
     "app.home.yourName": "உங்கள் பெயர்",
@@ -99,6 +97,9 @@ const ta: AppLocale = {
     "app.home.mySide": "என் தரப்பு:",
     "app.home.otherSide": "மறுதரப்பு:",
     "app.home.example": "உதாரணத்துடன் முயன்று பாருங்கள்",
+    "app.home.addTheirSide": "மறுதரப்பைச் சேர்க்கவும்",
+    "app.home.removeTheirSide": "மறுதரப்பை நீக்கவும்",
+    "app.home.clear": "அழி",
     "app.example.dishwasher.aName": "கவிதா",
     "app.example.dishwasher.a":
       "நீ மறுபடியும் கிண்ணங்களை மேல் ரேக்கில் வைத்திருக்கிறாய். அங்கே அவை ஒருபோதும் சுத்தமாக வருவதில்லை, அதற்குத்தான் கீழ் ரேக் இருக்கிறது.",

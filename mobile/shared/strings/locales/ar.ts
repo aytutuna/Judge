@@ -94,9 +94,6 @@ const ar: AppLocale = {
     "app.account.sessionExpired":
       "تم تسجيل خروجك. سجّل الدخول مجددًا للمتابعة.",
     "app.close": "إغلاق",
-    "app.home.lead":
-      "اكتب رواية الطرفين، أو أرسل إلى الطرف الآخر رابطًا ليكتب روايته بنفسه.",
-    "app.home.leadSolo": "اكتب روايتك، ورواية الطرف الآخر إن كنت تعرفها.",
     "app.home.yourSide": "روايتك",
     "app.home.theirSide": "رواية الطرف الآخر",
     "app.home.yourName": "اسمك",
@@ -111,6 +108,9 @@ const ar: AppLocale = {
     "app.home.mySide": "روايتي:",
     "app.home.otherSide": "رواية الطرف الآخر:",
     "app.home.example": "جرّب مثالًا",
+    "app.home.addTheirSide": "أضف رواية الطرف الآخر",
+    "app.home.removeTheirSide": "أزل رواية الطرف الآخر",
+    "app.home.clear": "مسح",
     "app.example.dishwasher.aName": "ليلى",
     "app.example.dishwasher.a":
       "وضعت الأوعية في الرف العلوي مرة أخرى. لا تخرج من هناك نظيفة أبدًا، والرف السفلي موجود لهذا بالذات.",

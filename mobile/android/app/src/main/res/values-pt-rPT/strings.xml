@@ -433,7 +433,6 @@
     <string name="names_failed">Não conseguimos guardar os nomes. Tenta outra vez.</string>
     <string name="names_invalid">Usa entre 1 e 40 caracteres, e nada de rótulos como Parte A.</string>
     <string name="account_verdicts_removed">Removido</string>
-    <string name="shell_new">Nova discussão</string>
     <string name="shell_today">Hoje</string>
     <string name="shell_load_failed">Não conseguimos carregar o teu histórico.</string>
     <string name="shell_load_more">Mostrar mais</string>
@@ -586,8 +585,6 @@
     <string name="app_account_signed_out">Terminaste a sessão.</string>
     <string name="app_account_session_expired">A tua sessão terminou. Entra outra vez para continuar.</string>
     <string name="app_close">Fechar</string>
-    <string name="app_home_lead">Escreve os dois lados ou envia à outra pessoa um link para ela escrever o dela.</string>
-    <string name="app_home_lead_solo">Escreve o teu lado e, se o souberes, o da outra pessoa.</string>
     <string name="app_home_your_side">O teu lado</string>
     <string name="app_home_their_side">O outro lado</string>
     <string name="app_home_your_name">O teu nome</string>
@@ -601,6 +598,9 @@
     <string name="app_home_my_side">O meu lado:</string>
     <string name="app_home_other_side">O outro lado:</string>
     <string name="app_home_example">Experimenta um exemplo</string>
+    <string name="app_home_add_their_side">Adicionar o outro lado</string>
+    <string name="app_home_remove_their_side">Remover o outro lado</string>
+    <string name="app_home_clear">Limpar</string>
     <string name="app_example_dishwasher_a_name">Rita</string>
     <string name="app_example_dishwasher_a">Voltaste a pôr as tigelas no cesto de cima. Lá em cima nunca ficam bem lavadas, o de baixo é que serve para isso.</string>
     <string name="app_example_dishwasher_b_name">Miguel</string>

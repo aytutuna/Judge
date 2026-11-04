@@ -425,7 +425,6 @@
     <string name="names_failed">Vi fikk ikke lagret navnene. Prøv igjen.</string>
     <string name="names_invalid">Bruk 1 til 40 tegn, og ikke en merkelapp som Part A.</string>
     <string name="account_verdicts_removed">Fjernet</string>
-    <string name="shell_new">Ny diskusjon</string>
     <string name="shell_today">I dag</string>
     <string name="shell_load_failed">Vi fikk ikke lastet historikken din.</string>
     <string name="shell_load_more">Vis flere</string>
@@ -569,8 +568,6 @@
     <string name="app_account_signed_out">Du er logget ut.</string>
     <string name="app_account_session_expired">Du har blitt logget ut. Logg inn igjen for å fortsette.</string>
     <string name="app_close">Lukk</string>
-    <string name="app_home_lead">Skriv begge sider, eller send en lenke så den andre kan skrive sin.</string>
-    <string name="app_home_lead_solo">Skriv din side, og den andres hvis du kjenner den.</string>
     <string name="app_home_your_side">Din side</string>
     <string name="app_home_their_side">Den andres side</string>
     <string name="app_home_your_name">Navnet ditt</string>
@@ -584,6 +581,9 @@
     <string name="app_home_my_side">Min side:</string>
     <string name="app_home_other_side">Den andres side:</string>
     <string name="app_home_example">Prøv et eksempel</string>
+    <string name="app_home_add_their_side">Legg til den andres side</string>
+    <string name="app_home_remove_their_side">Fjern den andres side</string>
+    <string name="app_home_clear">Tøm</string>
     <string name="app_example_dishwasher_a_name">Ingrid</string>
     <string name="app_example_dishwasher_a">Du satte skålene i overkurven igjen. Der blir de aldri rene, det er det underkurven er til.</string>
     <string name="app_example_dishwasher_b_name">Henrik</string>

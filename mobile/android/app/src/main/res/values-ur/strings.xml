@@ -425,7 +425,6 @@
     <string name="names_failed">نام محفوظ نہیں ہو سکے۔ دوبارہ کوشش کریں۔</string>
     <string name="names_invalid">1 سے 40 حروف استعمال کریں، اور فریق A جیسا کوئی لیبل نہیں۔</string>
     <string name="account_verdicts_removed">ہٹا دیا گیا</string>
-    <string name="shell_new">نئی بحث</string>
     <string name="shell_today">آج</string>
     <string name="shell_load_failed">آپ کی ہسٹری لوڈ نہیں ہو سکی۔</string>
     <string name="shell_load_more">مزید دکھائیں</string>
@@ -569,8 +568,6 @@
     <string name="app_account_signed_out">سائن آؤٹ ہو گیا۔</string>
     <string name="app_account_session_expired">آپ کو سائن آؤٹ کر دیا گیا ہے۔ جاری رکھنے کے لیے دوبارہ سائن ان کریں۔</string>
     <string name="app_close">بند کریں</string>
-    <string name="app_home_lead">دونوں طرف کی بات لکھیں، یا دوسرے شخص کو لنک بھیجیں تاکہ وہ اپنی بات خود لکھیں۔</string>
-    <string name="app_home_lead_solo">اپنی بات لکھیں، اور معلوم ہو تو ان کی بھی۔</string>
     <string name="app_home_your_side">آپ کی بات</string>
     <string name="app_home_their_side">ان کی بات</string>
     <string name="app_home_your_name">آپ کا نام</string>
@@ -584,6 +581,9 @@
     <string name="app_home_my_side">میری بات:</string>
     <string name="app_home_other_side">ان کی بات:</string>
     <string name="app_home_example">کوئی مثال آزمائیں</string>
+    <string name="app_home_add_their_side">ان کی بات شامل کریں</string>
+    <string name="app_home_remove_their_side">ان کی بات ہٹائیں</string>
+    <string name="app_home_clear">صاف کریں</string>
     <string name="app_example_dishwasher_a_name">عائشہ</string>
     <string name="app_example_dishwasher_a">تم نے پیالے پھر اوپر والے ریک میں رکھ دیے۔ وہاں وہ کبھی صاف نہیں نکلتے، نیچے والا ریک اسی کام کے لیے ہے۔</string>
     <string name="app_example_dishwasher_b_name">بلال</string>

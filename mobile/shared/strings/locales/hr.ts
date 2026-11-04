@@ -85,8 +85,6 @@ const hr: AppLocale = {
     "app.account.signedOut": "Odjava je uspjela.",
     "app.account.sessionExpired": "Prijava je istekla. Prijavi se ponovno za nastavak.",
     "app.close": "Zatvori",
-    "app.home.lead": "Napiši obje strane ili pošalji poveznicu drugoj osobi da napiše svoju.",
-    "app.home.leadSolo": "Napiši svoju stranu, a ako je znaš, i drugu.",
     "app.home.yourSide": "Tvoja strana",
     "app.home.theirSide": "Druga strana",
     "app.home.yourName": "Tvoje ime",
@@ -100,6 +98,9 @@ const hr: AppLocale = {
     "app.home.mySide": "Moja strana:",
     "app.home.otherSide": "Druga strana:",
     "app.home.example": "Isprobaj primjer",
+    "app.home.addTheirSide": "Dodaj drugu stranu",
+    "app.home.removeTheirSide": "Ukloni drugu stranu",
+    "app.home.clear": "Očisti",
     "app.example.dishwasher.aName": "Ana",
     "app.example.dishwasher.a":
       "Opet si stavio zdjelice u gornju košaru. Gore se nikad ne operu kako treba, za to služi donja.",

@@ -82,8 +82,6 @@ const id: AppLocale = {
     "app.account.signedOut": "Kamu sudah keluar.",
     "app.account.sessionExpired": "Sesimu sudah berakhir. Masuk lagi untuk melanjutkan.",
     "app.close": "Tutup",
-    "app.home.lead": "Tulis versi kedua pihak, atau kirim tautan ke lawan debatmu agar dia menulis versinya sendiri.",
-    "app.home.leadSolo": "Tulis versimu, dan versi dia juga kalau kamu tahu.",
     "app.home.yourSide": "Versimu",
     "app.home.theirSide": "Versi dia",
     "app.home.yourName": "Namamu",
@@ -97,6 +95,9 @@ const id: AppLocale = {
     "app.home.mySide": "Versiku:",
     "app.home.otherSide": "Versi dia:",
     "app.home.example": "Coba contoh",
+    "app.home.addTheirSide": "Tambah versi dia",
+    "app.home.removeTheirSide": "Hapus versi dia",
+    "app.home.clear": "Bersihkan",
     "app.example.dishwasher.aName": "Rina",
     "app.example.dishwasher.a":
       "Kamu menumpuk mangkuk basah di rak piring lagi. Kalau ditumpuk begitu, mangkuknya nggak pernah kering. Taruh telungkup satu-satu, dong.",

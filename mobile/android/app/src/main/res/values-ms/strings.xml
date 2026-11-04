@@ -417,7 +417,6 @@
     <string name="names_failed">Kami tidak dapat menyimpan nama. Cuba lagi.</string>
     <string name="names_invalid">Guna 1 hingga 40 aksara, dan bukan label seperti Pihak A.</string>
     <string name="account_verdicts_removed">Dibuang</string>
-    <string name="shell_new">Pertikaian baharu</string>
     <string name="shell_today">Hari ini</string>
     <string name="shell_load_failed">Kami tidak dapat memuatkan sejarah anda.</string>
     <string name="shell_load_more">Tunjuk lagi</string>
@@ -552,8 +551,6 @@
     <string name="app_account_signed_out">Anda sudah log keluar.</string>
     <string name="app_account_session_expired">Anda telah dilog keluar. Log masuk semula untuk meneruskan.</string>
     <string name="app_close">Tutup</string>
-    <string name="app_home_lead">Tulis kedua-dua versi, atau hantar pautan kepada pihak satu lagi supaya dia menulis versinya sendiri.</string>
-    <string name="app_home_lead_solo">Tulis versi anda, dan versi dia juga kalau anda tahu.</string>
     <string name="app_home_your_side">Versi anda</string>
     <string name="app_home_their_side">Versi dia</string>
     <string name="app_home_your_name">Nama anda</string>
@@ -567,6 +564,9 @@
     <string name="app_home_my_side">Versi saya:</string>
     <string name="app_home_other_side">Versi dia:</string>
     <string name="app_home_example">Cuba contoh</string>
+    <string name="app_home_add_their_side">Tambah versi dia</string>
+    <string name="app_home_remove_their_side">Buang versi dia</string>
+    <string name="app_home_clear">Kosongkan</string>
     <string name="app_example_dishwasher_a_name">Aisyah</string>
     <string name="app_example_dishwasher_a">Awak letak mangkuk kat rak atas lagi. Kat atas tu mangkuk tak pernah keluar bersih, sebab tu ada rak bawah.</string>
     <string name="app_example_dishwasher_b_name">Haziq</string>

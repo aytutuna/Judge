@@ -80,8 +80,6 @@ const pa: AppLocale = {
     "app.account.signedOut": "ਤੁਸੀਂ ਸਾਈਨ ਆਊਟ ਹੋ ਗਏ ਹੋ।",
     "app.account.sessionExpired": "ਤੁਹਾਨੂੰ ਸਾਈਨ ਆਊਟ ਕਰ ਦਿੱਤਾ ਗਿਆ ਹੈ। ਜਾਰੀ ਰੱਖਣ ਲਈ ਦੁਬਾਰਾ ਸਾਈਨ ਇਨ ਕਰੋ।",
     "app.close": "ਬੰਦ ਕਰੋ",
-    "app.home.lead": "ਦੋਵੇਂ ਪੱਖ ਲਿਖੋ, ਜਾਂ ਦੂਜੀ ਧਿਰ ਨੂੰ ਲਿੰਕ ਭੇਜੋ ਤਾਂ ਜੋ ਉਹ ਆਪਣਾ ਪੱਖ ਆਪ ਲਿਖਣ।",
-    "app.home.leadSolo": "ਆਪਣਾ ਪੱਖ ਲਿਖੋ, ਅਤੇ ਜੇ ਪਤਾ ਹੋਵੇ ਤਾਂ ਉਨ੍ਹਾਂ ਦਾ ਵੀ।",
     "app.home.yourSide": "ਤੁਹਾਡਾ ਪੱਖ",
     "app.home.theirSide": "ਉਨ੍ਹਾਂ ਦਾ ਪੱਖ",
     "app.home.yourName": "ਤੁਹਾਡਾ ਨਾਂ",
@@ -95,6 +93,9 @@ const pa: AppLocale = {
     "app.home.mySide": "ਮੇਰਾ ਪੱਖ:",
     "app.home.otherSide": "ਉਨ੍ਹਾਂ ਦਾ ਪੱਖ:",
     "app.home.example": "ਕੋਈ ਉਦਾਹਰਨ ਅਜ਼ਮਾਓ",
+    "app.home.addTheirSide": "ਉਨ੍ਹਾਂ ਦਾ ਪੱਖ ਜੋੜੋ",
+    "app.home.removeTheirSide": "ਉਨ੍ਹਾਂ ਦਾ ਪੱਖ ਹਟਾਓ",
+    "app.home.clear": "ਸਾਫ਼ ਕਰੋ",
     "app.example.dishwasher.aName": "ਸਿਮਰਨ",
     "app.example.dishwasher.a":
       "ਤੁਸੀਂ ਫਿਰ ਡਿਸ਼ਵਾਸ਼ਰ ਦੇ ਉੱਪਰਲੇ ਰੈਕ ’ਚ ਕਟੋਰੀਆਂ ਰੱਖ ਦਿੱਤੀਆਂ। ਉੱਥੇ ਇਹ ਕਦੇ ਸਾਫ਼ ਨਹੀਂ ਨਿਕਲਦੀਆਂ, ਹੇਠਲਾ ਰੈਕ ਇਸੇ ਲਈ ਤਾਂ ਹੈ।",

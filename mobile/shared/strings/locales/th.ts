@@ -81,8 +81,6 @@ const th: AppLocale = {
     "app.account.signedOut": "ออกจากระบบแล้ว",
     "app.account.sessionExpired": "คุณถูกออกจากระบบแล้ว เข้าสู่ระบบอีกครั้งเพื่อใช้งานต่อ",
     "app.close": "ปิด",
-    "app.home.lead": "เขียนทั้งสองฝั่งเลย หรือส่งลิงก์ให้อีกฝ่ายมาเขียนฝั่งของเขาเอง",
-    "app.home.leadSolo": "เขียนฝั่งของคุณ และฝั่งของเขาด้วยถ้าคุณรู้",
     "app.home.yourSide": "ฝั่งของคุณ",
     "app.home.theirSide": "ฝั่งของเขา",
     "app.home.yourName": "ชื่อของคุณ",
@@ -96,6 +94,9 @@ const th: AppLocale = {
     "app.home.mySide": "ฝั่งของฉัน:",
     "app.home.otherSide": "ฝั่งของเขา:",
     "app.home.example": "ลองดูตัวอย่าง",
+    "app.home.addTheirSide": "เพิ่มฝั่งของเขา",
+    "app.home.removeTheirSide": "ลบฝั่งของเขา",
+    "app.home.clear": "ล้าง",
     "app.example.dishwasher.aName": "แนน",
     "app.example.dishwasher.a":
       "ใส่ชามไว้ชั้นบนอีกแล้ว อยู่ข้างบนทีไรล้างไม่เคยสะอาดเลย ชั้นล่างมีไว้ใส่ชามอยู่แล้ว",

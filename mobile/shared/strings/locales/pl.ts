@@ -83,8 +83,6 @@ const pl: AppLocale = {
     "app.account.signedOut": "Wylogowano.",
     "app.account.sessionExpired": "Wylogowano cię. Zaloguj się ponownie, żeby kontynuować.",
     "app.close": "Zamknij",
-    "app.home.lead": "Opisz obie wersje albo wyślij drugiej osobie link, żeby opisała swoją.",
-    "app.home.leadSolo": "Opisz swoją wersję, a jeśli ją znasz, także wersję drugiej strony.",
     "app.home.yourSide": "Twoja wersja",
     "app.home.theirSide": "Druga strona",
     "app.home.yourName": "Twoje imię",
@@ -98,6 +96,9 @@ const pl: AppLocale = {
     "app.home.mySide": "Moja wersja:",
     "app.home.otherSide": "Wersja drugiej strony:",
     "app.home.example": "Wypróbuj przykład",
+    "app.home.addTheirSide": "Dodaj drugą stronę",
+    "app.home.removeTheirSide": "Usuń drugą stronę",
+    "app.home.clear": "Wyczyść",
     "app.example.dishwasher.aName": "Ania",
     "app.example.dishwasher.a":
       "Znowu wstawiłeś miski do górnego kosza. Tam nigdy się nie domywają, od tego jest dolny.",

@@ -102,8 +102,6 @@ export const APP_EN = {
   "app.close": "Close",
   // Home with both sides on one screen. The joined text is what the judges
   // read when one person writes both sides.
-  "app.home.lead": "Write both sides, or send the other person a link to write theirs.",
-  "app.home.leadSolo": "Write your side, and theirs if you know it.",
   "app.home.yourSide": "Your side",
   "app.home.theirSide": "Their side",
   "app.home.yourName": "Your name",
@@ -117,6 +115,9 @@ export const APP_EN = {
   "app.home.mySide": "My side:",
   "app.home.otherSide": "Their side:",
   "app.home.example": "Try an example",
+  "app.home.addTheirSide": "Add their side",
+  "app.home.removeTheirSide": "Remove their side",
+  "app.home.clear": "Clear",
   // Cases the example button fills in, a on "your side" and b on "theirs".
   "app.example.dishwasher.aName": "Alex",
   "app.example.dishwasher.a":

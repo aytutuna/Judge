@@ -83,8 +83,6 @@ const ms: AppLocale = {
     "app.account.signedOut": "Anda sudah log keluar.",
     "app.account.sessionExpired": "Anda telah dilog keluar. Log masuk semula untuk meneruskan.",
     "app.close": "Tutup",
-    "app.home.lead": "Tulis kedua-dua versi, atau hantar pautan kepada pihak satu lagi supaya dia menulis versinya sendiri.",
-    "app.home.leadSolo": "Tulis versi anda, dan versi dia juga kalau anda tahu.",
     "app.home.yourSide": "Versi anda",
     "app.home.theirSide": "Versi dia",
     "app.home.yourName": "Nama anda",
@@ -98,6 +96,9 @@ const ms: AppLocale = {
     "app.home.mySide": "Versi saya:",
     "app.home.otherSide": "Versi dia:",
     "app.home.example": "Cuba contoh",
+    "app.home.addTheirSide": "Tambah versi dia",
+    "app.home.removeTheirSide": "Buang versi dia",
+    "app.home.clear": "Kosongkan",
     "app.example.dishwasher.aName": "Aisyah",
     "app.example.dishwasher.a":
       "Awak letak mangkuk kat rak atas lagi. Kat atas tu mangkuk tak pernah keluar bersih, sebab tu ada rak bawah.",

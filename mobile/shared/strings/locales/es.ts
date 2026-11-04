@@ -83,8 +83,6 @@ const es: AppLocale = {
     "app.account.signedOut": "Has cerrado sesión.",
     "app.account.sessionExpired": "Se cerró tu sesión. Vuelve a iniciar sesión para continuar.",
     "app.close": "Cerrar",
-    "app.home.lead": "Escribe las dos versiones o envía un enlace a la otra persona para que escriba la suya.",
-    "app.home.leadSolo": "Escribe tu versión y, si la conoces, la de la otra persona.",
     "app.home.yourSide": "Tu versión",
     "app.home.theirSide": "La otra versión",
     "app.home.yourName": "Tu nombre",
@@ -98,6 +96,9 @@ const es: AppLocale = {
     "app.home.mySide": "Mi versión:",
     "app.home.otherSide": "Versión de la otra persona:",
     "app.home.example": "Probar un ejemplo",
+    "app.home.addTheirSide": "Añadir la otra versión",
+    "app.home.removeTheirSide": "Quitar la otra versión",
+    "app.home.clear": "Borrar",
     "app.example.dishwasher.aName": "Carmen",
     "app.example.dishwasher.a":
       "Otra vez pusiste los platos hondos en la parte de arriba. Ahí nunca salen limpios; para eso está la de abajo.",

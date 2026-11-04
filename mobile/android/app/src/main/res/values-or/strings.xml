@@ -425,7 +425,6 @@
     <string name="names_failed">ନାମ ସେଭ୍ କରିପାରିଲୁ ନାହିଁ। ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ।</string>
     <string name="names_invalid">1ରୁ 40 ଅକ୍ଷର ଭିତରେ ଲେଖନ୍ତୁ, ଆଉ ପକ୍ଷ A ଭଳି ଲେବଲ୍ ନୁହେଁ।</string>
     <string name="account_verdicts_removed">ହଟାଯାଇଛି</string>
-    <string name="shell_new">ନୂଆ ବିବାଦ</string>
     <string name="shell_today">ଆଜି</string>
     <string name="shell_load_failed">ଆପଣଙ୍କ ଇତିହାସ ଲୋଡ୍ କରିପାରିଲୁ ନାହିଁ।</string>
     <string name="shell_load_more">ଆହୁରି ଦେଖାନ୍ତୁ</string>
@@ -569,8 +568,6 @@
     <string name="app_account_signed_out">ଆପଣ ସାଇନ୍ ଆଉଟ୍ ହୋଇଗଲେ।</string>
     <string name="app_account_session_expired">ଆପଣ ସାଇନ୍ ଆଉଟ୍ ହୋଇଯାଇଛନ୍ତି। ଆଗକୁ ବଢ଼ିବାକୁ ପୁଣି ସାଇନ୍ ଇନ୍ କରନ୍ତୁ।</string>
     <string name="app_close">ବନ୍ଦ କରନ୍ତୁ</string>
-    <string name="app_home_lead">ଦୁଇ ପକ୍ଷର କଥା ଲେଖନ୍ତୁ, ନହେଲେ ଅନ୍ୟ ଜଣଙ୍କୁ ଲିଙ୍କ୍ ପଠାନ୍ତୁ, ସେ ନିଜ କଥା ନିଜେ ଲେଖିବେ।</string>
-    <string name="app_home_lead_solo">ନିଜ କଥା ଲେଖନ୍ତୁ, ଜାଣିଥିଲେ ତାଙ୍କ କଥା ବି।</string>
     <string name="app_home_your_side">ଆପଣଙ୍କ କଥା</string>
     <string name="app_home_their_side">ତାଙ୍କ କଥା</string>
     <string name="app_home_your_name">ଆପଣଙ୍କ ନାମ</string>
@@ -584,6 +581,9 @@
     <string name="app_home_my_side">ମୋ କଥା:</string>
     <string name="app_home_other_side">ତାଙ୍କ କଥା:</string>
     <string name="app_home_example">ଗୋଟେ ଉଦାହରଣ ନେଇ ଦେଖନ୍ତୁ</string>
+    <string name="app_home_add_their_side">ତାଙ୍କ କଥା ଯୋଡ଼ନ୍ତୁ</string>
+    <string name="app_home_remove_their_side">ତାଙ୍କ କଥା ହଟାନ୍ତୁ</string>
+    <string name="app_home_clear">ସଫା କରନ୍ତୁ</string>
     <string name="app_example_dishwasher_a_name">ରଶ୍ମି</string>
     <string name="app_example_dishwasher_a">ତୁମେ ପୁଣି ବାଟିଗୁଡ଼ାକ ଡିସ୍‌ୱାସରର ଉପର ଥାକରେ ରଖିଛ। ସେଠି ସେଗୁଡ଼ା କେବେ ସଫା ବାହାରେ ନାହିଁ, ସେଥିପାଇଁ ତ ତଳ ଥାକ ଅଛି।</string>
     <string name="app_example_dishwasher_b_name">ସୌମ୍ୟ</string>

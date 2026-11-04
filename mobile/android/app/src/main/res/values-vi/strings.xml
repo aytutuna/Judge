@@ -417,7 +417,6 @@
     <string name="names_failed">Chưa lưu được tên. Thử lại nhé.</string>
     <string name="names_invalid">Dùng từ 1 đến 40 ký tự, và đừng dùng nhãn như Bên A.</string>
     <string name="account_verdicts_removed">Đã gỡ</string>
-    <string name="shell_new">Tranh cãi mới</string>
     <string name="shell_today">Hôm nay</string>
     <string name="shell_load_failed">Không tải được lịch sử.</string>
     <string name="shell_load_more">Xem thêm</string>
@@ -552,8 +551,6 @@
     <string name="app_account_signed_out">Bạn đã đăng xuất.</string>
     <string name="app_account_session_expired">Bạn đã bị đăng xuất. Đăng nhập lại để tiếp tục.</string>
     <string name="app_close">Đóng</string>
-    <string name="app_home_lead">Kể phần của cả hai bên, hoặc gửi liên kết để người kia tự kể phần của họ.</string>
-    <string name="app_home_lead_solo">Kể phần của bạn, và cả phần của người kia nếu bạn biết.</string>
     <string name="app_home_your_side">Phía bạn</string>
     <string name="app_home_their_side">Phía bên kia</string>
     <string name="app_home_your_name">Tên của bạn</string>
@@ -567,6 +564,9 @@
     <string name="app_home_my_side">Phía tôi:</string>
     <string name="app_home_other_side">Phía bên kia:</string>
     <string name="app_home_example">Thử một ví dụ</string>
+    <string name="app_home_add_their_side">Thêm phía bên kia</string>
+    <string name="app_home_remove_their_side">Bỏ phía bên kia</string>
+    <string name="app_home_clear">Xóa</string>
     <string name="app_example_dishwasher_a_name">Linh</string>
     <string name="app_example_dishwasher_a">Bạn lại xếp bát lên ngăn trên rồi. Để trên đó rửa chẳng bao giờ sạch, ngăn dưới là để xếp bát mà.</string>
     <string name="app_example_dishwasher_b_name">Tuấn</string>

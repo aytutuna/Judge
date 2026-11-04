@@ -457,7 +457,6 @@
     <string name="names_failed">تعذّر حفظ الأسماء. حاول مجددًا.</string>
     <string name="names_invalid">استخدم من 1 إلى 40 حرفًا، ولا تكتب تسمية مثل الطرف A.</string>
     <string name="account_verdicts_removed">محذوف</string>
-    <string name="shell_new">خلاف جديد</string>
     <string name="shell_today">اليوم</string>
     <string name="shell_load_failed">تعذّر تحميل سجلك.</string>
     <string name="shell_load_more">عرض المزيد</string>
@@ -637,8 +636,6 @@
     <string name="app_account_signed_out">تم تسجيل خروجك.</string>
     <string name="app_account_session_expired">تم تسجيل خروجك. سجّل الدخول مجددًا للمتابعة.</string>
     <string name="app_close">إغلاق</string>
-    <string name="app_home_lead">اكتب رواية الطرفين، أو أرسل إلى الطرف الآخر رابطًا ليكتب روايته بنفسه.</string>
-    <string name="app_home_lead_solo">اكتب روايتك، ورواية الطرف الآخر إن كنت تعرفها.</string>
     <string name="app_home_your_side">روايتك</string>
     <string name="app_home_their_side">رواية الطرف الآخر</string>
     <string name="app_home_your_name">اسمك</string>
@@ -652,6 +649,9 @@
     <string name="app_home_my_side">روايتي:</string>
     <string name="app_home_other_side">رواية الطرف الآخر:</string>
     <string name="app_home_example">جرّب مثالًا</string>
+    <string name="app_home_add_their_side">أضف رواية الطرف الآخر</string>
+    <string name="app_home_remove_their_side">أزل رواية الطرف الآخر</string>
+    <string name="app_home_clear">مسح</string>
     <string name="app_example_dishwasher_a_name">ليلى</string>
     <string name="app_example_dishwasher_a">وضعت الأوعية في الرف العلوي مرة أخرى. لا تخرج من هناك نظيفة أبدًا، والرف السفلي موجود لهذا بالذات.</string>
     <string name="app_example_dishwasher_b_name">كريم</string>

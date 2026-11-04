@@ -425,7 +425,6 @@
     <string name="names_failed">नावे सेव्ह करता आली नाहीत. पुन्हा प्रयत्न करा.</string>
     <string name="names_invalid">1 ते 40 अक्षरे वापरा, आणि पक्ष A सारखे लेबल नको.</string>
     <string name="account_verdicts_removed">काढून टाकला</string>
-    <string name="shell_new">नवा वाद</string>
     <string name="shell_today">आज</string>
     <string name="shell_load_failed">तुमचा इतिहास लोड करता आला नाही.</string>
     <string name="shell_load_more">आणखी दाखवा</string>
@@ -569,8 +568,6 @@
     <string name="app_account_signed_out">तुम्ही साइन आउट झाला आहात.</string>
     <string name="app_account_session_expired">तुमचे साइन-इन संपले आहे. पुढे जाण्यासाठी पुन्हा साइन इन करा.</string>
     <string name="app_close">बंद करा</string>
-    <string name="app_home_lead">दोन्ही बाजू लिहा, किंवा लिंक पाठवा, म्हणजे समोरची व्यक्ती आपली बाजू स्वतः लिहील.</string>
-    <string name="app_home_lead_solo">तुमची बाजू लिहा, आणि माहीत असेल तर त्यांचीही.</string>
     <string name="app_home_your_side">तुमची बाजू</string>
     <string name="app_home_their_side">त्यांची बाजू</string>
     <string name="app_home_your_name">तुमचे नाव</string>
@@ -584,6 +581,9 @@
     <string name="app_home_my_side">माझी बाजू:</string>
     <string name="app_home_other_side">त्यांची बाजू:</string>
     <string name="app_home_example">एखादे उदाहरण वापरून पाहा</string>
+    <string name="app_home_add_their_side">त्यांची बाजू जोडा</string>
+    <string name="app_home_remove_their_side">त्यांची बाजू काढा</string>
+    <string name="app_home_clear">साफ करा</string>
     <string name="app_example_dishwasher_a_name">प्रिया</string>
     <string name="app_example_dishwasher_a">तू पुन्हा वाट्या वरच्या रॅकमध्ये ठेवल्या आहेस. तिथे त्या कधीच नीट स्वच्छ होत नाहीत, खालचा रॅक त्यासाठीच तर आहे.</string>
     <string name="app_example_dishwasher_b_name">आदित्य</string>

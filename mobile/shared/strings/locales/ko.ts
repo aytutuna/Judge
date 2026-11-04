@@ -77,8 +77,6 @@ const ko: AppLocale = {
     "app.account.signedOut": "로그아웃했어요.",
     "app.account.sessionExpired": "로그아웃됐어요. 계속하려면 다시 로그인해 주세요.",
     "app.close": "닫기",
-    "app.home.lead": "양쪽 입장을 다 쓰거나, 상대방에게 링크를 보내서 직접 쓰게 해 보세요.",
-    "app.home.leadSolo": "내 입장을 쓰고, 상대방 입장도 알면 함께 써 주세요.",
     "app.home.yourSide": "내 입장",
     "app.home.theirSide": "상대방 입장",
     "app.home.yourName": "내 이름",
@@ -92,6 +90,9 @@ const ko: AppLocale = {
     "app.home.mySide": "내 입장:",
     "app.home.otherSide": "상대방 입장:",
     "app.home.example": "예시로 해 보기",
+    "app.home.addTheirSide": "상대방 입장 추가",
+    "app.home.removeTheirSide": "상대방 입장 삭제",
+    "app.home.clear": "지우기",
     "app.example.dishwasher.aName": "지훈",
     "app.example.dishwasher.a":
       "그릇을 또 위 칸에 넣었네요. 위에서는 절대 깨끗하게 안 닦여요. 그릇 넣으라고 아래 칸이 있는 거잖아요.",

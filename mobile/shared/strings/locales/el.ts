@@ -84,8 +84,6 @@ const el: AppLocale = {
     "app.account.signedOut": "Αποσυνδέθηκες.",
     "app.account.sessionExpired": "Αποσυνδέθηκες. Συνδέσου ξανά για να συνεχίσεις.",
     "app.close": "Κλείσιμο",
-    "app.home.lead": "Γράψε και τις δύο πλευρές ή στείλε σύνδεσμο στο άλλο άτομο για να γράψει τη δική του.",
-    "app.home.leadSolo": "Γράψε τη δική σου πλευρά, και την άλλη αν την ξέρεις.",
     "app.home.yourSide": "Η πλευρά σου",
     "app.home.theirSide": "Η άλλη πλευρά",
     "app.home.yourName": "Το όνομά σου",
@@ -99,6 +97,9 @@ const el: AppLocale = {
     "app.home.mySide": "Η δική μου πλευρά:",
     "app.home.otherSide": "Η άλλη πλευρά:",
     "app.home.example": "Δοκίμασε ένα παράδειγμα",
+    "app.home.addTheirSide": "Πρόσθεσε την άλλη πλευρά",
+    "app.home.removeTheirSide": "Αφαίρεσε την άλλη πλευρά",
+    "app.home.clear": "Καθαρισμός",
     "app.example.dishwasher.aName": "Μαρία",
     "app.example.dishwasher.a":
       "Έβαλες πάλι τα μπολ στο πάνω καλάθι. Εκεί δεν βγαίνουν ποτέ καθαρά, γι' αυτό υπάρχει το κάτω.",

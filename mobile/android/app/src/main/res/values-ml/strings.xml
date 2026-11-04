@@ -425,7 +425,6 @@
     <string name="names_failed">പേരുകൾ സേവ് ചെയ്യാനായില്ല. വീണ്ടും ശ്രമിക്കൂ.</string>
     <string name="names_invalid">1 മുതൽ 40 വരെ അക്ഷരങ്ങൾ ഉപയോഗിക്കൂ; കക്ഷി A പോലുള്ള ലേബൽ പാടില്ല.</string>
     <string name="account_verdicts_removed">നീക്കം ചെയ്തത്</string>
-    <string name="shell_new">പുതിയ തർക്കം</string>
     <string name="shell_today">ഇന്ന്</string>
     <string name="shell_load_failed">ചരിത്രം ലോഡ് ചെയ്യാനായില്ല.</string>
     <string name="shell_load_more">കൂടുതൽ കാണിക്കൂ</string>
@@ -569,8 +568,6 @@
     <string name="app_account_signed_out">നിങ്ങൾ സൈൻ ഔട്ട് ചെയ്തു.</string>
     <string name="app_account_session_expired">നിങ്ങൾ സൈൻ ഔട്ട് ആയി. തുടരാൻ വീണ്ടും സൈൻ ഇൻ ചെയ്യൂ.</string>
     <string name="app_close">അടയ്ക്കൂ</string>
-    <string name="app_home_lead">രണ്ടു ഭാഗവും എഴുതൂ, അല്ലെങ്കിൽ മറ്റേയാൾക്ക് അവരുടെ ഭാഗം എഴുതാൻ ഒരു ലിങ്ക് അയയ്ക്കൂ.</string>
-    <string name="app_home_lead_solo">നിങ്ങളുടെ ഭാഗം എഴുതൂ, അറിയാമെങ്കിൽ അവരുടേതും.</string>
     <string name="app_home_your_side">നിങ്ങളുടെ ഭാഗം</string>
     <string name="app_home_their_side">അവരുടെ ഭാഗം</string>
     <string name="app_home_your_name">നിങ്ങളുടെ പേര്</string>
@@ -584,6 +581,9 @@
     <string name="app_home_my_side">എന്റെ ഭാഗം:</string>
     <string name="app_home_other_side">അവരുടെ ഭാഗം:</string>
     <string name="app_home_example">ഒരു ഉദാഹരണം നോക്കൂ</string>
+    <string name="app_home_add_their_side">അവരുടെ ഭാഗം ചേർക്കൂ</string>
+    <string name="app_home_remove_their_side">അവരുടെ ഭാഗം നീക്കൂ</string>
+    <string name="app_home_clear">മായ്ക്കൂ</string>
     <string name="app_example_dishwasher_a_name">അനു</string>
     <string name="app_example_dishwasher_a">നിങ്ങൾ വീണ്ടും ബൗളുകൾ മുകളിലെ റാക്കിലാണ് വെച്ചത്. അവിടെ വെച്ചാൽ ഒരിക്കലും വൃത്തിയാകില്ല, അതിനാണ് താഴത്തെ റാക്ക്.</string>
     <string name="app_example_dishwasher_b_name">രാഹുൽ</string>

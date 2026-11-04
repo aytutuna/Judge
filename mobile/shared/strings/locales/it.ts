@@ -84,8 +84,6 @@ const it: AppLocale = {
     "app.account.signedOut": "Disconnessione effettuata.",
     "app.account.sessionExpired": "La sessione è scaduta. Accedi di nuovo per continuare.",
     "app.close": "Chiudi",
-    "app.home.lead": "Scrivi entrambe le versioni, oppure manda un link all'altra persona perché scriva la sua.",
-    "app.home.leadSolo": "Scrivi la tua versione e, se la conosci, anche quella dell'altra persona.",
     "app.home.yourSide": "La tua versione",
     "app.home.theirSide": "La sua versione",
     "app.home.yourName": "Il tuo nome",
@@ -99,6 +97,9 @@ const it: AppLocale = {
     "app.home.mySide": "La mia versione:",
     "app.home.otherSide": "La versione dell'altra persona:",
     "app.home.example": "Prova un esempio",
+    "app.home.addTheirSide": "Aggiungi la sua versione",
+    "app.home.removeTheirSide": "Togli la sua versione",
+    "app.home.clear": "Cancella",
     "app.example.dishwasher.aName": "Sara",
     "app.example.dishwasher.a":
       "Hai messo di nuovo le scodelle nel cestello di sopra. Lì non vengono mai pulite, il cestello di sotto serve apposta.",

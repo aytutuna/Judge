@@ -95,9 +95,6 @@ const nb: AppLocale = {
     "app.account.sessionExpired":
       "Du har blitt logget ut. Logg inn igjen for å fortsette.",
     "app.close": "Lukk",
-    "app.home.lead":
-      "Skriv begge sider, eller send en lenke så den andre kan skrive sin.",
-    "app.home.leadSolo": "Skriv din side, og den andres hvis du kjenner den.",
     "app.home.yourSide": "Din side",
     "app.home.theirSide": "Den andres side",
     "app.home.yourName": "Navnet ditt",
@@ -112,6 +109,9 @@ const nb: AppLocale = {
     "app.home.mySide": "Min side:",
     "app.home.otherSide": "Den andres side:",
     "app.home.example": "Prøv et eksempel",
+    "app.home.addTheirSide": "Legg til den andres side",
+    "app.home.removeTheirSide": "Fjern den andres side",
+    "app.home.clear": "Tøm",
     "app.example.dishwasher.aName": "Ingrid",
     "app.example.dishwasher.a":
       "Du satte skålene i overkurven igjen. Der blir de aldri rene, det er det underkurven er til.",

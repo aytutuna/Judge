@@ -425,7 +425,6 @@
     <string name="names_failed">We couldn\'t save the names. Try again.</string>
     <string name="names_invalid">Use 1 to 40 characters, and not a label such as Party A.</string>
     <string name="account_verdicts_removed">Removed</string>
-    <string name="shell_new">New argument</string>
     <string name="shell_today">Today</string>
     <string name="shell_load_failed">We couldn\'t load your history.</string>
     <string name="shell_load_more">Show more</string>
@@ -569,8 +568,6 @@
     <string name="app_account_signed_out">You\'re signed out.</string>
     <string name="app_account_session_expired">You\'ve been signed out. Sign in again to continue.</string>
     <string name="app_close">Close</string>
-    <string name="app_home_lead">Write both sides, or send the other person a link to write theirs.</string>
-    <string name="app_home_lead_solo">Write your side, and theirs if you know it.</string>
     <string name="app_home_your_side">Your side</string>
     <string name="app_home_their_side">Their side</string>
     <string name="app_home_your_name">Your name</string>
@@ -584,6 +581,9 @@
     <string name="app_home_my_side">My side:</string>
     <string name="app_home_other_side">Their side:</string>
     <string name="app_home_example">Try an example</string>
+    <string name="app_home_add_their_side">Add their side</string>
+    <string name="app_home_remove_their_side">Remove their side</string>
+    <string name="app_home_clear">Clear</string>
     <string name="app_example_dishwasher_a_name">Alex</string>
     <string name="app_example_dishwasher_a">You put the bowls on the top rack again. They never come out clean up there, that\'s what the bottom is for.</string>
     <string name="app_example_dishwasher_b_name">Sam</string>

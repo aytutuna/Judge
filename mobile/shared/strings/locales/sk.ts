@@ -82,8 +82,6 @@ const sk: AppLocale = {
     "app.account.signedOut": "Odhlásenie prebehlo.",
     "app.account.sessionExpired": "Odhlásili sme ťa. Ak chceš pokračovať, prihlás sa znova.",
     "app.close": "Zavrieť",
-    "app.home.lead": "Napíš obe verzie alebo pošli druhej strane odkaz, nech napíše tú svoju.",
-    "app.home.leadSolo": "Napíš svoju verziu a aj verziu druhej strany, ak ju poznáš.",
     "app.home.yourSide": "Tvoja verzia",
     "app.home.theirSide": "Verzia druhej strany",
     "app.home.yourName": "Tvoje meno",
@@ -97,6 +95,9 @@ const sk: AppLocale = {
     "app.home.mySide": "Moja verzia:",
     "app.home.otherSide": "Verzia druhej strany:",
     "app.home.example": "Skúsiť príklad",
+    "app.home.addTheirSide": "Pridať verziu druhej strany",
+    "app.home.removeTheirSide": "Odstrániť verziu druhej strany",
+    "app.home.clear": "Vymazať",
     "app.example.dishwasher.aName": "Lucia",
     "app.example.dishwasher.a":
       "Zase si dal misky do horného koša. Tam sa nikdy poriadne neumyjú, na to je predsa dolný kôš.",

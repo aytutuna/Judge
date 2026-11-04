@@ -425,7 +425,6 @@
     <string name="names_failed">নাম সেভ করা গেল না। আবার চেষ্টা করুন।</string>
     <string name="names_invalid">1 থেকে 40 অক্ষরের মধ্যে লিখুন, আর পক্ষ A-এর মতো কোনো তকমা নয়।</string>
     <string name="account_verdicts_removed">সরানো হয়েছে</string>
-    <string name="shell_new">নতুন তর্ক</string>
     <string name="shell_today">আজ</string>
     <string name="shell_load_failed">আপনার ইতিহাস লোড করা গেল না।</string>
     <string name="shell_load_more">আরও দেখুন</string>
@@ -569,8 +568,6 @@
     <string name="app_account_signed_out">আপনি সাইন আউট হয়ে গেছেন।</string>
     <string name="app_account_session_expired">আপনাকে সাইন আউট করা হয়েছে। চালিয়ে যেতে আবার সাইন ইন করুন।</string>
     <string name="app_close">বন্ধ করুন</string>
-    <string name="app_home_lead">দুই পক্ষের কথাই লিখুন, নয়তো অন্যজনকে একটা লিংক পাঠান, তিনি নিজের কথা নিজেই লিখবেন।</string>
-    <string name="app_home_lead_solo">আপনার কথা লিখুন, আর জানা থাকলে অন্যজনেরটাও।</string>
     <string name="app_home_your_side">আপনার বক্তব্য</string>
     <string name="app_home_their_side">অন্যজনের বক্তব্য</string>
     <string name="app_home_your_name">আপনার নাম</string>
@@ -584,6 +581,9 @@
     <string name="app_home_my_side">আমার বক্তব্য:</string>
     <string name="app_home_other_side">অন্যজনের বক্তব্য:</string>
     <string name="app_home_example">একটা উদাহরণ দিয়ে দেখুন</string>
+    <string name="app_home_add_their_side">অন্যজনের বক্তব্য যোগ করুন</string>
+    <string name="app_home_remove_their_side">অন্যজনের বক্তব্য সরান</string>
+    <string name="app_home_clear">মুছুন</string>
     <string name="app_example_dishwasher_a_name">রুমি</string>
     <string name="app_example_dishwasher_a">তুমি আবার ভাতের হাঁড়িটা সারারাত সিঙ্কে ভিজিয়ে রেখেছ। সকালে পুরো রান্নাঘরে গন্ধ, রাতেই ধুয়ে ফেলা উচিত।</string>
     <string name="app_example_dishwasher_b_name">সুমন</string>

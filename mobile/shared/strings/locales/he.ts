@@ -81,8 +81,6 @@ const he: AppLocale = {
     "app.account.signedOut": "התנתקת.",
     "app.account.sessionExpired": "נותקת מהחשבון. צריך להתחבר שוב כדי להמשיך.",
     "app.close": "סגירה",
-    "app.home.lead": "אפשר לכתוב את שני הצדדים, או לשלוח לצד השני קישור כדי שיכתוב את שלו.",
-    "app.home.leadSolo": "אפשר לכתוב את הצד שלך, וגם את הצד השני אם הוא ידוע לך.",
     "app.home.yourSide": "הצד שלך",
     "app.home.theirSide": "הצד השני",
     "app.home.yourName": "השם שלך",
@@ -96,6 +94,9 @@ const he: AppLocale = {
     "app.home.mySide": "הצד שלי:",
     "app.home.otherSide": "הצד השני:",
     "app.home.example": "לנסות דוגמה",
+    "app.home.addTheirSide": "להוסיף את הצד השני",
+    "app.home.removeTheirSide": "להסיר את הצד השני",
+    "app.home.clear": "ניקוי",
     "app.example.dishwasher.aName": "נועה",
     "app.example.dishwasher.a":
       "שוב שמת את הקערות במדף העליון. שם הן אף פעם לא יוצאות נקיות, בשביל זה יש את המדף התחתון.",

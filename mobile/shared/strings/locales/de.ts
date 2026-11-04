@@ -81,8 +81,6 @@ const de: AppLocale = {
     "app.account.signedOut": "Du bist abgemeldet.",
     "app.account.sessionExpired": "Du wurdest abgemeldet. Melde dich wieder an, um weiterzumachen.",
     "app.close": "Schließen",
-    "app.home.lead": "Schreib beide Seiten auf oder schick der anderen Person einen Link für ihre Seite.",
-    "app.home.leadSolo": "Schreib deine Seite auf und, wenn du sie kennst, auch die der anderen Person.",
     "app.home.yourSide": "Deine Seite",
     "app.home.theirSide": "Gegenseite",
     "app.home.yourName": "Dein Name",
@@ -96,6 +94,9 @@ const de: AppLocale = {
     "app.home.mySide": "Meine Seite:",
     "app.home.otherSide": "Die andere Seite:",
     "app.home.example": "Beispiel ausprobieren",
+    "app.home.addTheirSide": "Gegenseite hinzufügen",
+    "app.home.removeTheirSide": "Gegenseite entfernen",
+    "app.home.clear": "Leeren",
     "app.example.dishwasher.aName": "Julia",
     "app.example.dishwasher.a":
       "Du hast die Schüsseln schon wieder oben eingeräumt. Da werden sie nie richtig sauber, dafür ist doch der untere Korb da.",

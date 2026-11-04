@@ -81,8 +81,6 @@ const nl: AppLocale = {
     "app.account.signedOut": "Je bent uitgelogd.",
     "app.account.sessionExpired": "Je bent uitgelogd. Log opnieuw in om verder te gaan.",
     "app.close": "Sluiten",
-    "app.home.lead": "Schrijf beide kanten op, of stuur de ander een link om het zelf te doen.",
-    "app.home.leadSolo": "Schrijf jouw kant op en die van de ander als je die kent.",
     "app.home.yourSide": "Jouw kant",
     "app.home.theirSide": "Kant van de ander",
     "app.home.yourName": "Jouw naam",
@@ -96,6 +94,9 @@ const nl: AppLocale = {
     "app.home.mySide": "Mijn kant:",
     "app.home.otherSide": "De andere kant:",
     "app.home.example": "Probeer een voorbeeld",
+    "app.home.addTheirSide": "Kant van de ander toevoegen",
+    "app.home.removeTheirSide": "Kant van de ander verwijderen",
+    "app.home.clear": "Wissen",
     "app.example.dishwasher.aName": "Lotte",
     "app.example.dishwasher.a":
       "Je hebt de kommen weer in het bovenste rek gezet. Daar worden ze nooit schoon, daar is het onderste rek voor.",

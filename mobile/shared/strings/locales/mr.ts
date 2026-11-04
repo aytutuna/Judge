@@ -81,8 +81,6 @@ const mr: AppLocale = {
     "app.account.signedOut": "तुम्ही साइन आउट झाला आहात.",
     "app.account.sessionExpired": "तुमचे साइन-इन संपले आहे. पुढे जाण्यासाठी पुन्हा साइन इन करा.",
     "app.close": "बंद करा",
-    "app.home.lead": "दोन्ही बाजू लिहा, किंवा लिंक पाठवा, म्हणजे समोरची व्यक्ती आपली बाजू स्वतः लिहील.",
-    "app.home.leadSolo": "तुमची बाजू लिहा, आणि माहीत असेल तर त्यांचीही.",
     "app.home.yourSide": "तुमची बाजू",
     "app.home.theirSide": "त्यांची बाजू",
     "app.home.yourName": "तुमचे नाव",
@@ -96,6 +94,9 @@ const mr: AppLocale = {
     "app.home.mySide": "माझी बाजू:",
     "app.home.otherSide": "त्यांची बाजू:",
     "app.home.example": "एखादे उदाहरण वापरून पाहा",
+    "app.home.addTheirSide": "त्यांची बाजू जोडा",
+    "app.home.removeTheirSide": "त्यांची बाजू काढा",
+    "app.home.clear": "साफ करा",
     "app.example.dishwasher.aName": "प्रिया",
     "app.example.dishwasher.a":
       "तू पुन्हा वाट्या वरच्या रॅकमध्ये ठेवल्या आहेस. तिथे त्या कधीच नीट स्वच्छ होत नाहीत, खालचा रॅक त्यासाठीच तर आहे.",

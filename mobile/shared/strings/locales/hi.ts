@@ -80,8 +80,6 @@ const hi: AppLocale = {
     "app.account.signedOut": "आपका साइन आउट हो गया है।",
     "app.account.sessionExpired": "आपको साइन आउट कर दिया गया है। जारी रखने के लिए फिर से साइन इन करें।",
     "app.close": "बंद करें",
-    "app.home.lead": "दोनों पक्षों की बात लिखें, या दूसरे व्यक्ति को लिंक भेजें ताकि वे अपनी बात ख़ुद लिखें।",
-    "app.home.leadSolo": "अपनी बात लिखें, और पता हो तो उनकी भी।",
     "app.home.yourSide": "आपकी बात",
     "app.home.theirSide": "उनकी बात",
     "app.home.yourName": "आपका नाम",
@@ -95,6 +93,9 @@ const hi: AppLocale = {
     "app.home.mySide": "मेरी बात:",
     "app.home.otherSide": "उनकी बात:",
     "app.home.example": "कोई उदाहरण आज़माएँ",
+    "app.home.addTheirSide": "उनकी बात जोड़ें",
+    "app.home.removeTheirSide": "उनकी बात हटाएँ",
+    "app.home.clear": "साफ़ करें",
     "app.example.dishwasher.aName": "अनन्या",
     "app.example.dishwasher.a":
       "तुमने फिर से कटोरियाँ ऊपर वाले रैक में रख दीं। वहाँ वे कभी ठीक से साफ़ नहीं होतीं, नीचे वाला रैक इसी के लिए है।",

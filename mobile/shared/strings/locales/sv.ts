@@ -83,8 +83,6 @@ const sv: AppLocale = {
     "app.account.signedOut": "Du är utloggad.",
     "app.account.sessionExpired": "Du har loggats ut. Logga in igen för att fortsätta.",
     "app.close": "Stäng",
-    "app.home.lead": "Skriv båda sidorna, eller skicka en länk så att den andra kan skriva sin.",
-    "app.home.leadSolo": "Skriv din sida, och den andras om du känner till den.",
     "app.home.yourSide": "Din sida",
     "app.home.theirSide": "Den andras sida",
     "app.home.yourName": "Ditt namn",
@@ -98,6 +96,9 @@ const sv: AppLocale = {
     "app.home.mySide": "Min sida:",
     "app.home.otherSide": "Den andras sida:",
     "app.home.example": "Prova ett exempel",
+    "app.home.addTheirSide": "Lägg till den andras sida",
+    "app.home.removeTheirSide": "Ta bort den andras sida",
+    "app.home.clear": "Rensa",
     "app.example.dishwasher.aName": "Emma",
     "app.example.dishwasher.a":
       "Du har ställt skålarna i överkorgen igen. Där uppe blir de aldrig rena – det är ju det underkorgen är till för.",

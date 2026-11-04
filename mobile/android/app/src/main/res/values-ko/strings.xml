@@ -417,7 +417,6 @@
     <string name="names_failed">이름을 저장하지 못했어요. 다시 시도해 주세요.</string>
     <string name="names_invalid">1~40자로 써 주세요. 당사자 A 같은 라벨은 쓸 수 없어요.</string>
     <string name="account_verdicts_removed">삭제됨</string>
-    <string name="shell_new">새 논쟁</string>
     <string name="shell_today">오늘</string>
     <string name="shell_load_failed">기록을 불러오지 못했어요.</string>
     <string name="shell_load_more">더 보기</string>
@@ -552,8 +551,6 @@
     <string name="app_account_signed_out">로그아웃했어요.</string>
     <string name="app_account_session_expired">로그아웃됐어요. 계속하려면 다시 로그인해 주세요.</string>
     <string name="app_close">닫기</string>
-    <string name="app_home_lead">양쪽 입장을 다 쓰거나, 상대방에게 링크를 보내서 직접 쓰게 해 보세요.</string>
-    <string name="app_home_lead_solo">내 입장을 쓰고, 상대방 입장도 알면 함께 써 주세요.</string>
     <string name="app_home_your_side">내 입장</string>
     <string name="app_home_their_side">상대방 입장</string>
     <string name="app_home_your_name">내 이름</string>
@@ -567,6 +564,9 @@
     <string name="app_home_my_side">내 입장:</string>
     <string name="app_home_other_side">상대방 입장:</string>
     <string name="app_home_example">예시로 해 보기</string>
+    <string name="app_home_add_their_side">상대방 입장 추가</string>
+    <string name="app_home_remove_their_side">상대방 입장 삭제</string>
+    <string name="app_home_clear">지우기</string>
     <string name="app_example_dishwasher_a_name">지훈</string>
     <string name="app_example_dishwasher_a">그릇을 또 위 칸에 넣었네요. 위에서는 절대 깨끗하게 안 닦여요. 그릇 넣으라고 아래 칸이 있는 거잖아요.</string>
     <string name="app_example_dishwasher_b_name">수빈</string>

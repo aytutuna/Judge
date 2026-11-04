@@ -545,7 +545,6 @@ enum L10n {
     static func namesFailed(_ lang: AppLang) -> String { string("names.failed", lang) }
     static func namesInvalid(_ lang: AppLang) -> String { string("names.invalid", lang) }
     static func accountVerdictsRemoved(_ lang: AppLang) -> String { string("account.verdicts.removed", lang) }
-    static func shellNew(_ lang: AppLang) -> String { string("shell.new", lang) }
     static func shellToday(_ lang: AppLang) -> String { string("shell.today", lang) }
     static func shellLoadFailed(_ lang: AppLang) -> String { string("shell.loadFailed", lang) }
     static func shellLoadMore(_ lang: AppLang) -> String { string("shell.loadMore", lang) }
@@ -662,8 +661,6 @@ enum L10n {
     static func appAccountSignedOut(_ lang: AppLang) -> String { string("app.account.signedOut", lang) }
     static func appAccountSessionExpired(_ lang: AppLang) -> String { string("app.account.sessionExpired", lang) }
     static func appClose(_ lang: AppLang) -> String { string("app.close", lang) }
-    static func appHomeLead(_ lang: AppLang) -> String { string("app.home.lead", lang) }
-    static func appHomeLeadSolo(_ lang: AppLang) -> String { string("app.home.leadSolo", lang) }
     static func appHomeYourSide(_ lang: AppLang) -> String { string("app.home.yourSide", lang) }
     static func appHomeTheirSide(_ lang: AppLang) -> String { string("app.home.theirSide", lang) }
     static func appHomeYourName(_ lang: AppLang) -> String { string("app.home.yourName", lang) }
@@ -677,6 +674,9 @@ enum L10n {
     static func appHomeMySide(_ lang: AppLang) -> String { string("app.home.mySide", lang) }
     static func appHomeOtherSide(_ lang: AppLang) -> String { string("app.home.otherSide", lang) }
     static func appHomeExample(_ lang: AppLang) -> String { string("app.home.example", lang) }
+    static func appHomeAddTheirSide(_ lang: AppLang) -> String { string("app.home.addTheirSide", lang) }
+    static func appHomeRemoveTheirSide(_ lang: AppLang) -> String { string("app.home.removeTheirSide", lang) }
+    static func appHomeClear(_ lang: AppLang) -> String { string("app.home.clear", lang) }
     static func appExampleDishwasherAName(_ lang: AppLang) -> String { string("app.example.dishwasher.aName", lang) }
     static func appExampleDishwasherA(_ lang: AppLang) -> String { string("app.example.dishwasher.a", lang) }
     static func appExampleDishwasherBName(_ lang: AppLang) -> String { string("app.example.dishwasher.bName", lang) }
@@ -1131,7 +1131,6 @@ enum L10n {
         "names.failed",
         "names.invalid",
         "account.verdicts.removed",
-        "shell.new",
         "shell.today",
         "shell.loadFailed",
         "shell.loadMore",
@@ -1230,8 +1229,6 @@ enum L10n {
         "app.account.signedOut",
         "app.account.sessionExpired",
         "app.close",
-        "app.home.lead",
-        "app.home.leadSolo",
         "app.home.yourSide",
         "app.home.theirSide",
         "app.home.yourName",
@@ -1244,6 +1241,9 @@ enum L10n {
         "app.home.mySide",
         "app.home.otherSide",
         "app.home.example",
+        "app.home.addTheirSide",
+        "app.home.removeTheirSide",
+        "app.home.clear",
         "app.example.dishwasher.aName",
         "app.example.dishwasher.a",
         "app.example.dishwasher.bName",

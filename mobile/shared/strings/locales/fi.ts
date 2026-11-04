@@ -81,8 +81,6 @@ const fi: AppLocale = {
     "app.account.signedOut": "Olet kirjautunut ulos.",
     "app.account.sessionExpired": "Sinut kirjattiin ulos. Kirjaudu uudelleen, niin voit jatkaa.",
     "app.close": "Sulje",
-    "app.home.lead": "Kirjoita molemmat puolet tai lähetä toiselle linkki, niin hän kirjoittaa omansa.",
-    "app.home.leadSolo": "Kirjoita oma puolesi ja toisen puoli, jos tiedät sen.",
     "app.home.yourSide": "Sinun puolesi",
     "app.home.theirSide": "Toisen puoli",
     "app.home.yourName": "Nimesi",
@@ -96,6 +94,9 @@ const fi: AppLocale = {
     "app.home.mySide": "Minun puoleni:",
     "app.home.otherSide": "Toisen puoli:",
     "app.home.example": "Kokeile esimerkkiä",
+    "app.home.addTheirSide": "Lisää toisen puoli",
+    "app.home.removeTheirSide": "Poista toisen puoli",
+    "app.home.clear": "Tyhjennä",
     "app.example.dishwasher.aName": "Laura",
     "app.example.dishwasher.a":
       "Laitoit kulhot taas yläkoriin. Ne eivät ikinä puhdistu siellä, alakori on niitä varten.",

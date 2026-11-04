@@ -84,8 +84,6 @@ const kn: AppLocale = {
     "app.account.signedOut": "ನೀವು ಸೈನ್ ಔಟ್ ಆಗಿದ್ದೀರಿ.",
     "app.account.sessionExpired": "ನೀವು ಸೈನ್ ಔಟ್ ಆಗಿದ್ದೀರಿ. ಮುಂದುವರಿಯಲು ಮತ್ತೆ ಸೈನ್ ಇನ್ ಮಾಡಿ.",
     "app.close": "ಮುಚ್ಚಿ",
-    "app.home.lead": "ಎರಡೂ ಕಡೆಯ ಮಾತು ನೀವೇ ಬರೆಯಿರಿ, ಅಥವಾ ಎದುರಿನವರಿಗೆ ಲಿಂಕ್ ಕಳುಹಿಸಿ, ಅವರ ಮಾತು ಅವರೇ ಬರೆಯಲಿ.",
-    "app.home.leadSolo": "ನಿಮ್ಮ ಕಡೆಯ ಮಾತು ಬರೆಯಿರಿ, ಗೊತ್ತಿದ್ದರೆ ಅವರದನ್ನೂ.",
     "app.home.yourSide": "ನಿಮ್ಮ ಕಡೆ",
     "app.home.theirSide": "ಅವರ ಕಡೆ",
     "app.home.yourName": "ನಿಮ್ಮ ಹೆಸರು",
@@ -99,6 +97,9 @@ const kn: AppLocale = {
     "app.home.mySide": "ನನ್ನ ಕಡೆಯ ಮಾತು:",
     "app.home.otherSide": "ಅವರ ಕಡೆಯ ಮಾತು:",
     "app.home.example": "ಒಂದು ಉದಾಹರಣೆ ಪ್ರಯತ್ನಿಸಿ",
+    "app.home.addTheirSide": "ಅವರ ಕಡೆ ಸೇರಿಸಿ",
+    "app.home.removeTheirSide": "ಅವರ ಕಡೆ ತೆಗೆದುಹಾಕಿ",
+    "app.home.clear": "ತೆರವುಗೊಳಿಸಿ",
     "app.example.dishwasher.aName": "ಶ್ವೇತಾ",
     "app.example.dishwasher.a":
       "ನೀನು ಮತ್ತೆ ಬಟ್ಟಲುಗಳನ್ನು ಡಿಶ್‌ವಾಶರ್‌ನ ಮೇಲಿನ ರ್ಯಾಕ್‌ನಲ್ಲಿ ಇಟ್ಟಿದ್ದೀಯ. ಅಲ್ಲಿ ಅವು ಯಾವತ್ತೂ ಸ್ವಚ್ಛವಾಗಿ ಬರುವುದಿಲ್ಲ, ಕೆಳಗಿನ ರ್ಯಾಕ್ ಇರುವುದೇ ಅದಕ್ಕೆ.",

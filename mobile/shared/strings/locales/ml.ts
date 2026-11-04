@@ -83,8 +83,6 @@ const ml: AppLocale = {
     "app.account.signedOut": "നിങ്ങൾ സൈൻ ഔട്ട് ചെയ്തു.",
     "app.account.sessionExpired": "നിങ്ങൾ സൈൻ ഔട്ട് ആയി. തുടരാൻ വീണ്ടും സൈൻ ഇൻ ചെയ്യൂ.",
     "app.close": "അടയ്ക്കൂ",
-    "app.home.lead": "രണ്ടു ഭാഗവും എഴുതൂ, അല്ലെങ്കിൽ മറ്റേയാൾക്ക് അവരുടെ ഭാഗം എഴുതാൻ ഒരു ലിങ്ക് അയയ്ക്കൂ.",
-    "app.home.leadSolo": "നിങ്ങളുടെ ഭാഗം എഴുതൂ, അറിയാമെങ്കിൽ അവരുടേതും.",
     "app.home.yourSide": "നിങ്ങളുടെ ഭാഗം",
     "app.home.theirSide": "അവരുടെ ഭാഗം",
     "app.home.yourName": "നിങ്ങളുടെ പേര്",
@@ -98,6 +96,9 @@ const ml: AppLocale = {
     "app.home.mySide": "എന്റെ ഭാഗം:",
     "app.home.otherSide": "അവരുടെ ഭാഗം:",
     "app.home.example": "ഒരു ഉദാഹരണം നോക്കൂ",
+    "app.home.addTheirSide": "അവരുടെ ഭാഗം ചേർക്കൂ",
+    "app.home.removeTheirSide": "അവരുടെ ഭാഗം നീക്കൂ",
+    "app.home.clear": "മായ്ക്കൂ",
     "app.example.dishwasher.aName": "അനു",
     "app.example.dishwasher.a":
       "നിങ്ങൾ വീണ്ടും ബൗളുകൾ മുകളിലെ റാക്കിലാണ് വെച്ചത്. അവിടെ വെച്ചാൽ ഒരിക്കലും വൃത്തിയാകില്ല, അതിനാണ് താഴത്തെ റാക്ക്.",

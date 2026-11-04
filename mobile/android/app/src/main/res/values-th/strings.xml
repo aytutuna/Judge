@@ -417,7 +417,6 @@
     <string name="names_failed">บันทึกชื่อไม่ได้ ลองอีกครั้ง</string>
     <string name="names_invalid">ใช้ได้ 1 ถึง 40 ตัวอักษร และต้องไม่ใช่ป้ายอย่าง “ฝ่าย A”</string>
     <string name="account_verdicts_removed">ลบแล้ว</string>
-    <string name="shell_new">เรื่องใหม่</string>
     <string name="shell_today">วันนี้</string>
     <string name="shell_load_failed">โหลดประวัติไม่ได้</string>
     <string name="shell_load_more">ดูเพิ่ม</string>
@@ -552,8 +551,6 @@
     <string name="app_account_signed_out">ออกจากระบบแล้ว</string>
     <string name="app_account_session_expired">คุณถูกออกจากระบบแล้ว เข้าสู่ระบบอีกครั้งเพื่อใช้งานต่อ</string>
     <string name="app_close">ปิด</string>
-    <string name="app_home_lead">เขียนทั้งสองฝั่งเลย หรือส่งลิงก์ให้อีกฝ่ายมาเขียนฝั่งของเขาเอง</string>
-    <string name="app_home_lead_solo">เขียนฝั่งของคุณ และฝั่งของเขาด้วยถ้าคุณรู้</string>
     <string name="app_home_your_side">ฝั่งของคุณ</string>
     <string name="app_home_their_side">ฝั่งของเขา</string>
     <string name="app_home_your_name">ชื่อของคุณ</string>
@@ -567,6 +564,9 @@
     <string name="app_home_my_side">ฝั่งของฉัน:</string>
     <string name="app_home_other_side">ฝั่งของเขา:</string>
     <string name="app_home_example">ลองดูตัวอย่าง</string>
+    <string name="app_home_add_their_side">เพิ่มฝั่งของเขา</string>
+    <string name="app_home_remove_their_side">ลบฝั่งของเขา</string>
+    <string name="app_home_clear">ล้าง</string>
     <string name="app_example_dishwasher_a_name">แนน</string>
     <string name="app_example_dishwasher_a">ใส่ชามไว้ชั้นบนอีกแล้ว อยู่ข้างบนทีไรล้างไม่เคยสะอาดเลย ชั้นล่างมีไว้ใส่ชามอยู่แล้ว</string>
     <string name="app_example_dishwasher_b_name">บอล</string>

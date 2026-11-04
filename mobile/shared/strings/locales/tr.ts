@@ -80,8 +80,6 @@ const tr: AppLocale = {
     "app.account.signedOut": "Çıkış yaptın.",
     "app.account.sessionExpired": "Oturumun kapandı. Devam etmek için tekrar giriş yap.",
     "app.close": "Kapat",
-    "app.home.lead": "İki tarafı da yaz ya da karşı tarafa bir bağlantı gönder, kendi tarafını o yazsın.",
-    "app.home.leadSolo": "Kendi tarafını yaz, biliyorsan onunkini de.",
     "app.home.yourSide": "Senin tarafın",
     "app.home.theirSide": "Karşı taraf",
     "app.home.yourName": "Adın",
@@ -95,6 +93,9 @@ const tr: AppLocale = {
     "app.home.mySide": "Benim tarafım:",
     "app.home.otherSide": "Onun tarafı:",
     "app.home.example": "Bir örnek dene",
+    "app.home.addTheirSide": "Karşı tarafı ekle",
+    "app.home.removeTheirSide": "Karşı tarafı kaldır",
+    "app.home.clear": "Temizle",
     "app.example.dishwasher.aName": "Elif",
     "app.example.dishwasher.a":
       "Kâseleri yine üst rafa koymuşsun. Orada hiç temiz çıkmıyorlar, alt raf bunun için var.",

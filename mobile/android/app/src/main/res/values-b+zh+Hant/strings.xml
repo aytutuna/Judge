@@ -417,7 +417,6 @@
     <string name="names_failed">無法儲存名字，請再試一次。</string>
     <string name="names_invalid">請輸入 1 到 40 個字元，而且不能是當事人A這類標籤。</string>
     <string name="account_verdicts_removed">已移除</string>
-    <string name="shell_new">新爭論</string>
     <string name="shell_today">今天</string>
     <string name="shell_load_failed">無法載入你的紀錄。</string>
     <string name="shell_load_more">顯示更多</string>
@@ -552,8 +551,6 @@
     <string name="app_account_signed_out">你已登出。</string>
     <string name="app_account_session_expired">你已經被登出了，請重新登入再繼續。</string>
     <string name="app_close">關閉</string>
-    <string name="app_home_lead">寫下雙方的說法，或傳連結給對方，讓對方自己寫。</string>
-    <string name="app_home_lead_solo">寫下你的說法，如果知道對方怎麼說，也一起寫上。</string>
     <string name="app_home_your_side">你的說法</string>
     <string name="app_home_their_side">對方的說法</string>
     <string name="app_home_your_name">你的名字</string>
@@ -567,6 +564,9 @@
     <string name="app_home_my_side">我的說法：</string>
     <string name="app_home_other_side">對方的說法：</string>
     <string name="app_home_example">試試範例</string>
+    <string name="app_home_add_their_side">新增對方的說法</string>
+    <string name="app_home_remove_their_side">移除對方的說法</string>
+    <string name="app_home_clear">清空</string>
     <string name="app_example_dishwasher_a_name">怡君</string>
     <string name="app_example_dishwasher_a">你又把碗放在上層了。放上面根本洗不乾淨，下層就是放碗的地方。</string>
     <string name="app_example_dishwasher_b_name">家豪</string>

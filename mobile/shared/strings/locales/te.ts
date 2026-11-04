@@ -81,8 +81,6 @@ const te: AppLocale = {
     "app.account.signedOut": "మీరు సైన్ అవుట్ అయ్యారు.",
     "app.account.sessionExpired": "మీరు సైన్ అవుట్ అయ్యారు. కొనసాగడానికి మళ్లీ సైన్ ఇన్ చేయండి.",
     "app.close": "మూసేయండి",
-    "app.home.lead": "రెండు వైపుల కథా మీరే రాయండి, లేదా అవతలి వ్యక్తికి లింక్ పంపి వాళ్ల కథ వాళ్లనే రాయమనండి.",
-    "app.home.leadSolo": "మీ వైపు కథ రాయండి, వాళ్ల వైపు తెలిస్తే అది కూడా.",
     "app.home.yourSide": "మీ వైపు కథ",
     "app.home.theirSide": "వాళ్ల వైపు కథ",
     "app.home.yourName": "మీ పేరు",
@@ -96,6 +94,9 @@ const te: AppLocale = {
     "app.home.mySide": "నా వైపు కథ:",
     "app.home.otherSide": "వాళ్ల వైపు కథ:",
     "app.home.example": "ఒక ఉదాహరణ ప్రయత్నించండి",
+    "app.home.addTheirSide": "వాళ్ల వైపు కథ జోడించండి",
+    "app.home.removeTheirSide": "వాళ్ల వైపు కథ తీసేయండి",
+    "app.home.clear": "క్లియర్ చేయండి",
     "app.example.dishwasher.aName": "సాయి",
     "app.example.dishwasher.a":
       "మీరు మళ్లీ గిన్నెలను పై ర్యాక్‌లో పెట్టారు. అక్కడ అవి ఎప్పుడూ శుభ్రంగా రావు, అందుకే కింది ర్యాక్ ఉంది.",

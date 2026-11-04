@@ -80,8 +80,6 @@ const hu: AppLocale = {
     "app.account.signedOut": "Kiléptél.",
     "app.account.sessionExpired": "Lejárt a belépésed. A folytatáshoz lépj be újra.",
     "app.close": "Bezárás",
-    "app.home.lead": "Írd le mindkét fél verzióját, vagy küldj egy linket a másiknak, hogy ő írja meg a sajátját.",
-    "app.home.leadSolo": "Írd le a te verziódat, és az övét is, ha ismered.",
     "app.home.yourSide": "A te verziód",
     "app.home.theirSide": "Az ő verziója",
     "app.home.yourName": "A neved",
@@ -95,6 +93,9 @@ const hu: AppLocale = {
     "app.home.mySide": "Az én verzióm:",
     "app.home.otherSide": "Az ő verziója:",
     "app.home.example": "Próbálj ki egy példát",
+    "app.home.addTheirSide": "Add hozzá az ő verzióját",
+    "app.home.removeTheirSide": "Vedd ki az ő verzióját",
+    "app.home.clear": "Törlés",
     "app.example.dishwasher.aName": "Kata",
     "app.example.dishwasher.a":
       "Már megint a felső kosárba raktad a tálakat. Ott sosem lesznek tiszták, arra való az alsó.",

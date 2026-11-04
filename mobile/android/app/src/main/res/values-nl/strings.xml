@@ -425,7 +425,6 @@
     <string name="names_failed">We konden de namen niet opslaan. Probeer het opnieuw.</string>
     <string name="names_invalid">Gebruik 1 tot 40 tekens, en geen label zoals Partij A.</string>
     <string name="account_verdicts_removed">Verwijderd</string>
-    <string name="shell_new">Nieuwe discussie</string>
     <string name="shell_today">Vandaag</string>
     <string name="shell_load_failed">We konden je geschiedenis niet laden.</string>
     <string name="shell_load_more">Meer tonen</string>
@@ -569,8 +568,6 @@
     <string name="app_account_signed_out">Je bent uitgelogd.</string>
     <string name="app_account_session_expired">Je bent uitgelogd. Log opnieuw in om verder te gaan.</string>
     <string name="app_close">Sluiten</string>
-    <string name="app_home_lead">Schrijf beide kanten op, of stuur de ander een link om het zelf te doen.</string>
-    <string name="app_home_lead_solo">Schrijf jouw kant op en die van de ander als je die kent.</string>
     <string name="app_home_your_side">Jouw kant</string>
     <string name="app_home_their_side">Kant van de ander</string>
     <string name="app_home_your_name">Jouw naam</string>
@@ -584,6 +581,9 @@
     <string name="app_home_my_side">Mijn kant:</string>
     <string name="app_home_other_side">De andere kant:</string>
     <string name="app_home_example">Probeer een voorbeeld</string>
+    <string name="app_home_add_their_side">Kant van de ander toevoegen</string>
+    <string name="app_home_remove_their_side">Kant van de ander verwijderen</string>
+    <string name="app_home_clear">Wissen</string>
     <string name="app_example_dishwasher_a_name">Lotte</string>
     <string name="app_example_dishwasher_a">Je hebt de kommen weer in het bovenste rek gezet. Daar worden ze nooit schoon, daar is het onderste rek voor.</string>
     <string name="app_example_dishwasher_b_name">Jeroen</string>

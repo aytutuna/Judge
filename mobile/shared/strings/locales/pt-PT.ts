@@ -81,8 +81,6 @@ const ptPT: AppLocale = {
     "app.account.signedOut": "Terminaste a sessão.",
     "app.account.sessionExpired": "A tua sessão terminou. Entra outra vez para continuar.",
     "app.close": "Fechar",
-    "app.home.lead": "Escreve os dois lados ou envia à outra pessoa um link para ela escrever o dela.",
-    "app.home.leadSolo": "Escreve o teu lado e, se o souberes, o da outra pessoa.",
     "app.home.yourSide": "O teu lado",
     "app.home.theirSide": "O outro lado",
     "app.home.yourName": "O teu nome",
@@ -96,6 +94,9 @@ const ptPT: AppLocale = {
     "app.home.mySide": "O meu lado:",
     "app.home.otherSide": "O outro lado:",
     "app.home.example": "Experimenta um exemplo",
+    "app.home.addTheirSide": "Adicionar o outro lado",
+    "app.home.removeTheirSide": "Remover o outro lado",
+    "app.home.clear": "Limpar",
     "app.example.dishwasher.aName": "Rita",
     "app.example.dishwasher.a":
       "Voltaste a pôr as tigelas no cesto de cima. Lá em cima nunca ficam bem lavadas, o de baixo é que serve para isso.",

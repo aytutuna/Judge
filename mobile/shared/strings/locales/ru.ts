@@ -83,8 +83,6 @@ const ru: AppLocale = {
     "app.account.signedOut": "Вы вышли из аккаунта.",
     "app.account.sessionExpired": "Сеанс истёк. Войдите снова, чтобы продолжить.",
     "app.close": "Закрыть",
-    "app.home.lead": "Напишите обе версии или отправьте другому человеку ссылку, чтобы он написал свою.",
-    "app.home.leadSolo": "Напишите свою версию, а если знаете — и версию другой стороны.",
     "app.home.yourSide": "Ваша версия",
     "app.home.theirSide": "Другая сторона",
     "app.home.yourName": "Ваше имя",
@@ -98,6 +96,9 @@ const ru: AppLocale = {
     "app.home.mySide": "Моя версия:",
     "app.home.otherSide": "Версия другой стороны:",
     "app.home.example": "Попробовать на примере",
+    "app.home.addTheirSide": "Добавить другую сторону",
+    "app.home.removeTheirSide": "Убрать другую сторону",
+    "app.home.clear": "Очистить",
     "app.example.dishwasher.aName": "Аня",
     "app.example.dishwasher.a":
       "Ты опять поставил миски в верхнюю корзину. Там они никогда не отмываются — для них есть нижняя.",

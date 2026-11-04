@@ -83,8 +83,6 @@ const fr: AppLocale = {
     "app.account.signedOut": "Déconnexion effectuée.",
     "app.account.sessionExpired": "Ta session a expiré. Reconnecte-toi pour continuer.",
     "app.close": "Fermer",
-    "app.home.lead": "Écris les deux versions, ou envoie un lien à l’autre personne pour qu’elle écrive la sienne.",
-    "app.home.leadSolo": "Écris ta version, et celle d’en face si tu la connais.",
     "app.home.yourSide": "Ta version",
     "app.home.theirSide": "Sa version",
     "app.home.yourName": "Ton nom",
@@ -98,6 +96,9 @@ const fr: AppLocale = {
     "app.home.mySide": "Ma version :",
     "app.home.otherSide": "Sa version :",
     "app.home.example": "Essayer un exemple",
+    "app.home.addTheirSide": "Ajouter sa version",
+    "app.home.removeTheirSide": "Retirer sa version",
+    "app.home.clear": "Effacer",
     "app.example.dishwasher.aName": "Julie",
     "app.example.dishwasher.a":
       "Tu as encore mis les bols dans le panier du haut. Ils n’en ressortent jamais propres, c’est à ça que sert le panier du bas.",

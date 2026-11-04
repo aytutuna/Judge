@@ -93,10 +93,6 @@ const sl: AppLocale = {
     "app.account.sessionExpired":
       "Seja je potekla. Za nadaljevanje se znova prijavi.",
     "app.close": "Zapri",
-    "app.home.lead":
-      "Napiši obe plati ali drugi osebi pošlji povezavo, da napiše svojo.",
-    "app.home.leadSolo":
-      "Napiši svojo plat, pa še plat druge osebe, če jo poznaš.",
     "app.home.yourSide": "Tvoja plat",
     "app.home.theirSide": "Druga plat",
     "app.home.yourName": "Tvoje ime",
@@ -111,6 +107,9 @@ const sl: AppLocale = {
     "app.home.mySide": "Moja plat:",
     "app.home.otherSide": "Plat druge osebe:",
     "app.home.example": "Poskusi s primerom",
+    "app.home.addTheirSide": "Dodaj drugo plat",
+    "app.home.removeTheirSide": "Odstrani drugo plat",
+    "app.home.clear": "Počisti",
     "app.example.dishwasher.aName": "Ana",
     "app.example.dishwasher.a":
       "Sklede si spet zložil v zgornjo košaro. Tam se nikoli ne pomijejo do konca, za to je spodnja.",

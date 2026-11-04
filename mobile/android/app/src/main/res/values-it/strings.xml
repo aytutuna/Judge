@@ -433,7 +433,6 @@
     <string name="names_failed">Non siamo riusciti a salvare i nomi. Riprova.</string>
     <string name="names_invalid">Usa da 1 a 40 caratteri, e non un\'etichetta come Parte A.</string>
     <string name="account_verdicts_removed">Rimosso</string>
-    <string name="shell_new">Nuova discussione</string>
     <string name="shell_today">Oggi</string>
     <string name="shell_load_failed">Non siamo riusciti a caricare la cronologia.</string>
     <string name="shell_load_more">Mostra altri</string>
@@ -586,8 +585,6 @@
     <string name="app_account_signed_out">Disconnessione effettuata.</string>
     <string name="app_account_session_expired">La sessione è scaduta. Accedi di nuovo per continuare.</string>
     <string name="app_close">Chiudi</string>
-    <string name="app_home_lead">Scrivi entrambe le versioni, oppure manda un link all\'altra persona perché scriva la sua.</string>
-    <string name="app_home_lead_solo">Scrivi la tua versione e, se la conosci, anche quella dell\'altra persona.</string>
     <string name="app_home_your_side">La tua versione</string>
     <string name="app_home_their_side">La sua versione</string>
     <string name="app_home_your_name">Il tuo nome</string>
@@ -601,6 +598,9 @@
     <string name="app_home_my_side">La mia versione:</string>
     <string name="app_home_other_side">La versione dell\'altra persona:</string>
     <string name="app_home_example">Prova un esempio</string>
+    <string name="app_home_add_their_side">Aggiungi la sua versione</string>
+    <string name="app_home_remove_their_side">Togli la sua versione</string>
+    <string name="app_home_clear">Cancella</string>
     <string name="app_example_dishwasher_a_name">Sara</string>
     <string name="app_example_dishwasher_a">Hai messo di nuovo le scodelle nel cestello di sopra. Lì non vengono mai pulite, il cestello di sotto serve apposta.</string>
     <string name="app_example_dishwasher_b_name">Matteo</string>

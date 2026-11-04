@@ -94,9 +94,6 @@ const gu: AppLocale = {
     "app.account.sessionExpired":
       "તમે સાઇન આઉટ થઈ ગયા છો. આગળ વધવા ફરી સાઇન ઇન કરો.",
     "app.close": "બંધ કરો",
-    "app.home.lead":
-      "બંને બાજુની વાત લખો, અથવા સામેની વ્યક્તિને લિંક મોકલો, જેથી એ પોતાની વાત જાતે લખે.",
-    "app.home.leadSolo": "તમારી વાત લખો, અને ખબર હોય તો એમની પણ.",
     "app.home.yourSide": "તમારી વાત",
     "app.home.theirSide": "એમની વાત",
     "app.home.yourName": "તમારું નામ",
@@ -110,6 +107,9 @@ const gu: AppLocale = {
     "app.home.mySide": "મારી વાત:",
     "app.home.otherSide": "સામેવાળાની વાત:",
     "app.home.example": "ઉદાહરણ અજમાવો",
+    "app.home.addTheirSide": "એમની વાત ઉમેરો",
+    "app.home.removeTheirSide": "એમની વાત કાઢી નાખો",
+    "app.home.clear": "સાફ કરો",
     "app.example.dishwasher.aName": "ધ્વનિ",
     "app.example.dishwasher.a":
       "તેં ફરી વાટકા ઉપરના રૅકમાં મૂક્યા. ત્યાં એ ક્યારેય ચોખ્ખા નથી નીકળતા, નીચેનું રૅક એના માટે જ તો છે.",

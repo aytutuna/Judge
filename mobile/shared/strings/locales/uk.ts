@@ -83,8 +83,6 @@ const uk: AppLocale = {
     "app.account.signedOut": "Вихід виконано.",
     "app.account.sessionExpired": "Сесія завершилася. Увійди знову, щоб продовжити.",
     "app.close": "Закрити",
-    "app.home.lead": "Напиши версії обох сторін або надішли іншій людині посилання, щоб вона написала свою.",
-    "app.home.leadSolo": "Напиши свою версію, а якщо знаєш, то й версію іншої сторони.",
     "app.home.yourSide": "Твоя версія",
     "app.home.theirSide": "Інша сторона",
     "app.home.yourName": "Твоє ім’я",
@@ -98,6 +96,9 @@ const uk: AppLocale = {
     "app.home.mySide": "Моя версія:",
     "app.home.otherSide": "Версія іншої сторони:",
     "app.home.example": "Спробувати приклад",
+    "app.home.addTheirSide": "Додати іншу сторону",
+    "app.home.removeTheirSide": "Прибрати іншу сторону",
+    "app.home.clear": "Очистити",
     "app.example.dishwasher.aName": "Олена",
     "app.example.dishwasher.a":
       "Ти знову поставив миски у верхній кошик. Там вони ніколи не відмиваються — для них є нижній.",

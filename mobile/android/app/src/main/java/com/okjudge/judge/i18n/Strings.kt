@@ -478,7 +478,6 @@ class Strings(private val res: Resources) {
     val namesFailed: String get() = res.getString(R.string.names_failed)
     val namesInvalid: String get() = res.getString(R.string.names_invalid)
     val accountVerdictsRemoved: String get() = res.getString(R.string.account_verdicts_removed)
-    val shellNew: String get() = res.getString(R.string.shell_new)
     val shellToday: String get() = res.getString(R.string.shell_today)
     val shellLoadFailed: String get() = res.getString(R.string.shell_load_failed)
     val shellLoadMore: String get() = res.getString(R.string.shell_load_more)
@@ -595,8 +594,6 @@ class Strings(private val res: Resources) {
     val appAccountSignedOut: String get() = res.getString(R.string.app_account_signed_out)
     val appAccountSessionExpired: String get() = res.getString(R.string.app_account_session_expired)
     val appClose: String get() = res.getString(R.string.app_close)
-    val appHomeLead: String get() = res.getString(R.string.app_home_lead)
-    val appHomeLeadSolo: String get() = res.getString(R.string.app_home_lead_solo)
     val appHomeYourSide: String get() = res.getString(R.string.app_home_your_side)
     val appHomeTheirSide: String get() = res.getString(R.string.app_home_their_side)
     val appHomeYourName: String get() = res.getString(R.string.app_home_your_name)
@@ -610,6 +607,9 @@ class Strings(private val res: Resources) {
     val appHomeMySide: String get() = res.getString(R.string.app_home_my_side)
     val appHomeOtherSide: String get() = res.getString(R.string.app_home_other_side)
     val appHomeExample: String get() = res.getString(R.string.app_home_example)
+    val appHomeAddTheirSide: String get() = res.getString(R.string.app_home_add_their_side)
+    val appHomeRemoveTheirSide: String get() = res.getString(R.string.app_home_remove_their_side)
+    val appHomeClear: String get() = res.getString(R.string.app_home_clear)
     val appExampleDishwasherAName: String get() = res.getString(R.string.app_example_dishwasher_a_name)
     val appExampleDishwasherA: String get() = res.getString(R.string.app_example_dishwasher_a)
     val appExampleDishwasherBName: String get() = res.getString(R.string.app_example_dishwasher_b_name)
@@ -1063,7 +1063,6 @@ class Strings(private val res: Resources) {
             "names.failed" -> R.string.names_failed
             "names.invalid" -> R.string.names_invalid
             "account.verdicts.removed" -> R.string.account_verdicts_removed
-            "shell.new" -> R.string.shell_new
             "shell.today" -> R.string.shell_today
             "shell.loadFailed" -> R.string.shell_load_failed
             "shell.loadMore" -> R.string.shell_load_more
@@ -1162,8 +1161,6 @@ class Strings(private val res: Resources) {
             "app.account.signedOut" -> R.string.app_account_signed_out
             "app.account.sessionExpired" -> R.string.app_account_session_expired
             "app.close" -> R.string.app_close
-            "app.home.lead" -> R.string.app_home_lead
-            "app.home.leadSolo" -> R.string.app_home_lead_solo
             "app.home.yourSide" -> R.string.app_home_your_side
             "app.home.theirSide" -> R.string.app_home_their_side
             "app.home.yourName" -> R.string.app_home_your_name
@@ -1176,6 +1173,9 @@ class Strings(private val res: Resources) {
             "app.home.mySide" -> R.string.app_home_my_side
             "app.home.otherSide" -> R.string.app_home_other_side
             "app.home.example" -> R.string.app_home_example
+            "app.home.addTheirSide" -> R.string.app_home_add_their_side
+            "app.home.removeTheirSide" -> R.string.app_home_remove_their_side
+            "app.home.clear" -> R.string.app_home_clear
             "app.example.dishwasher.aName" -> R.string.app_example_dishwasher_a_name
             "app.example.dishwasher.a" -> R.string.app_example_dishwasher_a
             "app.example.dishwasher.bName" -> R.string.app_example_dishwasher_b_name
