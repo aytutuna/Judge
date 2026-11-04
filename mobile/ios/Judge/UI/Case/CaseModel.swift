@@ -47,6 +47,12 @@ final class CaseModel {
     private(set) var appealSending = false
     private(set) var appealError: APIError?
 
+    /// The form for the owner's side, when the link went out first.
+    var sideText = ""
+    let sideEvidence: EvidenceModel
+    private(set) var sideSending = false
+    private(set) var sideError: APIError?
+
     /// The owner's name on the share pages, while being edited.
     var displayNameDraft: String?
     private(set) var displayBusy = false
@@ -72,6 +78,7 @@ final class CaseModel {
         load = initial == nil ? .loading : .ready
         localNames = namesStore.names(caseID: id)
         appealEvidence = EvidenceModel(max: CaseLogic.maxAppealEvidence)
+        sideEvidence = EvidenceModel(max: HomeModel.maxEvidence)
     }
 
     /// Party A's names for the verdicts: the server's copy, else this phone's.
@@ -235,6 +242,46 @@ final class CaseModel {
             }
             if failure.code == "evidence_invalid" { appealEvidence.invalidateTokens() }
             appealError = failure
+        }
+    }
+
+    // MARK: - Writing the owner's side
+
+    var sideCanSubmit: Bool {
+        let count = sideText.trimmingCharacters(in: .whitespacesAndNewlines).utf16.count
+        return count >= HomeModel.minLength && count <= HomeModel.maxLength && !sideSending && !sideEvidence.busy
+    }
+
+    /// POST the side with an Idempotency-Key (one per exact body), keep the
+    /// names it returns and swap in the view; polling goes on from there.
+    func submitSide() async {
+        guard sideCanSubmit else { return }
+        let text = sideText.trimmingCharacters(in: .whitespacesAndNewlines)
+        let evidence = sideEvidence.tokens
+        let key = keys.key(for: JudgeAPI.canonical(JudgeAPI.sideBody(text: text, evidence: evidence)))
+        sideSending = true
+        sideError = nil
+        defer { sideSending = false }
+        do {
+            let answer = try await api.addSide(id: id, text: text, evidence: evidence, idempotencyKey: key)
+            keys.clear(key)
+            namesStore.save(caseID: id, answer.nameMap)
+            localNames = namesStore.names(caseID: id)
+            if let entitlement = answer.entitlement { account?.applyEntitlement(entitlement) }
+            sideText = ""
+            sideEvidence.clear()
+            apply(answer.view)
+        } catch {
+            if APIError.isCancellation(error) { return }
+            let failure = (error as? APIError) ?? .malformed
+            if failure.code == "signin_required" {
+                account?.sessionExpired()
+            } else if case .server(let status, _) = failure, status == 402 {
+                account?.refreshSoon()
+            }
+            if failure.code == "evidence_invalid" { sideEvidence.invalidateTokens() }
+            sideError = failure
+            if ["case_closed", "case_expired", "removed"].contains(failure.code ?? "") { await reload() }
         }
     }
 

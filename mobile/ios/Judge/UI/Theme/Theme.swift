@@ -169,6 +169,32 @@ extension View {
     }
 }
 
+/// The text cards' edge: a thin stroke and a glow in the side's colour,
+/// a little stronger while the card has the focus.
+private struct NeonEdge: ViewModifier {
+    let color: Color
+    let focused: Bool
+    let radius: CGFloat
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
+    func body(content: Content) -> some View {
+        let shape = RoundedRectangle(cornerRadius: radius, style: .continuous)
+        content
+            .background {
+                shape.fill(Brand.paper)
+                    .shadow(color: color.opacity(focused ? 0.45 : 0.22), radius: focused ? 10 : 6)
+            }
+            .overlay(shape.strokeBorder(color.opacity(focused ? 0.9 : 0.55), lineWidth: 1))
+            .animation(reduceMotion ? nil : .easeOut(duration: 0.2), value: focused)
+    }
+}
+
+extension View {
+    func neonEdge(_ color: Color, focused: Bool, radius: CGFloat) -> some View {
+        modifier(NeonEdge(color: color, focused: focused, radius: radius))
+    }
+}
+
 /// Motion tokens.
 enum Motion {
     static let ease = Animation.timingCurve(0.2, 0.7, 0.1, 1, duration: 0.4)

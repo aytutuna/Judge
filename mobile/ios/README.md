@@ -79,7 +79,7 @@ bump `MARKETING_VERSION` there for a new release.
 Debug builds accept `-JudgeScreenshotState <screen>:<lang>` and render a fixed
 state from `mobile/shared/fixtures/verdicts.json`, with an in-memory history,
 a separate defaults suite and no network (the API points at a closed local
-port). Screens: `home`,
+port). Screens: `home` (signed in, so the link and "Add context" show),
 `home-example` (both sides from "Try an example"), `home-error`, `judging`, `history`, `settings`, `signin`, `signin-code`,
 `account` (Settings, signed in with a fixture account), `verdict/<sample>`
 for any key of `verdictResponses` (opened as a saved verdict),
@@ -90,8 +90,10 @@ account states `balance/welcome` (a new account's free verdict),
 `balance/none` (monthly allowance used up), `pricing`, `pricing-store`
 (store prices on the buy buttons, from a fake store), `pricing-buy` (the
 same, scrolled to the packs and the monthly plan), `clarify` and
-`evidence` (picked screenshots in mixed states), and the case states
-`mode-both`, `history-cases` (the account's list with every kind of row and
+`evidence` (picked screenshots in mixed states, under the box), and the case states
+`mode-both`, `case-write` and `case-write-answered` (the owner's page of a
+case the link started, with their side still to write, before and after the
+other side), `history-cases` (the account's list with every kind of row and
 a verdict kept only on the phone), `history-select` (select mode, two rows
 picked) and `case/<state>` (a key of `cases.views` or
 `awaiting`, `judging`, `judged`, `one-sided`, `appeal`, `appeal-judging`,
@@ -192,9 +194,12 @@ flow, natively (app/page.tsx):
   `POST /api/v1/evidence` (multipart, `image` parts). Only the tokens of
   images read successfully are sent, in order; images still being read
   hold the submit.
-- **Both sides** (when `features.cases`): "Or send them a link" on Home
-  creates a case, which costs a verdict
-  (`POST /api/v1/cases` with an `Idempotency-Key`); the returned name map is
+- **Both sides** (when `features.cases`): "Send them a link" on Home, signed
+  in or not (signed out it goes through sign-in first), creates a case, which
+  costs a verdict (`POST /api/v1/cases` with an `Idempotency-Key`). Home may
+  be blank then: the text key is left out and the owner writes their side on
+  the case page (`POST /api/v1/cases/{id}/side`) while the link is out. The
+  returned name map is
   kept in the Keychain per case (`KeychainCaseNamesStore`) as the fallback
   for `case.names`. The case page polls `GET /api/v1/cases/{id}` every
   `pollAfterMs` while something is judging (backing off to 30 s on errors)

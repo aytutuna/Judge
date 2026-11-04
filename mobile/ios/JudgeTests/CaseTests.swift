@@ -525,7 +525,7 @@ final class CaseTests: XCTestCase {
         router.on("POST", "/api/v1/cases", created)
         router.install()
         let app = try PremiumFixtures.app(container: container)
-        XCTAssertTrue(app.casesOn)
+        XCTAssertTrue(app.linkOn)
         let home = app.home
         home.mode = .both
         XCTAssertEqual(home.shownCaseName(app), "Alex", "prefilled from the account's first name")
@@ -609,13 +609,158 @@ final class CaseTests: XCTestCase {
         XCTAssertNil(JudgeAPI.createCaseBody(text: "t", lang: .en, evidence: [], displayName: nil)["evidence"])
     }
 
+    func testBlankCaseBodyLeavesTheTextOut() {
+        let blank = JudgeAPI.createCaseBody(text: nil, lang: .en, evidence: [], displayName: "Alex")
+        XCTAssertNil(blank["text"])
+        XCTAssertEqual(blank["displayName"] as? String, "Alex")
+        let written = JudgeAPI.createCaseBody(text: "t", lang: .en, evidence: [], displayName: "Alex")
+        XCTAssertEqual(written["text"] as? String, "t")
+        XCTAssertNotEqual(JudgeAPI.canonical(blank), JudgeAPI.canonical(written), "the two get their own idempotency keys")
+    }
+
     @MainActor
-    func testSignedOutHidesTheModeSwitch() throws {
+    func testTheLinkShowsSignedOutAndSignInComesFirst() async throws {
         let container = HistoryContainer.inMemory()
+        let router = StubRouter()
+        router.install()
         let app = try PremiumFixtures.app(container: container, token: nil)
-        XCTAssertFalse(app.casesOn, "signing in comes first; submit still opens sign-in")
-        app.home.mode = .both
-        XCTAssertFalse(app.home.isTwoSided(app))
+        app.home.argument = ""
+        XCTAssertTrue(app.linkOn, "the link needs the server's cases, not an account")
+        XCTAssertTrue(app.home.canSendLink(app))
+
+        app.home.sendLink(app: app)
+        XCTAssertEqual(app.home.mode, .both)
+        XCTAssertTrue(app.home.isTwoSided(app), "not tied to being signed in")
+        XCTAssertTrue(app.account.isSignInPresented)
+        XCTAssertFalse(app.home.isCreatingCase)
+        try await Task.sleep(for: .milliseconds(50))
+        XCTAssertEqual(router.count("POST", "/api/v1/cases"), 0)
+        withExtendedLifetime(container) {}
+    }
+
+    @MainActor
+    func testTheLinkCanGoOutBeforeAnythingIsWritten() async throws {
+        let container = HistoryContainer.inMemory()
+        let router = StubRouter()
+        router.on("POST", "/api/v1/cases", try PremiumFixtures.json(201, try PremiumFixtures.section("cases")["createResponse"] as Any))
+        router.install()
+        let app = try PremiumFixtures.app(container: container)
+        let home = app.home
+        home.argument = ""
+
+        home.sendLink(app: app)
+        try await PremiumFixtures.waitUntil("the case page") { home.path.last == .caseDetail(id: Self.caseID) }
+        let body = try PremiumFixtures.body(router.sentBodies("POST", "/api/v1/cases").first)
+        XCTAssertNil(body["text"], "no side yet: the key is left out")
+        XCTAssertEqual(body["tier"] as? String, "premium")
+        withExtendedLifetime(container) {}
+    }
+
+    @MainActor
+    func testWhenTheLinkCanBeSent() throws {
+        let container = HistoryContainer.inMemory()
+        let app = try PremiumFixtures.app(container: container)
+        let home = app.home
+        home.argument = ""
+        XCTAssertTrue(home.canSendLink(app), "blank")
+        home.argument = "  \n "
+        XCTAssertTrue(home.canSendLink(app), "blanks only")
+        home.argument = "too short"
+        XCTAssertFalse(home.canSendLink(app), "1 to 19 characters")
+        home.argument = String(repeating: "a", count: HomeModel.minLength)
+        XCTAssertTrue(home.canSendLink(app), "long enough for a verdict")
+
+        home.argument = ""
+        let ids = home.evidence.reserve(1)
+        XCTAssertFalse(home.canSendLink(app), "an image is still being read")
+        home.evidence.apply([EvidenceUploadItem(index: 0, status: "ok", token: "tok-1", preview: "one")], sent: ids)
+        XCTAssertFalse(home.canSendLink(app), "images only go with a written side")
+        home.argument = "My friend Sam says a hot dog is a sandwich. I say it is not."
+        XCTAssertTrue(home.canSendLink(app))
+
+        home.addTheirSide()
+        XCTAssertFalse(home.canSendLink(app), "with the second card open they write both")
+        withExtendedLifetime(container) {}
+    }
+
+    @MainActor
+    func testAShortSideDoesNotSendTheLink() async throws {
+        let container = HistoryContainer.inMemory()
+        let router = StubRouter()
+        router.install()
+        let app = try PremiumFixtures.app(container: container)
+        app.home.argument = "too short"
+        app.home.sendLink(app: app)
+        XCTAssertEqual(app.home.mode, .now)
+        XCTAssertFalse(app.home.isCreatingCase)
+        try await Task.sleep(for: .milliseconds(50))
+        XCTAssertEqual(router.count("POST", "/api/v1/cases"), 0)
+        withExtendedLifetime(container) {}
+    }
+
+    // MARK: - Writing the owner's side
+
+    func testOwnerSideMissingDecodes() throws {
+        XCTAssertFalse(try view("waiting_for_respondent").ownerSideMissing, "absent or false means written")
+        XCTAssertFalse(try CaseDecoding.view(["id": "x"]).ownerSideMissing)
+        XCTAssertTrue(try view("waiting_to_write").ownerSideMissing)
+        let answered = try view("waiting_to_write_answered")
+        XCTAssertTrue(answered.ownerSideMissing)
+        XCTAssertTrue(answered.respondentAnswered)
+        XCTAssertNil(answered.inviteUrl, "the link closes once their side is in")
+        XCTAssertFalse(answered.canJudgeNow)
+        XCTAssertTrue(try view("respondent_waiting_for_owner").ownerSideMissing, "the respondent's view carries it too")
+    }
+
+    func testSideBodyCarriesTheTextAndTheTokens() {
+        let body = JudgeAPI.sideBody(text: "mine", evidence: ["ev1"])
+        XCTAssertEqual(body["text"] as? String, "mine")
+        XCTAssertEqual(body["evidence"] as? [String], ["ev1"])
+        XCTAssertNil(JudgeAPI.sideBody(text: "mine", evidence: [])["evidence"])
+    }
+
+    @MainActor
+    func testWritingTheSideSwapsInTheView() async throws {
+        let container = HistoryContainer.inMemory()
+        let router = StubRouter()
+        let path = "/api/v1/cases/\(Self.caseID)/side"
+        router.on("POST", path, try PremiumFixtures.json(200, ["case": try viewObject("judging"), "name_map": [] as [Any]]))
+        router.install()
+        let app = try PremiumFixtures.app(container: container)
+        let model = CaseModel(id: Self.caseID, api: app.api, namesStore: app.caseNames, account: app.account, initial: try view("waiting_to_write"))
+        model.usesNetwork = false
+
+        model.sideText = "short"
+        XCTAssertFalse(model.sideCanSubmit)
+        model.sideText = "  My friend Sam says a hot dog is a sandwich. I say it is not.  "
+        XCTAssertTrue(model.sideCanSubmit)
+        await model.submitSide()
+
+        let headers = try XCTUnwrap(router.sentHeaders("POST", path).first)
+        XCTAssertFalse((headers["Idempotency-Key"] ?? "").isEmpty)
+        let body = try PremiumFixtures.body(router.sentBodies("POST", path).first)
+        XCTAssertEqual(body["text"] as? String, "My friend Sam says a hot dog is a sandwich. I say it is not.", "trimmed")
+        XCTAssertEqual(model.view?.status, .judging)
+        XCTAssertTrue(model.sideText.isEmpty)
+        XCTAssertNil(model.sideError)
+        withExtendedLifetime(container) {}
+    }
+
+    @MainActor
+    func testWritingTheSideKeepsTheFormOnAnError() async throws {
+        let container = HistoryContainer.inMemory()
+        let router = StubRouter()
+        router.on("POST", "/api/v1/cases/\(Self.caseID)/side", try PremiumFixtures.apiError("case_closed"))
+        router.install()
+        let app = try PremiumFixtures.app(container: container)
+        let model = CaseModel(id: Self.caseID, api: app.api, namesStore: app.caseNames, account: app.account)
+        model.usesNetwork = false
+        model.sideText = "My friend Sam says a hot dog is a sandwich. I say it is not."
+
+        await model.submitSide()
+        XCTAssertEqual(model.sideError?.code, "case_closed")
+        XCTAssertFalse(model.sideText.isEmpty, "what was written stays")
+        XCTAssertFalse(model.sideSending)
         withExtendedLifetime(container) {}
     }
 

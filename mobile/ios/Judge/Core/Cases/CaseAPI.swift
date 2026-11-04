@@ -34,12 +34,13 @@ extension JudgeAPI {
     }
 
     /// The JSON body of POST /api/v1/cases, also the Idempotency-Key's input.
-    static func createCaseBody(text: String, lang: AppLang, evidence: [String], displayName: String?) -> [String: Any] {
+    /// A nil `text` leaves the key out: the case starts without the owner's side.
+    static func createCaseBody(text: String?, lang: AppLang, evidence: [String], displayName: String?) -> [String: Any] {
         var body: [String: Any] = [
-            "text": text,
             "lang": lang.rawValue,
             "tier": Tier.premium.rawValue,
         ]
+        if let text { body["text"] = text }
         if !evidence.isEmpty { body["evidence"] = evidence }
         if let displayName, !displayName.isEmpty { body["displayName"] = displayName }
         return body
@@ -52,9 +53,29 @@ extension JudgeAPI {
     }
 
     /// POST /api/v1/cases: the owner's side; the case holds one verdict's unit.
-    func createCase(text: String, lang: AppLang, evidence: [String], displayName: String?, idempotencyKey: String) async throws -> CaseSubmission {
+    func createCase(text: String?, lang: AppLang, evidence: [String], displayName: String?, idempotencyKey: String) async throws -> CaseSubmission {
         let body = Self.createCaseBody(text: text, lang: lang, evidence: evidence, displayName: displayName)
         let request = try jsonRequest(endpoint("cases"), method: "POST", timeout: CaseTimeout.create, body: body, idempotencyKey: idempotencyKey)
+        let data = try await send(request)
+        do {
+            return try CaseDecoding.submission(data)
+        } catch {
+            throw APIError.malformed
+        }
+    }
+
+    /// The JSON body of POST /api/v1/cases/{id}/side, also the Idempotency-Key's input.
+    static func sideBody(text: String, evidence: [String]) -> [String: Any] {
+        var body: [String: Any] = ["text": text]
+        if !evidence.isEmpty { body["evidence"] = evidence }
+        return body
+    }
+
+    /// POST /api/v1/cases/{id}/side: the owner writes their side of a case
+    /// that was started with the link only.
+    func addSide(id: String, text: String, evidence: [String], idempotencyKey: String) async throws -> CaseSubmission {
+        let body = Self.sideBody(text: text, evidence: evidence)
+        let request = try jsonRequest(caseURL(id, "side"), method: "POST", timeout: CaseTimeout.create, body: body, idempotencyKey: idempotencyKey)
         let data = try await send(request)
         do {
             return try CaseDecoding.submission(data)

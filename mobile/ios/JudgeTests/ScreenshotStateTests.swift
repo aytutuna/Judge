@@ -233,7 +233,7 @@ final class ScreenshotStateTests: XCTestCase {
             let welcome = try XCTUnwrap(ScreenshotState.parse("balance/welcome:en")).makeModel(container: container)
             XCTAssertEqual(welcome.account.entitlement.map(Balance.init), .credits(1))
             XCTAssertTrue(welcome.evidenceOn)
-            XCTAssertTrue(welcome.casesOn)
+            XCTAssertTrue(welcome.linkOn)
 
             let pricing = try XCTUnwrap(ScreenshotState.parse("pricing:tr")).makeModel(container: container)
             XCTAssertEqual(pricing.home.path, [.pricing])
@@ -260,6 +260,9 @@ final class ScreenshotStateTests: XCTestCase {
         XCTAssertEqual(ScreenshotState.parse("history-select:tr")?.screen, .historySelect)
         XCTAssertEqual(ScreenshotState.parse("history-select:tr")?.tab, .history)
         XCTAssertEqual(ScreenshotState.parse("mode-both:en")?.screen, .modeBoth)
+        XCTAssertEqual(ScreenshotState.parse("case-write:en")?.screen, .caseWrite(answered: false))
+        XCTAssertEqual(ScreenshotState.parse("case-write-answered:en")?.screen, .caseWrite(answered: true))
+        XCTAssertEqual(ScreenshotState.parse("case-write:en")?.tab, .new)
         XCTAssertNil(ScreenshotState.parse("case/:en"))
     }
 
@@ -292,6 +295,17 @@ final class ScreenshotStateTests: XCTestCase {
 
             let both = try XCTUnwrap(ScreenshotState.parse("mode-both:en")).makeModel(container: container)
             XCTAssertTrue(both.home.isTwoSided(both))
+
+            let write = try XCTUnwrap(ScreenshotState.parse("case-write:en")).makeModel(container: container)
+            XCTAssertEqual(write.home.path, [.caseDetail(id: "case0000001")])
+            XCTAssertEqual(write.makeCaseModel(id: "case0000001").view?.ownerSideMissing, true)
+            XCTAssertEqual(write.makeCaseModel(id: "case0000001").view?.respondentAnswered, false)
+            let answered = try XCTUnwrap(ScreenshotState.parse("case-write-answered:tr")).makeModel(container: container)
+            XCTAssertEqual(answered.makeCaseModel(id: "case0000001").view?.respondentAnswered, true)
+
+            let home = try XCTUnwrap(ScreenshotState.parse("home:en")).makeModel(container: container)
+            XCTAssertTrue(home.linkOn)
+            XCTAssertTrue(home.evidenceOn, "signed in, so Add context shows")
         }
     }
 }

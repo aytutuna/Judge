@@ -7,7 +7,8 @@ import SwiftData
 /// only) with no network.
 ///
 /// Launch argument: `-JudgeScreenshotState <screen>:<lang>`, where screen is
-/// `home`, `home-example` (both sides filled by "Try an example"),
+/// `home` (signed in, so the link and "Add context" show),
+/// `home-example` (both sides filled by "Try an example"),
 /// `home-error`, `judging`, `history`, `settings`, `signin`, `signin-code`,
 /// `account` (Settings, signed in), `verdict/<sample>` (a key of `verdictResponses`,
 /// opened as a saved verdict), `verdict-thread` (a fresh verdict, as the
@@ -18,7 +19,9 @@ import SwiftData
 /// monthly allowance used up), `pricing`, `pricing-store` (store prices on
 /// the buy buttons), `pricing-buy` (the same, scrolled to the packs and the
 /// monthly plan), `clarify` (the questions), `evidence` (picked
-/// screenshots in mixed states), `mode-both` (a case being sent),
+/// screenshots in mixed states under the box), `mode-both` (a case being sent),
+/// `case-write` and `case-write-answered` (the owner's page of a case the link
+/// started, with their side still to write, before and after the other side),
 /// `history-cases` (the account's Verdicts list: waiting, thinking, your turn,
 /// ready either way, an answered case, a phone-only verdict), `history-select`
 /// (the same list in select mode, two rows picked) or `case/<state>`: the owner's
@@ -56,6 +59,7 @@ struct ScreenshotState {
         case clarify
         case evidence
         case modeBoth
+        case caseWrite(answered: Bool)
         case historyCases
         case historySelect
         case caseDetail(view: String)
@@ -70,7 +74,7 @@ struct ScreenshotState {
     var tab: RootTab {
         switch screen {
         case .home, .homeExample, .homeError, .judging, .verdict, .verdictThread, .verdictContext, .signIn, .signInCode,
-             .balanceWelcome, .balanceNone, .pricing, .pricingStore, .pricingBuy, .clarify, .evidence, .modeBoth, .caseDetail:
+             .balanceWelcome, .balanceNone, .pricing, .pricingStore, .pricingBuy, .clarify, .evidence, .modeBoth, .caseWrite, .caseDetail:
             return .new
         case .history, .historyCases, .historySelect: return .history
         case .settings, .account: return .settings
@@ -110,6 +114,8 @@ struct ScreenshotState {
         case "clarify": screen = .clarify
         case "evidence": screen = .evidence
         case "mode-both": screen = .modeBoth
+        case "case-write": screen = .caseWrite(answered: false)
+        case "case-write-answered": screen = .caseWrite(answered: true)
         case "history-cases": screen = .historyCases
         case "history-select": screen = .historySelect
         default:
@@ -164,7 +170,9 @@ struct ScreenshotState {
     @MainActor
     private func apply(to app: AppModel) {
         switch screen {
-        case .home, .settings:
+        case .home:
+            premium(app, me: "credits7")
+        case .settings:
             break
         case .homeExample:
             app.home.showForScreenshot(example: ExampleCase.all[0], lang: lang)
@@ -237,7 +245,6 @@ struct ScreenshotState {
         case .evidence:
             premium(app, me: "credits7")
             app.home.argument = ExampleArgument.all[0].text(lang)
-            app.home.initialScroll = HomeModel.evidenceAnchor
             let preview = ScreenshotFixtures.evidencePreview()
             app.home.evidence.showForScreenshot([
                 (status: .ok, preview: preview),
@@ -248,6 +255,11 @@ struct ScreenshotState {
             premium(app, me: "credits7")
             app.home.mode = .both
             app.home.argument = ExampleArgument.all[0].text(lang)
+        case .caseWrite(let answered):
+            premium(app, me: "credits7")
+            guard let view = ScreenshotFixtures.caseView(answered ? "waiting_to_write_answered" : "waiting_to_write") else { return }
+            app.seedCase(view)
+            app.home.path = [.caseDetail(id: view.id)]
         case .historyCases:
             premium(app, me: "credits7")
             accountList(app)

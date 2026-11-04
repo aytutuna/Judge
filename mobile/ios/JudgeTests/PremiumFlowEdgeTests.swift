@@ -102,6 +102,29 @@ final class PremiumFlowEdgeTests: XCTestCase {
         withExtendedLifetime(container) {}
     }
 
+    @MainActor
+    func testSigningInSendsTheLinkWithNothingWritten() async throws {
+        let container = HistoryContainer.inMemory()
+        let router = StubRouter()
+        try signInRoutes(router, me: "credits7")
+        router.on("POST", "/api/v1/cases", try PremiumFixtures.json(201, try PremiumFixtures.section("cases")["createResponse"] as Any))
+        router.install()
+        let app = try PremiumFixtures.app(container: container, token: nil)
+        app.home.argument = ""
+
+        app.home.sendLink(app: app)
+        XCTAssertTrue(app.account.isSignInPresented)
+        XCTAssertEqual(router.count("POST", "/api/v1/cases"), 0)
+        await signIn(app)
+        try await PremiumFixtures.waitUntil("the account") { app.account.entitlement != nil }
+        app.account.signInDismissed()
+        try await PremiumFixtures.waitUntil("the case page") { app.home.path.last == .caseDetail(id: "case0000001") }
+        let body = try PremiumFixtures.body(router.sentBodies("POST", "/api/v1/cases").first)
+        XCTAssertNil(body["text"])
+        XCTAssertEqual(router.count("POST", Self.clarifyPath), 0)
+        withExtendedLifetime(container) {}
+    }
+
     // MARK: - Resuming a premium verdict
 
     @MainActor

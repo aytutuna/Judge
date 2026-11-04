@@ -1,7 +1,8 @@
 import SwiftUI
 
 /// Home: one box to write in, with the other side as an extra card or a
-/// link, and the send button with what is left to spend.
+/// link, and the send button with what is left to spend. The box holds the
+/// text, "Add context" and the counter; picked images show just below it.
 struct HomeView: View {
     @Environment(AppModel.self) private var app
     @SceneStorage("home.draft") private var draft = ""
@@ -10,7 +11,6 @@ struct HomeView: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.sceneLive) private var sceneLive
     @Environment(\.sides) private var sides
-    @Environment(\.dynamicTypeSize) private var typeSize
 
     private enum Field: Hashable {
         case mine, theirs
@@ -113,16 +113,15 @@ struct HomeView: View {
             sideCard(lang, home: home, mine: true)
             if home.theirsOpen {
                 sideCard(lang, home: home, mine: false)
-            } else {
-                otherSide(lang, home: home)
             }
-            if app.evidenceOn {
-                EvidencePickerView(evidence: home.evidence, lang: lang, disabled: home.isBusy)
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 14)
-                    .paperSurface(radius: Radius.block)
-                    .softShadow()
-                    .id(HomeModel.evidenceAnchor)
+            if app.evidenceOn, !home.evidence.items.isEmpty || home.evidence.overLimit || home.evidence.failure != nil {
+                VStack(alignment: .leading, spacing: 10) {
+                    EvidenceRows(evidence: home.evidence, lang: lang, disabled: home.isBusy)
+                    EvidenceNotes(evidence: home.evidence, lang: lang)
+                }
+            }
+            if !home.theirsOpen {
+                otherSide(lang, home: home)
             }
             footer(lang, home: home)
             if let error = home.error {
@@ -138,6 +137,7 @@ struct HomeView: View {
         @Bindable var home = home
         let field: Field = mine ? .mine : .theirs
         let ink = mine ? sides.mine.ink : sides.theirs.ink
+        let strong = mine ? sides.mine.strong : sides.theirs.strong
         return VStack(alignment: .leading, spacing: 8) {
             // Names only tell two sides apart.
             if home.theirsOpen {
@@ -167,12 +167,34 @@ struct HomeView: View {
                 minHeight: home.theirsOpen ? 96 : 180
             )
             .disabled(home.isBusy)
+            bottomRow(lang, home: home, showsCounter: mine ? !home.theirsOpen : true)
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 14)
-        .paperSurface(radius: Radius.block, border: focused == field ? ink.opacity(0.6) : Brand.line)
-        .softShadow()
+        .neonEdge(strong, focused: focused == field, radius: Radius.block)
         .accessibilityElement(children: .contain)
+    }
+
+    /// Under the text: "Add context" on the left, the counter on the right
+    /// (in the last open box only). Every box adds to the same set of images.
+    private func bottomRow(_ lang: AppLang, home: HomeModel, showsCounter: Bool) -> some View {
+        HStack(alignment: .center, spacing: 12) {
+            if app.evidenceOn, !home.evidence.full {
+                EvidenceAddButton(evidence: home.evidence, disabled: home.isBusy) {
+                    Label(L10n.appHomeAddContext(lang), systemImage: "paperclip")
+                        .brandText(Self.linkType)
+                        .foregroundStyle(Brand.ink2)
+                        .frame(minHeight: 32)
+                        .contentShape(Rectangle())
+                }
+                .buttonStyle(.plain)
+            }
+            Spacer(minLength: 0)
+            if showsCounter {
+                counter(lang, home: home)
+                    .fixedSize()
+            }
+        }
     }
 
     private func removeTheirSide(_ lang: AppLang, home: HomeModel) -> some View {
@@ -217,58 +239,54 @@ struct HomeView: View {
 
     /// The two ways to hear the other side, for whoever has one to add.
     private func otherSide(_ lang: AppLang, home: HomeModel) -> some View {
-        VStack(alignment: .leading, spacing: 6) {
-            Button {
-                withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.2)) { home.addTheirSide() }
-                // The card has to be on screen before it can take the focus.
-                Task { focused = .theirs }
-            } label: {
-                Label(L10n.appHomeAddTheirSide(lang), systemImage: "plus")
+        // Stacked when the labels don't fit side by side (long locales, big text).
+        ViewThatFits(in: .horizontal) {
+            HStack(spacing: 8) {
+                addTheirSide(lang, home: home)
+                if app.linkOn { sendLink(lang, home: home) }
             }
-            .buttonStyle(GhostButtonStyle())
-            .disabled(home.isBusy)
-            if app.casesOn {
-                sendLink(lang, home: home)
-                    .padding(.horizontal, 4)
+            VStack(alignment: .leading, spacing: 8) {
+                addTheirSide(lang, home: home)
+                if app.linkOn { sendLink(lang, home: home) }
             }
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 
-    /// The link means they write it. The case costs a verdict like any other.
+    private func addTheirSide(_ lang: AppLang, home: HomeModel) -> some View {
+        Button {
+            withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.2)) { home.addTheirSide() }
+            // The card has to be on screen before it can take the focus.
+            Task { focused = .theirs }
+        } label: {
+            Label(L10n.appHomeAddTheirSide(lang), systemImage: "plus")
+        }
+        .buttonStyle(GhostButtonStyle())
+        .disabled(home.isBusy)
+    }
+
+    /// The link means they write it. The case costs a verdict like any other,
+    /// and it can go out before anything is written here.
     private func sendLink(_ lang: AppLang, home: HomeModel) -> some View {
-        let ready = home.canSubmit(app)
-        return Button {
+        Button {
             focused = nil
             home.sendLink(app: app)
         } label: {
             Label(L10n.appHomeSendLink(lang), systemImage: "link")
-                .brandText(Self.linkType)
-                .foregroundStyle(Brand.sageInk)
-                .frame(minHeight: 32)
-                .contentShape(Rectangle())
         }
-        .buttonStyle(.plain)
-        .disabled(!ready)
-        .opacity(ready ? 1 : 0.5)
+        .buttonStyle(GhostButtonStyle())
+        .disabled(!home.canSendLink(app))
     }
 
     /// Under the form, so the writing starts at the top of the screen.
     private func footer(_ lang: AppLang, home: HomeModel) -> some View {
-        // The counter never gives up width, so it moves down at the largest sizes.
-        let layout = typeSize.isAccessibilitySize
-            ? AnyLayout(VStackLayout(alignment: .leading, spacing: 4))
-            : AnyLayout(HStackLayout(alignment: .center, spacing: 12))
-        return layout {
-            FlowLayout(spacing: 16) {
-                if home.offersExample {
-                    exampleButton(lang, home: home)
-                }
-                if !home.isBlank {
-                    clearButton(lang, home: home)
-                }
+        FlowLayout(spacing: 16) {
+            if home.offersExample {
+                exampleButton(lang, home: home)
             }
-            counter(lang, home: home)
-                .fixedSize()
+            if !home.isBlank {
+                clearButton(lang, home: home)
+            }
         }
         .padding(.horizontal, 4)
     }

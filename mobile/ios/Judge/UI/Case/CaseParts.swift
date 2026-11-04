@@ -91,6 +91,87 @@ private struct InviteButtonStyle: ButtonStyle {
     }
 }
 
+/// The owner's side of a case that went out as a link first: the box, the
+/// context control and the send button.
+struct CaseSideForm: View {
+    @Environment(\.sides) private var sides
+    @Bindable var model: CaseModel
+    let evidenceOn: Bool
+    let lang: AppLang
+    @FocusState private var focused: Bool
+
+    private static let small = TypeStyle(face: .inter, weight: 600, size: 13, lineHeight: 1.2, textStyle: .footnote, maxScale: 1.8)
+
+    var body: some View {
+        let length = model.sideText.utf16.count
+        VStack(alignment: .leading, spacing: 12) {
+            VStack(alignment: .leading, spacing: 8) {
+                ZStack(alignment: .topLeading) {
+                    TextEditor(text: $model.sideText)
+                        .focused($focused)
+                        .brandText(TypeStyle(face: .inter, weight: 400, size: 15, lineHeight: 1.5))
+                        .foregroundStyle(Brand.ink)
+                        .scrollContentBackground(.hidden)
+                        .frame(minHeight: 160)
+                        .padding(.horizontal, -5)
+                        .padding(.vertical, -8)
+                        .disabled(model.sideSending)
+                        .accessibilityLabel(L10n.caseWriteTitle(lang))
+                    if model.sideText.isEmpty {
+                        Text(L10n.caseWritePlaceholder(lang))
+                            .brandText(TypeStyle(face: .inter, weight: 400, size: 15, lineHeight: 1.5))
+                            .foregroundStyle(Brand.placeholder)
+                            .allowsHitTesting(false)
+                            .accessibilityHidden(true)
+                    }
+                }
+                HStack(alignment: .center, spacing: 12) {
+                    if evidenceOn, !model.sideEvidence.full {
+                        EvidenceAddButton(evidence: model.sideEvidence, disabled: model.sideSending) {
+                            Label(L10n.appHomeAddContext(lang), systemImage: "paperclip")
+                                .brandText(Self.small)
+                                .foregroundStyle(Brand.ink2)
+                                .frame(minHeight: 32)
+                                .contentShape(Rectangle())
+                        }
+                        .buttonStyle(.plain)
+                    }
+                    Spacer(minLength: 0)
+                    Text(L10n.appInputCounter(lang, count: String(length), max: String(HomeModel.maxLength)))
+                        .brandText(.footnote)
+                        .monospacedDigit()
+                        .foregroundStyle(length > HomeModel.warnLength ? Brand.terraInk : Brand.muted)
+                        .lineLimit(1)
+                        .fixedSize()
+                }
+            }
+            .padding(.horizontal, 16)
+            .padding(.vertical, 14)
+            .neonEdge(sides.mine.strong, focused: focused, radius: Radius.block)
+            .accessibilityElement(children: .contain)
+            if evidenceOn {
+                EvidenceRows(evidence: model.sideEvidence, lang: lang, disabled: model.sideSending)
+                EvidenceNotes(evidence: model.sideEvidence, lang: lang)
+            }
+            if let error = model.sideError {
+                ErrorBanner(message: ErrorText.message(error, lang: lang))
+            }
+            Button {
+                focused = false
+                Task { await model.submitSide() }
+            } label: {
+                Text(L10n.caseWriteSubmit(lang))
+            }
+            .buttonStyle(PrimaryButtonStyle())
+            .disabled(!model.sideCanSubmit)
+        }
+        .onChange(of: model.sideText) { _, value in
+            let capped = HomeModel.capped(value)
+            if capped != value { model.sideText = capped }
+        }
+    }
+}
+
 /// What the appeal form edits and sends: a case page's, or the writer's
 /// on a one-sided verdict (useAppealDraft).
 @MainActor

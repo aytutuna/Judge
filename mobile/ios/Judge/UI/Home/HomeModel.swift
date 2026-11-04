@@ -76,7 +76,6 @@ final class HomeModel {
     /// Scroll anchor Home opens on (screenshot states); nil = the top.
     @ObservationIgnored var initialScroll: String?
     static let submitAnchor = "home.submit"
-    static let evidenceAnchor = "home.evidence"
 
     /// One written side as the judging cover shows it; an empty name reads
     /// "Your side" / "Their side".
@@ -206,9 +205,9 @@ final class HomeModel {
     /// An example writes over the form, so it never replaces the user's text.
     var offersExample: Bool { isBlank || formText == exampleForm }
 
-    /// Both sides chosen while cases can be used: "Create the invite".
+    /// The link chosen while cases can be used: "Send them a link".
     func isTwoSided(_ app: AppModel) -> Bool {
-        app.casesOn && mode == .both
+        app.linkOn && mode == .both
     }
 
     /// The display name field's text: what was typed, else the account's first name.
@@ -221,6 +220,16 @@ final class HomeModel {
         if app.evidenceOn, evidence.busy { return false }
         if let blockedUntil, blockedUntil > now { return false }
         return true
+    }
+
+    /// The link can go out with nothing written, or with a side that would
+    /// also do for a verdict. Images only go with a written side.
+    func canSendLink(_ app: AppModel, now: Date = .now) -> Bool {
+        guard !theirsOpen, !isBusy else { return false }
+        if app.evidenceOn, evidence.busy { return false }
+        if let blockedUntil, blockedUntil > now { return false }
+        if argument.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty { return evidence.items.isEmpty }
+        return canSubmit(app, now: now)
     }
 
     /// Hard cap at 6000 UTF-16 units, cutting whole characters.
@@ -249,14 +258,11 @@ final class HomeModel {
     /// sign-in and submits once the user has signed in. A verdict goes
     /// through the clarifying step first.
     func submit(app: AppModel) {
-        guard canSubmit(app) else { return }
+        guard isTwoSided(app) ? canSendLink(app) : canSubmit(app) else { return }
         account = app.account
         guard app.account.isSignedIn else {
-            // Signing in can turn on cases; then nothing is sent until the
-            // user taps again.
-            let twoSidedAtTap = isTwoSided(app)
             app.account.requireSignIn { [weak self, weak app] in
-                guard let self, let app, self.isTwoSided(app) == twoSidedAtTap else { return }
+                guard let self, let app else { return }
                 self.submit(app: app)
             }
             return
@@ -271,9 +277,10 @@ final class HomeModel {
         }
     }
 
-    /// "Or send them a link to write it": a two-sided case with your side;
+    /// "Send them a link": a two-sided case, with your side if it is written;
     /// the other person writes theirs.
     func sendLink(app: AppModel) {
+        guard canSendLink(app) else { return }
         mode = .both
         submit(app: app)
     }
@@ -305,16 +312,16 @@ final class HomeModel {
 
     // MARK: - Two-sided cases
 
-    /// Both sides: create the case with the owner's side (it holds one
-    /// verdict's unit), keep the returned names on the phone and open the
-    /// case page with the invite link. No clarifying step: the other side's
-    /// account fills the gaps.
+    /// The link: create the case with the owner's side if there is one (it
+    /// holds one verdict's unit either way), keep the returned names on the
+    /// phone and open the case page with the invite link. No clarifying
+    /// step: the other side's account fills the gaps.
     private func createCase(app: AppModel) {
         if openPricingIfOut(app) { return }
         app.analytics.track("case_submitted")
         error = nil
         isCreatingCase = true
-        let text = argument
+        let text: String? = argument.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? nil : argument
         let lang = app.lang
         let tokens = app.evidenceOn ? evidence.tokens : []
         let name = shownCaseName(app).trimmingCharacters(in: .whitespacesAndNewlines)

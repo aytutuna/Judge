@@ -207,7 +207,7 @@ struct PricingView: View {
     /// (premiumFeatureKeys on the web).
     static func premiumFeatures(_ features: PremiumFeatures?, lang: AppLang) -> [String] {
         var list = [L10n.pricingPremiumF1(lang), L10n.pricingPremiumF2(lang), L10n.pricingPremiumF3(lang)]
-        if features?.evidence == true { list.append(L10n.pricingPremiumF5(lang)) }
+        if features?.evidence == true { list.append(L10n.appPricingContext(lang)) }
         if features?.cases == true { list.append(L10n.pricingPremiumF6(lang)) }
         return list
     }

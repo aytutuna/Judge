@@ -163,6 +163,7 @@ final class AppModel {
             self?.historyUser = nil
             self?.historyPath = []
             self?.caseModels = [:]
+            self?.home.evidence.clear()
             purchases?.userSignedOut()
             self?.forgetUser()
             // Real names kept for this account's cases go with it, and so do
@@ -237,8 +238,9 @@ final class AppModel {
 
     // MARK: - Two-sided cases
 
-    /// "Or send them a link" on Home: signed in and cases offered.
-    var casesOn: Bool { account.isSignedIn && account.features.cases }
+    /// "Send them a link" on Home: cases offered. Signed out, the tap goes
+    /// through sign-in first.
+    var linkOn: Bool { account.features.cases }
 
     func seedCase(_ view: CaseView, otherName: String? = nil) {
         caseSeeds[view.id] = view

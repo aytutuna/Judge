@@ -32,6 +32,7 @@ private struct CaseScreenContent: View {
     @State private var showConfirm = false
     @State private var showPricing = false
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.scenePhase) private var scenePhase
 
     private static let title = TypeStyle(face: .interTight, weight: 700, size: 30, lineHeight: 1.05, tracking: -0.03, textStyle: .title1, maxScale: 1.4)
 
@@ -67,6 +68,9 @@ private struct CaseScreenContent: View {
         .task(id: model.generation) { await model.run() }
         .onAppear { Task { await model.refresh() } }
         .onAppear { app.analytics.track("screen_view", ["screen": "case_detail"]) }
+        .onChange(of: scenePhase) { _, phase in
+            if phase == .active, model.view.map(writesSide) == true { Task { await model.refresh() } }
+        }
         .onChange(of: model.actionError) { _, error in
             if let error { app.analytics.track("error_shown", ["code": error.eventCode]) }
         }
@@ -117,7 +121,9 @@ private struct CaseScreenContent: View {
 
     private func header(_ view: CaseView, lang: AppLang) -> some View {
         VStack(alignment: .leading, spacing: 10) {
-            if view.status == .awaitingRespondent {
+            if writesSide(view) {
+                writeHead(view, lang: lang)
+            } else if view.status == .awaitingRespondent {
                 waitingHead(otherName(view), lang: lang)
             } else {
                 // A case judged on the owner's side alone is not "both sides" anymore.
@@ -137,6 +143,24 @@ private struct CaseScreenContent: View {
         [app.caseOtherName(view.id), view.display.b]
             .compactMap { $0?.trimmingCharacters(in: .whitespacesAndNewlines) }
             .first { !$0.isEmpty }
+    }
+
+    /// The owner's side is still to be written, on a case the link started.
+    private func writesSide(_ view: CaseView) -> Bool {
+        view.role == .owner && view.ownerSideMissing && view.status == .awaitingRespondent
+    }
+
+    @ViewBuilder
+    private func writeHead(_ view: CaseView, lang: AppLang) -> some View {
+        Kicker(text: L10n.caseKicker(lang))
+        Text(L10n.caseWriteTitle(lang))
+            .brandText(Self.title)
+            .foregroundStyle(Brand.ink)
+            .accessibilityAddTraits(.isHeader)
+        Text(view.respondentAnswered ? L10n.caseWriteLeadAnswered(lang) : L10n.caseWriteLead(lang))
+            .brandText(TypeStyle(face: .inter, weight: 400, size: 14, lineHeight: 1.45, textStyle: .subheadline))
+            .foregroundStyle(Brand.ink2)
+            .fixedSize(horizontal: false, vertical: true)
     }
 
     @ViewBuilder
@@ -166,36 +190,10 @@ private struct CaseScreenContent: View {
                 .accessibilityAddTraits(.updatesFrequently)
             CaseJudgingCard(lang: lang, premium: view.tier == .premium)
         case .awaitingRespondent:
-            let other = otherName(view)
-            if let url = view.inviteUrl {
-                InviteLinkView(
-                    url: url,
-                    expiresAt: view.expiresAt,
-                    title: other.map { L10n.appCaseSendTo(lang, name: $0) } ?? L10n.caseInviteLabel(lang),
-                    lang: lang,
-                    resetting: model.busy,
-                    resetDone: model.resetDone
-                ) {
-                    ask(.resetInvite)
-                }
-            }
-            if let held = CaseLogic.heldNote(view, lang: lang) {
-                Text(held)
-                    .brandText(.slotText)
-                    .foregroundStyle(Brand.muted)
-                    .fixedSize(horizontal: false, vertical: true)
-            }
-            WaitingSteps(other: other, judgeNow: view.canJudgeNow, lang: lang)
-            actionError(lang)
-            if view.canJudgeNow {
-                Button {
-                    ask(.judgeNow(expired: false))
-                } label: {
-                    Text(other.map { L10n.appCaseJudgeNowWithout(lang, name: $0) } ?? L10n.caseJudgeNow(lang))
-                        .frame(maxWidth: .infinity, minHeight: 48)
-                }
-                .buttonStyle(GhostButtonStyle())
-                .disabled(model.busy)
+            if view.role == .respondent, view.ownerSideMissing, view.respondentAnswered {
+                note(L10n.respondSentWaiting(lang))
+            } else {
+                awaiting(view, lang: lang)
             }
         case .judged:
             if let current = view.current {
@@ -253,6 +251,46 @@ private struct CaseScreenContent: View {
                     .frame(minHeight: 40)
             }
             .buttonStyle(.plain)
+            .disabled(model.busy)
+        }
+    }
+
+    @ViewBuilder
+    private func awaiting(_ view: CaseView, lang: AppLang) -> some View {
+        let other = otherName(view)
+        let writing = writesSide(view)
+        if let url = view.inviteUrl {
+            InviteLinkView(
+                url: url,
+                expiresAt: view.expiresAt,
+                title: other.map { L10n.appCaseSendTo(lang, name: $0) } ?? L10n.caseInviteLabel(lang),
+                lang: lang,
+                resetting: model.busy,
+                resetDone: model.resetDone
+            ) {
+                ask(.resetInvite)
+            }
+        }
+        if let held = CaseLogic.heldNote(view, lang: lang) {
+            Text(held)
+                .brandText(.slotText)
+                .foregroundStyle(Brand.muted)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+        if writing {
+            CaseSideForm(model: model, evidenceOn: CaseLogic.appealEvidenceOn(view, features: app.account.features), lang: lang)
+        } else {
+            WaitingSteps(other: other, judgeNow: view.canJudgeNow, lang: lang)
+        }
+        actionError(lang)
+        if view.canJudgeNow, !writing {
+            Button {
+                ask(.judgeNow(expired: false))
+            } label: {
+                Text(other.map { L10n.appCaseJudgeNowWithout(lang, name: $0) } ?? L10n.caseJudgeNow(lang))
+                    .frame(maxWidth: .infinity, minHeight: 48)
+            }
+            .buttonStyle(GhostButtonStyle())
             .disabled(model.busy)
         }
     }

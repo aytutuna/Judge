@@ -209,6 +209,8 @@ struct CaseView: Sendable, Equatable {
     var expiresAt: String
     var judgedAt: String?
     var respondentAnswered: Bool
+    /// Side A is not written yet: the link was sent first.
+    var ownerSideMissing = false
     /// Owner only, while awaiting the respondent.
     var inviteUrl: String?
     var sides: [CaseSide]
@@ -262,7 +264,7 @@ struct CaseSummary: Decodable, Sendable, Equatable, Identifiable {
     }
 }
 
-/// POST /api/v1/cases and POST /api/v1/cases/{id}/appeals: the case view,
+/// POST /api/v1/cases, .../side and .../appeals: the case view,
 /// the names taken out of what was just sent, and the new balance.
 struct CaseSubmission: Sendable, Equatable {
     var view: CaseView
@@ -284,6 +286,7 @@ private struct CaseViewWire: Decodable {
     var expiresAt: String
     var judgedAt: String?
     var respondentAnswered: Bool
+    var ownerSideMissing: Bool
     var inviteUrl: String?
     var sides: [CaseSide]
     var appeals: [CaseAppeal]
@@ -298,7 +301,7 @@ private struct CaseViewWire: Decodable {
 
     private enum CodingKeys: String, CodingKey {
         case id, role, yourParty, status, mode, tier, lang, createdAt, expiresAt, judgedAt, respondentAnswered
-        case inviteUrl, sides, appeals, canJudgeNow, appeal, lastError, pollAfterMs, names, display, removed, yourOriginal
+        case ownerSideMissing, inviteUrl, sides, appeals, canJudgeNow, appeal, lastError, pollAfterMs, names, display, removed, yourOriginal
     }
 
     init(from decoder: any Decoder) throws {
@@ -316,6 +319,7 @@ private struct CaseViewWire: Decodable {
         expiresAt = (try? c.decodeIfPresent(String.self, forKey: .expiresAt)) ?? ""
         judgedAt = try? c.decodeIfPresent(String.self, forKey: .judgedAt)
         respondentAnswered = (try? c.decodeIfPresent(Bool.self, forKey: .respondentAnswered)) == true
+        ownerSideMissing = (try? c.decodeIfPresent(Bool.self, forKey: .ownerSideMissing)) == true
         inviteUrl = try? c.decodeIfPresent(String.self, forKey: .inviteUrl)
         sides = (try? c.decodeIfPresent([CaseSide].self, forKey: .sides)) ?? []
         appeals = (try? c.decodeIfPresent([CaseAppeal].self, forKey: .appeals)) ?? []
@@ -360,6 +364,7 @@ enum CaseDecoding {
             expiresAt: wire.expiresAt,
             judgedAt: wire.judgedAt,
             respondentAnswered: wire.respondentAnswered,
+            ownerSideMissing: wire.ownerSideMissing,
             inviteUrl: wire.inviteUrl,
             sides: wire.sides,
             verdicts: verdicts,
