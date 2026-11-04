@@ -307,7 +307,14 @@
     <string name="respond_label">आपकी बात</string>
     <string name="respond_placeholder">आपकी नज़र से क्या हुआ? वैसे ही लिखें जैसे किसी दोस्त को बताते।</string>
     <string name="respond_submit">मेरी बात भेजें</string>
+    <string name="case_write_title">आपकी बात</string>
+    <string name="case_write_placeholder">समस्या क्या है?</string>
+    <string name="case_write_lead">जब तैयार हों, अपनी बात लिखें। दोनों के लिख लेने पर जज शुरू करेंगे।</string>
+    <string name="case_write_lead_answered">उन्होंने अपनी बात लिख दी है। फ़ैसला पाने के लिए अपनी लिखें।</string>
+    <string name="case_write_submit">मेरी बात भेजें</string>
+    <string name="case_write_email_subject">दूसरे पक्ष ने अपनी बात लिख दी है</string>
     <string name="respond_sent">शुक्रिया। आपकी बात पहुँच गई है और जज उस पर लगे हैं।</string>
+    <string name="respond_sent_waiting">शुक्रिया। आपकी बात पहुँच गई है। दूसरे के लिखते ही जज शुरू करेंगे।</string>
     <string name="respond_own_invite">यह आपका अपना न्योता लिंक है। इसे दूसरे व्यक्ति को भेजें।</string>
     <string name="respond_expired">इस न्योते की मियाद ख़त्म हो गई है।</string>
     <string name="respond_closed">यह केस अब जवाब नहीं ले रहा।</string>
@@ -517,6 +524,8 @@
     </plurals>
     <string name="app_history_offline_remove">आप ऑफ़लाइन हैं। हटाने के लिए इंटरनेट कनेक्शन चाहिए।</string>
     <string name="app_pricing_free_account">Apple, Google या ईमेल से साइन इन करें</string>
+    <string name="app_context_label">संदर्भ (वैकल्पिक)</string>
+    <string name="app_pricing_context">संदर्भ की तस्वीरें पढ़कर फेंक दी जाती हैं, बिना किसी अतिरिक्त खर्च के</string>
     <string name="app_pricing_headline">पहला फ़ैसला हमारी तरफ़ से।</string>
     <string name="app_pricing_sub">अकाउंट बनाइए और पहला फ़ैसला मुफ़्त पाइए, सारी सुविधाओं के साथ। उसके बाद कोई पैक चुनें या मासिक प्लान लें।</string>
     <string name="app_pricing_headline_member">और फ़ैसले पाएँ।</string>
@@ -572,11 +581,12 @@
     <string name="app_home_their_side">उनकी बात</string>
     <string name="app_home_your_name">आपका नाम</string>
     <string name="app_home_their_name">उनका नाम</string>
-    <string name="app_home_your_placeholder">आपकी नज़र से क्या हुआ?</string>
+    <string name="app_home_your_placeholder">समस्या क्या है?</string>
     <string name="app_home_their_placeholder">उनका क्या कहना है? वैसे ही लिखें जैसे वे ख़ुद कहते।</string>
     <string name="app_home_your_side_label">बहस में आपकी बात</string>
     <string name="app_home_their_side_label">बहस में उनकी बात</string>
-    <string name="app_home_send_link">या उन्हें लिंक भेजें, ताकि वे ख़ुद लिखें</string>
+    <string name="app_home_send_link">लिंक भेजें</string>
+    <string name="app_home_add_context">संदर्भ जोड़ें</string>
     <string name="app_home_says">%1$s का कहना है:</string>
     <string name="app_home_my_side">मेरी बात:</string>
     <string name="app_home_other_side">उनकी बात:</string>

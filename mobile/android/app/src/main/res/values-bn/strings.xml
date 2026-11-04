@@ -307,7 +307,14 @@
     <string name="respond_label">আপনার বক্তব্য</string>
     <string name="respond_placeholder">আপনার চোখে কী ঘটেছে? বন্ধুকে যেভাবে বলতেন, সেভাবে লিখুন।</string>
     <string name="respond_submit">আমার বক্তব্য পাঠান</string>
+    <string name="case_write_title">আপনার বক্তব্য</string>
+    <string name="case_write_placeholder">সমস্যাটা কী?</string>
+    <string name="case_write_lead">যখন ইচ্ছা আপনার বক্তব্য লিখুন। দুজনের লেখা হলে বিচারকেরা শুরু করবেন।</string>
+    <string name="case_write_lead_answered">অন্যজন তাঁর বক্তব্য লিখেছেন। রায় পেতে আপনারটা লিখুন।</string>
+    <string name="case_write_submit">আমার বক্তব্য পাঠান</string>
+    <string name="case_write_email_subject">অন্যজন তাঁর বক্তব্য লিখেছেন</string>
     <string name="respond_sent">ধন্যবাদ। আপনার বক্তব্য পৌঁছে গেছে, বিচারকেরা কাজে লেগে পড়েছেন।</string>
+    <string name="respond_sent_waiting">ধন্যবাদ। আপনার বক্তব্য পৌঁছে গেছে। অন্যজন লিখলে বিচারকেরা শুরু করবেন।</string>
     <string name="respond_own_invite">এটা আপনার নিজেরই আমন্ত্রণ লিংক। অন্যজনকে পাঠান।</string>
     <string name="respond_expired">এই আমন্ত্রণের মেয়াদ শেষ।</string>
     <string name="respond_closed">এই মামলায় আর উত্তর নেওয়া হচ্ছে না।</string>
@@ -517,6 +524,8 @@
     </plurals>
     <string name="app_history_offline_remove">আপনি অফলাইনে আছেন। সরিয়ে ফেলতে ইন্টারনেট সংযোগ লাগবে।</string>
     <string name="app_pricing_free_account">Apple, Google বা ইমেইল দিয়ে সাইন ইন করুন</string>
+    <string name="app_context_label">প্রসঙ্গ (ঐচ্ছিক)</string>
+    <string name="app_pricing_context">প্রসঙ্গের ছবি পড়া হয়, তারপর মুছে ফেলা হয়, বাড়তি খরচ ছাড়াই</string>
     <string name="app_pricing_headline">প্রথম রায়টা আমাদের তরফ থেকে।</string>
     <string name="app_pricing_sub">অ্যাকাউন্ট খুললেই প্রথম রায় ফ্রি, সব ফিচারসহ। এরপর একটা প্যাক বেছে নিন বা মাসিক প্ল্যান নিন।</string>
     <string name="app_pricing_headline_member">আরও রায় নিন।</string>
@@ -572,11 +581,12 @@
     <string name="app_home_their_side">অন্যজনের বক্তব্য</string>
     <string name="app_home_your_name">আপনার নাম</string>
     <string name="app_home_their_name">অন্যজনের নাম</string>
-    <string name="app_home_your_placeholder">আপনার চোখে কী ঘটেছে?</string>
+    <string name="app_home_your_placeholder">সমস্যাটা কী?</string>
     <string name="app_home_their_placeholder">অন্যজন কী বলছেন? তিনি যেভাবে বলতেন, ঠিক সেভাবেই লিখুন।</string>
     <string name="app_home_your_side_label">তর্কে আপনার বক্তব্য</string>
     <string name="app_home_their_side_label">তর্কে অন্যজনের বক্তব্য</string>
-    <string name="app_home_send_link">অথবা লিংক পাঠান, তিনি নিজেই লিখবেন</string>
+    <string name="app_home_send_link">লিংক পাঠান</string>
+    <string name="app_home_add_context">প্রসঙ্গ যোগ করুন</string>
     <string name="app_home_says">%1$s বলছে:</string>
     <string name="app_home_my_side">আমার বক্তব্য:</string>
     <string name="app_home_other_side">অন্যজনের বক্তব্য:</string>

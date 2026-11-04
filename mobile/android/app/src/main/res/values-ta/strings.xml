@@ -307,7 +307,14 @@
     <string name="respond_label">உங்கள் தரப்பு</string>
     <string name="respond_placeholder">உங்கள் பார்வையில் என்ன நடந்தது? ஒரு நண்பரிடம் சொல்வது போல் எழுதுங்கள்.</string>
     <string name="respond_submit">என் தரப்பை அனுப்பு</string>
+    <string name="case_write_title">உங்கள் தரப்பு</string>
+    <string name="case_write_placeholder">என்ன பிரச்சினை?</string>
+    <string name="case_write_lead">தயாரானதும் உங்கள் தரப்பை எழுதுங்கள். இருவரும் எழுதியதும் நடுவர்கள் தொடங்குவார்கள்.</string>
+    <string name="case_write_lead_answered">அவர்கள் தங்கள் தரப்பை எழுதிவிட்டார்கள். தீர்ப்பு பெற உங்களுடையதை எழுதுங்கள்.</string>
+    <string name="case_write_submit">என் தரப்பை அனுப்பு</string>
+    <string name="case_write_email_subject">மறுதரப்பு தங்கள் பக்கத்தை எழுதியுள்ளது</string>
     <string name="respond_sent">நன்றி. உங்கள் தரப்பு வந்துசேர்ந்தது, நடுவர்கள் வேலையில் இருக்கிறார்கள்.</string>
+    <string name="respond_sent_waiting">நன்றி. உங்கள் தரப்பு வந்துசேர்ந்தது. மற்றவர் எழுதியதும் நடுவர்கள் தொடங்குவார்கள்.</string>
     <string name="respond_own_invite">இது உங்கள் சொந்த அழைப்பு லிங்க். அதை மற்றவருக்கு அனுப்புங்கள்.</string>
     <string name="respond_expired">இந்த அழைப்பு காலாவதியாகிவிட்டது.</string>
     <string name="respond_closed">இந்த வழக்கு இனி பதில்களை ஏற்காது.</string>
@@ -517,6 +524,8 @@
     </plurals>
     <string name="app_history_offline_remove">நீங்கள் ஆஃப்லைனில் இருக்கிறீர்கள். நீக்க இணைப்பு தேவை.</string>
     <string name="app_pricing_free_account">Apple, Google அல்லது ஈமெயில் மூலம் உள்நுழையுங்கள்</string>
+    <string name="app_context_label">பின்னணி (விருப்பம்)</string>
+    <string name="app_pricing_context">பின்னணிப் படங்கள் படிக்கப்பட்டு பிறகு தூக்கி எறியப்படும், கூடுதல் கட்டணம் இல்லை</string>
     <string name="app_pricing_headline">முதல் தீர்ப்பு எங்கள் செலவில்.</string>
     <string name="app_pricing_sub">கணக்கைத் தொடங்குங்கள், முதல் தீர்ப்பு எல்லா அம்சங்களுடனும் இலவசம். அதன் பிறகு ஒரு பேக்கைத் தேர்ந்தெடுங்கள் அல்லது மாதாந்திர பிளானுக்கு மாறுங்கள்.</string>
     <string name="app_pricing_headline_member">இன்னும் தீர்ப்புகள் பெறுங்கள்.</string>
@@ -572,11 +581,12 @@
     <string name="app_home_their_side">மறுதரப்பு</string>
     <string name="app_home_your_name">உங்கள் பெயர்</string>
     <string name="app_home_their_name">மற்றவர் பெயர்</string>
-    <string name="app_home_your_placeholder">உங்கள் பார்வையில் என்ன நடந்தது?</string>
+    <string name="app_home_your_placeholder">என்ன பிரச்சினை?</string>
     <string name="app_home_their_placeholder">அவர்கள் என்ன சொல்கிறார்கள்? அவர்கள் சொல்வதுபோலவே எழுதுங்கள்.</string>
     <string name="app_home_your_side_label">வாக்குவாதத்தில் உங்கள் தரப்பு</string>
     <string name="app_home_their_side_label">வாக்குவாதத்தில் மறுதரப்பு</string>
-    <string name="app_home_send_link">அல்லது அவர்களே எழுத ஒரு லிங்க் அனுப்புங்கள்</string>
+    <string name="app_home_send_link">லிங்க் அனுப்புங்க</string>
+    <string name="app_home_add_context">பின்னணி சேர்க்கவும்</string>
     <string name="app_home_says">%1$s சொல்வது:</string>
     <string name="app_home_my_side">என் தரப்பு:</string>
     <string name="app_home_other_side">மறுதரப்பு:</string>

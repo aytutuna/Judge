@@ -300,7 +300,14 @@
     <string name="respond_label">Phía bạn</string>
     <string name="respond_placeholder">Theo bạn, chuyện gì đã xảy ra? Cứ viết như đang kể cho bạn bè nghe.</string>
     <string name="respond_submit">Gửi lời kể</string>
+    <string name="case_write_title">Phía bạn</string>
+    <string name="case_write_placeholder">Có chuyện gì vậy?</string>
+    <string name="case_write_lead">Hãy viết phía của bạn khi sẵn sàng. Ban giám khảo bắt đầu khi cả hai đã viết.</string>
+    <string name="case_write_lead_answered">Họ đã viết phía của họ. Viết phía của bạn để nhận phán quyết.</string>
+    <string name="case_write_submit">Gửi phía của tôi</string>
+    <string name="case_write_email_subject">Bên kia đã viết phần của họ</string>
     <string name="respond_sent">Cảm ơn bạn. Lời kể của bạn đã được gửi và ban giám khảo đang xử.</string>
+    <string name="respond_sent_waiting">Cảm ơn bạn. Lời kể của bạn đã được gửi. Ban giám khảo bắt đầu khi người kia viết xong.</string>
     <string name="respond_own_invite">Đây là liên kết mời của chính bạn. Hãy gửi nó cho người kia.</string>
     <string name="respond_expired">Lời mời này đã hết hạn.</string>
     <string name="respond_closed">Vụ này không nhận câu trả lời nữa.</string>
@@ -501,6 +508,8 @@
     </plurals>
     <string name="app_history_offline_remove">Bạn đang mất mạng. Cần có kết nối mới gỡ được.</string>
     <string name="app_pricing_free_account">Đăng nhập bằng Apple, Google hoặc email</string>
+    <string name="app_context_label">Bối cảnh (không bắt buộc)</string>
+    <string name="app_pricing_context">Ảnh bối cảnh được đọc rồi bỏ đi, không tốn thêm phí</string>
     <string name="app_pricing_headline">Phán quyết đầu tiên, chúng tôi mời.</string>
     <string name="app_pricing_sub">Tạo tài khoản là có ngay phán quyết đầu tiên miễn phí, đủ mọi tính năng. Sau đó, chọn một gói lượt hoặc dùng gói tháng.</string>
     <string name="app_pricing_headline_member">Thêm lượt phán quyết.</string>
@@ -555,11 +564,12 @@
     <string name="app_home_their_side">Phía bên kia</string>
     <string name="app_home_your_name">Tên của bạn</string>
     <string name="app_home_their_name">Tên người kia</string>
-    <string name="app_home_your_placeholder">Theo bạn, chuyện gì đã xảy ra?</string>
+    <string name="app_home_your_placeholder">Có chuyện gì vậy?</string>
     <string name="app_home_their_placeholder">Người kia nói gì? Kể đúng như cách họ sẽ nói.</string>
     <string name="app_home_your_side_label">Lời kể của bạn về cuộc tranh cãi</string>
     <string name="app_home_their_side_label">Lời kể của phía bên kia về cuộc tranh cãi</string>
-    <string name="app_home_send_link">Hoặc gửi liên kết để họ tự kể</string>
+    <string name="app_home_send_link">Gửi liên kết</string>
+    <string name="app_home_add_context">Thêm bối cảnh</string>
     <string name="app_home_says">%1$s nói:</string>
     <string name="app_home_my_side">Phía tôi:</string>
     <string name="app_home_other_side">Phía bên kia:</string>

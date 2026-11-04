@@ -314,7 +314,14 @@
     <string name="respond_label">Tvoja strana</string>
     <string name="respond_placeholder">Što se dogodilo, iz tvoje perspektive? Napiši to kao da pričaš prijatelju.</string>
     <string name="respond_submit">Pošalji svoju stranu</string>
+    <string name="case_write_title">Tvoja strana</string>
+    <string name="case_write_placeholder">Što je problem?</string>
+    <string name="case_write_lead">Napiši svoju stranu kad budeš spreman. Suci počinju kad oboje napišete.</string>
+    <string name="case_write_lead_answered">Druga strana je napisala svoju. Napiši svoju da dobiješ presudu.</string>
+    <string name="case_write_submit">Pošalji moju stranu</string>
+    <string name="case_write_email_subject">Druga strana je napisala svoje</string>
     <string name="respond_sent">Hvala. Tvoja strana je stigla i suci rade na tome.</string>
+    <string name="respond_sent_waiting">Hvala. Tvoja strana je stigla. Suci počinju kad druga osoba napiše svoju.</string>
     <string name="respond_own_invite">Ovo je tvoja vlastita poveznica poziva. Pošalji je drugoj osobi.</string>
     <string name="respond_expired">Ovaj je poziv istekao.</string>
     <string name="respond_closed">Ovaj slučaj više ne prima odgovore.</string>
@@ -533,6 +540,8 @@
     </plurals>
     <string name="app_history_offline_remove">Nemaš pristup internetu. Za uklanjanje je potrebna veza.</string>
     <string name="app_pricing_free_account">Prijavi se s Appleom, Googleom ili e-poštom</string>
+    <string name="app_context_label">Kontekst (neobavezno)</string>
+    <string name="app_pricing_context">Slike konteksta se pročitaju pa odbace, bez dodatnog troška</string>
     <string name="app_pricing_headline">Prvu presudu častimo.</string>
     <string name="app_pricing_sub">Otvori račun i prva presuda je besplatna, sa svim mogućnostima. Nakon toga odaberi paket ili prijeđi na mjesečni plan.</string>
     <string name="app_pricing_headline_member">Nabavi još presuda.</string>
@@ -589,11 +598,12 @@
     <string name="app_home_their_side">Druga strana</string>
     <string name="app_home_your_name">Tvoje ime</string>
     <string name="app_home_their_name">Ime druge osobe</string>
-    <string name="app_home_your_placeholder">Što se dogodilo, iz tvoje perspektive?</string>
+    <string name="app_home_your_placeholder">Što je problem?</string>
     <string name="app_home_their_placeholder">Što kaže druga osoba? Napiši to onako kako bi ona rekla.</string>
     <string name="app_home_your_side_label">Tvoja strana u raspravi</string>
     <string name="app_home_their_side_label">Strana druge osobe u raspravi</string>
-    <string name="app_home_send_link">Ili pošalji drugoj osobi poveznicu da napiše svoju</string>
+    <string name="app_home_send_link">Pošalji poveznicu</string>
+    <string name="app_home_add_context">Dodaj kontekst</string>
     <string name="app_home_says">%1$s kaže:</string>
     <string name="app_home_my_side">Moja strana:</string>
     <string name="app_home_other_side">Druga strana:</string>

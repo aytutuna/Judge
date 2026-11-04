@@ -300,7 +300,14 @@
     <string name="respond_label">あなたの言い分</string>
     <string name="respond_placeholder">あなたから見て、何がありましたか？　友だちに話すつもりで書いてください。</string>
     <string name="respond_submit">言い分を送る</string>
+    <string name="case_write_title">あなたの言い分</string>
+    <string name="case_write_placeholder">何があったの？</string>
+    <string name="case_write_lead">準備ができたら言い分を書いてください。二人とも書き終えたら審査員が始めます。</string>
+    <string name="case_write_lead_answered">相手が言い分を書きました。あなたも書いて判定を受けましょう。</string>
+    <string name="case_write_submit">言い分を送る</string>
+    <string name="case_write_email_subject">相手が言い分を書きました</string>
     <string name="respond_sent">ありがとうございます。言い分が届き、審査員が判定を始めました。</string>
+    <string name="respond_sent_waiting">ありがとうございます。言い分が届きました。相手が書き終えたら審査員が始めます。</string>
     <string name="respond_own_invite">これはあなた自身の招待リンクです。相手に送ってください。</string>
     <string name="respond_expired">この招待は期限切れです。</string>
     <string name="respond_closed">このケースはもう回答を受け付けていません。</string>
@@ -501,6 +508,8 @@
     </plurals>
     <string name="app_history_offline_remove">オフラインのため削除できません。接続してからもう一度お試しください。</string>
     <string name="app_pricing_free_account">Apple、Google、またはメールアドレスでログイン</string>
+    <string name="app_context_label">状況の補足（任意）</string>
+    <string name="app_pricing_context">補足の画像は読み取ったあと破棄されます。追加料金はかかりません</string>
     <string name="app_pricing_headline">最初の判定は無料です。</string>
     <string name="app_pricing_sub">アカウントを作成すると、最初の判定はすべての機能つきで無料。その後はパックか月額プランを選べます。</string>
     <string name="app_pricing_headline_member">判定をもっと。</string>
@@ -555,11 +564,12 @@
     <string name="app_home_their_side">相手の言い分</string>
     <string name="app_home_your_name">あなたの名前</string>
     <string name="app_home_their_name">相手の名前</string>
-    <string name="app_home_your_placeholder">あなたから見て、何がありましたか？</string>
+    <string name="app_home_your_placeholder">何があったの？</string>
     <string name="app_home_their_placeholder">相手はなんと言っていますか？　相手になったつもりで書いてください。</string>
     <string name="app_home_your_side_label">揉めごとについてのあなたの言い分</string>
     <string name="app_home_their_side_label">揉めごとについての相手の言い分</string>
-    <string name="app_home_send_link">または、リンクを送って相手に書いてもらう</string>
+    <string name="app_home_send_link">リンクを送る</string>
+    <string name="app_home_add_context">状況を追加</string>
     <string name="app_home_says">%1$sの言い分：</string>
     <string name="app_home_my_side">私の言い分：</string>
     <string name="app_home_other_side">相手の言い分：</string>

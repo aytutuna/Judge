@@ -307,7 +307,14 @@
     <string name="respond_label">Senin tarafın</string>
     <string name="respond_placeholder">Senin gözünden ne oldu? Bir arkadaşına anlatır gibi yaz.</string>
     <string name="respond_submit">Tarafımı gönder</string>
+    <string name="case_write_title">Senin tarafın</string>
+    <string name="case_write_placeholder">Sorun ne?</string>
+    <string name="case_write_lead">Hazır olduğunda tarafını yaz. Yargıçlar iki taraf da yazınca başlar.</string>
+    <string name="case_write_lead_answered">Karşı taraf kendi tarafını yazdı. Kararı almak için seninkini yaz.</string>
+    <string name="case_write_submit">Tarafımı gönder</string>
+    <string name="case_write_email_subject">Karşı taraf kendi tarafını yazdı</string>
     <string name="respond_sent">Teşekkürler. Tarafın ulaştı, yargıçlar üzerinde çalışıyor.</string>
+    <string name="respond_sent_waiting">Teşekkürler. Tarafın ulaştı. Yargıçlar diğer kişi de kendi tarafını yazınca başlar.</string>
     <string name="respond_own_invite">Bu senin kendi davet bağlantın. Diğer kişiye gönder.</string>
     <string name="respond_expired">Bu davetin süresi doldu.</string>
     <string name="respond_closed">Bu dava artık cevap kabul etmiyor.</string>
@@ -517,6 +524,8 @@
     </plurals>
     <string name="app_history_offline_remove">Çevrimdışısın. Kaldırmak için bağlantı gerekir.</string>
     <string name="app_pricing_free_account">Apple, Google ya da e-postayla giriş yap</string>
+    <string name="app_context_label">Bağlam (isteğe bağlı)</string>
+    <string name="app_pricing_context">Bağlam görselleri okunur, sonra atılır, ekstra ücret yok</string>
     <string name="app_pricing_headline">İlk karar bizden.</string>
     <string name="app_pricing_sub">Hesap açtığında ilk kararın bütün özellikleriyle ücretsiz. Sonrasında bir paket seç ya da aylık plana geç.</string>
     <string name="app_pricing_headline_member">Daha fazla karar al.</string>
@@ -572,11 +581,12 @@
     <string name="app_home_their_side">Karşı taraf</string>
     <string name="app_home_your_name">Adın</string>
     <string name="app_home_their_name">Onun adı</string>
-    <string name="app_home_your_placeholder">Senin açından ne oldu?</string>
+    <string name="app_home_your_placeholder">Sorun ne?</string>
     <string name="app_home_their_placeholder">O ne diyor? Onun anlatacağı gibi yaz.</string>
     <string name="app_home_your_side_label">Tartışmada senin tarafın</string>
     <string name="app_home_their_side_label">Tartışmada karşı tarafın görüşü</string>
-    <string name="app_home_send_link">Ya da bağlantı gönder, kendisi yazsın</string>
+    <string name="app_home_send_link">Bağlantı gönder</string>
+    <string name="app_home_add_context">Bağlam ekle</string>
     <string name="app_home_says">%1$s diyor ki:</string>
     <string name="app_home_my_side">Benim tarafım:</string>
     <string name="app_home_other_side">Onun tarafı:</string>

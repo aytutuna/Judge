@@ -314,7 +314,14 @@
     <string name="respond_label">Ta version</string>
     <string name="respond_placeholder">Qu’est-ce qui s’est passé, de ton point de vue ? Écris-le comme si tu le racontais à un proche.</string>
     <string name="respond_submit">Envoyer ma version</string>
+    <string name="case_write_title">Ta version</string>
+    <string name="case_write_placeholder">C’est quoi, le problème ?</string>
+    <string name="case_write_lead">Écris ta version quand tu veux. Les juges démarrent dès que vous avez écrit tous les deux.</string>
+    <string name="case_write_lead_answered">L’autre a écrit sa version. Écris la tienne pour avoir le verdict.</string>
+    <string name="case_write_submit">Envoyer ma version</string>
+    <string name="case_write_email_subject">L\'autre personne a écrit sa version</string>
     <string name="respond_sent">Merci. Ta version est bien arrivée et les juges s’en occupent.</string>
+    <string name="respond_sent_waiting">Merci. Ta version est bien arrivée. Les juges démarrent dès que l’autre personne a écrit la sienne.</string>
     <string name="respond_own_invite">C’est ton propre lien d’invitation. Envoie-le à l’autre personne.</string>
     <string name="respond_expired">Cette invitation a expiré.</string>
     <string name="respond_closed">Ce dossier n’accepte plus de réponses.</string>
@@ -533,6 +540,8 @@
     </plurals>
     <string name="app_history_offline_remove">Tu es hors ligne. Il faut une connexion pour supprimer.</string>
     <string name="app_pricing_free_account">Connecte-toi avec Apple, Google ou par e-mail</string>
+    <string name="app_context_label">Contexte (facultatif)</string>
+    <string name="app_pricing_context">Les images de contexte sont lues puis jetées, sans frais en plus</string>
     <string name="app_pricing_headline">Ton premier verdict est offert.</string>
     <string name="app_pricing_sub">Crée un compte et ton premier verdict est gratuit, avec toutes les fonctionnalités. Ensuite, choisis un pack ou passe à l’abonnement mensuel.</string>
     <string name="app_pricing_headline_member">Obtiens plus de verdicts.</string>
@@ -589,11 +598,12 @@
     <string name="app_home_their_side">Sa version</string>
     <string name="app_home_your_name">Ton nom</string>
     <string name="app_home_their_name">Son nom</string>
-    <string name="app_home_your_placeholder">Qu’est-ce qui s’est passé, de ton point de vue ?</string>
+    <string name="app_home_your_placeholder">C’est quoi, le problème ?</string>
     <string name="app_home_their_placeholder">Que dit l’autre personne ? Raconte-le avec ses mots.</string>
     <string name="app_home_your_side_label">Ta version du débat</string>
     <string name="app_home_their_side_label">Sa version du débat</string>
-    <string name="app_home_send_link">Ou invite l’autre à l’écrire via un lien</string>
+    <string name="app_home_send_link">Envoie-lui un lien</string>
+    <string name="app_home_add_context">Ajouter du contexte</string>
     <string name="app_home_says">%1$s dit :</string>
     <string name="app_home_my_side">Ma version :</string>
     <string name="app_home_other_side">Sa version :</string>

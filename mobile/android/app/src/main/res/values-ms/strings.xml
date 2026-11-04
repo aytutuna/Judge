@@ -300,7 +300,14 @@
     <string name="respond_label">Versi anda</string>
     <string name="respond_placeholder">Apa yang berlaku, dari sudut anda? Tulis macam anda bercerita kepada kawan.</string>
     <string name="respond_submit">Hantar versi saya</string>
+    <string name="case_write_title">Versi anda</string>
+    <string name="case_write_placeholder">Apa masalahnya?</string>
+    <string name="case_write_lead">Tulis versi anda bila-bila masa anda bersedia. Hakim bermula selepas kedua-duanya menulis.</string>
+    <string name="case_write_lead_answered">Dia sudah menulis versinya. Tulis versi anda untuk mendapat keputusan.</string>
+    <string name="case_write_submit">Hantar versi saya</string>
+    <string name="case_write_email_subject">Pihak satu lagi sudah menulis versinya</string>
     <string name="respond_sent">Terima kasih. Versi anda sudah diterima dan hakim sedang menilai.</string>
+    <string name="respond_sent_waiting">Terima kasih. Versi anda sudah diterima. Hakim bermula selepas pihak lagi satu menulis versinya.</string>
     <string name="respond_own_invite">Ini pautan jemputan anda sendiri. Hantar kepada pihak satu lagi.</string>
     <string name="respond_expired">Jemputan ini sudah tamat tempoh.</string>
     <string name="respond_closed">Kes ini tidak lagi menerima jawapan.</string>
@@ -501,6 +508,8 @@
     </plurals>
     <string name="app_history_offline_remove">Anda di luar talian. Sambungan diperlukan untuk membuang keputusan.</string>
     <string name="app_pricing_free_account">Log masuk dengan Apple, Google atau e-mel</string>
+    <string name="app_context_label">Konteks (pilihan)</string>
+    <string name="app_pricing_context">Imej konteks dibaca kemudian dibuang, tanpa kos tambahan</string>
     <string name="app_pricing_headline">Keputusan pertama anda, kami belanja.</string>
     <string name="app_pricing_sub">Buat akaun dan keputusan pertama anda percuma, lengkap dengan semua ciri. Selepas itu, pilih pek atau langgan bulanan.</string>
     <string name="app_pricing_headline_member">Dapatkan lebih banyak keputusan.</string>
@@ -555,11 +564,12 @@
     <string name="app_home_their_side">Versi dia</string>
     <string name="app_home_your_name">Nama anda</string>
     <string name="app_home_their_name">Nama dia</string>
-    <string name="app_home_your_placeholder">Apa yang berlaku, dari sudut anda?</string>
+    <string name="app_home_your_placeholder">Apa masalahnya?</string>
     <string name="app_home_their_placeholder">Apa kata dia? Tulis seperti yang dia sendiri akan katakan.</string>
     <string name="app_home_your_side_label">Versi anda tentang pertikaian ini</string>
     <string name="app_home_their_side_label">Versi dia tentang pertikaian ini</string>
-    <string name="app_home_send_link">Atau hantar pautan supaya dia menulis sendiri</string>
+    <string name="app_home_send_link">Hantar pautan</string>
+    <string name="app_home_add_context">Tambah konteks</string>
     <string name="app_home_says">%1$s berkata:</string>
     <string name="app_home_my_side">Versi saya:</string>
     <string name="app_home_other_side">Versi dia:</string>

@@ -461,7 +461,17 @@ const nl: Locale = {
     "respond.label": "Jouw kant",
     "respond.placeholder": "Wat is er gebeurd, vanuit jou gezien? Schrijf het zoals je het aan een vriend zou vertellen.",
     "respond.submit": "Mijn kant versturen",
+    "case.write.title": "Jouw kant",
+    "case.write.placeholder": "Wat is het probleem?",
+    "case.write.lead":
+      "Schrijf je kant op als je er klaar voor bent. De rechters beginnen zodra jullie allebei hebben geschreven.",
+    "case.write.leadAnswered":
+      "De ander heeft zijn kant geschreven. Schrijf de jouwe om het vonnis te krijgen.",
+    "case.write.submit": "Mijn kant versturen",
+    "case.write.emailSubject": "De ander heeft geschreven",
     "respond.sent": "Bedankt. Je kant is binnen en de rechters zijn ermee bezig.",
+    "respond.sentWaiting":
+      "Bedankt. Je kant is binnen. De rechters beginnen zodra de ander de zijne heeft geschreven.",
     "respond.ownInvite": "Dit is je eigen uitnodigingslink. Stuur hem naar de ander.",
     "respond.expired": "Deze uitnodiging is verlopen.",
     "respond.closed": "Deze zaak neemt geen antwoorden meer aan.",

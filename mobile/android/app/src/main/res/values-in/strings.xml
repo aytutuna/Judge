@@ -300,7 +300,14 @@
     <string name="respond_label">Versimu</string>
     <string name="respond_placeholder">Apa yang terjadi, dari sudut pandangmu? Tulis seperti kamu cerita ke teman.</string>
     <string name="respond_submit">Kirim versiku</string>
+    <string name="case_write_title">Versimu</string>
+    <string name="case_write_placeholder">Apa masalahnya?</string>
+    <string name="case_write_lead">Tulis versimu kapan pun kamu siap. Hakim mulai setelah kalian berdua menulis.</string>
+    <string name="case_write_lead_answered">Dia sudah menulis versinya. Tulis versimu untuk mendapat putusan.</string>
+    <string name="case_write_submit">Kirim versiku</string>
+    <string name="case_write_email_subject">Pihak lain sudah menulis versinya</string>
     <string name="respond_sent">Terima kasih. Versimu sudah masuk dan hakim sedang menilainya.</string>
+    <string name="respond_sent_waiting">Terima kasih. Versimu sudah masuk. Hakim mulai setelah orang satunya menulis versinya.</string>
     <string name="respond_own_invite">Ini tautan undanganmu sendiri. Kirim ke lawan debatmu.</string>
     <string name="respond_expired">Undangan ini sudah kedaluwarsa.</string>
     <string name="respond_closed">Kasus ini sudah tidak menerima jawaban.</string>
@@ -501,6 +508,8 @@
     </plurals>
     <string name="app_history_offline_remove">Kamu sedang offline. Sambungkan ke internet untuk menghapus.</string>
     <string name="app_pricing_free_account">Masuk dengan Apple, Google, atau email</string>
+    <string name="app_context_label">Konteks (opsional)</string>
+    <string name="app_pricing_context">Gambar konteks dibaca lalu dibuang, tanpa biaya tambahan</string>
     <string name="app_pricing_headline">Putusan pertamamu kami traktir.</string>
     <string name="app_pricing_sub">Buat akun dan putusan pertamamu gratis, lengkap dengan semua fitur. Setelah itu, pilih paket atau berlangganan bulanan.</string>
     <string name="app_pricing_headline_member">Tambah putusan.</string>
@@ -555,11 +564,12 @@
     <string name="app_home_their_side">Versi dia</string>
     <string name="app_home_your_name">Namamu</string>
     <string name="app_home_their_name">Nama dia</string>
-    <string name="app_home_your_placeholder">Apa yang terjadi, dari sudut pandangmu?</string>
+    <string name="app_home_your_placeholder">Apa masalahnya?</string>
     <string name="app_home_their_placeholder">Apa katanya? Tulis seolah dia yang bercerita.</string>
     <string name="app_home_your_side_label">Versimu dalam perdebatan ini</string>
     <string name="app_home_their_side_label">Versi dia dalam perdebatan ini</string>
-    <string name="app_home_send_link">Atau kirim tautan agar dia menulisnya sendiri</string>
+    <string name="app_home_send_link">Kirim tautan</string>
+    <string name="app_home_add_context">Tambah konteks</string>
     <string name="app_home_says">Kata %1$s:</string>
     <string name="app_home_my_side">Versiku:</string>
     <string name="app_home_other_side">Versi dia:</string>

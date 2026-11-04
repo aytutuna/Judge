@@ -307,7 +307,14 @@
     <string name="respond_label">ನಿಮ್ಮ ಕಡೆಯ ಮಾತು</string>
     <string name="respond_placeholder">ನಿಮ್ಮ ದೃಷ್ಟಿಯಲ್ಲಿ ಏನಾಯಿತು? ಗೆಳೆಯರಿಗೆ ಹೇಳುವ ಹಾಗೆ ಬರೆಯಿರಿ.</string>
     <string name="respond_submit">ನನ್ನ ಮಾತು ಕಳುಹಿಸಿ</string>
+    <string name="case_write_title">ನಿಮ್ಮ ಕಡೆ</string>
+    <string name="case_write_placeholder">ಸಮಸ್ಯೆ ಏನು?</string>
+    <string name="case_write_lead">ಸಿದ್ಧರಾದಾಗ ನಿಮ್ಮ ಕಡೆಯ ಮಾತು ಬರೆಯಿರಿ. ಇಬ್ಬರೂ ಬರೆದ ಮೇಲೆ ತೀರ್ಪುಗಾರರು ಶುರು ಮಾಡುತ್ತಾರೆ.</string>
+    <string name="case_write_lead_answered">ಅವರು ತಮ್ಮ ಕಡೆಯ ಮಾತು ಬರೆದಿದ್ದಾರೆ. ತೀರ್ಪು ಪಡೆಯಲು ನಿಮ್ಮದನ್ನು ಬರೆಯಿರಿ.</string>
+    <string name="case_write_submit">ನನ್ನ ಕಡೆ ಕಳುಹಿಸಿ</string>
+    <string name="case_write_email_subject">ಇನ್ನೊಬ್ಬರು ತಮ್ಮ ಕಡೆ ಬರೆದಿದ್ದಾರೆ</string>
     <string name="respond_sent">ಧನ್ಯವಾದ. ನಿಮ್ಮ ಮಾತು ತಲುಪಿದೆ, ತೀರ್ಪುಗಾರರು ಕೆಲಸದಲ್ಲಿದ್ದಾರೆ.</string>
+    <string name="respond_sent_waiting">ಧನ್ಯವಾದ. ನಿಮ್ಮ ಮಾತು ತಲುಪಿದೆ. ಇನ್ನೊಬ್ಬರು ಬರೆದ ಮೇಲೆ ತೀರ್ಪುಗಾರರು ಶುರು ಮಾಡುತ್ತಾರೆ.</string>
     <string name="respond_own_invite">ಇದು ನಿಮ್ಮದೇ ಆಹ್ವಾನ ಲಿಂಕ್. ಇದನ್ನು ಎದುರಿನವರಿಗೆ ಕಳುಹಿಸಿ.</string>
     <string name="respond_expired">ಈ ಆಹ್ವಾನದ ಅವಧಿ ಮುಗಿದಿದೆ.</string>
     <string name="respond_closed">ಈ ಕೇಸ್ ಈಗ ಉತ್ತರಗಳನ್ನು ಸ್ವೀಕರಿಸುತ್ತಿಲ್ಲ.</string>
@@ -517,6 +524,8 @@
     </plurals>
     <string name="app_history_offline_remove">ನೀವು ಆಫ್‌ಲೈನ್ ಇದ್ದೀರಿ. ತೆಗೆದುಹಾಕಲು ಇಂಟರ್ನೆಟ್ ಸಂಪರ್ಕ ಬೇಕು.</string>
     <string name="app_pricing_free_account">Apple, Google ಅಥವಾ ಇಮೇಲ್ ಮೂಲಕ ಸೈನ್ ಇನ್ ಮಾಡಿ</string>
+    <string name="app_context_label">ಹಿನ್ನೆಲೆ (ಐಚ್ಛಿಕ)</string>
+    <string name="app_pricing_context">ಹಿನ್ನೆಲೆ ಚಿತ್ರಗಳನ್ನು ಓದಿ ನಂತರ ಎಸೆಯಲಾಗುತ್ತದೆ, ಹೆಚ್ಚುವರಿ ವೆಚ್ಚವಿಲ್ಲ</string>
     <string name="app_pricing_headline">ನಿಮ್ಮ ಮೊದಲ ತೀರ್ಪು ನಮ್ಮ ಕಡೆಯಿಂದ ಉಚಿತ.</string>
     <string name="app_pricing_sub">ಖಾತೆ ತೆರೆಯಿರಿ, ನಿಮ್ಮ ಮೊದಲ ತೀರ್ಪು ಎಲ್ಲಾ ಸೌಲಭ್ಯಗಳ ಸಮೇತ ಉಚಿತ. ಅದರ ನಂತರ ಒಂದು ಪ್ಯಾಕ್ ಆರಿಸಿ ಅಥವಾ ಮಾಸಿಕ ಪ್ಲಾನ್ ತೆಗೆದುಕೊಳ್ಳಿ.</string>
     <string name="app_pricing_headline_member">ಇನ್ನಷ್ಟು ತೀರ್ಪುಗಳನ್ನು ಪಡೆಯಿರಿ.</string>
@@ -572,11 +581,12 @@
     <string name="app_home_their_side">ಅವರ ಕಡೆ</string>
     <string name="app_home_your_name">ನಿಮ್ಮ ಹೆಸರು</string>
     <string name="app_home_their_name">ಅವರ ಹೆಸರು</string>
-    <string name="app_home_your_placeholder">ನಿಮ್ಮ ದೃಷ್ಟಿಯಲ್ಲಿ ಏನಾಯಿತು?</string>
+    <string name="app_home_your_placeholder">ಸಮಸ್ಯೆ ಏನು?</string>
     <string name="app_home_their_placeholder">ಅವರು ಏನು ಹೇಳುತ್ತಾರೆ? ಅವರು ಹೇಳುವ ಹಾಗೆಯೇ ಬರೆಯಿರಿ.</string>
     <string name="app_home_your_side_label">ವಾದದಲ್ಲಿ ನಿಮ್ಮ ಕಡೆಯ ಮಾತು</string>
     <string name="app_home_their_side_label">ವಾದದಲ್ಲಿ ಅವರ ಕಡೆಯ ಮಾತು</string>
-    <string name="app_home_send_link">ಅಥವಾ ಅವರೇ ಬರೆಯಲು ಲಿಂಕ್ ಕಳುಹಿಸಿ</string>
+    <string name="app_home_send_link">ಲಿಂಕ್ ಕಳುಹಿಸಿ</string>
+    <string name="app_home_add_context">ಹಿನ್ನೆಲೆ ಸೇರಿಸಿ</string>
     <string name="app_home_says">%1$s ಹೇಳುವುದು:</string>
     <string name="app_home_my_side">ನನ್ನ ಕಡೆಯ ಮಾತು:</string>
     <string name="app_home_other_side">ಅವರ ಕಡೆಯ ಮಾತು:</string>

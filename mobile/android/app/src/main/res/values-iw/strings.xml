@@ -314,7 +314,14 @@
     <string name="respond_label">הצד שלך</string>
     <string name="respond_placeholder">מה קרה, מנקודת המבט שלך? אפשר לכתוב כמו בהודעה לחבר.</string>
     <string name="respond_submit">לשלוח את הצד שלי</string>
+    <string name="case_write_title">הצד שלך</string>
+    <string name="case_write_placeholder">מה הבעיה?</string>
+    <string name="case_write_lead">אפשר לכתוב את הצד שלך מתי שנוח. השופטים מתחילים כששניכם כתבתם.</string>
+    <string name="case_write_lead_answered">הצד השני כתב את הצד שלו. כתבו את שלכם כדי לקבל פסק דין.</string>
+    <string name="case_write_submit">לשלוח את הצד שלי</string>
+    <string name="case_write_email_subject">הצד השני כתב את שלו</string>
     <string name="respond_sent">תודה. הצד שלך התקבל, והשופטים כבר על זה.</string>
+    <string name="respond_sent_waiting">תודה. הצד שלך התקבל. השופטים מתחילים כשהצד השני יכתוב את שלו.</string>
     <string name="respond_own_invite">זה קישור ההזמנה שלך. צריך לשלוח אותו לצד השני.</string>
     <string name="respond_expired">תוקף ההזמנה הזו פג.</string>
     <string name="respond_closed">התיק הזה כבר לא מקבל תשובות.</string>
@@ -533,6 +540,8 @@
     </plurals>
     <string name="app_history_offline_remove">אין חיבור לאינטרנט, ובלי חיבור אי אפשר להסיר.</string>
     <string name="app_pricing_free_account">התחברות עם Apple, Google או אימייל</string>
+    <string name="app_context_label">הקשר (אופציונלי)</string>
+    <string name="app_pricing_context">תמונות הקשר נקראות ואז נזרקות, בלי תוספת תשלום</string>
     <string name="app_pricing_headline">פסק הדין הראשון עלינו.</string>
     <string name="app_pricing_sub">פותחים חשבון, ופסק הדין הראשון בחינם, עם כל האפשרויות. אחר כך אפשר לבחור חבילה או תוכנית חודשית.</string>
     <string name="app_pricing_headline_member">עוד פסקי דין.</string>
@@ -589,11 +598,12 @@
     <string name="app_home_their_side">הצד השני</string>
     <string name="app_home_your_name">השם שלך</string>
     <string name="app_home_their_name">השם של הצד השני</string>
-    <string name="app_home_your_placeholder">מה קרה, מנקודת המבט שלך?</string>
+    <string name="app_home_your_placeholder">מה הבעיה?</string>
     <string name="app_home_their_placeholder">מה הצד השני אומר? כדאי לכתוב את זה במילים שלו.</string>
     <string name="app_home_your_side_label">הצד שלך בוויכוח</string>
     <string name="app_home_their_side_label">הצד השני בוויכוח</string>
-    <string name="app_home_send_link">או לשלוח קישור, והצד השני יכתוב בעצמו</string>
+    <string name="app_home_send_link">לשלוח קישור</string>
+    <string name="app_home_add_context">להוסיף הקשר</string>
     <string name="app_home_says">לדברי %1$s:</string>
     <string name="app_home_my_side">הצד שלי:</string>
     <string name="app_home_other_side">הצד השני:</string>

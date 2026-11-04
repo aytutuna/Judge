@@ -457,7 +457,17 @@ const ptBR: Locale = {
     "respond.label": "Seu lado",
     "respond.placeholder": "O que aconteceu, do seu ponto de vista? Escreva do jeito que você contaria para um amigo.",
     "respond.submit": "Enviar meu lado",
+    "case.write.title": "Seu lado",
+    "case.write.placeholder": "Qual é o problema?",
+    "case.write.lead":
+      "Escreva o seu lado quando quiser. Os juízes começam quando vocês dois tiverem escrito.",
+    "case.write.leadAnswered":
+      "A outra pessoa já escreveu o lado dela. Escreva o seu para receber o veredito.",
+    "case.write.submit": "Enviar meu lado",
+    "case.write.emailSubject": "A outra pessoa escreveu a versão dela",
     "respond.sent": "Valeu! Seu lado chegou e os juízes já estão analisando.",
+    "respond.sentWaiting":
+      "Valeu! Seu lado chegou. Os juízes começam quando a outra pessoa escrever o dela.",
     "respond.ownInvite": "Este é o seu próprio link de convite. Mande para a outra pessoa.",
     "respond.expired": "Este convite expirou.",
     "respond.closed": "Este caso não aceita mais respostas.",

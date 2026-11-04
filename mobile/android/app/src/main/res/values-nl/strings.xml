@@ -307,7 +307,14 @@
     <string name="respond_label">Jouw kant</string>
     <string name="respond_placeholder">Wat is er gebeurd, vanuit jou gezien? Schrijf het zoals je het aan een vriend zou vertellen.</string>
     <string name="respond_submit">Mijn kant versturen</string>
+    <string name="case_write_title">Jouw kant</string>
+    <string name="case_write_placeholder">Wat is het probleem?</string>
+    <string name="case_write_lead">Schrijf je kant op als je er klaar voor bent. De rechters beginnen zodra jullie allebei hebben geschreven.</string>
+    <string name="case_write_lead_answered">De ander heeft zijn kant geschreven. Schrijf de jouwe om het vonnis te krijgen.</string>
+    <string name="case_write_submit">Mijn kant versturen</string>
+    <string name="case_write_email_subject">De ander heeft geschreven</string>
     <string name="respond_sent">Bedankt. Je kant is binnen en de rechters zijn ermee bezig.</string>
+    <string name="respond_sent_waiting">Bedankt. Je kant is binnen. De rechters beginnen zodra de ander de zijne heeft geschreven.</string>
     <string name="respond_own_invite">Dit is je eigen uitnodigingslink. Stuur hem naar de ander.</string>
     <string name="respond_expired">Deze uitnodiging is verlopen.</string>
     <string name="respond_closed">Deze zaak neemt geen antwoorden meer aan.</string>
@@ -517,6 +524,8 @@
     </plurals>
     <string name="app_history_offline_remove">Je bent offline. Om te verwijderen heb je een verbinding nodig.</string>
     <string name="app_pricing_free_account">Log in met Apple, Google of e-mail</string>
+    <string name="app_context_label">Context (optioneel)</string>
+    <string name="app_pricing_context">Contextafbeeldingen worden gelezen en daarna weggegooid, zonder extra kosten</string>
     <string name="app_pricing_headline">Je eerste uitspraak is van het huis.</string>
     <string name="app_pricing_sub">Maak een account aan en je eerste uitspraak is gratis, met alles erop en eraan. Daarna kies je een bundel of neem je een maandabonnement.</string>
     <string name="app_pricing_headline_member">Meer uitspraken.</string>
@@ -572,11 +581,12 @@
     <string name="app_home_their_side">Kant van de ander</string>
     <string name="app_home_your_name">Jouw naam</string>
     <string name="app_home_their_name">Naam van de ander</string>
-    <string name="app_home_your_placeholder">Wat is er volgens jou gebeurd?</string>
+    <string name="app_home_your_placeholder">Wat is het probleem?</string>
     <string name="app_home_their_placeholder">Wat zegt de ander? Schrijf het zoals die het zelf zou zeggen.</string>
     <string name="app_home_your_side_label">Jouw kant van de discussie</string>
     <string name="app_home_their_side_label">De andere kant van de discussie</string>
-    <string name="app_home_send_link">Of stuur de ander een link om het zelf te schrijven</string>
+    <string name="app_home_send_link">Stuur een link</string>
+    <string name="app_home_add_context">Context toevoegen</string>
     <string name="app_home_says">%1$s zegt:</string>
     <string name="app_home_my_side">Mijn kant:</string>
     <string name="app_home_other_side">De andere kant:</string>

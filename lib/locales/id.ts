@@ -457,7 +457,16 @@ const id: Locale = {
     "respond.label": "Versimu",
     "respond.placeholder": "Apa yang terjadi, dari sudut pandangmu? Tulis seperti kamu cerita ke teman.",
     "respond.submit": "Kirim versiku",
+    "case.write.title": "Versimu",
+    "case.write.placeholder": "Apa masalahnya?",
+    "case.write.lead":
+      "Tulis versimu kapan pun kamu siap. Hakim mulai setelah kalian berdua menulis.",
+    "case.write.leadAnswered": "Dia sudah menulis versinya. Tulis versimu untuk mendapat putusan.",
+    "case.write.submit": "Kirim versiku",
+    "case.write.emailSubject": "Pihak lain sudah menulis versinya",
     "respond.sent": "Terima kasih. Versimu sudah masuk dan hakim sedang menilainya.",
+    "respond.sentWaiting":
+      "Terima kasih. Versimu sudah masuk. Hakim mulai setelah orang satunya menulis versinya.",
     "respond.ownInvite": "Ini tautan undanganmu sendiri. Kirim ke lawan debatmu.",
     "respond.expired": "Undangan ini sudah kedaluwarsa.",
     "respond.closed": "Kasus ini sudah tidak menerima jawaban.",

@@ -321,7 +321,14 @@
     <string name="respond_label">Tvůj pohled</string>
     <string name="respond_placeholder">Co se stalo, jak to vidíš ty? Napiš to tak, jak to vyprávíš kamarádům.</string>
     <string name="respond_submit">Odeslat můj pohled</string>
+    <string name="case_write_title">Tvůj pohled</string>
+    <string name="case_write_placeholder">Co je za problém?</string>
+    <string name="case_write_lead">Napiš svůj pohled, kdy budeš chtít. Soudci začnou, až napíšete oba.</string>
+    <string name="case_write_lead_answered">Druhá strana už svůj pohled napsala. Napiš ten svůj a dostaneš verdikt.</string>
+    <string name="case_write_submit">Odeslat můj pohled</string>
+    <string name="case_write_email_subject">Druhá strana napsala svůj pohled</string>
     <string name="respond_sent">Díky. Tvůj pohled dorazil a soudci na tom pracují.</string>
+    <string name="respond_sent_waiting">Díky. Tvůj pohled dorazil. Soudci začnou, až napíše svůj i druhá strana.</string>
     <string name="respond_own_invite">Tohle je tvůj vlastní odkaz na pozvánku. Pošli ho druhé straně.</string>
     <string name="respond_expired">Platnost této pozvánky vypršela.</string>
     <string name="respond_closed">Tenhle případ už odpovědi nepřijímá.</string>
@@ -549,6 +556,8 @@
     </plurals>
     <string name="app_history_offline_remove">Nejsi online. K odstranění potřebuješ připojení.</string>
     <string name="app_pricing_free_account">Přihlas se přes Apple, Google nebo e-mail</string>
+    <string name="app_context_label">Kontext (volitelné)</string>
+    <string name="app_pricing_context">Obrázky s kontextem se přečtou a pak zahodí, bez příplatku</string>
     <string name="app_pricing_headline">První verdikt máš od nás.</string>
     <string name="app_pricing_sub">Založ si účet a první verdikt máš zdarma, se vším všudy. Potom si vyber balíček nebo měsíční plán.</string>
     <string name="app_pricing_headline_member">Získej další verdikty.</string>
@@ -606,11 +615,12 @@
     <string name="app_home_their_side">Pohled druhé strany</string>
     <string name="app_home_your_name">Tvoje jméno</string>
     <string name="app_home_their_name">Jméno druhé strany</string>
-    <string name="app_home_your_placeholder">Co se stalo, jak to vidíš ty?</string>
+    <string name="app_home_your_placeholder">Co je za problém?</string>
     <string name="app_home_their_placeholder">Co říká druhá strana? Napiš to tak, jak by to řekla ona.</string>
     <string name="app_home_your_side_label">Tvůj pohled na spor</string>
     <string name="app_home_their_side_label">Pohled druhé strany na spor</string>
-    <string name="app_home_send_link">Nebo pošli odkaz, ať to druhá strana napíše sama</string>
+    <string name="app_home_send_link">Pošli odkaz</string>
+    <string name="app_home_add_context">Přidat kontext</string>
     <string name="app_home_says">%1$s říká:</string>
     <string name="app_home_my_side">Můj pohled:</string>
     <string name="app_home_other_side">Pohled druhé strany:</string>

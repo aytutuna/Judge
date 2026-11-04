@@ -300,7 +300,14 @@
     <string name="respond_label">你的說法</string>
     <string name="respond_placeholder">從你的角度看，發生了什麼事？就像跟朋友講一樣寫下來。</string>
     <string name="respond_submit">送出我的說法</string>
+    <string name="case_write_title">你的說法</string>
+    <string name="case_write_placeholder">怎麼了？</string>
+    <string name="case_write_lead">準備好就寫下你的說法。你們兩邊都寫完，評審才會開始。</string>
+    <string name="case_write_lead_answered">對方已經寫好說法。寫下你的，就能拿到判決。</string>
+    <string name="case_write_submit">送出我的說法</string>
+    <string name="case_write_email_subject">對方已經寫好他們的說法</string>
     <string name="respond_sent">謝謝！已收到你的說法，評審正在處理。</string>
+    <string name="respond_sent_waiting">謝謝！已收到你的說法。對方寫完後，評審才會開始。</string>
     <string name="respond_own_invite">這是你自己的邀請連結，請傳給對方。</string>
     <string name="respond_expired">這個邀請已經過期。</string>
     <string name="respond_closed">這個案子已不再接受回覆。</string>
@@ -501,6 +508,8 @@
     </plurals>
     <string name="app_history_offline_remove">你目前離線，移除需要網路連線。</string>
     <string name="app_pricing_free_account">用 Apple、Google 或電子郵件登入</string>
+    <string name="app_context_label">背景（選填）</string>
+    <string name="app_pricing_context">背景圖片讀完即丟，不另外收費</string>
     <string name="app_pricing_headline">第一次判決，我們請客。</string>
     <string name="app_pricing_sub">建立帳號，第一次判決免費，所有功能都能用。之後可以買額度包，或改用月費方案。</string>
     <string name="app_pricing_headline_member">取得更多判決。</string>
@@ -555,11 +564,12 @@
     <string name="app_home_their_side">對方的說法</string>
     <string name="app_home_your_name">你的名字</string>
     <string name="app_home_their_name">對方的名字</string>
-    <string name="app_home_your_placeholder">從你的角度看，發生了什麼事？</string>
+    <string name="app_home_your_placeholder">怎麼了？</string>
     <string name="app_home_their_placeholder">對方怎麼說？用對方的口吻寫下來。</string>
     <string name="app_home_your_side_label">你在這場爭論中的說法</string>
     <string name="app_home_their_side_label">對方在這場爭論中的說法</string>
-    <string name="app_home_send_link">或傳連結給對方，讓對方自己寫</string>
+    <string name="app_home_send_link">傳個連結</string>
+    <string name="app_home_add_context">新增背景</string>
     <string name="app_home_says">%1$s說：</string>
     <string name="app_home_my_side">我的說法：</string>
     <string name="app_home_other_side">對方的說法：</string>

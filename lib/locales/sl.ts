@@ -460,7 +460,17 @@ const sl: Locale = {
     "respond.label": "Tvoja plat",
     "respond.placeholder": "Kaj se je po tvoje zgodilo? Napiši, kot da pripoveduješ prijatelju.",
     "respond.submit": "Pošlji mojo plat",
+    "case.write.title": "Tvoja plat",
+    "case.write.placeholder": "Kaj je narobe?",
+    "case.write.lead":
+      "Napiši svojo plat, ko si pripravljen. Sodniki začnejo, ko sta napisala oba.",
+    "case.write.leadAnswered":
+      "Druga oseba je že napisala svojo plat. Napiši svojo in dobil boš sodbo.",
+    "case.write.submit": "Pošlji mojo plat",
+    "case.write.emailSubject": "Druga stran je napisala svoje",
     "respond.sent": "Hvala. Tvoja plat je oddana, sodniki so že pri delu.",
+    "respond.sentWaiting":
+      "Hvala. Tvoja plat je oddana. Sodniki začnejo, ko svojo napiše še druga oseba.",
     "respond.ownInvite": "To je tvoja lastna povezava za povabilo. Pošlji jo drugi osebi.",
     "respond.expired": "To povabilo je poteklo.",
     "respond.closed": "Ta spor ne sprejema več odgovorov.",

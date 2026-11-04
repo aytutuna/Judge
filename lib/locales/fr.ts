@@ -459,7 +459,16 @@ const fr: Locale = {
     "respond.label": "Ta version",
     "respond.placeholder": "Qu’est-ce qui s’est passé, de ton point de vue ? Écris-le comme si tu le racontais à un proche.",
     "respond.submit": "Envoyer ma version",
+    "case.write.title": "Ta version",
+    "case.write.placeholder": "C’est quoi, le problème ?",
+    "case.write.lead":
+      "Écris ta version quand tu veux. Les juges démarrent dès que vous avez écrit tous les deux.",
+    "case.write.leadAnswered": "L’autre a écrit sa version. Écris la tienne pour avoir le verdict.",
+    "case.write.submit": "Envoyer ma version",
+    "case.write.emailSubject": "L'autre personne a écrit sa version",
     "respond.sent": "Merci. Ta version est bien arrivée et les juges s’en occupent.",
+    "respond.sentWaiting":
+      "Merci. Ta version est bien arrivée. Les juges démarrent dès que l’autre personne a écrit la sienne.",
     "respond.ownInvite": "C’est ton propre lien d’invitation. Envoie-le à l’autre personne.",
     "respond.expired": "Cette invitation a expiré.",
     "respond.closed": "Ce dossier n’accepte plus de réponses.",

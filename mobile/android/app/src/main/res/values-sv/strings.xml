@@ -307,7 +307,14 @@
     <string name="respond_label">Din sida</string>
     <string name="respond_placeholder">Vad hände, sett från ditt håll? Skriv som om du berättade för en kompis.</string>
     <string name="respond_submit">Skicka min sida</string>
+    <string name="case_write_title">Din sida</string>
+    <string name="case_write_placeholder">Vad är problemet?</string>
+    <string name="case_write_lead">Skriv din sida när du är redo. Domarna börjar när ni båda har skrivit.</string>
+    <string name="case_write_lead_answered">Den andra har skrivit sin sida. Skriv din för att få domen.</string>
+    <string name="case_write_submit">Skicka min sida</string>
+    <string name="case_write_email_subject">Den andra har skrivit sin sida</string>
     <string name="respond_sent">Tack. Din sida är inskickad och domarna jobbar på det.</string>
+    <string name="respond_sent_waiting">Tack. Din sida är inskickad. Domarna börjar när den andra har skrivit sin.</string>
     <string name="respond_own_invite">Det här är din egen inbjudningslänk. Skicka den till den andra personen.</string>
     <string name="respond_expired">Inbjudan har gått ut.</string>
     <string name="respond_closed">Det här fallet tar inte emot svar längre.</string>
@@ -517,6 +524,8 @@
     </plurals>
     <string name="app_history_offline_remove">Du är offline. Du måste vara uppkopplad för att ta bort.</string>
     <string name="app_pricing_free_account">Logga in med Apple, Google eller e-post</string>
+    <string name="app_context_label">Sammanhang (valfritt)</string>
+    <string name="app_pricing_context">Bilder med sammanhang läses och kastas sedan, utan extra kostnad</string>
     <string name="app_pricing_headline">Din första dom bjuder vi på.</string>
     <string name="app_pricing_sub">Skapa ett konto så är din första dom gratis, med alla funktioner. Sedan väljer du ett paket eller ett månadsabonnemang.</string>
     <string name="app_pricing_headline_member">Skaffa fler domar.</string>
@@ -572,11 +581,12 @@
     <string name="app_home_their_side">Den andras sida</string>
     <string name="app_home_your_name">Ditt namn</string>
     <string name="app_home_their_name">Den andras namn</string>
-    <string name="app_home_your_placeholder">Vad hände, sett från ditt håll?</string>
+    <string name="app_home_your_placeholder">Vad är problemet?</string>
     <string name="app_home_their_placeholder">Vad säger den andra? Skriv det så som hen skulle säga det.</string>
     <string name="app_home_your_side_label">Din sida av bråket</string>
     <string name="app_home_their_side_label">Den andras sida av bråket</string>
-    <string name="app_home_send_link">Eller skicka en länk så att hen skriver den själv</string>
+    <string name="app_home_send_link">Skicka en länk</string>
+    <string name="app_home_add_context">Lägg till sammanhang</string>
     <string name="app_home_says">%1$s säger:</string>
     <string name="app_home_my_side">Min sida:</string>
     <string name="app_home_other_side">Den andras sida:</string>

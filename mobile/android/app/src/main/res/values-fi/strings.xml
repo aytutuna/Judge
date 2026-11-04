@@ -307,7 +307,14 @@
     <string name="respond_label">Kertomuksesi</string>
     <string name="respond_placeholder">Mitä tapahtui sinun näkökulmastasi? Kirjoita kuin kertoisit kaverille.</string>
     <string name="respond_submit">Lähetä kertomukseni</string>
+    <string name="case_write_title">Sinun puolesi</string>
+    <string name="case_write_placeholder">Mikä ongelma on?</string>
+    <string name="case_write_lead">Kirjoita puolesi, kun olet valmis. Tuomarit aloittavat, kun molemmat ovat kirjoittaneet.</string>
+    <string name="case_write_lead_answered">Toinen on kirjoittanut puolensa. Kirjoita omasi, niin saat tuomion.</string>
+    <string name="case_write_submit">Lähetä puoleni</string>
+    <string name="case_write_email_subject">Toinen osapuoli on kirjoittanut oman puolensa</string>
     <string name="respond_sent">Kiitos. Kertomuksesi on perillä, ja tuomarit ovat asian kimpussa.</string>
+    <string name="respond_sent_waiting">Kiitos. Kertomuksesi on perillä. Tuomarit aloittavat, kun toinenkin on kirjoittanut omansa.</string>
     <string name="respond_own_invite">Tämä on oma kutsulinkkisi. Lähetä se toiselle osapuolelle.</string>
     <string name="respond_expired">Tämä kutsu on vanhentunut.</string>
     <string name="respond_closed">Tähän juttuun ei voi enää vastata.</string>
@@ -517,6 +524,8 @@
     </plurals>
     <string name="app_history_offline_remove">Verkkoyhteys puuttuu. Poistaminen vaatii yhteyden.</string>
     <string name="app_pricing_free_account">Kirjaudu Applella, Googlella tai sähköpostilla</string>
+    <string name="app_context_label">Tausta (valinnainen)</string>
+    <string name="app_pricing_context">Taustakuvat luetaan ja heitetään sitten pois, ilman lisämaksua</string>
     <string name="app_pricing_headline">Ensimmäinen tuomio on meiltä.</string>
     <string name="app_pricing_sub">Luo tili, niin ensimmäinen tuomiosi on ilmainen kaikkine ominaisuuksineen. Sen jälkeen voit valita paketin tai kuukausitilauksen.</string>
     <string name="app_pricing_headline_member">Hanki lisää tuomioita.</string>
@@ -572,11 +581,12 @@
     <string name="app_home_their_side">Toisen puoli</string>
     <string name="app_home_your_name">Nimesi</string>
     <string name="app_home_their_name">Toisen nimi</string>
-    <string name="app_home_your_placeholder">Mitä tapahtui sinun näkökulmastasi?</string>
+    <string name="app_home_your_placeholder">Mikä ongelma on?</string>
     <string name="app_home_their_placeholder">Mitä toinen sanoo? Kirjoita se niin kuin hän itse sen sanoisi.</string>
     <string name="app_home_your_side_label">Sinun puolesi kiistassa</string>
     <string name="app_home_their_side_label">Toisen puoli kiistassa</string>
-    <string name="app_home_send_link">Tai lähetä hänelle linkki, niin hän kirjoittaa sen itse</string>
+    <string name="app_home_send_link">Lähetä linkki</string>
+    <string name="app_home_add_context">Lisää tausta</string>
     <string name="app_home_says">%1$s sanoo:</string>
     <string name="app_home_my_side">Minun puoleni:</string>
     <string name="app_home_other_side">Toisen puoli:</string>

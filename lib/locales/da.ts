@@ -458,7 +458,16 @@ const da: Locale = {
     "respond.label": "Din side",
     "respond.placeholder": "Hvad skete der set fra din side? Skriv det, som du ville fortælle det til en ven.",
     "respond.submit": "Send min side",
+    "case.write.title": "Din side",
+    "case.write.placeholder": "Hvad er problemet?",
+    "case.write.lead":
+      "Skriv din side, når du er klar. Dommerne går i gang, når I begge har skrevet.",
+    "case.write.leadAnswered": "Den anden har skrevet sin side. Skriv din for at få dommen.",
+    "case.write.submit": "Send min side",
+    "case.write.emailSubject": "Den anden har skrevet sin side",
     "respond.sent": "Tak. Din side er sendt, og dommerne er i gang.",
+    "respond.sentWaiting":
+      "Tak. Din side er sendt. Dommerne går i gang, når den anden har skrevet sin.",
     "respond.ownInvite": "Det er dit eget invitationslink. Send det til den anden person.",
     "respond.expired": "Invitationen er udløbet.",
     "respond.closed": "Sagen tager ikke imod svar længere.",

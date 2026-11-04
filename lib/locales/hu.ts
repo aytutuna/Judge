@@ -461,7 +461,17 @@ const hu: Locale = {
     "respond.label": "A te verziód",
     "respond.placeholder": "Mi történt a te szemszögedből? Írd le úgy, ahogy egy barátodnak mesélnéd.",
     "respond.submit": "Elküldöm a verziómat",
+    "case.write.title": "A te verziód",
+    "case.write.placeholder": "Mi a gond?",
+    "case.write.lead":
+      "Írd meg a verziódat, amikor készen állsz. A bírák akkor kezdenek, ha mindketten megírtátok.",
+    "case.write.leadAnswered":
+      "Ő már megírta a saját verzióját. Írd meg a tiédet, hogy megkapd az ítéletet.",
+    "case.write.submit": "Elküldöm a verziómat",
+    "case.write.emailSubject": "A másik fél megírta a maga verzióját",
     "respond.sent": "Köszönjük! Megkaptuk a verziódat, a bírák már dolgoznak rajta.",
+    "respond.sentWaiting":
+      "Köszönjük! Megkaptuk a verziódat. A bírák akkor kezdenek, ha a másik is megírta az övét.",
     "respond.ownInvite": "Ez a saját meghívólinked. Küldd el a másik félnek.",
     "respond.expired": "Ez a meghívó lejárt.",
     "respond.closed": "Ez az ügy már nem fogad válaszokat.",

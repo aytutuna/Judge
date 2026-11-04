@@ -307,7 +307,14 @@
     <string name="respond_label">A te verziód</string>
     <string name="respond_placeholder">Mi történt a te szemszögedből? Írd le úgy, ahogy egy barátodnak mesélnéd.</string>
     <string name="respond_submit">Elküldöm a verziómat</string>
+    <string name="case_write_title">A te verziód</string>
+    <string name="case_write_placeholder">Mi a gond?</string>
+    <string name="case_write_lead">Írd meg a verziódat, amikor készen állsz. A bírák akkor kezdenek, ha mindketten megírtátok.</string>
+    <string name="case_write_lead_answered">Ő már megírta a saját verzióját. Írd meg a tiédet, hogy megkapd az ítéletet.</string>
+    <string name="case_write_submit">Elküldöm a verziómat</string>
+    <string name="case_write_email_subject">A másik fél megírta a maga verzióját</string>
     <string name="respond_sent">Köszönjük! Megkaptuk a verziódat, a bírák már dolgoznak rajta.</string>
+    <string name="respond_sent_waiting">Köszönjük! Megkaptuk a verziódat. A bírák akkor kezdenek, ha a másik is megírta az övét.</string>
     <string name="respond_own_invite">Ez a saját meghívólinked. Küldd el a másik félnek.</string>
     <string name="respond_expired">Ez a meghívó lejárt.</string>
     <string name="respond_closed">Ez az ügy már nem fogad válaszokat.</string>
@@ -517,6 +524,8 @@
     </plurals>
     <string name="app_history_offline_remove">Nincs internetkapcsolat. Eltávolítani csak online lehet.</string>
     <string name="app_pricing_free_account">Belépés Apple-lel, Google-lal vagy e-maillel</string>
+    <string name="app_context_label">Háttér (nem kötelező)</string>
+    <string name="app_pricing_context">A háttérképeket elolvassuk, aztán eldobjuk, felár nélkül</string>
     <string name="app_pricing_headline">Az első ítélet ajándék.</string>
     <string name="app_pricing_sub">Hozz létre egy fiókot, és az első ítéleted ingyenes, minden funkcióval. Utána válassz csomagot, vagy fizess elő havonta.</string>
     <string name="app_pricing_headline_member">Még több ítélet.</string>
@@ -572,11 +581,12 @@
     <string name="app_home_their_side">Az ő verziója</string>
     <string name="app_home_your_name">A neved</string>
     <string name="app_home_their_name">Az ő neve</string>
-    <string name="app_home_your_placeholder">Mi történt a te szemszögedből?</string>
+    <string name="app_home_your_placeholder">Mi a gond?</string>
     <string name="app_home_their_placeholder">Mit mond ő? Írd le úgy, ahogy ő mondaná.</string>
     <string name="app_home_your_side_label">A te verziód a vitáról</string>
     <string name="app_home_their_side_label">Az ő verziója a vitáról</string>
-    <string name="app_home_send_link">Vagy küldj neki linket, és írja meg ő</string>
+    <string name="app_home_send_link">Küldj linket</string>
+    <string name="app_home_add_context">Háttér hozzáadása</string>
     <string name="app_home_says">%1$s szerint:</string>
     <string name="app_home_my_side">Az én verzióm:</string>
     <string name="app_home_other_side">Az ő verziója:</string>

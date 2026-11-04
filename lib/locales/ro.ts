@@ -460,7 +460,17 @@ const ro: Locale = {
     "respond.label": "Partea ta",
     "respond.placeholder": "Ce s-a întâmplat, din punctul tău de vedere? Scrie așa cum i-ai povesti unui prieten.",
     "respond.submit": "Trimite partea mea",
+    "case.write.title": "Partea ta",
+    "case.write.placeholder": "Care e problema?",
+    "case.write.lead":
+      "Scrie-ți partea când ești gata. Judecătorii încep după ce ați scris amândoi.",
+    "case.write.leadAnswered":
+      "Cealaltă persoană și-a scris partea. Scrie-o pe a ta ca să primești verdictul.",
+    "case.write.submit": "Trimite partea mea",
+    "case.write.emailSubject": "Cealaltă persoană și-a scris versiunea",
     "respond.sent": "Mulțumim. Partea ta a ajuns, iar judecătorii lucrează la ea.",
+    "respond.sentWaiting":
+      "Mulțumim. Partea ta a ajuns. Judecătorii încep după ce scrie și cealaltă persoană.",
     "respond.ownInvite": "Asta e propria ta invitație. Trimite-o celeilalte persoane.",
     "respond.expired": "Invitația a expirat.",
     "respond.closed": "Cazul ăsta nu mai acceptă răspunsuri.",

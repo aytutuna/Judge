@@ -457,7 +457,17 @@ const ptPT: Locale = {
     "respond.label": "O teu lado",
     "respond.placeholder": "O que aconteceu, do teu ponto de vista? Escreve como contarias a um amigo.",
     "respond.submit": "Enviar o meu lado",
+    "case.write.title": "O teu lado",
+    "case.write.placeholder": "Qual é o problema?",
+    "case.write.lead":
+      "Escreve o teu lado quando quiseres. Os juízes começam quando os dois tiverem escrito.",
+    "case.write.leadAnswered":
+      "A outra pessoa já escreveu o lado dela. Escreve o teu para receberes o veredicto.",
+    "case.write.submit": "Enviar o meu lado",
+    "case.write.emailSubject": "A outra pessoa escreveu a sua versão",
     "respond.sent": "Obrigado. O teu lado chegou e os juízes já estão a tratar disso.",
+    "respond.sentWaiting":
+      "Obrigado. O teu lado chegou. Os juízes começam quando a outra pessoa escrever o dela.",
     "respond.ownInvite": "Este link de convite é teu. Envia-o à outra pessoa.",
     "respond.expired": "Este convite expirou.",
     "respond.closed": "Este caso já não aceita respostas.",

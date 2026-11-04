@@ -461,7 +461,17 @@ const ms: Locale = {
     "respond.label": "Versi anda",
     "respond.placeholder": "Apa yang berlaku, dari sudut anda? Tulis macam anda bercerita kepada kawan.",
     "respond.submit": "Hantar versi saya",
+    "case.write.title": "Versi anda",
+    "case.write.placeholder": "Apa masalahnya?",
+    "case.write.lead":
+      "Tulis versi anda bila-bila masa anda bersedia. Hakim bermula selepas kedua-duanya menulis.",
+    "case.write.leadAnswered":
+      "Dia sudah menulis versinya. Tulis versi anda untuk mendapat keputusan.",
+    "case.write.submit": "Hantar versi saya",
+    "case.write.emailSubject": "Pihak satu lagi sudah menulis versinya",
     "respond.sent": "Terima kasih. Versi anda sudah diterima dan hakim sedang menilai.",
+    "respond.sentWaiting":
+      "Terima kasih. Versi anda sudah diterima. Hakim bermula selepas pihak lagi satu menulis versinya.",
     "respond.ownInvite": "Ini pautan jemputan anda sendiri. Hantar kepada pihak satu lagi.",
     "respond.expired": "Jemputan ini sudah tamat tempoh.",
     "respond.closed": "Kes ini tidak lagi menerima jawapan.",

@@ -321,7 +321,14 @@
     <string name="respond_label">Твоя версія</string>
     <string name="respond_placeholder">Як усе було з твого боку? Пиши так, ніби розповідаєш другові.</string>
     <string name="respond_submit">Надіслати мою версію</string>
+    <string name="case_write_title">Твоя версія</string>
+    <string name="case_write_placeholder">У чому проблема?</string>
+    <string name="case_write_lead">Напиши свою версію, коли будеш готовий. Судді почнуть, коли напишете обоє.</string>
+    <string name="case_write_lead_answered">Інша сторона вже написала свою версію. Напиши свою, щоб отримати вердикт.</string>
+    <string name="case_write_submit">Надіслати мою версію</string>
+    <string name="case_write_email_subject">Інша сторона написала свою версію</string>
     <string name="respond_sent">Дякуємо! Твою версію отримано, судді вже працюють.</string>
+    <string name="respond_sent_waiting">Дякуємо! Твою версію отримано. Судді почнуть, коли інша сторона напише свою.</string>
     <string name="respond_own_invite">Це твоє власне посилання-запрошення. Надішли його іншій людині.</string>
     <string name="respond_expired">Термін дії цього запрошення минув.</string>
     <string name="respond_closed">Ця справа більше не приймає відповідей.</string>
@@ -549,6 +556,8 @@
     </plurals>
     <string name="app_history_offline_remove">Немає інтернету. Щоб видалити, потрібне з’єднання.</string>
     <string name="app_pricing_free_account">Увійди через Apple, Google або пошту</string>
+    <string name="app_context_label">Контекст (необов’язково)</string>
+    <string name="app_pricing_context">Картинки з контекстом читаються і відразу видаляються, без доплати</string>
     <string name="app_pricing_headline">Перший вердикт — за наш рахунок.</string>
     <string name="app_pricing_sub">Створи акаунт, і перший вердикт буде безкоштовним, з усіма функціями. Далі обери пакет або оформи підписку.</string>
     <string name="app_pricing_headline_member">Більше вердиктів.</string>
@@ -606,11 +615,12 @@
     <string name="app_home_their_side">Інша сторона</string>
     <string name="app_home_your_name">Твоє ім’я</string>
     <string name="app_home_their_name">Ім’я іншої людини</string>
-    <string name="app_home_your_placeholder">Як усе було з твого боку?</string>
+    <string name="app_home_your_placeholder">У чому проблема?</string>
     <string name="app_home_their_placeholder">Що каже інша людина? Опиши так, як розповіла б вона сама.</string>
     <string name="app_home_your_side_label">Твоя версія суперечки</string>
     <string name="app_home_their_side_label">Версія іншої сторони</string>
-    <string name="app_home_send_link">Або надішли іншій стороні посилання для її версії</string>
+    <string name="app_home_send_link">Надіслати посилання</string>
+    <string name="app_home_add_context">Додати контекст</string>
     <string name="app_home_says">%1$s каже:</string>
     <string name="app_home_my_side">Моя версія:</string>
     <string name="app_home_other_side">Версія іншої сторони:</string>

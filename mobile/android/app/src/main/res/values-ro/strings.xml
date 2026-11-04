@@ -314,7 +314,14 @@
     <string name="respond_label">Partea ta</string>
     <string name="respond_placeholder">Ce s-a întâmplat, din punctul tău de vedere? Scrie așa cum i-ai povesti unui prieten.</string>
     <string name="respond_submit">Trimite partea mea</string>
+    <string name="case_write_title">Partea ta</string>
+    <string name="case_write_placeholder">Care e problema?</string>
+    <string name="case_write_lead">Scrie-ți partea când ești gata. Judecătorii încep după ce ați scris amândoi.</string>
+    <string name="case_write_lead_answered">Cealaltă persoană și-a scris partea. Scrie-o pe a ta ca să primești verdictul.</string>
+    <string name="case_write_submit">Trimite partea mea</string>
+    <string name="case_write_email_subject">Cealaltă persoană și-a scris versiunea</string>
     <string name="respond_sent">Mulțumim. Partea ta a ajuns, iar judecătorii lucrează la ea.</string>
+    <string name="respond_sent_waiting">Mulțumim. Partea ta a ajuns. Judecătorii încep după ce scrie și cealaltă persoană.</string>
     <string name="respond_own_invite">Asta e propria ta invitație. Trimite-o celeilalte persoane.</string>
     <string name="respond_expired">Invitația a expirat.</string>
     <string name="respond_closed">Cazul ăsta nu mai acceptă răspunsuri.</string>
@@ -533,6 +540,8 @@
     </plurals>
     <string name="app_history_offline_remove">Ești offline. Ca să elimini verdicte, ai nevoie de conexiune.</string>
     <string name="app_pricing_free_account">Conectează-te cu Apple, Google sau prin e-mail</string>
+    <string name="app_context_label">Context (opțional)</string>
+    <string name="app_pricing_context">Imaginile de context sunt citite și apoi aruncate, fără cost în plus</string>
     <string name="app_pricing_headline">Primul verdict e din partea casei.</string>
     <string name="app_pricing_sub">Fă-ți un cont și primul verdict e gratuit, cu toate funcțiile. După aceea, alege un pachet sau treci pe planul lunar.</string>
     <string name="app_pricing_headline_member">Ia mai multe verdicte.</string>
@@ -589,11 +598,12 @@
     <string name="app_home_their_side">Cealaltă parte</string>
     <string name="app_home_your_name">Numele tău</string>
     <string name="app_home_their_name">Numele celeilalte părți</string>
-    <string name="app_home_your_placeholder">Ce s-a întâmplat, din punctul tău de vedere?</string>
+    <string name="app_home_your_placeholder">Care e problema?</string>
     <string name="app_home_their_placeholder">Ce zice cealaltă persoană? Scrie așa cum ar spune-o ea.</string>
     <string name="app_home_your_side_label">Partea ta din dispută</string>
     <string name="app_home_their_side_label">Partea celeilalte persoane din dispută</string>
-    <string name="app_home_send_link">Sau trimite-i un link ca să-și scrie partea</string>
+    <string name="app_home_send_link">Trimite un link</string>
+    <string name="app_home_add_context">Adaugă context</string>
     <string name="app_home_says">%1$s spune:</string>
     <string name="app_home_my_side">Partea mea:</string>
     <string name="app_home_other_side">Cealaltă parte:</string>

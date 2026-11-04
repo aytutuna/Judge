@@ -314,7 +314,14 @@
     <string name="respond_label">Tu versión</string>
     <string name="respond_placeholder">¿Qué pasó, según tú? Escríbelo como se lo contarías a un amigo.</string>
     <string name="respond_submit">Enviar mi versión</string>
+    <string name="case_write_title">Tu versión</string>
+    <string name="case_write_placeholder">¿Cuál es el problema?</string>
+    <string name="case_write_lead">Escribe tu versión cuando quieras. Los jueces empiezan cuando los dos hayáis escrito.</string>
+    <string name="case_write_lead_answered">Ya escribió su versión. Escribe la tuya para recibir el veredicto.</string>
+    <string name="case_write_submit">Enviar mi versión</string>
+    <string name="case_write_email_subject">La otra persona ya ha escrito su versión</string>
     <string name="respond_sent">Gracias. Tu versión ya llegó y los jueces están en ello.</string>
+    <string name="respond_sent_waiting">Gracias. Tu versión ya llegó. Los jueces empiezan cuando la otra persona escriba la suya.</string>
     <string name="respond_own_invite">Este es tu propio enlace de invitación. Envíalo a la otra persona.</string>
     <string name="respond_expired">Esta invitación ha expirado.</string>
     <string name="respond_closed">Este caso ya no acepta respuestas.</string>
@@ -533,6 +540,8 @@
     </plurals>
     <string name="app_history_offline_remove">Estás sin conexión. Conéctate a internet para eliminar.</string>
     <string name="app_pricing_free_account">Inicia sesión con Apple, Google o tu correo</string>
+    <string name="app_context_label">Contexto (opcional)</string>
+    <string name="app_pricing_context">Las imágenes de contexto se leen y luego se descartan, sin coste adicional</string>
     <string name="app_pricing_headline">Tu primer veredicto corre por nuestra cuenta.</string>
     <string name="app_pricing_sub">Crea una cuenta y tu primer veredicto es gratis, con todas las funciones. Después, elige un paquete o pásate al plan mensual.</string>
     <string name="app_pricing_headline_member">Consigue más veredictos.</string>
@@ -589,11 +598,12 @@
     <string name="app_home_their_side">La otra versión</string>
     <string name="app_home_your_name">Tu nombre</string>
     <string name="app_home_their_name">Nombre de la otra persona</string>
-    <string name="app_home_your_placeholder">¿Qué pasó, según tú?</string>
+    <string name="app_home_your_placeholder">¿Cuál es el problema?</string>
     <string name="app_home_their_placeholder">¿Qué dice la otra persona? Escríbelo como lo contaría ella.</string>
     <string name="app_home_your_side_label">Tu versión de la discusión</string>
     <string name="app_home_their_side_label">La versión de la otra persona</string>
-    <string name="app_home_send_link">O envíale un enlace para que la escriba</string>
+    <string name="app_home_send_link">Envíale un enlace</string>
+    <string name="app_home_add_context">Añadir contexto</string>
     <string name="app_home_says">%1$s dice:</string>
     <string name="app_home_my_side">Mi versión:</string>
     <string name="app_home_other_side">Versión de la otra persona:</string>

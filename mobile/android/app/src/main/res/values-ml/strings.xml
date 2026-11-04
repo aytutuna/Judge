@@ -307,7 +307,14 @@
     <string name="respond_label">നിങ്ങളുടെ ഭാഗം</string>
     <string name="respond_placeholder">നിങ്ങളുടെ ഭാഗത്തുനിന്ന് നോക്കുമ്പോൾ എന്താണ് സംഭവിച്ചത്? ഒരു സുഹൃത്തിനോട് പറയുന്നതുപോലെ എഴുതൂ.</string>
     <string name="respond_submit">എന്റെ ഭാഗം അയയ്ക്കൂ</string>
+    <string name="case_write_title">നിങ്ങളുടെ ഭാഗം</string>
+    <string name="case_write_placeholder">എന്താണ് പ്രശ്നം?</string>
+    <string name="case_write_lead">തയ്യാറാകുമ്പോൾ നിങ്ങളുടെ ഭാഗം എഴുതൂ. രണ്ടുപേരും എഴുതിയാൽ ജഡ്ജിമാർ തുടങ്ങും.</string>
+    <string name="case_write_lead_answered">അവർ അവരുടെ ഭാഗം എഴുതി. വിധി കിട്ടാൻ നിങ്ങളുടേതും എഴുതൂ.</string>
+    <string name="case_write_submit">എന്റെ ഭാഗം അയയ്ക്കൂ</string>
+    <string name="case_write_email_subject">മറ്റേയാൾ അവരുടെ ഭാഗം എഴുതി</string>
     <string name="respond_sent">നന്ദി. നിങ്ങളുടെ ഭാഗം കിട്ടി, ജഡ്ജിമാർ പരിഗണിക്കുന്നു.</string>
+    <string name="respond_sent_waiting">നന്ദി. നിങ്ങളുടെ ഭാഗം കിട്ടി. മറ്റേയാൾ എഴുതിയാൽ ജഡ്ജിമാർ തുടങ്ങും.</string>
     <string name="respond_own_invite">ഇത് നിങ്ങളുടെ സ്വന്തം ക്ഷണ ലിങ്കാണ്. ഇത് മറ്റേയാൾക്ക് അയയ്ക്കൂ.</string>
     <string name="respond_expired">ഈ ക്ഷണത്തിന്റെ കാലാവധി കഴിഞ്ഞു.</string>
     <string name="respond_closed">ഈ കേസ് ഇനി മറുപടികൾ സ്വീകരിക്കുന്നില്ല.</string>
@@ -517,6 +524,8 @@
     </plurals>
     <string name="app_history_offline_remove">നിങ്ങൾ ഓഫ്‌ലൈനാണ്. നീക്കം ചെയ്യാൻ കണക്ഷൻ വേണം.</string>
     <string name="app_pricing_free_account">Apple, Google അല്ലെങ്കിൽ ഇമെയിൽ വഴി സൈൻ ഇൻ ചെയ്യൂ</string>
+    <string name="app_context_label">സാഹചര്യം (ഓപ്ഷണൽ)</string>
+    <string name="app_pricing_context">സാഹചര്യ ചിത്രങ്ങൾ വായിച്ച ശേഷം കളയും, അധിക ചെലവില്ല</string>
     <string name="app_pricing_headline">ആദ്യ വിധി ഞങ്ങളുടെ വക.</string>
     <string name="app_pricing_sub">അക്കൗണ്ട് തുടങ്ങൂ, എല്ലാ ഫീച്ചറുകളോടും കൂടിയ ആദ്യ വിധി സൗജന്യം. അതിനുശേഷം ഒരു പായ്ക്ക് എടുക്കൂ, അല്ലെങ്കിൽ പ്രതിമാസ പ്ലാനിലേക്ക് മാറൂ.</string>
     <string name="app_pricing_headline_member">കൂടുതൽ വിധികൾ നേടൂ.</string>
@@ -572,11 +581,12 @@
     <string name="app_home_their_side">അവരുടെ ഭാഗം</string>
     <string name="app_home_your_name">നിങ്ങളുടെ പേര്</string>
     <string name="app_home_their_name">അവരുടെ പേര്</string>
-    <string name="app_home_your_placeholder">നിങ്ങളുടെ ഭാഗത്തുനിന്ന് നോക്കുമ്പോൾ എന്താണ് സംഭവിച്ചത്?</string>
+    <string name="app_home_your_placeholder">എന്താണ് പ്രശ്നം?</string>
     <string name="app_home_their_placeholder">അവർ എന്താണ് പറയുന്നത്? അവർ പറയുന്നതുപോലെ തന്നെ എഴുതൂ.</string>
     <string name="app_home_your_side_label">തർക്കത്തിൽ നിങ്ങളുടെ ഭാഗം</string>
     <string name="app_home_their_side_label">തർക്കത്തിൽ അവരുടെ ഭാഗം</string>
-    <string name="app_home_send_link">അല്ലെങ്കിൽ, അവർക്ക് സ്വയം എഴുതാൻ ഒരു ലിങ്ക് അയയ്ക്കൂ</string>
+    <string name="app_home_send_link">ലിങ്ക് അയയ്ക്കൂ</string>
+    <string name="app_home_add_context">സാഹചര്യം ചേർക്കൂ</string>
     <string name="app_home_says">%1$s പറയുന്നത്:</string>
     <string name="app_home_my_side">എന്റെ ഭാഗം:</string>
     <string name="app_home_other_side">അവരുടെ ഭാഗം:</string>

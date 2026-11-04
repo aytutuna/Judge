@@ -461,7 +461,17 @@ const ca: Locale = {
     "respond.label": "La teva versió",
     "respond.placeholder": "Què va passar, des del teu punt de vista? Escriu-ho com si ho expliquessis a un amic.",
     "respond.submit": "Envia la meva versió",
+    "case.write.title": "La teva versió",
+    "case.write.placeholder": "Quin és el problema?",
+    "case.write.lead":
+      "Escriu la teva versió quan vulguis. Els jutges comencen quan les dues parts hagin escrit.",
+    "case.write.leadAnswered":
+      "Ja ha escrit la seva versió. Escriu la teva per obtenir el veredicte.",
+    "case.write.submit": "Envia la meva versió",
+    "case.write.emailSubject": "L'altra persona ja ha escrit la seva versió",
     "respond.sent": "Gràcies. Hem rebut la teva versió i els jutges ja hi estan treballant.",
+    "respond.sentWaiting":
+      "Gràcies. Ja tenim la teva versió. Els jutges comencen quan l'altra persona hagi escrit la seva.",
     "respond.ownInvite": "Aquest és el teu propi enllaç d'invitació. Envia'l a l'altra persona.",
     "respond.expired": "Aquesta invitació ha caducat.",
     "respond.closed": "Aquest cas ja no admet respostes.",

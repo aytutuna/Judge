@@ -314,7 +314,14 @@
     <string name="respond_label">La teva versió</string>
     <string name="respond_placeholder">Què va passar, des del teu punt de vista? Escriu-ho com si ho expliquessis a un amic.</string>
     <string name="respond_submit">Envia la meva versió</string>
+    <string name="case_write_title">La teva versió</string>
+    <string name="case_write_placeholder">Quin és el problema?</string>
+    <string name="case_write_lead">Escriu la teva versió quan vulguis. Els jutges comencen quan les dues parts hagin escrit.</string>
+    <string name="case_write_lead_answered">Ja ha escrit la seva versió. Escriu la teva per obtenir el veredicte.</string>
+    <string name="case_write_submit">Envia la meva versió</string>
+    <string name="case_write_email_subject">L\'altra persona ja ha escrit la seva versió</string>
     <string name="respond_sent">Gràcies. Hem rebut la teva versió i els jutges ja hi estan treballant.</string>
+    <string name="respond_sent_waiting">Gràcies. Ja tenim la teva versió. Els jutges comencen quan l\'altra persona hagi escrit la seva.</string>
     <string name="respond_own_invite">Aquest és el teu propi enllaç d\'invitació. Envia\'l a l\'altra persona.</string>
     <string name="respond_expired">Aquesta invitació ha caducat.</string>
     <string name="respond_closed">Aquest cas ja no admet respostes.</string>
@@ -533,6 +540,8 @@
     </plurals>
     <string name="app_history_offline_remove">No tens connexió. Per eliminar cal estar connectat.</string>
     <string name="app_pricing_free_account">Inicia sessió amb Apple, Google o el correu</string>
+    <string name="app_context_label">Context (opcional)</string>
+    <string name="app_pricing_context">Imatges de context, llegides i després esborrades, sense cost addicional</string>
     <string name="app_pricing_headline">El primer veredicte, et convidem.</string>
     <string name="app_pricing_sub">Crea un compte i el primer veredicte és gratis, amb totes les funcions. Després, tria un paquet o passa\'t al pla mensual.</string>
     <string name="app_pricing_headline_member">Aconsegueix més veredictes.</string>
@@ -589,11 +598,12 @@
     <string name="app_home_their_side">La seva versió</string>
     <string name="app_home_your_name">El teu nom</string>
     <string name="app_home_their_name">El seu nom</string>
-    <string name="app_home_your_placeholder">Què va passar, des del teu punt de vista?</string>
+    <string name="app_home_your_placeholder">Quin és el problema?</string>
     <string name="app_home_their_placeholder">Què diu l\'altra persona? Escriu-ho tal com ho diria ella.</string>
     <string name="app_home_your_side_label">La teva versió de la discussió</string>
     <string name="app_home_their_side_label">La versió de l\'altra persona</string>
-    <string name="app_home_send_link">O envia-li un enllaç perquè l\'escrigui</string>
+    <string name="app_home_send_link">Envia-li un enllaç</string>
+    <string name="app_home_add_context">Afegeix context</string>
     <string name="app_home_says">%1$s diu:</string>
     <string name="app_home_my_side">La meva versió:</string>
     <string name="app_home_other_side">La versió de l\'altra persona:</string>

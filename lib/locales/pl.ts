@@ -465,7 +465,17 @@ const pl: Locale = {
     "respond.label": "Twoja wersja",
     "respond.placeholder": "Co się stało z twojej perspektywy? Napisz to tak, jak opowiadasz znajomym.",
     "respond.submit": "Wyślij moją wersję",
+    "case.write.title": "Twoja wersja",
+    "case.write.placeholder": "O co chodzi?",
+    "case.write.lead":
+      "Napisz swoją wersję, kiedy będziesz gotowy. Sędziowie zaczną, gdy oboje napiszecie.",
+    "case.write.leadAnswered":
+      "Druga strona napisała już swoją wersję. Napisz swoją, a dostaniesz werdykt.",
+    "case.write.submit": "Wyślij moją wersję",
+    "case.write.emailSubject": "Druga strona napisała swoją wersję",
     "respond.sent": "Dzięki. Twoja wersja dotarła, a sędziowie już nad nią pracują.",
+    "respond.sentWaiting":
+      "Dzięki. Twoja wersja dotarła. Sędziowie zaczną, gdy druga osoba napisze swoją.",
     "respond.ownInvite": "To twój własny link z zaproszeniem. Wyślij go drugiej osobie.",
     "respond.expired": "To zaproszenie wygasło.",
     "respond.closed": "Ta sprawa nie przyjmuje już odpowiedzi.",

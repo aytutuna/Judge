@@ -300,7 +300,14 @@
     <string name="respond_label">ฝั่งของคุณ</string>
     <string name="respond_placeholder">จากมุมของคุณ เกิดอะไรขึ้น? เขียนแบบที่เล่าให้เพื่อนฟัง</string>
     <string name="respond_submit">ส่งฝั่งของฉัน</string>
+    <string name="case_write_title">ฝั่งของคุณ</string>
+    <string name="case_write_placeholder">มีปัญหาอะไร?</string>
+    <string name="case_write_lead">เขียนฝั่งของคุณเมื่อพร้อม กรรมการจะเริ่มเมื่อเขียนครบทั้งสองฝ่าย</string>
+    <string name="case_write_lead_answered">เขาเขียนฝั่งของเขาแล้ว เขียนฝั่งของคุณเพื่อรับคำตัดสิน</string>
+    <string name="case_write_submit">ส่งฝั่งของฉัน</string>
+    <string name="case_write_email_subject">อีกฝ่ายเขียนฝั่งของเขาแล้ว</string>
     <string name="respond_sent">ขอบคุณนะ ได้รับฝั่งของคุณแล้ว กรรมการกำลังตัดสิน</string>
+    <string name="respond_sent_waiting">ขอบคุณนะ ได้รับฝั่งของคุณแล้ว กรรมการจะเริ่มเมื่ออีกฝ่ายเขียนเสร็จ</string>
     <string name="respond_own_invite">นี่คือลิงก์คำเชิญของคุณเอง ส่งให้อีกฝ่ายนะ</string>
     <string name="respond_expired">คำเชิญนี้หมดอายุแล้ว</string>
     <string name="respond_closed">เคสนี้ไม่รับคำตอบแล้ว</string>
@@ -501,6 +508,8 @@
     </plurals>
     <string name="app_history_offline_remove">คุณออฟไลน์อยู่ ต้องต่ออินเทอร์เน็ตก่อนถึงจะลบได้</string>
     <string name="app_pricing_free_account">เข้าสู่ระบบด้วย Apple, Google หรืออีเมล</string>
+    <string name="app_context_label">บริบท (ไม่บังคับ)</string>
+    <string name="app_pricing_context">รูปบริบทจะถูกอ่านแล้วทิ้ง ไม่มีค่าใช้จ่ายเพิ่ม</string>
     <string name="app_pricing_headline">คำตัดสินแรก เราเลี้ยงเอง</string>
     <string name="app_pricing_sub">สร้างบัญชีแล้วรับคำตัดสินแรกฟรี ใช้ได้ทุกฟีเจอร์ หลังจากนั้นเลือกแพ็กเครดิตหรือสมัครรายเดือน</string>
     <string name="app_pricing_headline_member">เติมคำตัดสิน</string>
@@ -555,11 +564,12 @@
     <string name="app_home_their_side">ฝั่งของเขา</string>
     <string name="app_home_your_name">ชื่อของคุณ</string>
     <string name="app_home_their_name">ชื่อของเขา</string>
-    <string name="app_home_your_placeholder">จากมุมของคุณ เกิดอะไรขึ้น?</string>
+    <string name="app_home_your_placeholder">มีปัญหาอะไร?</string>
     <string name="app_home_their_placeholder">เขาว่ายังไง? เขียนแบบที่เขาจะพูดเอง</string>
     <string name="app_home_your_side_label">ฝั่งของคุณในเรื่องที่เถียงกัน</string>
     <string name="app_home_their_side_label">ฝั่งของเขาในเรื่องที่เถียงกัน</string>
-    <string name="app_home_send_link">หรือส่งลิงก์ให้เขามาเขียนเอง</string>
+    <string name="app_home_send_link">ส่งลิงก์</string>
+    <string name="app_home_add_context">เพิ่มบริบท</string>
     <string name="app_home_says">%1$s บอกว่า:</string>
     <string name="app_home_my_side">ฝั่งของฉัน:</string>
     <string name="app_home_other_side">ฝั่งของเขา:</string>

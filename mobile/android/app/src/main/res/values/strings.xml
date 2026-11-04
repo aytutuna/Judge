@@ -307,7 +307,14 @@
     <string name="respond_label">Your side</string>
     <string name="respond_placeholder">What happened, from where you stand? Write it the way you\'d tell a friend.</string>
     <string name="respond_submit">Send my side</string>
+    <string name="case_write_title">Your side</string>
+    <string name="case_write_placeholder">What\'s the problem?</string>
+    <string name="case_write_lead">Write your side whenever you\'re ready. The judges start once you\'ve both written.</string>
+    <string name="case_write_lead_answered">They\'ve written their side. Write yours to get the verdict.</string>
+    <string name="case_write_submit">Send my side</string>
+    <string name="case_write_email_subject">They\'ve written their side</string>
     <string name="respond_sent">Thanks. Your side is in and the judges are on it.</string>
+    <string name="respond_sent_waiting">Thanks. Your side is in. The judges start once the other person has written theirs.</string>
     <string name="respond_own_invite">This is your own invite link. Send it to the other person.</string>
     <string name="respond_expired">This invite has expired.</string>
     <string name="respond_closed">This case isn\'t taking answers anymore.</string>
@@ -517,6 +524,8 @@
     </plurals>
     <string name="app_history_offline_remove">You\'re offline. Removing needs a connection.</string>
     <string name="app_pricing_free_account">Sign in with Apple, Google or email</string>
+    <string name="app_context_label">Context (optional)</string>
+    <string name="app_pricing_context">Context images, read and then thrown away, at no extra cost</string>
     <string name="app_pricing_headline">Your first verdict is on us.</string>
     <string name="app_pricing_sub">Create an account and your first verdict is free, with every feature. After that, pick a pack or go monthly.</string>
     <string name="app_pricing_headline_member">Get more verdicts.</string>
@@ -572,11 +581,12 @@
     <string name="app_home_their_side">Their side</string>
     <string name="app_home_your_name">Your name</string>
     <string name="app_home_their_name">Their name</string>
-    <string name="app_home_your_placeholder">What happened, from where you stand?</string>
+    <string name="app_home_your_placeholder">What\'s the problem?</string>
     <string name="app_home_their_placeholder">What do they say? Write it the way they would.</string>
     <string name="app_home_your_side_label">Your side of the argument</string>
     <string name="app_home_their_side_label">Their side of the argument</string>
-    <string name="app_home_send_link">Or send them a link to write it</string>
+    <string name="app_home_send_link">Send them a link</string>
+    <string name="app_home_add_context">Add context</string>
     <string name="app_home_says">%1$s says:</string>
     <string name="app_home_my_side">My side:</string>
     <string name="app_home_other_side">Their side:</string>

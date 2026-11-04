@@ -307,7 +307,14 @@
     <string name="respond_label">Din side</string>
     <string name="respond_placeholder">Hva skjedde, sett fra din side? Skriv det som om du fortalte det til en venn.</string>
     <string name="respond_submit">Send min side</string>
+    <string name="case_write_title">Din side</string>
+    <string name="case_write_placeholder">Hva er problemet?</string>
+    <string name="case_write_lead">Skriv siden din når du er klar. Dommerne starter når dere begge har skrevet.</string>
+    <string name="case_write_lead_answered">Den andre har skrevet sin side. Skriv din for å få dommen.</string>
+    <string name="case_write_submit">Send min side</string>
+    <string name="case_write_email_subject">Den andre har skrevet sin side</string>
     <string name="respond_sent">Takk. Siden din er kommet inn, og dommerne er i gang.</string>
+    <string name="respond_sent_waiting">Takk. Siden din er kommet inn. Dommerne starter når den andre har skrevet sin.</string>
     <string name="respond_own_invite">Dette er din egen invitasjonslenke. Send den til den andre personen.</string>
     <string name="respond_expired">Denne invitasjonen har utløpt.</string>
     <string name="respond_closed">Denne saken tar ikke imot svar lenger.</string>
@@ -517,6 +524,8 @@
     </plurals>
     <string name="app_history_offline_remove">Du er ikke på nett. Du trenger nettforbindelse for å fjerne dommer.</string>
     <string name="app_pricing_free_account">Logg inn med Apple, Google eller e-post</string>
+    <string name="app_context_label">Kontekst (valgfritt)</string>
+    <string name="app_pricing_context">Kontekstbilder blir lest og deretter kastet, uten ekstra kostnad</string>
     <string name="app_pricing_headline">Den første dommen spanderer vi.</string>
     <string name="app_pricing_sub">Opprett en konto, så er den første dommen gratis, med alle funksjoner. Etter det velger du en pakke eller går over til månedsabonnement.</string>
     <string name="app_pricing_headline_member">Få flere dommer.</string>
@@ -572,11 +581,12 @@
     <string name="app_home_their_side">Den andres side</string>
     <string name="app_home_your_name">Navnet ditt</string>
     <string name="app_home_their_name">Den andres navn</string>
-    <string name="app_home_your_placeholder">Hva skjedde, sett fra din side?</string>
+    <string name="app_home_your_placeholder">Hva er problemet?</string>
     <string name="app_home_their_placeholder">Hva sier den andre? Skriv det med den andres ord.</string>
     <string name="app_home_your_side_label">Din side av diskusjonen</string>
     <string name="app_home_their_side_label">Den andres side av diskusjonen</string>
-    <string name="app_home_send_link">Eller send en lenke så den andre skriver selv</string>
+    <string name="app_home_send_link">Send en lenke</string>
+    <string name="app_home_add_context">Legg til kontekst</string>
     <string name="app_home_says">%1$s sier:</string>
     <string name="app_home_my_side">Min side:</string>
     <string name="app_home_other_side">Den andres side:</string>

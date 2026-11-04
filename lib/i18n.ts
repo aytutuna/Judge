@@ -451,7 +451,16 @@ const en = {
   "respond.label": "Your side",
   "respond.placeholder": "What happened, from where you stand? Write it the way you'd tell a friend.",
   "respond.submit": "Send my side",
+  "case.write.title": "Your side",
+  "case.write.placeholder": "What's the problem?",
+  "case.write.lead":
+    "Write your side whenever you're ready. The judges start once you've both written.",
+  "case.write.leadAnswered": "They've written their side. Write yours to get the verdict.",
+  "case.write.submit": "Send my side",
+  "case.write.emailSubject": "They've written their side",
   "respond.sent": "Thanks. Your side is in and the judges are on it.",
+  "respond.sentWaiting":
+    "Thanks. Your side is in. The judges start once the other person has written theirs.",
   "respond.ownInvite": "This is your own invite link. Send it to the other person.",
   "respond.expired": "This invite has expired.",
   "respond.closed": "This case isn't taking answers anymore.",

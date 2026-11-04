@@ -460,7 +460,16 @@ const vi: Locale = {
     "respond.label": "Phía bạn",
     "respond.placeholder": "Theo bạn, chuyện gì đã xảy ra? Cứ viết như đang kể cho bạn bè nghe.",
     "respond.submit": "Gửi lời kể",
+    "case.write.title": "Phía bạn",
+    "case.write.placeholder": "Có chuyện gì vậy?",
+    "case.write.lead":
+      "Hãy viết phía của bạn khi sẵn sàng. Ban giám khảo bắt đầu khi cả hai đã viết.",
+    "case.write.leadAnswered": "Họ đã viết phía của họ. Viết phía của bạn để nhận phán quyết.",
+    "case.write.submit": "Gửi phía của tôi",
+    "case.write.emailSubject": "Bên kia đã viết phần của họ",
     "respond.sent": "Cảm ơn bạn. Lời kể của bạn đã được gửi và ban giám khảo đang xử.",
+    "respond.sentWaiting":
+      "Cảm ơn bạn. Lời kể của bạn đã được gửi. Ban giám khảo bắt đầu khi người kia viết xong.",
     "respond.ownInvite": "Đây là liên kết mời của chính bạn. Hãy gửi nó cho người kia.",
     "respond.expired": "Lời mời này đã hết hạn.",
     "respond.closed": "Vụ này không nhận câu trả lời nữa.",

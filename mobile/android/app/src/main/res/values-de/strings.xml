@@ -307,7 +307,14 @@
     <string name="respond_label">Deine Seite</string>
     <string name="respond_placeholder">Was ist aus deiner Sicht passiert? Schreib es so, wie du es Freunden erzählen würdest.</string>
     <string name="respond_submit">Meine Seite abschicken</string>
+    <string name="case_write_title">Deine Seite</string>
+    <string name="case_write_placeholder">Was ist das Problem?</string>
+    <string name="case_write_lead">Schreib deine Seite, wenn du so weit bist. Die Richter legen los, sobald ihr beide geschrieben habt.</string>
+    <string name="case_write_lead_answered">Die andere Seite hat geschrieben. Schreib deine, dann bekommst du das Urteil.</string>
+    <string name="case_write_submit">Meine Seite senden</string>
+    <string name="case_write_email_subject">Die Gegenseite hat geschrieben</string>
     <string name="respond_sent">Danke. Deine Seite ist angekommen, und die Richter sind dran.</string>
+    <string name="respond_sent_waiting">Danke. Deine Seite ist angekommen. Die Richter legen los, sobald die andere Person ihre geschrieben hat.</string>
     <string name="respond_own_invite">Das ist dein eigener Einladungslink. Schick ihn an die andere Person.</string>
     <string name="respond_expired">Diese Einladung ist abgelaufen.</string>
     <string name="respond_closed">Dieser Fall nimmt keine Antworten mehr an.</string>
@@ -517,6 +524,8 @@
     </plurals>
     <string name="app_history_offline_remove">Du bist offline. Zum Entfernen brauchst du eine Verbindung.</string>
     <string name="app_pricing_free_account">Mit Apple, Google oder E-Mail anmelden</string>
+    <string name="app_context_label">Kontext (optional)</string>
+    <string name="app_pricing_context">Kontextbilder werden gelesen und dann verworfen, ohne Aufpreis</string>
     <string name="app_pricing_headline">Dein erstes Urteil geht auf uns.</string>
     <string name="app_pricing_sub">Erstell ein Konto, und dein erstes Urteil ist gratis, mit allen Funktionen. Danach wählst du ein Paket oder das Monatsabo.</string>
     <string name="app_pricing_headline_member">Hol dir mehr Urteile.</string>
@@ -572,11 +581,12 @@
     <string name="app_home_their_side">Gegenseite</string>
     <string name="app_home_your_name">Dein Name</string>
     <string name="app_home_their_name">Name der anderen Person</string>
-    <string name="app_home_your_placeholder">Was ist aus deiner Sicht passiert?</string>
+    <string name="app_home_your_placeholder">Was ist das Problem?</string>
     <string name="app_home_their_placeholder">Was sagt die andere Person? Schreib es so, wie sie es sagen würde.</string>
     <string name="app_home_your_side_label">Deine Seite des Streits</string>
     <string name="app_home_their_side_label">Die Seite der anderen Person</string>
-    <string name="app_home_send_link">Oder lad die Gegenseite per Link ein</string>
+    <string name="app_home_send_link">Per Link einladen</string>
+    <string name="app_home_add_context">Kontext hinzufügen</string>
     <string name="app_home_says">%1$s sagt:</string>
     <string name="app_home_my_side">Meine Seite:</string>
     <string name="app_home_other_side">Die andere Seite:</string>

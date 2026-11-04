@@ -335,7 +335,14 @@
     <string name="respond_label">روايتك</string>
     <string name="respond_placeholder">ماذا حدث من وجهة نظرك؟ اكتبه كما لو كنت تحكيه لصديق.</string>
     <string name="respond_submit">إرسال روايتي</string>
+    <string name="case_write_title">روايتك</string>
+    <string name="case_write_placeholder">ما المشكلة؟</string>
+    <string name="case_write_lead">اكتب روايتك متى شئت. يبدأ القضاة حين تكتبان معًا.</string>
+    <string name="case_write_lead_answered">كتب الطرف الآخر روايته. اكتب روايتك لتحصل على الحكم.</string>
+    <string name="case_write_submit">أرسل روايتي</string>
+    <string name="case_write_email_subject">كتب الطرف الآخر روايته</string>
     <string name="respond_sent">شكرًا. وصلت روايتك، والقضاة يعملون عليها.</string>
+    <string name="respond_sent_waiting">شكرًا. وصلت روايتك. يبدأ القضاة حين يكتب الطرف الآخر روايته.</string>
     <string name="respond_own_invite">هذا رابط دعوتك أنت. أرسله إلى الشخص الآخر.</string>
     <string name="respond_expired">انتهت صلاحية هذه الدعوة.</string>
     <string name="respond_closed">هذه القضية لم تعد تقبل الردود.</string>
@@ -581,6 +588,8 @@
     </plurals>
     <string name="app_history_offline_remove">أنت غير متصل بالإنترنت. يحتاج الحذف إلى اتصال.</string>
     <string name="app_pricing_free_account">سجّل الدخول باستخدام Apple أو Google أو البريد الإلكتروني</string>
+    <string name="app_context_label">سياق (اختياري)</string>
+    <string name="app_pricing_context">صور السياق تُقرأ ثم تُحذف، دون أي تكلفة إضافية</string>
     <string name="app_pricing_headline">حكمك الأول على حسابنا.</string>
     <string name="app_pricing_sub">أنشئ حسابًا واحصل على أول حكم مجانًا، بكل المزايا. بعد ذلك، اختر باقة أو اشترك شهريًا.</string>
     <string name="app_pricing_headline_member">احصل على المزيد من الأحكام.</string>
@@ -640,11 +649,12 @@
     <string name="app_home_their_side">رواية الطرف الآخر</string>
     <string name="app_home_your_name">اسمك</string>
     <string name="app_home_their_name">اسم الطرف الآخر</string>
-    <string name="app_home_your_placeholder">ماذا حدث من وجهة نظرك؟</string>
+    <string name="app_home_your_placeholder">ما المشكلة؟</string>
     <string name="app_home_their_placeholder">ماذا يقول الطرف الآخر؟ اكتب روايته كما يرويها هو.</string>
     <string name="app_home_your_side_label">روايتك للخلاف</string>
     <string name="app_home_their_side_label">رواية الطرف الآخر للخلاف</string>
-    <string name="app_home_send_link">أو أرسل إليه رابطًا ليكتبها بنفسه</string>
+    <string name="app_home_send_link">أرسل له رابطًا</string>
+    <string name="app_home_add_context">أضف سياقًا</string>
     <string name="app_home_says">رواية %1$s:</string>
     <string name="app_home_my_side">روايتي:</string>
     <string name="app_home_other_side">رواية الطرف الآخر:</string>

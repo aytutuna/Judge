@@ -455,7 +455,16 @@ const cs: Locale = {
     "respond.label": "Tvůj pohled",
     "respond.placeholder": "Co se stalo, jak to vidíš ty? Napiš to tak, jak to vyprávíš kamarádům.",
     "respond.submit": "Odeslat můj pohled",
+    "case.write.title": "Tvůj pohled",
+    "case.write.placeholder": "Co je za problém?",
+    "case.write.lead": "Napiš svůj pohled, kdy budeš chtít. Soudci začnou, až napíšete oba.",
+    "case.write.leadAnswered":
+      "Druhá strana už svůj pohled napsala. Napiš ten svůj a dostaneš verdikt.",
+    "case.write.submit": "Odeslat můj pohled",
+    "case.write.emailSubject": "Druhá strana napsala svůj pohled",
     "respond.sent": "Díky. Tvůj pohled dorazil a soudci na tom pracují.",
+    "respond.sentWaiting":
+      "Díky. Tvůj pohled dorazil. Soudci začnou, až napíše svůj i druhá strana.",
     "respond.ownInvite": "Tohle je tvůj vlastní odkaz na pozvánku. Pošli ho druhé straně.",
     "respond.expired": "Platnost této pozvánky vypršela.",
     "respond.closed": "Tenhle případ už odpovědi nepřijímá.",

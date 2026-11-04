@@ -461,7 +461,17 @@ const de: Locale = {
     "respond.label": "Deine Seite",
     "respond.placeholder": "Was ist aus deiner Sicht passiert? Schreib es so, wie du es Freunden erzählen würdest.",
     "respond.submit": "Meine Seite abschicken",
+    "case.write.title": "Deine Seite",
+    "case.write.placeholder": "Was ist das Problem?",
+    "case.write.lead":
+      "Schreib deine Seite, wenn du so weit bist. Die Richter legen los, sobald ihr beide geschrieben habt.",
+    "case.write.leadAnswered":
+      "Die andere Seite hat geschrieben. Schreib deine, dann bekommst du das Urteil.",
+    "case.write.submit": "Meine Seite senden",
+    "case.write.emailSubject": "Die Gegenseite hat geschrieben",
     "respond.sent": "Danke. Deine Seite ist angekommen, und die Richter sind dran.",
+    "respond.sentWaiting":
+      "Danke. Deine Seite ist angekommen. Die Richter legen los, sobald die andere Person ihre geschrieben hat.",
     "respond.ownInvite": "Das ist dein eigener Einladungslink. Schick ihn an die andere Person.",
     "respond.expired": "Diese Einladung ist abgelaufen.",
     "respond.closed": "Dieser Fall nimmt keine Antworten mehr an.",

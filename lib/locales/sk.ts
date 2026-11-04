@@ -457,7 +457,17 @@ const sk: Locale = {
     "respond.label": "Tvoja verzia",
     "respond.placeholder": "Čo sa stalo z tvojho pohľadu? Napíš to vlastnými slovami, ako keď to rozprávaš kamarátovi.",
     "respond.submit": "Odoslať moju verziu",
+    "case.write.title": "Tvoja verzia",
+    "case.write.placeholder": "V čom je problém?",
+    "case.write.lead":
+      "Napíš svoju verziu, keď budeš pripravený. Sudcovia začnú, keď napíšete obaja.",
+    "case.write.leadAnswered":
+      "Druhá strana už napísala svoju verziu. Napíš tú svoju a dostaneš verdikt.",
+    "case.write.submit": "Odoslať moju verziu",
+    "case.write.emailSubject": "Druhá strana napísala svoju verziu",
     "respond.sent": "Vďaka. Tvoja verzia dorazila a sudcovia na nej pracujú.",
+    "respond.sentWaiting":
+      "Vďaka. Tvoja verzia dorazila. Sudcovia začnú, keď svoju napíše aj druhá osoba.",
     "respond.ownInvite": "Toto je tvoj vlastný odkaz s pozvánkou. Pošli ho druhej strane.",
     "respond.expired": "Platnosť tejto pozvánky vypršala.",
     "respond.closed": "Tento prípad už neprijíma odpovede.",

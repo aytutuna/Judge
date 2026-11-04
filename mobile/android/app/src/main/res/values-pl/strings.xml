@@ -321,7 +321,14 @@
     <string name="respond_label">Twoja wersja</string>
     <string name="respond_placeholder">Co się stało z twojej perspektywy? Napisz to tak, jak opowiadasz znajomym.</string>
     <string name="respond_submit">Wyślij moją wersję</string>
+    <string name="case_write_title">Twoja wersja</string>
+    <string name="case_write_placeholder">O co chodzi?</string>
+    <string name="case_write_lead">Napisz swoją wersję, kiedy będziesz gotowy. Sędziowie zaczną, gdy oboje napiszecie.</string>
+    <string name="case_write_lead_answered">Druga strona napisała już swoją wersję. Napisz swoją, a dostaniesz werdykt.</string>
+    <string name="case_write_submit">Wyślij moją wersję</string>
+    <string name="case_write_email_subject">Druga strona napisała swoją wersję</string>
     <string name="respond_sent">Dzięki. Twoja wersja dotarła, a sędziowie już nad nią pracują.</string>
+    <string name="respond_sent_waiting">Dzięki. Twoja wersja dotarła. Sędziowie zaczną, gdy druga osoba napisze swoją.</string>
     <string name="respond_own_invite">To twój własny link z zaproszeniem. Wyślij go drugiej osobie.</string>
     <string name="respond_expired">To zaproszenie wygasło.</string>
     <string name="respond_closed">Ta sprawa nie przyjmuje już odpowiedzi.</string>
@@ -549,6 +556,8 @@
     </plurals>
     <string name="app_history_offline_remove">Jesteś offline. Usuwanie wymaga połączenia z internetem.</string>
     <string name="app_pricing_free_account">Zaloguj się przez Apple, Google albo e-mail</string>
+    <string name="app_context_label">Kontekst (opcjonalnie)</string>
+    <string name="app_pricing_context">Obrazy z kontekstem są czytane, a potem wyrzucane, bez dodatkowych kosztów</string>
     <string name="app_pricing_headline">Pierwszy werdykt na nasz koszt.</string>
     <string name="app_pricing_sub">Załóż konto, a pierwszy werdykt dostaniesz za darmo, ze wszystkimi funkcjami. Potem wybierz pakiet albo plan miesięczny.</string>
     <string name="app_pricing_headline_member">Kup więcej werdyktów.</string>
@@ -606,11 +615,12 @@
     <string name="app_home_their_side">Druga strona</string>
     <string name="app_home_your_name">Twoje imię</string>
     <string name="app_home_their_name">Imię drugiej osoby</string>
-    <string name="app_home_your_placeholder">Co się stało z twojej perspektywy?</string>
+    <string name="app_home_your_placeholder">O co chodzi?</string>
     <string name="app_home_their_placeholder">Co mówi druga strona? Napisz to tak, jak sama by to ujęła.</string>
     <string name="app_home_your_side_label">Twoja wersja sporu</string>
     <string name="app_home_their_side_label">Wersja drugiej strony</string>
-    <string name="app_home_send_link">Albo wyślij link, żeby druga strona opisała swoją wersję</string>
+    <string name="app_home_send_link">Wyślij link</string>
+    <string name="app_home_add_context">Dodaj kontekst</string>
     <string name="app_home_says">%1$s mówi:</string>
     <string name="app_home_my_side">Moja wersja:</string>
     <string name="app_home_other_side">Wersja drugiej strony:</string>

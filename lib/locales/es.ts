@@ -459,7 +459,16 @@ const es: Locale = {
     "respond.label": "Tu versión",
     "respond.placeholder": "¿Qué pasó, según tú? Escríbelo como se lo contarías a un amigo.",
     "respond.submit": "Enviar mi versión",
+    "case.write.title": "Tu versión",
+    "case.write.placeholder": "¿Cuál es el problema?",
+    "case.write.lead":
+      "Escribe tu versión cuando quieras. Los jueces empiezan cuando los dos hayáis escrito.",
+    "case.write.leadAnswered": "Ya escribió su versión. Escribe la tuya para recibir el veredicto.",
+    "case.write.submit": "Enviar mi versión",
+    "case.write.emailSubject": "La otra persona ya ha escrito su versión",
     "respond.sent": "Gracias. Tu versión ya llegó y los jueces están en ello.",
+    "respond.sentWaiting":
+      "Gracias. Tu versión ya llegó. Los jueces empiezan cuando la otra persona escriba la suya.",
     "respond.ownInvite": "Este es tu propio enlace de invitación. Envíalo a la otra persona.",
     "respond.expired": "Esta invitación ha expirado.",
     "respond.closed": "Este caso ya no acepta respuestas.",

@@ -430,7 +430,14 @@ enum L10n {
     static func respondLabel(_ lang: AppLang) -> String { string("respond.label", lang) }
     static func respondPlaceholder(_ lang: AppLang) -> String { string("respond.placeholder", lang) }
     static func respondSubmit(_ lang: AppLang) -> String { string("respond.submit", lang) }
+    static func caseWriteTitle(_ lang: AppLang) -> String { string("case.write.title", lang) }
+    static func caseWritePlaceholder(_ lang: AppLang) -> String { string("case.write.placeholder", lang) }
+    static func caseWriteLead(_ lang: AppLang) -> String { string("case.write.lead", lang) }
+    static func caseWriteLeadAnswered(_ lang: AppLang) -> String { string("case.write.leadAnswered", lang) }
+    static func caseWriteSubmit(_ lang: AppLang) -> String { string("case.write.submit", lang) }
+    static func caseWriteEmailSubject(_ lang: AppLang) -> String { string("case.write.emailSubject", lang) }
     static func respondSent(_ lang: AppLang) -> String { string("respond.sent", lang) }
+    static func respondSentWaiting(_ lang: AppLang) -> String { string("respond.sentWaiting", lang) }
     static func respondOwnInvite(_ lang: AppLang) -> String { string("respond.ownInvite", lang) }
     static func respondExpired(_ lang: AppLang) -> String { string("respond.expired", lang) }
     static func respondClosed(_ lang: AppLang) -> String { string("respond.closed", lang) }
@@ -613,6 +620,8 @@ enum L10n {
     static func appHistoryRemoveFailed(_ lang: AppLang, n: Int) -> String { plural("app.history.removeFailed", lang, n) }
     static func appHistoryOfflineRemove(_ lang: AppLang) -> String { string("app.history.offlineRemove", lang) }
     static func appPricingFreeAccount(_ lang: AppLang) -> String { string("app.pricing.free.account", lang) }
+    static func appContextLabel(_ lang: AppLang) -> String { string("app.context.label", lang) }
+    static func appPricingContext(_ lang: AppLang) -> String { string("app.pricing.context", lang) }
     static func appPricingHeadline(_ lang: AppLang) -> String { string("app.pricing.headline", lang) }
     static func appPricingSub(_ lang: AppLang) -> String { string("app.pricing.sub", lang) }
     static func appPricingHeadlineMember(_ lang: AppLang) -> String { string("app.pricing.headlineMember", lang) }
@@ -670,6 +679,7 @@ enum L10n {
     static func appHomeYourSideLabel(_ lang: AppLang) -> String { string("app.home.yourSideLabel", lang) }
     static func appHomeTheirSideLabel(_ lang: AppLang) -> String { string("app.home.theirSideLabel", lang) }
     static func appHomeSendLink(_ lang: AppLang) -> String { string("app.home.sendLink", lang) }
+    static func appHomeAddContext(_ lang: AppLang) -> String { string("app.home.addContext", lang) }
     static func appHomeSays(_ lang: AppLang, name: String) -> String { format("app.home.says", lang, name) }
     static func appHomeMySide(_ lang: AppLang) -> String { string("app.home.mySide", lang) }
     static func appHomeOtherSide(_ lang: AppLang) -> String { string("app.home.otherSide", lang) }
@@ -1025,7 +1035,14 @@ enum L10n {
         "respond.label",
         "respond.placeholder",
         "respond.submit",
+        "case.write.title",
+        "case.write.placeholder",
+        "case.write.lead",
+        "case.write.leadAnswered",
+        "case.write.submit",
+        "case.write.emailSubject",
         "respond.sent",
+        "respond.sentWaiting",
         "respond.ownInvite",
         "respond.expired",
         "respond.closed",
@@ -1186,6 +1203,8 @@ enum L10n {
         "app.history.phoneOnlyNote",
         "app.history.offlineRemove",
         "app.pricing.free.account",
+        "app.context.label",
+        "app.pricing.context",
         "app.pricing.headline",
         "app.pricing.sub",
         "app.pricing.headlineMember",
@@ -1238,6 +1257,7 @@ enum L10n {
         "app.home.yourSideLabel",
         "app.home.theirSideLabel",
         "app.home.sendLink",
+        "app.home.addContext",
         "app.home.mySide",
         "app.home.otherSide",
         "app.home.example",

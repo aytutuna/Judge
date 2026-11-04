@@ -321,7 +321,14 @@
     <string name="respond_label">Tvoja plat</string>
     <string name="respond_placeholder">Kaj se je po tvoje zgodilo? Napiši, kot da pripoveduješ prijatelju.</string>
     <string name="respond_submit">Pošlji mojo plat</string>
+    <string name="case_write_title">Tvoja plat</string>
+    <string name="case_write_placeholder">Kaj je narobe?</string>
+    <string name="case_write_lead">Napiši svojo plat, ko si pripravljen. Sodniki začnejo, ko sta napisala oba.</string>
+    <string name="case_write_lead_answered">Druga oseba je že napisala svojo plat. Napiši svojo in dobil boš sodbo.</string>
+    <string name="case_write_submit">Pošlji mojo plat</string>
+    <string name="case_write_email_subject">Druga stran je napisala svoje</string>
     <string name="respond_sent">Hvala. Tvoja plat je oddana, sodniki so že pri delu.</string>
+    <string name="respond_sent_waiting">Hvala. Tvoja plat je oddana. Sodniki začnejo, ko svojo napiše še druga oseba.</string>
     <string name="respond_own_invite">To je tvoja lastna povezava za povabilo. Pošlji jo drugi osebi.</string>
     <string name="respond_expired">To povabilo je poteklo.</string>
     <string name="respond_closed">Ta spor ne sprejema več odgovorov.</string>
@@ -549,6 +556,8 @@
     </plurals>
     <string name="app_history_offline_remove">Ni povezave s spletom. Za odstranitev jo potrebuješ.</string>
     <string name="app_pricing_free_account">Prijavi se z Apple, Googlom ali e-pošto</string>
+    <string name="app_context_label">Kontekst (neobvezno)</string>
+    <string name="app_pricing_context">Slike konteksta se preberejo in zavržejo, brez dodatnih stroškov</string>
     <string name="app_pricing_headline">Prva razsodba gre na naš račun.</string>
     <string name="app_pricing_sub">Ustvari račun in prva razsodba je brezplačna, z vsemi funkcijami. Potem izberi paket ali mesečno naročnino.</string>
     <string name="app_pricing_headline_member">Več razsodb.</string>
@@ -606,11 +615,12 @@
     <string name="app_home_their_side">Druga plat</string>
     <string name="app_home_your_name">Tvoje ime</string>
     <string name="app_home_their_name">Ime druge osebe</string>
-    <string name="app_home_your_placeholder">Kaj se je po tvoje zgodilo?</string>
+    <string name="app_home_your_placeholder">Kaj je narobe?</string>
     <string name="app_home_their_placeholder">Kaj pravi druga oseba? Napiši tako, kot bi povedala sama.</string>
     <string name="app_home_your_side_label">Tvoja plat v prepiru</string>
     <string name="app_home_their_side_label">Plat druge osebe v prepiru</string>
-    <string name="app_home_send_link">Ali pa drugi osebi pošlji povezavo, da svojo plat napiše sama</string>
+    <string name="app_home_send_link">Pošlji povezavo</string>
+    <string name="app_home_add_context">Dodaj kontekst</string>
     <string name="app_home_says">%1$s pravi:</string>
     <string name="app_home_my_side">Moja plat:</string>
     <string name="app_home_other_side">Plat druge osebe:</string>

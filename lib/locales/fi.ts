@@ -457,7 +457,17 @@ const fi: Locale = {
     "respond.label": "Kertomuksesi",
     "respond.placeholder": "Mitä tapahtui sinun näkökulmastasi? Kirjoita kuin kertoisit kaverille.",
     "respond.submit": "Lähetä kertomukseni",
+    "case.write.title": "Sinun puolesi",
+    "case.write.placeholder": "Mikä ongelma on?",
+    "case.write.lead":
+      "Kirjoita puolesi, kun olet valmis. Tuomarit aloittavat, kun molemmat ovat kirjoittaneet.",
+    "case.write.leadAnswered":
+      "Toinen on kirjoittanut puolensa. Kirjoita omasi, niin saat tuomion.",
+    "case.write.submit": "Lähetä puoleni",
+    "case.write.emailSubject": "Toinen osapuoli on kirjoittanut oman puolensa",
     "respond.sent": "Kiitos. Kertomuksesi on perillä, ja tuomarit ovat asian kimpussa.",
+    "respond.sentWaiting":
+      "Kiitos. Kertomuksesi on perillä. Tuomarit aloittavat, kun toinenkin on kirjoittanut omansa.",
     "respond.ownInvite": "Tämä on oma kutsulinkkisi. Lähetä se toiselle osapuolelle.",
     "respond.expired": "Tämä kutsu on vanhentunut.",
     "respond.closed": "Tähän juttuun ei voi enää vastata.",

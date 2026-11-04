@@ -363,7 +363,14 @@ class Strings(private val res: Resources) {
     val respondLabel: String get() = res.getString(R.string.respond_label)
     val respondPlaceholder: String get() = res.getString(R.string.respond_placeholder)
     val respondSubmit: String get() = res.getString(R.string.respond_submit)
+    val caseWriteTitle: String get() = res.getString(R.string.case_write_title)
+    val caseWritePlaceholder: String get() = res.getString(R.string.case_write_placeholder)
+    val caseWriteLead: String get() = res.getString(R.string.case_write_lead)
+    val caseWriteLeadAnswered: String get() = res.getString(R.string.case_write_lead_answered)
+    val caseWriteSubmit: String get() = res.getString(R.string.case_write_submit)
+    val caseWriteEmailSubject: String get() = res.getString(R.string.case_write_email_subject)
     val respondSent: String get() = res.getString(R.string.respond_sent)
+    val respondSentWaiting: String get() = res.getString(R.string.respond_sent_waiting)
     val respondOwnInvite: String get() = res.getString(R.string.respond_own_invite)
     val respondExpired: String get() = res.getString(R.string.respond_expired)
     val respondClosed: String get() = res.getString(R.string.respond_closed)
@@ -546,6 +553,8 @@ class Strings(private val res: Resources) {
     fun appHistoryRemoveFailed(n: Int): String = res.getQuantityString(R.plurals.app_history_remove_failed, n, n.toString())
     val appHistoryOfflineRemove: String get() = res.getString(R.string.app_history_offline_remove)
     val appPricingFreeAccount: String get() = res.getString(R.string.app_pricing_free_account)
+    val appContextLabel: String get() = res.getString(R.string.app_context_label)
+    val appPricingContext: String get() = res.getString(R.string.app_pricing_context)
     val appPricingHeadline: String get() = res.getString(R.string.app_pricing_headline)
     val appPricingSub: String get() = res.getString(R.string.app_pricing_sub)
     val appPricingHeadlineMember: String get() = res.getString(R.string.app_pricing_headline_member)
@@ -603,6 +612,7 @@ class Strings(private val res: Resources) {
     val appHomeYourSideLabel: String get() = res.getString(R.string.app_home_your_side_label)
     val appHomeTheirSideLabel: String get() = res.getString(R.string.app_home_their_side_label)
     val appHomeSendLink: String get() = res.getString(R.string.app_home_send_link)
+    val appHomeAddContext: String get() = res.getString(R.string.app_home_add_context)
     fun appHomeSays(name: String): String = res.getString(R.string.app_home_says, name)
     val appHomeMySide: String get() = res.getString(R.string.app_home_my_side)
     val appHomeOtherSide: String get() = res.getString(R.string.app_home_other_side)
@@ -957,7 +967,14 @@ class Strings(private val res: Resources) {
             "respond.label" -> R.string.respond_label
             "respond.placeholder" -> R.string.respond_placeholder
             "respond.submit" -> R.string.respond_submit
+            "case.write.title" -> R.string.case_write_title
+            "case.write.placeholder" -> R.string.case_write_placeholder
+            "case.write.lead" -> R.string.case_write_lead
+            "case.write.leadAnswered" -> R.string.case_write_lead_answered
+            "case.write.submit" -> R.string.case_write_submit
+            "case.write.emailSubject" -> R.string.case_write_email_subject
             "respond.sent" -> R.string.respond_sent
+            "respond.sentWaiting" -> R.string.respond_sent_waiting
             "respond.ownInvite" -> R.string.respond_own_invite
             "respond.expired" -> R.string.respond_expired
             "respond.closed" -> R.string.respond_closed
@@ -1118,6 +1135,8 @@ class Strings(private val res: Resources) {
             "app.history.phoneOnlyNote" -> R.string.app_history_phone_only_note
             "app.history.offlineRemove" -> R.string.app_history_offline_remove
             "app.pricing.free.account" -> R.string.app_pricing_free_account
+            "app.context.label" -> R.string.app_context_label
+            "app.pricing.context" -> R.string.app_pricing_context
             "app.pricing.headline" -> R.string.app_pricing_headline
             "app.pricing.sub" -> R.string.app_pricing_sub
             "app.pricing.headlineMember" -> R.string.app_pricing_headline_member
@@ -1170,6 +1189,7 @@ class Strings(private val res: Resources) {
             "app.home.yourSideLabel" -> R.string.app_home_your_side_label
             "app.home.theirSideLabel" -> R.string.app_home_their_side_label
             "app.home.sendLink" -> R.string.app_home_send_link
+            "app.home.addContext" -> R.string.app_home_add_context
             "app.home.mySide" -> R.string.app_home_my_side
             "app.home.otherSide" -> R.string.app_home_other_side
             "app.home.example" -> R.string.app_home_example

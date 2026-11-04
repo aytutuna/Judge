@@ -314,7 +314,14 @@
     <string name="respond_label">O teu lado</string>
     <string name="respond_placeholder">O que aconteceu, do teu ponto de vista? Escreve como contarias a um amigo.</string>
     <string name="respond_submit">Enviar o meu lado</string>
+    <string name="case_write_title">O teu lado</string>
+    <string name="case_write_placeholder">Qual é o problema?</string>
+    <string name="case_write_lead">Escreve o teu lado quando quiseres. Os juízes começam quando os dois tiverem escrito.</string>
+    <string name="case_write_lead_answered">A outra pessoa já escreveu o lado dela. Escreve o teu para receberes o veredicto.</string>
+    <string name="case_write_submit">Enviar o meu lado</string>
+    <string name="case_write_email_subject">A outra pessoa escreveu a sua versão</string>
     <string name="respond_sent">Obrigado. O teu lado chegou e os juízes já estão a tratar disso.</string>
+    <string name="respond_sent_waiting">Obrigado. O teu lado chegou. Os juízes começam quando a outra pessoa escrever o dela.</string>
     <string name="respond_own_invite">Este link de convite é teu. Envia-o à outra pessoa.</string>
     <string name="respond_expired">Este convite expirou.</string>
     <string name="respond_closed">Este caso já não aceita respostas.</string>
@@ -533,6 +540,8 @@
     </plurals>
     <string name="app_history_offline_remove">Estás sem internet. É preciso ligação para remover.</string>
     <string name="app_pricing_free_account">Entra com a Apple, o Google ou o e-mail</string>
+    <string name="app_context_label">Contexto (opcional)</string>
+    <string name="app_pricing_context">As imagens de contexto são lidas e depois descartadas, sem custo extra</string>
     <string name="app_pricing_headline">O primeiro veredicto é por nossa conta.</string>
     <string name="app_pricing_sub">Cria uma conta e o primeiro veredicto é grátis, com todas as funcionalidades. Depois, escolhe um pacote ou passa ao plano mensal.</string>
     <string name="app_pricing_headline_member">Obtém mais veredictos.</string>
@@ -589,11 +598,12 @@
     <string name="app_home_their_side">O outro lado</string>
     <string name="app_home_your_name">O teu nome</string>
     <string name="app_home_their_name">Nome da outra pessoa</string>
-    <string name="app_home_your_placeholder">O que aconteceu, do teu ponto de vista?</string>
+    <string name="app_home_your_placeholder">Qual é o problema?</string>
     <string name="app_home_their_placeholder">O que diz a outra pessoa? Escreve como ela o diria.</string>
     <string name="app_home_your_side_label">O teu lado da discussão</string>
     <string name="app_home_their_side_label">O outro lado da discussão</string>
-    <string name="app_home_send_link">Ou envia-lhe um link para ela o escrever</string>
+    <string name="app_home_send_link">Enviar um link</string>
+    <string name="app_home_add_context">Adicionar contexto</string>
     <string name="app_home_says">%1$s diz:</string>
     <string name="app_home_my_side">O meu lado:</string>
     <string name="app_home_other_side">O outro lado:</string>

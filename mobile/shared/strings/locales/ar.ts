@@ -32,6 +32,8 @@ const ar: AppLocale = {
     "app.history.offlineRemove": "أنت غير متصل بالإنترنت. يحتاج الحذف إلى اتصال.",
     "app.pricing.free.account":
       "سجّل الدخول باستخدام Apple أو Google أو البريد الإلكتروني",
+    "app.context.label": "سياق (اختياري)",
+    "app.pricing.context": "صور السياق تُقرأ ثم تُحذف، دون أي تكلفة إضافية",
     "app.pricing.headline": "حكمك الأول على حسابنا.",
     "app.pricing.sub":
       "أنشئ حسابًا واحصل على أول حكم مجانًا، بكل المزايا. بعد ذلك، اختر باقة أو اشترك شهريًا.",
@@ -98,12 +100,13 @@ const ar: AppLocale = {
     "app.home.theirSide": "رواية الطرف الآخر",
     "app.home.yourName": "اسمك",
     "app.home.theirName": "اسم الطرف الآخر",
-    "app.home.yourPlaceholder": "ماذا حدث من وجهة نظرك؟",
+    "app.home.yourPlaceholder": "ما المشكلة؟",
     "app.home.theirPlaceholder":
       "ماذا يقول الطرف الآخر؟ اكتب روايته كما يرويها هو.",
     "app.home.yourSideLabel": "روايتك للخلاف",
     "app.home.theirSideLabel": "رواية الطرف الآخر للخلاف",
-    "app.home.sendLink": "أو أرسل إليه رابطًا ليكتبها بنفسه",
+    "app.home.sendLink": "أرسل له رابطًا",
+    "app.home.addContext": "أضف سياقًا",
     "app.home.says": "رواية {name}:",
     "app.home.mySide": "روايتي:",
     "app.home.otherSide": "رواية الطرف الآخر:",

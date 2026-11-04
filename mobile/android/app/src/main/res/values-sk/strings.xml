@@ -321,7 +321,14 @@
     <string name="respond_label">Tvoja verzia</string>
     <string name="respond_placeholder">Čo sa stalo z tvojho pohľadu? Napíš to vlastnými slovami, ako keď to rozprávaš kamarátovi.</string>
     <string name="respond_submit">Odoslať moju verziu</string>
+    <string name="case_write_title">Tvoja verzia</string>
+    <string name="case_write_placeholder">V čom je problém?</string>
+    <string name="case_write_lead">Napíš svoju verziu, keď budeš pripravený. Sudcovia začnú, keď napíšete obaja.</string>
+    <string name="case_write_lead_answered">Druhá strana už napísala svoju verziu. Napíš tú svoju a dostaneš verdikt.</string>
+    <string name="case_write_submit">Odoslať moju verziu</string>
+    <string name="case_write_email_subject">Druhá strana napísala svoju verziu</string>
     <string name="respond_sent">Vďaka. Tvoja verzia dorazila a sudcovia na nej pracujú.</string>
+    <string name="respond_sent_waiting">Vďaka. Tvoja verzia dorazila. Sudcovia začnú, keď svoju napíše aj druhá osoba.</string>
     <string name="respond_own_invite">Toto je tvoj vlastný odkaz s pozvánkou. Pošli ho druhej strane.</string>
     <string name="respond_expired">Platnosť tejto pozvánky vypršala.</string>
     <string name="respond_closed">Tento prípad už neprijíma odpovede.</string>
@@ -549,6 +556,8 @@
     </plurals>
     <string name="app_history_offline_remove">Si offline. Na odstránenie potrebuješ pripojenie.</string>
     <string name="app_pricing_free_account">Prihlás sa cez Apple, Google alebo e-mail</string>
+    <string name="app_context_label">Kontext (nepovinné)</string>
+    <string name="app_pricing_context">Obrázky s kontextom sa prečítajú a potom zahodia, bez príplatku</string>
     <string name="app_pricing_headline">Prvý verdikt ide na nás.</string>
     <string name="app_pricing_sub">Vytvor si účet a prvý verdikt máš zadarmo, so všetkými funkciami. Potom si vyber balík alebo mesačné predplatné.</string>
     <string name="app_pricing_headline_member">Získaj viac verdiktov.</string>
@@ -606,11 +615,12 @@
     <string name="app_home_their_side">Verzia druhej strany</string>
     <string name="app_home_your_name">Tvoje meno</string>
     <string name="app_home_their_name">Meno druhej strany</string>
-    <string name="app_home_your_placeholder">Čo sa stalo z tvojho pohľadu?</string>
+    <string name="app_home_your_placeholder">V čom je problém?</string>
     <string name="app_home_their_placeholder">Čo hovorí druhá strana? Napíš to tak, ako by to povedala ona.</string>
     <string name="app_home_your_side_label">Tvoja verzia sporu</string>
     <string name="app_home_their_side_label">Ako spor vidí druhá strana</string>
-    <string name="app_home_send_link">Alebo pošli druhej strane odkaz, nech napíše svoju verziu</string>
+    <string name="app_home_send_link">Poslať odkaz</string>
+    <string name="app_home_add_context">Pridať kontext</string>
     <string name="app_home_says">%1$s hovorí:</string>
     <string name="app_home_my_side">Moja verzia:</string>
     <string name="app_home_other_side">Verzia druhej strany:</string>
