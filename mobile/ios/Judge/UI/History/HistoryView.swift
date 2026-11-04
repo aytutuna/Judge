@@ -230,6 +230,8 @@ struct HistoryView: View {
                     }
                     .listRowBackground(Color.clear)
                 }
+            } header: {
+                Color.clear.frame(height: 0)
             } footer: {
                 if entries.contains(where: \.isPhone) {
                     Text(L10n.appHistoryPhoneOnlyNote(lang))
@@ -240,6 +242,9 @@ struct HistoryView: View {
             }
         }
         .scrollContentBackground(.hidden)
+        // The grouped list leaves a band above its first section otherwise.
+        .environment(\.defaultMinListHeaderHeight, 0)
+        .contentMargins(.top, 8, for: .scrollContent)
         // A page of rows the phone already had doesn't grow the list, so no
         // new row appears: keep going while the end is on screen.
         .onChange(of: list.next) { _, next in
