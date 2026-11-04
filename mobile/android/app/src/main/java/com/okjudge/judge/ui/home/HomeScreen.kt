@@ -317,14 +317,14 @@ private fun SideCard(
     val s = LocalStrings.current
     var focused by remember { mutableStateOf(false) }
     val edge = colors.strong
-    val glow = edge.copy(alpha = 0.25f)
+    val glow = edge.copy(alpha = if (focused) 0.6f else 0.4f)
     Column(
         Modifier
             .fillMaxWidth()
-            .shadow(8.dp, JudgeShapes.block, clip = false, ambientColor = glow, spotColor = glow)
+            .shadow(if (focused) 12.dp else 8.dp, JudgeShapes.block, clip = false, ambientColor = glow, spotColor = glow)
             .clip(JudgeShapes.block)
             .background(Palette.paper)
-            .border(1.dp, edge.copy(alpha = if (focused) 0.9f else 0.55f), JudgeShapes.block)
+            .border(1.dp, edge.copy(alpha = if (focused) 0.95f else 0.75f), JudgeShapes.block)
             .onFocusChanged { focused = it.hasFocus }
             .padding(horizontal = 16.dp, vertical = 14.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp),

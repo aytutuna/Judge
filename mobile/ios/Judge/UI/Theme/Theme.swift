@@ -182,9 +182,9 @@ private struct NeonEdge: ViewModifier {
         content
             .background {
                 shape.fill(Brand.paper)
-                    .shadow(color: color.opacity(focused ? 0.45 : 0.22), radius: focused ? 10 : 6)
+                    .shadow(color: color.opacity(focused ? 0.6 : 0.38), radius: focused ? 12 : 8)
             }
-            .overlay(shape.strokeBorder(color.opacity(focused ? 0.9 : 0.55), lineWidth: 1))
+            .overlay(shape.strokeBorder(color.opacity(focused ? 0.95 : 0.75), lineWidth: 1))
             .animation(reduceMotion ? nil : .easeOut(duration: 0.2), value: focused)
     }
 }
