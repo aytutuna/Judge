@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -46,6 +47,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.platform.testTag
@@ -88,9 +90,12 @@ import com.okjudge.judge.ui.components.PrimaryButton
 import com.okjudge.judge.ui.components.TextAction
 import com.okjudge.judge.ui.components.TintedIcon
 import com.okjudge.judge.ui.components.TopBar
+import com.okjudge.judge.ui.components.neonEdge
 import com.okjudge.judge.ui.components.rememberIcon
 import com.okjudge.judge.ui.judging.JudgingScreen
+import com.okjudge.judge.ui.premium.AddContextButton
 import com.okjudge.judge.ui.premium.EvidencePicker
+import com.okjudge.judge.ui.premium.EvidenceRows
 import com.okjudge.judge.ui.premium.rememberEvidencePicker
 import com.okjudge.judge.ui.theme.JudgeShapes
 import com.okjudge.judge.ui.theme.JudgeType
@@ -492,7 +497,8 @@ private fun Body(
         CaseStatus.AWAITING -> {
             Card {
                 view.inviteUrl?.let { url -> InviteLink(url, view.expiresAt, waitingFor, state, actions) { ask(Confirm.RESET) } }
-                if (view.premium) {
+                // "If nobody answers" no longer applies once they have.
+                if (view.premium && !(view.ownerSideMissing && view.respondentAnswered)) {
                     Note(Errors.formatDate(lang, view.expiresAt)?.let { s.caseHeld(it) } ?: s.caseHeldSoon, color = Palette.muted)
                 }
             }
@@ -643,17 +649,17 @@ private fun WriteSide(draft: SideDraft, answered: Boolean, evidenceOn: Boolean, 
     val s = LocalStrings.current
     val lang = LocalLang.current
     val nf = remember(lang) { NumberFormat.getIntegerInstance(lang.locale) }
-    Card {
+    var focused by remember { mutableStateOf(false) }
+    Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(12.dp)) {
         Text(s.caseWriteTitle, style = JudgeType.sectionTitle, modifier = Modifier.semantics { heading() })
         Note(if (answered) s.caseWriteLeadAnswered else s.caseWriteLead)
-        Box(
+        Column(
             Modifier
                 .fillMaxWidth()
-                .heightIn(min = 130.dp)
-                .clip(JudgeShapes.field)
-                .background(Palette.ivory)
-                .border(1.dp, Palette.line2, JudgeShapes.field)
-                .padding(14.dp),
+                .neonEdge(LocalSides.current.mine.strong, focused, JudgeShapes.block)
+                .onFocusChanged { focused = it.hasFocus }
+                .padding(horizontal = 16.dp, vertical = 14.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             BasicTextField(
                 value = draft.text,
@@ -664,7 +670,7 @@ private fun WriteSide(draft: SideDraft, answered: Boolean, evidenceOn: Boolean, 
                 keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Sentences),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .heightIn(min = 100.dp)
+                    .heightIn(min = 130.dp)
                     .semantics { contentDescription = s.caseWritePlaceholder }
                     .testTag(CaseTags.WRITE_TEXT),
                 decorationBox = { inner ->
@@ -672,15 +678,16 @@ private fun WriteSide(draft: SideDraft, answered: Boolean, evidenceOn: Boolean, 
                     inner()
                 },
             )
+            Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+                if (evidenceOn && !draft.evidence.full) {
+                    AddContextButton(!draft.sending, rememberEvidencePicker(draft.evidence.room, actions.onAddSideEvidence))
+                }
+                Spacer(Modifier.weight(1f))
+                Text(s.appInputCounter(nf.format(draft.text.length), nf.format(ArgumentRules.MAX)), style = JudgeType.footnote)
+            }
         }
-        Text(
-            s.appInputCounter(nf.format(draft.text.length), nf.format(ArgumentRules.MAX)),
-            style = JudgeType.footnote,
-            modifier = Modifier.align(Alignment.End),
-        )
-        if (evidenceOn) {
-            val pick = rememberEvidencePicker(draft.evidence.room, actions.onAddSideEvidence)
-            EvidencePicker(draft.evidence, disabled = draft.sending, onAdd = pick, onRemove = actions.onRemoveSideEvidence)
+        if (evidenceOn && draft.evidence.hasRows) {
+            EvidenceRows(draft.evidence, disabled = draft.sending, onRemove = actions.onRemoveSideEvidence)
         }
         ErrorLine(draft.error, actions.onPricing)
         PrimaryButton(

@@ -500,29 +500,28 @@ class ScreenshotsTest {
     @Test
     fun case_judged_tr() = shotCase("case_judged_tr", "judged_tr", AppLang.TR)
 
-    private fun shotWrite(file: String, edit: (com.okjudge.judge.core.model.CaseView) -> com.okjudge.judge.core.model.CaseView, text: String = "") =
+    private fun shotWrite(file: String, fixture: String, text: String = "") =
         capture(file, tall = true) {
-            val base = caseState("waiting_for_respondent")
-            val state = base.copy(view = edit(base.view!!.copy(ownerSideMissing = true)), sideText = text)
+            val state = caseState(fixture).copy(sideText = text)
             Themed(AppLang.EN) {
                 com.okjudge.judge.ui.cases.CaseScreen(state, evidenceOn = true, actions = com.okjudge.judge.ui.cases.CaseActions(onBack = {}), reducedMotion = true)
             }
         }
 
     @Test
-    fun case_write_en() = shotWrite("case_write_en", { it })
+    fun case_write_en() = shotWrite("case_write_en", "waiting_to_write")
 
     @Test
     fun case_write_answered_en() = shotWrite(
         "case_write_answered_en",
-        { it.copy(inviteUrl = null, respondentAnswered = true) },
+        "waiting_to_write_answered",
         "Sam says a hot dog is a sandwich. I say a sandwich needs two slices of bread.",
     )
 
     @Test
     fun case_write_respondentWaiting_en() = shotWrite(
         "case_write_respondent_waiting_en",
-        { it.copy(role = "respondent", yourParty = "b", inviteUrl = null, respondentAnswered = true) },
+        "respondent_waiting_for_owner",
     )
 
     @Test

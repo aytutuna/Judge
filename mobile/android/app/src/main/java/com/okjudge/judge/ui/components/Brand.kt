@@ -1,8 +1,11 @@
 package com.okjudge.judge.ui.components
 
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
@@ -66,5 +69,15 @@ internal fun triangle(x1: Float, y1: Float, x2: Float, y2: Float, x3: Float, y3:
 @Composable
 fun Modifier.warmShadow(elevation: Dp, shape: Shape): Modifier =
     shadow(elevation, shape, clip = false, ambientColor = Palette.warmShadow, spotColor = Palette.warmShadow)
+
+/** The writing box's edge: a thin line and a glow, stronger with the focus. */
+@Composable
+fun Modifier.neonEdge(edge: Color, focused: Boolean, shape: Shape): Modifier {
+    val glow = edge.copy(alpha = if (focused) 0.6f else 0.4f)
+    return shadow(if (focused) 12.dp else 8.dp, shape, clip = false, ambientColor = glow, spotColor = glow)
+        .clip(shape)
+        .background(Palette.paper)
+        .border(1.dp, edge.copy(alpha = if (focused) 0.95f else 0.75f), shape)
+}
 
 val CardElevation = 10.dp

@@ -39,7 +39,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
@@ -75,6 +74,7 @@ import com.okjudge.judge.ui.components.GhostButton
 import com.okjudge.judge.ui.components.JudgeIcons
 import com.okjudge.judge.ui.components.TintedIcon
 import com.okjudge.judge.ui.components.rememberIcon
+import com.okjudge.judge.ui.components.neonEdge
 import com.okjudge.judge.ui.components.uppercaseForUi
 import com.okjudge.judge.ui.premium.AddContextButton
 import com.okjudge.judge.ui.premium.EvidenceRows
@@ -316,15 +316,10 @@ private fun SideCard(
 ) {
     val s = LocalStrings.current
     var focused by remember { mutableStateOf(false) }
-    val edge = colors.strong
-    val glow = edge.copy(alpha = if (focused) 0.6f else 0.4f)
     Column(
         Modifier
             .fillMaxWidth()
-            .shadow(if (focused) 12.dp else 8.dp, JudgeShapes.block, clip = false, ambientColor = glow, spotColor = glow)
-            .clip(JudgeShapes.block)
-            .background(Palette.paper)
-            .border(1.dp, edge.copy(alpha = if (focused) 0.95f else 0.75f), JudgeShapes.block)
+            .neonEdge(colors.strong, focused, JudgeShapes.block)
             .onFocusChanged { focused = it.hasFocus }
             .padding(horizontal = 16.dp, vertical = 14.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp),

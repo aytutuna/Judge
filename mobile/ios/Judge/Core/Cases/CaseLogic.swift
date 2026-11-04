@@ -107,7 +107,8 @@ enum CaseLogic {
     /// The held-unit line under the invite. Only a premium case holds a
     /// unit, so a free case never mentions credits.
     static func heldNote(_ view: CaseView, lang: AppLang) -> String? {
-        guard view.tier == .premium else { return nil }
+        // "If nobody answers" no longer applies once they have.
+        guard view.tier == .premium, !(view.ownerSideMissing && view.respondentAnswered) else { return nil }
         return ErrorText.formatDate(view.expiresAt, lang: lang).map { L10n.caseHeld(lang, date: $0) } ?? L10n.caseHeldSoon(lang)
     }
 

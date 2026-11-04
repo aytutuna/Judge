@@ -109,6 +109,7 @@ final class CaseTests: XCTestCase {
     func testFreeCaseWordingNeverMentionsCredits() throws {
         XCTAssertNotNil(CaseLogic.heldNote(try view("waiting_for_respondent"), lang: .en))
         XCTAssertNil(CaseLogic.heldNote(try view("waiting_free"), lang: .en))
+        XCTAssertNil(CaseLogic.heldNote(try view("waiting_to_write_answered"), lang: .en), "they already answered")
 
         var failed = try view("failed")
         XCTAssertEqual(CaseLogic.failedBody(failed, lang: .en), L10n.errorQuota(.en))
