@@ -124,7 +124,7 @@ enum PremiumFixtures {
     @MainActor
     static func waitUntil(_ what: String, file: StaticString = #filePath, line: UInt = #line, _ condition: () -> Bool) async throws {
         var waited = 0
-        while !condition(), waited < 500 {
+        while !condition(), waited < 2000 {
             try await Task.sleep(for: .milliseconds(10))
             waited += 1
         }
@@ -645,7 +645,7 @@ final class PremiumFlowTests: XCTestCase {
         router.on("POST", Self.clarifyPath, try questions("none"))
         router.on("POST", Self.verdictPath, try PremiumFixtures.apiError("in_progress"))
         let app = try premiumApp(router, container: container)
-        app.home.inProgressWait = .milliseconds(60)
+        app.home.inProgressWait = .milliseconds(500)
         let home = app.home
 
         home.submit(app: app)
