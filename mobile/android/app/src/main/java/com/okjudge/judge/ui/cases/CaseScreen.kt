@@ -296,7 +296,13 @@ private fun CaseScreenBody(
                 Modifier.widthIn(max = 640.dp).fillMaxWidth().padding(top = 4.dp, bottom = 40.dp),
                 verticalArrangement = Arrangement.spacedBy(18.dp),
             ) {
-                if (view.status == CaseStatus.AWAITING && !(view.ownerSideMissing && view.respondentAnswered)) WaitingHeader(waitingFor) else Header(kicker, view.status)
+                val theyWrote = view.status == CaseStatus.AWAITING && view.ownerSideMissing && view.respondentAnswered
+                if (view.status == CaseStatus.AWAITING && !theyWrote) {
+                    WaitingHeader(waitingFor)
+                } else {
+                    // The owner is who everyone waits for now, not the other side.
+                    Header(kicker, view.status.takeUnless { theyWrote && view.role == "owner" })
+                }
                 if (view.removed != null) {
                     Banner(if (state.removedNow) s.caseRemoved else s.caseRemovedBanner)
                 }
@@ -495,11 +501,12 @@ private fun Body(
     val lang = LocalLang.current
     when (view.status) {
         CaseStatus.AWAITING -> {
-            Card {
-                view.inviteUrl?.let { url -> InviteLink(url, view.expiresAt, waitingFor, state, actions) { ask(Confirm.RESET) } }
-                // "If nobody answers" no longer applies once they have.
-                if (view.premium && !(view.ownerSideMissing && view.respondentAnswered)) {
-                    Note(Errors.formatDate(lang, view.expiresAt)?.let { s.caseHeld(it) } ?: s.caseHeldSoon, color = Palette.muted)
+            // "If nobody answers" no longer applies once they have.
+            val held = view.premium && !(view.ownerSideMissing && view.respondentAnswered)
+            if (view.inviteUrl != null || held) {
+                Card {
+                    view.inviteUrl?.let { url -> InviteLink(url, view.expiresAt, waitingFor, state, actions) { ask(Confirm.RESET) } }
+                    if (held) Note(Errors.formatDate(lang, view.expiresAt)?.let { s.caseHeld(it) } ?: s.caseHeldSoon, color = Palette.muted)
                 }
             }
             val sideMissing = view.ownerSideMissing

@@ -70,6 +70,8 @@ class CaseScreensTest {
             val v = view(name)
             if (v.statusRaw == "awaiting_respondent" && !(v.ownerSideMissing && v.respondentAnswered)) {
                 compose.onNodeWithText(en.appCaseWaitingKicker.uppercase(Locale.US)).assertExists()
+            } else if (name == "waiting_to_write_answered") {
+                compose.onNodeWithTag(CaseTags.STATUS).assertDoesNotExist()
             } else {
                 compose.onNodeWithTag(CaseTags.STATUS).assertTextContains(en.text(v.status.key)!!)
             }
