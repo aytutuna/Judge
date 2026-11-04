@@ -1,7 +1,7 @@
 import SwiftUI
 
-/// Home: your side and theirs in two cards and the send button with what
-/// is left to spend.
+/// Home: one box to write in, with the other side as an extra card or a
+/// link, and the send button with what is left to spend.
 struct HomeView: View {
     @Environment(AppModel.self) private var app
     @SceneStorage("home.draft") private var draft = ""
@@ -10,6 +10,7 @@ struct HomeView: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.sceneLive) private var sceneLive
     @Environment(\.sides) private var sides
+    @Environment(\.dynamicTypeSize) private var typeSize
 
     private enum Field: Hashable {
         case mine, theirs
@@ -17,15 +18,14 @@ struct HomeView: View {
 
     private static let errorID = "home.error"
     private static let clarifyID = "home.clarify"
+    private static let linkType = TypeStyle(face: .inter, weight: 600, size: 13, lineHeight: 1.2, textStyle: .footnote, maxScale: 1.8)
 
     var body: some View {
         @Bindable var home = app.home
         let lang = app.lang
         ScrollViewReader { proxy in
             ScrollView {
-                VStack(alignment: .leading, spacing: 24) {
-                    header(lang, home: home)
-                        .padding(.bottom, -16)
+                Group {
                     if let clarify = home.clarify {
                         // The clarifying questions take the form's place.
                         ClarifyCard(home: home, state: clarify, lang: lang)
@@ -35,6 +35,7 @@ struct HomeView: View {
                     }
                 }
                 .padding(.horizontal, 16)
+                .padding(.top, 8)
                 .padding(.bottom, 32)
             }
             .onAppear {
@@ -76,7 +77,10 @@ struct HomeView: View {
         .onAppear {
             guard app.persistsDraft else { return }
             if home.argument.isEmpty, !draft.isEmpty { home.argument = draft }
-            if home.otherSide.isEmpty, !draftOther.isEmpty { home.otherSide = draftOther }
+            if home.otherSide.isEmpty, !draftOther.isEmpty {
+                home.otherSide = draftOther
+                home.theirsOpen = true
+            }
         }
         .onChange(of: home.argument) { old, value in
             if old.isEmpty, !value.isEmpty { app.analytics.track("case_started") }
@@ -100,36 +104,27 @@ struct HomeView: View {
         }
     }
 
-    private func header(_ lang: AppLang, home: HomeModel) -> some View {
-        HStack(spacing: 10) {
-            Text(L10n.appName(lang))
-                .brandText(.brand)
-                .foregroundStyle(Brand.ink)
-            Spacer()
-            // An empty form has nothing for the "+" to clear.
-            if !home.isBlank {
-                NewArgumentButton(lang: lang) { home.judgeAnother() }
-                    .disabled(home.isBusy)
-            }
-        }
-        .frame(minHeight: 44)
-        .padding(.top, 8)
-        .padding(.horizontal, 4)
-        .accessibilityElement(children: .contain)
-    }
-
-    /// Both sides: yours in green, theirs in red.
-    /// Written together they go to the judges as one text; "Or send them a
-    /// link" makes a two-sided case instead.
+    /// One box unless the other side is added: the two go to the judges as
+    /// one text with a name in front of each, and a link makes a two-sided
+    /// case instead. Screenshots go with the whole case, not with one card:
+    /// the judges get them as one set.
     private func form(_ lang: AppLang, home: HomeModel) -> some View {
         VStack(alignment: .leading, spacing: 12) {
-            exampleButton(lang, home: home)
-            if home.isBlank {
-                lead(lang)
-            }
             sideCard(lang, home: home, mine: true)
-            sideCard(lang, home: home, mine: false)
-            counter(lang, home: home)
+            if home.theirsOpen {
+                sideCard(lang, home: home, mine: false)
+            } else {
+                otherSide(lang, home: home)
+            }
+            if app.evidenceOn {
+                EvidencePickerView(evidence: home.evidence, lang: lang, disabled: home.isBusy)
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 14)
+                    .paperSurface(radius: Radius.block)
+                    .softShadow()
+                    .id(HomeModel.evidenceAnchor)
+            }
+            footer(lang, home: home)
             if let error = home.error {
                 errorBanner(error, lang: lang)
                     .id(Self.errorID)
@@ -139,66 +134,63 @@ struct HomeView: View {
         }
     }
 
-    private func exampleButton(_ lang: AppLang, home: HomeModel) -> some View {
-        Button {
-            focused = nil
-            home.fillExample(lang: lang)
-        } label: {
-            Label(L10n.appHomeExample(lang), systemImage: "shuffle")
-        }
-        .buttonStyle(ChipButtonStyle())
-        .disabled(home.isBusy)
-    }
-
-    private func lead(_ lang: AppLang) -> some View {
-        Text(app.casesOn ? L10n.appHomeLead(lang) : L10n.appHomeLeadSolo(lang))
-            .brandText(TypeStyle(face: .inter, weight: 400, size: 14, lineHeight: 1.45, textStyle: .subheadline))
-            .foregroundStyle(Brand.ink2)
-            .fixedSize(horizontal: false, vertical: true)
-            .padding(.horizontal, 4)
-    }
-
     private func sideCard(_ lang: AppLang, home: HomeModel, mine: Bool) -> some View {
         @Bindable var home = home
         let field: Field = mine ? .mine : .theirs
         let ink = mine ? sides.mine.ink : sides.theirs.ink
         return VStack(alignment: .leading, spacing: 8) {
-            HStack(spacing: 8) {
-                PartyAvatar(party: mine ? .a : .b)
-                CaseNameField(
-                    name: mine ? $home.caseName : $home.otherName,
-                    fallback: mine ? Names.firstName(app.account.user?.name) ?? "" : "",
-                    placeholder: mine ? L10n.appHomeYourName(lang) : L10n.appHomeTheirName(lang),
-                    disabled: home.isBusy
-                )
-                Text(mine ? L10n.appHomeYourSide(lang) : L10n.appHomeTheirSide(lang))
-                    .brandText(TypeStyle(face: .inter, weight: 600, size: 11, lineHeight: 1.2, tracking: 0.08, textStyle: .caption2, maxScale: 1.6, uppercase: true))
-                    .foregroundStyle(ink)
-                    .lineLimit(1)
-                    .accessibilityHidden(true)
+            // Names only tell two sides apart.
+            if home.theirsOpen {
+                HStack(spacing: 8) {
+                    PartyAvatar(party: mine ? .a : .b)
+                    CaseNameField(
+                        name: mine ? $home.caseName : $home.otherName,
+                        fallback: mine ? Names.firstName(app.account.user?.name) ?? "" : "",
+                        placeholder: mine ? L10n.appHomeYourName(lang) : L10n.appHomeTheirName(lang),
+                        disabled: home.isBusy
+                    )
+                    Text(mine ? L10n.appHomeYourSide(lang) : L10n.appHomeTheirSide(lang))
+                        .brandText(TypeStyle(face: .inter, weight: 600, size: 11, lineHeight: 1.2, tracking: 0.08, textStyle: .caption2, maxScale: 1.6, uppercase: true))
+                        .foregroundStyle(ink)
+                        .lineLimit(1)
+                        .accessibilityHidden(true)
+                    if !mine {
+                        removeTheirSide(lang, home: home)
+                    }
+                }
             }
             editor(
                 mine ? $home.argument : $home.otherSide,
                 field: field,
                 placeholder: mine ? L10n.appHomeYourPlaceholder(lang) : L10n.appHomeTheirPlaceholder(lang),
                 label: mine ? L10n.appHomeYourSideLabel(lang) : L10n.appHomeTheirSideLabel(lang),
-                minHeight: mine ? 96 : 56
+                minHeight: home.theirsOpen ? 96 : 180
             )
             .disabled(home.isBusy)
-            if mine, app.evidenceOn {
-                EvidencePickerView(evidence: home.evidence, lang: lang, disabled: home.isBusy)
-                    .id(HomeModel.evidenceAnchor)
-                    .padding(.top, 4)
-            }
-            if !mine, app.casesOn, home.otherSide.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-                sendLink(lang, home: home)
-            }
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 14)
         .paperSurface(radius: Radius.block, border: focused == field ? ink.opacity(0.6) : Brand.line)
         .softShadow()
         .accessibilityElement(children: .contain)
+    }
+
+    private func removeTheirSide(_ lang: AppLang, home: HomeModel) -> some View {
+        Button {
+            focused = nil
+            withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.2)) { home.removeTheirSide() }
+        } label: {
+            Image(systemName: "xmark")
+                .font(.system(size: 11, weight: .semibold))
+                .foregroundStyle(Brand.ink2)
+                .frame(width: 26, height: 26)
+                .background(Circle().fill(Brand.ivory2))
+                .frame(width: 32, height: 32)
+                .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .disabled(home.isBusy)
+        .accessibilityLabel(L10n.appHomeRemoveTheirSide(lang))
     }
 
     private func editor(_ text: Binding<String>, field: Field, placeholder: String, label: String, minHeight: CGFloat) -> some View {
@@ -223,25 +215,92 @@ struct HomeView: View {
         }
     }
 
-    /// Only before their side is written: the link means they write it.
-    /// The case costs a verdict like any other.
+    /// The two ways to hear the other side, for whoever has one to add.
+    private func otherSide(_ lang: AppLang, home: HomeModel) -> some View {
+        VStack(alignment: .leading, spacing: 6) {
+            Button {
+                withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.2)) { home.addTheirSide() }
+                // The card has to be on screen before it can take the focus.
+                Task { focused = .theirs }
+            } label: {
+                Label(L10n.appHomeAddTheirSide(lang), systemImage: "plus")
+            }
+            .buttonStyle(GhostButtonStyle())
+            .disabled(home.isBusy)
+            if app.casesOn {
+                sendLink(lang, home: home)
+                    .padding(.horizontal, 4)
+            }
+        }
+    }
+
+    /// The link means they write it. The case costs a verdict like any other.
     private func sendLink(_ lang: AppLang, home: HomeModel) -> some View {
         let ready = home.canSubmit(app)
-        return VStack(alignment: .leading, spacing: 0) {
-            Button {
-                focused = nil
-                home.sendLink(app: app)
-            } label: {
-                Label(L10n.appHomeSendLink(lang), systemImage: "link")
-                    .brandText(TypeStyle(face: .inter, weight: 600, size: 13, lineHeight: 1.2, textStyle: .footnote, maxScale: 1.8))
-                    .foregroundStyle(Brand.sageInk)
-                    .frame(minHeight: 32)
-                    .contentShape(Rectangle())
-            }
-            .buttonStyle(.plain)
-            .disabled(!ready)
-            .opacity(ready ? 1 : 0.5)
+        return Button {
+            focused = nil
+            home.sendLink(app: app)
+        } label: {
+            Label(L10n.appHomeSendLink(lang), systemImage: "link")
+                .brandText(Self.linkType)
+                .foregroundStyle(Brand.sageInk)
+                .frame(minHeight: 32)
+                .contentShape(Rectangle())
         }
+        .buttonStyle(.plain)
+        .disabled(!ready)
+        .opacity(ready ? 1 : 0.5)
+    }
+
+    /// Under the form, so the writing starts at the top of the screen.
+    private func footer(_ lang: AppLang, home: HomeModel) -> some View {
+        // The counter never gives up width, so it moves down at the largest sizes.
+        let layout = typeSize.isAccessibilitySize
+            ? AnyLayout(VStackLayout(alignment: .leading, spacing: 4))
+            : AnyLayout(HStackLayout(alignment: .center, spacing: 12))
+        return layout {
+            FlowLayout(spacing: 16) {
+                if home.offersExample {
+                    exampleButton(lang, home: home)
+                }
+                if !home.isBlank {
+                    clearButton(lang, home: home)
+                }
+            }
+            counter(lang, home: home)
+                .fixedSize()
+        }
+        .padding(.horizontal, 4)
+    }
+
+    private func exampleButton(_ lang: AppLang, home: HomeModel) -> some View {
+        Button {
+            focused = nil
+            withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.2)) { home.fillExample(lang: lang) }
+        } label: {
+            Label(L10n.appHomeExample(lang), systemImage: "shuffle")
+                .brandText(Self.linkType)
+                .foregroundStyle(Brand.ink2)
+                .frame(minHeight: 32)
+                .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .disabled(home.isBusy)
+    }
+
+    private func clearButton(_ lang: AppLang, home: HomeModel) -> some View {
+        Button {
+            focused = nil
+            withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.2)) { home.judgeAnother() }
+        } label: {
+            Text(L10n.appHomeClear(lang))
+                .brandText(Self.linkType)
+                .foregroundStyle(Brand.ink2)
+                .frame(minHeight: 32)
+                .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .disabled(home.isBusy)
     }
 
     /// The joined text's length against the limit, as the single field had it.
@@ -252,9 +311,6 @@ struct HomeView: View {
             .monospacedDigit()
             .foregroundStyle(length > HomeModel.warnLength ? Brand.terraInk : Brand.muted)
             .lineLimit(1)
-            .frame(maxWidth: .infinity, alignment: .trailing)
-            .padding(.horizontal, 4)
-            .padding(.vertical, -4)
     }
 
     private func errorBanner(_ error: APIError, lang: AppLang) -> some View {

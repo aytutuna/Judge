@@ -38,6 +38,8 @@ final class HomeModel {
     var argument = ""
     /// The other side, when the user writes it too; empty sends `argument` alone.
     var otherSide = ""
+    /// The second card is on Home: one person writes in one box until then.
+    var theirsOpen = false
     /// The other side's name over their card; nil until typed.
     var otherName: String?
     var path: [HomeRoute] = []
@@ -99,11 +101,22 @@ final class HomeModel {
     @ObservationIgnored private let keys = IdempotencyKeys()
     /// The example "Try an example" filled in last, so the next tap picks another.
     @ObservationIgnored private var lastExample: String?
-    /// The name the example wrote: "+" drops it, but keeps one the user typed.
-    @ObservationIgnored private var exampleName: String?
+    /// What the example wrote, to tell it from the user's own text.
+    @ObservationIgnored private var exampleForm: FormText?
     /// Told when the server refuses the session (401) and when an outcome
     /// changes the balance.
     @ObservationIgnored private weak var account: AccountModel?
+
+    private struct FormText: Equatable {
+        let mine: String
+        let theirs: String
+        let myName: String?
+        let theirName: String?
+    }
+
+    private var formText: FormText {
+        FormText(mine: argument, theirs: otherSide, myName: caseName, theirName: otherName)
+    }
 
     /// What was asked: "Try again" with the same request resumes its verdict.
     private struct RequestKey: Equatable {
@@ -187,8 +200,11 @@ final class HomeModel {
     /// Something the form started is still running: the switches hold still.
     var isBusy: Bool { isCheckingQuestions || isJudging || isCreatingCase }
 
-    /// Nothing typed or attached: Home's "+" stays hidden.
-    var isBlank: Bool { argument.isEmpty && otherSide.isEmpty && evidence.items.isEmpty }
+    /// Nothing typed, attached or opened: Home has nothing to clear.
+    var isBlank: Bool { argument.isEmpty && otherSide.isEmpty && evidence.items.isEmpty && !theirsOpen }
+
+    /// An example writes over the form, so it never replaces the user's text.
+    var offersExample: Bool { isBlank || formText == exampleForm }
 
     /// Both sides chosen while cases can be used: "Create the invite".
     func isTwoSided(_ app: AppModel) -> Bool {
@@ -260,6 +276,23 @@ final class HomeModel {
     func sendLink(app: AppModel) {
         mode = .both
         submit(app: app)
+    }
+
+    /// "Add their side": the second card, for writing both sides on one phone.
+    func addTheirSide() {
+        theirsOpen = true
+        mode = .now
+    }
+
+    /// The second card's close button: back to one person writing. The name
+    /// field goes with it, so a name the example wrote must not stay behind;
+    /// one the user typed does.
+    func removeTheirSide() {
+        theirsOpen = false
+        otherSide = ""
+        otherName = nil
+        if caseName == exampleForm?.myName { caseName = nil }
+        exampleForm = nil
     }
 
     /// Nothing left to spend: pricing instead of a request the server
@@ -554,11 +587,13 @@ final class HomeModel {
         fail(failure == .offline && background.expired ? .interrupted : failure)
     }
 
-    /// The judging cover finished its reveal: hand over to the verdict.
+    /// The judging cover finished its reveal: hand over to the verdict. The
+    /// case is done, so "New" finds an empty form behind it.
     func judgingFinished() {
         isJudging = false
         guard let id = arrivedID else { return }
         arrivedID = nil
+        clearForm()
         path.append(.verdict(id: id))
     }
 
@@ -573,18 +608,19 @@ final class HomeModel {
         arrivedID = nil
     }
 
-    /// The header's "+" and "Start a new case": back to an empty form.
+    /// "Clear" and "Start a new case": back to an empty form.
     func judgeAnother() {
+        clearForm()
+        path.removeAll()
+    }
+
+    private func clearForm() {
         argument = ""
-        otherSide = ""
-        otherName = nil
-        if caseName == exampleName { caseName = nil }
-        exampleName = nil
+        removeTheirSide()
         mode = .now
         error = nil
         clarify = nil
         evidence.clear()
-        path.removeAll()
     }
 
     /// "Try an example": both names and both sides from a random example,
@@ -592,11 +628,16 @@ final class HomeModel {
     func fillExample(lang: AppLang) {
         let example = ExampleCase.random(after: lastExample)
         lastExample = example.id
+        fill(example, lang: lang)
+    }
+
+    private func fill(_ example: ExampleCase, lang: AppLang) {
         caseName = example.myName(lang)
-        exampleName = caseName
         argument = example.mine(lang)
         otherName = example.theirName(lang)
         otherSide = example.theirs(lang)
+        theirsOpen = true
+        exampleForm = formText
     }
 
     func dismissError() {
@@ -651,6 +692,11 @@ extension HomeModel {
     func showJudgingForScreenshot() {
         judgedSides = Self.sides(mine: argument, theirs: otherSide, myName: caseName ?? "", theirName: otherName ?? "")
         isJudging = true
+    }
+
+    /// Screenshot fixtures: one example, the same every run.
+    func showForScreenshot(example: ExampleCase, lang: AppLang) {
+        fill(example, lang: lang)
     }
 
     /// Screenshot fixtures: a fresh verdict.

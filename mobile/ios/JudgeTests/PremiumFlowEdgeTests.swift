@@ -127,7 +127,9 @@ final class PremiumFlowEdgeTests: XCTestCase {
         XCTAssertEqual(router.count("POST", Self.clarifyPath), 1, "resuming skips the questions")
 
         // The same text again is a new request with a new key.
+        let text = home.argument
         home.judgingFinished()
+        home.argument = text
         home.submit(app: app)
         try await PremiumFixtures.waitUntil("the second post") { router.count("POST", Self.verdictPath) == 2 }
         let keys = router.sentHeaders("POST", Self.verdictPath).compactMap { $0["Idempotency-Key"] }

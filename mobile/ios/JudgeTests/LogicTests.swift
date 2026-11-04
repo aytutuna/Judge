@@ -387,6 +387,57 @@ final class TextHelperTests: XCTestCase {
     }
 
     @MainActor
+    func testOnePersonWritesUntilTheirSideIsAdded() {
+        let home = HomeModel()
+        XCTAssertFalse(home.theirsOpen)
+        home.mode = .both
+        home.addTheirSide()
+        XCTAssertTrue(home.theirsOpen)
+        XCTAssertEqual(home.mode, .now, "writing it yourself drops a failed link's case mode")
+        home.otherSide = "Their account of it."
+        home.otherName = "Sam"
+        home.removeTheirSide()
+        XCTAssertFalse(home.theirsOpen)
+        XCTAssertEqual(home.otherSide, "")
+        XCTAssertNil(home.otherName)
+    }
+
+    @MainActor
+    func testAnExampleNeverReplacesTheUsersText() {
+        let home = HomeModel()
+        XCTAssertTrue(home.offersExample)
+        home.fillExample(lang: .en)
+        XCTAssertTrue(home.theirsOpen)
+        XCTAssertTrue(home.offersExample, "another example can replace an example")
+        home.argument += " And one more thing."
+        XCTAssertFalse(home.offersExample)
+        home.judgeAnother()
+        XCTAssertTrue(home.offersExample)
+
+        home.fillExample(lang: .en)
+        home.otherSide += " They said more."
+        XCTAssertFalse(home.offersExample, "the second card counts too")
+        home.judgeAnother()
+
+        home.fillExample(lang: .en)
+        home.otherName = "Someone"
+        XCTAssertFalse(home.offersExample, "and so do the names")
+    }
+
+    @MainActor
+    func testClosingTheirCardDropsTheExampleNameButKeepsOneTheUserTyped() {
+        let home = HomeModel()
+        home.fillExample(lang: .en)
+        home.removeTheirSide()
+        XCTAssertNil(home.caseName, "a hidden example name must not go out on a link")
+
+        home.fillExample(lang: .en)
+        home.caseName = "Ada"
+        home.removeTheirSide()
+        XCTAssertEqual(home.caseName, "Ada")
+    }
+
+    @MainActor
     func testNewCaseDropsTheExampleNameButKeepsOneTheUserTyped() {
         let home = HomeModel()
         home.fillExample(lang: .en)

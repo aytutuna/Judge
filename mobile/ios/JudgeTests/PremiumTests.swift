@@ -677,7 +677,10 @@ final class PremiumFlowTests: XCTestCase {
         XCTAssertEqual(keys[0], keys[1], "the same request retried keeps its key")
 
         // After a success the same text is a new request.
+        let text = home.argument
         home.judgingFinished()
+        XCTAssertTrue(home.isBlank, "the finished case leaves an empty form behind the verdict")
+        home.argument = text
         home.submit(app: app)
         try await PremiumFixtures.waitUntil("the third post") { router.count("POST", Self.verdictPath) == 3 }
         keys = router.sentHeaders("POST", Self.verdictPath).compactMap { $0["Idempotency-Key"] }

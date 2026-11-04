@@ -10,8 +10,8 @@ import SwiftData
 /// `home`, `home-example` (both sides filled by "Try an example"),
 /// `home-error`, `judging`, `history`, `settings`, `signin`, `signin-code`,
 /// `account` (Settings, signed in), `verdict/<sample>` (a key of `verdictResponses`,
-/// opened as a saved verdict), `verdict-thread` (a fresh verdict under its
-/// argument), `verdict-context`, `verdict-context-locked` and
+/// opened as a saved verdict), `verdict-thread` (a fresh verdict, as the
+/// judging cover hands over to it), `verdict-context`, `verdict-context-locked` and
 /// `verdict-context-limit` (the writer's "Add context" form, its Premium
 /// lock and the limit note), or an account state: `balance/welcome` (signed
 /// in with a new account's free verdict), `balance/none` (signed in, the
@@ -167,11 +167,7 @@ struct ScreenshotState {
         case .home, .settings:
             break
         case .homeExample:
-            let example = ExampleCase.all[0]
-            app.home.caseName = example.myName(lang)
-            app.home.argument = example.mine(lang)
-            app.home.otherName = example.theirName(lang)
-            app.home.otherSide = example.theirs(lang)
+            app.home.showForScreenshot(example: ExampleCase.all[0], lang: lang)
         case .homeError:
             app.home.argument = ExampleArgument.all[0].text(lang)
             app.home.showForScreenshot(error: .timeout)
@@ -179,7 +175,7 @@ struct ScreenshotState {
             app.home.argument = ExampleArgument.all[0].text(lang)
             app.home.showJudgingForScreenshot()
         case .verdict(let sample):
-            // Opened as a saved verdict: the card at the top, no thread above it.
+            // Opened as a saved verdict, from history.
             guard let session = ScreenshotFixtures.session(sample) else { return }
             try? app.history.save(session, now: Self.newest)
             app.home.path = [.saved(id: session.id)]

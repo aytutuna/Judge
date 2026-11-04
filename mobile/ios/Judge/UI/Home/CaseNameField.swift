@@ -33,7 +33,7 @@ struct CaseNameField: View {
                 if capped != (name ?? fallback) { name = capped }
             }
             .onChange(of: name) { _, value in
-                // A created case or the "+" clears the name, an example writes
+                // A created case or "Clear" clears the name, an example writes
                 // one: show what the model holds.
                 let shown = value ?? fallback
                 if shown != text { text = shown }

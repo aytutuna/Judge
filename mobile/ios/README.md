@@ -83,7 +83,7 @@ port). Screens: `home`,
 `home-example` (both sides from "Try an example"), `home-error`, `judging`, `history`, `settings`, `signin`, `signin-code`,
 `account` (Settings, signed in with a fixture account), `verdict/<sample>`
 for any key of `verdictResponses` (opened as a saved verdict),
-`verdict-thread` (a fresh verdict under its argument), `verdict-context`,
+`verdict-thread` (a fresh verdict, as the judging cover hands over to it), `verdict-context`,
 `verdict-context-locked` and `verdict-context-limit` (the writer's "Add
 context" form, its Premium lock and the limit note), and the
 account states `balance/welcome` (a new account's free verdict),
