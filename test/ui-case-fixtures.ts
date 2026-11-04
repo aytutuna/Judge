@@ -123,6 +123,7 @@ export function caseView(over: Partial<CaseView> = {}): CaseView {
     verdicts: [],
     appeals: [],
     canJudgeNow: true,
+    ownerSideMissing: false,
     appeal: { allowed: false, blockedBy: "not_judged" },
     lastError: null,
     pollAfterMs: null,

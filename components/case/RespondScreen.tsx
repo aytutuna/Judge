@@ -47,10 +47,12 @@ export const RESPOND_SIGNIN_HREF = `/signin?next=${encodeURIComponent("/r")}`;
 export type RespondStage =
   | "own_invite"
   | "form"
+  | "waiting"
   | "judging"
   | "verdict"
   | "without_you"
   | "expired"
+  | "expired_answered"
   | "closed"
   | "failed";
 
@@ -58,9 +60,10 @@ export function respondStage(view: CaseView): RespondStage {
   if (view.ownInvite) return "own_invite";
   switch (view.status) {
     case "awaiting_respondent":
-      return view.respondentAnswered ? "closed" : "form";
+      if (!view.respondentAnswered) return "form";
+      return view.ownerSideMissing ? "waiting" : "closed";
     case "expired":
-      return "expired";
+      return view.respondentAnswered ? "expired_answered" : "expired";
     case "judging":
       if (view.mode === "one_sided") return "without_you";
       return view.respondentAnswered ? "judging" : "closed";
@@ -376,6 +379,33 @@ export function RespondPanel({
       {t(lang, removedNow ? "case.removed" : "case.removedBanner")}
     </p>
   ) : null;
+
+  if (stage === "waiting") {
+    return (
+      <>
+        {removedBanner}
+        <p className={styles.calm} role="status">
+          {t(lang, "respond.sentWaiting")}
+        </p>
+        {ownTools}
+        {removal}
+      </>
+    );
+  }
+
+  if (stage === "expired_answered") {
+    return (
+      <>
+        {removedBanner ?? (
+          <p className={styles.calm} role="status">
+            {t(lang, "respond.expired")}
+          </p>
+        )}
+        {ownTools}
+        {removal}
+      </>
+    );
+  }
 
   if (stage === "failed") {
     return (

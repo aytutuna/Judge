@@ -6,6 +6,7 @@ import { CasePanel, type CasePanelProps } from "../components/case/CaseScreen";
 import type { EvidenceController } from "../components/case/EvidencePicker";
 import { InviteLink } from "../components/case/InviteLink";
 import { RespondPanel, respondStage, type RespondForm, type RespondPanelProps } from "../components/case/RespondScreen";
+import { WriteSide, type SideDraft } from "../components/case/WriteSide";
 import type { CaseView } from "../lib/case-types";
 import { t } from "../lib/i18n";
 import { OWNER, OWNER_NAMES, RESPONDENT, RESPONDENT_NAMES, caseView } from "./ui-case-fixtures";
@@ -34,6 +35,8 @@ const draft: AppealDraft = {
   canSubmit: false,
   submit: async () => {},
 };
+
+const sideDraft: SideDraft = { ...draft };
 
 const form: RespondForm = {
   text: "",
@@ -105,6 +108,42 @@ describe("owner case page", () => {
     // "Make a new link" asks first: the link already sent stops working.
     expect(html).toContain(esc(t("en", "case.invite.resetConfirm")));
     expect(html).toContain(t("en", "case.invite.resetYes"));
+  });
+
+  it("no side A yet: the link and the write form, no judge-now, no not-stored message", () => {
+    const waiting = caseView({ sides: [], ownerSideMissing: true, canJudgeNow: false });
+    const html = owner(waiting, { write: sideDraft });
+    expect(html).toContain(waiting.inviteUrl as string);
+    expect(html).toContain(esc(t("en", "case.write.placeholder")));
+    expect(html).toContain(esc(t("en", "case.write.lead")));
+    expect(html).toContain(t("en", "case.write.submit"));
+    expect(html).not.toContain(esc(t("en", "case.judgeNow")));
+    expect(html).not.toContain(esc(t("en", "owner.notStored")));
+  });
+
+  it("no side A yet, the other side already wrote: no link, the answered lead", () => {
+    const waiting = caseView({
+      sides: [],
+      ownerSideMissing: true,
+      canJudgeNow: false,
+      respondentAnswered: true,
+      inviteUrl: null,
+      mode: "two_sided",
+    });
+    const html = owner(waiting, { write: sideDraft });
+    expect(html).toContain(esc(t("en", "case.write.leadAnswered")));
+    expect(html).not.toContain(esc(t("en", "case.write.lead")));
+    expect(html).not.toContain(t("en", "case.invite.copy"));
+    expect(html).not.toContain(esc(t("en", "owner.notStored")));
+  });
+
+  it("side A written: no write form", () => {
+    expect(owner(OWNER.awaiting, { write: sideDraft })).not.toContain(esc(t("en", "case.write.submit")));
+  });
+
+  it("WriteSide: the submit button waits for a long enough side", () => {
+    const html = renderToStaticMarkup(<WriteSide lang="en" draft={sideDraft} answered={false} evidenceOn />);
+    expect(html).toMatch(/<button type="submit"[^>]*disabled/);
   });
 
   it("awaiting: confirms a reset link in a status line", () => {
@@ -215,6 +254,32 @@ describe("respondent page", () => {
     expect(respondStage(caseView({ ...RESPONDENT.form, status: "failed", mode: "two_sided", respondentAnswered: true }))).toBe(
       "failed",
     );
+  });
+
+  it("waiting for the owner's side: thanks them and shows no form", () => {
+    const waiting = caseView({
+      ...RESPONDENT.form,
+      respondentAnswered: true,
+      ownerSideMissing: true,
+      mode: "two_sided",
+    });
+    expect(respondStage(waiting)).toBe("waiting");
+    const html = respondent(waiting);
+    expect(html).toContain(esc(t("en", "respond.sentWaiting")));
+    expect(html).not.toContain("<textarea");
+    // Once the owner has written, the answer is judging or closed as before.
+    expect(respondStage({ ...waiting, ownerSideMissing: false })).toBe("closed");
+  });
+
+  it("an answer that expired unread keeps the expired note and the removal; a removed one says so", () => {
+    const expired = caseView({ ...RESPONDENT.expired, respondentAnswered: true, ownerSideMissing: true });
+    expect(respondStage(expired)).toBe("expired_answered");
+    const html = respondent(expired, { onRemove: () => {} });
+    expect(html).toContain(esc(t("en", "respond.expired")));
+    expect(html).toContain(esc(t("en", "respond.remove")));
+    const gone = respondent({ ...expired, removed: { at: expired.createdAt, parties: ["b"] } }, { onRemove: () => {} });
+    expect(gone).toContain(esc(t("en", "case.removedBanner")));
+    expect(gone).not.toContain(esc(t("en", "respond.expired")));
   });
 
   it("form: the language, the textarea, screenshots and the privacy promise", () => {

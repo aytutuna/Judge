@@ -11,6 +11,8 @@ export type ThreadProps = {
   argument: string | null;
   /** Why it can't be shown (default: it was not kept). */
   missing?: Key;
+  /** The viewer has not written their side yet: no argument at all. */
+  unwritten?: boolean;
   /** The judges' side, always in this order, each part only when given. */
   clarify?: ReactNode;
   /** A short progress line (checking for gaps, creating the case). Not a
@@ -41,7 +43,7 @@ function prefersReducedMotion(): boolean {
  * finished thread stays where it starts.
  */
 export function Thread(props: ThreadProps) {
-  const { lang, argument, missing = "owner.notStored", status, followUp, judgesLabel } = props;
+  const { lang, argument, missing = "owner.notStored", unwritten = false, status, followUp, judgesLabel } = props;
   const listRef = useRef<HTMLOListElement>(null);
   const parts = PARTS.filter((p) => Boolean(props[p]));
   const shown = parts.join(" ");
@@ -65,14 +67,16 @@ export function Thread(props: ThreadProps) {
 
   return (
     <ol ref={listRef} className={styles.thread} aria-label={t(lang, "thread.label")}>
-      <li className={styles.you} data-turn="argument">
-        <p className="sr-only">{t(lang, "thread.you")}</p>
-        {argument === null ? (
-          <p className={styles.missing}>{t(lang, missing)}</p>
-        ) : (
-          <p className={styles.bubble}>{argument}</p>
-        )}
-      </li>
+      {unwritten ? null : (
+        <li className={styles.you} data-turn="argument">
+          <p className="sr-only">{t(lang, "thread.you")}</p>
+          {argument === null ? (
+            <p className={styles.missing}>{t(lang, missing)}</p>
+          ) : (
+            <p className={styles.bubble}>{argument}</p>
+          )}
+        </li>
+      )}
       {parts.length > 0 ? (
         <li className={styles.judges} data-turn="judges">
           <p className={styles.who}>

@@ -41,6 +41,7 @@ import {
 import { CaseNames, CaseOriginals, useCaseOriginals } from "./CaseOwnTools";
 import { InviteLink } from "./InviteLink";
 import { VerdictHistory } from "./VerdictHistory";
+import { WriteSide, useSideDraft, type SideDraft } from "./WriteSide";
 import styles from "./case.module.css";
 
 const STATUS_KEY = {
@@ -50,6 +51,10 @@ const STATUS_KEY = {
   failed: "case.status.failed",
   expired: "case.status.expired",
 } as const satisfies Record<CaseStatus, Key>;
+
+/** They wrote, the owner has not: the wait is on the owner, so no "waiting" chip. */
+const ownerOwes = (view: CaseView) =>
+  view.status === "awaiting_respondent" && view.ownerSideMissing && view.respondentAnswered;
 
 export function StatusChip({ lang, status }: { lang: Lang; status: CaseStatus }) {
   return (
@@ -188,6 +193,8 @@ export type CasePanelProps = {
   /** Removes the owner's side (soft: blanked and links closed). */
   onRemove: () => void;
   appeal: AppealDraft | null;
+  /** The owner's side of a case sent before writing it; absent when the side is in. */
+  write?: SideDraft | null;
   /** Show the screenshot picker on the appeal form (the deployment offers evidence). */
   evidenceOn?: boolean;
   /** An appeal just finished: focus its outcome banner. */
@@ -230,6 +237,7 @@ export function CasePanel({
   onReset,
   onRemove,
   appeal,
+  write = null,
   evidenceOn = true,
   focusAppeal = false,
   ownTools = null,
@@ -250,6 +258,7 @@ export function CasePanel({
   const bothRead = view.sides.length > 1;
   // Cases from before every verdict was premium hold no unit.
   const held = view.tier === "premium";
+  const showHeld = held && !ownerOwes(view);
 
   const error = actionError ? (
     <p className={styles.error} role="alert">
@@ -266,20 +275,25 @@ export function CasePanel({
   if (!overlay && view.status === "awaiting_respondent") {
     invite = (
       <div className={styles.stack}>
-        <p className={styles.note}>{t(lang, "case.notYet")}</p>
-        <section className={account.card}>
-          {view.inviteUrl ? (
-            <InviteLink
-              lang={lang}
-              url={view.inviteUrl}
-              expiresAt={view.expiresAt}
-              onReset={() => openConfirm(resetRef.current, resetCancelRef.current)}
-              resetting={busy}
-              resetDone={resetDone}
-            />
-          ) : null}
-          {held ? <p className={styles.note}>{tWithDate(lang, "case.held", view.expiresAt)}</p> : null}
-        </section>
+        {view.respondentAnswered ? null : <p className={styles.note}>{t(lang, "case.notYet")}</p>}
+        {view.inviteUrl || showHeld ? (
+          <section className={account.card}>
+            {view.inviteUrl ? (
+              <InviteLink
+                lang={lang}
+                url={view.inviteUrl}
+                expiresAt={view.expiresAt}
+                onReset={() => openConfirm(resetRef.current, resetCancelRef.current)}
+                resetting={busy}
+                resetDone={resetDone}
+              />
+            ) : null}
+            {showHeld ? <p className={styles.note}>{tWithDate(lang, "case.held", view.expiresAt)}</p> : null}
+          </section>
+        ) : null}
+        {view.ownerSideMissing && write ? (
+          <WriteSide lang={lang} draft={write} answered={view.respondentAnswered} evidenceOn={evidenceOn} />
+        ) : null}
         {error}
         {view.canJudgeNow ? (
           <button
@@ -308,7 +322,9 @@ export function CasePanel({
   } else if (!overlay && view.status === "expired") {
     notice = (
       <>
-        <p className={styles.banner}>{t(lang, held ? "case.expiredBody" : "case.expiredBodyFree")}</p>
+        {view.ownerSideMissing ? null : (
+          <p className={styles.banner}>{t(lang, held ? "case.expiredBody" : "case.expiredBodyFree")}</p>
+        )}
         {error}
         <div className={styles.row}>
           {view.canJudgeNow ? (
@@ -344,6 +360,7 @@ export function CasePanel({
       <Thread
         lang={lang}
         argument={argument}
+        unwritten={!own}
         status={judgingNote}
         judging={
           overlay ? (
@@ -525,6 +542,14 @@ export function CaseScreen({ id }: { id: string }) {
       setView(res.case);
     },
   });
+  const write = useSideDraft({
+    endpoint: `${base}/side`,
+    lang,
+    onSent: (res) => {
+      saveCaseNames(id, "a", res.name_map ?? []);
+      setView(res.case);
+    },
+  });
   const appealFinished = useAppealFinished(view);
 
   // The Verdicts list shows this case's status and headline: judging, a reply
@@ -613,7 +638,13 @@ export function CaseScreen({ id }: { id: string }) {
   }
 
   return (
-    <CaseShell lang={lang} kicker={kicker} title={title} status={view.status} you={view.yourParty}>
+    <CaseShell
+      lang={lang}
+      kicker={kicker}
+      title={title}
+      status={ownerOwes(view) ? null : view.status}
+      you={view.yourParty}
+    >
       <CasePanel
         lang={lang}
         view={view}
@@ -629,6 +660,7 @@ export function CaseScreen({ id }: { id: string }) {
         onReset={() => void reset()}
         onRemove={() => void remove()}
         appeal={appeal}
+        write={write}
         evidenceOn={viewer.config?.features?.evidence === true}
         focusAppeal={appealFinished}
         removedNow={removedNow}
