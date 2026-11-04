@@ -63,12 +63,12 @@ class CaseScreensTest {
         var state by mutableStateOf(stateOf("waiting_for_respondent"))
         compose.setContent { Themed(AppLang.EN) { CaseScreen(state, evidenceOn = true, actions = CaseActions(), reducedMotion = true) } }
         val names = Fixtures.verdicts["cases"]!!.jsonObject["views"]!!.jsonObject.keys
-        assertEquals(15, names.size)
+        assertEquals(18, names.size)
         for (name in names) {
             state = stateOf(name)
             compose.waitForIdle()
             val v = view(name)
-            if (v.statusRaw == "awaiting_respondent") {
+            if (v.statusRaw == "awaiting_respondent" && !(v.ownerSideMissing && v.respondentAnswered)) {
                 compose.onNodeWithText(en.appCaseWaitingKicker.uppercase(Locale.US)).assertExists()
             } else {
                 compose.onNodeWithTag(CaseTags.STATUS).assertTextContains(en.text(v.status.key)!!)
@@ -80,6 +80,9 @@ class CaseScreensTest {
                 "failed" -> compose.onNodeWithTag(CaseTags.BANNER).assertTextContains(en.errorQuota)
                 "expired" -> compose.onNodeWithTag(CaseTags.BANNER).assertTextContains(en.caseExpiredBody)
                 "waiting_free" -> compose.onNodeWithText(en.appCaseStepThemAnon).assertExists()
+                "waiting_to_write" -> compose.onNodeWithText(en.caseWriteLead).assertExists()
+                "waiting_to_write_answered" -> compose.onNodeWithText(en.caseWriteLeadAnswered).assertExists()
+                "respondent_waiting_for_owner" -> compose.onNodeWithText(en.respondSentWaiting).assertExists()
                 "removed" -> compose.onNodeWithTag(CaseTags.BANNER).assertTextContains(en.caseRemovedBanner)
                 "judged_one_sided" -> compose.onNodeWithText(en.caseOneSided).assertExists()
                 "appeal_judging" -> compose.onNodeWithTag(CaseTags.APPEAL_NOTE).assertTextContains(en.appealBusy)

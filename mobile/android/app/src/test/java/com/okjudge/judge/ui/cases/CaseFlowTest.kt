@@ -126,6 +126,9 @@ class CaseFlowTest {
             "removed" to CaseStatus.JUDGED,
             "waiting_free" to CaseStatus.AWAITING,
             "judged_free" to CaseStatus.JUDGED,
+            "waiting_to_write" to CaseStatus.AWAITING,
+            "waiting_to_write_answered" to CaseStatus.AWAITING,
+            "respondent_waiting_for_owner" to CaseStatus.AWAITING,
         )
         assertEquals(expected.keys, cases["views"]!!.jsonObject.keys)
         for ((name, status) in expected) {
