@@ -204,6 +204,7 @@ struct HistoryView: View {
             Section {
                 ForEach(Array(entries.enumerated()), id: \.element.id) { index, entry in
                     row(entry, lang: lang, now: now)
+                        .listRowSeparator(index == entries.count - 1 ? .hidden : .automatic, edges: .bottom)
                         .onAppear {
                             guard index >= entries.count - 3 else { return }
                             tailShown.insert(entry.id)
@@ -230,21 +231,21 @@ struct HistoryView: View {
                     }
                     .listRowBackground(Color.clear)
                 }
-            } header: {
-                Color.clear.frame(height: 0)
-            } footer: {
                 if entries.contains(where: \.isPhone) {
                     Text(L10n.appHistoryPhoneOnlyNote(lang))
                         .brandText(.footnote)
                         .foregroundStyle(Brand.muted)
                         .padding(.top, 8)
+                        .listRowBackground(Color.clear)
+                        .listRowSeparator(.hidden)
                 }
             }
         }
-        .scrollContentBackground(.hidden)
-        // The grouped list leaves a band above its first section otherwise.
-        .environment(\.defaultMinListHeaderHeight, 0)
+        // Plain, as the grouped style keeps a band above its first section.
+        .listStyle(.plain)
+        .contentMargins(.horizontal, 16, for: .scrollContent)
         .contentMargins(.top, 8, for: .scrollContent)
+        .scrollContentBackground(.hidden)
         // A page of rows the phone already had doesn't grow the list, so no
         // new row appears: keep going while the end is on screen.
         .onChange(of: list.next) { _, next in
