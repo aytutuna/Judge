@@ -226,6 +226,28 @@ class HomeViewModelTest {
     }
 
     @Test
+    fun sendLink_isOpenFromTheStart_andSignedOutGoesThroughSignIn() {
+        val vm = vm()
+        assertTrue(vm.state.value.canSendLink)
+        assertEquals(Submitted.SIGN_IN, vm.sendLink(AppLang.EN))
+        assertTrue(flow.canStart())
+    }
+
+    @Test
+    fun sendLink_followsTheTextRules() {
+        val vm = vm()
+        vm.onArgumentChange("too short")
+        assertFalse(vm.state.value.canSendLink)
+        assertEquals(Submitted.NOTHING, vm.sendLink(AppLang.EN))
+        vm.onArgumentChange("   ")
+        assertTrue(vm.state.value.canSendLink)
+        vm.onArgumentChange(argument)
+        assertTrue(vm.state.value.canSendLink)
+        vm.addTheirSide()
+        assertFalse(vm.state.value.canSendLink)
+    }
+
+    @Test
     fun submit_withACredit_orBeforeTheBalanceLoads_goesToTheQuestions() {
         for (e in listOf(Entitlement(canUsePremium = true, credits = 1), null)) {
             val vm = vm(account = signedIn(e))

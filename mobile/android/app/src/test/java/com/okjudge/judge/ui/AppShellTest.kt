@@ -84,6 +84,15 @@ class AppShellTest {
     }
 
     @Test
+    fun counter_sitsInTheBoxAndFollowsWhatIsTyped() {
+        val en = UiTestSupport.s(AppLang.EN)
+        awaitText(en.appHomeExample)
+        compose.onNodeWithTag(HomeTags.COUNTER).assertTextEquals("0 / 6,000")
+        compose.onNodeWithTag(HomeTags.INPUT).performTextInput("abc")
+        compose.onNodeWithTag(HomeTags.COUNTER).assertTextEquals("3 / 6,000")
+    }
+
+    @Test
     fun newTab_comesBackFromOtherTabsToTheDraft() {
         val en = UiTestSupport.s(AppLang.EN)
         awaitText(en.appHomeExample)

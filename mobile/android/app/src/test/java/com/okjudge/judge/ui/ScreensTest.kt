@@ -129,15 +129,24 @@ class ScreensTest {
     }
 
     @Test
-    fun home_sendLink_onlyWhileTheirSideIsEmpty() {
+    fun home_sendLink_isOpenFromTheStart_butNotForAShortSide_andGoesWithTheFirstCard() {
         var sent = 0
         home(AppLang.EN, HomeUiState(signedIn = true, features = Features(cases = true)), onSendLink = { sent++ })
+        compose.onNodeWithTag(HomeTags.SEND_LINK).assertIsEnabled()
+        compose.onNodeWithTag(HomeTags.INPUT).performTextInput("Too short")
         compose.onNodeWithTag(HomeTags.SEND_LINK).assertIsNotEnabled()
-        compose.onNodeWithTag(HomeTags.INPUT).performTextInput("My roommate never does the dishes")
+        compose.onNodeWithTag(HomeTags.INPUT).performTextInput(" for a link but not for long")
         compose.onNodeWithTag(HomeTags.SEND_LINK).assertIsEnabled().performClick()
         assertEquals(1, sent)
         compose.onNodeWithTag(HomeTags.ADD_THEIRS).performClick()
         compose.onNodeWithTag(HomeTags.SEND_LINK).assertDoesNotExist()
+    }
+
+    @Test
+    fun home_sendLink_isThereSignedOut() {
+        home(AppLang.EN, HomeUiState(features = Features(cases = true)))
+        compose.onNodeWithTag(HomeTags.SEND_LINK).assertIsEnabled()
+        compose.onNodeWithTag(HomeTags.ADD_THEIRS).assertExists()
     }
 
     @Test

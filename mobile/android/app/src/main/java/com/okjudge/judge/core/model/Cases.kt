@@ -105,6 +105,8 @@ data class CaseView(
     val display: CaseDisplay = CaseDisplay(),
     val removed: CaseRemoved? = null,
     val yourOriginal: String? = null,
+    /** The owner has not written their side yet: the link was made first. */
+    val ownerSideMissing: Boolean = false,
 ) {
     val status: CaseStatus get() = CaseStatus.of(statusRaw)
     val current: CaseVerdictView? get() = verdicts.lastOrNull()
@@ -135,7 +137,7 @@ data class CaseListResponse(val cases: List<CaseSummary> = emptyList(), val next
 @Serializable
 data class CaseResponse(@SerialName("case") val case: CaseView)
 
-/** POST /api/v1/cases and POST /api/v1/cases/{id}/appeals (CreateCaseResponse, AppealResponse). */
+/** POST /api/v1/cases, /side and /appeals (CreateCaseResponse, AppealResponse). */
 @Serializable
 data class CaseWithNames(
     @SerialName("case") val case: CaseView,
@@ -150,15 +152,19 @@ data class InviteResponse(val inviteUrl: String = "")
 @Serializable
 data class CaseRemovalResponse(val removed: Boolean = false, val removedAt: String = "", @SerialName("case") val case: CaseView? = null)
 
-/** POST /api/v1/cases (CreateCaseRequest). Null fields are left out. */
+/** POST /api/v1/cases (CreateCaseRequest). Null fields are left out; no [text] makes a case without the owner's side. */
 @Serializable
 data class CreateCaseRequest(
-    val text: String,
+    val text: String? = null,
     val lang: String = "en",
     val tier: String = "premium",
     val evidence: List<String>? = null,
     val displayName: String? = null,
 )
+
+/** POST /api/v1/cases/{id}/side (WriteSideRequest). */
+@Serializable
+data class WriteSideRequest(val text: String, val evidence: List<String>? = null, val displayName: String? = null)
 
 /** POST /api/v1/cases/{id}/appeals and /api/v1/verdicts/{id}/appeals (AppealRequest). */
 @Serializable

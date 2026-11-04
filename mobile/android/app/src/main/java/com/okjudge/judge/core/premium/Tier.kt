@@ -43,7 +43,7 @@ object Tiers {
         add("pricing.premium.f1")
         add("pricing.premium.f2")
         add("pricing.premium.f3")
-        if (evidence) add("pricing.premium.f5")
+        if (evidence) add("app.pricing.context")
         if (cases) add("pricing.premium.f6")
     }
 }

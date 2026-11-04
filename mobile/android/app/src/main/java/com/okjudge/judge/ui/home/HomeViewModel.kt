@@ -59,7 +59,7 @@ data class HomeUiState(
     /** What the last example wrote ([exampleMark]), to tell it from the user's own text. */
     val exampleText: String? = null,
 ) {
-    val casesOn: Boolean get() = signedIn && features.cases
+    val casesOn: Boolean get() = features.cases
     val shownName: String get() = typedName ?: suggestedName ?: ""
     val evidenceOn: Boolean get() = signedIn && features.evidence
 
@@ -80,9 +80,13 @@ data class HomeUiState(
         get() = argument.jsTrim().length + otherSide.jsTrim().length >= ArgumentRules.MIN &&
             !holding && !(evidenceOn && evidence.busy)
 
-    /** "Or send them a link": only your side goes into the case, so theirs must be empty. */
+    /**
+     * "Send them a link": from the start, with nothing written, or with your
+     * side written as for a verdict. Context images only go with a written side.
+     */
     val canSendLink: Boolean
-        get() = casesOn && otherSide.isBlank() && ArgumentRules.canSubmit(argument) && !holding && !(evidenceOn && evidence.busy)
+        get() = casesOn && !theirsOpen && !holding && !(evidenceOn && evidence.busy) &&
+            if (argument.jsTrim().isEmpty()) !evidenceOn || evidence.items.isEmpty() else ArgumentRules.canSubmit(argument)
 
     /** What the judges read: your side as written, or both sides joined with a name in front of each. */
     fun outgoing(s: Strings): String = joined(argument, otherSide, shownName, otherName, s)
@@ -297,10 +301,11 @@ class HomeViewModel(
         return if (flow.startPremium(s.outgoing(strings), lang, tokens, s.sides)) Submitted.CHECKING else Submitted.NOTHING
     }
 
-    /** "Or send them a link to write it": a two-sided case with your side; the other person writes theirs. */
+    /** "Send them a link to write it": a two-sided case, with your side if it is written; the other person writes theirs. */
     fun sendLink(lang: AppLang, now: Long = System.currentTimeMillis()): Submitted {
         val s = state.value
         if (!s.canSendLink || (s.blockedUntil ?: 0) > now) return Submitted.NOTHING
+        if (!s.signedIn) return Submitted.SIGN_IN
         if (s.outOfUnits) return Submitted.PRICING
         val tokens = if (s.evidenceOn) s.evidence.tokens else emptyList()
         val started = flow.createCase(s.argument, lang, tokens, s.shownName, s.otherName)

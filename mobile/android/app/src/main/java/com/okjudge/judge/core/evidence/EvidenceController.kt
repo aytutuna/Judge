@@ -55,6 +55,9 @@ data class EvidenceState(
 
     val full: Boolean get() = items.size >= max
     val room: Int get() = (max - items.size).coerceAtLeast(0)
+
+    /** Something to show under the writing box: the images, or why they were refused. */
+    val hasRows: Boolean get() = items.isNotEmpty() || overLimit || failure != null
 }
 
 /**

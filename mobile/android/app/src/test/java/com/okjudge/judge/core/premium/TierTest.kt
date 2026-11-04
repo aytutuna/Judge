@@ -89,10 +89,10 @@ class TierTest {
     fun premiumFeatures_addTheExtrasOnOffer() {
         assertEquals(3, Tiers.premiumFeatureKeys(cases = false, evidence = false).size)
         assertEquals(
-            listOf("pricing.premium.f1", "pricing.premium.f2", "pricing.premium.f3", "pricing.premium.f5", "pricing.premium.f6"),
+            listOf("pricing.premium.f1", "pricing.premium.f2", "pricing.premium.f3", "app.pricing.context", "pricing.premium.f6"),
             Tiers.premiumFeatureKeys(cases = true, evidence = true),
         )
-        assertEquals(listOf("pricing.premium.f1", "pricing.premium.f2", "pricing.premium.f3", "pricing.premium.f5"), Tiers.premiumFeatureKeys(cases = false, evidence = true))
+        assertEquals(listOf("pricing.premium.f1", "pricing.premium.f2", "pricing.premium.f3", "app.pricing.context"), Tiers.premiumFeatureKeys(cases = false, evidence = true))
         for (k in Tiers.premiumFeatureKeys(cases = true, evidence = true)) {
             assert(en.text(k) != null) { "missing $k" }
         }

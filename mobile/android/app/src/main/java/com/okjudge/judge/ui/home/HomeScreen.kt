@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -38,6 +39,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
@@ -74,8 +76,8 @@ import com.okjudge.judge.ui.components.JudgeIcons
 import com.okjudge.judge.ui.components.TintedIcon
 import com.okjudge.judge.ui.components.rememberIcon
 import com.okjudge.judge.ui.components.uppercaseForUi
-import com.okjudge.judge.ui.components.warmShadow
-import com.okjudge.judge.ui.premium.EvidencePicker
+import com.okjudge.judge.ui.premium.AddContextButton
+import com.okjudge.judge.ui.premium.EvidenceRows
 import com.okjudge.judge.ui.premium.rememberEvidencePicker
 import com.okjudge.judge.ui.theme.JudgeShapes
 import com.okjudge.judge.ui.theme.JudgeType
@@ -127,7 +129,6 @@ fun HomeScreen(
     onDisplayName: (String) -> Unit = {},
 ) {
     val s = LocalStrings.current
-    val lang = LocalLang.current
 
     // Re-evaluate the rate-limit block once a second while it lasts.
     var now by remember { mutableLongStateOf(System.currentTimeMillis()) }
@@ -141,6 +142,10 @@ fun HomeScreen(
     }
     val blocked = blockedUntil != null && now < blockedUntil
     val length = state.outgoing(s).length
+
+    // The server takes one set of screenshots for the verdict, so they belong to the case.
+    val pickContext = if (state.evidenceOn) rememberEvidencePicker(state.evidence.room, onAddEvidence) else null
+    val addContext = pickContext.takeIf { !state.evidence.full }
 
     val theirFocus = remember { FocusRequester() }
     var focusTheirs by remember { mutableStateOf(false) }
@@ -182,6 +187,8 @@ fun HomeScreen(
                     minHeight = if (state.theirsOpen) 96.dp else 180.dp,
                     tag = HomeTags.INPUT,
                     enabled = !state.holding,
+                    onAddContext = addContext,
+                    count = length.takeIf { !state.theirsOpen },
                 )
                 if (state.theirsOpen) {
                     SideCard(
@@ -202,9 +209,18 @@ fun HomeScreen(
                         enabled = !state.holding,
                         fieldModifier = Modifier.focusRequester(theirFocus),
                         onRemove = onRemoveTheirSide,
+                        onAddContext = addContext,
+                        count = length,
                     )
-                } else {
-                    Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                }
+                if (state.evidenceOn && state.evidence.hasRows) {
+                    EvidenceRows(state.evidence, disabled = state.holding, onRemove = onRemoveEvidence)
+                }
+                if (!state.theirsOpen) {
+                    FlowRow(
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        verticalArrangement = Arrangement.spacedBy(8.dp),
+                    ) {
                         GhostButton(
                             s.appHomeAddTheirSide,
                             rememberIcon(Palette.ink) { JudgeIcons.plus(it) },
@@ -216,54 +232,33 @@ fun HomeScreen(
                             enabled = !state.holding,
                         )
                         if (state.casesOn) {
-                            SendLink(enabled = state.canSendLink && !blocked, onClick = onSendLink)
-                        }
-                    }
-                }
-                // The server takes one set of screenshots for the verdict, so they belong to the case.
-                if (state.evidenceOn) {
-                    val pick = rememberEvidencePicker(state.evidence.room, onAddEvidence)
-                    Column(
-                        Modifier
-                            .fillMaxWidth()
-                            .warmShadow(6.dp, JudgeShapes.block)
-                            .clip(JudgeShapes.block)
-                            .background(Palette.paper)
-                            .border(1.dp, Palette.line, JudgeShapes.block)
-                            .padding(horizontal = 16.dp, vertical = 14.dp),
-                    ) {
-                        EvidencePicker(
-                            state = state.evidence,
-                            disabled = state.holding,
-                            onAdd = pick,
-                            onRemove = onRemoveEvidence,
-                        )
-                    }
-                }
-                Row(
-                    Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(12.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    FlowRow(
-                        Modifier.weight(1f),
-                        horizontalArrangement = Arrangement.spacedBy(8.dp),
-                        verticalArrangement = Arrangement.Center,
-                    ) {
-                        if (state.offersExample) {
-                            QuietAction(
-                                s.appHomeExample,
-                                onExample,
-                                !state.holding,
-                                Modifier.testTag(HomeTags.EXAMPLE),
-                                icon = rememberIcon(Palette.ink2) { JudgeIcons.shuffle(it) },
+                            GhostButton(
+                                s.appHomeSendLink,
+                                rememberIcon(Palette.ink) { JudgeIcons.link(it) },
+                                onClick = onSendLink,
+                                modifier = Modifier.testTag(HomeTags.SEND_LINK),
+                                enabled = state.canSendLink && !blocked,
                             )
                         }
-                        if (!state.blank) {
-                            QuietAction(s.appHomeClear, onClear, !state.holding, Modifier.testTag(HomeTags.CLEAR))
-                        }
                     }
-                    Counter(length, lang)
+                }
+                FlowRow(
+                    Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalArrangement = Arrangement.Center,
+                ) {
+                    if (state.offersExample) {
+                        QuietAction(
+                            s.appHomeExample,
+                            onExample,
+                            !state.holding,
+                            Modifier.testTag(HomeTags.EXAMPLE),
+                            icon = rememberIcon(Palette.ink2) { JudgeIcons.shuffle(it) },
+                        )
+                    }
+                    if (!state.blank) {
+                        QuietAction(s.appHomeClear, onClear, !state.holding, Modifier.testTag(HomeTags.CLEAR))
+                    }
                 }
                 state.error?.let { ErrorBanner(it, onDismissError) }
                 SubmitButton(
@@ -316,16 +311,20 @@ private fun SideCard(
     enabled: Boolean,
     fieldModifier: Modifier = Modifier,
     onRemove: (() -> Unit)? = null,
+    onAddContext: (() -> Unit)? = null,
+    count: Int? = null,
 ) {
     val s = LocalStrings.current
     var focused by remember { mutableStateOf(false) }
+    val edge = colors.strong
+    val glow = edge.copy(alpha = 0.25f)
     Column(
         Modifier
             .fillMaxWidth()
-            .warmShadow(6.dp, JudgeShapes.block)
+            .shadow(8.dp, JudgeShapes.block, clip = false, ambientColor = glow, spotColor = glow)
             .clip(JudgeShapes.block)
             .background(Palette.paper)
-            .border(1.dp, if (focused) colors.ink.copy(alpha = 0.6f) else Palette.line, JudgeShapes.block)
+            .border(1.dp, edge.copy(alpha = if (focused) 0.9f else 0.55f), JudgeShapes.block)
             .onFocusChanged { focused = it.hasFocus }
             .padding(horizontal = 16.dp, vertical = 14.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp),
@@ -396,6 +395,13 @@ private fun SideCard(
                 }
             },
         )
+        if (onAddContext != null || count != null) {
+            Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+                if (onAddContext != null) AddContextButton(enabled, onAddContext)
+                Spacer(Modifier.weight(1f))
+                if (count != null) Counter(count, LocalLang.current)
+            }
+        }
     }
 }
 
@@ -403,25 +409,6 @@ private val SideText: TextStyle
     @Composable
     @ReadOnlyComposable
     get() = JudgeType.body.copy(fontSize = 15.sp, lineHeight = (15 * 1.5).sp)
-
-@Composable
-private fun SendLink(enabled: Boolean, onClick: () -> Unit) {
-    val s = LocalStrings.current
-    Row(
-        Modifier
-            .defaultMinSize(minHeight = 44.dp)
-            .clip(JudgeShapes.chip)
-            .alpha(if (enabled) 1f else 0.5f)
-            .clickable(enabled = enabled, role = Role.Button, onClick = onClick)
-            .testTag(HomeTags.SEND_LINK)
-            .padding(end = 8.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(6.dp),
-    ) {
-        TintedIcon(rememberIcon(Palette.sageInk) { JudgeIcons.link(it) }, 14)
-        Text(s.appHomeSendLink, style = JudgeType.small.copy(color = Palette.sageInk))
-    }
-}
 
 /** A small text button under the form (an example, clear). */
 @Composable

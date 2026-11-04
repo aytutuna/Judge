@@ -121,8 +121,8 @@ import kotlinx.serialization.Serializable
 /** [otherName]: who a case just created here waits for, as typed on Home. */
 @Serializable data class CaseKey(val id: String, val otherName: String? = null) : NavKey
 
-/** Sign-in; [thenVerdict] when it was opened by "Get the verdict", which goes on after signing in. */
-@Serializable data class SignInKey(val thenVerdict: Boolean) : NavKey
+/** Sign-in; [thenVerdict] or [thenLink] when it was opened by "Get the verdict" or "Send them a link", which go on after signing in. */
+@Serializable data class SignInKey(val thenVerdict: Boolean, val thenLink: Boolean = false) : NavKey
 
 private enum class Tab { NEW, HISTORY, SETTINGS }
 
@@ -151,6 +151,7 @@ fun JudgeRoot(
             val backStack = rememberNavBackStack(HomeKey)
             var clearDraft by rememberSaveable { mutableStateOf(false) }
             var submitAfterSignIn by rememberSaveable { mutableStateOf(false) }
+            var linkAfterSignIn by rememberSaveable { mutableStateOf(false) }
             val context = LocalContext.current
             val account = container.account
             val snackbar = remember { SnackbarHostState() }
@@ -288,14 +289,18 @@ fun JudgeRoot(
                                     clearDraft = false
                                 }
                             }
-                            LaunchedEffect(submitAfterSignIn, accountNow, ageGate, phoneAge, agePosting) {
-                                if (!submitAfterSignIn) return@LaunchedEffect
+                            LaunchedEffect(submitAfterSignIn, linkAfterSignIn, accountNow, ageGate, phoneAge, agePosting) {
+                                if (!submitAfterSignIn && !linkAfterSignIn) return@LaunchedEffect
                                 if (accountNow is Account.State.SignedOut) {
                                     submitAfterSignIn = false
+                                    linkAfterSignIn = false
                                 } else if (account.ageRefusal() == null) {
                                     // Waits for the age to be on record (the sheet, if it failed).
+                                    val link = linkAfterSignIn
                                     submitAfterSignIn = false
-                                    if (counted(vm.submit(lang, strings)) == Submitted.PRICING) openPricing()
+                                    linkAfterSignIn = false
+                                    val started = if (link) vm.sendLink(lang) else vm.submit(lang, strings)
+                                    if (counted(started) == Submitted.PRICING) openPricing()
                                 }
                             }
                             HomeScreen(
@@ -316,8 +321,13 @@ fun JudgeRoot(
                                         else -> Unit
                                     }
                                 },
-                                onSendLink = {
-                                    if (account.ageRefusal() == null && counted(vm.sendLink(lang)) == Submitted.PRICING) openPricing()
+                                onSendLink = link@{
+                                    if (account.ageRefusal() != null) return@link
+                                    when (counted(vm.sendLink(lang))) {
+                                        Submitted.SIGN_IN -> if (backStack.lastOrNull() !is SignInKey) backStack.add(SignInKey(thenVerdict = false, thenLink = true))
+                                        Submitted.PRICING -> openPricing()
+                                        else -> Unit
+                                    }
                                 },
                                 onExample = {
                                     if (state.argument.isEmpty()) analytics.track("case_started")
@@ -500,6 +510,7 @@ fun JudgeRoot(
                                     key.id, container.api, container.caseNames,
                                     onEntitlement = { account.applyEntitlement(it) },
                                     refreshAccount = { account.refresh() },
+                                    saved = createSavedStateHandle(),
                                 )
                             }
                             val state by vm.state.collectAsStateWithLifecycle()
@@ -545,6 +556,13 @@ fun JudgeRoot(
                                     },
                                     onRemoveAppealEvidence = vm::onRemoveAppealEvidence,
                                     onSubmitAppeal = vm::submitAppeal,
+                                    onSideText = vm::onSideText,
+                                    onAddSideEvidence = {
+                                        analytics.track("evidence_added")
+                                        vm.onAddSideEvidence(it)
+                                    },
+                                    onRemoveSideEvidence = vm::onRemoveSideEvidence,
+                                    onSubmitSide = vm::submitSide,
                                     onTypedName = vm::onTypedName,
                                     onSaveName = vm::saveDisplayName,
                                     onNamesVisible = vm::setNamesVisible,
@@ -604,6 +622,7 @@ fun JudgeRoot(
                                 if (state.done) {
                                     backStack.removeAll { it is SignInKey }
                                     if (key.thenVerdict) submitAfterSignIn = true
+                                    if (key.thenLink) linkAfterSignIn = true
                                 }
                             }
                             SignInScreen(

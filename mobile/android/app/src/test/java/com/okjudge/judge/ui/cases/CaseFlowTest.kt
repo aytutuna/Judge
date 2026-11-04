@@ -8,7 +8,11 @@ import com.okjudge.judge.core.auth.Routes
 import com.okjudge.judge.core.cases.AppealArea
 import com.okjudge.judge.core.cases.CaseLogic
 import com.okjudge.judge.core.cases.MemoryCaseNames
+import com.okjudge.judge.core.display.ArgumentRules
 import com.okjudge.judge.core.display.UiError
+import com.okjudge.judge.core.evidence.EvidenceItem
+import com.okjudge.judge.core.evidence.EvidenceState
+import com.okjudge.judge.core.evidence.EvidenceStatus
 import com.okjudge.judge.core.evidence.ImageSource
 import com.okjudge.judge.core.evidence.Prepared
 import com.okjudge.judge.core.evidence.PreparedImage
@@ -36,6 +40,7 @@ import kotlinx.coroutines.withTimeout
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
@@ -202,13 +207,44 @@ class CaseFlowTest {
     }
 
     @Test
-    fun sendLink_needsASignInAndCases_andAnEmptyOtherSide() {
+    fun sendLink_needsCases_andNoSecondCard_andEitherNothingWrittenOrAValidSide() {
         val home = HomeUiState(argument = "Sam says a hot dog is a sandwich and I say it is not.", signedIn = true, features = Features(cases = true))
         assertTrue(home.canSendLink)
-        assertFalse(home.copy(signedIn = false).canSendLink)
+        assertTrue("signed out is sent through sign-in", home.copy(signedIn = false).canSendLink)
         assertFalse(home.copy(features = Features()).canSendLink)
-        assertFalse("their side is already written here", home.copy(otherSide = "It is a sandwich.").canSendLink)
-        assertFalse("your side alone must be long enough", home.copy(argument = "Too short").canSendLink)
+        assertFalse("their card is open", home.copy(theirsOpen = true).canSendLink)
+        assertFalse("a short side is not a side yet", home.copy(argument = "Too short").canSendLink)
+        assertTrue("nothing written is a link without a side", home.copy(argument = "").canSendLink)
+        assertTrue(home.copy(argument = "  \n ").canSendLink)
+        assertFalse(home.copy(argument = "x".repeat(ArgumentRules.MAX + 1)).canSendLink)
+        assertFalse(home.copy(creating = true).canSendLink)
+    }
+
+    @Test
+    fun sendLink_contextImagesOnlyGoWithAWrittenSide() {
+        val ok = EvidenceState(listOf(EvidenceItem("e1", 1, EvidenceStatus.OK, token = "t")), max = 3)
+        val home = HomeUiState(signedIn = true, features = Features(cases = true, evidence = true), evidence = ok)
+        assertFalse("images without text", home.canSendLink)
+        val written = home.copy(argument = "Sam says a hot dog is a sandwich and I say it is not.")
+        assertTrue(written.canSendLink)
+        val reading = EvidenceState(listOf(EvidenceItem("e1", 1, EvidenceStatus.READING)), max = 3)
+        assertFalse("still being read", written.copy(evidence = reading).canSendLink)
+    }
+
+    @Test
+    fun create_withoutAText_leavesTheKeyOut_andARetryKeepsItsKey() = runBlocking {
+        routes.on(CREATE, Routes.json(503, """{"error":"busy","code":"anonymize_failed"}"""))
+        routes.on(CREATE, Routes.json(201, cases["createResponse"].toString()))
+        val flow = VerdictFlow(api(), FakeHistory(), scope, newKey = { "ck-${++keys}" }, caseNames = names)
+        assertTrue(flow.createCase("   ", AppLang.EN, emptyList(), "Alex"))
+        withTimeout(5_000) { flow.lastError.first { it != null } }
+        assertFalse(flow.creating.value)
+        assertTrue("the form can try again", flow.createCase("", AppLang.EN, emptyList(), "Alex"))
+        assertEquals(VerdictFlow.Nav.Case(ID), withTimeout(5_000) { flow.navigation.first() })
+        assertEquals(listOf("ck-1", "ck-1"), routes.requestsTo(CREATE).map { it.headers["Idempotency-Key"] })
+        val body = bodyOf(CREATE)
+        assertTrue("text" !in body)
+        assertEquals("Alex", body["displayName"]!!.jsonPrimitive.content)
     }
 
     @Test
@@ -338,6 +374,38 @@ class CaseFlowTest {
         assertEquals(3000L, sleeps.last())
     }
 
+    private fun sideMissingBody(): String =
+        JsonObject(mapOf("case" to JsonObject(viewJson("waiting_for_respondent") + ("ownerSideMissing" to JsonPrimitive(true))))).toString()
+
+    @Test
+    fun writeSide_isGatedByLength_thenPostsWithAKey_keepsTheNames_andShowsTheNewView() = runBlocking {
+        routes.on(GET, Routes.json(200, sideMissingBody()))
+        routes.on(SIDE, Routes.json(503, """{"error":"busy","code":"anonymize_failed"}"""))
+        routes.on(SIDE, Routes.json(200, cases["createResponse"].toString()))
+        val vm = vm()
+        assertTrue(vm.until { it.status == CaseLoadStatus.READY }.view!!.ownerSideMissing)
+        vm.onSideText("too short")
+        assertFalse(vm.until { it.sideText == "too short" }.sideDraft.canSubmit)
+        vm.submitSide()
+        assertTrue("nothing is sent for a short side", routes.requestsTo(SIDE).isEmpty())
+        val text = "  Sam says a hot dog is a sandwich and I say it is not.  "
+        vm.onSideText(text)
+        assertTrue(vm.until { it.sideText == text }.sideDraft.canSubmit)
+
+        vm.submitSide()
+        val failed = vm.until { it.sideError != null }
+        assertEquals("anonymize_failed", (failed.sideError as UiError.Api).code)
+        vm.submitSide()
+        val done = vm.until { it.view?.ownerSideMissing == false }
+        assertEquals("", done.sideText)
+        assertEquals(listOf("ck-1", "ck-1"), routes.requestsTo(SIDE).map { it.headers["Idempotency-Key"] })
+        val body = bodyOf(SIDE)
+        assertEquals("Sam says a hot dog is a sandwich and I say it is not.", body["text"]!!.jsonPrimitive.content)
+        assertNull(body["evidence"])
+        assertEquals(13, applied.single().subscription!!.used)
+        assertEquals(listOf(NameMapping("I", "Party A"), NameMapping("Sam", "Party B")), names.get(ID))
+    }
+
     @Test
     fun appeal_withAScreenshot_sendsItsToken_andWaitsWhileItIsRead() = runBlocking {
         routes.on(GET, Routes.json(200, caseBody("judged")))
@@ -447,6 +515,7 @@ class CaseFlowTest {
         const val GET = "GET /api/v1/cases/$ID"
         const val JUDGE = "POST /api/v1/cases/$ID/judge"
         const val APPEALS = "POST /api/v1/cases/$ID/appeals"
+        const val SIDE = "POST /api/v1/cases/$ID/side"
         const val DISPLAY = "PATCH /api/v1/cases/$ID/display"
     }
 }

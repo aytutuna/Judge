@@ -213,9 +213,18 @@ class JudgeApi(
 
     // --- Two-sided cases (lib/cases/http.ts) ------------------------------------------
 
-    /** POST /api/v1/cases with the owner's side; [body] is the exact JSON the [idempotencyKey] belongs to. */
+    /** POST /api/v1/cases, with the owner's side when there is one; [body] is the exact JSON the [idempotencyKey] belongs to. */
     suspend fun createCase(body: String, idempotencyKey: String): ApiResult<CaseWithNames> {
         val req = request(url("api", "v1", "cases"))
+            .header("Idempotency-Key", idempotencyKey)
+            .post(body.toRequestBody(JSON))
+            .build()
+        return execute(caseWriteClient, req) { _, text -> WireJson.json.decodeFromString(CaseWithNames.serializer(), text) }
+    }
+
+    /** POST /api/v1/cases/{id}/side: the owner's side of a case that was made without one. */
+    suspend fun writeSide(id: String, body: String, idempotencyKey: String): ApiResult<CaseWithNames> {
+        val req = request(caseUrl(id, "side"))
             .header("Idempotency-Key", idempotencyKey)
             .post(body.toRequestBody(JSON))
             .build()

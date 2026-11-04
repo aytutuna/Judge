@@ -65,6 +65,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.okjudge.judge.core.cases.AppealArea
 import com.okjudge.judge.core.cases.CaseLogic
+import com.okjudge.judge.core.display.ArgumentRules
 import com.okjudge.judge.core.display.ContentLang
 import com.okjudge.judge.core.display.Errors
 import com.okjudge.judge.core.display.PartyNames
@@ -101,6 +102,7 @@ import com.okjudge.judge.ui.verdict.RulingSummary
 import com.okjudge.judge.ui.verdict.TranslationStatus
 import com.okjudge.judge.ui.verdict.TranslationView
 import com.okjudge.judge.ui.verdict.VerdictDetails
+import java.text.NumberFormat
 import kotlinx.coroutines.delay
 
 object CaseTags {
@@ -123,6 +125,8 @@ object CaseTags {
     const val APPEAL_NOTE = "case.appealNote"
     const val APPEAL_SIGN_IN = "case.appealSignIn"
     const val APPEAL_PRICING = "case.appealPricing"
+    const val WRITE_TEXT = "case.writeText"
+    const val WRITE_SUBMIT = "case.writeSubmit"
     const val NAMES_SWITCH = "case.namesSwitch"
     const val NAME_FIELD = "case.nameField"
     const val NAME_SAVE = "case.nameSave"
@@ -149,6 +153,10 @@ data class CaseActions(
     val onAddAppealEvidence: (List<ImageSource>) -> Unit = {},
     val onRemoveAppealEvidence: (String) -> Unit = {},
     val onSubmitAppeal: () -> Unit = {},
+    val onSideText: (String) -> Unit = {},
+    val onAddSideEvidence: (List<ImageSource>) -> Unit = {},
+    val onRemoveSideEvidence: (String) -> Unit = {},
+    val onSubmitSide: () -> Unit = {},
     val onTypedName: (String) -> Unit = {},
     val onSaveName: () -> Unit = {},
     val onNamesVisible: (Boolean) -> Unit = {},
@@ -283,11 +291,11 @@ private fun CaseScreenBody(
                 Modifier.widthIn(max = 640.dp).fillMaxWidth().padding(top = 4.dp, bottom = 40.dp),
                 verticalArrangement = Arrangement.spacedBy(18.dp),
             ) {
-                if (view.status == CaseStatus.AWAITING) WaitingHeader(waitingFor) else Header(kicker, view.status)
+                if (view.status == CaseStatus.AWAITING && !(view.ownerSideMissing && view.respondentAnswered)) WaitingHeader(waitingFor) else Header(kicker, view.status)
                 if (view.removed != null) {
                     Banner(if (state.removedNow) s.caseRemoved else s.caseRemovedBanner)
                 }
-                Body(state, view, waitingFor, actions, addContext, onDetails = { details = true }, reducedMotion) { confirm = it }
+                Body(state, view, waitingFor, evidenceOn, actions, addContext, onDetails = { details = true }, reducedMotion) { confirm = it }
                 if (view.verdicts.isNotEmpty() && view.removed == null) NamesTools(state, view, actions)
                 val bothRead = view.sides.size > 1
                 AccountsRead(
@@ -471,6 +479,7 @@ private fun Body(
     state: CaseUiState,
     view: CaseView,
     waitingFor: String?,
+    evidenceOn: Boolean,
     actions: CaseActions,
     onAddContext: (() -> Unit)?,
     onDetails: () -> Unit,
@@ -487,9 +496,15 @@ private fun Body(
                     Note(Errors.formatDate(lang, view.expiresAt)?.let { s.caseHeld(it) } ?: s.caseHeldSoon, color = Palette.muted)
                 }
             }
-            WaitingSteps(waitingFor, view.canJudgeNow)
+            val sideMissing = view.ownerSideMissing
+            if (sideMissing && view.role == "owner") {
+                WriteSide(state.sideDraft, view.respondentAnswered, evidenceOn && view.premium, actions)
+            } else if (sideMissing && view.respondentAnswered) {
+                Note(s.respondSentWaiting, Modifier.semantics { liveRegion = LiveRegionMode.Polite })
+            }
+            if (!sideMissing) WaitingSteps(waitingFor, view.canJudgeNow)
             ErrorLine(state.actionError, actions.onPricing)
-            if (view.canJudgeNow) {
+            if (view.canJudgeNow && !sideMissing) {
                 Box(
                     Modifier
                         .fillMaxWidth()
@@ -542,7 +557,7 @@ private fun Body(
             Banner(if (view.premium) s.caseExpiredBody else s.caseExpiredBodyFree)
             ErrorLine(state.actionError, actions.onPricing)
             Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                if (view.canJudgeNow) {
+                if (view.canJudgeNow && !view.ownerSideMissing) {
                     PrimaryButton(s.caseJudgeNow, !state.busy, { ask(Confirm.JUDGE_NOW) }, Modifier.testTag(CaseTags.JUDGE_NOW))
                 }
                 GhostButton(s.caseStartOver, null, actions.onStartOver, Modifier.testTag(CaseTags.START_OVER))
@@ -619,6 +634,61 @@ private fun InviteLink(url: String, expiresAt: String, name: String?, state: Cas
     TextAction(s.caseInviteReset, { if (!state.busy) onReset() }, Modifier.testTag(CaseTags.RESET), color = Palette.ink2)
     if (state.resetDone) {
         Note(s.caseInviteResetDone, Modifier.semantics { liveRegion = LiveRegionMode.Polite }, color = Palette.sageInk)
+    }
+}
+
+/** The owner's own side, for a case whose link was made first; the other person may have written theirs already. */
+@Composable
+private fun WriteSide(draft: SideDraft, answered: Boolean, evidenceOn: Boolean, actions: CaseActions) {
+    val s = LocalStrings.current
+    val lang = LocalLang.current
+    val nf = remember(lang) { NumberFormat.getIntegerInstance(lang.locale) }
+    Card {
+        Text(s.caseWriteTitle, style = JudgeType.sectionTitle, modifier = Modifier.semantics { heading() })
+        Note(if (answered) s.caseWriteLeadAnswered else s.caseWriteLead)
+        Box(
+            Modifier
+                .fillMaxWidth()
+                .heightIn(min = 130.dp)
+                .clip(JudgeShapes.field)
+                .background(Palette.ivory)
+                .border(1.dp, Palette.line2, JudgeShapes.field)
+                .padding(14.dp),
+        ) {
+            BasicTextField(
+                value = draft.text,
+                onValueChange = actions.onSideText,
+                readOnly = draft.sending,
+                textStyle = AppealText,
+                cursorBrush = SolidColor(Palette.terraInk),
+                keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Sentences),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .heightIn(min = 100.dp)
+                    .semantics { contentDescription = s.caseWritePlaceholder }
+                    .testTag(CaseTags.WRITE_TEXT),
+                decorationBox = { inner ->
+                    if (draft.text.isEmpty()) Text(s.caseWritePlaceholder, style = AppealText.copy(color = Palette.placeholder))
+                    inner()
+                },
+            )
+        }
+        Text(
+            s.appInputCounter(nf.format(draft.text.length), nf.format(ArgumentRules.MAX)),
+            style = JudgeType.footnote,
+            modifier = Modifier.align(Alignment.End),
+        )
+        if (evidenceOn) {
+            val pick = rememberEvidencePicker(draft.evidence.room, actions.onAddSideEvidence)
+            EvidencePicker(draft.evidence, disabled = draft.sending, onAdd = pick, onRemove = actions.onRemoveSideEvidence)
+        }
+        ErrorLine(draft.error, actions.onPricing)
+        PrimaryButton(
+            if (draft.sending) s.appealSending else s.caseWriteSubmit,
+            draft.canSubmit,
+            actions.onSubmitSide,
+            Modifier.fillMaxWidth().testTag(CaseTags.WRITE_SUBMIT),
+        )
     }
 }
 

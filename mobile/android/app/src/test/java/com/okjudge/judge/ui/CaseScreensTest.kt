@@ -118,6 +118,59 @@ class CaseScreensTest {
         assertEquals(listOf("copy:$url", "share:$url", "reset", "judgeNow"), calls)
     }
 
+    private fun sideMissing(name: String = "waiting_for_respondent", edit: (CaseView) -> CaseView = { it }): CaseUiState {
+        val base = stateOf(name)
+        return base.copy(view = edit(base.view!!.copy(ownerSideMissing = true)))
+    }
+
+    @Test
+    fun writeForm_showsTheLinkAndTheForm_andHidesJudgeNowAndTheSteps() {
+        var state by mutableStateOf(sideMissing { it.copy(canJudgeNow = true) })
+        var sent = 0
+        compose.setContent {
+            Themed(AppLang.EN) {
+                CaseScreen(state, evidenceOn = true, actions = CaseActions(onSideText = { state = state.copy(sideText = it) }, onSubmitSide = { sent++ }), reducedMotion = true)
+            }
+        }
+        compose.onNodeWithTag(CaseTags.INVITE_URL).assertExists()
+        compose.onNodeWithText(en.caseWriteLead).assertExists()
+        compose.onNodeWithText(en.caseWritePlaceholder).assertExists()
+        compose.onNodeWithTag(CaseTags.JUDGE_NOW).assertDoesNotExist()
+        compose.onNodeWithText(en.appCaseStepYou).assertDoesNotExist()
+        compose.onAllNodesWithTag(EvidenceTags.ADD).assertCountEquals(1)
+        compose.onNodeWithTag(CaseTags.WRITE_SUBMIT).assertIsNotEnabled()
+        state = state.copy(sideText = "x".repeat(19))
+        compose.onNodeWithTag(CaseTags.WRITE_SUBMIT).assertIsNotEnabled()
+        state = state.copy(sideText = "x".repeat(20))
+        compose.onNodeWithTag(CaseTags.WRITE_SUBMIT).performScrollTo().assertIsEnabled().performClick()
+        assertEquals(1, sent)
+    }
+
+    @Test
+    fun writeForm_afterTheyAnswered_hasNoLink_andLeadsWithTheirReply() {
+        compose.setContent {
+            Themed(AppLang.EN) {
+                CaseScreen(sideMissing { it.copy(inviteUrl = null, respondentAnswered = true) }, evidenceOn = false, actions = CaseActions(), reducedMotion = true)
+            }
+        }
+        compose.onNodeWithTag(CaseTags.INVITE_URL).assertDoesNotExist()
+        compose.onNodeWithText(en.caseWriteLeadAnswered).assertExists()
+        compose.onNodeWithText(en.appCaseWaitingLeadAnon).assertDoesNotExist()
+        compose.onNodeWithTag(CaseTags.WRITE_SUBMIT).assertExists()
+        compose.onAllNodesWithTag(EvidenceTags.ADD).assertCountEquals(0)
+    }
+
+    @Test
+    fun writeForm_isNotForARespondent_whoSeesTheyAreWaiting() {
+        compose.setContent {
+            Themed(AppLang.EN) {
+                CaseScreen(sideMissing { it.copy(role = "respondent", inviteUrl = null, respondentAnswered = true) }, true, CaseActions(), true)
+            }
+        }
+        compose.onNodeWithTag(CaseTags.WRITE_SUBMIT).assertDoesNotExist()
+        compose.onNodeWithText(en.respondSentWaiting).assertExists()
+    }
+
     @Test
     fun appealForm_waitsFor20Characters() {
         var state by mutableStateOf(stateOf("judged"))

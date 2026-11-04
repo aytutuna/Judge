@@ -1,11 +1,13 @@
 package com.okjudge.judge.ui.cases
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.okjudge.judge.core.api.ApiResult
 import com.okjudge.judge.core.api.JudgeApi
 import com.okjudge.judge.core.cases.CaseLogic
 import com.okjudge.judge.core.cases.CaseNamesStore
+import com.okjudge.judge.core.display.ArgumentRules
 import com.okjudge.judge.core.display.Errors
 import com.okjudge.judge.core.display.UiError
 import com.okjudge.judge.core.evidence.EvidenceController
@@ -17,6 +19,8 @@ import com.okjudge.judge.core.model.CaseView
 import com.okjudge.judge.core.model.Entitlement
 import com.okjudge.judge.core.model.NameMapping
 import com.okjudge.judge.core.model.WireJson
+import com.okjudge.judge.core.model.WriteSideRequest
+import com.okjudge.judge.ui.home.MAX_EVIDENCE_PER_SIDE
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -50,6 +54,10 @@ data class CaseUiState(
     val appealSending: Boolean = false,
     val appealError: UiError? = null,
     val appealEvidence: EvidenceState = EvidenceState(max = CaseLogic.MAX_EVIDENCE_PER_APPEAL),
+    val sideText: String = "",
+    val sideSending: Boolean = false,
+    val sideError: UiError? = null,
+    val sideEvidence: EvidenceState = EvidenceState(max = MAX_EVIDENCE_PER_SIDE),
     val namesBusy: Boolean = false,
     /** The display-name form's message: an error, or the saved note. */
     val namesError: NamesError? = null,
@@ -63,6 +71,18 @@ data class CaseUiState(
     val appealDraft: AppealDraft get() = AppealDraft(appealText, appealSending, appealError, appealEvidence)
 
     val appealCanSubmit: Boolean get() = appealDraft.canSubmit
+
+    val sideDraft: SideDraft get() = SideDraft(sideText, sideSending, sideError, sideEvidence)
+}
+
+/** What the owner's own side holds before it is sent, when the link was made first. */
+data class SideDraft(
+    val text: String = "",
+    val sending: Boolean = false,
+    val error: UiError? = null,
+    val evidence: EvidenceState = EvidenceState(max = MAX_EVIDENCE_PER_SIDE),
+) {
+    val canSubmit: Boolean get() = ArgumentRules.canSubmit(text) && !sending && !evidence.busy
 }
 
 /** What the appeal form holds (useAppealDraft), for a case or a one-sided verdict. */
@@ -96,21 +116,26 @@ class CaseViewModel(
     private val refreshAccount: suspend () -> Unit = {},
     private val sleep: suspend (Long) -> Unit = { delay(it) },
     private val newKey: () -> String = { UUID.randomUUID().toString() },
+    private val saved: SavedStateHandle = SavedStateHandle(),
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow(CaseUiState(localNames = names.get(caseId)))
+    private val _state = MutableStateFlow(CaseUiState(localNames = names.get(caseId), sideText = saved[KEY_SIDE] ?: ""))
 
     /** Opened from History or a link, the case still knows who it waits for. */
     val otherName: String? = names.otherName(caseId)
 
     val evidence = EvidenceController(viewModelScope, CaseLogic.MAX_EVIDENCE_PER_APPEAL) { api.uploadEvidence(it) }
 
-    val state: StateFlow<CaseUiState> = combine(_state, evidence.state) { s, ev -> s.copy(appealEvidence = ev) }
-        .stateIn(viewModelScope, SharingStarted.Eagerly, _state.value)
+    val sideEvidence = EvidenceController(viewModelScope, MAX_EVIDENCE_PER_SIDE) { api.uploadEvidence(it) }
+
+    val state: StateFlow<CaseUiState> = combine(_state, evidence.state, sideEvidence.state) { s, ev, side ->
+        s.copy(appealEvidence = ev, sideEvidence = side)
+    }.stateIn(viewModelScope, SharingStarted.Eagerly, _state.value)
 
     private var failures = 0
     private var pollJob: Job? = null
     private var appealKey: Pair<String, String>? = null
+    private var sideKey: Pair<String, String>? = null
 
     init {
         viewModelScope.launch { refresh() }
@@ -253,6 +278,55 @@ class CaseViewModel(
         }
     }
 
+    // --- The owner's side, written after the link was made ----------------------------
+
+    fun onSideText(text: String) {
+        saved[KEY_SIDE] = text.take(ArgumentRules.MAX)
+        _state.update { it.copy(sideText = text.take(ArgumentRules.MAX)) }
+    }
+
+    fun onAddSideEvidence(sources: List<ImageSource>) = sideEvidence.add(sources)
+
+    fun onRemoveSideEvidence(id: String) = sideEvidence.remove(id)
+
+    /**
+     * POST the side with an Idempotency-Key (kept while the same body is
+     * retried), keep the returned names and the new balance, and swap in the
+     * view: judging when the other side was already in.
+     */
+    fun submitSide() {
+        val s = _state.value.copy(sideEvidence = sideEvidence.state.value)
+        if (!s.sideDraft.canSubmit) return
+        val tokens = s.sideEvidence.tokens
+        val body = WireJson.json.encodeToString(
+            WriteSideRequest.serializer(),
+            WriteSideRequest(text = s.sideText.trim(), evidence = tokens.takeIf { it.isNotEmpty() }, displayName = s.view?.display?.a),
+        )
+        val key = sideKey?.takeIf { it.first == body }?.second ?: newKey().also { sideKey = body to it }
+        _state.update { it.copy(sideSending = true, sideError = null) }
+        viewModelScope.launch {
+            when (val res = api.writeSide(caseId, body, key)) {
+                is ApiResult.Ok -> {
+                    sideKey = null
+                    val written = res.value
+                    names.save(caseId, written.nameMap)
+                    written.entitlement?.let(onEntitlement)
+                    sideEvidence.clear()
+                    saved[KEY_SIDE] = ""
+                    _state.update { it.copy(sideSending = false, sideText = "", localNames = names.get(caseId)) }
+                    show(written.case, fromAction = true)
+                }
+                is ApiResult.Err -> {
+                    _state.update { it.copy(sideSending = false, sideError = res.error) }
+                    val code = (res.error as? UiError.Api)?.code
+                    if (code == "evidence_invalid") sideEvidence.invalidateTokens()
+                    if (code == "case_expired" || code == "case_closed" || code == "removed") reload()
+                    if (Errors.isAccountError(res.error)) viewModelScope.launch { refreshAccount() }
+                }
+            }
+        }
+    }
+
     // --- Appeals (useAppealDraft) ------------------------------------------------------
 
     fun onAppealText(text: String) {
@@ -300,6 +374,8 @@ class CaseViewModel(
     }
 
     companion object {
+        private const val KEY_SIDE = "side_text"
+
         /** A loaded state without network, for previews and screenshots (CaseScreen is stateless). */
         fun preview(view: CaseView, localNames: List<NameMapping> = emptyList()): CaseUiState =
             CaseUiState(status = CaseLoadStatus.READY, view = view, localNames = localNames)

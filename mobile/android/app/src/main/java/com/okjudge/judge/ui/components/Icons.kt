@@ -101,12 +101,6 @@ object JudgeIcons {
     /** Premium's four-point spark (PremiumSpark). */
     fun spark(color: Color) = icon("spark", 12f, P("M6 0.8 7.3 4.7 11.2 6 7.3 7.3 6 11.2 4.7 7.3 0.8 6 4.7 4.7z", fill = color))
 
-    fun lock(color: Color) = icon(
-        "lock", 12f,
-        P("M3.8 5.3h4.4a1.3 1.3 0 0 1 1.3 1.3v2.6a1.3 1.3 0 0 1-1.3 1.3H3.8a1.3 1.3 0 0 1-1.3-1.3V6.6a1.3 1.3 0 0 1 1.3-1.3z", fill = color),
-        P("M4.2 5.3V4a1.8 1.8 0 0 1 3.6 0v1.3", stroke = color, width = 1.3f),
-    )
-
     fun image(color: Color) = icon(
         "image", 20f,
         P("M5 3.5h10a2.5 2.5 0 0 1 2.5 2.5v8a2.5 2.5 0 0 1-2.5 2.5H5A2.5 2.5 0 0 1 2.5 14V6A2.5 2.5 0 0 1 5 3.5z", stroke = color, width = 1.5f),

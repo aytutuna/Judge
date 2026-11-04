@@ -88,10 +88,9 @@ fun rememberEvidencePicker(room: Int, onPicked: (List<ImageSource>) -> Unit): ()
 }
 
 /**
- * Screenshot evidence (components/case/EvidencePicker.tsx): the picked
- * images with their reading status, a preview of what was read (for the
- * uploader only), remove buttons, the add button and the privacy hint.
- * Stateless: [onAdd] opens the picker.
+ * Screenshot evidence (components/case/EvidencePicker.tsx) with its header:
+ * the picked images, the add button and why one was refused. Stateless:
+ * [onAdd] opens the picker.
  */
 @Composable
 fun EvidencePicker(
@@ -102,15 +101,12 @@ fun EvidencePicker(
     modifier: Modifier = Modifier,
 ) {
     val s = LocalStrings.current
-    val lang = LocalLang.current
-    val single = state.max == 1
-    val announce = state.items.joinToString(". ") { "${s.evidenceThumb(it.n.toString())}: ${s.text(it.status.key) ?: it.status.raw}" }
     Column(modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(10.dp)) {
         Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-            Text(s.evidenceLabel, style = JudgeType.slotTitle, modifier = Modifier.weight(1f))
+            Text(s.appContextLabel, style = JudgeType.slotTitle, modifier = Modifier.weight(1f))
             Text("${state.items.size} / ${state.max}", style = JudgeType.footnote)
         }
-        state.items.forEach { item -> ItemRow(item, disabled, onRemove) }
+        EvidenceRows(state, disabled, onRemove)
         val canAdd = !disabled && !state.full
         Row(
             Modifier
@@ -126,12 +122,41 @@ fun EvidencePicker(
             horizontalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             TintedIcon(rememberIcon(Palette.ink) { JudgeIcons.plus(it) }, 14)
-            Text(if (single) s.evidenceAddOne else s.evidenceAdd, style = JudgeType.small.copy(color = Palette.ink))
+            Text(s.appHomeAddContext, style = JudgeType.small.copy(color = Palette.ink))
         }
-        Row(verticalAlignment = Alignment.Top, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-            TintedIcon(rememberIcon(Palette.muted) { JudgeIcons.lock(it) }, 12, Modifier.padding(top = 2.dp))
-            Text(if (single) s.evidenceHintOne else s.evidenceHint(state.max), style = JudgeType.slotText)
-        }
+    }
+}
+
+/** Home's plain "Add context" control, for the bottom row of a writing box. */
+@Composable
+fun AddContextButton(enabled: Boolean, onClick: () -> Unit, modifier: Modifier = Modifier) {
+    Row(
+        modifier
+            .defaultMinSize(minHeight = 40.dp)
+            .clip(JudgeShapes.chip)
+            .alpha(if (enabled) 1f else 0.5f)
+            .clickable(enabled = enabled, role = Role.Button, onClick = onClick)
+            .testTag(EvidenceTags.ADD)
+            .padding(end = 8.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(6.dp),
+    ) {
+        TintedIcon(rememberIcon(Palette.ink2) { JudgeIcons.plus(it) }, 14)
+        Text(LocalStrings.current.appHomeAddContext, style = JudgeType.small)
+    }
+}
+
+/**
+ * The picked images with their reading status and remove buttons, then the
+ * over-limit and failure text. For the uploader only; the reading is never shown to the other side.
+ */
+@Composable
+fun EvidenceRows(state: EvidenceState, disabled: Boolean, onRemove: (String) -> Unit, modifier: Modifier = Modifier) {
+    val s = LocalStrings.current
+    val lang = LocalLang.current
+    val announce = state.items.joinToString(". ") { "${s.evidenceThumb(it.n.toString())}: ${s.text(it.status.key) ?: it.status.raw}" }
+    Column(modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(10.dp)) {
+        state.items.forEach { item -> ItemRow(item, disabled, onRemove) }
         if (state.overLimit) Text(s.evidenceLimit, style = JudgeType.slotText.copy(color = Palette.ink2))
         state.failure?.let {
             Text(Errors.message(it, s, lang), style = JudgeType.slotText.copy(color = Palette.danger))

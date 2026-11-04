@@ -54,6 +54,7 @@ import androidx.compose.ui.test.performScrollTo
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -143,12 +144,36 @@ class PremiumScreensTest {
         compose.onNodeWithTag(EvidenceTags.status(1)).assertTextContains(en.evidenceOk)
         compose.onNodeWithTag(EvidenceTags.status(2)).assertTextContains(en.evidenceReading)
         compose.onNodeWithTag(EvidenceTags.status(3)).assertTextContains(en.evidenceStatusUnreadable)
-        compose.onNodeWithTag(EvidenceTags.ADD).assertIsNotEnabled()
+        compose.onAllNodesWithTag(EvidenceTags.ADD).assertCountEquals(0)
         compose.onNodeWithTag(HomeTags.SUBMIT).assertIsNotEnabled()
         compose.onNodeWithText(en.evidencePreview, substring = true).performClick()
         compose.onNodeWithText("Sam: it's a hot dog").assertExists()
         compose.onNodeWithTag(EvidenceTags.remove(3)).performClick()
         assertEquals(listOf("ev3"), removed)
+    }
+
+    @Test
+    fun home_addContext_isInTheBox_withTheCounter_andTheRowsBelow() {
+        val items = listOf(EvidenceItem("ev1", 1, EvidenceStatus.OK, token = "t"))
+        compose.setContent {
+            Themed(AppLang.EN) { HomeScreen(premiumHome(EvidenceState(items, max = 3)), {}, {}, {}) }
+        }
+        compose.onNodeWithTag(EvidenceTags.ADD).assertIsEnabled().assertTextContains(en.appHomeAddContext)
+        compose.onNodeWithTag(HomeTags.COUNTER).assertExists()
+        compose.onNodeWithTag(EvidenceTags.item(1)).assertExists()
+        val box = compose.onNodeWithTag(HomeTags.INPUT).fetchSemanticsNode().boundsInRoot
+        assertTrue(compose.onNodeWithTag(EvidenceTags.ADD).fetchSemanticsNode().boundsInRoot.top >= box.bottom)
+        assertTrue(compose.onNodeWithTag(EvidenceTags.item(1)).fetchSemanticsNode().boundsInRoot.top > box.bottom)
+        compose.onNodeWithText(en.text("evidence.hintOne")!!, substring = true).assertDoesNotExist()
+    }
+
+    @Test
+    fun home_withTwoCards_bothOfferContext_andOnlyTheLastCountsCharacters() {
+        compose.setContent {
+            Themed(AppLang.EN) { HomeScreen(premiumHome(EvidenceState(max = 3)).copy(theirsOpen = true), {}, {}, {}) }
+        }
+        compose.onAllNodesWithTag(EvidenceTags.ADD).assertCountEquals(2)
+        compose.onAllNodesWithTag(HomeTags.COUNTER).assertCountEquals(1)
     }
 
     @Test

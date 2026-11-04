@@ -200,8 +200,9 @@ class VerdictFlow(
     }
 
     /**
-     * Both sides (createCase): the case with the owner's side, holding one
-     * verdict. The returned names stay on this phone. No clarifying step:
+     * Both sides (createCase): the case with the owner's side, or without
+     * one when [argument] is blank (it is written on the case screen),
+     * holding one verdict. The returned names stay on this phone. No clarifying step:
      * the other side fills the gaps.
      */
     fun createCase(
@@ -215,7 +216,7 @@ class VerdictFlow(
         _lastError.value = null
         _creating.value = true
         val request = CreateCaseRequest(
-            text = argument.trim(),
+            text = argument.trim().takeIf { it.isNotEmpty() },
             lang = lang.tag,
             evidence = evidence.takeIf { it.isNotEmpty() },
             displayName = displayName?.trim()?.takeIf { it.isNotEmpty() },
