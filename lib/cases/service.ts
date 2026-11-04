@@ -8,6 +8,9 @@
  * Every multi-row write is one guarded batch through entitlementWriteBatch.
  * A statement that must only apply if an earlier one did is guarded with
  * EXISTS on a fresh token (judging_token / attempt_token) or a fresh id.
+ * A case can start without side A (the owner sends the link first): the
+ * state is derived from which case_sides rows exist, and a write that
+ * depends on the other side's absence says so in its WHERE clause.
  * Each submission is anonymized once, when it is submitted; the anonymized
  * text and keyed name fingerprints are written in the clear, the original
  * (text as written, raw transcripts, name map) and the display name sealed
@@ -46,12 +49,14 @@ import {
   getAppeal,
   getCase,
   getCaseByOwnerKey,
+  hasSide,
   loadCaseBundle,
   type CaseBundle,
   type CaseRow,
 } from "./db";
 import { claimMatches, inviteHash, inviteToken, newInviteNonce, respondentClaim } from "./invite";
 import { meteredStep, runAppealJudging, runCaseJudging } from "./judging";
+import { notifyOwnerSideWaiting } from "./notify";
 import { scheduleJudging } from "./schedule";
 import { effectiveStatus, expireStatements, materializeExpiry } from "./sweep";
 
@@ -141,6 +146,10 @@ export function originalPayload(text: string, evidence: readonly VerifiedEvidenc
   };
 }
 
+/** SQL: the case has (or has not) a row for `party`, inside a statement on cases. */
+const sideExists = (party: PartyLetter, yes: boolean) =>
+  `${yes ? "" : "NOT "}EXISTS (SELECT 1 FROM case_sides WHERE case_id = cases.id AND party = '${party}')`;
+
 function rosterContext(bundle: CaseBundle): string {
   const mode = bundle.row.mode ?? (bundle.sides.some((s) => s.party === "b") ? "two_sided" : "one_sided");
   const earlier = bundle.appeals.filter((a) => a.status === "judged");
@@ -153,7 +162,8 @@ function rosterContext(bundle: CaseBundle): string {
 
 export type CreateCaseInput = {
   ownerId: string;
-  text: string;
+  /** Left out when the owner sends the link before writing their side. */
+  text?: string;
   lang: Lang;
   evidence: VerifiedEvidence[];
   idempotencyKey?: string;
@@ -202,19 +212,22 @@ export async function createCase(input: CreateCaseInput): Promise<CreateCaseResu
     return { ok: false, code: "unavailable" };
   }
 
-  let sub: AnonymizedSubmission;
+  let sub: AnonymizedSubmission | null = null;
   try {
-    sub = await meteredStep(caseId, "anonymize_a", () =>
-      anonymizeSubmission({
-        narrator: "Party A",
-        text: input.text,
-        evidence: input.evidence,
-        lang: input.lang,
-        twoSided: true,
-        opponentRequired: true,
-        names: { keysFor: caseNameKeys(caseId), known: [] },
-      }),
-    );
+    if (input.text !== undefined) {
+      const text = input.text;
+      sub = await meteredStep(caseId, "anonymize_a", () =>
+        anonymizeSubmission({
+          narrator: "Party A",
+          text,
+          evidence: input.evidence,
+          lang: input.lang,
+          twoSided: true,
+          opponentRequired: true,
+          names: { keysFor: caseNameKeys(caseId), known: [] },
+        }),
+      );
+    }
   } catch (e) {
     logError("anonymizing side A failed", e);
     await refundQuietly(reservationId);
@@ -225,14 +238,10 @@ export async function createCase(input: CreateCaseInput): Promise<CreateCaseResu
   const expiresAt = new Date(now.getTime() + CASE_EXPIRY_DAYS * DAY_MS).toISOString();
   const guard: StatementGuard = { sql: "EXISTS (SELECT 1 FROM cases WHERE id = ?)", args: [caseId] };
   const display = sealCaseDisplay(caseId, "a", input.displayName);
-  const original = caseOriginalStatement(
-    caseId,
-    "a",
-    "side",
-    originalPayload(input.rawText ?? input.text, input.evidence, sub),
-    guard,
-    nowIso,
-  );
+  const original =
+    sub && input.text !== undefined
+      ? caseOriginalStatement(caseId, "a", "side", originalPayload(input.rawText ?? input.text, input.evidence, sub), guard, nowIso)
+      : null;
   let inserted = false;
   try {
     const rs = await entitlementWriteBatch([
@@ -258,7 +267,7 @@ export async function createCase(input: CreateCaseInput): Promise<CreateCaseResu
           display?.kid ?? null,
         ],
       },
-      ...submissionStatements(caseId, "a", sub, guard, nowIso, null),
+      ...(sub ? submissionStatements(caseId, "a", sub, guard, nowIso, null) : []),
       ...(original ? [original] : []),
       // The unit stays held until the invite expires (then the usual
       // 10-minute stale rule applies).
@@ -280,7 +289,7 @@ export async function createCase(input: CreateCaseInput): Promise<CreateCaseResu
   const row = await getCase(caseId);
   if (!row) return { ok: false, code: "unavailable" };
   void track("case_created", { userId: input.ownerId, props: { mode: row.mode ?? "two_sided" } });
-  return { ok: true, row, nameMap: sub.nameMap, replayed: false };
+  return { ok: true, row, nameMap: sub?.nameMap ?? [], replayed: false };
 }
 
 // --- Respondent answer --------------------------------------------------------------
@@ -320,91 +329,229 @@ export async function respondToCase(input: RespondInput): Promise<RespondResult>
   const startedAt = Date.now();
   const now = input.now ?? new Date();
   const key = input.idempotencyKey || null;
-  const row = input.row;
+  let row = input.row;
   if (row.removedAt) return { ok: false, code: "removed" };
   await ensureOriginalsTables();
-  const status = effectiveStatus(row, now);
-  if (status === "expired") {
-    await materializeExpiry(row, now).catch((e: unknown) => logError("expiry failed", e));
-    return { ok: false, code: "case_expired" };
-  }
-  if (status !== "awaiting_respondent") return closedOrReplay(row, key, now);
 
-  const bundle = await loadCaseBundle(row);
-  const context = rosterContext(bundle);
-  let sub: AnonymizedSubmission;
-  try {
-    sub = await meteredStep(row.id, "anonymize_b", () =>
-      anonymizeSubmission({
-        narrator: "Party B",
-        text: input.text,
-        evidence: input.evidence,
-        lang: row.lang,
-        twoSided: true,
-        opponentRequired: true,
-        roster: { context, labelsInUse: labelsInUse(context, bundle.people) },
-        names: { keysFor: caseNameKeys(row.id), known: bundle.people },
-      }),
+  for (let attempt = 0; ; attempt++) {
+    const status = effectiveStatus(row, now);
+    if (status === "expired") {
+      await materializeExpiry(row, now).catch((e: unknown) => logError("expiry failed", e));
+      return { ok: false, code: "case_expired" };
+    }
+    if (status !== "awaiting_respondent") return closedOrReplay(row, key, now);
+
+    const bundle = await loadCaseBundle(row);
+    if (bundle.sides.some((s) => s.party === "b")) return closedOrReplay((await getCase(row.id)) ?? row, key, now);
+    const ownerWrote = bundle.sides.some((s) => s.party === "a");
+    const context = rosterContext(bundle);
+    let sub: AnonymizedSubmission;
+    try {
+      sub = await meteredStep(row.id, "anonymize_b", () =>
+        anonymizeSubmission({
+          narrator: "Party B",
+          text: input.text,
+          evidence: input.evidence,
+          lang: row.lang,
+          twoSided: true,
+          opponentRequired: true,
+          roster: { context, labelsInUse: labelsInUse(context, bundle.people) },
+          names: { keysFor: caseNameKeys(row.id), known: bundle.people },
+        }),
+      );
+    } catch (e) {
+      logError("anonymizing side B failed", e);
+      return { ok: false, code: anonymizeFailure(e) };
+    }
+
+    const nowIso = now.toISOString();
+    const token = nanoid(16);
+    const guard: StatementGuard = {
+      sql: "EXISTS (SELECT 1 FROM cases WHERE id = ? AND judging_token = ?)",
+      args: [row.id, token],
+    };
+    // Side B's author: the signed-in account, else whoever holds the claim
+    // secret derived from this nonce (returned in this response).
+    const claimNonce = newInviteNonce();
+    const display = sealCaseDisplay(row.id, "b", input.displayName);
+    const original = caseOriginalStatement(
+      row.id,
+      "b",
+      "side",
+      originalPayload(input.rawText ?? input.text, input.evidence, sub),
+      guard,
+      nowIso,
     );
-  } catch (e) {
-    logError("anonymizing side B failed", e);
-    return { ok: false, code: anonymizeFailure(e) };
+    const bindings = [key, input.userId, claimNonce, nowIso, display?.sealed ?? null, display?.kid ?? null, row.id, nowIso];
+    // With side A in, judging starts and the held unit gets the usual
+    // 10-minute crash clock. Without it the answer is only stored: the case
+    // keeps waiting, the unit stays held until the invite expires, and the
+    // token only guards this batch's rows.
+    const store: InStatement = ownerWrote
+      ? {
+          sql: `UPDATE cases SET status = 'judging', mode = 'two_sided', judging_token = ?, judging_started_at = ?,
+                  respondent_idem = ?, respondent_user_id = ?, respondent_claim_nonce = ?,
+                  attempts = attempts + 1, last_error = NULL, updated_at = ?,
+                  display_b_sealed = ?, display_key_id = COALESCE(?, display_key_id)
+                WHERE id = ? AND status = 'awaiting_respondent' AND expires_at > ? AND removed_at IS NULL`,
+          args: [token, nowIso, ...bindings],
+        }
+      : {
+          sql: `UPDATE cases SET mode = 'two_sided', judging_token = ?,
+                  respondent_idem = ?, respondent_user_id = ?, respondent_claim_nonce = ?,
+                  updated_at = ?, display_b_sealed = ?, display_key_id = COALESCE(?, display_key_id)
+                WHERE id = ? AND status = 'awaiting_respondent' AND expires_at > ? AND removed_at IS NULL
+                  AND ${sideExists("a", false)} AND ${sideExists("b", false)}`,
+          args: [token, ...bindings],
+        };
+    let won = false;
+    try {
+      const rs = await entitlementWriteBatch([
+        store,
+        ...submissionStatements(row.id, "b", sub, guard, nowIso, null),
+        ...(original ? [original] : []),
+        ...(ownerWrote && row.reservationId ? [holdStatement(row.reservationId, nowIso, guard)] : []),
+      ]);
+      won = rs[0].rowsAffected === 1;
+    } catch (e) {
+      logError("storing the answer failed", e);
+      return { ok: false, code: "unavailable" };
+    }
+    const fresh = (await getCase(row.id)) ?? row;
+    if (won) {
+      if (ownerWrote) scheduleJudging(() => runCaseJudging(row.id, token, input.origin, startedAt));
+      else scheduleJudging(() => notifyOwnerSideWaiting(fresh, input.origin));
+      return { ok: true, row: fresh, nameMap: sub.nameMap, claim: claimFor(fresh), replayed: false };
+    }
+    if (fresh.removedAt) return { ok: false, code: "removed" };
+    // Side A may have landed while this was being anonymized: go again with
+    // it in the roster. Anything else that changed closes the case.
+    if (attempt === 0 && effectiveStatus(fresh, now) === "awaiting_respondent") {
+      row = fresh;
+      continue;
+    }
+    return closedOrReplay(fresh, key, now);
   }
+}
 
-  const nowIso = now.toISOString();
-  const token = nanoid(16);
-  const guard: StatementGuard = {
-    sql: "EXISTS (SELECT 1 FROM cases WHERE id = ? AND judging_token = ?)",
-    args: [row.id, token],
-  };
-  // Side B's author: the signed-in account, else whoever holds the claim
-  // secret derived from this nonce (returned in this response).
-  const claimNonce = newInviteNonce();
-  const display = sealCaseDisplay(row.id, "b", input.displayName);
-  const original = caseOriginalStatement(
-    row.id,
-    "b",
-    "side",
-    originalPayload(input.rawText ?? input.text, input.evidence, sub),
-    guard,
-    nowIso,
-  );
-  let won = false;
-  try {
-    const rs = await entitlementWriteBatch([
-      {
-        sql: `UPDATE cases SET status = 'judging', mode = 'two_sided', judging_token = ?, judging_started_at = ?,
-                respondent_idem = ?, respondent_user_id = ?, respondent_claim_nonce = ?,
-                attempts = attempts + 1, last_error = NULL, updated_at = ?,
-                display_b_sealed = ?, display_key_id = COALESCE(?, display_key_id)
-              WHERE id = ? AND status = 'awaiting_respondent' AND expires_at > ? AND removed_at IS NULL`,
-        args: [
-          token,
-          nowIso,
-          key,
-          input.userId,
-          claimNonce,
-          nowIso,
-          display?.sealed ?? null,
-          display?.kid ?? null,
-          row.id,
-          nowIso,
-        ],
-      },
-      ...submissionStatements(row.id, "b", sub, guard, nowIso, null),
-      ...(original ? [original] : []),
-      // Judging starts now: the held unit gets the usual 10-minute crash clock.
-      ...(row.reservationId ? [holdStatement(row.reservationId, nowIso, guard)] : []),
-    ]);
-    won = rs[0].rowsAffected === 1;
-  } catch (e) {
-    logError("storing the answer failed", e);
-    return { ok: false, code: "unavailable" };
+// --- Owner writes side A -------------------------------------------------------------
+
+export type WriteSideInput = {
+  row: CaseRow;
+  text: string;
+  evidence: VerifiedEvidence[];
+  origin: string;
+  /** The side exactly as received (before trimming), for the sealed original. */
+  rawText?: string;
+  displayName?: string | null;
+  now?: Date;
+};
+
+export type WriteSideResult =
+  | { ok: true; row: CaseRow; nameMap: NameMapping[]; replayed: boolean }
+  | Failure<"case_expired" | "case_closed" | "unavailable" | "anonymize_failed" | "removed">;
+
+/** The owner writes side A of a case started without one. When side B is
+ * already in, this write also starts judging. A case that already has side
+ * A answers ok with its current state (a retry). */
+export async function writeOwnerSide(input: WriteSideInput): Promise<WriteSideResult> {
+  const startedAt = Date.now();
+  const now = input.now ?? new Date();
+  let row = input.row;
+  if (row.removedAt) return { ok: false, code: "removed" };
+  await ensureOriginalsTables();
+
+  for (let attempt = 0; ; attempt++) {
+    const bundle = await loadCaseBundle(row);
+    if (bundle.sides.some((s) => s.party === "a")) return { ok: true, row, nameMap: [], replayed: true };
+    const status = effectiveStatus(row, now);
+    if (status === "expired") {
+      await materializeExpiry(row, now).catch((e: unknown) => logError("expiry failed", e));
+      return { ok: false, code: "case_expired" };
+    }
+    if (status !== "awaiting_respondent") return { ok: false, code: "case_closed" };
+    const answered = bundle.sides.some((s) => s.party === "b");
+    const context = rosterContext(bundle);
+
+    let sub: AnonymizedSubmission;
+    try {
+      sub = await meteredStep(row.id, "anonymize_a", () =>
+        anonymizeSubmission({
+          narrator: "Party A",
+          text: input.text,
+          evidence: input.evidence,
+          lang: row.lang,
+          twoSided: true,
+          opponentRequired: true,
+          ...(answered ? { roster: { context, labelsInUse: labelsInUse(context, bundle.people) } } : {}),
+          names: { keysFor: caseNameKeys(row.id), known: bundle.people },
+        }),
+      );
+    } catch (e) {
+      logError("anonymizing side A failed", e);
+      return { ok: false, code: anonymizeFailure(e) };
+    }
+
+    const nowIso = now.toISOString();
+    const token = nanoid(16);
+    const guard: StatementGuard = {
+      sql: "EXISTS (SELECT 1 FROM cases WHERE id = ? AND judging_token = ?)",
+      args: [row.id, token],
+    };
+    const display = sealCaseDisplay(row.id, "a", input.displayName);
+    const original = caseOriginalStatement(
+      row.id,
+      "a",
+      "side",
+      originalPayload(input.rawText ?? input.text, input.evidence, sub),
+      guard,
+      nowIso,
+    );
+    // Side B's presence is part of the condition either way: the batch only
+    // applies to the state it was prepared for.
+    const open = `WHERE id = ? AND status = 'awaiting_respondent' AND expires_at > ? AND removed_at IS NULL
+                    AND ${sideExists("a", false)} AND ${sideExists("b", answered)}`;
+    const store: InStatement = answered
+      ? {
+          sql: `UPDATE cases SET status = 'judging', mode = 'two_sided', judging_token = ?, judging_started_at = ?,
+                  attempts = attempts + 1, last_error = NULL, updated_at = ?,
+                  display_a_sealed = COALESCE(?, display_a_sealed), display_key_id = COALESCE(?, display_key_id)
+                ${open}`,
+          args: [token, nowIso, nowIso, display?.sealed ?? null, display?.kid ?? null, row.id, nowIso],
+        }
+      : {
+          sql: `UPDATE cases SET judging_token = ?, updated_at = ?,
+                  display_a_sealed = COALESCE(?, display_a_sealed), display_key_id = COALESCE(?, display_key_id)
+                ${open}`,
+          args: [token, nowIso, display?.sealed ?? null, display?.kid ?? null, row.id, nowIso],
+        };
+    let won = false;
+    try {
+      const rs = await entitlementWriteBatch([
+        store,
+        ...submissionStatements(row.id, "a", sub, guard, nowIso, null),
+        ...(original ? [original] : []),
+        ...(answered && row.reservationId ? [holdStatement(row.reservationId, nowIso, guard)] : []),
+      ]);
+      won = rs[0].rowsAffected === 1;
+    } catch (e) {
+      logError("storing side A failed", e);
+      return { ok: false, code: "unavailable" };
+    }
+    const fresh = (await getCase(row.id)) ?? row;
+    if (won) {
+      if (answered) scheduleJudging(() => runCaseJudging(row.id, token, input.origin, startedAt));
+      return { ok: true, row: fresh, nameMap: sub.nameMap, replayed: false };
+    }
+    if (fresh.removedAt) return { ok: false, code: "removed" };
+    // The other side may have landed meanwhile (then this write is the one
+    // that starts judging), or a retry of this very write won.
+    if (attempt === 0) {
+      row = fresh;
+      continue;
+    }
+    return { ok: false, code: effectiveStatus(fresh, now) === "expired" ? "case_expired" : "case_closed" };
   }
-  const fresh = (await getCase(row.id)) ?? row;
-  if (!won) return fresh.removedAt ? { ok: false, code: "removed" } : closedOrReplay(fresh, key, now);
-  scheduleJudging(() => runCaseJudging(row.id, token, input.origin, startedAt));
-  return { ok: true, row: fresh, nameMap: sub.nameMap, claim: claimFor(fresh), replayed: false };
 }
 
 // --- Judge now / retry -------------------------------------------------------------
@@ -412,12 +559,13 @@ export async function respondToCase(input: RespondInput): Promise<RespondResult>
 export type JudgeNowResult =
   | { ok: true; row: CaseRow; started: boolean }
   | Blocked
-  | Failure<"invalid" | "case_closed" | "unavailable" | "removed">;
+  | Failure<"invalid" | "side_missing" | "case_closed" | "unavailable" | "removed">;
 
 /**
  * awaiting + only_mine: judge side A alone with the held unit (the invite
  * closes). expired: a new unit, one-sided. failed: a new unit, same mode.
- * Already judging or judged: no-op (idempotent).
+ * Already judging or judged: no-op (idempotent). Nothing runs while side A
+ * is still missing.
  */
 export async function judgeNow(input: {
   row: CaseRow;
@@ -429,6 +577,7 @@ export async function judgeNow(input: {
   const nowIso = now.toISOString();
   let row = input.row;
   if (row.removedAt) return { ok: false, code: "removed" };
+  if (!(await hasSide(row.id, "a"))) return { ok: false, code: "side_missing" };
   for (let attempt = 0; attempt < 2; attempt++) {
     const status = effectiveStatus(row, now);
     if (status === "judging" || status === "judged") return { ok: true, row, started: false };
@@ -512,7 +661,8 @@ export async function rotateInvite(row: CaseRow, now: Date = new Date()): Promis
   const rs = await entitlementWriteBatch([
     {
       sql: `UPDATE cases SET invite_nonce = ?, invite_hash = ?, updated_at = ?
-            WHERE id = ? AND status = 'awaiting_respondent' AND expires_at > ? AND removed_at IS NULL`,
+            WHERE id = ? AND status = 'awaiting_respondent' AND expires_at > ? AND removed_at IS NULL
+              AND ${sideExists("b", false)}`,
       args: [nonce, inviteHash(token), nowIso, row.id, nowIso],
     },
   ]);

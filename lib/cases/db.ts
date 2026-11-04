@@ -387,6 +387,12 @@ export async function getAppeal(caseId: string, party: PartyLetter): Promise<App
   return rs.rows[0] ? mapAppeal(rs.rows[0]) : null;
 }
 
+export async function hasSide(caseId: string, party: PartyLetter): Promise<boolean> {
+  const db = await caseDb();
+  const rs = await db.execute({ sql: "SELECT 1 FROM case_sides WHERE case_id = ? AND party = ?", args: [caseId, party] });
+  return rs.rows.length > 0;
+}
+
 /** Everything about one case, in parallel reads. */
 export async function loadCaseBundle(row: CaseRow): Promise<CaseBundle> {
   const db = await caseDb();

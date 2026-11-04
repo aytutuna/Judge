@@ -134,6 +134,8 @@ async function caseRow(r: HistoryCaseRow, party: PartyLetter, now: Date): Promis
       expiresAt: r.expiresAt,
       removedA: r.removedAAt !== null,
       removedB: r.removedBAt !== null,
+      ownerSideMissing: party === "a" && r.sideStart === null,
+      respondentAnswered: r.respondentClaimNonce !== null,
       appeals: r.appeals,
       latest: r.latestResult ? { appealId: r.latestAppealId, verdict: r.latestResult.verdict } : null,
     },

@@ -12,6 +12,8 @@ const facts = (over: Partial<CaseFacts> = {}): CaseFacts => ({
   expiresAt: LATER,
   removedA: false,
   removedB: false,
+  ownerSideMissing: false,
+  respondentAnswered: false,
   appeals: [],
   latest: { appealId: null, verdict: "side_b" },
   ...over,
@@ -28,6 +30,14 @@ describe("a case you started", () => {
     const past = facts({ status: "awaiting_respondent", expiresAt: "2026-10-28T11:59:59.000Z", latest: null });
     expect(pick(past)).toEqual(["expired", true, true]);
     expect(pick(facts({ status: "expired", latest: null }))).toEqual(["expired", true, true]);
+  });
+
+  it("a link-first case is your turn once they have written, never when it expired unwritten", () => {
+    const open = { status: "awaiting_respondent", latest: null, ownerSideMissing: true } as const;
+    expect(pick(facts(open))).toEqual(["waiting", false, true]);
+    expect(pick(facts({ ...open, respondentAnswered: true }))).toEqual(["waiting", true, true]);
+    expect(pick(facts({ ...open, party: "b", respondentAnswered: true }))).toEqual(["waiting", false, true]);
+    expect(pick(facts({ status: "expired", latest: null, ownerSideMissing: true }))).toEqual(["expired", false, true]);
   });
 
   it("stops saying it's your turn a week after the link expired", () => {
@@ -137,6 +147,8 @@ describe("historyStateFromView", () => {
       appeals: [],
       verdicts: [],
       removed: null,
+      ownerSideMissing: false,
+      respondentAnswered: false,
       ...over,
     }) as CaseView;
   const verdict = (appealId: string | null, v: "side_a" | "side_b") =>

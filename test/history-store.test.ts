@@ -286,6 +286,7 @@ function view(over: Partial<CaseView>): CaseView {
     verdicts: [],
     appeals: [],
     canJudgeNow: false,
+    ownerSideMissing: false,
     appeal: { allowed: false, blockedBy: "not_judged" },
     lastError: null,
     pollAfterMs: null,

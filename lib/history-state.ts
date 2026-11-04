@@ -19,6 +19,9 @@ export type CaseFacts = {
   expiresAt: string;
   removedA: boolean;
   removedB: boolean;
+  /** The owner never wrote their side (it started as a link). */
+  ownerSideMissing: boolean;
+  respondentAnswered: boolean;
   appeals: readonly { id: string; party: PartyLetter; status: AppealStatus }[];
   /** The newest verdict that parses. */
   latest: { appealId: string | null; verdict: FinalVerdict } | null;
@@ -45,11 +48,11 @@ export function caseHistoryState(f: CaseFacts, now: Date): DerivedState {
   const owner = f.party === "a";
   switch (status) {
     case "awaiting_respondent":
-      return { ...settled("waiting"), removable: true };
+      return { ...settled("waiting"), yourMove: owner && f.ownerSideMissing && f.respondentAnswered, removable: true };
     case "expired":
       return {
         ...settled("expired"),
-        yourMove: owner && now.getTime() - Date.parse(f.expiresAt) < EXPIRED_MOVE_MS,
+        yourMove: owner && !f.ownerSideMissing && now.getTime() - Date.parse(f.expiresAt) < EXPIRED_MOVE_MS,
         removable: true,
       };
     case "judging":
@@ -100,6 +103,8 @@ export function historyStateFromView(view: CaseView, now: Date): DerivedState {
       expiresAt: view.expiresAt,
       removedA: view.removed?.parties.includes("a") ?? false,
       removedB: view.removed?.parties.includes("b") ?? false,
+      ownerSideMissing: view.ownerSideMissing,
+      respondentAnswered: view.respondentAnswered,
       appeals: view.appeals,
       latest: current ? { appealId: current.appealId, verdict: current.result.verdict } : null,
     },

@@ -3,6 +3,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 const m = vi.hoisted(() => ({
   emailConfigured: vi.fn(),
   sendCaseReadyEmail: vi.fn(),
+  sendWriteYoursEmail: vi.fn(),
   findUserById: vi.fn(),
   entitlementWriteBatch: vi.fn(),
 }));
@@ -14,11 +15,12 @@ vi.mock("@/lib/email", async (importOriginal) => ({
   ...(await importOriginal<typeof import("@/lib/email")>()),
   emailConfigured: m.emailConfigured,
   sendCaseReadyEmail: m.sendCaseReadyEmail,
+  sendWriteYoursEmail: m.sendWriteYoursEmail,
 }));
 vi.mock("@/lib/entitlements", () => ({ entitlementWriteBatch: m.entitlementWriteBatch }));
 
-import { caseReadyEmailContent } from "../lib/email";
-import { notifyOwnerCaseReady } from "../lib/cases/notify";
+import { caseReadyEmailContent, writeYoursEmailContent } from "../lib/email";
+import { notifyOwnerCaseReady, notifyOwnerSideWaiting } from "../lib/cases/notify";
 import type { CaseRow } from "../lib/cases/db";
 
 const ROW = { id: "case00000001", ownerId: "owner-1", lang: "tr" } as CaseRow;
@@ -28,6 +30,7 @@ beforeEach(() => {
   m.findUserById.mockResolvedValue({ id: "owner-1", email: "owner@example.org" });
   m.entitlementWriteBatch.mockResolvedValue([{ rowsAffected: 1 }]);
   m.sendCaseReadyEmail.mockResolvedValue(undefined);
+  m.sendWriteYoursEmail.mockResolvedValue(undefined);
 });
 
 describe("notifyOwnerCaseReady", () => {
@@ -60,6 +63,46 @@ describe("notifyOwnerCaseReady", () => {
     await expect(notifyOwnerCaseReady(ROW, "https://settle.example")).resolves.toBeUndefined();
     expect(JSON.stringify(err.mock.calls)).not.toContain("owner@example.org");
     err.mockRestore();
+  });
+});
+
+describe("notifyOwnerSideWaiting", () => {
+  it("does nothing when email is not configured", async () => {
+    m.emailConfigured.mockReturnValue(false);
+    await notifyOwnerSideWaiting(ROW, "https://settle.example");
+    expect(m.findUserById).not.toHaveBeenCalled();
+    expect(m.sendWriteYoursEmail).not.toHaveBeenCalled();
+  });
+
+  it("asks the owner to write theirs, without touching the verdict notice flag", async () => {
+    m.emailConfigured.mockReturnValue(true);
+    await notifyOwnerSideWaiting(ROW, "https://settle.example");
+    expect(m.entitlementWriteBatch).not.toHaveBeenCalled();
+    expect(m.sendCaseReadyEmail).not.toHaveBeenCalled();
+    expect(m.sendWriteYoursEmail).toHaveBeenCalledWith({
+      to: "owner@example.org",
+      url: "https://settle.example/c/case00000001",
+      lang: "tr",
+    });
+  });
+
+  it("never throws or logs the address", async () => {
+    m.emailConfigured.mockReturnValue(true);
+    m.sendWriteYoursEmail.mockRejectedValue(new Error("case email rejected: HTTP 500"));
+    const err = vi.spyOn(console, "error").mockImplementation(() => {});
+    await expect(notifyOwnerSideWaiting(ROW, "https://settle.example")).resolves.toBeUndefined();
+    expect(JSON.stringify(err.mock.calls)).not.toContain("owner@example.org");
+    err.mockRestore();
+  });
+});
+
+describe("writeYoursEmailContent", () => {
+  it("links the case page and reads from the case screen's strings", () => {
+    const en = writeYoursEmailContent("https://settle.example/c/abc", "en");
+    expect(en.text).toContain("https://settle.example/c/abc");
+    expect(en.text).toContain("They've written their side.");
+    expect(en.html).toContain('href="https://settle.example/c/abc"');
+    expect(en.subject).toBe("They've written their side");
   });
 });
 

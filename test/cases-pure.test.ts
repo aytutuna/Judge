@@ -233,6 +233,30 @@ describe("CaseView visibility", () => {
     expect(resp.canJudgeNow).toBe(false);
   });
 
+  it("no side A yet: ownerSideMissing for both roles, no judge-now, no link once the answer is in", () => {
+    const waiting = bundle({ sides: [] });
+    for (const role of ["owner", "respondent"] as const) {
+      expect(buildCaseView(waiting, ctx(role)).ownerSideMissing).toBe(true);
+    }
+    const owner = buildCaseView(waiting, ctx("owner"));
+    expect(owner.sides).toEqual([]);
+    expect(owner.canJudgeNow).toBe(false);
+    expect(owner.inviteUrl).toBe("http://x/r/tok");
+
+    const answered = bundle({ row: row({ mode: "two_sided" }), sides: [SIDES[1]] });
+    const ownerAfter = buildCaseView(answered, ctx("owner"));
+    expect(ownerAfter.respondentAnswered).toBe(true);
+    expect(ownerAfter.ownerSideMissing).toBe(true);
+    expect(ownerAfter.inviteUrl).toBeNull();
+    expect(ownerAfter.canJudgeNow).toBe(false);
+    expect(ownerAfter.sides).toEqual([]);
+    expect(buildCaseView(answered, ctx("respondent")).sides).toEqual([]);
+
+    expect(buildCaseView(bundle(), ctx("owner")).ownerSideMissing).toBe(false);
+    // A removed case is not waiting for a side.
+    expect(buildCaseView(bundle({ row: row({ removedAt: "t", removedAAt: "t" }), sides: [] }), ctx("owner")).ownerSideMissing).toBe(false);
+  });
+
   it("judging after the answer: still no other side for anyone", () => {
     const b = bundle({ row: row({ status: "judging", mode: "two_sided" }), sides: SIDES });
     expect(buildCaseView(b, ctx("owner")).sides.map((s) => s.party)).toEqual(["a"]);

@@ -1104,6 +1104,7 @@
         "verdicts": [],
         "appeals": [],
         "canJudgeNow": true,
+        "ownerSideMissing": false,
         "appeal": {
           "allowed": false,
           "blockedBy": "not_judged"
@@ -1118,6 +1119,117 @@
           {
             "original": "Sam",
             "replacement": "Party B"
+          }
+        ],
+        "display": {
+          "namesVisible": true,
+          "a": null,
+          "b": null
+        },
+        "removed": null,
+        "yourOriginal": "stored"
+      },
+      "waiting_to_write": {
+        "id": "case0000001",
+        "role": "owner",
+        "yourParty": "a",
+        "status": "awaiting_respondent",
+        "mode": null,
+        "tier": "premium",
+        "lang": "en",
+        "createdAt": "2026-10-20T09:00:00.000Z",
+        "expiresAt": "2026-10-27T09:00:00.000Z",
+        "judgedAt": null,
+        "respondentAnswered": false,
+        "inviteUrl": "https://okjudge.com/r/Xk3pQ9vLm2Rt7YbN4cWd0A",
+        "ownInvite": false,
+        "sides": [],
+        "verdicts": [],
+        "appeals": [],
+        "canJudgeNow": false,
+        "ownerSideMissing": true,
+        "appeal": {
+          "allowed": false,
+          "blockedBy": "not_judged"
+        },
+        "lastError": null,
+        "pollAfterMs": null,
+        "names": null,
+        "display": {
+          "namesVisible": true,
+          "a": null,
+          "b": null
+        },
+        "removed": null,
+        "yourOriginal": "not_stored"
+      },
+      "waiting_to_write_answered": {
+        "id": "case0000001",
+        "role": "owner",
+        "yourParty": "a",
+        "status": "awaiting_respondent",
+        "mode": "two_sided",
+        "tier": "premium",
+        "lang": "en",
+        "createdAt": "2026-10-20T09:00:00.000Z",
+        "expiresAt": "2026-10-27T09:00:00.000Z",
+        "judgedAt": null,
+        "respondentAnswered": true,
+        "inviteUrl": null,
+        "ownInvite": false,
+        "sides": [],
+        "verdicts": [],
+        "appeals": [],
+        "canJudgeNow": false,
+        "ownerSideMissing": true,
+        "appeal": {
+          "allowed": false,
+          "blockedBy": "not_judged"
+        },
+        "lastError": null,
+        "pollAfterMs": null,
+        "names": null,
+        "display": {
+          "namesVisible": true,
+          "a": null,
+          "b": null
+        },
+        "removed": null,
+        "yourOriginal": "not_stored"
+      },
+      "respondent_waiting_for_owner": {
+        "id": "case0000001",
+        "role": "respondent",
+        "yourParty": "b",
+        "status": "awaiting_respondent",
+        "mode": "two_sided",
+        "tier": "premium",
+        "lang": "en",
+        "createdAt": "2026-10-20T09:00:00.000Z",
+        "expiresAt": "2026-10-27T09:00:00.000Z",
+        "judgedAt": null,
+        "respondentAnswered": true,
+        "inviteUrl": null,
+        "ownInvite": false,
+        "sides": [],
+        "verdicts": [],
+        "appeals": [],
+        "canJudgeNow": false,
+        "ownerSideMissing": true,
+        "appeal": {
+          "allowed": false,
+          "blockedBy": "not_judged"
+        },
+        "lastError": null,
+        "pollAfterMs": null,
+        "names": [
+          {
+            "original": "I",
+            "replacement": "Party B"
+          },
+          {
+            "original": "Alex",
+            "replacement": "Party A"
           }
         ],
         "display": {
@@ -1153,6 +1265,7 @@
         "verdicts": [],
         "appeals": [],
         "canJudgeNow": false,
+        "ownerSideMissing": false,
         "appeal": {
           "allowed": false,
           "blockedBy": "not_judged"
@@ -1202,6 +1315,7 @@
         "verdicts": [],
         "appeals": [],
         "canJudgeNow": false,
+        "ownerSideMissing": false,
         "appeal": {
           "allowed": false,
           "blockedBy": "not_judged"
@@ -1336,6 +1450,7 @@
         ],
         "appeals": [],
         "canJudgeNow": false,
+        "ownerSideMissing": false,
         "appeal": {
           "allowed": true,
           "blockedBy": null
@@ -1433,6 +1548,7 @@
         ],
         "appeals": [],
         "canJudgeNow": false,
+        "ownerSideMissing": false,
         "appeal": {
           "allowed": false,
           "blockedBy": "premium_required"
@@ -1553,6 +1669,7 @@
         ],
         "appeals": [],
         "canJudgeNow": false,
+        "ownerSideMissing": false,
         "appeal": {
           "allowed": true,
           "blockedBy": null
@@ -1699,6 +1816,7 @@
           }
         ],
         "canJudgeNow": false,
+        "ownerSideMissing": false,
         "appeal": {
           "allowed": false,
           "blockedBy": "busy"
@@ -1925,6 +2043,7 @@
           }
         ],
         "canJudgeNow": false,
+        "ownerSideMissing": false,
         "appeal": {
           "allowed": false,
           "blockedBy": "appeal_used"
@@ -2152,6 +2271,7 @@
           }
         ],
         "canJudgeNow": false,
+        "ownerSideMissing": false,
         "appeal": {
           "allowed": false,
           "blockedBy": "appeal_used"
@@ -2387,6 +2507,7 @@
           }
         ],
         "canJudgeNow": false,
+        "ownerSideMissing": false,
         "appeal": {
           "allowed": false,
           "blockedBy": "appeal_used"
@@ -2436,6 +2557,7 @@
         "verdicts": [],
         "appeals": [],
         "canJudgeNow": true,
+        "ownerSideMissing": false,
         "appeal": {
           "allowed": false,
           "blockedBy": "not_judged"
@@ -2485,6 +2607,7 @@
         "verdicts": [],
         "appeals": [],
         "canJudgeNow": false,
+        "ownerSideMissing": false,
         "appeal": {
           "allowed": false,
           "blockedBy": "not_judged"
@@ -2620,6 +2743,7 @@
         ],
         "appeals": [],
         "canJudgeNow": false,
+        "ownerSideMissing": false,
         "appeal": {
           "allowed": false,
           "blockedBy": "not_party"
@@ -2665,6 +2789,7 @@
         "verdicts": [],
         "appeals": [],
         "canJudgeNow": true,
+        "ownerSideMissing": false,
         "appeal": {
           "allowed": false,
           "blockedBy": "not_judged"
@@ -2792,6 +2917,7 @@
         ],
         "appeals": [],
         "canJudgeNow": false,
+        "ownerSideMissing": false,
         "appeal": {
           "allowed": true,
           "blockedBy": null
@@ -2884,6 +3010,7 @@
         "verdicts": [],
         "appeals": [],
         "canJudgeNow": true,
+        "ownerSideMissing": false,
         "appeal": {
           "allowed": false,
           "blockedBy": "not_judged"
@@ -3057,6 +3184,7 @@
           }
         ],
         "canJudgeNow": false,
+        "ownerSideMissing": false,
         "appeal": {
           "allowed": false,
           "blockedBy": "busy"

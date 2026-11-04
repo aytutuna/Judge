@@ -14,6 +14,9 @@
  * or for a signed-out answer a claim secret returned in that response (sent
  * back as `claim` on an appeal, and as the Respondent-Claim header on GET so
  * the view can say whether this person may add context).
+ * The owner may start a case without side A (text left out of the create
+ * body) and write it later with POST .../side; the answer of the other
+ * person can arrive first, and judging starts when both are in.
  * Each party's own originals, name map and display name are readable and
  * editable only by that party: the owner by session, Party B by the bound
  * account or the claim secret (Respondent-Claim header or `claim`).
@@ -37,6 +40,7 @@ import {
   MAX_EVIDENCE_PER_APPEAL,
   MAX_EVIDENCE_PER_SIDE,
   RespondRequest,
+  SideRequest,
   type AppealBlock,
   type AppealResponse,
   type CaseClaimResponse,
@@ -49,6 +53,7 @@ import {
   type InviteResponse,
   type PartyLetter,
   type RespondResponse,
+  type SideResponse,
 } from "@/lib/case-types";
 import { clientIp } from "@/lib/client-ip";
 import { entitlementWriteBatch, getEntitlement } from "@/lib/entitlements";
@@ -83,6 +88,7 @@ import {
   respondToCase,
   rotateInvite,
   submitAppeal,
+  writeOwnerSide,
 } from "./service";
 import { effectiveStatus, materializeExpiry, maybeSweepCases } from "./sweep";
 import { buildCaseView, caseSummary, structuralAppealBlock } from "./view";
@@ -364,8 +370,9 @@ export function createCaseHandler(req: Request): Promise<NextResponse> {
 
     const res = await createCase({
       ownerId: userId,
-      text: parsed.data.text,
-      rawText: rawField(read.body, "text") ?? parsed.data.text,
+      ...(parsed.data.text !== undefined
+        ? { text: parsed.data.text, rawText: rawField(read.body, "text") ?? parsed.data.text }
+        : {}),
       displayName: parsed.data.displayName || null,
       lang: parsed.data.lang,
       evidence: ev.items,
@@ -378,6 +385,48 @@ export function createCaseHandler(req: Request): Promise<NextResponse> {
     }
     const entitlement = await entitlementOrNull(userId);
     const body: CreateCaseResponse = {
+      case: await ownerView(res.row, req, userId),
+      name_map: res.nameMap,
+      ...(entitlement ? { entitlement } : {}),
+      ...(res.replayed ? { replayed: true } : {}),
+    };
+    return json(body, res.replayed ? 200 : 201);
+  });
+}
+
+/** POST /api/v1/cases/{id}/side: the owner writes side A of a case started without it. */
+export function writeSideHandler(req: Request, id: string): Promise<NextResponse> {
+  return guarded("side", async () => {
+    if (!casesEnabled()) return fail("not_configured");
+    const key = idempotencyKey(req.headers);
+    if (key === null) return fail("invalid", "Idempotency-Key must be 1 to 64 letters, digits, '_' or '-'.");
+    const read = await readJson(req);
+    if (!read.ok) return fail("invalid", "Invalid JSON body");
+    const parsed = SideRequest.safeParse(read.body);
+    if (!parsed.success) return invalidBody(parsed.error.issues[0]);
+    const gate = await signedIn(req);
+    if ("response" in gate) return gate.response;
+    const userId = gate.viewer.user.id;
+    const limited = await limitGate(userId, "premium_verdict", true);
+    if (limited) return limited;
+    await maybeSweepCases();
+    const row = await ownedCase(id, userId);
+    if (!row) return fail("not_found");
+
+    const ev = verifyEvidence(parsed.data.evidence, [{ type: "user", userId }], MAX_EVIDENCE_PER_SIDE);
+    if ("response" in ev) return ev.response;
+
+    const res = await writeOwnerSide({
+      row,
+      text: parsed.data.text,
+      rawText: rawField(read.body, "text") ?? parsed.data.text,
+      displayName: parsed.data.displayName || null,
+      evidence: ev.items,
+      origin: publicOrigin(req),
+    });
+    if (!res.ok) return fail(res.code);
+    const entitlement = await entitlementOrNull(userId);
+    const body: SideResponse = {
       case: await ownerView(res.row, req, userId),
       name_map: res.nameMap,
       ...(entitlement ? { entitlement } : {}),
@@ -467,6 +516,7 @@ export function judgeCaseHandler(req: Request, id: string): Promise<NextResponse
     const res = await judgeNow({ row, mode: parsed.data.mode, origin: publicOrigin(req) });
     if (!res.ok) {
       if (res.code === "invalid") return fail("invalid", 'Send { "mode": "only_mine" } to judge without the other side.');
+      if (res.code === "side_missing") return fail("invalid", "Write your side first.");
       if (res.code === "case_closed" || res.code === "unavailable" || res.code === "removed") return fail(res.code);
       return blocked(res.code, "resetsAt" in res ? res.resetsAt : undefined);
     }
@@ -623,7 +673,8 @@ export function respondPostHandler(req: Request, token: string): Promise<NextRes
       await materializeExpiry(row, now).catch(() => undefined);
       return fail("case_expired");
     }
-    if (status !== "awaiting_respondent") {
+    // A case waiting for the owner's side already holds an answer: closed too.
+    if (status !== "awaiting_respondent" || row.respondentClaimNonce) {
       if (key && row.respondentIdem === key) {
         const claim = claimFor(row);
         const body: RespondResponse = {
@@ -698,7 +749,7 @@ export function respondEvidenceHandler(req: Request, token: string): Promise<Nex
     if (refused) return refused;
     const status = effectiveStatus(row, new Date());
     if (status === "expired") return fail("case_expired");
-    if (status !== "awaiting_respondent") return fail("case_closed");
+    if (status !== "awaiting_respondent" || row.respondentClaimNonce) return fail("case_closed");
     const ip = clientIp(req.headers);
     try {
       const byIp = await checkIpLimits(ip, "respond_evidence");

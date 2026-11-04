@@ -6,6 +6,9 @@
  *   sees side A (their own, as the judges read it); the respondent view
  *   carries no sides at all, because the link alone is the credential and
  *   the owner holds the link too.
+ * - A case can wait without side A (the link was sent first): the owner view
+ *   then has no sides and ownerSideMissing is set, for both roles. Once side B
+ *   is in, the invite link is gone.
  * - After a two-sided verdict both parties see both anonymized accounts,
  *   their transcripts, the appeals and every verdict.
  * - A case the owner judged on their side alone shows the respondent no
@@ -112,11 +115,14 @@ export function buildCaseView(bundle: CaseBundle, ctx: ViewContext): CaseView {
         .filter((v) => v.result !== null)
         .map((v) => ({ seq: v.seq, id: v.verdictId, result: v.result!, appealId: v.appealId, createdAt: v.createdAt }));
 
+  const respondentAnswered = bundle.sides.some((s) => s.party === "b");
   const appealJudging = bundle.appeals.some((a) => a.status === "judging");
   const judging = status === "judging" || appealJudging;
+  const ownerSideMissing = !row.removedAt && !bundle.sides.some((s) => s.party === "a");
   const canJudgeNow =
     ctx.role === "owner" &&
     !row.removedAt &&
+    !ownerSideMissing &&
     (status === "awaiting_respondent" || status === "expired" || status === "failed");
 
   return {
@@ -130,13 +136,14 @@ export function buildCaseView(bundle: CaseBundle, ctx: ViewContext): CaseView {
     createdAt: row.createdAt,
     expiresAt: row.expiresAt,
     judgedAt: row.judgedAt,
-    respondentAnswered: bundle.sides.some((s) => s.party === "b"),
-    inviteUrl: ctx.role === "owner" && status === "awaiting_respondent" ? ctx.inviteUrl : null,
+    respondentAnswered,
+    inviteUrl: ctx.role === "owner" && status === "awaiting_respondent" && !respondentAnswered ? ctx.inviteUrl : null,
     ownInvite: ctx.role === "respondent" && ctx.ownInvite,
     sides,
     verdicts,
     appeals,
     canJudgeNow,
+    ownerSideMissing,
     appeal: row.removedAt
       ? { allowed: false, blockedBy: "not_judged" }
       : { allowed: ctx.appealBlock === null, blockedBy: ctx.appealBlock },

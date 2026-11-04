@@ -24,4 +24,5 @@ export {
   respondGetHandler,
   respondPostHandler,
   rotateInviteHandler,
+  writeSideHandler,
 } from "./http";

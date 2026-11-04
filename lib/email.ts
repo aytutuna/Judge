@@ -6,7 +6,7 @@
  * case text.
  */
 
-import { emailCopy, loadLocales, type EmailCopy, type Lang } from "./i18n";
+import { emailCopy, loadLocales, t, type EmailCopy, type Lang } from "./i18n";
 import { isLang, langDir } from "./langs";
 import { PALETTE as P } from "./palette";
 
@@ -153,8 +153,9 @@ export async function sendSignInCodeEmail({ to, code, lang }: { to: string; code
   await deliver(to, signInCodeEmailContent(code, lang), "sign-in code email", "email sign-in is not configured");
 }
 
-export function caseReadyEmailContent(url: string, lang: Lang): EmailContent {
-  const c = copy(lang).caseReady;
+type Notice = { subject: string; intro: string; button: string; note: string };
+
+function noticeContent(c: Notice, url: string, lang: Lang): EmailContent {
   const text = `${c.intro}\n\n${url}\n\n${c.note}\n`;
   const html = `<!doctype html>${htmlTag(lang)}<body style="margin:0;padding:32px 16px;background:${P.ivory};font-family:Georgia,'Times New Roman',serif;color:${P.ink}">
 <div style="max-width:480px;margin:0 auto;background:${P.paper};border:1px solid ${P.strata};border-radius:12px;padding:32px">
@@ -166,9 +167,35 @@ export function caseReadyEmailContent(url: string, lang: Lang): EmailContent {
   return { subject: c.subject, text, html };
 }
 
+export function caseReadyEmailContent(url: string, lang: Lang): EmailContent {
+  return noticeContent(copy(lang).caseReady, url, lang);
+}
+
+/** The other person wrote first: the owner is asked to write theirs. Reuses
+ * the case screen's strings, so it reads in the case language. */
+export function writeYoursEmailContent(url: string, lang: Lang): EmailContent {
+  return noticeContent(
+    {
+      subject: t(lang, "case.write.emailSubject"),
+      intro: t(lang, "case.write.leadAnswered"),
+      button: t(lang, "case.write.submit"),
+      note: copy(lang).caseReady.note,
+    },
+    url,
+    lang,
+  );
+}
+
 /** Sends the "your case is ready" notice. Throws on failure; the message
  * never contains the address or link. */
 export async function sendCaseReadyEmail({ to, url, lang }: { to: string; url: string; lang: Lang }): Promise<void> {
   await loadLocales();
   await deliver(to, caseReadyEmailContent(url, lang), "case email", "email is not configured");
+}
+
+/** Sends the "they wrote, now write yours" notice. Throws on failure; the
+ * message never contains the address or link. */
+export async function sendWriteYoursEmail({ to, url, lang }: { to: string; url: string; lang: Lang }): Promise<void> {
+  await loadLocales();
+  await deliver(to, writeYoursEmailContent(url, lang), "case email", "email is not configured");
 }

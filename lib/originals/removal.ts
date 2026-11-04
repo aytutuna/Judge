@@ -14,7 +14,7 @@ import { getCase, type CaseRow } from "@/lib/cases/db";
 import { entitlementWriteBatch, refundStatements } from "@/lib/entitlements";
 import type { RemovalReason } from "@/lib/originals-types";
 import type { SignInRevocation } from "@/lib/signin-tokens";
-import { getVerdict } from "@/lib/db";
+import { getDb, getVerdict } from "@/lib/db";
 import { ensureOriginalsTables, getVerdictMeta, userBackfillStatements, type VerdictMeta } from "./db";
 import { ensureVerdictJobTables } from "@/lib/verdict-jobs";
 import { appendRemovalLog, type RemovalLogEntry } from "./removal-log";
@@ -141,7 +141,8 @@ export type CaseRemovalResult = { ok: true; row: CaseRow; removedAt: string } | 
  * anything is judging (`ignoreBusy`: not refused, for a replay onto a
  * restored database while the app is stopped, where nothing can still be
  * judging). The owner removing a case that still waits for the answer
- * closes the invite and refunds the held unit. Idempotent.
+ * closes the invite and refunds the held unit; so does the respondent
+ * removing an answer that waits for the owner's side. Idempotent.
  */
 export async function removeCaseSide(
   row: CaseRow,
@@ -167,14 +168,19 @@ async function removeCaseSideOnce(
   await ensureOriginalsTables();
   const nowIso = now.toISOString();
   const where = ignoreBusy ? "id = ?" : `id = ? AND ${NOT_BUSY}`;
-  const refund =
-    party === "a" && row.reservationId
-      ? refundStatements(row.reservationId, nowIso, {
-          sql: `EXISTS (SELECT 1 FROM cases WHERE id = ? AND reservation_id = ? AND status IN ('awaiting_respondent','expired')
-                AND removed_a_at IS NULL AND ${NOT_BUSY})`,
-          args: [row.id, row.reservationId],
-        })
-      : [];
+  // Party B only holds the unit while the owner's side was never written
+  // (their answer was waiting): then nothing will be judged.
+  const refundable =
+    party === "a"
+      ? "removed_a_at IS NULL"
+      : "NOT EXISTS (SELECT 1 FROM case_sides s WHERE s.case_id = cases.id AND s.party = 'a')";
+  const refund = row.reservationId
+    ? refundStatements(row.reservationId, nowIso, {
+        sql: `EXISTS (SELECT 1 FROM cases WHERE id = ? AND reservation_id = ? AND status IN ('awaiting_respondent','expired')
+              AND ${refundable} AND ${NOT_BUSY})`,
+        args: [row.id, row.reservationId],
+      })
+    : [];
   const side = caseSideStatements(party, where, [row.id], reason, nowIso);
   const rs = await entitlementWriteBatch([...refund, ...side]);
   const fresh = await getCase(row.id);
@@ -197,7 +203,23 @@ export async function removeUserData(userId: string, now: Date = new Date(), opt
   await ensureOriginalsTables();
   await ensureVerdictJobTables();
   const nowIso = now.toISOString();
+  // Answers waiting for an owner's side hold that owner's unit; it comes back
+  // now instead of at the entitlements backstop.
+  const db = await getDb();
+  const waiting = await db.execute({
+    sql: `SELECT id, reservation_id FROM cases
+          WHERE respondent_user_id = ? AND reservation_id IS NOT NULL AND status = 'awaiting_respondent'`,
+    args: [userId],
+  });
+  const refunds = waiting.rows.flatMap((r) =>
+    refundStatements(String(r.reservation_id), nowIso, {
+      sql: `EXISTS (SELECT 1 FROM cases WHERE id = ? AND reservation_id = ? AND status = 'awaiting_respondent'
+            AND NOT EXISTS (SELECT 1 FROM case_sides s WHERE s.case_id = cases.id AND s.party = 'a') AND ${NOT_BUSY})`,
+      args: [String(r.id), String(r.reservation_id)],
+    }),
+  );
   await entitlementWriteBatch([
+    ...refunds,
     {
       sql: `UPDATE verdict_jobs SET status = 'failed', error_code = 'unavailable', updated_at = ?
             WHERE owner_user_id = ? AND status = 'judging'`,

@@ -33,17 +33,32 @@ export const INVITE_TOKEN_PATTERN = /^[A-Za-z0-9_-]{22}$/;
 
 const EvidenceTokens = z.array(z.string().min(1).max(16_000));
 
-export const CreateCaseRequest = z.object({
+export const CreateCaseRequest = z
+  .object({
+    /** Left out when the owner sends the link before writing: side A comes
+     * later (POST /api/v1/cases/{id}/side). An empty string still fails. */
+    text: ArgumentText.optional(),
+    lang: RequestLang.default("en"),
+    /** Ignored: every case holds one premium verdict. Older app builds
+     * still send it. */
+    tier: Tier.optional(),
+    evidence: EvidenceTokens.max(MAX_EVIDENCE_PER_SIDE).optional(),
+    /** How the owner appears on the case's share pages; empty or null = "Party A". */
+    displayName: z.union([z.literal(""), DisplayNameInput]).nullable().optional(),
+  })
+  .refine((v) => v.text !== undefined || !v.evidence?.length, {
+    path: ["evidence"],
+    message: "Images go with a written side.",
+  });
+export type CreateCaseRequest = z.infer<typeof CreateCaseRequest>;
+
+/** POST /api/v1/cases/{id}/side: the owner writes side A after sending the link. */
+export const SideRequest = z.object({
   text: ArgumentText,
-  lang: RequestLang.default("en"),
-  /** Ignored: every case holds one premium verdict. Older app builds
-   * still send it. */
-  tier: Tier.optional(),
   evidence: EvidenceTokens.max(MAX_EVIDENCE_PER_SIDE).optional(),
-  /** How the owner appears on the case's share pages; empty or null = "Party A". */
   displayName: z.union([z.literal(""), DisplayNameInput]).nullable().optional(),
 });
-export type CreateCaseRequest = z.infer<typeof CreateCaseRequest>;
+export type SideRequest = z.infer<typeof SideRequest>;
 
 export const RespondRequest = z.object({
   text: ArgumentText,
@@ -175,6 +190,9 @@ export type CaseView = {
   verdicts: CaseVerdictView[];
   appeals: CaseAppealView[];
   canJudgeNow: boolean;
+  /** The case has no side A yet (the owner sent the link before writing)
+   * and nothing was removed. */
+  ownerSideMissing: boolean;
   appeal: { allowed: boolean; blockedBy: AppealBlock | null };
   lastError: "quota" | "unavailable" | null;
   /** Poll GET again after this many ms while something is judging; null otherwise. */
@@ -221,6 +239,7 @@ export type CreateCaseResponse = {
   entitlement?: Entitlement;
   replayed?: boolean;
 };
+export type SideResponse = CreateCaseResponse;
 export type CaseResponse = { case: CaseView };
 export type CaseListResponse = { cases: CaseSummary[]; next: string | null };
 export type RespondResponse = {

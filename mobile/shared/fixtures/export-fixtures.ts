@@ -24,7 +24,8 @@
  *                           (202 body) and polls {judging, failed_quota, ready}
  *                           (GET /api/v1/verdicts/{id}, lib/verdict-poll.ts)
  *   cases                   views (CaseView per state: waiting_for_respondent,
- *                           respondent_answered, judging, judged, judged_one_sided,
+ *                           waiting_to_write, waiting_to_write_answered,
+ *                           respondent_waiting_for_owner, respondent_answered, judging, judged, judged_one_sided,
  *                           judged_tr, appeal_judging, appeal_upheld,
  *                           appeal_overturned, appeal_changed, failed, expired,
  *                           removed, waiting_free, judged_free), list (GET /api/v1/cases with next),
@@ -635,6 +636,7 @@ const caseView = (over: Partial<CaseView> = {}): CaseView => ({
   verdicts: [],
   appeals: [],
   canJudgeNow: false,
+  ownerSideMissing: false,
   appeal: { allowed: false, blockedBy: "not_judged" },
   lastError: null,
   pollAfterMs: null,
@@ -667,6 +669,30 @@ const appealedCase = (outcome: AppealOutcome, result: VerdictResult): CaseView =
 
 const CASE_VIEWS: Record<string, CaseView> = {
   waiting_for_respondent: caseView({ inviteUrl: INVITE, canJudgeNow: true }),
+  waiting_to_write: caseView({
+    inviteUrl: INVITE,
+    ownerSideMissing: true,
+    sides: [],
+    names: null,
+    yourOriginal: "not_stored",
+  }),
+  waiting_to_write_answered: caseView({
+    mode: "two_sided",
+    respondentAnswered: true,
+    ownerSideMissing: true,
+    sides: [],
+    names: null,
+    yourOriginal: "not_stored",
+  }),
+  respondent_waiting_for_owner: caseView({
+    role: "respondent",
+    yourParty: "b",
+    mode: "two_sided",
+    respondentAnswered: true,
+    ownerSideMissing: true,
+    sides: [],
+    names: RESPONDENT_NAMES,
+  }),
   respondent_answered: caseView({
     role: "respondent",
     yourParty: "b",

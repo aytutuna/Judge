@@ -1322,3 +1322,390 @@ describe("originals, display names and removal of a side", () => {
     expect(await count("SELECT count(*) AS n FROM case_verdicts WHERE case_id = ?", [c.id])).toBe(0);
   });
 });
+
+describe("a case started before side A is written", () => {
+  beforeEach(() => {
+    m.anonymizeSubmission.mockClear();
+    m.judgeAnonymized.mockClear();
+  });
+
+  async function createBare(ownerId: string, extra: Record<string, unknown> = {}) {
+    const res = await http.createCaseHandler(req("POST", "/api/v1/cases", { user: ownerId, body: { lang: "en", ...extra } }));
+    return { res, data: await body<{ case: CaseView; name_map: unknown[]; code?: string }>(res) };
+  }
+
+  function writeSide(ownerId: string, id: string, opts: Opts & { text?: string; evidence?: string[] } = {}) {
+    const { text, evidence, ...rest } = opts;
+    return http.writeSideHandler(
+      req("POST", `/api/v1/cases/${id}/side`, {
+        user: ownerId,
+        ip: ip(),
+        ...rest,
+        body: { text: text ?? SIDE_A, ...(evidence ? { evidence } : {}) },
+      }),
+      id,
+    );
+  }
+
+  const sideView = async (res: Response) => (await body<{ case: CaseView; name_map: unknown[]; replayed?: boolean }>(res)).case;
+
+  /** Holds the next anonymization of `narrator` until released. */
+  function holdAnonymize(narrator: string) {
+    let release: () => void = () => {};
+    const gate = new Promise<void>((r) => (release = r));
+    let entered: () => void = () => {};
+    const reached = new Promise<void>((r) => (entered = r));
+    const normal = m.anonymizeSubmission.getMockImplementation()!;
+    let held = false;
+    m.anonymizeSubmission.mockImplementation(async (input: { narrator: string }) => {
+      if (input.narrator === narrator && !held) {
+        held = true;
+        entered();
+        await gate;
+      }
+      return normal(input);
+    });
+    return { reached, release };
+  }
+
+  it("is created without text: one unit held, no side A, a link, nothing to judge yet", async () => {
+    const o = await owner(2);
+    const { res, data } = await createBare(o);
+    expect(res.status).toBe(201);
+    const c = data.case;
+    expect(c.status).toBe("awaiting_respondent");
+    expect(c.sides).toEqual([]);
+    expect(c.ownerSideMissing).toBe(true);
+    expect(c.canJudgeNow).toBe(false);
+    expect(c.respondentAnswered).toBe(false);
+    expect(c.inviteUrl).toMatch(/^http:\/\/localhost:3600\/r\/[A-Za-z0-9_-]{22}$/);
+    expect(data.name_map).toEqual([]);
+    expect(m.anonymizeSubmission).not.toHaveBeenCalled();
+    expect(await usage(o)).toEqual(["reserved"]);
+    expect(await credits(o)).toBe(1);
+    expect(await count("SELECT count(*) AS n FROM case_sides WHERE case_id = ?", [c.id])).toBe(0);
+    expect((await getOwner(o, c.id)).ownerSideMissing).toBe(true);
+    const resp = (await getRespondent(tokenOf(c))).view!;
+    expect(resp.ownerSideMissing).toBe(true);
+    expect(resp.sides).toEqual([]);
+  });
+
+  it("evidence without text is invalid, and an empty text still fails validation", async () => {
+    const o = await owner(2);
+    const withImages = await createBare(o, { evidence: [`good:u:${o}`] });
+    expect(withImages.res.status).toBe(400);
+    expect(withImages.data.code).toBe("invalid");
+    expect((await createBare(o, { text: "" })).data.code).toBe("too_short");
+    expect(await usage(o)).toEqual([]);
+    // An empty evidence list is the same as none.
+    expect((await createBare(o, { evidence: [] })).res.status).toBe(201);
+  });
+
+  it("the old create path is unchanged: text is stored, side A is not missing, judge-now works", async () => {
+    const o = await owner(2);
+    const { data } = await create(o);
+    expect(data.case.ownerSideMissing).toBe(false);
+    expect(data.case.canJudgeNow).toBe(true);
+    expect(data.case.sides).toHaveLength(1);
+    expect(data.name_map).toEqual([
+      { original: "I", replacement: "Party A" },
+      { original: "Deniz", replacement: "Party B" },
+    ]);
+    expect((await judgeNow(o, data.case.id)).status).toBe(202);
+  });
+
+  it("owner first: writing side A stores it, the case keeps waiting, then the answer starts judging", async () => {
+    const o = await owner(2);
+    const { data } = await createBare(o);
+    const id = data.case.id;
+    const token = tokenOf(data.case);
+    const written = await writeSide(o, id, { headers: { "idempotency-key": "side-1" } });
+    expect(written.status).toBe(201);
+    const view = await sideView(written);
+    expect(view.status).toBe("awaiting_respondent");
+    expect(view.ownerSideMissing).toBe(false);
+    expect(view.canJudgeNow).toBe(true);
+    expect(view.sides.map((s) => s.party)).toEqual(["a"]);
+    expect(view.sides[0].text).toContain("Party A paid the electricity bill");
+    expect(view.inviteUrl).toContain(token);
+    expect(m.scheduled).toHaveLength(0);
+    expect(await usage(o)).toEqual(["reserved"]);
+
+    // The respondent still sees no side A.
+    const resp = (await getRespondent(token)).view!;
+    expect(resp.ownerSideMissing).toBe(false);
+    expect(resp.sides).toEqual([]);
+
+    const answered = await respond(token);
+    expect(answered.status).toBe(202);
+    expect((await body<{ case: CaseView }>(answered)).case.status).toBe("judging");
+    await drain();
+    const done = await getOwner(o, id);
+    expect(done.status).toBe("judged");
+    expect(done.mode).toBe("two_sided");
+    expect(done.sides.map((s) => s.party)).toEqual(["a", "b"]);
+    expect(await usage(o)).toEqual(["consumed"]);
+  });
+
+  it("other side first: the answer is stored and the case keeps waiting; the owner's write starts judging", async () => {
+    const o = await owner(2);
+    const { data } = await createBare(o);
+    const id = data.case.id;
+    const token = tokenOf(data.case);
+
+    const answered = await respond(token, { headers: { "idempotency-key": "ans-1" } });
+    expect(answered.status).toBe(202);
+    const out = await body<{ case: CaseView; respondent_claim?: string }>(answered);
+    expect(out.case.status).toBe("awaiting_respondent");
+    expect(out.case.respondentAnswered).toBe(true);
+    expect(out.case.ownerSideMissing).toBe(true);
+    expect(out.case.sides).toEqual([]);
+    expect(out.respondent_claim).toMatch(/^[A-Za-z0-9_-]{22}$/);
+    await drain();
+    expect(m.judgeAnonymized).not.toHaveBeenCalled();
+    expect(await usage(o)).toEqual(["reserved"]);
+
+    // The owner sees that the other side wrote, but no link and no judge-now.
+    const waiting = await getOwner(o, id);
+    expect(waiting.status).toBe("awaiting_respondent");
+    expect(waiting.respondentAnswered).toBe(true);
+    expect(waiting.ownerSideMissing).toBe(true);
+    expect(waiting.inviteUrl).toBeNull();
+    expect(waiting.canJudgeNow).toBe(false);
+    expect(waiting.sides).toEqual([]);
+    const rotate = await http.rotateInviteHandler(req("POST", `/api/v1/cases/${id}/invite`, { user: o }), id);
+    expect(rotate.status).toBe(409);
+
+    // The respondent's claim, view and replay work; a second answer is closed.
+    const resp = (await getRespondent(token, undefined, out.respondent_claim)).view!;
+    expect(resp.respondentAnswered).toBe(true);
+    expect(resp.ownerSideMissing).toBe(true);
+    expect(resp.sides).toEqual([]);
+    const replay = await respond(token, { headers: { "idempotency-key": "ans-1" } });
+    expect(replay.status).toBe(202);
+    const again = await body<{ replayed?: boolean; respondent_claim?: string }>(replay);
+    expect(again.replayed).toBe(true);
+    expect(again.respondent_claim).toBe(out.respondent_claim);
+    expect((await body(await respond(token))).code).toBe("case_closed");
+    const claimant = uid("claimant");
+    const claim = await http.respondentClaimHandler(
+      req("POST", `/api/v1/cases/${id}/claim`, { user: claimant, body: { claim: out.respondent_claim } }),
+      id,
+    );
+    expect(claim.status).toBe(200);
+
+    // judge-now is refused while side A is missing.
+    const refused = await judgeNow(o, id);
+    expect(refused.status).toBe(400);
+    expect((await body(refused)).code).toBe("invalid");
+    expect(m.scheduled).toHaveLength(0);
+
+    const written = await writeSide(o, id);
+    expect(written.status).toBe(201);
+    const view = await sideView(written);
+    expect(view.status).toBe("judging");
+    expect(view.mode).toBe("two_sided");
+    expect(view.ownerSideMissing).toBe(false);
+    // Side A is anonymized with side B's material as the roster.
+    const call = m.anonymizeSubmission.mock.calls.at(-1)![0];
+    expect(call.narrator).toBe("Party A");
+    expect(call.roster.context).toContain("Party B");
+    await drain();
+    const done = await getOwner(o, id);
+    expect(done.status).toBe("judged");
+    expect(done.sides.map((s) => s.party)).toEqual(["a", "b"]);
+    const doc = m.judgeAnonymized.mock.calls.at(-1)![0].text as string;
+    expect(doc).toMatch(/^PARTY A'S ACCOUNT/);
+    expect(doc).toContain("PARTY B'S ACCOUNT");
+    expect(await usage(o)).toEqual(["consumed"]);
+    // After the verdict both views carry both sides, as before.
+    expect((await getRespondent(token, undefined, out.respondent_claim)).view!.sides.map((s) => s.party)).toEqual(["a", "b"]);
+  });
+
+  it("writing side A without a name keeps the one given at create", async () => {
+    const o = await owner(2);
+    const { data } = await createBare(o, { displayName: "Aytu" });
+    expect(data.case.display.a).toBe("Aytu");
+    const view = await sideView(await writeSide(o, data.case.id));
+    expect(view.display.a).toBe("Aytu");
+  });
+
+  it("a second write of side A is a retry: ok with the current view, nothing changes", async () => {
+    const o = await owner(2);
+    const { data } = await createBare(o);
+    const first = await writeSide(o, data.case.id);
+    expect(first.status).toBe(201);
+    const text = (await sideView(first)).sides[0].text;
+    const retry = await writeSide(o, data.case.id, { text: "I want to say something else entirely about the bill." });
+    expect(retry.status).toBe(200);
+    const view = await sideView(retry);
+    expect(view.sides[0].text).toBe(text);
+    expect(await count("SELECT count(*) AS n FROM case_sides WHERE case_id = ?", [data.case.id])).toBe(1);
+    // A case created with text counts as written too.
+    const withText = (await create(o)).data.case;
+    expect((await writeSide(o, withText.id)).status).toBe(200);
+  });
+
+  it("writing side A is the owner's alone, and needs a valid body", async () => {
+    const o = await owner(2);
+    const { data } = await createBare(o);
+    const id = data.case.id;
+    expect((await http.writeSideHandler(req("POST", `/api/v1/cases/${id}/side`, { body: { text: SIDE_A } }), id)).status).toBe(401);
+    expect((await writeSide(uid("other"), id)).status).toBe(404);
+    expect((await body(await writeSide(o, id, { text: "short" }))).code).toBe("too_short");
+    expect((await body(await writeSide(o, id, { evidence: ["good:u:someone-else"] }))).code).toBe("evidence_invalid");
+    const withImage = await writeSide(o, id, { evidence: [`good:u:${o}`] });
+    expect(withImage.status).toBe(201);
+    expect((await sideView(withImage)).sides[0].evidence).toHaveLength(1);
+  });
+
+  it("races: both sides written at the same moment end up judging, never both stored and waiting", async () => {
+    // The answer is anonymized while side A lands: it goes again with side A in.
+    {
+      const o = await owner(2);
+      const { data } = await createBare(o);
+      const token = tokenOf(data.case);
+      const held = holdAnonymize("Party B");
+      const answering = respond(token);
+      await held.reached;
+      expect((await writeSide(o, data.case.id)).status).toBe(201);
+      held.release();
+      const res = await answering;
+      expect(res.status).toBe(202);
+      expect((await body<{ case: CaseView }>(res)).case.status).toBe("judging");
+      await drain();
+      expect(m.judgeAnonymized).toHaveBeenCalledTimes(1);
+      const view = await getOwner(o, data.case.id);
+      expect(view.status).toBe("judged");
+      expect(view.sides.map((s) => s.party)).toEqual(["a", "b"]);
+      expect(await usage(o)).toEqual(["consumed"]);
+    }
+    m.judgeAnonymized.mockClear();
+    // Side A is anonymized while the answer lands: it goes again and starts judging.
+    {
+      const o = await owner(2);
+      const { data } = await createBare(o);
+      const token = tokenOf(data.case);
+      const held = holdAnonymize("Party A");
+      const writing = writeSide(o, data.case.id);
+      await held.reached;
+      expect((await respond(token)).status).toBe(202);
+      held.release();
+      const res = await writing;
+      expect(res.status).toBe(201);
+      expect((await sideView(res)).status).toBe("judging");
+      await drain();
+      expect(m.judgeAnonymized).toHaveBeenCalledTimes(1);
+      expect((await getOwner(o, data.case.id)).sides.map((s) => s.party)).toEqual(["a", "b"]);
+      expect(await usage(o)).toEqual(["consumed"]);
+    }
+    m.judgeAnonymized.mockClear();
+    // Fired together, in whatever order they land.
+    for (let i = 0; i < 4; i++) {
+      const o = await owner(2);
+      const { data } = await createBare(o);
+      const [a, b] = await Promise.all([writeSide(o, data.case.id), respond(tokenOf(data.case))]);
+      expect([a.status, b.status]).toEqual([201, 202]);
+      expect(await count("SELECT count(*) AS n FROM case_sides WHERE case_id = ?", [data.case.id])).toBe(2);
+      expect((await getOwner(o, data.case.id)).status).toBe("judging");
+      await drain();
+      expect((await getOwner(o, data.case.id)).status).toBe("judged");
+    }
+    expect(m.judgeAnonymized).toHaveBeenCalledTimes(4);
+  });
+
+  it("two answers at once store one", async () => {
+    const o = await owner(2);
+    const { data } = await createBare(o);
+    const token = tokenOf(data.case);
+    const [x, y] = await Promise.all([respond(token), respond(token)]);
+    expect([x.status, y.status].sort()).toEqual([202, 409]);
+    expect(await count("SELECT count(*) AS n FROM case_sides WHERE case_id = ? AND party = 'b'", [data.case.id])).toBe(1);
+  });
+
+  it("judge-now is refused on the server while side A is missing, in every state", async () => {
+    const o = await owner(3);
+    const { data } = await createBare(o);
+    const id = data.case.id;
+    const refused = await judgeNow(o, id);
+    expect(refused.status).toBe(400);
+    expect((await body(refused)).code).toBe("invalid");
+    await setCase(id, "expires_at = ?", [new Date(Date.now() - 1000).toISOString()]);
+    expect((await judgeNow(o, id, {})).status).toBe(400);
+    expect((await judgeNow(o, id)).status).toBe(400);
+    expect((await getOwner(o, id)).canJudgeNow).toBe(false);
+    expect(m.scheduled).toHaveLength(0);
+    expect(await credits(o)).toBe(2);
+  });
+
+  it("expiry refunds the held unit when nobody wrote, and when the other side wrote and the owner never did", async () => {
+    const o = await owner(3);
+    const nobody = (await createBare(o)).data.case;
+    const answered = (await createBare(o)).data.case;
+    expect((await respond(tokenOf(answered))).status).toBe(202);
+    expect(await credits(o)).toBe(1);
+    const past = new Date(Date.now() - 1000).toISOString();
+    await setCase(nobody.id, "expires_at = ?", [past]);
+    await setCase(answered.id, "expires_at = ?", [past]);
+    await sweepCases();
+    expect(await credits(o)).toBe(3);
+    expect(await usage(o)).toEqual(["refunded", "refunded"]);
+    for (const c of [nobody, answered]) {
+      const view = await getOwner(o, c.id);
+      expect(view.status).toBe("expired");
+      expect(view.ownerSideMissing).toBe(true);
+      expect(view.canJudgeNow).toBe(false);
+      const late = await writeSide(o, c.id);
+      expect(late.status).toBe(410);
+      expect((await body(late)).code).toBe("case_expired");
+    }
+    await sweepCases();
+    expect(await credits(o)).toBe(3);
+  });
+
+  it("the respondent removing a waiting answer closes the case and refunds the held unit once", async () => {
+    const o = await owner(2);
+    const { data } = await createBare(o);
+    const token = tokenOf(data.case);
+    const out = await body<{ respondent_claim: string }>(await respond(token));
+    expect(await credits(o)).toBe(1);
+    const rm = () =>
+      http.respondRemovalHandler(
+        req("POST", `/api/v1/respond/${token}/removal`, { body: { confirm: "remove", claim: out.respondent_claim } }),
+        token,
+      );
+    const res = await rm();
+    expect(res.status).toBe(200);
+    expect((await body<{ case: CaseView }>(res)).case.removed?.parties).toEqual(["b"]);
+    expect(await credits(o)).toBe(2);
+    expect(await usage(o)).toEqual(["refunded"]);
+    expect((await rm()).status).toBe(200);
+    expect(await credits(o)).toBe(2);
+    const view = await getOwner(o, data.case.id);
+    expect(view.status).toBe("expired");
+    expect(view.ownerSideMissing).toBe(false);
+    const late = await writeSide(o, data.case.id);
+    expect((await body(late)).code).toBe("removed");
+    expect((await body(await respond(token))).code).toBe("removed");
+  });
+
+  it("the owner removing a case with a waiting answer refunds the held unit", async () => {
+    const o = await owner(2);
+    const { data } = await createBare(o);
+    await respond(tokenOf(data.case));
+    const res = await http.deleteCaseHandler(req("DELETE", `/api/v1/cases/${data.case.id}`, { user: o }), data.case.id);
+    expect(res.status).toBe(200);
+    expect(await credits(o)).toBe(2);
+    expect(await usage(o)).toEqual(["refunded"]);
+  });
+
+  it("lists a waiting case with the answer flag and no excerpt", async () => {
+    const o = await owner(2);
+    const { data } = await createBare(o);
+    await respond(tokenOf(data.case));
+    const list = await body<{ cases: { id: string; respondentAnswered: boolean; excerpt: string | null; status: string }[] }>(
+      await http.listCasesHandler(req("GET", "/api/v1/cases", { user: o })),
+    );
+    expect(list.cases[0]).toMatchObject({ id: data.case.id, respondentAnswered: true, excerpt: null, status: "awaiting_respondent" });
+  });
+});
