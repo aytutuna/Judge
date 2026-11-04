@@ -65,7 +65,6 @@ import com.okjudge.judge.ui.components.SceneView
 import com.okjudge.judge.ui.components.TextAction
 import com.okjudge.judge.ui.components.TintedIcon
 import com.okjudge.judge.ui.components.rememberIcon
-import com.okjudge.judge.ui.components.TopBar
 import com.okjudge.judge.ui.components.uppercaseForUi
 import com.okjudge.judge.ui.components.warmShadow
 import com.okjudge.judge.ui.theme.JudgeShapes
@@ -96,8 +95,7 @@ object JudgingTags {
  * the 3D balance (beats from lib/judging-ui.ts while waiting, the verdict
  * tilt once it is in) over the rotating captions of lib/thinking.ts. After
  * the finish steps and a short hold [onFinished] hands over. [sides] is
- * empty where they are not shown (a case's judging); [onNew] puts the
- * header with its "+" on top (Home's request).
+ * empty where they are not shown (a case's judging).
  */
 @Composable
 fun JudgingScreen(
@@ -111,7 +109,6 @@ fun JudgingScreen(
     premium: Boolean = false,
     showCancel: Boolean = true,
     sides: List<VerdictFlow.Side> = emptyList(),
-    onNew: (() -> Unit)? = null,
 ) {
     val s = LocalStrings.current
     val finishedCallback by rememberUpdatedState(onFinished)
@@ -148,7 +145,6 @@ fun JudgingScreen(
     val announcement = s.text(Thinking.announcementKey(dig, done)) ?: ""
 
     Column(modifier.fillMaxSize().background(Palette.ivory), horizontalAlignment = Alignment.CenterHorizontally) {
-        if (onNew != null) TopBar(onBack = null, onNew = onNew)
         Column(
             Modifier
                 .weight(1f)

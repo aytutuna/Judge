@@ -44,7 +44,7 @@ class HistoryScreenTest {
 
     @Test
     fun eachRow_saysWhereItStands_fromTheViewersSide() {
-        compose.setContent { Themed(AppLang.EN) { HistoryScreen(entries, {}, { _, _ -> }, {}, now = now) } }
+        compose.setContent { Themed(AppLang.EN) { HistoryScreen(entries, {}, { _, _ -> }, now = now) } }
         compose.onNodeWithText("Waiting for Sam to answer").assertExists()
         compose.onNodeWithText(en.historyStateJudging).assertExists()
         compose.onNodeWithText(en.shellUntitled).assertExists()
@@ -68,7 +68,7 @@ class HistoryScreenTest {
     @Test
     fun rowsOpen_exceptOnesStillBeingJudged() {
         val opened = mutableListOf<String>()
-        compose.setContent { Themed(AppLang.EN) { HistoryScreen(entries, { opened += it.key }, { _, _ -> }, {}, now = now) } }
+        compose.setContent { Themed(AppLang.EN) { HistoryScreen(entries, { opened += it.key }, { _, _ -> }, now = now) } }
         compose.onNodeWithTag(HistoryTags.row("c:case0000013")).performClick()
         compose.onNodeWithTag(HistoryTags.row("v:verdict0020")).performClick()
         compose.onNodeWithTag(HistoryTags.row("c:case0000014")).performClick()
@@ -82,7 +82,7 @@ class HistoryScreenTest {
         var failNext = emptySet<String>()
         compose.setContent {
             Themed(AppLang.EN) {
-                HistoryScreen(entries, {}, { picked, done -> removed += picked.map { it.key }; done(failNext) }, {}, now = now)
+                HistoryScreen(entries, {}, { picked, done -> removed += picked.map { it.key }; done(failNext) }, now = now)
             }
         }
         compose.onNodeWithTag(HistoryTags.SELECT).performClick()
@@ -134,7 +134,7 @@ class HistoryScreenTest {
         var loads = 0
         compose.setContent {
             Themed(AppLang.EN) {
-                HistoryScreen(entries, {}, { _, _ -> }, {}, paging = HistoryPaging(next = page.next, loadedAt = 1L), onLoadMore = { loads++ }, now = now)
+                HistoryScreen(entries, {}, { _, _ -> }, paging = HistoryPaging(next = page.next, loadedAt = 1L), onLoadMore = { loads++ }, now = now)
             }
         }
         compose.waitForIdle()
@@ -149,7 +149,7 @@ class HistoryScreenTest {
         var retried = 0
         compose.setContent {
             Themed(AppLang.EN) {
-                HistoryScreen(entries, {}, { _, _ -> }, {}, paging = HistoryPaging(failed = true), notice = HistoryNotice.Offline, onRetry = { retried++ }, now = now)
+                HistoryScreen(entries, {}, { _, _ -> }, paging = HistoryPaging(failed = true), notice = HistoryNotice.Offline, onRetry = { retried++ }, now = now)
             }
         }
         compose.onNodeWithTag(HistoryTags.ERROR).assertExists()

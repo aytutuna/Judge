@@ -113,8 +113,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable data object HomeKey : NavKey
 @Serializable data object JudgingKey : NavKey
-/** [fresh]: straight from judging, without the tab bar. */
-@Serializable data class VerdictKey(val id: String, val fresh: Boolean) : NavKey
+@Serializable data class VerdictKey(val id: String) : NavKey
 @Serializable data object HistoryKey : NavKey
 @Serializable data object SettingsKey : NavKey
 @Serializable data object ClarifyKey : NavKey
@@ -156,17 +155,6 @@ fun JudgeRoot(
             val account = container.account
             val snackbar = remember { SnackbarHostState() }
             val currentStrings by rememberUpdatedState(strings)
-            // "+": a new argument on an empty form. Leaving the judging screen this way
-            // cancels it, like its own Cancel.
-            val newArgument: () -> Unit = {
-                if (backStack.lastOrNull() is JudgingKey) container.verdictFlow.cancel()
-                clearDraft = true
-                backStack.resetTo(listOf(HomeKey))
-            }
-            // Home's questions check or case creation would still land on the new, empty form.
-            val premiumStep by container.verdictFlow.premiumStep.collectAsStateWithLifecycle()
-            val creating by container.verdictFlow.creating.collectAsStateWithLifecycle()
-            val onNew = newArgument.takeUnless { premiumStep == VerdictFlow.PremiumStep.Checking || creating }
             val openPricing: () -> Unit = { if (backStack.lastOrNull() !is PricingKey) backStack.add(PricingKey) }
             LaunchedEffect(container.verdictFlow) {
                 // A verdict moves on by itself: questions first, then the judging screen.
@@ -336,7 +324,9 @@ fun JudgeRoot(
                                     vm.fillExample(strings)
                                 },
                                 onDismissError = vm::dismissError,
-                                onNew = newArgument,
+                                onAddTheirSide = vm::addTheirSide,
+                                onRemoveTheirSide = vm::removeTheirSide,
+                                onClear = vm::clear,
                                 onAddEvidence = {
                                     analytics.track("evidence_added")
                                     vm.onAddEvidence(it)
@@ -349,11 +339,12 @@ fun JudgeRoot(
                             JudgingEntry(
                                 flow = container.verdictFlow,
                                 onDone = { id ->
+                                    // The case is done: "New" finds an empty form.
+                                    clearDraft = true
                                     backStack.removeAll { it is JudgingKey }
-                                    backStack.add(VerdictKey(id, fresh = true))
+                                    backStack.add(VerdictKey(id))
                                 },
                                 onLeave = { backStack.removeAll { it is JudgingKey } },
-                                onNew = newArgument,
                             )
                         }
                         entry<ClarifyKey> {
@@ -378,7 +369,6 @@ fun JudgeRoot(
                                         container.verdictFlow.leaveClarify()
                                         backStack.removeAll { it is ClarifyKey }
                                     },
-                                    onNew = onNew,
                                 )
                             }
                         }
@@ -402,7 +392,6 @@ fun JudgeRoot(
                                 entitlement = signedIn?.me?.entitlement,
                                 onBack = { backStack.removeAll { it is PricingKey } },
                                 onSignIn = { if (backStack.lastOrNull() !is SignInKey) backStack.add(SignInKey(thenVerdict = false)) },
-                                onNew = onNew,
                                 store = StoreUi(
                                     available = store.available,
                                     offers = if (purchases.isReady(store)) store.offers else emptyMap(),
@@ -446,8 +435,9 @@ fun JudgeRoot(
                                 id = key.id,
                                 viewModel = vm,
                                 shareBaseUrl = container.config.shareBaseUrl,
-                                onBack = if (key.fresh) null else ({ backStack.removeAt(backStack.lastIndex) }),
-                                onNew = onNew,
+                                onBack = { backStack.removeAll { it == key } },
+                                // A verdict just judged sits right above the form; one from the list, above the list.
+                                backLabel = if (backStack.getOrNull(backStack.indexOf(key) - 1) is HomeKey) strings.appTabNew else strings.navVerdicts,
                                 appeal = appeal,
                                 evidenceOn = (providers as? Account.Providers.Ready)?.config?.features?.evidence == true,
                                 onSignIn = { if (backStack.lastOrNull() !is SignInKey) backStack.add(SignInKey(thenVerdict = false)) },
@@ -485,11 +475,11 @@ fun JudgeRoot(
                                 entries = entries,
                                 onOpen = { e ->
                                     when (e) {
-                                        is HistoryEntry.Phone -> backStack.add(VerdictKey(e.verdict.id, fresh = false))
+                                        is HistoryEntry.Phone -> backStack.add(VerdictKey(e.verdict.id))
                                         is HistoryEntry.Account -> {
                                             val item = e.item
                                             when {
-                                                !item.isCase -> vm.openVerdict(item) { id -> backStack.add(VerdictKey(id, fresh = false)) }
+                                                !item.isCase -> vm.openVerdict(item) { id -> backStack.add(VerdictKey(id)) }
                                                 // Answering is done on the website: the case opens there too.
                                                 item.isRespondent -> item.inviteToken?.let { openLink(context, "${container.config.shareBaseUrl.trimEnd('/')}/r/$it") }
                                                 else -> backStack.add(CaseKey(item.id))
@@ -498,7 +488,6 @@ fun JudgeRoot(
                                     }
                                 },
                                 onRemove = vm::remove,
-                                onNew = onNew,
                                 paging = paging,
                                 notice = notice,
                                 onLoadMore = vm::loadMore,
@@ -532,7 +521,6 @@ fun JudgeRoot(
                                 otherName = key.otherName ?: vm.otherName,
                                 actions = CaseActions(
                                     onBack = if (backStack.size > 1) ({ backStack.removeAt(backStack.lastIndex) }) else null,
-                                    onNew = onNew,
                                     onReload = vm::reload,
                                     onSignIn = { if (backStack.lastOrNull() !is SignInKey) backStack.add(SignInKey(thenVerdict = false)) },
                                     onPricing = { if (backStack.lastOrNull() !is PricingKey) backStack.add(PricingKey) },
@@ -595,7 +583,6 @@ fun JudgeRoot(
                                 },
                                 usageStats = usageStats,
                                 onUsageStats = { on -> scope.launch { container.settings.setUsageStats(on) } },
-                                onNew = onNew,
                                 onOpenLink = { openLink(context, it) },
                                 siteBaseUrl = container.config.shareBaseUrl,
                                 account = accountState,
@@ -622,7 +609,6 @@ fun JudgeRoot(
                             SignInScreen(
                                 state = state,
                                 onBack = { backStack.removeAll { it is SignInKey } },
-                                onNew = onNew,
                                 actions = SignInActions(
                                     onGoogle = {
                                         container.analytics.track("sign_in_started", mapOf("provider" to "google"))
@@ -711,7 +697,7 @@ private fun AgeOverlay(
 }
 
 @Composable
-private fun JudgingEntry(flow: VerdictFlow, onDone: (String) -> Unit, onLeave: () -> Unit, onNew: () -> Unit) {
+private fun JudgingEntry(flow: VerdictFlow, onDone: (String) -> Unit, onLeave: () -> Unit) {
     val state by flow.state.collectAsStateWithLifecycle()
     val reduced = rememberReducedMotion()
     val startedAt = remember { (state as? VerdictFlow.State.Running)?.startedAt ?: System.currentTimeMillis() }
@@ -762,7 +748,6 @@ private fun JudgingEntry(flow: VerdictFlow, onDone: (String) -> Unit, onLeave: (
             flow.cancel()
             onLeave()
         },
-        onNew = onNew,
     )
 }
 
@@ -787,10 +772,9 @@ private fun ErrorShown(analytics: Analytics, error: UiError?) {
     }
 }
 
-/** The tab bar stays off judging and the fresh verdict, sign-in and the questions. */
+/** The tab bar stays off judging, sign-in and the questions. */
 internal fun showsBottomBar(top: NavKey?): Boolean = when (top) {
     is JudgingKey, is SignInKey, is ClarifyKey -> false
-    is VerdictKey -> !top.fresh
     else -> true
 }
 

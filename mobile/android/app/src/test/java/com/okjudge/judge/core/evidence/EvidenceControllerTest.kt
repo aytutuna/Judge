@@ -86,6 +86,16 @@ class EvidenceControllerTest {
     }
 
     @Test
+    fun refusedTokens_areDroppedSoARetryDoesNotSendThemAgain() = runBlocking {
+        val c = EvidenceController(scope, max = 3) { ApiResult.Ok(okFor("t1", "t2")) }
+        c.add(listOf(image("a"), image("b")))
+        assertEquals(listOf("t1", "t2"), c.settled().tokens)
+        c.invalidateTokens()
+        assertTrue(c.state.value.tokens.isEmpty())
+        assertEquals(listOf(EvidenceStatus.FAILED, EvidenceStatus.FAILED), c.state.value.items.map { it.status })
+    }
+
+    @Test
     fun tokensFollowTheItemOrder_acrossUploads_andRemoval() = runBlocking {
         var call = 0
         val c = EvidenceController(scope, max = 3) {

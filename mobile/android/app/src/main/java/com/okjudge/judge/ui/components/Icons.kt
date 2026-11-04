@@ -72,6 +72,11 @@ object JudgeIcons {
 
     fun plus(color: Color) = icon("plus", 16f, P("M8 3v10M3 8h10", stroke = color, width = 1.6f))
 
+    fun shuffle(color: Color) = icon(
+        "shuffle", 16f,
+        P("M2 4.5h2.2c3.2 0 4 7 7.2 7H14M2 11.5h2.2c1 0 1.8-.8 2.4-1.8M9 5.8c.6-.8 1.2-1.3 2.4-1.3H14M12.3 2.8 14 4.5l-1.7 1.7M12.3 9.8 14 11.5l-1.7 1.7", stroke = color, width = 1.5f),
+    )
+
     fun list(color: Color) = icon("list", 16f, P("M5 4h8M5 8h8M5 12h8M2.5 4h.01M2.5 8h.01M2.5 12h.01", stroke = color, width = 1.6f))
 
     fun gear(color: Color) = icon(

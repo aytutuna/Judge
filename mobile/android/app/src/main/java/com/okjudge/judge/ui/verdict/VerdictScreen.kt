@@ -60,8 +60,8 @@ fun VerdictRoute(
     id: String,
     viewModel: VerdictViewModel,
     shareBaseUrl: String,
-    onBack: (() -> Unit)?,
-    onNew: (() -> Unit)?,
+    onBack: () -> Unit,
+    backLabel: String,
     appeal: VerdictAppealViewModel? = null,
     evidenceOn: Boolean = false,
     onSignIn: () -> Unit = {},
@@ -102,9 +102,9 @@ fun VerdictRoute(
 
     Column(Modifier.fillMaxSize()) {
         if (details) {
-            TopBar(onBack = { showDetails(false) }, onNew = onNew, backLabel = s.appVerdictBack, backText = s.appVerdictBack)
+            TopBar(onBack = { showDetails(false) }, backLabel = s.appVerdictBack, backText = s.appVerdictBack)
         } else {
-            TopBar(onBack = onBack, onNew = onNew, backLabel = s.navVerdicts)
+            TopBar(onBack = onBack, backLabel = backLabel)
         }
         val saved = state.saved
         val view = state.view

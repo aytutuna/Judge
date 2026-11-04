@@ -191,6 +191,7 @@ class VerdictAppealViewModel(
                     if (Errors.isAccountError(res.error)) launch { refreshAccount() }
                     // Another round or the limit got there first: the gate says so now.
                     val code = (res.error as? UiError.Api)?.code
+                    if (code == "evidence_invalid") evidence.invalidateTokens()
                     if (code == "appeal_limit" || code == "in_progress") load(follow = true)
                 }
             }

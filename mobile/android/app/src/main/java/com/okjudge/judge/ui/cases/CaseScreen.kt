@@ -134,7 +134,6 @@ object CaseTags {
 /** Everything the case screen can ask for; the route wires these to [CaseViewModel] and the app shell. */
 data class CaseActions(
     val onBack: (() -> Unit)? = null,
-    val onNew: (() -> Unit)? = null,
     val onReload: () -> Unit = {},
     val onSignIn: () -> Unit = {},
     val onPricing: () -> Unit = {},
@@ -212,7 +211,7 @@ private fun CaseScreenBody(
     Column(modifier.fillMaxSize()) {
         if (details && current != null) {
             BackHandler { details = false }
-            TopBar(onBack = { details = false }, onNew = actions.onNew, backLabel = s.appVerdictBack, backText = s.appVerdictBack)
+            TopBar(onBack = { details = false }, backLabel = s.appVerdictBack, backText = s.appVerdictBack)
             Column(
                 Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(horizontal = 16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -227,7 +226,7 @@ private fun CaseScreenBody(
             }
             return@Column
         }
-        TopBar(onBack = actions.onBack, onNew = actions.onNew, backLabel = s.navVerdicts)
+        TopBar(onBack = actions.onBack, backLabel = s.navVerdicts)
         if (view == null) {
             Column(Modifier.fillMaxSize().padding(horizontal = 20.dp), verticalArrangement = Arrangement.spacedBy(14.dp)) {
                 Header(kicker, null)

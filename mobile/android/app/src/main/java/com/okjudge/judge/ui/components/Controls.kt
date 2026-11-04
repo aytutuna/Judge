@@ -8,12 +8,10 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -26,7 +24,6 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.disabled
 import androidx.compose.ui.semantics.role
-import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -90,41 +87,6 @@ fun TextAction(text: String, onClick: () -> Unit, modifier: Modifier = Modifier,
         contentAlignment = Alignment.Center,
     ) {
         Text(text, style = JudgeType.chip.copy(color = if (enabled) color else color.copy(alpha = 0.4f)))
-    }
-}
-
-/** A selectable pill chip (examples, language). */
-@Composable
-fun Chip(
-    text: String,
-    selected: Boolean,
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier,
-    leading: String? = null,
-    icon: ImageVector? = null,
-) {
-    val bg = if (selected) Palette.terraTint else Palette.ivory2
-    val border = if (selected) Palette.terra.copy(alpha = 0.5f) else Palette.line
-    Row(
-        modifier
-            .defaultMinSize(minHeight = 38.dp)
-            .clip(JudgeShapes.chip)
-            .border(BorderStroke(1.dp, border), JudgeShapes.chip)
-            .background(bg)
-            .semantics { this.selected = selected }
-            .clickable(onClick = onClick)
-            .padding(horizontal = 14.dp, vertical = 9.dp),
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        if (icon != null) {
-            Image(icon, contentDescription = null, modifier = Modifier.size(15.dp))
-            Spacer(Modifier.width(7.dp))
-        }
-        if (leading != null) {
-            Text(leading, style = JudgeType.chip)
-            Spacer(Modifier.width(6.dp))
-        }
-        Text(text, style = JudgeType.chip.copy(color = Palette.ink))
     }
 }
 

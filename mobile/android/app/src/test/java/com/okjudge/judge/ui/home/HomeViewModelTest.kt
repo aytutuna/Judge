@@ -24,6 +24,7 @@ import kotlinx.coroutines.test.setMain
 import okhttp3.OkHttpClient
 import org.junit.After
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before
@@ -115,6 +116,95 @@ class HomeViewModelTest {
         vm.clear()
         assertEquals("Ada", vm.state.value.shownName)
         assertTrue(vm.state.value.blank)
+    }
+
+    @Test
+    fun onePersonWritesUntilTheirSideIsAdded() {
+        val vm = vm()
+        assertFalse(vm.state.value.theirsOpen)
+        vm.addTheirSide()
+        assertTrue(vm.state.value.theirsOpen)
+        vm.onOtherSideChange("Their account of it.")
+        vm.onOtherName("Sam")
+        vm.removeTheirSide()
+        val state = vm.state.value
+        assertFalse(state.theirsOpen)
+        assertEquals("", state.otherSide)
+        assertEquals("", state.otherName)
+    }
+
+    @Test
+    fun theOpenCardStaysWhenItsTextIsDeleted() {
+        val vm = vm()
+        vm.addTheirSide()
+        vm.onOtherSideChange("x")
+        vm.onOtherSideChange("")
+        assertTrue(vm.state.value.theirsOpen)
+    }
+
+    @Test
+    fun aRestoredDraftWithTheirSideOpensTheCard() {
+        val saved = SavedStateHandle(mapOf("argument" to argument, "other_side" to "Their account of it."))
+        val vm = HomeViewModel(saved, flow, flowOf(Account.State.SignedOut), flowOf(Account.Providers.Loading))
+        assertTrue(vm.state.value.theirsOpen)
+    }
+
+    @Test
+    fun anExampleNeverReplacesTheUsersText() {
+        val en = UiTestSupport.s(AppLang.EN)
+        val vm = vm()
+        assertTrue(vm.state.value.offersExample)
+        vm.fillExample(en)
+        assertTrue(vm.state.value.theirsOpen)
+        assertTrue("another example can replace an example", vm.state.value.offersExample)
+        vm.onArgumentChange(vm.state.value.argument + " And one more thing.")
+        assertFalse(vm.state.value.offersExample)
+        vm.clear()
+        assertTrue(vm.state.value.offersExample)
+    }
+
+    @Test
+    fun anExampleIsKeptOnlyWhileNothingInItWasEdited() {
+        val en = UiTestSupport.s(AppLang.EN)
+        val vm = vm()
+        vm.fillExample(en)
+        vm.onOtherSideChange(vm.state.value.otherSide + " Also this.")
+        assertFalse(vm.state.value.offersExample)
+
+        vm.clear()
+        vm.fillExample(en)
+        assertTrue(vm.state.value.offersExample)
+        vm.onOtherName("Someone else")
+        assertFalse(vm.state.value.offersExample)
+
+        vm.clear()
+        vm.fillExample(en)
+        vm.onDisplayName("Me")
+        assertFalse(vm.state.value.offersExample)
+    }
+
+    @Test
+    fun removingTheirSideDropsTheExampleNameAndMarker() {
+        val vm = vm()
+        vm.fillExample(UiTestSupport.s(AppLang.EN))
+        vm.removeTheirSide()
+        assertEquals("", vm.state.value.shownName)
+        assertEquals(null, vm.state.value.exampleText)
+        vm.onDisplayName("Ada")
+        vm.addTheirSide()
+        vm.removeTheirSide()
+        assertEquals("Ada", vm.state.value.shownName)
+    }
+
+    @Test
+    fun blankIncludesTheOpenCard_andClearClosesIt() {
+        val vm = vm()
+        assertTrue(vm.state.value.blank)
+        vm.addTheirSide()
+        assertFalse("an open second card is something to clear", vm.state.value.blank)
+        vm.clear()
+        assertTrue(vm.state.value.blank)
+        assertFalse(vm.state.value.theirsOpen)
     }
 
     @Test

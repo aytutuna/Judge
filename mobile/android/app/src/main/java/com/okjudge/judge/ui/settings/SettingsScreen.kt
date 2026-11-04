@@ -46,7 +46,6 @@ import com.okjudge.judge.i18n.LangPref
 import com.okjudge.judge.i18n.LocalLang
 import com.okjudge.judge.i18n.LocalStrings
 import com.okjudge.judge.ui.components.Kicker
-import com.okjudge.judge.ui.components.TopBar
 import com.okjudge.judge.ui.theme.JudgeShapes
 import com.okjudge.judge.ui.theme.JudgeType
 import com.okjudge.judge.ui.theme.Palette
@@ -77,7 +76,6 @@ fun SettingsScreen(
     langPref: LangPref,
     versionName: String,
     onLangPref: (LangPref) -> Unit,
-    onNew: (() -> Unit)?,
     onOpenLink: (String) -> Unit,
     siteBaseUrl: String,
     modifier: Modifier = Modifier,
@@ -101,7 +99,6 @@ fun SettingsScreen(
         LanguageDialog(langPref, onPick = { pickingLang = false; onLangPref(it) }, onDismiss = { pickingLang = false })
     }
     Column(modifier.fillMaxSize()) {
-        TopBar(onBack = null, onNew = onNew)
         Column(
             Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(horizontal = 20.dp, vertical = 8.dp),
             verticalArrangement = Arrangement.spacedBy(24.dp),

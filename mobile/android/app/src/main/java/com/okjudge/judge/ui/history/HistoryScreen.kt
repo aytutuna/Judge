@@ -73,7 +73,6 @@ import com.okjudge.judge.ui.components.JudgeIcons
 import com.okjudge.judge.ui.components.TextAction
 import com.okjudge.judge.ui.components.TintedIcon
 import com.okjudge.judge.ui.components.rememberIcon
-import com.okjudge.judge.ui.components.TopBar
 import com.okjudge.judge.ui.theme.JudgeShapes
 import com.okjudge.judge.ui.theme.JudgeType
 import com.okjudge.judge.ui.theme.LocalSides
@@ -130,7 +129,6 @@ fun HistoryScreen(
     onOpen: (HistoryEntry) -> Unit,
     /** Removes the picked rows and reports the keys that failed (they stay picked). */
     onRemove: (List<HistoryEntry>, (Set<String>) -> Unit) -> Unit,
-    onNew: (() -> Unit)?,
     modifier: Modifier = Modifier,
     paging: HistoryPaging = HistoryPaging(),
     notice: HistoryNotice? = null,
@@ -161,9 +159,7 @@ fun HistoryScreen(
     BackHandler(enabled = picked != null) { selection = null }
 
     Column(modifier.fillMaxSize()) {
-        if (picked == null) {
-            TopBar(onBack = null, onNew = onNew)
-        } else {
+        if (picked != null) {
             SelectBar(
                 count = picked.ids.size,
                 allSelected = picked.allOf(selectable),
@@ -171,14 +167,15 @@ fun HistoryScreen(
                 onToggleAll = { selection = picked.toggleAll(selectable) },
                 onDelete = { confirmSelected = true },
             )
-        }
-        Row(
-            Modifier.fillMaxWidth().padding(horizontal = 20.dp, vertical = 4.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Text(s.navVerdicts, style = JudgeType.sectionTitle.copy(fontSize = JudgeType.sectionTitle.fontSize * 1.3f), modifier = Modifier.weight(1f))
-            if (picked == null && selectable.isNotEmpty()) {
-                TextAction(s.appHistorySelect, { selection = HistorySelection() }, Modifier.testTag(HistoryTags.SELECT))
+        } else {
+            Row(
+                Modifier.fillMaxWidth().padding(start = 20.dp, end = 20.dp, top = 8.dp).height(48.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Text(s.navVerdicts, style = JudgeType.sectionTitle.copy(fontSize = JudgeType.sectionTitle.fontSize * 1.3f), modifier = Modifier.weight(1f))
+                if (selectable.isNotEmpty()) {
+                    TextAction(s.appHistorySelect, { selection = HistorySelection() }, Modifier.testTag(HistoryTags.SELECT))
+                }
             }
         }
         if (notice != null) {

@@ -34,7 +34,6 @@ import com.okjudge.judge.core.model.Features
 import com.okjudge.judge.core.session.VerdictFlow
 import com.okjudge.judge.core.model.VerdictOutcome
 import com.okjudge.judge.i18n.AppLang
-import com.okjudge.judge.ui.components.TopBarTags
 import com.okjudge.judge.ui.history.HistoryEntry
 import com.okjudge.judge.ui.history.HistoryScreen
 import com.okjudge.judge.ui.history.HistoryTags
@@ -74,11 +73,14 @@ class ScreensTest {
                     onArgumentChange = { state = state.copy(argument = it) },
                     onSubmit = {},
                     onDismissError = { state = state.copy(error = null) },
-                    onNew = {},
                     onOtherSideChange = { state = state.copy(otherSide = it) },
                     onOtherName = { state = state.copy(otherName = it) },
                     onDisplayName = { state = state.copy(typedName = it) },
                     onSendLink = onSendLink,
+                    onAddTheirSide = { state = state.copy(theirsOpen = true) },
+                    onRemoveTheirSide = { state = state.copy(theirsOpen = false, otherSide = "", otherName = "") },
+                    onClear = { state = HomeUiState() },
+                    onExample = { state = state.copy(argument = "Example", exampleText = HomeUiState.exampleMark("Example", "", "", ""), theirsOpen = true) },
                 )
             }
         }
@@ -95,6 +97,7 @@ class ScreensTest {
         compose.onNodeWithTag(HomeTags.INPUT).performTextInput("!")
         compose.onNodeWithTag(HomeTags.SUBMIT).assertIsEnabled()
         compose.onNodeWithTag(HomeTags.COUNTER).assertTextEquals("20 / 6,000")
+        compose.onNodeWithTag(HomeTags.ADD_THEIRS).performClick()
         compose.onNodeWithTag(HomeTags.NAME).performTextInput("Alex")
         compose.onNodeWithTag(HomeTags.OTHER).performTextInput("It is a sandwich.")
         val joined = HomeUiState.joined("nineteen characters!", "It is a sandwich.", "Alex", "", en)
@@ -105,7 +108,7 @@ class ScreensTest {
     @Test
     fun home_bothSidesTogetherCanGoOverTheLimit() {
         val half = "x".repeat(3000)
-        home(AppLang.EN, HomeUiState(argument = half, otherSide = half))
+        home(AppLang.EN, HomeUiState(argument = half, otherSide = half, theirsOpen = true))
         compose.onNodeWithTag(HomeTags.SUBMIT).assertIsNotEnabled()
         val sent = HomeUiState.joined(half, half, "", "", UiTestSupport.s(AppLang.EN)).length
         assertTrue(sent > 6000)
@@ -114,9 +117,14 @@ class ScreensTest {
 
     @Test
     fun home_tr_sideLabelsUppercaseWithTurkishRules() {
-        home(AppLang.TR)
+        home(AppLang.TR, HomeUiState(theirsOpen = true))
         // "Senin tarafın" must become "SENİN TARAFIN", not "SENIN TARAFIN".
         compose.onNodeWithText("SENİN TARAFIN").assertExists()
+    }
+
+    @Test
+    fun home_tr_exampleLabelOnABlankForm() {
+        home(AppLang.TR)
         compose.onNodeWithText(UiTestSupport.s(AppLang.TR).appHomeExample).assertExists()
     }
 
@@ -128,39 +136,50 @@ class ScreensTest {
         compose.onNodeWithTag(HomeTags.INPUT).performTextInput("My roommate never does the dishes")
         compose.onNodeWithTag(HomeTags.SEND_LINK).assertIsEnabled().performClick()
         assertEquals(1, sent)
-        compose.onNodeWithTag(HomeTags.OTHER).performTextInput("I did them on Sunday.")
+        compose.onNodeWithTag(HomeTags.ADD_THEIRS).performClick()
         compose.onNodeWithTag(HomeTags.SEND_LINK).assertDoesNotExist()
     }
 
     @Test
-    fun home_newButton_hiddenWhileBlank_clearsTheForm() {
+    fun home_oneBoxUntilTheirSideIsAdded_andTheCloseButtonRemovesIt() {
         val en = UiTestSupport.s(AppLang.EN)
-        var state by mutableStateOf(HomeUiState())
-        compose.setContent {
-            Themed(AppLang.EN) {
-                HomeScreen(
-                    state = state,
-                    onArgumentChange = { state = state.copy(argument = it) },
-                    onSubmit = {},
-                    onDismissError = {},
-                    onNew = { state = HomeUiState() },
-                    onOtherSideChange = { state = state.copy(otherSide = it) },
-                )
-            }
-        }
-        compose.onNodeWithTag(TopBarTags.NEW).assertDoesNotExist()
-        compose.onNodeWithTag(HomeTags.OTHER).performTextInput("My roommate never does the dishes")
-        compose.onNodeWithContentDescription(en.shellNew).assertExists()
-        compose.onNodeWithTag(TopBarTags.NEW).performClick()
+        home(AppLang.EN)
+        compose.onNodeWithTag(HomeTags.OTHER).assertDoesNotExist()
+        compose.onNodeWithTag(HomeTags.NAME).assertDoesNotExist()
+        compose.onNodeWithTag(HomeTags.ADD_THEIRS).performClick()
+        compose.onNodeWithTag(HomeTags.ADD_THEIRS).assertDoesNotExist()
+        compose.onNodeWithTag(HomeTags.NAME).assertExists()
+        compose.onNodeWithTag(HomeTags.OTHER).performTextInput("I did them on Sunday.")
+        compose.onNodeWithContentDescription(en.appHomeRemoveTheirSide).performClick()
+        compose.onNodeWithTag(HomeTags.OTHER).assertDoesNotExist()
+        compose.onNodeWithTag(HomeTags.ADD_THEIRS).assertExists()
         compose.onNodeWithTag(HomeTags.COUNTER).assertTextEquals("0 / 6,000")
-        compose.onNodeWithTag(TopBarTags.NEW).assertDoesNotExist()
     }
 
     @Test
-    fun home_newButton_hiddenWhileARequestIsOnItsWay() {
-        // Clearing now would not stop the request, which then opens its next screen.
+    fun home_clear_hiddenWhileBlank_clearsTheForm() {
+        home(AppLang.EN)
+        compose.onNodeWithTag(HomeTags.CLEAR).assertDoesNotExist()
+        compose.onNodeWithTag(HomeTags.INPUT).performTextInput("My roommate never does the dishes")
+        compose.onNodeWithTag(HomeTags.CLEAR).performClick()
+        compose.onNodeWithTag(HomeTags.COUNTER).assertTextEquals("0 / 6,000")
+        compose.onNodeWithTag(HomeTags.CLEAR).assertDoesNotExist()
+    }
+
+    @Test
+    fun home_exampleIsOfferedOnlyOverAnEmptyFormOrAnExample() {
+        home(AppLang.EN)
+        compose.onNodeWithTag(HomeTags.EXAMPLE).assertExists().performClick()
+        compose.onNodeWithTag(HomeTags.EXAMPLE).assertExists()
+        compose.onNodeWithTag(HomeTags.INPUT).performTextInput(" and more")
+        compose.onNodeWithTag(HomeTags.EXAMPLE).assertDoesNotExist()
+    }
+
+    @Test
+    fun home_actionsAreDisabledWhileARequestIsOnItsWay() {
         home(AppLang.EN, HomeUiState(argument = "My roommate never does the dishes", creating = true))
-        compose.onNodeWithTag(TopBarTags.NEW).assertDoesNotExist()
+        compose.onNodeWithTag(HomeTags.CLEAR).assertIsNotEnabled()
+        compose.onNodeWithTag(HomeTags.ADD_THEIRS).assertIsNotEnabled()
     }
 
     @Test
@@ -432,7 +451,7 @@ class ScreensTest {
         var entries by mutableStateOf<List<HistoryEntry>?>(emptyList())
         compose.setContent {
             Themed(AppLang.EN) {
-                HistoryScreen(entries = entries, onOpen = {}, onRemove = { _, _ -> }, onNew = {})
+                HistoryScreen(entries = entries, onOpen = {}, onRemove = { _, _ -> })
             }
         }
         compose.onNodeWithTag(HistoryTags.EMPTY).assertExists()

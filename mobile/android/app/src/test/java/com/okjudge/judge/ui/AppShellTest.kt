@@ -19,7 +19,6 @@ import com.okjudge.judge.core.data.Appearance
 import com.okjudge.judge.core.display.Examples
 import com.okjudge.judge.i18n.AppLang
 import com.okjudge.judge.i18n.LangPref
-import com.okjudge.judge.ui.components.TopBarTags
 import com.okjudge.judge.ui.history.HistoryTags
 import com.okjudge.judge.ui.home.HomeTags
 import com.okjudge.judge.ui.settings.SettingsTags
@@ -35,7 +34,7 @@ import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 
-/** The real activity: splash, theme, Navigation 3 back stack, tabs, the "+" and the language and appearance settings. */
+/** The real activity: splash, theme, Navigation 3 back stack, tabs, the clear button and the language and appearance settings. */
 @RunWith(RobolectricTestRunner::class)
 @Config(sdk = [36], qualifiers = "en-rUS-w393dp-h852dp")
 class AppShellTest {
@@ -73,29 +72,35 @@ class AppShellTest {
     }
 
     @Test
-    fun newButton_clearsTheDraft_andComesBackFromOtherTabs() {
+    fun clearButton_clearsTheDraft() {
         val en = UiTestSupport.s(AppLang.EN)
         awaitText(en.appHomeExample)
-        compose.onNodeWithTag(TopBarTags.NEW).assertDoesNotExist()
+        compose.onNodeWithTag(HomeTags.CLEAR).assertDoesNotExist()
         compose.onNodeWithTag(HomeTags.INPUT).performTextInput("My roommate never does the dishes")
-        compose.onNodeWithTag(TopBarTags.NEW).performClick()
+        compose.onNodeWithTag(HomeTags.CLEAR).performClick()
         compose.waitForIdle()
         compose.onNodeWithTag(HomeTags.COUNTER).assertTextEquals("0 / 6,000")
-        compose.onNodeWithTag(TopBarTags.NEW).assertDoesNotExist()
+        compose.onNodeWithTag(HomeTags.CLEAR).assertDoesNotExist()
+    }
 
+    @Test
+    fun newTab_comesBackFromOtherTabsToTheDraft() {
+        val en = UiTestSupport.s(AppLang.EN)
+        awaitText(en.appHomeExample)
+        compose.onNodeWithTag(HomeTags.INPUT).performTextInput("My roommate never does the dishes")
         compose.onNodeWithText(en.navVerdicts).performClick()
         awaitText(en.appHistoryEmpty)
-        compose.onNodeWithTag(TopBarTags.NEW).performClick()
-        awaitText(en.appHomeExample)
+        compose.onNodeWithText(en.appTabNew).performClick()
+        compose.waitUntil(5_000) { compose.onAllNodesWithTag(HomeTags.INPUT).fetchSemanticsNodes().isNotEmpty() }
         compose.onNodeWithTag(HistoryTags.EMPTY).assertDoesNotExist()
+        assertEquals("My roommate never does the dishes", typed(HomeTags.INPUT))
     }
 
     private fun typed(tag: String) = compose.onNodeWithTag(tag).fetchSemanticsNode().config[SemanticsProperties.EditableText].text
 
     @Test
-    fun example_fillsBothSides_andTheNewButtonClearsIt() {
+    fun example_fillsBothSides_andClearEmptiesIt() {
         compose.waitUntil(5_000) { compose.onAllNodesWithTag(HomeTags.EXAMPLE).fetchSemanticsNodes().isNotEmpty() }
-        compose.onNodeWithTag(HomeTags.INPUT).performTextInput("My roommate never does the dishes")
         compose.onNodeWithTag(HomeTags.EXAMPLE).performClick()
         compose.waitForIdle()
         // The language another test picked may still be set.
@@ -105,11 +110,11 @@ class AppShellTest {
         assertEquals(example.theirName, typed(HomeTags.OTHER_NAME))
         assertEquals(example.myName, typed(HomeTags.NAME))
 
-        compose.onNodeWithTag(TopBarTags.NEW).performClick()
+        compose.onNodeWithTag(HomeTags.CLEAR).performClick()
         compose.waitForIdle()
         assertEquals("", typed(HomeTags.INPUT))
-        assertEquals("", typed(HomeTags.OTHER))
-        assertEquals("", typed(HomeTags.NAME))
+        compose.onNodeWithTag(HomeTags.OTHER).assertDoesNotExist()
+        compose.onNodeWithTag(HomeTags.NAME).assertDoesNotExist()
     }
 
     @Test

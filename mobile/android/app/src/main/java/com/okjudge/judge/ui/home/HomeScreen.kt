@@ -6,6 +6,8 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
@@ -36,8 +38,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.LiveRegionMode
 import androidx.compose.ui.semantics.Role
@@ -51,6 +56,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
@@ -63,10 +69,9 @@ import com.okjudge.judge.core.premium.Tiers
 import com.okjudge.judge.i18n.AppLang
 import com.okjudge.judge.i18n.LocalLang
 import com.okjudge.judge.i18n.LocalStrings
-import com.okjudge.judge.ui.components.Chip
+import com.okjudge.judge.ui.components.GhostButton
 import com.okjudge.judge.ui.components.JudgeIcons
 import com.okjudge.judge.ui.components.TintedIcon
-import com.okjudge.judge.ui.components.TopBar
 import com.okjudge.judge.ui.components.rememberIcon
 import com.okjudge.judge.ui.components.uppercaseForUi
 import com.okjudge.judge.ui.components.warmShadow
@@ -92,25 +97,31 @@ object HomeTags {
     const val OTHER_NAME = "home.otherName"
     const val SEND_LINK = "home.sendLink"
     const val EXAMPLE = "home.example"
+    const val ADD_THEIRS = "home.addTheirs"
+    const val REMOVE_THEIRS = "home.removeTheirs"
+    const val CLEAR = "home.clear"
     const val BALANCE = "home.balance"
 }
 
 /**
- * Home: a card for your side and one for theirs (or a link for them to
- * write it), then the send button with what is left to spend.
+ * Home: one box to write in, with the other side as an extra card or a
+ * link for them to write it, then the send button with what is left to spend.
  */
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun HomeScreen(
     state: HomeUiState,
     onArgumentChange: (String) -> Unit,
     onSubmit: () -> Unit,
     onDismissError: () -> Unit,
-    onNew: (() -> Unit)?,
     modifier: Modifier = Modifier,
     onOtherSideChange: (String) -> Unit = {},
     onOtherName: (String) -> Unit = {},
     onSendLink: () -> Unit = {},
     onExample: () -> Unit = {},
+    onAddTheirSide: () -> Unit = {},
+    onRemoveTheirSide: () -> Unit = {},
+    onClear: () -> Unit = {},
     onAddEvidence: (List<ImageSource>) -> Unit = {},
     onRemoveEvidence: (String) -> Unit = {},
     onDisplayName: (String) -> Unit = {},
@@ -131,14 +142,23 @@ fun HomeScreen(
     val blocked = blockedUntil != null && now < blockedUntil
     val length = state.outgoing(s).length
 
+    val theirFocus = remember { FocusRequester() }
+    var focusTheirs by remember { mutableStateOf(false) }
+    LaunchedEffect(focusTheirs, state.theirsOpen) {
+        // The card has to be on screen before it can take the focus.
+        if (focusTheirs && state.theirsOpen) {
+            theirFocus.requestFocus()
+            focusTheirs = false
+        }
+    }
+
     Column(modifier.fillMaxSize().background(Palette.ivory)) {
-        TopBar(onBack = null, onNew = onNew?.takeUnless { state.blank || state.holding })
         Column(
             Modifier
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
                 .imePadding()
-                .padding(top = 4.dp, bottom = 40.dp),
+                .padding(top = 8.dp, bottom = 40.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(24.dp),
         ) {
@@ -146,22 +166,11 @@ fun HomeScreen(
                 Modifier.widthIn(max = 640.dp).fillMaxWidth().padding(horizontal = 16.dp),
                 verticalArrangement = Arrangement.spacedBy(12.dp),
             ) {
-                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                    Chip(
-                        s.appHomeExample,
-                        selected = false,
-                        onClick = onExample,
-                        modifier = Modifier.testTag(HomeTags.EXAMPLE),
-                        icon = rememberIcon(Palette.ink) { JudgeIcons.spark(it) },
-                    )
-                    if (state.blank) {
-                        Text(if (state.casesOn) s.appHomeLead else s.appHomeLeadSolo, style = JudgeType.body.copy(fontSize = 14.sp, color = Palette.ink2))
-                    }
-                }
                 SideCard(
                     colors = LocalSides.current.mine,
                     letter = "A",
                     label = s.appHomeYourSide,
+                    showHeader = state.theirsOpen,
                     name = state.shownName,
                     namePlaceholder = s.appHomeYourName,
                     onName = onDisplayName,
@@ -170,12 +179,59 @@ fun HomeScreen(
                     onText = onArgumentChange,
                     placeholder = s.appHomeYourPlaceholder,
                     fieldLabel = s.appHomeYourSideLabel,
-                    minLines = if (state.blank) 4 else 3,
+                    minHeight = if (state.theirsOpen) 96.dp else 180.dp,
                     tag = HomeTags.INPUT,
                     enabled = !state.holding,
-                ) {
-                    if (state.evidenceOn) {
-                        val pick = rememberEvidencePicker(state.evidence.room, onAddEvidence)
+                )
+                if (state.theirsOpen) {
+                    SideCard(
+                        colors = LocalSides.current.theirs,
+                        letter = "B",
+                        label = s.appHomeTheirSide,
+                        showHeader = true,
+                        name = state.otherName,
+                        namePlaceholder = s.appHomeTheirName,
+                        onName = onOtherName,
+                        nameTag = HomeTags.OTHER_NAME,
+                        text = state.otherSide,
+                        onText = onOtherSideChange,
+                        placeholder = s.appHomeTheirPlaceholder,
+                        fieldLabel = s.appHomeTheirSideLabel,
+                        minHeight = 96.dp,
+                        tag = HomeTags.OTHER,
+                        enabled = !state.holding,
+                        fieldModifier = Modifier.focusRequester(theirFocus),
+                        onRemove = onRemoveTheirSide,
+                    )
+                } else {
+                    Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                        GhostButton(
+                            s.appHomeAddTheirSide,
+                            rememberIcon(Palette.ink) { JudgeIcons.plus(it) },
+                            onClick = {
+                                focusTheirs = true
+                                onAddTheirSide()
+                            },
+                            modifier = Modifier.testTag(HomeTags.ADD_THEIRS),
+                            enabled = !state.holding,
+                        )
+                        if (state.casesOn) {
+                            SendLink(enabled = state.canSendLink && !blocked, onClick = onSendLink)
+                        }
+                    }
+                }
+                // The server takes one set of screenshots for the verdict, so they belong to the case.
+                if (state.evidenceOn) {
+                    val pick = rememberEvidencePicker(state.evidence.room, onAddEvidence)
+                    Column(
+                        Modifier
+                            .fillMaxWidth()
+                            .warmShadow(6.dp, JudgeShapes.block)
+                            .clip(JudgeShapes.block)
+                            .background(Palette.paper)
+                            .border(1.dp, Palette.line, JudgeShapes.block)
+                            .padding(horizontal = 16.dp, vertical = 14.dp),
+                    ) {
                         EvidencePicker(
                             state = state.evidence,
                             disabled = state.holding,
@@ -184,28 +240,31 @@ fun HomeScreen(
                         )
                     }
                 }
-                SideCard(
-                    colors = LocalSides.current.theirs,
-                    letter = "B",
-                    label = s.appHomeTheirSide,
-                    name = state.otherName,
-                    namePlaceholder = s.appHomeTheirName,
-                    onName = onOtherName,
-                    nameTag = HomeTags.OTHER_NAME,
-                    text = state.otherSide,
-                    onText = onOtherSideChange,
-                    placeholder = s.appHomeTheirPlaceholder,
-                    fieldLabel = s.appHomeTheirSideLabel,
-                    minLines = if (state.otherSide.isEmpty()) 2 else 3,
-                    tag = HomeTags.OTHER,
-                    enabled = !state.holding,
+                Row(
+                    Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(12.dp),
+                    verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    // Once their side is written here there is nothing left for them to write.
-                    if (state.casesOn && state.otherSide.isBlank()) {
-                        SendLink(enabled = state.canSendLink && !blocked, onClick = onSendLink)
+                    FlowRow(
+                        Modifier.weight(1f),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        verticalArrangement = Arrangement.Center,
+                    ) {
+                        if (state.offersExample) {
+                            QuietAction(
+                                s.appHomeExample,
+                                onExample,
+                                !state.holding,
+                                Modifier.testTag(HomeTags.EXAMPLE),
+                                icon = rememberIcon(Palette.ink2) { JudgeIcons.shuffle(it) },
+                            )
+                        }
+                        if (!state.blank) {
+                            QuietAction(s.appHomeClear, onClear, !state.holding, Modifier.testTag(HomeTags.CLEAR))
+                        }
                     }
+                    Counter(length, lang)
                 }
-                Counter(length, lang, Modifier.align(Alignment.End))
                 state.error?.let { ErrorBanner(it, onDismissError) }
                 SubmitButton(
                     text = s.getVerdict,
@@ -237,12 +296,13 @@ fun HomeScreen(
     }
 }
 
-/** One side: the letter, a name field and the side's label over what that side says. */
+/** One side: over what it says, the letter, a name field and the label (only once there are two sides). */
 @Composable
 private fun SideCard(
     colors: SideColors,
     letter: String,
     label: String,
+    showHeader: Boolean,
     name: String,
     namePlaceholder: String,
     onName: (String) -> Unit,
@@ -251,11 +311,13 @@ private fun SideCard(
     onText: (String) -> Unit,
     placeholder: String,
     fieldLabel: String,
-    minLines: Int,
+    minHeight: Dp,
     tag: String,
     enabled: Boolean,
-    extra: @Composable () -> Unit,
+    fieldModifier: Modifier = Modifier,
+    onRemove: (() -> Unit)? = null,
 ) {
+    val s = LocalStrings.current
     var focused by remember { mutableStateOf(false) }
     Column(
         Modifier
@@ -268,7 +330,7 @@ private fun SideCard(
             .padding(horizontal = 16.dp, vertical = 14.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+        if (showHeader) Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             Box(
                 Modifier.size(24.dp).clip(CircleShape).background(colors.ink).clearAndSetSemantics { },
                 contentAlignment = Alignment.Center,
@@ -300,16 +362,33 @@ private fun SideCard(
                 style = JudgeType.micro.copy(fontWeight = FontWeight.SemiBold, letterSpacing = 0.08.em, color = colors.ink).forScript(),
                 maxLines = 1,
             )
+            if (onRemove != null) {
+                Box(
+                    Modifier
+                        .size(32.dp)
+                        .clip(CircleShape)
+                        .semantics {
+                            role = Role.Button
+                            contentDescription = s.appHomeRemoveTheirSide
+                        }
+                        .clickable(enabled = enabled, onClick = onRemove)
+                        .testTag(HomeTags.REMOVE_THEIRS),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    Box(Modifier.size(26.dp).background(Palette.ivory2, CircleShape), contentAlignment = Alignment.Center) {
+                        TintedIcon(rememberIcon(Palette.ink2) { JudgeIcons.close(it) }, 12)
+                    }
+                }
+            }
         }
         BasicTextField(
             value = text,
             onValueChange = { onText(it.take(ArgumentRules.MAX)) },
             enabled = enabled,
-            minLines = minLines,
             textStyle = SideText,
             cursorBrush = SolidColor(Palette.terraInk),
             keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Sentences),
-            modifier = Modifier.fillMaxWidth().semantics { contentDescription = fieldLabel }.testTag(tag),
+            modifier = fieldModifier.fillMaxWidth().heightIn(min = minHeight).semantics { contentDescription = fieldLabel }.testTag(tag),
             decorationBox = { inner ->
                 Box {
                     if (text.isEmpty()) Text(placeholder, style = SideText.copy(color = Palette.placeholder))
@@ -317,7 +396,6 @@ private fun SideCard(
                 }
             },
         )
-        extra()
     }
 }
 
@@ -342,6 +420,25 @@ private fun SendLink(enabled: Boolean, onClick: () -> Unit) {
     ) {
         TintedIcon(rememberIcon(Palette.sageInk) { JudgeIcons.link(it) }, 14)
         Text(s.appHomeSendLink, style = JudgeType.small.copy(color = Palette.sageInk))
+    }
+}
+
+/** A small text button under the form (an example, clear). */
+@Composable
+private fun QuietAction(text: String, onClick: () -> Unit, enabled: Boolean, modifier: Modifier = Modifier, icon: ImageVector? = null) {
+    Row(
+        modifier
+            .defaultMinSize(minHeight = 40.dp)
+            .clip(JudgeShapes.chip)
+            .alpha(if (enabled) 1f else 0.5f)
+            .semantics { role = Role.Button }
+            .clickable(enabled = enabled, onClick = onClick)
+            .padding(horizontal = 6.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(6.dp),
+    ) {
+        if (icon != null) TintedIcon(icon, 14)
+        Text(text, style = JudgeType.small)
     }
 }
 

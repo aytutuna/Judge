@@ -292,6 +292,7 @@ class CaseViewModel(
                 }
                 is ApiResult.Err -> {
                     _state.update { it.copy(appealSending = false, appealError = res.error) }
+                    if ((res.error as? UiError.Api)?.code == "evidence_invalid") evidence.invalidateTokens()
                     if (Errors.isAccountError(res.error)) viewModelScope.launch { refreshAccount() }
                 }
             }

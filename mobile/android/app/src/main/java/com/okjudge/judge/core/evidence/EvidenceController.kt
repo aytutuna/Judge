@@ -135,6 +135,15 @@ class EvidenceController(
         _state.update { st -> st.copy(items = st.items.filterNot { it.id == id }, overLimit = false) }
     }
 
+    /** The server refused the tokens (400 evidence_invalid): the read images have to be added again. */
+    fun invalidateTokens() {
+        _state.update { st ->
+            st.copy(items = st.items.map {
+                if (it.status == EvidenceStatus.OK) it.copy(status = EvidenceStatus.FAILED, token = null, preview = null) else it
+            })
+        }
+    }
+
     fun clear() {
         _state.update { EvidenceState(max = max) }
     }

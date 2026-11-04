@@ -6,9 +6,8 @@ import org.junit.Test
 
 class BottomBarTest {
     @Test
-    fun hiddenOnTheThread() {
+    fun hiddenWhileJudging() {
         assertFalse(showsBottomBar(JudgingKey))
-        assertFalse(showsBottomBar(VerdictKey("v1", fresh = true)))
     }
 
     @Test
@@ -19,7 +18,7 @@ class BottomBarTest {
 
     @Test
     fun shownEverywhereElse() {
-        for (key in listOf(HomeKey, HistoryKey, SettingsKey, PricingKey, CaseKey("c1"), VerdictKey("v1", fresh = false))) {
+        for (key in listOf(HomeKey, HistoryKey, SettingsKey, PricingKey, CaseKey("c1"), VerdictKey("v1"))) {
             assertTrue(key.toString(), showsBottomBar(key))
         }
     }

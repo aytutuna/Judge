@@ -21,6 +21,7 @@ import com.okjudge.judge.core.premium.Tiers
 import com.okjudge.judge.core.session.VerdictFlow
 import com.okjudge.judge.i18n.AppLang
 import com.okjudge.judge.i18n.Strings
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -53,6 +54,10 @@ data class HomeUiState(
     val otherSide: String = "",
     /** The name over the other side's card. */
     val otherName: String = "",
+    /** The second card is on Home: one person writes in one box until then. */
+    val theirsOpen: Boolean = false,
+    /** What the last example wrote ([exampleMark]), to tell it from the user's own text. */
+    val exampleText: String? = null,
 ) {
     val casesOn: Boolean get() = signedIn && features.cases
     val shownName: String get() = typedName ?: suggestedName ?: ""
@@ -64,8 +69,11 @@ data class HomeUiState(
     /** A request is being prepared: the form holds still. */
     val holding: Boolean get() = checking || creating
 
-    /** Nothing typed or attached: the "+" has nothing to clear here. */
-    val blank: Boolean get() = argument.isEmpty() && otherSide.isEmpty() && evidence.items.isEmpty()
+    /** Nothing typed, attached or opened: Home has nothing to clear. */
+    val blank: Boolean get() = argument.isEmpty() && otherSide.isEmpty() && evidence.items.isEmpty() && !theirsOpen
+
+    /** An example writes over the form, so it never replaces the user's text. */
+    val offersExample: Boolean get() = blank || exampleText == exampleMark(argument, shownName, otherSide, otherName)
 
     /** Enough written and nothing running; [fits] checks the length of what is sent. */
     val canSubmit: Boolean
@@ -89,6 +97,10 @@ data class HomeUiState(
         ).filter { it.text.isNotEmpty() }
 
     companion object {
+        /** Both sides and both names in one value, so an edit to any of them shows. */
+        fun exampleMark(mine: String, myName: String, theirs: String, theirName: String): String =
+            listOf(mine, myName, theirs, theirName).joinToString("\u0000")
+
         fun joined(mine: String, theirs: String, myName: String, theirName: String, s: Strings): String {
             val other = theirs.trim()
             if (other.isEmpty()) return mine
@@ -125,18 +137,33 @@ class HomeViewModel(
 
     val evidence = EvidenceController(viewModelScope, MAX_EVIDENCE_PER_SIDE, uploadEvidence)
 
+    init {
+        // Refused tokens would fail the same way on every retry.
+        viewModelScope.launch {
+            flow.lastError.collect { if ((it as? UiError.Api)?.code == "evidence_invalid") evidence.invalidateTokens() }
+        }
+        // A restored draft with their side written needs the card that shows it.
+        if (!saved.get<String>(KEY_OTHER).isNullOrEmpty()) saved[KEY_THEIRS_OPEN] = true
+    }
+
     private val written = combine(
         saved.getStateFlow(KEY_ARGUMENT, ""),
         saved.getStateFlow(KEY_OTHER, ""),
         saved.getStateFlow(KEY_OTHER_NAME, ""),
     ) { mine, theirs, name -> Triple(mine, theirs, name) }
 
+    private val cardState = combine(
+        saved.getStateFlow(KEY_THEIRS_OPEN, false),
+        saved.getStateFlow<String?>(KEY_EXAMPLE_TEXT, null),
+    ) { open, example -> open to example }
+
     private val form = combine(
         written,
+        cardState,
         flow.lastError,
         flow.blockedUntil,
-    ) { (argument, other, otherName), error, blocked ->
-        HomeUiState(argument, error, blocked, otherSide = other, otherName = otherName)
+    ) { (argument, other, otherName), (open, example), error, blocked ->
+        HomeUiState(argument, error, blocked, otherSide = other, otherName = otherName, theirsOpen = open, exampleText = example)
     }
 
     private val premium = combine(accountState, providers, flow.premiumStep, evidence.state) { account, prov, step, ev ->
@@ -187,7 +214,13 @@ class HomeViewModel(
     }.stateIn(
         viewModelScope,
         SharingStarted.Eagerly,
-        HomeUiState(argument = saved[KEY_ARGUMENT] ?: "", otherSide = saved[KEY_OTHER] ?: "", otherName = saved[KEY_OTHER_NAME] ?: ""),
+        HomeUiState(
+            argument = saved[KEY_ARGUMENT] ?: "",
+            otherSide = saved[KEY_OTHER] ?: "",
+            otherName = saved[KEY_OTHER_NAME] ?: "",
+            theirsOpen = saved[KEY_THEIRS_OPEN] ?: false,
+            exampleText = saved[KEY_EXAMPLE_TEXT],
+        ),
     )
 
     fun onArgumentChange(text: String) {
@@ -216,8 +249,33 @@ class HomeViewModel(
         saved[KEY_NAME] = example.myName
         saved[KEY_EXAMPLE_NAME] = true
         saved[KEY_ARGUMENT] = example.mine
+        saved[KEY_EXAMPLE_TEXT] = HomeUiState.exampleMark(example.mine, example.myName, example.theirs, example.theirName)
+        saved[KEY_THEIRS_OPEN] = true
         saved[KEY_OTHER_NAME] = example.theirName
         saved[KEY_OTHER] = example.theirs
+    }
+
+    /** "Add their side": the second card, for writing both sides on one phone. */
+    fun addTheirSide() {
+        saved[KEY_THEIRS_OPEN] = true
+    }
+
+    /** The second card's close button: back to one person writing. */
+    fun removeTheirSide() {
+        saved[KEY_THEIRS_OPEN] = false
+        saved[KEY_OTHER] = ""
+        saved[KEY_OTHER_NAME] = ""
+        // The example's own name would otherwise go out with a link case.
+        dropExampleName()
+        saved[KEY_EXAMPLE_TEXT] = null
+    }
+
+    private fun dropExampleName() {
+        // A name the example wrote is not the user's: the account's first name comes back.
+        if (saved.get<Boolean>(KEY_EXAMPLE_NAME) == true) {
+            saved[KEY_NAME] = null
+            saved[KEY_EXAMPLE_NAME] = false
+        }
     }
 
     fun onAddEvidence(sources: List<ImageSource>) = evidence.add(sources)
@@ -251,16 +309,10 @@ class HomeViewModel(
 
     fun dismissError() = flow.dismissError()
 
-    /** "Judge another": back to an empty form. */
+    /** "Clear" and a finished verdict: back to an empty form. */
     fun clear() {
         saved[KEY_ARGUMENT] = ""
-        saved[KEY_OTHER] = ""
-        saved[KEY_OTHER_NAME] = ""
-        // A name the example wrote is not the user's: the account's first name comes back.
-        if (saved.get<Boolean>(KEY_EXAMPLE_NAME) == true) {
-            saved[KEY_NAME] = null
-            saved[KEY_EXAMPLE_NAME] = false
-        }
+        removeTheirSide()
         evidence.clear()
         flow.dismissError()
     }
@@ -269,6 +321,8 @@ class HomeViewModel(
         const val KEY_ARGUMENT = "argument"
         const val KEY_OTHER = "other_side"
         const val KEY_OTHER_NAME = "other_name"
+        const val KEY_THEIRS_OPEN = "theirs_open"
+        const val KEY_EXAMPLE_TEXT = "example_text"
         const val KEY_NAME = "case_name"
         const val KEY_EXAMPLE = "example"
         const val KEY_EXAMPLE_NAME = "example_name"

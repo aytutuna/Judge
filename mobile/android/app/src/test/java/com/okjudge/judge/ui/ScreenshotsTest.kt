@@ -98,18 +98,18 @@ class ScreenshotsTest {
 
     @Test
     fun home_en() = capture("home_en") {
-        Themed(AppLang.EN) { HomeScreen(HomeUiState(), {}, {}, {}, {}) }
+        Themed(AppLang.EN) { HomeScreen(HomeUiState(), {}, {}, {}) }
     }
 
     @Test
     fun home_en_dark() = capture("home_en_dark") {
-        Themed(AppLang.EN, dark = true) { HomeScreen(HomeUiState(), {}, {}, {}, {}) }
+        Themed(AppLang.EN, dark = true) { HomeScreen(HomeUiState(), {}, {}, {}) }
     }
 
     @Test
     fun home_tr_filled_withError() = capture("home_tr_error", tall = true) {
         Themed(AppLang.TR) {
-            HomeScreen(homeState(AppLang.TR).copy(error = UiError.Api("rate_limited", 429, 420.0)), {}, {}, {}, {})
+            HomeScreen(homeState(AppLang.TR).copy(error = UiError.Api("rate_limited", 429, 420.0)), {}, {}, {})
         }
     }
 
@@ -122,7 +122,6 @@ class ScreenshotsTest {
                     VerdictFlow.Side(mine = true, name = "Alex", text = "A hot dog is its own thing. Nobody orders a sandwich and expects one."),
                     VerdictFlow.Side(mine = false, name = "Sam", text = "It's a filling inside sliced bread. That's a sandwich, end of story."),
                 ),
-                onNew = {},
             )
         }
     }
@@ -133,7 +132,6 @@ class ScreenshotsTest {
             JudgingScreen(
                 done = true, result = sample("win_b_named").result.result, startedAt = 0, reducedMotion = true, onFinished = {}, onCancel = {},
                 sides = listOf(VerdictFlow.Side(mine = true, name = "", text = UiTestSupport.s(AppLang.TR).exampleHotdogText)),
-                onNew = {},
             )
         }
     }
@@ -142,7 +140,6 @@ class ScreenshotsTest {
     fun verdict_ruling_en() = capture("verdict_ruling_win_b_en") {
         Themed(AppLang.EN) {
             Column(Modifier.fillMaxSize()) {
-                TopBar(onBack = null, onNew = {})
                 SampleVerdict(sample("win_b_named"), AppLang.EN, Modifier.padding(horizontal = 16.dp, vertical = 4.dp), summary = true)
             }
         }
@@ -152,7 +149,6 @@ class ScreenshotsTest {
     fun verdict_ruling_en_dark() = capture("verdict_ruling_win_b_en_dark") {
         Themed(AppLang.EN, dark = true) {
             Column(Modifier.fillMaxSize()) {
-                TopBar(onBack = null, onNew = {})
                 SampleVerdict(sample("win_b_named"), AppLang.EN, Modifier.padding(horizontal = 16.dp, vertical = 4.dp), summary = true)
             }
         }
@@ -162,7 +158,6 @@ class ScreenshotsTest {
     fun verdict_ruling_tooClose_tr() = capture("verdict_ruling_too_close_tr") {
         Themed(AppLang.TR) {
             Column(Modifier.fillMaxSize()) {
-                TopBar(onBack = null, onNew = {})
                 SampleVerdict(sample("lean_tie"), AppLang.TR, Modifier.padding(horizontal = 16.dp, vertical = 4.dp), summary = true)
             }
         }
@@ -191,7 +186,7 @@ class ScreenshotsTest {
         val content: @Composable () -> Unit = {
             Themed(lang) {
                 Column(Modifier.fillMaxSize()) {
-                    TopBar(onBack = {}, onNew = {}, backText = UiTestSupport.s(lang).appVerdictBack)
+                    TopBar(onBack = {}, backText = UiTestSupport.s(lang).appVerdictBack)
                     SampleVerdict(outcome, lang, Modifier.padding(horizontal = 16.dp, vertical = 4.dp), status)
                 }
             }
@@ -215,18 +210,18 @@ class ScreenshotsTest {
     @Test
     fun history_en() = capture("history_en") {
         val items = phoneRows("win_a_self", "win_b_named", "lean_tie", "overturned_tr", "conditional")
-        Themed(AppLang.EN) { HistoryScreen(items, {}, { _, _ -> }, {}) }
+        Themed(AppLang.EN) { HistoryScreen(items, {}, { _, _ -> }) }
     }
 
     @Test
     fun settings_tr() = capture("settings_tr") {
-        Themed(AppLang.TR) { SettingsScreen(LangPref.SYSTEM, "0.1.0", {}, {}, {}, "https://okjudge.com") }
+        Themed(AppLang.TR) { SettingsScreen(LangPref.SYSTEM, "0.1.0", {}, {}, "https://okjudge.com") }
     }
 
     @Test
     fun settings_en_dark() = capture("settings_en_dark") {
         Themed(AppLang.EN, dark = true) {
-            SettingsScreen(LangPref.SYSTEM, "0.1.0", {}, {}, {}, "https://okjudge.com", appearance = Appearance.DARK)
+            SettingsScreen(LangPref.SYSTEM, "0.1.0", {}, {}, "https://okjudge.com", appearance = Appearance.DARK)
         }
     }
 
@@ -241,7 +236,7 @@ class ScreenshotsTest {
             ),
         )
         Themed(AppLang.EN) {
-            SettingsScreen(LangPref.SYSTEM, "0.1.0", {}, {}, {}, "https://okjudge.com", account = Account.State.SignedIn(me))
+            SettingsScreen(LangPref.SYSTEM, "0.1.0", {}, {}, "https://okjudge.com", account = Account.State.SignedIn(me))
         }
     }
 
@@ -249,12 +244,12 @@ class ScreenshotsTest {
 
     @Test
     fun signin_en() = capture("signin_en") {
-        Themed(AppLang.EN) { SignInScreen(SignInUiState(providers = bothProviders), onBack = {}, onNew = {}, actions = SignInActions()) }
+        Themed(AppLang.EN) { SignInScreen(SignInUiState(providers = bothProviders), onBack = {}, actions = SignInActions()) }
     }
 
     @Test
     fun signin_tr() = capture("signin_tr") {
-        Themed(AppLang.TR) { SignInScreen(SignInUiState(providers = bothProviders), onBack = {}, onNew = {}, actions = SignInActions()) }
+        Themed(AppLang.TR) { SignInScreen(SignInUiState(providers = bothProviders), onBack = {}, actions = SignInActions()) }
     }
 
     @Test
@@ -266,7 +261,7 @@ class ScreenshotsTest {
             code = "482913",
             error = SignInError.CODE_INVALID,
         )
-        Themed(AppLang.EN) { SignInScreen(state, onBack = {}, onNew = {}, actions = SignInActions()) }
+        Themed(AppLang.EN) { SignInScreen(state, onBack = {}, actions = SignInActions()) }
     }
 
     // --- Premium ---------------------------------------------------------------------
@@ -284,13 +279,13 @@ class ScreenshotsTest {
 
     @Test
     fun home_noVerdictsLeft_en() = capture("home_balance_none_en", tall = true) {
-        Themed(AppLang.EN) { HomeScreen(premiumHome(AppLang.EN, "fair_use"), {}, {}, {}, {}) }
+        Themed(AppLang.EN) { HomeScreen(premiumHome(AppLang.EN, "fair_use"), {}, {}, {}) }
     }
 
     @Test
     fun home_monthlyLeft_en() = capture("home_balance_monthly_en", tall = true) {
         Themed(AppLang.EN) {
-            HomeScreen(premiumHome(AppLang.EN, "subscriber").copy(features = Features()), {}, {}, {}, {})
+            HomeScreen(premiumHome(AppLang.EN, "subscriber").copy(features = Features()), {}, {}, {})
         }
     }
 
@@ -305,7 +300,7 @@ class ScreenshotsTest {
             EvidenceItem("ev3", 3, EvidenceStatus.UNREADABLE),
         )
         Themed(AppLang.EN) {
-            HomeScreen(premiumHome(AppLang.EN, "credits7", EvidenceState(items, max = 3)), {}, {}, {}, {})
+            HomeScreen(premiumHome(AppLang.EN, "credits7", EvidenceState(items, max = 3)), {}, {}, {})
         }
     }
 
@@ -316,21 +311,21 @@ class ScreenshotsTest {
             Fixtures.verdicts["clarifyResponse"]!!.jsonObject["two_questions"].toString(),
         ).questions
         Themed(AppLang.EN) {
-            ClarifyScreen(questions, mapOf("q1" to "No, we never settled it."), { _, _ -> }, {}, {}, {}, {})
+            ClarifyScreen(questions, mapOf("q1" to "No, we never settled it."), { _, _ -> }, {}, {}, {})
         }
     }
 
     @Test
     fun pricing_en() = capture("pricing_en", tall = true) {
         Themed(AppLang.EN) {
-            PricingScreen(PricingInfo(), Features(true, true), true, true, me("credits7").entitlement, {}, {}, {})
+            PricingScreen(PricingInfo(), Features(true, true), true, true, me("credits7").entitlement, {}, {})
         }
     }
 
     @Test
     fun pricing_tr() = capture("pricing_tr", tall = true) {
         Themed(AppLang.TR) {
-            PricingScreen(PricingInfo(), Features(true, true), false, true, null, null, {}, {})
+            PricingScreen(PricingInfo(), Features(true, true), false, true, null, null, {})
         }
     }
 
@@ -350,7 +345,7 @@ class ScreenshotsTest {
     fun pricing_store_tr() = capture("pricing_store_tr", tall = true) {
         Themed(AppLang.TR) {
             PricingScreen(
-                PricingInfo(purchasesEnabled = true), Features(true, true), true, true, me("credits7").entitlement, {}, {}, {},
+                PricingInfo(purchasesEnabled = true), Features(true, true), true, true, me("credits7").entitlement, {}, {},
                 store = storeUi(notice = PurchaseController.Notice.ARRIVING, buying = null),
             )
         }
@@ -360,7 +355,7 @@ class ScreenshotsTest {
     fun pricing_store_buying_en() = capture("pricing_store_buying_en", tall = true) {
         Themed(AppLang.EN) {
             PricingScreen(
-                PricingInfo(purchasesEnabled = true), Features(true, true), true, true, me("credits7").entitlement, {}, {}, {},
+                PricingInfo(purchasesEnabled = true), Features(true, true), true, true, me("credits7").entitlement, {}, {},
                 store = storeUi(notice = null, buying = "pack_10"),
             )
         }
@@ -369,7 +364,7 @@ class ScreenshotsTest {
     @Test
     fun judging_premium_en() = capture("judging_premium_en") {
         Themed(AppLang.EN) {
-            JudgingScreen(done = false, result = null, startedAt = System.currentTimeMillis() - 8_000, reducedMotion = true, onFinished = {}, onCancel = {}, premium = true, onNew = {})
+            JudgingScreen(done = false, result = null, startedAt = System.currentTimeMillis() - 8_000, reducedMotion = true, onFinished = {}, onCancel = {}, premium = true)
         }
     }
 
@@ -385,7 +380,7 @@ class ScreenshotsTest {
     private fun shotVerdict(name: String, outcome: VerdictOutcome, lang: AppLang) = capture(name, tall = true) {
         Themed(lang) {
             Column(Modifier.fillMaxSize()) {
-                TopBar(onBack = {}, onNew = {}, backText = UiTestSupport.s(lang).appVerdictBack)
+                TopBar(onBack = {}, backText = UiTestSupport.s(lang).appVerdictBack)
                 SampleVerdict(outcome, lang, Modifier.padding(horizontal = 16.dp, vertical = 12.dp))
             }
         }
@@ -409,7 +404,7 @@ class ScreenshotsTest {
         val en = UiTestSupport.s(AppLang.EN)
         Themed(AppLang.EN) {
             Column(Modifier.fillMaxSize()) {
-                TopBar(onBack = {}, onNew = {})
+                TopBar(onBack = {})
                 com.okjudge.judge.ui.verdict.RulingSummary(
                     view = sampleView(outcome, AppLang.EN).personalized(outcome.nameMap, AppLang.EN),
                     parties = com.okjudge.judge.core.display.PartyNames.partyNames(outcome.nameMap, AppLang.EN, en),
@@ -530,7 +525,7 @@ class ScreenshotsTest {
     fun history_cases_en() = capture("history_cases_en") {
         val page = historyPage()
         val entries = mergeHistory(page.items, listOf(savedSample("win_b_named", 1_760_700_000_000L)), user = "u1")
-        Themed(AppLang.EN) { HistoryScreen(entries, {}, { _, _ -> }, {}, paging = HistoryPaging(next = page.next, loadedAt = 1L), now = listNow) }
+        Themed(AppLang.EN) { HistoryScreen(entries, {}, { _, _ -> }, paging = HistoryPaging(next = page.next, loadedAt = 1L), now = listNow) }
     }
 
     /** Select mode with two rows picked; rows that can't be removed stay dimmed. */
@@ -539,7 +534,7 @@ class ScreenshotsTest {
         val page = historyPage()
         val entries = mergeHistory(page.items, listOf(savedSample("win_b_named", 1_760_700_000_000L)), user = "u1")
         compose.setContent {
-            Themed(AppLang.EN) { HistoryScreen(entries, {}, { _, _ -> }, {}, now = listNow) }
+            Themed(AppLang.EN) { HistoryScreen(entries, {}, { _, _ -> }, now = listNow) }
         }
         compose.onNodeWithTag(HistoryTags.SELECT).performClick()
         compose.onNodeWithTag(HistoryTags.row("c:case0000010")).performClick()
@@ -570,8 +565,9 @@ class ScreenshotsTest {
                     otherSide = "It's a filling inside sliced bread. That's a sandwich, end of story.",
                     suggestedName = "Alex",
                     otherName = "Sam",
+                    theirsOpen = true,
                 ),
-                {}, {}, {}, {},
+                {}, {}, {},
             )
         }
     }

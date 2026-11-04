@@ -30,7 +30,6 @@ import com.okjudge.judge.core.model.MeResponse
 import com.okjudge.judge.core.model.PricingInfo
 import com.okjudge.judge.core.model.VerdictOutcome
 import com.okjudge.judge.core.model.WireJson
-import com.okjudge.judge.ui.components.TopBarTags
 import com.okjudge.judge.i18n.AppLang
 import com.okjudge.judge.ui.home.HomeScreen
 import com.okjudge.judge.ui.home.HomeTags
@@ -77,7 +76,7 @@ class PremiumScreensTest {
     fun home_balanceUnderTheButton_onlyWhenSignedIn() {
         var state by mutableStateOf(premiumHome(EvidenceState(max = 3)))
         compose.setContent {
-            Themed(AppLang.EN) { HomeScreen(state, {}, {}, {}, {}) }
+            Themed(AppLang.EN) { HomeScreen(state, {}, {}, {}) }
         }
         compose.onNodeWithTag(HomeTags.BALANCE).assertTextEquals(en.appBalanceLeft(7))
         state = state.copy(entitlement = me("no_credits").entitlement)
@@ -107,7 +106,6 @@ class PremiumScreensTest {
                     onSubmit = { events += "submit" },
                     onSkip = { events += "skip" },
                     onBack = { events += "back" },
-                    onNew = {},
                 )
             }
         }
@@ -139,7 +137,7 @@ class PremiumScreensTest {
         val removed = mutableListOf<String>()
         compose.setContent {
             Themed(AppLang.EN) {
-                HomeScreen(premiumHome(EvidenceState(items, max = 3)), {}, {}, {}, {}, onRemoveEvidence = { removed += it })
+                HomeScreen(premiumHome(EvidenceState(items, max = 3)), {}, {}, {}, onRemoveEvidence = { removed += it })
             }
         }
         compose.onNodeWithTag(EvidenceTags.status(1)).assertTextContains(en.evidenceOk)
@@ -156,10 +154,9 @@ class PremiumScreensTest {
     @Test
     fun home_checking_showsTheStatusLine() {
         compose.setContent {
-            Themed(AppLang.EN) { HomeScreen(premiumHome(EvidenceState(max = 3)).copy(checking = true), {}, {}, {}, {}) }
+            Themed(AppLang.EN) { HomeScreen(premiumHome(EvidenceState(max = 3)).copy(checking = true), {}, {}, {}) }
         }
         compose.onNodeWithTag(HomeTags.STATUS).assertTextContains(en.tierChecking)
-        compose.onNodeWithTag(TopBarTags.NEW).assertDoesNotExist()
         compose.onNodeWithTag(HomeTags.SUBMIT).assertIsNotEnabled()
     }
 
@@ -167,7 +164,7 @@ class PremiumScreensTest {
     fun pricing_noFreePlan_buyButtonsSayComingSoon_andWhatIsLeftShows() {
         compose.setContent {
             Themed(AppLang.EN) {
-                PricingScreen(PricingInfo(), Features(true, true), signedIn = true, signInOffered = true, entitlement = me("subscriber").entitlement, onBack = {}, onSignIn = {}, onNew = {})
+                PricingScreen(PricingInfo(), Features(true, true), signedIn = true, signInOffered = true, entitlement = me("subscriber").entitlement, onBack = {}, onSignIn = {})
             }
         }
         compose.onAllNodesWithTag(PricingTags.BUY).assertCountEquals(3)
@@ -190,7 +187,7 @@ class PremiumScreensTest {
         var entitlement by mutableStateOf(me("subscriber").entitlement!!.copy(credits = 3))
         compose.setContent {
             Themed(AppLang.EN) {
-                PricingScreen(PricingInfo(), Features(true, true), signedIn = true, signInOffered = true, entitlement = entitlement, onBack = {}, onSignIn = {}, onNew = {})
+                PricingScreen(PricingInfo(), Features(true, true), signedIn = true, signInOffered = true, entitlement = entitlement, onBack = {}, onSignIn = {})
             }
         }
         compose.onNodeWithText("${en.accountCredits}: 3").assertExists()
@@ -205,7 +202,7 @@ class PremiumScreensTest {
         compose.setContent {
             Themed(AppLang.EN) {
                 androidx.compose.foundation.layout.Column {
-                    PricingScreen(PricingInfo(purchasesEnabled = true), Features(true, true), false, true, null, null, {}, {}, store = StoreUi(available = true))
+                    PricingScreen(PricingInfo(purchasesEnabled = true), Features(true, true), false, true, null, null, {}, store = StoreUi(available = true))
                 }
             }
         }
@@ -228,7 +225,7 @@ class PremiumScreensTest {
         compose.setContent {
             Themed(AppLang.EN) {
                 PricingScreen(
-                    PricingInfo(purchasesEnabled = true), Features(true, true), true, true, me("credits7").entitlement, null, {}, {},
+                    PricingInfo(purchasesEnabled = true), Features(true, true), true, true, me("credits7").entitlement, null, {},
                     store = StoreUi(available = false, offers = storeOffers),
                 )
             }
@@ -244,7 +241,7 @@ class PremiumScreensTest {
         compose.setContent {
             Themed(AppLang.EN) {
                 PricingScreen(
-                    PricingInfo(purchasesEnabled = true), Features(true, true), true, true, me("credits7").entitlement, null, {}, {},
+                    PricingInfo(purchasesEnabled = true), Features(true, true), true, true, me("credits7").entitlement, null, {},
                     store = StoreUi(available = true, offers = storeOffers),
                     onBuy = { bought += it },
                 )
@@ -268,7 +265,7 @@ class PremiumScreensTest {
         compose.setContent {
             Themed(AppLang.EN) {
                 PricingScreen(
-                    PricingInfo(purchasesEnabled = true), Features(true, true), false, true, null, null, {}, {},
+                    PricingInfo(purchasesEnabled = true), Features(true, true), false, true, null, null, {},
                     store = StoreUi(available = true, offers = storeOffers),
                 )
             }
@@ -282,7 +279,7 @@ class PremiumScreensTest {
         compose.setContent {
             Themed(AppLang.EN) {
                 PricingScreen(
-                    PricingInfo(purchasesEnabled = true), Features(true, true), true, true, me("credits7").entitlement, null, {}, {},
+                    PricingInfo(purchasesEnabled = true), Features(true, true), true, true, me("credits7").entitlement, null, {},
                     store = StoreUi(available = true, offers = storeOffers, buying = "pack_10"),
                 )
             }
@@ -298,7 +295,7 @@ class PremiumScreensTest {
         compose.setContent {
             Themed(AppLang.EN) {
                 PricingScreen(
-                    PricingInfo(purchasesEnabled = true), Features(true, true), true, true, me("credits7").entitlement, null, {}, {},
+                    PricingInfo(purchasesEnabled = true), Features(true, true), true, true, me("credits7").entitlement, null, {},
                     store = store,
                 )
             }
@@ -323,7 +320,7 @@ class PremiumScreensTest {
         compose.setContent {
             Themed(AppLang.EN) {
                 SettingsScreen(
-                    LangPref.SYSTEM, "0.1.0", {}, {}, {}, "https://okjudge.com",
+                    LangPref.SYSTEM, "0.1.0", {}, {}, "https://okjudge.com",
                     account = Account.State.SignedIn(me("credits7")),
                     restore = restore,
                     onRestore = { taps++ },
