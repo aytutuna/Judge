@@ -128,6 +128,7 @@
     <string name="nav_pricing">ମୂଲ୍ୟ</string>
     <string name="nav_sign_out">ସାଇନ୍ ଆଉଟ୍</string>
     <string name="nav_verdicts">ରାୟ</string>
+    <string name="nav_tabs">ବିଭାଗ</string>
     <string name="tier_locked_sign_in">(ଲକ୍: ବ୍ୟବହାର ପାଇଁ ସାଇନ୍ ଇନ୍ କରନ୍ତୁ)</string>
     <string name="tier_get_premium">ଅଧିକ ରାୟ ନିଅନ୍ତୁ</string>
     <string name="tier_checking">କିଛି ବାକି ରହିଲା କି ଦେଖୁଛୁ…</string>
@@ -438,6 +439,7 @@
     <string name="names_failed">ନାମ ସେଭ୍ କରିପାରିଲୁ ନାହିଁ। ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ।</string>
     <string name="names_invalid">1ରୁ 40 ଅକ୍ଷର ଭିତରେ ଲେଖନ୍ତୁ, ଆଉ ପକ୍ଷ A ଭଳି ଲେବଲ୍ ନୁହେଁ।</string>
     <string name="account_verdicts_removed">ହଟାଯାଇଛି</string>
+    <string name="shell_new">ନୂଆ ବିବାଦ</string>
     <string name="shell_today">ଆଜି</string>
     <string name="shell_load_failed">ଆପଣଙ୍କ ଇତିହାସ ଲୋଡ୍ କରିପାରିଲୁ ନାହିଁ।</string>
     <string name="shell_load_more">ଆହୁରି ଦେଖାନ୍ତୁ</string>

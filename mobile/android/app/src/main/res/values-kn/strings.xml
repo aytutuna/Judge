@@ -128,6 +128,7 @@
     <string name="nav_pricing">ಬೆಲೆಗಳು</string>
     <string name="nav_sign_out">ಸೈನ್ ಔಟ್</string>
     <string name="nav_verdicts">ತೀರ್ಪುಗಳು</string>
+    <string name="nav_tabs">ವಿಭಾಗಗಳು</string>
     <string name="tier_locked_sign_in">(ಲಾಕ್ ಆಗಿದೆ: ಬಳಸಲು ಸೈನ್ ಇನ್ ಮಾಡಿ)</string>
     <string name="tier_get_premium">ಇನ್ನಷ್ಟು ತೀರ್ಪುಗಳನ್ನು ಪಡೆಯಿರಿ</string>
     <string name="tier_checking">ಏನಾದರೂ ಬಿಟ್ಟುಹೋಗಿದೆಯೇ ಎಂದು ನೋಡುತ್ತಿದ್ದೇವೆ…</string>
@@ -438,6 +439,7 @@
     <string name="names_failed">ಹೆಸರುಗಳನ್ನು ಉಳಿಸಲು ಆಗಲಿಲ್ಲ. ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.</string>
     <string name="names_invalid">1ರಿಂದ 40 ಅಕ್ಷರಗಳನ್ನು ಬಳಸಿ, ಮತ್ತು ಪಕ್ಷ A ಎಂಬಂಥ ಹಣೆಪಟ್ಟಿ ಬೇಡ.</string>
     <string name="account_verdicts_removed">ತೆಗೆದುಹಾಕಲಾಗಿದೆ</string>
+    <string name="shell_new">ಹೊಸ ವಾದ</string>
     <string name="shell_today">ಇಂದು</string>
     <string name="shell_load_failed">ನಿಮ್ಮ ಇತಿಹಾಸ ಲೋಡ್ ಆಗಲಿಲ್ಲ.</string>
     <string name="shell_load_more">ಇನ್ನಷ್ಟು ತೋರಿಸಿ</string>

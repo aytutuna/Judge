@@ -134,6 +134,7 @@
     <string name="nav_pricing">Ceník</string>
     <string name="nav_sign_out">Odhlásit se</string>
     <string name="nav_verdicts">Verdikty</string>
+    <string name="nav_tabs">Sekce</string>
     <string name="tier_locked_sign_in">(zamčeno: pro použití se přihlas)</string>
     <string name="tier_get_premium">Získat další verdikty</string>
     <string name="tier_checking">Kontrolujeme, jestli něco nechybí…</string>
@@ -454,6 +455,7 @@
     <string name="names_failed">Jména se nepodařilo uložit. Zkus to znovu.</string>
     <string name="names_invalid">Použij 1 až 40 znaků a žádné označení jako Strana A.</string>
     <string name="account_verdicts_removed">Odstraněno</string>
+    <string name="shell_new">Nový spor</string>
     <string name="shell_today">Dnes</string>
     <string name="shell_load_failed">Historii se nepodařilo načíst.</string>
     <string name="shell_load_more">Zobrazit další</string>

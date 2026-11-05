@@ -131,6 +131,7 @@
     <string name="nav_pricing">Preços</string>
     <string name="nav_sign_out">Sair</string>
     <string name="nav_verdicts">Veredictos</string>
+    <string name="nav_tabs">Secções</string>
     <string name="tier_locked_sign_in">(bloqueado: entra para usar)</string>
     <string name="tier_get_premium">Obter mais veredictos</string>
     <string name="tier_checking">A ver se falta alguma coisa…</string>
@@ -446,6 +447,7 @@
     <string name="names_failed">Não conseguimos guardar os nomes. Tenta outra vez.</string>
     <string name="names_invalid">Usa entre 1 e 40 caracteres, e nada de rótulos como Parte A.</string>
     <string name="account_verdicts_removed">Removido</string>
+    <string name="shell_new">Nova discussão</string>
     <string name="shell_today">Hoje</string>
     <string name="shell_load_failed">Não conseguimos carregar o teu histórico.</string>
     <string name="shell_load_more">Mostrar mais</string>

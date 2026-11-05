@@ -134,6 +134,7 @@
     <string name="nav_pricing">Цены</string>
     <string name="nav_sign_out">Выйти</string>
     <string name="nav_verdicts">Вердикты</string>
+    <string name="nav_tabs">Разделы</string>
     <string name="tier_locked_sign_in">(недоступно: войдите, чтобы пользоваться)</string>
     <string name="tier_get_premium">Больше вердиктов</string>
     <string name="tier_checking">Проверяем, всего ли хватает…</string>
@@ -454,6 +455,7 @@
     <string name="names_failed">Не удалось сохранить имена. Попробуйте ещё раз.</string>
     <string name="names_invalid">От 1 до 40 символов, и не метка вроде «Сторона A».</string>
     <string name="account_verdicts_removed">Удалён</string>
+    <string name="shell_new">Новый спор</string>
     <string name="shell_today">Сегодня</string>
     <string name="shell_load_failed">Не удалось загрузить историю.</string>
     <string name="shell_load_more">Показать ещё</string>

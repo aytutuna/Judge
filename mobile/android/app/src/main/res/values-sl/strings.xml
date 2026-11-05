@@ -134,6 +134,7 @@
     <string name="nav_pricing">Cene</string>
     <string name="nav_sign_out">Odjava</string>
     <string name="nav_verdicts">Razsodbe</string>
+    <string name="nav_tabs">Razdelki</string>
     <string name="tier_locked_sign_in">(zaklenjeno: za uporabo se prijavi)</string>
     <string name="tier_get_premium">Več razsodb</string>
     <string name="tier_checking">Preverjamo, ali kaj manjka…</string>
@@ -454,6 +455,7 @@
     <string name="names_failed">Imen nismo mogli shraniti. Poskusi znova.</string>
     <string name="names_invalid">Uporabi od 1 do 40 znakov, ne pa oznake, kot je Stranka A.</string>
     <string name="account_verdicts_removed">Odstranjeno</string>
+    <string name="shell_new">Nov prepir</string>
     <string name="shell_today">Danes</string>
     <string name="shell_load_failed">Zgodovine nismo mogli naložiti.</string>
     <string name="shell_load_more">Pokaži več</string>

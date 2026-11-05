@@ -128,6 +128,7 @@
     <string name="nav_pricing">Hinnat</string>
     <string name="nav_sign_out">Kirjaudu ulos</string>
     <string name="nav_verdicts">Tuomiot</string>
+    <string name="nav_tabs">Osiot</string>
     <string name="tier_locked_sign_in">(lukittu: vaatii kirjautumisen)</string>
     <string name="tier_get_premium">Hanki lisää tuomioita</string>
     <string name="tier_checking">Tarkistetaan, puuttuuko jotain…</string>
@@ -438,6 +439,7 @@
     <string name="names_failed">Nimien tallentaminen ei onnistunut. Yritä uudelleen.</string>
     <string name="names_invalid">Nimessä voi olla 1–40 merkkiä, eikä se voi olla merkintä kuten Osapuoli A.</string>
     <string name="account_verdicts_removed">Poistettu</string>
+    <string name="shell_new">Uusi kiista</string>
     <string name="shell_today">Tänään</string>
     <string name="shell_load_failed">Historiaa ei saatu ladattua.</string>
     <string name="shell_load_more">Näytä lisää</string>

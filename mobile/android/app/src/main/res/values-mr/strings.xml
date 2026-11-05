@@ -128,6 +128,7 @@
     <string name="nav_pricing">किंमत</string>
     <string name="nav_sign_out">साइन आउट</string>
     <string name="nav_verdicts">निकाल</string>
+    <string name="nav_tabs">विभाग</string>
     <string name="tier_locked_sign_in">(लॉक आहे: वापरण्यासाठी साइन इन करा)</string>
     <string name="tier_get_premium">आणखी निकाल घ्या</string>
     <string name="tier_checking">काही राहिले आहे का ते पाहत आहोत…</string>
@@ -438,6 +439,7 @@
     <string name="names_failed">नावे सेव्ह करता आली नाहीत. पुन्हा प्रयत्न करा.</string>
     <string name="names_invalid">1 ते 40 अक्षरे वापरा, आणि पक्ष A सारखे लेबल नको.</string>
     <string name="account_verdicts_removed">काढून टाकला</string>
+    <string name="shell_new">नवा वाद</string>
     <string name="shell_today">आज</string>
     <string name="shell_load_failed">तुमचा इतिहास लोड करता आला नाही.</string>
     <string name="shell_load_more">आणखी दाखवा</string>

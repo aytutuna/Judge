@@ -128,6 +128,7 @@
     <string name="nav_pricing">দাম</string>
     <string name="nav_sign_out">সাইন আউট</string>
     <string name="nav_verdicts">রায়</string>
+    <string name="nav_tabs">বিভাগ</string>
     <string name="tier_locked_sign_in">(লক করা: ব্যবহার করতে সাইন ইন করুন)</string>
     <string name="tier_get_premium">আরও রায় নিন</string>
     <string name="tier_checking">কিছু বাদ পড়েছে কি না দেখছি…</string>
@@ -438,6 +439,7 @@
     <string name="names_failed">নাম সেভ করা গেল না। আবার চেষ্টা করুন।</string>
     <string name="names_invalid">1 থেকে 40 অক্ষরের মধ্যে লিখুন, আর পক্ষ A-এর মতো কোনো তকমা নয়।</string>
     <string name="account_verdicts_removed">সরানো হয়েছে</string>
+    <string name="shell_new">নতুন তর্ক</string>
     <string name="shell_today">আজ</string>
     <string name="shell_load_failed">আপনার ইতিহাস লোড করা গেল না।</string>
     <string name="shell_load_more">আরও দেখুন</string>

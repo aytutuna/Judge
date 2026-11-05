@@ -125,6 +125,7 @@
     <string name="nav_pricing">Harga</string>
     <string name="nav_sign_out">Keluar</string>
     <string name="nav_verdicts">Putusan</string>
+    <string name="nav_tabs">Bagian</string>
     <string name="tier_locked_sign_in">(terkunci: masuk dulu untuk memakainya)</string>
     <string name="tier_get_premium">Tambah putusan</string>
     <string name="tier_checking">Mengecek apakah ada yang kurang…</string>
@@ -430,6 +431,7 @@
     <string name="names_failed">Nama gagal disimpan. Coba lagi.</string>
     <string name="names_invalid">Gunakan 1 sampai 40 karakter, dan jangan pakai label seperti Pihak A.</string>
     <string name="account_verdicts_removed">Dihapus</string>
+    <string name="shell_new">Perdebatan baru</string>
     <string name="shell_today">Hari ini</string>
     <string name="shell_load_failed">Riwayatmu gagal dimuat.</string>
     <string name="shell_load_more">Tampilkan lagi</string>

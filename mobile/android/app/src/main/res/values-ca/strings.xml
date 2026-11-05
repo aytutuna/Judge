@@ -131,6 +131,7 @@
     <string name="nav_pricing">Preus</string>
     <string name="nav_sign_out">Tanca la sessió</string>
     <string name="nav_verdicts">Veredictes</string>
+    <string name="nav_tabs">Seccions</string>
     <string name="tier_locked_sign_in">(bloquejat: inicia sessió per fer-lo servir)</string>
     <string name="tier_get_premium">Aconsegueix més veredictes</string>
     <string name="tier_checking">Comprovant si hi falta alguna cosa…</string>
@@ -446,6 +447,7 @@
     <string name="names_failed">No hem pogut desar els noms. Torna-ho a provar.</string>
     <string name="names_invalid">Fes servir d\'1 a 40 caràcters, i no una etiqueta com Part A.</string>
     <string name="account_verdicts_removed">Eliminat</string>
+    <string name="shell_new">Nova discussió</string>
     <string name="shell_today">Avui</string>
     <string name="shell_load_failed">No hem pogut carregar l\'historial.</string>
     <string name="shell_load_more">Mostra\'n més</string>

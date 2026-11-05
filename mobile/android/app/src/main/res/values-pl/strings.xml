@@ -134,6 +134,7 @@
     <string name="nav_pricing">Cennik</string>
     <string name="nav_sign_out">Wyloguj się</string>
     <string name="nav_verdicts">Werdykty</string>
+    <string name="nav_tabs">Sekcje</string>
     <string name="tier_locked_sign_in">(zablokowane: zaloguj się, żeby użyć)</string>
     <string name="tier_get_premium">Kup więcej werdyktów</string>
     <string name="tier_checking">Sprawdzamy, czy czegoś nie brakuje…</string>
@@ -454,6 +455,7 @@
     <string name="names_failed">Nie udało się zapisać imion. Spróbuj ponownie.</string>
     <string name="names_invalid">Wpisz od 1 do 40 znaków. Etykiety w stylu „Strona A” są niedozwolone.</string>
     <string name="account_verdicts_removed">Usunięty</string>
+    <string name="shell_new">Nowy spór</string>
     <string name="shell_today">Dzisiaj</string>
     <string name="shell_load_failed">Nie udało się wczytać historii.</string>
     <string name="shell_load_more">Pokaż więcej</string>

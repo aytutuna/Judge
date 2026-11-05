@@ -128,6 +128,7 @@
     <string name="nav_pricing">कीमतें</string>
     <string name="nav_sign_out">साइन आउट</string>
     <string name="nav_verdicts">फ़ैसले</string>
+    <string name="nav_tabs">सेक्शन</string>
     <string name="tier_locked_sign_in">(लॉक है: इस्तेमाल के लिए साइन इन करें)</string>
     <string name="tier_get_premium">और फ़ैसले पाएँ</string>
     <string name="tier_checking">देख रहे हैं कि कुछ छूटा तो नहीं…</string>
@@ -438,6 +439,7 @@
     <string name="names_failed">नाम सेव नहीं हो पाए। फिर कोशिश करें।</string>
     <string name="names_invalid">1 से 40 अक्षरों का नाम लिखें, और पक्ष A जैसा कोई लेबल नहीं।</string>
     <string name="account_verdicts_removed">हटाया गया</string>
+    <string name="shell_new">नई बहस</string>
     <string name="shell_today">आज</string>
     <string name="shell_load_failed">आपका इतिहास लोड नहीं हो पाया।</string>
     <string name="shell_load_more">और दिखाएँ</string>

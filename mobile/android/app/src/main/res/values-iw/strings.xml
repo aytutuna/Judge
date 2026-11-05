@@ -131,6 +131,7 @@
     <string name="nav_pricing">מחירים</string>
     <string name="nav_sign_out">התנתקות</string>
     <string name="nav_verdicts">פסקי דין</string>
+    <string name="nav_tabs">אזורים</string>
     <string name="tier_locked_sign_in">(נעול: צריך להתחבר כדי להשתמש)</string>
     <string name="tier_get_premium">עוד פסקי דין</string>
     <string name="tier_checking">בודקים אם חסר משהו…</string>
@@ -446,6 +447,7 @@
     <string name="names_failed">לא הצלחנו לשמור את השמות. אפשר לנסות שוב.</string>
     <string name="names_invalid">בין 1 ל-40 תווים, ולא תווית כמו צד A.</string>
     <string name="account_verdicts_removed">הוסר</string>
+    <string name="shell_new">ויכוח חדש</string>
     <string name="shell_today">היום</string>
     <string name="shell_load_failed">לא הצלחנו לטעון את ההיסטוריה.</string>
     <string name="shell_load_more">להציג עוד</string>

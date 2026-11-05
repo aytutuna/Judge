@@ -128,6 +128,7 @@
     <string name="nav_pricing">Árak</string>
     <string name="nav_sign_out">Kilépés</string>
     <string name="nav_verdicts">Ítéletek</string>
+    <string name="nav_tabs">Szakaszok</string>
     <string name="tier_locked_sign_in">(zárolva: a használatához lépj be)</string>
     <string name="tier_get_premium">További ítéletek</string>
     <string name="tier_checking">Megnézzük, hiányzik-e valami…</string>
@@ -438,6 +439,7 @@
     <string name="names_failed">Nem sikerült menteni a neveket. Próbáld újra.</string>
     <string name="names_invalid">1–40 karakter legyen, és ne egy címke, például Fél A.</string>
     <string name="account_verdicts_removed">Eltávolítva</string>
+    <string name="shell_new">Új vita</string>
     <string name="shell_today">Ma</string>
     <string name="shell_load_failed">Nem sikerült betölteni az előzményeidet.</string>
     <string name="shell_load_more">Továbbiak</string>

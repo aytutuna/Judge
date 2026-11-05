@@ -128,6 +128,7 @@
     <string name="nav_pricing">Priser</string>
     <string name="nav_sign_out">Log ud</string>
     <string name="nav_verdicts">Domme</string>
+    <string name="nav_tabs">Sektioner</string>
     <string name="tier_locked_sign_in">(låst: log ind for at bruge det)</string>
     <string name="tier_get_premium">Få flere domme</string>
     <string name="tier_checking">Tjekker, om der mangler noget…</string>
@@ -438,6 +439,7 @@
     <string name="names_failed">Vi kunne ikke gemme navnene. Prøv igen.</string>
     <string name="names_invalid">Brug 1 til 40 tegn, og ikke en betegnelse som Part A.</string>
     <string name="account_verdicts_removed">Fjernet</string>
+    <string name="shell_new">Ny diskussion</string>
     <string name="shell_today">I dag</string>
     <string name="shell_load_failed">Vi kunne ikke hente din historik.</string>
     <string name="shell_load_more">Vis flere</string>

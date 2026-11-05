@@ -140,6 +140,7 @@
     <string name="nav_pricing">الأسعار</string>
     <string name="nav_sign_out">تسجيل الخروج</string>
     <string name="nav_verdicts">الأحكام</string>
+    <string name="nav_tabs">الأقسام</string>
     <string name="tier_locked_sign_in">(مقفل: سجّل الدخول لاستخدامه)</string>
     <string name="tier_get_premium">المزيد من الأحكام</string>
     <string name="tier_checking">نتحقق إن كان ينقص شيء…</string>
@@ -470,6 +471,7 @@
     <string name="names_failed">تعذّر حفظ الأسماء. حاول مجددًا.</string>
     <string name="names_invalid">استخدم من 1 إلى 40 حرفًا، ولا تكتب تسمية مثل الطرف A.</string>
     <string name="account_verdicts_removed">محذوف</string>
+    <string name="shell_new">خلاف جديد</string>
     <string name="shell_today">اليوم</string>
     <string name="shell_load_failed">تعذّر تحميل سجلك.</string>
     <string name="shell_load_more">عرض المزيد</string>

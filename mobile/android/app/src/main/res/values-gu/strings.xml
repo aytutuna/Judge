@@ -128,6 +128,7 @@
     <string name="nav_pricing">કિંમત</string>
     <string name="nav_sign_out">સાઇન આઉટ</string>
     <string name="nav_verdicts">ચુકાદા</string>
+    <string name="nav_tabs">વિભાગો</string>
     <string name="tier_locked_sign_in">(લૉક છે: વાપરવા માટે સાઇન ઇન કરો)</string>
     <string name="tier_get_premium">વધુ ચુકાદા લો</string>
     <string name="tier_checking">કંઈ ખૂટે છે કે નહીં, એ જોઈએ છીએ…</string>
@@ -438,6 +439,7 @@
     <string name="names_failed">નામ સેવ ન થઈ શક્યાં. ફરી પ્રયાસ કરો.</string>
     <string name="names_invalid">1થી 40 અક્ષર વાપરો, અને પક્ષ A જેવું લેબલ નહીં.</string>
     <string name="account_verdicts_removed">દૂર કરાયો</string>
+    <string name="shell_new">નવો વિવાદ</string>
     <string name="shell_today">આજે</string>
     <string name="shell_load_failed">તમારો ઇતિહાસ લોડ ન થઈ શક્યો.</string>
     <string name="shell_load_more">વધુ બતાવો</string>

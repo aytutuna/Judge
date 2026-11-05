@@ -99,6 +99,8 @@ export const WEB_KEYS: readonly string[] = [
   "nav.signIn",
   "nav.account",
   "nav.verdicts",
+  "nav.tabs",
+  "shell.new",
   "nav.pricing",
   "nav.signOut",
   // Premium, cases and appeals

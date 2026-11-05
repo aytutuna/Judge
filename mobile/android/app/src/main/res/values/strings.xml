@@ -128,6 +128,7 @@
     <string name="nav_pricing">Pricing</string>
     <string name="nav_sign_out">Sign out</string>
     <string name="nav_verdicts">Verdicts</string>
+    <string name="nav_tabs">Sections</string>
     <string name="tier_locked_sign_in">(locked: sign in to use it)</string>
     <string name="tier_get_premium">Get more verdicts</string>
     <string name="tier_checking">Checking if anything\'s missing…</string>
@@ -438,6 +439,7 @@
     <string name="names_failed">We couldn\'t save the names. Try again.</string>
     <string name="names_invalid">Use 1 to 40 characters, and not a label such as Party A.</string>
     <string name="account_verdicts_removed">Removed</string>
+    <string name="shell_new">New argument</string>
     <string name="shell_today">Today</string>
     <string name="shell_load_failed">We couldn\'t load your history.</string>
     <string name="shell_load_more">Show more</string>

@@ -125,6 +125,7 @@
     <string name="nav_pricing">ราคา</string>
     <string name="nav_sign_out">ออกจากระบบ</string>
     <string name="nav_verdicts">คำตัดสิน</string>
+    <string name="nav_tabs">ส่วนต่าง ๆ</string>
     <string name="tier_locked_sign_in">(ล็อกอยู่: เข้าสู่ระบบเพื่อใช้)</string>
     <string name="tier_get_premium">เติมคำตัดสิน</string>
     <string name="tier_checking">กำลังเช็กว่าขาดข้อมูลอะไรไหม…</string>
@@ -430,6 +431,7 @@
     <string name="names_failed">บันทึกชื่อไม่ได้ ลองอีกครั้ง</string>
     <string name="names_invalid">ใช้ได้ 1 ถึง 40 ตัวอักษร และต้องไม่ใช่ป้ายอย่าง “ฝ่าย A”</string>
     <string name="account_verdicts_removed">ลบแล้ว</string>
+    <string name="shell_new">เรื่องใหม่</string>
     <string name="shell_today">วันนี้</string>
     <string name="shell_load_failed">โหลดประวัติไม่ได้</string>
     <string name="shell_load_more">ดูเพิ่ม</string>

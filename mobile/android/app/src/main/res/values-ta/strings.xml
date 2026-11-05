@@ -128,6 +128,7 @@
     <string name="nav_pricing">விலை</string>
     <string name="nav_sign_out">வெளியேறு</string>
     <string name="nav_verdicts">தீர்ப்புகள்</string>
+    <string name="nav_tabs">பிரிவுகள்</string>
     <string name="tier_locked_sign_in">(பூட்டப்பட்டது: பயன்படுத்த உள்நுழையுங்கள்)</string>
     <string name="tier_get_premium">இன்னும் தீர்ப்புகள் பெறுக</string>
     <string name="tier_checking">ஏதாவது விடுபட்டிருக்கிறதா என்று பார்க்கிறோம்…</string>
@@ -438,6 +439,7 @@
     <string name="names_failed">பெயர்களைச் சேமிக்க முடியவில்லை. மீண்டும் முயலுங்கள்.</string>
     <string name="names_invalid">1 முதல் 40 எழுத்துகள் வரை பயன்படுத்துங்கள்; தரப்பு A போன்ற லேபிள் வேண்டாம்.</string>
     <string name="account_verdicts_removed">நீக்கப்பட்டது</string>
+    <string name="shell_new">புதிய வாக்குவாதம்</string>
     <string name="shell_today">இன்று</string>
     <string name="shell_load_failed">உங்கள் வரலாற்றை ஏற்ற முடியவில்லை.</string>
     <string name="shell_load_more">மேலும் காட்டு</string>

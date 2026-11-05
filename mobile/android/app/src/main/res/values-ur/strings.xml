@@ -128,6 +128,7 @@
     <string name="nav_pricing">قیمتیں</string>
     <string name="nav_sign_out">سائن آؤٹ</string>
     <string name="nav_verdicts">فیصلے</string>
+    <string name="nav_tabs">حصے</string>
     <string name="tier_locked_sign_in">(بند ہے: استعمال کے لیے سائن ان کریں)</string>
     <string name="tier_get_premium">مزید فیصلے لیں</string>
     <string name="tier_checking">دیکھ رہے ہیں کہ کچھ رہ تو نہیں گیا…</string>
@@ -438,6 +439,7 @@
     <string name="names_failed">نام محفوظ نہیں ہو سکے۔ دوبارہ کوشش کریں۔</string>
     <string name="names_invalid">1 سے 40 حروف استعمال کریں، اور فریق A جیسا کوئی لیبل نہیں۔</string>
     <string name="account_verdicts_removed">ہٹا دیا گیا</string>
+    <string name="shell_new">نئی بحث</string>
     <string name="shell_today">آج</string>
     <string name="shell_load_failed">آپ کی ہسٹری لوڈ نہیں ہو سکی۔</string>
     <string name="shell_load_more">مزید دکھائیں</string>

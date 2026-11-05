@@ -128,6 +128,7 @@
     <string name="nav_pricing">Preise</string>
     <string name="nav_sign_out">Abmelden</string>
     <string name="nav_verdicts">Urteile</string>
+    <string name="nav_tabs">Bereiche</string>
     <string name="tier_locked_sign_in">(gesperrt: zum Nutzen anmelden)</string>
     <string name="tier_get_premium">Mehr Urteile holen</string>
     <string name="tier_checking">Wir prüfen, ob etwas fehlt…</string>
@@ -438,6 +439,7 @@
     <string name="names_failed">Wir konnten die Namen nicht speichern. Versuch es noch mal.</string>
     <string name="names_invalid">Verwende 1 bis 40 Zeichen und keine Bezeichnung wie „Partei A“.</string>
     <string name="account_verdicts_removed">Entfernt</string>
+    <string name="shell_new">Neuer Streit</string>
     <string name="shell_today">Heute</string>
     <string name="shell_load_failed">Wir konnten deinen Verlauf nicht laden.</string>
     <string name="shell_load_more">Mehr anzeigen</string>

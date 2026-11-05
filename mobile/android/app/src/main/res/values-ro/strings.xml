@@ -131,6 +131,7 @@
     <string name="nav_pricing">Prețuri</string>
     <string name="nav_sign_out">Deconectează-te</string>
     <string name="nav_verdicts">Verdicte</string>
+    <string name="nav_tabs">Secțiuni</string>
     <string name="tier_locked_sign_in">(blocat: conectează-te ca să-l folosești)</string>
     <string name="tier_get_premium">Ia mai multe verdicte</string>
     <string name="tier_checking">Verificăm dacă lipsește ceva…</string>
@@ -446,6 +447,7 @@
     <string name="names_failed">N-am putut salva numele. Încearcă din nou.</string>
     <string name="names_invalid">Folosește între 1 și 40 de caractere, dar nu o etichetă precum Partea A.</string>
     <string name="account_verdicts_removed">Eliminat</string>
+    <string name="shell_new">Dispută nouă</string>
     <string name="shell_today">Azi</string>
     <string name="shell_load_failed">N-am putut încărca istoricul.</string>
     <string name="shell_load_more">Arată mai multe</string>

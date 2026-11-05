@@ -263,6 +263,7 @@ enum L10n {
     static func navPricing(_ lang: AppLang) -> String { string("nav.pricing", lang) }
     static func navSignOut(_ lang: AppLang) -> String { string("nav.signOut", lang) }
     static func navVerdicts(_ lang: AppLang) -> String { string("nav.verdicts", lang) }
+    static func navTabs(_ lang: AppLang) -> String { string("nav.tabs", lang) }
     static func tierLockedSignIn(_ lang: AppLang) -> String { string("tier.lockedSignIn", lang) }
     static func tierGetPremium(_ lang: AppLang) -> String { string("tier.getPremium", lang) }
     static func tierChecking(_ lang: AppLang) -> String { string("tier.checking", lang) }
@@ -558,6 +559,7 @@ enum L10n {
     static func namesFailed(_ lang: AppLang) -> String { string("names.failed", lang) }
     static func namesInvalid(_ lang: AppLang) -> String { string("names.invalid", lang) }
     static func accountVerdictsRemoved(_ lang: AppLang) -> String { string("account.verdicts.removed", lang) }
+    static func shellNew(_ lang: AppLang) -> String { string("shell.new", lang) }
     static func shellToday(_ lang: AppLang) -> String { string("shell.today", lang) }
     static func shellLoadFailed(_ lang: AppLang) -> String { string("shell.loadFailed", lang) }
     static func shellLoadMore(_ lang: AppLang) -> String { string("shell.loadMore", lang) }
@@ -894,6 +896,7 @@ enum L10n {
         "nav.pricing",
         "nav.signOut",
         "nav.verdicts",
+        "nav.tabs",
         "tier.lockedSignIn",
         "tier.getPremium",
         "tier.checking",
@@ -1160,6 +1163,7 @@ enum L10n {
         "names.failed",
         "names.invalid",
         "account.verdicts.removed",
+        "shell.new",
         "shell.today",
         "shell.loadFailed",
         "shell.loadMore",

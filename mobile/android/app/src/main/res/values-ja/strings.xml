@@ -125,6 +125,7 @@
     <string name="nav_pricing">料金</string>
     <string name="nav_sign_out">ログアウト</string>
     <string name="nav_verdicts">判定一覧</string>
+    <string name="nav_tabs">セクション</string>
     <string name="tier_locked_sign_in">（ロック中：ログインすると使えます）</string>
     <string name="tier_get_premium">判定回数を追加</string>
     <string name="tier_checking">足りない情報がないか確認しています…</string>
@@ -430,6 +431,7 @@
     <string name="names_failed">名前を保存できませんでした。もう一度お試しください。</string>
     <string name="names_invalid">1〜40文字で入力してください。「当事者A」のようなラベルは使えません。</string>
     <string name="account_verdicts_removed">削除済み</string>
+    <string name="shell_new">新しい揉めごと</string>
     <string name="shell_today">今日</string>
     <string name="shell_load_failed">履歴を読み込めませんでした。</string>
     <string name="shell_load_more">もっと見る</string>

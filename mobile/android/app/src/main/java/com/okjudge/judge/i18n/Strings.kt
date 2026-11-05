@@ -196,6 +196,7 @@ class Strings(private val res: Resources) {
     val navPricing: String get() = res.getString(R.string.nav_pricing)
     val navSignOut: String get() = res.getString(R.string.nav_sign_out)
     val navVerdicts: String get() = res.getString(R.string.nav_verdicts)
+    val navTabs: String get() = res.getString(R.string.nav_tabs)
     val tierLockedSignIn: String get() = res.getString(R.string.tier_locked_sign_in)
     val tierGetPremium: String get() = res.getString(R.string.tier_get_premium)
     val tierChecking: String get() = res.getString(R.string.tier_checking)
@@ -491,6 +492,7 @@ class Strings(private val res: Resources) {
     val namesFailed: String get() = res.getString(R.string.names_failed)
     val namesInvalid: String get() = res.getString(R.string.names_invalid)
     val accountVerdictsRemoved: String get() = res.getString(R.string.account_verdicts_removed)
+    val shellNew: String get() = res.getString(R.string.shell_new)
     val shellToday: String get() = res.getString(R.string.shell_today)
     val shellLoadFailed: String get() = res.getString(R.string.shell_load_failed)
     val shellLoadMore: String get() = res.getString(R.string.shell_load_more)
@@ -826,6 +828,7 @@ class Strings(private val res: Resources) {
             "nav.pricing" -> R.string.nav_pricing
             "nav.signOut" -> R.string.nav_sign_out
             "nav.verdicts" -> R.string.nav_verdicts
+            "nav.tabs" -> R.string.nav_tabs
             "tier.lockedSignIn" -> R.string.tier_locked_sign_in
             "tier.getPremium" -> R.string.tier_get_premium
             "tier.checking" -> R.string.tier_checking
@@ -1092,6 +1095,7 @@ class Strings(private val res: Resources) {
             "names.failed" -> R.string.names_failed
             "names.invalid" -> R.string.names_invalid
             "account.verdicts.removed" -> R.string.account_verdicts_removed
+            "shell.new" -> R.string.shell_new
             "shell.today" -> R.string.shell_today
             "shell.loadFailed" -> R.string.shell_load_failed
             "shell.loadMore" -> R.string.shell_load_more

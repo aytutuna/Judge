@@ -128,6 +128,7 @@
     <string name="nav_pricing">Priser</string>
     <string name="nav_sign_out">Logga ut</string>
     <string name="nav_verdicts">Domar</string>
+    <string name="nav_tabs">Avsnitt</string>
     <string name="tier_locked_sign_in">(låst: logga in för att använda)</string>
     <string name="tier_get_premium">Skaffa fler domar</string>
     <string name="tier_checking">Kollar om något saknas…</string>
@@ -438,6 +439,7 @@
     <string name="names_failed">Vi kunde inte spara namnen. Försök igen.</string>
     <string name="names_invalid">Använd 1–40 tecken, och inte en etikett som Part A.</string>
     <string name="account_verdicts_removed">Borttagen</string>
+    <string name="shell_new">Nytt bråk</string>
     <string name="shell_today">I dag</string>
     <string name="shell_load_failed">Vi kunde inte ladda din historik.</string>
     <string name="shell_load_more">Visa fler</string>

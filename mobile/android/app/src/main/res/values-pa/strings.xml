@@ -128,6 +128,7 @@
     <string name="nav_pricing">ਕੀਮਤਾਂ</string>
     <string name="nav_sign_out">ਸਾਈਨ ਆਊਟ</string>
     <string name="nav_verdicts">ਫ਼ੈਸਲੇ</string>
+    <string name="nav_tabs">ਹਿੱਸੇ</string>
     <string name="tier_locked_sign_in">(ਬੰਦ: ਵਰਤਣ ਲਈ ਸਾਈਨ ਇਨ ਕਰੋ)</string>
     <string name="tier_get_premium">ਹੋਰ ਫ਼ੈਸਲੇ ਲਓ</string>
     <string name="tier_checking">ਦੇਖ ਰਹੇ ਹਾਂ ਕਿ ਕੁਝ ਰਹਿ ਤਾਂ ਨਹੀਂ ਗਿਆ…</string>
@@ -438,6 +439,7 @@
     <string name="names_failed">ਨਾਂ ਸੇਵ ਨਹੀਂ ਹੋ ਸਕੇ। ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।</string>
     <string name="names_invalid">1 ਤੋਂ 40 ਅੱਖਰ ਵਰਤੋ, ਅਤੇ ਧਿਰ A ਵਰਗਾ ਕੋਈ ਲੇਬਲ ਨਹੀਂ।</string>
     <string name="account_verdicts_removed">ਹਟਾਇਆ ਗਿਆ</string>
+    <string name="shell_new">ਨਵੀਂ ਬਹਿਸ</string>
     <string name="shell_today">ਅੱਜ</string>
     <string name="shell_load_failed">ਤੁਹਾਡਾ ਇਤਿਹਾਸ ਲੋਡ ਨਹੀਂ ਹੋ ਸਕਿਆ।</string>
     <string name="shell_load_more">ਹੋਰ ਦਿਖਾਓ</string>

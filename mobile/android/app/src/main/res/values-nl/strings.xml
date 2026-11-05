@@ -128,6 +128,7 @@
     <string name="nav_pricing">Prijzen</string>
     <string name="nav_sign_out">Uitloggen</string>
     <string name="nav_verdicts">Uitspraken</string>
+    <string name="nav_tabs">Onderdelen</string>
     <string name="tier_locked_sign_in">(op slot: log in om het te gebruiken)</string>
     <string name="tier_get_premium">Meer uitspraken</string>
     <string name="tier_checking">Even kijken of er iets ontbreekt…</string>
@@ -438,6 +439,7 @@
     <string name="names_failed">We konden de namen niet opslaan. Probeer het opnieuw.</string>
     <string name="names_invalid">Gebruik 1 tot 40 tekens, en geen label zoals Partij A.</string>
     <string name="account_verdicts_removed">Verwijderd</string>
+    <string name="shell_new">Nieuwe discussie</string>
     <string name="shell_today">Vandaag</string>
     <string name="shell_load_failed">We konden je geschiedenis niet laden.</string>
     <string name="shell_load_more">Meer tonen</string>

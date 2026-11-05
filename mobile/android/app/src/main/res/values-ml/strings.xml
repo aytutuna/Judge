@@ -128,6 +128,7 @@
     <string name="nav_pricing">നിരക്കുകൾ</string>
     <string name="nav_sign_out">സൈൻ ഔട്ട്</string>
     <string name="nav_verdicts">വിധികൾ</string>
+    <string name="nav_tabs">വിഭാഗങ്ങൾ</string>
     <string name="tier_locked_sign_in">(ലോക്ക് ചെയ്തിരിക്കുന്നു: ഉപയോഗിക്കാൻ സൈൻ ഇൻ ചെയ്യൂ)</string>
     <string name="tier_get_premium">കൂടുതൽ വിധികൾ നേടൂ</string>
     <string name="tier_checking">എന്തെങ്കിലും വിട്ടുപോയോ എന്ന് നോക്കുന്നു…</string>
@@ -438,6 +439,7 @@
     <string name="names_failed">പേരുകൾ സേവ് ചെയ്യാനായില്ല. വീണ്ടും ശ്രമിക്കൂ.</string>
     <string name="names_invalid">1 മുതൽ 40 വരെ അക്ഷരങ്ങൾ ഉപയോഗിക്കൂ; കക്ഷി A പോലുള്ള ലേബൽ പാടില്ല.</string>
     <string name="account_verdicts_removed">നീക്കം ചെയ്തത്</string>
+    <string name="shell_new">പുതിയ തർക്കം</string>
     <string name="shell_today">ഇന്ന്</string>
     <string name="shell_load_failed">ചരിത്രം ലോഡ് ചെയ്യാനായില്ല.</string>
     <string name="shell_load_more">കൂടുതൽ കാണിക്കൂ</string>
