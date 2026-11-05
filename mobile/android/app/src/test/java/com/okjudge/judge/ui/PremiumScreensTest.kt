@@ -153,7 +153,7 @@ class PremiumScreensTest {
     }
 
     @Test
-    fun home_addContext_isInTheBox_withTheCounter_andTheRowsBelow() {
+    fun home_addContext_isInTheBox_withTheCounter_andTheRowsAbove() {
         val items = listOf(EvidenceItem("ev1", 1, EvidenceStatus.OK, token = "t"))
         compose.setContent {
             Themed(AppLang.EN) { HomeScreen(premiumHome(EvidenceState(items, max = 3)), {}, {}, {}) }
@@ -163,7 +163,7 @@ class PremiumScreensTest {
         compose.onNodeWithTag(EvidenceTags.item(1)).assertExists()
         val box = compose.onNodeWithTag(HomeTags.INPUT).fetchSemanticsNode().boundsInRoot
         assertTrue(compose.onNodeWithTag(EvidenceTags.ADD).fetchSemanticsNode().boundsInRoot.top >= box.bottom)
-        assertTrue(compose.onNodeWithTag(EvidenceTags.item(1)).fetchSemanticsNode().boundsInRoot.top > box.bottom)
+        assertTrue(compose.onNodeWithTag(EvidenceTags.item(1)).fetchSemanticsNode().boundsInRoot.bottom <= box.top)
         compose.onNodeWithText(en.text("evidence.hintOne")!!, substring = true).assertDoesNotExist()
     }
 

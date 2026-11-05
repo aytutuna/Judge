@@ -586,7 +586,7 @@ class ScreenshotsTest {
     }
 
     @Test
-    fun home_twoSides_en() = capture("home_two_sides_en", tall = true) {
+    fun home_twoSides_en() = capture("home_two_sides_en") {
         Themed(AppLang.EN) {
             HomeScreen(
                 premiumHome(AppLang.EN, "credits7").copy(
@@ -598,6 +598,16 @@ class ScreenshotsTest {
                 ),
                 {}, {}, {},
             )
+        }
+    }
+
+    @Test
+    fun home_withTabs_en() = capture("home_tabs_en") {
+        Themed(AppLang.EN) {
+            Column(Modifier.fillMaxSize()) {
+                TabBar(Tab.NEW) {}
+                HomeScreen(HomeUiState(), {}, {}, {})
+            }
         }
     }
 }
