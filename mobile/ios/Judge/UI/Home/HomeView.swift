@@ -1,8 +1,9 @@
 import SwiftUI
 
-/// Home: one box to write in, with the other side as an extra card or a
-/// link, and the send button with what is left to spend. The box holds the
-/// text, "Add context" and the counter; picked images show just below it.
+/// Home, laid out like a chat: what has been added so far fills the page
+/// above, the box to write in is pinned to the bottom with its send button,
+/// and the other side comes as a card above it or as a link. The box holds
+/// the text, "Add context" and the counter; picked images show just above it.
 struct HomeView: View {
     @Environment(AppModel.self) private var app
     @SceneStorage("home.draft") private var draft = ""
@@ -11,6 +12,8 @@ struct HomeView: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.sceneLive) private var sceneLive
     @Environment(\.sides) private var sides
+    @Environment(\.dynamicTypeSize) private var typeSize
+    @ScaledMetric(relativeTo: .body) private var lineHeight: CGFloat = 22.5
 
     private enum Field: Hashable {
         case mine, theirs
@@ -19,61 +22,58 @@ struct HomeView: View {
     private static let errorID = "home.error"
     private static let clarifyID = "home.clarify"
     private static let linkType = TypeStyle(face: .inter, weight: 600, size: 13, lineHeight: 1.2, textStyle: .footnote, maxScale: 1.8)
+    private static let wordmark = TypeStyle(face: .interTight, weight: 700, size: 34, lineHeight: 1.1, tracking: -0.02, textStyle: .largeTitle, maxScale: 1.3)
 
     var body: some View {
         @Bindable var home = app.home
         let lang = app.lang
-        ScrollViewReader { proxy in
-            ScrollView {
-                Group {
+        GeometryReader { geo in
+            ScrollViewReader { proxy in
+                ScrollView {
                     if let clarify = home.clarify {
                         // The clarifying questions take the form's place.
                         ClarifyCard(home: home, state: clarify, lang: lang)
                             .id(Self.clarifyID)
+                            .padding(.horizontal, 16)
+                            .padding(.top, 8)
+                            .padding(.bottom, 32)
                     } else {
                         form(lang, home: home)
+                            .padding(.horizontal, 16)
+                            .padding(.top, 8)
+                            .padding(.bottom, 12)
+                            .frame(minHeight: geo.size.height, alignment: .bottom)
                     }
                 }
-                .padding(.horizontal, 16)
-                .padding(.top, 8)
-                .padding(.bottom, 32)
-            }
-            .onAppear {
-                if home.error != nil { proxy.scrollTo(Self.errorID, anchor: .center) }
-            }
-            .task {
-                // Screenshot states open on the part they show.
-                guard let target = home.initialScroll else { return }
-                try? await Task.sleep(for: .milliseconds(300))
-                proxy.scrollTo(target, anchor: .top)
-            }
-            .onChange(of: home.error) { _, error in
-                guard let error else { return }
-                app.analytics.track("error_shown", ["code": error.eventCode])
-                withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.3)) {
-                    proxy.scrollTo(Self.errorID, anchor: .center)
+                .defaultScrollAnchor(home.clarify == nil ? UnitPoint.bottom : UnitPoint.top)
+                .scrollDismissesKeyboard(.interactively)
+                .onAppear {
+                    if home.error != nil { proxy.scrollTo(Self.errorID, anchor: .center) }
                 }
-            }
-            .onChange(of: home.clarify != nil) { _, shown in
-                guard shown else { return }
-                focused = nil
-                withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.3)) {
-                    proxy.scrollTo(Self.clarifyID, anchor: .top)
+                .onChange(of: home.error) { _, error in
+                    guard let error else { return }
+                    app.analytics.track("error_shown", ["code": error.eventCode])
+                    withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.3)) {
+                        proxy.scrollTo(Self.errorID, anchor: .center)
+                    }
+                }
+                .onChange(of: home.clarify != nil) { _, shown in
+                    guard shown else { return }
+                    focused = nil
+                    withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.3)) {
+                        proxy.scrollTo(Self.clarifyID, anchor: .top)
+                    }
                 }
             }
         }
-        .scrollDismissesKeyboard(.interactively)
-        // Keeps scrolled content out from under the status bar, since the nav bar is hidden.
-        .safeAreaInset(edge: .top, spacing: 0) {
-            Color.clear
-                .frame(height: 0)
-                .background(Brand.ivory)
-                .allowsHitTesting(false)
-                .accessibilityHidden(true)
+        .safeAreaInset(edge: .bottom, spacing: 0) {
+            if home.clarify == nil {
+                composer(lang, home: home)
+            }
         }
         .background(Brand.ivory.ignoresSafeArea())
         .toolbar(.hidden, for: .navigationBar)
-        .onAppear { app.analytics.track("screen_view", ["screen": "home"]) }
+        .onTabAppear { app.analytics.track("screen_view", ["screen": "home"]) }
         .onAppear {
             guard app.persistsDraft else { return }
             if home.argument.isEmpty, !draft.isEmpty { home.argument = draft }
@@ -104,15 +104,22 @@ struct HomeView: View {
         }
     }
 
-    /// One box unless the other side is added: the two go to the judges as
-    /// one text with a name in front of each, and a link makes a two-sided
-    /// case instead. Screenshots go with the whole case, not with one card:
-    /// the judges get them as one set.
+    /// Everything but the box in use, from the bottom up. Two sides go to
+    /// the judges as one text with a name in front of each, and a link makes
+    /// a two-sided case instead. Screenshots go with the whole case, not
+    /// with one card: the judges get them as one set.
     private func form(_ lang: AppLang, home: HomeModel) -> some View {
         VStack(alignment: .leading, spacing: 12) {
-            sideCard(lang, home: home, mine: true)
+            if home.isBlank {
+                Text(verbatim: "Judge")
+                    .brandText(Self.wordmark)
+                    .foregroundStyle(Brand.ink)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+            } else {
+                Spacer(minLength: 0)
+            }
             if home.theirsOpen {
-                sideCard(lang, home: home, mine: false)
+                sideCard(lang, home: home, mine: true, inComposer: false)
             }
             if app.evidenceOn, !home.evidence.items.isEmpty || home.evidence.overLimit || home.evidence.failure != nil {
                 VStack(alignment: .leading, spacing: 10) {
@@ -120,20 +127,42 @@ struct HomeView: View {
                     EvidenceNotes(evidence: home.evidence, lang: lang)
                 }
             }
-            if !home.theirsOpen {
-                otherSide(lang, home: home)
-            }
-            footer(lang, home: home)
             if let error = home.error {
                 errorBanner(error, lang: lang)
                     .id(Self.errorID)
             }
-            submitSection(lang, home: home)
-                .id(HomeModel.submitAnchor)
+            if home.offersExample || !home.isBlank {
+                footer(lang, home: home)
+            }
+            if !home.theirsOpen {
+                otherSide(lang, home: home)
+            }
         }
     }
 
-    private func sideCard(_ lang: AppLang, home: HomeModel, mine: Bool) -> some View {
+    /// The box that was opened last, and under it what is left to spend.
+    private func composer(_ lang: AppLang, home: HomeModel) -> some View {
+        VStack(spacing: 8) {
+            sideCard(lang, home: home, mine: !home.theirsOpen, inComposer: true)
+            if home.isCheckingQuestions || home.isCreatingCase {
+                Text(home.isCreatingCase ? L10n.caseCreating(lang) : L10n.tierChecking(lang))
+                    .brandText(.footnote)
+                    .foregroundStyle(Brand.muted)
+                    .multilineTextAlignment(.center)
+                    .accessibilityAddTraits(.updatesFrequently)
+            } else if app.account.isSignedIn, let entitlement = app.account.entitlement {
+                Text(Balance(entitlement).line(lang))
+                    .brandText(.footnote)
+                    .foregroundStyle(Brand.muted)
+                    .multilineTextAlignment(.center)
+            }
+        }
+        .padding(.horizontal, 16)
+        .padding(.bottom, 16)
+        .background(Brand.ivory.ignoresSafeArea(edges: .bottom))
+    }
+
+    private func sideCard(_ lang: AppLang, home: HomeModel, mine: Bool, inComposer: Bool) -> some View {
         @Bindable var home = home
         let field: Field = mine ? .mine : .theirs
         let ink = mine ? sides.mine.ink : sides.theirs.ink
@@ -164,37 +193,75 @@ struct HomeView: View {
                 field: field,
                 placeholder: mine ? L10n.appHomeYourPlaceholder(lang) : L10n.appHomeTheirPlaceholder(lang),
                 label: mine ? L10n.appHomeYourSideLabel(lang) : L10n.appHomeTheirSideLabel(lang),
-                minHeight: home.theirsOpen ? 96 : 180
+                lines: inComposer ? 2...(typeSize.isAccessibilitySize ? 4 : 7) : 3...8
             )
             .disabled(home.isBusy)
-            bottomRow(lang, home: home, showsCounter: mine ? !home.theirsOpen : true)
+            bottomRow(lang, home: home, inComposer: inComposer)
         }
         .padding(.horizontal, 16)
-        .padding(.vertical, 14)
+        .padding(.top, 14)
+        .padding(.bottom, 10)
         .neonEdge(strong, focused: focused == field, radius: Radius.block)
         .accessibilityElement(children: .contain)
     }
 
-    /// Under the text: "Add context" on the left, the counter on the right
-    /// (in the last open box only). Every box adds to the same set of images.
-    private func bottomRow(_ lang: AppLang, home: HomeModel, showsCounter: Bool) -> some View {
+    /// Under the text: "Add context" on the left, and in the composer the
+    /// counter and the send button on the right. Every box adds to the same
+    /// set of images.
+    private func bottomRow(_ lang: AppLang, home: HomeModel, inComposer: Bool) -> some View {
         HStack(alignment: .center, spacing: 12) {
             if app.evidenceOn, !home.evidence.full {
                 EvidenceAddButton(evidence: home.evidence, disabled: home.isBusy) {
                     Label(L10n.appHomeAddContext(lang), systemImage: "paperclip")
                         .brandText(Self.linkType)
                         .foregroundStyle(Brand.ink2)
-                        .frame(minHeight: 32)
+                        .frame(minHeight: 44)
                         .contentShape(Rectangle())
                 }
                 .buttonStyle(.plain)
             }
             Spacer(minLength: 0)
-            if showsCounter {
+            if inComposer {
                 counter(lang, home: home)
                     .fixedSize()
+                sendButton(lang, home: home)
+                    .padding(.trailing, -6)
             }
         }
+    }
+
+    private func sendButton(_ lang: AppLang, home: HomeModel) -> some View {
+        // `blockedUntil` is cleared by the model when a rate limit ends.
+        let waiting = home.isCheckingQuestions || home.isCreatingCase
+        let enabled = home.canSubmit(app) || waiting
+        return Button {
+            // Still enabled while waiting so the spinner isn't dimmed; a
+            // tap then must not turn a case being created into a verdict.
+            guard home.canSubmit(app) else { return }
+            home.mode = .now
+            submit()
+        } label: {
+            ZStack {
+                Circle().fill(Brand.ink)
+                if waiting {
+                    // The questions or the new case run before anything
+                    // else goes up.
+                    ProgressView()
+                        .tint(Brand.paper)
+                } else {
+                    Image(systemName: "arrow.up")
+                        .font(.system(size: 17, weight: .bold))
+                        .foregroundStyle(Brand.paper)
+                }
+            }
+            .frame(width: 38, height: 38)
+            .opacity(enabled ? 1 : 0.35)
+            .frame(width: 44, height: 44)
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .disabled(!enabled)
+        .accessibilityLabel(L10n.getVerdict(lang))
     }
 
     private func removeTheirSide(_ lang: AppLang, home: HomeModel) -> some View {
@@ -215,26 +282,39 @@ struct HomeView: View {
         .accessibilityLabel(L10n.appHomeRemoveTheirSide(lang))
     }
 
-    private func editor(_ text: Binding<String>, field: Field, placeholder: String, label: String, minHeight: CGFloat) -> some View {
-        ZStack(alignment: .topLeading) {
-            TextEditor(text: text)
-                .focused($focused, equals: field)
-                .brandText(TypeStyle(face: .inter, weight: 400, size: 15, lineHeight: 1.5))
-                .foregroundStyle(Brand.ink)
-                .scrollContentBackground(.hidden)
-                .frame(minHeight: minHeight)
-                // TextEditor insets its text; this lines it up with the name above.
-                .padding(.horizontal, -5)
-                .padding(.vertical, -8)
-                .accessibilityLabel(label)
-            if text.wrappedValue.isEmpty {
-                Text(placeholder)
-                    .brandText(TypeStyle(face: .inter, weight: 400, size: 15, lineHeight: 1.5))
-                    .foregroundStyle(Brand.placeholder)
-                    .allowsHitTesting(false)
-                    .accessibilityHidden(true)
+    private func editor(_ text: Binding<String>, field: Field, placeholder: String, label: String, lines: ClosedRange<Int>) -> some View {
+        let style = TypeStyle(face: .inter, weight: 400, size: 15, lineHeight: 1.5)
+        // The editor font stops scaling at 2.2x, so the line height must too.
+        let line = min(lineHeight, 22.5 * style.maxScale)
+        // TextEditor has no height of its own, so an invisible copy of the
+        // text sets it (the placeholder while empty, which can wrap). The
+        // zero-width space keeps the empty line after a trailing newline.
+        return Text(text.wrappedValue.isEmpty ? placeholder : text.wrappedValue + "\u{200B}")
+            .brandText(style)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .frame(minHeight: line * CGFloat(lines.lowerBound), maxHeight: line * CGFloat(lines.upperBound), alignment: .top)
+            .fixedSize(horizontal: false, vertical: true)
+            .hidden()
+            .overlay(alignment: .topLeading) {
+                ZStack(alignment: .topLeading) {
+                    TextEditor(text: text)
+                        .focused($focused, equals: field)
+                        .brandText(style)
+                        .foregroundStyle(Brand.ink)
+                        .scrollContentBackground(.hidden)
+                        // TextEditor insets its text; this lines it up with the name above.
+                        .padding(.horizontal, -5)
+                        .padding(.vertical, -8)
+                        .accessibilityLabel(label)
+                    if text.wrappedValue.isEmpty {
+                        Text(placeholder)
+                            .brandText(style)
+                            .foregroundStyle(Brand.placeholder)
+                            .allowsHitTesting(false)
+                            .accessibilityHidden(true)
+                    }
+                }
             }
-        }
     }
 
     /// The two ways to hear the other side, for whoever has one to add.
@@ -260,6 +340,7 @@ struct HomeView: View {
             Task { focused = .theirs }
         } label: {
             Label(L10n.appHomeAddTheirSide(lang), systemImage: "plus")
+                .frame(minHeight: 44)
         }
         .buttonStyle(GhostButtonStyle())
         .disabled(home.isBusy)
@@ -273,12 +354,12 @@ struct HomeView: View {
             home.sendLink(app: app)
         } label: {
             Label(L10n.appHomeSendLink(lang), systemImage: "link")
+                .frame(minHeight: 44)
         }
         .buttonStyle(GhostButtonStyle())
         .disabled(!home.canSendLink(app))
     }
 
-    /// Under the form, so the writing starts at the top of the screen.
     private func footer(_ lang: AppLang, home: HomeModel) -> some View {
         FlowLayout(spacing: 16) {
             if home.offersExample {
@@ -299,7 +380,7 @@ struct HomeView: View {
             Label(L10n.appHomeExample(lang), systemImage: "shuffle")
                 .brandText(Self.linkType)
                 .foregroundStyle(Brand.ink2)
-                .frame(minHeight: 32)
+                .frame(minHeight: 44)
                 .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
@@ -314,7 +395,7 @@ struct HomeView: View {
             Text(L10n.appHomeClear(lang))
                 .brandText(Self.linkType)
                 .foregroundStyle(Brand.ink2)
-                .frame(minHeight: 32)
+                .frame(minHeight: 44)
                 .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
@@ -340,69 +421,9 @@ struct HomeView: View {
         )
     }
 
-    private func submitSection(_ lang: AppLang, home: HomeModel) -> some View {
-        VStack(spacing: 12) {
-            // `blockedUntil` is cleared by the model when a rate limit ends.
-            let waiting = home.isCheckingQuestions || home.isCreatingCase
-            let title = L10n.getVerdict(lang)
-            Button {
-                // Still enabled while waiting so the spinner isn't dimmed; a
-                // tap then must not turn a case being created into a verdict.
-                guard home.canSubmit(app) else { return }
-                home.mode = .now
-                submit()
-            } label: {
-                if waiting {
-                    // The questions or the new case run before anything
-                    // else goes up.
-                    ProgressView()
-                        .tint(Brand.paper)
-                        .accessibilityLabel(title)
-                } else {
-                    HStack(spacing: 10) {
-                        Text(title)
-                            .lineLimit(1)
-                        Image(systemName: "arrow.right")
-                            .font(.system(size: 16, weight: .semibold))
-                            .accessibilityHidden(true)
-                    }
-                }
-            }
-            .buttonStyle(SubmitButtonStyle())
-            .disabled(!home.canSubmit(app) && !waiting)
-            .padding(.top, 4)
-            if home.isCheckingQuestions || home.isCreatingCase {
-                Text(home.isCreatingCase ? L10n.caseCreating(lang) : L10n.tierChecking(lang))
-                    .brandText(.slotText)
-                    .foregroundStyle(Brand.muted)
-                    .accessibilityAddTraits(.updatesFrequently)
-            } else if app.account.isSignedIn, let entitlement = app.account.entitlement {
-                Text(Balance(entitlement).line(lang))
-                    .brandText(.slotText)
-                    .foregroundStyle(Brand.muted)
-            }
-        }
-    }
-
     /// Also "Try again", which repeats whatever was sent last (a verdict or a case).
     private func submit() {
         focused = nil
         app.home.submit(app: app)
-    }
-}
-
-/// "Get the verdict" (thread.module.css .submit).
-private struct SubmitButtonStyle: ButtonStyle {
-    @Environment(\.isEnabled) private var isEnabled
-
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .brandText(.button)
-            .foregroundStyle(Brand.paper)
-            .frame(maxWidth: .infinity, minHeight: 54)
-            .padding(.horizontal, 20)
-            .background(RoundedRectangle(cornerRadius: Radius.field, style: .continuous).fill(Brand.ink.opacity(isEnabled ? 1 : 0.35)))
-            .scaleEffect(configuration.isPressed ? 0.98 : 1)
-            .animation(.easeOut(duration: 0.15), value: configuration.isPressed)
     }
 }

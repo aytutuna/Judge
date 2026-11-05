@@ -73,9 +73,6 @@ final class HomeModel {
     /// often, for at most the route's 300 s.
     @ObservationIgnored var inProgressInterval: Duration = .seconds(4)
     @ObservationIgnored var inProgressWait: Duration = .seconds(300)
-    /// Scroll anchor Home opens on (screenshot states); nil = the top.
-    @ObservationIgnored var initialScroll: String?
-    static let submitAnchor = "home.submit"
 
     /// One written side as the judging cover shows it; an empty name reads
     /// "Your side" / "Their side".

@@ -223,11 +223,9 @@ struct ScreenshotState {
                 config: ScreenshotFixtures.config("full")
             )
             app.home.argument = ExampleArgument.all[0].text(lang)
-            app.home.initialScroll = HomeModel.submitAnchor
         case .balanceNone:
             premium(app, me: "fair_use")
             app.home.argument = ExampleArgument.all[0].text(lang)
-            app.home.initialScroll = HomeModel.submitAnchor
         case .pricing:
             premium(app, me: "subscriber")
             app.home.path = [.pricing]

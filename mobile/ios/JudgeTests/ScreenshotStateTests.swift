@@ -227,7 +227,6 @@ final class ScreenshotStateTests: XCTestCase {
             let none = try XCTUnwrap(ScreenshotState.parse("balance/none:en")).makeModel(container: container)
             XCTAssertEqual(none.account.entitlement?.blockedReason, "fair_use")
             XCTAssertEqual(none.account.entitlement.map(Balance.init), .empty)
-            XCTAssertEqual(none.home.initialScroll, HomeModel.submitAnchor)
             XCTAssertNil(none.api.tokenStore.token(), "screenshots never hold a real token")
 
             let welcome = try XCTUnwrap(ScreenshotState.parse("balance/welcome:en")).makeModel(container: container)
