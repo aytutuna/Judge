@@ -33,6 +33,7 @@ private struct CaseScreenContent: View {
     @State private var showPricing = false
     @Environment(\.dismiss) private var dismiss
     @Environment(\.scenePhase) private var scenePhase
+    @Environment(\.tabShown) private var tabShown
 
     private static let title = TypeStyle(face: .interTight, weight: 700, size: 30, lineHeight: 1.05, tracking: -0.03, textStyle: .title1, maxScale: 1.4)
 
@@ -64,10 +65,16 @@ private struct CaseScreenContent: View {
         .background(Brand.ivory.ignoresSafeArea())
         .navigationBarTitleDisplayMode(.inline)
         .toolbarBackground(Brand.ivory, for: .navigationBar)
-        // Polling restarts whenever a new view arrives (generation).
-        .task(id: model.generation) { await model.run() }
-        .onAppear { Task { await model.refresh() } }
-        .onAppear { app.analytics.track("screen_view", ["screen": "case_detail"]) }
+        // Polling restarts whenever a new view arrives (generation), and
+        // waits while the page's tab is hidden.
+        .task(id: tabShown ? model.generation : -1) {
+            guard tabShown else { return }
+            await model.run()
+        }
+        .onTabAppear {
+            Task { await model.refresh() }
+            app.analytics.track("screen_view", ["screen": "case_detail"])
+        }
         .onChange(of: scenePhase) { _, phase in
             if phase == .active, model.view.map(writesSide) == true { Task { await model.refresh() } }
         }

@@ -12,6 +12,7 @@ enum HistoryRoute: Hashable {
 struct HistoryView: View {
     @Environment(AppModel.self) private var app
     @Environment(\.scenePhase) private var scenePhase
+    @Environment(\.tabShown) private var tabShown
     @Query(sort: \SavedVerdict.createdAt, order: .reverse) private var saved: [SavedVerdict]
     @Query private var cachedRows: [HistoryCacheRow]
     @State private var selection = HistorySelection()
@@ -45,8 +46,8 @@ struct HistoryView: View {
         .navigationTitle(selection.isActive ? L10n.appHistorySelected(lang, n: selection.ids.count) : L10n.navVerdicts(lang))
         .navigationBarTitleDisplayMode(.inline)
         .toolbarBackground(Brand.ivory, for: .navigationBar, .bottomBar)
-        // As in Photos, the delete bar takes the tab bar's place while selecting.
-        .toolbar(selection.isActive ? .hidden : .visible, for: .tabBar)
+        // As in Photos, the delete bar takes the top bar's place while selecting.
+        .hidesTopBar(selection.isActive)
         .toolbar { toolbarItems(lang, selectable: selectable) }
         .confirmationDialog(
             confirmText(entries, lang: lang),
@@ -63,7 +64,7 @@ struct HistoryView: View {
             if tab != .history { selection.end() }
         }
         // Each appearance reads page 1 again (at most once a minute).
-        .onAppear {
+        .onTabAppear {
             app.analytics.track("screen_view", ["screen": "verdicts"])
             if let seed = app.historySelectionSeed {
                 selection.start()
@@ -75,8 +76,8 @@ struct HistoryView: View {
         .onChange(of: app.historyUser) { _, _ in refresh(force: true) }
         .onChange(of: app.account.features.history) { _, _ in refresh() }
         // While the judges work on a row, the list is read again now and then.
-        .task(id: thinking && scenePhase == .active) {
-            guard thinking, scenePhase == .active else { return }
+        .task(id: thinking && scenePhase == .active && tabShown) {
+            guard thinking, scenePhase == .active, tabShown else { return }
             while !Task.isCancelled {
                 try? await Task.sleep(for: HistoryListModel.pollEvery)
                 if Task.isCancelled { return }

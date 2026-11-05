@@ -63,8 +63,12 @@ final class AppModel {
     let caseNames: any CaseNamesStore
     /// The selected tab (links and "Start a new case" switch it).
     var tab: RootTab = .new
+    /// Tabs whose open page hides the top bar.
+    var barHidden: Set<RootTab> = []
     /// The Verdicts tab's pages.
     var historyPath: [HistoryRoute] = []
+    /// The Settings tab's pages.
+    var settingsPath: [SettingsRoute] = []
     /// The account's Verdicts list (GET /api/v1/me/history and its cache).
     let historyList: HistoryListModel
     /// Whose list Verdicts shows: the signed-in account once known; at
@@ -261,9 +265,14 @@ final class AppModel {
     }
 
     /// A tab was tapped. "New" always lands on the form, also when a verdict
-    /// is still open in that tab.
+    /// is still open in that tab; the others go back to their list when
+    /// tapped again.
     func select(_ target: RootTab) {
         if target == .new { home.path.removeAll() }
+        if target == tab {
+            if target == .history { historyPath.removeAll() }
+            if target == .settings { settingsPath.removeAll() }
+        }
         tab = target
     }
 

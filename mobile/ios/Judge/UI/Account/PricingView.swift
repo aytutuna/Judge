@@ -8,6 +8,7 @@ import SwiftUI
 struct PricingView: View {
     @Environment(AppModel.self) private var app
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.pageTab) private var pageTab
     @State private var webLink: WebLink?
     /// Shown as a sheet there is no back button, so it brings its own close.
     private let inSheet: Bool
@@ -84,10 +85,15 @@ struct PricingView: View {
         .sheet(item: $webLink) { link in
             SafariView(url: link.url).ignoresSafeArea()
         }
-        .task { await account.refresh() }
-        .onAppear { app.analytics.track("screen_view", ["screen": "pricing"]) }
+        .onTabAppear {
+            Task { await account.refresh() }
+            app.analytics.track("screen_view", ["screen": "pricing"])
+        }
         .task(id: pricing.purchasesEnabled) { await app.purchases.loadOffers(pricing: app.account.pricing) }
         .onDisappear { app.purchases.clearMessage() }
+        .onChange(of: app.tab) { _, tab in
+            if tab != pageTab { app.purchases.clearMessage() }
+        }
     }
 
     /// How the monthly plan renews, and the Terms of Use and Privacy Policy

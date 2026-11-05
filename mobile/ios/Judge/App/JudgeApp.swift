@@ -1,5 +1,6 @@
 import SwiftData
 import SwiftUI
+import UIKit
 
 @main
 struct JudgeApp: App {
@@ -56,19 +57,17 @@ struct RootView: View {
     var body: some View {
         let lang = app.lang
         @Bindable var account = app.account
-        TabView(selection: Binding(get: { app.tab }, set: { app.select($0) })) {
-            HomeTab()
-                .tabItem { Label(L10n.appTabNew(lang), systemImage: "square.and.pencil") }
-                .tag(RootTab.new)
-            HistoryTab()
-                .tabItem { Label(L10n.navVerdicts(lang), systemImage: "clock.arrow.circlepath") }
-                .tag(RootTab.history)
-            SettingsView()
-                .tabItem { Label(L10n.appTabSettings(lang), systemImage: "gearshape") }
-                .tag(RootTab.settings)
+        VStack(spacing: 0) {
+            if !app.barHidden.contains(app.tab) {
+                TopBar()
+            }
+            ZStack {
+                page(.new) { HomeTab() }
+                page(.history) { HistoryTab() }
+                page(.settings) { SettingsView() }
+            }
         }
-        .toolbarBackground(Brand.ivory, for: .tabBar)
-        .toolbarBackground(.visible, for: .tabBar)
+        .background(Brand.ivory.ignoresSafeArea())
         .accessibilityHidden(ageCovered)
         .sheet(isPresented: $account.isSignInPresented, onDismiss: { app.account.signInDismissed() }) {
             SignInView()
@@ -117,6 +116,18 @@ struct RootView: View {
         }
     }
 
+    /// All three tabs stay alive, so their pages and scroll positions survive
+    /// a switch; the others are only hidden.
+    private func page<Content: View>(_ tab: RootTab, @ViewBuilder content: () -> Content) -> some View {
+        let shown = app.tab == tab
+        return content()
+            .environment(\.pageTab, tab)
+            .environment(\.tabShown, shown)
+            .opacity(shown ? 1 : 0)
+            .allowsHitTesting(shown)
+            .accessibilityHidden(!shown)
+    }
+
     /// The age gate is up, unless the phone's own prompt may still be on
     /// screen (the gate would cover it).
     private var ageCovered: Bool {
@@ -128,6 +139,137 @@ struct RootView: View {
     private func open(_ url: URL) {
         guard let link = AppLink.parse(url, site: app.config.shareBaseURL) else { return }
         if let web = app.open(link) { webLink = WebLink(url: web) }
+    }
+}
+
+/// New, Verdicts and Settings, above the pages.
+private struct TopBar: View {
+    @Environment(AppModel.self) private var app
+
+    var body: some View {
+        let lang = app.lang
+        HStack(spacing: 0) {
+            item(.new, title: L10n.appTabNew(lang), symbol: "square.and.pencil")
+            item(.history, title: L10n.navVerdicts(lang), symbol: "clock.arrow.circlepath")
+            item(.settings, title: L10n.appTabSettings(lang), symbol: "gearshape")
+        }
+        .padding(.horizontal, 8)
+        .padding(.top, 6)
+        .padding(.bottom, 4)
+        .background(Brand.ivory.ignoresSafeArea(edges: .top))
+        .overlay(alignment: .bottom) {
+            Rectangle().fill(Brand.line).frame(height: 1)
+        }
+    }
+
+    private func item(_ tab: RootTab, title: String, symbol: String) -> some View {
+        let selected = app.tab == tab
+        return Button {
+            if !selected {
+                // The hidden pages keep the keyboard otherwise.
+                UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+            }
+            app.select(tab)
+        } label: {
+            VStack(spacing: 4) {
+                Image(systemName: symbol)
+                    .font(.system(size: 20))
+                    .accessibilityHidden(true)
+                Text(title)
+                    .brandText(TypeStyle(face: .inter, weight: selected ? 600 : 500, size: 11, lineHeight: 1.2, textStyle: .caption2, maxScale: 1.6))
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.8)
+            }
+            .foregroundStyle(selected ? Brand.terraInk : Brand.muted)
+            .frame(maxWidth: .infinity, minHeight: 52)
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .accessibilityAddTraits(selected ? .isSelected : [])
+    }
+}
+
+private struct PageTabKey: EnvironmentKey {
+    static let defaultValue = RootTab.new
+}
+
+private struct TabShownKey: EnvironmentKey {
+    static let defaultValue = true
+}
+
+extension EnvironmentValues {
+    /// The tab a page lives in.
+    var pageTab: RootTab {
+        get { self[PageTabKey.self] }
+        set { self[PageTabKey.self] = newValue }
+    }
+
+    /// Whether that tab is the selected one. A hidden tab keeps running, so
+    /// polling and the 3D scene check this.
+    var tabShown: Bool {
+        get { self[TabShownKey.self] }
+        set { self[TabShownKey.self] = newValue }
+    }
+}
+
+extension View {
+    /// Runs when the page is on screen in the selected tab: at appearing, or
+    /// when its tab is picked while the page is still on top of its stack,
+    /// since a tab's pages stay alive while hidden.
+    func onTabAppear(perform action: @escaping () -> Void) -> some View {
+        modifier(TabAppear(action: action))
+    }
+
+    /// Takes the top bar away while this page is open in its tab.
+    func hidesTopBar(_ hidden: Bool = true) -> some View {
+        modifier(HidesTopBar(hidden: hidden))
+    }
+}
+
+private struct TabAppear: ViewModifier {
+    @Environment(AppModel.self) private var app
+    @Environment(\.pageTab) private var tab
+    let action: () -> Void
+    @State private var onTop = false
+    /// The tab was left since the page last ran the action.
+    @State private var away = false
+
+    func body(content: Content) -> some View {
+        content
+            .onAppear {
+                onTop = true
+                away = app.tab != tab
+                if !away { action() }
+            }
+            .onDisappear { onTop = false }
+            .onChange(of: app.tab) { _, selected in
+                guard selected == tab else {
+                    away = true
+                    return
+                }
+                // A page that was covered runs from onAppear when it is
+                // uncovered instead.
+                if away, onTop {
+                    away = false
+                    action()
+                }
+            }
+    }
+}
+
+private struct HidesTopBar: ViewModifier {
+    @Environment(AppModel.self) private var app
+    @Environment(\.pageTab) private var tab
+    let hidden: Bool
+
+    func body(content: Content) -> some View {
+        content
+            .onChange(of: hidden, initial: true) { _, hidden in set(hidden) }
+            .onDisappear { set(false) }
+    }
+
+    private func set(_ hidden: Bool) {
+        if hidden { app.barHidden.insert(tab) } else { app.barHidden.remove(tab) }
     }
 }
 

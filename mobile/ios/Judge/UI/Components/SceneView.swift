@@ -27,6 +27,7 @@ struct SceneView<Fallback: View>: View {
 
     @Environment(\.sceneLive) private var live
     @Environment(\.scenePhase) private var scenePhase
+    @Environment(\.tabShown) private var tabShown
     @Environment(\.sides) private var sides
     @Environment(\.colorScheme) private var colorScheme
     @State private var visible = false
@@ -36,7 +37,7 @@ struct SceneView<Fallback: View>: View {
         ZStack {
             Brand.paper
             if live && !failed {
-                SceneWebView(mode: mode, you: sides.you, dark: colorScheme == .dark, active: visible && scenePhase == .active) {
+                SceneWebView(mode: mode, you: sides.you, dark: colorScheme == .dark, active: visible && scenePhase == .active && tabShown) {
                     failed = true
                 }
             } else {
