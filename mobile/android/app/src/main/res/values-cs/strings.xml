@@ -375,6 +375,12 @@
     <string name="two_sided_would_change">Co by verdikt změnilo</string>
     <string name="appeal_title">Doplnit kontext</string>
     <string name="home_example">Zkusit příklad</string>
+    <string name="home_your_placeholder">Co je za problém?</string>
+    <string name="home_add_context">Přidat kontext</string>
+    <string name="home_add_their_side">Přidat pohled druhé strany</string>
+    <string name="home_remove_their_side">Odebrat pohled druhé strany</string>
+    <string name="home_send_link">Pošli odkaz</string>
+    <string name="home_clear">Vymazat</string>
     <string name="home_lead">Napiš oba pohledy, nebo pošli druhé straně odkaz, ať napíše ten svůj.</string>
     <string name="home_lead_solo">Napiš svůj pohled, případně i ten druhý, pokud ho znáš.</string>
     <string name="home_their_side">Pohled druhé strany</string>

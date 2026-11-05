@@ -359,6 +359,12 @@
     <string name="two_sided_would_change">Bu kararı ne değiştirirdi</string>
     <string name="appeal_title">Bilgi ekle</string>
     <string name="home_example">Bir örnek dene</string>
+    <string name="home_your_placeholder">Sorun ne?</string>
+    <string name="home_add_context">Bağlam ekle</string>
+    <string name="home_add_their_side">Karşı tarafı ekle</string>
+    <string name="home_remove_their_side">Karşı tarafı kaldır</string>
+    <string name="home_send_link">Bağlantı gönder</string>
+    <string name="home_clear">Temizle</string>
     <string name="home_lead">İki tarafı da yaz ya da karşı tarafa bir bağlantı gönder, kendi tarafını o yazsın.</string>
     <string name="home_lead_solo">Kendi tarafını yaz, biliyorsan onunkini de.</string>
     <string name="home_their_side">Karşı taraf</string>

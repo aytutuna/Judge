@@ -375,6 +375,12 @@
     <string name="two_sided_would_change">Kaj bi spremenilo to razsodbo</string>
     <string name="appeal_title">Dodaj kontekst</string>
     <string name="home_example">Poskusi s primerom</string>
+    <string name="home_your_placeholder">Kaj je narobe?</string>
+    <string name="home_add_context">Dodaj kontekst</string>
+    <string name="home_add_their_side">Dodaj drugo plat</string>
+    <string name="home_remove_their_side">Odstrani drugo plat</string>
+    <string name="home_send_link">Pošlji povezavo</string>
+    <string name="home_clear">Počisti</string>
     <string name="home_lead">Napiši obe plati ali drugi osebi pošlji povezavo, da napiše svojo.</string>
     <string name="home_lead_solo">Napiši svojo plat, pa še plat druge osebe, če jo poznaš.</string>
     <string name="home_their_side">Druga plat</string>

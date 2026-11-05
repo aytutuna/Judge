@@ -359,6 +359,12 @@
     <string name="two_sided_would_change">কী হলে এই রায় বদলাত</string>
     <string name="appeal_title">নতুন তথ্য যোগ করুন</string>
     <string name="home_example">একটা উদাহরণ দিয়ে দেখুন</string>
+    <string name="home_your_placeholder">সমস্যাটা কী?</string>
+    <string name="home_add_context">প্রসঙ্গ যোগ করুন</string>
+    <string name="home_add_their_side">অন্যজনের বক্তব্য যোগ করুন</string>
+    <string name="home_remove_their_side">অন্যজনের বক্তব্য সরান</string>
+    <string name="home_send_link">লিংক পাঠান</string>
+    <string name="home_clear">মুছুন</string>
     <string name="home_lead">দুই পক্ষের কথাই লিখুন, নয়তো অন্যজনকে একটা লিংক পাঠান, তিনি নিজের কথা নিজেই লিখবেন।</string>
     <string name="home_lead_solo">আপনার কথা লিখুন, আর জানা থাকলে অন্যজনেরটাও।</string>
     <string name="home_their_side">অন্যজনের বক্তব্য</string>

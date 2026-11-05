@@ -351,6 +351,12 @@
     <string name="two_sided_would_change">อะไรจะเปลี่ยนคำตัดสินนี้ได้</string>
     <string name="appeal_title">เพิ่มบริบท</string>
     <string name="home_example">ลองดูตัวอย่าง</string>
+    <string name="home_your_placeholder">มีปัญหาอะไร?</string>
+    <string name="home_add_context">เพิ่มบริบท</string>
+    <string name="home_add_their_side">เพิ่มฝั่งของเขา</string>
+    <string name="home_remove_their_side">ลบฝั่งของเขา</string>
+    <string name="home_send_link">ส่งลิงก์</string>
+    <string name="home_clear">ล้าง</string>
     <string name="home_lead">เขียนทั้งสองฝั่งเลย หรือส่งลิงก์ให้อีกฝ่ายมาเขียนฝั่งของเขาเอง</string>
     <string name="home_lead_solo">เขียนฝั่งของคุณ และฝั่งของเขาด้วยถ้าคุณรู้</string>
     <string name="home_their_side">ฝั่งของเขา</string>

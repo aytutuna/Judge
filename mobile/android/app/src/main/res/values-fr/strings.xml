@@ -367,6 +367,12 @@
     <string name="two_sided_would_change">Ce qui changerait ce verdict</string>
     <string name="appeal_title">Ajouter du contexte</string>
     <string name="home_example">Essayer un exemple</string>
+    <string name="home_your_placeholder">C’est quoi, le problème ?</string>
+    <string name="home_add_context">Ajouter du contexte</string>
+    <string name="home_add_their_side">Ajouter sa version</string>
+    <string name="home_remove_their_side">Retirer sa version</string>
+    <string name="home_send_link">Envoie-lui un lien</string>
+    <string name="home_clear">Effacer</string>
     <string name="home_lead">Écris les deux versions, ou envoie un lien à l’autre personne pour qu’elle écrive la sienne.</string>
     <string name="home_lead_solo">Écris ta version, et celle d’en face si tu la connais.</string>
     <string name="home_their_side">Sa version</string>

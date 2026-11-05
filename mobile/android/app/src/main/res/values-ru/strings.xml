@@ -375,6 +375,12 @@
     <string name="two_sided_would_change">Что изменило бы вердикт</string>
     <string name="appeal_title">Добавить подробности</string>
     <string name="home_example">Попробовать на примере</string>
+    <string name="home_your_placeholder">В чём проблема?</string>
+    <string name="home_add_context">Добавить контекст</string>
+    <string name="home_add_their_side">Добавить другую сторону</string>
+    <string name="home_remove_their_side">Убрать другую сторону</string>
+    <string name="home_send_link">Отправить ссылку</string>
+    <string name="home_clear">Очистить</string>
     <string name="home_lead">Напишите обе версии или отправьте другому человеку ссылку, чтобы он написал свою.</string>
     <string name="home_lead_solo">Напишите свою версию, а если знаете — и версию другой стороны.</string>
     <string name="home_their_side">Другая сторона</string>

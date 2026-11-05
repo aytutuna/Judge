@@ -359,6 +359,12 @@
     <string name="two_sided_would_change">किस बात से यह फ़ैसला बदल सकता है</string>
     <string name="appeal_title">जानकारी जोड़ें</string>
     <string name="home_example">कोई उदाहरण आज़माएँ</string>
+    <string name="home_your_placeholder">समस्या क्या है?</string>
+    <string name="home_add_context">संदर्भ जोड़ें</string>
+    <string name="home_add_their_side">उनकी बात जोड़ें</string>
+    <string name="home_remove_their_side">उनकी बात हटाएँ</string>
+    <string name="home_send_link">लिंक भेजें</string>
+    <string name="home_clear">साफ़ करें</string>
     <string name="home_lead">दोनों पक्षों की बात लिखें, या दूसरे व्यक्ति को लिंक भेजें ताकि वे अपनी बात ख़ुद लिखें।</string>
     <string name="home_lead_solo">अपनी बात लिखें, और पता हो तो उनकी भी।</string>
     <string name="home_their_side">उनकी बात</string>

@@ -359,6 +359,12 @@
     <string name="two_sided_would_change">ఈ తీర్పును ఏది మార్చగలదు</string>
     <string name="appeal_title">వివరాలు జోడించండి</string>
     <string name="home_example">ఒక ఉదాహరణ ప్రయత్నించండి</string>
+    <string name="home_your_placeholder">సమస్య ఏంటి?</string>
+    <string name="home_add_context">సందర్భం జోడించండి</string>
+    <string name="home_add_their_side">వాళ్ల వైపు కథ జోడించండి</string>
+    <string name="home_remove_their_side">వాళ్ల వైపు కథ తీసేయండి</string>
+    <string name="home_send_link">లింక్ పంపండి</string>
+    <string name="home_clear">క్లియర్ చేయండి</string>
     <string name="home_lead">రెండు వైపుల కథా మీరే రాయండి, లేదా అవతలి వ్యక్తికి లింక్ పంపి వాళ్ల కథ వాళ్లనే రాయమనండి.</string>
     <string name="home_lead_solo">మీ వైపు కథ రాయండి, వాళ్ల వైపు తెలిస్తే అది కూడా.</string>
     <string name="home_their_side">వాళ్ల వైపు కథ</string>

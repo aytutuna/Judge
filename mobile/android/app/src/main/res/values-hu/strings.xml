@@ -359,6 +359,12 @@
     <string name="two_sided_would_change">Mi változtatna az ítéleten</string>
     <string name="appeal_title">Kiegészítés</string>
     <string name="home_example">Próbálj ki egy példát</string>
+    <string name="home_your_placeholder">Mi a gond?</string>
+    <string name="home_add_context">Háttér hozzáadása</string>
+    <string name="home_add_their_side">Add hozzá az ő verzióját</string>
+    <string name="home_remove_their_side">Vedd ki az ő verzióját</string>
+    <string name="home_send_link">Küldj linket</string>
+    <string name="home_clear">Törlés</string>
     <string name="home_lead">Írd le mindkét fél verzióját, vagy küldj egy linket a másiknak, hogy ő írja meg a sajátját.</string>
     <string name="home_lead_solo">Írd le a te verziódat, és az övét is, ha ismered.</string>
     <string name="home_their_side">Az ő verziója</string>

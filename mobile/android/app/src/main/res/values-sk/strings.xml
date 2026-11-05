@@ -375,6 +375,12 @@
     <string name="two_sided_would_change">Čo by tento verdikt zmenilo</string>
     <string name="appeal_title">Doplniť kontext</string>
     <string name="home_example">Skúsiť príklad</string>
+    <string name="home_your_placeholder">V čom je problém?</string>
+    <string name="home_add_context">Pridať kontext</string>
+    <string name="home_add_their_side">Pridať verziu druhej strany</string>
+    <string name="home_remove_their_side">Odstrániť verziu druhej strany</string>
+    <string name="home_send_link">Poslať odkaz</string>
+    <string name="home_clear">Vymazať</string>
     <string name="home_lead">Napíš obe verzie alebo pošli druhej strane odkaz, nech napíše tú svoju.</string>
     <string name="home_lead_solo">Napíš svoju verziu a aj verziu druhej strany, ak ju poznáš.</string>
     <string name="home_their_side">Verzia druhej strany</string>

@@ -367,6 +367,12 @@
     <string name="two_sided_would_change">Što bi promijenilo ovu presudu</string>
     <string name="appeal_title">Dodaj kontekst</string>
     <string name="home_example">Isprobaj primjer</string>
+    <string name="home_your_placeholder">Što je problem?</string>
+    <string name="home_add_context">Dodaj kontekst</string>
+    <string name="home_add_their_side">Dodaj drugu stranu</string>
+    <string name="home_remove_their_side">Ukloni drugu stranu</string>
+    <string name="home_send_link">Pošalji poveznicu</string>
+    <string name="home_clear">Očisti</string>
     <string name="home_lead">Napiši obje strane ili pošalji poveznicu drugoj osobi da napiše svoju.</string>
     <string name="home_lead_solo">Napiši svoju stranu, a ako je znaš, i drugu.</string>
     <string name="home_their_side">Druga strana</string>

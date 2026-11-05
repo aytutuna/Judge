@@ -359,6 +359,12 @@
     <string name="two_sided_would_change">Τι θα άλλαζε την απόφαση</string>
     <string name="appeal_title">Πρόσθεσε πληροφορίες</string>
     <string name="home_example">Δοκίμασε ένα παράδειγμα</string>
+    <string name="home_your_placeholder">Ποιο είναι το πρόβλημα;</string>
+    <string name="home_add_context">Πρόσθεσε πλαίσιο</string>
+    <string name="home_add_their_side">Πρόσθεσε την άλλη πλευρά</string>
+    <string name="home_remove_their_side">Αφαίρεσε την άλλη πλευρά</string>
+    <string name="home_send_link">Στείλε σύνδεσμο</string>
+    <string name="home_clear">Καθαρισμός</string>
     <string name="home_lead">Γράψε και τις δύο πλευρές ή στείλε σύνδεσμο στο άλλο άτομο για να γράψει τη δική του.</string>
     <string name="home_lead_solo">Γράψε τη δική σου πλευρά, και την άλλη αν την ξέρεις.</string>
     <string name="home_their_side">Η άλλη πλευρά</string>

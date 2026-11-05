@@ -359,6 +359,12 @@
     <string name="two_sided_would_change">ഈ വിധി മാറാൻ എന്ത് വേണം</string>
     <string name="appeal_title">കൂടുതൽ വിവരം ചേർക്കൂ</string>
     <string name="home_example">ഒരു ഉദാഹരണം നോക്കൂ</string>
+    <string name="home_your_placeholder">എന്താണ് പ്രശ്നം?</string>
+    <string name="home_add_context">സാഹചര്യം ചേർക്കൂ</string>
+    <string name="home_add_their_side">അവരുടെ ഭാഗം ചേർക്കൂ</string>
+    <string name="home_remove_their_side">അവരുടെ ഭാഗം നീക്കൂ</string>
+    <string name="home_send_link">ലിങ്ക് അയയ്ക്കൂ</string>
+    <string name="home_clear">മായ്ക്കൂ</string>
     <string name="home_lead">രണ്ടു ഭാഗവും എഴുതൂ, അല്ലെങ്കിൽ മറ്റേയാൾക്ക് അവരുടെ ഭാഗം എഴുതാൻ ഒരു ലിങ്ക് അയയ്ക്കൂ.</string>
     <string name="home_lead_solo">നിങ്ങളുടെ ഭാഗം എഴുതൂ, അറിയാമെങ്കിൽ അവരുടേതും.</string>
     <string name="home_their_side">അവരുടെ ഭാഗം</string>

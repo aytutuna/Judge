@@ -359,6 +359,12 @@
     <string name="two_sided_would_change">Wat deze uitspraak zou veranderen</string>
     <string name="appeal_title">Iets aanvullen</string>
     <string name="home_example">Probeer een voorbeeld</string>
+    <string name="home_your_placeholder">Wat is het probleem?</string>
+    <string name="home_add_context">Context toevoegen</string>
+    <string name="home_add_their_side">Kant van de ander toevoegen</string>
+    <string name="home_remove_their_side">Kant van de ander verwijderen</string>
+    <string name="home_send_link">Stuur een link</string>
+    <string name="home_clear">Wissen</string>
     <string name="home_lead">Schrijf beide kanten op, of stuur de ander een link om het zelf te doen.</string>
     <string name="home_lead_solo">Schrijf jouw kant op en die van de ander als je die kent.</string>
     <string name="home_their_side">Kant van de ander</string>

@@ -359,6 +359,12 @@
     <string name="two_sided_would_change">Det här skulle kunna ändra domen</string>
     <string name="appeal_title">Komplettera</string>
     <string name="home_example">Prova ett exempel</string>
+    <string name="home_your_placeholder">Vad är problemet?</string>
+    <string name="home_add_context">Lägg till sammanhang</string>
+    <string name="home_add_their_side">Lägg till den andras sida</string>
+    <string name="home_remove_their_side">Ta bort den andras sida</string>
+    <string name="home_send_link">Skicka en länk</string>
+    <string name="home_clear">Rensa</string>
     <string name="home_lead">Skriv båda sidorna, eller skicka en länk så att den andra kan skriva sin.</string>
     <string name="home_lead_solo">Skriv din sida, och den andras om du känner till den.</string>
     <string name="home_their_side">Den andras sida</string>

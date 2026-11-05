@@ -367,6 +367,12 @@
     <string name="two_sided_would_change">O que mudaria este veredicto</string>
     <string name="appeal_title">Acrescentar contexto</string>
     <string name="home_example">Experimenta um exemplo</string>
+    <string name="home_your_placeholder">Qual é o problema?</string>
+    <string name="home_add_context">Adicionar contexto</string>
+    <string name="home_add_their_side">Adicionar o outro lado</string>
+    <string name="home_remove_their_side">Remover o outro lado</string>
+    <string name="home_send_link">Enviar um link</string>
+    <string name="home_clear">Limpar</string>
     <string name="home_lead">Escreve os dois lados ou envia à outra pessoa um link para ela escrever o dela.</string>
     <string name="home_lead_solo">Escreve o teu lado e, se o souberes, o da outra pessoa.</string>
     <string name="home_their_side">O outro lado</string>

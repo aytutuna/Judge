@@ -391,6 +391,12 @@
     <string name="two_sided_would_change">ما الذي قد يغيّر هذا الحكم</string>
     <string name="appeal_title">إضافة توضيح</string>
     <string name="home_example">جرّب مثالًا</string>
+    <string name="home_your_placeholder">ما المشكلة؟</string>
+    <string name="home_add_context">أضف سياقًا</string>
+    <string name="home_add_their_side">أضف رواية الطرف الآخر</string>
+    <string name="home_remove_their_side">أزل رواية الطرف الآخر</string>
+    <string name="home_send_link">أرسل له رابطًا</string>
+    <string name="home_clear">مسح</string>
     <string name="home_lead">اكتب رواية الطرفين، أو أرسل إلى الطرف الآخر رابطًا ليكتب روايته بنفسه.</string>
     <string name="home_lead_solo">اكتب روايتك، ورواية الطرف الآخر إن كنت تعرفها.</string>
     <string name="home_their_side">رواية الطرف الآخر</string>

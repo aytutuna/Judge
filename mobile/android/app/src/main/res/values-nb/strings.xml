@@ -359,6 +359,12 @@
     <string name="two_sided_would_change">Det som kunne endret dommen</string>
     <string name="appeal_title">Legg til kontekst</string>
     <string name="home_example">Prøv et eksempel</string>
+    <string name="home_your_placeholder">Hva er problemet?</string>
+    <string name="home_add_context">Legg til kontekst</string>
+    <string name="home_add_their_side">Legg til den andres side</string>
+    <string name="home_remove_their_side">Fjern den andres side</string>
+    <string name="home_send_link">Send en lenke</string>
+    <string name="home_clear">Tøm</string>
     <string name="home_lead">Skriv begge sider, eller send en lenke så den andre kan skrive sin.</string>
     <string name="home_lead_solo">Skriv din side, og den andres hvis du kjenner den.</string>
     <string name="home_their_side">Den andres side</string>

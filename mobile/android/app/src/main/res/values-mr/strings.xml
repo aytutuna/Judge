@@ -359,6 +359,12 @@
     <string name="two_sided_would_change">हा निकाल कशाने बदलू शकतो</string>
     <string name="appeal_title">माहिती जोडा</string>
     <string name="home_example">एखादे उदाहरण वापरून पाहा</string>
+    <string name="home_your_placeholder">समस्या काय आहे?</string>
+    <string name="home_add_context">संदर्भ जोडा</string>
+    <string name="home_add_their_side">त्यांची बाजू जोडा</string>
+    <string name="home_remove_their_side">त्यांची बाजू काढा</string>
+    <string name="home_send_link">लिंक पाठवा</string>
+    <string name="home_clear">साफ करा</string>
     <string name="home_lead">दोन्ही बाजू लिहा, किंवा लिंक पाठवा, म्हणजे समोरची व्यक्ती आपली बाजू स्वतः लिहील.</string>
     <string name="home_lead_solo">तुमची बाजू लिहा, आणि माहीत असेल तर त्यांचीही.</string>
     <string name="home_their_side">त्यांची बाजू</string>

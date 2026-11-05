@@ -351,6 +351,12 @@
     <string name="two_sided_would_change">Điều gì có thể thay đổi phán quyết này</string>
     <string name="appeal_title">Bổ sung thông tin</string>
     <string name="home_example">Thử một ví dụ</string>
+    <string name="home_your_placeholder">Có chuyện gì vậy?</string>
+    <string name="home_add_context">Thêm bối cảnh</string>
+    <string name="home_add_their_side">Thêm phía bên kia</string>
+    <string name="home_remove_their_side">Bỏ phía bên kia</string>
+    <string name="home_send_link">Gửi liên kết</string>
+    <string name="home_clear">Xóa</string>
     <string name="home_lead">Kể phần của cả hai bên, hoặc gửi liên kết để người kia tự kể phần của họ.</string>
     <string name="home_lead_solo">Kể phần của bạn, và cả phần của người kia nếu bạn biết.</string>
     <string name="home_their_side">Phía bên kia</string>

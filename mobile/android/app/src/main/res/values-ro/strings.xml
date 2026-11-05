@@ -367,6 +367,12 @@
     <string name="two_sided_would_change">Ce ar schimba verdictul</string>
     <string name="appeal_title">Adaugă context</string>
     <string name="home_example">Încearcă un exemplu</string>
+    <string name="home_your_placeholder">Care e problema?</string>
+    <string name="home_add_context">Adaugă context</string>
+    <string name="home_add_their_side">Adaugă cealaltă parte</string>
+    <string name="home_remove_their_side">Elimină cealaltă parte</string>
+    <string name="home_send_link">Trimite un link</string>
+    <string name="home_clear">Șterge</string>
     <string name="home_lead">Scrie ambele părți sau trimite-i celeilalte persoane un link ca să-și scrie varianta.</string>
     <string name="home_lead_solo">Scrie-ți partea și, dacă o știi, varianta celeilalte persoane.</string>
     <string name="home_their_side">Cealaltă parte</string>

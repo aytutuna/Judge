@@ -479,6 +479,12 @@ enum L10n {
     static func twoSidedWouldChange(_ lang: AppLang) -> String { string("twoSided.wouldChange", lang) }
     static func appealTitle(_ lang: AppLang) -> String { string("appeal.title", lang) }
     static func homeExample(_ lang: AppLang) -> String { string("home.example", lang) }
+    static func homeYourPlaceholder(_ lang: AppLang) -> String { string("home.yourPlaceholder", lang) }
+    static func homeAddContext(_ lang: AppLang) -> String { string("home.addContext", lang) }
+    static func homeAddTheirSide(_ lang: AppLang) -> String { string("home.addTheirSide", lang) }
+    static func homeRemoveTheirSide(_ lang: AppLang) -> String { string("home.removeTheirSide", lang) }
+    static func homeSendLink(_ lang: AppLang) -> String { string("home.sendLink", lang) }
+    static func homeClear(_ lang: AppLang) -> String { string("home.clear", lang) }
     static func homeLead(_ lang: AppLang) -> String { string("home.lead", lang) }
     static func homeLeadSolo(_ lang: AppLang) -> String { string("home.leadSolo", lang) }
     static func homeTheirSide(_ lang: AppLang) -> String { string("home.theirSide", lang) }
@@ -1077,6 +1083,12 @@ enum L10n {
         "twoSided.wouldChange",
         "appeal.title",
         "home.example",
+        "home.yourPlaceholder",
+        "home.addContext",
+        "home.addTheirSide",
+        "home.removeTheirSide",
+        "home.sendLink",
+        "home.clear",
         "home.lead",
         "home.leadSolo",
         "home.theirSide",

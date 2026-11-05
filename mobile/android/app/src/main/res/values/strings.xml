@@ -359,6 +359,12 @@
     <string name="two_sided_would_change">What would change this verdict</string>
     <string name="appeal_title">Add context</string>
     <string name="home_example">Try an example</string>
+    <string name="home_your_placeholder">What\'s the problem?</string>
+    <string name="home_add_context">Add context</string>
+    <string name="home_add_their_side">Add their side</string>
+    <string name="home_remove_their_side">Remove their side</string>
+    <string name="home_send_link">Send them a link</string>
+    <string name="home_clear">Clear</string>
     <string name="home_lead">Write both sides, or send the other person a link to write theirs.</string>
     <string name="home_lead_solo">Write your side, and theirs if you know it.</string>
     <string name="home_their_side">Their side</string>

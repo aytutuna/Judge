@@ -359,6 +359,12 @@
     <string name="two_sided_would_change">ਕਿਹੜੀ ਗੱਲ ਇਹ ਫ਼ੈਸਲਾ ਬਦਲ ਸਕਦੀ ਹੈ</string>
     <string name="appeal_title">ਵੇਰਵਾ ਜੋੜੋ</string>
     <string name="home_example">ਕੋਈ ਉਦਾਹਰਨ ਅਜ਼ਮਾਓ</string>
+    <string name="home_your_placeholder">ਸਮੱਸਿਆ ਕੀ ਹੈ?</string>
+    <string name="home_add_context">ਸੰਦਰਭ ਜੋੜੋ</string>
+    <string name="home_add_their_side">ਉਨ੍ਹਾਂ ਦਾ ਪੱਖ ਜੋੜੋ</string>
+    <string name="home_remove_their_side">ਉਨ੍ਹਾਂ ਦਾ ਪੱਖ ਹਟਾਓ</string>
+    <string name="home_send_link">ਲਿੰਕ ਭੇਜੋ</string>
+    <string name="home_clear">ਸਾਫ਼ ਕਰੋ</string>
     <string name="home_lead">ਦੋਵੇਂ ਪੱਖ ਲਿਖੋ, ਜਾਂ ਦੂਜੀ ਧਿਰ ਨੂੰ ਲਿੰਕ ਭੇਜੋ ਤਾਂ ਜੋ ਉਹ ਆਪਣਾ ਪੱਖ ਆਪ ਲਿਖਣ।</string>
     <string name="home_lead_solo">ਆਪਣਾ ਪੱਖ ਲਿਖੋ, ਅਤੇ ਜੇ ਪਤਾ ਹੋਵੇ ਤਾਂ ਉਨ੍ਹਾਂ ਦਾ ਵੀ।</string>
     <string name="home_their_side">ਉਨ੍ਹਾਂ ਦਾ ਪੱਖ</string>

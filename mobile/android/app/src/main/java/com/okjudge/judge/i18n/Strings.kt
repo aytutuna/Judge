@@ -412,6 +412,12 @@ class Strings(private val res: Resources) {
     val twoSidedWouldChange: String get() = res.getString(R.string.two_sided_would_change)
     val appealTitle: String get() = res.getString(R.string.appeal_title)
     val homeExample: String get() = res.getString(R.string.home_example)
+    val homeYourPlaceholder: String get() = res.getString(R.string.home_your_placeholder)
+    val homeAddContext: String get() = res.getString(R.string.home_add_context)
+    val homeAddTheirSide: String get() = res.getString(R.string.home_add_their_side)
+    val homeRemoveTheirSide: String get() = res.getString(R.string.home_remove_their_side)
+    val homeSendLink: String get() = res.getString(R.string.home_send_link)
+    val homeClear: String get() = res.getString(R.string.home_clear)
     val homeLead: String get() = res.getString(R.string.home_lead)
     val homeLeadSolo: String get() = res.getString(R.string.home_lead_solo)
     val homeTheirSide: String get() = res.getString(R.string.home_their_side)
@@ -1009,6 +1015,12 @@ class Strings(private val res: Resources) {
             "twoSided.wouldChange" -> R.string.two_sided_would_change
             "appeal.title" -> R.string.appeal_title
             "home.example" -> R.string.home_example
+            "home.yourPlaceholder" -> R.string.home_your_placeholder
+            "home.addContext" -> R.string.home_add_context
+            "home.addTheirSide" -> R.string.home_add_their_side
+            "home.removeTheirSide" -> R.string.home_remove_their_side
+            "home.sendLink" -> R.string.home_send_link
+            "home.clear" -> R.string.home_clear
             "home.lead" -> R.string.home_lead
             "home.leadSolo" -> R.string.home_lead_solo
             "home.theirSide" -> R.string.home_their_side

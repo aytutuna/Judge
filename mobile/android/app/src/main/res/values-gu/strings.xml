@@ -359,6 +359,12 @@
     <string name="two_sided_would_change">આ ચુકાદો શું બદલી શકે</string>
     <string name="appeal_title">વિગત ઉમેરો</string>
     <string name="home_example">ઉદાહરણ અજમાવો</string>
+    <string name="home_your_placeholder">સમસ્યા શું છે?</string>
+    <string name="home_add_context">સંદર્ભ ઉમેરો</string>
+    <string name="home_add_their_side">એમની વાત ઉમેરો</string>
+    <string name="home_remove_their_side">એમની વાત કાઢી નાખો</string>
+    <string name="home_send_link">લિંક મોકલો</string>
+    <string name="home_clear">સાફ કરો</string>
     <string name="home_lead">બંને બાજુની વાત લખો, અથવા સામેની વ્યક્તિને લિંક મોકલો, જેથી એ પોતાની વાત જાતે લખે.</string>
     <string name="home_lead_solo">તમારી વાત લખો, અને ખબર હોય તો એમની પણ.</string>
     <string name="home_their_side">એમની વાત</string>

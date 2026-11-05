@@ -351,6 +351,12 @@
     <string name="two_sided_would_change">この判定が変わるとしたら</string>
     <string name="appeal_title">補足する</string>
     <string name="home_example">例を試す</string>
+    <string name="home_your_placeholder">何があったの？</string>
+    <string name="home_add_context">状況を追加</string>
+    <string name="home_add_their_side">相手の言い分を追加</string>
+    <string name="home_remove_their_side">相手の言い分を削除</string>
+    <string name="home_send_link">リンクを送る</string>
+    <string name="home_clear">クリア</string>
     <string name="home_lead">両方の言い分を書くか、相手にリンクを送って言い分を書いてもらいましょう。</string>
     <string name="home_lead_solo">あなたの言い分を書いてください。わかれば相手の言い分も。</string>
     <string name="home_their_side">相手の言い分</string>

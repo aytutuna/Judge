@@ -367,6 +367,12 @@
     <string name="two_sided_would_change">מה היה משנה את פסק הדין</string>
     <string name="appeal_title">הוספת הקשר</string>
     <string name="home_example">לנסות דוגמה</string>
+    <string name="home_your_placeholder">מה הבעיה?</string>
+    <string name="home_add_context">להוסיף הקשר</string>
+    <string name="home_add_their_side">להוסיף את הצד השני</string>
+    <string name="home_remove_their_side">להסיר את הצד השני</string>
+    <string name="home_send_link">לשלוח קישור</string>
+    <string name="home_clear">ניקוי</string>
     <string name="home_lead">אפשר לכתוב את שני הצדדים, או לשלוח לצד השני קישור כדי שיכתוב את שלו.</string>
     <string name="home_lead_solo">אפשר לכתוב את הצד שלך, וגם את הצד השני אם הוא ידוע לך.</string>
     <string name="home_their_side">הצד השני</string>

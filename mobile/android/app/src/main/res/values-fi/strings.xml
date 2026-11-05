@@ -359,6 +359,12 @@
     <string name="two_sided_would_change">Mikä muuttaisi tämän tuomion</string>
     <string name="appeal_title">Lisää tietoa</string>
     <string name="home_example">Kokeile esimerkkiä</string>
+    <string name="home_your_placeholder">Mikä ongelma on?</string>
+    <string name="home_add_context">Lisää tausta</string>
+    <string name="home_add_their_side">Lisää toisen puoli</string>
+    <string name="home_remove_their_side">Poista toisen puoli</string>
+    <string name="home_send_link">Lähetä linkki</string>
+    <string name="home_clear">Tyhjennä</string>
     <string name="home_lead">Kirjoita molemmat puolet tai lähetä toiselle linkki, niin hän kirjoittaa omansa.</string>
     <string name="home_lead_solo">Kirjoita oma puolesi ja toisen puoli, jos tiedät sen.</string>
     <string name="home_their_side">Toisen puoli</string>

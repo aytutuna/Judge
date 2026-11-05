@@ -359,6 +359,12 @@
     <string name="two_sided_would_change">Was dieses Urteil ändern würde</string>
     <string name="appeal_title">Kontext ergänzen</string>
     <string name="home_example">Beispiel ausprobieren</string>
+    <string name="home_your_placeholder">Was ist das Problem?</string>
+    <string name="home_add_context">Kontext hinzufügen</string>
+    <string name="home_add_their_side">Gegenseite hinzufügen</string>
+    <string name="home_remove_their_side">Gegenseite entfernen</string>
+    <string name="home_send_link">Per Link einladen</string>
+    <string name="home_clear">Leeren</string>
     <string name="home_lead">Schreib beide Seiten auf oder schick der anderen Person einen Link für ihre Seite.</string>
     <string name="home_lead_solo">Schreib deine Seite auf und, wenn du sie kennst, auch die der anderen Person.</string>
     <string name="home_their_side">Gegenseite</string>

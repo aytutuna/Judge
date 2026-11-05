@@ -351,6 +351,12 @@
     <string name="two_sided_would_change">Apa yang boleh mengubah keputusan ini</string>
     <string name="appeal_title">Tambah konteks</string>
     <string name="home_example">Cuba contoh</string>
+    <string name="home_your_placeholder">Apa masalahnya?</string>
+    <string name="home_add_context">Tambah konteks</string>
+    <string name="home_add_their_side">Tambah versi dia</string>
+    <string name="home_remove_their_side">Buang versi dia</string>
+    <string name="home_send_link">Hantar pautan</string>
+    <string name="home_clear">Kosongkan</string>
     <string name="home_lead">Tulis kedua-dua versi, atau hantar pautan kepada pihak satu lagi supaya dia menulis versinya sendiri.</string>
     <string name="home_lead_solo">Tulis versi anda, dan versi dia juga kalau anda tahu.</string>
     <string name="home_their_side">Versi dia</string>
