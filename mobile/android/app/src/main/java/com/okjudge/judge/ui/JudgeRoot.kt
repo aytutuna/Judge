@@ -7,9 +7,18 @@ import androidx.browser.customtabs.CustomTabsIntent
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.WindowInsetsSides
+import androidx.compose.foundation.layout.displayCutout
+import androidx.compose.foundation.layout.only
+import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.systemBars
+import androidx.compose.foundation.layout.union
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -28,6 +37,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
@@ -124,9 +134,9 @@ import kotlinx.serialization.Serializable
 /** Sign-in; [thenVerdict] or [thenLink] when it was opened by "Get the verdict" or "Send them a link", which go on after signing in. */
 @Serializable data class SignInKey(val thenVerdict: Boolean, val thenLink: Boolean = false) : NavKey
 
-private enum class Tab { NEW, HISTORY, SETTINGS }
+internal enum class Tab { NEW, HISTORY, SETTINGS }
 
-/** App shell: language, theme, the back stack, the bottom bar and the sign-in gate. [onDark] hears the theme in use. */
+/** App shell: language, theme, the back stack, the tab bar and the sign-in gate. [onDark] hears the theme in use. */
 @Composable
 fun JudgeRoot(
     container: AppContainer,
@@ -237,14 +247,9 @@ fun JudgeRoot(
                 // Nothing under the age cover is read out or reachable.
                 modifier = if (ageGate == AgeGate.NONE) Modifier else Modifier.clearAndSetSemantics {},
                 containerColor = Palette.ivory,
-                snackbarHost = {
-                    SnackbarHost(snackbar) { data ->
-                        Snackbar(data, containerColor = Palette.ink, contentColor = Palette.ivory)
-                    }
-                },
-                bottomBar = {
-                    if (showsBottomBar(top)) {
-                        BottomBar(tab) { selected ->
+                topBar = {
+                    if (showsTabBar(top)) {
+                        TabBar(tab) { selected ->
                             backStack.resetTo(
                                 when (selected) {
                                     Tab.NEW -> listOf(HomeKey)
@@ -256,401 +261,405 @@ fun JudgeRoot(
                     }
                 },
             ) { padding ->
-                NavDisplay(
-                    backStack = backStack,
-                    modifier = Modifier.padding(padding).consumeWindowInsets(padding),
-                    onBack = { if (backStack.size > 1) backStack.removeAt(backStack.lastIndex) },
-                    entryDecorators = listOf(
-                        rememberSaveableStateHolderNavEntryDecorator(),
-                        rememberViewModelStoreNavEntryDecorator(),
-                    ),
-                    entryProvider = entryProvider {
-                        entry<HomeKey> {
-                            val vm = viewModel {
-                                HomeViewModel(
-                                    createSavedStateHandle(),
-                                    container.verdictFlow,
-                                    accountState = account.state,
-                                    providers = account.providers,
-                                    uploadEvidence = container.api::uploadEvidence,
-                                )
-                            }
-                            val state by vm.state.collectAsStateWithLifecycle()
-                            val analytics = container.analytics
-                            ScreenView(analytics, "home")
-                            ErrorShown(analytics, state.error)
-                            val counted: (Submitted) -> Submitted = {
-                                if (it == Submitted.CHECKING || it == Submitted.CREATING) analytics.track("case_submitted")
-                                it
-                            }
-                            LaunchedEffect(clearDraft) {
-                                if (clearDraft) {
-                                    vm.clear()
-                                    clearDraft = false
-                                }
-                            }
-                            LaunchedEffect(submitAfterSignIn, linkAfterSignIn, accountNow, ageGate, phoneAge, agePosting) {
-                                if (!submitAfterSignIn && !linkAfterSignIn) return@LaunchedEffect
-                                if (accountNow is Account.State.SignedOut) {
-                                    submitAfterSignIn = false
-                                    linkAfterSignIn = false
-                                } else if (account.ageRefusal() == null) {
-                                    // Waits for the age to be on record (the sheet, if it failed).
-                                    val link = linkAfterSignIn
-                                    submitAfterSignIn = false
-                                    linkAfterSignIn = false
-                                    val started = if (link) vm.sendLink(lang) else vm.submit(lang, strings)
-                                    if (counted(started) == Submitted.PRICING) openPricing()
-                                }
-                            }
-                            HomeScreen(
-                                state = state,
-                                onArgumentChange = { text ->
-                                    if (state.argument.isEmpty() && text.isNotEmpty()) analytics.track("case_started")
-                                    vm.onArgumentChange(text)
-                                },
-                                onOtherSideChange = vm::onOtherSideChange,
-                                onOtherName = vm::onOtherName,
-                                onSubmit = submit@{
-                                    // The phone's check or an age report is still running.
-                                    if (account.ageRefusal() != null) return@submit
-                                    when (counted(vm.submit(lang, strings))) {
-                                        // Every verdict needs an account: sign in first, then go on.
-                                        Submitted.SIGN_IN -> if (backStack.lastOrNull() !is SignInKey) backStack.add(SignInKey(thenVerdict = true))
-                                        Submitted.PRICING -> openPricing()
-                                        else -> Unit
-                                    }
-                                },
-                                onSendLink = link@{
-                                    if (account.ageRefusal() != null) return@link
-                                    when (counted(vm.sendLink(lang))) {
-                                        Submitted.SIGN_IN -> if (backStack.lastOrNull() !is SignInKey) backStack.add(SignInKey(thenVerdict = false, thenLink = true))
-                                        Submitted.PRICING -> openPricing()
-                                        else -> Unit
-                                    }
-                                },
-                                onExample = {
-                                    if (state.argument.isEmpty()) analytics.track("case_started")
-                                    vm.fillExample(strings)
-                                },
-                                onDismissError = vm::dismissError,
-                                onAddTheirSide = vm::addTheirSide,
-                                onRemoveTheirSide = vm::removeTheirSide,
-                                onClear = vm::clear,
-                                onAddEvidence = {
-                                    analytics.track("evidence_added")
-                                    vm.onAddEvidence(it)
-                                },
-                                onRemoveEvidence = vm::onRemoveEvidence,
-                                onDisplayName = vm::onDisplayName,
-                            )
-                        }
-                        entry<JudgingKey> {
-                            JudgingEntry(
-                                flow = container.verdictFlow,
-                                onDone = { id ->
-                                    // The case is done: "New" finds an empty form.
-                                    clearDraft = true
-                                    backStack.removeAll { it is JudgingKey }
-                                    backStack.add(VerdictKey(id))
-                                },
-                                onLeave = { backStack.removeAll { it is JudgingKey } },
-                            )
-                        }
-                        entry<ClarifyKey> {
-                            val step by container.verdictFlow.premiumStep.collectAsStateWithLifecycle()
-                            val clarify = step as? VerdictFlow.PremiumStep.Clarify
-                            var answers by rememberSaveable { mutableStateOf(mapOf<String, String>()) }
-                            LaunchedEffect(clarify == null) {
-                                // Nothing to ask (e.g. after the process was restarted): back to the form.
-                                if (clarify == null) backStack.removeAll { it is ClarifyKey }
-                            }
-                            if (clarify != null) {
-                                ClarifyScreen(
-                                    questions = clarify.questions,
-                                    answers = answers,
-                                    onAnswer = { id, value -> answers = answers + (id to value) },
-                                    onSubmit = {
-                                        container.analytics.track("question_answered")
-                                        container.verdictFlow.finishClarify(answers, skip = false)
-                                    },
-                                    onSkip = { container.verdictFlow.finishClarify(answers, skip = true) },
-                                    onBack = {
-                                        container.verdictFlow.leaveClarify()
-                                        backStack.removeAll { it is ClarifyKey }
-                                    },
-                                )
-                            }
-                        }
-                        entry<PricingKey> {
-                            val accountState by account.state.collectAsStateWithLifecycle()
-                            val providers by account.providers.collectAsStateWithLifecycle()
-                            val config = (providers as? Account.Providers.Ready)?.config
-                            val signedIn = accountState as? Account.State.SignedIn
-                            val purchases = container.purchases
-                            val store by purchases.state.collectAsStateWithLifecycle()
-                            LaunchedEffect(Unit) {
-                                purchases.refresh()
-                                account.refresh()
-                            }
-                            ScreenView(container.analytics, "pricing")
-                            PricingScreen(
-                                pricing = config?.pricing ?: PricingInfo(),
-                                features = config?.features,
-                                signedIn = signedIn != null,
-                                signInOffered = config?.signInOffered == true,
-                                entitlement = signedIn?.me?.entitlement,
-                                onBack = { backStack.removeAll { it is PricingKey } },
-                                onSignIn = { if (backStack.lastOrNull() !is SignInKey) backStack.add(SignInKey(thenVerdict = false)) },
-                                store = StoreUi(
-                                    available = store.available,
-                                    offers = if (purchases.isReady(store)) store.offers else emptyMap(),
-                                    buying = store.buying,
-                                    notice = store.notice,
-                                    subscriptionPending = PurchaseController.subscriptionPending(store, signedIn?.me?.entitlement),
-                                ),
-                                onBuy = { productId ->
-                                    container.analytics.track("buy_tapped", mapOf("product" to productId))
-                                    purchases.buy(context, productId)
-                                },
-                                onOpenTerms = { openLink(context, "$site/terms") },
-                                onOpenPrivacy = { openLink(context, "$site/privacy") },
-                            )
-                        }
-                        entry<VerdictKey> { key ->
-                            val vm = viewModel(key = "verdict-${key.id}") {
-                                VerdictViewModel(key.id, container.history, container.api)
-                            }
-                            val accountState by account.state.collectAsStateWithLifecycle()
-                            val providers by account.providers.collectAsStateWithLifecycle()
-                            // Once per verdict, not again on the way back from a screen above it.
-                            var viewed by rememberSaveable { mutableStateOf(false) }
-                            LaunchedEffect(Unit) {
-                                if (!viewed) container.analytics.track("verdict_viewed")
-                                viewed = true
-                            }
-                            // Only the signed-in writer is told they may add context.
-                            val appeal = if (accountState is Account.State.SignedIn) {
-                                viewModel(key = "verdict-appeal-${key.id}") {
-                                    VerdictAppealViewModel(
-                                        key.id, container.api, container.history,
-                                        onEntitlement = { account.applyEntitlement(it) },
-                                        refreshAccount = { account.refresh() },
+                Box(Modifier.padding(padding).consumeWindowInsets(padding)) {
+                    NavDisplay(
+                        backStack = backStack,
+                        onBack = { if (backStack.size > 1) backStack.removeAt(backStack.lastIndex) },
+                        entryDecorators = listOf(
+                            rememberSaveableStateHolderNavEntryDecorator(),
+                            rememberViewModelStoreNavEntryDecorator(),
+                        ),
+                        entryProvider = entryProvider {
+                            entry<HomeKey> {
+                                val vm = viewModel {
+                                    HomeViewModel(
+                                        createSavedStateHandle(),
+                                        container.verdictFlow,
+                                        accountState = account.state,
+                                        providers = account.providers,
+                                        uploadEvidence = container.api::uploadEvidence,
                                     )
                                 }
-                            } else {
-                                null
-                            }
-                            VerdictRoute(
-                                id = key.id,
-                                viewModel = vm,
-                                shareBaseUrl = container.config.shareBaseUrl,
-                                onBack = { backStack.removeAll { it == key } },
-                                // A verdict just judged sits right above the form; one from the list, above the list.
-                                backLabel = if (backStack.getOrNull(backStack.indexOf(key) - 1) is HomeKey) strings.appTabNew else strings.navVerdicts,
-                                appeal = appeal,
-                                evidenceOn = (providers as? Account.Providers.Ready)?.config?.features?.evidence == true,
-                                onSignIn = { if (backStack.lastOrNull() !is SignInKey) backStack.add(SignInKey(thenVerdict = false)) },
-                                onPricing = { if (backStack.lastOrNull() !is PricingKey) backStack.add(PricingKey) },
-                                onShared = { container.analytics.track("share_tapped") },
-                            )
-                        }
-                        entry<HistoryKey> {
-                            val providers by account.providers.collectAsStateWithLifecycle()
-                            val historyOn = (providers as? Account.Providers.Ready)?.config?.features?.history == true
-                            ScreenView(container.analytics, "verdicts")
-                            val vm = viewModel {
-                                HistoryViewModel(
-                                    container.history, container.api, container.historyUser,
-                                    syncOn = { (account.providers.value as? Account.Providers.Ready)?.config?.features?.history == true },
-                                )
-                            }
-                            val entries by vm.entries.collectAsStateWithLifecycle()
-                            val paging by vm.paging.collectAsStateWithLifecycle()
-                            val notice by vm.notice.collectAsStateWithLifecycle()
-                            val thinking = entries.orEmpty().any { (it as? HistoryEntry.Account)?.item?.historyState?.thinking == true }
-                            val lifecycle = LocalLifecycleOwner.current.lifecycle
-                            LaunchedEffect(historyOn) { vm.refresh() }
-                            // While the judges work on a row, the list is read again now and then.
-                            LaunchedEffect(thinking, historyOn) {
-                                if (!thinking || !historyOn) return@LaunchedEffect
-                                lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                                    while (true) {
-                                        delay(HistoryViewModel.POLL_MS)
-                                        vm.refresh(force = true)
+                                val state by vm.state.collectAsStateWithLifecycle()
+                                val analytics = container.analytics
+                                ScreenView(analytics, "home")
+                                ErrorShown(analytics, state.error)
+                                val counted: (Submitted) -> Submitted = {
+                                    if (it == Submitted.CHECKING || it == Submitted.CREATING) analytics.track("case_submitted")
+                                    it
+                                }
+                                LaunchedEffect(clearDraft) {
+                                    if (clearDraft) {
+                                        vm.clear()
+                                        clearDraft = false
                                     }
                                 }
-                            }
-                            HistoryScreen(
-                                entries = entries,
-                                onOpen = { e ->
-                                    when (e) {
-                                        is HistoryEntry.Phone -> backStack.add(VerdictKey(e.verdict.id))
-                                        is HistoryEntry.Account -> {
-                                            val item = e.item
-                                            when {
-                                                !item.isCase -> vm.openVerdict(item) { id -> backStack.add(VerdictKey(id)) }
-                                                // Answering is done on the website: the case opens there too.
-                                                item.isRespondent -> item.inviteToken?.let { openLink(context, "${container.config.shareBaseUrl.trimEnd('/')}/r/$it") }
-                                                else -> backStack.add(CaseKey(item.id))
-                                            }
+                                LaunchedEffect(submitAfterSignIn, linkAfterSignIn, accountNow, ageGate, phoneAge, agePosting) {
+                                    if (!submitAfterSignIn && !linkAfterSignIn) return@LaunchedEffect
+                                    if (accountNow is Account.State.SignedOut) {
+                                        submitAfterSignIn = false
+                                        linkAfterSignIn = false
+                                    } else if (account.ageRefusal() == null) {
+                                        // Waits for the age to be on record (the sheet, if it failed).
+                                        val link = linkAfterSignIn
+                                        submitAfterSignIn = false
+                                        linkAfterSignIn = false
+                                        val started = if (link) vm.sendLink(lang) else vm.submit(lang, strings)
+                                        if (counted(started) == Submitted.PRICING) openPricing()
+                                    }
+                                }
+                                HomeScreen(
+                                    state = state,
+                                    onArgumentChange = { text ->
+                                        if (state.argument.isEmpty() && text.isNotEmpty()) analytics.track("case_started")
+                                        vm.onArgumentChange(text)
+                                    },
+                                    onOtherSideChange = vm::onOtherSideChange,
+                                    onOtherName = vm::onOtherName,
+                                    onSubmit = submit@{
+                                        // The phone's check or an age report is still running.
+                                        if (account.ageRefusal() != null) return@submit
+                                        when (counted(vm.submit(lang, strings))) {
+                                            // Every verdict needs an account: sign in first, then go on.
+                                            Submitted.SIGN_IN -> if (backStack.lastOrNull() !is SignInKey) backStack.add(SignInKey(thenVerdict = true))
+                                            Submitted.PRICING -> openPricing()
+                                            else -> Unit
                                         }
-                                    }
-                                },
-                                onRemove = vm::remove,
-                                paging = paging,
-                                notice = notice,
-                                onLoadMore = vm::loadMore,
-                                onRetry = { vm.refresh(force = true) },
-                            )
-                        }
-                        entry<CaseKey> { key ->
-                            val vm = viewModel(key = "case-${key.id}") {
-                                CaseViewModel(
-                                    key.id, container.api, container.caseNames,
-                                    onEntitlement = { account.applyEntitlement(it) },
-                                    refreshAccount = { account.refresh() },
-                                    saved = createSavedStateHandle(),
+                                    },
+                                    onSendLink = link@{
+                                        if (account.ageRefusal() != null) return@link
+                                        when (counted(vm.sendLink(lang))) {
+                                            Submitted.SIGN_IN -> if (backStack.lastOrNull() !is SignInKey) backStack.add(SignInKey(thenVerdict = false, thenLink = true))
+                                            Submitted.PRICING -> openPricing()
+                                            else -> Unit
+                                        }
+                                    },
+                                    onExample = {
+                                        if (state.argument.isEmpty()) analytics.track("case_started")
+                                        vm.fillExample(strings)
+                                    },
+                                    onDismissError = vm::dismissError,
+                                    onAddTheirSide = vm::addTheirSide,
+                                    onRemoveTheirSide = vm::removeTheirSide,
+                                    onClear = vm::clear,
+                                    onAddEvidence = {
+                                        analytics.track("evidence_added")
+                                        vm.onAddEvidence(it)
+                                    },
+                                    onRemoveEvidence = vm::onRemoveEvidence,
+                                    onDisplayName = vm::onDisplayName,
                                 )
                             }
-                            val state by vm.state.collectAsStateWithLifecycle()
-                            val accountState by account.state.collectAsStateWithLifecycle()
-                            val providers by account.providers.collectAsStateWithLifecycle()
-                            val signedIn = accountState is Account.State.SignedIn
-                            val analytics = container.analytics
-                            ScreenView(analytics, "case_detail")
-                            ErrorShown(analytics, state.actionError)
-                            LaunchedEffect(signedIn) {
-                                // Signed in from the case screen: read it again.
-                                if (signedIn && state.status == CaseLoadStatus.SIGNIN) vm.reload()
-                            }
-                            val shareBase = container.config.shareBaseUrl
-                            CaseScreen(
-                                state = state,
-                                evidenceOn = (providers as? Account.Providers.Ready)?.config?.features?.evidence == true,
-                                reducedMotion = rememberReducedMotion(),
-                                otherName = key.otherName ?: vm.otherName,
-                                actions = CaseActions(
-                                    onBack = if (backStack.size > 1) ({ backStack.removeAt(backStack.lastIndex) }) else null,
-                                    onReload = vm::reload,
-                                    onSignIn = { if (backStack.lastOrNull() !is SignInKey) backStack.add(SignInKey(thenVerdict = false)) },
-                                    onPricing = { if (backStack.lastOrNull() !is PricingKey) backStack.add(PricingKey) },
-                                    onStartOver = {
+                            entry<JudgingKey> {
+                                JudgingEntry(
+                                    flow = container.verdictFlow,
+                                    onDone = { id ->
+                                        // The case is done: "New" finds an empty form.
                                         clearDraft = true
-                                        backStack.resetTo(listOf(HomeKey))
+                                        backStack.removeAll { it is JudgingKey }
+                                        backStack.add(VerdictKey(id))
                                     },
-                                    onJudgeNow = { vm.judge(onlyMine = true) },
-                                    onRetry = { vm.judge(onlyMine = false) },
-                                    onResetInvite = vm::resetInvite,
-                                    onRemove = vm::remove,
-                                    onCopyInvite = { copyLink(context, it) },
-                                    onShareInvite = {
-                                        analytics.track("share_tapped")
-                                        shareInvite(context, currentStrings.appShareTitle, currentStrings.caseInviteShareText, it)
-                                    },
-                                    onOverlayFinished = vm::finishOverlay,
-                                    onAppealText = vm::onAppealText,
-                                    onAddAppealEvidence = {
-                                        analytics.track("evidence_added")
-                                        vm.onAddAppealEvidence(it)
-                                    },
-                                    onRemoveAppealEvidence = vm::onRemoveAppealEvidence,
-                                    onSubmitAppeal = vm::submitAppeal,
-                                    onSideText = vm::onSideText,
-                                    onAddSideEvidence = {
-                                        analytics.track("evidence_added")
-                                        vm.onAddSideEvidence(it)
-                                    },
-                                    onRemoveSideEvidence = vm::onRemoveSideEvidence,
-                                    onSubmitSide = vm::submitSide,
-                                    onTypedName = vm::onTypedName,
-                                    onSaveName = vm::saveDisplayName,
-                                    onNamesVisible = vm::setNamesVisible,
-                                    onShareVerdict = { id, headline ->
-                                        analytics.track("share_tapped")
-                                        shareVerdict(context, currentStrings.appShareTitle, headline, currentStrings.shareText, shareUrl(shareBase, id))
-                                    },
-                                    onCopyVerdict = { id -> copyLink(context, shareUrl(shareBase, id)) },
-                                ),
-                            )
-                        }
-                        entry<SettingsKey> {
-                            val accountState by account.state.collectAsStateWithLifecycle()
-                            val accountBusy by account.working.collectAsStateWithLifecycle()
-                            val providers by account.providers.collectAsStateWithLifecycle()
-                            val purchases = container.purchases
-                            val store by purchases.state.collectAsStateWithLifecycle()
-                            val purchasesOn = (providers as? Account.Providers.Ready)?.config?.pricing?.purchasesEnabled == true
-                            val usageStats by container.settings.usageStats.collectAsStateWithLifecycle(initialValue = true)
-                            LaunchedEffect(Unit) {
-                                purchases.refresh()
-                                account.refresh()
+                                    onLeave = { backStack.removeAll { it is JudgingKey } },
+                                )
                             }
-                            ScreenView(container.analytics, "settings")
-                            SettingsScreen(
-                                langPref = langPref,
-                                versionName = container.config.versionName,
-                                onLangPref = { pref ->
-                                    container.analytics.track("settings_changed", mapOf("key" to "language"))
-                                    scope.launch { container.settings.setLangPref(pref) }
-                                },
-                                appearance = appearance,
-                                onAppearance = { a ->
-                                    container.analytics.track("settings_changed", mapOf("key" to "appearance"))
-                                    scope.launch { container.settings.setAppearance(a) }
-                                },
-                                usageStats = usageStats,
-                                onUsageStats = { on -> scope.launch { container.settings.setUsageStats(on) } },
-                                onOpenLink = { openLink(context, it) },
-                                siteBaseUrl = container.config.shareBaseUrl,
-                                account = accountState,
-                                accountBusy = accountBusy,
-                                onSignIn = { if (backStack.lastOrNull() !is SignInKey) backStack.add(SignInKey(thenVerdict = false)) },
-                                onOpenPricing = { if (backStack.lastOrNull() !is PricingKey) backStack.add(PricingKey) },
-                                // App scope: leaving the screen must not stop a sign-out or deletion halfway.
-                                onSignOut = { container.appScope.launch { account.signOut() } },
-                                onDeleteAccount = { container.appScope.launch { account.deleteAccount() } },
-                                restore = if (purchasesOn && purchases.isReady(store)) RestoreUi(store.restoring, store.restoreNotice) else null,
-                                onRestore = { purchases.restore() },
-                            )
-                        }
-                        entry<SignInKey> { key ->
-                            val vm = viewModel { SignInViewModel(account) }
-                            val state by vm.state.collectAsStateWithLifecycle()
-                            ScreenView(container.analytics, "sign_in")
-                            LaunchedEffect(state.done) {
-                                if (state.done) {
-                                    backStack.removeAll { it is SignInKey }
-                                    if (key.thenVerdict) submitAfterSignIn = true
-                                    if (key.thenLink) linkAfterSignIn = true
+                            entry<ClarifyKey> {
+                                val step by container.verdictFlow.premiumStep.collectAsStateWithLifecycle()
+                                val clarify = step as? VerdictFlow.PremiumStep.Clarify
+                                var answers by rememberSaveable { mutableStateOf(mapOf<String, String>()) }
+                                LaunchedEffect(clarify == null) {
+                                    // Nothing to ask (e.g. after the process was restarted): back to the form.
+                                    if (clarify == null) backStack.removeAll { it is ClarifyKey }
+                                }
+                                if (clarify != null) {
+                                    ClarifyScreen(
+                                        questions = clarify.questions,
+                                        answers = answers,
+                                        onAnswer = { id, value -> answers = answers + (id to value) },
+                                        onSubmit = {
+                                            container.analytics.track("question_answered")
+                                            container.verdictFlow.finishClarify(answers, skip = false)
+                                        },
+                                        onSkip = { container.verdictFlow.finishClarify(answers, skip = true) },
+                                        onBack = {
+                                            container.verdictFlow.leaveClarify()
+                                            backStack.removeAll { it is ClarifyKey }
+                                        },
+                                    )
                                 }
                             }
-                            SignInScreen(
-                                state = state,
-                                onBack = { backStack.removeAll { it is SignInKey } },
-                                actions = SignInActions(
-                                    onGoogle = {
-                                        container.analytics.track("sign_in_started", mapOf("provider" to "google"))
-                                        vm.google(context)
+                            entry<PricingKey> {
+                                val accountState by account.state.collectAsStateWithLifecycle()
+                                val providers by account.providers.collectAsStateWithLifecycle()
+                                val config = (providers as? Account.Providers.Ready)?.config
+                                val signedIn = accountState as? Account.State.SignedIn
+                                val purchases = container.purchases
+                                val store by purchases.state.collectAsStateWithLifecycle()
+                                LaunchedEffect(Unit) {
+                                    purchases.refresh()
+                                    account.refresh()
+                                }
+                                ScreenView(container.analytics, "pricing")
+                                PricingScreen(
+                                    pricing = config?.pricing ?: PricingInfo(),
+                                    features = config?.features,
+                                    signedIn = signedIn != null,
+                                    signInOffered = config?.signInOffered == true,
+                                    entitlement = signedIn?.me?.entitlement,
+                                    onBack = { backStack.removeAll { it is PricingKey } },
+                                    onSignIn = { if (backStack.lastOrNull() !is SignInKey) backStack.add(SignInKey(thenVerdict = false)) },
+                                    store = StoreUi(
+                                        available = store.available,
+                                        offers = if (purchases.isReady(store)) store.offers else emptyMap(),
+                                        buying = store.buying,
+                                        notice = store.notice,
+                                        subscriptionPending = PurchaseController.subscriptionPending(store, signedIn?.me?.entitlement),
+                                    ),
+                                    onBuy = { productId ->
+                                        container.analytics.track("buy_tapped", mapOf("product" to productId))
+                                        purchases.buy(context, productId)
                                     },
-                                    onEmailChange = vm::onEmailChange,
-                                    onRequestCode = {
-                                        container.analytics.track("sign_in_started", mapOf("provider" to "email"))
-                                        vm.requestCode(lang)
-                                    },
-                                    onCodeChange = vm::onCodeChange,
-                                    onSubmitCode = vm::submitCode,
-                                    onResend = { vm.resend(lang) },
-                                    onChangeEmail = vm::changeEmail,
-                                    onRetryProviders = vm::retryProviders,
-                                    onAgeTicked = vm::onAgeTicked,
                                     onOpenTerms = { openLink(context, "$site/terms") },
                                     onOpenPrivacy = { openLink(context, "$site/privacy") },
-                                ),
-                            )
-                        }
-                    },
-                )
+                                )
+                            }
+                            entry<VerdictKey> { key ->
+                                val vm = viewModel(key = "verdict-${key.id}") {
+                                    VerdictViewModel(key.id, container.history, container.api)
+                                }
+                                val accountState by account.state.collectAsStateWithLifecycle()
+                                val providers by account.providers.collectAsStateWithLifecycle()
+                                // Once per verdict, not again on the way back from a screen above it.
+                                var viewed by rememberSaveable { mutableStateOf(false) }
+                                LaunchedEffect(Unit) {
+                                    if (!viewed) container.analytics.track("verdict_viewed")
+                                    viewed = true
+                                }
+                                // Only the signed-in writer is told they may add context.
+                                val appeal = if (accountState is Account.State.SignedIn) {
+                                    viewModel(key = "verdict-appeal-${key.id}") {
+                                        VerdictAppealViewModel(
+                                            key.id, container.api, container.history,
+                                            onEntitlement = { account.applyEntitlement(it) },
+                                            refreshAccount = { account.refresh() },
+                                        )
+                                    }
+                                } else {
+                                    null
+                                }
+                                VerdictRoute(
+                                    id = key.id,
+                                    viewModel = vm,
+                                    shareBaseUrl = container.config.shareBaseUrl,
+                                    onBack = { backStack.removeAll { it == key } },
+                                    // A verdict just judged sits right above the form; one from the list, above the list.
+                                    backLabel = if (backStack.getOrNull(backStack.indexOf(key) - 1) is HomeKey) strings.appTabNew else strings.navVerdicts,
+                                    appeal = appeal,
+                                    evidenceOn = (providers as? Account.Providers.Ready)?.config?.features?.evidence == true,
+                                    onSignIn = { if (backStack.lastOrNull() !is SignInKey) backStack.add(SignInKey(thenVerdict = false)) },
+                                    onPricing = { if (backStack.lastOrNull() !is PricingKey) backStack.add(PricingKey) },
+                                    onShared = { container.analytics.track("share_tapped") },
+                                )
+                            }
+                            entry<HistoryKey> {
+                                val providers by account.providers.collectAsStateWithLifecycle()
+                                val historyOn = (providers as? Account.Providers.Ready)?.config?.features?.history == true
+                                ScreenView(container.analytics, "verdicts")
+                                val vm = viewModel {
+                                    HistoryViewModel(
+                                        container.history, container.api, container.historyUser,
+                                        syncOn = { (account.providers.value as? Account.Providers.Ready)?.config?.features?.history == true },
+                                    )
+                                }
+                                val entries by vm.entries.collectAsStateWithLifecycle()
+                                val paging by vm.paging.collectAsStateWithLifecycle()
+                                val notice by vm.notice.collectAsStateWithLifecycle()
+                                val thinking = entries.orEmpty().any { (it as? HistoryEntry.Account)?.item?.historyState?.thinking == true }
+                                val lifecycle = LocalLifecycleOwner.current.lifecycle
+                                LaunchedEffect(historyOn) { vm.refresh() }
+                                // While the judges work on a row, the list is read again now and then.
+                                LaunchedEffect(thinking, historyOn) {
+                                    if (!thinking || !historyOn) return@LaunchedEffect
+                                    lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                                        while (true) {
+                                            delay(HistoryViewModel.POLL_MS)
+                                            vm.refresh(force = true)
+                                        }
+                                    }
+                                }
+                                HistoryScreen(
+                                    entries = entries,
+                                    onOpen = { e ->
+                                        when (e) {
+                                            is HistoryEntry.Phone -> backStack.add(VerdictKey(e.verdict.id))
+                                            is HistoryEntry.Account -> {
+                                                val item = e.item
+                                                when {
+                                                    !item.isCase -> vm.openVerdict(item) { id -> backStack.add(VerdictKey(id)) }
+                                                    // Answering is done on the website: the case opens there too.
+                                                    item.isRespondent -> item.inviteToken?.let { openLink(context, "${container.config.shareBaseUrl.trimEnd('/')}/r/$it") }
+                                                    else -> backStack.add(CaseKey(item.id))
+                                                }
+                                            }
+                                        }
+                                    },
+                                    onRemove = vm::remove,
+                                    paging = paging,
+                                    notice = notice,
+                                    onLoadMore = vm::loadMore,
+                                    onRetry = { vm.refresh(force = true) },
+                                )
+                            }
+                            entry<CaseKey> { key ->
+                                val vm = viewModel(key = "case-${key.id}") {
+                                    CaseViewModel(
+                                        key.id, container.api, container.caseNames,
+                                        onEntitlement = { account.applyEntitlement(it) },
+                                        refreshAccount = { account.refresh() },
+                                        saved = createSavedStateHandle(),
+                                    )
+                                }
+                                val state by vm.state.collectAsStateWithLifecycle()
+                                val accountState by account.state.collectAsStateWithLifecycle()
+                                val providers by account.providers.collectAsStateWithLifecycle()
+                                val signedIn = accountState is Account.State.SignedIn
+                                val analytics = container.analytics
+                                ScreenView(analytics, "case_detail")
+                                ErrorShown(analytics, state.actionError)
+                                LaunchedEffect(signedIn) {
+                                    // Signed in from the case screen: read it again.
+                                    if (signedIn && state.status == CaseLoadStatus.SIGNIN) vm.reload()
+                                }
+                                val shareBase = container.config.shareBaseUrl
+                                CaseScreen(
+                                    state = state,
+                                    evidenceOn = (providers as? Account.Providers.Ready)?.config?.features?.evidence == true,
+                                    reducedMotion = rememberReducedMotion(),
+                                    otherName = key.otherName ?: vm.otherName,
+                                    actions = CaseActions(
+                                        onBack = if (backStack.size > 1) ({ backStack.removeAt(backStack.lastIndex) }) else null,
+                                        onReload = vm::reload,
+                                        onSignIn = { if (backStack.lastOrNull() !is SignInKey) backStack.add(SignInKey(thenVerdict = false)) },
+                                        onPricing = { if (backStack.lastOrNull() !is PricingKey) backStack.add(PricingKey) },
+                                        onStartOver = {
+                                            clearDraft = true
+                                            backStack.resetTo(listOf(HomeKey))
+                                        },
+                                        onJudgeNow = { vm.judge(onlyMine = true) },
+                                        onRetry = { vm.judge(onlyMine = false) },
+                                        onResetInvite = vm::resetInvite,
+                                        onRemove = vm::remove,
+                                        onCopyInvite = { copyLink(context, it) },
+                                        onShareInvite = {
+                                            analytics.track("share_tapped")
+                                            shareInvite(context, currentStrings.appShareTitle, currentStrings.caseInviteShareText, it)
+                                        },
+                                        onOverlayFinished = vm::finishOverlay,
+                                        onAppealText = vm::onAppealText,
+                                        onAddAppealEvidence = {
+                                            analytics.track("evidence_added")
+                                            vm.onAddAppealEvidence(it)
+                                        },
+                                        onRemoveAppealEvidence = vm::onRemoveAppealEvidence,
+                                        onSubmitAppeal = vm::submitAppeal,
+                                        onSideText = vm::onSideText,
+                                        onAddSideEvidence = {
+                                            analytics.track("evidence_added")
+                                            vm.onAddSideEvidence(it)
+                                        },
+                                        onRemoveSideEvidence = vm::onRemoveSideEvidence,
+                                        onSubmitSide = vm::submitSide,
+                                        onTypedName = vm::onTypedName,
+                                        onSaveName = vm::saveDisplayName,
+                                        onNamesVisible = vm::setNamesVisible,
+                                        onShareVerdict = { id, headline ->
+                                            analytics.track("share_tapped")
+                                            shareVerdict(context, currentStrings.appShareTitle, headline, currentStrings.shareText, shareUrl(shareBase, id))
+                                        },
+                                        onCopyVerdict = { id -> copyLink(context, shareUrl(shareBase, id)) },
+                                    ),
+                                )
+                            }
+                            entry<SettingsKey> {
+                                val accountState by account.state.collectAsStateWithLifecycle()
+                                val accountBusy by account.working.collectAsStateWithLifecycle()
+                                val providers by account.providers.collectAsStateWithLifecycle()
+                                val purchases = container.purchases
+                                val store by purchases.state.collectAsStateWithLifecycle()
+                                val purchasesOn = (providers as? Account.Providers.Ready)?.config?.pricing?.purchasesEnabled == true
+                                val usageStats by container.settings.usageStats.collectAsStateWithLifecycle(initialValue = true)
+                                LaunchedEffect(Unit) {
+                                    purchases.refresh()
+                                    account.refresh()
+                                }
+                                ScreenView(container.analytics, "settings")
+                                SettingsScreen(
+                                    langPref = langPref,
+                                    versionName = container.config.versionName,
+                                    onLangPref = { pref ->
+                                        container.analytics.track("settings_changed", mapOf("key" to "language"))
+                                        scope.launch { container.settings.setLangPref(pref) }
+                                    },
+                                    appearance = appearance,
+                                    onAppearance = { a ->
+                                        container.analytics.track("settings_changed", mapOf("key" to "appearance"))
+                                        scope.launch { container.settings.setAppearance(a) }
+                                    },
+                                    usageStats = usageStats,
+                                    onUsageStats = { on -> scope.launch { container.settings.setUsageStats(on) } },
+                                    onOpenLink = { openLink(context, it) },
+                                    siteBaseUrl = container.config.shareBaseUrl,
+                                    account = accountState,
+                                    accountBusy = accountBusy,
+                                    onSignIn = { if (backStack.lastOrNull() !is SignInKey) backStack.add(SignInKey(thenVerdict = false)) },
+                                    onOpenPricing = { if (backStack.lastOrNull() !is PricingKey) backStack.add(PricingKey) },
+                                    // App scope: leaving the screen must not stop a sign-out or deletion halfway.
+                                    onSignOut = { container.appScope.launch { account.signOut() } },
+                                    onDeleteAccount = { container.appScope.launch { account.deleteAccount() } },
+                                    restore = if (purchasesOn && purchases.isReady(store)) RestoreUi(store.restoring, store.restoreNotice) else null,
+                                    onRestore = { purchases.restore() },
+                                )
+                            }
+                            entry<SignInKey> { key ->
+                                val vm = viewModel { SignInViewModel(account) }
+                                val state by vm.state.collectAsStateWithLifecycle()
+                                ScreenView(container.analytics, "sign_in")
+                                LaunchedEffect(state.done) {
+                                    if (state.done) {
+                                        backStack.removeAll { it is SignInKey }
+                                        if (key.thenVerdict) submitAfterSignIn = true
+                                        if (key.thenLink) linkAfterSignIn = true
+                                    }
+                                }
+                                SignInScreen(
+                                    state = state,
+                                    onBack = { backStack.removeAll { it is SignInKey } },
+                                    actions = SignInActions(
+                                        onGoogle = {
+                                            container.analytics.track("sign_in_started", mapOf("provider" to "google"))
+                                            vm.google(context)
+                                        },
+                                        onEmailChange = vm::onEmailChange,
+                                        onRequestCode = {
+                                            container.analytics.track("sign_in_started", mapOf("provider" to "email"))
+                                            vm.requestCode(lang)
+                                        },
+                                        onCodeChange = vm::onCodeChange,
+                                        onSubmitCode = vm::submitCode,
+                                        onResend = { vm.resend(lang) },
+                                        onChangeEmail = vm::changeEmail,
+                                        onRetryProviders = vm::retryProviders,
+                                        onAgeTicked = vm::onAgeTicked,
+                                        onOpenTerms = { openLink(context, "$site/terms") },
+                                        onOpenPrivacy = { openLink(context, "$site/privacy") },
+                                    ),
+                                )
+                            }
+                        },
+                    )
+                    SnackbarHost(snackbar, Modifier.align(Alignment.TopCenter).statusBarsPadding()) { data ->
+                        Snackbar(data, containerColor = Palette.ink, contentColor = Palette.ivory)
+                    }
+                }
             }
             AgeOverlay(
                 gate = ageGate,
@@ -792,35 +801,38 @@ private fun ErrorShown(analytics: Analytics, error: UiError?) {
 }
 
 /** The tab bar stays off judging, sign-in and the questions. */
-internal fun showsBottomBar(top: NavKey?): Boolean = when (top) {
+internal fun showsTabBar(top: NavKey?): Boolean = when (top) {
     is JudgingKey, is SignInKey, is ClarifyKey -> false
     else -> true
 }
 
 @Composable
-private fun BottomBar(selected: Tab, onSelect: (Tab) -> Unit) {
+internal fun TabBar(selected: Tab, onSelect: (Tab) -> Unit) {
     val s = LocalStrings.current
-    NavigationBar(containerColor = Palette.ivory, tonalElevation = 0.dp) {
-        val colors = NavigationBarItemDefaults.colors(
-            selectedIconColor = Palette.terraInk,
-            selectedTextColor = Palette.terraInk,
-            indicatorColor = Color.Transparent,
-            unselectedIconColor = Palette.muted,
-            unselectedTextColor = Palette.muted,
-        )
-        listOf(
-            Triple(Tab.NEW, s.appTabNew, JudgeIcons.plus(Palette.ink)),
-            Triple(Tab.HISTORY, s.navVerdicts, JudgeIcons.list(Palette.ink)),
-            Triple(Tab.SETTINGS, s.appTabSettings, JudgeIcons.gear(Palette.ink)),
-        ).forEach { (tab, label, icon) ->
-            NavigationBarItem(
-                selected = tab == selected,
-                onClick = { onSelect(tab) },
-                icon = { Icon(icon, contentDescription = null) },
-                label = { Text(label, style = JudgeType.material.labelMedium) },
-                colors = colors,
+    Column {
+        NavigationBar(containerColor = Palette.ivory, tonalElevation = 0.dp, windowInsets = WindowInsets.systemBars.union(WindowInsets.displayCutout).only(WindowInsetsSides.Top + WindowInsetsSides.Horizontal)) {
+            val colors = NavigationBarItemDefaults.colors(
+                selectedIconColor = Palette.terraInk,
+                selectedTextColor = Palette.terraInk,
+                indicatorColor = Color.Transparent,
+                unselectedIconColor = Palette.muted,
+                unselectedTextColor = Palette.muted,
             )
+            listOf(
+                Triple(Tab.NEW, s.appTabNew, JudgeIcons.plus(Palette.ink)),
+                Triple(Tab.HISTORY, s.navVerdicts, JudgeIcons.list(Palette.ink)),
+                Triple(Tab.SETTINGS, s.appTabSettings, JudgeIcons.gear(Palette.ink)),
+            ).forEach { (tab, label, icon) ->
+                NavigationBarItem(
+                    selected = tab == selected,
+                    onClick = { onSelect(tab) },
+                    icon = { Icon(icon, contentDescription = null) },
+                    label = { Text(label, style = JudgeType.material.labelMedium) },
+                    colors = colors,
+                )
+            }
         }
+        HorizontalDivider(color = Palette.line)
     }
 }
 
