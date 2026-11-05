@@ -1,6 +1,5 @@
 import SwiftData
 import SwiftUI
-import UIKit
 
 @main
 struct JudgeApp: App {
@@ -57,16 +56,13 @@ struct RootView: View {
     var body: some View {
         let lang = app.lang
         @Bindable var account = app.account
-        VStack(spacing: 0) {
-            if !app.barHidden.contains(app.tab) {
-                TopBar()
-            }
-            ZStack {
-                page(.new) { HomeTab() }
-                page(.history) { HistoryTab() }
-                page(.settings) { SettingsView() }
-            }
+        ZStack {
+            page(.new) { HomeTab() }
+            page(.history) { HistoryTab() }
+            page(.settings) { SettingsView() }
         }
+        .accessibilityHidden(app.menuOpen)
+        .overlay { SideMenu() }
         .background(Brand.ivory.ignoresSafeArea())
         .accessibilityHidden(ageCovered)
         .sheet(isPresented: $account.isSignInPresented, onDismiss: { app.account.signInDismissed() }) {
@@ -142,53 +138,6 @@ struct RootView: View {
     }
 }
 
-/// New, Verdicts and Settings, above the pages.
-private struct TopBar: View {
-    @Environment(AppModel.self) private var app
-
-    var body: some View {
-        let lang = app.lang
-        HStack(spacing: 0) {
-            item(.new, title: L10n.appTabNew(lang), symbol: "square.and.pencil")
-            item(.history, title: L10n.navVerdicts(lang), symbol: "clock.arrow.circlepath")
-            item(.settings, title: L10n.appTabSettings(lang), symbol: "gearshape")
-        }
-        .padding(.horizontal, 8)
-        .padding(.top, 6)
-        .padding(.bottom, 4)
-        .background(Brand.ivory.ignoresSafeArea(edges: .top))
-        .overlay(alignment: .bottom) {
-            Rectangle().fill(Brand.line).frame(height: 1)
-        }
-    }
-
-    private func item(_ tab: RootTab, title: String, symbol: String) -> some View {
-        let selected = app.tab == tab
-        return Button {
-            if !selected {
-                // The hidden pages keep the keyboard otherwise.
-                UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-            }
-            app.select(tab)
-        } label: {
-            VStack(spacing: 4) {
-                Image(systemName: symbol)
-                    .font(.system(size: 20))
-                    .accessibilityHidden(true)
-                Text(title)
-                    .brandText(TypeStyle(face: .inter, weight: selected ? 600 : 500, size: 11, lineHeight: 1.2, textStyle: .caption2, maxScale: 1.6))
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.8)
-            }
-            .foregroundStyle(selected ? Brand.terraInk : Brand.muted)
-            .frame(maxWidth: .infinity, minHeight: 52)
-            .contentShape(Rectangle())
-        }
-        .buttonStyle(.plain)
-        .accessibilityAddTraits(selected ? .isSelected : [])
-    }
-}
-
 private struct PageTabKey: EnvironmentKey {
     static let defaultValue = RootTab.new
 }
@@ -218,11 +167,6 @@ extension View {
     /// since a tab's pages stay alive while hidden.
     func onTabAppear(perform action: @escaping () -> Void) -> some View {
         modifier(TabAppear(action: action))
-    }
-
-    /// Takes the top bar away while this page is open in its tab.
-    func hidesTopBar(_ hidden: Bool = true) -> some View {
-        modifier(HidesTopBar(hidden: hidden))
     }
 }
 
@@ -254,22 +198,6 @@ private struct TabAppear: ViewModifier {
                     action()
                 }
             }
-    }
-}
-
-private struct HidesTopBar: ViewModifier {
-    @Environment(AppModel.self) private var app
-    @Environment(\.pageTab) private var tab
-    let hidden: Bool
-
-    func body(content: Content) -> some View {
-        content
-            .onChange(of: hidden, initial: true) { _, hidden in set(hidden) }
-            .onDisappear { set(false) }
-    }
-
-    private func set(_ hidden: Bool) {
-        if hidden { app.barHidden.insert(tab) } else { app.barHidden.remove(tab) }
     }
 }
 

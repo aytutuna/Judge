@@ -104,7 +104,6 @@ struct VerdictDetails<Appeal: View>: View {
         .navigationBarBackButtonHidden(true)
         .navigationBarTitleDisplayMode(.inline)
         .toolbarBackground(Brand.ivory, for: .navigationBar)
-        .hidesTopBar()
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 Button {

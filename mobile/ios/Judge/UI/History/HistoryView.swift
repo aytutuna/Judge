@@ -46,8 +46,6 @@ struct HistoryView: View {
         .navigationTitle(selection.isActive ? L10n.appHistorySelected(lang, n: selection.ids.count) : L10n.navVerdicts(lang))
         .navigationBarTitleDisplayMode(.inline)
         .toolbarBackground(Brand.ivory, for: .navigationBar, .bottomBar)
-        // As in Photos, the delete bar takes the top bar's place while selecting.
-        .hidesTopBar(selection.isActive)
         .toolbar { toolbarItems(lang, selectable: selectable) }
         .confirmationDialog(
             confirmText(entries, lang: lang),
@@ -87,13 +85,7 @@ struct HistoryView: View {
     }
 
     private var currentEntries: [HistoryEntry] {
-        let user = app.historyUser
-        let cached = user.map { id in
-            cachedRows.filter { $0.userID == id }
-                .compactMap(\.item)
-                .sorted { HistoryOrder.before(($0.at, $0.key), ($1.at, $1.key)) }
-        } ?? []
-        return HistoryEntry.merge(cached: cached, saved: saved, user: user, cutoff: app.historyList.cutoff)
+        HistoryEntry.current(app: app, rows: cachedRows, saved: saved)
     }
 
     @ToolbarContentBuilder
@@ -116,11 +108,13 @@ struct HistoryView: View {
                 .disabled(selection.ids.isEmpty)
             }
         } else {
+            ToolbarItem(placement: .topBarLeading) { MenuButton() }
             if !selectable.isEmpty {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button(L10n.appHistorySelect(lang)) { selection.start() }
                 }
             }
+            ToolbarItem(placement: .topBarTrailing) { ComposeButton() }
         }
     }
 
@@ -155,23 +149,8 @@ struct HistoryView: View {
     }
 
     private func open(_ entry: HistoryEntry) {
-        switch entry {
-        case .phone(let row):
-            app.historyPath.append(.detail(id: row.id))
-        case .account(let item):
-            guard HistoryLabels.openable(item) else { return }
-            if !item.isCase {
-                let list = app.historyList
-                let user = app.historyUser
-                Task {
-                    if await list.openVerdict(item, user: user) { app.historyPath.append(.detail(id: item.id)) }
-                }
-            } else if item.isRespondent, let token = item.inviteToken {
-                // Answering is done on the website: the case opens there too.
-                webLink = WebLink(url: app.config.siteURL("r").appending(component: token))
-            } else {
-                app.historyPath.append(.caseDetail(id: item.id))
-            }
+        Task {
+            if let url = await app.openHistory(entry) { webLink = WebLink(url: url) }
         }
     }
 
@@ -289,7 +268,7 @@ struct HistoryView: View {
     }
 
     private func openButton(_ entry: HistoryEntry, lang: AppLang, now: Date) -> some View {
-        let opens = opens(entry)
+        let opens = entry.opens
         return Button { open(entry) } label: {
             HStack {
                 EntryRow(entry: entry, lang: lang, now: now)
@@ -305,11 +284,6 @@ struct HistoryView: View {
         .buttonStyle(.plain)
         .disabled(!opens)
         .listRowBackground(Brand.paper)
-    }
-
-    private func opens(_ entry: HistoryEntry) -> Bool {
-        if case .account(let item) = entry { return HistoryLabels.openable(item) }
-        return true
     }
 
     private func noticeText(_ notice: HistoryListModel.Notice, lang: AppLang) -> String {
@@ -472,9 +446,7 @@ private struct PhoneRow: View {
         let nameMap = row.nameMap
         let selfLang = row.contentLang
         let parties = Names.partyNames(nameMap, lang: lang, selfLang: selfLang)
-        // Display-only: the stored headline stays anonymized. It is the
-        // original's, so it is written in the language it was judged in.
-        let headline = Names.restoreNames(row.headline, parties: Names.resolveParties(nameMap, selfLang: selfLang), textLang: selfLang)
+        let headline = HistoryEntry.phone(row).title(lang: lang)
         let verdict = row.finalVerdict
         let date = row.createdAt.formatted(Date.FormatStyle(date: .abbreviated, time: .shortened).locale(lang.locale))
         HStack(alignment: .top, spacing: 12) {

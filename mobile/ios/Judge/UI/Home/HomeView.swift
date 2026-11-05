@@ -72,7 +72,15 @@ struct HomeView: View {
             }
         }
         .background(Brand.ivory.ignoresSafeArea())
-        .toolbar(.hidden, for: .navigationBar)
+        .navigationTitle(L10n.appTabNew(lang))
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbarBackground(Brand.ivory, for: .navigationBar)
+        .toolbar {
+            if home.clarify == nil {
+                ToolbarItem(placement: .topBarLeading) { MenuButton() }
+                ToolbarItem(placement: .topBarTrailing) { ComposeButton() }
+            }
+        }
         .onTabAppear { app.analytics.track("screen_view", ["screen": "home"]) }
         .onAppear {
             guard app.persistsDraft else { return }

@@ -413,6 +413,54 @@ final class HistoryListTests: XCTestCase {
     }
 
     @MainActor
+    func testOpeningARowPushesItOnTheVerdictsTab() async throws {
+        let container = HistoryContainer.inMemory()
+        let (app, _) = try model(container, router: StubRouter())
+        var answered = item("c2", "2026-10-03T00:00:00.000Z", kind: "case")
+        answered.role = "respondent"
+        answered.party = "b"
+        answered.inviteToken = "tok2"
+        let rows = [item("v1", "2026-10-05T00:00:00.000Z"), answered, item("c3", "2026-10-02T00:00:00.000Z", kind: "case")]
+        try app.history.apply(HistoryPage(items: rows, next: nil), user: "u1", above: nil)
+        try app.history.save(try session("lean_tie", id: "v1"))
+        try app.history.save(try session("split", id: "phone1"))
+        let entries = HistoryEntry.merge(cached: try app.history.cached(user: "u1"), saved: try app.history.all(), user: "u1")
+        func entry(_ id: String) throws -> HistoryEntry { try XCTUnwrap(entries.first { $0.id == id }) }
+
+        var url = await app.openHistory(try entry("v:v1"))
+        XCTAssertNil(url)
+        url = await app.openHistory(try entry("v:phone1"))
+        XCTAssertNil(url)
+        url = await app.openHistory(try entry("c:c3"))
+        XCTAssertNil(url)
+        XCTAssertEqual(app.historyPath, [.detail(id: "v1"), .detail(id: "phone1"), .caseDetail(id: "c3")])
+
+        url = await app.openHistory(try entry("c:c2"))
+        XCTAssertEqual(url, app.config.siteURL("r").appending(component: "tok2"), "an invite is answered on the website")
+        XCTAssertEqual(app.historyPath.count, 3)
+        XCTAssertEqual(try entry("v:v1").title(lang: .en), HistoryLabels.title(rows[0], lang: .en))
+        withExtendedLifetime(container) {}
+    }
+
+    @MainActor
+    func testARecentRowFromAnotherTabStartsTheVerdictsStackAgain() async throws {
+        let container = HistoryContainer.inMemory()
+        let (app, _) = try model(container, router: StubRouter())
+        try app.history.save(try session("split", id: "phone1"))
+        let entries = HistoryEntry.merge(cached: try app.history.cached(user: "u1"), saved: try app.history.all(), user: "u1")
+        let entry = try XCTUnwrap(entries.first { $0.id == "v:phone1" })
+        app.historyPath = [.detail(id: "old")]
+        app.tab = .new
+        app.menuOpen = true
+
+        let url = await app.openRecent(entry)
+        XCTAssertNil(url)
+        XCTAssertEqual(app.tab, .history)
+        XCTAssertEqual(app.historyPath, [.detail(id: "phone1")])
+        withExtendedLifetime(container) {}
+    }
+
+    @MainActor
     func testRemovingOfflineSendsNothingMoreButDeletesPhoneRows() async throws {
         let container = HistoryContainer.inMemory()
         let router = StubRouter()

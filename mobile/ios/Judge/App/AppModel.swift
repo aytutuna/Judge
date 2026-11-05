@@ -63,8 +63,8 @@ final class AppModel {
     let caseNames: any CaseNamesStore
     /// The selected tab (links and "Start a new case" switch it).
     var tab: RootTab = .new
-    /// Tabs whose open page hides the top bar.
-    var barHidden: Set<RootTab> = []
+    /// The side menu is open.
+    var menuOpen = false
     /// The Verdicts tab's pages.
     var historyPath: [HistoryRoute] = []
     /// The Settings tab's pages.
@@ -276,9 +276,30 @@ final class AppModel {
         tab = target
     }
 
+    /// Opens a Verdicts row on its page in that tab. An invite answered on
+    /// the website comes back as its address instead.
+    func openHistory(_ entry: HistoryEntry) async -> URL? {
+        switch entry {
+        case .phone(let row):
+            historyPath.append(.detail(id: row.id))
+        case .account(let item):
+            guard HistoryLabels.openable(item) else { return nil }
+            if !item.isCase {
+                if await historyList.openVerdict(item, user: historyUser) { historyPath.append(.detail(id: item.id)) }
+            } else if item.isRespondent, let token = item.inviteToken {
+                // Answering is done on the website: the case opens there too.
+                return config.siteURL("r").appending(component: token)
+            } else {
+                historyPath.append(.caseDetail(id: item.id))
+            }
+        }
+        return nil
+    }
+
     /// "Start a new case": an empty form on the Home tab.
     func newArgument() {
         home.judgeAnother()
+        menuOpen = false
         tab = .new
     }
 
@@ -289,6 +310,7 @@ final class AppModel {
         case .invite(let url):
             return url
         case .caseDetail(let id):
+            menuOpen = false
             tab = .new
             home.path = [.caseDetail(id: id)]
             return nil

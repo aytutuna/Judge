@@ -89,6 +89,10 @@ struct SettingsView: View {
             .navigationTitle(L10n.appTabSettings(lang))
             .navigationBarTitleDisplayMode(.inline)
             .toolbarBackground(Brand.ivory, for: .navigationBar)
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) { MenuButton() }
+                ToolbarItem(placement: .topBarTrailing) { ComposeButton() }
+            }
             .sheet(item: $webLink) { link in
                 SafariView(url: link.url).ignoresSafeArea()
             }
