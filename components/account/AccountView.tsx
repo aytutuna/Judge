@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { t, tWithDate, type Lang } from "@/lib/i18n";
 import { useLang } from "@/lib/lang";
+import { langTag } from "@/lib/langs";
 import { markSignedOut, useViewer, type ViewerState } from "@/lib/use-viewer";
 import styles from "./AccountPages.module.css";
 
@@ -102,7 +103,7 @@ export function AccountPanel({
         <dl className={styles.facts}>
           <div className={styles.fact}>
             <dt>{t(lang, "account.credits")}</dt>
-            <dd>{e?.credits ?? 0}</dd>
+            <dd>{(e?.credits ?? 0).toLocaleString(langTag(lang))}</dd>
           </div>
           <div className={styles.fact}>
             <dt>{t(lang, "account.subscription")}</dt>

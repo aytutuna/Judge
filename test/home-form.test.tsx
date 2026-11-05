@@ -58,7 +58,7 @@ describe("HomeForm", () => {
     expect(html.match(/<textarea/g)).toHaveLength(1);
     expect(html).toContain(esc(t("en", "home.yourPlaceholder")));
     expect(html).toMatch(new RegExp(`<button type="submit"[^>]*disabled[^>]*aria-label="${t("en", "getVerdict")}"`));
-    expect(html).toContain("0 / 6000");
+    expect(html).toContain("0 / 6,000");
     expect(html).not.toContain(t("en", "home.clear"));
     expect(html).not.toContain(t("en", "home.addContext"));
     expect(html).not.toContain(t("en", "home.leadSolo"));
@@ -78,6 +78,7 @@ describe("HomeForm", () => {
     const html = form({ mine: "A long enough argument about the dishes.", blank: false, canSubmit: true });
     expect(html).not.toContain(">Judge<");
     expect(html).toContain(t("en", "home.clear"));
+    expect(html).not.toContain(t("en", "home.example"));
     expect(html).not.toMatch(/<button type="submit"[^>]*disabled/);
   });
 
@@ -88,7 +89,7 @@ describe("HomeForm", () => {
     expect(html).toContain(esc(t("en", "home.theirPlaceholder")));
     expect(html).toContain(`aria-label="${t("en", "home.removeTheirSide")}"`);
     expect(html).not.toContain(t("en", "home.addTheirSide"));
-    expect(html.match(/ \/ 6000/g)).toHaveLength(1);
+    expect(html.match(/ \/ 6,000/g)).toHaveLength(1);
     expect(html.match(/type="submit"/g)).toHaveLength(1);
   });
 
@@ -108,7 +109,7 @@ describe("HomeForm", () => {
 
   it("flags the counter near the cap, ties the error to the first side, spins while holding", () => {
     const html = form({ length: 5800, error: "Nope", holding: true });
-    expect(html).toMatch(/data-warn="" aria-hidden="true">5800 \/ 6000</);
+    expect(html).toMatch(/data-warn="" aria-hidden="true">5,800 \/ 6,000</);
     expect(html).toContain('role="alert"');
     expect(html).toContain('aria-describedby="home-error"');
     expect(html).toMatch(/data-busy=""/);

@@ -364,11 +364,6 @@
 }
 
 /* ---------- Pricing ---------- */
-.plans {
-  display: grid;
-  gap: 18px;
-}
-
 .plan {
   display: flex;
   flex-direction: column;
@@ -379,12 +374,6 @@
   border-radius: var(--radius-card);
   background: var(--paper);
   box-shadow: var(--shadow-1);
-}
-.planHighlight {
-  border-color: color-mix(in srgb, var(--terra-ink) 35%, transparent);
-  box-shadow:
-    var(--shadow-2),
-    0 0 0 1px color-mix(in srgb, var(--terra-ink) 12%, transparent);
 }
 
 .planTitle {
@@ -402,13 +391,6 @@
   width: 16px;
   height: 16px;
   color: var(--terra);
-}
-
-.planPrice {
-  margin: -8px 0 0;
-  color: var(--ink-2);
-  font-size: 16px;
-  font-weight: 600;
 }
 
 .features {
@@ -442,9 +424,9 @@
 }
 
 .offers {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
+  gap: 14px;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -452,12 +434,17 @@
 .offer {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-rows: auto auto 1fr;
   align-items: center;
-  gap: 4px 14px;
+  column-gap: 14px;
   padding: 14px 16px;
   border: 1px solid var(--line-2);
   border-radius: 18px;
   background: var(--well);
+}
+.offerName,
+.offerMeta {
+  grid-column: 1;
 }
 .offerName {
   margin: 0;
@@ -465,8 +452,11 @@
   font-size: 16px;
   font-weight: 700;
 }
+.offerName:not(:has(+ .offerMeta)) {
+  grid-row: 1 / span 2;
+}
 .offerMeta {
-  margin: 0;
+  margin: 4px 0 0;
   color: var(--muted);
   font-size: 13.5px;
 }
@@ -482,8 +472,10 @@
 }
 .offer .btn {
   grid-column: 1 / -1;
+  grid-row: 3;
+  align-self: end;
   min-height: 44px;
-  margin-top: 8px;
+  margin-top: 12px;
   font-size: 15px;
 }
 
@@ -504,13 +496,6 @@
   color: var(--ink-2);
   font-size: 14px;
   line-height: 1.5;
-}
-
-@media (min-width: 720px) {
-  .plans {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    align-items: start;
-  }
 }
 
 @media (min-width: 960px) {
@@ -603,8 +588,13 @@
 }
 
 /* The picker shares the header chip; here it fills the row like a field. */
+.langCard > * {
+  width: 100%;
+}
 .langCard select {
   width: 100%;
+  max-width: none;
+  min-height: 44px;
 }
 
 .out {

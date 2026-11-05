@@ -10,6 +10,7 @@ import { firstNameOf } from "@/lib/originals-types";
 import { trackApiError } from "@/lib/analytics/client";
 import { apiErrorMessage, languageName, t, type Lang } from "@/lib/i18n";
 import { useLang } from "@/lib/lang";
+import { langTag } from "@/lib/langs";
 import {
   clearPendingInvite,
   rememberPendingInvite,
@@ -252,7 +253,7 @@ export function RespondPanel({
             <label htmlFor={fieldId} className={styles.fieldLabel}>
               <span>{t(lang, "respond.label")}</span>
               <span className={styles.count} aria-hidden>
-                {form.text.length} / {MAX_SIDE}
+                {form.text.length.toLocaleString(langTag(lang))} / {MAX_SIDE.toLocaleString(langTag(lang))}
               </span>
             </label>
             <textarea

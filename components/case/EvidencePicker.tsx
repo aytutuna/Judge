@@ -372,10 +372,17 @@ export function EvidencePicker({
       <EvidenceRows lang={lang} items={items} disabled={disabled} onRemove={onRemove} />
 
       <EvidenceAdd single={single} disabled={disabled || full} className={styles.evAdd} onAdd={onAdd}>
-        <svg viewBox="0 0 16 16" aria-hidden>
-          <path d="M8 3v10M3 8h10" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
+        <svg viewBox="0 0 24 24" aria-hidden>
+          <path
+            d="M21 11.5 12.5 20a5.5 5.5 0 0 1-7.8-7.8l8.5-8.5a3.7 3.7 0 0 1 5.2 5.2l-8.5 8.5a1.8 1.8 0 0 1-2.6-2.6L15 7"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
         </svg>
-        {t(lang, single ? "evidence.addOne" : "evidence.add")}
+        {t(lang, "home.addContext")}
       </EvidenceAdd>
       <p className={styles.evHint} id={hintId}>
         <svg viewBox="0 0 16 16" aria-hidden>

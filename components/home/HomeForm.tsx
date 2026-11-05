@@ -3,6 +3,7 @@
 import { useEffect, useLayoutEffect, useRef, type ReactNode } from "react";
 import { EvidenceAdd, EvidenceNotes, EvidenceRows, type EvidenceController } from "@/components/case/EvidencePicker";
 import { t, type Lang } from "@/lib/i18n";
+import { langTag } from "@/lib/langs";
 import { MAX_ARGUMENT } from "@/lib/sides";
 import styles from "./HomeForm.module.css";
 
@@ -133,6 +134,7 @@ export type HomeFormProps = {
 
 export function HomeForm(p: HomeFormProps) {
   const { lang, evidence } = p;
+  const tag = langTag(lang);
   const submit = () => {
     if (p.canSubmit) p.onSubmit();
   };
@@ -236,20 +238,21 @@ export function HomeForm(p: HomeFormProps) {
           ) : null}
 
           <div className={styles.quiet}>
-            <button type="button" onClick={p.onExample}>
-              <svg viewBox="0 0 20 20" aria-hidden>
-                <path
-                  d="M3 6h3.5c3 0 4 8 7 8H17M3 14h3.5c1 0 1.8-1 2.5-2.2M17 6h-3.5c-1 0-1.8.8-2.4 1.8M14.5 3.5 17 6l-2.5 2.5M14.5 11.5 17 14l-2.5 2.5"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.6"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-              {t(lang, "home.example")}
-            </button>
-            {p.blank ? null : (
+            {p.blank ? (
+              <button type="button" onClick={p.onExample}>
+                <svg viewBox="0 0 20 20" aria-hidden>
+                  <path
+                    d="M3 6h3.5c3 0 4 8 7 8H17M3 14h3.5c1 0 1.8-1 2.5-2.2M17 6h-3.5c-1 0-1.8.8-2.4 1.8M14.5 3.5 17 6l-2.5 2.5M14.5 11.5 17 14l-2.5 2.5"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.6"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+                {t(lang, "home.example")}
+              </button>
+            ) : (
               <button type="button" onClick={p.onClear}>
                 {t(lang, "home.clear")}
               </button>
@@ -295,7 +298,7 @@ export function HomeForm(p: HomeFormProps) {
             <div className={styles.row}>
               {addContext}
               <span className={styles.count} data-warn={p.length > WARN_AT ? "" : undefined} aria-hidden>
-                {p.length} / {MAX_ARGUMENT}
+                {p.length.toLocaleString(tag)} / {MAX_ARGUMENT.toLocaleString(tag)}
               </span>
               <button
                 type="submit"

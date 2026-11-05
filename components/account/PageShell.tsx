@@ -8,7 +8,17 @@ import { SiteFooter, SiteHeader, SkipLink } from "../SiteChrome";
 import { AppShell } from "../shell/AppShell";
 import styles from "./AccountPages.module.css";
 
-/** Chrome and intro shared by /signin, /settings, /pricing and /verdicts:
+export function PageIntro({ kicker, title, lead }: { kicker?: string; title: string; lead?: string }) {
+  return (
+    <header className={styles.intro}>
+      {kicker ? <p className="kicker">{kicker}</p> : null}
+      <h1 className={styles.h1}>{noOrphan(title)}</h1>
+      {lead ? <p className={styles.lead}>{lead}</p> : null}
+    </header>
+  );
+}
+
+/** Chrome and intro shared by /signin, /settings and /verdicts:
  * the same type scale as the prose pages, one lang scope. All but sign-in
  * sit in the app shell; sign-in (`bare`) keeps the plain header and footer,
  * as a step on the way somewhere else. */
@@ -23,7 +33,7 @@ export function PageShell({
 }: {
   lang: Lang;
   kicker?: string;
-  title: string;
+  title?: string;
   lead?: string;
   wide?: boolean;
   bare?: boolean;
@@ -32,11 +42,7 @@ export function PageShell({
   const main = (
     <main id="main" tabIndex={-1} className={styles.main}>
       <div className={`wrap ${wide ? styles.wide : styles.narrow}`}>
-        <header className={styles.intro}>
-          {kicker ? <p className="kicker">{kicker}</p> : null}
-          <h1 className={styles.h1}>{noOrphan(title)}</h1>
-          {lead ? <p className={styles.lead}>{lead}</p> : null}
-        </header>
+        {title ? <PageIntro kicker={kicker} title={title} lead={lead} /> : null}
         {children}
       </div>
     </main>

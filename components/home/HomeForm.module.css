@@ -52,7 +52,7 @@
   flex: none;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 20px;
   padding-bottom: max(16px, env(safe-area-inset-bottom));
 }
 
@@ -112,22 +112,27 @@
 .card {
   --side-ink: var(--party-a-ink);
   --side-tint: var(--party-a-tint);
+  --side-strong: var(--party-a-strong);
   display: flex;
   flex-direction: column;
   gap: 8px;
   padding: 14px 16px 10px;
-  border: 1px solid var(--line);
+  border: 1px solid color-mix(in srgb, var(--side-strong) 75%, transparent);
   border-radius: var(--radius-block);
   background: var(--paper);
-  box-shadow: var(--shadow-1);
-  transition: border-color var(--dur-1);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--side-strong) 38%, transparent);
+  transition:
+    border-color var(--dur-1),
+    box-shadow var(--dur-1);
 }
 .card[data-side="B"] {
   --side-ink: var(--party-b-ink);
   --side-tint: var(--party-b-tint);
+  --side-strong: var(--party-b-strong);
 }
 .card:focus-within {
-  border-color: color-mix(in srgb, var(--side-ink) 60%, transparent);
+  border-color: color-mix(in srgb, var(--side-strong) 95%, transparent);
+  box-shadow: 0 0 12px color-mix(in srgb, var(--side-strong) 60%, transparent);
 }
 
 .cardHead {

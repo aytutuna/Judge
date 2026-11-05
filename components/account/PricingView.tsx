@@ -1,14 +1,16 @@
 "use client";
 
 import Link from "next/link";
+import type { ReactNode } from "react";
 import type { Entitlement, PricingInfo } from "@/lib/account-types";
 import { t, tWithDate, type Key, type Lang } from "@/lib/i18n";
 import { useLang } from "@/lib/lang";
+import { langTag } from "@/lib/langs";
 import { PRICING, formatPrice } from "@/lib/pricing";
 import { signInOffered, useViewer } from "@/lib/use-viewer";
 import { PremiumSpark } from "../PremiumBadge";
 import styles from "./AccountPages.module.css";
-import { PageShell } from "./PageShell";
+import { PageIntro, PageShell } from "./PageShell";
 
 const FEATURES: Key[] = ["pricing.premium.f1", "pricing.premium.f2", "pricing.premium.f3", "pricing.premium.f4"];
 
@@ -54,15 +56,17 @@ export type PricingTableProps = {
   /** At least one sign-in method is set up; without one the sign-in call
    * to action would lead to a page where nothing works. */
   signInOffered: boolean;
-  /** The signed-in viewer's balance and plan, shown above the plans. */
+  /** The signed-in viewer's balance and plan, shown below the plans. */
   entitlement?: Entitlement | null;
   /** Premium extras on offer (two-sided cases, screenshot evidence). */
   features?: { cases: boolean; evidence: boolean } | null;
+  /** The page heading, which sits below the prices. */
+  intro?: ReactNode;
 };
 
-/** What a verdict includes beside the packs and the monthly plan. Buy
- * buttons stay disabled ("Coming soon") until a payment provider exists.
- * Stateless for tests. */
+/** The packs and the monthly plan first, then the page heading and what a
+ * verdict includes. Buy buttons stay disabled ("Coming soon") until a
+ * payment provider exists. Stateless for tests. */
 export function PricingTable({
   lang,
   pricing,
@@ -71,6 +75,7 @@ export function PricingTable({
   signInOffered,
   entitlement,
   features = null,
+  intro,
 }: PricingTableProps) {
   const buy = (label: string) => (
     // TODO: wire buy_tapped when purchases open.
@@ -80,13 +85,40 @@ export function PricingTable({
   );
 
   const sub = entitlement?.subscription ?? null;
+  // Once the button carries the price, a second copy beside the name is noise.
+  const showPrice = !pricing.purchasesEnabled;
 
   return (
     <>
+      <section aria-label={t(lang, "pricing.buy.title")}>
+        <ul className={styles.offers}>
+          {pricing.packs.map((p) => (
+            <li key={p.id} className={styles.offer}>
+              <p className={styles.offerName}>{p.credits === 1 ? t(lang, "pricing.pack.one") : t(lang, "pricing.pack", { n: p.credits })}</p>
+              {p.credits === 1 ? null : (
+                <p className={styles.offerMeta}>
+                  {t(lang, "pricing.perVerdict", { price: formatPrice(p.priceUsd / p.credits, lang) })}
+                </p>
+              )}
+              {showPrice ? <span className={styles.offerPrice}>{formatPrice(p.priceUsd, lang)}</span> : null}
+              {buy(formatPrice(p.priceUsd, lang))}
+            </li>
+          ))}
+          <li className={styles.offer}>
+            <p className={styles.offerName}>
+              {t(lang, "pricing.monthly.cap", { n: pricing.monthly.fairUseCap })}
+            </p>
+            <p className={styles.offerMeta}>{t(lang, "pricing.monthly.renews")}</p>
+            {showPrice ? <span className={styles.offerPrice}>{formatPrice(pricing.monthly.priceUsd, lang)}</span> : null}
+            {buy(formatPrice(pricing.monthly.priceUsd, lang))}
+          </li>
+        </ul>
+      </section>
+      {intro}
       {signedIn && entitlement ? (
         <p className={styles.status} data-testid="pricing-status">
           <strong>
-            {t(lang, "account.credits")}: {entitlement.credits}
+            {t(lang, "account.credits")}: {entitlement.credits.toLocaleString(langTag(lang))}
           </strong>
           {sub ? (
             <span>
@@ -96,53 +128,22 @@ export function PricingTable({
         </p>
       ) : null}
       {premiumEnabled === false ? <p className={styles.notice}>{t(lang, "pricing.preview")}</p> : null}
-      <div className={styles.plans}>
-        <section className={`${styles.plan} ${styles.planHighlight}`} aria-labelledby="plan-buy">
-          <h2 id="plan-buy" className={styles.planTitle}>
-            {t(lang, "pricing.buy.title")}
-          </h2>
-
-          <h3 className={styles.groupTitle}>{t(lang, "pricing.packsTitle")}</h3>
-          <p className={styles.small}>{t(lang, "pricing.packsLead")}</p>
-          <ul className={styles.offers}>
-            {pricing.packs.map((p) => (
-              <li key={p.id} className={styles.offer}>
-                <p className={styles.offerName}>{p.credits === 1 ? t(lang, "pricing.pack.one") : t(lang, "pricing.pack", { n: p.credits })}</p>
-                <p className={styles.offerMeta}>
-                  {t(lang, "pricing.perVerdict", { price: formatPrice(p.priceUsd / p.credits, lang) })}
-                </p>
-                <span className={styles.offerPrice}>{formatPrice(p.priceUsd, lang)}</span>
-                {buy(formatPrice(p.priceUsd, lang))}
-              </li>
-            ))}
-          </ul>
-
-          <h3 className={styles.groupTitle}>{t(lang, "pricing.monthly.title")}</h3>
-          <ul className={styles.offers}>
-            <li className={styles.offer}>
-              <p className={styles.offerName}>
-                {t(lang, "pricing.monthly.cap", { n: pricing.monthly.fairUseCap })}
-              </p>
-              <p className={styles.offerMeta}>{t(lang, "pricing.monthly.renews")}</p>
-              <span className={styles.offerPrice}>{formatPrice(pricing.monthly.priceUsd, lang)}</span>
-              {buy(formatPrice(pricing.monthly.priceUsd, lang))}
-            </li>
-          </ul>
-          {premiumEnabled && !signedIn && signInOffered ? (
-            <Link href="/signin?next=%2Fpricing" className={`${styles.btn} ${styles.primary}`}>
-              {t(lang, "pricing.signIn")}
-            </Link>
-          ) : null}
-        </section>
-
-        <section className={styles.plan} aria-labelledby="plan-included">
-          <h2 id="plan-included" className={styles.planTitle}>
-            <PremiumSpark />
-            {t(lang, "pricing.included.title")}
-          </h2>
-          <Features lang={lang} keys={featureKeys(premiumEnabled ? features : null)} />
-        </section>
+      <div className={styles.group}>
+        <h2 className={styles.groupTitle}>{t(lang, "pricing.packsTitle")}</h2>
+        <p className={styles.small}>{t(lang, "pricing.packsLead")}</p>
       </div>
+      {premiumEnabled && !signedIn && signInOffered ? (
+        <Link href="/signin?next=%2Fpricing" className={`${styles.btn} ${styles.primary}`}>
+          {t(lang, "pricing.signIn")}
+        </Link>
+      ) : null}
+      <section className={styles.plan} aria-labelledby="plan-included">
+        <h2 id="plan-included" className={styles.planTitle}>
+          <PremiumSpark />
+          {t(lang, "pricing.included.title")}
+        </h2>
+        <Features lang={lang} keys={featureKeys(premiumEnabled ? features : null)} />
+      </section>
       <p className={styles.small}>{t(lang, "pricing.note")}</p>
       <p className={styles.small}>
         <Link href="/terms" className={styles.link}>
@@ -167,13 +168,7 @@ export function PricingView() {
   // Only promise the free first verdict once we know nobody is signed in.
   const member = signedIn || !known;
   return (
-    <PageShell
-      lang={lang}
-      kicker={t(lang, "nav.pricing")}
-      title={t(lang, member ? "pricing.titleMember" : "pricing.title")}
-      lead={t(lang, member ? "pricing.leadMember" : "pricing.lead")}
-      wide
-    >
+    <PageShell lang={lang} wide>
       <PricingTable
         lang={lang}
         pricing={config?.pricing ?? PRICING}
@@ -182,6 +177,13 @@ export function PricingView() {
         signInOffered={signInOffered(config)}
         entitlement={me?.entitlement ?? null}
         features={config?.features ?? null}
+        intro={
+          <PageIntro
+            kicker={t(lang, "nav.pricing")}
+            title={t(lang, member ? "pricing.titleMember" : "pricing.title")}
+            lead={t(lang, member ? "pricing.leadMember" : "pricing.lead")}
+          />
+        }
       />
     </PageShell>
   );

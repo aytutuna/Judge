@@ -287,7 +287,7 @@ describe("respondent page", () => {
     expect(html).not.toContain("weigh it by");
     expect(html).toContain("The verdict will be written in English.");
     expect(html).toContain(t("en", "respond.label"));
-    expect(html).toContain(esc(t("en", "evidence.add")));
+    expect(html).toContain(esc(t("en", "home.addContext")));
     expect(html).toContain(esc(t("en", "respond.privacy")));
     expect(html).toContain(t("en", "respond.submit"));
     // Nothing of the owner's account before the verdict.
@@ -297,7 +297,7 @@ describe("respondent page", () => {
   it("form on an old free case: screenshots like any case", () => {
     const html = respondent(caseView({ ...RESPONDENT.form, tier: "free" }));
     expect(html).toContain(t("en", "respond.submit"));
-    expect(html).toContain(esc(t("en", "evidence.add")));
+    expect(html).toContain(esc(t("en", "home.addContext")));
   });
 
   it("own invite: tells the owner to send it on, no form", () => {
@@ -339,7 +339,7 @@ describe("respondent page", () => {
 
   it("evidence switched off on this server: no screenshot pickers, the forms still work", () => {
     const form = respondent(RESPONDENT.form, { evidence: false });
-    expect(form).not.toContain(esc(t("en", "evidence.add")));
+    expect(form).not.toContain(esc(t("en", "home.addContext")));
     expect(form).toContain(t("en", "respond.submit"));
     const appeal = respondent(RESPONDENT.judgedPremium, { evidence: false });
     expect(appeal).toContain(t("en", "appeal.submit"));

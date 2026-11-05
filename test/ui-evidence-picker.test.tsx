@@ -43,7 +43,7 @@ describe("EvidencePicker", () => {
   it("empty: the add button, the accepted types and the never-kept note", () => {
     const html = picker([]);
     expect(html).toContain(t("en", "evidence.label"));
-    expect(html).toContain(t("en", "evidence.add"));
+    expect(html).toContain(t("en", "home.addContext"));
     expect(html).toContain('accept="image/png,image/jpeg,image/webp,image/gif"');
     expect(html).toContain("multiple");
     expect(html).toContain(esc(t("en", "evidence.hint", { n: 3 })));
@@ -52,7 +52,7 @@ describe("EvidencePicker", () => {
 
   it("one image only for appeals", () => {
     const html = picker([], { max: 1 });
-    expect(html).toContain(t("en", "evidence.addOne"));
+    expect(html).toContain(t("en", "home.addContext"));
     expect(html).toContain(esc(t("en", "evidence.hintOne")));
     expect(html).not.toContain("multiple");
   });
