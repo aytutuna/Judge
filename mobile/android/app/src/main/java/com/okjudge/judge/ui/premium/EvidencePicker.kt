@@ -121,7 +121,7 @@ fun EvidencePicker(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-            TintedIcon(rememberIcon(Palette.ink) { JudgeIcons.plus(it) }, 14)
+            TintedIcon(rememberIcon(Palette.ink) { JudgeIcons.paperclip(it) }, 14)
             Text(s.appHomeAddContext, style = JudgeType.small.copy(color = Palette.ink))
         }
     }
@@ -132,7 +132,7 @@ fun EvidencePicker(
 fun AddContextButton(enabled: Boolean, onClick: () -> Unit, modifier: Modifier = Modifier) {
     Row(
         modifier
-            .defaultMinSize(minHeight = 40.dp)
+            .defaultMinSize(minHeight = 44.dp)
             .clip(JudgeShapes.chip)
             .alpha(if (enabled) 1f else 0.5f)
             .clickable(enabled = enabled, role = Role.Button, onClick = onClick)
@@ -141,7 +141,7 @@ fun AddContextButton(enabled: Boolean, onClick: () -> Unit, modifier: Modifier =
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(6.dp),
     ) {
-        TintedIcon(rememberIcon(Palette.ink2) { JudgeIcons.plus(it) }, 14)
+        TintedIcon(rememberIcon(Palette.ink2) { JudgeIcons.paperclip(it) }, 14)
         Text(LocalStrings.current.appHomeAddContext, style = JudgeType.small)
     }
 }
@@ -206,7 +206,7 @@ private fun ItemRow(item: EvidenceItem, disabled: Boolean, onRemove: (String) ->
             }
             Box(
                 Modifier
-                    .size(40.dp)
+                    .size(44.dp)
                     .clip(JudgeShapes.chip)
                     .semantics {
                         role = Role.Button

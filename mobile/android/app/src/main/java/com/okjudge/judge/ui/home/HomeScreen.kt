@@ -261,7 +261,7 @@ fun HomeScreen(
                         } else {
                             Spacer(Modifier.weight(1f))
                         }
-                        Column(column.padding(top = 16.dp, bottom = 12.dp), verticalArrangement = Arrangement.spacedBy(12.dp), content = middle)
+                        Column(column.padding(top = 16.dp, bottom = 20.dp), verticalArrangement = Arrangement.spacedBy(12.dp), content = middle)
                     }
                 }
             }
@@ -317,7 +317,7 @@ fun HomeScreen(
                 }
                 if (state.holding) {
                     Row(
-                        Modifier.fillMaxWidth().semantics(mergeDescendants = true) { liveRegion = LiveRegionMode.Polite }.testTag(HomeTags.STATUS),
+                        Modifier.fillMaxWidth().padding(top = 28.dp).semantics(mergeDescendants = true) { liveRegion = LiveRegionMode.Polite }.testTag(HomeTags.STATUS),
                         horizontalArrangement = Arrangement.Center,
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
@@ -330,7 +330,7 @@ fun HomeScreen(
                             it,
                             style = JudgeType.slotText,
                             textAlign = TextAlign.Center,
-                            modifier = Modifier.fillMaxWidth().testTag(HomeTags.BALANCE),
+                            modifier = Modifier.fillMaxWidth().padding(top = 28.dp).testTag(HomeTags.BALANCE),
                         )
                     }
                 }
@@ -410,7 +410,7 @@ private fun SideCard(
             if (onRemove != null) {
                 Box(
                     Modifier
-                        .size(32.dp)
+                        .size(44.dp)
                         .clip(CircleShape)
                         .semantics {
                             role = Role.Button

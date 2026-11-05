@@ -70,6 +70,11 @@ object JudgeIcons {
 
     fun close(color: Color) = icon("close", 16f, P("M4 4l8 8M12 4l-8 8", stroke = color, width = 1.6f))
 
+    fun paperclip(color: Color) = icon(
+        "paperclip", 16f,
+        P("M12.5 7.5 7.8 12.2a2.8 2.8 0 0 1-4-4l5-5a1.9 1.9 0 0 1 2.7 2.7l-5 5a.9.9 0 0 1-1.3-1.3L9.3 5.5", stroke = color, width = 1.4f),
+    )
+
     fun plus(color: Color) = icon("plus", 16f, P("M8 3v10M3 8h10", stroke = color, width = 1.6f))
 
     fun shuffle(color: Color) = icon(

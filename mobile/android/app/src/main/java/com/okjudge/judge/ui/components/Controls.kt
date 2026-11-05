@@ -56,7 +56,7 @@ fun PrimaryButton(text: String, enabled: Boolean, onClick: () -> Unit, modifier:
 fun GhostButton(text: String, icon: ImageVector?, onClick: () -> Unit, modifier: Modifier = Modifier, enabled: Boolean = true) {
     Row(
         modifier
-            .defaultMinSize(minHeight = 40.dp)
+            .defaultMinSize(minHeight = 44.dp)
             .clip(JudgeShapes.chip)
             .border(BorderStroke(1.dp, Palette.line2), JudgeShapes.chip)
             .background(Palette.paper)
@@ -79,7 +79,7 @@ fun GhostButton(text: String, icon: ImageVector?, onClick: () -> Unit, modifier:
 fun TextAction(text: String, onClick: () -> Unit, modifier: Modifier = Modifier, color: Color = Palette.terraInk, enabled: Boolean = true) {
     Box(
         modifier
-            .defaultMinSize(minHeight = 40.dp)
+            .defaultMinSize(minHeight = 44.dp)
             .clip(JudgeShapes.chip)
             .semantics { role = Role.Button }
             .clickable(enabled = enabled, onClick = onClick)

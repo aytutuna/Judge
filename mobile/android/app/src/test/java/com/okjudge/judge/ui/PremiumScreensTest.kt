@@ -273,9 +273,12 @@ class PremiumScreensTest {
             }
         }
         compose.onAllNodesWithText(en.pricingComingSoon).assertCountEquals(0)
-        // The price column and the button both carry the store's price.
-        compose.onAllNodesWithText("TRY 44.99").assertCountEquals(2)
-        compose.onAllNodesWithText("TRY 649.99").assertCountEquals(2)
+        // The button carries the store's price; the column beside it drops the repeat.
+        compose.onAllNodesWithText("TRY 44.99").assertCountEquals(1)
+        compose.onAllNodesWithText("TRY 649.99").assertCountEquals(1)
+        compose.onAllNodesWithTag(PricingTags.BUY)[0].assertTextEquals("TRY 44.99")
+        compose.onAllNodesWithTag(PricingTags.BUY)[2].assertTextEquals("TRY 649.99")
+        compose.onAllNodesWithText(en.pricingPerVerdict("TRY 44.99")).assertCountEquals(0)
         compose.onAllNodesWithText("$1.00").assertCountEquals(0)
         // The "prices in USD, payments not open" footnote goes once the store sells.
         compose.onAllNodesWithText(en.pricingNote).assertCountEquals(0)

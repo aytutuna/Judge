@@ -113,57 +113,18 @@ fun PricingScreen(
                 Modifier.widthIn(max = 640.dp).fillMaxWidth().padding(top = 8.dp, bottom = 40.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp),
             ) {
-                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                    Kicker(s.navPricing)
-                    Text(
-                        if (signedIn) s.appPricingHeadlineMember else s.appPricingHeadline,
-                        style = JudgeType.sectionTitle.copy(fontSize = 30.sp, lineHeight = 34.sp, letterSpacing = (-0.03).em),
-                        modifier = Modifier.semantics { heading() },
-                    )
-                    Text(if (signedIn) s.appPricingSubMember else s.appPricingSub, style = JudgeType.lead)
-                }
-
-                if (signedIn && entitlement != null) {
-                    val sub = entitlement.subscription
-                    Column(
-                        Modifier
-                            .fillMaxWidth()
-                            .clip(JudgeShapes.field)
-                            .background(Palette.paper)
-                            .border(1.dp, Palette.line, JudgeShapes.field)
-                            .testTag(PricingTags.STATUS)
-                            .padding(horizontal = 16.dp, vertical = 12.dp),
-                        verticalArrangement = Arrangement.spacedBy(2.dp),
-                    ) {
-                        Tiers.balance(s, entitlement)?.let { Text(it, style = JudgeType.bodyStrong) }
-                        if (sub != null) {
-                            // Credits kept beside the plan need their own line; past the cap the line above counts them.
-                            if (Tiers.remaining(entitlement)?.monthly == true && entitlement.credits > 0) {
-                                Text("${s.accountCredits}: ${entitlement.credits}", style = JudgeType.body.copy(color = Palette.ink2))
-                            }
-                            val date = Errors.formatDate(lang, sub.periodEnd) ?: sub.periodEnd
-                            Text(
-                                if (sub.willRenew) s.accountSubscriptionRenews(date) else s.accountSubscriptionUntil(date),
-                                style = JudgeType.body.copy(color = Palette.ink2),
-                            )
-                        }
-                    }
-                }
-
                 PlanCard {
-                    Text(s.pricingPacksTitle, style = JudgeType.slotTitle.copy(color = Palette.ink))
-                    Text(s.pricingPacksLead, style = JudgeType.slotText)
                     pricing.packs.forEach { pack ->
                         val offer = offerFor(pack.id)
                         val price = offer?.price ?: Tiers.formatPrice(pack.priceUsd, lang, pricing.currency)
                         val each = when {
-                            pack.credits <= 0 -> price
+                            pack.credits <= 1 -> null
                             offer != null -> Tiers.formatPrice(offer.amountMicros / 1_000_000.0 / pack.credits, lang, offer.currencyCode)
                             else -> Tiers.formatPrice(pack.priceUsd / pack.credits, lang, pricing.currency)
                         }
                         Offer(
                             name = s.pricingPack(pack.credits),
-                            meta = s.pricingPerVerdict(each),
+                            meta = each?.let { s.pricingPerVerdict(it) },
                             price = price,
                             buyLabel = if (storeOn) price else s.pricingComingSoon,
                             enabled = offer != null && store.buying == null,
@@ -173,7 +134,6 @@ fun PricingScreen(
                         )
                     }
 
-                    Text(s.pricingMonthlyTitle, style = JudgeType.slotTitle.copy(color = Palette.ink), modifier = Modifier.padding(top = 8.dp))
                     val monthlyId = pricing.monthly.id.ifEmpty { StoreProducts.MONTHLY }
                     val monthlyOffer = offerFor(monthlyId)
                     val monthly = monthlyOffer?.price ?: Tiers.formatPrice(pricing.monthly.priceUsd, lang, pricing.currency)
@@ -215,17 +175,52 @@ fun PricingScreen(
                             modifier = Modifier.fillMaxWidth().padding(top = 8.dp).testTag(PricingTags.SIGN_IN),
                         )
                     }
-
-                    Row(
-                        Modifier.padding(top = 8.dp),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    ) {
-                        TintedIcon(rememberIcon(Palette.terra) { JudgeIcons.spark(it) }, 14)
-                        Text(s.pricingIncludedTitle, style = JudgeType.sectionTitle, modifier = Modifier.semantics { heading() })
-                    }
-                    FeatureList(Tiers.premiumFeatureKeys(cases = features?.cases == true, evidence = features?.evidence == true))
                 }
+
+                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Kicker(s.navPricing)
+                    Text(
+                        if (signedIn) s.appPricingHeadlineMember else s.appPricingHeadline,
+                        style = JudgeType.sectionTitle.copy(fontSize = 30.sp, lineHeight = 34.sp, letterSpacing = (-0.03).em),
+                        modifier = Modifier.semantics { heading() },
+                    )
+                    Text(if (signedIn) s.appPricingSubMember else s.appPricingSub, style = JudgeType.lead)
+                }
+
+                if (signedIn && entitlement != null) {
+                    val sub = entitlement.subscription
+                    Column(
+                        Modifier
+                            .fillMaxWidth()
+                            .clip(JudgeShapes.field)
+                            .background(Palette.paper)
+                            .border(1.dp, Palette.line, JudgeShapes.field)
+                            .testTag(PricingTags.STATUS)
+                            .padding(horizontal = 16.dp, vertical = 12.dp),
+                        verticalArrangement = Arrangement.spacedBy(2.dp),
+                    ) {
+                        Tiers.balance(s, entitlement)?.let { Text(it, style = JudgeType.bodyStrong) }
+                        if (sub != null) {
+                            // Credits kept beside the plan need their own line; past the cap the line above counts them.
+                            if (Tiers.remaining(entitlement)?.monthly == true && entitlement.credits > 0) {
+                                Text("${s.accountCredits}: ${entitlement.credits}", style = JudgeType.body.copy(color = Palette.ink2))
+                            }
+                            val date = Errors.formatDate(lang, sub.periodEnd) ?: sub.periodEnd
+                            Text(
+                                if (sub.willRenew) s.accountSubscriptionRenews(date) else s.accountSubscriptionUntil(date),
+                                style = JudgeType.body.copy(color = Palette.ink2),
+                            )
+                        }
+                    }
+                }
+
+                Text(s.pricingPacksLead, style = JudgeType.slotText)
+
+                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    TintedIcon(rememberIcon(Palette.terra) { JudgeIcons.spark(it) }, 14)
+                    Text(s.pricingIncludedTitle, style = JudgeType.sectionTitle, modifier = Modifier.semantics { heading() })
+                }
+                FeatureList(Tiers.premiumFeatureKeys(cases = features?.cases == true, evidence = features?.evidence == true))
 
                 // "Prices in USD, payments not open yet" is wrong once the store sells in the buyer's currency.
                 val storeSelling = storeOn && signedIn && store.offers.isNotEmpty()
@@ -296,7 +291,7 @@ private fun PurchaseNotice(text: String, working: Boolean, failed: Boolean) {
 @Composable
 private fun Offer(
     name: String,
-    meta: String,
+    meta: String?,
     price: String,
     buyLabel: String,
     enabled: Boolean,
@@ -315,10 +310,10 @@ private fun Offer(
     ) {
         Column(Modifier.weight(1f)) {
             Text(name, style = JudgeType.slotTitle)
-            Text(meta, style = JudgeType.slotText)
+            if (meta != null) Text(meta, style = JudgeType.slotText)
         }
         Column(horizontalAlignment = Alignment.End, verticalArrangement = Arrangement.spacedBy(6.dp)) {
-            Text(price, style = JudgeType.bodyStrong)
+            if (buying || buyLabel != price) Text(price, style = JudgeType.bodyStrong)
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 if (buying) CircularProgressIndicator(Modifier.size(14.dp), color = Palette.ink2, strokeWidth = 1.5.dp)
                 GhostButton(
