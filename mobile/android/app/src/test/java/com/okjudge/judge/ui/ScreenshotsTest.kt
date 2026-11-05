@@ -5,8 +5,12 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.DrawerValue
+import androidx.compose.material3.ModalNavigationDrawer
+import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
@@ -602,11 +606,36 @@ class ScreenshotsTest {
     }
 
     @Test
-    fun home_withTabs_en() = capture("home_tabs_en") {
+    fun home_withBar_en() = capture("home_bar_en") {
         Themed(AppLang.EN) {
             Column(Modifier.fillMaxSize()) {
-                TabBar(Tab.NEW) {}
+                PageBar(UiTestSupport.s(AppLang.EN).appTabNew, {}, {}, FocusRequester())
                 HomeScreen(HomeUiState(), {}, {}, {})
+            }
+        }
+    }
+
+    @Test
+    fun menu_open_en() = capture("menu_open_en") { OpenMenu(dark = false) }
+
+    @Test
+    fun menu_open_en_dark() = capture("menu_open_en_dark") { OpenMenu(dark = true) }
+
+    @Composable
+    private fun OpenMenu(dark: Boolean) {
+        val s = UiTestSupport.s(AppLang.EN)
+        Themed(AppLang.EN, dark = dark) {
+            ModalNavigationDrawer(
+                drawerContent = {
+                    MenuPanel(Tab.HISTORY, phoneRows("win_a_self", "win_b_named", "lean_tie"), false, FocusRequester(), {}, {}, {})
+                },
+                drawerState = rememberDrawerState(DrawerValue.Open),
+                scrimColor = menuScrim,
+            ) {
+                Column(Modifier.fillMaxSize()) {
+                    PageBar(s.navVerdicts, {}, {}, FocusRequester())
+                    HistoryScreen(phoneRows("win_a_self", "win_b_named", "lean_tie"), {}, { _, _ -> })
+                }
             }
         }
     }

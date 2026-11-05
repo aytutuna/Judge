@@ -103,8 +103,6 @@ fun SettingsScreen(
             Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(horizontal = 20.dp, vertical = 8.dp),
             verticalArrangement = Arrangement.spacedBy(24.dp),
         ) {
-            Text(s.appTabSettings, style = JudgeType.sectionTitle.copy(fontSize = JudgeType.sectionTitle.fontSize * 1.3f))
-
             AccountGroup(account, accountBusy, onSignIn, onSignOut, onDeleteAccount, restore, onRestore)
 
             if (onOpenPricing != null) {

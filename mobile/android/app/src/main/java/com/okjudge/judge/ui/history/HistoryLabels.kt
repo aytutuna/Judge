@@ -5,6 +5,7 @@ import com.okjudge.judge.core.display.Errors
 import com.okjudge.judge.core.display.Party
 import com.okjudge.judge.core.display.PartyNames
 import com.okjudge.judge.core.display.RestoreNames
+import com.okjudge.judge.core.data.SavedVerdict
 import com.okjudge.judge.core.data.parseIso
 import com.okjudge.judge.core.model.HistoryItem
 import com.okjudge.judge.core.model.HistoryState
@@ -45,6 +46,17 @@ object HistoryLabels {
             item.historyState == HistoryState.REMOVED -> s.historyStateRemoved
             else -> s.shellUntitled
         }
+    }
+
+    fun title(entry: HistoryEntry, s: Strings, lang: AppLang): String = when (entry) {
+        is HistoryEntry.Account -> title(entry.item, s, lang)
+        is HistoryEntry.Phone -> title(entry.verdict, lang)
+    }
+
+    /** A verdict kept on the phone: its headline in the shown language. */
+    fun title(verdict: SavedVerdict, lang: AppLang): String {
+        val shown = verdict.translations[lang]?.result ?: verdict.original.result
+        return RestoreNames.headline(shown, verdict.nameMap, verdict.lang)
     }
 
     /** The row's state in a few words; null when there is nothing to say. */

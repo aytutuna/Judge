@@ -77,13 +77,7 @@ object JudgeIcons {
         P("M2 4.5h2.2c3.2 0 4 7 7.2 7H14M2 11.5h2.2c1 0 1.8-.8 2.4-1.8M9 5.8c.6-.8 1.2-1.3 2.4-1.3H14M12.3 2.8 14 4.5l-1.7 1.7M12.3 9.8 14 11.5l-1.7 1.7", stroke = color, width = 1.5f),
     )
 
-    fun list(color: Color) = icon("list", 16f, P("M5 4h8M5 8h8M5 12h8M2.5 4h.01M2.5 8h.01M2.5 12h.01", stroke = color, width = 1.6f))
-
-    fun gear(color: Color) = icon(
-        "gear", 16f,
-        P("M5.5 8a2.5 2.5 0 1 0 5 0a2.5 2.5 0 1 0 -5 0", stroke = color, width = 1.5f),
-        P("M8 1.5v2M8 12.5v2M1.5 8h2M12.5 8h2M3.4 3.4l1.4 1.4M11.2 11.2l1.4 1.4M3.4 12.6l1.4-1.4M11.2 4.8l1.4-1.4", stroke = color, width = 1.5f),
-    )
+    fun menu(color: Color) = icon("menu", 16f, P("M2.5 4h11M2.5 8h11M2.5 12h11", stroke = color, width = 1.6f))
 
     fun trash(color: Color) = icon(
         "trash", 16f,
