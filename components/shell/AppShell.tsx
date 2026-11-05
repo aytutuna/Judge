@@ -7,16 +7,16 @@ import { t, type Lang } from "@/lib/i18n";
 import { langDir } from "@/lib/langs";
 import { AgeGate } from "../AgeGate";
 import { SiteFooter, SiteHeader, SkipLink } from "../SiteChrome";
-import { TabBar } from "./TabBar";
+import { SideMenu } from "./SideMenu";
 import styles from "./shell.module.css";
 
 /**
  * Page frame for the app's own pages: the header (with "Verdicts" and "Settings" from
  * the desktop breakpoint), the page, the footer unless `footer` is off,
- * and below 960px the tabs under the header. `toggle` shows the language
- * picker (pages whose chrome reads the client language store). The home page
- * hides the tabs on the judging screen (`tabs`), and `onHome` lets it reset
- * itself from the first tab.
+ * and below 960px a menu button at the start of the header. `toggle` shows the
+ * language picker (pages whose chrome reads the client language store). The
+ * home page hides the menu on the judging screen (`tabs`), and `onHome` lets
+ * it reset itself from the menu's first row.
  */
 export function AppShell({
   lang,
@@ -35,9 +35,13 @@ export function AppShell({
 }) {
   const pathname = usePathname();
   return (
-    <div lang={lang} dir={langDir(lang)} className={styles.shell} data-tabs={tabs ? "" : undefined}>
+    <div lang={lang} dir={langDir(lang)} className={styles.shell}>
       <SkipLink lang={lang} />
-      <SiteHeader lang={lang} toggle={toggle}>
+      <SiteHeader
+        lang={lang}
+        toggle={toggle}
+        lead={tabs ? <SideMenu lang={lang} pathname={pathname} onHome={onHome} /> : undefined}
+      >
         <Link
           href="/verdicts"
           className={styles.headerLink}
@@ -53,7 +57,6 @@ export function AppShell({
           {t(lang, "nav.settings")}
         </Link>
       </SiteHeader>
-      {tabs ? <TabBar lang={lang} pathname={pathname} onHome={onHome} /> : null}
       {children}
       {footer ? <SiteFooter lang={lang} toggle={toggle} /> : null}
       <AgeGate lang={lang} />

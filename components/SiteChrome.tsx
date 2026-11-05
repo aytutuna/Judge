@@ -21,17 +21,30 @@ export function SkipLink({ lang }: { lang: Lang }) {
 }
 
 /** Fixed, blurred 56px nav, with a spacer of the same height so the page
- * starts below it. `children` go before the account entry (the app shell's
- * "Verdicts" link). */
-export function SiteHeader({ lang, toggle = false, children }: { lang: Lang; toggle?: boolean; children?: ReactNode }) {
+ * starts below it. `lead` goes before the brand (the app shell's menu button);
+ * `children` go before the account entry (its "Verdicts" link). */
+export function SiteHeader({
+  lang,
+  toggle = false,
+  lead,
+  children,
+}: {
+  lang: Lang;
+  toggle?: boolean;
+  lead?: ReactNode;
+  children?: ReactNode;
+}) {
   return (
     <>
       <header className={styles.nav}>
         <div className={`wrap ${styles.navInner}`}>
-          <Link href="/" aria-label={t(lang, "nav.home")} className={styles.brand}>
-            <BrandMark size={28} />
-            Judge
-          </Link>
+          <div className={styles.navStart}>
+            {lead}
+            <Link href="/" aria-label={t(lang, "nav.home")} className={styles.brand}>
+              <BrandMark size={28} />
+              <span className={styles.wordmark}>Judge</span>
+            </Link>
+          </div>
           <div className={styles.navRight}>
             {toggle ? <LangPicker lang={lang} /> : null}
             {children}

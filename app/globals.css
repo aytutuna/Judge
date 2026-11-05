@@ -184,6 +184,7 @@
   --scene-shadow: var(--ink-2);
   --scene-shadow-opacity: 0.12;
   --scene-pool: var(--paper);
+  --scrim: rgba(28, 25, 22, 0.28);
 }
 :root[data-theme="light"] {
   color-scheme: light;
@@ -209,6 +210,7 @@
     --scene-shadow: #000000;
     --scene-shadow-opacity: 0.4;
     --scene-pool: var(--ivory-2);
+    --scrim: rgba(0, 0, 0, 0.55);
   }
 }
 
@@ -225,6 +227,7 @@
   --scene-shadow: #000000;
   --scene-shadow-opacity: 0.4;
   --scene-pool: var(--ivory-2);
+  --scrim: rgba(0, 0, 0, 0.55);
 }
 
 @media (min-width: 960px) {

@@ -545,7 +545,7 @@ export default function Home() {
   }, [phase]);
 
   return (
-    // The tab bar gives way to the judging screen, as the apps' full-screen cover does.
+    // The menu button gives way to the judging screen, as the apps' full-screen cover does.
     <AppShell lang={lang} toggle footer={false} tabs={phase !== "judging"} onHome={phase !== "form" ? reset : undefined}>
       <main id="main" tabIndex={-1} className={phase === "form" ? `${styles.main} ${styles.chat}` : styles.main}>
         <div className={`wrap ${styles.column}`}>

@@ -1,9 +1,7 @@
 /* App shell: the site header and footer around the page, and below 960px
-   a tab bar fixed under the header. --tabs-h is the bar's height while it
-   shows (0 otherwise); the page starts below it. */
+   a menu button in the header that opens the side panel. */
 
 .shell {
-  --tabs-h: 0px;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -33,53 +31,138 @@
   color: var(--ink);
 }
 
-.tabs {
-  position: fixed;
-  inset: var(--nav-h) 0 auto 0;
-  z-index: 39;
-  background: color-mix(in srgb, var(--ivory) 86%, transparent);
-  -webkit-backdrop-filter: saturate(180%) blur(20px);
-  backdrop-filter: saturate(180%) blur(20px);
-  border-bottom: 1px solid var(--line);
-}
-.tabs ul {
-  display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: minmax(0, 1fr);
-  height: 56px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-.tabs a {
-  display: flex;
-  flex-direction: column;
+.menuButton {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 3px;
-  height: 100%;
-  color: var(--muted);
-  font-size: 11.5px;
-  font-weight: 600;
-  text-decoration: none;
+  flex: none;
+  width: 44px;
+  height: 44px;
+  margin-inline-start: -10px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  color: var(--ink);
+  cursor: pointer;
   -webkit-tap-highlight-color: transparent;
 }
-.tabs a[aria-current="page"] {
-  color: var(--ink);
+.menuButton:hover {
+  background: color-mix(in srgb, var(--ink) 6%, transparent);
 }
-.tabs svg {
+.menuButton svg {
   width: 22px;
   height: 22px;
 }
 
-@media (max-width: 959px) {
-  .shell[data-tabs] {
-    --tabs-h: 56px;
-    padding-top: var(--tabs-h);
+/* A full-screen modal dialog: the scrim fills it, the panel sits at the
+   start edge. The UA's dialog box and Tailwind's resets are cleared. */
+.menu {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  overflow: hidden;
+}
+.menu::backdrop {
+  background: transparent;
+}
+.scrim {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: var(--scrim);
+  cursor: default;
+  animation: scrim-in 0.2s ease-out;
+}
+.panel {
+  --from: -100%;
+  position: absolute;
+  z-index: 1;
+  inset-block: 0;
+  inset-inline-start: 0;
+  width: min(300px, 85vw);
+  display: flex;
+  flex-direction: column;
+  padding: calc(20px + env(safe-area-inset-top)) 12px calc(22px + env(safe-area-inset-bottom));
+  background: var(--ivory-2);
+  overflow-y: auto;
+  animation: panel-in 0.24s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+[dir="rtl"] .panel {
+  --from: 100%;
+}
+.panel ul {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.menuRow {
+  display: flex;
+  align-items: center;
+  min-height: 48px;
+  padding: 4px 12px;
+  border-radius: 12px;
+  color: var(--ink);
+  font-size: 16px;
+  font-weight: 500;
+  text-decoration: none;
+}
+.menuRow[aria-current="page"] {
+  background: var(--paper);
+  box-shadow: 0 1px 3px var(--line-2);
+}
+.menuEnd {
+  margin-top: auto;
+  padding-top: 12px;
+}
+.recent {
+  display: block;
+  min-height: 44px;
+  padding: 0 12px;
+  color: var(--ink-2);
+  font-size: 14px;
+  line-height: 44px;
+  text-decoration: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.recent[data-removed] {
+  opacity: 0.6;
+}
+@keyframes scrim-in {
+  from {
+    opacity: 0;
   }
-  /* Focus and find-in-page scroll targets stop below the bar, not under it. */
-  html:has(.shell[data-tabs]) {
-    scroll-padding-top: calc(var(--nav-h) + 56px + 8px);
+}
+@keyframes panel-in {
+  from {
+    transform: translateX(var(--from));
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .scrim,
+  .panel {
+    animation: none;
+  }
+}
+@media (forced-colors: active) {
+  .menuRow[aria-current="page"] {
+    text-decoration: underline;
   }
 }
 
@@ -87,14 +170,8 @@
   .headerLink {
     display: inline-flex;
   }
-  .tabs {
+  .menuButton {
     display: none;
-  }
-}
-
-@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-  .tabs {
-    background: var(--ivory);
   }
 }
 
@@ -214,12 +291,6 @@ a.row:hover .title {
 .more:disabled {
   color: var(--muted);
   cursor: default;
-}
-
-@media (forced-colors: active) {
-  .tabs a[aria-current="page"] {
-    text-decoration: underline;
-  }
 }
 
 .dock {

@@ -65,6 +65,19 @@
   letter-spacing: -0.02em;
 }
 
+@media (max-width: 359px) {
+  .wordmark {
+    display: none;
+  }
+}
+
+.navStart {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+}
+
 .navRight {
   display: flex;
   align-items: center;
