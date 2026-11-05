@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect, useEffectEvent, useRef, useState } from "react";
-import { EvidencePicker, useEvidence } from "@/components/case/EvidencePicker";
+import { useEvidence } from "@/components/case/EvidencePicker";
 import { ClarifyStep, buildClarifications, type ClarifyQuestion } from "@/components/ClarifyStep";
 import { Balance } from "@/components/home/Balance";
 import { HomeForm } from "@/components/home/HomeForm";
@@ -20,7 +20,7 @@ import { startHistory } from "@/lib/history-store";
 import { apiErrorMessage, t } from "@/lib/i18n";
 import { useLang } from "@/lib/lang";
 import { resetScene } from "@/lib/scene-bridge";
-import { EXAMPLES, MAX_ARGUMENT, joinSides } from "@/lib/sides";
+import { EXAMPLES, MAX_ARGUMENT, inviteTextOk, joinSides } from "@/lib/sides";
 import { MAX_FINISH_MS } from "@/lib/thinking";
 import type { Clarification, ClarifyResponse, VerdictApiResponse, VerdictResponse } from "@/lib/types";
 import { applyEntitlement, refreshViewer, useViewer } from "@/lib/use-viewer";
@@ -90,6 +90,8 @@ export default function Home() {
   // the form as it was.
   const [argument, setArgument] = useState("");
   const [otherSide, setOtherSide] = useState("");
+  // Their side stays closed until asked for; closed, it is always empty.
+  const [theirsOpen, setTheirsOpen] = useState(false);
   // Null: the account's first name until they type.
   const [mineName, setMineName] = useState<string | null>(null);
   const [otherName, setOtherName] = useState("");
@@ -131,7 +133,8 @@ export default function Home() {
   const signedIn = Boolean(viewer.me?.user);
   const entitlement = signedIn ? (viewer.me?.entitlement ?? null) : null;
   const evidenceOn = signedIn && features?.evidence === true;
-  const casesOn = signedIn && features?.cases === true;
+  // Signed out, "Send them a link" goes to sign-in first.
+  const casesOn = features?.cases === true;
   const holding = checking || creating;
   const open = useEffectEvent(judgingFinished);
 
@@ -164,6 +167,7 @@ export default function Home() {
     // eslint-disable-next-line react-hooks/set-state-in-effect -- one-time read of browser storage
     setArgument(draft.argument);
     setOtherSide(draft.otherSide ?? "");
+    setTheirsOpen(Boolean(draft.otherSide));
   }, []);
 
   // The index has to exist before the first addHistory, or the verdicts
@@ -188,6 +192,15 @@ export default function Home() {
     viewerKnown &&
     !holding &&
     !(evidenceOn && evidence.busy);
+
+  // A link needs a side worth judging, or none at all (the other person can
+  // write theirs first); text with a few words or only images does not count.
+  const canInvite =
+    !theirsOpen &&
+    viewerKnown &&
+    !holding &&
+    !(evidenceOn && evidence.busy) &&
+    inviteTextOk(argument, evidence.items.length);
 
   function signInFirst() {
     saveDraftForSignIn();
@@ -374,14 +387,14 @@ export default function Home() {
     }
   }
 
-  /** Send a link: create the case with the owner's side (it holds one
-   * premium verdict), keep the returned names in this browser and open
+  /** Send a link: create the case with the owner's side if they wrote one (it
+   * holds one premium verdict), keep the returned names in this browser and open
    * the case page with the invite link. No clarifying step: the other side's
    * account fills the gaps. */
   async function createCase() {
     track("case_submitted");
     const tokens = evidenceOn ? evidence.tokens : [];
-    const text = argument;
+    const text = argument.trim() ? argument : undefined;
     const signal = threadSignal();
     clearDraft();
     setError(null);
@@ -442,6 +455,7 @@ export default function Home() {
     setArgument("");
     setOtherSide("");
     setOtherName("");
+    setTheirsOpen(false);
     if (mineName !== null && mineName === exampleName.current) setMineName(null);
     exampleName.current = null;
     setChecking(false);
@@ -469,6 +483,14 @@ export default function Home() {
     started.current = argument !== "";
   }, [argument]);
 
+  function removeTheirs() {
+    setOtherSide("");
+    setOtherName("");
+    setTheirsOpen(false);
+    if (mineName !== null && mineName === exampleName.current) setMineName(null);
+    exampleName.current = null;
+  }
+
   function fillExample() {
     const pool = EXAMPLES.filter((id) => id !== lastExample.current);
     const id = pool[Math.floor(Math.random() * pool.length)];
@@ -479,6 +501,7 @@ export default function Home() {
     setArgument(t(lang, `pairs.${id}.a`));
     setOtherName(t(lang, `pairs.${id}.bName`));
     setOtherSide(t(lang, `pairs.${id}.b`));
+    setTheirsOpen(true);
     setError(null);
   }
 
@@ -506,10 +529,25 @@ export default function Home() {
     shown.current = phase;
   }, [phase]);
 
+  // iOS Safari keeps dvh at full height under the keyboard, so the chat
+  // follows the visual viewport where there is one.
+  useEffect(() => {
+    const vv = window.visualViewport;
+    if (phase !== "form" || !vv) return;
+    const root = document.documentElement;
+    const size = () => root.style.setProperty("--vvh", `${vv.height}px`);
+    size();
+    vv.addEventListener("resize", size);
+    return () => {
+      vv.removeEventListener("resize", size);
+      root.style.removeProperty("--vvh");
+    };
+  }, [phase]);
+
   return (
     // The tab bar gives way to the judging screen, as the apps' full-screen cover does.
     <AppShell lang={lang} toggle footer={false} tabs={phase !== "judging"} onHome={phase !== "form" ? reset : undefined}>
-      <main id="main" tabIndex={-1} className={styles.main}>
+      <main id="main" tabIndex={-1} className={phase === "form" ? `${styles.main} ${styles.chat}` : styles.main}>
         <div className={`wrap ${styles.column}`}>
           <h1 className="sr-only">{t(lang, "hero.title")}</h1>
           <p className="sr-only" role="status" aria-live="polite">
@@ -546,30 +584,21 @@ export default function Home() {
               onTheirs={setOtherSide}
               theirName={otherName}
               onTheirName={setOtherName}
+              theirsOpen={theirsOpen}
+              onAddTheirs={() => setTheirsOpen(true)}
+              onRemoveTheirs={removeTheirs}
               length={joined.length}
-              casesOn={casesOn}
-              onNew={argument || otherSide || evidence.items.length > 0 ? reset : undefined}
+              blank={!argument && !theirsOpen && evidence.items.length === 0}
+              onClear={reset}
               onExample={fillExample}
               canSubmit={canSubmit}
               onSubmit={onSubmit}
-              onInvite={casesOn && !otherSide.trim() ? onInvite : undefined}
+              onInvite={casesOn ? onInvite : undefined}
+              canInvite={canInvite}
               holding={holding}
               error={error}
               status={progress ?? (entitlement ? <Balance lang={lang} entitlement={entitlement} /> : null)}
-              evidence={
-                evidenceOn ? (
-                  <EvidencePicker
-                    lang={lang}
-                    max={MAX_EVIDENCE_PER_SIDE}
-                    items={evidence.items}
-                    full={evidence.full}
-                    failure={evidence.failure}
-                    overLimit={evidence.overLimit}
-                    onAdd={evidence.add}
-                    onRemove={evidence.remove}
-                  />
-                ) : null
-              }
+              evidence={evidenceOn ? evidence : undefined}
             />
           )}
         </div>
