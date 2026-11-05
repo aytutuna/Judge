@@ -26,7 +26,7 @@ Every verdict uses one credit or one of the monthly plan's verdicts. A new accou
 
 ## Two-sided cases
 
-A two-sided case uses one verdict, like any other. Write your side on the home screen, tap "Or send them a link to write it", then open the link in a browser to answer as the other person.
+A two-sided case uses one verdict, like any other. On the New page tap "Send them a link", with or without writing your side first, then open the link in a browser to answer as the other person. The case page takes your side if you have not written it yet.
 
 ## Other
 
