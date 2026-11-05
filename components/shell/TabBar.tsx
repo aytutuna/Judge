@@ -11,7 +11,7 @@ const LIST = "M8 6.5h11M8 12h11M8 17.5h11M4.5 6.5h.01M4.5 12h.01M4.5 17.5h.01";
 const GEAR =
   "M8.25 12a3.75 3.75 0 1 0 7.5 0a3.75 3.75 0 1 0 -7.5 0M12 2.25v3M12 18.75v3M2.25 12h3M18.75 12h3M5.1 5.1l2.1 2.1M16.8 16.8l2.1 2.1M5.1 18.9l2.1-2.1M16.8 7.2l2.1-2.1";
 
-/** The phone's bottom tabs, as in the native app: a new argument, My
+/** The phone's tabs under the header, as in the native app: a new argument, My
  * verdicts, and Settings (where the account lives). `onHome` resets the home
  * page instead of navigating to itself. Hidden from 960px, where the header
  * carries the same links. */

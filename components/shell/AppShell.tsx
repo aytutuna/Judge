@@ -13,10 +13,10 @@ import styles from "./shell.module.css";
 /**
  * Page frame for the app's own pages: the header (with "Verdicts" and "Settings" from
  * the desktop breakpoint), the page, the footer unless `footer` is off,
- * and below 960px the bottom tabs. `toggle` shows the language picker
- * (pages whose chrome reads the client language store). The home page
- * hides the tabs while its composer is docked (`tabs`), and `onHome` lets
- * it reset itself from the first tab.
+ * and below 960px the tabs under the header. `toggle` shows the language
+ * picker (pages whose chrome reads the client language store). The home page
+ * hides the tabs on the judging screen (`tabs`), and `onHome` lets it reset
+ * itself from the first tab.
  */
 export function AppShell({
   lang,
@@ -53,9 +53,9 @@ export function AppShell({
           {t(lang, "nav.settings")}
         </Link>
       </SiteHeader>
+      {tabs ? <TabBar lang={lang} pathname={pathname} onHome={onHome} /> : null}
       {children}
       {footer ? <SiteFooter lang={lang} toggle={toggle} /> : null}
-      {tabs ? <TabBar lang={lang} pathname={pathname} onHome={onHome} /> : null}
       <AgeGate lang={lang} />
     </div>
   );
