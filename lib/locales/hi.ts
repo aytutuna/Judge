@@ -513,6 +513,12 @@ const hi: Locale = {
     "card.claims": "हर पक्ष यहाँ तक कैसे पहुँचा",
     "card.appeal": "जानकारी जोड़कर अपील करें",
     "home.example": "कोई उदाहरण आज़माएँ",
+    "home.yourPlaceholder": "समस्या क्या है?",
+    "home.addContext": "संदर्भ जोड़ें",
+    "home.addTheirSide": "उनकी बात जोड़ें",
+    "home.removeTheirSide": "उनकी बात हटाएँ",
+    "home.sendLink": "लिंक भेजें",
+    "home.clear": "साफ़ करें",
     "home.lead":
       "दोनों पक्षों की बात लिखें, या दूसरे व्यक्ति को लिंक भेजें ताकि वे अपनी बात ख़ुद लिखें।",
     "home.leadSolo": "अपनी बात लिखें, और पता हो तो उनकी भी।",

@@ -519,6 +519,12 @@ const it: Locale = {
     "card.claims": "Il ragionamento di ciascuna parte",
     "card.appeal": "Aggiungi contesto e fai appello",
     "home.example": "Prova un esempio",
+    "home.yourPlaceholder": "Qual è il problema?",
+    "home.addContext": "Aggiungi contesto",
+    "home.addTheirSide": "Aggiungi la sua versione",
+    "home.removeTheirSide": "Togli la sua versione",
+    "home.sendLink": "Manda un link",
+    "home.clear": "Cancella",
     "home.lead":
       "Scrivi entrambe le versioni, oppure manda un link all'altra persona perché scriva la sua.",
     "home.leadSolo": "Scrivi la tua versione e, se la conosci, anche quella dell'altra persona.",

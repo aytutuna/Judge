@@ -518,6 +518,12 @@ const ro: Locale = {
     "card.claims": "Cum a ajuns fiecare parte la poziția ei",
     "card.appeal": "Adaugă context și contestă",
     "home.example": "Încearcă un exemplu",
+    "home.yourPlaceholder": "Care e problema?",
+    "home.addContext": "Adaugă context",
+    "home.addTheirSide": "Adaugă cealaltă parte",
+    "home.removeTheirSide": "Elimină cealaltă parte",
+    "home.sendLink": "Trimite un link",
+    "home.clear": "Șterge",
     "home.lead":
       "Scrie ambele părți sau trimite-i celeilalte persoane un link ca să-și scrie varianta.",
     "home.leadSolo": "Scrie-ți partea și, dacă o știi, varianta celeilalte persoane.",

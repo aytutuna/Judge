@@ -516,6 +516,12 @@ const es: Locale = {
     "card.claims": "Cómo llegó cada parte a su postura",
     "card.appeal": "Añadir contexto y apelar",
     "home.example": "Probar un ejemplo",
+    "home.yourPlaceholder": "¿Cuál es el problema?",
+    "home.addContext": "Añadir contexto",
+    "home.addTheirSide": "Añadir la otra versión",
+    "home.removeTheirSide": "Quitar la otra versión",
+    "home.sendLink": "Envíale un enlace",
+    "home.clear": "Borrar",
     "home.lead":
       "Escribe las dos versiones o envía un enlace a la otra persona para que escriba la suya.",
     "home.leadSolo": "Escribe tu versión y, si la conoces, la de la otra persona.",

@@ -519,6 +519,12 @@ const de: Locale = {
     "card.claims": "Wie jede Seite zu ihrer Sicht kam",
     "card.appeal": "Einspruch mit neuem Kontext",
     "home.example": "Beispiel ausprobieren",
+    "home.yourPlaceholder": "Was ist das Problem?",
+    "home.addContext": "Kontext hinzufügen",
+    "home.addTheirSide": "Gegenseite hinzufügen",
+    "home.removeTheirSide": "Gegenseite entfernen",
+    "home.sendLink": "Per Link einladen",
+    "home.clear": "Leeren",
     "home.lead":
       "Schreib beide Seiten auf oder schick der anderen Person einen Link für ihre Seite.",
     "home.leadSolo":

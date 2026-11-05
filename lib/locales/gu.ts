@@ -513,6 +513,12 @@ const gu: Locale = {
     "card.claims": "દરેક બાજુ આ તારણ પર કેવી રીતે પહોંચી",
     "card.appeal": "વિગત ઉમેરો અને અપીલ કરો",
     "home.example": "ઉદાહરણ અજમાવો",
+    "home.yourPlaceholder": "સમસ્યા શું છે?",
+    "home.addContext": "સંદર્ભ ઉમેરો",
+    "home.addTheirSide": "એમની વાત ઉમેરો",
+    "home.removeTheirSide": "એમની વાત કાઢી નાખો",
+    "home.sendLink": "લિંક મોકલો",
+    "home.clear": "સાફ કરો",
     "home.lead":
       "બંને બાજુની વાત લખો, અથવા સામેની વ્યક્તિને લિંક મોકલો, જેથી એ પોતાની વાત જાતે લખે.",
     "home.leadSolo": "તમારી વાત લખો, અને ખબર હોય તો એમની પણ.",

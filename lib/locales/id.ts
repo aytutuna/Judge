@@ -514,6 +514,12 @@ const id: Locale = {
     "card.claims": "Alur pikir tiap pihak",
     "card.appeal": "Tambah konteks & banding",
     "home.example": "Coba contoh",
+    "home.yourPlaceholder": "Apa masalahnya?",
+    "home.addContext": "Tambah konteks",
+    "home.addTheirSide": "Tambah versi dia",
+    "home.removeTheirSide": "Hapus versi dia",
+    "home.sendLink": "Kirim tautan",
+    "home.clear": "Bersihkan",
     "home.lead":
       "Tulis versi kedua pihak, atau kirim tautan ke lawan debatmu agar dia menulis versinya sendiri.",
     "home.leadSolo": "Tulis versimu, dan versi dia juga kalau kamu tahu.",

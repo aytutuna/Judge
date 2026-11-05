@@ -521,6 +521,12 @@ const tr: Locale = {
     "card.claims": "Her taraf görüşüne nasıl vardı",
     "card.appeal": "Bağlam ekle ve itiraz et",
     "home.example": "Bir örnek dene",
+    "home.yourPlaceholder": "Sorun ne?",
+    "home.addContext": "Bağlam ekle",
+    "home.addTheirSide": "Karşı tarafı ekle",
+    "home.removeTheirSide": "Karşı tarafı kaldır",
+    "home.sendLink": "Bağlantı gönder",
+    "home.clear": "Temizle",
     "home.lead":
       "İki tarafı da yaz ya da karşı tarafa bir bağlantı gönder, kendi tarafını o yazsın.",
     "home.leadSolo": "Kendi tarafını yaz, biliyorsan onunkini de.",

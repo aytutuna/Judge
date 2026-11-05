@@ -519,6 +519,12 @@ const ms: Locale = {
     "card.claims": "Bagaimana setiap pihak sampai ke situ",
     "card.appeal": "Tambah konteks & buat rayuan",
     "home.example": "Cuba contoh",
+    "home.yourPlaceholder": "Apa masalahnya?",
+    "home.addContext": "Tambah konteks",
+    "home.addTheirSide": "Tambah versi dia",
+    "home.removeTheirSide": "Buang versi dia",
+    "home.sendLink": "Hantar pautan",
+    "home.clear": "Kosongkan",
     "home.lead":
       "Tulis kedua-dua versi, atau hantar pautan kepada pihak satu lagi supaya dia menulis versinya sendiri.",
     "home.leadSolo": "Tulis versi anda, dan versi dia juga kalau anda tahu.",

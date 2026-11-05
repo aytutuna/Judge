@@ -519,6 +519,12 @@ const ca: Locale = {
     "card.claims": "Com hi ha arribat cada part",
     "card.appeal": "Afegeix context i apel·la",
     "home.example": "Prova un exemple",
+    "home.yourPlaceholder": "Quin és el problema?",
+    "home.addContext": "Afegeix context",
+    "home.addTheirSide": "Afegeix la seva versió",
+    "home.removeTheirSide": "Treu la seva versió",
+    "home.sendLink": "Envia-li un enllaç",
+    "home.clear": "Esborra",
     "home.lead":
       "Escriu les dues versions o envia un enllaç a l'altra persona perquè escrigui la seva.",
     "home.leadSolo": "Escriu la teva versió, i la de l'altra persona si la coneixes.",

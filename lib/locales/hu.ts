@@ -519,6 +519,12 @@ const hu: Locale = {
     "card.claims": "Így érvelt a két fél",
     "card.appeal": "Kiegészítés és fellebbezés",
     "home.example": "Próbálj ki egy példát",
+    "home.yourPlaceholder": "Mi a gond?",
+    "home.addContext": "Háttér hozzáadása",
+    "home.addTheirSide": "Add hozzá az ő verzióját",
+    "home.removeTheirSide": "Vedd ki az ő verzióját",
+    "home.sendLink": "Küldj linket",
+    "home.clear": "Törlés",
     "home.lead":
       "Írd le mindkét fél verzióját, vagy küldj egy linket a másiknak, hogy ő írja meg a sajátját.",
     "home.leadSolo": "Írd le a te verziódat, és az övét is, ha ismered.",

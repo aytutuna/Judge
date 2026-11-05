@@ -516,6 +516,12 @@ const fr: Locale = {
     "card.claims": "Comment chaque camp en est arrivé là",
     "card.appeal": "Ajouter du contexte et faire appel",
     "home.example": "Essayer un exemple",
+    "home.yourPlaceholder": "C’est quoi, le problème ?",
+    "home.addContext": "Ajouter du contexte",
+    "home.addTheirSide": "Ajouter sa version",
+    "home.removeTheirSide": "Retirer sa version",
+    "home.sendLink": "Envoie-lui un lien",
+    "home.clear": "Effacer",
     "home.lead":
       "Écris les deux versions, ou envoie un lien à l’autre personne pour qu’elle écrive la sienne.",
     "home.leadSolo": "Écris ta version, et celle d’en face si tu la connais.",
