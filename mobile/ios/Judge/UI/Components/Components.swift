@@ -1,8 +1,8 @@
 import SafariServices
 import SwiftUI
 
-/// The judging balance: the brand mark redrawn with a level beam that
-/// rotates about the pivot tip, the spheres in the side colours. `angle` is
+/// The judging balance: a level beam that rotates about the pivot tip, the
+/// spheres in the side colours. `angle` is
 /// clockwise-positive degrees, so a negative angle lowers Party A's (left)
 /// end.
 struct BalanceCanvas: View {
