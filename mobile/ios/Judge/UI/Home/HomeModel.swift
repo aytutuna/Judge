@@ -188,6 +188,12 @@ final class HomeModel {
     /// and the server count it.
     func length(_ app: AppModel) -> Int { outgoing(app).utf16.count }
 
+    /// "1,234 / 6,000", with the language's digit grouping.
+    static func counterText(_ length: Int, lang: AppLang) -> String {
+        let style = IntegerFormatStyle<Int>.number.locale(lang.locale)
+        return L10n.appInputCounter(lang, count: length.formatted(style), max: maxLength.formatted(style))
+    }
+
     /// What the user wrote, without the names and labels the join adds.
     var writtenLength: Int {
         [argument, otherSide].map { $0.trimmingCharacters(in: .whitespacesAndNewlines).utf16.count }.reduce(0, +)

@@ -255,7 +255,7 @@ private struct CaseScreenContent: View {
                 Text(L10n.caseRemove(lang))
                     .brandText(.chip)
                     .foregroundStyle(Brand.danger)
-                    .frame(minHeight: 40)
+                    .frame(minHeight: 44)
             }
             .buttonStyle(.plain)
             .disabled(model.busy)

@@ -303,11 +303,13 @@ final class TextHelperTests: XCTestCase {
         XCTAssertNil(ErrorText.formatDate(nil, lang: .en))
     }
 
+    @MainActor
     func testPluralAndPlaceholders() {
         XCTAssertEqual(L10n.judgesVoted(.en, n: 1), "1 independent AI judge voted:")
         XCTAssertEqual(L10n.judgesVoted(.en, n: 3), "3 independent AI judges voted:")
         XCTAssertEqual(L10n.judgesVoted(.tr, n: 5), "5 bağımsız yapay zekâ yargıcı oy verdi:")
-        XCTAssertEqual(L10n.appInputCounter(.en, count: "12", max: "6000"), "12 / 6000")
+        XCTAssertEqual(HomeModel.counterText(12, lang: .en), "12 / 6,000")
+        XCTAssertEqual(HomeModel.counterText(1234, lang: .tr), "1.234 / 6.000")
         XCTAssertEqual(L10n.verdictWin(.tr, name: "Deniz"), "Deniz haklı")
         XCTAssertEqual(L10n.leanMajority(.en, forValue: "4", against: "1"), "The judges leaned this way 4–1.")
     }

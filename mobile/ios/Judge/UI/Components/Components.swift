@@ -84,6 +84,8 @@ struct GhostButtonStyle: ButtonStyle {
             .frame(minHeight: 40)
             .background(Capsule().fill(configuration.isPressed ? Brand.paperHi : Brand.paper))
             .overlay(Capsule().strokeBorder(Brand.line2, lineWidth: 1))
+            .frame(minHeight: 44)
+            .contentShape(Rectangle())
             .scaleEffect(configuration.isPressed ? 0.98 : 1)
             .opacity(isEnabled ? 1 : 0.4)
     }
@@ -95,7 +97,7 @@ struct LinkButtonStyle: ButtonStyle {
         configuration.label
             .brandText(.chip)
             .foregroundStyle(Brand.terraInk)
-            .frame(minHeight: 40)
+            .frame(minHeight: 44)
             .opacity(configuration.isPressed ? 0.6 : 1)
     }
 }

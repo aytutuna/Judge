@@ -30,6 +30,7 @@ struct PricingView: View {
         ScrollViewReader { proxy in
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
+                offers(pricing, lang: lang)
                 VStack(alignment: .leading, spacing: 10) {
                     Kicker(text: L10n.navPricing(lang))
                     Text(account.isSignedIn ? L10n.appPricingHeadlineMember(lang) : L10n.appPricingHeadline(lang))
@@ -44,7 +45,14 @@ struct PricingView: View {
                 if account.isSignedIn, let entitlement = account.entitlement {
                     planStatus(entitlement, lang: lang)
                 }
-                premiumPlan(pricing, lang: lang)
+                Text(L10n.pricingPacksTitle(lang))
+                    .brandText(.slotTitle)
+                    .foregroundStyle(Brand.ink)
+                Text(L10n.pricingPacksLead(lang))
+                    .brandText(.slotText)
+                    .foregroundStyle(Brand.muted)
+                    .fixedSize(horizontal: false, vertical: true)
+                included(lang)
                 // The note says payments are not open yet and prices are in USD.
                 if !app.purchases.sellsEveryPlan(pricing) {
                     Text(L10n.pricingNote(lang))
@@ -59,7 +67,7 @@ struct PricingView: View {
             .padding(.bottom, 32)
         }
         .task {
-            // Screenshot states can open scrolled down to the buy options.
+            // Screenshot states can open scrolled to the cards.
             guard let target = app.pricingScroll else { return }
             try? await Task.sleep(for: .milliseconds(300))
             proxy.scrollTo(target, anchor: .top)
@@ -137,46 +145,29 @@ struct PricingView: View {
         .accessibilityElement(children: .combine)
     }
 
-    private func premiumPlan(_ pricing: PricingInfo, lang: AppLang) -> some View {
+    /// The packs and then the monthly plan, as one run of cards, with what
+    /// the store says about a purchase right under them.
+    private func offers(_ pricing: PricingInfo, lang: AppLang) -> some View {
         let account = app.account
-        return VStack(alignment: .leading, spacing: 14) {
-            Text(L10n.pricingPacksTitle(lang))
-                .brandText(.slotTitle)
-                .foregroundStyle(Brand.ink)
-                .id(Self.packsAnchor)
-            Text(L10n.pricingPacksLead(lang))
-                .brandText(.slotText)
-                .foregroundStyle(Brand.muted)
-                .fixedSize(horizontal: false, vertical: true)
-            ForEach(pricing.packs) { pack in
-                let labels = app.purchases.labels(planId: pack.id, usd: pack.priceUsd, credits: pack.credits, pricing: pricing, lang: lang)
+        return VStack(alignment: .leading, spacing: 12) {
+            VStack(alignment: .leading, spacing: 12) {
+                ForEach(pricing.packs) { pack in
+                    let labels = app.purchases.labels(planId: pack.id, usd: pack.priceUsd, credits: pack.credits, pricing: pricing, lang: lang)
+                    offer(
+                        planId: pack.id,
+                        name: L10n.pricingPack(lang, n: pack.credits),
+                        meta: pack.credits == 1 ? nil : labels.perVerdict.map { L10n.pricingPerVerdict(lang, price: $0) },
+                        labels: labels
+                    )
+                }
                 offer(
-                    planId: pack.id,
-                    name: L10n.pricingPack(lang, n: pack.credits),
-                    meta: labels.perVerdict.map { L10n.pricingPerVerdict(lang, price: $0) },
-                    labels: labels
+                    planId: pricing.monthly.id,
+                    name: L10n.pricingMonthlyCap(lang, n: pricing.monthly.fairUseCap),
+                    meta: L10n.pricingMonthlyRenews(lang),
+                    labels: app.purchases.labels(planId: pricing.monthly.id, usd: pricing.monthly.priceUsd, credits: nil, pricing: pricing, lang: lang)
                 )
             }
-
-            Text(L10n.pricingMonthlyTitle(lang))
-                .brandText(.slotTitle)
-                .foregroundStyle(Brand.ink)
-                .padding(.top, 4)
-            offer(
-                planId: pricing.monthly.id,
-                name: L10n.pricingMonthlyCap(lang, n: pricing.monthly.fairUseCap),
-                meta: L10n.pricingMonthlyRenews(lang),
-                labels: app.purchases.labels(planId: pricing.monthly.id, usd: pricing.monthly.priceUsd, credits: nil, pricing: pricing, lang: lang)
-            )
-
-            // TestFlight-only debug aid, so the English text is not localized.
-            if AppConfig.isTestFlight, let diagnostic = app.purchases.diagnostic {
-                Text(diagnostic)
-                    .font(.caption)
-                    .foregroundStyle(Brand.muted)
-                    .textSelection(.enabled)
-                    .fixedSize(horizontal: false, vertical: true)
-            }
+            .id(Self.packsAnchor)
 
             if let message = app.purchases.message {
                 Text(message.text(lang))
@@ -188,10 +179,22 @@ struct PricingView: View {
             if account.premiumEnabled, !account.isSignedIn, account.signInProviders?.any == true {
                 Button(L10n.navSignIn(lang)) { account.presentSignIn() }
                     .buttonStyle(PrimaryButtonStyle())
-                    .padding(.top, 4)
             }
 
-            Divider().overlay(Brand.line)
+            // TestFlight-only debug aid, so the English text is not localized.
+            if AppConfig.isTestFlight, let diagnostic = app.purchases.diagnostic {
+                Text(diagnostic)
+                    .font(.caption)
+                    .foregroundStyle(Brand.muted)
+                    .textSelection(.enabled)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+        }
+    }
+
+    private func included(_ lang: AppLang) -> some View {
+        let account = app.account
+        return VStack(alignment: .leading, spacing: 14) {
             HStack(spacing: 6) {
                 Image(systemName: "sparkle")
                     .foregroundStyle(Brand.terraInk)
@@ -252,10 +255,13 @@ struct PricingView: View {
                     }
                 }
                 Spacer(minLength: 12)
-                Text(labels.price)
-                    .brandText(Self.price)
-                    .foregroundStyle(Brand.ink)
-                    .monospacedDigit()
+                // The store's button already is the price.
+                if labels.button != labels.price {
+                    Text(labels.price)
+                        .brandText(Self.price)
+                        .foregroundStyle(Brand.ink)
+                        .monospacedDigit()
+                }
             }
             if labels.purchasable {
                 Button {
@@ -279,7 +285,7 @@ struct PricingView: View {
         }
         .padding(14)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .paperSurface(radius: 18, fill: Brand.well)
+        .paperSurface(radius: 18, fill: Brand.well, border: Brand.line2)
     }
 
     /// Buying needs an account: signed out, sign-in comes first.

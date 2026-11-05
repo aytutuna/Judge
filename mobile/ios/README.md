@@ -89,7 +89,7 @@ context" form, its Premium lock and the limit note), and the
 account states `balance/welcome` (a new account's free verdict),
 `balance/none` (monthly allowance used up), `pricing`, `pricing-store`
 (store prices on the buy buttons, from a fake store), `pricing-buy` (the
-same, scrolled to the packs and the monthly plan), `clarify` and
+same, scrolled to the cards), `clarify` and
 `evidence` (picked screenshots in mixed states, under the box), and the case states
 `mode-both`, `case-write` and `case-write-answered` (the owner's page of a
 case the link started, with their side still to write, before and after the

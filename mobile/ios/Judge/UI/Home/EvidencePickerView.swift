@@ -176,6 +176,8 @@ private struct EvidenceRow: View {
                         .foregroundStyle(Brand.ink2)
                         .frame(width: 36, height: 36)
                         .background(Circle().fill(Brand.ivory2))
+                        .frame(width: 44, height: 44)
+                        .contentShape(Rectangle())
                 }
                 .buttonStyle(.plain)
                 .disabled(disabled)

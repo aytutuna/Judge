@@ -150,7 +150,8 @@ struct HomeView: View {
 
     /// The box that was opened last, and under it what is left to spend.
     private func composer(_ lang: AppLang, home: HomeModel) -> some View {
-        VStack(spacing: 8) {
+        // The gap is the glow's radius (12) plus 8, so it never touches the line.
+        VStack(spacing: 20) {
             sideCard(lang, home: home, mine: !home.theirsOpen, inComposer: true)
             if home.isCheckingQuestions || home.isCreatingCase {
                 Text(home.isCreatingCase ? L10n.caseCreating(lang) : L10n.tierChecking(lang))
@@ -282,7 +283,7 @@ struct HomeView: View {
                 .foregroundStyle(Brand.ink2)
                 .frame(width: 26, height: 26)
                 .background(Circle().fill(Brand.ivory2))
-                .frame(width: 32, height: 32)
+                .frame(width: 44, height: 44)
                 .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
@@ -413,7 +414,7 @@ struct HomeView: View {
     /// The joined text's length against the limit, as the single field had it.
     private func counter(_ lang: AppLang, home: HomeModel) -> some View {
         let length = home.length(app)
-        return Text(L10n.appInputCounter(lang, count: String(length), max: String(HomeModel.maxLength)))
+        return Text(HomeModel.counterText(length, lang: lang))
             .brandText(.footnote)
             .monospacedDigit()
             .foregroundStyle(length > HomeModel.warnLength ? Brand.terraInk : Brand.muted)
