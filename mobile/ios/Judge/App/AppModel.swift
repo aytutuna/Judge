@@ -65,6 +65,9 @@ final class AppModel {
     var tab: RootTab = .new
     /// The side menu is open.
     var menuOpen = false
+    /// A sheet the root does not own is up (the photo picker, a link opened
+    /// from the side menu), so the Home page is covered.
+    var sheetOpen = false
     /// The Verdicts tab's pages.
     var historyPath: [HistoryRoute] = []
     /// The Settings tab's pages.

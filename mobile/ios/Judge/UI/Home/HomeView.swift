@@ -11,6 +11,7 @@ struct HomeView: View {
     @FocusState private var focused: Field?
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.sceneLive) private var sceneLive
+    @Environment(\.pageCovered) private var pageCovered
     @Environment(\.sides) private var sides
     @Environment(\.dynamicTypeSize) private var typeSize
     @ScaledMetric(relativeTo: .body) private var lineHeight: CGFloat = 22.5
@@ -22,7 +23,6 @@ struct HomeView: View {
     private static let errorID = "home.error"
     private static let clarifyID = "home.clarify"
     private static let linkType = TypeStyle(face: .inter, weight: 600, size: 13, lineHeight: 1.2, textStyle: .footnote, maxScale: 1.8)
-    private static let wordmark = TypeStyle(face: .interTight, weight: 700, size: 34, lineHeight: 1.1, tracking: -0.02, textStyle: .largeTitle, maxScale: 1.3)
 
     var body: some View {
         @Bindable var home = app.home
@@ -118,14 +118,14 @@ struct HomeView: View {
     /// with one card: the judges get them as one set.
     private func form(_ lang: AppLang, home: HomeModel) -> some View {
         VStack(alignment: .leading, spacing: 12) {
-            if home.isBlank {
-                Text(verbatim: "Judge")
-                    .brandText(Self.wordmark)
-                    .foregroundStyle(Brand.ink)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-            } else {
-                Spacer(minLength: 0)
-            }
+            Spacer(minLength: 0)
+                .frame(maxWidth: .infinity)
+                .overlay {
+                    // The second side, an error or a crowded page take the room.
+                    if !home.theirsOpen, home.error == nil {
+                        MidsPlayground(typing: focused != nil || !home.argument.isEmpty, covered: pageCovered || home.isJudging || !home.path.isEmpty)
+                    }
+                }
             if home.theirsOpen {
                 sideCard(lang, home: home, mine: true, inComposer: false)
             }

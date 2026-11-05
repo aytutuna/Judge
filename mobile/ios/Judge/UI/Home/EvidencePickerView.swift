@@ -41,16 +41,25 @@ struct EvidenceAddButton<Content: View>: View {
     let disabled: Bool
     @ViewBuilder let label: () -> Content
     @State private var selection: [PhotosPickerItem] = []
+    @State private var picking = false
 
     var body: some View {
-        PhotosPicker(
+        Button {
+            picking = true
+        } label: {
+            label()
+        }
+        .photosPicker(
+            isPresented: $picking,
             selection: $selection,
             maxSelectionCount: Swift.max(1, evidence.room),
             selectionBehavior: .ordered,
-            matching: .images,
-            label: label
+            matching: .images
         )
         .disabled(disabled || evidence.full)
+        .onChange(of: picking) { _, open in
+            app.sheetOpen = open
+        }
         .onChange(of: selection) { _, picked in
             guard !picked.isEmpty else { return }
             selection = []

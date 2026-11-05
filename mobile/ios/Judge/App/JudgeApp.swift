@@ -65,6 +65,7 @@ struct RootView: View {
         .overlay { SideMenu() }
         .background(Brand.ivory.ignoresSafeArea())
         .accessibilityHidden(ageCovered)
+        .environment(\.pageCovered, app.menuOpen || account.isSignInPresented || webLink != nil || app.sheetOpen || ageCovered)
         .sheet(isPresented: $account.isSignInPresented, onDismiss: { app.account.signInDismissed() }) {
             SignInView()
                 .environment(app)
@@ -146,6 +147,10 @@ private struct TabShownKey: EnvironmentKey {
     static let defaultValue = true
 }
 
+private struct PageCoveredKey: EnvironmentKey {
+    static let defaultValue = false
+}
+
 extension EnvironmentValues {
     /// The tab a page lives in.
     var pageTab: RootTab {
@@ -158,6 +163,13 @@ extension EnvironmentValues {
     var tabShown: Bool {
         get { self[TabShownKey.self] }
         set { self[TabShownKey.self] = newValue }
+    }
+
+    /// The side menu, a sheet or the age gate is over the pages, so what
+    /// only animates for show can rest.
+    var pageCovered: Bool {
+        get { self[PageCoveredKey.self] }
+        set { self[PageCoveredKey.self] = newValue }
     }
 }
 

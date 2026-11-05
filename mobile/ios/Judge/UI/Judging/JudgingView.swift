@@ -18,9 +18,9 @@ struct JudgingCover: View {
 }
 
 /// The judging turn of the thread, full screen while a verdict is pending:
-/// the sides that were sent and a card with the 3D balance (the beats of
-/// lib/judging-ui.ts while waiting, the verdict tilt once it is in) over
-/// the judge dots and the rotating captions of lib/thinking.ts, then Cancel.
+/// the sides that were sent and a card with the three Mids (acting out the
+/// stage the verdict has reached, then cheering once it is in) over the
+/// judge dots and the rotating captions of lib/thinking.ts, then Cancel.
 /// After the finish sequence and a short hold `onFinished` hands over.
 struct JudgingView: View {
     let lang: AppLang
@@ -37,14 +37,6 @@ struct JudgingView: View {
     @State private var state: Thinking.DigState = .initial
     @State private var finished = false
     @State private var started = Date.now
-    @State private var settle: Settle?
-
-    /// When and from which angle the flat beam started springing to its verdict.
-    private struct Settle: Equatable {
-        let start: Date
-        let from: Double
-        let target: Double
-    }
 
     private struct TickKey: Equatable {
         let state: Thinking.DigState
@@ -56,9 +48,8 @@ struct JudgingView: View {
     private var done: Bool { result != nil }
     private var skip: Bool { reduceMotion || scenePhase != .active }
 
-    private var sceneMode: SceneMode {
-        if let result { return VerdictDisplay.sceneVerdict(result) }
-        return .judging(Thinking.beat(for: state))
+    private var stage: JudgingStage {
+        JudgingStage.of(state, done: done, finished: finished)
     }
 
     var body: some View {
@@ -89,12 +80,10 @@ struct JudgingView: View {
         .task(id: TickKey(state: state, done: done, finished: finished, skip: skip)) {
             await tick()
         }
-        .onChange(of: done) { _, _ in startSettle() }
         .onChange(of: captionKey) { _, key in
             AccessibilityNotification.Announcement(L10n.text(key, lang) ?? "").post()
         }
         .onAppear {
-            startSettle()
             AccessibilityNotification.Announcement(L10n.text(captionKey, lang) ?? "").post()
         }
         .sensoryFeedback(.impact(weight: .light), trigger: done) { _, isDone in isDone && !reduceMotion }
@@ -102,14 +91,9 @@ struct JudgingView: View {
 
     private func card(captionKey: String) -> some View {
         VStack(spacing: 0) {
-            SceneView(mode: sceneMode) {
-                TimelineView(.animation(minimumInterval: nil, paused: timelinePaused)) { context in
-                    BalanceCanvas(angle: angle(at: context.date))
-                }
-            }
-            .aspectRatio(4.0 / 3.0, contentMode: .fit)
-            .frame(maxWidth: 480)
-            .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
+            MidsJudging(stage: stage, flags: JudgingStage.flags(Thinking.judgeDots(done ? result : nil)))
+                .aspectRatio(4.0 / 3.0, contentMode: .fit)
+                .frame(maxWidth: 480)
 
             Kicker(text: L10n.thinkingEyebrow(lang))
                 .padding(.top, 20)
@@ -186,31 +170,6 @@ struct JudgingView: View {
         } else {
             finished = true
         }
-    }
-
-    /// The verdict is in: the flat beam springs from wherever the rock is to
-    /// the verdict angle (the 3D scene settles by itself).
-    private func startSettle() {
-        guard settle == nil, let result else { return }
-        let target = VerdictDisplay.rotationDegrees(tugA: VerdictDisplay.sceneTug(result))
-        let now = Date.now
-        settle = Settle(start: now, from: reduceMotion ? target : rockingAngle(at: now), target: target)
-    }
-
-    private var timelinePaused: Bool {
-        if reduceMotion { return true }
-        guard let settle else { return false }
-        return Date.now.timeIntervalSince(settle.start) > BalanceMotion.settleDuration && finished
-    }
-
-    private func rockingAngle(at date: Date) -> Double {
-        reduceMotion ? 0 : BalanceMotion.rockAngle(at: date.timeIntervalSince(started))
-    }
-
-    private func angle(at date: Date) -> Double {
-        guard let settle else { return rockingAngle(at: date) }
-        if reduceMotion { return settle.target }
-        return BalanceMotion.springAngle(from: settle.from, to: settle.target, elapsed: date.timeIntervalSince(settle.start))
     }
 
     /// Thin bar under the caption, like the website's: the gradient from

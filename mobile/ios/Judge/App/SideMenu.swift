@@ -98,6 +98,9 @@ struct SideMenu: View {
         .sheet(item: $webLink) { link in
             SafariView(url: link.url).ignoresSafeArea()
         }
+        .onChange(of: webLink != nil) { _, open in
+            app.sheetOpen = open
+        }
     }
 
     private func panel(width: CGFloat) -> some View {

@@ -99,9 +99,9 @@ picked) and `case/<state>` (a key of `cases.views` or
 `awaiting`, `judging`, `judged`, `one-sided`, `appeal`, `appeal-judging`,
 `failed`, `expired`, `removed`; Turkish takes the `_tr` view if there is one).
 Languages: `en`, `tr`. Add `:dark` (`home:en:dark`) for the dark appearance;
-without it a state is light whatever the simulator uses. These states draw
-the flat balance in place of the bundled 3D scene, so the shots match from
-run to run.
+without it a state is light whatever the simulator uses. These states hold
+the Mids in one fixed pose and draw the flat balance in place of the bundled
+3D scene, so the shots match from run to run.
 
 ```sh
 APP=build/DerivedData/Build/Products/Debug-iphonesimulator/Judge.app
@@ -303,6 +303,7 @@ available. It covers:
   computed by the website's own code;
 - decoding of every sample body, absent vs `null` lean, unknown enum values;
 - the judging state machine, the progress bar and the balance motion;
+- the Mids: which stage the verdict's progress maps to, their walks and easing;
 - error mapping, and `JudgeAPI` against a stub `URLProtocol` (headers,
   timeouts, every error body, 524 and 504, HTML 5xx, offline, no automatic
   retry);
