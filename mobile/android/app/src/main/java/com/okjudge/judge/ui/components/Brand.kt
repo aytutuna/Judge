@@ -23,7 +23,7 @@ import com.okjudge.judge.ui.theme.Palette
 import com.okjudge.judge.ui.theme.Sides
 
 /**
- * The judging balance: the mark redrawn as a level beam on the ink pivot,
+ * The judging balance: a level beam on the ink pivot,
  * Party A on the left and Party B on the right, in the side colours
  * ([LocalSides]). `angle` is clockwise-positive degrees, so a negative angle
  * drops Party A's end.
