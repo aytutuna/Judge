@@ -1,0 +1,585 @@
+.stage {
+  --mid-hi: #5a524a;
+  --mid-body: #26211d;
+  --mid-lo: #0e0c0a;
+  --mid-limb: #1c1916;
+  --mid-rim: transparent;
+  position: relative;
+  overflow: hidden;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* On a dark page a black Mid would vanish, so it goes a warm grey with
+   light limbs and a faint rim. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .stage {
+    --mid-hi: #8a8076;
+    --mid-body: #4a423b;
+    --mid-lo: #2a2521;
+    --mid-limb: #e6ded2;
+    --mid-rim: rgba(241, 235, 225, 0.22);
+  }
+}
+:root[data-theme="dark"] .stage {
+  --mid-hi: #8a8076;
+  --mid-body: #4a423b;
+  --mid-lo: #2a2521;
+  --mid-limb: #e6ded2;
+  --mid-rim: rgba(241, 235, 225, 0.22);
+}
+
+.mid {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transition-property: transform;
+  transition-timing-function: linear;
+  will-change: transform;
+  pointer-events: none;
+}
+.mid[data-motion="run"] {
+  transition-timing-function: cubic-bezier(0.3, 0, 0.4, 1);
+}
+
+.shadow {
+  position: absolute;
+  left: 28%;
+  right: 28%;
+  bottom: -3%;
+  height: 7%;
+  border-radius: 50%;
+  background: var(--ink);
+  opacity: 0.16;
+  filter: blur(2.5px);
+  transform-origin: center;
+}
+
+.depth,
+.lift,
+.turn {
+  position: absolute;
+  inset: 0;
+  transform-origin: 50% 100%;
+}
+.turn {
+  transition: transform 0.22s ease;
+}
+.turn svg {
+  display: block;
+  overflow: visible;
+}
+
+.hi {
+  stop-color: var(--mid-hi);
+}
+.mid0 {
+  stop-color: var(--mid-body);
+}
+.lo {
+  stop-color: var(--mid-lo);
+}
+.ball {
+  stroke: var(--mid-rim);
+  stroke-width: 2;
+}
+.shine {
+  fill: #fff;
+  opacity: 0.22;
+}
+
+.limbs {
+  fill: none;
+  stroke: var(--mid-limb);
+  stroke-width: 12;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.arm,
+.leg,
+.torso {
+  transition: transform 0.34s cubic-bezier(0.3, 0.7, 0.3, 1);
+}
+.held {
+  transition: transform 0.34s cubic-bezier(0.3, 0.7, 0.3, 1);
+}
+
+.eyes {
+  fill: #fff;
+  transition: transform 0.3s ease;
+}
+.lid {
+  fill: none;
+  stroke: #fff;
+  stroke-width: 5.5;
+  stroke-linecap: round;
+}
+.blink {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: blink 4.6s var(--d, 0s) infinite;
+}
+
+.sheet {
+  fill: #fff;
+  stroke: rgba(28, 25, 22, 0.35);
+  stroke-width: 2;
+}
+.lines {
+  fill: none;
+  stroke: #cfc8bf;
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+.cover {
+  fill: none;
+  stroke: var(--party-a-strong);
+  stroke-width: 4;
+}
+.pole,
+.pencil {
+  fill: none;
+  stroke: var(--mid-limb);
+  stroke-width: 5;
+  stroke-linecap: round;
+}
+.pencil {
+  stroke: #c9a227;
+  stroke-width: 5;
+}
+.lens {
+  fill: rgba(111, 181, 138, 0.22);
+  stroke: var(--mid-limb);
+  stroke-width: 4;
+}
+.flag {
+  animation: pop 0.3s cubic-bezier(0.3, 1.6, 0.5, 1) both;
+}
+.pop {
+  animation: pop 0.28s cubic-bezier(0.3, 1.5, 0.5, 1) both;
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+.beam {
+  fill: none;
+  stroke: var(--mid-limb);
+  stroke-width: 10;
+  stroke-linecap: round;
+  transform-origin: 512px 506px;
+  animation: tilt 2.4s ease-in-out infinite;
+}
+.thin {
+  stroke-width: 3;
+}
+
+/* ---- motions ---- */
+
+.mid[data-motion="walk"] .leg[data-side="l"],
+.mid[data-motion="run"] .leg[data-side="l"],
+.mid[data-motion="dance"] .leg[data-side="l"] {
+  animation: step 0.42s ease-in-out infinite alternate;
+}
+.mid[data-motion="walk"] .leg[data-side="r"],
+.mid[data-motion="run"] .leg[data-side="r"],
+.mid[data-motion="dance"] .leg[data-side="r"] {
+  animation: step 0.42s ease-in-out -0.42s infinite alternate-reverse;
+}
+.mid[data-motion="run"] .leg {
+  animation-duration: 0.22s !important;
+}
+.mid[data-motion="walk"] .lift {
+  animation: bob 0.42s ease-in-out infinite alternate;
+}
+.mid[data-motion="run"] .lift {
+  animation: bob 0.22s ease-in-out infinite alternate;
+}
+.mid[data-motion="run"] .turn > svg {
+  transform: rotate(7deg);
+}
+.mid[data-motion="walk"][data-arms="rest"] .arm[data-side="l"] .wiggle,
+.mid[data-motion="run"][data-arms="rest"] .arm[data-side="l"] .wiggle {
+  animation: swing 0.42s ease-in-out infinite alternate;
+}
+.mid[data-motion="walk"][data-arms="rest"] .arm[data-side="r"] .wiggle,
+.mid[data-motion="run"][data-arms="rest"] .arm[data-side="r"] .wiggle {
+  animation: swing 0.42s ease-in-out infinite alternate-reverse;
+}
+
+.mid[data-motion="hop"] .lift {
+  animation: hop 0.62s cubic-bezier(0.3, 0.7, 0.3, 1) infinite;
+}
+.mid[data-motion="hop"] .shadow {
+  animation: shrink 0.62s cubic-bezier(0.3, 0.7, 0.3, 1) infinite;
+}
+.mid[data-motion="bounce"] .lift {
+  animation: bounce 0.36s ease-in-out infinite alternate;
+}
+.mid[data-motion="nod"] .torso {
+  transform-origin: 512px 556px;
+  animation: nod 1.1s ease-in-out var(--d, 0s) infinite;
+}
+.mid[data-motion="shake"] .torso {
+  transform-origin: 512px 556px;
+  animation: shake 0.5s ease-in-out infinite;
+}
+.turn > svg {
+  transform-origin: 50% 100%;
+  transition: transform 0.4s ease;
+}
+.mid[data-motion="lean"] .turn > svg {
+  transform: rotate(6deg);
+}
+.mid[data-motion="dance"] .lift {
+  animation: sway 0.84s ease-in-out infinite alternate;
+}
+.mid[data-motion="spin"] .turn {
+  animation: spin 0.7s ease-in-out 2;
+}
+.mid[data-motion="sit"] .torso {
+  transform: translateY(26px);
+}
+.mid[data-motion="sit"] .leg {
+  transform: translateY(26px) rotate(-82deg);
+}
+.mid[data-motion="sit"] .shadow {
+  left: 24%;
+  right: 18%;
+}
+
+.mid[data-arms="wave"] .arm[data-side="r"] .wiggle {
+  animation: wave 0.42s ease-in-out infinite alternate;
+}
+.mid[data-arms="up"] .arm .wiggle {
+  animation: wave 0.5s ease-in-out infinite alternate;
+}
+.mid[data-arms="up"] .arm[data-side="r"] .wiggle {
+  animation-direction: alternate-reverse;
+}
+.mid[data-arms="write"] .arm[data-side="r"] .wiggle {
+  animation: scribble 0.3s ease-in-out infinite alternate;
+}
+.mid[data-arms="clap"] .arm[data-side="l"] .wiggle {
+  animation: clapL 0.26s ease-in-out infinite alternate;
+}
+.mid[data-arms="clap"] .arm[data-side="r"] .wiggle {
+  animation: clapR 0.26s ease-in-out infinite alternate;
+}
+.mid[data-arms="vote"] .arm[data-side="r"] .wiggle {
+  animation: wave 1.1s ease-in-out infinite alternate;
+}
+
+/* ---- bubbles ---- */
+
+.bubble,
+.float {
+  position: absolute;
+  left: 62%;
+  bottom: 96%;
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1;
+  pointer-events: none;
+}
+.bubble {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  min-width: 30px;
+  height: 24px;
+  padding: 0 8px;
+  border: 1px solid var(--line-2, var(--line));
+  border-radius: 12px 12px 12px 4px;
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 14px;
+  box-shadow: 0 4px 12px rgba(28, 25, 22, 0.12);
+  animation: pop 0.24s cubic-bezier(0.3, 1.5, 0.5, 1) both;
+  transform-origin: 0 100%;
+}
+.bubble[data-kind="think"],
+.bubble[data-kind="idea"] {
+  border-radius: 12px;
+}
+.bubble[data-kind="idea"] {
+  color: var(--sage-strong, var(--ink));
+}
+.bubble i {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+  animation: dot 1s ease-in-out infinite;
+}
+.bubble[data-kind="dots"] i {
+  background: var(--muted);
+}
+.bubble i:nth-child(2) {
+  animation-delay: 0.15s;
+}
+.bubble i:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+.float {
+  color: var(--muted);
+  font-size: 20px;
+}
+.float i {
+  position: absolute;
+  font-style: normal;
+  animation: drift 2.2s ease-out infinite;
+}
+.float i:nth-child(2) {
+  left: 12px;
+  font-size: 14px;
+  animation-delay: 1.1s;
+}
+.float svg {
+  width: 16px;
+  height: 16px;
+  fill: var(--muted);
+  animation: drift 1.8s ease-out infinite;
+}
+
+/* ---- things on the floor ---- */
+
+.thing {
+  position: absolute;
+  pointer-events: none;
+  transform: translate(-50%, -100%);
+  animation: pop 0.3s cubic-bezier(0.3, 1.5, 0.5, 1) both;
+}
+.thing svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.toss {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  margin: -7px 0 0 -7px;
+  pointer-events: none;
+  transition-property: left;
+  transition-timing-function: linear;
+}
+.toss > span {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: var(--party-a-strong);
+  box-shadow: inset -2px -2px 0 rgba(0, 0, 0, 0.18);
+  animation: arc var(--t) ease-in-out;
+}
+
+@keyframes blink {
+  0%,
+  93%,
+  100% {
+    transform: scaleY(1);
+  }
+  96% {
+    transform: scaleY(0.1);
+  }
+}
+@keyframes step {
+  from {
+    transform: rotate(-20deg);
+  }
+  to {
+    transform: rotate(20deg);
+  }
+}
+@keyframes swing {
+  from {
+    transform: rotate(-16deg);
+  }
+  to {
+    transform: rotate(16deg);
+  }
+}
+@keyframes bob {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-4%);
+  }
+}
+@keyframes hop {
+  0%,
+  100% {
+    transform: translateY(0) scale(1, 1);
+  }
+  12% {
+    transform: translateY(0) scale(1.06, 0.88);
+  }
+  46% {
+    transform: translateY(-30%) scale(0.96, 1.06);
+  }
+  84% {
+    transform: translateY(0) scale(1.05, 0.92);
+  }
+}
+@keyframes shrink {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.16;
+  }
+  46% {
+    transform: scale(0.6);
+    opacity: 0.08;
+  }
+}
+@keyframes bounce {
+  from {
+    transform: translateY(0) scale(1.03, 0.97);
+  }
+  to {
+    transform: translateY(-6%) scale(0.98, 1.02);
+  }
+}
+@keyframes nod {
+  0%,
+  100% {
+    transform: rotate(0);
+  }
+  30% {
+    transform: rotate(-4deg) translateY(2px);
+  }
+  70% {
+    transform: rotate(3deg);
+  }
+}
+@keyframes shake {
+  0%,
+  100% {
+    transform: rotate(0);
+  }
+  25% {
+    transform: rotate(-5deg);
+  }
+  75% {
+    transform: rotate(5deg);
+  }
+}
+@keyframes sway {
+  from {
+    transform: rotate(-7deg) translateY(0);
+  }
+  to {
+    transform: rotate(7deg) translateY(-3%);
+  }
+}
+@keyframes spin {
+  0%,
+  100% {
+    transform: scaleX(1);
+  }
+  50% {
+    transform: scaleX(-1);
+  }
+}
+@keyframes wave {
+  from {
+    transform: rotate(-14deg);
+  }
+  to {
+    transform: rotate(16deg);
+  }
+}
+@keyframes scribble {
+  from {
+    transform: rotate(-4deg) translateY(-2px);
+  }
+  to {
+    transform: rotate(6deg) translateY(2px);
+  }
+}
+@keyframes clapL {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(-14deg);
+  }
+}
+@keyframes clapR {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(14deg);
+  }
+}
+@keyframes tilt {
+  0%,
+  100% {
+    transform: rotate(-11deg);
+  }
+  50% {
+    transform: rotate(11deg);
+  }
+}
+@keyframes pop {
+  from {
+    transform: scale(0);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+@keyframes dot {
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: translateY(0);
+  }
+  40% {
+    opacity: 1;
+    transform: translateY(-2px);
+  }
+}
+@keyframes drift {
+  from {
+    opacity: 0;
+    transform: translate(0, 4px);
+  }
+  30% {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+    transform: translate(8px, -18px);
+  }
+}
+@keyframes arc {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(var(--arc, -60px));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mid,
+  .turn,
+  .arm,
+  .leg,
+  .torso,
+  .held,
+  .eyes {
+    transition: none;
+  }
+  .mid *,
+  .mid *::before {
+    animation: none !important;
+  }
+}

@@ -5,6 +5,7 @@ import { EvidenceAdd, EvidenceNotes, EvidenceRows, type EvidenceController } fro
 import { t, type Lang } from "@/lib/i18n";
 import { langTag } from "@/lib/langs";
 import { MAX_ARGUMENT } from "@/lib/sides";
+import { HomeMids } from "@/components/mids/HomeMids";
 import styles from "./HomeForm.module.css";
 
 const WARN_AT = 5700;
@@ -214,8 +215,13 @@ export function HomeForm(p: HomeFormProps) {
     >
       <fieldset className={styles.form} disabled={p.holding}>
         <div className={styles.mid} ref={mid}>
-          <div className={p.blank ? styles.empty : styles.push} aria-hidden>
-            {p.blank ? "Judge" : null}
+          <div className={styles.push}>
+            {p.blank ? (
+              <p className={styles.empty} aria-hidden>
+                Judge
+              </p>
+            ) : null}
+            {p.theirsOpen ? null : <HomeMids className={styles.mids} length={p.length} busy={p.holding} />}
           </div>
 
           {p.theirsOpen ? (
