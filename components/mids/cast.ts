@@ -19,7 +19,18 @@ export type Arms =
 export type Eyes = "open" | "down" | "happy" | "closed" | "wide" | "squint";
 export type Prop = "paper" | "glass" | "pad" | "book" | "flag-a" | "flag-b" | "flag-o" | null;
 export type Bubble = "talk" | "think" | "idea" | "sleep" | "note" | "dots" | "web" | null;
-export type Motion = "stand" | "walk" | "run" | "hop" | "nod" | "sit" | "dance" | "spin" | "bounce" | "shake" | "lean";
+export type Motion =
+  | "stand"
+  | "walk"
+  | "run"
+  | "settle"
+  | "hop"
+  | "nod"
+  | "sit"
+  | "dance"
+  | "bounce"
+  | "shake"
+  | "lean";
 
 export type Mid = {
   x: number;
@@ -52,9 +63,16 @@ export function mid(x: number, y: number, face: 1 | -1 = 1): Mid {
   return { ...REST, x, y, face };
 }
 
-// Walking pace in px/s; the stage size turns it into a duration.
-const WALK = 75;
-const RUN = 170;
+// Walking pace in mid widths per second: small enough steps that the feet
+// don't slide. Each seat walks at its own speed.
+const WALK = 0.75;
+const RUN = 1.9;
+const STRIDE = [1, 1.1, 0.9, 1.05, 0.95, 1.12];
+
+/** Mid width for a stage of w × h holding n of them. */
+export function midSize(w: number, h: number, n: number): number {
+  return Math.round(Math.max(40, Math.min(72, w * 0.18, h * 0.3, (w * 0.7) / Math.max(n, 3))));
+}
 
 export class Cast {
   mids: Mid[];
@@ -115,7 +133,8 @@ export class Cast {
   travel(i: number, x: number, y: number, run = false): number {
     const m = this.mids[i];
     const px = Math.hypot((x - m.x) * this.w, (y - m.y) * this.h);
-    return this.reduced ? 0 : Math.round((px / (run ? RUN : WALK)) * 1000);
+    const pace = midSize(this.w, this.h, this.mids.length) * (run ? RUN : WALK) * STRIDE[i % STRIDE.length];
+    return this.reduced ? 0 : Math.round((px / pace) * 1000);
   }
 
   /** Sets off and arrives; the mid faces the way it goes. */
@@ -129,6 +148,9 @@ export class Cast {
     const face = Math.abs(x - m.x) < 0.01 ? m.face : x < m.x ? -1 : 1;
     this.set(i, { x, y, t, face, motion: run ? "run" : "walk", bubble: m.bubble === "note" ? "note" : null });
     await this.wait(t, ids, tokens);
+    // A little settle on arrival before standing still.
+    this.set(i, { motion: "settle" });
+    await this.wait(260, ids, tokens);
     this.set(i, { motion: "stand" });
   }
 

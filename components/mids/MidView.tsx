@@ -153,8 +153,14 @@ const VOTE_FILL = {
   "flag-o": "var(--muted)",
 } as const;
 
-export function MidView({ m, size, delay, w, h }: { m: Mid; size: number; delay: number; w: number; h: number }) {
+// Small differences between mids, by seat in the cast, so a row of them
+// never moves as one.
+const BUILD = [1, 0.92, 1.06, 0.96, 1.03, 0.9];
+
+export function MidView({ m, size: base, seed, w, h }: { m: Mid; size: number; seed: number; w: number; h: number }) {
+  const size = Math.round(base * BUILD[seed % BUILD.length]);
   const tall = size * ASPECT;
+  const delay = (seed * 1730) % 4600;
   // Further back is a touch smaller, so the floor reads as a floor.
   const depth = 0.82 + 0.18 * Math.min(1, Math.max(0, (m.y - 0.4) / 0.55));
   const [la, ra] = POSES[m.arms];
@@ -167,7 +173,11 @@ export function MidView({ m, size, delay, w, h }: { m: Mid; size: number; delay:
     transitionDuration: `${m.t}ms`,
     zIndex: Math.round(m.y * 100),
     ["--d" as string]: `${-delay}ms`,
+    ["--blink" as string]: `${(3.8 + ((seed * 1.37) % 2.6)).toFixed(2)}s`,
+    ["--breath" as string]: `${(2.9 + ((seed * 0.53) % 0.9)).toFixed(2)}s`,
   };
+  // The head leans a little the way the eyes go.
+  const tilt = m.look[0] * 5;
 
   const arms =
     m.arms === "beam" ? (
@@ -204,6 +214,8 @@ export function MidView({ m, size, delay, w, h }: { m: Mid; size: number; delay:
                 </g>
               </g>
               <g className={styles.torso}>
+                <g className={styles.breathe}>
+                <g className={styles.tilt} style={{ transform: `rotate(${tilt.toFixed(1)}deg)` }}>
                 {front ? null : <g className={styles.limbs}>{arms}</g>}
                 <circle cx="512" cy="500" r="56" className={styles.ball} />
                 <Eyes m={m} />
@@ -220,6 +232,8 @@ export function MidView({ m, size, delay, w, h }: { m: Mid; size: number; delay:
                   </g>
                 ) : null}
                 {front ? <g className={styles.limbs}>{arms}</g> : null}
+                </g>
+                </g>
               </g>
             </svg>
           </div>

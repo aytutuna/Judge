@@ -2,16 +2,13 @@
 
 import { useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore, type ReactNode, type RefObject } from "react";
 import { useReducedMotion } from "@/components/scene/useReducedMotion";
-import { Cast, type Mid } from "./cast";
+import { Cast, midSize, type Mid } from "./cast";
 import { ASPECT, MidView } from "./MidView";
 import styles from "./Mids.module.css";
 
-export type Toss = { from: number; to: number; y: number; key: number; ms: number } | null;
+export { midSize };
 
-/** Mid width for a stage of w × h holding n of them. */
-export function midSize(w: number, h: number, n: number): number {
-  return Math.round(Math.max(40, Math.min(72, w * 0.18, h * 0.3, (w * 0.7) / Math.max(n, 3))));
-}
+export type Toss = { from: number; to: number; y: number; key: number; ms: number } | null;
 
 export function useCast(initial: () => Mid[]) {
   const [cast] = useState(() => {
@@ -119,7 +116,7 @@ export function Stage({
                 key={i}
                 m={g ? { ...m, look: g } : m}
                 size={size}
-                delay={(i * 1730) % 4600}
+                seed={i}
                 w={box.w}
                 h={box.h}
               />

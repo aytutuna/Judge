@@ -12,8 +12,11 @@ describe("mids cast", () => {
     cast.h = 200;
     const r = run(cast, [0]);
     const arrived = r.go(0, 0.2, 0.8);
-    expect(cast.mids[0]).toMatchObject({ x: 0.2, face: -1, motion: "walk", t: 2400 });
-    await vi.advanceTimersByTimeAsync(2400);
+    // 180 px at three quarters of a 54 px mid per second.
+    expect(cast.mids[0]).toMatchObject({ x: 0.2, face: -1, motion: "walk", t: 4444 });
+    await vi.advanceTimersByTimeAsync(4444);
+    expect(cast.mids[0].motion).toBe("settle");
+    await vi.advanceTimersByTimeAsync(260);
     await arrived;
     expect(cast.mids[0].motion).toBe("stand");
   });

@@ -21,8 +21,9 @@
   position: absolute;
   left: 0;
   top: 0;
+  --step: 0.32s;
   transition-property: transform;
-  transition-timing-function: linear;
+  transition-timing-function: cubic-bezier(0.3, 0.1, 0.5, 1);
   will-change: transform;
   pointer-events: none;
 }
@@ -50,7 +51,7 @@
   transform-origin: 50% 100%;
 }
 .turn {
-  transition: transform 0.22s ease;
+  transition: transform 0.16s cubic-bezier(0.5, 0, 0.5, 1);
 }
 .turn svg {
   display: block;
@@ -79,13 +80,28 @@
   stroke-linecap: round;
   stroke-linejoin: round;
 }
+/* Arms spring into a pose and settle; the held thing turns back on the same
+   curve so it stays upright. */
 .arm,
+.held {
+  transition: transform 0.42s cubic-bezier(0.34, 1.4, 0.64, 1);
+}
 .leg,
 .torso {
   transition: transform 0.34s cubic-bezier(0.3, 0.7, 0.3, 1);
 }
-.held {
-  transition: transform 0.34s cubic-bezier(0.3, 0.7, 0.3, 1);
+.breathe {
+  transform-origin: 512px 556px;
+  animation: breathe var(--breath, 3.2s) ease-in-out var(--d, 0s) infinite;
+}
+.tilt {
+  transform-origin: 512px 552px;
+  transition: transform 0.5s ease;
+}
+.mid[data-motion="walk"] .breathe,
+.mid[data-motion="run"] .breathe,
+.mid[data-motion="hop"] .breathe {
+  animation: none;
 }
 
 .eyes {
@@ -101,7 +117,7 @@
 .blink {
   transform-box: fill-box;
   transform-origin: center;
-  animation: blink 4.6s var(--d, 0s) infinite;
+  animation: blink var(--blink, 4.6s) var(--d, 0s) infinite;
 }
 
 .sheet {
@@ -158,35 +174,40 @@
 
 /* ---- motions ---- */
 
-.mid[data-motion="walk"] .leg[data-side="l"],
-.mid[data-motion="run"] .leg[data-side="l"],
-.mid[data-motion="dance"] .leg[data-side="l"] {
-  animation: step 0.42s ease-in-out infinite alternate;
+.mid[data-motion="run"] {
+  --step: 0.2s;
 }
+.mid[data-motion="dance"] {
+  --step: 0.42s;
+}
+.mid[data-motion="walk"] .leg,
+.mid[data-motion="run"] .leg,
+.mid[data-motion="dance"] .leg {
+  animation: step var(--step) ease-in-out infinite alternate;
+}
+/* One stride behind, so the legs go opposite ways. */
 .mid[data-motion="walk"] .leg[data-side="r"],
 .mid[data-motion="run"] .leg[data-side="r"],
 .mid[data-motion="dance"] .leg[data-side="r"] {
-  animation: step 0.42s ease-in-out -0.42s infinite alternate-reverse;
+  animation-delay: calc(-1 * var(--step));
 }
-.mid[data-motion="run"] .leg {
-  animation-duration: 0.22s !important;
-}
-.mid[data-motion="walk"] .lift {
-  animation: bob 0.42s ease-in-out infinite alternate;
-}
+.mid[data-motion="walk"] .lift,
 .mid[data-motion="run"] .lift {
-  animation: bob 0.22s ease-in-out infinite alternate;
+  animation: waddle var(--step) ease-in-out infinite alternate;
 }
 .mid[data-motion="run"] .turn > svg {
   transform: rotate(7deg);
 }
-.mid[data-motion="walk"][data-arms="rest"] .arm[data-side="l"] .wiggle,
-.mid[data-motion="run"][data-arms="rest"] .arm[data-side="l"] .wiggle {
-  animation: swing 0.42s ease-in-out infinite alternate;
+.mid[data-motion="walk"][data-arms="rest"] .arm .wiggle,
+.mid[data-motion="run"][data-arms="rest"] .arm .wiggle {
+  animation: swing var(--step) ease-in-out calc(-1 * var(--step)) infinite alternate;
 }
 .mid[data-motion="walk"][data-arms="rest"] .arm[data-side="r"] .wiggle,
 .mid[data-motion="run"][data-arms="rest"] .arm[data-side="r"] .wiggle {
-  animation: swing 0.42s ease-in-out infinite alternate-reverse;
+  animation-delay: 0s;
+}
+.mid[data-motion="settle"] .lift {
+  animation: settle 0.26s ease-out;
 }
 
 .mid[data-motion="hop"] .lift {
@@ -215,9 +236,6 @@
 }
 .mid[data-motion="dance"] .lift {
   animation: sway 0.84s ease-in-out infinite alternate;
-}
-.mid[data-motion="spin"] .turn {
-  animation: spin 0.7s ease-in-out 2;
 }
 .mid[data-motion="sit"] .torso {
   transform: translateY(26px);
@@ -449,10 +467,41 @@
 }
 @keyframes step {
   from {
-    transform: rotate(-20deg);
+    transform: rotate(-26deg);
   }
   to {
-    transform: rotate(20deg);
+    transform: rotate(26deg);
+  }
+}
+@keyframes waddle {
+  from {
+    transform: translateY(0) rotate(-3deg);
+  }
+  50% {
+    transform: translateY(-5%) rotate(0);
+  }
+  to {
+    transform: translateY(0) rotate(3deg);
+  }
+}
+@keyframes settle {
+  0% {
+    transform: scale(1.06, 0.9);
+  }
+  60% {
+    transform: scale(0.98, 1.03);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes breathe {
+  0%,
+  100% {
+    transform: scale(1, 1);
+  }
+  50% {
+    transform: scale(0.99, 1.03);
   }
 }
 @keyframes swing {
@@ -461,14 +510,6 @@
   }
   to {
     transform: rotate(16deg);
-  }
-}
-@keyframes bob {
-  from {
-    transform: translateY(0);
-  }
-  to {
-    transform: translateY(-4%);
   }
 }
 @keyframes hop {
@@ -535,15 +576,6 @@
   }
   to {
     transform: rotate(7deg) translateY(-3%);
-  }
-}
-@keyframes spin {
-  0%,
-  100% {
-    transform: scaleX(1);
-  }
-  50% {
-    transform: scaleX(-1);
   }
 }
 @keyframes wave {

@@ -17,7 +17,8 @@ const CALM: Partial<Mid> = { arms: "rest", eyes: "open", prop: null, bubble: nul
 const FIRE: [number, number] = [0.5, 0.74];
 
 function inFire(x: number, y: number): boolean {
-  return Math.abs(x - FIRE[0]) < 0.11 && Math.abs(y - FIRE[1]) < 0.07;
+  // Further back counts too: from there the flames hide the feet.
+  return Math.abs(x - FIRE[0]) < 0.11 && y - FIRE[1] > -0.12 && y - FIRE[1] < 0.07;
 }
 
 function spot(cast: Cast, i: number): [number, number] {
@@ -100,9 +101,14 @@ const dance: Solo = async (r, i) => {
   r.set(i, CALM);
 };
 
-const spin: Solo = async (r, i) => {
-  r.set(i, { motion: "spin", eyes: "happy" });
-  await r.wait(1400);
+// A hop and a look over the shoulder, turning at the top of each hop.
+const turnAbout: Solo = async (r, i) => {
+  r.set(i, { motion: "hop", eyes: "happy" });
+  for (let k = 0; k < 2; k++) {
+    await r.wait(300);
+    r.set(i, { face: r.cast.mids[i].face === 1 ? -1 : 1 });
+    await r.wait(320);
+  }
   r.set(i, CALM);
 };
 
@@ -136,7 +142,9 @@ async function meet(r: Run, a: number, b: number, gap: number) {
   const ma = r.cast.mids[a];
   const mb = r.cast.mids[b];
   const cx = Math.min(0.9 - gap / 2, Math.max(0.1 + gap / 2, (ma.x + mb.x) / 2));
-  const cy = (ma.y + mb.y) / 2;
+  let cy = (ma.y + mb.y) / 2;
+  // Not in the fire: step round to the front of it.
+  if (inFire(cx - gap / 2, cy) || inFire(cx + gap / 2, cy) || inFire(cx, cy)) cy = Math.min(0.94, FIRE[1] + 0.17);
   const [la, lb] = ma.x <= mb.x ? [a, b] : [b, a];
   await Promise.all([r.go(la, cx - gap / 2, cy), r.go(lb, cx + gap / 2, cy)]);
   r.set(la, { face: 1 });
@@ -194,8 +202,8 @@ const follow: Duo = async (r, a, b) => {
     await Promise.all([r.go(a, x, y), r.go(b, Math.min(0.92, Math.max(0.08, x + behind)), y)]);
     r.set(b, { face: r.cast.mids[a].x < r.cast.mids[b].x ? -1 : 1 });
   }
-  r.set(a, { motion: "spin" });
-  await r.wait(700);
+  r.set(a, { motion: "hop", face: r.cast.mids[a].face === 1 ? -1 : 1 });
+  await r.wait(620);
   r.set(a, { face: r.cast.mids[b].x < r.cast.mids[a].x ? -1 : 1, motion: "stand", eyes: "wide" });
   r.set(b, { arms: "wave", eyes: "happy" });
   await r.wait(1100);
@@ -225,8 +233,9 @@ const catcher = (setToss: (t: Toss) => void): Duo =>
     await r.wait(620);
   };
 
-// Seats on the ring round the fire, as angles: the sides first, then the front.
-const RING = [Math.PI, 0, Math.PI * 0.75, Math.PI * 0.25, Math.PI * 1.25, Math.PI * 1.75];
+// Seats on the ring round the fire, as angles: either side, then the front
+// corners. None behind it, where a mid would look to be standing in the flames.
+const RING = [Math.PI, 0, Math.PI * 0.72, Math.PI * 0.28];
 
 /** The free seat by the fire nearest to the mid. */
 function byFire(cast: Cast, i: number): [number, number] {
@@ -302,7 +311,7 @@ const SOLO: [Solo, number][] = [
   [stretch, 0.8],
   [read, 1],
   [dance, 0.6],
-  [spin, 0.5],
+  [turnAbout, 0.5],
   [inspect, 0.9],
   [write, 0.7],
   [clap, 0.5],
@@ -365,6 +374,8 @@ function director(cast: Cast, setToss: (t: Toss) => void, flare: () => void) {
       }
       await weighted(solo)(r, i);
       free.add(i);
+      // Between things, the eyes wander a little.
+      if (Math.random() < 0.5) r.set(i, { look: [rand(-0.6, 0.6), rand(-0.3, 0.2)] });
       await r.wait(rand(700, 2600));
       free.delete(i);
     }
