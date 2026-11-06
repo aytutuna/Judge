@@ -59,7 +59,7 @@
   width: 100%;
   max-width: 480px;
   margin: 0 auto;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 3 / 2;
   overflow: hidden;
   border-radius: 18px;
 }

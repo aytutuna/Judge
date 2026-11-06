@@ -3,13 +3,13 @@
 import { t, type Lang } from "@/lib/i18n";
 import type { VerdictResult } from "@/lib/types";
 import { JudgingOverlay } from "./JudgingOverlay";
-import JudgingScene from "./scene/JudgingScene";
+import { JudgingMids } from "./mids/JudgingMids";
 import styles from "./JudgingScreen.module.css";
 
 export type JudgedSide = { name: string; text: string };
 
 /** The home page while a verdict is being made: the sides as submitted, the
- * scene with the judging overlay under it, and a way out. */
+ * judges at work with the overlay under them, and a way out. */
 export function JudgingScreen({
   lang,
   mine,
@@ -44,7 +44,7 @@ export function JudgingScreen({
         ) : null}
       </div>
       <div className={styles.card}>
-        <JudgingScene className={styles.scene} />
+        <JudgingMids className={styles.scene} />
         <JudgingOverlay lang={lang} done={done} result={result} onFinished={onFinished} premium />
       </div>
       {done ? null : (
