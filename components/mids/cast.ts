@@ -18,7 +18,7 @@ export type Arms =
   | "beam";
 export type Eyes = "open" | "down" | "happy" | "closed" | "wide" | "squint";
 export type Prop = "paper" | "glass" | "pad" | "book" | "flag-a" | "flag-b" | "flag-o" | null;
-export type Bubble = "talk" | "think" | "idea" | "sleep" | "note" | "dots" | null;
+export type Bubble = "talk" | "think" | "idea" | "sleep" | "note" | "dots" | "web" | null;
 export type Motion = "stand" | "walk" | "run" | "hop" | "nod" | "sit" | "dance" | "spin" | "bounce" | "shake" | "lean";
 
 export type Mid = {
@@ -34,6 +34,8 @@ export type Mid = {
   look: [number, number];
   /** How long the current move takes, ms. */
   t: number;
+  /** The colour a judge turns once it has made up its mind. */
+  tint?: "a" | "b" | "o" | null;
 };
 
 export const REST: Omit<Mid, "x" | "y" | "face"> = {
@@ -174,17 +176,4 @@ export function weighted<T>(items: readonly (readonly [T, number])[]): T {
 export function seats(n: number, y = 0.86): [number, number][] {
   const span = Math.min(0.76, 0.26 * (n - 1));
   return Array.from({ length: n }, (_, i) => [n === 1 ? 0.5 : 0.5 - span / 2 + (span * i) / (n - 1), y]);
-}
-
-/** The side most votes went to, or null on a tie or no votes. */
-export function majority(votes: readonly string[]): string | null {
-  const counts = new Map<string, number>();
-  for (const v of votes) counts.set(v, (counts.get(v) ?? 0) + 1);
-  let best: string | null = null;
-  let top = 0;
-  for (const [v, c] of counts) {
-    if (c > top) [best, top] = [v, c];
-    else if (c === top) best = null;
-  }
-  return best;
 }

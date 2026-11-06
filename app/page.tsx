@@ -7,6 +7,7 @@ import { ClarifyStep, buildClarifications, type ClarifyQuestion } from "@/compon
 import { Balance } from "@/components/home/Balance";
 import { HomeForm } from "@/components/home/HomeForm";
 import { JudgingScreen, type JudgedSide } from "@/components/JudgingScreen";
+import { ENDING_MAX_MS } from "@/components/mids/story";
 import { AppShell } from "@/components/shell/AppShell";
 import { refreshHistory, useHistory } from "@/components/shell/useHistory";
 import styles from "@/components/home/page.module.css";
@@ -21,7 +22,6 @@ import { apiErrorMessage, t } from "@/lib/i18n";
 import { useLang } from "@/lib/lang";
 import { resetScene } from "@/lib/scene-bridge";
 import { EXAMPLES, MAX_ARGUMENT, inviteTextOk, joinSides } from "@/lib/sides";
-import { MAX_FINISH_MS } from "@/lib/thinking";
 import type { Clarification, ClarifyResponse, VerdictApiResponse, VerdictResponse } from "@/lib/types";
 import { applyEntitlement, refreshViewer, useViewer } from "@/lib/use-viewer";
 import { pollVerdict, RESPOND_ASYNC, type VerdictAcceptedResponse } from "@/lib/verdict-poll";
@@ -98,6 +98,7 @@ export default function Home() {
   const [phase, setPhase] = useState<Phase>("form");
   const [error, setError] = useState<string | null>(null);
   const [response, setResponse] = useState<VerdictResponse | null>(null);
+  const [accepted, setAccepted] = useState(false);
   const viewer = useViewer();
   // Nothing from it is listed here; the hook still settles entries left
   // judging and warms the Verdicts tab.
@@ -142,7 +143,7 @@ export default function Home() {
   // after the response arrived, open the verdict anyway.
   useEffect(() => {
     if (phase !== "judging" || response === null) return;
-    const t = setTimeout(() => open(), MAX_FINISH_MS + 2000);
+    const t = setTimeout(() => open(), ENDING_MAX_MS + 2000);
     return () => clearTimeout(t);
   }, [phase, response]);
 
@@ -328,6 +329,7 @@ export default function Home() {
     const signal = threadSignal();
     setError(null);
     setResponse(null);
+    setAccepted(false);
     opened.current = false;
     setPhase("judging");
     const body = JSON.stringify({
@@ -364,9 +366,10 @@ export default function Home() {
           return;
         }
         if (res.status === 202) {
-          const accepted = json as VerdictAcceptedResponse;
-          if (accepted.entitlement) applyEntitlement(accepted.entitlement);
-          const verdict = await awaitVerdict(accepted, signal);
+          const pending = json as VerdictAcceptedResponse;
+          if (pending.entitlement) applyEntitlement(pending.entitlement);
+          if (!signal.aborted) setAccepted(true);
+          const verdict = await awaitVerdict(pending, signal);
           // A refused or degraded verdict, or a failed one, gave the unit back.
           void refreshViewer();
           if (!verdict) return;
@@ -451,6 +454,7 @@ export default function Home() {
     premiumInput.current = null;
     resetScene();
     setResponse(null);
+    setAccepted(false);
     setError(null);
     setArgument("");
     setOtherSide("");
@@ -473,6 +477,7 @@ export default function Home() {
     thread.current = null;
     resetScene();
     setResponse(null);
+    setAccepted(false);
     setChecking(false);
     setPhase("form");
   }
@@ -568,6 +573,7 @@ export default function Home() {
               lang={lang}
               mine={judged.mine}
               theirs={judged.theirs}
+              accepted={accepted}
               done={response !== null}
               result={response?.result ?? null}
               onFinished={judgingFinished}

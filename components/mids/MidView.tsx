@@ -1,4 +1,4 @@
-import { useId, type CSSProperties, type ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import type { Arms, Mid } from "./cast";
 import styles from "./Mids.module.css";
 
@@ -134,6 +134,10 @@ function Bubble({ kind }: { kind: NonNullable<Mid["bubble"]> }) {
           <i />
           <i />
         </>
+      ) : kind === "web" ? (
+        <svg viewBox="0 0 20 20">
+          <path d="M10 2.5a7.5 7.5 0 1 0 0 15 7.5 7.5 0 0 0 0-15ZM2.5 10h15M10 2.5c2 2.2 3 4.7 3 7.5s-1 5.3-3 7.5c-2-2.2-3-4.7-3-7.5s1-5.3 3-7.5Z" />
+        </svg>
       ) : kind === "think" ? (
         "?"
       ) : (
@@ -150,7 +154,6 @@ const VOTE_FILL = {
 } as const;
 
 export function MidView({ m, size, delay, w, h }: { m: Mid; size: number; delay: number; w: number; h: number }) {
-  const gid = useId().replace(/:/g, "");
   const tall = size * ASPECT;
   // Further back is a touch smaller, so the floor reads as a floor.
   const depth = 0.82 + 0.18 * Math.min(1, Math.max(0, (m.y - 0.4) / 0.55));
@@ -186,19 +189,12 @@ export function MidView({ m, size, delay, w, h }: { m: Mid; size: number; delay:
     );
 
   return (
-    <div className={styles.mid} style={pose} data-motion={m.motion} data-arms={m.arms}>
+    <div className={styles.mid} style={pose} data-motion={m.motion} data-arms={m.arms} data-tint={m.tint ?? undefined}>
       <span className={styles.shadow} />
       <div className={styles.depth} style={{ transform: `scale(${depth.toFixed(3)})` }}>
         <div className={styles.lift}>
           <div className={styles.turn} style={{ transform: `scaleX(${m.face})` }}>
             <svg viewBox={VIEW} width={size} height={tall} aria-hidden>
-              <defs>
-                <radialGradient id={`b${gid}`} cx="38%" cy="30%" r="75%">
-                  <stop offset="0" className={styles.hi} />
-                  <stop offset=".45" className={styles.mid0} />
-                  <stop offset="1" className={styles.lo} />
-                </radialGradient>
-              </defs>
               <g className={styles.limbs}>
                 <g className={styles.leg} data-side="l" style={{ transformOrigin: "497px 550px" }}>
                   <path d="M497 550 L494 594" />
@@ -209,8 +205,7 @@ export function MidView({ m, size, delay, w, h }: { m: Mid; size: number; delay:
               </g>
               <g className={styles.torso}>
                 {front ? null : <g className={styles.limbs}>{arms}</g>}
-                <circle cx="512" cy="500" r="56" fill={`url(#b${gid})`} className={styles.ball} />
-                <ellipse cx="492" cy="472" rx="15" ry="9" className={styles.shine} transform="rotate(-24 492 472)" />
+                <circle cx="512" cy="500" r="56" className={styles.ball} />
                 <Eyes m={m} />
                 {m.prop === "paper" ? (
                   <g className={styles.pop}>

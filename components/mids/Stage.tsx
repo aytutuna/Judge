@@ -10,7 +10,7 @@ export type Toss = { from: number; to: number; y: number; key: number; ms: numbe
 
 /** Mid width for a stage of w × h holding n of them. */
 export function midSize(w: number, h: number, n: number): number {
-  return Math.round(Math.max(44, Math.min(104, w * 0.28, h * 0.42, (w * 0.85) / Math.max(n, 3))));
+  return Math.round(Math.max(40, Math.min(72, w * 0.18, h * 0.3, (w * 0.7) / Math.max(n, 3))));
 }
 
 export function useCast(initial: () => Mid[]) {

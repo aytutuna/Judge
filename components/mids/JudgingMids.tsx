@@ -1,260 +1,251 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import type { JudgingBeat, Vote } from "@/lib/scene-bridge";
-import { useSceneMode } from "@/lib/scene-bridge-react";
-import { majority, mid, pick, rand, run, seats, type Cast, type Mid, type Run } from "./cast";
+import type { Vote } from "@/lib/scene-bridge";
+import { mid, pick, rand, run, seats, type Cast, type Mid, type Run } from "./cast";
 import { Stage, useBox, useCast } from "./Stage";
+import { agreement, type Waiting } from "./story";
 import styles from "./Mids.module.css";
 
-// The judges at work, following the overlay's beats through the scene
-// bridge: they gather, take a page each, dig through the evidence, weigh it,
-// go quiet just before the votes, then each raise their own flag.
+// The judging card's scene. JudgingStory picks the beat; this plays it.
+// Mid 3 is the fact checker, not a judge: it comes in, searches, reports and
+// goes. Judges never confer once they have their own copy, as on the server.
+
+export type Beat = Waiting | "vote1" | "more" | "vote2" | "final";
 
 const CALM: Partial<Mid> = { arms: "rest", eyes: "open", prop: null, bubble: null, motion: "stand", look: [0, 0] };
+const CHECKER = 3;
+const FIRST = [0, 1, 2];
 
-type Scene = "lift" | JudgingBeat | "verdict";
-type Thing = "file" | null;
+type Thing = "letter" | null;
 
-const all = (c: Cast) => c.mids.map((_, i) => i);
-
-function faceCentre(r: Run, i: number) {
-  const x = r.cast.mids[i].x;
-  if (Math.abs(x - 0.5) > 0.02) r.face(i, 0.5);
+/** The judges in vote order: the first three, then any called in later. */
+function judges(c: Cast): number[] {
+  return c.mids.map((_, i) => i).filter((i) => i !== CHECKER);
 }
 
-/** Everyone to their seat; resolves when the last one sits. */
-async function toSeats(r: Run, fast = false) {
-  const s = seats(r.cast.size);
-  await Promise.all(r.ids.map((i) => r.go(i, s[i][0], s[i][1], fast)));
+function tintOf(v: Vote | undefined): Mid["tint"] {
+  return v === "a" ? "a" : v === "b" ? "b" : v ? "o" : null;
 }
 
-async function huddle(r: Run, fast: boolean, rounds = Infinity) {
-  const n = r.cast.size;
-  await Promise.all(
-    r.ids.map((i) => {
-      const k = i - (n - 1) / 2;
-      return r.go(i, 0.5 + k * 0.12, 0.8 - Math.abs(k) * 0.07 + (k === 0 ? 0.04 : 0), fast);
-    }),
-  );
-  r.ids.forEach((i) => faceCentre(r, i));
-  for (let turn = 0; r.alive() && turn < rounds; turn++) {
-    const s = r.ids[turn % n];
-    r.ids.forEach((i) =>
-      r.set(i, i === s ? { bubble: "talk", motion: "stand", arms: turn % 3 === 2 ? "point" : "rest" } : { bubble: null, motion: "nod", arms: "rest" }),
-    );
-    await r.wait(rand(1100, 1600));
+/** Judges to their own seats, spread across the floor. */
+async function spread(r: Run, ids: number[], fast = false) {
+  const s = seats(ids.length);
+  await Promise.all(ids.map((i, k) => r.go(i, s[k][0], s[k][1], fast)));
+  ids.forEach((i) => r.set(i, { face: 1 }));
+}
+
+async function names(r: Run, setThing: (t: Thing) => void) {
+  setThing("letter");
+  const around: [number, number][] = [
+    [0.36, 0.76],
+    [0.5, 0.88],
+    [0.64, 0.76],
+  ];
+  await Promise.all(FIRST.map((i, k) => r.go(i, around[k][0], around[k][1], true)));
+  FIRST.forEach((i) => r.set(i, { ...CALM, face: r.cast.mids[i].x < 0.5 ? 1 : -1, eyes: "down" }));
+  r.set(1, { face: 1, look: [0, -0.4] });
+  for (let k = 0; r.alive(); k++) {
+    // One scrubs the names off the page while the others watch it go.
+    r.set(1, { arms: "write", prop: "pad", eyes: "down", bubble: null });
+    await r.wait(rand(1600, 2200));
+    r.set(1, { arms: "rest", prop: null, eyes: "happy", bubble: k % 2 ? "idea" : null });
+    await r.wait(700);
   }
 }
 
-async function sort(r: Run, setThing: (t: Thing) => void) {
-  setThing("file");
-  await Promise.all(r.ids.map((i, k) => r.go(i, 0.42 + k * 0.08, 0.7)));
-  for (const i of r.ids) {
-    r.set(i, { ...CALM, face: 1, arms: "hold", prop: "paper", eyes: "down" });
-    await r.wait(260);
+async function facts(r: Run) {
+  FIRST.forEach((i) => r.set(i, { ...CALM, eyes: "squint", look: [-0.6, 0] }));
+  r.set(CHECKER, { ...CALM, tint: "o", arms: "point", prop: "glass", bubble: "web" });
+  await r.go(CHECKER, 0.2, 0.68);
+  while (r.alive()) {
+    for (const x of [0.12, 0.28, 0.2]) {
+      r.set(CHECKER, { arms: "point", prop: "glass", eyes: "down", bubble: "web" });
+      await r.go(CHECKER, x, rand(0.62, 0.72));
+      await r.wait(rand(500, 900));
+    }
+    // Found something: it reads it out to the judges.
+    r.set(CHECKER, { ...CALM, face: 1, arms: "hold", prop: "paper", bubble: "idea", eyes: "wide" });
+    FIRST.forEach((i) => r.set(i, { eyes: "wide", look: [-0.8, 0], motion: "nod" }));
+    await r.wait(1500);
+    FIRST.forEach((i) => r.set(i, { eyes: "squint", motion: "stand" }));
   }
+}
+
+async function takeSeats(r: Run, setThing: (t: Thing) => void) {
   setThing(null);
-  await toSeats(r);
-  r.ids.forEach((i) => r.set(i, { face: 1, arms: "hold", prop: "paper", eyes: "down", motion: "nod" }));
-  while (r.alive()) {
-    await r.wait(rand(1400, 2200));
-    const i = pick(r.ids);
-    // A page turn: the sheet drops and comes back up.
-    r.set(i, { prop: null, motion: "stand" });
-    await r.wait(140);
-    r.set(i, { prop: "paper", motion: "nod", bubble: Math.random() < 0.3 ? "think" : null });
+  r.set(CHECKER, { ...CALM, arms: "wave", eyes: "happy" });
+  void r.go(CHECKER, -0.3, 0.7, true);
+  FIRST.forEach((i) => r.set(i, { ...CALM, arms: "hold", prop: "paper" }));
+  await spread(r, FIRST);
+  for (let k = 0; r.alive(); k++) {
+    FIRST.forEach((i, j) =>
+      r.set(i, { arms: "hold", prop: "paper", eyes: "down", motion: (j + k) % 2 ? "nod" : "stand" }),
+    );
+    await r.wait(rand(1400, 2000));
   }
 }
 
-type Role = "glass" | "write" | "think" | "talk" | "read" | "idea";
-
-function role(r: Run, i: number, what: Role) {
-  const base = { ...CALM, face: (r.cast.mids[i].x < 0.5 ? 1 : -1) as 1 | -1 };
-  const look: Record<Role, Partial<Mid>> = {
-    glass: { arms: "point", prop: "glass", eyes: "down" },
-    write: { arms: "write", prop: "pad", eyes: "down" },
-    think: { arms: "chin", eyes: "squint", bubble: "think", look: [0.3, -0.8] },
-    talk: { bubble: "talk", motion: "nod" },
-    read: { arms: "hold", prop: "paper", eyes: "down", motion: "nod" },
-    idea: { arms: "up", eyes: "wide", bubble: "idea", motion: "hop" },
-  };
-  r.set(i, { ...base, ...look[what] });
-}
-
-async function dig(r: Run) {
-  await toSeats(r);
-  const pool: Role[] = ["glass", "write", "think", "talk", "read", "idea"];
-  let last: Role[] = [];
+async function bothSides(r: Run) {
+  // Each weighs A against B on its own.
+  for (const [k, i] of FIRST.entries()) {
+    r.set(i, { ...CALM, face: 1, arms: "beam", eyes: "squint", look: [0, -0.6] });
+    await r.wait(260 + k * 120);
+  }
   while (r.alive()) {
-    // A fresh mix each round, nobody keeping the same job twice running.
-    const roles = r.ids.map((_, k) => {
-      const options = pool.filter((p) => p !== last[k]);
-      return pick(options);
-    });
-    if (!roles.includes("idea") && Math.random() < 0.5) roles[Math.floor(Math.random() * roles.length)] = "idea";
-    last = roles;
-    for (const [k, i] of r.ids.entries()) {
-      role(r, i, roles[k]);
-      await r.wait(180);
-    }
-    // The one with the glass searches about a bit; the one with an idea settles.
-    const g = roles.indexOf("glass");
-    const idea = roles.indexOf("idea");
-    const s = seats(r.cast.size);
-    if (idea >= 0) {
-      void r.wait(620).then(() => r.set(r.ids[idea], { motion: "stand", arms: "point", bubble: "idea" }));
-    }
-    if (g >= 0) {
-      const i = r.ids[g];
-      await r.go(i, s[g][0] + rand(-0.08, 0.08), s[g][1] + rand(-0.06, 0.06));
-      role(r, i, "glass");
-    }
-    await r.wait(rand(2000, 2800));
+    await r.wait(rand(1600, 2400));
+    r.set(pick(FIRST), { look: [pick([-0.9, 0.9]), -0.4] });
   }
 }
 
 async function crux(r: Run) {
-  const n = r.cast.size;
-  const centre = Math.floor(n / 2);
-  const others = r.ids.filter((i) => i !== centre);
-  await Promise.all([
-    r.go(centre, 0.5, 0.86),
-    ...others.map((i, k) => {
-      const left = k < others.length / 2;
-      return r.go(i, left ? 0.24 - k * 0.04 : 0.76 + (k - others.length / 2) * 0.04, 0.76);
-    }),
-  ]);
-  r.set(centre, { ...CALM, face: 1, arms: "beam", eyes: "squint", look: [0, -0.6] });
-  others.forEach((i) => {
-    faceCentre(r, i);
-    r.set(i, { ...CALM, arms: "chin", eyes: "squint", face: r.cast.mids[i].x < 0.5 ? 1 : -1 });
-  });
-  for (let k = 0; r.alive(); k++) {
-    others.forEach((i, j) => r.set(i, { bubble: (j + k) % 2 ? "dots" : "think" }));
-    await r.wait(rand(1600, 2200));
-  }
-}
-
-async function orbs(r: Run) {
-  await toSeats(r);
-  r.ids.forEach((i) => r.set(i, { ...CALM, face: 1, eyes: "squint", motion: "bounce", bubble: "dots" }));
-}
-
-async function deliberate(r: Run) {
+  const think: Partial<Mid> = { ...CALM, face: 1, arms: "chin", eyes: "squint", bubble: "think", look: [0.3, -0.8] };
+  FIRST.forEach((i) => r.set(i, think));
   while (r.alive()) {
-    const kind = pick(["huddle", "pace", "book", "recheck"] as const);
-    if (kind === "huddle") {
-      await huddle(r, false, Math.round(rand(3, 5)));
-      continue;
-    }
-    if (kind === "pace") {
-      await toSeats(r);
-      for (let k = 0; k < 2; k++) {
-        await Promise.all(
-          r.ids.map(async (i, j) => {
-            const s = seats(r.cast.size)[j];
-            r.set(i, { arms: "chin", eyes: "squint", bubble: Math.random() < 0.5 ? "think" : null });
-            await r.go(i, s[0] + rand(-0.1, 0.1), s[1] + rand(-0.08, 0.06));
-            r.set(i, { arms: "chin", eyes: "squint" });
-          }),
-        );
-        await r.wait(600);
-      }
-    } else if (kind === "book") {
-      const reader = pick(r.ids);
-      const rest = r.ids.filter((i) => i !== reader);
-      await r.go(reader, 0.5, 0.84);
-      r.set(reader, { ...CALM, face: 1, arms: "hold", prop: "book", eyes: "down", motion: "nod" });
-      await Promise.all(rest.map((i, k) => r.go(i, k % 2 ? 0.66 + k * 0.03 : 0.34 - k * 0.03, 0.78)));
-      rest.forEach((i) => {
-        faceCentre(r, i);
-        r.set(i, { motion: "lean", eyes: "down", look: [0.6, 0.4] });
-      });
-      await r.wait(rand(3000, 4200));
-      r.set(reader, { bubble: "idea", eyes: "wide" });
-      await r.wait(900);
-      r.ids.forEach((i) => r.set(i, CALM));
-    } else {
-      await toSeats(r);
-      r.ids.forEach((i, k) => role(r, i, k % 2 ? "read" : "glass"));
-      await r.wait(rand(3000, 4000));
-    }
+    await r.wait(rand(1800, 2600));
+    const i = pick(FIRST);
+    r.set(i, { arms: "up", eyes: "wide", bubble: "idea", motion: "hop", look: [0, 0] });
+    await r.wait(620);
+    r.set(i, { arms: "point", motion: "stand" });
+    await r.wait(900);
+    r.set(i, think);
   }
 }
 
-async function verdict(r: Run, votes: readonly Vote[]) {
-  await toSeats(r, true);
-  r.ids.forEach((i) => r.set(i, { ...CALM, face: 1, look: [0, 0.3] }));
-  if (!votes.length) {
-    r.ids.forEach((i) => r.set(i, { arms: "shrug", motion: "shake", bubble: "think" }));
-    return;
+async function ruling(r: Run) {
+  const jobs: Partial<Mid>[] = [
+    { arms: "write", prop: "pad", eyes: "down", bubble: null },
+    { arms: "hold", prop: "paper", eyes: "down", motion: "nod", bubble: null },
+    { arms: "chin", eyes: "squint", bubble: "think" },
+    { arms: "write", prop: "pad", eyes: "down", bubble: null },
+  ];
+  const s = seats(3);
+  FIRST.forEach((i) => r.set(i, { ...CALM, face: 1, ...jobs[0] }));
+  while (r.alive()) {
+    await r.wait(rand(2200, 3200));
+    const k = pick(FIRST);
+    if (Math.random() < 0.3) {
+      // A short pace, still alone.
+      r.set(k, { ...CALM, arms: "chin", eyes: "squint" });
+      await r.go(k, s[k][0] + rand(-0.07, 0.07), s[k][1] + rand(-0.05, 0.03));
+    }
+    r.set(k, { ...CALM, face: 1, ...pick(jobs) });
   }
-  // One flag per run, in the dots' order; a judge without a run keeps its hands down.
-  for (const [k, i] of r.ids.entries()) {
+}
+
+async function vote(r: Run, ids: number[], votes: readonly Vote[], from: number) {
+  for (const [k, i] of ids.entries()) {
+    const v = votes[from + k];
+    r.set(i, {
+      ...CALM,
+      face: 1,
+      look: [0, 0.3],
+      tint: tintOf(v),
+      motion: v ? "hop" : "stand",
+      eyes: v ? "open" : "squint",
+    });
+    await r.wait(420);
+    r.set(i, { motion: "stand" });
+  }
+}
+
+/** Brings the cast up to 3 + count judges; safe to call again. */
+function callIn(c: Cast, count: number) {
+  for (let k = judges(c).length - 3; k < count; k++) {
+    const left = k % 2 === 0;
+    const i = c.add(mid(left ? -0.12 : 1.12, 0.84, left ? 1 : -1));
+    c.set(i, { arms: "hold", prop: "paper", eyes: "down" });
+  }
+}
+
+async function more(r: Run, count: number) {
+  // Fresh judges, called in for a close one. They start from the case alone.
+  callIn(r.cast, count);
+  const go = run(r.cast, r.cast.mids.map((_, i) => i));
+  const ids = judges(go.cast);
+  await spread(go, ids, true);
+  ids.slice(3).forEach((i) => go.set(i, { arms: "hold", prop: "paper", eyes: "down", motion: "nod" }));
+}
+
+function final(r: Run, ids: number[], votes: readonly Vote[]) {
+  const { side } = agreement(votes);
+  ids.forEach((i, k) => {
     const v = votes[k];
-    if (!v) continue;
-    r.set(i, { arms: "vote", prop: v === "a" ? "flag-a" : v === "b" ? "flag-b" : "flag-o" });
-    await r.wait(150);
-  }
-  await r.wait(350);
-  const win = majority(votes);
-  r.ids.forEach((i, k) => {
-    if (k >= votes.length) return;
-    r.set(i, votes[k] === win ? { eyes: "happy", motion: "hop" } : { eyes: "open", motion: "shake" });
+    if (!v) r.set(i, { arms: "shrug", motion: "shake" });
+    else if (v === side) r.set(i, { eyes: "happy", motion: "hop", arms: "up" });
+    else r.set(i, { motion: "shake" });
   });
-  await r.wait(win ? 1240 : 500);
-  r.ids.forEach((i) => r.set(i, { motion: "stand" }));
 }
 
-/** The judging card's Mids. Starts them off stage so they walk on. */
-export function JudgingMids({ className }: { className?: string }) {
+/** Plays one beat at a time; changing the beat cuts the last one short. */
+export function JudgingMids({
+  beat,
+  votes,
+  extra,
+  className,
+}: {
+  beat: Beat;
+  votes: readonly Vote[];
+  /** Judges called in after the first three. */
+  extra: number;
+  className?: string;
+}) {
   const ref = useRef<HTMLDivElement>(null);
-  const mode = useSceneMode();
-  const { cast, mids, reduced } = useCast(() => [mid(-0.12, 0.78, 1), mid(-0.24, 0.84, 1), mid(1.14, 0.78, -1)]);
+  const { cast, mids } = useCast(() => [
+    mid(-0.12, 0.76, 1),
+    mid(-0.24, 0.84, 1),
+    mid(1.14, 0.76, -1),
+    mid(-0.3, 0.7, 1),
+  ]);
   const box = useBox(ref, cast);
   const [thing, setThing] = useState<Thing>(null);
-  const scene: Scene = mode.kind === "judging" ? mode.beat : mode.kind === "verdict" ? "verdict" : "lift";
-  const votes = mode.kind === "verdict" ? mode.verdict.votes : null;
-  const voteKey = votes?.join(",") ?? "";
   const sized = box.w > 0;
+  const voteKey = votes.join(",");
 
   useEffect(() => {
     if (!sized) return;
     const play = () => {
       cast.stop();
-      const n = Math.max(3, votes?.length ?? 0);
-      while (cast.size < n) cast.add(mid(1.14 + (cast.size - 3) * 0.1, 0.8, -1));
-      const r = run(cast, all(cast));
-      if (scene !== "sort") setThing(null);
-      if (scene === "lift") void huddle(r, !reduced);
-      else if (scene === "sort") void sort(r, setThing);
-      else if (scene === "dig") void dig(r);
-      else if (scene === "crux") void crux(r);
-      else if (scene === "orbs") void orbs(r);
-      else if (scene === "deliberate") void deliberate(r);
-      else void verdict(r, votes ?? []);
+      const r = run(cast, cast.mids.map((_, i) => i));
+      if (beat === "names") void names(r, setThing);
+      else if (beat === "facts") void facts(r);
+      else if (beat === "judges") void takeSeats(r, setThing);
+      else if (beat === "bothSides") void bothSides(r);
+      else if (beat === "crux") void crux(r);
+      else if (beat === "ruling") void ruling(r);
+      else if (beat === "vote1") {
+        setThing(null);
+        r.set(CHECKER, { x: -0.3, t: 0 });
+        void spread(r, FIRST, true).then(() => vote(r, FIRST, votes, 0));
+      } else if (beat === "more") void more(r, extra);
+      else {
+        // Back from a hidden tab past "more": the late judges still need to be there.
+        if (judges(cast).length < 3 + extra) {
+          callIn(cast, extra);
+          const r2 = run(cast, cast.mids.map((_, i) => i));
+          void spread(r2, judges(cast), true);
+        }
+        const r3 = run(cast, cast.mids.map((_, i) => i));
+        if (beat === "vote2") void vote(r3, judges(cast).slice(3), votes, 3);
+        else final(r3, judges(cast), votes);
+      }
     };
-    // A hidden tab stops them; coming back picks the current beat up again.
+    // A hidden tab stops them; coming back picks the beat up again.
     const flip = () => (document.hidden ? cast.stop() : play());
     if (!document.hidden) play();
     document.addEventListener("visibilitychange", flip);
-    return () => {
-      document.removeEventListener("visibilitychange", flip);
-      cast.stop();
-    };
+    return () => document.removeEventListener("visibilitychange", flip);
     // votes is read through voteKey so a new array with the same votes is no change.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [scene, voteKey, cast, reduced, sized]);
+  }, [beat, voteKey, extra, cast, sized]);
 
   return (
     <Stage stageRef={ref} mids={mids} box={box} className={className}>
-      {thing === "file" ? (
-        <span className={styles.thing} style={{ left: "50%", top: "60%", width: 60, height: 44, zIndex: 1 }}>
-          <svg viewBox="0 0 46 34">
-            <rect x="6" y="4" width="34" height="26" rx="3" fill="var(--paper)" stroke="var(--line-2, var(--line))" strokeWidth="2" transform="rotate(-6 23 17)" />
-            <rect x="6" y="6" width="34" height="26" rx="3" fill="var(--paper)" stroke="var(--line-2, var(--line))" strokeWidth="2" />
-            <path d="M12 13h20M12 19h16M12 25h20" stroke="var(--party-a-strong)" strokeWidth="2.5" strokeLinecap="round" opacity=".6" />
+      {thing === "letter" ? (
+        <span className={styles.letter} style={{ left: "50%", top: "72%" }}>
+          <svg viewBox="0 0 44 34">
+            <rect x="3" y="3" width="38" height="28" rx="3" fill="#fff" stroke="var(--ink)" strokeWidth="2" />
+            <path d="M9 11h26M9 17h20M9 23h24" stroke="var(--muted)" strokeWidth="2.5" strokeLinecap="round" />
           </svg>
         </span>
       ) : null}

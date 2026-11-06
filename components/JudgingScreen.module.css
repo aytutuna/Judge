@@ -54,16 +54,6 @@
   box-shadow: var(--shadow-1);
 }
 
-.scene {
-  position: relative;
-  width: 100%;
-  max-width: 480px;
-  margin: 0 auto;
-  aspect-ratio: 3 / 2;
-  overflow: hidden;
-  border-radius: 18px;
-}
-
 .cancel {
   align-self: center;
   min-height: 40px;

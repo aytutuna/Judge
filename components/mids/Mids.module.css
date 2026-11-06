@@ -1,32 +1,20 @@
 .stage {
-  --mid-hi: #5a524a;
-  --mid-body: #26211d;
-  --mid-lo: #0e0c0a;
-  --mid-limb: #1c1916;
-  --mid-rim: transparent;
+  --mid: var(--ink);
+  --mid-eye: #fff;
   position: relative;
   overflow: hidden;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
 }
 
-/* On a dark page a black Mid would vanish, so it goes a warm grey with
-   light limbs and a faint rim. */
+/* Flat ink: black on a light page, white on a dark one. */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) .stage {
-    --mid-hi: #8a8076;
-    --mid-body: #4a423b;
-    --mid-lo: #2a2521;
-    --mid-limb: #e6ded2;
-    --mid-rim: rgba(241, 235, 225, 0.22);
+    --mid-eye: var(--paper);
   }
 }
 :root[data-theme="dark"] .stage {
-  --mid-hi: #8a8076;
-  --mid-body: #4a423b;
-  --mid-lo: #2a2521;
-  --mid-limb: #e6ded2;
-  --mid-rim: rgba(241, 235, 225, 0.22);
+  --mid-eye: var(--paper);
 }
 
 .mid {
@@ -50,8 +38,7 @@
   height: 7%;
   border-radius: 50%;
   background: var(--ink);
-  opacity: 0.16;
-  filter: blur(2.5px);
+  opacity: 0.08;
   transform-origin: center;
 }
 
@@ -70,27 +57,24 @@
   overflow: visible;
 }
 
-.hi {
-  stop-color: var(--mid-hi);
+.mid[data-tint="a"] {
+  --mid: var(--party-a-strong);
 }
-.mid0 {
-  stop-color: var(--mid-body);
+.mid[data-tint="b"] {
+  --mid: var(--party-b-strong);
 }
-.lo {
-  stop-color: var(--mid-lo);
+.mid[data-tint="o"] {
+  --mid: var(--muted);
 }
 .ball {
-  stroke: var(--mid-rim);
-  stroke-width: 2;
-}
-.shine {
-  fill: #fff;
-  opacity: 0.22;
+  fill: var(--mid);
+  transition: fill 0.5s ease;
 }
 
 .limbs {
+  transition: stroke 0.5s ease;
   fill: none;
-  stroke: var(--mid-limb);
+  stroke: var(--mid);
   stroke-width: 12;
   stroke-linecap: round;
   stroke-linejoin: round;
@@ -105,12 +89,12 @@
 }
 
 .eyes {
-  fill: #fff;
+  fill: var(--mid-eye);
   transition: transform 0.3s ease;
 }
 .lid {
   fill: none;
-  stroke: #fff;
+  stroke: var(--mid-eye);
   stroke-width: 5.5;
   stroke-linecap: round;
 }
@@ -139,7 +123,7 @@
 .pole,
 .pencil {
   fill: none;
-  stroke: var(--mid-limb);
+  stroke: var(--ink);
   stroke-width: 5;
   stroke-linecap: round;
 }
@@ -149,7 +133,7 @@
 }
 .lens {
   fill: rgba(111, 181, 138, 0.22);
-  stroke: var(--mid-limb);
+  stroke: var(--ink);
   stroke-width: 4;
 }
 .flag {
@@ -162,7 +146,7 @@
 }
 .beam {
   fill: none;
-  stroke: var(--mid-limb);
+  stroke: var(--ink);
   stroke-width: 10;
   stroke-linecap: round;
   transform-origin: 512px 506px;
@@ -311,6 +295,13 @@
   background: currentColor;
   animation: dot 1s ease-in-out infinite;
 }
+.bubble svg {
+  width: 15px;
+  height: 15px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+}
 .bubble[data-kind="dots"] i {
   background: var(--muted);
 }
@@ -355,6 +346,20 @@
   width: 100%;
   height: 100%;
 }
+.letter {
+  position: absolute;
+  width: 44px;
+  height: 34px;
+  pointer-events: none;
+  transform: translate(-50%, -100%);
+  animation: drop 0.9s cubic-bezier(0.3, 0.8, 0.4, 1) both;
+}
+.letter svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
 .toss {
   position: absolute;
   width: 14px;
@@ -427,11 +432,11 @@
   0%,
   100% {
     transform: scale(1);
-    opacity: 0.16;
+    opacity: 0.08;
   }
   46% {
     transform: scale(0.6);
-    opacity: 0.08;
+    opacity: 0.04;
   }
 }
 @keyframes bounce {
@@ -522,6 +527,18 @@
   }
   50% {
     transform: rotate(11deg);
+  }
+}
+@keyframes drop {
+  from {
+    transform: translate(-50%, -100%) translateY(-220px) rotate(-14deg);
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+  }
+  to {
+    transform: translate(-50%, -100%);
   }
 }
 @keyframes pop {

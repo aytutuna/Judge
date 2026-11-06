@@ -5,7 +5,7 @@ import { mid, pick, rand, run, weighted, type Cast, type Mid, type Run } from ".
 import { Stage, hit, useBox, useCast, useWhileVisible, type Toss } from "./Stage";
 
 // The New page's idle Mids: they wander, keep busy, pair up for a chat or a
-// game of catch, watch the box while someone types and bunch up on send.
+// game of catch, and bunch up on send.
 
 type Solo = (r: Run, i: number) => Promise<void>;
 type Duo = (r: Run, a: number, b: number) => Promise<void>;
@@ -305,56 +305,22 @@ function director(cast: Cast, setToss: (t: Toss) => void) {
   };
 }
 
-/** The idle Mids; `length` is the text so far, `busy` the moment of sending. */
-export function HomeMids({ length, busy, className }: { length: number; busy: boolean; className?: string }) {
+/** The idle Mids; `busy` is the moment of sending. */
+export function HomeMids({ busy, className }: { busy: boolean; className?: string }) {
   const ref = useRef<HTMLDivElement>(null);
   const { cast, mids, reduced } = useCast(() => [mid(0.2, 0.68, 1), mid(0.54, 0.9, -1), mid(0.8, 0.52, -1)]);
   const box = useBox(ref, cast);
   const [toss, setToss] = useState<Toss>(null);
   const [gaze, setGaze] = useState<[number, number] | null>(null);
   const [d] = useState(() => director(cast, setToss));
-  const mode = useRef<"idle" | "typing" | "busy">("idle");
-  const lastLength = useRef(length);
-  const settle = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  const mode = useRef<"idle" | "busy">("idle");
   const ready = box.w > 0 && box.h >= 110 && !reduced;
 
   useWhileVisible(
     () => mode.current === "idle" && d.startAll(),
-    () => {
-      // A paused stage stays paused, even mid-typing.
-      clearTimeout(settle.current);
-      if (mode.current === "typing") mode.current = "idle";
-      d.stop();
-    },
+    () => d.stop(),
     ready,
   );
-
-  // Someone's typing: everyone comes to the front to watch, one takes notes.
-  useEffect(() => {
-    if (!ready || busy || length === lastLength.current) return;
-    lastLength.current = length;
-    if (mode.current !== "typing") {
-      mode.current = "typing";
-      d.stop();
-      const order = cast.mids.map((m, i) => [m.x, i]).sort((p, q) => p[0] - q[0]);
-      const r = run(cast, cast.mids.map((_, i) => i));
-      order.forEach(([, i], k) => {
-        const x = 0.3 + k * 0.2;
-        void r.go(i, x, 0.93).then(() => {
-          r.set(i, { ...CALM, face: x < 0.5 ? 1 : x > 0.5 ? -1 : 1, eyes: "down", look: [(0.5 - x) * 1.5, 0.6] });
-          r.set(i, k === 1 ? { arms: "write", prop: "pad" } : { motion: "lean" });
-        });
-      });
-    }
-    clearTimeout(settle.current);
-    settle.current = setTimeout(() => {
-      mode.current = "idle";
-      d.stop();
-      d.startAll();
-    }, 2200);
-  }, [length, busy, ready, cast, d]);
-
-  useEffect(() => () => clearTimeout(settle.current), []);
 
   // Sent: they bunch up, ready to go. A send that fails lets them go again.
   useEffect(() => {
@@ -368,7 +334,6 @@ export function HomeMids({ length, busy, className }: { length: number; busy: bo
       return;
     }
     mode.current = "busy";
-    clearTimeout(settle.current);
     d.stop();
     const r = run(cast, cast.mids.map((_, i) => i));
     cast.mids.forEach((_, i) => {
