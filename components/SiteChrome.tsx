@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 import { CONTACT_EMAIL } from "@/app/site";
 import { t, type Lang } from "@/lib/i18n";
 import { AccountMenu } from "./AccountMenu";
-import { BrandMark } from "./BrandMark";
+import { BrandLogo } from "./BrandLogo";
 import { LangPicker } from "./LangPicker";
 import styles from "./SiteChrome.module.css";
 
@@ -41,7 +41,7 @@ export function SiteHeader({
           <div className={styles.navStart}>
             {lead}
             <Link href="/" aria-label={t(lang, "nav.home")} className={styles.brand}>
-              <BrandMark size={28} />
+              <BrandLogo size={30} />
               <span className={styles.wordmark}>Judge</span>
             </Link>
           </div>
@@ -65,7 +65,7 @@ export function SiteFooter({ lang, toggle = false }: { lang: Lang; toggle?: bool
       <div className={`wrap ${styles.foot}`}>
         <div className={styles.footBrand}>
           <Link href="/" className={styles.brand}>
-            <BrandMark size={28} />
+            <BrandLogo size={30} />
             Judge
           </Link>
           <p className={styles.note}>{t(lang, "footer.note")}</p>
