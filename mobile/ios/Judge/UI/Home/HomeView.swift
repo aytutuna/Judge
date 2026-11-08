@@ -78,8 +78,7 @@ struct HomeView: View {
         .toolbar {
             if home.clarify == nil {
                 ToolbarItem(placement: .topBarLeading) { MenuButton() }
-                ToolbarItem(placement: .topBarTrailing) { GamifyButton() }
-                ToolbarItem(placement: .topBarTrailing) { ComposeButton() }
+                RootBarTrailing()
             }
         }
         .onTabAppear { app.analytics.track("screen_view", ["screen": "home"]) }
@@ -119,14 +118,16 @@ struct HomeView: View {
     /// with one card: the judges get them as one set.
     private func form(_ lang: AppLang, home: HomeModel) -> some View {
         VStack(alignment: .leading, spacing: 12) {
-            Spacer(minLength: 0)
-                .frame(maxWidth: .infinity)
-                .overlay {
-                    // The second side, an error or a crowded page take the room.
-                    if app.gamify, !home.theirsOpen, home.error == nil {
-                        HomeCourt(busy: home.isBusy, covered: pageCovered || home.isJudging || !home.path.isEmpty)
+            if app.gamify {
+                Spacer(minLength: 0)
+                    .frame(maxWidth: .infinity)
+                    .overlay {
+                        // The second side, an error or a crowded page take the room.
+                        if !home.theirsOpen, home.error == nil {
+                            HomeCourt(busy: home.isBusy, covered: pageCovered || home.isJudging || !home.path.isEmpty)
+                        }
                     }
-                }
+            }
             if home.theirsOpen {
                 sideCard(lang, home: home, mine: true, inComposer: false)
             }

@@ -44,18 +44,20 @@ struct CourtView: View {
 }
 
 /// The New page's court in the room the form leaves, and nothing at all
-/// when that is too little to see.
+/// when that is too little to see. It grows with the screen up to 1100pt wide.
 struct HomeCourt: View {
     let busy: Bool
     let covered: Bool
 
     private static let minHeight: CGFloat = 110
+    private static let maxWidth: CGFloat = 1100
 
     var body: some View {
         GeometryReader { geo in
             if geo.size.height >= Self.minHeight {
                 CourtView(scene: .home(busy: busy), covered: covered)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .frame(maxWidth: min(geo.size.width, Self.maxWidth), maxHeight: .infinity)
+                    .frame(width: geo.size.width, height: geo.size.height)
             }
         }
         .allowsHitTesting(false)

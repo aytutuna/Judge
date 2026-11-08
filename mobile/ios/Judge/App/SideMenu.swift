@@ -32,41 +32,135 @@ struct MenuButton: View {
     }
 }
 
-/// Starts a new argument, at the trailing end of a root page's bar.
-struct ComposeButton: View {
-    @Environment(AppModel.self) private var app
+/// The look of the Gamify switch: the gamepad and a small capsule. The
+/// label is for VoiceOver only.
+private struct GamifyToggleStyle: ToggleStyle {
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
-    var body: some View {
-        Button {
-            app.go(.new)
+    func makeBody(configuration: Configuration) -> some View {
+        let on = configuration.isOn
+        return Button {
+            configuration.isOn.toggle()
         } label: {
-            Image(systemName: "square.and.pencil")
-                .font(.system(size: 18, weight: .semibold))
-                .foregroundStyle(Brand.ink)
-                .frame(minWidth: 44, minHeight: 44)
-                .contentShape(Rectangle())
+            HStack(spacing: 6) {
+                Image(systemName: "gamecontroller")
+                    .font(.system(size: 18, weight: .semibold))
+                    .foregroundStyle(on ? Brand.ink : Brand.muted)
+                Capsule()
+                    .fill(on ? Brand.terraInk : Brand.muted)
+                    .frame(width: 32, height: 18)
+                    .overlay(alignment: on ? .trailing : .leading) {
+                        Circle()
+                            .fill(Brand.paper)
+                            .frame(width: 14, height: 14)
+                            .padding(2)
+                    }
+                    .animation(reduceMotion ? nil : .easeOut(duration: 0.15), value: on)
+            }
+            .frame(minHeight: 44)
+            .contentShape(Rectangle())
         }
-        .accessibilityLabel(L10n.shellNew(app.lang))
+        .buttonStyle(.plain)
+        .accessibilityRepresentation {
+            Toggle(isOn: configuration.$isOn) { configuration.label }
+        }
     }
 }
 
-/// Turns the street court on or off, next to the compose button.
+/// Turns the street court on or off, at the trailing end of a root page's bar.
 struct GamifyButton: View {
     @Environment(AppModel.self) private var app
 
     var body: some View {
-        let on = app.gamify
-        Button {
-            app.setGamify(!on)
+        Toggle(L10n.shellGamify(app.lang), isOn: Binding(get: { app.gamify }, set: { app.setGamify($0) }))
+            .toggleStyle(GamifyToggleStyle())
+    }
+}
+
+/// The profile picture at the trailing end of a root page's bar: their
+/// image, else their initial, else a silhouette. It opens Sign in or Sign
+/// out, Settings and Pricing. Signing out asks first, as in Settings.
+struct ProfileMenu: View {
+    @Environment(AppModel.self) private var app
+    @State private var confirmSignOut = false
+
+    /// First letter of the name, or of the email when there is no name.
+    static func initial(name: String, email: String) -> String {
+        let source = name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? email : name
+        let letter = source.trimmingCharacters(in: .whitespacesAndNewlines).prefix(1).uppercased()
+        return letter.isEmpty ? "?" : letter
+    }
+
+    var body: some View {
+        let lang = app.lang
+        let signedIn = app.account.isSignedIn
+        Menu {
+            if !signedIn {
+                Button(L10n.navSignIn(lang)) { app.account.presentSignIn() }
+            }
+            Button(L10n.appTabSettings(lang)) { app.go(.settings) }
+            Button(L10n.navPricing(lang)) { app.openPricing() }
+            if signedIn {
+                Button(L10n.navSignOut(lang), role: .destructive) { confirmSignOut = true }
+            }
         } label: {
-            Image(systemName: on ? "gamecontroller.fill" : "gamecontroller")
-                .font(.system(size: 18, weight: .semibold))
-                .foregroundStyle(on ? Brand.terraInk : Brand.ink2)
+            avatar
+                .frame(width: 30, height: 30)
+                .clipShape(Circle())
                 .frame(minWidth: 44, minHeight: 44)
                 .contentShape(Rectangle())
         }
-        .accessibilityLabel(L10n.shellGamify(app.lang))
-        .accessibilityAddTraits(on ? .isSelected : [])
+        .accessibilityLabel(L10n.navAccount(lang))
+        .alert(L10n.appAccountSignOutConfirm(lang), isPresented: $confirmSignOut) {
+            Button(L10n.accountSignOut(lang), role: .destructive) {
+                Task { await app.account.signOut() }
+            }
+            Button(L10n.appCancel(lang), role: .cancel) {}
+        }
+    }
+
+    @ViewBuilder
+    private var avatar: some View {
+        if app.account.isSignedIn {
+            let user = app.account.user
+            let initial = Self.initial(name: user?.name ?? "", email: user?.email ?? "")
+            if let image = user?.image, let url = URL(string: image) {
+                AsyncImage(url: url) { phase in
+                    if let loaded = phase.image {
+                        loaded.resizable().scaledToFill()
+                    } else {
+                        letter(initial)
+                    }
+                }
+            } else {
+                letter(initial)
+            }
+        } else {
+            ZStack {
+                Brand.ivory2
+                Image(systemName: "person.fill")
+                    .font(.system(size: 15))
+                    .foregroundStyle(Brand.muted)
+            }
+        }
+    }
+
+    private func letter(_ initial: String) -> some View {
+        ZStack {
+            Brand.terraInk
+            Text(initial)
+                .font(.system(size: 14, weight: .semibold))
+                .foregroundStyle(Brand.paper)
+        }
+    }
+}
+
+/// The trailing end of a root page's bar. New is in the side menu, so the
+/// bar leaves the title its room.
+struct RootBarTrailing: ToolbarContent {
+    var body: some ToolbarContent {
+        ToolbarItem(placement: .topBarTrailing) { GamifyButton() }
+        ToolbarItem(placement: .topBarTrailing) { ProfileMenu() }
     }
 }
 
@@ -234,6 +328,12 @@ extension AppModel {
     func go(_ target: RootTab) {
         if target != tab { dismissKeyboard() }
         select(target)
+    }
+
+    /// The Pricing page, under Settings so Back lands on the list.
+    func openPricing() {
+        go(.settings)
+        settingsPath = [.pricing]
     }
 
     func openMenu() {
