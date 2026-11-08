@@ -142,6 +142,7 @@
     <string name="nav_sign_in">Prijava</string>
     <string name="nav_account">Račun</string>
     <string name="nav_pricing">Cene</string>
+    <string name="nav_account_menu">Meni računa</string>
     <string name="nav_sign_out">Odjava</string>
     <string name="nav_verdicts">Razsodbe</string>
     <string name="nav_tabs">Razdelki</string>

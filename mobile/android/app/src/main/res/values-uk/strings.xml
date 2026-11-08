@@ -142,6 +142,7 @@
     <string name="nav_sign_in">Увійти</string>
     <string name="nav_account">Акаунт</string>
     <string name="nav_pricing">Ціни</string>
+    <string name="nav_account_menu">Меню акаунта</string>
     <string name="nav_sign_out">Вийти</string>
     <string name="nav_verdicts">Вердикти</string>
     <string name="nav_tabs">Розділи</string>

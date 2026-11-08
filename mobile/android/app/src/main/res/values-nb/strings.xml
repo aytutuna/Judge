@@ -136,6 +136,7 @@
     <string name="nav_sign_in">Logg inn</string>
     <string name="nav_account">Konto</string>
     <string name="nav_pricing">Priser</string>
+    <string name="nav_account_menu">Kontomeny</string>
     <string name="nav_sign_out">Logg ut</string>
     <string name="nav_verdicts">Dommene</string>
     <string name="nav_tabs">Seksjoner</string>

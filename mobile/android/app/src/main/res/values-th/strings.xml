@@ -133,6 +133,7 @@
     <string name="nav_sign_in">เข้าสู่ระบบ</string>
     <string name="nav_account">บัญชี</string>
     <string name="nav_pricing">ราคา</string>
+    <string name="nav_account_menu">เมนูบัญชี</string>
     <string name="nav_sign_out">ออกจากระบบ</string>
     <string name="nav_verdicts">คำตัดสิน</string>
     <string name="nav_tabs">ส่วนต่าง ๆ</string>

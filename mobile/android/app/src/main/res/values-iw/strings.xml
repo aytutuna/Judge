@@ -139,6 +139,7 @@
     <string name="nav_sign_in">התחברות</string>
     <string name="nav_account">חשבון</string>
     <string name="nav_pricing">מחירים</string>
+    <string name="nav_account_menu">תפריט החשבון</string>
     <string name="nav_sign_out">התנתקות</string>
     <string name="nav_verdicts">פסקי דין</string>
     <string name="nav_tabs">אזורים</string>

@@ -139,6 +139,7 @@
     <string name="nav_sign_in">Accedi</string>
     <string name="nav_account">Account</string>
     <string name="nav_pricing">Prezzi</string>
+    <string name="nav_account_menu">Menu account</string>
     <string name="nav_sign_out">Esci</string>
     <string name="nav_verdicts">Verdetti</string>
     <string name="nav_tabs">Sezioni</string>

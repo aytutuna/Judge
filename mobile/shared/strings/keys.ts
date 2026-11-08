@@ -105,6 +105,7 @@ export const WEB_KEYS: readonly string[] = [
   "shell.gamify",
   "nav.pricing",
   "nav.signOut",
+  "nav.accountMenu",
   // Premium, cases and appeals
   "tier.*",
   "clarify.*",

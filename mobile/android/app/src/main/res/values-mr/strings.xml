@@ -136,6 +136,7 @@
     <string name="nav_sign_in">साइन इन</string>
     <string name="nav_account">खाते</string>
     <string name="nav_pricing">किंमत</string>
+    <string name="nav_account_menu">खाते मेनू</string>
     <string name="nav_sign_out">साइन आउट</string>
     <string name="nav_verdicts">निकाल</string>
     <string name="nav_tabs">विभाग</string>

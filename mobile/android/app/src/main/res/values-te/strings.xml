@@ -136,6 +136,7 @@
     <string name="nav_sign_in">సైన్ ఇన్</string>
     <string name="nav_account">అకౌంట్</string>
     <string name="nav_pricing">ధరలు</string>
+    <string name="nav_account_menu">అకౌంట్ మెనూ</string>
     <string name="nav_sign_out">సైన్ అవుట్</string>
     <string name="nav_verdicts">తీర్పులు</string>
     <string name="nav_tabs">విభాగాలు</string>

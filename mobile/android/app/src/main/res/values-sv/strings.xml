@@ -136,6 +136,7 @@
     <string name="nav_sign_in">Logga in</string>
     <string name="nav_account">Konto</string>
     <string name="nav_pricing">Priser</string>
+    <string name="nav_account_menu">Kontomeny</string>
     <string name="nav_sign_out">Logga ut</string>
     <string name="nav_verdicts">Domar</string>
     <string name="nav_tabs">Avsnitt</string>

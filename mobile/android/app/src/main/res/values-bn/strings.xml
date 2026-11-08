@@ -136,6 +136,7 @@
     <string name="nav_sign_in">সাইন ইন</string>
     <string name="nav_account">অ্যাকাউন্ট</string>
     <string name="nav_pricing">দাম</string>
+    <string name="nav_account_menu">অ্যাকাউন্ট মেনু</string>
     <string name="nav_sign_out">সাইন আউট</string>
     <string name="nav_verdicts">রায়</string>
     <string name="nav_tabs">বিভাগ</string>

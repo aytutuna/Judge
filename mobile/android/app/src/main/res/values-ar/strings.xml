@@ -148,6 +148,7 @@
     <string name="nav_sign_in">تسجيل الدخول</string>
     <string name="nav_account">الحساب</string>
     <string name="nav_pricing">الأسعار</string>
+    <string name="nav_account_menu">قائمة الحساب</string>
     <string name="nav_sign_out">تسجيل الخروج</string>
     <string name="nav_verdicts">الأحكام</string>
     <string name="nav_tabs">الأقسام</string>

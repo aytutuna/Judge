@@ -133,6 +133,7 @@
     <string name="nav_sign_in">Đăng nhập</string>
     <string name="nav_account">Tài khoản</string>
     <string name="nav_pricing">Bảng giá</string>
+    <string name="nav_account_menu">Menu tài khoản</string>
     <string name="nav_sign_out">Đăng xuất</string>
     <string name="nav_verdicts">Phán quyết</string>
     <string name="nav_tabs">Mục</string>

@@ -136,6 +136,7 @@
     <string name="nav_sign_in">Sign in</string>
     <string name="nav_account">Account</string>
     <string name="nav_pricing">Pricing</string>
+    <string name="nav_account_menu">Account menu</string>
     <string name="nav_sign_out">Sign out</string>
     <string name="nav_verdicts">Verdicts</string>
     <string name="nav_tabs">Sections</string>

@@ -136,6 +136,7 @@
     <string name="nav_sign_in">Kirjaudu</string>
     <string name="nav_account">Tili</string>
     <string name="nav_pricing">Hinnat</string>
+    <string name="nav_account_menu">Tilivalikko</string>
     <string name="nav_sign_out">Kirjaudu ulos</string>
     <string name="nav_verdicts">Tuomiot</string>
     <string name="nav_tabs">Osiot</string>

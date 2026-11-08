@@ -136,6 +136,7 @@
     <string name="nav_sign_in">ಸೈನ್ ಇನ್</string>
     <string name="nav_account">ಖಾತೆ</string>
     <string name="nav_pricing">ಬೆಲೆಗಳು</string>
+    <string name="nav_account_menu">ಖಾತೆ ಮೆನು</string>
     <string name="nav_sign_out">ಸೈನ್ ಔಟ್</string>
     <string name="nav_verdicts">ತೀರ್ಪುಗಳು</string>
     <string name="nav_tabs">ವಿಭಾಗಗಳು</string>

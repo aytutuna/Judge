@@ -133,6 +133,7 @@
     <string name="nav_sign_in">로그인</string>
     <string name="nav_account">계정</string>
     <string name="nav_pricing">요금</string>
+    <string name="nav_account_menu">계정 메뉴</string>
     <string name="nav_sign_out">로그아웃</string>
     <string name="nav_verdicts">판결</string>
     <string name="nav_tabs">섹션</string>
