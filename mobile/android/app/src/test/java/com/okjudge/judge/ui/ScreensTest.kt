@@ -19,6 +19,7 @@ import androidx.compose.ui.test.assertIsFocused
 import androidx.compose.ui.test.assertIsNotEnabled
 import androidx.compose.ui.test.assertIsOff
 import androidx.compose.ui.test.assertIsOn
+import androidx.compose.ui.test.assertTextContains
 import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.assertWidthIsEqualTo
 import androidx.compose.ui.test.junit4.createComposeRule
@@ -51,6 +52,7 @@ import com.okjudge.judge.ui.history.HistoryScreen
 import com.okjudge.judge.ui.history.HistoryTags
 import com.okjudge.judge.ui.home.HomeScreen
 import com.okjudge.judge.ui.home.HomeTags
+import com.okjudge.judge.ui.premium.EvidenceTags
 import com.okjudge.judge.ui.home.HomeUiState
 import com.okjudge.judge.ui.judging.JudgingScreen
 import com.okjudge.judge.ui.judging.JudgingTags
@@ -79,7 +81,7 @@ class ScreensTest {
     @get:Rule
     val compose = createComposeRule()
 
-    private fun home(lang: AppLang, initial: HomeUiState = HomeUiState(), onSendLink: () -> Unit = {}) {
+    private fun home(lang: AppLang, initial: HomeUiState = HomeUiState(), onSendLink: () -> Unit = {}, onAddContextSignIn: () -> Unit = {}) {
         compose.setContent {
             Themed(lang) {
                 var state by remember { mutableStateOf(initial) }
@@ -92,6 +94,7 @@ class ScreensTest {
                     onOtherName = { state = state.copy(otherName = it) },
                     onDisplayName = { state = state.copy(typedName = it) },
                     onSendLink = onSendLink,
+                    onAddContextSignIn = onAddContextSignIn,
                     onAddTheirSide = { state = state.copy(theirsOpen = true) },
                     onRemoveTheirSide = { state = state.copy(theirsOpen = false, otherSide = "", otherName = "") },
                     onClear = { state = HomeUiState() },
@@ -162,6 +165,16 @@ class ScreensTest {
         home(AppLang.EN, HomeUiState(features = Features(cases = true)))
         compose.onNodeWithTag(HomeTags.SEND_LINK).assertIsEnabled()
         compose.onNodeWithTag(HomeTags.ADD_THEIRS).assertExists()
+    }
+
+    @Test
+    fun home_addContext_signedOutAsksForSignIn_andKeepsTheDraft() {
+        var signIn = 0
+        home(AppLang.EN, HomeUiState(features = Features(evidence = true)), onAddContextSignIn = { signIn++ })
+        compose.onNodeWithTag(HomeTags.INPUT).performTextInput("What I wrote before signing in")
+        compose.onNodeWithTag(EvidenceTags.ADD).assertExists().performClick()
+        assertEquals(1, signIn)
+        compose.onNodeWithTag(HomeTags.INPUT).assertTextContains("What I wrote before signing in")
     }
 
     @Test

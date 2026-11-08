@@ -435,6 +435,7 @@ fun JudgeRoot(
                                         },
                                         onRemoveEvidence = vm::onRemoveEvidence,
                                         onDisplayName = vm::onDisplayName,
+                                        onAddContextSignIn = { if (backStack.lastOrNull() !is SignInKey) backStack.add(SignInKey(thenVerdict = false)) },
                                     )
                                 }
                                 entry<JudgingKey> {

@@ -87,7 +87,7 @@ class PremiumScreensTest {
         compose.onAllNodesWithTag(HomeTags.BALANCE).assertCountEquals(0)
         state = state.copy(signedIn = false, entitlement = me("credits7").entitlement)
         compose.onAllNodesWithTag(HomeTags.BALANCE).assertCountEquals(0)
-        compose.onAllNodesWithTag(EvidenceTags.ADD).assertCountEquals(0)
+        compose.onAllNodesWithTag(EvidenceTags.ADD).assertCountEquals(1)
     }
 
     @Test

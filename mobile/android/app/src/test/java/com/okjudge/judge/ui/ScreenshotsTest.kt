@@ -301,6 +301,13 @@ class ScreenshotsTest {
     }
 
     @Test
+    fun home_signedOutAddContext_en() = capture("home_signed_out_en", tall = true) {
+        Themed(AppLang.EN) {
+            HomeScreen(homeState(AppLang.EN).copy(features = Features(cases = true, evidence = true)), {}, {}, {})
+        }
+    }
+
+    @Test
     fun home_monthlyLeft_en() = capture("home_balance_monthly_en", tall = true) {
         Themed(AppLang.EN) {
             HomeScreen(premiumHome(AppLang.EN, "subscriber").copy(features = Features()), {}, {}, {})

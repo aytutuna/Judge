@@ -141,6 +141,7 @@ fun HomeScreen(
     onAddEvidence: (List<ImageSource>) -> Unit = {},
     onRemoveEvidence: (String) -> Unit = {},
     onDisplayName: (String) -> Unit = {},
+    onAddContextSignIn: () -> Unit = {},
 ) {
     val s = LocalStrings.current
 
@@ -158,7 +159,9 @@ fun HomeScreen(
     val length = state.outgoing(s).length
 
     // The server takes one set of screenshots for the verdict, so they belong to the case.
-    val pickContext = if (state.evidenceOn) rememberEvidencePicker(state.evidence.room, onAddEvidence) else null
+    // Signed out, the tap asks for sign-in instead of opening the picker; the draft stays in Home's state.
+    val picker = rememberEvidencePicker(state.evidence.room, onAddEvidence)
+    val pickContext = if (state.evidenceOn) picker else if (state.evidenceOffered) onAddContextSignIn else null
     val addContext = pickContext.takeIf { !state.evidence.full }
 
     val theirFocus = remember { FocusRequester() }
