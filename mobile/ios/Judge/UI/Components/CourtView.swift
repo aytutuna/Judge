@@ -29,6 +29,7 @@ struct CourtView: View {
             if running {
                 CourtWebView(scene: scene, reduced: reduceMotion, onReady: { ready = true }, onFailed: { failed = true })
                     .opacity(ready ? 1 : 0)
+                    .animation(.easeOut(duration: 0.25), value: ready)
             }
         }
         .aspectRatio(16.0 / 9.0, contentMode: .fit)
