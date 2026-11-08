@@ -42,7 +42,7 @@ struct HomeView: View {
                             .padding(.horizontal, 16)
                             .padding(.top, 8)
                             .padding(.bottom, 12)
-                            .frame(minHeight: geo.size.height, alignment: app.gamify ? .bottom : .center)
+                            .frame(minHeight: geo.size.height, alignment: .bottom)
                     }
                 }
                 .defaultScrollAnchor(home.clarify == nil ? UnitPoint.bottom : UnitPoint.top)
@@ -118,7 +118,6 @@ struct HomeView: View {
     /// with one card: the judges get them as one set.
     private func form(_ lang: AppLang, home: HomeModel) -> some View {
         VStack(alignment: .leading, spacing: 12) {
-            // Without the court the form rests in the middle of the page.
             if app.gamify {
                 Spacer(minLength: 0)
                     .frame(maxWidth: .infinity)
