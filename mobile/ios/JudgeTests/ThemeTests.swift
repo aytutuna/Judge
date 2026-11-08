@@ -57,6 +57,7 @@ final class ThemeTests: XCTestCase {
         XCTAssertFalse(again.gamify)
     }
 
+    @MainActor
     func testTheProfileInitialComesFromTheNameThenTheEmail() {
         XCTAssertEqual(ProfileMenu.initial(name: "ada Lovelace", email: "x@y.z"), "A")
         XCTAssertEqual(ProfileMenu.initial(name: "  ", email: "bo@y.z"), "B")
