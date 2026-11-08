@@ -213,17 +213,12 @@ export function HomeForm(p: HomeFormProps) {
         submit();
       }}
     >
-      <fieldset className={styles.form} disabled={p.holding}>
-        <div className={styles.mid} ref={mid}>
-          <div className={styles.push}>
-            {p.blank ? (
-              <p className={styles.empty} aria-hidden>
-                Judge
-              </p>
-            ) : null}
-            <HomeCourt className={styles.court} busy={p.holding} />
-          </div>
+      <fieldset className={styles.form} disabled={p.holding} data-blank={p.blank ? "" : undefined}>
+        <div className={styles.stage}>
+          <HomeCourt className={styles.court} busy={p.holding} />
+        </div>
 
+        <div className={styles.mid} ref={mid}>
           {p.theirsOpen ? (
             <SideCard side={mine} head>
               {addContext ? <div className={styles.row}>{addContext}</div> : null}

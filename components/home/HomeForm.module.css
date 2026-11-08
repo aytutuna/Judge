@@ -19,10 +19,27 @@
   min-height: 0;
 }
 
-/* Scrolls, and keeps what it holds against the composer. The side margins
-   leave room for the cards' edges inside the scroll box. */
-.mid {
+/* Takes whatever height the form leaves, and is the one thing that may be
+   wider than the column: the court scales with the screen. */
+.stage {
+  flex: 1 1 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 16px;
+}
+
+.court {
   flex: 1;
+  min-height: 0;
+  width: min(92vw, 1100px);
+}
+
+/* Scrolls when short of room, and keeps what it holds against the composer.
+   The side margins leave room for the cards' edges inside the scroll box. */
+.mid {
+  flex: 0 1 auto;
   min-height: 56px;
   display: flex;
   flex-direction: column;
@@ -32,38 +49,12 @@
   overflow-y: auto;
 }
 
-.push {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  min-height: 0;
-}
-
-.court {
-  flex: 1;
-  min-height: 0;
-}
-
-/* Without the court the title sits in the middle of the free space. */
-:global(html[data-game="off"]) .push {
+/* Nothing typed and no court: the form rests in the middle of the screen. */
+:global(html[data-game="off"]) .form[data-blank] {
   justify-content: center;
 }
-:global(html[data-game="off"]) .court {
+:global(html[data-game="off"]) .form[data-blank] .stage {
   display: none;
-}
-:global(html[data-game="off"]) .empty {
-  margin-top: 0;
-}
-
-.empty {
-  flex: none;
-  margin: 6vh 0 0;
-  text-align: center;
-  color: var(--ink);
-  font-family: var(--font-display);
-  font-size: 34px;
-  font-weight: 700;
-  letter-spacing: -0.02em;
 }
 
 .dock {
