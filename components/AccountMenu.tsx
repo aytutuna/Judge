@@ -41,7 +41,7 @@ export function AccountMenu({ lang }: { lang: Lang }) {
   const { me, config } = useViewer();
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
-  const [imageFailed, setImageFailed] = useState(false);
+  const [failedImage, setFailedImage] = useState<string | null>(null);
   const rootRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
@@ -63,6 +63,7 @@ export function AccountMenu({ lang }: { lang: Lang }) {
 
   async function signOutNow() {
     setOpen(false);
+    buttonRef.current?.focus();
     try {
       const { signOut } = await import("@/lib/auth-client");
       await signOut();
@@ -112,9 +113,9 @@ export function AccountMenu({ lang }: { lang: Lang }) {
         onClick={() => setOpen((o) => !o)}
       >
         {user ? (
-          user.image && !imageFailed ? (
+          user.image && failedImage !== user.image ? (
             // eslint-disable-next-line @next/next/no-img-element -- a provider's avatar URL
-            <img src={user.image} alt="" referrerPolicy="no-referrer" onError={() => setImageFailed(true)} />
+            <img src={user.image} alt="" referrerPolicy="no-referrer" onError={() => setFailedImage(user.image)} />
           ) : (
             <span aria-hidden>{initialOf(user.name, user.email)}</span>
           )
@@ -125,7 +126,13 @@ export function AccountMenu({ lang }: { lang: Lang }) {
           </svg>
         )}
       </button>
-      <div id={panelId} ref={panelRef} className={styles.panel} hidden={!open}>
+      <div
+        id={panelId}
+        ref={panelRef}
+        className={styles.panel}
+        hidden={!open}
+        onMouseDown={(e) => e.preventDefault()}
+      >
         {user ? <p className={styles.who}>{user.email}</p> : null}
         <ul className={styles.items} role="menu" aria-label={t(lang, "nav.accountMenu")}>
           {showSignIn ? (
