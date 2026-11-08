@@ -20,6 +20,16 @@
     <string name="thinking_finish">ใกล้เจอหัวใจของเรื่องแล้ว…</string>
     <string name="thinking_still_judging">กรรมการยังคิดอยู่ อดใจรออีกนิดนะ…</string>
     <string name="thinking_ready">คำตัดสินออกแล้ว</string>
+    <string name="story_names">ลบชื่อออก เพื่อไม่ให้ใครถูกตัดสินจากว่าเขาเป็นใคร</string>
+    <string name="story_facts">ตัวตรวจแยกต่างหากค้นข้อเท็จจริงบนเว็บ</string>
+    <string name="story_judges">กรรมการสามคนได้รับสำเนาคดีคนละชุด</string>
+    <string name="story_both_sides">แต่ละคนเสนอข้อโต้แย้งที่ดีที่สุดของทั้งสองฝ่ายก่อน</string>
+    <string name="story_crux">หาจุดที่เรื่องทั้งหมดขึ้นอยู่กับมัน</string>
+    <string name="story_ruling">กรรมการแต่ละคนตัดสินเองโดยไม่เห็นคนอื่น</string>
+    <string name="story_count">กำลังนับคะแนน</string>
+    <string name="story_close_call">สูสีมาก จึงให้กรรมการเพิ่มอีกมาดูใหม่</string>
+    <string name="story_agree">กรรมการ %1$s จาก %2$s คนเห็นตรงกัน</string>
+    <string name="story_split">กรรมการเห็นไม่ตรงกัน</string>
     <string name="verdict_win">%1$s เป็นฝ่ายถูก</string>
     <string name="verdict_win_self">คุณเป็นฝ่ายถูก</string>
     <string name="verdict_split">ถูกกันคนละส่วน</string>

@@ -20,6 +20,16 @@
     <string name="thinking_finish">핵심 쟁점에 거의 다 왔어요…</string>
     <string name="thinking_still_judging">판사들이 아직 고민 중이에요. 조금만 기다려 주세요…</string>
     <string name="thinking_ready">판결이 나왔어요.</string>
+    <string name="story_names">이름을 지워서 누구도 사람 때문에 판단받지 않게 해요</string>
+    <string name="story_facts">별도의 검증기가 웹에서 사실을 찾아봐요</string>
+    <string name="story_judges">판사 세 명이 각자 사건 사본을 받아요</string>
+    <string name="story_both_sides">각자 먼저 양쪽의 가장 좋은 주장을 정리해요</string>
+    <string name="story_crux">모든 게 갈리는 핵심 지점을 찾고 있어요</string>
+    <string name="story_ruling">판사들은 서로 보지 않고 각자 판결해요</string>
+    <string name="story_count">표를 세고 있어요</string>
+    <string name="story_close_call">박빙이라 다른 판사들이 처음부터 다시 봐요</string>
+    <string name="story_agree">판사 %2$s명 중 %1$s명이 같은 의견이에요</string>
+    <string name="story_split">판사들 의견이 갈렸어요</string>
     <string name="verdict_win">%1$s 쪽이 맞아요</string>
     <string name="verdict_win_self">내가 맞았어요</string>
     <string name="verdict_split">양쪽 다 일리 있어요</string>

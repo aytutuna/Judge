@@ -20,6 +20,16 @@
     <string name="thinking_finish">On approche du nœud du débat…</string>
     <string name="thinking_still_judging">Les juges réfléchissent encore. Tiens bon…</string>
     <string name="thinking_ready">Le verdict est prêt.</string>
+    <string name="story_names">On retire les noms pour que personne ne soit jugé sur qui il est</string>
+    <string name="story_facts">Un vérificateur à part cherche les faits sur le web</string>
+    <string name="story_judges">Trois juges reçoivent chacun leur propre copie du dossier</string>
+    <string name="story_both_sides">Chacun défend d\'abord au mieux les deux camps</string>
+    <string name="story_crux">On cherche le point sur lequel tout repose</string>
+    <string name="story_ruling">Chaque juge tranche seul, sans voir les autres</string>
+    <string name="story_count">On compte les votes</string>
+    <string name="story_close_call">C\'est serré, d\'autres juges réexaminent l\'affaire à neuf</string>
+    <string name="story_agree">%1$s juges sur %2$s sont d\'accord</string>
+    <string name="story_split">Les juges sont partagés</string>
     <string name="verdict_win">%1$s a raison</string>
     <string name="verdict_win_self">Tu as raison</string>
     <string name="verdict_split">Décision partagée</string>

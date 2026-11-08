@@ -25,6 +25,7 @@ export const WEB_KEYS: readonly string[] = [
   "history.*",
   // Judging state
   "thinking.*",
+  "story.*",
   // Verdict card
   "verdict.*",
   "lean.*",

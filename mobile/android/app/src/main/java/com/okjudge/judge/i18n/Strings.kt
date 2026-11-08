@@ -97,6 +97,16 @@ class Strings(private val res: Resources) {
     val thinkingFinish: String get() = res.getString(R.string.thinking_finish)
     val thinkingStillJudging: String get() = res.getString(R.string.thinking_still_judging)
     val thinkingReady: String get() = res.getString(R.string.thinking_ready)
+    val storyNames: String get() = res.getString(R.string.story_names)
+    val storyFacts: String get() = res.getString(R.string.story_facts)
+    val storyJudges: String get() = res.getString(R.string.story_judges)
+    val storyBothSides: String get() = res.getString(R.string.story_both_sides)
+    val storyCrux: String get() = res.getString(R.string.story_crux)
+    val storyRuling: String get() = res.getString(R.string.story_ruling)
+    val storyCount: String get() = res.getString(R.string.story_count)
+    val storyCloseCall: String get() = res.getString(R.string.story_close_call)
+    fun storyAgree(n: String, total: String): String = res.getString(R.string.story_agree, n, total)
+    val storySplit: String get() = res.getString(R.string.story_split)
     fun verdictWin(name: String): String = res.getString(R.string.verdict_win, name)
     val verdictWinSelf: String get() = res.getString(R.string.verdict_win_self)
     val verdictSplit: String get() = res.getString(R.string.verdict_split)
@@ -740,6 +750,15 @@ class Strings(private val res: Resources) {
             "thinking.finish" -> R.string.thinking_finish
             "thinking.stillJudging" -> R.string.thinking_still_judging
             "thinking.ready" -> R.string.thinking_ready
+            "story.names" -> R.string.story_names
+            "story.facts" -> R.string.story_facts
+            "story.judges" -> R.string.story_judges
+            "story.bothSides" -> R.string.story_both_sides
+            "story.crux" -> R.string.story_crux
+            "story.ruling" -> R.string.story_ruling
+            "story.count" -> R.string.story_count
+            "story.closeCall" -> R.string.story_close_call
+            "story.split" -> R.string.story_split
             "verdict.winSelf" -> R.string.verdict_win_self
             "verdict.split" -> R.string.verdict_split
             "verdict.conditional" -> R.string.verdict_conditional

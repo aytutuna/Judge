@@ -20,6 +20,16 @@
     <string name="thinking_finish">Bijna bij de kern…</string>
     <string name="thinking_still_judging">De rechters denken nog na. Even volhouden…</string>
     <string name="thinking_ready">De uitspraak is klaar.</string>
+    <string name="story_names">We halen de namen eruit, zodat niemand wordt beoordeeld op wie hij is</string>
+    <string name="story_facts">Een aparte controleur zoekt de feiten op het web op</string>
+    <string name="story_judges">Drie rechters krijgen elk hun eigen kopie van de zaak</string>
+    <string name="story_both_sides">Elk bepleit eerst de beste zaak voor beide kanten</string>
+    <string name="story_crux">We zoeken het punt waar alles om draait</string>
+    <string name="story_ruling">Elke rechter beslist alleen, zonder de anderen te zien</string>
+    <string name="story_count">We tellen de stemmen</string>
+    <string name="story_close_call">Het is nipt, dus meer rechters kijken er opnieuw naar</string>
+    <string name="story_agree">%1$s van de %2$s rechters zijn het eens</string>
+    <string name="story_split">De rechters zijn verdeeld</string>
     <string name="verdict_win">%1$s heeft gelijk</string>
     <string name="verdict_win_self">Jij hebt gelijk</string>
     <string name="verdict_split">Verdeelde uitspraak</string>

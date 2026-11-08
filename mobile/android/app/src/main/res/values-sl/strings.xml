@@ -20,6 +20,16 @@
     <string name="thinking_finish">Bližamo se jedru…</string>
     <string name="thinking_still_judging">Sodniki še premišljujejo. Še malo potrpi…</string>
     <string name="thinking_ready">Razsodba je pripravljena.</string>
+    <string name="story_names">Odstranjujemo imena, da nikomur ne sodijo po tem, kdo je</string>
+    <string name="story_facts">Ločen preverjevalec na spletu poišče dejstva</string>
+    <string name="story_judges">Trije sodniki vsak dobijo svojo kopijo primera</string>
+    <string name="story_both_sides">Vsak najprej predstavi najboljše argumente obeh strani</string>
+    <string name="story_crux">Iščemo točko, okoli katere se vse vrti</string>
+    <string name="story_ruling">Vsak sodnik odloča sam, ne da bi videl druge</string>
+    <string name="story_count">Štejemo glasove</string>
+    <string name="story_close_call">Tesno je, zato primer znova pogleda več sodnikov</string>
+    <string name="story_agree">%1$s od %2$s sodnikov se strinja</string>
+    <string name="story_split">Sodniki so razdeljeni</string>
     <string name="verdict_win">%1$s ima prav</string>
     <string name="verdict_win_self">Prav imaš</string>
     <string name="verdict_split">Oba imata delno prav</string>

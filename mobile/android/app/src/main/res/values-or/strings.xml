@@ -20,6 +20,16 @@
     <string name="thinking_finish">ଅସଲ କଥାର ପାଖାପାଖି ପହଞ୍ଚିଲୁଣି…</string>
     <string name="thinking_still_judging">ବିଚାରକମାନେ ଏବେ ବି ଭାବୁଛନ୍ତି। ଟିକେ ଧୈର୍ଯ୍ୟ ଧରନ୍ତୁ…</string>
     <string name="thinking_ready">ରାୟ ପ୍ରସ୍ତୁତ।</string>
+    <string name="story_names">ନାମ କାଢ଼ି ଦେଉଛୁ, ଯେପରି କେହି ସେ କିଏ ସେଥିପାଇଁ ବିଚାରିତ ନହୁଅନ୍ତି</string>
+    <string name="story_facts">ଅଲଗା ଯାଞ୍ଚକାରୀ ୱେବରେ ତଥ୍ୟ ଖୋଜନ୍ତି</string>
+    <string name="story_judges">ତିନିଜଣ ବିଚାରକ ପ୍ରତ୍ୟେକେ ମାମଲାର ନିଜ ନିଜ କପି ପାଆନ୍ତି</string>
+    <string name="story_both_sides">ପ୍ରତ୍ୟେକେ ଆଗେ ଦୁଇ ପକ୍ଷର ସବୁଠୁ ଭଲ ଯୁକ୍ତି ରଖନ୍ତି</string>
+    <string name="story_crux">ସମ୍ପୂର୍ଣ୍ଣ ବିଷୟ ଯେଉଁ ମୁଦ୍ଦା ଉପରେ ଟିକିଛି ତାହା ଖୋଜୁଛୁ</string>
+    <string name="story_ruling">ପ୍ରତ୍ୟେକ ବିଚାରକ ଅନ୍ୟମାନଙ୍କୁ ନଦେଖି ଏକୁଟିଆ ରାୟ ଦିଅନ୍ତି</string>
+    <string name="story_count">ଭୋଟ ଗଣୁଛୁ</string>
+    <string name="story_close_call">ଟକ୍କର ଭାରି, ତେଣୁ ଆହୁରି ବିଚାରକ ନୂଆକରି ଦେଖନ୍ତି</string>
+    <string name="story_agree">%2$s ଜଣରୁ %1$s ଜଣ ବିଚାରକ ସହମତ</string>
+    <string name="story_split">ବିଚାରକମାନେ ଦ୍ୱିମତ</string>
     <string name="verdict_win">%1$s ଠିକ୍</string>
     <string name="verdict_win_self">ଆପଣ ଠିକ୍</string>
     <string name="verdict_split">ବିଭକ୍ତ ରାୟ</string>

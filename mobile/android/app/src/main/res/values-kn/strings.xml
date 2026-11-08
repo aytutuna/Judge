@@ -20,6 +20,16 @@
     <string name="thinking_finish">ತಿರುಳಿನ ಹತ್ತಿರ ಬಂದಿದ್ದೇವೆ…</string>
     <string name="thinking_still_judging">ತೀರ್ಪುಗಾರರು ಇನ್ನೂ ಯೋಚಿಸುತ್ತಿದ್ದಾರೆ. ಸ್ವಲ್ಪ ತಾಳಿ…</string>
     <string name="thinking_ready">ತೀರ್ಪು ಸಿದ್ಧ.</string>
+    <string name="story_names">ಯಾರನ್ನೂ ಅವರು ಯಾರು ಎಂಬುದರ ಆಧಾರದ ಮೇಲೆ ನಿರ್ಣಯಿಸಬಾರದೆಂದು ಹೆಸರುಗಳನ್ನು ತೆಗೆಯುತ್ತಿದ್ದೇವೆ</string>
+    <string name="story_facts">ಪ್ರತ್ಯೇಕ ಪರಿಶೀಲಕ ವೆಬ್‌ನಲ್ಲಿ ಸತ್ಯಾಂಶಗಳನ್ನು ಹುಡುಕುತ್ತಾನೆ</string>
+    <string name="story_judges">ಮೂವರು ಜಡ್ಜ್‌ಗಳಿಗೆ ಪ್ರಕರಣದ ಅವರವರ ಪ್ರತಿ ಸಿಗುತ್ತದೆ</string>
+    <string name="story_both_sides">ಪ್ರತಿಯೊಬ್ಬರೂ ಮೊದಲು ಎರಡೂ ಕಡೆಯ ಅತ್ಯುತ್ತಮ ವಾದ ಮಂಡಿಸುತ್ತಾರೆ</string>
+    <string name="story_crux">ಇಡೀ ವಿಷಯ ಯಾವುದರ ಮೇಲೆ ನಿಂತಿದೆಯೋ ಆ ಅಂಶವನ್ನು ಹುಡುಕುತ್ತಿದ್ದೇವೆ</string>
+    <string name="story_ruling">ಪ್ರತಿ ಜಡ್ಜ್ ಇತರರನ್ನು ನೋಡದೆ ಒಬ್ಬರೇ ತೀರ್ಪು ನೀಡುತ್ತಾರೆ</string>
+    <string name="story_count">ಮತಗಳನ್ನು ಎಣಿಸುತ್ತಿದ್ದೇವೆ</string>
+    <string name="story_close_call">ಪೈಪೋಟಿ ಬಿಗಿಯಾಗಿದೆ, ಹಾಗಾಗಿ ಇನ್ನಷ್ಟು ಜಡ್ಜ್‌ಗಳು ಹೊಸದಾಗಿ ನೋಡುತ್ತಾರೆ</string>
+    <string name="story_agree">%2$s ರಲ್ಲಿ %1$s ಜಡ್ಜ್‌ಗಳು ಒಪ್ಪಿದ್ದಾರೆ</string>
+    <string name="story_split">ಜಡ್ಜ್‌ಗಳ ಅಭಿಪ್ರಾಯ ಹೋಳಾಗಿದೆ</string>
     <string name="verdict_win">%1$s ಹೇಳಿದ್ದೇ ಸರಿ</string>
     <string name="verdict_win_self">ನೀವು ಹೇಳಿದ್ದೇ ಸರಿ</string>
     <string name="verdict_split">ಇಬ್ಬರೂ ಭಾಗಶಃ ಸರಿ</string>

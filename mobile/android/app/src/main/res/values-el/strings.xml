@@ -20,6 +20,16 @@
     <string name="thinking_finish">Φτάνουμε στην ουσία…</string>
     <string name="thinking_still_judging">Οι κριτές ακόμα σκέφτονται. Λίγη υπομονή…</string>
     <string name="thinking_ready">Η απόφαση είναι έτοιμη.</string>
+    <string name="story_names">Αφαιρούμε τα ονόματα, ώστε κανείς να μην κρίνεται από το ποιος είναι</string>
+    <string name="story_facts">Ένας ξεχωριστός ελεγκτής ψάχνει τα στοιχεία στο διαδίκτυο</string>
+    <string name="story_judges">Οι τρεις κριτές παίρνουν ο καθένας το δικό του αντίγραφο της υπόθεσης</string>
+    <string name="story_both_sides">Ο καθένας παρουσιάζει πρώτα το καλύτερο επιχείρημα και για τις δύο πλευρές</string>
+    <string name="story_crux">Βρίσκουμε το σημείο γύρω από το οποίο στρέφεται το θέμα</string>
+    <string name="story_ruling">Ο κάθε κριτής αποφασίζει μόνος, χωρίς να βλέπει τους άλλους</string>
+    <string name="story_count">Μετράμε τις ψήφους</string>
+    <string name="story_close_call">Είναι οριακό, οπότε κι άλλοι κριτές το εξετάζουν από την αρχή</string>
+    <string name="story_agree">%1$s από %2$s κριτές συμφωνούν</string>
+    <string name="story_split">Οι κριτές διχάζονται</string>
     <string name="verdict_win">Δικαιώνεται: %1$s</string>
     <string name="verdict_win_self">Έχεις δίκιο</string>
     <string name="verdict_split">Μοιρασμένη απόφαση</string>

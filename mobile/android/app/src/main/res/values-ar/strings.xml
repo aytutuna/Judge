@@ -20,6 +20,16 @@
     <string name="thinking_finish">نقترب من لبّ الخلاف…</string>
     <string name="thinking_still_judging">القضاة ما زالوا يفكرون. لحظات من فضلك…</string>
     <string name="thinking_ready">الحكم جاهز.</string>
+    <string name="story_names">نحذف الأسماء حتى لا يُحكم على أحد بسبب هويته</string>
+    <string name="story_facts">مدقّق منفصل يبحث عن الحقائق على الإنترنت</string>
+    <string name="story_judges">كل قاضٍ من القضاة الثلاثة يحصل على نسخته الخاصة من القضية</string>
+    <string name="story_both_sides">كل قاضٍ يعرض أقوى حجة للطرفين أولًا</string>
+    <string name="story_crux">نحدد النقطة التي تدور حولها القضية كلها</string>
+    <string name="story_ruling">كل قاضٍ يحكم بمفرده دون أن يرى الآخرين</string>
+    <string name="story_count">نعدّ الأصوات</string>
+    <string name="story_close_call">النتيجة متقاربة، فيراجعها قضاة آخرون من جديد</string>
+    <string name="story_agree">%1$s من %2$s قضاة متفقون</string>
+    <string name="story_split">القضاة منقسمون</string>
     <string name="verdict_win">%1$s على حق</string>
     <string name="verdict_win_self">أنت على حق</string>
     <string name="verdict_split">حكم منقسم</string>

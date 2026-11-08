@@ -20,6 +20,16 @@
     <string name="thinking_finish">快找到症结了……</string>
     <string name="thinking_still_judging">评委们还在思考，再等等……</string>
     <string name="thinking_ready">裁决出炉了。</string>
+    <string name="story_names">先去掉名字，免得有人因为身份被评判</string>
+    <string name="story_facts">另有核查员在网上查证事实</string>
+    <string name="story_judges">三位评委各拿到一份独立的案卷</string>
+    <string name="story_both_sides">每人先为双方各写出最有力的论点</string>
+    <string name="story_crux">找出整件事的关键点</string>
+    <string name="story_ruling">每位评委独立裁决，互不参考</string>
+    <string name="story_count">正在统计票数</string>
+    <string name="story_close_call">结果很接近，再请更多评委重新审视</string>
+    <string name="story_agree">%2$s位评委中有%1$s位意见一致</string>
+    <string name="story_split">评委意见不一</string>
     <string name="verdict_win">%1$s说得对</string>
     <string name="verdict_win_self">你说得对</string>
     <string name="verdict_split">各有道理</string>

@@ -20,6 +20,16 @@
     <string name="thinking_finish">Ne apropiem de miezul problemei…</string>
     <string name="thinking_still_judging">Judecătorii încă se gândesc. Mai ai puțină răbdare…</string>
     <string name="thinking_ready">Verdictul e gata.</string>
+    <string name="story_names">Scoatem numele, ca nimeni să nu fie judecat după cine este</string>
+    <string name="story_facts">Un verificator separat caută faptele pe web</string>
+    <string name="story_judges">Trei judecători primesc fiecare propria copie a cazului</string>
+    <string name="story_both_sides">Fiecare prezintă mai întâi cel mai bun argument pentru ambele părți</string>
+    <string name="story_crux">Căutăm punctul pe care se sprijină totul</string>
+    <string name="story_ruling">Fiecare judecător hotărăște singur, fără să-i vadă pe ceilalți</string>
+    <string name="story_count">Numărăm voturile</string>
+    <string name="story_close_call">E strâns, așa că mai mulți judecători se uită din nou</string>
+    <string name="story_agree">%1$s din %2$s judecători sunt de acord</string>
+    <string name="story_split">Judecătorii sunt împărțiți</string>
     <string name="verdict_win">%1$s are dreptate</string>
     <string name="verdict_win_self">Tu ai dreptate</string>
     <string name="verdict_split">Verdict împărțit</string>

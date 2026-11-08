@@ -20,6 +20,16 @@
     <string name="thinking_finish">കാതലിനോട് അടുക്കുന്നു…</string>
     <string name="thinking_still_judging">ജഡ്ജിമാർ ഇപ്പോഴും ആലോചനയിലാണ്. അൽപം കാത്തിരിക്കൂ…</string>
     <string name="thinking_ready">വിധി തയ്യാർ.</string>
+    <string name="story_names">ആരെയും അവർ ആരെന്നതിന്റെ പേരിൽ വിധിക്കാതിരിക്കാൻ പേരുകൾ നീക്കുന്നു</string>
+    <string name="story_facts">വേറെയൊരു പരിശോധകൻ വെബിൽ വസ്തുതകൾ തിരയുന്നു</string>
+    <string name="story_judges">മൂന്ന് ജഡ്ജിമാർക്കും കേസിന്റെ അവരവരുടെ പകർപ്പ് ലഭിക്കുന്നു</string>
+    <string name="story_both_sides">ഓരോരുത്തരും ആദ്യം ഇരുപക്ഷത്തിന്റെയും മികച്ച വാദം അവതരിപ്പിക്കുന്നു</string>
+    <string name="story_crux">മുഴുവൻ കാര്യവും ആശ്രയിക്കുന്ന പോയിന്റ് കണ്ടെത്തുന്നു</string>
+    <string name="story_ruling">ഓരോ ജഡ്ജിയും മറ്റുള്ളവരെ കാണാതെ ഒറ്റയ്ക്ക് വിധിക്കുന്നു</string>
+    <string name="story_count">വോട്ടുകൾ എണ്ണുന്നു</string>
+    <string name="story_close_call">വളരെ അടുത്താണ്, അതുകൊണ്ട് കൂടുതൽ ജഡ്ജിമാർ പുതുതായി നോക്കുന്നു</string>
+    <string name="story_agree">%2$s ജഡ്ജിമാരിൽ %1$s പേർ യോജിക്കുന്നു</string>
+    <string name="story_split">ജഡ്ജിമാർ രണ്ടു തട്ടിലാണ്</string>
     <string name="verdict_win">%1$s ആണ് ശരി</string>
     <string name="verdict_win_self">നിങ്ങളാണ് ശരി</string>
     <string name="verdict_split">ഭിന്നവിധി</string>

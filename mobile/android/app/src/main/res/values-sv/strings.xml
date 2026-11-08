@@ -20,6 +20,16 @@
     <string name="thinking_finish">Närmar oss kärnfrågan…</string>
     <string name="thinking_still_judging">Domarna funderar fortfarande. Häng kvar…</string>
     <string name="thinking_ready">Domen är klar.</string>
+    <string name="story_names">Vi tar bort namnen så att ingen bedöms efter vem de är</string>
+    <string name="story_facts">En separat kontrollant slår upp fakta på nätet</string>
+    <string name="story_judges">Tre domare får var sin kopia av ärendet</string>
+    <string name="story_both_sides">Var och en lägger först fram det bästa argumentet för båda sidor</string>
+    <string name="story_crux">Vi hittar punkten som hela saken hänger på</string>
+    <string name="story_ruling">Varje domare avgör själv utan att se de andra</string>
+    <string name="story_count">Vi räknar rösterna</string>
+    <string name="story_close_call">Det är jämnt, så fler domare tittar på det på nytt</string>
+    <string name="story_agree">%1$s av %2$s domare är överens</string>
+    <string name="story_split">Domarna är oeniga</string>
     <string name="verdict_win">%1$s har rätt</string>
     <string name="verdict_win_self">Du har rätt</string>
     <string name="verdict_split">Delad dom</string>

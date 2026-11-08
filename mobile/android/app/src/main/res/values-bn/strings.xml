@@ -20,6 +20,16 @@
     <string name="thinking_finish">মূল জটের কাছাকাছি পৌঁছে গেছি…</string>
     <string name="thinking_still_judging">বিচারকেরা এখনও ভাবছেন। একটু ধৈর্য ধরুন…</string>
     <string name="thinking_ready">রায় তৈরি।</string>
+    <string name="story_names">নাম সরিয়ে দিচ্ছি, যাতে কেউ পরিচয়ের কারণে বিচারের শিকার না হয়</string>
+    <string name="story_facts">আলাদা একটি যাচাইকারী ওয়েবে তথ্য খুঁজে দেখছে</string>
+    <string name="story_judges">তিনজন বিচারক প্রত্যেকে মামলার নিজস্ব কপি পাচ্ছেন</string>
+    <string name="story_both_sides">প্রত্যেকে আগে দুই পক্ষের সবচেয়ে জোরালো যুক্তি তুলে ধরছেন</string>
+    <string name="story_crux">পুরো ব্যাপারটা যে বিন্দুতে ঘুরছে সেটা খুঁজছি</string>
+    <string name="story_ruling">প্রত্যেক বিচারক অন্যদের না দেখে একা রায় দিচ্ছেন</string>
+    <string name="story_count">ভোট গুনছি</string>
+    <string name="story_close_call">খুব কাছাকাছি, তাই আরও বিচারক নতুন করে দেখছেন</string>
+    <string name="story_agree">%2$s জন বিচারকের মধ্যে %1$s জন একমত</string>
+    <string name="story_split">বিচারকদের মত ভাগ হয়ে গেছে</string>
     <string name="verdict_win">%1$s ঠিক</string>
     <string name="verdict_win_self">আপনিই ঠিক</string>
     <string name="verdict_split">বিভক্ত রায়</string>

@@ -20,6 +20,16 @@
     <string name="thinking_finish">Gleich haben wir den Knackpunkt…</string>
     <string name="thinking_still_judging">Die Richter überlegen noch. Einen Moment Geduld…</string>
     <string name="thinking_ready">Das Urteil steht.</string>
+    <string name="story_names">Namen werden entfernt, damit niemand nach seiner Person beurteilt wird</string>
+    <string name="story_facts">Ein separater Prüfer recherchiert die Fakten im Netz</string>
+    <string name="story_judges">Drei Richter bekommen jeweils ihre eigene Kopie des Falls</string>
+    <string name="story_both_sides">Jeder bringt zuerst die stärksten Argumente für beide Seiten</string>
+    <string name="story_crux">Wir suchen den Punkt, um den sich alles dreht</string>
+    <string name="story_ruling">Jeder Richter urteilt allein, ohne die anderen zu sehen</string>
+    <string name="story_count">Stimmen werden gezählt</string>
+    <string name="story_close_call">Es ist knapp, deshalb schauen weitere Richter frisch drauf</string>
+    <string name="story_agree">%1$s von %2$s Richtern sind sich einig</string>
+    <string name="story_split">Die Richter sind gespalten</string>
     <string name="verdict_win">%1$s hat recht</string>
     <string name="verdict_win_self">Du hast recht</string>
     <string name="verdict_split">Teils, teils</string>

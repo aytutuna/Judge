@@ -20,6 +20,16 @@
     <string name="thinking_finish">Düğüme yaklaşıyoruz…</string>
     <string name="thinking_still_judging">Yargıçlar hâlâ düşünüyor, biraz sabır…</string>
     <string name="thinking_ready">Karar hazır.</string>
+    <string name="story_names">İsimleri çıkarıyoruz, kimse kim olduğuna göre yargılanmasın</string>
+    <string name="story_facts">Ayrı bir kontrolcü gerçekleri internette arıyor</string>
+    <string name="story_judges">Üç yargıcın her biri davanın kendi kopyasını alıyor</string>
+    <string name="story_both_sides">Her biri önce iki tarafın da en güçlü savunmasını yapıyor</string>
+    <string name="story_crux">Her şeyin düğümlendiği noktayı buluyoruz</string>
+    <string name="story_ruling">Her yargıç diğerlerini görmeden tek başına karar veriyor</string>
+    <string name="story_count">Oyları sayıyoruz</string>
+    <string name="story_close_call">Fark az, o yüzden daha fazla yargıç baştan bakıyor</string>
+    <string name="story_agree">%2$s yargıçtan %1$s tanesi aynı fikirde</string>
+    <string name="story_split">Yargıçlar bölündü</string>
     <string name="verdict_win">%1$s haklı</string>
     <string name="verdict_win_self">Sen haklısın</string>
     <string name="verdict_split">Bölünmüş karar</string>

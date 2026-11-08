@@ -164,6 +164,16 @@ enum L10n {
     static func thinkingFinish(_ lang: AppLang) -> String { string("thinking.finish", lang) }
     static func thinkingStillJudging(_ lang: AppLang) -> String { string("thinking.stillJudging", lang) }
     static func thinkingReady(_ lang: AppLang) -> String { string("thinking.ready", lang) }
+    static func storyNames(_ lang: AppLang) -> String { string("story.names", lang) }
+    static func storyFacts(_ lang: AppLang) -> String { string("story.facts", lang) }
+    static func storyJudges(_ lang: AppLang) -> String { string("story.judges", lang) }
+    static func storyBothSides(_ lang: AppLang) -> String { string("story.bothSides", lang) }
+    static func storyCrux(_ lang: AppLang) -> String { string("story.crux", lang) }
+    static func storyRuling(_ lang: AppLang) -> String { string("story.ruling", lang) }
+    static func storyCount(_ lang: AppLang) -> String { string("story.count", lang) }
+    static func storyCloseCall(_ lang: AppLang) -> String { string("story.closeCall", lang) }
+    static func storyAgree(_ lang: AppLang, n: String, total: String) -> String { format("story.agree", lang, n, total) }
+    static func storySplit(_ lang: AppLang) -> String { string("story.split", lang) }
     static func verdictWin(_ lang: AppLang, name: String) -> String { format("verdict.win", lang, name) }
     static func verdictWinSelf(_ lang: AppLang) -> String { string("verdict.winSelf", lang) }
     static func verdictSplit(_ lang: AppLang) -> String { string("verdict.split", lang) }
@@ -808,6 +818,15 @@ enum L10n {
         "thinking.finish",
         "thinking.stillJudging",
         "thinking.ready",
+        "story.names",
+        "story.facts",
+        "story.judges",
+        "story.bothSides",
+        "story.crux",
+        "story.ruling",
+        "story.count",
+        "story.closeCall",
+        "story.split",
         "verdict.winSelf",
         "verdict.split",
         "verdict.conditional",

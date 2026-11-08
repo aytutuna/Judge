@@ -20,6 +20,16 @@
     <string name="thinking_finish">అసలు ముడికి దగ్గరవుతున్నాం…</string>
     <string name="thinking_still_judging">జడ్జీలు ఇంకా ఆలోచిస్తున్నారు. కాస్త ఓపిక పట్టండి…</string>
     <string name="thinking_ready">తీర్పు రెడీ.</string>
+    <string name="story_names">ఎవరినీ వాళ్లు ఎవరన్నదాన్ని బట్టి తీర్పు చెప్పకుండా పేర్లు తీసేస్తున్నాం</string>
+    <string name="story_facts">వేరే చెకర్ వెబ్‌లో వాస్తవాలు వెతుకుతాడు</string>
+    <string name="story_judges">ముగ్గురు జడ్జీలకు ఒక్కొక్కరికి కేసు సొంత కాపీ వస్తుంది</string>
+    <string name="story_both_sides">ప్రతి ఒక్కరూ ముందు రెండు వైపుల బలమైన వాదన చెబుతారు</string>
+    <string name="story_crux">మొత్తం విషయం దేనిపై ఆధారపడిందో ఆ పాయింట్ వెతుకుతున్నాం</string>
+    <string name="story_ruling">ప్రతి జడ్జి మిగతావాళ్లను చూడకుండా ఒంటరిగా తీర్పు ఇస్తారు</string>
+    <string name="story_count">ఓట్లు లెక్కిస్తున్నాం</string>
+    <string name="story_close_call">పోటీ చాలా దగ్గరగా ఉంది, అందుకే మరింత మంది జడ్జీలు కొత్తగా చూస్తారు</string>
+    <string name="story_agree">%2$s మంది జడ్జీల్లో %1$s మంది ఒప్పుకున్నారు</string>
+    <string name="story_split">జడ్జీల మధ్య అభిప్రాయ భేదం ఉంది</string>
     <string name="verdict_win">%1$s మాటే కరెక్ట్</string>
     <string name="verdict_win_self">మీ మాటే కరెక్ట్</string>
     <string name="verdict_split">చీలిన తీర్పు</string>

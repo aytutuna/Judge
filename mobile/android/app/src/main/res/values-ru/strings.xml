@@ -20,6 +20,16 @@
     <string name="thinking_finish">Подбираемся к сути…</string>
     <string name="thinking_still_judging">Судьи всё ещё думают. Потерпите немного…</string>
     <string name="thinking_ready">Вердикт готов.</string>
+    <string name="story_names">Убираем имена, чтобы никого не судили за то, кто он</string>
+    <string name="story_facts">Отдельный проверяющий ищет факты в сети</string>
+    <string name="story_judges">Три судьи получают по своей копии дела</string>
+    <string name="story_both_sides">Каждый сначала излагает сильнейшие доводы обеих сторон</string>
+    <string name="story_crux">Ищем главный пункт, на котором всё держится</string>
+    <string name="story_ruling">Каждый судья решает сам, не глядя на остальных</string>
+    <string name="story_count">Считаем голоса</string>
+    <string name="story_close_call">Результат близкий, поэтому другие судьи смотрят заново</string>
+    <string name="story_agree">%1$s из %2$s судей согласны</string>
+    <string name="story_split">Судьи разошлись во мнениях</string>
     <string name="verdict_win">Побеждает %1$s</string>
     <string name="verdict_win_self">Вы правы</string>
     <string name="verdict_split">Каждый отчасти прав</string>

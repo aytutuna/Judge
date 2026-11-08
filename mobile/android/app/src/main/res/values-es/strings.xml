@@ -20,6 +20,16 @@
     <string name="thinking_finish">Ya casi damos con el quid…</string>
     <string name="thinking_still_judging">Los jueces siguen pensando. Un poco de paciencia…</string>
     <string name="thinking_ready">El veredicto está listo.</string>
+    <string name="story_names">Quitamos los nombres para que nadie sea juzgado por quién es</string>
+    <string name="story_facts">Un verificador aparte comprueba los hechos en la web</string>
+    <string name="story_judges">Tres jueces reciben cada uno su propia copia del caso</string>
+    <string name="story_both_sides">Cada uno expone primero el mejor argumento de ambas partes</string>
+    <string name="story_crux">Buscamos el punto del que depende todo</string>
+    <string name="story_ruling">Cada juez decide solo, sin ver a los demás</string>
+    <string name="story_count">Contamos los votos</string>
+    <string name="story_close_call">Está reñido, así que más jueces lo revisan desde cero</string>
+    <string name="story_agree">%1$s de %2$s jueces coinciden</string>
+    <string name="story_split">Los jueces están divididos</string>
     <string name="verdict_win">%1$s tiene razón</string>
     <string name="verdict_win_self">Tienes razón</string>
     <string name="verdict_split">Decisión dividida</string>

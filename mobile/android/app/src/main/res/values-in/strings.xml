@@ -20,6 +20,16 @@
     <string name="thinking_finish">Hampir sampai ke inti masalahnya…</string>
     <string name="thinking_still_judging">Para hakim masih berpikir. Sabar sebentar, ya…</string>
     <string name="thinking_ready">Putusan sudah siap.</string>
+    <string name="story_names">Nama dihapus supaya tak ada yang dinilai dari siapa dia</string>
+    <string name="story_facts">Pemeriksa terpisah mencari faktanya di web</string>
+    <string name="story_judges">Tiga hakim masing-masing mendapat salinan kasusnya sendiri</string>
+    <string name="story_both_sides">Masing-masing lebih dulu membela kedua pihak sebaik mungkin</string>
+    <string name="story_crux">Mencari titik yang jadi inti masalahnya</string>
+    <string name="story_ruling">Tiap hakim memutuskan sendiri, tanpa melihat yang lain</string>
+    <string name="story_count">Menghitung suara</string>
+    <string name="story_close_call">Hasilnya ketat, jadi lebih banyak hakim menilai dari awal</string>
+    <string name="story_agree">%1$s dari %2$s hakim setuju</string>
+    <string name="story_split">Para hakim terbelah</string>
     <string name="verdict_win">%1$s yang benar</string>
     <string name="verdict_win_self">Kamu yang benar</string>
     <string name="verdict_split">Sama-sama ada benarnya</string>

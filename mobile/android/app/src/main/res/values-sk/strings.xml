@@ -20,6 +20,16 @@
     <string name="thinking_finish">Už sa blížia k jadru sporu…</string>
     <string name="thinking_still_judging">Sudcovia ešte premýšľajú. Vydrž…</string>
     <string name="thinking_ready">Verdikt je hotový.</string>
+    <string name="story_names">Odstraňujeme mená, aby nikoho nesúdili podľa toho, kto je</string>
+    <string name="story_facts">Samostatný overovateľ hľadá fakty na webe</string>
+    <string name="story_judges">Každý z troch sudcov dostane vlastnú kópiu prípadu</string>
+    <string name="story_both_sides">Každý najprv predloží najlepšie argumenty oboch strán</string>
+    <string name="story_crux">Hľadáme bod, na ktorom celá vec stojí</string>
+    <string name="story_ruling">Každý sudca rozhoduje sám, bez pohľadu na ostatných</string>
+    <string name="story_count">Sčítavame hlasy</string>
+    <string name="story_close_call">Je to tesné, tak sa naň znova pozrú ďalší sudcovia</string>
+    <string name="story_agree">%1$s z %2$s sudcov sa zhoduje</string>
+    <string name="story_split">Sudcovia sa nezhodujú</string>
     <string name="verdict_win">%1$s má pravdu</string>
     <string name="verdict_win_self">Máš pravdu</string>
     <string name="verdict_split">Každý má kus pravdy</string>

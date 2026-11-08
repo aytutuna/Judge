@@ -20,6 +20,16 @@
     <string name="thinking_finish">Arribant al quid…</string>
     <string name="thinking_still_judging">Els jutges encara s\'ho estan pensant. Una mica de paciència…</string>
     <string name="thinking_ready">Ja tenim el veredicte.</string>
+    <string name="story_names">Traiem els noms perquè ningú sigui jutjat per qui és</string>
+    <string name="story_facts">Un verificador a part comprova els fets a la xarxa</string>
+    <string name="story_judges">Cadascun dels tres jutges rep la seva còpia del cas</string>
+    <string name="story_both_sides">Cadascun defensa primer el millor cas de les dues parts</string>
+    <string name="story_crux">Busquem el punt del qual depèn tot plegat</string>
+    <string name="story_ruling">Cada jutge dicta sentència sol, sense veure els altres</string>
+    <string name="story_count">Comptem els vots</string>
+    <string name="story_close_call">Està renyit, així que més jutges ho miren de nou</string>
+    <string name="story_agree">%1$s de %2$s jutges coincideixen</string>
+    <string name="story_split">Els jutges estan dividits</string>
     <string name="verdict_win">%1$s té raó</string>
     <string name="verdict_win_self">Tens raó</string>
     <string name="verdict_split">Decisió dividida</string>

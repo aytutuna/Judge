@@ -20,6 +20,16 @@
     <string name="thinking_finish">Közelítünk a kulcskérdéshez…</string>
     <string name="thinking_still_judging">A bírák még gondolkodnak. Tarts ki…</string>
     <string name="thinking_ready">Megvan az ítélet.</string>
+    <string name="story_names">Kivesszük a neveket, hogy senkit ne az alapján ítéljenek meg, ki ő</string>
+    <string name="story_facts">Egy különálló ellenőr utánanéz a tényeknek a weben</string>
+    <string name="story_judges">Három bíró egyenként megkapja az ügy saját másolatát</string>
+    <string name="story_both_sides">Mindegyik előbb a legjobb érvet hozza fel mindkét félnek</string>
+    <string name="story_crux">Megkeressük azt a pontot, amin az egész fordul</string>
+    <string name="story_ruling">Minden bíró egyedül dönt, a többiek nélkül</string>
+    <string name="story_count">Összeszámoljuk a szavazatokat</string>
+    <string name="story_close_call">Szoros, ezért további bírák nézik meg újra</string>
+    <string name="story_agree">%2$s bíróból %1$s egyetért</string>
+    <string name="story_split">A bírák megoszlanak</string>
     <string name="verdict_win">%1$s nyert</string>
     <string name="verdict_win_self">Te nyertél</string>
     <string name="verdict_split">Megosztott ítélet</string>

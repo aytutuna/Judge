@@ -20,6 +20,16 @@
     <string name="thinking_finish">מתקרבים ללב העניין…</string>
     <string name="thinking_still_judging">השופטים עוד חושבים. עוד קצת סבלנות…</string>
     <string name="thinking_ready">פסק הדין מוכן.</string>
+    <string name="story_names">מסירים את השמות כדי שאף אחד לא יישפט לפי מי שהוא</string>
+    <string name="story_facts">בודק נפרד מחפש את העובדות ברשת</string>
+    <string name="story_judges">שלושה שופטים מקבלים כל אחד עותק משלו של התיק</string>
+    <string name="story_both_sides">כל אחד מציג קודם את הטיעון הטוב ביותר של שני הצדדים</string>
+    <string name="story_crux">מחפשים את הנקודה שעליה הכול נסוב</string>
+    <string name="story_ruling">כל שופט פוסק לבד, בלי לראות את האחרים</string>
+    <string name="story_count">סופרים את הקולות</string>
+    <string name="story_close_call">זה צמוד, אז עוד שופטים בוחנים את זה מחדש</string>
+    <string name="story_agree">%1$s מתוך %2$s שופטים מסכימים</string>
+    <string name="story_split">השופטים חלוקים</string>
     <string name="verdict_win">הצדק עם %1$s</string>
     <string name="verdict_win_self">הצדק איתך</string>
     <string name="verdict_split">הדעות חלוקות</string>

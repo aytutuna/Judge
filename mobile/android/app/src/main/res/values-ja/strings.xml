@@ -20,6 +20,16 @@
     <string name="thinking_finish">核心に迫っています…</string>
     <string name="thinking_still_judging">審査員はまだ考え中です。もう少しだけ…</string>
     <string name="thinking_ready">判定が出ました。</string>
+    <string name="story_names">名前を取り除いて、誰かを人柄で裁かないようにします</string>
+    <string name="story_facts">別のチェック役がウェブで事実を調べます</string>
+    <string name="story_judges">3人の審査員にそれぞれ事案のコピーを渡します</string>
+    <string name="story_both_sides">まず各自が双方の最良の主張をまとめます</string>
+    <string name="story_crux">すべての分かれ目になる点を探します</string>
+    <string name="story_ruling">各審査員は他の判断を見ずに単独で判定します</string>
+    <string name="story_count">票を数えています</string>
+    <string name="story_close_call">僅差なので、ほかの審査員が改めて見直します</string>
+    <string name="story_agree">審査員%2$s人中%1$s人が一致</string>
+    <string name="story_split">審査員の意見が割れました</string>
     <string name="verdict_win">%1$sに軍配</string>
     <string name="verdict_win_self">あなたに軍配</string>
     <string name="verdict_split">どちらにも一理あり</string>

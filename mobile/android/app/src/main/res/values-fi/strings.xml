@@ -20,6 +20,16 @@
     <string name="thinking_finish">Ydin alkaa löytyä…</string>
     <string name="thinking_still_judging">Tuomarit miettivät vielä. Pieni hetki…</string>
     <string name="thinking_ready">Tuomio on valmis.</string>
+    <string name="story_names">Poistetaan nimet, ettei ketään tuomita sen mukaan, kuka hän on</string>
+    <string name="story_facts">Erillinen tarkistaja hakee faktat netistä</string>
+    <string name="story_judges">Kolme tuomaria saa kukin oman kopionsa tapauksesta</string>
+    <string name="story_both_sides">Jokainen esittää ensin parhaat perustelut molemmille puolille</string>
+    <string name="story_crux">Etsitään kohta, jonka varassa koko asia on</string>
+    <string name="story_ruling">Jokainen tuomari ratkaisee yksin näkemättä muiden ratkaisuja</string>
+    <string name="story_count">Lasketaan äänet</string>
+    <string name="story_close_call">Tulos on tiukka, joten lisää tuomareita katsoo asiaa uusin silmin</string>
+    <string name="story_agree">%1$s / %2$s tuomarista on samaa mieltä</string>
+    <string name="story_split">Tuomarit ovat eri mieltä</string>
     <string name="verdict_win">%1$s on oikeassa</string>
     <string name="verdict_win_self">Sinä olet oikeassa</string>
     <string name="verdict_split">Jaettu tuomio</string>
