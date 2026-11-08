@@ -442,6 +442,7 @@
     <string name="names_invalid">1〜40文字で入力してください。「当事者A」のようなラベルは使えません。</string>
     <string name="account_verdicts_removed">削除済み</string>
     <string name="shell_new">新しい揉めごと</string>
+    <string name="shell_gamify">ゲーム化</string>
     <string name="shell_today">今日</string>
     <string name="shell_load_failed">履歴を読み込めませんでした。</string>
     <string name="shell_load_more">もっと見る</string>

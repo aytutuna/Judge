@@ -442,6 +442,7 @@
     <string name="names_invalid">Gunakan 1 sampai 40 karakter, dan jangan pakai label seperti Pihak A.</string>
     <string name="account_verdicts_removed">Dihapus</string>
     <string name="shell_new">Perdebatan baru</string>
+    <string name="shell_gamify">Gamifikasi</string>
     <string name="shell_today">Hari ini</string>
     <string name="shell_load_failed">Riwayatmu gagal dimuat.</string>
     <string name="shell_load_more">Tampilkan lagi</string>

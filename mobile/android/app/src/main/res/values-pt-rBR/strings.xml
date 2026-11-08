@@ -458,6 +458,7 @@
     <string name="names_invalid">Use de 1 a 40 caracteres, e nada de rótulos como Parte A.</string>
     <string name="account_verdicts_removed">Removido</string>
     <string name="shell_new">Nova discussão</string>
+    <string name="shell_gamify">Gamificar</string>
     <string name="shell_today">Hoje</string>
     <string name="shell_load_failed">Não conseguimos carregar seu histórico.</string>
     <string name="shell_load_more">Mostrar mais</string>

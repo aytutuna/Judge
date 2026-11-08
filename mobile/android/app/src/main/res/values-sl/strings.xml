@@ -466,6 +466,7 @@
     <string name="names_invalid">Uporabi od 1 do 40 znakov, ne pa oznake, kot je Stranka A.</string>
     <string name="account_verdicts_removed">Odstranjeno</string>
     <string name="shell_new">Nov prepir</string>
+    <string name="shell_gamify">Igra</string>
     <string name="shell_today">Danes</string>
     <string name="shell_load_failed">Zgodovine nismo mogli naložiti.</string>
     <string name="shell_load_more">Pokaži več</string>

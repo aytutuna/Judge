@@ -458,6 +458,7 @@
     <string name="names_invalid">Upiši od 1 do 40 znakova. Oznake poput „Strana A“ nisu dopuštene.</string>
     <string name="account_verdicts_removed">Uklonjeno</string>
     <string name="shell_new">Nova rasprava</string>
+    <string name="shell_gamify">Igra</string>
     <string name="shell_today">Danas</string>
     <string name="shell_load_failed">Nismo uspjeli učitati tvoju povijest.</string>
     <string name="shell_load_more">Prikaži više</string>

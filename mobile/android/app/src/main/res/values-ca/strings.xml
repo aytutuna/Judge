@@ -458,6 +458,7 @@
     <string name="names_invalid">Fes servir d\'1 a 40 caràcters, i no una etiqueta com Part A.</string>
     <string name="account_verdicts_removed">Eliminat</string>
     <string name="shell_new">Nova discussió</string>
+    <string name="shell_gamify">Gamifica</string>
     <string name="shell_today">Avui</string>
     <string name="shell_load_failed">No hem pogut carregar l\'historial.</string>
     <string name="shell_load_more">Mostra\'n més</string>

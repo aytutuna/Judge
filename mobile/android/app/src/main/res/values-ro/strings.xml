@@ -458,6 +458,7 @@
     <string name="names_invalid">Folosește între 1 și 40 de caractere, dar nu o etichetă precum Partea A.</string>
     <string name="account_verdicts_removed">Eliminat</string>
     <string name="shell_new">Dispută nouă</string>
+    <string name="shell_gamify">Joc</string>
     <string name="shell_today">Azi</string>
     <string name="shell_load_failed">N-am putut încărca istoricul.</string>
     <string name="shell_load_more">Arată mai multe</string>

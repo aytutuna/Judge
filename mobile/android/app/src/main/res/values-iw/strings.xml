@@ -458,6 +458,7 @@
     <string name="names_invalid">בין 1 ל-40 תווים, ולא תווית כמו צד A.</string>
     <string name="account_verdicts_removed">הוסר</string>
     <string name="shell_new">ויכוח חדש</string>
+    <string name="shell_gamify">משחק</string>
     <string name="shell_today">היום</string>
     <string name="shell_load_failed">לא הצלחנו לטעון את ההיסטוריה.</string>
     <string name="shell_load_more">להציג עוד</string>

@@ -482,6 +482,7 @@
     <string name="names_invalid">استخدم من 1 إلى 40 حرفًا، ولا تكتب تسمية مثل الطرف A.</string>
     <string name="account_verdicts_removed">محذوف</string>
     <string name="shell_new">خلاف جديد</string>
+    <string name="shell_gamify">ألعاب</string>
     <string name="shell_today">اليوم</string>
     <string name="shell_load_failed">تعذّر تحميل سجلك.</string>
     <string name="shell_load_more">عرض المزيد</string>

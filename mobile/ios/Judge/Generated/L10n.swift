@@ -570,6 +570,7 @@ enum L10n {
     static func namesInvalid(_ lang: AppLang) -> String { string("names.invalid", lang) }
     static func accountVerdictsRemoved(_ lang: AppLang) -> String { string("account.verdicts.removed", lang) }
     static func shellNew(_ lang: AppLang) -> String { string("shell.new", lang) }
+    static func shellGamify(_ lang: AppLang) -> String { string("shell.gamify", lang) }
     static func shellToday(_ lang: AppLang) -> String { string("shell.today", lang) }
     static func shellLoadFailed(_ lang: AppLang) -> String { string("shell.loadFailed", lang) }
     static func shellLoadMore(_ lang: AppLang) -> String { string("shell.loadMore", lang) }
@@ -1183,6 +1184,7 @@ enum L10n {
         "names.invalid",
         "account.verdicts.removed",
         "shell.new",
+        "shell.gamify",
         "shell.today",
         "shell.loadFailed",
         "shell.loadMore",

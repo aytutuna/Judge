@@ -466,6 +466,7 @@
     <string name="names_invalid">Meno musí mať 1 až 40 znakov a nesmie to byť označenie ako Strana A.</string>
     <string name="account_verdicts_removed">Odstránený</string>
     <string name="shell_new">Nový spor</string>
+    <string name="shell_gamify">Hra</string>
     <string name="shell_today">Dnes</string>
     <string name="shell_load_failed">Históriu sa nepodarilo načítať.</string>
     <string name="shell_load_more">Zobraziť viac</string>

@@ -442,6 +442,7 @@
     <string name="names_invalid">1~40자로 써 주세요. 당사자 A 같은 라벨은 쓸 수 없어요.</string>
     <string name="account_verdicts_removed">삭제됨</string>
     <string name="shell_new">새 논쟁</string>
+    <string name="shell_gamify">게임 모드</string>
     <string name="shell_today">오늘</string>
     <string name="shell_load_failed">기록을 불러오지 못했어요.</string>
     <string name="shell_load_more">더 보기</string>

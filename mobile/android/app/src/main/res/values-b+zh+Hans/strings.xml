@@ -442,6 +442,7 @@
     <string name="names_invalid">请输入 1 到 40 个字符，且不能是当事人A这类标签。</string>
     <string name="account_verdicts_removed">已删除</string>
     <string name="shell_new">新的争论</string>
+    <string name="shell_gamify">游戏化</string>
     <string name="shell_today">今天</string>
     <string name="shell_load_failed">没能加载历史记录。</string>
     <string name="shell_load_more">显示更多</string>

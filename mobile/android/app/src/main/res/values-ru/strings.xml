@@ -466,6 +466,7 @@
     <string name="names_invalid">От 1 до 40 символов, и не метка вроде «Сторона A».</string>
     <string name="account_verdicts_removed">Удалён</string>
     <string name="shell_new">Новый спор</string>
+    <string name="shell_gamify">Игра</string>
     <string name="shell_today">Сегодня</string>
     <string name="shell_load_failed">Не удалось загрузить историю.</string>
     <string name="shell_load_more">Показать ещё</string>

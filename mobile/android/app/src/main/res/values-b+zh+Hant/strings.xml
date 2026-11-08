@@ -442,6 +442,7 @@
     <string name="names_invalid">請輸入 1 到 40 個字元，而且不能是當事人A這類標籤。</string>
     <string name="account_verdicts_removed">已移除</string>
     <string name="shell_new">新爭論</string>
+    <string name="shell_gamify">遊戲化</string>
     <string name="shell_today">今天</string>
     <string name="shell_load_failed">無法載入你的紀錄。</string>
     <string name="shell_load_more">顯示更多</string>

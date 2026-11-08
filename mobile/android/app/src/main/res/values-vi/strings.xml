@@ -442,6 +442,7 @@
     <string name="names_invalid">Dùng từ 1 đến 40 ký tự, và đừng dùng nhãn như Bên A.</string>
     <string name="account_verdicts_removed">Đã gỡ</string>
     <string name="shell_new">Tranh cãi mới</string>
+    <string name="shell_gamify">Trò chơi</string>
     <string name="shell_today">Hôm nay</string>
     <string name="shell_load_failed">Không tải được lịch sử.</string>
     <string name="shell_load_more">Xem thêm</string>

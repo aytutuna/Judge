@@ -442,6 +442,7 @@
     <string name="names_invalid">ใช้ได้ 1 ถึง 40 ตัวอักษร และต้องไม่ใช่ป้ายอย่าง “ฝ่าย A”</string>
     <string name="account_verdicts_removed">ลบแล้ว</string>
     <string name="shell_new">เรื่องใหม่</string>
+    <string name="shell_gamify">เกม</string>
     <string name="shell_today">วันนี้</string>
     <string name="shell_load_failed">โหลดประวัติไม่ได้</string>
     <string name="shell_load_more">ดูเพิ่ม</string>

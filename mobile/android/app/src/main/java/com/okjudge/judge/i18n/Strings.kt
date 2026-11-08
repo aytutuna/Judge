@@ -503,6 +503,7 @@ class Strings(private val res: Resources) {
     val namesInvalid: String get() = res.getString(R.string.names_invalid)
     val accountVerdictsRemoved: String get() = res.getString(R.string.account_verdicts_removed)
     val shellNew: String get() = res.getString(R.string.shell_new)
+    val shellGamify: String get() = res.getString(R.string.shell_gamify)
     val shellToday: String get() = res.getString(R.string.shell_today)
     val shellLoadFailed: String get() = res.getString(R.string.shell_load_failed)
     val shellLoadMore: String get() = res.getString(R.string.shell_load_more)
@@ -1115,6 +1116,7 @@ class Strings(private val res: Resources) {
             "names.invalid" -> R.string.names_invalid
             "account.verdicts.removed" -> R.string.account_verdicts_removed
             "shell.new" -> R.string.shell_new
+            "shell.gamify" -> R.string.shell_gamify
             "shell.today" -> R.string.shell_today
             "shell.loadFailed" -> R.string.shell_load_failed
             "shell.loadMore" -> R.string.shell_load_more

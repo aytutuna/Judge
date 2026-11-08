@@ -450,6 +450,7 @@
     <string name="names_invalid">Använd 1–40 tecken, och inte en etikett som Part A.</string>
     <string name="account_verdicts_removed">Borttagen</string>
     <string name="shell_new">Nytt bråk</string>
+    <string name="shell_gamify">Spelläge</string>
     <string name="shell_today">I dag</string>
     <string name="shell_load_failed">Vi kunde inte ladda din historik.</string>
     <string name="shell_load_more">Visa fler</string>
