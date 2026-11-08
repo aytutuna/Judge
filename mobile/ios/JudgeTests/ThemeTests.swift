@@ -57,6 +57,24 @@ final class ThemeTests: XCTestCase {
         XCTAssertFalse(again.gamify)
     }
 
+    func testTheProfileInitialComesFromTheNameThenTheEmail() {
+        XCTAssertEqual(ProfileMenu.initial(name: "ada Lovelace", email: "x@y.z"), "A")
+        XCTAssertEqual(ProfileMenu.initial(name: "  ", email: "bo@y.z"), "B")
+        XCTAssertEqual(ProfileMenu.initial(name: "", email: ""), "")
+    }
+
+    @MainActor
+    func testPricingOpensUnderSettings() throws {
+        let config = AppConfig(apiBaseURL: AppConfig.production, shareBaseURL: AppConfig.production, version: "1", build: "1")
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: "judge.tests.\(UUID().uuidString)"))
+        let app = AppModel(config: config, container: HistoryContainer.inMemory(), defaults: defaults, tokenStore: MemoryTokenStore(), persistsDraft: false, caseNames: MemoryCaseNamesStore())
+        app.openPricing()
+        XCTAssertEqual(app.tab, .settings)
+        XCTAssertEqual(app.settingsPath, [.pricing])
+        app.openPricing()
+        XCTAssertEqual(app.settingsPath, [.pricing])
+    }
+
     private func assertResolves(_ color: Color, in scheme: ColorScheme, to hex: UInt32, line: UInt = #line) {
         var environment = EnvironmentValues()
         environment.colorScheme = scheme

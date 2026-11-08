@@ -78,8 +78,7 @@ struct HomeView: View {
         .toolbar {
             if home.clarify == nil {
                 ToolbarItem(placement: .topBarLeading) { MenuButton() }
-                ToolbarItem(placement: .topBarTrailing) { GamifyButton() }
-                ToolbarItem(placement: .topBarTrailing) { ComposeButton() }
+                RootBarTrailing()
             }
         }
         .onTabAppear { app.analytics.track("screen_view", ["screen": "home"]) }

@@ -104,8 +104,7 @@ struct SettingsView: View {
             .toolbarBackground(Brand.ivory, for: .navigationBar)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) { MenuButton() }
-                ToolbarItem(placement: .topBarTrailing) { GamifyButton() }
-                ToolbarItem(placement: .topBarTrailing) { ComposeButton() }
+                RootBarTrailing()
             }
             .sheet(item: $webLink) { link in
                 SafariView(url: link.url).ignoresSafeArea()
