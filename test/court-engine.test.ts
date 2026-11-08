@@ -23,6 +23,16 @@ describe("court spots", () => {
       }
     }
   });
+
+  it("keeps the trial spots clear", () => {
+    for (let seed = 1; seed <= 2000; seed++) {
+      for (const p of Object.values(pickSpots(seeded(seed)))) {
+        for (const t of [{ x: 192, y: 124 }, { x: 128, y: 124 }]) {
+          expect(Math.abs(p.x - t.x) >= 16 || Math.abs(p.y - t.y) >= 29).toBe(true);
+        }
+      }
+    }
+  });
 });
 
 describe("court engine", () => {

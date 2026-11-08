@@ -49,6 +49,7 @@ const SPOT_A = { x: 128, y: 108 };
 const SPOT_B = { x: 192, y: 108 };
 const TRIAL_ATK = { x: 192, y: 124 };
 const TRIAL_ADJ = { x: 128, y: 124 };
+const TRIAL_SPEED = 110;
 
 const C = {
   paper: "#efe6d2",
@@ -140,7 +141,7 @@ function shuffle<T>(a: readonly T[], rand: () => number): T[] {
 export function pickSpots(rand: () => number): Record<string, Point> {
   for (let tries = 0; tries < 60; tries++) {
     const at: Record<string, Point> = {};
-    const boxes: Box[] = [];
+    const boxes: Box[] = [boxAt(TRIAL_ATK), boxAt(TRIAL_ADJ)];
     let ok = true;
     for (const g of GROUPS) {
       const mx = g.x[0] + rand() * (g.x[1] - g.x[0]);
@@ -217,6 +218,8 @@ export function createCourt(canvas: HTMLCanvasElement, opts: CourtOptions): Cour
   let dirty = true;
   let clock = 0;
   let events: { t: number; fn: () => void }[] = [];
+  // Votes scheduled but not yet cast; a beat that ends early casts them at once.
+  let owed: { c: Actor; v: Vote }[] = [];
   let scene: CourtScene | null = null;
   let busy = false;
   let over = false;
@@ -264,6 +267,8 @@ export function createCourt(canvas: HTMLCanvasElement, opts: CourtOptions): Cour
   pair.forEach((p) => (p.facing = "up"));
   const everyone = [...agents, ...pair];
   const { anon, fact, j1, j2, j3, x1, x2, atk, adj } = byId;
+  // The review pair come in from opposite edges, so both arrive in time to be heard.
+  adj.off = { x: -24, y: adj.home.y };
   const judges = [j1, j2, j3];
   const crew = agents.slice(0, rand() < 0.5 ? 4 : 5);
 
@@ -274,14 +279,14 @@ export function createCourt(canvas: HTMLCanvasElement, opts: CourtOptions): Cour
   bg.height = H;
   const names = ["ground", ...new Set(LAYOUT.map((p) => `props/${p[0]}`))];
   const load = (name: string) =>
-    new Promise<HTMLImageElement>((ok) => {
+    new Promise<HTMLImageElement | null>((ok) => {
       const img = new Image();
       img.onload = () => ok(img);
-      img.onerror = () => ok(img);
+      img.onerror = () => ok(null);
       img.src = opts.src(name);
     });
   Promise.all([
-    ...names.map((n) => load(n).then((img) => void (pics[n] = img))),
+    ...names.map((n) => load(n).then((img) => void (img && (pics[n] = img)))),
     ...everyone.map((c) => load(`people/${c.who}`).then((img) => void (c.img = img))),
   ]).then(() => {
     if (disposed) return;
@@ -348,6 +353,14 @@ export function createCourt(canvas: HTMLCanvasElement, opts: CourtOptions): Cour
   const bubble = (c: Actor, kind: BubbleKind, dur: number) => {
     c.bubble = { kind, start: clock, until: clock + dur };
   };
+  const castAt = (t: number, c: Actor, v: Vote) => {
+    const o = { c, v };
+    owed.push(o);
+    at(t, () => {
+      owed.splice(owed.indexOf(o), 1);
+      vote(c, v, false);
+    });
+  };
   const hold = (c: Actor, kind: BubbleKind) => bubble(c, kind, Infinity);
 
   /** A vote: the flag goes up, arms too, and the ball leaves for that side's hoop. */
@@ -367,6 +380,7 @@ export function createCourt(canvas: HTMLCanvasElement, opts: CourtOptions): Cour
 
   function clear() {
     events = [];
+    owed = [];
     shots = [];
     score = { a: 0, b: 0 };
     swish = { a: -9, b: -9 };
@@ -399,6 +413,8 @@ export function createCourt(canvas: HTMLCanvasElement, opts: CourtOptions): Cour
     const snap = mode !== "play";
     const still = mode === "still";
     const i = ORDER.indexOf(beat);
+    for (const o of owed) vote(o.c, o.v, true);
+    owed = [];
     events = [];
     for (const c of everyone) c.bubble = null;
     tags.redacted = { a: i > 0, b: i > 0 };
@@ -435,7 +451,7 @@ export function createCourt(canvas: HTMLCanvasElement, opts: CourtOptions): Cour
       const n = Math.min(3, s.votes.length);
       for (let k = 0; k < n; k++) {
         if (snap) vote(judges[k], s.votes[k], true);
-        else at(k * VOTE_S, () => vote(judges[k], s.votes[k], false));
+        else castAt(k * VOTE_S, judges[k], s.votes[k]);
       }
     } else if (beat === "more" || beat === "vote2") {
       const eta = Math.max(to(x1, x1.home, JOG), to(x2, x2.home, JOG));
@@ -446,16 +462,16 @@ export function createCourt(canvas: HTMLCanvasElement, opts: CourtOptions): Cour
           const v = s.votes[3 + k];
           if (v === undefined) return;
           if (snap) vote(c, v, true);
-          else at(k * VOTE_S, () => vote(c, v, false));
+          else castAt(k * VOTE_S, c, v);
         });
       }
     } else if (beat === "trial") {
-      const eta = Math.max(to(atk, TRIAL_ATK, JOG), to(adj, TRIAL_ADJ, JOG));
+      const eta = Math.max(to(atk, TRIAL_ATK, TRIAL_SPEED), to(adj, TRIAL_ADJ, TRIAL_SPEED));
       const answer = s.trial === "survived" ? "holds" : s.trial === "overturned" ? "crack" : "unsure";
       if (still) hold(adj, answer);
       else if (!snap) {
-        at(eta + 0.1, () => bubble(atk, "object", 1.3));
-        at(eta + 1.5, () => bubble(adj, answer, 4));
+        at(eta + 0.1, () => bubble(atk, "object", 1.1));
+        at(eta + 1.0, () => bubble(adj, answer, 2));
       }
     } else {
       over = true;
@@ -725,6 +741,7 @@ export function createCourt(canvas: HTMLCanvasElement, opts: CourtOptions): Cour
     dirty = false;
     ctx.setTransform(PX, 0, 0, PX, 0, 0);
     ctx.drawImage(bg, 0, 0);
+    if (!scene) return;
 
     const heads: { c: Actor; x: number; top: number }[] = [];
     const seen = everyone.filter((c) => c.x > -16 && c.x < W + 16 && c.y < H + 29).sort((p, q) => p.y - q.y);
