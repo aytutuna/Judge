@@ -15,7 +15,7 @@
 }
 
 .stage {
-  max-width: 480px;
+  max-width: calc(48vh * 16 / 9);
   margin-inline: auto;
 }
 

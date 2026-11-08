@@ -53,6 +53,12 @@
   background: var(--paper);
   box-shadow: var(--shadow-1);
 }
+@media (min-width: 960px) {
+  .card {
+    align-self: center;
+    width: min(92vw, 880px);
+  }
+}
 
 .cancel {
   align-self: center;
