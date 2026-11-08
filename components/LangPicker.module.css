@@ -30,6 +30,12 @@
     max-width: 96px;
   }
 }
+@media (max-width: 479px) {
+  .select {
+    max-width: 72px;
+    padding-inline: 10px 24px;
+  }
+}
 
 .select:hover {
   background: color-mix(in srgb, var(--ink) 11%, transparent);

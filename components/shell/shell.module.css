@@ -73,6 +73,12 @@
 .gamifyLabel {
   display: none;
 }
+@media (max-width: 479px) {
+  .gamify {
+    padding: 0 4px;
+    min-width: 0;
+  }
+}
 .track {
   position: relative;
   flex: none;
