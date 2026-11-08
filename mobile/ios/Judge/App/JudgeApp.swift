@@ -50,6 +50,7 @@ struct RootView: View {
     @State private var showLaunchMark = true
     @State private var webLink: WebLink?
     @State private var ageWindow = AgeGateWindow()
+    @State private var narrowBar = false
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.scenePhase) private var scenePhase
 
@@ -64,6 +65,15 @@ struct RootView: View {
         .accessibilityHidden(app.menuOpen)
         .overlay { SideMenu() }
         .background(Brand.ivory.ignoresSafeArea())
+        .background {
+            // Toolbar items cannot measure the screen, so the bars read this.
+            GeometryReader { geo in
+                Color.clear.onChange(of: geo.size.width < 400, initial: true) { _, narrow in
+                    narrowBar = narrow
+                }
+            }
+        }
+        .environment(\.narrowBar, narrowBar)
         .accessibilityHidden(ageCovered)
         .environment(\.pageCovered, app.menuOpen || account.isSignInPresented || webLink != nil || app.sheetOpen || ageCovered)
         .sheet(isPresented: $account.isSignInPresented, onDismiss: { app.account.signInDismissed() }) {
@@ -147,6 +157,10 @@ private struct TabShownKey: EnvironmentKey {
     static let defaultValue = true
 }
 
+private struct NarrowBarKey: EnvironmentKey {
+    static let defaultValue = false
+}
+
 private struct PageCoveredKey: EnvironmentKey {
     static let defaultValue = false
 }
@@ -163,6 +177,12 @@ extension EnvironmentValues {
     var tabShown: Bool {
         get { self[TabShownKey.self] }
         set { self[TabShownKey.self] = newValue }
+    }
+
+    /// The screen is under 400 pt wide, so a root page's bar drops what it can.
+    var narrowBar: Bool {
+        get { self[NarrowBarKey.self] }
+        set { self[NarrowBarKey.self] = newValue }
     }
 
     /// The side menu, a sheet or the age gate is over the pages, so what

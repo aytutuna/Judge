@@ -32,10 +32,29 @@ struct MenuButton: View {
     }
 }
 
+/// Starts a new argument, at the trailing end of a root page's bar.
+struct ComposeButton: View {
+    @Environment(AppModel.self) private var app
+
+    var body: some View {
+        Button {
+            app.go(.new)
+        } label: {
+            Image(systemName: "square.and.pencil")
+                .font(.system(size: 18, weight: .semibold))
+                .foregroundStyle(Brand.ink)
+                .frame(minWidth: 44, minHeight: 44)
+                .contentShape(Rectangle())
+        }
+        .accessibilityLabel(L10n.shellNew(app.lang))
+    }
+}
+
 /// The look of the Gamify switch: the gamepad and a small capsule. The
-/// label is for VoiceOver only.
+/// label is for VoiceOver only. On a narrow phone it is the switch alone.
 private struct GamifyToggleStyle: ToggleStyle {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.narrowBar) private var narrowBar
 
     func makeBody(configuration: Configuration) -> some View {
         let on = configuration.isOn
@@ -43,9 +62,11 @@ private struct GamifyToggleStyle: ToggleStyle {
             configuration.isOn.toggle()
         } label: {
             HStack(spacing: 6) {
-                Image(systemName: "gamecontroller")
-                    .font(.system(size: 18, weight: .semibold))
-                    .foregroundStyle(on ? Brand.ink : Brand.muted)
+                if !narrowBar {
+                    Image(systemName: "gamecontroller")
+                        .font(.system(size: 18, weight: .semibold))
+                        .foregroundStyle(on ? Brand.ink : Brand.muted)
+                }
                 Capsule()
                     .fill(on ? Brand.terraInk : Brand.muted)
                     .frame(width: 32, height: 18)
@@ -155,11 +176,12 @@ struct ProfileMenu: View {
     }
 }
 
-/// The trailing end of a root page's bar. New is in the side menu, so the
-/// bar leaves the title its room.
+/// The trailing end of a root page's bar: the Gamify switch, New and the
+/// profile button.
 struct RootBarTrailing: ToolbarContent {
     var body: some ToolbarContent {
         ToolbarItem(placement: .topBarTrailing) { GamifyButton() }
+        ToolbarItem(placement: .topBarTrailing) { ComposeButton() }
         ToolbarItem(placement: .topBarTrailing) { ProfileMenu() }
     }
 }
