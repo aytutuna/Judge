@@ -33,7 +33,7 @@
 .court {
   flex: 1;
   min-height: 0;
-  width: min(92vw, 1100px);
+  width: 92vw;
 }
 
 /* Scrolls when short of room, and keeps what it holds against the composer.

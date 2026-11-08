@@ -56,7 +56,7 @@
 @media (min-width: 960px) {
   .card {
     align-self: center;
-    width: min(92vw, 880px);
+    width: clamp(640px, calc(48vh * 16 / 9 + 46px), 92vw);
   }
 }
 
