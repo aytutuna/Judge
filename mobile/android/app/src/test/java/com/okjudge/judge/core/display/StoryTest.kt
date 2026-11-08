@@ -78,4 +78,18 @@ class StoryTest {
         assertNull(Story.agreement(listOf(Vote.A, Vote.B)).first)
         assertNull(Story.agreement(emptyList()).first)
     }
+
+    @Test
+    fun scene_json() {
+        assertEquals("""{"kind":"home","busy":true}""", CourtScene.Home(true).json())
+        val summary = Story.Summary(listOf(Vote.A, Vote.OTHER), true, 0, Vote.A, TrialOutcome.SURVIVED)
+        assertEquals(
+            """{"kind":"judging","beat":"vote1","votes":["a","other"],"extra":0,"winner":"a","trial":"survived"}""",
+            CourtScene.Judging(Story.Beat.VOTE1, summary).json(),
+        )
+        assertEquals(
+            """{"kind":"judging","beat":"bothSides","votes":[],"extra":0,"winner":null,"trial":null}""",
+            CourtScene.Judging(Story.Beat.BOTH_SIDES, null).json(),
+        )
+    }
 }
