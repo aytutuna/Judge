@@ -52,7 +52,10 @@ struct SettingsView: View {
                 .listRowBackground(Brand.paper)
 
                 Section {
-                    Toggle(isOn: Binding(get: { app.gamify }, set: { app.setGamify($0) })) {
+                    Toggle(isOn: Binding(get: { app.gamify }, set: {
+                        app.setGamify($0)
+                        app.analytics.track("settings_changed", ["key": "gamify"])
+                    })) {
                         Text(L10n.shellGamify(lang))
                             .brandText(.body)
                             .foregroundStyle(Brand.ink)
