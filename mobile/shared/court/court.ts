@@ -14,8 +14,6 @@ declare global {
       set(scene: CourtScene | string): void;
       setReduced(on: boolean): void;
     };
-    webkit?: { messageHandlers?: { judgeCourt?: { postMessage(msg: unknown): void } } };
-    JudgeCourt?: { onEvent(type: string): void };
   }
 }
 
@@ -24,8 +22,12 @@ const VOTES = ["a", "b", "other"];
 const TRIALS = ["survived", "uncertain", "overturned"];
 
 function post(type: string) {
-  window.webkit?.messageHandlers?.judgeCourt?.postMessage({ type });
-  window.JudgeCourt?.onEvent(type);
+  const native = window as unknown as {
+    webkit?: { messageHandlers?: { judgeCourt?: { postMessage(msg: unknown): void } } };
+    JudgeCourt?: { onEvent(type: string): void };
+  };
+  native.webkit?.messageHandlers?.judgeCourt?.postMessage({ type });
+  native.JudgeCourt?.onEvent(type);
 }
 
 function parse(input: CourtScene | string): CourtScene {
