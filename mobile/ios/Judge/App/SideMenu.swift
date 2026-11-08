@@ -177,10 +177,15 @@ struct ProfileMenu: View {
 }
 
 /// The trailing end of a root page's bar: the Gamify switch, New and the
-/// profile button.
+/// profile button. Verdicts leaves the switch out: it has no court, and its
+/// Select button needs the room.
 struct RootBarTrailing: ToolbarContent {
+    var gamify = true
+
     var body: some ToolbarContent {
-        ToolbarItem(placement: .topBarTrailing) { GamifyButton() }
+        if gamify {
+            ToolbarItem(placement: .topBarTrailing) { GamifyButton() }
+        }
         ToolbarItem(placement: .topBarTrailing) { ComposeButton() }
         ToolbarItem(placement: .topBarTrailing) { ProfileMenu() }
     }

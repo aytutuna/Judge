@@ -114,7 +114,7 @@ struct HistoryView: View {
                     Button(L10n.appHistorySelect(lang)) { selection.start() }
                 }
             }
-            RootBarTrailing()
+            RootBarTrailing(gamify: false)
         }
     }
 
