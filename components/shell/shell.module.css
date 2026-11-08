@@ -55,16 +55,17 @@
     box-shadow var(--dur-1),
     color var(--dur-1);
 }
-.gamify:hover {
-  background: color-mix(in srgb, var(--ink) 6%, transparent);
-  color: var(--ink);
+@media (hover: hover) {
+  .gamify:hover {
+    background: color-mix(in srgb, var(--ink) 6%, transparent);
+    color: var(--ink);
+  }
 }
 .gamify:focus-visible {
   outline: 2px solid var(--terra-ink);
   outline-offset: 2px;
 }
-html:not([data-game="off"]) .gamify,
-html:not([data-game="off"]) .gamify:hover {
+html:not([data-game="off"]) .gamify {
   background: color-mix(in srgb, var(--terra) 16%, transparent);
   color: var(--terra-ink);
   box-shadow: 0 0 12px color-mix(in srgb, var(--terra) 40%, transparent);
@@ -76,12 +77,6 @@ html:not([data-game="off"]) .gamify:hover {
 }
 .gamifyLabel {
   display: none;
-}
-@media (max-width: 479px) {
-  .gamify {
-    padding: 0 4px;
-    min-width: 0;
-  }
 }
 @media (min-width: 640px) {
   .gamifyLabel {
