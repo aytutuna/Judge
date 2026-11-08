@@ -1,0 +1,20 @@
+.court {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-field);
+  background: var(--paper);
+  image-rendering: pixelated;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.home {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  container-type: size;
+}
+.fit {
+  width: min(100cqw, 177.78cqh);
+}

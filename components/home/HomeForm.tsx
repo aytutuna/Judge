@@ -5,7 +5,7 @@ import { EvidenceAdd, EvidenceNotes, EvidenceRows, type EvidenceController } fro
 import { t, type Lang } from "@/lib/i18n";
 import { langTag } from "@/lib/langs";
 import { MAX_ARGUMENT } from "@/lib/sides";
-import { HomeMids } from "@/components/mids/HomeMids";
+import { HomeCourt } from "@/components/court/HomeCourt";
 import styles from "./HomeForm.module.css";
 
 const WARN_AT = 5700;
@@ -221,7 +221,7 @@ export function HomeForm(p: HomeFormProps) {
                 Judge
               </p>
             ) : null}
-            <HomeMids className={styles.mids} busy={p.holding} />
+            <HomeCourt className={styles.mids} busy={p.holding} />
           </div>
 
           {p.theirsOpen ? (

@@ -1,0 +1,26 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+import { Court } from "./Court";
+import styles from "./Court.module.css";
+
+// The New page's court: scouts shooting hoops in whatever room the form
+// leaves, and nothing at all when that is too little to see.
+export function HomeCourt({ busy, className }: { busy: boolean; className?: string }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [roomy, setRoomy] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const ro = new ResizeObserver(([e]) => setRoomy(e.contentRect.height >= 110));
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+
+  return (
+    <div ref={ref} className={className ? `${styles.home} ${className}` : styles.home} aria-hidden>
+      {roomy ? <Court scene={{ kind: "home", busy }} className={styles.fit} /> : null}
+    </div>
+  );
+}

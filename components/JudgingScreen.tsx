@@ -2,7 +2,7 @@
 
 import { t, type Lang } from "@/lib/i18n";
 import type { VerdictResult } from "@/lib/types";
-import { JudgingStory } from "./mids/JudgingStory";
+import { JudgingStory } from "./court/JudgingStory";
 import styles from "./JudgingScreen.module.css";
 
 export type JudgedSide = { name: string; text: string };
