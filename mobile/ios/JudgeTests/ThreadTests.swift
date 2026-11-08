@@ -2,38 +2,8 @@ import SwiftData
 import XCTest
 @testable import Judge
 
-/// The 3D beats of the judging turn, the scene's verdict and the JSON the
-/// bundled page receives.
+/// The scene's verdict and the JSON the bundled page receives.
 final class SceneModeTests: XCTestCase {
-    func testBeatsFollowTheStory() {
-        XCTAssertEqual(Thinking.beat(for: .loop(step: -1, cycle: 0)), .lift)
-        XCTAssertEqual(Thinking.beat(for: .loop(step: 0, cycle: 0)), .lift)
-        XCTAssertEqual(Thinking.beat(for: .loop(step: 1, cycle: 0)), .sort)
-        for step in 2...5 {
-            XCTAssertEqual(Thinking.beat(for: .loop(step: step, cycle: 0)), .dig, "step \(step)")
-        }
-        XCTAssertEqual(Thinking.beat(for: .loop(step: 6, cycle: 0)), .crux)
-        XCTAssertEqual(Thinking.beat(for: .loop(step: 7, cycle: 0)), .orbs)
-        XCTAssertEqual(Thinking.beat(for: .loop(step: 8, cycle: 0)), .orbs)
-    }
-
-    func testLaterCyclesDeliberateAndTheFinishShowsOrbs() {
-        XCTAssertEqual(Thinking.beat(for: .loop(step: 0, cycle: 1)), .deliberate)
-        XCTAssertEqual(Thinking.beat(for: .loop(step: 6, cycle: 3)), .deliberate)
-        XCTAssertEqual(Thinking.beat(for: .finish(step: 0, from: 1, cycle: 0)), .orbs)
-        XCTAssertEqual(Thinking.beat(for: .finish(step: 3, from: 6, cycle: 2)), .orbs)
-    }
-
-    func testOneLoopOfTheTimeline() {
-        var state = Thinking.DigState.initial
-        var beats: [SceneBeat] = []
-        for _ in 0...Thinking.steps.count {
-            beats.append(Thinking.beat(for: state))
-            state = Thinking.plan(state, done: false, skip: false).next ?? state
-        }
-        XCTAssertEqual(beats, [.lift, .sort, .dig, .dig, .dig, .dig, .crux, .orbs, .orbs, .deliberate])
-    }
-
     func testSceneVerdictFromSamples() throws {
         let win = try Fixtures.sample("win_a_self").result.result
         XCTAssertEqual(VerdictDisplay.sceneVerdict(win), .verdict(tugA: 80, votes: [.a, .a, .b]))

@@ -112,22 +112,4 @@ final class DisplayVectorTests: XCTestCase {
         XCTAssertEqual(alpha["line2"], "rgba(241, 235, 225, \(PaletteHex.Dark.line2Alpha))")
         XCTAssertEqual(PaletteHex.Dark.ink, 0xF1EBE1, "line colours are ink at an alpha")
     }
-
-    func testThinkingTimelineMatchesWeb() throws {
-        let thinking = try XCTUnwrap(Fixtures.vectors()["thinking"] as? [String: Any])
-        let steps = try Fixtures.list("steps", in: thinking)
-        XCTAssertEqual(steps.compactMap { $0["key"] as? String }, Thinking.steps.map(\.key))
-        XCTAssertEqual(steps.compactMap { ($0["ms"] as? NSNumber)?.intValue }, Thinking.steps.map(\.ms))
-        let finish = try Fixtures.list("finishSteps", in: thinking)
-        XCTAssertEqual(finish.compactMap { $0["name"] as? String }, Thinking.finishSteps.map(\.name))
-        XCTAssertEqual(finish.compactMap { ($0["ms"] as? NSNumber)?.intValue }, Thinking.finishSteps.map(\.ms))
-        XCTAssertEqual((thinking["maxFinishMs"] as? NSNumber)?.intValue, Thinking.maxFinishMs)
-        XCTAssertEqual(thinking["finishKey"] as? String, Thinking.finishKey)
-        XCTAssertEqual(thinking["stillJudgingKey"] as? String, Thinking.stillJudgingKey)
-        XCTAssertEqual(thinking["readyKey"] as? String, Thinking.readyKey)
-        for step in Thinking.steps {
-            XCTAssertNotNil(L10n.text(step.key, .en), step.key)
-            XCTAssertNotNil(L10n.text(step.key, .tr), step.key)
-        }
-    }
 }
