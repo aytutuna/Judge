@@ -66,27 +66,32 @@ struct JudgingView: View {
     }
 
     var body: some View {
-        VStack(spacing: 0) {
-            ScrollView {
-                VStack(alignment: .leading, spacing: 16) {
-                    if !sides.isEmpty {
-                        SideTiles(sides: sides, lang: lang)
+        GeometryReader { geo in
+            // Phones keep the narrow card; wider screens widen it, and the
+            // court stops at about half the height so the log stays in view.
+            let wide = geo.size.width >= 700
+            VStack(spacing: 0) {
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 16) {
+                        if !sides.isEmpty {
+                            SideTiles(sides: sides, lang: lang)
+                        }
+                        card(courtWidth: wide ? geo.size.height * 0.48 * 16 / 9 : 480)
                     }
-                    card
+                    .padding(16)
+                    .frame(maxWidth: wide ? min(geo.size.width * 0.92, 880) : 640)
+                    .frame(maxWidth: .infinity)
                 }
-                .padding(16)
-                .frame(maxWidth: 640)
-                .frame(maxWidth: .infinity)
-            }
 
-            Button(L10n.appCancel(lang), action: onCancel)
-                .brandText(TypeStyle(face: .inter, weight: 600, size: 14, lineHeight: 1.2, textStyle: .subheadline, maxScale: 1.8))
-                .foregroundStyle(Brand.ink2)
-                .padding(.horizontal, 20)
-                .frame(minHeight: 44)
-                .contentShape(Rectangle())
-                .buttonStyle(.plain)
-                .padding(.bottom, 8)
+                Button(L10n.appCancel(lang), action: onCancel)
+                    .brandText(TypeStyle(face: .inter, weight: 600, size: 14, lineHeight: 1.2, textStyle: .subheadline, maxScale: 1.8))
+                    .foregroundStyle(Brand.ink2)
+                    .padding(.horizontal, 20)
+                    .frame(minHeight: 44)
+                    .contentShape(Rectangle())
+                    .buttonStyle(.plain)
+                    .padding(.bottom, 8)
+            }
         }
         .background(Brand.ivory.ignoresSafeArea())
         .task(id: done) {
@@ -105,13 +110,13 @@ struct JudgingView: View {
         .sensoryFeedback(.impact(weight: .light), trigger: done) { _, isDone in isDone && !reduceMotion }
     }
 
-    private var card: some View {
+    private func card(courtWidth: CGFloat) -> some View {
         VStack(alignment: .leading, spacing: 14) {
             Kicker(text: L10n.thinkingEyebrow(lang))
 
             if gamify {
                 CourtView(scene: .judging(beat, summary))
-                    .frame(maxWidth: 480)
+                    .frame(maxWidth: courtWidth)
                     .frame(maxWidth: .infinity)
             }
 
