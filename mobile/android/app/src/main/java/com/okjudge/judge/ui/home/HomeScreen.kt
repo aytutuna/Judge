@@ -257,8 +257,8 @@ fun HomeScreen(
     BoxWithConstraints(modifier.fillMaxSize().background(Palette.ivory).imePadding()) {
         // A short screen with the keyboard up still has to leave room for the send row.
         val fieldMax = maxHeight * 0.25f
-        // No court and nothing typed: the form rests in the middle of the screen.
-        val centred = !LocalGamify.current && state.blank
+        // No court: the form rests in the middle of the screen, typed or not.
+        val centred = !LocalGamify.current
         Column(
             Modifier.fillMaxSize(),
             verticalArrangement = if (centred) Arrangement.Center else Arrangement.Top,
@@ -267,7 +267,7 @@ fun HomeScreen(
             BoxWithConstraints(Modifier.weight(1f, fill = !centred).fillMaxWidth()) {
                 val region = if (centred) 0.dp else maxHeight
                 // Reversed, so the content stays against the composer as it grows.
-                Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState(), reverseScrolling = true)) {
+                Column((if (centred) Modifier.fillMaxWidth() else Modifier.fillMaxSize()).verticalScroll(rememberScrollState(), reverseScrolling = true)) {
                     Column(Modifier.fillMaxWidth().heightIn(min = region), horizontalAlignment = Alignment.CenterHorizontally) {
                         if (!centred) BoxWithConstraints(Modifier.weight(1f).fillMaxWidth(), contentAlignment = Alignment.Center) {
                             if (LocalGamify.current && maxHeight >= COURT_MIN_HEIGHT) {
