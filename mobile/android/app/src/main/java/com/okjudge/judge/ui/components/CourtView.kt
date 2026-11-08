@@ -20,6 +20,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.FilterQuality
@@ -38,6 +39,9 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.okjudge.judge.R
 import com.okjudge.judge.core.display.CourtScene
 import com.okjudge.judge.ui.theme.Palette
+
+/** Whether the court is shown at all (the Gamify setting); the shell provides it. */
+val LocalGamify = staticCompositionLocalOf { true }
 
 private val CourtShape = RoundedCornerShape(16.dp)
 

@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.union
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -63,9 +64,16 @@ import com.okjudge.judge.ui.theme.Palette
 internal val menuScrim: Color
     @Composable get() = if (Palette.dark) Color.Black.copy(alpha = 0.5f) else Color(0xFF1C1916).copy(alpha = 0.28f)
 
-/** The bar of the three main pages: the menu button, the page's title and the compose button. */
+/** The bar of the three main pages: the menu button, the page's title, the gamify switch and the compose button. */
 @Composable
-internal fun PageBar(title: String, onMenu: () -> Unit, onNew: () -> Unit, menuFocus: FocusRequester) {
+internal fun PageBar(
+    title: String,
+    onMenu: () -> Unit,
+    onNew: () -> Unit,
+    menuFocus: FocusRequester,
+    gamify: Boolean = true,
+    onGamify: (Boolean) -> Unit = {},
+) {
     val s = LocalStrings.current
     Row(
         Modifier
@@ -77,7 +85,24 @@ internal fun PageBar(title: String, onMenu: () -> Unit, onNew: () -> Unit, menuF
         horizontalArrangement = Arrangement.spacedBy(6.dp),
     ) {
         BarButton(s.navTabs, JudgeIcons.menu(Palette.ink), onMenu, Modifier.focusRequester(menuFocus))
-        Text(title, style = JudgeType.sectionTitle, modifier = Modifier.weight(1f).semantics { heading() })
+        Text(
+            title,
+            style = JudgeType.sectionTitle,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+            modifier = Modifier.weight(1f).semantics { heading() },
+        )
+        Box(
+            Modifier
+                .size(48.dp)
+                .clip(CircleShape)
+                .background(if (gamify) Palette.line else Color.Transparent)
+                .semantics { contentDescription = s.shellGamify }
+                .toggleable(value = gamify, role = Role.Switch, onValueChange = onGamify),
+            contentAlignment = Alignment.Center,
+        ) {
+            TintedIcon(JudgeIcons.gamepad(if (gamify) Palette.ink else Palette.ink2), 22)
+        }
         BarButton(s.shellNew, JudgeIcons.plus(Palette.ink), onNew)
     }
 }

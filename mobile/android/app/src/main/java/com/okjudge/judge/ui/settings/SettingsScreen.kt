@@ -59,6 +59,7 @@ object SettingsTags {
     const val RESTORE_NOTE = "settings.restoreNote"
     const val LANGUAGE = "settings.language"
     const val USAGE_STATS = "settings.usageStats"
+    const val GAMIFY = "settings.gamify"
 
     /** A row of the appearance group: "settings.appearance.dark". */
     fun appearanceOption(a: Appearance): String = "settings.appearance.${a.stored}"
@@ -70,7 +71,7 @@ object SettingsTags {
 /** "Restore purchases" in the account group; shown while the store is ready for this account. */
 data class RestoreUi(val working: Boolean = false, val notice: PurchaseController.RestoreNotice? = null)
 
-/** The account, language and appearance choices, links out to the website, and the footer note. */
+/** The account, language, appearance and gamify choices, links out to the website, and the footer note. */
 @Composable
 fun SettingsScreen(
     langPref: LangPref,
@@ -91,6 +92,8 @@ fun SettingsScreen(
     onAppearance: (Appearance) -> Unit = {},
     usageStats: Boolean = true,
     onUsageStats: (Boolean) -> Unit = {},
+    gamify: Boolean = true,
+    onGamify: (Boolean) -> Unit = {},
 ) {
     val s = LocalStrings.current
     val base = siteBaseUrl.trimEnd('/')
@@ -123,6 +126,24 @@ fun SettingsScreen(
                 Appearance.entries.forEachIndexed { i, option ->
                     if (i > 0) HorizontalDivider(color = Palette.line)
                     AppearanceRow(option, selected = option == appearance) { onAppearance(option) }
+                }
+            }
+
+            Group(null) {
+                Row(
+                    Modifier
+                        .fillMaxWidth()
+                        .testTag(SettingsTags.GAMIFY)
+                        .toggleable(value = gamify, role = Role.Switch, onValueChange = onGamify)
+                        .padding(horizontal = 16.dp, vertical = 10.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Text(s.shellGamify, style = JudgeType.body, modifier = Modifier.weight(1f))
+                    Switch(
+                        checked = gamify,
+                        onCheckedChange = null,
+                        colors = SwitchDefaults.colors(checkedTrackColor = Palette.terraInk, checkedThumbColor = Palette.paper),
+                    )
                 }
             }
 

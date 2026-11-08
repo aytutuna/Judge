@@ -59,6 +59,7 @@ import com.okjudge.judge.core.session.VerdictFlow
 import com.okjudge.judge.i18n.LocalStrings
 import com.okjudge.judge.i18n.Strings
 import com.okjudge.judge.ui.components.CourtView
+import com.okjudge.judge.ui.components.LocalGamify
 import com.okjudge.judge.ui.components.JudgeIcons
 import com.okjudge.judge.ui.components.Kicker
 import com.okjudge.judge.ui.components.TextAction
@@ -163,17 +164,20 @@ fun JudgingScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 Kicker(s.thinkingEyebrow, Modifier.padding(bottom = 14.dp))
-                CourtView(
-                    scene = CourtScene.Judging(beat, summary),
-                    reducedMotion = reducedMotion,
-                    modifier = Modifier
-                        .heightIn(max = 360.dp)
-                        .widthIn(max = 480.dp)
-                        .fillMaxWidth()
-                        .aspectRatio(16f / 9f)
-                        .testTag(JudgingTags.COURT),
-                )
-                Column(Modifier.fillMaxWidth().padding(top = 16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                val gamify = LocalGamify.current
+                if (gamify) {
+                    CourtView(
+                        scene = CourtScene.Judging(beat, summary),
+                        reducedMotion = reducedMotion,
+                        modifier = Modifier
+                            .heightIn(max = 360.dp)
+                            .widthIn(max = 480.dp)
+                            .fillMaxWidth()
+                            .aspectRatio(16f / 9f)
+                            .testTag(JudgingTags.COURT),
+                    )
+                }
+                Column(Modifier.fillMaxWidth().padding(top = if (gamify) 16.dp else 0.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     texts.forEachIndexed { i, text ->
                         val live = i == last && beat != Story.Beat.FINAL
                         Row(

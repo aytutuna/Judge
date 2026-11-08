@@ -9,6 +9,7 @@ import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.semantics.SemanticsActions
@@ -33,6 +34,7 @@ import com.okjudge.judge.core.model.SubscriptionView
 import com.okjudge.judge.core.model.Viewer
 import com.okjudge.judge.i18n.AppLang
 import com.okjudge.judge.i18n.LangPref
+import com.okjudge.judge.ui.components.LocalGamify
 import com.okjudge.judge.ui.components.TopBar
 import com.okjudge.judge.ui.history.HistoryPaging
 import com.okjudge.judge.ui.history.HistoryScreen
@@ -127,6 +129,17 @@ class ScreenshotsTest {
                     VerdictFlow.Side(mine = false, name = "Sam", text = "It's a filling inside sliced bread. That's a sandwich, end of story."),
                 ),
             )
+        }
+    }
+
+    @Test
+    fun judging_waiting_gamifyOff() = capture("judging_waiting_gamify_off_en") {
+        Themed(AppLang.EN) {
+            CompositionLocalProvider(LocalGamify provides false) {
+                JudgingScreen(
+                    done = false, result = null, startedAt = System.currentTimeMillis() - 4_000, reducedMotion = true, onFinished = {}, onCancel = {},
+                )
+            }
         }
     }
 
@@ -611,6 +624,18 @@ class ScreenshotsTest {
             Column(Modifier.fillMaxSize()) {
                 PageBar(UiTestSupport.s(AppLang.EN).appTabNew, {}, {}, FocusRequester())
                 HomeScreen(HomeUiState(), {}, {}, {})
+            }
+        }
+    }
+
+    @Test
+    fun home_withBar_gamifyOff_en() = capture("home_bar_gamify_off_en") {
+        Themed(AppLang.EN) {
+            CompositionLocalProvider(LocalGamify provides false) {
+                Column(Modifier.fillMaxSize()) {
+                    PageBar(UiTestSupport.s(AppLang.EN).appTabNew, {}, {}, FocusRequester(), gamify = false)
+                    HomeScreen(HomeUiState(), {}, {}, {})
+                }
             }
         }
     }

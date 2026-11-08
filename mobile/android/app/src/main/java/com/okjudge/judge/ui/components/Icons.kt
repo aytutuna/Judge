@@ -84,6 +84,14 @@ object JudgeIcons {
 
     fun menu(color: Color) = icon("menu", 16f, P("M2.5 4h11M2.5 8h11M2.5 12h11", stroke = color, width = 1.6f))
 
+    fun gamepad(color: Color) = icon(
+        "gamepad", 24f,
+        P(
+            "M7.5 7h9a4.5 4.5 0 0 1 4.4 5.4l-.6 3A2.8 2.8 0 0 1 15.5 16.7l-.7-1.2H9.2l-.7 1.2a2.8 2.8 0 0 1-4.8-1.3l-.6-3A4.5 4.5 0 0 1 7.5 7ZM8 10v3M6.5 11.5h3M15.5 10.5h.01M17.5 12.5h.01",
+            stroke = color, width = 1.8f,
+        ),
+    )
+
     fun trash(color: Color) = icon(
         "trash", 16f,
         P("M3 4.5h10M6.5 4.5V3h3v1.5M4.5 4.5l.6 8.5h5.8l.6-8.5", stroke = color, width = 1.4f),

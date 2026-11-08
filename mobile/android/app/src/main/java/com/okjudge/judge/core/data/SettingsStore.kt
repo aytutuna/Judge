@@ -39,6 +39,10 @@ interface SettingsStore {
     /** On unless the user turned it off. */
     val usageStats: Flow<Boolean>
     suspend fun setUsageStats(on: Boolean)
+
+    /** The street court on the home and judging screens; on unless the user turned it off. */
+    val gamify: Flow<Boolean>
+    suspend fun setGamify(on: Boolean)
 }
 
 private val Context.settingsDataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
@@ -64,9 +68,16 @@ class DataStoreSettings(context: Context) : SettingsStore {
         store.edit { it[USAGE_STATS] = on }
     }
 
+    override val gamify: Flow<Boolean> = store.data.map { it[GAMIFY] ?: true }
+
+    override suspend fun setGamify(on: Boolean) {
+        store.edit { it[GAMIFY] = on }
+    }
+
     private companion object {
         val LANG = stringPreferencesKey("lang")
         val APPEARANCE = stringPreferencesKey("appearance")
         val USAGE_STATS = booleanPreferencesKey("usage_stats")
+        val GAMIFY = booleanPreferencesKey("gamify")
     }
 }
