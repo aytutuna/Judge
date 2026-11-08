@@ -45,7 +45,12 @@ struct EvidenceAddButton<Content: View>: View {
 
     var body: some View {
         Button {
-            picking = true
+            // Uploads need an account; the draft stays in the home model.
+            if app.account.isSignedIn {
+                picking = true
+            } else {
+                app.account.presentSignIn()
+            }
         } label: {
             label()
         }

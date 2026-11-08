@@ -221,7 +221,7 @@ struct HomeView: View {
     /// set of images.
     private func bottomRow(_ lang: AppLang, home: HomeModel, inComposer: Bool) -> some View {
         HStack(alignment: .center, spacing: 12) {
-            if app.evidenceOn, !home.evidence.full {
+            if app.evidenceOffered, !home.evidence.full {
                 EvidenceAddButton(evidence: home.evidence, disabled: home.isBusy) {
                     Label(L10n.appHomeAddContext(lang), systemImage: "paperclip")
                         .brandText(Self.linkType)

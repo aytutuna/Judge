@@ -253,6 +253,10 @@ final class AppModel {
     /// Screenshot evidence on Home: uploading needs an account.
     var evidenceOn: Bool { account.isSignedIn && account.features.evidence }
 
+    /// "Add context" is drawn whenever the deployment offers it; signed out,
+    /// a tap goes to sign-in instead of the picker.
+    var evidenceOffered: Bool { account.features.evidence }
+
     // MARK: - Two-sided cases
 
     /// "Send them a link" on Home: cases offered. Signed out, the tap goes

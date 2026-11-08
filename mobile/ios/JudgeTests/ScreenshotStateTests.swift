@@ -310,6 +310,7 @@ final class ScreenshotStateTests: XCTestCase {
             let home = try XCTUnwrap(ScreenshotState.parse("home:en")).makeModel(container: container)
             XCTAssertTrue(home.linkOn)
             XCTAssertTrue(home.evidenceOn, "signed in, so Add context shows")
+            XCTAssertTrue(home.evidenceOffered)
         }
     }
 }
