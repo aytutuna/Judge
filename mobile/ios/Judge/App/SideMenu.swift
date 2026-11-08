@@ -50,36 +50,28 @@ struct ComposeButton: View {
     }
 }
 
-/// The look of the Gamify switch: the gamepad and a small capsule. The
-/// label is for VoiceOver only. On a narrow phone it is the switch alone.
+/// The look of the Gamify control: the gamepad on a pill that lights up when
+/// it is on. The label is for VoiceOver only.
 private struct GamifyToggleStyle: ToggleStyle {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    @Environment(\.narrowBar) private var narrowBar
 
     func makeBody(configuration: Configuration) -> some View {
         let on = configuration.isOn
         return Button {
             configuration.isOn.toggle()
         } label: {
-            HStack(spacing: 6) {
-                if !narrowBar {
-                    Image(systemName: "gamecontroller")
-                        .font(.system(size: 18, weight: .semibold))
-                        .foregroundStyle(on ? Brand.ink : Brand.muted)
-                }
-                Capsule()
-                    .fill(on ? Brand.terraInk : Brand.muted)
-                    .frame(width: 32, height: 18)
-                    .overlay(alignment: on ? .trailing : .leading) {
-                        Circle()
-                            .fill(Brand.paper)
-                            .frame(width: 14, height: 14)
-                            .padding(2)
-                    }
-                    .animation(reduceMotion ? nil : .easeOut(duration: 0.15), value: on)
-            }
-            .frame(minWidth: 44, minHeight: 44)
-            .contentShape(Rectangle())
+            Image(systemName: "gamecontroller")
+                .font(.system(size: 18, weight: .semibold))
+                .foregroundStyle(on ? Brand.terraInk : Brand.muted)
+                .frame(width: 36, height: 32)
+                .background(
+                    Capsule()
+                        .fill(on ? Brand.terra.opacity(0.16) : Color.clear)
+                        .shadow(color: on ? Brand.terra.opacity(0.4) : .clear, radius: 6)
+                )
+                .frame(minWidth: 44, minHeight: 44)
+                .contentShape(Rectangle())
+                .animation(reduceMotion ? nil : .easeOut(duration: 0.15), value: on)
         }
         .buttonStyle(.plain)
         .accessibilityRepresentation {
