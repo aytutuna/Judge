@@ -139,7 +139,7 @@ fun JudgeRoot(
 ) {
     val langPref by container.settings.langPref.collectAsStateWithLifecycle(initialValue = LangPref.SYSTEM)
     val appearance by container.settings.appearance.collectAsStateWithLifecycle(initialValue = Appearance.SYSTEM)
-    val gamify by container.settings.gamify.collectAsStateWithLifecycle(initialValue = true)
+    val gamify by container.settings.gamify.collectAsStateWithLifecycle(initialValue = null)
     val dark = appearance.isDark(isSystemInDarkTheme())
     val darkChanged by rememberUpdatedState(onDark)
     LaunchedEffect(dark) { darkChanged(dark) }
@@ -150,7 +150,7 @@ fun JudgeRoot(
     val strings = remember(lang) { container.strings.of(lang) }
     val scope = rememberCoroutineScope()
 
-    CompositionLocalProvider(LocalGamify provides gamify) {
+    CompositionLocalProvider(LocalGamify provides (gamify == true)) {
         ProvideLang(lang, strings) {
             JudgeTheme(dark = dark) {
                 val backStack = rememberNavBackStack(HomeKey)
@@ -334,11 +334,8 @@ fun JudgeRoot(
                                 onMenu = { setMenu(true) },
                                 onNew = { backStack.resetTo(listOf(HomeKey)) },
                                 menuFocus = menuButton,
-                                gamify = gamify,
-                                onGamify = { on ->
-                                    container.analytics.track("settings_changed", mapOf("key" to "gamify"))
-                                    scope.launch { container.settings.setGamify(on) }
-                                },
+                                gamify = gamify != false,
+                                onGamify = { on -> scope.launch { container.settings.setGamify(on) } },
                             )
                         }
                     },
@@ -675,7 +672,7 @@ fun JudgeRoot(
                                         },
                                         usageStats = usageStats,
                                         onUsageStats = { on -> scope.launch { container.settings.setUsageStats(on) } },
-                                        gamify = gamify,
+                                        gamify = gamify != false,
                                         onGamify = { on ->
                                             container.analytics.track("settings_changed", mapOf("key" to "gamify"))
                                             scope.launch { container.settings.setGamify(on) }
