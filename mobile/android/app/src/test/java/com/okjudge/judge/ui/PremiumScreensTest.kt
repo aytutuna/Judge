@@ -438,17 +438,16 @@ class PremiumScreensTest {
     }
 
     @Test
-    fun judging_premium_showsTheWebCheckLine() {
-        var done by mutableStateOf(false)
+    fun judging_logTicksOffWhatCameBefore() {
         compose.setContent {
             Themed(AppLang.EN) {
-                JudgingScreen(done = done, result = null, startedAt = 0, reducedMotion = true, onFinished = {}, onCancel = {}, premium = true)
+                JudgingScreen(done = false, result = null, startedAt = 0, reducedMotion = true, onFinished = {}, onCancel = {}, premium = true)
             }
         }
-        compose.onNodeWithTag(JudgingTags.FACTCHECK).assertTextContains(en.thinkingFactcheck)
-        compose.onNodeWithText(en.thinkingPremiumHelper).assertExists()
-        done = true
-        compose.waitForIdle()
-        compose.onNodeWithTag(JudgingTags.FACTCHECK).assertTextContains(en.thinkingFactcheckDone)
+        // Long past the last wait, so every line of the story is in the log.
+        compose.onNodeWithText(en.storyNames, useUnmergedTree = true).assertExists()
+        compose.onNodeWithText(en.storyCrux, useUnmergedTree = true).assertExists()
+        compose.onNodeWithText(en.storyRuling, useUnmergedTree = true).assertExists()
+        compose.onNodeWithTag(JudgingTags.CAPTION).assertExists()
     }
 }

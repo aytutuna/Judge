@@ -443,7 +443,7 @@ class ScreensTest {
         compose.onNodeWithText("A hot dog is its own thing.").assertExists()
         compose.onNodeWithText(en.appHomeYourSide.uppercase(Locale.US)).assertExists()
         compose.onNodeWithText("SAM").assertExists()
-        compose.onNodeWithTag(JudgingTags.BALANCE).assertExists()
+        compose.onNodeWithTag(JudgingTags.COURT).assertExists()
         compose.onNodeWithTag(JudgingTags.CAPTION).assertExists()
     }
 
