@@ -2,11 +2,12 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect, useEffectEvent, useRef, useState } from "react";
-import { EvidencePicker, useEvidence } from "@/components/case/EvidencePicker";
+import { useEvidence } from "@/components/case/EvidencePicker";
 import { ClarifyStep, buildClarifications, type ClarifyQuestion } from "@/components/ClarifyStep";
 import { Balance } from "@/components/home/Balance";
 import { HomeForm } from "@/components/home/HomeForm";
 import { JudgingScreen, type JudgedSide } from "@/components/JudgingScreen";
+import { ENDING_MAX_MS } from "@/components/court/story";
 import { AppShell } from "@/components/shell/AppShell";
 import { refreshHistory, useHistory } from "@/components/shell/useHistory";
 import styles from "@/components/home/page.module.css";
@@ -20,8 +21,7 @@ import { startHistory } from "@/lib/history-store";
 import { apiErrorMessage, t } from "@/lib/i18n";
 import { useLang } from "@/lib/lang";
 import { resetScene } from "@/lib/scene-bridge";
-import { EXAMPLES, MAX_ARGUMENT, joinSides } from "@/lib/sides";
-import { MAX_FINISH_MS } from "@/lib/thinking";
+import { EXAMPLES, MAX_ARGUMENT, inviteTextOk, joinSides } from "@/lib/sides";
 import type { Clarification, ClarifyResponse, VerdictApiResponse, VerdictResponse } from "@/lib/types";
 import { applyEntitlement, refreshViewer, useViewer } from "@/lib/use-viewer";
 import { pollVerdict, RESPOND_ASYNC, type VerdictAcceptedResponse } from "@/lib/verdict-poll";
@@ -90,12 +90,15 @@ export default function Home() {
   // the form as it was.
   const [argument, setArgument] = useState("");
   const [otherSide, setOtherSide] = useState("");
+  // Their side stays closed until asked for; closed, it is always empty.
+  const [theirsOpen, setTheirsOpen] = useState(false);
   // Null: the account's first name until they type.
   const [mineName, setMineName] = useState<string | null>(null);
   const [otherName, setOtherName] = useState("");
   const [phase, setPhase] = useState<Phase>("form");
   const [error, setError] = useState<string | null>(null);
   const [response, setResponse] = useState<VerdictResponse | null>(null);
+  const [accepted, setAccepted] = useState(false);
   const viewer = useViewer();
   // Nothing from it is listed here; the hook still settles entries left
   // judging and warms the Verdicts tab.
@@ -130,8 +133,10 @@ export default function Home() {
   // first and the draft comes back afterwards. Uploads need the account.
   const signedIn = Boolean(viewer.me?.user);
   const entitlement = signedIn ? (viewer.me?.entitlement ?? null) : null;
-  const evidenceOn = signedIn && features?.evidence === true;
-  const casesOn = signedIn && features?.cases === true;
+  const evidenceOffered = features?.evidence === true;
+  const evidenceOn = signedIn && evidenceOffered;
+  // Signed out, "Send them a link" goes to sign-in first.
+  const casesOn = features?.cases === true;
   const holding = checking || creating;
   const open = useEffectEvent(judgingFinished);
 
@@ -139,7 +144,7 @@ export default function Home() {
   // after the response arrived, open the verdict anyway.
   useEffect(() => {
     if (phase !== "judging" || response === null) return;
-    const t = setTimeout(() => open(), MAX_FINISH_MS + 2000);
+    const t = setTimeout(() => open(), ENDING_MAX_MS + 2000);
     return () => clearTimeout(t);
   }, [phase, response]);
 
@@ -164,6 +169,9 @@ export default function Home() {
     // eslint-disable-next-line react-hooks/set-state-in-effect -- one-time read of browser storage
     setArgument(draft.argument);
     setOtherSide(draft.otherSide ?? "");
+    setTheirsOpen(Boolean(draft.otherSide) || draft.theirsOpen === true);
+    if (draft.mineName !== undefined) setMineName(draft.mineName);
+    setOtherName(draft.otherName ?? "");
   }, []);
 
   // The index has to exist before the first addHistory, or the verdicts
@@ -172,8 +180,19 @@ export default function Home() {
 
   // What a sign-in link saves: only an unsent argument.
   useEffect(
-    () => registerDraftSource(() => (phase === "judging" ? null : { argument, ...(otherSide ? { otherSide } : {}) })),
-    [argument, otherSide, phase],
+    () =>
+      registerDraftSource(() =>
+        phase === "judging"
+          ? null
+          : {
+              argument,
+              ...(otherSide ? { otherSide } : {}),
+              ...(mineName !== null ? { mineName } : {}),
+              ...(otherName ? { otherName } : {}),
+              ...(theirsOpen ? { theirsOpen } : {}),
+            },
+      ),
+    [argument, otherSide, mineName, otherName, theirsOpen, phase],
   );
 
   const shownMineName = mineName ?? firstNameOf(viewer.me?.user?.name) ?? "";
@@ -189,9 +208,24 @@ export default function Home() {
     !holding &&
     !(evidenceOn && evidence.busy);
 
+  // A link needs a side worth judging, or none at all (the other person can
+  // write theirs first); text with a few words or only images does not count.
+  const canInvite =
+    !theirsOpen &&
+    viewerKnown &&
+    !holding &&
+    !(evidenceOn && evidence.busy) &&
+    inviteTextOk(argument, evidence.items.length);
+
   function signInFirst() {
     saveDraftForSignIn();
     router.push("/signin?next=%2F");
+  }
+
+  // The button only renders once /config and /me are in, so this also runs
+  // when /me failed; /signin sends a signed-in person back.
+  function addContextSignIn() {
+    signInFirst();
   }
 
   /** Nothing left to spend: pricing, with the text kept for afterwards. */
@@ -315,6 +349,7 @@ export default function Home() {
     const signal = threadSignal();
     setError(null);
     setResponse(null);
+    setAccepted(false);
     opened.current = false;
     setPhase("judging");
     const body = JSON.stringify({
@@ -351,9 +386,10 @@ export default function Home() {
           return;
         }
         if (res.status === 202) {
-          const accepted = json as VerdictAcceptedResponse;
-          if (accepted.entitlement) applyEntitlement(accepted.entitlement);
-          const verdict = await awaitVerdict(accepted, signal);
+          const pending = json as VerdictAcceptedResponse;
+          if (pending.entitlement) applyEntitlement(pending.entitlement);
+          if (!signal.aborted) setAccepted(true);
+          const verdict = await awaitVerdict(pending, signal);
           // A refused or degraded verdict, or a failed one, gave the unit back.
           void refreshViewer();
           if (!verdict) return;
@@ -374,14 +410,14 @@ export default function Home() {
     }
   }
 
-  /** Send a link: create the case with the owner's side (it holds one
-   * premium verdict), keep the returned names in this browser and open
+  /** Send a link: create the case with the owner's side if they wrote one (it
+   * holds one premium verdict), keep the returned names in this browser and open
    * the case page with the invite link. No clarifying step: the other side's
    * account fills the gaps. */
   async function createCase() {
     track("case_submitted");
     const tokens = evidenceOn ? evidence.tokens : [];
-    const text = argument;
+    const text = argument.trim() ? argument : undefined;
     const signal = threadSignal();
     clearDraft();
     setError(null);
@@ -438,10 +474,12 @@ export default function Home() {
     premiumInput.current = null;
     resetScene();
     setResponse(null);
+    setAccepted(false);
     setError(null);
     setArgument("");
     setOtherSide("");
     setOtherName("");
+    setTheirsOpen(false);
     if (mineName !== null && mineName === exampleName.current) setMineName(null);
     exampleName.current = null;
     setChecking(false);
@@ -459,6 +497,7 @@ export default function Home() {
     thread.current = null;
     resetScene();
     setResponse(null);
+    setAccepted(false);
     setChecking(false);
     setPhase("form");
   }
@@ -468,6 +507,14 @@ export default function Home() {
     if (argument && !started.current) track("case_started");
     started.current = argument !== "";
   }, [argument]);
+
+  function removeTheirs() {
+    setOtherSide("");
+    setOtherName("");
+    setTheirsOpen(false);
+    if (mineName !== null && mineName === exampleName.current) setMineName(null);
+    exampleName.current = null;
+  }
 
   function fillExample() {
     const pool = EXAMPLES.filter((id) => id !== lastExample.current);
@@ -479,6 +526,7 @@ export default function Home() {
     setArgument(t(lang, `pairs.${id}.a`));
     setOtherName(t(lang, `pairs.${id}.bName`));
     setOtherSide(t(lang, `pairs.${id}.b`));
+    setTheirsOpen(true);
     setError(null);
   }
 
@@ -506,10 +554,25 @@ export default function Home() {
     shown.current = phase;
   }, [phase]);
 
+  // iOS Safari keeps dvh at full height under the keyboard, so the chat
+  // follows the visual viewport where there is one.
+  useEffect(() => {
+    const vv = window.visualViewport;
+    if (phase !== "form" || !vv) return;
+    const root = document.documentElement;
+    const size = () => root.style.setProperty("--vvh", `${vv.height}px`);
+    size();
+    vv.addEventListener("resize", size);
+    return () => {
+      vv.removeEventListener("resize", size);
+      root.style.removeProperty("--vvh");
+    };
+  }, [phase]);
+
   return (
-    // The tab bar gives way to the judging screen, as the apps' full-screen cover does.
+    // The menu button gives way to the judging screen, as the apps' full-screen cover does.
     <AppShell lang={lang} toggle footer={false} tabs={phase !== "judging"} onHome={phase !== "form" ? reset : undefined}>
-      <main id="main" tabIndex={-1} className={styles.main}>
+      <main id="main" tabIndex={-1} className={phase === "form" ? `${styles.main} ${styles.chat}` : styles.main}>
         <div className={`wrap ${styles.column}`}>
           <h1 className="sr-only">{t(lang, "hero.title")}</h1>
           <p className="sr-only" role="status" aria-live="polite">
@@ -530,6 +593,7 @@ export default function Home() {
               lang={lang}
               mine={judged.mine}
               theirs={judged.theirs}
+              accepted={accepted}
               done={response !== null}
               result={response?.result ?? null}
               onFinished={judgingFinished}
@@ -546,30 +610,22 @@ export default function Home() {
               onTheirs={setOtherSide}
               theirName={otherName}
               onTheirName={setOtherName}
+              theirsOpen={theirsOpen}
+              onAddTheirs={() => setTheirsOpen(true)}
+              onRemoveTheirs={removeTheirs}
               length={joined.length}
-              casesOn={casesOn}
-              onNew={argument || otherSide || evidence.items.length > 0 ? reset : undefined}
+              blank={!argument && !theirsOpen && evidence.items.length === 0}
+              onClear={reset}
               onExample={fillExample}
               canSubmit={canSubmit}
               onSubmit={onSubmit}
-              onInvite={casesOn && !otherSide.trim() ? onInvite : undefined}
+              onInvite={casesOn ? onInvite : undefined}
+              canInvite={canInvite}
               holding={holding}
               error={error}
               status={progress ?? (entitlement ? <Balance lang={lang} entitlement={entitlement} /> : null)}
-              evidence={
-                evidenceOn ? (
-                  <EvidencePicker
-                    lang={lang}
-                    max={MAX_EVIDENCE_PER_SIDE}
-                    items={evidence.items}
-                    full={evidence.full}
-                    failure={evidence.failure}
-                    overLimit={evidence.overLimit}
-                    onAdd={evidence.add}
-                    onRemove={evidence.remove}
-                  />
-                ) : null
-              }
+              evidence={evidenceOffered ? evidence : undefined}
+              onAddContextSignIn={signedIn ? undefined : addContextSignIn}
             />
           )}
         </div>

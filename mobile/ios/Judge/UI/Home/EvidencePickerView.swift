@@ -41,16 +41,30 @@ struct EvidenceAddButton<Content: View>: View {
     let disabled: Bool
     @ViewBuilder let label: () -> Content
     @State private var selection: [PhotosPickerItem] = []
+    @State private var picking = false
 
     var body: some View {
-        PhotosPicker(
+        Button {
+            // Uploads need an account; the draft stays in the home model.
+            if app.account.isSignedIn {
+                picking = true
+            } else {
+                app.account.presentSignIn()
+            }
+        } label: {
+            label()
+        }
+        .photosPicker(
+            isPresented: $picking,
             selection: $selection,
             maxSelectionCount: Swift.max(1, evidence.room),
             selectionBehavior: .ordered,
-            matching: .images,
-            label: label
+            matching: .images
         )
         .disabled(disabled || evidence.full)
+        .onChange(of: picking) { _, open in
+            app.sheetOpen = open
+        }
         .onChange(of: selection) { _, picked in
             guard !picked.isEmpty else { return }
             selection = []
@@ -176,6 +190,8 @@ private struct EvidenceRow: View {
                         .foregroundStyle(Brand.ink2)
                         .frame(width: 36, height: 36)
                         .background(Circle().fill(Brand.ivory2))
+                        .frame(width: 44, height: 44)
+                        .contentShape(Rectangle())
                 }
                 .buttonStyle(.plain)
                 .disabled(disabled)

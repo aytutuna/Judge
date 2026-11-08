@@ -1,5 +1,9 @@
 import SwiftUI
 
+enum SettingsRoute: Hashable {
+    case pricing, language
+}
+
 struct SettingsView: View {
     @Environment(AppModel.self) private var app
     @State private var webLink: WebLink?
@@ -8,14 +12,13 @@ struct SettingsView: View {
 
     var body: some View {
         let lang = app.lang
-        NavigationStack {
+        @Bindable var model = app
+        NavigationStack(path: $model.settingsPath) {
             List {
                 AccountSection(confirmSignOut: $confirmSignOut, confirmDelete: $confirmDelete)
 
                 Section {
-                    NavigationLink {
-                        PricingView()
-                    } label: {
+                    NavigationLink(value: SettingsRoute.pricing) {
                         Label {
                             Text(L10n.navPricing(lang))
                                 .brandText(.body)
@@ -29,9 +32,7 @@ struct SettingsView: View {
                 .listRowBackground(Brand.paper)
 
                 Section {
-                    NavigationLink {
-                        LanguageList()
-                    } label: {
+                    NavigationLink(value: SettingsRoute.language) {
                         Text(languageChoice(lang))
                             .brandText(.body)
                             .foregroundStyle(Brand.ink)
@@ -47,6 +48,19 @@ struct SettingsView: View {
                     }
                 } header: {
                     Kicker(text: L10n.appSettingsAppearance(lang))
+                }
+                .listRowBackground(Brand.paper)
+
+                Section {
+                    Toggle(isOn: Binding(get: { app.gamify }, set: {
+                        app.setGamify($0)
+                        app.analytics.track("settings_changed", ["key": "gamify"])
+                    })) {
+                        Text(L10n.shellGamify(lang))
+                            .brandText(.body)
+                            .foregroundStyle(Brand.ink)
+                    }
+                    .tint(Brand.terraInk)
                 }
                 .listRowBackground(Brand.paper)
 
@@ -88,6 +102,10 @@ struct SettingsView: View {
             .navigationTitle(L10n.appTabSettings(lang))
             .navigationBarTitleDisplayMode(.inline)
             .toolbarBackground(Brand.ivory, for: .navigationBar)
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) { MenuButton() }
+                RootBarTrailing()
+            }
             .sheet(item: $webLink) { link in
                 SafariView(url: link.url).ignoresSafeArea()
             }
@@ -105,9 +123,20 @@ struct SettingsView: View {
             } message: {
                 Text(L10n.appAccountDeleteBody(lang))
             }
-            .task { await app.account.refresh() }
-            .onAppear { app.analytics.track("screen_view", ["screen": "settings"]) }
+            .navigationDestination(for: SettingsRoute.self) { route in
+                switch route {
+                case .pricing: PricingView()
+                case .language: LanguageList()
+                }
+            }
+            .onTabAppear {
+                Task { await app.account.refresh() }
+                app.analytics.track("screen_view", ["screen": "settings"])
+            }
             .onDisappear { app.purchases.clearRestoreResult() }
+            .onChange(of: app.tab) { _, tab in
+                if tab != .settings { app.purchases.clearRestoreResult() }
+            }
         }
     }
 

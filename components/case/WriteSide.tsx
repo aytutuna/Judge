@@ -5,6 +5,7 @@ import type { SideResponse } from "@/lib/case-types";
 import { MAX_EVIDENCE_PER_SIDE } from "@/lib/case-types";
 import { trackApiError } from "@/lib/analytics/client";
 import { apiErrorMessage, t, type Lang } from "@/lib/i18n";
+import { langTag } from "@/lib/langs";
 import { MAX_ARGUMENT } from "@/lib/sides";
 import { keyHolder } from "@/lib/use-case";
 import { applyEntitlement, refreshViewer } from "@/lib/use-viewer";
@@ -107,7 +108,7 @@ export function WriteSide({
           <label htmlFor={fieldId} className={styles.fieldLabel}>
             <span>{t(lang, "case.write.title")}</span>
             <span className={styles.count} aria-hidden>
-              {draft.text.length} / {MAX_ARGUMENT}
+              {draft.text.length.toLocaleString(langTag(lang))} / {MAX_ARGUMENT.toLocaleString(langTag(lang))}
             </span>
           </label>
           <textarea

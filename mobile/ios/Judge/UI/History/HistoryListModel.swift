@@ -35,6 +35,38 @@ enum HistoryEntry: Identifiable {
         return false
     }
 
+    /// A tap opens it (an account row can be past opening).
+    var opens: Bool {
+        if case .account(let item) = self { return HistoryLabels.openable(item) }
+        return true
+    }
+
+    /// The row's one-line name: the headline with their names put back.
+    func title(lang: AppLang) -> String {
+        switch self {
+        case .account(let item):
+            return HistoryLabels.title(item, lang: lang)
+        case .phone(let row):
+            // Display-only: the stored headline stays anonymized. It is the
+            // original's, so it is written in the language it was judged in.
+            let selfLang = row.contentLang
+            return Names.restoreNames(row.headline, parties: Names.resolveParties(row.nameMap, selfLang: selfLang), textLang: selfLang)
+        }
+    }
+
+    /// What the Verdicts list shows: the signed-in account's cached rows and
+    /// the phone's own.
+    @MainActor
+    static func current(app: AppModel, rows: [HistoryCacheRow], saved: [SavedVerdict]) -> [HistoryEntry] {
+        let user = app.historyUser
+        let cached = user.map { id in
+            rows.filter { $0.userID == id }
+                .compactMap(\.item)
+                .sorted { HistoryOrder.before(($0.at, $0.key), ($1.at, $1.key)) }
+        } ?? []
+        return merge(cached: cached, saved: saved, user: user, cutoff: app.historyList.cutoff)
+    }
+
     /// The account's rows and the phone's own, newest first. A phone row
     /// older than `cutoff` (the last account row loaded this session) waits
     /// until the account's list is loaded that far: the account may have it.

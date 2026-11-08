@@ -46,6 +46,9 @@ final class AppModel {
     private(set) var appearance: Appearance
     /// The "Usage statistics" setting, on unless turned off.
     private(set) var usageStats: Bool
+    /// The street court on Home and in the judging card, per device, on
+    /// unless turned off.
+    private(set) var gamify: Bool
 
     let config: AppConfig
     let api: JudgeAPI
@@ -63,8 +66,15 @@ final class AppModel {
     let caseNames: any CaseNamesStore
     /// The selected tab (links and "Start a new case" switch it).
     var tab: RootTab = .new
+    /// The side menu is open.
+    var menuOpen = false
+    /// A sheet the root does not own is up (the photo picker, a link opened
+    /// from the side menu), so the Home page is covered.
+    var sheetOpen = false
     /// The Verdicts tab's pages.
     var historyPath: [HistoryRoute] = []
+    /// The Settings tab's pages.
+    var settingsPath: [SettingsRoute] = []
     /// The account's Verdicts list (GET /api/v1/me/history and its cache).
     let historyList: HistoryListModel
     /// Whose list Verdicts shows: the signed-in account once known; at
@@ -95,6 +105,7 @@ final class AppModel {
     private static let langKey = "settings.lang"
     private static let appearanceKey = "settings.appearance"
     private static let usageStatsKey = "settings.usageStats"
+    private static let gamifyKey = "settings.gamify"
     private static let userKey = "session.user"
     private static let userSessionKey = "session.userToken"
 
@@ -119,6 +130,7 @@ final class AppModel {
         appearance = Appearance(stored: defaults.string(forKey: Self.appearanceKey))
         let usageStats = defaults.object(forKey: Self.usageStatsKey) as? Bool ?? true
         self.usageStats = usageStats
+        gamify = defaults.object(forKey: Self.gamifyKey) as? Bool ?? true
         let deviceID = DeviceIdentity.deviceID(defaults)
         let (ageGates, ageGateSink) = AsyncStream.makeStream(of: String.self)
         let judgeAPI = api ?? JudgeAPI(
@@ -226,6 +238,11 @@ final class AppModel {
         defaults.set(value.rawValue, forKey: Self.appearanceKey)
     }
 
+    func setGamify(_ on: Bool) {
+        gamify = on
+        defaults.set(on, forKey: Self.gamifyKey)
+    }
+
     /// Off drops the queued events and sends no more.
     func setUsageStats(_ on: Bool) {
         usageStats = on
@@ -235,6 +252,10 @@ final class AppModel {
 
     /// Screenshot evidence on Home: uploading needs an account.
     var evidenceOn: Bool { account.isSignedIn && account.features.evidence }
+
+    /// "Add context" is drawn whenever the deployment offers it; signed out,
+    /// a tap goes to sign-in instead of the picker.
+    var evidenceOffered: Bool { account.features.evidence }
 
     // MARK: - Two-sided cases
 
@@ -261,15 +282,41 @@ final class AppModel {
     }
 
     /// A tab was tapped. "New" always lands on the form, also when a verdict
-    /// is still open in that tab.
+    /// is still open in that tab; the others go back to their list when
+    /// tapped again.
     func select(_ target: RootTab) {
         if target == .new { home.path.removeAll() }
+        if target == tab {
+            if target == .history { historyPath.removeAll() }
+            if target == .settings { settingsPath.removeAll() }
+        }
         tab = target
+    }
+
+    /// Opens a Verdicts row on its page in that tab. An invite answered on
+    /// the website comes back as its address instead.
+    func openHistory(_ entry: HistoryEntry) async -> URL? {
+        switch entry {
+        case .phone(let row):
+            historyPath.append(.detail(id: row.id))
+        case .account(let item):
+            guard HistoryLabels.openable(item) else { return nil }
+            if !item.isCase {
+                if await historyList.openVerdict(item, user: historyUser) { historyPath.append(.detail(id: item.id)) }
+            } else if item.isRespondent, let token = item.inviteToken {
+                // Answering is done on the website: the case opens there too.
+                return config.siteURL("r").appending(component: token)
+            } else {
+                historyPath.append(.caseDetail(id: item.id))
+            }
+        }
+        return nil
     }
 
     /// "Start a new case": an empty form on the Home tab.
     func newArgument() {
         home.judgeAnother()
+        menuOpen = false
         tab = .new
     }
 
@@ -280,6 +327,7 @@ final class AppModel {
         case .invite(let url):
             return url
         case .caseDetail(let id):
+            menuOpen = false
             tab = .new
             home.path = [.caseDetail(id: id)]
             return nil

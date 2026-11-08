@@ -7,6 +7,7 @@ import type { CaseAppealView, CaseView } from "@/lib/case-types";
 import { MAX_APPEAL_CHARS, MAX_EVIDENCE_PER_APPEAL, MIN_APPEAL_CHARS } from "@/lib/case-types";
 import { trackApiError } from "@/lib/analytics/client";
 import { apiErrorMessage, t, tWithDate, type Key, type Lang } from "@/lib/i18n";
+import { langTag } from "@/lib/langs";
 import { keyHolder } from "@/lib/use-case";
 import { applyEntitlement, refreshViewer } from "@/lib/use-viewer";
 import { PremiumSpark } from "../PremiumBadge";
@@ -265,7 +266,7 @@ export function AppealSection({
           <label htmlFor={fieldId} className={styles.fieldLabel}>
             <span>{t(lang, "appeal.label")}</span>
             <span className={styles.count} aria-hidden>
-              {count} / {MAX_APPEAL_CHARS}
+              {count.toLocaleString(langTag(lang))} / {MAX_APPEAL_CHARS.toLocaleString(langTag(lang))}
             </span>
           </label>
           <textarea

@@ -25,6 +25,7 @@ export const WEB_KEYS: readonly string[] = [
   "history.*",
   // Judging state
   "thinking.*",
+  "story.*",
   // Verdict card
   "verdict.*",
   "lean.*",
@@ -99,8 +100,12 @@ export const WEB_KEYS: readonly string[] = [
   "nav.signIn",
   "nav.account",
   "nav.verdicts",
+  "nav.tabs",
+  "shell.new",
+  "shell.gamify",
   "nav.pricing",
   "nav.signOut",
+  "nav.accountMenu",
   // Premium, cases and appeals
   "tier.*",
   "clarify.*",

@@ -1,9 +1,7 @@
 /* App shell: the site header and footer around the page, and below 960px
-   a fixed tab bar. --tabs-h is the bar's height while it shows (0
-   otherwise); docked bars on the pages sit on top of it. */
+   a menu button in the header that opens the side panel. */
 
 .shell {
-  --tabs-h: 0px;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -33,54 +31,199 @@
   color: var(--ink);
 }
 
-.tabs {
-  position: fixed;
-  inset: auto 0 0 0;
-  z-index: 40;
-  padding-bottom: env(safe-area-inset-bottom);
-  background: color-mix(in srgb, var(--ivory) 86%, transparent);
-  -webkit-backdrop-filter: saturate(180%) blur(20px);
-  backdrop-filter: saturate(180%) blur(20px);
-  border-top: 1px solid var(--line);
-}
-.tabs ul {
-  display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: minmax(0, 1fr);
-  height: 56px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-.tabs a {
-  display: flex;
-  flex-direction: column;
+.gamify {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 3px;
-  height: 100%;
+  gap: 6px;
+  flex: none;
+  min-width: 40px;
+  min-height: 40px;
+  padding: 0 10px;
+  border: 0;
+  border-radius: var(--radius-chip);
+  background: none;
   color: var(--muted);
-  font-size: 11.5px;
-  font-weight: 600;
-  text-decoration: none;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    background-color var(--dur-1),
+    box-shadow var(--dur-1),
+    color var(--dur-1);
+}
+@media (hover: hover) {
+  .gamify:hover {
+    background: color-mix(in srgb, var(--ink) 6%, transparent);
+    color: var(--ink);
+  }
+}
+.gamify:focus-visible {
+  outline: 2px solid var(--terra-ink);
+  outline-offset: 2px;
+}
+html:not([data-game="off"]) .gamify {
+  background: color-mix(in srgb, var(--terra) 16%, transparent);
+  color: var(--terra-ink);
+  box-shadow: 0 0 12px color-mix(in srgb, var(--terra) 40%, transparent);
+}
+.gamify svg {
+  width: 20px;
+  height: 20px;
+  flex: none;
+}
+.gamifyLabel {
+  display: none;
+}
+@media (min-width: 640px) {
+  .gamifyLabel {
+    display: inline;
+  }
+}
+
+.menuButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 44px;
+  height: 44px;
+  margin-inline-start: -10px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  color: var(--ink);
+  cursor: pointer;
   -webkit-tap-highlight-color: transparent;
 }
-.tabs a[aria-current="page"] {
-  color: var(--ink);
+.menuButton:hover {
+  background: color-mix(in srgb, var(--ink) 6%, transparent);
 }
-.tabs svg {
+.menuButton svg {
   width: 22px;
   height: 22px;
 }
 
-@media (max-width: 959px) {
-  .shell[data-tabs] {
-    --tabs-h: calc(56px + env(safe-area-inset-bottom));
-    padding-bottom: var(--tabs-h);
+/* A full-screen modal dialog: the scrim fills it, the panel sits at the
+   start edge. The UA's dialog box and Tailwind's resets are cleared. */
+.menu {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  overflow: hidden;
+}
+.menu::backdrop {
+  background: transparent;
+}
+.scrim {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: var(--scrim);
+  cursor: default;
+  animation: scrim-in 0.2s ease-out;
+}
+.panel {
+  --from: -100%;
+  position: absolute;
+  z-index: 1;
+  inset-block: 0;
+  inset-inline-start: 0;
+  width: min(300px, 85vw);
+  display: flex;
+  flex-direction: column;
+  padding: calc(20px + env(safe-area-inset-top)) 12px calc(22px + env(safe-area-inset-bottom));
+  background: var(--ivory-2);
+  overflow-y: auto;
+  animation: panel-in 0.24s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+[dir="rtl"] .panel {
+  --from: 100%;
+}
+.panel ul {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.menuRow {
+  display: flex;
+  align-items: center;
+  min-height: 48px;
+  padding: 4px 12px;
+  border-radius: 12px;
+  color: var(--ink);
+  font-size: 16px;
+  font-weight: 500;
+  text-decoration: none;
+}
+.menuRow[aria-current="page"] {
+  background: var(--paper);
+  box-shadow: 0 1px 3px var(--line-2);
+}
+.menuEnd {
+  margin-top: auto;
+  padding-top: 12px;
+}
+.recent {
+  display: block;
+  min-height: 44px;
+  padding: 0 12px;
+  color: var(--ink-2);
+  font-size: 14px;
+  line-height: 44px;
+  text-decoration: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.recent[data-removed] {
+  opacity: 0.6;
+}
+@keyframes scrim-in {
+  from {
+    opacity: 0;
   }
-  /* Focus and find-in-page scroll targets stop above the bar, not under it. */
-  html:has(.shell[data-tabs]) {
-    scroll-padding-bottom: calc(56px + env(safe-area-inset-bottom) + 8px);
+}
+@keyframes panel-in {
+  from {
+    transform: translateX(var(--from));
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .scrim,
+  .panel {
+    animation: none;
+  }
+  .gamify {
+    transition: none;
+  }
+}
+@media (forced-colors: active) {
+  html:not([data-game="off"]) .gamify {
+    background: Highlight;
+    color: HighlightText;
+    box-shadow: none;
+  }
+  .menuRow[aria-current="page"] {
+    text-decoration: underline;
   }
 }
 
@@ -88,14 +231,8 @@
   .headerLink {
     display: inline-flex;
   }
-  .tabs {
+  .menuButton {
     display: none;
-  }
-}
-
-@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-  .tabs {
-    background: var(--ivory);
   }
 }
 
@@ -217,24 +354,16 @@ a.row:hover .title {
   cursor: default;
 }
 
-@media (forced-colors: active) {
-  .tabs a[aria-current="page"] {
-    text-decoration: underline;
-  }
-}
-
-/* On top of the tab bar while it shows (--tabs-h), which already pads for
-   the home indicator. */
 .dock {
   position: sticky;
-  bottom: var(--tabs-h, 0px);
+  bottom: 0;
   z-index: 5;
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: 10px;
   margin-top: auto;
-  padding: 16px 0 max(14px, calc(14px + env(safe-area-inset-bottom) - var(--tabs-h, 0px)));
+  padding: 16px 0 calc(14px + env(safe-area-inset-bottom));
   background: linear-gradient(to bottom, transparent, var(--ivory) 16px);
 }
 

@@ -1,7 +1,8 @@
 .wrap {
   position: relative;
   display: inline-flex;
-  flex: none;
+  flex: 0 1 auto;
+  min-width: 0;
 }
 
 /* Same chip track as the old two-way switch; 40px touch target. */
@@ -13,6 +14,8 @@
   border-radius: var(--radius-chip);
   background: color-mix(in srgb, var(--ink) 7%, transparent);
   color: var(--ink);
+  max-width: 100%;
+  text-overflow: ellipsis;
   font: inherit;
   font-size: 12.5px;
   font-weight: 600;
@@ -20,6 +23,18 @@
   appearance: none;
   cursor: pointer;
   transition: background-color 0.25s var(--ease);
+}
+
+@media (max-width: 959px) {
+  .select {
+    max-width: 96px;
+  }
+}
+@media (max-width: 479px) {
+  .compact {
+    max-width: 72px;
+    padding-inline: 10px 24px;
+  }
 }
 
 .select:hover {

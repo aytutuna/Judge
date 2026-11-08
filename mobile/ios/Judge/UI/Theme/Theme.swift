@@ -14,10 +14,10 @@ enum PaletteHex {
     static let terra: UInt32 = 0xC8553D
     static let terraInk: UInt32 = 0xA9442F
     static let terraTint: UInt32 = 0xF3DDD5
-    static let sage: UInt32 = 0x8AA899
-    static let sageStrong: UInt32 = 0x6E8F80
-    static let sageInk: UInt32 = 0x4C6B5D
-    static let sageTint: UInt32 = 0xDDE7E0
+    static let sage: UInt32 = 0x6FB58A
+    static let sageStrong: UInt32 = 0x3B8F60
+    static let sageInk: UInt32 = 0x2A6E4A
+    static let sageTint: UInt32 = 0xDCEFE2
     static let stone: UInt32 = 0xDAD6CF
     static let strata: UInt32 = 0xE9E6E1
     static let danger: UInt32 = 0xB3261E
@@ -46,10 +46,10 @@ enum PaletteHex {
         static let terra: UInt32 = 0xD9694F
         static let terraInk: UInt32 = 0xEE8C74
         static let terraTint: UInt32 = 0x432A22
-        static let sage: UInt32 = 0x7F9C8E
-        static let sageStrong: UInt32 = 0x8FB0A0
-        static let sageInk: UInt32 = 0xA3C2B3
-        static let sageTint: UInt32 = 0x2D3832
+        static let sage: UInt32 = 0x62A67E
+        static let sageStrong: UInt32 = 0x6FC093
+        static let sageInk: UInt32 = 0x97DDB4
+        static let sageTint: UInt32 = 0x223A2D
         static let stone: UInt32 = 0x4F463C
         static let strata: UInt32 = 0x3A342E
         static let danger: UInt32 = 0xF5727E
@@ -169,8 +169,8 @@ extension View {
     }
 }
 
-/// The text cards' edge: a thin stroke and a glow in the side's colour,
-/// a little stronger while the card has the focus.
+/// The text cards' edge: a thin stroke in the side's colour, with a glow
+/// while the card has the focus.
 private struct NeonEdge: ViewModifier {
     let color: Color
     let focused: Bool
@@ -182,7 +182,7 @@ private struct NeonEdge: ViewModifier {
         content
             .background {
                 shape.fill(Brand.paper)
-                    .shadow(color: color.opacity(focused ? 0.6 : 0.38), radius: focused ? 12 : 8)
+                    .shadow(color: color.opacity(focused ? 0.6 : 0), radius: 12)
             }
             .overlay(shape.strokeBorder(color.opacity(focused ? 0.95 : 0.75), lineWidth: 1))
             .animation(reduceMotion ? nil : .easeOut(duration: 0.2), value: focused)

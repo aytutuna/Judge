@@ -39,6 +39,7 @@ class MainActivity : ComponentActivity() {
         lifecycleScope.launch {
             container.settings.langPref.first()
             container.settings.appearance.first()
+            container.settings.gamify.first()
             ready = true
         }
 

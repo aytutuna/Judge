@@ -80,7 +80,7 @@ export function Thread(props: ThreadProps) {
       {parts.length > 0 ? (
         <li className={styles.judges} data-turn="judges">
           <p className={styles.who}>
-            <BrandMark size={22} />
+            <BrandMark size={18} />
             {judgesLabel ?? t(lang, "thread.judges")}
           </p>
           {parts.map((p) =>

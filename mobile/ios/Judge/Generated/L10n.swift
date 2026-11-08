@@ -164,6 +164,16 @@ enum L10n {
     static func thinkingFinish(_ lang: AppLang) -> String { string("thinking.finish", lang) }
     static func thinkingStillJudging(_ lang: AppLang) -> String { string("thinking.stillJudging", lang) }
     static func thinkingReady(_ lang: AppLang) -> String { string("thinking.ready", lang) }
+    static func storyNames(_ lang: AppLang) -> String { string("story.names", lang) }
+    static func storyFacts(_ lang: AppLang) -> String { string("story.facts", lang) }
+    static func storyJudges(_ lang: AppLang) -> String { string("story.judges", lang) }
+    static func storyBothSides(_ lang: AppLang) -> String { string("story.bothSides", lang) }
+    static func storyCrux(_ lang: AppLang) -> String { string("story.crux", lang) }
+    static func storyRuling(_ lang: AppLang) -> String { string("story.ruling", lang) }
+    static func storyCount(_ lang: AppLang) -> String { string("story.count", lang) }
+    static func storyCloseCall(_ lang: AppLang) -> String { string("story.closeCall", lang) }
+    static func storyAgree(_ lang: AppLang, n: String, total: String) -> String { format("story.agree", lang, n, total) }
+    static func storySplit(_ lang: AppLang) -> String { string("story.split", lang) }
     static func verdictWin(_ lang: AppLang, name: String) -> String { format("verdict.win", lang, name) }
     static func verdictWinSelf(_ lang: AppLang) -> String { string("verdict.winSelf", lang) }
     static func verdictSplit(_ lang: AppLang) -> String { string("verdict.split", lang) }
@@ -261,8 +271,10 @@ enum L10n {
     static func navSignIn(_ lang: AppLang) -> String { string("nav.signIn", lang) }
     static func navAccount(_ lang: AppLang) -> String { string("nav.account", lang) }
     static func navPricing(_ lang: AppLang) -> String { string("nav.pricing", lang) }
+    static func navAccountMenu(_ lang: AppLang) -> String { string("nav.accountMenu", lang) }
     static func navSignOut(_ lang: AppLang) -> String { string("nav.signOut", lang) }
     static func navVerdicts(_ lang: AppLang) -> String { string("nav.verdicts", lang) }
+    static func navTabs(_ lang: AppLang) -> String { string("nav.tabs", lang) }
     static func tierLockedSignIn(_ lang: AppLang) -> String { string("tier.lockedSignIn", lang) }
     static func tierGetPremium(_ lang: AppLang) -> String { string("tier.getPremium", lang) }
     static func tierChecking(_ lang: AppLang) -> String { string("tier.checking", lang) }
@@ -479,6 +491,12 @@ enum L10n {
     static func twoSidedWouldChange(_ lang: AppLang) -> String { string("twoSided.wouldChange", lang) }
     static func appealTitle(_ lang: AppLang) -> String { string("appeal.title", lang) }
     static func homeExample(_ lang: AppLang) -> String { string("home.example", lang) }
+    static func homeYourPlaceholder(_ lang: AppLang) -> String { string("home.yourPlaceholder", lang) }
+    static func homeAddContext(_ lang: AppLang) -> String { string("home.addContext", lang) }
+    static func homeAddTheirSide(_ lang: AppLang) -> String { string("home.addTheirSide", lang) }
+    static func homeRemoveTheirSide(_ lang: AppLang) -> String { string("home.removeTheirSide", lang) }
+    static func homeSendLink(_ lang: AppLang) -> String { string("home.sendLink", lang) }
+    static func homeClear(_ lang: AppLang) -> String { string("home.clear", lang) }
     static func homeLead(_ lang: AppLang) -> String { string("home.lead", lang) }
     static func homeLeadSolo(_ lang: AppLang) -> String { string("home.leadSolo", lang) }
     static func homeTheirSide(_ lang: AppLang) -> String { string("home.theirSide", lang) }
@@ -552,6 +570,8 @@ enum L10n {
     static func namesFailed(_ lang: AppLang) -> String { string("names.failed", lang) }
     static func namesInvalid(_ lang: AppLang) -> String { string("names.invalid", lang) }
     static func accountVerdictsRemoved(_ lang: AppLang) -> String { string("account.verdicts.removed", lang) }
+    static func shellNew(_ lang: AppLang) -> String { string("shell.new", lang) }
+    static func shellGamify(_ lang: AppLang) -> String { string("shell.gamify", lang) }
     static func shellToday(_ lang: AppLang) -> String { string("shell.today", lang) }
     static func shellLoadFailed(_ lang: AppLang) -> String { string("shell.loadFailed", lang) }
     static func shellLoadMore(_ lang: AppLang) -> String { string("shell.loadMore", lang) }
@@ -800,6 +820,15 @@ enum L10n {
         "thinking.finish",
         "thinking.stillJudging",
         "thinking.ready",
+        "story.names",
+        "story.facts",
+        "story.judges",
+        "story.bothSides",
+        "story.crux",
+        "story.ruling",
+        "story.count",
+        "story.closeCall",
+        "story.split",
         "verdict.winSelf",
         "verdict.split",
         "verdict.conditional",
@@ -886,8 +915,10 @@ enum L10n {
         "nav.signIn",
         "nav.account",
         "nav.pricing",
+        "nav.accountMenu",
         "nav.signOut",
         "nav.verdicts",
+        "nav.tabs",
         "tier.lockedSignIn",
         "tier.getPremium",
         "tier.checking",
@@ -1077,6 +1108,12 @@ enum L10n {
         "twoSided.wouldChange",
         "appeal.title",
         "home.example",
+        "home.yourPlaceholder",
+        "home.addContext",
+        "home.addTheirSide",
+        "home.removeTheirSide",
+        "home.sendLink",
+        "home.clear",
         "home.lead",
         "home.leadSolo",
         "home.theirSide",
@@ -1148,6 +1185,8 @@ enum L10n {
         "names.failed",
         "names.invalid",
         "account.verdicts.removed",
+        "shell.new",
+        "shell.gamify",
         "shell.today",
         "shell.loadFailed",
         "shell.loadMore",

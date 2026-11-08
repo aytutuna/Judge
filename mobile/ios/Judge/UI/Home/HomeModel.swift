@@ -54,6 +54,9 @@ final class HomeModel {
     /// Kept until the next submit or cancel, so the cover keeps its final
     /// frame while it animates out.
     private(set) var arrived: VerdictResult?
+    /// When the server accepted the running request; the cover paces its
+    /// first lines from it.
+    private(set) var acceptedAt: Date?
     /// The sides the running request sent, for the judging cover.
     private(set) var judgedSides: [JudgedSide] = []
     private(set) var error: APIError?
@@ -73,9 +76,6 @@ final class HomeModel {
     /// often, for at most the route's 300 s.
     @ObservationIgnored var inProgressInterval: Duration = .seconds(4)
     @ObservationIgnored var inProgressWait: Duration = .seconds(300)
-    /// Scroll anchor Home opens on (screenshot states); nil = the top.
-    @ObservationIgnored var initialScroll: String?
-    static let submitAnchor = "home.submit"
 
     /// One written side as the judging cover shows it; an empty name reads
     /// "Your side" / "Their side".
@@ -190,6 +190,12 @@ final class HomeModel {
     /// UTF-16 length of what would be sent, as the website's `maxLength`
     /// and the server count it.
     func length(_ app: AppModel) -> Int { outgoing(app).utf16.count }
+
+    /// "1,234 / 6,000", with the language's digit grouping.
+    static func counterText(_ length: Int, lang: AppLang) -> String {
+        let style = IntegerFormatStyle<Int>.number.locale(lang.locale)
+        return L10n.appInputCounter(lang, count: length.formatted(style), max: maxLength.formatted(style))
+    }
 
     /// What the user wrote, without the names and labels the join adds.
     var writtenLength: Int {
@@ -378,6 +384,7 @@ final class HomeModel {
         error = nil
         arrived = nil
         arrivedID = nil
+        acceptedAt = nil
         clarify = nil
         let input = PremiumInput(
             argument: outgoing(app),
@@ -466,6 +473,7 @@ final class HomeModel {
         error = nil
         arrived = nil
         arrivedID = nil
+        acceptedAt = nil
         pending = nil
         isJudging = true
         let body = VerdictRequest(
@@ -537,6 +545,7 @@ final class HomeModel {
             switch start {
             case .resume(let held, let token):
                 accepted = held
+                acceptedAt = .now
                 idempotencyKey = token
             case .post(let body, let token):
                 idempotencyKey = token
@@ -552,6 +561,7 @@ final class HomeModel {
                 case .accepted(let fresh):
                     if let entitlement = fresh.entitlement { account?.applyEntitlement(entitlement) }
                     accepted = fresh
+                    acceptedAt = .now
                     pending = PendingVerdict(accepted: fresh, key: requestKey, since: .now, idempotencyKey: token)
                 }
             }
@@ -613,6 +623,7 @@ final class HomeModel {
         isJudging = false
         arrived = nil
         arrivedID = nil
+        acceptedAt = nil
     }
 
     /// "Clear" and "Start a new case": back to an empty form.

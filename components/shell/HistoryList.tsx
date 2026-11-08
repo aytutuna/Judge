@@ -83,15 +83,21 @@ function tone(item: HistoryItem): "yours" | "theirs" | undefined {
   return item.verdict === (item.party === "a" ? "side_a" : "side_b") ? "yours" : "theirs";
 }
 
-function Row({ lang, item }: { lang: Lang; item: HistoryItem }) {
-  const ownRemoval = item.state === "removed";
-  const title =
+/** The row's headline, or a stand-in while it has none. */
+export function titleOf(lang: Lang, item: HistoryItem): string {
+  return (
     item.title ??
     (item.kind === "case"
       ? tWithDate(lang, "case.list.untitled", item.at)
-      : ownRemoval
+      : item.state === "removed"
         ? t(lang, "history.state.removed")
-        : t(lang, "shell.untitled"));
+        : t(lang, "shell.untitled"))
+  );
+}
+
+function Row({ lang, item }: { lang: Lang; item: HistoryItem }) {
+  const ownRemoval = item.state === "removed";
+  const title = titleOf(lang, item);
   // A removed verdict says so in its title already.
   const state = item.kind === "verdict" && ownRemoval ? null : stateLabel(lang, item);
   const tags = [

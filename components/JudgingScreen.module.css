@@ -53,15 +53,11 @@
   background: var(--paper);
   box-shadow: var(--shadow-1);
 }
-
-.scene {
-  position: relative;
-  width: 100%;
-  max-width: 480px;
-  margin: 0 auto;
-  aspect-ratio: 4 / 3;
-  overflow: hidden;
-  border-radius: 18px;
+@media (min-width: 960px) {
+  .card {
+    align-self: center;
+    width: clamp(640px, calc(48vh * 16 / 9 + 46px), 92vw);
+  }
 }
 
 .cancel {

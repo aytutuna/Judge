@@ -1,8 +1,8 @@
 import type { ComponentProps } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
-import { describe, expect, it } from "vitest";
-import { HistoryList, groupHistory, stateLabel } from "../components/shell/HistoryList";
-import { TabBar } from "../components/shell/TabBar";
+import { describe, expect, it, vi } from "vitest";
+import { HistoryList, groupHistory, stateLabel, titleOf } from "../components/shell/HistoryList";
+import { Panel, SideMenu } from "../components/shell/SideMenu";
 import { fromRow, mergeHistory, type HistoryItem } from "../components/shell/useHistory";
 import type { HistoryRow } from "../lib/history-types";
 import { t } from "../lib/i18n";
@@ -42,6 +42,12 @@ const RESPONDENT_MAP = [
   { original: "I", replacement: "Party B" },
   { original: "Ada", replacement: "Party A" },
 ];
+const mocked = vi.hoisted(() => ({ history: null as unknown }));
+vi.mock("../components/shell/useHistory", async (orig) => {
+  const actual = await orig<typeof import("../components/shell/useHistory")>();
+  return { ...actual, useHistory: (...a: Parameters<typeof actual.useHistory>) => mocked.history ?? actual.useHistory(...a) };
+});
+
 const TOKEN = "T".repeat(22);
 
 const ROWS: HistoryRow[] = [
@@ -75,8 +81,8 @@ function list(over: Partial<ComponentProps<typeof HistoryList>> = {}): string {
   );
 }
 
-function tabs(over: Partial<ComponentProps<typeof TabBar>> = {}): string {
-  return renderToStaticMarkup(<TabBar lang="en" pathname="/" {...over} />);
+function menu(over: Partial<ComponentProps<typeof Panel>> = {}): string {
+  return renderToStaticMarkup(<Panel lang="en" pathname="/" onClosed={() => {}} {...over} />);
 }
 
 const label = (over: Partial<HistoryRow> & { id: string }) => stateLabel("en", fromRow(row(over)));
@@ -229,20 +235,57 @@ describe("HistoryList", () => {
   });
 });
 
-describe("TabBar", () => {
-  it("has the native app's three tabs and marks the open one", () => {
-    const html = tabs();
+describe("SideMenu", () => {
+  it("renders only its button until opened", () => {
+    const html = renderToStaticMarkup(<SideMenu lang="en" pathname="/" />);
+    expect(html).toContain(`aria-label="${t("en", "nav.tabs")}"`);
+    expect(html).toContain('aria-expanded="false"');
+    expect(html).not.toContain("<dialog");
+  });
+
+  it("lists New, Verdicts and Settings and marks the open page", () => {
+    const html = menu();
     expect(html).toContain(`aria-label="${t("en", "nav.tabs")}"`);
     for (const href of ["/", "/verdicts", "/settings"]) expect(html).toContain(`href="${href}"`);
     expect(html.match(/aria-current="page"/g)).toHaveLength(1);
-    expect(html).toMatch(/<a aria-current="page" href="\/">/);
-    expect(tabs({ pathname: "/verdicts" })).toMatch(/<a aria-current="page" href="\/verdicts">/);
-    expect(tabs({ pathname: "/settings" })).toMatch(/<a aria-current="page" href="\/settings">/);
-    expect(tabs({ pathname: "/v/abc" })).not.toContain("aria-current");
+    expect(html).toMatch(/aria-current="page" href="\/"/);
+    expect(menu({ pathname: "/verdicts" })).toMatch(/aria-current="page" href="\/verdicts"/);
+    expect(menu({ pathname: "/settings" })).toMatch(/aria-current="page" href="\/settings"/);
+    expect(menu({ pathname: "/v/abc" })).not.toContain("aria-current");
+    expect(html.indexOf('href="/settings"')).toBeGreaterThan(html.indexOf('href="/verdicts"'));
+  });
+
+  it("closes with the scrim, labelled Cancel, and shows no recent rows without history", () => {
+    const html = menu();
+    expect(html).toContain(`aria-label="${t("en", "case.cancel")}"`);
+    expect(html.match(/<li/g)).toHaveLength(3);
+  });
+
+  it("lists the newest five items with the Verdicts titles, linked where they have a page", () => {
+    const rows = [...ROWS, row({ id: "extra1" }), row({ id: "extra2" })];
+    const items = rows.map(fromRow);
+    mocked.history = { items, status: "ready", more: false, loadingMore: false };
+    try {
+      const html = menu();
+      expect(html.match(/<li/g)).toHaveLength(3 + 5);
+      for (const item of items.slice(0, 5)) expect(html).toContain(titleOf("en", item));
+      expect(html).not.toContain(titleOf("en", items[5]));
+      const first = items[0];
+      expect(first.href).toBeTruthy();
+      expect(html).toContain(`href="${first.href}"`);
+      mocked.history = { items: [{ ...first, href: null }], status: "ready", more: false, loadingMore: false };
+      const unlinked = menu();
+      expect(unlinked).toContain("data-removed");
+      expect(unlinked).not.toContain(`href="${first.href}"`);
+      mocked.history = { items, status: "loading", more: false, loadingMore: false };
+      expect(menu().match(/<li/g)).toHaveLength(3);
+    } finally {
+      mocked.history = null;
+    }
   });
 
   it("speaks Turkish", () => {
-    const html = tabs({ lang: "tr" });
+    const html = menu({ lang: "tr" });
     for (const k of ["nav.new", "nav.verdicts", "nav.settings"] as const) expect(html).toContain(`>${t("tr", k)}</a>`);
   });
 });

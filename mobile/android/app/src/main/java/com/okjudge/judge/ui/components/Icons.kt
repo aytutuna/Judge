@@ -70,6 +70,11 @@ object JudgeIcons {
 
     fun close(color: Color) = icon("close", 16f, P("M4 4l8 8M12 4l-8 8", stroke = color, width = 1.6f))
 
+    fun paperclip(color: Color) = icon(
+        "paperclip", 16f,
+        P("M12.5 7.5 7.8 12.2a2.8 2.8 0 0 1-4-4l5-5a1.9 1.9 0 0 1 2.7 2.7l-5 5a.9.9 0 0 1-1.3-1.3L9.3 5.5", stroke = color, width = 1.4f),
+    )
+
     fun plus(color: Color) = icon("plus", 16f, P("M8 3v10M3 8h10", stroke = color, width = 1.6f))
 
     fun shuffle(color: Color) = icon(
@@ -77,12 +82,19 @@ object JudgeIcons {
         P("M2 4.5h2.2c3.2 0 4 7 7.2 7H14M2 11.5h2.2c1 0 1.8-.8 2.4-1.8M9 5.8c.6-.8 1.2-1.3 2.4-1.3H14M12.3 2.8 14 4.5l-1.7 1.7M12.3 9.8 14 11.5l-1.7 1.7", stroke = color, width = 1.5f),
     )
 
-    fun list(color: Color) = icon("list", 16f, P("M5 4h8M5 8h8M5 12h8M2.5 4h.01M2.5 8h.01M2.5 12h.01", stroke = color, width = 1.6f))
+    fun menu(color: Color) = icon("menu", 16f, P("M2.5 4h11M2.5 8h11M2.5 12h11", stroke = color, width = 1.6f))
 
-    fun gear(color: Color) = icon(
-        "gear", 16f,
-        P("M5.5 8a2.5 2.5 0 1 0 5 0a2.5 2.5 0 1 0 -5 0", stroke = color, width = 1.5f),
-        P("M8 1.5v2M8 12.5v2M1.5 8h2M12.5 8h2M3.4 3.4l1.4 1.4M11.2 11.2l1.4 1.4M3.4 12.6l1.4-1.4M11.2 4.8l1.4-1.4", stroke = color, width = 1.5f),
+    fun gamepad(color: Color) = icon(
+        "gamepad", 24f,
+        P(
+            "M7.5 7h9a4.5 4.5 0 0 1 4.4 5.4l-.6 3A2.8 2.8 0 0 1 15.5 16.7l-.7-1.2H9.2l-.7 1.2a2.8 2.8 0 0 1-4.8-1.3l-.6-3A4.5 4.5 0 0 1 7.5 7ZM8 10v3M6.5 11.5h3M15.5 10.5h.01M17.5 12.5h.01",
+            stroke = color, width = 1.8f,
+        ),
+    )
+
+    fun person(color: Color) = icon(
+        "person", 24f,
+        P("M12 5a4 4 0 1 0 0 8 4 4 0 0 0 0-8ZM4 21c0-4.4 3.6-7 8-7s8 2.6 8 7Z", fill = color),
     )
 
     fun trash(color: Color) = icon(

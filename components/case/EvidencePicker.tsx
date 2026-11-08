@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useId, useRef, useState } from "react";
+import { useCallback, useEffect, useId, useRef, useState, type ReactNode } from "react";
 import { track } from "@/lib/analytics/client";
 import type { EvidenceStatus, EvidenceUploadResponse } from "@/lib/case-types";
 import { ACCEPTED_IMAGE_TYPES } from "@/lib/case-types";
@@ -215,44 +215,22 @@ function ImageGlyph() {
   );
 }
 
-/** Presentational picker. Stateless apart from the hidden file input, so
- * tests render every state from plain items. */
-export function EvidencePicker({
+/** The thumbnails with their status, and the polite live region that reads
+ * them out. */
+export function EvidenceRows({
   lang,
-  max,
   items,
-  full,
-  failure,
-  overLimit,
   disabled = false,
-  onAdd,
   onRemove,
 }: {
   lang: Lang;
-  max: number;
   items: readonly EvidenceItem[];
-  full: boolean;
-  failure: UploadFailure | null;
-  overLimit: boolean;
   disabled?: boolean;
-  onAdd: (files: File[]) => void;
   onRemove: (id: string) => void;
 }) {
-  const inputRef = useRef<HTMLInputElement>(null);
-  const labelId = useId();
-  const hintId = useId();
-  const single = max === 1;
   const announce = items.map((it) => `${t(lang, "evidence.thumb", { n: it.n })}: ${evidenceStatusText(lang, it.status)}`).join(". ");
-
   return (
-    <div className={styles.evidence} role="group" aria-labelledby={labelId} aria-describedby={hintId}>
-      <p className={styles.evidenceHead}>
-        <span id={labelId}>{t(lang, "evidence.label")}</span>
-        <span className={styles.count} aria-hidden>
-          {items.length} / {max}
-        </span>
-      </p>
-
+    <>
       {items.length > 0 ? (
         <ul className={styles.chipsList}>
           {items.map((it) => {
@@ -297,17 +275,35 @@ export function EvidencePicker({
           })}
         </ul>
       ) : null}
+      <p className="sr-only" aria-live="polite">
+        {announce}
+      </p>
+    </>
+  );
+}
 
-      <button
-        type="button"
-        className={styles.evAdd}
-        onClick={() => inputRef.current?.click()}
-        disabled={disabled || full}
-      >
-        <svg viewBox="0 0 16 16" aria-hidden>
-          <path d="M8 3v10M3 8h10" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
-        </svg>
-        {t(lang, single ? "evidence.addOne" : "evidence.add")}
+/** The button that opens the file dialog, with its hidden input. */
+export function EvidenceAdd({
+  single = false,
+  disabled,
+  className,
+  onAdd,
+  onSignIn,
+  children,
+}: {
+  single?: boolean;
+  disabled: boolean;
+  className: string;
+  onAdd: (files: File[]) => void;
+  /** Signed out: the button asks for sign-in instead of opening the picker. */
+  onSignIn?: () => void;
+  children: ReactNode;
+}) {
+  const inputRef = useRef<HTMLInputElement>(null);
+  return (
+    <>
+      <button type="button" className={className} onClick={() => (onSignIn ? onSignIn() : inputRef.current?.click())} disabled={disabled}>
+        {children}
       </button>
       <input
         ref={inputRef}
@@ -322,6 +318,75 @@ export function EvidencePicker({
           if (files.length) onAdd(files);
         }}
       />
+    </>
+  );
+}
+
+/** The "too many" note and the whole-request failure. */
+export function EvidenceNotes({ lang, overLimit, failure }: { lang: Lang; overLimit: boolean; failure: UploadFailure | null }) {
+  return (
+    <>
+      {overLimit ? <p className={styles.note}>{t(lang, "evidence.limit")}</p> : null}
+      {failure ? (
+        <p className={styles.error} role="alert">
+          {apiErrorMessage(lang, failure.body, failure.status ?? undefined)}
+        </p>
+      ) : null}
+    </>
+  );
+}
+
+/** Presentational picker. Stateless, so tests render every state from plain
+ * items. */
+export function EvidencePicker({
+  lang,
+  max,
+  items,
+  full,
+  failure,
+  overLimit,
+  disabled = false,
+  onAdd,
+  onRemove,
+}: {
+  lang: Lang;
+  max: number;
+  items: readonly EvidenceItem[];
+  full: boolean;
+  failure: UploadFailure | null;
+  overLimit: boolean;
+  disabled?: boolean;
+  onAdd: (files: File[]) => void;
+  onRemove: (id: string) => void;
+}) {
+  const labelId = useId();
+  const hintId = useId();
+  const single = max === 1;
+
+  return (
+    <div className={styles.evidence} role="group" aria-labelledby={labelId} aria-describedby={hintId}>
+      <p className={styles.evidenceHead}>
+        <span id={labelId}>{t(lang, "evidence.label")}</span>
+        <span className={styles.count} aria-hidden>
+          {items.length} / {max}
+        </span>
+      </p>
+
+      <EvidenceRows lang={lang} items={items} disabled={disabled} onRemove={onRemove} />
+
+      <EvidenceAdd single={single} disabled={disabled || full} className={styles.evAdd} onAdd={onAdd}>
+        <svg viewBox="0 0 24 24" aria-hidden>
+          <path
+            d="M21 11.5 12.5 20a5.5 5.5 0 0 1-7.8-7.8l8.5-8.5a3.7 3.7 0 0 1 5.2 5.2l-8.5 8.5a1.8 1.8 0 0 1-2.6-2.6L15 7"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+        {t(lang, "home.addContext")}
+      </EvidenceAdd>
       <p className={styles.evHint} id={hintId}>
         <svg viewBox="0 0 16 16" aria-hidden>
           <rect x="3" y="7" width="10" height="7" rx="2" fill="none" stroke="currentColor" strokeWidth="1.4" />
@@ -329,15 +394,7 @@ export function EvidencePicker({
         </svg>
         <span>{single ? t(lang, "evidence.hintOne") : t(lang, "evidence.hint", { n: max })}</span>
       </p>
-      {overLimit ? <p className={styles.note}>{t(lang, "evidence.limit")}</p> : null}
-      {failure ? (
-        <p className={styles.error} role="alert">
-          {apiErrorMessage(lang, failure.body, failure.status ?? undefined)}
-        </p>
-      ) : null}
-      <p className="sr-only" aria-live="polite">
-        {announce}
-      </p>
+      <EvidenceNotes lang={lang} overLimit={overLimit} failure={failure} />
     </div>
   );
 }

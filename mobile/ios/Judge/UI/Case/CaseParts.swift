@@ -131,13 +131,13 @@ struct CaseSideForm: View {
                             Label(L10n.appHomeAddContext(lang), systemImage: "paperclip")
                                 .brandText(Self.small)
                                 .foregroundStyle(Brand.ink2)
-                                .frame(minHeight: 32)
+                                .frame(minHeight: 44)
                                 .contentShape(Rectangle())
                         }
                         .buttonStyle(.plain)
                     }
                     Spacer(minLength: 0)
-                    Text(L10n.appInputCounter(lang, count: String(length), max: String(HomeModel.maxLength)))
+                    Text(HomeModel.counterText(length, lang: lang))
                         .brandText(.footnote)
                         .monospacedDigit()
                         .foregroundStyle(length > HomeModel.warnLength ? Brand.terraInk : Brand.muted)

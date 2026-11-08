@@ -4,6 +4,8 @@
  * against the real thing rather than a re-reading of it:
  *
  *   mobile/shared/fixtures/verdicts.json         sample API bodies (validated with lib/types.ts)
+ *   mobile/shared/fixtures/story-vectors.json    the judging card's timeline: waitingAt samples and
+ *                                                the ending plan for a spread of verdicts
  *   mobile/shared/fixtures/display-vectors.json  expected labels, tug, tilt, waits (pluralWaits
  *                                                in languages with more plural forms), errors,
  *                                                restored names
@@ -69,6 +71,7 @@ import {
 } from "../../../lib/case-types";
 import type { DisplayState } from "../../../lib/originals-types";
 import { compareHistory, historyKey, type HistoryResponse, type HistoryRow } from "../../../lib/history-types";
+import { ending, waitingAt, type Summary } from "../../../components/court/story";
 import { PRICING } from "../../../lib/pricing";
 import { POLL_AFTER_MS, type VerdictAcceptedResponse, type VerdictPollResponse } from "../../../lib/verdict-poll";
 import {
@@ -1065,6 +1068,41 @@ function displayVectors() {
   };
 }
 
+function storyVectors() {
+  const waiting = [
+    [0, null],
+    [60000, null],
+    [1000, 400],
+    [2510, 400],
+    [5000, 4000],
+    [13010, 4000],
+    [19010, 4000],
+    [26010, 4000],
+    [33010, 4000],
+    [600000, 4000],
+  ].map(([elapsed, acceptedAt]) => ({ elapsed, acceptedAt, index: waitingAt(elapsed!, acceptedAt) }));
+
+  const base: Summary = { votes: ["a", "a", "a"], escalated: false, extra: 0, winner: "a", trial: null };
+  const cases: { name: string; fromWaiting: number; summary: Summary | null; reduced: boolean }[] = [];
+  const add = (name: string, over: Partial<Summary>, fromWaiting = 5) =>
+    cases.push({ name, fromWaiting, summary: { ...base, ...over }, reduced: false });
+  add("unanimous", {});
+  add("two_one", { votes: ["a", "b", "a"] });
+  add("other_votes", { votes: ["a", "other", "b"], winner: null });
+  add("refusal_no_votes", { votes: [], winner: null });
+  add("escalated_two_extra", { votes: ["a", "b", "a", "a", "b"], escalated: true, extra: 2 });
+  add("escalated_no_extra", { escalated: true });
+  add("escalated_capped_extra", { votes: ["a", "b", "a", "a", "b", "a", "b"], escalated: true, extra: 4 });
+  for (const trial of ["survived", "uncertain", "overturned"] as const) add(`trial_${trial}`, { trial });
+  add("trial_without_votes", { votes: [], winner: null, trial: "survived" });
+  add("everything", { votes: ["b", "a", "b", "b", "a"], winner: "b", escalated: true, extra: 2, trial: "overturned" }, 0);
+  cases.push({ name: "reduced", fromWaiting: 2, summary: base, reduced: true });
+  cases.push({ name: "no_result", fromWaiting: 2, summary: null, reduced: false });
+  for (let i = 0; i < 5; i++) add(`done_during_${i}`, {}, i);
+
+  return { waiting, endings: cases.map((c) => ({ ...c, ...ending(c.fromWaiting, c.summary, c.reduced) })) };
+}
+
 async function main(): Promise<void> {
   // Every language but English loads on demand; without this the Turkish
   // vectors would quietly read English.
@@ -1095,6 +1133,8 @@ async function main(): Promise<void> {
   };
   const files: [string, string][] = [
     [join(OUT_DIR, "verdicts.json"), `${JSON.stringify(verdicts, null, 2)}\n`],
+    [join(OUT_DIR, "story-vectors.json"), `${JSON.stringify(storyVectors(), null, 2)}
+`],
     [join(OUT_DIR, "display-vectors.json"), `${JSON.stringify(displayVectors(), null, 2)}\n`],
   ];
   let stale = 0;

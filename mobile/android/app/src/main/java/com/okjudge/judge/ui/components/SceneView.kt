@@ -38,7 +38,7 @@ import com.okjudge.judge.core.display.VerdictDisplay
 import com.okjudge.judge.ui.theme.LocalSides
 import com.okjudge.judge.ui.theme.Palette
 
-/** False where a WebView draws nothing (Robolectric tests): the flat balance stands in. */
+/** False where a WebView draws nothing (Robolectric tests): a still stands in for the scene and the court. */
 val LocalSceneLive = staticCompositionLocalOf { true }
 
 val SceneShape = RoundedCornerShape(18.dp)

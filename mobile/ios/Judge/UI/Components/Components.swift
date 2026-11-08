@@ -1,8 +1,8 @@
 import SafariServices
 import SwiftUI
 
-/// The judging balance: the brand mark redrawn with a level beam that
-/// rotates about the pivot tip, the spheres in the side colours. `angle` is
+/// The judging balance: a level beam that rotates about the pivot tip, the
+/// spheres in the side colours. `angle` is
 /// clockwise-positive degrees, so a negative angle lowers Party A's (left)
 /// end.
 struct BalanceCanvas: View {
@@ -84,6 +84,8 @@ struct GhostButtonStyle: ButtonStyle {
             .frame(minHeight: 40)
             .background(Capsule().fill(configuration.isPressed ? Brand.paperHi : Brand.paper))
             .overlay(Capsule().strokeBorder(Brand.line2, lineWidth: 1))
+            .frame(minHeight: 44)
+            .contentShape(Rectangle())
             .scaleEffect(configuration.isPressed ? 0.98 : 1)
             .opacity(isEnabled ? 1 : 0.4)
     }
@@ -95,7 +97,7 @@ struct LinkButtonStyle: ButtonStyle {
         configuration.label
             .brandText(.chip)
             .foregroundStyle(Brand.terraInk)
-            .frame(minHeight: 40)
+            .frame(minHeight: 44)
             .opacity(configuration.isPressed ? 0.6 : 1)
     }
 }

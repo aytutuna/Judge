@@ -30,6 +30,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -60,7 +61,6 @@ import androidx.compose.ui.unit.sp
 import com.okjudge.judge.core.data.SavedVerdict
 import com.okjudge.judge.core.data.parseIso
 import com.okjudge.judge.core.display.PartyNames
-import com.okjudge.judge.core.display.RestoreNames
 import com.okjudge.judge.core.display.SealSide
 import com.okjudge.judge.core.display.VerdictDisplay
 import com.okjudge.judge.core.model.HistoryItem
@@ -134,6 +134,8 @@ fun HistoryScreen(
     notice: HistoryNotice? = null,
     onLoadMore: () -> Unit = {},
     onRetry: () -> Unit = {},
+    /** Told when select mode starts and stops, for the shell to hide its bar. */
+    onSelecting: (Boolean) -> Unit = {},
     /** For invites whose time ran out since the list was loaded. */
     now: Long = System.currentTimeMillis(),
 ) {
@@ -157,6 +159,10 @@ fun HistoryScreen(
     }
 
     BackHandler(enabled = picked != null) { selection = null }
+    DisposableEffect(picked != null) {
+        onSelecting(picked != null)
+        onDispose { onSelecting(false) }
+    }
 
     Column(modifier.fillMaxSize()) {
         if (picked != null) {
@@ -168,12 +174,12 @@ fun HistoryScreen(
                 onDelete = { confirmSelected = true },
             )
         } else {
-            Row(
-                Modifier.fillMaxWidth().padding(start = 20.dp, end = 20.dp, top = 8.dp).height(48.dp),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Text(s.navVerdicts, style = JudgeType.sectionTitle.copy(fontSize = JudgeType.sectionTitle.fontSize * 1.3f), modifier = Modifier.weight(1f))
-                if (selectable.isNotEmpty()) {
+            if (selectable.isNotEmpty()) {
+                Row(
+                    Modifier.fillMaxWidth().padding(start = 20.dp, end = 20.dp, top = 8.dp).height(48.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.End,
+                ) {
                     TextAction(s.appHistorySelect, { selection = HistorySelection() }, Modifier.testTag(HistoryTags.SELECT))
                 }
             }
@@ -272,7 +278,7 @@ fun HistoryScreen(
     }
 }
 
-private fun opens(e: HistoryEntry) = when (e) {
+internal fun opens(e: HistoryEntry) = when (e) {
     is HistoryEntry.Account -> HistoryLabels.openable(e.item)
     is HistoryEntry.Phone -> true
 }
@@ -440,8 +446,7 @@ private fun PhoneRow(item: SavedVerdict, interaction: Modifier, selected: Boolea
     val result = item.original.result
     val parties = PartyNames.partyNames(item.nameMap, item.lang, s)
     val label = VerdictDisplay.verdictLabel(result, parties, s)
-    val shown = item.translations[lang]?.result ?: result
-    val headline = remember(shown, item.nameMap, item.lang) { RestoreNames.headline(shown, item.nameMap, item.lang) }
+    val headline = remember(item, lang) { HistoryLabels.title(item, lang) }
     val date = remember(item.createdAt, lang) { formatDate(item.createdAt, lang) }
     val dot = when (VerdictDisplay.sealOf(result)) {
         SealSide.A -> LocalSides.current.a.ink

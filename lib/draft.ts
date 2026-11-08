@@ -10,11 +10,19 @@
  * Nothing is saved on any other path.
  */
 
-export type Draft = { argument: string; otherSide?: string };
+export type Draft = {
+  argument: string;
+  otherSide?: string;
+  mineName?: string;
+  otherName?: string;
+  theirsOpen?: boolean;
+};
 
 export const DRAFT_KEY = "verdict-draft";
 /** Same cap as the form (lib/sides MAX_ARGUMENT). */
 const MAX_DRAFT = 6000;
+/** Same cap as the name inputs. */
+const MAX_NAME = 40;
 const DRAFT_TTL_MS = 30 * 60_000;
 
 let source: (() => Draft | null) | null = null;
@@ -71,9 +79,14 @@ export function parseDraft(raw: string): Draft | null {
     return null;
   }
   if (typeof v !== "object" || v === null) return null;
-  const { argument, otherSide } = v as { argument?: unknown; otherSide?: unknown };
+  const { argument, otherSide, mineName, otherName, theirsOpen } = v as Record<string, unknown>;
   if (typeof argument !== "string" || argument.length > MAX_DRAFT) return null;
   if (otherSide !== undefined && (typeof otherSide !== "string" || otherSide.length > MAX_DRAFT)) return null;
-  if (!argument.trim() && !otherSide?.trim()) return null;
-  return otherSide ? { argument, otherSide } : { argument };
+  if (!argument.trim() && !(otherSide as string | undefined)?.trim()) return null;
+  const draft: Draft = { argument };
+  if (otherSide) draft.otherSide = otherSide as string;
+  if (typeof mineName === "string" && mineName.length <= MAX_NAME) draft.mineName = mineName;
+  if (typeof otherName === "string" && otherName.length <= MAX_NAME) draft.otherName = otherName;
+  if (theirsOpen === true) draft.theirsOpen = true;
+  return draft;
 }

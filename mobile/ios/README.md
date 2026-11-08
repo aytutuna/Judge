@@ -80,7 +80,8 @@ Debug builds accept `-JudgeScreenshotState <screen>:<lang>` and render a fixed
 state from `mobile/shared/fixtures/verdicts.json`, with an in-memory history,
 a separate defaults suite and no network (the API points at a closed local
 port). Screens: `home` (signed in, so the link and "Add context" show),
-`home-example` (both sides from "Try an example"), `home-error`, `judging`, `history`, `settings`, `signin`, `signin-code`,
+`home-example` (both sides from "Try an example"), `home-error`, `judging`, `judging-plain` (the same
+with Gamify off), `history`, `settings`, `signin`, `signin-code`,
 `account` (Settings, signed in with a fixture account), `verdict/<sample>`
 for any key of `verdictResponses` (opened as a saved verdict),
 `verdict-thread` (a fresh verdict, as the judging cover hands over to it), `verdict-context`,
@@ -89,7 +90,7 @@ context" form, its Premium lock and the limit note), and the
 account states `balance/welcome` (a new account's free verdict),
 `balance/none` (monthly allowance used up), `pricing`, `pricing-store`
 (store prices on the buy buttons, from a fake store), `pricing-buy` (the
-same, scrolled to the packs and the monthly plan), `clarify` and
+same, scrolled to the cards), `clarify` and
 `evidence` (picked screenshots in mixed states, under the box), and the case states
 `mode-both`, `case-write` and `case-write-answered` (the owner's page of a
 case the link started, with their side still to write, before and after the
@@ -99,9 +100,9 @@ picked) and `case/<state>` (a key of `cases.views` or
 `awaiting`, `judging`, `judged`, `one-sided`, `appeal`, `appeal-judging`,
 `failed`, `expired`, `removed`; Turkish takes the `_tr` view if there is one).
 Languages: `en`, `tr`. Add `:dark` (`home:en:dark`) for the dark appearance;
-without it a state is light whatever the simulator uses. These states draw
-the flat balance in place of the bundled 3D scene, so the shots match from
-run to run.
+without it a state is light whatever the simulator uses. These states hold
+the still court ground in place of the bundled court page and draw the flat
+balance in place of the bundled 3D scene, so the shots match from run to run.
 
 ```sh
 APP=build/DerivedData/Build/Products/Debug-iphonesimulator/Judge.app
@@ -299,10 +300,12 @@ available. It covers:
 
 - the display ports against `mobile/shared/fixtures/display-vectors.json`
   (party names, verdict labels, tug and tilt, crux style, lean tally, share
-  URL, waits, error messages, confidence text, palette, judging timeline),
-  computed by the website's own code;
+  URL, waits, error messages, confidence text, palette), computed by the
+  website's own code;
+- the judging story against `mobile/shared/fixtures/story-vectors.json`
+  (waiting lines, the plan once the verdict lands);
 - decoding of every sample body, absent vs `null` lean, unknown enum values;
-- the judging state machine, the progress bar and the balance motion;
+- the balance motion;
 - error mapping, and `JudgeAPI` against a stub `URLProtocol` (headers,
   timeouts, every error body, 524 and 504, HTML 5xx, offline, no automatic
   retry);

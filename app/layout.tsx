@@ -51,10 +51,12 @@ export const viewport: Viewport = {
     { media: "(prefers-color-scheme: dark)", color: PALETTE_DARK.ivory },
   ],
   colorScheme: "light dark",
+  // The keyboard shrinks the page, so the home composer rises above it.
+  interactiveWidget: "resizes-content",
 };
 
 // Sets a stored light/dark choice before first paint; "system" needs no attribute.
-const THEME_INIT = `try{var t=localStorage.getItem("verdict-theme");if(t==="light"||t==="dark"){document.documentElement.dataset.theme=t;document.querySelectorAll('meta[name="theme-color"]').forEach(function(m){m.content=t==="dark"?"${PALETTE_DARK.ivory}":"${PALETTE.ivory}"})}}catch(e){}`;
+const THEME_INIT = `try{var t=localStorage.getItem("verdict-theme");if(t==="light"||t==="dark"){document.documentElement.dataset.theme=t;document.querySelectorAll('meta[name="theme-color"]').forEach(function(m){m.content=t==="dark"?"${PALETTE_DARK.ivory}":"${PALETTE.ivory}"})}}catch(e){}try{if(localStorage.getItem("verdict-game")==="off")document.documentElement.dataset.game="off"}catch(e){}`;
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (

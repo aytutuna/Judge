@@ -4,6 +4,7 @@ import Link from "next/link";
 import { track } from "@/lib/analytics/client";
 import { t, type Key } from "@/lib/i18n";
 import { useLang } from "@/lib/lang";
+import { setGame, useGame } from "@/lib/game";
 import { setTheme, useTheme, type Theme } from "@/lib/theme";
 import { signInOffered, useViewer } from "@/lib/use-viewer";
 import { LangPicker } from "../LangPicker";
@@ -31,6 +32,7 @@ const OUT = "M7 17 17 7M8 7h9v9";
 export function SettingsView() {
   const lang = useLang();
   const theme = useTheme();
+  const game = useGame();
 
   const viewer = useViewer();
   const nothingToShow = viewer.status === "ready" && !viewer.me?.user && !signInOffered(viewer.config);
@@ -84,6 +86,29 @@ export function SettingsView() {
                 </svg>
               </label>
             ))}
+          </div>
+          <div className={styles.options}>
+            <label className={styles.option}>
+              <input
+                type="checkbox"
+                checked={game}
+                onChange={(e) => {
+                  setGame(e.target.checked);
+                  track("settings_changed", { key: "gamify" });
+                }}
+              />
+              <span>{t(lang, "shell.gamify")}</span>
+              <svg viewBox="0 0 24 24" aria-hidden className={styles.optionTick}>
+                <path
+                  d="m5 12.5 4.5 4.5L19 7.5"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </label>
           </div>
         </section>
       </div>

@@ -5,8 +5,13 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.DrawerValue
+import androidx.compose.material3.ModalNavigationDrawer
+import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
@@ -29,6 +34,7 @@ import com.okjudge.judge.core.model.SubscriptionView
 import com.okjudge.judge.core.model.Viewer
 import com.okjudge.judge.i18n.AppLang
 import com.okjudge.judge.i18n.LangPref
+import com.okjudge.judge.ui.components.LocalGamify
 import com.okjudge.judge.ui.components.TopBar
 import com.okjudge.judge.ui.history.HistoryPaging
 import com.okjudge.judge.ui.history.HistoryScreen
@@ -84,8 +90,9 @@ class ScreenshotsTest {
     @get:Rule
     val compose = createComposeRule()
 
-    private fun capture(name: String, tall: Boolean = false, content: @Composable () -> Unit) {
+    private fun capture(name: String, tall: Boolean = false, tablet: Boolean = false, content: @Composable () -> Unit) {
         if (tall) RuntimeEnvironment.setQualifiers("+w393dp-h2900dp")
+        if (tablet) RuntimeEnvironment.setQualifiers("+w800dp-h1280dp")
         compose.mainClock.autoAdvance = false
         compose.setContent(content)
         compose.mainClock.advanceTimeBy(5_000)
@@ -123,6 +130,17 @@ class ScreenshotsTest {
                     VerdictFlow.Side(mine = false, name = "Sam", text = "It's a filling inside sliced bread. That's a sandwich, end of story."),
                 ),
             )
+        }
+    }
+
+    @Test
+    fun judging_waiting_gamifyOff() = capture("judging_waiting_gamify_off_en") {
+        Themed(AppLang.EN) {
+            CompositionLocalProvider(LocalGamify provides false) {
+                JudgingScreen(
+                    done = false, result = null, startedAt = System.currentTimeMillis() - 4_000, reducedMotion = true, onFinished = {}, onCancel = {},
+                )
+            }
         }
     }
 
@@ -280,6 +298,13 @@ class ScreenshotsTest {
     @Test
     fun home_noVerdictsLeft_en() = capture("home_balance_none_en", tall = true) {
         Themed(AppLang.EN) { HomeScreen(premiumHome(AppLang.EN, "fair_use"), {}, {}, {}) }
+    }
+
+    @Test
+    fun home_signedOutAddContext_en() = capture("home_signed_out_en", tall = true) {
+        Themed(AppLang.EN) {
+            HomeScreen(homeState(AppLang.EN).copy(features = Features(cases = true, evidence = true)), {}, {}, {})
+        }
     }
 
     @Test
@@ -586,7 +611,7 @@ class ScreenshotsTest {
     }
 
     @Test
-    fun home_twoSides_en() = capture("home_two_sides_en", tall = true) {
+    fun home_twoSides_en() = capture("home_two_sides_en") {
         Themed(AppLang.EN) {
             HomeScreen(
                 premiumHome(AppLang.EN, "credits7").copy(
@@ -598,6 +623,122 @@ class ScreenshotsTest {
                 ),
                 {}, {}, {},
             )
+        }
+    }
+
+    @Test
+    fun home_withBar_en() = capture("home_bar_en") {
+        Themed(AppLang.EN) {
+            Column(Modifier.fillMaxSize()) {
+                PageBar(UiTestSupport.s(AppLang.EN).appTabNew, {}, {}, FocusRequester())
+                HomeScreen(HomeUiState(), {}, {}, {})
+            }
+        }
+    }
+
+    @Test
+    fun home_withBar_signedIn_en_dark() = capture("home_bar_signed_in_en_dark") {
+        Themed(AppLang.EN, dark = true) {
+            Column(Modifier.fillMaxSize()) {
+                PageBar(
+                    UiTestSupport.s(AppLang.EN).navVerdicts, {}, {}, FocusRequester(),
+                    account = AccountActions(true, Viewer("u1", "sam@example.com", "Sam"), {}, {}, {}, {}),
+                )
+                HomeScreen(HomeUiState(), {}, {}, {})
+            }
+        }
+    }
+
+    @Test
+    fun home_tablet_en() = capture("home_tablet_en", tablet = true) {
+        Themed(AppLang.EN) {
+            Column(Modifier.fillMaxSize()) {
+                PageBar(UiTestSupport.s(AppLang.EN).appTabNew, {}, {}, FocusRequester())
+                HomeScreen(HomeUiState(), {}, {}, {})
+            }
+        }
+    }
+
+    @Test
+    fun judging_tablet_en() = capture("judging_tablet_en", tablet = true) {
+        Themed(AppLang.EN) {
+            JudgingScreen(done = false, result = null, startedAt = System.currentTimeMillis() - 4_000, reducedMotion = true, onFinished = {}, onCancel = {})
+        }
+    }
+
+    @Test
+    fun home_withBar_gamifyOff_en() = capture("home_bar_gamify_off_en") {
+        Themed(AppLang.EN) {
+            CompositionLocalProvider(LocalGamify provides false) {
+                Column(Modifier.fillMaxSize()) {
+                    PageBar(UiTestSupport.s(AppLang.EN).appTabNew, {}, {}, FocusRequester(), gamify = false)
+                    HomeScreen(HomeUiState(), {}, {}, {})
+                }
+            }
+        }
+    }
+
+    @Test
+    fun home_withBar_gamifyOff_typed_en() = capture("home_bar_gamify_off_typed_en") {
+        Themed(AppLang.EN) {
+            CompositionLocalProvider(LocalGamify provides false) {
+                Column(Modifier.fillMaxSize()) {
+                    PageBar(UiTestSupport.s(AppLang.EN).appTabNew, {}, {}, FocusRequester(), gamify = false)
+                    HomeScreen(HomeUiState(argument = "He keeps eating my lunch from the shared fridge."), {}, {}, {})
+                }
+            }
+        }
+    }
+
+    private fun narrowBar(name: String, lang: AppLang, width: Int) {
+        RuntimeEnvironment.setQualifiers("+w${width}dp-h200dp")
+        capture(name) { NarrowBar(lang) }
+    }
+
+    @Composable
+    private fun NarrowBar(lang: AppLang) {
+        Themed(lang) {
+            PageBar(
+                UiTestSupport.s(lang).appTabSettings, {}, {}, FocusRequester(),
+                account = AccountActions(true, Viewer("u1", "sam@example.com", "Sam"), {}, {}, {}, {}),
+            )
+        }
+    }
+
+    @Test
+    fun bar_de_320() = narrowBar("bar_de_320", AppLang.DE, 320)
+
+    @Test
+    fun bar_de_360() = narrowBar("bar_de_360", AppLang.DE, 360)
+
+    @Test
+    fun bar_ar_320() = narrowBar("bar_ar_320", AppLang.AR, 320)
+
+    @Test
+    fun bar_ar_360() = narrowBar("bar_ar_360", AppLang.AR, 360)
+
+    @Test
+    fun menu_open_en() = capture("menu_open_en") { OpenMenu(dark = false) }
+
+    @Test
+    fun menu_open_en_dark() = capture("menu_open_en_dark") { OpenMenu(dark = true) }
+
+    @Composable
+    private fun OpenMenu(dark: Boolean) {
+        val s = UiTestSupport.s(AppLang.EN)
+        Themed(AppLang.EN, dark = dark) {
+            ModalNavigationDrawer(
+                drawerContent = {
+                    MenuPanel(Tab.HISTORY, phoneRows("win_a_self", "win_b_named", "lean_tie"), false, FocusRequester(), {}, {}, {})
+                },
+                drawerState = rememberDrawerState(DrawerValue.Open),
+                scrimColor = menuScrim,
+            ) {
+                Column(Modifier.fillMaxSize()) {
+                    PageBar(s.navVerdicts, {}, {}, FocusRequester())
+                    HistoryScreen(phoneRows("win_a_self", "win_b_named", "lean_tie"), {}, { _, _ -> })
+                }
+            }
         }
     }
 }

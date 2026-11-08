@@ -266,8 +266,14 @@ describe("account entry in the nav", () => {
     expect(initialOf("", "")).toBe("?");
   });
 
-  it("server-renders nothing (no account UI before the store answers)", () => {
-    expect(renderToStaticMarkup(<AccountMenu lang="en" />)).toBe("");
+  it("server-renders a closed signed-out avatar with Settings and Pricing", () => {
+    const html = renderToStaticMarkup(<AccountMenu lang="en" />);
+    expect(html).toContain('aria-haspopup="menu"');
+    expect(html).toContain('aria-expanded="false"');
+    expect(html).toContain('href="/settings"');
+    expect(html).toContain('href="/pricing"');
+    expect(html).not.toContain(STRINGS.en["nav.signOut"]);
+    expect(html).not.toContain(STRINGS.en["nav.signIn"]);
   });
 
   it("links Pricing in the footer", () => {

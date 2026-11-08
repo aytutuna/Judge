@@ -87,7 +87,7 @@ class PremiumScreensTest {
         compose.onAllNodesWithTag(HomeTags.BALANCE).assertCountEquals(0)
         state = state.copy(signedIn = false, entitlement = me("credits7").entitlement)
         compose.onAllNodesWithTag(HomeTags.BALANCE).assertCountEquals(0)
-        compose.onAllNodesWithTag(EvidenceTags.ADD).assertCountEquals(0)
+        compose.onAllNodesWithTag(EvidenceTags.ADD).assertCountEquals(1)
     }
 
     @Test
@@ -153,7 +153,7 @@ class PremiumScreensTest {
     }
 
     @Test
-    fun home_addContext_isInTheBox_withTheCounter_andTheRowsBelow() {
+    fun home_addContext_isInTheBox_withTheCounter_andTheRowsAbove() {
         val items = listOf(EvidenceItem("ev1", 1, EvidenceStatus.OK, token = "t"))
         compose.setContent {
             Themed(AppLang.EN) { HomeScreen(premiumHome(EvidenceState(items, max = 3)), {}, {}, {}) }
@@ -163,7 +163,7 @@ class PremiumScreensTest {
         compose.onNodeWithTag(EvidenceTags.item(1)).assertExists()
         val box = compose.onNodeWithTag(HomeTags.INPUT).fetchSemanticsNode().boundsInRoot
         assertTrue(compose.onNodeWithTag(EvidenceTags.ADD).fetchSemanticsNode().boundsInRoot.top >= box.bottom)
-        assertTrue(compose.onNodeWithTag(EvidenceTags.item(1)).fetchSemanticsNode().boundsInRoot.top > box.bottom)
+        assertTrue(compose.onNodeWithTag(EvidenceTags.item(1)).fetchSemanticsNode().boundsInRoot.bottom <= box.top)
         compose.onNodeWithText(en.text("evidence.hintOne")!!, substring = true).assertDoesNotExist()
     }
 
@@ -273,9 +273,12 @@ class PremiumScreensTest {
             }
         }
         compose.onAllNodesWithText(en.pricingComingSoon).assertCountEquals(0)
-        // The price column and the button both carry the store's price.
-        compose.onAllNodesWithText("TRY 44.99").assertCountEquals(2)
-        compose.onAllNodesWithText("TRY 649.99").assertCountEquals(2)
+        // The button carries the store's price; the column beside it drops the repeat.
+        compose.onAllNodesWithText("TRY 44.99").assertCountEquals(1)
+        compose.onAllNodesWithText("TRY 649.99").assertCountEquals(1)
+        compose.onAllNodesWithTag(PricingTags.BUY)[0].assertTextEquals("TRY 44.99")
+        compose.onAllNodesWithTag(PricingTags.BUY)[2].assertTextEquals("TRY 649.99")
+        compose.onAllNodesWithText(en.pricingPerVerdict("TRY 44.99")).assertCountEquals(0)
         compose.onAllNodesWithText("$1.00").assertCountEquals(0)
         // The "prices in USD, payments not open" footnote goes once the store sells.
         compose.onAllNodesWithText(en.pricingNote).assertCountEquals(0)
@@ -435,17 +438,16 @@ class PremiumScreensTest {
     }
 
     @Test
-    fun judging_premium_showsTheWebCheckLine() {
-        var done by mutableStateOf(false)
+    fun judging_logTicksOffWhatCameBefore() {
         compose.setContent {
             Themed(AppLang.EN) {
-                JudgingScreen(done = done, result = null, startedAt = 0, reducedMotion = true, onFinished = {}, onCancel = {}, premium = true)
+                JudgingScreen(done = false, result = null, startedAt = 0, reducedMotion = true, onFinished = {}, onCancel = {}, premium = true)
             }
         }
-        compose.onNodeWithTag(JudgingTags.FACTCHECK).assertTextContains(en.thinkingFactcheck)
-        compose.onNodeWithText(en.thinkingPremiumHelper).assertExists()
-        done = true
-        compose.waitForIdle()
-        compose.onNodeWithTag(JudgingTags.FACTCHECK).assertTextContains(en.thinkingFactcheckDone)
+        // Long past the last wait, so every line of the story is in the log.
+        compose.onNodeWithText(en.storyNames, useUnmergedTree = true).assertExists()
+        compose.onNodeWithText(en.storyCrux, useUnmergedTree = true).assertExists()
+        compose.onNodeWithText(en.storyRuling, useUnmergedTree = true).assertExists()
+        compose.onNodeWithTag(JudgingTags.CAPTION).assertExists()
     }
 }

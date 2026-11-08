@@ -51,11 +51,11 @@ describe("PricingTable", () => {
   it("lists what every verdict gets, every pack and the monthly plan", () => {
     const html = render();
     expect(html).toContain('id="plan-included"');
-    expect(html).toContain('id="plan-buy"');
+    expect(html).toContain(`aria-label="${t("en", "pricing.buy.title")}"`);
     for (const p of pricing.packs) {
       expect(html).toContain(p.credits === 1 ? "1 verdict" : `${p.credits} verdicts`);
       expect(html).toContain(formatPrice(p.priceUsd, "en"));
-      expect(html).toContain(`${formatPrice(p.priceUsd / p.credits, "en")} per verdict`);
+      if (p.credits > 1) expect(html).toContain(`${formatPrice(p.priceUsd / p.credits, "en")} per verdict`);
     }
     expect(html).toContain(`${pricing.monthly.fairUseCap} verdicts a month`);
     expect(html).toContain("Renews every month");
@@ -64,9 +64,32 @@ describe("PricingTable", () => {
 
   it("the monthly card names the offer and shows its price once", () => {
     const html = render();
-    const monthly = html.slice(html.indexOf(t("en", "pricing.monthly.title")));
+    const monthly = html.slice(html.indexOf(`${pricing.monthly.fairUseCap} verdicts a month`));
     const card = monthly.slice(0, monthly.indexOf("</li>"));
     expect(count(card, formatPrice(pricing.monthly.priceUsd, "en"))).toBe(1);
+  });
+
+  it("prices come first, then the heading, then what every verdict gets", () => {
+    const html = renderToStaticMarkup(<PricingView />);
+    const at = (s: string) => html.indexOf(s);
+    expect(at("<h1")).toBeGreaterThan(at(formatPrice(pricing.monthly.priceUsd, "en")));
+    expect(at("<h1")).toBeGreaterThan(at("1 verdict"));
+    expect(at("<h1")).toBeLessThan(at(t("en", "pricing.packsLead")));
+    expect(at(t("en", "pricing.packsLead"))).toBeLessThan(at('id="plan-included"'));
+    expect(at("verdicts a month")).toBeGreaterThan(at("10 verdicts"));
+  });
+
+  it("the one-verdict card does not repeat its price as a per-verdict line", () => {
+    const html = render();
+    expect(html).not.toContain(`${formatPrice(1, "en")} per verdict`);
+    expect(html).toContain(`${formatPrice(0.75, "en")} per verdict`);
+  });
+
+  it("once purchases open the button carries the price and the card does not repeat it", () => {
+    const html = render({ pricing: { ...pricing, purchasesEnabled: true } });
+    expect(html).not.toContain("offerPrice");
+    expect(html).not.toContain("Coming soon");
+    expect(count(html, ">" + formatPrice(pricing.monthly.priceUsd, "en") + "<")).toBe(1);
   });
 
   it("buy buttons are disabled and say Coming soon while purchases are off", () => {

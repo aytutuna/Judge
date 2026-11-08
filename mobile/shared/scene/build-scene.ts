@@ -5,13 +5,19 @@
  *   Android  mobile/android/app/src/main/assets/scene/index.html
  *   iOS      mobile/ios/Judge/Resources/Scene/index.html
  *
+ * and ../court/court.ts (the street court, with public/court's art inlined)
+ * into the page for the court views:
+ *
+ *   Android  mobile/android/app/src/main/assets/court/index.html
+ *   iOS      mobile/ios/Judge/Resources/Court/court.html
+ *
  * Run from the repo root:  npm run scene:build
  * CI / pre-commit check:   npx tsx mobile/shared/scene/build-scene.ts --check
  *
  * Script and style are inlined and nothing is fetched, so the page works from
  * a file:// URL. The output is committed so neither native build needs Node.
  */
-import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
 import { build } from "esbuild";
 import { PALETTE, PALETTE_DARK } from "../../../lib/palette";
@@ -23,6 +29,12 @@ const OUTPUTS = [
   join(MOBILE_DIR, "android/app/src/main/assets/scene/index.html"),
   join(MOBILE_DIR, "ios/Judge/Resources/Scene/index.html"),
 ];
+// Not index.html on iOS: the resource groups flatten, and Scene has taken that name.
+const COURT_OUTPUTS = [
+  join(MOBILE_DIR, "android/app/src/main/assets/court/index.html"),
+  join(MOBILE_DIR, "ios/Judge/Resources/Court/court.html"),
+];
+const COURT_ART = join(REPO_DIR, "public/court");
 
 // The --scene-* and --party-* tokens from app/globals.css. Dark follows the
 // system until native code pins a theme with setTheme (data-theme on <html>).
@@ -44,9 +56,23 @@ body[data-status=ready] #fallback{opacity:0;transition-duration:.2s}
 body[data-status=fallback] canvas{visibility:hidden}
 body[data-reduced=true] canvas,body[data-reduced=true] #fallback{transition:none}`;
 
-async function bundle(): Promise<string> {
+const COURT_CSS = `html,body{margin:0;height:100%;overflow:hidden;background:transparent;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+canvas{position:absolute;left:50%;top:50%;width:min(100vw,177.78vh);aspect-ratio:16/9;transform:translate(-50%,-50%);image-rendering:pixelated}`;
+
+/** Every picture under public/court as a data URI, by the name the engine asks for ("props/ball"). */
+function courtArt(): Record<string, string> {
+  const art: Record<string, string> = {};
+  for (const file of readdirSync(COURT_ART, { recursive: true, encoding: "utf8" }).sort()) {
+    if (!file.endsWith(".png")) continue;
+    const png = readFileSync(join(COURT_ART, file)).toString("base64");
+    art[file.replace(/\\/g, "/").slice(0, -4)] = `data:image/png;base64,${png}`;
+  }
+  return art;
+}
+
+async function bundle(entry: string, define: Record<string, string> = {}): Promise<string> {
   const result = await build({
-    entryPoints: [join(__dirname, "scene.ts")],
+    entryPoints: [entry],
     tsconfig: join(REPO_DIR, "tsconfig.json"),
     bundle: true,
     minify: true,
@@ -54,7 +80,7 @@ async function bundle(): Promise<string> {
     format: "iife",
     target: "es2020",
     legalComments: "none",
-    define: { "process.env.NODE_ENV": '"production"' },
+    define: { "process.env.NODE_ENV": '"production"', ...define },
     // lib/balance.ts reaches lib/i18n.ts, whose languages load on demand. The
     // scene never shows text, so leave those imports unresolved rather than
     // inline every language.
@@ -64,6 +90,24 @@ async function bundle(): Promise<string> {
   });
   // Keep the inline script from closing itself early.
   return result.outputFiles[0].text.trim().replace(/<\/script/gi, "<\\/script");
+}
+
+function courtPage(js: string): string {
+  return [
+    "<!doctype html>",
+    '<html lang="en">',
+    "<head>",
+    '<meta charset="utf-8">',
+    '<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">',
+    "<title>Judge</title>",
+    `<style>${COURT_CSS}</style>`,
+    "</head>",
+    "<body>",
+    `<script>${js}</script>`,
+    "</body>",
+    "</html>",
+    "",
+  ].join("\n");
 }
 
 function page(js: string): string {
@@ -87,9 +131,12 @@ function page(js: string): string {
 
 async function main(): Promise<void> {
   const check = process.argv.includes("--check");
-  const html = page(await bundle());
+  const html = page(await bundle(join(__dirname, "scene.ts")));
+  const court = courtPage(
+    await bundle(join(__dirname, "../court/court.ts"), { COURT_ART: JSON.stringify(courtArt()) }),
+  );
   let stale = 0;
-  for (const path of OUTPUTS) {
+  for (const [path, content] of [...OUTPUTS.map((p) => [p, html]), ...COURT_OUTPUTS.map((p) => [p, court])]) {
     const rel = relative(REPO_DIR, path).replace(/\\/g, "/");
     if (check) {
       let current = "";
@@ -98,17 +145,17 @@ async function main(): Promise<void> {
       } catch {
         // missing counts as stale
       }
-      if (current !== html) {
+      if (current !== content) {
         stale++;
         console.error(`stale: ${rel}`);
       }
       continue;
     }
     mkdirSync(dirname(path), { recursive: true });
-    writeFileSync(path, html, "utf8");
+    writeFileSync(path, content, "utf8");
     console.log(`wrote ${rel}`);
   }
-  console.log(`${(Buffer.byteLength(html) / 1024).toFixed(1)} KB`);
+  console.log(`scene ${(Buffer.byteLength(html) / 1024).toFixed(1)} KB, court ${(Buffer.byteLength(court) / 1024).toFixed(1)} KB`);
   if (stale) {
     console.error("Run: npm run scene:build");
     process.exit(1);

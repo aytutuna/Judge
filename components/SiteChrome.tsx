@@ -3,14 +3,14 @@ import type { ReactNode } from "react";
 import { CONTACT_EMAIL } from "@/app/site";
 import { t, type Lang } from "@/lib/i18n";
 import { AccountMenu } from "./AccountMenu";
-import { BrandMark } from "./BrandMark";
+import { BrandLogo } from "./BrandLogo";
 import { LangPicker } from "./LangPicker";
 import styles from "./SiteChrome.module.css";
 
 /** Shared page chrome. No hooks: usable from server pages (share page, which
  * passes its Accept-Language lang and no toggle) and client pages alike. The
- * account entry is its own client component and renders nothing until the
- * viewer store has answered, so server HTML is unchanged. */
+ * avatar menu is its own client component; server HTML has it as the
+ * signed-out avatar until the viewer store has answered. */
 
 export function SkipLink({ lang }: { lang: Lang }) {
   return (
@@ -21,19 +21,32 @@ export function SkipLink({ lang }: { lang: Lang }) {
 }
 
 /** Fixed, blurred 56px nav, with a spacer of the same height so the page
- * starts below it. `children` go before the account entry (the app shell's
- * "Verdicts" link). */
-export function SiteHeader({ lang, toggle = false, children }: { lang: Lang; toggle?: boolean; children?: ReactNode }) {
+ * starts below it. `lead` goes before the brand (the app shell's menu button);
+ * `children` go before the avatar menu (the "Verdicts" link). */
+export function SiteHeader({
+  lang,
+  toggle = false,
+  lead,
+  children,
+}: {
+  lang: Lang;
+  toggle?: boolean;
+  lead?: ReactNode;
+  children?: ReactNode;
+}) {
   return (
     <>
       <header className={styles.nav}>
         <div className={`wrap ${styles.navInner}`}>
-          <Link href="/" aria-label={t(lang, "nav.home")} className={styles.brand}>
-            <BrandMark size={28} />
-            Judge
-          </Link>
+          <div className={styles.navStart}>
+            {lead}
+            <Link href="/" aria-label={t(lang, "nav.home")} className={styles.brand}>
+              <BrandLogo size={30} />
+              <span className={styles.wordmark}>Judge</span>
+            </Link>
+          </div>
           <div className={styles.navRight}>
-            {toggle ? <LangPicker lang={lang} /> : null}
+            {toggle ? <LangPicker lang={lang} compact /> : null}
             {children}
             <span className={styles.account}>
               <AccountMenu lang={lang} />
@@ -52,7 +65,7 @@ export function SiteFooter({ lang, toggle = false }: { lang: Lang; toggle?: bool
       <div className={`wrap ${styles.foot}`}>
         <div className={styles.footBrand}>
           <Link href="/" className={styles.brand}>
-            <BrandMark size={28} />
+            <BrandLogo size={30} />
             Judge
           </Link>
           <p className={styles.note}>{t(lang, "footer.note")}</p>

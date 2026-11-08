@@ -29,10 +29,10 @@
 
   /* Sage: the viewer's own side. --sage is for large fills only, never
      text; --sage-strong for thin marks that need 3:1; --sage-ink for text. */
-  --sage: #8AA899;
-  --sage-strong: #6E8F80;
-  --sage-ink: #4C6B5D;
-  --sage-tint: #DDE7E0;
+  --sage: #6FB58A;
+  --sage-strong: #3B8F60;
+  --sage-ink: #2A6E4A;
+  --sage-tint: #DCEFE2;
 
   /* bedrock (3D scene, argument map) */
   --stone: #DAD6CF;
@@ -57,10 +57,10 @@
     --terra: #D9694F;
     --terra-ink: #EE8C74;
     --terra-tint: #432A22;
-    --sage: #7F9C8E;
-    --sage-strong: #8FB0A0;
-    --sage-ink: #A3C2B3;
-    --sage-tint: #2D3832;
+    --sage: #62A67E;
+    --sage-strong: #6FC093;
+    --sage-ink: #97DDB4;
+    --sage-tint: #223A2D;
     --stone: #4F463C;
     --strata: #3A342E;
     --danger: #F5727E;
@@ -81,10 +81,10 @@
   --terra: #D9694F;
   --terra-ink: #EE8C74;
   --terra-tint: #432A22;
-  --sage: #7F9C8E;
-  --sage-strong: #8FB0A0;
-  --sage-ink: #A3C2B3;
-  --sage-tint: #2D3832;
+  --sage: #62A67E;
+  --sage-strong: #6FC093;
+  --sage-ink: #97DDB4;
+  --sage-tint: #223A2D;
   --stone: #4F463C;
   --strata: #3A342E;
   --danger: #F5727E;
@@ -184,6 +184,7 @@
   --scene-shadow: var(--ink-2);
   --scene-shadow-opacity: 0.12;
   --scene-pool: var(--paper);
+  --scrim: rgba(28, 25, 22, 0.28);
 }
 :root[data-theme="light"] {
   color-scheme: light;
@@ -209,6 +210,7 @@
     --scene-shadow: #000000;
     --scene-shadow-opacity: 0.4;
     --scene-pool: var(--ivory-2);
+    --scrim: rgba(0, 0, 0, 0.55);
   }
 }
 
@@ -225,6 +227,7 @@
   --scene-shadow: #000000;
   --scene-shadow-opacity: 0.4;
   --scene-pool: var(--ivory-2);
+  --scrim: rgba(0, 0, 0, 0.55);
 }
 
 @media (min-width: 960px) {

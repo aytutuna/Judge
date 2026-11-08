@@ -2,18 +2,18 @@
 
 import { t, type Lang } from "@/lib/i18n";
 import type { VerdictResult } from "@/lib/types";
-import { JudgingOverlay } from "./JudgingOverlay";
-import JudgingScene from "./scene/JudgingScene";
+import { JudgingStory } from "./court/JudgingStory";
 import styles from "./JudgingScreen.module.css";
 
 export type JudgedSide = { name: string; text: string };
 
 /** The home page while a verdict is being made: the sides as submitted, the
- * scene with the judging overlay under it, and a way out. */
+ * judges at work with what they're doing written under them, and a way out. */
 export function JudgingScreen({
   lang,
   mine,
   theirs,
+  accepted = false,
   done,
   result,
   onFinished,
@@ -22,6 +22,7 @@ export function JudgingScreen({
   lang: Lang;
   mine: JudgedSide | null;
   theirs: JudgedSide | null;
+  accepted?: boolean;
   done: boolean;
   result: VerdictResult | null;
   onFinished: () => void;
@@ -44,8 +45,7 @@ export function JudgingScreen({
         ) : null}
       </div>
       <div className={styles.card}>
-        <JudgingScene className={styles.scene} />
-        <JudgingOverlay lang={lang} done={done} result={result} onFinished={onFinished} premium />
+        <JudgingStory lang={lang} accepted={accepted} done={done} result={result} onFinished={onFinished} />
       </div>
       {done ? null : (
         <button type="button" className={styles.cancel} onClick={onCancel}>

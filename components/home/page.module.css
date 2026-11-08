@@ -11,8 +11,23 @@
   max-width: calc(640px + 2 * var(--gutter));
 }
 
+/* The form phase fills the screen under the header: the middle
+   scrolls, the composer stays at the bottom. */
+.chat {
+  height: calc(100vh - var(--nav-h));
+  height: calc(var(--vvh, 100dvh) - var(--nav-h));
+  flex: none;
+  padding: 0;
+}
+.chat .column {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
 @media (min-width: 960px) {
-  .main {
+  .main:not(.chat) {
     padding-top: 40px;
   }
 }

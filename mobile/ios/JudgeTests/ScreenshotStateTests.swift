@@ -93,6 +93,11 @@ final class ScreenshotStateTests: XCTestCase {
             XCTAssertTrue(judging.home.isJudging)
             let sent = ExampleArgument.all[0].text(.en).trimmingCharacters(in: .whitespacesAndNewlines)
             XCTAssertEqual(judging.home.judgedSides.map(\.text), [sent], "the cover shows what was sent")
+            XCTAssertTrue(judging.gamify)
+
+            let plain = try XCTUnwrap(ScreenshotState.parse("judging-plain:en")).makeModel(container: container)
+            XCTAssertTrue(plain.home.isJudging)
+            XCTAssertFalse(plain.gamify)
         }
     }
 
@@ -227,7 +232,6 @@ final class ScreenshotStateTests: XCTestCase {
             let none = try XCTUnwrap(ScreenshotState.parse("balance/none:en")).makeModel(container: container)
             XCTAssertEqual(none.account.entitlement?.blockedReason, "fair_use")
             XCTAssertEqual(none.account.entitlement.map(Balance.init), .empty)
-            XCTAssertEqual(none.home.initialScroll, HomeModel.submitAnchor)
             XCTAssertNil(none.api.tokenStore.token(), "screenshots never hold a real token")
 
             let welcome = try XCTUnwrap(ScreenshotState.parse("balance/welcome:en")).makeModel(container: container)
@@ -306,6 +310,7 @@ final class ScreenshotStateTests: XCTestCase {
             let home = try XCTUnwrap(ScreenshotState.parse("home:en")).makeModel(container: container)
             XCTAssertTrue(home.linkOn)
             XCTAssertTrue(home.evidenceOn, "signed in, so Add context shows")
+            XCTAssertTrue(home.evidenceOffered)
         }
     }
 }

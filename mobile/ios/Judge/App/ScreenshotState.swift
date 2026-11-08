@@ -9,7 +9,8 @@ import SwiftData
 /// Launch argument: `-JudgeScreenshotState <screen>:<lang>`, where screen is
 /// `home` (signed in, so the link and "Add context" show),
 /// `home-example` (both sides filled by "Try an example"),
-/// `home-error`, `judging`, `history`, `settings`, `signin`, `signin-code`,
+/// `home-error`, `judging`, `judging-plain` (the same with Gamify off),
+/// `history`, `settings`, `signin`, `signin-code`,
 /// `account` (Settings, signed in), `verdict/<sample>` (a key of `verdictResponses`,
 /// opened as a saved verdict), `verdict-thread` (a fresh verdict, as the
 /// judging cover hands over to it), `verdict-context`, `verdict-context-locked` and
@@ -17,9 +18,8 @@ import SwiftData
 /// lock and the limit note), or an account state: `balance/welcome` (signed
 /// in with a new account's free verdict), `balance/none` (signed in, the
 /// monthly allowance used up), `pricing`, `pricing-store` (store prices on
-/// the buy buttons), `pricing-buy` (the same, scrolled to the packs and the
-/// monthly plan), `clarify` (the questions), `evidence` (picked
-/// screenshots in mixed states under the box), `mode-both` (a case being sent),
+/// the buy buttons), `pricing-buy` (the same, scrolled to the cards), `clarify` (the
+/// questions), `evidence` (picked screenshots in mixed states under the box), `mode-both` (a case being sent),
 /// `case-write` and `case-write-answered` (the owner's page of a case the link
 /// started, with their side still to write, before and after the other side),
 /// `history-cases` (the account's Verdicts list: waiting, thinking, your turn,
@@ -42,6 +42,7 @@ struct ScreenshotState {
         case homeExample
         case homeError
         case judging
+        case judgingPlain
         case verdict(sample: String)
         case verdictThread
         /// The writer's gate: nil allows the form, else why not.
@@ -73,7 +74,7 @@ struct ScreenshotState {
 
     var tab: RootTab {
         switch screen {
-        case .home, .homeExample, .homeError, .judging, .verdict, .verdictThread, .verdictContext, .signIn, .signInCode,
+        case .home, .homeExample, .homeError, .judging, .judgingPlain, .verdict, .verdictThread, .verdictContext, .signIn, .signInCode,
              .balanceWelcome, .balanceNone, .pricing, .pricingStore, .pricingBuy, .clarify, .evidence, .modeBoth, .caseWrite, .caseDetail:
             return .new
         case .history, .historyCases, .historySelect: return .history
@@ -97,6 +98,7 @@ struct ScreenshotState {
         case "home-example": screen = .homeExample
         case "home-error": screen = .homeError
         case "judging": screen = .judging
+        case "judging-plain": screen = .judgingPlain
         case "verdict-thread": screen = .verdictThread
         case "verdict-context": screen = .verdictContext(blockedBy: nil)
         case "verdict-context-locked": screen = .verdictContext(blockedBy: "premium_required")
@@ -182,6 +184,10 @@ struct ScreenshotState {
         case .judging:
             app.home.argument = ExampleArgument.all[0].text(lang)
             app.home.showJudgingForScreenshot()
+        case .judgingPlain:
+            app.home.argument = ExampleArgument.all[0].text(lang)
+            app.home.showJudgingForScreenshot()
+            app.setGamify(false)
         case .verdict(let sample):
             // Opened as a saved verdict, from history.
             guard let session = ScreenshotFixtures.session(sample) else { return }
@@ -223,11 +229,9 @@ struct ScreenshotState {
                 config: ScreenshotFixtures.config("full")
             )
             app.home.argument = ExampleArgument.all[0].text(lang)
-            app.home.initialScroll = HomeModel.submitAnchor
         case .balanceNone:
             premium(app, me: "fair_use")
             app.home.argument = ExampleArgument.all[0].text(lang)
-            app.home.initialScroll = HomeModel.submitAnchor
         case .pricing:
             premium(app, me: "subscriber")
             app.home.path = [.pricing]

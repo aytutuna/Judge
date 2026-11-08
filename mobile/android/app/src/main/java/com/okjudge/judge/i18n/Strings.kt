@@ -97,6 +97,16 @@ class Strings(private val res: Resources) {
     val thinkingFinish: String get() = res.getString(R.string.thinking_finish)
     val thinkingStillJudging: String get() = res.getString(R.string.thinking_still_judging)
     val thinkingReady: String get() = res.getString(R.string.thinking_ready)
+    val storyNames: String get() = res.getString(R.string.story_names)
+    val storyFacts: String get() = res.getString(R.string.story_facts)
+    val storyJudges: String get() = res.getString(R.string.story_judges)
+    val storyBothSides: String get() = res.getString(R.string.story_both_sides)
+    val storyCrux: String get() = res.getString(R.string.story_crux)
+    val storyRuling: String get() = res.getString(R.string.story_ruling)
+    val storyCount: String get() = res.getString(R.string.story_count)
+    val storyCloseCall: String get() = res.getString(R.string.story_close_call)
+    fun storyAgree(n: String, total: String): String = res.getString(R.string.story_agree, n, total)
+    val storySplit: String get() = res.getString(R.string.story_split)
     fun verdictWin(name: String): String = res.getString(R.string.verdict_win, name)
     val verdictWinSelf: String get() = res.getString(R.string.verdict_win_self)
     val verdictSplit: String get() = res.getString(R.string.verdict_split)
@@ -194,8 +204,10 @@ class Strings(private val res: Resources) {
     val navSignIn: String get() = res.getString(R.string.nav_sign_in)
     val navAccount: String get() = res.getString(R.string.nav_account)
     val navPricing: String get() = res.getString(R.string.nav_pricing)
+    val navAccountMenu: String get() = res.getString(R.string.nav_account_menu)
     val navSignOut: String get() = res.getString(R.string.nav_sign_out)
     val navVerdicts: String get() = res.getString(R.string.nav_verdicts)
+    val navTabs: String get() = res.getString(R.string.nav_tabs)
     val tierLockedSignIn: String get() = res.getString(R.string.tier_locked_sign_in)
     val tierGetPremium: String get() = res.getString(R.string.tier_get_premium)
     val tierChecking: String get() = res.getString(R.string.tier_checking)
@@ -412,6 +424,12 @@ class Strings(private val res: Resources) {
     val twoSidedWouldChange: String get() = res.getString(R.string.two_sided_would_change)
     val appealTitle: String get() = res.getString(R.string.appeal_title)
     val homeExample: String get() = res.getString(R.string.home_example)
+    val homeYourPlaceholder: String get() = res.getString(R.string.home_your_placeholder)
+    val homeAddContext: String get() = res.getString(R.string.home_add_context)
+    val homeAddTheirSide: String get() = res.getString(R.string.home_add_their_side)
+    val homeRemoveTheirSide: String get() = res.getString(R.string.home_remove_their_side)
+    val homeSendLink: String get() = res.getString(R.string.home_send_link)
+    val homeClear: String get() = res.getString(R.string.home_clear)
     val homeLead: String get() = res.getString(R.string.home_lead)
     val homeLeadSolo: String get() = res.getString(R.string.home_lead_solo)
     val homeTheirSide: String get() = res.getString(R.string.home_their_side)
@@ -485,6 +503,8 @@ class Strings(private val res: Resources) {
     val namesFailed: String get() = res.getString(R.string.names_failed)
     val namesInvalid: String get() = res.getString(R.string.names_invalid)
     val accountVerdictsRemoved: String get() = res.getString(R.string.account_verdicts_removed)
+    val shellNew: String get() = res.getString(R.string.shell_new)
+    val shellGamify: String get() = res.getString(R.string.shell_gamify)
     val shellToday: String get() = res.getString(R.string.shell_today)
     val shellLoadFailed: String get() = res.getString(R.string.shell_load_failed)
     val shellLoadMore: String get() = res.getString(R.string.shell_load_more)
@@ -732,6 +752,15 @@ class Strings(private val res: Resources) {
             "thinking.finish" -> R.string.thinking_finish
             "thinking.stillJudging" -> R.string.thinking_still_judging
             "thinking.ready" -> R.string.thinking_ready
+            "story.names" -> R.string.story_names
+            "story.facts" -> R.string.story_facts
+            "story.judges" -> R.string.story_judges
+            "story.bothSides" -> R.string.story_both_sides
+            "story.crux" -> R.string.story_crux
+            "story.ruling" -> R.string.story_ruling
+            "story.count" -> R.string.story_count
+            "story.closeCall" -> R.string.story_close_call
+            "story.split" -> R.string.story_split
             "verdict.winSelf" -> R.string.verdict_win_self
             "verdict.split" -> R.string.verdict_split
             "verdict.conditional" -> R.string.verdict_conditional
@@ -818,8 +847,10 @@ class Strings(private val res: Resources) {
             "nav.signIn" -> R.string.nav_sign_in
             "nav.account" -> R.string.nav_account
             "nav.pricing" -> R.string.nav_pricing
+            "nav.accountMenu" -> R.string.nav_account_menu
             "nav.signOut" -> R.string.nav_sign_out
             "nav.verdicts" -> R.string.nav_verdicts
+            "nav.tabs" -> R.string.nav_tabs
             "tier.lockedSignIn" -> R.string.tier_locked_sign_in
             "tier.getPremium" -> R.string.tier_get_premium
             "tier.checking" -> R.string.tier_checking
@@ -1009,6 +1040,12 @@ class Strings(private val res: Resources) {
             "twoSided.wouldChange" -> R.string.two_sided_would_change
             "appeal.title" -> R.string.appeal_title
             "home.example" -> R.string.home_example
+            "home.yourPlaceholder" -> R.string.home_your_placeholder
+            "home.addContext" -> R.string.home_add_context
+            "home.addTheirSide" -> R.string.home_add_their_side
+            "home.removeTheirSide" -> R.string.home_remove_their_side
+            "home.sendLink" -> R.string.home_send_link
+            "home.clear" -> R.string.home_clear
             "home.lead" -> R.string.home_lead
             "home.leadSolo" -> R.string.home_lead_solo
             "home.theirSide" -> R.string.home_their_side
@@ -1080,6 +1117,8 @@ class Strings(private val res: Resources) {
             "names.failed" -> R.string.names_failed
             "names.invalid" -> R.string.names_invalid
             "account.verdicts.removed" -> R.string.account_verdicts_removed
+            "shell.new" -> R.string.shell_new
+            "shell.gamify" -> R.string.shell_gamify
             "shell.today" -> R.string.shell_today
             "shell.loadFailed" -> R.string.shell_load_failed
             "shell.loadMore" -> R.string.shell_load_more

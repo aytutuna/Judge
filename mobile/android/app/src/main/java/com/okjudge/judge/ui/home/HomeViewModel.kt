@@ -63,6 +63,9 @@ data class HomeUiState(
     val shownName: String get() = typedName ?: suggestedName ?: ""
     val evidenceOn: Boolean get() = signedIn && features.evidence
 
+    /** "Add context" is drawn whenever the deployment offers it; signed out, a tap goes to sign-in. */
+    val evidenceOffered: Boolean get() = features.evidence
+
     /** Signed in with nothing left to spend; unknown while the account loads, so the server decides then. */
     val outOfUnits: Boolean get() = signedIn && entitlement != null && Tiers.remaining(entitlement) == null
 
