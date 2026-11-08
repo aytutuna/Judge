@@ -6,7 +6,7 @@ import { t, type Key, type Lang } from "@/lib/i18n";
 import type { VerdictResult } from "@/lib/types";
 import { useReducedMotion } from "@/components/scene/useReducedMotion";
 import { JudgingMids, type Beat } from "./JudgingMids";
-import { WAITING, agreement, waitingAt } from "./story";
+import { WAITING, agreement, waitingAt } from "../court/story";
 import styles from "./Story.module.css";
 
 type Line = { key: Key; vars?: Record<string, number> };

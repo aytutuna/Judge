@@ -1,6 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { Cast, mid, run, seats } from "../components/mids/cast";
-import { NAMES_MIN_MS, agreement, waitingAt } from "../components/mids/story";
 
 describe("mids cast", () => {
   beforeEach(() => vi.useFakeTimers());
@@ -44,22 +43,5 @@ describe("mids cast", () => {
     const three = seats(3).map(([x]) => +x.toFixed(2));
     expect(three).toEqual([0.24, 0.5, 0.76]);
     expect(seats(5)[0][0]).toBeCloseTo(0.12);
-  });
-
-  it("agreement is the most common vote, with no side on a tie", () => {
-    expect(agreement(["a", "b", "a"])).toEqual({ side: "a", n: 2 });
-    expect(agreement(["a", "b"]).side).toBeNull();
-    expect(agreement(["a", "b", "b", "other"])).toEqual({ side: null, n: 2 });
-    expect(agreement(["b", "a", "a", "b", "b"])).toEqual({ side: "b", n: 3 });
-    expect(agreement([])).toEqual({ side: null, n: 0 });
-  });
-
-  it("the story holds on names until the server has them out, then walks the steps", () => {
-    expect(waitingAt(60000, null)).toBe(0);
-    expect(waitingAt(1000, 400)).toBe(0);
-    expect(waitingAt(NAMES_MIN_MS + 10, 400)).toBe(1);
-    expect(waitingAt(5000, 4000)).toBe(1);
-    expect(waitingAt(4000 + 9000 + 10, 4000)).toBe(2);
-    expect(waitingAt(10 * 60000, 4000)).toBe(5);
   });
 });

@@ -7,7 +7,7 @@ import { ClarifyStep, buildClarifications, type ClarifyQuestion } from "@/compon
 import { Balance } from "@/components/home/Balance";
 import { HomeForm } from "@/components/home/HomeForm";
 import { JudgingScreen, type JudgedSide } from "@/components/JudgingScreen";
-import { ENDING_MAX_MS } from "@/components/mids/story";
+import { ENDING_MAX_MS } from "@/components/court/story";
 import { AppShell } from "@/components/shell/AppShell";
 import { refreshHistory, useHistory } from "@/components/shell/useHistory";
 import styles from "@/components/home/page.module.css";

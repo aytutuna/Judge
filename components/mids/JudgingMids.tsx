@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import type { Vote } from "@/lib/scene-bridge";
 import { mid, pick, rand, run, seats, type Cast, type Mid, type Run } from "./cast";
 import { Stage, useBox, useCast } from "./Stage";
-import { agreement, type Waiting } from "./story";
+import { agreement, type Waiting } from "../court/story";
 import styles from "./Mids.module.css";
 
 // The judging card's scene. JudgingStory picks the beat; this plays it.
