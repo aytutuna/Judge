@@ -337,6 +337,7 @@ fun JudgeRoot(
                                 gamify = gamify != false,
                                 onGamify = { on -> scope.launch { container.settings.setGamify(on) } },
                                 account = AccountActions(
+                                    signedIn = accountNow is Account.State.SignedIn,
                                     user = (accountNow as? Account.State.SignedIn)?.me?.user,
                                     onSettings = { backStack.resetTo(listOf(HomeKey, SettingsKey)) },
                                     onPricing = openPricing,

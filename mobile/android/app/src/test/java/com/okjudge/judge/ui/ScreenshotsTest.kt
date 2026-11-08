@@ -635,7 +635,7 @@ class ScreenshotsTest {
             Column(Modifier.fillMaxSize()) {
                 PageBar(
                     UiTestSupport.s(AppLang.EN).navVerdicts, {}, {}, FocusRequester(),
-                    account = AccountActions(Viewer("u1", "sam@example.com", "Sam"), {}, {}, {}, {}),
+                    account = AccountActions(true, Viewer("u1", "sam@example.com", "Sam"), {}, {}, {}, {}),
                 )
                 HomeScreen(HomeUiState(), {}, {}, {})
             }
@@ -670,6 +670,45 @@ class ScreenshotsTest {
             }
         }
     }
+
+    @Test
+    fun home_withBar_gamifyOff_typed_en() = capture("home_bar_gamify_off_typed_en") {
+        Themed(AppLang.EN) {
+            CompositionLocalProvider(LocalGamify provides false) {
+                Column(Modifier.fillMaxSize()) {
+                    PageBar(UiTestSupport.s(AppLang.EN).appTabNew, {}, {}, FocusRequester(), gamify = false)
+                    HomeScreen(HomeUiState(argument = "He keeps eating my lunch from the shared fridge."), {}, {}, {})
+                }
+            }
+        }
+    }
+
+    private fun narrowBar(name: String, lang: AppLang, width: Int) {
+        RuntimeEnvironment.setQualifiers("+w${width}dp-h200dp")
+        capture(name) { NarrowBar(lang) }
+    }
+
+    @Composable
+    private fun NarrowBar(lang: AppLang) {
+        Themed(lang) {
+            PageBar(
+                UiTestSupport.s(lang).appTabSettings, {}, {}, FocusRequester(),
+                account = AccountActions(true, Viewer("u1", "sam@example.com", "Sam"), {}, {}, {}, {}),
+            )
+        }
+    }
+
+    @Test
+    fun bar_de_320() = narrowBar("bar_de_320", AppLang.DE, 320)
+
+    @Test
+    fun bar_de_360() = narrowBar("bar_de_360", AppLang.DE, 360)
+
+    @Test
+    fun bar_ar_320() = narrowBar("bar_ar_320", AppLang.AR, 320)
+
+    @Test
+    fun bar_ar_360() = narrowBar("bar_ar_360", AppLang.AR, 360)
 
     @Test
     fun menu_open_en() = capture("menu_open_en") { OpenMenu(dark = false) }

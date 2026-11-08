@@ -473,12 +473,13 @@ class ScreensTest {
         assertTrue(finished)
     }
 
-    private fun bar(user: Viewer?, calls: MutableList<String>, gamify: Boolean = true, onGamify: (Boolean) -> Unit = {}) {
+    private fun bar(user: Viewer?, calls: MutableList<String>, gamify: Boolean = true, onGamify: (Boolean) -> Unit = {}, signedIn: Boolean = user != null) {
         compose.setContent {
             Themed(AppLang.EN) {
                 PageBar(
                     "New", {}, {}, FocusRequester(), gamify = gamify, onGamify = onGamify,
                     account = AccountActions(
+                        signedIn,
                         user,
                         onSettings = { calls += "settings" },
                         onPricing = { calls += "pricing" },
@@ -517,12 +518,21 @@ class ScreensTest {
     }
 
     @Test
+    fun pageBar_signedInWithoutProfileKeepsSignOut() {
+        bar(null, mutableListOf(), signedIn = true)
+        compose.onNodeWithTag(PageBarTags.AVATAR).performClick()
+        compose.onNodeWithTag(PageBarTags.SIGN_IN).assertDoesNotExist()
+        compose.onNodeWithTag(PageBarTags.SIGN_OUT).assertExists()
+    }
+
+    @Test
     fun pageBar_gamifySwitchShowsItsState() {
         var on by mutableStateOf(false)
-        bar(null, mutableListOf(), gamify = false, onGamify = { on = it })
+        compose.setContent { Themed(AppLang.EN) { PageBar("New", {}, {}, FocusRequester(), gamify = on, onGamify = { on = it }) } }
         compose.onNodeWithTag(PageBarTags.GAMIFY).assertIsOff()
         compose.onNodeWithTag(PageBarTags.GAMIFY).performClick()
         assertTrue(on)
+        compose.onNodeWithTag(PageBarTags.GAMIFY).assertIsOn()
     }
 
     @Test

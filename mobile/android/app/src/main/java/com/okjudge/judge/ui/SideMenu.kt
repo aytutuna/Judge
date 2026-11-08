@@ -53,13 +53,16 @@ import androidx.compose.ui.input.key.type
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.collapse
 import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.expand
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.hideFromAccessibility
 import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.okjudge.judge.core.model.Viewer
@@ -88,6 +91,7 @@ object PageBarTags {
 
 /** What the avatar menu does, with the signed-in user (null when signed out). */
 internal class AccountActions(
+    val signedIn: Boolean,
     val user: Viewer?,
     val onSettings: () -> Unit,
     val onPricing: () -> Unit,
@@ -111,10 +115,12 @@ internal fun PageBar(
     menuFocus: FocusRequester,
     gamify: Boolean = true,
     onGamify: (Boolean) -> Unit = {},
-    account: AccountActions = AccountActions(null, {}, {}, {}, {}),
+    account: AccountActions = AccountActions(false, null, {}, {}, {}, {}),
 ) {
     val s = LocalStrings.current
-    val wide = LocalConfiguration.current.screenWidthDp >= 640
+    val width = LocalConfiguration.current.screenWidthDp
+    val wide = width >= 640
+    val target = if (width < 400) 44.dp else 48.dp
     Row(
         Modifier
             .fillMaxWidth()
@@ -124,7 +130,7 @@ internal fun PageBar(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(2.dp),
     ) {
-        BarButton(s.navTabs, JudgeIcons.menu(Palette.ink), onMenu, Modifier.focusRequester(menuFocus))
+        BarButton(s.navTabs, JudgeIcons.menu(Palette.ink), onMenu, target, Modifier.focusRequester(menuFocus))
         Text(
             title,
             style = JudgeType.sectionTitle,
@@ -132,24 +138,24 @@ internal fun PageBar(
             overflow = TextOverflow.Ellipsis,
             modifier = Modifier.weight(1f).padding(start = 4.dp).semantics { heading() },
         )
-        GamifySwitch(gamify, onGamify, wide)
-        AvatarMenu(account)
-        BarButton(s.shellNew, JudgeIcons.plus(Palette.ink), onNew)
+        GamifySwitch(gamify, onGamify, wide, target)
+        AvatarMenu(account, target)
+        BarButton(s.shellNew, JudgeIcons.plus(Palette.ink), onNew, target)
     }
 }
 
 @Composable
-private fun GamifySwitch(on: Boolean, onChange: (Boolean) -> Unit, showLabel: Boolean) {
+private fun GamifySwitch(on: Boolean, onChange: (Boolean) -> Unit, showLabel: Boolean, target: Dp) {
     val s = LocalStrings.current
     val knob by animateDpAsState(if (on) 16.dp else 2.dp, if (rememberReducedMotion()) snap() else tween(150), label = "knob")
     Row(
         Modifier
-            .heightIn(min = 48.dp)
+            .heightIn(min = target)
             .clip(CircleShape)
             .semantics { contentDescription = s.shellGamify }
             .toggleable(value = on, role = Role.Switch, onValueChange = onChange)
             .testTag(PageBarTags.GAMIFY)
-            .padding(horizontal = 6.dp),
+            .padding(horizontal = if (target < 48.dp) 4.dp else 6.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(6.dp),
     ) {
@@ -162,7 +168,7 @@ private fun GamifySwitch(on: Boolean, onChange: (Boolean) -> Unit, showLabel: Bo
 }
 
 @Composable
-private fun AvatarMenu(account: AccountActions) {
+private fun AvatarMenu(account: AccountActions, target: Dp) {
     val s = LocalStrings.current
     var open by remember { mutableStateOf(false) }
     val close = { open = false }
@@ -170,11 +176,12 @@ private fun AvatarMenu(account: AccountActions) {
     Box {
         Box(
             Modifier
-                .size(48.dp)
+                .size(target)
                 .clip(CircleShape)
                 .semantics {
                     role = Role.Button
                     contentDescription = s.navAccountMenu
+                    if (open) collapse { close(); true } else expand { open = true; true }
                 }
                 .clickable { open = true }
                 .testTag(PageBarTags.AVATAR),
@@ -192,10 +199,10 @@ private fun AvatarMenu(account: AccountActions) {
             if (user != null) {
                 Text(user.email, style = JudgeType.small, maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp))
             }
-            if (user == null) MenuItem(s.navSignIn, PageBarTags.SIGN_IN) { close(); account.onSignIn() }
+            if (!account.signedIn) MenuItem(s.navSignIn, PageBarTags.SIGN_IN) { close(); account.onSignIn() }
             MenuItem(s.appTabSettings, PageBarTags.SETTINGS) { close(); account.onSettings() }
             MenuItem(s.navPricing, PageBarTags.PRICING) { close(); account.onPricing() }
-            if (user != null) MenuItem(s.navSignOut, PageBarTags.SIGN_OUT) { close(); account.onSignOut() }
+            if (account.signedIn) MenuItem(s.navSignOut, PageBarTags.SIGN_OUT) { close(); account.onSignOut() }
         }
     }
 }
@@ -206,10 +213,10 @@ private fun MenuItem(label: String, tag: String, onClick: () -> Unit) {
 }
 
 @Composable
-private fun BarButton(label: String, icon: ImageVector, onClick: () -> Unit, modifier: Modifier = Modifier) {
+private fun BarButton(label: String, icon: ImageVector, onClick: () -> Unit, target: Dp, modifier: Modifier = Modifier) {
     Box(
         modifier
-            .size(48.dp)
+            .size(target)
             .clip(CircleShape)
             .semantics {
                 role = Role.Button
