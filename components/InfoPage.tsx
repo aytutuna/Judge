@@ -84,6 +84,7 @@ function About({ lang, features, premiumOn }: { lang: Lang; features: InfoFeatur
       </Section>
       <Section title={t(lang, "about.builtTitle")}>
         <p>{t(lang, "about.built")}</p>
+        <ArtCredit text={t(lang, "about.art")} />
       </Section>
     </>
   );
