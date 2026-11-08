@@ -61,7 +61,7 @@ final class ThemeTests: XCTestCase {
     func testTheProfileInitialComesFromTheNameThenTheEmail() {
         XCTAssertEqual(ProfileMenu.initial(name: "ada Lovelace", email: "x@y.z"), "A")
         XCTAssertEqual(ProfileMenu.initial(name: "  ", email: "bo@y.z"), "B")
-        XCTAssertEqual(ProfileMenu.initial(name: "", email: ""), "")
+        XCTAssertEqual(ProfileMenu.initial(name: "", email: ""), "?")
     }
 
     @MainActor

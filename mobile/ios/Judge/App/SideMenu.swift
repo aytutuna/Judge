@@ -32,34 +32,15 @@ struct MenuButton: View {
     }
 }
 
-/// Starts a new argument, at the trailing end of a root page's bar.
-struct ComposeButton: View {
-    @Environment(AppModel.self) private var app
-
-    var body: some View {
-        Button {
-            app.go(.new)
-        } label: {
-            Image(systemName: "square.and.pencil")
-                .font(.system(size: 18, weight: .semibold))
-                .foregroundStyle(Brand.ink)
-                .frame(minWidth: 44, minHeight: 44)
-                .contentShape(Rectangle())
-        }
-        .accessibilityLabel(L10n.shellNew(app.lang))
-    }
-}
-
-/// Turns the street court on or off: the gamepad and a small switch, next
-/// to the compose button. The label is for VoiceOver only.
-struct GamifyButton: View {
-    @Environment(AppModel.self) private var app
+/// The look of the Gamify switch: the gamepad and a small capsule. The
+/// label is for VoiceOver only.
+private struct GamifyToggleStyle: ToggleStyle {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
-    var body: some View {
-        let on = app.gamify
-        Button {
-            app.setGamify(!on)
+    func makeBody(configuration: Configuration) -> some View {
+        let on = configuration.isOn
+        return Button {
+            configuration.isOn.toggle()
         } label: {
             HStack(spacing: 6) {
                 Image(systemName: "gamecontroller")
@@ -79,8 +60,20 @@ struct GamifyButton: View {
             .frame(minHeight: 44)
             .contentShape(Rectangle())
         }
-        .accessibilityLabel(L10n.shellGamify(app.lang))
-        .accessibilityAddTraits(on ? [.isToggle, .isSelected] : .isToggle)
+        .buttonStyle(.plain)
+        .accessibilityRepresentation {
+            Toggle(isOn: configuration.$isOn) { configuration.label }
+        }
+    }
+}
+
+/// Turns the street court on or off, at the trailing end of a root page's bar.
+struct GamifyButton: View {
+    @Environment(AppModel.self) private var app
+
+    var body: some View {
+        Toggle(L10n.shellGamify(app.lang), isOn: Binding(get: { app.gamify }, set: { app.setGamify($0) }))
+            .toggleStyle(GamifyToggleStyle())
     }
 }
 
@@ -94,7 +87,8 @@ struct ProfileMenu: View {
     /// First letter of the name, or of the email when there is no name.
     static func initial(name: String, email: String) -> String {
         let source = name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? email : name
-        return source.trimmingCharacters(in: .whitespacesAndNewlines).prefix(1).uppercased()
+        let letter = source.trimmingCharacters(in: .whitespacesAndNewlines).prefix(1).uppercased()
+        return letter.isEmpty ? "?" : letter
     }
 
     var body: some View {
@@ -127,9 +121,10 @@ struct ProfileMenu: View {
 
     @ViewBuilder
     private var avatar: some View {
-        if let user = app.account.user {
-            let initial = Self.initial(name: user.name, email: user.email)
-            if let image = user.image, let url = URL(string: image) {
+        if app.account.isSignedIn {
+            let user = app.account.user
+            let initial = Self.initial(name: user?.name ?? "", email: user?.email ?? "")
+            if let image = user?.image, let url = URL(string: image) {
                 AsyncImage(url: url) { phase in
                     if let loaded = phase.image {
                         loaded.resizable().scaledToFill()
@@ -160,16 +155,11 @@ struct ProfileMenu: View {
     }
 }
 
-/// The trailing end of a root page's bar. On a compact width the compose
-/// button goes (New is in the side menu) to leave the title its room.
+/// The trailing end of a root page's bar. New is in the side menu, so the
+/// bar leaves the title its room.
 struct RootBarTrailing: ToolbarContent {
-    @Environment(\.horizontalSizeClass) private var sizeClass
-
     var body: some ToolbarContent {
         ToolbarItem(placement: .topBarTrailing) { GamifyButton() }
-        if sizeClass != .compact {
-            ToolbarItem(placement: .topBarTrailing) { ComposeButton() }
-        }
         ToolbarItem(placement: .topBarTrailing) { ProfileMenu() }
     }
 }
