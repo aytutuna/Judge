@@ -169,7 +169,9 @@ export default function Home() {
     // eslint-disable-next-line react-hooks/set-state-in-effect -- one-time read of browser storage
     setArgument(draft.argument);
     setOtherSide(draft.otherSide ?? "");
-    setTheirsOpen(Boolean(draft.otherSide));
+    setTheirsOpen(Boolean(draft.otherSide) || draft.theirsOpen === true);
+    if (draft.mineName !== undefined) setMineName(draft.mineName);
+    setOtherName(draft.otherName ?? "");
   }, []);
 
   // The index has to exist before the first addHistory, or the verdicts
@@ -178,8 +180,19 @@ export default function Home() {
 
   // What a sign-in link saves: only an unsent argument.
   useEffect(
-    () => registerDraftSource(() => (phase === "judging" ? null : { argument, ...(otherSide ? { otherSide } : {}) })),
-    [argument, otherSide, phase],
+    () =>
+      registerDraftSource(() =>
+        phase === "judging"
+          ? null
+          : {
+              argument,
+              ...(otherSide ? { otherSide } : {}),
+              ...(mineName !== null ? { mineName } : {}),
+              ...(otherName ? { otherName } : {}),
+              ...(theirsOpen ? { theirsOpen } : {}),
+            },
+      ),
+    [argument, otherSide, mineName, otherName, theirsOpen, phase],
   );
 
   const shownMineName = mineName ?? firstNameOf(viewer.me?.user?.name) ?? "";

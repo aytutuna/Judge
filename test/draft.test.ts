@@ -37,6 +37,13 @@ describe("draft round trip through sign-in", () => {
     expect(takeDraft()).toBeNull();
   });
 
+  it("carries names and the open card through the round trip", () => {
+    const draft = { argument: ARG, mineName: "Ayse", otherName: "Sam", theirsOpen: true };
+    unregister = registerDraftSource(() => draft);
+    saveDraftForSignIn();
+    expect(takeDraft()).toEqual(draft);
+  });
+
   it("gives nothing back after 30 minutes, and drops the stale draft", () => {
     unregister = registerDraftSource(() => ({ argument: ARG }));
     saveDraftForSignIn();
@@ -108,6 +115,18 @@ describe("parseDraft", () => {
     const raw = JSON.stringify({ argument: ARG, otherSide: "Ben says they are fruit." });
     expect(parseDraft(raw)).toEqual({ argument: ARG, otherSide: "Ben says they are fruit." });
     expect(parseDraft(JSON.stringify({ argument: "", otherSide: ARG }))).toEqual({ argument: "", otherSide: ARG });
+  });
+
+  it("keeps the names and the open their-side card", () => {
+    const full = { argument: ARG, otherSide: "Fruit.", mineName: "Ayse", otherName: "Sam", theirsOpen: true };
+    expect(parseDraft(JSON.stringify(full))).toEqual(full);
+    const open = { argument: ARG, otherName: "Sam", theirsOpen: true };
+    expect(parseDraft(JSON.stringify(open))).toEqual(open);
+  });
+
+  it("ignores names that are not short strings", () => {
+    const raw = JSON.stringify({ argument: ARG, mineName: 5, otherName: "x".repeat(41), theirsOpen: "yes" });
+    expect(parseDraft(raw)).toEqual({ argument: ARG });
   });
 
   it("drops unknown keys", () => {
