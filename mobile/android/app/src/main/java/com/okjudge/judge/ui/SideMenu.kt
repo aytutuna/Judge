@@ -1,5 +1,6 @@
 package com.okjudge.judge.ui
 
+import android.os.Build
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.snap
@@ -12,6 +13,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.WindowInsetsSides
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.displayCutout
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -150,11 +152,11 @@ private fun GamifyButton(on: Boolean, onChange: (Boolean) -> Unit, showLabel: Bo
     val s = LocalStrings.current
     val spec = if (rememberReducedMotion()) snap<Color>() else tween(150)
     val tint by animateColorAsState(if (on) Palette.terraTint else Color.Transparent, spec, label = "tint")
-    val fg by animateColorAsState(if (on) Palette.terraInk else Palette.ink2, spec, label = "fg")
-    val glow by animateDpAsState(if (on) 8.dp else 0.dp, if (rememberReducedMotion()) snap() else tween(150), label = "glow")
+    val fg by animateColorAsState(if (on) Palette.terraInk else Palette.muted, spec, label = "fg")
+    val glow by animateDpAsState(if (on && Build.VERSION.SDK_INT >= 28) 8.dp else 0.dp, if (rememberReducedMotion()) snap() else tween(150), label = "glow")
     Row(
         Modifier
-            .heightIn(min = target)
+            .defaultMinSize(minWidth = target, minHeight = target)
             .shadow(glow, CircleShape, ambientColor = Palette.terra, spotColor = Palette.terra)
             .clip(CircleShape)
             .background(tint)
@@ -163,7 +165,7 @@ private fun GamifyButton(on: Boolean, onChange: (Boolean) -> Unit, showLabel: Bo
             .testTag(PageBarTags.GAMIFY)
             .padding(horizontal = if (target < 48.dp) 10.dp else 12.dp),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(6.dp),
+        horizontalArrangement = Arrangement.spacedBy(6.dp, Alignment.CenterHorizontally),
     ) {
         TintedIcon(JudgeIcons.gamepad(fg), 20)
         if (showLabel) Text(s.shellGamify, style = JudgeType.small.copy(color = fg), maxLines = 1)

@@ -526,7 +526,7 @@ class ScreensTest {
     }
 
     @Test
-    fun pageBar_gamifySwitchShowsItsState() {
+    fun pageBar_gamifyButtonShowsItsState() {
         var on by mutableStateOf(false)
         compose.setContent { Themed(AppLang.EN) { PageBar("New", {}, {}, FocusRequester(), gamify = on, onGamify = { on = it }) } }
         compose.onNodeWithTag(PageBarTags.GAMIFY).assertIsOff()
