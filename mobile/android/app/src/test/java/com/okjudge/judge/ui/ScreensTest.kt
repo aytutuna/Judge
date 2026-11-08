@@ -10,6 +10,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.test.assertContentDescriptionEquals
 import androidx.compose.ui.test.assertHeightIsEqualTo
@@ -40,6 +41,7 @@ import com.okjudge.judge.core.model.FactClaim
 import com.okjudge.judge.core.model.FactSource
 import com.okjudge.judge.core.model.Features
 import com.okjudge.judge.core.model.VerdictOutcome
+import com.okjudge.judge.core.model.Viewer
 import com.okjudge.judge.core.session.VerdictFlow
 import com.okjudge.judge.i18n.AppLang
 import com.okjudge.judge.str
@@ -469,6 +471,64 @@ class ScreensTest {
         compose.onNodeWithTag(JudgingTags.CAPTION).assertExists()
         compose.mainClock.advanceTimeBy(2_000)
         assertTrue(finished)
+    }
+
+    private fun bar(user: Viewer?, calls: MutableList<String>, gamify: Boolean = true, onGamify: (Boolean) -> Unit = {}) {
+        compose.setContent {
+            Themed(AppLang.EN) {
+                PageBar(
+                    "New", {}, {}, FocusRequester(), gamify = gamify, onGamify = onGamify,
+                    account = AccountActions(
+                        user,
+                        onSettings = { calls += "settings" },
+                        onPricing = { calls += "pricing" },
+                        onSignIn = { calls += "signIn" },
+                        onSignOut = { calls += "signOut" },
+                    ),
+                )
+            }
+        }
+    }
+
+    @Test
+    fun pageBar_avatarMenuSignedOut() {
+        val calls = mutableListOf<String>()
+        bar(null, calls)
+        compose.onNodeWithTag(PageBarTags.AVATAR).performClick()
+        compose.onNodeWithTag(PageBarTags.SETTINGS).assertExists()
+        compose.onNodeWithTag(PageBarTags.PRICING).assertExists()
+        compose.onNodeWithTag(PageBarTags.SIGN_OUT).assertDoesNotExist()
+        compose.onNodeWithTag(PageBarTags.SIGN_IN).performClick()
+        assertEquals(listOf("signIn"), calls)
+    }
+
+    @Test
+    fun pageBar_avatarMenuSignedIn() {
+        val calls = mutableListOf<String>()
+        bar(Viewer(id = "u1", email = "sam@example.com", name = "Sam"), calls)
+        compose.onNodeWithText("S").assertExists()
+        compose.onNodeWithTag(PageBarTags.AVATAR).performClick()
+        compose.onNodeWithText("sam@example.com").assertExists()
+        compose.onNodeWithTag(PageBarTags.SIGN_IN).assertDoesNotExist()
+        compose.onNodeWithTag(PageBarTags.PRICING).performClick()
+        compose.onNodeWithTag(PageBarTags.AVATAR).performClick()
+        compose.onNodeWithTag(PageBarTags.SIGN_OUT).performClick()
+        assertEquals(listOf("pricing", "signOut"), calls)
+    }
+
+    @Test
+    fun pageBar_gamifySwitchShowsItsState() {
+        var on by mutableStateOf(false)
+        bar(null, mutableListOf(), gamify = false, onGamify = { on = it })
+        compose.onNodeWithTag(PageBarTags.GAMIFY).assertIsOff()
+        compose.onNodeWithTag(PageBarTags.GAMIFY).performClick()
+        assertTrue(on)
+    }
+
+    @Test
+    fun pageBar_initialFallsBackToEmail() {
+        assertEquals("S", initialOf(Viewer("1", "a@b.c", " sam")))
+        assertEquals("A", initialOf(Viewer("1", "a@b.c")))
     }
 
     @Test

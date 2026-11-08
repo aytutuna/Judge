@@ -90,8 +90,9 @@ class ScreenshotsTest {
     @get:Rule
     val compose = createComposeRule()
 
-    private fun capture(name: String, tall: Boolean = false, content: @Composable () -> Unit) {
+    private fun capture(name: String, tall: Boolean = false, tablet: Boolean = false, content: @Composable () -> Unit) {
         if (tall) RuntimeEnvironment.setQualifiers("+w393dp-h2900dp")
+        if (tablet) RuntimeEnvironment.setQualifiers("+w800dp-h1280dp")
         compose.mainClock.autoAdvance = false
         compose.setContent(content)
         compose.mainClock.advanceTimeBy(5_000)
@@ -625,6 +626,36 @@ class ScreenshotsTest {
                 PageBar(UiTestSupport.s(AppLang.EN).appTabNew, {}, {}, FocusRequester())
                 HomeScreen(HomeUiState(), {}, {}, {})
             }
+        }
+    }
+
+    @Test
+    fun home_withBar_signedIn_en_dark() = capture("home_bar_signed_in_en_dark") {
+        Themed(AppLang.EN, dark = true) {
+            Column(Modifier.fillMaxSize()) {
+                PageBar(
+                    UiTestSupport.s(AppLang.EN).navVerdicts, {}, {}, FocusRequester(),
+                    account = AccountActions(Viewer("u1", "sam@example.com", "Sam"), {}, {}, {}, {}),
+                )
+                HomeScreen(HomeUiState(), {}, {}, {})
+            }
+        }
+    }
+
+    @Test
+    fun home_tablet_en() = capture("home_tablet_en", tablet = true) {
+        Themed(AppLang.EN) {
+            Column(Modifier.fillMaxSize()) {
+                PageBar(UiTestSupport.s(AppLang.EN).appTabNew, {}, {}, FocusRequester())
+                HomeScreen(HomeUiState(), {}, {}, {})
+            }
+        }
+    }
+
+    @Test
+    fun judging_tablet_en() = capture("judging_tablet_en", tablet = true) {
+        Themed(AppLang.EN) {
+            JudgingScreen(done = false, result = null, startedAt = System.currentTimeMillis() - 4_000, reducedMotion = true, onFinished = {}, onCancel = {})
         }
     }
 
