@@ -336,6 +336,13 @@ fun JudgeRoot(
                                 menuFocus = menuButton,
                                 gamify = gamify != false,
                                 onGamify = { on -> scope.launch { container.settings.setGamify(on) } },
+                                account = AccountActions(
+                                    user = (accountNow as? Account.State.SignedIn)?.me?.user,
+                                    onSettings = { backStack.resetTo(listOf(HomeKey, SettingsKey)) },
+                                    onPricing = openPricing,
+                                    onSignIn = { if (backStack.lastOrNull() !is SignInKey) backStack.add(SignInKey(thenVerdict = false)) },
+                                    onSignOut = { container.appScope.launch { account.signOut() } },
+                                ),
                             )
                         }
                     },

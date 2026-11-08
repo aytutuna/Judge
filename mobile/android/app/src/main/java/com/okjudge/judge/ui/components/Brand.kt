@@ -13,7 +13,6 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.graphics.FilterQuality
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.rotate
@@ -34,7 +33,6 @@ fun BrandLogo(size: Dp, modifier: Modifier = Modifier) {
         painterResource(if (Palette.dark) R.drawable.brand_logo_dark else R.drawable.brand_logo_light),
         contentDescription = null,
         modifier = modifier.size(size),
-        filterQuality = FilterQuality.High,
     )
 }
 
