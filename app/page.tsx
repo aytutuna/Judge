@@ -222,9 +222,10 @@ export default function Home() {
     router.push("/signin?next=%2F");
   }
 
-  // Until /me answers, a click does nothing rather than sending a signed-in writer away.
+  // The button only renders once /config and /me are in, so this also runs
+  // when /me failed; /signin sends a signed-in person back.
   function addContextSignIn() {
-    if (viewer.status === "ready") signInFirst();
+    signInFirst();
   }
 
   /** Nothing left to spend: pricing, with the text kept for afterwards. */
