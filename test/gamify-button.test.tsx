@@ -2,11 +2,11 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import { GamifyButton } from "../components/shell/GamifyButton";
 
-describe("gamify switch", () => {
-  it("is a switch, on by default", () => {
+describe("gamify button", () => {
+  it("is a toggle button, pressed by default", () => {
     const html = renderToStaticMarkup(<GamifyButton lang="en" />);
-    expect(html).toContain('role="switch"');
-    expect(html).toContain('aria-checked="true"');
-    expect(html).not.toContain("aria-pressed");
+    expect(html).toContain('aria-pressed="true"');
+    expect(html).not.toContain("role=");
+    expect(html).not.toContain("aria-checked");
   });
 });

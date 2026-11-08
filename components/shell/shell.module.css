@@ -43,7 +43,7 @@
   border: 0;
   border-radius: var(--radius-chip);
   background: none;
-  color: var(--ink-2);
+  color: var(--muted);
   font: inherit;
   font-size: 14px;
   font-weight: 500;
@@ -52,6 +52,7 @@
   -webkit-tap-highlight-color: transparent;
   transition:
     background-color var(--dur-1),
+    box-shadow var(--dur-1),
     color var(--dur-1);
 }
 .gamify:hover {
@@ -62,8 +63,11 @@
   outline: 2px solid var(--terra-ink);
   outline-offset: 2px;
 }
-html:not([data-game="off"]) .gamify {
-  color: var(--ink);
+html:not([data-game="off"]) .gamify,
+html:not([data-game="off"]) .gamify:hover {
+  background: color-mix(in srgb, var(--terra) 16%, transparent);
+  color: var(--terra-ink);
+  box-shadow: 0 0 12px color-mix(in srgb, var(--terra) 40%, transparent);
 }
 .gamify svg {
   width: 20px;
@@ -78,32 +82,6 @@ html:not([data-game="off"]) .gamify {
     padding: 0 4px;
     min-width: 0;
   }
-}
-.track {
-  position: relative;
-  flex: none;
-  width: 32px;
-  height: 18px;
-  border-radius: 9px;
-  background: var(--muted);
-  transition: background-color var(--dur-1);
-}
-.knob {
-  position: absolute;
-  inset-block-start: 2px;
-  inset-inline-start: 2px;
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  background: var(--paper);
-  box-shadow: 0 1px 2px var(--line-2);
-  transition: inset-inline-start var(--dur-1);
-}
-html:not([data-game="off"]) .track {
-  background: var(--terra-ink);
-}
-html:not([data-game="off"]) .knob {
-  inset-inline-start: 16px;
 }
 @media (min-width: 640px) {
   .gamifyLabel {
@@ -239,21 +217,15 @@ html:not([data-game="off"]) .knob {
   .panel {
     animation: none;
   }
-  .track,
-  .knob {
+  .gamify {
     transition: none;
   }
 }
 @media (forced-colors: active) {
-  .track {
-    border: 1px solid ButtonText;
-    background: Canvas;
-  }
-  html:not([data-game="off"]) .track {
+  html:not([data-game="off"]) .gamify {
     background: Highlight;
-  }
-  .knob {
-    background: ButtonText;
+    color: HighlightText;
+    box-shadow: none;
   }
   .menuRow[aria-current="page"] {
     text-decoration: underline;

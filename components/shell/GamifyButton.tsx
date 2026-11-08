@@ -4,7 +4,7 @@ import { t, type Lang } from "@/lib/i18n";
 import { setGame, useGame } from "@/lib/game";
 import styles from "./shell.module.css";
 
-/** Header switch for the court art; the label hides on narrow screens, the icon and switch stay. */
+/** Header toggle for the court art; it lights up when on. The label hides on narrow screens. */
 export function GamifyButton({ lang }: { lang: Lang }) {
   const on = useGame();
   const label = t(lang, "shell.gamify");
@@ -12,8 +12,7 @@ export function GamifyButton({ lang }: { lang: Lang }) {
     <button
       type="button"
       className={styles.gamify}
-      role="switch"
-      aria-checked={on}
+      aria-pressed={on}
       aria-label={label}
       title={label}
       onClick={() => setGame(!on)}
@@ -29,9 +28,6 @@ export function GamifyButton({ lang }: { lang: Lang }) {
         />
       </svg>
       <span className={styles.gamifyLabel}>{label}</span>
-      <span className={styles.track} aria-hidden>
-        <span className={styles.knob} />
-      </span>
     </button>
   );
 }
