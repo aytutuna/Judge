@@ -76,6 +76,7 @@ import com.okjudge.judge.i18n.AppLang
 import com.okjudge.judge.i18n.LocalLang
 import com.okjudge.judge.i18n.LocalStrings
 import com.okjudge.judge.ui.components.CourtView
+import com.okjudge.judge.ui.components.LocalGamify
 import com.okjudge.judge.ui.components.GhostButton
 import com.okjudge.judge.ui.components.JudgeIcons
 import com.okjudge.judge.ui.components.TintedIcon
@@ -262,7 +263,7 @@ fun HomeScreen(
                 Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState(), reverseScrolling = true)) {
                     Column(Modifier.fillMaxWidth().heightIn(min = region), horizontalAlignment = Alignment.CenterHorizontally) {
                         BoxWithConstraints(Modifier.weight(1f).fillMaxWidth(), contentAlignment = Alignment.Center) {
-                            if (maxHeight >= COURT_MIN_HEIGHT) {
+                            if (LocalGamify.current && maxHeight >= COURT_MIN_HEIGHT) {
                                 // 16/9 inside the free space, with a margin to the edges.
                                 val width = minOf(maxWidth - 32.dp, (maxHeight - 16.dp) * 16f / 9f, 480.dp)
                                 CourtView(CourtScene.Home(busy = state.holding), rememberReducedMotion(), Modifier.width(width).aspectRatio(16f / 9f))
