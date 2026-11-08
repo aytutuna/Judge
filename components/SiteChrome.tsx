@@ -9,8 +9,8 @@ import styles from "./SiteChrome.module.css";
 
 /** Shared page chrome. No hooks: usable from server pages (share page, which
  * passes its Accept-Language lang and no toggle) and client pages alike. The
- * account entry is its own client component and renders nothing until the
- * viewer store has answered, so server HTML is unchanged. */
+ * avatar menu is its own client component; server HTML has it as the
+ * signed-out avatar until the viewer store has answered. */
 
 export function SkipLink({ lang }: { lang: Lang }) {
   return (
@@ -22,7 +22,7 @@ export function SkipLink({ lang }: { lang: Lang }) {
 
 /** Fixed, blurred 56px nav, with a spacer of the same height so the page
  * starts below it. `lead` goes before the brand (the app shell's menu button);
- * `children` go before the account entry (its "Verdicts" link). */
+ * `children` go before the avatar menu (the "Verdicts" link). */
 export function SiteHeader({
   lang,
   toggle = false,

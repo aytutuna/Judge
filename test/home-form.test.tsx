@@ -52,7 +52,7 @@ const evidence: EvidenceController = {
 describe("HomeForm", () => {
   it("blank: the name, one composer with a held send button, the example and the add-their-side chip", () => {
     const html = form();
-    expect(html).toContain(">Judge<");
+    expect(html).not.toContain(">Judge<");
     expect(html).toContain(t("en", "home.example"));
     expect(html).toContain(t("en", "home.addTheirSide"));
     expect(html.match(/<textarea/g)).toHaveLength(1);

@@ -85,8 +85,7 @@
   min-width: 0;
 }
 
-/* The account entry (client-rendered; empty until the viewer store has
-   answered) takes no box of its own. */
+/* The avatar menu takes no box of its own. */
 .account {
   display: contents;
 }

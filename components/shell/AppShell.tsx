@@ -12,7 +12,7 @@ import { SideMenu } from "./SideMenu";
 import styles from "./shell.module.css";
 
 /**
- * Page frame for the app's own pages: the header (with "Verdicts" and "Settings" from
+ * Page frame for the app's own pages: the header (with "Verdicts" from
  * the desktop breakpoint), the page, the footer unless `footer` is off,
  * and below 960px a menu button at the start of the header. `toggle` shows the
  * language picker (pages whose chrome reads the client language store). The
@@ -50,13 +50,6 @@ export function AppShell({
           aria-current={pathname === "/verdicts" ? "page" : undefined}
         >
           {t(lang, "nav.verdicts")}
-        </Link>
-        <Link
-          href="/settings"
-          className={styles.headerLink}
-          aria-current={pathname === "/settings" ? "page" : undefined}
-        >
-          {t(lang, "nav.settings")}
         </Link>
       </SiteHeader>
       {children}
