@@ -65,9 +65,13 @@ private struct GamifyToggleStyle: ToggleStyle {
                 .foregroundStyle(on ? Brand.terraInk : Brand.muted)
                 .frame(width: 36, height: 32)
                 .background(
-                    Capsule()
-                        .fill(on ? Brand.terra.opacity(0.16) : Color.clear)
-                        .shadow(color: on ? Brand.terra.opacity(0.4) : .clear, radius: 6)
+                    ZStack {
+                        Capsule()
+                            .fill(Brand.terra.opacity(on ? 0.4 : 0))
+                            .blur(radius: 6)
+                        Capsule()
+                            .fill(Brand.terra.opacity(on ? 0.16 : 0))
+                    }
                 )
                 .frame(minWidth: 44, minHeight: 44)
                 .contentShape(Rectangle())
@@ -168,8 +172,8 @@ struct ProfileMenu: View {
     }
 }
 
-/// The trailing end of a root page's bar: the Gamify switch, New and the
-/// profile button. Verdicts leaves the switch out: it has no court, and its
+/// The trailing end of a root page's bar: the Gamify button, New and the
+/// profile button. Verdicts leaves the button out: it has no court, and its
 /// Select button needs the room.
 struct RootBarTrailing: ToolbarContent {
     var gamify = true
