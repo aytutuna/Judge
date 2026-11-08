@@ -125,7 +125,7 @@ export function ending(fromWaiting: number, summary: Summary | null, reduced: bo
     later(400, "more", { key: "story.closeCall" });
     if (extra > 0) {
       later(2600, "vote2", null);
-      at += extra * VOTE_MS;
+      at += Math.min(2, extra) * VOTE_MS;
     }
   }
   if (votes.length && trial) {

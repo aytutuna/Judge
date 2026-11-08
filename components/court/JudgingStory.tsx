@@ -73,7 +73,7 @@ export function JudgingStory({
     () => (done ? ending(waiting, summary, reduced || document.hidden) : null),
     // Planned once, when the verdict lands.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [done, reduced],
+    [done],
   );
 
   useEffect(() => {
