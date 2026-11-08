@@ -229,6 +229,7 @@ const zhHans: Locale = {
     "about.builtTitle": "背后原理",
     "about.built":
       "Judge 使用外部服务商提供的 AI 模型。三位评委并行工作，票数接近时会有更多评委加入。他们的一致程度决定可信度；凭事实胜出的裁决要先经过一轮质询才算数。",
+    "about.art": "像素美术：{author} 的 {pack}",
     "privacy.title": "隐私",
     "privacy.kicker": "你的数据",
     "privacy.lead":

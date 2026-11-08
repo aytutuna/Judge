@@ -245,6 +245,7 @@ const tr: Locale = {
     "about.builtTitle": "Perde arkası",
     "about.built":
       "Judge, harici bir sağlayıcının yapay zekâ modeliyle çalışır. Üç yargıç aynı anda karar verir, oylar başa başsa ek yargıçlar da katılır. Ne kadar anlaştıkları güven puanını belirler. Kazanan olgusal bir hüküm de kesinleşmeden önce ayrı bir çapraz sorgudan geçer.",
+    "about.art": "Piksel sanat: {author} tarafından {pack}",
     "privacy.title": "Gizlilik",
     "privacy.kicker": "Verilerin",
     "privacy.lead":

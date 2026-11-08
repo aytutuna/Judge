@@ -243,6 +243,7 @@ const pl: Locale = {
     "about.builtTitle": "Pod maską",
     "about.built":
       "Judge działa na modelu AI od zewnętrznego dostawcy. Trzech sędziów pracuje równolegle, a przy wyrównanym wyniku dochodzą kolejni. To, na ile się zgadzają, wyznacza poziom pewności, a zwycięski werdykt oparty na faktach musi jeszcze przetrwać osobne przesłuchanie krzyżowe.",
+    "about.art": "Pixel art: {pack} autorstwa {author}",
     "privacy.title": "Prywatność",
     "privacy.kicker": "Twoje dane",
     "privacy.lead":

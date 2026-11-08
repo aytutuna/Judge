@@ -240,6 +240,7 @@ const sk: Locale = {
     "about.builtTitle": "Pod kapotou",
     "about.built":
       "Judge beží na AI modeli od externého poskytovateľa. Traja sudcovia pracujú súčasne a pri tesnom výsledku sa pridajú ďalší. Miera ich zhody určuje skóre istoty a víťazné rozhodnutie o faktoch musí ešte obstáť vo vlastnom krížovom výsluchu.",
+    "about.art": "Pixel art: {pack} od {author}",
     "privacy.title": "Súkromie",
     "privacy.kicker": "Tvoje údaje",
     "privacy.lead":

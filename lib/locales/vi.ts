@@ -241,6 +241,7 @@ const vi: Locale = {
     "about.builtTitle": "Bên trong",
     "about.built":
       "Judge chạy trên một mô hình AI của một nhà cung cấp bên ngoài. Ba giám khảo làm việc song song và có thêm giám khảo khi sát nút. Mức độ đồng thuận của họ quyết định độ tin cậy, và một phán quyết thắng về mặt sự thật phải qua một vòng chất vấn riêng trước khi được giữ nguyên.",
+    "about.art": "Đồ họa pixel: {pack} của {author}",
     "privacy.title": "Quyền riêng tư",
     "privacy.kicker": "Dữ liệu của bạn",
     "privacy.lead":

@@ -240,6 +240,7 @@ const ro: Locale = {
     "about.builtTitle": "Sub capotă",
     "about.built":
       "Judge funcționează cu un model AI de la un furnizor extern. Trei judecători lucrează în paralel, iar când e la limită se alătură și alții. Cât de mult sunt de acord dă scorul de încredere, iar un verdict câștigător bazat pe fapte trece printr-un interogatoriu separat înainte să rămână în picioare.",
+    "about.art": "Pixel art: {pack} de {author}",
     "privacy.title": "Confidențialitate",
     "privacy.kicker": "Datele tale",
     "privacy.lead":

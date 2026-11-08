@@ -240,6 +240,7 @@ const ptPT: Locale = {
     "about.builtTitle": "Por dentro",
     "about.built":
       "O Judge funciona com um modelo de IA de um fornecedor externo. Três juízes trabalham em paralelo e entram mais quando está renhido. O grau de acordo entre eles define a pontuação de confiança, e uma decisão vencedora baseada em factos enfrenta a sua própria prova de fogo antes de ser dada como certa.",
+    "about.art": "Pixel art: {pack} de {author}",
     "privacy.title": "Privacidade",
     "privacy.kicker": "Os teus dados",
     "privacy.lead":

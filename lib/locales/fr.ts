@@ -240,6 +240,7 @@ const fr: Locale = {
     "about.builtTitle": "Sous le capot",
     "about.built":
       "Judge s’appuie sur un modèle d’IA d’un fournisseur externe. Trois juges travaillent en parallèle, et d’autres les rejoignent si c’est serré. Leur degré d’accord fixe l’indice de confiance, et un verdict gagnant fondé sur des faits passe son propre contre-interrogatoire avant d’être validé.",
+    "about.art": "Pixel art : {pack} de {author}",
     "privacy.title": "Confidentialité",
     "privacy.kicker": "Tes données",
     "privacy.lead":

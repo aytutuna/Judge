@@ -240,6 +240,7 @@ const ko: Locale = {
     "about.builtTitle": "작동 방식",
     "about.built":
       "Judge는 외부 업체의 AI 모델로 돌아가요. 판사 3명이 동시에 일하고, 박빙이면 판사가 더 들어와요. 판사들이 얼마나 의견이 같은지가 신뢰도 점수를 정하고, 사실을 근거로 이긴 판결은 확정되기 전에 따로 반대 심문을 거쳐요.",
+    "about.art": "픽셀 아트: {author}의 {pack}",
     "privacy.title": "개인정보 처리방침",
     "privacy.kicker": "내 데이터",
     "privacy.lead":

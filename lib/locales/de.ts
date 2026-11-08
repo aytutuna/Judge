@@ -240,6 +240,7 @@ const de: Locale = {
     "about.builtTitle": "Unter der Haube",
     "about.built":
       "Judge läuft mit einem KI-Modell eines externen Anbieters. Drei Richter arbeiten parallel, bei knappen Fällen kommen weitere dazu. Wie einig sie sich sind, bestimmt die Sicherheit, und ein Sieg auf Faktenbasis muss erst ein eigenes Kreuzverhör bestehen, bevor er gilt.",
+    "about.art": "Pixel-Art: {pack} von {author}",
     "privacy.title": "Datenschutz",
     "privacy.kicker": "Deine Daten",
     "privacy.lead":

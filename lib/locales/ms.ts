@@ -242,6 +242,7 @@ const ms: Locale = {
     "about.builtTitle": "Di sebalik tabir",
     "about.built":
       "Judge menggunakan model AI daripada penyedia luar. Tiga hakim bekerja serentak dan lebih ramai menyertai kalau keputusannya rapat. Sejauh mana mereka sependapat menentukan skor keyakinan, dan keputusan fakta yang menang perlu melalui soal balasnya sendiri sebelum diterima.",
+    "about.art": "Seni piksel: {pack} oleh {author}",
     "privacy.title": "Privasi",
     "privacy.kicker": "Data anda",
     "privacy.lead":

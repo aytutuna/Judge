@@ -240,6 +240,7 @@ const ja: Locale = {
     "about.builtTitle": "裏側のしくみ",
     "about.built":
       "Judgeは外部の会社が提供するAIモデルで動いています。3人の審査員が並行して判定し、僅差なら審査員が加わります。意見がどれだけそろったかが信頼度になり、事実で決着がついた判定は、確定する前に別途反論テストを受けます。",
+    "about.art": "ドット絵: {author} の {pack}",
     "privacy.title": "プライバシー",
     "privacy.kicker": "あなたのデータ",
     "privacy.lead":

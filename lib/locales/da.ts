@@ -241,6 +241,7 @@ const da: Locale = {
     "about.builtTitle": "Under motorhjelmen",
     "about.built":
       "Judge kører på en AI-model fra en ekstern udbyder. Tre dommere arbejder parallelt, og flere kommer til, når det er tæt. Hvor enige de er, bestemmer sikkerhedsscoren, og en vindende afgørelse om fakta skal igennem sit eget krydsforhør, før den står ved magt.",
+    "about.art": "Pixelkunst: {pack} af {author}",
     "privacy.title": "Privatliv",
     "privacy.kicker": "Dine data",
     "privacy.lead":

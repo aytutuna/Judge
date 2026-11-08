@@ -229,6 +229,7 @@ const zhHant: Locale = {
     "about.builtTitle": "幕後運作",
     "about.built":
       "Judge 使用外部供應商的 AI 模型。三位評審同時判斷，票數接近時會有更多評審加入。他們的一致程度決定信心分數，而靠事實勝出的判決在定案前，還要通過一輪壓力測試。",
+    "about.art": "像素美術：{author} 的 {pack}",
     "privacy.title": "隱私權",
     "privacy.kicker": "你的資料",
     "privacy.lead":

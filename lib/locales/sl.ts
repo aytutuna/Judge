@@ -240,6 +240,7 @@ const sl: Locale = {
     "about.builtTitle": "Pod pokrovom",
     "about.built":
       "Judge deluje na modelu UI zunanjega ponudnika. Trije sodniki delajo vzporedno, ob tesnem izidu pa se pridruži še kdo. Koliko se strinjajo, določa oceno zanesljivosti, zmagovita razsodba o dejstvih pa mora pred potrditvijo prestati še svoje navzkrižno zaslišanje.",
+    "about.art": "Pixel art: {pack} avtorja {author}",
     "privacy.title": "Zasebnost",
     "privacy.kicker": "Tvoji podatki",
     "privacy.lead":

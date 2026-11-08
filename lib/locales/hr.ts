@@ -240,6 +240,7 @@ const hr: Locale = {
     "about.builtTitle": "Ispod haube",
     "about.built":
       "Judge radi na AI modelu vanjskog pružatelja. Tri suca rade usporedno, a kad je tijesno, pridružuju im se dodatni suci. Koliko se slažu, određuje ocjenu pouzdanosti, a pobjednička presuda o činjenicama, prije nego što postane konačna, prolazi vlastito unakrsno ispitivanje.",
+    "about.art": "Pixel art: {pack} autora {author}",
     "privacy.title": "Privatnost",
     "privacy.kicker": "Tvoji podaci",
     "privacy.lead":

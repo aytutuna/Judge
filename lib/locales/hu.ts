@@ -241,6 +241,7 @@ const hu: Locale = {
     "about.builtTitle": "A motorháztető alatt",
     "about.built":
       "A Judge egy külső szolgáltató MI-modelljével működik. Három bíró dolgozik párhuzamosan, szoros állásnál pedig további bírák is beszállnak. Az egyetértésük mértéke adja a bizonyossági pontszámot, a tényeken alapuló győztes ítéletnek pedig külön kereszttűzön is át kell mennie, mielőtt végleges lesz.",
+    "about.art": "Pixelgrafika: {pack}, készítette: {author}",
     "privacy.title": "Adatvédelem",
     "privacy.kicker": "Az adataid",
     "privacy.lead":

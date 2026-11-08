@@ -241,6 +241,7 @@ const sv: Locale = {
     "about.builtTitle": "Under huven",
     "about.built":
       "Judge körs på en AI-modell från en extern leverantör. Tre domare arbetar parallellt och fler ansluter när det är jämnt. Hur överens de är avgör säkerhetspoängen, och en vinnande faktadom får klara ett eget korsförhör innan den får stå kvar.",
+    "about.art": "Pixelkonst: {pack} av {author}",
     "privacy.title": "Integritet",
     "privacy.kicker": "Dina uppgifter",
     "privacy.lead":

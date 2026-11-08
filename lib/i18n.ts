@@ -233,6 +233,7 @@ const en = {
   "about.builtTitle": "Under the hood",
   "about.built":
     "Judge runs on an AI model from an outside provider. Three judges work in parallel and more join on a close call. How much they agree sets the confidence score, and a winning factual ruling faces its own cross-examination before it stands.",
+  "about.art": "Pixel art: {pack} by {author}",
   "privacy.title": "Privacy",
   "privacy.kicker": "Your data",
   "privacy.lead":

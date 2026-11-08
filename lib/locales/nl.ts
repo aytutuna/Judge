@@ -240,6 +240,7 @@ const nl: Locale = {
     "about.builtTitle": "Onder de motorkap",
     "about.built":
       "Judge draait op een AI-model van een externe aanbieder. Drie rechters werken tegelijk en bij een nipte uitslag komen er meer bij. Hoe eensgezind ze zijn, bepaalt de zekerheidsscore, en een winnende uitspraak over feiten moet eerst nog door een eigen kruisverhoor voordat hij staat.",
+    "about.art": "Pixelart: {pack} van {author}",
     "privacy.title": "Privacy",
     "privacy.kicker": "Jouw gegevens",
     "privacy.lead":

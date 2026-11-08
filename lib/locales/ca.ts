@@ -241,6 +241,7 @@ const ca: Locale = {
     "about.builtTitle": "Per dins",
     "about.built":
       "Judge funciona amb un model d'IA d'un proveïdor extern. Tres jutges treballen en paral·lel i, si la cosa està igualada, se n'hi afegeixen més. El grau d'acord entre ells fixa la puntuació de confiança, i un veredicte guanyador sobre fets passa la seva pròpia prova de foc abans de donar-se per bo.",
+    "about.art": "Pixel art: {pack} de {author}",
     "privacy.title": "Privadesa",
     "privacy.kicker": "Les teves dades",
     "privacy.lead":

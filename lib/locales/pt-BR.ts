@@ -240,6 +240,7 @@ const ptBR: Locale = {
     "about.builtTitle": "Por dentro",
     "about.built":
       "O Judge funciona com um modelo de IA de um provedor externo. Três juízes trabalham em paralelo, e mais juízes entram num caso apertado. O quanto eles concordam define a nota de confiança, e uma vitória baseada em fatos passa por um teste de fogo próprio antes de valer.",
+    "about.art": "Pixel art: {pack} de {author}",
     "privacy.title": "Privacidade",
     "privacy.kicker": "Seus dados",
     "privacy.lead":

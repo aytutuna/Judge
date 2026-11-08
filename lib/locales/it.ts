@@ -240,6 +240,7 @@ const it: Locale = {
     "about.builtTitle": "Dietro le quinte",
     "about.built":
       "Judge funziona con un modello di IA di un fornitore esterno. Tre giudici lavorano in parallelo e altri si aggiungono quando è in bilico. Quanto sono d'accordo determina il punteggio di certezza, e una vittoria sui fatti affronta un fuoco incrociato tutto suo prima di essere confermata.",
+    "about.art": "Pixel art: {pack} di {author}",
     "privacy.title": "Privacy",
     "privacy.kicker": "I tuoi dati",
     "privacy.lead":

@@ -240,6 +240,7 @@ const nb: Locale = {
     "about.builtTitle": "Under panseret",
     "about.built":
       "Judge kjører på en KI-modell fra en ekstern leverandør. Tre dommere jobber parallelt, og flere blir med når det er jevnt. Hvor enige de er, avgjør sikkerhetsscoren, og en vinnende dom på fakta må gjennom sitt eget kryssforhør før den blir stående.",
+    "about.art": "Pikselkunst: {pack} av {author}",
     "privacy.title": "Personvern",
     "privacy.kicker": "Dine data",
     "privacy.lead":

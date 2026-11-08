@@ -240,6 +240,7 @@ const es: Locale = {
     "about.builtTitle": "Por dentro",
     "about.built":
       "Judge funciona con un modelo de IA de un proveedor externo. Tres jueces trabajan en paralelo y se suman más si está reñido. Cuánto coinciden determina la puntuación de confianza, y una decisión ganadora basada en hechos pasa por su propio interrogatorio cruzado antes de darse por buena.",
+    "about.art": "Pixel art: {pack} de {author}",
     "privacy.title": "Privacidad",
     "privacy.kicker": "Tus datos",
     "privacy.lead":

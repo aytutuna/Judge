@@ -89,6 +89,27 @@ function About({ lang, features, premiumOn }: { lang: Lang; features: InfoFeatur
   );
 }
 
+/** The street court art credit, pack and author as links. */
+function ArtCredit({ text }: { text: string }) {
+  const links: Record<string, [string, string]> = {
+    "{pack}": ["Modern Exteriors", "https://limezu.itch.io/modernexteriors"],
+    "{author}": ["LimeZu", "https://limezu.itch.io/"],
+  };
+  return (
+    <p>
+      {text.split(/({pack}|{author})/).map((part, i) => {
+        const link = links[part];
+        if (!link) return part;
+        return (
+          <a key={i} href={link[1]} className={styles.link} target="_blank" rel="noreferrer">
+            {link[0]}
+          </a>
+        );
+      })}
+    </p>
+  );
+}
+
 /** A sentence with an {email} slot, the address as a real link. */
 function ContactLine({ text, email }: { text: string; email: string }) {
   const [before, after = ""] = text.split("{email}");

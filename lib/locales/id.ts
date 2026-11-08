@@ -240,6 +240,7 @@ const id: Locale = {
     "about.builtTitle": "Di balik layar",
     "about.built":
       "Judge berjalan dengan model AI dari penyedia luar. Tiga hakim bekerja bersamaan dan lebih banyak yang ikut kalau hasilnya tipis. Tingkat kesepakatan mereka menentukan skor keyakinan, dan kemenangan berdasarkan fakta menjalani uji silangnya sendiri sebelum dinyatakan berlaku.",
+    "about.art": "Pixel art: {pack} oleh {author}",
     "privacy.title": "Privasi",
     "privacy.kicker": "Datamu",
     "privacy.lead":

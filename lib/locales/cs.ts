@@ -238,6 +238,7 @@ const cs: Locale = {
     "about.builtTitle": "Pod kapotou",
     "about.built":
       "Judge běží na AI modelu od externího poskytovatele. Tři soudci pracují souběžně a při těsném výsledku se přidají další. Míra jejich shody určuje skóre jistoty a vítězný verdikt postavený na faktech musí nejdřív obstát ve vlastním křížovém výslechu.",
+    "about.art": "Pixel art: {pack} od {author}",
     "privacy.title": "Soukromí",
     "privacy.kicker": "Tvoje data",
     "privacy.lead":

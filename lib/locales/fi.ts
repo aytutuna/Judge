@@ -240,6 +240,7 @@ const fi: Locale = {
     "about.builtTitle": "Konepellin alla",
     "about.built":
       "Judge toimii ulkopuolisen palveluntarjoajan tekoälymallilla. Kolme tuomaria työskentelee rinnakkain, ja tiukassa tilanteessa mukaan tulee lisää. Heidän yksimielisyytensä määrää varmuusluvun, ja faktoihin perustuva voittava tuomio joutuu vielä omaan ristikuulusteluunsa ennen kuin se jää voimaan.",
+    "about.art": "Pikselitaide: {pack}, tekijä {author}",
     "privacy.title": "Tietosuoja",
     "privacy.kicker": "Tietosi",
     "privacy.lead":
