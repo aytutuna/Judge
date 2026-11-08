@@ -50,7 +50,7 @@ const evidence: EvidenceController = {
 };
 
 describe("HomeForm", () => {
-  it("blank: the name, one composer with a held send button, the example and the add-their-side chip", () => {
+  it("blank: no title, one composer with a held send button, the example and the add-their-side chip", () => {
     const html = form();
     expect(html).not.toContain(">Judge<");
     expect(html).toContain(t("en", "home.example"));

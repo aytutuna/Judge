@@ -49,11 +49,11 @@
   overflow-y: auto;
 }
 
-/* Nothing typed and no court: the form rests in the middle of the screen. */
-:global(html[data-game="off"]) .form[data-blank] {
+/* No court: the form rests in the middle of the screen, typed in or not. */
+:global(html[data-game="off"]) .form {
   justify-content: center;
 }
-:global(html[data-game="off"]) .form[data-blank] .stage {
+:global(html[data-game="off"]) .form .stage {
   display: none;
 }
 
