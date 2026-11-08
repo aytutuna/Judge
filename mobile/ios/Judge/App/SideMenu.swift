@@ -78,7 +78,7 @@ private struct GamifyToggleStyle: ToggleStyle {
                     }
                     .animation(reduceMotion ? nil : .easeOut(duration: 0.15), value: on)
             }
-            .frame(minHeight: 44)
+            .frame(minWidth: 44, minHeight: 44)
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
