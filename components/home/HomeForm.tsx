@@ -221,7 +221,7 @@ export function HomeForm(p: HomeFormProps) {
                 Judge
               </p>
             ) : null}
-            <HomeCourt className={styles.mids} busy={p.holding} />
+            <HomeCourt className={styles.court} busy={p.holding} />
           </div>
 
           {p.theirsOpen ? (
