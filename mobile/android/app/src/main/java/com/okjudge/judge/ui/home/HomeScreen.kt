@@ -275,7 +275,7 @@ fun HomeScreen(
                         if (!centred) BoxWithConstraints(Modifier.weight(1f).fillMaxWidth(), contentAlignment = Alignment.Center) {
                             if (LocalGamify.current && maxHeight >= COURT_MIN_HEIGHT) {
                                 // 16/9 inside the free space; wide screens let it grow with the width, phones stay at 480.
-                                val cap = if (maxWidth >= WIDE_SCREEN) minOf(maxWidth * 0.92f, 1100.dp) else 480.dp
+                                val cap = if (maxWidth >= WIDE_SCREEN) maxWidth * 0.92f else 480.dp
                                 val width = minOf(maxWidth - 32.dp, (maxHeight - 16.dp) * 16f / 9f, cap)
                                 CourtView(CourtScene.Home(busy = state.holding), rememberReducedMotion(), Modifier.width(width).aspectRatio(16f / 9f))
                             }
