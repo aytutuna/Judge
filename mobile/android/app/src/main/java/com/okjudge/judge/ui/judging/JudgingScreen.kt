@@ -230,10 +230,11 @@ private fun TypeLine(text: String, reducedMotion: Boolean, style: TextStyle) {
             n++
         }
     }
+    val shown = if (reducedMotion) text.length else n
     Text(
         buildAnnotatedString {
-            append(text.take(n))
-            withStyle(SpanStyle(color = Color.Transparent)) { append(text.drop(n)) }
+            append(text.take(shown))
+            withStyle(SpanStyle(color = Color.Transparent)) { append(text.drop(shown)) }
         },
         style = style,
     )
