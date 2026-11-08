@@ -46,7 +46,7 @@ export function SiteHeader({
             </Link>
           </div>
           <div className={styles.navRight}>
-            {toggle ? <LangPicker lang={lang} /> : null}
+            {toggle ? <LangPicker lang={lang} compact /> : null}
             {children}
             <span className={styles.account}>
               <AccountMenu lang={lang} />

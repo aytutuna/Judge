@@ -15,10 +15,12 @@ export function LangPicker({
   lang,
   onSelect = setLang,
   label,
+  compact,
 }: {
   lang: Lang;
   onSelect?: (l: Lang) => void;
   label?: string;
+  compact?: boolean;
 }) {
   return (
     <span className={styles.wrap}>
@@ -29,7 +31,7 @@ export function LangPicker({
           track("settings_changed", { key: "language" });
           onSelect(e.target.value as Lang);
         }}
-        className={styles.select}
+        className={compact ? `${styles.select} ${styles.compact}` : styles.select}
       >
         {ENABLED.map((l) => (
           // Each name is written in its own language, whatever the page's.

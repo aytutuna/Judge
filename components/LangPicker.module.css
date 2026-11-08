@@ -31,7 +31,7 @@
   }
 }
 @media (max-width: 479px) {
-  .select {
+  .compact {
     max-width: 72px;
     padding-inline: 10px 24px;
   }
