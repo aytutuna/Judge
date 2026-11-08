@@ -7,6 +7,7 @@ import { t, type Lang } from "@/lib/i18n";
 import { langDir } from "@/lib/langs";
 import { AgeGate } from "../AgeGate";
 import { SiteFooter, SiteHeader, SkipLink } from "../SiteChrome";
+import { GamifyButton } from "./GamifyButton";
 import { SideMenu } from "./SideMenu";
 import styles from "./shell.module.css";
 
@@ -42,6 +43,7 @@ export function AppShell({
         toggle={toggle}
         lead={tabs ? <SideMenu lang={lang} pathname={pathname} onHome={onHome} /> : undefined}
       >
+        <GamifyButton lang={lang} />
         <Link
           href="/verdicts"
           className={styles.headerLink}

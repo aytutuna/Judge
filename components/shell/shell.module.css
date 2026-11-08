@@ -31,6 +31,55 @@
   color: var(--ink);
 }
 
+.gamify {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  flex: none;
+  min-width: 40px;
+  min-height: 40px;
+  padding: 0 10px;
+  border: 0;
+  border-radius: var(--radius-chip);
+  background: none;
+  color: var(--ink-2);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    background-color var(--dur-1),
+    color var(--dur-1);
+}
+.gamify:hover {
+  background: color-mix(in srgb, var(--ink) 6%, transparent);
+  color: var(--ink);
+}
+.gamify:focus-visible {
+  outline: 2px solid var(--terra-ink);
+  outline-offset: 2px;
+}
+.gamify[aria-pressed="true"] {
+  color: var(--terra-ink);
+  background: color-mix(in srgb, var(--terra-ink) 10%, transparent);
+}
+.gamify svg {
+  width: 20px;
+  height: 20px;
+  flex: none;
+}
+.gamifyLabel {
+  display: none;
+}
+@media (min-width: 640px) {
+  .gamifyLabel {
+    display: inline;
+  }
+}
+
 .menuButton {
   display: inline-flex;
   align-items: center;

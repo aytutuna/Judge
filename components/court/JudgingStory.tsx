@@ -2,6 +2,7 @@
 
 import { useEffect, useEffectEvent, useMemo, useRef, useState } from "react";
 import { t, type Lang } from "@/lib/i18n";
+import { useGame } from "@/lib/game";
 import { stripLeadingEmoji } from "@/lib/text";
 import type { VerdictResult } from "@/lib/types";
 import { useReducedMotion } from "@/components/scene/useReducedMotion";
@@ -44,6 +45,7 @@ export function JudgingStory({
   onFinished: () => void;
 }) {
   const reduced = useReducedMotion();
+  const game = useGame();
   const finish = useEffectEvent(onFinished);
   const started = useRef(0);
   const isAccepted = useRef(accepted);
@@ -99,17 +101,19 @@ export function JudgingStory({
   return (
     <div className={styles.root}>
       <p className={styles.eyebrow}>{t(lang, "thinking.eyebrow")}</p>
-      <Court
-        className={styles.stage}
-        scene={{
-          kind: "judging",
-          beat,
-          votes: summary?.votes ?? [],
-          extra: summary?.extra ?? 0,
-          winner: summary?.winner ?? null,
-          trial: summary?.trial ?? null,
-        }}
-      />
+      {game ? (
+        <Court
+          className={styles.stage}
+          scene={{
+            kind: "judging",
+            beat,
+            votes: summary?.votes ?? [],
+            extra: summary?.extra ?? 0,
+            winner: summary?.winner ?? null,
+            trial: summary?.trial ?? null,
+          }}
+        />
+      ) : null}
       <p className="sr-only" role="status" aria-live="polite" aria-atomic="true">
         {text(lines[last])}
       </p>

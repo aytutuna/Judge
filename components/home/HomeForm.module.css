@@ -44,6 +44,14 @@
   min-height: 0;
 }
 
+/* Without the court the title sits in the middle of the free space. */
+:global(html[data-game="off"]) .push {
+  justify-content: center;
+}
+:global(html[data-game="off"]) .empty {
+  margin-top: 0;
+}
+
 .empty {
   flex: none;
   margin: 6vh 0 0;
