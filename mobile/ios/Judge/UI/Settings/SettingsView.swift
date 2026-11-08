@@ -52,6 +52,19 @@ struct SettingsView: View {
                 .listRowBackground(Brand.paper)
 
                 Section {
+                    Toggle(isOn: Binding(get: { app.gamify }, set: {
+                        app.setGamify($0)
+                        app.analytics.track("settings_changed", ["key": "gamify"])
+                    })) {
+                        Text(L10n.shellGamify(lang))
+                            .brandText(.body)
+                            .foregroundStyle(Brand.ink)
+                    }
+                    .tint(Brand.terraInk)
+                }
+                .listRowBackground(Brand.paper)
+
+                Section {
                     Toggle(isOn: Binding(get: { app.usageStats }, set: { app.setUsageStats($0) })) {
                         Text(L10n.appSettingsUsageStats(lang))
                             .brandText(.body)
@@ -91,6 +104,7 @@ struct SettingsView: View {
             .toolbarBackground(Brand.ivory, for: .navigationBar)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) { MenuButton() }
+                ToolbarItem(placement: .topBarTrailing) { GamifyButton() }
                 ToolbarItem(placement: .topBarTrailing) { ComposeButton() }
             }
             .sheet(item: $webLink) { link in

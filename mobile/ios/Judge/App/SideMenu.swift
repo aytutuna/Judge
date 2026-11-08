@@ -50,6 +50,26 @@ struct ComposeButton: View {
     }
 }
 
+/// Turns the street court on or off, next to the compose button.
+struct GamifyButton: View {
+    @Environment(AppModel.self) private var app
+
+    var body: some View {
+        let on = app.gamify
+        Button {
+            app.setGamify(!on)
+        } label: {
+            Image(systemName: on ? "gamecontroller.fill" : "gamecontroller")
+                .font(.system(size: 18, weight: .semibold))
+                .foregroundStyle(on ? Brand.terraInk : Brand.ink2)
+                .frame(minWidth: 44, minHeight: 44)
+                .contentShape(Rectangle())
+        }
+        .accessibilityLabel(L10n.shellGamify(app.lang))
+        .accessibilityAddTraits(on ? .isSelected : [])
+    }
+}
+
 /// The panel the menu button slides in: New, Verdicts and the newest few
 /// verdicts, with Settings at the bottom.
 struct SideMenu: View {

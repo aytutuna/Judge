@@ -46,6 +46,9 @@ final class AppModel {
     private(set) var appearance: Appearance
     /// The "Usage statistics" setting, on unless turned off.
     private(set) var usageStats: Bool
+    /// The street court on Home and in the judging card, per device, on
+    /// unless turned off.
+    private(set) var gamify: Bool
 
     let config: AppConfig
     let api: JudgeAPI
@@ -102,6 +105,7 @@ final class AppModel {
     private static let langKey = "settings.lang"
     private static let appearanceKey = "settings.appearance"
     private static let usageStatsKey = "settings.usageStats"
+    private static let gamifyKey = "settings.gamify"
     private static let userKey = "session.user"
     private static let userSessionKey = "session.userToken"
 
@@ -126,6 +130,7 @@ final class AppModel {
         appearance = Appearance(stored: defaults.string(forKey: Self.appearanceKey))
         let usageStats = defaults.object(forKey: Self.usageStatsKey) as? Bool ?? true
         self.usageStats = usageStats
+        gamify = defaults.object(forKey: Self.gamifyKey) as? Bool ?? true
         let deviceID = DeviceIdentity.deviceID(defaults)
         let (ageGates, ageGateSink) = AsyncStream.makeStream(of: String.self)
         let judgeAPI = api ?? JudgeAPI(
@@ -231,6 +236,11 @@ final class AppModel {
     func setAppearance(_ value: Appearance) {
         appearance = value
         defaults.set(value.rawValue, forKey: Self.appearanceKey)
+    }
+
+    func setGamify(_ on: Bool) {
+        gamify = on
+        defaults.set(on, forKey: Self.gamifyKey)
     }
 
     /// Off drops the queued events and sends no more.

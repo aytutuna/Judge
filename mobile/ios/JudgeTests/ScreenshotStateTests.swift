@@ -93,6 +93,11 @@ final class ScreenshotStateTests: XCTestCase {
             XCTAssertTrue(judging.home.isJudging)
             let sent = ExampleArgument.all[0].text(.en).trimmingCharacters(in: .whitespacesAndNewlines)
             XCTAssertEqual(judging.home.judgedSides.map(\.text), [sent], "the cover shows what was sent")
+            XCTAssertTrue(judging.gamify)
+
+            let plain = try XCTUnwrap(ScreenshotState.parse("judging-plain:en")).makeModel(container: container)
+            XCTAssertTrue(plain.home.isJudging)
+            XCTAssertFalse(plain.gamify)
         }
     }
 

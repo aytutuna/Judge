@@ -5,10 +5,12 @@ import SwiftUI
 struct JudgingCover: View {
     let home: HomeModel
     let lang: AppLang
+    let gamify: Bool
 
     var body: some View {
         JudgingView(
             lang: lang,
+            gamify: gamify,
             sides: home.judgedSides,
             result: home.arrived,
             acceptedAt: home.acceptedAt,
@@ -25,6 +27,9 @@ struct JudgingCover: View {
 /// out and `onFinished` hands over.
 struct JudgingView: View {
     let lang: AppLang
+    /// The street court is drawn; off, the card is the eyebrow, the log and
+    /// the helper.
+    var gamify = true
     /// What was sent, a tile per written side.
     var sides: [HomeModel.JudgedSide] = []
     /// Non-nil once the verdict has arrived.
@@ -104,9 +109,11 @@ struct JudgingView: View {
         VStack(alignment: .leading, spacing: 14) {
             Kicker(text: L10n.thinkingEyebrow(lang))
 
-            CourtView(scene: .judging(beat, summary))
-                .frame(maxWidth: 480)
-                .frame(maxWidth: .infinity)
+            if gamify {
+                CourtView(scene: .judging(beat, summary))
+                    .frame(maxWidth: 480)
+                    .frame(maxWidth: .infinity)
+            }
 
             log
 
