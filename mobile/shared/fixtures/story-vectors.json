@@ -1,0 +1,941 @@
+{
+  "waiting": [
+    {
+      "elapsed": 0,
+      "acceptedAt": null,
+      "index": 0
+    },
+    {
+      "elapsed": 60000,
+      "acceptedAt": null,
+      "index": 0
+    },
+    {
+      "elapsed": 1000,
+      "acceptedAt": 400,
+      "index": 0
+    },
+    {
+      "elapsed": 2510,
+      "acceptedAt": 400,
+      "index": 1
+    },
+    {
+      "elapsed": 5000,
+      "acceptedAt": 4000,
+      "index": 1
+    },
+    {
+      "elapsed": 13010,
+      "acceptedAt": 4000,
+      "index": 2
+    },
+    {
+      "elapsed": 19010,
+      "acceptedAt": 4000,
+      "index": 3
+    },
+    {
+      "elapsed": 26010,
+      "acceptedAt": 4000,
+      "index": 4
+    },
+    {
+      "elapsed": 33010,
+      "acceptedAt": 4000,
+      "index": 5
+    },
+    {
+      "elapsed": 600000,
+      "acceptedAt": 4000,
+      "index": 5
+    }
+  ],
+  "endings": [
+    {
+      "name": "unanimous",
+      "fromWaiting": 5,
+      "summary": {
+        "votes": [
+          "a",
+          "a",
+          "a"
+        ],
+        "escalated": false,
+        "extra": 0,
+        "winner": "a",
+        "trial": null
+      },
+      "reduced": false,
+      "steps": [
+        {
+          "at": 450,
+          "beat": "vote1",
+          "line": {
+            "key": "story.count"
+          }
+        },
+        {
+          "at": 3510,
+          "beat": "final",
+          "line": {
+            "key": "story.agree",
+            "vars": {
+              "n": 3,
+              "total": 3
+            }
+          }
+        },
+        {
+          "at": 3510,
+          "beat": "final",
+          "line": {
+            "key": "thinking.ready"
+          }
+        }
+      ],
+      "finishAt": 5410
+    },
+    {
+      "name": "two_one",
+      "fromWaiting": 5,
+      "summary": {
+        "votes": [
+          "a",
+          "b",
+          "a"
+        ],
+        "escalated": false,
+        "extra": 0,
+        "winner": "a",
+        "trial": null
+      },
+      "reduced": false,
+      "steps": [
+        {
+          "at": 450,
+          "beat": "vote1",
+          "line": {
+            "key": "story.count"
+          }
+        },
+        {
+          "at": 3510,
+          "beat": "final",
+          "line": {
+            "key": "story.agree",
+            "vars": {
+              "n": 2,
+              "total": 3
+            }
+          }
+        },
+        {
+          "at": 3510,
+          "beat": "final",
+          "line": {
+            "key": "thinking.ready"
+          }
+        }
+      ],
+      "finishAt": 5410
+    },
+    {
+      "name": "other_votes",
+      "fromWaiting": 5,
+      "summary": {
+        "votes": [
+          "a",
+          "other",
+          "b"
+        ],
+        "escalated": false,
+        "extra": 0,
+        "winner": null,
+        "trial": null
+      },
+      "reduced": false,
+      "steps": [
+        {
+          "at": 450,
+          "beat": "vote1",
+          "line": {
+            "key": "story.count"
+          }
+        },
+        {
+          "at": 3510,
+          "beat": "final",
+          "line": {
+            "key": "story.split"
+          }
+        },
+        {
+          "at": 3510,
+          "beat": "final",
+          "line": {
+            "key": "thinking.ready"
+          }
+        }
+      ],
+      "finishAt": 5410
+    },
+    {
+      "name": "refusal_no_votes",
+      "fromWaiting": 5,
+      "summary": {
+        "votes": [],
+        "escalated": false,
+        "extra": 0,
+        "winner": null,
+        "trial": null
+      },
+      "reduced": false,
+      "steps": [
+        {
+          "at": 600,
+          "beat": "final",
+          "line": {
+            "key": "thinking.ready"
+          }
+        }
+      ],
+      "finishAt": 2500
+    },
+    {
+      "name": "escalated_two_extra",
+      "fromWaiting": 5,
+      "summary": {
+        "votes": [
+          "a",
+          "b",
+          "a",
+          "a",
+          "b"
+        ],
+        "escalated": true,
+        "extra": 2,
+        "winner": "a",
+        "trial": null
+      },
+      "reduced": false,
+      "steps": [
+        {
+          "at": 450,
+          "beat": "vote1",
+          "line": {
+            "key": "story.count"
+          }
+        },
+        {
+          "at": 3310,
+          "beat": "more",
+          "line": {
+            "key": "story.closeCall"
+          }
+        },
+        {
+          "at": 5910,
+          "beat": "vote2",
+          "line": null
+        },
+        {
+          "at": 7350,
+          "beat": "final",
+          "line": {
+            "key": "story.agree",
+            "vars": {
+              "n": 3,
+              "total": 5
+            }
+          }
+        },
+        {
+          "at": 7350,
+          "beat": "final",
+          "line": {
+            "key": "thinking.ready"
+          }
+        }
+      ],
+      "finishAt": 9250
+    },
+    {
+      "name": "escalated_no_extra",
+      "fromWaiting": 5,
+      "summary": {
+        "votes": [
+          "a",
+          "a",
+          "a"
+        ],
+        "escalated": true,
+        "extra": 0,
+        "winner": "a",
+        "trial": null
+      },
+      "reduced": false,
+      "steps": [
+        {
+          "at": 450,
+          "beat": "vote1",
+          "line": {
+            "key": "story.count"
+          }
+        },
+        {
+          "at": 3310,
+          "beat": "more",
+          "line": {
+            "key": "story.closeCall"
+          }
+        },
+        {
+          "at": 3910,
+          "beat": "final",
+          "line": {
+            "key": "story.agree",
+            "vars": {
+              "n": 3,
+              "total": 3
+            }
+          }
+        },
+        {
+          "at": 3910,
+          "beat": "final",
+          "line": {
+            "key": "thinking.ready"
+          }
+        }
+      ],
+      "finishAt": 5810
+    },
+    {
+      "name": "trial_survived",
+      "fromWaiting": 5,
+      "summary": {
+        "votes": [
+          "a",
+          "a",
+          "a"
+        ],
+        "escalated": false,
+        "extra": 0,
+        "winner": "a",
+        "trial": "survived"
+      },
+      "reduced": false,
+      "steps": [
+        {
+          "at": 450,
+          "beat": "vote1",
+          "line": {
+            "key": "story.count"
+          }
+        },
+        {
+          "at": 3510,
+          "beat": "trial",
+          "line": {
+            "key": "trial.survived"
+          }
+        },
+        {
+          "at": 8310,
+          "beat": "final",
+          "line": {
+            "key": "story.agree",
+            "vars": {
+              "n": 3,
+              "total": 3
+            }
+          }
+        },
+        {
+          "at": 8310,
+          "beat": "final",
+          "line": {
+            "key": "thinking.ready"
+          }
+        }
+      ],
+      "finishAt": 10210
+    },
+    {
+      "name": "trial_uncertain",
+      "fromWaiting": 5,
+      "summary": {
+        "votes": [
+          "a",
+          "a",
+          "a"
+        ],
+        "escalated": false,
+        "extra": 0,
+        "winner": "a",
+        "trial": "uncertain"
+      },
+      "reduced": false,
+      "steps": [
+        {
+          "at": 450,
+          "beat": "vote1",
+          "line": {
+            "key": "story.count"
+          }
+        },
+        {
+          "at": 3510,
+          "beat": "trial",
+          "line": {
+            "key": "trial.uncertain"
+          }
+        },
+        {
+          "at": 8310,
+          "beat": "final",
+          "line": {
+            "key": "story.agree",
+            "vars": {
+              "n": 3,
+              "total": 3
+            }
+          }
+        },
+        {
+          "at": 8310,
+          "beat": "final",
+          "line": {
+            "key": "thinking.ready"
+          }
+        }
+      ],
+      "finishAt": 10210
+    },
+    {
+      "name": "trial_overturned",
+      "fromWaiting": 5,
+      "summary": {
+        "votes": [
+          "a",
+          "a",
+          "a"
+        ],
+        "escalated": false,
+        "extra": 0,
+        "winner": "a",
+        "trial": "overturned"
+      },
+      "reduced": false,
+      "steps": [
+        {
+          "at": 450,
+          "beat": "vote1",
+          "line": {
+            "key": "story.count"
+          }
+        },
+        {
+          "at": 3510,
+          "beat": "trial",
+          "line": {
+            "key": "trial.overturned"
+          }
+        },
+        {
+          "at": 8310,
+          "beat": "final",
+          "line": {
+            "key": "story.agree",
+            "vars": {
+              "n": 3,
+              "total": 3
+            }
+          }
+        },
+        {
+          "at": 8310,
+          "beat": "final",
+          "line": {
+            "key": "thinking.ready"
+          }
+        }
+      ],
+      "finishAt": 10210
+    },
+    {
+      "name": "trial_without_votes",
+      "fromWaiting": 5,
+      "summary": {
+        "votes": [],
+        "escalated": false,
+        "extra": 0,
+        "winner": null,
+        "trial": "survived"
+      },
+      "reduced": false,
+      "steps": [
+        {
+          "at": 600,
+          "beat": "final",
+          "line": {
+            "key": "thinking.ready"
+          }
+        }
+      ],
+      "finishAt": 2500
+    },
+    {
+      "name": "everything",
+      "fromWaiting": 0,
+      "summary": {
+        "votes": [
+          "b",
+          "a",
+          "b",
+          "b",
+          "a"
+        ],
+        "escalated": true,
+        "extra": 2,
+        "winner": "b",
+        "trial": "overturned"
+      },
+      "reduced": false,
+      "steps": [
+        {
+          "at": 0,
+          "beat": "facts",
+          "line": {
+            "key": "story.facts"
+          }
+        },
+        {
+          "at": 450,
+          "beat": "judges",
+          "line": {
+            "key": "story.judges"
+          }
+        },
+        {
+          "at": 900,
+          "beat": "bothSides",
+          "line": {
+            "key": "story.bothSides"
+          }
+        },
+        {
+          "at": 1350,
+          "beat": "crux",
+          "line": {
+            "key": "story.crux"
+          }
+        },
+        {
+          "at": 1800,
+          "beat": "ruling",
+          "line": {
+            "key": "story.ruling"
+          }
+        },
+        {
+          "at": 2250,
+          "beat": "vote1",
+          "line": {
+            "key": "story.count"
+          }
+        },
+        {
+          "at": 5110,
+          "beat": "more",
+          "line": {
+            "key": "story.closeCall"
+          }
+        },
+        {
+          "at": 7710,
+          "beat": "vote2",
+          "line": null
+        },
+        {
+          "at": 9150,
+          "beat": "trial",
+          "line": {
+            "key": "trial.overturned"
+          }
+        },
+        {
+          "at": 13950,
+          "beat": "final",
+          "line": {
+            "key": "story.agree",
+            "vars": {
+              "n": 3,
+              "total": 5
+            }
+          }
+        },
+        {
+          "at": 13950,
+          "beat": "final",
+          "line": {
+            "key": "thinking.ready"
+          }
+        }
+      ],
+      "finishAt": 15850
+    },
+    {
+      "name": "reduced",
+      "fromWaiting": 2,
+      "summary": {
+        "votes": [
+          "a",
+          "a",
+          "a"
+        ],
+        "escalated": false,
+        "extra": 0,
+        "winner": "a",
+        "trial": null
+      },
+      "reduced": true,
+      "steps": [],
+      "finishAt": 600
+    },
+    {
+      "name": "no_result",
+      "fromWaiting": 2,
+      "summary": null,
+      "reduced": false,
+      "steps": [],
+      "finishAt": 0
+    },
+    {
+      "name": "done_during_0",
+      "fromWaiting": 0,
+      "summary": {
+        "votes": [
+          "a",
+          "a",
+          "a"
+        ],
+        "escalated": false,
+        "extra": 0,
+        "winner": "a",
+        "trial": null
+      },
+      "reduced": false,
+      "steps": [
+        {
+          "at": 0,
+          "beat": "facts",
+          "line": {
+            "key": "story.facts"
+          }
+        },
+        {
+          "at": 450,
+          "beat": "judges",
+          "line": {
+            "key": "story.judges"
+          }
+        },
+        {
+          "at": 900,
+          "beat": "bothSides",
+          "line": {
+            "key": "story.bothSides"
+          }
+        },
+        {
+          "at": 1350,
+          "beat": "crux",
+          "line": {
+            "key": "story.crux"
+          }
+        },
+        {
+          "at": 1800,
+          "beat": "ruling",
+          "line": {
+            "key": "story.ruling"
+          }
+        },
+        {
+          "at": 2250,
+          "beat": "vote1",
+          "line": {
+            "key": "story.count"
+          }
+        },
+        {
+          "at": 5310,
+          "beat": "final",
+          "line": {
+            "key": "story.agree",
+            "vars": {
+              "n": 3,
+              "total": 3
+            }
+          }
+        },
+        {
+          "at": 5310,
+          "beat": "final",
+          "line": {
+            "key": "thinking.ready"
+          }
+        }
+      ],
+      "finishAt": 7210
+    },
+    {
+      "name": "done_during_1",
+      "fromWaiting": 1,
+      "summary": {
+        "votes": [
+          "a",
+          "a",
+          "a"
+        ],
+        "escalated": false,
+        "extra": 0,
+        "winner": "a",
+        "trial": null
+      },
+      "reduced": false,
+      "steps": [
+        {
+          "at": 0,
+          "beat": "judges",
+          "line": {
+            "key": "story.judges"
+          }
+        },
+        {
+          "at": 450,
+          "beat": "bothSides",
+          "line": {
+            "key": "story.bothSides"
+          }
+        },
+        {
+          "at": 900,
+          "beat": "crux",
+          "line": {
+            "key": "story.crux"
+          }
+        },
+        {
+          "at": 1350,
+          "beat": "ruling",
+          "line": {
+            "key": "story.ruling"
+          }
+        },
+        {
+          "at": 1800,
+          "beat": "vote1",
+          "line": {
+            "key": "story.count"
+          }
+        },
+        {
+          "at": 4860,
+          "beat": "final",
+          "line": {
+            "key": "story.agree",
+            "vars": {
+              "n": 3,
+              "total": 3
+            }
+          }
+        },
+        {
+          "at": 4860,
+          "beat": "final",
+          "line": {
+            "key": "thinking.ready"
+          }
+        }
+      ],
+      "finishAt": 6760
+    },
+    {
+      "name": "done_during_2",
+      "fromWaiting": 2,
+      "summary": {
+        "votes": [
+          "a",
+          "a",
+          "a"
+        ],
+        "escalated": false,
+        "extra": 0,
+        "winner": "a",
+        "trial": null
+      },
+      "reduced": false,
+      "steps": [
+        {
+          "at": 0,
+          "beat": "bothSides",
+          "line": {
+            "key": "story.bothSides"
+          }
+        },
+        {
+          "at": 450,
+          "beat": "crux",
+          "line": {
+            "key": "story.crux"
+          }
+        },
+        {
+          "at": 900,
+          "beat": "ruling",
+          "line": {
+            "key": "story.ruling"
+          }
+        },
+        {
+          "at": 1350,
+          "beat": "vote1",
+          "line": {
+            "key": "story.count"
+          }
+        },
+        {
+          "at": 4410,
+          "beat": "final",
+          "line": {
+            "key": "story.agree",
+            "vars": {
+              "n": 3,
+              "total": 3
+            }
+          }
+        },
+        {
+          "at": 4410,
+          "beat": "final",
+          "line": {
+            "key": "thinking.ready"
+          }
+        }
+      ],
+      "finishAt": 6310
+    },
+    {
+      "name": "done_during_3",
+      "fromWaiting": 3,
+      "summary": {
+        "votes": [
+          "a",
+          "a",
+          "a"
+        ],
+        "escalated": false,
+        "extra": 0,
+        "winner": "a",
+        "trial": null
+      },
+      "reduced": false,
+      "steps": [
+        {
+          "at": 0,
+          "beat": "crux",
+          "line": {
+            "key": "story.crux"
+          }
+        },
+        {
+          "at": 450,
+          "beat": "ruling",
+          "line": {
+            "key": "story.ruling"
+          }
+        },
+        {
+          "at": 900,
+          "beat": "vote1",
+          "line": {
+            "key": "story.count"
+          }
+        },
+        {
+          "at": 3960,
+          "beat": "final",
+          "line": {
+            "key": "story.agree",
+            "vars": {
+              "n": 3,
+              "total": 3
+            }
+          }
+        },
+        {
+          "at": 3960,
+          "beat": "final",
+          "line": {
+            "key": "thinking.ready"
+          }
+        }
+      ],
+      "finishAt": 5860
+    },
+    {
+      "name": "done_during_4",
+      "fromWaiting": 4,
+      "summary": {
+        "votes": [
+          "a",
+          "a",
+          "a"
+        ],
+        "escalated": false,
+        "extra": 0,
+        "winner": "a",
+        "trial": null
+      },
+      "reduced": false,
+      "steps": [
+        {
+          "at": 0,
+          "beat": "ruling",
+          "line": {
+            "key": "story.ruling"
+          }
+        },
+        {
+          "at": 450,
+          "beat": "vote1",
+          "line": {
+            "key": "story.count"
+          }
+        },
+        {
+          "at": 3510,
+          "beat": "final",
+          "line": {
+            "key": "story.agree",
+            "vars": {
+              "n": 3,
+              "total": 3
+            }
+          }
+        },
+        {
+          "at": 3510,
+          "beat": "final",
+          "line": {
+            "key": "thinking.ready"
+          }
+        }
+      ],
+      "finishAt": 5410
+    }
+  ]
+}
