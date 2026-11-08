@@ -1,8 +1,10 @@
 package com.okjudge.judge.ui.components
 
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -16,11 +18,23 @@ import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.rotate
 import androidx.compose.ui.graphics.drawscope.scale
 import androidx.compose.ui.graphics.drawscope.translate
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.okjudge.judge.R
 import com.okjudge.judge.ui.theme.LocalSides
 import com.okjudge.judge.ui.theme.Palette
 import com.okjudge.judge.ui.theme.Sides
+
+/** The app icon's 3D mark; the art follows the app's own light or dark, not the system's. Decorative. */
+@Composable
+fun BrandLogo(size: Dp, modifier: Modifier = Modifier) {
+    Image(
+        painterResource(if (Palette.dark) R.drawable.brand_logo_dark else R.drawable.brand_logo_light),
+        contentDescription = null,
+        modifier = modifier.size(size),
+    )
+}
 
 /**
  * The judging balance: a level beam on the ink pivot,
@@ -70,11 +84,11 @@ internal fun triangle(x1: Float, y1: Float, x2: Float, y2: Float, x3: Float, y3:
 fun Modifier.warmShadow(elevation: Dp, shape: Shape): Modifier =
     shadow(elevation, shape, clip = false, ambientColor = Palette.warmShadow, spotColor = Palette.warmShadow)
 
-/** The writing box's edge: a thin line and a glow, stronger with the focus. */
+/** The writing box's edge: a thin line, with a glow only while it has the focus. */
 @Composable
 fun Modifier.neonEdge(edge: Color, focused: Boolean, shape: Shape): Modifier {
-    val glow = edge.copy(alpha = if (focused) 0.6f else 0.4f)
-    return shadow(if (focused) 12.dp else 8.dp, shape, clip = false, ambientColor = glow, spotColor = glow)
+    val glow = edge.copy(alpha = 0.6f)
+    return (if (focused) shadow(12.dp, shape, clip = false, ambientColor = glow, spotColor = glow) else this)
         .clip(shape)
         .background(Palette.paper)
         .border(1.dp, edge.copy(alpha = if (focused) 0.95f else 0.75f), shape)

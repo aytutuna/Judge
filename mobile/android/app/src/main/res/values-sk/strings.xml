@@ -142,6 +142,7 @@
     <string name="nav_sign_in">Prihlásiť sa</string>
     <string name="nav_account">Účet</string>
     <string name="nav_pricing">Cenník</string>
+    <string name="nav_account_menu">Ponuka účtu</string>
     <string name="nav_sign_out">Odhlásiť sa</string>
     <string name="nav_verdicts">Verdikty</string>
     <string name="nav_tabs">Sekcie</string>

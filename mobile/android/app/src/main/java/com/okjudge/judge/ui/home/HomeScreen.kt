@@ -96,10 +96,11 @@ import com.okjudge.judge.ui.theme.forScript
 import java.text.NumberFormat
 import kotlinx.coroutines.delay
 
-private const val WORDMARK = "Judge"
-
 /** Under this the free space above the case is too small for the court. */
 private val COURT_MIN_HEIGHT = 110.dp
+
+/** From this width the court scales with the screen instead of stopping at phone size. */
+private val WIDE_SCREEN = 600.dp
 
 object HomeTags {
     const val INPUT = "home.input"
@@ -256,19 +257,24 @@ fun HomeScreen(
     BoxWithConstraints(modifier.fillMaxSize().background(Palette.ivory).imePadding()) {
         // A short screen with the keyboard up still has to leave room for the send row.
         val fieldMax = maxHeight * 0.25f
-        Column(Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
-            BoxWithConstraints(Modifier.weight(1f).fillMaxWidth()) {
-                val region = maxHeight
+        // No court: the form rests in the middle of the screen, typed or not.
+        val centred = !LocalGamify.current
+        Column(
+            Modifier.fillMaxSize(),
+            verticalArrangement = if (centred) Arrangement.Center else Arrangement.Top,
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            BoxWithConstraints(Modifier.weight(1f, fill = !centred).fillMaxWidth()) {
+                val region = if (centred) 0.dp else maxHeight
                 // Reversed, so the content stays against the composer as it grows.
-                Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState(), reverseScrolling = true)) {
+                Column((if (centred) Modifier.fillMaxWidth() else Modifier.fillMaxSize()).verticalScroll(rememberScrollState(), reverseScrolling = true)) {
                     Column(Modifier.fillMaxWidth().heightIn(min = region), horizontalAlignment = Alignment.CenterHorizontally) {
-                        BoxWithConstraints(Modifier.weight(1f).fillMaxWidth(), contentAlignment = Alignment.Center) {
+                        if (!centred) BoxWithConstraints(Modifier.weight(1f).fillMaxWidth(), contentAlignment = Alignment.Center) {
                             if (LocalGamify.current && maxHeight >= COURT_MIN_HEIGHT) {
-                                // 16/9 inside the free space, with a margin to the edges.
-                                val width = minOf(maxWidth - 32.dp, (maxHeight - 16.dp) * 16f / 9f, 480.dp)
+                                // 16/9 inside the free space; wide screens let it grow with the width, phones stay at 480.
+                                val cap = if (maxWidth >= WIDE_SCREEN) minOf(maxWidth * 0.92f, 1100.dp) else 480.dp
+                                val width = minOf(maxWidth - 32.dp, (maxHeight - 16.dp) * 16f / 9f, cap)
                                 CourtView(CourtScene.Home(busy = state.holding), rememberReducedMotion(), Modifier.width(width).aspectRatio(16f / 9f))
-                            } else if (state.blank) {
-                                Text(WORDMARK, style = JudgeType.display1.copy(fontSize = 34.sp, lineHeight = 34.sp, letterSpacing = (-0.02).em))
                             }
                         }
                         Column(column.padding(top = 16.dp, bottom = 20.dp), verticalArrangement = Arrangement.spacedBy(12.dp), content = middle)

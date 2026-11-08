@@ -35,6 +35,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.LiveRegionMode
@@ -142,11 +143,17 @@ fun JudgingScreen(
     val last = lines.lastIndex
     val texts = lines.map { lineText(s, it) }
 
+    val screen = LocalConfiguration.current
+    // Large screens let the card and the court grow; the court stops short of half the height so the log stays in view.
+    val cardMax = if (screen.screenWidthDp >= 960) 880.dp else 640.dp
+    val courtHeight = if (screen.screenWidthDp >= 600) (screen.screenHeightDp * 0.48f).dp else 360.dp
+    val courtWidth = if (screen.screenWidthDp >= 600) courtHeight * 16f / 9f else 480.dp
+
     Column(modifier.fillMaxSize().background(Palette.ivory), horizontalAlignment = Alignment.CenterHorizontally) {
         Column(
             Modifier
                 .weight(1f)
-                .widthIn(max = 640.dp)
+                .widthIn(max = cardMax)
                 .fillMaxWidth()
                 .verticalScroll(rememberScrollState())
                 .padding(horizontal = 16.dp, vertical = 16.dp),
@@ -170,8 +177,8 @@ fun JudgingScreen(
                         scene = CourtScene.Judging(beat, summary),
                         reducedMotion = reducedMotion,
                         modifier = Modifier
-                            .heightIn(max = 360.dp)
-                            .widthIn(max = 480.dp)
+                            .heightIn(max = courtHeight)
+                            .widthIn(max = courtWidth)
                             .fillMaxWidth()
                             .aspectRatio(16f / 9f)
                             .testTag(JudgingTags.COURT),

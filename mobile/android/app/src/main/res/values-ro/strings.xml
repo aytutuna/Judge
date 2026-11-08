@@ -139,6 +139,7 @@
     <string name="nav_sign_in">Conectează-te</string>
     <string name="nav_account">Cont</string>
     <string name="nav_pricing">Prețuri</string>
+    <string name="nav_account_menu">Meniul contului</string>
     <string name="nav_sign_out">Deconectează-te</string>
     <string name="nav_verdicts">Verdicte</string>
     <string name="nav_tabs">Secțiuni</string>

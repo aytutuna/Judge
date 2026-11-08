@@ -136,6 +136,7 @@
     <string name="nav_sign_in">સાઇન ઇન</string>
     <string name="nav_account">એકાઉન્ટ</string>
     <string name="nav_pricing">કિંમત</string>
+    <string name="nav_account_menu">એકાઉન્ટ મેનૂ</string>
     <string name="nav_sign_out">સાઇન આઉટ</string>
     <string name="nav_verdicts">ચુકાદા</string>
     <string name="nav_tabs">વિભાગો</string>

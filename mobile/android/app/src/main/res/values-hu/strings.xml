@@ -136,6 +136,7 @@
     <string name="nav_sign_in">Belépés</string>
     <string name="nav_account">Fiók</string>
     <string name="nav_pricing">Árak</string>
+    <string name="nav_account_menu">Fiókmenü</string>
     <string name="nav_sign_out">Kilépés</string>
     <string name="nav_verdicts">Ítéletek</string>
     <string name="nav_tabs">Szakaszok</string>

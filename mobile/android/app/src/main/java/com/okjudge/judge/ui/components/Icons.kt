@@ -92,6 +92,11 @@ object JudgeIcons {
         ),
     )
 
+    fun person(color: Color) = icon(
+        "person", 24f,
+        P("M12 5a4 4 0 1 0 0 8 4 4 0 0 0 0-8ZM4 21c0-4.4 3.6-7 8-7s8 2.6 8 7Z", fill = color),
+    )
+
     fun trash(color: Color) = icon(
         "trash", 16f,
         P("M3 4.5h10M6.5 4.5V3h3v1.5M4.5 4.5l.6 8.5h5.8l.6-8.5", stroke = color, width = 1.4f),

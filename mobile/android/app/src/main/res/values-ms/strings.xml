@@ -133,6 +133,7 @@
     <string name="nav_sign_in">Log masuk</string>
     <string name="nav_account">Akaun</string>
     <string name="nav_pricing">Harga</string>
+    <string name="nav_account_menu">Menu akaun</string>
     <string name="nav_sign_out">Log keluar</string>
     <string name="nav_verdicts">Keputusan</string>
     <string name="nav_tabs">Bahagian</string>

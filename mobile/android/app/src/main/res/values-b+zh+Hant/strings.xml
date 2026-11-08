@@ -133,6 +133,7 @@
     <string name="nav_sign_in">登入</string>
     <string name="nav_account">帳號</string>
     <string name="nav_pricing">價格</string>
+    <string name="nav_account_menu">帳號選單</string>
     <string name="nav_sign_out">登出</string>
     <string name="nav_verdicts">判決</string>
     <string name="nav_tabs">區塊</string>

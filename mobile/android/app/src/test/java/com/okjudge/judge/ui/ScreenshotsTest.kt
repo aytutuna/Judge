@@ -90,8 +90,9 @@ class ScreenshotsTest {
     @get:Rule
     val compose = createComposeRule()
 
-    private fun capture(name: String, tall: Boolean = false, content: @Composable () -> Unit) {
+    private fun capture(name: String, tall: Boolean = false, tablet: Boolean = false, content: @Composable () -> Unit) {
         if (tall) RuntimeEnvironment.setQualifiers("+w393dp-h2900dp")
+        if (tablet) RuntimeEnvironment.setQualifiers("+w800dp-h1280dp")
         compose.mainClock.autoAdvance = false
         compose.setContent(content)
         compose.mainClock.advanceTimeBy(5_000)
@@ -629,6 +630,36 @@ class ScreenshotsTest {
     }
 
     @Test
+    fun home_withBar_signedIn_en_dark() = capture("home_bar_signed_in_en_dark") {
+        Themed(AppLang.EN, dark = true) {
+            Column(Modifier.fillMaxSize()) {
+                PageBar(
+                    UiTestSupport.s(AppLang.EN).navVerdicts, {}, {}, FocusRequester(),
+                    account = AccountActions(true, Viewer("u1", "sam@example.com", "Sam"), {}, {}, {}, {}),
+                )
+                HomeScreen(HomeUiState(), {}, {}, {})
+            }
+        }
+    }
+
+    @Test
+    fun home_tablet_en() = capture("home_tablet_en", tablet = true) {
+        Themed(AppLang.EN) {
+            Column(Modifier.fillMaxSize()) {
+                PageBar(UiTestSupport.s(AppLang.EN).appTabNew, {}, {}, FocusRequester())
+                HomeScreen(HomeUiState(), {}, {}, {})
+            }
+        }
+    }
+
+    @Test
+    fun judging_tablet_en() = capture("judging_tablet_en", tablet = true) {
+        Themed(AppLang.EN) {
+            JudgingScreen(done = false, result = null, startedAt = System.currentTimeMillis() - 4_000, reducedMotion = true, onFinished = {}, onCancel = {})
+        }
+    }
+
+    @Test
     fun home_withBar_gamifyOff_en() = capture("home_bar_gamify_off_en") {
         Themed(AppLang.EN) {
             CompositionLocalProvider(LocalGamify provides false) {
@@ -639,6 +670,45 @@ class ScreenshotsTest {
             }
         }
     }
+
+    @Test
+    fun home_withBar_gamifyOff_typed_en() = capture("home_bar_gamify_off_typed_en") {
+        Themed(AppLang.EN) {
+            CompositionLocalProvider(LocalGamify provides false) {
+                Column(Modifier.fillMaxSize()) {
+                    PageBar(UiTestSupport.s(AppLang.EN).appTabNew, {}, {}, FocusRequester(), gamify = false)
+                    HomeScreen(HomeUiState(argument = "He keeps eating my lunch from the shared fridge."), {}, {}, {})
+                }
+            }
+        }
+    }
+
+    private fun narrowBar(name: String, lang: AppLang, width: Int) {
+        RuntimeEnvironment.setQualifiers("+w${width}dp-h200dp")
+        capture(name) { NarrowBar(lang) }
+    }
+
+    @Composable
+    private fun NarrowBar(lang: AppLang) {
+        Themed(lang) {
+            PageBar(
+                UiTestSupport.s(lang).appTabSettings, {}, {}, FocusRequester(),
+                account = AccountActions(true, Viewer("u1", "sam@example.com", "Sam"), {}, {}, {}, {}),
+            )
+        }
+    }
+
+    @Test
+    fun bar_de_320() = narrowBar("bar_de_320", AppLang.DE, 320)
+
+    @Test
+    fun bar_de_360() = narrowBar("bar_de_360", AppLang.DE, 360)
+
+    @Test
+    fun bar_ar_320() = narrowBar("bar_ar_320", AppLang.AR, 320)
+
+    @Test
+    fun bar_ar_360() = narrowBar("bar_ar_360", AppLang.AR, 360)
 
     @Test
     fun menu_open_en() = capture("menu_open_en") { OpenMenu(dark = false) }

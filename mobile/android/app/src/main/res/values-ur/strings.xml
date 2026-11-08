@@ -136,6 +136,7 @@
     <string name="nav_sign_in">سائن ان</string>
     <string name="nav_account">اکاؤنٹ</string>
     <string name="nav_pricing">قیمتیں</string>
+    <string name="nav_account_menu">اکاؤنٹ مینو</string>
     <string name="nav_sign_out">سائن آؤٹ</string>
     <string name="nav_verdicts">فیصلے</string>
     <string name="nav_tabs">حصے</string>
