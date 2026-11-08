@@ -123,7 +123,7 @@ struct HomeView: View {
                 .overlay {
                     // The second side, an error or a crowded page take the room.
                     if !home.theirsOpen, home.error == nil {
-                        MidsPlayground(typing: focused != nil || !home.argument.isEmpty, covered: pageCovered || home.isJudging || !home.path.isEmpty)
+                        HomeCourt(busy: home.isBusy, covered: pageCovered || home.isJudging || !home.path.isEmpty)
                     }
                 }
             if home.theirsOpen {
