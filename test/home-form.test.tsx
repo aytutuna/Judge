@@ -107,6 +107,17 @@ describe("HomeForm", () => {
     expect(html).not.toContain(t("en", "evidence.hint", { n: 3 }));
   });
 
+  it("context: signed out the control looks the same as signed in", () => {
+    const signedIn = form({ evidence });
+    const signedOut = form({ evidence, onAddContextSignIn: noop });
+    expect(signedOut).toContain(t("en", "home.addContext"));
+    expect(signedOut).toBe(signedIn);
+  });
+
+  it("context: absent when the deployment does not offer it", () => {
+    expect(form({ onAddContextSignIn: noop })).not.toContain(t("en", "home.addContext"));
+  });
+
   it("flags the counter near the cap, ties the error to the first side, spins while holding", () => {
     const html = form({ length: 5800, error: "Nope", holding: true });
     expect(html).toMatch(/data-warn="" aria-hidden="true">5,800 \/ 6,000</);

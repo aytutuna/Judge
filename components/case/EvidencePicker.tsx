@@ -288,18 +288,21 @@ export function EvidenceAdd({
   disabled,
   className,
   onAdd,
+  onSignIn,
   children,
 }: {
   single?: boolean;
   disabled: boolean;
   className: string;
   onAdd: (files: File[]) => void;
+  /** Signed out: the button asks for sign-in instead of opening the picker. */
+  onSignIn?: () => void;
   children: ReactNode;
 }) {
   const inputRef = useRef<HTMLInputElement>(null);
   return (
     <>
-      <button type="button" className={className} onClick={() => inputRef.current?.click()} disabled={disabled}>
+      <button type="button" className={className} onClick={() => (onSignIn ? onSignIn() : inputRef.current?.click())} disabled={disabled}>
         {children}
       </button>
       <input

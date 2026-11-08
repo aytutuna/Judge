@@ -133,7 +133,8 @@ export default function Home() {
   // first and the draft comes back afterwards. Uploads need the account.
   const signedIn = Boolean(viewer.me?.user);
   const entitlement = signedIn ? (viewer.me?.entitlement ?? null) : null;
-  const evidenceOn = signedIn && features?.evidence === true;
+  const evidenceOffered = features?.evidence === true;
+  const evidenceOn = signedIn && evidenceOffered;
   // Signed out, "Send them a link" goes to sign-in first.
   const casesOn = features?.cases === true;
   const holding = checking || creating;
@@ -206,6 +207,11 @@ export default function Home() {
   function signInFirst() {
     saveDraftForSignIn();
     router.push("/signin?next=%2F");
+  }
+
+  // Until /me answers, a click does nothing rather than sending a signed-in writer away.
+  function addContextSignIn() {
+    if (viewer.status === "ready") signInFirst();
   }
 
   /** Nothing left to spend: pricing, with the text kept for afterwards. */
@@ -604,7 +610,8 @@ export default function Home() {
               holding={holding}
               error={error}
               status={progress ?? (entitlement ? <Balance lang={lang} entitlement={entitlement} /> : null)}
-              evidence={evidenceOn ? evidence : undefined}
+              evidence={evidenceOffered ? evidence : undefined}
+              onAddContextSignIn={signedIn ? undefined : addContextSignIn}
             />
           )}
         </div>

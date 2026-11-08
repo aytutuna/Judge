@@ -129,8 +129,10 @@ export type HomeFormProps = {
   error: string | null;
   /** "Checking…" or "Creating…" while holding, else the balance. */
   status: ReactNode;
-  /** Context uploads, when this account has them. */
+  /** Context uploads, when this deployment has them. */
   evidence?: EvidenceController;
+  /** Signed out: "Add context" asks for sign-in instead of picking a file. */
+  onAddContextSignIn?: () => void;
 };
 
 export function HomeForm(p: HomeFormProps) {
@@ -156,7 +158,7 @@ export function HomeForm(p: HomeFormProps) {
   }, [p.error, p.theirsOpen, evidence?.items.length, evidence?.failure, evidence?.overLimit]);
 
   const addContext = evidence ? (
-    <EvidenceAdd disabled={evidence.full} className={styles.context} onAdd={evidence.add}>
+    <EvidenceAdd disabled={evidence.full} className={styles.context} onAdd={evidence.add} onSignIn={p.onAddContextSignIn}>
       <svg viewBox="0 0 24 24" aria-hidden>
         <path
           d="M21 11.5 12.5 20a5.5 5.5 0 0 1-7.8-7.8l8.5-8.5a3.7 3.7 0 0 1 5.2 5.2l-8.5 8.5a1.8 1.8 0 0 1-2.6-2.6L15 7"
