@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -66,6 +67,7 @@ import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import com.okjudge.judge.core.cases.CaseLogic
 import com.okjudge.judge.core.display.ArgumentRules
+import com.okjudge.judge.core.display.CourtScene
 import com.okjudge.judge.core.display.Errors
 import com.okjudge.judge.core.display.UiError
 import com.okjudge.judge.core.evidence.ImageSource
@@ -73,12 +75,14 @@ import com.okjudge.judge.core.premium.Tiers
 import com.okjudge.judge.i18n.AppLang
 import com.okjudge.judge.i18n.LocalLang
 import com.okjudge.judge.i18n.LocalStrings
+import com.okjudge.judge.ui.components.CourtView
 import com.okjudge.judge.ui.components.GhostButton
 import com.okjudge.judge.ui.components.JudgeIcons
 import com.okjudge.judge.ui.components.TintedIcon
 import com.okjudge.judge.ui.components.rememberIcon
 import com.okjudge.judge.ui.components.neonEdge
 import com.okjudge.judge.ui.components.uppercaseForUi
+import com.okjudge.judge.ui.judging.rememberReducedMotion
 import com.okjudge.judge.ui.premium.AddContextButton
 import com.okjudge.judge.ui.premium.EvidenceRows
 import com.okjudge.judge.ui.premium.rememberEvidencePicker
@@ -92,6 +96,9 @@ import java.text.NumberFormat
 import kotlinx.coroutines.delay
 
 private const val WORDMARK = "Judge"
+
+/** Under this the free space above the case is too small for the court. */
+private val COURT_MIN_HEIGHT = 110.dp
 
 object HomeTags {
     const val INPUT = "home.input"
@@ -254,12 +261,14 @@ fun HomeScreen(
                 // Reversed, so the content stays against the composer as it grows.
                 Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState(), reverseScrolling = true)) {
                     Column(Modifier.fillMaxWidth().heightIn(min = region), horizontalAlignment = Alignment.CenterHorizontally) {
-                        if (state.blank) {
-                            Box(Modifier.weight(1f).fillMaxWidth(), contentAlignment = Alignment.Center) {
+                        BoxWithConstraints(Modifier.weight(1f).fillMaxWidth(), contentAlignment = Alignment.Center) {
+                            if (maxHeight >= COURT_MIN_HEIGHT) {
+                                // 16/9 inside the free space, with a margin to the edges.
+                                val width = minOf(maxWidth - 32.dp, (maxHeight - 16.dp) * 16f / 9f, 480.dp)
+                                CourtView(CourtScene.Home(busy = state.holding), rememberReducedMotion(), Modifier.width(width).aspectRatio(16f / 9f))
+                            } else if (state.blank) {
                                 Text(WORDMARK, style = JudgeType.display1.copy(fontSize = 34.sp, lineHeight = 34.sp, letterSpacing = (-0.02).em))
                             }
-                        } else {
-                            Spacer(Modifier.weight(1f))
                         }
                         Column(column.padding(top = 16.dp, bottom = 20.dp), verticalArrangement = Arrangement.spacedBy(12.dp), content = middle)
                     }

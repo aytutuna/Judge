@@ -791,7 +791,8 @@ private fun AgeOverlay(
 private fun JudgingEntry(flow: VerdictFlow, onDone: (String) -> Unit, onLeave: () -> Unit) {
     val state by flow.state.collectAsStateWithLifecycle()
     val reduced = rememberReducedMotion()
-    val startedAt = remember { (state as? VerdictFlow.State.Running)?.startedAt ?: System.currentTimeMillis() }
+    // A verdict that is already in (the screen was recreated) skips the waiting beats instead of replaying them.
+    val startedAt = remember { (state as? VerdictFlow.State.Running)?.startedAt ?: if (state is VerdictFlow.State.Succeeded) 0L else System.currentTimeMillis() }
     val argument = remember {
         when (val st = state) {
             is VerdictFlow.State.Running -> st.argument

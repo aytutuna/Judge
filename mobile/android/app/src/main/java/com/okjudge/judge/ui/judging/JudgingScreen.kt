@@ -2,11 +2,6 @@ package com.okjudge.judge.ui.judging
 
 import android.provider.Settings
 import androidx.activity.compose.BackHandler
-import androidx.compose.animation.core.RepeatMode
-import androidx.compose.animation.core.animateFloat
-import androidx.compose.animation.core.infiniteRepeatable
-import androidx.compose.animation.core.rememberInfiniteTransition
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -14,8 +9,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -31,15 +26,15 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableFloatStateOf
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.LiveRegionMode
@@ -47,21 +42,25 @@ import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
-import com.okjudge.judge.core.display.SceneMode
-import com.okjudge.judge.core.display.Thinking
-import com.okjudge.judge.core.display.VerdictDisplay
+import com.okjudge.judge.core.display.CourtScene
+import com.okjudge.judge.core.display.Story
 import com.okjudge.judge.core.model.VerdictResult
 import com.okjudge.judge.core.session.VerdictFlow
 import com.okjudge.judge.i18n.LocalStrings
+import com.okjudge.judge.i18n.Strings
+import com.okjudge.judge.ui.components.CourtView
 import com.okjudge.judge.ui.components.JudgeIcons
 import com.okjudge.judge.ui.components.Kicker
-import com.okjudge.judge.ui.components.SceneView
 import com.okjudge.judge.ui.components.TextAction
 import com.okjudge.judge.ui.components.TintedIcon
 import com.okjudge.judge.ui.components.rememberIcon
@@ -72,7 +71,6 @@ import com.okjudge.judge.ui.theme.JudgeType
 import com.okjudge.judge.ui.theme.LocalSides
 import com.okjudge.judge.ui.theme.Palette
 import com.okjudge.judge.ui.theme.forScript
-import com.okjudge.judge.ui.verdict.VoteDot
 import kotlinx.coroutines.delay
 
 /** True when the user turned animations off (developer option or "Remove animations"). */
@@ -86,16 +84,14 @@ fun rememberReducedMotion(): Boolean {
 
 object JudgingTags {
     const val CAPTION = "judging.caption"
-    const val BALANCE = "judging.balance"
-    const val FACTCHECK = "judging.factcheck"
+    const val COURT = "judging.court"
 }
 
 /**
  * The judges at work: what each side wrote as short tiles, then a card with
- * the 3D balance (beats from lib/judging-ui.ts while waiting, the verdict
- * tilt once it is in) over the rotating captions of lib/thinking.ts. After
- * the finish steps and a short hold [onFinished] hands over. [sides] is
- * empty where they are not shown (a case's judging).
+ * the street court acting out each step (Story, from components/court/story.ts)
+ * over a log of what is going on. After the ending has played, [onFinished]
+ * hands over. [sides] is empty where they are not shown (a case's judging).
  */
 @Composable
 fun JudgingScreen(
@@ -114,35 +110,36 @@ fun JudgingScreen(
     val finishedCallback by rememberUpdatedState(onFinished)
     BackHandler(onBack = onCancel)
 
-    var dig by remember { mutableStateOf(Thinking.INITIAL) }
-    var finished by remember { mutableStateOf(false) }
-    LaunchedEffect(dig, done, finished) {
-        if (finished) return@LaunchedEffect
-        val plan = Thinking.plan(dig, done, reducedMotion)
-        delay(plan.delayMs)
-        when (val to = plan.to) {
-            Thinking.Next.Finished -> finished = true
-            is Thinking.Next.To -> dig = to.state
-        }
-    }
-    LaunchedEffect(finished) {
-        if (!finished) return@LaunchedEffect
-        delay(if (reducedMotion) 0 else Thinking.REVEAL_HOLD_MS)
-        finishedCallback()
-    }
-
-    var progress by remember { mutableFloatStateOf(0f) }
+    // The app has no separate signal for the server taking the case, so the names count from the start.
+    var elapsed by remember { mutableLongStateOf(System.currentTimeMillis() - startedAt) }
     LaunchedEffect(done) {
-        while (true) {
-            progress = Thinking.progressAt(System.currentTimeMillis() - startedAt, done)
-            if (done) break
+        while (!done) {
+            elapsed = System.currentTimeMillis() - startedAt
             delay(250)
         }
     }
+    val waiting = Story.waitingAt(elapsed, 0)
+    val summary = remember(done) { if (done && result != null) Story.summarize(result) else null }
+    val ending = remember(done) { if (done) Story.ending(waiting, summary, reducedMotion) else null }
 
-    val scene = if (done && result != null) VerdictDisplay.sceneVerdict(result) else SceneMode.Judging(Thinking.beatFor(dig))
-    val caption = s.text(Thinking.captionKey(dig, finished)) ?: ""
-    val announcement = s.text(Thinking.announcementKey(dig, done)) ?: ""
+    var reached by remember { mutableIntStateOf(0) }
+    LaunchedEffect(ending) {
+        val e = ending ?: return@LaunchedEffect
+        var t = 0L
+        e.steps.forEachIndexed { i, step ->
+            delay(step.at - t)
+            t = step.at
+            reached = i + 1
+        }
+        delay(e.finishAt - t)
+        finishedCallback()
+    }
+
+    val steps = ending?.steps?.take(reached).orEmpty()
+    val lines = Story.WAITING.take(waiting + 1).map { Story.Line("story.${it.wire}") } + steps.mapNotNull { it.line }
+    val beat = steps.lastOrNull()?.beat ?: Story.WAITING[waiting]
+    val last = lines.lastIndex
+    val texts = lines.map { lineText(s, it) }
 
     Column(modifier.fillMaxSize().background(Palette.ivory), horizontalAlignment = Alignment.CenterHorizontally) {
         Column(
@@ -165,34 +162,44 @@ fun JudgingScreen(
                     .padding(22.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                SceneView(
-                    mode = scene,
+                Kicker(s.thinkingEyebrow, Modifier.padding(bottom = 14.dp))
+                CourtView(
+                    scene = CourtScene.Judging(beat, summary),
                     reducedMotion = reducedMotion,
                     modifier = Modifier
                         .heightIn(max = 360.dp)
+                        .widthIn(max = 480.dp)
                         .fillMaxWidth()
-                        .aspectRatio(4f / 3f)
-                        .testTag(JudgingTags.BALANCE),
+                        .aspectRatio(16f / 9f)
+                        .testTag(JudgingTags.COURT),
                 )
-                Kicker(s.thinkingEyebrow, Modifier.padding(top = 20.dp, bottom = 14.dp))
-                JudgeDots(done, result, reducedMotion)
-                Text(
-                    caption,
-                    style = JudgeType.lead.copy(color = Palette.ink),
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier
-                        .padding(top = 16.dp)
-                        .widthIn(max = 420.dp)
-                        .testTag(JudgingTags.CAPTION)
-                        .clearAndSetSemantics { },
-                )
-                // One polite live region with the announcement() text.
+                Column(Modifier.fillMaxWidth().padding(top = 16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    texts.forEachIndexed { i, text ->
+                        val live = i == last && beat != Story.Beat.FINAL
+                        Row(
+                            (if (i == last) Modifier.testTag(JudgingTags.CAPTION) else Modifier).clearAndSetSemantics { },
+                            horizontalArrangement = Arrangement.spacedBy(10.dp),
+                        ) {
+                            Box(Modifier.size(18.dp, 20.dp), contentAlignment = Alignment.Center) {
+                                if (live) {
+                                    CircularProgressIndicator(Modifier.size(12.dp), color = Palette.ink2, strokeWidth = 1.5.dp)
+                                } else {
+                                    TintedIcon(rememberIcon(Palette.sageStrong) { JudgeIcons.check(it) }, 16)
+                                }
+                            }
+                            if (i == last) {
+                                TypeLine(text, reducedMotion, JudgeType.slotText.copy(fontSize = 14.sp, color = Palette.ink, fontWeight = FontWeight.Medium))
+                            } else {
+                                Text(text, style = JudgeType.slotText.copy(fontSize = 14.sp))
+                            }
+                        }
+                    }
+                }
+                // One polite live region with the current line.
                 Box(Modifier.size(1.dp).semantics {
                     liveRegion = LiveRegionMode.Polite
-                    contentDescription = announcement
+                    contentDescription = texts.lastOrNull().orEmpty()
                 })
-                if (premium) FactCheckRow(done)
-                ProgressBar(progress, Modifier.padding(top = 18.dp).widthIn(max = 280.dp).fillMaxWidth())
                 Text(
                     if (premium) s.thinkingPremiumHelper else s.thinkingHelper,
                     style = JudgeType.slotText,
@@ -203,6 +210,34 @@ fun JudgingScreen(
         }
         if (showCancel) TextAction(s.appCancel, onCancel, Modifier.padding(vertical = 12.dp), color = Palette.ink2)
     }
+}
+
+private val LEADING_SYMBOLS = Regex("^[\\p{So}\\p{Sk}\u200D\uFE0F\u20E3\u2713]+\\s*")
+
+private fun lineText(s: Strings, line: Story.Line): String = when {
+    line.n != null && line.total != null -> s.storyAgree(line.n.toString(), line.total.toString())
+    line.key.startsWith("trial.") -> (s.text(line.key) ?: "").replace(LEADING_SYMBOLS, "")
+    else -> s.text(line.key) ?: ""
+}
+
+/** The newest log line, typed out; the rest of it is laid out already, so nothing jumps. */
+@Composable
+private fun TypeLine(text: String, reducedMotion: Boolean, style: TextStyle) {
+    var n by remember(text) { mutableIntStateOf(if (reducedMotion) text.length else 0) }
+    LaunchedEffect(text, reducedMotion) {
+        while (!reducedMotion && n < text.length) {
+            delay(22)
+            n++
+        }
+    }
+    val shown = if (reducedMotion) text.length else n
+    Text(
+        buildAnnotatedString {
+            append(text.take(shown))
+            withStyle(SpanStyle(color = Color.Transparent)) { append(text.drop(shown)) }
+        },
+        style = style,
+    )
 }
 
 /** What each side wrote, three lines at most, yours first. */
@@ -237,57 +272,5 @@ private fun SideTiles(sides: List<VerdictFlow.Side>) {
                 )
             }
         }
-    }
-}
-
-/** Premium's web fact-check line (JudgingOverlay): in progress, then finished once the verdict is in. */
-@Composable
-private fun FactCheckRow(done: Boolean) {
-    val s = LocalStrings.current
-    val text = if (done) s.thinkingFactcheckDone else s.thinkingFactcheck
-    Row(
-        Modifier
-            .padding(top = 14.dp)
-            .testTag(JudgingTags.FACTCHECK)
-            .semantics(mergeDescendants = true) { liveRegion = LiveRegionMode.Polite },
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
-    ) {
-        if (done) {
-            Box(Modifier.size(16.dp).clip(RoundedCornerShape(8.dp)).background(Palette.sageInk), contentAlignment = Alignment.Center) {
-                TintedIcon(rememberIcon(Palette.paper) { JudgeIcons.factCheck(it) }, 10)
-            }
-        } else {
-            CircularProgressIndicator(Modifier.size(14.dp), color = Palette.ink2, strokeWidth = 1.5.dp)
-        }
-        Text(text, style = JudgeType.slotText.copy(color = Palette.ink2))
-    }
-}
-
-@Composable
-private fun JudgeDots(done: Boolean, result: VerdictResult?, reducedMotion: Boolean) {
-    val votes = if (done && result != null) VerdictDisplay.votes(result) else emptyList()
-    val pulse = rememberInfiniteTransition(label = "dots")
-    val alpha by pulse.animateFloat(
-        initialValue = 0.45f,
-        targetValue = 1f,
-        animationSpec = infiniteRepeatable(tween(900), RepeatMode.Reverse),
-        label = "dotAlpha",
-    )
-    Row(Modifier.clearAndSetSemantics { }, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-        if (votes.isEmpty()) {
-            repeat(3) {
-                Box(Modifier.alpha(if (reducedMotion || done) 1f else alpha)) { VoteDot(null, 12) }
-            }
-        } else {
-            votes.forEach { VoteDot(it, 12) }
-        }
-    }
-}
-
-@Composable
-private fun ProgressBar(value: Float, modifier: Modifier) {
-    Box(modifier.height(4.dp).clip(RoundedCornerShape(4.dp)).background(Palette.ink.copy(alpha = 0.1f))) {
-        Box(Modifier.fillMaxWidth(value.coerceIn(0f, 1f)).height(4.dp).background(Palette.ink))
     }
 }

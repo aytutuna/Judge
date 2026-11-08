@@ -102,19 +102,6 @@ class DisplayPureTest {
     }
 
     @Test
-    fun thinkingConstants_matchLibThinking() {
-        val t = Fixtures.vectors["thinking"]!!.jsonObject
-        val steps = t["steps"]!!.let { it as kotlinx.serialization.json.JsonArray }.map { it.jsonObject }
-        assertEquals(steps.map { it.str("key") to it.num("ms")!!.toLong() }, Thinking.STEPS.map { it.key to it.ms })
-        val finish = t["finishSteps"]!!.let { it as kotlinx.serialization.json.JsonArray }.map { it.jsonObject }
-        assertEquals(finish.map { it.str("name") to it.num("ms")!!.toLong() }, Thinking.FINISH_STEPS.map { it.name to it.ms })
-        assertEquals(t.num("maxFinishMs")!!.toLong(), Thinking.MAX_FINISH_MS)
-        assertEquals(t.str("finishKey"), Thinking.FINISH_KEY)
-        assertEquals(t.str("stillJudgingKey"), Thinking.STILL_JUDGING_KEY)
-        assertEquals(t.str("readyKey"), Thinking.READY_KEY)
-    }
-
-    @Test
     fun contentLang_heuristic() {
         assertEquals(AppLang.TR, ContentLang.contentLang("Taraf A haklı"))
         assertEquals(AppLang.TR, ContentLang.contentLang("şüphe"))
