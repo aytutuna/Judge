@@ -62,7 +62,7 @@
   outline: 2px solid var(--terra-ink);
   outline-offset: 2px;
 }
-.gamify[aria-checked="true"] {
+html:not([data-game="off"]) .gamify {
   color: var(--ink);
 }
 .gamify svg {
@@ -99,10 +99,10 @@
   box-shadow: 0 1px 2px var(--line-2);
   transition: inset-inline-start var(--dur-1);
 }
-.gamify[aria-checked="true"] .track {
+html:not([data-game="off"]) .track {
   background: var(--terra-ink);
 }
-.gamify[aria-checked="true"] .knob {
+html:not([data-game="off"]) .knob {
   inset-inline-start: 16px;
 }
 @media (min-width: 640px) {
@@ -245,6 +245,16 @@
   }
 }
 @media (forced-colors: active) {
+  .track {
+    border: 1px solid ButtonText;
+    background: Canvas;
+  }
+  html:not([data-game="off"]) .track {
+    background: Highlight;
+  }
+  .knob {
+    background: ButtonText;
+  }
   .menuRow[aria-current="page"] {
     text-decoration: underline;
   }
