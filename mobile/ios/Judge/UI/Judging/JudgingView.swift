@@ -11,6 +11,7 @@ struct JudgingCover: View {
             lang: lang,
             sides: home.judgedSides,
             result: home.arrived,
+            acceptedAt: home.acceptedAt,
             onFinished: { home.judgingFinished() },
             onCancel: { home.cancel() }
         )
@@ -18,49 +19,55 @@ struct JudgingCover: View {
 }
 
 /// The judging turn of the thread, full screen while a verdict is pending:
-/// the sides that were sent and a card with the three Mids (acting out the
-/// stage the verdict has reached, then cheering once it is in) over the
-/// judge dots and the rotating captions of lib/thinking.ts, then Cancel.
-/// After the finish sequence and a short hold `onFinished` hands over.
+/// the sides that were sent and a card with the street court acting out the
+/// story (components/court/story.ts) over a log of what the judges are
+/// doing, then Cancel. Once the verdict is in, the rest of the story plays
+/// out and `onFinished` hands over.
 struct JudgingView: View {
     let lang: AppLang
     /// What was sent, a tile per written side.
     var sides: [HomeModel.JudgedSide] = []
     /// Non-nil once the verdict has arrived.
     let result: VerdictResult?
+    /// When the server accepted the request, if it has.
+    var acceptedAt: Date?
     let onFinished: () -> Void
     let onCancel: () -> Void
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.scenePhase) private var scenePhase
-    @Environment(\.sides) private var colors
-    @State private var state: Thinking.DigState = .initial
-    @State private var finished = false
+    @Environment(\.sceneLive) private var sceneLive
     @State private var started = Date.now
-
-    private struct TickKey: Equatable {
-        let state: Thinking.DigState
-        let done: Bool
-        let finished: Bool
-        let skip: Bool
-    }
+    /// `acceptedAt` as ms into the story, for the clock loop to read.
+    @State private var acceptedMs: Double?
+    /// The waiting line the story is on; frozen when the verdict lands.
+    @State private var waiting = 0
+    @State private var plan: Story.Ending?
+    /// How many steps of the plan have played.
+    @State private var reached = 0
 
     private var done: Bool { result != nil }
-    private var skip: Bool { reduceMotion || scenePhase != .active }
+    private var summary: Story.Summary? { result.map(Story.summarize) }
+    private var steps: ArraySlice<Story.Step> { plan?.steps.prefix(reached) ?? [] }
+    private var beat: Story.Beat { steps.last?.beat ?? Story.waiting[waiting] }
 
-    private var stage: JudgingStage {
-        JudgingStage.of(state, done: done, finished: finished)
+    private var lines: [Story.Line] {
+        let waited = Story.waiting.prefix(waiting + 1).map { Story.Line(key: "story.\($0.rawValue)") }
+        return waited + steps.compactMap { $0.line }
+    }
+
+    private var liveText: String {
+        lines.last.map { Story.text($0, lang: lang) } ?? ""
     }
 
     var body: some View {
-        let captionKey = Thinking.announcementKey(state, done: done)
         VStack(spacing: 0) {
             ScrollView {
                 VStack(alignment: .leading, spacing: 16) {
                     if !sides.isEmpty {
                         SideTiles(sides: sides, lang: lang)
                     }
-                    card(captionKey: captionKey)
+                    card
                 }
                 .padding(16)
                 .frame(maxWidth: 640)
@@ -77,153 +84,129 @@ struct JudgingView: View {
                 .padding(.bottom, 8)
         }
         .background(Brand.ivory.ignoresSafeArea())
-        .task(id: TickKey(state: state, done: done, finished: finished, skip: skip)) {
-            await tick()
+        .task(id: done) {
+            await run()
         }
-        .onChange(of: captionKey) { _, key in
-            AccessibilityNotification.Announcement(L10n.text(key, lang) ?? "").post()
+        .task(id: liveText) {
+            // The catch-up after the verdict changes the line every few
+            // hundred ms; only the one that settles is worth announcing.
+            try? await Task.sleep(for: .seconds(1))
+            guard !Task.isCancelled else { return }
+            AccessibilityNotification.Announcement(liveText).post()
         }
-        .onAppear {
-            AccessibilityNotification.Announcement(L10n.text(captionKey, lang) ?? "").post()
+        .onChange(of: acceptedAt, initial: true) { _, at in
+            acceptedMs = at.map { max(0, $0.timeIntervalSince(started) * 1000) }
         }
         .sensoryFeedback(.impact(weight: .light), trigger: done) { _, isDone in isDone && !reduceMotion }
     }
 
-    private func card(captionKey: String) -> some View {
-        VStack(spacing: 0) {
-            MidsJudging(stage: stage, flags: JudgingStage.flags(Thinking.judgeDots(done ? result : nil)))
-                .aspectRatio(4.0 / 3.0, contentMode: .fit)
-                .frame(maxWidth: 480)
-
+    private var card: some View {
+        VStack(alignment: .leading, spacing: 14) {
             Kicker(text: L10n.thinkingEyebrow(lang))
-                .padding(.top, 20)
 
-            TimelineView(.animation(minimumInterval: nil, paused: reduceMotion || done)) { context in
-                dots(at: context.date)
-            }
-            .padding(.top, 14)
+            CourtView(scene: .judging(beat, summary))
+                .frame(maxWidth: 480)
+                .frame(maxWidth: .infinity)
 
-            VStack(spacing: 18) {
-                ZStack {
-                    Text(L10n.text(captionKey, lang) ?? "")
-                        .brandText(.lead)
-                        .foregroundStyle(Brand.ink)
-                        .multilineTextAlignment(.center)
-                        .id(captionKey)
-                        .transition(.opacity)
-                }
-                .frame(minHeight: 56, alignment: .top)
-                .animation(reduceMotion ? nil : .easeInOut(duration: 0.3), value: captionKey)
-
-                TimelineView(.animation(minimumInterval: 0.25, paused: done)) { context in
-                    progressBar(Thinking.progressAt(elapsedMs: context.date.timeIntervalSince(started) * 1000, done: done))
-                }
-            }
-            .padding(.top, 16)
-            .accessibilityHidden(true)
-
-            HStack(spacing: 8) {
-                Image(systemName: done ? "checkmark.circle.fill" : "globe")
-                    .font(.system(size: 13, weight: .semibold))
-                    .foregroundStyle(done ? Brand.sageInk : Brand.terraInk)
-                    .accessibilityHidden(true)
-                Text(done ? L10n.thinkingFactcheckDone(lang) : L10n.thinkingFactcheck(lang))
-                    .brandText(.slotTitle)
-                    .foregroundStyle(Brand.ink2)
-            }
-            .accessibilityElement(children: .combine)
-            .padding(.top, 14)
+            log
 
             Text(L10n.thinkingPremiumHelper(lang))
-                .brandText(.slotText)
+                .brandText(.footnote)
                 .foregroundStyle(Brand.muted)
-                .multilineTextAlignment(.center)
-                .frame(maxWidth: 360)
-                .padding(.top, 16)
+                .frame(maxWidth: 360, alignment: .leading)
         }
         .padding(22)
-        .frame(maxWidth: .infinity)
+        .frame(maxWidth: .infinity, alignment: .leading)
         .paperSurface(radius: Radius.card)
         .cardShadow()
     }
 
-    /// One step of the state machine (re-run whenever its inputs change).
-    private func tick() async {
-        if finished {
-            let hold = skip ? 0 : Thinking.revealHoldMs
-            try? await Task.sleep(for: .milliseconds(hold))
-            guard !Task.isCancelled else { return }
-            onFinished()
+    /// Ticked lines for what is done, the last one live until the story is
+    /// over. VoiceOver hears the live line announced, not the list.
+    private var log: some View {
+        let lines = self.lines
+        let over = beat == .finale
+        return VStack(alignment: .leading, spacing: 8) {
+            ForEach(Array(lines.enumerated()), id: \.offset) { index, line in
+                let live = index == lines.count - 1 && !over
+                HStack(alignment: .top, spacing: 10) {
+                    mark(live: live)
+                    Text(Story.text(line, lang: lang))
+                        .brandText(TypeStyle(face: .inter, weight: live ? 500 : 400, size: 14, lineHeight: 1.4, textStyle: .subheadline))
+                        .foregroundStyle(live ? Brand.ink : Brand.muted)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
+                .transition(.opacity.combined(with: .offset(y: 6)))
+            }
+        }
+        .animation(reduceMotion ? nil : .easeOut(duration: 0.3), value: lines.count)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(liveText)
+    }
+
+    private func mark(live: Bool) -> some View {
+        Group {
+            if live {
+                LiveDots(animated: !reduceMotion)
+                    .foregroundStyle(Brand.ink)
+            } else {
+                Image(systemName: "checkmark")
+                    .font(.system(size: 11, weight: .bold))
+                    .foregroundStyle(Brand.sageInk)
+            }
+        }
+        .frame(width: 18, height: 20)
+    }
+
+    /// While waiting, follows the clock; once the verdict is in, plays the
+    /// plan out and hands over at its end.
+    private func run() async {
+        if !done {
+            // Stills (screenshots, tests) stay on the first line.
+            guard sceneLive else { return }
+            while !Task.isCancelled {
+                waiting = Story.waitingAt(Date.now.timeIntervalSince(started) * 1000, acceptedAt: acceptedMs)
+                try? await Task.sleep(for: .milliseconds(250))
+            }
             return
         }
-        let plan = Thinking.plan(state, done: done, skip: skip)
-        if plan.delayMs > 0 {
-            do {
-                try await Task.sleep(for: .milliseconds(plan.delayMs))
-            } catch {
-                return
+        let ending = Story.ending(fromWaiting: waiting, summary: summary, reduced: reduceMotion || scenePhase != .active)
+        plan = ending
+        let began = Date.now
+        do {
+            for (index, step) in ending.steps.enumerated() {
+                try await pause(until: step.at, since: began)
+                reached = index + 1
+            }
+            try await pause(until: ending.finishAt, since: began)
+        } catch {
+            return
+        }
+        onFinished()
+    }
+
+    private func pause(until ms: Int, since began: Date) async throws {
+        let left = ms - Int(Date.now.timeIntervalSince(began) * 1000)
+        if left > 0 { try await Task.sleep(for: .milliseconds(left)) }
+    }
+}
+
+/// Three dots that pulse one after the other.
+private struct LiveDots: View {
+    let animated: Bool
+
+    var body: some View {
+        TimelineView(.animation(minimumInterval: 0.1, paused: !animated)) { context in
+            let t = context.date.timeIntervalSinceReferenceDate
+            HStack(spacing: 3) {
+                ForEach(0..<3, id: \.self) { index in
+                    let wave = 0.5 + 0.5 * sin(2 * Double.pi * (t - Double(index) * 0.15))
+                    Circle()
+                        .frame(width: 4, height: 4)
+                        .opacity(animated ? 0.25 + 0.75 * wave : 0.6)
+                }
             }
         }
-        guard !Task.isCancelled else { return }
-        if let next = plan.next {
-            state = next
-        } else {
-            finished = true
-        }
-    }
-
-    /// Thin bar under the caption, like the website's: the gradient from
-    /// Party A's colour to Party B's spans the full track and is revealed
-    /// from the leading edge.
-    private func progressBar(_ value: Double) -> some View {
-        let fill = min(max(value, 0), 1)
-        return GeometryReader { geo in
-            ZStack(alignment: .leading) {
-                Capsule().fill(Brand.ink.opacity(0.08))
-                Capsule()
-                    .fill(LinearGradient(colors: [colors.a.strong, colors.b.strong], startPoint: .leading, endPoint: .trailing))
-                    .mask(alignment: .leading) {
-                        Capsule().frame(width: geo.size.width * fill)
-                    }
-            }
-        }
-        .frame(maxWidth: 280)
-        .frame(height: 3)
-        .animation(reduceMotion ? nil : .linear(duration: 0.3), value: fill)
-    }
-
-    @ViewBuilder
-    private func dots(at date: Date) -> some View {
-        let dots = Thinking.judgeDots(done ? result : nil)
-        HStack(spacing: 10) {
-            ForEach(Array(dots.enumerated()), id: \.offset) { index, dot in
-                Circle()
-                    .fill(fill(dot))
-                    .overlay(Circle().strokeBorder(stroke(dot), lineWidth: 1.5))
-                    .frame(width: 12, height: 12)
-                    .opacity(dot == .pending ? pulse(at: date, index: index) : 1)
-            }
-        }
-        .accessibilityHidden(true)
-    }
-
-    private func pulse(at date: Date, index: Int) -> Double {
-        guard !reduceMotion else { return 0.6 }
-        let t = date.timeIntervalSince(started) - Double(index) * 0.12
-        return 0.35 + 0.45 * (0.5 + 0.5 * sin(2 * .pi * t / 1.4))
-    }
-
-    private func fill(_ dot: Thinking.Dot) -> Color {
-        switch dot {
-        case .pending: return Brand.ink.opacity(0.35)
-        case .vote(.a): return colors.a.strong
-        case .vote(.b): return colors.b.strong
-        case .vote(.other): return .clear
-        }
-    }
-
-    private func stroke(_ dot: Thinking.Dot) -> Color {
-        dot == .vote(.other) ? Brand.ink : .clear
     }
 }
 

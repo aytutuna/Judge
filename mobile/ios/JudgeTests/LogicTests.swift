@@ -1,7 +1,7 @@
 import XCTest
 @testable import Judge
 
-/// Tug/tilt mapping, names, the judging timeline, the balance motion,
+/// Tug/tilt mapping, names, the balance motion,
 /// text helpers and the translation state.
 final class TugAndTiltTests: XCTestCase {
     private func result(_ verdict: FinalVerdict, lean: LeanField = .absent, refused: Bool = false) -> VerdictResult {
@@ -66,14 +66,6 @@ final class TugAndTiltTests: XCTestCase {
     func testRefusalKeepsTheBalanceLevel() {
         let refused = result(.tooClose, lean: lean(.a), refused: true)
         XCTAssertEqual(VerdictDisplay.sceneTug(refused), 50)
-        XCTAssertEqual(Thinking.judgeDots(refused), [.pending, .pending, .pending])
-    }
-
-    func testJudgeDotsFollowRuns() {
-        var r = result(.sideA)
-        r.runs = [.sideA, .sideB, .split, .sideA]
-        XCTAssertEqual(Thinking.judgeDots(r), [.vote(.a), .vote(.b), .vote(.other), .vote(.a)])
-        XCTAssertEqual(Thinking.judgeDots(nil).count, 3)
     }
 
     func testLeanTally() {
@@ -136,92 +128,6 @@ final class NamesTests: XCTestCase {
             NameMapping(original: "Christopher", replacement: "Party B"),
         ]
         XCTAssertEqual(Names.partyNames(map, lang: .en, selfLang: .en).nameB, "Chris")
-    }
-}
-
-final class ThinkingTests: XCTestCase {
-    private let loopSteps = Array(0..<Thinking.steps.count)
-
-    func testTables() {
-        XCTAssertEqual(Thinking.steps.count, 9)
-        XCTAssertLessThanOrEqual(Thinking.finishSteps.map(\.ms).reduce(0, +), Thinking.maxFinishMs)
-        let total = Thinking.steps.map(\.ms).reduce(0, +)
-        XCTAssertTrue((14000...17000).contains(total))
-    }
-
-    func testLoopAdvancesWithStepDuration() {
-        for step in loopSteps.dropLast() {
-            XCTAssertEqual(
-                Thinking.plan(.loop(step: step, cycle: 3), done: false, skip: false),
-                Thinking.Plan(next: .loop(step: step + 1, cycle: 3), delayMs: Thinking.steps[step].ms)
-            )
-        }
-        let last = Thinking.steps.count - 1
-        XCTAssertEqual(
-            Thinking.plan(.loop(step: last, cycle: 2), done: false, skip: false),
-            Thinking.Plan(next: .loop(step: 0, cycle: 3), delayMs: Thinking.steps[last].ms)
-        )
-        XCTAssertEqual(Thinking.plan(.initial, done: false, skip: false).next, .loop(step: 1, cycle: 0))
-    }
-
-    func testDoneAndSkipFinishesImmediately() {
-        for step in loopSteps {
-            XCTAssertEqual(Thinking.plan(.loop(step: step, cycle: 1), done: true, skip: true), Thinking.Plan(next: nil, delayMs: 0))
-        }
-    }
-
-    func testDoneEntersFinishMode() {
-        for step in loopSteps {
-            XCTAssertEqual(
-                Thinking.plan(.loop(step: step, cycle: 4), done: true, skip: false),
-                Thinking.Plan(next: .finish(step: Thinking.finishEntry(fromLoopStep: step), from: step, cycle: 4), delayMs: 0)
-            )
-        }
-        XCTAssertEqual((0...8).map { Thinking.finishEntry(fromLoopStep: $0) }, [0, 0, 1, 1, 2, 2, 3, 3, 3])
-    }
-
-    func testFinishModeIsBounded() {
-        var starts: [Thinking.DigState] = []
-        for cycle in [0, 1, 5] {
-            for step in loopSteps { starts.append(.loop(step: step, cycle: cycle)) }
-        }
-        for from in loopSteps {
-            for step in Thinking.finishEntry(fromLoopStep: from)..<Thinking.finishSteps.count {
-                starts.append(.finish(step: step, from: from, cycle: 0))
-            }
-        }
-        for start in starts {
-            var state: Thinking.DigState? = start
-            var transitions = 0
-            var total = 0
-            while let current = state {
-                let plan = Thinking.plan(current, done: true, skip: false)
-                total += plan.delayMs
-                state = plan.next
-                transitions += 1
-                XCTAssertLessThanOrEqual(transitions, 6)
-                if transitions > 6 { break }
-            }
-            XCTAssertLessThanOrEqual(total, Thinking.maxFinishMs)
-        }
-    }
-
-    func testAnnouncementKeys() {
-        XCTAssertEqual(Thinking.announcementKey(.loop(step: 0, cycle: 0), done: false), "thinking.read")
-        XCTAssertEqual(Thinking.announcementKey(.loop(step: 3, cycle: 0), done: false), "thinking.dig")
-        XCTAssertEqual(Thinking.announcementKey(.loop(step: 3, cycle: 1), done: false), "thinking.stillJudging")
-        XCTAssertEqual(Thinking.announcementKey(.loop(step: 3, cycle: 1), done: true), "thinking.ready")
-        XCTAssertEqual(Thinking.announcementKey(.finish(step: 0, from: 0, cycle: 0), done: false), "thinking.ready")
-    }
-
-    func testProgressEasesTowardNinetyTwoPercent() {
-        XCTAssertEqual(Thinking.progressAt(elapsedMs: 0, done: false), 0)
-        XCTAssertEqual(Thinking.progressAt(elapsedMs: -500, done: false), 0)
-        XCTAssertEqual(Thinking.progressAt(elapsedMs: 10_000, done: false), 0.62, accuracy: 0.01)
-        XCTAssertEqual(Thinking.progressAt(elapsedMs: 20_000, done: false), 0.82, accuracy: 0.01)
-        XCTAssertEqual(Thinking.progressAt(elapsedMs: 30_000, done: false), 0.89, accuracy: 0.01)
-        XCTAssertLessThan(Thinking.progressAt(elapsedMs: 600_000, done: false), 0.92 + 1e-9)
-        XCTAssertEqual(Thinking.progressAt(elapsedMs: 1_000, done: true), 1)
     }
 }
 

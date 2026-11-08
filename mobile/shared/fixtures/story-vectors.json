@@ -312,6 +312,66 @@
       "finishAt": 5810
     },
     {
+      "name": "escalated_capped_extra",
+      "fromWaiting": 5,
+      "summary": {
+        "votes": [
+          "a",
+          "b",
+          "a",
+          "a",
+          "b",
+          "a",
+          "b"
+        ],
+        "escalated": true,
+        "extra": 4,
+        "winner": "a",
+        "trial": null
+      },
+      "reduced": false,
+      "steps": [
+        {
+          "at": 450,
+          "beat": "vote1",
+          "line": {
+            "key": "story.count"
+          }
+        },
+        {
+          "at": 3310,
+          "beat": "more",
+          "line": {
+            "key": "story.closeCall"
+          }
+        },
+        {
+          "at": 5910,
+          "beat": "vote2",
+          "line": null
+        },
+        {
+          "at": 7350,
+          "beat": "final",
+          "line": {
+            "key": "story.agree",
+            "vars": {
+              "n": 4,
+              "total": 7
+            }
+          }
+        },
+        {
+          "at": 7350,
+          "beat": "final",
+          "line": {
+            "key": "thinking.ready"
+          }
+        }
+      ],
+      "finishAt": 9250
+    },
+    {
       "name": "trial_survived",
       "fromWaiting": 5,
       "summary": {

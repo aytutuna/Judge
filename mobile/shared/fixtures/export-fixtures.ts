@@ -1092,6 +1092,7 @@ function storyVectors() {
   add("refusal_no_votes", { votes: [], winner: null });
   add("escalated_two_extra", { votes: ["a", "b", "a", "a", "b"], escalated: true, extra: 2 });
   add("escalated_no_extra", { escalated: true });
+  add("escalated_capped_extra", { votes: ["a", "b", "a", "a", "b", "a", "b"], escalated: true, extra: 4 });
   for (const trial of ["survived", "uncertain", "overturned"] as const) add(`trial_${trial}`, { trial });
   add("trial_without_votes", { votes: [], winner: null, trial: "survived" });
   add("everything", { votes: ["b", "a", "b", "b", "a"], winner: "b", escalated: true, extra: 2, trial: "overturned" }, 0);
