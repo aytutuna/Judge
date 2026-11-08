@@ -64,7 +64,7 @@ import com.okjudge.judge.ui.theme.Palette
 internal val menuScrim: Color
     @Composable get() = if (Palette.dark) Color.Black.copy(alpha = 0.5f) else Color(0xFF1C1916).copy(alpha = 0.28f)
 
-/** The bar of the three main pages: the menu button, the page's title and the compose button. */
+/** The bar of the three main pages: the menu button, the page's title, the gamify switch and the compose button. */
 @Composable
 internal fun PageBar(
     title: String,
@@ -85,7 +85,13 @@ internal fun PageBar(
         horizontalArrangement = Arrangement.spacedBy(6.dp),
     ) {
         BarButton(s.navTabs, JudgeIcons.menu(Palette.ink), onMenu, Modifier.focusRequester(menuFocus))
-        Text(title, style = JudgeType.sectionTitle, modifier = Modifier.weight(1f).semantics { heading() })
+        Text(
+            title,
+            style = JudgeType.sectionTitle,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+            modifier = Modifier.weight(1f).semantics { heading() },
+        )
         Box(
             Modifier
                 .size(48.dp)

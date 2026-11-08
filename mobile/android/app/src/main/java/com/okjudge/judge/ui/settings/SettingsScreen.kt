@@ -71,7 +71,7 @@ object SettingsTags {
 /** "Restore purchases" in the account group; shown while the store is ready for this account. */
 data class RestoreUi(val working: Boolean = false, val notice: PurchaseController.RestoreNotice? = null)
 
-/** The account, language and appearance choices, links out to the website, and the footer note. */
+/** The account, language, appearance and gamify choices, links out to the website, and the footer note. */
 @Composable
 fun SettingsScreen(
     langPref: LangPref,
