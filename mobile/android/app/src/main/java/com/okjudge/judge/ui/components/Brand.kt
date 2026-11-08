@@ -1,8 +1,10 @@
 package com.okjudge.judge.ui.components
 
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -11,16 +13,30 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.FilterQuality
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.rotate
 import androidx.compose.ui.graphics.drawscope.scale
 import androidx.compose.ui.graphics.drawscope.translate
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.okjudge.judge.R
 import com.okjudge.judge.ui.theme.LocalSides
 import com.okjudge.judge.ui.theme.Palette
 import com.okjudge.judge.ui.theme.Sides
+
+/** The app icon's 3D mark; the art follows the app's own light or dark, not the system's. Decorative. */
+@Composable
+fun BrandLogo(size: Dp, modifier: Modifier = Modifier) {
+    Image(
+        painterResource(if (Palette.dark) R.drawable.brand_logo_dark else R.drawable.brand_logo_light),
+        contentDescription = null,
+        modifier = modifier.size(size),
+        filterQuality = FilterQuality.High,
+    )
+}
 
 /**
  * The judging balance: a level beam on the ink pivot,

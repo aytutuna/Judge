@@ -54,6 +54,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.okjudge.judge.i18n.LocalLang
 import com.okjudge.judge.i18n.LocalStrings
+import com.okjudge.judge.ui.components.BrandLogo
 import com.okjudge.judge.ui.components.JudgeIcons
 import com.okjudge.judge.ui.components.TintedIcon
 import com.okjudge.judge.ui.history.HistoryEntry
@@ -153,6 +154,14 @@ internal fun MenuPanel(
         drawerTonalElevation = 0.dp,
     ) {
         Column(Modifier.fillMaxHeight().padding(horizontal = 12.dp, vertical = 24.dp)) {
+            Row(
+                Modifier.padding(start = 22.dp, bottom = 16.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(10.dp),
+            ) {
+                BrandLogo(32.dp)
+                Text(s.appName, style = JudgeType.sectionTitle)
+            }
             Column(Modifier.weight(1f).verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 MenuRow(s.appTabNew, selected == Tab.NEW, { onSelect(Tab.NEW) }, Modifier.focusRequester(firstRow))
                 MenuRow(s.navVerdicts, selected == Tab.HISTORY, { onSelect(Tab.HISTORY) })
