@@ -227,7 +227,7 @@ export function HomeForm(p: HomeFormProps) {
             </SideCard>
           ) : null}
 
-          {evidence ? (
+          {evidence && !p.onAddContextSignIn ? (
             <>
               <EvidenceRows lang={lang} items={evidence.items} onRemove={evidence.remove} />
               <EvidenceNotes lang={lang} overLimit={evidence.overLimit} failure={evidence.failure} />

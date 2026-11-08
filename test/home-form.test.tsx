@@ -107,11 +107,22 @@ describe("HomeForm", () => {
     expect(html).not.toContain(t("en", "evidence.hint", { n: 3 }));
   });
 
-  it("context: signed out the control looks the same as signed in", () => {
-    const signedIn = form({ evidence });
+  it("context: signed out the control is the same as signed in", () => {
     const signedOut = form({ evidence, onAddContextSignIn: noop });
     expect(signedOut).toContain(t("en", "home.addContext"));
-    expect(signedOut).toBe(signedIn);
+    expect(signedOut.match(/<button[^>]*>/g)).toEqual(form({ evidence }).match(/<button[^>]*>/g));
+  });
+
+  it("context: signed out shows no evidence rows or notes", () => {
+    const withItem = {
+      ...evidence,
+      items: [{ id: "a", n: 1, name: "chat.png", thumb: null, status: "ok" as const, token: "t", preview: null }],
+      overLimit: true,
+    };
+    const html = form({ evidence: withItem, onAddContextSignIn: noop });
+    expect(html).toContain(t("en", "home.addContext"));
+    expect(html).not.toContain('aria-label="Remove image 1"');
+    expect(html).not.toContain(esc(t("en", "evidence.limit")));
   });
 
   it("context: absent when the deployment does not offer it", () => {
