@@ -1,5 +1,6 @@
 package com.okjudge.judge.ui
 
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.snap
 import androidx.compose.animation.core.tween
@@ -15,7 +16,6 @@ import androidx.compose.foundation.layout.displayCutout
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -40,6 +40,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusProperties
 import androidx.compose.ui.focus.focusRequester
@@ -104,8 +105,8 @@ internal fun initialOf(user: Viewer): String =
     user.name.trim().ifEmpty { user.email.trim() }.take(1).uppercase().ifEmpty { "?" }
 
 /**
- * The bar of the three main pages: the menu button, the page's title, the gamify switch, the
- * profile button and the compose button. Under 640dp the switch drops its label.
+ * The bar of the three main pages: the menu button, the page's title, the gamify button, the
+ * profile button and the compose button. Under 640dp the button drops its label.
  */
 @Composable
 internal fun PageBar(
@@ -138,32 +139,34 @@ internal fun PageBar(
             overflow = TextOverflow.Ellipsis,
             modifier = Modifier.weight(1f).padding(start = 4.dp).semantics { heading() },
         )
-        GamifySwitch(gamify, onGamify, wide, target)
+        GamifyButton(gamify, onGamify, wide, target)
         BarButton(s.shellNew, JudgeIcons.plus(Palette.ink), onNew, target)
         AvatarMenu(account, target)
     }
 }
 
 @Composable
-private fun GamifySwitch(on: Boolean, onChange: (Boolean) -> Unit, showLabel: Boolean, target: Dp) {
+private fun GamifyButton(on: Boolean, onChange: (Boolean) -> Unit, showLabel: Boolean, target: Dp) {
     val s = LocalStrings.current
-    val knob by animateDpAsState(if (on) 16.dp else 2.dp, if (rememberReducedMotion()) snap() else tween(150), label = "knob")
+    val spec = if (rememberReducedMotion()) snap<Color>() else tween(150)
+    val tint by animateColorAsState(if (on) Palette.terraTint else Color.Transparent, spec, label = "tint")
+    val fg by animateColorAsState(if (on) Palette.terraInk else Palette.ink2, spec, label = "fg")
+    val glow by animateDpAsState(if (on) 8.dp else 0.dp, if (rememberReducedMotion()) snap() else tween(150), label = "glow")
     Row(
         Modifier
             .heightIn(min = target)
+            .shadow(glow, CircleShape, ambientColor = Palette.terra, spotColor = Palette.terra)
             .clip(CircleShape)
+            .background(tint)
             .semantics { contentDescription = s.shellGamify }
             .toggleable(value = on, role = Role.Switch, onValueChange = onChange)
             .testTag(PageBarTags.GAMIFY)
-            .padding(horizontal = if (target < 48.dp) 4.dp else 6.dp),
+            .padding(horizontal = if (target < 48.dp) 10.dp else 12.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(6.dp),
     ) {
-        TintedIcon(JudgeIcons.gamepad(if (on) Palette.ink else Palette.ink2), 20)
-        if (showLabel) Text(s.shellGamify, style = JudgeType.small.copy(color = if (on) Palette.ink else Palette.ink2), maxLines = 1)
-        Box(Modifier.size(32.dp, 18.dp).clip(CircleShape).background(if (on) Palette.terraInk else Palette.muted)) {
-            Box(Modifier.offset(x = knob, y = 2.dp).size(14.dp).background(Palette.paper, CircleShape))
-        }
+        TintedIcon(JudgeIcons.gamepad(fg), 20)
+        if (showLabel) Text(s.shellGamify, style = JudgeType.small.copy(color = fg), maxLines = 1)
     }
 }
 
