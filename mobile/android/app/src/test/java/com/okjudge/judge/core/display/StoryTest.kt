@@ -92,4 +92,22 @@ class StoryTest {
             CourtScene.Judging(Story.Beat.BOTH_SIDES, null).json(),
         )
     }
+
+    @Test
+    fun vote2_holdsForTwoExtraJudgesAtMost() {
+        fun finishFor(extra: Int) = Story.ending(5, Story.Summary(List(3 + extra) { Vote.A }, true, extra, Vote.A, null), false).finishAt
+        assertEquals(finishFor(2), finishFor(5))
+    }
+
+    @Test
+    fun summarize_readsTheResult() {
+        val win = Story.summarize(Fixtures.sample("win_b_named").result.result)
+        assertEquals(Vote.B, win.winner)
+        assertEquals(false, win.escalated)
+        assertEquals(0, win.extra)
+        val refused = Story.summarize(Fixtures.sample("refused").result.result)
+        assertEquals(emptyList<Vote>(), refused.votes)
+        assertNull(refused.winner)
+        assertEquals(TrialOutcome.OVERTURNED, Story.summarize(Fixtures.sample("overturned_tr").result.result).trial)
+    }
 }
