@@ -114,6 +114,7 @@ struct HistoryView: View {
                     Button(L10n.appHistorySelect(lang)) { selection.start() }
                 }
             }
+            ToolbarItem(placement: .topBarTrailing) { GamifyButton() }
             ToolbarItem(placement: .topBarTrailing) { ComposeButton() }
         }
     }
