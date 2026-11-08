@@ -16,6 +16,8 @@ import androidx.compose.ui.test.assertHeightIsEqualTo
 import androidx.compose.ui.test.assertIsEnabled
 import androidx.compose.ui.test.assertIsFocused
 import androidx.compose.ui.test.assertIsNotEnabled
+import androidx.compose.ui.test.assertIsOff
+import androidx.compose.ui.test.assertIsOn
 import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.assertWidthIsEqualTo
 import androidx.compose.ui.test.junit4.createComposeRule
@@ -28,7 +30,7 @@ import androidx.compose.ui.test.performTextInput
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
 import com.okjudge.judge.Fixtures
-import com.okjudge.judge.str
+import com.okjudge.judge.i18n.LangPref
 import com.okjudge.judge.core.display.ContentLang
 import com.okjudge.judge.core.display.PartyNames
 import com.okjudge.judge.core.display.UiError
@@ -37,9 +39,11 @@ import com.okjudge.judge.core.model.FactCheck
 import com.okjudge.judge.core.model.FactClaim
 import com.okjudge.judge.core.model.FactSource
 import com.okjudge.judge.core.model.Features
-import com.okjudge.judge.core.session.VerdictFlow
 import com.okjudge.judge.core.model.VerdictOutcome
+import com.okjudge.judge.core.session.VerdictFlow
 import com.okjudge.judge.i18n.AppLang
+import com.okjudge.judge.str
+import com.okjudge.judge.ui.components.LocalGamify
 import com.okjudge.judge.ui.history.HistoryEntry
 import com.okjudge.judge.ui.history.HistoryScreen
 import com.okjudge.judge.ui.history.HistoryTags
@@ -48,21 +52,24 @@ import com.okjudge.judge.ui.home.HomeTags
 import com.okjudge.judge.ui.home.HomeUiState
 import com.okjudge.judge.ui.judging.JudgingScreen
 import com.okjudge.judge.ui.judging.JudgingTags
+import com.okjudge.judge.ui.settings.SettingsScreen
+import com.okjudge.judge.ui.settings.SettingsTags
 import com.okjudge.judge.ui.verdict.CardActions
+import com.okjudge.judge.ui.verdict.RulingSummary
 import com.okjudge.judge.ui.verdict.TranslationStatus
 import com.okjudge.judge.ui.verdict.TranslationView
-import com.okjudge.judge.ui.verdict.RulingSummary
 import com.okjudge.judge.ui.verdict.VerdictTags
+import java.util.Locale
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonObject
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
-import java.util.Locale
 
 @RunWith(RobolectricTestRunner::class)
 @Config(sdk = [36], qualifiers = "w400dp-h2400dp-xhdpi")
@@ -445,6 +452,36 @@ class ScreensTest {
         compose.onNodeWithText("SAM").assertExists()
         compose.onNodeWithTag(JudgingTags.COURT).assertExists()
         compose.onNodeWithTag(JudgingTags.CAPTION).assertExists()
+    }
+
+    @Test
+    fun judging_gamifyOffHasNoCourt_andStillFinishes() {
+        var finished = false
+        compose.mainClock.autoAdvance = false
+        compose.setContent {
+            Themed(AppLang.EN) {
+                CompositionLocalProvider(LocalGamify provides false) {
+                    JudgingScreen(done = true, result = null, startedAt = 0, reducedMotion = true, onFinished = { finished = true }, onCancel = {})
+                }
+            }
+        }
+        compose.onNodeWithTag(JudgingTags.COURT).assertDoesNotExist()
+        compose.onNodeWithTag(JudgingTags.CAPTION).assertExists()
+        compose.mainClock.advanceTimeBy(2_000)
+        assertTrue(finished)
+    }
+
+    @Test
+    fun settings_gamifyRowToggles() {
+        var on by mutableStateOf(true)
+        compose.setContent {
+            Themed(AppLang.EN) {
+                SettingsScreen(LangPref.SYSTEM, "0.1.0", {}, {}, "https://okjudge.com", gamify = on, onGamify = { on = it })
+            }
+        }
+        compose.onNodeWithTag(SettingsTags.GAMIFY).assertIsOn().performClick()
+        assertFalse(on)
+        compose.onNodeWithTag(SettingsTags.GAMIFY).assertIsOff()
     }
 
     @Test
