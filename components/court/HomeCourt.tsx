@@ -14,7 +14,10 @@ export function HomeCourt({ busy, className }: { busy: boolean; className?: stri
 
   useEffect(() => {
     const el = ref.current;
-    if (!el) return;
+    if (!el) {
+      setRoomy(false);
+      return;
+    }
     const ro = new ResizeObserver(([e]) => setRoomy(e.contentRect.height >= 110));
     ro.observe(el);
     return () => ro.disconnect();

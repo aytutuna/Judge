@@ -48,6 +48,9 @@
 :global(html[data-game="off"]) .push {
   justify-content: center;
 }
+:global(html[data-game="off"]) .court {
+  display: none;
+}
 :global(html[data-game="off"]) .empty {
   margin-top: 0;
 }

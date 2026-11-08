@@ -62,7 +62,7 @@
   outline: 2px solid var(--terra-ink);
   outline-offset: 2px;
 }
-.gamify[aria-pressed="true"] {
+:global(html:not([data-game="off"])) .gamify {
   color: var(--terra-ink);
   background: color-mix(in srgb, var(--terra-ink) 10%, transparent);
 }

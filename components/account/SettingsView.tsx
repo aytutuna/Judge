@@ -87,25 +87,29 @@ export function SettingsView() {
               </label>
             ))}
           </div>
-        </section>
-      </div>
-
-      <div className={styles.group}>
-        <section className={styles.card}>
-          <label className={styles.option}>
-            <input type="checkbox" checked={game} onChange={(e) => setGame(e.target.checked)} />
-            <span>{t(lang, "shell.gamify")}</span>
-            <svg viewBox="0 0 24 24" aria-hidden className={styles.optionTick}>
-              <path
-                d="m5 12.5 4.5 4.5L19 7.5"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth={2}
-                strokeLinecap="round"
-                strokeLinejoin="round"
+          <div className={styles.options}>
+            <label className={styles.option}>
+              <input
+                type="checkbox"
+                checked={game}
+                onChange={(e) => {
+                  setGame(e.target.checked);
+                  track("settings_changed", { key: "gamify" });
+                }}
               />
-            </svg>
-          </label>
+              <span>{t(lang, "shell.gamify")}</span>
+              <svg viewBox="0 0 24 24" aria-hidden className={styles.optionTick}>
+                <path
+                  d="m5 12.5 4.5 4.5L19 7.5"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </label>
+          </div>
         </section>
       </div>
 
