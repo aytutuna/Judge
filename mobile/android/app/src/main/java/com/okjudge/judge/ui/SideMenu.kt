@@ -192,6 +192,7 @@ private fun AvatarMenu(account: AccountActions, target: Dp) {
                     TintedIcon(JudgeIcons.person(Palette.ink2), 20)
                 } else {
                     Text(initialOf(user), style = JudgeType.slotTitle.copy(color = Palette.sageInk, fontSize = 15.sp))
+                    AvatarImage(user.image)
                 }
             }
         }
