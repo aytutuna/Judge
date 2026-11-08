@@ -139,8 +139,8 @@ internal fun PageBar(
             modifier = Modifier.weight(1f).padding(start = 4.dp).semantics { heading() },
         )
         GamifySwitch(gamify, onGamify, wide, target)
-        AvatarMenu(account, target)
         BarButton(s.shellNew, JudgeIcons.plus(Palette.ink), onNew, target)
+        AvatarMenu(account, target)
     }
 }
 
