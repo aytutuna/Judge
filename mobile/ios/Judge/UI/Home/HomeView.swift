@@ -78,6 +78,7 @@ struct HomeView: View {
         .toolbar {
             if home.clarify == nil {
                 ToolbarItem(placement: .topBarLeading) { MenuButton() }
+                ToolbarItem(placement: .topBarTrailing) { GamifyButton() }
                 ToolbarItem(placement: .topBarTrailing) { ComposeButton() }
             }
         }
@@ -107,7 +108,7 @@ struct HomeView: View {
             }
         }
         .fullScreenCover(isPresented: $home.isJudging) {
-            JudgingCover(home: home, lang: lang)
+            JudgingCover(home: home, lang: lang, gamify: app.gamify)
                 .environment(\.sceneLive, sceneLive)
         }
     }
@@ -122,7 +123,7 @@ struct HomeView: View {
                 .frame(maxWidth: .infinity)
                 .overlay {
                     // The second side, an error or a crowded page take the room.
-                    if !home.theirsOpen, home.error == nil {
+                    if app.gamify, !home.theirsOpen, home.error == nil {
                         HomeCourt(busy: home.isBusy, covered: pageCovered || home.isJudging || !home.path.isEmpty)
                     }
                 }
