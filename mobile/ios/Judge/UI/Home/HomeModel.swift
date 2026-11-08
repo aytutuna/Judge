@@ -54,6 +54,9 @@ final class HomeModel {
     /// Kept until the next submit or cancel, so the cover keeps its final
     /// frame while it animates out.
     private(set) var arrived: VerdictResult?
+    /// When the server accepted the running request; the cover paces its
+    /// first lines from it.
+    private(set) var acceptedAt: Date?
     /// The sides the running request sent, for the judging cover.
     private(set) var judgedSides: [JudgedSide] = []
     private(set) var error: APIError?
@@ -381,6 +384,7 @@ final class HomeModel {
         error = nil
         arrived = nil
         arrivedID = nil
+        acceptedAt = nil
         clarify = nil
         let input = PremiumInput(
             argument: outgoing(app),
@@ -469,6 +473,7 @@ final class HomeModel {
         error = nil
         arrived = nil
         arrivedID = nil
+        acceptedAt = nil
         pending = nil
         isJudging = true
         let body = VerdictRequest(
@@ -540,6 +545,7 @@ final class HomeModel {
             switch start {
             case .resume(let held, let token):
                 accepted = held
+                acceptedAt = .now
                 idempotencyKey = token
             case .post(let body, let token):
                 idempotencyKey = token
@@ -555,6 +561,7 @@ final class HomeModel {
                 case .accepted(let fresh):
                     if let entitlement = fresh.entitlement { account?.applyEntitlement(entitlement) }
                     accepted = fresh
+                    acceptedAt = .now
                     pending = PendingVerdict(accepted: fresh, key: requestKey, since: .now, idempotencyKey: token)
                 }
             }
@@ -616,6 +623,7 @@ final class HomeModel {
         isJudging = false
         arrived = nil
         arrivedID = nil
+        acceptedAt = nil
     }
 
     /// "Clear" and "Start a new case": back to an empty form.

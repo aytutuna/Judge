@@ -11,6 +11,7 @@ struct JudgingCover: View {
             lang: lang,
             sides: home.judgedSides,
             result: home.arrived,
+            acceptedAt: home.acceptedAt,
             onFinished: { home.judgingFinished() },
             onCancel: { home.cancel() }
         )
@@ -28,12 +29,17 @@ struct JudgingView: View {
     var sides: [HomeModel.JudgedSide] = []
     /// Non-nil once the verdict has arrived.
     let result: VerdictResult?
+    /// When the server accepted the request, if it has.
+    var acceptedAt: Date?
     let onFinished: () -> Void
     let onCancel: () -> Void
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.scenePhase) private var scenePhase
+    @Environment(\.sceneLive) private var sceneLive
     @State private var started = Date.now
+    /// `acceptedAt` as ms into the story, for the clock loop to read.
+    @State private var acceptedMs: Double?
     /// The waiting line the story is on; frozen when the verdict lands.
     @State private var waiting = 0
     @State private var plan: Story.Ending?
@@ -81,11 +87,15 @@ struct JudgingView: View {
         .task(id: done) {
             await run()
         }
-        .onChange(of: liveText) { _, text in
-            AccessibilityNotification.Announcement(text).post()
-        }
-        .onAppear {
+        .task(id: liveText) {
+            // The catch-up after the verdict changes the line every few
+            // hundred ms; only the one that settles is worth announcing.
+            try? await Task.sleep(for: .seconds(1))
+            guard !Task.isCancelled else { return }
             AccessibilityNotification.Announcement(liveText).post()
+        }
+        .onChange(of: acceptedAt, initial: true) { _, at in
+            acceptedMs = at.map { max(0, $0.timeIntervalSince(started) * 1000) }
         }
         .sensoryFeedback(.impact(weight: .light), trigger: done) { _, isDone in isDone && !reduceMotion }
     }
@@ -152,10 +162,10 @@ struct JudgingView: View {
     /// plan out and hands over at its end.
     private func run() async {
         if !done {
+            // Stills (screenshots, tests) stay on the first line.
+            guard sceneLive else { return }
             while !Task.isCancelled {
-                // The cover opens as the request goes out, so the names are
-                // out from the start.
-                waiting = Story.waitingAt(Date.now.timeIntervalSince(started) * 1000, acceptedAt: 0)
+                waiting = Story.waitingAt(Date.now.timeIntervalSince(started) * 1000, acceptedAt: acceptedMs)
                 try? await Task.sleep(for: .milliseconds(250))
             }
             return
