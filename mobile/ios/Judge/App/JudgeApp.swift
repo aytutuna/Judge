@@ -68,7 +68,7 @@ struct RootView: View {
         .background {
             // Toolbar items cannot measure the screen, so the bars read this.
             GeometryReader { geo in
-                Color.clear.onChange(of: geo.size.width < 400, initial: true) { _, narrow in
+                Color.clear.onChange(of: geo.size.width < 410, initial: true) { _, narrow in
                     narrowBar = narrow
                 }
             }
