@@ -62,9 +62,8 @@
   outline: 2px solid var(--terra-ink);
   outline-offset: 2px;
 }
-:global(html:not([data-game="off"])) .gamify {
-  color: var(--terra-ink);
-  background: color-mix(in srgb, var(--terra-ink) 10%, transparent);
+.gamify[aria-checked="true"] {
+  color: var(--ink);
 }
 .gamify svg {
   width: 20px;
@@ -73,6 +72,32 @@
 }
 .gamifyLabel {
   display: none;
+}
+.track {
+  position: relative;
+  flex: none;
+  width: 32px;
+  height: 18px;
+  border-radius: 9px;
+  background: var(--muted);
+  transition: background-color var(--dur-1);
+}
+.knob {
+  position: absolute;
+  inset-block-start: 2px;
+  inset-inline-start: 2px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--paper);
+  box-shadow: 0 1px 2px var(--line-2);
+  transition: inset-inline-start var(--dur-1);
+}
+.gamify[aria-checked="true"] .track {
+  background: var(--terra-ink);
+}
+.gamify[aria-checked="true"] .knob {
+  inset-inline-start: 16px;
 }
 @media (min-width: 640px) {
   .gamifyLabel {
@@ -207,6 +232,10 @@
   .scrim,
   .panel {
     animation: none;
+  }
+  .track,
+  .knob {
+    transition: none;
   }
 }
 @media (forced-colors: active) {
