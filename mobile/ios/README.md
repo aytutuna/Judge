@@ -80,7 +80,8 @@ Debug builds accept `-JudgeScreenshotState <screen>:<lang>` and render a fixed
 state from `mobile/shared/fixtures/verdicts.json`, with an in-memory history,
 a separate defaults suite and no network (the API points at a closed local
 port). Screens: `home` (signed in, so the link and "Add context" show),
-`home-example` (both sides from "Try an example"), `home-error`, `judging`, `history`, `settings`, `signin`, `signin-code`,
+`home-example` (both sides from "Try an example"), `home-error`, `judging`, `judging-plain` (the same
+with Gamify off), `history`, `settings`, `signin`, `signin-code`,
 `account` (Settings, signed in with a fixture account), `verdict/<sample>`
 for any key of `verdictResponses` (opened as a saved verdict),
 `verdict-thread` (a fresh verdict, as the judging cover hands over to it), `verdict-context`,
