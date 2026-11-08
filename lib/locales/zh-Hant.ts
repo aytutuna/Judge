@@ -662,6 +662,7 @@ const zhHant: Locale = {
     "account.verdicts.removed": "已移除",
     "shell.history": "紀錄",
     "shell.new": "新爭論",
+    "shell.gamify": "遊戲化",
     "shell.today": "今天",
     "shell.week": "本週",
     "shell.earlier": "更早",

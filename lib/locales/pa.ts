@@ -702,6 +702,7 @@ const pa: Locale = {
     "account.verdicts.removed": "ਹਟਾਇਆ ਗਿਆ",
     "shell.history": "ਇਤਿਹਾਸ",
     "shell.new": "ਨਵੀਂ ਬਹਿਸ",
+    "shell.gamify": "ਗੇਮਿਫਾਈ",
     "shell.today": "ਅੱਜ",
     "shell.week": "ਇਸ ਹਫ਼ਤੇ",
     "shell.earlier": "ਪਹਿਲਾਂ",

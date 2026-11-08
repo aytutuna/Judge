@@ -660,6 +660,7 @@ const zhHans: Locale = {
     "account.verdicts.removed": "已删除",
     "shell.history": "历史记录",
     "shell.new": "新的争论",
+    "shell.gamify": "游戏化",
     "shell.today": "今天",
     "shell.week": "本周",
     "shell.earlier": "更早",

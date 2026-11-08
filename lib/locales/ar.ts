@@ -698,6 +698,7 @@ const ar: Locale = {
     "account.verdicts.removed": "محذوف",
     "shell.history": "السجل",
     "shell.new": "خلاف جديد",
+    "shell.gamify": "ألعاب",
     "shell.today": "اليوم",
     "shell.week": "هذا الأسبوع",
     "shell.earlier": "أقدم",

@@ -709,6 +709,7 @@ const tr: Locale = {
     "account.verdicts.removed": "Kaldırıldı",
     "shell.history": "Geçmiş",
     "shell.new": "Yeni tartışma",
+    "shell.gamify": "Oyunlaştır",
     "shell.today": "Bugün",
     "shell.week": "Bu hafta",
     "shell.earlier": "Daha önce",

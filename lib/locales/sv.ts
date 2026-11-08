@@ -702,6 +702,7 @@ const sv: Locale = {
     "account.verdicts.removed": "Borttagen",
     "shell.history": "Historik",
     "shell.new": "Nytt bråk",
+    "shell.gamify": "Spelläge",
     "shell.today": "I dag",
     "shell.week": "Den här veckan",
     "shell.earlier": "Tidigare",

@@ -708,6 +708,7 @@ const ca: Locale = {
     "account.verdicts.removed": "Eliminat",
     "shell.history": "Historial",
     "shell.new": "Nova discussió",
+    "shell.gamify": "Gamifica",
     "shell.today": "Avui",
     "shell.week": "Aquesta setmana",
     "shell.earlier": "Abans",

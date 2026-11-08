@@ -705,6 +705,7 @@ const fr: Locale = {
     "account.verdicts.removed": "Supprimé",
     "shell.history": "Historique",
     "shell.new": "Nouveau débat",
+    "shell.gamify": "Ludique",
     "shell.today": "Aujourd’hui",
     "shell.week": "Cette semaine",
     "shell.earlier": "Plus tôt",

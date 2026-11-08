@@ -709,6 +709,7 @@ const de: Locale = {
     "account.verdicts.removed": "Entfernt",
     "shell.history": "Verlauf",
     "shell.new": "Neuer Streit",
+    "shell.gamify": "Spielmodus",
     "shell.today": "Heute",
     "shell.week": "Diese Woche",
     "shell.earlier": "Früher",

@@ -686,6 +686,7 @@ const ja: Locale = {
     "account.verdicts.removed": "削除済み",
     "shell.history": "履歴",
     "shell.new": "新しい揉めごと",
+    "shell.gamify": "ゲーム化",
     "shell.today": "今日",
     "shell.week": "今週",
     "shell.earlier": "それ以前",

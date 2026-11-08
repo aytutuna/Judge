@@ -712,6 +712,7 @@ const pl: Locale = {
     "account.verdicts.removed": "Usunięty",
     "shell.history": "Historia",
     "shell.new": "Nowy spór",
+    "shell.gamify": "Gra",
     "shell.today": "Dzisiaj",
     "shell.week": "W tym tygodniu",
     "shell.earlier": "Wcześniej",

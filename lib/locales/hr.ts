@@ -701,6 +701,7 @@ const hr: Locale = {
     "account.verdicts.removed": "Uklonjeno",
     "shell.history": "Povijest",
     "shell.new": "Nova rasprava",
+    "shell.gamify": "Igra",
     "shell.today": "Danas",
     "shell.week": "Ovaj tjedan",
     "shell.earlier": "Ranije",

@@ -707,6 +707,7 @@ const ro: Locale = {
     "account.verdicts.removed": "Eliminat",
     "shell.history": "Istoric",
     "shell.new": "Dispută nouă",
+    "shell.gamify": "Joc",
     "shell.today": "Azi",
     "shell.week": "Săptămâna asta",
     "shell.earlier": "Mai devreme",

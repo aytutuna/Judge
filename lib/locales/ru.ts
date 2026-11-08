@@ -706,6 +706,7 @@ const ru: Locale = {
     "account.verdicts.removed": "Удалён",
     "shell.history": "История",
     "shell.new": "Новый спор",
+    "shell.gamify": "Игра",
     "shell.today": "Сегодня",
     "shell.week": "На этой неделе",
     "shell.earlier": "Раньше",

@@ -708,6 +708,7 @@ const hu: Locale = {
     "account.verdicts.removed": "Eltávolítva",
     "shell.history": "Előzmények",
     "shell.new": "Új vita",
+    "shell.gamify": "Játék",
     "shell.today": "Ma",
     "shell.week": "Ezen a héten",
     "shell.earlier": "Korábban",

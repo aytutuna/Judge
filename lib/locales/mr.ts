@@ -704,6 +704,7 @@ const mr: Locale = {
     "account.verdicts.removed": "काढून टाकला",
     "shell.history": "इतिहास",
     "shell.new": "नवा वाद",
+    "shell.gamify": "गेमिफाय",
     "shell.today": "आज",
     "shell.week": "हा आठवडा",
     "shell.earlier": "आधीचे",

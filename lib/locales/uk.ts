@@ -706,6 +706,7 @@ const uk: Locale = {
     "account.verdicts.removed": "Видалено",
     "shell.history": "Історія",
     "shell.new": "Нова суперечка",
+    "shell.gamify": "Гра",
     "shell.today": "Сьогодні",
     "shell.week": "Цього тижня",
     "shell.earlier": "Раніше",

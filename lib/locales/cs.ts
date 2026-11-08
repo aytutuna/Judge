@@ -700,6 +700,7 @@ const cs: Locale = {
     "account.verdicts.removed": "Odstraněno",
     "shell.history": "Historie",
     "shell.new": "Nový spor",
+    "shell.gamify": "Hra",
     "shell.today": "Dnes",
     "shell.week": "Tento týden",
     "shell.earlier": "Dříve",

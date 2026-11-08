@@ -707,6 +707,7 @@ const ta: Locale = {
     "account.verdicts.removed": "நீக்கப்பட்டது",
     "shell.history": "வரலாறு",
     "shell.new": "புதிய வாக்குவாதம்",
+    "shell.gamify": "கேமிஃபை",
     "shell.today": "இன்று",
     "shell.week": "இந்த வாரம்",
     "shell.earlier": "முன்பு",

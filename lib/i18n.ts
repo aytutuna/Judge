@@ -699,6 +699,7 @@ const en = {
   "account.verdicts.removed": "Removed",
   "shell.history": "History",
   "shell.new": "New argument",
+  "shell.gamify": "Gamify",
   "shell.today": "Today",
   "shell.week": "This week",
   "shell.earlier": "Earlier",

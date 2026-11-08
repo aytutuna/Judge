@@ -702,6 +702,7 @@ const hi: Locale = {
     "account.verdicts.removed": "हटाया गया",
     "shell.history": "इतिहास",
     "shell.new": "नई बहस",
+    "shell.gamify": "गेमिफ़ाई",
     "shell.today": "आज",
     "shell.week": "इस हफ़्ते",
     "shell.earlier": "पहले",

@@ -706,6 +706,7 @@ const el: Locale = {
     "account.verdicts.removed": "Αφαιρέθηκε",
     "shell.history": "Ιστορικό",
     "shell.new": "Νέα διαφωνία",
+    "shell.gamify": "Παιχνίδι",
     "shell.today": "Σήμερα",
     "shell.week": "Αυτή την εβδομάδα",
     "shell.earlier": "Παλαιότερα",

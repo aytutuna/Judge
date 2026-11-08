@@ -701,6 +701,7 @@ const gu: Locale = {
     "account.verdicts.removed": "દૂર કરાયો",
     "shell.history": "ઇતિહાસ",
     "shell.new": "નવો વિવાદ",
+    "shell.gamify": "ગેમિફાઇ",
     "shell.today": "આજે",
     "shell.week": "આ અઠવાડિયે",
     "shell.earlier": "અગાઉ",

@@ -703,6 +703,7 @@ const fi: Locale = {
     "account.verdicts.removed": "Poistettu",
     "shell.history": "Historia",
     "shell.new": "Uusi kiista",
+    "shell.gamify": "Pelitila",
     "shell.today": "Tänään",
     "shell.week": "Tällä viikolla",
     "shell.earlier": "Aiemmin",

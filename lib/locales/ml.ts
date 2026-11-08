@@ -704,6 +704,7 @@ const ml: Locale = {
     "account.verdicts.removed": "നീക്കം ചെയ്തത്",
     "shell.history": "ചരിത്രം",
     "shell.new": "പുതിയ തർക്കം",
+    "shell.gamify": "ഗെയിമിഫൈ",
     "shell.today": "ഇന്ന്",
     "shell.week": "ഈ ആഴ്ച",
     "shell.earlier": "മുമ്പ്",

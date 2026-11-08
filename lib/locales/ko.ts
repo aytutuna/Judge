@@ -684,6 +684,7 @@ const ko: Locale = {
     "account.verdicts.removed": "삭제됨",
     "shell.history": "기록",
     "shell.new": "새 논쟁",
+    "shell.gamify": "게임 모드",
     "shell.today": "오늘",
     "shell.week": "이번 주",
     "shell.earlier": "이전",

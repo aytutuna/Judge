@@ -703,6 +703,7 @@ const bn: Locale = {
     "account.verdicts.removed": "সরানো হয়েছে",
     "shell.history": "ইতিহাস",
     "shell.new": "নতুন তর্ক",
+    "shell.gamify": "গেমিফাই",
     "shell.today": "আজ",
     "shell.week": "এই সপ্তাহে",
     "shell.earlier": "আগে",

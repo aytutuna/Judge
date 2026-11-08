@@ -704,6 +704,7 @@ const da: Locale = {
     "account.verdicts.removed": "Fjernet",
     "shell.history": "Historik",
     "shell.new": "Ny diskussion",
+    "shell.gamify": "Gamify",
     "shell.today": "I dag",
     "shell.week": "Denne uge",
     "shell.earlier": "Tidligere",

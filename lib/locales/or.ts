@@ -702,6 +702,7 @@ const or: Locale = {
     "account.verdicts.removed": "ହଟାଯାଇଛି",
     "shell.history": "ଇତିହାସ",
     "shell.new": "ନୂଆ ବିବାଦ",
+    "shell.gamify": "ଗେମିଫାଏ",
     "shell.today": "ଆଜି",
     "shell.week": "ଏହି ସପ୍ତାହ",
     "shell.earlier": "ଆଗରୁ",

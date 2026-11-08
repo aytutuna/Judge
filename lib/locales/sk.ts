@@ -703,6 +703,7 @@ const sk: Locale = {
     "account.verdicts.removed": "Odstránený",
     "shell.history": "História",
     "shell.new": "Nový spor",
+    "shell.gamify": "Hra",
     "shell.today": "Dnes",
     "shell.week": "Tento týždeň",
     "shell.earlier": "Skôr",

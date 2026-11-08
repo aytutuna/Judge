@@ -708,6 +708,7 @@ const it: Locale = {
     "account.verdicts.removed": "Rimosso",
     "shell.history": "Cronologia",
     "shell.new": "Nuova discussione",
+    "shell.gamify": "Gioco",
     "shell.today": "Oggi",
     "shell.week": "Questa settimana",
     "shell.earlier": "Prima",

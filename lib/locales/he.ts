@@ -690,6 +690,7 @@ const he: Locale = {
     "account.verdicts.removed": "הוסר",
     "shell.history": "היסטוריה",
     "shell.new": "ויכוח חדש",
+    "shell.gamify": "משחק",
     "shell.today": "היום",
     "shell.week": "השבוע",
     "shell.earlier": "מוקדם יותר",

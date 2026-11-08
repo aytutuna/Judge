@@ -699,6 +699,7 @@ const th: Locale = {
     "account.verdicts.removed": "ลบแล้ว",
     "shell.history": "ประวัติ",
     "shell.new": "เรื่องใหม่",
+    "shell.gamify": "เกม",
     "shell.today": "วันนี้",
     "shell.week": "สัปดาห์นี้",
     "shell.earlier": "ก่อนหน้านี้",

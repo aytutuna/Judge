@@ -709,6 +709,7 @@ const ms: Locale = {
     "account.verdicts.removed": "Dibuang",
     "shell.history": "Sejarah",
     "shell.new": "Pertikaian baharu",
+    "shell.gamify": "Gamifikasi",
     "shell.today": "Hari ini",
     "shell.week": "Minggu ini",
     "shell.earlier": "Sebelum ini",

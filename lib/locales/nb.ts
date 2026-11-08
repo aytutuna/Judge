@@ -702,6 +702,7 @@ const nb: Locale = {
     "account.verdicts.removed": "Fjernet",
     "shell.history": "Historikk",
     "shell.new": "Ny diskusjon",
+    "shell.gamify": "Spillmodus",
     "shell.today": "I dag",
     "shell.week": "Denne uken",
     "shell.earlier": "Tidligere",

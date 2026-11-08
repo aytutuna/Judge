@@ -703,6 +703,7 @@ const te: Locale = {
     "account.verdicts.removed": "తీసేశారు",
     "shell.history": "చరిత్ర",
     "shell.new": "కొత్త వాదన",
+    "shell.gamify": "గేమిఫై",
     "shell.today": "ఈరోజు",
     "shell.week": "ఈ వారం",
     "shell.earlier": "ఇంతకుముందు",

@@ -702,6 +702,7 @@ const vi: Locale = {
     "account.verdicts.removed": "Đã gỡ",
     "shell.history": "Lịch sử",
     "shell.new": "Tranh cãi mới",
+    "shell.gamify": "Trò chơi",
     "shell.today": "Hôm nay",
     "shell.week": "Tuần này",
     "shell.earlier": "Trước đó",

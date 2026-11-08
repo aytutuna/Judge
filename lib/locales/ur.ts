@@ -700,6 +700,7 @@ const ur: Locale = {
     "account.verdicts.removed": "ہٹا دیا گیا",
     "shell.history": "ہسٹری",
     "shell.new": "نئی بحث",
+    "shell.gamify": "گیمیفائی",
     "shell.today": "آج",
     "shell.week": "اس ہفتے",
     "shell.earlier": "پہلے",

@@ -704,6 +704,7 @@ const kn: Locale = {
     "account.verdicts.removed": "ತೆಗೆದುಹಾಕಲಾಗಿದೆ",
     "shell.history": "ಇತಿಹಾಸ",
     "shell.new": "ಹೊಸ ವಾದ",
+    "shell.gamify": "ಗೇಮಿಫೈ",
     "shell.today": "ಇಂದು",
     "shell.week": "ಈ ವಾರ",
     "shell.earlier": "ಹಿಂದಿನವು",

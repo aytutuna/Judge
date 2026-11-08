@@ -704,6 +704,7 @@ const sl: Locale = {
     "account.verdicts.removed": "Odstranjeno",
     "shell.history": "Zgodovina",
     "shell.new": "Nov prepir",
+    "shell.gamify": "Igra",
     "shell.today": "Danes",
     "shell.week": "Ta teden",
     "shell.earlier": "Prej",

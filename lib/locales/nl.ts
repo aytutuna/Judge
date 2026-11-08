@@ -707,6 +707,7 @@ const nl: Locale = {
     "account.verdicts.removed": "Verwijderd",
     "shell.history": "Geschiedenis",
     "shell.new": "Nieuwe discussie",
+    "shell.gamify": "Spelmodus",
     "shell.today": "Vandaag",
     "shell.week": "Deze week",
     "shell.earlier": "Eerder",

@@ -703,6 +703,7 @@ const ptPT: Locale = {
     "account.verdicts.removed": "Removido",
     "shell.history": "Histórico",
     "shell.new": "Nova discussão",
+    "shell.gamify": "Gamificar",
     "shell.today": "Hoje",
     "shell.week": "Esta semana",
     "shell.earlier": "Antes",

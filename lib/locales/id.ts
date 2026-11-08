@@ -703,6 +703,7 @@ const id: Locale = {
     "account.verdicts.removed": "Dihapus",
     "shell.history": "Riwayat",
     "shell.new": "Perdebatan baru",
+    "shell.gamify": "Gamifikasi",
     "shell.today": "Hari ini",
     "shell.week": "Minggu ini",
     "shell.earlier": "Sebelumnya",
