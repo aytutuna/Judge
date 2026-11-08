@@ -138,7 +138,6 @@
   border: 1px solid color-mix(in srgb, var(--side-strong) 75%, transparent);
   border-radius: var(--radius-block);
   background: var(--paper);
-  box-shadow: 0 0 8px color-mix(in srgb, var(--side-strong) 38%, transparent);
   transition:
     border-color var(--dur-1),
     box-shadow var(--dur-1);
