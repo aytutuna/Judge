@@ -10,6 +10,8 @@ on:
       - ".github/workflows/mobile.yml"
       - "lib/**"
       - "components/scene/**"
+      - "components/court/**"
+      - "public/court/**"
       - "package.json"
       - "package-lock.json"
   pull_request:
@@ -18,6 +20,8 @@ on:
       - ".github/workflows/mobile.yml"
       - "lib/**"
       - "components/scene/**"
+      - "components/court/**"
+      - "public/court/**"
       - "package.json"
       - "package-lock.json"
 
