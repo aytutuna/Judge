@@ -61,7 +61,7 @@ internal fun PasswordPanel(
     var error by remember { mutableStateOf<SignInError?>(null) }
 
     fun save() {
-        if (busy || new.isEmpty()) return
+        if (busy || new.isEmpty() || (hasPassword && current.isEmpty())) return
         if (new.length < SignInUiState.PASSWORD_MIN) {
             error = SignInError.PASSWORD_SHORT
             return
@@ -69,7 +69,7 @@ internal fun PasswordPanel(
         busy = true
         error = null
         scope.launch {
-            error = onSave(new, current.ifEmpty { null })
+            error = onSave(new, current.takeIf { hasPassword })
             saved = error == null
             busy = false
         }
@@ -131,7 +131,7 @@ internal fun PasswordPanel(
                 TextButton(onClick = onClose, enabled = !busy) { Text(s.appCancel, color = Palette.ink) }
                 TextButton(
                     onClick = ::save,
-                    enabled = !busy && new.isNotEmpty(),
+                    enabled = !busy && new.isNotEmpty() && (!hasPassword || current.isNotEmpty()),
                     modifier = Modifier.testTag(SettingsTags.PASSWORD_SAVE),
                 ) { Text(s.signinPasswordSave, color = Palette.ink) }
             }

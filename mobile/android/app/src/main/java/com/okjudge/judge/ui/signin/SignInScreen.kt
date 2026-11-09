@@ -25,6 +25,7 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
+import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -131,8 +132,11 @@ fun SignInScreen(
     modifier: Modifier = Modifier,
 ) {
     val s = LocalStrings.current
+    // Signed in by the code already: leaving this step skips the password and goes on.
+    val choosing = state.step == SignInStep.CHOOSE_PASSWORD
+    BackHandler(enabled = choosing, onBack = actions.onSkipPassword)
     Column(modifier.fillMaxSize()) {
-        TopBar(onBack = onBack)
+        TopBar(onBack = if (choosing) actions.onSkipPassword else onBack)
         Column(
             Modifier
                 .fillMaxSize()
@@ -163,7 +167,6 @@ fun SignInScreen(
                             if (state.ageNeeded && state.step == SignInStep.EMAIL) {
                                 AgeCheckbox(state.ageTicked, actions.onAgeTicked, Modifier.padding(bottom = 14.dp), enabled = state.busy == null)
                             }
-                            val choosing = state.step == SignInStep.CHOOSE_PASSWORD
                             if (state.showGoogle && !choosing) {
                                 GoogleButton(s.signinGoogle, enabled = state.canGoogle, onClick = actions.onGoogle)
                             }

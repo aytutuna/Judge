@@ -268,6 +268,22 @@ class SignInViewModelTest {
     }
 
     @Test
+    fun forgot_whenTheSignInGrewOld_goesBackToTheCodeStep() = runBlocking {
+        withPasswords()
+        routes.always(SEND_CODE, json(200, """{"success":true}"""))
+        routes.on(VERIFY_CODE, Routes.grant("reset-session"))
+        routes.on(SET_PASSWORD, json(403, """{"code":"password_required"}"""))
+        val vm = vm()
+        vm.throughTheCode(SignInMode.FORGOT)
+        vm.await { it.step == SignInStep.CHOOSE_PASSWORD && it.busy == null }
+        vm.onPasswordChange("another-made-up")
+        vm.savePassword()
+        val s = vm.await { it.step == SignInStep.CODE && it.busy == null }
+        assertEquals(SignInError.CODE_EXPIRED, s.error)
+        assertFalse(s.done)
+    }
+
+    @Test
     fun skippingTheNewPassword_finishesSignedIn() = runBlocking {
         withPasswords()
         routes.always(SEND_CODE, json(200, """{"success":true}"""))

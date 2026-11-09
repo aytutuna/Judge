@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.test.core.app.ApplicationProvider
 import com.okjudge.judge.core.api.JudgeApi
 import com.okjudge.judge.core.api.TokenStore
+import com.okjudge.judge.core.display.UiError
 import com.okjudge.judge.core.auth.Routes.Companion.CONFIG
 import com.okjudge.judge.core.auth.Routes.Companion.DELETE_ME
 import com.okjudge.judge.core.auth.Routes.Companion.GOOGLE
@@ -325,6 +326,15 @@ class AccountTest {
         assertEquals(SignInError.RATE_LIMITED, answer(429, "rate_limited"))
         assertEquals(SignInError.UNAVAILABLE, answer(503, "unavailable"))
         assertEquals(SignInError.PASSWORD_SAVE_FAILED, answer(400, "invalid"))
+    }
+
+    @Test
+    fun passwordSignInError_mapsTheStatus() {
+        fun api(status: Int) = UiError.Api(code = null, status = status)
+        assertEquals(SignInError.PASSWORD_WRONG, Account.passwordSignInError(api(401)))
+        assertEquals(SignInError.UNAVAILABLE, Account.passwordSignInError(api(404)))
+        assertEquals(SignInError.RATE_LIMITED, Account.passwordSignInError(api(429)))
+        assertEquals(SignInError.FAILED, Account.passwordSignInError(api(400)))
     }
 
     @Test

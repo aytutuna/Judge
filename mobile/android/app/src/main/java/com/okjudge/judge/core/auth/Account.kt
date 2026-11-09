@@ -452,7 +452,8 @@ class Account(
         }
 
         fun passwordSignInError(e: UiError): SignInError =
-            if (e is UiError.Api && e.status == 401) SignInError.PASSWORD_WRONG else common(e) ?: SignInError.FAILED
+            if (e is UiError.Api && e.status == 401) SignInError.PASSWORD_WRONG
+            else common(e) ?: if ((e as UiError.Api).status == 404) SignInError.UNAVAILABLE else SignInError.FAILED
 
         fun passwordSaveError(e: UiError): SignInError = common(e) ?: (e as UiError.Api).let {
             when (it.code) {

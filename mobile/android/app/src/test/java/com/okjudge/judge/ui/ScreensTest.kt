@@ -591,16 +591,27 @@ class ScreensTest {
             Themed(AppLang.EN) { PasswordPanel(hasPassword = true, onSave = { new, current -> saved += new to current; null }, onClose = {}) }
         }
         val s = UiTestSupport.s(AppLang.EN)
+        compose.onNodeWithTag(SettingsTags.PASSWORD_CURRENT).performTextInput("old-made-up")
         compose.onNodeWithTag(SettingsTags.PASSWORD_NEW).performTextInput("short")
         compose.onNodeWithTag(SettingsTags.PASSWORD_SAVE).performClick()
         compose.onNodeWithTag(SettingsTags.PASSWORD_ERROR).assertTextEquals(s.signinPasswordShort)
         assertTrue(saved.isEmpty())
 
-        compose.onNodeWithTag(SettingsTags.PASSWORD_CURRENT).performTextInput("old-made-up")
         compose.onNodeWithTag(SettingsTags.PASSWORD_NEW).performTextInput("-and-longer")
         compose.onNodeWithTag(SettingsTags.PASSWORD_SAVE).performClick()
         compose.onNodeWithTag(SettingsTags.PASSWORD_SAVED).assertTextEquals(s.accountPasswordSaved)
         assertEquals(listOf("short-and-longer" to "old-made-up"), saved)
+    }
+
+    @Test
+    fun passwordPanel_changing_needsTheCurrentPasswordBeforeSaving() {
+        val saved = mutableListOf<Pair<String, String?>>()
+        compose.setContent {
+            Themed(AppLang.EN) { PasswordPanel(hasPassword = true, onSave = { new, current -> saved += new to current; null }, onClose = {}) }
+        }
+        compose.onNodeWithTag(SettingsTags.PASSWORD_NEW).performTextInput("made-up-pass")
+        compose.onNodeWithTag(SettingsTags.PASSWORD_SAVE).assertIsNotEnabled()
+        assertTrue(saved.isEmpty())
     }
 
     @Test

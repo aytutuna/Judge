@@ -171,8 +171,13 @@ class SignInViewModel(private val account: Account) : ViewModel() {
         viewModelScope.launch {
             val error = account.setPassword(s.password, null)
             _state.update {
-                if (error == null) it.copy(busy = null, password = "", done = true)
-                else it.copy(busy = null, error = error)
+                when (error) {
+                    null -> it.copy(busy = null, password = "", done = true)
+                    // This sign-in is too old to replace a password: back to the code step for a fresh one.
+                    SignInError.CURRENT_PASSWORD_REQUIRED ->
+                        it.copy(busy = null, step = SignInStep.CODE, code = "", error = SignInError.CODE_EXPIRED)
+                    else -> it.copy(busy = null, error = error)
+                }
             }
         }
     }
