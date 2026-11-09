@@ -71,7 +71,11 @@ const TR_LETTER: Record<string, string> = {
   Y: "ye", Z: "ze",
 };
 
-type PartyLabel = "Party A" | "Party B";
+export type PartyLabel = "Party A" | "Party B" | "Party C" | "Party D";
+
+/** Party labels of a document with `sides` sides. */
+export const sideLabels = (sides: number): PartyLabel[] =>
+  (["Party A", "Party B", "Party C", "Party D"] as const).slice(0, Math.max(2, Math.min(4, sides)));
 
 /** A label with a Turkish case suffix, harmonized for its letter
  * ("Party A" + dat -> "Party A'ya", "Party B" + gen -> "Party B'nin"). */
@@ -123,7 +127,7 @@ export function retryLines(hint: RetryHint): string[] {
 
 /** One line per quality issue of an earlier attempt, for the retry prompt.
  * Names nothing from the text. */
-export function qualityLines(issues: readonly QualityIssue[], n: PartyLabel, o: PartyLabel): string[] {
+export function qualityLines(issues: readonly QualityIssue[], n: PartyLabel, o: PartyLabel, sides = 2): string[] {
   const lines: string[] = [];
   if (issues.includes("first_person_left")) {
     lines.push(
@@ -137,7 +141,12 @@ export function qualityLines(issues: readonly QualityIssue[], n: PartyLabel, o: 
   }
   if (issues.includes("opponent_missing")) {
     lines.push(
-      `IMPORTANT: a previous attempt did not label the person the narrator argues with. That person is ALWAYS "${o}", even when the narrator calls them a friend, roommate or sibling; never "Person C".`,
+      sides > 2
+        ? `IMPORTANT: a previous attempt did not label the other sides of the dispute. They are ${sideLabels(sides)
+            .filter((l) => l !== n)
+            .map((l) => `"${l}"`)
+            .join(", ")}, even when the narrator calls them a friend, roommate or sibling; never a "Person" label.`
+        : `IMPORTANT: a previous attempt did not label the person the narrator argues with. That person is ALWAYS "${o}", even when the narrator calls them a friend, roommate or sibling; never "Person C".`,
     );
   }
   return lines;
@@ -861,7 +870,14 @@ const SENTENCE_OPENERS = new Set([
   "gibi", "kadar", "olay", "durum", "konu",
 ]);
 
-const hasBothLabels = (text: string) => /Party A(?![\p{L}\p{N}])/u.test(text) && /Party B(?![\p{L}\p{N}])/u.test(text);
+const hasLabel = (text: string, label: string) => new RegExp(`${label}(?![\p{L}\p{N}])`, "u").test(text);
+
+/** Both party labels (or, with more than two sides, at least two of them)
+ * are in the text: every side that speaks has been anonymized. */
+const hasBothLabels = (text: string, sides = 2) =>
+  sides > 2
+    ? sideLabels(sides).filter((l) => hasLabel(text, l)).length >= 2
+    : /Party A(?![\p{L}\p{N}])/u.test(text) && /Party B(?![\p{L}\p{N}])/u.test(text);
 
 /** Whole-word uses of a capitalized word in the argument, with the apostrophe
  * suffix each one carries. */
@@ -875,12 +891,12 @@ function usesOf(argument: string, word: string): (string | undefined)[] {
  * everyday name ordinary ("Can you"), never written in lowercase in the
  * argument, and either used twice or left in a text that lacks Party A or
  * Party B (an echo, or a rewrite that missed a side). */
-function sentenceStartName(argument: string, text: string, word: string, index: number): boolean {
+function sentenceStartName(argument: string, text: string, word: string, index: number, sides = 2): boolean {
   if (inSet(SENTENCE_OPENERS, word)) return false;
   const next = /^\s+(\p{L}+)/u.exec(argument.slice(index + word.length));
   if (next && ordinaryAfter(word, next[1], false)) return false;
   if (lowerForms(word).some((w) => wordIn(argument, w))) return false;
-  return usesOf(argument, word).length >= 2 || !hasBothLabels(text);
+  return usesOf(argument, word).length >= 2 || !hasBothLabels(text, sides);
 }
 
 /**
@@ -890,8 +906,8 @@ function sentenceStartName(argument: string, text: string, word: string, index: 
  * anonymized; a word left there is a place or brand the model kept
  * ("İstanbul'da" always carries a suffix). Pure; exported for tests.
  */
-export function heldCandidates(argument: string, text: string, candidates: readonly string[]): string[] {
-  if (hasBothLabels(text)) return [];
+export function heldCandidates(argument: string, text: string, candidates: readonly string[], sides = 2): string[] {
+  if (hasBothLabels(text, sides)) return [];
   return candidates.filter((c) => {
     if (!wordIn(text, c)) return false;
     const uses = usesOf(argument, c);
@@ -912,6 +928,7 @@ export function unlistedCandidates(
   text: string,
   rules: readonly NameRule[],
   replacements: readonly { original: string; replacement: string }[] = [],
+  sides = 2,
 ): string[] {
   const covered = new Set(rules.map((r) => r.name.toLocaleLowerCase("tr")));
   const out: string[] = [];
@@ -923,7 +940,7 @@ export function unlistedCandidates(
   };
   for (const r of replacements) {
     const name = bareName(r.original);
-    if (name === r.replacement.trim() && /^\p{Lu}\p{Ll}/u.test(name) && !canonicalLabel(name) && !EN_SELF.test(name)) {
+    if (name === r.replacement.trim() && /^\p{Lu}\p{Ll}/u.test(name) && !canonicalLabel(name, sides) && !EN_SELF.test(name)) {
       add(name);
     }
   }
@@ -932,7 +949,7 @@ export function unlistedCandidates(
     if (m[2] && NOT_A_SUFFIX.has(m[2].slice(1))) continue;
     if (midSentence(argument, m.index) || (m[2] && classifyTr(m[2].slice(1)))) add(m[1]);
     else if (m[2] === undefined || m[2].slice(1) === "s") {
-      if (sentenceStartName(argument, text, m[1], m.index)) add(m[1]);
+      if (sentenceStartName(argument, text, m[1], m.index, sides)) add(m[1]);
     }
   }
   return out;
@@ -1071,6 +1088,7 @@ const TR_FIRST_PERSON_NOUN =
 /** "Party A bence ...": a first-person opinion word glued to a label, which
  * makes the label the subject of what the narrator thinks about someone else. */
 const SELF_LABEL_MISUSE = /(?:Party|Taraf) [AB](?:['’]\p{Ll}+)?\s+(?:ben|bence|benim|bana|beni)(?!\p{L})/iu;
+const SELF_LABEL_MISUSE_N = /(?:Party|Taraf) [A-D](?:['’]\p{Ll}+)?\s+(?:ben|bence|benim|bana|beni)(?!\p{L})/iu;
 
 /**
  * What is wrong with a rewritten account beyond names, outside quotations:
@@ -1085,8 +1103,9 @@ const SELF_LABEL_MISUSE = /(?:Party|Taraf) [AB](?:['’]\p{Ll}+)?\s+(?:ben|bence
 export function accountQualityIssues(
   input: string,
   output: string,
-  opts: { narrator: "Party A" | "Party B"; opponentRequired: boolean },
+  opts: { narrator: PartyLabel; opponentRequired: boolean; sides?: number },
 ): QualityIssue[] {
+  const sides = opts.sides ?? 2;
   const plain = output.replace(QUOTED, " ");
   const issues: QualityIssue[] = [];
   const fp = firstPerson(plain);
@@ -1099,9 +1118,17 @@ export function accountQualityIssues(
   } else if (fp.enStrong > 0) {
     issues.push("first_person_left");
   }
-  if (SELF_LABEL_MISUSE.test(plain)) issues.push("self_label_misuse");
+  if ((sides > 2 ? SELF_LABEL_MISUSE_N : SELF_LABEL_MISUSE).test(plain)) issues.push("self_label_misuse");
   if (opts.opponentRequired) {
-    const letter = opts.narrator === "Party A" ? "B" : "A";
+    const letter =
+      sides > 2
+        ? `[${sideLabels(sides)
+            .filter((l) => l !== opts.narrator)
+            .map((l) => l.slice(-1))
+            .join("")}]`
+        : opts.narrator === "Party A"
+          ? "B"
+          : "A";
     if (!new RegExp(`(?<![\\p{L}\\p{N}])(?:Party|Taraf) ${letter}(?![\\p{L}\\p{N}])`, "u").test(output)) {
       issues.push("opponent_missing");
     }
@@ -1144,9 +1171,11 @@ export function normalizeNameMap(
   /** The narrator's label: "Party A" (default, every one-account argument)
    * or "Party B" (the respondent's account of a two-sided case). The other
    * party label is the one the narrator argues with. */
-  opts: { narrator?: "Party A" | "Party B" } = {},
+  opts: { narrator?: PartyLabel; sides?: number } = {},
 ): NameMapping[] {
   const narrator = opts.narrator ?? "Party A";
+  const sides = opts.sides ?? 2;
+  const others = sideLabels(sides).filter((l) => l !== narrator);
   const other = narrator === "Party A" ? "Party B" : "Party A";
   const out: NameMapping[] = [];
   const seen = new Set<string>();
@@ -1161,7 +1190,7 @@ export function normalizeNameMap(
   const entries = replacements.map((r) => ({
     original: r.original.trim(),
     replacement: r.replacement.trim(),
-    label: canonicalLabel(r.replacement.trim()),
+    label: canonicalLabel(r.replacement.trim(), sides),
   }));
   for (const { original, replacement, label } of entries) {
     if (!original || original === replacement) continue;
@@ -1175,7 +1204,7 @@ export function normalizeNameMap(
       entries.filter((e) => e.label && e.label !== label).map((e) => bareName(e.original).toLocaleLowerCase("tr")),
     );
     let name = stripGluedSuffix(bareName(original), argument, tr, taken);
-    if (!name || canonicalLabel(name)) continue;
+    if (!name || canonicalLabel(name, sides)) continue;
     if (label === narrator) {
       // Every narrator becomes "I", which reads as the narrator under
       // either judged language, so a Turkish argument judged with the
@@ -1193,7 +1222,10 @@ export function normalizeNameMap(
     const present = tr ? raw.trAny + raw.trVerbs > 0 : raw.enAny > 0;
     const labelRe = (label: string) => new RegExp(String.raw`(?:Party|Taraf) ${label.slice(-1)}(?![\p{L}\p{N}])`, "u");
     const hasLabelSelf = labelRe(narrator).test(text);
-    const hasLabelOther = labelRe(other).test(text) || out.some((m) => m.replacement === other);
+    const hasLabelOther =
+      sides > 2
+        ? others.some((l) => labelRe(l).test(text) || out.some((m) => m.replacement === l))
+        : labelRe(other).test(text) || out.some((m) => m.replacement === other);
     const rewritten = tr
       ? raw.trStrong > 0
         ? anon.trStrong < raw.trStrong
