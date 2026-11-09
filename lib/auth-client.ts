@@ -20,7 +20,8 @@ export const authClient = createAuthClient({
 type Outcome = { ok: true } | { ok: false; code: string };
 
 function failure(error: { code?: string; status?: number } | null | undefined): Outcome {
-  return { ok: false, code: error?.code || (error?.status ? `http_${error.status}` : "failed") };
+  const status = error?.status || undefined;
+  return { ok: false, code: error?.code || (status ? `http_${status}` : "failed"), status };
 }
 
 /** Starts the Apple or Google redirect flow; on success the browser leaves
@@ -81,14 +82,16 @@ export async function signInWithCode(email: string, otp: string): Promise<Outcom
   }
 }
 
-/** The message for a failed code call, by the `code` of its Outcome. Same
- * mapping as the apps: the server's own codes first, then the status. */
-export function codeErrorKey(code: string, step: "send" | "verify"): Key {
+/** The message for a failed code call. Same mapping as the apps: the status
+ * decides first (the server's reply also carries a `code` such as
+ * INVALID_EMAIL or unavailable), the code tells the verify errors apart. */
+export function codeErrorKey(res: Pick<Failed, "code" | "status">, step: "send" | "verify"): Key {
+  const { code, status } = res;
   if (code === "network") return "signin.offline";
-  if (code === "http_429") return "signin.rateLimited";
-  if (code === "http_404" || code.startsWith("http_5")) return "signin.serviceDown";
-  if (step === "send") return code === "http_400" ? "signin.emailInvalid" : "signin.failed";
-  if (code === "INVALID_OTP" || code === "http_400") return "signin.codeInvalid";
+  if (status === 429) return "signin.rateLimited";
+  if (status === 404 || (status !== undefined && status >= 500)) return "signin.serviceDown";
+  if (step === "send") return status === 400 ? "signin.emailInvalid" : "signin.failed";
+  if (code === "INVALID_OTP" || status === 400) return "signin.codeInvalid";
   if (code === "OTP_EXPIRED") return "signin.codeExpired";
   if (code === "TOO_MANY_ATTEMPTS") return "signin.codeTooMany";
   return "signin.failed";

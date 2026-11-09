@@ -19,6 +19,12 @@ globalThis.fetch = (async (input: RequestInfo | URL, init?: RequestInit) => {
 }) as typeof fetch;
 const { codeErrorKey, sendSignInCode, signInWithCode } = await import("../lib/auth-client");
 
+async function failed(call: Promise<{ ok: boolean }>) {
+  const res = await call;
+  if (res.ok) throw new Error("expected a failure");
+  return res as { ok: false; code: string; status?: number };
+}
+
 function answer(status: number, body: unknown): typeof seen {
   seen.urls.length = 0;
   seen.bodies.length = 0;
@@ -28,26 +34,39 @@ function answer(status: number, body: unknown): typeof seen {
 
 describe("codeErrorKey", () => {
   it("maps the server's code errors the way the apps do", () => {
-    expect(codeErrorKey("INVALID_OTP", "verify")).toBe("signin.codeInvalid");
-    expect(codeErrorKey("OTP_EXPIRED", "verify")).toBe("signin.codeExpired");
-    expect(codeErrorKey("TOO_MANY_ATTEMPTS", "verify")).toBe("signin.codeTooMany");
-    expect(codeErrorKey("http_400", "verify")).toBe("signin.codeInvalid");
+    expect(codeErrorKey({ code: "INVALID_OTP", status: 400 }, "verify")).toBe("signin.codeInvalid");
+    expect(codeErrorKey({ code: "OTP_EXPIRED", status: 403 }, "verify")).toBe("signin.codeExpired");
+    expect(codeErrorKey({ code: "TOO_MANY_ATTEMPTS", status: 403 }, "verify")).toBe("signin.codeTooMany");
+    expect(codeErrorKey({ code: "http_400", status: 400 }, "verify")).toBe("signin.codeInvalid");
   });
 
   it("rate limits, outages and a lost connection read the same on both steps", () => {
     for (const step of ["send", "verify"] as const) {
-      expect(codeErrorKey("http_429", step)).toBe("signin.rateLimited");
-      expect(codeErrorKey("http_404", step)).toBe("signin.serviceDown");
-      expect(codeErrorKey("http_503", step)).toBe("signin.serviceDown");
-      expect(codeErrorKey("network", step)).toBe("signin.offline");
+      expect(codeErrorKey({ code: "http_429", status: 429 }, step)).toBe("signin.rateLimited");
+      expect(codeErrorKey({ code: "http_404", status: 404 }, step)).toBe("signin.serviceDown");
+      expect(codeErrorKey({ code: "http_503", status: 503 }, step)).toBe("signin.serviceDown");
+      expect(codeErrorKey({ code: "network" }, step)).toBe("signin.offline");
     }
   });
 
   it("sending: a refused address is an email problem, anything else a plain failure", () => {
-    expect(codeErrorKey("http_400", "send")).toBe("signin.emailInvalid");
-    expect(codeErrorKey("INVALID_OTP", "send")).toBe("signin.failed");
-    expect(codeErrorKey("failed", "send")).toBe("signin.failed");
-    expect(codeErrorKey("something_else", "verify")).toBe("signin.failed");
+    expect(codeErrorKey({ code: "http_400", status: 400 }, "send")).toBe("signin.emailInvalid");
+    expect(codeErrorKey({ code: "INVALID_OTP", status: 400 }, "send")).toBe("signin.emailInvalid");
+    expect(codeErrorKey({ code: "failed" }, "send")).toBe("signin.failed");
+    expect(codeErrorKey({ code: "something_else" }, "verify")).toBe("signin.failed");
+  });
+
+  it("the replies the server really sends, whose body also carries a code", async () => {
+    answer(400, { code: "INVALID_EMAIL", message: "Invalid email" });
+    expect(codeErrorKey(await failed(sendSignInCode("a@b.c", "en")), "send")).toBe("signin.emailInvalid");
+    answer(503, { code: "unavailable" });
+    expect(codeErrorKey(await failed(sendSignInCode("a@b.co", "en")), "send")).toBe("signin.serviceDown");
+    answer(503, { code: "unavailable" });
+    expect(codeErrorKey(await failed(signInWithCode("a@b.co", "000000")), "verify")).toBe("signin.serviceDown");
+    answer(404, { code: "not_found" });
+    expect(codeErrorKey(await failed(sendSignInCode("a@b.co", "en")), "send")).toBe("signin.serviceDown");
+    answer(400, { code: "INVALID_OTP", message: "Invalid OTP" });
+    expect(codeErrorKey(await failed(signInWithCode("a@b.co", "000000")), "verify")).toBe("signin.codeInvalid");
   });
 });
 
@@ -69,11 +88,11 @@ describe("code helpers", () => {
 
   it("failures carry the server's code, or http_<status>", async () => {
     answer(400, { code: "INVALID_OTP", message: "Invalid OTP" });
-    expect(await signInWithCode("a@b.co", "000000")).toEqual({ ok: false, code: "INVALID_OTP" });
+    expect(await signInWithCode("a@b.co", "000000")).toEqual({ ok: false, code: "INVALID_OTP", status: 400 });
     answer(403, { code: "TOO_MANY_ATTEMPTS", message: "Too many attempts" });
-    expect(await signInWithCode("a@b.co", "000000")).toEqual({ ok: false, code: "TOO_MANY_ATTEMPTS" });
+    expect(await signInWithCode("a@b.co", "000000")).toEqual({ ok: false, code: "TOO_MANY_ATTEMPTS", status: 403 });
     answer(429, { message: "Too many requests. Please try again later." });
-    expect(await sendSignInCode("a@b.co", "en")).toEqual({ ok: false, code: "http_429" });
+    expect(await sendSignInCode("a@b.co", "en")).toEqual({ ok: false, code: "http_429", status: 429 });
   });
 
   it("a request that never gets an answer is a network failure", async () => {

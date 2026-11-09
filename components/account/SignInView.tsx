@@ -382,7 +382,7 @@ export function SignInView({ next: rawNext }: { next?: string | string[] }) {
       } else {
         forgetAdultTick();
         trackError(res.code);
-        setError(t(lang, codeErrorKey(res.code, "send")));
+        setError(t(lang, codeErrorKey(res, "send")));
       }
       return;
     }
@@ -409,7 +409,7 @@ export function SignInView({ next: rawNext }: { next?: string | string[] }) {
     if (!res.ok) {
       forgetAdultTick();
       trackError(res.code);
-      setError(t(lang, codeErrorKey(res.code, "verify")));
+      setError(t(lang, codeErrorKey(res, "verify")));
       setPending(false);
       return;
     }
@@ -427,7 +427,7 @@ export function SignInView({ next: rawNext }: { next?: string | string[] }) {
     if (res.ok) setCode("");
     else {
       trackError(res.code);
-      setError(t(lang, codeErrorKey(res.code, "send")));
+      setError(t(lang, codeErrorKey(res, "send")));
     }
   }
 
