@@ -1,6 +1,7 @@
 import { useSyncExternalStore } from "react";
 import { INVITE_TOKEN_PATTERN } from "./case-types";
 import { compareHistory, type HistoryRow } from "./history-types";
+import type { FinalVerdict } from "./types";
 
 /**
  * This browser's own list of the verdicts it wrote signed out, newest first,
@@ -24,6 +25,8 @@ export type HistoryEntry = {
   id: string;
   createdAt: string;
   headline: string | null;
+  /** The ruling, once known, so the row shows who won. */
+  verdict?: FinalVerdict;
   /** Set when the writer removed the verdict from this browser. */
   removed?: true;
   /** Indexed while it was still being judged; looked up again later. */
@@ -40,7 +43,8 @@ function isEntry(v: unknown): v is HistoryEntry {
     e.id.length > 0 &&
     typeof e.createdAt === "string" &&
     !Number.isNaN(Date.parse(e.createdAt)) &&
-    (e.headline === null || typeof e.headline === "string")
+    (e.headline === null || typeof e.headline === "string") &&
+    (e.verdict === undefined || typeof e.verdict === "string")
   );
 }
 

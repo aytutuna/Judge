@@ -127,8 +127,8 @@ function fromEntry(e: HistoryEntry): HistoryItem {
     role: "owner",
     party: "a",
     title: e.headline,
-    state: removed ? "removed" : pending ? "judging" : null,
-    verdict: null,
+    state: removed ? "removed" : pending ? "judging" : e.verdict ? "ready" : null,
+    verdict: removed || pending ? null : (e.verdict ?? null),
     other: null,
     self: null,
     yourMove: false,
@@ -339,7 +339,7 @@ async function lookUp(id: string): Promise<boolean> {
     id,
     createdAt: mine.createdAt,
     headline: mine.removed ? null : restoredHeadline({ headline: mine.result?.headline ?? null, nameMap: mine.nameMap }),
-    ...(mine.removed ? { removed: true as const } : {}),
+    ...(mine.removed ? { removed: true as const } : mine.result ? { verdict: mine.result.verdict } : {}),
   });
   seeded(id);
   return true;
