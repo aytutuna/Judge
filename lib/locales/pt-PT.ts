@@ -13,7 +13,7 @@ const ptPT: Locale = {
     },
     signInCode: {
       subject: "O teu código de acesso ao Judge",
-      intro: "Introduz este código na app Judge para entrares:",
+      intro: "Introduz este código para entrares:",
       expiry: "O código só funciona uma vez e expira daqui a 10 minutos.",
       ignore: "Se não foste tu a pedir isto, podes ignorar este e-mail.",
     },

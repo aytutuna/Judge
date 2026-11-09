@@ -13,7 +13,7 @@ const ca: Locale = {
     },
     signInCode: {
       subject: "El teu codi per entrar a Judge",
-      intro: "Introdueix aquest codi a l'app de Judge per iniciar sessió:",
+      intro: "Introdueix aquest codi per iniciar sessió:",
       expiry: "El codi només funciona una vegada i caduca d'aquí a 10 minuts.",
       ignore: "Si no ho has demanat tu, pots ignorar aquest correu.",
     },

@@ -13,7 +13,7 @@ const hu: Locale = {
     },
     signInCode: {
       subject: "Belépési kódod a Judge-hoz",
-      intro: "A belépéshez írd be ezt a kódot a Judge appban:",
+      intro: "A belépéshez írd be ezt a kódot:",
       expiry: "A kód egyszer használható, és 10 perc múlva lejár.",
       ignore: "Ha nem te kérted, nyugodtan hagyd figyelmen kívül ezt az e-mailt.",
     },

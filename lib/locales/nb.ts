@@ -13,7 +13,7 @@ const nb: Locale = {
     },
     signInCode: {
       subject: "Innloggingskoden din til Judge",
-      intro: "Skriv inn denne koden i Judge-appen for å logge inn:",
+      intro: "Skriv inn denne koden for å logge inn:",
       expiry: "Koden kan brukes én gang og utløper om 10 minutter.",
       ignore: "Hvis det ikke var du som ba om dette, kan du se bort fra denne e-posten.",
     },

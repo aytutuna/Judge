@@ -13,7 +13,7 @@ const vi: Locale = {
     },
     signInCode: {
       subject: "Mã đăng nhập Judge của bạn",
-      intro: "Nhập mã này trong ứng dụng Judge để đăng nhập:",
+      intro: "Nhập mã này để đăng nhập:",
       expiry: "Mã chỉ dùng được một lần và hết hạn sau 10 phút.",
       ignore: "Nếu bạn không yêu cầu, bạn có thể bỏ qua email này.",
     },

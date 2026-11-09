@@ -30,7 +30,7 @@ export const EMAIL_EN: EmailCopy = {
   },
   signInCode: {
     subject: "Your Judge sign-in code",
-    intro: "Enter this code in the Judge app to sign in:",
+    intro: "Enter this code to sign in:",
     expiry: "The code works once and expires in 10 minutes.",
     ignore: "If you didn't ask for this, you can ignore this email.",
   },

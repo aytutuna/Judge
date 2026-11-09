@@ -17,7 +17,7 @@ const tr: Locale = {
     },
     signInCode: {
       subject: "Judge giriş kodun",
-      intro: "Giriş yapmak için bu kodu Judge uygulamasına gir:",
+      intro: "Giriş yapmak için bu kodu gir:",
       expiry: "Kod tek kullanımlık ve 10 dakika geçerli.",
       ignore: "Bu isteği sen yapmadıysan bu e-postayı yok sayabilirsin.",
     },

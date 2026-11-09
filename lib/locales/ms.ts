@@ -13,7 +13,7 @@ const ms: Locale = {
     },
     signInCode: {
       subject: "Kod log masuk Judge anda",
-      intro: "Masukkan kod ini dalam aplikasi Judge untuk log masuk:",
+      intro: "Masukkan kod ini untuk log masuk:",
       expiry: "Kod ini boleh digunakan sekali sahaja dan tamat tempoh dalam 10 minit.",
       ignore: "Jika anda tidak memintanya, abaikan sahaja e-mel ini.",
     },

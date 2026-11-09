@@ -13,7 +13,7 @@ const id: Locale = {
     },
     signInCode: {
       subject: "Kode untuk masuk ke Judge",
-      intro: "Masukkan kode ini di aplikasi Judge untuk masuk:",
+      intro: "Masukkan kode ini untuk masuk:",
       expiry: "Kode ini hanya bisa dipakai sekali dan berlaku 10 menit.",
       ignore: "Kalau kamu tidak memintanya, abaikan saja email ini.",
     },

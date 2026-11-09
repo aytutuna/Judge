@@ -13,7 +13,7 @@ const nl: Locale = {
     },
     signInCode: {
       subject: "Je inlogcode voor Judge",
-      intro: "Vul deze code in de Judge-app in om in te loggen:",
+      intro: "Vul deze code in om in te loggen:",
       expiry: "De code werkt één keer en verloopt na 10 minuten.",
       ignore: "Heb je hier niet om gevraagd? Dan kun je deze e-mail negeren.",
     },

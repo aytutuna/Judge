@@ -13,7 +13,7 @@ const zhHant: Locale = {
     },
     signInCode: {
       subject: "你的 Judge 登入碼",
-      intro: "在 Judge App 輸入這組代碼即可登入：",
+      intro: "輸入這組代碼即可登入：",
       expiry: "這組代碼只能用一次，10 分鐘後失效。",
       ignore: "如果這不是你申請的，忽略這封信就好。",
     },

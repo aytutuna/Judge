@@ -13,7 +13,7 @@ const pl: Locale = {
     },
     signInCode: {
       subject: "Twój kod logowania do Judge",
-      intro: "Wpisz ten kod w aplikacji Judge, żeby się zalogować:",
+      intro: "Wpisz ten kod, żeby się zalogować:",
       expiry: "Kod działa jednorazowo i wygasa po 10 minutach.",
       ignore: "Jeśli to nie ty, po prostu zignoruj tę wiadomość.",
     },

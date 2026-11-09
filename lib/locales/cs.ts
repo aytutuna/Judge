@@ -13,7 +13,7 @@ const cs: Locale = {
     },
     signInCode: {
       subject: "Tvůj přihlašovací kód do Judge",
-      intro: "Pro přihlášení zadej v aplikaci Judge tento kód:",
+      intro: "Pro přihlášení zadej tento kód:",
       expiry: "Kód funguje jen jednou a platí 10 minut.",
       ignore: "Pokud ten požadavek nepochází od tebe, tenhle e-mail klidně ignoruj.",
     },

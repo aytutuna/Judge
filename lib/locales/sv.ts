@@ -13,7 +13,7 @@ const sv: Locale = {
     },
     signInCode: {
       subject: "Din inloggningskod till Judge",
-      intro: "Skriv in den här koden i Judge-appen för att logga in:",
+      intro: "Skriv in den här koden för att logga in:",
       expiry: "Koden fungerar en gång och slutar gälla om 10 minuter.",
       ignore: "Om det inte var du som bad om det här kan du strunta i mejlet.",
     },

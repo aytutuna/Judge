@@ -13,7 +13,7 @@ const ro: Locale = {
     },
     signInCode: {
       subject: "Codul tău de conectare la Judge",
-      intro: "Introdu acest cod în aplicația Judge ca să te conectezi:",
+      intro: "Introdu acest cod ca să te conectezi:",
       expiry: "Codul poate fi folosit o singură dată și expiră în 10 minute.",
       ignore: "Dacă nu tu ai cerut asta, poți ignora acest e-mail.",
     },

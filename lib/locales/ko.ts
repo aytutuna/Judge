@@ -13,7 +13,7 @@ const ko: Locale = {
     },
     signInCode: {
       subject: "Judge 로그인 코드",
-      intro: "Judge 앱에 이 코드를 입력하면 로그인돼요:",
+      intro: "이 코드를 입력하면 로그인돼요:",
       expiry: "코드는 한 번만 쓸 수 있고 10분 뒤에 만료돼요.",
       ignore: "직접 요청하지 않았다면 이 메일은 무시해도 괜찮아요.",
     },

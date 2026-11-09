@@ -13,7 +13,7 @@ const hr: Locale = {
     },
     signInCode: {
       subject: "Tvoj kod za prijavu u Judge",
-      intro: "Za prijavu upiši ovaj kod u aplikaciju Judge:",
+      intro: "Za prijavu upiši ovaj kod:",
       expiry: "Kod radi samo jednom i istječe za 10 minuta.",
       ignore: "Ako ovo nije tvoj zahtjev, slobodno zanemari ovu poruku.",
     },

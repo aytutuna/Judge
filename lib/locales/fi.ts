@@ -13,7 +13,7 @@ const fi: Locale = {
     },
     signInCode: {
       subject: "Judge-kirjautumiskoodisi",
-      intro: "Kirjaudu sisään syöttämällä tämä koodi Judge-sovellukseen:",
+      intro: "Kirjaudu sisään syöttämällä tämä koodi:",
       expiry: "Koodi toimii kerran ja vanhenee 10 minuutin kuluttua.",
       ignore: "Jos et pyytänyt tätä, voit jättää viestin huomiotta.",
     },
