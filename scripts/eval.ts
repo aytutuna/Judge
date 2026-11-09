@@ -3,19 +3,27 @@
  * Costs real API calls (one judge run per case). Runs sequentially so the
  * per-case output stays in order and the request rate stays gentle.
  *
- * Run: npm run eval            (all 30 cases)
+ * Run: npm run eval            (all cases)
  *      npm run eval -- 5       (first N cases)
+ *      npm run eval -- --sides (only the cases with three or four sides)
+ *
+ * A case with `parties` is judged among those sides: the expected winner is
+ * a side letter ("a" to "d") or "too_close".
  */
 import cases from "../test/arguments.json";
 import { judgeOnce } from "../lib/judge";
+import type { MultiRunOutput } from "../lib/judge-multi";
+import { partiesFor } from "../lib/multi";
+import type { JudgeRunOutput } from "../lib/types";
 
 async function main() {
   if (!process.env.ANTHROPIC_API_KEY) {
     console.error("ANTHROPIC_API_KEY not set — eval needs a live key.");
     process.exit(1);
   }
-  const limit = Number(process.argv[2]) || cases.length;
-  const selected = cases.slice(0, limit);
+  const sidesOnly = process.argv.includes("--sides");
+  const limit = Number(process.argv.slice(2).find((a) => /^\d+$/.test(a))) || cases.length;
+  const selected = cases.filter((c) => !sidesOnly || "parties" in c).slice(0, limit);
 
   let typeHits = 0;
   let verdictHits = 0;
@@ -24,25 +32,25 @@ async function main() {
   const misses: string[] = [];
 
   for (const c of selected) {
-    const run = await judgeOnce(c.argument);
+    const parties = c.parties ? partiesFor(c.parties) : undefined;
+    const run = await judgeOnce(c.argument, parties ? { parties } : {});
     if (!run.ok) {
       failures++;
       console.log(`✗ ${c.id}: RUN FAILED (${run.error})`);
       continue;
     }
-    const typeOk = (c.expected.dispute_type as string[]).includes(run.data.dispute_type);
-    const verdictOk = (c.expected.verdict_one_of as string[]).includes(run.data.verdict);
+    const data = run.data as JudgeRunOutput | MultiRunOutput;
+    const typeOk = (c.expected.dispute_type as string[]).includes(data.dispute_type);
+    const verdictOk = (c.expected.verdict_one_of as string[]).includes(data.verdict);
     if (typeOk) typeHits++;
     if (verdictOk) verdictHits++;
-    if (run.data.verdict === "side_a" || run.data.verdict === "side_b") winnerRuns++;
+    if (parties ? data.verdict !== "too_close" : data.verdict === "side_a" || data.verdict === "side_b") winnerRuns++;
     if (!typeOk || !verdictOk) {
       misses.push(
-        `${c.id}: got ${run.data.verdict}/${run.data.dispute_type}, expected ${c.expected.verdict_one_of.join("|")}/${c.expected.dispute_type.join("|")}`,
+        `${c.id}: got ${data.verdict}/${data.dispute_type}, expected ${c.expected.verdict_one_of.join("|")}/${c.expected.dispute_type.join("|")}`,
       );
     }
-    console.log(
-      `${typeOk && verdictOk ? "✓" : "•"} ${c.id}: ${run.data.verdict} (${run.data.dispute_type})`,
-    );
+    console.log(`${typeOk && verdictOk ? "✓" : "•"} ${c.id}: ${data.verdict} (${data.dispute_type})`);
   }
 
   const judged = selected.length - failures;

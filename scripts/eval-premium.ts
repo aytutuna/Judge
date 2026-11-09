@@ -88,8 +88,10 @@ async function main() {
     process.exit(1);
   }
   const only = arg("--only")?.split(",");
-  const limit = Number(process.argv[2]) || cases.length;
-  const selected = only ? cases.filter((c) => only.includes(c.id)) : cases.slice(0, limit);
+  // The cases with three or four sides are judged by `npm run eval -- --sides`.
+  const twoSided = cases.filter((c) => !("parties" in c));
+  const limit = Number(process.argv[2]) || twoSided.length;
+  const selected = only ? twoSided.filter((c) => only.includes(c.id)) : twoSided.slice(0, limit);
   const out = arg("--out") ?? `eval-premium-${Date.now()}.json`;
 
   const rows = [];
