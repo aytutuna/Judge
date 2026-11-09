@@ -245,6 +245,21 @@ class Strings(private val res: Resources) {
     val signinEmailSubmit: String get() = res.getString(R.string.signin_email_submit)
     fun signinEmailSent(email: String): String = res.getString(R.string.signin_email_sent, email)
     val signinEmailInvalid: String get() = res.getString(R.string.signin_email_invalid)
+    val signinPassword: String get() = res.getString(R.string.signin_password)
+    val signinPasswordNew: String get() = res.getString(R.string.signin_password_new)
+    val signinPasswordShow: String get() = res.getString(R.string.signin_password_show)
+    val signinCreate: String get() = res.getString(R.string.signin_create)
+    val signinForgot: String get() = res.getString(R.string.signin_forgot)
+    val signinUseCode: String get() = res.getString(R.string.signin_use_code)
+    val signinUsePassword: String get() = res.getString(R.string.signin_use_password)
+    val signinPasswordWrong: String get() = res.getString(R.string.signin_password_wrong)
+    val signinPasswordShort: String get() = res.getString(R.string.signin_password_short)
+    val signinCreateNote: String get() = res.getString(R.string.signin_create_note)
+    val signinPasswordChoose: String get() = res.getString(R.string.signin_password_choose)
+    val signinPasswordSave: String get() = res.getString(R.string.signin_password_save)
+    val signinPasswordSaveFailed: String get() = res.getString(R.string.signin_password_save_failed)
+    val signinPasswordSkip: String get() = res.getString(R.string.signin_password_skip)
+    val signinPasswordSubmit: String get() = res.getString(R.string.signin_password_submit)
     val signinProviderUnavailable: String get() = res.getString(R.string.signin_provider_unavailable)
     val signinFailed: String get() = res.getString(R.string.signin_failed)
     val signinLoading: String get() = res.getString(R.string.signin_loading)
@@ -262,6 +277,10 @@ class Strings(private val res: Resources) {
     val accountDelete: String get() = res.getString(R.string.account_delete)
     val accountDeleteConfirm: String get() = res.getString(R.string.account_delete_confirm)
     val accountDeleteYes: String get() = res.getString(R.string.account_delete_yes)
+    val accountPasswordSet: String get() = res.getString(R.string.account_password_set)
+    val accountPasswordChange: String get() = res.getString(R.string.account_password_change)
+    val accountPasswordCurrent: String get() = res.getString(R.string.account_password_current)
+    val accountPasswordSaved: String get() = res.getString(R.string.account_password_saved)
     val accountDeleteCancel: String get() = res.getString(R.string.account_delete_cancel)
     val accountDeleteFailed: String get() = res.getString(R.string.account_delete_failed)
     val accountSignInPrompt: String get() = res.getString(R.string.account_sign_in_prompt)
@@ -549,6 +568,8 @@ class Strings(private val res: Resources) {
     val stampDissolved: String get() = res.getString(R.string.stamp_dissolved)
     fun bestPointOf(name: String): String = res.getString(R.string.best_point_of, name)
     val bestPointSelf: String get() = res.getString(R.string.best_point_self)
+    val errorPasswordWrong: String get() = res.getString(R.string.error_password_wrong)
+    val errorPasswordRequired: String get() = res.getString(R.string.error_password_required)
     val errorAgeBlocked: String get() = res.getString(R.string.error_age_blocked)
     val errorAgeUnconfirmed: String get() = res.getString(R.string.error_age_unconfirmed)
     val appName: String get() = res.getString(R.string.app_name)
@@ -883,6 +904,21 @@ class Strings(private val res: Resources) {
             "signin.emailPlaceholder" -> R.string.signin_email_placeholder
             "signin.emailSubmit" -> R.string.signin_email_submit
             "signin.emailInvalid" -> R.string.signin_email_invalid
+            "signin.password" -> R.string.signin_password
+            "signin.passwordNew" -> R.string.signin_password_new
+            "signin.passwordShow" -> R.string.signin_password_show
+            "signin.create" -> R.string.signin_create
+            "signin.forgot" -> R.string.signin_forgot
+            "signin.useCode" -> R.string.signin_use_code
+            "signin.usePassword" -> R.string.signin_use_password
+            "signin.passwordWrong" -> R.string.signin_password_wrong
+            "signin.passwordShort" -> R.string.signin_password_short
+            "signin.createNote" -> R.string.signin_create_note
+            "signin.passwordChoose" -> R.string.signin_password_choose
+            "signin.passwordSave" -> R.string.signin_password_save
+            "signin.passwordSaveFailed" -> R.string.signin_password_save_failed
+            "signin.passwordSkip" -> R.string.signin_password_skip
+            "signin.passwordSubmit" -> R.string.signin_password_submit
             "signin.providerUnavailable" -> R.string.signin_provider_unavailable
             "signin.failed" -> R.string.signin_failed
             "signin.loading" -> R.string.signin_loading
@@ -896,6 +932,10 @@ class Strings(private val res: Resources) {
             "account.delete" -> R.string.account_delete
             "account.deleteConfirm" -> R.string.account_delete_confirm
             "account.deleteYes" -> R.string.account_delete_yes
+            "account.passwordSet" -> R.string.account_password_set
+            "account.passwordChange" -> R.string.account_password_change
+            "account.passwordCurrent" -> R.string.account_password_current
+            "account.passwordSaved" -> R.string.account_password_saved
             "account.deleteCancel" -> R.string.account_delete_cancel
             "account.deleteFailed" -> R.string.account_delete_failed
             "account.signInPrompt" -> R.string.account_sign_in_prompt
@@ -1157,6 +1197,8 @@ class Strings(private val res: Resources) {
             "stamp.tooClose" -> R.string.stamp_too_close
             "stamp.dissolved" -> R.string.stamp_dissolved
             "bestPoint.self" -> R.string.best_point_self
+            "error.password_wrong" -> R.string.error_password_wrong
+            "error.password_required" -> R.string.error_password_required
             "error.age_blocked" -> R.string.error_age_blocked
             "error.age_unconfirmed" -> R.string.error_age_unconfirmed
             "app.name" -> R.string.app_name
