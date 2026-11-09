@@ -35,6 +35,7 @@ import { getDb, getVerdict, type StoredVerdict } from "@/lib/db";
 import { entitlementWriteBatch } from "@/lib/entitlements";
 import { anonymizeSubmission, evidenceBlock, type AnonymizedSubmission, type VerifiedEvidence } from "@/lib/evidence";
 import { APPEAL_ONE_SIDED_JUDGE_NOTE } from "@/lib/judge";
+import { multiAppealNote } from "@/lib/judge-multi";
 import { getVerdictMeta } from "@/lib/originals/db";
 import type { OriginalPayload } from "@/lib/originals-types";
 import { judgeAnonymized, mergeUsage, premiumLogLine, type PremiumStats } from "@/lib/premium/run";
@@ -249,6 +250,7 @@ export async function submitVerdictAppeal(input: VerdictAppealInput): Promise<Ve
         evidence: input.evidence,
         lang: verdictLang(stored.result),
         roster: { context, labelsInUse: labelsInUse(context, []) },
+        ...(stored.result.parties ? { sides: { count: stored.result.parties.length, names: [] } } : {}),
       }),
     ));
   } catch (e) {
@@ -361,7 +363,8 @@ export async function runVerdictAppeal(p: VerdictAppealRun): Promise<void> {
           context: evText,
           lang,
           ...(evText ? { evidence: true } : {}),
-          appeal: APPEAL_ONE_SIDED_JUDGE_NOTE,
+          // A verdict typed as three or four sides is re-judged among them.
+          ...(root.result.parties ? { parties: root.result.parties, appeal: multiAppealNote("a") } : { appeal: APPEAL_ONE_SIDED_JUDGE_NOTE }),
         },
         { startedAt: p.startedAt, stats },
       ),

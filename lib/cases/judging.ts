@@ -115,6 +115,14 @@ function summarySystem(lang: Lang): string {
   return `You write one sentence for an argument-settling app. A case was judged, then one party added new context and the whole case was judged again. The app already shows the outcome label, so never quote numbers and never contradict the label. Say what the new context changed in the judges' reasoning, or why it did not change the outcome. One short sentence of 12 to 25 words: name the one point that mattered, nothing more. No names, no quotes, no preamble. ${language}`;
 }
 
+/** The verdict as the summary prompt names it. A result with three or four
+ * sides keeps side_a, side_b or too_close in `verdict`, so it is read by
+ * its winner. */
+function verdictWord(r: VerdictResult): string {
+  if (!r.parties) return r.verdict;
+  return r.winner ? `side_${r.winner}` : "too_close";
+}
+
 /** One sentence on what the new context changed. Fails open to "". */
 export async function appealSummary(
   prev: VerdictResult,
@@ -127,12 +135,12 @@ export async function appealSummary(
     const user = [
       `OUTCOME LABEL: ${OUTCOME_MEANING[outcome]}`,
       "",
-      `EARLIER VERDICT: ${prev.verdict}`,
+      `EARLIER VERDICT: ${verdictWord(prev)}`,
       `Headline: ${prev.headline}`,
       ...(prev.why ? [`Why: ${prev.why}`] : []),
       `Crux: ${prev.crux}`,
       "",
-      `NEW VERDICT: ${next.verdict}`,
+      `NEW VERDICT: ${verdictWord(next)}`,
       `Headline: ${next.headline}`,
       ...(next.why ? [`Why: ${next.why}`] : []),
       `Crux: ${next.crux}`,

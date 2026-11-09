@@ -70,6 +70,7 @@ const { verdictRemoved } = await import("../lib/originals/removed");
 const { ensureVerdictJobTables } = await import("../lib/verdict-jobs");
 const route = await import("../app/api/v1/verdicts/[id]/route");
 import { APPEAL_ONE_SIDED_JUDGE_NOTE } from "../lib/judge";
+import { multiAppealNote } from "../lib/judge-multi";
 import type { VerdictAppealView, VerdictResult } from "../lib/types";
 import type { VerdictAppealResponse, VerdictOwnerState } from "../lib/verdict-poll";
 
@@ -297,6 +298,35 @@ describe("POST /api/v1/verdicts/{id}/appeals", () => {
     expect(user).toContain(`NEW VERDICT: side_a\nHeadline: Party B has the stronger case\nWhy: ${why}\nCrux:`);
     expect(user.split("Why:")).toHaveLength(2);
     expect((await get(body.appeal.id)).body.result.why).toBe(why);
+  });
+
+  it("re-judges a verdict with three sides among those sides and reads the outcome by winner", async () => {
+    const o = await owner(2);
+    const three = result({
+      verdict: "too_close",
+      parties: ["a", "b", "c"],
+      winner: "c",
+      votes: ["c", "c", "c"],
+      runs: ["split", "split", "split"],
+      sides: ["a", "b", "c"].map((party) => ({ party: party as "a", claims: [], bedrock: "" })),
+      others: [],
+    });
+    const doc = "PARTY A'S SIDE:\nParty A paid.\n\nPARTY B'S SIDE:\nParty B says no.\n\nPARTY C'S SIDE:\nParty C saw it.";
+    const { id } = await verdict(o, doc, three);
+    m.judgeAnonymized.mockResolvedValue(
+      okOutcome(result({ ...three, verdict: "side_a", winner: "a", votes: ["a", "a", "a"], runs: ["side_a", "side_a", "side_a"], tier: "premium" })),
+    );
+    const body = (await (await post(id, { user: o })).json()) as VerdictAppealResponse;
+    expect(m.anonymizeSubmission.mock.calls.at(-1)![0].sides).toEqual({ count: 3, names: [] });
+    await drain();
+    const call = m.judgeAnonymized.mock.calls.at(-1)![0];
+    expect(call.parties).toEqual(["a", "b", "c"]);
+    expect(call.appeal).toBe(multiAppealNote("a"));
+    expect(call.text.startsWith(doc)).toBe(true);
+    const ready = await get(body.appeal.id);
+    expect(ready.body.result.appeal?.outcome).toBe("overturned");
+    expect(ready.body.result.winner).toBe("a");
+    expect(String(m.claudeJson.mock.calls.at(-1)![0].user)).toContain("EARLIER VERDICT: side_c");
   });
 
   it("needs a session, from this site", async () => {
