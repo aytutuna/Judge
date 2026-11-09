@@ -145,6 +145,7 @@ fun RulingSummary(
     val s = LocalStrings.current
     val result = view.result
     Column(modifier, verticalArrangement = Arrangement.spacedBy(12.dp)) {
+        ShareRow(actions)
         result.appeal?.let { OutcomeBanner(it, parties) }
         Column(
             Modifier
@@ -192,7 +193,7 @@ fun RulingSummary(
                 }
             }
         }
-        ActionsRow(actions)
+        AppealButton(actions)
     }
 }
 
@@ -216,6 +217,7 @@ fun VerdictDetails(
         modifier.alpha(if (view.status == TranslationStatus.LOADING) 0.55f else 1f),
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
+        ShareRow(actions)
         result.appeal?.let { OutcomeBanner(it, parties) }
         DetailCard {
             TranslationLine(view)
@@ -245,7 +247,7 @@ fun VerdictDetails(
             WouldChange(result.wouldChange.orEmpty())
         }
         Footnote(result, parties)
-        ActionsRow(actions)
+        AppealButton(actions)
     }
 }
 
@@ -437,42 +439,21 @@ fun VoteDot(vote: Vote?, sizeDp: Int) {
 }
 
 /**
- * Share (filled) and, beside it, "Add context & appeal" for the writer or
- * the copy link for everyone else.
+ * Share (filled) at the top right of a verdict, with copy link beside it for
+ * everyone but the writer, whose appeal button is under the verdict and who
+ * copies from the share sheet.
  */
 @Composable
-private fun ActionsRow(actions: CardActions) {
+private fun ShareRow(actions: CardActions) {
     val s = LocalStrings.current
-    val second = actions.onAddContext ?: actions.onCopy
-    if (actions.onShare == null && second == null) return
-    // Same height for both when a long label wraps.
-    Row(Modifier.fillMaxWidth().height(IntrinsicSize.Min).padding(top = 4.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-        actions.onShare?.let { share ->
-            Row(
-                Modifier
-                    .weight(1f)
-                    .heightIn(min = 52.dp)
-                    .fillMaxHeight()
-                    .clip(JudgeShapes.field)
-                    .background(Palette.ink)
-                    .clickable(role = Role.Button, onClick = share)
-                    .padding(horizontal = 14.dp),
-                horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                TintedIcon(rememberIcon(Palette.ivory) { JudgeIcons.share(it) }, 15)
-                Text(s.share, style = JudgeType.button.copy(fontSize = 15.sp, color = Palette.paper), maxLines = 1)
-            }
-        }
-        val addContext = actions.onAddContext
-        if (addContext != null) {
-            OutlinedAction(s.appAppealTitle, addContext, Modifier.weight(1f).testTag(VerdictTags.ADD_CONTEXT))
-        } else {
+    val share = actions.onShare ?: return
+    Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.End)) {
+        if (actions.onAddContext == null) {
             actions.onCopy?.let { copy ->
                 OutlinedAction(
                     if (actions.copied) s.copied else s.copyLink,
                     copy,
-                    Modifier.weight(1f).semantics { liveRegion = LiveRegionMode.Polite },
+                    Modifier.semantics { liveRegion = LiveRegionMode.Polite },
                     icon = {
                         val icon = if (actions.copied) {
                             rememberIcon(Palette.sageInk) { JudgeIcons.check(it, 2f) }
@@ -484,6 +465,39 @@ private fun ActionsRow(actions: CardActions) {
                 )
             }
         }
+        Row(
+            Modifier
+                .heightIn(min = 44.dp)
+                .clip(JudgeShapes.field)
+                .background(Palette.ink)
+                .clickable(role = Role.Button, onClick = share)
+                .padding(horizontal = 16.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            TintedIcon(rememberIcon(Palette.ivory) { JudgeIcons.share(it) }, 15)
+            Text(s.share, style = JudgeType.button.copy(fontSize = 15.sp, color = Palette.paper), maxLines = 1)
+        }
+    }
+}
+
+/** "Add context & appeal" under the verdict, full width in the red accent. */
+@Composable
+private fun AppealButton(actions: CardActions) {
+    val s = LocalStrings.current
+    val onClick = actions.onAddContext ?: return
+    Box(
+        Modifier
+            .fillMaxWidth()
+            .heightIn(min = 52.dp)
+            .clip(JudgeShapes.field)
+            .background(Palette.terraInk)
+            .clickable(role = Role.Button, onClick = onClick)
+            .padding(horizontal = 16.dp, vertical = 6.dp)
+            .testTag(VerdictTags.ADD_CONTEXT),
+        contentAlignment = Alignment.Center,
+    ) {
+        Text(s.appAppealTitle, style = JudgeType.button.copy(fontSize = 15.sp, color = Palette.paper), textAlign = TextAlign.Center)
     }
 }
 
@@ -491,28 +505,21 @@ private fun ActionsRow(actions: CardActions) {
 private fun OutlinedAction(text: String, onClick: () -> Unit, modifier: Modifier, icon: (@Composable () -> Unit)? = null) {
     Row(
         modifier
-            .heightIn(min = 52.dp)
-            .fillMaxHeight()
+            .heightIn(min = 44.dp)
             .clip(JudgeShapes.field)
             .background(Palette.paper)
             .border(1.dp, Palette.line2, JudgeShapes.field)
             .semantics(mergeDescendants = true) {}
             .clickable(role = Role.Button, onClick = onClick)
-            .padding(horizontal = 12.dp, vertical = 6.dp),
+            .padding(horizontal = 14.dp, vertical = 6.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         icon?.invoke()
-        // "Bağlam ekle ve itiraz et" does not fit half a 360dp screen on one line.
-        Text(
-            text,
-            style = JudgeType.button.copy(fontSize = 15.sp, color = Palette.ink),
-            textAlign = TextAlign.Center,
-            maxLines = 2,
-            overflow = TextOverflow.Ellipsis,
-        )
+        Text(text, style = JudgeType.button.copy(fontSize = 15.sp, color = Palette.ink), maxLines = 1)
     }
 }
+
 
 // --- Detail sections ---------------------------------------------------------------
 
