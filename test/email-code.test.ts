@@ -213,7 +213,6 @@ describe("email sign-in by code (apps)", () => {
       "/email-otp/reset-password",
       "/email-otp/request-email-change",
       "/email-otp/change-email",
-      "/sign-in/email",
       "/sign-up/email",
     ]) {
       expect((await post(p, { email: "a@example.com", otp: "123456", type: "sign-in" })).status, p).toBe(404);

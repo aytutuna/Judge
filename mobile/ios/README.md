@@ -159,6 +159,12 @@ shows only the methods `GET /api/v1/config` reports (`signIn.apple`,
   server must list the iOS client id in `GOOGLE_IOS_CLIENT_ID`.
 - **Email code**: `POST /api/auth/email-otp/send-verification-otp?lang=…`,
   then `POST /api/auth/sign-in/email-otp` with the six digits.
+- **Password** (when `signIn.password` is on): `POST /api/auth/sign-in/email`.
+  An account is made by the code, then `POST /api/v1/me/password` sets the
+  password on the signed-in session (create asks for it first and saves it
+  after the code; forgot asks after the code). Settings shows the Password
+  row when `/api/v1/me` reports `hasPassword`; replacing a password sends
+  `current`. The password is never stored on the phone.
 
 The session token lives in the Keychain (`KeychainTokenStore`, readable
 after first unlock, this device only) and goes out as `Authorization:

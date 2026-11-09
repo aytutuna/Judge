@@ -131,6 +131,30 @@ describe("store-review sign-in", () => {
     expect(sent).toHaveLength(0);
   });
 
+  it("the website signs in the same way: same-origin POST, session cookie, no Bearer needed", async () => {
+    emailOn();
+    reviewOn("web-review@okjudge.test");
+    const instance = await auth.getAuth();
+    const browser = (p: string, body: unknown) =>
+      instance.handler(
+        new Request(`${ORIGIN}/api/auth${p}`, {
+          method: "POST",
+          headers: { "content-type": "application/json", origin: ORIGIN },
+          body: JSON.stringify(body),
+        }),
+      );
+    expect((await browser("/email-otp/send-verification-otp?lang=tr", { email: "web-review@okjudge.test", type: "sign-in" })).status).toBe(200);
+    const signed = await browser("/sign-in/email-otp", { email: "web-review@okjudge.test", otp: REVIEW_CODE });
+    expect(signed.status).toBe(200);
+    const cookies = signed.headers.getSetCookie();
+    const session = cookies.find((c) => c.startsWith("verdict.session_token="));
+    expect(session).toBeTruthy();
+    expect(session).toMatch(/HttpOnly/i);
+    expect(session).toMatch(/SameSite=Lax/i);
+    const me = await getMe(new Request(`${ORIGIN}/api/v1/me`, { headers: { cookie: session!.split(";")[0] } }));
+    expect(((await me.json()) as { user: { email: string } }).user.email).toBe("web-review@okjudge.test");
+  });
+
   it("the configured code works only for the review address", async () => {
     const sent = emailOn();
     reviewOn();

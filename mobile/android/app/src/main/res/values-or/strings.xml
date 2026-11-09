@@ -183,6 +183,21 @@
     <string name="signin_email_submit">ମୋ ଇମେଲ୍‌କୁ ସାଇନ୍ ଇନ୍ ଲିଙ୍କ୍ ପଠାନ୍ତୁ</string>
     <string name="signin_email_sent">ଇନବକ୍ସ ଦେଖନ୍ତୁ। %1$s ଠିକଣାକୁ ସାଇନ୍ ଇନ୍ ଲିଙ୍କ୍ ପଠାଇଛୁ। ଏହା 10 ମିନିଟ୍ କାମ କରିବ।</string>
     <string name="signin_email_invalid">ଏହି ଇମେଲ୍ ଠିକଣା ଠିକ୍ ଲାଗୁନାହିଁ।</string>
+    <string name="signin_password">ପାସୱାର୍ଡ</string>
+    <string name="signin_password_new">ନୂଆ ପାସୱାର୍ଡ</string>
+    <string name="signin_password_show">ପାସୱାର୍ଡ ଦେଖାନ୍ତୁ</string>
+    <string name="signin_create">ଖାତା ତିଆରି କରନ୍ତୁ</string>
+    <string name="signin_forgot">ପାସୱାର୍ଡ ଭୁଲିଗଲେ?</string>
+    <string name="signin_use_code">ବଦଳରେ ମୋତେ ଇମେଲରେ କୋଡ୍ ପଠାନ୍ତୁ</string>
+    <string name="signin_use_password">ବଦଳରେ ପାସୱାର୍ଡ ବ୍ୟବହାର କରନ୍ତୁ</string>
+    <string name="signin_password_wrong">ଏହି ଇମେଲ୍ ଏବଂ ପାସୱାର୍ଡ ମେଳ ଖାଉନାହିଁ।</string>
+    <string name="signin_password_short">ଅତି କମରେ 8ଟି ଅକ୍ଷର ବ୍ୟବହାର କରନ୍ତୁ।</string>
+    <string name="signin_create_note">ଏହି ଠିକଣା ନିଶ୍ଚିତ କରିବାକୁ ଆମେ ଆପଣଙ୍କୁ ଇମେଲରେ ଏକ କୋଡ୍ ପଠାଇବୁ। ଏହା କେବଳ ଥରେ କରିବାକୁ ପଡ଼ିବ।</string>
+    <string name="signin_password_choose">ଆପଣ ସାଇନ୍ ଇନ୍ କରିଛନ୍ତି। ପରବର୍ତ୍ତୀ ଥର ପାଇଁ ଏକ ପାସୱାର୍ଡ ବାଛନ୍ତୁ।</string>
+    <string name="signin_password_save">ପାସୱାର୍ଡ ସାଇତନ୍ତୁ</string>
+    <string name="signin_password_save_failed">ଆପଣ ସାଇନ୍ ଇନ୍ କରିଛନ୍ତି, କିନ୍ତୁ ପାସୱାର୍ଡ ସାଇତିହେଲା ନାହିଁ। ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ, ଅଥବା ପରେ ସେଟିଂସରେ ଠିକ୍ କରନ୍ତୁ।</string>
+    <string name="signin_password_skip">ଏବେ ଛାଡ଼ନ୍ତୁ</string>
+    <string name="signin_password_submit">ସାଇନ୍ ଇନ୍</string>
     <string name="signin_provider_unavailable">ଏବେ ଉପଲବ୍ଧ ନାହିଁ</string>
     <string name="signin_failed">ସାଇନ୍ ଇନ୍ କରାଇପାରିଲୁ ନାହିଁ। ପୁଣି ଥରେ ଚେଷ୍ଟା କରିବେ?</string>
     <string name="signin_loading">ସାଇନ୍ ଇନ୍ ବିକଳ୍ପ ଲୋଡ୍ ହେଉଛି…</string>
@@ -200,6 +215,10 @@
     <string name="account_delete">ଆକାଉଣ୍ଟ ଡିଲିଟ୍ କରନ୍ତୁ</string>
     <string name="account_delete_confirm">ଆକାଉଣ୍ଟ ଡିଲିଟ୍ କରିବେ? ଆପଣଙ୍କ କ୍ରେଡିଟ୍, ପ୍ଲାନ୍ ଓ ସାଇନ୍ ଇନ୍ ବିବରଣୀ ଡିଲିଟ୍ ହେବ। ଆପଣଙ୍କ ରାୟ ଓ ମାମଲାରେ ଆପଣଙ୍କ କଥା ହଟିଯିବ: ଆପଣ ଯାହା ଲେଖିଥିଲେ ଓ ନାମଗୁଡ଼ିକ ଲିଭିଯିବ, ଆଉ ସେଗୁଡ଼ିକର ସେୟାର୍ ଲିଙ୍କ୍ କାମ କରିବ ନାହିଁ।</string>
     <string name="account_delete_yes">ହଁ, ଡିଲିଟ୍ କରନ୍ତୁ</string>
+    <string name="account_password_set">ପାସୱାର୍ଡ ଠିକ୍ କରନ୍ତୁ</string>
+    <string name="account_password_change">ପାସୱାର୍ଡ ବଦଳାନ୍ତୁ</string>
+    <string name="account_password_current">ବର୍ତ୍ତମାନର ପାସୱାର୍ଡ</string>
+    <string name="account_password_saved">ପାସୱାର୍ଡ ସାଇତାଗଲା।</string>
     <string name="account_delete_cancel">ଆକାଉଣ୍ଟ ରହୁ</string>
     <string name="account_delete_failed">ଏବେ ଆକାଉଣ୍ଟ ଡିଲିଟ୍ କରିପାରିଲୁ ନାହିଁ। ପୁଣି ଥରେ ଚେଷ୍ଟା କରିବେ?</string>
     <string name="account_sign_in_prompt">ପ୍ଲାନ୍ ଓ କ୍ରେଡିଟ୍ ଦେଖିବାକୁ ସାଇନ୍ ଇନ୍ କରନ୍ତୁ।</string>
@@ -372,7 +391,7 @@
     <string name="appeal_title">ବିବରଣୀ ଯୋଡ଼ନ୍ତୁ</string>
     <string name="home_example">ଗୋଟେ ଉଦାହରଣ ନେଇ ଦେଖନ୍ତୁ</string>
     <string name="home_your_placeholder">ସମସ୍ୟା କ\'ଣ?</string>
-    <string name="home_add_context">ପ୍ରସଙ୍ଗ ଯୋଡ଼ନ୍ତୁ</string>
+    <string name="home_add_context">ବିବରଣୀ ଯୋଡ଼ନ୍ତୁ</string>
     <string name="home_add_their_side">ତାଙ୍କ କଥା ଯୋଡ଼ନ୍ତୁ</string>
     <string name="home_remove_their_side">ତାଙ୍କ କଥା ହଟାନ୍ତୁ</string>
     <string name="home_send_link">ଲିଙ୍କ୍ ପଠାନ୍ତୁ</string>
@@ -505,6 +524,8 @@
     <string name="stamp_dissolved">ଅର୍ଥଭେଦ</string>
     <string name="best_point_of">%1$sଙ୍କ ସବୁଠୁ ଜୋରଦାର କଥା</string>
     <string name="best_point_self">ଆପଣଙ୍କ ସବୁଠୁ ଜୋରଦାର କଥା</string>
+    <string name="error_password_wrong">ଏହି ପାସୱାର୍ଡ ଠିକ୍ ନୁହେଁ।</string>
+    <string name="error_password_required">ଆପଣଙ୍କ ବର୍ତ୍ତମାନର ପାସୱାର୍ଡ ଲେଖନ୍ତୁ।</string>
     <string name="error_age_blocked">Judge କେବଳ 18 ବା ତା\'ଠାରୁ ଅଧିକ ବୟସର ଲୋକଙ୍କ ପାଇଁ।</string>
     <string name="error_age_unconfirmed">ଆଗକୁ ବଢ଼ିବା ପାଇଁ ନିଶ୍ଚିତ କରନ୍ତୁ ଯେ ଆପଣଙ୍କ ବୟସ 18 ବା ତା\'ଠାରୁ ଅଧିକ।</string>
     <string name="app_name">Judge</string>
@@ -544,8 +565,8 @@
     </plurals>
     <string name="app_history_offline_remove">ଆପଣ ଅଫଲାଇନ୍ ଅଛନ୍ତି। ହଟାଇବାକୁ ଇଣ୍ଟରନେଟ୍ ସଂଯୋଗ ଦରକାର।</string>
     <string name="app_pricing_free_account">Apple, Google ବା ଇମେଲ୍ ସହ ସାଇନ୍ ଇନ୍ କରନ୍ତୁ</string>
-    <string name="app_context_label">ପ୍ରସଙ୍ଗ (ଇଚ୍ଛାଧୀନ)</string>
-    <string name="app_pricing_context">ପ୍ରସଙ୍ଗର ଛବି ପଢ଼ି ପରେ ଫିଙ୍ଗି ଦିଆଯାଏ, ଅତିରିକ୍ତ ଖର୍ଚ୍ଚ ନାହିଁ</string>
+    <string name="app_context_label">ବିବରଣୀ (ଇଚ୍ଛାଧୀନ)</string>
+    <string name="app_pricing_context">ବିବରଣୀର ଛବି ପଢ଼ି ପରେ ଫିଙ୍ଗି ଦିଆଯାଏ, ଅତିରିକ୍ତ ଖର୍ଚ୍ଚ ନାହିଁ</string>
     <string name="app_pricing_headline">ପ୍ରଥମ ରାୟ ଆମ ତରଫରୁ।</string>
     <string name="app_pricing_sub">ଆକାଉଣ୍ଟ ଖୋଲନ୍ତୁ, ପ୍ରଥମ ରାୟ ସବୁ ସୁବିଧା ସହ ମାଗଣା। ତା\'ପରେ ଗୋଟେ ପ୍ୟାକ୍ ବାଛନ୍ତୁ ବା ମାସିକ ପ୍ଲାନ୍ ନିଅନ୍ତୁ।</string>
     <string name="app_pricing_headline_member">ଅଧିକ ରାୟ ନିଅନ୍ତୁ।</string>
@@ -606,7 +627,7 @@
     <string name="app_home_your_side_label">ବିବାଦରେ ଆପଣଙ୍କ କଥା</string>
     <string name="app_home_their_side_label">ବିବାଦରେ ତାଙ୍କ କଥା</string>
     <string name="app_home_send_link">ଲିଙ୍କ୍ ପଠାନ୍ତୁ</string>
-    <string name="app_home_add_context">ପ୍ରସଙ୍ଗ ଯୋଡ଼ନ୍ତୁ</string>
+    <string name="app_home_add_context">ବିବରଣୀ ଯୋଡ଼ନ୍ତୁ</string>
     <string name="app_home_says">%1$s କହନ୍ତି:</string>
     <string name="app_home_my_side">ମୋ କଥା:</string>
     <string name="app_home_other_side">ତାଙ୍କ କଥା:</string>

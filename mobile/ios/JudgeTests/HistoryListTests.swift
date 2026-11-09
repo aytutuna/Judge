@@ -279,6 +279,20 @@ final class HistoryListTests: XCTestCase {
     }
 
     @MainActor
+    func testTheMenuCardsFollowTheRuling() throws {
+        let page = try fixturePage()
+        func entry(_ id: String) throws -> HistoryEntry { .account(try XCTUnwrap(page.items.first { $0.id == id })) }
+        let now = try XCTUnwrap(ErrorText.parseISO("2026-10-21T08:00:00Z"))
+
+        XCTAssertEqual(try entry("verdict0021").tone(now: now), .yours)
+        XCTAssertEqual(try entry("verdict0021").status(lang: .en, now: now), L10n.verdictWinSelf(.en))
+        XCTAssertEqual(try entry("case0000012").tone(now: now), .theirs)
+        XCTAssertEqual(try entry("case0000012").status(lang: .en, now: now), L10n.verdictWin(.en, name: "Sam"))
+        XCTAssertEqual(try entry("case0000010").tone(now: now), .waiting)
+        XCTAssertEqual(try entry("verdict0020").tone(now: now), .thinking)
+    }
+
+    @MainActor
     func testSelectableRowsAndConfirmWording() throws {
         try withStore { store in
             try store.save(try session("win_b_named"))

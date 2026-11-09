@@ -5,15 +5,15 @@
  * - the native app: the same session token as `Authorization: Bearer <token>`.
  *
  * Sign-in methods: Apple and Google (web redirect and native ID token), email
- * magic link (website) or one-time email code (apps), both through Resend,
- * and a dev-only test login. A method without credentials is simply not
+ * magic link or one-time email code (website and apps), both through Resend,
+ * a password set after the first emailed code, and a dev-only test login. A method without credentials is simply not
  * offered (authProviders). Without BETTER_AUTH_SECRET in production, auth is
  * off, and with it judging: every verdict needs an account.
  */
 
 import { createHash, createHmac } from "node:crypto";
 import { LibsqlDialect } from "@libsql/kysely-libsql";
-import { betterAuth, type Auth, type BetterAuthOptions, type BetterAuthPlugin } from "better-auth";
+import { betterAuth, type Auth, type AuthContext, type BetterAuthOptions, type BetterAuthPlugin } from "better-auth";
 import { APIError, createAuthMiddleware } from "better-auth/api";
 import { makeSignature } from "better-auth/crypto";
 import { getMigrations } from "better-auth/db/migration";
@@ -30,6 +30,8 @@ import {
   sendSignInEmail,
 } from "./email";
 import { ensureEntitlementTables, grantMissedWelcomeCredit, grantWelcomeCredit } from "./entitlements";
+import { clientIp } from "./client-ip";
+import { checkUserLimits, visitorKey } from "./ratelimit";
 import { captureAppleRefreshToken, deleteSignInTokens, keepCapturedAppleRefreshToken } from "./signin-tokens";
 import { signal } from "./signals";
 
@@ -46,6 +48,11 @@ const EMAIL_CODE_ATTEMPTS = 3;
 /** Sign-in requests per IP and endpoint per minute (production only). */
 const EMAIL_SIGNIN_RATE = { window: 60, max: 3 };
 const SEND_CODE_PATH = "/email-otp/send-verification-otp";
+const PASSWORD_SIGNIN_PATH = "/sign-in/email";
+/** Sign-in with a password per IP and minute (production only). */
+const PASSWORD_SIGNIN_RATE = { window: 60, max: 5 };
+const PASSWORD_MIN = 8;
+const PASSWORD_MAX = 128;
 const MIN_SECRET_LENGTH = 32;
 /** Used only outside production (never in a production build) when
  * BETTER_AUTH_SECRET is unset or too short. */
@@ -196,6 +203,28 @@ const withoutProviderTokens = <T extends Record<string, unknown>>(account: T) =>
   idToken: null,
 });
 
+/** Set on the request context when the code email was not accepted. Better
+ * Auth awaits sendVerificationOTP but swallows its errors, so the after hook
+ * turns this flag into the error reply. */
+const CODE_NOT_SENT = "codeNotSent";
+/** The code row a send is about to replace, put back if the new email fails. */
+const PREVIOUS_CODE = "previousCode";
+type CodeRow = { value: string; expiresAt: Date };
+
+const codeIdentifier = (email: string) => `sign-in-otp-${email.trim().toLowerCase()}`;
+
+/** Flags the failed send and puts the previous code back: the library
+ * replaces the row before sending, which would kill a code already delivered. */
+async function keepPreviousCode(context: AuthContext, email: string): Promise<void> {
+  const flags = context as unknown as Record<string, unknown>;
+  flags[CODE_NOT_SENT] = true;
+  const previous = flags[PREVIOUS_CODE] as CodeRow | undefined;
+  if (!previous) return;
+  const identifier = codeIdentifier(email);
+  await context.internalAdapter.deleteVerificationByIdentifier(identifier);
+  await context.internalAdapter.createVerificationValue({ identifier, ...previous });
+}
+
 function buildOptions(env: Env, secret: string, client: Awaited<ReturnType<typeof getDb>>) {
   const origin = configuredOrigin(env);
   const production = isProduction(env);
@@ -214,7 +243,7 @@ function buildOptions(env: Env, secret: string, client: Awaited<ReturnType<typeo
           await sendSignInEmail({ to: email, url, lang: langFromMagicLink(url) });
         },
       }),
-      // The apps: POST /email-otp/send-verification-otp?lang=tr
+      // The email code: POST /email-otp/send-verification-otp?lang=tr
       // {email, type:"sign-in"}, then POST /sign-in/email-otp {email, otp}.
       emailOTP({
         expiresIn: EMAIL_SIGNIN_SECONDS,
@@ -232,7 +261,12 @@ function buildOptions(env: Env, secret: string, client: Awaited<ReturnType<typeo
         sendVerificationOTP: async ({ email, otp, type }, ctx) => {
           if (type !== "sign-in") return; // refused earlier by hooks.before
           if (reviewAccount(env)?.email === email.trim().toLowerCase()) return; // the reviewer knows the code
-          await sendSignInCodeEmail({ to: email, code: otp, lang: langFromRequestUrl(ctx?.request?.url) });
+          try {
+            await sendSignInCodeEmail({ to: email, code: otp, lang: langFromRequestUrl(ctx?.request?.url) });
+          } catch (e) {
+            if (ctx) await keepPreviousCode(ctx.context, email);
+            throw e;
+          }
         },
       }),
     );
@@ -302,11 +336,21 @@ function buildOptions(env: Env, secret: string, client: Awaited<ReturnType<typeo
         }),
     },
     plugins,
-    // Built-in endpoints we never use (no passwords; profile and email are
-    // set by the sign-in provider). Fewer open endpoints, less to defend.
+    // Passwords exist only for addresses that proved their inbox with a
+    // code: no sign-up here, the password is set afterwards through
+    // /api/v1/me/password.
+    emailAndPassword: {
+      enabled: emailConfigured(env),
+      disableSignUp: true,
+      requireEmailVerification: true,
+      minPasswordLength: PASSWORD_MIN,
+      maxPasswordLength: PASSWORD_MAX,
+    },
+    // Built-in endpoints we never use (profile and email are set by the
+    // sign-in provider; passwords by our own route). Fewer open endpoints,
+    // less to defend.
     disabledPaths: [
       "/sign-up/email",
-      "/sign-in/email",
       "/request-password-reset",
       "/reset-password",
       "/change-password",
@@ -329,6 +373,19 @@ function buildOptions(env: Env, secret: string, client: Awaited<ReturnType<typeo
       "/email-otp/reset-password",
       "/email-otp/request-email-change",
       "/email-otp/change-email",
+      // Session and account management nothing here calls. The session list
+      // hands out raw tokens, the account list and unlink would let a young
+      // session remove the password row and start over, and /verify-password
+      // is a password check with no limit of its own.
+      "/list-sessions",
+      "/revoke-session",
+      "/revoke-sessions",
+      "/revoke-other-sessions",
+      "/update-session",
+      "/list-accounts",
+      "/unlink-account",
+      "/verify-password",
+      "/delete-user",
     ],
     rateLimit: {
       enabled: production,
@@ -337,6 +394,7 @@ function buildOptions(env: Env, secret: string, client: Awaited<ReturnType<typeo
         "/sign-in/magic-link": EMAIL_SIGNIN_RATE,
         [SEND_CODE_PATH]: EMAIL_SIGNIN_RATE,
         "/sign-in/email-otp": EMAIL_SIGNIN_RATE,
+        [PASSWORD_SIGNIN_PATH]: PASSWORD_SIGNIN_RATE,
         "/sign-in/social": { window: 60, max: 10 },
       },
     },
@@ -344,8 +402,38 @@ function buildOptions(env: Env, secret: string, client: Awaited<ReturnType<typeo
       // Codes are for signing in only (no email verification, password or
       // email-change codes).
       before: createAuthMiddleware(async (ctx) => {
-        if (ctx.path === SEND_CODE_PATH && (ctx.body as { type?: unknown } | undefined)?.type !== "sign-in") {
-          throw new APIError("BAD_REQUEST", { message: "Only sign-in codes are supported" });
+        if (ctx.path === SEND_CODE_PATH) {
+          const body = ctx.body as { type?: unknown; email?: unknown } | undefined;
+          if (body?.type !== "sign-in") throw new APIError("BAD_REQUEST", { message: "Only sign-in codes are supported" });
+          if (typeof body.email === "string") {
+            const row = await ctx.context.internalAdapter.findVerificationValue(codeIdentifier(body.email));
+            if (row && row.expiresAt > new Date()) {
+              (ctx.context as unknown as Record<string, unknown>)[PREVIOUS_CODE] = { value: row.value, expiresAt: row.expiresAt };
+            }
+          }
+        }
+        if (ctx.path === PASSWORD_SIGNIN_PATH) {
+          // Every address counts the same, known or not, so the refusal
+          // says nothing about whether the account exists. The bucket is per
+          // address and IP: keyed by address alone, anyone could keep a
+          // victim's address locked from anywhere.
+          const email = (ctx.body as { email?: unknown } | undefined)?.email;
+          const claim = typeof email === "string" ? welcomeClaim(email) : null;
+          if (claim) {
+            const ip = clientIp(ctx.headers ?? ctx.request?.headers ?? new Headers());
+            const limit = await checkUserLimits(`${claim}:${visitorKey(ip)}`, "password_signin");
+            if (!limit.ok) {
+              if (limit.code === "unavailable") {
+                throw new APIError("SERVICE_UNAVAILABLE", { message: "Sign-in is unavailable right now.", code: "unavailable" });
+              }
+              throw new APIError("TOO_MANY_REQUESTS", { message: "Too many attempts", code: "RATE_LIMITED" });
+            }
+          }
+        }
+      }),
+      after: createAuthMiddleware(async (ctx) => {
+        if (ctx.path === SEND_CODE_PATH && (ctx.context as Record<string, unknown>)[CODE_NOT_SENT]) {
+          throw new APIError("SERVICE_UNAVAILABLE", { message: "Sign-in is unavailable right now.", code: "unavailable" });
         }
       }),
     },
@@ -640,12 +728,15 @@ export function devLoginAllowed(req: Request, env: Env = process.env): boolean {
 
 /** Which sign-in methods this deployment offers right now. */
 export function authProviders(req: Request, env: Env = process.env): AuthProviders {
-  if (!authConfigured(env)) return { apple: false, google: false, email: false, emailCode: false, dev: false };
+  if (!authConfigured(env)) {
+    return { apple: false, google: false, email: false, emailCode: false, password: false, dev: false };
+  }
   return {
     apple: appleConfigured(env),
     google: googleClientIds(env) !== null,
     email: emailConfigured(env),
     emailCode: emailConfigured(env),
+    password: emailConfigured(env),
     dev: devLoginAllowed(req, env),
   };
 }

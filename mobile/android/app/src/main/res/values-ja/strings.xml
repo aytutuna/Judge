@@ -178,6 +178,21 @@
     <string name="signin_email_submit">ログインリンクをメールで受け取る</string>
     <string name="signin_email_sent">受信トレイを確認してください。%1$sにログインリンクを送りました。有効期限は10分です。</string>
     <string name="signin_email_invalid">メールアドレスが正しくないようです。</string>
+    <string name="signin_password">パスワード</string>
+    <string name="signin_password_new">新しいパスワード</string>
+    <string name="signin_password_show">パスワードを表示</string>
+    <string name="signin_create">アカウントを作成</string>
+    <string name="signin_forgot">パスワードをお忘れですか？</string>
+    <string name="signin_use_code">代わりにメールでコードを受け取る</string>
+    <string name="signin_use_password">代わりにパスワードを使う</string>
+    <string name="signin_password_wrong">メールアドレスとパスワードが一致しません。</string>
+    <string name="signin_password_short">8文字以上にしてください。</string>
+    <string name="signin_create_note">このアドレスを確認するため、コードをメールで送ります。必要なのは一度だけです。</string>
+    <string name="signin_password_choose">ログインしました。次回のためにパスワードを決めてください。</string>
+    <string name="signin_password_save">パスワードを保存</string>
+    <string name="signin_password_save_failed">ログインはできましたが、パスワードを保存できませんでした。もう一度試すか、あとで設定から決めてください。</string>
+    <string name="signin_password_skip">今はスキップ</string>
+    <string name="signin_password_submit">ログイン</string>
     <string name="signin_provider_unavailable">まだ利用できません</string>
     <string name="signin_failed">ログインできませんでした。もう一度お試しください。</string>
     <string name="signin_loading">ログイン方法を読み込み中…</string>
@@ -195,6 +210,10 @@
     <string name="account_delete">アカウントを削除</string>
     <string name="account_delete_confirm">アカウントを削除しますか？　クレジット、プラン、ログイン情報は削除されます。あなたの判定と、ケースでのあなたの言い分も削除され、書いた内容と名前は消去されて、シェア用リンクも使えなくなります。</string>
     <string name="account_delete_yes">削除する</string>
+    <string name="account_password_set">パスワードを設定</string>
+    <string name="account_password_change">パスワードを変更</string>
+    <string name="account_password_current">現在のパスワード</string>
+    <string name="account_password_saved">パスワードを保存しました。</string>
     <string name="account_delete_cancel">アカウントを残す</string>
     <string name="account_delete_failed">いまはアカウントを削除できませんでした。もう一度お試しください。</string>
     <string name="account_sign_in_prompt">プランとクレジットを見るにはログインしてください。</string>
@@ -364,7 +383,7 @@
     <string name="appeal_title">補足する</string>
     <string name="home_example">例を試す</string>
     <string name="home_your_placeholder">何があったの？</string>
-    <string name="home_add_context">状況を追加</string>
+    <string name="home_add_context">補足を追加</string>
     <string name="home_add_their_side">相手の言い分を追加</string>
     <string name="home_remove_their_side">相手の言い分を削除</string>
     <string name="home_send_link">リンクを送る</string>
@@ -494,6 +513,8 @@
     <string name="stamp_dissolved">言葉のズレ</string>
     <string name="best_point_of">%1$sのいちばん強い主張</string>
     <string name="best_point_self">あなたのいちばん強い主張</string>
+    <string name="error_password_wrong">パスワードが正しくありません。</string>
+    <string name="error_password_required">現在のパスワードを入力してください。</string>
     <string name="error_age_blocked">Judgeは18歳以上の方のみ利用できます。</string>
     <string name="error_age_unconfirmed">続けるには、18歳以上であることを確認してください。</string>
     <string name="app_name">Judge</string>
@@ -528,7 +549,7 @@
     </plurals>
     <string name="app_history_offline_remove">オフラインのため削除できません。接続してからもう一度お試しください。</string>
     <string name="app_pricing_free_account">Apple、Google、またはメールアドレスでログイン</string>
-    <string name="app_context_label">状況の補足（任意）</string>
+    <string name="app_context_label">補足（任意）</string>
     <string name="app_pricing_context">補足の画像は読み取ったあと破棄されます。追加料金はかかりません</string>
     <string name="app_pricing_headline">最初の判定は無料です。</string>
     <string name="app_pricing_sub">アカウントを作成すると、最初の判定はすべての機能つきで無料。その後はパックか月額プランを選べます。</string>
@@ -589,7 +610,7 @@
     <string name="app_home_your_side_label">揉めごとについてのあなたの言い分</string>
     <string name="app_home_their_side_label">揉めごとについての相手の言い分</string>
     <string name="app_home_send_link">リンクを送る</string>
-    <string name="app_home_add_context">状況を追加</string>
+    <string name="app_home_add_context">補足を追加</string>
     <string name="app_home_says">%1$sの言い分：</string>
     <string name="app_home_my_side">私の言い分：</string>
     <string name="app_home_other_side">相手の言い分：</string>

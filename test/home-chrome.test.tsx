@@ -48,6 +48,11 @@ describe("SiteChrome", () => {
     expect(renderToStaticMarkup(<SiteHeader lang="en" />)).not.toContain(t("en", "footer.language"));
   });
 
+  it("keeps the avatar in the header at every width, except under a menu button that carries the profile", () => {
+    expect(renderToStaticMarkup(<SiteHeader lang="en" />)).not.toContain("accountWide");
+    expect(renderToStaticMarkup(<SiteHeader lang="en" lead={<i />} />)).toContain("accountWide");
+  });
+
   it("links home, about and privacy in the footer", () => {
     const html = renderToStaticMarkup(<SiteFooter lang="en" />);
     for (const href of ['href="/"', 'href="/about"', 'href="/privacy"']) expect(html).toContain(href);

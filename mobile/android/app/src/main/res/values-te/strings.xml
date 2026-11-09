@@ -183,6 +183,21 @@
     <string name="signin_email_submit">సైన్ ఇన్ లింక్ ఈమెయిల్‌కు పంపండి</string>
     <string name="signin_email_sent">మీ ఇన్‌బాక్స్ చూడండి. %1$sకు సైన్ ఇన్ లింక్ పంపాం. అది 10 నిమిషాలు పనిచేస్తుంది.</string>
     <string name="signin_email_invalid">ఈ ఈమెయిల్ అడ్రస్ సరిగ్గా లేనట్టుంది.</string>
+    <string name="signin_password">పాస్‌వర్డ్</string>
+    <string name="signin_password_new">కొత్త పాస్‌వర్డ్</string>
+    <string name="signin_password_show">పాస్‌వర్డ్ చూపించు</string>
+    <string name="signin_create">ఖాతా సృష్టించు</string>
+    <string name="signin_forgot">పాస్‌వర్డ్ మర్చిపోయారా?</string>
+    <string name="signin_use_code">బదులుగా నాకు ఇమెయిల్‌లో కోడ్ పంపండి</string>
+    <string name="signin_use_password">బదులుగా పాస్‌వర్డ్ ఉపయోగించండి</string>
+    <string name="signin_password_wrong">ఈ ఇమెయిల్, పాస్‌వర్డ్ సరిపోలడం లేదు.</string>
+    <string name="signin_password_short">కనీసం 8 అక్షరాలు ఉపయోగించండి.</string>
+    <string name="signin_create_note">ఈ చిరునామాను నిర్ధారించడానికి మేము మీకు ఇమెయిల్‌లో ఒక కోడ్ పంపుతాము. ఇది ఒక్కసారి చేస్తే చాలు.</string>
+    <string name="signin_password_choose">మీరు సైన్ ఇన్ అయ్యారు. తదుపరిసారి కోసం ఒక పాస్‌వర్డ్ ఎంచుకోండి.</string>
+    <string name="signin_password_save">పాస్‌వర్డ్ సేవ్ చేయి</string>
+    <string name="signin_password_save_failed">మీరు సైన్ ఇన్ అయ్యారు, కానీ పాస్‌వర్డ్‌ను సేవ్ చేయలేకపోయాము. మళ్ళీ ప్రయత్నించండి, లేదా తర్వాత సెట్టింగ్‌లలో పెట్టుకోండి.</string>
+    <string name="signin_password_skip">ప్రస్తుతానికి వదిలేయి</string>
+    <string name="signin_password_submit">సైన్ ఇన్</string>
     <string name="signin_provider_unavailable">ఇంకా అందుబాటులో లేదు</string>
     <string name="signin_failed">మిమ్మల్ని సైన్ ఇన్ చేయలేకపోయాం. ఇంకోసారి ప్రయత్నిస్తారా?</string>
     <string name="signin_loading">సైన్ ఇన్ ఆప్షన్లు లోడ్ అవుతున్నాయి…</string>
@@ -200,6 +215,10 @@
     <string name="account_delete">అకౌంట్ డిలీట్ చేయండి</string>
     <string name="account_delete_confirm">మీ అకౌంట్‌ను డిలీట్ చేయాలా? మీ క్రెడిట్లు, ప్లాన్, సైన్ ఇన్ వివరాలు డిలీట్ అవుతాయి. మీ తీర్పులు, కేసుల్లో మీ వైపు కథలు తీసేస్తాం: మీరు రాసినది, పేర్లు చెరిగిపోతాయి, వాటి షేర్ లింక్‌లు పనిచేయవు.</string>
     <string name="account_delete_yes">అవును, డిలీట్ చేయండి</string>
+    <string name="account_password_set">పాస్‌వర్డ్ సెట్ చేయి</string>
+    <string name="account_password_change">పాస్‌వర్డ్ మార్చు</string>
+    <string name="account_password_current">ప్రస్తుత పాస్‌వర్డ్</string>
+    <string name="account_password_saved">పాస్‌వర్డ్ సేవ్ అయింది.</string>
     <string name="account_delete_cancel">నా అకౌంట్ ఉంచండి</string>
     <string name="account_delete_failed">ఇప్పుడు అకౌంట్ డిలీట్ చేయలేకపోయాం. ఇంకోసారి ప్రయత్నిస్తారా?</string>
     <string name="account_sign_in_prompt">మీ ప్లాన్, క్రెడిట్లు చూడటానికి సైన్ ఇన్ చేయండి.</string>
@@ -372,7 +391,7 @@
     <string name="appeal_title">వివరాలు జోడించండి</string>
     <string name="home_example">ఒక ఉదాహరణ ప్రయత్నించండి</string>
     <string name="home_your_placeholder">సమస్య ఏంటి?</string>
-    <string name="home_add_context">సందర్భం జోడించండి</string>
+    <string name="home_add_context">వివరాలు జోడించండి</string>
     <string name="home_add_their_side">వాళ్ల వైపు కథ జోడించండి</string>
     <string name="home_remove_their_side">వాళ్ల వైపు కథ తీసేయండి</string>
     <string name="home_send_link">లింక్ పంపండి</string>
@@ -505,6 +524,8 @@
     <string name="stamp_dissolved">అర్థభేదం</string>
     <string name="best_point_of">%1$s వాదనలో బలమైన పాయింట్</string>
     <string name="best_point_self">మీ వాదనలో బలమైన పాయింట్</string>
+    <string name="error_password_wrong">ఈ పాస్‌వర్డ్ సరిగ్గా లేదు.</string>
+    <string name="error_password_required">మీ ప్రస్తుత పాస్‌వర్డ్ నమోదు చేయండి.</string>
     <string name="error_age_blocked">Judge 18 ఏళ్లు, అంతకంటే ఎక్కువ వయసు ఉన్నవాళ్లకు మాత్రమే.</string>
     <string name="error_age_unconfirmed">కొనసాగడానికి మీకు 18 ఏళ్లు లేదా అంతకంటే ఎక్కువ అని నిర్ధారించండి.</string>
     <string name="app_name">Judge</string>
@@ -544,8 +565,8 @@
     </plurals>
     <string name="app_history_offline_remove">మీరు ఆఫ్‌లైన్‌లో ఉన్నారు. తీసేయడానికి కనెక్షన్ కావాలి.</string>
     <string name="app_pricing_free_account">Apple, Google లేదా ఈమెయిల్‌తో సైన్ ఇన్ చేయండి</string>
-    <string name="app_context_label">సందర్భం (ఐచ్ఛికం)</string>
-    <string name="app_pricing_context">సందర్భ చిత్రాలను చదివి పారేస్తాం, అదనపు ఖర్చు లేదు</string>
+    <string name="app_context_label">వివరాలు (ఐచ్ఛికం)</string>
+    <string name="app_pricing_context">వివరాల చిత్రాలను చదివి పారేస్తాం, అదనపు ఖర్చు లేదు</string>
     <string name="app_pricing_headline">మీ మొదటి తీర్పు మా ఖాతాలో.</string>
     <string name="app_pricing_sub">అకౌంట్ తెరవండి, మీ మొదటి తీర్పు ఉచితం, అన్ని ఫీచర్లతో. ఆ తర్వాత ఒక ప్యాక్ ఎంచుకోండి, లేదా నెలవారీ ప్లాన్ తీసుకోండి.</string>
     <string name="app_pricing_headline_member">ఇంకా తీర్పులు తీసుకోండి.</string>
@@ -606,7 +627,7 @@
     <string name="app_home_your_side_label">వాదనలో మీ వైపు కథ</string>
     <string name="app_home_their_side_label">వాదనలో వాళ్ల వైపు కథ</string>
     <string name="app_home_send_link">లింక్ పంపండి</string>
-    <string name="app_home_add_context">సందర్భం జోడించండి</string>
+    <string name="app_home_add_context">వివరాలు జోడించండి</string>
     <string name="app_home_says">%1$s అంటున్నారు:</string>
     <string name="app_home_my_side">నా వైపు కథ:</string>
     <string name="app_home_other_side">వాళ్ల వైపు కథ:</string>

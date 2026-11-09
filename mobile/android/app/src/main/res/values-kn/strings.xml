@@ -183,6 +183,21 @@
     <string name="signin_email_submit">ಸೈನ್ ಇನ್ ಲಿಂಕ್ ಇಮೇಲ್ ಮಾಡಿ</string>
     <string name="signin_email_sent">ನಿಮ್ಮ ಇನ್‌ಬಾಕ್ಸ್ ನೋಡಿ. %1$s ವಿಳಾಸಕ್ಕೆ ಸೈನ್ ಇನ್ ಲಿಂಕ್ ಕಳುಹಿಸಿದ್ದೇವೆ. ಅದು 10 ನಿಮಿಷ ಕೆಲಸ ಮಾಡುತ್ತದೆ.</string>
     <string name="signin_email_invalid">ಈ ಇಮೇಲ್ ವಿಳಾಸ ಸರಿಯಾಗಿ ಕಾಣುತ್ತಿಲ್ಲ.</string>
+    <string name="signin_password">ಪಾಸ್‌ವರ್ಡ್</string>
+    <string name="signin_password_new">ಹೊಸ ಪಾಸ್‌ವರ್ಡ್</string>
+    <string name="signin_password_show">ಪಾಸ್‌ವರ್ಡ್ ತೋರಿಸಿ</string>
+    <string name="signin_create">ಖಾತೆ ರಚಿಸಿ</string>
+    <string name="signin_forgot">ಪಾಸ್‌ವರ್ಡ್ ಮರೆತಿರಾ?</string>
+    <string name="signin_use_code">ಬದಲಿಗೆ ನನಗೆ ಇಮೇಲ್‌ನಲ್ಲಿ ಕೋಡ್ ಕಳುಹಿಸಿ</string>
+    <string name="signin_use_password">ಬದಲಿಗೆ ಪಾಸ್‌ವರ್ಡ್ ಬಳಸಿ</string>
+    <string name="signin_password_wrong">ಈ ಇಮೇಲ್ ಮತ್ತು ಪಾಸ್‌ವರ್ಡ್ ಹೊಂದಿಕೆಯಾಗುತ್ತಿಲ್ಲ.</string>
+    <string name="signin_password_short">ಕನಿಷ್ಠ 8 ಅಕ್ಷರಗಳನ್ನು ಬಳಸಿ.</string>
+    <string name="signin_create_note">ಈ ವಿಳಾಸವನ್ನು ದೃಢೀಕರಿಸಲು ನಾವು ನಿಮಗೆ ಇಮೇಲ್‌ನಲ್ಲಿ ಒಂದು ಕೋಡ್ ಕಳುಹಿಸುತ್ತೇವೆ. ಇದನ್ನು ಒಮ್ಮೆ ಮಾತ್ರ ಮಾಡಬೇಕು.</string>
+    <string name="signin_password_choose">ನೀವು ಸೈನ್ ಇನ್ ಆಗಿದ್ದೀರಿ. ಮುಂದಿನ ಬಾರಿಗೆ ಒಂದು ಪಾಸ್‌ವರ್ಡ್ ಆರಿಸಿ.</string>
+    <string name="signin_password_save">ಪಾಸ್‌ವರ್ಡ್ ಉಳಿಸಿ</string>
+    <string name="signin_password_save_failed">ನೀವು ಸೈನ್ ಇನ್ ಆಗಿದ್ದೀರಿ, ಆದರೆ ಪಾಸ್‌ವರ್ಡ್ ಉಳಿಸಲು ಆಗಲಿಲ್ಲ. ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ, ಅಥವಾ ನಂತರ ಸೆಟ್ಟಿಂಗ್‌ಗಳಲ್ಲಿ ಹೊಂದಿಸಿ.</string>
+    <string name="signin_password_skip">ಈಗ ಬಿಟ್ಟುಬಿಡಿ</string>
+    <string name="signin_password_submit">ಸೈನ್ ಇನ್ ಮಾಡಿ</string>
     <string name="signin_provider_unavailable">ಇನ್ನೂ ಲಭ್ಯವಿಲ್ಲ</string>
     <string name="signin_failed">ಸೈನ್ ಇನ್ ಆಗಲಿಲ್ಲ. ಇನ್ನೊಮ್ಮೆ ಪ್ರಯತ್ನಿಸುತ್ತೀರಾ?</string>
     <string name="signin_loading">ಸೈನ್ ಇನ್ ಆಯ್ಕೆಗಳು ಲೋಡ್ ಆಗುತ್ತಿವೆ…</string>
@@ -200,6 +215,10 @@
     <string name="account_delete">ಖಾತೆ ಅಳಿಸಿ</string>
     <string name="account_delete_confirm">ನಿಮ್ಮ ಖಾತೆ ಅಳಿಸಬೇಕೇ? ನಿಮ್ಮ ಕ್ರೆಡಿಟ್‌ಗಳು, ಪ್ಲಾನ್ ಮತ್ತು ಸೈನ್ ಇನ್ ವಿವರಗಳು ಅಳಿಸಿಹೋಗುತ್ತವೆ. ನಿಮ್ಮ ತೀರ್ಪುಗಳು ಮತ್ತು ಕೇಸ್‌ಗಳಲ್ಲಿನ ನಿಮ್ಮ ಕಡೆಯ ಮಾತುಗಳನ್ನು ತೆಗೆದುಹಾಕಲಾಗುತ್ತದೆ: ನೀವು ಬರೆದದ್ದು ಮತ್ತು ಹೆಸರುಗಳು ಅಳಿಸಿಹೋಗುತ್ತವೆ, ಅವುಗಳ ಹಂಚಿಕೆ ಲಿಂಕ್‌ಗಳು ಕೆಲಸ ಮಾಡುವುದನ್ನು ನಿಲ್ಲಿಸುತ್ತವೆ.</string>
     <string name="account_delete_yes">ಹೌದು, ಅಳಿಸಿ</string>
+    <string name="account_password_set">ಪಾಸ್‌ವರ್ಡ್ ಹೊಂದಿಸಿ</string>
+    <string name="account_password_change">ಪಾಸ್‌ವರ್ಡ್ ಬದಲಿಸಿ</string>
+    <string name="account_password_current">ಪ್ರಸ್ತುತ ಪಾಸ್‌ವರ್ಡ್</string>
+    <string name="account_password_saved">ಪಾಸ್‌ವರ್ಡ್ ಉಳಿಸಲಾಗಿದೆ.</string>
     <string name="account_delete_cancel">ಖಾತೆ ಇರಲಿ</string>
     <string name="account_delete_failed">ಈಗ ಖಾತೆ ಅಳಿಸಲು ಆಗಲಿಲ್ಲ. ಇನ್ನೊಮ್ಮೆ ಪ್ರಯತ್ನಿಸುತ್ತೀರಾ?</string>
     <string name="account_sign_in_prompt">ನಿಮ್ಮ ಪ್ಲಾನ್ ಮತ್ತು ಕ್ರೆಡಿಟ್‌ಗಳನ್ನು ನೋಡಲು ಸೈನ್ ಇನ್ ಮಾಡಿ.</string>
@@ -372,7 +391,7 @@
     <string name="appeal_title">ಹೆಚ್ಚಿನ ವಿವರ ಸೇರಿಸಿ</string>
     <string name="home_example">ಒಂದು ಉದಾಹರಣೆ ಪ್ರಯತ್ನಿಸಿ</string>
     <string name="home_your_placeholder">ಸಮಸ್ಯೆ ಏನು?</string>
-    <string name="home_add_context">ಹಿನ್ನೆಲೆ ಸೇರಿಸಿ</string>
+    <string name="home_add_context">ವಿವರ ಸೇರಿಸಿ</string>
     <string name="home_add_their_side">ಅವರ ಕಡೆ ಸೇರಿಸಿ</string>
     <string name="home_remove_their_side">ಅವರ ಕಡೆ ತೆಗೆದುಹಾಕಿ</string>
     <string name="home_send_link">ಲಿಂಕ್ ಕಳುಹಿಸಿ</string>
@@ -505,6 +524,8 @@
     <string name="stamp_dissolved">ಪದದ ಗೊಂದಲ</string>
     <string name="best_point_of">%1$s ಅವರ ಅತ್ಯುತ್ತಮ ಅಂಶ</string>
     <string name="best_point_self">ನಿಮ್ಮ ಅತ್ಯುತ್ತಮ ಅಂಶ</string>
+    <string name="error_password_wrong">ಈ ಪಾಸ್‌ವರ್ಡ್ ಸರಿಯಿಲ್ಲ.</string>
+    <string name="error_password_required">ನಿಮ್ಮ ಪ್ರಸ್ತುತ ಪಾಸ್‌ವರ್ಡ್ ನಮೂದಿಸಿ.</string>
     <string name="error_age_blocked">Judge 18 ವರ್ಷ ಮತ್ತು ಮೇಲ್ಪಟ್ಟವರಿಗೆ ಮಾತ್ರ.</string>
     <string name="error_age_unconfirmed">ಮುಂದುವರಿಯಲು ನಿಮಗೆ 18 ವರ್ಷ ಅಥವಾ ಹೆಚ್ಚು ವಯಸ್ಸಾಗಿದೆ ಎಂದು ದೃಢೀಕರಿಸಿ.</string>
     <string name="app_name">Judge</string>
@@ -544,8 +565,8 @@
     </plurals>
     <string name="app_history_offline_remove">ನೀವು ಆಫ್‌ಲೈನ್ ಇದ್ದೀರಿ. ತೆಗೆದುಹಾಕಲು ಇಂಟರ್ನೆಟ್ ಸಂಪರ್ಕ ಬೇಕು.</string>
     <string name="app_pricing_free_account">Apple, Google ಅಥವಾ ಇಮೇಲ್ ಮೂಲಕ ಸೈನ್ ಇನ್ ಮಾಡಿ</string>
-    <string name="app_context_label">ಹಿನ್ನೆಲೆ (ಐಚ್ಛಿಕ)</string>
-    <string name="app_pricing_context">ಹಿನ್ನೆಲೆ ಚಿತ್ರಗಳನ್ನು ಓದಿ ನಂತರ ಎಸೆಯಲಾಗುತ್ತದೆ, ಹೆಚ್ಚುವರಿ ವೆಚ್ಚವಿಲ್ಲ</string>
+    <string name="app_context_label">ವಿವರ (ಐಚ್ಛಿಕ)</string>
+    <string name="app_pricing_context">ವಿವರದ ಚಿತ್ರಗಳನ್ನು ಓದಿ ನಂತರ ಎಸೆಯಲಾಗುತ್ತದೆ, ಹೆಚ್ಚುವರಿ ವೆಚ್ಚವಿಲ್ಲ</string>
     <string name="app_pricing_headline">ನಿಮ್ಮ ಮೊದಲ ತೀರ್ಪು ನಮ್ಮ ಕಡೆಯಿಂದ ಉಚಿತ.</string>
     <string name="app_pricing_sub">ಖಾತೆ ತೆರೆಯಿರಿ, ನಿಮ್ಮ ಮೊದಲ ತೀರ್ಪು ಎಲ್ಲಾ ಸೌಲಭ್ಯಗಳ ಸಮೇತ ಉಚಿತ. ಅದರ ನಂತರ ಒಂದು ಪ್ಯಾಕ್ ಆರಿಸಿ ಅಥವಾ ಮಾಸಿಕ ಪ್ಲಾನ್ ತೆಗೆದುಕೊಳ್ಳಿ.</string>
     <string name="app_pricing_headline_member">ಇನ್ನಷ್ಟು ತೀರ್ಪುಗಳನ್ನು ಪಡೆಯಿರಿ.</string>
@@ -606,7 +627,7 @@
     <string name="app_home_your_side_label">ವಾದದಲ್ಲಿ ನಿಮ್ಮ ಕಡೆಯ ಮಾತು</string>
     <string name="app_home_their_side_label">ವಾದದಲ್ಲಿ ಅವರ ಕಡೆಯ ಮಾತು</string>
     <string name="app_home_send_link">ಲಿಂಕ್ ಕಳುಹಿಸಿ</string>
-    <string name="app_home_add_context">ಹಿನ್ನೆಲೆ ಸೇರಿಸಿ</string>
+    <string name="app_home_add_context">ವಿವರ ಸೇರಿಸಿ</string>
     <string name="app_home_says">%1$s ಹೇಳುವುದು:</string>
     <string name="app_home_my_side">ನನ್ನ ಕಡೆಯ ಮಾತು:</string>
     <string name="app_home_other_side">ಅವರ ಕಡೆಯ ಮಾತು:</string>

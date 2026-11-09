@@ -479,13 +479,13 @@ const pricing = (): AppConfig["pricing"] => ({
 
 const CONFIG_BODIES: Record<string, AppConfig> = {
   full: {
-    signIn: { apple: true, google: true, email: true, emailCode: true, dev: false },
+    signIn: { apple: true, google: true, email: true, emailCode: true, password: true, dev: false },
     premiumEnabled: true,
     pricing: pricing(),
     features: { cases: true, evidence: true, history: true },
   },
   minimal: {
-    signIn: { apple: false, google: true, email: false, emailCode: false, dev: false },
+    signIn: { apple: false, google: true, email: false, emailCode: false, password: false, dev: false },
     premiumEnabled: false,
     pricing: pricing(),
     features: { cases: false, evidence: false, history: false },

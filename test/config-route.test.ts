@@ -45,7 +45,7 @@ describe("GET /api/v1/config", () => {
     const { res, body } = await call();
     expect(res.headers.get("cache-control")).toBe("no-store");
     expect(body).toEqual({
-      signIn: { apple: false, google: false, email: false, emailCode: false, dev: false },
+      signIn: { apple: false, google: false, email: false, emailCode: false, password: false, dev: false },
       premiumEnabled: false,
       pricing: {
         currency: "USD",
@@ -73,7 +73,7 @@ describe("GET /api/v1/config", () => {
     vi.stubEnv("RESEND_API_KEY", "re_x");
     vi.stubEnv("EMAIL_FROM", "Judge <signin@verdict.example.org>");
     const { body } = await call("verdict.example.org");
-    expect(body.signIn).toEqual({ apple: false, google: true, email: true, emailCode: true, dev: false });
+    expect(body.signIn).toEqual({ apple: false, google: true, email: true, emailCode: true, password: true, dev: false });
     expect(body.premiumEnabled).toBe(true);
   });
 

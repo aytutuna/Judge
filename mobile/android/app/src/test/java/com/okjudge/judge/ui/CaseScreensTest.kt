@@ -14,7 +14,6 @@ import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
-import androidx.compose.ui.test.performScrollTo
 import com.okjudge.judge.Fixtures
 import com.okjudge.judge.core.display.Errors
 import com.okjudge.judge.core.display.UiError
@@ -147,7 +146,7 @@ class CaseScreensTest {
         state = state.copy(sideText = "x".repeat(19))
         compose.onNodeWithTag(CaseTags.WRITE_SUBMIT).assertIsNotEnabled()
         state = state.copy(sideText = "x".repeat(20))
-        compose.onNodeWithTag(CaseTags.WRITE_SUBMIT).performScrollTo().assertIsEnabled().performClick()
+        compose.onNodeWithTag(CaseTags.WRITE_SUBMIT).assertIsEnabled().performClick()
         assertEquals(1, sent)
     }
 
@@ -186,7 +185,7 @@ class CaseScreensTest {
             }
         }
         compose.onNodeWithTag(CaseTags.APPEAL_SUBMIT).assertDoesNotExist()
-        compose.onNodeWithTag(VerdictTags.ADD_CONTEXT).performScrollTo().performClick()
+        compose.onNodeWithTag(VerdictTags.ADD_CONTEXT).performClick()
         compose.onNodeWithTag(CaseTags.APPEAL_SUBMIT).assertIsNotEnabled()
         compose.onNodeWithText(en.appAppealCostCase).assertExists()
         state = state.copy(appealText = "x".repeat(19))
@@ -201,7 +200,7 @@ class CaseScreensTest {
     fun appealForm_offersAScreenshot_onlyOnAPremiumCase() {
         var state by mutableStateOf(stateOf("judged"))
         compose.setContent { Themed(AppLang.EN) { CaseScreen(state, evidenceOn = true, actions = CaseActions(), reducedMotion = true) } }
-        compose.onNodeWithTag(VerdictTags.ADD_CONTEXT).performScrollTo().performClick()
+        compose.onNodeWithTag(VerdictTags.ADD_CONTEXT).performClick()
         compose.onNodeWithTag(CaseTags.APPEAL_SUBMIT).assertExists()
         compose.onAllNodesWithTag(EvidenceTags.ADD).assertCountEquals(1)
         state = stateOf("judged_free")
@@ -214,7 +213,7 @@ class CaseScreensTest {
     fun appealBlocked_forTheOwner_saysWhy_andOffersPricing() {
         var pricing = 0
         compose.setContent { Themed(AppLang.EN) { CaseScreen(stateOf("judged_one_sided"), true, CaseActions(onPricing = { pricing++ }), true) } }
-        compose.onNodeWithTag(VerdictTags.ADD_CONTEXT).performScrollTo().performClick()
+        compose.onNodeWithTag(VerdictTags.ADD_CONTEXT).performClick()
         compose.onNodeWithTag(CaseTags.APPEAL_NOTE).assertTextContains(en.errorPremiumRequired)
         compose.onNodeWithTag(CaseTags.APPEAL_PRICING).performClick()
         assertEquals(1, pricing)
@@ -270,7 +269,7 @@ class CaseScreensTest {
     fun judged_rowsOpenTheDetails_andBackReturns() {
         compose.setContent { Themed(AppLang.EN) { CaseScreen(stateOf("judged"), true, CaseActions(), true) } }
         compose.onNodeWithText(en.appVerdictBack).assertDoesNotExist()
-        compose.onNodeWithTag(VerdictTags.CRUX_ROW).performScrollTo().performClick()
+        compose.onNodeWithTag(VerdictTags.CRUX_ROW).performClick()
         compose.onNodeWithText(en.appVerdictBack).assertExists().performClick()
         compose.onNodeWithTag(VerdictTags.CRUX_ROW).assertExists()
     }

@@ -45,6 +45,11 @@ export const API_ERROR_STATUS = {
   age_blocked: 403,
   /** Starting a verdict or case before confirming the account holder is 18+. */
   age_unconfirmed: 403,
+  /** Replacing a password without the current one or a recent sign-in
+   * (POST /api/v1/me/password). */
+  password_required: 403,
+  /** The current password sent to POST /api/v1/me/password is wrong. */
+  password_wrong: 403,
 } as const;
 
 export type ApiErrorCode = keyof typeof API_ERROR_STATUS;

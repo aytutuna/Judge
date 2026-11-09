@@ -3,6 +3,8 @@ package com.okjudge.judge.ui.history
 import com.okjudge.judge.core.cases.CaseLogic
 import com.okjudge.judge.core.display.Errors
 import com.okjudge.judge.core.display.Party
+import com.okjudge.judge.core.display.SealSide
+import com.okjudge.judge.core.display.VerdictDisplay
 import com.okjudge.judge.core.display.PartyNames
 import com.okjudge.judge.core.display.RestoreNames
 import com.okjudge.judge.core.data.SavedVerdict
@@ -104,6 +106,25 @@ object HistoryLabels {
         HistoryState.WAITING -> Tone.WAITING
         HistoryState.FAILED, HistoryState.REJUDGE_FAILED -> Tone.ATTENTION
         HistoryState.EXPIRED, HistoryState.REMOVED, HistoryState.REMOVED_BY_OTHER, null -> Tone.MUTED
+    }
+
+    /** What a row of either kind says about itself, for the side menu's cards. */
+    fun status(entry: HistoryEntry, s: Strings, now: Long = System.currentTimeMillis()): String? = when (entry) {
+        is HistoryEntry.Account -> status(entry.item, s, now)
+        is HistoryEntry.Phone -> {
+            val saved = entry.verdict
+            VerdictDisplay.verdictLabel(saved.original.result, PartyNames.partyNames(saved.nameMap, saved.lang, s), s)
+        }
+    }
+
+    /** Whose way the ruling went; a phone row's Party A is the writer. */
+    fun tone(entry: HistoryEntry, now: Long = System.currentTimeMillis()): Tone = when (entry) {
+        is HistoryEntry.Account -> tone(entry.item, now)
+        is HistoryEntry.Phone -> when (VerdictDisplay.sealOf(entry.verdict.original.result)) {
+            SealSide.A -> Tone.YOURS
+            SealSide.B -> Tone.THEIRS
+            SealSide.NONE -> Tone.NEUTRAL
+        }
     }
 
     /** Small tags after the date: "You answered", "After new context". */

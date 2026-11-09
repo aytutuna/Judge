@@ -27,7 +27,7 @@ const ja: AppLocale = {
     "app.history.removeFailed": "{n}件を削除できませんでした。接続を確認して、もう一度お試しください。",
     "app.history.offlineRemove": "オフラインのため削除できません。接続してからもう一度お試しください。",
     "app.pricing.free.account": "Apple、Google、またはメールアドレスでログイン",
-    "app.context.label": "状況の補足（任意）",
+    "app.context.label": "補足（任意）",
     "app.pricing.context": "補足の画像は読み取ったあと破棄されます。追加料金はかかりません",
     "app.pricing.headline": "最初の判定は無料です。",
     "app.pricing.sub":
@@ -90,7 +90,7 @@ const ja: AppLocale = {
     "app.home.yourSideLabel": "揉めごとについてのあなたの言い分",
     "app.home.theirSideLabel": "揉めごとについての相手の言い分",
     "app.home.sendLink": "リンクを送る",
-    "app.home.addContext": "状況を追加",
+    "app.home.addContext": "補足を追加",
     "app.home.says": "{name}の言い分：",
     "app.home.mySide": "私の言い分：",
     "app.home.otherSide": "相手の言い分：",

@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.test.core.app.ApplicationProvider
 import com.okjudge.judge.core.api.JudgeApi
 import com.okjudge.judge.core.api.TokenStore
+import com.okjudge.judge.core.display.UiError
 import com.okjudge.judge.core.auth.Routes.Companion.CONFIG
 import com.okjudge.judge.core.auth.Routes.Companion.DELETE_ME
 import com.okjudge.judge.core.auth.Routes.Companion.GOOGLE
@@ -267,6 +268,73 @@ class AccountTest {
         assertTrue(e.subscription.willRenew)
         assertEquals("2026-11-01T00:00:00.000Z", e.subscription.periodEnd)
         assertEquals("Bearer session-m", routes.requestsTo(ME).single().headers["Authorization"])
+    }
+
+    @Test
+    fun password_configAndMeParseLeniently() = runBlocking {
+        val absent = WireJson.json.decodeFromString(
+            com.okjudge.judge.core.model.ServerConfig.serializer(),
+            """{"signIn":{"google":true,"emailCode":true}}""",
+        )
+        assertFalse("an older server has no passwords", absent.passwordSignIn)
+        val on = WireJson.json.decodeFromString(
+            com.okjudge.judge.core.model.ServerConfig.serializer(),
+            """{"signIn":{"emailCode":true,"password":true}}""",
+        )
+        assertTrue(on.passwordSignIn)
+        val noCode = WireJson.json.decodeFromString(
+            com.okjudge.judge.core.model.ServerConfig.serializer(),
+            """{"signIn":{"emailCode":false,"password":true}}""",
+        )
+        assertFalse("a password needs the code", noCode.passwordSignIn)
+
+        routes.on(ME, json(200, """{"user":{"id":"u1","email":"a@example.com","name":"","image":null},"entitlement":null,"hasPassword":true}"""))
+        routes.on(ME, json(200, """{"user":{"id":"u1","email":"a@example.com","name":"","image":null},"entitlement":null}"""))
+        val account = account(store().apply { set("session-p") })
+        account.refresh()
+        assertEquals(true, (account.state.value as Account.State.SignedIn).me!!.hasPassword)
+        account.refresh()
+        assertNull("older servers send none", (account.state.value as Account.State.SignedIn).me!!.hasPassword)
+    }
+
+    @Test
+    fun setPassword_sendsTheBearer_andMarksTheAccount() = runBlocking {
+        routes.on(ME, json(200, """{"user":{"id":"u1","email":"a@example.com","name":"","image":null},"entitlement":null,"hasPassword":false}"""))
+        routes.on(Routes.SET_PASSWORD, json(200, """{"ok":true}"""))
+        val account = account(store().apply { set("session-p") })
+        account.refresh()
+        assertNull(account.setPassword("made-up-pass", "old-made-up"))
+        val request = routes.requestsTo(Routes.SET_PASSWORD).single()
+        assertEquals("Bearer session-p", request.headers["Authorization"])
+        val body = Json.parseToJsonElement(request.body!!.utf8()).jsonObject
+        assertEquals("made-up-pass", body["password"]!!.jsonPrimitive.content)
+        assertEquals("old-made-up", body["current"]!!.jsonPrimitive.content)
+        assertEquals(true, (account.state.value as Account.State.SignedIn).me!!.hasPassword)
+    }
+
+    @Test
+    fun setPassword_mapsTheServerCodes() = runBlocking {
+        val account = account(store().apply { set("session-p") })
+        suspend fun answer(status: Int, code: String): SignInError? {
+            routes.on(Routes.SET_PASSWORD, json(status, """{"code":"$code"}"""))
+            return account.setPassword("made-up-pass", null)
+        }
+        assertEquals(SignInError.PASSWORD_SHORT, answer(400, "too_short"))
+        assertEquals(SignInError.PASSWORD_SHORT, answer(400, "too_long"))
+        assertEquals(SignInError.CURRENT_PASSWORD_REQUIRED, answer(403, "password_required"))
+        assertEquals(SignInError.CURRENT_PASSWORD_WRONG, answer(403, "password_wrong"))
+        assertEquals(SignInError.RATE_LIMITED, answer(429, "rate_limited"))
+        assertEquals(SignInError.UNAVAILABLE, answer(503, "unavailable"))
+        assertEquals(SignInError.PASSWORD_SAVE_FAILED, answer(400, "invalid"))
+    }
+
+    @Test
+    fun passwordSignInError_mapsTheStatus() {
+        fun api(status: Int) = UiError.Api(code = null, status = status)
+        assertEquals(SignInError.PASSWORD_WRONG, Account.passwordSignInError(api(401)))
+        assertEquals(SignInError.UNAVAILABLE, Account.passwordSignInError(api(404)))
+        assertEquals(SignInError.RATE_LIMITED, Account.passwordSignInError(api(429)))
+        assertEquals(SignInError.FAILED, Account.passwordSignInError(api(400)))
     }
 
     @Test

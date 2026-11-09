@@ -267,55 +267,59 @@ struct VerdictNotes: View {
     }
 }
 
-/// Share (filled) and "Add context & appeal" (outlined) under the ruling.
-/// Without the second, copy link takes its slot; with it, copying is left
-/// to the share sheet so both labels fit.
-struct VerdictActions: View {
+/// Share (filled) at the top right of a verdict. Copy link sits beside it,
+/// except for the writer, whose appeal button is below the verdict and who
+/// copies from the share sheet.
+struct VerdictShare: View {
     @Environment(AppModel.self) private var app
-    /// Nil hides share and copy (a removed case: its links are closed).
+    /// Nil hides the row (a removed case: its links are closed).
     let shareURL: URL?
     /// The anonymized original headline (anything that leaves the phone
     /// stays anonymized).
     let shareSubject: String
     let lang: AppLang
-    var onAddContext: (() -> Void)? = nil
+    var writer = false
     @State private var copied = false
 
     var body: some View {
-        if shareURL != nil || onAddContext != nil {
+        if let shareURL {
             HStack(spacing: 8) {
-                if let shareURL {
-                    ShareLink(item: shareURL, subject: Text(shareSubject), message: Text(L10n.shareText(lang))) {
-                        Label(L10n.share(lang), systemImage: "square.and.arrow.up")
-                            .frame(maxWidth: .infinity)
-                    }
-                    .buttonStyle(CardActionStyle(filled: true))
-                    .simultaneousGesture(TapGesture().onEnded { app.analytics.track("share_tapped") })
-                }
-                if let onAddContext {
-                    Button(action: onAddContext) {
-                        Text(L10n.appAppealTitle(lang))
-                            .frame(maxWidth: .infinity)
-                    }
-                    .buttonStyle(CardActionStyle(filled: false))
-                }
-                if let shareURL, onAddContext == nil {
+                Spacer(minLength: 0)
+                if !writer {
                     Button {
                         UIPasteboard.general.url = shareURL
                         copied = true
                     } label: {
                         Label(copied ? L10n.copied(lang) : L10n.copyLink(lang), systemImage: copied ? "checkmark" : "link")
-                            .frame(maxWidth: .infinity)
                     }
-                    .buttonStyle(CardActionStyle(filled: false))
+                    .buttonStyle(CardActionStyle(look: .outline))
                     .task(id: copied) {
                         guard copied else { return }
                         try? await Task.sleep(for: .seconds(2))
                         if !Task.isCancelled { copied = false }
                     }
                 }
+                ShareLink(item: shareURL, subject: Text(shareSubject), message: Text(L10n.shareText(lang))) {
+                    Label(L10n.share(lang), systemImage: "square.and.arrow.up")
+                }
+                .buttonStyle(CardActionStyle(look: .share))
+                .simultaneousGesture(TapGesture().onEnded { app.analytics.track("share_tapped") })
             }
         }
+    }
+}
+
+/// "Add context & appeal" under the verdict, full width in the red accent.
+struct VerdictAppealButton: View {
+    let lang: AppLang
+    let action: () -> Void
+
+    var body: some View {
+        Button(action: action) {
+            Text(L10n.appAppealTitle(lang))
+                .frame(maxWidth: .infinity)
+        }
+        .buttonStyle(CardActionStyle(look: .appeal))
     }
 }
 
@@ -371,18 +375,25 @@ struct BedrockTile: View {
 
 /// 52 pt buttons under the ruling: ink when filled, paper with a hairline otherwise.
 private struct CardActionStyle: ButtonStyle {
-    let filled: Bool
+    enum Look { case share, outline, appeal }
+    let look: Look
 
     func makeBody(configuration: Configuration) -> some View {
+        let shape = RoundedRectangle(cornerRadius: Radius.field, style: .continuous)
+        let fill: Color = switch look {
+        case .share: Brand.ink
+        case .appeal: Brand.terraInk
+        case .outline: configuration.isPressed ? Brand.well : Brand.paper
+        }
         configuration.label
             .brandText(TypeStyle(face: .interTight, weight: 600, size: 15, lineHeight: 1.2, textStyle: .headline, maxScale: 1.6))
-            .foregroundStyle(filled ? Brand.ivory : Brand.ink)
+            .foregroundStyle(look == .appeal ? Brand.paper : look == .share ? Brand.ivory : Brand.ink)
             .lineLimit(1)
             .minimumScaleFactor(0.8)
-            .padding(.horizontal, 12)
-            .frame(minHeight: 52)
-            .background(RoundedRectangle(cornerRadius: Radius.field, style: .continuous).fill(filled ? Brand.ink : (configuration.isPressed ? Brand.well : Brand.paper)))
-            .overlay(RoundedRectangle(cornerRadius: Radius.field, style: .continuous).strokeBorder(filled ? Color.clear : Brand.line2, lineWidth: 1))
+            .padding(.horizontal, 16)
+            .frame(minHeight: look == .appeal ? 52 : 44)
+            .background(shape.fill(fill))
+            .overlay(shape.strokeBorder(look == .outline ? Brand.line2 : Color.clear, lineWidth: 1))
             .scaleEffect(configuration.isPressed ? 0.98 : 1)
     }
 }

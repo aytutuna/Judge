@@ -27,8 +27,37 @@ export function initialOf(name: string, email: string): string {
 }
 
 /** Same-origin path to come back to after signing in. */
-function returnPath(pathname: string | null): string {
+export function returnPath(pathname: string | null): string {
   return pathname && pathname.startsWith("/") && !pathname.startsWith("/signin") ? pathname : "/";
+}
+
+/** The picture inside an avatar circle: their image, else their initial,
+ * else a plain silhouette when signed out. */
+export function AccountPicture({ user }: { user: MeResponse["user"] }) {
+  const [failedImage, setFailedImage] = useState<string | null>(null);
+  if (!user) {
+    return (
+      <svg viewBox="0 0 24 24" aria-hidden>
+        <circle cx="12" cy="9" r="4" fill="currentColor" />
+        <path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7z" fill="currentColor" />
+      </svg>
+    );
+  }
+  return user.image && failedImage !== user.image ? (
+    // eslint-disable-next-line @next/next/no-img-element -- a provider's avatar URL
+    <img src={user.image} alt="" referrerPolicy="no-referrer" onError={() => setFailedImage(user.image)} />
+  ) : (
+    <span aria-hidden>{initialOf(user.name, user.email)}</span>
+  );
+}
+
+export async function signOutNow() {
+  try {
+    const { signOut } = await import("@/lib/auth-client");
+    await signOut();
+  } finally {
+    markSignedOut();
+  }
 }
 
 /**
@@ -41,7 +70,6 @@ export function AccountMenu({ lang }: { lang: Lang }) {
   const { me, config } = useViewer();
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
-  const [failedImage, setFailedImage] = useState<string | null>(null);
   const rootRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
@@ -61,15 +89,10 @@ export function AccountMenu({ lang }: { lang: Lang }) {
   const entry = accountEntry(config, me);
   const showSignIn = entry === "signin" && !pathname?.startsWith("/signin");
 
-  async function signOutNow() {
+  function signOut() {
     setOpen(false);
     buttonRef.current?.focus();
-    try {
-      const { signOut } = await import("@/lib/auth-client");
-      await signOut();
-    } finally {
-      markSignedOut();
-    }
+    return signOutNow();
   }
 
   function onKeyDown(e: KeyboardEvent) {
@@ -112,19 +135,7 @@ export function AccountMenu({ lang }: { lang: Lang }) {
         aria-label={t(lang, "nav.accountMenu")}
         onClick={() => setOpen((o) => !o)}
       >
-        {user ? (
-          user.image && failedImage !== user.image ? (
-            // eslint-disable-next-line @next/next/no-img-element -- a provider's avatar URL
-            <img src={user.image} alt="" referrerPolicy="no-referrer" onError={() => setFailedImage(user.image)} />
-          ) : (
-            <span aria-hidden>{initialOf(user.name, user.email)}</span>
-          )
-        ) : (
-          <svg viewBox="0 0 24 24" aria-hidden>
-            <circle cx="12" cy="9" r="4" fill="currentColor" />
-            <path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7z" fill="currentColor" />
-          </svg>
-        )}
+        <AccountPicture user={user} />
       </button>
       <div
         id={panelId}
@@ -170,7 +181,7 @@ export function AccountMenu({ lang }: { lang: Lang }) {
           </li>
           {user ? (
             <li role="none">
-              <button type="button" role="menuitem" className={styles.item} onClick={() => void signOutNow()}>
+              <button type="button" role="menuitem" className={styles.item} onClick={() => void signOut()}>
                 {t(lang, "nav.signOut")}
               </button>
             </li>

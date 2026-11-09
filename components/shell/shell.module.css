@@ -35,19 +35,14 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
   flex: none;
-  min-width: 40px;
-  min-height: 40px;
-  padding: 0 10px;
+  width: 40px;
+  height: 40px;
+  padding: 0;
   border: 0;
-  border-radius: var(--radius-chip);
-  background: none;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--ink) 8%, transparent);
   color: var(--muted);
-  font: inherit;
-  font-size: 14px;
-  font-weight: 500;
-  white-space: nowrap;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
   transition:
@@ -57,7 +52,7 @@
 }
 @media (hover: hover) {
   .gamify:hover {
-    background: color-mix(in srgb, var(--ink) 6%, transparent);
+    background: color-mix(in srgb, var(--ink) 14%, transparent);
     color: var(--ink);
   }
 }
@@ -75,37 +70,32 @@ html:not([data-game="off"]) .gamify {
   height: 20px;
   flex: none;
 }
-.gamifyLabel {
-  display: none;
-}
-@media (min-width: 640px) {
-  .gamifyLabel {
-    display: inline;
-  }
-}
 
 .menuButton {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   flex: none;
-  width: 44px;
-  height: 44px;
-  margin-inline-start: -10px;
+  width: 40px;
+  height: 40px;
   padding: 0;
   border: 0;
   border-radius: 50%;
-  background: none;
+  background: color-mix(in srgb, var(--ink) 8%, transparent);
   color: var(--ink);
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
 }
 .menuButton:hover {
-  background: color-mix(in srgb, var(--ink) 6%, transparent);
+  background: color-mix(in srgb, var(--ink) 14%, transparent);
+}
+.menuButton:focus-visible {
+  outline: 2px solid var(--terra-ink);
+  outline-offset: 2px;
 }
 .menuButton svg {
-  width: 22px;
-  height: 22px;
+  width: 20px;
+  height: 20px;
 }
 
 /* A full-screen modal dialog: the scrim fills it, the panel sits at the
@@ -166,36 +156,174 @@ html:not([data-game="off"]) .gamify {
 .menuRow {
   display: flex;
   align-items: center;
+  gap: 12px;
+  width: 100%;
   min-height: 48px;
   padding: 4px 12px;
+  border: 0;
   border-radius: 12px;
+  background: none;
   color: var(--ink);
+  font: inherit;
   font-size: 16px;
   font-weight: 500;
+  text-align: start;
   text-decoration: none;
+  cursor: pointer;
 }
 .menuRow[aria-current="page"] {
   background: var(--paper);
   box-shadow: 0 1px 3px var(--line-2);
 }
+.menuIcon {
+  width: 22px;
+  height: 22px;
+  flex: none;
+  color: var(--ink-2);
+}
+.menuHeadingWrap {
+  margin: 0;
+  font: inherit;
+}
+.menuHeading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 44px;
+  margin-top: 8px;
+  padding: 0 12px;
+  border-bottom: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+}
+.menuHeading svg {
+  width: 14px;
+  height: 14px;
+}
+.menuHeading[aria-current="page"] {
+  color: var(--ink);
+}
+.panel li + li:has(> .recent) {
+  margin-top: 8px;
+}
 .menuEnd {
   margin-top: auto;
   padding-top: 12px;
 }
-.recent {
-  display: block;
-  min-height: 44px;
-  padding: 0 12px;
-  color: var(--ink-2);
-  font-size: 14px;
-  line-height: 44px;
-  text-decoration: none;
-  white-space: nowrap;
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 56px;
+  padding: 6px 12px;
+  border: 0;
+  border-radius: 12px;
+  background: none;
+  color: var(--ink);
+  font: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  text-align: start;
+  cursor: pointer;
+}
+.profile:hover,
+.profile[aria-expanded="true"] {
+  background: var(--paper);
+}
+.profilePicture {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--terra-ink);
+  color: var(--paper);
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 700;
+  overflow: hidden;
+}
+.profilePicture[data-signed-out] {
+  background: var(--well);
+  color: var(--muted);
+}
+.profilePicture img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.profilePicture svg {
+  width: 24px;
+  height: 24px;
+  margin-top: 4px;
+}
+.profileName {
+  min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.profileItems {
+  margin-bottom: 4px;
+  padding-inline-start: 48px;
+}
+.profileItems[hidden] {
+  display: none;
+}
+.profileItems .menuRow {
+  min-height: 44px;
+  font-size: 15px;
+}
+
+/* Each verdict is its own card, tinted by the ruling; the result words stay
+   under the title so colour is never the only signal. */
+.recent {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-height: 52px;
+  padding: 8px 12px;
+  border: 1px solid var(--line-2);
+  border-radius: 12px;
+  background: var(--paper);
+  color: var(--ink);
+  text-decoration: none;
+}
+.recent[data-tone="yours"] {
+  border-color: var(--sage-strong);
+  background: var(--sage-tint);
+}
+.recent[data-tone="theirs"] {
+  border-color: var(--terra);
+  background: var(--terra-tint);
 }
 .recent[data-removed] {
   opacity: 0.6;
+}
+.recentTitle {
+  font-size: 14px;
+  line-height: 1.35;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+}
+.recentState {
+  color: var(--muted);
+  font-size: 12.5px;
+  font-weight: 600;
+}
+.recent[data-tone="yours"] .recentState {
+  color: var(--sage-ink);
+}
+.recent[data-tone="theirs"] .recentState {
+  color: var(--terra-ink);
 }
 @keyframes scrim-in {
   from {

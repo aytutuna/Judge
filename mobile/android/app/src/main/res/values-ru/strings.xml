@@ -193,6 +193,21 @@
     <string name="signin_email_submit">Прислать ссылку для входа</string>
     <string name="signin_email_sent">Проверьте почту. Мы отправили ссылку для входа на %1$s. Она действует 10 минут.</string>
     <string name="signin_email_invalid">Похоже, в адресе почты ошибка.</string>
+    <string name="signin_password">Пароль</string>
+    <string name="signin_password_new">Новый пароль</string>
+    <string name="signin_password_show">Показать пароль</string>
+    <string name="signin_create">Создать аккаунт</string>
+    <string name="signin_forgot">Забыли пароль?</string>
+    <string name="signin_use_code">Лучше отправьте код на почту</string>
+    <string name="signin_use_password">Лучше войти с паролем</string>
+    <string name="signin_password_wrong">Эта почта и пароль не совпадают.</string>
+    <string name="signin_password_short">Используйте не меньше 8 символов.</string>
+    <string name="signin_create_note">Мы отправим вам код на почту, чтобы подтвердить этот адрес. Это нужно сделать всего один раз.</string>
+    <string name="signin_password_choose">Вы вошли. Выберите пароль на следующий раз.</string>
+    <string name="signin_password_save">Сохранить пароль</string>
+    <string name="signin_password_save_failed">Вы вошли, но пароль сохранить не удалось. Попробуйте ещё раз или задайте его позже в настройках.</string>
+    <string name="signin_password_skip">Пропустить пока</string>
+    <string name="signin_password_submit">Войти</string>
     <string name="signin_provider_unavailable">Пока недоступно</string>
     <string name="signin_failed">Не получилось войти. Попробуете ещё раз?</string>
     <string name="signin_loading">Загружаем варианты входа…</string>
@@ -210,6 +225,10 @@
     <string name="account_delete">Удалить аккаунт</string>
     <string name="account_delete_confirm">Удалить аккаунт? Баланс вердиктов, тариф и данные для входа будут удалены. Ваши вердикты и ваши версии в делах тоже удалятся: написанное вами и имена сотрутся, а ссылки на них перестанут работать.</string>
     <string name="account_delete_yes">Да, удалить</string>
+    <string name="account_password_set">Задать пароль</string>
+    <string name="account_password_change">Сменить пароль</string>
+    <string name="account_password_current">Текущий пароль</string>
+    <string name="account_password_saved">Пароль сохранён.</string>
     <string name="account_delete_cancel">Оставить аккаунт</string>
     <string name="account_delete_failed">Сейчас не получилось удалить аккаунт. Попробуете ещё раз?</string>
     <string name="account_sign_in_prompt">Войдите, чтобы увидеть тариф и баланс вердиктов.</string>
@@ -388,7 +407,7 @@
     <string name="appeal_title">Добавить подробности</string>
     <string name="home_example">Попробовать на примере</string>
     <string name="home_your_placeholder">В чём проблема?</string>
-    <string name="home_add_context">Добавить контекст</string>
+    <string name="home_add_context">Добавить подробности</string>
     <string name="home_add_their_side">Добавить другую сторону</string>
     <string name="home_remove_their_side">Убрать другую сторону</string>
     <string name="home_send_link">Отправить ссылку</string>
@@ -527,6 +546,8 @@
     <string name="stamp_dissolved">Спор о словах</string>
     <string name="best_point_of">Самый сильный довод, который приводит %1$s</string>
     <string name="best_point_self">Ваш самый сильный довод</string>
+    <string name="error_password_wrong">Этот пароль неверный.</string>
+    <string name="error_password_required">Введите текущий пароль.</string>
     <string name="error_age_blocked">Judge только для людей от 18 лет.</string>
     <string name="error_age_unconfirmed">Подтвердите, что вам 18 лет или больше, чтобы продолжить.</string>
     <string name="app_name">Judge</string>
@@ -576,8 +597,8 @@
     </plurals>
     <string name="app_history_offline_remove">Вы не в сети. Чтобы удалить, нужно подключение.</string>
     <string name="app_pricing_free_account">Вход через Apple, Google или почту</string>
-    <string name="app_context_label">Контекст (необязательно)</string>
-    <string name="app_pricing_context">Картинки с контекстом читаются и сразу удаляются, без доплаты</string>
+    <string name="app_context_label">Подробности (необязательно)</string>
+    <string name="app_pricing_context">Картинки с подробностями читаются и сразу удаляются, без доплаты</string>
     <string name="app_pricing_headline">Первый вердикт — за наш счёт.</string>
     <string name="app_pricing_sub">Создайте аккаунт, и первый вердикт со всеми возможностями будет бесплатным. Дальше выберите пакет или оформите подписку.</string>
     <string name="app_pricing_headline_member">Больше вердиктов.</string>
@@ -640,7 +661,7 @@
     <string name="app_home_your_side_label">Ваша версия спора</string>
     <string name="app_home_their_side_label">Версия другой стороны</string>
     <string name="app_home_send_link">Отправить ссылку</string>
-    <string name="app_home_add_context">Добавить контекст</string>
+    <string name="app_home_add_context">Добавить подробности</string>
     <string name="app_home_says">%1$s говорит:</string>
     <string name="app_home_my_side">Моя версия:</string>
     <string name="app_home_other_side">Версия другой стороны:</string>

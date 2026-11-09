@@ -66,6 +66,11 @@ export function refreshViewer(): Promise<void> {
   return inflight;
 }
 
+/** Whether the store holds a signed-in user right now. */
+export function viewerSignedIn(): boolean {
+  return Boolean(state.me?.user);
+}
+
 /** Swap in the age check POST /api/v1/me/age answered with. */
 export function applyAge(age: AgeState): void {
   if (!state.me?.user) return;

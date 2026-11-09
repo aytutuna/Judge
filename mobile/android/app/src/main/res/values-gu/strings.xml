@@ -183,6 +183,21 @@
     <string name="signin_email_submit">મને સાઇન-ઇન લિંક ઈમેલ કરો</string>
     <string name="signin_email_sent">તમારું ઇનબૉક્સ જુઓ. અમે %1$s પર સાઇન-ઇન લિંક મોકલી છે. એ 10 મિનિટ ચાલશે.</string>
     <string name="signin_email_invalid">આ ઈમેલ એડ્રેસ બરાબર લાગતું નથી.</string>
+    <string name="signin_password">પાસવર્ડ</string>
+    <string name="signin_password_new">નવો પાસવર્ડ</string>
+    <string name="signin_password_show">પાસવર્ડ બતાવો</string>
+    <string name="signin_create">એકાઉન્ટ બનાવો</string>
+    <string name="signin_forgot">પાસવર્ડ ભૂલી ગયા?</string>
+    <string name="signin_use_code">તેના બદલે મને ઇમેઇલ પર કોડ મોકલો</string>
+    <string name="signin_use_password">તેના બદલે પાસવર્ડ વાપરો</string>
+    <string name="signin_password_wrong">આ ઇમેઇલ અને પાસવર્ડ મેળ ખાતા નથી.</string>
+    <string name="signin_password_short">ઓછામાં ઓછા 8 અક્ષરો વાપરો.</string>
+    <string name="signin_create_note">આ સરનામાની ખાતરી કરવા અમે તમને ઇમેઇલ પર એક કોડ મોકલીશું. આ ફક્ત એક જ વાર કરવું પડશે.</string>
+    <string name="signin_password_choose">તમે સાઇન ઇન થયા છો. આવતી વખત માટે એક પાસવર્ડ પસંદ કરો.</string>
+    <string name="signin_password_save">પાસવર્ડ સાચવો</string>
+    <string name="signin_password_save_failed">તમે સાઇન ઇન થયા છો, પણ પાસવર્ડ સાચવી શકાયો નથી. ફરી પ્રયત્ન કરો, અથવા પછી સેટિંગ્સમાં નક્કી કરો.</string>
+    <string name="signin_password_skip">હમણાં છોડો</string>
+    <string name="signin_password_submit">સાઇન ઇન કરો</string>
     <string name="signin_provider_unavailable">હજી ઉપલબ્ધ નથી</string>
     <string name="signin_failed">સાઇન ઇન ન થઈ શક્યું. ફરી પ્રયાસ કરશો?</string>
     <string name="signin_loading">સાઇન ઇનના વિકલ્પો લોડ થાય છે…</string>
@@ -200,6 +215,10 @@
     <string name="account_delete">એકાઉન્ટ ડિલીટ કરો</string>
     <string name="account_delete_confirm">એકાઉન્ટ ડિલીટ કરવું છે? તમારી ક્રેડિટ, પ્લાન અને સાઇન ઇનની વિગતો ડિલીટ થશે. તમારા ચુકાદા અને કેસમાંની તમારી બાજુ દૂર થશે: તમે જે લખ્યું એ અને નામ ભૂંસાઈ જશે, અને એમની શેર લિંક કામ કરતી બંધ થઈ જશે.</string>
     <string name="account_delete_yes">હા, ડિલીટ કરો</string>
+    <string name="account_password_set">પાસવર્ડ નક્કી કરો</string>
+    <string name="account_password_change">પાસવર્ડ બદલો</string>
+    <string name="account_password_current">હાલનો પાસવર્ડ</string>
+    <string name="account_password_saved">પાસવર્ડ સચવાઈ ગયો.</string>
     <string name="account_delete_cancel">એકાઉન્ટ રહેવા દો</string>
     <string name="account_delete_failed">અત્યારે એકાઉન્ટ ડિલીટ ન થઈ શક્યું. ફરી પ્રયાસ કરશો?</string>
     <string name="account_sign_in_prompt">તમારો પ્લાન અને ક્રેડિટ જોવા સાઇન ઇન કરો.</string>
@@ -372,7 +391,7 @@
     <string name="appeal_title">વિગત ઉમેરો</string>
     <string name="home_example">ઉદાહરણ અજમાવો</string>
     <string name="home_your_placeholder">સમસ્યા શું છે?</string>
-    <string name="home_add_context">સંદર્ભ ઉમેરો</string>
+    <string name="home_add_context">વિગત ઉમેરો</string>
     <string name="home_add_their_side">એમની વાત ઉમેરો</string>
     <string name="home_remove_their_side">એમની વાત કાઢી નાખો</string>
     <string name="home_send_link">લિંક મોકલો</string>
@@ -505,6 +524,8 @@
     <string name="stamp_dissolved">અર્થનો ફરક</string>
     <string name="best_point_of">%1$sનો સૌથી મજબૂત મુદ્દો</string>
     <string name="best_point_self">તમારો સૌથી મજબૂત મુદ્દો</string>
+    <string name="error_password_wrong">આ પાસવર્ડ સાચો નથી.</string>
+    <string name="error_password_required">તમારો હાલનો પાસવર્ડ દાખલ કરો.</string>
     <string name="error_age_blocked">Judge ફક્ત 18 કે તેથી વધુ ઉંમરના લોકો માટે છે.</string>
     <string name="error_age_unconfirmed">આગળ વધવા માટે પુષ્ટિ કરો કે તમારી ઉંમર 18 કે તેથી વધુ છે.</string>
     <string name="app_name">Judge</string>
@@ -544,8 +565,8 @@
     </plurals>
     <string name="app_history_offline_remove">તમે ઑફલાઇન છો. દૂર કરવા કનેક્શન જોઈએ.</string>
     <string name="app_pricing_free_account">Apple, Google કે ઈમેલથી સાઇન ઇન કરો</string>
-    <string name="app_context_label">સંદર્ભ (વૈકલ્પિક)</string>
-    <string name="app_pricing_context">સંદર્ભની છબીઓ વંચાય છે અને પછી ફેંકી દેવાય છે, કોઈ વધારાના ખર્ચ વિના</string>
+    <string name="app_context_label">વિગત (વૈકલ્પિક)</string>
+    <string name="app_pricing_context">વિગતની છબીઓ વંચાય છે અને પછી ફેંકી દેવાય છે, કોઈ વધારાનો ખર્ચ નથી</string>
     <string name="app_pricing_headline">તમારો પહેલો ચુકાદો અમારા તરફથી.</string>
     <string name="app_pricing_sub">એકાઉન્ટ બનાવો અને પહેલો ચુકાદો મફત, બધી સુવિધાઓ સાથે. પછી કોઈ પૅક પસંદ કરો કે માસિક પ્લાન લો.</string>
     <string name="app_pricing_headline_member">વધુ ચુકાદા લો.</string>
@@ -606,7 +627,7 @@
     <string name="app_home_your_side_label">વિવાદમાં તમારી વાત</string>
     <string name="app_home_their_side_label">વિવાદમાં એમની વાત</string>
     <string name="app_home_send_link">લિંક મોકલો</string>
-    <string name="app_home_add_context">સંદર્ભ ઉમેરો</string>
+    <string name="app_home_add_context">વિગત ઉમેરો</string>
     <string name="app_home_says">%1$s કહે છે:</string>
     <string name="app_home_my_side">મારી વાત:</string>
     <string name="app_home_other_side">સામેવાળાની વાત:</string>

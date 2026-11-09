@@ -183,6 +183,21 @@
     <string name="signin_email_submit">Mejla mig en inloggningslänk</string>
     <string name="signin_email_sent">Kolla din inkorg. Vi har skickat en inloggningslänk till %1$s. Den fungerar i 10 minuter.</string>
     <string name="signin_email_invalid">Den e-postadressen ser inte rätt ut.</string>
+    <string name="signin_password">Lösenord</string>
+    <string name="signin_password_new">Nytt lösenord</string>
+    <string name="signin_password_show">Visa lösenord</string>
+    <string name="signin_create">Skapa ett konto</string>
+    <string name="signin_forgot">Glömt lösenordet?</string>
+    <string name="signin_use_code">Mejla mig en kod i stället</string>
+    <string name="signin_use_password">Använd ett lösenord i stället</string>
+    <string name="signin_password_wrong">Den e-postadressen och det lösenordet stämmer inte överens.</string>
+    <string name="signin_password_short">Använd minst 8 tecken.</string>
+    <string name="signin_create_note">Vi mejlar dig en kod för att bekräfta adressen. Det behöver du bara göra en gång.</string>
+    <string name="signin_password_choose">Du är inloggad. Välj ett lösenord till nästa gång.</string>
+    <string name="signin_password_save">Spara lösenord</string>
+    <string name="signin_password_save_failed">Du är inloggad, men vi kunde inte spara lösenordet. Försök igen eller ange det senare i Inställningar.</string>
+    <string name="signin_password_skip">Hoppa över för nu</string>
+    <string name="signin_password_submit">Logga in</string>
     <string name="signin_provider_unavailable">Inte tillgängligt än</string>
     <string name="signin_failed">Vi kunde inte logga in dig. Vill du försöka igen?</string>
     <string name="signin_loading">Laddar inloggningsalternativ…</string>
@@ -200,6 +215,10 @@
     <string name="account_delete">Radera konto</string>
     <string name="account_delete_confirm">Radera ditt konto? Dina krediter, ditt abonnemang och dina inloggningsuppgifter raderas. Dina domar och dina sidor i tvåsidiga fall tas bort: det du skrev och namnen raderas, och deras delningslänkar slutar fungera.</string>
     <string name="account_delete_yes">Ja, radera det</string>
+    <string name="account_password_set">Ange ett lösenord</string>
+    <string name="account_password_change">Byt lösenord</string>
+    <string name="account_password_current">Nuvarande lösenord</string>
+    <string name="account_password_saved">Lösenordet har sparats.</string>
     <string name="account_delete_cancel">Behåll mitt konto</string>
     <string name="account_delete_failed">Vi kunde inte radera kontot just nu. Vill du försöka igen?</string>
     <string name="account_sign_in_prompt">Logga in för att se ditt abonnemang och dina krediter.</string>
@@ -372,7 +391,7 @@
     <string name="appeal_title">Komplettera</string>
     <string name="home_example">Prova ett exempel</string>
     <string name="home_your_placeholder">Vad är problemet?</string>
-    <string name="home_add_context">Lägg till sammanhang</string>
+    <string name="home_add_context">Komplettera</string>
     <string name="home_add_their_side">Lägg till den andras sida</string>
     <string name="home_remove_their_side">Ta bort den andras sida</string>
     <string name="home_send_link">Skicka en länk</string>
@@ -505,6 +524,8 @@
     <string name="stamp_dissolved">Ordstrid</string>
     <string name="best_point_of">Bästa argumentet från %1$s</string>
     <string name="best_point_self">Ditt bästa argument</string>
+    <string name="error_password_wrong">Lösenordet stämmer inte.</string>
+    <string name="error_password_required">Ange ditt nuvarande lösenord.</string>
     <string name="error_age_blocked">Judge är bara för personer som är 18 år eller äldre.</string>
     <string name="error_age_unconfirmed">Bekräfta att du är 18 år eller äldre för att fortsätta.</string>
     <string name="app_name">Judge</string>
@@ -544,8 +565,8 @@
     </plurals>
     <string name="app_history_offline_remove">Du är offline. Du måste vara uppkopplad för att ta bort.</string>
     <string name="app_pricing_free_account">Logga in med Apple, Google eller e-post</string>
-    <string name="app_context_label">Sammanhang (valfritt)</string>
-    <string name="app_pricing_context">Bilder med sammanhang läses och kastas sedan, utan extra kostnad</string>
+    <string name="app_context_label">Komplettering (valfritt)</string>
+    <string name="app_pricing_context">Bilder till kompletteringen läses och kastas sedan, utan extra kostnad</string>
     <string name="app_pricing_headline">Din första dom bjuder vi på.</string>
     <string name="app_pricing_sub">Skapa ett konto så är din första dom gratis, med alla funktioner. Sedan väljer du ett paket eller ett månadsabonnemang.</string>
     <string name="app_pricing_headline_member">Skaffa fler domar.</string>
@@ -606,7 +627,7 @@
     <string name="app_home_your_side_label">Din sida av bråket</string>
     <string name="app_home_their_side_label">Den andras sida av bråket</string>
     <string name="app_home_send_link">Skicka en länk</string>
-    <string name="app_home_add_context">Lägg till sammanhang</string>
+    <string name="app_home_add_context">Komplettera</string>
     <string name="app_home_says">%1$s säger:</string>
     <string name="app_home_my_side">Min sida:</string>
     <string name="app_home_other_side">Den andras sida:</string>

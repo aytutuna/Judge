@@ -54,6 +54,31 @@ enum HistoryEntry: Identifiable {
         }
     }
 
+    /// Where the row stands in a few words, from the viewer's side.
+    func status(lang: AppLang, now: Date) -> String? {
+        switch self {
+        case .account(let item):
+            return HistoryLabels.status(item, lang: lang, now: now)
+        case .phone(let row):
+            let parties = Names.partyNames(row.nameMap, lang: lang, selfLang: row.contentLang)
+            return VerdictDisplay.label(row.finalVerdict, parties: parties, lang: lang)
+        }
+    }
+
+    /// Whose way the ruling went. A phone row's Party A is the writer.
+    func tone(now: Date) -> HistoryLabels.Tone {
+        switch self {
+        case .account(let item):
+            return HistoryLabels.tone(item, now: now)
+        case .phone(let row):
+            switch VerdictDisplay.seal(row.finalVerdict) {
+            case .a: return .yours
+            case .b: return .theirs
+            case .none: return .neutral
+            }
+        }
+    }
+
     /// What the Verdicts list shows: the signed-in account's cached rows and
     /// the phone's own.
     @MainActor

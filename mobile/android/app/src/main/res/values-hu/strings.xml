@@ -183,6 +183,21 @@
     <string name="signin_email_submit">Belépési link küldése</string>
     <string name="signin_email_sent">Nézd meg a postafiókodat. Küldtünk egy belépési linket ide: %1$s. 10 percig érvényes.</string>
     <string name="signin_email_invalid">Ez az e-mail-cím nem tűnik helyesnek.</string>
+    <string name="signin_password">Jelszó</string>
+    <string name="signin_password_new">Új jelszó</string>
+    <string name="signin_password_show">Jelszó megjelenítése</string>
+    <string name="signin_create">Fiók létrehozása</string>
+    <string name="signin_forgot">Elfelejtetted a jelszót?</string>
+    <string name="signin_use_code">Inkább kérek egy kódot e-mailben</string>
+    <string name="signin_use_password">Inkább jelszót használok</string>
+    <string name="signin_password_wrong">Ez az e-mail-cím és jelszó nem egyezik.</string>
+    <string name="signin_password_short">Legalább 8 karaktert használj.</string>
+    <string name="signin_create_note">E-mailben küldünk egy kódot, hogy megerősítsd ezt a címet. Ezt csak egyszer kell megtenned.</string>
+    <string name="signin_password_choose">Be vagy jelentkezve. Válassz jelszót a következő alkalomra.</string>
+    <string name="signin_password_save">Jelszó mentése</string>
+    <string name="signin_password_save_failed">Be vagy jelentkezve, de a jelszót nem sikerült elmenteni. Próbáld újra, vagy állítsd be később a Beállításokban.</string>
+    <string name="signin_password_skip">Kihagyás egyelőre</string>
+    <string name="signin_password_submit">Belépés</string>
     <string name="signin_provider_unavailable">Még nem elérhető</string>
     <string name="signin_failed">Nem sikerült a belépés. Megpróbálod újra?</string>
     <string name="signin_loading">Belépési lehetőségek betöltése…</string>
@@ -200,6 +215,10 @@
     <string name="account_delete">Fiók törlése</string>
     <string name="account_delete_confirm">Törlöd a fiókodat? A kreditjeid, az előfizetésed és a belépési adataid törlődnek. Az ítéleteidet és az ügyekben beküldött verzióidat eltávolítjuk: amit írtál, azt a nevekkel együtt töröljük, a megosztási linkjeik pedig megszűnnek működni.</string>
     <string name="account_delete_yes">Igen, törlöm</string>
+    <string name="account_password_set">Jelszó beállítása</string>
+    <string name="account_password_change">Jelszó módosítása</string>
+    <string name="account_password_current">Jelenlegi jelszó</string>
+    <string name="account_password_saved">Jelszó elmentve.</string>
     <string name="account_delete_cancel">Megtartom a fiókot</string>
     <string name="account_delete_failed">Most nem sikerült törölni a fiókot. Megpróbálod újra?</string>
     <string name="account_sign_in_prompt">Lépj be, hogy lásd az előfizetésedet és a kreditjeidet.</string>
@@ -372,7 +391,7 @@
     <string name="appeal_title">Kiegészítés</string>
     <string name="home_example">Próbálj ki egy példát</string>
     <string name="home_your_placeholder">Mi a gond?</string>
-    <string name="home_add_context">Háttér hozzáadása</string>
+    <string name="home_add_context">Kiegészítés hozzáadása</string>
     <string name="home_add_their_side">Add hozzá az ő verzióját</string>
     <string name="home_remove_their_side">Vedd ki az ő verzióját</string>
     <string name="home_send_link">Küldj linket</string>
@@ -505,6 +524,8 @@
     <string name="stamp_dissolved">Félreértés</string>
     <string name="best_point_of">%1$s legjobb érve</string>
     <string name="best_point_self">A te legjobb érved</string>
+    <string name="error_password_wrong">Ez a jelszó nem helyes.</string>
+    <string name="error_password_required">Add meg a jelenlegi jelszavad.</string>
     <string name="error_age_blocked">A Judge csak 18 éves vagy idősebb embereknek szól.</string>
     <string name="error_age_unconfirmed">A folytatáshoz erősítsd meg, hogy legalább 18 éves vagy.</string>
     <string name="app_name">Judge</string>
@@ -544,8 +565,8 @@
     </plurals>
     <string name="app_history_offline_remove">Nincs internetkapcsolat. Eltávolítani csak online lehet.</string>
     <string name="app_pricing_free_account">Belépés Apple-lel, Google-lal vagy e-maillel</string>
-    <string name="app_context_label">Háttér (nem kötelező)</string>
-    <string name="app_pricing_context">A háttérképeket elolvassuk, aztán eldobjuk, felár nélkül</string>
+    <string name="app_context_label">Kiegészítés (nem kötelező)</string>
+    <string name="app_pricing_context">A kiegészítő képeket elolvassuk, aztán eldobjuk, felár nélkül</string>
     <string name="app_pricing_headline">Az első ítélet ajándék.</string>
     <string name="app_pricing_sub">Hozz létre egy fiókot, és az első ítéleted ingyenes, minden funkcióval. Utána válassz csomagot, vagy fizess elő havonta.</string>
     <string name="app_pricing_headline_member">Még több ítélet.</string>
@@ -606,7 +627,7 @@
     <string name="app_home_your_side_label">A te verziód a vitáról</string>
     <string name="app_home_their_side_label">Az ő verziója a vitáról</string>
     <string name="app_home_send_link">Küldj linket</string>
-    <string name="app_home_add_context">Háttér hozzáadása</string>
+    <string name="app_home_add_context">Kiegészítés hozzáadása</string>
     <string name="app_home_says">%1$s szerint:</string>
     <string name="app_home_my_side">Az én verzióm:</string>
     <string name="app_home_other_side">Az ő verziója:</string>

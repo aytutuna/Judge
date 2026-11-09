@@ -372,6 +372,11 @@ describe("mergeHistory", () => {
     expect(items.map((i) => i.id)).toEqual(["v2", "v5", "c1"]);
   });
 
+  it("lists a stored ruling as a ready row on the writer's side", () => {
+    const [item] = mergeHistory(null, [{ ...entry("v1", "2026-10-20T10:00:00.000Z"), verdict: "side_a" }]);
+    expect([item.state, item.verdict, item.party]).toEqual(["ready", "side_a", "a"]);
+  });
+
   it("works signed out from this browser's lists alone", () => {
     const items = mergeHistory(null, [{ ...entry("v1", "2026-10-20T10:00:00.000Z", null), removed: true }, { ...entry("v2", "2026-10-21T10:00:00.000Z", null), pending: true }]);
     expect(items.map((i) => [i.id, i.state, i.href])).toEqual([

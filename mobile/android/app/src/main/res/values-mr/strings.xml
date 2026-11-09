@@ -183,6 +183,21 @@
     <string name="signin_email_submit">मला साइन-इन लिंक ईमेल करा</string>
     <string name="signin_email_sent">तुमचा इनबॉक्स पाहा. %1$s वर साइन-इन लिंक पाठवली आहे. ती 10 मिनिटे चालेल.</string>
     <string name="signin_email_invalid">हा ईमेल पत्ता बरोबर वाटत नाही.</string>
+    <string name="signin_password">पासवर्ड</string>
+    <string name="signin_password_new">नवीन पासवर्ड</string>
+    <string name="signin_password_show">पासवर्ड दाखवा</string>
+    <string name="signin_create">खाते तयार करा</string>
+    <string name="signin_forgot">पासवर्ड विसरलात?</string>
+    <string name="signin_use_code">त्याऐवजी मला ईमेलवर कोड पाठवा</string>
+    <string name="signin_use_password">त्याऐवजी पासवर्ड वापरा</string>
+    <string name="signin_password_wrong">हा ईमेल आणि पासवर्ड जुळत नाहीत.</string>
+    <string name="signin_password_short">किमान 8 अक्षरे वापरा.</string>
+    <string name="signin_create_note">हा पत्ता पडताळण्यासाठी आम्ही तुम्हाला ईमेलवर एक कोड पाठवू. हे फक्त एकदाच करावे लागेल.</string>
+    <string name="signin_password_choose">तुम्ही साइन इन केले आहे. पुढच्या वेळेसाठी एक पासवर्ड निवडा.</string>
+    <string name="signin_password_save">पासवर्ड जतन करा</string>
+    <string name="signin_password_save_failed">तुम्ही साइन इन केले आहे, पण पासवर्ड जतन करता आला नाही. पुन्हा प्रयत्न करा किंवा नंतर सेटिंग्जमध्ये ठरवा.</string>
+    <string name="signin_password_skip">सध्या वगळा</string>
+    <string name="signin_password_submit">साइन इन करा</string>
     <string name="signin_provider_unavailable">अजून उपलब्ध नाही</string>
     <string name="signin_failed">साइन इन करता आले नाही. पुन्हा प्रयत्न कराल का?</string>
     <string name="signin_loading">साइन-इनचे पर्याय लोड होत आहेत…</string>
@@ -200,6 +215,10 @@
     <string name="account_delete">खाते डिलीट करा</string>
     <string name="account_delete_confirm">तुमचे खाते डिलीट करायचे? तुमचे क्रेडिट, प्लॅन आणि साइन-इनची माहिती डिलीट होईल. तुमचे निकाल आणि प्रकरणांतल्या तुमच्या बाजू काढून टाकल्या जातील: तुम्ही लिहिलेले आणि नावे पुसली जातील, आणि त्यांच्या शेअर लिंक चालणे बंद होईल.</string>
     <string name="account_delete_yes">हो, डिलीट करा</string>
+    <string name="account_password_set">पासवर्ड ठरवा</string>
+    <string name="account_password_change">पासवर्ड बदला</string>
+    <string name="account_password_current">सध्याचा पासवर्ड</string>
+    <string name="account_password_saved">पासवर्ड जतन केला.</string>
     <string name="account_delete_cancel">खाते राहू द्या</string>
     <string name="account_delete_failed">आत्ता खाते डिलीट करता आले नाही. पुन्हा प्रयत्न कराल का?</string>
     <string name="account_sign_in_prompt">तुमचा प्लॅन आणि क्रेडिट पाहण्यासाठी साइन इन करा.</string>
@@ -372,7 +391,7 @@
     <string name="appeal_title">माहिती जोडा</string>
     <string name="home_example">एखादे उदाहरण वापरून पाहा</string>
     <string name="home_your_placeholder">समस्या काय आहे?</string>
-    <string name="home_add_context">संदर्भ जोडा</string>
+    <string name="home_add_context">माहिती जोडा</string>
     <string name="home_add_their_side">त्यांची बाजू जोडा</string>
     <string name="home_remove_their_side">त्यांची बाजू काढा</string>
     <string name="home_send_link">लिंक पाठवा</string>
@@ -505,6 +524,8 @@
     <string name="stamp_dissolved">अर्थभेद</string>
     <string name="best_point_of">%1$sचा सर्वात भक्कम मुद्दा</string>
     <string name="best_point_self">तुमचा सर्वात भक्कम मुद्दा</string>
+    <string name="error_password_wrong">हा पासवर्ड बरोबर नाही.</string>
+    <string name="error_password_required">तुमचा सध्याचा पासवर्ड टाका.</string>
     <string name="error_age_blocked">Judge फक्त 18 वर्षे आणि त्यापेक्षा जास्त वयाच्या लोकांसाठी आहे.</string>
     <string name="error_age_unconfirmed">पुढे जाण्यासाठी तुमचे वय 18 किंवा जास्त असल्याची खात्री करा.</string>
     <string name="app_name">Judge</string>
@@ -544,8 +565,8 @@
     </plurals>
     <string name="app_history_offline_remove">तुम्ही ऑफलाइन आहात. काढून टाकण्यासाठी कनेक्शन लागते.</string>
     <string name="app_pricing_free_account">Apple, Google किंवा ईमेलने साइन इन करा</string>
-    <string name="app_context_label">संदर्भ (ऐच्छिक)</string>
-    <string name="app_pricing_context">संदर्भाची चित्रे वाचून टाकून दिली जातात, कोणताही जादा खर्च नाही</string>
+    <string name="app_context_label">माहिती (ऐच्छिक)</string>
+    <string name="app_pricing_context">माहितीची चित्रे वाचून टाकून दिली जातात, कोणताही जादा खर्च नाही</string>
     <string name="app_pricing_headline">पहिला निकाल आमच्याकडून.</string>
     <string name="app_pricing_sub">खाते उघडा, तुमचा पहिला निकाल सगळ्या सुविधांसह मोफत. त्यानंतर एखादा पॅक निवडा किंवा मासिक प्लॅन घ्या.</string>
     <string name="app_pricing_headline_member">आणखी निकाल घ्या.</string>
@@ -606,7 +627,7 @@
     <string name="app_home_your_side_label">वादातली तुमची बाजू</string>
     <string name="app_home_their_side_label">वादातली त्यांची बाजू</string>
     <string name="app_home_send_link">लिंक पाठवा</string>
-    <string name="app_home_add_context">संदर्भ जोडा</string>
+    <string name="app_home_add_context">माहिती जोडा</string>
     <string name="app_home_says">%1$sचे म्हणणे:</string>
     <string name="app_home_my_side">माझी बाजू:</string>
     <string name="app_home_other_side">त्यांची बाजू:</string>

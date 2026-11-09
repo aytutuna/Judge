@@ -46,6 +46,7 @@ import com.okjudge.judge.ui.judging.JudgingScreen
 import com.okjudge.judge.ui.settings.SettingsScreen
 import com.okjudge.judge.ui.theme.Palette
 import com.okjudge.judge.ui.signin.SignInActions
+import com.okjudge.judge.ui.signin.SignInMode
 import com.okjudge.judge.ui.signin.SignInScreen
 import com.okjudge.judge.ui.signin.SignInStep
 import com.okjudge.judge.ui.signin.SignInUiState
@@ -67,7 +68,8 @@ import com.okjudge.judge.core.session.VerdictFlow
 import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
-import org.junit.Assert.assertFalse
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -282,6 +284,38 @@ class ScreenshotsTest {
         Themed(AppLang.EN) { SignInScreen(state, onBack = {}, actions = SignInActions()) }
     }
 
+    private val passwordProviders = Account.Providers.Ready(
+        ServerConfig(SignInProviders(google = true, email = true, emailCode = true, password = true)),
+    )
+
+    @Test
+    fun signin_password_en() = capture("signin_password_en") {
+        val state = SignInUiState(
+            providers = passwordProviders,
+            email = "ada@example.com",
+            password = "made-up-pass",
+            error = SignInError.PASSWORD_WRONG,
+        )
+        Themed(AppLang.EN) { SignInScreen(state, onBack = {}, actions = SignInActions()) }
+    }
+
+    @Test
+    fun signin_create_en() = capture("signin_create_en") {
+        val state = SignInUiState(providers = passwordProviders, mode = SignInMode.CREATE, email = "ada@example.com", password = "made-up-pass")
+        Themed(AppLang.EN) { SignInScreen(state, onBack = {}, actions = SignInActions()) }
+    }
+
+    @Test
+    fun signin_choose_password_en() = capture("signin_choose_password_en") {
+        val state = SignInUiState(
+            providers = passwordProviders,
+            step = SignInStep.CHOOSE_PASSWORD,
+            email = "ada@example.com",
+            error = SignInError.PASSWORD_SAVE_FAILED,
+        )
+        Themed(AppLang.EN) { SignInScreen(state, onBack = {}, actions = SignInActions()) }
+    }
+
     // --- Premium ---------------------------------------------------------------------
 
     private fun me(name: String): MeResponse =
@@ -479,8 +513,40 @@ class ScreenshotsTest {
         val layouts = mutableListOf<TextLayoutResult>()
         val label = compose.onNodeWithText(tr.appAppealTitle, useUnmergedTree = true).fetchSemanticsNode()
         label.config[SemanticsActions.GetTextLayoutResult].action!!(layouts)
-        assertFalse("the label wraps instead of being cut", layouts.single().hasVisualOverflow)
+        val button = compose.onNodeWithTag(com.okjudge.judge.ui.verdict.VerdictTags.ADD_CONTEXT).fetchSemanticsNode().boundsInRoot
+        assertEquals(1, layouts.single().lineCount)
+        assertTrue("the label fits inside its button", label.boundsInRoot.left >= button.left && label.boundsInRoot.right <= button.right)
     }
+
+    // hasVisualOverflow reads true here even for a label that fits, so the text's own width is compared to the room it got.
+    private fun shotShareRow(name: String, lang: AppLang, width: Int) {
+        RuntimeEnvironment.setQualifiers("+w${width}dp-h568dp")
+        val outcome = sample("win_b_named")
+        val strings = UiTestSupport.s(lang)
+        capture(name) {
+            Themed(lang) {
+                com.okjudge.judge.ui.verdict.RulingSummary(
+                    view = sampleView(outcome, lang),
+                    parties = com.okjudge.judge.core.display.PartyNames.partyNames(outcome.nameMap, lang, strings),
+                    actions = com.okjudge.judge.ui.verdict.CardActions(onShare = {}, onCopy = {}, copied = false),
+                    onDetails = {},
+                    reducedMotion = true,
+                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
+                )
+            }
+        }
+        val layouts = mutableListOf<TextLayoutResult>()
+        compose.onNodeWithText(strings.share, useUnmergedTree = true).fetchSemanticsNode()
+            .config[SemanticsActions.GetTextLayoutResult].action!!(layouts)
+        val layout = layouts.single()
+        assertTrue("$lang share label is cut", layout.multiParagraph.maxIntrinsicWidth <= layout.size.width)
+    }
+
+    @Test
+    fun verdict_share_tr_320() = shotShareRow("verdict_share_tr_320", AppLang.TR, 320)
+
+    @Test
+    fun verdict_share_el_360() = shotShareRow("verdict_share_el_360", AppLang.EL, 360)
 
     @Test
     fun verdict_addContext_locked_en() =
@@ -630,20 +696,17 @@ class ScreenshotsTest {
     fun home_withBar_en() = capture("home_bar_en") {
         Themed(AppLang.EN) {
             Column(Modifier.fillMaxSize()) {
-                PageBar(UiTestSupport.s(AppLang.EN).appTabNew, {}, {}, FocusRequester())
+                PageBar(null, {}, {}, FocusRequester())
                 HomeScreen(HomeUiState(), {}, {}, {})
             }
         }
     }
 
     @Test
-    fun home_withBar_signedIn_en_dark() = capture("home_bar_signed_in_en_dark") {
+    fun home_withBar_en_dark() = capture("home_bar_en_dark") {
         Themed(AppLang.EN, dark = true) {
             Column(Modifier.fillMaxSize()) {
-                PageBar(
-                    UiTestSupport.s(AppLang.EN).navVerdicts, {}, {}, FocusRequester(),
-                    account = AccountActions(true, Viewer("u1", "sam@example.com", "Sam"), {}, {}, {}, {}),
-                )
+                PageBar(UiTestSupport.s(AppLang.EN).navVerdicts, {}, {}, FocusRequester())
                 HomeScreen(HomeUiState(), {}, {}, {})
             }
         }
@@ -653,7 +716,7 @@ class ScreenshotsTest {
     fun home_tablet_en() = capture("home_tablet_en", tablet = true) {
         Themed(AppLang.EN) {
             Column(Modifier.fillMaxSize()) {
-                PageBar(UiTestSupport.s(AppLang.EN).appTabNew, {}, {}, FocusRequester())
+                PageBar(null, {}, {}, FocusRequester())
                 HomeScreen(HomeUiState(), {}, {}, {})
             }
         }
@@ -671,7 +734,7 @@ class ScreenshotsTest {
         Themed(AppLang.EN) {
             CompositionLocalProvider(LocalGamify provides false) {
                 Column(Modifier.fillMaxSize()) {
-                    PageBar(UiTestSupport.s(AppLang.EN).appTabNew, {}, {}, FocusRequester(), gamify = false)
+                    PageBar(null, {}, {}, FocusRequester(), gamify = false)
                     HomeScreen(HomeUiState(), {}, {}, {})
                 }
             }
@@ -683,7 +746,7 @@ class ScreenshotsTest {
         Themed(AppLang.EN) {
             CompositionLocalProvider(LocalGamify provides false) {
                 Column(Modifier.fillMaxSize()) {
-                    PageBar(UiTestSupport.s(AppLang.EN).appTabNew, {}, {}, FocusRequester(), gamify = false)
+                    PageBar(null, {}, {}, FocusRequester(), gamify = false)
                     HomeScreen(HomeUiState(argument = "He keeps eating my lunch from the shared fridge."), {}, {}, {})
                 }
             }
@@ -700,7 +763,6 @@ class ScreenshotsTest {
         Themed(lang) {
             PageBar(
                 UiTestSupport.s(lang).appTabSettings, {}, {}, FocusRequester(),
-                account = AccountActions(true, Viewer("u1", "sam@example.com", "Sam"), {}, {}, {}, {}),
             )
         }
     }
@@ -721,15 +783,34 @@ class ScreenshotsTest {
     fun menu_open_en() = capture("menu_open_en") { OpenMenu(dark = false) }
 
     @Test
+    fun menu_open_signedIn_en() = capture("menu_open_signed_in_en") { OpenMenu(dark = false, user = Viewer("u1", "sam@example.com", "Sam")) }
+
+    @Test
+    fun home_smallPhone_twoSides_en() {
+        RuntimeEnvironment.setQualifiers("+w320dp-h568dp")
+        capture("home_small_two_sides_en") {
+            Themed(AppLang.EN) {
+                Column(Modifier.fillMaxSize()) {
+                    PageBar(null, {}, {}, FocusRequester())
+                    HomeScreen(HomeUiState(argument = "A hot dog is its own thing, and no menu lists it under sandwiches.", otherSide = "It is a filling inside sliced bread.", otherName = "Sam", theirsOpen = true), {}, {}, {})
+                }
+            }
+        }
+    }
+
+    @Test
     fun menu_open_en_dark() = capture("menu_open_en_dark") { OpenMenu(dark = true) }
 
     @Composable
-    private fun OpenMenu(dark: Boolean) {
+    private fun OpenMenu(dark: Boolean, user: Viewer? = null) {
         val s = UiTestSupport.s(AppLang.EN)
         Themed(AppLang.EN, dark = dark) {
             ModalNavigationDrawer(
                 drawerContent = {
-                    MenuPanel(Tab.HISTORY, phoneRows("win_a_self", "win_b_named", "lean_tie"), false, FocusRequester(), {}, {}, {})
+                    MenuPanel(
+                        Tab.HISTORY, phoneRows("win_a_self", "win_b_named", "lean_tie"), false, FocusRequester(), {}, {}, {},
+                        account = AccountActions(user != null, user, {}, {}, {}),
+                    )
                 },
                 drawerState = rememberDrawerState(DrawerValue.Open),
                 scrimColor = menuScrim,

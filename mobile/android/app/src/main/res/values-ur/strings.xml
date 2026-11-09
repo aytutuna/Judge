@@ -183,6 +183,21 @@
     <string name="signin_email_submit">مجھے سائن ان لنک ای میل کریں</string>
     <string name="signin_email_sent">اپنا ان باکس دیکھیں۔ ہم نے %1$s پر سائن ان لنک بھیجا ہے۔ یہ 10 منٹ تک کام کرے گا۔</string>
     <string name="signin_email_invalid">یہ ای میل ایڈریس ٹھیک نہیں لگ رہا۔</string>
+    <string name="signin_password">پاس ورڈ</string>
+    <string name="signin_password_new">نیا پاس ورڈ</string>
+    <string name="signin_password_show">پاس ورڈ دکھائیں</string>
+    <string name="signin_create">اکاؤنٹ بنائیں</string>
+    <string name="signin_forgot">پاس ورڈ بھول گئے؟</string>
+    <string name="signin_use_code">اس کے بجائے مجھے ای میل پر کوڈ بھیجیں</string>
+    <string name="signin_use_password">اس کے بجائے پاس ورڈ استعمال کریں</string>
+    <string name="signin_password_wrong">یہ ای میل اور پاس ورڈ آپس میں میل نہیں کھاتے۔</string>
+    <string name="signin_password_short">کم از کم 8 حروف استعمال کریں۔</string>
+    <string name="signin_create_note">اس پتے کی تصدیق کے لیے ہم آپ کو ای میل پر ایک کوڈ بھیجیں گے۔ یہ صرف ایک بار کرنا ہوگا۔</string>
+    <string name="signin_password_choose">آپ سائن اِن ہو گئے ہیں۔ اگلی بار کے لیے پاس ورڈ چنیں۔</string>
+    <string name="signin_password_save">پاس ورڈ محفوظ کریں</string>
+    <string name="signin_password_save_failed">آپ سائن اِن ہو گئے ہیں، لیکن پاس ورڈ محفوظ نہ ہو سکا۔ دوبارہ کوشش کریں یا بعد میں سیٹنگز میں مقرر کریں۔</string>
+    <string name="signin_password_skip">فی الحال چھوڑیں</string>
+    <string name="signin_password_submit">سائن ان کریں</string>
     <string name="signin_provider_unavailable">ابھی دستیاب نہیں</string>
     <string name="signin_failed">ہم آپ کو سائن ان نہیں کر سکے۔ ذرا دوبارہ کوشش کر کے دیکھیں۔</string>
     <string name="signin_loading">سائن ان کے طریقے لوڈ ہو رہے ہیں…</string>
@@ -200,6 +215,10 @@
     <string name="account_delete">اکاؤنٹ حذف کریں</string>
     <string name="account_delete_confirm">اپنا اکاؤنٹ حذف کریں؟ آپ کے کریڈٹس، پلان اور سائن ان کی تفصیلات حذف ہو جائیں گی۔ آپ کے فیصلے اور کیسوں میں آپ کی باتیں ہٹا دی جائیں گی: آپ کا لکھا ہوا اور نام مٹا دیے جائیں گے، اور ان کے شیئر لنکس کام کرنا بند کر دیں گے۔</string>
     <string name="account_delete_yes">ہاں، حذف کر دیں</string>
+    <string name="account_password_set">پاس ورڈ مقرر کریں</string>
+    <string name="account_password_change">پاس ورڈ تبدیل کریں</string>
+    <string name="account_password_current">موجودہ پاس ورڈ</string>
+    <string name="account_password_saved">پاس ورڈ محفوظ ہو گیا۔</string>
     <string name="account_delete_cancel">اکاؤنٹ رہنے دیں</string>
     <string name="account_delete_failed">ابھی اکاؤنٹ حذف نہیں ہو سکا۔ ذرا دوبارہ کوشش کر کے دیکھیں۔</string>
     <string name="account_sign_in_prompt">اپنا پلان اور کریڈٹس دیکھنے کے لیے سائن ان کریں۔</string>
@@ -372,7 +391,7 @@
     <string name="appeal_title">مزید تفصیل شامل کریں</string>
     <string name="home_example">کوئی مثال آزمائیں</string>
     <string name="home_your_placeholder">مسئلہ کیا ہے؟</string>
-    <string name="home_add_context">پس منظر شامل کریں</string>
+    <string name="home_add_context">تفصیل شامل کریں</string>
     <string name="home_add_their_side">ان کی بات شامل کریں</string>
     <string name="home_remove_their_side">ان کی بات ہٹائیں</string>
     <string name="home_send_link">لنک بھیجیں</string>
@@ -505,6 +524,8 @@
     <string name="stamp_dissolved">لفظی فرق</string>
     <string name="best_point_of">%1$s کی سب سے مضبوط دلیل</string>
     <string name="best_point_self">آپ کی سب سے مضبوط دلیل</string>
+    <string name="error_password_wrong">یہ پاس ورڈ درست نہیں ہے۔</string>
+    <string name="error_password_required">اپنا موجودہ پاس ورڈ درج کریں۔</string>
     <string name="error_age_blocked">Judge صرف 18 سال یا اس سے زیادہ عمر کے لوگوں کے لیے ہے۔</string>
     <string name="error_age_unconfirmed">آگے بڑھنے کے لیے تصدیق کریں کہ آپ کی عمر 18 سال یا اس سے زیادہ ہے۔</string>
     <string name="app_name">Judge</string>
@@ -544,8 +565,8 @@
     </plurals>
     <string name="app_history_offline_remove">آپ آف لائن ہیں۔ ہٹانے کے لیے کنکشن ضروری ہے۔</string>
     <string name="app_pricing_free_account">Apple، Google یا ای میل سے سائن ان کریں</string>
-    <string name="app_context_label">پس منظر (اختیاری)</string>
-    <string name="app_pricing_context">پس منظر کی تصویریں پڑھ کر پھینک دی جاتی ہیں، کوئی اضافی خرچ نہیں</string>
+    <string name="app_context_label">تفصیل (اختیاری)</string>
+    <string name="app_pricing_context">تفصیل کی تصویریں پڑھ کر پھینک دی جاتی ہیں، کوئی اضافی خرچ نہیں</string>
     <string name="app_pricing_headline">پہلا فیصلہ ہماری طرف سے۔</string>
     <string name="app_pricing_sub">اکاؤنٹ بنائیں اور پہلا فیصلہ مفت پائیں، تمام فیچرز کے ساتھ۔ اس کے بعد کوئی پیک لیں یا ماہانہ پلان۔</string>
     <string name="app_pricing_headline_member">مزید فیصلے لیں۔</string>
@@ -606,7 +627,7 @@
     <string name="app_home_your_side_label">بحث میں آپ کی بات</string>
     <string name="app_home_their_side_label">بحث میں ان کی بات</string>
     <string name="app_home_send_link">لنک بھیجیں</string>
-    <string name="app_home_add_context">پس منظر شامل کریں</string>
+    <string name="app_home_add_context">تفصیل شامل کریں</string>
     <string name="app_home_says">%1$s کا کہنا ہے:</string>
     <string name="app_home_my_side">میری بات:</string>
     <string name="app_home_other_side">ان کی بات:</string>

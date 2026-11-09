@@ -178,6 +178,21 @@
     <string name="signin_email_submit">Gửi liên kết đăng nhập qua email</string>
     <string name="signin_email_sent">Kiểm tra hộp thư nhé. Chúng tôi đã gửi liên kết đăng nhập tới %1$s. Liên kết có hiệu lực trong 10 phút.</string>
     <string name="signin_email_invalid">Địa chỉ email này có vẻ không đúng.</string>
+    <string name="signin_password">Mật khẩu</string>
+    <string name="signin_password_new">Mật khẩu mới</string>
+    <string name="signin_password_show">Hiện mật khẩu</string>
+    <string name="signin_create">Tạo tài khoản</string>
+    <string name="signin_forgot">Quên mật khẩu?</string>
+    <string name="signin_use_code">Gửi mã qua email cho tôi thay vào đó</string>
+    <string name="signin_use_password">Dùng mật khẩu thay vào đó</string>
+    <string name="signin_password_wrong">Email và mật khẩu này không khớp.</string>
+    <string name="signin_password_short">Dùng ít nhất 8 ký tự.</string>
+    <string name="signin_create_note">Chúng tôi sẽ gửi cho bạn một mã qua email để xác nhận địa chỉ này. Bạn chỉ cần làm một lần.</string>
+    <string name="signin_password_choose">Bạn đã đăng nhập. Hãy chọn một mật khẩu cho lần sau.</string>
+    <string name="signin_password_save">Lưu mật khẩu</string>
+    <string name="signin_password_save_failed">Bạn đã đăng nhập, nhưng chúng tôi không lưu được mật khẩu. Hãy thử lại, hoặc đặt sau trong Cài đặt.</string>
+    <string name="signin_password_skip">Bỏ qua lúc này</string>
+    <string name="signin_password_submit">Đăng nhập</string>
     <string name="signin_provider_unavailable">Chưa khả dụng</string>
     <string name="signin_failed">Chưa đăng nhập được. Bạn thử lại nhé?</string>
     <string name="signin_loading">Đang tải các cách đăng nhập…</string>
@@ -195,6 +210,10 @@
     <string name="account_delete">Xóa tài khoản</string>
     <string name="account_delete_confirm">Xóa tài khoản của bạn? Lượt, gói và thông tin đăng nhập sẽ bị xóa. Các phán quyết và phần của bạn trong các vụ sẽ bị gỡ: nội dung bạn viết và các tên bị xóa, liên kết chia sẻ cũng ngừng hoạt động.</string>
     <string name="account_delete_yes">Có, xóa đi</string>
+    <string name="account_password_set">Đặt mật khẩu</string>
+    <string name="account_password_change">Đổi mật khẩu</string>
+    <string name="account_password_current">Mật khẩu hiện tại</string>
+    <string name="account_password_saved">Đã lưu mật khẩu.</string>
     <string name="account_delete_cancel">Giữ tài khoản</string>
     <string name="account_delete_failed">Chưa xóa được tài khoản lúc này. Bạn thử lại nhé?</string>
     <string name="account_sign_in_prompt">Đăng nhập để xem gói và số lượt của bạn.</string>
@@ -364,7 +383,7 @@
     <string name="appeal_title">Bổ sung thông tin</string>
     <string name="home_example">Thử một ví dụ</string>
     <string name="home_your_placeholder">Có chuyện gì vậy?</string>
-    <string name="home_add_context">Thêm bối cảnh</string>
+    <string name="home_add_context">Bổ sung thông tin</string>
     <string name="home_add_their_side">Thêm phía bên kia</string>
     <string name="home_remove_their_side">Bỏ phía bên kia</string>
     <string name="home_send_link">Gửi liên kết</string>
@@ -494,6 +513,8 @@
     <string name="stamp_dissolved">Lệch nghĩa</string>
     <string name="best_point_of">Điểm mạnh nhất của %1$s</string>
     <string name="best_point_self">Điểm mạnh nhất của bạn</string>
+    <string name="error_password_wrong">Mật khẩu này không đúng.</string>
+    <string name="error_password_required">Nhập mật khẩu hiện tại của bạn.</string>
     <string name="error_age_blocked">Judge chỉ dành cho người từ 18 tuổi trở lên.</string>
     <string name="error_age_unconfirmed">Hãy xác nhận bạn từ 18 tuổi trở lên để tiếp tục.</string>
     <string name="app_name">Judge</string>
@@ -528,8 +549,8 @@
     </plurals>
     <string name="app_history_offline_remove">Bạn đang mất mạng. Cần có kết nối mới gỡ được.</string>
     <string name="app_pricing_free_account">Đăng nhập bằng Apple, Google hoặc email</string>
-    <string name="app_context_label">Bối cảnh (không bắt buộc)</string>
-    <string name="app_pricing_context">Ảnh bối cảnh được đọc rồi bỏ đi, không tốn thêm phí</string>
+    <string name="app_context_label">Thông tin thêm (không bắt buộc)</string>
+    <string name="app_pricing_context">Ảnh thông tin thêm được đọc rồi bỏ đi, không tốn thêm phí</string>
     <string name="app_pricing_headline">Phán quyết đầu tiên, chúng tôi mời.</string>
     <string name="app_pricing_sub">Tạo tài khoản là có ngay phán quyết đầu tiên miễn phí, đủ mọi tính năng. Sau đó, chọn một gói lượt hoặc dùng gói tháng.</string>
     <string name="app_pricing_headline_member">Thêm lượt phán quyết.</string>
@@ -589,7 +610,7 @@
     <string name="app_home_your_side_label">Lời kể của bạn về cuộc tranh cãi</string>
     <string name="app_home_their_side_label">Lời kể của phía bên kia về cuộc tranh cãi</string>
     <string name="app_home_send_link">Gửi liên kết</string>
-    <string name="app_home_add_context">Thêm bối cảnh</string>
+    <string name="app_home_add_context">Bổ sung thông tin</string>
     <string name="app_home_says">%1$s nói:</string>
     <string name="app_home_my_side">Phía tôi:</string>
     <string name="app_home_other_side">Phía bên kia:</string>

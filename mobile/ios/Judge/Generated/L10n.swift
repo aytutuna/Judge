@@ -312,6 +312,21 @@ enum L10n {
     static func signinEmailSubmit(_ lang: AppLang) -> String { string("signin.emailSubmit", lang) }
     static func signinEmailSent(_ lang: AppLang, email: String) -> String { format("signin.emailSent", lang, email) }
     static func signinEmailInvalid(_ lang: AppLang) -> String { string("signin.emailInvalid", lang) }
+    static func signinPassword(_ lang: AppLang) -> String { string("signin.password", lang) }
+    static func signinPasswordNew(_ lang: AppLang) -> String { string("signin.passwordNew", lang) }
+    static func signinPasswordShow(_ lang: AppLang) -> String { string("signin.passwordShow", lang) }
+    static func signinCreate(_ lang: AppLang) -> String { string("signin.create", lang) }
+    static func signinForgot(_ lang: AppLang) -> String { string("signin.forgot", lang) }
+    static func signinUseCode(_ lang: AppLang) -> String { string("signin.useCode", lang) }
+    static func signinUsePassword(_ lang: AppLang) -> String { string("signin.usePassword", lang) }
+    static func signinPasswordWrong(_ lang: AppLang) -> String { string("signin.passwordWrong", lang) }
+    static func signinPasswordShort(_ lang: AppLang) -> String { string("signin.passwordShort", lang) }
+    static func signinCreateNote(_ lang: AppLang) -> String { string("signin.createNote", lang) }
+    static func signinPasswordChoose(_ lang: AppLang) -> String { string("signin.passwordChoose", lang) }
+    static func signinPasswordSave(_ lang: AppLang) -> String { string("signin.passwordSave", lang) }
+    static func signinPasswordSaveFailed(_ lang: AppLang) -> String { string("signin.passwordSaveFailed", lang) }
+    static func signinPasswordSkip(_ lang: AppLang) -> String { string("signin.passwordSkip", lang) }
+    static func signinPasswordSubmit(_ lang: AppLang) -> String { string("signin.passwordSubmit", lang) }
     static func signinProviderUnavailable(_ lang: AppLang) -> String { string("signin.providerUnavailable", lang) }
     static func signinFailed(_ lang: AppLang) -> String { string("signin.failed", lang) }
     static func signinLoading(_ lang: AppLang) -> String { string("signin.loading", lang) }
@@ -329,6 +344,10 @@ enum L10n {
     static func accountDelete(_ lang: AppLang) -> String { string("account.delete", lang) }
     static func accountDeleteConfirm(_ lang: AppLang) -> String { string("account.deleteConfirm", lang) }
     static func accountDeleteYes(_ lang: AppLang) -> String { string("account.deleteYes", lang) }
+    static func accountPasswordSet(_ lang: AppLang) -> String { string("account.passwordSet", lang) }
+    static func accountPasswordChange(_ lang: AppLang) -> String { string("account.passwordChange", lang) }
+    static func accountPasswordCurrent(_ lang: AppLang) -> String { string("account.passwordCurrent", lang) }
+    static func accountPasswordSaved(_ lang: AppLang) -> String { string("account.passwordSaved", lang) }
     static func accountDeleteCancel(_ lang: AppLang) -> String { string("account.deleteCancel", lang) }
     static func accountDeleteFailed(_ lang: AppLang) -> String { string("account.deleteFailed", lang) }
     static func accountSignInPrompt(_ lang: AppLang) -> String { string("account.signInPrompt", lang) }
@@ -616,6 +635,8 @@ enum L10n {
     static func stampDissolved(_ lang: AppLang) -> String { string("stamp.dissolved", lang) }
     static func bestPointOf(_ lang: AppLang, name: String) -> String { format("bestPoint.of", lang, name) }
     static func bestPointSelf(_ lang: AppLang) -> String { string("bestPoint.self", lang) }
+    static func errorPasswordWrong(_ lang: AppLang) -> String { string("error.password_wrong", lang) }
+    static func errorPasswordRequired(_ lang: AppLang) -> String { string("error.password_required", lang) }
     static func errorAgeBlocked(_ lang: AppLang) -> String { string("error.age_blocked", lang) }
     static func errorAgeUnconfirmed(_ lang: AppLang) -> String { string("error.age_unconfirmed", lang) }
     static func appName(_ lang: AppLang) -> String { string("app.name", lang) }
@@ -951,6 +972,21 @@ enum L10n {
         "signin.emailPlaceholder",
         "signin.emailSubmit",
         "signin.emailInvalid",
+        "signin.password",
+        "signin.passwordNew",
+        "signin.passwordShow",
+        "signin.create",
+        "signin.forgot",
+        "signin.useCode",
+        "signin.usePassword",
+        "signin.passwordWrong",
+        "signin.passwordShort",
+        "signin.createNote",
+        "signin.passwordChoose",
+        "signin.passwordSave",
+        "signin.passwordSaveFailed",
+        "signin.passwordSkip",
+        "signin.passwordSubmit",
         "signin.providerUnavailable",
         "signin.failed",
         "signin.loading",
@@ -964,6 +1000,10 @@ enum L10n {
         "account.delete",
         "account.deleteConfirm",
         "account.deleteYes",
+        "account.passwordSet",
+        "account.passwordChange",
+        "account.passwordCurrent",
+        "account.passwordSaved",
         "account.deleteCancel",
         "account.deleteFailed",
         "account.signInPrompt",
@@ -1225,6 +1265,8 @@ enum L10n {
         "stamp.tooClose",
         "stamp.dissolved",
         "bestPoint.self",
+        "error.password_wrong",
+        "error.password_required",
         "error.age_blocked",
         "error.age_unconfirmed",
         "app.name",

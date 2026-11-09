@@ -27,9 +27,9 @@ const pa: AppLocale = {
     "app.history.removeFailed": "{n} ਫ਼ੈਸਲੇ ਹਟਾਏ ਨਹੀਂ ਜਾ ਸਕੇ। ਆਪਣਾ ਕਨੈਕਸ਼ਨ ਦੇਖ ਕੇ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।",
     "app.history.offlineRemove": "ਤੁਸੀਂ ਆਫ਼ਲਾਈਨ ਹੋ। ਹਟਾਉਣ ਲਈ ਕਨੈਕਸ਼ਨ ਚਾਹੀਦਾ ਹੈ।",
     "app.pricing.free.account": "Apple, Google ਜਾਂ ਈਮੇਲ ਨਾਲ ਸਾਈਨ ਇਨ ਕਰੋ",
-    "app.context.label": "ਸੰਦਰਭ (ਵਿਕਲਪਿਕ)",
+    "app.context.label": "ਵੇਰਵਾ (ਵਿਕਲਪਿਕ)",
     "app.pricing.context":
-      "ਸੰਦਰਭ ਦੀਆਂ ਤਸਵੀਰਾਂ ਪੜ੍ਹ ਕੇ ਸੁੱਟ ਦਿੱਤੀਆਂ ਜਾਂਦੀਆਂ ਹਨ, ਕੋਈ ਵਾਧੂ ਖ਼ਰਚਾ ਨਹੀਂ",
+      "ਵੇਰਵੇ ਦੀਆਂ ਤਸਵੀਰਾਂ ਪੜ੍ਹ ਕੇ ਸੁੱਟ ਦਿੱਤੀਆਂ ਜਾਂਦੀਆਂ ਹਨ, ਕੋਈ ਵਾਧੂ ਖ਼ਰਚਾ ਨਹੀਂ",
     "app.pricing.headline": "ਪਹਿਲਾ ਫ਼ੈਸਲਾ ਸਾਡੇ ਵੱਲੋਂ।",
     "app.pricing.sub":
       "ਖਾਤਾ ਬਣਾਓ ਅਤੇ ਪਹਿਲਾ ਫ਼ੈਸਲਾ ਮੁਫ਼ਤ ਪਾਓ, ਸਾਰੀਆਂ ਸਹੂਲਤਾਂ ਸਮੇਤ। ਉਸ ਤੋਂ ਬਾਅਦ ਕੋਈ ਪੈਕ ਚੁਣੋ ਜਾਂ ਮਹੀਨਾਵਾਰ ਪਲਾਨ ਲਓ।",
@@ -92,7 +92,7 @@ const pa: AppLocale = {
     "app.home.yourSideLabel": "ਬਹਿਸ ਵਿੱਚ ਤੁਹਾਡਾ ਪੱਖ",
     "app.home.theirSideLabel": "ਬਹਿਸ ਵਿੱਚ ਉਨ੍ਹਾਂ ਦਾ ਪੱਖ",
     "app.home.sendLink": "ਲਿੰਕ ਭੇਜੋ",
-    "app.home.addContext": "ਸੰਦਰਭ ਜੋੜੋ",
+    "app.home.addContext": "ਵੇਰਵਾ ਜੋੜੋ",
     "app.home.says": "{name} ਦਾ ਕਹਿਣਾ ਹੈ:",
     "app.home.mySide": "ਮੇਰਾ ਪੱਖ:",
     "app.home.otherSide": "ਉਨ੍ਹਾਂ ਦਾ ਪੱਖ:",

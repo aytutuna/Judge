@@ -74,6 +74,14 @@ struct VerdictDetails<Appeal: View>: View {
         let result = Names.personalizeResult(view.result, nameMap: session.nameMap, selfLang: selfLang)
         ScrollView {
             VStack(alignment: .leading, spacing: 12) {
+                if shareURL != nil {
+                    VerdictShare(
+                        shareURL: shareURL,
+                        shareSubject: session.original.result.headline,
+                        lang: lang,
+                        writer: onAddContext != nil
+                    )
+                }
                 if let outcome = result.appeal {
                     AppealOutcomeBanner(
                         appeal: outcome,
@@ -87,18 +95,16 @@ struct VerdictDetails<Appeal: View>: View {
                     sections(result, parties: parties)
                 }
                 votes(result, parties: parties)
-                VerdictActions(
-                    shareURL: shareURL,
-                    shareSubject: session.original.result.headline,
-                    lang: lang,
-                    onAddContext: onAddContext
-                )
-                .padding(.top, 4)
+                if let onAddContext {
+                    VerdictAppealButton(lang: lang, action: onAddContext)
+                        .padding(.top, 4)
+                }
             }
             .padding(.horizontal, 16)
             .padding(.top, 8)
             .padding(.bottom, 32)
         }
+        .scrollBounceBehavior(.basedOnSize)
         .background(Brand.ivory.ignoresSafeArea())
         .background(EdgeSwipeBack().frame(width: 0, height: 0))
         .navigationBarBackButtonHidden(true)

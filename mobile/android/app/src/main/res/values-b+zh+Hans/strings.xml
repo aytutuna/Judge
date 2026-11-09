@@ -178,6 +178,21 @@
     <string name="signin_email_submit">给我发登录链接</string>
     <string name="signin_email_sent">请查收邮件。我们已向 %1$s 发送登录链接，10 分钟内有效。</string>
     <string name="signin_email_invalid">这个邮箱地址好像不对。</string>
+    <string name="signin_password">密码</string>
+    <string name="signin_password_new">新密码</string>
+    <string name="signin_password_show">显示密码</string>
+    <string name="signin_create">创建账号</string>
+    <string name="signin_forgot">忘记密码？</string>
+    <string name="signin_use_code">改为用邮件发送验证码</string>
+    <string name="signin_use_password">改用密码登录</string>
+    <string name="signin_password_wrong">该邮箱和密码不匹配。</string>
+    <string name="signin_password_short">至少使用 8 个字符。</string>
+    <string name="signin_create_note">我们会通过邮件发送验证码来确认此地址，只需做这一次。</string>
+    <string name="signin_password_choose">你已登录。请为下次选一个密码。</string>
+    <string name="signin_password_save">保存密码</string>
+    <string name="signin_password_save_failed">你已登录，但密码没能保存。请重试，或稍后在设置中设定。</string>
+    <string name="signin_password_skip">暂时跳过</string>
+    <string name="signin_password_submit">登录</string>
     <string name="signin_provider_unavailable">暂未开放</string>
     <string name="signin_failed">登录没成功，再试一次吧？</string>
     <string name="signin_loading">正在加载登录方式……</string>
@@ -195,6 +210,10 @@
     <string name="account_delete">删除账号</string>
     <string name="account_delete_confirm">确定删除账号吗？你的次数、套餐和登录信息都会被删除。你的裁决和你在案子中的说法也会被删除：你写的内容和名字都会被抹去，分享链接也会失效。</string>
     <string name="account_delete_yes">是的，删除</string>
+    <string name="account_password_set">设置密码</string>
+    <string name="account_password_change">修改密码</string>
+    <string name="account_password_current">当前密码</string>
+    <string name="account_password_saved">密码已保存。</string>
     <string name="account_delete_cancel">保留我的账号</string>
     <string name="account_delete_failed">暂时没能删除账号，再试一次吧？</string>
     <string name="account_sign_in_prompt">登录后查看你的套餐和次数。</string>
@@ -364,7 +383,7 @@
     <string name="appeal_title">补充说明</string>
     <string name="home_example">试试示例</string>
     <string name="home_your_placeholder">怎么了？</string>
-    <string name="home_add_context">添加背景</string>
+    <string name="home_add_context">补充说明</string>
     <string name="home_add_their_side">添加对方的说法</string>
     <string name="home_remove_their_side">移除对方的说法</string>
     <string name="home_send_link">发个链接</string>
@@ -494,6 +513,8 @@
     <string name="stamp_dissolved">词义之争</string>
     <string name="best_point_of">%1$s最有力的一点</string>
     <string name="best_point_self">你最有力的一点</string>
+    <string name="error_password_wrong">密码不正确。</string>
+    <string name="error_password_required">请输入当前密码。</string>
     <string name="error_age_blocked">Judge 仅限 18 岁及以上的人使用。</string>
     <string name="error_age_unconfirmed">请确认你已满 18 岁后继续。</string>
     <string name="app_name">Judge</string>
@@ -528,8 +549,8 @@
     </plurals>
     <string name="app_history_offline_remove">你现在没联网，删除需要网络连接。</string>
     <string name="app_pricing_free_account">用 Apple、Google 或邮箱登录</string>
-    <string name="app_context_label">背景（可选）</string>
-    <string name="app_pricing_context">背景图片读完即丢，不另外收费</string>
+    <string name="app_context_label">补充说明（可选）</string>
+    <string name="app_pricing_context">补充说明的图片读完即丢，不另外收费</string>
     <string name="app_pricing_headline">第一次裁决，我们请客。</string>
     <string name="app_pricing_sub">注册账号，第一次裁决免费，所有功能都能用。之后可以买次数包，或者按月订阅。</string>
     <string name="app_pricing_headline_member">获取更多裁决。</string>
@@ -589,7 +610,7 @@
     <string name="app_home_your_side_label">你在这场争论中的说法</string>
     <string name="app_home_their_side_label">对方在这场争论中的说法</string>
     <string name="app_home_send_link">发个链接</string>
-    <string name="app_home_add_context">添加背景</string>
+    <string name="app_home_add_context">补充说明</string>
     <string name="app_home_says">%1$s说：</string>
     <string name="app_home_my_side">我的说法：</string>
     <string name="app_home_other_side">对方的说法：</string>

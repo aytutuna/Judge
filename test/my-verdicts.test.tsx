@@ -42,7 +42,11 @@ const RESPONDENT_MAP = [
   { original: "I", replacement: "Party B" },
   { original: "Ada", replacement: "Party A" },
 ];
-const mocked = vi.hoisted(() => ({ history: null as unknown }));
+const mocked = vi.hoisted(() => ({ history: null as unknown, viewer: null as unknown }));
+vi.mock("../lib/use-viewer", async (orig) => {
+  const actual = await orig<typeof import("../lib/use-viewer")>();
+  return { ...actual, useViewer: () => mocked.viewer ?? actual.useViewer() };
+});
 vi.mock("../components/shell/useHistory", async (orig) => {
   const actual = await orig<typeof import("../components/shell/useHistory")>();
   return { ...actual, useHistory: (...a: Parameters<typeof actual.useHistory>) => mocked.history ?? actual.useHistory(...a) };
@@ -286,6 +290,50 @@ describe("SideMenu", () => {
 
   it("speaks Turkish", () => {
     const html = menu({ lang: "tr" });
-    for (const k of ["nav.new", "nav.verdicts", "nav.settings"] as const) expect(html).toContain(`>${t("tr", k)}</a>`);
+    for (const k of ["nav.new", "nav.settings"] as const) expect(html).toContain(`>${t("tr", k)}</a>`);
+    expect(html).toContain(`>${t("tr", "nav.verdicts")}<svg`);
+  });
+
+  it("puts the profile above Settings, with Pricing and Sign in behind it", () => {
+    const html = menu();
+    const profile = html.indexOf('aria-controls=');
+    expect(profile).toBeGreaterThan(html.indexOf('href="/verdicts"'));
+    expect(html.indexOf('href="/settings"')).toBeGreaterThan(profile);
+    expect(html).toContain(t("en", "nav.account"));
+    expect(html).toMatch(/hidden=""[^>]*>[^]*href="\/pricing"/);
+    expect(html).not.toContain(t("en", "nav.signOut"));
+  });
+
+  it("offers Sign in only where the server has a way to sign in and the page is not the sign-in page", () => {
+    const viewer = { status: "ready", me: { user: null }, config: { signIn: { apple: false, google: true, email: false, dev: false } } };
+    try {
+      expect(menu()).not.toContain("/signin?next=");
+      mocked.viewer = viewer;
+      expect(menu()).toContain("/signin?next=%2F");
+      expect(menu({ pathname: "/signin" })).not.toContain("/signin?next=");
+      mocked.viewer = { ...viewer, config: { signIn: { apple: false, google: false, email: false, dev: false } } };
+      expect(menu()).not.toContain("/signin?next=");
+    } finally {
+      mocked.viewer = null;
+    }
+  });
+
+  it("makes each recent verdict its own tinted card and keeps the result in words", () => {
+    const items = [
+      row({ id: "w", verdict: "side_a" }),
+      row({ id: "l", verdict: "side_b" }),
+      row({ id: "s", verdict: "split" }),
+      row({ id: "j", state: "judging", verdict: null }),
+    ].map(fromRow);
+    mocked.history = { items, status: "ready", more: false, loadingMore: false };
+    try {
+      const html = menu();
+      expect(html.match(/data-tone="yours"/g)).toHaveLength(1);
+      expect(html.match(/data-tone="theirs"/g)).toHaveLength(1);
+      expect(html.match(/<(a|span) [^>]*class="_recent_/g)).toHaveLength(4);
+      for (const item of items) expect(html).toContain(esc(stateLabel("en", item) ?? ""));
+    } finally {
+      mocked.history = null;
+    }
   });
 });

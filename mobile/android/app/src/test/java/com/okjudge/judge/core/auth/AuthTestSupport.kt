@@ -51,10 +51,12 @@ class Routes : Dispatcher() {
         const val SEND_CODE = "POST /api/auth/email-otp/send-verification-otp"
         const val VERIFY_CODE = "POST /api/auth/sign-in/email-otp"
         const val SIGN_OUT = "POST /api/auth/sign-out"
+        const val PASSWORD_SIGN_IN = "POST /api/auth/sign-in/email"
+        const val SET_PASSWORD = "POST /api/v1/me/password"
 
-        fun config(google: Boolean, emailCode: Boolean, apple: Boolean = false) = json(
+        fun config(google: Boolean, emailCode: Boolean, apple: Boolean = false, password: Boolean = false) = json(
             200,
-            """{"signIn":{"apple":$apple,"google":$google,"email":$emailCode,"emailCode":$emailCode,"dev":false},
+            """{"signIn":{"apple":$apple,"google":$google,"email":$emailCode,"emailCode":$emailCode,"password":$password,"dev":false},
                "premiumEnabled":false,"pricing":{"currency":"USD","purchasesEnabled":false,"packs":[],
                "monthly":{"id":"monthly","priceUsd":4.99,"fairUseCap":100,"periodDays":30}},
                "features":{"cases":false,"evidence":false}}""",

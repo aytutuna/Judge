@@ -183,6 +183,21 @@
     <string name="signin_email_submit">Stuur me een inloglink</string>
     <string name="signin_email_sent">Check je inbox. We hebben een inloglink gestuurd naar %1$s. Die werkt 10 minuten.</string>
     <string name="signin_email_invalid">Dat e-mailadres lijkt niet te kloppen.</string>
+    <string name="signin_password">Wachtwoord</string>
+    <string name="signin_password_new">Nieuw wachtwoord</string>
+    <string name="signin_password_show">Wachtwoord tonen</string>
+    <string name="signin_create">Account aanmaken</string>
+    <string name="signin_forgot">Wachtwoord vergeten?</string>
+    <string name="signin_use_code">Mail me in plaats daarvan een code</string>
+    <string name="signin_use_password">Gebruik in plaats daarvan een wachtwoord</string>
+    <string name="signin_password_wrong">Dat e-mailadres en wachtwoord komen niet overeen.</string>
+    <string name="signin_password_short">Gebruik minstens 8 tekens.</string>
+    <string name="signin_create_note">We mailen je een code om dit adres te bevestigen. Dat hoef je maar één keer te doen.</string>
+    <string name="signin_password_choose">Je bent ingelogd. Kies een wachtwoord voor de volgende keer.</string>
+    <string name="signin_password_save">Wachtwoord opslaan</string>
+    <string name="signin_password_save_failed">Je bent ingelogd, maar we konden het wachtwoord niet opslaan. Probeer het opnieuw of stel het later in bij Instellingen.</string>
+    <string name="signin_password_skip">Nu overslaan</string>
+    <string name="signin_password_submit">Inloggen</string>
     <string name="signin_provider_unavailable">Nog niet beschikbaar</string>
     <string name="signin_failed">Inloggen lukte niet. Wil je het nog eens proberen?</string>
     <string name="signin_loading">Inlogopties laden…</string>
@@ -200,6 +215,10 @@
     <string name="account_delete">Account verwijderen</string>
     <string name="account_delete_confirm">Je account verwijderen? Je credits, abonnement en inloggegevens worden gewist. Je uitspraken en jouw kant in zaken worden verwijderd: wat je schreef en de namen worden gewist, en de deellinks werken niet meer.</string>
     <string name="account_delete_yes">Ja, verwijderen</string>
+    <string name="account_password_set">Wachtwoord instellen</string>
+    <string name="account_password_change">Wachtwoord wijzigen</string>
+    <string name="account_password_current">Huidig wachtwoord</string>
+    <string name="account_password_saved">Wachtwoord opgeslagen.</string>
     <string name="account_delete_cancel">Account houden</string>
     <string name="account_delete_failed">We konden het account nu niet verwijderen. Wil je het nog eens proberen?</string>
     <string name="account_sign_in_prompt">Log in om je abonnement en credits te zien.</string>
@@ -372,7 +391,7 @@
     <string name="appeal_title">Iets aanvullen</string>
     <string name="home_example">Probeer een voorbeeld</string>
     <string name="home_your_placeholder">Wat is het probleem?</string>
-    <string name="home_add_context">Context toevoegen</string>
+    <string name="home_add_context">Iets aanvullen</string>
     <string name="home_add_their_side">Kant van de ander toevoegen</string>
     <string name="home_remove_their_side">Kant van de ander verwijderen</string>
     <string name="home_send_link">Stuur een link</string>
@@ -505,6 +524,8 @@
     <string name="stamp_dissolved">Misverstand</string>
     <string name="best_point_of">Sterkste punt van %1$s</string>
     <string name="best_point_self">Jouw sterkste punt</string>
+    <string name="error_password_wrong">Dat wachtwoord klopt niet.</string>
+    <string name="error_password_required">Vul je huidige wachtwoord in.</string>
     <string name="error_age_blocked">Judge is alleen voor mensen van 18 jaar en ouder.</string>
     <string name="error_age_unconfirmed">Bevestig dat je 18 jaar of ouder bent om verder te gaan.</string>
     <string name="app_name">Judge</string>
@@ -544,8 +565,8 @@
     </plurals>
     <string name="app_history_offline_remove">Je bent offline. Om te verwijderen heb je een verbinding nodig.</string>
     <string name="app_pricing_free_account">Log in met Apple, Google of e-mail</string>
-    <string name="app_context_label">Context (optioneel)</string>
-    <string name="app_pricing_context">Contextafbeeldingen worden gelezen en daarna weggegooid, zonder extra kosten</string>
+    <string name="app_context_label">Aanvulling (optioneel)</string>
+    <string name="app_pricing_context">Afbeeldingen bij de aanvulling worden gelezen en daarna weggegooid, zonder extra kosten</string>
     <string name="app_pricing_headline">Je eerste uitspraak is van het huis.</string>
     <string name="app_pricing_sub">Maak een account aan en je eerste uitspraak is gratis, met alles erop en eraan. Daarna kies je een bundel of neem je een maandabonnement.</string>
     <string name="app_pricing_headline_member">Meer uitspraken.</string>
@@ -606,7 +627,7 @@
     <string name="app_home_your_side_label">Jouw kant van de discussie</string>
     <string name="app_home_their_side_label">De andere kant van de discussie</string>
     <string name="app_home_send_link">Stuur een link</string>
-    <string name="app_home_add_context">Context toevoegen</string>
+    <string name="app_home_add_context">Iets aanvullen</string>
     <string name="app_home_says">%1$s zegt:</string>
     <string name="app_home_my_side">Mijn kant:</string>
     <string name="app_home_other_side">De andere kant:</string>

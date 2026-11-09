@@ -203,6 +203,21 @@
     <string name="signin_email_submit">أرسل لي رابط الدخول</string>
     <string name="signin_email_sent">تفقّد بريدك الوارد. أرسلنا رابط تسجيل الدخول إلى %1$s. يعمل الرابط لمدة 10 دقائق.</string>
     <string name="signin_email_invalid">عنوان البريد الإلكتروني هذا لا يبدو صحيحًا.</string>
+    <string name="signin_password">كلمة المرور</string>
+    <string name="signin_password_new">كلمة مرور جديدة</string>
+    <string name="signin_password_show">إظهار كلمة المرور</string>
+    <string name="signin_create">إنشاء حساب</string>
+    <string name="signin_forgot">نسيت كلمة المرور؟</string>
+    <string name="signin_use_code">أرسل لي رمزًا بالبريد بدلًا من ذلك</string>
+    <string name="signin_use_password">استخدم كلمة مرور بدلًا من ذلك</string>
+    <string name="signin_password_wrong">البريد وكلمة المرور غير متطابقين.</string>
+    <string name="signin_password_short">استخدم 8 أحرف على الأقل.</string>
+    <string name="signin_create_note">سنرسل لك رمزًا بالبريد لتأكيد هذا العنوان. تحتاج إلى ذلك مرة واحدة فقط.</string>
+    <string name="signin_password_choose">سجّلت الدخول. اختر كلمة مرور للمرة القادمة.</string>
+    <string name="signin_password_save">حفظ كلمة المرور</string>
+    <string name="signin_password_save_failed">سجّلت الدخول، لكن تعذّر حفظ كلمة المرور. حاول مرة أخرى أو عيّنها لاحقًا من الإعدادات.</string>
+    <string name="signin_password_skip">تخطَّ الآن</string>
+    <string name="signin_password_submit">تسجيل الدخول</string>
     <string name="signin_provider_unavailable">غير متاح بعد</string>
     <string name="signin_failed">لم نتمكن من تسجيل دخولك. هلّا حاولت مرة أخرى؟</string>
     <string name="signin_loading">جارٍ تحميل خيارات تسجيل الدخول…</string>
@@ -220,6 +235,10 @@
     <string name="account_delete">حذف الحساب</string>
     <string name="account_delete_confirm">هل تريد حذف حسابك؟ سيُحذف رصيدك وخطتك وبيانات تسجيل الدخول. وستُزال أحكامك ورواياتك في القضايا: يُمحى ما كتبته والأسماء، وتتوقف روابط مشاركتها عن العمل.</string>
     <string name="account_delete_yes">نعم، احذفه</string>
+    <string name="account_password_set">تعيين كلمة مرور</string>
+    <string name="account_password_change">تغيير كلمة المرور</string>
+    <string name="account_password_current">كلمة المرور الحالية</string>
+    <string name="account_password_saved">تم حفظ كلمة المرور.</string>
     <string name="account_delete_cancel">الإبقاء على حسابي</string>
     <string name="account_delete_failed">تعذّر حذف الحساب الآن. هلّا حاولت مرة أخرى؟</string>
     <string name="account_sign_in_prompt">سجّل الدخول لترى خطتك ورصيدك.</string>
@@ -404,7 +423,7 @@
     <string name="appeal_title">إضافة توضيح</string>
     <string name="home_example">جرّب مثالًا</string>
     <string name="home_your_placeholder">ما المشكلة؟</string>
-    <string name="home_add_context">أضف سياقًا</string>
+    <string name="home_add_context">أضف توضيحًا</string>
     <string name="home_add_their_side">أضف رواية الطرف الآخر</string>
     <string name="home_remove_their_side">أزل رواية الطرف الآخر</string>
     <string name="home_send_link">أرسل له رابطًا</string>
@@ -549,6 +568,8 @@
     <string name="stamp_dissolved">خلاف لفظي</string>
     <string name="best_point_of">أقوى نقطة لدى %1$s</string>
     <string name="best_point_self">أقوى نقطة لديك</string>
+    <string name="error_password_wrong">كلمة المرور هذه غير صحيحة.</string>
+    <string name="error_password_required">أدخل كلمة المرور الحالية.</string>
     <string name="error_age_blocked">Judge مخصص لمن بلغوا 18 عامًا فأكثر فقط.</string>
     <string name="error_age_unconfirmed">أكّد أن عمرك 18 عامًا أو أكثر للمتابعة.</string>
     <string name="app_name">Judge</string>
@@ -608,8 +629,8 @@
     </plurals>
     <string name="app_history_offline_remove">أنت غير متصل بالإنترنت. يحتاج الحذف إلى اتصال.</string>
     <string name="app_pricing_free_account">سجّل الدخول باستخدام Apple أو Google أو البريد الإلكتروني</string>
-    <string name="app_context_label">سياق (اختياري)</string>
-    <string name="app_pricing_context">صور السياق تُقرأ ثم تُحذف، دون أي تكلفة إضافية</string>
+    <string name="app_context_label">توضيح (اختياري)</string>
+    <string name="app_pricing_context">صور التوضيح تُقرأ ثم تُحذف، دون أي تكلفة إضافية</string>
     <string name="app_pricing_headline">حكمك الأول على حسابنا.</string>
     <string name="app_pricing_sub">أنشئ حسابًا واحصل على أول حكم مجانًا، بكل المزايا. بعد ذلك، اختر باقة أو اشترك شهريًا.</string>
     <string name="app_pricing_headline_member">احصل على المزيد من الأحكام.</string>
@@ -674,7 +695,7 @@
     <string name="app_home_your_side_label">روايتك للخلاف</string>
     <string name="app_home_their_side_label">رواية الطرف الآخر للخلاف</string>
     <string name="app_home_send_link">أرسل له رابطًا</string>
-    <string name="app_home_add_context">أضف سياقًا</string>
+    <string name="app_home_add_context">أضف توضيحًا</string>
     <string name="app_home_says">رواية %1$s:</string>
     <string name="app_home_my_side">روايتي:</string>
     <string name="app_home_other_side">رواية الطرف الآخر:</string>

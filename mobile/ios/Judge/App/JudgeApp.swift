@@ -65,6 +65,7 @@ struct RootView: View {
         .overlay { SideMenu() }
         .background(Brand.ivory.ignoresSafeArea())
         .accessibilityHidden(ageCovered)
+        .dismissesKeyboard(closeLabel: L10n.appClose(lang))
         .environment(\.pageCovered, app.menuOpen || account.isSignInPresented || webLink != nil || app.sheetOpen || ageCovered)
         .sheet(isPresented: $account.isSignInPresented, onDismiss: { app.account.signInDismissed() }) {
             SignInView()

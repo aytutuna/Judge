@@ -48,6 +48,9 @@ export type MeResponse = {
   entitlement: Entitlement | null;
   /** Absent on older servers. */
   age?: AgeState | null;
+  /** The account has a password (POST /api/v1/me/password). Absent when
+   * signed out and on older servers. */
+  hasPassword?: boolean;
 };
 
 /** Which sign-in methods are usable on this deployment right now. */
@@ -59,6 +62,10 @@ export type AuthProviders = {
   /** Email one-time code (apps): POST /api/auth/email-otp/send-verification-otp
    * then POST /api/auth/sign-in/email-otp. On whenever `email` is. */
   emailCode: boolean;
+  /** Sign in with email and password (POST /api/auth/sign-in/email), set
+   * through POST /api/v1/me/password after the first code. On whenever
+   * `emailCode` is; absent on older servers. */
+  password: boolean;
   /** Dev-only test login (never true in production). */
   dev: boolean;
 };

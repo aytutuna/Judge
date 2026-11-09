@@ -183,6 +183,21 @@
     <string name="signin_email_submit">Στείλε μου σύνδεσμο εισόδου</string>
     <string name="signin_email_sent">Δες τα εισερχόμενά σου. Στείλαμε σύνδεσμο εισόδου στο %1$s. Ισχύει για 10 λεπτά.</string>
     <string name="signin_email_invalid">Αυτή η διεύθυνση email δεν φαίνεται σωστή.</string>
+    <string name="signin_password">Κωδικός πρόσβασης</string>
+    <string name="signin_password_new">Νέος κωδικός πρόσβασης</string>
+    <string name="signin_password_show">Εμφάνιση κωδικού</string>
+    <string name="signin_create">Δημιουργία λογαριασμού</string>
+    <string name="signin_forgot">Ξέχασες τον κωδικό;</string>
+    <string name="signin_use_code">Στείλε μου κωδικό με email</string>
+    <string name="signin_use_password">Χρήση κωδικού πρόσβασης</string>
+    <string name="signin_password_wrong">Αυτό το email και ο κωδικός δεν ταιριάζουν.</string>
+    <string name="signin_password_short">Χρησιμοποίησε τουλάχιστον 8 χαρακτήρες.</string>
+    <string name="signin_create_note">Θα σου στείλουμε έναν κωδικό με email για να επιβεβαιώσουμε τη διεύθυνση. Χρειάζεται να το κάνεις μόνο μία φορά.</string>
+    <string name="signin_password_choose">Συνδέθηκες. Διάλεξε έναν κωδικό για την επόμενη φορά.</string>
+    <string name="signin_password_save">Αποθήκευση κωδικού</string>
+    <string name="signin_password_save_failed">Συνδέθηκες, αλλά δεν μπορέσαμε να αποθηκεύσουμε τον κωδικό. Δοκίμασε ξανά ή όρισέ τον αργότερα στις Ρυθμίσεις.</string>
+    <string name="signin_password_skip">Παράλειψη προς το παρόν</string>
+    <string name="signin_password_submit">Σύνδεση</string>
     <string name="signin_provider_unavailable">Δεν είναι διαθέσιμο ακόμα</string>
     <string name="signin_failed">Δεν μπορέσαμε να σε συνδέσουμε. Δοκιμάζεις ξανά;</string>
     <string name="signin_loading">Φόρτωση επιλογών σύνδεσης…</string>
@@ -200,6 +215,10 @@
     <string name="account_delete">Διαγραφή λογαριασμού</string>
     <string name="account_delete_confirm">Να διαγραφεί ο λογαριασμός σου; Το υπόλοιπο αποφάσεων, το πρόγραμμα και τα στοιχεία σύνδεσης διαγράφονται. Οι αποφάσεις σου και οι πλευρές σου στις υποθέσεις αφαιρούνται: ό,τι έγραψες και τα ονόματα σβήνονται και οι σύνδεσμοι κοινοποίησης σταματούν να λειτουργούν.</string>
     <string name="account_delete_yes">Ναι, διάγραψέ τον</string>
+    <string name="account_password_set">Ορισμός κωδικού</string>
+    <string name="account_password_change">Αλλαγή κωδικού</string>
+    <string name="account_password_current">Τρέχων κωδικός</string>
+    <string name="account_password_saved">Ο κωδικός αποθηκεύτηκε.</string>
     <string name="account_delete_cancel">Κράτα τον λογαριασμό μου</string>
     <string name="account_delete_failed">Δεν μπορέσαμε να διαγράψουμε τον λογαριασμό τώρα. Δοκιμάζεις ξανά;</string>
     <string name="account_sign_in_prompt">Συνδέσου για να δεις το πρόγραμμα και το υπόλοιπό σου.</string>
@@ -372,7 +391,7 @@
     <string name="appeal_title">Πρόσθεσε πληροφορίες</string>
     <string name="home_example">Δοκίμασε ένα παράδειγμα</string>
     <string name="home_your_placeholder">Ποιο είναι το πρόβλημα;</string>
-    <string name="home_add_context">Πρόσθεσε πλαίσιο</string>
+    <string name="home_add_context">Πρόσθεσε πληροφορίες</string>
     <string name="home_add_their_side">Πρόσθεσε την άλλη πλευρά</string>
     <string name="home_remove_their_side">Αφαίρεσε την άλλη πλευρά</string>
     <string name="home_send_link">Στείλε σύνδεσμο</string>
@@ -505,6 +524,8 @@
     <string name="stamp_dissolved">Θέμα λέξεων</string>
     <string name="best_point_of">Το δυνατό χαρτί (%1$s)</string>
     <string name="best_point_self">Το δικό σου δυνατό χαρτί</string>
+    <string name="error_password_wrong">Αυτός ο κωδικός δεν είναι σωστός.</string>
+    <string name="error_password_required">Εισήγαγε τον τρέχοντα κωδικό σου.</string>
     <string name="error_age_blocked">Το Judge είναι μόνο για άτομα 18 ετών και άνω.</string>
     <string name="error_age_unconfirmed">Επιβεβαίωσε ότι είσαι 18 ετών ή μεγαλύτερος/η για να συνεχίσεις.</string>
     <string name="app_name">Judge</string>
@@ -544,8 +565,8 @@
     </plurals>
     <string name="app_history_offline_remove">Είσαι εκτός σύνδεσης. Για να αφαιρέσεις αποφάσεις χρειάζεσαι σύνδεση στο ίντερνετ.</string>
     <string name="app_pricing_free_account">Σύνδεση με Apple, Google ή email</string>
-    <string name="app_context_label">Πλαίσιο (προαιρετικά)</string>
-    <string name="app_pricing_context">Οι εικόνες πλαισίου διαβάζονται και μετά πετιούνται, χωρίς επιπλέον κόστος</string>
+    <string name="app_context_label">Πληροφορίες (προαιρετικά)</string>
+    <string name="app_pricing_context">Οι εικόνες με πληροφορίες διαβάζονται και μετά πετιούνται, χωρίς επιπλέον κόστος</string>
     <string name="app_pricing_headline">Την πρώτη απόφαση την κερνάμε εμείς.</string>
     <string name="app_pricing_sub">Φτιάξε λογαριασμό και η πρώτη σου απόφαση είναι δωρεάν, με όλες τις λειτουργίες. Μετά διαλέγεις πακέτο ή μηνιαίο πρόγραμμα.</string>
     <string name="app_pricing_headline_member">Περισσότερες αποφάσεις.</string>
@@ -606,7 +627,7 @@
     <string name="app_home_your_side_label">Η δική σου πλευρά στη διαφωνία</string>
     <string name="app_home_their_side_label">Η άλλη πλευρά στη διαφωνία</string>
     <string name="app_home_send_link">Στείλε σύνδεσμο</string>
-    <string name="app_home_add_context">Πρόσθεσε πλαίσιο</string>
+    <string name="app_home_add_context">Πρόσθεσε πληροφορίες</string>
     <string name="app_home_says">%1$s λέει:</string>
     <string name="app_home_my_side">Η δική μου πλευρά:</string>
     <string name="app_home_other_side">Η άλλη πλευρά:</string>

@@ -46,7 +46,7 @@ struct HomeView: View {
                     }
                 }
                 .defaultScrollAnchor(home.clarify == nil ? UnitPoint.bottom : UnitPoint.top)
-                .scrollDismissesKeyboard(.interactively)
+                .scrollDismissesKeyboard(.immediately)
                 .onAppear {
                     if home.error != nil { proxy.scrollTo(Self.errorID, anchor: .center) }
                 }
@@ -72,12 +72,11 @@ struct HomeView: View {
             }
         }
         .background(Brand.ivory.ignoresSafeArea())
-        .navigationTitle(L10n.appTabNew(lang))
         .navigationBarTitleDisplayMode(.inline)
         .toolbarBackground(Brand.ivory, for: .navigationBar)
         .toolbar {
             if home.clarify == nil {
-                ToolbarItem(placement: .topBarLeading) { MenuButton() }
+                RootBarLeading()
                 RootBarTrailing()
             }
         }
@@ -119,13 +118,12 @@ struct HomeView: View {
     private func form(_ lang: AppLang, home: HomeModel) -> some View {
         VStack(alignment: .leading, spacing: 12) {
             if app.gamify {
-                Spacer(minLength: 0)
-                    .frame(maxWidth: .infinity)
+                // Takes what the boxes leave, never less than the court needs
+                // to draw: the page scrolls before the court shrinks.
+                Color.clear
+                    .frame(maxWidth: .infinity, minHeight: HomeCourt.minHeight)
                     .overlay {
-                        // The second side, an error or a crowded page take the room.
-                        if !home.theirsOpen, home.error == nil {
-                            HomeCourt(busy: home.isBusy, covered: pageCovered || home.isJudging || !home.path.isEmpty)
-                        }
+                        HomeCourt(busy: home.isBusy, covered: pageCovered || home.isJudging || !home.path.isEmpty)
                     }
             }
             if home.theirsOpen {

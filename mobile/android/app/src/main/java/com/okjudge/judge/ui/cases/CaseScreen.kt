@@ -83,6 +83,7 @@ import com.okjudge.judge.core.model.NameMapping
 import com.okjudge.judge.i18n.LocalLang
 import com.okjudge.judge.i18n.LocalStrings
 import com.okjudge.judge.i18n.Strings
+import com.okjudge.judge.ui.components.ClearFocusOnDrag
 import com.okjudge.judge.ui.components.GhostButton
 import com.okjudge.judge.ui.components.JudgeIcons
 import com.okjudge.judge.ui.components.Kicker
@@ -90,6 +91,7 @@ import com.okjudge.judge.ui.components.PrimaryButton
 import com.okjudge.judge.ui.components.TextAction
 import com.okjudge.judge.ui.components.TintedIcon
 import com.okjudge.judge.ui.components.TopBar
+import com.okjudge.judge.ui.components.clearFocusOnTap
 import com.okjudge.judge.ui.components.neonEdge
 import com.okjudge.judge.ui.components.rememberIcon
 import com.okjudge.judge.ui.judging.JudgingScreen
@@ -288,8 +290,10 @@ private fun CaseScreenBody(
         }
 
         val waitingFor = otherName?.trim()?.takeIf { it.isNotEmpty() } ?: view.display.b?.trim()?.takeIf { it.isNotEmpty() }
+        val scroll = rememberScrollState()
+        ClearFocusOnDrag(scroll)
         Column(
-            Modifier.fillMaxSize().verticalScroll(rememberScrollState()).imePadding().padding(horizontal = 16.dp),
+            Modifier.fillMaxSize().clearFocusOnTap().verticalScroll(scroll, enabled = scroll.canScrollForward || scroll.canScrollBackward).imePadding().padding(horizontal = 16.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Column(
@@ -871,7 +875,9 @@ fun AppealSheet(
         shape = RoundedCornerShape(topStart = 28.dp, topEnd = 28.dp),
         dragHandle = { Box(Modifier.padding(top = 10.dp).size(width = 40.dp, height = 5.dp).clip(JudgeShapes.chip).background(Palette.stone)) },
     ) {
-        AppealPanel(area, draft, evidenceOn, cost, actions, onClose, Modifier.verticalScroll(rememberScrollState()).imePadding())
+        val scroll = rememberScrollState()
+        ClearFocusOnDrag(scroll)
+        AppealPanel(area, draft, evidenceOn, cost, actions, onClose, Modifier.clearFocusOnTap().verticalScroll(scroll).imePadding())
     }
 }
 

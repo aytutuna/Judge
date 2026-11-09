@@ -6,20 +6,23 @@
  */
 
 import { createAuthClient } from "better-auth/react";
-import { magicLinkClient } from "better-auth/client/plugins";
+import { emailOTPClient, magicLinkClient } from "better-auth/client/plugins";
 import { isApiErrorCode, type ApiErrorCode } from "./api-errors";
 import type { AgeState, AppConfig, MeResponse } from "./account-types";
+import type { Key } from "./i18n";
 
 // No baseURL: the browser's own origin, so one build works on any domain.
 export const authClient = createAuthClient({
   basePath: "/api/auth",
-  plugins: [magicLinkClient()],
+  plugins: [magicLinkClient(), emailOTPClient()],
 });
 
-type Outcome = { ok: true } | { ok: false; code: string };
+type Failed = { ok: false; code: string; status?: number };
+type Outcome = { ok: true } | Failed;
 
 function failure(error: { code?: string; status?: number } | null | undefined): Outcome {
-  return { ok: false, code: error?.code || (error?.status ? `http_${error.status}` : "failed") };
+  const status = error?.status || undefined;
+  return { ok: false, code: error?.code || (status ? `http_${status}` : "failed"), status };
 }
 
 /** Starts the Apple or Google redirect flow; on success the browser leaves
@@ -53,6 +56,99 @@ export async function sendMagicLink(
   } catch {
     return { ok: false, code: "network" };
   }
+}
+
+/** Emails a 6-digit sign-in code (the apps use the same endpoint). `lang`
+ * picks the language of the email. */
+export async function sendSignInCode(email: string, lang: string): Promise<Outcome> {
+  try {
+    const { error } = await authClient.emailOtp.sendVerificationOtp({
+      email,
+      type: "sign-in",
+      fetchOptions: { query: { lang } },
+    });
+    return error ? failure(error) : { ok: true };
+  } catch {
+    return { ok: false, code: "network" };
+  }
+}
+
+/** Signs in with the emailed code; success sets the session cookie. */
+export async function signInWithCode(email: string, otp: string): Promise<Outcome> {
+  try {
+    const { error } = await authClient.signIn.emailOtp({ email, otp });
+    return error ? failure(error) : { ok: true };
+  } catch {
+    return { ok: false, code: "network" };
+  }
+}
+
+/** Signs in with email and password; success sets the session cookie. */
+export async function signInWithPassword(email: string, password: string): Promise<Outcome> {
+  try {
+    const { error } = await authClient.signIn.email({ email, password });
+    return error ? failure(error) : { ok: true };
+  } catch {
+    return { ok: false, code: "network" };
+  }
+}
+
+/** POST /api/v1/me/password: sets the password, or replaces it (`current` is
+ * the old one, which is not needed right after a code sign-in). */
+export async function savePassword(
+  password: string,
+  current?: string,
+): Promise<{ ok: true } | { ok: false; code: ApiErrorCode | "network" }> {
+  let res: Response;
+  try {
+    res = await fetch("/api/v1/me/password", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      credentials: "same-origin",
+      body: JSON.stringify(current === undefined ? { password } : { password, current }),
+    });
+  } catch {
+    return { ok: false, code: "network" };
+  }
+  if (res.ok) return { ok: true };
+  const body: unknown = await res.json().catch(() => null);
+  const code = typeof body === "object" && body !== null ? (body as { code?: unknown }).code : null;
+  return { ok: false, code: isApiErrorCode(code) ? code : "unavailable" };
+}
+
+/** The message for a failed password sign-in. */
+export function passwordSignInErrorKey(res: { code: string; status?: number }): Key {
+  const { code, status } = res;
+  if (code === "network") return "signin.offline";
+  if (status === 401) return "signin.passwordWrong";
+  if (status === 429) return "signin.rateLimited";
+  if (status === 404 || (status !== undefined && status >= 500)) return "signin.serviceDown";
+  return "signin.failed";
+}
+
+/** The message for a failed password save, from the route's error code. */
+export function passwordSaveErrorKey(code: ApiErrorCode | "network"): Key {
+  if (code === "network") return "signin.offline";
+  if (code === "too_short" || code === "too_long") return "signin.passwordShort";
+  if (code === "password_wrong") return "error.password_wrong";
+  if (code === "password_required") return "error.password_required";
+  if (code === "rate_limited") return "signin.rateLimited";
+  return "signin.passwordSaveFailed";
+}
+
+/** The message for a failed code call. Same mapping as the apps: the status
+ * decides first (the server's reply also carries a `code` such as
+ * INVALID_EMAIL or unavailable), the code tells the verify errors apart. */
+export function codeErrorKey(res: { code: string; status?: number }, step: "send" | "verify"): Key {
+  const { code, status } = res;
+  if (code === "network") return "signin.offline";
+  if (status === 429) return "signin.rateLimited";
+  if (status === 404 || (status !== undefined && status >= 500)) return "signin.serviceDown";
+  if (step === "send") return status === 400 ? "signin.emailInvalid" : "signin.failed";
+  if (code === "INVALID_OTP" || status === 400) return "signin.codeInvalid";
+  if (code === "OTP_EXPIRED") return "signin.codeExpired";
+  if (code === "TOO_MANY_ATTEMPTS") return "signin.codeTooMany";
+  return "signin.failed";
 }
 
 /** Local test sign-in (only answers under `next dev` with DEV_LOGIN=1 on

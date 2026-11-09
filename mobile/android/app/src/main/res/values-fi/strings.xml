@@ -183,6 +183,21 @@
     <string name="signin_email_submit">Lähetä kirjautumislinkki</string>
     <string name="signin_email_sent">Katso sähköpostisi. Lähetimme kirjautumislinkin osoitteeseen %1$s. Se toimii 10 minuuttia.</string>
     <string name="signin_email_invalid">Sähköpostiosoite ei näytä oikealta.</string>
+    <string name="signin_password">Salasana</string>
+    <string name="signin_password_new">Uusi salasana</string>
+    <string name="signin_password_show">Näytä salasana</string>
+    <string name="signin_create">Luo tili</string>
+    <string name="signin_forgot">Unohtuiko salasana?</string>
+    <string name="signin_use_code">Lähetä sen sijaan koodi sähköpostiin</string>
+    <string name="signin_use_password">Käytä sen sijaan salasanaa</string>
+    <string name="signin_password_wrong">Sähköposti ja salasana eivät täsmää.</string>
+    <string name="signin_password_short">Käytä vähintään 8 merkkiä.</string>
+    <string name="signin_create_note">Lähetämme sinulle koodin sähköpostiin osoitteen vahvistamiseksi. Se tarvitsee tehdä vain kerran.</string>
+    <string name="signin_password_choose">Olet kirjautunut sisään. Valitse salasana seuraavaa kertaa varten.</string>
+    <string name="signin_password_save">Tallenna salasana</string>
+    <string name="signin_password_save_failed">Olet kirjautunut sisään, mutta salasanan tallennus epäonnistui. Yritä uudelleen tai aseta se myöhemmin Asetuksissa.</string>
+    <string name="signin_password_skip">Ohita toistaiseksi</string>
+    <string name="signin_password_submit">Kirjaudu</string>
     <string name="signin_provider_unavailable">Ei vielä käytettävissä</string>
     <string name="signin_failed">Kirjautuminen ei onnistunut. Yritä uudelleen.</string>
     <string name="signin_loading">Ladataan kirjautumisvaihtoehtoja…</string>
@@ -200,6 +215,10 @@
     <string name="account_delete">Poista tili</string>
     <string name="account_delete_confirm">Poistetaanko tilisi? Tuomiosaldosi, tilauksesi ja kirjautumistietosi poistetaan. Tuomiosi ja osuutesi jutuista poistetaan: kirjoittamasi teksti ja nimet pyyhitään, ja niiden jakolinkit lakkaavat toimimasta.</string>
     <string name="account_delete_yes">Kyllä, poista</string>
+    <string name="account_password_set">Aseta salasana</string>
+    <string name="account_password_change">Vaihda salasana</string>
+    <string name="account_password_current">Nykyinen salasana</string>
+    <string name="account_password_saved">Salasana tallennettu.</string>
     <string name="account_delete_cancel">Älä poista</string>
     <string name="account_delete_failed">Tilin poistaminen ei onnistunut juuri nyt. Yritä uudelleen.</string>
     <string name="account_sign_in_prompt">Kirjaudu, niin näet tilauksesi ja saldosi.</string>
@@ -372,7 +391,7 @@
     <string name="appeal_title">Lisää tietoa</string>
     <string name="home_example">Kokeile esimerkkiä</string>
     <string name="home_your_placeholder">Mikä ongelma on?</string>
-    <string name="home_add_context">Lisää tausta</string>
+    <string name="home_add_context">Lisää tietoa</string>
     <string name="home_add_their_side">Lisää toisen puoli</string>
     <string name="home_remove_their_side">Poista toisen puoli</string>
     <string name="home_send_link">Lähetä linkki</string>
@@ -505,6 +524,8 @@
     <string name="stamp_dissolved">Merkitysero</string>
     <string name="best_point_of">%1$s: paras pointti</string>
     <string name="best_point_self">Sinun paras pointtisi</string>
+    <string name="error_password_wrong">Salasana ei ole oikea.</string>
+    <string name="error_password_required">Anna nykyinen salasanasi.</string>
     <string name="error_age_blocked">Judge on tarkoitettu vain 18 vuotta täyttäneille.</string>
     <string name="error_age_unconfirmed">Vahvista, että olet 18-vuotias tai vanhempi, jatkaaksesi.</string>
     <string name="app_name">Judge</string>
@@ -544,8 +565,8 @@
     </plurals>
     <string name="app_history_offline_remove">Verkkoyhteys puuttuu. Poistaminen vaatii yhteyden.</string>
     <string name="app_pricing_free_account">Kirjaudu Applella, Googlella tai sähköpostilla</string>
-    <string name="app_context_label">Tausta (valinnainen)</string>
-    <string name="app_pricing_context">Taustakuvat luetaan ja heitetään sitten pois, ilman lisämaksua</string>
+    <string name="app_context_label">Lisätiedot (valinnainen)</string>
+    <string name="app_pricing_context">Lisätietokuvat luetaan ja heitetään sitten pois, ilman lisämaksua</string>
     <string name="app_pricing_headline">Ensimmäinen tuomio on meiltä.</string>
     <string name="app_pricing_sub">Luo tili, niin ensimmäinen tuomiosi on ilmainen kaikkine ominaisuuksineen. Sen jälkeen voit valita paketin tai kuukausitilauksen.</string>
     <string name="app_pricing_headline_member">Hanki lisää tuomioita.</string>
@@ -606,7 +627,7 @@
     <string name="app_home_your_side_label">Sinun puolesi kiistassa</string>
     <string name="app_home_their_side_label">Toisen puoli kiistassa</string>
     <string name="app_home_send_link">Lähetä linkki</string>
-    <string name="app_home_add_context">Lisää tausta</string>
+    <string name="app_home_add_context">Lisää tietoa</string>
     <string name="app_home_says">%1$s sanoo:</string>
     <string name="app_home_my_side">Minun puoleni:</string>
     <string name="app_home_other_side">Toisen puoli:</string>

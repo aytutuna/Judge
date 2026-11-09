@@ -183,6 +183,21 @@
     <string name="signin_email_submit">உள்நுழைவு லிங்கை அனுப்புக</string>
     <string name="signin_email_sent">இன்பாக்ஸைப் பாருங்கள். %1$s முகவரிக்கு உள்நுழைவு லிங்க் அனுப்பியுள்ளோம். அது 10 நிமிடங்கள் வேலை செய்யும்.</string>
     <string name="signin_email_invalid">இந்த ஈமெயில் முகவரி சரியாகத் தெரியவில்லை.</string>
+    <string name="signin_password">கடவுச்சொல்</string>
+    <string name="signin_password_new">புதிய கடவுச்சொல்</string>
+    <string name="signin_password_show">கடவுச்சொல்லைக் காட்டு</string>
+    <string name="signin_create">கணக்கை உருவாக்கு</string>
+    <string name="signin_forgot">கடவுச்சொல்லை மறந்துவிட்டீர்களா?</string>
+    <string name="signin_use_code">அதற்குப் பதிலாக மின்னஞ்சலில் குறியீடு அனுப்பு</string>
+    <string name="signin_use_password">அதற்குப் பதிலாக கடவுச்சொல்லைப் பயன்படுத்து</string>
+    <string name="signin_password_wrong">இந்த மின்னஞ்சலும் கடவுச்சொல்லும் பொருந்தவில்லை.</string>
+    <string name="signin_password_short">குறைந்தது 8 எழுத்துகளைப் பயன்படுத்துங்கள்.</string>
+    <string name="signin_create_note">இந்த முகவரியை உறுதிசெய்ய மின்னஞ்சலில் ஒரு குறியீட்டை அனுப்புவோம். இதை ஒருமுறை மட்டும் செய்தால் போதும்.</string>
+    <string name="signin_password_choose">நீங்கள் உள்நுழைந்துவிட்டீர்கள். அடுத்த முறைக்கு ஒரு கடவுச்சொல்லைத் தேர்ந்தெடுங்கள்.</string>
+    <string name="signin_password_save">கடவுச்சொல்லைச் சேமி</string>
+    <string name="signin_password_save_failed">நீங்கள் உள்நுழைந்துவிட்டீர்கள், ஆனால் கடவுச்சொல்லைச் சேமிக்க முடியவில்லை. மீண்டும் முயலுங்கள், அல்லது பிறகு அமைப்புகளில் அமையுங்கள்.</string>
+    <string name="signin_password_skip">இப்போதைக்குத் தவிர்</string>
+    <string name="signin_password_submit">உள்நுழைக</string>
     <string name="signin_provider_unavailable">இன்னும் கிடைக்கவில்லை</string>
     <string name="signin_failed">உள்நுழைய முடியவில்லை. மீண்டும் முயல்கிறீர்களா?</string>
     <string name="signin_loading">உள்நுழைவு வழிகளை ஏற்றுகிறோம்…</string>
@@ -200,6 +215,10 @@
     <string name="account_delete">கணக்கை நீக்கு</string>
     <string name="account_delete_confirm">உங்கள் கணக்கை நீக்கவா? உங்கள் கிரெடிட்கள், பிளான், உள்நுழைவு விவரங்கள் நீக்கப்படும். உங்கள் தீர்ப்புகளும் வழக்குகளில் உங்கள் தரப்புகளும் அகற்றப்படும்: நீங்கள் எழுதியவையும் பெயர்களும் அழிக்கப்படும், அவற்றின் பகிர்வு லிங்க்குகள் வேலை செய்யாது.</string>
     <string name="account_delete_yes">ஆம், நீக்கு</string>
+    <string name="account_password_set">கடவுச்சொல்லை அமை</string>
+    <string name="account_password_change">கடவுச்சொல்லை மாற்று</string>
+    <string name="account_password_current">தற்போதைய கடவுச்சொல்</string>
+    <string name="account_password_saved">கடவுச்சொல் சேமிக்கப்பட்டது.</string>
     <string name="account_delete_cancel">கணக்கு இருக்கட்டும்</string>
     <string name="account_delete_failed">இப்போது கணக்கை நீக்க முடியவில்லை. மீண்டும் முயல்கிறீர்களா?</string>
     <string name="account_sign_in_prompt">உங்கள் பிளானையும் கிரெடிட்களையும் பார்க்க உள்நுழையுங்கள்.</string>
@@ -372,7 +391,7 @@
     <string name="appeal_title">தகவல் சேர்</string>
     <string name="home_example">உதாரணத்துடன் முயன்று பாருங்கள்</string>
     <string name="home_your_placeholder">என்ன பிரச்சினை?</string>
-    <string name="home_add_context">பின்னணி சேர்க்கவும்</string>
+    <string name="home_add_context">தகவல் சேர்க்கவும்</string>
     <string name="home_add_their_side">மறுதரப்பைச் சேர்க்கவும்</string>
     <string name="home_remove_their_side">மறுதரப்பை நீக்கவும்</string>
     <string name="home_send_link">லிங்க் அனுப்புங்க</string>
@@ -505,6 +524,8 @@
     <string name="stamp_dissolved">சொல் குழப்பம்</string>
     <string name="best_point_of">%1$s வைத்த வலுவான வாதம்</string>
     <string name="best_point_self">நீங்கள் வைத்த வலுவான வாதம்</string>
+    <string name="error_password_wrong">இந்தக் கடவுச்சொல் சரியில்லை.</string>
+    <string name="error_password_required">உங்கள் தற்போதைய கடவுச்சொல்லை உள்ளிடுங்கள்.</string>
     <string name="error_age_blocked">Judge 18 வயது மற்றும் அதற்கு மேற்பட்டவர்களுக்கு மட்டுமே.</string>
     <string name="error_age_unconfirmed">தொடர, உங்களுக்கு 18 வயது அல்லது அதற்கு மேல் என்று உறுதிசெய்யுங்கள்.</string>
     <string name="app_name">Judge</string>
@@ -544,8 +565,8 @@
     </plurals>
     <string name="app_history_offline_remove">நீங்கள் ஆஃப்லைனில் இருக்கிறீர்கள். நீக்க இணைப்பு தேவை.</string>
     <string name="app_pricing_free_account">Apple, Google அல்லது ஈமெயில் மூலம் உள்நுழையுங்கள்</string>
-    <string name="app_context_label">பின்னணி (விருப்பம்)</string>
-    <string name="app_pricing_context">பின்னணிப் படங்கள் படிக்கப்பட்டு பிறகு தூக்கி எறியப்படும், கூடுதல் கட்டணம் இல்லை</string>
+    <string name="app_context_label">தகவல் (விருப்பம்)</string>
+    <string name="app_pricing_context">தகவல் படங்கள் படிக்கப்பட்டு பிறகு தூக்கியெறியப்படும், கூடுதல் செலவு இல்லை</string>
     <string name="app_pricing_headline">முதல் தீர்ப்பு எங்கள் செலவில்.</string>
     <string name="app_pricing_sub">கணக்கைத் தொடங்குங்கள், முதல் தீர்ப்பு எல்லா அம்சங்களுடனும் இலவசம். அதன் பிறகு ஒரு பேக்கைத் தேர்ந்தெடுங்கள் அல்லது மாதாந்திர பிளானுக்கு மாறுங்கள்.</string>
     <string name="app_pricing_headline_member">இன்னும் தீர்ப்புகள் பெறுங்கள்.</string>
@@ -606,7 +627,7 @@
     <string name="app_home_your_side_label">வாக்குவாதத்தில் உங்கள் தரப்பு</string>
     <string name="app_home_their_side_label">வாக்குவாதத்தில் மறுதரப்பு</string>
     <string name="app_home_send_link">லிங்க் அனுப்புங்க</string>
-    <string name="app_home_add_context">பின்னணி சேர்க்கவும்</string>
+    <string name="app_home_add_context">தகவல் சேர்க்கவும்</string>
     <string name="app_home_says">%1$s சொல்வது:</string>
     <string name="app_home_my_side">என் தரப்பு:</string>
     <string name="app_home_other_side">மறுதரப்பு:</string>

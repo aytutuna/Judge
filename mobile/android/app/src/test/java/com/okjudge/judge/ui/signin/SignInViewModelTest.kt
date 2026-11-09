@@ -9,6 +9,8 @@ import com.okjudge.judge.core.auth.FakeGoogle
 import com.okjudge.judge.core.auth.GoogleIdResult
 import com.okjudge.judge.core.auth.Routes
 import com.okjudge.judge.core.auth.Routes.Companion.CONFIG
+import com.okjudge.judge.core.auth.Routes.Companion.PASSWORD_SIGN_IN
+import com.okjudge.judge.core.auth.Routes.Companion.SET_PASSWORD
 import com.okjudge.judge.core.auth.Routes.Companion.SEND_CODE
 import com.okjudge.judge.core.auth.Routes.Companion.VERIFY_CODE
 import com.okjudge.judge.core.auth.Routes.Companion.json
@@ -155,6 +157,154 @@ class SignInViewModelTest {
         vm.changeEmail()
         assertEquals(SignInStep.EMAIL, vm.state.value.step)
         assertEquals("ada@example.com", vm.state.value.email)
+    }
+
+    private fun withPasswords() = routes.always(CONFIG, Routes.config(google = true, emailCode = true, password = true))
+
+    /** Create or forgot: the email, then the emailed code, up to the choose-password step or the end. */
+    private suspend fun SignInViewModel.throughTheCode(mode: SignInMode, password: String? = null) {
+        await { it.passwordSignIn }
+        setMode(mode)
+        onEmailChange("ada@example.com")
+        if (password != null) onPasswordChange(password)
+        requestCode(AppLang.EN)
+        await { it.step == SignInStep.CODE && it.busy == null }
+        onCodeChange("123456")
+        submitCode()
+    }
+
+    @Test
+    fun withoutPasswordsOnTheServer_onlyTheCodeIsOffered() = runBlocking {
+        val s = vm().await { it.providers is Account.Providers.Ready }
+        assertFalse(s.passwordSignIn)
+        assertEquals(SignInMode.CODE, s.flow)
+    }
+
+    @Test
+    fun passwordSignIn_failsAlike_thenSucceeds() = runBlocking {
+        withPasswords()
+        routes.on(PASSWORD_SIGN_IN, json(401, """{"message":"Invalid email or password","code":"INVALID_EMAIL_OR_PASSWORD"}"""))
+        routes.on(PASSWORD_SIGN_IN, Routes.grant("pw-session"))
+        val vm = vm()
+        vm.await { it.passwordSignIn }
+        assertEquals(SignInMode.PASSWORD, vm.state.value.flow)
+        vm.onEmailChange(" ada@example.com ")
+        assertFalse(vm.state.value.canSignInWithPassword)
+        vm.onPasswordChange("made-up-pass")
+        vm.signInWithPassword()
+        val failed = vm.await { it.busy == null && it.error != null }
+        assertEquals(SignInError.PASSWORD_WRONG, failed.error)
+        assertNull(tokens.get())
+
+        vm.signInWithPassword()
+        vm.await { it.done }
+        assertEquals("pw-session", tokens.get())
+        assertTrue(routes.requestsTo(PASSWORD_SIGN_IN).last().body!!.utf8().contains("\"email\":\"ada@example.com\""))
+        assertEquals("", vm.state.value.password)
+    }
+
+    @Test
+    fun create_asksThePasswordFirst_thenCode_thenSavesIt() = runBlocking {
+        withPasswords()
+        routes.always(SEND_CODE, json(200, """{"success":true}"""))
+        routes.on(VERIFY_CODE, Routes.grant("new-session"))
+        routes.on(SET_PASSWORD, json(200, """{"ok":true}"""))
+        val vm = vm()
+        vm.await { it.passwordSignIn }
+        vm.setMode(SignInMode.CREATE)
+        vm.onEmailChange("ada@example.com")
+        assertFalse("create needs a password before the code", vm.state.value.canRequestCode)
+        vm.onPasswordChange("short")
+        vm.requestCode(AppLang.EN)
+        assertEquals(SignInError.PASSWORD_SHORT, vm.state.value.error)
+        assertTrue(routes.requestsTo(SEND_CODE).isEmpty())
+
+        vm.throughTheCode(SignInMode.CREATE, "made-up-pass")
+        vm.await { it.done }
+        assertEquals("new-session", tokens.get())
+        val save = routes.requestsTo(SET_PASSWORD).single()
+        assertTrue(save.body!!.utf8().contains("made-up-pass"))
+        assertFalse(save.body!!.utf8().contains("current"))
+        assertEquals("Bearer new-session", save.headers["Authorization"])
+    }
+
+    @Test
+    fun create_whenSavingFails_staysSignedInWithARetry() = runBlocking {
+        withPasswords()
+        routes.always(SEND_CODE, json(200, """{"success":true}"""))
+        routes.on(VERIFY_CODE, Routes.grant("new-session"))
+        routes.on(SET_PASSWORD, json(503, """{"code":"unavailable"}"""))
+        routes.on(SET_PASSWORD, json(200, """{"ok":true}"""))
+        val vm = vm()
+        vm.throughTheCode(SignInMode.CREATE, "made-up-pass")
+        val s = vm.await { it.step == SignInStep.CHOOSE_PASSWORD && it.busy == null && it.error != null }
+        assertEquals(SignInError.UNAVAILABLE, s.error)
+        assertFalse(s.done)
+        assertEquals("new-session", tokens.get())
+
+        vm.savePassword()
+        assertTrue(vm.await { it.done }.done)
+    }
+
+    @Test
+    fun forgot_signsInByCode_thenChoosesAPassword() = runBlocking {
+        withPasswords()
+        routes.always(SEND_CODE, json(200, """{"success":true}"""))
+        routes.on(VERIFY_CODE, Routes.grant("reset-session"))
+        routes.on(SET_PASSWORD, json(200, """{"ok":true}"""))
+        val vm = vm()
+        vm.throughTheCode(SignInMode.FORGOT)
+        val choosing = vm.await { it.step == SignInStep.CHOOSE_PASSWORD && it.busy == null }
+        assertFalse(choosing.done)
+        assertTrue(routes.requestsTo(SET_PASSWORD).isEmpty())
+
+        vm.onPasswordChange("short")
+        vm.savePassword()
+        assertEquals(SignInError.PASSWORD_SHORT, vm.state.value.error)
+        vm.onPasswordChange("another-made-up")
+        vm.savePassword()
+        vm.await { it.done }
+        assertEquals(1, routes.requestsTo(SET_PASSWORD).size)
+    }
+
+    @Test
+    fun forgot_whenTheSignInGrewOld_goesBackToTheCodeStep() = runBlocking {
+        withPasswords()
+        routes.always(SEND_CODE, json(200, """{"success":true}"""))
+        routes.on(VERIFY_CODE, Routes.grant("reset-session"))
+        routes.on(SET_PASSWORD, json(403, """{"code":"password_required"}"""))
+        val vm = vm()
+        vm.throughTheCode(SignInMode.FORGOT)
+        vm.await { it.step == SignInStep.CHOOSE_PASSWORD && it.busy == null }
+        vm.onPasswordChange("another-made-up")
+        vm.savePassword()
+        val s = vm.await { it.step == SignInStep.CODE && it.busy == null }
+        assertEquals(SignInError.CODE_EXPIRED, s.error)
+        assertFalse(s.done)
+    }
+
+    @Test
+    fun skippingTheNewPassword_finishesSignedIn() = runBlocking {
+        withPasswords()
+        routes.always(SEND_CODE, json(200, """{"success":true}"""))
+        routes.on(VERIFY_CODE, Routes.grant("reset-session"))
+        val vm = vm()
+        vm.throughTheCode(SignInMode.FORGOT)
+        vm.await { it.step == SignInStep.CHOOSE_PASSWORD && it.busy == null }
+        vm.skipPassword()
+        vm.await { it.done }
+        assertEquals("reset-session", tokens.get())
+    }
+
+    @Test
+    fun codeMode_neverAsksForAPassword() = runBlocking {
+        withPasswords()
+        routes.always(SEND_CODE, json(200, """{"success":true}"""))
+        routes.on(VERIFY_CODE, Routes.grant("code-session"))
+        val vm = vm()
+        vm.throughTheCode(SignInMode.CODE)
+        vm.await { it.done }
+        assertTrue(routes.requestsTo(SET_PASSWORD).isEmpty())
     }
 
     @Test

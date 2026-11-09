@@ -90,6 +90,11 @@ export const WEB_KEYS: readonly string[] = [
   "signin.providerUnavailable",
   "signin.failed",
   "signin.loading",
+  "signin.password*",
+  "signin.create*",
+  "signin.forgot",
+  "signin.useCode",
+  "signin.usePassword",
   "account.*",
   // Settings / links out to the website
   "footer.about",

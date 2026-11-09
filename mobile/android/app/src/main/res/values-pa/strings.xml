@@ -183,6 +183,21 @@
     <string name="signin_email_submit">ਮੈਨੂੰ ਸਾਈਨ ਇਨ ਲਿੰਕ ਭੇਜੋ</string>
     <string name="signin_email_sent">ਆਪਣਾ ਇਨਬਾਕਸ ਦੇਖੋ। ਅਸੀਂ %1$s ’ਤੇ ਸਾਈਨ ਇਨ ਲਿੰਕ ਭੇਜਿਆ ਹੈ। ਇਹ 10 ਮਿੰਟ ਚੱਲੇਗਾ।</string>
     <string name="signin_email_invalid">ਇਹ ਈਮੇਲ ਪਤਾ ਠੀਕ ਨਹੀਂ ਲੱਗਦਾ।</string>
+    <string name="signin_password">ਪਾਸਵਰਡ</string>
+    <string name="signin_password_new">ਨਵਾਂ ਪਾਸਵਰਡ</string>
+    <string name="signin_password_show">ਪਾਸਵਰਡ ਦਿਖਾਓ</string>
+    <string name="signin_create">ਖਾਤਾ ਬਣਾਓ</string>
+    <string name="signin_forgot">ਪਾਸਵਰਡ ਭੁੱਲ ਗਏ?</string>
+    <string name="signin_use_code">ਇਸ ਦੀ ਬਜਾਏ ਮੈਨੂੰ ਈਮੇਲ ਤੇ ਕੋਡ ਭੇਜੋ</string>
+    <string name="signin_use_password">ਇਸ ਦੀ ਬਜਾਏ ਪਾਸਵਰਡ ਵਰਤੋ</string>
+    <string name="signin_password_wrong">ਇਹ ਈਮੇਲ ਅਤੇ ਪਾਸਵਰਡ ਮੇਲ ਨਹੀਂ ਖਾਂਦੇ।</string>
+    <string name="signin_password_short">ਘੱਟੋ-ਘੱਟ 8 ਅੱਖਰ ਵਰਤੋ।</string>
+    <string name="signin_create_note">ਇਸ ਪਤੇ ਦੀ ਪੁਸ਼ਟੀ ਲਈ ਅਸੀਂ ਤੁਹਾਨੂੰ ਈਮੇਲ ਤੇ ਇੱਕ ਕੋਡ ਭੇਜਾਂਗੇ। ਇਹ ਸਿਰਫ਼ ਇੱਕ ਵਾਰ ਕਰਨਾ ਪਵੇਗਾ।</string>
+    <string name="signin_password_choose">ਤੁਸੀਂ ਸਾਈਨ ਇਨ ਹੋ ਗਏ ਹੋ। ਅਗਲੀ ਵਾਰ ਲਈ ਇੱਕ ਪਾਸਵਰਡ ਚੁਣੋ।</string>
+    <string name="signin_password_save">ਪਾਸਵਰਡ ਸੰਭਾਲੋ</string>
+    <string name="signin_password_save_failed">ਤੁਸੀਂ ਸਾਈਨ ਇਨ ਹੋ ਗਏ ਹੋ, ਪਰ ਪਾਸਵਰਡ ਸੰਭਾਲਿਆ ਨਹੀਂ ਜਾ ਸਕਿਆ। ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ, ਜਾਂ ਬਾਅਦ ਵਿੱਚ ਸੈਟਿੰਗਾਂ ਵਿੱਚ ਤੈਅ ਕਰੋ।</string>
+    <string name="signin_password_skip">ਹੁਣ ਲਈ ਛੱਡੋ</string>
+    <string name="signin_password_submit">ਸਾਈਨ ਇਨ ਕਰੋ</string>
     <string name="signin_provider_unavailable">ਹਾਲੇ ਉਪਲਬਧ ਨਹੀਂ</string>
     <string name="signin_failed">ਅਸੀਂ ਤੁਹਾਨੂੰ ਸਾਈਨ ਇਨ ਨਹੀਂ ਕਰ ਸਕੇ। ਇੱਕ ਵਾਰ ਫਿਰ ਕੋਸ਼ਿਸ਼ ਕਰੋਗੇ?</string>
     <string name="signin_loading">ਸਾਈਨ ਇਨ ਦੇ ਤਰੀਕੇ ਲੋਡ ਹੋ ਰਹੇ ਹਨ…</string>
@@ -200,6 +215,10 @@
     <string name="account_delete">ਖਾਤਾ ਮਿਟਾਓ</string>
     <string name="account_delete_confirm">ਆਪਣਾ ਖਾਤਾ ਮਿਟਾਉਣਾ ਹੈ? ਤੁਹਾਡੇ ਕ੍ਰੈਡਿਟ, ਪਲਾਨ ਅਤੇ ਸਾਈਨ ਇਨ ਦੇ ਵੇਰਵੇ ਮਿਟ ਜਾਣਗੇ। ਤੁਹਾਡੇ ਫ਼ੈਸਲੇ ਅਤੇ ਕੇਸਾਂ ਵਿੱਚ ਤੁਹਾਡੇ ਪੱਖ ਹਟ ਜਾਣਗੇ: ਜੋ ਤੁਸੀਂ ਲਿਖਿਆ ਅਤੇ ਨਾਂ ਮਿਟ ਜਾਣਗੇ, ਅਤੇ ਉਨ੍ਹਾਂ ਦੇ ਸਾਂਝੇ ਲਿੰਕ ਕੰਮ ਕਰਨਾ ਬੰਦ ਕਰ ਦੇਣਗੇ।</string>
     <string name="account_delete_yes">ਹਾਂ, ਮਿਟਾ ਦਿਓ</string>
+    <string name="account_password_set">ਪਾਸਵਰਡ ਤੈਅ ਕਰੋ</string>
+    <string name="account_password_change">ਪਾਸਵਰਡ ਬਦਲੋ</string>
+    <string name="account_password_current">ਮੌਜੂਦਾ ਪਾਸਵਰਡ</string>
+    <string name="account_password_saved">ਪਾਸਵਰਡ ਸੰਭਾਲਿਆ ਗਿਆ।</string>
     <string name="account_delete_cancel">ਖਾਤਾ ਰਹਿਣ ਦਿਓ</string>
     <string name="account_delete_failed">ਇਸ ਵੇਲੇ ਖਾਤਾ ਨਹੀਂ ਮਿਟ ਸਕਿਆ। ਇੱਕ ਵਾਰ ਫਿਰ ਕੋਸ਼ਿਸ਼ ਕਰੋਗੇ?</string>
     <string name="account_sign_in_prompt">ਆਪਣਾ ਪਲਾਨ ਅਤੇ ਕ੍ਰੈਡਿਟ ਦੇਖਣ ਲਈ ਸਾਈਨ ਇਨ ਕਰੋ।</string>
@@ -372,7 +391,7 @@
     <string name="appeal_title">ਵੇਰਵਾ ਜੋੜੋ</string>
     <string name="home_example">ਕੋਈ ਉਦਾਹਰਨ ਅਜ਼ਮਾਓ</string>
     <string name="home_your_placeholder">ਸਮੱਸਿਆ ਕੀ ਹੈ?</string>
-    <string name="home_add_context">ਸੰਦਰਭ ਜੋੜੋ</string>
+    <string name="home_add_context">ਵੇਰਵਾ ਜੋੜੋ</string>
     <string name="home_add_their_side">ਉਨ੍ਹਾਂ ਦਾ ਪੱਖ ਜੋੜੋ</string>
     <string name="home_remove_their_side">ਉਨ੍ਹਾਂ ਦਾ ਪੱਖ ਹਟਾਓ</string>
     <string name="home_send_link">ਲਿੰਕ ਭੇਜੋ</string>
@@ -505,6 +524,8 @@
     <string name="stamp_dissolved">ਸ਼ਬਦਾਂ ਦਾ ਭੁਲੇਖਾ</string>
     <string name="best_point_of">%1$s ਦੀ ਸਭ ਤੋਂ ਵਧੀਆ ਦਲੀਲ</string>
     <string name="best_point_self">ਤੁਹਾਡੀ ਸਭ ਤੋਂ ਵਧੀਆ ਦਲੀਲ</string>
+    <string name="error_password_wrong">ਇਹ ਪਾਸਵਰਡ ਸਹੀ ਨਹੀਂ ਹੈ।</string>
+    <string name="error_password_required">ਆਪਣਾ ਮੌਜੂਦਾ ਪਾਸਵਰਡ ਦਾਖਲ ਕਰੋ।</string>
     <string name="error_age_blocked">Judge ਸਿਰਫ਼ 18 ਸਾਲ ਜਾਂ ਵੱਧ ਉਮਰ ਦੇ ਲੋਕਾਂ ਲਈ ਹੈ।</string>
     <string name="error_age_unconfirmed">ਅੱਗੇ ਵਧਣ ਲਈ ਪੁਸ਼ਟੀ ਕਰੋ ਕਿ ਤੁਹਾਡੀ ਉਮਰ 18 ਸਾਲ ਜਾਂ ਵੱਧ ਹੈ।</string>
     <string name="app_name">Judge</string>
@@ -544,8 +565,8 @@
     </plurals>
     <string name="app_history_offline_remove">ਤੁਸੀਂ ਆਫ਼ਲਾਈਨ ਹੋ। ਹਟਾਉਣ ਲਈ ਕਨੈਕਸ਼ਨ ਚਾਹੀਦਾ ਹੈ।</string>
     <string name="app_pricing_free_account">Apple, Google ਜਾਂ ਈਮੇਲ ਨਾਲ ਸਾਈਨ ਇਨ ਕਰੋ</string>
-    <string name="app_context_label">ਸੰਦਰਭ (ਵਿਕਲਪਿਕ)</string>
-    <string name="app_pricing_context">ਸੰਦਰਭ ਦੀਆਂ ਤਸਵੀਰਾਂ ਪੜ੍ਹ ਕੇ ਸੁੱਟ ਦਿੱਤੀਆਂ ਜਾਂਦੀਆਂ ਹਨ, ਕੋਈ ਵਾਧੂ ਖ਼ਰਚਾ ਨਹੀਂ</string>
+    <string name="app_context_label">ਵੇਰਵਾ (ਵਿਕਲਪਿਕ)</string>
+    <string name="app_pricing_context">ਵੇਰਵੇ ਦੀਆਂ ਤਸਵੀਰਾਂ ਪੜ੍ਹ ਕੇ ਸੁੱਟ ਦਿੱਤੀਆਂ ਜਾਂਦੀਆਂ ਹਨ, ਕੋਈ ਵਾਧੂ ਖ਼ਰਚਾ ਨਹੀਂ</string>
     <string name="app_pricing_headline">ਪਹਿਲਾ ਫ਼ੈਸਲਾ ਸਾਡੇ ਵੱਲੋਂ।</string>
     <string name="app_pricing_sub">ਖਾਤਾ ਬਣਾਓ ਅਤੇ ਪਹਿਲਾ ਫ਼ੈਸਲਾ ਮੁਫ਼ਤ ਪਾਓ, ਸਾਰੀਆਂ ਸਹੂਲਤਾਂ ਸਮੇਤ। ਉਸ ਤੋਂ ਬਾਅਦ ਕੋਈ ਪੈਕ ਚੁਣੋ ਜਾਂ ਮਹੀਨਾਵਾਰ ਪਲਾਨ ਲਓ।</string>
     <string name="app_pricing_headline_member">ਹੋਰ ਫ਼ੈਸਲੇ ਲਓ।</string>
@@ -606,7 +627,7 @@
     <string name="app_home_your_side_label">ਬਹਿਸ ਵਿੱਚ ਤੁਹਾਡਾ ਪੱਖ</string>
     <string name="app_home_their_side_label">ਬਹਿਸ ਵਿੱਚ ਉਨ੍ਹਾਂ ਦਾ ਪੱਖ</string>
     <string name="app_home_send_link">ਲਿੰਕ ਭੇਜੋ</string>
-    <string name="app_home_add_context">ਸੰਦਰਭ ਜੋੜੋ</string>
+    <string name="app_home_add_context">ਵੇਰਵਾ ਜੋੜੋ</string>
     <string name="app_home_says">%1$s ਦਾ ਕਹਿਣਾ ਹੈ:</string>
     <string name="app_home_my_side">ਮੇਰਾ ਪੱਖ:</string>
     <string name="app_home_other_side">ਉਨ੍ਹਾਂ ਦਾ ਪੱਖ:</string>

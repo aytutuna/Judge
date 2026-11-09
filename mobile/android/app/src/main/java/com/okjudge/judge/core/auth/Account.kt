@@ -34,6 +34,12 @@ enum class SignInError {
     CODE_INVALID,
     CODE_EXPIRED,
     CODE_TOO_MANY,
+    /** Wrong password, unknown address or an account without a password: the server answers alike. */
+    PASSWORD_WRONG,
+    PASSWORD_SHORT,
+    PASSWORD_SAVE_FAILED,
+    CURRENT_PASSWORD_WRONG,
+    CURRENT_PASSWORD_REQUIRED,
     RATE_LIMITED,
     /** The method is off on the server (404) or the server is down. */
     UNAVAILABLE,
@@ -52,7 +58,7 @@ sealed interface SignInResult {
 /**
  * The session: whether the app is signed in, the account behind it, the
  * sign-in methods the server offers, and every way in and out (Google,
- * email code, sign-out, account deletion, an expired session).
+ * email code or password, sign-out, account deletion, an expired session).
  *
  * The token lives in [tokens]; [JudgeApi] reads it for every call. Local
  * verdict history is never touched here.
@@ -306,6 +312,31 @@ class Account(
             is ApiResult.Err -> SignInResult.Error(codeVerifyError(res.error))
         }
 
+    suspend fun signInWithPassword(email: String, password: String): SignInResult =
+        when (val res = api.signInWithPassword(email.trim(), password)) {
+            is ApiResult.Ok -> complete(res.value)
+            is ApiResult.Err -> SignInResult.Error(passwordSignInError(res.error))
+        }
+
+    /**
+     * Sets or replaces the password of the signed-in account; null when saved.
+     * [current] is needed to replace one, unless the session is a fresh code sign-in.
+     */
+    suspend fun setPassword(password: String, current: String?): SignInError? {
+        val asked = tokens.get()
+        return when (val res = api.setPassword(password, current)) {
+            is ApiResult.Ok -> {
+                if (tokens.get() == asked) {
+                    val signedIn = _state.value as? State.SignedIn
+                    val me = signedIn?.me
+                    if (signedIn != null && me != null) _state.value = signedIn.copy(me = me.copy(hasPassword = true))
+                }
+                null
+            }
+            is ApiResult.Err -> passwordSaveError(res.error)
+        }
+    }
+
     private suspend fun complete(grant: SessionGrant): SignInResult {
         // The verdict waiting behind sign-in needs the age on record first, so
         // the box ticked (or the phone's 18+) is reported before "signed in".
@@ -417,6 +448,19 @@ class Account(
                 it.status == 404 -> SignInError.UNAVAILABLE
                 it.status == 400 -> SignInError.CODE_INVALID
                 else -> SignInError.FAILED
+            }
+        }
+
+        fun passwordSignInError(e: UiError): SignInError =
+            if (e is UiError.Api && e.status == 401) SignInError.PASSWORD_WRONG
+            else common(e) ?: if ((e as UiError.Api).status == 404) SignInError.UNAVAILABLE else SignInError.FAILED
+
+        fun passwordSaveError(e: UiError): SignInError = common(e) ?: (e as UiError.Api).let {
+            when (it.code) {
+                "too_short", "too_long" -> SignInError.PASSWORD_SHORT
+                "password_wrong" -> SignInError.CURRENT_PASSWORD_WRONG
+                "password_required" -> SignInError.CURRENT_PASSWORD_REQUIRED
+                else -> SignInError.PASSWORD_SAVE_FAILED
             }
         }
 

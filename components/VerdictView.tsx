@@ -154,6 +154,15 @@ export function VerdictView({
 
   return (
     <div className="flex flex-col gap-3 min-w-0" data-you={selfParty === "B" ? "b" : "a"}>
+      {shareId ? (
+        <ShareButtons
+          shareId={shareId}
+          title={view.result.headline}
+          lang={lang}
+          owner={owner}
+          writer={Boolean(onAddContext)}
+        />
+      ) : null}
       {result.appeal ? (
         <div className="pb-2">
           <AppealOutcomeBanner
@@ -181,14 +190,10 @@ export function VerdictView({
         animate
       />
       <VerdictDetails result={result} parties={parties} lang={lang} loading={loading} />
-      {shareId ? (
-        <ShareButtons
-          shareId={shareId}
-          title={view.result.headline}
-          lang={lang}
-          owner={owner}
-          onAddContext={onAddContext}
-        />
+      {onAddContext ? (
+        <button type="button" onClick={onAddContext} className={styles.appeal}>
+          {t(lang, "card.appeal")}
+        </button>
       ) : null}
     </div>
   );

@@ -38,6 +38,7 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.okjudge.judge.core.auth.Account
+import com.okjudge.judge.core.auth.SignInError
 import com.okjudge.judge.core.data.Appearance
 import com.okjudge.judge.core.display.Errors
 import com.okjudge.judge.core.purchases.PurchaseController
@@ -54,6 +55,12 @@ object SettingsTags {
     const val SIGN_IN = "settings.signIn"
     const val SIGN_OUT = "settings.signOut"
     const val DELETE = "settings.delete"
+    const val PASSWORD = "settings.password"
+    const val PASSWORD_CURRENT = "settings.password.current"
+    const val PASSWORD_NEW = "settings.password.new"
+    const val PASSWORD_SAVE = "settings.password.save"
+    const val PASSWORD_SAVED = "settings.password.saved"
+    const val PASSWORD_ERROR = "settings.password.error"
     const val PRICING = "settings.pricing"
     const val RESTORE = "settings.restore"
     const val RESTORE_NOTE = "settings.restoreNote"
@@ -85,6 +92,8 @@ fun SettingsScreen(
     onSignIn: () -> Unit = {},
     onSignOut: () -> Unit = {},
     onDeleteAccount: () -> Unit = {},
+    /** Set when the server has passwords; the row also waits for /me to say whether this account has one. */
+    onSetPassword: (suspend (new: String, current: String?) -> SignInError?)? = null,
     onOpenPricing: (() -> Unit)? = null,
     restore: RestoreUi? = null,
     onRestore: () -> Unit = {},
@@ -106,7 +115,7 @@ fun SettingsScreen(
             Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(horizontal = 20.dp, vertical = 8.dp),
             verticalArrangement = Arrangement.spacedBy(24.dp),
         ) {
-            AccountGroup(account, accountBusy, onSignIn, onSignOut, onDeleteAccount, restore, onRestore)
+            AccountGroup(account, accountBusy, onSignIn, onSignOut, onDeleteAccount, onSetPassword, restore, onRestore)
 
             if (onOpenPricing != null) {
                 Group(null) {
@@ -193,6 +202,7 @@ private fun AccountGroup(
     onSignIn: () -> Unit,
     onSignOut: () -> Unit,
     onDelete: () -> Unit,
+    onSetPassword: (suspend (new: String, current: String?) -> SignInError?)?,
     restore: RestoreUi?,
     onRestore: () -> Unit,
 ) {
@@ -200,12 +210,14 @@ private fun AccountGroup(
     val lang = LocalLang.current
     var confirmSignOut by rememberSaveable { mutableStateOf(false) }
     var confirmDelete by rememberSaveable { mutableStateOf(false) }
+    var editingPassword by rememberSaveable { mutableStateOf(false) }
     val signedIn = account is Account.State.SignedIn
     // A session that ends while a dialog is open must not bring it back after the next sign-in.
     LaunchedEffect(signedIn) {
         if (!signedIn) {
             confirmSignOut = false
             confirmDelete = false
+            editingPassword = false
         }
     }
 
@@ -250,6 +262,16 @@ private fun AccountGroup(
                         RestoreRow(restore, enabled = !busy, onRestore)
                     }
                 }
+                val hasPassword = account.me?.hasPassword
+                if (user != null && onSetPassword != null && hasPassword != null) {
+                    HorizontalDivider(color = Palette.line)
+                    ActionRow(
+                        if (hasPassword) s.accountPasswordChange else s.accountPasswordSet,
+                        Modifier.testTag(SettingsTags.PASSWORD),
+                        trailing = "›",
+                        enabled = !busy,
+                    ) { editingPassword = true }
+                }
                 HorizontalDivider(color = Palette.line)
                 ActionRow(s.accountSignOut, Modifier.testTag(SettingsTags.SIGN_OUT), enabled = !busy) { confirmSignOut = true }
                 HorizontalDivider(color = Palette.line)
@@ -260,6 +282,13 @@ private fun AccountGroup(
         }
     }
 
+    if (editingPassword && account is Account.State.SignedIn && onSetPassword != null) {
+        PasswordDialog(
+            hasPassword = account.me?.hasPassword == true,
+            onSave = onSetPassword,
+            onDismiss = { editingPassword = false },
+        )
+    }
     if (confirmSignOut && account is Account.State.SignedIn) {
         AlertDialog(
             onDismissRequest = { confirmSignOut = false },

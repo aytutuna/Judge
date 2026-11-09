@@ -22,7 +22,7 @@ import { useCase } from "@/lib/use-case";
 import { refreshViewer, useViewer } from "@/lib/use-viewer";
 import { JudgingOverlay } from "../JudgingOverlay";
 import { SiteFooter, SiteHeader, SkipLink } from "../SiteChrome";
-import { AppShell } from "../shell/AppShell";
+import { AppShell, useBlurOnTapOutside } from "../shell/AppShell";
 import { updateHistoryCase } from "../shell/useHistory";
 import { NextSteps } from "../shell/NextSteps";
 import { Thread } from "../thread/Thread";
@@ -90,6 +90,7 @@ export function CaseShell({
   children: ReactNode;
   headingRef?: React.Ref<HTMLHeadingElement>;
 }) {
+  useBlurOnTapOutside(bare);
   const main = (
     <main id="main" tabIndex={-1} className={styles.main} data-you={you}>
       <div className={`wrap ${styles.column}`}>

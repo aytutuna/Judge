@@ -264,6 +264,8 @@ final class ScreenshotStateTests: XCTestCase {
         XCTAssertEqual(ScreenshotState.parse("history-select:tr")?.screen, .historySelect)
         XCTAssertEqual(ScreenshotState.parse("history-select:tr")?.tab, .history)
         XCTAssertEqual(ScreenshotState.parse("mode-both:en")?.screen, .modeBoth)
+        XCTAssertEqual(ScreenshotState.parse("menu:en:dark")?.screen, .menu)
+        XCTAssertEqual(ScreenshotState.parse("menu:en")?.tab, .new)
         XCTAssertEqual(ScreenshotState.parse("case-write:en")?.screen, .caseWrite(answered: false))
         XCTAssertEqual(ScreenshotState.parse("case-write-answered:en")?.screen, .caseWrite(answered: true))
         XCTAssertEqual(ScreenshotState.parse("case-write:en")?.tab, .new)
@@ -291,6 +293,10 @@ final class ScreenshotStateTests: XCTestCase {
             XCTAssertFalse(list.historyList.usesNetwork)
             let phone = try XCTUnwrap(try list.history.find(id: "winB000001"), "and one verdict only on this phone")
             XCTAssertNil(phone.ownerUserID)
+
+            let menu = try XCTUnwrap(ScreenshotState.parse("menu:en")).makeModel(container: container)
+            XCTAssertTrue(menu.menuOpen)
+            XCTAssertFalse(try menu.history.cached(user: try XCTUnwrap(menu.historyUser)).isEmpty, "the menu has verdicts to list")
 
             let select = try XCTUnwrap(ScreenshotState.parse("history-select:en")).makeModel(container: container)
             XCTAssertEqual(select.historySelectionSeed, ["c:case0000010", "v:verdict0021"])

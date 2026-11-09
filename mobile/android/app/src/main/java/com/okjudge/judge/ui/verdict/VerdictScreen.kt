@@ -139,7 +139,8 @@ fun VerdictRoute(
             Modifier
                 .weight(1f)
                 .fillMaxWidth()
-                .verticalScroll(scroll)
+                // Nothing to scroll, nothing to drag: no stretch or empty scroll when the verdict fits.
+                .verticalScroll(scroll, enabled = scroll.canScrollForward || scroll.canScrollBackward)
                 .padding(horizontal = 16.dp, vertical = 4.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {

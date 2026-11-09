@@ -9,6 +9,7 @@ struct AccountSection: View {
     @Environment(AppModel.self) private var app
     @Binding var confirmSignOut: Bool
     @Binding var confirmDelete: Bool
+    @Binding var changePassword: Bool
 
     var body: some View {
         let account = app.account
@@ -54,6 +55,13 @@ struct AccountSection: View {
             }
             .disabled(purchases.isRestoring || account.busy != nil)
         }
+        if account.canManagePassword {
+            actionRow(account.hasPassword ? L10n.accountPasswordChange(lang) : L10n.accountPasswordSet(lang), busy: false, color: Brand.ink) {
+                account.beginPasswordChange()
+                changePassword = true
+            }
+            .disabled(account.busy != nil)
+        }
         actionRow(L10n.accountSignOut(lang), busy: account.busy == .signOut, color: Brand.ink) {
             confirmSignOut = true
         }
@@ -81,6 +89,10 @@ struct AccountSection: View {
             Text(failure.message(lang))
                 .brandText(.footnote)
                 .foregroundStyle(Brand.danger)
+        } else if account.isSignedIn, account.passwordSaved {
+            Text(L10n.accountPasswordSaved(lang))
+                .brandText(.footnote)
+                .foregroundStyle(Brand.muted)
         } else if account.isSignedIn, let restored = app.purchases.restoreResult {
             Text(restored.text(lang))
                 .brandText(.footnote)
@@ -129,5 +141,103 @@ struct AccountSection: View {
             : L10n.accountSubscriptionUntil(lang, date: date)
         let usage = L10n.accountFairUse(lang, used: String(subscription.used), cap: String(subscription.cap))
         return period + "\n" + usage
+    }
+}
+
+/// Settings → Password: set one, or replace the current one (which the
+/// server asks for unless the session is a fresh code sign-in).
+struct PasswordSheet: View {
+    @Environment(AppModel.self) private var app
+    @Environment(\.dismiss) private var dismiss
+    @State private var current = ""
+    @State private var next = ""
+    @State private var showPassword = false
+    @FocusState private var focus: Field?
+
+    private enum Field: Hashable {
+        case current, next
+    }
+
+    var body: some View {
+        let account = app.account
+        let lang = app.lang
+        let replacing = account.hasPassword
+        ScrollView {
+            VStack(alignment: .leading, spacing: 16) {
+                Text(replacing ? L10n.accountPasswordChange(lang) : L10n.accountPasswordSet(lang))
+                    .brandText(.display1)
+                    .foregroundStyle(Brand.ink)
+                    .accessibilityAddTraits(.isHeader)
+                if replacing {
+                    field(L10n.accountPasswordCurrent(lang), text: $current, type: .password, focus: .current)
+                }
+                field(L10n.signinPasswordNew(lang), text: $next, type: .newPassword, focus: .next)
+                Button(L10n.signinPasswordShow(lang)) { showPassword.toggle() }
+                    .buttonStyle(LinkButtonStyle())
+                    .accessibilityAddTraits(showPassword ? .isSelected : [])
+                if let failure = account.failure, failure != .loadFailed {
+                    ErrorBanner(message: failure.message(lang))
+                }
+                Button {
+                    save(replacing: replacing)
+                } label: {
+                    if account.busy == .password {
+                        ProgressView().tint(Brand.ivory)
+                    } else {
+                        Text(L10n.signinPasswordSave(lang))
+                    }
+                }
+                .buttonStyle(PrimaryButtonStyle())
+                .disabled(account.busy != nil || next.isEmpty || (replacing && current.isEmpty))
+                Button(L10n.appCancel(lang)) { dismiss() }
+                    .buttonStyle(LinkButtonStyle())
+                    .disabled(account.busy != nil)
+            }
+            .padding(.horizontal, 20)
+            .padding(.vertical, 24)
+        }
+        .scrollDismissesKeyboard(.interactively)
+        .background(Brand.ivory.ignoresSafeArea())
+        .interactiveDismissDisabled(account.busy != nil)
+        .environment(\.locale, lang.locale)
+        .onChange(of: account.isSignedIn) { _, signedIn in
+            if !signedIn { dismiss() }
+        }
+    }
+
+    private func field(_ label: String, text: Binding<String>, type: UITextContentType, focus which: Field) -> some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Text(label)
+                .brandText(.slotTitle)
+                .foregroundStyle(Brand.ink)
+            Group {
+                if showPassword {
+                    TextField("", text: text)
+                } else {
+                    SecureField("", text: text)
+                }
+            }
+            .focused($focus, equals: which)
+            .textContentType(type)
+            .textInputAutocapitalization(.never)
+            .autocorrectionDisabled()
+            .submitLabel(which == .current ? .next : .go)
+            .onSubmit {
+                if which == .current { focus = .next } else { save(replacing: app.account.hasPassword) }
+            }
+            .brandText(.body)
+            .foregroundStyle(Brand.ink)
+            .padding(.horizontal, 16)
+            .frame(minHeight: 52)
+            .paperSurface(radius: Radius.field, fill: Brand.paper, border: focus == which ? Brand.terraInk : Brand.line2)
+            .accessibilityLabel(label)
+        }
+    }
+
+    private func save(replacing: Bool) {
+        guard !next.isEmpty, !replacing || !current.isEmpty else { return }
+        Task {
+            if await app.account.changePassword(next, current: replacing ? current : nil) { dismiss() }
+        }
     }
 }

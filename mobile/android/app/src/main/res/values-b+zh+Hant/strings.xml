@@ -178,6 +178,21 @@
     <string name="signin_email_submit">寄登入連結給我</string>
     <string name="signin_email_sent">請查看收件匣。我們已將登入連結寄到 %1$s，10 分鐘內有效。</string>
     <string name="signin_email_invalid">這個電子郵件地址好像不太對。</string>
+    <string name="signin_password">密碼</string>
+    <string name="signin_password_new">新密碼</string>
+    <string name="signin_password_show">顯示密碼</string>
+    <string name="signin_create">建立帳號</string>
+    <string name="signin_forgot">忘記密碼？</string>
+    <string name="signin_use_code">改用電子郵件寄送驗證碼</string>
+    <string name="signin_use_password">改用密碼登入</string>
+    <string name="signin_password_wrong">該電子郵件與密碼不相符。</string>
+    <string name="signin_password_short">至少使用 8 個字元。</string>
+    <string name="signin_create_note">我們會用電子郵件寄送驗證碼來確認此地址，只需做這一次。</string>
+    <string name="signin_password_choose">你已登入。請為下次選一個密碼。</string>
+    <string name="signin_password_save">儲存密碼</string>
+    <string name="signin_password_save_failed">你已登入，但密碼未能儲存。請重試，或稍後在設定中設定。</string>
+    <string name="signin_password_skip">暫時略過</string>
+    <string name="signin_password_submit">登入</string>
     <string name="signin_provider_unavailable">尚未開放</string>
     <string name="signin_failed">登入失敗，可以再試一次嗎？</string>
     <string name="signin_loading">正在載入登入選項…</string>
@@ -195,6 +210,10 @@
     <string name="account_delete">刪除帳號</string>
     <string name="account_delete_confirm">要刪除帳號嗎？你的額度、方案和登入資料都會刪除。你的判決和你在案子中的說法也會移除：你寫的內容和名字都會清除，分享連結也會失效。</string>
     <string name="account_delete_yes">是，刪除</string>
+    <string name="account_password_set">設定密碼</string>
+    <string name="account_password_change">變更密碼</string>
+    <string name="account_password_current">目前的密碼</string>
+    <string name="account_password_saved">密碼已儲存。</string>
     <string name="account_delete_cancel">保留我的帳號</string>
     <string name="account_delete_failed">暫時無法刪除帳號，可以再試一次嗎？</string>
     <string name="account_sign_in_prompt">登入即可查看你的方案和額度。</string>
@@ -364,7 +383,7 @@
     <string name="appeal_title">補充說明</string>
     <string name="home_example">試試範例</string>
     <string name="home_your_placeholder">怎麼了？</string>
-    <string name="home_add_context">新增背景</string>
+    <string name="home_add_context">補充說明</string>
     <string name="home_add_their_side">新增對方的說法</string>
     <string name="home_remove_their_side">移除對方的說法</string>
     <string name="home_send_link">傳個連結</string>
@@ -494,6 +513,8 @@
     <string name="stamp_dissolved">各說各話</string>
     <string name="best_point_of">%1$s最有力的一點</string>
     <string name="best_point_self">你最有力的一點</string>
+    <string name="error_password_wrong">密碼不正確。</string>
+    <string name="error_password_required">請輸入目前的密碼。</string>
     <string name="error_age_blocked">Judge 僅限 18 歲以上的人使用。</string>
     <string name="error_age_unconfirmed">請確認你已年滿 18 歲後繼續。</string>
     <string name="app_name">Judge</string>
@@ -528,8 +549,8 @@
     </plurals>
     <string name="app_history_offline_remove">你目前離線，移除需要網路連線。</string>
     <string name="app_pricing_free_account">用 Apple、Google 或電子郵件登入</string>
-    <string name="app_context_label">背景（選填）</string>
-    <string name="app_pricing_context">背景圖片讀完即丟，不另外收費</string>
+    <string name="app_context_label">補充說明（選填）</string>
+    <string name="app_pricing_context">補充說明的圖片讀完即丟，不另外收費</string>
     <string name="app_pricing_headline">第一次判決，我們請客。</string>
     <string name="app_pricing_sub">建立帳號，第一次判決免費，所有功能都能用。之後可以買額度包，或改用月費方案。</string>
     <string name="app_pricing_headline_member">取得更多判決。</string>
@@ -589,7 +610,7 @@
     <string name="app_home_your_side_label">你在這場爭論中的說法</string>
     <string name="app_home_their_side_label">對方在這場爭論中的說法</string>
     <string name="app_home_send_link">傳個連結</string>
-    <string name="app_home_add_context">新增背景</string>
+    <string name="app_home_add_context">補充說明</string>
     <string name="app_home_says">%1$s說：</string>
     <string name="app_home_my_side">我的說法：</string>
     <string name="app_home_other_side">對方的說法：</string>

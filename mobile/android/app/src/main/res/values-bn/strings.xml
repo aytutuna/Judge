@@ -183,6 +183,21 @@
     <string name="signin_email_submit">ইমেইলে সাইন-ইন লিংক পাঠান</string>
     <string name="signin_email_sent">ইনবক্স দেখুন। %1$s ঠিকানায় একটা সাইন-ইন লিংক পাঠিয়েছি। এটা 10 মিনিট কাজ করবে।</string>
     <string name="signin_email_invalid">ইমেইল ঠিকানাটা ঠিক মনে হচ্ছে না।</string>
+    <string name="signin_password">পাসওয়ার্ড</string>
+    <string name="signin_password_new">নতুন পাসওয়ার্ড</string>
+    <string name="signin_password_show">পাসওয়ার্ড দেখান</string>
+    <string name="signin_create">অ্যাকাউন্ট খুলুন</string>
+    <string name="signin_forgot">পাসওয়ার্ড ভুলে গেছেন?</string>
+    <string name="signin_use_code">এর বদলে আমাকে ইমেইলে কোড পাঠান</string>
+    <string name="signin_use_password">এর বদলে পাসওয়ার্ড ব্যবহার করুন</string>
+    <string name="signin_password_wrong">এই ইমেইল আর পাসওয়ার্ড মেলেনি।</string>
+    <string name="signin_password_short">কমপক্ষে ৮টি অক্ষর ব্যবহার করুন।</string>
+    <string name="signin_create_note">এই ঠিকানা নিশ্চিত করতে আমরা আপনাকে ইমেইলে একটি কোড পাঠাব। এটা শুধু একবারই করতে হবে।</string>
+    <string name="signin_password_choose">আপনি সাইন ইন করেছেন। পরের বারের জন্য একটি পাসওয়ার্ড বেছে নিন।</string>
+    <string name="signin_password_save">পাসওয়ার্ড সংরক্ষণ করুন</string>
+    <string name="signin_password_save_failed">আপনি সাইন ইন করেছেন, কিন্তু পাসওয়ার্ড সংরক্ষণ করা যায়নি। আবার চেষ্টা করুন, অথবা পরে সেটিংসে ঠিক করুন।</string>
+    <string name="signin_password_skip">এখন বাদ দিন</string>
+    <string name="signin_password_submit">সাইন ইন</string>
     <string name="signin_provider_unavailable">এখনও পাওয়া যাচ্ছে না</string>
     <string name="signin_failed">সাইন ইন করানো গেল না। আরেকবার চেষ্টা করবেন?</string>
     <string name="signin_loading">সাইন-ইনের অপশন লোড হচ্ছে…</string>
@@ -200,6 +215,10 @@
     <string name="account_delete">অ্যাকাউন্ট মুছুন</string>
     <string name="account_delete_confirm">অ্যাকাউন্ট মুছে ফেলবেন? আপনার ক্রেডিট, প্ল্যান আর সাইন-ইনের তথ্য মুছে যাবে। আপনার রায় আর মামলায় আপনার বক্তব্য সরিয়ে ফেলা হবে: আপনার লেখা আর নামগুলো মুছে যাবে, আর সেগুলোর শেয়ার লিংক কাজ করা বন্ধ করবে।</string>
     <string name="account_delete_yes">হ্যাঁ, মুছে ফেলুন</string>
+    <string name="account_password_set">পাসওয়ার্ড ঠিক করুন</string>
+    <string name="account_password_change">পাসওয়ার্ড বদলান</string>
+    <string name="account_password_current">বর্তমান পাসওয়ার্ড</string>
+    <string name="account_password_saved">পাসওয়ার্ড সংরক্ষিত হয়েছে।</string>
     <string name="account_delete_cancel">অ্যাকাউন্ট থাকুক</string>
     <string name="account_delete_failed">এই মুহূর্তে অ্যাকাউন্টটা মোছা গেল না। আরেকবার চেষ্টা করবেন?</string>
     <string name="account_sign_in_prompt">আপনার প্ল্যান আর ক্রেডিট দেখতে সাইন ইন করুন।</string>
@@ -372,7 +391,7 @@
     <string name="appeal_title">নতুন তথ্য যোগ করুন</string>
     <string name="home_example">একটা উদাহরণ দিয়ে দেখুন</string>
     <string name="home_your_placeholder">সমস্যাটা কী?</string>
-    <string name="home_add_context">প্রসঙ্গ যোগ করুন</string>
+    <string name="home_add_context">নতুন তথ্য যোগ করুন</string>
     <string name="home_add_their_side">অন্যজনের বক্তব্য যোগ করুন</string>
     <string name="home_remove_their_side">অন্যজনের বক্তব্য সরান</string>
     <string name="home_send_link">লিংক পাঠান</string>
@@ -505,6 +524,8 @@
     <string name="stamp_dissolved">অর্থের ফারাক</string>
     <string name="best_point_of">সবচেয়ে জোরালো যুক্তি: %1$s</string>
     <string name="best_point_self">আপনার সবচেয়ে জোরালো যুক্তি</string>
+    <string name="error_password_wrong">এই পাসওয়ার্ড ঠিক নয়।</string>
+    <string name="error_password_required">আপনার বর্তমান পাসওয়ার্ড লিখুন।</string>
     <string name="error_age_blocked">Judge শুধু ১৮ বছর বা তার বেশি বয়সীদের জন্য।</string>
     <string name="error_age_unconfirmed">চালিয়ে যেতে নিশ্চিত করুন যে আপনার বয়স ১৮ বা তার বেশি।</string>
     <string name="app_name">Judge</string>
@@ -544,8 +565,8 @@
     </plurals>
     <string name="app_history_offline_remove">আপনি অফলাইনে আছেন। সরিয়ে ফেলতে ইন্টারনেট সংযোগ লাগবে।</string>
     <string name="app_pricing_free_account">Apple, Google বা ইমেইল দিয়ে সাইন ইন করুন</string>
-    <string name="app_context_label">প্রসঙ্গ (ঐচ্ছিক)</string>
-    <string name="app_pricing_context">প্রসঙ্গের ছবি পড়া হয়, তারপর মুছে ফেলা হয়, বাড়তি খরচ ছাড়াই</string>
+    <string name="app_context_label">নতুন তথ্য (ঐচ্ছিক)</string>
+    <string name="app_pricing_context">নতুন তথ্যের ছবি পড়া হয়, তারপর মুছে ফেলা হয়, বাড়তি খরচ ছাড়াই</string>
     <string name="app_pricing_headline">প্রথম রায়টা আমাদের তরফ থেকে।</string>
     <string name="app_pricing_sub">অ্যাকাউন্ট খুললেই প্রথম রায় ফ্রি, সব ফিচারসহ। এরপর একটা প্যাক বেছে নিন বা মাসিক প্ল্যান নিন।</string>
     <string name="app_pricing_headline_member">আরও রায় নিন।</string>
@@ -606,7 +627,7 @@
     <string name="app_home_your_side_label">তর্কে আপনার বক্তব্য</string>
     <string name="app_home_their_side_label">তর্কে অন্যজনের বক্তব্য</string>
     <string name="app_home_send_link">লিংক পাঠান</string>
-    <string name="app_home_add_context">প্রসঙ্গ যোগ করুন</string>
+    <string name="app_home_add_context">নতুন তথ্য যোগ করুন</string>
     <string name="app_home_says">%1$s বলছে:</string>
     <string name="app_home_my_side">আমার বক্তব্য:</string>
     <string name="app_home_other_side">অন্যজনের বক্তব্য:</string>
