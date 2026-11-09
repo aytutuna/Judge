@@ -436,6 +436,7 @@ struct SideMenu: View {
         .buttonStyle(.plain)
         .accessibilityLabel(L10n.navAccount(lang))
         .accessibilityValue(user == nil ? "" : name)
+        .accessibilityAddTraits(profileOpen ? .isSelected : [])
     }
 
     private func profileItems(_ lang: AppLang) -> some View {
