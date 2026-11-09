@@ -92,6 +92,26 @@ describe("AccountPanel", () => {
     expect(until).toContain("Bu ay 200 karardan 12 tanesini kullandın");
   });
 
+  it("a Password row says set or change by what the account has, and hides on servers without passwords", () => {
+    const config = (password: boolean): AppConfig => ({
+      signIn: { apple: true, google: true, email: true, emailCode: true, password, dev: false },
+      premiumEnabled: true,
+      pricing: PRICING,
+    });
+    const viewer = (hasPassword: boolean | undefined, password = true): ViewerState => ({
+      status: "ready",
+      me: { user, entitlement: ent(), hasPassword },
+      config: config(password),
+    });
+    expect(panel({ viewer: viewer(false) })).toContain(esc(t("en", "account.passwordSet")));
+    const change = panel({ viewer: viewer(true) });
+    expect(change).toContain(esc(t("en", "account.passwordChange")));
+    expect(change).not.toContain(esc(t("en", "account.passwordSet")));
+    expect(panel({ viewer: viewer(undefined) })).not.toContain(esc(t("en", "account.passwordSet")));
+    expect(panel({ viewer: viewer(false, false) })).not.toContain(esc(t("en", "account.passwordSet")));
+    expect(panel({})).not.toContain("Password");
+  });
+
   it("fair use: says when the allowance comes back", () => {
     const html = panel({
       viewer: ready({
@@ -127,7 +147,7 @@ function signin(over: Partial<SignInPanelProps>): string {
   return renderToStaticMarkup(
     <SignInPanel
       lang="en"
-      providers={{ apple: true, google: true, email: true, emailCode: true, password: true, dev: false }}
+      providers={{ apple: true, google: true, email: true, emailCode: true, password: false, dev: false }}
       pending={false}
       error={null}
       emailOpen={false}
@@ -137,7 +157,18 @@ function signin(over: Partial<SignInPanelProps>): string {
       captcha={null}
       canSendEmail={false}
       adult={true}
+      mode="password"
+      password=""
+      showPassword={false}
+      choosing={false}
+      errorInForm={false}
       onAdult={noop}
+      onMode={noop}
+      onPassword={noop}
+      onShowPassword={noop}
+      onSignInPassword={noop}
+      onSavePassword={noop}
+      onSkipPassword={noop}
       onProvider={noop}
       onToggleEmail={noop}
       onEmail={noop}
@@ -249,7 +280,7 @@ describe("SignInPanel", () => {
   });
 
   it("nothing can be used until the 18+ box is ticked", () => {
-    const html = signin({ adult: false, providers: { apple: true, google: true, email: true, emailCode: true, password: true, dev: true } });
+    const html = signin({ adult: false, providers: { apple: true, google: true, email: true, emailCode: true, password: false, dev: true } });
     expect(html).toContain('type="checkbox"');
     expect(html).toContain(esc(t("en", "age.confirm")));
     expect(html.indexOf('type="checkbox"')).toBeLessThan(html.indexOf("Continue with Apple"));
@@ -270,6 +301,100 @@ describe("SignInPanel", () => {
       /<p[^>]*>Tartışmalarını harici bir yapay zekâ okur\. Devam ederek <a [^>]*href="\/terms"[^>]*>Kullanım Koşulları<\/a>&#x27;nı ve <a [^>]*href="\/privacy"[^>]*>Gizlilik Politikası<\/a>&#x27;nı kabul etmiş olursun\.<\/p>/,
     );
     expect(en).not.toContain("Signing in keeps");
+  });
+});
+
+const withPassword: AuthProviders = { apple: true, google: true, email: true, emailCode: true, password: true, dev: false };
+
+describe("SignInPanel with passwords", () => {
+  const pw = (over: Partial<SignInPanelProps> = {}) => signin({ providers: withPassword, ...over });
+
+  it("Apple, Google, then email and password with the three other ways in", () => {
+    const html = pw({ email: "a@b.co", password: "secret" });
+    const order = [
+      "Continue with Apple",
+      "Continue with Google",
+      t("en", "signin.emailLabel"),
+      t("en", "signin.password"),
+      t("en", "signin.passwordSubmit"),
+      t("en", "signin.forgot"),
+      t("en", "signin.create"),
+      t("en", "signin.useCode"),
+    ].map((text) => html.indexOf(esc(text)));
+    expect(order.every((i) => i >= 0)).toBe(true);
+    expect([...order].sort((x, y) => x - y)).toEqual(order);
+    expect(html).not.toContain(t("en", "signin.emailToggle"));
+    expect(html).not.toMatch(/<form[^>]*hidden=""/);
+  });
+
+  it("lets a password manager find the pair, and the password can be shown", () => {
+    const html = pw({ email: "a@b.co", password: "secret" });
+    expect(html).toContain('autoComplete="username"');
+    expect(html).toContain('autoComplete="current-password"');
+    expect(html).toMatch(/type="password"[^>]*value="secret"|value="secret"[^>]*type="password"/);
+    expect(html).toMatch(/<button[^>]*aria-pressed="false"[^>]*>Show password/);
+    const shown = pw({ password: "secret", showPassword: true });
+    expect(shown).not.toContain('type="password"');
+    expect(shown).toMatch(/aria-pressed="true"/);
+  });
+
+  it("the error sits next to the fields, once", () => {
+    const html = pw({ email: "a@b.co", password: "x", error: "No match", errorInForm: true });
+    expect(html.match(/role="alert"/g)).toHaveLength(1);
+    expect(html.indexOf("No match")).toBeGreaterThan(html.indexOf('autoComplete="current-password"'));
+    expect(html).toContain('aria-invalid="true"');
+    expect(html).toMatch(/aria-describedby="([^"]+)-error"/);
+    const provider = pw({ error: "Apple said no" });
+    expect(provider.indexOf("Apple said no")).toBeLessThan(provider.indexOf("Continue with Apple"));
+  });
+
+  it("Sign in needs a password and the 18+ box", () => {
+    const submit = (h: string) => /<button[^>]*type="submit"[^>]*>/.exec(h)![0];
+    expect(submit(pw({ email: "a@b.co", canSendEmail: true }))).toContain('disabled=""');
+    expect(submit(pw({ email: "a@b.co", canSendEmail: true, password: "secret" }))).not.toContain('disabled=""');
+    expect(submit(pw({ email: "a@b.co", canSendEmail: true, password: "secret", adult: false }))).toContain('disabled=""');
+  });
+
+  it("create asks for a new password up front and says the code comes next", () => {
+    const html = pw({ mode: "create", password: "secret" });
+    expect(html).toContain('autoComplete="new-password"');
+    expect(html).toContain(esc(t("en", "signin.createNote")));
+    expect(html).toContain(esc(t("en", "signin.codeRequest")));
+    expect(html).toContain(esc(t("en", "signin.usePassword")));
+    expect(html).not.toContain(esc(t("en", "signin.forgot")));
+  });
+
+  it("forgot and code ask for the address only", () => {
+    for (const mode of ["forgot", "code"] as const) {
+      const html = pw({ mode });
+      expect(html, mode).not.toContain('type="password"');
+      expect(html, mode).toContain(esc(t("en", "signin.codeRequest")));
+      expect(html, mode).toContain(esc(t("en", "signin.usePassword")));
+    }
+  });
+
+  it("the code step is the same as without passwords", () => {
+    const html = pw({ sentTo: "a@b.co", code: "12", mode: "create" });
+    expect(html).toContain("We emailed a code to a@b.co");
+    expect(html).toContain('autoComplete="one-time-code"');
+    expect(html).not.toContain('type="password"');
+  });
+
+  it("after the code it asks for the password to keep, with a way to skip", () => {
+    const html = pw({ choosing: true, email: "a@b.co", password: "", error: "Could not save", errorInForm: true });
+    expect(html).toContain(esc(t("en", "signin.passwordChoose")));
+    expect(html).toContain('autoComplete="new-password"');
+    expect(html).toContain('autoComplete="username"');
+    expect(html).toContain(esc(t("en", "signin.passwordSave")));
+    expect(html).toContain(esc(t("en", "signin.passwordSkip")));
+    expect(html).not.toContain("Continue with Apple");
+    expect(html.match(/role="alert"/g)).toHaveLength(1);
+  });
+
+  it("without the password flag the old email form stays", () => {
+    const html = signin({ emailOpen: true });
+    expect(html).not.toContain('type="password"');
+    expect(html).toContain(esc(t("en", "signin.codeRequest")));
   });
 });
 

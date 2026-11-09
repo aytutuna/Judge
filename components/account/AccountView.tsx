@@ -8,6 +8,7 @@ import { useLang } from "@/lib/lang";
 import { langTag } from "@/lib/langs";
 import { markSignedOut, useViewer, type ViewerState } from "@/lib/use-viewer";
 import styles from "./AccountPages.module.css";
+import { PasswordRow } from "./PasswordRow";
 
 /** How long the "account deleted" note stays before going home. */
 const DELETED_HOLD_MS = 1800;
@@ -139,6 +140,10 @@ export function AccountPanel({
           </button>
         </div>
       </section>
+
+      {viewer.config?.signIn.password && typeof viewer.me.hasPassword === "boolean" ? (
+        <PasswordRow lang={lang} email={user.email} hasPassword={viewer.me.hasPassword} />
+      ) : null}
 
       <section className={styles.card}>
         {deleteError ? (

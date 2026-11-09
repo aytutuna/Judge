@@ -83,6 +83,59 @@ export async function signInWithCode(email: string, otp: string): Promise<Outcom
   }
 }
 
+/** Signs in with email and password; success sets the session cookie. */
+export async function signInWithPassword(email: string, password: string): Promise<Outcome> {
+  try {
+    const { error } = await authClient.signIn.email({ email, password });
+    return error ? failure(error) : { ok: true };
+  } catch {
+    return { ok: false, code: "network" };
+  }
+}
+
+/** POST /api/v1/me/password: sets the password, or replaces it (`current` is
+ * the old one, which is not needed right after a code sign-in). */
+export async function savePassword(
+  password: string,
+  current?: string,
+): Promise<{ ok: true } | { ok: false; code: ApiErrorCode | "network" }> {
+  let res: Response;
+  try {
+    res = await fetch("/api/v1/me/password", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      credentials: "same-origin",
+      body: JSON.stringify(current === undefined ? { password } : { password, current }),
+    });
+  } catch {
+    return { ok: false, code: "network" };
+  }
+  if (res.ok) return { ok: true };
+  const body: unknown = await res.json().catch(() => null);
+  const code = typeof body === "object" && body !== null ? (body as { code?: unknown }).code : null;
+  return { ok: false, code: isApiErrorCode(code) ? code : "unavailable" };
+}
+
+/** The message for a failed password sign-in. */
+export function passwordSignInErrorKey(res: { code: string; status?: number }): Key {
+  const { code, status } = res;
+  if (code === "network") return "signin.offline";
+  if (status === 401) return "signin.passwordWrong";
+  if (status === 429) return "signin.rateLimited";
+  if (status === 404 || (status !== undefined && status >= 500)) return "signin.serviceDown";
+  return "signin.failed";
+}
+
+/** The message for a failed password save, from the route's error code. */
+export function passwordSaveErrorKey(code: ApiErrorCode | "network"): Key {
+  if (code === "network") return "signin.offline";
+  if (code === "too_short" || code === "too_long") return "signin.passwordShort";
+  if (code === "password_wrong") return "error.password_wrong";
+  if (code === "password_required") return "error.password_required";
+  if (code === "rate_limited") return "signin.rateLimited";
+  return "signin.passwordSaveFailed";
+}
+
 /** The message for a failed code call. Same mapping as the apps: the status
  * decides first (the server's reply also carries a `code` such as
  * INVALID_EMAIL or unavailable), the code tells the verify errors apart. */
