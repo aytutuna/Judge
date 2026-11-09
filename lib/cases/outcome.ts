@@ -1,18 +1,27 @@
 /** How a re-judged verdict compares to the one before it. Pure. */
 
+import { winnerOf } from "@/lib/multi";
 import type { AppealOutcome, VerdictResult } from "@/lib/types";
 
 const win = (v: VerdictResult["verdict"]) => v === "side_a" || v === "side_b";
+
+type Compared = Pick<VerdictResult, "verdict" | "lean" | "winner" | "parties">;
 
 /**
  * overturned: a winner verdict now names the other winner.
  * upheld: the same verdict, and for non-winner verdicts the same forced lean.
  * changed: anything else (a winner became a split, the lean moved, ...).
+ * With three or four sides the same words go by the winning side: a
+ * different winner is overturned, the same winner (or too close both times)
+ * is upheld.
  */
-export function appealOutcome(
-  prev: Pick<VerdictResult, "verdict" | "lean">,
-  next: Pick<VerdictResult, "verdict" | "lean">,
-): AppealOutcome {
+export function appealOutcome(prev: Compared, next: Compared): AppealOutcome {
+  if (prev.parties || next.parties) {
+    const before = winnerOf(prev);
+    const after = winnerOf(next);
+    if (before && after && before !== after) return "overturned";
+    return before === after ? "upheld" : "changed";
+  }
   if (win(prev.verdict) && win(next.verdict) && prev.verdict !== next.verdict) return "overturned";
   if (
     prev.verdict === next.verdict &&

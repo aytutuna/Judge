@@ -36,6 +36,10 @@ export function verdictLabel(
 /** How many judge runs reached the final verdict. Null when there is no
  * majority ruling to agree with (too close) or no runs at all. */
 export function agreement(r: VerdictResult): { n: number; total: number } | null {
+  if (r.parties) {
+    const winner = r.winner ?? null;
+    return !r.runs.length || !winner ? null : { n: (r.votes ?? []).filter((v) => v === winner).length, total: r.runs.length };
+  }
   if (!r.runs.length || r.verdict === "too_close") return null;
   return { n: r.runs.filter((v) => v === r.verdict).length, total: r.runs.length };
 }
@@ -64,6 +68,7 @@ export function judgesLabel(lang: Lang, r: VerdictResult | null): string {
  * surviving run "unanimous" is vacuous and a stronger bar would overclaim;
  * the agreement note carries that distinction in text. */
 export function tugFinal(result: VerdictResult): number {
+  if (result.parties) return 50; // no bar with more than two sides
   switch (result.verdict) {
     case "side_a":
       return 80;
@@ -79,6 +84,7 @@ export function tugFinal(result: VerdictResult): number {
  * bar. Half for a too-close or split ruling or when nobody voted for a side;
  * null when there is nothing to show (a refusal, no runs). */
 export function leanShare(r: VerdictResult): number | null {
+  if (r.parties) return null;
   if (r.model_refused || !r.runs.length) return null;
   if (r.verdict === "too_close" || r.verdict === "split") return 0.5;
   const a = r.runs.filter((v) => v === "side_a").length;

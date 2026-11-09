@@ -35,6 +35,11 @@ export const FinalVerdict = z.enum([
 ]);
 export type FinalVerdict = z.infer<typeof FinalVerdict>;
 
+/** A side of a dispute with more than two sides. Two-sided results keep
+ * "a" and "b" in the older fields and never use this. */
+export const PartyId = z.enum(["a", "b", "c", "d"]);
+export type PartyId = z.infer<typeof PartyId>;
+
 export const Claim = z.object({
   claim: z.string(),
   kind: ClaimKind,
@@ -152,7 +157,12 @@ export const DisputedFact = z.object({
 });
 export type DisputedFact = z.infer<typeof DisputedFact>;
 
-export const EvidenceUsed = z.object({ a: z.number().int().min(0), b: z.number().int().min(0) });
+export const EvidenceUsed = z.object({
+  a: z.number().int().min(0),
+  b: z.number().int().min(0),
+  c: z.number().int().min(0).optional(),
+  d: z.number().int().min(0).optional(),
+});
 export type EvidenceUsed = z.infer<typeof EvidenceUsed>;
 
 export const AppealOutcome = z.enum(["upheld", "overturned", "changed"]);
@@ -160,7 +170,7 @@ export type AppealOutcome = z.infer<typeof AppealOutcome>;
 
 /** On a verdict produced by an appeal: how it compares to the one before. */
 export const AppealInfo = z.object({
-  by: z.enum(["a", "b"]),
+  by: PartyId,
   outcome: AppealOutcome,
   previous_id: z.string(),
   previous_verdict: FinalVerdict,
@@ -191,6 +201,33 @@ export const TwoSidedJudgeRunOutput = JudgeRunOutput.extend({
   would_change: z.array(z.string()),
 });
 export type TwoSidedJudgeRunOutput = z.infer<typeof TwoSidedJudgeRunOutput>;
+
+// --- Three or four sides -----------------------------------------------------------
+/** One judge run's vote on a dispute with 3 or 4 sides: a side, or "other"
+ * when the run found it too close to name one. */
+export const MultiVote = z.union([PartyId, z.literal("other")]);
+export type MultiVote = z.infer<typeof MultiVote>;
+
+/** One side's claims and deepest premise on a verdict with 3 or 4 sides. */
+export const SideAnalysis = z.object({
+  party: PartyId,
+  claims: z.array(Claim),
+  bedrock: z.string(),
+});
+export type SideAnalysis = z.infer<typeof SideAnalysis>;
+
+/** Where one side that did not win fell short, in a sentence. */
+export const OtherLine = z.object({ party: PartyId, line: z.string() });
+export type OtherLine = z.infer<typeof OtherLine>;
+
+/** A disputed fact on a case with 3 or 4 accounts. */
+export const Dispute = z.object({
+  fact: z.string(),
+  positions: z.array(z.object({ party: PartyId, says: z.string() })),
+  finding: z.enum(["a", "b", "c", "d", "unsettled"]),
+  decisive: z.boolean(),
+});
+export type Dispute = z.infer<typeof Dispute>;
 
 /** Aggregated result shown to the user and stored. Confidence is computed
  * from self-consistency (how often the judges agreed), never model-claimed. */
@@ -235,6 +272,21 @@ export const VerdictResult = JudgeOutput.extend({
   evidence_used: EvidenceUsed.optional(),
   /** Set on verdicts produced by an appeal. */
   appeal: AppealInfo.optional(),
+  /** Three or four sides only (absent on two-sided results, which are
+   * unchanged). On these `verdict` is the older projection: side_a or
+   * side_b only when that side really won, else too_close, and `runs` holds
+   * only split for any run that did not name side A or B. The real result
+   * is below. */
+  parties: z.array(PartyId).min(3).max(4).optional(),
+  /** The winning side, or null when it was too close to call. */
+  winner: PartyId.nullable().optional(),
+  /** What each run voted, in the same order as `runs`. */
+  votes: z.array(MultiVote).optional(),
+  sides: z.array(SideAnalysis).optional(),
+  /** One line per side that did not win; empty when too close. */
+  others: z.array(OtherLine).optional(),
+  /** Disputed facts of a case with 3 or 4 accounts. */
+  disputes: z.array(Dispute).optional(),
 });
 export type VerdictResult = z.infer<typeof VerdictResult>;
 
@@ -265,6 +317,13 @@ export type Clarification = z.infer<typeof Clarification>;
  * has the voice note the prompts rely on; stored results take any code. */
 export const RequestLang = z.enum(LANG_CODES).refine(isEnabled, "This language isn't available yet.");
 
+export const TypedSide = z.object({
+  text: z.string().trim().min(1).max(6000),
+  /** What the writer calls this person; absent or blank when unnamed. */
+  name: z.string().trim().max(60).optional(),
+});
+export type TypedSide = z.infer<typeof TypedSide>;
+
 export const VerdictRequest = z.object({
   argument: ArgumentText,
   // Older app builds still send a judging style as `framework`; zod strips unknown keys.
@@ -276,6 +335,10 @@ export const VerdictRequest = z.object({
   clarifications: z.array(Clarification).max(2).optional(),
   /** Signed evidence tokens from POST /api/v1/evidence. */
   evidence: z.array(z.string().min(1).max(16_000)).max(3).optional(),
+  /** Three or four typed sides, in the order A to D. Only builds that know
+   * about more than two sides send it; `argument` is still required and
+   * holds the same sides joined. */
+  sides: z.array(TypedSide).min(3).max(4).optional(),
 });
 export type VerdictRequest = z.infer<typeof VerdictRequest>;
 
@@ -303,6 +366,9 @@ export const DisplayStateSchema = z.object({
   namesVisible: z.boolean(),
   a: z.string().nullable(),
   b: z.string().nullable(),
+  /** Three or four sides only. */
+  c: z.string().nullable().optional(),
+  d: z.string().nullable().optional(),
   others: z.record(z.string(), z.string()),
 });
 
@@ -334,7 +400,7 @@ export type StoredVerdictResponse = {
   id: string;
   result: VerdictResult;
   createdAt: string;
-  display?: { a: string | null; b: string | null; others: Record<string, string> } | null;
+  display?: { a: string | null; b: string | null; c?: string | null; d?: string | null; others: Record<string, string> } | null;
   /** A one-sided verdict's added context, oldest first. The verdict of the
    * last judged one is the current ruling. */
   appeals?: VerdictAppealView[];
