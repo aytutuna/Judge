@@ -283,9 +283,10 @@ private fun MenuRow(label: String, on: Boolean, onClick: () -> Unit, modifier: M
             .semantics { selected = on }
             .focusProperties { canFocus = true }
             .clickable(role = Role.Button, onClick = onClick)
-            .padding(horizontal = 22.dp, vertical = 8.dp),
+            .padding(start = if (icon != null) 19.dp else 12.dp, end = 12.dp, top = 8.dp, bottom = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(12.dp),
+        // The gear centres under the profile picture (36dp at 12dp) and the label lines up with the name.
+        horizontalArrangement = Arrangement.spacedBy(if (icon != null) 19.dp else 12.dp),
     ) {
         if (icon != null) TintedIcon(icon, 22)
         Text(label, style = JudgeType.slotTitle.copy(color = if (on) Palette.sageInk else Palette.ink))
