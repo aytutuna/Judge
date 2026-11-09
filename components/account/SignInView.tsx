@@ -56,6 +56,13 @@ export function withLang(path: string, lang: Lang): string {
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+export const CODE_LENGTH = 6;
+
+/** Digits only, at most six: what a typed or pasted code is cut down to. */
+export function digitsOnly(text: string): string {
+  return text.replace(/[^0-9]/g, "").slice(0, CODE_LENGTH);
+}
+
 const NO_PROVIDERS: AuthProviders = { apple: false, google: false, email: false, emailCode: false, dev: false };
 
 function AppleLogo() {
@@ -91,6 +98,8 @@ export type SignInPanelProps = {
   emailOpen: boolean;
   email: string;
   sentTo: string | null;
+  /** The emailed code being typed (email code sign-in, after `sentTo`). */
+  code: string;
   captcha: React.ReactNode;
   canSendEmail: boolean;
   /** "I'm 18 or older" is ticked: nothing can be used until it is. */
@@ -100,6 +109,10 @@ export type SignInPanelProps = {
   onToggleEmail: () => void;
   onEmail: (value: string) => void;
   onSendEmail: () => void;
+  onCode: (value: string) => void;
+  onVerify: () => void;
+  onResend: () => void;
+  onChangeEmail: () => void;
   onDev: () => void;
 };
 
@@ -112,6 +125,7 @@ export function SignInPanel({
   emailOpen,
   email,
   sentTo,
+  code,
   captcha,
   canSendEmail,
   adult,
@@ -120,10 +134,15 @@ export function SignInPanel({
   onToggleEmail,
   onEmail,
   onSendEmail,
+  onCode,
+  onVerify,
+  onResend,
+  onChangeEmail,
   onDev,
 }: SignInPanelProps) {
   const emailFormId = useId();
   const loading = providers === null;
+  const byCode = providers?.emailCode === true;
   const none = providers !== null && !providers.apple && !providers.google && !providers.email && !providers.dev;
 
   const providerButton = (p: "apple" | "google") => {
@@ -166,7 +185,49 @@ export function SignInPanel({
       {providers?.email ? (
         <>
           <div className={styles.divider} aria-hidden />
-          {sentTo ? (
+          {sentTo && byCode ? (
+            <>
+              <p className={styles.ok} role="status">
+                {t(lang, "signin.codeSent", { email: sentTo })}
+              </p>
+              <form
+                className={styles.field}
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  if (code.length === CODE_LENGTH && adult && !pending) onVerify();
+                }}
+              >
+                <label className={styles.label} htmlFor={`${emailFormId}-code`}>
+                  {t(lang, "signin.codeLabel")}
+                </label>
+                <input
+                  id={`${emailFormId}-code`}
+                  className={`${styles.input} ${styles.codeInput}`}
+                  type="text"
+                  inputMode="numeric"
+                  autoComplete="one-time-code"
+                  pattern="[0-9]*"
+                  autoFocus
+                  required
+                  value={code}
+                  onChange={(e) => onCode(digitsOnly(e.target.value))}
+                />
+                <button
+                  type="submit"
+                  className={`${styles.btn} ${styles.primary}`}
+                  disabled={code.length !== CODE_LENGTH || pending || !adult}
+                >
+                  {t(lang, "signin.codeSubmit")}
+                </button>
+              </form>
+              <button type="button" className={styles.textBtn} disabled={pending || !adult} onClick={onResend}>
+                {t(lang, "signin.codeResend")}
+              </button>
+              <button type="button" className={styles.textBtn} disabled={pending} onClick={onChangeEmail}>
+                {t(lang, "signin.changeEmail")}
+              </button>
+            </>
+          ) : sentTo ? (
             <p className={styles.ok} role="status">
               {t(lang, "signin.emailSent", { email: sentTo })}
             </p>
@@ -205,13 +266,13 @@ export function SignInPanel({
                   placeholder={t(lang, "signin.emailPlaceholder")}
                   onChange={(e) => onEmail(e.target.value)}
                 />
-                {emailOpen ? captcha : null}
+                {emailOpen && !byCode ? captcha : null}
                 <button
                   type="submit"
                   className={`${styles.btn} ${styles.secondary}`}
                   disabled={!canSendEmail || pending || !adult}
                 >
-                  {t(lang, "signin.emailSubmit")}
+                  {t(lang, byCode ? "signin.codeRequest" : "signin.emailSubmit")}
                 </button>
               </form>
             </>
@@ -254,7 +315,7 @@ export function SignInPanel({
   );
 }
 
-/** /signin: Apple and Google first, email link as an extra, the dev test
+/** /signin: Apple and Google first, email code (or link) as an extra, the dev test
  * login only where the server reports it. Signed-in visitors go to
  * /account. `next` is the raw ?next= value. */
 export function SignInView({ next: rawNext }: { next?: string | string[] }) {
@@ -267,6 +328,7 @@ export function SignInView({ next: rawNext }: { next?: string | string[] }) {
   const [emailOpen, setEmailOpen] = useState(false);
   const [email, setEmail] = useState("");
   const [sentTo, setSentTo] = useState<string | null>(null);
+  const [code, setCode] = useState("");
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
   const [adult, setAdult] = useState(false);
 
@@ -278,7 +340,10 @@ export function SignInView({ next: rawNext }: { next?: string | string[] }) {
     if (signedIn) router.replace(next);
   }, [signedIn, next, router]);
 
-  const needsCaptcha = TURNSTILE_SITE_KEY !== "";
+  // The code endpoints are not behind the widget (see lib/auth.ts); only the
+  // magic link is.
+  const byCode = config?.signIn.emailCode === true;
+  const needsCaptcha = TURNSTILE_SITE_KEY !== "" && !byCode;
   const canSendEmail = EMAIL_RE.test(email.trim()) && (!needsCaptcha || captchaToken !== null);
 
   async function provider(p: "apple" | "google") {
@@ -307,6 +372,20 @@ export function SignInView({ next: rawNext }: { next?: string | string[] }) {
     setError(null);
     rememberAdultTick();
     signInStarted("email");
+    if (byCode) {
+      const { sendSignInCode, codeErrorKey } = await import("@/lib/auth-client");
+      const res = await sendSignInCode(to, lang);
+      setPending(false);
+      if (res.ok) {
+        setCode("");
+        setSentTo(to);
+      } else {
+        forgetAdultTick();
+        trackError(res.code);
+        setError(t(lang, codeErrorKey(res.code, "send")));
+      }
+      return;
+    }
     const token = captchaToken ?? undefined;
     setCaptchaToken(null);
     const { sendMagicLink } = await import("@/lib/auth-client");
@@ -318,6 +397,44 @@ export function SignInView({ next: rawNext }: { next?: string | string[] }) {
       trackError(res.code);
       setError(t(lang, "signin.failed"));
     }
+  }
+
+  async function verifyCode() {
+    if (!sentTo || code.length !== CODE_LENGTH) return;
+    setPending(true);
+    setError(null);
+    rememberAdultTick();
+    const { signInWithCode, codeErrorKey } = await import("@/lib/auth-client");
+    const res = await signInWithCode(sentTo, code);
+    if (!res.ok) {
+      forgetAdultTick();
+      trackError(res.code);
+      setError(t(lang, codeErrorKey(res.code, "verify")));
+      setPending(false);
+      return;
+    }
+    // The cookie is set; the effect above takes the viewer to `next`.
+    await refreshViewer();
+  }
+
+  async function resendCode() {
+    if (!sentTo) return;
+    setPending(true);
+    setError(null);
+    const { sendSignInCode, codeErrorKey } = await import("@/lib/auth-client");
+    const res = await sendSignInCode(sentTo, lang);
+    setPending(false);
+    if (res.ok) setCode("");
+    else {
+      trackError(res.code);
+      setError(t(lang, codeErrorKey(res.code, "send")));
+    }
+  }
+
+  function changeEmail() {
+    setSentTo(null);
+    setCode("");
+    setError(null);
   }
 
   async function dev() {
@@ -354,6 +471,7 @@ export function SignInView({ next: rawNext }: { next?: string | string[] }) {
         emailOpen={emailOpen}
         email={email}
         sentTo={sentTo}
+        code={code}
         captcha={
           needsCaptcha && !pending ? (
             <Turnstile siteKey={TURNSTILE_SITE_KEY} lang={lang} onToken={setCaptchaToken} />
@@ -366,6 +484,10 @@ export function SignInView({ next: rawNext }: { next?: string | string[] }) {
         onToggleEmail={() => setEmailOpen((o) => !o)}
         onEmail={setEmail}
         onSendEmail={() => void sendEmail()}
+        onCode={setCode}
+        onVerify={() => void verifyCode()}
+        onResend={() => void resendCode()}
+        onChangeEmail={changeEmail}
         onDev={() => void dev()}
       />
     </PageShell>

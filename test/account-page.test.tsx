@@ -2,7 +2,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import { AccountMenu, accountEntry, initialOf } from "../components/AccountMenu";
 import { AccountPanel, openConfirm, type AccountPanelProps } from "../components/account/AccountView";
-import { SignInPanel, safeNext, withLang, type SignInPanelProps } from "../components/account/SignInView";
+import { SignInPanel, digitsOnly, safeNext, withLang, type SignInPanelProps } from "../components/account/SignInView";
 import { SiteFooter } from "../components/SiteChrome";
 import type { AppConfig, AuthProviders, Entitlement, MeResponse } from "../lib/account-types";
 import { t } from "../lib/i18n";
@@ -133,6 +133,7 @@ function signin(over: Partial<SignInPanelProps>): string {
       emailOpen={false}
       email=""
       sentTo={null}
+      code=""
       captcha={null}
       canSendEmail={false}
       adult={true}
@@ -141,6 +142,10 @@ function signin(over: Partial<SignInPanelProps>): string {
       onToggleEmail={noop}
       onEmail={noop}
       onSendEmail={noop}
+      onCode={noop}
+      onVerify={noop}
+      onResend={noop}
+      onChangeEmail={noop}
       onDev={noop}
       {...over}
     />,
@@ -179,9 +184,44 @@ describe("SignInPanel", () => {
     expect(html).toMatch(/<label[^>]*for="([^"]+)-email"/);
     expect(html).toContain('type="email"');
     expect(html).toContain('autoComplete="email"');
-    const sent = signin({ sentTo: "a@b.co", lang: "tr" });
+    const link = { apple: true, google: true, email: true, emailCode: false, dev: false };
+    const sent = signin({ sentTo: "a@b.co", lang: "tr", providers: link });
     expect(sent).toContain("a@b.co adresine bir giriş bağlantısı gönderdik");
     expect(sent).not.toContain('type="email"');
+    expect(sent).not.toContain("one-time-code");
+  });
+
+  it("with email codes the form asks for a code, not a link", () => {
+    const html = signin({ emailOpen: true });
+    expect(html).toContain(esc(t("en", "signin.codeRequest")));
+    expect(html).not.toContain(esc(t("en", "signin.emailSubmit")));
+    const link = signin({ emailOpen: true, providers: { apple: true, google: true, email: true, emailCode: false, dev: false } });
+    expect(link).toContain(esc(t("en", "signin.emailSubmit")));
+  });
+
+  it("the code step: numeric one-time-code field, sign in, resend, change email", () => {
+    const html = signin({ sentTo: "a@b.co", code: "12" });
+    expect(html).toContain("We emailed a code to a@b.co");
+    expect(html).toContain('inputMode="numeric"');
+    expect(html).toContain('autoComplete="one-time-code"');
+    expect(html).toContain('value="12"');
+    expect(html).not.toContain('type="email"');
+    expect(html).toContain(esc(t("en", "signin.codeLabel")));
+    expect(html).toContain(esc(t("en", "signin.codeResend")));
+    expect(html).toContain(esc(t("en", "signin.changeEmail")));
+    // Six digits are needed before Sign in lights up.
+    const submit = (h: string) => /<button[^>]*type="submit"[^>]*>/.exec(h.slice(h.indexOf("one-time-code")))![0];
+    expect(submit(html)).toContain('disabled=""');
+    expect(submit(signin({ sentTo: "a@b.co", code: "123456" }))).not.toContain('disabled=""');
+    expect(submit(signin({ sentTo: "a@b.co", code: "123456", pending: true }))).toContain('disabled=""');
+  });
+
+  it("digitsOnly keeps at most six ASCII digits, pasted text included", () => {
+    expect(digitsOnly("12 34-56")).toBe("123456");
+    expect(digitsOnly("123456789")).toBe("123456");
+    expect(digitsOnly("a1b2")).toBe("12");
+    expect(digitsOnly("١٢")).toBe("");
+    expect(digitsOnly("")).toBe("");
   });
 
   it("nothing can be used until the 18+ box is ticked", () => {

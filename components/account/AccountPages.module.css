@@ -237,6 +237,12 @@
   outline: 3px solid var(--terra-ink);
   outline-offset: 0;
 }
+.codeInput {
+  font-size: 24px;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.35em;
+  text-align: center;
+}
 
 .devBox {
   display: flex;
