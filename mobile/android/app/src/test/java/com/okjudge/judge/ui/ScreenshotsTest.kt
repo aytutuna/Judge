@@ -518,6 +518,36 @@ class ScreenshotsTest {
         assertTrue("the label fits inside its button", label.boundsInRoot.left >= button.left && label.boundsInRoot.right <= button.right)
     }
 
+    // hasVisualOverflow reads true here even for a label that fits, so the text's own width is compared to the room it got.
+    private fun shotShareRow(name: String, lang: AppLang, width: Int) {
+        RuntimeEnvironment.setQualifiers("+w${width}dp-h568dp")
+        val outcome = sample("win_b_named")
+        val strings = UiTestSupport.s(lang)
+        capture(name) {
+            Themed(lang) {
+                com.okjudge.judge.ui.verdict.RulingSummary(
+                    view = sampleView(outcome, lang),
+                    parties = com.okjudge.judge.core.display.PartyNames.partyNames(outcome.nameMap, lang, strings),
+                    actions = com.okjudge.judge.ui.verdict.CardActions(onShare = {}, onCopy = {}, copied = false),
+                    onDetails = {},
+                    reducedMotion = true,
+                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
+                )
+            }
+        }
+        val layouts = mutableListOf<TextLayoutResult>()
+        compose.onNodeWithText(strings.share, useUnmergedTree = true).fetchSemanticsNode()
+            .config[SemanticsActions.GetTextLayoutResult].action!!(layouts)
+        val layout = layouts.single()
+        assertTrue("$lang share label is cut", layout.multiParagraph.maxIntrinsicWidth <= layout.size.width)
+    }
+
+    @Test
+    fun verdict_share_tr_320() = shotShareRow("verdict_share_tr_320", AppLang.TR, 320)
+
+    @Test
+    fun verdict_share_el_360() = shotShareRow("verdict_share_el_360", AppLang.EL, 360)
+
     @Test
     fun verdict_addContext_locked_en() =
         shotAddContext("verdict_add_context_locked_en", com.okjudge.judge.core.cases.AppealArea.Blocked("premium_required"))

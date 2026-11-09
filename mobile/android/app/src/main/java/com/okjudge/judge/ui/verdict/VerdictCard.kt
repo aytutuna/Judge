@@ -443,11 +443,16 @@ fun VoteDot(vote: Vote?, sizeDp: Int) {
  * everyone but the writer, whose appeal button is under the verdict and who
  * copies from the share sheet.
  */
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun ShareRow(actions: CardActions) {
     val s = LocalStrings.current
     val share = actions.onShare ?: return
-    Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.End)) {
+    FlowRow(
+        Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.End),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
         if (actions.onAddContext == null) {
             actions.onCopy?.let { copy ->
                 OutlinedAction(
