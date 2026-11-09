@@ -6,14 +6,15 @@ import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.snap
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.WindowInsetsSides
-import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.displayCutout
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -30,11 +31,10 @@ import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -42,10 +42,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusProperties
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.key.Key
@@ -64,10 +68,13 @@ import androidx.compose.ui.semantics.hideFromAccessibility
 import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.stateDescription
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.platform.LocalLayoutDirection
 import com.okjudge.judge.core.model.Viewer
 import com.okjudge.judge.i18n.LocalLang
 import com.okjudge.judge.i18n.LocalStrings
@@ -85,18 +92,19 @@ internal val menuScrim: Color
 
 object PageBarTags {
     const val GAMIFY = "bar.gamify"
-    const val AVATAR = "bar.avatar"
+    const val PROFILE = "bar.menu.profile"
     const val SETTINGS = "bar.menu.settings"
     const val PRICING = "bar.menu.pricing"
     const val SIGN_IN = "bar.menu.signIn"
     const val SIGN_OUT = "bar.menu.signOut"
+    const val VERDICTS = "bar.menu.verdicts"
+    fun recent(key: String) = "bar.menu.recent.$key"
 }
 
-/** What the avatar menu does, with the signed-in user (null when signed out). */
+/** What the profile row of the side menu does, with the signed-in user (null when signed out). */
 internal class AccountActions(
     val signedIn: Boolean,
     val user: Viewer?,
-    val onSettings: () -> Unit,
     val onPricing: () -> Unit,
     val onSignIn: () -> Unit,
     val onSignOut: () -> Unit,
@@ -107,122 +115,80 @@ internal fun initialOf(user: Viewer): String =
     user.name.trim().ifEmpty { user.email.trim() }.take(1).uppercase().ifEmpty { "?" }
 
 /**
- * The bar of the three main pages: the menu button, the page's title, the gamify button, the
- * profile button and the compose button. Under 640dp the button drops its label.
+ * The bar of the three main pages: the menu button, the page's title (the New page has none), the
+ * gamify button and the compose button, each on its own small round plate.
  */
 @Composable
 internal fun PageBar(
-    title: String,
+    title: String?,
     onMenu: () -> Unit,
     onNew: () -> Unit,
     menuFocus: FocusRequester,
     gamify: Boolean = true,
     onGamify: (Boolean) -> Unit = {},
-    account: AccountActions = AccountActions(false, null, {}, {}, {}, {}),
 ) {
     val s = LocalStrings.current
-    val width = LocalConfiguration.current.screenWidthDp
-    val wide = width >= 640
-    val target = if (width < 400) 44.dp else 48.dp
     Row(
         Modifier
             .fillMaxWidth()
             .windowInsetsPadding(WindowInsets.systemBars.union(WindowInsets.displayCutout).only(WindowInsetsSides.Top + WindowInsetsSides.Horizontal))
             .heightIn(min = 56.dp)
-            .padding(horizontal = 8.dp),
+            .padding(horizontal = 6.dp),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(2.dp),
     ) {
-        BarButton(s.navTabs, JudgeIcons.menu(Palette.ink), onMenu, target, Modifier.focusRequester(menuFocus))
-        Text(
-            title,
-            style = JudgeType.sectionTitle,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
-            modifier = Modifier.weight(1f).padding(start = 4.dp).semantics { heading() },
-        )
-        GamifyButton(gamify, onGamify, wide, target)
-        BarButton(s.shellNew, JudgeIcons.plus(Palette.ink), onNew, target)
-        AvatarMenu(account, target)
+        BarButton(s.navTabs, JudgeIcons.menu(Palette.ink), onMenu, Modifier.focusRequester(menuFocus))
+        if (title != null) {
+            Text(
+                title,
+                style = JudgeType.sectionTitle,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                modifier = Modifier.weight(1f).padding(horizontal = 8.dp).semantics { heading() },
+            )
+        } else {
+            Spacer(Modifier.weight(1f))
+        }
+        GamifyButton(gamify, onGamify)
+        BarButton(s.shellNew, JudgeIcons.plus(Palette.ink), onNew)
     }
 }
 
+/** The 44dp hit area of a bar button around its 36dp plate. */
+private val BarTarget = 44.dp
+private val BarPlate = 36.dp
+
 @Composable
-private fun GamifyButton(on: Boolean, onChange: (Boolean) -> Unit, showLabel: Boolean, target: Dp) {
+private fun GamifyButton(on: Boolean, onChange: (Boolean) -> Unit) {
     val s = LocalStrings.current
     val spec = if (rememberReducedMotion()) snap<Color>() else tween(150)
-    val tint by animateColorAsState(if (on) Palette.terraTint else Color.Transparent, spec, label = "tint")
-    val fg by animateColorAsState(if (on) Palette.terraInk else Palette.muted, spec, label = "fg")
+    val tint by animateColorAsState(if (on) Palette.terraTint else Palette.ink.copy(alpha = 0.08f), spec, label = "tint")
     val glow by animateDpAsState(if (on && Build.VERSION.SDK_INT >= 28) 8.dp else 0.dp, if (rememberReducedMotion()) snap() else tween(150), label = "glow")
-    Row(
+    Box(
         Modifier
-            .defaultMinSize(minWidth = target, minHeight = target)
-            .shadow(glow, CircleShape, ambientColor = Palette.terra, spotColor = Palette.terra)
-            .clip(CircleShape)
-            .background(tint)
+            .size(BarTarget)
             .semantics { contentDescription = s.shellGamify }
             .toggleable(value = on, role = Role.Switch, onValueChange = onChange)
-            .testTag(PageBarTags.GAMIFY)
-            .padding(horizontal = if (target < 48.dp) 10.dp else 12.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(6.dp, Alignment.CenterHorizontally),
+            .testTag(PageBarTags.GAMIFY),
+        contentAlignment = Alignment.Center,
     ) {
-        TintedIcon(JudgeIcons.gamepad(fg), 20)
-        if (showLabel) Text(s.shellGamify, style = JudgeType.small.copy(color = fg), maxLines = 1)
-    }
-}
-
-@Composable
-private fun AvatarMenu(account: AccountActions, target: Dp) {
-    val s = LocalStrings.current
-    var open by remember { mutableStateOf(false) }
-    val close = { open = false }
-    val user = account.user
-    Box {
         Box(
             Modifier
-                .size(target)
+                .size(BarPlate)
+                .shadow(glow, CircleShape, ambientColor = Palette.terra, spotColor = Palette.terra)
                 .clip(CircleShape)
-                .semantics {
-                    role = Role.Button
-                    contentDescription = s.navAccountMenu
-                    if (open) collapse { close(); true } else expand { open = true; true }
-                }
-                .clickable { open = true }
-                .testTag(PageBarTags.AVATAR),
+                .background(tint),
             contentAlignment = Alignment.Center,
         ) {
-            Box(Modifier.size(32.dp).background(if (user == null) Palette.line else Palette.sageTint, CircleShape), contentAlignment = Alignment.Center) {
-                if (user == null) {
-                    TintedIcon(JudgeIcons.person(Palette.ink2), 20)
-                } else {
-                    Text(initialOf(user), style = JudgeType.slotTitle.copy(color = Palette.sageInk, fontSize = 15.sp))
-                    AvatarImage(user.image)
-                }
-            }
-        }
-        DropdownMenu(open, close, containerColor = Palette.paper) {
-            if (user != null) {
-                Text(user.email, style = JudgeType.small, maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp))
-            }
-            if (!account.signedIn) MenuItem(s.navSignIn, PageBarTags.SIGN_IN) { close(); account.onSignIn() }
-            MenuItem(s.appTabSettings, PageBarTags.SETTINGS) { close(); account.onSettings() }
-            MenuItem(s.navPricing, PageBarTags.PRICING) { close(); account.onPricing() }
-            if (account.signedIn) MenuItem(s.navSignOut, PageBarTags.SIGN_OUT) { close(); account.onSignOut() }
+            TintedIcon(JudgeIcons.gamepad(if (on) Palette.terraInk else Palette.muted), 20)
         }
     }
 }
 
 @Composable
-private fun MenuItem(label: String, tag: String, onClick: () -> Unit) {
-    DropdownMenuItem(text = { Text(label, style = JudgeType.body) }, onClick = onClick, modifier = Modifier.testTag(tag))
-}
-
-@Composable
-private fun BarButton(label: String, icon: ImageVector, onClick: () -> Unit, target: Dp, modifier: Modifier = Modifier) {
+private fun BarButton(label: String, icon: ImageVector, onClick: () -> Unit, modifier: Modifier = Modifier) {
     Box(
         modifier
-            .size(target)
+            .size(BarTarget)
             .clip(CircleShape)
             .semantics {
                 role = Role.Button
@@ -232,11 +198,16 @@ private fun BarButton(label: String, icon: ImageVector, onClick: () -> Unit, tar
             .clickable(onClick = onClick),
         contentAlignment = Alignment.Center,
     ) {
-        TintedIcon(icon, 22)
+        Box(Modifier.size(BarPlate).background(Palette.ink.copy(alpha = 0.08f), CircleShape), contentAlignment = Alignment.Center) {
+            TintedIcon(icon, 20)
+        }
     }
 }
 
-/** The drawer's sheet: New and Verdicts with the newest [recent] under them, Settings pinned to the bottom. */
+/**
+ * The drawer's sheet: New, a Verdicts heading over the newest [recent] as separate cards, and at the
+ * bottom the profile above Settings.
+ */
 @Composable
 internal fun MenuPanel(
     selected: Tab,
@@ -246,9 +217,13 @@ internal fun MenuPanel(
     onSelect: (Tab) -> Unit,
     onOpen: (HistoryEntry) -> Unit,
     onClose: () -> Unit,
+    account: AccountActions = AccountActions(false, null, {}, {}, {}),
 ) {
     val s = LocalStrings.current
     val width = minOf(300.dp, (LocalConfiguration.current.screenWidthDp * 0.85f).dp)
+    var profileOpen by remember { mutableStateOf(false) }
+    LaunchedEffect(hidden) { if (hidden) profileOpen = false }
+    val now = remember(recent) { System.currentTimeMillis() }
     ModalDrawerSheet(
         modifier = Modifier
             .width(width)
@@ -272,19 +247,34 @@ internal fun MenuPanel(
                 BrandLogo(32.dp)
                 Text(s.appName, style = JudgeType.sectionTitle)
             }
-            Column(Modifier.weight(1f).verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+            Column(Modifier.weight(1f).verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 MenuRow(s.appTabNew, selected == Tab.NEW, { onSelect(Tab.NEW) }, Modifier.focusRequester(firstRow))
-                MenuRow(s.navVerdicts, selected == Tab.HISTORY, { onSelect(Tab.HISTORY) })
-                recent.forEach { RecentRow(it) { onOpen(it) } }
+                VerdictsHeading(s.navVerdicts, selected == Tab.HISTORY) { onSelect(Tab.HISTORY) }
+                recent.forEach { RecentCard(it, now) { onOpen(it) } }
             }
-            MenuRow(s.appTabSettings, selected == Tab.SETTINGS, { onSelect(Tab.SETTINGS) })
+            Column(Modifier.padding(top = 12.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                if (profileOpen) {
+                    ProfileItem(s.navPricing, PageBarTags.PRICING) { onClose(); account.onPricing() }
+                    if (account.signedIn) {
+                        ProfileItem(s.navSignOut, PageBarTags.SIGN_OUT, Palette.danger) { onClose(); account.onSignOut() }
+                    } else {
+                        ProfileItem(s.navSignIn, PageBarTags.SIGN_IN) { onClose(); account.onSignIn() }
+                    }
+                }
+                ProfileRow(account, profileOpen) { profileOpen = !profileOpen }
+                MenuRow(
+                    s.appTabSettings, selected == Tab.SETTINGS, { onSelect(Tab.SETTINGS) },
+                    Modifier.testTag(PageBarTags.SETTINGS),
+                    icon = JudgeIcons.settings(Palette.ink),
+                )
+            }
         }
     }
 }
 
 @Composable
-private fun MenuRow(label: String, on: Boolean, onClick: () -> Unit, modifier: Modifier = Modifier) {
-    Box(
+private fun MenuRow(label: String, on: Boolean, onClick: () -> Unit, modifier: Modifier = Modifier, icon: ImageVector? = null) {
+    Row(
         modifier
             .fillMaxWidth()
             .heightIn(min = 56.dp)
@@ -294,25 +284,136 @@ private fun MenuRow(label: String, on: Boolean, onClick: () -> Unit, modifier: M
             .focusProperties { canFocus = true }
             .clickable(role = Role.Button, onClick = onClick)
             .padding(horizontal = 22.dp, vertical = 8.dp),
-        contentAlignment = Alignment.CenterStart,
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(12.dp),
     ) {
+        if (icon != null) TintedIcon(icon, 22)
         Text(label, style = JudgeType.slotTitle.copy(color = if (on) Palette.sageInk else Palette.ink))
     }
 }
 
+/** A section heading over the recent verdicts that still opens the list. */
 @Composable
-private fun RecentRow(entry: HistoryEntry, onClick: () -> Unit) {
+private fun VerdictsHeading(label: String, on: Boolean, onClick: () -> Unit) {
+    val rtl = LocalLayoutDirection.current == LayoutDirection.Rtl
+    val line = Palette.line
+    Row(
+        Modifier
+            .padding(top = 8.dp)
+            .fillMaxWidth()
+            .heightIn(min = 48.dp)
+            .semantics {
+                selected = on
+                heading()
+            }
+            .focusProperties { canFocus = true }
+            .clickable(role = Role.Button, onClick = onClick)
+            .drawBehind { drawLine(line, Offset(0f, size.height), Offset(size.width, size.height), 1.dp.toPx()) }
+            .padding(horizontal = 12.dp)
+            .testTag(PageBarTags.VERDICTS),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Text(
+            label,
+            style = JudgeType.small.copy(fontWeight = FontWeight.Bold, color = if (on) Palette.ink else Palette.muted),
+            modifier = Modifier.weight(1f),
+        )
+        TintedIcon(JudgeIcons.chevron(Palette.muted), 12, Modifier.scale(if (rtl) -1f else 1f, 1f))
+    }
+}
+
+/**
+ * One verdict as its own card: green when the ruling went the viewer's way, red when it went the
+ * other's, plain otherwise. The result words stay under the title, so colour is never the only
+ * signal, and a screen reader reads them with the title.
+ */
+@Composable
+private fun RecentCard(entry: HistoryEntry, now: Long, onClick: () -> Unit) {
     val s = LocalStrings.current
     val lang = LocalLang.current
     val title = remember(entry, lang) { HistoryLabels.title(entry, s, lang) }
+    val status = HistoryLabels.status(entry, s, now)
+    val (fill, edge, words) = when (HistoryLabels.tone(entry, now)) {
+        HistoryLabels.Tone.YOURS -> Triple(Palette.sageTint, Palette.sageStrong, Palette.sageInk)
+        HistoryLabels.Tone.THEIRS -> Triple(Palette.terraTint, Palette.terra, Palette.terraInk)
+        else -> Triple(Palette.paper, Palette.line2, Palette.muted)
+    }
+    val shape = RoundedCornerShape(12.dp)
+    Column(
+        Modifier
+            .fillMaxWidth()
+            .heightIn(min = 52.dp)
+            .clip(shape)
+            .background(fill)
+            .border(1.dp, edge, shape)
+            .semantics(mergeDescendants = true) {}
+            .clickable(role = Role.Button, onClick = onClick)
+            .padding(horizontal = 12.dp, vertical = 8.dp)
+            .testTag(PageBarTags.recent(entry.key)),
+        verticalArrangement = Arrangement.spacedBy(2.dp, Alignment.CenterVertically),
+    ) {
+        Text(title, style = JudgeType.body.copy(fontSize = 14.sp), maxLines = 2, overflow = TextOverflow.Ellipsis)
+        if (status != null) {
+            Text(
+                status,
+                style = JudgeType.small.copy(fontSize = 12.5.sp, fontWeight = FontWeight.SemiBold, color = words),
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+            )
+        }
+    }
+}
+
+/** The picture and name of the account; it opens Pricing, Sign in or Sign out. */
+@Composable
+private fun ProfileRow(account: AccountActions, open: Boolean, onClick: () -> Unit) {
+    val s = LocalStrings.current
+    val user = account.user
+    val name = user?.let { it.name.trim().ifEmpty { it.email.trim() } }.orEmpty().ifEmpty { s.navAccount }
+    Row(
+        Modifier
+            .fillMaxWidth()
+            .heightIn(min = 56.dp)
+            .clip(RoundedCornerShape(12.dp))
+            .background(if (open) Palette.ivory2 else Color.Transparent)
+            .semantics(mergeDescendants = true) {
+                role = Role.Button
+                contentDescription = s.navAccountMenu
+                if (user != null) stateDescription = name
+                if (open) collapse { onClick(); true } else expand { onClick(); true }
+            }
+            .focusProperties { canFocus = true }
+            .clickable(onClick = onClick)
+            .padding(horizontal = 12.dp, vertical = 8.dp)
+            .testTag(PageBarTags.PROFILE),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(12.dp),
+    ) {
+        Box(Modifier.size(36.dp).background(if (user == null) Palette.line else Palette.sageTint, CircleShape), contentAlignment = Alignment.Center) {
+            if (user == null) {
+                TintedIcon(JudgeIcons.person(Palette.ink2), 20)
+            } else {
+                Text(initialOf(user), style = JudgeType.slotTitle.copy(color = Palette.sageInk, fontSize = 15.sp))
+                AvatarImage(user.image)
+            }
+        }
+        Text(name, style = JudgeType.slotTitle, maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.weight(1f))
+        TintedIcon(JudgeIcons.caret(Palette.muted), 14, Modifier.rotate(if (open) 180f else 0f))
+    }
+}
+
+@Composable
+private fun ProfileItem(label: String, tag: String, color: Color = Palette.ink, onClick: () -> Unit) {
     Box(
         Modifier
             .fillMaxWidth()
             .heightIn(min = 44.dp)
+            .clip(RoundedCornerShape(12.dp))
             .clickable(role = Role.Button, onClick = onClick)
-            .padding(horizontal = 22.dp),
+            .padding(start = 60.dp, end = 12.dp)
+            .testTag(tag),
         contentAlignment = Alignment.CenterStart,
     ) {
-        Text(title, style = JudgeType.body.copy(fontSize = 14.sp, color = Palette.ink2), maxLines = 1, overflow = TextOverflow.Ellipsis)
+        Text(label, style = JudgeType.slotTitle.copy(color = color))
     }
 }

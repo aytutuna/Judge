@@ -18,7 +18,17 @@ import androidx.compose.ui.test.assert
 import androidx.compose.ui.test.assertContentDescriptionEquals
 import androidx.compose.ui.test.assertHeightIsEqualTo
 import androidx.compose.ui.test.assertIsEnabled
+import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsFocused
+import androidx.compose.ui.test.assertIsNotFocused
+import androidx.compose.ui.test.assertHeightIsAtLeast
+import androidx.compose.ui.test.onRoot
+import androidx.compose.ui.test.performTouchInput
+import androidx.compose.ui.test.click
+import androidx.compose.ui.geometry.Offset
+import org.robolectric.RuntimeEnvironment
+import com.okjudge.judge.ui.history.HistoryLabels
+import com.okjudge.judge.ui.history.HistoryLabels.Tone
 import androidx.compose.ui.test.assertIsNotEnabled
 import androidx.compose.ui.test.assertIsOff
 import androidx.compose.ui.test.assertIsOn
@@ -340,6 +350,66 @@ class ScreensTest {
     }
 
     @Test
+    fun verdictCard_shareSitsAtTheTopRight_andAppealIsFullWidthBelow() {
+        val en = UiTestSupport.s(AppLang.EN)
+        val outcome = sample("win_b_named")
+        compose.setContent {
+            Themed(AppLang.EN) {
+                RulingSummary(
+                    view = TranslationView(outcome.result.result, TranslationStatus.ORIGINAL, AppLang.EN),
+                    parties = PartyNames.partyNames(outcome.nameMap, AppLang.EN, en),
+                    actions = CardActions(onShare = {}, onCopy = {}, copied = false, onAddContext = {}),
+                    onDetails = {},
+                    reducedMotion = true,
+                    modifier = Modifier.verticalScroll(rememberScrollState()),
+                )
+            }
+        }
+        val ruling = compose.onNodeWithTag(VerdictTags.RULING).fetchSemanticsNode().boundsInRoot
+        val share = compose.onNodeWithText(en.share).fetchSemanticsNode().boundsInRoot
+        val appeal = compose.onNodeWithTag(VerdictTags.ADD_CONTEXT).fetchSemanticsNode().boundsInRoot
+        assertTrue(share.bottom <= ruling.top)
+        assertTrue(share.right > ruling.right - 40f)
+        assertEquals(ruling.left, appeal.left, 1f)
+        assertEquals(ruling.right, appeal.right, 1f)
+        assertTrue(appeal.top >= ruling.bottom)
+        // The writer copies from the share sheet.
+        compose.onNodeWithText(en.copyLink).assertDoesNotExist()
+    }
+
+    @Test
+    fun home_twoSidesKeepTheCourtOnASmallPhone() {
+        RuntimeEnvironment.setQualifiers("+w320dp-h568dp")
+        home(AppLang.EN, HomeUiState(argument = "x".repeat(300), otherSide = "y".repeat(300), theirsOpen = true))
+        compose.onNodeWithTag(HomeTags.COURT).assertExists().assertHeightIsAtLeast(110.dp - 16.dp)
+        compose.onNodeWithTag(HomeTags.COURT).assertIsDisplayed()
+    }
+
+    @Test
+    fun home_noCourtWithGamifyOff() {
+        compose.setContent {
+            Themed(AppLang.EN) {
+                CompositionLocalProvider(LocalGamify provides false) {
+                    HomeScreen(HomeUiState(theirsOpen = true), {}, {}, {})
+                }
+            }
+        }
+        compose.onNodeWithTag(HomeTags.COURT).assertDoesNotExist()
+        compose.onNodeWithTag(HomeTags.OTHER).assertExists()
+    }
+
+    @Test
+    fun home_tapOutsideATextBoxPutsTheFocusAway() {
+        home(AppLang.EN)
+        compose.onNodeWithTag(HomeTags.INPUT).performClick()
+        compose.onNodeWithTag(HomeTags.INPUT).assertIsFocused()
+        compose.onNodeWithTag(HomeTags.INPUT).performClick()
+        compose.onNodeWithTag(HomeTags.INPUT).assertIsFocused()
+        compose.onRoot().performTouchInput { click(Offset(4f, 4f)) }
+        compose.onNodeWithTag(HomeTags.INPUT).assertIsNotFocused()
+    }
+
+    @Test
     fun verdictCard_namesTheLosersBestPoint_andTheBedrockSides() {
         val outcome = sample("win_b_named")
         val r = outcome.result.result
@@ -500,15 +570,14 @@ class ScreensTest {
         assertTrue(finished)
     }
 
-    private fun bar(user: Viewer?, calls: MutableList<String>, gamify: Boolean = true, onGamify: (Boolean) -> Unit = {}, signedIn: Boolean = user != null) {
+    private fun menu(user: Viewer?, calls: MutableList<String>, signedIn: Boolean = user != null) {
         compose.setContent {
             Themed(AppLang.EN) {
-                PageBar(
-                    "New", {}, {}, FocusRequester(), gamify = gamify, onGamify = onGamify,
+                MenuPanel(
+                    Tab.NEW, emptyList(), false, FocusRequester(), { calls += "select:$it" }, {}, { calls += "close" },
                     account = AccountActions(
                         signedIn,
                         user,
-                        onSettings = { calls += "settings" },
                         onPricing = { calls += "pricing" },
                         onSignIn = { calls += "signIn" },
                         onSignOut = { calls += "signOut" },
@@ -519,37 +588,86 @@ class ScreensTest {
     }
 
     @Test
-    fun pageBar_avatarMenuSignedOut() {
+    fun menu_profileOpensPricingAndSignInWhenSignedOut() {
         val calls = mutableListOf<String>()
-        bar(null, calls)
-        compose.onNodeWithTag(PageBarTags.AVATAR).performClick()
-        compose.onNodeWithTag(PageBarTags.SETTINGS).assertExists()
+        menu(null, calls)
+        compose.onNodeWithTag(PageBarTags.SIGN_IN).assertDoesNotExist()
+        compose.onNodeWithTag(PageBarTags.PROFILE).performClick()
         compose.onNodeWithTag(PageBarTags.PRICING).assertExists()
         compose.onNodeWithTag(PageBarTags.SIGN_OUT).assertDoesNotExist()
         compose.onNodeWithTag(PageBarTags.SIGN_IN).performClick()
-        assertEquals(listOf("signIn"), calls)
+        assertEquals(listOf("close", "signIn"), calls)
     }
 
     @Test
-    fun pageBar_avatarMenuSignedIn() {
+    fun menu_profileShowsTheNameAndOpensPricingAndSignOutWhenSignedIn() {
         val calls = mutableListOf<String>()
-        bar(Viewer(id = "u1", email = "sam@example.com", name = "Sam"), calls)
+        menu(Viewer(id = "u1", email = "sam@example.com", name = "Sam"), calls)
+        compose.onNodeWithText("Sam").assertExists()
         compose.onNodeWithText("S").assertExists()
-        compose.onNodeWithTag(PageBarTags.AVATAR).performClick()
-        compose.onNodeWithText("sam@example.com").assertExists()
+        compose.onNodeWithTag(PageBarTags.PROFILE).performClick()
         compose.onNodeWithTag(PageBarTags.SIGN_IN).assertDoesNotExist()
         compose.onNodeWithTag(PageBarTags.PRICING).performClick()
-        compose.onNodeWithTag(PageBarTags.AVATAR).performClick()
         compose.onNodeWithTag(PageBarTags.SIGN_OUT).performClick()
-        assertEquals(listOf("pricing", "signOut"), calls)
+        assertEquals(listOf("close", "pricing", "close", "signOut"), calls)
     }
 
     @Test
-    fun pageBar_signedInWithoutProfileKeepsSignOut() {
-        bar(null, mutableListOf(), signedIn = true)
-        compose.onNodeWithTag(PageBarTags.AVATAR).performClick()
+    fun menu_profileNamesTheEmailWhenThereIsNoName() {
+        menu(Viewer(id = "u1", email = "sam@example.com"), mutableListOf())
+        compose.onNodeWithText("sam@example.com").assertExists()
+    }
+
+    @Test
+    fun menu_signedInWithoutProfileKeepsSignOut() {
+        menu(null, mutableListOf(), signedIn = true)
+        compose.onNodeWithTag(PageBarTags.PROFILE).performClick()
         compose.onNodeWithTag(PageBarTags.SIGN_IN).assertDoesNotExist()
         compose.onNodeWithTag(PageBarTags.SIGN_OUT).assertExists()
+    }
+
+    @Test
+    fun menu_settingsRowComesAfterTheProfile() {
+        val calls = mutableListOf<String>()
+        menu(null, calls)
+        val profile = compose.onNodeWithTag(PageBarTags.PROFILE).fetchSemanticsNode().boundsInRoot.top
+        val settings = compose.onNodeWithTag(PageBarTags.SETTINGS).fetchSemanticsNode().boundsInRoot.top
+        assertTrue(profile < settings)
+        compose.onNodeWithTag(PageBarTags.SETTINGS).performClick()
+        assertEquals(listOf("select:SETTINGS"), calls)
+    }
+
+    @Test
+    fun menu_verdictsIsAHeadingThatStillOpensTheList() {
+        val calls = mutableListOf<String>()
+        menu(null, calls)
+        compose.onNodeWithTag(PageBarTags.VERDICTS).assert(SemanticsMatcher.keyIsDefined(SemanticsProperties.Heading))
+        compose.onNodeWithTag(PageBarTags.VERDICTS).performClick()
+        assertEquals(listOf("select:HISTORY"), calls)
+    }
+
+    @Test
+    fun menu_recentVerdictsAreSeparateCardsWithTheirResultWords() {
+        val rows = phoneRows("win_a_self", "win_b_named", "lean_tie")
+        compose.setContent {
+            Themed(AppLang.EN) { MenuPanel(Tab.NEW, rows, false, FocusRequester(), {}, {}, {}) }
+        }
+        val s = UiTestSupport.s(AppLang.EN)
+        for (row in rows) {
+            val card = compose.onNodeWithTag(PageBarTags.recent(row.key))
+            card.assertExists()
+            val words = HistoryLabels.status(row, s)!!
+            card.assertTextContains(words)
+        }
+        assertEquals(listOf(Tone.YOURS, Tone.THEIRS, Tone.NEUTRAL), rows.map { HistoryLabels.tone(it) })
+    }
+
+    @Test
+    fun pageBar_hasNoProfileButtonAndNoTitleWhenNone() {
+        compose.setContent { Themed(AppLang.EN) { PageBar(null, {}, {}, FocusRequester()) } }
+        compose.onNodeWithContentDescription(UiTestSupport.s(AppLang.EN).navAccountMenu).assertDoesNotExist()
+        compose.onNodeWithContentDescription(UiTestSupport.s(AppLang.EN).shellNew).assertExists()
+        compose.onNodeWithTag(PageBarTags.GAMIFY).assertExists()
     }
 
     @Test

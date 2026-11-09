@@ -68,7 +68,8 @@ import com.okjudge.judge.core.session.VerdictFlow
 import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
-import org.junit.Assert.assertFalse
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -512,7 +513,9 @@ class ScreenshotsTest {
         val layouts = mutableListOf<TextLayoutResult>()
         val label = compose.onNodeWithText(tr.appAppealTitle, useUnmergedTree = true).fetchSemanticsNode()
         label.config[SemanticsActions.GetTextLayoutResult].action!!(layouts)
-        assertFalse("the label wraps instead of being cut", layouts.single().hasVisualOverflow)
+        val button = compose.onNodeWithTag(com.okjudge.judge.ui.verdict.VerdictTags.ADD_CONTEXT).fetchSemanticsNode().boundsInRoot
+        assertEquals(1, layouts.single().lineCount)
+        assertTrue("the label fits inside its button", label.boundsInRoot.left >= button.left && label.boundsInRoot.right <= button.right)
     }
 
     @Test
@@ -663,20 +666,17 @@ class ScreenshotsTest {
     fun home_withBar_en() = capture("home_bar_en") {
         Themed(AppLang.EN) {
             Column(Modifier.fillMaxSize()) {
-                PageBar(UiTestSupport.s(AppLang.EN).appTabNew, {}, {}, FocusRequester())
+                PageBar(null, {}, {}, FocusRequester())
                 HomeScreen(HomeUiState(), {}, {}, {})
             }
         }
     }
 
     @Test
-    fun home_withBar_signedIn_en_dark() = capture("home_bar_signed_in_en_dark") {
+    fun home_withBar_en_dark() = capture("home_bar_en_dark") {
         Themed(AppLang.EN, dark = true) {
             Column(Modifier.fillMaxSize()) {
-                PageBar(
-                    UiTestSupport.s(AppLang.EN).navVerdicts, {}, {}, FocusRequester(),
-                    account = AccountActions(true, Viewer("u1", "sam@example.com", "Sam"), {}, {}, {}, {}),
-                )
+                PageBar(UiTestSupport.s(AppLang.EN).navVerdicts, {}, {}, FocusRequester())
                 HomeScreen(HomeUiState(), {}, {}, {})
             }
         }
@@ -686,7 +686,7 @@ class ScreenshotsTest {
     fun home_tablet_en() = capture("home_tablet_en", tablet = true) {
         Themed(AppLang.EN) {
             Column(Modifier.fillMaxSize()) {
-                PageBar(UiTestSupport.s(AppLang.EN).appTabNew, {}, {}, FocusRequester())
+                PageBar(null, {}, {}, FocusRequester())
                 HomeScreen(HomeUiState(), {}, {}, {})
             }
         }
@@ -704,7 +704,7 @@ class ScreenshotsTest {
         Themed(AppLang.EN) {
             CompositionLocalProvider(LocalGamify provides false) {
                 Column(Modifier.fillMaxSize()) {
-                    PageBar(UiTestSupport.s(AppLang.EN).appTabNew, {}, {}, FocusRequester(), gamify = false)
+                    PageBar(null, {}, {}, FocusRequester(), gamify = false)
                     HomeScreen(HomeUiState(), {}, {}, {})
                 }
             }
@@ -716,7 +716,7 @@ class ScreenshotsTest {
         Themed(AppLang.EN) {
             CompositionLocalProvider(LocalGamify provides false) {
                 Column(Modifier.fillMaxSize()) {
-                    PageBar(UiTestSupport.s(AppLang.EN).appTabNew, {}, {}, FocusRequester(), gamify = false)
+                    PageBar(null, {}, {}, FocusRequester(), gamify = false)
                     HomeScreen(HomeUiState(argument = "He keeps eating my lunch from the shared fridge."), {}, {}, {})
                 }
             }
@@ -733,7 +733,6 @@ class ScreenshotsTest {
         Themed(lang) {
             PageBar(
                 UiTestSupport.s(lang).appTabSettings, {}, {}, FocusRequester(),
-                account = AccountActions(true, Viewer("u1", "sam@example.com", "Sam"), {}, {}, {}, {}),
             )
         }
     }
@@ -754,15 +753,34 @@ class ScreenshotsTest {
     fun menu_open_en() = capture("menu_open_en") { OpenMenu(dark = false) }
 
     @Test
+    fun menu_open_signedIn_en() = capture("menu_open_signed_in_en") { OpenMenu(dark = false, user = Viewer("u1", "sam@example.com", "Sam")) }
+
+    @Test
+    fun home_smallPhone_twoSides_en() {
+        RuntimeEnvironment.setQualifiers("+w320dp-h568dp")
+        capture("home_small_two_sides_en") {
+            Themed(AppLang.EN) {
+                Column(Modifier.fillMaxSize()) {
+                    PageBar(null, {}, {}, FocusRequester())
+                    HomeScreen(HomeUiState(argument = "A hot dog is its own thing, and no menu lists it under sandwiches.", otherSide = "It is a filling inside sliced bread.", otherName = "Sam", theirsOpen = true), {}, {}, {})
+                }
+            }
+        }
+    }
+
+    @Test
     fun menu_open_en_dark() = capture("menu_open_en_dark") { OpenMenu(dark = true) }
 
     @Composable
-    private fun OpenMenu(dark: Boolean) {
+    private fun OpenMenu(dark: Boolean, user: Viewer? = null) {
         val s = UiTestSupport.s(AppLang.EN)
         Themed(AppLang.EN, dark = dark) {
             ModalNavigationDrawer(
                 drawerContent = {
-                    MenuPanel(Tab.HISTORY, phoneRows("win_a_self", "win_b_named", "lean_tie"), false, FocusRequester(), {}, {}, {})
+                    MenuPanel(
+                        Tab.HISTORY, phoneRows("win_a_self", "win_b_named", "lean_tie"), false, FocusRequester(), {}, {}, {},
+                        account = AccountActions(user != null, user, {}, {}, {}),
+                    )
                 },
                 drawerState = rememberDrawerState(DrawerValue.Open),
                 scrimColor = menuScrim,

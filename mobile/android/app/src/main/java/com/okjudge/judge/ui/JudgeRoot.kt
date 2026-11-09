@@ -311,6 +311,13 @@ fun JudgeRoot(
                                 setMenu(false)
                             },
                             onClose = { setMenu(false) },
+                            account = AccountActions(
+                                signedIn = accountNow is Account.State.SignedIn,
+                                user = (accountNow as? Account.State.SignedIn)?.me?.user,
+                                onPricing = openPricing,
+                                onSignIn = { if (backStack.lastOrNull() !is SignInKey) backStack.add(SignInKey(thenVerdict = false)) },
+                                onSignOut = { container.appScope.launch { account.signOut() } },
+                            ),
                         )
                     },
                     // Nothing under the age cover is read out or reachable.
@@ -329,21 +336,13 @@ fun JudgeRoot(
                                 title = when (top) {
                                     is HistoryKey -> strings.navVerdicts
                                     is SettingsKey -> strings.appTabSettings
-                                    else -> strings.appTabNew
+                                    else -> null
                                 },
                                 onMenu = { setMenu(true) },
                                 onNew = { backStack.resetTo(listOf(HomeKey)) },
                                 menuFocus = menuButton,
                                 gamify = gamify != false,
                                 onGamify = { on -> scope.launch { container.settings.setGamify(on) } },
-                                account = AccountActions(
-                                    signedIn = accountNow is Account.State.SignedIn,
-                                    user = (accountNow as? Account.State.SignedIn)?.me?.user,
-                                    onSettings = { backStack.resetTo(listOf(HomeKey, SettingsKey)) },
-                                    onPricing = openPricing,
-                                    onSignIn = { if (backStack.lastOrNull() !is SignInKey) backStack.add(SignInKey(thenVerdict = false)) },
-                                    onSignOut = { container.appScope.launch { account.signOut() } },
-                                ),
                             )
                         }
                     },
