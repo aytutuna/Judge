@@ -46,6 +46,7 @@ import com.okjudge.judge.ui.judging.JudgingScreen
 import com.okjudge.judge.ui.settings.SettingsScreen
 import com.okjudge.judge.ui.theme.Palette
 import com.okjudge.judge.ui.signin.SignInActions
+import com.okjudge.judge.ui.signin.SignInMode
 import com.okjudge.judge.ui.signin.SignInScreen
 import com.okjudge.judge.ui.signin.SignInStep
 import com.okjudge.judge.ui.signin.SignInUiState
@@ -278,6 +279,38 @@ class ScreenshotsTest {
             email = "ada@example.com",
             code = "482913",
             error = SignInError.CODE_INVALID,
+        )
+        Themed(AppLang.EN) { SignInScreen(state, onBack = {}, actions = SignInActions()) }
+    }
+
+    private val passwordProviders = Account.Providers.Ready(
+        ServerConfig(SignInProviders(google = true, email = true, emailCode = true, password = true)),
+    )
+
+    @Test
+    fun signin_password_en() = capture("signin_password_en") {
+        val state = SignInUiState(
+            providers = passwordProviders,
+            email = "ada@example.com",
+            password = "made-up-pass",
+            error = SignInError.PASSWORD_WRONG,
+        )
+        Themed(AppLang.EN) { SignInScreen(state, onBack = {}, actions = SignInActions()) }
+    }
+
+    @Test
+    fun signin_create_en() = capture("signin_create_en") {
+        val state = SignInUiState(providers = passwordProviders, mode = SignInMode.CREATE, email = "ada@example.com", password = "made-up-pass")
+        Themed(AppLang.EN) { SignInScreen(state, onBack = {}, actions = SignInActions()) }
+    }
+
+    @Test
+    fun signin_choose_password_en() = capture("signin_choose_password_en") {
+        val state = SignInUiState(
+            providers = passwordProviders,
+            step = SignInStep.CHOOSE_PASSWORD,
+            email = "ada@example.com",
+            error = SignInError.PASSWORD_SAVE_FAILED,
         )
         Themed(AppLang.EN) { SignInScreen(state, onBack = {}, actions = SignInActions()) }
     }

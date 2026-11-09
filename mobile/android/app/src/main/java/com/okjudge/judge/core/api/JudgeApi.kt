@@ -434,6 +434,26 @@ class JudgeApi(
         signIn = true,
     ) { _, text -> decodeGrant(text) }
 
+    /** POST /api/auth/sign-in/email: a session for an address and its password. */
+    suspend fun signInWithPassword(email: String, password: String): ApiResult<SessionGrant> = postAuth(
+        url("api", "auth", "sign-in", "email"),
+        buildJsonObject {
+            put("email", email)
+            put("password", password)
+        },
+        signIn = true,
+    ) { _, text -> decodeGrant(text) }
+
+    /** POST /api/v1/me/password: sets the password, or replaces it ([current] unless the sign-in is fresh). */
+    suspend fun setPassword(password: String, current: String?): ApiResult<Unit> {
+        val body = buildJsonObject {
+            put("password", password)
+            if (current != null) put("current", current)
+        }.toString()
+        val req = request(url("api", "v1", "me", "password")).post(body.toRequestBody(JSON)).build()
+        return execute(accountClient, req) { _, _ -> }
+    }
+
     /** POST /api/auth/sign-out: ends the session on the server. */
     suspend fun signOut(): ApiResult<Unit> = postAuth(url("api", "auth", "sign-out"), JsonObject(emptyMap())) { _, _ -> }
 

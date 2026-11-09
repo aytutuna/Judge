@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -33,8 +34,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.autofill.ContentType
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.LiveRegionMode
@@ -52,6 +55,8 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withLink
@@ -82,6 +87,15 @@ object SignInTags {
     const val SUBMIT_CODE = "signin.submitCode"
     const val ERROR = "signin.error"
     const val LEGAL = "signin.legal"
+    const val PASSWORD = "signin.password"
+    const val SUBMIT_PASSWORD = "signin.submitPassword"
+    const val FORGOT = "signin.forgot"
+    const val CREATE = "signin.create"
+    const val USE_CODE = "signin.useCode"
+    const val USE_PASSWORD = "signin.usePassword"
+    const val NEW_PASSWORD = "signin.newPassword"
+    const val SAVE_PASSWORD = "signin.savePassword"
+    const val SKIP_PASSWORD = "signin.skipPassword"
 }
 
 /** Everything the sign-in screen can ask for; no-ops by default (previews, screenshots). */
@@ -89,6 +103,11 @@ data class SignInActions(
     val onGoogle: () -> Unit = {},
     val onEmailChange: (String) -> Unit = {},
     val onRequestCode: () -> Unit = {},
+    val onPasswordChange: (String) -> Unit = {},
+    val onSignInWithPassword: () -> Unit = {},
+    val onMode: (SignInMode) -> Unit = {},
+    val onSavePassword: () -> Unit = {},
+    val onSkipPassword: () -> Unit = {},
     val onCodeChange: (String) -> Unit = {},
     val onSubmitCode: () -> Unit = {},
     val onResend: () -> Unit = {},
@@ -100,7 +119,7 @@ data class SignInActions(
 )
 
 /**
- * Sign-in: Google and/or an emailed code, whichever the server offers, the
+ * Sign-in: Google, a password and/or an emailed code, whichever the server offers, the
  * 18+ checkbox above them unless the phone already said 18+, and the consent
  * line for the outside AI at the bottom.
  */
@@ -144,14 +163,16 @@ fun SignInScreen(
                             if (state.ageNeeded && state.step == SignInStep.EMAIL) {
                                 AgeCheckbox(state.ageTicked, actions.onAgeTicked, Modifier.padding(bottom = 14.dp), enabled = state.busy == null)
                             }
-                            if (state.showGoogle) {
+                            val choosing = state.step == SignInStep.CHOOSE_PASSWORD
+                            if (state.showGoogle && !choosing) {
                                 GoogleButton(s.signinGoogle, enabled = state.canGoogle, onClick = actions.onGoogle)
                             }
-                            if (state.showGoogle && state.showEmail) OrDivider(s.appSigninOr)
+                            if (state.showGoogle && state.showEmail && !choosing) OrDivider(s.appSigninOr)
                             if (state.showEmail) {
                                 when (state.step) {
                                     SignInStep.EMAIL -> EmailStep(state, actions)
                                     SignInStep.CODE -> CodeStep(state, actions)
+                                    SignInStep.CHOOSE_PASSWORD -> ChoosePasswordStep(state, actions)
                                 }
                             }
                         }
@@ -171,6 +192,11 @@ fun errorText(s: Strings, error: SignInError): String = when (error) {
     SignInError.CODE_INVALID -> s.appSigninCodeInvalid
     SignInError.CODE_EXPIRED -> s.appSigninCodeExpired
     SignInError.CODE_TOO_MANY -> s.appSigninCodeTooMany
+    SignInError.PASSWORD_WRONG -> s.signinPasswordWrong
+    SignInError.PASSWORD_SHORT -> s.signinPasswordShort
+    SignInError.PASSWORD_SAVE_FAILED -> s.signinPasswordSaveFailed
+    SignInError.CURRENT_PASSWORD_WRONG -> s.errorPasswordWrong
+    SignInError.CURRENT_PASSWORD_REQUIRED -> s.errorPasswordRequired
     SignInError.RATE_LIMITED -> s.appSigninRateLimited
     SignInError.UNAVAILABLE -> s.appSigninUnavailable
     SignInError.PROVIDER_UNAVAILABLE -> s.signinProviderUnavailable
@@ -236,23 +262,142 @@ private fun OrDivider(text: String) {
     }
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun EmailStep(state: SignInUiState, actions: SignInActions) {
     val s = LocalStrings.current
+    val focus = LocalFocusManager.current
+    val flow = state.flow
+    val passwordNext = flow == SignInMode.PASSWORD || flow == SignInMode.CREATE
     Text(s.signinEmailLabel, style = JudgeType.slotTitle, modifier = Modifier.padding(bottom = 8.dp))
     Field(
         value = state.email,
         onChange = actions.onEmailChange,
         placeholder = s.signinEmailPlaceholder,
-        keyboard = KeyboardOptions(keyboardType = KeyboardType.Email, imeAction = ImeAction.Send, autoCorrectEnabled = false),
-        onIme = actions.onRequestCode,
-        modifier = Modifier.semantics { contentType = ContentType.EmailAddress }.testTag(SignInTags.EMAIL),
+        keyboard = KeyboardOptions(
+            keyboardType = KeyboardType.Email,
+            imeAction = if (passwordNext) ImeAction.Next else ImeAction.Send,
+            autoCorrectEnabled = false,
+        ),
+        onIme = if (passwordNext) ({ focus.moveFocus(FocusDirection.Down); Unit }) else actions.onRequestCode,
+        modifier = Modifier
+            .semantics {
+                contentType = when (flow) {
+                    SignInMode.PASSWORD -> ContentType.Username
+                    SignInMode.CREATE -> ContentType.NewUsername
+                    else -> ContentType.EmailAddress
+                }
+            }
+            .testTag(SignInTags.EMAIL),
     )
+    if (flow == SignInMode.PASSWORD) {
+        Text(s.signinPassword, style = JudgeType.slotTitle, modifier = Modifier.padding(top = 16.dp, bottom = 8.dp))
+        PasswordField(
+            value = state.password,
+            onChange = actions.onPasswordChange,
+            autofill = ContentType.Password,
+            onDone = actions.onSignInWithPassword,
+            modifier = Modifier.testTag(SignInTags.PASSWORD),
+        )
+        PrimaryButton(
+            text = s.signinPasswordSubmit,
+            enabled = state.canSignInWithPassword,
+            onClick = actions.onSignInWithPassword,
+            modifier = Modifier.fillMaxWidth().padding(top = 16.dp).testTag(SignInTags.SUBMIT_PASSWORD),
+        )
+        FlowRow(Modifier.fillMaxWidth().padding(top = 10.dp), horizontalArrangement = Arrangement.SpaceBetween) {
+            TextAction(s.signinForgot, onClick = { actions.onMode(SignInMode.FORGOT) }, modifier = Modifier.testTag(SignInTags.FORGOT))
+            TextAction(s.signinCreate, onClick = { actions.onMode(SignInMode.CREATE) }, modifier = Modifier.testTag(SignInTags.CREATE))
+        }
+        TextAction(
+            s.signinUseCode,
+            onClick = { actions.onMode(SignInMode.CODE) },
+            color = Palette.ink2,
+            modifier = Modifier.testTag(SignInTags.USE_CODE),
+        )
+        return
+    }
+    if (flow == SignInMode.CREATE) {
+        Text(s.signinPasswordNew, style = JudgeType.slotTitle, modifier = Modifier.padding(top = 16.dp, bottom = 8.dp))
+        PasswordField(
+            value = state.password,
+            onChange = actions.onPasswordChange,
+            autofill = ContentType.NewPassword,
+            onDone = actions.onRequestCode,
+            modifier = Modifier.testTag(SignInTags.NEW_PASSWORD),
+        )
+        Text(s.signinCreateNote, style = JudgeType.footnote, modifier = Modifier.padding(top = 10.dp))
+    }
     OutlinePill(
         text = s.appSigninCodeRequest,
         enabled = state.canRequestCode,
         onClick = actions.onRequestCode,
         modifier = Modifier.padding(top = 16.dp).testTag(SignInTags.REQUEST_CODE),
+    )
+    if (state.passwordSignIn) {
+        TextAction(
+            s.signinUsePassword,
+            onClick = { actions.onMode(SignInMode.PASSWORD) },
+            color = Palette.ink2,
+            modifier = Modifier.padding(top = 6.dp).testTag(SignInTags.USE_PASSWORD),
+        )
+    }
+}
+
+@Composable
+private fun ChoosePasswordStep(state: SignInUiState, actions: SignInActions) {
+    val s = LocalStrings.current
+    Text(s.signinPasswordChoose, style = JudgeType.body.copy(color = Palette.ink2), modifier = Modifier.padding(bottom = 18.dp))
+    Text(s.signinPasswordNew, style = JudgeType.slotTitle, modifier = Modifier.padding(bottom = 8.dp))
+    PasswordField(
+        value = state.password,
+        onChange = actions.onPasswordChange,
+        autofill = ContentType.NewPassword,
+        onDone = actions.onSavePassword,
+        modifier = Modifier.testTag(SignInTags.NEW_PASSWORD),
+    )
+    PrimaryButton(
+        text = s.signinPasswordSave,
+        enabled = state.canSavePassword,
+        onClick = actions.onSavePassword,
+        modifier = Modifier.fillMaxWidth().padding(top = 16.dp).testTag(SignInTags.SAVE_PASSWORD),
+    )
+    TextAction(
+        s.signinPasswordSkip,
+        onClick = actions.onSkipPassword,
+        color = Palette.ink2,
+        modifier = Modifier.padding(top = 6.dp).testTag(SignInTags.SKIP_PASSWORD),
+    )
+}
+
+/** A password box with a show switch; [autofill] tells password managers which kind it is. */
+@Composable
+internal fun PasswordField(
+    value: String,
+    onChange: (String) -> Unit,
+    autofill: ContentType,
+    onDone: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val s = LocalStrings.current
+    var shown by remember { mutableStateOf(false) }
+    Field(
+        value = value,
+        onChange = onChange,
+        placeholder = "",
+        keyboard = KeyboardOptions(keyboardType = KeyboardType.Password, imeAction = ImeAction.Done, autoCorrectEnabled = false),
+        onIme = onDone,
+        modifier = modifier.semantics { contentType = autofill },
+        visualTransformation = if (shown) VisualTransformation.None else PasswordVisualTransformation(),
+        trailing = {
+            Text(
+                s.signinPasswordShow,
+                style = JudgeType.footnote.copy(color = if (shown) Palette.terraInk else Palette.muted),
+                modifier = Modifier
+                    .padding(start = 12.dp)
+                    .toggleable(value = shown, role = Role.Switch, onValueChange = { shown = it }),
+            )
+        },
     )
 }
 
@@ -300,7 +445,7 @@ private fun CodeStep(state: SignInUiState, actions: SignInActions) {
 }
 
 @Composable
-private fun Field(
+internal fun Field(
     value: String,
     onChange: (String) -> Unit,
     placeholder: String,
@@ -310,6 +455,8 @@ private fun Field(
     textStyle: TextStyle = JudgeType.body,
     minHeight: Dp = 52.dp,
     align: Alignment = Alignment.CenterStart,
+    visualTransformation: VisualTransformation = VisualTransformation.None,
+    trailing: (@Composable () -> Unit)? = null,
 ) {
     var focused by remember { mutableStateOf(false) }
     Box(
@@ -322,22 +469,26 @@ private fun Field(
             .padding(horizontal = 16.dp, vertical = 14.dp),
         contentAlignment = Alignment.CenterStart,
     ) {
-        BasicTextField(
-            value = value,
-            onValueChange = onChange,
-            textStyle = textStyle,
-            singleLine = true,
-            cursorBrush = SolidColor(Palette.terraInk),
-            keyboardOptions = keyboard,
-            keyboardActions = KeyboardActions(onAny = { onIme() }),
-            modifier = modifier.fillMaxWidth().onFocusChanged { focused = it.isFocused },
-            decorationBox = { inner ->
-                Box(Modifier.fillMaxWidth(), contentAlignment = align) {
-                    if (value.isEmpty()) Text(placeholder, style = textStyle.copy(color = Palette.placeholder))
-                    inner()
-                }
-            },
-        )
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            BasicTextField(
+                value = value,
+                onValueChange = onChange,
+                textStyle = textStyle,
+                singleLine = true,
+                cursorBrush = SolidColor(Palette.terraInk),
+                keyboardOptions = keyboard,
+                keyboardActions = KeyboardActions(onAny = { onIme() }),
+                visualTransformation = visualTransformation,
+                modifier = modifier.weight(1f).onFocusChanged { focused = it.isFocused },
+                decorationBox = { inner ->
+                    Box(Modifier.fillMaxWidth(), contentAlignment = align) {
+                        if (value.isEmpty()) Text(placeholder, style = textStyle.copy(color = Palette.placeholder))
+                        inner()
+                    }
+                },
+            )
+            trailing?.invoke()
+        }
     }
 }
 

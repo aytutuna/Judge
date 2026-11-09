@@ -12,6 +12,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.semantics.SemanticsProperties
+import androidx.compose.ui.test.SemanticsMatcher
+import androidx.compose.ui.test.assert
 import androidx.compose.ui.test.assertContentDescriptionEquals
 import androidx.compose.ui.test.assertHeightIsEqualTo
 import androidx.compose.ui.test.assertIsEnabled
@@ -32,6 +35,16 @@ import androidx.compose.ui.test.performTextInput
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
 import com.okjudge.judge.Fixtures
+import com.okjudge.judge.ui.signin.SignInUiState
+import com.okjudge.judge.ui.signin.SignInTags
+import com.okjudge.judge.ui.signin.SignInScreen
+import com.okjudge.judge.ui.signin.SignInMode
+import com.okjudge.judge.ui.signin.SignInActions
+import com.okjudge.judge.core.model.SignInProviders
+import com.okjudge.judge.core.model.ServerConfig
+import com.okjudge.judge.core.model.MeResponse
+import com.okjudge.judge.core.auth.SignInError
+import com.okjudge.judge.core.auth.Account
 import com.okjudge.judge.i18n.LangPref
 import com.okjudge.judge.core.display.ContentLang
 import com.okjudge.judge.core.display.PartyNames
@@ -56,6 +69,7 @@ import com.okjudge.judge.ui.premium.EvidenceTags
 import com.okjudge.judge.ui.home.HomeUiState
 import com.okjudge.judge.ui.judging.JudgingScreen
 import com.okjudge.judge.ui.judging.JudgingTags
+import com.okjudge.judge.ui.settings.PasswordPanel
 import com.okjudge.judge.ui.settings.SettingsScreen
 import com.okjudge.judge.ui.settings.SettingsTags
 import com.okjudge.judge.ui.verdict.CardActions
@@ -565,6 +579,102 @@ class ScreensTest {
         compose.onNodeWithTag(SettingsTags.GAMIFY).assertIsOn().performClick()
         assertFalse(on)
         compose.onNodeWithTag(SettingsTags.GAMIFY).assertIsOff()
+    }
+
+    private fun signedInWith(hasPassword: Boolean?) =
+        Account.State.SignedIn(MeResponse(user = Viewer("u1", "ada@example.com"), hasPassword = hasPassword))
+
+    @Test
+    fun passwordPanel_changesThePassword() {
+        val saved = mutableListOf<Pair<String, String?>>()
+        compose.setContent {
+            Themed(AppLang.EN) { PasswordPanel(hasPassword = true, onSave = { new, current -> saved += new to current; null }, onClose = {}) }
+        }
+        val s = UiTestSupport.s(AppLang.EN)
+        compose.onNodeWithTag(SettingsTags.PASSWORD_NEW).performTextInput("short")
+        compose.onNodeWithTag(SettingsTags.PASSWORD_SAVE).performClick()
+        compose.onNodeWithTag(SettingsTags.PASSWORD_ERROR).assertTextEquals(s.signinPasswordShort)
+        assertTrue(saved.isEmpty())
+
+        compose.onNodeWithTag(SettingsTags.PASSWORD_CURRENT).performTextInput("old-made-up")
+        compose.onNodeWithTag(SettingsTags.PASSWORD_NEW).performTextInput("-and-longer")
+        compose.onNodeWithTag(SettingsTags.PASSWORD_SAVE).performClick()
+        compose.onNodeWithTag(SettingsTags.PASSWORD_SAVED).assertTextEquals(s.accountPasswordSaved)
+        assertEquals(listOf("short-and-longer" to "old-made-up"), saved)
+    }
+
+    @Test
+    fun passwordPanel_firstPassword_doesNotAskForTheCurrentOne_andShowsTheServersAnswer() {
+        compose.setContent {
+            Themed(AppLang.EN) {
+                PasswordPanel(hasPassword = false, onSave = { _, _ -> SignInError.CURRENT_PASSWORD_REQUIRED }, onClose = {})
+            }
+        }
+        val s = UiTestSupport.s(AppLang.EN)
+        compose.onNodeWithTag(SettingsTags.PASSWORD_CURRENT).assertDoesNotExist()
+        compose.onNodeWithTag(SettingsTags.PASSWORD_NEW).performTextInput("made-up-pass")
+        compose.onNodeWithTag(SettingsTags.PASSWORD_SAVE).performClick()
+        compose.onNodeWithTag(SettingsTags.PASSWORD_ERROR).assertTextEquals(s.errorPasswordRequired)
+    }
+
+    @Test
+    fun settings_passwordRow_followsWhatTheAccountHas() {
+        var me by mutableStateOf(signedInWith(false))
+        compose.setContent {
+            Themed(AppLang.EN) {
+                SettingsScreen(LangPref.SYSTEM, "0.1.0", {}, {}, "https://okjudge.com", account = me, onSetPassword = { _, _ -> null })
+            }
+        }
+        val s = UiTestSupport.s(AppLang.EN)
+        compose.onNodeWithTag(SettingsTags.PASSWORD).assertTextContains(s.accountPasswordSet, substring = true)
+        me = signedInWith(true)
+        compose.onNodeWithTag(SettingsTags.PASSWORD).assertTextContains(s.accountPasswordChange, substring = true)
+    }
+
+    @Test
+    fun settings_passwordRow_waitsForTheServer() {
+        compose.setContent {
+            Themed(AppLang.EN) {
+                SettingsScreen(LangPref.SYSTEM, "0.1.0", {}, {}, "https://okjudge.com", account = signedInWith(null), onSetPassword = { _, _ -> null })
+            }
+        }
+        val s = UiTestSupport.s(AppLang.EN)
+        compose.onNodeWithText(s.accountPasswordSet).assertDoesNotExist()
+        compose.onNodeWithText(s.accountPasswordChange).assertDoesNotExist()
+    }
+
+    @Test
+    fun signIn_passwordForm_hidesThePasswordWhenTyped_andSwitchesMode() {
+        val modes = mutableListOf<SignInMode>()
+        var signedIn = 0
+        val providers = Account.Providers.Ready(ServerConfig(SignInProviders(emailCode = true, password = true)))
+        compose.setContent {
+            Themed(AppLang.EN) {
+                SignInScreen(
+                    SignInUiState(providers = providers, ageNeeded = false, email = "ada@example.com", password = "made-up-pass"),
+                    onBack = {},
+                    actions = SignInActions(onMode = { modes += it }, onSignInWithPassword = { signedIn++ }),
+                )
+            }
+        }
+        compose.onNodeWithTag(SignInTags.SUBMIT_PASSWORD).assertIsEnabled().performClick()
+        assertEquals(1, signedIn)
+        compose.onNodeWithTag(SignInTags.PASSWORD).assert(SemanticsMatcher.keyIsDefined(SemanticsProperties.Password))
+        compose.onNodeWithTag(SignInTags.FORGOT).performClick()
+        compose.onNodeWithTag(SignInTags.CREATE).performClick()
+        compose.onNodeWithTag(SignInTags.USE_CODE).performClick()
+        assertEquals(listOf(SignInMode.FORGOT, SignInMode.CREATE, SignInMode.CODE), modes)
+    }
+
+    @Test
+    fun signIn_withoutPasswordsOnTheServer_showsOnlyTheCodeForm() {
+        val providers = Account.Providers.Ready(ServerConfig(SignInProviders(emailCode = true)))
+        compose.setContent {
+            Themed(AppLang.EN) { SignInScreen(SignInUiState(providers = providers, ageNeeded = false), onBack = {}, actions = SignInActions()) }
+        }
+        compose.onNodeWithTag(SignInTags.REQUEST_CODE).assertExists()
+        compose.onNodeWithTag(SignInTags.PASSWORD).assertDoesNotExist()
+        compose.onNodeWithTag(SignInTags.USE_PASSWORD).assertDoesNotExist()
     }
 
     @Test

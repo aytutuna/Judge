@@ -11,6 +11,8 @@ data class SignInProviders(
     val email: Boolean = false,
     /** Email one-time code: the app's email flow. */
     val emailCode: Boolean = false,
+    /** Email and password, on top of the code that makes the account. */
+    val password: Boolean = false,
     val dev: Boolean = false,
 )
 
@@ -51,6 +53,9 @@ data class ServerConfig(
 ) {
     /** At least one sign-in method this app can use (signInOffered: Apple is iOS only, the dev login web only). */
     val signInOffered: Boolean get() = signIn.google || signIn.emailCode
+
+    /** A password needs the emailed code to make the account first. */
+    val passwordSignIn: Boolean get() = signIn.password && signIn.emailCode
 }
 
 @Serializable
@@ -88,12 +93,16 @@ data class Entitlement(
 @Serializable
 data class AgeStatus(val confirmed: Boolean = false, val blocked: Boolean = false)
 
-/** GET /api/v1/me. Both null when the request carried no valid session; [age] null from a server without the age check. */
+/**
+ * GET /api/v1/me. Both null when the request carried no valid session; [age]
+ * null from a server without the age check, [hasPassword] from one without passwords.
+ */
 @Serializable
 data class MeResponse(
     val user: Viewer? = null,
     val entitlement: Entitlement? = null,
     val age: AgeStatus? = null,
+    val hasPassword: Boolean? = null,
 )
 
 /** The `{token, user}` body of a successful Better Auth sign-in. */
