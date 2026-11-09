@@ -392,7 +392,7 @@ struct AppealSheet<Draft: AppealDraft>: View {
             .padding(.top, 18)
             .padding(.bottom, 22)
         }
-        .scrollDismissesKeyboard(.interactively)
+        .scrollDismissesKeyboard(.immediately)
         .background(Brand.paper.ignoresSafeArea())
         .presentationDragIndicator(.visible)
         .presentationCornerRadius(Radius.card)
