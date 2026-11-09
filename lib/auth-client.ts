@@ -6,14 +6,15 @@
  */
 
 import { createAuthClient } from "better-auth/react";
-import { magicLinkClient } from "better-auth/client/plugins";
+import { emailOTPClient, magicLinkClient } from "better-auth/client/plugins";
 import { isApiErrorCode, type ApiErrorCode } from "./api-errors";
 import type { AgeState, AppConfig, MeResponse } from "./account-types";
+import type { Key } from "./i18n";
 
 // No baseURL: the browser's own origin, so one build works on any domain.
 export const authClient = createAuthClient({
   basePath: "/api/auth",
-  plugins: [magicLinkClient()],
+  plugins: [magicLinkClient(), emailOTPClient()],
 });
 
 type Outcome = { ok: true } | { ok: false; code: string };
@@ -53,6 +54,44 @@ export async function sendMagicLink(
   } catch {
     return { ok: false, code: "network" };
   }
+}
+
+/** Emails a 6-digit sign-in code (the apps use the same endpoint). `lang`
+ * picks the language of the email. */
+export async function sendSignInCode(email: string, lang: string): Promise<Outcome> {
+  try {
+    const { error } = await authClient.emailOtp.sendVerificationOtp({
+      email,
+      type: "sign-in",
+      fetchOptions: { query: { lang } },
+    });
+    return error ? failure(error) : { ok: true };
+  } catch {
+    return { ok: false, code: "network" };
+  }
+}
+
+/** Signs in with the emailed code; success sets the session cookie. */
+export async function signInWithCode(email: string, otp: string): Promise<Outcome> {
+  try {
+    const { error } = await authClient.signIn.emailOtp({ email, otp });
+    return error ? failure(error) : { ok: true };
+  } catch {
+    return { ok: false, code: "network" };
+  }
+}
+
+/** The message for a failed code call, by the `code` of its Outcome. Same
+ * mapping as the apps: the server's own codes first, then the status. */
+export function codeErrorKey(code: string, step: "send" | "verify"): Key {
+  if (code === "network") return "signin.offline";
+  if (code === "http_429") return "signin.rateLimited";
+  if (code === "http_404" || code.startsWith("http_5")) return "signin.serviceDown";
+  if (step === "send") return code === "http_400" ? "signin.emailInvalid" : "signin.failed";
+  if (code === "INVALID_OTP" || code === "http_400") return "signin.codeInvalid";
+  if (code === "OTP_EXPIRED") return "signin.codeExpired";
+  if (code === "TOO_MANY_ATTEMPTS") return "signin.codeTooMany";
+  return "signin.failed";
 }
 
 /** Local test sign-in (only answers under `next dev` with DEV_LOGIN=1 on
