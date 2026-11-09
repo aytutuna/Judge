@@ -60,6 +60,7 @@ private struct CaseScreenContent: View {
             .padding(.bottom, 32)
             .frame(maxWidth: .infinity, alignment: .leading)
         }
+        .scrollDismissesKeyboard(.interactively)
         // The viewer's own party is green on everything below.
         .environment(\.sides, Sides(you: model.view?.yourParty))
         .background(Brand.ivory.ignoresSafeArea())
