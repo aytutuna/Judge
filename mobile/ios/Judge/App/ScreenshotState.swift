@@ -24,7 +24,8 @@ import SwiftData
 /// started, with their side still to write, before and after the other side),
 /// `history-cases` (the account's Verdicts list: waiting, thinking, your turn,
 /// ready either way, an answered case, a phone-only verdict), `history-select`
-/// (the same list in select mode, two rows picked) or `case/<state>`: the owner's
+/// (the same list in select mode, two rows picked), `menu` (the side menu open over
+/// the New page, signed in, with the same list's newest rows) or `case/<state>`: the owner's
 /// case page for a key of `cases.views` or one of the short names `awaiting`,
 /// `judging`, `judged`, `one-sided`, `appeal`, `appeal-judging`, `failed`,
 /// `expired`, `removed` (Turkish takes the `_tr` view when there is one);
@@ -63,6 +64,7 @@ struct ScreenshotState {
         case caseWrite(answered: Bool)
         case historyCases
         case historySelect
+        case menu
         case caseDetail(view: String)
     }
 
@@ -75,7 +77,7 @@ struct ScreenshotState {
     var tab: RootTab {
         switch screen {
         case .home, .homeExample, .homeError, .judging, .judgingPlain, .verdict, .verdictThread, .verdictContext, .signIn, .signInCode,
-             .balanceWelcome, .balanceNone, .pricing, .pricingStore, .pricingBuy, .clarify, .evidence, .modeBoth, .caseWrite, .caseDetail:
+             .balanceWelcome, .balanceNone, .pricing, .pricingStore, .pricingBuy, .clarify, .evidence, .modeBoth, .caseWrite, .caseDetail, .menu:
             return .new
         case .history, .historyCases, .historySelect: return .history
         case .settings, .account: return .settings
@@ -120,6 +122,7 @@ struct ScreenshotState {
         case "case-write-answered": screen = .caseWrite(answered: true)
         case "history-cases": screen = .historyCases
         case "history-select": screen = .historySelect
+        case "menu": screen = .menu
         default:
             if name.hasPrefix("case/") {
                 let view = String(name.dropFirst("case/".count))
@@ -271,6 +274,10 @@ struct ScreenshotState {
             premium(app, me: "credits7")
             accountList(app)
             app.historySelectionSeed = ["c:case0000010", "v:verdict0021"]
+        case .menu:
+            premium(app, me: "credits7")
+            accountList(app)
+            app.menuOpen = true
         case .caseDetail(let name):
             premium(app, me: "credits7")
             let localized = lang == .tr ? ScreenshotFixtures.caseView(name + "_tr") : nil
