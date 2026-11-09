@@ -31,9 +31,11 @@ export async function POST(req: Request): Promise<NextResponse> {
     const issue = parsed.error.issues[0];
     const message = issue?.message ?? "Invalid request";
     // Map the ISSUE CODE, not the message string — and only for the
-    // `argument` field, so range failures elsewhere (e.g. clarifications) don't get
-    // the argument-length messages.
-    const onArgument = issue?.path[0] === "argument";
+    // `argument` field (or the typed `sides`, which carry the same text), so range
+    // failures elsewhere (e.g. clarifications) don't get the argument-length messages.
+    const onArgument =
+      issue?.path[0] === "argument" ||
+      (issue?.path[0] === "sides" && (issue.path.at(-1) === "text" || (issue.code === "too_big" && issue.origin === "string")));
     const code =
       onArgument && issue.code === "too_small"
         ? "too_short"

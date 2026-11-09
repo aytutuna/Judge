@@ -41,7 +41,10 @@ export async function runPremiumJob(job: PremiumJobInput): Promise<void> {
       console.error(`[premium] job ${job.id}: all judge runs failed:`, outcome.error);
       await failVerdictJob(job.id, code, job.reservationId);
       console.info(premiumLogLine(null, code, run));
-      void track("verdict_failed", { userId: job.userId, props: { kind: "verdict", code } });
+      void track("verdict_failed", {
+        userId: job.userId,
+        props: { kind: "verdict", ...(job.prepared.parties ? { mode: "many_sided" } : {}), code },
+      });
       return;
     }
     // The model declined, or every strong seat failed and the verdict rests
@@ -64,7 +67,10 @@ export async function runPremiumJob(job: PremiumJobInput): Promise<void> {
       return;
     }
     console.info(premiumLogLine(job.id, outcome.refused ? "refused" : outcome.degraded ? "degraded" : "ok", run));
-    void track("verdict_ready", { userId: job.userId, props: { kind: "verdict" } });
+    void track("verdict_ready", {
+      userId: job.userId,
+      props: { kind: "verdict", ...(job.prepared.parties ? { mode: "many_sided" } : {}) },
+    });
   } catch (e) {
     console.error(`[premium] job ${job.id} failed:`, e instanceof Error ? e.message : String(e));
     if (run) console.info(premiumLogLine(null, "error", run));

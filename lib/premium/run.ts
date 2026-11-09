@@ -19,13 +19,17 @@ import { judgeExtra, type JudgeOptions, type JudgeRun } from "../judge";
 import { applyCruxTrial, runCruxTrial, shouldTryCrux } from "../trial";
 import type {
   Clarification,
+  EvidenceUsed,
   FactCheck,
   JudgeRunOutput,
   NameMapping,
   PartyId,
+  TypedSide,
   VerdictResult,
 } from "../types";
+import { partiesFor } from "../multi";
 import { withClarifications } from "./context";
+import { anonymizeSides } from "./sides";
 import { factCheckBlock, runFactCheck } from "./factcheck";
 import {
   HAIKU_MODEL,
@@ -58,6 +62,9 @@ export type PremiumInput = {
   lang: Lang;
   /** Verified evidence transcripts (raw). Absent or empty: today's path. */
   evidence?: VerifiedEvidence[];
+  /** Three or four typed sides (VerdictRequest.sides); `argument` is then
+   * not read. Absent: today's path. */
+  sides?: TypedSide[];
 };
 
 /** An already anonymized document to judge (premium argument, two-sided
@@ -181,6 +188,8 @@ export type PreparedPremium = {
   /** The anonymized EVIDENCE block, or null without evidence. */
   evidenceText: string | null;
   evidenceCount: number;
+  /** Three or four sides: the judges pick among these. Absent for the usual verdict. */
+  parties?: PartyId[];
 };
 
 /**
@@ -190,10 +199,14 @@ export type PreparedPremium = {
  * or the database. Never throws.
  */
 export async function preparePremium(
-  { argument, clarifications, lang, evidence }: Pick<PremiumInput, "argument" | "clarifications" | "lang" | "evidence">,
+  { argument, clarifications, lang, evidence, sides }: Pick<PremiumInput, "argument" | "clarifications" | "lang" | "evidence" | "sides">,
 ): Promise<{ ok: true; prepared: PreparedPremium } | { ok: false; error: string }> {
   const argumentText = withClarifications(argument, clarifications, lang);
   try {
+    if (sides) {
+      const prepared = await anonymizeSides({ sides, clarifications, lang, evidence });
+      return { ok: true, prepared: { ...prepared, parties: partiesFor(sides.length) } };
+    }
     if (evidence && evidence.length > 0) {
       // Loaded only with evidence, so a plain premium request runs exactly
       // as before. One call anonymizes the account and its transcripts with
@@ -220,21 +233,26 @@ export async function preparePremium(
 /** The judge step after preparePremium (fact-check, panel, escalation, crux
  * trial). Sees only the prepared, anonymized text. */
 async function judgePrepared(
-  { anonymized, nameMap, evidenceText, evidenceCount }: PreparedPremium,
+  { anonymized, nameMap, evidenceText, evidenceCount, parties }: PreparedPremium,
   { lang }: Pick<PremiumInput, "lang">,
   startedAt: number,
   now: () => number,
   stats: PremiumStats,
 ): Promise<PremiumOutcome> {
   const judged = await judgeAnonymized(
-    { text: anonymized, context: evidenceText, lang, ...(evidenceText ? { evidence: true } : {}) },
+    { text: anonymized, context: evidenceText, lang, ...(evidenceText ? { evidence: true } : {}), ...(parties ? { parties } : {}) },
     { startedAt, now, stats },
   );
   if (judged.status !== "ok") return judged;
   if (!evidenceText) return { ...judged, nameMap };
   return {
     ...judged,
-    result: { ...judged.result, evidence_used: { a: evidenceCount, b: 0 } },
+    result: {
+      ...judged.result,
+      evidence_used: parties
+        ? Object.fromEntries(parties.map((p, i) => [p, i === 0 ? evidenceCount : 0])) as EvidenceUsed
+        : { a: evidenceCount, b: 0 },
+    },
     input: `${anonymized}
 
 ${evidenceText}`,

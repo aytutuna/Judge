@@ -48,6 +48,9 @@ const UNAVAILABLE_MESSAGE = "The judge is unavailable right now — try again in
 
 const IMPLIED_KEY_WINDOW_MS = 10 * 60_000;
 
+/** The `mode` of analytics events for a verdict typed as three or four sides. */
+const MANY_SIDED = "many_sided";
+
 const BLOCK_MESSAGES = {
   premium_required: "Verdicts need credits or a monthly plan.",
   no_credits: "You have no verdicts left.",
@@ -297,6 +300,7 @@ export async function premiumVerdict(req: Request, data: VerdictRequest, rawBody
         clarifications: data.clarifications,
         lang: data.lang,
         ...(evidence ? { evidence } : {}),
+        ...(data.sides ? { sides: data.sides } : {}),
       },
       { startedAt },
     );
@@ -311,7 +315,7 @@ export async function premiumVerdict(req: Request, data: VerdictRequest, rawBody
       await refund();
       console.error("[premium] all judge runs failed:", outcome.error);
       console.info(premiumLogLine(null, outcome.code, run));
-      void track("verdict_failed", { userId, props: { kind: "verdict", code: outcome.code } });
+      void track("verdict_failed", { userId, props: { kind: "verdict", ...(data.sides ? { mode: MANY_SIDED } : {}), code: outcome.code } });
       return outcome.code === "quota"
         ? fail("quota", "The judge hit its AI quota for now — try again in a few minutes.", { status: 502 })
         : unavailable(502);
@@ -358,7 +362,7 @@ export async function premiumVerdict(req: Request, data: VerdictRequest, rawBody
 
     const entitlement = await entitlementOrNull(userId);
     console.info(premiumLogLine(id, outcome.refused ? "refused" : outcome.degraded ? "degraded" : "ok", run));
-    void track("verdict_ready", { userId, props: { kind: "verdict" } });
+    void track("verdict_ready", { userId, props: { kind: "verdict", ...(data.sides ? { mode: MANY_SIDED } : {}) } });
     const body: VerdictApiResponse = {
       id,
       result: outcome.result,
@@ -429,6 +433,7 @@ async function startPremiumJob(p: {
         clarifications: data.clarifications,
         lang: data.lang,
         ...(evidence ? { evidence } : {}),
+        ...(data.sides ? { sides: data.sides } : {}),
       }),
     );
   } catch (e) {

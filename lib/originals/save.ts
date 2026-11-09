@@ -123,7 +123,7 @@ export function verdictWriteStatements(
   const subject = subjects.verdict(v.id);
   const lang: Lang = v.result.lang ?? "en";
   const original = sealOriginal(subject, v.original);
-  const display: DisplayNames = original ? defaultDisplay(v.original.nameMap, lang) : { ...EMPTY_DISPLAY, others: {} };
+  const display: DisplayNames = original ? defaultDisplay(v.original.nameMap, lang, v.result.parties?.length ?? 2) : { ...EMPTY_DISPLAY, others: {} };
   const sealedDisplay = original ? sealJson(display, aad.verdictDisplay(v.id)) : null;
   const token = v.ownerUserId ? null : (opts.ownerToken ?? newOwnerToken());
   const stmts: InStatement[] = [

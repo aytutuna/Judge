@@ -318,7 +318,7 @@ export type Clarification = z.infer<typeof Clarification>;
 export const RequestLang = z.enum(LANG_CODES).refine(isEnabled, "This language isn't available yet.");
 
 export const TypedSide = z.object({
-  text: z.string().trim().min(1).max(6000),
+  text: z.string().trim().min(20, "Tell us a bit more about each side.").max(6000, "Keep it under 6000 characters."),
   /** What the writer calls this person; absent or blank when unnamed. */
   name: z.string().trim().max(60).optional(),
 });
@@ -338,7 +338,16 @@ export const VerdictRequest = z.object({
   /** Three or four typed sides, in the order A to D. Only builds that know
    * about more than two sides send it; `argument` is still required and
    * holds the same sides joined. */
-  sides: z.array(TypedSide).min(3).max(4).optional(),
+  sides: z
+    .array(TypedSide)
+    .min(3)
+    .max(4)
+    .superRefine((sides, ctx) => {
+      if (sides.reduce((n, s) => n + s.text.length, 0) > 6000) {
+        ctx.addIssue({ code: "too_big", origin: "string", maximum: 6000, inclusive: true, input: sides, message: "Keep it under 6000 characters." });
+      }
+    })
+    .optional(),
 });
 export type VerdictRequest = z.infer<typeof VerdictRequest>;
 
