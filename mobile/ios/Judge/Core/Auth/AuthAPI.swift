@@ -96,6 +96,22 @@ extension JudgeAPI {
         try await authPost("sign-in/email-otp", body: ["email": email, "otp": code])
     }
 
+    /// POST /api/auth/sign-in/email.
+    func signInWithPassword(email: String, password: String) async throws -> AuthSession {
+        try await authPost("sign-in/email", body: ["email": email, "password": password])
+    }
+
+    /// POST /api/v1/me/password: sets the account's password, or replaces it
+    /// (`current` is the old one).
+    func setPassword(_ password: String, current: String?) async throws {
+        var request = makeRequest(url: endpoint("me/password"), method: "POST", timeout: AuthTimeout.call)
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        var body = ["password": password]
+        if let current { body["current"] = current }
+        request.httpBody = try JSONSerialization.data(withJSONObject: body)
+        _ = try await send(request)
+    }
+
     /// POST /api/auth/sign-out: ends the session on the server.
     func signOut() async throws {
         var request = makeRequest(url: authEndpoint("sign-out"), method: "POST", timeout: AuthTimeout.call)

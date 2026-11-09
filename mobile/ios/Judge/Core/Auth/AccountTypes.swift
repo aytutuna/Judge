@@ -9,17 +9,20 @@ struct SignInProviders: Decodable, Sendable, Equatable {
     var email = false
     /// Email one-time code (the apps).
     var emailCode = false
+    /// Email and password, on top of the code that makes the account.
+    var password = false
     var dev = false
 
-    init(apple: Bool = false, google: Bool = false, email: Bool = false, emailCode: Bool = false, dev: Bool = false) {
+    init(apple: Bool = false, google: Bool = false, email: Bool = false, emailCode: Bool = false, password: Bool = false, dev: Bool = false) {
         self.apple = apple
         self.google = google
         self.email = email
         self.emailCode = emailCode
+        self.password = password
         self.dev = dev
     }
 
-    private enum CodingKeys: String, CodingKey { case apple, google, email, emailCode, dev }
+    private enum CodingKeys: String, CodingKey { case apple, google, email, emailCode, password, dev }
 
     init(from decoder: any Decoder) throws {
         let c = try decoder.container(keyedBy: CodingKeys.self)
@@ -27,11 +30,15 @@ struct SignInProviders: Decodable, Sendable, Equatable {
         google = (try? c.decodeIfPresent(Bool.self, forKey: .google)) == true
         email = (try? c.decodeIfPresent(Bool.self, forKey: .email)) == true
         emailCode = (try? c.decodeIfPresent(Bool.self, forKey: .emailCode)) == true
+        password = (try? c.decodeIfPresent(Bool.self, forKey: .password)) == true
         dev = (try? c.decodeIfPresent(Bool.self, forKey: .dev)) == true
     }
 
     /// Whether the app can offer any of them (the dev login is web only).
     var any: Bool { apple || google || emailCode }
+
+    /// A password needs the emailed code to make the account first.
+    var passwordSignIn: Bool { password && emailCode }
 }
 
 /// GET /api/v1/config, the parts the app reads.
@@ -225,25 +232,29 @@ struct AgeStatus: Decodable, Sendable, Equatable {
 }
 
 /// GET /api/v1/me. Signed out (or an unknown token): both nil. `age` is nil
-/// from a server without the age check.
+/// from a server without the age check, `hasPassword` from one without
+/// passwords.
 struct AccountInfo: Decodable, Sendable, Equatable {
     var user: Viewer?
     var entitlement: Entitlement?
     var age: AgeStatus?
+    var hasPassword: Bool?
 
-    init(user: Viewer?, entitlement: Entitlement?, age: AgeStatus? = nil) {
+    init(user: Viewer?, entitlement: Entitlement?, age: AgeStatus? = nil, hasPassword: Bool? = nil) {
         self.user = user
         self.entitlement = entitlement
         self.age = age
+        self.hasPassword = hasPassword
     }
 
-    private enum CodingKeys: String, CodingKey { case user, entitlement, age }
+    private enum CodingKeys: String, CodingKey { case user, entitlement, age, hasPassword }
 
     init(from decoder: any Decoder) throws {
         let c = try decoder.container(keyedBy: CodingKeys.self)
         user = try c.decodeIfPresent(Viewer.self, forKey: .user)
         entitlement = try? c.decodeIfPresent(Entitlement.self, forKey: .entitlement)
         age = try? c.decodeIfPresent(AgeStatus.self, forKey: .age)
+        hasPassword = try? c.decodeIfPresent(Bool.self, forKey: .hasPassword)
     }
 }
 

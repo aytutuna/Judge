@@ -21,10 +21,19 @@ final class AccountModel {
         case choose
         /// The code was emailed to this address.
         case code(email: String)
+        /// Signed in by the code and choosing a password; closing the sheet skips it.
+        case choosePassword
+    }
+
+    /// What the email area is doing: sign in with a password, make an
+    /// account (password first, then the code), reset a password (code
+    /// first, then the password) or sign in by code alone.
+    enum Mode: Equatable {
+        case password, create, forgot, code
     }
 
     enum Busy: Equatable {
-        case apple, google, sendCode, verifyCode, signOut, delete
+        case apple, google, sendCode, verifyCode, password, signOut, delete
     }
 
     /// Something to tell the user that is not a form error.
@@ -42,6 +51,11 @@ final class AccountModel {
         case rateLimited
         case unavailable
         case offline
+        case passwordWrong
+        case passwordShort
+        case passwordSaveFailed
+        case currentPasswordWrong
+        case currentPasswordRequired
         case deleteFailed
         case loadFailed
     }
@@ -55,6 +69,11 @@ final class AccountModel {
     var notice: Notice?
     var email = ""
     var code = ""
+    var mode: Mode = .password
+    /// Kept in memory only, until the account has it or the sheet is left.
+    var password = ""
+    /// A password was just saved from Settings.
+    private(set) var passwordSaved = false
     var isSignInPresented = false
 
     /// The phone's answer, asked at most once per run; nil until it answered.
@@ -105,6 +124,7 @@ final class AccountModel {
     }
 
     var user: Viewer? { info?.user }
+    var hasPassword: Bool { info?.hasPassword == true }
     var entitlement: Entitlement? { info?.entitlement }
 
     var signInProviders: SignInProviders? {
@@ -383,6 +403,9 @@ final class AccountModel {
         failure = nil
         if notice == .sessionExpired, isSignedIn { notice = nil }
         guard isSignedIn else { return }
+        password = ""
+        mode = .password
+        if step == .choosePassword { step = .choose }
         // A report that failed leaves the age sheet up; the action waits for it.
         if ageCleared { action?() } else { afterAge = action }
     }
@@ -429,7 +452,16 @@ final class AccountModel {
         return value.range(of: #"^[^\s@]+@[^\s@]+\.[^\s@]+$"#, options: .regularExpression) != nil
     }
 
-    var canSendCode: Bool { busy == nil && ageAllowsSignIn && !email.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }
+    static let passwordMin = 8
+
+    var passwordSignIn: Bool { signInProviders?.passwordSignIn == true }
+
+    private var hasEmail: Bool { !email.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }
+
+    var canSendCode: Bool {
+        busy == nil && ageAllowsSignIn && hasEmail && (mode != .create || !password.isEmpty)
+    }
+    var canSignInWithPassword: Bool { busy == nil && ageAllowsSignIn && hasEmail && !password.isEmpty }
     var canVerifyCode: Bool { busy == nil && Self.digits(code).count == Self.codeLength }
 
     /// Keeps digits only, at most six (paste-friendly).
@@ -442,6 +474,10 @@ final class AccountModel {
         guard busy == nil, ageAllowsSignIn else { return }
         guard Self.isPlausibleEmail(address) else {
             failure = .emailInvalid
+            return
+        }
+        if passwordSignIn, mode == .create, password.count < Self.passwordMin {
+            failure = .passwordShort
             return
         }
         busy = .sendCode
@@ -466,12 +502,98 @@ final class AccountModel {
         }
         busy = .verifyCode
         failure = nil
-        defer { busy = nil }
+        let setsPassword = passwordSignIn && (mode == .create || mode == .forgot)
         do {
             let session = try await api.signInWithCode(email: address, code: entered)
-            await finishSignIn(session)
+            await finishSignIn(session, choosePassword: setsPassword)
         } catch {
             failure = Self.codeFailure(error)
+        }
+        busy = nil
+        // Create asked for the password up front: save it now that the
+        // address is proven. A failure leaves the form up to retry or skip.
+        if step == .choosePassword, mode == .create, password.count >= Self.passwordMin {
+            await saveChosenPassword()
+        }
+    }
+
+    // MARK: - Password
+
+    func signInWithPassword() async {
+        let address = email.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard busy == nil, ageAllowsSignIn, !password.isEmpty else { return }
+        guard Self.isPlausibleEmail(address) else {
+            failure = .emailInvalid
+            return
+        }
+        busy = .password
+        failure = nil
+        defer { busy = nil }
+        do {
+            let session = try await api.signInWithPassword(email: address, password: password)
+            await finishSignIn(session)
+        } catch {
+            failure = Self.passwordFailure(error)
+        }
+    }
+
+    func setMode(_ mode: Mode) {
+        guard busy == nil else { return }
+        self.mode = mode
+        password = ""
+        failure = nil
+    }
+
+    /// The password form after a code sign-in: saves what was typed, then
+    /// closes the sheet.
+    func saveChosenPassword() async {
+        if await storePassword(password, current: nil) { isSignInPresented = false }
+    }
+
+    /// Settings: sets or replaces the password. `current` is needed to
+    /// replace one unless the session is a fresh code sign-in.
+    func changePassword(_ new: String, current: String?) async -> Bool {
+        passwordSaved = false
+        guard await storePassword(new, current: current) else { return false }
+        passwordSaved = true
+        return true
+    }
+
+    /// The Password row was opened: forget the last attempt.
+    func beginPasswordChange() {
+        failure = nil
+        passwordSaved = false
+    }
+
+    /// Whether Settings offers the Password row: the server has passwords
+    /// and says whether this account has one.
+    var canManagePassword: Bool {
+        isSignedIn && serverConfig?.signIn.passwordSignIn == true && info?.hasPassword != nil
+    }
+
+    private func storePassword(_ new: String, current: String?) async -> Bool {
+        guard isSignedIn, busy == nil else { return false }
+        guard new.count >= Self.passwordMin else {
+            failure = .passwordShort
+            return false
+        }
+        busy = .password
+        failure = nil
+        defer { busy = nil }
+        let asked = api.tokenStore.token()
+        do {
+            try await api.setPassword(new, current: current)
+            guard isSameSession(asked) else { return false }
+            info?.hasPassword = true
+            password = ""
+            return true
+        } catch let error as APIError where error.code == "signin_required" {
+            guard isSameSession(asked) else { return false }
+            sessionExpired()
+            return false
+        } catch {
+            failure = Self.passwordSaveFailure(error)
+            return false
         }
     }
 
@@ -497,14 +619,20 @@ final class AccountModel {
 
     // MARK: - Session
 
-    private func finishSignIn(_ session: AuthSession) async {
+    /// `choosePassword` keeps the sheet open on the password form: the
+    /// account exists now, and closing the sheet skips the password.
+    private func finishSignIn(_ session: AuthSession, choosePassword: Bool = false) async {
         api.tokenStore.setToken(session.token)
         isSignedIn = true
         info = session.user.map { AccountInfo(user: $0, entitlement: nil) }
         notice = nil
         failure = nil
-        step = .choose
+        step = choosePassword ? .choosePassword : .choose
         code = ""
+        if !choosePassword {
+            password = ""
+            mode = .password
+        }
         // The verdict waiting behind sign-in needs the age on record first:
         // read the account and report the box (or the phone's 18+) before
         // the sheet closes.
@@ -515,7 +643,7 @@ final class AccountModel {
             known = true
             await settleAge()
         }
-        isSignInPresented = false
+        if !choosePassword { isSignInPresented = false }
         if let id = info?.user?.id ?? session.user?.id { onUserKnown?(id) }
         if usesNetwork, !known {
             Task { await refresh() }
@@ -606,6 +734,9 @@ final class AccountModel {
         failure = nil
         step = .choose
         code = ""
+        password = ""
+        mode = .password
+        passwordSaved = false
         onSessionEnded?(byUser)
     }
 
@@ -622,6 +753,26 @@ final class AccountModel {
         }
         if let api = error as? APIError { return serverFailure(api) ?? .signInFailed }
         return .signInFailed
+    }
+
+    /// A wrong password, an unknown address and an account without a
+    /// password all answer 401 alike.
+    static func passwordFailure(_ error: any Error) -> Failure? {
+        if APIError.isCancellation(error) { return nil }
+        guard let api = error as? APIError else { return .signInFailed }
+        if case .server(let status, _) = api, status == 401 { return .passwordWrong }
+        return serverFailure(api) ?? .signInFailed
+    }
+
+    static func passwordSaveFailure(_ error: any Error) -> Failure? {
+        if APIError.isCancellation(error) { return nil }
+        guard let api = error as? APIError else { return .passwordSaveFailed }
+        switch api.code {
+        case "too_short", "too_long": return .passwordShort
+        case "password_wrong": return .currentPasswordWrong
+        case "password_required": return .currentPasswordRequired
+        default: return serverFailure(api) ?? .passwordSaveFailed
+        }
     }
 
     static func sendFailure(_ error: any Error) -> Failure? {
@@ -673,6 +824,11 @@ extension AccountModel.Failure {
         case .rateLimited: return L10n.appSigninRateLimited(lang)
         case .unavailable: return L10n.appSigninUnavailable(lang)
         case .offline: return L10n.appErrorOffline(lang)
+        case .passwordWrong: return L10n.signinPasswordWrong(lang)
+        case .passwordShort: return L10n.signinPasswordShort(lang)
+        case .passwordSaveFailed: return L10n.signinPasswordSaveFailed(lang)
+        case .currentPasswordWrong: return L10n.errorPasswordWrong(lang)
+        case .currentPasswordRequired: return L10n.errorPasswordRequired(lang)
         case .deleteFailed: return L10n.accountDeleteFailed(lang)
         case .loadFailed: return L10n.accountLoadFailed(lang)
         }
@@ -697,6 +853,7 @@ extension AccountModel {
         info: AccountInfo? = nil,
         step: Step = .choose,
         email: String = "",
+        mode: Mode = .password,
         config: ServerConfig? = nil
     ) {
         usesNetwork = false
@@ -708,6 +865,7 @@ extension AccountModel {
         }
         self.step = step
         self.email = email
+        self.mode = mode
     }
 
     /// Tests: a loaded config and account, keeping the network on.

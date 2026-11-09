@@ -459,6 +459,238 @@ final class AccountTests: XCTestCase {
         XCTAssertEqual(account.step, .choose)
     }
 
+    // MARK: - Password
+
+    @MainActor
+    private func passwordModel(_ store: any TokenStore = MemoryTokenStore()) -> AccountModel {
+        let account = model(store)
+        account.preload(config: ServerConfig(signIn: SignInProviders(emailCode: true, password: true)), info: nil)
+        return account
+    }
+
+    func testPasswordFlagsDecodeLeniently() throws {
+        let on = try JSONDecoder().decode(ServerConfig.self, from: Data(#"{"signIn":{"emailCode":true,"password":true}}"#.utf8))
+        XCTAssertTrue(on.signIn.passwordSignIn)
+        let old = try JSONDecoder().decode(ServerConfig.self, from: Data(#"{"signIn":{"emailCode":true}}"#.utf8))
+        XCTAssertFalse(old.signIn.passwordSignIn)
+        let alone = try JSONDecoder().decode(ServerConfig.self, from: Data(#"{"signIn":{"password":true}}"#.utf8))
+        XCTAssertFalse(alone.signIn.passwordSignIn, "a password needs the code to make the account")
+
+        let me = try JSONDecoder().decode(AccountInfo.self, from: Data(#"{"user":{"id":"u1","email":"a@b.co","name":""},"hasPassword":true}"#.utf8))
+        XCTAssertEqual(me.hasPassword, true)
+        let oldMe = try JSONDecoder().decode(AccountInfo.self, from: Data(#"{"user":{"id":"u1","email":"a@b.co","name":""}}"#.utf8))
+        XCTAssertNil(oldMe.hasPassword)
+    }
+
+    @MainActor
+    func testPasswordSignIn() async throws {
+        route([
+            "/api/auth/sign-in/email": try json(200, ["token": "sess-pw", "user": Self.userJSON, "redirect": false]),
+            "/api/v1/me": try json(200, Self.meJSON),
+        ])
+        let store = MemoryTokenStore()
+        let account = passwordModel(store)
+        account.email = " Ann@Example.com "
+        account.password = "correct horse"
+        XCTAssertTrue(account.canSignInWithPassword)
+        await account.signInWithPassword()
+        XCTAssertEqual(store.token(), "sess-pw")
+        XCTAssertTrue(account.isSignedIn)
+        XCTAssertEqual(account.password, "")
+        XCTAssertEqual(try body(request("/api/auth/sign-in/email")) as? [String: String], ["email": "Ann@Example.com", "password": "correct horse"])
+    }
+
+    @MainActor
+    func testWrongPasswordIsOneGenericFailure() async throws {
+        route(["/api/auth/sign-in/email": try json(401, ["message": "Invalid email or password", "code": "INVALID_EMAIL_OR_PASSWORD"])])
+        let store = MemoryTokenStore()
+        let account = passwordModel(store)
+        account.email = "ann@example.com"
+        account.password = "not it"
+        await account.signInWithPassword()
+        XCTAssertEqual(account.failure, .passwordWrong)
+        XCTAssertNil(store.token())
+        XCTAssertFalse(account.isSignedIn)
+        XCTAssertEqual(account.password, "not it", "kept so it can be corrected")
+    }
+
+    @MainActor
+    func testPasswordSignInRateLimitedAndDown() async throws {
+        route(["/api/auth/sign-in/email": try json(429, ["code": "RATE_LIMITED"])])
+        let account = passwordModel()
+        account.email = "ann@example.com"
+        account.password = "whatever1"
+        await account.signInWithPassword()
+        XCTAssertEqual(account.failure, .rateLimited)
+
+        route(["/api/auth/sign-in/email": try json(404, ["message": "Not found"])])
+        await account.signInWithPassword()
+        XCTAssertEqual(account.failure, .unavailable)
+    }
+
+    @MainActor
+    func testCreateAccountAsksTheCodeThenSavesThePassword() async throws {
+        route([
+            "/api/auth/email-otp/send-verification-otp": try json(200, ["success": true]),
+            "/api/auth/sign-in/email-otp": try json(200, ["token": "sess-code", "user": Self.userJSON]),
+            "/api/v1/me/password": try json(200, ["ok": true]),
+            "/api/v1/me": try json(200, Self.meJSON),
+        ])
+        let store = MemoryTokenStore()
+        let account = passwordModel(store)
+        account.isSignInPresented = true
+        account.setMode(.create)
+        account.email = "ann@example.com"
+        account.password = "short"
+        await account.sendCode(lang: .en)
+        XCTAssertEqual(account.failure, .passwordShort)
+        XCTAssertTrue(StubURLProtocol.requests.isEmpty, "no email for a password that will be refused")
+
+        account.password = "long enough"
+        await account.sendCode(lang: .en)
+        XCTAssertEqual(account.step, .code(email: "ann@example.com"))
+        account.code = "123456"
+        await account.verifyCode()
+
+        let save = try XCTUnwrap(request("/api/v1/me/password"))
+        XCTAssertEqual(save.value(forHTTPHeaderField: "Authorization"), "Bearer sess-code")
+        XCTAssertEqual(try body(save) as? [String: String], ["password": "long enough"])
+        XCTAssertTrue(account.isSignedIn)
+        XCTAssertFalse(account.isSignInPresented)
+        XCTAssertEqual(account.password, "")
+        XCTAssertEqual(account.mode, .create, "the sheet resets it when it closes")
+        account.signInDismissed()
+        XCTAssertEqual(account.mode, .password)
+    }
+
+    @MainActor
+    func testAFailedSaveAfterTheCodeKeepsThePersonSignedIn() async throws {
+        route([
+            "/api/auth/email-otp/send-verification-otp": try json(200, ["success": true]),
+            "/api/auth/sign-in/email-otp": try json(200, ["token": "sess-code", "user": Self.userJSON]),
+            "/api/v1/me/password": try json(503, ["code": "unavailable"]),
+            "/api/v1/me": try json(200, Self.meJSON),
+        ])
+        let store = MemoryTokenStore()
+        let account = passwordModel(store)
+        account.isSignInPresented = true
+        account.setMode(.create)
+        account.email = "ann@example.com"
+        account.password = "long enough"
+        await account.sendCode(lang: .en)
+        account.code = "123456"
+        await account.verifyCode()
+        XCTAssertEqual(store.token(), "sess-code")
+        XCTAssertTrue(account.isSignedIn)
+        XCTAssertEqual(account.step, .choosePassword)
+        XCTAssertTrue(account.isSignInPresented, "the form stays up to retry or skip")
+        XCTAssertEqual(account.failure, .unavailable)
+
+        route(["/api/v1/me/password": try json(200, ["ok": true])])
+        await account.saveChosenPassword()
+        XCTAssertFalse(account.isSignInPresented)
+        XCTAssertNil(account.failure)
+    }
+
+    @MainActor
+    func testForgotPasswordAsksForANewOneAfterTheCode() async throws {
+        route([
+            "/api/auth/email-otp/send-verification-otp": try json(200, ["success": true]),
+            "/api/auth/sign-in/email-otp": try json(200, ["token": "sess-code", "user": Self.userJSON]),
+            "/api/v1/me/password": try json(200, ["ok": true]),
+            "/api/v1/me": try json(200, Self.meJSON),
+        ])
+        let account = passwordModel()
+        account.isSignInPresented = true
+        account.setMode(.forgot)
+        account.email = "ann@example.com"
+        await account.sendCode(lang: .en)
+        account.code = "123456"
+        await account.verifyCode()
+        XCTAssertEqual(account.step, .choosePassword)
+        XCTAssertNil(request("/api/v1/me/password"), "nothing is saved until a password is typed")
+
+        account.password = "brand new one"
+        await account.saveChosenPassword()
+        XCTAssertEqual(try body(request("/api/v1/me/password")) as? [String: String], ["password": "brand new one"])
+        XCTAssertFalse(account.isSignInPresented)
+    }
+
+    @MainActor
+    func testCodeSignInIsUnchangedWhenTheServerHasNoPasswords() async throws {
+        route([
+            "/api/auth/email-otp/send-verification-otp": try json(200, ["success": true]),
+            "/api/auth/sign-in/email-otp": try json(200, ["token": "sess-code", "user": Self.userJSON]),
+            "/api/v1/me": try json(200, Self.meJSON),
+        ])
+        let account = model()
+        account.preload(config: ServerConfig(signIn: SignInProviders(emailCode: true)), info: nil)
+        account.isSignInPresented = true
+        account.setMode(.create)
+        account.email = "ann@example.com"
+        await account.sendCode(lang: .en)
+        account.code = "123456"
+        await account.verifyCode()
+        XCTAssertEqual(account.step, .choose)
+        XCTAssertFalse(account.isSignInPresented)
+        XCTAssertNil(request("/api/v1/me/password"))
+    }
+
+    @MainActor
+    func testChangingAPasswordNeedsTheCurrentOne() async throws {
+        let store = MemoryTokenStore()
+        store.setToken("sess-1")
+        let account = model(store)
+        account.preload(
+            config: ServerConfig(signIn: SignInProviders(emailCode: true, password: true)),
+            info: AccountInfo(user: Viewer(id: "u1", email: "ann@example.com"), entitlement: nil, hasPassword: true)
+        )
+        XCTAssertTrue(account.canManagePassword)
+        XCTAssertTrue(account.hasPassword)
+
+        route(["/api/v1/me/password": try json(403, ["error": "Wrong password", "code": "password_wrong"])])
+        let wrong = await account.changePassword("another one", current: "guess")
+        XCTAssertFalse(wrong)
+        XCTAssertEqual(account.failure, .currentPasswordWrong)
+        XCTAssertEqual(try body(request("/api/v1/me/password")) as? [String: String], ["password": "another one", "current": "guess"])
+
+        route(["/api/v1/me/password": try json(200, ["ok": true])])
+        let saved = await account.changePassword("another one", current: "right one")
+        XCTAssertTrue(saved)
+        XCTAssertTrue(account.passwordSaved)
+        XCTAssertNil(account.failure)
+        XCTAssertTrue(account.isSignedIn)
+    }
+
+    @MainActor
+    func testThePasswordRowNeedsAServerThatReportsIt() {
+        let store = MemoryTokenStore()
+        store.setToken("sess-1")
+        let account = model(store)
+        let config = ServerConfig(signIn: SignInProviders(emailCode: true, password: true))
+        account.preload(config: config, info: AccountInfo(user: Viewer(id: "u1", email: "ann@example.com"), entitlement: nil))
+        XCTAssertFalse(account.canManagePassword, "an older server sends no hasPassword")
+        account.preload(
+            config: ServerConfig(signIn: SignInProviders(emailCode: true)),
+            info: AccountInfo(user: Viewer(id: "u1", email: "ann@example.com"), entitlement: nil, hasPassword: false)
+        )
+        XCTAssertFalse(account.canManagePassword)
+    }
+
+    @MainActor
+    func testPasswordSaveFailuresMap() {
+        func failure(_ status: Int, _ code: String) -> AccountModel.Failure? {
+            AccountModel.passwordSaveFailure(APIError.server(status: status, body: ApiErrorBody(code: code)))
+        }
+        XCTAssertEqual(failure(400, "too_short"), .passwordShort)
+        XCTAssertEqual(failure(400, "too_long"), .passwordShort)
+        XCTAssertEqual(failure(403, "password_required"), .currentPasswordRequired)
+        XCTAssertEqual(failure(429, "rate_limited"), .rateLimited)
+        XCTAssertEqual(failure(400, "invalid"), .passwordSaveFailed)
+        XCTAssertEqual(AccountModel.passwordSaveFailure(APIError.offline), .offline)
+        XCTAssertEqual(ErrorText.apiErrorMessage(ApiErrorBody(code: "password_wrong"), status: 403, lang: .en), L10n.errorPasswordWrong(.en))
+    }
+
     func testFailureMessagesAreLocalized() {
         XCTAssertEqual(AccountModel.Failure.codeInvalid.message(.en), L10n.appSigninCodeInvalid(.en))
         XCTAssertEqual(AccountModel.Failure.codeTooMany.message(.tr), L10n.appSigninCodeTooMany(.tr))

@@ -360,7 +360,7 @@ struct ScreenshotState {
     }
 
     private static let email = "sam@example.com"
-    private static let allProviders = SignInProviders(apple: true, google: true, email: true, emailCode: true)
+    private static let allProviders = SignInProviders(apple: true, google: true, email: true, emailCode: true, password: true)
 }
 
 /// A store that already has its prices and never sells (screenshots).
