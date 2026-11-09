@@ -13,7 +13,7 @@
 
 import { createHash, createHmac } from "node:crypto";
 import { LibsqlDialect } from "@libsql/kysely-libsql";
-import { betterAuth, type Auth, type BetterAuthOptions, type BetterAuthPlugin } from "better-auth";
+import { betterAuth, type Auth, type AuthContext, type BetterAuthOptions, type BetterAuthPlugin } from "better-auth";
 import { APIError, createAuthMiddleware } from "better-auth/api";
 import { makeSignature } from "better-auth/crypto";
 import { getMigrations } from "better-auth/db/migration";
@@ -30,7 +30,8 @@ import {
   sendSignInEmail,
 } from "./email";
 import { ensureEntitlementTables, grantMissedWelcomeCredit, grantWelcomeCredit } from "./entitlements";
-import { checkUserLimits } from "./ratelimit";
+import { clientIp } from "./client-ip";
+import { checkUserLimits, visitorKey } from "./ratelimit";
 import { captureAppleRefreshToken, deleteSignInTokens, keepCapturedAppleRefreshToken } from "./signin-tokens";
 import { signal } from "./signals";
 
@@ -206,6 +207,23 @@ const withoutProviderTokens = <T extends Record<string, unknown>>(account: T) =>
  * Auth awaits sendVerificationOTP but swallows its errors, so the after hook
  * turns this flag into the error reply. */
 const CODE_NOT_SENT = "codeNotSent";
+/** The code row a send is about to replace, put back if the new email fails. */
+const PREVIOUS_CODE = "previousCode";
+type CodeRow = { value: string; expiresAt: Date };
+
+const codeIdentifier = (email: string) => `sign-in-otp-${email.trim().toLowerCase()}`;
+
+/** Flags the failed send and puts the previous code back: the library
+ * replaces the row before sending, which would kill a code already delivered. */
+async function keepPreviousCode(context: AuthContext, email: string): Promise<void> {
+  const flags = context as unknown as Record<string, unknown>;
+  flags[CODE_NOT_SENT] = true;
+  const previous = flags[PREVIOUS_CODE] as CodeRow | undefined;
+  if (!previous) return;
+  const identifier = codeIdentifier(email);
+  await context.internalAdapter.deleteVerificationByIdentifier(identifier);
+  await context.internalAdapter.createVerificationValue({ identifier, ...previous });
+}
 
 function buildOptions(env: Env, secret: string, client: Awaited<ReturnType<typeof getDb>>) {
   const origin = configuredOrigin(env);
@@ -246,7 +264,7 @@ function buildOptions(env: Env, secret: string, client: Awaited<ReturnType<typeo
           try {
             await sendSignInCodeEmail({ to: email, code: otp, lang: langFromRequestUrl(ctx?.request?.url) });
           } catch (e) {
-            if (ctx) (ctx.context as Record<string, unknown>)[CODE_NOT_SENT] = true;
+            if (ctx) await keepPreviousCode(ctx.context, email);
             throw e;
           }
         },
@@ -324,6 +342,7 @@ function buildOptions(env: Env, secret: string, client: Awaited<ReturnType<typeo
     emailAndPassword: {
       enabled: emailConfigured(env),
       disableSignUp: true,
+      requireEmailVerification: true,
       minPasswordLength: PASSWORD_MIN,
       maxPasswordLength: PASSWORD_MAX,
     },
@@ -354,6 +373,19 @@ function buildOptions(env: Env, secret: string, client: Awaited<ReturnType<typeo
       "/email-otp/reset-password",
       "/email-otp/request-email-change",
       "/email-otp/change-email",
+      // Session and account management nothing here calls. The session list
+      // hands out raw tokens, the account list and unlink would let a young
+      // session remove the password row and start over, and /verify-password
+      // is a password check with no limit of its own.
+      "/list-sessions",
+      "/revoke-session",
+      "/revoke-sessions",
+      "/revoke-other-sessions",
+      "/update-session",
+      "/list-accounts",
+      "/unlink-account",
+      "/verify-password",
+      "/delete-user",
     ],
     rateLimit: {
       enabled: production,
@@ -370,16 +402,32 @@ function buildOptions(env: Env, secret: string, client: Awaited<ReturnType<typeo
       // Codes are for signing in only (no email verification, password or
       // email-change codes).
       before: createAuthMiddleware(async (ctx) => {
-        if (ctx.path === SEND_CODE_PATH && (ctx.body as { type?: unknown } | undefined)?.type !== "sign-in") {
-          throw new APIError("BAD_REQUEST", { message: "Only sign-in codes are supported" });
+        if (ctx.path === SEND_CODE_PATH) {
+          const body = ctx.body as { type?: unknown; email?: unknown } | undefined;
+          if (body?.type !== "sign-in") throw new APIError("BAD_REQUEST", { message: "Only sign-in codes are supported" });
+          if (typeof body.email === "string") {
+            const row = await ctx.context.internalAdapter.findVerificationValue(codeIdentifier(body.email));
+            if (row && row.expiresAt > new Date()) {
+              (ctx.context as unknown as Record<string, unknown>)[PREVIOUS_CODE] = { value: row.value, expiresAt: row.expiresAt };
+            }
+          }
         }
         if (ctx.path === PASSWORD_SIGNIN_PATH) {
           // Every address counts the same, known or not, so the refusal
-          // says nothing about whether the account exists.
+          // says nothing about whether the account exists. The bucket is per
+          // address and IP: keyed by address alone, anyone could keep a
+          // victim's address locked from anywhere.
           const email = (ctx.body as { email?: unknown } | undefined)?.email;
-          const key = typeof email === "string" ? welcomeClaim(email) : null;
-          if (key && !(await checkUserLimits(key, "password_signin")).ok) {
-            throw new APIError("TOO_MANY_REQUESTS", { message: "Too many attempts", code: "RATE_LIMITED" });
+          const claim = typeof email === "string" ? welcomeClaim(email) : null;
+          if (claim) {
+            const ip = clientIp(ctx.headers ?? ctx.request?.headers ?? new Headers());
+            const limit = await checkUserLimits(`${claim}:${visitorKey(ip)}`, "password_signin");
+            if (!limit.ok) {
+              if (limit.code === "unavailable") {
+                throw new APIError("SERVICE_UNAVAILABLE", { message: "Sign-in is unavailable right now.", code: "unavailable" });
+              }
+              throw new APIError("TOO_MANY_REQUESTS", { message: "Too many attempts", code: "RATE_LIMITED" });
+            }
           }
         }
       }),

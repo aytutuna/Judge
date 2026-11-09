@@ -161,6 +161,30 @@ describe("password sign-in", () => {
     }
   });
 
+  it("keeps the session, account and password-check routes closed", async () => {
+    const sent = emailOn();
+    const token = await codeSignIn(sent, "closed@example.com");
+    await setPassword(token, { password: "correct horse" });
+    const bearer = { authorization: `Bearer ${token}` };
+    for (const p of [
+      "/unlink-account",
+      "/list-accounts",
+      "/list-sessions",
+      "/revoke-session",
+      "/revoke-sessions",
+      "/revoke-other-sessions",
+      "/update-session",
+      "/verify-password",
+      "/delete-user",
+    ]) {
+      expect((await post(p, { password: "correct horse", accountId: "x", token: "x" }, bearer)).status, p).toBe(404);
+    }
+    const list = await (await auth.getAuth()).handler(
+      new Request(`${ORIGIN}/api/auth/list-sessions`, { headers: bearer }),
+    );
+    expect(list.status).toBe(404);
+  });
+
   it("is off without email credentials", async () => {
     vi.stubEnv("RESEND_API_KEY", "");
     vi.stubEnv("EMAIL_FROM", "");
@@ -181,6 +205,14 @@ describe("password sign-in", () => {
       expect(statuses.slice(0, 10).every((s) => s === 401)).toBe(true);
       expect(statuses.slice(10)).toEqual([429, 429]);
     }
+  });
+
+  it("counts attempts per address and IP, so one visitor cannot lock the address for everyone", async () => {
+    emailOn();
+    const from = (n: number) => ({ "x-forwarded-for": `198.51.100.${n}` });
+    for (let i = 0; i < 10; i++) await signInPassword("target@example.com", "wrong password", from(1));
+    expect((await signInPassword("target@example.com", "wrong password", from(1))).status).toBe(429);
+    expect((await signInPassword("target@example.com", "wrong password", from(2))).status).toBe(401);
   });
 
   it("is rate limited per IP in production", async () => {
@@ -310,6 +342,42 @@ describe("POST /api/v1/me/password", () => {
     expect((await me(first)).status).toBe(401);
   });
 
+  it("refuses a password for an address that was never verified", async () => {
+    const sent = emailOn();
+    const token = await codeSignIn(sent, "unproven@example.com");
+    const db = await getDb();
+    await db.execute({ sql: 'UPDATE "user" SET emailVerified = 0 WHERE email = ?', args: ["unproven@example.com"] });
+    const res = await setPassword(token, { password: "correct horse" });
+    expect(res.status).toBe(403);
+    expect((await signInPassword("unproven@example.com", "correct horse")).status).toBe(401);
+  });
+
+  it("refuses password sign-in once the address is no longer verified", async () => {
+    const sent = emailOn();
+    const token = await codeSignIn(sent, "lapsed@example.com");
+    await setPassword(token, { password: "correct horse" });
+    const db = await getDb();
+    await db.execute({ sql: 'UPDATE "user" SET emailVerified = 0 WHERE email = ?', args: ["lapsed@example.com"] });
+    expect((await signInPassword("lapsed@example.com", "correct horse")).status).toBe(403);
+  });
+
+  it("two first-password requests at once leave one credential row", async () => {
+    const sent = emailOn();
+    const token = await codeSignIn(sent, "race@example.com");
+    const both = await Promise.all([
+      setPassword(token, { password: "first password" }),
+      setPassword(token, { password: "second password" }),
+    ]);
+    expect(both.map((r) => r.status)).toEqual([200, 200]);
+    const db = await getDb();
+    const rs = await db.execute({
+      sql: 'SELECT COUNT(*) AS n FROM account WHERE providerId = ? AND userId = (SELECT id FROM "user" WHERE email = ?)',
+      args: ["credential", "race@example.com"],
+    });
+    expect(Number(rs.rows[0].n)).toBe(1);
+    expect((await signInPassword("race@example.com", "second password")).status).toBe(200);
+  });
+
   it("limits attempts per account", async () => {
     const sent = emailOn();
     const token = await codeSignIn(sent, "spam@example.com");
@@ -347,6 +415,16 @@ describe("the emailed code", () => {
     );
     vi.spyOn(console, "error").mockImplementation(() => {});
     expect((await sendCode("offline@example.com")).status).toBe(503);
+  });
+
+  it("a failed resend leaves the code already delivered usable", async () => {
+    const sent = emailOn();
+    vi.spyOn(console, "error").mockImplementation(() => {});
+    expect((await sendCode("resend@example.com")).status).toBe(200);
+    const first = codeFrom(sent[0]);
+    resendStatus = 500;
+    expect((await sendCode("resend@example.com")).status).toBe(503);
+    expect((await post("/sign-in/email-otp", { email: "resend@example.com", otp: first })).status).toBe(200);
   });
 
   it("the review account still gets its fixed code and no email", async () => {

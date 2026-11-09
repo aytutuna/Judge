@@ -17,33 +17,52 @@ export async function hasPassword(userId: string): Promise<boolean> {
   return Boolean((await ctx.internalAdapter.findCredentialAccount(userId))?.password);
 }
 
-export type PasswordResult = "ok" | "current_required" | "current_wrong";
+export type PasswordResult = "ok" | "current_required" | "current_wrong" | "unverified";
+
+/** Writes for one account run one at a time, so two first-password requests
+ * cannot both create a credential row. */
+const chains = new Map<string, Promise<unknown>>();
+
+function serial<T>(userId: string, work: () => Promise<T>): Promise<T> {
+  const run = (chains.get(userId) ?? Promise.resolve()).then(work, work);
+  const tail = run.catch(() => {});
+  chains.set(userId, tail);
+  void tail.then(() => {
+    if (chains.get(userId) === tail) chains.delete(userId);
+  });
+  return run;
+}
 
 /** Sets the password, or replaces it when the account has one: that needs
- * `current`, or a session created within FRESH_SIGNIN_MS. Every other session
- * of the account is signed out afterwards. */
-export async function setPassword(
+ * `current`, or a session created within FRESH_SIGNIN_MS. An address that was
+ * never verified gets none. Every other session of the account is signed out
+ * first, so a failure part way leaves the old password and fewer sessions. */
+export function setPassword(
   userId: string,
   sessionId: string,
   password: string,
   current: string | undefined,
   now = Date.now(),
 ): Promise<PasswordResult> {
-  const ctx = await (await getAuth()).$context;
-  const account = await ctx.internalAdapter.findCredentialAccount(userId);
-  const sessions = await ctx.internalAdapter.listSessions(userId);
-  if (account?.password) {
-    if (current !== undefined) {
-      if (!(await ctx.password.verify({ hash: account.password, password: current }))) return "current_wrong";
-    } else {
-      const mine = sessions.find((s) => s.id === sessionId);
-      if (!mine || now - new Date(mine.createdAt).getTime() > FRESH_SIGNIN_MS) return "current_required";
+  return serial(userId, async () => {
+    const ctx = await (await getAuth()).$context;
+    const user = await ctx.internalAdapter.findUserById(userId);
+    if (!user?.emailVerified) return "unverified";
+    const account = await ctx.internalAdapter.findCredentialAccount(userId);
+    const sessions = await ctx.internalAdapter.listSessions(userId);
+    if (account?.password) {
+      if (current !== undefined) {
+        if (!(await ctx.password.verify({ hash: account.password, password: current }))) return "current_wrong";
+      } else {
+        const mine = sessions.find((s) => s.id === sessionId);
+        if (!mine || now - new Date(mine.createdAt).getTime() > FRESH_SIGNIN_MS) return "current_required";
+      }
     }
-  }
-  const hash = await ctx.password.hash(password);
-  if (account) await ctx.internalAdapter.updateAccount(account.id, { password: hash });
-  else await ctx.internalAdapter.linkAccount({ userId, providerId: "credential", accountId: userId, password: hash });
-  const others = sessions.filter((s) => s.id !== sessionId).map((s) => s.token);
-  if (others.length) await ctx.internalAdapter.deleteSessions(others);
-  return "ok";
+    const hash = await ctx.password.hash(password);
+    const others = sessions.filter((s) => s.id !== sessionId).map((s) => s.token);
+    if (others.length) await ctx.internalAdapter.deleteSessions(others);
+    if (account) await ctx.internalAdapter.updateAccount(account.id, { password: hash });
+    else await ctx.internalAdapter.linkAccount({ userId, providerId: "credential", accountId: userId, password: hash });
+    return "ok";
+  });
 }
