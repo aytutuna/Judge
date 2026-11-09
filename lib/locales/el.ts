@@ -560,7 +560,7 @@ const el: Locale = {
     "card.appeal": "Νέες πληροφορίες, νέα κρίση",
     "home.example": "Δοκίμασε ένα παράδειγμα",
     "home.yourPlaceholder": "Ποιο είναι το πρόβλημα;",
-    "home.addContext": "Πρόσθεσε πλαίσιο",
+    "home.addContext": "Πρόσθεσε πληροφορίες",
     "home.addTheirSide": "Πρόσθεσε την άλλη πλευρά",
     "home.removeTheirSide": "Αφαίρεσε την άλλη πλευρά",
     "home.sendLink": "Στείλε σύνδεσμο",

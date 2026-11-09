@@ -555,7 +555,7 @@ const ur: Locale = {
     "card.appeal": "مزید تفصیل اور نظرثانی",
     "home.example": "کوئی مثال آزمائیں",
     "home.yourPlaceholder": "مسئلہ کیا ہے؟",
-    "home.addContext": "پس منظر شامل کریں",
+    "home.addContext": "تفصیل شامل کریں",
     "home.addTheirSide": "ان کی بات شامل کریں",
     "home.removeTheirSide": "ان کی بات ہٹائیں",
     "home.sendLink": "لنک بھیجیں",

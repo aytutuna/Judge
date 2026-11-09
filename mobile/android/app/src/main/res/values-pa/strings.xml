@@ -391,7 +391,7 @@
     <string name="appeal_title">ਵੇਰਵਾ ਜੋੜੋ</string>
     <string name="home_example">ਕੋਈ ਉਦਾਹਰਨ ਅਜ਼ਮਾਓ</string>
     <string name="home_your_placeholder">ਸਮੱਸਿਆ ਕੀ ਹੈ?</string>
-    <string name="home_add_context">ਸੰਦਰਭ ਜੋੜੋ</string>
+    <string name="home_add_context">ਵੇਰਵਾ ਜੋੜੋ</string>
     <string name="home_add_their_side">ਉਨ੍ਹਾਂ ਦਾ ਪੱਖ ਜੋੜੋ</string>
     <string name="home_remove_their_side">ਉਨ੍ਹਾਂ ਦਾ ਪੱਖ ਹਟਾਓ</string>
     <string name="home_send_link">ਲਿੰਕ ਭੇਜੋ</string>
@@ -565,8 +565,8 @@
     </plurals>
     <string name="app_history_offline_remove">ਤੁਸੀਂ ਆਫ਼ਲਾਈਨ ਹੋ। ਹਟਾਉਣ ਲਈ ਕਨੈਕਸ਼ਨ ਚਾਹੀਦਾ ਹੈ।</string>
     <string name="app_pricing_free_account">Apple, Google ਜਾਂ ਈਮੇਲ ਨਾਲ ਸਾਈਨ ਇਨ ਕਰੋ</string>
-    <string name="app_context_label">ਸੰਦਰਭ (ਵਿਕਲਪਿਕ)</string>
-    <string name="app_pricing_context">ਸੰਦਰਭ ਦੀਆਂ ਤਸਵੀਰਾਂ ਪੜ੍ਹ ਕੇ ਸੁੱਟ ਦਿੱਤੀਆਂ ਜਾਂਦੀਆਂ ਹਨ, ਕੋਈ ਵਾਧੂ ਖ਼ਰਚਾ ਨਹੀਂ</string>
+    <string name="app_context_label">ਵੇਰਵਾ (ਵਿਕਲਪਿਕ)</string>
+    <string name="app_pricing_context">ਵੇਰਵੇ ਦੀਆਂ ਤਸਵੀਰਾਂ ਪੜ੍ਹ ਕੇ ਸੁੱਟ ਦਿੱਤੀਆਂ ਜਾਂਦੀਆਂ ਹਨ, ਕੋਈ ਵਾਧੂ ਖ਼ਰਚਾ ਨਹੀਂ</string>
     <string name="app_pricing_headline">ਪਹਿਲਾ ਫ਼ੈਸਲਾ ਸਾਡੇ ਵੱਲੋਂ।</string>
     <string name="app_pricing_sub">ਖਾਤਾ ਬਣਾਓ ਅਤੇ ਪਹਿਲਾ ਫ਼ੈਸਲਾ ਮੁਫ਼ਤ ਪਾਓ, ਸਾਰੀਆਂ ਸਹੂਲਤਾਂ ਸਮੇਤ। ਉਸ ਤੋਂ ਬਾਅਦ ਕੋਈ ਪੈਕ ਚੁਣੋ ਜਾਂ ਮਹੀਨਾਵਾਰ ਪਲਾਨ ਲਓ।</string>
     <string name="app_pricing_headline_member">ਹੋਰ ਫ਼ੈਸਲੇ ਲਓ।</string>
@@ -627,7 +627,7 @@
     <string name="app_home_your_side_label">ਬਹਿਸ ਵਿੱਚ ਤੁਹਾਡਾ ਪੱਖ</string>
     <string name="app_home_their_side_label">ਬਹਿਸ ਵਿੱਚ ਉਨ੍ਹਾਂ ਦਾ ਪੱਖ</string>
     <string name="app_home_send_link">ਲਿੰਕ ਭੇਜੋ</string>
-    <string name="app_home_add_context">ਸੰਦਰਭ ਜੋੜੋ</string>
+    <string name="app_home_add_context">ਵੇਰਵਾ ਜੋੜੋ</string>
     <string name="app_home_says">%1$s ਦਾ ਕਹਿਣਾ ਹੈ:</string>
     <string name="app_home_my_side">ਮੇਰਾ ਪੱਖ:</string>
     <string name="app_home_other_side">ਉਨ੍ਹਾਂ ਦਾ ਪੱਖ:</string>

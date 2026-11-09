@@ -11720,7 +11720,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "맥락을 두 번 추가했어요. 판결 하나에 추가할 수 있는 최대 횟수예요."
+            "value" : "내용을 두 번 추가했어요. 판결 하나에 추가할 수 있는 최대 횟수예요."
           }
         },
         "ml" : {
@@ -11828,13 +11828,13 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "คุณเพิ่มบริบทไปแล้ว 2 ครั้ง ซึ่งเป็นจำนวนสูงสุดต่อหนึ่งคำตัดสิน"
+            "value" : "คุณเพิ่มรายละเอียดไปแล้ว 2 ครั้ง ซึ่งเป็นจำนวนสูงสุดต่อหนึ่งคำตัดสิน"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "İki kez bağlam ekledin. Bir karar için sınır bu."
+            "value" : "İki kez ayrıntı ekledin. Bir karar için sınır bu."
           }
         },
         "uk" : {
@@ -12272,7 +12272,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "로그인하고 맥락 추가·재심 요청"
+            "value" : "로그인하고 내용 추가·재심 요청"
           }
         },
         "ml" : {
@@ -12380,13 +12380,13 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "เข้าสู่ระบบเพื่อเพิ่มบริบทและขอตัดสินใหม่"
+            "value" : "เข้าสู่ระบบเพื่อเพิ่มรายละเอียดและขอตัดสินใหม่"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bağlam ekleyip itiraz etmek için giriş yap"
+            "value" : "Ayrıntı ekleyip itiraz etmek için giriş yap"
           }
         },
         "uk" : {
@@ -12824,7 +12824,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "맥락 추가·재심 요청"
+            "value" : "내용 추가·재심 요청"
           }
         },
         "ml" : {
@@ -12932,13 +12932,13 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "เพิ่มบริบทและขอตัดสินใหม่"
+            "value" : "เพิ่มรายละเอียดและขอตัดสินใหม่"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bağlam ekle ve itiraz et"
+            "value" : "Ayrıntı ekle ve itiraz et"
           }
         },
         "uk" : {
@@ -13100,7 +13100,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "빠진 내용이 있나요? 맥락을 추가하고 판결 1회로 다시 판결 받아 보세요."
+            "value" : "빠진 내용이 있나요? 내용을 추가하고 판결 1회로 다시 판결 받아 보세요."
           }
         },
         "ml" : {
@@ -13208,13 +13208,13 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "มีอะไรขาดไปไหม? เพิ่มบริบทแล้วให้ตัดสินใหม่ ใช้คำตัดสิน 1 ครั้ง"
+            "value" : "มีอะไรขาดไปไหม? เพิ่มรายละเอียดแล้วให้ตัดสินใหม่ ใช้คำตัดสิน 1 ครั้ง"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Eksik bir şey mi var? Bağlam ekle, 1 karar hakkıyla yeniden yargılansın."
+            "value" : "Eksik bir şey mi var? Ayrıntı ekle, 1 karar hakkıyla yeniden yargılansın."
           }
         },
         "uk" : {
@@ -13376,7 +13376,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "이 사건에는 이미 맥락을 추가했어요."
+            "value" : "이 사건에는 이미 내용을 추가했어요."
           }
         },
         "ml" : {
@@ -13484,13 +13484,13 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "คุณเพิ่มบริบทในเคสนี้ไปแล้ว"
+            "value" : "คุณเพิ่มรายละเอียดในเคสนี้ไปแล้ว"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bu davaya zaten bağlam ekledin."
+            "value" : "Bu davaya zaten ayrıntı ekledin."
           }
         },
         "uk" : {
@@ -19142,13 +19142,13 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "سياق (اختياري)"
+            "value" : "توضيح (اختياري)"
           }
         },
         "bn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "প্রসঙ্গ (ঐচ্ছিক)"
+            "value" : "নতুন তথ্য (ঐচ্ছিক)"
           }
         },
         "ca" : {
@@ -19178,7 +19178,7 @@
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Πλαίσιο (προαιρετικά)"
+            "value" : "Πληροφορίες (προαιρετικά)"
           }
         },
         "en" : {
@@ -19196,7 +19196,7 @@
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tausta (valinnainen)"
+            "value" : "Lisätiedot (valinnainen)"
           }
         },
         "fr" : {
@@ -19208,7 +19208,7 @@
         "gu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "સંદર્ભ (વૈકલ્પિક)"
+            "value" : "વિગત (વૈકલ્પિક)"
           }
         },
         "he" : {
@@ -19220,7 +19220,7 @@
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "संदर्भ (वैकल्पिक)"
+            "value" : "जानकारी (वैकल्पिक)"
           }
         },
         "hr" : {
@@ -19232,7 +19232,7 @@
         "hu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Háttér (nem kötelező)"
+            "value" : "Kiegészítés (nem kötelező)"
           }
         },
         "id" : {
@@ -19250,31 +19250,31 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "状況の補足（任意）"
+            "value" : "補足（任意）"
           }
         },
         "kn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ಹಿನ್ನೆಲೆ (ಐಚ್ಛಿಕ)"
+            "value" : "ವಿವರ (ಐಚ್ಛಿಕ)"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "상황 설명 (선택)"
+            "value" : "추가 내용 (선택)"
           }
         },
         "ml" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "സാഹചര്യം (ഓപ്ഷണൽ)"
+            "value" : "വിവരം (ഓപ്ഷണൽ)"
           }
         },
         "mr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "संदर्भ (ऐच्छिक)"
+            "value" : "माहिती (ऐच्छिक)"
           }
         },
         "ms" : {
@@ -19292,19 +19292,19 @@
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Context (optioneel)"
+            "value" : "Aanvulling (optioneel)"
           }
         },
         "or" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ପ୍ରସଙ୍ଗ (ଇଚ୍ଛାଧୀନ)"
+            "value" : "ବିବରଣୀ (ଇଚ୍ଛାଧୀନ)"
           }
         },
         "pa" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ਸੰਦਰਭ (ਵਿਕਲਪਿਕ)"
+            "value" : "ਵੇਰਵਾ (ਵਿਕਲਪਿਕ)"
           }
         },
         "pl" : {
@@ -19334,7 +19334,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Контекст (необязательно)"
+            "value" : "Подробности (необязательно)"
           }
         },
         "sk" : {
@@ -19352,31 +19352,31 @@
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sammanhang (valfritt)"
+            "value" : "Komplettering (valfritt)"
           }
         },
         "ta" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "பின்னணி (விருப்பம்)"
+            "value" : "தகவல் (விருப்பம்)"
           }
         },
         "te" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "సందర్భం (ఐచ్ఛికం)"
+            "value" : "వివరాలు (ఐచ్ఛికం)"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "บริบท (ไม่บังคับ)"
+            "value" : "รายละเอียด (ไม่บังคับ)"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bağlam (isteğe bağlı)"
+            "value" : "Ayrıntı (isteğe bağlı)"
           }
         },
         "uk" : {
@@ -19388,25 +19388,25 @@
         "ur" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "پس منظر (اختیاری)"
+            "value" : "تفصیل (اختیاری)"
           }
         },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bối cảnh (không bắt buộc)"
+            "value" : "Thông tin thêm (không bắt buộc)"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "背景（可选）"
+            "value" : "补充说明（可选）"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "背景（選填）"
+            "value" : "補充說明（選填）"
           }
         }
       }
@@ -37532,13 +37532,13 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "أضف سياقًا"
+            "value" : "أضف توضيحًا"
           }
         },
         "bn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "প্রসঙ্গ যোগ করুন"
+            "value" : "নতুন তথ্য যোগ করুন"
           }
         },
         "ca" : {
@@ -37568,7 +37568,7 @@
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Πρόσθεσε πλαίσιο"
+            "value" : "Πρόσθεσε πληροφορίες"
           }
         },
         "en" : {
@@ -37586,7 +37586,7 @@
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Lisää tausta"
+            "value" : "Lisää tietoa"
           }
         },
         "fr" : {
@@ -37598,7 +37598,7 @@
         "gu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "સંદર્ભ ઉમેરો"
+            "value" : "વિગત ઉમેરો"
           }
         },
         "he" : {
@@ -37610,7 +37610,7 @@
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "संदर्भ जोड़ें"
+            "value" : "जानकारी जोड़ें"
           }
         },
         "hr" : {
@@ -37622,7 +37622,7 @@
         "hu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Háttér hozzáadása"
+            "value" : "Kiegészítés hozzáadása"
           }
         },
         "id" : {
@@ -37640,31 +37640,31 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "状況を追加"
+            "value" : "補足を追加"
           }
         },
         "kn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ಹಿನ್ನೆಲೆ ಸೇರಿಸಿ"
+            "value" : "ವಿವರ ಸೇರಿಸಿ"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "상황 추가"
+            "value" : "내용 추가"
           }
         },
         "ml" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "സാഹചര്യം ചേർക്കൂ"
+            "value" : "വിവരം ചേർക്കൂ"
           }
         },
         "mr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "संदर्भ जोडा"
+            "value" : "माहिती जोडा"
           }
         },
         "ms" : {
@@ -37682,19 +37682,19 @@
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Context toevoegen"
+            "value" : "Iets aanvullen"
           }
         },
         "or" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ପ୍ରସଙ୍ଗ ଯୋଡ଼ନ୍ତୁ"
+            "value" : "ବିବରଣୀ ଯୋଡ଼ନ୍ତୁ"
           }
         },
         "pa" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ਸੰਦਰਭ ਜੋੜੋ"
+            "value" : "ਵੇਰਵਾ ਜੋੜੋ"
           }
         },
         "pl" : {
@@ -37712,7 +37712,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Adicionar contexto"
+            "value" : "Acrescentar contexto"
           }
         },
         "ro" : {
@@ -37724,7 +37724,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Добавить контекст"
+            "value" : "Добавить подробности"
           }
         },
         "sk" : {
@@ -37742,31 +37742,31 @@
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Lägg till sammanhang"
+            "value" : "Komplettera"
           }
         },
         "ta" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "பின்னணி சேர்க்கவும்"
+            "value" : "தகவல் சேர்க்கவும்"
           }
         },
         "te" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "సందర్భం జోడించండి"
+            "value" : "వివరాలు జోడించండి"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "เพิ่มบริบท"
+            "value" : "เพิ่มรายละเอียด"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bağlam ekle"
+            "value" : "Ayrıntı ekle"
           }
         },
         "uk" : {
@@ -37778,25 +37778,25 @@
         "ur" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "پس منظر شامل کریں"
+            "value" : "تفصیل شامل کریں"
           }
         },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Thêm bối cảnh"
+            "value" : "Bổ sung thông tin"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "添加背景"
+            "value" : "补充说明"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "新增背景"
+            "value" : "補充說明"
           }
         }
       }
@@ -43604,13 +43604,13 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "صور السياق تُقرأ ثم تُحذف، دون أي تكلفة إضافية"
+            "value" : "صور التوضيح تُقرأ ثم تُحذف، دون أي تكلفة إضافية"
           }
         },
         "bn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "প্রসঙ্গের ছবি পড়া হয়, তারপর মুছে ফেলা হয়, বাড়তি খরচ ছাড়াই"
+            "value" : "নতুন তথ্যের ছবি পড়া হয়, তারপর মুছে ফেলা হয়, বাড়তি খরচ ছাড়াই"
           }
         },
         "ca" : {
@@ -43640,7 +43640,7 @@
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Οι εικόνες πλαισίου διαβάζονται και μετά πετιούνται, χωρίς επιπλέον κόστος"
+            "value" : "Οι εικόνες με πληροφορίες διαβάζονται και μετά πετιούνται, χωρίς επιπλέον κόστος"
           }
         },
         "en" : {
@@ -43658,7 +43658,7 @@
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Taustakuvat luetaan ja heitetään sitten pois, ilman lisämaksua"
+            "value" : "Lisätietokuvat luetaan ja heitetään sitten pois, ilman lisämaksua"
           }
         },
         "fr" : {
@@ -43670,7 +43670,7 @@
         "gu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "સંદર્ભની છબીઓ વંચાય છે અને પછી ફેંકી દેવાય છે, કોઈ વધારાના ખર્ચ વિના"
+            "value" : "વિગતની છબીઓ વંચાય છે અને પછી ફેંકી દેવાય છે, કોઈ વધારાનો ખર્ચ નથી"
           }
         },
         "he" : {
@@ -43682,7 +43682,7 @@
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "संदर्भ की तस्वीरें पढ़कर फेंक दी जाती हैं, बिना किसी अतिरिक्त खर्च के"
+            "value" : "जानकारी की तस्वीरें पढ़कर फेंक दी जाती हैं, बिना किसी अतिरिक्त खर्च के"
           }
         },
         "hr" : {
@@ -43694,7 +43694,7 @@
         "hu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "A háttérképeket elolvassuk, aztán eldobjuk, felár nélkül"
+            "value" : "A kiegészítő képeket elolvassuk, aztán eldobjuk, felár nélkül"
           }
         },
         "id" : {
@@ -43718,25 +43718,25 @@
         "kn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ಹಿನ್ನೆಲೆ ಚಿತ್ರಗಳನ್ನು ಓದಿ ನಂತರ ಎಸೆಯಲಾಗುತ್ತದೆ, ಹೆಚ್ಚುವರಿ ವೆಚ್ಚವಿಲ್ಲ"
+            "value" : "ವಿವರದ ಚಿತ್ರಗಳನ್ನು ಓದಿ ನಂತರ ಎಸೆಯಲಾಗುತ್ತದೆ, ಹೆಚ್ಚುವರಿ ವೆಚ್ಚವಿಲ್ಲ"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "상황 이미지는 읽은 뒤 바로 버려져요. 추가 비용은 없어요"
+            "value" : "추가 내용 이미지는 읽은 뒤 바로 버려져요. 추가 비용은 없어요"
           }
         },
         "ml" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "സാഹചര്യ ചിത്രങ്ങൾ വായിച്ച ശേഷം കളയും, അധിക ചെലവില്ല"
+            "value" : "വിവര ചിത്രങ്ങൾ വായിച്ച ശേഷം കളയും, അധിക ചെലവില്ല"
           }
         },
         "mr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "संदर्भाची चित्रे वाचून टाकून दिली जातात, कोणताही जादा खर्च नाही"
+            "value" : "माहितीची चित्रे वाचून टाकून दिली जातात, कोणताही जादा खर्च नाही"
           }
         },
         "ms" : {
@@ -43754,19 +43754,19 @@
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Contextafbeeldingen worden gelezen en daarna weggegooid, zonder extra kosten"
+            "value" : "Afbeeldingen bij de aanvulling worden gelezen en daarna weggegooid, zonder extra kosten"
           }
         },
         "or" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ପ୍ରସଙ୍ଗର ଛବି ପଢ଼ି ପରେ ଫିଙ୍ଗି ଦିଆଯାଏ, ଅତିରିକ୍ତ ଖର୍ଚ୍ଚ ନାହିଁ"
+            "value" : "ବିବରଣୀର ଛବି ପଢ଼ି ପରେ ଫିଙ୍ଗି ଦିଆଯାଏ, ଅତିରିକ୍ତ ଖର୍ଚ୍ଚ ନାହିଁ"
           }
         },
         "pa" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ਸੰਦਰਭ ਦੀਆਂ ਤਸਵੀਰਾਂ ਪੜ੍ਹ ਕੇ ਸੁੱਟ ਦਿੱਤੀਆਂ ਜਾਂਦੀਆਂ ਹਨ, ਕੋਈ ਵਾਧੂ ਖ਼ਰਚਾ ਨਹੀਂ"
+            "value" : "ਵੇਰਵੇ ਦੀਆਂ ਤਸਵੀਰਾਂ ਪੜ੍ਹ ਕੇ ਸੁੱਟ ਦਿੱਤੀਆਂ ਜਾਂਦੀਆਂ ਹਨ, ਕੋਈ ਵਾਧੂ ਖ਼ਰਚਾ ਨਹੀਂ"
           }
         },
         "pl" : {
@@ -43796,7 +43796,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Картинки с контекстом читаются и сразу удаляются, без доплаты"
+            "value" : "Картинки с подробностями читаются и сразу удаляются, без доплаты"
           }
         },
         "sk" : {
@@ -43814,31 +43814,31 @@
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bilder med sammanhang läses och kastas sedan, utan extra kostnad"
+            "value" : "Bilder till kompletteringen läses och kastas sedan, utan extra kostnad"
           }
         },
         "ta" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "பின்னணிப் படங்கள் படிக்கப்பட்டு பிறகு தூக்கி எறியப்படும், கூடுதல் கட்டணம் இல்லை"
+            "value" : "தகவல் படங்கள் படிக்கப்பட்டு பிறகு தூக்கியெறியப்படும், கூடுதல் செலவு இல்லை"
           }
         },
         "te" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "సందర్భ చిత్రాలను చదివి పారేస్తాం, అదనపు ఖర్చు లేదు"
+            "value" : "వివరాల చిత్రాలను చదివి పారేస్తాం, అదనపు ఖర్చు లేదు"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "รูปบริบทจะถูกอ่านแล้วทิ้ง ไม่มีค่าใช้จ่ายเพิ่ม"
+            "value" : "รูปที่เพิ่มจะถูกอ่านแล้วทิ้ง ไม่มีค่าใช้จ่ายเพิ่ม"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bağlam görselleri okunur, sonra atılır, ekstra ücret yok"
+            "value" : "Ayrıntı görselleri okunur, sonra atılır, ekstra ücret yok"
           }
         },
         "uk" : {
@@ -43850,25 +43850,25 @@
         "ur" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "پس منظر کی تصویریں پڑھ کر پھینک دی جاتی ہیں، کوئی اضافی خرچ نہیں"
+            "value" : "تفصیل کی تصویریں پڑھ کر پھینک دی جاتی ہیں، کوئی اضافی خرچ نہیں"
           }
         },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ảnh bối cảnh được đọc rồi bỏ đi, không tốn thêm phí"
+            "value" : "Ảnh thông tin thêm được đọc rồi bỏ đi, không tốn thêm phí"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "背景图片读完即丢，不另外收费"
+            "value" : "补充说明的图片读完即丢，不另外收费"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "背景圖片讀完即丟，不另外收費"
+            "value" : "補充說明的圖片讀完即丟，不另外收費"
           }
         }
       }
@@ -61388,7 +61388,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "추가할 맥락"
+            "value" : "추가할 내용"
           }
         },
         "ml" : {
@@ -61496,7 +61496,7 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "บริบทของคุณ"
+            "value" : "รายละเอียดของคุณ"
           }
         },
         "tr" : {
@@ -62216,7 +62216,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "맥락을 두 번 추가했어요. 판결 하나에 추가할 수 있는 최대 횟수예요."
+            "value" : "내용을 두 번 추가했어요. 판결 하나에 추가할 수 있는 최대 횟수예요."
           }
         },
         "ml" : {
@@ -62324,7 +62324,7 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "คุณเพิ่มบริบทไปแล้ว 2 ครั้ง ซึ่งเป็นจำนวนสูงสุดต่อหนึ่งคำตัดสิน"
+            "value" : "คุณเพิ่มรายละเอียดไปแล้ว 2 ครั้ง ซึ่งเป็นจำนวนสูงสุดต่อหนึ่งคำตัดสิน"
           }
         },
         "tr" : {
@@ -64424,7 +64424,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "로그인하고 맥락 추가"
+            "value" : "로그인하고 내용 추가"
           }
         },
         "ml" : {
@@ -64532,7 +64532,7 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "เข้าสู่ระบบเพื่อเพิ่มบริบท"
+            "value" : "เข้าสู่ระบบเพื่อเพิ่มรายละเอียด"
           }
         },
         "tr" : {
@@ -64976,7 +64976,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "맥락 추가"
+            "value" : "내용 추가"
           }
         },
         "ml" : {
@@ -65084,7 +65084,7 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "เพิ่มบริบท"
+            "value" : "เพิ่มรายละเอียด"
           }
         },
         "tr" : {
@@ -65252,7 +65252,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "빠진 내용이 있나요? 맥락을 추가하고 판결 1회로 다시 판결 받아 보세요."
+            "value" : "빠진 내용이 있나요? 내용을 추가하고 판결 1회로 다시 판결 받아 보세요."
           }
         },
         "ml" : {
@@ -65360,7 +65360,7 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "มีอะไรขาดไปไหม? เพิ่มบริบทแล้วให้ตัดสินใหม่ ใช้คำตัดสิน 1 ครั้ง"
+            "value" : "มีอะไรขาดไปไหม? เพิ่มรายละเอียดแล้วให้ตัดสินใหม่ ใช้คำตัดสิน 1 ครั้ง"
           }
         },
         "tr" : {
@@ -65528,7 +65528,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "이 사건에는 이미 맥락을 추가했어요."
+            "value" : "이 사건에는 이미 내용을 추가했어요."
           }
         },
         "ml" : {
@@ -65636,7 +65636,7 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "คุณเพิ่มบริบทในเคสนี้ไปแล้ว"
+            "value" : "คุณเพิ่มรายละเอียดในเคสนี้ไปแล้ว"
           }
         },
         "tr" : {
@@ -119318,13 +119318,13 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "أضف سياقًا"
+            "value" : "أضف توضيحًا"
           }
         },
         "bn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "প্রসঙ্গ যোগ করুন"
+            "value" : "নতুন তথ্য যোগ করুন"
           }
         },
         "ca" : {
@@ -119354,7 +119354,7 @@
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Πρόσθεσε πλαίσιο"
+            "value" : "Πρόσθεσε πληροφορίες"
           }
         },
         "en" : {
@@ -119372,7 +119372,7 @@
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Lisää tausta"
+            "value" : "Lisää tietoa"
           }
         },
         "fr" : {
@@ -119384,7 +119384,7 @@
         "gu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "સંદર્ભ ઉમેરો"
+            "value" : "વિગત ઉમેરો"
           }
         },
         "he" : {
@@ -119396,7 +119396,7 @@
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "संदर्भ जोड़ें"
+            "value" : "जानकारी जोड़ें"
           }
         },
         "hr" : {
@@ -119408,7 +119408,7 @@
         "hu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Háttér hozzáadása"
+            "value" : "Kiegészítés hozzáadása"
           }
         },
         "id" : {
@@ -119426,31 +119426,31 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "状況を追加"
+            "value" : "補足を追加"
           }
         },
         "kn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ಹಿನ್ನೆಲೆ ಸೇರಿಸಿ"
+            "value" : "ವಿವರ ಸೇರಿಸಿ"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "상황 추가"
+            "value" : "내용 추가"
           }
         },
         "ml" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "സാഹചര്യം ചേർക്കൂ"
+            "value" : "വിവരം ചേർക്കൂ"
           }
         },
         "mr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "संदर्भ जोडा"
+            "value" : "माहिती जोडा"
           }
         },
         "ms" : {
@@ -119468,19 +119468,19 @@
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Context toevoegen"
+            "value" : "Iets aanvullen"
           }
         },
         "or" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ପ୍ରସଙ୍ଗ ଯୋଡ଼ନ୍ତୁ"
+            "value" : "ବିବରଣୀ ଯୋଡ଼ନ୍ତୁ"
           }
         },
         "pa" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ਸੰਦਰਭ ਜੋੜੋ"
+            "value" : "ਵੇਰਵਾ ਜੋੜੋ"
           }
         },
         "pl" : {
@@ -119498,7 +119498,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Adicionar contexto"
+            "value" : "Acrescentar contexto"
           }
         },
         "ro" : {
@@ -119510,7 +119510,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Добавить контекст"
+            "value" : "Добавить подробности"
           }
         },
         "sk" : {
@@ -119528,31 +119528,31 @@
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Lägg till sammanhang"
+            "value" : "Komplettera"
           }
         },
         "ta" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "பின்னணி சேர்க்கவும்"
+            "value" : "தகவல் சேர்க்கவும்"
           }
         },
         "te" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "సందర్భం జోడించండి"
+            "value" : "వివరాలు జోడించండి"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "เพิ่มบริบท"
+            "value" : "เพิ่มรายละเอียด"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bağlam ekle"
+            "value" : "Ayrıntı ekle"
           }
         },
         "uk" : {
@@ -119564,25 +119564,25 @@
         "ur" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "پس منظر شامل کریں"
+            "value" : "تفصیل شامل کریں"
           }
         },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Thêm bối cảnh"
+            "value" : "Bổ sung thông tin"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "添加背景"
+            "value" : "补充说明"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "新增背景"
+            "value" : "補充說明"
           }
         }
       }

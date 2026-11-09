@@ -536,7 +536,7 @@ const zhHant: Locale = {
     "card.appeal": "補充說明並重新判決",
     "home.example": "試試範例",
     "home.yourPlaceholder": "怎麼了？",
-    "home.addContext": "新增背景",
+    "home.addContext": "補充說明",
     "home.addTheirSide": "新增對方的說法",
     "home.removeTheirSide": "移除對方的說法",
     "home.sendLink": "傳個連結",

@@ -557,7 +557,7 @@ const pa: Locale = {
     "card.appeal": "ਵੇਰਵਾ ਜੋੜੋ ਅਤੇ ਅਪੀਲ ਕਰੋ",
     "home.example": "ਕੋਈ ਉਦਾਹਰਨ ਅਜ਼ਮਾਓ",
     "home.yourPlaceholder": "ਸਮੱਸਿਆ ਕੀ ਹੈ?",
-    "home.addContext": "ਸੰਦਰਭ ਜੋੜੋ",
+    "home.addContext": "ਵੇਰਵਾ ਜੋੜੋ",
     "home.addTheirSide": "ਉਨ੍ਹਾਂ ਦਾ ਪੱਖ ਜੋੜੋ",
     "home.removeTheirSide": "ਉਨ੍ਹਾਂ ਦਾ ਪੱਖ ਹਟਾਓ",
     "home.sendLink": "ਲਿੰਕ ਭੇਜੋ",

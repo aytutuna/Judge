@@ -556,7 +556,7 @@ const gu: Locale = {
     "card.appeal": "વિગત ઉમેરો અને અપીલ કરો",
     "home.example": "ઉદાહરણ અજમાવો",
     "home.yourPlaceholder": "સમસ્યા શું છે?",
-    "home.addContext": "સંદર્ભ ઉમેરો",
+    "home.addContext": "વિગત ઉમેરો",
     "home.addTheirSide": "એમની વાત ઉમેરો",
     "home.removeTheirSide": "એમની વાત કાઢી નાખો",
     "home.sendLink": "લિંક મોકલો",

@@ -391,7 +391,7 @@
     <string name="appeal_title">കൂടുതൽ വിവരം ചേർക്കൂ</string>
     <string name="home_example">ഒരു ഉദാഹരണം നോക്കൂ</string>
     <string name="home_your_placeholder">എന്താണ് പ്രശ്നം?</string>
-    <string name="home_add_context">സാഹചര്യം ചേർക്കൂ</string>
+    <string name="home_add_context">വിവരം ചേർക്കൂ</string>
     <string name="home_add_their_side">അവരുടെ ഭാഗം ചേർക്കൂ</string>
     <string name="home_remove_their_side">അവരുടെ ഭാഗം നീക്കൂ</string>
     <string name="home_send_link">ലിങ്ക് അയയ്ക്കൂ</string>
@@ -565,8 +565,8 @@
     </plurals>
     <string name="app_history_offline_remove">നിങ്ങൾ ഓഫ്‌ലൈനാണ്. നീക്കം ചെയ്യാൻ കണക്ഷൻ വേണം.</string>
     <string name="app_pricing_free_account">Apple, Google അല്ലെങ്കിൽ ഇമെയിൽ വഴി സൈൻ ഇൻ ചെയ്യൂ</string>
-    <string name="app_context_label">സാഹചര്യം (ഓപ്ഷണൽ)</string>
-    <string name="app_pricing_context">സാഹചര്യ ചിത്രങ്ങൾ വായിച്ച ശേഷം കളയും, അധിക ചെലവില്ല</string>
+    <string name="app_context_label">വിവരം (ഓപ്ഷണൽ)</string>
+    <string name="app_pricing_context">വിവര ചിത്രങ്ങൾ വായിച്ച ശേഷം കളയും, അധിക ചെലവില്ല</string>
     <string name="app_pricing_headline">ആദ്യ വിധി ഞങ്ങളുടെ വക.</string>
     <string name="app_pricing_sub">അക്കൗണ്ട് തുടങ്ങൂ, എല്ലാ ഫീച്ചറുകളോടും കൂടിയ ആദ്യ വിധി സൗജന്യം. അതിനുശേഷം ഒരു പായ്ക്ക് എടുക്കൂ, അല്ലെങ്കിൽ പ്രതിമാസ പ്ലാനിലേക്ക് മാറൂ.</string>
     <string name="app_pricing_headline_member">കൂടുതൽ വിധികൾ നേടൂ.</string>
@@ -627,7 +627,7 @@
     <string name="app_home_your_side_label">തർക്കത്തിൽ നിങ്ങളുടെ ഭാഗം</string>
     <string name="app_home_their_side_label">തർക്കത്തിൽ അവരുടെ ഭാഗം</string>
     <string name="app_home_send_link">ലിങ്ക് അയയ്ക്കൂ</string>
-    <string name="app_home_add_context">സാഹചര്യം ചേർക്കൂ</string>
+    <string name="app_home_add_context">വിവരം ചേർക്കൂ</string>
     <string name="app_home_says">%1$s പറയുന്നത്:</string>
     <string name="app_home_my_side">എന്റെ ഭാഗം:</string>
     <string name="app_home_other_side">അവരുടെ ഭാഗം:</string>

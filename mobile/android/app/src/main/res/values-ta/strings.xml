@@ -391,7 +391,7 @@
     <string name="appeal_title">தகவல் சேர்</string>
     <string name="home_example">உதாரணத்துடன் முயன்று பாருங்கள்</string>
     <string name="home_your_placeholder">என்ன பிரச்சினை?</string>
-    <string name="home_add_context">பின்னணி சேர்க்கவும்</string>
+    <string name="home_add_context">தகவல் சேர்க்கவும்</string>
     <string name="home_add_their_side">மறுதரப்பைச் சேர்க்கவும்</string>
     <string name="home_remove_their_side">மறுதரப்பை நீக்கவும்</string>
     <string name="home_send_link">லிங்க் அனுப்புங்க</string>
@@ -565,8 +565,8 @@
     </plurals>
     <string name="app_history_offline_remove">நீங்கள் ஆஃப்லைனில் இருக்கிறீர்கள். நீக்க இணைப்பு தேவை.</string>
     <string name="app_pricing_free_account">Apple, Google அல்லது ஈமெயில் மூலம் உள்நுழையுங்கள்</string>
-    <string name="app_context_label">பின்னணி (விருப்பம்)</string>
-    <string name="app_pricing_context">பின்னணிப் படங்கள் படிக்கப்பட்டு பிறகு தூக்கி எறியப்படும், கூடுதல் கட்டணம் இல்லை</string>
+    <string name="app_context_label">தகவல் (விருப்பம்)</string>
+    <string name="app_pricing_context">தகவல் படங்கள் படிக்கப்பட்டு பிறகு தூக்கியெறியப்படும், கூடுதல் செலவு இல்லை</string>
     <string name="app_pricing_headline">முதல் தீர்ப்பு எங்கள் செலவில்.</string>
     <string name="app_pricing_sub">கணக்கைத் தொடங்குங்கள், முதல் தீர்ப்பு எல்லா அம்சங்களுடனும் இலவசம். அதன் பிறகு ஒரு பேக்கைத் தேர்ந்தெடுங்கள் அல்லது மாதாந்திர பிளானுக்கு மாறுங்கள்.</string>
     <string name="app_pricing_headline_member">இன்னும் தீர்ப்புகள் பெறுங்கள்.</string>
@@ -627,7 +627,7 @@
     <string name="app_home_your_side_label">வாக்குவாதத்தில் உங்கள் தரப்பு</string>
     <string name="app_home_their_side_label">வாக்குவாதத்தில் மறுதரப்பு</string>
     <string name="app_home_send_link">லிங்க் அனுப்புங்க</string>
-    <string name="app_home_add_context">பின்னணி சேர்க்கவும்</string>
+    <string name="app_home_add_context">தகவல் சேர்க்கவும்</string>
     <string name="app_home_says">%1$s சொல்வது:</string>
     <string name="app_home_my_side">என் தரப்பு:</string>
     <string name="app_home_other_side">மறுதரப்பு:</string>

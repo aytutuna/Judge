@@ -560,7 +560,7 @@ const vi: Locale = {
     "card.appeal": "Bổ sung thông tin và xét lại",
     "home.example": "Thử một ví dụ",
     "home.yourPlaceholder": "Có chuyện gì vậy?",
-    "home.addContext": "Thêm bối cảnh",
+    "home.addContext": "Bổ sung thông tin",
     "home.addTheirSide": "Thêm phía bên kia",
     "home.removeTheirSide": "Bỏ phía bên kia",
     "home.sendLink": "Gửi liên kết",

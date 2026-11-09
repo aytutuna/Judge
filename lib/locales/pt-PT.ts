@@ -558,7 +558,7 @@ const ptPT: Locale = {
     "card.appeal": "Acrescentar contexto e recorrer",
     "home.example": "Experimenta um exemplo",
     "home.yourPlaceholder": "Qual é o problema?",
-    "home.addContext": "Adicionar contexto",
+    "home.addContext": "Acrescentar contexto",
     "home.addTheirSide": "Adicionar o outro lado",
     "home.removeTheirSide": "Remover o outro lado",
     "home.sendLink": "Enviar um link",

@@ -558,7 +558,7 @@ const kn: Locale = {
     "card.appeal": "ವಿವರ ಸೇರಿಸಿ ಮರುತೀರ್ಪು ಪಡೆಯಿರಿ",
     "home.example": "ಒಂದು ಉದಾಹರಣೆ ಪ್ರಯತ್ನಿಸಿ",
     "home.yourPlaceholder": "ಸಮಸ್ಯೆ ಏನು?",
-    "home.addContext": "ಹಿನ್ನೆಲೆ ಸೇರಿಸಿ",
+    "home.addContext": "ವಿವರ ಸೇರಿಸಿ",
     "home.addTheirSide": "ಅವರ ಕಡೆ ಸೇರಿಸಿ",
     "home.removeTheirSide": "ಅವರ ಕಡೆ ತೆಗೆದುಹಾಕಿ",
     "home.sendLink": "ಲಿಂಕ್ ಕಳುಹಿಸಿ",

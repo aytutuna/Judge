@@ -558,7 +558,7 @@ const ml: Locale = {
     "card.appeal": "കൂടുതൽ വിവരം ചേർത്ത് അപ്പീൽ ചെയ്യൂ",
     "home.example": "ഒരു ഉദാഹരണം നോക്കൂ",
     "home.yourPlaceholder": "എന്താണ് പ്രശ്നം?",
-    "home.addContext": "സാഹചര്യം ചേർക്കൂ",
+    "home.addContext": "വിവരം ചേർക്കൂ",
     "home.addTheirSide": "അവരുടെ ഭാഗം ചേർക്കൂ",
     "home.removeTheirSide": "അവരുടെ ഭാഗം നീക്കൂ",
     "home.sendLink": "ലിങ്ക് അയയ്ക്കൂ",

@@ -391,7 +391,7 @@
     <string name="appeal_title">Kiegészítés</string>
     <string name="home_example">Próbálj ki egy példát</string>
     <string name="home_your_placeholder">Mi a gond?</string>
-    <string name="home_add_context">Háttér hozzáadása</string>
+    <string name="home_add_context">Kiegészítés hozzáadása</string>
     <string name="home_add_their_side">Add hozzá az ő verzióját</string>
     <string name="home_remove_their_side">Vedd ki az ő verzióját</string>
     <string name="home_send_link">Küldj linket</string>
@@ -565,8 +565,8 @@
     </plurals>
     <string name="app_history_offline_remove">Nincs internetkapcsolat. Eltávolítani csak online lehet.</string>
     <string name="app_pricing_free_account">Belépés Apple-lel, Google-lal vagy e-maillel</string>
-    <string name="app_context_label">Háttér (nem kötelező)</string>
-    <string name="app_pricing_context">A háttérképeket elolvassuk, aztán eldobjuk, felár nélkül</string>
+    <string name="app_context_label">Kiegészítés (nem kötelező)</string>
+    <string name="app_pricing_context">A kiegészítő képeket elolvassuk, aztán eldobjuk, felár nélkül</string>
     <string name="app_pricing_headline">Az első ítélet ajándék.</string>
     <string name="app_pricing_sub">Hozz létre egy fiókot, és az első ítéleted ingyenes, minden funkcióval. Utána válassz csomagot, vagy fizess elő havonta.</string>
     <string name="app_pricing_headline_member">Még több ítélet.</string>
@@ -627,7 +627,7 @@
     <string name="app_home_your_side_label">A te verziód a vitáról</string>
     <string name="app_home_their_side_label">Az ő verziója a vitáról</string>
     <string name="app_home_send_link">Küldj linket</string>
-    <string name="app_home_add_context">Háttér hozzáadása</string>
+    <string name="app_home_add_context">Kiegészítés hozzáadása</string>
     <string name="app_home_says">%1$s szerint:</string>
     <string name="app_home_my_side">Az én verzióm:</string>
     <string name="app_home_other_side">Az ő verziója:</string>

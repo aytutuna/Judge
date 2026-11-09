@@ -391,7 +391,7 @@
     <string name="appeal_title">जानकारी जोड़ें</string>
     <string name="home_example">कोई उदाहरण आज़माएँ</string>
     <string name="home_your_placeholder">समस्या क्या है?</string>
-    <string name="home_add_context">संदर्भ जोड़ें</string>
+    <string name="home_add_context">जानकारी जोड़ें</string>
     <string name="home_add_their_side">उनकी बात जोड़ें</string>
     <string name="home_remove_their_side">उनकी बात हटाएँ</string>
     <string name="home_send_link">लिंक भेजें</string>
@@ -565,8 +565,8 @@
     </plurals>
     <string name="app_history_offline_remove">आप ऑफ़लाइन हैं। हटाने के लिए इंटरनेट कनेक्शन चाहिए।</string>
     <string name="app_pricing_free_account">Apple, Google या ईमेल से साइन इन करें</string>
-    <string name="app_context_label">संदर्भ (वैकल्पिक)</string>
-    <string name="app_pricing_context">संदर्भ की तस्वीरें पढ़कर फेंक दी जाती हैं, बिना किसी अतिरिक्त खर्च के</string>
+    <string name="app_context_label">जानकारी (वैकल्पिक)</string>
+    <string name="app_pricing_context">जानकारी की तस्वीरें पढ़कर फेंक दी जाती हैं, बिना किसी अतिरिक्त खर्च के</string>
     <string name="app_pricing_headline">पहला फ़ैसला हमारी तरफ़ से।</string>
     <string name="app_pricing_sub">अकाउंट बनाइए और पहला फ़ैसला मुफ़्त पाइए, सारी सुविधाओं के साथ। उसके बाद कोई पैक चुनें या मासिक प्लान लें।</string>
     <string name="app_pricing_headline_member">और फ़ैसले पाएँ।</string>
@@ -627,7 +627,7 @@
     <string name="app_home_your_side_label">बहस में आपकी बात</string>
     <string name="app_home_their_side_label">बहस में उनकी बात</string>
     <string name="app_home_send_link">लिंक भेजें</string>
-    <string name="app_home_add_context">संदर्भ जोड़ें</string>
+    <string name="app_home_add_context">जानकारी जोड़ें</string>
     <string name="app_home_says">%1$s का कहना है:</string>
     <string name="app_home_my_side">मेरी बात:</string>
     <string name="app_home_other_side">उनकी बात:</string>

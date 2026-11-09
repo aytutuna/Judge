@@ -562,7 +562,7 @@ const nl: Locale = {
     "card.appeal": "Iets aanvullen",
     "home.example": "Probeer een voorbeeld",
     "home.yourPlaceholder": "Wat is het probleem?",
-    "home.addContext": "Context toevoegen",
+    "home.addContext": "Iets aanvullen",
     "home.addTheirSide": "Kant van de ander toevoegen",
     "home.removeTheirSide": "Kant van de ander verwijderen",
     "home.sendLink": "Stuur een link",

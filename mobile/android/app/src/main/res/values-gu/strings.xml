@@ -391,7 +391,7 @@
     <string name="appeal_title">વિગત ઉમેરો</string>
     <string name="home_example">ઉદાહરણ અજમાવો</string>
     <string name="home_your_placeholder">સમસ્યા શું છે?</string>
-    <string name="home_add_context">સંદર્ભ ઉમેરો</string>
+    <string name="home_add_context">વિગત ઉમેરો</string>
     <string name="home_add_their_side">એમની વાત ઉમેરો</string>
     <string name="home_remove_their_side">એમની વાત કાઢી નાખો</string>
     <string name="home_send_link">લિંક મોકલો</string>
@@ -565,8 +565,8 @@
     </plurals>
     <string name="app_history_offline_remove">તમે ઑફલાઇન છો. દૂર કરવા કનેક્શન જોઈએ.</string>
     <string name="app_pricing_free_account">Apple, Google કે ઈમેલથી સાઇન ઇન કરો</string>
-    <string name="app_context_label">સંદર્ભ (વૈકલ્પિક)</string>
-    <string name="app_pricing_context">સંદર્ભની છબીઓ વંચાય છે અને પછી ફેંકી દેવાય છે, કોઈ વધારાના ખર્ચ વિના</string>
+    <string name="app_context_label">વિગત (વૈકલ્પિક)</string>
+    <string name="app_pricing_context">વિગતની છબીઓ વંચાય છે અને પછી ફેંકી દેવાય છે, કોઈ વધારાનો ખર્ચ નથી</string>
     <string name="app_pricing_headline">તમારો પહેલો ચુકાદો અમારા તરફથી.</string>
     <string name="app_pricing_sub">એકાઉન્ટ બનાવો અને પહેલો ચુકાદો મફત, બધી સુવિધાઓ સાથે. પછી કોઈ પૅક પસંદ કરો કે માસિક પ્લાન લો.</string>
     <string name="app_pricing_headline_member">વધુ ચુકાદા લો.</string>
@@ -627,7 +627,7 @@
     <string name="app_home_your_side_label">વિવાદમાં તમારી વાત</string>
     <string name="app_home_their_side_label">વિવાદમાં એમની વાત</string>
     <string name="app_home_send_link">લિંક મોકલો</string>
-    <string name="app_home_add_context">સંદર્ભ ઉમેરો</string>
+    <string name="app_home_add_context">વિગત ઉમેરો</string>
     <string name="app_home_says">%1$s કહે છે:</string>
     <string name="app_home_my_side">મારી વાત:</string>
     <string name="app_home_other_side">સામેવાળાની વાત:</string>

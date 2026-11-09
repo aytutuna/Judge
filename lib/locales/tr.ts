@@ -561,10 +561,10 @@ const tr: Locale = {
     "card.leanNone": "Kurul iki taraftan birine yatmadı",
     "card.sides": "Her taraf neye dayanıyor",
     "card.claims": "Her taraf görüşüne nasıl vardı",
-    "card.appeal": "Bağlam ekle ve itiraz et",
+    "card.appeal": "Ayrıntı ekle ve itiraz et",
     "home.example": "Bir örnek dene",
     "home.yourPlaceholder": "Sorun ne?",
-    "home.addContext": "Bağlam ekle",
+    "home.addContext": "Ayrıntı ekle",
     "home.addTheirSide": "Karşı tarafı ekle",
     "home.removeTheirSide": "Karşı tarafı kaldır",
     "home.sendLink": "Bağlantı gönder",
@@ -660,7 +660,7 @@ const tr: Locale = {
       "Dava 1 karar hakkı kullanır; cevap gelmezse hakkın geri gelir. Karardan sonra her taraf bir kez bilgi ekleyip davayı yeniden yargılatabilir (1 karar).",
     "faq.evidence.q": "Ekran görüntüsü ekleyebilir miyim?",
     "faq.evidence.a":
-      "Evet, taraf başına en fazla üç tane: bir sohbet ya da bir fiş gibi. Her görsel, yazısı okunsun diye bir kez harici bir yapay zekâ hizmetine gider. Yargıçlar isimleri gizlenmiş bir hâlini görür. Görselden okunan yazıyı, yazdığınla birlikte şifreli olarak saklarız; görselin kendisi hiç saklanmaz. Ekran görüntüleri kırpılmış ya da bağlamından kopmuş olabilir, o yüzden yargıçlar onları kesin kanıt değil, güçlü bir ipucu sayar.",
+      "Evet, taraf başına en fazla üç tane: bir sohbet ya da bir fiş gibi. Her görsel, yazısı okunsun diye bir kez harici bir yapay zekâ hizmetine gider. Yargıçlar isimleri gizlenmiş bir hâlini görür. Görselden okunan yazıyı, yazdığınla birlikte şifreli olarak saklarız; görselin kendisi hiç saklanmaz. Ekran görüntüleri kırpılmış ya da eksik olabilir, o yüzden yargıçlar onları kesin kanıt değil, güçlü bir ipucu sayar.",
     "about.casesTitle": "İki tarafı da dinlemek",
     "about.cases1":
       "İki taraflı davalar: giriş yapıp kendi tarafını yazar, özel bir bağlantı gönderirsin. Diğer kişi seninkini görmeden kendi tarafını yazar. Yargıçlar iki anlatımı birlikte tartar: iki tarafın neyde anlaştığını, neyi tartıştığını ve hangi kanıtın kararı değiştireceğini söyler.",

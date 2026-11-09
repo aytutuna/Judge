@@ -557,7 +557,7 @@ const bn: Locale = {
     "card.appeal": "নতুন তথ্য যোগ করে আপিল করুন",
     "home.example": "একটা উদাহরণ দিয়ে দেখুন",
     "home.yourPlaceholder": "সমস্যাটা কী?",
-    "home.addContext": "প্রসঙ্গ যোগ করুন",
+    "home.addContext": "নতুন তথ্য যোগ করুন",
     "home.addTheirSide": "অন্যজনের বক্তব্য যোগ করুন",
     "home.removeTheirSide": "অন্যজনের বক্তব্য সরান",
     "home.sendLink": "লিংক পাঠান",

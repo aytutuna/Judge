@@ -557,7 +557,7 @@ const te: Locale = {
     "card.appeal": "వివరాలు జోడించి అప్పీల్ చేయండి",
     "home.example": "ఒక ఉదాహరణ ప్రయత్నించండి",
     "home.yourPlaceholder": "సమస్య ఏంటి?",
-    "home.addContext": "సందర్భం జోడించండి",
+    "home.addContext": "వివరాలు జోడించండి",
     "home.addTheirSide": "వాళ్ల వైపు కథ జోడించండి",
     "home.removeTheirSide": "వాళ్ల వైపు కథ తీసేయండి",
     "home.sendLink": "లింక్ పంపండి",

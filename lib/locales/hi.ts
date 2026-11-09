@@ -556,7 +556,7 @@ const hi: Locale = {
     "card.appeal": "जानकारी जोड़कर अपील करें",
     "home.example": "कोई उदाहरण आज़माएँ",
     "home.yourPlaceholder": "समस्या क्या है?",
-    "home.addContext": "संदर्भ जोड़ें",
+    "home.addContext": "जानकारी जोड़ें",
     "home.addTheirSide": "उनकी बात जोड़ें",
     "home.removeTheirSide": "उनकी बात हटाएँ",
     "home.sendLink": "लिंक भेजें",

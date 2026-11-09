@@ -558,7 +558,7 @@ const fi: Locale = {
     "card.appeal": "Lisää tietoa ja pyydä uusi tuomio",
     "home.example": "Kokeile esimerkkiä",
     "home.yourPlaceholder": "Mikä ongelma on?",
-    "home.addContext": "Lisää tausta",
+    "home.addContext": "Lisää tietoa",
     "home.addTheirSide": "Lisää toisen puoli",
     "home.removeTheirSide": "Poista toisen puoli",
     "home.sendLink": "Lähetä linkki",

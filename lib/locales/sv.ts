@@ -558,7 +558,7 @@ const sv: Locale = {
     "card.appeal": "Komplettera och döm om",
     "home.example": "Prova ett exempel",
     "home.yourPlaceholder": "Vad är problemet?",
-    "home.addContext": "Lägg till sammanhang",
+    "home.addContext": "Komplettera",
     "home.addTheirSide": "Lägg till den andras sida",
     "home.removeTheirSide": "Ta bort den andras sida",
     "home.sendLink": "Skicka en länk",

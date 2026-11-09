@@ -559,7 +559,7 @@ const mr: Locale = {
     "card.appeal": "माहिती जोडून फेरविचार मागा",
     "home.example": "एखादे उदाहरण वापरून पाहा",
     "home.yourPlaceholder": "समस्या काय आहे?",
-    "home.addContext": "संदर्भ जोडा",
+    "home.addContext": "माहिती जोडा",
     "home.addTheirSide": "त्यांची बाजू जोडा",
     "home.removeTheirSide": "त्यांची बाजू काढा",
     "home.sendLink": "लिंक पाठवा",

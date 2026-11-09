@@ -391,7 +391,7 @@
     <string name="appeal_title">Komplettera</string>
     <string name="home_example">Prova ett exempel</string>
     <string name="home_your_placeholder">Vad är problemet?</string>
-    <string name="home_add_context">Lägg till sammanhang</string>
+    <string name="home_add_context">Komplettera</string>
     <string name="home_add_their_side">Lägg till den andras sida</string>
     <string name="home_remove_their_side">Ta bort den andras sida</string>
     <string name="home_send_link">Skicka en länk</string>
@@ -565,8 +565,8 @@
     </plurals>
     <string name="app_history_offline_remove">Du är offline. Du måste vara uppkopplad för att ta bort.</string>
     <string name="app_pricing_free_account">Logga in med Apple, Google eller e-post</string>
-    <string name="app_context_label">Sammanhang (valfritt)</string>
-    <string name="app_pricing_context">Bilder med sammanhang läses och kastas sedan, utan extra kostnad</string>
+    <string name="app_context_label">Komplettering (valfritt)</string>
+    <string name="app_pricing_context">Bilder till kompletteringen läses och kastas sedan, utan extra kostnad</string>
     <string name="app_pricing_headline">Din första dom bjuder vi på.</string>
     <string name="app_pricing_sub">Skapa ett konto så är din första dom gratis, med alla funktioner. Sedan väljer du ett paket eller ett månadsabonnemang.</string>
     <string name="app_pricing_headline_member">Skaffa fler domar.</string>
@@ -627,7 +627,7 @@
     <string name="app_home_your_side_label">Din sida av bråket</string>
     <string name="app_home_their_side_label">Den andras sida av bråket</string>
     <string name="app_home_send_link">Skicka en länk</string>
-    <string name="app_home_add_context">Lägg till sammanhang</string>
+    <string name="app_home_add_context">Komplettera</string>
     <string name="app_home_says">%1$s säger:</string>
     <string name="app_home_my_side">Min sida:</string>
     <string name="app_home_other_side">Den andras sida:</string>

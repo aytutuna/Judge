@@ -383,7 +383,7 @@
     <string name="appeal_title">Bổ sung thông tin</string>
     <string name="home_example">Thử một ví dụ</string>
     <string name="home_your_placeholder">Có chuyện gì vậy?</string>
-    <string name="home_add_context">Thêm bối cảnh</string>
+    <string name="home_add_context">Bổ sung thông tin</string>
     <string name="home_add_their_side">Thêm phía bên kia</string>
     <string name="home_remove_their_side">Bỏ phía bên kia</string>
     <string name="home_send_link">Gửi liên kết</string>
@@ -549,8 +549,8 @@
     </plurals>
     <string name="app_history_offline_remove">Bạn đang mất mạng. Cần có kết nối mới gỡ được.</string>
     <string name="app_pricing_free_account">Đăng nhập bằng Apple, Google hoặc email</string>
-    <string name="app_context_label">Bối cảnh (không bắt buộc)</string>
-    <string name="app_pricing_context">Ảnh bối cảnh được đọc rồi bỏ đi, không tốn thêm phí</string>
+    <string name="app_context_label">Thông tin thêm (không bắt buộc)</string>
+    <string name="app_pricing_context">Ảnh thông tin thêm được đọc rồi bỏ đi, không tốn thêm phí</string>
     <string name="app_pricing_headline">Phán quyết đầu tiên, chúng tôi mời.</string>
     <string name="app_pricing_sub">Tạo tài khoản là có ngay phán quyết đầu tiên miễn phí, đủ mọi tính năng. Sau đó, chọn một gói lượt hoặc dùng gói tháng.</string>
     <string name="app_pricing_headline_member">Thêm lượt phán quyết.</string>
@@ -610,7 +610,7 @@
     <string name="app_home_your_side_label">Lời kể của bạn về cuộc tranh cãi</string>
     <string name="app_home_their_side_label">Lời kể của phía bên kia về cuộc tranh cãi</string>
     <string name="app_home_send_link">Gửi liên kết</string>
-    <string name="app_home_add_context">Thêm bối cảnh</string>
+    <string name="app_home_add_context">Bổ sung thông tin</string>
     <string name="app_home_says">%1$s nói:</string>
     <string name="app_home_my_side">Phía tôi:</string>
     <string name="app_home_other_side">Phía bên kia:</string>

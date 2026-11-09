@@ -92,7 +92,7 @@ const ptPT: AppLocale = {
     "app.home.yourSideLabel": "O teu lado da discussão",
     "app.home.theirSideLabel": "O outro lado da discussão",
     "app.home.sendLink": "Enviar um link",
-    "app.home.addContext": "Adicionar contexto",
+    "app.home.addContext": "Acrescentar contexto",
     "app.home.says": "{name} diz:",
     "app.home.mySide": "O meu lado:",
     "app.home.otherSide": "O outro lado:",

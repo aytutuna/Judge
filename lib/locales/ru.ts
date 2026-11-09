@@ -560,7 +560,7 @@ const ru: Locale = {
     "card.appeal": "Добавить подробности",
     "home.example": "Попробовать на примере",
     "home.yourPlaceholder": "В чём проблема?",
-    "home.addContext": "Добавить контекст",
+    "home.addContext": "Добавить подробности",
     "home.addTheirSide": "Добавить другую сторону",
     "home.removeTheirSide": "Убрать другую сторону",
     "home.sendLink": "Отправить ссылку",

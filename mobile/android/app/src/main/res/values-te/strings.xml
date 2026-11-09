@@ -391,7 +391,7 @@
     <string name="appeal_title">వివరాలు జోడించండి</string>
     <string name="home_example">ఒక ఉదాహరణ ప్రయత్నించండి</string>
     <string name="home_your_placeholder">సమస్య ఏంటి?</string>
-    <string name="home_add_context">సందర్భం జోడించండి</string>
+    <string name="home_add_context">వివరాలు జోడించండి</string>
     <string name="home_add_their_side">వాళ్ల వైపు కథ జోడించండి</string>
     <string name="home_remove_their_side">వాళ్ల వైపు కథ తీసేయండి</string>
     <string name="home_send_link">లింక్ పంపండి</string>
@@ -565,8 +565,8 @@
     </plurals>
     <string name="app_history_offline_remove">మీరు ఆఫ్‌లైన్‌లో ఉన్నారు. తీసేయడానికి కనెక్షన్ కావాలి.</string>
     <string name="app_pricing_free_account">Apple, Google లేదా ఈమెయిల్‌తో సైన్ ఇన్ చేయండి</string>
-    <string name="app_context_label">సందర్భం (ఐచ్ఛికం)</string>
-    <string name="app_pricing_context">సందర్భ చిత్రాలను చదివి పారేస్తాం, అదనపు ఖర్చు లేదు</string>
+    <string name="app_context_label">వివరాలు (ఐచ్ఛికం)</string>
+    <string name="app_pricing_context">వివరాల చిత్రాలను చదివి పారేస్తాం, అదనపు ఖర్చు లేదు</string>
     <string name="app_pricing_headline">మీ మొదటి తీర్పు మా ఖాతాలో.</string>
     <string name="app_pricing_sub">అకౌంట్ తెరవండి, మీ మొదటి తీర్పు ఉచితం, అన్ని ఫీచర్లతో. ఆ తర్వాత ఒక ప్యాక్ ఎంచుకోండి, లేదా నెలవారీ ప్లాన్ తీసుకోండి.</string>
     <string name="app_pricing_headline_member">ఇంకా తీర్పులు తీసుకోండి.</string>
@@ -627,7 +627,7 @@
     <string name="app_home_your_side_label">వాదనలో మీ వైపు కథ</string>
     <string name="app_home_their_side_label">వాదనలో వాళ్ల వైపు కథ</string>
     <string name="app_home_send_link">లింక్ పంపండి</string>
-    <string name="app_home_add_context">సందర్భం జోడించండి</string>
+    <string name="app_home_add_context">వివరాలు జోడించండి</string>
     <string name="app_home_says">%1$s అంటున్నారు:</string>
     <string name="app_home_my_side">నా వైపు కథ:</string>
     <string name="app_home_other_side">వాళ్ల వైపు కథ:</string>

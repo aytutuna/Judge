@@ -561,7 +561,7 @@ const ta: Locale = {
     "card.appeal": "தகவல் சேர்த்து மறுதீர்ப்பு",
     "home.example": "உதாரணத்துடன் முயன்று பாருங்கள்",
     "home.yourPlaceholder": "என்ன பிரச்சினை?",
-    "home.addContext": "பின்னணி சேர்க்கவும்",
+    "home.addContext": "தகவல் சேர்க்கவும்",
     "home.addTheirSide": "மறுதரப்பைச் சேர்க்கவும்",
     "home.removeTheirSide": "மறுதரப்பை நீக்கவும்",
     "home.sendLink": "லிங்க் அனுப்புங்க",

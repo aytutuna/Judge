@@ -556,7 +556,7 @@ const ja: Locale = {
     "card.appeal": "補足して再判定",
     "home.example": "例を試す",
     "home.yourPlaceholder": "何があったの？",
-    "home.addContext": "状況を追加",
+    "home.addContext": "補足を追加",
     "home.addTheirSide": "相手の言い分を追加",
     "home.removeTheirSide": "相手の言い分を削除",
     "home.sendLink": "リンクを送る",

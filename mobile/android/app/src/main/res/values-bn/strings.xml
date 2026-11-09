@@ -391,7 +391,7 @@
     <string name="appeal_title">নতুন তথ্য যোগ করুন</string>
     <string name="home_example">একটা উদাহরণ দিয়ে দেখুন</string>
     <string name="home_your_placeholder">সমস্যাটা কী?</string>
-    <string name="home_add_context">প্রসঙ্গ যোগ করুন</string>
+    <string name="home_add_context">নতুন তথ্য যোগ করুন</string>
     <string name="home_add_their_side">অন্যজনের বক্তব্য যোগ করুন</string>
     <string name="home_remove_their_side">অন্যজনের বক্তব্য সরান</string>
     <string name="home_send_link">লিংক পাঠান</string>
@@ -565,8 +565,8 @@
     </plurals>
     <string name="app_history_offline_remove">আপনি অফলাইনে আছেন। সরিয়ে ফেলতে ইন্টারনেট সংযোগ লাগবে।</string>
     <string name="app_pricing_free_account">Apple, Google বা ইমেইল দিয়ে সাইন ইন করুন</string>
-    <string name="app_context_label">প্রসঙ্গ (ঐচ্ছিক)</string>
-    <string name="app_pricing_context">প্রসঙ্গের ছবি পড়া হয়, তারপর মুছে ফেলা হয়, বাড়তি খরচ ছাড়াই</string>
+    <string name="app_context_label">নতুন তথ্য (ঐচ্ছিক)</string>
+    <string name="app_pricing_context">নতুন তথ্যের ছবি পড়া হয়, তারপর মুছে ফেলা হয়, বাড়তি খরচ ছাড়াই</string>
     <string name="app_pricing_headline">প্রথম রায়টা আমাদের তরফ থেকে।</string>
     <string name="app_pricing_sub">অ্যাকাউন্ট খুললেই প্রথম রায় ফ্রি, সব ফিচারসহ। এরপর একটা প্যাক বেছে নিন বা মাসিক প্ল্যান নিন।</string>
     <string name="app_pricing_headline_member">আরও রায় নিন।</string>
@@ -627,7 +627,7 @@
     <string name="app_home_your_side_label">তর্কে আপনার বক্তব্য</string>
     <string name="app_home_their_side_label">তর্কে অন্যজনের বক্তব্য</string>
     <string name="app_home_send_link">লিংক পাঠান</string>
-    <string name="app_home_add_context">প্রসঙ্গ যোগ করুন</string>
+    <string name="app_home_add_context">নতুন তথ্য যোগ করুন</string>
     <string name="app_home_says">%1$s বলছে:</string>
     <string name="app_home_my_side">আমার বক্তব্য:</string>
     <string name="app_home_other_side">অন্যজনের বক্তব্য:</string>

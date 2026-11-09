@@ -391,7 +391,7 @@
     <string name="appeal_title">ବିବରଣୀ ଯୋଡ଼ନ୍ତୁ</string>
     <string name="home_example">ଗୋଟେ ଉଦାହରଣ ନେଇ ଦେଖନ୍ତୁ</string>
     <string name="home_your_placeholder">ସମସ୍ୟା କ\'ଣ?</string>
-    <string name="home_add_context">ପ୍ରସଙ୍ଗ ଯୋଡ଼ନ୍ତୁ</string>
+    <string name="home_add_context">ବିବରଣୀ ଯୋଡ଼ନ୍ତୁ</string>
     <string name="home_add_their_side">ତାଙ୍କ କଥା ଯୋଡ଼ନ୍ତୁ</string>
     <string name="home_remove_their_side">ତାଙ୍କ କଥା ହଟାନ୍ତୁ</string>
     <string name="home_send_link">ଲିଙ୍କ୍ ପଠାନ୍ତୁ</string>
@@ -565,8 +565,8 @@
     </plurals>
     <string name="app_history_offline_remove">ଆପଣ ଅଫଲାଇନ୍ ଅଛନ୍ତି। ହଟାଇବାକୁ ଇଣ୍ଟରନେଟ୍ ସଂଯୋଗ ଦରକାର।</string>
     <string name="app_pricing_free_account">Apple, Google ବା ଇମେଲ୍ ସହ ସାଇନ୍ ଇନ୍ କରନ୍ତୁ</string>
-    <string name="app_context_label">ପ୍ରସଙ୍ଗ (ଇଚ୍ଛାଧୀନ)</string>
-    <string name="app_pricing_context">ପ୍ରସଙ୍ଗର ଛବି ପଢ଼ି ପରେ ଫିଙ୍ଗି ଦିଆଯାଏ, ଅତିରିକ୍ତ ଖର୍ଚ୍ଚ ନାହିଁ</string>
+    <string name="app_context_label">ବିବରଣୀ (ଇଚ୍ଛାଧୀନ)</string>
+    <string name="app_pricing_context">ବିବରଣୀର ଛବି ପଢ଼ି ପରେ ଫିଙ୍ଗି ଦିଆଯାଏ, ଅତିରିକ୍ତ ଖର୍ଚ୍ଚ ନାହିଁ</string>
     <string name="app_pricing_headline">ପ୍ରଥମ ରାୟ ଆମ ତରଫରୁ।</string>
     <string name="app_pricing_sub">ଆକାଉଣ୍ଟ ଖୋଲନ୍ତୁ, ପ୍ରଥମ ରାୟ ସବୁ ସୁବିଧା ସହ ମାଗଣା। ତା\'ପରେ ଗୋଟେ ପ୍ୟାକ୍ ବାଛନ୍ତୁ ବା ମାସିକ ପ୍ଲାନ୍ ନିଅନ୍ତୁ।</string>
     <string name="app_pricing_headline_member">ଅଧିକ ରାୟ ନିଅନ୍ତୁ।</string>
@@ -627,7 +627,7 @@
     <string name="app_home_your_side_label">ବିବାଦରେ ଆପଣଙ୍କ କଥା</string>
     <string name="app_home_their_side_label">ବିବାଦରେ ତାଙ୍କ କଥା</string>
     <string name="app_home_send_link">ଲିଙ୍କ୍ ପଠାନ୍ତୁ</string>
-    <string name="app_home_add_context">ପ୍ରସଙ୍ଗ ଯୋଡ଼ନ୍ତୁ</string>
+    <string name="app_home_add_context">ବିବରଣୀ ଯୋଡ଼ନ୍ତୁ</string>
     <string name="app_home_says">%1$s କହନ୍ତି:</string>
     <string name="app_home_my_side">ମୋ କଥା:</string>
     <string name="app_home_other_side">ତାଙ୍କ କଥା:</string>

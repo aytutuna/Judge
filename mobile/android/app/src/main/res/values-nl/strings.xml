@@ -391,7 +391,7 @@
     <string name="appeal_title">Iets aanvullen</string>
     <string name="home_example">Probeer een voorbeeld</string>
     <string name="home_your_placeholder">Wat is het probleem?</string>
-    <string name="home_add_context">Context toevoegen</string>
+    <string name="home_add_context">Iets aanvullen</string>
     <string name="home_add_their_side">Kant van de ander toevoegen</string>
     <string name="home_remove_their_side">Kant van de ander verwijderen</string>
     <string name="home_send_link">Stuur een link</string>
@@ -565,8 +565,8 @@
     </plurals>
     <string name="app_history_offline_remove">Je bent offline. Om te verwijderen heb je een verbinding nodig.</string>
     <string name="app_pricing_free_account">Log in met Apple, Google of e-mail</string>
-    <string name="app_context_label">Context (optioneel)</string>
-    <string name="app_pricing_context">Contextafbeeldingen worden gelezen en daarna weggegooid, zonder extra kosten</string>
+    <string name="app_context_label">Aanvulling (optioneel)</string>
+    <string name="app_pricing_context">Afbeeldingen bij de aanvulling worden gelezen en daarna weggegooid, zonder extra kosten</string>
     <string name="app_pricing_headline">Je eerste uitspraak is van het huis.</string>
     <string name="app_pricing_sub">Maak een account aan en je eerste uitspraak is gratis, met alles erop en eraan. Daarna kies je een bundel of neem je een maandabonnement.</string>
     <string name="app_pricing_headline_member">Meer uitspraken.</string>
@@ -627,7 +627,7 @@
     <string name="app_home_your_side_label">Jouw kant van de discussie</string>
     <string name="app_home_their_side_label">De andere kant van de discussie</string>
     <string name="app_home_send_link">Stuur een link</string>
-    <string name="app_home_add_context">Context toevoegen</string>
+    <string name="app_home_add_context">Iets aanvullen</string>
     <string name="app_home_says">%1$s zegt:</string>
     <string name="app_home_my_side">Mijn kant:</string>
     <string name="app_home_other_side">De andere kant:</string>

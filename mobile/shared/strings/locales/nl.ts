@@ -28,9 +28,9 @@ const nl: AppLocale = {
     "app.history.removeFailed": "{n} ervan konden niet worden verwijderd. Check je verbinding en probeer het opnieuw.",
     "app.history.offlineRemove": "Je bent offline. Om te verwijderen heb je een verbinding nodig.",
     "app.pricing.free.account": "Log in met Apple, Google of e-mail",
-    "app.context.label": "Context (optioneel)",
+    "app.context.label": "Aanvulling (optioneel)",
     "app.pricing.context":
-      "Contextafbeeldingen worden gelezen en daarna weggegooid, zonder extra kosten",
+      "Afbeeldingen bij de aanvulling worden gelezen en daarna weggegooid, zonder extra kosten",
     "app.pricing.headline": "Je eerste uitspraak is van het huis.",
     "app.pricing.sub":
       "Maak een account aan en je eerste uitspraak is gratis, met alles erop en eraan. Daarna kies je een bundel of neem je een maandabonnement.",
@@ -93,7 +93,7 @@ const nl: AppLocale = {
     "app.home.yourSideLabel": "Jouw kant van de discussie",
     "app.home.theirSideLabel": "De andere kant van de discussie",
     "app.home.sendLink": "Stuur een link",
-    "app.home.addContext": "Context toevoegen",
+    "app.home.addContext": "Iets aanvullen",
     "app.home.says": "{name} zegt:",
     "app.home.mySide": "Mijn kant:",
     "app.home.otherSide": "De andere kant:",

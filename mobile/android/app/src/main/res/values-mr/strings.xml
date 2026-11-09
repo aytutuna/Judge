@@ -391,7 +391,7 @@
     <string name="appeal_title">माहिती जोडा</string>
     <string name="home_example">एखादे उदाहरण वापरून पाहा</string>
     <string name="home_your_placeholder">समस्या काय आहे?</string>
-    <string name="home_add_context">संदर्भ जोडा</string>
+    <string name="home_add_context">माहिती जोडा</string>
     <string name="home_add_their_side">त्यांची बाजू जोडा</string>
     <string name="home_remove_their_side">त्यांची बाजू काढा</string>
     <string name="home_send_link">लिंक पाठवा</string>
@@ -565,8 +565,8 @@
     </plurals>
     <string name="app_history_offline_remove">तुम्ही ऑफलाइन आहात. काढून टाकण्यासाठी कनेक्शन लागते.</string>
     <string name="app_pricing_free_account">Apple, Google किंवा ईमेलने साइन इन करा</string>
-    <string name="app_context_label">संदर्भ (ऐच्छिक)</string>
-    <string name="app_pricing_context">संदर्भाची चित्रे वाचून टाकून दिली जातात, कोणताही जादा खर्च नाही</string>
+    <string name="app_context_label">माहिती (ऐच्छिक)</string>
+    <string name="app_pricing_context">माहितीची चित्रे वाचून टाकून दिली जातात, कोणताही जादा खर्च नाही</string>
     <string name="app_pricing_headline">पहिला निकाल आमच्याकडून.</string>
     <string name="app_pricing_sub">खाते उघडा, तुमचा पहिला निकाल सगळ्या सुविधांसह मोफत. त्यानंतर एखादा पॅक निवडा किंवा मासिक प्लॅन घ्या.</string>
     <string name="app_pricing_headline_member">आणखी निकाल घ्या.</string>
@@ -627,7 +627,7 @@
     <string name="app_home_your_side_label">वादातली तुमची बाजू</string>
     <string name="app_home_their_side_label">वादातली त्यांची बाजू</string>
     <string name="app_home_send_link">लिंक पाठवा</string>
-    <string name="app_home_add_context">संदर्भ जोडा</string>
+    <string name="app_home_add_context">माहिती जोडा</string>
     <string name="app_home_says">%1$sचे म्हणणे:</string>
     <string name="app_home_my_side">माझी बाजू:</string>
     <string name="app_home_other_side">त्यांची बाजू:</string>

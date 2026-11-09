@@ -562,7 +562,7 @@ const hu: Locale = {
     "card.appeal": "Kiegészítés és fellebbezés",
     "home.example": "Próbálj ki egy példát",
     "home.yourPlaceholder": "Mi a gond?",
-    "home.addContext": "Háttér hozzáadása",
+    "home.addContext": "Kiegészítés hozzáadása",
     "home.addTheirSide": "Add hozzá az ő verzióját",
     "home.removeTheirSide": "Vedd ki az ő verzióját",
     "home.sendLink": "Küldj linket",

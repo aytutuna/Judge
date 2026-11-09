@@ -391,7 +391,7 @@
     <string name="appeal_title">Lisää tietoa</string>
     <string name="home_example">Kokeile esimerkkiä</string>
     <string name="home_your_placeholder">Mikä ongelma on?</string>
-    <string name="home_add_context">Lisää tausta</string>
+    <string name="home_add_context">Lisää tietoa</string>
     <string name="home_add_their_side">Lisää toisen puoli</string>
     <string name="home_remove_their_side">Poista toisen puoli</string>
     <string name="home_send_link">Lähetä linkki</string>
@@ -565,8 +565,8 @@
     </plurals>
     <string name="app_history_offline_remove">Verkkoyhteys puuttuu. Poistaminen vaatii yhteyden.</string>
     <string name="app_pricing_free_account">Kirjaudu Applella, Googlella tai sähköpostilla</string>
-    <string name="app_context_label">Tausta (valinnainen)</string>
-    <string name="app_pricing_context">Taustakuvat luetaan ja heitetään sitten pois, ilman lisämaksua</string>
+    <string name="app_context_label">Lisätiedot (valinnainen)</string>
+    <string name="app_pricing_context">Lisätietokuvat luetaan ja heitetään sitten pois, ilman lisämaksua</string>
     <string name="app_pricing_headline">Ensimmäinen tuomio on meiltä.</string>
     <string name="app_pricing_sub">Luo tili, niin ensimmäinen tuomiosi on ilmainen kaikkine ominaisuuksineen. Sen jälkeen voit valita paketin tai kuukausitilauksen.</string>
     <string name="app_pricing_headline_member">Hanki lisää tuomioita.</string>
@@ -627,7 +627,7 @@
     <string name="app_home_your_side_label">Sinun puolesi kiistassa</string>
     <string name="app_home_their_side_label">Toisen puoli kiistassa</string>
     <string name="app_home_send_link">Lähetä linkki</string>
-    <string name="app_home_add_context">Lisää tausta</string>
+    <string name="app_home_add_context">Lisää tietoa</string>
     <string name="app_home_says">%1$s sanoo:</string>
     <string name="app_home_my_side">Minun puoleni:</string>
     <string name="app_home_other_side">Toisen puoli:</string>

@@ -399,7 +399,7 @@
     <string name="appeal_title">Acrescentar contexto</string>
     <string name="home_example">Experimenta um exemplo</string>
     <string name="home_your_placeholder">Qual é o problema?</string>
-    <string name="home_add_context">Adicionar contexto</string>
+    <string name="home_add_context">Acrescentar contexto</string>
     <string name="home_add_their_side">Adicionar o outro lado</string>
     <string name="home_remove_their_side">Remover o outro lado</string>
     <string name="home_send_link">Enviar um link</string>
@@ -644,7 +644,7 @@
     <string name="app_home_your_side_label">O teu lado da discussão</string>
     <string name="app_home_their_side_label">O outro lado da discussão</string>
     <string name="app_home_send_link">Enviar um link</string>
-    <string name="app_home_add_context">Adicionar contexto</string>
+    <string name="app_home_add_context">Acrescentar contexto</string>
     <string name="app_home_says">%1$s diz:</string>
     <string name="app_home_my_side">O meu lado:</string>
     <string name="app_home_other_side">O outro lado:</string>

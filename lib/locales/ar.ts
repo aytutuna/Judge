@@ -555,7 +555,7 @@ const ar: Locale = {
     "card.appeal": "إضافة توضيح والاعتراض على الحكم",
     "home.example": "جرّب مثالًا",
     "home.yourPlaceholder": "ما المشكلة؟",
-    "home.addContext": "أضف سياقًا",
+    "home.addContext": "أضف توضيحًا",
     "home.addTheirSide": "أضف رواية الطرف الآخر",
     "home.removeTheirSide": "أزل رواية الطرف الآخر",
     "home.sendLink": "أرسل له رابطًا",

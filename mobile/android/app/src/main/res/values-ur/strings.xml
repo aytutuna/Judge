@@ -391,7 +391,7 @@
     <string name="appeal_title">مزید تفصیل شامل کریں</string>
     <string name="home_example">کوئی مثال آزمائیں</string>
     <string name="home_your_placeholder">مسئلہ کیا ہے؟</string>
-    <string name="home_add_context">پس منظر شامل کریں</string>
+    <string name="home_add_context">تفصیل شامل کریں</string>
     <string name="home_add_their_side">ان کی بات شامل کریں</string>
     <string name="home_remove_their_side">ان کی بات ہٹائیں</string>
     <string name="home_send_link">لنک بھیجیں</string>
@@ -565,8 +565,8 @@
     </plurals>
     <string name="app_history_offline_remove">آپ آف لائن ہیں۔ ہٹانے کے لیے کنکشن ضروری ہے۔</string>
     <string name="app_pricing_free_account">Apple، Google یا ای میل سے سائن ان کریں</string>
-    <string name="app_context_label">پس منظر (اختیاری)</string>
-    <string name="app_pricing_context">پس منظر کی تصویریں پڑھ کر پھینک دی جاتی ہیں، کوئی اضافی خرچ نہیں</string>
+    <string name="app_context_label">تفصیل (اختیاری)</string>
+    <string name="app_pricing_context">تفصیل کی تصویریں پڑھ کر پھینک دی جاتی ہیں، کوئی اضافی خرچ نہیں</string>
     <string name="app_pricing_headline">پہلا فیصلہ ہماری طرف سے۔</string>
     <string name="app_pricing_sub">اکاؤنٹ بنائیں اور پہلا فیصلہ مفت پائیں، تمام فیچرز کے ساتھ۔ اس کے بعد کوئی پیک لیں یا ماہانہ پلان۔</string>
     <string name="app_pricing_headline_member">مزید فیصلے لیں۔</string>
@@ -627,7 +627,7 @@
     <string name="app_home_your_side_label">بحث میں آپ کی بات</string>
     <string name="app_home_their_side_label">بحث میں ان کی بات</string>
     <string name="app_home_send_link">لنک بھیجیں</string>
-    <string name="app_home_add_context">پس منظر شامل کریں</string>
+    <string name="app_home_add_context">تفصیل شامل کریں</string>
     <string name="app_home_says">%1$s کا کہنا ہے:</string>
     <string name="app_home_my_side">میری بات:</string>
     <string name="app_home_other_side">ان کی بات:</string>

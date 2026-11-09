@@ -557,7 +557,7 @@ const or: Locale = {
     "card.appeal": "ବିବରଣୀ ଯୋଡ଼ି ପୁଣି ବିଚାର",
     "home.example": "ଗୋଟେ ଉଦାହରଣ ନେଇ ଦେଖନ୍ତୁ",
     "home.yourPlaceholder": "ସମସ୍ୟା କ'ଣ?",
-    "home.addContext": "ପ୍ରସଙ୍ଗ ଯୋଡ଼ନ୍ତୁ",
+    "home.addContext": "ବିବରଣୀ ଯୋଡ଼ନ୍ତୁ",
     "home.addTheirSide": "ତାଙ୍କ କଥା ଯୋଡ଼ନ୍ତୁ",
     "home.removeTheirSide": "ତାଙ୍କ କଥା ହଟାନ୍ତୁ",
     "home.sendLink": "ଲିଙ୍କ୍ ପଠାନ୍ତୁ",

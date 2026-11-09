@@ -535,7 +535,7 @@ const zhHans: Locale = {
     "card.appeal": "补充说明，申请重审",
     "home.example": "试试示例",
     "home.yourPlaceholder": "怎么了？",
-    "home.addContext": "添加背景",
+    "home.addContext": "补充说明",
     "home.addTheirSide": "添加对方的说法",
     "home.removeTheirSide": "移除对方的说法",
     "home.sendLink": "发个链接",
