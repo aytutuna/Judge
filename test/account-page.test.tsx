@@ -216,11 +216,35 @@ describe("SignInPanel", () => {
     expect(submit(signin({ sentTo: "a@b.co", code: "123456", pending: true }))).toContain('disabled=""');
   });
 
+  it("the wrong-code error sits in the code step, linked to the field", () => {
+    const html = signin({ sentTo: "a@b.co", code: "123456", error: "That code is not right" });
+    const alerts = html.match(/role="alert"/g) ?? [];
+    expect(alerts).toHaveLength(1);
+    expect(html.indexOf("That code is not right")).toBeGreaterThan(html.indexOf("one-time-code"));
+    expect(html).toContain('aria-invalid="true"');
+    expect(html).toMatch(/aria-describedby="([^"]+)-sent \1-error"/);
+    const quiet = signin({ sentTo: "a@b.co" });
+    expect(quiet).not.toContain("aria-invalid");
+    expect(quiet).toMatch(/aria-describedby="[^"]+-sent"/);
+    // Elsewhere the error stays at the top of the card.
+    const top = signin({ error: "Nope" });
+    expect(top.indexOf("Nope")).toBeLessThan(top.indexOf("Continue with Apple"));
+  });
+
+  it("the code step stays locked until the 18+ box is ticked", () => {
+    const html = signin({ sentTo: "a@b.co", code: "123456", adult: false });
+    const after = html.slice(html.indexOf("one-time-code"));
+    expect(/<button[^>]*type="submit"[^>]*>/.exec(after)![0]).toContain('disabled=""');
+    const resend = new RegExp(`<button[^>]*>${esc(t("en", "signin.codeResend"))}`).exec(html)![0];
+    expect(resend).toContain('disabled=""');
+  });
+
   it("digitsOnly keeps at most six ASCII digits, pasted text included", () => {
     expect(digitsOnly("12 34-56")).toBe("123456");
     expect(digitsOnly("123456789")).toBe("123456");
     expect(digitsOnly("a1b2")).toBe("12");
-    expect(digitsOnly("١٢")).toBe("");
+    expect(digitsOnly("١٢٣٤٥٦")).toBe("123456");
+    expect(digitsOnly("۱۲ ۳۴")).toBe("1234");
     expect(digitsOnly("")).toBe("");
   });
 

@@ -7,7 +7,7 @@ import { signInStarted, trackError } from "@/lib/analytics/client";
 import type { AuthProviders } from "@/lib/account-types";
 import { t, type Lang } from "@/lib/i18n";
 import { useLang } from "@/lib/lang";
-import { refreshViewer, useViewer } from "@/lib/use-viewer";
+import { refreshViewer, useViewer, viewerSignedIn } from "@/lib/use-viewer";
 import { AdultCheck, forgetAdultTick, rememberAdultTick } from "../AgeGate";
 import { Turnstile, TURNSTILE_SITE_KEY } from "../Turnstile";
 import styles from "./AccountPages.module.css";
@@ -58,9 +58,33 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export const CODE_LENGTH = 6;
 
-/** Digits only, at most six: what a typed or pasted code is cut down to. */
+/** Digits only, at most six: what a typed or pasted code is cut down to.
+ * Arabic-Indic and Persian digits become ASCII ones first. */
 export function digitsOnly(text: string): string {
-  return text.replace(/[^0-9]/g, "").slice(0, CODE_LENGTH);
+  return text
+    .replace(/[٠-٩]/g, (d) => String(d.charCodeAt(0) - 0x0660))
+    .replace(/[۰-۹]/g, (d) => String(d.charCodeAt(0) - 0x06f0))
+    .replace(/[^0-9]/g, "")
+    .slice(0, CODE_LENGTH);
+}
+
+const SENT_TO_KEY = "signin_sent_to";
+
+function readSentTo(): string | null {
+  try {
+    return sessionStorage.getItem(SENT_TO_KEY);
+  } catch {
+    return null;
+  }
+}
+
+function keepSentTo(email: string | null): void {
+  try {
+    if (email) sessionStorage.setItem(SENT_TO_KEY, email);
+    else sessionStorage.removeItem(SENT_TO_KEY);
+  } catch {
+    // Private mode: the code step just does not survive a reload.
+  }
 }
 
 const NO_PROVIDERS: AuthProviders = { apple: false, google: false, email: false, emailCode: false, dev: false };
@@ -143,6 +167,7 @@ export function SignInPanel({
   const emailFormId = useId();
   const loading = providers === null;
   const byCode = providers?.emailCode === true;
+  const codeStep = Boolean(providers?.email && byCode && sentTo);
   const none = providers !== null && !providers.apple && !providers.google && !providers.email && !providers.dev;
 
   const providerButton = (p: "apple" | "google") => {
@@ -171,7 +196,7 @@ export function SignInPanel({
         {loading ? t(lang, "signin.loading") : ""}
       </p>
       {none ? <p className={styles.notice}>{t(lang, "signin.unavailable")}</p> : null}
-      {error ? (
+      {error && !codeStep ? (
         <p className={styles.error} role="alert">
           {error}
         </p>
@@ -187,7 +212,7 @@ export function SignInPanel({
           <div className={styles.divider} aria-hidden />
           {sentTo && byCode ? (
             <>
-              <p className={styles.ok} role="status">
+              <p id={`${emailFormId}-sent`} className={styles.ok} role="status">
                 {t(lang, "signin.codeSent", { email: sentTo })}
               </p>
               <form
@@ -209,9 +234,16 @@ export function SignInPanel({
                   pattern="[0-9]*"
                   autoFocus
                   required
+                  aria-invalid={error ? true : undefined}
+                  aria-describedby={`${emailFormId}-sent${error ? ` ${emailFormId}-error` : ""}`}
                   value={code}
                   onChange={(e) => onCode(digitsOnly(e.target.value))}
                 />
+                {error ? (
+                  <p id={`${emailFormId}-error`} className={styles.error} role="alert">
+                    {error}
+                  </p>
+                ) : null}
                 <button
                   type="submit"
                   className={`${styles.btn} ${styles.primary}`}
@@ -333,6 +365,12 @@ export function SignInView({ next: rawNext }: { next?: string | string[] }) {
   const [adult, setAdult] = useState(false);
 
   const signedIn = Boolean(me?.user);
+  // A mobile browser can reload the tab while the user reads the mail.
+  useEffect(() => {
+    const kept = readSentTo();
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- one-time read of browser storage
+    if (kept) setSentTo(kept);
+  }, []);
   // Back here from Apple or Google without signing in, or a fresh visit:
   // whatever was ticked before no longer counts.
   useEffect(() => forgetAdultTick(), []);
@@ -379,6 +417,7 @@ export function SignInView({ next: rawNext }: { next?: string | string[] }) {
       if (res.ok) {
         setCode("");
         setSentTo(to);
+        keepSentTo(to);
       } else {
         forgetAdultTick();
         trackError(res.code);
@@ -414,7 +453,13 @@ export function SignInView({ next: rawNext }: { next?: string | string[] }) {
       return;
     }
     // The cookie is set; the effect above takes the viewer to `next`.
+    keepSentTo(null);
     await refreshViewer();
+    if (!viewerSignedIn()) {
+      forgetAdultTick();
+      setError(t(lang, "signin.failed"));
+      setPending(false);
+    }
   }
 
   async function resendCode() {
@@ -433,6 +478,7 @@ export function SignInView({ next: rawNext }: { next?: string | string[] }) {
 
   function changeEmail() {
     setSentTo(null);
+    keepSentTo(null);
     setCode("");
     setError(null);
   }
@@ -453,6 +499,11 @@ export function SignInView({ next: rawNext }: { next?: string | string[] }) {
     }
     // The store now has a user, and the effect above takes it to `next`.
     await refreshViewer();
+    if (!viewerSignedIn()) {
+      forgetAdultTick();
+      setError(t(lang, "signin.failed"));
+      setPending(false);
+    }
   }
 
   return (
@@ -484,7 +535,10 @@ export function SignInView({ next: rawNext }: { next?: string | string[] }) {
         onToggleEmail={() => setEmailOpen((o) => !o)}
         onEmail={setEmail}
         onSendEmail={() => void sendEmail()}
-        onCode={setCode}
+        onCode={(v) => {
+          setCode(v);
+          setError(null);
+        }}
         onVerify={() => void verifyCode()}
         onResend={() => void resendCode()}
         onChangeEmail={changeEmail}
