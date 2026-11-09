@@ -19,11 +19,12 @@
   min-height: 0;
 }
 
-/* Takes whatever height the form leaves, and is the one thing that may be
+/* Takes whatever height the form leaves, never less than the 110px the court
+   needs to draw (the middle scrolls first, then the page), and is the one thing that may be
    wider than the column: the court scales with the screen. */
 .stage {
   flex: 1 1 0;
-  min-height: 0;
+  min-height: 110px;
   display: flex;
   flex-direction: column;
   align-items: center;
