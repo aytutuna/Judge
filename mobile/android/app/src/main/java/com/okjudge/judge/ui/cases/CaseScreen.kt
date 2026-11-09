@@ -293,7 +293,7 @@ private fun CaseScreenBody(
         val scroll = rememberScrollState()
         ClearFocusOnDrag(scroll)
         Column(
-            Modifier.fillMaxSize().clearFocusOnTap().verticalScroll(scroll).imePadding().padding(horizontal = 16.dp),
+            Modifier.fillMaxSize().clearFocusOnTap().verticalScroll(scroll, enabled = scroll.canScrollForward || scroll.canScrollBackward).imePadding().padding(horizontal = 16.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Column(
