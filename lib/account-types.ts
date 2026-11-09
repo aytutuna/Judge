@@ -48,6 +48,9 @@ export type MeResponse = {
   entitlement: Entitlement | null;
   /** Absent on older servers. */
   age?: AgeState | null;
+  /** The account has a password (POST /api/v1/me/password). Absent when
+   * signed out and on older servers. */
+  hasPassword?: boolean;
 };
 
 /** Which sign-in methods are usable on this deployment right now. */

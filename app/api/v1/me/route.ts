@@ -15,6 +15,7 @@ import {
 import { deadBearerResponse } from "@/lib/bearer-guard";
 import { deleteUserEntitlements, getEntitlement } from "@/lib/entitlements";
 import { removeUserData } from "@/lib/originals/removal";
+import { hasPassword } from "@/lib/password";
 import { revokeSignInTokens } from "@/lib/signin-tokens";
 
 export const runtime = "nodejs";
@@ -37,7 +38,12 @@ export async function GET(req: Request): Promise<NextResponse> {
     if (entitlement.credits === 0 && !entitlement.subscription && (await missedWelcome(viewer.user.id))) {
       entitlement = await getEntitlement(viewer.user.id);
     }
-    const body: MeResponse = { user: viewer.user, entitlement, age: viewer.age };
+    const body: MeResponse = {
+      user: viewer.user,
+      entitlement,
+      age: viewer.age,
+      hasPassword: await hasPassword(viewer.user.id),
+    };
     return NextResponse.json(body, { headers: NO_STORE });
   } catch (e) {
     console.error("[me] entitlement lookup failed:", e instanceof Error ? e.message : String(e));

@@ -124,6 +124,7 @@ describe("password sign-in", () => {
     expect(body.user.email).toBe("pw1@example.com");
     expect(res.headers.get("set-auth-token")?.split(".")[0]).toBe(body.token);
     expect((await me(body.token)).status).toBe(200);
+    expect(((await (await me(body.token)).json()) as { hasPassword: boolean }).hasPassword).toBe(true);
     expect(sent).toHaveLength(1);
   });
 

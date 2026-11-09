@@ -12,6 +12,11 @@ import { getAuth } from "./auth";
  * code sign-in, then a new password). */
 export const FRESH_SIGNIN_MS = 5 * 60_000;
 
+export async function hasPassword(userId: string): Promise<boolean> {
+  const ctx = await (await getAuth()).$context;
+  return Boolean((await ctx.internalAdapter.findCredentialAccount(userId))?.password);
+}
+
 export type PasswordResult = "ok" | "current_required" | "current_wrong";
 
 /** Sets the password, or replaces it when the account has one: that needs

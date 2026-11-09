@@ -56,6 +56,7 @@ describe("GET /api/v1/me", () => {
       // 5 granted plus the welcome credit.
       entitlement: { canUsePremium: true, blockedReason: null, credits: 6, subscription: null, resetsAt: null },
       age: { confirmed: false, blocked: false },
+      hasPassword: false,
     });
   });
 
