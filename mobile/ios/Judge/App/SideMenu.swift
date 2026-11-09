@@ -174,10 +174,14 @@ struct RootBarLeading: ToolbarContent {
 /// its own round plate. The profile is in the side menu.
 struct RootBarTrailing: ToolbarContent {
     var body: some ToolbarContent {
-        ToolbarItem(placement: .topBarTrailing) { GamifyButton() }
-            .ownBackground()
-        ToolbarItem(placement: .topBarTrailing) { ComposeButton() }
-            .ownBackground()
+        // One item, because the bar spaces separate items too far apart.
+        ToolbarItem(placement: .topBarTrailing) {
+            HStack(spacing: 0) {
+                GamifyButton()
+                ComposeButton()
+            }
+        }
+        .ownBackground()
     }
 }
 
