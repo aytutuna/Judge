@@ -576,18 +576,18 @@
 
 /* ---------- Actions ---------- */
 .actions {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
   gap: 8px;
-  padding-top: 4px;
 }
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  min-height: 52px;
-  padding: 0 14px;
+  min-height: 40px;
+  padding: 0 16px;
   border: 1px solid var(--ink);
   border-radius: var(--radius-field);
   background: var(--ink);
@@ -612,6 +612,27 @@
 }
 .btnOutline:hover {
   background: var(--paper-hi);
+}
+.appeal {
+  width: 100%;
+  min-height: 52px;
+  padding: 0 14px;
+  border: 1px solid var(--terra-ink);
+  border-radius: var(--radius-field);
+  background: var(--terra-ink);
+  color: var(--paper);
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.2;
+  cursor: pointer;
+  transition: background var(--dur-1), transform 0.25s var(--ease);
+}
+.appeal:hover {
+  background: color-mix(in srgb, var(--terra-ink) 88%, var(--ink));
+}
+.appeal:active {
+  transform: scale(0.98);
 }
 .btn svg {
   width: 16px;

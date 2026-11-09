@@ -26,10 +26,10 @@ export function needsNamesPrompt(owner: OwnerShare | undefined, confirmedHere: b
   return Boolean(owner) && !confirmedHere && !owner?.namesConfirmed && owner?.display.a == null;
 }
 
-/** The card's action row: a filled "Share" (the browser's share sheet, a
- * plain copy where it has none) and an outlined second button, "Add context
- * & appeal" for the verdict's writer (`onAddContext`) and "Copy link" for
- * everyone else. The native share only appears after hydration so server and
+/** The row at the top right of a verdict: a filled "Share" (the browser's
+ * share sheet, a plain copy where it has none) and, for everyone but the
+ * verdict's writer (who has the appeal button below the verdict), an outlined
+ * "Copy link". The native share only appears after hydration so server and
  * client markup agree. For the writer (`owner`), the first share or copy
  * opens the names dialog first (how they appear, the others' names, names on
  * or off), then goes on with the share; public viewers get the buttons alone. */
@@ -38,13 +38,13 @@ export function ShareButtons({
   title,
   lang,
   owner,
-  onAddContext,
+  writer = false,
 }: {
   shareId: string;
   title: string;
   lang: Lang;
   owner?: OwnerShare;
-  onAddContext?: () => void;
+  writer?: boolean;
 }) {
   const nativeShare = useSyncExternalStore(subscribeNever, canNativeShare, serverCanShare);
   const [copied, setCopied] = useState(false);
@@ -131,11 +131,7 @@ export function ShareButtons({
           {stripLeadingEmoji(t(lang, copied && sharePastes ? "copied" : "share"))}
         </span>
       </button>
-      {onAddContext ? (
-        <button type="button" onClick={onAddContext} className={`${styles.btn} ${styles.btnOutline}`}>
-          {t(lang, "card.appeal")}
-        </button>
-      ) : (
+      {writer ? null : (
         <button
           type="button"
           onClick={() => withNames(() => void copyLink())}
