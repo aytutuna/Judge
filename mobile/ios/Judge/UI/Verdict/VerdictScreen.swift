@@ -90,6 +90,7 @@ private struct VerdictScreenContent: View {
                 .padding(.top, 8)
                 .padding(.bottom, 32)
             }
+            .scrollBounceBehavior(.basedOnSize)
             .task {
                 // Screenshot states with a note out: show it under the card.
                 guard appeal.panel, !appeal.area.inSheet else { return }
@@ -159,6 +160,14 @@ struct VerdictSections<Appeal: View>: View {
         let result = Names.personalizeResult(view.result, nameMap: session.nameMap, selfLang: selfLang)
         let offered = appealArea.inSheet
         VStack(spacing: 12) {
+            if shareURL != nil {
+                VerdictShare(
+                    shareURL: shareURL,
+                    shareSubject: session.original.result.headline,
+                    lang: lang,
+                    writer: offered
+                )
+            }
             if let outcome = result.appeal {
                 AppealOutcomeBanner(
                     appeal: outcome,
@@ -178,13 +187,10 @@ struct VerdictSections<Appeal: View>: View {
             if !result.modelRefused {
                 VerdictReasons(result: result, parties: parties, lang: lang) { showDetails = true }
             }
-            VerdictActions(
-                shareURL: shareURL,
-                shareSubject: session.original.result.headline,
-                lang: lang,
-                onAddContext: offered ? { openAppeal() } : nil
-            )
-            .padding(.top, 4)
+            if offered {
+                VerdictAppealButton(lang: lang) { openAppeal() }
+                    .padding(.top, 4)
+            }
         }
         .opacity(view.status == .loading ? 0.55 : 1)
         .animation(.easeOut(duration: 0.25), value: view.status == .loading)
