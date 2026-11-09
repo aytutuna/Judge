@@ -24,6 +24,15 @@ export function blurOnTapOutside(
   active.blur();
 }
 
+export function useBlurOnTapOutside(on = true) {
+  useEffect(() => {
+    if (!on) return;
+    const onDown = (e: PointerEvent) => blurOnTapOutside(e.pointerType, document.activeElement as HTMLElement | null, e.target as Element | null);
+    document.addEventListener("pointerdown", onDown);
+    return () => document.removeEventListener("pointerdown", onDown);
+  }, [on]);
+}
+
 /**
  * Page frame for the app's own pages: the header (with "Verdicts" from
  * the desktop breakpoint), the page, the footer unless `footer` is off,
@@ -48,11 +57,7 @@ export function AppShell({
   children: ReactNode;
 }) {
   const pathname = usePathname();
-  useEffect(() => {
-    const onDown = (e: PointerEvent) => blurOnTapOutside(e.pointerType, document.activeElement as HTMLElement | null, e.target as Element | null);
-    document.addEventListener("pointerdown", onDown);
-    return () => document.removeEventListener("pointerdown", onDown);
-  }, []);
+  useBlurOnTapOutside();
   return (
     <div lang={lang} dir={langDir(lang)} className={styles.shell}>
       <SkipLink lang={lang} />
