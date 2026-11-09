@@ -49,7 +49,7 @@ struct HomeCourt: View {
     let busy: Bool
     let covered: Bool
 
-    private static let minHeight: CGFloat = 110
+    static let minHeight: CGFloat = 110
     private static let maxWidth: CGFloat = 1100
 
     var body: some View {
