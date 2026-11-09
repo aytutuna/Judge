@@ -25,7 +25,7 @@ export const SEAT_RETRY_TIMEOUT_MS = 60_000;
 export type PanelSeat = { model: string; analyzeBFirst: boolean; effort: Effort };
 
 /** Case options every seat gets (two-sided schema, evidence and appeal notes). */
-export type PanelOptions = Pick<JudgeOptions, "twoSided" | "evidence" | "appeal">;
+export type PanelOptions = Pick<JudgeOptions, "twoSided" | "evidence" | "appeal" | "parties">;
 
 export function isHaiku(model: string): boolean {
   return model.includes("haiku");
@@ -80,12 +80,16 @@ export async function judgePremiumPanel(
     ...(opts.twoSided ? { twoSided: true } : {}),
     ...(opts.evidence ? { evidence: true } : {}),
     ...(opts.appeal ? { appeal: opts.appeal } : {}),
+    ...(opts.parties ? { parties: opts.parties } : {}),
   };
+  // Seats read in a rotated order with several sides, B-first with two.
+  const order = (seat: PanelSeat, i: number) =>
+    opts.parties && opts.parties.length > 2 ? { seat: i } : { analyzeBFirst: seat.analyzeBFirst };
   const served = await Promise.all(
     seats.map(async (seat, i): Promise<{ run: JudgeRun; model: string }> => {
       const run = await judgeOnce(text, {
         ...common,
-        analyzeBFirst: seat.analyzeBFirst,
+        ...order(seat, i),
         model: seat.model,
         effort: seat.effort,
       }).catch((e: unknown): JudgeRun => ({
@@ -105,7 +109,7 @@ export async function judgePremiumPanel(
       console.warn(`[premium] ${seat.model} seat refused; rerunning it on ${HAIKU_MODEL}`);
       const retry = await judgeOnce(text, {
         ...common,
-        analyzeBFirst: seat.analyzeBFirst,
+        ...order(seat, i),
         model: HAIKU_MODEL,
         effort: defaultJudgeEffort(),
         timeoutMs: SEAT_RETRY_TIMEOUT_MS,

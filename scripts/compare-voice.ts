@@ -66,9 +66,10 @@ async function run(outPath: string, judgePath?: string) {
         console.warn(`${id}/${lang}: run failed (${res.error})`);
         return null;
       }
-      const fields = Object.fromEntries(SHOWN.map((k) => [k, res.data[k]]));
-      fields.verdict = res.data.verdict;
-      return { id, lang, fields, allText: freeText(res.data) };
+      const data = res.data as JudgeRunOutput;
+      const fields = Object.fromEntries(SHOWN.map((k) => [k, data[k]]));
+      fields.verdict = data.verdict;
+      return { id, lang, fields, allText: freeText(data) };
     }),
   );
   writeFileSync(outPath, JSON.stringify(samples.filter(Boolean), null, 2));

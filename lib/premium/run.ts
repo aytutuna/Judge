@@ -10,6 +10,8 @@
  */
 
 import { aggregate } from "../aggregate";
+import { aggregateMulti } from "../aggregate-multi";
+import type { MultiRunOutput } from "../judge-multi";
 import { anonymize } from "../anonymize";
 import { providerFailure, withUsageMeter, type UsageTotals } from "../claude";
 import { loadLocales, t, type Lang } from "../i18n";
@@ -20,6 +22,7 @@ import type {
   FactCheck,
   JudgeRunOutput,
   NameMapping,
+  PartyId,
   VerdictResult,
 } from "../types";
 import { withClarifications } from "./context";
@@ -69,6 +72,9 @@ export type JudgeInput = {
   evidence?: boolean;
   /** Appeal note for the judges' system prompt (APPEAL_JUDGE_NOTE). */
   appeal?: string;
+  /** Three or four sides: the judges pick among them (lib/judge-multi.ts).
+   * Absent: today's two-sided path. */
+  parties?: readonly PartyId[];
 };
 
 export type PremiumStats = {
@@ -113,8 +119,8 @@ function intEnv(name: string, fallback: number, min: number, max: number): numbe
 }
 
 /** The free tier's honest output when the model declines to judge. */
-export function refusedPremiumResult(lang: Lang): VerdictResult {
-  return {
+export function refusedPremiumResult(lang: Lang, parties?: readonly PartyId[]): VerdictResult {
+  const refused: VerdictResult = {
     verdict: "too_close",
     dispute_type: "mixed",
     confidence: 1,
@@ -133,6 +139,15 @@ export function refusedPremiumResult(lang: Lang): VerdictResult {
     runs: [],
     demo: false,
     model_refused: true,
+  };
+  if (!parties) return refused;
+  return {
+    ...refused,
+    parties: [...parties],
+    winner: null,
+    votes: [],
+    sides: parties.map((party) => ({ party, claims: [{ claim: t(lang, "refused.claim"), kind: "logic" as const }], bedrock: "—" })),
+    others: [],
   };
 }
 
@@ -282,7 +297,8 @@ export async function judgeAnonymized(
   const startedAt = opts.startedAt ?? now();
   const stats = opts.stats ?? { factCheck: "unavailable", claims: 0, escalated: false, trial: false, ms: 0 };
 
-  const factCheck = await runFactCheck(text, lang);
+  const many = input.parties && input.parties.length > 2 ? input.parties : undefined;
+  const factCheck = many ? await runFactCheck(text, lang, many.length) : await runFactCheck(text, lang);
   stats.factCheck = factCheck.status;
   stats.claims = factCheck.claims.length;
   const factContext = factCheckBlock(factCheck);
@@ -294,6 +310,7 @@ export async function judgeAnonymized(
     ...(input.twoSided ? { twoSided: true } : {}),
     ...(input.evidence ? { evidence: true } : {}),
     ...(input.appeal ? { appeal: input.appeal } : {}),
+    ...(many ? { parties: many } : {}),
   };
   const hasCaseOpts = Object.keys(caseOpts).length > 0;
 
@@ -305,13 +322,15 @@ export async function judgeAnonymized(
       })
     : await judgePremiumPanel(text, lang, context);
   const ok = panel.runs.filter((r) => r.ok).map((r) => r.data as JudgeRunOutput);
+  const combine = (runs: JudgeRunOutput[]): VerdictResult =>
+    many ? aggregateMulti(runs as unknown as MultiRunOutput[], many) : aggregate(runs);
   const premiumFields = { tier: "premium" as const, fact_check: factCheck, lang };
 
   if (ok.length === 0) {
     if (panel.runs.every((r) => !r.ok && r.blocked)) {
       return {
         status: "ok",
-        result: { ...refusedPremiumResult(lang), ...premiumFields, panel: { models: [] } },
+        result: { ...refusedPremiumResult(lang, many), ...premiumFields, panel: { models: [] } },
         input: text,
         refused: true,
         degraded: false,
@@ -326,7 +345,7 @@ export async function judgeAnonymized(
 
   // Read before escalation, which only ever adds Haiku runs.
   const degraded = premiumPanel().some((s) => !isHaiku(s.model)) && panel.models.every(isHaiku);
-  let result = aggregate(ok);
+  let result = combine(ok);
   let models = panel.models;
 
   const extra = intEnv("JUDGE_EXTRA_RUNS", 2, 0, 4);
@@ -335,7 +354,7 @@ export async function judgeAnonymized(
     result.confidence <= intEnv("JUDGE_ESCALATE_AT", 2, 0, 5) &&
     now() - startedAt < ESCALATION_CUTOFF_MS
   ) {
-    const extraOpts: Pick<JudgeOptions, "context" | "premium" | "twoSided" | "evidence" | "appeal"> = {
+    const extraOpts: Pick<JudgeOptions, "context" | "premium" | "twoSided" | "evidence" | "appeal" | "parties"> = {
       premium: true,
       ...(context ? { context } : {}),
       ...caseOpts,
@@ -343,7 +362,7 @@ export async function judgeAnonymized(
     const more = await judgeExtra(extra, text, lang, extraOpts).catch((): JudgeRun[] => []);
     const moreOk = more.filter((r) => r.ok).map((r) => r.data as JudgeRunOutput);
     if (moreOk.length > 0) {
-      result = { ...aggregate([...ok, ...moreOk]), escalated: true };
+      result = { ...combine([...ok, ...moreOk]), escalated: true };
       models = [...models, ...moreOk.map(() => HAIKU_MODEL)];
       stats.escalated = true;
     }

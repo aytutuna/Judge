@@ -2,7 +2,14 @@ import { claudeJson, type Effort } from "./claude";
 import { humanStyle } from "./style";
 import { loadLocales, voiceNote, type Lang } from "./i18n";
 import { LANGS } from "./langs";
-import { JudgeRunOutput, TwoSidedJudgeRunOutput } from "./types";
+import {
+  multiAccountsNote,
+  multiSchema,
+  multiSystemPrompt,
+  parseMultiRun,
+  type MultiRunOutput,
+} from "./judge-multi";
+import { JudgeRunOutput, TwoSidedJudgeRunOutput, type PartyId } from "./types";
 
 /** Output schema mirroring lib/types.ts JudgeOutput (compact form,
  * converted by toClaudeSchema in lib/claude.ts). */
@@ -178,7 +185,7 @@ ${humanStyle(lang)}`;
 }
 
 export type JudgeRun =
-  | { ok: true; data: JudgeRunOutput }
+  | { ok: true; data: JudgeRunOutput | MultiRunOutput }
   | { ok: false; blocked: boolean; error: string };
 
 /** Added to the system prompt of premium judges only (`premium: true`). The
@@ -227,15 +234,27 @@ export type JudgeOptions = {
   /** Re-judging after an appeal: this note is appended (APPEAL_JUDGE_NOTE,
    * or APPEAL_ONE_SIDED_JUDGE_NOTE for a case judged on one side). */
   appeal?: string;
+  /** Three or four sides (lib/judge-multi.ts): the judge picks among them
+   * or says too close. With `twoSided`, the sides are separate accounts. */
+  parties?: readonly PartyId[];
+  /** Which judge seat this is; with `parties`, it sets the reading order
+   * (instead of `analyzeBFirst`). */
+  seat?: number;
 };
+
+/** The sides when the run is a three- or four-sided one. */
+function manySides(opts: JudgeOptions): readonly PartyId[] | null {
+  return opts.parties && opts.parties.length > 2 ? opts.parties : null;
+}
 
 /** The system prompt additions for the premium options, in order. Empty for
  * a free or plain premium run (which then send exactly today's prompt). */
 function extraNotes(opts: JudgeOptions): string {
+  const many = manySides(opts);
   const notes = [
     opts.premium ? PREMIUM_JUDGE_NOTE : null,
     opts.evidence ? EVIDENCE_JUDGE_NOTE : null,
-    opts.twoSided ? TWO_SIDED_JUDGE_NOTE : null,
+    opts.twoSided ? (many ? multiAccountsNote(many) : TWO_SIDED_JUDGE_NOTE) : null,
     opts.appeal || null,
   ].filter((n): n is string => Boolean(n));
   return notes.join("\n\n");
@@ -249,7 +268,10 @@ export async function judgeOnce(
   // premium options only add keys when set, so a call without them sends
   // exactly the request it always has.
   await loadLocales();
-  const system = systemPrompt(opts.analyzeBFirst ?? false, opts.lang ?? "en");
+  const many = manySides(opts);
+  const system = many
+    ? multiSystemPrompt(many, opts.seat ?? 0, opts.lang ?? "en")
+    : systemPrompt(opts.analyzeBFirst ?? false, opts.lang ?? "en");
   const notes = extraNotes(opts);
   const heading = opts.twoSided ? "THE CASE" : "THE ARGUMENT";
   const res = await claudeJson<unknown>({
@@ -257,7 +279,11 @@ export async function judgeOnce(
     user: opts.context
       ? `${heading}:\n\n${anonymizedArgument}\n\n${opts.context}`
       : `${heading}:\n\n${anonymizedArgument}`,
-    schema: (opts.twoSided ? TWO_SIDED_JUDGE_SCHEMA : JUDGE_SCHEMA) as unknown as Record<string, unknown>,
+    schema: (many
+      ? multiSchema(many, Boolean(opts.twoSided))
+      : opts.twoSided
+        ? TWO_SIDED_JUDGE_SCHEMA
+        : JUDGE_SCHEMA) as unknown as Record<string, unknown>,
     timeoutMs: opts.timeoutMs,
     ...(opts.model ? { model: opts.model } : {}),
     ...(opts.effort ? { effort: opts.effort } : {}),
@@ -266,6 +292,10 @@ export async function judgeOnce(
     return res.blocked
       ? { ok: false, blocked: true, error: `model refused (${res.reason})` }
       : { ok: false, blocked: false, error: res.error };
+  }
+  if (many) {
+    const run = parseMultiRun(res.data, many);
+    return run.ok ? { ok: true, data: run.data } : { ok: false, blocked: false, error: `schema mismatch: ${run.error}` };
   }
   // Two-sided runs keep their extra arrays (aggregate spreads the
   // representative run, so they reach the stored result).
@@ -318,11 +348,13 @@ export async function judgeExtra(
   anonymizedArgument: string,
   lang: Lang = "en",
   /** The same context, notes and schema as the first round (premium panel or free case). */
-  extra: Pick<JudgeOptions, "context" | "premium" | "twoSided" | "evidence" | "appeal"> = {},
+  extra: Pick<JudgeOptions, "context" | "premium" | "twoSided" | "evidence" | "appeal" | "parties"> = {},
 ): Promise<JudgeRun[]> {
-  const configs = Array.from({ length: Math.max(0, n) }, (_, i) => ({
-    analyzeBFirst: i % 2 === 0,
-  }));
+  // With several sides the extra seats start from the second side on, so
+  // they read in a different order than the first round's first seat.
+  const configs = Array.from({ length: Math.max(0, n) }, (_, i) =>
+    manySides(extra) ? { seat: i + 1 } : { analyzeBFirst: i % 2 === 0 },
+  );
   return Promise.all(
     configs.map((config) =>
       judgeOnce(anonymizedArgument, {
