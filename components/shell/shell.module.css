@@ -181,6 +181,10 @@ html:not([data-game="off"]) .gamify {
   flex: none;
   color: var(--ink-2);
 }
+.menuHeadingWrap {
+  margin: 0;
+  font: inherit;
+}
 .menuHeading {
   display: flex;
   align-items: center;

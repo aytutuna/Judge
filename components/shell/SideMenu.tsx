@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useId, useRef, useState, type MouseEvent } from "react";
-import { AccountPicture, returnPath, signOutNow } from "@/components/AccountMenu";
+import { accountEntry, AccountPicture, returnPath, signOutNow } from "@/components/AccountMenu";
 import { saveDraftForSignIn } from "@/lib/draft";
 import { t, type Key, type Lang } from "@/lib/i18n";
 import { useViewer } from "@/lib/use-viewer";
@@ -68,6 +68,7 @@ export function Panel({ lang, pathname, onHome, onClosed }: Props & { onClosed: 
   const close = () => dialogRef.current?.close();
   const recent = history.status === "loading" ? [] : history.items.slice(0, RECENT);
   const user = viewer.me?.user ?? null;
+  const showSignIn = accountEntry(viewer.config, viewer.me) === "signin" && !pathname?.startsWith("/signin");
   const [profileOpen, setProfileOpen] = useState(false);
   const profileId = useId();
 
@@ -99,17 +100,19 @@ export function Panel({ lang, pathname, onHome, onClosed }: Props & { onClosed: 
             })}
           </li>
           <li>
-            <Link
-              href="/verdicts"
-              className={styles.menuHeading}
-              aria-current={pathname === "/verdicts" ? "page" : undefined}
-              onClick={close}
-            >
-              {t(lang, "nav.verdicts")}
-              <svg viewBox="0 0 16 16" aria-hidden>
-                <path d="m6 3.5 4.5 4.5L6 12.5" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </Link>
+            <h2 className={styles.menuHeadingWrap}>
+              <Link
+                href="/verdicts"
+                className={styles.menuHeading}
+                aria-current={pathname === "/verdicts" ? "page" : undefined}
+                onClick={close}
+              >
+                {t(lang, "nav.verdicts")}
+                <svg viewBox="0 0 16 16" aria-hidden>
+                  <path d="m6 3.5 4.5 4.5L6 12.5" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </Link>
+            </h2>
           </li>
           {recent.map((item) => {
             const state = item.kind === "verdict" && item.state === "removed" ? null : stateLabel(lang, item);
@@ -149,7 +152,7 @@ export function Panel({ lang, pathname, onHome, onClosed }: Props & { onClosed: 
                 >
                   {t(lang, "nav.signOut")}
                 </button>
-              ) : (
+              ) : showSignIn ? (
                 <Link
                   href={`/signin?next=${encodeURIComponent(returnPath(pathname))}`}
                   className={styles.menuRow}
@@ -160,7 +163,7 @@ export function Panel({ lang, pathname, onHome, onClosed }: Props & { onClosed: 
                 >
                   {t(lang, "nav.signIn")}
                 </Link>
-              )}
+              ) : null}
             </div>
             <button
               type="button"
