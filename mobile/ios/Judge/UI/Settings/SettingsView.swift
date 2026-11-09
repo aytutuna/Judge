@@ -9,13 +9,14 @@ struct SettingsView: View {
     @State private var webLink: WebLink?
     @State private var confirmSignOut = false
     @State private var confirmDelete = false
+    @State private var changePassword = false
 
     var body: some View {
         let lang = app.lang
         @Bindable var model = app
         NavigationStack(path: $model.settingsPath) {
             List {
-                AccountSection(confirmSignOut: $confirmSignOut, confirmDelete: $confirmDelete)
+                AccountSection(confirmSignOut: $confirmSignOut, confirmDelete: $confirmDelete, changePassword: $changePassword)
 
                 Section {
                     NavigationLink(value: SettingsRoute.pricing) {
@@ -108,6 +109,9 @@ struct SettingsView: View {
             }
             .sheet(item: $webLink) { link in
                 SafariView(url: link.url).ignoresSafeArea()
+            }
+            .sheet(isPresented: $changePassword) {
+                PasswordSheet().environment(app)
             }
             .alert(L10n.appAccountSignOutConfirm(lang), isPresented: $confirmSignOut) {
                 Button(L10n.accountSignOut(lang), role: .destructive) {
