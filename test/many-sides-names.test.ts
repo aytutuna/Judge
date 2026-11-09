@@ -422,3 +422,9 @@ describe("anonymizeSubmission with three sides", () => {
     expect(sub.nameMap).toContainEqual({ original: "Zoe", replacement: "Person E" });
   });
 });
+
+describe("label detection", () => {
+  it("a letter that runs on into a word is not a side's label", () => {
+    expect(heldCandidates("Cem went to Berlin and Berlin was cold", "Party Cx met Party A in Berlin", ["Berlin"], 3)).toEqual(["Berlin"]);
+  });
+});

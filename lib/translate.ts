@@ -19,7 +19,7 @@ import { claudeJson, LITE_MODEL, type ClaudeJsonResult, type Effort } from "./cl
 import { verdictLang } from "./content-lang";
 import { getTranslation, getVerdict, saveTranslation } from "./db";
 import { contentLang, loadLocales, t, voiceNote, type Lang } from "./i18n";
-import { LANGS } from "./langs";
+import { LANGS, PARTY_LABELS } from "./langs";
 import { z } from "zod";
 import type { VerdictResult } from "./types";
 
@@ -55,6 +55,11 @@ export type TranslatableText = {
   would_change?: string[];
   /** Verdicts produced by an appeal: the one-sentence "what changed". */
   appeal_summary?: string;
+  /** Three or four sides only: each side's claims and bedrock, the line for
+   * each side that did not win, and the disputed facts of separate accounts. */
+  sides?: { claims: string[]; bedrock: string }[];
+  others?: string[];
+  disputes?: { fact: string; positions: string[] }[];
 };
 
 /** Output schema (compact form, converted by toClaudeSchema). */
@@ -101,6 +106,9 @@ export function extractText(r: VerdictResult): TranslatableText {
       : {}),
     ...(r.would_change ? { would_change: [...r.would_change] } : {}),
     ...(r.appeal ? { appeal_summary: r.appeal.summary } : {}),
+    ...(r.sides ? { sides: r.sides.map((s) => ({ claims: s.claims.map((c) => c.claim), bedrock: s.bedrock })) } : {}),
+    ...(r.others ? { others: r.others.map((o) => o.line) } : {}),
+    ...(r.disputes ? { disputes: r.disputes.map((d) => ({ fact: d.fact, positions: d.positions.map((p) => p.says) })) } : {}),
   };
 }
 
@@ -131,6 +139,9 @@ export function flattenText(x: TranslatableText): Slot[] {
     ...(x.disputed_facts ?? []).flatMap((d) => [other(d.fact), other(d.party_a), other(d.party_b)]),
     ...(x.would_change ?? []).map(other),
     ...(x.appeal_summary === undefined ? [] : [other(x.appeal_summary)]),
+    ...(x.sides ?? []).flatMap((s) => [...s.claims.map(other), other(s.bedrock)]),
+    ...(x.others ?? []).map(other),
+    ...(x.disputes ?? []).flatMap((d) => [other(d.fact), ...d.positions.map(other)]),
   ];
 }
 
@@ -173,6 +184,15 @@ export function unflattenText(template: TranslatableText, flat: readonly string[
   });
   const would_change = template.would_change?.map(() => next());
   const appeal_summary = template.appeal_summary === undefined ? undefined : next();
+  const sides = template.sides?.map((s) => {
+    const claims = s.claims.map(() => next());
+    return { claims, bedrock: next() };
+  });
+  const others = template.others?.map(() => next());
+  const disputes = template.disputes?.map((d) => {
+    const fact = next();
+    return { fact, positions: d.positions.map(() => next()) };
+  });
   return {
     headline,
     ...(why !== undefined ? { why } : {}),
@@ -192,6 +212,9 @@ export function unflattenText(template: TranslatableText, flat: readonly string[
     ...(disputed_facts ? { disputed_facts } : {}),
     ...(would_change ? { would_change } : {}),
     ...(appeal_summary !== undefined ? { appeal_summary } : {}),
+    ...(sides ? { sides } : {}),
+    ...(others ? { others } : {}),
+    ...(disputes ? { disputes } : {}),
   };
 }
 
@@ -245,19 +268,19 @@ export function reassemble(plan: SegmentPlan, translated: readonly string[]): st
   return flat;
 }
 
-const LABELS: Record<"en" | "tr", { a: string; b: string }> = {
-  en: { a: "Party A", b: "Party B" },
-  tr: { a: "Taraf A", b: "Taraf B" },
-};
+type Letter = "A" | "B" | "C" | "D";
 
-/** Turkish genitive after the letter names: "A'nın", "B'nin". */
-const TR_GENITIVE: Record<"A" | "B", string> = { A: "nın", B: "nin" };
+/** Turkish genitive after the letter names: "A'nın", "B'nin", "C'nin", "D'nin". */
+const TR_GENITIVE: Record<Letter, string> = { A: "nın", B: "nin", C: "nin", D: "nin" };
 
 /** Vowel harmony for a suffix on a letter name: "A" is read "a" (back
- * vowel), "B" is read "be" (front vowel). */
-const HARMONY: Record<"A" | "B", Record<string, string>> = {
+ * vowel); "B", "C" and "D" are read "be", "ce", "de" (front vowel). */
+const FRONT = { a: "e", ı: "i", u: "i", ü: "i" };
+const HARMONY: Record<Letter, Record<string, string>> = {
   A: { e: "a", i: "ı", u: "ı", ü: "ı" },
-  B: { a: "e", ı: "i", u: "i", ü: "i" },
+  B: FRONT,
+  C: FRONT,
+  D: FRONT,
 };
 
 /** An apostrophe plus a Turkish case suffix (dative, locative, ablative,
@@ -279,31 +302,31 @@ function placeholderGenitive(x: string): string {
  * "Party B's" and any other Turkish case suffix ("Taraf B'ye") is dropped.
  * Name placeholders ("Person C") keep their English form in both languages,
  * as the anonymizer writes them, and get the same suffix handling. */
-export function mapPartyLabels(text: string, target: Lang): string {
+export function mapPartyLabels(text: string, target: Lang, sides = 2): string {
   // Other languages have no suffix rules here; the prompt carries their labels.
   if (target !== "en" && target !== "tr") return text;
+  // A verdict with more than two sides has Party C and Party D too.
+  const cls = sides > 2 ? "[A-D]" : "[AB]";
   if (target === "tr") {
     return text
-      .replace(/\b(?:Party|Taraf) ([AB])['’]s(?!\p{L})/gu, (_, x: "A" | "B") => `Taraf ${x}'${TR_GENITIVE[x]}`)
+      .replace(new RegExp(String.raw`\b(?:Party|Taraf) (${cls})['’]s(?!\p{L})`, "gu"), (_, x: Letter) => `Taraf ${x}'${TR_GENITIVE[x]}`)
       .replace(/(?<!\p{L})(?:Person|Kişi) ([C-Z])['’]s(?!\p{L})/gu, (_, x: string) => `Person ${x}'${placeholderGenitive(x)}`)
       .replace(/(?<!\p{L})Kişi ([C-Z])\b/gu, "Person $1")
-      .replace(new RegExp(`\\b${LABELS.en.a}\\b`, "g"), LABELS.tr.a)
-      .replace(new RegExp(`\\b${LABELS.en.b}\\b`, "g"), LABELS.tr.b)
+      .replace(new RegExp(String.raw`\bParty (${cls})\b`, "g"), "Taraf $1")
       .replace(
         // A final -ki / -ken is invariant: only the case suffix before it is harmonised.
-        /\bTaraf ([AB])(['’])(\p{L}+?)(ki|ken)?(?!\p{L})/gu,
-        (_, x: "A" | "B", apos: string, suffix: string, tail: string | undefined) =>
+        new RegExp(String.raw`\bTaraf (${cls})(['’])(\p{L}+?)(ki|ken)?(?!\p{L})`, "gu"),
+        (_, x: Letter, apos: string, suffix: string, tail: string | undefined) =>
           `Taraf ${x}${apos}${suffix.replace(/[aeıiuü]/g, (v) => HARMONY[x][v] ?? v)}${tail ?? ""}`,
       );
   }
   return text
-    .replace(/\b(?:Taraf|Party) ([AB])['’]n?[ıi]n(?:ki)?(?!\p{L})/gu, "Party $1's")
-    .replace(new RegExp(`\\b(?:Taraf|Party) ([AB])${TR_CASE_SUFFIX}`, "gu"), "Party $1")
+    .replace(new RegExp(String.raw`\b(?:Taraf|Party) (${cls})['’]n?[ıi]n(?:ki)?(?!\p{L})`, "gu"), "Party $1's")
+    .replace(new RegExp(String.raw`\b(?:Taraf|Party) (${cls})${TR_CASE_SUFFIX}`, "gu"), "Party $1")
     .replace(/(?<!\p{L})(?:Person|Kişi) ([C-Z])['’]n?[ıiuü]n(?:ki)?(?!\p{L})/gu, "Person $1's")
     .replace(new RegExp(`(?<!\\p{L})(?:Person|Kişi) ([C-Z])${TR_CASE_SUFFIX}`, "gu"), "Person $1")
     .replace(/(?<!\p{L})Kişi ([C-Z])\b/gu, "Person $1")
-    .replace(new RegExp(`\\b${LABELS.tr.a}\\b`, "g"), LABELS.en.a)
-    .replace(new RegExp(`\\b${LABELS.tr.b}\\b`, "g"), LABELS.en.b);
+    .replace(new RegExp(String.raw`\bTaraf (${cls})\b`, "g"), "Party $1");
 }
 
 /** Below this many letters of plain prose the language check abstains:
@@ -358,8 +381,8 @@ function mustChange(text: string): boolean {
   return (prose.match(/\p{L}/gu)?.length ?? 0) >= 20 && prose.trim().split(/\s+/).length >= 4;
 }
 
-function normalized(text: string, target: Lang): string {
-  return mapPartyLabels(text, target).toLowerCase().replace(/[‘’]/g, "'").replace(/\s+/g, " ").trim();
+function normalized(text: string, target: Lang, sides = 2): string {
+  return mapPartyLabels(text, target, sides).toLowerCase().replace(/[‘’]/g, "'").replace(/\s+/g, " ").trim();
 }
 
 export type SegmentCheck = { ok: true; texts: string[] } | { ok: false; error: string };
@@ -371,7 +394,7 @@ function list(ns: number[]): string {
 /** Checks a model reply against the segments sent: every i exactly once,
  * nothing empty, no long segment echoed back, and the target language.
  * Returns the translations in segment order, or why the reply is unusable. */
-export function checkSegments(segments: readonly Segment[], payload: unknown, target: Lang): SegmentCheck {
+export function checkSegments(segments: readonly Segment[], payload: unknown, target: Lang, sides = 2): SegmentCheck {
   const parsed = SegmentsReply.safeParse(payload);
   if (!parsed.success) return { ok: false, error: "reply did not match the segment schema" };
   const byI = new Map<number, string>();
@@ -384,7 +407,7 @@ export function checkSegments(segments: readonly Segment[], payload: unknown, ta
   if (missing.length) return { ok: false, error: `segments ${list(missing)} missing or empty` };
   const texts = segments.map((s) => byI.get(s.i)!);
   const echoed = segments
-    .filter((s, i) => mustChange(s.text) && normalized(s.text, target) === normalized(texts[i], target))
+    .filter((s, i) => mustChange(s.text) && normalized(s.text, target, sides) === normalized(texts[i], target, sides))
     .map((s) => s.i);
   if (echoed.length) return { ok: false, error: `segments ${list(echoed)} came back untranslated` };
   if (!inTargetLanguage(texts, target)) return { ok: false, error: `translation is not in ${LANGS[target].name}` };
@@ -395,7 +418,7 @@ export function checkSegments(segments: readonly Segment[], payload: unknown, ta
  * is not free text (verdict, confidence, kinds, parties, runs, outcome,
  * flags) comes from the original untouched. */
 export function applyText(r: VerdictResult, text: TranslatableText, target: Lang): VerdictResult {
-  const m = (s: string) => mapPartyLabels(s, target);
+  const m = (s: string) => mapPartyLabels(s, target, r.parties?.length ?? 2);
   return {
     ...r,
     headline: m(text.headline),
@@ -453,6 +476,25 @@ export function applyText(r: VerdictResult, text: TranslatableText, target: Lang
       : {}),
     ...(r.would_change ? { would_change: r.would_change.map((w, i) => m(text.would_change?.[i] ?? w)) } : {}),
     ...(r.appeal ? { appeal: { ...r.appeal, summary: m(text.appeal_summary ?? r.appeal.summary) } } : {}),
+    ...(r.sides
+      ? {
+          sides: r.sides.map((s, i) => ({
+            ...s,
+            claims: s.claims.map((c, j) => ({ ...c, claim: m(text.sides?.[i]?.claims[j] ?? c.claim) })),
+            bedrock: m(text.sides?.[i]?.bedrock ?? s.bedrock),
+          })),
+        }
+      : {}),
+    ...(r.others ? { others: r.others.map((o, i) => ({ ...o, line: m(text.others?.[i] ?? o.line) })) } : {}),
+    ...(r.disputes
+      ? {
+          disputes: r.disputes.map((d, i) => ({
+            ...d,
+            fact: m(text.disputes?.[i]?.fact ?? d.fact),
+            positions: d.positions.map((p, j) => ({ ...p, says: m(text.disputes?.[i]?.positions[j] ?? p.says) })),
+          })),
+        }
+      : {}),
     lang: target,
   };
 }
@@ -484,14 +526,31 @@ function partyLabels(lang: Lang): { a: string; b: string } {
   return { a: t(lang, "party.a"), b: t(lang, "party.b") };
 }
 
-function labelMapRule(source: Lang, target: Lang): string {
+/** A language's labels for the first `sides` sides, "Party A" to "Party D". */
+function sideLabelsIn(lang: Lang, sides: number): string[] {
+  const word = (PARTY_LABELS[lang] ?? PARTY_LABELS.en)[0].slice(0, -1);
+  return ["A", "B", "C", "D"].slice(0, sides).map((l) => `${word}${l}`);
+}
+
+/** `"X", "Y" and "Z"` for a list of labels. */
+function quoted(labels: readonly string[]): string {
+  return labels.map((l) => `"${l}"`).join(", ").replace(/, ("[^"]*")$/, " and $1");
+}
+
+function labelMapRule(source: Lang, target: Lang, sides = 2): string {
+  if (sides > 2) {
+    const from = sideLabelsIn(source, sides);
+    const to = sideLabelsIn(target, sides);
+    const pairs = from.map((f, i) => `"${f}" ${enTrPair(source, target) ? "<->" : "->"} "${to[i]}"`);
+    return `Party labels map exactly: ${pairs.join(", ")}.`;
+  }
   if (enTrPair(source, target)) return `Party labels map exactly: "Party A" <-> "Taraf A", "Party B" <-> "Taraf B".`;
   const from = partyLabels(source);
   const to = partyLabels(target);
   return `Party labels map exactly: "${from.a}" -> "${to.a}", "${from.b}" -> "${to.b}".`;
 }
 
-export function translateSystemPrompt(source: Lang, target: Lang): string {
+export function translateSystemPrompt(source: Lang, target: Lang, sides = 2): string {
   const from = LANGS[source].name;
   const to = LANGS[target].name;
   return `You are a careful translator for an argument-settling app. You translate the text of one written ruling from ${from} into ${to}, segment by segment.
@@ -499,7 +558,7 @@ export function translateSystemPrompt(source: Lang, target: Lang): string {
 RULES, in priority order:
 1. Faithful meaning. Never add, drop, soften or strengthen anything. Keep every claim, number, unit, name, quote, hedge and degree of certainty exactly as strong as in the source. Don't correct, summarise or comment on the content.
 2. Complete. Every input segment gets exactly one output segment with the same i, fully translated into ${to}. Never return a segment in ${from}.
-3. ${labelMapRule(source, target)} "Person C", "Person D" and so on stand in for other people's names and stay exactly as written in both languages. Never swap a label for a name or a pronoun.
+3. ${labelMapRule(source, target, sides)} "Person C", "Person D" and so on stand in for other people's names and stay exactly as written in both languages. Never swap a label for a name or a pronoun.
 4. ${natural(target)}`;
 }
 
@@ -509,8 +568,18 @@ const PARTY_RULE: Partial<Record<Lang, string>> = {
   tr: `Party labels: "Party A" is "Taraf A" and "Party B" is "Taraf B". Give the label the Turkish suffix the sentence needs, after an apostrophe and in harmony with how the letter is read (A is "a", B is "be"): "Party A's" -> "Taraf A'nın", "Party B's" -> "Taraf B'nin", "to Party A" -> "Taraf A'ya", "to Party B" -> "Taraf B'ye", "from Party B" -> "Taraf B'den". Never leave "'s" on "Taraf A" or "Taraf B". "Person C", "Person D" and so on are name placeholders: keep them in English, untranslated, with any Turkish suffix after an apostrophe ("Person C's" -> "Person C'nin").`,
 };
 
-function partyRule(source: Lang, target: Lang): string {
+function partyRule(source: Lang, target: Lang, sides = 2): string {
   const fixed = enTrPair(source, target) ? PARTY_RULE[target] : undefined;
+  if (sides > 2) {
+    const letters = ["A", "B", "C", "D"].slice(0, sides);
+    const to = sideLabelsIn(target, sides);
+    const base = fixed ?? `Party labels: ${sideLabelsIn(source, sides).map((f, i) => `"${f}" is "${to[i]}"`).join(", ")}. Give the label whatever grammar the ${LANGS[target].name} sentence needs.`;
+    const extra =
+      target === "tr"
+        ? ` The same goes for ${quoted(letters.slice(2).map((l) => `Taraf ${l}`))}, read "ce" and "de" like B: "Party C's" -> "Taraf C'nin".`
+        : "";
+    return `${base}${extra} Every one of ${quoted(to)} is a side; they are never merged or reordered.`;
+  }
   if (fixed) return fixed;
   const from = partyLabels(source);
   const to = partyLabels(target);
@@ -525,13 +594,14 @@ export function translateUserMessage(
   target: Lang,
   segments: readonly Segment[],
   rejected?: string,
+  sides = 2,
 ): string {
   const from = LANGS[source].name;
   const to = LANGS[target].name;
   const last = segments.length - 1;
   const parts = [
     `Translate every segment from ${from} to ${to}. Return the same i values: {"segments": [{"i": 0, "text": "<${to} translation of segment 0>"}, ...]}, exactly one item per input segment. Translate every segment, short ones too. Don't merge, split, skip or add segments, and leave no ${from} text behind.`,
-    partyRule(source, target),
+    partyRule(source, target, sides),
   ];
   if (segments.some((s) => s.note)) parts.push(`A segment's "note" is context for you. Don't translate it or return it.`);
   if (rejected) {
@@ -564,6 +634,7 @@ function refusedCopy(r: VerdictResult, target: Lang): VerdictResult {
       side_b: r.argument_map.side_b.map((c) => ({ ...c, claim })),
     },
     losing_side_best_point: t(target, "refused.bestPoint"),
+    ...(r.sides ? { sides: r.sides.map((s) => ({ ...s, claims: s.claims.map((c) => ({ ...c, claim })) })) } : {}),
     lang: target,
   };
 }
@@ -588,6 +659,7 @@ export async function translateResult(
   if (result.model_refused) return { ok: true, result: refusedCopy(result, target) };
 
   const text = extractText(result);
+  const sides = result.parties?.length ?? 2;
   const plan = planSegments(text, target);
   const done = (texts: string[]) => ({
     ok: true as const,
@@ -600,8 +672,8 @@ export async function translateResult(
   const start = now();
   const attempt = async (effort: Effort, timeoutMs: number, rejected?: string): Promise<Attempt> => {
     const res = await call({
-      system: translateSystemPrompt(source, target),
-      user: translateUserMessage(source, target, plan.segments, rejected),
+      system: translateSystemPrompt(source, target, sides),
+      user: translateUserMessage(source, target, plan.segments, rejected, sides),
       schema: TRANSLATE_SCHEMA,
       model: LITE_MODEL,
       effort,
@@ -612,7 +684,7 @@ export async function translateResult(
         ? { ok: false, error: `refused: ${res.reason}`, retryable: false }
         : { ok: false, error: res.error, retryable: RETRYABLE_CALL_ERROR.test(res.error) };
     }
-    const checked = checkSegments(plan.segments, res.data, target);
+    const checked = checkSegments(plan.segments, res.data, target, sides);
     return checked.ok ? checked : { ...checked, retryable: true };
   };
 

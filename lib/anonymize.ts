@@ -870,7 +870,7 @@ const SENTENCE_OPENERS = new Set([
   "gibi", "kadar", "olay", "durum", "konu",
 ]);
 
-const hasLabel = (text: string, label: string) => new RegExp(`${label}(?![\p{L}\p{N}])`, "u").test(text);
+const hasLabel = (text: string, label: string) => new RegExp(`${label}(?![\\p{L}\\p{N}])`, "u").test(text);
 
 /** Both party labels (or, with more than two sides, at least two of them)
  * are in the text: every side that speaks has been anonymized. */
