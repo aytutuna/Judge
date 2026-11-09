@@ -6,7 +6,7 @@
  *
  * Sign-in methods: Apple and Google (web redirect and native ID token), email
  * magic link or one-time email code (website and apps), both through Resend,
- * and a dev-only test login. A method without credentials is simply not
+ * a password set after the first emailed code, and a dev-only test login. A method without credentials is simply not
  * offered (authProviders). Without BETTER_AUTH_SECRET in production, auth is
  * off, and with it judging: every verdict needs an account.
  */
@@ -30,6 +30,7 @@ import {
   sendSignInEmail,
 } from "./email";
 import { ensureEntitlementTables, grantMissedWelcomeCredit, grantWelcomeCredit } from "./entitlements";
+import { checkUserLimits } from "./ratelimit";
 import { captureAppleRefreshToken, deleteSignInTokens, keepCapturedAppleRefreshToken } from "./signin-tokens";
 import { signal } from "./signals";
 
@@ -46,6 +47,11 @@ const EMAIL_CODE_ATTEMPTS = 3;
 /** Sign-in requests per IP and endpoint per minute (production only). */
 const EMAIL_SIGNIN_RATE = { window: 60, max: 3 };
 const SEND_CODE_PATH = "/email-otp/send-verification-otp";
+const PASSWORD_SIGNIN_PATH = "/sign-in/email";
+/** Sign-in with a password per IP and minute (production only). */
+const PASSWORD_SIGNIN_RATE = { window: 60, max: 5 };
+const PASSWORD_MIN = 8;
+const PASSWORD_MAX = 128;
 const MIN_SECRET_LENGTH = 32;
 /** Used only outside production (never in a production build) when
  * BETTER_AUTH_SECRET is unset or too short. */
@@ -196,6 +202,11 @@ const withoutProviderTokens = <T extends Record<string, unknown>>(account: T) =>
   idToken: null,
 });
 
+/** Set on the request context when the code email was not accepted. Better
+ * Auth awaits sendVerificationOTP but swallows its errors, so the after hook
+ * turns this flag into the error reply. */
+const CODE_NOT_SENT = "codeNotSent";
+
 function buildOptions(env: Env, secret: string, client: Awaited<ReturnType<typeof getDb>>) {
   const origin = configuredOrigin(env);
   const production = isProduction(env);
@@ -232,7 +243,12 @@ function buildOptions(env: Env, secret: string, client: Awaited<ReturnType<typeo
         sendVerificationOTP: async ({ email, otp, type }, ctx) => {
           if (type !== "sign-in") return; // refused earlier by hooks.before
           if (reviewAccount(env)?.email === email.trim().toLowerCase()) return; // the reviewer knows the code
-          await sendSignInCodeEmail({ to: email, code: otp, lang: langFromRequestUrl(ctx?.request?.url) });
+          try {
+            await sendSignInCodeEmail({ to: email, code: otp, lang: langFromRequestUrl(ctx?.request?.url) });
+          } catch (e) {
+            if (ctx) (ctx.context as Record<string, unknown>)[CODE_NOT_SENT] = true;
+            throw e;
+          }
         },
       }),
     );
@@ -302,11 +318,20 @@ function buildOptions(env: Env, secret: string, client: Awaited<ReturnType<typeo
         }),
     },
     plugins,
-    // Built-in endpoints we never use (no passwords; profile and email are
-    // set by the sign-in provider). Fewer open endpoints, less to defend.
+    // Passwords exist only for addresses that proved their inbox with a
+    // code: no sign-up here, the password is set afterwards through
+    // /api/v1/me/password.
+    emailAndPassword: {
+      enabled: emailConfigured(env),
+      disableSignUp: true,
+      minPasswordLength: PASSWORD_MIN,
+      maxPasswordLength: PASSWORD_MAX,
+    },
+    // Built-in endpoints we never use (profile and email are set by the
+    // sign-in provider; passwords by our own route). Fewer open endpoints,
+    // less to defend.
     disabledPaths: [
       "/sign-up/email",
-      "/sign-in/email",
       "/request-password-reset",
       "/reset-password",
       "/change-password",
@@ -337,6 +362,7 @@ function buildOptions(env: Env, secret: string, client: Awaited<ReturnType<typeo
         "/sign-in/magic-link": EMAIL_SIGNIN_RATE,
         [SEND_CODE_PATH]: EMAIL_SIGNIN_RATE,
         "/sign-in/email-otp": EMAIL_SIGNIN_RATE,
+        [PASSWORD_SIGNIN_PATH]: PASSWORD_SIGNIN_RATE,
         "/sign-in/social": { window: 60, max: 10 },
       },
     },
@@ -346,6 +372,20 @@ function buildOptions(env: Env, secret: string, client: Awaited<ReturnType<typeo
       before: createAuthMiddleware(async (ctx) => {
         if (ctx.path === SEND_CODE_PATH && (ctx.body as { type?: unknown } | undefined)?.type !== "sign-in") {
           throw new APIError("BAD_REQUEST", { message: "Only sign-in codes are supported" });
+        }
+        if (ctx.path === PASSWORD_SIGNIN_PATH) {
+          // Every address counts the same, known or not, so the refusal
+          // says nothing about whether the account exists.
+          const email = (ctx.body as { email?: unknown } | undefined)?.email;
+          const key = typeof email === "string" ? welcomeClaim(email) : null;
+          if (key && !(await checkUserLimits(key, "password_signin")).ok) {
+            throw new APIError("TOO_MANY_REQUESTS", { message: "Too many attempts", code: "RATE_LIMITED" });
+          }
+        }
+      }),
+      after: createAuthMiddleware(async (ctx) => {
+        if (ctx.path === SEND_CODE_PATH && (ctx.context as Record<string, unknown>)[CODE_NOT_SENT]) {
+          throw new APIError("SERVICE_UNAVAILABLE", { message: "Sign-in is unavailable right now.", code: "unavailable" });
         }
       }),
     },
@@ -640,12 +680,15 @@ export function devLoginAllowed(req: Request, env: Env = process.env): boolean {
 
 /** Which sign-in methods this deployment offers right now. */
 export function authProviders(req: Request, env: Env = process.env): AuthProviders {
-  if (!authConfigured(env)) return { apple: false, google: false, email: false, emailCode: false, dev: false };
+  if (!authConfigured(env)) {
+    return { apple: false, google: false, email: false, emailCode: false, password: false, dev: false };
+  }
   return {
     apple: appleConfigured(env),
     google: googleClientIds(env) !== null,
     email: emailConfigured(env),
     emailCode: emailConfigured(env),
+    password: emailConfigured(env),
     dev: devLoginAllowed(req, env),
   };
 }

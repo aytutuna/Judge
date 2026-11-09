@@ -87,7 +87,7 @@ function keepSentTo(email: string | null): void {
   }
 }
 
-const NO_PROVIDERS: AuthProviders = { apple: false, google: false, email: false, emailCode: false, dev: false };
+const NO_PROVIDERS: AuthProviders = { apple: false, google: false, email: false, emailCode: false, password: false, dev: false };
 
 function AppleLogo() {
   return (

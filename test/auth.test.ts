@@ -77,6 +77,7 @@ describe("authProviders", () => {
       google: false,
       email: false,
       emailCode: false,
+      password: false,
       dev: false,
     });
   });
@@ -89,6 +90,7 @@ describe("authProviders", () => {
       google: false,
       email: false,
       emailCode: false,
+      password: false,
       dev: false,
     });
     expect(auth.authProviders(r, { ...base, GOOGLE_CLIENT_ID: "g" }).google).toBe(false);

@@ -651,6 +651,7 @@
         "google": true,
         "email": true,
         "emailCode": true,
+        "password": true,
         "dev": false
       },
       "premiumEnabled": true,
@@ -688,6 +689,7 @@
         "google": true,
         "email": false,
         "emailCode": false,
+        "password": false,
         "dev": false
       },
       "premiumEnabled": false,

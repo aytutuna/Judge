@@ -121,13 +121,13 @@ describe("AccountPanel", () => {
   });
 });
 
-const none: AuthProviders = { apple: false, google: false, email: false, emailCode: false, dev: false };
+const none: AuthProviders = { apple: false, google: false, email: false, emailCode: false, password: false, dev: false };
 
 function signin(over: Partial<SignInPanelProps>): string {
   return renderToStaticMarkup(
     <SignInPanel
       lang="en"
-      providers={{ apple: true, google: true, email: true, emailCode: true, dev: false }}
+      providers={{ apple: true, google: true, email: true, emailCode: true, password: true, dev: false }}
       pending={false}
       error={null}
       emailOpen={false}
@@ -184,7 +184,7 @@ describe("SignInPanel", () => {
     expect(html).toMatch(/<label[^>]*for="([^"]+)-email"/);
     expect(html).toContain('type="email"');
     expect(html).toContain('autoComplete="email"');
-    const link = { apple: true, google: true, email: true, emailCode: false, dev: false };
+    const link = { apple: true, google: true, email: true, emailCode: false, password: false, dev: false };
     const sent = signin({ sentTo: "a@b.co", lang: "tr", providers: link });
     expect(sent).toContain("a@b.co adresine bir giriş bağlantısı gönderdik");
     expect(sent).not.toContain('type="email"');
@@ -195,7 +195,7 @@ describe("SignInPanel", () => {
     const html = signin({ emailOpen: true });
     expect(html).toContain(esc(t("en", "signin.codeRequest")));
     expect(html).not.toContain(esc(t("en", "signin.emailSubmit")));
-    const link = signin({ emailOpen: true, providers: { apple: true, google: true, email: true, emailCode: false, dev: false } });
+    const link = signin({ emailOpen: true, providers: { apple: true, google: true, email: true, emailCode: false, password: false, dev: false } });
     expect(link).toContain(esc(t("en", "signin.emailSubmit")));
   });
 
@@ -249,7 +249,7 @@ describe("SignInPanel", () => {
   });
 
   it("nothing can be used until the 18+ box is ticked", () => {
-    const html = signin({ adult: false, providers: { apple: true, google: true, email: true, emailCode: true, dev: true } });
+    const html = signin({ adult: false, providers: { apple: true, google: true, email: true, emailCode: true, password: true, dev: true } });
     expect(html).toContain('type="checkbox"');
     expect(html).toContain(esc(t("en", "age.confirm")));
     expect(html.indexOf('type="checkbox"')).toBeLessThan(html.indexOf("Continue with Apple"));

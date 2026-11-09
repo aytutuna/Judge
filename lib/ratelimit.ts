@@ -170,6 +170,8 @@ export type UserBucket =
   | "verdict_owner"
   | "history_list"
   | "apple_code"
+  | "password_signin"
+  | "password_set"
   | "events";
 
 type UserWindow = { limit: number; windowMs: number; redisWindow: `${number} ${"m" | "h" | "d"}`; prefix: string };
@@ -209,6 +211,16 @@ export const USER_LIMITS: Record<UserBucket, readonly UserWindow[]> = {
   apple_code: [
     { limit: 10, windowMs: 10 * MINUTE_MS, redisWindow: "10 m", prefix: "verdict:u:ac10m" },
     { limit: 30, windowMs: DAY_MS, redisWindow: "1 d", prefix: "verdict:u:acday" },
+  ],
+  /** Password sign-ins, keyed by a hash of the address (known or not). */
+  password_signin: [
+    { limit: 10, windowMs: 10 * MINUTE_MS, redisWindow: "10 m", prefix: "verdict:u:ps10m" },
+    { limit: 30, windowMs: DAY_MS, redisWindow: "1 d", prefix: "verdict:u:psday" },
+  ],
+  /** Setting or changing the password (POST /api/v1/me/password). */
+  password_set: [
+    { limit: 5, windowMs: 10 * MINUTE_MS, redisWindow: "10 m", prefix: "verdict:u:pw10m" },
+    { limit: 20, windowMs: DAY_MS, redisWindow: "1 d", prefix: "verdict:u:pwday" },
   ],
   /** Usage event batches (POST /api/v1/events). */
   events: [{ limit: 300, windowMs: 60 * MINUTE_MS, redisWindow: "1 h", prefix: "verdict:u:evt1h" }],
