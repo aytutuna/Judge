@@ -666,6 +666,17 @@ export function SignInView({ next: rawNext }: { next?: string | string[] }) {
     setError(null);
     const { savePassword, passwordSaveErrorKey } = await import("@/lib/auth-client");
     const res = await savePassword(password);
+    if (!res.ok && res.code === "password_required") {
+      // The code sign-in is too old to replace a password: back to the code
+      // step for a fresh one.
+      setChoosing(false);
+      setCode("");
+      setSentTo(email.trim());
+      keepSentTo(email.trim(), mode);
+      fail(t(lang, "signin.codeExpired"));
+      setPending(false);
+      return;
+    }
     if (!res.ok) {
       trackError(res.code);
       setChoosing(true);
