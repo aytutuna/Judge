@@ -48,6 +48,7 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.LiveRegionMode
@@ -61,6 +62,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
@@ -75,12 +77,14 @@ import com.okjudge.judge.core.premium.Tiers
 import com.okjudge.judge.i18n.AppLang
 import com.okjudge.judge.i18n.LocalLang
 import com.okjudge.judge.i18n.LocalStrings
+import com.okjudge.judge.ui.components.ClearFocusOnDrag
 import com.okjudge.judge.ui.components.CourtView
 import com.okjudge.judge.ui.components.LocalGamify
 import com.okjudge.judge.ui.components.GhostButton
 import com.okjudge.judge.ui.components.JudgeIcons
 import com.okjudge.judge.ui.components.TintedIcon
 import com.okjudge.judge.ui.components.rememberIcon
+import com.okjudge.judge.ui.components.clearFocusOnTap
 import com.okjudge.judge.ui.components.neonEdge
 import com.okjudge.judge.ui.components.uppercaseForUi
 import com.okjudge.judge.ui.judging.rememberReducedMotion
@@ -96,7 +100,7 @@ import com.okjudge.judge.ui.theme.forScript
 import java.text.NumberFormat
 import kotlinx.coroutines.delay
 
-/** Under this the free space above the case is too small for the court. */
+/** The least height the court is drawn at, however crowded the form is. */
 private val COURT_MIN_HEIGHT = 110.dp
 
 /** From this width the court scales with the screen instead of stopping at phone size. */
@@ -117,6 +121,7 @@ object HomeTags {
     const val REMOVE_THEIRS = "home.removeTheirs"
     const val CLEAR = "home.clear"
     const val BALANCE = "home.balance"
+    const val COURT = "home.court"
 }
 
 /**
@@ -257,7 +262,9 @@ fun HomeScreen(
         }
     }
 
-    BoxWithConstraints(modifier.fillMaxSize().background(Palette.ivory).imePadding()) {
+    val scroll = rememberScrollState()
+    ClearFocusOnDrag(scroll)
+    BoxWithConstraints(modifier.fillMaxSize().background(Palette.ivory).imePadding().clearFocusOnTap()) {
         // A short screen with the keyboard up still has to leave room for the send row.
         val fieldMax = maxHeight * 0.25f
         // No court: the form rests in the middle of the screen, typed or not.
@@ -269,18 +276,26 @@ fun HomeScreen(
         ) {
             BoxWithConstraints(Modifier.weight(1f, fill = !centred).fillMaxWidth()) {
                 val region = if (centred) 0.dp else maxHeight
+                val form: @Composable () -> Unit = {
+                    Column(column.padding(top = 16.dp, bottom = 20.dp), verticalArrangement = Arrangement.spacedBy(12.dp), content = middle)
+                }
                 // Reversed, so the content stays against the composer as it grows.
-                Column((if (centred) Modifier.fillMaxWidth() else Modifier.fillMaxSize()).verticalScroll(rememberScrollState(), reverseScrolling = true)) {
-                    Column(Modifier.fillMaxWidth().heightIn(min = region), horizontalAlignment = Alignment.CenterHorizontally) {
-                        if (!centred) BoxWithConstraints(Modifier.weight(1f).fillMaxWidth(), contentAlignment = Alignment.Center) {
-                            if (LocalGamify.current && maxHeight >= COURT_MIN_HEIGHT) {
-                                // 16/9 inside the free space; wide screens let it grow with the width, phones stay at 480.
-                                val cap = if (maxWidth >= WIDE_SCREEN) maxWidth * 0.92f else 480.dp
-                                val width = minOf(maxWidth - 32.dp, (maxHeight - 16.dp) * 16f / 9f, cap)
-                                CourtView(CourtScene.Home(busy = state.holding), rememberReducedMotion(), Modifier.width(width).aspectRatio(16f / 9f))
-                            }
-                        }
-                        Column(column.padding(top = 16.dp, bottom = 20.dp), verticalArrangement = Arrangement.spacedBy(12.dp), content = middle)
+                Column((if (centred) Modifier.fillMaxWidth() else Modifier.fillMaxSize()).verticalScroll(scroll, reverseScrolling = true)) {
+                    if (centred) {
+                        Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) { form() }
+                    } else {
+                        CourtAbove(
+                            region,
+                            court = {
+                                BoxWithConstraints(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                                    // 16/9 inside the free space; wide screens let it grow with the width, phones stay at 480.
+                                    val cap = if (maxWidth >= WIDE_SCREEN) maxWidth * 0.92f else 480.dp
+                                    val width = minOf(maxWidth - 32.dp, (maxHeight - 16.dp) * 16f / 9f, cap)
+                                    CourtView(CourtScene.Home(busy = state.holding), rememberReducedMotion(), Modifier.width(width).aspectRatio(16f / 9f).testTag(HomeTags.COURT))
+                                }
+                            },
+                            form = form,
+                        )
                     }
                 }
             }
@@ -354,6 +369,24 @@ fun HomeScreen(
                     }
                 }
             }
+        }
+    }
+}
+
+/**
+ * The court over the form. The court takes the room the form leaves in [region], but never less than
+ * [COURT_MIN_HEIGHT]: a crowded page grows past [region] and scrolls instead of losing the court.
+ */
+@Composable
+private fun CourtAbove(region: Dp, court: @Composable () -> Unit, form: @Composable () -> Unit) {
+    Layout({ Box { court() }; Box { form() } }) { (courtBox, formBox), constraints ->
+        val width = constraints.maxWidth
+        val formPlaced = formBox.measure(Constraints(maxWidth = width))
+        val courtHeight = maxOf(region.roundToPx() - formPlaced.height, COURT_MIN_HEIGHT.roundToPx())
+        val courtPlaced = courtBox.measure(Constraints.fixed(width, courtHeight))
+        layout(width, courtHeight + formPlaced.height) {
+            courtPlaced.place(0, 0)
+            formPlaced.place((width - formPlaced.width) / 2, courtHeight)
         }
     }
 }
