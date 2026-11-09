@@ -5,7 +5,7 @@
  * - the native app: the same session token as `Authorization: Bearer <token>`.
  *
  * Sign-in methods: Apple and Google (web redirect and native ID token), email
- * magic link (website) or one-time email code (apps), both through Resend,
+ * magic link or one-time email code (website and apps), both through Resend,
  * and a dev-only test login. A method without credentials is simply not
  * offered (authProviders). Without BETTER_AUTH_SECRET in production, auth is
  * off, and with it judging: every verdict needs an account.
@@ -214,7 +214,7 @@ function buildOptions(env: Env, secret: string, client: Awaited<ReturnType<typeo
           await sendSignInEmail({ to: email, url, lang: langFromMagicLink(url) });
         },
       }),
-      // The apps: POST /email-otp/send-verification-otp?lang=tr
+      // The email code: POST /email-otp/send-verification-otp?lang=tr
       // {email, type:"sign-in"}, then POST /sign-in/email-otp {email, otp}.
       emailOTP({
         expiresIn: EMAIL_SIGNIN_SECONDS,
