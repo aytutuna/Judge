@@ -76,7 +76,7 @@ struct HomeView: View {
         .toolbarBackground(Brand.ivory, for: .navigationBar)
         .toolbar {
             if home.clarify == nil {
-                ToolbarItem(placement: .topBarLeading) { MenuButton() }
+                RootBarLeading()
                 RootBarTrailing()
             }
         }

@@ -2,6 +2,30 @@ import SwiftData
 import SwiftUI
 import UIKit
 
+extension View {
+    /// A bar button on its own small round plate, as the website's header
+    /// buttons. The hit area stays larger than the plate.
+    fileprivate func roundPlate() -> some View {
+        frame(width: 36, height: 36)
+            .background(Circle().fill(Brand.ink.opacity(0.08)))
+            .frame(minWidth: 40, minHeight: 44)
+            .contentShape(Rectangle())
+    }
+}
+
+extension ToolbarContent {
+    /// iOS 26 merges neighbouring items into one wide glass pill; the round
+    /// buttons draw their own plate, so the shared one is dropped.
+    @ToolbarContentBuilder
+    func ownBackground() -> some ToolbarContent {
+        if #available(iOS 26.0, *) {
+            self.sharedBackgroundVisibility(.hidden)
+        } else {
+            self
+        }
+    }
+}
+
 /// Opens the side menu, at the leading end of a root page's bar.
 struct MenuButton: View {
     @Environment(AppModel.self) private var app
@@ -14,10 +38,9 @@ struct MenuButton: View {
             app.openMenu()
         } label: {
             Image(systemName: "line.3.horizontal")
-                .font(.system(size: 18, weight: .semibold))
+                .font(.system(size: 16, weight: .semibold))
                 .foregroundStyle(Brand.ink)
-                .frame(minWidth: 44, minHeight: 44)
-                .contentShape(Rectangle())
+                .roundPlate()
         }
         .accessibilityLabel(L10n.navTabs(app.lang))
         .accessibilityFocused($focused)
@@ -41,17 +64,16 @@ struct ComposeButton: View {
             app.go(.new)
         } label: {
             Image(systemName: "square.and.pencil")
-                .font(.system(size: 18, weight: .semibold))
+                .font(.system(size: 16, weight: .semibold))
                 .foregroundStyle(Brand.ink)
-                .frame(minWidth: 44, minHeight: 44)
-                .contentShape(Rectangle())
+                .roundPlate()
         }
         .accessibilityLabel(L10n.shellNew(app.lang))
     }
 }
 
-/// The look of the Gamify control: the gamepad on a pill that lights up when
-/// it is on. The label is for VoiceOver only.
+/// The look of the Gamify control: the gamepad on a round plate that lights
+/// up when it is on. The label is for VoiceOver only.
 private struct GamifyToggleStyle: ToggleStyle {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
@@ -61,19 +83,19 @@ private struct GamifyToggleStyle: ToggleStyle {
             configuration.isOn.toggle()
         } label: {
             Image(systemName: "gamecontroller")
-                .font(.system(size: 18, weight: .semibold))
+                .font(.system(size: 16, weight: .semibold))
                 .foregroundStyle(on ? Brand.terraInk : Brand.muted)
-                .frame(width: 36, height: 32)
+                .frame(width: 36, height: 36)
                 .background(
                     ZStack {
-                        Capsule()
+                        Circle()
                             .fill(Brand.terra.opacity(on ? 0.4 : 0))
                             .blur(radius: 6)
-                        Capsule()
-                            .fill(Brand.terra.opacity(on ? 0.16 : 0))
+                        Circle()
+                            .fill(on ? Brand.terra.opacity(0.16) : Brand.ink.opacity(0.08))
                     }
                 )
-                .frame(minWidth: 44, minHeight: 44)
+                .frame(minWidth: 40, minHeight: 44)
                 .contentShape(Rectangle())
                 .animation(reduceMotion ? nil : .easeOut(duration: 0.15), value: on)
         }
@@ -94,12 +116,9 @@ struct GamifyButton: View {
     }
 }
 
-/// The profile picture at the trailing end of a root page's bar: their
-/// image, else their initial, else a silhouette. It opens Sign in or Sign
-/// out, Settings and Pricing. Signing out asks first, as in Settings.
-struct ProfileMenu: View {
+/// A profile picture: their image, else their initial, else a silhouette.
+struct ProfileAvatar: View {
     @Environment(AppModel.self) private var app
-    @State private var confirmSignOut = false
 
     /// First letter of the name, or of the email when there is no name.
     static func initial(name: String, email: String) -> String {
@@ -109,35 +128,6 @@ struct ProfileMenu: View {
     }
 
     var body: some View {
-        let lang = app.lang
-        let signedIn = app.account.isSignedIn
-        Menu {
-            if !signedIn {
-                Button(L10n.navSignIn(lang)) { app.account.presentSignIn() }
-            }
-            Button(L10n.appTabSettings(lang)) { app.go(.settings) }
-            Button(L10n.navPricing(lang)) { app.openPricing() }
-            if signedIn {
-                Button(L10n.navSignOut(lang), role: .destructive) { confirmSignOut = true }
-            }
-        } label: {
-            avatar
-                .frame(width: 30, height: 30)
-                .clipShape(Circle())
-                .frame(minWidth: 44, minHeight: 44)
-                .contentShape(Rectangle())
-        }
-        .accessibilityLabel(L10n.navAccount(lang))
-        .alert(L10n.appAccountSignOutConfirm(lang), isPresented: $confirmSignOut) {
-            Button(L10n.accountSignOut(lang), role: .destructive) {
-                Task { await app.account.signOut() }
-            }
-            Button(L10n.appCancel(lang), role: .cancel) {}
-        }
-    }
-
-    @ViewBuilder
-    private var avatar: some View {
         if app.account.isSignedIn {
             let user = app.account.user
             let initial = Self.initial(name: user?.name ?? "", email: user?.email ?? "")
@@ -154,9 +144,9 @@ struct ProfileMenu: View {
             }
         } else {
             ZStack {
-                Brand.ivory2
+                Brand.well
                 Image(systemName: "person.fill")
-                    .font(.system(size: 15))
+                    .font(.system(size: 17))
                     .foregroundStyle(Brand.muted)
             }
         }
@@ -166,29 +156,33 @@ struct ProfileMenu: View {
         ZStack {
             Brand.terraInk
             Text(initial)
-                .font(.system(size: 14, weight: .semibold))
+                .font(.system(size: 16, weight: .semibold))
                 .foregroundStyle(Brand.paper)
         }
     }
 }
 
-/// The trailing end of a root page's bar: the Gamify button, New and the
-/// profile button. Verdicts leaves the button out: it has no court, and its
-/// Select button needs the room.
-struct RootBarTrailing: ToolbarContent {
-    var gamify = true
-
+/// The leading end of a root page's bar: the menu button.
+struct RootBarLeading: ToolbarContent {
     var body: some ToolbarContent {
-        if gamify {
-            ToolbarItem(placement: .topBarTrailing) { GamifyButton() }
-        }
-        ToolbarItem(placement: .topBarTrailing) { ComposeButton() }
-        ToolbarItem(placement: .topBarTrailing) { ProfileMenu() }
+        ToolbarItem(placement: .topBarLeading) { MenuButton() }
+            .ownBackground()
     }
 }
 
-/// The panel the menu button slides in: New, Verdicts and the newest few
-/// verdicts, with Settings at the bottom.
+/// The trailing end of a root page's bar: the Gamify button and New, each on
+/// its own round plate. The profile is in the side menu.
+struct RootBarTrailing: ToolbarContent {
+    var body: some ToolbarContent {
+        ToolbarItem(placement: .topBarTrailing) { GamifyButton() }
+            .ownBackground()
+        ToolbarItem(placement: .topBarTrailing) { ComposeButton() }
+            .ownBackground()
+    }
+}
+
+/// The panel the menu button slides in: New, a Verdicts heading over the
+/// newest few verdicts, and at the bottom the profile above Settings.
 struct SideMenu: View {
     @Environment(AppModel.self) private var app
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -198,6 +192,8 @@ struct SideMenu: View {
     @State private var pull: CGFloat = 0
     @GestureState private var dragging = false
     @State private var webLink: WebLink?
+    @State private var profileOpen = false
+    @State private var confirmSignOut = false
     @AccessibilityFocusState private var focusFirst: Bool
 
     private var settle: Duration { .milliseconds(reduceMotion ? 0 : 300) }
@@ -205,6 +201,8 @@ struct SideMenu: View {
     private static let recentCount = 5
     private static let rowType = TypeStyle(face: .inter, weight: 500, size: 16, lineHeight: 1.3)
     private static let recentType = TypeStyle(face: .inter, weight: 400, size: 14, lineHeight: 1.3, textStyle: .subheadline)
+    private static let stateType = TypeStyle(face: .inter, weight: 600, size: 12.5, lineHeight: 1.3, textStyle: .footnote)
+    private static let headingType = TypeStyle(face: .inter, weight: 700, size: 13, lineHeight: 1.3, tracking: 0.04, textStyle: .footnote, maxScale: 1.6)
 
     var body: some View {
         GeometryReader { geo in
@@ -226,7 +224,7 @@ struct SideMenu: View {
         .allowsHitTesting(app.menuOpen)
         .animation(reduceMotion ? nil : .easeOut(duration: 0.24), value: app.menuOpen)
         .onChange(of: app.menuOpen) { _, open in
-            if open { pull = 0 }
+            if open { pull = 0 } else { profileOpen = false }
         }
         .onChange(of: app.home.path.count) { close() }
         .onChange(of: app.home.isJudging) { _, judging in
@@ -238,6 +236,13 @@ struct SideMenu: View {
         .onChange(of: webLink != nil) { _, open in
             app.sheetOpen = open
         }
+        .alert(L10n.appAccountSignOutConfirm(app.lang), isPresented: $confirmSignOut) {
+            Button(L10n.accountSignOut(app.lang), role: .destructive) {
+                close()
+                Task { await app.account.signOut() }
+            }
+            Button(L10n.appCancel(app.lang), role: .cancel) {}
+        }
     }
 
     private func panel(width: CGFloat) -> some View {
@@ -245,19 +250,25 @@ struct SideMenu: View {
         let recents = HistoryEntry.current(app: app, rows: cachedRows, saved: saved)
             .filter(\.opens)
             .prefix(Self.recentCount)
+        let now = app.historyList.now()
         return VStack(spacing: 0) {
             ScrollView {
-                VStack(spacing: 4) {
+                VStack(spacing: 8) {
                     row(.new, title: L10n.appTabNew(lang))
                         .accessibilityFocused($focusFirst)
-                    row(.history, title: L10n.navVerdicts(lang))
+                    heading(L10n.navVerdicts(lang))
                     ForEach(Array(recents)) { entry in
-                        recent(entry, lang: lang)
+                        recent(entry, lang: lang, now: now)
                     }
                 }
             }
             .scrollBounceBehavior(.basedOnSize)
-            row(.settings, title: L10n.appTabSettings(lang))
+            VStack(spacing: 4) {
+                if profileOpen { profileItems(lang) }
+                profile(lang)
+                row(.settings, title: L10n.appTabSettings(lang), icon: "gearshape")
+            }
+            .padding(.top, 12)
         }
         .padding(.horizontal, 12)
         .padding(.top, 20)
@@ -292,44 +303,165 @@ struct SideMenu: View {
         .onDisappear { focusFirst = false }
     }
 
-    private func row(_ tab: RootTab, title: String) -> some View {
+    private func row(_ tab: RootTab, title: String, icon: String? = nil) -> some View {
         let selected = app.tab == tab
         return Button {
             app.menuOpen = false
             app.go(tab)
         } label: {
-            Text(title)
-                .brandText(Self.rowType)
-                .foregroundStyle(Brand.ink)
-                .multilineTextAlignment(.leading)
-                .padding(.horizontal, 12)
-                .padding(.vertical, 6)
-                .frame(maxWidth: .infinity, minHeight: 48, alignment: .leading)
-                .background {
-                    if selected {
-                        RoundedRectangle(cornerRadius: 12, style: .continuous)
-                            .fill(Brand.paper)
-                            .shadow(color: Brand.shadow(0.1, dark: 0.3), radius: 1.5, y: 1)
-                    }
+            HStack(spacing: 12) {
+                if let icon {
+                    Image(systemName: icon)
+                        .font(.system(size: 18))
+                        .frame(width: 36)
+                        .accessibilityHidden(true)
                 }
-                .contentShape(Rectangle())
+                Text(title)
+                    .brandText(Self.rowType)
+                    .multilineTextAlignment(.leading)
+            }
+            .foregroundStyle(Brand.ink)
+            .padding(.horizontal, 12)
+            .padding(.vertical, 6)
+            .frame(maxWidth: .infinity, minHeight: 48, alignment: .leading)
+            .background {
+                if selected {
+                    RoundedRectangle(cornerRadius: 12, style: .continuous)
+                        .fill(Brand.paper)
+                        .shadow(color: Brand.shadow(0.1, dark: 0.3), radius: 1.5, y: 1)
+                }
+            }
+            .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
         .accessibilityAddTraits(selected ? .isSelected : [])
     }
 
-    private func recent(_ entry: HistoryEntry, lang: AppLang) -> some View {
-        Button {
+    /// A section heading that still opens the list.
+    private func heading(_ title: String) -> some View {
+        let selected = app.tab == .history
+        return Button {
+            app.menuOpen = false
+            app.go(.history)
+        } label: {
+            HStack {
+                Text(title)
+                    .brandText(Self.headingType)
+                    .foregroundStyle(selected ? Brand.ink : Brand.muted)
+                Spacer(minLength: 8)
+                Image(systemName: "chevron.forward")
+                    .font(.system(size: 12, weight: .bold))
+                    .foregroundStyle(Brand.muted)
+                    .accessibilityHidden(true)
+            }
+            .padding(.horizontal, 12)
+            .frame(maxWidth: .infinity, minHeight: 44)
+            .overlay(alignment: .bottom) { Rectangle().fill(Brand.line).frame(height: 1) }
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .padding(.top, 8)
+        .accessibilityAddTraits(selected ? [.isHeader, .isSelected] : .isHeader)
+    }
+
+    /// One verdict as its own card: green when the ruling went the viewer's
+    /// way, red when it went the other's. The result words stay under the
+    /// title so colour is never the only signal.
+    private func recent(_ entry: HistoryEntry, lang: AppLang, now: Date) -> some View {
+        let tone = entry.tone(now: now)
+        let status = entry.status(lang: lang, now: now)
+        let (fill, edge, words): (Color, Color, Color) = switch tone {
+        case .yours: (Brand.sageTint, Brand.sageStrong, Brand.sageInk)
+        case .theirs: (Brand.terraTint, Brand.terra, Brand.terraInk)
+        default: (Brand.paper, Brand.line2, Brand.muted)
+        }
+        return Button {
             app.menuOpen = false
             Task {
                 if let url = await app.openRecent(entry) { webLink = WebLink(url: url) }
             }
         } label: {
-            Text(entry.title(lang: lang))
-                .brandText(Self.recentType)
-                .foregroundStyle(Brand.ink2)
-                .lineLimit(1)
-                .padding(.horizontal, 12)
+            VStack(alignment: .leading, spacing: 2) {
+                Text(entry.title(lang: lang))
+                    .brandText(Self.recentType)
+                    .foregroundStyle(Brand.ink)
+                    .lineLimit(2)
+                    .multilineTextAlignment(.leading)
+                if let status {
+                    Text(status)
+                        .brandText(Self.stateType)
+                        .foregroundStyle(words)
+                        .lineLimit(1)
+                }
+            }
+            .padding(.horizontal, 12)
+            .padding(.vertical, 8)
+            .frame(maxWidth: .infinity, minHeight: 52, alignment: .leading)
+            .paperSurface(radius: 12, fill: fill, border: edge)
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+    }
+
+    /// The picture and name of the account; it opens Pricing, Sign in or Sign out.
+    private func profile(_ lang: AppLang) -> some View {
+        let user = app.account.isSignedIn ? app.account.user : nil
+        let name = user.map { $0.name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? $0.email : $0.name } ?? L10n.navAccount(lang)
+        return Button {
+            withAnimation(reduceMotion ? nil : .easeOut(duration: 0.2)) { profileOpen.toggle() }
+        } label: {
+            HStack(spacing: 12) {
+                ProfileAvatar()
+                    .frame(width: 36, height: 36)
+                    .clipShape(Circle())
+                Text(name)
+                    .brandText(Self.rowType)
+                    .foregroundStyle(Brand.ink)
+                    .lineLimit(1)
+                Spacer(minLength: 0)
+                Image(systemName: profileOpen ? "chevron.up" : "chevron.down")
+                    .font(.system(size: 12, weight: .bold))
+                    .foregroundStyle(Brand.muted)
+                    .accessibilityHidden(true)
+            }
+            .padding(.horizontal, 12)
+            .frame(maxWidth: .infinity, minHeight: 56, alignment: .leading)
+            .background {
+                if profileOpen {
+                    RoundedRectangle(cornerRadius: 12, style: .continuous).fill(Brand.paper)
+                }
+            }
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel(L10n.navAccount(lang))
+        .accessibilityValue(user == nil ? "" : name)
+    }
+
+    private func profileItems(_ lang: AppLang) -> some View {
+        VStack(spacing: 0) {
+            profileItem(L10n.navPricing(lang)) {
+                app.menuOpen = false
+                app.openPricing()
+            }
+            if app.account.isSignedIn {
+                profileItem(L10n.navSignOut(lang), destructive: true) { confirmSignOut = true }
+            } else {
+                profileItem(L10n.navSignIn(lang)) {
+                    app.menuOpen = false
+                    app.account.presentSignIn()
+                }
+            }
+        }
+    }
+
+    private func profileItem(_ title: String, destructive: Bool = false, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            Text(title)
+                .brandText(Self.rowType)
+                .foregroundStyle(destructive ? Brand.danger : Brand.ink)
+                .padding(.leading, 60)
+                .padding(.trailing, 12)
                 .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
                 .contentShape(Rectangle())
         }

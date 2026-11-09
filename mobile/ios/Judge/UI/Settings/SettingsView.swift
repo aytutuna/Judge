@@ -104,7 +104,7 @@ struct SettingsView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbarBackground(Brand.ivory, for: .navigationBar)
             .toolbar {
-                ToolbarItem(placement: .topBarLeading) { MenuButton() }
+                RootBarLeading()
                 RootBarTrailing()
             }
             .sheet(item: $webLink) { link in

@@ -108,13 +108,13 @@ struct HistoryView: View {
                 .disabled(selection.ids.isEmpty)
             }
         } else {
-            ToolbarItem(placement: .topBarLeading) { MenuButton() }
+            RootBarLeading()
             if !selectable.isEmpty {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button(L10n.appHistorySelect(lang)) { selection.start() }
                 }
             }
-            RootBarTrailing(gamify: false)
+            RootBarTrailing()
         }
     }
 
