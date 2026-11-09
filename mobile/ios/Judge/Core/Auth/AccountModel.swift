@@ -402,8 +402,8 @@ final class AccountModel {
         afterSignIn = nil
         failure = nil
         if notice == .sessionExpired, isSignedIn { notice = nil }
-        guard isSignedIn else { return }
         password = ""
+        guard isSignedIn else { return }
         mode = .password
         if step == .choosePassword { step = .choose }
         // A report that failed leaves the age sheet up; the action waits for it.
@@ -590,6 +590,13 @@ final class AccountModel {
         } catch let error as APIError where error.code == "signin_required" {
             guard isSameSession(asked) else { return false }
             sessionExpired()
+            return false
+        } catch let error as APIError where error.code == "password_required" && step == .choosePassword {
+            // This code sign-in is too old to replace a password: back to the code step for a fresh one.
+            guard isSameSession(asked) else { return false }
+            step = .code(email: email)
+            code = ""
+            failure = .codeExpired
             return false
         } catch {
             failure = Self.passwordSaveFailure(error)

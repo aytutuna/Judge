@@ -593,6 +593,39 @@ final class AccountTests: XCTestCase {
     }
 
     @MainActor
+    func testAnOldCodeSignInGoesBackToTheCodeStepToChooseAPassword() async throws {
+        route([
+            "/api/auth/email-otp/send-verification-otp": try json(200, ["success": true]),
+            "/api/auth/sign-in/email-otp": try json(200, ["token": "sess-code", "user": Self.userJSON]),
+            "/api/v1/me/password": try json(403, ["code": "password_required"]),
+            "/api/v1/me": try json(200, Self.meJSON),
+        ])
+        let account = passwordModel()
+        account.isSignInPresented = true
+        account.setMode(.forgot)
+        account.email = "ann@example.com"
+        await account.sendCode(lang: .en)
+        account.code = "123456"
+        await account.verifyCode()
+        XCTAssertEqual(account.step, .choosePassword)
+
+        account.password = "brand new one"
+        await account.saveChosenPassword()
+        XCTAssertEqual(account.step, .code(email: "ann@example.com"))
+        XCTAssertEqual(account.failure, .codeExpired)
+        XCTAssertTrue(account.isSignInPresented)
+    }
+
+    @MainActor
+    func testATypedPasswordIsForgottenWhenTheSheetClosesSignedOut() {
+        let account = passwordModel()
+        account.isSignInPresented = true
+        account.password = "typed and abandoned"
+        account.signInDismissed()
+        XCTAssertEqual(account.password, "")
+    }
+
+    @MainActor
     func testForgotPasswordAsksForANewOneAfterTheCode() async throws {
         route([
             "/api/auth/email-otp/send-verification-otp": try json(200, ["success": true]),
