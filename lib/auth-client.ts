@@ -17,7 +17,8 @@ export const authClient = createAuthClient({
   plugins: [magicLinkClient(), emailOTPClient()],
 });
 
-type Outcome = { ok: true } | { ok: false; code: string };
+type Failed = { ok: false; code: string; status?: number };
+type Outcome = { ok: true } | Failed;
 
 function failure(error: { code?: string; status?: number } | null | undefined): Outcome {
   const status = error?.status || undefined;
@@ -85,7 +86,7 @@ export async function signInWithCode(email: string, otp: string): Promise<Outcom
 /** The message for a failed code call. Same mapping as the apps: the status
  * decides first (the server's reply also carries a `code` such as
  * INVALID_EMAIL or unavailable), the code tells the verify errors apart. */
-export function codeErrorKey(res: Pick<Failed, "code" | "status">, step: "send" | "verify"): Key {
+export function codeErrorKey(res: { code: string; status?: number }, step: "send" | "verify"): Key {
   const { code, status } = res;
   if (code === "network") return "signin.offline";
   if (status === 429) return "signin.rateLimited";
