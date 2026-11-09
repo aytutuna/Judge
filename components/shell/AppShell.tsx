@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import type { ReactNode } from "react";
+import { useEffect, type ReactNode } from "react";
 import { t, type Lang } from "@/lib/i18n";
 import { langDir } from "@/lib/langs";
 import { AgeGate } from "../AgeGate";
@@ -10,6 +10,19 @@ import { SiteFooter, SiteHeader, SkipLink } from "../SiteChrome";
 import { GamifyButton } from "./GamifyButton";
 import { SideMenu } from "./SideMenu";
 import styles from "./shell.module.css";
+
+const FIELD = "input, textarea, select, button, a, label, summary, [contenteditable], [role=button]";
+
+/** On a touch screen a tap on plain page space puts the keyboard away. */
+export function blurOnTapOutside(
+  pointerType: string,
+  active: Pick<HTMLElement, "matches" | "blur"> | null,
+  target: Pick<Element, "closest"> | null,
+) {
+  if (pointerType !== "touch" || !active?.matches("input, textarea, [contenteditable]")) return;
+  if (target?.closest(FIELD)) return;
+  active.blur();
+}
 
 /**
  * Page frame for the app's own pages: the header (with "Verdicts" from
@@ -35,6 +48,11 @@ export function AppShell({
   children: ReactNode;
 }) {
   const pathname = usePathname();
+  useEffect(() => {
+    const onDown = (e: PointerEvent) => blurOnTapOutside(e.pointerType, document.activeElement as HTMLElement | null, e.target as Element | null);
+    document.addEventListener("pointerdown", onDown);
+    return () => document.removeEventListener("pointerdown", onDown);
+  }, []);
   return (
     <div lang={lang} dir={langDir(lang)} className={styles.shell}>
       <SkipLink lang={lang} />
