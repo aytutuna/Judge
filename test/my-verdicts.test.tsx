@@ -286,6 +286,37 @@ describe("SideMenu", () => {
 
   it("speaks Turkish", () => {
     const html = menu({ lang: "tr" });
-    for (const k of ["nav.new", "nav.verdicts", "nav.settings"] as const) expect(html).toContain(`>${t("tr", k)}</a>`);
+    for (const k of ["nav.new", "nav.settings"] as const) expect(html).toContain(`>${t("tr", k)}</a>`);
+    expect(html).toContain(`>${t("tr", "nav.verdicts")}<svg`);
+  });
+
+  it("puts the profile above Settings, with Pricing and Sign in behind it", () => {
+    const html = menu();
+    const profile = html.indexOf('aria-controls=');
+    expect(profile).toBeGreaterThan(html.indexOf('href="/verdicts"'));
+    expect(html.indexOf('href="/settings"')).toBeGreaterThan(profile);
+    expect(html).toContain(t("en", "nav.account"));
+    expect(html).toMatch(/hidden=""[^>]*>[^]*href="\/pricing"/);
+    expect(html).toContain("/signin?next=%2F");
+    expect(html).not.toContain(t("en", "nav.signOut"));
+  });
+
+  it("makes each recent verdict its own tinted card and keeps the result in words", () => {
+    const items = [
+      row({ id: "w", verdict: "side_a" }),
+      row({ id: "l", verdict: "side_b" }),
+      row({ id: "s", verdict: "split" }),
+      row({ id: "j", state: "judging", verdict: null }),
+    ].map(fromRow);
+    mocked.history = { items, status: "ready", more: false, loadingMore: false };
+    try {
+      const html = menu();
+      expect(html.match(/data-tone="yours"/g)).toHaveLength(1);
+      expect(html.match(/data-tone="theirs"/g)).toHaveLength(1);
+      expect(html.match(/<(a|span) [^>]*class="_recent_/g)).toHaveLength(4);
+      for (const item of items) expect(html).toContain(esc(stateLabel("en", item) ?? ""));
+    } finally {
+      mocked.history = null;
+    }
   });
 });

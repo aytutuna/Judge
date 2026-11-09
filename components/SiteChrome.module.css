@@ -81,13 +81,19 @@
 .navRight {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
   min-width: 0;
 }
 
 /* The avatar menu takes no box of its own. */
-.account {
+.account,
+.accountWide {
   display: contents;
+}
+@media (max-width: 959px) {
+  .accountWide {
+    display: none;
+  }
 }
 
 /* ---------- Footer ---------- */

@@ -4,7 +4,7 @@ import { t, type Lang } from "@/lib/i18n";
 import { setGame, useGame } from "@/lib/game";
 import styles from "./shell.module.css";
 
-/** Header toggle for the court art; it lights up when on. The label hides on narrow screens. */
+/** Header toggle for the court art; it lights up when on. */
 export function GamifyButton({ lang }: { lang: Lang }) {
   const on = useGame();
   const label = t(lang, "shell.gamify");
@@ -27,7 +27,6 @@ export function GamifyButton({ lang }: { lang: Lang }) {
           strokeLinejoin="round"
         />
       </svg>
-      <span className={styles.gamifyLabel}>{label}</span>
     </button>
   );
 }

@@ -21,8 +21,9 @@ export function SkipLink({ lang }: { lang: Lang }) {
 }
 
 /** Fixed, blurred 56px nav, with a spacer of the same height so the page
- * starts below it. `lead` goes before the brand (the app shell's menu button);
- * `children` go before the avatar menu (the "Verdicts" link). */
+ * starts below it. `lead` goes before the brand (the app shell's menu button,
+ * whose panel carries the profile below 960px, so the avatar waits for the
+ * wide header); `children` go before the avatar menu (the "Verdicts" link). */
 export function SiteHeader({
   lang,
   toggle = false,
@@ -48,7 +49,7 @@ export function SiteHeader({
           <div className={styles.navRight}>
             {toggle ? <LangPicker lang={lang} compact /> : null}
             {children}
-            <span className={styles.account}>
+            <span className={lead ? styles.accountWide : styles.account}>
               <AccountMenu lang={lang} />
             </span>
           </div>

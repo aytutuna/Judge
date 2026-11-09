@@ -9,4 +9,10 @@ describe("gamify button", () => {
     expect(html).not.toContain("role=");
     expect(html).not.toContain("aria-checked");
   });
+
+  it("is an icon with its name as the label", () => {
+    const html = renderToStaticMarkup(<GamifyButton lang="en" />);
+    expect(html).toContain('aria-label="Gamify"');
+    expect(html).not.toMatch(/<\/svg><span/);
+  });
 });

@@ -78,7 +78,7 @@ export function stateLabel(lang: Lang, item: HistoryItem): string | null {
 }
 
 /** Green when the ruling went the viewer's way, red when it went the other's. */
-function tone(item: HistoryItem): "yours" | "theirs" | undefined {
+export function tone(item: HistoryItem): "yours" | "theirs" | undefined {
   if (item.state !== "ready" || (item.verdict !== "side_a" && item.verdict !== "side_b")) return undefined;
   return item.verdict === (item.party === "a" ? "side_a" : "side_b") ? "yours" : "theirs";
 }
