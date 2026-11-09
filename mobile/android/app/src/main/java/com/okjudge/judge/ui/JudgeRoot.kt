@@ -695,6 +695,11 @@ fun JudgeRoot(
                                         // App scope: leaving the screen must not stop a sign-out or deletion halfway.
                                         onSignOut = { container.appScope.launch { account.signOut() } },
                                         onDeleteAccount = { container.appScope.launch { account.deleteAccount() } },
+                                        onSetPassword = if ((providers as? Account.Providers.Ready)?.config?.passwordSignIn == true) {
+                                            { new, current -> account.setPassword(new, current) }
+                                        } else {
+                                            null
+                                        },
                                         restore = if (purchasesOn && purchases.isReady(store)) RestoreUi(store.restoring, store.restoreNotice) else null,
                                         onRestore = { purchases.restore() },
                                     )
@@ -723,6 +728,14 @@ fun JudgeRoot(
                                                 container.analytics.track("sign_in_started", mapOf("provider" to "email"))
                                                 vm.requestCode(lang)
                                             },
+                                            onPasswordChange = vm::onPasswordChange,
+                                            onSignInWithPassword = {
+                                                container.analytics.track("sign_in_started", mapOf("provider" to "password"))
+                                                vm.signInWithPassword()
+                                            },
+                                            onMode = vm::setMode,
+                                            onSavePassword = vm::savePassword,
+                                            onSkipPassword = vm::skipPassword,
                                             onCodeChange = vm::onCodeChange,
                                             onSubmitCode = vm::submitCode,
                                             onResend = { vm.resend(lang) },
