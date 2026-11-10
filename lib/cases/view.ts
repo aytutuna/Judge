@@ -23,6 +23,7 @@ import {
   type AppealBlock,
   type CaseAppealView,
   type CaseEvidenceView,
+  type CaseInviteView,
   type CaseRole,
   type CaseSideView,
   type CaseSummary,
@@ -30,9 +31,10 @@ import {
   type PartyLetter,
 } from "@/lib/case-types";
 import { excerptOf } from "@/lib/history-state";
+import { partiesFor } from "@/lib/multi";
 import type { OriginalStatus } from "@/lib/originals-types";
 import type { NameMapping } from "@/lib/types";
-import type { CaseBundle, CaseListRow, EvidenceRow } from "./db";
+import { respondentOf, type CaseBundle, type CaseListRow, type EvidenceRow } from "./db";
 import { effectiveStatus } from "./sweep";
 
 export type ViewContext = {
@@ -42,6 +44,10 @@ export type ViewContext = {
   inviteUrl: string | null;
   /** Respondent role: the signed-in viewer is the owner. */
   ownInvite: boolean;
+  /** Respondent role: which side the link is for (default b). */
+  party?: PartyLetter;
+  /** Owner, three or four sides: the re-derived link of each waiting side. */
+  inviteUrls?: Partial<Record<PartyLetter, string>>;
   /** Why the viewer cannot appeal right now (null = allowed). */
   appealBlock: AppealBlock | null;
   /** Respondent role: side B is bound to the signed-in viewer. */
@@ -53,7 +59,7 @@ export type ViewContext = {
    * names, and the status of the viewer's side original. */
   originals?: {
     names: NameMapping[] | null;
-    display: { a: string | null; b: string | null };
+    display: { a: string | null; b: string | null; c?: string | null; d?: string | null };
     yourOriginal: OriginalStatus;
   };
 };
@@ -69,7 +75,9 @@ export function twoSidedJudged(bundle: CaseBundle): boolean {
 export function buildCaseView(bundle: CaseBundle, ctx: ViewContext): CaseView {
   const { row } = bundle;
   const status = effectiveStatus(row, ctx.now);
-  const yourParty: PartyLetter = ctx.role === "owner" ? "a" : "b";
+  const yourParty: PartyLetter = ctx.role === "owner" ? "a" : (ctx.party ?? "b");
+  const many = row.sides > 2 && row.mode !== "one_sided";
+  const allParties: PartyLetter[] = many ? partiesFor(row.sides) : ["a", "b"];
   const shared = twoSidedJudged(bundle);
   // The respondent sees nothing of a case settled without their side.
   const respondentShut = ctx.role === "respondent" && row.mode === "one_sided";
@@ -77,10 +85,12 @@ export function buildCaseView(bundle: CaseBundle, ctx: ViewContext): CaseView {
   const removedParties: PartyLetter[] = [
     ...(row.removedAAt ? (["a"] as const) : []),
     ...(row.removedBAt ? (["b"] as const) : []),
+    ...(row.removedCAt ? (["c"] as const) : []),
+    ...(row.removedDAt ? (["d"] as const) : []),
   ];
   const isRemoved = (p: PartyLetter) => removedParties.includes(p);
 
-  const visibleParties: PartyLetter[] = shared ? ["a", "b"] : ctx.role === "owner" ? ["a"] : [];
+  const visibleParties: PartyLetter[] = shared ? allParties : ctx.role === "owner" ? ["a"] : [];
   const sides: CaseSideView[] = bundle.sides
     .filter((s) => visibleParties.includes(s.party))
     .map((s) =>
@@ -124,6 +134,23 @@ export function buildCaseView(bundle: CaseBundle, ctx: ViewContext): CaseView {
     !row.removedAt &&
     !ownerSideMissing &&
     (status === "awaiting_respondent" || status === "expired" || status === "failed");
+  const present = new Set(bundle.sides.map((s) => s.party));
+  const prefix = allParties.filter((p, i) => allParties.slice(0, i + 1).every((q) => present.has(q)));
+  const canJudgeAnswered =
+    many && canJudgeNow && status === "awaiting_respondent" && prefix.length >= 2 && present.size === prefix.length;
+  const invites: CaseInviteView[] | undefined =
+    many && ctx.role === "owner"
+      ? allParties.slice(1).map((party) => {
+          const answered = bundle.sides.find((s) => s.party === party);
+          const inviteStatus = answered ? "answered" : status === "awaiting_respondent" ? "waiting" : "closed";
+          return {
+            party,
+            status: inviteStatus,
+            inviteUrl: inviteStatus === "waiting" ? (ctx.inviteUrls?.[party] ?? null) : null,
+            answeredAt: answered?.submittedAt ?? null,
+          };
+        })
+      : undefined;
 
   return {
     id: row.id,
@@ -137,12 +164,15 @@ export function buildCaseView(bundle: CaseBundle, ctx: ViewContext): CaseView {
     expiresAt: row.expiresAt,
     judgedAt: row.judgedAt,
     respondentAnswered,
+    ...(many ? { parties: allParties } : {}),
+    ...(invites ? { invites } : {}),
     inviteUrl: ctx.role === "owner" && status === "awaiting_respondent" && !respondentAnswered ? ctx.inviteUrl : null,
     ownInvite: ctx.role === "respondent" && ctx.ownInvite,
     sides,
     verdicts,
     appeals,
     canJudgeNow,
+    ...(many && ctx.role === "owner" ? { canJudgeAnswered } : {}),
     ownerSideMissing,
     appeal: row.removedAt
       ? { allowed: false, blockedBy: "not_judged" }
@@ -154,6 +184,7 @@ export function buildCaseView(bundle: CaseBundle, ctx: ViewContext): CaseView {
       namesVisible: row.namesVisible,
       a: ctx.originals?.display.a ?? null,
       b: ctx.originals?.display.b ?? null,
+      ...(many ? { c: ctx.originals?.display.c ?? null, d: row.sides > 3 ? (ctx.originals?.display.d ?? null) : null } : {}),
     },
     removed: row.removedAt ? { at: row.removedAt, parties: removedParties } : null,
     yourOriginal: ctx.originals?.yourOriginal ?? "not_stored",
@@ -175,12 +206,13 @@ export function structuralAppealBlock(
 ): AppealBlock | null {
   const { row } = bundle;
   if (effectiveStatus(row, now) !== "judged" || bundle.verdicts.length === 0) return "not_judged";
-  if (party === "b") {
+  if (party !== "a") {
     if (row.mode !== "two_sided") return "not_party";
-    if (!row.respondentUserId && !claimOk) return "not_party";
+    const bound = respondentOf(row, bundle.invites, party).userId;
+    if (!bound && !claimOk) return "not_party";
     if (!viewerId) return "signin_required";
     if (viewerId === row.ownerId) return "not_party";
-    if (row.respondentUserId && row.respondentUserId !== viewerId) return "not_party";
+    if (bound && bound !== viewerId) return "not_party";
   } else if (!viewerId || viewerId !== row.ownerId) {
     return viewerId ? "not_party" : "signin_required";
   }
@@ -199,6 +231,7 @@ export function caseSummary(r: CaseListRow, now: Date): CaseSummary {
     createdAt: r.createdAt,
     expiresAt: r.expiresAt,
     respondentAnswered: r.respondentAnswered,
+    ...(r.sides > 2 && r.mode !== "one_sided" ? { parties: partiesFor(r.sides) } : {}),
     verdict: r.latestResult?.verdict ?? null,
     headline: r.removedAAt ? null : (r.latestResult?.headline ?? null),
     excerpt: r.removedAAt ? null : excerptOf(r.sideAStart),

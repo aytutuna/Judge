@@ -6,10 +6,11 @@
 
 import type { CaseMode, PartyLetter } from "@/lib/case-types";
 import type { EvidenceGroup, VerifiedEvidence } from "@/lib/evidence";
+import { composeSides, partiesFor } from "@/lib/multi";
 import type { AppealRow, EvidenceRow, SideRow } from "./db";
 
-const LABEL: Record<PartyLetter, string> = { a: "Party A", b: "Party B" };
-const LETTER: Record<PartyLetter, string> = { a: "A", b: "B" };
+const LABEL: Record<PartyLetter, string> = { a: "Party A", b: "Party B", c: "Party C", d: "Party D" };
+const LETTER: Record<PartyLetter, string> = { a: "A", b: "B", c: "C", d: "D" };
 const other = (p: PartyLetter): PartyLetter => (p === "a" ? "b" : "a");
 
 /** What composing reads of a side and an appeal (one-sided verdicts reuse it). */
@@ -30,10 +31,14 @@ export function composeCaseDocument(sideA: string, sideB: string | null): string
 }
 
 /** One added-context section. `isNew` marks the appeal being judged now. */
-export function appealSection(party: PartyLetter, text: string, mode: CaseMode, isNew: boolean): string {
+export function appealSection(party: PartyLetter, text: string, mode: CaseMode, isNew: boolean, count = 2): string {
   const by = LABEL[party];
   const heading =
-    mode === "two_sided"
+    mode === "two_sided" && count > 2
+      ? isNew
+        ? `NEW CONTEXT FROM ${by.toUpperCase()} (added after an earlier verdict; ${by} had seen that verdict and the other accounts; the other parties have not answered it):`
+        : `CONTEXT ADDED EARLIER BY ${by.toUpperCase()} (after an earlier verdict, already judged once):`
+      : mode === "two_sided"
       ? isNew
         ? `NEW CONTEXT FROM ${by.toUpperCase()} (added after an earlier verdict; ${by} had seen that verdict and ${LABEL[other(party)]}'s account; ${LABEL[other(party)]} has not answered it):`
         : `CONTEXT ADDED EARLIER BY ${by.toUpperCase()} (after an earlier verdict, already judged once):`
@@ -53,11 +58,15 @@ export function composeForJudging(
   sides: readonly Account[],
   mode: CaseMode,
   appeals: { earlier: readonly Context[]; current: Context | null },
+  count = 2,
 ): string {
-  const base = composeCaseDocument(sideText(sides, "a") ?? "", mode === "two_sided" ? sideText(sides, "b") ?? "" : null);
+  const many = mode === "two_sided" && count > 2;
+  const base = many
+    ? composeSides(partiesFor(count).flatMap((party) => sides.filter((s) => s.party === party)))
+    : composeCaseDocument(sideText(sides, "a") ?? "", mode === "two_sided" ? sideText(sides, "b") ?? "" : null);
   const parts = [base];
-  for (const a of appeals.earlier) parts.push(appealSection(a.party, a.text, mode, false));
-  if (appeals.current) parts.push(appealSection(appeals.current.party, appeals.current.text, mode, true));
+  for (const a of appeals.earlier) parts.push(appealSection(a.party, a.text, mode, false, count));
+  if (appeals.current) parts.push(appealSection(appeals.current.party, appeals.current.text, mode, true, count));
   return parts.join("\n\n");
 }
 
@@ -73,6 +82,7 @@ export function evidenceGroups(
   evidence: readonly EvidenceRow[],
   mode: CaseMode,
   appeals: { earlier: readonly Context[]; current: Context | null },
+  count = 2,
 ): EvidenceGroup[] {
   const groups: EvidenceGroup[] = [];
   const push = (party: PartyLetter, prefix: string, rows: EvidenceRow[]) => {
@@ -83,7 +93,7 @@ export function evidenceGroups(
         : { party: null, idPrefix: `E${prefix}`, items: toVerified(rows) },
     );
   };
-  const sideParties: PartyLetter[] = mode === "two_sided" ? ["a", "b"] : ["a"];
+  const sideParties: PartyLetter[] = mode === "two_sided" ? partiesFor(count) : ["a"];
   for (const p of sideParties) push(p, "", evidence.filter((e) => e.party === p && e.appealId === null));
   for (const a of appeals.earlier) push(a.party, "-ctx", evidence.filter((e) => e.appealId === a.id));
   if (appeals.current) {
@@ -97,10 +107,14 @@ export function evidenceGroups(
 export function evidenceCounts(
   evidence: readonly EvidenceRow[],
   appealIds: ReadonlySet<string>,
-): { a: number; b: number } {
+  count = 2,
+): { a: number; b: number; c?: number; d?: number } {
   const counted = evidence.filter((e) => e.appealId === null || appealIds.has(e.appealId));
+  const per = (party: PartyLetter) => counted.filter((e) => e.party === party).length;
   return {
-    a: counted.filter((e) => e.party === "a").length,
-    b: counted.filter((e) => e.party === "b").length,
+    a: per("a"),
+    b: per("b"),
+    ...(count > 2 ? { c: per("c") } : {}),
+    ...(count > 3 ? { d: per("d") } : {}),
   };
 }
