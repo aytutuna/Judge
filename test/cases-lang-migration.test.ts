@@ -71,7 +71,7 @@ describe("cases.lang on an old table", () => {
     for (const c of ["respondent_claim_nonce", "tier", "removed_at"]) expect(cols).toContain(c);
     const after = (await db.execute("SELECT * FROM cases ORDER BY id")).rows;
     expect(after.map((r) => ({ ...r }))).toEqual(
-      before.map((r) => ({ ...r, respondent_claim_nonce: null, names_visible: 1, display_a_sealed: null, display_b_sealed: null, display_key_id: null, removed_at: null, removed_a_at: null, removed_b_at: null, tier: "premium" })),
+      before.map((r) => ({ ...r, respondent_claim_nonce: null, names_visible: 1, display_a_sealed: null, display_b_sealed: null, display_key_id: null, removed_at: null, removed_a_at: null, removed_b_at: null, tier: "premium", sides: 2, display_c_sealed: null, display_d_sealed: null, removed_c_at: null, removed_d_at: null })),
     );
     expect((await getCase("old-tr"))?.lang).toBe("tr");
 

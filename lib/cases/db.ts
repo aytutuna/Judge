@@ -17,6 +17,7 @@
 import type { Client, Row } from "@libsql/client";
 import type { CaseMode, CaseStatus, PartyLetter, AppealStatus } from "@/lib/case-types";
 import { getDb } from "@/lib/db";
+import { PARTY_CHECK, PARTY_CHECK_WIDE, rebuildTable } from "@/lib/db-rebuild";
 import { ensureEntitlementTables } from "@/lib/entitlements";
 import type { KnownPerson } from "@/lib/evidence";
 import type { Lang } from "@/lib/i18n";
@@ -56,9 +57,25 @@ const SCHEMA = [
   "CREATE INDEX IF NOT EXISTS cases_status_started ON cases (status, judging_started_at)",
   `CREATE INDEX IF NOT EXISTS cases_respondent ON cases (respondent_user_id)
     WHERE respondent_user_id IS NOT NULL`,
+  // Side B keeps its link and respondent in the cases columns; sides C and D
+  // (cases.sides > 2) each have a row here.
+  `CREATE TABLE IF NOT EXISTS case_invites (
+    case_id         TEXT NOT NULL,
+    party           TEXT NOT NULL CHECK (party IN ('c','d')),
+    invite_nonce    TEXT NOT NULL,
+    invite_hash     TEXT NOT NULL UNIQUE,
+    respondent_idem TEXT,
+    user_id         TEXT,
+    claim_nonce     TEXT,
+    answered_at     TEXT,
+    created_at      TEXT NOT NULL,
+    updated_at      TEXT NOT NULL,
+    PRIMARY KEY (case_id, party)
+  )`,
+  "CREATE INDEX IF NOT EXISTS case_invites_user ON case_invites (user_id) WHERE user_id IS NOT NULL",
   `CREATE TABLE IF NOT EXISTS case_sides (
     case_id       TEXT NOT NULL,
-    party         TEXT NOT NULL CHECK (party IN ('a','b')),
+    party         TEXT NOT NULL CHECK (party IN ('a','b','c','d')),
     text          TEXT NOT NULL,
     submitted_at  TEXT NOT NULL,
     PRIMARY KEY (case_id, party)
@@ -66,7 +83,7 @@ const SCHEMA = [
   `CREATE TABLE IF NOT EXISTS case_appeals (
     id              TEXT PRIMARY KEY,
     case_id         TEXT NOT NULL,
-    party           TEXT NOT NULL CHECK (party IN ('a','b')),
+    party           TEXT NOT NULL CHECK (party IN ('a','b','c','d')),
     user_id         TEXT,
     text            TEXT NOT NULL,
     status          TEXT NOT NULL CHECK (status IN ('judging','judged','failed')),
@@ -84,7 +101,7 @@ const SCHEMA = [
   `CREATE TABLE IF NOT EXISTS case_evidence (
     id          TEXT PRIMARY KEY,
     case_id     TEXT NOT NULL,
-    party       TEXT NOT NULL CHECK (party IN ('a','b')),
+    party       TEXT NOT NULL CHECK (party IN ('a','b','c','d')),
     appeal_id   TEXT,
     seq         INTEGER NOT NULL,
     kind        TEXT NOT NULL CHECK (kind IN ('chat','document','photo','other')),
@@ -125,6 +142,7 @@ export async function ensureCaseTables(): Promise<void> {
     .then(() => addClaimColumn(client))
     .then(() => addCaseColumns(client))
     .then(() => dropLangCheck(client))
+    .then(() => widenPartyChecks(client))
     .then(
       () => undefined,
       (e: unknown) => {
@@ -161,6 +179,11 @@ const ADDED_COLUMNS: [string, string][] = [
   ["removed_a_at", "TEXT"],
   ["removed_b_at", "TEXT"],
   ["tier", "TEXT NOT NULL DEFAULT 'premium' CHECK (tier IN ('free','premium'))"],
+  ["sides", "INTEGER NOT NULL DEFAULT 2 CHECK (sides BETWEEN 2 AND 4)"],
+  ["display_c_sealed", "TEXT"],
+  ["display_d_sealed", "TEXT"],
+  ["removed_c_at", "TEXT"],
+  ["removed_d_at", "TEXT"],
 ];
 
 async function addCaseColumns(db: Client): Promise<void> {
@@ -199,6 +222,13 @@ async function dropLangCheck(db: Client): Promise<void> {
     ],
     "write",
   );
+}
+
+/** Tables created when a case had two sides allowed only a and b in `party`. */
+async function widenPartyChecks(db: Client): Promise<void> {
+  for (const table of ["case_sides", "case_appeals", "case_evidence"]) {
+    await rebuildTable(db, table, PARTY_CHECK, PARTY_CHECK_WIDE);
+  }
 }
 
 /** The migrated client, for reads. */
@@ -245,6 +275,25 @@ export type CaseRow = {
   removedAt: string | null;
   removedAAt: string | null;
   removedBAt: string | null;
+  /** How many sides the case has: 2, or 3 or 4 when the owner asked for more.
+   * A case judged on side A alone (mode one_sided) is reset to 2. */
+  sides: number;
+  displayCSealed: string | null;
+  displayDSealed: string | null;
+  removedCAt: string | null;
+  removedDAt: string | null;
+};
+
+/** The link and respondent of side C or D. Side B's are in the cases row. */
+export type InviteRow = {
+  caseId: string;
+  party: "c" | "d";
+  inviteNonce: string;
+  inviteHash: string;
+  respondentIdem: string | null;
+  userId: string | null;
+  claimNonce: string | null;
+  answeredAt: string | null;
 };
 
 export type SideRow = { party: PartyLetter; text: string; submittedAt: string };
@@ -291,6 +340,8 @@ export type CaseBundle = {
   appeals: AppealRow[];
   verdicts: CaseVerdictRow[];
   people: KnownPerson[];
+  /** Sides C and D, when the case has them. */
+  invites: InviteRow[];
 };
 
 const str = (v: unknown): string => String(v);
@@ -334,6 +385,24 @@ export function mapCase(r: Row): CaseRow {
     removedAt: strOrNull(r.removed_at),
     removedAAt: strOrNull(r.removed_a_at),
     removedBAt: strOrNull(r.removed_b_at),
+    sides: r.sides == null ? 2 : Number(r.sides),
+    displayCSealed: strOrNull(r.display_c_sealed),
+    displayDSealed: strOrNull(r.display_d_sealed),
+    removedCAt: strOrNull(r.removed_c_at),
+    removedDAt: strOrNull(r.removed_d_at),
+  };
+}
+
+function mapInvite(r: Row): InviteRow {
+  return {
+    caseId: str(r.case_id),
+    party: str(r.party) as "c" | "d",
+    inviteNonce: str(r.invite_nonce),
+    inviteHash: str(r.invite_hash),
+    respondentIdem: strOrNull(r.respondent_idem),
+    userId: strOrNull(r.user_id),
+    claimNonce: strOrNull(r.claim_nonce),
+    answeredAt: strOrNull(r.answered_at),
   };
 }
 
@@ -369,6 +438,34 @@ export async function getCaseByInviteHash(hash: string): Promise<CaseRow | null>
   return rs.rows[0] ? mapCase(rs.rows[0]) : null;
 }
 
+/** The case behind an invite link, and which side the link is for: the
+ * case's own link is side B's, any other is a row of case_invites. */
+export async function getCaseByAnyInviteHash(hash: string): Promise<{ row: CaseRow; party: "b" | "c" | "d" } | null> {
+  const db = await caseDb();
+  const own = await getCaseByInviteHash(hash);
+  if (own) return { row: own, party: "b" };
+  const rs = await db.execute({ sql: "SELECT case_id, party FROM case_invites WHERE invite_hash = ?", args: [hash] });
+  if (!rs.rows[0]) return null;
+  const row = await getCase(str(rs.rows[0].case_id));
+  return row ? { row, party: str(rs.rows[0].party) as "c" | "d" } : null;
+}
+
+export async function getInvites(caseId: string): Promise<InviteRow[]> {
+  const db = await caseDb();
+  const rs = await db.execute({ sql: "SELECT * FROM case_invites WHERE case_id = ? ORDER BY party", args: [caseId] });
+  return rs.rows.map(mapInvite);
+}
+
+/** Who answered for `party` and how they are bound. Side B's live in the
+ * case row (every case before side C existed), C and D's in case_invites. */
+export type Respondent = { idem: string | null; userId: string | null; claimNonce: string | null };
+
+export function respondentOf(row: CaseRow, invites: readonly InviteRow[], party: PartyLetter): Respondent {
+  if (party === "b") return { idem: row.respondentIdem, userId: row.respondentUserId, claimNonce: row.respondentClaimNonce };
+  const inv = invites.find((i) => i.party === party);
+  return { idem: inv?.respondentIdem ?? null, userId: inv?.userId ?? null, claimNonce: inv?.claimNonce ?? null };
+}
+
 export async function getCaseByOwnerKey(ownerId: string, key: string): Promise<CaseRow | null> {
   const db = await caseDb();
   const rs = await db.execute({
@@ -397,7 +494,7 @@ export async function hasSide(caseId: string, party: PartyLetter): Promise<boole
 export async function loadCaseBundle(row: CaseRow): Promise<CaseBundle> {
   const db = await caseDb();
   const id = row.id;
-  const [sides, evidence, appeals, verdicts, people] = await Promise.all([
+  const [sides, evidence, appeals, verdicts, people, invites] = await Promise.all([
     db.execute({ sql: "SELECT party, text, submitted_at FROM case_sides WHERE case_id = ? ORDER BY party", args: [id] }),
     db.execute({
       sql: `SELECT id, party, appeal_id, seq, kind, transcript FROM case_evidence
@@ -412,6 +509,7 @@ export async function loadCaseBundle(row: CaseRow): Promise<CaseBundle> {
       args: [id],
     }),
     db.execute({ sql: "SELECT name_key, label FROM case_people WHERE case_id = ?", args: [id] }),
+    db.execute({ sql: "SELECT * FROM case_invites WHERE case_id = ? ORDER BY party", args: [id] }),
   ]);
   return {
     row,
@@ -441,6 +539,7 @@ export async function loadCaseBundle(row: CaseRow): Promise<CaseBundle> {
       };
     }),
     people: people.rows.map((r) => ({ key: str(r.name_key), label: str(r.label) })),
+    invites: invites.rows.map(mapInvite),
   };
 }
 
@@ -452,7 +551,12 @@ export type CaseListRow = CaseRow & {
 };
 
 /** The owner's cases, newest first, with the latest verdict of each. */
-export async function listOwnerCases(ownerId: string, limit: number, before: string | null): Promise<CaseListRow[]> {
+export async function listOwnerCases(
+  ownerId: string,
+  limit: number,
+  before: string | null,
+  manySides = true,
+): Promise<CaseListRow[]> {
   const db = await caseDb();
   const rs = await db.execute({
     sql: `SELECT c.*,
@@ -461,10 +565,10 @@ export async function listOwnerCases(ownerId: string, limit: number, before: str
              WHERE cv.case_id = c.id ORDER BY cv.seq DESC LIMIT 1) AS latest,
             (SELECT substr(s.text, 1, 200) FROM case_sides s WHERE s.case_id = c.id AND s.party = 'a') AS side_a_start
           FROM cases c
-          WHERE c.owner_id = ? AND (? IS NULL OR c.created_at < ?)
+          WHERE c.owner_id = ? AND (? IS NULL OR c.created_at < ?) AND (? = 1 OR c.sides <= 2)
           ORDER BY c.created_at DESC, c.id DESC
           LIMIT ?`,
-    args: [ownerId, before, before, limit],
+    args: [ownerId, before, before, manySides ? 1 : 0, limit],
   });
   return rs.rows.map((r) => {
     const parsed = r.latest == null ? null : VerdictResult.safeParse(parseJson<unknown>(r.latest, null));
